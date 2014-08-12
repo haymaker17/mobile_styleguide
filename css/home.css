@@ -1,0 +1,430 @@
+/* CONCUR MOBILE LABS - 
+
+HOME CSS 
+
+------------ */
+
+
+
+
+
+
+
+
+
+
+/* home stuff ------------ */
+
+
+#header {
+	background: rgba(255,255,255,1);
+	border-bottom: 1px solid #d5d5d5;
+}
+
+.top_header {
+	border-bottom: 1px solid #d5d5d5;
+}
+
+.sticky_header {
+	padding: 0 30px;
+}
+
+.sidebar_visible #main_nav {
+	-webkit-transform: translateX(0);
+	   -moz-transform: translateX(0);
+	    -ms-transform: translateX(0);
+	     -o-transform: translateX(0);
+	        transform: translateX(0);
+}
+
+
+
+#main {
+	position: absolute;
+	top: 130px;
+	width: 100%;
+	margin: 0;
+	padding: 0 0;
+}
+
+
+#main_nav {
+	width: 75%;
+	float: right;
+	margin-top: 20px;
+	right: 30px;
+	z-index: 4;
+	background: none;
+	-webkit-transition: -webkit-transform .25s ease-in;
+   -moz-transition: -moz-transform .25s ease-in;
+    -ms-transition: -ms-transform .25s ease-in;
+     -o-transition: -o-transform .25s ease-in;
+        transition: transform .25s ease-in;
+}
+
+#main_nav > ul {
+	margin: 0;
+	padding: 0;
+	float: right;
+	list-style: none;
+	line-height: 2.5em;
+	margin-top: 20px;
+}
+
+#main_nav li {
+	float: left;
+	padding: 0 30px;
+}
+
+#main_nav li:last-child {
+	padding-right: 0;
+}
+
+ul.nav {
+	list-style: none;
+	margin: 0;
+	padding: 0;
+}
+
+
+section {
+	padding: 0 30px;
+}
+
+
+
+
+
+
+
+
+/* specific blocks to the home page ------------ */
+.hero_1 {
+	background: #343434;
+	height: 365px;
+	margin-top: 0;
+}
+
+.hero_1 .left {
+	float: left;
+	width: 15%;
+	margin: 65px 0 65px 15%;
+}
+
+
+.hero_1 .right {
+	float: left;
+	width: 65%;
+	margin: 95px 5% 65px 0;
+	font-size: 2.5rem;
+	line-height: 2.5rem;
+	font-weight: 200;
+	color: #fff;
+}
+
+.hero_1 b {
+	font-weight: 400;
+}
+
+.hero_1 .right p {
+	margin: 0;
+	padding: 0 0 1rem 0;
+	font-weight: 100;
+}
+
+a.button {
+	position: relative;
+	display: inline-block;
+	padding: 2px 30px 0;
+	border-radius: 4px;
+	font-size: 1.2rem;
+	line-height: 2.5rem;
+	color: #fff;
+	background: #89bf42;
+	text-transform: uppercase;
+}
+
+.home_styleguide {
+	background: #f7f7f7;
+	margin-top: 0;
+}
+
+.home_styleguide h2 {
+	color: #222;
+}
+
+
+
+.home .img_block.medium li {
+	height: 150px;
+	width: 18.4%;
+	margin: 0 2% 20px 0;
+	background: #fff;
+}
+
+.home .img_block.medium li:nth-of-type(4n) {
+	margin-right: 2%;
+}
+
+.home .img_block.medium li:nth-of-type(5n) {
+	margin-right: 0;
+}
+
+a.button:hover {
+	text-decoration: none;
+	background: #99d54a;
+}
+
+.featured_demos {
+	height: 575px;
+	background: #343434;
+	margin-top: 0;
+	color: rgba(255,255,255,.5);
+}
+
+.featured_demos h5 {
+	color: rgba(255,255,255,.75);
+	font-weight: 300;
+	font-size: 1rem;
+	margin-top: 0;
+}
+
+.featured_demos p {
+	width: 169px;
+	margin-right: auto;
+	margin-left: auto;
+}
+
+.featured_demos .left, .featured_demos .right {
+	float: left;
+	width: 20%;
+	margin: 40px 5% 0 25%;
+	text-align: center;
+}
+
+.featured_demos .right {
+	float: right;
+	margin: 40px 25% 0 5%;
+}
+
+.featured_demos div.ios img:after {
+	content: "";
+	position: absolute;
+	height: 20px;
+	width: 20px;
+	top: 10px;
+	right: 10px;
+	background: url(../img/logos/logo_apple.svg);
+	background-size: 20px 20px;
+	z-index: 1;
+}
+
+.featured_demos div.android img:after {
+	content: "";
+	position: absolute;
+	height: 20px;
+	width: 20px;
+	top: 10px;
+	right: 10px;
+	background: url(../img/logos/logo_android.svg);
+	background-size: 20px 20px;
+	z-index: 1;
+}
+
+
+.featured_videos {
+	padding: 0;
+}
+
+.featured_videos h2 {
+	padding: 0 35px;
+}
+
+.video_hero {
+	width: 100%;
+	text-align: center;
+	height: 505px;
+	color: rgba(255,255,255,.75);
+}
+
+.video_hero p {
+	font-size: 1.5rem;
+}
+
+.video_hero h3 {
+	font-size: 2rem;
+	font-weight: 300;
+	padding-top: 170px;
+}
+
+.video_hero b {
+	color: rgba(255,255,255,.95);
+	font-weight: 400;
+}
+
+.video_hero.jarvis {
+	background: url(../img/video_bg_jarvis.jpg) no-repeat;
+	background-size: cover;
+}
+
+.video_hero.perfect_trip {
+	background: url(../img/video_bg_perfect_trip.jpg) no-repeat;
+	background-size: cover;
+}
+
+
+
+
+
+
+
+/* image blocks with captions ------------ */
+.img_block_caption {
+	list-style: none;
+	margin: 0;
+	padding: 0;
+	overflow: hidden;
+	clear: both;
+}
+
+.img_block_caption li {
+	position: relative;
+	display: block;
+	float: left;
+}
+
+.img_block_caption.large li {
+	width: 32%;
+	margin: 0 2% 20px 0;
+}
+
+.img_block_caption.medium li {
+	width: 18.4%;
+	margin: 0 2% 20px 0;
+}
+
+.img_block_caption.large li:nth-of-type(3n) {
+	margin-right: 0;
+}
+
+.img_block_caption.medium li:nth-of-type(5n) {
+	margin-right: 0;
+}
+
+.img_block_caption a {
+	position: relative;
+	display: block;
+	border: 1px solid #e2e2e2;
+	width: 100%;
+}
+
+.img_block_caption.large a {
+	height: 215px;
+}
+
+.img_block_caption.medium a {
+	height: 150px;
+}
+
+.img_block_caption img {
+	position: absolute;
+	height: 100px;
+	width: auto;
+	margin: auto;
+	top: 0; 
+	bottom: 0; 
+	left: 0; 
+	right: 0;
+}
+
+.img_block_caption a.ios:after {
+	content: "";
+	position: absolute;
+	height: 20px;
+	width: 20px;
+	top: 10px;
+	right: 10px;
+	background: url(../img/logos/logo_apple.svg);
+	background-size: 20px 20px;
+	z-index: 1;
+}
+
+.img_block_caption a.android:after {
+	content: "";
+	position: absolute;
+	height: 20px;
+	width: 20px;
+	top: 10px;
+	right: 10px;
+	background: url(../img/logos/logo_android.svg);
+	background-size: 20px 20px;
+	z-index: 1;
+}
+
+.img_block_caption a.cml:after {
+	content: "";
+	position: absolute;
+	height: 20px;
+	width: 20px;
+	top: 10px;
+	right: 10px;
+	background: url(../img/logos/logo_cml.svg);
+	background-size: 20px 20px;
+	z-index: 1;
+}
+
+
+
+
+/* Default colors ------------ */
+.home #header {
+	background: #fff;
+}
+
+.home #header a {
+	color: #222222;
+}
+
+.home h2 {
+	color: #89bf42;
+}
+
+.home .accordion a.active {
+	color: #89bf42;
+}
+
+.home .responsivetable th {
+	color: #89bf42;
+}
+
+.home .tip {
+	border: 1px solid #89bf42;
+	color: #89bf42;
+	background: rgba(137,191,66,.1);
+}
+
+.home .tip .icon_svg {
+	fill: #89bf42;
+}
+
+
+
+
+
+
+
+
+
+/* Desktops and laptops ----------- */
+@media only screen 
+and (min-width : 1281px) {
+/* Styles */
+	
+	#header .contact {
+		margin: 0;
+	}
+
+
+
+
+}

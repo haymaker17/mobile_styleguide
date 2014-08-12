@@ -1,0 +1,179 @@
+body {
+    margin: 0;
+}
+
+.cte_signin  {
+	position: relative;
+	background: #f7fafd;
+	color: #383f46;
+	height: 100%;
+	width: 100%;
+	font-size: 100%;
+	font: 16px/1.4 "Helvetica Neue","HelveticaNeue",Helvetica,Arial,sans-serif;
+	-webkit-font-smoothing:antialiased;
+}
+
+.cte_signin  * {
+	-webkit-box-sizing: border-box;
+	   -moz-box-sizing: border-box;
+	        box-sizing: border-box;
+}
+
+.cte_signin header {
+	background: #0078c8;
+	height: 90px;
+	text-align: center;
+	padding: 20px;
+	margin: 0 0 50px 0;
+	position: relative;
+}
+
+.cte_signin .concur_signin_form_container {
+	width: 380px;
+	margin: 0 auto;
+}
+
+.cte_signin .concur_signin_form_container span {
+	font-weight: 500;
+}
+
+.cte_signin .concur_signin_form_box {
+	border-radius: 3px;
+	border: 1px solid #a7b6bf;
+	background: #fff;
+}
+
+.cte_signin .concur_signin_form input, .cte_signin .concur_signin_form select {
+	width: 100%;
+	padding: 11px 10px 11px 13px;
+	display: block;
+	margin: 0;
+	border: 0;
+	background: #fff;
+	color: #a7b6bf;
+	font: 16px/1.4 "proxima-nova","Helvetica Neue","HelveticaNeue",Helvetica,Arial,sans-serif;
+	font-weight: 200;
+	
+}
+
+.cte_signin .concur_signin_form input:first-of-type {
+	border-top-left-radius: 3px;
+	border-top-right-radius: 3px;
+}
+
+.cte_signin .concur_signin_form input:last-of-type {
+	border-bottom-left-radius: 3px;
+	border-bottom-right-radius: 3px;
+}
+
+.cte_signin .divider {
+	height: 1px;
+	width: 93%;
+	margin: 0 3.5%;
+	background: #d5dbdf;
+}
+
+.cte_signin .concur_signin_form label {
+	display: none;
+}
+
+.cte_signin button {
+	background: #0078c8;
+	color: #fff;
+	line-height: 2.3em;
+	border-radius: 3px;
+	border: none;
+	margin-top: 1.3em;
+	padding: 0 7%;
+	font-size: 1.2em;
+}
+
+.cte_signin .concur_signin_form button {
+	width: 100%;
+}
+
+.cte_signin button:hover {
+	background: #1aa3ff;
+}
+
+.cte_signin footer {
+	float: right;
+	position: absolute;
+	bottom: 20px;
+	right: 20px;
+}
+
+.cte_signin footer a {
+	color: #a7b6bf;
+}
+
+
+/* confirm screen ------------ */
+
+.cte_signin #confirm button:first-of-type  {
+	margin-right: 15px;
+}
+
+.cte_signin button.default {
+	background: #1aa3ff;
+}
+.cte_signin button.default:hover {
+	background: #37afff;
+}
+
+.cte_signin #confirm ul {
+	color: #6c757e;
+}
+
+
+
+/* Smartphones (portrait) ----------- */
+@media only screen 
+and (max-width : 480px) {
+/* Styles */
+
+  	.cte_signin footer {
+  		display: none;
+  	}
+
+  	.cte_signin header {
+		margin-bottom:30px;
+		height: 70px;
+	}
+
+	.cte_signin header img {
+		height: 80%;
+		width: auto;
+	}
+
+	.cte_signin .concur_signin_form_container {
+		width: 100%;
+		padding: 0 4%;
+		margin: 0 auto;
+	}
+
+	.cte_signin #confirm .concur_button:first-of-type  {
+		margin-right: 7px;
+	}
+
+	.cte_signin .concur_button {
+		padding: 0 5%;
+	}
+
+	.cte_signin button {
+		width: 100%;
+	}
+
+	.cte_signin button:nth-of-type(2n) {
+		margin-top: .3em;
+	}
+
+
+
+}
+
+
+
+
+
+

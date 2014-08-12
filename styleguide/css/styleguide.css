@@ -1,0 +1,651 @@
+/* CONCUR MOBILE LABS - 
+
+STYLEGUIDE CSS 
+
+------------ */
+
+
+
+/* avoid the FOUT ------------ */
+
+.wf-loading #body {
+	/*display: none;*/
+}
+.wf-active #body {
+	/*display: block;*/
+}
+
+
+
+
+#header {
+	background: #d25533;
+}
+
+#header_title {
+	position: absolute;
+	bottom: 21%;
+	left: 300px;
+	text-transform: uppercase;
+	font-weight: 300;
+	color: #fff;
+	font-size: 1.7rem;
+	margin: 0;
+	padding: 0;
+	-webkit-transition: all .15s ease-in;
+	   -moz-transition: all .15s ease-in;
+	    -ms-transition: all .15s ease-in;
+	     -o-transition: all .15s ease-in;
+	        transition: all .15s ease-in;
+}
+
+#header_logo {
+	margin-left: 30px;
+}
+
+#header .contact, #header .contact a {
+	color: rgba(255,255,255,.7);
+}
+
+#header .contact a {
+	color: #fff;
+}
+
+
+/* FIXED HEADER CHANGES ------------ */
+
+.fixedHeader #main_nav {
+	position: fixed;
+	top: 60px;
+}
+
+
+#footer {
+	border-top: 1px solid #e2e2e2;
+	padding: 1rem 3%;
+	/*width: 100%;*/
+	/*padding-left: 290px;*/
+	margin-left: 290px;
+	margin-right: 30px;
+}
+
+
+
+
+
+
+/* main nav ------------ */
+#main_nav {
+	width: 260px;
+	position: absolute;
+	height: 100%;
+	padding-bottom: 60px;
+	border-right: 1px solid #e2e2e2;
+	background: rgb(249,249,249);
+	height: 100%;
+	z-index: 2;
+	overflow: scroll;
+-webkit-transition: -webkit-transform .25s ease-in;
+   -moz-transition: -moz-transform .25s ease-in;
+    -ms-transition: -ms-transform .25s ease-in;
+     -o-transition: -o-transform .25s ease-in;
+        transition: transform .25s ease-in;
+}
+
+.sidebar_visible #main_nav {
+	-webkit-transform: translateX(0);
+	   -moz-transform: translateX(0);
+	    -ms-transform: translateX(0);
+	     -o-transform: translateX(0);
+	        transform: translateX(0);
+}
+
+
+#main_nav > ul {
+	margin: 0;
+	padding: 0;
+	list-style: none;
+	line-height: 2.5em;
+	margin-top: 20px;
+}
+
+ul.nav {
+	list-style: none;
+	margin: 0;
+	padding: 0;
+}
+
+
+
+#content {
+	position: absolute;
+	top: 130px;
+	left: 0;
+	width: 100%;
+	max-width: 1280px;
+	height: 100%;
+}
+
+
+
+
+
+/* phones */
+figure.phone {
+	width: 340px;
+	float: left;
+}
+
+figure.phone p {
+	width: 80%;
+	margin-left: 10%;
+}
+
+.phone_ios {
+	background-size: contain;
+	height: 640px;
+	width: 340px;
+	position: relative;
+	overflow: hidden;
+	float: left;
+	margin: 10px 0;
+	background-repeat: no-repeat;
+}
+
+.phone_ios.black {
+	background-image: url(../img/iphone_black.png);
+}
+
+.phone_ios.white {
+	background-image: url(../img/ios/iphone_white.png);
+}
+
+
+.phone_ios img {
+	position: absolute;
+	top: 14%;
+	left: 12.3%;
+	width: 74.8%;
+	height: auto;
+}
+
+.phone_ios.small {
+	height: 555px;
+	width: 295px;
+}
+
+.phone_ios:last-of-type {
+	margin-right: 0;
+}
+
+
+.phone_android {
+	background-size: contain;
+	background-repeat: no-repeat;
+	height: 640px;
+	width: 419px;
+	position: relative;
+	overflow: hidden;
+	float: left;
+	margin: 10px 0;
+}
+
+.phone_android.white {
+	background-image: url(../img/nexus5_white.png);
+}
+
+.phone_android img {
+	position: absolute;
+	top: 9.9%;
+	left: 16.2%;
+	width: 65.7%;
+	height: auto;
+}
+
+
+
+
+
+
+
+
+
+/* Colors */
+.color_swatches {
+	list-style: none;
+	margin: 0;
+	padding: 0;
+}
+
+.color_swatches span {
+	position: absolute;
+	bottom: 20px;
+	right: 25px;
+	text-align: right;
+	font-size: 1.1rem;
+}
+
+.color_swatches li {
+	float: left;
+	height: 150px;
+	width: 48%;
+	font-size: .85rem;
+	color: #fff;
+	margin: 0 2% 25px 0;
+	position: relative;
+}
+
+.color_swatches li:nth-of-type(even) {
+	margin-right: 0;
+}
+
+.color_swatches li:nth-of-type(1), .color_swatches li:nth-of-type(2) {
+	height: 325px;
+}
+
+.concur_blue {
+	background: #0078c8;
+}
+
+.dark_blue {
+	background: #004a7d;
+}
+
+.bright_blue {
+	background: #1aa3ff;
+}
+
+
+.black {
+	background-color: #343434;
+}
+
+.white {
+	background-color: #fff;
+}
+
+.dark_grey {
+	background: #5e6c75;
+}
+
+.light_grey {
+	background: #a7b6bf;
+}
+
+.off_white {
+	background: #f7fafd;
+}
+
+
+
+.orange {
+	background: #d25533;
+}
+
+.yellow {
+	background: #f4a900;
+}
+
+
+
+.green {
+	background: #62ac64;
+}
+
+.light_green {
+	background: #dfefd4;
+}
+
+.light_green span {
+	color: #62ac64;
+}
+.off_white span, .white span {
+	color: #5e6c75;
+}
+
+
+
+
+/* Icons */
+section {
+	padding-bottom: 30px;
+	clear: both;
+	overflow: hidden;
+	border-bottom: 1px solid #e2e2e2;
+	margin-bottom: 30px;
+}
+
+section:last-of-type {
+	border-bottom: 0;
+}
+
+a.icon img {
+	margin-right: 15px;
+	float: left;
+}
+
+a.icon span {
+	color: #5b5b5b;
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+/* SWITCH ALL THE COLORS BASED ON SECTION ------------ */
+
+
+
+
+/* Default ------------ */
+.concur #header {
+	background: #d25533;
+}
+
+.concur h2 {
+	color: #d25533;
+}
+
+.concur .accordion a.active {
+	color: #d25533;
+}
+
+.concur .responsivetable th {
+	color: #d25533;
+}
+
+.concur .tip {
+	border: 1px solid #d25533;
+	color: #d25533;
+	background: rgba(210,85,51,.1);
+}
+
+.concur .tip .icon_svg {
+	fill: #d25533;
+}
+
+
+
+/* IOS ------------ */
+.iOS #header {
+	background: #616161;
+}
+
+.iOS h2 {
+	color: #616161;
+}
+
+.iOS .accordion a.active {
+	color: #616161;
+}
+
+.iOS .responsivetable th {
+	color: #616161;
+}
+
+.iOS .tip {
+	border: 1px solid #616161;
+	color: #616161;
+	background: rgba(97,97,97,.1);
+}
+
+.iOS .tip .icon_svg {
+	fill: #616161;
+}
+
+.iOS a {
+	color: #0078c8;
+}
+
+
+
+/* ANDROID ------------ */
+.android #header {
+	background: #89bf42;
+}
+
+.android h2 {
+	color: #89bf42;
+}
+
+.android .accordion a.active {
+	color: #89bf42;
+}
+
+.android .responsivetable th {
+	color: #89bf42;
+}
+
+.android .tip {
+	border: 1px solid #89bf42;
+	color: #89bf42;
+	background: rgba(137,191,66,.1);
+}
+
+.android .tip .icon_svg {
+	fill: #89bf42;
+}
+
+.android a {
+	color: #89bf42;
+}
+
+
+
+
+
+/* WINDOWS ------------ */
+.windows #header {
+	background: #0078c8;
+}
+
+.windows h2 {
+	color: #0078c8;
+}
+
+.windows .accordion a.active {
+	color: #0078c8;
+}
+
+.windows .responsivetable th {
+	color: #0078c8;
+}
+
+.windows .tip {
+	border: 1px solid #0078c8;
+	color: #0078c8;
+	background: rgba(0,120,200,.1);
+}
+
+.windows .tip .icon_svg {
+	fill: #0078c8;
+}
+
+.windows a {
+	color: #0078c8;
+}
+
+
+
+
+
+
+
+
+
+
+
+/* tablets Landscape ----------- */
+@media only screen 
+and (max-width : 1024px) {
+/* Styles */
+
+
+	#main_nav {
+		-webkit-transform: translateX(-268px);
+		   -moz-transform: translateX(-268px);
+		    -ms-transform: translateX(-268px);
+		     -o-transform: translateX(-268px);
+		        transform: translateX(-268px);
+	}
+
+	#main {
+		margin-left: 0;
+	}
+
+	
+
+	#footer {
+		margin: 0 35px;
+	}
+
+	#content {
+		top: 60px;
+	}
+
+
+	#header_logo {
+		margin-left: 70px;
+		margin-top: 55px;
+		width: 180px;
+	}
+
+	#header_title {
+		bottom: 15%;
+	}
+
+	#section_title {
+		margin-left: 12%;
+	}
+
+
+	.phone_ios {
+		height: 576px;
+		width: 306px;
+	}
+
+	.phone_android {
+		height: 594px;
+		width: 382px;
+	}
+
+	figure.phone {
+		width: 382px;
+	}
+
+
+
+}
+
+
+
+
+
+
+
+
+
+
+
+/* tablets ----------- */
+@media only screen 
+and (max-width : 900px) {
+/* Styles */
+  
+
+
+
+	
+
+
+
+}
+
+
+
+
+
+
+
+/* Smartphones (portrait) ----------- */
+@media only screen 
+and (max-width : 735px) {
+/* Styles */
+
+
+
+	footer {
+		height: 30px;
+		line-height: 1.8rem;
+		font-size: .7rem;
+		margin-left: 280px;	
+	}
+
+
+
+}
+
+
+
+
+
+
+/* Smartphones (portrait) ----------- */
+@media only screen 
+and (max-width : 450px) {
+/* Styles */
+
+	
+	
+
+	#header_logo {
+		display: none;
+	}
+
+	#header_title {
+		left: 80px;
+		bottom: 13%;
+		font-size: 1.5rem;
+	}
+	
+
+}
+
+
+
+
+
+
+
+/* Smartphones (portrait) ----------- */
+@media only screen 
+and (max-width : 320px) {
+/* Styles */
+
+	
+	.phone_ios {
+		height: 576px;
+		width: 306px;
+	}
+
+	 .phone_android {
+		height: 465px;
+		width: 302px;
+	}
+
+	figure.phone {
+		width: 306px;
+	}
+	
+	
+
+}
+

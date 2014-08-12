@@ -1,0 +1,143 @@
+<style>	
+
+
+table {
+	background: #f7fafd;
+}
+
+table th {
+	background: #D9E4EC;
+	color: #a7b6bf;
+	padding:8px 14px;
+	font-weight: normal;
+}
+
+table td {
+	padding:14px 14px 7px;
+}
+
+.sign_in_container, .confirmation_container {
+	position: relative;
+	height: 600px;
+}
+
+</style>
+<link rel="stylesheet" type="text/css" media="screen" href="login_with_concur/css/style.css" >
+
+
+<div class="container">
+<section>
+<h2>Log In With Concur Guidelines</h2>
+<p>We've created these guidelines so developers can benefit from the Concur identity and contribute to its strength. We believe that powerful marketing communications will help bring continued success for your applications.</p>
+
+<p>These guidelines are provided to help Concur partners correctly promote their affiliation with Concur. The guidelines include information on using the Log in with Concur badge and the Login page itself.</p>
+</section>
+
+<section>
+<h2>Log In With Concur Button</h2>
+<div class="clear_container">
+<div class="three_quarters float_left">
+<p>Use the Log in with Concur button whenever you link to the Concur login page. It should be included on all links to the Concur login page including both websites and mobile platforms.</p>
+<p>There are two varients of Log in buttons to choose from. There is a dark and light version with a small, medium, and large option of each. Also included in the Button Kit is an SVG version of both the light and dark version as well as the original Adobe Illustrator version.</p>
+</div>
+<div class="quarter float_left"><p><a href="login_with_concur/img/log_in_with_concur_graphics.zip" class="icon"><img src="img/icons_web/arrow_download.svg" height="25" width="25">Button Kit<br><span>643 KB (.zip)</span></a></p></div>
+</div>
+<table>
+    <thead>
+      <tr>
+        <th width="10%">Style</th>
+        <th>Dark Buttons</th>
+        <th>Light Buttons</th>
+      </tr>
+    </thead>
+
+    <tbody>
+      <tr>
+        <td>Small</td>
+        <td><img src="login_with_concur/img/log_in_button_dark_sm.png"  /></td>
+        <td><img src="login_with_concur/img/log_in_button_light_sm.png" /></td>
+      </tr>
+      <tr>
+        <td>Medium</td>
+        <td><img src="login_with_concur/img/log_in_button_dark_med.png"  /></td>
+        <td><img src="login_with_concur/img/log_in_button_light_med.png" /></td>
+      </tr>
+      <tr>
+        <td>Large</td>
+        <td><img src="login_with_concur/img/log_in_button_dark_lg.png"  /></td>
+        <td><img src="login_with_concur/img/log_in_button_light_lg.png" /></td>
+      </tr>
+       <tr>
+        <td>SVG</td>
+        <td><img src="login_with_concur/img/log_in_button_dark.svg"  height="75" /></td>
+        <td><img src="login_with_concur/img/log_in_button_light.svg" height="75" /></td>
+      </tr>
+
+    </tbody>
+  </table>
+
+
+</section>
+
+<section>
+<h2>Log In With Concur Log in form</h2>
+<div class="clear_container">
+<div class="three_quarters float_left">
+<p>The Concur Log in page is the screen your users will be presented with to actually log in with their Concur credentials. The user is required to provide their Concur Username or email and their Password or PIN in order to sign in.</p>
+<p>Once the credentials are verified and accepted, the user will be presented win a confirmation page. If the credentials are not accepted, an error should appear in-line.</p>
+</div>
+<div class="quarter float_left">
+<p>
+	<a href="login_with_concur/log_in_with_concur.zip" class="icon">
+	<img src="img/icons_web/arrow_download.svg" height="25" width="25">Get Code<br><span>12 KB (.zip)</span></a>
+</p>
+</div>
+</div>
+<h3>Web</h3>
+<div class="sign_in_container"></div>
+<!-- end cte_signin -->
+
+<h3>Mobile</h3>
+<img class="centered" src="login_with_concur/img/screen_ios_login.png">
+</section>
+
+
+
+<section>
+<h2>Log in Confirmation Page</h2>
+<div class="clear_container">
+<div class="three_quarters float_left">
+<p>After the user enters their credentials, they will be presented with a confirmation page specifying the permissions and access they will be allowing Concur.</p>
+<p>Once they accept the terms and conditions on this page, the user will be re-directed back to the specified page. If the user declines the terms, they will be sent back to the original sign-in page.</p></div>
+<div class="quarter float_left">
+<p>
+  <a href="login_with_concur/log_in_with_concur.zip" class="icon">
+  <img src="img/icons_web/arrow_download.svg" height="25" width="25">Get Code<br><span>12 KB (.zip)</span></a>
+</p>
+</div>
+</div>
+<h3>Web</h3>
+	<div class="confirmation_container"></div>
+<!-- end cte_signin -->
+<h3>Mobile</h3>
+<img class="centered" src="login_with_concur/img/screen_ios_confirm.png">
+</section>
+
+<!-- 
+<section>
+<h2>Best Practices</h2>
+<p></p>
+
+
+
+</section>
+ -->
+
+</div>
+<script>
+jQuery(document).ready(function($) {
+	$(".sign_in_container").load("login_with_concur/login.html");
+	$(".confirmation_container").load("login_with_concur/confirmation.html");
+});
+</script>
+
