@@ -99,7 +99,7 @@ p {
 
 .wrap {
 	width: 100%;
-	max-width: 1280px;
+	max-width: 1380px;
 	margin: 0 auto;
 }
 
@@ -126,6 +126,10 @@ p {
 	-webkit-flex: 1 0 auto;
 	flex: 1 0 auto;
 	width: 50%;
+}
+
+.flexContainer.half > div:nth-child(odd) {
+	padding-right: 2%;
 }
 
 .flexContainer.half figure {

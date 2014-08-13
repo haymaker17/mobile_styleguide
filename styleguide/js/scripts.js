@@ -163,10 +163,10 @@ function setHeader(inTitle,inCategory,topCategory) {
       category = topCategory;
    }
    else {
-      category = topCategory + "  >  " + inCategory;
+      category = topCategory + "  <span>&gt;</span>  " + inCategory;
    }
 
-   title = category + "  >  " + inTitle;
+   title = category + "  <span>&gt;</span>  " + inTitle;
 
    $("#header_title").html(title);
    $("#body").removeClass().addClass(topCategory);
