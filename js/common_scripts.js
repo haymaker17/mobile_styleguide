@@ -67,7 +67,6 @@ $(window).scroll(function () {
 function fixHeader() {
 
    var fromTop   = $("body").scrollTop();
-
    $('body').toggleClass("fixedHeader", (fromTop > 60));
    
 
@@ -80,7 +79,7 @@ function sortItems(inThis) {
    var thisOne = inThis;
 
    // fetch the id of the clicked item
-   var ourId = thisOne.data('id');
+   var ourId = thisOne.data('filter');
 
    // reset the active class on all the buttons
    $('.filterOptions li').removeClass('active');
@@ -122,7 +121,7 @@ function countItems() {
    });
 
    $('.filterOptions li').each(function(index, element){
-     var thisId  = $(element).data("id");
+     var thisId  = $(element).data("filter");
      var thisSpan = $(element).find("span");
 
      thisSpan.html(itemCount[thisId]);

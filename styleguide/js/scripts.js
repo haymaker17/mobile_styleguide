@@ -10,6 +10,7 @@ $(function() {
       var currentLink  = $(this);
       var thisParent   = currentLink.parent().parents("li");
       var thisCategory = thisParent.data("class");
+      var parentCategory = currentLink.parents(".accordion").children("li.active").data("class");
       var nextElement  = currentLink.next();
       var thisUrl      = $(this).attr("href");
       var thisTitle    = $(this).html();
@@ -29,7 +30,7 @@ $(function() {
 
          /* load the url ------------ */
          loadUrl(thisUrl);
-         setHeader(thisTitle,thisCategory);
+         setHeader(thisTitle,thisCategory,parentCategory);
 
          if ($("#hamburger .icon").is(":visible")) {
             toggleSidebar();
@@ -102,11 +103,13 @@ function init() {
 
    /* load the url ------------ */
    loadUrl(firstPage.attr("href"));
-   setHeader(firstPage.html(),"concur");
+   setHeader(firstPage.html(),"concur","concur");
 
    if ($("#hamburger .icon").is(":visible")) {
       toggleSidebar();
    }
+
+   $("#main_nav a:first-child").click();
 
 }
 
@@ -129,6 +132,20 @@ function loadUrl(inLink) {
       $('.filterOptions').on("click", "li", function() {
          sortItems($(this));
       });
+
+      // // init Isotope
+      // var $container = $('#isotope').isotope({
+      //   // options
+      // });
+
+
+      // // filter items on button click
+      // $('#filters').on( 'click', 'li', function() {
+      //   var filterValue = $(this).attr('data-filter');
+      //   $container.isotope({ filter: filterValue });
+      // });
+
+
       countItems();
       selectFirstItem();
    });
@@ -138,9 +155,21 @@ function loadUrl(inLink) {
 
 
 /* add the title to the header when a new page is loaded ------------ */
-function setHeader(inTitle,inCategory) {
-   $("#header_title").html(inTitle);
-   $("#body").removeClass().addClass(inCategory);
+function setHeader(inTitle,inCategory,topCategory) {
+
+   var title = inTitle;
+   var category = "";
+   if (inCategory == topCategory) {
+      category = topCategory;
+   }
+   else {
+      category = topCategory + "  >  " + inCategory;
+   }
+
+   title = category + "  >  " + inTitle;
+
+   $("#header_title").html(title);
+   $("#body").removeClass().addClass(topCategory);
 }  
 
 
