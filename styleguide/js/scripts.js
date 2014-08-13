@@ -34,6 +34,10 @@ $(function() {
          if ($("#hamburger .icon").is(":visible")) {
             toggleSidebar();
          }
+ 
+         //if a sub nav is showing, close it.
+         currentLink.parent("li").siblings('li').find('ul').slideUp();
+
       }
    })
 
@@ -47,18 +51,30 @@ $(function() {
 
 function accordionMenu(inLink) {
 
-   var currentLink  = inLink;
-   var checkElement = inLink.next();
+   var currentLink = inLink;
+   var nextItem    = inLink.next();
+   var linkParent  = inLink.parentsUntil(".accordion").length;
 
-   if (checkElement.is(':visible')) {
+   //check and see if this link is visible if it is, toggle it off
+   if (nextItem.is(':visible')) {
       //currentLink.closest('li').removeClass('active');
-      checkElement.slideUp(200);
+      nextItem.slideUp(200);
       changeActive();
    }
-   else if(!checkElement.is(':visible')) {
-      $("li.active ul").slideUp(200);
-      checkElement.slideDown(200);
-      changeActive();
+
+   //this link isn't visible so let's open it and close the others
+   else if(!nextItem.is(':visible')) {
+      //this is a sub menu so open it
+      if (linkParent > 1) {
+         nextItem.slideDown(200);
+      }
+
+      else {
+         $("li.active ul").slideUp(200);
+         nextItem.slideDown(200);
+         changeActive();
+      }
+      
    }
 
    function changeActive() {

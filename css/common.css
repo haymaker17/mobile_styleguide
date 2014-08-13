@@ -361,7 +361,7 @@ footer a {
   display: block;
   font-weight: 300;
   font-size: 1.5rem;
-  color: #222222;
+  color: #222;
 }
 .accordion ul {
   display: none;
@@ -379,7 +379,11 @@ li.active > a {
 	color: #d25533;
 }
 
-
+.accordion > li > ul > li > ul > li a {
+  display: block;
+  font-weight: 300;
+  color: #333;
+}
 
 
 
@@ -751,23 +755,23 @@ a.icon span {
 	box-shadow: inset 0 0 5px 2px rgba(0,0,0,.1);
 }
 
-#filterItemsContainer, ul.screens {
+.filterItemsContainer, ul.screens {
 	color: #222222;
 	list-style: none;
 	padding: 0;
 }
 
-#filterItemsContainer h4, ul.screens h4 {
+.filterItemsContainer h4, ul.screens h4 {
 	margin: .5rem 0 0 0;
 	font-size: 1.2rem;
 	font-weight: 200;
 }
 
-#filterItemsContainer p, ul.screens p {
+.filterItemsContainer p, ul.screens p {
 	margin-top: .3rem;
 }
 
-#filterItemsContainer li, ul.screens li {
+.filterItemsContainer li, ul.screens li {
 	float: left;
 	margin: 0 0 50px 0;
 	width: 33%;
@@ -778,22 +782,24 @@ a.icon span {
 	        transition: all .2s ease-in;
 }
 
-#filterItemsContainer li.hidden {
+.filterItemsContainer li.hidden {
 	display: none;
 }
 
-#filterItemsContainer img, ul.screens img {
+.filterItemsContainer img, ul.screens img {
 	width: 90%;
 	height: auto;
 	margin: 0;
 }
-#filterItemsContainer img, #filterItemsContainer p, #filterItemsContainer h4,
+.filterItemsContainer img, .filterItemsContainer p, .filterItemsContainer h4,
 ul.screens img, ul.screens p, ul.screens h4 {
 	margin-left: 5%;
 	margin-top: 5%;
 }
 
-
+.components .filterItemsContainer img {
+	border: 1px solid #a7b6bf;
+}
 
 
 

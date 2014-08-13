@@ -89,13 +89,13 @@ function sortItems(inThis) {
 
    if(ourId == 'all') {
       // show all our items
-      $('#filterItemsContainer').children('li').removeClass("hidden");
+      $('.filterItemsContainer').children('li').removeClass("hidden");
    }
    else {
       // hide all elements that don't share ourId
-      $('#filterItemsContainer').children('li:not(.' + ourId + ')').addClass('hidden');
+      $('.filterItemsContainer').children('li:not(.' + ourId + ')').addClass('hidden');
       // show all elements that do share ourId
-      $('#filterItemsContainer').children('li.' + ourId).removeClass("hidden");
+      $('.filterItemsContainer').children('li.' + ourId).removeClass("hidden");
    }
    return false;
 
@@ -114,7 +114,7 @@ function countItems() {
       states: 0
    };
 
-   $('#filterItemsContainer li').each(function(index, element){
+   $('.filterItemsContainer li').each(function(index, element){
      var thisClass  = $(element).attr("class");
      itemCount[thisClass] += 1;
      itemCount.all += 1;
