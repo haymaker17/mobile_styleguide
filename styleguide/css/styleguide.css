@@ -25,6 +25,7 @@ STYLEGUIDE CSS
 #header_title {
 	position: absolute;
 	bottom: 21%;
+	width: 100%;
 	left: 300px;
 	text-transform: uppercase;
 	font-weight: 300;
@@ -126,6 +127,12 @@ ul.nav {
 	height: 100%;
 }
 
+
+/* components ------------ */
+
+.components img {
+	border: 1px solid #a7b6bf;
+}
 
 
 

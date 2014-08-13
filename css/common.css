@@ -91,12 +91,6 @@ p {
 	position: relative;
 }
 
-.half {
-	width: 50%;
-	padding: 0 10px;
-	position: relative;
-}
-
 .three_quarters {
 	width: 75%;
 	padding: 0 60px 0 0;
@@ -116,7 +110,38 @@ p {
 	text-align: center;
 }
 
+.flexContainer {
+	display: -webkit-flex;
+	display: flex;
+	-webkit-flex-flow: row wrap;
+	flex-flow: row wrap;
+}
 
+.flexContainer > div {
+	-webkit-flex: 1 0 auto;
+	flex: 1 0 auto;
+}
+
+.flexContainer.half > div {
+	-webkit-flex: 1 0 auto;
+	flex: 1 0 auto;
+	width: 50%;
+}
+
+.flexContainer.half figure {
+	width: 48%;
+	float: left;
+	margin-right: 2%;
+}
+
+.flexContainer.half figure:nth-child(even) {
+	margin-right: 0;
+}
+
+.flexContainer.half figure img {
+	width: 100%;
+	height: auto;
+}
 
 
 
@@ -797,9 +822,6 @@ ul.screens img, ul.screens p, ul.screens h4 {
 	margin-top: 5%;
 }
 
-.components .filterItemsContainer img {
-	border: 1px solid #a7b6bf;
-}
 
 
 
