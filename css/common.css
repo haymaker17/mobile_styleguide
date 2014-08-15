@@ -803,6 +803,7 @@ a.icon span {
 
 .filterItemsContainer p, ul.screens p {
 	margin-top: .3rem;
+	margin-left: 5%;
 }
 
 .filterItemsContainer li, ul.screens li {
@@ -824,9 +825,10 @@ a.icon span {
 	width: 90%;
 	height: auto;
 	margin: 0;
+	border: 1px solid #a7b6bf;
 }
-.filterItemsContainer img, .filterItemsContainer p, .filterItemsContainer h4,
-ul.screens img, ul.screens p, ul.screens h4 {
+.filterItemsContainer img, .filterItemsContainer h4,
+ul.screens img, ul.screens h4 {
 	margin-left: 5%;
 	margin-top: 5%;
 }
