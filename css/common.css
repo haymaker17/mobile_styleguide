@@ -23,7 +23,12 @@ COMMON CSS
 
 
 
-
+::selection {
+  background: #1aa3ff; /* WebKit/Blink Browsers */
+}
+::-moz-selection {
+  background: #1aa3ff; /* Gecko Browsers */
+}
 
 
 body {
