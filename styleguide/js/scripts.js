@@ -133,20 +133,6 @@ function loadUrl(inLink) {
          sortItems($(this));
       });
 
-
-      // // init Isotope
-      // var $container = $('#isotope').isotope({
-      //   // options
-      // });
-
-
-      // // filter items on button click
-      // $('#filters').on( 'click', 'li', function() {
-      //   var filterValue = $(this).attr('data-filter');
-      //   $container.isotope({ filter: filterValue });
-      // });
-
-
       countItems();
       selectFirstItem();
    });

@@ -97,7 +97,6 @@ function sortItems(inThis) {
       $('.filterItemsContainer').children('li.' + ourId).removeClass("hidden");
    }
    return false;
-
 }
 
 function countItems() {
