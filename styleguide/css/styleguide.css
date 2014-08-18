@@ -252,6 +252,11 @@ figure.phone p {
 
 .color_swatches li:nth-of-type(1), .color_swatches li:nth-of-type(2) {
 	height: 325px;
+	-webkit-transition: height .25s ease-out;
+	   -moz-transition: height .25s ease-out;
+	    -ms-transition: height .25s ease-out;
+	     -o-transition: height .25s ease-out;
+	        transition: height .25s ease-out;
 }
 
 .concur_blue {
@@ -576,7 +581,20 @@ and (max-width : 900px) {
 /* Styles */
   
 
+.filterOptions li {
+	width: 24%;
+	border-right-width: 1px;
+	margin: 0 1% 1% 0;
+	border-radius: 2px;
+}
 
+.filterOptions li:first-child, .filterOptions li:last-child {
+	border-radius: 2px;
+}
+
+.flexContainer.half > div {
+	width: 100%;
+}
 
 	
 
@@ -630,6 +648,10 @@ and (max-width : 450px) {
 		bottom: 13%;
 		font-size: 1.5rem;
 	}
+
+	.color_swatches li:nth-of-type(1), .color_swatches li:nth-of-type(2) {
+		height: 200px;
+	}
 	
 
 }
@@ -660,6 +682,7 @@ and (max-width : 320px) {
 		width: 306px;
 	}
 	
+
 	
 
 }

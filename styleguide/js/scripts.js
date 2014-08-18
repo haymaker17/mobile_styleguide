@@ -92,6 +92,9 @@ function accordionMenu(inLink) {
 }
 
 
+
+
+
 /* start all the initial load stuff ------------ */
 function init() {
    var firstPage = $("#main_nav ul li ul a:first-child");
@@ -114,8 +117,15 @@ function init() {
 }
 
 
+
+
+
+
 //do the ajax load into the #main div
 function loadUrl(inLink) {
+
+   // change the url without a page refresh and add a history entry.
+   //history.pushState(null, null, inLink);
 
    $("#main").load(inLink,function(){
       
@@ -139,6 +149,14 @@ function loadUrl(inLink) {
 
 }
 
+
+
+// $(window).bind("popstate", function() {
+//     link = location.pathname.replace(/^.*[\\/]/, ""); // get filename only
+//     if (link == "") {link = "introduction.html"}
+//     loadUrl(link);
+// });
+
 /* Selecting Text ------------ */
 
 // selectText = function(){
@@ -158,6 +176,9 @@ function loadUrl(inLink) {
 //         selection.addRange(range);
 //     }
 // };
+
+
+
 
 
 

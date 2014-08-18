@@ -109,7 +109,7 @@ function countItems() {
       controls: 0,
       login: 0,
       temp_view: 0,
-      states: 0
+      status: 0
    };
 
    $('.filterItemsContainer li').each(function(index, element){
