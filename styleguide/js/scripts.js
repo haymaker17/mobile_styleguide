@@ -1,4 +1,4 @@
-$(function() { 
+   $(function() { 
 
    init();
 
@@ -139,9 +139,9 @@ function loadUrl(inLink) {
       fadeinElements();
 
       //the filtering mechanism
-      $('.filterOptions').on("click", "li", function() {
-         sortItems($(this));
-      });
+      // $('.filterOptions').on("click", "li", function() {
+      //    sortItems($(this));
+      // });
 
       countItems();
       selectFirstItem();

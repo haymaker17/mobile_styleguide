@@ -74,45 +74,45 @@ function fixHeader() {
 
 
 
-function sortItems(inThis) {
+// function sortItems(inThis) {
 
-   var thisOne = inThis;
+//    var thisOne = inThis;
 
-   // fetch the id of the clicked item
-   var ourId = thisOne.data('filter');
+//    // fetch the id of the clicked item
+//    var ourId = thisOne.data('filter');
 
-   // reset the active class on all the buttons
-   $('.filterOptions li').removeClass('active');
-   // update the active state on our clicked button
-   thisOne.addClass('active');
+//    // reset the active class on all the buttons
+//    $('.filterOptions li').removeClass('active');
+//    // update the active state on our clicked button
+//    thisOne.addClass('active');
 
-   if(ourId == 'all') {
-      // show all our items
-      $('.filterItemsContainer').children('li').removeClass("hidden");
-   }
-   else {
-      // hide all elements that don't share ourId
-      $('.filterItemsContainer').children('li:not(.' + ourId + ')').addClass('hidden');
-      // show all elements that do share ourId
-      $('.filterItemsContainer').children('li.' + ourId).removeClass("hidden");
-   }
-   return false;
-}
+//    if(ourId == '*') {
+//       // show all our items
+//       $('.filterItemsContainer').children('li').removeClass("hidden");
+//    }
+//    else {
+//       // hide all elements that don't share ourId
+//       $('.filterItemsContainer').children('li:not(.' + ourId + ')').addClass('hidden');
+//       // show all elements that do share ourId
+//       $('.filterItemsContainer').children('li.' + ourId).removeClass("hidden");
+//    }
+//    return false;
+// }
 
 function countItems() {
 
    var itemCount = {
       all: 0,
-      list: 0,
-      content: 0,
-      bars: 0,
-      controls: 0,
-      login: 0,
-      temp_view: 0,
-      status: 0
+      filter_list: 0,
+      filter_content: 0,
+      filter_bars: 0,
+      filter_controls: 0,
+      filter_login: 0,
+      filter_temp_view: 0,
+      filter_status: 0
    };
 
-   $('.filterItemsContainer li').each(function(index, element){
+   $('.filterItemsContainer > div').each(function(index, element){
      var thisClass  = $(element).attr("class");
      itemCount[thisClass] += 1;
      itemCount.all += 1;
@@ -120,7 +120,7 @@ function countItems() {
    });
 
    $('.filterOptions li').each(function(index, element){
-     var thisId  = $(element).data("filter");
+     var thisId   = $(element).data("filter");
      var thisSpan = $(element).find("span");
 
      thisSpan.html(itemCount[thisId]);

@@ -834,7 +834,11 @@ ul.screens img, ul.screens h4 {
 }
 
 
-
+#isotope > div {
+	width: 23%;
+	display: inline-block;
+	margin-right: 1%;
+}
 
 
 
