@@ -185,6 +185,7 @@ function loadUrl(inLink) {
 
 
 
+
 /* add the title to the header when a new page is loaded ------------ */
 function setHeader(inTitle,inCategory,topCategory) {
 
