@@ -796,13 +796,14 @@ a.icon span {
 }
 
 .filterItemsContainer h4, ul.screens h4 {
-	margin: .5rem 0 0 0;
-	font-size: 1.2rem;
+	margin: 0;
+	font-size: 1.1rem;
 	font-weight: 200;
+	margin-left: 5%;
 }
 
 .filterItemsContainer p, ul.screens p {
-	margin-top: .3rem;
+	margin-top: .2rem;
 	margin-left: 5%;
 }
 
@@ -827,17 +828,17 @@ a.icon span {
 	margin: 0;
 	border: 1px solid #a7b6bf;
 }
-.filterItemsContainer img, .filterItemsContainer h4,
-ul.screens img, ul.screens h4 {
+.filterItemsContainer img, ul.screens img {
 	margin-left: 5%;
-	margin-top: 5%;
+	
 }
 
 
 #isotope > div {
-	width: 23%;
+	width: 24%;
 	display: inline-block;
 	margin-right: 1%;
+	margin-bottom: 10px;
 }
 
 
