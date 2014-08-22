@@ -404,7 +404,8 @@ footer a {
   margin: 0;
   line-height: 2rem;
 }
-li.active > a {
+
+.accordion > li.active > a {
 	background: rgba(235,235,235,.5);
 }
 
