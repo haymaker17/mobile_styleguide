@@ -213,8 +213,24 @@ figure.phone p {
 	height: auto;
 }
 
+.downloads, .resources {
+	list-style: none;
+}
 
+.downloads li {
+	display: inline-block;
+	width: 22%;
+}
 
+.resources li {
+	clear: both;
+	margin-bottom: 10px;
+}
+
+.resources li > img {
+	float: left;
+	margin-right: 20px;
+}
 
 
 

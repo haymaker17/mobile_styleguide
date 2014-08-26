@@ -575,7 +575,7 @@ a.icon span {
 	top: auto;
 	bottom: 0;
 	padding: 1em;
-	height: 3.5em;
+	height: 50%;
 	background: rgba(255,255,255,.9);
 	color: #3c4a50;
 	border-top: 1px solid #e2e2e2;
@@ -656,14 +656,14 @@ a.icon span {
 }
 
 .img_block li:hover img {
-	-webkit-transform: scale(1.5);
-	        transform: scale(1.5);
+	/*-webkit-transform: scale(1.5);
+	        transform: scale(1.5);*/
 	        
 }
 
 .img_block.width_dependant li:hover img {
-	-webkit-transform: scale(1.2);
-	        transform: scale(1.2);
+	/*-webkit-transform: scale(1.2);
+	        transform: scale(1.2);*/
 	        
 }
 
@@ -672,17 +672,13 @@ a.icon span {
 	transition-delay: 0.05s;
 }
 
-.img_block li:hover div > a:nth-child(4) {
-	-webkit-transition-delay: 0.1s;
-	transition-delay: 0.1s;
-}
 
-.img_block li:hover div > a:nth-child(3) {
+.img_block li:hover div > a:nth-of-type(3) {
 	-webkit-transition-delay: 0.15s;
 	transition-delay: 0.15s;
 }
 
-.img_block li:hover div > a:nth-child(2) {
+.img_block li:hover div > a:nth-of-type(2) {
 	-webkit-transition-delay: 0.2s;
 	transition-delay: 0.2s;
 }
@@ -734,8 +730,14 @@ a.icon span {
 }
 
 
+.img_block.downloads li div {
+	height: 80%;
+}
 
-
+.img_block.downloads li h4 {
+	margin-botom: 10px;
+	line-height: 2.4rem;
+}
 
 
 
