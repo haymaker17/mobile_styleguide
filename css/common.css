@@ -397,6 +397,21 @@ footer a {
   font-size: 1.5rem;
   color: #222;
 }
+.accordion span {
+    display: block;
+    font-weight: 300;
+    color: #858585;
+    line-height: 2.8rem;
+    padding: 0 20px 0 30px;
+}
+.accordion span.top {
+    font-size: 1.5rem;
+}
+
+.accordion span:hover {
+    cursor: pointer;
+}
+
 .accordion ul {
   display: none;
   list-style: none;

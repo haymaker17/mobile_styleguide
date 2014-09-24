@@ -1,49 +1,106 @@
-   $(function() { 
+$(function() { 
 
-   init();
-
-
-   //when you click on a link in the sidebar nav, load the page in the "main" div
-   $("#main_nav").on("click","a",function(ev){
-      ev.preventDefault();
-
-      var currentLink  = $(this);
-      var thisParent   = currentLink.parent().parents("li");
-      var thisCategory = thisParent.data("class");
-      var parentCategory = currentLink.parents(".accordion").children("li.active").data("class");
-      var nextElement  = currentLink.next();
-      var thisUrl      = $(this).attr("href");
-      var thisTitle    = $(this).html();
-
-      /* lets see if this has children and needs to drop down first ------------ */
-      if(nextElement.is('ul')){
-         accordionMenu(currentLink);
-      }
-
-      /* this doesn't have a submenu so just get the link ------------ */
-      else {
-
-         /* colorize the nav ------------ */
-         $("#main_nav").find(".active").removeClass("active");
-         thisParent.addClass("active");
-         currentLink.addClass("active");
-
-         /* load the url ------------ */
-         loadUrl(thisUrl);
-         setHeader(thisTitle,thisCategory,parentCategory);
-
-         if ($("#hamburger .icon").is(":visible")) {
-            toggleSidebar();
-         }
- 
-         //if a sub nav is showing, close it.
-         currentLink.parent("li").siblings('li').find('ul').slideUp();
-
-      }
-   })
-
-
+    //init();
+    
   
+  // Keep a mapping of url-to-container for caching purposes.
+  var cache = {
+    // If url is '' (no fragment), display this div's content.
+    '': $('.bbq-default')
+  };
+    
+    var thisNavItem;
+  
+  // Bind an event to window.onhashchange that, when the history state changes,
+  // gets the url from the hash and displays either our cached content or fetches
+  // new content to be displayed.
+  $(window).bind( 'hashchange', function(e) {
+    
+    // Get the hash (fragment) as a string, with any leading # removed. Note that
+    // in jQuery 1.4, you should use e.fragment instead of $.param.fragment().
+    var url            = $.param.fragment();
+      if (url === "") {url = "pages/introduction.html?&cat=concur&parent=concur&title=Introduction"};
+    var myObj          = $.deparam(url);
+    var currentHash    = url && $( 'a[href="#' + url + '"]' );
+    var thisParent     = currentHash.parent().parents("li");
+    var thisCategory   = myObj.parent;
+    var thisTitle      = myObj.title;
+    var parentCategory = myObj.cat;
+    
+    // Remove .bbq-current class from any previously "current" link(s).
+    $( 'a.bbq-current' ).removeClass( 'bbq-current' );
+    
+    // Hide any visible ajax content.
+    $( '#main' ).children( ':visible' ).hide();
+    
+    // Add .bbq-current class to "current" nav link(s), only if url isn't empty.
+    url && $( 'a[href="#' + url + '"]' ).addClass( 'bbq-current' );
+      
+      
+    //click on the accordion menu to open it to the right place
+      if (thisCategory === parentCategory) {
+          thisNavItem = $(".accordion").find("[data-class='" + thisCategory + "']").find("span:first");
+      }
+      else {
+          
+          thisNavItem = $(".accordion").find("[data-class='" + parentCategory + "']").find("[data-class='" + thisCategory + "']").find("span:first");
+      }
+    
+     
+    /* colorize the nav ------------ */
+    $("#main_nav").find(".active").removeClass("active");
+    thisParent.addClass("active");
+    currentHash.addClass("active");
+
+    /* Set the Header ------------ */
+    setHeader(thisTitle,thisCategory,parentCategory);
+    
+    if ( cache[ url ] ) {
+      // Since the element is already in the cache, it doesn't need to be
+      // created, so instead of creating it again, let's just show it!
+      cache[ url ].show();
+      
+    } else {
+      // Show "loading" content while AJAX content loads.
+      $( '.distractor' ).show();
+      
+      // Create container for this url's content and store a reference to it in
+      // the cache.
+      cache[ url ] = $( '<div class="bbq-item"/>' )
+        
+        // Append the content container to the parent container.
+        .appendTo( '#main' )
+        
+        // Load external content via AJAX. Note that in order to keep this
+        // example streamlined, only the content in .infobox is shown. You'll
+        // want to change this based on your needs.
+        .load( url, function(){
+          // Content loaded, hide "loading" content.
+          $( '.distractor' ).hide();
+          //fade in the container
+      $(".container").addClass("fadeIn");
+
+      //fade in any elements that have the fadeInElemnt class
+      fadeinElements();
+        });
+    }
+  })
+  
+  // Since the event is only triggered when the hash changes, we need to trigger
+  // the event now, to handle the hash the page may have loaded with.
+  $(window).trigger( 'hashchange' );
+    accordionMenu(thisNavItem);
+     
+  
+    
+    
+
+    
+    $(".accordion span").on("click",function(){
+        accordionMenu($(this));
+    })
+    
+    
 
 
 
@@ -67,6 +124,7 @@ function accordionMenu(inLink) {
    else if(!nextItem.is(':visible')) {
       //this is a sub menu so open it
       if (linkParent > 1) {
+         nextItem.parents("ul").css("display","block");
          nextItem.slideDown(200);
       }
 
@@ -105,82 +163,16 @@ function init() {
    firstItem.find("ul > li:first-child a").addClass("active");
 
    /* load the url ------------ */
-   loadUrl(firstPage.attr("href"));
+   //loadUrl(firstPage.attr("href"));
    setHeader(firstPage.html(),"concur","concur");
 
    if ($("#hamburger .icon").is(":visible")) {
       toggleSidebar();
    }
 
-   $("#main_nav a:first-child").click();
+   //$("#main_nav a:first-child").click();
 
 }
-
-
-
-
-
-
-//do the ajax load into the #main div
-function loadUrl(inLink) {
-
-   // change the url without a page refresh and add a history entry.
-   //history.pushState(null, null, inLink);
-
-   $("#main").load(inLink,function(){
-      
-      //make sure the window always starts at the top
-      $(window).scrollTop(0);
-
-      //fade in the container
-      $(".container").addClass("fadeIn");
-
-      //fade in any elements that have the fadeInElemnt class
-      fadeinElements();
-
-      //the filtering mechanism
-      // $('.filterOptions').on("click", "li", function() {
-      //    sortItems($(this));
-      // });
-
-      countItems();
-      selectFirstItem();
-   });
-
-}
-
-
-
-// $(window).bind("popstate", function() {
-//     link = location.pathname.replace(/^.*[\\/]/, ""); // get filename only
-//     if (link == "") {link = "introduction.html"}
-//     loadUrl(link);
-// });
-
-/* Selecting Text ------------ */
-
-// selectText = function(){
-//     var doc = document
-//         , element = this[0]
-//         , range, selection
-//     ;
-//     if (doc.body.createTextRange) {
-//         range = document.body.createTextRange();
-//         range.moveToElementText(element);
-//         range.select();
-//     } else if (window.getSelection) {
-//         selection = window.getSelection();        
-//         range = document.createRange();
-//         range.selectNodeContents(element);
-//         selection.removeAllRanges();
-//         selection.addRange(range);
-//     }
-// };
-
-
-
-
-
 
 
 
@@ -203,5 +195,4 @@ function setHeader(inTitle,inCategory,topCategory) {
    $("#header_title").html(title);
    $("#body").removeClass().addClass(topCategory);
 }  
-
 
