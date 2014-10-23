@@ -312,7 +312,9 @@ figure.phone p {
 	background: #f7fafd;
 }
 
-
+.red {
+    background: #d65b42;
+}
 
 .orange {
 	background: #d25533;

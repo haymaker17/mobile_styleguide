@@ -21,20 +21,20 @@ $(function() {
     var url            = $.param.fragment();
       if (url === "") {url = "pages/introduction.html?&cat=concur&parent=concur&title=Introduction"};
     var myObj          = $.deparam(url);
-    var currentHash    = url && $( 'a[href="#' + url + '"]' );
+    var currentHash    = url && $('a[href="#' + url + '"]');
     var thisParent     = currentHash.parent().parents("li");
     var thisCategory   = myObj.parent;
     var thisTitle      = myObj.title;
     var parentCategory = myObj.cat;
     
     // Remove .bbq-current class from any previously "current" link(s).
-    $( 'a.bbq-current' ).removeClass( 'bbq-current' );
+    $('a.bbq-current').removeClass('bbq-current');
     
     // Hide any visible ajax content.
-    $( '#main' ).children( ':visible' ).hide();
+    $('#main').children(':visible').hide();
     
     // Add .bbq-current class to "current" nav link(s), only if url isn't empty.
-    url && $( 'a[href="#' + url + '"]' ).addClass( 'bbq-current' );
+    url && $('a[href="#' + url + '"]').addClass('bbq-current');
       
       
     //click on the accordion menu to open it to the right place
@@ -62,14 +62,14 @@ $(function() {
       
     } else {
       // Show "loading" content while AJAX content loads.
-      $( '.distractor' ).show();
+      $('.distractor').show();
       
       // Create container for this url's content and store a reference to it in
       // the cache.
-      cache[ url ] = $( '<div class="bbq-item"/>' )
+      cache[ url ] = $('<div class="bbq-item"/>')
         
         // Append the content container to the parent container.
-        .appendTo( '#main' )
+        .appendTo('#main')
         
         // Load external content via AJAX. Note that in order to keep this
         // example streamlined, only the content in .infobox is shown. You'll
@@ -88,7 +88,7 @@ $(function() {
   
   // Since the event is only triggered when the hash changes, we need to trigger
   // the event now, to handle the hash the page may have loaded with.
-  $(window).trigger( 'hashchange' );
+  $(window).trigger('hashchange');
     accordionMenu(thisNavItem);
      
   
