@@ -134,7 +134,7 @@ ul.nav {
 
 /* components ------------ */
 
-.components img {
+.components img, .components video {
 	border: 1px solid #a7b6bf;
 }
 

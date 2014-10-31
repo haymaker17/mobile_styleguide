@@ -1,4 +1,4 @@
-/* CONCUR MOBILE LABS - 
+.flexContainer.half figure img/* CONCUR MOBILE LABS - 
 
 COMMON CSS 
 
@@ -147,7 +147,7 @@ p {
 	margin-right: 0;
 }
 
-.flexContainer.half figure img {
+.flexContainer.half figure img, .flexContainer.half figure video {
 	width: 100%;
 	height: auto;
 }
