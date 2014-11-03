@@ -115,12 +115,12 @@
 	<p>Controls</p>
 </div>
 <div class="filter_temp_view">
-	<img src="img/ios/components/content_views/overlay_01.png" alt="screen 1" width="338" height="599" />
+	<img src="img/ios/components/overlays/overlay_01.png" alt="screen 1" width="338" height="599" />
 	<h4>Preferred Overlay</h4>
 	<p>Temp Views</p>
 </div>
 <div class="filter_temp_view">
-	<img src="img/ios/components/content_views/overlay_02.png" alt="screen 1" width="338" height="599" />
+	<img src="img/ios/components/overlays/overlay_02.png" alt="screen 1" width="338" height="599" />
 	<h4>Hotel Rate Detail Overlay</h4>
 	<p>Temp Views</p>
 </div>
@@ -182,10 +182,12 @@
 <script>
 
 jQuery(document).ready(function($) {
-	// init Isotope
-      var $container = $('#isotope').isotope({
-        // options
-      });
+	// initialize Isotope after all images have loaded
+	var $container = $('#isotope').imagesLoaded( function() {
+	  $container.isotope({
+	    // options
+	  });
+	});
 
 
       // filter items on button click
