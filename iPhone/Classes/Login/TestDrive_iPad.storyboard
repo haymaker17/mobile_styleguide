@@ -1,0 +1,783 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="6245" systemVersion="13F34" targetRuntime="iOS.CocoaTouch.iPad" propertyAccessControl="none" useAutolayout="YES" initialViewController="MGn-K6-NOv">
+    <dependencies>
+        <deployment defaultVersion="1536" identifier="iOS"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="6238"/>
+    </dependencies>
+    <scenes>
+        <!--Universal TourVC ipad-->
+        <scene sceneID="0Pp-vv-SQH">
+            <objects>
+                <viewController automaticallyAdjustsScrollViewInsets="NO" modalTransitionStyle="crossDissolve" id="ZWY-lO-ujL" customClass="UniversalTourVC_ipad" sceneMemberID="viewController">
+                    <layoutGuides>
+                        <viewControllerLayoutGuide type="top" id="0Rl-VP-sdG"/>
+                        <viewControllerLayoutGuide type="bottom" id="sQt-uX-u8h"/>
+                    </layoutGuides>
+                    <view key="view" contentMode="scaleToFill" id="SMc-Bz-SMd">
+                        <rect key="frame" x="0.0" y="64" width="768" height="960"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="MVy-Ik-GYM" userLabel="LogoArea">
+                                <rect key="frame" x="120" y="100" width="480" height="240"/>
+                                <subviews>
+                                    <imageView userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="CConcur" translatesAutoresizingMaskIntoConstraints="NO" id="0Db-y5-Q0o">
+                                        <rect key="frame" x="0.0" y="0.0" width="480" height="141"/>
+                                        <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
+                                        <constraints>
+                                            <constraint firstAttribute="height" constant="141" id="cUW-RE-OhA"/>
+                                        </constraints>
+                                    </imageView>
+                                    <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" usesAttributedText="YES" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" preferredMaxLayoutWidth="480" translatesAutoresizingMaskIntoConstraints="NO" id="mB1-Ft-OVJ">
+                                        <rect key="frame" x="0.0" y="149" width="480" height="81"/>
+                                        <attributedString key="attributedText">
+                                            <fragment content="Concur Mobile">
+                                                <attributes>
+                                                    <color key="NSColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
+                                                    <font key="NSFont" size="25" name="HelveticaNeue"/>
+                                                    <paragraphStyle key="NSParagraphStyle" alignment="left" lineBreakMode="wordWrapping" baseWritingDirection="natural"/>
+                                                </attributes>
+                                            </fragment>
+                                            <fragment content=" ">
+                                                <attributes>
+                                                    <color key="NSColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
+                                                    <font key="NSFont" size="25" name="HelveticaNeue"/>
+                                                    <paragraphStyle key="NSParagraphStyle" alignment="left" lineBreakMode="wordWrapping" baseWritingDirection="natural"/>
+                                                </attributes>
+                                            </fragment>
+                                            <fragment content="makes it easy to plan your business trips, capture expenses and get reimbursed.">
+                                                <attributes>
+                                                    <color key="NSColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
+                                                    <font key="NSFont" size="22" name="HelveticaNeue"/>
+                                                    <paragraphStyle key="NSParagraphStyle" alignment="left" lineBreakMode="wordWrapping" baseWritingDirection="natural"/>
+                                                </attributes>
+                                            </fragment>
+                                        </attributedString>
+                                        <nil key="highlightedColor"/>
+                                    </label>
+                                </subviews>
+                                <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
+                                <constraints>
+                                    <constraint firstItem="mB1-Ft-OVJ" firstAttribute="width" secondItem="0Db-y5-Q0o" secondAttribute="width" id="A8m-cT-7ik"/>
+                                    <constraint firstAttribute="centerX" secondItem="mB1-Ft-OVJ" secondAttribute="centerX" id="HbQ-vB-Y9a"/>
+                                    <constraint firstAttribute="width" constant="480" id="Ka4-R9-oOC"/>
+                                    <constraint firstAttribute="centerX" secondItem="0Db-y5-Q0o" secondAttribute="centerX" id="aVP-4k-Zoz"/>
+                                    <constraint firstItem="0Db-y5-Q0o" firstAttribute="top" secondItem="MVy-Ik-GYM" secondAttribute="top" id="b2T-gs-jhE"/>
+                                    <constraint firstAttribute="height" constant="240" id="iYM-Vd-ZaH"/>
+                                    <constraint firstItem="mB1-Ft-OVJ" firstAttribute="top" secondItem="0Db-y5-Q0o" secondAttribute="bottom" constant="8" symbolic="YES" id="llE-C7-WPZ"/>
+                                    <constraint firstAttribute="width" secondItem="0Db-y5-Q0o" secondAttribute="width" id="v7a-RW-k2S"/>
+                                </constraints>
+                            </view>
+                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="bDV-Nk-CH9" userLabel="FormArea">
+                                <rect key="frame" x="120" y="400" width="480" height="512"/>
+                                <subviews>
+                                    <imageView userInteractionEnabled="NO" contentMode="center" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" image="icon_flight.png" translatesAutoresizingMaskIntoConstraints="NO" id="hgp-4E-WdV">
+                                        <rect key="frame" x="0.0" y="0.0" width="101" height="100"/>
+                                    </imageView>
+                                    <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Book your business trip on the go" lineBreakMode="tailTruncation" numberOfLines="2" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" preferredMaxLayoutWidth="346" translatesAutoresizingMaskIntoConstraints="NO" id="fGS-hq-tMI">
+                                        <rect key="frame" x="141" y="0.0" width="346" height="71"/>
+                                        <fontDescription key="fontDescription" name="HelveticaNeue" family="Helvetica Neue" pointSize="20"/>
+                                        <color key="textColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                        <nil key="highlightedColor"/>
+                                    </label>
+                                    <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" image="separator.png" translatesAutoresizingMaskIntoConstraints="NO" id="uK4-ui-XOK">
+                                        <rect key="frame" x="0.0" y="113" width="483" height="11"/>
+                                    </imageView>
+                                    <imageView userInteractionEnabled="NO" contentMode="center" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" image="icon_tdcamera.png" translatesAutoresizingMaskIntoConstraints="NO" id="KH7-YP-2q5">
+                                        <rect key="frame" x="1" y="137" width="100" height="100"/>
+                                    </imageView>
+                                    <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Snap a picture of your expense receipt" lineBreakMode="tailTruncation" numberOfLines="2" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" preferredMaxLayoutWidth="346" translatesAutoresizingMaskIntoConstraints="NO" id="JQk-o7-VPc">
+                                        <rect key="frame" x="141" y="147" width="346" height="79"/>
+                                        <fontDescription key="fontDescription" name="HelveticaNeue" family="Helvetica Neue" pointSize="20"/>
+                                        <color key="textColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                        <nil key="highlightedColor"/>
+                                    </label>
+                                    <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" image="separator.png" translatesAutoresizingMaskIntoConstraints="NO" id="Enm-3V-6hv">
+                                        <rect key="frame" x="1" y="250" width="483" height="11"/>
+                                    </imageView>
+                                    <imageView userInteractionEnabled="NO" contentMode="center" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" image="icon_expense.png" translatesAutoresizingMaskIntoConstraints="NO" id="Ua3-uf-Rui">
+                                        <rect key="frame" x="1" y="273" width="100" height="100"/>
+                                    </imageView>
+                                    <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Submit your expenses and get reimbursed" lineBreakMode="tailTruncation" numberOfLines="2" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" preferredMaxLayoutWidth="341" translatesAutoresizingMaskIntoConstraints="NO" id="5h6-N1-bWJ">
+                                        <rect key="frame" x="139" y="276" width="341" height="97"/>
+                                        <fontDescription key="fontDescription" name="HelveticaNeue" family="Helvetica Neue" pointSize="20"/>
+                                        <color key="textColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                        <nil key="highlightedColor"/>
+                                    </label>
+                                    <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" image="separator.png" translatesAutoresizingMaskIntoConstraints="NO" id="dPM-xW-7T3">
+                                        <rect key="frame" x="-3" y="387" width="483" height="11"/>
+                                    </imageView>
+                                    <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" usesAttributedText="YES" lineBreakMode="tailTruncation" numberOfLines="2" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" preferredMaxLayoutWidth="480" translatesAutoresizingMaskIntoConstraints="NO" id="Kdc-MC-aPa">
+                                        <rect key="frame" x="0.0" y="450" width="480" height="50"/>
+                                        <attributedString key="attributedText">
+                                            <fragment content="Features depend on your company configuration.">
+                                                <attributes>
+                                                    <color key="NSColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                                    <font key="NSFont" size="18" name="HelveticaNeue"/>
+                                                    <paragraphStyle key="NSParagraphStyle" alignment="center" lineBreakMode="wordWrapping" baseWritingDirection="natural"/>
+                                                </attributes>
+                                            </fragment>
+                                        </attributedString>
+                                        <nil key="highlightedColor"/>
+                                    </label>
+                                </subviews>
+                                <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
+                                <constraints>
+                                    <constraint firstAttribute="width" constant="480" id="fAE-du-LyP"/>
+                                </constraints>
+                            </view>
+                        </subviews>
+                        <color key="backgroundColor" red="0.0" green="0.47099998589999997" blue="0.78799998760000001" alpha="1" colorSpace="calibratedRGB"/>
+                        <accessibility key="accessibilityConfiguration">
+                            <accessibilityTraits key="traits" none="YES" image="YES" staticText="YES" notEnabled="YES"/>
+                        </accessibility>
+                        <constraints>
+                            <constraint firstItem="bDV-Nk-CH9" firstAttribute="top" secondItem="0Rl-VP-sdG" secondAttribute="bottom" constant="400" id="6am-7l-UsJ"/>
+                            <constraint firstItem="bDV-Nk-CH9" firstAttribute="leading" secondItem="SMc-Bz-SMd" secondAttribute="leading" constant="120" id="O18-nP-r1X"/>
+                            <constraint firstItem="MVy-Ik-GYM" firstAttribute="leading" secondItem="SMc-Bz-SMd" secondAttribute="leading" constant="120" id="QM1-MT-WXC"/>
+                            <constraint firstItem="sQt-uX-u8h" firstAttribute="top" secondItem="bDV-Nk-CH9" secondAttribute="bottom" constant="48" id="X7j-GY-ISO"/>
+                            <constraint firstItem="MVy-Ik-GYM" firstAttribute="top" secondItem="0Rl-VP-sdG" secondAttribute="bottom" constant="100" id="t2z-xU-9o6"/>
+                        </constraints>
+                    </view>
+                    <extendedEdge key="edgesForExtendedLayout" bottom="YES"/>
+                    <navigationItem key="navigationItem" id="bMB-gN-Egl">
+                        <barButtonItem key="rightBarButtonItem" title="Next" id="M8q-gW-SBT">
+                            <connections>
+                                <segue destination="kL9-Fm-OGi" kind="push" identifier="ShowSignIn" id="WDK-po-Hkf"/>
+                            </connections>
+                        </barButtonItem>
+                    </navigationItem>
+                    <simulatedNavigationBarMetrics key="simulatedTopBarMetrics" prompted="NO"/>
+                    <simulatedOrientationMetrics key="simulatedOrientationMetrics"/>
+                    <connections>
+                        <outlet property="coFormAreaLea" destination="O18-nP-r1X" id="MHM-tR-fJh"/>
+                        <outlet property="coFormAreaTop" destination="6am-7l-UsJ" id="Lqk-So-2wm"/>
+                        <outlet property="coLogoAreaLea" destination="QM1-MT-WXC" id="sS3-5y-tWo"/>
+                        <outlet property="coLogoAreaTop" destination="t2z-xU-9o6" id="Qi7-Bt-hD4"/>
+                        <outlet property="coLogoAreaWidth" destination="Ka4-R9-oOC" id="eoz-n9-AeO"/>
+                        <outlet property="nextbarBtn" destination="M8q-gW-SBT" id="rqp-oT-tEC"/>
+                        <segue destination="kL9-Fm-OGi" kind="push" identifier="ShowSignIn" id="qP2-JT-VnS"/>
+                    </connections>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="Xnx-Mz-X0p" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="1190" y="-810"/>
+        </scene>
+        <!--Test Drive Tour ipad-->
+        <scene sceneID="ym1-4n-omX">
+            <objects>
+                <viewController automaticallyAdjustsScrollViewInsets="NO" modalTransitionStyle="crossDissolve" id="48a-uV-kN9" customClass="TestDriveTour_ipad" sceneMemberID="viewController">
+                    <layoutGuides>
+                        <viewControllerLayoutGuide type="top" id="NjG-va-dsC"/>
+                        <viewControllerLayoutGuide type="bottom" id="ghs-mc-rG6"/>
+                    </layoutGuides>
+                    <view key="view" contentMode="scaleToFill" id="Cjv-Gh-aXL">
+                        <rect key="frame" x="0.0" y="64" width="768" height="960"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="fGE-P4-CMe" userLabel="LogoArea">
+                                <rect key="frame" x="120" y="62" width="480" height="290"/>
+                                <subviews>
+                                    <imageView userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="testDrive_tour1" translatesAutoresizingMaskIntoConstraints="NO" id="pzW-B6-tUm">
+                                        <rect key="frame" x="0.0" y="0.0" width="480" height="343"/>
+                                        <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
+                                    </imageView>
+                                </subviews>
+                                <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
+                                <constraints>
+                                    <constraint firstAttribute="width" secondItem="pzW-B6-tUm" secondAttribute="width" id="KGY-Sy-tqB"/>
+                                    <constraint firstAttribute="width" constant="480" id="RJ9-1E-0Af"/>
+                                    <constraint firstAttribute="centerX" secondItem="pzW-B6-tUm" secondAttribute="centerX" id="ZUb-K9-4Bl"/>
+                                    <constraint firstItem="pzW-B6-tUm" firstAttribute="top" secondItem="fGE-P4-CMe" secondAttribute="top" id="f9v-UE-xjL"/>
+                                    <constraint firstAttribute="height" constant="290" id="xcS-RU-HjV"/>
+                                </constraints>
+                            </view>
+                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="mKq-Hn-MH5" userLabel="FormArea">
+                                <rect key="frame" x="120" y="380" width="480" height="495"/>
+                                <subviews>
+                                    <imageView userInteractionEnabled="NO" contentMode="center" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" image="icon_check_mark" translatesAutoresizingMaskIntoConstraints="NO" id="kDa-II-sxS">
+                                        <rect key="frame" x="2" y="112" width="30" height="30"/>
+                                    </imageView>
+                                    <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Cut expense reports down from hours to minutes." lineBreakMode="tailTruncation" numberOfLines="3" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" preferredMaxLayoutWidth="340" translatesAutoresizingMaskIntoConstraints="NO" id="Jb8-YE-DfR">
+                                        <rect key="frame" x="40" y="112" width="340" height="45"/>
+                                        <fontDescription key="fontDescription" name="HelveticaNeue-Light" family="Helvetica Neue" pointSize="18"/>
+                                        <color key="textColor" red="0.66200000047683716" green="0.87000000476837158" blue="1" alpha="1" colorSpace="calibratedRGB"/>
+                                        <nil key="highlightedColor"/>
+                                    </label>
+                                    <imageView userInteractionEnabled="NO" contentMode="center" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" image="icon_check_mark" translatesAutoresizingMaskIntoConstraints="NO" id="kaY-rg-9hR">
+                                        <rect key="frame" x="2" y="178" width="30" height="30"/>
+                                    </imageView>
+                                    <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Get crystal-clear visibility into your expenses." lineBreakMode="tailTruncation" numberOfLines="2" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" preferredMaxLayoutWidth="345" translatesAutoresizingMaskIntoConstraints="NO" id="Dlh-Ou-eKx">
+                                        <rect key="frame" x="40" y="178" width="345" height="45"/>
+                                        <fontDescription key="fontDescription" name="HelveticaNeue-Light" family="Helvetica Neue" pointSize="18"/>
+                                        <color key="textColor" red="0.66200000047683716" green="0.87000000476837158" blue="1" alpha="1" colorSpace="calibratedRGB"/>
+                                        <nil key="highlightedColor"/>
+                                    </label>
+                                    <imageView userInteractionEnabled="NO" contentMode="center" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" image="icon_check_mark" translatesAutoresizingMaskIntoConstraints="NO" id="d4R-qX-0Wv">
+                                        <rect key="frame" x="2" y="244" width="30" height="30"/>
+                                    </imageView>
+                                    <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Increase productivity and overall morale." lineBreakMode="tailTruncation" numberOfLines="2" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" preferredMaxLayoutWidth="345" translatesAutoresizingMaskIntoConstraints="NO" id="8Dd-z1-hgg">
+                                        <rect key="frame" x="40" y="244" width="345" height="30"/>
+                                        <fontDescription key="fontDescription" name="HelveticaNeue-Light" family="Helvetica Neue" pointSize="18"/>
+                                        <color key="textColor" red="0.66200000049999996" green="0.87000000479999995" blue="1" alpha="1" colorSpace="calibratedRGB"/>
+                                        <nil key="highlightedColor"/>
+                                    </label>
+                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" hasAttributedTitle="YES" translatesAutoresizingMaskIntoConstraints="NO" id="2bh-Tw-c2d">
+                                        <rect key="frame" x="47" y="370" width="370" height="50"/>
+                                        <color key="backgroundColor" red="0.0" green="0.66299998760000001" blue="0.94900000100000004" alpha="1" colorSpace="calibratedRGB"/>
+                                        <constraints>
+                                            <constraint firstAttribute="width" constant="370" id="TZC-gg-q5B"/>
+                                            <constraint firstAttribute="height" constant="50" id="Z5A-eK-7aP"/>
+                                        </constraints>
+                                        <state key="normal">
+                                            <attributedString key="attributedTitle">
+                                                <fragment content="Next">
+                                                    <attributes>
+                                                        <color key="NSColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
+                                                        <font key="NSFont" size="18" name="HelveticaNeue-Medium"/>
+                                                        <paragraphStyle key="NSParagraphStyle" alignment="center" lineBreakMode="wordWrapping" baseWritingDirection="natural"/>
+                                                    </attributes>
+                                                </fragment>
+                                            </attributedString>
+                                        </state>
+                                        <userDefinedRuntimeAttributes>
+                                            <userDefinedRuntimeAttribute type="number" keyPath="cornerRadius">
+                                                <integer key="value" value="5"/>
+                                            </userDefinedRuntimeAttribute>
+                                        </userDefinedRuntimeAttributes>
+                                        <connections>
+                                            <segue destination="UUA-34-gxg" kind="push" identifier="TestDriveTour2" id="aHf-nQ-2uq"/>
+                                        </connections>
+                                    </button>
+                                    <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Welcome to Test Drive." lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="0mS-5P-1lx">
+                                        <rect key="frame" x="5" y="10" width="340" height="50"/>
+                                        <fontDescription key="fontDescription" name="HelveticaNeue-Light" family="Helvetica Neue" pointSize="25"/>
+                                        <color key="textColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="calibratedRGB"/>
+                                        <nil key="highlightedColor"/>
+                                    </label>
+                                    <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="With Concur you can:" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="G3n-Pr-YCk">
+                                        <rect key="frame" x="5" y="72" width="300" height="20"/>
+                                        <fontDescription key="fontDescription" name="HelveticaNeue-Light" family="Helvetica Neue" pointSize="18"/>
+                                        <color key="textColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="calibratedRGB"/>
+                                        <nil key="highlightedColor"/>
+                                    </label>
+                                </subviews>
+                                <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
+                                <constraints>
+                                    <constraint firstAttribute="centerX" secondItem="2bh-Tw-c2d" secondAttribute="centerX" constant="8" id="1ai-9x-7t0"/>
+                                    <constraint firstAttribute="bottom" secondItem="2bh-Tw-c2d" secondAttribute="bottom" constant="75" id="D2M-UL-wQY"/>
+                                    <constraint firstAttribute="width" constant="480" id="cPt-v1-O2Y"/>
+                                </constraints>
+                            </view>
+                        </subviews>
+                        <color key="backgroundColor" red="0.0" green="0.47099998589999997" blue="0.78799998760000001" alpha="1" colorSpace="calibratedRGB"/>
+                        <accessibility key="accessibilityConfiguration">
+                            <accessibilityTraits key="traits" none="YES" image="YES" staticText="YES" notEnabled="YES"/>
+                        </accessibility>
+                        <constraints>
+                            <constraint firstItem="fGE-P4-CMe" firstAttribute="top" secondItem="NjG-va-dsC" secondAttribute="bottom" constant="62" id="1Us-7N-juu"/>
+                            <constraint firstItem="mKq-Hn-MH5" firstAttribute="top" secondItem="NjG-va-dsC" secondAttribute="bottom" constant="380" id="5EP-xQ-gzW"/>
+                            <constraint firstItem="mKq-Hn-MH5" firstAttribute="leading" secondItem="Cjv-Gh-aXL" secondAttribute="leading" constant="120" id="Blp-Ae-pdG"/>
+                            <constraint firstItem="ghs-mc-rG6" firstAttribute="top" secondItem="mKq-Hn-MH5" secondAttribute="bottom" constant="85" id="fqf-0o-IRZ"/>
+                            <constraint firstItem="fGE-P4-CMe" firstAttribute="leading" secondItem="Cjv-Gh-aXL" secondAttribute="leading" constant="120" id="iLt-aE-f9R"/>
+                        </constraints>
+                    </view>
+                    <extendedEdge key="edgesForExtendedLayout" bottom="YES"/>
+                    <navigationItem key="navigationItem" id="sfJ-cA-kdF">
+                        <barButtonItem key="rightBarButtonItem" enabled="NO" id="saq-1q-6fr"/>
+                    </navigationItem>
+                    <simulatedNavigationBarMetrics key="simulatedTopBarMetrics" prompted="NO"/>
+                    <simulatedOrientationMetrics key="simulatedOrientationMetrics"/>
+                    <connections>
+                        <outlet property="coFormAreaLea" destination="Blp-Ae-pdG" id="hyh-WJ-WgC"/>
+                        <outlet property="coFormAreaTop" destination="5EP-xQ-gzW" id="5vV-r2-c8I"/>
+                        <outlet property="coFormAreaWidth" destination="cPt-v1-O2Y" id="2hg-oH-nLF"/>
+                        <outlet property="coLogoAreaLea" destination="iLt-aE-f9R" id="l8j-re-LL7"/>
+                        <outlet property="coLogoAreaTop" destination="1Us-7N-juu" id="9JF-qz-rjl"/>
+                        <outlet property="coLogoAreaWidth" destination="RJ9-1E-0Af" id="TdY-lb-W58"/>
+                        <outlet property="coNextButtonCenterXAlign" destination="1ai-9x-7t0" id="4Hb-1D-j8o"/>
+                        <outlet property="coNextButtonVerticalSpace" destination="D2M-UL-wQY" id="11M-LP-2kj"/>
+                    </connections>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="UmF-dH-Dgz" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="2476" y="377"/>
+        </scene>
+        <!--Test Drive Tour2 i PadVC-->
+        <scene sceneID="feH-4r-TDj">
+            <objects>
+                <viewController automaticallyAdjustsScrollViewInsets="NO" modalTransitionStyle="crossDissolve" id="UUA-34-gxg" customClass="TestDriveTour2_iPadVC" sceneMemberID="viewController">
+                    <layoutGuides>
+                        <viewControllerLayoutGuide type="top" id="ERh-G5-IPR"/>
+                        <viewControllerLayoutGuide type="bottom" id="OyH-Jl-GuW"/>
+                    </layoutGuides>
+                    <view key="view" contentMode="scaleToFill" id="1VN-0e-Zxj">
+                        <rect key="frame" x="0.0" y="64" width="768" height="960"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="4NZ-82-RPx" userLabel="LogoArea">
+                                <rect key="frame" x="120" y="62" width="480" height="290"/>
+                                <subviews>
+                                    <imageView userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="testDrive_tour2" translatesAutoresizingMaskIntoConstraints="NO" id="qzz-9j-z3Y">
+                                        <rect key="frame" x="0.0" y="0.0" width="480" height="337"/>
+                                        <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
+                                    </imageView>
+                                </subviews>
+                                <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
+                                <constraints>
+                                    <constraint firstItem="qzz-9j-z3Y" firstAttribute="top" secondItem="4NZ-82-RPx" secondAttribute="top" id="1Gm-wK-5uD"/>
+                                    <constraint firstAttribute="width" constant="480" id="TH6-it-q0w"/>
+                                    <constraint firstAttribute="centerX" secondItem="qzz-9j-z3Y" secondAttribute="centerX" id="aOO-II-xou"/>
+                                    <constraint firstAttribute="width" secondItem="qzz-9j-z3Y" secondAttribute="width" id="eH1-eo-qA6"/>
+                                    <constraint firstAttribute="height" constant="290" id="yc3-wH-y8W"/>
+                                </constraints>
+                            </view>
+                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="ymb-HH-SB3" userLabel="FormArea">
+                                <rect key="frame" x="120" y="380" width="480" height="495"/>
+                                <subviews>
+                                    <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" usesAttributedText="YES" lineBreakMode="tailTruncation" numberOfLines="5" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" preferredMaxLayoutWidth="382" translatesAutoresizingMaskIntoConstraints="NO" id="vhE-f7-XU6">
+                                        <rect key="frame" x="25" y="103" width="382" height="125"/>
+                                        <attributedString key="attributedText">
+                                            <fragment>
+                                                <string key="content">We have pre-loaded sample reports, card charges, and receipts as well as guided overlays to help you on your way. NOTE: This is a demo account and should not be used for real expenses.</string>
+                                                <attributes>
+                                                    <color key="NSColor" red="0.66200000049999996" green="0.87000000479999995" blue="1" alpha="1" colorSpace="calibratedRGB"/>
+                                                    <font key="NSFont" size="21" name="HelveticaNeue-Light"/>
+                                                    <paragraphStyle key="NSParagraphStyle" alignment="left" lineBreakMode="wordWrapping" baseWritingDirection="natural"/>
+                                                </attributes>
+                                            </fragment>
+                                        </attributedString>
+                                        <nil key="highlightedColor"/>
+                                    </label>
+                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" hasAttributedTitle="YES" translatesAutoresizingMaskIntoConstraints="NO" id="ZvE-sF-lWc">
+                                        <rect key="frame" x="39" y="320" width="382" height="50"/>
+                                        <color key="backgroundColor" red="0.0" green="0.66299998760000001" blue="0.94900000100000004" alpha="1" colorSpace="calibratedRGB"/>
+                                        <constraints>
+                                            <constraint firstAttribute="height" constant="50" id="6pW-8C-79j"/>
+                                            <constraint firstAttribute="width" constant="382" id="Yaf-rZ-pig"/>
+                                        </constraints>
+                                        <state key="normal">
+                                            <attributedString key="attributedTitle">
+                                                <fragment content="Launch Test Drive">
+                                                    <attributes>
+                                                        <color key="NSColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
+                                                        <font key="NSFont" size="18" name="HelveticaNeue-Medium"/>
+                                                        <paragraphStyle key="NSParagraphStyle" alignment="center" lineBreakMode="wordWrapping" baseWritingDirection="natural"/>
+                                                    </attributes>
+                                                </fragment>
+                                            </attributedString>
+                                        </state>
+                                        <userDefinedRuntimeAttributes>
+                                            <userDefinedRuntimeAttribute type="number" keyPath="cornerRadius">
+                                                <integer key="value" value="5"/>
+                                            </userDefinedRuntimeAttribute>
+                                        </userDefinedRuntimeAttributes>
+                                        <connections>
+                                            <action selector="launchTestDriveTapped:" destination="UUA-34-gxg" eventType="touchUpInside" id="phl-uQ-MyM"/>
+                                        </connections>
+                                    </button>
+                                    <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Getting started." lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="d5L-OQ-dUw">
+                                        <rect key="frame" x="25" y="45" width="340" height="50"/>
+                                        <fontDescription key="fontDescription" name="HelveticaNeue-Light" family="Helvetica Neue" pointSize="25"/>
+                                        <color key="textColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="calibratedRGB"/>
+                                        <nil key="highlightedColor"/>
+                                    </label>
+                                </subviews>
+                                <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
+                                <constraints>
+                                    <constraint firstAttribute="width" constant="480" id="Qf3-Q4-Epr"/>
+                                    <constraint firstAttribute="centerX" secondItem="ZvE-sF-lWc" secondAttribute="centerX" constant="10" id="nyu-oD-o9u"/>
+                                    <constraint firstAttribute="bottom" secondItem="ZvE-sF-lWc" secondAttribute="bottom" constant="125" id="qVw-E0-oLb"/>
+                                </constraints>
+                            </view>
+                        </subviews>
+                        <color key="backgroundColor" red="0.0" green="0.47099998589999997" blue="0.78799998760000001" alpha="1" colorSpace="calibratedRGB"/>
+                        <accessibility key="accessibilityConfiguration">
+                            <accessibilityTraits key="traits" none="YES" image="YES" staticText="YES" notEnabled="YES"/>
+                        </accessibility>
+                        <constraints>
+                            <constraint firstItem="4NZ-82-RPx" firstAttribute="leading" secondItem="1VN-0e-Zxj" secondAttribute="leading" constant="120" id="5IH-VM-xNd"/>
+                            <constraint firstItem="OyH-Jl-GuW" firstAttribute="top" secondItem="ymb-HH-SB3" secondAttribute="bottom" constant="85" id="7ds-AI-vXO"/>
+                            <constraint firstItem="4NZ-82-RPx" firstAttribute="top" secondItem="ERh-G5-IPR" secondAttribute="bottom" constant="62" id="J25-sw-6aY"/>
+                            <constraint firstItem="ymb-HH-SB3" firstAttribute="leading" secondItem="1VN-0e-Zxj" secondAttribute="leading" constant="120" id="YHw-B0-Xab"/>
+                            <constraint firstItem="ymb-HH-SB3" firstAttribute="top" secondItem="ERh-G5-IPR" secondAttribute="bottom" constant="380" id="e0L-yF-E5o"/>
+                        </constraints>
+                    </view>
+                    <extendedEdge key="edgesForExtendedLayout" bottom="YES"/>
+                    <navigationItem key="navigationItem" id="j77-bc-W11">
+                        <barButtonItem key="rightBarButtonItem" enabled="NO" id="bMR-eA-aD6"/>
+                    </navigationItem>
+                    <simulatedNavigationBarMetrics key="simulatedTopBarMetrics" prompted="NO"/>
+                    <simulatedOrientationMetrics key="simulatedOrientationMetrics"/>
+                    <connections>
+                        <outlet property="coFormAreaLea" destination="YHw-B0-Xab" id="Ufl-La-rbd"/>
+                        <outlet property="coFormAreaTop" destination="e0L-yF-E5o" id="Qjh-Qb-O5Y"/>
+                        <outlet property="coFormAreaWidth" destination="Qf3-Q4-Epr" id="Umr-qB-71B"/>
+                        <outlet property="coLogoAreaLea" destination="5IH-VM-xNd" id="ts2-Q0-1IH"/>
+                        <outlet property="coLogoAreaTop" destination="J25-sw-6aY" id="SN0-ev-eQk"/>
+                        <outlet property="coLogoAreaWidth" destination="TH6-it-q0w" id="0wH-1G-LAM"/>
+                        <outlet property="coNextButtonVerticalSpace" destination="qVw-E0-oLb" id="wo1-8o-36f"/>
+                    </connections>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="gWZ-MX-zFN" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="3341" y="372"/>
+        </scene>
+        <!--Signin RegisterVC ipad-->
+        <scene sceneID="BtX-DD-Yya">
+            <objects>
+                <viewController storyboardIdentifier="SignInRegister" automaticallyAdjustsScrollViewInsets="NO" id="kL9-Fm-OGi" customClass="SigninRegisterVC_ipad" sceneMemberID="viewController">
+                    <layoutGuides>
+                        <viewControllerLayoutGuide type="top" id="CJZ-7p-Nbc"/>
+                        <viewControllerLayoutGuide type="bottom" id="e4B-B4-Mgm"/>
+                    </layoutGuides>
+                    <view key="view" contentMode="scaleToFill" id="OGC-QS-Nuv">
+                        <rect key="frame" x="0.0" y="0.0" width="1024" height="768"/>
+                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                        <subviews>
+                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="9xd-9I-B0o" userLabel="LogoArea">
+                                <rect key="frame" x="50" y="160" width="475" height="100"/>
+                                <subviews>
+                                    <imageView userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" horizontalCompressionResistancePriority="1" fixedFrame="YES" image="CConcur" translatesAutoresizingMaskIntoConstraints="NO" id="pyb-zt-win">
+                                        <rect key="frame" x="25" y="0.0" width="424" height="100"/>
+                                    </imageView>
+                                </subviews>
+                                <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
+                                <constraints>
+                                    <constraint firstAttribute="width" constant="475" id="5D6-Md-Q5h"/>
+                                    <constraint firstAttribute="height" constant="100" id="qJ5-P8-Lsa"/>
+                                </constraints>
+                            </view>
+                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="ept-6r-McP" userLabel="FormArea">
+                                <rect key="frame" x="525" y="160" width="441" height="582"/>
+                                <subviews>
+                                    <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="O3i-zE-dr9">
+                                        <rect key="frame" x="11" y="12" width="410" height="50"/>
+                                        <color key="backgroundColor" red="0.0" green="0.66299998760000001" blue="0.94900000100000004" alpha="1" colorSpace="calibratedRGB"/>
+                                        <fontDescription key="fontDescription" name="HelveticaNeue" family="Helvetica Neue" pointSize="20"/>
+                                        <state key="normal" title="Sign In">
+                                            <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
+                                        </state>
+                                        <userDefinedRuntimeAttributes>
+                                            <userDefinedRuntimeAttribute type="number" keyPath="cornerRadius">
+                                                <integer key="value" value="5"/>
+                                            </userDefinedRuntimeAttribute>
+                                        </userDefinedRuntimeAttributes>
+                                        <connections>
+                                            <action selector="SignInBtnPressed:" destination="kL9-Fm-OGi" eventType="touchUpInside" id="mh4-6C-cwb"/>
+                                        </connections>
+                                    </button>
+                                    <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="jJ5-Db-DfJ">
+                                        <rect key="frame" x="11" y="70" width="410" height="50"/>
+                                        <color key="backgroundColor" red="0.0" green="0.66299998760000001" blue="0.94900000100000004" alpha="1" colorSpace="calibratedRGB"/>
+                                        <fontDescription key="fontDescription" name="HelveticaNeue" family="Helvetica Neue" pointSize="20"/>
+                                        <state key="normal" title="Test Drive">
+                                            <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
+                                        </state>
+                                        <userDefinedRuntimeAttributes>
+                                            <userDefinedRuntimeAttribute type="number" keyPath="cornerRadius">
+                                                <integer key="value" value="5"/>
+                                            </userDefinedRuntimeAttribute>
+                                        </userDefinedRuntimeAttributes>
+                                        <connections>
+                                            <segue destination="fOF-yU-leN" kind="push" identifier="RegisterTestDrive" id="ebL-vz-Hpb"/>
+                                        </connections>
+                                    </button>
+                                    <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="left" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Dl9-aO-mX6">
+                                        <rect key="frame" x="120" y="532" width="201" height="20"/>
+                                        <fontDescription key="fontDescription" name="HelveticaNeue" family="Helvetica Neue" pointSize="14"/>
+                                        <state key="normal" title=" Learn more about Concur" image="icon_question_mark.png">
+                                            <color key="titleColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
+                                            <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
+                                        </state>
+                                        <connections>
+                                            <segue destination="ZWY-lO-ujL" kind="push" identifier="LearnMore" id="2eR-X6-3jq"/>
+                                        </connections>
+                                    </button>
+                                </subviews>
+                                <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="582" id="TXC-7W-rdx"/>
+                                    <constraint firstAttribute="width" constant="441" id="eGq-2g-hB5"/>
+                                </constraints>
+                            </view>
+                        </subviews>
+                        <color key="backgroundColor" red="0.0" green="0.47099998593330383" blue="0.78799998760223389" alpha="1" colorSpace="calibratedRGB"/>
+                        <constraints>
+                            <constraint firstItem="ept-6r-McP" firstAttribute="top" secondItem="CJZ-7p-Nbc" secondAttribute="bottom" constant="140" id="6VT-sp-Tpc"/>
+                            <constraint firstItem="ept-6r-McP" firstAttribute="leading" secondItem="OGC-QS-Nuv" secondAttribute="leading" constant="525" id="Mac-BS-wxB"/>
+                            <constraint firstItem="9xd-9I-B0o" firstAttribute="top" secondItem="CJZ-7p-Nbc" secondAttribute="bottom" constant="140" id="Shp-5W-v3l"/>
+                            <constraint firstItem="9xd-9I-B0o" firstAttribute="leading" secondItem="OGC-QS-Nuv" secondAttribute="leading" constant="50" id="rE9-gK-vrr"/>
+                        </constraints>
+                    </view>
+                    <extendedEdge key="edgesForExtendedLayout" bottom="YES"/>
+                    <navigationItem key="navigationItem" id="oS2-D8-xAU"/>
+                    <nil key="simulatedTopBarMetrics"/>
+                    <simulatedOrientationMetrics key="simulatedOrientationMetrics" orientation="landscapeRight"/>
+                    <connections>
+                        <outlet property="coFormAreaLea" destination="Mac-BS-wxB" id="TvW-JP-ZtC"/>
+                        <outlet property="coFormAreaTop" destination="6VT-sp-Tpc" id="Ih4-z4-lZ4"/>
+                        <outlet property="coLogoAreaLea" destination="rE9-gK-vrr" id="I7h-ph-c4q"/>
+                        <outlet property="coLogoAreaTop" destination="Shp-5W-v3l" id="DNL-T5-weS"/>
+                    </connections>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="nae-YE-v1U" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="2759" y="-741"/>
+        </scene>
+        <!--Test Drive RegisterVC ipad-->
+        <scene sceneID="6pj-qp-8R3">
+            <objects>
+                <viewController storyboardIdentifier="TestDriveRegisterVC_ipad" automaticallyAdjustsScrollViewInsets="NO" id="fOF-yU-leN" customClass="TestDriveRegisterVC_ipad" sceneMemberID="viewController">
+                    <layoutGuides>
+                        <viewControllerLayoutGuide type="top" id="n9f-Ht-gi3"/>
+                        <viewControllerLayoutGuide type="bottom" id="38p-Vh-xUE"/>
+                    </layoutGuides>
+                    <view key="view" contentMode="scaleToFill" id="w7Y-pg-fLW">
+                        <rect key="frame" x="0.0" y="64" width="1024" height="704"/>
+                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                        <subviews>
+                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="NO4-WD-Jyj" userLabel="LogoArea">
+                                <rect key="frame" x="50" y="160" width="475" height="230"/>
+                                <subviews>
+                                    <imageView userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" horizontalCompressionResistancePriority="1" fixedFrame="YES" image="CConcur" translatesAutoresizingMaskIntoConstraints="NO" id="OSn-V0-WYQ">
+                                        <rect key="frame" x="25" y="0.0" width="424" height="100"/>
+                                    </imageView>
+                                    <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Test Drive is a great way to learn more about Concur, and how it can help you manage your expense reporting." lineBreakMode="wordWrap" numberOfLines="4" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" preferredMaxLayoutWidth="425" translatesAutoresizingMaskIntoConstraints="NO" id="J4P-Vv-8op">
+                                        <rect key="frame" x="36" y="130" width="425" height="85"/>
+                                        <fontDescription key="fontDescription" name="HelveticaNeue" family="Helvetica Neue" pointSize="18"/>
+                                        <color key="textColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                        <nil key="highlightedColor"/>
+                                    </label>
+                                </subviews>
+                                <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="230" id="7BI-8h-W2u"/>
+                                    <constraint firstAttribute="width" constant="475" id="cZT-Fi-Sjt"/>
+                                </constraints>
+                            </view>
+                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="a0R-hk-cYG" userLabel="FormArea">
+                                <rect key="frame" x="526" y="144" width="441" height="540"/>
+                                <subviews>
+                                    <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="ziH-3g-8n8">
+                                        <rect key="frame" x="15" y="66" width="410" height="50"/>
+                                        <subviews>
+                                            <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Email" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="3V5-JM-UyG">
+                                                <rect key="frame" x="20" y="14" width="100" height="21"/>
+                                                <fontDescription key="fontDescription" name="HelveticaNeue" family="Helvetica Neue" pointSize="18"/>
+                                                <color key="textColor" white="0.33333333333333331" alpha="1" colorSpace="calibratedWhite"/>
+                                                <nil key="highlightedColor"/>
+                                            </label>
+                                            <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="left" contentVerticalAlignment="center" placeholder="Enter email" minimumFontSize="17" clearButtonMode="always" translatesAutoresizingMaskIntoConstraints="NO" id="f7a-MU-kBq">
+                                                <rect key="frame" x="128" y="10" width="274" height="30"/>
+                                                <fontDescription key="fontDescription" name="HelveticaNeue" family="Helvetica Neue" pointSize="16"/>
+                                                <textInputTraits key="textInputTraits" returnKeyType="next"/>
+                                                <userDefinedRuntimeAttributes>
+                                                    <userDefinedRuntimeAttribute type="boolean" keyPath="inLandscapeLayoutOnly" value="YES"/>
+                                                </userDefinedRuntimeAttributes>
+                                                <connections>
+                                                    <outlet property="nextUIResponder" destination="JiD-HN-dT7" id="mqU-J5-QBt"/>
+                                                </connections>
+                                            </textField>
+                                        </subviews>
+                                        <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
+                                        <constraints>
+                                            <constraint firstAttribute="width" constant="410" id="AmE-za-mdd"/>
+                                            <constraint firstAttribute="height" constant="50" id="Chx-H8-GBd"/>
+                                        </constraints>
+                                        <userDefinedRuntimeAttributes>
+                                            <userDefinedRuntimeAttribute type="number" keyPath="cornerRadius">
+                                                <integer key="value" value="5"/>
+                                            </userDefinedRuntimeAttribute>
+                                        </userDefinedRuntimeAttributes>
+                                    </view>
+                                    <view contentMode="scaleToFill" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="bNI-uA-r3o">
+                                        <rect key="frame" x="15" y="123" width="410" height="50"/>
+                                        <subviews>
+                                            <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Password" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Vlx-pD-vZm">
+                                                <rect key="frame" x="20" y="14" width="100" height="21"/>
+                                                <fontDescription key="fontDescription" name="HelveticaNeue" family="Helvetica Neue" pointSize="18"/>
+                                                <color key="textColor" white="0.33333333333333331" alpha="1" colorSpace="calibratedWhite"/>
+                                                <nil key="highlightedColor"/>
+                                            </label>
+                                            <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="left" contentVerticalAlignment="center" placeholder="Create password" minimumFontSize="17" clearButtonMode="always" translatesAutoresizingMaskIntoConstraints="NO" id="JiD-HN-dT7">
+                                                <rect key="frame" x="128" y="10" width="274" height="30"/>
+                                                <fontDescription key="fontDescription" name="HelveticaNeue" family="Helvetica Neue" pointSize="16"/>
+                                                <textInputTraits key="textInputTraits" returnKeyType="done" enablesReturnKeyAutomatically="YES" secureTextEntry="YES"/>
+                                                <userDefinedRuntimeAttributes>
+                                                    <userDefinedRuntimeAttribute type="boolean" keyPath="inLandscapeLayoutOnly" value="YES"/>
+                                                </userDefinedRuntimeAttributes>
+                                                <connections>
+                                                    <outlet property="nextUIResponder" destination="L4K-PK-fSZ" id="KDO-OC-YCc"/>
+                                                </connections>
+                                            </textField>
+                                        </subviews>
+                                        <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
+                                        <userDefinedRuntimeAttributes>
+                                            <userDefinedRuntimeAttribute type="number" keyPath="cornerRadius">
+                                                <integer key="value" value="5"/>
+                                            </userDefinedRuntimeAttribute>
+                                        </userDefinedRuntimeAttributes>
+                                    </view>
+                                    <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="L4K-PK-fSZ">
+                                        <rect key="frame" x="15" y="184" width="410" height="50"/>
+                                        <color key="backgroundColor" red="0.0" green="0.66299998760000001" blue="0.94900000100000004" alpha="1" colorSpace="calibratedRGB"/>
+                                        <fontDescription key="fontDescription" name="HelveticaNeue" family="Helvetica Neue" pointSize="18"/>
+                                        <state key="normal" title="Submit Registration">
+                                            <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
+                                        </state>
+                                        <userDefinedRuntimeAttributes>
+                                            <userDefinedRuntimeAttribute type="number" keyPath="cornerRadius">
+                                                <integer key="value" value="5"/>
+                                            </userDefinedRuntimeAttribute>
+                                        </userDefinedRuntimeAttributes>
+                                        <connections>
+                                            <action selector="registerForTestDrive:" destination="fOF-yU-leN" eventType="touchUpInside" id="GS4-o0-gDN"/>
+                                        </connections>
+                                    </button>
+                                    <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" usesAttributedText="YES" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Xl3-zM-8df">
+                                        <rect key="frame" x="76" y="254" width="190" height="17"/>
+                                        <attributedString key="attributedText">
+                                            <fragment content="By Registering you accept our">
+                                                <attributes>
+                                                    <color key="NSColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
+                                                    <font key="NSFont" size="14" name="HelveticaNeue"/>
+                                                    <paragraphStyle key="NSParagraphStyle" alignment="left" lineBreakMode="wordWrapping" baseWritingDirection="natural"/>
+                                                </attributes>
+                                            </fragment>
+                                        </attributedString>
+                                        <nil key="highlightedColor"/>
+                                    </label>
+                                    <button opaque="NO" alpha="0.5" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" hasAttributedTitle="YES" translatesAutoresizingMaskIntoConstraints="NO" id="gYf-C9-DCm">
+                                        <rect key="frame" x="268" y="254" width="86" height="16"/>
+                                        <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
+                                        <accessibility key="accessibilityConfiguration">
+                                            <accessibilityTraits key="traits" none="YES" link="YES"/>
+                                        </accessibility>
+                                        <color key="tintColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
+                                        <state key="normal">
+                                            <attributedString key="attributedTitle">
+                                                <fragment content="Terms of Use">
+                                                    <attributes>
+                                                        <color key="NSColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                                        <font key="NSFont" size="14" name="HelveticaNeue"/>
+                                                        <paragraphStyle key="NSParagraphStyle" alignment="natural" lineBreakMode="wordWrapping" baseWritingDirection="natural"/>
+                                                    </attributes>
+                                                </fragment>
+                                            </attributedString>
+                                        </state>
+                                        <connections>
+                                            <action selector="termsOfUseBtnPressed:" destination="fOF-yU-leN" eventType="touchUpInside" id="so6-HT-T2E"/>
+                                        </connections>
+                                    </button>
+                                    <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" usesAttributedText="YES" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="tpw-kG-tff">
+                                        <rect key="frame" x="356" y="253" width="24" height="17"/>
+                                        <attributedString key="attributedText">
+                                            <fragment content="and">
+                                                <attributes>
+                                                    <color key="NSColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
+                                                    <font key="NSFont" size="14" name="HelveticaNeue"/>
+                                                    <paragraphStyle key="NSParagraphStyle" alignment="left" lineBreakMode="wordWrapping" baseWritingDirection="natural"/>
+                                                </attributes>
+                                            </fragment>
+                                        </attributedString>
+                                        <nil key="highlightedColor"/>
+                                    </label>
+                                    <button opaque="NO" alpha="0.5" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" hasAttributedTitle="YES" translatesAutoresizingMaskIntoConstraints="NO" id="f9c-T6-jJd">
+                                        <rect key="frame" x="177" y="272" width="90" height="14"/>
+                                        <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
+                                        <accessibility key="accessibilityConfiguration">
+                                            <accessibilityTraits key="traits" none="YES" link="YES"/>
+                                        </accessibility>
+                                        <color key="tintColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
+                                        <state key="normal">
+                                            <attributedString key="attributedTitle">
+                                                <fragment content="Privacy Policy">
+                                                    <attributes>
+                                                        <color key="NSColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                                        <font key="NSFont" size="14" name="HelveticaNeue"/>
+                                                        <paragraphStyle key="NSParagraphStyle" alignment="left" lineBreakMode="wordWrapping" baseWritingDirection="natural"/>
+                                                    </attributes>
+                                                </fragment>
+                                            </attributedString>
+                                        </state>
+                                        <connections>
+                                            <action selector="privacyPolicyBtnPressed:" destination="fOF-yU-leN" eventType="touchUpInside" id="hc3-Fd-mWt"/>
+                                        </connections>
+                                    </button>
+                                </subviews>
+                                <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="540" id="RM1-YX-3tK"/>
+                                    <constraint firstItem="ziH-3g-8n8" firstAttribute="top" secondItem="a0R-hk-cYG" secondAttribute="top" constant="66" id="UBE-aS-4VT"/>
+                                    <constraint firstAttribute="width" constant="441" id="ZMa-Vi-o9a"/>
+                                    <constraint firstItem="ziH-3g-8n8" firstAttribute="leading" secondItem="a0R-hk-cYG" secondAttribute="leading" constant="15" id="e9R-nb-46g"/>
+                                </constraints>
+                            </view>
+                        </subviews>
+                        <color key="backgroundColor" red="0.0" green="0.47099998593330383" blue="0.78799998760223389" alpha="1" colorSpace="calibratedRGB"/>
+                        <constraints>
+                            <constraint firstItem="NO4-WD-Jyj" firstAttribute="leading" secondItem="w7Y-pg-fLW" secondAttribute="leading" constant="50" id="0Lf-4P-GQZ"/>
+                            <constraint firstItem="NO4-WD-Jyj" firstAttribute="top" secondItem="n9f-Ht-gi3" secondAttribute="bottom" constant="160" id="3Cy-D5-mCc"/>
+                            <constraint firstItem="a0R-hk-cYG" firstAttribute="leading" secondItem="w7Y-pg-fLW" secondAttribute="leading" constant="526" id="Drf-2v-egk"/>
+                            <constraint firstItem="a0R-hk-cYG" firstAttribute="top" secondItem="n9f-Ht-gi3" secondAttribute="bottom" constant="144" id="YIP-H9-PMp"/>
+                        </constraints>
+                    </view>
+                    <extendedEdge key="edgesForExtendedLayout" bottom="YES"/>
+                    <navigationItem key="navigationItem" id="ymK-HX-prF"/>
+                    <simulatedNavigationBarMetrics key="simulatedTopBarMetrics" prompted="NO"/>
+                    <simulatedOrientationMetrics key="simulatedOrientationMetrics" orientation="landscapeRight"/>
+                    <connections>
+                        <outlet property="coEmailTxtFieldTop" destination="UBE-aS-4VT" id="3kp-Fu-iAO"/>
+                        <outlet property="coFormAreaHeight" destination="RM1-YX-3tK" id="V8X-dE-UP0"/>
+                        <outlet property="coFormAreaLea" destination="Drf-2v-egk" id="hEW-cl-e24"/>
+                        <outlet property="coFormAreaTop" destination="YIP-H9-PMp" id="ISD-gC-PlQ"/>
+                        <outlet property="coLogoAreaLea" destination="0Lf-4P-GQZ" id="C85-2S-2JJ"/>
+                        <outlet property="coLogoAreaTop" destination="3Cy-D5-mCc" id="Juz-Sy-H1G"/>
+                        <outlet property="testDriveEmail" destination="f7a-MU-kBq" id="jCk-WK-CIj"/>
+                        <outlet property="testDrivePassword" destination="JiD-HN-dT7" id="QYf-2p-T96"/>
+                        <segue destination="48a-uV-kN9" kind="push" identifier="PagedTestDriveTour" id="DZ4-ql-2g7"/>
+                    </connections>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="Xfy-0R-7ZP" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="1235" y="531"/>
+        </scene>
+        <!--Navigation Controller-->
+        <scene sceneID="lGw-GW-FrR">
+            <objects>
+                <navigationController definesPresentationContext="YES" id="MGn-K6-NOv" sceneMemberID="viewController">
+                    <nil key="simulatedTopBarMetrics"/>
+                    <nil key="simulatedBottomBarMetrics"/>
+                    <navigationBar key="navigationBar" contentMode="scaleToFill" id="Utf-sN-cUH">
+                        <autoresizingMask key="autoresizingMask"/>
+                    </navigationBar>
+                    <connections>
+                        <segue destination="ZWY-lO-ujL" kind="relationship" relationship="rootViewController" id="iMj-3S-1HW"/>
+                    </connections>
+                </navigationController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="1PS-Na-oXy" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="132" y="-810"/>
+        </scene>
+    </scenes>
+    <resources>
+        <image name="CConcur" width="1001" height="247"/>
+        <image name="icon_check_mark" width="25" height="25"/>
+        <image name="icon_expense.png" width="90" height="100"/>
+        <image name="icon_flight.png" width="90" height="100"/>
+        <image name="icon_question_mark.png" width="25" height="25"/>
+        <image name="icon_tdcamera.png" width="90" height="100"/>
+        <image name="separator.png" width="373" height="5"/>
+        <image name="testDrive_tour1" width="404" height="343"/>
+        <image name="testDrive_tour2" width="400" height="337"/>
+    </resources>
+    <simulatedMetricsContainer key="defaultSimulatedMetrics">
+        <simulatedStatusBarMetrics key="statusBar" statusBarStyle="lightContent"/>
+        <simulatedOrientationMetrics key="orientation"/>
+        <simulatedScreenMetrics key="destination"/>
+    </simulatedMetricsContainer>
+    <inferredMetricsTieBreakers>
+        <segue reference="2eR-X6-3jq"/>
+        <segue reference="WDK-po-Hkf"/>
+    </inferredMetricsTieBreakers>
+</document>

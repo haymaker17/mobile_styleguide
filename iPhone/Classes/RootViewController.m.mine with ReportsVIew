@@ -1,0 +1,817 @@
+//
+//  RootViewController.m
+//  ConcurMobile
+//
+//  Created by Paul Kramer on 10/27/09.
+//  Copyright 2009 __MyCompanyName__. All rights reserved.
+//
+
+#import "RootViewController.h"
+#import "LoginViewController.h"
+#import "HomePageViewController.h"
+#import "InfoViewController.h"
+#import "ExpenseListViewController.h"
+#import "EntryListViewController.h"
+#import "ReportsViewController.h"
+#import "TripsViewController.h"
+#import "TripDetailsViewController.h"
+#import "ItinDetailsViewController.h"
+#import "ConcurMobileAppDelegate.h"
+#import "BlueButton.h"
+#import "MapViewController.h"
+#import "SplashViewController.h"
+#import "FindMe.h"
+#import "SouthwestViewController.h"
+#import "WebViewController.h"
+#import "MobileViewController.h"
+#import "SlidingMessageViewController.h"
+
+@implementation RootViewController
+@synthesize loginViewController;
+@synthesize homePageViewController;
+@synthesize infoViewController;
+@synthesize expenseListViewController;
+@synthesize entryListViewController;
+@synthesize tripsViewController;
+@synthesize tripDetailsViewController;
+@synthesize itinDetailsViewController;
+@synthesize mapViewController;
+@synthesize splashViewController;
+@synthesize southwestViewController;
+@synthesize webViewController;
+
+@synthesize webViewURL;
+@synthesize topView;
+
+@synthesize findMe;
+@synthesize msgControl;
+
+//@synthesize plistDict;
+@synthesize views;
+@synthesize viewNamesDict;
+@synthesize configDict;
+
+@synthesize barButton;
+@synthesize navBar;
+@synthesize logo;
+@synthesize barTitle;
+
+@synthesize strCurrentView;
+@synthesize strSessionId;
+@synthesize strUserName;
+@synthesize strRememberMe;
+
+NSString * const HOME_PAGE = @"HOME_PAGE";
+NSString * const LOGIN = @"LOGIN";
+NSString * const INFO = @"INFO";
+NSString * const REPORTS = @"REPORTS";
+NSString * const ENTRIES = @"ENTRIES";
+NSString * const TRIPS = @"TRIPS";
+NSString * const SPLASH = @"SPLASH";
+NSString * const TRIP_DETAILS = @"TRIP_DETAILS";
+NSString * const ITIN_DETAILS = @"ITIN_DETAILS";
+NSString * const MAP = @"MAP";
+NSString * const SOUTHWEST = @"SOUTHWEST";
+NSString * const WEBVIEW = @"WEBVIEW";
+
+
+-(NSString *)getLocalizedText:(NSString *)dictName LocalConstant:(NSString *)localConstant
+{
+	NSDictionary *dict = [configDict objectForKey:dictName];
+	NSString *foundVal = [dict objectForKey:localConstant];
+	return foundVal;
+}
+
+
+-(void) initPlistFiles
+{
+//	NSFileManager *defFM = [NSFileManager defaultManager];
+//	NSString *docsDir = [NSSearchPathForDirectoriesInDomains(NSDocumentDirectory,NSUserDomainMask, YES) objectAtIndex:0];
+//	NSUserDefaults *userDefaults = [NSUserDefaults standardUserDefaults];
+//	//..Stuff that is done only once when installing a new version....
+//	static NSString *AppVersionKey = @"MyAppVersion";
+//	int lastVersion = [userDefaults integerForKey: AppVersionKey];
+////	if( lastVersion != thisVersion )	//..do this only once after install..
+////	{
+//		//[userDefaults setInteger: thisVersion forKey: AppVersionKey];
+//		NSString *appDir = [[NSBundle mainBundle] resourcePath];
+//		NSString *src = [appDir stringByAppendingPathComponent: @"en_Configuration.plist"];
+//		NSString *dest = [docsDir stringByAppendingPathComponent: @"en_Configuration.plist"];
+//		[defFM removeItemAtPath: dest error: NULL];  //..remove old copy
+//		[defFM copyItemAtPath: src toPath: dest error: NULL];
+//	//}
+}
+
+
+-(void) initConfigLocalization
+{//the en file is included in the bundle, we will download other langs as needed
+	NSString *path = [[NSBundle mainBundle] bundlePath];
+	NSString *finalPath = [path stringByAppendingPathComponent:@"en_Configuration.plist"];
+	configDict = [[NSDictionary dictionaryWithContentsOfFile:finalPath] retain];
+}
+
+-(NSString *)getViewTitle:(NSString *)viewName
+{//gets the localized title for the view 
+	NSString *localViewName = [viewNamesDict objectForKey:viewName];
+	return localViewName;
+}
+
+-(void) initViewNames
+{//grab from the localized file here.	
+	viewNamesDict = [self.configDict objectForKey:@"view_names"];
+}
+
+- (void)navigationController:(UINavigationController *)navigationController 
+	  willShowViewController:(UIViewController *)viewController animated:(BOOL)animated 
+{
+    [viewController viewWillAppear:animated];
+}
+
+- (void)navigationController:(UINavigationController *)navigationController 
+	   didShowViewController:(UIViewController *)viewController animated:(BOOL)animated 
+{
+    [viewController viewDidAppear:animated];
+	NSLog(@"NibName:%@", viewController.nibName);
+	NSLog(@"viewController.title:%@", viewController.title);
+	NSLog(@"[self getViewTitle:TRIPS]=%@", [self getViewTitle:TRIPS]);
+	//if ([viewController.nibName isEqualToString:@"HomePageView"]) 
+	//NSString *viewName = [self getViewTitle:HOME_PAGE];
+	if ([viewController.title isEqualToString:[self getViewTitle:HOME_PAGE]] || viewController.nibName == nil)
+	{
+		[self addLogoutButton];	
+		strCurrentView = HOME_PAGE;
+		viewController.title = [self getViewTitle:HOME_PAGE];
+
+		[self.msgControl createMsg:WEATHER];
+	}
+	else if ([viewController.title isEqualToString:[self getViewTitle:ENTRIES]])
+	{
+		strCurrentView = ENTRIES;
+	}
+	else if ([viewController.title isEqualToString:[self getViewTitle:TRIPS]])
+	{
+		strCurrentView = TRIPS;
+	}
+	else if ([viewController.title isEqualToString:[self getViewTitle:TRIP_DETAILS]])
+	{
+		strCurrentView = TRIP_DETAILS;
+	}
+	else if ([viewController.title isEqualToString:[self getViewTitle:REPORTS]])
+	{
+		strCurrentView = REPORTS;
+	}
+	else if ([viewController.title isEqualToString:[self getViewTitle:ITIN_DETAILS]])
+	{
+		strCurrentView = ITIN_DETAILS;
+	}
+	else if ([viewController.title isEqualToString:[self getViewTitle:LOGIN]])
+	{
+		strCurrentView = LOGIN;
+	}
+	
+	[self writeToPlist];
+}
+
+
+- (void)readPlist
+{
+	NSArray *paths = NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES);
+	NSString *documentsDirectory = [paths objectAtIndex:0];
+	NSString *path = [documentsDirectory stringByAppendingPathComponent:@"MobileSettings.plist"];
+	plistDict = [[NSMutableDictionary alloc] initWithContentsOfFile:path];
+	
+	if (plistDict != nil)
+	{
+		strCurrentView = [plistDict objectForKey:@"VIEW"];
+		NSLog(@"readPlist::strCurrentView=%@", strCurrentView);
+		strSessionId = [plistDict objectForKey:@"SESSION_ID"];
+		strUserName = [plistDict objectForKey:@"USER_NAME"];
+		strRememberMe = [plistDict objectForKey:@"REMEMBER_ME"];
+	}
+	else 
+	{
+		strCurrentView = LOGIN;
+		plistDict = [[NSMutableDictionary alloc] initWithObjectsAndKeys:LOGIN, @"VIEW", @"", @"SESSION_ID", @"user@concur.com", @"USER_NAME", nil];
+	}
+	
+	if (plistDict == nil)
+	{
+		LoginViewController *loginController = [[LoginViewController alloc] initWithNibName:@"LoginView" bundle:nil];
+		self.loginViewController = loginController;
+		self.loginViewController.rootViewController = self;
+		[self.view insertSubview:loginController.view atIndex:0];
+		[loginController release];
+	}
+	else 
+	{
+		strCurrentView = [plistDict objectForKey:@"VIEW"];
+		if (strCurrentView == nil || [strCurrentView length] <= 1)
+		{
+			strCurrentView = LOGIN;
+		}
+		//NSLog(@"Current View: %@", strCurrentView);
+		[self switchToView:[NSString stringWithString:strCurrentView] viewFrom:SPLASH];
+	}
+	
+	if (strRememberMe == nil)
+	{
+		strRememberMe = @"empty";
+		[plistDict setObject:strRememberMe forKey:@"REMEMBER_ME"];
+	}
+	//NSLog(@"readPList - strCurrentView:%@", strCurrentView);
+}
+
+
+-(void)updateRM:(NSString *)rm
+{
+	strRememberMe = rm;
+}
+
+- (void)writeToPlist
+{
+	NSArray *paths = NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES);
+	NSString *documentsDirectory = [paths objectAtIndex:0];
+	NSString *path = [documentsDirectory stringByAppendingPathComponent:@"MobileSettings.plist"];
+
+	NSLog(@"writeToPList - strCurrentView:%@", strCurrentView);
+	NSLog(@"writeToPList - strSessionId:%@", strSessionId);
+	NSLog(@"writeToPList - strUserName:%@", strUserName);
+	NSLog(@"writeToPlist.rememberMe=%@", strRememberMe);
+	[plistDict setValue:strCurrentView forKey:@"VIEW"];
+	[plistDict setValue:strSessionId forKey:@"SESSION_ID"];
+	[plistDict setValue:strUserName forKey:@"USER_NAME"];
+	[plistDict setValue:strRememberMe forKey:@"REMEMBER_ME"];
+	[plistDict writeToFile:path atomically: YES];
+}
+
+
+ // The designated initializer.  Override if you create the controller programmatically and want to perform customization that is not appropriate for viewDidLoad.
+- (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil {
+    if (self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil]) {
+        // Custom initialization
+    }
+    return self;
+}
+
+
+/*
+// Implement loadView to create a view hierarchy programmatically, without using a nib.
+- (void)loadView {
+}
+*/
+
+-(void) addLogoutButton
+{//adds a logout button to the navigation bar, removes the existing right button.
+	self.navigationItem.rightBarButtonItem = nil;
+	BlueButton *blueSaveButton = [[BlueButton alloc] init];		
+	NSString *logoutText = [[NSString alloc] initWithString:[self getLocalizedText:HOME_PAGE LocalConstant:LABEL_LOGOUT]];
+	[blueSaveButton setTitle:logoutText forState:UIControlStateNormal];
+	blueSaveButton.tag = 101999;
+	[blueSaveButton addTarget:self action:@selector(switchViews:) forControlEvents:UIControlEventTouchUpInside];		
+	UIBarButtonItem *button = [[UIBarButtonItem alloc] initWithCustomView:blueSaveButton];
+	self.navigationItem.rightBarButtonItem = button;
+	[button release];
+	[blueSaveButton release];	
+	[logoutText release];
+}
+
+// Implement viewDidLoad to do additional setup after loading the view, typically from a nib.
+- (void)viewDidLoad 
+{
+	[navController setDelegate:self];
+	self.msgControl = [MsgControl alloc];
+	[self.msgControl init:self];
+	
+	[self initConfigLocalization]; //get the config localization dictionary
+	[self initViewNames];
+	
+	//get the location of where we are right now
+	self.findMe = [FindMe alloc];
+	[self.findMe init:self]; //let's get our location and store all of the fun information about our location on startup.
+
+	HomePageViewController *newController = [[HomePageViewController alloc] initWithNibName:@"HomePageView" bundle:nil];
+	newController.rootViewController = self;
+	newController.title = [self getViewTitle:HOME_PAGE];
+	self.title = newController.title;
+	NSLog(@"self.title=%@", self.title);
+	[self addLogoutButton];
+	[self.view insertSubview:newController.view atIndex:0];
+	[newController viewDidAppear:YES];
+	self.views = [[NSMutableDictionary alloc] initWithObjectsAndKeys:newController, HOME_PAGE, nil];
+	[newController release];
+	
+    [self readPlist];
+	
+	//sets the badges.  Hardcoded for now
+	UIApplication *application = [UIApplication sharedApplication];
+	application.applicationIconBadgeNumber = 3;
+	
+}
+
+-(void) addInfoButton
+{//adds an info button to the navigation bar, on the right hand side.
+	self.navigationItem.rightBarButtonItem = nil;
+	UIButton *infoButton = [UIButton buttonWithType:UIButtonTypeInfoLight];
+	infoButton.tag = 100002;
+	[infoButton addTarget:self action:@selector(switchViews:) forControlEvents:UIControlEventTouchUpInside];
+	UIBarButtonItem *iButton = [[UIBarButtonItem alloc] initWithCustomView: infoButton];
+	self.navigationItem.rightBarButtonItem = iButton;
+	[iButton release];
+}
+
+
+-(void)getNextController:(NSString *)to ComingFrom:(NSString *)from
+{//Even though the controller that we are getting is the MVC, we actually want to create the nib with the desired form class,
+	//this is the class that gets inserted into the dictionary.
+	//add in the one time run code defines the view here, not in switchviews, which does things like like the addInfobutton or specifying the message to create and run
+
+	MobileViewController *nextController = [self.views objectForKey:to];
+	nextController.title = [self getViewTitle:to];
+	
+	if ([to isEqualToString:HOME_PAGE])
+	{//sign in button and the home button
+		HomePageViewController *nextController = [[HomePageViewController alloc] initWithNibName:@"HomePageView" bundle:nil];
+		//nextController.title = @"Home";
+	}
+	else if ([to isEqualToString:LOGIN])
+	{//show the login screen
+		nextController = [[LoginViewController alloc] initWithNibName:@"LoginView" bundle:nil];
+		//nextController.title = @"Sign In";
+	}
+	else if ([to isEqualToString:TRIPS])
+	{
+		nextController = [[TripsViewController alloc] initWithNibName:@"TripsView" bundle:nil];
+		//nextController.title = @"Trips";
+	}
+	else if ([to isEqualToString:TRIP_DETAILS])
+	{//drill to the Trip Details view from the Trips List view
+		nextController = [[TripDetailsViewController alloc] initWithNibName:@"TripDetailsView" bundle:nil];
+		//nextController.title = @"Trip Segments";
+
+		//ok, the code below needs to get called, but with something like a recursive call, and then the special loads.
+		//but this is only for that initial load situation.  Bugger, how can this be made clean?
+		if([from isEqualToString:SPLASH])
+		{
+			//show/insert home first
+			HomePageViewController *homeController = [self.views objectForKey:HOME_PAGE];
+			[self.view insertSubview:homeController.view atIndex:0];
+			//now insert the trips list so that we have a place to go back to
+			TripsViewController *tripsListController = [[TripsViewController alloc] initWithNibName:@"TripsView" bundle:nil];
+			tripsListController.rootViewController = self;
+
+			ConcurMobileAppDelegate *delegate = [[UIApplication sharedApplication] delegate];
+			[delegate.navController pushViewController:tripsListController animated:NO];
+			[self.views setObject:tripsListController forKey:TRIPS];
+			[tripsListController release];
+		}
+		[nextController viewDidAppear:YES];
+	}
+	else if ([to isEqualToString:ITIN_DETAILS])
+	{//drill to the itin details view from the Trip Detail view
+		nextController = [[ItinDetailsViewController alloc] initWithNibName:@"ItinDetailsViewController" bundle:nil];
+		//nextController.title = @"Segment Details";
+		
+		if([from isEqualToString:SPLASH])
+		{
+			//show/insert home first
+			HomePageViewController *homeController = [self.views objectForKey:HOME_PAGE];
+			[self.view insertSubview:homeController.view atIndex:0];
+			
+			//now insert the trips list so that we have a place to go back to
+			TripsViewController *tripsListController = [[TripsViewController alloc] initWithNibName:@"TripsView" bundle:nil];
+			tripsListController.rootViewController = self;
+			ConcurMobileAppDelegate *delegate = [[UIApplication sharedApplication] delegate];
+			[delegate.navController pushViewController:tripsListController animated:NO];
+			[self.views setObject:tripsListController forKey:TRIPS];
+			[tripsListController release];
+
+			//now do the trip details screen, which is the parent of itin details
+			TripDetailsViewController *tripDetailsController = [[TripDetailsViewController alloc] initWithNibName:@"TripDetailsView" bundle:nil];
+			tripDetailsController.rootViewController = self;
+			[delegate.navController pushViewController:tripDetailsController animated:NO];
+			[self.views setObject:tripDetailsController forKey:TRIP_DETAILS];
+			[tripDetailsController release];
+		}
+	} 
+	else if ([to isEqualToString:REPORTS])
+	{
+		nextController = [[ReportsViewController alloc] initWithNibName:@"ReportsView" bundle:nil];
+		if([from isEqualToString:SPLASH])
+		{
+			//show/insert home first
+			HomePageViewController *homeController = [self.views objectForKey:HOME_PAGE];
+			[self.view insertSubview:homeController.view atIndex:0];
+		}
+	}
+	else {
+		// YIWEN TODO - fix this, maybe Justin already did
+		return;
+	}
+				 
+	nextController.rootViewController = self;
+	self.title = nextController.title;
+	[self.views setObject:nextController forKey:to];	
+}
+
+
+-(void)switchToView:(NSString *)to viewFrom:(NSString *)from
+{
+	[UIView beginAnimations:@"View Flip" context:nil];
+	[UIView setAnimationDuration:1.25];
+	[UIView setAnimationCurve:UIViewAnimationCurveEaseInOut];
+	
+	NSString *msgName = [NSString alloc];
+	msgName = nil;
+	
+	MobileViewController *currController;
+	MobileViewController *nextController;
+	ConcurMobileAppDelegate *delegate = [[UIApplication sharedApplication] delegate];
+	[delegate.navController.navigationBar setHidden:NO];
+	self.navigationItem.rightBarButtonItem = nil; //remove the right button
+	
+	nextController = [self.views objectForKey:to];
+	currController = [self.views objectForKey:from];
+	
+	if (nextController == nil)
+	{//snag the controller and define it via it's xib
+		[self getNextController:to ComingFrom:from];
+		nextController = [self.views objectForKey:to];
+	}
+	NSLog(@"1)nextController.tite=%@", nextController.title);
+	
+	if ([from isEqualToString:SPLASH])
+	{
+		if (self.splashViewController != nil) 
+		{
+			[self.splashViewController.view removeFromSuperview];
+		}
+	}
+	else 
+	{
+		from = strCurrentView;
+	}
+	
+	currController.title = [self getViewTitle:from];
+	
+	if ([to isEqualToString:HOME_PAGE])
+	{//sign in button and the home button
+		[self addLogoutButton];
+	}
+	else if ([to isEqualToString:TRIP_DETAILS])
+	{//drill to the Trip Details view from the Trips List view
+
+	}
+	else if ([to isEqualToString:TRIPS])
+	{//go from Trip Details view to the Trip List view
+		if([from isEqualToString:SPLASH])
+		{
+			[self.view insertSubview:self.homePageViewController.view atIndex:0];
+			from = @"";
+		}
+	}
+	else if ([to isEqualToString:ITIN_DETAILS])
+	{//drill to the itin details view from the Trip Detail view
+		if (self.itinDetailsViewController == nil)
+		{
+			ItinDetailsViewController *listController = [[ItinDetailsViewController alloc] initWithNibName:@"ItinDetailsViewController" bundle:nil];
+			self.itinDetailsViewController = listController;
+			self.itinDetailsViewController.rootViewController = self;
+			[listController release];
+		}
+		nextController = self.itinDetailsViewController;
+		nextController.title = @"Segment Details";
+		
+		if([from isEqualToString:SPLASH])
+		{
+			[self.view insertSubview:self.homePageViewController.view atIndex:0];
+			from = @"";
+			if (self.tripsViewController == nil)
+			{
+				TripsViewController *listController = [[TripsViewController alloc] initWithNibName:@"TripsView" bundle:nil];
+				self.tripsViewController = listController;
+				self.tripsViewController.rootViewController = self;
+				[listController release];
+			}
+			[delegate.navController pushViewController:self.tripsViewController animated:NO];
+			
+			if (self.tripDetailsViewController == nil)
+			{
+				TripDetailsViewController *listController = [[TripDetailsViewController alloc] initWithNibName:@"TripDetailsView" bundle:nil];
+				self.tripDetailsViewController = listController;
+				self.tripDetailsViewController.rootViewController = self;
+				[listController release];
+			}
+			[delegate.navController pushViewController:self.tripDetailsViewController animated:NO];
+		}
+	}
+	else if ([to isEqualToString:ENTRIES])
+	{//drill to the entry view from the ExpenseList view
+		if (self.entryListViewController == nil)
+		{
+			EntryListViewController *listController = [[EntryListViewController alloc] initWithNibName:@"EntryListView" bundle:nil];
+			self.entryListViewController = listController;
+			self.entryListViewController.rootViewController = self;
+			[listController release];
+		}
+		nextController = self.entryListViewController;
+		nextController.title = @"Entries";
+		
+		if([from isEqualToString:SPLASH])
+		{
+			[self.view insertSubview:self.homePageViewController.view atIndex:0];
+			from = @"";
+			if (self.expenseListViewController == nil)
+			{
+				ExpenseListViewController *listController = [[ExpenseListViewController alloc] initWithNibName:@"ExpenseListView" bundle:nil];
+				self.expenseListViewController = listController;
+				self.expenseListViewController.rootViewController = self;
+				[listController release];
+			}
+			[delegate.navController pushViewController:self.expenseListViewController animated:NO];
+		}
+	}
+/*	else if ([to isEqualToString:REPORTS])
+	{//go from entry view to the ExpenseList view
+		if (self.reportListViewController == nil)
+		{
+			ReportListViewController *listController = [[ReportListViewController alloc] initWithNibName:@"ReportListView" bundle:nil];
+			self.reportListViewController = listController;
+			self.reportListViewController.rootViewController = self;
+			[listController release];
+		}
+		nextController = self.expenseListViewController;
+		nextController.title = @"Active Reports";
+		
+		if([from isEqualToString:SPLASH])
+		{
+			[self.view insertSubview:self.homePageViewController.view atIndex:0];
+			from = @"";
+		}
+	}*/
+	else if ([to isEqualToString:MAP])
+	{//go to maps from itin detail
+		if (self.mapViewController == nil)
+		{
+			MapViewController *listController = [[MapViewController alloc] initWithNibName:@"MapView" bundle:nil];
+			self.mapViewController = listController;
+			//self.mapViewController.rootViewController = self;
+			[listController release];
+		}
+		nextController = self.mapViewController;
+		nextController.title = @"Map";
+	}
+	else if ([to isEqualToString:WEBVIEW])
+	{//go to webview from itin detail
+		if (self.webViewController == nil)
+		{
+			WebViewController *listController = [[WebViewController alloc] initWithNibName:@"WebView" bundle:nil];
+			self.webViewController = listController;
+			self.webViewController.rootViewController = self;
+			[listController release];
+		}
+		nextController = self.webViewController;
+		nextController.title = @"Web View";
+	}
+	else if ([to isEqualToString:SOUTHWEST])
+	{//go to maps from itin detail
+		if (self.southwestViewController == nil)
+		{
+			SouthwestViewController *listController = [[SouthwestViewController alloc] initWithNibName:@"SouthwestViewController" bundle:nil];
+			self.southwestViewController = listController;
+			[listController release];
+		}
+		nextController = self.southwestViewController;
+		nextController.title = @"Southwest Booking";
+	}
+	else if ([to isEqualToString:LOGIN])
+	{//btnBack from Info screen (102000) or the Logout button (101999), show the login screen
+		[self addInfoButton];
+		//msgName = WEATHER;
+	}
+	else if ([to isEqualToString:INFO])
+	{//btnInfo from login screen, show the info screen
+		if (self.infoViewController == nil)
+		{
+			InfoViewController *infoController = [[InfoViewController alloc] initWithNibName:@"InfoView" bundle:nil];
+			self.infoViewController = infoController;
+			self.infoViewController.rootViewController = self;
+			[infoController release];
+		}
+		nextController = self.infoViewController;
+		nextController.title = @"Information";	
+		self.title = nextController.title;
+	}
+		
+	if ([from isEqualToString:LOGIN] || [from isEqualToString:INFO] || [to isEqualToString:LOGIN] || [to isEqualToString:INFO])
+	{
+		[currController.view removeFromSuperview];
+		[self.view insertSubview:nextController.view atIndex:0];
+	}
+	else
+	{
+		[delegate.navController pushViewController:nextController animated:YES];
+	}
+	NSLog(@"2)nextController.title=%@", nextController.title);
+	[UIView commitAnimations];
+	
+	strCurrentView = to;
+	[self.views setObject:nextController forKey:to]; //let's keep track of every view that we load/create
+	if (msgName != nil)
+	{//if a view specifies the message that it wants to run/create by name, then do it.  This is the start of fetching data for a view
+		[self.msgControl createMsg:msgName];
+	}
+	[msgName release];
+	[self writeToPlist]; //dump out everything that has gone on into the prefs file
+	NSLog(@"currTitle:%@, nextTitle:%@", currController.title, nextController.title);
+	
+}
+
+
+-(void) doNotify:(NSString *)notifyTitle NotifyBody:(NSString *)notifyBody
+{//shows the notification screen
+	SlidingMessageViewController *msgVC = [[SlidingMessageViewController alloc] initWithTitle:notifyTitle message:notifyBody];   
+	if ([strCurrentView isEqualToString:LOGIN] || [strCurrentView isEqualToString:INFO] || [strCurrentView isEqualToString:HOME_PAGE])
+	{
+		[self.view addSubview:msgVC.view];
+	}
+	else 
+	{
+		ConcurMobileAppDelegate *delegate = [[UIApplication sharedApplication] delegate];
+		[delegate.navController.view addSubview:msgVC.view];
+	}
+	// Show the message for 5 seconds
+	[msgVC showMsgWithDelay:5];
+}
+
+
+-(IBAction)switchViews:(id)sender
+{
+	UIControl *btn = (UIControl*)sender;
+
+	if (btn.tag == 100002)
+	{//sign in button and the home button
+		//[self switchToView:HOME_PAGE viewFrom:HOME_PAGE];
+		[self switchToView:INFO viewFrom:LOGIN];
+	}
+	else if (btn.tag == 100001 || btn.tag == 100 || btn.tag == 101)
+	{//sign in button and the home button
+		[self switchToView:HOME_PAGE viewFrom:LOGIN];
+	}
+	else if (btn.tag == 600001)
+	{//drill to the Trip Details view from the Trips List view
+		[self switchToView:TRIP_DETAILS viewFrom:TRIPS];
+	}
+	else if (btn.tag == 600002)
+	{//go from Trip Details view to the Trip List view
+		[self switchToView:TRIPS viewFrom:TRIP_DETAILS];
+	}
+	else if (btn.tag == 600003)
+	{//drill to the itin details view from the Trip Detail view
+		[self switchToView:ITIN_DETAILS viewFrom:TRIP_DETAILS];
+	}
+	else if (btn.tag == 600004)
+	{//go from itin details details view to the segments Trip Detail view
+		[self switchToView:TRIP_DETAILS viewFrom:ITIN_DETAILS];
+	}
+	else if (btn.tag == 300001)
+	{//drill to the entry view from the ExpenseList view
+		[self switchToView:ENTRIES viewFrom:REPORTS];
+	}
+	else if (btn.tag == 300002)
+	{//go from entry view to the ExpenseList view
+		[self switchToView:REPORTS viewFrom:ENTRIES];
+	}
+	else if (btn.tag == 700001)
+	{//go to maps from itin detail
+		[self switchToView:MAP viewFrom:ITIN_DETAILS];
+	}
+	else if (btn.tag == 700002)
+	{//go to webview from itin details
+		[self switchToView:WEBVIEW viewFrom:ITIN_DETAILS];
+	}
+	else if (btn.tag == 101032)
+	{
+		[self switchToView:REPORTS viewFrom:HOME_PAGE];
+	}
+	else if (btn.tag == 101031 || btn.tag == 101002 || btn.tag == 101010)
+	{//expense, trip, weather button from homepage view		
+		if (btn.tag == 101031)
+		{//go to expense list
+			[self switchToView:ENTRIES viewFrom:HOME_PAGE];
+		}
+		else if (btn.tag == 101002)
+		{//go to trips
+			[self switchToView:TRIPS viewFrom:HOME_PAGE];
+		}		
+		else if (btn.tag == 101010)
+		{//go to southwest
+			//[self switchToView:SOUTHWEST viewFrom:HOME_PAGE];
+			//[self switchToView:MAP viewFrom:HOME_PAGE];
+			if ([self.findMe.doneLoading isEqualToString:@"YES"])
+			{
+				//NSString *urlString = @"http://maps.google.com/maps?daddr=37.74324,-121.43432&saddr=37.5,-121.4";
+				//NSString *urlString = [NSString stringWithFormat:@"http://maps.google.com/maps?daddr=%@,%@&saddr=37.5,-121.4", self.findMe.latitude, self.findMe.longitude];
+				NSString *address2 = @"18400+NE+Union+Hill+Road,+Redmond,+WA,+980523,+USA";
+				NSString *escaped_address =  [address2 stringByAddingPercentEscapesUsingEncoding: NSUTF8StringEncoding];
+				NSString *urlString = [NSString stringWithFormat:@"http://maps.google.com/maps?daddr=%@&saddr=%@,%@", escaped_address, self.findMe.latitude, self.findMe.longitude];
+				//NSString *requestString = [NSString stringWithFormat:@"http://maps.google.com/maps/geo?q=%@&output=xml&oe=utf8&key=%@&sensor=false&gl=it", escaped_address, MAPS_API_KEY];
+
+				//NSLog(urlString);
+				[[UIApplication sharedApplication] openURL: [NSURL URLWithString: urlString]];
+			}
+		}		
+	}
+	else if (btn.tag == 102000 || btn.tag == 101999)
+	{//btnBack from Info screen (102000) or the Logout button (101999), show the login screen
+		if (btn.tag == 102000)
+		{
+			[self switchToView:LOGIN viewFrom:INFO];
+		}
+		else if (btn.tag == 101999)
+		{
+			[self switchToView:LOGIN viewFrom:HOME_PAGE];
+		}
+	}
+	else if (btn.tag == 100002)
+	{//btnInfo from login screen, show the info screen
+		[self switchToView:INFO viewFrom:LOGIN];
+	}
+  
+}
+
+
+// Override to allow orientations other than the default portrait orientation.
+- (BOOL)shouldAutorotateToInterfaceOrientation:(UIInterfaceOrientation)interfaceOrientation {
+    // Return YES for supported orientations
+    return (interfaceOrientation == UIInterfaceOrientationPortrait);
+}
+
+
+- (void)didReceiveMemoryWarning {
+	// Releases the view if it doesn't have a superview.
+    [super didReceiveMemoryWarning];
+	
+	// Release any cached data, images, etc that aren't in use.
+}
+
+- (void)viewDidUnload {
+	// Release any retained subviews of the main view.
+	// e.g. self.myOutlet = nil;
+}
+
+-(void) addMsg:(Msg *)msg
+{//when a message is added it will auto execute and attempt to fetch the data
+	[msgControl add:msg];
+}
+
+-(void) refreshTopViewData:(Msg *)msg
+{//this is where the rvc asks the top view if it wants to use the currently retrieved data
+	//get top view and call it's refreshData view method
+	NSLog(@"refreshTopViewData for %@", strCurrentView);
+	MobileViewController *mvc = [views objectForKey:strCurrentView];
+	if (mvc != nil)
+	{
+		[mvc respondToFoundData:msg];
+	}	
+}
+
+
+- (void)dealloc {
+	[loginViewController release];
+	[homePageViewController release];
+	[infoViewController release];
+	[expenseListViewController release];
+	[entryListViewController release];
+	[tripsViewController release];
+	[tripDetailsViewController release];
+	[itinDetailsViewController release];
+	[mapViewController release];
+	[splashViewController release];
+	[southwestViewController release];
+	[webViewController release];
+	
+	[webViewURL release];
+	[topView release];
+	
+	[findMe release];
+	[msgControl release];
+	
+	[plistDict release];
+	[views release];
+	[viewNamesDict release];
+	[configDict release];
+	
+	[barButton release];
+	[navBar release];
+	[barTitle release];
+	
+	[strCurrentView release];
+	[strSessionId release];
+	[strUserName release];
+	[strRememberMe release];
+	
+    [super dealloc];
+}
+
+
+@end

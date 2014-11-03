@@ -1,0 +1,3805 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key># of Cars</key>
+	<string># of Cars</string>
+	<key>%@ has been submitted</key>
+	<string>%@ has been submitted</string>
+	<key>%@ km</key>
+	<string>%@ km</string>
+	<key>%@ kms</key>
+	<string>%@ km</string>
+	<key>%@ mile</key>
+	<string>%@ mile</string>
+	<key>%@ miles</key>
+	<string>%@ miles</string>
+	<key>%@ of your colleagues are staying here on your check-in date</key>
+	<string>%@ of your colleagues are staying here on your check-in date</string>
+	<key>%@ per day</key>
+	<string>%@ per day</string>
+	<key>%d Hour and %d Minute(s)</key>
+	<string>%d Hour and %d Minute(s)</string>
+	<key>%d Hours and %d Minute(s)</key>
+	<string>%d Hours and %d Minute(s)</string>
+	<key>%d Minute(s)</key>
+	<string>%d Minute(s)</string>
+	<key>(Refundable)</key>
+	<string>(Refundable)</string>
+	<key>1 Stop</key>
+	<string>1 Stop</string>
+	<key>@Concur2Go Twitter Feed</key>
+	<string>@Concur2Go Twitter Feed</string>
+	<key>A Receipt is</key>
+	<string>A Receipt is showing attached to this Expense on the server, but the receipt no longer exists in Receipt Manager.  Please reattach the receipt to this Expense and Save.</string>
+	<key>ACTIVEREQUESTS</key>
+	<string>ACTIVE REQUESTS</string>
+	<key>ACTIVE_ENTRIES</key>
+	<string>Claim</string>
+	<key>ACTIVE_REPORTS</key>
+	<string>Active Claims</string>
+	<key>ADD_CAR_MILEAGE_HOME_NOT_SUPPORTED</key>
+	<string>No car mileage rates were found for your personal car configuration - or -  your particular car rate configuration is not currently supported.  Please add your mileage expense within a claim via mobile or via the web.</string>
+	<key>ADD_CAR_MILEAGE_NOT_SUPPORTED</key>
+	<string>No car mileage rates were found for your personal car configuration - or -  your particular car rate configuration is not currently supported.</string>
+	<key>ADD_EXISTING_CARD</key>
+	<string>This particular card has already been added and cannot be added again.</string>
+	<key>ADD_EXPENSE_OFFLINE_NOT_SUPPORTED</key>
+	<string>Add expense is not yet supported in offline mode.</string>
+	<key>ADD_TO_RPT_CONFIRM_MSG</key>
+	<string>Add selected expense(s) to claim? You can attach receipts and edit expenses after adding them to a claim.</string>
+	<key>ADD_TO_RPT_CONFIRM_TITLE</key>
+	<string>Confirm</string>
+	<key>ADD_YODLEE_CARD_COMPLETE_MSG</key>
+	<string>Your card ending in %@ has been added to your SmartExpense account.</string>
+	<key>ADD_YODLEE_CARD_FAILED_MSG</key>
+	<string>Failed to add your credit card.  Please try later.</string>
+	<key>ADD_YODLEE_CARD_INSTRUCTION</key>
+	<string>Enter your login information for your account. Concur will encrypt and securely use this information to download your card charges.</string>
+	<key>AIR_BOOKING</key>
+	<string>Air Booking</string>
+	<key>AIR_BOOKING_DISABLED_MSG</key>
+	<string>Your company has disabled Air booking on mobile. Please book your flight online or by calling your Travel Agency.</string>
+	<key>AIR_BOOKING_PROFILE_1_MSG</key>
+	<string>Your travel profile requires a value for Middle Name, Gender and Date of Birth. Please log in to the web version of Concur Travel and select Profile on the menu.</string>
+	<key>AIR_BOOKING_PROFILE_21_MSG</key>
+	<string>Your travel profile has never been saved and must be saved at least one time prior to booking. Please log in to the web version of Concur Travel, select Profile and Save.</string>
+	<key>AIR_BOOKING_PROFILE_22_MSG</key>
+	<string>Your travel configuration billing code/type requires the existence of projects. Please contact your Company Administrator to set up the appropriate projects.</string>
+	<key>AIR_BOOKING_PROFILE_23_MSG</key>
+	<string>Vinnet no longer exists! The client should not be receiving this profile check code.</string>
+	<key>AIR_BOOKING_PROFILE_24_MSG</key>
+	<string>Your travel profile requires a value for cell phone. Please log in to the web version of Concur Travel and select Profile on the menu.</string>
+	<key>AIR_BOOKING_PROFILE_25_MSG</key>
+	<string>Your travel profile requires a value for Passport Nationality. Please log in to the web version of Concur Travel and select Profile on the menu.</string>
+	<key>AIR_BOOKING_PROFILE_26_MSG</key>
+	<string>Your travel profile requires a value for Job Title. Please log in to the web version of Concur Travel and select Profile on the menu.</string>
+	<key>AIR_BOOKING_PROFILE_27_MSG</key>
+	<string>Your travel profile requires a value for Org Unit. Please log in to the web version of Concur Travel and select Profile on the menu.</string>
+	<key>AIR_BOOKING_PROFILE_28_MSG</key>
+	<string>Your travel profile requires a value for Name-Remark. Please log in to the web version of Concur Travel and select Profile on the menu.\nNOTE: This field may have a customised label. If not found, please contact your Company Administrator.</string>
+	<key>AIR_BOOKING_PROFILE_29_MSG</key>
+	<string>Your travel profile requires a value for Manager. Please log in to the web version of Concur Travel and select Profile on the menu.</string>
+	<key>AIR_BOOKING_PROFILE_2_MSG</key>
+	<string>Before you can book air travel, you must complete your travel profile. Please log in to the web version of Concur Travel and select Profile on the menu.</string>
+	<key>AIR_BOOKING_PROFILE_30_MSG</key>
+	<string>Your travel profile requires a value for Employee ID. Please log in to the web version of Concur Travel and select Profile on the menu.</string>
+	<key>AIR_BOOKING_PROFILE_31_MSG</key>
+	<string>Your travel profile requires a valid email address. Please log in to the web version of Concur Travel and select Profile on the menu.</string>
+	<key>AIR_BOOKING_PROFILE_32_MSG</key>
+	<string>Your travel profile requires a value for work address (street, city and country). Please log in to the web version of Concur Travel and select Profile on the menu.</string>
+	<key>AIR_BOOKING_PROFILE_33_MSG</key>
+	<string>Your travel profile requires a value for either a work or home phone number. Please log in to the web version of Concur Travel and select Profile on the menu.</string>
+	<key>AIR_BOOKING_PROFILE_PROLOG_MSG</key>
+	<string>Please log out, then log back in after providing the above information.</string>
+	<key>AIR_BOOKING_REQ_CUSTOM_FIELDS_MSG</key>
+	<string>Your company has special requirements when booking air.  Please book air using the web version of Concur.</string>
+	<key>AIR_WARNING_JUSTIFICATION</key>
+	<string>Before reserving this flight in violation of company policy, you must provide a justification in the field shown in red.</string>
+	<key>AIR_WARNING_REASON</key>
+	<string>Before reserving this flight in violation of company policy, you must provide a reason in the field shown in red.</string>
+	<key>AIR_WARNING_REASON_JUSTIFICATION</key>
+	<string>Before reserving this flight in violation of company policy, you must provide a reason and justification in the fields shown in red.</string>
+	<key>ALERT_CLEAR_CACHE</key>
+	<string>This will delete all of the Offline data. Your application will continue to work.</string>
+	<key>AMOUNT_TOO_BIG_ERR_MSG</key>
+	<string>Enter amount within 999999999999999</string>
+	<key>APPROVALS_NEG_TEXT</key>
+	<string>Approve items anywhere, anytime</string>
+	<key>APPROVEDREQUESTS</key>
+	<string>APPROVED REQUESTS</string>
+	<key>APPROVE_APPROVE_BUTTON_TITLE</key>
+	<string>Approve</string>
+	<key>APPROVE_CANCEL</key>
+	<string>Cancel</string>
+	<key>APPROVE_ENTER_COMMENT_FOR_SENDBACK</key>
+	<string>Please enter a comment.</string>
+	<key>APPROVE_ENTRIES</key>
+	<string>Claim Entries</string>
+	<key>APPROVE_ENTRIES_ACTION_SECTION_REPORT_SUMMARY_ROW</key>
+	<string>Claim Summary</string>
+	<key>APPROVE_ENTRIES_ACTION_SECTION_VIEW_COMMENTS_ROW</key>
+	<string>View Comments</string>
+	<key>APPROVE_ENTRIES_ACTION_SECTION_VIEW_EXCEPTIONS_ROW</key>
+	<string>View Exceptions</string>
+	<key>APPROVE_ENTRIES_ACTION_SECTION_VIEW_RECEIPTS_ROW</key>
+	<string>View Receipts</string>
+	<key>APPROVE_ENTRIES_VIEW_TITLE</key>
+	<string>Expense List</string>
+	<key>APPROVE_EXPENSE_DETAILS</key>
+	<string>Expense Details</string>
+	<key>APPROVE_EXPENSE_DETAILS_ATTENDEES</key>
+	<string>Attendees</string>
+	<key>APPROVE_EXPENSE_DETAILS_COMMENT</key>
+	<string>Comment</string>
+	<key>APPROVE_EXPENSE_DETAILS_DETAILS</key>
+	<string>Details</string>
+	<key>APPROVE_EXPENSE_DETAILS_EXCEPTIONS</key>
+	<string>Exceptions</string>
+	<key>APPROVE_EXPENSE_DETAILS_VIEW_ATTENDEES</key>
+	<string>View Attendees</string>
+	<key>APPROVE_EXPENSE_DETAILS_VIEW_ITEMIZATIONS</key>
+	<string>View Itemisations</string>
+	<key>APPROVE_EXPENSE_DETAILS_VIEW_TITLE</key>
+	<string>Expense</string>
+	<key>APPROVE_INVOICES</key>
+	<string>Approve Invoices</string>
+	<key>APPROVE_OK</key>
+	<string>OK</string>
+	<key>APPROVE_PLEASE_COMMENT</key>
+	<string>Please Comment</string>
+	<key>APPROVE_PLEASE_CONFIRM</key>
+	<string>Please Confirm</string>
+	<key>APPROVE_QUESTION_AREYOUSURE</key>
+	<string>Are you sure you want to approve this claim?</string>
+	<key>APPROVE_QUESTION_PART1</key>
+	<string>Approve</string>
+	<key>APPROVE_QUESTION_PART2</key>
+	<string>expense claim for</string>
+	<key>APPROVE_REPORT</key>
+	<string>Approve Claim</string>
+	<key>APPROVE_REPORTS</key>
+	<string>Approve Claims</string>
+	<key>APPROVE_REPORTS_VIEW_TITLE</key>
+	<string>Claims To Approve</string>
+	<key>APPROVE_REPORT_CHECK_RECEIPT_IMAGE</key>
+	<string>Check Receipt Image</string>
+	<key>APPROVE_REPORT_RECEIPT_IMAGE</key>
+	<string>View Receipt Image</string>
+	<key>APPROVE_REPORT_SUMMARY</key>
+	<string>Claim Summary</string>
+	<key>APPROVE_REPORT_SUMMARY_AMOUNT_APPROVED</key>
+	<string>Amount Approved</string>
+	<key>APPROVE_REPORT_SUMMARY_AMOUNT_CLAIMED</key>
+	<string>Amount Claimed</string>
+	<key>APPROVE_REPORT_SUMMARY_AMOUNT_DUE_COMPANY</key>
+	<string>Amount Due Company</string>
+	<key>APPROVE_REPORT_SUMMARY_AMOUNT_DUE_CREDIT_CARD</key>
+	<string>Amount Due Credit Card</string>
+	<key>APPROVE_REPORT_SUMMARY_AMOUNT_DUE_EMPLOYEE</key>
+	<string>Amount Due Employee</string>
+	<key>APPROVE_REPORT_SUMMARY_AMOUNT_REJECTED</key>
+	<string>Amount Rejected</string>
+	<key>APPROVE_REPORT_SUMMARY_COMMENTS</key>
+	<string>Comments</string>
+	<key>APPROVE_REPORT_SUMMARY_COMPANYDISBURSEMENT</key>
+	<string>Company Disbursement</string>
+	<key>APPROVE_REPORT_SUMMARY_COMPANY_PAID_TO_CREDIT_CARD</key>
+	<string>Company Paid To Credit Card</string>
+	<key>APPROVE_REPORT_SUMMARY_EMPLOYEEDISBURSEMENTS</key>
+	<string>Employee Disbursements</string>
+	<key>APPROVE_REPORT_SUMMARY_HEADER</key>
+	<string>Header</string>
+	<key>APPROVE_REPORT_SUMMARY_LESS_PERSONAL_AMOUNT</key>
+	<string>Less  Personal Amount</string>
+	<key>APPROVE_REPORT_SUMMARY_POLICY</key>
+	<string>Policy</string>
+	<key>APPROVE_REPORT_SUMMARY_REPORT_HEADER</key>
+	<string>Claim Header</string>
+	<key>APPROVE_REPORT_SUMMARY_REPORT_ID</key>
+	<string>Claim id</string>
+	<key>APPROVE_REPORT_SUMMARY_REPORT_TOTAL</key>
+	<string>Claim Total</string>
+	<key>APPROVE_REPORT_SUMMARY_TOTAL_PAID_BY_COMPANY</key>
+	<string>Total Paid By Company</string>
+	<key>APPROVE_REPORT_SUMMARY_TOTAL_PAID_BY_EMPLOYEE</key>
+	<string>Total Paid By Employee</string>
+	<key>APPROVE_REPORT_SUMMARY_VIEW_TITLE</key>
+	<string>Summary</string>
+	<key>APPROVE_SENDBACK_BUTTON_TITLE</key>
+	<string>Send Back</string>
+	<key>APPROVE_VIEW_ATTENDEES</key>
+	<string>Attendees</string>
+	<key>APPROVE_VIEW_ATTENDEES_ATTENDEE_AMOUNT_TITLE</key>
+	<string>Amount</string>
+	<key>APPROVE_VIEW_ATTENDEES_ATTENDEE_COMPANY_TITLE</key>
+	<string>Company</string>
+	<key>APPROVE_VIEW_ATTENDEES_ATTENDEE_NAME_TITLE</key>
+	<string>Attendee Name</string>
+	<key>APPROVE_VIEW_ATTENDEES_ATTENDEE_TITLE_TITLE</key>
+	<string>Attendee Title</string>
+	<key>APPROVE_VIEW_ATTENDEES_ATTENDEE_TYPE_TITLE</key>
+	<string>Attendee Type</string>
+	<key>APPROVE_VIEW_COMMENTS</key>
+	<string>View Comments</string>
+	<key>APPROVE_VIEW_COMMENTS_VIEW_TITLE</key>
+	<string>Comments</string>
+	<key>APPROVE_VIEW_EXCEPTIONS</key>
+	<string>View Exceptions</string>
+	<key>APPROVE_VIEW_EXCEPTIONS_EXPENSE_LEVEL_EXCEPTION_SECTION_HEADER</key>
+	<string>Expenses</string>
+	<key>APPROVE_VIEW_EXCEPTIONS_REPORT_LEVEL_EXCEPTION_SECTION_HEADER</key>
+	<string>Claim</string>
+	<key>APPROVE_VIEW_EXCEPTIONS_VIEW_TITLE</key>
+	<string>Exceptions</string>
+	<key>APPROVE_VIEW_ITEMIZATIONS</key>
+	<string>Itemisation</string>
+	<key>APPROVE_VIEW_ITEMIZATIONS_SUMMARY_SECTION_TITLE</key>
+	<string>Summary</string>
+	<key>APP_RATING_MSG</key>
+	<string> Now that you have used our app, please let us know what you think of it by rating it in the App Store.</string>
+	<key>APP_RATING_MSG_DISMISS</key>
+	<string>Don't Ask Again</string>
+	<key>APP_RATING_TITLE</key>
+	<string>Rate this App?</string>
+	<key>ATTENDEES</key>
+	<string>Attendees</string>
+	<key>ATTENDEES_EXCLUDED_FOR_TYPE</key>
+	<string>Some of the attendees cannot be added because their attendee types are excluded from this expense type.</string>
+	<key>ATTENDEE_ADD</key>
+	<string>Add Attendee</string>
+	<key>ATTENDEE_ADD_BUMP</key>
+	<string>Add Attendee via %@</string>
+	<key>ATTENDEE_ADD_CONTACT</key>
+	<string>Add Attendee Manually</string>
+	<key>ATTENDEE_ENTRY</key>
+	<string>Attendee</string>
+	<key>ATTENDEE_SEARCH_FOR_ATTENDEE</key>
+	<string>Search for Attendee</string>
+	<key>ATTENDEE_SELECT_CONTACT</key>
+	<string>Select from Contact</string>
+	<key>AUTHENTICATION_FAILURE_MSG</key>
+	<string>Unauthorised access violation.  Please check your user name and/or PIN.</string>
+	<key>AUTHENTICATION_TIMED_OUT_MSG</key>
+	<string>The connection to the authentication service timed out.  Please make sure that you are pointing to the proper URL.</string>
+	<key>A_ACCO</key>
+	<string>Approved &amp; in Accounting Review</string>
+	<key>A_APPR</key>
+	<string>Approved</string>
+	<key>A_EXTV</key>
+	<string>Pending External Validation</string>
+	<key>A_FILE</key>
+	<string>Submitted</string>
+	<key>A_NOTF</key>
+	<string>Not Submitted</string>
+	<key>A_PECO</key>
+	<string>Pending Cost Object Approval</string>
+	<key>A_PEND</key>
+	<string>Submitted &amp; Pending Approval</string>
+	<key>A_PVAL</key>
+	<string>Pending Validation</string>
+	<key>A_RESU</key>
+	<string>Sent Back to Employee</string>
+	<key>A_RHLD</key>
+	<string>Hold for Receipt Image</string>
+	<key>A_TEXP</key>
+	<string>Approval Time Expired</string>
+	<key>Abukai Expenses</key>
+	<string>Abukai Expenses</string>
+	<key>Accept</key>
+	<string>Accept</string>
+	<key>Access other areas of the app</key>
+	<string>Access other areas of the app</string>
+	<key>Accounting Code</key>
+	<string>Accounting Code</string>
+	<key>Actions offline</key>
+	<string>Your device is currently offline.  Please connect it to the internet and try this action again.</string>
+	<key>Actual Arrival</key>
+	<string>Actual Arrival</string>
+	<key>Actual Departure</key>
+	<string>Actual Departure</string>
+	<key>Actual Equipment</key>
+	<string>Actual Equipment</string>
+	<key>Actual Terminal</key>
+	<string>Actual Terminal</string>
+	<key>Add Account to Concur</key>
+	<string>Add Account to Concur</string>
+	<key>Add Amtrak</key>
+	<string>Add Amtrak</string>
+	<key>Add Another</key>
+	<string>Add Another</string>
+	<key>Add Attendee</key>
+	<string>Add Attendee</string>
+	<key>Add Car</key>
+	<string>Add Car</string>
+	<key>Add Car Mileage</key>
+	<string>Add Car Mileage</string>
+	<key>Add Card</key>
+	<string>Add Card</string>
+	<key>Add Comment</key>
+	<string>Add Comment</string>
+	<key>Add Credit Card</key>
+	<string>Add Credit Card</string>
+	<key>Add Entry</key>
+	<string>Add Entry</string>
+	<key>Add Expense</key>
+	<string>Add Expense</string>
+	<key>Add Hotel</key>
+	<string>Add Hotel</string>
+	<key>Add Itemization</key>
+	<string>Add Itemisation</string>
+	<key>Add Itinerary Stop Header</key>
+	<string>In order to give you the most accurate allowances, we need to know where you stopped during your trip. Add at least two stops to complete your itinerary.</string>
+	<key>Add Mileage</key>
+	<string>Add Mileage</string>
+	<key>Add New Expense</key>
+	<string>Add New Expense</string>
+	<key>Add Receipt</key>
+	<string>Add Receipt</string>
+	<key>Add Selected Attendee</key>
+	<string>Add Selected Attendee</string>
+	<key>Add Single Day Itinerary Stop Header</key>
+	<string>In order to give you the most accurate allowances, we need to know where you stopped during your trip. Add at least two stops to complete your itinerary.</string>
+	<key>Add a Cash Expense</key>
+	<string>Add expense</string>
+	<key>Add a Receipt using the below buttons</key>
+	<string>Add a Receipt using the below buttons</string>
+	<key>Add an Attendee</key>
+	<string>Add an Attendee</string>
+	<key>Add an Entry from a Picture</key>
+	<string>Add an Entry from a Picture</string>
+	<key>Add credit card</key>
+	<string>Add credit card</string>
+	<key>Add expenses to your report.</key>
+	<string>Add expenses to your claim.</string>
+	<key>Add expenses with attendees</key>
+	<string>Add expenses with attendees</string>
+	<key>Add from Photo Album</key>
+	<string>Add from Photo Album</string>
+	<key>Add to Report</key>
+	<string>Add to Claim</string>
+	<key>AddAnotherItemToThisRequest</key>
+	<string>Add another item to this request</string>
+	<key>Adding to Report</key>
+	<string>Adding to Claim</string>
+	<key>Additional Charges (each night)</key>
+	<string>Additional Charges (each night)</string>
+	<key>Address</key>
+	<string>Address</string>
+	<key>Address point of interest airport code</key>
+	<string>Address, point of interest, airport code</string>
+	<key>Adds processing time</key>
+	<string>Adds processing time</string>
+	<key>Adjust Allowance</key>
+	<string>Adjust Allowance</string>
+	<key>Adjustments</key>
+	<string>Adjustments</string>
+	<key>Adults</key>
+	<string>Adults</string>
+	<key>Advanced Search</key>
+	<string>Advanced Search</string>
+	<key>Afternoon</key>
+	<string>Afternoon</string>
+	<key>Agency Code Sign In</key>
+	<string>Agency Code Sign-In</string>
+	<key>Agency Record Locator: %@</key>
+	<string>Agency Record Locator: %@</string>
+	<key>Agency Sign In</key>
+	<string>Agency Sign In</string>
+	<key>Air Booking</key>
+	<string>Air Booking</string>
+	<key>Air Price to Beat</key>
+	<string>Air Price-to-Beat</string>
+	<key>Air cancelled from mobile device</key>
+	<string>Air cancelled from mobile device</string>
+	<key>Aircraft</key>
+	<string>Aircraft</string>
+	<key>Airfare Price to Beat</key>
+	<string>Airfare Price-to-Beat</string>
+	<key>Airline</key>
+	<string>Airline</string>
+	<key>Airports</key>
+	<string>Airports</string>
+	<key>All</key>
+	<string>All</string>
+	<key>All Expenses</key>
+	<string>All Expenses</string>
+	<key>All Flights</key>
+	<string>All Flights</string>
+	<key>All Items</key>
+	<string>All Items</string>
+	<key>All Nonstop</key>
+	<string>All Nonstop</string>
+	<key>All Results</key>
+	<string>All Results</string>
+	<key>All States &amp; Provinces</key>
+	<string>All States &amp; Provinces</string>
+	<key>All day</key>
+	<string>All day</string>
+	<key>All token</key>
+	<string>All %@</string>
+	<key>All token (token results)</key>
+	<string>All %@ (%d results)</string>
+	<key>Allowance Adjustments</key>
+	<string>Allowance Adjustments</string>
+	<key>Allowance Itinerary</key>
+	<string>Allowance Itinerary</string>
+	<key>Already Expensed</key>
+	<string>Already Expensed</string>
+	<key>Already have an account SU</key>
+	<string>Already have an account?</string>
+	<key>Amount</key>
+	<string>Amount</string>
+	<key>Amount in</key>
+	<string>Amount in</string>
+	<key>Amtrak</key>
+	<string>Amtrak</string>
+	<key>An Expense Report</key>
+	<string>An Expense Claim</string>
+	<key>An email containing the application's log has been placed in your outbox.</key>
+	<string>An email containing the application's log has been placed in your outbox.</string>
+	<key>An email containing the application's log has been saved in your Drafts folder.</key>
+	<string>An email containing the application's log has been saved in your Drafts folder.</string>
+	<key>An email has been sent containing your report.</key>
+	<string>An email has been sent containing your claim.</string>
+	<key>An invalid station for arrival has been specified.  Please select a station to arrive at.</key>
+	<string>An invalid station for arrival has been specified.  Please select a station to arrive at.</string>
+	<key>An invalid station for departure has been specified.  Please select a station to depart from.</key>
+	<string>An invalid station for departure has been specified.  Please select a station to depart from.</string>
+	<key>An unexpected error occurred. Please try again later.</key>
+	<string>An unexpected error occurred. Please try again later.</string>
+	<key>And view upcoming itineraries.</key>
+	<string>and view upcoming itineraries.</string>
+	<key>Any</key>
+	<string>Mixed Classes</string>
+	<key>Any Car Class</key>
+	<string>Any Car Class</string>
+	<key>Anytime</key>
+	<string>Anytime</string>
+	<key>AppStore Expense</key>
+	<string>If you are a Concur Expense or Concur Breeze user then you can use the mobile solution to:         
+        * Capture quick expenses and receipts using device's camera (no more scanning, faxing or mailing required) 
+        * View and Edit Credit Card Charges
+        * Add expenses to an existing or a new expense claim and submit claims
+        * Edit a claim's header/expenses
+        * Add itemisations /mileage
+        * Approve or reject expense claims with a comment - even view related receipts!</string>
+	<key>Append</key>
+	<string>Append</string>
+	<key>Append Confirmation</key>
+	<string>Append Confirmation</string>
+	<key>Append or Replace Receipt</key>
+	<string>This expense already has a receipt associated with it.  Please select "Append" to append this new receipt to this expense, or "Replace" to replace the existing receipt with this new receipt.</string>
+	<key>Application Information</key>
+	<string>Application Information</string>
+	<key>Approval Summary</key>
+	<string>Approval Summary</string>
+	<key>Approvals</key>
+	<string>Approvals</string>
+	<key>Approve</key>
+	<string>Approve</string>
+	<key>Approve Trips</key>
+	<string>Approve Trips</string>
+	<key>Approve by</key>
+	<string>Approve by</string>
+	<key>Approver</key>
+	<string>Approver</string>
+	<key>Approving Report</key>
+	<string>Approving Claim</string>
+	<key>Approving Trip</key>
+	<string>Approving Trip</string>
+	<key>Apps</key>
+	<string>Apps</string>
+	<key>Are you sure</key>
+	<string>Are you sure that you want to delete the selected expense(s)?</string>
+	<key>Are you sure about adding smart expenses</key>
+	<string>Smart Expenses will be combined into a single entry on the claim.</string>
+	<key>Are you sure about smart expenses</key>
+	<string>Are you sure that you want to delete the selected expense(s)?  The mobile entry portion(s) of the smart expense(s) will be permanently deleted and the associated card charge(s) will be hidden.</string>
+	<key>Are you sure that you want to delete this receipt</key>
+	<string>Are you sure that you want to delete this receipt?</string>
+	<key>Are you sure that you want to reserve the selected train(s)?</key>
+	<string>Are you sure that you want to reserve the selected train(s)?</string>
+	<key>Are you sure you want to approve this trip?</key>
+	<string>Are you sure you want to approve this trip?</string>
+	<key>Are you sure you want to cancel this air reservation?</key>
+	<string>Are you sure you want to cancel this air reservation?</string>
+	<key>Are you sure you want to cancel this car reservation?</key>
+	<string>Are you sure you want to cancel this car reservation?</string>
+	<key>Are you sure you want to cancel this hotel reservation?</key>
+	<string>Are you sure you want to cancel this hotel reservation?</string>
+	<key>Are you sure you want to cancel this rail reservation?</key>
+	<string>Are you sure you want to cancel this rail reservation?</string>
+	<key>Are you sure you want to delete the open report?</key>
+	<string>Are you sure you want to delete the open claim?</string>
+	<key>Are you sure you want to reserve this car?</key>
+	<string>Are you sure you want to reserve this car?</string>
+	<key>Are you sure you want to reserve this flight?</key>
+	<string>Are you sure you want to reserve this flight?</string>
+	<key>Are you sure you want to unlink from your TripIt account?</key>
+	<string>Are you sure you want to unlink from your TripIt account?</string>
+	<key>Arrival</key>
+	<string>Arrival</string>
+	<key>Arrival City</key>
+	<string>Arrival City</string>
+	<key>Arrival Information</key>
+	<string>Arrival Information</string>
+	<key>Arrival Station</key>
+	<string>Arrival Station</string>
+	<key>Arrival Terminal</key>
+	<string>Arrival Terminal</string>
+	<key>Arrival Time</key>
+	<string>Arrival Time</string>
+	<key>Arrive</key>
+	<string>Arrive</string>
+	<key>Arriving trains</key>
+	<string>Arriving: %@</string>
+	<key>Ask Me Later</key>
+	<string>Ask Me Later</string>
+	<key>At Least 1 Month</key>
+	<string>At Least 1 Month</string>
+	<key>At Least 1 Week</key>
+	<string>At Least 1 Week</string>
+	<key>Attach Receipt</key>
+	<string>Attach Receipt</string>
+	<key>Attach via Receipt Store</key>
+	<string>Attach via Receipt Store</string>
+	<key>Attendee</key>
+	<string>Attendee</string>
+	<key>Attendee Amount</key>
+	<string>Attendee Amount</string>
+	<key>Attendee Count</key>
+	<string>Attendee Count</string>
+	<key>Attendee Group</key>
+	<string>Attendee Group</string>
+	<key>Attendee Search Results</key>
+	<string>Attendee Search Results</string>
+	<key>Attendee Type</key>
+	<string>Attendee Type</string>
+	<key>Attendee data is unavailable.</key>
+	<string>Attendee data is unavailable.</string>
+	<key>Attendee type cannot be changed.  Create a new attendee instead.</key>
+	<string>Attendee type cannot be changed.  Create a new attendee instead.</string>
+	<key>Attendees</key>
+	<string>Attendees</string>
+	<key>Attendees not editable offline</key>
+	<string>Attendees cannot be edited offline.</string>
+	<key>Attention</key>
+	<string>Attention</string>
+	<key>Authenticating</key>
+	<string>Authenticating</string>
+	<key>Auto Login</key>
+	<string>Auto Sign In</string>
+	<key>Available From States/Provinces</key>
+	<string>Available From States/Provinces</string>
+	<key>Available From Stations</key>
+	<string>Available From Stations</string>
+	<key>Available Itineraries</key>
+	<string>available Itineraries</string>
+	<key>Available States/Provinces</key>
+	<string>Available States/Provinces</string>
+	<key>Available Stations</key>
+	<string>Available Stations</string>
+	<key>Available To States/Provinces</key>
+	<string>Available To States/Provinces</string>
+	<key>Available To Stations</key>
+	<string>Available To Stations</string>
+	<key>Awaiting Approval</key>
+	<string>Awaiting Approval</string>
+	<key>BOOKING_UNDER_P2B_EARNS_POINTS</key>
+	<string>Selecting options that cost less than the Price-to-Beat earns you Travel Points that can be used toward future benefits.</string>
+	<key>BOOKING_UNDER_P2B_SAVES_MONEY</key>
+	<string>Booking under the Price-to-Beat saves your company money.</string>
+	<key>BRONX_USER_CORP_APP_MSG</key>
+	<string>You cannot log in to Concur Mobile using your login for the SmartExpense version of Concur. Would you like to use the SmartExpense version instead?</string>
+	<key>BRONX_USER_CORP_APP_TITLE</key>
+	<string>SmartExpense User Not Supported</string>
+	<key>BTN_EDIT</key>
+	<string>Edit</string>
+	<key>BUMP_HELP_TEXT1</key>
+	<string>You can share your attendee info by selecting 'Become an Attendee' below.</string>
+	<key>BUMP_HELP_TEXT2</key>
+	<string>Your associate should select 'Add Attendee via %@' on the attendee section of the claim line item screen.</string>
+	<key>BUMP_INSTRUCTION</key>
+	<string>Your associate should select 'Add Attendee via %@' on the attendee section of the claim line item screen in order to add you as an attendee to the claim line item.</string>
+	<key>BUMP_SHARE_HELP_TEXT1</key>
+	<string>You add an attendee by selecting 'Add an Attendee' below.</string>
+	<key>BUMP_SHARE_HELP_TEXT2</key>
+	<string>Your associate should select 'Attendee' button on the home screen.</string>
+	<key>BUSGUEST</key>
+	<string>Business Guest</string>
+	<key>Back</key>
+	<string>Back</string>
+	<key>Baggage Claim</key>
+	<string>Baggage Claim</string>
+	<key>Become an Attendee</key>
+	<string>Become an Attendee</string>
+	<key>Before reserving this car in</key>
+	<string>Before reserving this car in violation of company policy, you must provide a reason and justification in the fields shown in red.</string>
+	<key>Before reserving this car in justification</key>
+	<string>Before reserving this car in violation of company policy, you must provide a justification in the field shown in red.</string>
+	<key>Before reserving this car in reason</key>
+	<string>Before reserving this car in violation of company policy, you must provide a reason in the field shown in red.</string>
+	<key>Before reserving this flight</key>
+	<string>Before reserving this flight, please complete the fields shown in red.</string>
+	<key>Benchmark</key>
+	<string>Benchmark</string>
+	<key>Book</key>
+	<string>Book</string>
+	<key>Book Air</key>
+	<string>Book Air</string>
+	<key>Book Car</key>
+	<string>Book Car</string>
+	<key>Book Hotel</key>
+	<string>Book Hotel</string>
+	<key>Book Rail</key>
+	<string>Book Rail</string>
+	<key>Book Train</key>
+	<string>Book Train</string>
+	<key>Book Travel</key>
+	<string>Book Travel</string>
+	<key>Book Travel from anywhere.</key>
+	<string>Book travel from anywhere</string>
+	<key>Book Travel on the go with Concur</key>
+	<string>Book Travel on the go with Concur</string>
+	<key>Book a Hotel Car and more</key>
+	<string>Book Air, Hotel, and more</string>
+	<key>Book a Trip</key>
+	<string>Book a Trip</string>
+	<key>Book a train</key>
+	<string>Book a train</string>
+	<key>Book flights</key>
+	<string>Book flights</string>
+	<key>Book under this price to earn Travel Points.</key>
+	<string>Book under this price to earn Travel Points.</string>
+	<key>Booking Info</key>
+	<string>Booking Info</string>
+	<key>Booking under this amount saves your company money.</key>
+	<string>Booking under this amount saves your company money.</string>
+	<key>Bookings</key>
+	<string>Bookings</string>
+	<key>Bookings offline</key>
+	<string>Bookings cannot be made while your device is offline.  Please reconnect to the internet and then try again.</string>
+	<key>Border Crossing</key>
+	<string>Border Crossing</string>
+	<key>Bump Phones to Become an Attendee</key>
+	<string>%@ Phones to Become an Attendee</string>
+	<key>Bump Phones to Exchange Attendee Info</key>
+	<string>%@ Phones to Exchange Attendee Info</string>
+	<key>Bus</key>
+	<string>Bus</string>
+	<key>Business</key>
+	<string>Business</string>
+	<key>By State or Province</key>
+	<string>By State or Province</string>
+	<key>CANNOT_ADD_TO_RPT_WAIT_IMAGE</key>
+	<string>Receipt upload is in progress. Please wait a few seconds and try again</string>
+	<key>CAR</key>
+	<string>Car Rental</string>
+	<key>CARDS_LIST</key>
+	<string>Cards</string>
+	<key>CARD_AUTH_MSG</key>
+	<string>This is a card authorisation. Please wait for the card charge before submitting.</string>
+	<key>CAR_DETAILS</key>
+	<string>Car Details</string>
+	<key>CAR_LIST</key>
+	<string>Select Car</string>
+	<key>CHECK_OUT_DATE_ERR_MSG</key>
+	<string>Enter a date later than check in date.</string>
+	<key>COMMENTS</key>
+	<string>Comments</string>
+	<key>COMPANY_NAME</key>
+	<string>Company Name</string>
+	<key>COMPANY_SSO_DISABLED_MSG</key>
+	<string>Company sign-on has been disabled for your company. Please contact your company administrator.</string>
+	<key>COMPANY_SSO_INITIATED_REMOTE_WIPE</key>
+	<string>Your account data has been wiped from this device.  Please contact your company administrator for assistance.</string>
+	<key>CONFIGURING_SESSION</key>
+	<string>Configuring mobile session...</string>
+	<key>CONFIRM_CONTINUE</key>
+	<string>Are you sure that you want to continue?</string>
+	<key>CONFIRM_DETACH_TEXT</key>
+	<string>Are you sure that you want to detach the receipt image?</string>
+	<key>CONFIRM_PIN</key>
+	<string>Confirm New PIN</string>
+	<key>CONFIRM_RECEIPT_DELETE</key>
+	<string>Are you sure you want to delete this receipt?</string>
+	<key>CONFIRM_RECEIPT_DELETION</key>
+	<string>Are you sure you want to delete this receipt?</string>
+	<key>CONFIRM_REPORT_SUBMISSION</key>
+	<string>Are you sure you want to submit this expense claim?</string>
+	<key>COPY_DOWN_ENTRY_MSG</key>
+	<string>You have changed the %@ field(s) in this entry. Do you also want to overwrite the %@ field(s) in all entries and itemisations associated with this entry with the new value entered here? Click Yes to overwrite the values. Click No to save the changes only in the entry. </string>
+	<key>COPY_DOWN_RPT_MSG</key>
+	<string>You have changed the %@ field(s) in this claim header. Do you also want to overwrite the %@ field(s) in all entries and itemisations in this claim with the new value entered here? Click Yes to overwrite the values. Click No to save the changes only in the claim header. </string>
+	<key>CORP_CARDS_0</key>
+	<string>You have no unused corporate card charges</string>
+	<key>CORP_CARDS_1</key>
+	<string>You have 1 unused corporate card charge</string>
+	<key>CORP_CARDS_2</key>
+	<string>You have %d unused corporate card charges</string>
+	<key>CORP_SSO_MSG</key>
+	<string>If your company uses Single Sign On (SSO) and has issued a company code, enter it here.</string>
+	<key>CORP_SSO_MSG_GOV</key>
+	<string>If your agency has issued an agency code, enter it below.</string>
+	<key>CORP_USER_SU_APP_MSG</key>
+	<string>You cannot log in to this SmartExpense version of Concur with your Concur Mobile login. Would you like to use Concur Mobile instead?</string>
+	<key>CORP_USER_SU_APP_TITLE</key>
+	<string>Corporate User Not Supported</string>
+	<key>CREATE_ADD</key>
+	<string>Create &amp; Add</string>
+	<key>CREATE_PIN</key>
+	<string>Set your Mobile PIN to sign in to Concur</string>
+	<key>CREATE_PIN_NOTES</key>
+	<string>Pin may be letters, numbers, and special characters, such as !, $, or #, but no spaces.</string>
+	<key>CREATE_PIN_TITLE</key>
+	<string>Mobile PIN</string>
+	<key>CVV Number</key>
+	<string>CVV Number</string>
+	<key>Cache</key>
+	<string>Cache</string>
+	<key>Cache Done Title</key>
+	<string>Cache Clean Complete</string>
+	<key>Calculate Allowances</key>
+	<string>Calculate Allowances</string>
+	<key>Call</key>
+	<string>Call</string>
+	<key>Call Travel Agent</key>
+	<string>Call Travel Agent</string>
+	<key>Camera</key>
+	<string>Attach via Camera</string>
+	<key>Cancel</key>
+	<string>Cancel</string>
+	<key>Cancel Air</key>
+	<string>Cancel Air</string>
+	<key>Cancel Car</key>
+	<string>Cancel Car</string>
+	<key>Cancel Failed</key>
+	<string>Cancel Failed</string>
+	<key>Cancel Hotel</key>
+	<string>Cancel Hotel</string>
+	<key>Cancel Rail</key>
+	<string>Cancel Rail</string>
+	<key>Cancel Trip</key>
+	<string>Cancel Trip</string>
+	<key>Cancel Upload</key>
+	<string>Cancel Upload</string>
+	<key>Cancel air reservation</key>
+	<string>Cancel air reservation</string>
+	<key>Cancel car reservation</key>
+	<string>Cancel car reservation</string>
+	<key>Cancel hotel reservation</key>
+	<string>Cancel hotel reservation</string>
+	<key>Cancellation Policy</key>
+	<string>Cancellation Policy</string>
+	<key>Cannot Save Changes</key>
+	<string>Cannot Save Changes</string>
+	<key>Cannot Submit Report</key>
+	<string>Cannot Submit Claim</string>
+	<key>Cannot access receipt</key>
+	<string>Cannot access receipt</string>
+	<key>Cannot append receipt</key>
+	<string>Cannot append receipt</string>
+	<key>Cannot expense trip</key>
+	<string>Cannot expense trip</string>
+	<key>Capture Receipt</key>
+	<string>Capture Receipt</string>
+	<key>Capture car mileage</key>
+	<string>Capture car mileage</string>
+	<key>Capture expense and receipt</key>
+	<string>Capture expense and receipt</string>
+	<key>Capture your expenses while you travel</key>
+	<string>Capture your expenses while you travel</string>
+	<key>Car</key>
+	<string>Car</string>
+	<key>Car Hire Airport Location</key>
+	<string>Airport Location</string>
+	<key>Car Mileage</key>
+	<string>Car Mileage</string>
+	<key>Car Mileage Text</key>
+	<string>Expense your mileage</string>
+	<key>Car Type</key>
+	<string>Car Type</string>
+	<key>Car cancelled from mobile device</key>
+	<string>Car cancelled from mobile device</string>
+	<key>Card</key>
+	<string>Card</string>
+	<key>Card Charges</key>
+	<string>Card Charges</string>
+	<key>Card Transactions</key>
+	<string>Card Transactions</string>
+	<key>Cards</key>
+	<string>Cards</string>
+	<key>Cars</key>
+	<string>Cars</string>
+	<key>Cars near</key>
+	<string>Cars near</string>
+	<key>Cars_subline</key>
+	<string>Pick up some cool wheels</string>
+	<key>Cash</key>
+	<string>Cash</string>
+	<key>Chain Least Preferred</key>
+	<string>Chain Least Preferred</string>
+	<key>Chain Most Preferred</key>
+	<string>Chain Most Preferred</string>
+	<key>Chain Preferred</key>
+	<string>Chain Preferred</string>
+	<key>Changing the expense type will remove all itemized data</key>
+	<string>Changing the expense type will remove all itemised data from this expense. Do you want to proceed?</string>
+	<key>Check  In</key>
+	<string>Check   In</string>
+	<key>Check In</key>
+	<string>Check In</string>
+	<key>Check In Complete</key>
+	<string>Check In Complete</string>
+	<key>Check In Complete Message</key>
+	<string>You have successfully checked in with your current location.</string>
+	<key>Check In Failed Message</key>
+	<string>You cannot checkin at this time.  Please retry later.</string>
+	<key>Check Invoice Image</key>
+	<string>Check Invoice Image</string>
+	<key>Check connection retry from receipt store</key>
+	<string>Please check your connection and try to reattach the receipt from receipt store.</string>
+	<key>Check your email to reset your password and sign in</key>
+	<string>Check your email to reset your password and sign in.</string>
+	<key>Check your email to reset your password and sign in.</key>
+	<string>Check your email to reset your password and sign in.</string>
+	<key>Check your spam folder or</key>
+	<string>Don't see it? Check your spam folder or</string>
+	<key>Check-In Date</key>
+	<string>Check-In Date</string>
+	<key>Check-Out Date</key>
+	<string>Check-Out Date</string>
+	<key>Check-in</key>
+	<string>Check-in</string>
+	<key>Check-out</key>
+	<string>Check-out</string>
+	<key>Checking In</key>
+	<string>Checking In</string>
+	<key>Checking Network Connection</key>
+	<string>Checking Network Connection</string>
+	<key>Checking Out</key>
+	<string>Checking Out</string>
+	<key>Children</key>
+	<string>Children</string>
+	<key>ChoosePhoto-ImagePicker</key>
+	<string>Preview</string>
+	<key>Class &amp; Seat Number</key>
+	<string>Class &amp; Seat Number</string>
+	<key>Class / Seat</key>
+	<string>Class / Seat</string>
+	<key>Class of Service</key>
+	<string>Class of Service</string>
+	<key>Class: %@</key>
+	<string>Class: %@</string>
+	<key>Clear Current Selection</key>
+	<string>Clear Current Selection</string>
+	<key>Clear out the local cache</key>
+	<string>Clear out the local cache</string>
+	<key>Close</key>
+	<string>Close</string>
+	<key>Closed</key>
+	<string>Closed</string>
+	<key>Comment</key>
+	<string>Comment</string>
+	<key>Comments</key>
+	<string>Comments</string>
+	<key>Commonly Used</key>
+	<string>Commonly Used</string>
+	<key>Compact</key>
+	<string>Compact</string>
+	<key>Compact Hybrid</key>
+	<string>Compact Hybrid</string>
+	<key>Company</key>
+	<string>Company</string>
+	<key>Company Code</key>
+	<string>SSO Company Code</string>
+	<key>Company Code Sign In</key>
+	<string>SSO Company Code Sign In</string>
+	<key>Company Name</key>
+	<string>Company Name</string>
+	<key>Company Sign In</key>
+	<string>Company Sign In</string>
+	<key>Company Sign On</key>
+	<string>Company Sign On</string>
+	<key>Confirm Delete</key>
+	<string>Confirm Deletion</string>
+	<key>Confirm Detach</key>
+	<string>Confirm Detach</string>
+	<key>Confirm New Mobile Password (PIN)</key>
+	<string>Confirm New Mobile Password (PIN)</string>
+	<key>Confirm New Password</key>
+	<string>Confirm New Password</string>
+	<key>Connect to a WiFi or cellular data network.</key>
+	<string>Connect to a WiFi or cellular data network.</string>
+	<key>Connecting with TripIt</key>
+	<string>Connecting with TripIt</string>
+	<key>Connection Error</key>
+	<string>Connection Error</string>
+	<key>Connection Settings</key>
+	<string>Connection Settings</string>
+	<key>Contact Received</key>
+	<string>Contact Received</string>
+	<key>Continue</key>
+	<string>Continue</string>
+	<key>Copyright Concur 2010</key>
+	<string>Copyright Concur 2013</string>
+	<key>Corp Cards</key>
+	<string>Cards</string>
+	<key>Corporate Card</key>
+	<string>Corporate Card</string>
+	<key>Corporate Cards</key>
+	<string>Corporate Cards</string>
+	<key>Could not connect to Concur.</key>
+	<string>Could not connect to Concur.</string>
+	<key>Could not expense trip</key>
+	<string>This trip has already been expensed</string>
+	<key>Could not load attendee data.</key>
+	<string>Could not load attendee data.</string>
+	<key>Could not load attendee form data.</key>
+	<string>Could not load attendee form data.</string>
+	<key>Could not load attendee search fields data.</key>
+	<string>Could not load attendee search fields data.</string>
+	<key>Could not load expense data.</key>
+	<string>Could not load expense data.</string>
+	<key>Could not save attendee data.  Please try again later.</key>
+	<string>Could not save attendee data.  Please try again later.</string>
+	<key>Crash Detected</key>
+	<string>Crash Detected</string>
+	<key>Create &amp; Add</key>
+	<string>Create &amp; Add</string>
+	<key>Create Password</key>
+	<string>Create Password</string>
+	<key>Create Report</key>
+	<string>Create Claim</string>
+	<key>Create a Report</key>
+	<string>Create a Claim</string>
+	<key>Create a report for your expenses to go into</key>
+	<string>Create a claim for your expenses to go into</string>
+	<key>Create an Account</key>
+	<string>Create an Account</string>
+	<key>Create and submit your expense reports</key>
+	<string>Create and submit your expense claims</string>
+	<key>Credit Card</key>
+	<string>Credit Card</string>
+	<key>Currency</key>
+	<string>Currency</string>
+	<key>Currency Code</key>
+	<string>Currency Code</string>
+	<key>Current Location</key>
+	<string>Current Location</string>
+	<key>Current Trip</key>
+	<string>Current</string>
+	<key>Current Trip Information</key>
+	<string>Current Trip Information</string>
+	<key>Currently Offline</key>
+	<string>Currently Offline</string>
+	<key>Custom fields required message</key>
+	<string>Your company booking policy is not currently supported. Custom fields support is coming soon. Please book travel using the web version of Concur.</string>
+	<key>DISALLOW_EXPENSEIT_DELETE</key>
+	<string>Removal of ExpenseIt items is not supported on mobile</string>
+	<key>DISALLOW_TRANS_DELETE</key>
+	<string>Removal of Card charges is not supported on mobile</string>
+	<key>DISTANCE</key>
+	<string>Find Hotels Within</string>
+	<key>Daily Rate</key>
+	<string>Daily Rate</string>
+	<key>Date</key>
+	<string>Date</string>
+	<key>Day</key>
+	<string>Day</string>
+	<key>Day Trip</key>
+	<string>Day Trip</string>
+	<key>Days</key>
+	<string>Days</string>
+	<key>Days Remaining at Location</key>
+	<string>Days Remaining at Location</string>
+	<key>Delete</key>
+	<string>Delete</string>
+	<key>Delete Entry Failed</key>
+	<string>Delete Entry Failed</string>
+	<key>Delete Receipt</key>
+	<string>Delete Receipt</string>
+	<key>Delete Report Failed</key>
+	<string>Delete Claim Failed</string>
+	<key>Deleting Out of Pocket Expense(s)</key>
+	<string>Deleting Expense(s)</string>
+	<key>Deleting Receipt</key>
+	<string>Deleting Receipt</string>
+	<key>Deleting Report</key>
+	<string>Deleting Claim</string>
+	<key>Delivery Options</key>
+	<string>Delivery Options</string>
+	<key>Depart</key>
+	<string>Depart</string>
+	<key>Departing</key>
+	<string>Departing</string>
+	<key>Departing Train</key>
+	<string>Departing Train</string>
+	<key>Departing trains</key>
+	<string>Departing: %@ %@ %@ </string>
+	<key>Departing: token token</key>
+	<string>Departing: %@ %@</string>
+	<key>Departure</key>
+	<string>Departure</string>
+	<key>Departure City</key>
+	<string>Departure City</string>
+	<key>Departure Date</key>
+	<string>Departure Date</string>
+	<key>Departure Gate</key>
+	<string>Departure Gate</string>
+	<key>Departure Information</key>
+	<string>Departure Information</string>
+	<key>Departure Matches Arrival</key>
+	<string>Departure Matches Arrival</string>
+	<key>Departure Matches Arrival Message</key>
+	<string>The departure and arrival airports are the same.  Please select different airports for your journey.</string>
+	<key>Departure Point</key>
+	<string>Departure Point</string>
+	<key>Departure Station</key>
+	<string>Departure Station</string>
+	<key>Departure Status</key>
+	<string>Departure Status</string>
+	<key>Departure Time</key>
+	<string>Departure Time</string>
+	<key>Depending upon your company configuration some of the Concur for Mobile features may not be avaiable to you</key>
+	<string>Depending upon your company configuration some of the Concur for Mobile features may not be available to you</string>
+	<key>Deposit required</key>
+	<string>Deposit required</string>
+	<key>Destination</key>
+	<string>Destination</string>
+	<key>Destination Location</key>
+	<string>Destination Location</string>
+	<key>Destination Point</key>
+	<string>Destination Point</string>
+	<key>Detach</key>
+	<string>Detach</string>
+	<key>Details</key>
+	<string>Details</string>
+	<key>Dining</key>
+	<string>Dining</string>
+	<key>Directions</key>
+	<string>Directions</string>
+	<key>Disabled by administrator</key>
+	<string>Disabled by administrator</string>
+	<key>Discover great hotels</key>
+	<string>Discover great hotels</string>
+	<key>Dismiss tip overlay</key>
+	<string>Dismiss tip overlay</string>
+	<key>Distance</key>
+	<string>Distance</string>
+	<key>Distance calculated by Google</key>
+	<string>Distance calculated by Google</string>
+	<key>Distance to Date = %@</key>
+	<string>Distance to Date = %@</string>
+	<key>Diversion Airport</key>
+	<string>Diversion Airport</string>
+	<key>Diversion City</key>
+	<string>Diversion City</string>
+	<key>Don't know your PIN?</key>
+	<string>Don't know your PIN?</string>
+	<key>Don't know your password or PIN?</key>
+	<string>Don't know your password or PIN?</string>
+	<key>Don't know your user name?</key>
+	<string>Don't know your user name?</string>
+	<key>Done</key>
+	<string>Done</string>
+	<key>Done cache killing</key>
+	<string>The cache has been wiped from this device.  You will need to close the application and then restart it.  Failure to do so will most likely result in system instability.</string>
+	<key>Dont have an Account Sign Up</key>
+	<string>Don't have an account?</string>
+	<key>Download receipts in background</key>
+	<string>Still downloading receipts in background.  You can wait by clicking Cancel or proceed by clicking OK.</string>
+	<key>Drop-off</key>
+	<string>Drop-off</string>
+	<key>Drop-off Date</key>
+	<string>Drop-off Date</string>
+	<key>Drop-off Time</key>
+	<string>Drop-off Time</string>
+	<key>Dropbox</key>
+	<string>Dropbox</string>
+	<key>Duplicate Attendees</key>
+	<string>Warning Duplicate Attendees</string>
+	<key>Duplicates Found</key>
+	<string>Duplicates Found</string>
+	<key>Duration</key>
+	<string>Duration</string>
+	<key>E Ticket</key>
+	<string>E Ticket</string>
+	<key>E-Receipt</key>
+	<string>E-Receipt</string>
+	<key>EMAIL</key>
+	<string>Email</string>
+	<key>EMPLOYEE</key>
+	<string>Employee</string>
+	<key>ENTER_NEW_PIN</key>
+	<string>New PIN</string>
+	<key>ENTER_PIN_MSG</key>
+	<string>Enter a PIN consisting of at least 4 characters using letters or numbers.  Your company may require additional characters.</string>
+	<key>ENTER_VALID_COMPANY_CODE</key>
+	<string>Please provide a value for company code.</string>
+	<key>ENTRY_REQ_FIELDS</key>
+	<string>Please fill in all required fields and fix any error on the form before saving the entry.</string>
+	<key>ERROR</key>
+	<string>Error</string>
+	<key>ERROR_ACCOUNT_NOT_CONFIGURED</key>
+	<string>Your account is not configured for submitting claims.</string>
+	<key>ERROR_BAD_CONFIG_MSG</key>
+	<string>Your configuration does not support receipts.  Please check with your administrator.</string>
+	<key>ERROR_CONFIGURING_SESSION</key>
+	<string>Configuring your mobile session via single sign-on has failed. Please contact your company administrator.</string>
+	<key>ERROR_EXPENSE_SITE_DOWN</key>
+	<string>Expense is undergoing maintenance. Please try again in about an hour.</string>
+	<key>ERROR_INVALID_AGENCY_CODE</key>
+	<string>Please enter your agency code.</string>
+	<key>ERROR_INVALID_COMPANY_CODE</key>
+	<string>Please enter your company code.</string>
+	<key>ERROR_INVALID_PIN</key>
+	<string>Your PIN is not valid. Please reenter your PIN.</string>
+	<key>ERROR_MSG_VISIT_WEBSITE</key>
+	<string>Please visit the Concur web site to provide a value.</string>
+	<key>ERROR_REQUIRED_FIELDS_MISSING</key>
+	<string>At least one required field in this claim lacks data. A red exception flag marks the expense and a list identifies the field(s) to be filled out.</string>
+	<key>ERROR_SUBMIT_FAILED</key>
+	<string>Submit Failed</string>
+	<key>EXCEPTIONS</key>
+	<string>Exceptions</string>
+	<key>EXPENSES_NEG_TEXT</key>
+	<string>Capture your expenses on the go</string>
+	<key>EXPENSE_DETAILS_ITEMIZATIONS</key>
+	<string>Itemisations</string>
+	<key>EXPENSE_REPORTS</key>
+	<string>Expense Claims</string>
+	<key>EXPENSE_REPORTS_NEG_TEXT</key>
+	<string>Review and submit your claims</string>
+	<key>EXPENSE_TYPES_LIST</key>
+	<string>Expense Types</string>
+	<key>Earliest Departure</key>
+	<string>Earliest Departure</string>
+	<key>Earn %d pts.</key>
+	<string>Earn %d pts.</string>
+	<key>Economy</key>
+	<string>Economy</string>
+	<key>Economy Hybrid</key>
+	<string>Economy Hybrid</string>
+	<key>Edit</key>
+	<string>Edit</string>
+	<key>Email</key>
+	<string>Email</string>
+	<key>Email Address</key>
+	<string>Email Address</string>
+	<key>Email Log</key>
+	<string>Email Log</string>
+	<key>Enter Approver Email</key>
+	<string>Enter Approver Email</string>
+	<key>Enter Field</key>
+	<string>Enter %@</string>
+	<key>Enter in the URL that connects to the Concur servers</key>
+	<string>Enter in the URL that connects to the Concur servers</string>
+	<key>Enter your Agency Code</key>
+	<string>Enter your Agency Code</string>
+	<key>Enter your mobile password (PIN) to sign in</key>
+	<string>Enter your mobile password (PIN) to sign in</string>
+	<key>Enter your password to sign in</key>
+	<string>Enter your password to sign in</string>
+	<key>Error</key>
+	<string>Error</string>
+	<key>Error loading content</key>
+	<string>Error loading content</string>
+	<key>ErrorReceiptsFetch</key>
+	<string>No receipts uploaded. Tap on the '+' button below to upload a receipt now and use them later from your claim or expense entries.</string>
+	<key>Estimated Arrival</key>
+	<string>Estimated Arrival</string>
+	<key>Estimated Departure</key>
+	<string>Estimated Departure</string>
+	<key>Evening</key>
+	<string>Evening</string>
+	<key>Exception Details</key>
+	<string>Exception Details</string>
+	<key>Exceptions</key>
+	<string>Exceptions</string>
+	<key>Exchange Rate</key>
+	<string>Exchange Rate</string>
+	<key>Existing Reports</key>
+	<string>Existing Claims</string>
+	<key>Expense</key>
+	<string>Expense</string>
+	<key>Expense Locations</key>
+	<string>Expense Locations</string>
+	<key>Expense Queued</key>
+	<string>Expense Queued</string>
+	<key>Expense Trip</key>
+	<string>Expense Trip</string>
+	<key>Expense Type</key>
+	<string>Expense Type</string>
+	<key>Expense Updates</key>
+	<string>Expense Updates</string>
+	<key>Expense a trip from TripIt</key>
+	<string>Expense a trip from TripIt</string>
+	<key>ExpenseIt Entries</key>
+	<string>ExpenseIt Entries</string>
+	<key>ExpenseIt Entry</key>
+	<string>ExpenseIt Entry</string>
+	<key>ExpenseTracker version</key>
+	<string>SmartExpense version %@</string>
+	<key>Expensed</key>
+	<string>Expensed</string>
+	<key>Expenses</key>
+	<string>Expenses</string>
+	<key>Expenses cannot be added offline</key>
+	<string>Expenses cannot be added offline.</string>
+	<key>Expensing the Trip</key>
+	<string>Expensing the Trip</string>
+	<key>Export</key>
+	<string>Export</string>
+	<key>Express</key>
+	<string>Express</string>
+	<key>FACEBOOK_AUTH_FAILED</key>
+	<string>Failed to use Facebook to authenticate.  Please make sure Private Browsing is disabled on your Safari browser.</string>
+	<key>FACEBOOK_INCOMPLETE_INFO_SIGNIN_MSG</key>
+	<string>Unable to sign in using your Facebook credentials. Please make sure you have a valid email in your Facebook profile and sign in via Email with Facebook account.</string>
+	<key>FACEBOOK_INCOMPLETE_INFO_SIGNUP_MSG</key>
+	<string>Unable to sign up using your Facebook credentials.  Please make sure email, first name and last name are filled in your Facebook profile and sign in via Email with Facebook account.</string>
+	<key>FACEBOOK_SIGNIN_FAILED_MSG</key>
+	<string>Unexpected error.  Please try Facebook SignIn again or try a different SignIn method from Sign In page.</string>
+	<key>FACEBOOK_SIGNUP_FAILED_MSG</key>
+	<string>Unexpected error.  Please try Facebook SignUp again or try a different SignUp method from Sign Up page.</string>
+	<key>FIELD_MAX_LENGTH_ERR_MSG</key>
+	<string>Please enter no more than %@ characters.</string>
+	<key>FILL_IN_PARENT_MLIST_FIELD</key>
+	<string>Please fill in parent field %@ first.</string>
+	<key>FIRST_NAME</key>
+	<string>First Name</string>
+	<key>FIX_EMAIL_RESET_PASSWORD</key>
+	<string>Please enter a valid email in the Email Address field, before clicking on Reset your password link.</string>
+	<key>FIX_REPORT_NAME_MSG</key>
+	<string>Please select an existing claim or enter a valid claim name and then select the new claim.</string>
+	<key>FLEX_FARING_ERROR_MSG</key>
+	<string>For Air travel between these cities, please use the web to book your flight.</string>
+	<key>FLIGHT_STATUS_MSG</key>
+	<string>Flight stats updated on</string>
+	<key>FORM</key>
+	<string>FORM</string>
+	<key>FORM_FIELDS_INVALID</key>
+	<string>Please fill in all required fields and fix any error on the form before saving.</string>
+	<key>FOUND_COUNT</key>
+	<string>found: %i</string>
+	<key>FREQUENT_FLYER_NO_SEL_MSG</key>
+	<string>You have one or more frequent flyer accounts, but did not select one for this booking.  Select 'OK' to continue with no account, or 'Cancel' to select an account.</string>
+	<key>Facebook</key>
+	<string>Facebook</string>
+	<key>Failed</key>
+	<string>Failed</string>
+	<key>Failed to add to report</key>
+	<string>Failed to add entries to claim.</string>
+	<key>Failed to download receipt</key>
+	<string>Failed to download receipt</string>
+	<key>Failed to import Itinerary</key>
+	<string>Failed to import Itinerary</string>
+	<key>Failed to import entry</key>
+	<string>Unable to import some of the expenses.</string>
+	<key>Failed to retrieve attendees in selected group</key>
+	<string>Failed to retrieve attendees in selected group</string>
+	<key>Failed to save Itinerary Stop</key>
+	<string>Failed to save Itinerary Stop</string>
+	<key>Failed to save external list item</key>
+	<string>Failed to save external list item</string>
+	<key>Failure</key>
+	<string>Failure</string>
+	<key>Fare Choices</key>
+	<string>Fare Choices</string>
+	<key>Feature not enabled for this demo</key>
+	<string>Feature not enabled for this demo</string>
+	<key>Features</key>
+	<string>Features</string>
+	<key>Fee</key>
+	<string>Fee</string>
+	<key>Fetching Data</key>
+	<string>Fetching Data</string>
+	<key>Fetching Expense Data</key>
+	<string>Fetching Expense Data</string>
+	<key>Fetching Filter Results</key>
+	<string>Fetching Filter Results</string>
+	<key>Fetching Hotel Rates</key>
+	<string>Fetching Hotel Rates</string>
+	<key>Fetching Location Data</key>
+	<string>Fetching Location Data</string>
+	<key>Fetching Trip</key>
+	<string>Fetching Trip</string>
+	<key>Fetching the Feed</key>
+	<string>Fetching the Feed</string>
+	<key>Filter</key>
+	<string>Filter</string>
+	<key>Find Travel</key>
+	<string>Find Travel</string>
+	<key>First</key>
+	<string>First</string>
+	<key>First Name</key>
+	<string>First Name</string>
+	<key>Flight Details</key>
+	<string>Flight Details</string>
+	<key>Flight Duration</key>
+	<string>Flight Duration</string>
+	<key>Flight Options</key>
+	<string>Flight Options</string>
+	<key>Flight Schedules</key>
+	<string>Flight Schedules</string>
+	<key>Flight Search</key>
+	<string>Flight Search</string>
+	<key>Flight Status</key>
+	<string>Flight Status</string>
+	<key>Flights</key>
+	<string>Flights</string>
+	<key>Flights_subline</key>
+	<string>Find and book flights fast</string>
+	<key>For Example: say Find a Flight from San Francisco to New York for next week</key>
+	<string>For Example: say Find a Flight from San Francisco to New York for next week</string>
+	<key>Forgot Username or Password?</key>
+	<string>Forgot username or password?</string>
+	<key>Forgot mobile password (PIN)?</key>
+	<string>Forgot mobile password (PIN)?</string>
+	<key>Forgot password?</key>
+	<string>Forgot password?</string>
+	<key>Free up memory and retry receipt upload</key>
+	<string>Please free up memory and retry receipt upload later.</string>
+	<key>Frequent Flyer Program</key>
+	<string>Frequent Flyer Program</string>
+	<key>Frequent Flyer Warning</key>
+	<string>Frequent Flyer Warning</string>
+	<key>Friday_Short</key>
+	<string>Fri</string>
+	<key>From</key>
+	<string>From</string>
+	<key>From Location</key>
+	<string>From Location</string>
+	<key>From Station</key>
+	<string>From Station</string>
+	<key>Full</key>
+	<string>Full</string>
+	<key>Full Hybrid</key>
+	<string>Full-size Hybrid</string>
+	<key>Full Pickup</key>
+	<string>Full-size Pickup</string>
+	<key>Full SUV</key>
+	<string>Full-size SUV</string>
+	<key>Future Trips</key>
+	<string>Upcoming</string>
+	<key>GOOGLE_AUTH_FAILED_MSG</key>
+	<string>Unable to use Google to authorise your access to Concur SmartExpense.</string>
+	<key>GOOGLE_INCOMPLETE_INFO_SIGNIN_MSG</key>
+	<string>Unable to sign in using your Google credentials.  Please make sure you have a valid email and profile in your Google account.</string>
+	<key>GOOGLE_INCOMPLETE_INFO_SIGNUP_MSG</key>
+	<string>Unable to sign up using your Google credentials.  Please make sure email, first name and last name are filled in your Google profile.</string>
+	<key>Gate token</key>
+	<string>Gate %@</string>
+	<key>GateGuru</key>
+	<string>GateGuru</string>
+	<key>Gathering data from TripIt</key>
+	<string>Gathering data from TripIt</string>
+	<key>Generate Expenses</key>
+	<string>Generate Expenses</string>
+	<key>Get Help</key>
+	<string>Get Help</string>
+	<key>GetApprovedForAirHotelAndMore</key>
+	<string>Get approved for Air, Hotel and more</string>
+	<key>Google</key>
+	<string>Google</string>
+	<key>Greater than 25</key>
+	<string>Greater than 25</string>
+	<key>HAS_DYNAMIC_FIELDS_MSG</key>
+	<string>Your company booking policy is not currently supported. Support for it is coming soon. Please book travel using the web version of Concur.</string>
+	<key>HIGH_RESOLUTION_IMAGE</key>
+	<string>High Resolution (1000x1000px)</string>
+	<key>HOME_PAGE</key>
+	<string>Concur</string>
+	<key>HOME_PAGE_BREEZE</key>
+	<string>Concur Breeze</string>
+	<key>HOTEL</key>
+	<string>Hotel/None</string>
+	<key>HOTEL_BOOKING</key>
+	<string>Book Room</string>
+	<key>HOTEL_BOOKING_ADDRESS_MISSING_VIOLATIONS</key>
+	<string>Before reserving this room, you must address policy violations shown in red.</string>
+	<key>HOTEL_BOOKING_VIEW_BOOKING_ERROR_MESSAGE</key>
+	<string>The hotel could not be booked.</string>
+	<key>HOTEL_BOOKING_VIEW_CANCELLATION_POLICY_DESCRIPTION</key>
+	<string>Before reserving this room, you must read the cancelation policy details.</string>
+	<key>HOTEL_BOOKING_VIEW_CANCELLATION_POLICY_TITLE</key>
+	<string>Cancellation Policy</string>
+	<key>HOTEL_BOOKING_VIEW_CONFIRM_BOOKING_MESSAGE</key>
+	<string>Are you sure you want to reserve this room?</string>
+	<key>HOTEL_BOOKING_VIEW_CONFIRM_BOOKING_TITLE</key>
+	<string>Please Confirm</string>
+	<key>HOTEL_BOOKING_VIEW_DAILY_RATE</key>
+	<string>Daily rate: </string>
+	<key>HOTEL_BOOKING_VIEW_MISSING_VIOLATION_INFO_TITLE</key>
+	<string>Missing fields</string>
+	<key>HOTEL_BOOKING_VIEW_MISSING_VIOLATION_JUSTIFICATION</key>
+	<string>Before reserving this room in violation of company policy, you must provide a justification in the field shown in red.</string>
+	<key>HOTEL_BOOKING_VIEW_MISSING_VIOLATION_REASON</key>
+	<string>Before reserving this room in violation of company policy, you must provide a reason in the field shown in red.</string>
+	<key>HOTEL_BOOKING_VIEW_MISSING_VIOLATION_REASON_AND_JUSTIFICATION</key>
+	<string>Before reserving this room in violation of company policy, you must provide a reason and justification in the fields shown in red.</string>
+	<key>HOTEL_BOOKING_VIEW_ROOM</key>
+	<string>Room</string>
+	<key>HOTEL_BOOKING_VIOLATION_JUSTIFICATION_TITLE</key>
+	<string>Violation Justification</string>
+	<key>HOTEL_BOOKNIG_VIOLATION_JUSTIFICATION_PLACEHOLDER_TEXT</key>
+	<string>Please enter a justification for booking this room.</string>
+	<key>HOTEL_CREDIT_CARD</key>
+	<string>Select Credit Card</string>
+	<key>HOTEL_DETAILS_VIEW_FEES</key>
+	<string>Fees</string>
+	<key>HOTEL_ROOM_LIST</key>
+	<string>Select Room</string>
+	<key>HOTEL_SEARCH_RESULTS</key>
+	<string>Select Hotel</string>
+	<key>HOTEL_VIEW_FIND_HOTELS_WITHIN</key>
+	<string>Find hotels within</string>
+	<key>HOTEL_VIEW_HOTEL_NAME_RESTRICTIONS</key>
+	<string>Hotel Name Restrictions</string>
+	<key>HOTEL_VIEW_HOTEL_NAME_RESTRICTIONS_PLACEHOLDER_TEXT</key>
+	<string>Find hotels whose names contain this text</string>
+	<key>HOTEL_VIEW_KILOMETERS</key>
+	<string>km</string>
+	<key>HOTEL_VIEW_LOCATION</key>
+	<string>Location</string>
+	<key>HOTEL_VIEW_MILE</key>
+	<string>mile</string>
+	<key>HOTEL_VIEW_NO_HOTELS_MESSAGE</key>
+	<string>No matching hotels were found.  Please modify your search criteria and try again.</string>
+	<key>HOTEL_VIEW_NO_HOTELS_TITLE</key>
+	<string>No Matching Hotels</string>
+	<key>HOTEL_VIEW_NUMBER_SPACE_KILOMETERS_OR_MILES</key>
+	<string>%@ %@</string>
+	<key>HOTEL_VIEW_SEARCHING_FOR_HOTELS_AT</key>
+	<string>Searching for hotels at</string>
+	<key>HOTEL_VIEW_SEARCHING_FOR_HOTELS_TO</key>
+	<string>to</string>
+	<key>HOTEL_VIEW_SEARCHING_FOR_HOTELS_WITH_AVAILABILITY</key>
+	<string>with rooms available from</string>
+	<key>HOTEL_VIEW_SEARCH_BUTTON_TITLE</key>
+	<string>Search for Hotels</string>
+	<key>HOTEL_VIEW_SELECT_PREFERENCE</key>
+	<string>Select Preference</string>
+	<key>HOTEL_VIEW_SMOKING_PREFERENCE</key>
+	<string>Smoking preference</string>
+	<key>HOTEL_VIEW_SPECIFY_LOCATION_MESSAGE</key>
+	<string>Please specify a location.</string>
+	<key>HOTEL_VIEW_SPECIFY_LOCATION_TITLE</key>
+	<string>Location Required</string>
+	<key>HOTEL_VIEW_TIMEOUT_MESSAGE</key>
+	<string>No matching hotel rates could be found. Please modify your search criteria and try again.</string>
+	<key>HOTEL_VIEW_TIMEOUT_TITLE</key>
+	<string>No Matching Hotel Rates</string>
+	<key>HOTEL_VIEW_WITH_NAMES_CONTAINING</key>
+	<string>With names containing</string>
+	<key>Having trouble signing in?</key>
+	<string>Having trouble signing in?</string>
+	<key>Help for PIN</key>
+	<string>Your PIN is an alternative way to log in and can be created in cases where you are automatically logged into the Web version of Concur by your company and you don't know the password. 
+
+To create a PIN, visit the Web version of Concur (Profile&gt;Mobile Registration).</string>
+	<key>Help for PIN - Gov</key>
+	<string>Your PIN is an alternative way to log in and can be created in cases where you are automatically logged into the Web version of Concur by your agency and you don't know the password. 
+
+To create a PIN, visit the Web version of Concur (Profile&gt;Mobile Registration).</string>
+	<key>Help for Password</key>
+	<string>If your company allows PIN for mobile sign-in: Go back to the previous screen and submit your Concur registered email. We will send you instructions on how to sign in.
+
+If your company requires a password: Use the same password you use to sign in to the Concur Website.</string>
+	<key>Help for Password - Gov</key>
+	<string>Your password is the one you use to log in to the web version of Concur. You should use your password for the mobile app.
+
+If you do not know your Concur password check with your agency administrator.</string>
+	<key>Help for User Name</key>
+	<string>In most cases, you will sign into our app using the same username and password you use for the web version of Concur.
+ 
+If you don't have this information, please submit your email on the previous screen to receive sign in info, or contact your company administrator.
+
+</string>
+	<key>Help for User Name - Gov</key>
+	<string>Your user name is the one you use to log in to the web version of Concur. You should use your user name for the mobile app.
+
+If you do not know your Concur user name check with your agency administrator.</string>
+	<key>Hide Offers</key>
+	<string>Hide Offers</string>
+	<key>Home</key>
+	<string>Home</string>
+	<key>Hotel</key>
+	<string>Hotel</string>
+	<key>Hotel Dates</key>
+	<string>Hotel Dates</string>
+	<key>Hotel Name</key>
+	<string>Hotel Name</string>
+	<key>Hotel Price to Beat</key>
+	<string>Hotel Price-to-Beat</string>
+	<key>Hotel Search</key>
+	<string>Hotel Search</string>
+	<key>Hotel cancelled from mobile device</key>
+	<string>Hotel cancelled from mobile device</string>
+	<key>Hotels</key>
+	<string>Hotels</string>
+	<key>Hotels With Names Containing</key>
+	<string>Hotels With Names Containing</string>
+	<key>Hotels Within</key>
+	<string>Hotels Within</string>
+	<key>Hotels near</key>
+	<string>Hotels near</string>
+	<key>Hotels near you</key>
+	<string>Hotels near you</string>
+	<key>Hotels_subline</key>
+	<string>Check into the perfect hotel</string>
+	<key>Hour</key>
+	<string>Hour</string>
+	<key>How would you like to book?</key>
+	<string>How would you like to book?</string>
+	<key>I Forgot</key>
+	<string>I Forgot</string>
+	<key>IDV Arrive</key>
+	<string>Arrive</string>
+	<key>IDV Arrives in t at t</key>
+	<string>Arrives in %@ at %@</string>
+	<key>IDV Body</key>
+	<string>Body</string>
+	<key>IDV Check In</key>
+	<string>Check In</string>
+	<key>IDV Check Out</key>
+	<string>Check Out</string>
+	<key>IDV Confirmation</key>
+	<string>Confirmation</string>
+	<key>IDV Daily</key>
+	<string>Daily</string>
+	<key>IDV Depart</key>
+	<string>Depart</string>
+	<key>IDV Departs from t at t</key>
+	<string>Departs from %@ at %@</string>
+	<key>IDV Drop Off</key>
+	<string>Drop Off</string>
+	<key>IDV Operated by t Flight t</key>
+	<string>Operated by %@ Flight %@</string>
+	<key>IDV Persons</key>
+	<string>Persons</string>
+	<key>IDV Pick Up</key>
+	<string>Pick Up</string>
+	<key>IDV Reserved for</key>
+	<string>Reserved for</string>
+	<key>IDV Rooms</key>
+	<string>Rooms</string>
+	<key>IDV Seat Map for t</key>
+	<string>Seat Map for %@</string>
+	<key>IDV Social Publishing</key>
+	<string>Social Publishing</string>
+	<key>IDV Terminal Map for t</key>
+	<string>Terminal Map for %@</string>
+	<key>IDV Terminal t Gate t</key>
+	<string>Terminal %@ Gate %@</string>
+	<key>IDV Web site for t</key>
+	<string>Web site for %@</string>
+	<key>IDV property name</key>
+	<string>Property Name</string>
+	<key>IDV t Flight t</key>
+	<string>%@ Flight @%</string>
+	<key>IMAGE_DOWN_SCALED_MSG</key>
+	<string>The size of the image has been reduced to within 4MB.  Please verify the content of image before saving it with the entry.</string>
+	<key>INFO</key>
+	<string>Information</string>
+	<key>INTEGER_NEGATIVE_ERR_MSG</key>
+	<string>This field cannot have a negative value</string>
+	<key>INTEGER_TOO_BIG_ERR_MSG</key>
+	<string>Integer too big</string>
+	<key>INTEGER_VALIDATION_ERR_MSG</key>
+	<string>This field requires an integer value.</string>
+	<key>INVALID_CONCUR_CREDENTIALS</key>
+	<string>Incorrect Sign In Credentials</string>
+	<key>INVALID_LOGIN_MSG</key>
+	<string>Try again to re-enter your credentials or select I Forgot to receive sign in instructions.</string>
+	<key>INVALID_USERID_MSG</key>
+	<string>Please enter a valid Login ID.%@It should consist of your login name followed by an @ sign and your company domain.</string>
+	<key>INVOICE_LINEITEMS</key>
+	<string>Invoice Detail</string>
+	<key>INVOICE_LINEITEM_DETAIL</key>
+	<string>Line Item</string>
+	<key>INVOICE_SUMMARY</key>
+	<string>Invoice Summary</string>
+	<key>INVOICE_VENDOR</key>
+	<string>Invoice Supplier</string>
+	<key>ITEMIZATIONS</key>
+	<string>Itemisations</string>
+	<key>ITEMIZATION_LIST</key>
+	<string>Itemisation List</string>
+	<key>ITEMS_TO_APPROVE</key>
+	<string>%d items to approve</string>
+	<key>ITIN_DETAILS</key>
+	<string>Segment Details</string>
+	<key>ITIN_DETAILS_VIEW_AIR</key>
+	<string>Air</string>
+	<key>ITIN_DETAILS_VIEW_AIRCOND</key>
+	<string>Air Condition</string>
+	<key>ITIN_DETAILS_VIEW_AIRCRAFT</key>
+	<string>Aircraft</string>
+	<key>ITIN_DETAILS_VIEW_AIRPORT</key>
+	<string>Airport</string>
+	<key>ITIN_DETAILS_VIEW_ALLOWABLE_MILES</key>
+	<string>Allowable Miles</string>
+	<key>ITIN_DETAILS_VIEW_AMENITIES</key>
+	<string>Amenities</string>
+	<key>ITIN_DETAILS_VIEW_ARRIVAL</key>
+	<string>Arrival</string>
+	<key>ITIN_DETAILS_VIEW_ARRIVE</key>
+	<string>Arrive</string>
+	<key>ITIN_DETAILS_VIEW_BAGGAGE</key>
+	<string>Baggage</string>
+	<key>ITIN_DETAILS_VIEW_BODY</key>
+	<string>Body Type</string>
+	<key>ITIN_DETAILS_VIEW_BOOKING</key>
+	<string>Booking</string>
+	<key>ITIN_DETAILS_VIEW_CABIN</key>
+	<string>Cabin</string>
+	<key>ITIN_DETAILS_VIEW_CANCEL_POLICY</key>
+	<string>Cancel Policy</string>
+	<key>ITIN_DETAILS_VIEW_CAR</key>
+	<string>Car Rental</string>
+	<key>ITIN_DETAILS_VIEW_CARRIER</key>
+	<string>Carrier</string>
+	<key>ITIN_DETAILS_VIEW_CHECK_IN</key>
+	<string>Check In</string>
+	<key>ITIN_DETAILS_VIEW_CHECK_OUT</key>
+	<string>Check Out</string>
+	<key>ITIN_DETAILS_VIEW_CITY</key>
+	<string>City</string>
+	<key>ITIN_DETAILS_VIEW_CLASS</key>
+	<string>Class</string>
+	<key>ITIN_DETAILS_VIEW_CONFIRM_NUM</key>
+	<string>Confirm #</string>
+	<key>ITIN_DETAILS_VIEW_CONF_NUM</key>
+	<string>Confirmation #</string>
+	<key>ITIN_DETAILS_VIEW_CONTACT</key>
+	<string>Contact</string>
+	<key>ITIN_DETAILS_VIEW_DAILY_RATE</key>
+	<string>Daily Rate</string>
+	<key>ITIN_DETAILS_VIEW_DEPART</key>
+	<string>Depart</string>
+	<key>ITIN_DETAILS_VIEW_DEPARTURE</key>
+	<string>Departure</string>
+	<key>ITIN_DETAILS_VIEW_DISCOUNT</key>
+	<string>Discount Code</string>
+	<key>ITIN_DETAILS_VIEW_DIVERSION</key>
+	<string>Diversion</string>
+	<key>ITIN_DETAILS_VIEW_DROP_OFF</key>
+	<string>Drop Off</string>
+	<key>ITIN_DETAILS_VIEW_DROP_OFF_ADDRESS</key>
+	<string>Drop Off Address</string>
+	<key>ITIN_DETAILS_VIEW_DROP_OFF_INSTRUCTIONS</key>
+	<string>Drop Off Instructions</string>
+	<key>ITIN_DETAILS_VIEW_DURATION</key>
+	<string>Duration</string>
+	<key>ITIN_DETAILS_VIEW_END</key>
+	<string>End</string>
+	<key>ITIN_DETAILS_VIEW_EQUIP</key>
+	<string>Special Equipment</string>
+	<key>ITIN_DETAILS_VIEW_FLIGHT</key>
+	<string>Flight</string>
+	<key>ITIN_DETAILS_VIEW_FLIGHT_WITH_OB</key>
+	<string>%@ #%@ (%@ #%@)</string>
+	<key>ITIN_DETAILS_VIEW_GATE</key>
+	<string>Gate</string>
+	<key>ITIN_DETAILS_VIEW_HOTEL</key>
+	<string>Hotel</string>
+	<key>ITIN_DETAILS_VIEW_INFO</key>
+	<string>Info</string>
+	<key>ITIN_DETAILS_VIEW_MAP</key>
+	<string>Map</string>
+	<key>ITIN_DETAILS_VIEW_MEAL</key>
+	<string>Meal</string>
+	<key>ITIN_DETAILS_VIEW_MEETING_INSTRUCTIONS</key>
+	<string>Meeting Instructions</string>
+	<key>ITIN_DETAILS_VIEW_MINUTES</key>
+	<string>%@ minutes</string>
+	<key>ITIN_DETAILS_VIEW_NUMBER_IN_PARTY</key>
+	<string>Number in Party</string>
+	<key>ITIN_DETAILS_VIEW_NUMBER_OF_PERSONS</key>
+	<string>Number of Persons</string>
+	<key>ITIN_DETAILS_VIEW_OPERATED</key>
+	<string>Operated by %@ - %@</string>
+	<key>ITIN_DETAILS_VIEW_PARKING</key>
+	<string>Parking Centre</string>
+	<key>ITIN_DETAILS_VIEW_PICKUP_ADDRESS</key>
+	<string>Pickup Address</string>
+	<key>ITIN_DETAILS_VIEW_PICKUP_INSTRUCTIONS</key>
+	<string>Pickup Instructions</string>
+	<key>ITIN_DETAILS_VIEW_PLATFORM</key>
+	<string>Platform</string>
+	<key>ITIN_DETAILS_VIEW_PRICE</key>
+	<string>Price</string>
+	<key>ITIN_DETAILS_VIEW_RAIL</key>
+	<string>Rail</string>
+	<key>ITIN_DETAILS_VIEW_RATE</key>
+	<string>Rate</string>
+	<key>ITIN_DETAILS_VIEW_RATE_DESCRIPTION</key>
+	<string>Rate Description</string>
+	<key>ITIN_DETAILS_VIEW_RATE_TYPE</key>
+	<string>Rate Type</string>
+	<key>ITIN_DETAILS_VIEW_RESERVATION</key>
+	<string>Reservation</string>
+	<key>ITIN_DETAILS_VIEW_REZ</key>
+	<string>Reservation</string>
+	<key>ITIN_DETAILS_VIEW_ROOM</key>
+	<string>Room</string>
+	<key>ITIN_DETAILS_VIEW_SEAT</key>
+	<string>Seat</string>
+	<key>ITIN_DETAILS_VIEW_SEGMENT_DETAILS</key>
+	<string>Segment Details</string>
+	<key>ITIN_DETAILS_VIEW_SPECIAL_INSTRUCTIONS</key>
+	<string>Special Instructions</string>
+	<key>ITIN_DETAILS_VIEW_START</key>
+	<string>Start</string>
+	<key>ITIN_DETAILS_VIEW_STATION</key>
+	<string>Station</string>
+	<key>ITIN_DETAILS_VIEW_STATUS</key>
+	<string>Status</string>
+	<key>ITIN_DETAILS_VIEW_STOPS</key>
+	<string>Stops</string>
+	<key>ITIN_DETAILS_VIEW_TERMINAL</key>
+	<string>Terminal</string>
+	<key>ITIN_DETAILS_VIEW_TOTAL_RATE</key>
+	<string>Total Rate</string>
+	<key>ITIN_DETAILS_VIEW_TRAIN_TYPE</key>
+	<string>Train Type</string>
+	<key>ITIN_DETAILS_VIEW_TRANSMISSION</key>
+	<string>Transmission</string>
+	<key>ITIN_DETAILS_VIEW_TYPE</key>
+	<string>Type</string>
+	<key>ITIN_DETAILS_VIEW_VENDOR</key>
+	<string>Supplier</string>
+	<key>ITIN_DETAILS_VIEW_WAGON_NUM</key>
+	<string>Wagon #</string>
+	<key>If any changes have been made by your agent</key>
+	<string>If any changes have been made by your agent, your itinerary may take a few minutes to update.</string>
+	<key>If you continue to experience</key>
+	<string>Please try again.  If you continue to experience problems accessing the system, please contact your company's help desk or travel/expense department.</string>
+	<key>If you continue to experience SU</key>
+	<string>Please try again.  If you continue to experience problems accessing the system, please contact Concur support.</string>
+	<key>If your plans change</key>
+	<string>If your plans change, cancel and rebook another hotel on-the-go</string>
+	<key>Image Not Available</key>
+	<string>Image Not Available</string>
+	<key>Immediate Assistance Required</key>
+	<string>Immediate Assistance Required</string>
+	<key>Import Error</key>
+	<string>Import Error</string>
+	<key>Import Expenses</key>
+	<string>Import Expenses</string>
+	<key>Import and Match</key>
+	<string>Import and Match</string>
+	<key>Incorrect Password</key>
+	<string>Incorrect Password</string>
+	<key>Individual Edition</key>
+	<string>Individual Edition</string>
+	<key>Infants</key>
+	<string>Infants</string>
+	<key>Info</key>
+	<string>Info</string>
+	<key>Intermediate</key>
+	<string>Intermediate</string>
+	<key>Intermediate Hybrid</key>
+	<string>Intermediate Hybrid</string>
+	<key>Intermediate SUV</key>
+	<string>Intermediate SUV</string>
+	<key>Invalid Arrival Location</key>
+	<string>Invalid Arrival Location</string>
+	<key>Invalid Departure Date</key>
+	<string>Invalid Departure Date</string>
+	<key>Invalid Departure Location</key>
+	<string>Invalid Departure Location</string>
+	<key>Invalid Email or Username</key>
+	<string>Invalid Email or Username</string>
+	<key>Invalid Login Credentials</key>
+	<string>Invalid Login Credentials</string>
+	<key>Invalid PIN</key>
+	<string>Invalid PIN</string>
+	<key>Invalid Password</key>
+	<string>Invalid Password</string>
+	<key>Invalid Return Date</key>
+	<string>Invalid Return Date</string>
+	<key>Invalid User Name</key>
+	<string>Invalid User Name</string>
+	<key>Invalid email address</key>
+	<string>Invalid email address</string>
+	<key>Invitation(s) Sent</key>
+	<string>Invitation(s) Sent</string>
+	<key>Invitations Sent</key>
+	<string>Thanks for spreading the word about SmartExpense.</string>
+	<key>Invite</key>
+	<string>Invite</string>
+	<key>Invite colleagues to use SmartExpense</key>
+	<string>Invite colleagues to use SmartExpense</string>
+	<key>Invoice</key>
+	<string>Invoice</string>
+	<key>Invoice Approval</key>
+	<string>Invoice Approval</string>
+	<key>Invoice Image</key>
+	<string>Invoice Image</string>
+	<key>InvoiceApprove</key>
+	<string>Invoice</string>
+	<key>Invoices</key>
+	<string>Invoices</string>
+	<key>Itemization not allowed</key>
+	<string>Itemisation is not allowed for this entry</string>
+	<key>Itemizations</key>
+	<string>Itemisations</string>
+	<key>Itemize</key>
+	<string>Itemise</string>
+	<key>Itemized Entry</key>
+	<string>Itemised Entry</string>
+	<key>Itemized:</key>
+	<string>Itemised:</string>
+	<key>Itineraries</key>
+	<string>Itineraries</string>
+	<key>Itinerary</key>
+	<string>Itinerary</string>
+	<key>Itinerary List</key>
+	<string>Itinerary List</string>
+	<key>Join</key>
+	<string>Join</string>
+	<key>Join with Facebook</key>
+	<string>Join with Facebook</string>
+	<key>LABEL_ADD_BTN</key>
+	<string>Add</string>
+	<key>LABEL_AIR</key>
+	<string>Air</string>
+	<key>LABEL_APPROVE_EXPENSES</key>
+	<string>Approve Expenses</string>
+	<key>LABEL_CANCEL_BTN</key>
+	<string>Cancel</string>
+	<key>LABEL_CAR_RENTAL</key>
+	<string>Car Rental</string>
+	<key>LABEL_CLOSE_BTN</key>
+	<string>Close</string>
+	<key>LABEL_DONE_BTN</key>
+	<string>Done</string>
+	<key>LABEL_EXPENSE</key>
+	<string>Expense</string>
+	<key>LABEL_EXPENSES</key>
+	<string>Expenses</string>
+	<key>LABEL_HOTELS</key>
+	<string>Hotels</string>
+	<key>LABEL_LOGIN_NO_PIN</key>
+	<string>Need to set your PIN?</string>
+	<key>LABEL_LOGIN_PASSWORD</key>
+	<string>Password or PIN</string>
+	<key>LABEL_LOGIN_REGISTER</key>
+	<string>Register</string>
+	<key>LABEL_LOGIN_SIGN_IN</key>
+	<string>Sign In</string>
+	<key>LABEL_LOGIN_USER_NAME</key>
+	<string>Username</string>
+	<key>LABEL_OK_BTN</key>
+	<string>OK</string>
+	<key>LABEL_QUICK_EXPENSE</key>
+	<string>Cash</string>
+	<key>LABEL_REGISTER_ENTER_PIN</key>
+	<string>Enter PIN</string>
+	<key>LABEL_REGISTER_PASSWORD</key>
+	<string>Password</string>
+	<key>LABEL_REGISTER_REENTER_PIN</key>
+	<string>Reenter PIN</string>
+	<key>LABEL_REGISTER_SIGN_IN</key>
+	<string>Sign In</string>
+	<key>LABEL_SAVE_BTN</key>
+	<string>Save</string>
+	<key>LABEL_SEND_BTN</key>
+	<string>Send</string>
+	<key>LABEL_SETTINGS</key>
+	<string>Settings</string>
+	<key>LABEL_SETTINGS_VIEW_APP_INFO</key>
+	<string>Application Information</string>
+	<key>LABEL_SETTINGS_VIEW_APP_NAME</key>
+	<string>Application Name</string>
+	<key>LABEL_SETTINGS_VIEW_CONNECTION_SETTINGS</key>
+	<string>Connection Settings</string>
+	<key>LABEL_SETTINGS_VIEW_REMEMBER_USER</key>
+	<string>Save User Name</string>
+	<key>LABEL_SETTINGS_VIEW_SAVE_BTN</key>
+	<string>Save Settings</string>
+	<key>LABEL_SETTINGS_VIEW_TWITTER</key>
+	<string>Show Twitter</string>
+	<key>LABEL_SETTINGS_VIEW_URI_NON_SSL</key>
+	<string>Non SSL URI</string>
+	<key>LABEL_SETTINGS_VIEW_URL</key>
+	<string>Server URI</string>
+	<key>LABEL_SETTINGS_VIEW_VERSION</key>
+	<string>Version</string>
+	<key>LABEL_SUBMIT_BTN</key>
+	<string>Submit</string>
+	<key>LABEL_TAXI</key>
+	<string>Taxi</string>
+	<key>LABEL_TRAVEL</key>
+	<string>Travel</string>
+	<key>LABEL_TRIPS</key>
+	<string>Trips</string>
+	<key>LABEL_VENDOR_ADDR_CODE</key>
+	<string>Address Code:</string>
+	<key>LABEL_VENDOR_CODE</key>
+	<string>Supplier Code:</string>
+	<key>LAST_NAME</key>
+	<string>Last Name</string>
+	<key>LNA_LOADING_TEXT</key>
+	<string>Obtaining your current location...</string>
+	<key>LOCATION_NOT_FOUND_MSG</key>
+	<string>Your current location could not be found.</string>
+	<key>LOGIN</key>
+	<string>Sign In</string>
+	<key>LOG_UNAVAILABLE_MSG</key>
+	<string>Log data is unavailable.</string>
+	<key>LOW_RESOLUTION_IMAGE</key>
+	<string>Low resolution (320x320px)</string>
+	<key>Last Name</key>
+	<string>Last Name</string>
+	<key>Last updated</key>
+	<string>Last updated %@</string>
+	<key>Last updated on</key>
+	<string>Last updated on</string>
+	<key>Layover in</key>
+	<string>Layover in</string>
+	<key>Learn More</key>
+	<string>Learn More</string>
+	<key>Least Preferred</key>
+	<string>Least Preferred</string>
+	<key>Legs: token</key>
+	<string>Legs: %@</string>
+	<key>Link Dropbox</key>
+	<string>Link Dropbox</string>
+	<key>Link Success</key>
+	<string>Link Success</string>
+	<key>Link to TripIt</key>
+	<string>Link to TripIt</string>
+	<key>Link with TripIt</key>
+	<string>Link with TripIt</string>
+	<key>Link with TripIt Header</key>
+	<string>Link to TripIt and turn your trips into expense claims.</string>
+	<key>Linked to Dropbox</key>
+	<string>Linked to Dropbox</string>
+	<key>List</key>
+	<string>List</string>
+	<key>List of your expenses</key>
+	<string>List of your expenses</string>
+	<key>Load Logs</key>
+	<string>Load Logs</string>
+	<key>Load more hotels</key>
+	<string>Load more hotels...</string>
+	<key>Loading Data</key>
+	<string>Loading data</string>
+	<key>Loading Image</key>
+	<string>Loading Image</string>
+	<key>Loading Receipt Image(s)</key>
+	<string>Loading Receipt Image(s)</string>
+	<key>Loading Receipts</key>
+	<string>Loading Receipts</string>
+	<key>Loading Stations</key>
+	<string>Loading Stations</string>
+	<key>Loading Trip</key>
+	<string>Loading Trip</string>
+	<key>Loading delivery options</key>
+	<string>Loading delivery options</string>
+	<key>Loading more Hotels</key>
+	<string>Loading more Hotels</string>
+	<key>Loading trip data</key>
+	<string>Loading trip data</string>
+	<key>Loading...</key>
+	<string>Loading...</string>
+	<key>Location</key>
+	<string>Location</string>
+	<key>Location Check Offline</key>
+	<string>Your location cannot be checked while you are offline.  Please try later.</string>
+	<key>Location Not Found</key>
+	<string>Location Not Found</string>
+	<key>Location Required</key>
+	<string>Location Required</string>
+	<key>Log</key>
+	<string>Log</string>
+	<key>Log Saved</key>
+	<string>Log Saved</string>
+	<key>Log Unavailable</key>
+	<string>Log Unavailable</string>
+	<key>Log out from Concur Mobile</key>
+	<string>Sign out from Concur Mobile</string>
+	<key>Log out from SmartExpense</key>
+	<string>Log out from SmartExpense</string>
+	<key>Logging In</key>
+	<string>Logging In</string>
+	<key>Login Settings</key>
+	<string>Sign In Settings</string>
+	<key>Logout</key>
+	<string>Sign Out</string>
+	<key>Looks like we are experience some difficulties. Please check back in a few minutes.</key>
+	<string>Looks like we are experience some difficulties. Please check back in a few minutes.</string>
+	<key>Luxury</key>
+	<string>Luxury</string>
+	<key>MAP</key>
+	<string>Map View</string>
+	<key>MAPVIEW_ACCESS_DENIED</key>
+	<string>Sorry, Concur needs access to your location to generate directions. Please activate Location Services for Concur.</string>
+	<key>MAPVIEW_LOCATION_UNKNOWN</key>
+	<string>Sorry, your present location is currently unknown, but Concur will keep trying to locate you.</string>
+	<key>MAPVIEW_NETWORK_ERROR</key>
+	<string>Sorry, Concur is unable to identify your present location. Please check your network connection and ensure that Airplane Mode is disabled.</string>
+	<key>MAPVIEW_UNKNOWN_ERROR</key>
+	<string>Sorry, Concur is unable to identify your present location. Please check your network connection, ensure that Location Services is activated and that Airplane Mode is disabled.</string>
+	<key>MEDIUM_RESOLUTION_IMAGE</key>
+	<string>Medium resolution (640x640px)</string>
+	<key>MLIST_FIELD_EDIT_NOT_SUPPORT</key>
+	<string>Editing for this connected list field is not supported at this moment on mobile.  Please use CTE web instead.</string>
+	<key>MLIST_MRU_NOT_SUPPORT</key>
+	<string>Selecting most recently used list item is not supported for this field.  Please use CTE web instead.</string>
+	<key>MOBILE_DISABLED_MSG</key>
+	<string>Your company has disabled Concur for mobile. Please contact your administrator.</string>
+	<key>MODULE_DISABLED_ALERT_TEXT</key>
+	<string>Your company has disabled this feature for mobile.</string>
+	<key>MODULE_DISABLED_ALERT_TITLE</key>
+	<string>Feature Disabled</string>
+	<key>MSG_ADDITIONAL_RECEIPT_NOT_REQUIRED</key>
+	<string>Additional receipts are not required.</string>
+	<key>MSG_APPROVE_INVOICE_AREYOUSURE</key>
+	<string>Are you sure you want to approve this invoice?</string>
+	<key>MSG_NO_INVOICE_DETAIL</key>
+	<string>No Invoice Detail</string>
+	<key>MSG_NO_INVOICE_TO_APPROVE</key>
+	<string>No Invoice to approve</string>
+	<key>MSG_RECEIPT_NOT_REQUIRED</key>
+	<string>Receipts are not required.</string>
+	<key>MSG_RECEIPT_REQUIRED</key>
+	<string>Reminder: Receipts Required!</string>
+	<key>MSG_REPORT_SUBMISSION</key>
+	<string>If you have not already provided receipts, please visit the Concur web site.  Otherwise, you may submit the claim now.</string>
+	<key>MSG_TRAIN_SELL_NOT_READY</key>
+	<string>The sell of train reservations has not been implemented yet.  You should be able to reserve your train in a later version.</string>
+	<key>MSG_WAIT_FETCHING_INFO</key>
+	<string>We are fetching information for claim submit.  Please wait and try again.</string>
+	<key>Mail Queued</key>
+	<string>Mail Queued</string>
+	<key>Mail Saved</key>
+	<string>Mail Saved</string>
+	<key>Mail Unavailable</key>
+	<string>Mail Unavailable</string>
+	<key>Manage Receipts</key>
+	<string>Manage Receipts</string>
+	<key>Manage Violations</key>
+	<string>Manage Violations</string>
+	<key>ManageYourAuthorizations</key>
+	<string>Manage your authorizations</string>
+	<key>Manager approval</key>
+	<string>Manager approval</string>
+	<key>Map</key>
+	<string>Map</string>
+	<key>Map Address</key>
+	<string>Map Address</string>
+	<key>Matching transactions combined into a single expense</key>
+	<string>Matching transactions combined into a single expense</string>
+	<key>Meal Allowances</key>
+	<string>Meal Allowances</string>
+	<key>Menu</key>
+	<string>Menu</string>
+	<key>Message Center</key>
+	<string>Message Centre</string>
+	<key>Microphone Access Denied</key>
+	<string>Microphone Access Denied</string>
+	<key>Midnight</key>
+	<string>Midnight</string>
+	<key>Mileage</key>
+	<string>Mileage</string>
+	<key>Mini</key>
+	<string>Mini</string>
+	<key>Mini Van</key>
+	<string>Mini Van</string>
+	<key>Missing Arrival</key>
+	<string>Missing Arrival</string>
+	<key>Missing Arrival Message</key>
+	<string>The arrival airport is missing.  Please select an airport to arrive to.</string>
+	<key>Missing Departure</key>
+	<string>Missing Departure</string>
+	<key>Missing Departure Message</key>
+	<string>The departure airport is missing.  Please select an airport to depart from.</string>
+	<key>Missing fields</key>
+	<string>Missing fields</string>
+	<key>Missing required information for Itinerary Stop</key>
+	<string>Missing required information for Itinerary Stop</string>
+	<key>Mobile Expenses</key>
+	<string>Mobile Expenses</string>
+	<key>Mobile Log</key>
+	<string>Mobile Log</string>
+	<key>Mobile Log: iPhone Crash</key>
+	<string>Mobile Log: iPhone Crash</string>
+	<key>Mobile PIN title</key>
+	<string>Mobile PIN</string>
+	<key>Mobile Password (PIN)</key>
+	<string>Mobile Password (PIN)</string>
+	<key>Mobile Password (PIN) Reset Link Sent</key>
+	<string>Mobile Password (PIN) Reset Link Sent</string>
+	<key>Mobile Password (PIN) Successfully Reset</key>
+	<string>Mobile Password (PIN) Successfully Reset</string>
+	<key>Monday_Short</key>
+	<string>Mon</string>
+	<key>Month of stay</key>
+	<string>Month of stay</string>
+	<key>More Help</key>
+	<string>More Help</string>
+	<key>Morning</key>
+	<string>Morning</string>
+	<key>Most Preferred</key>
+	<string>Most Preferred</string>
+	<key>Most Recently Used</key>
+	<string>Most Recently Used</string>
+	<key>Must log in online first</key>
+	<string>You need to log in online first before you can be authenticated offline.</string>
+	<key>N Stops</key>
+	<string>%d Stops</string>
+	<key>NCOOK</key>
+	<string>Other without cooking</string>
+	<key>NEED_TO_RESET_PASSWORD</key>
+	<string>Please reset your password and then login.  If you have difficulties, please contact your administrator.</string>
+	<key>NEED_TO_RESET_PIN</key>
+	<string>Please reset your PIN and then login.  If you have difficulties, please contact your administrator.</string>
+	<key>NIGHTS_TOO_LARGE_ERR_MSG</key>
+	<string>Itemise expenses for 90 days or less</string>
+	<key>NON_REFUNDABLE_WARN_MSG</key>
+	<string>Customers holding NON-REFUNDABLE type tickets may cancel their journey, and reuse these tickets to any destination in the carriers system, within one year following the DATE OF ISSUE. Reservations MUST be cancelled by the intended (original) departure day, or tickets will be void and have NO value for future use. These rules apply to DOMESTIC ticketing only. Select these flights anyway?</string>
+	<key>NO_RATES_SOLD_OUT_USER_MESSAGE</key>
+	<string>No rooms at this property are available for the specified dates. Please select a different hotel.</string>
+	<key>NO_RECEIPTS_NEG</key>
+	<string>No Receipts</string>
+	<key>NO_RECEIPT_FOUND</key>
+	<string>No receipt has been found on the server.  If you have already attached a receipt to the claim, please come back later and check again.</string>
+	<key>NO_RECEIPT_MSG</key>
+	<string>At least one of the selected expenses is missing a receipt.</string>
+	<key>NO_RECEIPT_NEG</key>
+	<string>No Receipt</string>
+	<key>NO_REPORTRECEIPT_NEG</key>
+	<string>No Receipt attached to expenses</string>
+	<key>NUMBER_OF_ROOMS</key>
+	<string>Number of rooms</string>
+	<key>NUMERIC_TOO_BIG_ERR_MSG</key>
+	<string>Number too big</string>
+	<key>NUMERIC_VALIDATION_ERR_MSG</key>
+	<string>This field requires a numeric value.</string>
+	<key>Navigator</key>
+	<string>Navigator</string>
+	<key>Network Error</key>
+	<string>Network Error</string>
+	<key>New Attendee</key>
+	<string>New Attendee</string>
+	<key>New Mobile Password (PIN)</key>
+	<string>New Mobile Password (PIN)</string>
+	<key>New Password</key>
+	<string>New Password</string>
+	<key>New Report</key>
+	<string>New Claim</string>
+	<key>Next</key>
+	<string>Next</string>
+	<key>Nightly Lodging Expenses</key>
+	<string>Nightly Lodging Expenses</string>
+	<key>No</key>
+	<string>No</string>
+	<key>No Active Reports</key>
+	<string>You currently have no Active Claims</string>
+	<key>No Active Trips</key>
+	<string>No Active Trips</string>
+	<key>No Attendee Found</key>
+	<string>No Attendee Found</string>
+	<key>No Attendee Type Available</key>
+	<string>No attendees may be added as no valid attendee types are available for this expense type.</string>
+	<key>No Attendees</key>
+	<string>No Attendees</string>
+	<key>No Card Charges</key>
+	<string>No Card Charges</string>
+	<key>No Comments</key>
+	<string>No Comments</string>
+	<key>No Credit Card</key>
+	<string>No Credit Card</string>
+	<key>No Delivery Option</key>
+	<string>No Delivery Option</string>
+	<key>No Email in Profile</key>
+	<string>No Email in Profile</string>
+	<key>No Email(s)</key>
+	<string>No Email(s)</string>
+	<key>No Expenses</key>
+	<string>No Expenses</string>
+	<key>No Flights Found</key>
+	<string>No Flights Found</string>
+	<key>No Itemization</key>
+	<string>No Itemisation</string>
+	<key>No Matching Cars</key>
+	<string>No Matching Cars</string>
+	<key>No Network Connection</key>
+	<string>No Network Connection</string>
+	<key>No Out of Pocket Expenses</key>
+	<string>No Expenses</string>
+	<key>No Rates</key>
+	<string>No Rates</string>
+	<key>No Receipts</key>
+	<string>Manage all your receipts in one place and reduce the clutter in your photo album. The Receipt Folder keeps track of receipts used in expenses. You can also copy receipts from your photo album to the Receipt Folder or take new pictures of receipts and store them here.</string>
+	<key>No Reports</key>
+	<string>No Claims</string>
+	<key>No Results</key>
+	<string>No Results</string>
+	<key>No Segments Selected</key>
+	<string>No Segments Selected</string>
+	<key>No Shows</key>
+	<string>No Shows</string>
+	<key>No Shows Tip</key>
+	<string>Please enter the number of %@.</string>
+	<key>No TripIt Trips</key>
+	<string>No TripIt trips to expense</string>
+	<key>No Trips</key>
+	<string>No Trips</string>
+	<key>No date specified</key>
+	<string>No date specified</string>
+	<key>No email(s) were specified for the invite</key>
+	<string>No email(s) were specified for the invite</string>
+	<key>No items to upload</key>
+	<string>No items to upload</string>
+	<key>No matching cars were found.  Please modify your search criteria and try again.</key>
+	<string>No matching cars were found.  Please modify your search criteria and try again.</string>
+	<key>No new twitter message</key>
+	<string>No new twitter message</string>
+	<key>No preference</key>
+	<string>No preference</string>
+	<key>No trains were found</key>
+	<string>No trains were found</string>
+	<key>No trip segments have been selected</key>
+	<string>No trip segments have been selected.</string>
+	<key>Non-smoking</key>
+	<string>Non-smoking</string>
+	<key>None</key>
+	<string>None</string>
+	<key>Nonstop</key>
+	<string>Nonstop</string>
+	<key>Not Available</key>
+	<string>Not Available</string>
+	<key>Not Filed Reports</key>
+	<string>Claims</string>
+	<key>Not Linked</key>
+	<string>Not Linked</string>
+	<key>Not Preferred</key>
+	<string>Not Preferred</string>
+	<key>Not Provided</key>
+	<string>Not Provided</string>
+	<key>Not Sure</key>
+	<string>Not Sure</string>
+	<key>Now</key>
+	<string>Now</string>
+	<key>Number Of Nights</key>
+	<string>Number Of Nights</string>
+	<key>Number of hotels</key>
+	<string>Number of hotels</string>
+	<key>Number of schedules found: token</key>
+	<string>Number of schedules found: %d</string>
+	<key>OFFLINE_MSG</key>
+	<string>You are offline.  Please wait to submit the claim until you are online.</string>
+	<key>OK</key>
+	<string>OK</string>
+	<key>OR</key>
+	<string>OR</string>
+	<key>OUT_OF_POCKET_FORM</key>
+	<string>Expense</string>
+	<key>OUT_OF_POCKET_FORM_VIEW_CONFIRM_SPLIT_SMART_EXPENSE_MESSAGE</key>
+	<string>Are you sure that you want to split the card charge from the mobile entry?</string>
+	<key>OUT_OF_POCKET_FORM_VIEW_CONFIRM_SPLIT_SMART_EXPENSE_TITLE</key>
+	<string>Please Confirm</string>
+	<key>OUT_OF_POCKET_FORM_VIEW_SPLIT_SMART_EXPENSE_BUTTON_TITLE</key>
+	<string>Split Smart Expense</string>
+	<key>OUT_OF_POCKET_LIST</key>
+	<string>Expenses</string>
+	<key>Off</key>
+	<string>Off</string>
+	<key>Off Airport</key>
+	<string>Off Airport</string>
+	<key>Offers</key>
+	<string>Offers</string>
+	<key>Office</key>
+	<string>Office</string>
+	<key>Office Locations</key>
+	<string>Office Locations</string>
+	<key>Offline</key>
+	<string>Offline</string>
+	<key>Offline limits features</key>
+	<string>Your device is currently offline.  Some features will not be available.</string>
+	<key>Old Trips</key>
+	<string>Past</string>
+	<key>On</key>
+	<string>On</string>
+	<key>One Way</key>
+	<string>One Way</string>
+	<key>Open the email from this device to reset your mobile password (PIN) and sign in.</key>
+	<string>Open the email from this device to reset your mobile password (PIN) and sign in.</string>
+	<key>Open the email from this device to reset your password and sign in.</key>
+	<string>Open the email from this device to reset your password and sign in.</string>
+	<key>Operated By</key>
+	<string>Operated By</string>
+	<key>Operated by</key>
+	<string>Operated by</string>
+	<key>Operation Not Supported Offline</key>
+	<string>This operation is not supported in offline mode.  Please try again when network connectivity is available.</string>
+	<key>Or Sign In with...</key>
+	<string>Or Sign In with...</string>
+	<key>Or Sign Up with...</key>
+	<string>Or Sign Up with...</string>
+	<key>Organization</key>
+	<string>Organisation</string>
+	<key>Original receipt required</key>
+	<string>Original receipt required</string>
+	<key>Other</key>
+	<string>Social and Other</string>
+	<key>Other Allowances</key>
+	<string>Other Allowances</string>
+	<key>Other Reports</key>
+	<string>Other Claims</string>
+	<key>Other Room Tax 1</key>
+	<string>Other Room Tax 1</string>
+	<key>Other Room Tax 2</key>
+	<string>Other Room Tax 2</string>
+	<key>Out of Pocket Entry has been Saved</key>
+	<string>Expense has been Saved</string>
+	<key>Outbound</key>
+	<string>Outbound</string>
+	<key>P2B_AIR_BOOKING_HEADER_POINTS_DISABLED</key>
+	<string>Be a smarter travel buyer! Booking under the Price-to-Beat saves your company money.</string>
+	<key>P2B_AIR_BOOKING_HEADER_POINTS_ENABLED</key>
+	<string>Earn Travel Points when you select options that cost less than the Price-to-Beat. When the trip is expensed, the earned Travel Points are reflected in the total that you can use toward future benefits.</string>
+	<key>PDF Receipt</key>
+	<string>PDF Receipt</string>
+	<key>PENDING_REQUIRED_TRAVEL_CUSTOM_FIELDS</key>
+	<string>Please fill in all the required Booking Info before proceeding</string>
+	<key>PER_VARIABLE_NO_RATES</key>
+	<string>No rates defined for the date provided.</string>
+	<key>PIN</key>
+	<string>PIN</string>
+	<key>PIN Tip</key>
+	<string>If you don't know your credentials, log into your Concur web account and navigate to Profile &gt; Mobile Registration.  Concur Breeze users should navigate to My Account &gt; Mobile PIN.  Contact your company administrator for additional help.</string>
+	<key>PIN_EXPIRED</key>
+	<string>You PIN has expired.  Please register your PIN again and then login.</string>
+	<key>PIN_MOBILE_NOTES</key>
+	<string>The PIN is only for the Concur mobile app.</string>
+	<key>PLEASE_SELECT_VALUE</key>
+	<string>Please select an option from the list.</string>
+	<key>PRICE_TO_BEAT_AIR_RESULTS_HEADER</key>
+	<string>Booking a flight that costs less than the Price-to-Beat earns you Travel Points that you can use later!</string>
+	<key>PRICE_TO_BEAT_AIR_SEARCH_HEADER</key>
+	<string>Earn Travel Points when you save money! Enter your air search details below to find the Price-to-Beat when booking your flight.</string>
+	<key>PRICE_TO_BEAT_DISABLED_AIR_RESULTS_HEADER</key>
+	<string>Booking a flight that costs less than the Price-to-Beat saves your company money!</string>
+	<key>PRICE_TO_BEAT_DISABLED_AIR_SEARCH_HEADER</key>
+	<string>Be a smarter travel buyer! Enter your air search details below to find the Price-to-Beat when booking your flight.</string>
+	<key>PRICE_TO_BEAT_DISABLED_HOTEL_RESULTS_HEADER</key>
+	<string>Booking a room that costs less than the Price-to-Beat saves your company money!</string>
+	<key>PRICE_TO_BEAT_DISABLED_HOTEL_SEARCH_HEADER</key>
+	<string>Be a smarter travel buyer! Enter your hotel search details below to find the Price-to-Beat when booking your room.</string>
+	<key>PRICE_TO_BEAT_HOTEL_RESULTS_HEADER</key>
+	<string>Booking a room that costs less than the Price-to-Beat earns you Travel Points that you can use later!</string>
+	<key>PRICE_TO_BEAT_HOTEL_SEARCH_HEADER</key>
+	<string>Earn Travel Points when you save money! Enter your hotel search details below to find the Price-to-Beat when booking your room. </string>
+	<key>PROCEED_TO_ADD_MSG</key>
+	<string>You can proceed and add them to a claim, but will need to attach a receipt via the website.</string>
+	<key>PWD</key>
+	<string>Password</string>
+	<key>PWD_LOGIN</key>
+	<string>Register</string>
+	<key>Paid Reports</key>
+	<string>Paid Claims</string>
+	<key>Passenger</key>
+	<string>Passenger</string>
+	<key>PassengerCount</key>
+	<string>Passenger Count</string>
+	<key>Passengers</key>
+	<string>Passengers</string>
+	<key>Password</key>
+	<string>Password</string>
+	<key>Password Reset Link Sent</key>
+	<string>Password Reset Link Sent</string>
+	<key>Password Successfully Reset</key>
+	<string>Password Successfully Reset</string>
+	<key>Passwords Don't Match</key>
+	<string>Passwords Don't Match</string>
+	<key>Personal Car Mileage</key>
+	<string>Personal Car Mileage</string>
+	<key>PersonalCardCount_0</key>
+	<string>You have no unused card charges from %@</string>
+	<key>PersonalCardCount_1</key>
+	<string>You have 1 unused card charge from %@</string>
+	<key>PersonalCardCount_2</key>
+	<string>You have %d unused card charges from %@</string>
+	<key>Phone</key>
+	<string>Phone</string>
+	<key>Photo Album</key>
+	<string>Attach via Photo Album</string>
+	<key>Pick-up</key>
+	<string>Pick-up</string>
+	<key>Pick-up Date</key>
+	<string>Pick-up Date</string>
+	<key>Pick-up Time</key>
+	<string>Pick-up Time</string>
+	<key>Pickup</key>
+	<string>Pickup</string>
+	<key>Pickup Location</key>
+	<string>Pickup Location</string>
+	<key>Please Confirm</key>
+	<string>Please Confirm</string>
+	<key>Please Enter Your Email Address</key>
+	<string>Please Enter Your Work Email Address</string>
+	<key>Please Select To View</key>
+	<string>Please select to view</string>
+	<key>Please Specify Program</key>
+	<string>Please Specify Program</string>
+	<key>Please Wait</key>
+	<string>Please Wait</string>
+	<key>Please address policy violations</key>
+	<string>Please address policy violations</string>
+	<key>Please check your connection and retry later.</key>
+	<string>Please check your connection and retry later.</string>
+	<key>Please enter a justification for booking this car.</key>
+	<string>Please enter a justification for booking this car.</string>
+	<key>Please enter in your distance</key>
+	<string>Please enter in your distance</string>
+	<key>Please enter values for required fields</key>
+	<string>Please enter values for required fields, in red, before saving.</string>
+	<key>Please fill in the missing required fields before saving the entry.</key>
+	<string>Please fill in the missing required fields before saving the entry.</string>
+	<key>Please follow the instructions in the email</key>
+	<string>Please follow the instructions in the email you received from TripIt when you set up your account.</string>
+	<key>Please log in to SmartExpense and then link your accounts together.</key>
+	<string>Please log in to SmartExpense and then link your accounts together.</string>
+	<key>Please log in to SmartExpense using the same account already linked to TripIt.</key>
+	<string>Please log in to SmartExpense using the same account already linked to TripIt.</string>
+	<key>Please select a destination location</key>
+	<string>Please select a destination location</string>
+	<key>Please select a report or create a new report first</key>
+	<string>Please select a claim or create a new claim first</string>
+	<key>Please select a starting location</key>
+	<string>Please select a starting location</string>
+	<key>Please specify</key>
+	<string>Please specify</string>
+	<key>Please specify a location.</key>
+	<string>Please specify a location.</string>
+	<key>Please try again and use the link within 24 hours of receipt.</key>
+	<string>Please try again and use the link within 24 hours of receipt.</string>
+	<key>Please type a description into this email message describing what you were doing when the application crashed.  For example: I was uploading an expense receipt.</key>
+	<string>Please type a description into this email message describing what you were doing when the application crashed.  For example: I was uploading an expense receipt.</string>
+	<key>Please verify your email</key>
+	<string>Please verify your email</string>
+	<key>Please verify your email address</key>
+	<string>Please verify your email address</string>
+	<key>Please wait for your verification email to continue the registration process.</key>
+	<string>Please wait for your verification email to continue the registration process.</string>
+	<key>Please wait until online to edit field</key>
+	<string>These fields cannot be edited offline.</string>
+	<key>Please wait until you are online to login</key>
+	<string>Please wait until you are online to login.</string>
+	<key>Points or Approval</key>
+	<string>Points or Approval</string>
+	<key>Popular Cards</key>
+	<string>Popular Cards</string>
+	<key>Post Trip</key>
+	<string>Post Trip</string>
+	<key>Preferred</key>
+	<string>Preferred</string>
+	<key>Preferred Vendors</key>
+	<string>Preferred Suppliers</string>
+	<key>Premium</key>
+	<string>Premium</string>
+	<key>Premium Economy</key>
+	<string>Premium Economy</string>
+	<key>Prev</key>
+	<string>Prev</string>
+	<key>Preview</key>
+	<string>Preview</string>
+	<key>Previous</key>
+	<string>Previous</string>
+	<key>Price</key>
+	<string>Price</string>
+	<key>Price to Beat</key>
+	<string>Price-to-Beat</string>
+	<key>Print</key>
+	<string>Print</string>
+	<key>Proceed to Sign In</key>
+	<string>Proceed to Sign In</string>
+	<key>Property</key>
+	<string>Property</string>
+	<key>Provided</key>
+	<string>Provided</string>
+	<key>Pull to Refresh</key>
+	<string>Pull to Refresh</string>
+	<key>Purchase Requests</key>
+	<string>Purchase Requests</string>
+	<key>Quick Expense</key>
+	<string>Quick Expense</string>
+	<key>Quick Search</key>
+	<string>Quick Search</string>
+	<key>Quick Tips</key>
+	<string>Quick Tips</string>
+	<key>RECEIPT</key>
+	<string>Receipt</string>
+	<key>RECEIPT_CELL_TITLE</key>
+	<string>Receipt</string>
+	<key>RECEIPT_DETAIL_NO_DATA_INSTRUCTION</key>
+	<string>Or forward digital receipts to receipts@smartexpense.com from your %@ account</string>
+	<key>RECEIPT_IMG_UPLOADED</key>
+	<string>Receipt Image has been uploaded</string>
+	<key>RECEIPT_IMG_UPLOADING</key>
+	<string>Uploading Receipt Image</string>
+	<key>RECEIPT_MANAGER</key>
+	<string>Receipt Folder</string>
+	<key>RECEIPT_MANAGER_IMAGES</key>
+	<string>Receipt Folder</string>
+	<key>RECEIPT_MIGRATE_MSG</key>
+	<string>You have %d unassigned receipt images saved locally into the Concur Mobile Documents folder. Would you like to copy the unassigned receipt images to the iPhone's photo album?</string>
+	<key>RECEIPT_MIGRATION_STATUS_MSG</key>
+	<string>Copied %d of %d receipts to Photo Album</string>
+	<key>RECEIPT_MIGRATION_WAIT_MSG</key>
+	<string>Image copying in progress. Terminating or leaving the application now may result in lost images.</string>
+	<key>RECEIPT_NOT_ON_SERVER</key>
+	<string>A Receipt is showing attached to this Expense on the server, but the receipt no longer exists in Receipt Manager.</string>
+	<key>RECEIPT_STORE_HELP_TEXT</key>
+	<string>Upload your receipts to the Receipt Store. Then open a claim or expense entry and attach the receipt.</string>
+	<key>RECEIPT_STORE_NO_DATA_INSTRUCTION</key>
+	<string>You can also forward digital receipts to receipts@smartexpense.com from your %@ account</string>
+	<key>RECEIPT_VIEWER</key>
+	<string>Receipt Viewer</string>
+	<key>REGISTER</key>
+	<string>Enter PIN</string>
+	<key>REGISTERED_EMAIL</key>
+	<string>Work email</string>
+	<key>REGISTER_MSG</key>
+	<string>For help, login to the web version of Concur and navigate to Profile &gt; Mobile Registration.</string>
+	<key>REGISTER_PINS_DIFF_ERR</key>
+	<string>PINs are different.  Please reenter the PINs.</string>
+	<key>REPORTS</key>
+	<string>Claim List</string>
+	<key>REPORTS_TO_SUBMIT</key>
+	<string>%d claim(s) to submit</string>
+	<key>REPORT_DETAIL</key>
+	<string>Claim</string>
+	<key>REPORT_DETAIL_RECEIPTS</key>
+	<string>Receipts</string>
+	<key>REPORT_NAME_TIP</key>
+	<string>Type in a new claim name</string>
+	<key>REPORT_REQ_FIELDS</key>
+	<string>Please fill in all required fields and fix any error on the form before saving the claim.</string>
+	<key>REPORT_TA_ITINERARY</key>
+	<string>Travel Allowance</string>
+	<key>REPORT_TA_ITINERARY_ADD</key>
+	<string>Allowance Expense</string>
+	<key>RESET_PASSWORD_FAILED</key>
+	<string>Failed to reset your password</string>
+	<key>RESET_PASSWORD_SUCCEEDED</key>
+	<string>You will soon receive an email with instructions to reset your password.</string>
+	<key>RESET_PASSWORD_USER_NOT_EXIST</key>
+	<string>User does not exist in the system.  Make sure you have completed the SignUp process, before clicking on Rest your password link.</string>
+	<key>ROLE_DISABLED_ALERT_TITLE</key>
+	<string>Feature Disabled</string>
+	<key>ROLE_DISABLED_TEXT</key>
+	<string>This feature is not available for your company or role.</string>
+	<key>RPT_NO_ENTRY_INSTRUCTION_1</key>
+	<string>This expense claim has no expenses.  You must create or import at least one expense in order to submit the claim. </string>
+	<key>RPT_NO_ENTRY_INSTRUCTION_2</key>
+	<string>To create or import an expense, tap on the + icon below.</string>
+	<key>RPT_QUIT_CONFIRM_MSG</key>
+	<string>Would you like to save this claim before?</string>
+	<key>RPT_SAVE_CONFIRM_MSG</key>
+	<string>Your changes may be lost if you proceed.  Would you like to save these changes?</string>
+	<key>Rail</key>
+	<string>Rail</string>
+	<key>Rail cancelled from mobile device</key>
+	<string>Rail cancelled from mobile device</string>
+	<key>Rail violation justification is missing</key>
+	<string>Before reserving this train in violation of company policy, you must provide a justification in the field shown in red.</string>
+	<key>Rail violation reason and justification are missing</key>
+	<string>Before reserving this train in violation of company policy, you must provide a reason and justification in the fields shown in red.</string>
+	<key>Rail violation reason is missing</key>
+	<string>Before reserving this train in violation of company policy, you must provide a reason in the field shown in red.</string>
+	<key>Rail_subline</key>
+	<string>Book a train and ride</string>
+	<key>Rate It!</key>
+	<string>Rate It!</string>
+	<key>Rate Location:</key>
+	<string>Rate Location:</string>
+	<key>Rating</key>
+	<string>Rating</string>
+	<key>Re-enter Password</key>
+	<string>Re-enter Password</string>
+	<key>Recalculate Allowances</key>
+	<string>Recalculate Allowances</string>
+	<key>Recall</key>
+	<string>Recall</string>
+	<key>Recall Failed</key>
+	<string>Recall Failed</string>
+	<key>Receipt</key>
+	<string>Receipt</string>
+	<key>Receipt Capture</key>
+	<string>Receipt Capture</string>
+	<key>Receipt Folder</key>
+	<string>Receipt Folder</string>
+	<key>Receipt Images</key>
+	<string>Receipt Images</string>
+	<key>Receipt Queued</key>
+	<string>Receipt Queued</string>
+	<key>Receipt Store</key>
+	<string>Receipt Store</string>
+	<key>Receipt image required</key>
+	<string>Receipt image required</string>
+	<key>Receipt upload complete</key>
+	<string>Receipt upload complete</string>
+	<key>Receipt upload failed</key>
+	<string>Receipt upload failed</string>
+	<key>Receipt uploaded</key>
+	<string>Receipt uploaded</string>
+	<key>ReceiptUploadFailMsg</key>
+	<string>Could not save receipt at this time. Please try again later.</string>
+	<key>Receipts</key>
+	<string>Receipts</string>
+	<key>Receipts cannot be added offline</key>
+	<string>Receipts cannot be added offline.</string>
+	<key>Recurring Charges (each night)</key>
+	<string>Recurring Charges (each night)</string>
+	<key>Refresh Data</key>
+	<string>Refresh Data</string>
+	<key>Refresh Data Offline</key>
+	<string>Your data cannot be refreshed while you are offline.  Please try later.</string>
+	<key>Refresh Trip</key>
+	<string>Refresh Trip</string>
+	<key>Refreshing</key>
+	<string>Refreshing</string>
+	<key>Refreshing Data</key>
+	<string>Refreshing Data</string>
+	<key>Refreshing View</key>
+	<string>Refreshing View</string>
+	<key>Refundable Only</key>
+	<string>Refundable Only</string>
+	<key>Regional</key>
+	<string>Regional</string>
+	<key>Register a credit card</key>
+	<string>Register a credit card</string>
+	<key>Reject</key>
+	<string>Reject</string>
+	<key>Rejected</key>
+	<string>Rejected</string>
+	<key>Rejecting Trip</key>
+	<string>Rejecting Trip</string>
+	<key>Remaining:</key>
+	<string>Remaining:</string>
+	<key>Removed Link to Dropbox</key>
+	<string>Removed Link to Dropbox</string>
+	<key>Removing entry</key>
+	<string>Removing entry</string>
+	<key>Rent a car</key>
+	<string>Rent a car</string>
+	<key>Replace</key>
+	<string>Replace</string>
+	<key>Report</key>
+	<string>Claim</string>
+	<key>Report Approvals</key>
+	<string>Claim Approvals</string>
+	<key>Report Comments</key>
+	<string>Claim Comments</string>
+	<key>Report Entry</key>
+	<string>Claim Entry</string>
+	<key>Report Exceptions</key>
+	<string>Claim Exceptions</string>
+	<key>Report Header</key>
+	<string>Claim Header</string>
+	<key>Report Name</key>
+	<string>Claim Name</string>
+	<key>Report Summary</key>
+	<string>Claim Summary</string>
+	<key>Report is open</key>
+	<string>Claim is open</string>
+	<key>Reports</key>
+	<string>Claims</string>
+	<key>Reports List</key>
+	<string>Reports List</string>
+	<key>Reports cannot be approved offline</key>
+	<string>Claims cannot be approved offline.</string>
+	<key>ReportsToApproveRow_0</key>
+	<string>You have no claims to approve</string>
+	<key>ReportsToApproveRow_1</key>
+	<string>You have 1 claim to approve</string>
+	<key>ReportsToApproveRow_2</key>
+	<string>You have %d claims to approve</string>
+	<key>Request</key>
+	<string>Request</string>
+	<key>Requested</key>
+	<string>Requested</string>
+	<key>Requests</key>
+	<string>Requests</string>
+	<key>Required Fields Missing</key>
+	<string>Required Fields Missing</string>
+	<key>Reservation Date</key>
+	<string>Reservation Date</string>
+	<key>Reservation Not Allowed</key>
+	<string>Reservation Not Allowed</string>
+	<key>Reservation Status</key>
+	<string>Reservation Status</string>
+	<key>Reservation Time</key>
+	<string>Reservation Time</string>
+	<key>Reserve</key>
+	<string>Reserve</string>
+	<key>Reserve Train</key>
+	<string>Reserve Train</string>
+	<key>Reserving Car</key>
+	<string>Reserving Car</string>
+	<key>Reserving Flights</key>
+	<string>Reserving Flights</string>
+	<key>Reserving Hotel Room</key>
+	<string>Reserve Room</string>
+	<key>Reserving Train</key>
+	<string>Reserving Train</string>
+	<key>Reset</key>
+	<string>Reset</string>
+	<key>Reset Concur Password</key>
+	<string>Reset Concur Password</string>
+	<key>Reset Mobile Password (PIN)</key>
+	<string>Reset Mobile Password (PIN)</string>
+	<key>Reset PIN</key>
+	<string>Reset PIN</string>
+	<key>Reset Password</key>
+	<string>Reset Password</string>
+	<key>Reset to factory defaults</key>
+	<string>Reset to factory defaults</string>
+	<key>Reset your password</key>
+	<string>Reset your password</string>
+	<key>Results</key>
+	<string>Results</string>
+	<key>Results Summary</key>
+	<string>Results Summary</string>
+	<key>Retake</key>
+	<string>Retake</string>
+	<key>Return</key>
+	<string>Return</string>
+	<key>Return Date</key>
+	<string>Return Date</string>
+	<key>Return Date must be</key>
+	<string>Return Date</string>
+	<key>Return Date must be Message</key>
+	<string>The date to return must be after departure.</string>
+	<key>Return Time</key>
+	<string>Return Time</string>
+	<key>Returning</key>
+	<string>Returning</string>
+	<key>Returning: token token</key>
+	<string>Returning: %@ %@</string>
+	<key>Review Approver Instruction</key>
+	<string>Please review approver, then submit claim</string>
+	<key>Room Rate</key>
+	<string>Room Rate</string>
+	<key>Room Tax</key>
+	<string>Room Tax</string>
+	<key>Rooms</key>
+	<string>Rooms</string>
+	<key>Round Trip</key>
+	<string>Round Trip</string>
+	<key>Rule Messages</key>
+	<string>Rule Messages</string>
+	<key>SAFETY_CHECK_IN_HELP</key>
+	<string>Check in with your current location for assistance</string>
+	<key>SAVE_REPORT_RECEIPT_FAILURE</key>
+	<string>Unable to Attach Receipt</string>
+	<key>SEARCH_LOCN</key>
+	<string>Location Search</string>
+	<key>SEC_TITLE_COMMENTS</key>
+	<string>Comments</string>
+	<key>SEC_TITLE_INVOICE_HEADER</key>
+	<string>Invoice Header</string>
+	<key>SEE ALL token RESULTS</key>
+	<string>SEE ALL %@ RESULTS</string>
+	<key>SEE ALL token RESULTS (starting at token)</key>
+	<string>SEE ALL %d RESULTS (starting at %@)</string>
+	<key>SELECT_HELP_TOPIC</key>
+	<string>Or Select a Help Topic</string>
+	<key>SELECT_REPORT</key>
+	<string>Select Claim</string>
+	<key>SELECT_REPORT_HELP</key>
+	<string>Pick a claim from the list below to add your expenses to.  Or add to a new claim by tapping the '+' button above.</string>
+	<key>SETTINGS_VIEW</key>
+	<string>Settings</string>
+	<key>SIGN_IN_EMAIL</key>
+	<string>Enter your work email to receive your sign in information.</string>
+	<key>SIGN_IN_INSTRUCT_MSG</key>
+	<string>If your email address is in our system, you'll receive an email. Open it from this device to access the Concur app.</string>
+	<key>SLV_AT</key>
+	<string>at</string>
+	<key>SLV_BOOK_A_TAXI</key>
+	<string>Book a Taxi</string>
+	<key>SLV_CLICK_ON</key>
+	<string>Click on this cell to book</string>
+	<key>SLV_CONFIRMATION</key>
+	<string>Confirmation</string>
+	<key>SLV_DROP_OFF</key>
+	<string>%@ drop off at %@</string>
+	<key>SLV_FROM</key>
+	<string>From</string>
+	<key>SLV_GATE</key>
+	<string>Gate</string>
+	<key>SLV_GOES_FROM</key>
+	<string>Goes from %@ to %@</string>
+	<key>SLV_NUM_BOOKINGS</key>
+	<string>%d Booking(s) in this trip</string>
+	<key>SLV_PICKUP_AT</key>
+	<string>Pick up at %@</string>
+	<key>SLV_PICKUP_BY</key>
+	<string>Pick up by %@</string>
+	<key>SLV_PLATFORM_WAGON</key>
+	<string>Platform %@ Wagon #%@</string>
+	<key>SLV_TAXI_MAGIC</key>
+	<string>a cab with Taxi Magic</string>
+	<key>SLV_TAXI_MAGIC2</key>
+	<string>You will be redirected to the Taxi Magic app</string>
+	<key>SLV_TERMINAL</key>
+	<string>Terminal</string>
+	<key>SLV_TO</key>
+	<string>to</string>
+	<key>SLV_TOTAL_SEGS</key>
+	<string>With a total of %d segments for the trip</string>
+	<key>SLV_TRIP_LOCATOR</key>
+	<string>Trip Locator: %@</string>
+	<key>SOUTHWEST</key>
+	<string>Southwest Booking</string>
+	<key>SPLASH</key>
+	<string>Splash</string>
+	<key>SPOUSE</key>
+	<string>Spouse</string>
+	<key>SSO_FETCHING_DATA</key>
+	<string>Retrieving company sign-on information...</string>
+	<key>SSO_LOGIN_REQUIRED_MSG</key>
+	<string>Company Code (SSO) login required. Enter company code on the next screen to proceed</string>
+	<key>SUBMIT_BUTTON</key>
+	<string>Submit</string>
+	<key>SUBMIT_ERROR_NO_ENTRY_MSG</key>
+	<string>The expense claim has no expenses.  You must create at least one expense in order to submit the claim.</string>
+	<key>SUBMIT_ERROR_RPT_XCT_LEVEL_MSG</key>
+	<string>This expense claim cannot be submitted until all exceptions with red flags are resolved.</string>
+	<key>SUBMIT_ERROR_UNDEF_MSG</key>
+	<string>The expense claim contains one or more expenses with an expense type of Undefined.  You must select the expense type in order to submit the claim.</string>
+	<key>SUBMIT_HOW_TO_RECEIPT_MSG</key>
+	<string>According to company policy, you must provide receipts for the expenses listed below.  You may either fax the receipts or attach scanned images.  If you have already provided receipts, you can submit your claim now.</string>
+	<key>SU_ADD_YODLEE_CARD_INSTRUCTION</key>
+	<string>Enter your login information for your credit card account. SmartExpense will encrypt and securely use this information to download your card transactions. (Don't worry, it's read-only.)</string>
+	<key>SU_APPROVER_AB_NO_EMAIL</key>
+	<string>The selected contact does not have an email address to submit the claim to.</string>
+	<key>SU_CHECK_TEMP_PWD</key>
+	<string>Please check your email for your temporary SmartExpense password.</string>
+	<key>SU_SIGN_UP_CHECK_EMAIL</key>
+	<string>We need to verify your email address.  Check your email for a message from us and click on the verification link.</string>
+	<key>SYSEMP</key>
+	<string>This Employee</string>
+	<key>Safety Check In</key>
+	<string>Location Check In</string>
+	<key>Saturday_Short</key>
+	<string>Sat</string>
+	<key>Save</key>
+	<string>Save</string>
+	<key>Save &amp; Generate Allowances</key>
+	<string>Save &amp; Generate Allowances</string>
+	<key>Save Itemizations</key>
+	<string>Save Itemisations</string>
+	<key>Save entry receipt failed</key>
+	<string>Failed to save receipt to entry</string>
+	<key>Saved</key>
+	<string>Saved</string>
+	<key>Saving Expense</key>
+	<string>Saving Expense</string>
+	<key>Saving Report</key>
+	<string>Saving Claim</string>
+	<key>Saving offline receipt</key>
+	<string>Saving offline receipt</string>
+	<key>Scheduled Arrival</key>
+	<string>Scheduled Arrival</string>
+	<key>Scheduled Departure</key>
+	<string>Scheduled Departure</string>
+	<key>Scheduled Equipment</key>
+	<string>Scheduled Equipment</string>
+	<key>Scheduled On-time</key>
+	<string>Scheduled On-time</string>
+	<key>Scheduled Terminal</key>
+	<string>Scheduled Terminal</string>
+	<key>Search</key>
+	<string>Search</string>
+	<key>Search Again</key>
+	<string>Search Again</string>
+	<key>Search Approver</key>
+	<string>Search Approver</string>
+	<key>Search Approver Instruction</key>
+	<string>Please find an approver, then submit claim</string>
+	<key>Search Failed</key>
+	<string>Search Failed</string>
+	<key>Search Results</key>
+	<string>Search Results</string>
+	<key>Search and book flights</key>
+	<string>Search and book flights, hotels, car and more</string>
+	<key>Search for Attendee</key>
+	<string>Search for Attendee</string>
+	<key>Search for Cars</key>
+	<string>Search for Cars</string>
+	<key>Search for an office location</key>
+	<string>Search for an office location</string>
+	<key>Search schedules</key>
+	<string>Search schedules</string>
+	<key>Searching for Hotels near you</key>
+	<string>Searching for Hotels near you</string>
+	<key>Searching for cars</key>
+	<string>Searching for cars</string>
+	<key>Searching for cars at</key>
+	<string>Searching for cars at</string>
+	<key>Searching for flights</key>
+	<string>Searching for flights</string>
+	<key>Searching for hotels</key>
+	<string>Searching for hotels</string>
+	<key>Searching for trains</key>
+	<string>Searching for trains</string>
+	<key>Seat: %@</key>
+	<string>Seat: %@</string>
+	<key>Seats</key>
+	<string>Seats</string>
+	<key>See All</key>
+	<string>See All</string>
+	<key>See All (token results)</key>
+	<string>See All (%d results)</string>
+	<key>See Alternative Flights</key>
+	<string>See Alternative Flights</string>
+	<key>See what you can do with Concur</key>
+	<string>See what you can do with Concur</string>
+	<key>Select</key>
+	<string>Select</string>
+	<key>Select All</key>
+	<string>Select All</string>
+	<key>Select Attendee Type</key>
+	<string>Select Attendee Type</string>
+	<key>Select Attendee to Add</key>
+	<string>Select Attendee to Add</string>
+	<key>Select Car Type</key>
+	<string>Select Car Type</string>
+	<key>Select Card</key>
+	<string>Select Card</string>
+	<key>Select Email Address</key>
+	<string>Select Email Address</string>
+	<key>Select Preference</key>
+	<string>Select Preference</string>
+	<key>Select Program</key>
+	<string>Select Program</string>
+	<key>Select Reason</key>
+	<string>Select Reason</string>
+	<key>Select Train</key>
+	<string>Select Train</string>
+	<key>Select an office location</key>
+	<string>Select an office location</string>
+	<key>Select delivery option</key>
+	<string>Select delivery option</string>
+	<key>Select seat class below</key>
+	<string>Select seat class below</string>
+	<key>Send Again</key>
+	<string>Send Again</string>
+	<key>Send Failed</key>
+	<string>Send Failed</string>
+	<key>Send Invite</key>
+	<string>Send Invite</string>
+	<key>Send Invite To</key>
+	<string>Send Invite To</string>
+	<key>Send Log</key>
+	<string>Send Log</string>
+	<key>Send My Sign In Details</key>
+	<string>Send Sign In Instructions</string>
+	<key>Send to Approver</key>
+	<string>Send to Approver</string>
+	<key>Sending Back Report</key>
+	<string>Sending Back Claim</string>
+	<key>Sending Email</key>
+	<string>Sending Email</string>
+	<key>Sent</key>
+	<string>Sent</string>
+	<key>Set Mobile PIN</key>
+	<string>Set Mobile PIN</string>
+	<key>Set PIN</key>
+	<string>Set PIN</string>
+	<key>Set PIN Tip</key>
+	<string>Set PIN Tip</string>
+	<key>Set PIN succeeded</key>
+	<string>Your mobile PIN was saved successfully.</string>
+	<key>Settings</key>
+	<string>Settings</string>
+	<key>Share Trip</key>
+	<string>Share Trip</string>
+	<key>Show Home Panels</key>
+	<string>Show Home Panels</string>
+	<key>Show Offers</key>
+	<string>Show Offers</string>
+	<key>Sign In</key>
+	<string>Sign In</string>
+	<key>Sign In Help</key>
+	<string>Sign In Help</string>
+	<key>Sign In Instructions Sent to This Device</key>
+	<string>Sign In Instructions Sent</string>
+	<key>Sign In with Concur</key>
+	<string>Sign In with Concur</string>
+	<key>Sign In with Facebook</key>
+	<string>Sign In with Facebook</string>
+	<key>Sign Up</key>
+	<string>Sign Up</string>
+	<key>Sign Up Failed</key>
+	<string>Sign Up Failed</string>
+	<key>Sign in to Concur</key>
+	<string>Sign In</string>
+	<key>Sign in to TripIt</key>
+	<string>Sign in to TripIt</string>
+	<key>Signing up accepts our</key>
+	<string>Signing up accepts our</string>
+	<key>Similar users like this hotel</key>
+	<string>Similar users like this hotel</string>
+	<key>Single Sign On</key>
+	<string>Single Sign On</string>
+	<key>Smart Matching</key>
+	<string>Smart Matching</string>
+	<key>SmartExpense Report</key>
+	<string>SmartExpense Claim</string>
+	<key>SmartExpense version</key>
+	<string>Welcome to SmartExpense</string>
+	<key>SmartExpense was denied access to your TripIt account.</key>
+	<string>SmartExpense was denied access to your TripIt account.</string>
+	<key>SmartExpense was unable to access your TripIt account.  Please try again later.</key>
+	<string>SmartExpense was unable to access your TripIt account.  Please try again later.</string>
+	<key>SmartExpense was unable to expense your trip. Please try again later.</key>
+	<string>SmartExpense was unable to expense your trip. Please try again later.</string>
+	<key>Smoking</key>
+	<string>Smoking</string>
+	<key>Sold Out</key>
+	<string>Sold Out</string>
+	<key>Sorry</key>
+	<string>Sorry, we did not find a Price-to-Beat. Try searching again.</string>
+	<key>Sorry I didn't quite get that.</key>
+	<string>Sorry, I didn't quite get that. Let's start over.</string>
+	<key>Sort</key>
+	<string>Sort</string>
+	<key>Sort By</key>
+	<string>Sort By</string>
+	<key>Sort by</key>
+	<string>Sort by</string>
+	<key>Sort by Amount</key>
+	<string>Sort by Amount</string>
+	<key>Sort by Date</key>
+	<string>Sort by Date</string>
+	<key>Sort by Distance</key>
+	<string>Sort by Distance</string>
+	<key>Sort by Duration</key>
+	<string>Sort by Duration</string>
+	<key>Sort by Earliest Departure</key>
+	<string>Sort by Earliest Departure</string>
+	<key>Sort by Preference</key>
+	<string>Sort by Preference</string>
+	<key>Sort by Preferred Vendors</key>
+	<string>Sort by Preferred Suppliers</string>
+	<key>Sort by Price</key>
+	<string>Sort by Price</string>
+	<key>Sort by Rating</key>
+	<string>Sort by Rating</string>
+	<key>Sort by Vendor Names</key>
+	<string>Sort by Supplier Names</string>
+	<key>Standard</key>
+	<string>Standard</string>
+	<key>Standard Hybrid</key>
+	<string>Standard Hybrid</string>
+	<key>Standard SUV</key>
+	<string>Standard SUV</string>
+	<key>Star Rating</key>
+	<string>Star Rating</string>
+	<key>StartARequest</key>
+	<string>Start a Request</string>
+	<key>StartYourRequest</key>
+	<string>Start Your Request</string>
+	<key>Starting</key>
+	<string>Starting</string>
+	<key>Station</key>
+	<string>Station</string>
+	<key>Stations</key>
+	<string>Stations</string>
+	<key>Stop</key>
+	<string>Stop</string>
+	<key>Stopping Upload</key>
+	<string>Stopping Upload</string>
+	<key>Stops</key>
+	<string>Stops</string>
+	<key>Submit Invoices</key>
+	<string>Submit Invoices</string>
+	<key>Submit Report</key>
+	<string>Submit Claim</string>
+	<key>SubmitRequest</key>
+	<string>Submit Request</string>
+	<key>Submitted Reports</key>
+	<string>Submitted Claims</string>
+	<key>Suggested based on co-worker</key>
+	<string>Suggested based on co-worker</string>
+	<key>Suggested based on past stay</key>
+	<string>Suggested based on past stay</string>
+	<key>Suggested based on popularity</key>
+	<string>Suggested based on popularity</string>
+	<key>Sunday_Short</key>
+	<string>Sun</string>
+	<key>Swipe for more</key>
+	<string>Swipe for more</string>
+	<key>Swipe to delete</key>
+	<string>Swipe to delete</string>
+	<key>Switch to KM</key>
+	<string>Switch to KM</string>
+	<key>Switch to Miles</key>
+	<string>Switch to Miles</string>
+	<key>Sync Credit Card</key>
+	<string>Sync Credit Card</string>
+	<key>Sync account with SmartExpense</key>
+	<string>Sync account with SmartExpense</string>
+	<key>Sync credit card</key>
+	<string>Sync credit card</string>
+	<key>TA Import Heading Text</key>
+	<string>Select travel reservations or card charges to help start your travel allowance itinerary</string>
+	<key>TITLE_REGISTER_REENTER_PIN</key>
+	<string>Enter PIN</string>
+	<key>TRAVEL_NEG_TEXT</key>
+	<string>Start by planning your trip</string>
+	<key>TRAVEL_REQUESTS</key>
+	<string>Requests</string>
+	<key>TRIPS</key>
+	<string>Trips List</string>
+	<key>TRIP_DETAILS</key>
+	<string>Trip Details</string>
+	<key>TRY_AGAIN</key>
+	<string>Try Again</string>
+	<key>TWITTER_MESSAGES</key>
+	<string>Twitter From Concur</string>
+	<key>Take photos of your receipts.</key>
+	<string>Take photos of your receipts.</string>
+	<key>Take pictures of receipts &amp; upload</key>
+	<string>Take pictures of receipts &amp; upload</string>
+	<key>Tap to get directions</key>
+	<string>Tap to get directions</string>
+	<key>Taxable</key>
+	<string>Taxable</string>
+	<key>Taxi</key>
+	<string>Taxi</string>
+	<key>Taxi Magic</key>
+	<string>Taxi Magic</string>
+	<key>Terminal token</key>
+	<string>Terminal %@</string>
+	<key>Terms of Use</key>
+	<string>Terms of Use</string>
+	<key>Thank You</key>
+	<string>Thank You</string>
+	<key>The Out of Pocket Entry could not be saved because the network is unavailable.  Please try again later.</key>
+	<string>The Out of Pocket Entry could not be saved because the network is unavailable.  Please try again later.</string>
+	<key>The Out of Pocket Entry could not be saved.  Please try again later.</key>
+	<string>The Out of Pocket Entry could not be saved.  Please try again later.</string>
+	<key>The Price-to-Beat is %@.</key>
+	<string>The Price-to-Beat is %@.</string>
+	<key>The Price-to-Beat range is between %@.</key>
+	<string>The Price-to-Beat range is between %@.</string>
+	<key>The account could not be unlinked.</key>
+	<string>The account could not be unlinked.</string>
+	<key>The car could not be booked.</key>
+	<string>The car could not be booked.</string>
+	<key>The check-out date must be later than the check-in date.</key>
+	<string>The check-out date must be later than the check-in date.</string>
+	<key>The date specified for departure is invalid.</key>
+	<string>The date specified for departure is invalid.</string>
+	<key>The date specified for the departure occurs in the past.</key>
+	<string>The date specified for the departure occurs in the past.</string>
+	<key>The date specified for the return is earlier than the date of departure.</key>
+	<string>The date specified for the return is earlier than the date of departure.</string>
+	<key>The flight could not be booked.</key>
+	<string>The flight could not be booked.</string>
+	<key>The log could not be sent.</key>
+	<string>The log could not be sent.</string>
+	<key>The log mail has been placed in your outbox.</key>
+	<string>The log mail has been placed in your outbox.</string>
+	<key>The log mail has been saved in your Drafts folder.</key>
+	<string>The log mail has been saved in your Drafts folder.</string>
+	<key>The password reset was requested from another device. Please use the same device you requested the password reset.</key>
+	<string>The password reset was requested from another device. Please use the same device you requested the password reset.</string>
+	<key>The selected credit card will be charged and the ticket will be issued immediately. The reservation may not be eligible for changes or refunds. Are you sure you want to reserve this flight?</key>
+	<string>The selected credit card will be charged and the ticket will be issued immediately. The reservation may not be eligible for changes or refunds. Are you sure you want to reserve this flight?</string>
+	<key>The server encountered an error.</key>
+	<string>The server encountered an error.</string>
+	<key>The train could not be booked</key>
+	<string>The train could not be booked.</string>
+	<key>There are</key>
+	<string>There are %@ claims waiting for your approval.</string>
+	<key>There are cct</key>
+	<string>You have %@ unused card charges.</string>
+	<key>There are no cct</key>
+	<string>You have no card charges.</string>
+	<key>There are no reports to approve</key>
+	<string>There are no claims to approve</string>
+	<key>There are no rpt</key>
+	<string>All claims have been submitted.</string>
+	<key>There are no travel requests to approve</key>
+	<string>There are no requests to approve</string>
+	<key>There are rpt</key>
+	<string>There are %@ unsubmitted claims for a total of %@.</string>
+	<key>There is</key>
+	<string>There is %@ claim waiting for your approval.</string>
+	<key>There is cct</key>
+	<string>You have %@ unused card charge.</string>
+	<key>There is rpt</key>
+	<string>There is %@ unsubmitted claim for a total of %@.</string>
+	<key>There must have been a typo. Please re-enter the password so it matches exactly in both fields</key>
+	<string>There must have been a typo. Please re-enter the password so it matches exactly in both fields</string>
+	<key>There was an error processing your request. It may be due to a poor network connection. Please try again later. If this condition continues</key>
+	<string>There was an error processing your request. It may be due to a poor network connection. Please try again later. If this condition continues, please contact your administrator</string>
+	<key>There were no unassigned expenses found</key>
+	<string>There were no unassigned expenses found</string>
+	<key>This application crashed the last time you ran it.  Please help us determine the cause of the crash by sending us the application log.</key>
+	<string>This application crashed the last time you ran it.  Please help us determine the cause of the crash by sending us the application log.</string>
+	<key>This attendee cannot be edited.</key>
+	<string>This attendee cannot be edited.</string>
+	<key>This attendee has been modified</key>
+	<string>This attendee has been modified since it was last used on this expense.  Any edits must be completed in Profile on the web.</string>
+	<key>This device is not configured for sending mail.</key>
+	<string>This device is not configured for sending mail.</string>
+	<key>This feature requires access</key>
+	<string>This feature requires access to your device's Microphone. 
+Please enable Microphone access for this app in Settings / Privacy / Microphone</string>
+	<key>This trip has already been expensed or the trip could not be synchronized.</key>
+	<string>This trip has already been expensed or the trip could not be synchronised.</string>
+	<key>Thursday_Short</key>
+	<string>Thu</string>
+	<key>Ticket Delivery</key>
+	<string>Ticket Delivery</string>
+	<key>Ticket Type</key>
+	<string>Ticket Type</string>
+	<key>Ticketing</key>
+	<string>Ticketing</string>
+	<key>Time</key>
+	<string>Time</string>
+	<key>Title</key>
+	<string>Title</string>
+	<key>To</key>
+	<string>To</string>
+	<key>To Location</key>
+	<string>To Location</string>
+	<key>To Station</key>
+	<string>To Station</string>
+	<key>ToReceiptStoreMsg</key>
+	<string>Take me to the Receipt Store.</string>
+	<key>Tomorrow</key>
+	<string>Tomorrow</string>
+	<key>Total</key>
+	<string>Total</string>
+	<key>Total Amount</key>
+	<string>Total Amount</string>
+	<key>Total Due Company Card</key>
+	<string>Total Due Company Card</string>
+	<key>Total Due Employee</key>
+	<string>Total Due Employee</string>
+	<key>Total Owed by Employee</key>
+	<string>Total Owed by Employee</string>
+	<key>Total Paid by Company</key>
+	<string>Total Paid by Company</string>
+	<key>Total Personal Amount</key>
+	<string>Total Personal Amount</string>
+	<key>Total Price</key>
+	<string>Total Price</string>
+	<key>Total Rate</key>
+	<string>Total Rate</string>
+	<key>Total Requested</key>
+	<string>Total Requested</string>
+	<key>Total Travel Points: %@</key>
+	<string>Total Travel Points: %@</string>
+	<key>Total no card charges</key>
+	<string>You have no card transactions</string>
+	<key>Total no expenses</key>
+	<string>You have no expenses</string>
+	<key>Total num card charge</key>
+	<string>You have one card transactions</string>
+	<key>Total num card charges</key>
+	<string>You have %@ card transactions</string>
+	<key>Total num expense</key>
+	<string>You have one expense</string>
+	<key>Total num expenses</key>
+	<string>You have %@ expenses</string>
+	<key>Total: %@</key>
+	<string>Total: %@</string>
+	<key>Tour</key>
+	<string>Tour</string>
+	<key>TourExpense2Subtitle</key>
+	<string>Then submit and get reimbursed.
+Managers can approve from anywhere.</string>
+	<key>Train</key>
+	<string>Train</string>
+	<key>Train Choices</key>
+	<string>Train Choices</string>
+	<key>Train Detail</key>
+	<string>Train Detail</string>
+	<key>Train Number</key>
+	<string>Train Number</string>
+	<key>Train: token</key>
+	<string>Train %@</string>
+	<key>Transaction Amount</key>
+	<string>Transaction Amount</string>
+	<key>Transaction Date</key>
+	<string>Transaction Date</string>
+	<key>Transaction Location</key>
+	<string>Transaction Location</string>
+	<key>Travel</key>
+	<string>Travel</string>
+	<key>Travel Agency Info</key>
+	<string>Travel Agency Info</string>
+	<key>Travel Apps</key>
+	<string>Travel Apps</string>
+	<key>Travel Points</key>
+	<string>Travel Points</string>
+	<key>Travel Points Awarded</key>
+	<string>Travel Points Awarded</string>
+	<key>Travel Points Bank: %@ points</key>
+	<string>Travel Points Bank: %@ points</string>
+	<key>Travel Points Booked</key>
+	<string>Travel Points Booked</string>
+	<key>Travel Policy</key>
+	<string>Travel Policy</string>
+	<key>Travel Requests</key>
+	<string>Travel Requests</string>
+	<key>Travel Time</key>
+	<string>Travel Time</string>
+	<key>TravelRequestCount</key>
+	<string>You have %d Request(s) to approve</string>
+	<key>TravelRequestsToApproveRow_0</key>
+	<string>You have no requests to approve</string>
+	<key>TravelRequestsToApproveRow_1</key>
+	<string>You have 1 request to approve</string>
+	<key>TravelRequestsToApproveRow_2</key>
+	<string>You have %d requests to approve</string>
+	<key>Trip</key>
+	<string>Current Trip</string>
+	<key>Trip Approval</key>
+	<string>Trip Approval</string>
+	<key>Trip Approvals</key>
+	<string>Trip Approvals</string>
+	<key>Trip Feed</key>
+	<string>Trip Feed</string>
+	<key>Trip Fields</key>
+	<string>Trip Fields</string>
+	<key>Trip Locator</key>
+	<string>Trip Locator</string>
+	<key>Trip Record Locator for this trip could not be retrieved.</key>
+	<string>Trip Record Locator for this trip could not be retrieved.</string>
+	<key>Trip data updated on</key>
+	<string>Trip data updated on %@</string>
+	<key>Trip data updated on hrt</key>
+	<string>Trip data updated on
+	%@</string>
+	<key>Trip just trip</key>
+	<string>Trip</string>
+	<key>TripIt Account Not Activated</key>
+	<string>TripIt Account Not Activated</string>
+	<key>TripIt Trips</key>
+	<string>TripIt Trips</string>
+	<key>TripIt not linked</key>
+	<string>The TripIt account has not been linked to SmartExpense.  Please link to TripIt by tapping on the TripIt row from the Home screen</string>
+	<key>TripIt not linked together</key>
+	<string>The TripIt account that is linked to the logged in SmartExpense user is different than the account that the TripIt mobile app is signed in to.  Please sign into TripIt using the same account you have linked to SmartExpense.</string>
+	<key>TripIt trip key not found</key>
+	<string>The system was unable to process your request to expense a trip.  The TripIt trip key was not found.</string>
+	<key>Trips</key>
+	<string>Trips</string>
+	<key>Try Again</key>
+	<string>Try Again</string>
+	<key>Try again to re-enter your password or select I Forgot to receive signin in instructions</key>
+	<string>Try again to re-enter your password or select I Forgot to receive signin in instructions</string>
+	<key>Tuesday_Short</key>
+	<string>Tue</string>
+	<key>Type</key>
+	<string>Type</string>
+	<key>Type in emails seperated by commas or choose from contacts list</key>
+	<string>Type in emails separated by commas or choose from contacts list</string>
+	<key>Type name or select frequent attendee</key>
+	<string>Enter first or last name</string>
+	<key>Type to search for a location</key>
+	<string>Type to search for a location</string>
+	<key>UNDEFINED_MSG</key>
+	<string>At least one of the selected expenses has an Undefined expense type.</string>
+	<key>Unable to Sign In</key>
+	<string>Unable to Sign In</string>
+	<key>Unable to add expense</key>
+	<string>Unable to add expense</string>
+	<key>Unable to add itemization</key>
+	<string>Unable to add itemisation</string>
+	<key>Unable to attach expense. Please check that this report policy allows Japan Public Transit.</key>
+	<string>Unable to attach expense. Please check that this claim policy allows Japan Public Transit.</string>
+	<key>Unable to link</key>
+	<string>Unable to link</string>
+	<key>Unable to load location data.</key>
+	<string>Unable to load location data.</string>
+	<key>Unable to sign in</key>
+	<string>We are unable to sign you in at this time. Please contact your company's help desk or travel/expense department.</string>
+	<key>Unavailable</key>
+	<string>Unavailable</string>
+	<key>Undefined</key>
+	<string>Undefined</string>
+	<key>Unexpected Error</key>
+	<string>Unexpected Error</string>
+	<key>Unknown Station</key>
+	<string>Unknown Station</string>
+	<key>Unlink Dropbox</key>
+	<string>Unlink Dropbox</string>
+	<key>Unlink Succeeded</key>
+	<string>Unlink Succeeded</string>
+	<key>Unlink from TripIt</key>
+	<string>Unlink from TripIt</string>
+	<key>Unmatch</key>
+	<string>Unmatch</string>
+	<key>Unsaved Receipts</key>
+	<string>Unsaved Receipts</string>
+	<key>Unselect All</key>
+	<string>Unselect All</string>
+	<key>Unsubmitted Reports</key>
+	<string>Unsubmitted Claims</string>
+	<key>UnsubmittedReportsRow_0</key>
+	<string>You have no unsubmitted claims</string>
+	<key>UnsubmittedReportsRow_1</key>
+	<string>You have 1 unsubmitted claim</string>
+	<key>UnsubmittedReportsRow_2</key>
+	<string>You have %d unsubmitted claims</string>
+	<key>Update</key>
+	<string>Update</string>
+	<key>Update Itemizations</key>
+	<string>Update Itemisations</string>
+	<key>Update Receipt</key>
+	<string>Update Receipt</string>
+	<key>Updating</key>
+	<string>Updating</string>
+	<key>Updating Itinerary</key>
+	<string>Updating Itinerary</string>
+	<key>Upload</key>
+	<string>Upload</string>
+	<key>Upload Failed</key>
+	<string>Upload Failed</string>
+	<key>Upload Queue</key>
+	<string>Upload Queue</string>
+	<key>Upload Receipt</key>
+	<string>Upload Receipt</string>
+	<key>Upload Success</key>
+	<string>Upload Success</string>
+	<key>Uploading Please Wait</key>
+	<string>Uploading Please Wait</string>
+	<key>Uploading count</key>
+	<string>Uploading %d of %d</string>
+	<key>Uploading to Dropbox</key>
+	<string>Uploading to Dropbox</string>
+	<key>Uploading to Dropbox failed</key>
+	<string>Uploading to Dropbox failed</string>
+	<key>Uploading to Dropbox was successful</key>
+	<string>Uploading to Dropbox was successful</string>
+	<key>Use %@ Travel Points</key>
+	<string>Use %@ Travel Points</string>
+	<key>Use %d pts.</key>
+	<string>Use %d pts.</string>
+	<key>User Name</key>
+	<string>User Name</string>
+	<key>Username and Password</key>
+	<string>Username and Password</string>
+	<key>Username or PIN is invalid</key>
+	<string>Username or PIN is invalid. You can create or reset your mobile PIN by clicking on 'Need to set your PIN?' or by navigating to 'Profile -&gt; Mobile Registration' in Concur online.</string>
+	<key>Username or Password is invalid</key>
+	<string>Username or Password is invalid.</string>
+	<key>Username or Password is invalid SU</key>
+	<string>Username or password is invalid. You can reset your password by clicking on 'Reset your password' link. If you don't have an account, please click on 'Sign Up'.</string>
+	<key>Using Points</key>
+	<string>Using Points</string>
+	<key>VALUE_RANGE_MSG</key>
+	<string>Please enter a value between %d to %d characters.</string>
+	<key>VALUE_RANGE_MSG_FIXED_LENGTH</key>
+	<string>Please enter a value that is %d characters long.</string>
+	<key>VALUE_RANGE_MSG_LOWER_BOUND</key>
+	<string>Please enter a value greater than %d characters.</string>
+	<key>VALUE_RANGE_MSG_NO_BOUNDS</key>
+	<string>Please enter a valid value for this field.</string>
+	<key>VALUE_RANGE_MSG_UPPER_BOUND</key>
+	<string>Please enter a value less than %d characters.</string>
+	<key>VERIFY_PWD</key>
+	<string>Verify password</string>
+	<key>VehicleId</key>
+	<string>Vehicle Id</string>
+	<key>Vendor</key>
+	<string>Supplier</string>
+	<key>Vendor Hours</key>
+	<string>Supplier Hours</string>
+	<key>Vendor Names</key>
+	<string>Supplier Names</string>
+	<key>Vendor Web Site</key>
+	<string>Supplier Web Site</string>
+	<key>Verification is simple. Just tap on the link in the email we sent to</key>
+	<string>Verification is simple. Just tap on the link in the email we sent to %@</string>
+	<key>View Allowance</key>
+	<string>View Allowance</string>
+	<key>View Images</key>
+	<string>View Images</string>
+	<key>View Rates</key>
+	<string>View Rates</string>
+	<key>View Receipt</key>
+	<string>View Receipt</string>
+	<key>View Report Offline</key>
+	<string>Could not access claim.  Please try later when you are online.</string>
+	<key>View your travel requests</key>
+	<string>View your requests</string>
+	<key>View your trips</key>
+	<string>View your trips</string>
+	<key>View your uploaded receipts</key>
+	<string>View your uploaded receipts</string>
+	<key>Violation</key>
+	<string>Violation</string>
+	<key>Violation Justification</key>
+	<string>Violation Justification</string>
+	<key>Violation Reason</key>
+	<string>Violation Reason</string>
+	<key>Violations</key>
+	<string>Violations</string>
+	<key>WAIT_FOR_CAR_RATES_DATA</key>
+	<string>You are waiting for car rates data.  Please retry this action later.</string>
+	<key>WARNING</key>
+	<string>Warning</string>
+	<key>WARNING_INVALID_VALUE_RANGE_NOT_REQUIRED</key>
+	<string>This value is not within the specified range of %d to %d characters. Are you sure that you want to proceed?</string>
+	<key>WARN_MISSING_REQ_FLD</key>
+	<string>You have missing required fields on the form.  Do you want to continue saving?</string>
+	<key>WEBVIEW</key>
+	<string>Web Data View</string>
+	<key>Waiting</key>
+	<string>Waiting</string>
+	<key>Warning</key>
+	<string>Warning</string>
+	<key>Warning on Itinerary Stop update</key>
+	<string>Warning on Itinerary Stop update</string>
+	<key>Watch setup video</key>
+	<string>Watch setup video</string>
+	<key>We are unable to sign you in with this information</key>
+	<string>We are unable to sign you in with this information</string>
+	<key>We couldnt find any hotels with the given search criteria. Please try again with different criteria.</key>
+	<string>We couldnt find any hotels with the given search criteria. Please try again with different criteria.</string>
+	<key>Web Site</key>
+	<string>Web Site</string>
+	<key>Wednesday_Short</key>
+	<string>Wed</string>
+	<key>Welcome to Concur</key>
+	<string>Welcome to Concur</string>
+	<key>What Flights can I find for you?</key>
+	<string>What Flights can I find for you?</string>
+	<key>What's New</key>
+	<string>What's New</string>
+	<key>When auto login is on</key>
+	<string>When auto login is on, user name is automatically saved.</string>
+	<key>Work email or Concur username</key>
+	<string>Work email or Concur username</string>
+	<key>Would you like to create an Expense Report from the selected trip segments</key>
+	<string>Would you like to create an Expense Claim from the selected trip segments?</string>
+	<key>Wrong agency code</key>
+	<string>Wrong agency code</string>
+	<key>Wrong company code</key>
+	<string>Wrong company code</string>
+	<key>YCOOK</key>
+	<string>Other with cooking</string>
+	<key>YODLEE_CARD_LOGIN_FORM_FAILED_MSG</key>
+	<string>Failed to retrieve login form for your credit card.  Please try later.</string>
+	<key>Yes</key>
+	<string>Yes</string>
+	<key>You already have a corporate account with Concur.</key>
+	<string>You already have a corporate account with Concur.</string>
+	<key>You are offline. Please expense trip later.</key>
+	<string>You are offline.  Please wait to expense the trip until you are online.</string>
+	<key>You are using %@ Travel Points.</key>
+	<string>You are using %@ Travel Points.</string>
+	<key>You do not have an email in your Concur profile. We are unable to send you a password reset email without one. Please go to the Concur Website and add your work email to your profile.</key>
+	<string>You do not have an email in your Concur profile. We are unable to send you a password reset email without one. Please go to the Concur Website and add your work email to your profile.</string>
+	<key>You have %@ Travel Points in your bank.</key>
+	<string>You have %@ Travel Points in your bank.</string>
+	<key>You have already registered for SmartExpense.</key>
+	<string>You have already registered for SmartExpense.</string>
+	<key>You have no approvals</key>
+	<string>You have no approvals</string>
+	<key>You have no messages</key>
+	<string>You have no messages</string>
+	<key>You have no upcoming trips</key>
+	<string>You have no upcoming trips</string>
+	<key>You have stayed here %@ times</key>
+	<string>You have stayed here %@ times</string>
+	<key>You have successfully linked your TripIt account to SmartExpense.</key>
+	<string>You have successfully linked your TripIt account to SmartExpense.</string>
+	<key>You must be online before you can upload your items</key>
+	<string>You must be online before you can upload your items.</string>
+	<key>You must enter in a valid PIN in order to log in</key>
+	<string>You must enter in a valid PIN in order to log in</string>
+	<key>You must enter in a valid email address in order for Concur to verify it</key>
+	<string>You must enter in a valid email address in order for Concur to verify it</string>
+	<key>You must enter in a valid email for your approver</key>
+	<string>You must enter in a valid email for your approver</string>
+	<key>You must enter in a valid password in order to log in</key>
+	<string>You must enter in a valid password in order to log in</string>
+	<key>You must enter in a valid password or PIN in order to log in</key>
+	<string>You must enter in a valid password or PIN in order to log in</string>
+	<key>You must enter in a valid user name in order to log in</key>
+	<string>You must enter in a valid user name in order to log in</string>
+	<key>You need to select a Delivery Option in order to reserve your train</key>
+	<string>You need to select a Delivery Option in order to reserve your train.</string>
+	<key>You need to select a valid credit card in order to reserve your train</key>
+	<string>You need to select a valid credit card in order to reserve your train.</string>
+	<key>Your account data has been wiped from this device.  Please contact your company administrator for assistance.</key>
+	<string>Your account data has been wiped from this device.  Please contact your company administrator for assistance.</string>
+	<key>Your account is no longer linked to TripIt.</key>
+	<string>Your account is no longer linked to TripIt.</string>
+	<key>Your agent may ask for the Trip Record Locator: %@</key>
+	<string>Your agent may ask for the Trip Record Locator: %@</string>
+	<key>Your colleague is staying here on your check-in date</key>
+	<string>Your colleague is staying here on your check-in date</string>
+	<key>Your colleague's favorite</key>
+	<string>Your colleague's favourite</string>
+	<key>Your colleagues have stayed here %@ times</key>
+	<string>Your colleagues have stayed here %@ times</string>
+	<key>Your company has disabled Concur for mobile. Please contact your administrator.</key>
+	<string>Your company has disabled Concur for mobile. Please contact your administrator.</string>
+	<key>Your company's preferred</key>
+	<string>Your company's preferred</string>
+	<key>Your company's travel policy will not allow this reservation.</key>
+	<string>Your company's travel policy will not allow this reservation.</string>
+	<key>Your device cannot make a phone call.</key>
+	<string>Your device cannot make a phone call.</string>
+	<key>Your entry does not appear to be a valid work email or Concur Username. For example</key>
+	<string>Your entry does not appear to be a valid work email or Concur Username. For example, you may be missing the @ or .com</string>
+	<key>Your expense has been queued</key>
+	<string>Your expense has been queued for upload.</string>
+	<key>Your favorite</key>
+	<string>Your favourite</string>
+	<key>Your receipt has been queued</key>
+	<string>Your receipt has been queued for upload.</string>
+	<key>add_as_favorite</key>
+	<string>Add as Favourite</string>
+	<key>add_route</key>
+	<string>Add Route</string>
+	<key>add_to_report</key>
+	<string>Add to Claim</string>
+	<key>additional_charge</key>
+	<string>Additional Charge</string>
+	<key>are missing</key>
+	<string> are missing.</string>
+	<key>arrival_station</key>
+	<string>Arrival Station</string>
+	<key>available from</key>
+	<string>available from</string>
+	<key>business_purpose</key>
+	<string>Business Purpose</string>
+	<key>check in on</key>
+	<string>check in on</string>
+	<key>choices</key>
+	<string>choices</string>
+	<key>corporate card transactions</key>
+	<string>corporate card transaction(s)</string>
+	<key>day</key>
+	<string>day</string>
+	<key>days</key>
+	<string>days</string>
+	<key>departure_station</key>
+	<string>Departure Station</string>
+	<key>email saved into your drafts</key>
+	<string>email saved into your drafts</string>
+	<key>fast</key>
+	<string>Fast</string>
+	<key>favorites</key>
+	<string>Favourites</string>
+	<key>green</key>
+	<string>First Class (Green Seat)</string>
+	<key>hour</key>
+	<string>hour</string>
+	<key>hours</key>
+	<string>hours</string>
+	<key>ic_card</key>
+	<string>IC Card</string>
+	<key>ic_card_fare</key>
+	<string>IC Card Fare</string>
+	<key>int active int upcoming</key>
+	<string>%d active, %d upcoming</string>
+	<key>invoice to review</key>
+	<string>invoice to review</string>
+	<key>invoices to approve</key>
+	<string>Invoices to approve</string>
+	<key>invoices to review</key>
+	<string>invoices to review</string>
+	<key>is missing</key>
+	<string> is missing.</string>
+	<key>items to upload</key>
+	<string>items to upload</string>
+	<key>manual</key>
+	<string>Manual</string>
+	<key>menu</key>
+	<string>menu</string>
+	<key>miles</key>
+	<string>miles</string>
+	<key>minute</key>
+	<string>minute</string>
+	<key>minute_quantity</key>
+	<string>%d min</string>
+	<key>minutes</key>
+	<string>minutes</string>
+	<key>minutes_quantity</key>
+	<string>%d mins</string>
+	<key>mobile entries</key>
+	<string>mobile entries</string>
+	<key>near</key>
+	<string>near</string>
+	<key>no</key>
+	<string>no</string>
+	<key>noReceipt</key>
+	<string>The receipt image is not currently available. Please try again later.</string>
+	<key>noReceipts</key>
+	<string>You currently have no receipts in the Receipt Store.</string>
+	<key>no_favorite_routes</key>
+	<string>No Favorite Routes</string>
+	<key>no_recent_routes</key>
+	<string>No Recent Routes</string>
+	<key>other</key>
+	<string>Other</string>
+	<key>paper_ticket</key>
+	<string>Paper ticket</string>
+	<key>per day</key>
+	<string>per day</string>
+	<key>per night</key>
+	<string>per night</string>
+	<key>pickup on</key>
+	<string>pickup on</string>
+	<key>purchase request to review</key>
+	<string>purchase request to review</string>
+	<key>purchase requests to review</key>
+	<string>purchase requests to review</string>
+	<key>report to approve</key>
+	<string>claim to approve</string>
+	<key>reports to approve</key>
+	<string>claims to approve</string>
+	<key>resend the verification email</key>
+	<string>resend the verification email</string>
+	<key>reserved</key>
+	<string>Reserved Seat</string>
+	<key>results by</key>
+	<string>results by</string>
+	<key>results by Duration</key>
+	<string>results by Duration</string>
+	<key>results by Earliest Departure</key>
+	<string>results by Earliest Departure</string>
+	<key>results by Fare Price</key>
+	<string>results by Fare Price</string>
+	<key>results by Preferred Carrier</key>
+	<string>results by Preferred Carrier</string>
+	<key>route_added_to_report_confirmation</key>
+	<string>Your route was added to</string>
+	<key>route_search</key>
+	<string>Route Search</string>
+	<key>search_stations</key>
+	<string>Search stations</string>
+	<key>sorted by</key>
+	<string>sorted by</string>
+	<key>tap here to cancel reservation</key>
+	<string>tap here to cancel reservation</string>
+	<key>through_stations</key>
+	<string>Through Stations</string>
+	<key>to</key>
+	<string>to</string>
+	<key>today</key>
+	<string>Today</string>
+	<key>token hour(s) token minute(s)</key>
+	<string>%d hour(s) %d minute(s)</string>
+	<key>token minute(s)</key>
+	<string>%d minute(s)</string>
+	<key>token results</key>
+	<string>%d results</string>
+	<key>travel request to approve</key>
+	<string>travel request to approve</string>
+	<key>travel requests to approve</key>
+	<string>travel requests to approve</string>
+	<key>trip to approve</key>
+	<string>trip to approve</string>
+	<key>trips to approve</key>
+	<string>trips to approve</string>
+	<key>unreserved</key>
+	<string>Non-Reserved Seat</string>
+	<key>unsubmitted Reports</key>
+	<string>unsubmitted claim(s)</string>
+</dict>
+</plist>

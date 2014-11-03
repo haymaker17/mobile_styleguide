@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.iPad.XIB" version="3.0" toolsVersion="4514" systemVersion="13A603" targetRuntime="iOS.CocoaTouch.iPad" propertyAccessControl="none" useAutolayout="YES">
+    <dependencies>
+        <deployment defaultVersion="1536" identifier="iOS"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="3747"/>
+    </dependencies>
+    <objects>
+        <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="HomeCollectionView">
+            <connections>
+                <outlet property="collectionView" destination="whf-LP-trw" id="1dm-3n-9x0"/>
+                <outlet property="topLevelSubView" destination="1" id="acD-Ha-hee"/>
+            </connections>
+        </placeholder>
+        <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
+        <view contentMode="scaleToFill" id="1">
+            <rect key="frame" x="0.0" y="0.0" width="768" height="1024"/>
+            <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+            <subviews>
+                <collectionView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" minimumZoomScale="0.0" maximumZoomScale="0.0" dataMode="none" translatesAutoresizingMaskIntoConstraints="NO" id="whf-LP-trw">
+                    <rect key="frame" x="0.0" y="0.0" width="768" height="1024"/>
+                    <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                    <color key="backgroundColor" cyan="0.12" magenta="0.089999999999999997" yellow="0.10000000000000001" black="0.0" alpha="1" colorSpace="custom" customColorSpace="genericCMYKColorSpace"/>
+                    <collectionViewFlowLayout key="collectionViewLayout" minimumLineSpacing="10" minimumInteritemSpacing="10" id="fN9-SH-Twd" customClass="PackingCollectionViewLayout">
+                        <size key="itemSize" width="50" height="50"/>
+                        <size key="headerReferenceSize" width="0.0" height="0.0"/>
+                        <size key="footerReferenceSize" width="0.0" height="0.0"/>
+                        <inset key="sectionInset" minX="0.0" minY="0.0" maxX="0.0" maxY="0.0"/>
+                    </collectionViewFlowLayout>
+                    <cells/>
+                    <connections>
+                        <outlet property="dataSource" destination="-1" id="XfI-xE-7cz"/>
+                        <outlet property="delegate" destination="-1" id="oMo-Yz-zyJ"/>
+                    </connections>
+                </collectionView>
+            </subviews>
+            <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
+            <constraints>
+                <constraint firstItem="whf-LP-trw" firstAttribute="top" secondItem="1" secondAttribute="top" id="7gN-U2-Jdk"/>
+                <constraint firstItem="whf-LP-trw" firstAttribute="leading" secondItem="1" secondAttribute="leading" id="Tmr-Qv-rNG"/>
+                <constraint firstAttribute="trailing" secondItem="whf-LP-trw" secondAttribute="trailing" id="VcU-ps-81k"/>
+                <constraint firstAttribute="bottom" secondItem="whf-LP-trw" secondAttribute="bottom" id="ghq-aU-cMj"/>
+            </constraints>
+        </view>
+    </objects>
+</document>

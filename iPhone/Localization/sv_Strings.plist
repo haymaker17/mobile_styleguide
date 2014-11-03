@@ -1,0 +1,3932 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key># of Cars</key>
+	<string>Antal bilar</string>
+	<key>%@ has been submitted</key>
+	<string>%@ har skickats in</string>
+	<key>%@ km</key>
+	<string>%@ km</string>
+	<key>%@ kms</key>
+	<string>%@ km</string>
+	<key>%@ mile</key>
+	<string>%@ amerikansk mile</string>
+	<key>%@ miles</key>
+	<string>%@ amerikanska miles</string>
+	<key>%@ of your colleagues are staying here on your check-in date</key>
+	<string>%@ av dina kolleger bor här på ditt incheckningsdatum</string>
+	<key>%@ of your colleagues' favourite</key>
+	<string>%@ av dina kollegers favorit</string>
+	<key>%@ per day</key>
+	<string>%@ per dag</string>
+	<key>%d Hour and %d Minute(s)</key>
+	<string>%d timme och %d minuter</string>
+	<key>%d Hours and %d Minute(s)</key>
+	<string>%d timmar och %d minuter</string>
+	<key>%d Minute(s)</key>
+	<string>%d minuter</string>
+	<key>(Refundable)</key>
+	<string>(Återbetalbar)</string>
+	<key>1 Stop</key>
+	<string>1 mellanlandning</string>
+	<key>@Concur2Go Twitter Feed</key>
+	<string>@Concur2Go Twitter-feed</string>
+	<key>A Receipt is</key>
+	<string>Ett kvitto har bifogats till det här utlägget på servern, men kvittot finns inte längre i Kvittohanteraren.  Bifoga kvittot på nytt till utlägget och spara det sedan.</string>
+	<key>ACTIVEREQUESTS</key>
+	<string>AKTIVA BEGÄRANDEN</string>
+	<key>ACTIVE_ENTRIES</key>
+	<string>Rapport</string>
+	<key>ACTIVE_REPORTS</key>
+	<string>Aktiva rapporter</string>
+	<key>ADD_CAR_MILEAGE_HOME_NOT_SUPPORTED</key>
+	<string>Hittade inga milersättningstaxor för din privata bilkonfiguration, eller också stöds inte den aktuella konfigurationen för biltaxan för tillfället.  Lägg till ditt utlägg för milersättning i en rapport via mobilen eller via webben.</string>
+	<key>ADD_CAR_MILEAGE_NOT_SUPPORTED</key>
+	<string>Hittade inga milersättningstaxor för din privata bilkonfiguration, eller också stöds inte den aktuella konfigurationen för biltaxan för tillfället.</string>
+	<key>ADD_EXISTING_CARD</key>
+	<string>Det specifika kortet har redan lagts till och kan inte läggas till igen.</string>
+	<key>ADD_EXPENSE_OFFLINE_NOT_SUPPORTED</key>
+	<string>Det går inte att lägga till utlägg i offlineläge.</string>
+	<key>ADD_TO_RPT_CONFIRM_MSG</key>
+	<string>Vill du lägga till de valda utläggen i rapporten? Du kan bifoga kvitton och redigera utlägg efter att du har lagt till dem i en rapport.</string>
+	<key>ADD_TO_RPT_CONFIRM_TITLE</key>
+	<string>Bekräfta</string>
+	<key>ADD_YODLEE_CARD_COMPLETE_MSG</key>
+	<string>Ditt kort som upphör %@ har lagts till i ditt SmartExpense-konto.</string>
+	<key>ADD_YODLEE_CARD_FAILED_MSG</key>
+	<string>Det gick inte att lägga till ditt kreditkort.  Försök igen senare.</string>
+	<key>ADD_YODLEE_CARD_INSTRUCTION</key>
+	<string>Ange dina autentiseringsuppgifter för kontot. Concur krypterar och använder informationen för att ladda ner korttransaktioner på ett säkert sätt.</string>
+	<key>AIR_BOOKING</key>
+	<string>Flygbokning</string>
+	<key>AIR_BOOKING_DISABLED_MSG</key>
+	<string>Ditt företag har inaktiverat flygbokning via mobil. Boka ditt flyg online eller genom att ringa en resebyrå.</string>
+	<key>AIR_BOOKING_PROFILE_1_MSG</key>
+	<string>Din reseprofil kräver ett värde för mellannamn, kön och födelsedatum. Logga in på webbversionen av Concur Travel och välj Profil i menyn.</string>
+	<key>AIR_BOOKING_PROFILE_21_MSG</key>
+	<string>Din reseprofil har aldrig sparats, men den måste sparas minst en gång innan du utför en bokning. Logga in på webbversionen av Concur Travel, välj Profil och sedan Spara.</string>
+	<key>AIR_BOOKING_PROFILE_22_MSG</key>
+	<string>Din faktureringskod/-typ för resekonfiguration kräver att det finns projekt. Kontakta företagets administratör för att konfigurera lämpliga projekt.</string>
+	<key>AIR_BOOKING_PROFILE_23_MSG</key>
+	<string>Vinnet existerar inte längre! Kunden ska inte erhålla den här profilkontrollkoden.</string>
+	<key>AIR_BOOKING_PROFILE_24_MSG</key>
+	<string>Din reseprofil kräver ett värde för mobiltelefon. Logga in på webbversionen av Concur Travel och välj Profil i menyn.</string>
+	<key>AIR_BOOKING_PROFILE_25_MSG</key>
+	<string>Din reseprofil kräver ett värde för nationalitet enligt pass. Logga in på webbversionen av Concur Travel och välj Profil i menyn.</string>
+	<key>AIR_BOOKING_PROFILE_26_MSG</key>
+	<string>Din reseprofil kräver ett värde för jobbtitel. Logga in på webbversionen av Concur Travel och välj Profil i menyn.</string>
+	<key>AIR_BOOKING_PROFILE_27_MSG</key>
+	<string>Din reseprofil kräver ett värde för organisationsenhet. Logga in på webbversionen av Concur Travel och välj Profil i menyn.</string>
+	<key>AIR_BOOKING_PROFILE_28_MSG</key>
+	<string>Din reseprofil kräver ett värde för namnanmärkning. Logga in på webbversionen av Concur Travel och välj Profil i menyn.\nOBS! Det här fältet kan ha en anpassad etikett. Om du inte hittar den kontaktar du företagets administratör.</string>
+	<key>AIR_BOOKING_PROFILE_29_MSG</key>
+	<string>Din reseprofil kräver ett värde för chef. Logga in på webbversionen av Concur Travel och välj Profil i menyn.</string>
+	<key>AIR_BOOKING_PROFILE_2_MSG</key>
+	<string>Innan du kan boka en flygresa måste du slutföra reseprofilen. Logga in på webbversionen av Concur Travel och välj Profil i menyn.</string>
+	<key>AIR_BOOKING_PROFILE_30_MSG</key>
+	<string>Din reseprofil kräver ett värde för anställnings-ID. Logga in på webbversionen av Concur Travel och välj Profil i menyn.</string>
+	<key>AIR_BOOKING_PROFILE_31_MSG</key>
+	<string>Din reseprofil kräver en giltig e-postadress. Logga in på webbversionen av Concur Travel och välj Profil i menyn.</string>
+	<key>AIR_BOOKING_PROFILE_32_MSG</key>
+	<string>Din reseprofil kräver ett värde för arbetsadress (gata, ort och land). Logga in på webbversionen av Concur Travel och välj Profil i menyn.</string>
+	<key>AIR_BOOKING_PROFILE_33_MSG</key>
+	<string>Din reseprofil kräver ett värde för ett telefonnummer till antingen ditt arbete eller ditt hem. Logga in på webbversionen av Concur Travel och välj Profil i menyn.</string>
+	<key>AIR_BOOKING_PROFILE_PROLOG_MSG</key>
+	<string>Logga ut och logga sedan in igen, efter att du har angett informationen ovan.</string>
+	<key>AIR_BOOKING_REQ_CUSTOM_FIELDS_MSG</key>
+	<string>Ditt företag har speciella krav för flygbokningar.  Boka ett flyg via webbversionen av Concur.</string>
+	<key>AIR_WARNING_JUSTIFICATION</key>
+	<string>Innan du bokar det här flyget i strid mot företagspolicyn måste du ange en motivering i fältet som visas i rött.</string>
+	<key>AIR_WARNING_REASON</key>
+	<string>Innan du bokar det här flyget i strid mot företagspolicyn måste du ange en orsak i fältet som visas i rött.</string>
+	<key>AIR_WARNING_REASON_JUSTIFICATION</key>
+	<string>Innan du bokar det här flyget i strid mot företagspolicyn måste du ange en orsak och en motivering i fälten som visas i rött.</string>
+	<key>ALERT_CLEAR_CACHE</key>
+	<string>Alla offlinedata kommer att tas bort. Applikationen fortsätter att fungera.</string>
+	<key>AMOUNT_TOO_BIG_ERR_MSG</key>
+	<string>Ange ett belopp inom 999999999999999</string>
+	<key>APPROVALS_NEG_TEXT</key>
+	<string>Attestera poster när du vill och var du än är</string>
+	<key>APPROVEDREQUESTS</key>
+	<string>ATTESTERADE BEGÄRANDEN</string>
+	<key>APPROVE_APPROVE_BUTTON_TITLE</key>
+	<string>Attestera</string>
+	<key>APPROVE_CANCEL</key>
+	<string>Avbryt</string>
+	<key>APPROVE_ENTER_COMMENT_FOR_SENDBACK</key>
+	<string>Ange en kommentar.</string>
+	<key>APPROVE_ENTRIES</key>
+	<string>Rapportposter</string>
+	<key>APPROVE_ENTRIES_ACTION_SECTION_REPORT_SUMMARY_ROW</key>
+	<string>Sammanfattning rapport</string>
+	<key>APPROVE_ENTRIES_ACTION_SECTION_VIEW_COMMENTS_ROW</key>
+	<string>Visa kommentarer</string>
+	<key>APPROVE_ENTRIES_ACTION_SECTION_VIEW_EXCEPTIONS_ROW</key>
+	<string>Granska undantag</string>
+	<key>APPROVE_ENTRIES_ACTION_SECTION_VIEW_RECEIPTS_ROW</key>
+	<string>Visa kvitton</string>
+	<key>APPROVE_ENTRIES_VIEW_TITLE</key>
+	<string>Lista över utlägg</string>
+	<key>APPROVE_EXPENSE_DETAILS</key>
+	<string>Utläggsdetaljer</string>
+	<key>APPROVE_EXPENSE_DETAILS_ATTENDEES</key>
+	<string>Deltagare</string>
+	<key>APPROVE_EXPENSE_DETAILS_COMMENT</key>
+	<string>Kommentar</string>
+	<key>APPROVE_EXPENSE_DETAILS_DETAILS</key>
+	<string>Information</string>
+	<key>APPROVE_EXPENSE_DETAILS_EXCEPTIONS</key>
+	<string>Undantag</string>
+	<key>APPROVE_EXPENSE_DETAILS_VIEW_ATTENDEES</key>
+	<string>Visa deltagare</string>
+	<key>APPROVE_EXPENSE_DETAILS_VIEW_ITEMIZATIONS</key>
+	<string>Visa specificeringar</string>
+	<key>APPROVE_EXPENSE_DETAILS_VIEW_TITLE</key>
+	<string>Utlägg</string>
+	<key>APPROVE_INVOICES</key>
+	<string>Attestera fakturor</string>
+	<key>APPROVE_OK</key>
+	<string>OK</string>
+	<key>APPROVE_PLEASE_COMMENT</key>
+	<string>Kommentera</string>
+	<key>APPROVE_PLEASE_CONFIRM</key>
+	<string>Bekräfta</string>
+	<key>APPROVE_QUESTION_AREYOUSURE</key>
+	<string>Vill du attestera den här rapporten?</string>
+	<key>APPROVE_QUESTION_PART1</key>
+	<string>Attestera</string>
+	<key>APPROVE_QUESTION_PART2</key>
+	<string>utläggsrapport för</string>
+	<key>APPROVE_REPORT</key>
+	<string>Attestera rapport</string>
+	<key>APPROVE_REPORTS</key>
+	<string>Attestera rapporter</string>
+	<key>APPROVE_REPORTS_VIEW_TITLE</key>
+	<string>Rapporter att attestera</string>
+	<key>APPROVE_REPORT_CHECK_RECEIPT_IMAGE</key>
+	<string>Kontrollera kvittobild</string>
+	<key>APPROVE_REPORT_RECEIPT_IMAGE</key>
+	<string>Visa kvittobild</string>
+	<key>APPROVE_REPORT_SUMMARY</key>
+	<string>Sammanfattning rapport</string>
+	<key>APPROVE_REPORT_SUMMARY_AMOUNT_APPROVED</key>
+	<string>Belopp attesterat</string>
+	<key>APPROVE_REPORT_SUMMARY_AMOUNT_CLAIMED</key>
+	<string>Begärt belopp</string>
+	<key>APPROVE_REPORT_SUMMARY_AMOUNT_DUE_COMPANY</key>
+	<string>Att betala företaget</string>
+	<key>APPROVE_REPORT_SUMMARY_AMOUNT_DUE_CREDIT_CARD</key>
+	<string>Att betala till kreditkortet</string>
+	<key>APPROVE_REPORT_SUMMARY_AMOUNT_DUE_EMPLOYEE</key>
+	<string>Att betala anställd</string>
+	<key>APPROVE_REPORT_SUMMARY_AMOUNT_REJECTED</key>
+	<string>Avvisat belopp</string>
+	<key>APPROVE_REPORT_SUMMARY_COMMENTS</key>
+	<string>Kommentarer</string>
+	<key>APPROVE_REPORT_SUMMARY_COMPANYDISBURSEMENT</key>
+	<string>Företagets utlägg</string>
+	<key>APPROVE_REPORT_SUMMARY_COMPANY_PAID_TO_CREDIT_CARD</key>
+	<string>Företagsbetalt till kreditkort</string>
+	<key>APPROVE_REPORT_SUMMARY_EMPLOYEEDISBURSEMENTS</key>
+	<string>Den anställdes utlägg</string>
+	<key>APPROVE_REPORT_SUMMARY_HEADER</key>
+	<string>Rubrik</string>
+	<key>APPROVE_REPORT_SUMMARY_LESS_PERSONAL_AMOUNT</key>
+	<string>Minus personligt belopp</string>
+	<key>APPROVE_REPORT_SUMMARY_POLICY</key>
+	<string>Policy</string>
+	<key>APPROVE_REPORT_SUMMARY_REPORT_HEADER</key>
+	<string>Rapportrubrik</string>
+	<key>APPROVE_REPORT_SUMMARY_REPORT_ID</key>
+	<string>Rapport-ID</string>
+	<key>APPROVE_REPORT_SUMMARY_REPORT_TOTAL</key>
+	<string>Totalsumma rapport</string>
+	<key>APPROVE_REPORT_SUMMARY_TOTAL_PAID_BY_COMPANY</key>
+	<string>Summa som företaget betalat</string>
+	<key>APPROVE_REPORT_SUMMARY_TOTAL_PAID_BY_EMPLOYEE</key>
+	<string>Summa som den anställde betalat</string>
+	<key>APPROVE_REPORT_SUMMARY_VIEW_TITLE</key>
+	<string>Sammanfattning</string>
+	<key>APPROVE_SENDBACK_BUTTON_TITLE</key>
+	<string>Skicka tillbaka</string>
+	<key>APPROVE_VIEW_ATTENDEES</key>
+	<string>Deltagare</string>
+	<key>APPROVE_VIEW_ATTENDEES_ATTENDEE_AMOUNT_TITLE</key>
+	<string>Belopp</string>
+	<key>APPROVE_VIEW_ATTENDEES_ATTENDEE_COMPANY_TITLE</key>
+	<string>Företag</string>
+	<key>APPROVE_VIEW_ATTENDEES_ATTENDEE_NAME_TITLE</key>
+	<string>Deltagarnamn</string>
+	<key>APPROVE_VIEW_ATTENDEES_ATTENDEE_TITLE_TITLE</key>
+	<string>Deltagarens titel</string>
+	<key>APPROVE_VIEW_ATTENDEES_ATTENDEE_TYPE_TITLE</key>
+	<string>Deltagartyp</string>
+	<key>APPROVE_VIEW_COMMENTS</key>
+	<string>Visa kommentarer</string>
+	<key>APPROVE_VIEW_COMMENTS_VIEW_TITLE</key>
+	<string>Kommentarer</string>
+	<key>APPROVE_VIEW_EXCEPTIONS</key>
+	<string>Granska undantag</string>
+	<key>APPROVE_VIEW_EXCEPTIONS_EXPENSE_LEVEL_EXCEPTION_SECTION_HEADER</key>
+	<string>Utlägg</string>
+	<key>APPROVE_VIEW_EXCEPTIONS_REPORT_LEVEL_EXCEPTION_SECTION_HEADER</key>
+	<string>Rapport</string>
+	<key>APPROVE_VIEW_EXCEPTIONS_VIEW_TITLE</key>
+	<string>Undantag</string>
+	<key>APPROVE_VIEW_ITEMIZATIONS</key>
+	<string>Specificering</string>
+	<key>APPROVE_VIEW_ITEMIZATIONS_SUMMARY_SECTION_TITLE</key>
+	<string>Sammanfattning</string>
+	<key>APP_RATING_MSG</key>
+	<string> Nu när du har använt vår app vill vi gärna veta vad du tyckte om den. Klassificera den i App Store.</string>
+	<key>APP_RATING_MSG_DISMISS</key>
+	<string>Fråga inte igen</string>
+	<key>APP_RATING_TITLE</key>
+	<string>Vill du klassificera den här appen?</string>
+	<key>ATTENDEES</key>
+	<string>Deltagare</string>
+	<key>ATTENDEES_EXCLUDED_FOR_TYPE</key>
+	<string>Det går inte att lägga till vissa deltagare eftersom deras deltagartyper är undantagna från den här utgiftstypen.</string>
+	<key>ATTENDEE_ADD</key>
+	<string>Lägg till deltagare</string>
+	<key>ATTENDEE_ADD_BUMP</key>
+	<string>Lägg till deltagare via %@</string>
+	<key>ATTENDEE_ADD_CONTACT</key>
+	<string>Lägg till deltagare manuellt</string>
+	<key>ATTENDEE_ENTRY</key>
+	<string>Deltagare</string>
+	<key>ATTENDEE_SEARCH_FOR_ATTENDEE</key>
+	<string>Sök efter deltagare</string>
+	<key>ATTENDEE_SELECT_CONTACT</key>
+	<string>Välj från kontakt</string>
+	<key>AUTHENTICATION_FAILURE_MSG</key>
+	<string>Obehörig åtkomst.  Kontrollera ditt användarnamn och/eller PIN-koden.</string>
+	<key>AUTHENTICATION_TIMED_OUT_MSG</key>
+	<string>Anslutningen till autentiseringstjänsten orsakade timeout.  Kontrollera att du pekar på rätt URL.</string>
+	<key>A_ACCO</key>
+	<string>Attesterad och i redovisningsgranskning</string>
+	<key>A_APPR</key>
+	<string>Attesterad</string>
+	<key>A_EXTV</key>
+	<string>Väntar på extern validering</string>
+	<key>A_FILE</key>
+	<string>Inskickad</string>
+	<key>A_NOTF</key>
+	<string>Inte inskickad</string>
+	<key>A_PECO</key>
+	<string>Saknar attestering av kostnadsobjekt</string>
+	<key>A_PEND</key>
+	<string>Inskickad och saknar attest</string>
+	<key>A_PVAL</key>
+	<string>Saknar validering</string>
+	<key>A_RESU</key>
+	<string>Skickad tillbaka till anställd</string>
+	<key>A_RHLD</key>
+	<string>Vänta på kvittobild</string>
+	<key>A_TEXP</key>
+	<string>Attesteringstid utgången</string>
+	<key>Abukai Expenses</key>
+	<string>Abukai-utlägg</string>
+	<key>Accept</key>
+	<string>Acceptera</string>
+	<key>Access other areas of the app</key>
+	<string>Använd andra funktionsområden i appen</string>
+	<key>Accounting Code</key>
+	<string>Redovisningskod</string>
+	<key>Actions offline</key>
+	<string>Enheten är offline.  Anslut den till internet och försök utföra åtgärden igen.</string>
+	<key>Actual Arrival</key>
+	<string>Verklig ankomst</string>
+	<key>Actual Departure</key>
+	<string>Faktisk avresa</string>
+	<key>Actual Equipment</key>
+	<string>Faktisk utrustning</string>
+	<key>Actual Terminal</key>
+	<string>Faktisk terminal</string>
+	<key>Add Account to Concur</key>
+	<string>Lägg till kontot till Concur</string>
+	<key>Add Amtrak</key>
+	<string>Lägg till Amtrak</string>
+	<key>Add Another</key>
+	<string>Lägg ytterligare en</string>
+	<key>Add Attendee</key>
+	<string>Lägg till deltagare</string>
+	<key>Add Car</key>
+	<string>Lägg till bil</string>
+	<key>Add Car Mileage</key>
+	<string>Lägg till milersättning</string>
+	<key>Add Card</key>
+	<string>Lägg till kort</string>
+	<key>Add Comment</key>
+	<string>Lägg till kommentar</string>
+	<key>Add Credit Card</key>
+	<string>Lägg till kreditkort</string>
+	<key>Add Entry</key>
+	<string>Lägg till post</string>
+	<key>Add Expense</key>
+	<string>Lägg till utlägg</string>
+	<key>Add Hotel</key>
+	<string>Lägg till hotell</string>
+	<key>Add Itemization</key>
+	<string>Lägg till specificering</string>
+	<key>Add Itinerary Stop Header</key>
+	<string>Vi behöver information om uppehållen under din resa så att vi kan ge dig korrekta traktamenten. Lägg till minst två uppehåll för att slutföra resplanen.</string>
+	<key>Add Mileage</key>
+	<string>Lägg till milersättning</string>
+	<key>Add New Expense</key>
+	<string>Lägg till ny utgift</string>
+	<key>Add Receipt</key>
+	<string>Lägg till kvitto</string>
+	<key>Add Selected Attendee</key>
+	<string>Lägg till markerade deltagare</string>
+	<key>Add Single Day Itinerary Stop Header</key>
+	<string>Vi behöver information om uppehållen under din resa så att vi kan ge dig korrekta traktamenten. Lägg till minst två uppehåll för att slutföra resplanen.</string>
+	<key>Add a Cash Expense</key>
+	<string>Lägg till utlägg</string>
+	<key>Add a Receipt using the below buttons</key>
+	<string>Lägg till ett kvitto med knapparna nedan</string>
+	<key>Add an Attendee</key>
+	<string>Lägg till en deltagare</string>
+	<key>Add an Entry from a Picture</key>
+	<string>Lägg till en post från en bild</string>
+	<key>Add credit card</key>
+	<string>Lägg till kreditkort</string>
+	<key>Add expenses to your report.</key>
+	<string>Lägg till utlägg i din rapport.</string>
+	<key>Add expenses with attendees</key>
+	<string>Lägg till utlägg med deltagare</string>
+	<key>Add from Photo Album</key>
+	<string>Lägg till från fotoalbum</string>
+	<key>Add to Report</key>
+	<string>Lägg till i rapport</string>
+	<key>AddAnotherItemToThisRequest</key>
+	<string>Lägg till ett objekt i denna begäran</string>
+	<key>Adding to Report</key>
+	<string>Lägger till i rapport</string>
+	<key>Additional Charges (each night)</key>
+	<string>Tilläggsavgifter (varje natt)</string>
+	<key>Address</key>
+	<string>Adress</string>
+	<key>Address point of interest airport code</key>
+	<string>Adress, orienteringspunkt, flygplatskod</string>
+	<key>Adds processing time</key>
+	<string>Lägger till behandlingstid</string>
+	<key>Adjust Allowance</key>
+	<string>Justera traktamente</string>
+	<key>Adjustments</key>
+	<string>Justeringar</string>
+	<key>Adults</key>
+	<string>Vuxna</string>
+	<key>Advanced Search</key>
+	<string>Avancerad sökning</string>
+	<key>Afternoon</key>
+	<string>Eftermiddag</string>
+	<key>Agency Code Sign In</key>
+	<string>Resebyråkod-inloggning</string>
+	<key>Agency Record Locator: %@</key>
+	<string>Resebyråns bokningsreferens: %@</string>
+	<key>Agency Sign In</key>
+	<string>Resebyråinloggning</string>
+	<key>Air Booking</key>
+	<string>Flygbokning</string>
+	<key>Air Price to Beat</key>
+	<string>Pris att slå för flygresa</string>
+	<key>Air cancelled from mobile device</key>
+	<string>Flyg avbokat från mobil enhet</string>
+	<key>Aircraft</key>
+	<string>Flygplan</string>
+	<key>Airfare Price to Beat</key>
+	<string>Pris att slå för flygbiljett</string>
+	<key>Airfare quoted total</key>
+	<string>Totalsumma offererat biljettpris</string>
+	<key>Airline</key>
+	<string>Flygbolag</string>
+	<key>Airports</key>
+	<string>Flygplatser</string>
+	<key>All</key>
+	<string>Alla</string>
+	<key>All Expenses</key>
+	<string>Alla utlägg</string>
+	<key>All Flights</key>
+	<string>Alla flyg</string>
+	<key>All Items</key>
+	<string>Alla poster</string>
+	<key>All Nonstop</key>
+	<string>Alla direkt</string>
+	<key>All Results</key>
+	<string>Alla resultat</string>
+	<key>All States &amp; Provinces</key>
+	<string>Alla stater och provinser</string>
+	<key>All day</key>
+	<string>Hela dagen</string>
+	<key>All token</key>
+	<string>Alla %@</string>
+	<key>All token (token results)</key>
+	<string>Alla %@ (%d resultat)</string>
+	<key>Allowance Adjustments</key>
+	<string>Traktamentejusteringar</string>
+	<key>Allowance Itinerary</key>
+	<string>Resplan för traktamente</string>
+	<key>Already Expensed</key>
+	<string>Utlägg har redan skapats</string>
+	<key>Already have an account SU</key>
+	<string>Har du redan ett konto?</string>
+	<key>Amount</key>
+	<string>Belopp</string>
+	<key>Amount in</key>
+	<string>Belopp i</string>
+	<key>Amtrak</key>
+	<string>Amtrak</string>
+	<key>An Expense Report</key>
+	<string>En utläggsrapport</string>
+	<key>An email containing the application's log has been placed in your outbox.</key>
+	<string>Ett e-postmeddelande som innehåller applikationens logg har placerats i utkorgen.</string>
+	<key>An email containing the application's log has been saved in your Drafts folder.</key>
+	<string>Ett e-postmeddelande som innehåller applikationens logg har sparats i mappen Utkast.</string>
+	<key>An email has been sent containing your report.</key>
+	<string>Ett e-postmeddelande som innehåller din rapport har skickats.</string>
+	<key>An invalid station for arrival has been specified.  Please select a station to arrive at.</key>
+	<string>En ogiltig station för ankomst har angetts.  Välj en station för ankomsten.</string>
+	<key>An invalid station for departure has been specified.  Please select a station to depart from.</key>
+	<string>En ogiltig station för avresa har angetts.  Välj en station för avresan.</string>
+	<key>An unexpected error occurred. Please try again later.</key>
+	<string>Ett oväntat fel inträffade. Försök igen senare.</string>
+	<key>And view upcoming itineraries.</key>
+	<string>och visa kommande resplaner.</string>
+	<key>Any</key>
+	<string>Blandade klasser</string>
+	<key>Any Car Class</key>
+	<string>Valfri bilklass</string>
+	<key>Anytime</key>
+	<string>När som helst</string>
+	<key>AppStore Expense</key>
+	<string>Om du använder Concur Expense eller Concur Breeze kan du använda den mobila lösningen för att: * Samla in snabbutlägg och kvitton med enhetens kamera (du slipper skanna, faxa eller e-posta) * Visa och redigera kreditkorttransaktioner * Lägga till utgifter i befintliga eller nya utläggsrapporter och skicka rapporter * Redigera rubrik och utlägg för en rapport * Lägga till specificeringar/milersättning * Attestera eller avvisa utläggsrapporter med en kommentar. Du kan t.o.m. visa relaterade kvitton!</string>
+	<key>Append</key>
+	<string>Lägg till</string>
+	<key>Append Confirmation</key>
+	<string>Lägg till bekräftelse</string>
+	<key>Append or Replace Receipt</key>
+	<string>Det här utlägget har redan ett associerat kvitto.  Välj Lägg till om du vill lägga till det här nya kvittot till utlägget, eller Ersätt om du vill ersätta det befintliga kvittot med det nya kvittot.</string>
+	<key>Application Information</key>
+	<string>Applikationsinformation</string>
+	<key>Approval Summary</key>
+	<string>Sammanfattning av attestering</string>
+	<key>Approvals</key>
+	<string>Godkännanden</string>
+	<key>Approve</key>
+	<string>Attestera</string>
+	<key>Approve Trips</key>
+	<string>Attestera resor</string>
+	<key>Approve by</key>
+	<string>Godkänns av</string>
+	<key>Approver</key>
+	<string>Attestant</string>
+	<key>Approving Report</key>
+	<string>Attesterar rapport</string>
+	<key>Approving Trip</key>
+	<string>Godkänner resa</string>
+	<key>Apps</key>
+	<string>Appar</string>
+	<key>Are you sure</key>
+	<string>Vill du ta bort markerade utlägg?</string>
+	<key>Are you sure about adding smart expenses</key>
+	<string>Smarta utlägg kommer att kombineras till en enda post i rapporten.</string>
+	<key>Are you sure about smart expenses</key>
+	<string>Vill du ta bort markerade utlägg?  Andelen inmatningar från mobil av de smarta utgifterna, kommer att tas bort permanent och de associerade korttransaktionerna kommer att döljas.</string>
+	<key>Are you sure that you want to delete this receipt</key>
+	<string>Vill du ta bort det här kvittot?</string>
+	<key>Are you sure that you want to reserve the selected train(s)?</key>
+	<string>Vill du reservera de valda tågen?</string>
+	<key>Are you sure you want to approve this trip?</key>
+	<string>Vill du attestera den här resan?</string>
+	<key>Are you sure you want to cancel this air reservation?</key>
+	<string>Vill du avboka den här flygbokningen?</string>
+	<key>Are you sure you want to cancel this car reservation?</key>
+	<string>Vill du avboka den här bilbokningen?</string>
+	<key>Are you sure you want to cancel this hotel reservation?</key>
+	<string>Vill du avboka den här hotellbokningen?</string>
+	<key>Are you sure you want to cancel this rail reservation?</key>
+	<string>Vill du avboka den här tågbokningen?</string>
+	<key>Are you sure you want to delete the open report?</key>
+	<string>Är du säker på att du vill ta bort den öppna rapport?</string>
+	<key>Are you sure you want to reserve this car?</key>
+	<string>Vill du boka den här bilen?</string>
+	<key>Are you sure you want to reserve this flight?</key>
+	<string>Vill du boka det här flyget?</string>
+	<key>Are you sure you want to unlink from your TripIt account?</key>
+	<string>Vill du avlänka från ditt TripIt-konto?</string>
+	<key>Arrival</key>
+	<string>Ankomst</string>
+	<key>Arrival City</key>
+	<string>Ankomstort</string>
+	<key>Arrival Information</key>
+	<string>Ankomstinformation</string>
+	<key>Arrival Station</key>
+	<string>Ankomststation</string>
+	<key>Arrival Terminal</key>
+	<string>Ankomstterminal</string>
+	<key>Arrival Time</key>
+	<string>Ankomsttid</string>
+	<key>Arrive</key>
+	<string>Ankommer</string>
+	<key>Arriving trains</key>
+	<string>Anländer: %@</string>
+	<key>Ask Me Later</key>
+	<string>Fråga igen senare</string>
+	<key>At Least 1 Month</key>
+	<string>Minst 1 månad</string>
+	<key>At Least 1 Week</key>
+	<string>Minst 1 vecka</string>
+	<key>Attach Receipt</key>
+	<string>Bifoga kvitto</string>
+	<key>Attach via Receipt Store</key>
+	<string>Bifoga via kvittolager</string>
+	<key>Attendee</key>
+	<string>Deltagare</string>
+	<key>Attendee Amount</key>
+	<string>Deltagarens belopp</string>
+	<key>Attendee Count</key>
+	<string>Deltagarantal</string>
+	<key>Attendee Group</key>
+	<string>Deltagargrupp</string>
+	<key>Attendee Search Results</key>
+	<string>Resultat för deltagarsökning</string>
+	<key>Attendee Type</key>
+	<string>Deltagartyp</string>
+	<key>Attendee data is unavailable.</key>
+	<string>Deltagardata är inte tillgängliga.</string>
+	<key>Attendee type cannot be changed.  Create a new attendee instead.</key>
+	<string>Det går inte att ändra deltagartyp.  Skapa en ny deltagare i stället.</string>
+	<key>Attendees</key>
+	<string>Deltagare</string>
+	<key>Attendees not editable offline</key>
+	<string>Deltagare kan inte redigeras offline.</string>
+	<key>Attention</key>
+	<string>Observera</string>
+	<key>Authenticating</key>
+	<string>Autentiserar</string>
+	<key>Auto Login</key>
+	<string>Autoinloggning</string>
+	<key>Available From States/Provinces</key>
+	<string>Tillgängliga Från stater/provinser</string>
+	<key>Available From Stations</key>
+	<string>Tillgänglig från stationer</string>
+	<key>Available Itineraries</key>
+	<string>tillgängliga resplaner</string>
+	<key>Available States/Provinces</key>
+	<string>Tillgängliga stater/provinser</string>
+	<key>Available Stations</key>
+	<string>Tillgängliga stationer</string>
+	<key>Available To States/Provinces</key>
+	<string>Tillgängliga Till stater/provinser</string>
+	<key>Available To Stations</key>
+	<string>Tillgängliga Till stationer</string>
+	<key>Awaiting Approval</key>
+	<string>Inväntar attestering</string>
+	<key>BOOKING_UNDER_P2B_EARNS_POINTS</key>
+	<string>Om du väljer alternativ som kostar mindre än Pris att slå kan du tjäna in respoäng som du kan använda till framtida förmåner.</string>
+	<key>BOOKING_UNDER_P2B_SAVES_MONEY</key>
+	<string>Bokning under Pris att slå sparar pengar åt ditt företag.</string>
+	<key>BRONX_USER_CORP_APP_MSG</key>
+	<string>Du kan inte logga in på Concur Mobile med inloggningsinformationen för SmartExpense-versionen av Concur. Vill du använda SmartExpense-versionen i stället?</string>
+	<key>BRONX_USER_CORP_APP_TITLE</key>
+	<string>SmartExpense-användare stöds inte</string>
+	<key>BTN_EDIT</key>
+	<string>Redigera</string>
+	<key>BUMP_HELP_TEXT1</key>
+	<string>Du kan dela din deltagarinfo genom att välja Bli en deltagare nedan.</string>
+	<key>BUMP_HELP_TEXT2</key>
+	<string>Din associerade ska välja Lägg till deltagare via %@' i deltagarområdet på skärmen med rapportradposter.</string>
+	<key>BUMP_INSTRUCTION</key>
+	<string>Din associerade ska välja Lägg till deltagare via %@' i deltagarområdet på skärmen med rapportradposter, för att lägga till dig som en deltagare på rapportradposten.</string>
+	<key>BUMP_SHARE_HELP_TEXT1</key>
+	<string>Du lägger till en deltagare genom att välja Lägg till en deltagare nedan.</string>
+	<key>BUMP_SHARE_HELP_TEXT2</key>
+	<string>Din associerade ska välja knappen Deltagare på hemskärmen.</string>
+	<key>BUSGUEST</key>
+	<string>Affärsgäst </string>
+	<key>Back</key>
+	<string>Tillbaka</string>
+	<key>Baggage Claim</key>
+	<string>Bagageutlämning</string>
+	<key>Become an Attendee</key>
+	<string>Bli en deltagare</string>
+	<key>Before reserving this car in</key>
+	<string>Innan du bokar den här bilen i strid mot företagspolicyn måste du ange en orsak och en motivering i fälten som visas i rött.</string>
+	<key>Before reserving this car in justification</key>
+	<string>Innan du bokar den här bilen i strid mot företagspolicyn måste du ange en motivering i fältet som visas i rött.</string>
+	<key>Before reserving this car in reason</key>
+	<string>Innan du bokar den här bilen i strid mot företagspolicyn måste du ange en orsak i fältet som visas i rött.</string>
+	<key>Before reserving this flight</key>
+	<string>Innan du bokar det här flyget måste du fylla i fälten som är markerade med rött.</string>
+	<key>Benchmark</key>
+	<string>Riktlinje</string>
+	<key>Book</key>
+	<string>Boka</string>
+	<key>Book Air</key>
+	<string>Boka flyg</string>
+	<key>Book Car</key>
+	<string>Boka bil</string>
+	<key>Book Hotel</key>
+	<string>Boka hotell</string>
+	<key>Book Rail</key>
+	<string>Boka tåg</string>
+	<key>Book Train</key>
+	<string>Boka tåg</string>
+	<key>Book Travel</key>
+	<string>Boka resa</string>
+	<key>Book Travel from anywhere.</key>
+	<string>Boka resor oavsett var du befinner dig</string>
+	<key>Book Travel on the go with Concur</key>
+	<string>Boka resa på resande fot med Concur</string>
+	<key>Book a Hotel Car and more</key>
+	<string>Boka flyg, hotell och mer</string>
+	<key>Book a Trip</key>
+	<string>Boka en resa</string>
+	<key>Book a train</key>
+	<string>Boka en tågresa</string>
+	<key>Book flights</key>
+	<string>Boka flygresor</string>
+	<key>Book under this price to earn Travel Points.</key>
+	<string>Boka under detta pris och tjäna in respoäng.</string>
+	<key>Booker Comments</key>
+	<string>Bokarens kommentarer</string>
+	<key>Booking Info</key>
+	<string>Bokningsinfo</string>
+	<key>Booking cancelled</key>
+	<string>Reservationen har avbokats</string>
+	<key>Booking under this amount saves your company money.</key>
+	<string>Bokning under detta belopp sparar pengar åt ditt företag.</string>
+	<key>Bookings</key>
+	<string>Bokningar</string>
+	<key>Bookings offline</key>
+	<string>Det går inte att göra bokningar när enheten är offline.  Återanslut till internet och försök sedan igen.</string>
+	<key>Border Crossing</key>
+	<string>Gränspassage</string>
+	<key>Bump Phones to Become an Attendee</key>
+	<string>%@ ringer för att bli en deltagare</string>
+	<key>Bump Phones to Exchange Attendee Info</key>
+	<string>%@ ringer för att utbyta deltagarinfo</string>
+	<key>Bus</key>
+	<string>Buss</string>
+	<key>Business</key>
+	<string>Affärer</string>
+	<key>By State or Province</key>
+	<string>Efter stat eller provins</string>
+	<key>CANNOT_ADD_TO_RPT_WAIT_IMAGE</key>
+	<string>Uppladdning av utgiftskvitto pågår. Vänta några sekunder och försök sedan igen.</string>
+	<key>CAR</key>
+	<string>Biluthyrning</string>
+	<key>CARDS_LIST</key>
+	<string>Kort</string>
+	<key>CARD_AUTH_MSG</key>
+	<string>Det här är en kortauktorisation. Vänta på kortdebiteringen innan du skickar in.</string>
+	<key>CAR_DETAILS</key>
+	<string>Bilinformation</string>
+	<key>CAR_LIST</key>
+	<string>Välj bil</string>
+	<key>CHECK_OUT_DATE_ERR_MSG</key>
+	<string>Ange ett datum senare än incheckningsdatumet.</string>
+	<key>COMMENTS</key>
+	<string>Kommentarer</string>
+	<key>COMPANY_NAME</key>
+	<string>Företagsnamn</string>
+	<key>COMPANY_SSO_DISABLED_MSG</key>
+	<string>Företagsinloggning har inaktiverats för ditt företag. Kontakta företagets administratör.</string>
+	<key>COMPANY_SSO_INITIATED_REMOTE_WIPE</key>
+	<string>Dina kortkontodata har rensats från den här enheten.  Kontakta din företagets administratör om du behöver hjälp.</string>
+	<key>CONFIGURING_SESSION</key>
+	<string>Konfigurerar mobilsession...</string>
+	<key>CONFIRM_CONTINUE</key>
+	<string>Vill du fortsätta?</string>
+	<key>CONFIRM_DETACH_TEXT</key>
+	<string>Är du säker på att du vill avskilja kvittobilden?</string>
+	<key>CONFIRM_PIN</key>
+	<string>Bekräfta ny PIN-kod</string>
+	<key>CONFIRM_RECEIPT_DELETE</key>
+	<string>Vill du ta bort det här kvittot?</string>
+	<key>CONFIRM_RECEIPT_DELETION</key>
+	<string>Vill du ta bort det här kvittot?</string>
+	<key>CONFIRM_REPORT_SUBMISSION</key>
+	<string>Vill du skicka in den här utläggsrapporten?</string>
+	<key>COPY_DOWN_ENTRY_MSG</key>
+	<string>Du har ändrat fältet/fälten %@ i denna post. Vill du även ersätta fältet/fälten %@ i samtliga poster och specificeringar som är associerade med den här posten, med det nya värde som angetts här? Klicka på Ja för att skriva över värdena. Klicka på Nej om du endast vill spara ändringarna i posten. </string>
+	<key>COPY_DOWN_RPT_MSG</key>
+	<string>Du har ändrat fältet/fälten %@ i denna rapportrubrik. Vill du även ersätta fältet/fälten %@ i samtliga poster och specificeringar i den här rapporten med det nya värde som angetts här? Klicka på Ja för att skriva över värdena. Klicka på Nej om du endast vill spara ändringarna i rapportrubriken. </string>
+	<key>CORP_CARDS_0</key>
+	<string>Du har inga ej använda företagskorttransaktioner</string>
+	<key>CORP_CARDS_1</key>
+	<string>Du har 1 ej använd företagskorttransaktion</string>
+	<key>CORP_CARDS_2</key>
+	<string>Du har %d ej använda företagskorttransaktioner</string>
+	<key>CORP_SSO_MSG</key>
+	<string>Om ditt företag använder enkel inloggning (SSO) och har utfärdat en företagskod anger du den här.</string>
+	<key>CORP_SSO_MSG_GOV</key>
+	<string>Om din resebyrå har utfärdat en resebyråkod anger du den nedan.</string>
+	<key>CORP_USER_SU_APP_MSG</key>
+	<string>Du kan inte logga in på den här SmartExpense-versionen av Concur med din Concur Mobile-inloggningsinformation. Vill du använda Concur Mobile i stället?</string>
+	<key>CORP_USER_SU_APP_TITLE</key>
+	<string>Företagsanvändare stöds inte</string>
+	<key>CREATE_ADD</key>
+	<string>Skapa och lägg till</string>
+	<key>CREATE_PIN</key>
+	<string>Ange din mobil-PIN-kod för att logga in på Concur</string>
+	<key>CREATE_PIN_NOTES</key>
+	<string>PIN-koden kan innehålla bokstäver, siffror och specialtecken, som !, $ eller #, men inte blanksteg.</string>
+	<key>CREATE_PIN_TITLE</key>
+	<string>Mobil-PIN</string>
+	<key>CVV Number</key>
+	<string>CVV-nummer</string>
+	<key>Cache</key>
+	<string>Cache</string>
+	<key>Cache Done Title</key>
+	<string>Cachen har rensats</string>
+	<key>Calculate Allowances</key>
+	<string>Beräkna traktamenten</string>
+	<key>Call</key>
+	<string>Samtal</string>
+	<key>Call Travel Agent</key>
+	<string>Ring till resebyrå</string>
+	<key>Camera</key>
+	<string>Bifoga via kamera</string>
+	<key>Cancel</key>
+	<string>Avbryt</string>
+	<key>Cancel Air</key>
+	<string>Avboka flyg</string>
+	<key>Cancel Car</key>
+	<string>Avboka bil</string>
+	<key>Cancel Failed</key>
+	<string>Avbokningen misslyckades</string>
+	<key>Cancel Hotel</key>
+	<string>Avboka hotell</string>
+	<key>Cancel Rail</key>
+	<string>Avboka tåg</string>
+	<key>Cancel Trip</key>
+	<string>Avboka resa</string>
+	<key>Cancel Upload</key>
+	<string>Avbryt uppladdningen</string>
+	<key>Cancel air reservation</key>
+	<string>Avboka flygbokning</string>
+	<key>Cancel car reservation</key>
+	<string>Avboka bilbokning</string>
+	<key>Cancel hotel reservation</key>
+	<string>Avboka hotellbokning</string>
+	<key>Cancellation Policy</key>
+	<string>Avbokningspolicy</string>
+	<key>Cannot Save Changes</key>
+	<string>Det går inte att spara ändringar</string>
+	<key>Cannot Submit Report</key>
+	<string>Det går inte att skicka rapporten</string>
+	<key>Cannot access receipt</key>
+	<string>Det går inte att komma åt kvittot</string>
+	<key>Cannot append receipt</key>
+	<string>Det går inte att lägga till kvittot</string>
+	<key>Cannot expense trip</key>
+	<string>Det går inte att skapa utlägg för resan</string>
+	<key>Capture Receipt</key>
+	<string>Registrera kvitto</string>
+	<key>Capture car mileage</key>
+	<string>Fånga in data för milersättning</string>
+	<key>Capture expense and receipt</key>
+	<string>Registrera utlägg och kvitto</string>
+	<key>Capture your expenses while you travel</key>
+	<string>Registrera dina utlägg på resande fot</string>
+	<key>Car</key>
+	<string>Bil</string>
+	<key>Car Hire Airport Location</key>
+	<string>Flygplatsens läge</string>
+	<key>Car Mileage</key>
+	<string>Milersättning</string>
+	<key>Car Mileage Text</key>
+	<string>Utlägg för milersättning</string>
+	<key>Car Rule Violation</key>
+	<string>Överträdelse av bilregler</string>
+	<key>Car Type</key>
+	<string>Typ av bil</string>
+	<key>Car cancelled from mobile device</key>
+	<string>Bil avbokad från mobil enhet</string>
+	<key>Card</key>
+	<string>Kort</string>
+	<key>Card Charges</key>
+	<string>Korttransaktioner</string>
+	<key>Card Transactions</key>
+	<string>Korttransaktioner</string>
+	<key>Cards</key>
+	<string>Kort</string>
+	<key>Cars</key>
+	<string>Bilar</string>
+	<key>Cars near</key>
+	<string>Bilar nära </string>
+	<key>Cars_subline</key>
+	<string>Hämta ett riktigt häftigt åk</string>
+	<key>Cash</key>
+	<string>Kontant</string>
+	<key>Chain Least Preferred</key>
+	<string>Minst föredragna kedjan</string>
+	<key>Chain Most Preferred</key>
+	<string>Mest föredragna kedjan</string>
+	<key>Chain Preferred</key>
+	<string>Föredragen kedja</string>
+	<key>Changing the expense type will remove all itemized data</key>
+	<string>Om du ändrar utläggstyp tas alla specificerade data bort från detta utlägg Vill du fortsätta?</string>
+	<key>Chatter</key>
+	<string>Chatter</string>
+	<key>Chatter post help text</key>
+	<string>Resan har ännu inte registrerats på Chatter.  Registrera din resa och lär känna din destination med hjälp av tips från kolleger. </string>
+	<key>Check  In</key>
+	<string>Incheckning</string>
+	<key>Check In</key>
+	<string>Incheckning</string>
+	<key>Check In Complete</key>
+	<string>Incheckning klar</string>
+	<key>Check In Complete Message</key>
+	<string>Du har checkat in på den aktuella platsen.</string>
+	<key>Check In Failed Message</key>
+	<string>Det går inte att checka in just nu.  Försök igen senare.</string>
+	<key>Check Invoice Image</key>
+	<string>Kontrollera fakturabild</string>
+	<key>Check connection retry from receipt store</key>
+	<string>Kontrollera anslutningen och försöka bifoga kvittot på nytt från kvittolagret.</string>
+	<key>Check your email to reset your password and sign in</key>
+	<string>Kontrollera din e-post för att återställa ditt lösenord och logga in.</string>
+	<key>Check your email to reset your password and sign in.</key>
+	<string>Kontrollera din e-post för att återställa ditt lösenord och logga in.</string>
+	<key>Check your spam folder or</key>
+	<string>Ser du det inte? Kontrollera skräppostmappen eller</string>
+	<key>Check-In Date</key>
+	<string>Incheckningsdatum</string>
+	<key>Check-Out Date</key>
+	<string>Utcheckningsdatum</string>
+	<key>Check-in</key>
+	<string>Incheckning</string>
+	<key>Check-out</key>
+	<string>Utcheckning</string>
+	<key>Checking In</key>
+	<string>Checkar in</string>
+	<key>Checking Network Connection</key>
+	<string>Kontrollerar nätverksanslutning</string>
+	<key>Checking Out</key>
+	<string>Checkar ut</string>
+	<key>Children</key>
+	<string>Barn</string>
+	<key>ChoosePhoto-ImagePicker</key>
+	<string>Förhandsgranska</string>
+	<key>Class &amp; Seat Number</key>
+	<string>Klass- och platsnummer</string>
+	<key>Class / Seat</key>
+	<string>Klass/sittplats</string>
+	<key>Class of Service</key>
+	<string>Serviceklass</string>
+	<key>Class: %@</key>
+	<string>Klass: %@</string>
+	<key>Clear Current Selection</key>
+	<string>Rensa aktuellt urval</string>
+	<key>Clear out the local cache</key>
+	<string>Rensa den lokala cachen</string>
+	<key>Close</key>
+	<string>Stäng</string>
+	<key>Closed</key>
+	<string>Stängd</string>
+	<key>Comment</key>
+	<string>Kommentar</string>
+	<key>Comments</key>
+	<string>Kommentarer</string>
+	<key>Commonly Used</key>
+	<string>Ofta använda</string>
+	<key>Compact</key>
+	<string>Kompakt</string>
+	<key>Compact Hybrid</key>
+	<string>Kompakt hybrid</string>
+	<key>Company</key>
+	<string>Företag</string>
+	<key>Company Code</key>
+	<string>Företagskod för enkel inloggning (SSO)</string>
+	<key>Company Code Sign In</key>
+	<string>Inloggning med företagskod för enkel inloggning (SSO)</string>
+	<key>Company Name</key>
+	<string>Företagsnamn</string>
+	<key>Company Sign In</key>
+	<string>Företagsinloggning</string>
+	<key>Company Sign On</key>
+	<string>Företagsinloggning</string>
+	<key>Concur was unable to obtain a cancellation number for your hotel cancellation. In order to obtain a cancellation number</key>
+	<string>Concur kunde inte generera ett avbokningsnummer för din hotellavbokning. Kontakta hotellet för att få ett avbokningsnummer.</string>
+	<key>Confirm Delete</key>
+	<string>Bekräfta borttagning</string>
+	<key>Confirm Detach</key>
+	<string>Bekräfta avskiljning</string>
+	<key>Confirm New Mobile Password (PIN)</key>
+	<string>Bekräfta nytt mobillösenord (PIN-kod)</string>
+	<key>Confirm New Password</key>
+	<string>Bekräfta nytt lösenord</string>
+	<key>Connect to a WiFi or cellular data network.</key>
+	<string>Anslut till ett WiFi- eller mobildatanätverk.</string>
+	<key>Connecting with TripIt</key>
+	<string>Ansluter till TripIt</string>
+	<key>Connection Error</key>
+	<string>Anslutningsfel</string>
+	<key>Connection Settings</key>
+	<string>Anslutningsinställningar</string>
+	<key>Contact Received</key>
+	<string>Kontakt mottagen</string>
+	<key>Continue</key>
+	<string>Fortsätt</string>
+	<key>Copyright Concur 2010</key>
+	<string>Copyright Concur 2013</string>
+	<key>Corp Cards</key>
+	<string>Kort</string>
+	<key>Corporate Card</key>
+	<string>Företagskort</string>
+	<key>Corporate Cards</key>
+	<string>Företagskort</string>
+	<key>Could not connect to Concur.</key>
+	<string>Det gick inte att ansluta till Concur.</string>
+	<key>Could not expense trip</key>
+	<string>Utlägg har redan skapats för den här resan</string>
+	<key>Could not load attendee data.</key>
+	<string>Det gick inte att läsa in deltagardata.</string>
+	<key>Could not load attendee form data.</key>
+	<string>Det gick inte att läsa in formulärdata.</string>
+	<key>Could not load attendee search fields data.</key>
+	<string>Det gick inte att läsa in data i sökfält för deltagare.</string>
+	<key>Could not load expense data.</key>
+	<string>Det gick inte att läsa in utgiftsdata.</string>
+	<key>Could not save attendee data.  Please try again later.</key>
+	<string>Det gick inte att spara deltagardata.  Försök igen senare.</string>
+	<key>Crash Detected</key>
+	<string>Krasch identifierad</string>
+	<key>Create &amp; Add</key>
+	<string>Skapa och lägg till</string>
+	<key>Create Password</key>
+	<string>Skapa lösenord</string>
+	<key>Create Report</key>
+	<string>Skapa rapport</string>
+	<key>Create a Report</key>
+	<string>Skapa en rapport</string>
+	<key>Create a report for your expenses to go into</key>
+	<string>Skapa en rapport för dina utlägg som ska skickas till</string>
+	<key>Create an Account</key>
+	<string>Skapa ett konto</string>
+	<key>Create and submit your expense reports</key>
+	<string>Skapa och skicka utläggsrapporter</string>
+	<key>Credit Card</key>
+	<string>Kreditkort</string>
+	<key>Currency</key>
+	<string>Valuta</string>
+	<key>Currency Code</key>
+	<string>Valutakod</string>
+	<key>Current Location</key>
+	<string>Aktuell plats</string>
+	<key>Current Trip</key>
+	<string>Aktuell</string>
+	<key>Current Trip Information</key>
+	<string>Information om aktuell resa</string>
+	<key>Currently Offline</key>
+	<string>För närvarande offline</string>
+	<key>Custom fields required message</key>
+	<string>Ditt företags bokningspolicy stöds inte för tillfället. Stöd för anpassade fält kommer snart. Boka en resa via webbversionen av Concur.</string>
+	<key>DISALLOW_EXPENSEIT_DELETE</key>
+	<string>Borttagning av ExpenseIt-poster stöds inte på mobiler.</string>
+	<key>DISALLOW_TRANS_DELETE</key>
+	<string>Borttagning av korttransaktioner stöds inte på mobiler</string>
+	<key>DISTANCE</key>
+	<string>Hitta hotell inom</string>
+	<key>Daily Rate</key>
+	<string>Daglig taxa</string>
+	<key>Date</key>
+	<string>Datum</string>
+	<key>Day</key>
+	<string>Dag</string>
+	<key>Day Trip</key>
+	<string>Dagsresa</string>
+	<key>Days</key>
+	<string>Dagar</string>
+	<key>Days Remaining at Location</key>
+	<string>Återstående dagar på platsen</string>
+	<key>Delete</key>
+	<string>Ta bort</string>
+	<key>Delete Entry Failed</key>
+	<string>Det gick inte att ta bort posten</string>
+	<key>Delete Receipt</key>
+	<string>Ta bort kvitto</string>
+	<key>Delete Report Failed</key>
+	<string>Det gick inte att ta bort rapporten</string>
+	<key>Deleting Out of Pocket Expense(s)</key>
+	<string>Tar bort utlägg</string>
+	<key>Deleting Receipt</key>
+	<string>Tar bort kvitto</string>
+	<key>Deleting Report</key>
+	<string>Radera rapport</string>
+	<key>Delivery Options</key>
+	<string>Leveransalternativ</string>
+	<key>Depart</key>
+	<string>Avgår</string>
+	<key>Departing</key>
+	<string>Avreser</string>
+	<key>Departing Train</key>
+	<string>Avgående tåg</string>
+	<key>Departing trains</key>
+	<string>Avreser: %@ %@ %@ </string>
+	<key>Departing: token token</key>
+	<string>Avreser: %@ %@</string>
+	<key>Departure</key>
+	<string>Avgång</string>
+	<key>Departure City</key>
+	<string>Avreseort</string>
+	<key>Departure Date</key>
+	<string>Avresedatum</string>
+	<key>Departure Gate</key>
+	<string>Avresegate</string>
+	<key>Departure Information</key>
+	<string>Information om avresa</string>
+	<key>Departure Matches Arrival</key>
+	<string>Avresa matchar ankomst</string>
+	<key>Departure Matches Arrival Message</key>
+	<string>Flygplatserna för avresa och ankomst är desamma.  Välj olika flygplatser för resan.</string>
+	<key>Departure Point</key>
+	<string>Avreseort</string>
+	<key>Departure Station</key>
+	<string>Avgångsstation</string>
+	<key>Departure Status</key>
+	<string>Avresestatus</string>
+	<key>Departure Time</key>
+	<string>Avgångstid</string>
+	<key>Depending upon your company configuration some of the Concur for Mobile features may not be avaiable to you</key>
+	<string>Beroende på ditt företags konfiguration, är det möjligt att vissa funktioner i Concur för mobilen inte är tillgängliga för dig</string>
+	<key>Deposit required</key>
+	<string>Depositionsavgift krävs</string>
+	<key>Destination</key>
+	<string>Destination</string>
+	<key>Destination Location</key>
+	<string>Destinationsplats</string>
+	<key>Destination Point</key>
+	<string>Destinationsort</string>
+	<key>Detach</key>
+	<string>Avskilj</string>
+	<key>Details</key>
+	<string>Information</string>
+	<key>Dining</key>
+	<string>Restaurang</string>
+	<key>Directions</key>
+	<string>Vägbeskrivning</string>
+	<key>Disabled by administrator</key>
+	<string>Inaktiverad av administratör</string>
+	<key>Discover great hotels</key>
+	<string>Upptäck fantastiska hotell</string>
+	<key>Dismiss tip overlay</key>
+	<string>Stäng reseöverlägg</string>
+	<key>Distance</key>
+	<string>Körsträcka</string>
+	<key>Distance calculated by Google</key>
+	<string>Distans beräknad av Google</string>
+	<key>Distance to Date = %@</key>
+	<string>Sträcka till dags dato = %@</string>
+	<key>Diversion Airport</key>
+	<string>Diversion-flygplats</string>
+	<key>Diversion City</key>
+	<string>Diversion-sort</string>
+	<key>Don't know your PIN?</key>
+	<string>Känner du inte till din PIN-kod?</string>
+	<key>Don't know your password or PIN?</key>
+	<string>Har du glömt ditt lösenord eller din PIN-kod?</string>
+	<key>Don't know your user name?</key>
+	<string>Känner du inte till ditt användarnamn?</string>
+	<key>Done</key>
+	<string>Klar</string>
+	<key>Done cache killing</key>
+	<string>Cachen har rensats från den här enheten.  Du måste stänga applikationen och sedan starta om den.  Om du inte gör det kan det leda till att systemet blir instabilt.</string>
+	<key>Dont have an Account Sign Up</key>
+	<string>Har du inget konto?</string>
+	<key>Download receipts in background</key>
+	<string>Laddar fortfarande ned kvitton i bakgrunden.  Du kan vänta genom att klicka på Avbryt eller fortsätta genom att klicka på OK.</string>
+	<key>Drop-off</key>
+	<string>Avlämning</string>
+	<key>Drop-off Date</key>
+	<string>Återlämningsdatum</string>
+	<key>Drop-off Time</key>
+	<string>Avlämningstid</string>
+	<key>Dropbox</key>
+	<string>Dropbox</string>
+	<key>Duplicate Attendees</key>
+	<string>Varning p.g.a. dubblettdeltagare</string>
+	<key>Duplicates Found</key>
+	<string>Dubbletter hittades</string>
+	<key>Duration</key>
+	<string>Tidslängd</string>
+	<key>E Ticket</key>
+	<string>E-biljett</string>
+	<key>E-Receipt</key>
+	<string>E-kvitto</string>
+	<key>EMAIL</key>
+	<string>E-post</string>
+	<key>EMAIL_LINK_EXPIRED_MSG</key>
+	<string>Försök igen och använd länken inom 24 timmar efter att du tagit emot den</string>
+	<key>EMPLOYEE</key>
+	<string>Anställd</string>
+	<key>ENTER_NEW_PIN</key>
+	<string>Ny PIN-kod</string>
+	<key>ENTER_PIN_MSG</key>
+	<string>Ange en PIN-kod som består av minst 4 tecken i form av siffror eller bokstäver.  Ditt företag kan kräva fler tecken.</string>
+	<key>ENTER_VALID_COMPANY_CODE</key>
+	<string>Ange ett värde på för företagskod.</string>
+	<key>ENTRIES_NOT_MATCH_MSG</key>
+	<string>De poster du har angett stämmer inte överens. Försök igen.</string>
+	<key>ENTRY_REQ_FIELDS</key>
+	<string>Fyll i alla obligatoriska fält och åtgärda alla fel i formuläret innan du sparar posten.</string>
+	<key>ERROR</key>
+	<string>Fel</string>
+	<key>ERROR_ACCOUNT_NOT_CONFIGURED</key>
+	<string>Ditt konto är inte konfigurerat för att skicka in rapporter.</string>
+	<key>ERROR_BAD_CONFIG_MSG</key>
+	<string>Din konfiguration stöder inte kvitton.  Kontrollera med din administratör.</string>
+	<key>ERROR_CONFIGURING_SESSION</key>
+	<string>Det gick inte att konfigurera din mobilsession via SSO-inloggning. Kontakta företagets administratör.</string>
+	<key>ERROR_EXPENSE_SITE_DOWN</key>
+	<string>Det utförs underhåll på utlägget. Försök igen om cirka en halvtimme.</string>
+	<key>ERROR_INVALID_AGENCY_CODE</key>
+	<string>Ange din resebyråkod.</string>
+	<key>ERROR_INVALID_COMPANY_CODE</key>
+	<string>Ange din företagskod.</string>
+	<key>ERROR_INVALID_PIN</key>
+	<string>Din PIN-kod är ogiltig. Ange din PIN-kod igen.</string>
+	<key>ERROR_MSG_VISIT_WEBSITE</key>
+	<string>Besök Concurs webbplats för att ange ett värde.</string>
+	<key>ERROR_REQUIRED_FIELDS_MISSING</key>
+	<string>Åtminstone ett obligatoriskt fält i rapporten saknar data. En röd undantagsflagga markerar utlägget och en lista visar de fält som måste fyllas i.</string>
+	<key>ERROR_SUBMIT_FAILED</key>
+	<string>Det gick inte att skicka</string>
+	<key>EXCEPTIONS</key>
+	<string>Undantag</string>
+	<key>EXPENSES_NEG_TEXT</key>
+	<string>Registrera dina utlägg på resande fot.</string>
+	<key>EXPENSE_DETAILS_ITEMIZATIONS</key>
+	<string>Specificeringar</string>
+	<key>EXPENSE_REPORTS</key>
+	<string>Utläggsrapporter</string>
+	<key>EXPENSE_REPORTS_NEG_TEXT</key>
+	<string>Granska och skicka in dina rapporter</string>
+	<key>EXPENSE_TYPES_LIST</key>
+	<string>Utläggstyper</string>
+	<key>Earliest Departure</key>
+	<string>Tidigast avgång</string>
+	<key>Earn %d pts.</key>
+	<string>Tjäna in %d poäng.</string>
+	<key>Economy</key>
+	<string>Ekonomi</string>
+	<key>Economy Hybrid</key>
+	<string>Ekonomi hybrid</string>
+	<key>Edit</key>
+	<string>Redigera</string>
+	<key>Email</key>
+	<string>E-post</string>
+	<key>Email Address</key>
+	<string>E-postadress</string>
+	<key>Email Log</key>
+	<string>Skicka logg med e-post</string>
+	<key>Email link expired</key>
+	<string>E-postlänken har gått ut</string>
+	<key>Enter Approver Email</key>
+	<string>Ange e-postadress till attestant</string>
+	<key>Enter Field</key>
+	<string>Ange %@</string>
+	<key>Enter in the URL that connects to the Concur servers</key>
+	<string>Ange URL:en till servrarna hos Concur</string>
+	<key>Enter your Agency Code</key>
+	<string>Ange din resebyråkod</string>
+	<key>Enter your mobile password (PIN) to sign in</key>
+	<string>Ange ditt mobillösenord (PIN-koden) för att logga in.</string>
+	<key>Enter your password to sign in</key>
+	<string>Ange ditt lösenord för att logga in</string>
+	<key>Entries Don't Match</key>
+	<string>Posterna överensstämmer inte</string>
+	<key>Error</key>
+	<string>Fel</string>
+	<key>Error loading content</key>
+	<string>Ett fel uppstod när innehållet lästes in</string>
+	<key>ErrorReceiptsFetch</key>
+	<string>Inga kvitton har laddats upp. Tryck på plusknappen (+) nedan för att ladda upp ett kvitto nu så att du kan använda det senare i rapport- eller utläggsposter.</string>
+	<key>Estimated Arrival</key>
+	<string>Beräknad ankomst</string>
+	<key>Estimated Departure</key>
+	<string>Beräknad avresa</string>
+	<key>Evening</key>
+	<string>Kväll</string>
+	<key>Exception Details</key>
+	<string>Undantagsdetaljer</string>
+	<key>Exceptions</key>
+	<string>Undantag</string>
+	<key>Exchange Rate</key>
+	<string>Växelkurs</string>
+	<key>Existing Reports</key>
+	<string>Befintliga rapporter</string>
+	<key>Expense</key>
+	<string>Utlägg</string>
+	<key>Expense Locations</key>
+	<string>Utläggsplatser</string>
+	<key>Expense Queued</key>
+	<string>Utlägg i kö</string>
+	<key>Expense Trip</key>
+	<string>Utläggsresa</string>
+	<key>Expense Type</key>
+	<string>Utläggstyp</string>
+	<key>Expense Updates</key>
+	<string>Utläggsuppdateringar</string>
+	<key>Expense a trip from TripIt</key>
+	<string>Utlägg för en resa från TripIt</string>
+	<key>ExpenseIt Entries</key>
+	<string>ExpenseIt-poster</string>
+	<key>ExpenseIt Entry</key>
+	<string>ExpenseIt-post</string>
+	<key>ExpenseTracker version</key>
+	<string>SmartExpense-version %@</string>
+	<key>Expensed</key>
+	<string>Utlägg har skapats</string>
+	<key>Expenses</key>
+	<string>Utlägg</string>
+	<key>Expenses Combined</key>
+	<string>Samlade utgifter</string>
+	<key>Expenses cannot be added offline</key>
+	<string>Det går inte att lägga till utlägg offline.</string>
+	<key>Expensing the Trip</key>
+	<string>Skapar utlägg för resan</string>
+	<key>Export</key>
+	<string>Exportera</string>
+	<key>Express</key>
+	<string>Express</string>
+	<key>FACEBOOK_AUTH_FAILED</key>
+	<string>Det gick inte att använda Facebook för autentisering.  Kontrollera att Private Browsing har inaktiverats i webbläsaren Safari.</string>
+	<key>FACEBOOK_INCOMPLETE_INFO_SIGNIN_MSG</key>
+	<string>Det går inte att logga in med dina autentiseringsuppgifter för Facebook. Kontrollera att du har en giltig e-postadress i din Facebook-profil och logga in via e-post med Facebook-konto.</string>
+	<key>FACEBOOK_INCOMPLETE_INFO_SIGNUP_MSG</key>
+	<string>Det går inte att logga in med dina autentiseringsuppgifter för Facebook.  Kontrollera att e-post, förnamn och efternamn har angetts i din Facebook-profil och logga in via e-post med Facebook-konto.</string>
+	<key>FACEBOOK_SIGNIN_FAILED_MSG</key>
+	<string>Oväntade fel.  Försök med Facebook-inloggning igen eller med en annan inloggningsmetod från inloggningssidan.</string>
+	<key>FACEBOOK_SIGNUP_FAILED_MSG</key>
+	<string>Oväntade fel.  Försök med Facebook-registrering igen eller med en annan registreringsmetod från registreringssidan.</string>
+	<key>FIELD_MAX_LENGTH_ERR_MSG</key>
+	<string>Ange inte fler än %@ tecken.</string>
+	<key>FILL_IN_PARENT_MLIST_FIELD</key>
+	<string>Fyll i det överordnade fältet %@ först.</string>
+	<key>FIRST_NAME</key>
+	<string>Förnamn</string>
+	<key>FIX_EMAIL_RESET_PASSWORD</key>
+	<string>Ange en giltig e-postadress i fältet E-postadress innan du klickar på länken för att återställa lösenordet.</string>
+	<key>FIX_REPORT_NAME_MSG</key>
+	<string>Välj en befintlig rapport eller ange ett giltigt rapportnamn och välj sedan en ny rapport.</string>
+	<key>FLEX_FARING_ERROR_MSG</key>
+	<string>Använd webbversionen för att boka flygresor mellan dessa orter.</string>
+	<key>FLIGHT_STATUS_MSG</key>
+	<string>Flygstatistik uppdaterad den</string>
+	<key>FORM</key>
+	<string>FORMULÄR</string>
+	<key>FORM_FIELDS_INVALID</key>
+	<string>Fyll i alla obligatoriska fält och åtgärda alla fel i formuläret innan du sparar.</string>
+	<key>FOUND_COUNT</key>
+	<string>hittades: %i</string>
+	<key>FREQUENT_FLYER_NO_SEL_MSG</key>
+	<string>Du har minst ett bonusprogramkonto men valde inget för den här bokningen.  Välj OK för att fortsätta utan konto, eller Avbryt för att välja ett konto.</string>
+	<key>Facebook</key>
+	<string>Facebook</string>
+	<key>Failed</key>
+	<string>Misslyckades</string>
+	<key>Failed to add to report</key>
+	<string>Det gick inte att lägga till poster i rapporten.</string>
+	<key>Failed to download receipt</key>
+	<string>Kvittohämtningen misslyckades</string>
+	<key>Failed to import Itinerary</key>
+	<string>Kunde inte importera resplan.</string>
+	<key>Failed to import entry</key>
+	<string>Det går inte att importera vissa av utläggen.</string>
+	<key>Failed to retrieve attendees in selected group</key>
+	<string>Det gick inte att hämta deltagare i den valda gruppen</string>
+	<key>Failed to save Itinerary Stop</key>
+	<string>Kunde inte spara uppehåll i resplan</string>
+	<key>Failed to save external list item</key>
+	<string>Det gick inte att spara det externa listobjektet</string>
+	<key>Failure</key>
+	<string>Misslyckades</string>
+	<key>Fare Choices</key>
+	<string>Biljettalternativ</string>
+	<key>Feature not enabled for this demo</key>
+	<string>Funktionen fungerar inte i denna demo</string>
+	<key>Features</key>
+	<string>Inslag</string>
+	<key>Fee</key>
+	<string>Avgift</string>
+	<key>Fetching Data</key>
+	<string>Hämtar data</string>
+	<key>Fetching Expense Data</key>
+	<string>Hämtar utläggsdata</string>
+	<key>Fetching Filter Results</key>
+	<string>Hämtar filterresultat</string>
+	<key>Fetching Hotel Rates</key>
+	<string>Hämtar hotelltaxor</string>
+	<key>Fetching Location Data</key>
+	<string>Hämtar platsdata</string>
+	<key>Fetching Trip</key>
+	<string>Hämtar resa</string>
+	<key>Fetching the Feed</key>
+	<string>Hämtar feed</string>
+	<key>Filter</key>
+	<string>Filtrera</string>
+	<key>Find Travel</key>
+	<string>Sök efter resa</string>
+	<key>First</key>
+	<string>Första</string>
+	<key>First Name</key>
+	<string>Förnamn</string>
+	<key>Flight Details</key>
+	<string>Flygdetaljer</string>
+	<key>Flight Duration</key>
+	<string>Flygvaraktighet</string>
+	<key>Flight Options</key>
+	<string>Flygresealternativ</string>
+	<key>Flight Rule Violation</key>
+	<string>Överträdelse av flygregel</string>
+	<key>Flight Schedules</key>
+	<string>Flygscheman</string>
+	<key>Flight Search</key>
+	<string>Sök flygresa</string>
+	<key>Flight Status</key>
+	<string>Flygresestatus</string>
+	<key>Flights</key>
+	<string>Flygresor</string>
+	<key>Flights_subline</key>
+	<string>Hitta och boka flygresor snabbt</string>
+	<key>For Example: say Find a Flight from San Francisco to New York for next week</key>
+	<string>Säg exempelvis ”Hitta en flygresa från San Fransisco till New York nästa vecka”</string>
+	<key>For Example: say Find a hotel in San Francisco for next week</key>
+	<string>Exempel: säg ”Hitta ett hotell i San Francisco nästa vecka för 3 nätter”</string>
+	<key>Forgot Username or Password?</key>
+	<string>Har du glömt användarnamnet eller lösenordet?</string>
+	<key>Forgot mobile password (PIN)?</key>
+	<string>Glömt mobillösenordet (PIN-koden)?</string>
+	<key>Forgot password?</key>
+	<string>Glömt lösenordet?</string>
+	<key>Free up memory and retry receipt upload</key>
+	<string>Frigöra utrymme och försök ladda upp kvitton på nytt senare.</string>
+	<key>Frequent Flyer Program</key>
+	<string>Bonusprogram</string>
+	<key>Frequent Flyer Warning</key>
+	<string>Bonusprogramvarning</string>
+	<key>Friday_Short</key>
+	<string>Fre</string>
+	<key>From</key>
+	<string>Från</string>
+	<key>From Location</key>
+	<string>Från plats</string>
+	<key>From Station</key>
+	<string>Från station</string>
+	<key>Full</key>
+	<string>Komplett</string>
+	<key>Full Hybrid</key>
+	<string>Stor hybrid</string>
+	<key>Full Pickup</key>
+	<string>Stor pickup</string>
+	<key>Full SUV</key>
+	<string>Stor SUV</string>
+	<key>Future Trips</key>
+	<string>Kommande</string>
+	<key>GOOGLE_AUTH_FAILED_MSG</key>
+	<string>Det går inte att använda Google för att auktorisera din åtkomst till Concur SmartExpense.</string>
+	<key>GOOGLE_INCOMPLETE_INFO_SIGNIN_MSG</key>
+	<string>Det går inte att logga in med dina autentiseringsuppgifter för Google.  Kontrollera att du har en giltig e-postadress och profil i ditt Google-konto.</string>
+	<key>GOOGLE_INCOMPLETE_INFO_SIGNUP_MSG</key>
+	<string>Det går inte att logga in med dina autentiseringsuppgifter för Google.  Kontrollera att e-post, förnamn och efternamn har angetts i din Google-profil.</string>
+	<key>Gate token</key>
+	<string>Gate %@</string>
+	<key>GateGuru</key>
+	<string>GateGuru</string>
+	<key>Gathering data from TripIt</key>
+	<string>Samlar in data från TripIt</string>
+	<key>Generate Expenses</key>
+	<string>Skapa utlägg</string>
+	<key>Get Help</key>
+	<string>Få hjälp</string>
+	<key>GetApprovedForAirHotelAndMore</key>
+	<string>Få attestering för flyg, hotell och mer</string>
+	<key>Google</key>
+	<string>Google</string>
+	<key>Greater than 25</key>
+	<string>Större än 25</string>
+	<key>HAS_DYNAMIC_FIELDS_MSG</key>
+	<string>Ditt företags bokningspolicy stöds inte för tillfället. Stöd för policyn kommer snart. Boka en resa via webbversionen av Concur.</string>
+	<key>HIGH_RESOLUTION_IMAGE</key>
+	<string>Hög upplösning (1000×1000 bpt)</string>
+	<key>HOME_PAGE</key>
+	<string>Concur</string>
+	<key>HOME_PAGE_BREEZE</key>
+	<string>Concur Breeze</string>
+	<key>HOTEL</key>
+	<string>Hotell/inget</string>
+	<key>HOTEL_BOOKING</key>
+	<string>Boka rum</string>
+	<key>HOTEL_BOOKING_ADDRESS_MISSING_VIOLATIONS</key>
+	<string>Innan du bokar detta rum måste du behandla policyöverträdelserna som visas i rött.</string>
+	<key>HOTEL_BOOKING_VIEW_BOOKING_ERROR_MESSAGE</key>
+	<string>Det gick inte att boka hotellet.</string>
+	<key>HOTEL_BOOKING_VIEW_CANCELLATION_POLICY_DESCRIPTION</key>
+	<string>Innan du bokar detta rum måste du läsa informationen i avbokningspolicyn.</string>
+	<key>HOTEL_BOOKING_VIEW_CANCELLATION_POLICY_TITLE</key>
+	<string>Avbokningspolicy</string>
+	<key>HOTEL_BOOKING_VIEW_CONFIRM_BOOKING_MESSAGE</key>
+	<string>Vill du boka det här rummet?</string>
+	<key>HOTEL_BOOKING_VIEW_CONFIRM_BOOKING_TITLE</key>
+	<string>Bekräfta</string>
+	<key>HOTEL_BOOKING_VIEW_DAILY_RATE</key>
+	<string>Daglig taxa: </string>
+	<key>HOTEL_BOOKING_VIEW_MISSING_VIOLATION_INFO_TITLE</key>
+	<string>Saknade fält</string>
+	<key>HOTEL_BOOKING_VIEW_MISSING_VIOLATION_JUSTIFICATION</key>
+	<string>Innan du bokar det här rummet i strid mot företagspolicyn måste du ange en motivering i fältet som visas i rött.</string>
+	<key>HOTEL_BOOKING_VIEW_MISSING_VIOLATION_REASON</key>
+	<string>Innan du bokar det här rummet i strid mot företagspolicyn måste du ange en orsak i fältet som visas i rött.</string>
+	<key>HOTEL_BOOKING_VIEW_MISSING_VIOLATION_REASON_AND_JUSTIFICATION</key>
+	<string>Innan du bokar det här rummet i strid mot företagspolicyn måste du ange en orsak och en motivering i fälten som visas i rött.</string>
+	<key>HOTEL_BOOKING_VIEW_ROOM</key>
+	<string>Rum</string>
+	<key>HOTEL_BOOKING_VIOLATION_JUSTIFICATION_TITLE</key>
+	<string>Motivering till överträdelse</string>
+	<key>HOTEL_BOOKING_WITH_DEPOSIT_CONFIRM_BOOKING_MESSAGE</key>
+	<string>Vill du boka det här rummet?</string>
+	<key>HOTEL_BOOKNIG_VIOLATION_JUSTIFICATION_PLACEHOLDER_TEXT</key>
+	<string>Ange en motivering för att boka det här rummet.</string>
+	<key>HOTEL_CREDIT_CARD</key>
+	<string>Välj kreditkort</string>
+	<key>HOTEL_DETAILS_VIEW_FEES</key>
+	<string>Avgifter</string>
+	<key>HOTEL_ROOM_LIST</key>
+	<string>Välj rum</string>
+	<key>HOTEL_SEARCH_RESULTS</key>
+	<string>Välj hotell</string>
+	<key>HOTEL_VIEW_FIND_HOTELS_WITHIN</key>
+	<string>Hitta hotell inom</string>
+	<key>HOTEL_VIEW_HOTEL_NAME_RESTRICTIONS</key>
+	<string>Hotellnamnsbegränsningar</string>
+	<key>HOTEL_VIEW_HOTEL_NAME_RESTRICTIONS_PLACEHOLDER_TEXT</key>
+	<string>Sök efter hotell vars namn innehåller följande text</string>
+	<key>HOTEL_VIEW_KILOMETERS</key>
+	<string>km</string>
+	<key>HOTEL_VIEW_LOCATION</key>
+	<string>Plats</string>
+	<key>HOTEL_VIEW_MILE</key>
+	<string>amerikansk mile</string>
+	<key>HOTEL_VIEW_NO_HOTELS_MESSAGE</key>
+	<string>Hitta inga matchande hotell.  Ändra dina sökkriterier och försök igen.</string>
+	<key>HOTEL_VIEW_NO_HOTELS_TITLE</key>
+	<string>Inga matchande hotell</string>
+	<key>HOTEL_VIEW_NUMBER_SPACE_KILOMETERS_OR_MILES</key>
+	<string>%@ %@</string>
+	<key>HOTEL_VIEW_SEARCHING_FOR_HOTELS_AT</key>
+	<string>Söker efter hotell på</string>
+	<key>HOTEL_VIEW_SEARCHING_FOR_HOTELS_TO</key>
+	<string>till</string>
+	<key>HOTEL_VIEW_SEARCHING_FOR_HOTELS_WITH_AVAILABILITY</key>
+	<string>med rum tillgängliga från</string>
+	<key>HOTEL_VIEW_SEARCH_BUTTON_TITLE</key>
+	<string>Sök efter hotell</string>
+	<key>HOTEL_VIEW_SELECT_PREFERENCE</key>
+	<string>Välj preferens</string>
+	<key>HOTEL_VIEW_SMOKING_PREFERENCE</key>
+	<string>Rökningspreferenser</string>
+	<key>HOTEL_VIEW_SPECIFY_LOCATION_MESSAGE</key>
+	<string>Ange en plats.</string>
+	<key>HOTEL_VIEW_SPECIFY_LOCATION_TITLE</key>
+	<string>Plats krävs</string>
+	<key>HOTEL_VIEW_TIMEOUT_MESSAGE</key>
+	<string>Inga matchande hotelltaxor hittades. Ändra dina sökkriterier och försök igen.</string>
+	<key>HOTEL_VIEW_TIMEOUT_TITLE</key>
+	<string>Inga matchande hotelltaxor</string>
+	<key>HOTEL_VIEW_WITH_NAMES_CONTAINING</key>
+	<string>Med namn som innehåller</string>
+	<key>Having trouble signing in?</key>
+	<string>Har du problem med att logga in?</string>
+	<key>Help for PIN</key>
+	<string>Din PIN-kod är ett alternativt sätt att logga in och kan skapas i de fall du är automatiskt inloggad på webbversionen av Concur via ditt företag, och du inte känner till ditt lösenord. 
+
+Använd webbversionen av Concur (Profil&gt;Mobilregistrering) för att skapa en PIN-kod.</string>
+	<key>Help for PIN - Gov</key>
+	<string>Din PIN-kod är ett alternativt sätt att logga in och kan skapas i de fall du är automatiskt inloggad på webbversionen av Concur via din resebyrå, och du inte känner till ditt lösenord. 
+
+Använd webbversionen av Concur (Profil&gt;Mobilregistrering) för att skapa en PIN-kod.</string>
+	<key>Help for Password</key>
+	<string>Om ditt företag tillåter PIN-kod för mobil inloggning: Gå tillbaka till föregående sida och skicka in den e-postadress som är registrerad hos Concur. Vi skickar då anvisningar om hur du loggar in.
+
+Om ditt företag kräver ett lösenord: Använd samma lösenord som du använder för att logga in på Concurs webbplats.</string>
+	<key>Help for Password - Gov</key>
+	<string>Ditt lösenord är det lösenord du använder för att logga in på webbversionen av Concur. Du bör använda ditt lösenord för mobilappen.
+
+Om du inte känner till ditt lösenord för Concur kontaktar du resebyråns administratör.</string>
+	<key>Help for User Name</key>
+	<string>Vanligtvis kan du logga in på vår app med samma användarnamn och lösenord som till Concurs webbversion.
+ 
+Om du inte har de här uppgifterna ber vi dig skicka in din e-postadress på föregående sida för att få inloggningsuppgifter eller kontakta ditt företags administratör.
+
+</string>
+	<key>Help for User Name - Gov</key>
+	<string>Ditt användarnamn är det namn du använder för att logga in på webbversionen av Concur. Du bör använda ditt användarnamn för mobilappen.
+
+Om du inte känner till ditt användarnamn för Concur kontaktar du resebyråns administratör.</string>
+	<key>Hide Offers</key>
+	<string>Dölj erbjudanden</string>
+	<key>Home</key>
+	<string>Hem</string>
+	<key>Hotel</key>
+	<string>Hotell</string>
+	<key>Hotel Dates</key>
+	<string>Hotelldatum</string>
+	<key>Hotel Name</key>
+	<string>Hotellets namn</string>
+	<key>Hotel Price to Beat</key>
+	<string>Pris att slå för hotell</string>
+	<key>Hotel Rule Violation</key>
+	<string>Överträdelse av hotellregler</string>
+	<key>Hotel Search</key>
+	<string>Hotellsökning</string>
+	<key>Hotel cancelled from mobile device</key>
+	<string>Hotell avbokat från mobil enhet</string>
+	<key>Hotels</key>
+	<string>Hotell</string>
+	<key>Hotels With Names Containing</key>
+	<string>Hotell med namn som innehåller</string>
+	<key>Hotels Within</key>
+	<string>Hotell inom</string>
+	<key>Hotels near</key>
+	<string>Hotell nära</string>
+	<key>Hotels near you</key>
+	<string>Hotell nära dig</string>
+	<key>Hotels_subline</key>
+	<string>Checka in på det perfekta hotellet</string>
+	<key>Hour</key>
+	<string>Timme</string>
+	<key>How would you like to book?</key>
+	<string>Hur vill du boka?</string>
+	<key>I Forgot</key>
+	<string>Jag har glömt</string>
+	<key>IDV Arrive</key>
+	<string>Ankommer</string>
+	<key>IDV Arrives in t at t</key>
+	<string>Ankommer om %@ till %@</string>
+	<key>IDV Body</key>
+	<string>Text</string>
+	<key>IDV Check In</key>
+	<string>Incheckning</string>
+	<key>IDV Check Out</key>
+	<string>Checka ut</string>
+	<key>IDV Confirmation</key>
+	<string>Bekräftelse</string>
+	<key>IDV Daily</key>
+	<string>Dagligen</string>
+	<key>IDV Depart</key>
+	<string>Avgår</string>
+	<key>IDV Departs from t at t</key>
+	<string>Avgår från %@ kl. %@</string>
+	<key>IDV Drop Off</key>
+	<string>Avlämning</string>
+	<key>IDV Operated by t Flight t</key>
+	<string>Körs av %@ flyg %@</string>
+	<key>IDV Persons</key>
+	<string>Personer</string>
+	<key>IDV Pick Up</key>
+	<string>Upphämtning</string>
+	<key>IDV Reserved for</key>
+	<string>Bokat för</string>
+	<key>IDV Rooms</key>
+	<string>Rum</string>
+	<key>IDV Seat Map for t</key>
+	<string>Sittplatskarta för %@</string>
+	<key>IDV Social Publishing</key>
+	<string>Social publicering</string>
+	<key>IDV Terminal Map for t</key>
+	<string>Terminalkarta för %@</string>
+	<key>IDV Terminal t Gate t</key>
+	<string>Terminal %@ gate %@</string>
+	<key>IDV Web site for t</key>
+	<string>Webbplats för %@</string>
+	<key>IDV property name</key>
+	<string>Namn på anläggning</string>
+	<key>IDV t Flight t</key>
+	<string>%@ Flyg @%</string>
+	<key>IMAGE_DOWN_SCALED_MSG</key>
+	<string>Bildens storlek har minskats till mindre än 4 MB.  Verifiera innehållet på bilden innan du sparar den med posten.</string>
+	<key>INFO</key>
+	<string>Information</string>
+	<key>INTEGER_NEGATIVE_ERR_MSG</key>
+	<string>Det här fältet får inte innehålla ett negativt värde</string>
+	<key>INTEGER_TOO_BIG_ERR_MSG</key>
+	<string>Heltalet är för stort</string>
+	<key>INTEGER_VALIDATION_ERR_MSG</key>
+	<string>Detta fält kräver ett heltalsvärde.</string>
+	<key>INVALID_CONCUR_CREDENTIALS</key>
+	<string>Ogiltiga autentiseringsuppgifter för inloggning</string>
+	<key>INVALID_DEVICE_MSG</key>
+	<string>PIN-återställningen begärdes från en annan enhet. Använd samma enhet som du begärde din PIN-återställning från.</string>
+	<key>INVALID_LOGIN_MSG</key>
+	<string>Försök ange dina autentiseringsuppgifter igen eller välj Jag har glömt för att få inloggningsanvisningar.</string>
+	<key>INVALID_PIN_LEN_MSG</key>
+	<string>PIN-koden måste innehålla minst %@ tecken</string>
+	<key>INVALID_PIN_MSG</key>
+	<string>PIN-koden får innehålla bokstäver, siffror &amp; och specialtecken, men inte blanksteg.</string>
+	<key>INVALID_PIN_SPECIAL_CHARACTERS</key>
+	<string>Den PIN-kod som du har angett innehåller inga specialtecken. Mobilens PIN-kod måste innehålla minst ett specialtecken. Några exempel är !, $, %, + och =.</string>
+	<key>INVALID_PIN_SPECIAL_MIXED_CASE</key>
+	<string>PIN-koden måste innehålla minst en versal [A–Z] och en gemen [a–z].</string>
+	<key>INVALID_USERID_MSG</key>
+	<string>Ange ett giltigt inloggnings-ID.%@ Det ska bestå av ditt inloggningsnamn följt av symbolen @ och ditt företags domän.</string>
+	<key>INVOICE_LINEITEMS</key>
+	<string>Fakturadetalj</string>
+	<key>INVOICE_LINEITEM_DETAIL</key>
+	<string>Radpost</string>
+	<key>INVOICE_SUMMARY</key>
+	<string>Sammandrag faktura</string>
+	<key>INVOICE_VENDOR</key>
+	<string>Faktureringsleverantör</string>
+	<key>ITEMIZATIONS</key>
+	<string>Specificeringar</string>
+	<key>ITEMIZATION_LIST</key>
+	<string>Specificeringslista</string>
+	<key>ITEMS_TO_APPROVE</key>
+	<string>%d objekt att attestera</string>
+	<key>ITIN_DETAILS</key>
+	<string>Segmentdetaljer</string>
+	<key>ITIN_DETAILS_VIEW_AIR</key>
+	<string>Flyg</string>
+	<key>ITIN_DETAILS_VIEW_AIRCOND</key>
+	<string>Luftkonditionering</string>
+	<key>ITIN_DETAILS_VIEW_AIRCRAFT</key>
+	<string>Flygplan</string>
+	<key>ITIN_DETAILS_VIEW_AIRPORT</key>
+	<string>Flygplats</string>
+	<key>ITIN_DETAILS_VIEW_ALLOWABLE_MILES</key>
+	<string>Tillåtna amerikanska miles</string>
+	<key>ITIN_DETAILS_VIEW_AMENITIES</key>
+	<string>Bekvämligheter</string>
+	<key>ITIN_DETAILS_VIEW_ARRIVAL</key>
+	<string>Ankomst</string>
+	<key>ITIN_DETAILS_VIEW_ARRIVE</key>
+	<string>Ankommer</string>
+	<key>ITIN_DETAILS_VIEW_BAGGAGE</key>
+	<string>Bagage</string>
+	<key>ITIN_DETAILS_VIEW_BODY</key>
+	<string>Texttyp</string>
+	<key>ITIN_DETAILS_VIEW_BOOKING</key>
+	<string>Bokning</string>
+	<key>ITIN_DETAILS_VIEW_CABIN</key>
+	<string>Sittvagn</string>
+	<key>ITIN_DETAILS_VIEW_CANCEL_POLICY</key>
+	<string>Avbokningspolicy</string>
+	<key>ITIN_DETAILS_VIEW_CAR</key>
+	<string>Biluthyrning</string>
+	<key>ITIN_DETAILS_VIEW_CARRIER</key>
+	<string>Bolag</string>
+	<key>ITIN_DETAILS_VIEW_CHECK_IN</key>
+	<string>Incheckning</string>
+	<key>ITIN_DETAILS_VIEW_CHECK_OUT</key>
+	<string>Checka ut</string>
+	<key>ITIN_DETAILS_VIEW_CITY</key>
+	<string>Ort</string>
+	<key>ITIN_DETAILS_VIEW_CLASS</key>
+	<string>Klass</string>
+	<key>ITIN_DETAILS_VIEW_CONFIRM_NUM</key>
+	<string>Bekräfta nr</string>
+	<key>ITIN_DETAILS_VIEW_CONF_NUM</key>
+	<string>Bekräftelsenr</string>
+	<key>ITIN_DETAILS_VIEW_CONTACT</key>
+	<string>Kontakt</string>
+	<key>ITIN_DETAILS_VIEW_DAILY_RATE</key>
+	<string>Daglig taxa</string>
+	<key>ITIN_DETAILS_VIEW_DEPART</key>
+	<string>Avgår</string>
+	<key>ITIN_DETAILS_VIEW_DEPARTURE</key>
+	<string>Avgång</string>
+	<key>ITIN_DETAILS_VIEW_DISCOUNT</key>
+	<string>Rabattkod</string>
+	<key>ITIN_DETAILS_VIEW_DIVERSION</key>
+	<string>Diversion</string>
+	<key>ITIN_DETAILS_VIEW_DROP_OFF</key>
+	<string>Avlämning</string>
+	<key>ITIN_DETAILS_VIEW_DROP_OFF_ADDRESS</key>
+	<string>Avlämningsadress</string>
+	<key>ITIN_DETAILS_VIEW_DROP_OFF_INSTRUCTIONS</key>
+	<string>Avlämningsinstruktioner</string>
+	<key>ITIN_DETAILS_VIEW_DURATION</key>
+	<string>Tidslängd</string>
+	<key>ITIN_DETAILS_VIEW_END</key>
+	<string>Slut</string>
+	<key>ITIN_DETAILS_VIEW_EQUIP</key>
+	<string>Särskild utrustning</string>
+	<key>ITIN_DETAILS_VIEW_FLIGHT</key>
+	<string>Flyg</string>
+	<key>ITIN_DETAILS_VIEW_FLIGHT_WITH_OB</key>
+	<string>%@ #%@ (%@ #%@)</string>
+	<key>ITIN_DETAILS_VIEW_GATE</key>
+	<string>Gate</string>
+	<key>ITIN_DETAILS_VIEW_HOTEL</key>
+	<string>Hotell</string>
+	<key>ITIN_DETAILS_VIEW_INFO</key>
+	<string>Info</string>
+	<key>ITIN_DETAILS_VIEW_MAP</key>
+	<string>Mappa</string>
+	<key>ITIN_DETAILS_VIEW_MEAL</key>
+	<string>Måltid</string>
+	<key>ITIN_DETAILS_VIEW_MEETING_INSTRUCTIONS</key>
+	<string>Mötesinstruktioner</string>
+	<key>ITIN_DETAILS_VIEW_MINUTES</key>
+	<string>%@ minuter</string>
+	<key>ITIN_DETAILS_VIEW_NUMBER_IN_PARTY</key>
+	<string>Antal i gruppen</string>
+	<key>ITIN_DETAILS_VIEW_NUMBER_OF_PERSONS</key>
+	<string>Antal personer</string>
+	<key>ITIN_DETAILS_VIEW_OPERATED</key>
+	<string>Körs av %@ - %@</string>
+	<key>ITIN_DETAILS_VIEW_PARKING</key>
+	<string>Parkering</string>
+	<key>ITIN_DETAILS_VIEW_PICKUP_ADDRESS</key>
+	<string>Upphämtningsadress</string>
+	<key>ITIN_DETAILS_VIEW_PICKUP_INSTRUCTIONS</key>
+	<string>Upphämtningsinstruktioner</string>
+	<key>ITIN_DETAILS_VIEW_PLATFORM</key>
+	<string>Perrong</string>
+	<key>ITIN_DETAILS_VIEW_PRICE</key>
+	<string>Pris</string>
+	<key>ITIN_DETAILS_VIEW_RAIL</key>
+	<string>Tåg</string>
+	<key>ITIN_DETAILS_VIEW_RATE</key>
+	<string>Taxa</string>
+	<key>ITIN_DETAILS_VIEW_RATE_DESCRIPTION</key>
+	<string>Beskrivning av taxan</string>
+	<key>ITIN_DETAILS_VIEW_RATE_TYPE</key>
+	<string>Taxetyp</string>
+	<key>ITIN_DETAILS_VIEW_RESERVATION</key>
+	<string>Bokning</string>
+	<key>ITIN_DETAILS_VIEW_REZ</key>
+	<string>Bokning</string>
+	<key>ITIN_DETAILS_VIEW_ROOM</key>
+	<string>Rum</string>
+	<key>ITIN_DETAILS_VIEW_SEAT</key>
+	<string>Sittplats</string>
+	<key>ITIN_DETAILS_VIEW_SEGMENT_DETAILS</key>
+	<string>Segmentdetaljer</string>
+	<key>ITIN_DETAILS_VIEW_SPECIAL_INSTRUCTIONS</key>
+	<string>Specialinstruktioner</string>
+	<key>ITIN_DETAILS_VIEW_START</key>
+	<string>Start</string>
+	<key>ITIN_DETAILS_VIEW_STATION</key>
+	<string>Station</string>
+	<key>ITIN_DETAILS_VIEW_STATUS</key>
+	<string>Status</string>
+	<key>ITIN_DETAILS_VIEW_STOPS</key>
+	<string>Stopp</string>
+	<key>ITIN_DETAILS_VIEW_TERMINAL</key>
+	<string>Terminal</string>
+	<key>ITIN_DETAILS_VIEW_TOTAL_RATE</key>
+	<string>Totalt pris</string>
+	<key>ITIN_DETAILS_VIEW_TRAIN_TYPE</key>
+	<string>Tågtyp</string>
+	<key>ITIN_DETAILS_VIEW_TRANSMISSION</key>
+	<string>Överföring</string>
+	<key>ITIN_DETAILS_VIEW_TYPE</key>
+	<string>Typ</string>
+	<key>ITIN_DETAILS_VIEW_VENDOR</key>
+	<string>Leverantör</string>
+	<key>ITIN_DETAILS_VIEW_WAGON_NUM</key>
+	<string>Vagn nr</string>
+	<key>If any changes have been made by your agent</key>
+	<string>Om några ändringar har gjorts av resebyrån kan det ta några minuter att uppdatera din resplan.</string>
+	<key>If you continue to experience</key>
+	<string>Försök igen.  Om problemen att få åtkomst till systemet kvarstår kontaktar du supportavdelningen på ditt företag eller rese-/utläggsavdelningen.</string>
+	<key>If you continue to experience SU</key>
+	<string>Försök igen.  Kontakta Concur support om problemen med att komma åt systemet kvarstår.</string>
+	<key>If your plans change</key>
+	<string>Avboka och boka ett annat hotell om dina planer ändras medan du är på resande fot</string>
+	<key>Image Not Available</key>
+	<string>Bild ej tillgänglig</string>
+	<key>Immediate Assistance Required</key>
+	<string>Behöver hjälp omgående</string>
+	<key>Import Error</key>
+	<string>Importfel</string>
+	<key>Import Expenses</key>
+	<string>Importera utlägg</string>
+	<key>Import and Match</key>
+	<string>Importera och matcha</string>
+	<key>Incorrect Password</key>
+	<string>Fel lösenord</string>
+	<key>Individual Edition</key>
+	<string>Individuell version</string>
+	<key>Infants</key>
+	<string>Småbarn</string>
+	<key>Info</key>
+	<string>Info</string>
+	<key>Intermediate</key>
+	<string>Mellan</string>
+	<key>Intermediate Hybrid</key>
+	<string>Medelstor hybrid</string>
+	<key>Intermediate SUV</key>
+	<string>Medelstor SUV</string>
+	<key>Invalid Arrival Location</key>
+	<string>Ogiltig ankomstplats</string>
+	<key>Invalid Departure Date</key>
+	<string>Ogiltigt avresedatum</string>
+	<key>Invalid Departure Location</key>
+	<string>Ogiltig avreseplats</string>
+	<key>Invalid Device</key>
+	<string>Ogiltig enhet</string>
+	<key>Invalid Email or Username</key>
+	<string>Ogiltig e-postadress eller ogiltigt användarnamn</string>
+	<key>Invalid Login Credentials</key>
+	<string>Ogiltiga autentiseringsuppgifter</string>
+	<key>Invalid PIN</key>
+	<string>Ogiltig PIN-kod</string>
+	<key>Invalid PIN length</key>
+	<string>Ogiltig längd på PIN-kod</string>
+	<key>Invalid Password</key>
+	<string>Ogiltigt lösenord</string>
+	<key>Invalid Return Date</key>
+	<string>Ogiltigt returdatum</string>
+	<key>Invalid User Name</key>
+	<string>Ogiltigt användarnamn</string>
+	<key>Invalid email address</key>
+	<string>Ogiltig e-postadress</string>
+	<key>Invitation(s) Sent</key>
+	<string>Skickade inbjudningar</string>
+	<key>Invitations Sent</key>
+	<string>Tack för att du sprider information om SmartExpense.</string>
+	<key>Invite</key>
+	<string>Bjud in</string>
+	<key>Invite colleagues to use SmartExpense</key>
+	<string>Bjud in kollegor att använda SmartExpense</string>
+	<key>Invoice</key>
+	<string>Faktura</string>
+	<key>Invoice Approval</key>
+	<string>Faktureringsattestering</string>
+	<key>Invoice Image</key>
+	<string>Fakturabild</string>
+	<key>InvoiceApprove</key>
+	<string>Faktura</string>
+	<key>Invoices</key>
+	<string>Fakturor</string>
+	<key>Itemization not allowed</key>
+	<string>Specificering tillåts inte för den här posten</string>
+	<key>Itemizations</key>
+	<string>Specificeringar</string>
+	<key>Itemize</key>
+	<string>Specificera</string>
+	<key>Itemized Entry</key>
+	<string>Specificerad post</string>
+	<key>Itemized:</key>
+	<string>Specificerat:</string>
+	<key>Itineraries</key>
+	<string>Resplaner</string>
+	<key>Itinerary</key>
+	<string>Resplan</string>
+	<key>Itinerary List</key>
+	<string>Resplanslista</string>
+	<key>Itinerary Rule Violation</key>
+	<string>Överträdelse av resplansregel</string>
+	<key>Join</key>
+	<string>Förena</string>
+	<key>Join with Facebook</key>
+	<string>Anslut med Facebook</string>
+	<key>LABEL_ADD_BTN</key>
+	<string>Lägg till</string>
+	<key>LABEL_AIR</key>
+	<string>Flyg</string>
+	<key>LABEL_APPROVE_EXPENSES</key>
+	<string>Attestera utlägg</string>
+	<key>LABEL_CANCEL_BTN</key>
+	<string>Avbryt</string>
+	<key>LABEL_CAR_RENTAL</key>
+	<string>Biluthyrning</string>
+	<key>LABEL_CLOSE_BTN</key>
+	<string>Stäng</string>
+	<key>LABEL_DONE_BTN</key>
+	<string>Klar</string>
+	<key>LABEL_EXPENSE</key>
+	<string>Utlägg</string>
+	<key>LABEL_EXPENSES</key>
+	<string>Utlägg</string>
+	<key>LABEL_HOTELS</key>
+	<string>Hotell</string>
+	<key>LABEL_LOGIN_NO_PIN</key>
+	<string>Behöver du ange din PIN-kod?</string>
+	<key>LABEL_LOGIN_PASSWORD</key>
+	<string>Lösenord eller PIN-kod</string>
+	<key>LABEL_LOGIN_REGISTER</key>
+	<string>Registrera</string>
+	<key>LABEL_LOGIN_SIGN_IN</key>
+	<string>Logga in</string>
+	<key>LABEL_LOGIN_USER_NAME</key>
+	<string>Användarnamn</string>
+	<key>LABEL_OK_BTN</key>
+	<string>OK</string>
+	<key>LABEL_QUICK_EXPENSE</key>
+	<string>Kontant</string>
+	<key>LABEL_REGISTER_ENTER_PIN</key>
+	<string>Ange PIN-kod</string>
+	<key>LABEL_REGISTER_PASSWORD</key>
+	<string>Lösenord</string>
+	<key>LABEL_REGISTER_REENTER_PIN</key>
+	<string>Ange PIN-koden igen</string>
+	<key>LABEL_REGISTER_SIGN_IN</key>
+	<string>Logga in</string>
+	<key>LABEL_SAVE_BTN</key>
+	<string>Spara</string>
+	<key>LABEL_SEND_BTN</key>
+	<string>Skicka</string>
+	<key>LABEL_SETTINGS</key>
+	<string>Inställningar</string>
+	<key>LABEL_SETTINGS_VIEW_APP_INFO</key>
+	<string>Applikationsinformation</string>
+	<key>LABEL_SETTINGS_VIEW_APP_NAME</key>
+	<string>Programnamn</string>
+	<key>LABEL_SETTINGS_VIEW_CONNECTION_SETTINGS</key>
+	<string>Anslutningsinställningar</string>
+	<key>LABEL_SETTINGS_VIEW_REMEMBER_USER</key>
+	<string>Spara användarnamn</string>
+	<key>LABEL_SETTINGS_VIEW_SAVE_BTN</key>
+	<string>Spara inställningar</string>
+	<key>LABEL_SETTINGS_VIEW_TWITTER</key>
+	<string>Visa Twitter</string>
+	<key>LABEL_SETTINGS_VIEW_URI_NON_SSL</key>
+	<string>Ingen SSL-URI</string>
+	<key>LABEL_SETTINGS_VIEW_URL</key>
+	<string>Server-URI</string>
+	<key>LABEL_SETTINGS_VIEW_VERSION</key>
+	<string>Version</string>
+	<key>LABEL_SUBMIT_BTN</key>
+	<string>Skicka in</string>
+	<key>LABEL_TAXI</key>
+	<string>Taxi</string>
+	<key>LABEL_TRAVEL</key>
+	<string>Resa</string>
+	<key>LABEL_TRIPS</key>
+	<string>Resor</string>
+	<key>LABEL_VENDOR_ADDR_CODE</key>
+	<string>Adresskod:</string>
+	<key>LABEL_VENDOR_CODE</key>
+	<string>Leverantörskod:</string>
+	<key>LAST_NAME</key>
+	<string>Efternamn</string>
+	<key>LNA_LOADING_TEXT</key>
+	<string>Hämtar din aktuella plats...</string>
+	<key>LOCATION_NOT_FOUND_MSG</key>
+	<string>Det gick inte att hitta den aktuella platsen.</string>
+	<key>LOGIN</key>
+	<string>Logga in</string>
+	<key>LOG_UNAVAILABLE_MSG</key>
+	<string>Loggdata är inte tillgängliga.</string>
+	<key>LOW_RESOLUTION_IMAGE</key>
+	<string>Låg upplösning (320×320 bpt)</string>
+	<key>Last Name</key>
+	<string>Efternamn</string>
+	<key>Last updated</key>
+	<string>Senast uppdaterad %@</string>
+	<key>Last updated on</key>
+	<string>Senast uppdaterad den</string>
+	<key>Layover in</key>
+	<string>Uppehåll i</string>
+	<key>Learn More</key>
+	<string>Mer information</string>
+	<key>Least Preferred</key>
+	<string>Minst föredragna</string>
+	<key>Legs: token</key>
+	<string>Etapper: %@</string>
+	<key>Link Dropbox</key>
+	<string>Länka Dropbox</string>
+	<key>Link Success</key>
+	<string>Länkningen slutfördes</string>
+	<key>Link to TripIt</key>
+	<string>Länka till TripIt</string>
+	<key>Link with TripIt</key>
+	<string>Länka till TripIt</string>
+	<key>Link with TripIt Header</key>
+	<string>Länka till TripIt och omvandla dina resor till utläggsrapporter.</string>
+	<key>Linked to Dropbox</key>
+	<string>Länkat till Dropbox</string>
+	<key>List</key>
+	<string>Lista</string>
+	<key>List of your expenses</key>
+	<string>Lista över dina utlägg</string>
+	<key>Load Logs</key>
+	<string>Läs in loggar</string>
+	<key>Load more hotels</key>
+	<string>Läs in fler hotell...</string>
+	<key>Loading Data</key>
+	<string>Läser in data</string>
+	<key>Loading Image</key>
+	<string>Läser inte bild</string>
+	<key>Loading Receipt Image(s)</key>
+	<string>Läser in kvittobild(er)</string>
+	<key>Loading Receipts</key>
+	<string>Läser in kvitton</string>
+	<key>Loading Stations</key>
+	<string>Läser in stationer</string>
+	<key>Loading Trip</key>
+	<string>Läser in resa</string>
+	<key>Loading delivery options</key>
+	<string>Läser in leveransalternativ</string>
+	<key>Loading more Hotels</key>
+	<string>Läser in fler hotell...</string>
+	<key>Loading trip data</key>
+	<string>Läser in resedata</string>
+	<key>Loading...</key>
+	<string>Läser in...</string>
+	<key>Location</key>
+	<string>Plats</string>
+	<key>Location Check Offline</key>
+	<string>Det går inte att kontrollera din plats när du är offline.  Försök igen senare.</string>
+	<key>Location Not Found</key>
+	<string>Hittade inte platsen</string>
+	<key>Location Required</key>
+	<string>Plats krävs</string>
+	<key>Log</key>
+	<string>Logg</string>
+	<key>Log Saved</key>
+	<string>Loggen har sparats</string>
+	<key>Log Unavailable</key>
+	<string>Loggen är inte tillgänglig</string>
+	<key>Log out from Concur Mobile</key>
+	<string>Logga ut från Concur Mobile</string>
+	<key>Log out from SmartExpense</key>
+	<string>Logga ut från SmartExpense</string>
+	<key>Logging In</key>
+	<string>Loggar in</string>
+	<key>Login Settings</key>
+	<string>Inloggningsinställningar</string>
+	<key>Logout</key>
+	<string>Logga ut</string>
+	<key>Looks like we are experience some difficulties. Please check back in a few minutes.</key>
+	<string>Det verkar som vi har stött på problem. Försök igen om några minuter.</string>
+	<key>Luxury</key>
+	<string>Lyx</string>
+	<key>MAP</key>
+	<string>Visa karta</string>
+	<key>MAPVIEW_ACCESS_DENIED</key>
+	<string>Concur måste ha tillgång till din exakta plats för att kunna ge färdanvisningar. Aktivera Platstjänster för Concur.</string>
+	<key>MAPVIEW_LOCATION_UNKNOWN</key>
+	<string>Den plats där du nu befinner dig är för närvarande okänd, men Concur fortsätter att försöka lokalisera dig.</string>
+	<key>MAPVIEW_NETWORK_ERROR</key>
+	<string>Concur kan tyvärr inte hitta den plats där du för närvarande befinner dig. Kontrollera din nätverksanslutning och se till att flygläge är inaktiverat.</string>
+	<key>MAPVIEW_UNKNOWN_ERROR</key>
+	<string>Concur kan tyvärr inte hitta den plats där du för närvarande befinner dig. Kontrollera din nätverksanslutning och se till att Lokaliseringstjänster är aktiverat och att Flygläge är inaktiverat.</string>
+	<key>MEDIUM_RESOLUTION_IMAGE</key>
+	<string>Medelhög upplösning (640×640 bpt)</string>
+	<key>MLIST_FIELD_EDIT_NOT_SUPPORT</key>
+	<string>Redigeringar för det här fältet i den anslutna listan stöds inte för tillfället på mobiler.  Välj CTE-webben i stället.</string>
+	<key>MLIST_MRU_NOT_SUPPORT</key>
+	<string>Du kan inte välja de senast använda listposterna för det här fältet.  Välj CTE-webben i stället.</string>
+	<key>MOBILE_DISABLED_MSG</key>
+	<string>Ditt företag har inaktiverat Concur för mobilen. Kontakta din administratör.</string>
+	<key>MODULE_DISABLED_ALERT_TEXT</key>
+	<string>Ditt företag har avaktiverat denna funktion för mobil.</string>
+	<key>MODULE_DISABLED_ALERT_TITLE</key>
+	<string>Funktionen har avaktiverats</string>
+	<key>MSG_ADDITIONAL_RECEIPT_NOT_REQUIRED</key>
+	<string>Ytterligare kvitton krävs inte.</string>
+	<key>MSG_APPROVE_INVOICE_AREYOUSURE</key>
+	<string>Vill du attestera den här fakturan?</string>
+	<key>MSG_NO_INVOICE_DETAIL</key>
+	<string>Ingen fakturadetalj</string>
+	<key>MSG_NO_INVOICE_TO_APPROVE</key>
+	<string>Det finns ingen faktura att attestera</string>
+	<key>MSG_RECEIPT_NOT_REQUIRED</key>
+	<string>Kvitton krävs inte.</string>
+	<key>MSG_RECEIPT_REQUIRED</key>
+	<string>Påminnelse: Kvitton krävs!</string>
+	<key>MSG_REPORT_SUBMISSION</key>
+	<string>Om du inte redan har lämnat kvitton besöker du Concurs webbplats.  Annars kan du skicka rapporten nu.</string>
+	<key>MSG_TRAIN_SELL_NOT_READY</key>
+	<string>Försäljningen av tågbokningar har inte implementerats än.  Du kommer att kunna boka tåg i en senare version.</string>
+	<key>MSG_WAIT_FETCHING_INFO</key>
+	<string>Vi hämtar information för att skicka rapport.  Vänta och försök sedan igen.</string>
+	<key>Mail Queued</key>
+	<string>E-post i kö</string>
+	<key>Mail Saved</key>
+	<string>Sparad e-post</string>
+	<key>Mail Unavailable</key>
+	<string>E-post ej tillgänglig</string>
+	<key>Manage Receipts</key>
+	<string>Hantera kvitton</string>
+	<key>Manage Violations</key>
+	<string>Hantera överträdelser</string>
+	<key>ManageYourAuthorizations</key>
+	<string>Hantera dina behörigheter</string>
+	<key>Manager approval</key>
+	<string>Chefsattest</string>
+	<key>Map</key>
+	<string>Mappa</string>
+	<key>Map Address</key>
+	<string>Kartadress</string>
+	<key>Matching transactions combined into a single expense</key>
+	<string>Matchande transaktioner som kombinerats till ett enda utlägg</string>
+	<key>Meal Allowances</key>
+	<string>Måltidstraktamenten</string>
+	<key>Menu</key>
+	<string>Meny</string>
+	<key>Message Center</key>
+	<string>Meddelandecenter</string>
+	<key>Microphone Access Denied</key>
+	<string>Mikrofonåtkomst nekad</string>
+	<key>Midnight</key>
+	<string>Midnatt</string>
+	<key>Mileage</key>
+	<string>Bilersättning</string>
+	<key>Mini</key>
+	<string>Mini</string>
+	<key>Mini Van</key>
+	<string>Minivan</string>
+	<key>Missing Arrival</key>
+	<string>Ankomst saknas</string>
+	<key>Missing Arrival Message</key>
+	<string>Flygplats för ankomst saknas.  Välj en flygplats för ankomst.</string>
+	<key>Missing Departure</key>
+	<string>Avresa saknas</string>
+	<key>Missing Departure Message</key>
+	<string>Flygplats för avresa saknas.  Välj en flygplats för avresa.</string>
+	<key>Missing fields</key>
+	<string>Saknade fält</string>
+	<key>Missing required information for Itinerary Stop</key>
+	<string>Obligatoriska uppgifter som saknas för uppehåll i resplan</string>
+	<key>Mobile Disabled</key>
+	<string>Mobil inaktiverad</string>
+	<key>Mobile Expenses</key>
+	<string>Mobilutlägg</string>
+	<key>Mobile Log</key>
+	<string>Mobillogg</string>
+	<key>Mobile Log: iPhone Crash</key>
+	<string>Mobillogg: iPhone-krasch</string>
+	<key>Mobile PIN title</key>
+	<string>Mobil-PIN</string>
+	<key>Mobile Password (PIN)</key>
+	<string>Mobillösenord (PIN-kod)</string>
+	<key>Mobile Password (PIN) Reset Link Sent</key>
+	<string>Länken för återställande av mobillösenord (PIN-kod) har skickats</string>
+	<key>Mobile Password (PIN) Successfully Reset</key>
+	<string>Mobillösenordet (PIN-koden) har återställts.</string>
+	<key>Monday_Short</key>
+	<string>Mån</string>
+	<key>Month of stay</key>
+	<string>Vistelsemånad</string>
+	<key>More Help</key>
+	<string>Mer Hjälp</string>
+	<key>Morning</key>
+	<string>Morgon</string>
+	<key>Most Preferred</key>
+	<string>Mest föredragna</string>
+	<key>Most Recently Used</key>
+	<string>Senast använda</string>
+	<key>Must log in online first</key>
+	<string>Du måste logga in online innan du kan autentiseras offline.</string>
+	<key>N Stops</key>
+	<string>%d stopp</string>
+	<key>NCOOK</key>
+	<string>Annan utan matlagning</string>
+	<key>NEED_TO_RESET_PASSWORD</key>
+	<string>Återställ ditt lösenord och logga sedan in.  Kontakta din administratör om du har problem.</string>
+	<key>NEED_TO_RESET_PIN</key>
+	<string>Återställ din PIN-kod och logga sedan in.  Kontakta din administratör om du har problem.</string>
+	<key>NIGHTS_TOO_LARGE_ERR_MSG</key>
+	<string>Specificera utlägg för maximalt 90 dagar</string>
+	<key>NON_REFUNDABLE_WARN_MSG</key>
+	<string>Kunder med EJ ÅTERBETALBARA biljettyper kan avboka sin resa och återvända dessa biljetter till vilken destination som helst inom transportörens system inom ett år från UTFÄRDANDEDAGEN. Bokningar MÅSTE avbeställas före det avsedda (ursprungliga) utresedatumet, annars blir biljetterna makulerade och har INGET värde vid framtida användning. Dessa regler gäller endast för INRIKESBILJETTER. Välj dessa flyg ändå?</string>
+	<key>NO_RATES_SOLD_OUT_USER_MESSAGE</key>
+	<string>Inga rum i denna fastighet är tillgängliga under angivna datum. Välj ett annat hotell.</string>
+	<key>NO_RECEIPTS_NEG</key>
+	<string>Inga kvitton</string>
+	<key>NO_RECEIPT_FOUND</key>
+	<string>Hittade inget kvitto på servern.  Om du redan har bifogat ett kvitto i rapporten kan du kontrollera på nytt lite senare.</string>
+	<key>NO_RECEIPT_MSG</key>
+	<string>Minst en av de valda utläggen saknar ett kvitto.</string>
+	<key>NO_RECEIPT_NEG</key>
+	<string>Inget kvitto</string>
+	<key>NO_REPORTRECEIPT_NEG</key>
+	<string>Inget kvitto har bifogats till utläggen</string>
+	<key>NUMBER_OF_ROOMS</key>
+	<string>Antal rum</string>
+	<key>NUMERIC_TOO_BIG_ERR_MSG</key>
+	<string>Numret är för stort</string>
+	<key>NUMERIC_VALIDATION_ERR_MSG</key>
+	<string>Detta fält kräver ett numeriskt värde.</string>
+	<key>Navigator</key>
+	<string>Navigator</string>
+	<key>Network Error</key>
+	<string>Nätverksfel</string>
+	<key>New Attendee</key>
+	<string>Ny deltagare</string>
+	<key>New Mobile Password (PIN)</key>
+	<string>Nytt mobillösenord (PIN-kod)</string>
+	<key>New Password</key>
+	<string>Nytt lösenord</string>
+	<key>New Report</key>
+	<string>Ny rapport</string>
+	<key>Next</key>
+	<string>Nästa</string>
+	<key>Nightly Lodging Expenses</key>
+	<string>Nattliga logiutlägg</string>
+	<key>No</key>
+	<string>Nej</string>
+	<key>No Active Reports</key>
+	<string>Du har för närvarande inga aktiva rapporter</string>
+	<key>No Active Trips</key>
+	<string>Inga aktiva resor</string>
+	<key>No Attendee Found</key>
+	<string>Hittade ingen deltagare</string>
+	<key>No Attendee Type Available</key>
+	<string>Inga deltagare får läggas till eftersom inga giltiga typer av deltagare finns tillgängliga för den här utläggstypen.</string>
+	<key>No Attendees</key>
+	<string>Inga deltagare</string>
+	<key>No Card Charges</key>
+	<string>Inga korttransaktioner</string>
+	<key>No Comments</key>
+	<string>Inga kommentarer</string>
+	<key>No Credit Card</key>
+	<string>Inget kreditkort</string>
+	<key>No Delivery Option</key>
+	<string>Inget leveransalternativ</string>
+	<key>No Email in Profile</key>
+	<string>Ingen e-postadress i profilen</string>
+	<key>No Email(s)</key>
+	<string>Inga e-postmeddelanden</string>
+	<key>No Expenses</key>
+	<string>Inga utlägg</string>
+	<key>No Flights Found</key>
+	<string>Hittade inga flyg</string>
+	<key>No Itemization</key>
+	<string>Ingen specificering</string>
+	<key>No Matching Cars</key>
+	<string>Inga matchande bilar</string>
+	<key>No Network Connection</key>
+	<string>Ingen nätverksanslutning</string>
+	<key>No Out of Pocket Expenses</key>
+	<string>Inga utlägg</string>
+	<key>No Rates</key>
+	<string>Inga taxor</string>
+	<key>No Receipts</key>
+	<string>Hantera alla kvitton på en och samma plats och håll ditt fotoalbum rent. I mappen Kvitto sparar du kvitton för dina utlägg. Du kan också kopiera kvitton från ditt fotoalbum till mappen Kvitto eller ta en ny bild av kvitton och spara dem här.</string>
+	<key>No Reports</key>
+	<string>Inga rapporter</string>
+	<key>No Results</key>
+	<string>Inga resultat</string>
+	<key>No Segments Selected</key>
+	<string>Inga segment är valda</string>
+	<key>No Shows</key>
+	<string>No-show:er</string>
+	<key>No Shows Tip</key>
+	<string>Ange numret för %@.</string>
+	<key>No TripIt Trips</key>
+	<string>Inga TripIt-resor att skapa utlägg för</string>
+	<key>No Trips</key>
+	<string>Inga resor</string>
+	<key>No date specified</key>
+	<string>Datum inte angivet</string>
+	<key>No email(s) were specified for the invite</key>
+	<string>Inga e-postadresser angavs för inbjudan</string>
+	<key>No items to upload</key>
+	<string>Inga poster att ladda upp</string>
+	<key>No matching cars were found.  Please modify your search criteria and try again.</key>
+	<string>Inga matchande bilar hittades.  Ändra dina sökkriterier och försök igen.</string>
+	<key>No new twitter message</key>
+	<string>Inget nytt Twitter-meddelande</string>
+	<key>No preference</key>
+	<string>Ingen preferens</string>
+	<key>No trains were found</key>
+	<string>Hittade inga tåg.</string>
+	<key>No trip segments have been selected</key>
+	<string>Inga resesegment har valts.</string>
+	<key>Non-smoking</key>
+	<string>Icke rökare</string>
+	<key>None</key>
+	<string>Ingen</string>
+	<key>Nonstop</key>
+	<string>Direkt</string>
+	<key>Not Available</key>
+	<string>Ej tillgängligt</string>
+	<key>Not Filed Reports</key>
+	<string>Rapporter</string>
+	<key>Not Linked</key>
+	<string>Inte länkad</string>
+	<key>Not Preferred</key>
+	<string>Inte föredragna</string>
+	<key>Not Provided</key>
+	<string>Ingår inte</string>
+	<key>Not Sure</key>
+	<string>Osäker</string>
+	<key>Now</key>
+	<string>Nu</string>
+	<key>Number Of Nights</key>
+	<string>Antal nätter</string>
+	<key>Number of hotels</key>
+	<string>Antal hotell</string>
+	<key>Number of schedules found: token</key>
+	<string>Antal påträffade scheman: %d</string>
+	<key>OFFLINE_MSG</key>
+	<string>Du är offline.  Vänta med att skicka rapporten tills du är online.</string>
+	<key>OK</key>
+	<string>OK</string>
+	<key>OR</key>
+	<string>ELLER</string>
+	<key>OUT_OF_POCKET_FORM</key>
+	<string>Utlägg</string>
+	<key>OUT_OF_POCKET_FORM_VIEW_CONFIRM_SPLIT_SMART_EXPENSE_MESSAGE</key>
+	<string>Vill du dela korttransaktionen som matats in från mobilen?</string>
+	<key>OUT_OF_POCKET_FORM_VIEW_CONFIRM_SPLIT_SMART_EXPENSE_TITLE</key>
+	<string>Bekräfta</string>
+	<key>OUT_OF_POCKET_FORM_VIEW_SPLIT_SMART_EXPENSE_BUTTON_TITLE</key>
+	<string>Dela smarta utlägg</string>
+	<key>OUT_OF_POCKET_LIST</key>
+	<string>Utlägg</string>
+	<key>Off</key>
+	<string>Av</string>
+	<key>Off Airport</key>
+	<string>Utanför flygplats</string>
+	<key>Offers</key>
+	<string>Erbjudanden</string>
+	<key>Office</key>
+	<string>Kontor</string>
+	<key>Office Locations</key>
+	<string>Kontorsplatser</string>
+	<key>Offline</key>
+	<string>Offline</string>
+	<key>Offline limits features</key>
+	<string>Enheten är för tillfället offline.  Vissa funktioner är inte tillgängliga.</string>
+	<key>Ok let's start over. What Hotel can I find for you</key>
+	<string>OK, vi tar det från början igen. Vilket hotell kan jag hjälpa dig att hitta?</string>
+	<key>Old Trips</key>
+	<string>Tidigare</string>
+	<key>On</key>
+	<string>På</string>
+	<key>One Way</key>
+	<string>Enkel resa</string>
+	<key>Open the email from this device to reset your mobile password (PIN) and sign in.</key>
+	<string>Öppna e-postmeddelandet på denna enhet för att återställa mobillösenordet (PIN-koden) och logga in.</string>
+	<key>Open the email from this device to reset your password and sign in.</key>
+	<string>Öppna e-postmeddelandet på denna enhet för att återställa lösenordet och logga in.</string>
+	<key>Operated By</key>
+	<string>Körs av</string>
+	<key>Operated by</key>
+	<string>Körs av</string>
+	<key>Operation Not Supported Offline</key>
+	<string>Den här åtgärden stöds inte i offlineläge.  Försök igen när en nätverksanslutning är tillgänglig.</string>
+	<key>Or Sign In with...</key>
+	<string>Eller logga in med...</string>
+	<key>Or Sign Up with...</key>
+	<string>Eller registrera dig med...</string>
+	<key>Organization</key>
+	<string>Organisation</string>
+	<key>Original receipt required</key>
+	<string>Ursprungligt kvitto krävs</string>
+	<key>Other</key>
+	<string>Social och övrigt</string>
+	<key>Other Allowances</key>
+	<string>Övriga traktamenten</string>
+	<key>Other Reports</key>
+	<string>Andra rapporter</string>
+	<key>Other Room Tax 1</key>
+	<string>Annan rumskatt 1</string>
+	<key>Other Room Tax 2</key>
+	<string>Annan rumskatt 2</string>
+	<key>Out of Pocket Entry has been Saved</key>
+	<string>Utlägget har sparats</string>
+	<key>Outbound</key>
+	<string>Utgående</string>
+	<key>P2B_AIR_BOOKING_HEADER_POINTS_DISABLED</key>
+	<string>Bli en smartare reseköpare! Bokning under priset att slå sparar pengar åt ditt företag.</string>
+	<key>P2B_AIR_BOOKING_HEADER_POINTS_ENABLED</key>
+	<string>Du kan tjäna in respoäng när du väljer alternativ som kostar mindre än priset att slå. När resan bokförs som utlägg registreras de intjänade respoängen i totalsumman som du kan använda vid framtida förmåner.</string>
+	<key>PDF Receipt</key>
+	<string>PDF-kvitto</string>
+	<key>PENDING_REQUIRED_TRAVEL_CUSTOM_FIELDS</key>
+	<string>Fyll i all obligatorisk bokningsinfo innan du fortsätter</string>
+	<key>PER_VARIABLE_NO_RATES</key>
+	<string>Ingen taxa definierad för det angivna datumet.</string>
+	<key>PIN</key>
+	<string>PIN-kod</string>
+	<key>PIN Tip</key>
+	<string>Om du inte känner till dina autentiseringsuppgifter loggar du in på ditt Concur-webbkonto och går till Profil -&gt; Mobilregistrering.  Concur Breeze-användare går till Mitt konto -&gt; Mobil-PIN.  Ytterligare hjälp får du av företagets administratör.</string>
+	<key>PIN has been reset successfully</key>
+	<string>PIN-koden har återställts</string>
+	<key>PIN_EXPIRED</key>
+	<string>Din PIN-kod har slutat att gälla.  Registrera din PIN-kod igen och logga sedan in.</string>
+	<key>PIN_MOBILE_NOTES</key>
+	<string>PIN-koden gäller endast för Concurs mobilapp.</string>
+	<key>PLEASE_SELECT_VALUE</key>
+	<string>Välj ett alternativ i listan.</string>
+	<key>PRICE_TO_BEAT_AIR_RESULTS_HEADER</key>
+	<string>Om du bokar en flygresa som kostar mindre än priset att slå kan du tjäna in respoäng som du kan använda vid ett senare tillfälle!</string>
+	<key>PRICE_TO_BEAT_AIR_SEARCH_HEADER</key>
+	<string>Tjäna in respoäng när du sparar pengar! Ange dina flygsökuppgifter nedan för att hitta priset att slå när du bokar din flygresa.</string>
+	<key>PRICE_TO_BEAT_DISABLED_AIR_RESULTS_HEADER</key>
+	<string>Om du bokar en flygresa som kostar mindre än priset att slå sparar du pengar åt ditt företag!</string>
+	<key>PRICE_TO_BEAT_DISABLED_AIR_SEARCH_HEADER</key>
+	<string>Bli en smartare reseköpare! Ange dina flygsökuppgifter nedan för att hitta priset att slå när du bokar din flygresa.</string>
+	<key>PRICE_TO_BEAT_DISABLED_HOTEL_RESULTS_HEADER</key>
+	<string>Om du bokar ett rum som kostar mindre än priset att slå sparar du pengar åt ditt företag!</string>
+	<key>PRICE_TO_BEAT_DISABLED_HOTEL_SEARCH_HEADER</key>
+	<string>Bli en smartare reseköpare! Ange dina hotellsökuppgifter nedan för att hitta priset att slå när du bokar ditt rum.</string>
+	<key>PRICE_TO_BEAT_HOTEL_RESULTS_HEADER</key>
+	<string>Om du bokar ett rum som kostar mindre än priset att slå kan du tjäna in respoäng som du kan använda vid ett senare tillfälle!</string>
+	<key>PRICE_TO_BEAT_HOTEL_SEARCH_HEADER</key>
+	<string>Tjäna in respoäng när du sparar pengar! Ange dina hotellsökuppgifter nedan för att hitta priset att slå när du bokar ditt rum. </string>
+	<key>PROCEED_TO_ADD_MSG</key>
+	<string>Du kan fortsätta och lägga till dem i en rapport, men du måste bifoga kvittot via webbplatsen.</string>
+	<key>PWD</key>
+	<string>Lösenord</string>
+	<key>PWD_LOGIN</key>
+	<string>Registrera</string>
+	<key>Paid Reports</key>
+	<string>Utbetalda rapporter</string>
+	<key>Passenger</key>
+	<string>Passagerare</string>
+	<key>PassengerCount</key>
+	<string>Passagerarantal</string>
+	<key>Passengers</key>
+	<string>Passagerare</string>
+	<key>Password</key>
+	<string>Lösenord</string>
+	<key>Password Reset Link Sent</key>
+	<string>Länken för återställande av lösenord har skickats</string>
+	<key>Password Successfully Reset</key>
+	<string>Lösenordet har återställts</string>
+	<key>Passwords Don't Match</key>
+	<string>Lösenorden överensstämmer inte</string>
+	<key>Personal Car Mileage</key>
+	<string>Körsträcka egen bil</string>
+	<key>PersonalCardCount_0</key>
+	<string>Du har inga ej använda korttransaktioner från %@</string>
+	<key>PersonalCardCount_1</key>
+	<string>Du har 1 ej använd korttransaktion från %@</string>
+	<key>PersonalCardCount_2</key>
+	<string>Du har %d ej använda korttransaktioner från %@</string>
+	<key>Phone</key>
+	<string>Telefon</string>
+	<key>Photo Album</key>
+	<string>Bifoga via fotoalbumet</string>
+	<key>Pick-up</key>
+	<string>Upphämtning</string>
+	<key>Pick-up Date</key>
+	<string>Upphämtningsdatum</string>
+	<key>Pick-up Time</key>
+	<string>Upphämtningstid</string>
+	<key>Pickup</key>
+	<string>Hämta</string>
+	<key>Pickup Location</key>
+	<string>Upphämtningsplats</string>
+	<key>Please Confirm</key>
+	<string>Bekräfta</string>
+	<key>Please Enter Your Email Address</key>
+	<string>Ange din e-postadress till arbetet</string>
+	<key>Please Select To View</key>
+	<string>Välj för att visa</string>
+	<key>Please Specify Program</key>
+	<string>Ange program</string>
+	<key>Please Wait</key>
+	<string>Vänta</string>
+	<key>Please address policy violations</key>
+	<string>Behandla policyöverträdelser</string>
+	<key>Please check your connection and retry later.</key>
+	<string>Kontrollera anslutningen och försök igen senare.</string>
+	<key>Please enter a justification for booking this car.</key>
+	<string>Ange en motivering för att boka den här bilen.</string>
+	<key>Please enter a justification for this booking.</key>
+	<string>Ange en motivering för den här bokningen.</string>
+	<key>Please enter and confirm the PIN</key>
+	<string>Ange och bekräfta PIN-koden</string>
+	<key>Please enter in your distance</key>
+	<string>Ange din körsträcka</string>
+	<key>Please enter values for required fields</key>
+	<string>Ange värden för obligatoriska fält som visas i rött, innan du sparar.</string>
+	<key>Please fill in the missing required fields before saving the entry.</key>
+	<string>Fyll i de saknade obligatoriska fälten innan du sparar posten.</string>
+	<key>Please follow the instructions in the email</key>
+	<string>Följ instruktionerna i e-postmeddelandet du fick från TripIt när du konfigurerar ditt konto.</string>
+	<key>Please log in to SmartExpense and then link your accounts together.</key>
+	<string>Logga in på SmartExpense och länka sedan samman dina konton.</string>
+	<key>Please log in to SmartExpense using the same account already linked to TripIt.</key>
+	<string>Logga in på SmartExpense med samma konto som redan är länkat till TripIt.</string>
+	<key>Please select a destination location</key>
+	<string>Välj en destinationsplats</string>
+	<key>Please select a report or create a new report first</key>
+	<string>Välj en rapport eller skapa en ny rapport.</string>
+	<key>Please select a starting location</key>
+	<string>Välj en startplats</string>
+	<key>Please specify</key>
+	<string>Ange</string>
+	<key>Please specify a location.</key>
+	<string>Ange en plats.</string>
+	<key>Please try again and use the link within 24 hours of receipt.</key>
+	<string>Försök igen och använd länken inom 24 timmar efter att du tagit emot den.</string>
+	<key>Please type a description into this email message describing what you were doing when the application crashed.  For example: I was uploading an expense receipt.</key>
+	<string>Ange en beskrivning i det här e-postmeddelandet, som förklarar vad du gjorde när applikationen kraschade.  Exempel: Jag laddade upp ett utgiftskvitto.</string>
+	<key>Please verify your email</key>
+	<string>Verifiera din e-postadress</string>
+	<key>Please verify your email address</key>
+	<string>Verifiera din e-postadress</string>
+	<key>Please wait for your verification email to continue the registration process.</key>
+	<string>Vänta tills du får bekräftelsemeddelandet innan du fortsätter med registreringsprocessen.</string>
+	<key>Please wait until online to edit field</key>
+	<string>Det går inte att redigera dessa fält offline.</string>
+	<key>Please wait until you are online to login</key>
+	<string>Vänta med att logga in tills du är online.</string>
+	<key>Points or Approval</key>
+	<string>Poäng eller attestering</string>
+	<key>Popular Cards</key>
+	<string>Populära bilar</string>
+	<key>Post Trip</key>
+	<string>Publicera resa</string>
+	<key>Preferred</key>
+	<string>Föredragna</string>
+	<key>Preferred Vendors</key>
+	<string>Föredragna leverantörer</string>
+	<key>Premium</key>
+	<string>Premium</string>
+	<key>Premium Economy</key>
+	<string>Premium ekonomi</string>
+	<key>Prev</key>
+	<string>Föreg.</string>
+	<key>Preview</key>
+	<string>Förhandsgranska</string>
+	<key>Previous</key>
+	<string>Föregående</string>
+	<key>Price</key>
+	<string>Pris</string>
+	<key>Price to Beat</key>
+	<string>Pris att slå</string>
+	<key>Print</key>
+	<string>Skriv ut</string>
+	<key>Proceed to Sign In</key>
+	<string>Gå vidare till inloggning</string>
+	<key>Property</key>
+	<string>Anläggning</string>
+	<key>Provided</key>
+	<string>Ingår</string>
+	<key>Pull to Refresh</key>
+	<string>Dra om du vill uppdatera</string>
+	<key>Purchase Requests</key>
+	<string>Inköpsbegäranden</string>
+	<key>Quick Expense</key>
+	<string>Snabbutlägg</string>
+	<key>Quick Search</key>
+	<string>Snabbsök</string>
+	<key>Quick Tips</key>
+	<string>Snabbtips</string>
+	<key>RECEIPT</key>
+	<string>Kvitto</string>
+	<key>RECEIPT_CELL_TITLE</key>
+	<string>Kvitto</string>
+	<key>RECEIPT_DETAIL_NO_DATA_INSTRUCTION</key>
+	<string>Du kan också vidarebefordra digitala kvitton till receipts@smartexpense.com från ditt %@-konto</string>
+	<key>RECEIPT_IMG_UPLOADED</key>
+	<string>Kvittobilden har laddats upp</string>
+	<key>RECEIPT_IMG_UPLOADING</key>
+	<string>Laddar upp kvittobild</string>
+	<key>RECEIPT_MANAGER</key>
+	<string>Mappen Kvitto</string>
+	<key>RECEIPT_MANAGER_IMAGES</key>
+	<string>Mappen Kvitto</string>
+	<key>RECEIPT_MIGRATE_MSG</key>
+	<string>Du har %d kvittobilder som inte har tilldelats, sparade lokalt i mappen med Concur Mobile-dokument. Vill du kopiera dessa ej tilldelade kvittobilder till fotoalbumet på din iPhone?</string>
+	<key>RECEIPT_MIGRATION_STATUS_MSG</key>
+	<string>Kopierade %d av %d kvitton till fotoalbumet</string>
+	<key>RECEIPT_MIGRATION_WAIT_MSG</key>
+	<string>Bilden kopieras. Om du avslutar eller lämnar applikationen nu kan det leda till att bilder går förlorade.</string>
+	<key>RECEIPT_NOT_ON_SERVER</key>
+	<string>Ett kvitto har bifogats till det här utlägget på servern, men kvittot finns inte längre i Kvittohanteraren.</string>
+	<key>RECEIPT_STORE_HELP_TEXT</key>
+	<string>Ladda upp dina kvitton till kvittolagret. Öppna sedan en rapport eller en utläggspost och bifoga kvittot.</string>
+	<key>RECEIPT_STORE_NO_DATA_INSTRUCTION</key>
+	<string>Du kan också vidarebefordra digitala kvitton till receipts@smartexpense.com från ditt %@-konto</string>
+	<key>RECEIPT_VIEWER</key>
+	<string>Kvittovisaren</string>
+	<key>REGISTER</key>
+	<string>Ange PIN-kod</string>
+	<key>REGISTERED_EMAIL</key>
+	<string>E-postadress, arbete</string>
+	<key>REGISTER_MSG</key>
+	<string>Om du vill ha hjälp loggar du in på webbversionen av Concur och går till Profil -&gt; Mobilregistrering.</string>
+	<key>REGISTER_PINS_DIFF_ERR</key>
+	<string>PIN-koderna skiljer sig.  Ange PIN-koderna igen.</string>
+	<key>REPORTS</key>
+	<string>Rapportslista</string>
+	<key>REPORTS_TO_SUBMIT</key>
+	<string>%d rapport(er) att skicka in</string>
+	<key>REPORT_DETAIL</key>
+	<string>Rapport</string>
+	<key>REPORT_DETAIL_RECEIPTS</key>
+	<string>Kvitton</string>
+	<key>REPORT_NAME_TIP</key>
+	<string>Ange ett nytt rapportnamn</string>
+	<key>REPORT_REQ_FIELDS</key>
+	<string>Fyll i alla obligatoriska fält och åtgärda alla fel i formuläret innan du sparar rapporten.</string>
+	<key>REPORT_TA_ITINERARY</key>
+	<string>Traktamente</string>
+	<key>REPORT_TA_ITINERARY_ADD</key>
+	<string>Utlägg för traktamente</string>
+	<key>RESET_PASSWORD_FAILED</key>
+	<string>Det gick inte att återställa ditt lösenord</string>
+	<key>RESET_PASSWORD_SUCCEEDED</key>
+	<string>Du får snart ett e-postmeddelande med instruktioner om hur du återställer ditt lösenord.</string>
+	<key>RESET_PASSWORD_USER_NOT_EXIST</key>
+	<string>Användaren finns inte i systemet.  Kontrollera att du har slutfört registreringsprocessen innan du klickar på länken för att återställa lösenordet.</string>
+	<key>ROLE_DISABLED_ALERT_TITLE</key>
+	<string>Funktionen har avaktiverats</string>
+	<key>ROLE_DISABLED_TEXT</key>
+	<string>Funktionen är inte tillgänglig för ditt företag eller din roll.</string>
+	<key>RPT_NO_ENTRY_INSTRUCTION_1</key>
+	<string>Utläggsrapporten har inga utlägg.  Du måste skapa eller importera minst ett utlägg för att kunna skicka rapporten. </string>
+	<key>RPT_NO_ENTRY_INSTRUCTION_2</key>
+	<string>Om du vill skapa eller importera ett utlägg trycker du på plusikonen (+) nedan.</string>
+	<key>RPT_QUIT_CONFIRM_MSG</key>
+	<string>Vill du börja med att spara den här rapporten?</string>
+	<key>RPT_SAVE_CONFIRM_MSG</key>
+	<string>Dina ändringar kan gå förlorade om du fortsätter.  Vill du spara dessa ändringar?</string>
+	<key>Rail</key>
+	<string>Tåg</string>
+	<key>Rail Rule Violation</key>
+	<string>Överträdelse av tågregel</string>
+	<key>Rail cancelled from mobile device</key>
+	<string>Tåg avbokat från mobil enhet</string>
+	<key>Rail violation justification is missing</key>
+	<string>Innan du bokar det här tåget i strid mot företagspolicyn måste du ange en motivering i fältet som visas i rött.</string>
+	<key>Rail violation reason and justification are missing</key>
+	<string>Innan du bokar det här tåget i strid mot företagspolicyn måste du ange en orsak och en motivering i fälten som visas i rött.</string>
+	<key>Rail violation reason is missing</key>
+	<string>Innan du bokar det här tåget i strid mot företagspolicyn måste du ange en orsak i fältet som visas i rött.</string>
+	<key>Rail_subline</key>
+	<string>Boka tåg och resa</string>
+	<key>Rate It!</key>
+	<string>Klassificera det!</string>
+	<key>Rate Location:</key>
+	<string>Platstaxa:</string>
+	<key>Rating</key>
+	<string>Gradering</string>
+	<key>Re-enter Password</key>
+	<string>Ange lösenordet på nytt</string>
+	<key>Recalculate Allowances</key>
+	<string>Omräkna traktamenten</string>
+	<key>Recall</key>
+	<string>Återkalla</string>
+	<key>Recall Failed</key>
+	<string>Det gick inte att återkalla</string>
+	<key>Receipt</key>
+	<string>Kvitto</string>
+	<key>Receipt Capture</key>
+	<string>Kvittoregistrering</string>
+	<key>Receipt Folder</key>
+	<string>Mappen Kvitto</string>
+	<key>Receipt Images</key>
+	<string>Kvittobilder</string>
+	<key>Receipt Queued</key>
+	<string>Kvitto i kö</string>
+	<key>Receipt Store</key>
+	<string>Kvittolager</string>
+	<key>Receipt image required</key>
+	<string>Kvittobild krävs</string>
+	<key>Receipt upload complete</key>
+	<string>Uppladdningen av kvitto har slutförts</string>
+	<key>Receipt upload failed</key>
+	<string>Det gick inte att ladda upp kvittot</string>
+	<key>Receipt uploaded</key>
+	<string>Kvittot har laddats upp</string>
+	<key>ReceiptUploadFailMsg</key>
+	<string>Det gick inte att spara kvittot just nu. Försök igen senare.</string>
+	<key>Receipts</key>
+	<string>Kvitton</string>
+	<key>Receipts cannot be added offline</key>
+	<string>Det går inte att lägga till kvitton offline.</string>
+	<key>Recommendation</key>
+	<string>Förslag</string>
+	<key>Recommended</key>
+	<string>Förslag</string>
+	<key>Recurring Charges (each night)</key>
+	<string>Återkommande avgifter (varje natt)</string>
+	<key>Refresh Data</key>
+	<string>Uppdatera data</string>
+	<key>Refresh Data Offline</key>
+	<string>Det går inte att uppdatera dina data när du är offline.  Försök igen senare.</string>
+	<key>Refresh Trip</key>
+	<string>Uppdatera resa</string>
+	<key>Refreshing</key>
+	<string>Uppdaterar</string>
+	<key>Refreshing Data</key>
+	<string>Uppdaterar data</string>
+	<key>Refreshing View</key>
+	<string>Uppdaterar vyn</string>
+	<key>Refundable Only</key>
+	<string>Endast återbetalningsbara</string>
+	<key>Regional</key>
+	<string>Regional</string>
+	<key>Register a credit card</key>
+	<string>Registrera ett kreditkort</string>
+	<key>Reject</key>
+	<string>Avvisa</string>
+	<key>Rejected</key>
+	<string>Avvisad</string>
+	<key>Rejecting Trip</key>
+	<string>Avvisar resa</string>
+	<key>Remaining:</key>
+	<string>Återstående:</string>
+	<key>Removed Link to Dropbox</key>
+	<string>Tog bort länk till Dropbox</string>
+	<key>Removing entry</key>
+	<string>Tar bort post</string>
+	<key>Rent a car</key>
+	<string>Hyr en bil</string>
+	<key>Replace</key>
+	<string>Ersätt</string>
+	<key>Report</key>
+	<string>Rapport</string>
+	<key>Report Approvals</key>
+	<string>Rapportattester</string>
+	<key>Report Comments</key>
+	<string>Rapportkommentarer</string>
+	<key>Report Entry</key>
+	<string>Rapportpost</string>
+	<key>Report Exceptions</key>
+	<string>Rapportundantag</string>
+	<key>Report Header</key>
+	<string>Rapportrubrik</string>
+	<key>Report Name</key>
+	<string>Rapportnamn</string>
+	<key>Report Not Ready</key>
+	<string>Rapporten är inte klar</string>
+	<key>Report Summary</key>
+	<string>Sammanfattning rapport</string>
+	<key>Report is open</key>
+	<string>Rapporten är öppen</string>
+	<key>Reports</key>
+	<string>Rapporter</string>
+	<key>Reports List</key>
+	<string>Rapportlista</string>
+	<key>Reports cannot be approved offline</key>
+	<string>Det går inte att attestera rapporter offline.</string>
+	<key>ReportsToApproveRow_0</key>
+	<string>Du har inga rapporter att attestera</string>
+	<key>ReportsToApproveRow_1</key>
+	<string>Du har 1 rapport att attestera</string>
+	<key>ReportsToApproveRow_2</key>
+	<string>Du har %d rapporter att attestera</string>
+	<key>Request</key>
+	<string>Begäran</string>
+	<key>Requested</key>
+	<string>Begärd</string>
+	<key>Requests</key>
+	<string>Begäranden</string>
+	<key>Required Fields Missing</key>
+	<string>Obligatoriska fält saknas</string>
+	<key>Reservation Date</key>
+	<string>Bokningsdatum</string>
+	<key>Reservation Not Allowed</key>
+	<string>Bokningen tillåts inte</string>
+	<key>Reservation Status</key>
+	<string>Bokningsstatus</string>
+	<key>Reservation Time</key>
+	<string>Bokningstid</string>
+	<key>Reserve</key>
+	<string>Boka</string>
+	<key>Reserve Train</key>
+	<string>Boka tåg</string>
+	<key>Reserving Car</key>
+	<string>Bokar bil</string>
+	<key>Reserving Flights</key>
+	<string>Bokar flyg</string>
+	<key>Reserving Hotel Room</key>
+	<string>Boka rum</string>
+	<key>Reserving Train</key>
+	<string>Bokar tåg</string>
+	<key>Reset</key>
+	<string>Återställ</string>
+	<key>Reset Concur Password</key>
+	<string>Återställ lösenord till Concur</string>
+	<key>Reset Mobile Password (PIN)</key>
+	<string>Återställ mobillösenord (PIN-kod)</string>
+	<key>Reset PIN</key>
+	<string>Återställ PIN-kod</string>
+	<key>Reset Password</key>
+	<string>Återställ lösenord</string>
+	<key>Reset to factory defaults</key>
+	<string>Återställ tillverkningsinställningarna</string>
+	<key>Reset your password</key>
+	<string>Återställ ditt lösenord</string>
+	<key>Resetting the PIN</key>
+	<string>Återställer PIN-koden</string>
+	<key>Results</key>
+	<string>Resultat</string>
+	<key>Results Summary</key>
+	<string>Sammanfattning av resultat</string>
+	<key>Retake</key>
+	<string>Ta om</string>
+	<key>Return</key>
+	<string>Tillbaka</string>
+	<key>Return Date</key>
+	<string>Returdatum</string>
+	<key>Return Date must be</key>
+	<string>Returdatum</string>
+	<key>Return Date must be Message</key>
+	<string>Returdatumet måste infalla efter avresedatumet.</string>
+	<key>Return Time</key>
+	<string>Returtid</string>
+	<key>Returning</key>
+	<string>Återlämna</string>
+	<key>Returning: token token</key>
+	<string>Återlämnas: %@ %@</string>
+	<key>Review Approver Instruction</key>
+	<string>Kontrollera attestanten och skicka sedan rapporten</string>
+	<key>Room Rate</key>
+	<string>Rumpris</string>
+	<key>Room Tax</key>
+	<string>Rumskatt</string>
+	<key>Rooms</key>
+	<string>Rum</string>
+	<key>Round Trip</key>
+	<string>Tur och retur</string>
+	<key>Rule Messages</key>
+	<string>Regelmeddelanden</string>
+	<key>SAFETY_CHECK_IN_HELP</key>
+	<string>Checka in med den aktuella platsen om du behöver hjälp</string>
+	<key>SAVE_REPORT_RECEIPT_FAILURE</key>
+	<string>Det går inte att bifoga kvitto</string>
+	<key>SEARCH_LOCN</key>
+	<string>Platssökning</string>
+	<key>SEC_TITLE_COMMENTS</key>
+	<string>Kommentarer</string>
+	<key>SEC_TITLE_INVOICE_HEADER</key>
+	<string>Fakturarubrik</string>
+	<key>SEE ALL token RESULTS</key>
+	<string>SE ALLA %@ RESULTAT</string>
+	<key>SEE ALL token RESULTS (starting at token)</key>
+	<string>SE ALLA %d RESULTAT (från %@)</string>
+	<key>SELECT_HELP_TOPIC</key>
+	<string>Eller välj ett hjälpämne</string>
+	<key>SELECT_REPORT</key>
+	<string>Välj rapport</string>
+	<key>SELECT_REPORT_HELP</key>
+	<string>Välj en rapport i listan nedan att lägga till utläggen i.  Eller lägg till en ny rapport genom att trycka på plusknappen (+) ovan.</string>
+	<key>SETTINGS_VIEW</key>
+	<string>Inställningar</string>
+	<key>SIGN_IN_EMAIL</key>
+	<string>Ange din e-postadress till arbetet för att få dina inloggningsuppgifter.</string>
+	<key>SIGN_IN_INSTRUCT_MSG</key>
+	<string>Om din e-postadress finns i vårt system skickar vi ett e-postmeddelande. Öppna det på denna enhet för att få åtkomst till Concur-appen.</string>
+	<key>SLV_AT</key>
+	<string>vid</string>
+	<key>SLV_BOOK_A_TAXI</key>
+	<string>Boka en taxi</string>
+	<key>SLV_CLICK_ON</key>
+	<string>Klicka i den här cellen för att boka</string>
+	<key>SLV_CONFIRMATION</key>
+	<string>Bekräftelse</string>
+	<key>SLV_DROP_OFF</key>
+	<string>%@ avlämnat %@</string>
+	<key>SLV_FROM</key>
+	<string>Från</string>
+	<key>SLV_GATE</key>
+	<string>Gate</string>
+	<key>SLV_GOES_FROM</key>
+	<string>Går från %@ till %@</string>
+	<key>SLV_NUM_BOOKINGS</key>
+	<string>%d bokningar på den här resan</string>
+	<key>SLV_PICKUP_AT</key>
+	<string>Hämta på %@</string>
+	<key>SLV_PICKUP_BY</key>
+	<string>Hämtas av %@</string>
+	<key>SLV_PLATFORM_WAGON</key>
+	<string>Perrong %@, vagn nr%@</string>
+	<key>SLV_TAXI_MAGIC</key>
+	<string>en taxi med Taxi Magic</string>
+	<key>SLV_TAXI_MAGIC2</key>
+	<string>Du kommer att omdirigeras till appen Taxi Magic</string>
+	<key>SLV_TERMINAL</key>
+	<string>Terminal</string>
+	<key>SLV_TO</key>
+	<string>till</string>
+	<key>SLV_TOTAL_SEGS</key>
+	<string>Med totalt %d segment för resan</string>
+	<key>SLV_TRIP_LOCATOR</key>
+	<string>Resereferens: %@</string>
+	<key>SOUTHWEST</key>
+	<string>Southwest-bokning</string>
+	<key>SPLASH</key>
+	<string>Stänk</string>
+	<key>SPOUSE</key>
+	<string>Make/maka</string>
+	<key>SSO_FETCHING_DATA</key>
+	<string>Hämtar inloggningsinformation till företaget...</string>
+	<key>SSO_LOGIN_REQUIRED_MSG</key>
+	<string>Inloggning med företagskod (SSO) krävs. Ange företagskoden på nästa skärm för att fortsätta</string>
+	<key>SU Password Expired Instruction</key>
+	<string>Logga in på Concurs webbplats för att byta lösenord.</string>
+	<key>SUBMIT_BUTTON</key>
+	<string>Skicka in</string>
+	<key>SUBMIT_ERROR_CCT_AUTH</key>
+	<string>Vänta tills dina väntande Amex-överföringar registrerats innan du skickar.</string>
+	<key>SUBMIT_ERROR_NO_ENTRY_MSG</key>
+	<string>Utläggsrapporten har inga utlägg.  Du måste skapa minst ett utlägg för att kunna skicka rapporten.</string>
+	<key>SUBMIT_ERROR_RPT_XCT_LEVEL_MSG</key>
+	<string>Denna utläggsrapport kan inte skickas förrän alla undantag med röd flagg har blivit lösta.</string>
+	<key>SUBMIT_ERROR_UNDEF_MSG</key>
+	<string>Utläggsrapporten innehåller ett eller flera utlägg med utläggstypen Odefinierad.  Du måste välja utläggstyp för att kunna skicka rapporten.</string>
+	<key>SUBMIT_HOW_TO_RECEIPT_MSG</key>
+	<string>I enlighet med företagets policy måste du tillhandahålla kvitton för nedanstående utlägg.  Du kan antingen faxa kvittona, eller bifoga skannade bilder.  Om du redan har lämnat kvitton kan du skicka din rapport nu.</string>
+	<key>SUBMIT_REQUIRE_PAPER_RECEIPT</key>
+	<string>I enlighet med företagets policy måste du tillhandahålla kvitton för nedanstående utlägg.  Du kan bifoga skannade bilder till individuella utlägg eller till rapporten, men originalpapperskvitton måste även skickas in. Om du redan har lämnat kvitton kan du skicka din rapport nu.</string>
+	<key>SU_ADD_YODLEE_CARD_INSTRUCTION</key>
+	<string>Ange dina autentiseringsuppgifter för kreditkortskontot. SmartExpense krypterar och använder informationen för att ladda ner korttransaktioner på ett säkert sätt. (Oroa dig inte. Den är skrivskyddad.)</string>
+	<key>SU_APPROVER_AB_NO_EMAIL</key>
+	<string>Den valda kontakten har ingen e-postadress att skicka rapporten till.</string>
+	<key>SU_CHECK_TEMP_PWD</key>
+	<string>Kontrollera din e-post för ditt temporära SmartExpense-lösenord.</string>
+	<key>SU_SIGN_UP_CHECK_EMAIL</key>
+	<string>Vi måste verifiera din e-postadress.  Kontrollera e-postmeddelandet från oss och klicka på verifieringslänken.</string>
+	<key>SYSEMP</key>
+	<string>Den här anställda</string>
+	<key>Safety Check In</key>
+	<string>Platsincheckning</string>
+	<key>Saturday_Short</key>
+	<string>Lör</string>
+	<key>Save</key>
+	<string>Spara</string>
+	<key>Save &amp; Generate Allowances</key>
+	<string>Spara &amp; skapa traktamenten</string>
+	<key>Save Itemizations</key>
+	<string>Spara specificeringar</string>
+	<key>Save entry receipt failed</key>
+	<string>Det gick inte att spara kvittot till post</string>
+	<key>Saved</key>
+	<string>Sparad</string>
+	<key>Saving Expense</key>
+	<string>Sparar utlägg</string>
+	<key>Saving Report</key>
+	<string>Spara rapport</string>
+	<key>Saving offline receipt</key>
+	<string>Sparar offline-kvitto</string>
+	<key>Scheduled Arrival</key>
+	<string>Schemalagd ankomst</string>
+	<key>Scheduled Departure</key>
+	<string>Schemalagd avresa</string>
+	<key>Scheduled Equipment</key>
+	<string>Schemalagd utrustning</string>
+	<key>Scheduled On-time</key>
+	<string>Schemalagd i tid</string>
+	<key>Scheduled Terminal</key>
+	<string>Schemalagd terminal</string>
+	<key>Search</key>
+	<string>Sök</string>
+	<key>Search Again</key>
+	<string>Sök igen</string>
+	<key>Search Approver</key>
+	<string>Sök efter attestant</string>
+	<key>Search Approver Instruction</key>
+	<string>Sök efter en attestant och skicka sedan rapporten</string>
+	<key>Search Failed</key>
+	<string>Sökningen misslyckades</string>
+	<key>Search Results</key>
+	<string>Sökresultat</string>
+	<key>Search and book flights</key>
+	<string>Sök efter och boka flygresor, hotell, bil m.m.</string>
+	<key>Search for Attendee</key>
+	<string>Sök efter deltagare</string>
+	<key>Search for Cars</key>
+	<string>Sök efter bilar</string>
+	<key>Search for an office location</key>
+	<string>Sök efter en kontorsplats</string>
+	<key>Search schedules</key>
+	<string>Sök i scheman</string>
+	<key>Searching for Hotels near you</key>
+	<string>Söker efter hotell nära dig</string>
+	<key>Searching for cars</key>
+	<string>Söker efter bilar</string>
+	<key>Searching for cars at</key>
+	<string>Söker efter bilar på</string>
+	<key>Searching for flights</key>
+	<string>Söker efter flygresor</string>
+	<key>Searching for hotels</key>
+	<string>Söker efter hotell</string>
+	<key>Searching for trains</key>
+	<string>Söker efter tåg</string>
+	<key>Seat: %@</key>
+	<string>Sittplats: %@</string>
+	<key>Seats</key>
+	<string>Platser</string>
+	<key>See All</key>
+	<string>Visa alla</string>
+	<key>See All (token results)</key>
+	<string>Visa alla (%d resultat)</string>
+	<key>See Alternative Flights</key>
+	<string>Se alternativa flyg</string>
+	<key>See what you can do with Concur</key>
+	<string>Se vad du kan göra med Concur</string>
+	<key>Select</key>
+	<string>Välj</string>
+	<key>Select All</key>
+	<string>Välj alla</string>
+	<key>Select Attendee Type</key>
+	<string>Välj deltagartyp</string>
+	<key>Select Attendee to Add</key>
+	<string>Markerade deltagare att lägga till</string>
+	<key>Select Car Type</key>
+	<string>Välj biltyp</string>
+	<key>Select Card</key>
+	<string>Välj kort</string>
+	<key>Select Email Address</key>
+	<string>Välj e-postadress</string>
+	<key>Select Preference</key>
+	<string>Välj preferens</string>
+	<key>Select Program</key>
+	<string>Välj program</string>
+	<key>Select Reason</key>
+	<string>Välj en orsak</string>
+	<key>Select Train</key>
+	<string>Välj tåg</string>
+	<key>Select an office location</key>
+	<string>Välj en kontorsplats</string>
+	<key>Select delivery option</key>
+	<string>Välj leveransalternativ</string>
+	<key>Select seat class below</key>
+	<string>Välj en sittplatsklass nedan</string>
+	<key>Send Again</key>
+	<string>Skicka igen</string>
+	<key>Send Failed</key>
+	<string>Det gick inte att skicka</string>
+	<key>Send Invite</key>
+	<string>Skicka inbjudan</string>
+	<key>Send Invite To</key>
+	<string>Skicka inbjudan till</string>
+	<key>Send Log</key>
+	<string>Skickar logg</string>
+	<key>Send My Sign In Details</key>
+	<string>Skicka inloggningsanvisningar</string>
+	<key>Send to Approver</key>
+	<string>Skicka till attestant</string>
+	<key>Sending Back Report</key>
+	<string>Skickar tillbaka rapport</string>
+	<key>Sending Email</key>
+	<string>Skickar e-post</string>
+	<key>Sent</key>
+	<string>Skickad</string>
+	<key>Set Mobile PIN</key>
+	<string>Ange mobil-PIN-koden</string>
+	<key>Set PIN</key>
+	<string>Ange PIN-kod</string>
+	<key>Set PIN Tip</key>
+	<string>Tips om att ange PIN-kod</string>
+	<key>Set PIN succeeded</key>
+	<string>Din mobil-PIN sparades.</string>
+	<key>Settings</key>
+	<string>Inställningar</string>
+	<key>Share Trip</key>
+	<string>Dela resa</string>
+	<key>Show Home Panels</key>
+	<string>Visa hemfälten</string>
+	<key>Show Offers</key>
+	<string>Visa erbjudanden</string>
+	<key>Sign In</key>
+	<string>Logga in</string>
+	<key>Sign In Help</key>
+	<string>Inloggningshjälp</string>
+	<key>Sign In Instructions Sent to This Device</key>
+	<string>Inloggningsinstruktioner har skickats</string>
+	<key>Sign In with Concur</key>
+	<string>Logga in på Concur</string>
+	<key>Sign In with Facebook</key>
+	<string>Logga in med Facebook</string>
+	<key>Sign Up</key>
+	<string>Registrering</string>
+	<key>Sign Up Failed</key>
+	<string>Registrering misslyckades</string>
+	<key>Sign in to Concur</key>
+	<string>Logga in</string>
+	<key>Sign in to TripIt</key>
+	<string>Logga in på TripIt</string>
+	<key>Signing up accepts our</key>
+	<string>När du registrerar dig accepterar du våra</string>
+	<key>Similar users like this hotel</key>
+	<string>Liknande användare gillar detta hotell</string>
+	<key>Single Sign On</key>
+	<string>Engångsinloggning</string>
+	<key>Smart Matching</key>
+	<string>Smart matchning</string>
+	<key>SmartExpense Report</key>
+	<string>SmartExpense-rapport</string>
+	<key>SmartExpense version</key>
+	<string>Välkommen till SmartExpense</string>
+	<key>SmartExpense was denied access to your TripIt account.</key>
+	<string>SmartExpense nekades åtkomst till ditt TripIt-konto.</string>
+	<key>SmartExpense was unable to access your TripIt account.  Please try again later.</key>
+	<string>Det gick inte att komma åt ditt TripIt-konto från SmartExpense.  Försök igen senare.</string>
+	<key>SmartExpense was unable to expense your trip. Please try again later.</key>
+	<string>SmartExpense kunde inte skapa utlägg för din resa. Försök igen senare.</string>
+	<key>Smoking</key>
+	<string>Rökare</string>
+	<key>Sold Out</key>
+	<string>Utsålt</string>
+	<key>Sorry</key>
+	<string>Vi kunde tyvärr inte hitta något pris att slå. Prova med en ny sökning.</string>
+	<key>Sorry I didn't quite get that.</key>
+	<string>Förlåt, men jag förstår inte riktigt vad du menar. OK, vi tar det från början igen.</string>
+	<key>Sort</key>
+	<string>Sortering</string>
+	<key>Sort By</key>
+	<string>Sortera efter</string>
+	<key>Sort by</key>
+	<string>Sortera efter</string>
+	<key>Sort by Amount</key>
+	<string>Sortera efter belopp</string>
+	<key>Sort by Date</key>
+	<string>Sortera efter datum</string>
+	<key>Sort by Distance</key>
+	<string>Sortera efter körsträcka</string>
+	<key>Sort by Duration</key>
+	<string>Sortera efter tidslängd</string>
+	<key>Sort by Earliest Departure</key>
+	<string>Sortera efter Tidigast avgång</string>
+	<key>Sort by Preference</key>
+	<string>Sortera efter preferens</string>
+	<key>Sort by Preferred Vendors</key>
+	<string>Sortera efter föredragna leverantörer</string>
+	<key>Sort by Price</key>
+	<string>Sortera efter pris</string>
+	<key>Sort by Rating</key>
+	<string>Sortera efter gradering</string>
+	<key>Sort by Recommendation</key>
+	<string>Sortera efter förslag</string>
+	<key>Sort by Vendor Names</key>
+	<string>Sortera efter leverantörsnamn</string>
+	<key>Standard</key>
+	<string>Standard</string>
+	<key>Standard Hybrid</key>
+	<string>Standard hybrid</string>
+	<key>Standard SUV</key>
+	<string>Standard SUV</string>
+	<key>Star Rating</key>
+	<string>Stjärngradering</string>
+	<key>StartARequest</key>
+	<string>Starta en begäran</string>
+	<key>StartYourRequest</key>
+	<string>Starta din begäran</string>
+	<key>Starting</key>
+	<string>Startar</string>
+	<key>Station</key>
+	<string>Station</string>
+	<key>Stations</key>
+	<string>Stationer</string>
+	<key>Stop</key>
+	<string>Stopp</string>
+	<key>Stopping Upload</key>
+	<string>Stoppar uppladdningen</string>
+	<key>Stops</key>
+	<string>Stopp</string>
+	<key>Submit Invoices</key>
+	<string>Skicka fakturor</string>
+	<key>Submit Report</key>
+	<string>Skicka in rapport</string>
+	<key>SubmitRequest</key>
+	<string>Skicka in begäran</string>
+	<key>Submitted Reports</key>
+	<string>Inskickade utläggsrapporter</string>
+	<key>Suggested based on co-worker</key>
+	<string>Förslag baserade på medarbetare</string>
+	<key>Suggested based on past stay</key>
+	<string>Förslag baserade på tidigare vistelse</string>
+	<key>Suggested based on popularity</key>
+	<string>Förslag baserade på popularitet</string>
+	<key>Sunday_Short</key>
+	<string>Sön</string>
+	<key>Swipe for more</key>
+	<string>Svep för mer</string>
+	<key>Swipe to delete</key>
+	<string>Svep för att ta bort</string>
+	<key>Switch to KM</key>
+	<string>Växla till KM</string>
+	<key>Switch to Miles</key>
+	<string>Växla till amerikanska miles</string>
+	<key>Sync Credit Card</key>
+	<string>Synka kreditkort</string>
+	<key>Sync account with SmartExpense</key>
+	<string>Synkronisera konto med SmartExpense</string>
+	<key>Sync credit card</key>
+	<string>Synka kreditkort</string>
+	<key>TA Import Heading Text</key>
+	<string>Välj resebokningar eller kortdebiteringar för att komma igång med din traktamentesresplan</string>
+	<key>TITLE_REGISTER_REENTER_PIN</key>
+	<string>Ange PIN-kod</string>
+	<key>TRAVEL_NEG_TEXT</key>
+	<string>Starta genom att planera resan</string>
+	<key>TRAVEL_REQUESTS</key>
+	<string>Begäranden</string>
+	<key>TRIPS</key>
+	<string>Reselista</string>
+	<key>TRIP_DETAILS</key>
+	<string>Reseinformation</string>
+	<key>TRY_AGAIN</key>
+	<string>Försök igen</string>
+	<key>TWITTER_MESSAGES</key>
+	<string>Twitter från Concur</string>
+	<key>Take photos of your receipts.</key>
+	<string>Ta foton på dina kvitton.</string>
+	<key>Take pictures of receipts &amp; upload</key>
+	<string>Ta bilder på kvitton &amp; ladda upp</string>
+	<key>Tap microphone to get started</key>
+	<string>Tryck på mikrofonen för att komma igång</string>
+	<key>Tap to get directions</key>
+	<string>Tryck för att få vägbeskrivningar</string>
+	<key>Taxable</key>
+	<string>Skattepliktigt</string>
+	<key>Taxi</key>
+	<string>Taxi</string>
+	<key>Taxi Magic</key>
+	<string>Taxi Magic</string>
+	<key>Terminal token</key>
+	<string>Terminal %@</string>
+	<key>Terms of Use</key>
+	<string>Användarvillkor</string>
+	<key>Thank You</key>
+	<string>Tack</string>
+	<key>The Out of Pocket Entry could not be saved because the network is unavailable.  Please try again later.</key>
+	<string>Det gick inte att spara kontantutläggsposten eftersom nätverket inte är tillgängligt.  Försök igen senare.</string>
+	<key>The Out of Pocket Entry could not be saved.  Please try again later.</key>
+	<string>Det gick inte att spara kontantutläggsposten .  Försök igen senare.</string>
+	<key>The Price-to-Beat is %@.</key>
+	<string>Priset att slå är %@.</string>
+	<key>The Price-to-Beat range is between %@.</key>
+	<string>Intervallet för priset att slå ligger mellan %@.</string>
+	<key>The account could not be unlinked.</key>
+	<string>Det gick inte att avlänka kontot.</string>
+	<key>The car could not be booked.</key>
+	<string>Det gick inte att boka bilen.</string>
+	<key>The check-out date must be later than the check-in date.</key>
+	<string>Utcheckningsdatum måste vara senare än incheckningsdatum.</string>
+	<key>The date specified for departure is invalid.</key>
+	<string>Det angivna avresedatumet är ogiltigt.</string>
+	<key>The date specified for the departure occurs in the past.</key>
+	<string>Det angivna returdatumet har redan passerat.</string>
+	<key>The date specified for the return is earlier than the date of departure.</key>
+	<string>Det angivna returdatumet infaller tidigare än avresedatumet.</string>
+	<key>The flight could not be booked.</key>
+	<string>Det gick inte att boka flyget.</string>
+	<key>The log could not be sent.</key>
+	<string>Det gick inte att skicka loggen.</string>
+	<key>The log mail has been placed in your outbox.</key>
+	<string>E-postmeddelandet med loggen har placerats i utkorgen.</string>
+	<key>The log mail has been saved in your Drafts folder.</key>
+	<string>E-postmeddelandet med loggen har sparats i Utkast.</string>
+	<key>The password reset was requested from another device. Please use the same device you requested the password reset.</key>
+	<string>Lösenordsåterställningen begärdes från en annan enhet. Använd samma enhet som du begärde din lösenordsåterställning från.</string>
+	<key>The selected credit card will be charged and the ticket will be issued immediately. The reservation may not be eligible for changes or refunds. Are you sure you want to reserve this flight?</key>
+	<string>Det valda kreditkortet kommer att debiteras och biljetten kommer att utfärdas omedelbart. Bokningen berättigar eventuellt inte till ändringar eller återbetalning. Är du säker på att du vill boka det här flyget?</string>
+	<key>The server encountered an error.</key>
+	<string>Det uppstod ett fel i servern.</string>
+	<key>The train could not be booked</key>
+	<string>Det gick inte att boka tåget.</string>
+	<key>There are</key>
+	<string>Det finns %@ rapporter som väntar på din attest.</string>
+	<key>There are cct</key>
+	<string>Du har %@ ej använda korttransaktioner.</string>
+	<key>There are no cct</key>
+	<string>Du har inga korttransaktioner.</string>
+	<key>There are no reports to approve</key>
+	<string>Det finns inga rapporter att attestera</string>
+	<key>There are no rpt</key>
+	<string>Alla rapporter har skickats.</string>
+	<key>There are no travel requests to approve</key>
+	<string>Det finns inga begäranden att attestera</string>
+	<key>There are rpt</key>
+	<string>Det finns %@ ej skickade rapporter med summan %@.</string>
+	<key>There is</key>
+	<string>Det finns %@ rapport som väntar på din attest.</string>
+	<key>There is cct</key>
+	<string>Du har %@ ej använd korttransaktion.</string>
+	<key>There is rpt</key>
+	<string>Det finns %@ ej skickad rapport med summan %@.</string>
+	<key>There must have been a typo. Please re-enter the password so it matches exactly in both fields</key>
+	<string>Det måste ha blivit ett stavfel. Skriv in lösenordet igen så att det är exakt likadant i båda fälten.</string>
+	<key>There was an error processing your request. It may be due to a poor network connection. Please try again later. If this condition continues</key>
+	<string>Det inträffade ett fel när din begäran behandlades. Det kan bero på dålig nätverksanslutning. Försök igen senare. Kontakta din administratör om felet kvarstår</string>
+	<key>There were no unassigned expenses found</key>
+	<string>Hittade inga ej tilldelade utlägg</string>
+	<key>This application crashed the last time you ran it.  Please help us determine the cause of the crash by sending us the application log.</key>
+	<string>Den här applikationen kraschade när den senast kördes.  Du kan hjälpa oss att fastställa orsaken till kraschen genom att skicka oss applikationsloggen.</string>
+	<key>This attendee cannot be edited.</key>
+	<string>Den här deltagaren kan inte redigeras.</string>
+	<key>This attendee has been modified</key>
+	<string>Deltagaren har ändrats sedan den senast användes för detta utlägg.  Alla redigeringar måste göras i profilen på webben.</string>
+	<key>This device is not configured for sending mail.</key>
+	<string>Den här enheten är inte konfigurerad för att skicka e-post.</string>
+	<key>This feature requires access</key>
+	<string>Denna funktion kräver åtkomst till mikrofonen i din enhet. Aktivera mikrofonåtkomst för denna app i Inställningar/Sekretess/Mikrofon</string>
+	<key>This trip has already been expensed or the trip could not be synchronized.</key>
+	<string>Utlägg har redan skapats för den här resan eller också gick den inte att synkonisera.</string>
+	<key>Thursday_Short</key>
+	<string>Tors</string>
+	<key>Ticket Delivery</key>
+	<string>Biljettleverans</string>
+	<key>Ticket Type</key>
+	<string>Biljettyp</string>
+	<key>Ticketing</key>
+	<string>Biljettutskrift</string>
+	<key>Time</key>
+	<string>Tid</string>
+	<key>Title</key>
+	<string>Titel</string>
+	<key>To</key>
+	<string>Till</string>
+	<key>To Location</key>
+	<string>Till plats</string>
+	<key>To Station</key>
+	<string>Till station</string>
+	<key>ToReceiptStoreMsg</key>
+	<string>Ta mig till kvittolagret.</string>
+	<key>Tomorrow</key>
+	<string>Imorgon</string>
+	<key>Total</key>
+	<string>Totalt</string>
+	<key>Total Amount</key>
+	<string>Totalbelopp</string>
+	<key>Total Due Company Card</key>
+	<string>Totalt att betala för företagskort</string>
+	<key>Total Due Employee</key>
+	<string>Att betala totalt anställd</string>
+	<key>Total Owed by Employee</key>
+	<string>Summa som den anställde är skyldig</string>
+	<key>Total Paid by Company</key>
+	<string>Summa som företaget betalat</string>
+	<key>Total Personal Amount</key>
+	<string>Totalt personligt belopp</string>
+	<key>Total Price</key>
+	<string>Totalpris</string>
+	<key>Total Rate</key>
+	<string>Totalt pris</string>
+	<key>Total Requested</key>
+	<string>Begärd summa</string>
+	<key>Total Travel Points: %@</key>
+	<string>Totalt antal respoäng: %@</string>
+	<key>Total no card charges</key>
+	<string>Du har inga korttransaktioner</string>
+	<key>Total no expenses</key>
+	<string>Du har inga utlägg</string>
+	<key>Total num card charge</key>
+	<string>Du har en korttransaktion</string>
+	<key>Total num card charges</key>
+	<string>Du har %@ korttransaktioner</string>
+	<key>Total num expense</key>
+	<string>Du har ett utlägg</string>
+	<key>Total num expenses</key>
+	<string>Du har %@ utlägg</string>
+	<key>Total: %@</key>
+	<string>Summa: %@</string>
+	<key>Tour</key>
+	<string>Rundtur</string>
+	<key>TourExpense2Subtitle</key>
+	<string>Skicka sedan in och få återbetalning. Chefer kan attestera från valfri plats.</string>
+	<key>Train</key>
+	<string>Tåg</string>
+	<key>Train Choices</key>
+	<string>Tågval</string>
+	<key>Train Detail</key>
+	<string>Tågdetaljer</string>
+	<key>Train Number</key>
+	<string>Tågnummer</string>
+	<key>Train: token</key>
+	<string>Tåg %@</string>
+	<key>Transaction Amount</key>
+	<string>Transaktionsbelopp</string>
+	<key>Transaction Date</key>
+	<string>Transaktionsdatum</string>
+	<key>Transaction Location</key>
+	<string>Transaktionsplats</string>
+	<key>Travel</key>
+	<string>Resa</string>
+	<key>Travel Agency Info</key>
+	<string>Resebyråinfo</string>
+	<key>Travel Apps</key>
+	<string>Reseappar</string>
+	<key>Travel Points</key>
+	<string>Respoäng</string>
+	<key>Travel Points Awarded</key>
+	<string>Tilldelade respoäng</string>
+	<key>Travel Points Bank: %@ points</key>
+	<string>Respoängbank: %@ poäng</string>
+	<key>Travel Points Booked</key>
+	<string>Bokförda respoäng</string>
+	<key>Travel Policy</key>
+	<string>Resepolicy</string>
+	<key>Travel Requests</key>
+	<string>Resebegäranden</string>
+	<key>Travel Time</key>
+	<string>Restid</string>
+	<key>TravelRequestCount</key>
+	<string>Du har %d begäran(den) att attestera</string>
+	<key>TravelRequestsToApproveRow_0</key>
+	<string>Du har inga begäranden att attestera</string>
+	<key>TravelRequestsToApproveRow_1</key>
+	<string>Du har 1 begäran att attestera</string>
+	<key>TravelRequestsToApproveRow_2</key>
+	<string>Du har %d begäranden att attestera</string>
+	<key>Trip</key>
+	<string>Aktuell resa</string>
+	<key>Trip Approval</key>
+	<string>Reseattestering</string>
+	<key>Trip Approvals</key>
+	<string>Reseattesteringar</string>
+	<key>Trip Feed</key>
+	<string>Resematning</string>
+	<key>Trip Fields</key>
+	<string>Resefält</string>
+	<key>Trip Locator</key>
+	<string>Resereferens</string>
+	<key>Trip Record Locator for this trip could not be retrieved.</key>
+	<string>Det gick inte att hämta bokningsreferens för denna resa.</string>
+	<key>Trip data updated on</key>
+	<string>Resdata uppdaterade den %@</string>
+	<key>Trip data updated on hrt</key>
+	<string>Resdata uppdaterade den %@</string>
+	<key>Trip just trip</key>
+	<string>Resa</string>
+	<key>TripIt Account Not Activated</key>
+	<string>TripIt-kontot har inte aktiverats</string>
+	<key>TripIt Trips</key>
+	<string>TripIt-resor</string>
+	<key>TripIt not linked</key>
+	<string>TripIt-kontot har inte länkats till SmartExpense.  Länka till TripIt genom att trycka på TripIt-raden från hemskärmen</string>
+	<key>TripIt not linked together</key>
+	<string>TripIt-kontot som är länkat till den inloggade SmartExpense-användaren skiljer sig från kontot som TripIt-mobilappen är inloggad med.  Logga in på TripIt med samma konto som du har länkat till SmartExpense.</string>
+	<key>TripIt trip key not found</key>
+	<string>Det gick inte att behandla din begäran att skapa utlägg för en resa.  Det gick inte att hitta TripIt-resans nyckel.</string>
+	<key>Trips</key>
+	<string>Resor</string>
+	<key>Try Again</key>
+	<string>Försök igen</string>
+	<key>Try again to re-enter your password or select I Forgot to receive signin in instructions</key>
+	<string>Försök att ange ditt lösenord igen eller välj Jag har glömt för att få inloggningsanvisningar</string>
+	<key>Tuesday_Short</key>
+	<string>Tis</string>
+	<key>Type</key>
+	<string>Typ</string>
+	<key>Type in emails seperated by commas or choose from contacts list</key>
+	<string>Ange e-postadresser avgränsade med kommatecken eller välj från kontaktlistan</string>
+	<key>Type name or select frequent attendee</key>
+	<string>Ange för- och efternamn</string>
+	<key>Type to search for a location</key>
+	<string>Skriv för att söka efter en plats</string>
+	<key>UNDEFINED_MSG</key>
+	<string>Minst en av de valda utläggen har en odefinierad utläggstyp.</string>
+	<key>Unable to Sign In</key>
+	<string>Det går inte att logga in</string>
+	<key>Unable to add expense</key>
+	<string>Det går inte att lägga till utgiften</string>
+	<key>Unable to add itemization</key>
+	<string>Det går inte att lägga till specificering</string>
+	<key>Unable to attach expense. Please check that this report policy allows Japan Public Transit.</key>
+	<string>Det går inte att bifoga utlägg. Kontrollera att denna rapportpolicy tillåter kollektivtrafik i Japan.</string>
+	<key>Unable to link</key>
+	<string>Det går inte att länka</string>
+	<key>Unable to load location data.</key>
+	<string>Det gick inte att ladda platsdata.</string>
+	<key>Unable to sign in</key>
+	<string>Det går inte att logga in dig just nu. Kontakta supportavdelningen på ditt företag eller rese-/utläggsavdelningen.</string>
+	<key>Unavailable</key>
+	<string>Otillgänglig</string>
+	<key>Undefined</key>
+	<string>Odefinierad</string>
+	<key>Unexpected Error</key>
+	<string>Oväntat fel</string>
+	<key>Unknown Station</key>
+	<string>Okänd station</string>
+	<key>Unlink Dropbox</key>
+	<string>Avlänka Dropbox</string>
+	<key>Unlink Succeeded</key>
+	<string>Avlänkningen slutfördes</string>
+	<key>Unlink from TripIt</key>
+	<string>Avlänka från TripIt</string>
+	<key>Unmatch</key>
+	<string>Ta bort matchning</string>
+	<key>Unsaved Receipts</key>
+	<string>Osparade kvitton</string>
+	<key>Unselect All</key>
+	<string>Avmarkera alla</string>
+	<key>Unsubmitted Reports</key>
+	<string>Ej inskickade rapporter</string>
+	<key>UnsubmittedReportsRow_0</key>
+	<string>Du har inga rapporter som inte har skickats</string>
+	<key>UnsubmittedReportsRow_1</key>
+	<string>Du har 1 rapport som inte har skickats</string>
+	<key>UnsubmittedReportsRow_2</key>
+	<string>Du har %d rapporter som inte har skickats</string>
+	<key>Update</key>
+	<string>Uppdatera</string>
+	<key>Update Itemizations</key>
+	<string>Uppdatera specificeringar</string>
+	<key>Update Receipt</key>
+	<string>Uppdatera kvitto</string>
+	<key>Updating</key>
+	<string>Uppdaterar</string>
+	<key>Updating Itinerary</key>
+	<string>Uppdaterar resplan</string>
+	<key>Upload</key>
+	<string>Ladda upp</string>
+	<key>Upload Failed</key>
+	<string>Uppladdningen misslyckades</string>
+	<key>Upload Queue</key>
+	<string>Uppladdningskö</string>
+	<key>Upload Receipt</key>
+	<string>Ladda upp kvitto</string>
+	<key>Upload Success</key>
+	<string>Uppladdningen slutfördes</string>
+	<key>Uploading Please Wait</key>
+	<string>Laddar upp. Vänta...</string>
+	<key>Uploading count</key>
+	<string>Laddar upp %d av %d</string>
+	<key>Uploading to Dropbox</key>
+	<string>Laddar upp till Dropbox</string>
+	<key>Uploading to Dropbox failed</key>
+	<string>Det gick inte att ladda upp till Dropbox</string>
+	<key>Uploading to Dropbox was successful</key>
+	<string>Uppladdningen till Dropbox slutfördes</string>
+	<key>Use %@ Travel Points</key>
+	<string>Använd %@ respoäng</string>
+	<key>Use %d pts.</key>
+	<string>Använd %d poäng.</string>
+	<key>Use-ImagePicker</key>
+	<string>Använd</string>
+	<key>User Name</key>
+	<string>Användarnamn</string>
+	<key>Username and Password</key>
+	<string>Användarnamn och lösenord</string>
+	<key>Username or PIN is invalid</key>
+	<string>Användarnamnet eller PIN-koden är ogiltig. Du kan skapa eller återställa mobil-PIN-koden genom att klicka på Behöver du ange din PIN-kod, eller genom att gå till Profil -&gt; Mobilregistrering på Concur online.</string>
+	<key>Username or Password is invalid</key>
+	<string>Användarnamnet eller lösenordet är ogiltigt.</string>
+	<key>Username or Password is invalid SU</key>
+	<string>Användarnamnet eller lösenordet är ogiltigt. Du kan återställa ditt lösenord genom att klicka på länken för att återställa lösenordet. Om du inte har något konto klickar du på Registrering.</string>
+	<key>Using Points</key>
+	<string>Använder poäng</string>
+	<key>VALUE_RANGE_MSG</key>
+	<string>Ange ett värde med mellan %d och %d tecken.</string>
+	<key>VALUE_RANGE_MSG_FIXED_LENGTH</key>
+	<string>Ange ett värde som består av %d tecken.</string>
+	<key>VALUE_RANGE_MSG_LOWER_BOUND</key>
+	<string>Ange ett värde mer fler än %d tecken.</string>
+	<key>VALUE_RANGE_MSG_NO_BOUNDS</key>
+	<string>Ange ett giltigt värde för det här fältet.</string>
+	<key>VALUE_RANGE_MSG_UPPER_BOUND</key>
+	<string>Ange ett värde mer färre än %d tecken.</string>
+	<key>VERIFY_PWD</key>
+	<string>Verifiera lösenord</string>
+	<key>VehicleId</key>
+	<string>Fordons-ID</string>
+	<key>Vendor</key>
+	<string>Leverantör</string>
+	<key>Vendor Hours</key>
+	<string>Leverantörstider</string>
+	<key>Vendor Names</key>
+	<string>Leverantörsnamn</string>
+	<key>Vendor Web Site</key>
+	<string>Leverantörens webbplats</string>
+	<key>Verification is simple. Just tap on the link in the email we sent to</key>
+	<string>Att verifiera är enkelt. Tryck bara på länken i e-postmeddelandet vi skickade till %@</string>
+	<key>View Allowance</key>
+	<string>Visa traktamente</string>
+	<key>View Images</key>
+	<string>Granska bilder</string>
+	<key>View Rates</key>
+	<string>Visa taxor</string>
+	<key>View Receipt</key>
+	<string>Visa kvitto</string>
+	<key>View Report Offline</key>
+	<string>Det gick inte att komma åt rapporten.  Försök igen senare när du är online.</string>
+	<key>View in Chatter</key>
+	<string>Visa i Chatter</string>
+	<key>View your travel requests</key>
+	<string>Visa dina begäranden</string>
+	<key>View your trips</key>
+	<string>Visa dina resor</string>
+	<key>View your uploaded receipts</key>
+	<string>Visa dina uppladdade kvitton</string>
+	<key>Violation</key>
+	<string>Överträdelse</string>
+	<key>Violation Justification</key>
+	<string>Motivering till överträdelse</string>
+	<key>Violation Reason</key>
+	<string>Orsak till överträdelse</string>
+	<key>Violation Reason Code</key>
+	<string>Orsakskod för överträdelsen</string>
+	<key>Violation Summary</key>
+	<string>Sammanfattning av överträdelse</string>
+	<key>Violations</key>
+	<string>Överträdelser</string>
+	<key>WAIT_FOR_CAR_RATES_DATA</key>
+	<string>Du väntar på bilprisdata.  Försök utföra åtgärden igen senare.</string>
+	<key>WARNING</key>
+	<string>Varning</string>
+	<key>WARNING_INVALID_VALUE_RANGE_NOT_REQUIRED</key>
+	<string>Det angivna värdet består inte det specificerade antalet tecken mellan %d och %d tecken. Vill du fortsätta?</string>
+	<key>WARN_MISSING_REQ_FLD</key>
+	<string>Det finns tomma obligatoriska fält i rapporten.  Vill du fortsätta att spara?</string>
+	<key>WEBVIEW</key>
+	<string>Webbdatavy</string>
+	<key>Waiting</key>
+	<string>Väntar</string>
+	<key>Warning</key>
+	<string>Varning</string>
+	<key>Warning on Itinerary Stop update</key>
+	<string>Varning i uppdatering av resplansuppehåll</string>
+	<key>Watch setup video</key>
+	<string>Titta på konfigurationsvideo</string>
+	<key>We are unable to sign you in with this information</key>
+	<string>Vi kan inte att logga in dig med de här uppgifterna</string>
+	<key>We couldnt find any hotels with the given search criteria. Please try again with different criteria.</key>
+	<string>Vi kunde inte hitta några hotell med de angivna sökkriterierna. Försök igen med andra kriterier.</string>
+	<key>Web Site</key>
+	<string>Webbplats</string>
+	<key>Wednesday_Short</key>
+	<string>Ons</string>
+	<key>Welcome to Concur</key>
+	<string>Välkommen till Concur</string>
+	<key>What Flights can I find for you?</key>
+	<string>Vilka flygresor kan jag hjälpa dig att hitta?</string>
+	<key>What Hotel can I find for you?</key>
+	<string>Vilket hotell kan jag hjälpa dig att hitta?</string>
+	<key>What's New</key>
+	<string>Vad är nytt</string>
+	<key>When auto login is on</key>
+	<string>När automatisk inloggning är aktiverad sparas användarnamnet automatiskt.</string>
+	<key>Work email or Concur username</key>
+	<string>E-postadress till arbete eller Concur-användarnamn</string>
+	<key>Would you like to create an Expense Report from the selected trip segments</key>
+	<string>Vill du skapa en utläggsrapport från de valda resesegmenten?</string>
+	<key>Wrong agency code</key>
+	<string>Fel resebyråkod</string>
+	<key>Wrong company code</key>
+	<string>Fel företagskod</string>
+	<key>YCOOK</key>
+	<string>Annan med matlagning</string>
+	<key>YODLEE_CARD_LOGIN_FORM_FAILED_MSG</key>
+	<string>Det gick inte att hämta inloggningsformuläret för ditt kreditkort.  Försök igen senare.</string>
+	<key>Yes</key>
+	<string>Ja</string>
+	<key>You already have a corporate account with Concur.</key>
+	<string>Du har redan ett företagskonto hos Concur.</string>
+	<key>You are offline. Please expense trip later.</key>
+	<string>Du är offline.  Vänta med att skapa utlägg för resan tills du är online.</string>
+	<key>You are using %@ Travel Points.</key>
+	<string>Du använder %@ respoäng.</string>
+	<key>You do not have an email in your Concur profile. We are unable to send you a password reset email without one. Please go to the Concur Website and add your work email to your profile.</key>
+	<string>Du har ingen e-postadress i din Concur-profil. Vi måste ha din e-postadress för att kunna skicka dig ett e-postmeddelande om återställande av lösenord. Gå till Concurs webbplats och lägg till din e-postadress till arbetet i din profil.</string>
+	<key>You have %@ Travel Points in your bank.</key>
+	<string>Du har %@ respoäng i din bank.</string>
+	<key>You have already registered for SmartExpense.</key>
+	<string>Du har redan registrerat dig för SmartExpense.</string>
+	<key>You have no approvals</key>
+	<string>Du har inga attester</string>
+	<key>You have no messages</key>
+	<string>Du har inga meddelanden</string>
+	<key>You have no upcoming trips</key>
+	<string>Du har inga kommande resor</string>
+	<key>You have stayed here %@ times</key>
+	<string>Du har bott här %@ gånger</string>
+	<key>You have stayed here earlier</key>
+	<string>Du har bott här tidigare</string>
+	<key>You have successfully linked your TripIt account to SmartExpense.</key>
+	<string>Du har länkat ditt TripIt-konto till SmartExpense!</string>
+	<key>You must be online before you can upload your items</key>
+	<string>Du måste vara online innan du kan ladda upp dina objekt.</string>
+	<key>You must enter in a valid PIN in order to log in</key>
+	<string>Du måste ange en giltig PIN-kod för att logga in</string>
+	<key>You must enter in a valid email address in order for Concur to verify it</key>
+	<string>Du måste ange en giltig valid e-postadress så att Concur kan verifiera den</string>
+	<key>You must enter in a valid email for your approver</key>
+	<string>Du måste ange en giltig e-postadress till din attestant</string>
+	<key>You must enter in a valid password in order to log in</key>
+	<string>Du måste ange ett giltigt lösenord för att logga in</string>
+	<key>You must enter in a valid password or PIN in order to log in</key>
+	<string>Du måste ange ett giltigt lösenord eller PIN-kod för att logga in</string>
+	<key>You must enter in a valid user name in order to log in</key>
+	<string>Du måste ange ett giltigt användarnamn för att logga in</string>
+	<key>You need to select a Delivery Option in order to reserve your train</key>
+	<string>Du måste välja ett leveransalternativ för att boka tåget.</string>
+	<key>You need to select a valid credit card in order to reserve your train</key>
+	<string>Du måste välja ett giltigt kreditkort för att boka tåget.</string>
+	<key>Your account data has been wiped from this device.  Please contact your company administrator for assistance.</key>
+	<string>Dina kortkontodata har rensats från den här enheten.  Kontakta din företagets administratör om du behöver hjälp.</string>
+	<key>Your account is no longer linked to TripIt.</key>
+	<string>Ditt konto är inte längre länkat till TripIt.</string>
+	<key>Your agent may ask for the Trip Record Locator: %@</key>
+	<string>Din resebyrå kan be om bokningsreferensen: %@</string>
+	<key>Your colleague has stayed here</key>
+	<string>En av dina kolleger har bott här</string>
+	<key>Your colleague is staying here on your check-in date</key>
+	<string>Din kollega bor här på ditt incheckningsdatum</string>
+	<key>Your colleague's favorite</key>
+	<string>Din kollegas favorit</string>
+	<key>Your colleagues have stayed here %@ times</key>
+	<string>Dina kolleger har bott här %@ gånger</string>
+	<key>Your company has disabled Concur for mobile. Please contact your administrator.</key>
+	<string>Ditt företag har inaktiverat Concur för mobilen. Kontakta din administratör.</string>
+	<key>Your company's preferred</key>
+	<string>Ditt företags föredragna</string>
+	<key>Your company's travel policy will not allow this reservation.</key>
+	<string>Den här bokningen tillåts inte enligt ditt företags resepolicy.</string>
+	<key>Your device cannot make a phone call.</key>
+	<string>Din enhet kan inte ringa ett telefonsamtal.</string>
+	<key>Your entry does not appear to be a valid work email or Concur Username. For example</key>
+	<string>Det du har skrivit in verkar inte vara en giltig e-postadress till arbetet eller ett giltigt Concur-användarnamn. Du kan till exempel ha glömt @ eller .com</string>
+	<key>Your expense has been queued</key>
+	<string>Utlägget står i kö för att laddas upp.</string>
+	<key>Your favorite</key>
+	<string>Din favorit</string>
+	<key>Your hotel reservation has been successfully cancelled. Cancellation Number: %@</key>
+	<string>Din hotellreservation har avbokats. Avbokningsnummer: %@</string>
+	<key>Your receipt has been queued</key>
+	<string>Kvittot står i kö för att laddas upp.</string>
+	<key>add_as_favorite</key>
+	<string>Lägg till som favorit</string>
+	<key>add_new_route</key>
+	<string>Lägg till ny rutt</string>
+	<key>add_route</key>
+	<string>Lägg till rutt</string>
+	<key>add_to_report</key>
+	<string>Lägg till i rapport</string>
+	<key>additional_charge</key>
+	<string>Ytterligare avgift</string>
+	<key>are missing</key>
+	<string> saknas.</string>
+	<key>arrival_station</key>
+	<string>Ankomststation</string>
+	<key>available from</key>
+	<string>tillgängligt från</string>
+	<key>business_purpose</key>
+	<string>Affärssyfte</string>
+	<key>cheap</key>
+	<string>Billig</string>
+	<key>check in on</key>
+	<string>checka in på</string>
+	<key>choices</key>
+	<string>val</string>
+	<key>commuter_pass</key>
+	<string>Pendelkort</string>
+	<key>corporate card transactions</key>
+	<string>företagskorttransaktioner</string>
+	<key>cost</key>
+	<string>Kostnad</string>
+	<key>day</key>
+	<string>dag</string>
+	<key>days</key>
+	<string>dagar</string>
+	<key>departure_station</key>
+	<string>Avgångsstation</string>
+	<key>easy</key>
+	<string>Enkel</string>
+	<key>email saved into your drafts</key>
+	<string>e-postmeddelandet har sparats bland dina utkast</string>
+	<key>expense_route</key>
+	<string>Utgiftsväg</string>
+	<key>fast</key>
+	<string>Snabb</string>
+	<key>favorites</key>
+	<string>Favoriter</string>
+	<key>green</key>
+	<string>Första klass (grön sittplats)</string>
+	<key>hour</key>
+	<string>timme</string>
+	<key>hour_quantity</key>
+	<string>%d tim</string>
+	<key>hours</key>
+	<string>timmar</string>
+	<key>hours_quantity</key>
+	<string>%d tim</string>
+	<key>ic_card</key>
+	<string>IC-kort</string>
+	<key>ic_card_fare</key>
+	<string>Biljettpris för IC-kort</string>
+	<key>int active int upcoming</key>
+	<string>%d aktiva, %d kommande</string>
+	<key>invoice to review</key>
+	<string>faktura att granska</string>
+	<key>invoices to approve</key>
+	<string>Fakturor att attestera</string>
+	<key>invoices to review</key>
+	<string>fakturor att granska</string>
+	<key>is missing</key>
+	<string> saknas.</string>
+	<key>items to upload</key>
+	<string>poster att ladda upp</string>
+	<key>japan_public_transit</key>
+	<string>Japan, kollektivtrafik</string>
+	<key>line</key>
+	<string>Rad</string>
+	<key>manual</key>
+	<string>Manuell</string>
+	<key>menu</key>
+	<string>meny</string>
+	<key>miles</key>
+	<string>amerikanska miles</string>
+	<key>minute</key>
+	<string>minut</string>
+	<key>minute_quantity</key>
+	<string>%d min.</string>
+	<key>minutes</key>
+	<string>minuter</string>
+	<key>minutes_quantity</key>
+	<string>%d minuter</string>
+	<key>mobile entries</key>
+	<string>inmatningar från mobil</string>
+	<key>near</key>
+	<string>nära</string>
+	<key>no</key>
+	<string>nej</string>
+	<key>noReceipt</key>
+	<string>Kvittobilden är inte tillgänglig just nu. Försök igen senare.</string>
+	<key>noReceipts</key>
+	<string>Du har för närvarande inga kvitton i kvittolagret.</string>
+	<key>no_favorite_routes</key>
+	<string>Inga favoritrutter</string>
+	<key>no_recent_routes</key>
+	<string>Inga nyligen genomförda rutter</string>
+	<key>no_saved_routes</key>
+	<string>Inga sparade rutter</string>
+	<key>other</key>
+	<string>Annan</string>
+	<key>paper_ticket</key>
+	<string>Pappersbiljett</string>
+	<key>per day</key>
+	<string>per dag</string>
+	<key>per night</key>
+	<string>per natt</string>
+	<key>personal_expense</key>
+	<string>Privat utlägg</string>
+	<key>pickup on</key>
+	<string>upphämtning den</string>
+	<key>purchase request to review</key>
+	<string>inköpsbegäran att granska</string>
+	<key>purchase requests to review</key>
+	<string>inköpsbegäranden att granska</string>
+	<key>report to approve</key>
+	<string>rapport att attestera</string>
+	<key>reports to approve</key>
+	<string>rapporter att attestera</string>
+	<key>resend the verification email</key>
+	<string>skicka in bekräftelsemeddelandet igen</string>
+	<key>reserved</key>
+	<string>Reserverad sittplats</string>
+	<key>results by</key>
+	<string>resultat efter</string>
+	<key>results by Duration</key>
+	<string>resultat efter Varaktighet</string>
+	<key>results by Earliest Departure</key>
+	<string>resultat efter Tidigast avgång</string>
+	<key>results by Fare Price</key>
+	<string>resultat efter Biljettpris</string>
+	<key>results by Preferred Carrier</key>
+	<string>resultat efter Föredraget bolag</string>
+	<key>route_added_to_report_confirmation</key>
+	<string>Din rutt har lagts till</string>
+	<key>route_saved_confirmation</key>
+	<string>Din rutt sparades</string>
+	<key>route_search</key>
+	<string>Ruttsökning</string>
+	<key>routes</key>
+	<string>Rutter</string>
+	<key>save_for_later</key>
+	<string>Spara till senare</string>
+	<key>search_stations</key>
+	<string>Sök stationer</string>
+	<key>select_route</key>
+	<string>Välj rutt</string>
+	<key>sorted by</key>
+	<string>sorterat efter </string>
+	<key>tap here to cancel reservation</key>
+	<string>tryck här för att avboka bokningen</string>
+	<key>through_station</key>
+	<string>Via station</string>
+	<key>through_stations</key>
+	<string>Via stationer</string>
+	<key>to</key>
+	<string>till</string>
+	<key>today</key>
+	<string>Idag</string>
+	<key>token hour(s) token minute(s)</key>
+	<string>%d timmar %d minuter</string>
+	<key>token minute(s)</key>
+	<string>%d minuter</string>
+	<key>token results</key>
+	<string>%d resultat</string>
+	<key>travel request to approve</key>
+	<string>resebegäran att attestera</string>
+	<key>travel requests to approve</key>
+	<string>resebegäranden att attestera</string>
+	<key>trip to approve</key>
+	<string>resa att attestera</string>
+	<key>trip_date</key>
+	<string>Resans datum</string>
+	<key>trips to approve</key>
+	<string>resor att attestera</string>
+	<key>unknown</key>
+	<string>Okänd</string>
+	<key>unreserved</key>
+	<string>Ej reserverad sittplats</string>
+	<key>unsubmitted Reports</key>
+	<string>ej inskickade rapporter</string>
+	<key>view_report</key>
+	<string>Visa rapport</string>
+</dict>
+</plist>

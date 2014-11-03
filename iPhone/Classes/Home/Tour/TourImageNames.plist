@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<array>
+	<dict>
+		<key>imageKey</key>
+		<string>tour1.png</string>
+		<key>upperLabelKey</key>
+		<string>Search and book flights</string>
+		<key>lowerLabelKey</key>
+		<string>If your plans change</string>
+	</dict>
+	<dict>
+		<key>imageKey</key>
+		<string>tour2.png</string>
+		<key>upperLabelKey</key>
+		<string>Capture your expenses while you travel</string>
+		<key>lowerLabelKey</key>
+		<array>
+			<string>Take pictures of receipts &amp; upload</string>
+			<string>Add expenses with attendees</string>
+			<string>Capture car mileage</string>
+		</array>
+	</dict>
+	<dict>
+		<key>imageKey</key>
+		<string>tour3.png</string>
+		<key>upperLabelKey</key>
+		<string>Create and submit your expense reports</string>
+		<key>lowerLabelKey</key>
+		<string>Depending upon your company configuration some of the Concur for Mobile features may not be avaiable to you</string>
+	</dict>
+</array>
+</plist>

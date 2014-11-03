@@ -1,0 +1,77 @@
+{
+  "formatVersion" : 1,
+  "passTypeIdentifier" : "pass.concur.speedcheckin",
+  "serialNumber" : "nmyuxofgnb",
+  "teamIdentifier" : "Z339R6HVU8",
+  "webServiceURL":"https:\/\/www.concursolutions.com\/mobile\/",
+  "authenticationToken":"vxwxd7J8AlNNFPS8k0a0FfUFtq0ewzFdc",
+  "relevantDate" : "2012-11-08T13:00-08:00",
+  "labelColor":"rgb(255, 255, 255)",
+  "foregroundColor":"rgb(255, 255, 255)",
+  "backgroundColor":"rgb(29, 101, 162)",
+  "locations" : [
+    {
+      "longitude" : -122.123875,
+      "latitude" : 47.669414
+    }
+  ],
+  "barcode" : {
+    "message" : "3210987654321",
+    "format" : "PKBarcodeFormatQR",
+    "messageEncoding" : "iso-8859-1",
+    "altText":"3210987654321"
+  },
+  "organizationName" : "Concur",
+  "description" : "Concur",
+  "logoText" : "Hotel Check In",
+  "eventTicket" : {
+
+    "headerFields" : [
+      {
+        "key" : "date",
+        "label" : "Dec",
+        "value" : "20"
+      }
+    ],
+    "primaryFields" : [
+      {
+        "key" : "event",
+        "label" : "Confirmation #",
+        "value" : "2832132DTR454"
+      }
+    ],
+    "secondaryFields": [
+      {
+        "key" : "vendor",
+        "label" : "Hotel",
+        "value" : "Executive Plaza Hotel"
+      }
+    ],
+	"auxiliaryFields" : [
+      {
+        "key" : "checkin",
+        "label" : "Check In",
+        "value" : "Dec 20, 2012"
+      },
+      {
+        "key" : "checkout",
+        "label" : "Check Out",
+        "value" : "Dec 22, 2012"
+      }
+    ],
+    "backFields" : [
+      {
+        "key" : "address",
+        "label" : "Address",
+        "value" : "200 California St\nSan Francisco, CA 94104",
+        "textAlignment":"PKTextAlignmentNatural"
+      },
+      {
+        "key" : "source",
+        "label" : "Created by Concur Technologies, Inc.",
+        "value" : "For more information, visit: http:\/\/www.concur.com\n"
+      }
+    ]
+    
+  }
+}

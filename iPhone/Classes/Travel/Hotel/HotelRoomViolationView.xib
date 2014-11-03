@@ -1,0 +1,123 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="6245" systemVersion="13F34" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES">
+    <dependencies>
+        <deployment defaultVersion="1536" identifier="iOS"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="6238"/>
+    </dependencies>
+    <objects>
+        <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner"/>
+        <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
+        <view contentMode="scaleToFill" id="iN0-l3-epB" userLabel="Violation Section" customClass="HotelRoomViolationView">
+            <rect key="frame" x="0.0" y="0.0" width="320" height="260"/>
+            <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+            <subviews>
+                <view contentMode="scaleToFill" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="wg1-Ms-LLp" userLabel="Violation Description Section">
+                    <rect key="frame" x="0.0" y="0.0" width="320" height="95"/>
+                    <subviews>
+                        <view contentMode="scaleToFill" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="jYt-gI-0HN" userLabel="Grey Line">
+                            <rect key="frame" x="0.0" y="0.0" width="320" height="1"/>
+                            <color key="backgroundColor" red="0.87058823529999996" green="0.87843137250000003" blue="0.89019607840000003" alpha="1" colorSpace="calibratedRGB"/>
+                        </view>
+                        <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" fixedFrame="YES" editable="NO" text="Violation Description" selectable="NO" translatesAutoresizingMaskIntoConstraints="NO" id="JyD-7B-lsE" userLabel="Violation Description">
+                            <rect key="frame" x="35" y="14" width="265" height="40"/>
+                            <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                            <color key="textColor" red="0.43529411759999997" green="0.43529411759999997" blue="0.43529411759999997" alpha="1" colorSpace="calibratedRGB"/>
+                            <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                            <textInputTraits key="textInputTraits" autocapitalizationType="sentences"/>
+                        </textView>
+                        <view contentMode="scaleToFill" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="aD1-mv-hso" customClass="CTETriangleBadge">
+                            <rect key="frame" x="300" y="1" width="20" height="20"/>
+                            <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                        </view>
+                        <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" fixedFrame="YES" editable="NO" text="Violation Message" selectable="NO" translatesAutoresizingMaskIntoConstraints="NO" id="S7N-Tq-KuY" userLabel="Violation Message">
+                            <rect key="frame" x="35" y="42" width="265" height="45"/>
+                            <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                            <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
+                            <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                            <textInputTraits key="textInputTraits" autocapitalizationType="sentences"/>
+                        </textView>
+                    </subviews>
+                    <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                </view>
+                <view contentMode="scaleToFill" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="bFe-Bw-9PC" userLabel="Reason Button">
+                    <rect key="frame" x="0.0" y="95" width="320" height="65"/>
+                    <subviews>
+                        <view contentMode="scaleToFill" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="7pk-sS-9vX" userLabel="Grey Line">
+                            <rect key="frame" x="40" y="0.0" width="280" height="1"/>
+                            <color key="backgroundColor" red="0.87058823529999996" green="0.87843137250000003" blue="0.89019607840000003" alpha="1" colorSpace="calibratedRGB"/>
+                        </view>
+                        <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Reason" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="PS8-at-inh" userLabel="Reason">
+                            <rect key="frame" x="40" y="9" width="260" height="21"/>
+                            <fontDescription key="fontDescription" type="system" pointSize="15"/>
+                            <color key="textColor" red="0.43529411759999997" green="0.43529411759999997" blue="0.43529411759999997" alpha="1" colorSpace="calibratedRGB"/>
+                            <nil key="highlightedColor"/>
+                        </label>
+                        <imageView userInteractionEnabled="NO" contentMode="center" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" image="disclosure_light_grey" translatesAutoresizingMaskIntoConstraints="NO" id="j31-kX-Xog">
+                            <rect key="frame" x="300" y="22" width="20" height="20"/>
+                        </imageView>
+                        <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Reason placeholder" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="04C-q0-Vvt" userLabel="Reason placeholder">
+                            <rect key="frame" x="40" y="31" width="250" height="21"/>
+                            <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                            <color key="textColor" red="0.0" green="0.39607843139999999" blue="0.73725490199999999" alpha="1" colorSpace="calibratedRGB"/>
+                            <nil key="highlightedColor"/>
+                        </label>
+                    </subviews>
+                    <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                    <gestureRecognizers/>
+                    <connections>
+                        <outletCollection property="gestureRecognizers" destination="FJu-QP-rqg" appends="YES" id="cAe-9r-Xdb"/>
+                    </connections>
+                </view>
+                <view contentMode="scaleToFill" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="azx-t6-aqk" userLabel="Justification  Section">
+                    <rect key="frame" x="0.0" y="160" width="320" height="100"/>
+                    <subviews>
+                        <view contentMode="scaleToFill" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="ib7-D0-BaW" userLabel="Grey Line">
+                            <rect key="frame" x="40" y="0.0" width="280" height="1"/>
+                            <color key="backgroundColor" red="0.87058823529999996" green="0.87843137250000003" blue="0.89019607840000003" alpha="1" colorSpace="calibratedRGB"/>
+                        </view>
+                        <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Justification" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="fcu-Ju-WCJ">
+                            <rect key="frame" x="40" y="14" width="250" height="21"/>
+                            <fontDescription key="fontDescription" type="system" pointSize="15"/>
+                            <color key="textColor" red="0.43529411759999997" green="0.43529411759999997" blue="0.43529411759999997" alpha="1" colorSpace="calibratedRGB"/>
+                            <nil key="highlightedColor"/>
+                        </label>
+                        <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" fixedFrame="YES" text="Justification placeholder" translatesAutoresizingMaskIntoConstraints="NO" id="5xv-FN-k58" userLabel="Justification placeholder">
+                            <rect key="frame" x="34" y="37" width="265" height="55"/>
+                            <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                            <color key="textColor" red="0.0" green="0.396078431372549" blue="0.74901960784313726" alpha="1" colorSpace="calibratedRGB"/>
+                            <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                            <textInputTraits key="textInputTraits" returnKeyType="done" enablesReturnKeyAutomatically="YES"/>
+                        </textView>
+                    </subviews>
+                    <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                </view>
+                <view contentMode="scaleToFill" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="wp5-zj-hXt" userLabel="Grey Line">
+                    <rect key="frame" x="0.0" y="259" width="320" height="1"/>
+                    <color key="backgroundColor" red="0.87058823529999996" green="0.87843137250000003" blue="0.89019607840000003" alpha="1" colorSpace="calibratedRGB"/>
+                </view>
+            </subviews>
+            <color key="backgroundColor" red="0.94117647059999998" green="0.94117647059999998" blue="0.94117647059999998" alpha="1" colorSpace="calibratedRGB"/>
+            <gestureRecognizers/>
+            <nil key="simulatedStatusBarMetrics"/>
+            <nil key="simulatedTopBarMetrics"/>
+            <nil key="simulatedBottomBarMetrics"/>
+            <freeformSimulatedSizeMetrics key="simulatedDestinationMetrics"/>
+            <connections>
+                <outlet property="badge" destination="aD1-mv-hso" id="pEw-dH-TuL"/>
+                <outlet property="justification" destination="5xv-FN-k58" id="L71-9Z-Q6W"/>
+                <outlet property="reason" destination="04C-q0-Vvt" id="IJ0-00-19j"/>
+                <outlet property="violationDescription" destination="JyD-7B-lsE" id="IM8-1n-AcU"/>
+                <outlet property="violationMessage" destination="S7N-Tq-KuY" id="N29-kf-FUr"/>
+            </connections>
+            <point key="canvasLocation" x="140" y="156"/>
+        </view>
+        <tapGestureRecognizer id="FJu-QP-rqg" userLabel="Reason">
+            <connections>
+                <action selector="openHotelViolationReasons" destination="iN0-l3-epB" id="5UF-DT-Myb"/>
+            </connections>
+        </tapGestureRecognizer>
+    </objects>
+    <resources>
+        <image name="disclosure_light_grey" width="8" height="13"/>
+    </resources>
+</document>

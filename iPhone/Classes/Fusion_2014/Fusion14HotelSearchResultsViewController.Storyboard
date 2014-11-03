@@ -1,0 +1,676 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="5056" systemVersion="13E28" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" initialViewController="KcI-ES-Lv3">
+    <dependencies>
+        <deployment defaultVersion="1536" identifier="iOS"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="3733"/>
+    </dependencies>
+    <scenes>
+        <!--Fusion14 Hotel Search Results View Controller-->
+        <scene sceneID="ED8-Ju-ecx">
+            <objects>
+                <viewController id="KcI-ES-Lv3" customClass="Fusion14HotelSearchResultsViewController" sceneMemberID="viewController">
+                    <tableView key="view" opaque="NO" clipsSubviews="YES" clearsContextBeforeDrawing="NO" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="44" sectionHeaderHeight="22" sectionFooterHeight="22" id="GGb-wE-IS6">
+                        <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                        <prototypes>
+                            <tableViewCell contentMode="scaleToFill" selectionStyle="blue" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" reuseIdentifier="HotelSearchResultsTableViewHeaderCell" rowHeight="108" id="p0f-xm-wj4" customClass="Fusion14HotelSearchResultsTableViewHeaderCell">
+                                <rect key="frame" x="0.0" y="22" width="320" height="108"/>
+                                <autoresizingMask key="autoresizingMask"/>
+                                <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="p0f-xm-wj4" id="awN-sV-PI1">
+                                    <rect key="frame" x="0.0" y="0.0" width="320" height="107"/>
+                                    <autoresizingMask key="autoresizingMask"/>
+                                    <subviews>
+                                        <view contentMode="scaleToFill" ambiguous="YES" misplaced="YES" translatesAutoresizingMaskIntoConstraints="NO" id="NhL-OM-eiK" userLabel="View - price-to-beat">
+                                            <rect key="frame" x="10" y="-5" width="300" height="44"/>
+                                            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                            <subviews>
+                                                <view contentMode="scaleToFill" ambiguous="YES" misplaced="YES" translatesAutoresizingMaskIntoConstraints="NO" id="h5A-Id-Kqj">
+                                                    <rect key="frame" x="0.0" y="0.0" width="300" height="44"/>
+                                                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                                    <subviews>
+                                                        <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" ambiguous="YES" misplaced="YES" image="fusion14_icon_pricetobeat" translatesAutoresizingMaskIntoConstraints="NO" id="16V-kT-8wN">
+                                                            <rect key="frame" x="26" y="17" width="14" height="14"/>
+                                                            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                                        </imageView>
+                                                        <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" ambiguous="YES" misplaced="YES" text="PRICE-TO-BEAT : " lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="PVA-84-QTS">
+                                                            <rect key="frame" x="50" y="14" width="119" height="21"/>
+                                                            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                                            <fontDescription key="fontDescription" name="HelveticaNeue" family="Helvetica Neue" pointSize="14"/>
+                                                            <color key="textColor" red="0.0" green="0.47058823529411764" blue="0.78431372549019607" alpha="1" colorSpace="calibratedRGB"/>
+                                                            <nil key="highlightedColor"/>
+                                                        </label>
+                                                        <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" ambiguous="YES" misplaced="YES" text="$200.00 - $250.00" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="LOx-U1-LQ0">
+                                                            <rect key="frame" x="170" y="14" width="124" height="21"/>
+                                                            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                                            <constraints>
+                                                                <constraint firstAttribute="width" constant="124" id="hDM-sg-Js5"/>
+                                                            </constraints>
+                                                            <fontDescription key="fontDescription" name="HelveticaNeue-Medium" family="Helvetica Neue" pointSize="14"/>
+                                                            <color key="textColor" red="0.0" green="0.47058823529411764" blue="0.78431372549019607" alpha="1" colorSpace="calibratedRGB"/>
+                                                            <nil key="highlightedColor"/>
+                                                        </label>
+                                                    </subviews>
+                                                    <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
+                                                    <constraints>
+                                                        <constraint firstAttribute="width" constant="300" id="02c-Na-Gcm"/>
+                                                        <constraint firstItem="LOx-U1-LQ0" firstAttribute="leading" secondItem="h5A-Id-Kqj" secondAttribute="leading" constant="143" id="3Gk-kt-1i4"/>
+                                                        <constraint firstItem="PVA-84-QTS" firstAttribute="leading" secondItem="h5A-Id-Kqj" secondAttribute="leading" constant="24" id="fwB-2p-r5N"/>
+                                                        <constraint firstItem="16V-kT-8wN" firstAttribute="leading" secondItem="h5A-Id-Kqj" secondAttribute="leading" id="gq4-Us-IIK"/>
+                                                    </constraints>
+                                                </view>
+                                            </subviews>
+                                            <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                            <constraints>
+                                                <constraint firstItem="h5A-Id-Kqj" firstAttribute="leading" secondItem="NhL-OM-eiK" secondAttribute="leading" id="7YR-iX-2Pt"/>
+                                            </constraints>
+                                            <userDefinedRuntimeAttributes>
+                                                <userDefinedRuntimeAttribute type="number" keyPath="cornerRadius">
+                                                    <integer key="value" value="5"/>
+                                                </userDefinedRuntimeAttribute>
+                                            </userDefinedRuntimeAttributes>
+                                        </view>
+                                        <imageView userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" image="icon_nav_location" translatesAutoresizingMaskIntoConstraints="NO" id="vmn-Ki-IMw">
+                                            <rect key="frame" x="15" y="50" width="12" height="16"/>
+                                            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                        </imageView>
+                                        <imageView userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" image="icon_nav_calendar" translatesAutoresizingMaskIntoConstraints="NO" id="yE2-1i-mgw">
+                                            <rect key="frame" x="15" y="80" width="12" height="16"/>
+                                            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                        </imageView>
+                                        <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Palo Alto, CA" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Mhy-YY-lrF">
+                                            <rect key="frame" x="35" y="45" width="280" height="25"/>
+                                            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                            <fontDescription key="fontDescription" name="HelveticaNeue-Light" family="Helvetica Neue" pointSize="17"/>
+                                            <color key="textColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                            <nil key="highlightedColor"/>
+                                        </label>
+                                        <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Thursday, May 8" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="gqt-K6-u5L">
+                                            <rect key="frame" x="35" y="75" width="280" height="25"/>
+                                            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                            <fontDescription key="fontDescription" name="HelveticaNeue-Light" family="Helvetica Neue" pointSize="17"/>
+                                            <color key="textColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                            <nil key="highlightedColor"/>
+                                        </label>
+                                    </subviews>
+                                </tableViewCellContentView>
+                                <color key="backgroundColor" red="0.0" green="0.47058823529411764" blue="0.78431372549019607" alpha="1" colorSpace="calibratedRGB"/>
+                                <connections>
+                                    <outlet property="coPriceToBeatLeft" destination="7YR-iX-2Pt" id="ksf-B4-diR"/>
+                                    <outlet property="coTextPriceToBeatWidth" destination="hDM-sg-Js5" id="3NP-sY-nJn"/>
+                                    <outlet property="coViewPriceToBeatWidth" destination="02c-Na-Gcm" id="uaF-y4-EiX"/>
+                                    <outlet property="imageViewIcon" destination="16V-kT-8wN" id="Ki0-a9-CxO"/>
+                                    <outlet property="labelDate" destination="gqt-K6-u5L" id="qFt-a4-gVe"/>
+                                    <outlet property="labelLocation" destination="Mhy-YY-lrF" id="7RC-2Y-ALg"/>
+                                    <outlet property="labelPriceToBeat" destination="LOx-U1-LQ0" id="2fV-jK-uLh"/>
+                                    <outlet property="labelTitlePriceToBeat" destination="PVA-84-QTS" id="QeP-zl-3t3"/>
+                                </connections>
+                            </tableViewCell>
+                            <tableViewCell contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" reuseIdentifier="HotelListCell" rowHeight="110" id="vhS-BB-rtf" customClass="Fusion14HotelListCell">
+                                <rect key="frame" x="0.0" y="130" width="320" height="110"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="vhS-BB-rtf" id="43Y-0w-xVx">
+                                    <rect key="frame" x="0.0" y="0.0" width="320" height="109"/>
+                                    <autoresizingMask key="autoresizingMask"/>
+                                    <subviews>
+                                        <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="ab5-QC-0LY">
+                                            <rect key="frame" x="8" y="13" width="68" height="64"/>
+                                            <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                                        </imageView>
+                                        <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" fixedFrame="YES" text="Hotel Name" lineBreakMode="tailTruncation" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="n86-vk-fwV" customClass="VerticallyAlignedLabel">
+                                            <rect key="frame" x="84" y="13" width="168" height="17"/>
+                                            <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                            <fontDescription key="fontDescription" name="HelveticaNeue-Medium" family="Helvetica Neue" pointSize="14"/>
+                                            <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
+                                            <color key="highlightedColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                        </label>
+                                        <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" fixedFrame="YES" text="Location" lineBreakMode="tailTruncation" minimumFontSize="12" translatesAutoresizingMaskIntoConstraints="NO" id="Ff4-RY-ed4" customClass="VerticallyAlignedLabel">
+                                            <rect key="frame" x="85" y="32" width="168" height="16"/>
+                                            <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                            <fontDescription key="fontDescription" name="HelveticaNeue" family="Helvetica Neue" pointSize="12"/>
+                                            <color key="textColor" red="0.65098039215686276" green="0.70588235294117641" blue="0.74117647058823533" alpha="1" colorSpace="calibratedRGB"/>
+                                            <color key="highlightedColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                            <size key="shadowOffset" width="0.0" height="0.0"/>
+                                        </label>
+                                        <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" fixedFrame="YES" text="Distance" lineBreakMode="tailTruncation" minimumFontSize="12" translatesAutoresizingMaskIntoConstraints="NO" id="b2n-un-hPq" customClass="VerticallyAlignedLabel">
+                                            <rect key="frame" x="100" y="51" width="112" height="16"/>
+                                            <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                            <fontDescription key="fontDescription" name="HelveticaNeue" family="Helvetica Neue" pointSize="12"/>
+                                            <color key="highlightedColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                            <size key="shadowOffset" width="0.0" height="0.0"/>
+                                        </label>
+                                        <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" image="icon_locator" translatesAutoresizingMaskIntoConstraints="NO" id="v98-Nn-56o">
+                                            <rect key="frame" x="84" y="52" width="13" height="13"/>
+                                            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                        </imageView>
+                                        <imageView userInteractionEnabled="NO" contentMode="scaleAspectFit" fixedFrame="YES" image="stars_5.png" translatesAutoresizingMaskIntoConstraints="NO" id="q84-1b-M9t">
+                                            <rect key="frame" x="82" y="82" width="89" height="18"/>
+                                            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                        </imageView>
+                                        <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" fixedFrame="YES" text="$1000" textAlignment="right" lineBreakMode="wordWrap" numberOfLines="0" minimumFontSize="13" preferredMaxLayoutWidth="62" translatesAutoresizingMaskIntoConstraints="NO" id="9ki-9c-rhS" userLabel="Vertically Aligned Label - Price" customClass="VerticallyAlignedLabel">
+                                            <rect key="frame" x="252" y="13" width="62" height="35"/>
+                                            <autoresizingMask key="autoresizingMask" flexibleMinX="YES" flexibleMaxY="YES"/>
+                                            <fontDescription key="fontDescription" name="HelveticaNeue-Medium" family="Helvetica Neue" pointSize="20"/>
+                                            <color key="textColor" red="0.0" green="0.47058823529411764" blue="0.78431372549019607" alpha="1" colorSpace="calibratedRGB"/>
+                                            <color key="highlightedColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                            <size key="shadowOffset" width="0.0" height="0.0"/>
+                                        </label>
+                                        <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Requires Approval" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" preferredMaxLayoutWidth="102" translatesAutoresizingMaskIntoConstraints="NO" id="caF-FX-ikT">
+                                            <rect key="frame" x="205" y="71" width="102" height="25"/>
+                                            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                            <color key="backgroundColor" red="0.38431372549019605" green="0.67450980392156867" blue="0.39215686274509803" alpha="1" colorSpace="calibratedRGB"/>
+                                            <fontDescription key="fontDescription" name="HelveticaNeue-Light" family="Helvetica Neue" pointSize="12"/>
+                                            <color key="textColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                            <nil key="highlightedColor"/>
+                                            <userDefinedRuntimeAttributes>
+                                                <userDefinedRuntimeAttribute type="number" keyPath="cornerRadius">
+                                                    <integer key="value" value="2"/>
+                                                </userDefinedRuntimeAttribute>
+                                            </userDefinedRuntimeAttributes>
+                                        </label>
+                                        <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="+25 pts" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="AzM-25-b31" customClass="VerticallyAlignedLabel">
+                                            <rect key="frame" x="17" y="85" width="44" height="15"/>
+                                            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                            <fontDescription key="fontDescription" name="HelveticaNeue" family="Helvetica Neue" pointSize="11"/>
+                                            <color key="textColor" red="0.0" green="0.47058823529411764" blue="0.78431372549019607" alpha="1" colorSpace="calibratedRGB"/>
+                                            <nil key="highlightedColor"/>
+                                        </label>
+                                    </subviews>
+                                </tableViewCellContentView>
+                                <connections>
+                                    <outlet property="hotelCityAndState" destination="Ff4-RY-ed4" id="q9A-fc-WI0"/>
+                                    <outlet property="hotelDistance" destination="b2n-un-hPq" id="p0h-mT-zlc"/>
+                                    <outlet property="hotelImage" destination="ab5-QC-0LY" id="58a-LG-ETr"/>
+                                    <outlet property="hotelName" destination="n86-vk-fwV" id="YWA-cE-iaR"/>
+                                    <outlet property="hotelPreferred" destination="caF-FX-ikT" id="d9j-2N-9W5"/>
+                                    <outlet property="hotelPrice" destination="9ki-9c-rhS" id="p8N-eY-Szs"/>
+                                    <outlet property="hotelRating" destination="q84-1b-M9t" id="Rdt-jb-43F"/>
+                                    <outlet property="travelPoints" destination="AzM-25-b31" id="qKg-vK-eC7"/>
+                                    <segue destination="mQM-PS-lHq" kind="push" identifier="Fusion14HotelRoomDetailsViewController" id="MjT-5E-Gfi"/>
+                                </connections>
+                            </tableViewCell>
+                        </prototypes>
+                    </tableView>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="yO8-Of-hfx" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="159" y="-40"/>
+        </scene>
+        <!--Fusion14 Hotel Room Details View Controller-->
+        <scene sceneID="OI1-MR-xbZ">
+            <objects>
+                <tableViewController id="mQM-PS-lHq" customClass="Fusion14HotelRoomDetailsViewController" sceneMemberID="viewController">
+                    <tableView key="view" opaque="NO" clipsSubviews="YES" clearsContextBeforeDrawing="NO" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="44" sectionHeaderHeight="22" sectionFooterHeight="22" id="hRM-dH-oyu">
+                        <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                        <prototypes>
+                            <tableViewCell contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" reuseIdentifier="Fusion14HotelRoomDetailsTableHeaderCell" rowHeight="275" id="DvH-8a-gfK" customClass="Fusion14HotelRoomDetailsTableViewHeaderCell">
+                                <rect key="frame" x="0.0" y="22" width="320" height="275"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="DvH-8a-gfK" id="48C-2P-e8m">
+                                    <rect key="frame" x="0.0" y="0.0" width="320" height="274"/>
+                                    <autoresizingMask key="autoresizingMask"/>
+                                    <subviews>
+                                        <imageView userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="12u-Ds-uZm">
+                                            <rect key="frame" x="0.0" y="0.0" width="320" height="108"/>
+                                            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                        </imageView>
+                                        <view contentMode="scaleToFill" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="2fh-9v-w09">
+                                            <rect key="frame" x="0.0" y="120" width="320" height="110"/>
+                                            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                            <subviews>
+                                                <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="iqi-xE-y5x">
+                                                    <rect key="frame" x="8" y="0.0" width="64" height="65"/>
+                                                    <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                                                </imageView>
+                                                <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Hotel Name" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="D1B-1N-7yz">
+                                                    <rect key="frame" x="83" y="0.0" width="220" height="17"/>
+                                                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                                    <fontDescription key="fontDescription" name="HelveticaNeue-Medium" family="Helvetica Neue" pointSize="15"/>
+                                                    <nil key="highlightedColor"/>
+                                                </label>
+                                                <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" fixedFrame="YES" text="Location" lineBreakMode="tailTruncation" minimumFontSize="12" translatesAutoresizingMaskIntoConstraints="NO" id="yIX-5T-ipS" customClass="VerticallyAlignedLabel">
+                                                    <rect key="frame" x="83" y="21" width="168" height="16"/>
+                                                    <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                                    <fontDescription key="fontDescription" name="HelveticaNeue" family="Helvetica Neue" pointSize="12"/>
+                                                    <color key="textColor" red="0.65098039215686276" green="0.70588235294117641" blue="0.74117647058823533" alpha="1" colorSpace="calibratedRGB"/>
+                                                    <color key="highlightedColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                                    <size key="shadowOffset" width="0.0" height="0.0"/>
+                                                </label>
+                                                <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" image="icon_locator" translatesAutoresizingMaskIntoConstraints="NO" id="R3x-lA-2dI">
+                                                    <rect key="frame" x="83" y="47" width="13" height="13"/>
+                                                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                                </imageView>
+                                                <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" fixedFrame="YES" text="Distance" lineBreakMode="tailTruncation" minimumFontSize="12" translatesAutoresizingMaskIntoConstraints="NO" id="R4b-b2-tzU" customClass="VerticallyAlignedLabel">
+                                                    <rect key="frame" x="104" y="45" width="112" height="16"/>
+                                                    <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                                    <fontDescription key="fontDescription" name="HelveticaNeue" family="Helvetica Neue" pointSize="12"/>
+                                                    <color key="highlightedColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                                    <size key="shadowOffset" width="0.0" height="0.0"/>
+                                                </label>
+                                                <imageView userInteractionEnabled="NO" contentMode="scaleAspectFit" fixedFrame="YES" image="stars_5.png" translatesAutoresizingMaskIntoConstraints="NO" id="NOk-tn-cNX">
+                                                    <rect key="frame" x="81" y="75" width="89" height="18"/>
+                                                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                                </imageView>
+                                            </subviews>
+                                            <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
+                                        </view>
+                                        <segmentedControl opaque="NO" userInteractionEnabled="NO" contentMode="scaleToFill" ambiguous="YES" misplaced="YES" contentHorizontalAlignment="left" contentVerticalAlignment="top" segmentControlStyle="bordered" selectedSegmentIndex="0" translatesAutoresizingMaskIntoConstraints="NO" id="gG1-4W-aAw">
+                                            <rect key="frame" x="15" y="230" width="290" height="29"/>
+                                            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                            <segments>
+                                                <segment title="Details" width="96"/>
+                                                <segment title="Rooms" width="96"/>
+                                                <segment title="Photos" width="96"/>
+                                            </segments>
+                                            <color key="tintColor" red="0.0" green="0.47058823529411764" blue="0.78431372549019607" alpha="1" colorSpace="calibratedRGB"/>
+                                        </segmentedControl>
+                                    </subviews>
+                                    <constraints>
+                                        <constraint firstAttribute="bottom" secondItem="gG1-4W-aAw" secondAttribute="bottom" constant="15" id="Ze2-Zj-BUg"/>
+                                    </constraints>
+                                </tableViewCellContentView>
+                                <connections>
+                                    <outlet property="imageViewHotelIcon" destination="iqi-xE-y5x" id="Hlg-DH-abg"/>
+                                    <outlet property="imageViewHotelImage" destination="12u-Ds-uZm" id="mH1-Ab-zLB"/>
+                                    <outlet property="imageViewHotelRating" destination="NOk-tn-cNX" id="zKT-xH-9fY"/>
+                                    <outlet property="labelHotelCityAndState" destination="yIX-5T-ipS" id="5Up-3m-jFu"/>
+                                    <outlet property="labelHotelDistance" destination="R4b-b2-tzU" id="FTb-I3-f3g"/>
+                                    <outlet property="labelHotelName" destination="D1B-1N-7yz" id="onO-el-dhH"/>
+                                    <outlet property="segmentedCtrl" destination="gG1-4W-aAw" id="RiI-ug-Hp2"/>
+                                </connections>
+                            </tableViewCell>
+                            <tableViewCell contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" reuseIdentifier="Fusion14HotelRoomDetailsCell" rowHeight="97" id="xPg-VE-4Gg" customClass="Fusion14HotelRoomDetailsCell">
+                                <rect key="frame" x="0.0" y="297" width="320" height="97"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="xPg-VE-4Gg" id="Nlq-xe-0D0">
+                                    <rect key="frame" x="0.0" y="0.0" width="320" height="96"/>
+                                    <autoresizingMask key="autoresizingMask"/>
+                                    <subviews>
+                                        <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" fixedFrame="YES" text="Deluxe City View King" lineBreakMode="tailTruncation" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="fts-fH-TS2" userLabel="Label - Room Type">
+                                            <rect key="frame" x="15" y="15" width="215" height="20"/>
+                                            <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                            <fontDescription key="fontDescription" name="HelveticaNeue-Medium" family="Helvetica Neue" pointSize="15"/>
+                                            <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
+                                            <color key="highlightedColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                        </label>
+                                        <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" fixedFrame="YES" text="520 sq ft - 1 king bed" lineBreakMode="characterWrap" numberOfLines="0" minimumFontSize="10" preferredMaxLayoutWidth="186" translatesAutoresizingMaskIntoConstraints="NO" id="MXK-PZ-xbW" userLabel="Vertically Aligned Label - Room Size" customClass="VerticallyAlignedLabel">
+                                            <rect key="frame" x="15" y="35" width="186" height="26"/>
+                                            <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                            <fontDescription key="fontDescription" name="HelveticaNeue-Light" family="Helvetica Neue" pointSize="12"/>
+                                            <color key="textColor" red="0.65098039215686276" green="0.70588235294117641" blue="0.74117647058823533" alpha="1" colorSpace="calibratedRGB"/>
+                                            <color key="highlightedColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                            <size key="shadowOffset" width="0.0" height="0.0"/>
+                                        </label>
+                                        <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" fixedFrame="YES" text="$1000.00" textAlignment="right" lineBreakMode="wordWrap" numberOfLines="0" minimumFontSize="13" preferredMaxLayoutWidth="76" translatesAutoresizingMaskIntoConstraints="NO" id="oDf-9i-D7v" userLabel="Vertically Aligned Label - Price" customClass="VerticallyAlignedLabel">
+                                            <rect key="frame" x="232" y="15" width="76" height="26"/>
+                                            <autoresizingMask key="autoresizingMask" flexibleMinX="YES" flexibleMaxY="YES"/>
+                                            <fontDescription key="fontDescription" name="HelveticaNeue-Medium" family="Helvetica Neue" pointSize="20"/>
+                                            <color key="textColor" red="0.0" green="0.47058823529999999" blue="0.7843137255" alpha="1" colorSpace="calibratedRGB"/>
+                                            <color key="highlightedColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                            <size key="shadowOffset" width="0.0" height="0.0"/>
+                                        </label>
+                                        <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" fixedFrame="YES" text="per night" textAlignment="right" lineBreakMode="tailTruncation" minimumFontSize="12" translatesAutoresizingMaskIntoConstraints="NO" id="XAx-Lw-epU" userLabel="Vertically Aligned Label - Per Night" customClass="VerticallyAlignedLabel">
+                                            <rect key="frame" x="240" y="38" width="68" height="16"/>
+                                            <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                            <fontDescription key="fontDescription" name="HelveticaNeue" family="Helvetica Neue" pointSize="12"/>
+                                            <color key="textColor" red="0.65098039215686276" green="0.70588235294117641" blue="0.74117647058823533" alpha="1" colorSpace="calibratedRGB"/>
+                                            <color key="highlightedColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                            <size key="shadowOffset" width="0.0" height="0.0"/>
+                                        </label>
+                                        <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" ambiguous="YES" misplaced="YES" text="Recommended" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" preferredMaxLayoutWidth="93" translatesAutoresizingMaskIntoConstraints="NO" id="sde-3H-3Su">
+                                            <rect key="frame" x="215" y="59" width="93" height="23"/>
+                                            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                            <color key="backgroundColor" red="0.38431372549999998" green="0.67450980390000004" blue="0.3921568627" alpha="1" colorSpace="calibratedRGB"/>
+                                            <constraints>
+                                                <constraint firstAttribute="width" constant="102" id="0mn-lG-5nE"/>
+                                                <constraint firstAttribute="height" constant="25" id="qUL-OC-qNr"/>
+                                            </constraints>
+                                            <fontDescription key="fontDescription" name="HelveticaNeue-Light" family="Helvetica Neue" pointSize="12"/>
+                                            <color key="textColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                            <nil key="highlightedColor"/>
+                                            <userDefinedRuntimeAttributes>
+                                                <userDefinedRuntimeAttribute type="number" keyPath="cornerRadius">
+                                                    <integer key="value" value="2"/>
+                                                </userDefinedRuntimeAttribute>
+                                            </userDefinedRuntimeAttributes>
+                                        </label>
+                                        <view contentMode="scaleToFill" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="w6F-bP-D3Y" userLabel="View - Cancellation View">
+                                            <rect key="frame" x="15" y="57" width="160" height="25"/>
+                                            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                            <subviews>
+                                                <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" image="fusion14_icon_cancel_button" translatesAutoresizingMaskIntoConstraints="NO" id="SQ6-PH-Xke">
+                                                    <rect key="frame" x="0.0" y="7" width="12" height="11"/>
+                                                    <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                                                </imageView>
+                                                <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" fixedFrame="YES" text="Free Cancellation" lineBreakMode="tailTruncation" minimumFontSize="12" translatesAutoresizingMaskIntoConstraints="NO" id="Ekd-ro-YLr" userLabel="Vertically Aligned Label - Room Size">
+                                                    <rect key="frame" x="15" y="0.0" width="127" height="25"/>
+                                                    <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                                    <fontDescription key="fontDescription" name="HelveticaNeue-Light" family="Helvetica Neue" pointSize="12"/>
+                                                    <color key="textColor" red="0.65490196079999996" green="0.71372549019999998" blue="0.74901960779999999" alpha="1" colorSpace="calibratedRGB"/>
+                                                    <color key="highlightedColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                                    <size key="shadowOffset" width="0.0" height="0.0"/>
+                                                </label>
+                                            </subviews>
+                                            <color key="backgroundColor" red="0.95686274509803915" green="0.96862745098039216" blue="0.97647058823529409" alpha="1" colorSpace="calibratedRGB"/>
+                                        </view>
+                                        <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="+25 pts" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="fkq-at-Jwy">
+                                            <rect key="frame" x="15" y="62" width="45" height="15"/>
+                                            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                            <fontDescription key="fontDescription" name="HelveticaNeue" family="Helvetica Neue" pointSize="11"/>
+                                            <color key="textColor" red="0.0" green="0.47058823529411764" blue="0.78431372549019607" alpha="1" colorSpace="calibratedRGB"/>
+                                            <nil key="highlightedColor"/>
+                                        </label>
+                                    </subviews>
+                                    <constraints>
+                                        <constraint firstAttribute="trailing" secondItem="sde-3H-3Su" secondAttribute="trailing" constant="7.5" id="tOE-MY-NKa"/>
+                                    </constraints>
+                                </tableViewCellContentView>
+                                <connections>
+                                    <outlet property="coRecommendationTagHeight" destination="qUL-OC-qNr" id="iUG-rD-dqD"/>
+                                    <outlet property="coRecommendationTagWidth" destination="0mn-lG-5nE" id="8lT-ZI-W6a"/>
+                                    <outlet property="labelRecommendationTag" destination="sde-3H-3Su" id="rd3-Xi-VG5"/>
+                                    <outlet property="labelRoomPrice" destination="oDf-9i-D7v" id="CkB-ec-gqb"/>
+                                    <outlet property="labelRoomSize" destination="MXK-PZ-xbW" id="O3T-9c-BIm"/>
+                                    <outlet property="labelRoomType" destination="fts-fH-TS2" id="jao-qP-lg3"/>
+                                    <outlet property="labelTravelPoints" destination="fkq-at-Jwy" id="Uc7-Y8-656"/>
+                                    <outlet property="viewCancellation" destination="w6F-bP-D3Y" id="y8E-ec-ngL"/>
+                                    <segue destination="0vQ-lu-U5a" kind="push" identifier="Fusion14HotelBookingViewController" id="uaJ-U0-pza"/>
+                                </connections>
+                            </tableViewCell>
+                        </prototypes>
+                        <connections>
+                            <outlet property="dataSource" destination="mQM-PS-lHq" id="Xu1-z8-qNT"/>
+                            <outlet property="delegate" destination="mQM-PS-lHq" id="hME-nG-FiY"/>
+                        </connections>
+                    </tableView>
+                    <navigationItem key="navigationItem" id="uLP-LK-dXy"/>
+                </tableViewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="zIM-Gk-925" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="646" y="-40"/>
+        </scene>
+        <!--Fusion14 Hotel Booking View Controller-->
+        <scene sceneID="uGP-vD-ShB">
+            <objects>
+                <tableViewController id="0vQ-lu-U5a" customClass="Fusion14HotelBookingViewController" sceneMemberID="viewController">
+                    <tableView key="view" opaque="NO" clipsSubviews="YES" clearsContextBeforeDrawing="NO" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="211" sectionHeaderHeight="22" sectionFooterHeight="22" id="TGg-iP-8lq">
+                        <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <color key="backgroundColor" red="0.94117653369903564" green="0.94117653369903564" blue="0.94117653369903564" alpha="1" colorSpace="deviceRGB"/>
+                        <view key="tableFooterView" contentMode="scaleToFill" id="qRb-pb-nia">
+                            <rect key="frame" x="0.0" y="495" width="320" height="44"/>
+                            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                            <subviews>
+                                <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="jon-7y-Mwh" userLabel="background">
+                                    <rect key="frame" x="15" y="4" width="290" height="36"/>
+                                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                    <color key="backgroundColor" red="0.0" green="0.47058823529999999" blue="0.7843137255" alpha="1" colorSpace="calibratedRGB"/>
+                                    <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                    <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
+                                    <nil key="highlightedColor"/>
+                                </label>
+                                <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Slide to Reserve" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="WSw-td-kvR">
+                                    <rect key="frame" x="66" y="5" width="129" height="32"/>
+                                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                    <fontDescription key="fontDescription" name="HelveticaNeue-Light" family="Helvetica Neue" pointSize="17"/>
+                                    <color key="textColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                    <nil key="highlightedColor"/>
+                                </label>
+                                <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="$1,779.84" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="mHg-c6-Y8c">
+                                    <rect key="frame" x="202" y="7" width="100" height="30"/>
+                                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                    <color key="backgroundColor" red="0.0" green="0.41176470590000003" blue="0.68627450980000004" alpha="1" colorSpace="calibratedRGB"/>
+                                    <fontDescription key="fontDescription" name="HelveticaNeue-Light" family="Helvetica Neue" pointSize="17"/>
+                                    <color key="textColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                    <nil key="highlightedColor"/>
+                                </label>
+                                <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" image="fusion14_icon_button_arrow" translatesAutoresizingMaskIntoConstraints="NO" id="ZAa-aH-JXb">
+                                    <rect key="frame" x="44" y="9" width="15" height="25"/>
+                                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                </imageView>
+                            </subviews>
+                            <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                        </view>
+                        <prototypes>
+                            <tableViewCell contentMode="scaleToFill" selectionStyle="blue" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" reuseIdentifier="Fusion14HotelBookingTableViewHeaderCell" rowHeight="200" id="wSa-dt-Hib" customClass="Fusion14HotelBookingTableViewHeaderCell">
+                                <rect key="frame" x="0.0" y="22" width="320" height="200"/>
+                                <autoresizingMask key="autoresizingMask"/>
+                                <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="wSa-dt-Hib" id="fRA-gR-q7h">
+                                    <rect key="frame" x="0.0" y="0.0" width="320" height="199"/>
+                                    <autoresizingMask key="autoresizingMask"/>
+                                    <subviews>
+                                        <imageView userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="h9T-FG-AJp">
+                                            <rect key="frame" x="0.0" y="0.0" width="320" height="107"/>
+                                            <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                                        </imageView>
+                                        <view contentMode="scaleToFill" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="cz0-ut-kjb">
+                                            <rect key="frame" x="0.0" y="107" width="320" height="92"/>
+                                            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                            <subviews>
+                                                <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Traditional King - Landmark" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Qlj-Ky-6lW" customClass="VerticallyAlignedLabel">
+                                                    <rect key="frame" x="15" y="14" width="220" height="22"/>
+                                                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                                    <fontDescription key="fontDescription" name="HelveticaNeue-Medium" family="Helvetica Neue" pointSize="15"/>
+                                                    <nil key="highlightedColor"/>
+                                                </label>
+                                                <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="1 King" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="OMq-sc-fBb">
+                                                    <rect key="frame" x="17" y="37" width="220" height="17"/>
+                                                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                                    <fontDescription key="fontDescription" name="HelveticaNeue-Light" family="Helvetica Neue" pointSize="12"/>
+                                                    <color key="textColor" red="0.65098039215686276" green="0.70588235294117641" blue="0.74117647058823533" alpha="1" colorSpace="calibratedRGB"/>
+                                                    <nil key="highlightedColor"/>
+                                                </label>
+                                                <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="This elegant and historic hotel offers a prime..." lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="59Q-cJ-itF" customClass="VerticallyAlignedLabel">
+                                                    <rect key="frame" x="17" y="62" width="258" height="17"/>
+                                                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                                    <fontDescription key="fontDescription" name="HelveticaNeue-Light" family="Helvetica Neue" pointSize="13"/>
+                                                    <nil key="highlightedColor"/>
+                                                </label>
+                                                <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" image="fusion_expand_icon" translatesAutoresizingMaskIntoConstraints="NO" id="4rM-w6-0w6">
+                                                    <rect key="frame" x="288" y="66" width="12" height="12"/>
+                                                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                                </imageView>
+                                            </subviews>
+                                            <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
+                                        </view>
+                                    </subviews>
+                                </tableViewCellContentView>
+                                <connections>
+                                    <outlet property="imageViewHotelImage" destination="h9T-FG-AJp" id="VBM-nd-DQb"/>
+                                </connections>
+                            </tableViewCell>
+                            <tableViewCell contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" reuseIdentifier="Fusion14HotelBookingDetailsCell" rowHeight="97" id="Cgt-xN-JtQ" customClass="Fusion14HotelBookingDetailsCell">
+                                <rect key="frame" x="0.0" y="222" width="320" height="97"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="Cgt-xN-JtQ" id="wgC-T4-HrI">
+                                    <rect key="frame" x="0.0" y="0.0" width="320" height="96"/>
+                                    <autoresizingMask key="autoresizingMask"/>
+                                    <subviews>
+                                        <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" image="icon_calendar" translatesAutoresizingMaskIntoConstraints="NO" id="i6S-xj-nW9">
+                                            <rect key="frame" x="13" y="13" width="15" height="15"/>
+                                            <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                                        </imageView>
+                                        <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Thu, July 8 - Mon, May 12" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="yVF-Nw-ahP" customClass="VerticallyAlignedLabel">
+                                            <rect key="frame" x="45" y="9" width="196" height="22"/>
+                                            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                            <fontDescription key="fontDescription" name="HelveticaNeue-Light" family="Helvetica Neue" pointSize="15"/>
+                                            <nil key="highlightedColor"/>
+                                        </label>
+                                        <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" image="fusion14_icon_person" translatesAutoresizingMaskIntoConstraints="NO" id="zZf-hh-ijt">
+                                            <rect key="frame" x="13" y="39" width="15" height="15"/>
+                                            <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                                        </imageView>
+                                        <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="1 Guest" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="kCt-DQ-wX5" customClass="VerticallyAlignedLabel">
+                                            <rect key="frame" x="45" y="36" width="120" height="22"/>
+                                            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                            <fontDescription key="fontDescription" name="HelveticaNeue-Light" family="Helvetica Neue" pointSize="15"/>
+                                            <nil key="highlightedColor"/>
+                                        </label>
+                                        <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="4 Nights" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="4iG-8P-t2e">
+                                            <rect key="frame" x="240" y="10" width="65" height="22"/>
+                                            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                            <color key="backgroundColor" red="0.0" green="0.47058823529411764" blue="0.78431372549019607" alpha="1" colorSpace="calibratedRGB"/>
+                                            <fontDescription key="fontDescription" name="HelveticaNeue-Light" family="Helvetica Neue" pointSize="13"/>
+                                            <color key="textColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                            <nil key="highlightedColor"/>
+                                            <userDefinedRuntimeAttributes>
+                                                <userDefinedRuntimeAttribute type="number" keyPath="cornerRadius">
+                                                    <integer key="value" value="2"/>
+                                                </userDefinedRuntimeAttribute>
+                                            </userDefinedRuntimeAttributes>
+                                        </label>
+                                        <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" image="fusion_flight_points" translatesAutoresizingMaskIntoConstraints="NO" id="lkh-Jr-4Kp">
+                                            <rect key="frame" x="13" y="65" width="15" height="15"/>
+                                            <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                                        </imageView>
+                                        <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Points Earned" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Ctm-15-se8">
+                                            <rect key="frame" x="45" y="62" width="136" height="21"/>
+                                            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                            <fontDescription key="fontDescription" name="HelveticaNeue-Light" family="Helvetica Neue" pointSize="15"/>
+                                            <nil key="highlightedColor"/>
+                                        </label>
+                                        <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="+9 points" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="zDm-VZ-mdE">
+                                            <rect key="frame" x="230" y="62" width="77" height="21"/>
+                                            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                            <fontDescription key="fontDescription" name="HelveticaNeue" family="Helvetica Neue" pointSize="15"/>
+                                            <color key="textColor" red="0.0" green="0.47058823529999999" blue="0.7843137255" alpha="1" colorSpace="calibratedRGB"/>
+                                            <nil key="highlightedColor"/>
+                                        </label>
+                                    </subviews>
+                                </tableViewCellContentView>
+                                <connections>
+                                    <outlet property="labelCheckInOutDate" destination="yVF-Nw-ahP" id="FKo-ox-Vcj"/>
+                                    <outlet property="labelNumberOfGuest" destination="kCt-DQ-wX5" id="k3N-jM-Nk4"/>
+                                    <outlet property="labelNumberOfNights" destination="4iG-8P-t2e" id="2VZ-cK-Vdm"/>
+                                </connections>
+                            </tableViewCell>
+                            <tableViewCell contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" reuseIdentifier="Fusion14HotelBookingPriceCell" rowHeight="56" id="iL3-MV-qPs" customClass="Fusion14HotelBookingPriceCell">
+                                <rect key="frame" x="0.0" y="319" width="320" height="56"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="iL3-MV-qPs" id="dFp-1O-BvL">
+                                    <rect key="frame" x="0.0" y="0.0" width="320" height="55"/>
+                                    <autoresizingMask key="autoresizingMask"/>
+                                    <subviews>
+                                        <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Total:" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="jWO-oy-zZP" customClass="VerticallyAlignedLabel">
+                                            <rect key="frame" x="39" y="9" width="100" height="22"/>
+                                            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                            <fontDescription key="fontDescription" name="HelveticaNeue-Medium" family="Helvetica Neue" pointSize="15"/>
+                                            <nil key="highlightedColor"/>
+                                        </label>
+                                        <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" fixedFrame="YES" text="$1000.00" textAlignment="right" lineBreakMode="wordWrap" numberOfLines="0" minimumFontSize="13" preferredMaxLayoutWidth="86" translatesAutoresizingMaskIntoConstraints="NO" id="S1Y-3p-gZY" userLabel="Vertically Aligned Label - Price" customClass="VerticallyAlignedLabel">
+                                            <rect key="frame" x="200" y="9" width="86" height="26"/>
+                                            <autoresizingMask key="autoresizingMask" flexibleMinX="YES" flexibleMaxY="YES"/>
+                                            <fontDescription key="fontDescription" name="HelveticaNeue-Medium" family="Helvetica Neue" pointSize="20"/>
+                                            <color key="textColor" red="0.0" green="0.47058823529999999" blue="0.7843137255" alpha="1" colorSpace="calibratedRGB"/>
+                                            <color key="highlightedColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                            <size key="shadowOffset" width="0.0" height="0.0"/>
+                                        </label>
+                                        <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" image="fusion14_icon_info" translatesAutoresizingMaskIntoConstraints="NO" id="6yn-Rt-i8j">
+                                            <rect key="frame" x="290" y="14" width="16" height="16"/>
+                                            <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                                        </imageView>
+                                        <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Total with tax" textAlignment="right" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Wqb-vw-LYx">
+                                            <rect key="frame" x="200" y="35" width="86" height="17"/>
+                                            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                            <fontDescription key="fontDescription" name="HelveticaNeue" family="Helvetica Neue" pointSize="12"/>
+                                            <color key="textColor" red="0.62745098039215685" green="0.70588235294117641" blue="0.74117647058823533" alpha="1" colorSpace="calibratedRGB"/>
+                                            <nil key="highlightedColor"/>
+                                        </label>
+                                    </subviews>
+                                </tableViewCellContentView>
+                                <connections>
+                                    <outlet property="labelTotalPrice" destination="S1Y-3p-gZY" id="lz0-z1-yQi"/>
+                                </connections>
+                            </tableViewCell>
+                            <tableViewCell contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" reuseIdentifier="Fusion14HotelBookingCancellationCell" rowHeight="75" id="L6p-yq-fNs" customClass="Fusion14HotelBookingCancellationCell">
+                                <rect key="frame" x="0.0" y="375" width="320" height="75"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="L6p-yq-fNs" id="SAf-Y7-EZ3">
+                                    <rect key="frame" x="0.0" y="0.0" width="320" height="74"/>
+                                    <autoresizingMask key="autoresizingMask"/>
+                                    <subviews>
+                                        <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Cancellation Policy" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="6nX-7u-4jN" customClass="VerticallyAlignedLabel">
+                                            <rect key="frame" x="15" y="13" width="167" height="23"/>
+                                            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                            <fontDescription key="fontDescription" name="HelveticaNeue-Light" family="Helvetica Neue" pointSize="15"/>
+                                            <nil key="highlightedColor"/>
+                                        </label>
+                                        <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="By selecting this booking I have read and accept the rules &amp; restrictions." lineBreakMode="wordWrap" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" preferredMaxLayoutWidth="290" translatesAutoresizingMaskIntoConstraints="NO" id="Ba7-vl-be1" customClass="VerticallyAlignedLabel">
+                                            <rect key="frame" x="15" y="36" width="290" height="33"/>
+                                            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                            <fontDescription key="fontDescription" name="HelveticaNeue-Light" family="Helvetica Neue" pointSize="13"/>
+                                            <color key="textColor" red="0.0" green="0.47058823529411764" blue="0.78431372549019607" alpha="1" colorSpace="calibratedRGB"/>
+                                            <nil key="highlightedColor"/>
+                                        </label>
+                                    </subviews>
+                                </tableViewCellContentView>
+                            </tableViewCell>
+                            <tableViewCell contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" reuseIdentifier="Fusion14HotelBookingPaymentDetailsCell" rowHeight="45" id="BA4-6i-BFy" customClass="Fusion14HotelBookingPaymentDetailsCell">
+                                <rect key="frame" x="0.0" y="450" width="320" height="45"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="BA4-6i-BFy" id="kIN-b5-0Pa">
+                                    <rect key="frame" x="0.0" y="0.0" width="320" height="44"/>
+                                    <autoresizingMask key="autoresizingMask"/>
+                                    <subviews>
+                                        <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" image="fusion14_icon_payment" translatesAutoresizingMaskIntoConstraints="NO" id="Ill-L3-0Pw">
+                                            <rect key="frame" x="15" y="14" width="16" height="16"/>
+                                            <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                                        </imageView>
+                                        <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Payment Details" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="8V5-M9-ISj">
+                                            <rect key="frame" x="39" y="10" width="144" height="23"/>
+                                            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                            <fontDescription key="fontDescription" name="HelveticaNeue-Light" family="Helvetica Neue" pointSize="15"/>
+                                            <nil key="highlightedColor"/>
+                                        </label>
+                                        <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Mike Hilton" textAlignment="right" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="owT-xz-wDt">
+                                            <rect key="frame" x="211" y="11" width="94" height="21"/>
+                                            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                            <fontDescription key="fontDescription" name="HelveticaNeue-Light" family="Helvetica Neue" pointSize="15"/>
+                                            <nil key="highlightedColor"/>
+                                        </label>
+                                    </subviews>
+                                </tableViewCellContentView>
+                                <connections>
+                                    <outlet property="lableCardNumber" destination="owT-xz-wDt" id="L8k-nf-wLb"/>
+                                </connections>
+                            </tableViewCell>
+                        </prototypes>
+                        <connections>
+                            <outlet property="dataSource" destination="0vQ-lu-U5a" id="e9e-VP-gvr"/>
+                            <outlet property="delegate" destination="0vQ-lu-U5a" id="lrk-Wo-KB1"/>
+                        </connections>
+                    </tableView>
+                    <navigationItem key="navigationItem" id="GAj-cL-Pow"/>
+                    <connections>
+                        <outlet property="lblTotalCost" destination="mHg-c6-Y8c" id="lVD-rI-wzg"/>
+                        <outlet property="uvSlideReserve" destination="qRb-pb-nia" id="ZWK-AX-lYJ"/>
+                    </connections>
+                </tableViewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="0I1-NH-eg9" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="1102" y="-40"/>
+        </scene>
+    </scenes>
+    <resources>
+        <image name="fusion14_icon_button_arrow" width="15" height="25"/>
+        <image name="fusion14_icon_cancel_button" width="12" height="12"/>
+        <image name="fusion14_icon_info" width="16" height="16"/>
+        <image name="fusion14_icon_payment" width="16" height="16"/>
+        <image name="fusion14_icon_person" width="16" height="16"/>
+        <image name="fusion14_icon_pricetobeat" width="14" height="14"/>
+        <image name="fusion_expand_icon" width="12" height="12"/>
+        <image name="fusion_flight_points" width="15" height="15"/>
+        <image name="icon_calendar" width="12" height="14"/>
+        <image name="icon_locator" width="13" height="13"/>
+        <image name="icon_nav_calendar" width="12" height="16"/>
+        <image name="icon_nav_location" width="12" height="16"/>
+        <image name="stars_5.png" width="67" height="12"/>
+    </resources>
+    <simulatedMetricsContainer key="defaultSimulatedMetrics">
+        <simulatedStatusBarMetrics key="statusBar"/>
+        <simulatedOrientationMetrics key="orientation"/>
+        <simulatedScreenMetrics key="destination" type="retina4"/>
+    </simulatedMetricsContainer>
+</document>

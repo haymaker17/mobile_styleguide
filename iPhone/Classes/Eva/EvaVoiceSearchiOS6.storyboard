@@ -1,0 +1,137 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="5056" systemVersion="13D65" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" initialViewController="rGt-uo-IJt">
+    <dependencies>
+        <deployment defaultVersion="1296" identifier="iOS"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="3733"/>
+    </dependencies>
+    <scenes>
+        <!--Navigation Controller-->
+        <scene sceneID="4Uy-Xe-eXL">
+            <objects>
+                <navigationController definesPresentationContext="YES" id="rGt-uo-IJt" sceneMemberID="viewController">
+                    <navigationBar key="navigationBar" contentMode="scaleToFill" id="NDW-Hb-HRV">
+                        <autoresizingMask key="autoresizingMask"/>
+                    </navigationBar>
+                    <connections>
+                        <segue destination="9Pk-yc-GTS" kind="relationship" relationship="rootViewController" id="RLe-y6-ewa"/>
+                    </connections>
+                </navigationController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="P9C-J1-Bfn" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="-219" y="20"/>
+        </scene>
+        <!--Eva Voice SearchiOS6 Table View Controller-->
+        <scene sceneID="gST-wI-K0c">
+            <objects>
+                <tableViewController id="9Pk-yc-GTS" customClass="EvaVoiceSearchiOS6TableViewController" sceneMemberID="viewController">
+                    <tableView key="view" opaque="NO" clipsSubviews="YES" clearsContextBeforeDrawing="NO" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="none" allowsSelection="NO" showsSelectionImmediatelyOnTouchBegin="NO" rowHeight="44" sectionHeaderHeight="22" sectionFooterHeight="22" id="fJd-jN-WR6">
+                        <rect key="frame" x="0.0" y="0.0" width="320" height="480"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <color key="backgroundColor" cocoaTouchSystemColor="scrollViewTexturedBackgroundColor"/>
+                        <prototypes>
+                            <tableViewCell contentMode="scaleToFill" selectionStyle="blue" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" reuseIdentifier="HeaderCell" rowHeight="70" id="gur-HA-FTf" customClass="EvaHeaderCell">
+                                <rect key="frame" x="0.0" y="86" width="320" height="70"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxY="YES"/>
+                                <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="gur-HA-FTf" id="Cim-tV-OjY">
+                                    <rect key="frame" x="0.0" y="0.0" width="320" height="70"/>
+                                    <autoresizingMask key="autoresizingMask"/>
+                                    <subviews>
+                                        <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" text="Label" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="rrb-ec-c8J">
+                                            <rect key="frame" x="7" y="5" width="302" height="21"/>
+                                            <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMaxY="YES"/>
+                                            <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                            <color key="textColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                            <color key="highlightedColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                        </label>
+                                        <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" text="sdasd asdas asdas asda asd asd asd asd ads asda asd asd" lineBreakMode="tailTruncation" numberOfLines="2" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="36e-l6-ph0">
+                                            <rect key="frame" x="7" y="20" width="302" height="49"/>
+                                            <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMaxY="YES"/>
+                                            <fontDescription key="fontDescription" type="system" pointSize="15"/>
+                                            <color key="textColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                            <color key="highlightedColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                        </label>
+                                    </subviews>
+                                </tableViewCellContentView>
+                                <connections>
+                                    <outlet property="example" destination="36e-l6-ph0" id="iz7-eS-kZu"/>
+                                    <outlet property="question" destination="rrb-ec-c8J" id="dEA-ce-49v"/>
+                                </connections>
+                            </tableViewCell>
+                            <tableViewCell contentMode="right" selectionStyle="blue" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" reuseIdentifier="RightCell" rowHeight="40" id="uBd-BW-fhY" customClass="EvaMessageCell">
+                                <rect key="frame" x="0.0" y="156" width="320" height="40"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMinX="YES" flexibleMaxY="YES"/>
+                                <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="right" tableViewCell="uBd-BW-fhY" id="wqG-7a-EyE">
+                                    <rect key="frame" x="0.0" y="0.0" width="320" height="40"/>
+                                    <autoresizingMask key="autoresizingMask"/>
+                                    <subviews>
+                                        <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="right" scrollEnabled="NO" editable="NO" text="align right" textAlignment="right" id="Tbf-rQ-3zn">
+                                            <rect key="frame" x="40" y="0.0" width="280" height="40"/>
+                                            <autoresizingMask key="autoresizingMask" flexibleMinX="YES" widthSizable="YES" flexibleMaxY="YES"/>
+                                            <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
+                                            <color key="textColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                            <fontDescription key="fontDescription" type="italicSystem" pointSize="14"/>
+                                            <textInputTraits key="textInputTraits" autocapitalizationType="sentences"/>
+                                        </textView>
+                                    </subviews>
+                                    <color key="backgroundColor" red="0.1647058874" green="0.16862745579999999" blue="0.180392161" alpha="1" colorSpace="deviceRGB"/>
+                                </tableViewCellContentView>
+                                <connections>
+                                    <outlet property="aMessage" destination="Tbf-rQ-3zn" id="5jA-Dv-4dy"/>
+                                </connections>
+                            </tableViewCell>
+                            <tableViewCell contentMode="left" selectionStyle="blue" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" reuseIdentifier="LeftCell" rowHeight="40" id="84k-a8-IAF" customClass="EvaMessageCell">
+                                <rect key="frame" x="0.0" y="196" width="320" height="40"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="left" tableViewCell="84k-a8-IAF" id="snt-p2-ESw">
+                                    <rect key="frame" x="0.0" y="0.0" width="320" height="40"/>
+                                    <autoresizingMask key="autoresizingMask"/>
+                                    <subviews>
+                                        <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="left" scrollEnabled="NO" editable="NO" text="align left" id="6d4-bH-6Ik">
+                                            <rect key="frame" x="0.0" y="0.0" width="280" height="40"/>
+                                            <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                            <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
+                                            <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
+                                            <fontDescription key="fontDescription" type="system" pointSize="16"/>
+                                            <textInputTraits key="textInputTraits" autocapitalizationType="sentences"/>
+                                        </textView>
+                                    </subviews>
+                                    <color key="backgroundColor" red="0.17647059261798859" green="0.18039216101169586" blue="0.19215688109397888" alpha="1" colorSpace="deviceRGB"/>
+                                </tableViewCellContentView>
+                                <connections>
+                                    <outlet property="aMessage" destination="6d4-bH-6Ik" id="Y7Z-8G-fpz"/>
+                                </connections>
+                            </tableViewCell>
+                            <tableViewCell contentMode="scaleToFill" selectionStyle="blue" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" reuseIdentifier="EmptyCell" rowHeight="151" id="rrQ-kJ-rAE">
+                                <rect key="frame" x="0.0" y="236" width="320" height="151"/>
+                                <autoresizingMask key="autoresizingMask"/>
+                                <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="rrQ-kJ-rAE" id="bhe-aS-zb0">
+                                    <rect key="frame" x="0.0" y="0.0" width="320" height="151"/>
+                                    <autoresizingMask key="autoresizingMask"/>
+                                    <color key="backgroundColor" red="0.17647059261798859" green="0.18039216101169586" blue="0.19215688109397888" alpha="1" colorSpace="deviceRGB"/>
+                                </tableViewCellContentView>
+                            </tableViewCell>
+                        </prototypes>
+                        <sections/>
+                        <connections>
+                            <outlet property="dataSource" destination="9Pk-yc-GTS" id="eH7-5Y-x3q"/>
+                            <outlet property="delegate" destination="9Pk-yc-GTS" id="vsv-Kz-rzZ"/>
+                        </connections>
+                    </tableView>
+                    <navigationItem key="navigationItem" id="3dY-fb-BbW">
+                        <barButtonItem key="leftBarButtonItem" systemItem="cancel" id="6T8-iR-JNc"/>
+                    </navigationItem>
+                    <connections>
+                        <outlet property="cancel" destination="6T8-iR-JNc" id="haI-W1-OXA"/>
+                    </connections>
+                </tableViewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="4bh-K8-RW2" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="271" y="20"/>
+        </scene>
+    </scenes>
+    <simulatedMetricsContainer key="defaultSimulatedMetrics">
+        <simulatedStatusBarMetrics key="statusBar"/>
+        <simulatedOrientationMetrics key="orientation"/>
+        <simulatedScreenMetrics key="destination"/>
+    </simulatedMetricsContainer>
+</document>

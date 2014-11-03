@@ -1,0 +1,1851 @@
+{
+    "data": {
+        "distanceUnit": "m",
+        "hotels": [
+                   {
+                   "chainCode": "WI",
+                   "chainName": "Westin Hotels & Resorts",
+                   "contact": {
+                   "addressLine1": "",
+                   "city": "Bellevue",
+                   "country": "United States",
+                   "countryCode": "US",
+                   "phone": "425-638-1000",
+                   "state": "Washington",
+                   "street": "600 Bellevue Way NE",
+                   "tollFree": "800-WESTIN-1",
+                   "zip": "98004"
+                   },
+                   "distance": 17.505432451767,
+                   "imagePairs": [
+                                  {
+                                  "categorySequenceId": 1,
+                                  "imageHeight": 70,
+                                  "imageId": 33216,
+                                  "imageName": "http://noname.jpg",
+                                  "imageWidth": 70,
+                                  "lastModifiedBy": 1,
+                                  "lastModifiedDate": "2014-09-02T22:41:51-04:00",
+                                  "northstarId": "S76534",
+                                  "providerImageId": 1095806,
+                                  "sequenceId": 1,
+                                  "thumbnailHeight": 70,
+                                  "thumbnailName": "http://www.cfmedia.vfmleonardo.com/imageRepo/4/0/57/549/998/wes1555ex-90974-Exterior_A.jpg",
+                                  "thumbnailWidth": 70
+                                  }
+                                  ],
+                   "isPreferredChain": false,
+                   "latitude": 47.6158,
+                   "longitude": -122.2013,
+                   "name": "The Westin Bellevue",
+                   "preferences": {
+                   "companyPriority": 0,
+                   "isCompanyPreferredChain": false,
+                   "isContracted": true,
+                   "preferenceType": 3,
+                   "starRating": "5"
+                   },
+                   "propertyIds": [
+                                   {
+                                   "propertyId": "WI1555",
+                                   "source": "GDS"
+                                   },
+                                   {
+                                   "propertyId": "S76534",
+                                   "source": "NorthStar"
+                                   }
+                                   ],
+                   "rates": []
+                   },
+                   "ratesURL": "/mobile/travel/v1.0/Hotels/773647a0-2bd1-479e-9b79-f5031ee17cd1/39409/Rates",
+                   {
+                   "chainCode": "RC",
+                   "chainName": "Residence Inn by Marriott",
+                   "contact": {
+                   "addressLine1": "",
+                   "city": "Bellevue",
+                   "country": "United States",
+                   "countryCode": "US",
+                   "phone": "425-882-1222",
+                   "state": "Washington",
+                   "street": "14455 NE 29th Place",
+                   "tollFree": "800-331-3131",
+                   "zip": "98007"
+                   },
+                   "distance": 18.8847814356922,
+                   "imagePairs": [
+                                  {
+                                  "categorySequenceId": 1,
+                                  "imageHeight": 70,
+                                  "imageId": 14992,
+                                  "imageName": "http://noname.jpg",
+                                  "imageWidth": 70,
+                                  "lastModifiedBy": 1,
+                                  "lastModifiedDate": "2014-09-02T22:41:51-04:00",
+                                  "northstarId": "191353",
+                                  "providerImageId": 1073037,
+                                  "sequenceId": 1,
+                                  "thumbnailHeight": 70,
+                                  "thumbnailName": "http://www.cfmedia.vfmleonardo.com/imageRepo/3/0/49/76/132/bvuwa_phototour25_A.jpg",
+                                  "thumbnailWidth": 70
+                                  }
+                                  ],
+                   "isPreferredChain": false,
+                   "latitude": 47.6339,
+                   "longitude": -122.1472,
+                   "name": "Residence Inn by Marriott",
+                   "preferences": {
+                   "companyPriority": 0,
+                   "isCompanyPreferredChain": false,
+                   "isContracted": true,
+                   "preferenceType": 3,
+                   "starRating": "3"
+                   },
+                   "propertyIds": [
+                                   {
+                                   "propertyId": "RCBVUWA",
+                                   "source": "GDS"
+                                   },
+                                   {
+                                   "propertyId": "191353",
+                                   "source": "NorthStar"
+                                   }
+                                   ],
+                   "rates": []
+                   },
+                   {
+                   "chainCode": "MC",
+                   "chainName": "Marriott International",
+                   "contact": {
+                   "addressLine1": "",
+                   "city": "Redmond",
+                   "country": "United States",
+                   "countryCode": "US",
+                   "phone": "425-498-4000",
+                   "state": "Washington",
+                   "street": "7401 164th Ave NE",
+                   "tollFree": "800-228-9290",
+                   "zip": "98052"
+                   },
+                   "distance": 21.5797742505587,
+                   "imagePairs": [
+                                  {
+                                  "categorySequenceId": 1,
+                                  "imageHeight": 70,
+                                  "imageId": 14886,
+                                  "imageName": "http://noname.jpg",
+                                  "imageWidth": 70,
+                                  "lastModifiedBy": 1,
+                                  "lastModifiedDate": "2014-09-02T22:41:51-04:00",
+                                  "northstarId": "T15526",
+                                  "providerImageId": 1072924,
+                                  "sequenceId": 1,
+                                  "thumbnailHeight": 70,
+                                  "thumbnailName": "http://www.cfmedia.vfmleonardo.com/imageRepo/1/0/30/7/469/seamc_phototour10_A.jpg",
+                                  "thumbnailWidth": 70
+                                  }
+                                  ],
+                   "isPreferredChain": false,
+                   "latitude": 47.6709,
+                   "longitude": -122.1217,
+                   "name": "Marriott Redmond Town Center",
+                   "preferences": {
+                   "companyPriority": 0,
+                   "isCompanyPreferredChain": false,
+                   "isContracted": true,
+                   "preferenceType": 3,
+                   "starRating": ""
+                   },
+                   "propertyIds": [
+                                   {
+                                   "propertyId": "MCSEAMC",
+                                   "source": "GDS"
+                                   },
+                                   {
+                                   "propertyId": "T15526",
+                                   "source": "NorthStar"
+                                   }
+                                   ],
+                   "rates": []
+                   },
+                   {
+                   "chainCode": "EA",
+                   "chainName": "Crossland Economy Studios",
+                   "contact": {
+                   "addressLine1": "",
+                   "city": "Kent",
+                   "country": "United States",
+                   "countryCode": "US",
+                   "phone": "253-946-1744",
+                   "state": "Washington",
+                   "street": "25104 Pacific Hwy South",
+                   "tollFree": "877-276-7752",
+                   "zip": "98032"
+                   },
+                   "distance": 2.22726639795852,
+                   "imagePairs": [
+                                  {
+                                  "categorySequenceId": 1,
+                                  "imageHeight": 70,
+                                  "imageId": 21151,
+                                  "imageName": "http://noname.jpg",
+                                  "imageWidth": 70,
+                                  "lastModifiedBy": 1,
+                                  "lastModifiedDate": "2014-09-02T22:41:51-04:00",
+                                  "northstarId": "R52105",
+                                  "providerImageId": 1080439,
+                                  "sequenceId": 1,
+                                  "thumbnailHeight": 70,
+                                  "thumbnailName": "http://www.cfmedia.vfmleonardo.com/imageRepo/1/0/24/974/717/7010_A.jpg",
+                                  "thumbnailWidth": 70
+                                  }
+                                  ],
+                   "isPreferredChain": false,
+                   "latitude": 47.3812,
+                   "longitude": -122.2336,
+                   "name": "Crossland Economy Studios",
+                   "preferences": {
+                   "companyPriority": 0,
+                   "isCompanyPreferredChain": false,
+                   "isContracted": false,
+                   "preferenceType": 0,
+                   "starRating": "1"
+                   },
+                   "propertyIds": [
+                                   {
+                                   "propertyId": "EA03240",
+                                   "source": "GDS"
+                                   },
+                                   {
+                                   "propertyId": "R52105",
+                                   "source": "NorthStar"
+                                   }
+                                   ],
+                   "rates": [],
+                   "recommended": {
+                   "category": "Algorithm",
+                   "totalScore": 0.0377811252691981
+                   }
+                   },
+                   {
+                   "chainCode": "RL",
+                   "chainName": "Red Lion Hotels & Inns",
+                   "contact": {
+                   "addressLine1": "",
+                   "city": "Kent",
+                   "country": "United States",
+                   "countryCode": "US",
+                   "phone": "253-520-6670",
+                   "state": "Washington",
+                   "street": "25100 74th Ave S",
+                   "tollFree": "800-RED-LION",
+                   "zip": "98032"
+                   },
+                   "distance": 2.42361468510976,
+                   "imagePairs": [
+                                  {
+                                  "categorySequenceId": 1,
+                                  "imageHeight": 70,
+                                  "imageId": 96921,
+                                  "imageName": "http://noname.jpg",
+                                  "imageWidth": 70,
+                                  "lastModifiedBy": 1,
+                                  "lastModifiedDate": "2014-09-02T22:41:51-04:00",
+                                  "northstarId": "R98911",
+                                  "providerImageId": 1298177,
+                                  "sequenceId": 1,
+                                  "thumbnailHeight": 70,
+                                  "thumbnailName": "http://www.cfmedia.vfmleonardo.com/imageRepo/4/0/53/411/398/WAKENT-Exterior_2013_A.jpg",
+                                  "thumbnailWidth": 70
+                                  }
+                                  ],
+                   "isPreferredChain": false,
+                   "latitude": 47.3768,
+                   "longitude": -122.2422,
+                   "name": "Red Lion Inn & Suites Kent",
+                   "preferences": {
+                   "companyPriority": 0,
+                   "isCompanyPreferredChain": false,
+                   "isContracted": false,
+                   "preferenceType": 0,
+                   "starRating": "2"
+                   },
+                   "propertyIds": [
+                                   {
+                                   "propertyId": "RLWA136",
+                                   "source": "GDS"
+                                   },
+                                   {
+                                   "propertyId": "R98911",
+                                   "source": "NorthStar"
+                                   }
+                                   ],
+                   "rates": [],
+                   "recommended": {
+                   "category": "Algorithm",
+                   "totalScore": 0.064462351467071
+                   }
+                   },
+                   {
+                   "chainCode": "HJ",
+                   "chainName": "Howard Johnson",
+                   "contact": {
+                   "addressLine1": "",
+                   "city": "Kent",
+                   "country": "United States",
+                   "countryCode": "US",
+                   "phone": "253-852-7224",
+                   "state": "Washington",
+                   "street": "1233 N Central Ave",
+                   "tollFree": "800-446-5646",
+                   "zip": "98032"
+                   },
+                   "distance": 2.67282455099729,
+                   "imagePairs": [
+                                  {
+                                  "categorySequenceId": 1,
+                                  "imageHeight": 70,
+                                  "imageId": 24388,
+                                  "imageName": "http://noname.jpg",
+                                  "imageWidth": 70,
+                                  "lastModifiedBy": 1,
+                                  "lastModifiedDate": "2014-09-02T22:41:51-04:00",
+                                  "northstarId": "189804",
+                                  "providerImageId": 1084519,
+                                  "sequenceId": 1,
+                                  "thumbnailHeight": 70,
+                                  "thumbnailName": "http://www.cfmedia.vfmleonardo.com/imageRepo/1/0/27/148/266/10234_b1_A.jpg",
+                                  "thumbnailWidth": 70
+                                  }
+                                  ],
+                   "isPreferredChain": false,
+                   "latitude": 47.3941,
+                   "longitude": -122.2276,
+                   "name": "Howard Johnson Inn",
+                   "preferences": {
+                   "companyPriority": 0,
+                   "isCompanyPreferredChain": false,
+                   "isContracted": false,
+                   "preferenceType": 0,
+                   "starRating": "2"
+                   },
+                   "propertyIds": [
+                                   {
+                                   "propertyId": "HJ10234",
+                                   "source": "GDS"
+                                   },
+                                   {
+                                   "propertyId": "189804",
+                                   "source": "NorthStar"
+                                   }
+                                   ],
+                   "rates": [],
+                   "recommended": {
+                   "category": "Algorithm",
+                   "totalScore": 0.035187540497539
+                   }
+                   },
+                   {
+                   "chainCode": "DI",
+                   "chainName": "Days Inns of America, Inc.",
+                   "contact": {
+                   "addressLine1": "",
+                   "city": "Kent",
+                   "country": "United States",
+                   "countryCode": "US",
+                   "phone": "253-395-5444",
+                   "state": "Washington",
+                   "street": "22420 84th Ave S",
+                   "tollFree": "800-329-7466",
+                   "zip": "98032"
+                   },
+                   "distance": 2.91768343796826,
+                   "imagePairs": [
+                                  {
+                                  "categorySequenceId": 1,
+                                  "imageHeight": 70,
+                                  "imageId": 20053,
+                                  "imageName": "http://noname.jpg",
+                                  "imageWidth": 70,
+                                  "lastModifiedBy": 1,
+                                  "lastModifiedDate": "2014-09-02T22:41:51-04:00",
+                                  "northstarId": "M89862",
+                                  "providerImageId": 1079246,
+                                  "sequenceId": 1,
+                                  "thumbnailHeight": 70,
+                                  "thumbnailName": "http://www.cfmedia.vfmleonardo.com/imageRepo/1/0/27/137/748/20593_b1_A.jpg",
+                                  "thumbnailWidth": 70
+                                  }
+                                  ],
+                   "isPreferredChain": false,
+                   "latitude": 47.3987,
+                   "longitude": -122.2267,
+                   "name": "Days Inn",
+                   "preferences": {
+                   "companyPriority": 0,
+                   "isCompanyPreferredChain": false,
+                   "isContracted": false,
+                   "preferenceType": 0,
+                   "starRating": "2"
+                   },
+                   "propertyIds": [
+                                   {
+                                   "propertyId": "DI20593",
+                                   "source": "GDS"
+                                   },
+                                   {
+                                   "propertyId": "M89862",
+                                   "source": "NorthStar"
+                                   }
+                                   ],
+                   "rates": [],
+                   "recommended": {
+                   "category": "Algorithm",
+                   "totalScore": 0.0522475632610405
+                   }
+                   },
+                   {
+                   "chainCode": "EA",
+                   "chainName": "Extended Stay America",
+                   "contact": {
+                   "addressLine1": "",
+                   "city": "Kent",
+                   "country": "United States",
+                   "countryCode": "US",
+                   "phone": "253-872-6514",
+                   "state": "Washington",
+                   "street": "22520 83rd Ave South",
+                   "tollFree": "800-EXT-STAY",
+                   "zip": "98032"
+                   },
+                   "distance": 2.99973898316206,
+                   "imagePairs": [
+                                  {
+                                  "categorySequenceId": 1,
+                                  "imageHeight": 70,
+                                  "imageId": 21138,
+                                  "imageName": "http://noname.jpg",
+                                  "imageWidth": 70,
+                                  "lastModifiedBy": 1,
+                                  "lastModifiedDate": "2014-09-02T22:41:51-04:00",
+                                  "northstarId": "R52113",
+                                  "providerImageId": 1080426,
+                                  "sequenceId": 1,
+                                  "thumbnailHeight": 70,
+                                  "thumbnailName": "http://www.cfmedia.vfmleonardo.com/imageRepo/4/0/57/662/801/802_exterior2_A.jpg",
+                                  "thumbnailWidth": 70
+                                  }
+                                  ],
+                   "isPreferredChain": false,
+                   "latitude": 47.3998,
+                   "longitude": -122.2274,
+                   "name": "Extended Stay America Kent",
+                   "preferences": {
+                   "companyPriority": 0,
+                   "isCompanyPreferredChain": false,
+                   "isContracted": false,
+                   "preferenceType": 0,
+                   "starRating": "2"
+                   },
+                   "propertyIds": [
+                                   {
+                                   "propertyId": "EA03802",
+                                   "source": "GDS"
+                                   },
+                                   {
+                                   "propertyId": "R52113",
+                                   "source": "NorthStar"
+                                   }
+                                   ],
+                   "rates": [],
+                   "recommended": {
+                   "category": "Algorithm",
+                   "totalScore": 0.0593118594300563
+                   }
+                   },
+                   {
+                   "chainCode": "RA",
+                   "chainName": "Ramada Worldwide",
+                   "contact": {
+                   "addressLine1": "",
+                   "city": "Kent",
+                   "country": "United States",
+                   "countryCode": "US",
+                   "phone": "253-395-4300",
+                   "state": "Washington",
+                   "street": "22318 84th Ave S",
+                   "tollFree": "800-2-RAMADA",
+                   "zip": "98032"
+                   },
+                   "distance": 3.08511492231032,
+                   "imagePairs": [
+                                  {
+                                  "categorySequenceId": 1,
+                                  "imageHeight": 70,
+                                  "imageId": 98594,
+                                  "imageName": "http://noname.jpg",
+                                  "imageWidth": 70,
+                                  "lastModifiedBy": 1,
+                                  "lastModifiedDate": "2014-09-02T22:41:51-04:00",
+                                  "northstarId": "598119",
+                                  "providerImageId": 1953597,
+                                  "sequenceId": 1,
+                                  "thumbnailHeight": 70,
+                                  "thumbnailName": "http://www.cfmedia.vfmleonardo.com/imageRepo/4/0/60/190/929/48110_b1_A.jpg",
+                                  "thumbnailWidth": 70
+                                  }
+                                  ],
+                   "isPreferredChain": false,
+                   "latitude": 47.4016,
+                   "longitude": -122.2264,
+                   "name": "Ramada Kent Seattle",
+                   "preferences": {
+                   "companyPriority": 0,
+                   "isCompanyPreferredChain": false,
+                   "isContracted": false,
+                   "preferenceType": 0,
+                   "starRating": "2"
+                   },
+                   "propertyIds": [
+                                   {
+                                   "propertyId": "RA48110",
+                                   "source": "GDS"
+                                   },
+                                   {
+                                   "propertyId": "598119",
+                                   "source": "NorthStar"
+                                   }
+                                   ],
+                   "rates": [],
+                   "recommended": {
+                   "category": "Algorithm",
+                   "totalScore": 0.0758572421497873
+                   }
+                   },
+                   {
+                   "chainCode": "DI",
+                   "chainName": "Days Inns of America, Inc.",
+                   "contact": {
+                   "addressLine1": "",
+                   "city": "Auburn",
+                   "country": "United States",
+                   "countryCode": "US",
+                   "phone": "253-939-5950",
+                   "state": "Washington",
+                   "street": "1521 D St NE",
+                   "tollFree": "800-329-7466",
+                   "zip": "98002"
+                   },
+                   "distance": 3.11498597905704,
+                   "imagePairs": [
+                                  {
+                                  "categorySequenceId": 1,
+                                  "imageHeight": 70,
+                                  "imageId": 57540,
+                                  "imageName": "http://noname.jpg",
+                                  "imageWidth": 70,
+                                  "lastModifiedBy": 1,
+                                  "lastModifiedDate": "2014-09-02T22:41:51-04:00",
+                                  "northstarId": "189782",
+                                  "providerImageId": 1134337,
+                                  "sequenceId": 1,
+                                  "thumbnailHeight": 70,
+                                  "thumbnailName": "http://www.cfmedia.vfmleonardo.com/imageRepo/1/0/27/120/554/10235_b1_A.jpg",
+                                  "thumbnailWidth": 70
+                                  }
+                                  ],
+                   "isPreferredChain": false,
+                   "latitude": 47.3214,
+                   "longitude": -122.2231,
+                   "name": "Days Inn",
+                   "preferences": {
+                   "companyPriority": 0,
+                   "isCompanyPreferredChain": false,
+                   "isContracted": false,
+                   "preferenceType": 0,
+                   "starRating": "2"
+                   },
+                   "propertyIds": [
+                                   {
+                                   "propertyId": "DI10235",
+                                   "source": "GDS"
+                                   },
+                                   {
+                                   "propertyId": "189782",
+                                   "source": "NorthStar"
+                                   }
+                                   ],
+                   "rates": [],
+                   "recommended": {
+                   "category": "Algorithm",
+                   "totalScore": 0.0931293894997843
+                   }
+                   },
+                   {
+                   "chainCode": "CI",
+                   "chainName": "Comfort Inns & Suites",
+                   "contact": {
+                   "addressLine1": "",
+                   "city": "Kent",
+                   "country": "United States",
+                   "countryCode": "US",
+                   "phone": "253-872-2211",
+                   "state": "Washington",
+                   "street": "22311 84th Ave S",
+                   "tollFree": "800-4-CHOICE",
+                   "zip": "98032"
+                   },
+                   "distance": 3.1326704798664,
+                   "imagePairs": [
+                                  {
+                                  "categorySequenceId": 1,
+                                  "imageHeight": 70,
+                                  "imageId": 18065,
+                                  "imageName": "http://noname.jpg",
+                                  "imageWidth": 70,
+                                  "lastModifiedBy": 1,
+                                  "lastModifiedDate": "2014-09-02T22:41:51-04:00",
+                                  "northstarId": "P97031",
+                                  "providerImageId": 1076880,
+                                  "sequenceId": 1,
+                                  "thumbnailHeight": 70,
+                                  "thumbnailName": "http://www.cfmedia.vfmleonardo.com/imageRepo/4/0/59/268/460/WA020_Exterior_1_A.jpg",
+                                  "thumbnailWidth": 70
+                                  }
+                                  ],
+                   "isPreferredChain": false,
+                   "latitude": 47.4022,
+                   "longitude": -122.2269,
+                   "name": "Comfort Inn",
+                   "preferences": {
+                   "companyPriority": 0,
+                   "isCompanyPreferredChain": false,
+                   "isContracted": false,
+                   "preferenceType": 0,
+                   "starRating": "2"
+                   },
+                   "propertyIds": [
+                                   {
+                                   "propertyId": "CIWA020",
+                                   "source": "GDS"
+                                   },
+                                   {
+                                   "propertyId": "P97031",
+                                   "source": "NorthStar"
+                                   }
+                                   ],
+                   "rates": [],
+                   "recommended": {
+                   "category": "Algorithm",
+                   "totalScore": 0.104182554871804
+                   }
+                   },
+                   {
+                   "chainCode": "TL",
+                   "chainName": "Travelodge",
+                   "contact": {
+                   "addressLine1": "",
+                   "city": "Auburn",
+                   "country": "United States",
+                   "countryCode": "US",
+                   "phone": "253-833-7171",
+                   "state": "Washington",
+                   "street": "9 16th St NW",
+                   "tollFree": "800-578-7878",
+                   "zip": "98001"
+                   },
+                   "distance": 3.16860397742472,
+                   "imagePairs": [
+                                  {
+                                  "categorySequenceId": 1,
+                                  "imageHeight": 70,
+                                  "imageId": 31352,
+                                  "imageName": "http://noname.jpg",
+                                  "imageWidth": 70,
+                                  "lastModifiedBy": 1,
+                                  "lastModifiedDate": "2014-09-02T22:41:51-04:00",
+                                  "northstarId": "P99042",
+                                  "providerImageId": 1093091,
+                                  "sequenceId": 1,
+                                  "thumbnailHeight": 70,
+                                  "thumbnailName": "http://www.cfmedia.vfmleonardo.com/imageRepo/1/0/26/608/804/14392_b1_A.jpg",
+                                  "thumbnailWidth": 70
+                                  }
+                                  ],
+                   "isPreferredChain": false,
+                   "latitude": 47.3236,
+                   "longitude": -122.2314,
+                   "name": "Travelodge Suites",
+                   "preferences": {
+                   "companyPriority": 0,
+                   "isCompanyPreferredChain": false,
+                   "isContracted": false,
+                   "preferenceType": 0,
+                   "starRating": "2"
+                   },
+                   "propertyIds": [
+                                   {
+                                   "propertyId": "TLSEANI",
+                                   "source": "GDS"
+                                   },
+                                   {
+                                   "propertyId": "P99042",
+                                   "source": "NorthStar"
+                                   }
+                                   ],
+                   "rates": [],
+                   "recommended": {
+                   "category": "Algorithm",
+                   "totalScore": 0.0446848980131568
+                   }
+                   },
+                   {
+                   "chainCode": "BW",
+                   "chainName": "Best Western Intl Inc",
+                   "contact": {
+                   "addressLine1": "",
+                   "city": "Kent",
+                   "country": "United States",
+                   "countryCode": "US",
+                   "phone": "253-854-8767",
+                   "state": "Washington",
+                   "street": "24415 Russell Rd",
+                   "tollFree": "800-648-3311",
+                   "zip": "98032"
+                   },
+                   "distance": 3.31317018821327,
+                   "imagePairs": [
+                                  {
+                                  "categorySequenceId": 1,
+                                  "imageHeight": 70,
+                                  "imageId": 4568,
+                                  "imageName": "http://noname.jpg",
+                                  "imageWidth": 70,
+                                  "lastModifiedBy": 1,
+                                  "lastModifiedDate": "2014-09-02T22:41:51-04:00",
+                                  "northstarId": "L50694",
+                                  "providerImageId": 1056981,
+                                  "sequenceId": 1,
+                                  "thumbnailHeight": 70,
+                                  "thumbnailName": "http://www.cfmedia.vfmleonardo.com/imageRepo/2/0/51/500/426/Exterior_Dusk_A.jpg",
+                                  "thumbnailWidth": 70
+                                  }
+                                  ],
+                   "isPreferredChain": false,
+                   "latitude": 47.3814,
+                   "longitude": -122.26,
+                   "name": "Best Western Plus Plaza by the Green",
+                   "preferences": {
+                   "companyPriority": 0,
+                   "isCompanyPreferredChain": false,
+                   "isContracted": false,
+                   "preferenceType": 0,
+                   "starRating": "2"
+                   },
+                   "propertyIds": [
+                                   {
+                                   "propertyId": "BW48106",
+                                   "source": "GDS"
+                                   },
+                                   {
+                                   "propertyId": "L50694",
+                                   "source": "NorthStar"
+                                   }
+                                   ],
+                   "rates": [],
+                   "recommended": {
+                   "category": "Algorithm",
+                   "totalScore": 0.126913164044882
+                   }
+                   },
+                   {
+                   "chainCode": "CI",
+                   "chainName": "Comfort Inns & Suites",
+                   "contact": {
+                   "addressLine1": "",
+                   "city": "Auburn",
+                   "country": "United States",
+                   "countryCode": "US",
+                   "phone": "253-333-8888",
+                   "state": "Washington",
+                   "street": "One 16th St NE",
+                   "tollFree": "800-4-CHOICE",
+                   "zip": "98002"
+                   },
+                   "distance": 3.31558561939718,
+                   "imagePairs": [
+                                  {
+                                  "categorySequenceId": 1,
+                                  "imageHeight": 70,
+                                  "imageId": 18063,
+                                  "imageName": "http://noname.jpg",
+                                  "imageWidth": 70,
+                                  "lastModifiedBy": 1,
+                                  "lastModifiedDate": "2014-09-02T22:41:51-04:00",
+                                  "northstarId": "P97015",
+                                  "providerImageId": 1076877,
+                                  "sequenceId": 1,
+                                  "thumbnailHeight": 70,
+                                  "thumbnailName": "http://www.cfmedia.vfmleonardo.com/imageRepo/4/0/60/480/369/IMG_1400_A.jpg",
+                                  "thumbnailWidth": 70
+                                  }
+                                  ],
+                   "isPreferredChain": false,
+                   "latitude": 47.3228,
+                   "longitude": -122.2353,
+                   "name": "Comfort Inn",
+                   "preferences": {
+                   "companyPriority": 0,
+                   "isCompanyPreferredChain": false,
+                   "isContracted": false,
+                   "preferenceType": 0,
+                   "starRating": "2"
+                   },
+                   "propertyIds": [
+                                   {
+                                   "propertyId": "CIWA081",
+                                   "source": "GDS"
+                                   },
+                                   {
+                                   "propertyId": "P97015",
+                                   "source": "NorthStar"
+                                   }
+                                   ],
+                   "rates": [],
+                   "recommended": {
+                   "category": "Algorithm",
+                   "totalScore": 0.0620156059504086
+                   }
+                   },
+                   {
+                   "chainCode": "GZ",
+                   "chainName": "",
+                   "contact": {
+                   "addressLine1": "",
+                   "city": "Auburn",
+                   "country": "United States",
+                   "countryCode": "US",
+                   "phone": "253-833-8007",
+                   "state": "Washington",
+                   "street": "102 15th St Ne",
+                   "tollFree": "866-833-8007",
+                   "zip": "98002"
+                   },
+                   "distance": 3.34802543942424,
+                   "imagePairs": [
+                                  {
+                                  "categorySequenceId": 1,
+                                  "imageHeight": 70,
+                                  "imageId": 32215,
+                                  "imageName": "http://noname.jpg",
+                                  "imageWidth": 70,
+                                  "lastModifiedBy": 1,
+                                  "lastModifiedDate": "2014-09-02T22:41:51-04:00",
+                                  "northstarId": "L62102",
+                                  "providerImageId": 1094355,
+                                  "sequenceId": 1,
+                                  "thumbnailHeight": 70,
+                                  "thumbnailName": "http://www.cfmedia.vfmleonardo.com/imageRepo/4/0/56/352/812/01_Exterior_view_(Exterior_view)_A.jpg",
+                                  "thumbnailWidth": 70
+                                  }
+                                  ],
+                   "isPreferredChain": false,
+                   "latitude": 47.3216,
+                   "longitude": -122.2339,
+                   "name": "Cedars Inn Auburn",
+                   "preferences": {
+                   "companyPriority": 0,
+                   "isCompanyPreferredChain": false,
+                   "isContracted": false,
+                   "preferenceType": 0,
+                   "starRating": ""
+                   },
+                   "propertyIds": [
+                                   {
+                                   "propertyId": "GZSEAAU",
+                                   "source": "GDS"
+                                   },
+                                   {
+                                   "propertyId": "L62102",
+                                   "source": "NorthStar"
+                                   }
+                                   ],
+                   "rates": [],
+                   "recommended": {
+                   "category": "Algorithm",
+                   "totalScore": 0.0416378937638696
+                   }
+                   },
+                   {
+                   "chainCode": "GO",
+                   "chainName": "GuestHouse International Inns, Hotels &",
+                   "contact": {
+                   "addressLine1": "",
+                   "city": "Auburn",
+                   "country": "United States",
+                   "countryCode": "US",
+                   "phone": "253-735-9600",
+                   "state": "Washington",
+                   "street": "9 14th St NW",
+                   "tollFree": "800-214-8378",
+                   "zip": "98001"
+                   },
+                   "distance": 3.34995266631346,
+                   "imagePairs": [
+                                  {
+                                  "categorySequenceId": 1,
+                                  "imageHeight": 70,
+                                  "imageId": 34319,
+                                  "imageName": "http://noname.jpg",
+                                  "imageWidth": 70,
+                                  "lastModifiedBy": 1,
+                                  "lastModifiedDate": "2014-09-02T22:41:51-04:00",
+                                  "northstarId": "M90410",
+                                  "providerImageId": 1097451,
+                                  "sequenceId": 1,
+                                  "thumbnailHeight": 70,
+                                  "thumbnailName": "http://www.cfmedia.vfmleonardo.com/imageRepo/1/0/21/255/144/SNS_A.jpg",
+                                  "thumbnailWidth": 70
+                                  }
+                                  ],
+                   "isPreferredChain": false,
+                   "latitude": 47.3204,
+                   "longitude": -122.2311,
+                   "name": "GuestHouse Inn Auburn",
+                   "preferences": {
+                   "companyPriority": 0,
+                   "isCompanyPreferredChain": false,
+                   "isContracted": false,
+                   "preferenceType": 0,
+                   "starRating": ""
+                   },
+                   "propertyIds": [
+                                   {
+                                   "propertyId": "GOGOABR",
+                                   "source": "GDS"
+                                   },
+                                   {
+                                   "propertyId": "M90410",
+                                   "source": "NorthStar"
+                                   }
+                                   ],
+                   "rates": [],
+                   "recommended": {
+                   "category": "Algorithm",
+                   "totalScore": 0.0527810028926217
+                   }
+                   },
+                   {
+                   "chainCode": "LQ",
+                   "chainName": "La Quinta Inns & Suites",
+                   "contact": {
+                   "addressLine1": "",
+                   "city": "Auburn",
+                   "country": "United States",
+                   "countryCode": "US",
+                   "phone": "253-804-9999",
+                   "state": "Washington",
+                   "street": "225 6Th Street SE",
+                   "tollFree": "800-SLEEPLQ",
+                   "zip": "98002"
+                   },
+                   "distance": 4.41666668794452,
+                   "imagePairs": [
+                                  {
+                                  "categorySequenceId": 1,
+                                  "imageHeight": 70,
+                                  "imageId": 87830,
+                                  "imageName": "http://noname.jpg",
+                                  "imageWidth": 70,
+                                  "lastModifiedBy": 1,
+                                  "lastModifiedDate": "2014-09-02T22:41:51-04:00",
+                                  "northstarId": "T68724",
+                                  "providerImageId": 1266588,
+                                  "sequenceId": 1,
+                                  "thumbnailHeight": 70,
+                                  "thumbnailName": "http://www.cfmedia.vfmleonardo.com/imageRepo/4/0/59/204/889/Exterior_032514_1_A.jpg",
+                                  "thumbnailWidth": 70
+                                  }
+                                  ],
+                   "isPreferredChain": false,
+                   "latitude": 47.302,
+                   "longitude": -122.2265,
+                   "name": "La Quinta Inn Ste Auburn Washington",
+                   "preferences": {
+                   "companyPriority": 0,
+                   "isCompanyPreferredChain": false,
+                   "isContracted": false,
+                   "preferenceType": 0,
+                   "starRating": "2"
+                   },
+                   "propertyIds": [
+                                   {
+                                   "propertyId": "LQ6554",
+                                   "source": "GDS"
+                                   },
+                                   {
+                                   "propertyId": "T68724",
+                                   "source": "NorthStar"
+                                   }
+                                   ],
+                   "rates": [],
+                   "recommended": {
+                   "category": "Algorithm",
+                   "totalScore": 0.143115808901965
+                   }
+                   },
+                   {
+                   "chainCode": "HX",
+                   "chainName": "Hampton Inns & Suites",
+                   "contact": {
+                   "addressLine1": "",
+                   "city": "Kent",
+                   "country": "United States",
+                   "countryCode": "US",
+                   "phone": "253-872-8811",
+                   "state": "Washington",
+                   "street": "21109 66th Avenue South",
+                   "tollFree": "800-426-7866",
+                   "zip": "98032"
+                   },
+                   "distance": 4.42993652989814,
+                   "imagePairs": [
+                                  {
+                                  "categorySequenceId": 1,
+                                  "imageHeight": 70,
+                                  "imageId": 80803,
+                                  "imageName": "http://noname.jpg",
+                                  "imageWidth": 70,
+                                  "lastModifiedBy": 1,
+                                  "lastModifiedDate": "2014-09-02T22:41:51-04:00",
+                                  "northstarId": "T49851",
+                                  "providerImageId": 1225722,
+                                  "sequenceId": 1,
+                                  "thumbnailHeight": 70,
+                                  "thumbnailName": "http://www.cfmedia.vfmleonardo.com/imageRepo/3/0/37/138/802/SEAKTHX_Hotel_2_A.jpg",
+                                  "thumbnailWidth": 70
+                                  }
+                                  ],
+                   "isPreferredChain": false,
+                   "latitude": 47.4133,
+                   "longitude": -122.2525,
+                   "name": "Hampton Inn & Suites Seattle/Kent",
+                   "preferences": {
+                   "companyPriority": 0,
+                   "isCompanyPreferredChain": false,
+                   "isContracted": false,
+                   "preferenceType": 0,
+                   "starRating": "2"
+                   },
+                   "propertyIds": [
+                                   {
+                                   "propertyId": "HX12682",
+                                   "source": "GDS"
+                                   },
+                                   {
+                                   "propertyId": "T49851",
+                                   "source": "NorthStar"
+                                   }
+                                   ],
+                   "rates": [],
+                   "recommended": {
+                   "category": "Algorithm",
+                   "totalScore": 0.149071140394879
+                   }
+                   },
+                   {
+                   "chainCode": "BW",
+                   "chainName": "Best Western Intl Inc",
+                   "contact": {
+                   "addressLine1": "",
+                   "city": "Auburn",
+                   "country": "United States",
+                   "countryCode": "US",
+                   "phone": "253-887-7600",
+                   "state": "Washington",
+                   "street": "401 8th St SW",
+                   "tollFree": "888-624-4854",
+                   "zip": "98001"
+                   },
+                   "distance": 4.59813661245028,
+                   "imagePairs": [
+                                  {
+                                  "categorySequenceId": 1,
+                                  "imageHeight": 70,
+                                  "imageId": 4578,
+                                  "imageName": "http://noname.jpg",
+                                  "imageWidth": 70,
+                                  "lastModifiedBy": 1,
+                                  "lastModifiedDate": "2014-09-02T22:41:51-04:00",
+                                  "northstarId": "R89017",
+                                  "providerImageId": 1056993,
+                                  "sequenceId": 1,
+                                  "thumbnailHeight": 70,
+                                  "thumbnailName": "http://www.cfmedia.vfmleonardo.com/imageRepo/4/0/55/536/471/0000874651_A.jpg",
+                                  "thumbnailWidth": 70
+                                  }
+                                  ],
+                   "isPreferredChain": false,
+                   "latitude": 47.301,
+                   "longitude": -122.2334,
+                   "name": "Best Western Plus Peppertree Auburn Inn",
+                   "preferences": {
+                   "companyPriority": 0,
+                   "isCompanyPreferredChain": false,
+                   "isContracted": false,
+                   "preferenceType": 0,
+                   "starRating": "3"
+                   },
+                   "propertyIds": [
+                                   {
+                                   "propertyId": "BW48144",
+                                   "source": "GDS"
+                                   },
+                                   {
+                                   "propertyId": "R89017",
+                                   "source": "NorthStar"
+                                   }
+                                   ],
+                   "rates": [],
+                   "recommended": {
+                   "category": "Algorithm",
+                   "totalScore": 0.207507889936447
+                   }
+                   },
+                   {
+                   "chainCode": "BH",
+                   "chainName": "Hawthorn Suites",
+                   "contact": {
+                   "addressLine1": "",
+                   "city": "Kent",
+                   "country": "United States",
+                   "countryCode": "US",
+                   "phone": "253-395-3800",
+                   "state": "Washington",
+                   "street": "6329 S 212th St",
+                   "tollFree": "800-527-1133",
+                   "zip": "98032"
+                   },
+                   "distance": 4.7889235844889,
+                   "imagePairs": [
+                                  {
+                                  "categorySequenceId": 1,
+                                  "imageHeight": 70,
+                                  "imageId": 6136,
+                                  "imageName": "http://noname.jpg",
+                                  "imageWidth": 70,
+                                  "lastModifiedBy": 1,
+                                  "lastModifiedDate": "2014-09-02T22:41:51-04:00",
+                                  "northstarId": "G83749",
+                                  "providerImageId": 1059292,
+                                  "sequenceId": 1,
+                                  "thumbnailHeight": 70,
+                                  "thumbnailName": "http://www.cfmedia.vfmleonardo.com/imageRepo/1/0/26/924/962/30824_b1_A.jpg",
+                                  "thumbnailWidth": 70
+                                  }
+                                  ],
+                   "isPreferredChain": false,
+                   "latitude": 47.4123,
+                   "longitude": -122.266,
+                   "name": "Hawthorn Suites",
+                   "preferences": {
+                   "companyPriority": 0,
+                   "isCompanyPreferredChain": false,
+                   "isContracted": false,
+                   "preferenceType": 0,
+                   "starRating": "3"
+                   },
+                   "propertyIds": [
+                                   {
+                                   "propertyId": "BHSEAWA",
+                                   "source": "GDS"
+                                   },
+                                   {
+                                   "propertyId": "G83749",
+                                   "source": "NorthStar"
+                                   }
+                                   ],
+                   "rates": [],
+                   "recommended": {
+                   "category": "Algorithm",
+                   "totalScore": 0.275526947929874
+                   }
+                   },
+                   {
+                   "chainCode": "HX",
+                   "chainName": "Hampton Inns & Suites",
+                   "contact": {
+                   "addressLine1": "",
+                   "city": "Federal Way",
+                   "country": "United States",
+                   "countryCode": "US",
+                   "phone": "253-946-7000",
+                   "state": "Washington",
+                   "street": "31720 Gateway Center Blvd S",
+                   "tollFree": "800-426-7866",
+                   "zip": "98003"
+                   },
+                   "distance": 5.73436989072285,
+                   "imagePairs": [
+                                  {
+                                  "categorySequenceId": 1,
+                                  "imageHeight": 70,
+                                  "imageId": 80897,
+                                  "imageName": "http://noname.jpg",
+                                  "imageWidth": 70,
+                                  "lastModifiedBy": 1,
+                                  "lastModifiedDate": "2014-09-02T22:41:51-04:00",
+                                  "northstarId": "T50219",
+                                  "providerImageId": 1225996,
+                                  "sequenceId": 1,
+                                  "thumbnailHeight": 70,
+                                  "thumbnailName": "http://www.cfmedia.vfmleonardo.com/imageRepo/3/0/43/664/1/SEAFWHX_Pool1_A.jpg",
+                                  "thumbnailWidth": 70
+                                  }
+                                  ],
+                   "isPreferredChain": false,
+                   "latitude": 47.3175,
+                   "longitude": -122.2982,
+                   "name": "Hampton Inn & Suites-Seattle/Federal Way",
+                   "preferences": {
+                   "companyPriority": 0,
+                   "isCompanyPreferredChain": false,
+                   "isContracted": false,
+                   "preferenceType": 0,
+                   "starRating": "2"
+                   },
+                   "propertyIds": [
+                                   {
+                                   "propertyId": "HX12782",
+                                   "source": "GDS"
+                                   },
+                                   {
+                                   "propertyId": "T50219",
+                                   "source": "NorthStar"
+                                   }
+                                   ],
+                   "rates": [],
+                   "recommended": {
+                   "category": "Algorithm",
+                   "totalScore": 0.134553550088177
+                   }
+                   },
+                   {
+                   "chainCode": "CY",
+                   "chainName": "Courtyard by Marriott",
+                   "contact": {
+                   "addressLine1": "",
+                   "city": "Federal Way",
+                   "country": "United States",
+                   "countryCode": "US",
+                   "phone": "253-529-0200",
+                   "state": "Washington",
+                   "street": "31910 Gateway Ctr Blvd South",
+                   "tollFree": "800-321-2211",
+                   "zip": "98003"
+                   }, 
+                   "distance": 5.75364715249692, 
+                   "imagePairs": [
+                                  {
+                                  "categorySequenceId": 1, 
+                                  "imageHeight": 70, 
+                                  "imageId": 10710, 
+                                  "imageName": "http://noname.jpg", 
+                                  "imageWidth": 70, 
+                                  "lastModifiedBy": 1, 
+                                  "lastModifiedDate": "2014-09-02T22:41:51-04:00", 
+                                  "northstarId": "R90937", 
+                                  "providerImageId": 1067357, 
+                                  "sequenceId": 1, 
+                                  "thumbnailHeight": 70, 
+                                  "thumbnailName": "http://www.cfmedia.vfmleonardo.com/imageRepo/1/0/30/7/217/seafw_phototour34_A.jpg", 
+                                  "thumbnailWidth": 70
+                                  }
+                                  ], 
+                   "isPreferredChain": false, 
+                   "latitude": 47.3173, 
+                   "longitude": -122.2985, 
+                   "name": "Courtyard by Marriott", 
+                   "preferences": {
+                   "companyPriority": 0, 
+                   "isCompanyPreferredChain": false, 
+                   "isContracted": false, 
+                   "preferenceType": 0, 
+                   "starRating": "3"
+                   }, 
+                   "propertyIds": [
+                                   {
+                                   "propertyId": "CYSEAFW", 
+                                   "source": "GDS"
+                                   }, 
+                                   {
+                                   "propertyId": "R90937", 
+                                   "source": "NorthStar"
+                                   }
+                                   ], 
+                   "rates": [], 
+                   "recommended": {
+                   "category": "Algorithm", 
+                   "totalScore": 0.349944978569717
+                   }
+                   }, 
+                   {
+                   "chainCode": "MX", 
+                   "chainName": "Motel 6, Inc.", 
+                   "contact": {
+                   "addressLine1": "", 
+                   "city": "Seattle", 
+                   "country": "United States", 
+                   "countryCode": "US", 
+                   "phone": "206-824-9902", 
+                   "state": "Washington", 
+                   "street": "20651 Military Rd S", 
+                   "tollFree": "800-466-8356", 
+                   "zip": "98198"
+                   }, 
+                   "distance": 5.79252436918702, 
+                   "imagePairs": [
+                                  {
+                                  "categorySequenceId": 1, 
+                                  "imageHeight": 70, 
+                                  "imageId": 26566, 
+                                  "imageName": "http://noname.jpg", 
+                                  "imageWidth": 70, 
+                                  "lastModifiedBy": 1, 
+                                  "lastModifiedDate": "2014-09-02T22:41:51-04:00", 
+                                  "northstarId": "G40969", 
+                                  "providerImageId": 1087309, 
+                                  "sequenceId": 1, 
+                                  "thumbnailHeight": 70, 
+                                  "thumbnailName": "http://www.cfmedia.vfmleonardo.com/imageRepo/2/0/52/176/780/m6_0736_front2_A.jpg", 
+                                  "thumbnailWidth": 70
+                                  }
+                                  ], 
+                   "isPreferredChain": false, 
+                   "latitude": 47.4191, 
+                   "longitude": -122.2862, 
+                   "name": "Motel 6 Seattle South", 
+                   "preferences": {
+                   "companyPriority": 0, 
+                   "isCompanyPreferredChain": false, 
+                   "isContracted": false, 
+                   "preferenceType": 0, 
+                   "starRating": "1"
+                   }, 
+                   "propertyIds": [
+                                   {
+                                   "propertyId": "MX736", 
+                                   "source": "GDS"
+                                   }, 
+                                   {
+                                   "propertyId": "G40969", 
+                                   "source": "NorthStar"
+                                   }
+                                   ], 
+                   "rates": [], 
+                   "recommended": {
+                   "category": "Algorithm", 
+                   "totalScore": 0.02970547351381
+                   }
+                   }, 
+                   {
+                   "chainCode": "BW", 
+                   "chainName": "Best Western Intl Inc", 
+                   "contact": {
+                   "addressLine1": "", 
+                   "city": "Federal Way", 
+                   "country": "United States", 
+                   "countryCode": "US", 
+                   "phone": "253-529-4000", 
+                   "state": "Washington", 
+                   "street": "32124 25th Ave S", 
+                   "tollFree": "800-WESTERN", 
+                   "zip": "98003-6014"
+                   }, 
+                   "distance": 5.95008977266057, 
+                   "imagePairs": [
+                                  {
+                                  "categorySequenceId": 1, 
+                                  "imageHeight": 70, 
+                                  "imageId": 84789, 
+                                  "imageName": "http://noname.jpg", 
+                                  "imageWidth": 70, 
+                                  "lastModifiedBy": 1, 
+                                  "lastModifiedDate": "2014-09-02T22:41:51-04:00", 
+                                  "northstarId": "S09964", 
+                                  "providerImageId": 1247822, 
+                                  "sequenceId": 1, 
+                                  "thumbnailHeight": 70, 
+                                  "thumbnailName": "http://www.cfmedia.vfmleonardo.com/imageRepo/3/0/42/396/165/EXTERIOR_A.jpg", 
+                                  "thumbnailWidth": 70
+                                  }
+                                  ], 
+                   "isPreferredChain": false, 
+                   "latitude": 47.315, 
+                   "longitude": -122.3013, 
+                   "name": "Best Western Plus Evergreen Inn & Suites", 
+                   "preferences": {
+                   "companyPriority": 0, 
+                   "isCompanyPreferredChain": false, 
+                   "isContracted": false, 
+                   "preferenceType": 0, 
+                   "starRating": "3"
+                   }, 
+                   "propertyIds": [
+                                   {
+                                   "propertyId": "BW48171", 
+                                   "source": "GDS"
+                                   }, 
+                                   {
+                                   "propertyId": "S09964", 
+                                   "source": "NorthStar"
+                                   }
+                                   ], 
+                   "rates": [], 
+                   "recommended": {
+                   "category": "Algorithm", 
+                   "totalScore": 0.270411633035121
+                   }
+                   }, 
+                   {
+                   "chainCode": "BV", 
+                   "chainName": "Americas Best Value Inn", 
+                   "contact": {
+                   "addressLine1": "", 
+                   "city": "Sea Tac", 
+                   "country": "United States", 
+                   "countryCode": "US", 
+                   "phone": "206-824-6930", 
+                   "state": "Washington", 
+                   "street": "20620 International Blvd", 
+                   "tollFree": "888-315-2378", 
+                   "zip": "98198"
+                   }, 
+                   "distance": 5.9951531033393, 
+                   "imagePairs": [
+                                  {
+                                  "categorySequenceId": 1, 
+                                  "imageHeight": 70, 
+                                  "imageId": 55570, 
+                                  "imageName": "http://noname.jpg", 
+                                  "imageWidth": 70, 
+                                  "lastModifiedBy": 1, 
+                                  "lastModifiedDate": "2014-09-02T22:41:51-04:00", 
+                                  "northstarId": "P86358", 
+                                  "providerImageId": 1129862, 
+                                  "sequenceId": 1, 
+                                  "thumbnailHeight": 70, 
+                                  "thumbnailName": "http://www.cfmedia.vfmleonardo.com/imageRepo/4/0/56/720/720/Front_Exterior_22822789_A.jpg", 
+                                  "thumbnailWidth": 70
+                                  }
+                                  ], 
+                   "isPreferredChain": false, 
+                   "latitude": 47.4159, 
+                   "longitude": -122.2959, 
+                   "name": "Americas Best Value Inn", 
+                   "preferences": {
+                   "companyPriority": 0, 
+                   "isCompanyPreferredChain": false, 
+                   "isContracted": false, 
+                   "preferenceType": 0, 
+                   "starRating": "2"
+                   }, 
+                   "propertyIds": [
+                                   {
+                                   "propertyId": "BVMRATE", 
+                                   "source": "GDS"
+                                   }, 
+                                   {
+                                   "propertyId": "P86358", 
+                                   "source": "NorthStar"
+                                   }
+                                   ], 
+                   "rates": [], 
+                   "recommended": {
+                   "category": "Algorithm", 
+                   "totalScore": 0.0522475632610405
+                   }
+                   }, 
+                   {
+                   "chainCode": "MX", 
+                   "chainName": "Motel 6, Inc.", 
+                   "contact": {
+                   "addressLine1": "", 
+                   "city": "Seattle", 
+                   "country": "United States", 
+                   "countryCode": "US", 
+                   "phone": "206-248-9000", 
+                   "state": "Washington", 
+                   "street": "18900 47th Ave S", 
+                   "tollFree": "800-4-MOTEL6", 
+                   "zip": "98188"
+                   }, 
+                   "distance": 6.00247149024939, 
+                   "imagePairs": [
+                                  {
+                                  "categorySequenceId": 1, 
+                                  "imageHeight": 70, 
+                                  "imageId": 26318, 
+                                  "imageName": "http://noname.jpg", 
+                                  "imageWidth": 70, 
+                                  "lastModifiedBy": 1, 
+                                  "lastModifiedDate": "2014-09-02T22:41:51-04:00", 
+                                  "northstarId": "A77768", 
+                                  "providerImageId": 1087038, 
+                                  "sequenceId": 1, 
+                                  "thumbnailHeight": 70, 
+                                  "thumbnailName": "http://www.cfmedia.vfmleonardo.com/imageRepo/4/0/53/405/706/m6_4690_exterior2_A.jpg", 
+                                  "thumbnailWidth": 70
+                                  }
+                                  ], 
+                   "isPreferredChain": false, 
+                   "latitude": 47.431, 
+                   "longitude": -122.2737, 
+                   "name": "Motel 6 Seattle Sea Tac Arpt South", 
+                   "preferences": {
+                   "companyPriority": 0, 
+                   "isCompanyPreferredChain": false, 
+                   "isContracted": false, 
+                   "preferenceType": 0, 
+                   "starRating": "1"
+                   }, 
+                   "propertyIds": [
+                                   {
+                                   "propertyId": "MX090", 
+                                   "source": "GDS"
+                                   }, 
+                                   {
+                                   "propertyId": "A77768", 
+                                   "source": "NorthStar"
+                                   }
+                                   ], 
+                   "rates": [], 
+                   "recommended": {
+                   "category": "Algorithm", 
+                   "totalScore": 0.0960341140861174
+                   }
+                   }, 
+                   {
+                   "chainCode": "BW", 
+                   "chainName": "Best Western Intl Inc", 
+                   "contact": {
+                   "addressLine1": "", 
+                   "city": "Sea Tac", 
+                   "country": "United States", 
+                   "countryCode": "US", 
+                   "phone": "206-878-3300", 
+                   "state": "Washington", 
+                   "street": "20717 International Blvd", 
+                   "tollFree": "800-648-3311", 
+                   "zip": "98198"
+                   }, 
+                   "distance": 6.09291209716075, 
+                   "imagePairs": [
+                                  {
+                                  "categorySequenceId": 1, 
+                                  "imageHeight": 70, 
+                                  "imageId": 4562, 
+                                  "imageName": "http://noname.jpg", 
+                                  "imageWidth": 70, 
+                                  "lastModifiedBy": 1, 
+                                  "lastModifiedDate": "2014-09-02T22:41:51-04:00", 
+                                  "northstarId": "802638", 
+                                  "providerImageId": 1056975, 
+                                  "sequenceId": 1, 
+                                  "thumbnailHeight": 70, 
+                                  "thumbnailName": "http://www.cfmedia.vfmleonardo.com/imageRepo/2/0/53/62/713/Ext_night_A.jpg", 
+                                  "thumbnailWidth": 70
+                                  }
+                                  ], 
+                   "isPreferredChain": false, 
+                   "latitude": 47.4169, 
+                   "longitude": -122.2974, 
+                   "name": "Best Western Arpt Executel", 
+                   "preferences": {
+                   "companyPriority": 0, 
+                   "isCompanyPreferredChain": false, 
+                   "isContracted": false, 
+                   "preferenceType": 0, 
+                   "starRating": "3"
+                   }, 
+                   "propertyIds": [
+                                   {
+                                   "propertyId": "BW48077", 
+                                   "source": "GDS"
+                                   }, 
+                                   {
+                                   "propertyId": "802638", 
+                                   "source": "NorthStar"
+                                   }
+                                   ], 
+                   "rates": [], 
+                   "recommended": {
+                   "category": "Algorithm", 
+                   "totalScore": 0.228712548128736
+                   }
+                   }, 
+                   {
+                   "chainCode": "SZ", 
+                   "chainName": "Sleep Inn", 
+                   "contact": {
+                   "addressLine1": "", 
+                   "city": "Sea Tac", 
+                   "country": "United States", 
+                   "countryCode": "US", 
+                   "phone": "206-878-3600", 
+                   "state": "Washington", 
+                   "street": "20406 International Blvd", 
+                   "tollFree": "800-4-CHOICE", 
+                   "zip": "98198"
+                   }, 
+                   "distance": 6.14670511376509, 
+                   "imagePairs": [
+                                  {
+                                  "categorySequenceId": 1, 
+                                  "imageHeight": 70, 
+                                  "imageId": 30942, 
+                                  "imageName": "http://noname.jpg", 
+                                  "imageWidth": 70, 
+                                  "lastModifiedBy": 1, 
+                                  "lastModifiedDate": "2014-09-02T22:41:51-04:00", 
+                                  "northstarId": "S09972", 
+                                  "providerImageId": 1092561, 
+                                  "sequenceId": 1, 
+                                  "thumbnailHeight": 70, 
+                                  "thumbnailName": "http://www.cfmedia.vfmleonardo.com/imageRepo/2/0/51/267/55/Exterior5_A.jpg", 
+                                  "thumbnailWidth": 70
+                                  }
+                                  ], 
+                   "isPreferredChain": false, 
+                   "latitude": 47.4189, 
+                   "longitude": -122.2965, 
+                   "name": "Sleep Inn", 
+                   "preferences": {
+                   "companyPriority": 0, 
+                   "isCompanyPreferredChain": false, 
+                   "isContracted": false, 
+                   "preferenceType": 0, 
+                   "starRating": "2"
+                   }, 
+                   "propertyIds": [
+                                   {
+                                   "propertyId": "SZWA090", 
+                                   "source": "GDS"
+                                   }, 
+                                   {
+                                   "propertyId": "S09972", 
+                                   "source": "NorthStar"
+                                   }
+                                   ], 
+                   "rates": [], 
+                   "recommended": {
+                   "category": "Algorithm", 
+                   "totalScore": 0.064462351467071
+                   }
+                   }, 
+                   {
+                   "chainCode": "IR", 
+                   "chainName": "", 
+                   "contact": {
+                   "addressLine1": "", 
+                   "city": "Sea Tac", 
+                   "country": "United States", 
+                   "countryCode": "US", 
+                   "phone": "206-878-3310", 
+                   "state": "Washington", 
+                   "street": "20045 International Blvd", 
+                   "tollFree": "800-872-0202", 
+                   "zip": "98198"
+                   }, 
+                   "distance": 6.30096266190067, 
+                   "imagePairs": [
+                                  {
+                                  "categorySequenceId": 1, 
+                                  "imageHeight": 450, 
+                                  "imageId": 86265, 
+                                  "imageName": "http://www.vfmii.com/medlib3/orbitz_bulk_photo/42550224/42550224.jpg", 
+                                  "imageWidth": 600, 
+                                  "lastModifiedBy": -1, 
+                                  "lastModifiedDate": "2014-01-04T22:57:00-05:00", 
+                                  "northstarId": "191639", 
+                                  "providerImageId": 42550223, 
+                                  "sequenceId": 1, 
+                                  "thumbnailHeight": 70, 
+                                  "thumbnailName": "http://www.vfmii.com/medlib3/orbitz_bulk_photo/42550225.jpg", 
+                                  "thumbnailWidth": 70
+                                  }, 
+                                  {
+                                  "categorySequenceId": 1, 
+                                  "imageHeight": 300, 
+                                  "imageId": 86266, 
+                                  "imageName": "http://www.vfmii.com/medlib3/orbitz_bulk_photo/42550228/42550228.jpg", 
+                                  "imageWidth": 451, 
+                                  "lastModifiedBy": -1, 
+                                  "lastModifiedDate": "2014-01-04T22:57:00-05:00", 
+                                  "northstarId": "191639", 
+                                  "providerImageId": 42550227, 
+                                  "sequenceId": 2, 
+                                  "thumbnailHeight": 70, 
+                                  "thumbnailName": "http://www.vfmii.com/medlib3/orbitz_bulk_photo/42550229.jpg", 
+                                  "thumbnailWidth": 70
+                                  }, 
+                                  {
+                                  "categorySequenceId": 1, 
+                                  "imageHeight": 380, 
+                                  "imageId": 1939386, 
+                                  "imageName": "http://www.vfmii.com/medlib3/orbitz_bulk_photo/42550248/42550248.jpg", 
+                                  "imageWidth": 600, 
+                                  "lastModifiedBy": -1, 
+                                  "lastModifiedDate": "2014-01-04T22:57:00-05:00", 
+                                  "northstarId": "191639", 
+                                  "providerImageId": 42550247, 
+                                  "sequenceId": 6, 
+                                  "thumbnailHeight": 70, 
+                                  "thumbnailName": "http://www.vfmii.com/medlib3/orbitz_bulk_photo/42550249.jpg", 
+                                  "thumbnailWidth": 70
+                                  }, 
+                                  {
+                                  "categorySequenceId": 2, 
+                                  "imageHeight": 450, 
+                                  "imageId": 86111, 
+                                  "imageName": "http://www.vfmii.com/medlib3/orbitz_bulk_photo/42550236/42550236.jpg", 
+                                  "imageWidth": 600, 
+                                  "lastModifiedBy": -1, 
+                                  "lastModifiedDate": "2014-01-04T22:57:00-05:00", 
+                                  "northstarId": "191639", 
+                                  "providerImageId": 42550235, 
+                                  "sequenceId": 3, 
+                                  "thumbnailHeight": 70, 
+                                  "thumbnailName": "http://www.vfmii.com/medlib3/orbitz_bulk_photo/42550237.jpg", 
+                                  "thumbnailWidth": 70
+                                  }, 
+                                  {
+                                  "categorySequenceId": 3, 
+                                  "imageHeight": 450, 
+                                  "imageId": 1939385, 
+                                  "imageName": "http://www.vfmii.com/medlib3/orbitz_bulk_photo/42550240/42550240.jpg", 
+                                  "imageWidth": 600, 
+                                  "lastModifiedBy": -1, 
+                                  "lastModifiedDate": "2014-01-04T22:57:00-05:00", 
+                                  "northstarId": "191639", 
+                                  "providerImageId": 42550239, 
+                                  "sequenceId": 4, 
+                                  "thumbnailHeight": 70, 
+                                  "thumbnailName": "http://www.vfmii.com/medlib3/orbitz_bulk_photo/42550241.jpg", 
+                                  "thumbnailWidth": 70
+                                  }, 
+                                  {
+                                  "categorySequenceId": 4, 
+                                  "imageHeight": 450, 
+                                  "imageId": 1939387, 
+                                  "imageName": "http://www.vfmii.com/medlib3/orbitz_bulk_photo/42550244/42550244.jpg", 
+                                  "imageWidth": 600, 
+                                  "lastModifiedBy": -1, 
+                                  "lastModifiedDate": "2014-01-04T22:57:00-05:00", 
+                                  "northstarId": "191639", 
+                                  "providerImageId": 42550243, 
+                                  "sequenceId": 5, 
+                                  "thumbnailHeight": 70, 
+                                  "thumbnailName": "http://www.vfmii.com/medlib3/orbitz_bulk_photo/42550245.jpg", 
+                                  "thumbnailWidth": 70
+                                  }
+                                  ], 
+                   "isPreferredChain": false, 
+                   "latitude": 47.4222, 
+                   "longitude": -122.2967, 
+                   "name": "Skyway Inn Hotel", 
+                   "preferences": {
+                   "companyPriority": 0, 
+                   "isCompanyPreferredChain": false, 
+                   "isContracted": false, 
+                   "preferenceType": 0, 
+                   "starRating": ""
+                   }, 
+                   "propertyIds": [
+                                   {
+                                   "propertyId": "IRSKYWA", 
+                                   "source": "GDS"
+                                   }, 
+                                   {
+                                   "propertyId": "191639", 
+                                   "source": "NorthStar"
+                                   }
+                                   ], 
+                   "rates": [], 
+                   "recommended": {
+                   "category": "Algorithm", 
+                   "totalScore": 0.0758572421497873
+                   }
+                   }, 
+                   {
+                   "chainCode": "FN", 
+                   "chainName": "Fairfield Inn & Suites by Marriott", 
+                   "contact": {
+                   "addressLine1": "", 
+                   "city": "Sea Tac", 
+                   "country": "United States", 
+                   "countryCode": "US", 
+                   "phone": "206-824-9909", 
+                   "state": "Washington", 
+                   "street": "19631 International Blvd", 
+                   "tollFree": "888-236-2427", 
+                   "zip": "98188"
+                   }, 
+                   "distance": 6.45424677944093, 
+                   "imagePairs": [
+                                  {
+                                  "categorySequenceId": 1, 
+                                  "imageHeight": 70, 
+                                  "imageId": 11796, 
+                                  "imageName": "http://noname.jpg", 
+                                  "imageWidth": 70, 
+                                  "lastModifiedBy": 1, 
+                                  "lastModifiedDate": "2014-09-02T22:41:51-04:00", 
+                                  "northstarId": "P56637", 
+                                  "providerImageId": 1068497, 
+                                  "sequenceId": 1, 
+                                  "thumbnailHeight": 70, 
+                                  "thumbnailName": "http://www.cfmedia.vfmleonardo.com/imageRepo/3/0/42/286/351/seata_phototour11_A.jpg", 
+                                  "thumbnailWidth": 70
+                                  }
+                                  ], 
+                   "isPreferredChain": false, 
+                   "latitude": 47.4259, 
+                   "longitude": -122.2962, 
+                   "name": "Fairfield Inn by Marriott Seatac Airport", 
+                   "preferences": {
+                   "companyPriority": 0, 
+                   "isCompanyPreferredChain": false, 
+                   "isContracted": false, 
+                   "preferenceType": 0, 
+                   "starRating": "2"
+                   }, 
+                   "propertyIds": [
+                                   {
+                                   "propertyId": "FNSEATA", 
+                                   "source": "GDS"
+                                   }, 
+                                   {
+                                   "propertyId": "P56637", 
+                                   "source": "NorthStar"
+                                   }
+                                   ], 
+                   "rates": [], 
+                   "recommended": {
+                   "category": "Algorithm", 
+                   "totalScore": 0.0996285024606249
+                   }
+                   }
+                   ], 
+        "inventoryId": "15063106-c76b-47d3-b4f7-7bb92c29ec4d", 
+        "limit": 30, 
+        "offSet": 0, 
+        "polling": {
+            "href": "/mobile/travel/v1.0/Hotels/15063106-c76b-47d3-b4f7-7bb92c29ec4d/Poll?seq=1&radius=5&distanceUnit=m&limit=30&offset=0"
+        }, 
+        "radius": 5, 
+        "searchDone": false, 
+        "totalCount": 30, 
+        "violations": []
+    }
+}

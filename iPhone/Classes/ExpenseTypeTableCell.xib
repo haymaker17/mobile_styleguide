@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="4514" systemVersion="13B42" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES">
+    <dependencies>
+        <deployment defaultVersion="1536" identifier="iOS"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="3747"/>
+    </dependencies>
+    <objects>
+        <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner"/>
+        <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
+        <tableViewCell contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" id="aA9-6C-rvf" userLabel="Expense Type Table Cell" customClass="ExpenseTypeTableCell">
+            <rect key="frame" x="0.0" y="0.0" width="520" height="60"/>
+            <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+            <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="aA9-6C-rvf" id="0Hl-ys-44Z">
+                <rect key="frame" x="0.0" y="0.0" width="520" height="59"/>
+                <autoresizingMask key="autoresizingMask"/>
+                <subviews>
+                    <textView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleToFill" bounces="NO" scrollEnabled="NO" showsHorizontalScrollIndicator="NO" showsVerticalScrollIndicator="NO" delaysContentTouches="NO" canCancelContentTouches="NO" bouncesZoom="NO" editable="NO" selectable="NO" translatesAutoresizingMaskIntoConstraints="NO" id="gRv-HA-KKG">
+                        <rect key="frame" x="8" y="8" width="505" height="44"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
+                        <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                        <textInputTraits key="textInputTraits"/>
+                    </textView>
+                </subviews>
+                <constraints>
+                    <constraint firstItem="gRv-HA-KKG" firstAttribute="top" secondItem="0Hl-ys-44Z" secondAttribute="top" constant="8" id="06c-oC-DPY"/>
+                    <constraint firstAttribute="trailing" secondItem="gRv-HA-KKG" secondAttribute="trailing" constant="7" id="XeA-6c-gqv"/>
+                    <constraint firstAttribute="bottom" secondItem="gRv-HA-KKG" secondAttribute="bottom" constant="7" id="c35-Lv-eCT"/>
+                    <constraint firstItem="gRv-HA-KKG" firstAttribute="leading" secondItem="0Hl-ys-44Z" secondAttribute="leading" constant="8" id="jZF-2P-8xF"/>
+                </constraints>
+            </tableViewCellContentView>
+            <connections>
+                <outlet property="text" destination="gRv-HA-KKG" id="stN-V2-fzq"/>
+            </connections>
+        </tableViewCell>
+    </objects>
+</document>

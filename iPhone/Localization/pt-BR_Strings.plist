@@ -1,0 +1,3932 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key># of Cars</key>
+	<string>Nº de automóveis</string>
+	<key>%@ has been submitted</key>
+	<string>%@ foi submetida</string>
+	<key>%@ km</key>
+	<string>%@ km</string>
+	<key>%@ kms</key>
+	<string>%@ km</string>
+	<key>%@ mile</key>
+	<string>%@ milha</string>
+	<key>%@ miles</key>
+	<string>%@ milhas</string>
+	<key>%@ of your colleagues are staying here on your check-in date</key>
+	<string>%@ de seus colegas ficarão aqui na data de check-in</string>
+	<key>%@ of your colleagues' favourite</key>
+	<string>%@ dos favoritos de seus colegas</string>
+	<key>%@ per day</key>
+	<string>%@ por dia</string>
+	<key>%d Hour and %d Minute(s)</key>
+	<string>%d Hora e %d minuto(s)</string>
+	<key>%d Hours and %d Minute(s)</key>
+	<string>%d Horas e %d minuto(s)</string>
+	<key>%d Minute(s)</key>
+	<string>%d Minuto(s)</string>
+	<key>(Refundable)</key>
+	<string>(Reembolsável)</string>
+	<key>1 Stop</key>
+	<string>1 parada</string>
+	<key>@Concur2Go Twitter Feed</key>
+	<string>Importação do Twitter AConcur2Go</string>
+	<key>A Receipt is</key>
+	<string>Um recibo aparece anexado a esta despesa no servidor, mas o recibo não existe mais no gerenciador de recibos.  Anexe novamente o recibo a esta despesa e salve-o.</string>
+	<key>ACTIVEREQUESTS</key>
+	<string>SOLICITAÇÕES ATIVAS</string>
+	<key>ACTIVE_ENTRIES</key>
+	<string>Relatório</string>
+	<key>ACTIVE_REPORTS</key>
+	<string>Relatórios ativos</string>
+	<key>ADD_CAR_MILEAGE_HOME_NOT_SUPPORTED</key>
+	<string>Nenhuma milhagem de automóvel foi encontrada para a sua configuração pessoal de automóvel - ou -  sua configuração particular de tarifa de automóvel não é suportada atualmente.  Adicione sua despesa de milhagem em um relatório via dispositivo móvel ou através da web.</string>
+	<key>ADD_CAR_MILEAGE_NOT_SUPPORTED</key>
+	<string>Nenhuma milhagem de automóvel foi encontrada para a sua configuração pessoal de automóvel - ou -  sua configuração particular de tarifa de automóvel não é suportada atualmente.</string>
+	<key>ADD_EXISTING_CARD</key>
+	<string>Este cartão específico já foi adicionado e não pode ser adicionado novamente.</string>
+	<key>ADD_EXPENSE_OFFLINE_NOT_SUPPORTED</key>
+	<string>A adição de despesa ainda não é suportada em modo off-line.</string>
+	<key>ADD_TO_RPT_CONFIRM_MSG</key>
+	<string>Adicionar as despesas selecionadas ao relatório? Você pode anexar recibos e editar despesas após adicioná-los a um relatório.</string>
+	<key>ADD_TO_RPT_CONFIRM_TITLE</key>
+	<string>Confirmar</string>
+	<key>ADD_YODLEE_CARD_COMPLETE_MSG</key>
+	<string>Seu cartão que termina com %@ foi adicionado à sua conta SmartExpense.</string>
+	<key>ADD_YODLEE_CARD_FAILED_MSG</key>
+	<string>Falha ao adicionar seu cartão de crédito.  Tente mais tarde.</string>
+	<key>ADD_YODLEE_CARD_INSTRUCTION</key>
+	<string>Digite as informações de login da sua conta. O Concur criptografará e usará estas informações com segurança para fazer download dos seus encargos de cartão.</string>
+	<key>AIR_BOOKING</key>
+	<string>Reserva aérea</string>
+	<key>AIR_BOOKING_DISABLED_MSG</key>
+	<string>Sua empresa desativou reservas aéreas no dispositivo móvel. Reserve seu voo on-line ou chamando sua agência de viagem.</string>
+	<key>AIR_BOOKING_PROFILE_1_MSG</key>
+	<string>Seu perfil de viagem exige um valor para Segundo nome, Gênero e Data de nascimento. Efetue login na versão web do Concur viagens e selecione Perfil no menu.</string>
+	<key>AIR_BOOKING_PROFILE_21_MSG</key>
+	<string>Seu perfil de viagem nunca foi salvo e precisa ser salvo pelo menos uma vez antes de reservar. Efetue login na versão web do Concur viagens, selecione Perfil e salve-o.</string>
+	<key>AIR_BOOKING_PROFILE_22_MSG</key>
+	<string>Sua configuração de código/tipo de faturamento de viagem exige a existência de projetos. Entre em contato com o administrador de sua empresa para configurar os projetos apropriados.</string>
+	<key>AIR_BOOKING_PROFILE_23_MSG</key>
+	<string>Vinnet não existe mais! O cliente não deve receber este código de verificação de perfil.</string>
+	<key>AIR_BOOKING_PROFILE_24_MSG</key>
+	<string>Seu perfil de viagem exige um valor para telefone celular. Efetue login na versão web do Concur viagens e selecione Perfil no menu.</string>
+	<key>AIR_BOOKING_PROFILE_25_MSG</key>
+	<string>Seu perfil de viagem exige um valor para nacionalidade do passaporte. Efetue login na versão web do Concur viagens e selecione Perfil no menu.</string>
+	<key>AIR_BOOKING_PROFILE_26_MSG</key>
+	<string>Seu perfil de viagem exige um valor para Cargo. Efetue login na versão web do Concur viagens e selecione Perfil no menu.</string>
+	<key>AIR_BOOKING_PROFILE_27_MSG</key>
+	<string>Seu perfil de viagem exige um valor para a unidade Org. Efetue login na versão web do Concur viagens e selecione Perfil no menu.</string>
+	<key>AIR_BOOKING_PROFILE_28_MSG</key>
+	<string>Seu perfil de viagem exige um valor para observação no nome. Efetue login na versão web do Concur viagens e selecione Perfil no menu.\nOBSERVAÇÃO: Este campo pode ter um rótulo personalizado. Se não o encontrar, entre em contato com o administrador de sua empresa.</string>
+	<key>AIR_BOOKING_PROFILE_29_MSG</key>
+	<string>Seu perfil de viagem exige um valor para Gerente. Efetue login na versão web do Concur viagens e selecione Perfil no menu.</string>
+	<key>AIR_BOOKING_PROFILE_2_MSG</key>
+	<string>Antes de poder reservar viagens aéreas, você precisa preencher seu perfil de viagem. Efetue login na versão web do Concur viagens e selecione Perfil no menu.</string>
+	<key>AIR_BOOKING_PROFILE_30_MSG</key>
+	<string>Seu perfil de viagem exige um valor para ID do empregado. Efetue login na versão web do Concur viagem e selecione Perfil no menu.</string>
+	<key>AIR_BOOKING_PROFILE_31_MSG</key>
+	<string>Seu perfil de viagem exige um endereço de e-mail válido. Efetue login na versão web do Concur viagens e selecione Perfil no menu.</string>
+	<key>AIR_BOOKING_PROFILE_32_MSG</key>
+	<string>Seu perfil de viagem exige um valor para o endereço de trabalho (rua, cidade e país). Efetue login na versão web do Concur viagens e selecione Perfil no menu.</string>
+	<key>AIR_BOOKING_PROFILE_33_MSG</key>
+	<string>Seu perfil de viagem requer um valor para um número de telefone de trabalho ou residencial. Efetue login na versão web do Concur viagens e selecione Perfil no menu.</string>
+	<key>AIR_BOOKING_PROFILE_PROLOG_MSG</key>
+	<string>Saia e faça login novamente após fornecer as informações acima.</string>
+	<key>AIR_BOOKING_REQ_CUSTOM_FIELDS_MSG</key>
+	<string>Sua empresa tem exigência especiais ao fazer reserva de aéreo.  Faça reserva de aéreo usando a versão web do Concur.</string>
+	<key>AIR_WARNING_JUSTIFICATION</key>
+	<string>Antes de reservar este voo violando a política da empresa, você deve fornecer uma justificação no campo mostrado em vermelho.</string>
+	<key>AIR_WARNING_REASON</key>
+	<string>Antes de reservar este voo violando a política da empresa, você deve fornecer um motivo no campo mostrado em vermelho.</string>
+	<key>AIR_WARNING_REASON_JUSTIFICATION</key>
+	<string>Antes de reservar este voo violando a política da empresa, você deve fornecer um motivo e uma justificação nos campos mostrados em vermelho.</string>
+	<key>ALERT_CLEAR_CACHE</key>
+	<string>Isto excluirá todos os dados off-line. Seu aplicativo continuará funcionando.</string>
+	<key>AMOUNT_TOO_BIG_ERR_MSG</key>
+	<string>Digite valor dentro de 999999999999999</string>
+	<key>APPROVALS_NEG_TEXT</key>
+	<string>Aprovar itens em qualquer lugar, a qualquer hora</string>
+	<key>APPROVEDREQUESTS</key>
+	<string>SOLICITAÇÕES APROVADAS</string>
+	<key>APPROVE_APPROVE_BUTTON_TITLE</key>
+	<string>Aprovar</string>
+	<key>APPROVE_CANCEL</key>
+	<string>Cancelar</string>
+	<key>APPROVE_ENTER_COMMENT_FOR_SENDBACK</key>
+	<string>Digite um comentário.</string>
+	<key>APPROVE_ENTRIES</key>
+	<string>Lançamentos em relatório</string>
+	<key>APPROVE_ENTRIES_ACTION_SECTION_REPORT_SUMMARY_ROW</key>
+	<string>Resumo do relatório</string>
+	<key>APPROVE_ENTRIES_ACTION_SECTION_VIEW_COMMENTS_ROW</key>
+	<string>Exibir comentários</string>
+	<key>APPROVE_ENTRIES_ACTION_SECTION_VIEW_EXCEPTIONS_ROW</key>
+	<string>Visualizar exceções</string>
+	<key>APPROVE_ENTRIES_ACTION_SECTION_VIEW_RECEIPTS_ROW</key>
+	<string>Exibir recibos</string>
+	<key>APPROVE_ENTRIES_VIEW_TITLE</key>
+	<string>Lista despesas</string>
+	<key>APPROVE_EXPENSE_DETAILS</key>
+	<string>Detalhes de despesas</string>
+	<key>APPROVE_EXPENSE_DETAILS_ATTENDEES</key>
+	<string>Participantes</string>
+	<key>APPROVE_EXPENSE_DETAILS_COMMENT</key>
+	<string>Comentário</string>
+	<key>APPROVE_EXPENSE_DETAILS_DETAILS</key>
+	<string>Detalhes</string>
+	<key>APPROVE_EXPENSE_DETAILS_EXCEPTIONS</key>
+	<string>Exceções</string>
+	<key>APPROVE_EXPENSE_DETAILS_VIEW_ATTENDEES</key>
+	<string>Ver Participantes</string>
+	<key>APPROVE_EXPENSE_DETAILS_VIEW_ITEMIZATIONS</key>
+	<string>Exibir especificação do item</string>
+	<key>APPROVE_EXPENSE_DETAILS_VIEW_TITLE</key>
+	<string>Despesa</string>
+	<key>APPROVE_INVOICES</key>
+	<string>Aprovar faturas</string>
+	<key>APPROVE_OK</key>
+	<string>OK</string>
+	<key>APPROVE_PLEASE_COMMENT</key>
+	<string>Comente</string>
+	<key>APPROVE_PLEASE_CONFIRM</key>
+	<string>Confirme</string>
+	<key>APPROVE_QUESTION_AREYOUSURE</key>
+	<string>Tem certeza de que deseja aprovar este relatório?</string>
+	<key>APPROVE_QUESTION_PART1</key>
+	<string>Aprovar</string>
+	<key>APPROVE_QUESTION_PART2</key>
+	<string>relatório de despesas para</string>
+	<key>APPROVE_REPORT</key>
+	<string>Aprovar relatório</string>
+	<key>APPROVE_REPORTS</key>
+	<string>Aprovar relatórios</string>
+	<key>APPROVE_REPORTS_VIEW_TITLE</key>
+	<string>Relatórios para aprovar</string>
+	<key>APPROVE_REPORT_CHECK_RECEIPT_IMAGE</key>
+	<string>Verificar imagem do recibo</string>
+	<key>APPROVE_REPORT_RECEIPT_IMAGE</key>
+	<string>Exibir imagem de recibo</string>
+	<key>APPROVE_REPORT_SUMMARY</key>
+	<string>Resumo do relatório</string>
+	<key>APPROVE_REPORT_SUMMARY_AMOUNT_APPROVED</key>
+	<string>Montante aprovado</string>
+	<key>APPROVE_REPORT_SUMMARY_AMOUNT_CLAIMED</key>
+	<string>Montante a ser reembolsado</string>
+	<key>APPROVE_REPORT_SUMMARY_AMOUNT_DUE_COMPANY</key>
+	<string>Montante devido à empresa</string>
+	<key>APPROVE_REPORT_SUMMARY_AMOUNT_DUE_CREDIT_CARD</key>
+	<string>Montante devido em cartão corporativo</string>
+	<key>APPROVE_REPORT_SUMMARY_AMOUNT_DUE_EMPLOYEE</key>
+	<string>Montante devido ao funcionário</string>
+	<key>APPROVE_REPORT_SUMMARY_AMOUNT_REJECTED</key>
+	<string>Montante rejeitado</string>
+	<key>APPROVE_REPORT_SUMMARY_COMMENTS</key>
+	<string>Comentários</string>
+	<key>APPROVE_REPORT_SUMMARY_COMPANYDISBURSEMENT</key>
+	<string>Desembolso da empresa</string>
+	<key>APPROVE_REPORT_SUMMARY_COMPANY_PAID_TO_CREDIT_CARD</key>
+	<string>Pago pela empresa ao cartão de crédito</string>
+	<key>APPROVE_REPORT_SUMMARY_EMPLOYEEDISBURSEMENTS</key>
+	<string>Desembolsos do funcionário</string>
+	<key>APPROVE_REPORT_SUMMARY_HEADER</key>
+	<string>Cabeçalho</string>
+	<key>APPROVE_REPORT_SUMMARY_LESS_PERSONAL_AMOUNT</key>
+	<string>Menos valor de despesa pessoal</string>
+	<key>APPROVE_REPORT_SUMMARY_POLICY</key>
+	<string>Política</string>
+	<key>APPROVE_REPORT_SUMMARY_REPORT_HEADER</key>
+	<string>Cabeçalho do relatório</string>
+	<key>APPROVE_REPORT_SUMMARY_REPORT_ID</key>
+	<string>ID do relatório</string>
+	<key>APPROVE_REPORT_SUMMARY_REPORT_TOTAL</key>
+	<string>Total do relatório</string>
+	<key>APPROVE_REPORT_SUMMARY_TOTAL_PAID_BY_COMPANY</key>
+	<string>Total pago pela empresa</string>
+	<key>APPROVE_REPORT_SUMMARY_TOTAL_PAID_BY_EMPLOYEE</key>
+	<string>Total pago pelo funcionário</string>
+	<key>APPROVE_REPORT_SUMMARY_VIEW_TITLE</key>
+	<string>Resumo</string>
+	<key>APPROVE_SENDBACK_BUTTON_TITLE</key>
+	<string>Devolver</string>
+	<key>APPROVE_VIEW_ATTENDEES</key>
+	<string>Participantes</string>
+	<key>APPROVE_VIEW_ATTENDEES_ATTENDEE_AMOUNT_TITLE</key>
+	<string>Montante</string>
+	<key>APPROVE_VIEW_ATTENDEES_ATTENDEE_COMPANY_TITLE</key>
+	<string>Empresa</string>
+	<key>APPROVE_VIEW_ATTENDEES_ATTENDEE_NAME_TITLE</key>
+	<string>Nome do participante</string>
+	<key>APPROVE_VIEW_ATTENDEES_ATTENDEE_TITLE_TITLE</key>
+	<string>Título do participante</string>
+	<key>APPROVE_VIEW_ATTENDEES_ATTENDEE_TYPE_TITLE</key>
+	<string>Tipo de participante</string>
+	<key>APPROVE_VIEW_COMMENTS</key>
+	<string>Exibir comentários</string>
+	<key>APPROVE_VIEW_COMMENTS_VIEW_TITLE</key>
+	<string>Comentários</string>
+	<key>APPROVE_VIEW_EXCEPTIONS</key>
+	<string>Visualizar exceções</string>
+	<key>APPROVE_VIEW_EXCEPTIONS_EXPENSE_LEVEL_EXCEPTION_SECTION_HEADER</key>
+	<string>Despesas</string>
+	<key>APPROVE_VIEW_EXCEPTIONS_REPORT_LEVEL_EXCEPTION_SECTION_HEADER</key>
+	<string>Relatório</string>
+	<key>APPROVE_VIEW_EXCEPTIONS_VIEW_TITLE</key>
+	<string>Exceções</string>
+	<key>APPROVE_VIEW_ITEMIZATIONS</key>
+	<string>Especificação de item</string>
+	<key>APPROVE_VIEW_ITEMIZATIONS_SUMMARY_SECTION_TITLE</key>
+	<string>Resumo</string>
+	<key>APP_RATING_MSG</key>
+	<string> Agora que usou nosso aplicativo, informe-nos o que você acha dele, classificando-o no App Store.</string>
+	<key>APP_RATING_MSG_DISMISS</key>
+	<string>Não pergunte novamente</string>
+	<key>APP_RATING_TITLE</key>
+	<string>Classificar este aplicativo?</string>
+	<key>ATTENDEES</key>
+	<string>Participantes</string>
+	<key>ATTENDEES_EXCLUDED_FOR_TYPE</key>
+	<string>Alguns dos participantes não podem ser adicionados porque seus tipos de participante estão excluídos deste tipo de despesa.</string>
+	<key>ATTENDEE_ADD</key>
+	<string>Adicionar participante</string>
+	<key>ATTENDEE_ADD_BUMP</key>
+	<string>Adicionar participante através de %@</string>
+	<key>ATTENDEE_ADD_CONTACT</key>
+	<string>Adicione participante manualmente</string>
+	<key>ATTENDEE_ENTRY</key>
+	<string>Participante</string>
+	<key>ATTENDEE_SEARCH_FOR_ATTENDEE</key>
+	<string>Procurar participantes</string>
+	<key>ATTENDEE_SELECT_CONTACT</key>
+	<string>Selecionar contato</string>
+	<key>AUTHENTICATION_FAILURE_MSG</key>
+	<string>Violação por acesso não autorizado.  Verifique seu nome de usuário e/ou PIN.</string>
+	<key>AUTHENTICATION_TIMED_OUT_MSG</key>
+	<string>A conexão com o serviço de autenticação expirou.  Certifique-se de que você está apontando para o URL adequado.</string>
+	<key>A_ACCO</key>
+	<string>Aprovado e em análise contábil</string>
+	<key>A_APPR</key>
+	<string>Aprovado</string>
+	<key>A_EXTV</key>
+	<string>Validação externa pendente</string>
+	<key>A_FILE</key>
+	<string>Enviado</string>
+	<key>A_NOTF</key>
+	<string>Não enviado</string>
+	<key>A_PECO</key>
+	<string>Aprovação do objeto de custo pendente</string>
+	<key>A_PEND</key>
+	<string>Enviado e aguardando aprovação</string>
+	<key>A_PVAL</key>
+	<string>Validação pendente</string>
+	<key>A_RESU</key>
+	<string>Devolvido ao empregado</string>
+	<key>A_RHLD</key>
+	<string>Retenção de imagem de recibo</string>
+	<key>A_TEXP</key>
+	<string>Tempo de Aprovação Expirado</string>
+	<key>Abukai Expenses</key>
+	<string>Despesas de Abukai</string>
+	<key>Accept</key>
+	<string>Aceitar</string>
+	<key>Access other areas of the app</key>
+	<string>Acessar outras áreas do aplicativo</string>
+	<key>Accounting Code</key>
+	<string>Código contábil</string>
+	<key>Actions offline</key>
+	<string>Seu dispositivo está off-line no momento.  Conecte-o à internet e tente esta ação novamente.</string>
+	<key>Actual Arrival</key>
+	<string>Chegada real</string>
+	<key>Actual Departure</key>
+	<string>Partida real</string>
+	<key>Actual Equipment</key>
+	<string>Equipamento real</string>
+	<key>Actual Terminal</key>
+	<string>Terminal real</string>
+	<key>Add Account to Concur</key>
+	<string>Adicionar conta ao Concur</string>
+	<key>Add Amtrak</key>
+	<string>Adicionar Amtrak</string>
+	<key>Add Another</key>
+	<string>Adicionar outro</string>
+	<key>Add Attendee</key>
+	<string>Adicionar participante</string>
+	<key>Add Car</key>
+	<string>Adicionar automóvel</string>
+	<key>Add Car Mileage</key>
+	<string>Adicionar milhagem de automóvel</string>
+	<key>Add Card</key>
+	<string>Adicionar cartão</string>
+	<key>Add Comment</key>
+	<string>Adicionar comentário</string>
+	<key>Add Credit Card</key>
+	<string>Adicionar cartão de crédito</string>
+	<key>Add Entry</key>
+	<string>Adicionar lançamento</string>
+	<key>Add Expense</key>
+	<string>Adicionar despesa</string>
+	<key>Add Hotel</key>
+	<string>Adicionar hotel</string>
+	<key>Add Itemization</key>
+	<string>Adicionar especificação do item</string>
+	<key>Add Itinerary Stop Header</key>
+	<string>Para fornecer ajudas de custo mais precisas, precisamos saber onde você parou durante sua viagem. Adicione pelo menos duas paradas para completar seu itinerário.</string>
+	<key>Add Mileage</key>
+	<string>Adicionar milhagem</string>
+	<key>Add New Expense</key>
+	<string>Adicionar nova despesa</string>
+	<key>Add Receipt</key>
+	<string>Adicionar recibo</string>
+	<key>Add Selected Attendee</key>
+	<string>Adicionar participante selecionado</string>
+	<key>Add Single Day Itinerary Stop Header</key>
+	<string>Para fornecer ajudas de custo mais precisas, precisamos saber onde você parou durante sua viagem. Adicione pelo menos duas paradas para completar seu itinerário.</string>
+	<key>Add a Cash Expense</key>
+	<string>Adicionar despesa</string>
+	<key>Add a Receipt using the below buttons</key>
+	<string>Adicionar um recibo usando os botões abaixo</string>
+	<key>Add an Attendee</key>
+	<string>Adicionar um participante</string>
+	<key>Add an Entry from a Picture</key>
+	<string>Adicionar um lançamento de uma foto</string>
+	<key>Add credit card</key>
+	<string>Adicionar cartão de crédito</string>
+	<key>Add expenses to your report.</key>
+	<string>Adicionando despesas ao seu relatório</string>
+	<key>Add expenses with attendees</key>
+	<string>Adicionar despesas com participantes</string>
+	<key>Add from Photo Album</key>
+	<string>Adicionar do álbum de fotos</string>
+	<key>Add to Report</key>
+	<string>Adicionar ao relatório</string>
+	<key>AddAnotherItemToThisRequest</key>
+	<string>Adicionar outro item a esta solicitação</string>
+	<key>Adding to Report</key>
+	<string>Adicionando ao relatório</string>
+	<key>Additional Charges (each night)</key>
+	<string>Taxas adicionais (por noite)</string>
+	<key>Address</key>
+	<string>Endereço</string>
+	<key>Address point of interest airport code</key>
+	<string>Endereço, ponto de interesse, código do aeroporto</string>
+	<key>Adds processing time</key>
+	<string>Tempo de processamento de adição</string>
+	<key>Adjust Allowance</key>
+	<string>Ajustar ajuda de custo</string>
+	<key>Adjustments</key>
+	<string>Ajustes</string>
+	<key>Adults</key>
+	<string>Adultos</string>
+	<key>Advanced Search</key>
+	<string>Busca avançada</string>
+	<key>Afternoon</key>
+	<string>Tarde</string>
+	<key>Agency Code Sign In</key>
+	<string>Login pelo código da agência</string>
+	<key>Agency Record Locator: %@</key>
+	<string>Localizador de registros da agência: %@</string>
+	<key>Agency Sign In</key>
+	<string>Login da agência</string>
+	<key>Air Booking</key>
+	<string>Reserva aérea</string>
+	<key>Air Price to Beat</key>
+	<string>Preço aéreo a vencer</string>
+	<key>Air cancelled from mobile device</key>
+	<string>Aéreo cancelado a partir de dispositivo móvel</string>
+	<key>Aircraft</key>
+	<string>Avião</string>
+	<key>Airfare Price to Beat</key>
+	<string>Preço de tarifa aérea a vencer</string>
+	<key>Airfare quoted total</key>
+	<string>Total cotado de tarifa aérea</string>
+	<key>Airline</key>
+	<string>Companhia aérea</string>
+	<key>Airports</key>
+	<string>Aeroportos</string>
+	<key>All</key>
+	<string>Todos</string>
+	<key>All Expenses</key>
+	<string>Todas as despesas</string>
+	<key>All Flights</key>
+	<string>Todos os voos</string>
+	<key>All Items</key>
+	<string>Todos os itens</string>
+	<key>All Nonstop</key>
+	<string>Todos diretos</string>
+	<key>All Results</key>
+	<string>Todos os resultados</string>
+	<key>All States &amp; Provinces</key>
+	<string>Todos os estados e províncias</string>
+	<key>All day</key>
+	<string>Todos os dias</string>
+	<key>All token</key>
+	<string>Todos %@</string>
+	<key>All token (token results)</key>
+	<string>Todos %@ (%d resultados)</string>
+	<key>Allowance Adjustments</key>
+	<string>Ajustes da ajuda de custo</string>
+	<key>Allowance Itinerary</key>
+	<string>Itinerários de ajuda de custo</string>
+	<key>Already Expensed</key>
+	<string>Já debitado</string>
+	<key>Already have an account SU</key>
+	<string>Já tem uma conta?</string>
+	<key>Amount</key>
+	<string>Montante</string>
+	<key>Amount in</key>
+	<string>Montante em</string>
+	<key>Amtrak</key>
+	<string>Amtrak</string>
+	<key>An Expense Report</key>
+	<string>Um relatório de despesas</string>
+	<key>An email containing the application's log has been placed in your outbox.</key>
+	<string>Um e-mail contendo o registro do aplicativo foi colocado na sua caixa de saída.</string>
+	<key>An email containing the application's log has been saved in your Drafts folder.</key>
+	<string>Um e-mail contendo o registro do aplicativo foi colocado na sua pasta Rascunhos.</string>
+	<key>An email has been sent containing your report.</key>
+	<string>Foi enviando um e-mail contendo seu relatório.</string>
+	<key>An invalid station for arrival has been specified.  Please select a station to arrive at.</key>
+	<string>Uma estação inválida para chegada foi especificada.  Selecione uma estação de chegada.</string>
+	<key>An invalid station for departure has been specified.  Please select a station to depart from.</key>
+	<string>Uma estação inválida para partida foi especificada.  Selecione uma estação de partida.</string>
+	<key>An unexpected error occurred. Please try again later.</key>
+	<string>Ocorreu um erro inesperado. Tente novamente mais tarde.</string>
+	<key>And view upcoming itineraries.</key>
+	<string>e visualizar itinerários agendados.</string>
+	<key>Any</key>
+	<string>Classes combinadas</string>
+	<key>Any Car Class</key>
+	<string>Qualquer classe de automóvel</string>
+	<key>Anytime</key>
+	<string>A qualquer momento</string>
+	<key>AppStore Expense</key>
+	<string>Se você um usuário do Concur Expense ou do Concur Breeze, você pode usar a solução móvel para: * Capturar despesas e recibos rápidos usando a câmera do dispositivo (não é mais necessário digitalizar, enviar fax ou correio) * Exibir e editar encargos de cartão de crédito * Adicionar despesas a um relatório de despesas existente ou novo * Editar um cabeçalho/despeças de um relatório * Adicionar especificação por item/milhagem * Aprovar ou rejeitar relatório de despesas com um comentário - até mesmo visualizar os respectivos recibos!</string>
+	<key>Append</key>
+	<string>Anexar</string>
+	<key>Append Confirmation</key>
+	<string>Anexar confirmação</string>
+	<key>Append or Replace Receipt</key>
+	<string>Essa despesa já possui um recibo associado.  Selecione "Anexar" para anexar este novo recibo a esta despesa, ou 'Substituir' para substituir o recibo existente por este novo recibo.</string>
+	<key>Application Information</key>
+	<string>Informações sobre aplicativo</string>
+	<key>Approval Summary</key>
+	<string>Resumo da aprovação</string>
+	<key>Approvals</key>
+	<string>Aprovações</string>
+	<key>Approve</key>
+	<string>Aprovar</string>
+	<key>Approve Trips</key>
+	<string>Aprovar viagens</string>
+	<key>Approve by</key>
+	<string>Aprovar por</string>
+	<key>Approver</key>
+	<string>Aprovador</string>
+	<key>Approving Report</key>
+	<string>Aprovando relatório.</string>
+	<key>Approving Trip</key>
+	<string>Aprovando viagem</string>
+	<key>Apps</key>
+	<string>Aplicativos</string>
+	<key>Are you sure</key>
+	<string>Você tem certeza de que deseja excluir a(s) despesa(s) selecionada(s)?</string>
+	<key>Are you sure about adding smart expenses</key>
+	<string>As despesas inteligentes serão combinadas em um lançamento único no relatório.</string>
+	<key>Are you sure about smart expenses</key>
+	<string>Você tem certeza de que deseja excluir a(s) despesa(s) selecionada(s)?  A(s) parte(s) de entradas móveis da(s) despesa(s) inteligente(s) será(ão) excluída(s) permanentemente e o(s) encargo(s) correspondente(s) do cartão será(ão) ocultado(s).</string>
+	<key>Are you sure that you want to delete this receipt</key>
+	<string>Tem certeza de que deseja excluir este recibo?</string>
+	<key>Are you sure that you want to reserve the selected train(s)?</key>
+	<string>Você tem certeza de que deseja reservar o(s) trem(ns) selecionado(s)?</string>
+	<key>Are you sure you want to approve this trip?</key>
+	<string>Tem certeza de que deseja aprovar esta viagem?</string>
+	<key>Are you sure you want to cancel this air reservation?</key>
+	<string>Tem certeza de que deseja cancelar esta reserva aérea?</string>
+	<key>Are you sure you want to cancel this car reservation?</key>
+	<string>Tem certeza de que deseja cancelar esta reserva de automóvel?</string>
+	<key>Are you sure you want to cancel this hotel reservation?</key>
+	<string>Tem certeza de que deseja cancelar esta reserva de hotel?</string>
+	<key>Are you sure you want to cancel this rail reservation?</key>
+	<string>Tem certeza de que deseja cancelar esta reserva ferroviária?</string>
+	<key>Are you sure you want to delete the open report?</key>
+	<string>Tem certeza de que deseja excluir o relatório em aberto?</string>
+	<key>Are you sure you want to reserve this car?</key>
+	<string>Tem certeza de que deseja reservar este automóvel?</string>
+	<key>Are you sure you want to reserve this flight?</key>
+	<string>Tem certeza de que deseja reservar este voo?</string>
+	<key>Are you sure you want to unlink from your TripIt account?</key>
+	<string>Tem certeza de que deseja desvincular-se da sua conta TripIt?</string>
+	<key>Arrival</key>
+	<string>Chegada</string>
+	<key>Arrival City</key>
+	<string>Cidade de destino</string>
+	<key>Arrival Information</key>
+	<string>Informações de chegada</string>
+	<key>Arrival Station</key>
+	<string>Estação de chegada</string>
+	<key>Arrival Terminal</key>
+	<string>Terminal de chegada</string>
+	<key>Arrival Time</key>
+	<string>Hora de chegada</string>
+	<key>Arrive</key>
+	<string>Chegada</string>
+	<key>Arriving trains</key>
+	<string>Chegando: %@</string>
+	<key>Ask Me Later</key>
+	<string>Pergunte-me mais tarde</string>
+	<key>At Least 1 Month</key>
+	<string>Pelo menos 1 mês</string>
+	<key>At Least 1 Week</key>
+	<string>Pelo menos 1 semana</string>
+	<key>Attach Receipt</key>
+	<string>Anexar recibo</string>
+	<key>Attach via Receipt Store</key>
+	<string>Anexar por meio do Receipt Store</string>
+	<key>Attendee</key>
+	<string>Participante</string>
+	<key>Attendee Amount</key>
+	<string>Montante do participante</string>
+	<key>Attendee Count</key>
+	<string>Contagem de participantes</string>
+	<key>Attendee Group</key>
+	<string>Grupo de participantes</string>
+	<key>Attendee Search Results</key>
+	<string>Resultados da pesquisa de participantes</string>
+	<key>Attendee Type</key>
+	<string>Tipo de participante</string>
+	<key>Attendee data is unavailable.</key>
+	<string>Dados do participantes estão indisponíveis.</string>
+	<key>Attendee type cannot be changed.  Create a new attendee instead.</key>
+	<string>Não é possível alterar o tipo de participante.  Crie um novo participante, em vez disso.</string>
+	<key>Attendees</key>
+	<string>Participantes</string>
+	<key>Attendees not editable offline</key>
+	<string>Os participantes não podem ser editados off-line.</string>
+	<key>Attention</key>
+	<string>Atenção:</string>
+	<key>Authenticating</key>
+	<string>Autenticando</string>
+	<key>Auto Login</key>
+	<string>Logon automático</string>
+	<key>Available From States/Provinces</key>
+	<string>Disponível de estados/províncias</string>
+	<key>Available From Stations</key>
+	<string>Disponível nas estações</string>
+	<key>Available Itineraries</key>
+	<string>itinerários disponíveis</string>
+	<key>Available States/Provinces</key>
+	<string>Estados/Províncias disponíveis</string>
+	<key>Available Stations</key>
+	<string>Estações disponíveis</string>
+	<key>Available To States/Provinces</key>
+	<string>Disponível para estados/províncias</string>
+	<key>Available To Stations</key>
+	<string>Disponível para as estações</string>
+	<key>Awaiting Approval</key>
+	<string>Aguardando aprovação</string>
+	<key>BOOKING_UNDER_P2B_EARNS_POINTS</key>
+	<string>Selecionar opções que custam menos que o preço a vencer lhe dá pontos de viagem que podem ser usados ​​para benefícios futuros.</string>
+	<key>BOOKING_UNDER_P2B_SAVES_MONEY</key>
+	<string>Uma reserva sob o preço a vencer economiza o dinheiro de sua empresa.</string>
+	<key>BRONX_USER_CORP_APP_MSG</key>
+	<string>Você não pode efetuar login no Concur móvel usando seu login para a versão SmartExpense do Concur. Deseja usar a versão SmartExpense em vez disso?</string>
+	<key>BRONX_USER_CORP_APP_TITLE</key>
+	<string>Usuário do SmartExpense não compatível</string>
+	<key>BTN_EDIT</key>
+	<string>Editar</string>
+	<key>BUMP_HELP_TEXT1</key>
+	<string>Você pode compartilhar suas informações de participante selecionando 'Tornar-se um participante' abaixo.</string>
+	<key>BUMP_HELP_TEXT2</key>
+	<string>Seu associado deve selecionar 'Adicionar participante através de %@' na seção de participantes da tela de especificação por item do relatório.</string>
+	<key>BUMP_INSTRUCTION</key>
+	<string>Seu associado deve selecionar 'Adicionar participante através de %@' na seção de participantes da especificação por item do relatório para adicionar você como participante à especificação por item do relatório.</string>
+	<key>BUMP_SHARE_HELP_TEXT1</key>
+	<string>Você adiciona um participante selecionado 'Adicionar um participante' abaixo.</string>
+	<key>BUMP_SHARE_HELP_TEXT2</key>
+	<string>Seu associado deve selecionar o botão 'Participante' na tela inicial.</string>
+	<key>BUSGUEST</key>
+	<string>Convidado de negócios</string>
+	<key>Back</key>
+	<string>Voltar</string>
+	<key>Baggage Claim</key>
+	<string>Retirada de bagagem</string>
+	<key>Become an Attendee</key>
+	<string>Tornar-se participante</string>
+	<key>Before reserving this car in</key>
+	<string>Antes de reservar este automóvel violando a política da empresa, você deve fornecer um motivo e uma justificação nos campos mostrados em vermelho.</string>
+	<key>Before reserving this car in justification</key>
+	<string>Antes de reservar este automóvel violando a política da empresa, você deve fornecer uma justificação no campo mostrado em vermelho.</string>
+	<key>Before reserving this car in reason</key>
+	<string>Antes de reservar este automóvel violando a política da empresa, você deve fornecer um motivo no campo mostrado em vermelho.</string>
+	<key>Before reserving this flight</key>
+	<string>Antes de reservar esse voo, complete os campos em vermelho.</string>
+	<key>Benchmark</key>
+	<string>Referência</string>
+	<key>Book</key>
+	<string>Reservar</string>
+	<key>Book Air</key>
+	<string>Reservar aéreo</string>
+	<key>Book Car</key>
+	<string>Reservar automóvel</string>
+	<key>Book Hotel</key>
+	<string>Reservar hotel</string>
+	<key>Book Rail</key>
+	<string>Reservar trem</string>
+	<key>Book Train</key>
+	<string>Reservar trem</string>
+	<key>Book Travel</key>
+	<string>Reservar viagem</string>
+	<key>Book Travel from anywhere.</key>
+	<string>Reservar a viagem para qualquer lugar</string>
+	<key>Book Travel on the go with Concur</key>
+	<string>Reservar viagem em ir com Concur</string>
+	<key>Book a Hotel Car and more</key>
+	<string>Reservar aéreo, hotel e mais</string>
+	<key>Book a Trip</key>
+	<string>Reserve uma viagem</string>
+	<key>Book a train</key>
+	<string>Reservar um trem</string>
+	<key>Book flights</key>
+	<string>Reservar voos</string>
+	<key>Book under this price to earn Travel Points.</key>
+	<string>Faça a reserva neste preço para ganhar pontos de viagem.</string>
+	<key>Booker Comments</key>
+	<string>Comentários de quem reserva</string>
+	<key>Booking Info</key>
+	<string>Informações de reservas</string>
+	<key>Booking cancelled</key>
+	<string>Reserva cancelada</string>
+	<key>Booking under this amount saves your company money.</key>
+	<string>A reserva neste valor economiza o dinheiro de sua empresa.</string>
+	<key>Bookings</key>
+	<string>Reservas</string>
+	<key>Bookings offline</key>
+	<string>As reservas não podem ser feitas enquanto seu dispositivo estiver off-line.  Conecte novamente à internet e depois tente novamente.</string>
+	<key>Border Crossing</key>
+	<string>Travessia de fronteira</string>
+	<key>Bump Phones to Become an Attendee</key>
+	<string>%@ Telefones para tornar-se participante</string>
+	<key>Bump Phones to Exchange Attendee Info</key>
+	<string>%@ Telefones para trocar informações sobre participantes</string>
+	<key>Bus</key>
+	<string>Ônibus</string>
+	<key>Business</key>
+	<string>Serviço</string>
+	<key>By State or Province</key>
+	<string>Por estado ou província</string>
+	<key>CANNOT_ADD_TO_RPT_WAIT_IMAGE</key>
+	<string>Carregamento de recibo está em andamento. Aguarde alguns segundos e tente novamente.</string>
+	<key>CAR</key>
+	<string>Aluguel de automóvel</string>
+	<key>CARDS_LIST</key>
+	<string>Cartões</string>
+	<key>CARD_AUTH_MSG</key>
+	<string>Esta é um cartão de autorização. Espera o encargo de cartão antes de enviar.</string>
+	<key>CAR_DETAILS</key>
+	<string>Detalhes do automóvel</string>
+	<key>CAR_LIST</key>
+	<string>Selecionar automóvel</string>
+	<key>CHECK_OUT_DATE_ERR_MSG</key>
+	<string>Informe uma posterior à dada de check-in.</string>
+	<key>COMMENTS</key>
+	<string>Comentários</string>
+	<key>COMPANY_NAME</key>
+	<string>Nome da empresa</string>
+	<key>COMPANY_SSO_DISABLED_MSG</key>
+	<string>A conexão de empresa foi desativada para a sua empresa. Entre em contato com o administrador da sua empresa.</string>
+	<key>COMPANY_SSO_INITIATED_REMOTE_WIPE</key>
+	<string>Os dados da sua conta foram apagados deste dispositivo.  Entre em contato com o seu administrador para obter assistência.</string>
+	<key>CONFIGURING_SESSION</key>
+	<string>Configurando sessão móvel...</string>
+	<key>CONFIRM_CONTINUE</key>
+	<string>Tem certeza de que deseja continuar?</string>
+	<key>CONFIRM_DETACH_TEXT</key>
+	<string>Tem certeza de que deseja retirar esta imagem de recibo, ?</string>
+	<key>CONFIRM_PIN</key>
+	<string>Confirmar novo PIN</string>
+	<key>CONFIRM_RECEIPT_DELETE</key>
+	<string>Tem certeza de que deseja excluir este recibo?</string>
+	<key>CONFIRM_RECEIPT_DELETION</key>
+	<string>Tem certeza de que deseja excluir este recibo?</string>
+	<key>CONFIRM_REPORT_SUBMISSION</key>
+	<string>Tem certeza de que deseja submeter este relatório de despesas?</string>
+	<key>COPY_DOWN_ENTRY_MSG</key>
+	<string>Você modificou o(s) %@ campo(s) neste lançamento. Deseja sobregravar o(s) %@ campo(s) em todos os lançamentos e especificações do item com este lançamento com o novo valor informado aqui? Clique em Sim para substituir os valores. Clique em Não para salvar apenas as modificações nesta solicitação. </string>
+	<key>COPY_DOWN_RPT_MSG</key>
+	<string>Você modificou o(s) %@ campo(s) neste cabeçalho de relatório. Deseja sobregravar %@ o(s) campo(s) em todos os lançamentos e especificações do item neste relatório com o novo valor informado aqui? Clique em Sim para substituir os valores. Clique em Não para salvar as modificações apenas neste cabeçalho da relatório. </string>
+	<key>CORP_CARDS_0</key>
+	<string>Você não tem encargos de cartão corporativo não usados</string>
+	<key>CORP_CARDS_1</key>
+	<string>Você tem 1 encargo de cartão corporativo não usado</string>
+	<key>CORP_CARDS_2</key>
+	<string>Você tem %d encargos de cartão corporativo não usados</string>
+	<key>CORP_SSO_MSG</key>
+	<string>Se sua empresa usa Logon Único (SSO) e emitiu um código de empresa, insira-o aqui.</string>
+	<key>CORP_SSO_MSG_GOV</key>
+	<string>Se sua agência tiver emitido um código de agência, digite-o abaixo.</string>
+	<key>CORP_USER_SU_APP_MSG</key>
+	<string>Você não pode efetuar login nesta versão do SmartExpense do Concur com o seu login do Concur móvel. Deseja usar o Concur móvel em vez disso?</string>
+	<key>CORP_USER_SU_APP_TITLE</key>
+	<string>Usuário corporativo não compatível</string>
+	<key>CREATE_ADD</key>
+	<string>Criar e adicionar</string>
+	<key>CREATE_PIN</key>
+	<string>Definir seu PIN móvel para acessar o Concur</string>
+	<key>CREATE_PIN_NOTES</key>
+	<string>PIN pode ser letras, números e caracteres especiais, como !, $, ou #, mas sem espaços.</string>
+	<key>CREATE_PIN_TITLE</key>
+	<string>PIN móvel</string>
+	<key>CVV Number</key>
+	<string>Número CVV</string>
+	<key>Cache</key>
+	<string>Cache</string>
+	<key>Cache Done Title</key>
+	<string>Limpeza do cache completa</string>
+	<key>Calculate Allowances</key>
+	<string>Calcular ajudas de custo</string>
+	<key>Call</key>
+	<string>Chamada</string>
+	<key>Call Travel Agent</key>
+	<string>Chamar agente de viagens</string>
+	<key>Camera</key>
+	<string>Anexar via câmera</string>
+	<key>Cancel</key>
+	<string>Cancelar</string>
+	<key>Cancel Air</key>
+	<string>Cancelar aéreo</string>
+	<key>Cancel Car</key>
+	<string>Cancelar automóvel</string>
+	<key>Cancel Failed</key>
+	<string>Cancelamento falhou</string>
+	<key>Cancel Hotel</key>
+	<string>Cancelar hotel</string>
+	<key>Cancel Rail</key>
+	<string>Cancelar trem</string>
+	<key>Cancel Trip</key>
+	<string>Cancelar viagem</string>
+	<key>Cancel Upload</key>
+	<string>Cancelar carregamento</string>
+	<key>Cancel air reservation</key>
+	<string>Cancelar reserva aérea</string>
+	<key>Cancel car reservation</key>
+	<string>Cancelar reserva de automóvel</string>
+	<key>Cancel hotel reservation</key>
+	<string>Cancelar reserva de hotel</string>
+	<key>Cancellation Policy</key>
+	<string>Política de cancelamento</string>
+	<key>Cannot Save Changes</key>
+	<string>Clique em salvar alterações</string>
+	<key>Cannot Submit Report</key>
+	<string>Não foi possível submeter o relatório</string>
+	<key>Cannot access receipt</key>
+	<string>Não é possível acessar o recibo</string>
+	<key>Cannot append receipt</key>
+	<string>Não é possível anexar recibo</string>
+	<key>Cannot expense trip</key>
+	<string>Não é possível debitar a viagem</string>
+	<key>Capture Receipt</key>
+	<string>Capturar recibo</string>
+	<key>Capture car mileage</key>
+	<string>Capturar milhagem de automóvel</string>
+	<key>Capture expense and receipt</key>
+	<string>Capturar despesa e recibo</string>
+	<key>Capture your expenses while you travel</key>
+	<string>Capture suas despesas enquanto viaja</string>
+	<key>Car</key>
+	<string>Automóvel</string>
+	<key>Car Hire Airport Location</key>
+	<string>Localização do aeroporto</string>
+	<key>Car Mileage</key>
+	<string>Milhagem de automóvel</string>
+	<key>Car Mileage Text</key>
+	<string>Gaste sua milhagem</string>
+	<key>Car Rule Violation</key>
+	<string>Violação de regras para automóveis</string>
+	<key>Car Type</key>
+	<string>Tipo de automóvel</string>
+	<key>Car cancelled from mobile device</key>
+	<string>Automóvel cancelado a partir de dispositivo móvel</string>
+	<key>Card</key>
+	<string>Cartão</string>
+	<key>Card Charges</key>
+	<string>Encargos de cartão</string>
+	<key>Card Transactions</key>
+	<string>Transação com cartão</string>
+	<key>Cards</key>
+	<string>Cartões</string>
+	<key>Cars</key>
+	<string>Automóveis</string>
+	<key>Cars near</key>
+	<string>Automóveis próximo a</string>
+	<key>Cars_subline</key>
+	<string>Pegue algumas rodas legais</string>
+	<key>Cash</key>
+	<string>Dinheiro</string>
+	<key>Chain Least Preferred</key>
+	<string>Cadeia menos preferida</string>
+	<key>Chain Most Preferred</key>
+	<string>Cadeia mais preferencial</string>
+	<key>Chain Preferred</key>
+	<string>Cadeia preferencial</string>
+	<key>Changing the expense type will remove all itemized data</key>
+	<string>A alteração do tipo de despesa removerá todos os dados dessa despesa especificados por item. Deseja continuar?</string>
+	<key>Chatter</key>
+	<string>Chatter</string>
+	<key>Chatter post help text</key>
+	<string>Esta viagem ainda não foi publicada no Chatter.  Publique sua viagem e receba dicas e ideias dos seus colegas de trabalho sobre o seu destino  </string>
+	<key>Check  In</key>
+	<string>Check in</string>
+	<key>Check In</key>
+	<string>Check in</string>
+	<key>Check In Complete</key>
+	<string>Check-in concluído</string>
+	<key>Check In Complete Message</key>
+	<string>Você fez check-in com êxito com seu local atual.</string>
+	<key>Check In Failed Message</key>
+	<string>Você não pode efetuar check-in neste momento.  Tente novamente mais tarde.</string>
+	<key>Check Invoice Image</key>
+	<string>Verificar imagem da fatura</string>
+	<key>Check connection retry from receipt store</key>
+	<string>Verifique sua conexão e tente anexar novamente o recibo do Receipt Store.</string>
+	<key>Check your email to reset your password and sign in</key>
+	<string>Verifique o seu e-mail para redefinir sua senha e efetuar login.</string>
+	<key>Check your email to reset your password and sign in.</key>
+	<string>Verifique o seu e-mail para redefinir sua senha e efetuar login.</string>
+	<key>Check your spam folder or</key>
+	<string>Não o vê? Verifique sua pasta de spam ou</string>
+	<key>Check-In Date</key>
+	<string>Data de Check-in</string>
+	<key>Check-Out Date</key>
+	<string>Data de check-out</string>
+	<key>Check-in</key>
+	<string>Check-in:</string>
+	<key>Check-out</key>
+	<string>Checkout</string>
+	<key>Checking In</key>
+	<string>Efetuando check in</string>
+	<key>Checking Network Connection</key>
+	<string>Verificando conexão à rede</string>
+	<key>Checking Out</key>
+	<string>Efetuando check out</string>
+	<key>Children</key>
+	<string>Crianças</string>
+	<key>ChoosePhoto-ImagePicker</key>
+	<string>Pré-visualização</string>
+	<key>Class &amp; Seat Number</key>
+	<string>Classe e número de assento</string>
+	<key>Class / Seat</key>
+	<string>Classe/assento</string>
+	<key>Class of Service</key>
+	<string>Classe do serviço</string>
+	<key>Class: %@</key>
+	<string>Classe: %@</string>
+	<key>Clear Current Selection</key>
+	<string>Apagar seleção atual</string>
+	<key>Clear out the local cache</key>
+	<string>Remover o cache local</string>
+	<key>Close</key>
+	<string>Fechar</string>
+	<key>Closed</key>
+	<string>Fechado</string>
+	<key>Comment</key>
+	<string>Comentário</string>
+	<key>Comments</key>
+	<string>Comentários</string>
+	<key>Commonly Used</key>
+	<string>Comumente usado</string>
+	<key>Compact</key>
+	<string>Compacto</string>
+	<key>Compact Hybrid</key>
+	<string>Compacto híbrido</string>
+	<key>Company</key>
+	<string>Empresa</string>
+	<key>Company Code</key>
+	<string>Código de empresa SSO</string>
+	<key>Company Code Sign In</key>
+	<string>Login pelo código da empresa SSO</string>
+	<key>Company Name</key>
+	<string>Nome da empresa</string>
+	<key>Company Sign In</key>
+	<string>Login da empresa</string>
+	<key>Company Sign On</key>
+	<string>Logon da empresa</string>
+	<key>Concur was unable to obtain a cancellation number for your hotel cancellation. In order to obtain a cancellation number</key>
+	<string>O Concur não pôde obter um número de cancelamento para o seu cancelamento do hotel. Para obter um número de cancelamento, entre em contato com o hotel.</string>
+	<key>Confirm Delete</key>
+	<string>Confirmar exclusão</string>
+	<key>Confirm Detach</key>
+	<string>Confirme retirada</string>
+	<key>Confirm New Mobile Password (PIN)</key>
+	<string>Confirmar nova senha móvel (PIN)</string>
+	<key>Confirm New Password</key>
+	<string>Confirmar Nova Senha</string>
+	<key>Connect to a WiFi or cellular data network.</key>
+	<string>Conecte-se a uma rede WiFi ou de dados de celular.</string>
+	<key>Connecting with TripIt</key>
+	<string>Conectando ao TripIt</string>
+	<key>Connection Error</key>
+	<string>Erro de conexão</string>
+	<key>Connection Settings</key>
+	<string>Definições de conexões</string>
+	<key>Contact Received</key>
+	<string>Contato recebido</string>
+	<key>Continue</key>
+	<string>Continuar</string>
+	<key>Copyright Concur 2010</key>
+	<string>Copyright Concur 2013</string>
+	<key>Corp Cards</key>
+	<string>Cartões</string>
+	<key>Corporate Card</key>
+	<string>Cartão corporativo</string>
+	<key>Corporate Cards</key>
+	<string>Cartão corporativo</string>
+	<key>Could not connect to Concur.</key>
+	<string>Não foi possível conectar ao Concur.</string>
+	<key>Could not expense trip</key>
+	<string>Esta viagem já foi debitada</string>
+	<key>Could not load attendee data.</key>
+	<string>Não foi possível carregar dados do participante.</string>
+	<key>Could not load attendee form data.</key>
+	<string>Não foi possível carregar dados do formulário do participante.</string>
+	<key>Could not load attendee search fields data.</key>
+	<string>Não foi possível carregar dados dos campos de busca do participante.</string>
+	<key>Could not load expense data.</key>
+	<string>Não foi possível carregar dados da despesa.</string>
+	<key>Could not save attendee data.  Please try again later.</key>
+	<string>Não foi possível salvar dados do participante.  Tente novamente mais tarde.</string>
+	<key>Crash Detected</key>
+	<string>Foi detectado um travamento</string>
+	<key>Create &amp; Add</key>
+	<string>Criar e adicionar</string>
+	<key>Create Password</key>
+	<string>Criar senha</string>
+	<key>Create Report</key>
+	<string>Criar relatório</string>
+	<key>Create a Report</key>
+	<string>Criar um relatório</string>
+	<key>Create a report for your expenses to go into</key>
+	<string>Criar um relatório no qual devem entrar suas despesas</string>
+	<key>Create an Account</key>
+	<string>Criar uma conta</string>
+	<key>Create and submit your expense reports</key>
+	<string>Criar e enviar seus relatórios de despesas</string>
+	<key>Credit Card</key>
+	<string>Cartão de crédito</string>
+	<key>Currency</key>
+	<string>Moeda</string>
+	<key>Currency Code</key>
+	<string>Código da moeda</string>
+	<key>Current Location</key>
+	<string>Local atual</string>
+	<key>Current Trip</key>
+	<string>Atual</string>
+	<key>Current Trip Information</key>
+	<string>Informações atuais da viagem</string>
+	<key>Currently Offline</key>
+	<string>Atualmente off-line</string>
+	<key>Custom fields required message</key>
+	<string>Atualmente a política de reservas de sua empresa não é compatível. Em breve haverá suporte personalizado para os campos. Faça reserva de viagem usando a versão web do Concur.</string>
+	<key>DISALLOW_EXPENSEIT_DELETE</key>
+	<string>A remoção de itens Expenselt não é compatível com dispositivos móveis</string>
+	<key>DISALLOW_TRANS_DELETE</key>
+	<string>A remoção de encargos do cartão não é compatível no dispositivo móvel.</string>
+	<key>DISTANCE</key>
+	<string>Localizar hotéis a uma distância de</string>
+	<key>Daily Rate</key>
+	<string>Tarifa diária</string>
+	<key>Date</key>
+	<string>Data</string>
+	<key>Day</key>
+	<string>Dia</string>
+	<key>Day Trip</key>
+	<string>Viagem de um dia</string>
+	<key>Days</key>
+	<string>Dias</string>
+	<key>Days Remaining at Location</key>
+	<string>Dias permanecendo no local</string>
+	<key>Delete</key>
+	<string>Excluir</string>
+	<key>Delete Entry Failed</key>
+	<string>Exclusão do lançamento falhou</string>
+	<key>Delete Receipt</key>
+	<string>Excluir recibo</string>
+	<key>Delete Report Failed</key>
+	<string>Falha ao excluir relatório</string>
+	<key>Deleting Out of Pocket Expense(s)</key>
+	<string>Excluindo despesa(s)</string>
+	<key>Deleting Receipt</key>
+	<string>Excluindo recibo</string>
+	<key>Deleting Report</key>
+	<string>Excluindo relatório</string>
+	<key>Delivery Options</key>
+	<string>Opções de entrega</string>
+	<key>Depart</key>
+	<string>Partida</string>
+	<key>Departing</key>
+	<string>Partindo</string>
+	<key>Departing Train</key>
+	<string>Partida de trem</string>
+	<key>Departing trains</key>
+	<string>Partindo: %@ %@ %@ </string>
+	<key>Departing: token token</key>
+	<string>Partindo: %@ %@</string>
+	<key>Departure</key>
+	<string>Partida</string>
+	<key>Departure City</key>
+	<string>Cidade de partida</string>
+	<key>Departure Date</key>
+	<string>Data de partida</string>
+	<key>Departure Gate</key>
+	<string>Portão de partida</string>
+	<key>Departure Information</key>
+	<string>Informações de partida</string>
+	<key>Departure Matches Arrival</key>
+	<string>Partida igual à chegada</string>
+	<key>Departure Matches Arrival Message</key>
+	<string>Os aeroportos de partida e destino são o mesmo.  Selecione aeroportos diferentes para sua viagem.</string>
+	<key>Departure Point</key>
+	<string>Ponto de partida</string>
+	<key>Departure Station</key>
+	<string>Estação de partida</string>
+	<key>Departure Status</key>
+	<string>Status da partida</string>
+	<key>Departure Time</key>
+	<string>Hora de partida</string>
+	<key>Depending upon your company configuration some of the Concur for Mobile features may not be avaiable to you</key>
+	<string>Dependendo da configuração de sua empresa, alguns dos recursos da Concur para celulares podem não estar disponíveis para você</string>
+	<key>Deposit required</key>
+	<string>Depósito obrigatório</string>
+	<key>Destination</key>
+	<string>Destino</string>
+	<key>Destination Location</key>
+	<string>Local de destino</string>
+	<key>Destination Point</key>
+	<string>Ponto de destino</string>
+	<key>Detach</key>
+	<string>Retirar</string>
+	<key>Details</key>
+	<string>Detalhes</string>
+	<key>Dining</key>
+	<string>Jantar</string>
+	<key>Directions</key>
+	<string>Indicações</string>
+	<key>Disabled by administrator</key>
+	<string>Desativado pelo administrador</string>
+	<key>Discover great hotels</key>
+	<string>Descobrir bons hotéis</string>
+	<key>Dismiss tip overlay</key>
+	<string>Dispensar sobreposição de dicas</string>
+	<key>Distance</key>
+	<string>Distância</string>
+	<key>Distance calculated by Google</key>
+	<string>Distância calculada pelo Google</string>
+	<key>Distance to Date = %@</key>
+	<string>Distância até a data = %@</string>
+	<key>Diversion Airport</key>
+	<string>Aeroporto de diversão</string>
+	<key>Diversion City</key>
+	<string>Cidade de diversão</string>
+	<key>Don't know your PIN?</key>
+	<string>Não sabe seu PIN?</string>
+	<key>Don't know your password or PIN?</key>
+	<string>Não sabe sua senha ou PIN?</string>
+	<key>Don't know your user name?</key>
+	<string>Não sabe seu nome de usuário?</string>
+	<key>Done</key>
+	<string>Pronto</string>
+	<key>Done cache killing</key>
+	<string>O cache foi apagado deste dispositivo.  Você precisará fechar o aplicativo e então reiniciá-lo.  Se isso não for feito, provavelmente causará instabilidade do sistema.</string>
+	<key>Dont have an Account Sign Up</key>
+	<string>Não tem conta?</string>
+	<key>Download receipts in background</key>
+	<string>Ainda fazendo download dos recibos no segundo plano.  Você pode aguardar clicando em cancelar ou prosseguir clicando em OK.</string>
+	<key>Drop-off</key>
+	<string>Entrega</string>
+	<key>Drop-off Date</key>
+	<string>Data entrega</string>
+	<key>Drop-off Time</key>
+	<string>Hora de entrega</string>
+	<key>Dropbox</key>
+	<string>Dropbox</string>
+	<key>Duplicate Attendees</key>
+	<string>Aviso: participantes duplicados</string>
+	<key>Duplicates Found</key>
+	<string>Duplicados encontradas</string>
+	<key>Duration</key>
+	<string>Duração</string>
+	<key>E Ticket</key>
+	<string>E-bilhete</string>
+	<key>E-Receipt</key>
+	<string>Recibo eletrônico</string>
+	<key>EMAIL</key>
+	<string>E-mail</string>
+	<key>EMAIL_LINK_EXPIRED_MSG</key>
+	<string>Tente novamente e use o link dentro de 24 horas a partir do recebimento</string>
+	<key>EMPLOYEE</key>
+	<string>Funcionário</string>
+	<key>ENTER_NEW_PIN</key>
+	<string>Novo PIN</string>
+	<key>ENTER_PIN_MSG</key>
+	<string>Digitar um PIN formado por no mínimo 4 caracteres, usando letras ou números.  Sua empresa pode exigir caracteres adicionais.</string>
+	<key>ENTER_VALID_COMPANY_CODE</key>
+	<string>Forneça um valor para o código da empresa.</string>
+	<key>ENTRIES_NOT_MATCH_MSG</key>
+	<string>Os lançamentos inseridos não correspondem. Tente novamente.</string>
+	<key>ENTRY_REQ_FIELDS</key>
+	<string>Preencha todos os campos obrigatórios e solucione qualquer erro no formulário antes de salvar o lançamento.</string>
+	<key>ERROR</key>
+	<string>Erro</string>
+	<key>ERROR_ACCOUNT_NOT_CONFIGURED</key>
+	<string>Sua conta não está configurada para submeter relatórios.</string>
+	<key>ERROR_BAD_CONFIG_MSG</key>
+	<string>Sua configuração não suporta recibos.  Verifique junto ao seu administrador.</string>
+	<key>ERROR_CONFIGURING_SESSION</key>
+	<string>A configuração da sua sessão móvel através de logon único falhou. Entre em contato com o administrador da sua empresa.</string>
+	<key>ERROR_EXPENSE_SITE_DOWN</key>
+	<string>Despesas está em manutenção. Tente novamente dentro de aproximadamente uma hora.</string>
+	<key>ERROR_INVALID_AGENCY_CODE</key>
+	<string>Digite o código da sua agência.</string>
+	<key>ERROR_INVALID_COMPANY_CODE</key>
+	<string>Digite o código da sua empresa.</string>
+	<key>ERROR_INVALID_PIN</key>
+	<string>Seu PIN não é válido. Digite novamente o seu PIN.</string>
+	<key>ERROR_MSG_VISIT_WEBSITE</key>
+	<string>Visite o site da Concur para fornecer um valor.</string>
+	<key>ERROR_REQUIRED_FIELDS_MISSING</key>
+	<string>Faltam dados em pelo menos um campo obrigatório deste relatório. Um indicador vermelho de exceção marca a despesa e uma lista identifica os campos a serem preenchidos.</string>
+	<key>ERROR_SUBMIT_FAILED</key>
+	<string>Falha no envio</string>
+	<key>EXCEPTIONS</key>
+	<string>Exceções</string>
+	<key>EXPENSES_NEG_TEXT</key>
+	<string>Obtenha suas despesas enquanto viaja</string>
+	<key>EXPENSE_DETAILS_ITEMIZATIONS</key>
+	<string>Especificações dos itens</string>
+	<key>EXPENSE_REPORTS</key>
+	<string>Relatórios de despesas</string>
+	<key>EXPENSE_REPORTS_NEG_TEXT</key>
+	<string>Revise e envie seus relatórios</string>
+	<key>EXPENSE_TYPES_LIST</key>
+	<string>Tipos de despesas</string>
+	<key>Earliest Departure</key>
+	<string>Primeira partida</string>
+	<key>Earn %d pts.</key>
+	<string>Ganhe %d pontos</string>
+	<key>Economy</key>
+	<string>Econômico</string>
+	<key>Economy Hybrid</key>
+	<string>Econômico híbrido</string>
+	<key>Edit</key>
+	<string>Editar</string>
+	<key>Email</key>
+	<string>E-mail</string>
+	<key>Email Address</key>
+	<string>E-mail</string>
+	<key>Email Log</key>
+	<string>Registro de e-mails</string>
+	<key>Email link expired</key>
+	<string>Link de e-mail expirado</string>
+	<key>Enter Approver Email</key>
+	<string>Digitar e-mail do aprovador</string>
+	<key>Enter Field</key>
+	<string>Inserir %@</string>
+	<key>Enter in the URL that connects to the Concur servers</key>
+	<string>Entrar no URL conectado ao servidor do Concur.</string>
+	<key>Enter your Agency Code</key>
+	<string>Digite o código da sua agência</string>
+	<key>Enter your mobile password (PIN) to sign in</key>
+	<string>Digite sua senha móvel (PIN) para efetuar login</string>
+	<key>Enter your password to sign in</key>
+	<string>Digite sua senha para efetuar login</string>
+	<key>Entries Don't Match</key>
+	<string>Os lançamentos não correspondem</string>
+	<key>Error</key>
+	<string>Erro</string>
+	<key>Error loading content</key>
+	<string>Erro ao carregar conteúdo</string>
+	<key>ErrorReceiptsFetch</key>
+	<string>Nenhum recibo carregado. Clique no botão '+' abaixo para carregar um recibo agora e use-os mais tarde a partir do seu relatório ou dos lançamentos de despesas.</string>
+	<key>Estimated Arrival</key>
+	<string>Chegada estimada</string>
+	<key>Estimated Departure</key>
+	<string>Partida estimada</string>
+	<key>Evening</key>
+	<string>Noite</string>
+	<key>Exception Details</key>
+	<string>Detalhes da exceção</string>
+	<key>Exceptions</key>
+	<string>Exceções</string>
+	<key>Exchange Rate</key>
+	<string>Taxa de câmbio</string>
+	<key>Existing Reports</key>
+	<string>Relatório atual</string>
+	<key>Expense</key>
+	<string>Despesa</string>
+	<key>Expense Locations</key>
+	<string>Locais das despesas</string>
+	<key>Expense Queued</key>
+	<string>Despesa enfileirada</string>
+	<key>Expense Trip</key>
+	<string>Despesas de viagem</string>
+	<key>Expense Type</key>
+	<string>Tipo de despesa</string>
+	<key>Expense Updates</key>
+	<string>Atualizações de despesas</string>
+	<key>Expense a trip from TripIt</key>
+	<string>Despesa de uma viagem de TripIt</string>
+	<key>ExpenseIt Entries</key>
+	<string>Entradas do Expenselt</string>
+	<key>ExpenseIt Entry</key>
+	<string>Entrada do Expenselt</string>
+	<key>ExpenseTracker version</key>
+	<string>SmartExpense versão %@</string>
+	<key>Expensed</key>
+	<string>Debitado</string>
+	<key>Expenses</key>
+	<string>Despesas</string>
+	<key>Expenses Combined</key>
+	<string>Despesas combinadas</string>
+	<key>Expenses cannot be added offline</key>
+	<string>As despesas não podem ser adicionadas off-line.</string>
+	<key>Expensing the Trip</key>
+	<string>Debitando de viagem</string>
+	<key>Export</key>
+	<string>Exportar</string>
+	<key>Express</key>
+	<string>Express</string>
+	<key>FACEBOOK_AUTH_FAILED</key>
+	<string>Falha ao usar o Facebook para autenticar.  Certifique-se de que a procura privada está desativado no seu navegador Safari.</string>
+	<key>FACEBOOK_INCOMPLETE_INFO_SIGNIN_MSG</key>
+	<string>Não foi possível efetuar login usando suas credenciais do Facebook. Certifique-se de que você tem um e-mail válido no seu perfil do Facebook e efetue login via e-mail com a conta do Facebook.</string>
+	<key>FACEBOOK_INCOMPLETE_INFO_SIGNUP_MSG</key>
+	<string>Não foi possível inscrever-se usando suas credenciais do Facebook.  Certifique-se de que o e-mail, o nome e o sobrenome estejam preenchidos no seu perfil no Facebook e efetue login via e-mail com a conta do Facebook.</string>
+	<key>FACEBOOK_SIGNIN_FAILED_MSG</key>
+	<string>Erro inesperado.  Tente novamente o SignIn do Facebook ou tente um método de SignIn diferente da página do Sign In.</string>
+	<key>FACEBOOK_SIGNUP_FAILED_MSG</key>
+	<string>Erro inesperado.  Tente novamente o SignUp do Facebook ou tente um método de SignUp diferente da página do Sign Up.</string>
+	<key>FIELD_MAX_LENGTH_ERR_MSG</key>
+	<string>Digite não mais do que %@ caracteres.</string>
+	<key>FILL_IN_PARENT_MLIST_FIELD</key>
+	<string>Preencha o campo pai %@ primeiro.</string>
+	<key>FIRST_NAME</key>
+	<string>Nome</string>
+	<key>FIX_EMAIL_RESET_PASSWORD</key>
+	<string>Digite um e-mail válido no campo endereço de e-mail, antes de clicar no link Reiniciar sua senha.</string>
+	<key>FIX_REPORT_NAME_MSG</key>
+	<string>Selecione um relatório existente ou digite um nome de relatório válido e então selecione o novo relatório.</string>
+	<key>FLEX_FARING_ERROR_MSG</key>
+	<string>Para viagem aérea entre estas cidades, use a web para reservar o seu voo.</string>
+	<key>FLIGHT_STATUS_MSG</key>
+	<string>Estatísticas de voo atualizadas em</string>
+	<key>FORM</key>
+	<string>FORMULÁRIO</string>
+	<key>FORM_FIELDS_INVALID</key>
+	<string>Preencha todos os campos obrigatórios e solucione qualquer erro no formulário antes de salvar.</string>
+	<key>FOUND_COUNT</key>
+	<string>encontrado(s): %i</string>
+	<key>FREQUENT_FLYER_NO_SEL_MSG</key>
+	<string>Você tem um ou mais programas de milhagem, mas não selecionou um para esta reserva.  Selecione 'OK' para continuar sem conta, ou 'Cancelar' para selecionar uma conta.</string>
+	<key>Facebook</key>
+	<string>Facebook</string>
+	<key>Failed</key>
+	<string>Falha</string>
+	<key>Failed to add to report</key>
+	<string>Falha ao adicionar lançamentos ao relatório.</string>
+	<key>Failed to download receipt</key>
+	<string>Falha no download do recibo</string>
+	<key>Failed to import Itinerary</key>
+	<string>Falha ao importar itinerário</string>
+	<key>Failed to import entry</key>
+	<string>Não foi possível importar algumas das despesas.</string>
+	<key>Failed to retrieve attendees in selected group</key>
+	<string>Falha ao recuperar participantes no grupo selecionado</string>
+	<key>Failed to save Itinerary Stop</key>
+	<string>Falha ao salvar escala de itinerário</string>
+	<key>Failed to save external list item</key>
+	<string>Falha ao salvar item de lista externo</string>
+	<key>Failure</key>
+	<string>Falha</string>
+	<key>Fare Choices</key>
+	<string>Opções de tarifa</string>
+	<key>Feature not enabled for this demo</key>
+	<string>Recurso não habilitado na versão de demonstração</string>
+	<key>Features</key>
+	<string>Características</string>
+	<key>Fee</key>
+	<string>Taxa</string>
+	<key>Fetching Data</key>
+	<string>Obtendo Dados</string>
+	<key>Fetching Expense Data</key>
+	<string>Obtendo dados de despesas</string>
+	<key>Fetching Filter Results</key>
+	<string>Obtendo resultados do filtro</string>
+	<key>Fetching Hotel Rates</key>
+	<string>Buscando tarifas de hotel</string>
+	<key>Fetching Location Data</key>
+	<string>Obtendo dados do local</string>
+	<key>Fetching Trip</key>
+	<string>Obtendo viagem</string>
+	<key>Fetching the Feed</key>
+	<string>Obtendo a importação</string>
+	<key>Filter</key>
+	<string>Filtro</string>
+	<key>Find Travel</key>
+	<string>Encontrar viagem</string>
+	<key>First</key>
+	<string>Primeiro</string>
+	<key>First Name</key>
+	<string>Nome</string>
+	<key>Flight Details</key>
+	<string>Detalhes do voo</string>
+	<key>Flight Duration</key>
+	<string>Duração do voo</string>
+	<key>Flight Options</key>
+	<string>Opções de voo</string>
+	<key>Flight Rule Violation</key>
+	<string>Violação de regra de voo</string>
+	<key>Flight Schedules</key>
+	<string>Programas de voo</string>
+	<key>Flight Search</key>
+	<string>Pesquisa de voos</string>
+	<key>Flight Status</key>
+	<string>Status do voo</string>
+	<key>Flights</key>
+	<string>Voos</string>
+	<key>Flights_subline</key>
+	<string>Encontrar e reservar voos rápidos</string>
+	<key>For Example: say Find a Flight from San Francisco to New York for next week</key>
+	<string>Por exemplo: diga Encontre um voo de São Francisco para Nova York para a próxima semana</string>
+	<key>For Example: say Find a hotel in San Francisco for next week</key>
+	<string>Por exemplo: diga "Encontre um hotel em São Francisco para a próxima semana por 3 noites"</string>
+	<key>Forgot Username or Password?</key>
+	<string>Esqueceu nome de usuário ou senha?</string>
+	<key>Forgot mobile password (PIN)?</key>
+	<string>Esqueceu a senha móvel (PIN)?</string>
+	<key>Forgot password?</key>
+	<string>Senha esquecida?</string>
+	<key>Free up memory and retry receipt upload</key>
+	<string>Libere memória e tente novamente o carregamento do recibo mais tarde.</string>
+	<key>Frequent Flyer Program</key>
+	<string>Programa de milhagem</string>
+	<key>Frequent Flyer Warning</key>
+	<string>Aviso de programa de milhagem</string>
+	<key>Friday_Short</key>
+	<string>Sex</string>
+	<key>From</key>
+	<string>De</string>
+	<key>From Location</key>
+	<string>Do local</string>
+	<key>From Station</key>
+	<string>Da estação</string>
+	<key>Full</key>
+	<string>Completo</string>
+	<key>Full Hybrid</key>
+	<string>3 volumes híbrido</string>
+	<key>Full Pickup</key>
+	<string>Pickup 3 volumes</string>
+	<key>Full SUV</key>
+	<string>SUV 3 volumes</string>
+	<key>Future Trips</key>
+	<string>Próximo</string>
+	<key>GOOGLE_AUTH_FAILED_MSG</key>
+	<string>Não é possível usar o Google para autorizar o seu acesso à SmartExpense do Concur.</string>
+	<key>GOOGLE_INCOMPLETE_INFO_SIGNIN_MSG</key>
+	<string>Não foi possível efetuar login usando suas credenciais do Google.  Certifique-se de que tem um e-mail válido e um perfil na sua conta do Google.</string>
+	<key>GOOGLE_INCOMPLETE_INFO_SIGNUP_MSG</key>
+	<string>Não foi possível inscrever-se usando suas credenciais do Google.  Certifique-se de que o e-mail, nome e sobrenome estão preenchidos se perfil do Google.</string>
+	<key>Gate token</key>
+	<string>Portão %@</string>
+	<key>GateGuru</key>
+	<string>GateGuru</string>
+	<key>Gathering data from TripIt</key>
+	<string>Coletando dados do TripIt</string>
+	<key>Generate Expenses</key>
+	<string>Gerar despesas</string>
+	<key>Get Help</key>
+	<string>Obter ajuda</string>
+	<key>GetApprovedForAirHotelAndMore</key>
+	<string>Obter aprovações para aéreo, hotel e mais</string>
+	<key>Google</key>
+	<string>Google</string>
+	<key>Greater than 25</key>
+	<string>Maior do que 25</string>
+	<key>HAS_DYNAMIC_FIELDS_MSG</key>
+	<string>Atualmente a política de reservas de sua empresa não é compatível. Em breve ela será compatível. Faça reserva de viagem usando a versão web do Concur.</string>
+	<key>HIGH_RESOLUTION_IMAGE</key>
+	<string>Alta resolução (1000x1000px)</string>
+	<key>HOME_PAGE</key>
+	<string>Concur</string>
+	<key>HOME_PAGE_BREEZE</key>
+	<string>Concur Breeze</string>
+	<key>HOTEL</key>
+	<string>Hotel/Nenhum</string>
+	<key>HOTEL_BOOKING</key>
+	<string>Reservar quarto</string>
+	<key>HOTEL_BOOKING_ADDRESS_MISSING_VIOLATIONS</key>
+	<string>Antes de reservar esse quarto, é preciso tratar as violações de política mostradas em vermelho.</string>
+	<key>HOTEL_BOOKING_VIEW_BOOKING_ERROR_MESSAGE</key>
+	<string>Não foi possível reservar o hotel.</string>
+	<key>HOTEL_BOOKING_VIEW_CANCELLATION_POLICY_DESCRIPTION</key>
+	<string>Antes de reservar este quarto, você deve ler os detalhes da política de cancelamento.</string>
+	<key>HOTEL_BOOKING_VIEW_CANCELLATION_POLICY_TITLE</key>
+	<string>Política de cancelamento</string>
+	<key>HOTEL_BOOKING_VIEW_CONFIRM_BOOKING_MESSAGE</key>
+	<string>Tem certeza de que deseja reservar este quarto?</string>
+	<key>HOTEL_BOOKING_VIEW_CONFIRM_BOOKING_TITLE</key>
+	<string>Confirme</string>
+	<key>HOTEL_BOOKING_VIEW_DAILY_RATE</key>
+	<string>Tarifa diária: </string>
+	<key>HOTEL_BOOKING_VIEW_MISSING_VIOLATION_INFO_TITLE</key>
+	<string>Campos ausentes</string>
+	<key>HOTEL_BOOKING_VIEW_MISSING_VIOLATION_JUSTIFICATION</key>
+	<string>Antes de reservar este quarto violando a política da empresa, você deve fornecer uma justificação no campo mostrado em vermelho.</string>
+	<key>HOTEL_BOOKING_VIEW_MISSING_VIOLATION_REASON</key>
+	<string>Antes de reservar este quarto violando a política da empresa, você deve fornecer um motivo no campo mostrado em vermelho.</string>
+	<key>HOTEL_BOOKING_VIEW_MISSING_VIOLATION_REASON_AND_JUSTIFICATION</key>
+	<string>Antes de reservar este quarto violando a política da empresa, você deve fornecer um motivo e uma justificação nos campos mostrados em vermelho.</string>
+	<key>HOTEL_BOOKING_VIEW_ROOM</key>
+	<string>Quarto</string>
+	<key>HOTEL_BOOKING_VIOLATION_JUSTIFICATION_TITLE</key>
+	<string>Justificação de violação</string>
+	<key>HOTEL_BOOKING_WITH_DEPOSIT_CONFIRM_BOOKING_MESSAGE</key>
+	<string>Tem certeza de que deseja reservar este quarto?</string>
+	<key>HOTEL_BOOKNIG_VIOLATION_JUSTIFICATION_PLACEHOLDER_TEXT</key>
+	<string>Informe uma justificação para reservar este quarto.</string>
+	<key>HOTEL_CREDIT_CARD</key>
+	<string>Cartão de crédito selecionado</string>
+	<key>HOTEL_DETAILS_VIEW_FEES</key>
+	<string>Taxas</string>
+	<key>HOTEL_ROOM_LIST</key>
+	<string>Selecionar quarto</string>
+	<key>HOTEL_SEARCH_RESULTS</key>
+	<string>Selecionar hotel</string>
+	<key>HOTEL_VIEW_FIND_HOTELS_WITHIN</key>
+	<string>Localizar hotéis a uma distância de</string>
+	<key>HOTEL_VIEW_HOTEL_NAME_RESTRICTIONS</key>
+	<string>Restrições de nome do hotel</string>
+	<key>HOTEL_VIEW_HOTEL_NAME_RESTRICTIONS_PLACEHOLDER_TEXT</key>
+	<string>Encontrar hotéis cujos nomes contêm este texto</string>
+	<key>HOTEL_VIEW_KILOMETERS</key>
+	<string>km</string>
+	<key>HOTEL_VIEW_LOCATION</key>
+	<string>Local</string>
+	<key>HOTEL_VIEW_MILE</key>
+	<string>milha</string>
+	<key>HOTEL_VIEW_NO_HOTELS_MESSAGE</key>
+	<string>Não foram encontrados hotéis correspondentes.  Modifique seus critérios de pesquisa e tente novamente.</string>
+	<key>HOTEL_VIEW_NO_HOTELS_TITLE</key>
+	<string>Nenhum hotel correspondente</string>
+	<key>HOTEL_VIEW_NUMBER_SPACE_KILOMETERS_OR_MILES</key>
+	<string>%@ %@</string>
+	<key>HOTEL_VIEW_SEARCHING_FOR_HOTELS_AT</key>
+	<string>Pesquisando hotéis em</string>
+	<key>HOTEL_VIEW_SEARCHING_FOR_HOTELS_TO</key>
+	<string>para</string>
+	<key>HOTEL_VIEW_SEARCHING_FOR_HOTELS_WITH_AVAILABILITY</key>
+	<string>com quartos disponíveis a partir de</string>
+	<key>HOTEL_VIEW_SEARCH_BUTTON_TITLE</key>
+	<string>Pesquisar hotéis</string>
+	<key>HOTEL_VIEW_SELECT_PREFERENCE</key>
+	<string>Selecionar preferência</string>
+	<key>HOTEL_VIEW_SMOKING_PREFERENCE</key>
+	<string>Fumante/não fumante</string>
+	<key>HOTEL_VIEW_SPECIFY_LOCATION_MESSAGE</key>
+	<string>Especifique um local.</string>
+	<key>HOTEL_VIEW_SPECIFY_LOCATION_TITLE</key>
+	<string>Local é obrigatório</string>
+	<key>HOTEL_VIEW_TIMEOUT_MESSAGE</key>
+	<string>Não foi possível localizar nenhuma tarifa de hotel correspondente. Modifique seus critérios de pesquisa e tente novamente.</string>
+	<key>HOTEL_VIEW_TIMEOUT_TITLE</key>
+	<string>Não há tarifas de hotel correspondentes</string>
+	<key>HOTEL_VIEW_WITH_NAMES_CONTAINING</key>
+	<string>Com nomes contendo</string>
+	<key>Having trouble signing in?</key>
+	<string>Tendo problemas para efetuar login?</string>
+	<key>Help for PIN</key>
+	<string>Seu PIN é uma forma alternativa de efetuar login e pode ser criado em casos em que você efetua login automaticamente na versão web do Concur pela sua empresa e você não sabe a senha. 
+
+Para criar um PIN, visite a versão web do Concur (Perfil&gt;Registro móvel).</string>
+	<key>Help for PIN - Gov</key>
+	<string>Seu PIN é uma forma alternativa de efetuar login e pode ser criado em casos em que você efetua login automaticamente na versão web do Concur pela sua empresa e você não sabe a senha. 
+
+Para criar um PIN, visite a versão web do Concur (Perfil&gt;Registro móvel).</string>
+	<key>Help for Password</key>
+	<string>Caso sua empresa permita PIN para acesso em dispositivos móveis: Volte à tela anterior e envie seu e-mail registrado no Concur. Enviaremos a você as instruções para se conectar.
+
+Se sua empresa exige uma senha: Use a mesma senha usada para fazer log-in no site do Concur.</string>
+	<key>Help for Password - Gov</key>
+	<string>Sua senha é aquela que você usa para efetuar login na versão web do Concur. Você deve usar sua senha para o aplicativo móvel.
+
+Se não souber sua senha do Concur, verifique junto ao administrador da sua agência.</string>
+	<key>Help for User Name</key>
+	<string>Na maioria dos casos, você acessará nosso aplicativo usando o mesmo nome de usuário e senha que utiliza para a versão Web do Concur.
+ 
+Se você não tiver essas informações, envie um e-mail na tela anterior para receber informações de acesso ou entre em contato com o administrador de empresa.
+
+</string>
+	<key>Help for User Name - Gov</key>
+	<string>Seu nome de usuário é aquele que você usa para efetuar login na versão web do Concur. Você deve usar seu nome de usuário para o aplicativo móvel.
+
+Se não souber seu nome de usuário do Concur, verifique junto ao administrador da sua agência.</string>
+	<key>Hide Offers</key>
+	<string>Ocultar ofertas</string>
+	<key>Home</key>
+	<string>Casa</string>
+	<key>Hotel</key>
+	<string>Hotel</string>
+	<key>Hotel Dates</key>
+	<string>Datas de hotel</string>
+	<key>Hotel Name</key>
+	<string>Nome do hotel</string>
+	<key>Hotel Price to Beat</key>
+	<string>Preço a vencer do hotel</string>
+	<key>Hotel Rule Violation</key>
+	<string>Violação de regra para hotéis</string>
+	<key>Hotel Search</key>
+	<string>Pesquisa de hotel</string>
+	<key>Hotel cancelled from mobile device</key>
+	<string>Hotel cancelado a partir de dispositivo móvel</string>
+	<key>Hotels</key>
+	<string>Hotéis</string>
+	<key>Hotels With Names Containing</key>
+	<string>Hotéis com nomes contendo</string>
+	<key>Hotels Within</key>
+	<string>Hotéis a uma distância de</string>
+	<key>Hotels near</key>
+	<string>Hotéis próximos a</string>
+	<key>Hotels near you</key>
+	<string>Hotéis próximos a você</string>
+	<key>Hotels_subline</key>
+	<string>Check-in no hotel perfeito</string>
+	<key>Hour</key>
+	<string>Hora</string>
+	<key>How would you like to book?</key>
+	<string>Como deseja realizar a reserva?</string>
+	<key>I Forgot</key>
+	<string>Esqueci</string>
+	<key>IDV Arrive</key>
+	<string>Chegada</string>
+	<key>IDV Arrives in t at t</key>
+	<string>Chega em %@ às %@</string>
+	<key>IDV Body</key>
+	<string>Corpo</string>
+	<key>IDV Check In</key>
+	<string>Check in</string>
+	<key>IDV Check Out</key>
+	<string>Check out</string>
+	<key>IDV Confirmation</key>
+	<string>Confirmação</string>
+	<key>IDV Daily</key>
+	<string>Diário</string>
+	<key>IDV Depart</key>
+	<string>Partida</string>
+	<key>IDV Departs from t at t</key>
+	<string>Partida de %@ às %@</string>
+	<key>IDV Drop Off</key>
+	<string>Devolução</string>
+	<key>IDV Operated by t Flight t</key>
+	<string>Operado por %@ voo %@</string>
+	<key>IDV Persons</key>
+	<string>Pessoas</string>
+	<key>IDV Pick Up</key>
+	<string>Retirada</string>
+	<key>IDV Reserved for</key>
+	<string>Reservado para</string>
+	<key>IDV Rooms</key>
+	<string>Quartos</string>
+	<key>IDV Seat Map for t</key>
+	<string>Mapa de assentos para %@</string>
+	<key>IDV Social Publishing</key>
+	<string>Publicação social</string>
+	<key>IDV Terminal Map for t</key>
+	<string>Mapa do terminal para %@</string>
+	<key>IDV Terminal t Gate t</key>
+	<string>Terminal %@ portão %@</string>
+	<key>IDV Web site for t</key>
+	<string>Site para %@</string>
+	<key>IDV property name</key>
+	<string>Nome da propriedade</string>
+	<key>IDV t Flight t</key>
+	<string>%@ Voo @%</string>
+	<key>IMAGE_DOWN_SCALED_MSG</key>
+	<string>O tamanho da imagem foi reduzido para menos do que 4MB.  Verifique o conteúdo da imagem ante de salvá-la com a entrada.</string>
+	<key>INFO</key>
+	<string>Informação</string>
+	<key>INTEGER_NEGATIVE_ERR_MSG</key>
+	<string>Este campo não pode ter um valor negativo</string>
+	<key>INTEGER_TOO_BIG_ERR_MSG</key>
+	<string>Número inteiro muito grande</string>
+	<key>INTEGER_VALIDATION_ERR_MSG</key>
+	<string>Esse campo requer um número inteiro.</string>
+	<key>INVALID_CONCUR_CREDENTIALS</key>
+	<string>Credenciais de login incorretas</string>
+	<key>INVALID_DEVICE_MSG</key>
+	<string>A redefinição de PIN foi solicitada a partir de outro dispositivo. Utilize o mesmo dispositivo usado para a solicitação de redefinição de PIN.</string>
+	<key>INVALID_LOGIN_MSG</key>
+	<string>Tente inserir novamente suas credenciais ou selecione Esqueci para receber as instruções de acesso.</string>
+	<key>INVALID_PIN_LEN_MSG</key>
+	<string>Seu PIN deve ter no mínimo %@ caracteres.</string>
+	<key>INVALID_PIN_MSG</key>
+	<string>O PIN pode conter letras, números &amp; caracteres especiais, porém sem espaços.</string>
+	<key>INVALID_PIN_SPECIAL_CHARACTERS</key>
+	<string>O PIN para celular que você digitou não contém caracteres especiais. O PIN para celular deve conter pelo menos um caractere especial. Eis alguns exemplos: !, $, %, + e =.</string>
+	<key>INVALID_PIN_SPECIAL_MIXED_CASE</key>
+	<string>O PIN deve conter pelo menos uma letra maiúscula [A-Z] e uma letra minúscula [a-z].</string>
+	<key>INVALID_USERID_MSG</key>
+	<string>Insira uma ID de Login válida.%@Ela deve consistir do seu nome e login seguido por um símbolo de @ e o domínio da sua empresa.</string>
+	<key>INVOICE_LINEITEMS</key>
+	<string>Detalhe da fatura</string>
+	<key>INVOICE_LINEITEM_DETAIL</key>
+	<string>Item</string>
+	<key>INVOICE_SUMMARY</key>
+	<string>Resumo da fatura</string>
+	<key>INVOICE_VENDOR</key>
+	<string>Faturar fornecedor</string>
+	<key>ITEMIZATIONS</key>
+	<string>Especificações dos itens</string>
+	<key>ITEMIZATION_LIST</key>
+	<string>Lista de especificações do item</string>
+	<key>ITEMS_TO_APPROVE</key>
+	<string>%d itens para aprovar</string>
+	<key>ITIN_DETAILS</key>
+	<string>Detalhes do segmento</string>
+	<key>ITIN_DETAILS_VIEW_AIR</key>
+	<string>Segmento aéreo</string>
+	<key>ITIN_DETAILS_VIEW_AIRCOND</key>
+	<string>Condição do ar</string>
+	<key>ITIN_DETAILS_VIEW_AIRCRAFT</key>
+	<string>Avião</string>
+	<key>ITIN_DETAILS_VIEW_AIRPORT</key>
+	<string>Aeroporto</string>
+	<key>ITIN_DETAILS_VIEW_ALLOWABLE_MILES</key>
+	<string>Milhas permitidas</string>
+	<key>ITIN_DETAILS_VIEW_AMENITIES</key>
+	<string>Conveniências</string>
+	<key>ITIN_DETAILS_VIEW_ARRIVAL</key>
+	<string>Chegada</string>
+	<key>ITIN_DETAILS_VIEW_ARRIVE</key>
+	<string>Chegada</string>
+	<key>ITIN_DETAILS_VIEW_BAGGAGE</key>
+	<string>Bagagem</string>
+	<key>ITIN_DETAILS_VIEW_BODY</key>
+	<string>Tipo</string>
+	<key>ITIN_DETAILS_VIEW_BOOKING</key>
+	<string>Reserva</string>
+	<key>ITIN_DETAILS_VIEW_CABIN</key>
+	<string>Cabina</string>
+	<key>ITIN_DETAILS_VIEW_CANCEL_POLICY</key>
+	<string>Política de cancelamento</string>
+	<key>ITIN_DETAILS_VIEW_CAR</key>
+	<string>Aluguel de automóvel</string>
+	<key>ITIN_DETAILS_VIEW_CARRIER</key>
+	<string>Transportador</string>
+	<key>ITIN_DETAILS_VIEW_CHECK_IN</key>
+	<string>Check in</string>
+	<key>ITIN_DETAILS_VIEW_CHECK_OUT</key>
+	<string>Check out</string>
+	<key>ITIN_DETAILS_VIEW_CITY</key>
+	<string>Cidade</string>
+	<key>ITIN_DETAILS_VIEW_CLASS</key>
+	<string>Classe</string>
+	<key>ITIN_DETAILS_VIEW_CONFIRM_NUM</key>
+	<string>Confirmar nº</string>
+	<key>ITIN_DETAILS_VIEW_CONF_NUM</key>
+	<string>Nº da confirmação</string>
+	<key>ITIN_DETAILS_VIEW_CONTACT</key>
+	<string>Contato</string>
+	<key>ITIN_DETAILS_VIEW_DAILY_RATE</key>
+	<string>Tarifa diária</string>
+	<key>ITIN_DETAILS_VIEW_DEPART</key>
+	<string>Partida</string>
+	<key>ITIN_DETAILS_VIEW_DEPARTURE</key>
+	<string>Partida</string>
+	<key>ITIN_DETAILS_VIEW_DISCOUNT</key>
+	<string>Código de desconto</string>
+	<key>ITIN_DETAILS_VIEW_DIVERSION</key>
+	<string>Diversão</string>
+	<key>ITIN_DETAILS_VIEW_DROP_OFF</key>
+	<string>Devolução</string>
+	<key>ITIN_DETAILS_VIEW_DROP_OFF_ADDRESS</key>
+	<string>Endereço de entrega</string>
+	<key>ITIN_DETAILS_VIEW_DROP_OFF_INSTRUCTIONS</key>
+	<string>Instruções de entrega</string>
+	<key>ITIN_DETAILS_VIEW_DURATION</key>
+	<string>Duração</string>
+	<key>ITIN_DETAILS_VIEW_END</key>
+	<string>Fim</string>
+	<key>ITIN_DETAILS_VIEW_EQUIP</key>
+	<string>Equipamento especial</string>
+	<key>ITIN_DETAILS_VIEW_FLIGHT</key>
+	<string>Voo</string>
+	<key>ITIN_DETAILS_VIEW_FLIGHT_WITH_OB</key>
+	<string>%@ #%@ (%@ #%@)</string>
+	<key>ITIN_DETAILS_VIEW_GATE</key>
+	<string>Portão</string>
+	<key>ITIN_DETAILS_VIEW_HOTEL</key>
+	<string>Hotel</string>
+	<key>ITIN_DETAILS_VIEW_INFO</key>
+	<string>Info</string>
+	<key>ITIN_DETAILS_VIEW_MAP</key>
+	<string>Mapear</string>
+	<key>ITIN_DETAILS_VIEW_MEAL</key>
+	<string>Refeição</string>
+	<key>ITIN_DETAILS_VIEW_MEETING_INSTRUCTIONS</key>
+	<string>Instruções para o encontro</string>
+	<key>ITIN_DETAILS_VIEW_MINUTES</key>
+	<string>%@ minutos</string>
+	<key>ITIN_DETAILS_VIEW_NUMBER_IN_PARTY</key>
+	<string>Número no grupo</string>
+	<key>ITIN_DETAILS_VIEW_NUMBER_OF_PERSONS</key>
+	<string>Número de pessoas</string>
+	<key>ITIN_DETAILS_VIEW_OPERATED</key>
+	<string>Operado por %@ - %@</string>
+	<key>ITIN_DETAILS_VIEW_PARKING</key>
+	<string>Centro de estacionamento</string>
+	<key>ITIN_DETAILS_VIEW_PICKUP_ADDRESS</key>
+	<string>Endereço de retirada</string>
+	<key>ITIN_DETAILS_VIEW_PICKUP_INSTRUCTIONS</key>
+	<string>Instruções de retirada</string>
+	<key>ITIN_DETAILS_VIEW_PLATFORM</key>
+	<string>Plataforma</string>
+	<key>ITIN_DETAILS_VIEW_PRICE</key>
+	<string>Preço</string>
+	<key>ITIN_DETAILS_VIEW_RAIL</key>
+	<string>Trem</string>
+	<key>ITIN_DETAILS_VIEW_RATE</key>
+	<string>Tarifa</string>
+	<key>ITIN_DETAILS_VIEW_RATE_DESCRIPTION</key>
+	<string>Descrição da tarifa</string>
+	<key>ITIN_DETAILS_VIEW_RATE_TYPE</key>
+	<string>Tipo de tarifa</string>
+	<key>ITIN_DETAILS_VIEW_RESERVATION</key>
+	<string>Reserva</string>
+	<key>ITIN_DETAILS_VIEW_REZ</key>
+	<string>Reserva</string>
+	<key>ITIN_DETAILS_VIEW_ROOM</key>
+	<string>Quarto</string>
+	<key>ITIN_DETAILS_VIEW_SEAT</key>
+	<string>Poltrona</string>
+	<key>ITIN_DETAILS_VIEW_SEGMENT_DETAILS</key>
+	<string>Detalhes do segmento</string>
+	<key>ITIN_DETAILS_VIEW_SPECIAL_INSTRUCTIONS</key>
+	<string>Instruções especiais</string>
+	<key>ITIN_DETAILS_VIEW_START</key>
+	<string>Início</string>
+	<key>ITIN_DETAILS_VIEW_STATION</key>
+	<string>Estação</string>
+	<key>ITIN_DETAILS_VIEW_STATUS</key>
+	<string>Status</string>
+	<key>ITIN_DETAILS_VIEW_STOPS</key>
+	<string>Escalas</string>
+	<key>ITIN_DETAILS_VIEW_TERMINAL</key>
+	<string>Terminal</string>
+	<key>ITIN_DETAILS_VIEW_TOTAL_RATE</key>
+	<string>Tarifa total</string>
+	<key>ITIN_DETAILS_VIEW_TRAIN_TYPE</key>
+	<string>Tipo de trem</string>
+	<key>ITIN_DETAILS_VIEW_TRANSMISSION</key>
+	<string>Transmissão</string>
+	<key>ITIN_DETAILS_VIEW_TYPE</key>
+	<string>Tipo</string>
+	<key>ITIN_DETAILS_VIEW_VENDOR</key>
+	<string>Fornecedor</string>
+	<key>ITIN_DETAILS_VIEW_WAGON_NUM</key>
+	<string>Vagão nº</string>
+	<key>If any changes have been made by your agent</key>
+	<string>Se quaisquer alterações forem realizadas pelo seu agente, levará alguns minutos para seu itinerário ser atualizado.</string>
+	<key>If you continue to experience</key>
+	<string>Tente novamente.  Se continuar encontrando problemas ao acessar o sistema, contate o suporte ou o departamento de despesas/viagens da sua empresa.</string>
+	<key>If you continue to experience SU</key>
+	<string>Tente novamente.  Se você continuar tendo problemas no acesso ao sistema, entre em contato com o suporte da Concur.</string>
+	<key>If your plans change</key>
+	<string>Se você alterar seus planos, cancele e faça uma nova reserva em um hotel de onde estiver</string>
+	<key>Image Not Available</key>
+	<string>Imagem não disponível</string>
+	<key>Immediate Assistance Required</key>
+	<string>Assistência imediata é obrigatória</string>
+	<key>Import Error</key>
+	<string>Erro de importação</string>
+	<key>Import Expenses</key>
+	<string>Importar despesas</string>
+	<key>Import and Match</key>
+	<string>Importar e Corresponder</string>
+	<key>Incorrect Password</key>
+	<string>Senha Incorreta</string>
+	<key>Individual Edition</key>
+	<string>Edição individual</string>
+	<key>Infants</key>
+	<string>Crianças</string>
+	<key>Info</key>
+	<string>Info</string>
+	<key>Intermediate</key>
+	<string>Intermediário</string>
+	<key>Intermediate Hybrid</key>
+	<string>Híbrido intermediário</string>
+	<key>Intermediate SUV</key>
+	<string>SUV intermediário</string>
+	<key>Invalid Arrival Location</key>
+	<string>Local de destino inválido</string>
+	<key>Invalid Departure Date</key>
+	<string>Data de partida inválida</string>
+	<key>Invalid Departure Location</key>
+	<string>Local de partida inválido</string>
+	<key>Invalid Device</key>
+	<string>Dispositivo inválido</string>
+	<key>Invalid Email or Username</key>
+	<string>E-mail ou nome de usuário inválido</string>
+	<key>Invalid Login Credentials</key>
+	<string>Credenciais de login inválidas</string>
+	<key>Invalid PIN</key>
+	<string>PIN inválido</string>
+	<key>Invalid PIN length</key>
+	<string>Comprimento de PIN inválido</string>
+	<key>Invalid Password</key>
+	<string>Senha inválida</string>
+	<key>Invalid Return Date</key>
+	<string>Data de retorno inválida</string>
+	<key>Invalid User Name</key>
+	<string>Nome do usuário inválido</string>
+	<key>Invalid email address</key>
+	<string>Endereço de e-mail inválido</string>
+	<key>Invitation(s) Sent</key>
+	<string>Convite(s) enviado(s)</string>
+	<key>Invitations Sent</key>
+	<string>Obrigado por compartilhar o SmartExpense.</string>
+	<key>Invite</key>
+	<string>Convidar</string>
+	<key>Invite colleagues to use SmartExpense</key>
+	<string>Convidar colegas para usarem o SmartExpense</string>
+	<key>Invoice</key>
+	<string>Fatura</string>
+	<key>Invoice Approval</key>
+	<string>Aprovações de fatura</string>
+	<key>Invoice Image</key>
+	<string>Imagem da fatura</string>
+	<key>InvoiceApprove</key>
+	<string>Fatura</string>
+	<key>Invoices</key>
+	<string>Faturas</string>
+	<key>Itemization not allowed</key>
+	<string>A especificação por item não é permitida para este lançamento</string>
+	<key>Itemizations</key>
+	<string>Especificações dos itens</string>
+	<key>Itemize</key>
+	<string>Especificar por Item</string>
+	<key>Itemized Entry</key>
+	<string>Lançamento por itens</string>
+	<key>Itemized:</key>
+	<string>Especificado por itens:</string>
+	<key>Itineraries</key>
+	<string>Itinerários</string>
+	<key>Itinerary</key>
+	<string>Itinerário</string>
+	<key>Itinerary List</key>
+	<string>Lista de Itinerários</string>
+	<key>Itinerary Rule Violation</key>
+	<string>Violação de regra de itinerário</string>
+	<key>Join</key>
+	<string>Juntar</string>
+	<key>Join with Facebook</key>
+	<string>Associar-se com Facebook</string>
+	<key>LABEL_ADD_BTN</key>
+	<string>Adicionar</string>
+	<key>LABEL_AIR</key>
+	<string>Segmento aéreo</string>
+	<key>LABEL_APPROVE_EXPENSES</key>
+	<string>Aprovar despesas</string>
+	<key>LABEL_CANCEL_BTN</key>
+	<string>Cancelar</string>
+	<key>LABEL_CAR_RENTAL</key>
+	<string>Aluguel de automóvel</string>
+	<key>LABEL_CLOSE_BTN</key>
+	<string>Fechar</string>
+	<key>LABEL_DONE_BTN</key>
+	<string>Pronto</string>
+	<key>LABEL_EXPENSE</key>
+	<string>Despesa</string>
+	<key>LABEL_EXPENSES</key>
+	<string>Despesas</string>
+	<key>LABEL_HOTELS</key>
+	<string>Hotéis</string>
+	<key>LABEL_LOGIN_NO_PIN</key>
+	<string>Precisa definir seu PIN?</string>
+	<key>LABEL_LOGIN_PASSWORD</key>
+	<string>Senha ou PIN</string>
+	<key>LABEL_LOGIN_REGISTER</key>
+	<string>Registrar</string>
+	<key>LABEL_LOGIN_SIGN_IN</key>
+	<string>Acessar</string>
+	<key>LABEL_LOGIN_USER_NAME</key>
+	<string>Nome de usuário</string>
+	<key>LABEL_OK_BTN</key>
+	<string>OK</string>
+	<key>LABEL_QUICK_EXPENSE</key>
+	<string>Dinheiro</string>
+	<key>LABEL_REGISTER_ENTER_PIN</key>
+	<string>Digitar PIN</string>
+	<key>LABEL_REGISTER_PASSWORD</key>
+	<string>Senha</string>
+	<key>LABEL_REGISTER_REENTER_PIN</key>
+	<string>Reinserir o PIN</string>
+	<key>LABEL_REGISTER_SIGN_IN</key>
+	<string>Acessar</string>
+	<key>LABEL_SAVE_BTN</key>
+	<string>Salvar</string>
+	<key>LABEL_SEND_BTN</key>
+	<string>Enviar</string>
+	<key>LABEL_SETTINGS</key>
+	<string>Configurações</string>
+	<key>LABEL_SETTINGS_VIEW_APP_INFO</key>
+	<string>Informações sobre aplicativo</string>
+	<key>LABEL_SETTINGS_VIEW_APP_NAME</key>
+	<string>Nome do aplicativo</string>
+	<key>LABEL_SETTINGS_VIEW_CONNECTION_SETTINGS</key>
+	<string>Definições de conexões</string>
+	<key>LABEL_SETTINGS_VIEW_REMEMBER_USER</key>
+	<string>Salvar nome de usuário</string>
+	<key>LABEL_SETTINGS_VIEW_SAVE_BTN</key>
+	<string>Salvar definições</string>
+	<key>LABEL_SETTINGS_VIEW_TWITTER</key>
+	<string>Mostrar twitter</string>
+	<key>LABEL_SETTINGS_VIEW_URI_NON_SSL</key>
+	<string>Não SSL URI</string>
+	<key>LABEL_SETTINGS_VIEW_URL</key>
+	<string>URI do servidor</string>
+	<key>LABEL_SETTINGS_VIEW_VERSION</key>
+	<string>Versão</string>
+	<key>LABEL_SUBMIT_BTN</key>
+	<string>Enviar</string>
+	<key>LABEL_TAXI</key>
+	<string>Táxi</string>
+	<key>LABEL_TRAVEL</key>
+	<string>Viagem</string>
+	<key>LABEL_TRIPS</key>
+	<string>Viagens</string>
+	<key>LABEL_VENDOR_ADDR_CODE</key>
+	<string>Código de endereço:</string>
+	<key>LABEL_VENDOR_CODE</key>
+	<string>Código do fornecedor:</string>
+	<key>LAST_NAME</key>
+	<string>Sobrenome</string>
+	<key>LNA_LOADING_TEXT</key>
+	<string>Obtendo se local atual...</string>
+	<key>LOCATION_NOT_FOUND_MSG</key>
+	<string>Seu local atual não pôde ser encontrado.</string>
+	<key>LOGIN</key>
+	<string>Acessar</string>
+	<key>LOG_UNAVAILABLE_MSG</key>
+	<string>Dados de registro estão indisponíveis.</string>
+	<key>LOW_RESOLUTION_IMAGE</key>
+	<string>Baixa resolução (320x320px)</string>
+	<key>Last Name</key>
+	<string>Sobrenome</string>
+	<key>Last updated</key>
+	<string>Última atualização %@</string>
+	<key>Last updated on</key>
+	<string>Última atualização em</string>
+	<key>Layover in</key>
+	<string>Escala em</string>
+	<key>Learn More</key>
+	<string>Saiba mais</string>
+	<key>Least Preferred</key>
+	<string>Menos preferido</string>
+	<key>Legs: token</key>
+	<string>Posições: %@</string>
+	<key>Link Dropbox</key>
+	<string>Link para Dropbox</string>
+	<key>Link Success</key>
+	<string>Link êxito</string>
+	<key>Link to TripIt</key>
+	<string>Link para TripIt</string>
+	<key>Link with TripIt</key>
+	<string>Link para TripIt</string>
+	<key>Link with TripIt Header</key>
+	<string>Clique no link para TripIt e transforme suas viagens relatórios de despesas.</string>
+	<key>Linked to Dropbox</key>
+	<string>Vinculado à Dropbox</string>
+	<key>List</key>
+	<string>Lista</string>
+	<key>List of your expenses</key>
+	<string>Lista de suas despesas</string>
+	<key>Load Logs</key>
+	<string>Carregar registros</string>
+	<key>Load more hotels</key>
+	<string>Carregar mais hotéis...</string>
+	<key>Loading Data</key>
+	<string>Carregando dados</string>
+	<key>Loading Image</key>
+	<string>Carregando imagem</string>
+	<key>Loading Receipt Image(s)</key>
+	<string>Carregando imagens de recibo</string>
+	<key>Loading Receipts</key>
+	<string>Carregando recibos</string>
+	<key>Loading Stations</key>
+	<string>Carregando estações</string>
+	<key>Loading Trip</key>
+	<string>Carregando viagem</string>
+	<key>Loading delivery options</key>
+	<string>Carregando opções de entrega</string>
+	<key>Loading more Hotels</key>
+	<string>Carregando mais hotéis</string>
+	<key>Loading trip data</key>
+	<string>Carregando dados da viagem</string>
+	<key>Loading...</key>
+	<string>Carregando...</string>
+	<key>Location</key>
+	<string>Local</string>
+	<key>Location Check Offline</key>
+	<string>Seu local não pode ser verificado enquanto você estiver off-line.  Tente mais tarde.</string>
+	<key>Location Not Found</key>
+	<string>Local não encontrado</string>
+	<key>Location Required</key>
+	<string>Local é obrigatório</string>
+	<key>Log</key>
+	<string>Registro</string>
+	<key>Log Saved</key>
+	<string>Registro salvo</string>
+	<key>Log Unavailable</key>
+	<string>Registro não disponível</string>
+	<key>Log out from Concur Mobile</key>
+	<string>Sair do Concur Móvel</string>
+	<key>Log out from SmartExpense</key>
+	<string>Sair do SmartExpense</string>
+	<key>Logging In</key>
+	<string>Fazendo login</string>
+	<key>Login Settings</key>
+	<string>Acessar configurações</string>
+	<key>Logout</key>
+	<string>Sair</string>
+	<key>Looks like we are experience some difficulties. Please check back in a few minutes.</key>
+	<string>Parece que estamos passando por algumas dificuldades. Tente novamente em alguns minutos.</string>
+	<key>Luxury</key>
+	<string>Luxo</string>
+	<key>MAP</key>
+	<string>Exibição do mapa</string>
+	<key>MAPVIEW_ACCESS_DENIED</key>
+	<string>Infelizmente, a Concur precisa acessar seu local para gerar as instruções. Ative os Serviços de Localização para o Concur.</string>
+	<key>MAPVIEW_LOCATION_UNKNOWN</key>
+	<string>Infelizmente, seu local atual é desconhecido, mas o Concur continuará tentando localizá-lo.</string>
+	<key>MAPVIEW_NETWORK_ERROR</key>
+	<string>Infelizmente, o Concur não conseguiu identificar seu local atual. Verifique sua conexão de rede e certifique-se de que o Modo de Avião esteja desativado.</string>
+	<key>MAPVIEW_UNKNOWN_ERROR</key>
+	<string>Infelizmente, o Concur não conseguiu identificar seu local atual. Verifique a conexão de sua rede, certifique-se de que os Serviços de Localização estejam ativados e que o Modo de Avião esteja desativado.</string>
+	<key>MEDIUM_RESOLUTION_IMAGE</key>
+	<string>Resolução média (640x640px)</string>
+	<key>MLIST_FIELD_EDIT_NOT_SUPPORT</key>
+	<string>Edição para este campo da lista conectada não é compatível no momento em dispositivo móvel.  Use a web CTE em vez disso.</string>
+	<key>MLIST_MRU_NOT_SUPPORT</key>
+	<string>A seleção do último item da lista usado não é compatível para este campo.  Use a web CTE em vez disso.</string>
+	<key>MOBILE_DISABLED_MSG</key>
+	<string>Sua empresa desativou o Concur para celular. Entre em contato com o seu administrador.</string>
+	<key>MODULE_DISABLED_ALERT_TEXT</key>
+	<string>Sua empresa desativou esta ferramenta para celular.</string>
+	<key>MODULE_DISABLED_ALERT_TITLE</key>
+	<string>Recurso desativado</string>
+	<key>MSG_ADDITIONAL_RECEIPT_NOT_REQUIRED</key>
+	<string>Recibos adicionais não são obrigatórios.</string>
+	<key>MSG_APPROVE_INVOICE_AREYOUSURE</key>
+	<string>Tem certeza de que deseja aprovar esta fatura?</string>
+	<key>MSG_NO_INVOICE_DETAIL</key>
+	<string>Nenhum detalhe de fatura</string>
+	<key>MSG_NO_INVOICE_TO_APPROVE</key>
+	<string>Nenhuma fatura para aprovar</string>
+	<key>MSG_RECEIPT_NOT_REQUIRED</key>
+	<string>Recibos não são obrigatórios.</string>
+	<key>MSG_RECEIPT_REQUIRED</key>
+	<string>Lembrete: Recibos necessários!</string>
+	<key>MSG_REPORT_SUBMISSION</key>
+	<string>Caso ainda não tenha fornecido os recibos, visite o site do Concur.  Caso contrário, você pode submeter o relatório agora.</string>
+	<key>MSG_TRAIN_SELL_NOT_READY</key>
+	<string>A venda de reservas de trem ainda não foi implementada.  Você deverá conseguir reservar seu trem em uma versão posterior.</string>
+	<key>MSG_WAIT_FETCHING_INFO</key>
+	<string>Estamos obtendo informações para a submissão do relatório.  Aguarde e tente novamente.</string>
+	<key>Mail Queued</key>
+	<string>Correio enfileirado</string>
+	<key>Mail Saved</key>
+	<string>Correio salvo</string>
+	<key>Mail Unavailable</key>
+	<string>Correio indisponível</string>
+	<key>Manage Receipts</key>
+	<string>Administrar recibos</string>
+	<key>Manage Violations</key>
+	<string>Gerenciar Violações</string>
+	<key>ManageYourAuthorizations</key>
+	<string>Gerenciar suas autorizações</string>
+	<key>Manager approval</key>
+	<string>Aprovação do gerente</string>
+	<key>Map</key>
+	<string>Mapear</string>
+	<key>Map Address</key>
+	<string>Endereço do mapa</string>
+	<key>Matching transactions combined into a single expense</key>
+	<string>Correspondência de transações combinadas em uma única despesa</string>
+	<key>Meal Allowances</key>
+	<string>Ajuda de custo para refeição</string>
+	<key>Menu</key>
+	<string>Menu</string>
+	<key>Message Center</key>
+	<string>Central de mensagens</string>
+	<key>Microphone Access Denied</key>
+	<string>Acesso via microfone negado</string>
+	<key>Midnight</key>
+	<string>Meia-noite</string>
+	<key>Mileage</key>
+	<string>Milhagem</string>
+	<key>Mini</key>
+	<string>Mini</string>
+	<key>Mini Van</key>
+	<string>Mini van</string>
+	<key>Missing Arrival</key>
+	<string>Chegada ausente</string>
+	<key>Missing Arrival Message</key>
+	<string>O aeroporto de chegada está ausente.  Selecione um aeroporto no qual vai chegar.</string>
+	<key>Missing Departure</key>
+	<string>Partida ausente</string>
+	<key>Missing Departure Message</key>
+	<string>O aeroporto de partida está ausente.  Selecione um aeroporto do qual vai partir.</string>
+	<key>Missing fields</key>
+	<string>Campos ausentes</string>
+	<key>Missing required information for Itinerary Stop</key>
+	<string>Faltam informações necessárias para a escala de itinerário</string>
+	<key>Mobile Disabled</key>
+	<string>Celular desativado</string>
+	<key>Mobile Expenses</key>
+	<string>Despesas móveis</string>
+	<key>Mobile Log</key>
+	<string>Registro móvel</string>
+	<key>Mobile Log: iPhone Crash</key>
+	<string>Registro móvel: Travamento do iPhone</string>
+	<key>Mobile PIN title</key>
+	<string>PIN móvel</string>
+	<key>Mobile Password (PIN)</key>
+	<string>Senha móvel (PIN)</string>
+	<key>Mobile Password (PIN) Reset Link Sent</key>
+	<string>Link para Redefinir Senha Móvel (PIN) Enviado</string>
+	<key>Mobile Password (PIN) Successfully Reset</key>
+	<string>Senha móvel (PIN) redefinida com sucesso</string>
+	<key>Monday_Short</key>
+	<string>Seg</string>
+	<key>Month of stay</key>
+	<string>Mês da estada</string>
+	<key>More Help</key>
+	<string>Mais ajuda</string>
+	<key>Morning</key>
+	<string>Manhã</string>
+	<key>Most Preferred</key>
+	<string>Mais preferencial</string>
+	<key>Most Recently Used</key>
+	<string>Utilizado mais recentemente</string>
+	<key>Must log in online first</key>
+	<string>Você precisa fazer login on-line antes de poder ser autenticado off-line.</string>
+	<key>N Stops</key>
+	<string>%d Escalas</string>
+	<key>NCOOK</key>
+	<string>Outros sem cozinhar</string>
+	<key>NEED_TO_RESET_PASSWORD</key>
+	<string>Reinicie sua senha e depois efetue login.  Se tiver dificuldades, entre em contato com o seu administrador.</string>
+	<key>NEED_TO_RESET_PIN</key>
+	<string>Reinicie seu PIN e depois efetue login.  Se tiver dificuldades, entre em contato com o seu administrador.</string>
+	<key>NIGHTS_TOO_LARGE_ERR_MSG</key>
+	<string>Especificar despesas por item por 90 dias ou menos</string>
+	<key>NON_REFUNDABLE_WARN_MSG</key>
+	<string>Os clientes detentores de bilhetes do tipo NÃO REEMBOLSÁVEL podem cancelar a sua viagem e reutilizar os seus bilhetes para qualquer destino no sistema de transportadoras, no espaço de um ano a contar da DATA DE EMISSÃO do bilhete. As reservas TÊM que ser canceladas até ao suposto dia (original) da partida, caso contrário, os bilhetes serão considerados nulos e NÃO terão qualquer valor para futura utilização. Estas regras aplicam-se apenas a bilhetes de voos DOMÉSTICOS. Deseja, mesmo assim, selecionar estes voos?</string>
+	<key>NO_RATES_SOLD_OUT_USER_MESSAGE</key>
+	<string>Nenhum quarto nesta propriedade está disponível para as datas especificadas. Selecione um hotel diferente.</string>
+	<key>NO_RECEIPTS_NEG</key>
+	<string>Nenhum recibo</string>
+	<key>NO_RECEIPT_FOUND</key>
+	<string>Nenhum recibo foi encontrado no servidor.  Se você já anexou um recibo ao relatório, volte mais tarde e verifique novamente.</string>
+	<key>NO_RECEIPT_MSG</key>
+	<string>Falta um recibo para pelo menos uma das despesas selecionadas.</string>
+	<key>NO_RECEIPT_NEG</key>
+	<string>Nenhum recibo</string>
+	<key>NO_REPORTRECEIPT_NEG</key>
+	<string>Nenhum recibo anexado às despesas</string>
+	<key>NUMBER_OF_ROOMS</key>
+	<string>Número de quartos</string>
+	<key>NUMERIC_TOO_BIG_ERR_MSG</key>
+	<string>Número muito grande</string>
+	<key>NUMERIC_VALIDATION_ERR_MSG</key>
+	<string>Esse campo requer um valor numérico.</string>
+	<key>Navigator</key>
+	<string>Navegador</string>
+	<key>Network Error</key>
+	<string>Erro de rede</string>
+	<key>New Attendee</key>
+	<string>Novo participante</string>
+	<key>New Mobile Password (PIN)</key>
+	<string>Nova senha móvel (PIN)</string>
+	<key>New Password</key>
+	<string>Nova senha</string>
+	<key>New Report</key>
+	<string>Novo relatório</string>
+	<key>Next</key>
+	<string>Próximo</string>
+	<key>Nightly Lodging Expenses</key>
+	<string>Despesas de diárias</string>
+	<key>No</key>
+	<string>Não</string>
+	<key>No Active Reports</key>
+	<string>Atualmente você não tem relatórios ativos</string>
+	<key>No Active Trips</key>
+	<string>Nenhuma viagem ativa</string>
+	<key>No Attendee Found</key>
+	<string>Nenhum participante encontrado</string>
+	<key>No Attendee Type Available</key>
+	<string>Nenhum participante pode ser adicionado uma vez que não há tipo de participante válido disponível para este tipo de despesa.</string>
+	<key>No Attendees</key>
+	<string>Nenhum participante</string>
+	<key>No Card Charges</key>
+	<string>Nenhum encargo de cartão</string>
+	<key>No Comments</key>
+	<string>Sem comentários.</string>
+	<key>No Credit Card</key>
+	<string>Nenhum cartão de crédito</string>
+	<key>No Delivery Option</key>
+	<string>Nenhuma opção de entrega</string>
+	<key>No Email in Profile</key>
+	<string>Não há e-mail no perfil</string>
+	<key>No Email(s)</key>
+	<string>Nenhum e-mail</string>
+	<key>No Expenses</key>
+	<string>Sem despesas</string>
+	<key>No Flights Found</key>
+	<string>Nenhum voo encontrado</string>
+	<key>No Itemization</key>
+	<string>Nenhuma especificação por item</string>
+	<key>No Matching Cars</key>
+	<string>Nenhum automóvel correspondente</string>
+	<key>No Network Connection</key>
+	<string>Não há conexão de rede</string>
+	<key>No Out of Pocket Expenses</key>
+	<string>Sem despesas</string>
+	<key>No Rates</key>
+	<string>Sem tarifas</string>
+	<key>No Receipts</key>
+	<string>Administre todos os seus recibos em um mesmo local e reduza a aglomeração em seu álbum de fotos. A pasta de recibos mantém registro dos recibos usados nas despesas. Você também pode copiar recibos do seu álbum de fotos para a pasta de recibos ou tirar novas fotos dos recibos e armazená-los aqui.</string>
+	<key>No Reports</key>
+	<string>Nenhum relatório</string>
+	<key>No Results</key>
+	<string>Sem resultados</string>
+	<key>No Segments Selected</key>
+	<string>Nenhum segmento selecionado</string>
+	<key>No Shows</key>
+	<string>Ausências</string>
+	<key>No Shows Tip</key>
+	<string>Digite o número de %@.</string>
+	<key>No TripIt Trips</key>
+	<string>Nenhuma viagem TripIt para debitar</string>
+	<key>No Trips</key>
+	<string>Nenhuma viagem</string>
+	<key>No date specified</key>
+	<string>Nenhuma data especificada</string>
+	<key>No email(s) were specified for the invite</key>
+	<string>Nenhum e-mail for especificado para o convite</string>
+	<key>No items to upload</key>
+	<string>Nenhum item para carregar</string>
+	<key>No matching cars were found.  Please modify your search criteria and try again.</key>
+	<string>Nenhum automóvel correspondente foi encontrado.  Modifique seus critérios de pesquisa e tente novamente.</string>
+	<key>No new twitter message</key>
+	<string>Nenhuma mensagem nova do twitter</string>
+	<key>No preference</key>
+	<string>Sem preferência</string>
+	<key>No trains were found</key>
+	<string>Nenhum trem foi encontrado</string>
+	<key>No trip segments have been selected</key>
+	<string>Nenhum segmento de viagem foi selecionado.</string>
+	<key>Non-smoking</key>
+	<string>Não fumantes</string>
+	<key>None</key>
+	<string>Nenhum</string>
+	<key>Nonstop</key>
+	<string>Direto</string>
+	<key>Not Available</key>
+	<string>Não disponível</string>
+	<key>Not Filed Reports</key>
+	<string>Relatórios</string>
+	<key>Not Linked</key>
+	<string>Não vinculado</string>
+	<key>Not Preferred</key>
+	<string>Não preferencial</string>
+	<key>Not Provided</key>
+	<string>Não fornecido</string>
+	<key>Not Sure</key>
+	<string>Não sabe</string>
+	<key>Now</key>
+	<string>Agora</string>
+	<key>Number Of Nights</key>
+	<string>Número de noites</string>
+	<key>Number of hotels</key>
+	<string>Número de hotéis</string>
+	<key>Number of schedules found: token</key>
+	<string>Número de programações encontradas: %d</string>
+	<key>OFFLINE_MSG</key>
+	<string>Você está off-line.  Aguarde para submeter o relatório até você estar on-line.</string>
+	<key>OK</key>
+	<string>OK</string>
+	<key>OR</key>
+	<string>OU</string>
+	<key>OUT_OF_POCKET_FORM</key>
+	<string>Despesa</string>
+	<key>OUT_OF_POCKET_FORM_VIEW_CONFIRM_SPLIT_SMART_EXPENSE_MESSAGE</key>
+	<string>Tem certeza de que deseja dividir o encargo do cartão da entrada móvel?</string>
+	<key>OUT_OF_POCKET_FORM_VIEW_CONFIRM_SPLIT_SMART_EXPENSE_TITLE</key>
+	<string>Confirme</string>
+	<key>OUT_OF_POCKET_FORM_VIEW_SPLIT_SMART_EXPENSE_BUTTON_TITLE</key>
+	<string>Dividir despesa inteligente</string>
+	<key>OUT_OF_POCKET_LIST</key>
+	<string>Despesas</string>
+	<key>Off</key>
+	<string>Off</string>
+	<key>Off Airport</key>
+	<string>Fora do aeroporto</string>
+	<key>Offers</key>
+	<string>Ofertas</string>
+	<key>Office</key>
+	<string>Escritório</string>
+	<key>Office Locations</key>
+	<string>Locais de agências</string>
+	<key>Offline</key>
+	<string>Off-line</string>
+	<key>Offline limits features</key>
+	<string>Seu dispositivo está off-line no momento.  Alguns recursos não estarão disponíveis.</string>
+	<key>Ok let's start over. What Hotel can I find for you</key>
+	<string>Ok, comece novamente. Que hotel posso encontrar para você?</string>
+	<key>Old Trips</key>
+	<string>Passado</string>
+	<key>On</key>
+	<string>em</string>
+	<key>One Way</key>
+	<string>Só ida</string>
+	<key>Open the email from this device to reset your mobile password (PIN) and sign in.</key>
+	<string>Abra o e-mail usando este dispositivo para redefinir sua senha móvel (PIN) e efetuar login.</string>
+	<key>Open the email from this device to reset your password and sign in.</key>
+	<string>Abra o e-mail usando este dispositivo para redefinir sua senha e efetuar login.</string>
+	<key>Operated By</key>
+	<string>Operado por</string>
+	<key>Operated by</key>
+	<string>Operado por</string>
+	<key>Operation Not Supported Offline</key>
+	<string>Esta operação não é suportada em modo off-line.  Tente novamente quando a conectividade da rede estiver disponível.</string>
+	<key>Or Sign In with...</key>
+	<string>Ou faça login com...</string>
+	<key>Or Sign Up with...</key>
+	<string>Ou inscrever-se com...</string>
+	<key>Organization</key>
+	<string>Organização</string>
+	<key>Original receipt required</key>
+	<string>Recibo original Obrigatório</string>
+	<key>Other</key>
+	<string>Social e outros</string>
+	<key>Other Allowances</key>
+	<string>Outras ajudas de custo</string>
+	<key>Other Reports</key>
+	<string>Outros relatórios</string>
+	<key>Other Room Tax 1</key>
+	<string>Outras taxas de quarto 1</string>
+	<key>Other Room Tax 2</key>
+	<string>Outras taxas de quarto 2</string>
+	<key>Out of Pocket Entry has been Saved</key>
+	<string>Despesa foi salva</string>
+	<key>Outbound</key>
+	<string>Externo</string>
+	<key>P2B_AIR_BOOKING_HEADER_POINTS_DISABLED</key>
+	<string>Compre passagens de forma mais inteligente! Uma reserva sob o preço a vencer economiza o dinheiro de sua empresa.</string>
+	<key>P2B_AIR_BOOKING_HEADER_POINTS_ENABLED</key>
+	<string>Ganhe pontos de viagem ao selecionar opções que custam menos que o preço a vencer. Quando uma viagem é debitada, os pontos de viagem ganhos e gastos refletem no total do qual você poderá usufruir como benefícios futuros.</string>
+	<key>PDF Receipt</key>
+	<string>Recibo em PDF</string>
+	<key>PENDING_REQUIRED_TRAVEL_CUSTOM_FIELDS</key>
+	<string>Preencha todas as informações de reserva antes de prosseguir</string>
+	<key>PER_VARIABLE_NO_RATES</key>
+	<string>Não existem tarifas definidas para a data fornecida.</string>
+	<key>PIN</key>
+	<string>PIN</string>
+	<key>PIN Tip</key>
+	<string>Se não souber suas credenciais, efetue login na sua conta web do Concur e navegue até Perfil &gt; Registro móvel.  Os usuários do Concur Breeze devem navegar até Minha conta &gt; PIN móvel.  Entre em contato com o administrados de sua empresa para ajuda adicional.</string>
+	<key>PIN has been reset successfully</key>
+	<string>O PIN foi redefinido com sucesso.</string>
+	<key>PIN_EXPIRED</key>
+	<string>Seu PIN expirou.  Registre seu PIN novamente e depois efetue login.</string>
+	<key>PIN_MOBILE_NOTES</key>
+	<string>O PIN serve apenas para o aplicativo móvel do Concur.</string>
+	<key>PLEASE_SELECT_VALUE</key>
+	<string>Escolha uma opção na lista.</string>
+	<key>PRICE_TO_BEAT_AIR_RESULTS_HEADER</key>
+	<string>Reservar um voo que custa menos que o preço a vencer lhe dá pontos de viagens que podem ser usados depois!</string>
+	<key>PRICE_TO_BEAT_AIR_SEARCH_HEADER</key>
+	<string>Ganhe pontos de viagem ao economizar dinheiro! Insira seus detalhes de pesquisa de viagem aérea abaixo para encontrar o preço a vencer ao reservar seu voo.</string>
+	<key>PRICE_TO_BEAT_DISABLED_AIR_RESULTS_HEADER</key>
+	<string>Uma reserva sob o preço a vencer economiza o dinheiro de sua empresa!</string>
+	<key>PRICE_TO_BEAT_DISABLED_AIR_SEARCH_HEADER</key>
+	<string>Compre passagens de forma mais inteligente! Insira seus detalhes de pesquisa de viagem aérea abaixo para encontrar o preço a vencer ao reservar seu voo.</string>
+	<key>PRICE_TO_BEAT_DISABLED_HOTEL_RESULTS_HEADER</key>
+	<string>Reservar um quarto que custa menos que o preço a vencer economiza o dinheiro de sua empresa!</string>
+	<key>PRICE_TO_BEAT_DISABLED_HOTEL_SEARCH_HEADER</key>
+	<string>Compre passagens de forma mais inteligente! Insira seus detalhes de pesquisa de hotel abaixo para encontrar o preço a vencer ao reservar seu quarto.</string>
+	<key>PRICE_TO_BEAT_HOTEL_RESULTS_HEADER</key>
+	<string>Reservar um quarto que custa menos que o preço a vencer lhe dá pontos de viagem que podem ser usados depois!</string>
+	<key>PRICE_TO_BEAT_HOTEL_SEARCH_HEADER</key>
+	<string>Ganhe pontos de viagem ao economizar dinheiro! Insira seus detalhes de pesquisa de hotel abaixo para encontrar o preço a vencer ao reservar seu quarto. </string>
+	<key>PROCEED_TO_ADD_MSG</key>
+	<string>Você pode prosseguir e adicioná-las a um relatório, mas precisará anexar um recibo via site.</string>
+	<key>PWD</key>
+	<string>Senha</string>
+	<key>PWD_LOGIN</key>
+	<string>Registrar</string>
+	<key>Paid Reports</key>
+	<string>Relatórios pagos</string>
+	<key>Passenger</key>
+	<string>Passageiro</string>
+	<key>PassengerCount</key>
+	<string>Contagem de passageiros</string>
+	<key>Passengers</key>
+	<string>Passageiros</string>
+	<key>Password</key>
+	<string>Senha</string>
+	<key>Password Reset Link Sent</key>
+	<string>Link para Redefinir Senha Enviado</string>
+	<key>Password Successfully Reset</key>
+	<string>Senha redefinida com sucesso</string>
+	<key>Passwords Don't Match</key>
+	<string>As senhas não correspondem</string>
+	<key>Personal Car Mileage</key>
+	<string>Milhagem de automóvel particular</string>
+	<key>PersonalCardCount_0</key>
+	<string>Você não tem encargos de cartão não usados de %@</string>
+	<key>PersonalCardCount_1</key>
+	<string>Você tem 1 encargo de cartão não usado %@</string>
+	<key>PersonalCardCount_2</key>
+	<string>Você tem %d encargos de cartão não usados de %@</string>
+	<key>Phone</key>
+	<string>Telefone</string>
+	<key>Photo Album</key>
+	<string>Anexar via álbum de fotos</string>
+	<key>Pick-up</key>
+	<string>Retirada</string>
+	<key>Pick-up Date</key>
+	<string>Data de retirada</string>
+	<key>Pick-up Time</key>
+	<string>Hora de retirada</string>
+	<key>Pickup</key>
+	<string>Pickup</string>
+	<key>Pickup Location</key>
+	<string>Local de entrega</string>
+	<key>Please Confirm</key>
+	<string>Confirme</string>
+	<key>Please Enter Your Email Address</key>
+	<string>Digite seu endereço de e-mail comercial</string>
+	<key>Please Select To View</key>
+	<string>Selecione para visualizar</string>
+	<key>Please Specify Program</key>
+	<string>Especifique o programa</string>
+	<key>Please Wait</key>
+	<string>Aguarde</string>
+	<key>Please address policy violations</key>
+	<string>Trate as violações da política</string>
+	<key>Please check your connection and retry later.</key>
+	<string>Verifique sua conexão e tente novamente mais tarde.</string>
+	<key>Please enter a justification for booking this car.</key>
+	<string>Informe uma justificação para reservar este automóvel.</string>
+	<key>Please enter a justification for this booking.</key>
+	<string>Informe uma justificativa para esta reserva.</string>
+	<key>Please enter and confirm the PIN</key>
+	<string>Insira e confirme o PIN</string>
+	<key>Please enter in your distance</key>
+	<string>Digite sua distância</string>
+	<key>Please enter values for required fields</key>
+	<string>Informe valores para os campos obrigatórios, em vermelho, antes de salvar.</string>
+	<key>Please fill in the missing required fields before saving the entry.</key>
+	<string>Preencha os campos obrigatórios em branco antes de salvar o lançamento.</string>
+	<key>Please follow the instructions in the email</key>
+	<string>Siga as instruções no e-mail que recebeu do TripIt ao configurar a sua conta.</string>
+	<key>Please log in to SmartExpense and then link your accounts together.</key>
+	<string>Efetue login na SmartExpense e então vincule suas contas.</string>
+	<key>Please log in to SmartExpense using the same account already linked to TripIt.</key>
+	<string>Efetue login em SmartExpense usando a mesma conta já vinculada ao TripIt.</string>
+	<key>Please select a destination location</key>
+	<string>Selecione uma localização de destino</string>
+	<key>Please select a report or create a new report first</key>
+	<string>Selecione um relatório ou crie um novo relatório primeiro</string>
+	<key>Please select a starting location</key>
+	<string>Selecione uma localização inicial</string>
+	<key>Please specify</key>
+	<string>Especifique</string>
+	<key>Please specify a location.</key>
+	<string>Especifique um local.</string>
+	<key>Please try again and use the link within 24 hours of receipt.</key>
+	<string>Tente novamente e use o link dentro de 24 horas a partir do recebimento.</string>
+	<key>Please type a description into this email message describing what you were doing when the application crashed.  For example: I was uploading an expense receipt.</key>
+	<string>Digite uma descrição nesta mensagem de e-mail, descrevendo o que você estava fazendo quando o aplicativo travou.  Por exemplo: Eu estava carregando um recibo de despesas.</string>
+	<key>Please verify your email</key>
+	<string>Verifique seu e-mail</string>
+	<key>Please verify your email address</key>
+	<string>Verifique seu endereço de e-mail</string>
+	<key>Please wait for your verification email to continue the registration process.</key>
+	<string>Aguarde o seu e-mail de verificação para continuar o processo de registro.</string>
+	<key>Please wait until online to edit field</key>
+	<string>Estes campos não podem ser editados off-line.</string>
+	<key>Please wait until you are online to login</key>
+	<string>Aguarde até estar on-line para efetuar login.</string>
+	<key>Points or Approval</key>
+	<string>Pontos ou aprovação</string>
+	<key>Popular Cards</key>
+	<string>Cartões populares</string>
+	<key>Post Trip</key>
+	<string>Lançar viagem</string>
+	<key>Preferred</key>
+	<string>Preferencial</string>
+	<key>Preferred Vendors</key>
+	<string>Fornecedores preferenciais</string>
+	<key>Premium</key>
+	<string>Premium</string>
+	<key>Premium Economy</key>
+	<string>Econômica premium</string>
+	<key>Prev</key>
+	<string>Prev</string>
+	<key>Preview</key>
+	<string>Pré-visualização</string>
+	<key>Previous</key>
+	<string>Anterior</string>
+	<key>Price</key>
+	<string>Preço</string>
+	<key>Price to Beat</key>
+	<string>Preço a vencer</string>
+	<key>Print</key>
+	<string>Imprimir</string>
+	<key>Proceed to Sign In</key>
+	<string>Prosseguir para acessar</string>
+	<key>Property</key>
+	<string>Propriedade</string>
+	<key>Provided</key>
+	<string>Fornecido</string>
+	<key>Pull to Refresh</key>
+	<string>Efetue pull para atualizar</string>
+	<key>Purchase Requests</key>
+	<string>Solicitações de compra</string>
+	<key>Quick Expense</key>
+	<string>Despesa rápida</string>
+	<key>Quick Search</key>
+	<string>Pesquisa rápida</string>
+	<key>Quick Tips</key>
+	<string>Dicas rápidas</string>
+	<key>RECEIPT</key>
+	<string>Recibo</string>
+	<key>RECEIPT_CELL_TITLE</key>
+	<string>Recibo</string>
+	<key>RECEIPT_DETAIL_NO_DATA_INSTRUCTION</key>
+	<string>Ou encaminhe os recibos digitais para receipts@smartexpense.com da sua conta %@</string>
+	<key>RECEIPT_IMG_UPLOADED</key>
+	<string>A imagem de recibo foi carregada</string>
+	<key>RECEIPT_IMG_UPLOADING</key>
+	<string>Carregando imagem do recibo</string>
+	<key>RECEIPT_MANAGER</key>
+	<string>Pasta de recibos</string>
+	<key>RECEIPT_MANAGER_IMAGES</key>
+	<string>Pasta de recibos</string>
+	<key>RECEIPT_MIGRATE_MSG</key>
+	<string>Você tem %d imagens de recibos não atribuídas salvas localmente na pasta de documentos Concur móvel. Deseja copiar as imagens de recibos não atribuídas no álbum de fotos do iPhone?</string>
+	<key>RECEIPT_MIGRATION_STATUS_MSG</key>
+	<string>Copiados %d de %d recibos para o álbum de fotos</string>
+	<key>RECEIPT_MIGRATION_WAIT_MSG</key>
+	<string>Cópia de imagem em andamento. Encerrar ou sair do aplicativo agora pode resultar em perda de imagens.</string>
+	<key>RECEIPT_NOT_ON_SERVER</key>
+	<string>Um recibo aparece anexado a esta despesa no servidor, mas o recibo não existe mais no gerenciador de recibos.</string>
+	<key>RECEIPT_STORE_HELP_TEXT</key>
+	<string>Carregue seus recibos para o Receipt Store. Depois abra um relatório ou um lançamento de despesa e anexe-o ao recibo.</string>
+	<key>RECEIPT_STORE_NO_DATA_INSTRUCTION</key>
+	<string>Você também pode encaminhar recibos digitais para receipts@smartexpense.com da sua conta %@</string>
+	<key>RECEIPT_VIEWER</key>
+	<string>Visualizador de recibo</string>
+	<key>REGISTER</key>
+	<string>Digitar PIN</string>
+	<key>REGISTERED_EMAIL</key>
+	<string>E-mail comercial</string>
+	<key>REGISTER_MSG</key>
+	<string>Para ajuda, efetue login na versão web to Concur e navegue até Perfil &gt; Registro móvel.</string>
+	<key>REGISTER_PINS_DIFF_ERR</key>
+	<string>Os PINs são diferentes.  Digite novamente os PINs.</string>
+	<key>REPORTS</key>
+	<string>Lista de relatórios</string>
+	<key>REPORTS_TO_SUBMIT</key>
+	<string>%d relatórios para enviar</string>
+	<key>REPORT_DETAIL</key>
+	<string>Relatório</string>
+	<key>REPORT_DETAIL_RECEIPTS</key>
+	<string>Recibos</string>
+	<key>REPORT_NAME_TIP</key>
+	<string>Digite um novo nome de relatório</string>
+	<key>REPORT_REQ_FIELDS</key>
+	<string>Preencha todos os campos obrigatórios e solucione qualquer erro no formulário antes de salvar o relatório.</string>
+	<key>REPORT_TA_ITINERARY</key>
+	<string>Ajuda de Custo de Viagem</string>
+	<key>REPORT_TA_ITINERARY_ADD</key>
+	<string>Despesa de ajuda</string>
+	<key>RESET_PASSWORD_FAILED</key>
+	<string>Falha ao reiniciar sua senha</string>
+	<key>RESET_PASSWORD_SUCCEEDED</key>
+	<string>Em breve você receberá um e-mail com instruções para reiniciar sua senha.</string>
+	<key>RESET_PASSWORD_USER_NOT_EXIST</key>
+	<string>O usuário não existe no sistema.  Certifique-se de que concluiu o processo de registro, antes de clicar em Reiniciar seu link de senha.</string>
+	<key>ROLE_DISABLED_ALERT_TITLE</key>
+	<string>Recurso desativado</string>
+	<key>ROLE_DISABLED_TEXT</key>
+	<string>Este recurso não está disponível para a sua empresa ou função.</string>
+	<key>RPT_NO_ENTRY_INSTRUCTION_1</key>
+	<string>Este relatório de despesas não contém despesas.  É preciso criar ou importar pelo menos uma despesa para enviar o relatório. </string>
+	<key>RPT_NO_ENTRY_INSTRUCTION_2</key>
+	<string>Para criar ou importar uma despesa, clique no ícone + abaixo.</string>
+	<key>RPT_QUIT_CONFIRM_MSG</key>
+	<string>Deseja salvar este relatório antes?</string>
+	<key>RPT_SAVE_CONFIRM_MSG</key>
+	<string>Se continuar, você poderá perder suas alterações.  Deseja salvar essas alterações?</string>
+	<key>Rail</key>
+	<string>Trem</string>
+	<key>Rail Rule Violation</key>
+	<string>Violação das regras ferroviárias</string>
+	<key>Rail cancelled from mobile device</key>
+	<string>Trem cancelado a partir de dispositivo móvel</string>
+	<key>Rail violation justification is missing</key>
+	<string>Antes de reservar este trem violando a política da empresa, você deve fornecer uma justificação no campo mostrado em vermelho.</string>
+	<key>Rail violation reason and justification are missing</key>
+	<string>Antes de reservar este trem violando a política da empresa, você deve fornecer um motivo e uma justificação nos campos mostrados em vermelho.</string>
+	<key>Rail violation reason is missing</key>
+	<string>Antes de reservar este trem violando a política da empresa, você deve fornecer um motivo no campo mostrado em vermelho.</string>
+	<key>Rail_subline</key>
+	<string>Reservar um trem e passeio</string>
+	<key>Rate It!</key>
+	<string>Classifique-o!</string>
+	<key>Rate Location:</key>
+	<string>Local de tarifa:</string>
+	<key>Rating</key>
+	<string>Classificação</string>
+	<key>Re-enter Password</key>
+	<string>Digite novamente a senha</string>
+	<key>Recalculate Allowances</key>
+	<string>Recalcular ajudas de custo</string>
+	<key>Recall</key>
+	<string>Recolher</string>
+	<key>Recall Failed</key>
+	<string>Recolhimento falhou</string>
+	<key>Receipt</key>
+	<string>Recibo</string>
+	<key>Receipt Capture</key>
+	<string>Captura de recibo</string>
+	<key>Receipt Folder</key>
+	<string>Pasta de recibos</string>
+	<key>Receipt Images</key>
+	<string>Imagens de recibos</string>
+	<key>Receipt Queued</key>
+	<string>Recibo enfileirado</string>
+	<key>Receipt Store</key>
+	<string>Receipt Store</string>
+	<key>Receipt image required</key>
+	<string>Imagem de recibos obrigatória</string>
+	<key>Receipt upload complete</key>
+	<string>Carregamento de recibo concluído</string>
+	<key>Receipt upload failed</key>
+	<string>Falha ao carregar recibo</string>
+	<key>Receipt uploaded</key>
+	<string>Recibo carregado</string>
+	<key>ReceiptUploadFailMsg</key>
+	<string>Não foi possível salvar o recibo neste momento. Tente novamente mais tarde.</string>
+	<key>Receipts</key>
+	<string>Recibos</string>
+	<key>Receipts cannot be added offline</key>
+	<string>Os recibos não podem ser adicionados off-line.</string>
+	<key>Recommendation</key>
+	<string>Sugestão</string>
+	<key>Recommended</key>
+	<string>Sugerido</string>
+	<key>Recurring Charges (each night)</key>
+	<string>Taxas recorrentes (por noite)</string>
+	<key>Refresh Data</key>
+	<string>Atualizar dados</string>
+	<key>Refresh Data Offline</key>
+	<string>Seus dados não podem ser atualizados enquanto você estiver off-line.  Tente mais tarde.</string>
+	<key>Refresh Trip</key>
+	<string>Atualizar viagem</string>
+	<key>Refreshing</key>
+	<string>Atualizando</string>
+	<key>Refreshing Data</key>
+	<string>Atualizando dados</string>
+	<key>Refreshing View</key>
+	<string>Atualizando exibição</string>
+	<key>Refundable Only</key>
+	<string>Apenas reembolsável</string>
+	<key>Regional</key>
+	<string>Regional</string>
+	<key>Register a credit card</key>
+	<string>Registrar um cartão de crédito</string>
+	<key>Reject</key>
+	<string>Rejeitar</string>
+	<key>Rejected</key>
+	<string>Rejeitado(a)</string>
+	<key>Rejecting Trip</key>
+	<string>Rejeitando viagem</string>
+	<key>Remaining:</key>
+	<string>Restantes:</string>
+	<key>Removed Link to Dropbox</key>
+	<string>Removido o link para Dropbox</string>
+	<key>Removing entry</key>
+	<string>Removendo lançamento</string>
+	<key>Rent a car</key>
+	<string>Locação de veículo</string>
+	<key>Replace</key>
+	<string>Substituir</string>
+	<key>Report</key>
+	<string>Relatório</string>
+	<key>Report Approvals</key>
+	<string>Relatório de aprovações</string>
+	<key>Report Comments</key>
+	<string>Comentários do relatório</string>
+	<key>Report Entry</key>
+	<string>Lançamento em relatório</string>
+	<key>Report Exceptions</key>
+	<string>Exceções do relatório</string>
+	<key>Report Header</key>
+	<string>Cabeçalho do relatório</string>
+	<key>Report Name</key>
+	<string>Nome do relatório</string>
+	<key>Report Not Ready</key>
+	<string>O relatório não está pronto</string>
+	<key>Report Summary</key>
+	<string>Resumo do relatório</string>
+	<key>Report is open</key>
+	<string>Relatório em aberto</string>
+	<key>Reports</key>
+	<string>Relatórios</string>
+	<key>Reports List</key>
+	<string>Lista de relatórios</string>
+	<key>Reports cannot be approved offline</key>
+	<string>Os relatórios não podem ser aprovados off-line.</string>
+	<key>ReportsToApproveRow_0</key>
+	<string>Você não tem relatórios para aprovar</string>
+	<key>ReportsToApproveRow_1</key>
+	<string>Você tem 1 relatório para aprovar</string>
+	<key>ReportsToApproveRow_2</key>
+	<string>Você tem %d relatórios para aprovar</string>
+	<key>Request</key>
+	<string>Solicitação</string>
+	<key>Requested</key>
+	<string>Solicitado</string>
+	<key>Requests</key>
+	<string>Solicitações</string>
+	<key>Required Fields Missing</key>
+	<string>Campos obrigatórios em branco</string>
+	<key>Reservation Date</key>
+	<string>Data da reserva</string>
+	<key>Reservation Not Allowed</key>
+	<string>Reserva não permitida</string>
+	<key>Reservation Status</key>
+	<string>Status da reserva</string>
+	<key>Reservation Time</key>
+	<string>Hora da reserva</string>
+	<key>Reserve</key>
+	<string>Reservar</string>
+	<key>Reserve Train</key>
+	<string>Reservar trem</string>
+	<key>Reserving Car</key>
+	<string>Reservando automóvel</string>
+	<key>Reserving Flights</key>
+	<string>Reservando voos</string>
+	<key>Reserving Hotel Room</key>
+	<string>Reservar quarto</string>
+	<key>Reserving Train</key>
+	<string>Reservando trem</string>
+	<key>Reset</key>
+	<string>Reset</string>
+	<key>Reset Concur Password</key>
+	<string>Redefinir senha do Concur</string>
+	<key>Reset Mobile Password (PIN)</key>
+	<string>Redefinir senha móvel (PIN)</string>
+	<key>Reset PIN</key>
+	<string>Reiniciar o PIN</string>
+	<key>Reset Password</key>
+	<string>Redefinir senha</string>
+	<key>Reset to factory defaults</key>
+	<string>Reinicializar para padrões de fábrica</string>
+	<key>Reset your password</key>
+	<string>Redefinir sua senha</string>
+	<key>Resetting the PIN</key>
+	<string>Redefinição de PIN</string>
+	<key>Results</key>
+	<string>Resultados</string>
+	<key>Results Summary</key>
+	<string>Resumo dos resultados</string>
+	<key>Retake</key>
+	<string>Repetir</string>
+	<key>Return</key>
+	<string>Regresso</string>
+	<key>Return Date</key>
+	<string>Data do retorno</string>
+	<key>Return Date must be</key>
+	<string>Data do retorno</string>
+	<key>Return Date must be Message</key>
+	<string>A data de retorno deve ser posterior à data de partida.</string>
+	<key>Return Time</key>
+	<string>Hora de retorno</string>
+	<key>Returning</key>
+	<string>Devolução</string>
+	<key>Returning: token token</key>
+	<string>Devolução: %@ %@</string>
+	<key>Review Approver Instruction</key>
+	<string>Verifique aprovador e depois submeta o relatório</string>
+	<key>Room Rate</key>
+	<string>Tarifa de quarto</string>
+	<key>Room Tax</key>
+	<string>Imposto quarto</string>
+	<key>Rooms</key>
+	<string>Quartos</string>
+	<key>Round Trip</key>
+	<string>Ida e volta</string>
+	<key>Rule Messages</key>
+	<string>Mensagens de regras</string>
+	<key>SAFETY_CHECK_IN_HELP</key>
+	<string>Efetue check-com seu local atual para ajuda</string>
+	<key>SAVE_REPORT_RECEIPT_FAILURE</key>
+	<string>Impossível anexar recibo</string>
+	<key>SEARCH_LOCN</key>
+	<string>Pesquisa de local</string>
+	<key>SEC_TITLE_COMMENTS</key>
+	<string>Comentários</string>
+	<key>SEC_TITLE_INVOICE_HEADER</key>
+	<string>Cabeçalho da fatura</string>
+	<key>SEE ALL token RESULTS</key>
+	<string>EXIBIR TODOS %@ RESULTADOS</string>
+	<key>SEE ALL token RESULTS (starting at token)</key>
+	<string>VER TODOS OS %d RESULTADOS (iniciados em %@)</string>
+	<key>SELECT_HELP_TOPIC</key>
+	<string>Ou selecione um tópico da ajuda</string>
+	<key>SELECT_REPORT</key>
+	<string>Selecionar relatório</string>
+	<key>SELECT_REPORT_HELP</key>
+	<string>Escolha um relatório da lista abaixo ao qual adicionar suas despesas.  Ou adicione-as a um novo relatório clicando no botão '+' acima.</string>
+	<key>SETTINGS_VIEW</key>
+	<string>Configurações</string>
+	<key>SIGN_IN_EMAIL</key>
+	<string>Insira seu e-mail de trabalho para receber suas informações de acesso.</string>
+	<key>SIGN_IN_INSTRUCT_MSG</key>
+	<string>Se o seu endereço de e-mail estiver em nosso sistema, você receberá um e-mail. Abra o e-mail nesse dispositivo para acessar o aplicativo Concur.</string>
+	<key>SLV_AT</key>
+	<string>às</string>
+	<key>SLV_BOOK_A_TAXI</key>
+	<string>Reservar um táxi</string>
+	<key>SLV_CLICK_ON</key>
+	<string>Clique nesta célula para reservar</string>
+	<key>SLV_CONFIRMATION</key>
+	<string>Confirmação</string>
+	<key>SLV_DROP_OFF</key>
+	<string>%@ Entrega em %@</string>
+	<key>SLV_FROM</key>
+	<string>De</string>
+	<key>SLV_GATE</key>
+	<string>Portão</string>
+	<key>SLV_GOES_FROM</key>
+	<string>Vai de %@ para %@</string>
+	<key>SLV_NUM_BOOKINGS</key>
+	<string>%d Reserva(s) nesta viagem</string>
+	<key>SLV_PICKUP_AT</key>
+	<string>Retirada em %@</string>
+	<key>SLV_PICKUP_BY</key>
+	<string>Retirado por %@</string>
+	<key>SLV_PLATFORM_WAGON</key>
+	<string>Plataforma %@ Nº vagão%@</string>
+	<key>SLV_TAXI_MAGIC</key>
+	<string>um táxi com Taxi Magic</string>
+	<key>SLV_TAXI_MAGIC2</key>
+	<string>Você será redirecionado ao aplicativo Taxi Magic</string>
+	<key>SLV_TERMINAL</key>
+	<string>Terminal</string>
+	<key>SLV_TO</key>
+	<string>para</string>
+	<key>SLV_TOTAL_SEGS</key>
+	<string>Com um total de %d segmentos para a viagem</string>
+	<key>SLV_TRIP_LOCATOR</key>
+	<string>Localizador de viagem: %@</string>
+	<key>SOUTHWEST</key>
+	<string>Reserva da Southwest</string>
+	<key>SPLASH</key>
+	<string>Respingo</string>
+	<key>SPOUSE</key>
+	<string>Cônjuge</string>
+	<key>SSO_FETCHING_DATA</key>
+	<string>Recuperando informações de conexão da empresa...</string>
+	<key>SSO_LOGIN_REQUIRED_MSG</key>
+	<string>Login com código da empresa (SSO) obrigatório. Digite o código da empresa na próxima tela para continuar</string>
+	<key>SU Password Expired Instruction</key>
+	<string>Faça login no site do Concur para alterar sua senha.</string>
+	<key>SUBMIT_BUTTON</key>
+	<string>Enviar</string>
+	<key>SUBMIT_ERROR_CCT_AUTH</key>
+	<string>Aguarde suas transações Amex pendentes serem publicadas antes de enviar.</string>
+	<key>SUBMIT_ERROR_NO_ENTRY_MSG</key>
+	<string>O relatório de despesas não contém despesas.  É preciso criar pelo menos uma despesa para enviar o relatório.</string>
+	<key>SUBMIT_ERROR_RPT_XCT_LEVEL_MSG</key>
+	<string>Esse relatório de despesa não pode ser enviado até todas as exceções com indicadores em vermelho serem solucionadas.</string>
+	<key>SUBMIT_ERROR_UNDEF_MSG</key>
+	<string>O relatório de despesas contém uma ou mais despesas com um tipo de despesa não definido.  Você precisa selecionar o tipo de despesa para submeter o relatório.</string>
+	<key>SUBMIT_HOW_TO_RECEIPT_MSG</key>
+	<string>Segundo a política da empresa, você deve fornecer recibos das despesas listadas abaixo.  Você pode enviar os recibos por fax ou anexar imagens digitalizadas.  Se você já forneceu recibos, é possível enviar seu relatório agora.</string>
+	<key>SUBMIT_REQUIRE_PAPER_RECEIPT</key>
+	<string>Segundo a política da empresa, você deve fornecer recibos das despesas listadas abaixo.  Você pode anexar imagens digitalizadas a despesas individuais ou ao relatório, mas os recibos originais em papel também devem ser enviados. Se você já forneceu recibos, é possível enviar seu relatório agora.</string>
+	<key>SU_ADD_YODLEE_CARD_INSTRUCTION</key>
+	<string>Digite as informações de login da sua conta de cartão de crédito. O SmartExpense criptografará e usará estas informações com segurança para fazer download das suas transações com cartão. (Não se preocupe, é somente para leitura.)</string>
+	<key>SU_APPROVER_AB_NO_EMAIL</key>
+	<string>O contato selecionado não possui um endereço de e-mail para o qual enviar o relatório.</string>
+	<key>SU_CHECK_TEMP_PWD</key>
+	<string>Verifique seu e-mail para obter sua senha SmartExpense temporária.</string>
+	<key>SU_SIGN_UP_CHECK_EMAIL</key>
+	<string>Precisamos verificar seu endereço de e-mail.  Verifique seu e-mail e veja se há uma mensagem nossa e clique no link de verificação.</string>
+	<key>SYSEMP</key>
+	<string>Este empregado</string>
+	<key>Safety Check In</key>
+	<string>Check-in no local</string>
+	<key>Saturday_Short</key>
+	<string>Sáb</string>
+	<key>Save</key>
+	<string>Salvar</string>
+	<key>Save &amp; Generate Allowances</key>
+	<string>Salvar &amp; gerar ajuda de custo</string>
+	<key>Save Itemizations</key>
+	<string>Salvar especificação de item</string>
+	<key>Save entry receipt failed</key>
+	<string>Falha ao salvar recibo para lançamento</string>
+	<key>Saved</key>
+	<string>Salvo</string>
+	<key>Saving Expense</key>
+	<string>Salvando despesa</string>
+	<key>Saving Report</key>
+	<string>Salvando relatório</string>
+	<key>Saving offline receipt</key>
+	<string>Salvar recibo off-line</string>
+	<key>Scheduled Arrival</key>
+	<string>Chegada programada</string>
+	<key>Scheduled Departure</key>
+	<string>Partida programada</string>
+	<key>Scheduled Equipment</key>
+	<string>Equipamento programado</string>
+	<key>Scheduled On-time</key>
+	<string>Programa pontual</string>
+	<key>Scheduled Terminal</key>
+	<string>Terminal programado</string>
+	<key>Search</key>
+	<string>Busca</string>
+	<key>Search Again</key>
+	<string>Pesquisar novamente</string>
+	<key>Search Approver</key>
+	<string>Pesquisar aprovador</string>
+	<key>Search Approver Instruction</key>
+	<string>Encontre aprovador e depois submeta o relatório</string>
+	<key>Search Failed</key>
+	<string>Pesquisa falhou</string>
+	<key>Search Results</key>
+	<string>Resultados da pesquisa</string>
+	<key>Search and book flights</key>
+	<string>Pesquise e reserve voos, hotéis, automóveis e muito mais</string>
+	<key>Search for Attendee</key>
+	<string>Procurar participantes</string>
+	<key>Search for Cars</key>
+	<string>Pesquisar automóveis</string>
+	<key>Search for an office location</key>
+	<string>Pesquisa por um local de escritório</string>
+	<key>Search schedules</key>
+	<string>Pesquisar programações</string>
+	<key>Searching for Hotels near you</key>
+	<string>Pesquisando hotéis próximos a você</string>
+	<key>Searching for cars</key>
+	<string>Pesquisando automóveis</string>
+	<key>Searching for cars at</key>
+	<string>Pesquisando automóveis em</string>
+	<key>Searching for flights</key>
+	<string>Buscando voos</string>
+	<key>Searching for hotels</key>
+	<string>Pesquisando hotéis</string>
+	<key>Searching for trains</key>
+	<string>Pesquisando trens</string>
+	<key>Seat: %@</key>
+	<string>Poltrona: %@</string>
+	<key>Seats</key>
+	<string>Poltronas</string>
+	<key>See All</key>
+	<string>Ver todos</string>
+	<key>See All (token results)</key>
+	<string>Exibir todos (%d resultados)</string>
+	<key>See Alternative Flights</key>
+	<string>Consultar voos alternativos</string>
+	<key>See what you can do with Concur</key>
+	<string>Veja o que você pode fazer com a Concur</string>
+	<key>Select</key>
+	<string>Selecionar</string>
+	<key>Select All</key>
+	<string>Selecionar todos</string>
+	<key>Select Attendee Type</key>
+	<string>Selecionar tipo de participante</string>
+	<key>Select Attendee to Add</key>
+	<string>Selecionar participante para adicionar</string>
+	<key>Select Car Type</key>
+	<string>Selecionar tipo de automóvel</string>
+	<key>Select Card</key>
+	<string>Selecionar cartão</string>
+	<key>Select Email Address</key>
+	<string>Selecionar endereço de e-mail</string>
+	<key>Select Preference</key>
+	<string>Selecionar preferência</string>
+	<key>Select Program</key>
+	<string>Selecionar programa</string>
+	<key>Select Reason</key>
+	<string>Selecione motivo</string>
+	<key>Select Train</key>
+	<string>Selecione trem</string>
+	<key>Select an office location</key>
+	<string>Selecionar um local de escritório</string>
+	<key>Select delivery option</key>
+	<string>Selecionar opção de entrega</string>
+	<key>Select seat class below</key>
+	<string>Selecionar classe de assento abaixo</string>
+	<key>Send Again</key>
+	<string>Enviar novamente</string>
+	<key>Send Failed</key>
+	<string>Envio falhou</string>
+	<key>Send Invite</key>
+	<string>Enviar convite</string>
+	<key>Send Invite To</key>
+	<string>Enviar convite a</string>
+	<key>Send Log</key>
+	<string>Enviar registro</string>
+	<key>Send My Sign In Details</key>
+	<string>Enviar instruções de login</string>
+	<key>Send to Approver</key>
+	<string>Enviar para o aprovador</string>
+	<key>Sending Back Report</key>
+	<string>Devolvendo relatório</string>
+	<key>Sending Email</key>
+	<string>Enviando e-mail</string>
+	<key>Sent</key>
+	<string>Enviado</string>
+	<key>Set Mobile PIN</key>
+	<string>Definir PIN Móvel</string>
+	<key>Set PIN</key>
+	<string>Definir PIN</string>
+	<key>Set PIN Tip</key>
+	<string>Definir PIN Tip</string>
+	<key>Set PIN succeeded</key>
+	<string>Seu PIN móvel foi salvo com êxito.</string>
+	<key>Settings</key>
+	<string>Configurações</string>
+	<key>Share Trip</key>
+	<string>Compartilhar viagem</string>
+	<key>Show Home Panels</key>
+	<string>Mostrar painéis locais</string>
+	<key>Show Offers</key>
+	<string>Mostrar ofertas</string>
+	<key>Sign In</key>
+	<string>Acessar</string>
+	<key>Sign In Help</key>
+	<string>Ajuda para login</string>
+	<key>Sign In Instructions Sent to This Device</key>
+	<string>Acessar instruções enviadas</string>
+	<key>Sign In with Concur</key>
+	<string>Acessar com o Concur</string>
+	<key>Sign In with Facebook</key>
+	<string>Acessar com Facebook</string>
+	<key>Sign Up</key>
+	<string>Inscrever-se</string>
+	<key>Sign Up Failed</key>
+	<string>Falha ao registrar-se</string>
+	<key>Sign in to Concur</key>
+	<string>Acessar</string>
+	<key>Sign in to TripIt</key>
+	<string>Entre no TripIt</string>
+	<key>Signing up accepts our</key>
+	<string>A inscrição aceita nossa</string>
+	<key>Similar users like this hotel</key>
+	<string>Usuários parecidos gostam deste hotel</string>
+	<key>Single Sign On</key>
+	<string>Logon Único</string>
+	<key>Smart Matching</key>
+	<string>Correspondência Inteligente</string>
+	<key>SmartExpense Report</key>
+	<string>Relatório do SmartExpense</string>
+	<key>SmartExpense version</key>
+	<string>Bem-vindo ao SmartExpense</string>
+	<key>SmartExpense was denied access to your TripIt account.</key>
+	<string>O SmartExpense teve acesso negado à sua conta TripIt.</string>
+	<key>SmartExpense was unable to access your TripIt account.  Please try again later.</key>
+	<string>Não foi possível para o SmartExpense acessar sua conta TripIt.  Tente novamente mais tarde.</string>
+	<key>SmartExpense was unable to expense your trip. Please try again later.</key>
+	<string>O SmartExpense não pôde cancelar a sua viagem. Tente novamente mais tarde.</string>
+	<key>Smoking</key>
+	<string>Fumantes</string>
+	<key>Sold Out</key>
+	<string>Vendidos</string>
+	<key>Sorry</key>
+	<string>Desculpe, não encontramos um preço a vencer. Tente pesquisar novamente.</string>
+	<key>Sorry I didn't quite get that.</key>
+	<string>Lamento, mas não era isso que queria obter. Vamos recomeçar.</string>
+	<key>Sort</key>
+	<string>Classificar</string>
+	<key>Sort By</key>
+	<string>Ordenar por</string>
+	<key>Sort by</key>
+	<string>Ordenar por</string>
+	<key>Sort by Amount</key>
+	<string>Classificar por valor</string>
+	<key>Sort by Date</key>
+	<string>Classificar por data</string>
+	<key>Sort by Distance</key>
+	<string>Ordenar por distância</string>
+	<key>Sort by Duration</key>
+	<string>Classificar por duração</string>
+	<key>Sort by Earliest Departure</key>
+	<string>Classificar por Primeira partida</string>
+	<key>Sort by Preference</key>
+	<string>Classificar por Preferência</string>
+	<key>Sort by Preferred Vendors</key>
+	<string>Classificar por fornecedores preferenciais</string>
+	<key>Sort by Price</key>
+	<string>Ordenar por preço</string>
+	<key>Sort by Rating</key>
+	<string>Ordenar por classificação</string>
+	<key>Sort by Recommendation</key>
+	<string>Classificar por sugestão</string>
+	<key>Sort by Vendor Names</key>
+	<string>Ordenar por nomes de fornecedores</string>
+	<key>Standard</key>
+	<string>Padrão</string>
+	<key>Standard Hybrid</key>
+	<string>Híbrido padrão</string>
+	<key>Standard SUV</key>
+	<string>SUV padrão</string>
+	<key>Star Rating</key>
+	<string>Classificação de estrelas</string>
+	<key>StartARequest</key>
+	<string>Iniciar uma solicitação</string>
+	<key>StartYourRequest</key>
+	<string>Iniciar sua solicitação</string>
+	<key>Starting</key>
+	<string>Iniciando</string>
+	<key>Station</key>
+	<string>Estação</string>
+	<key>Stations</key>
+	<string>Estações</string>
+	<key>Stop</key>
+	<string>Parada</string>
+	<key>Stopping Upload</key>
+	<string>Parando carregamento</string>
+	<key>Stops</key>
+	<string>Escalas</string>
+	<key>Submit Invoices</key>
+	<string>Submeter faturas</string>
+	<key>Submit Report</key>
+	<string>Submeter relatório</string>
+	<key>SubmitRequest</key>
+	<string>Enviar solicitação</string>
+	<key>Submitted Reports</key>
+	<string>Relatórios submetidos</string>
+	<key>Suggested based on co-worker</key>
+	<string>Sugestões com base em colegas</string>
+	<key>Suggested based on past stay</key>
+	<string>Sugestões com base em estadias anteriores</string>
+	<key>Suggested based on popularity</key>
+	<string>Sugerido com base em popularidade</string>
+	<key>Sunday_Short</key>
+	<string>Dom</string>
+	<key>Swipe for more</key>
+	<string>Clique aqui para mais</string>
+	<key>Swipe to delete</key>
+	<string>Clique para excluir</string>
+	<key>Switch to KM</key>
+	<string>Alternar para KM</string>
+	<key>Switch to Miles</key>
+	<string>Alternar para milhas</string>
+	<key>Sync Credit Card</key>
+	<string>Sincronizar cartão de crédito</string>
+	<key>Sync account with SmartExpense</key>
+	<string>Sincronizar conta com SmartExpense</string>
+	<key>Sync credit card</key>
+	<string>Sincronizar cartão de crédito</string>
+	<key>TA Import Heading Text</key>
+	<string>Selecione reservas de viagem ou encargos de cartão para ajudar a começar o itinerário de ajuda de custo de viagem</string>
+	<key>TITLE_REGISTER_REENTER_PIN</key>
+	<string>Digitar PIN</string>
+	<key>TRAVEL_NEG_TEXT</key>
+	<string>Iniciar pelo planejamento da sua viagem</string>
+	<key>TRAVEL_REQUESTS</key>
+	<string>Solicitações</string>
+	<key>TRIPS</key>
+	<string>Lista de viagens</string>
+	<key>TRIP_DETAILS</key>
+	<string>Detalhes da viagem</string>
+	<key>TRY_AGAIN</key>
+	<string>Tentar novamente</string>
+	<key>TWITTER_MESSAGES</key>
+	<string>Twitter do Concur</string>
+	<key>Take photos of your receipts.</key>
+	<string>Tire fotos de seus recibos.</string>
+	<key>Take pictures of receipts &amp; upload</key>
+	<string>Fotografe e carregue os recibos&amp;</string>
+	<key>Tap microphone to get started</key>
+	<string>Bata levemente no microfone para iniciar</string>
+	<key>Tap to get directions</key>
+	<string>Clique para obter indicações</string>
+	<key>Taxable</key>
+	<string>Tributável</string>
+	<key>Taxi</key>
+	<string>Táxi</string>
+	<key>Taxi Magic</key>
+	<string>Taxi Magic</string>
+	<key>Terminal token</key>
+	<string>Terminal %@</string>
+	<key>Terms of Use</key>
+	<string>Condições de utilização</string>
+	<key>Thank You</key>
+	<string>Obrigado</string>
+	<key>The Out of Pocket Entry could not be saved because the network is unavailable.  Please try again later.</key>
+	<string>O lançamento em dinheiro não pôde ser salvo porque a rede não está disponível.  Tente novamente mais tarde.</string>
+	<key>The Out of Pocket Entry could not be saved.  Please try again later.</key>
+	<string>O lançamento em dinheiro não pôde ser salvo.  Tente novamente mais tarde.</string>
+	<key>The Price-to-Beat is %@.</key>
+	<string>O preço a vencer é %@.</string>
+	<key>The Price-to-Beat range is between %@.</key>
+	<string>A faixa de preço a vencer está entre %@.</string>
+	<key>The account could not be unlinked.</key>
+	<string>Não foi possível desvincular a conta.</string>
+	<key>The car could not be booked.</key>
+	<string>Não foi possível reservar o automóvel.</string>
+	<key>The check-out date must be later than the check-in date.</key>
+	<string>A data de check-out deve ser posterior à data de check-in.</string>
+	<key>The date specified for departure is invalid.</key>
+	<string>A data especificada para partida é inválida.</string>
+	<key>The date specified for the departure occurs in the past.</key>
+	<string>A data especificada para a partida ocorreu no passado.</string>
+	<key>The date specified for the return is earlier than the date of departure.</key>
+	<string>A data especificada para o retorno é anterior à data de partida.</string>
+	<key>The flight could not be booked.</key>
+	<string>Não foi possível reservar o voo.</string>
+	<key>The log could not be sent.</key>
+	<string>Não foi possível enviar o registro.</string>
+	<key>The log mail has been placed in your outbox.</key>
+	<string>O registro foi colocado na sua caixa de saída.</string>
+	<key>The log mail has been saved in your Drafts folder.</key>
+	<string>O registro foi salvo na sua pasta de rascunhos.</string>
+	<key>The password reset was requested from another device. Please use the same device you requested the password reset.</key>
+	<string>A redefinição de senha foi solicitada a partir de outro dispositivo. Utilize o mesmo dispositivo usado para a solicitação de redefinição de senha.</string>
+	<key>The selected credit card will be charged and the ticket will be issued immediately. The reservation may not be eligible for changes or refunds. Are you sure you want to reserve this flight?</key>
+	<string>O cartão de crédito selecionado será cobrado e o bilhete será emitido imediatamente. A reserva pode não ser elegível para alterações ou reembolsos. Tem certeza de que deseja reservar este voo?</string>
+	<key>The server encountered an error.</key>
+	<string>O servidor encontrou um erro.</string>
+	<key>The train could not be booked</key>
+	<string>Não foi possível reservar o trem.</string>
+	<key>There are</key>
+	<string>Há %@ relatórios aguardando a sua aprovação.</string>
+	<key>There are cct</key>
+	<string>Você tem %@ encargos de cartão não usados.</string>
+	<key>There are no cct</key>
+	<string>Você não possui encargo de cartão.</string>
+	<key>There are no reports to approve</key>
+	<string>Não há relatórios para aprovar</string>
+	<key>There are no rpt</key>
+	<string>Todos os relatórios foram enviados.</string>
+	<key>There are no travel requests to approve</key>
+	<string>Não há solicitações para aprovar</string>
+	<key>There are rpt</key>
+	<string>Há %@ relatórios que não foram submetidos por um total de %@.</string>
+	<key>There is</key>
+	<string>Há %@ relatório aguardando a sua aprovação.</string>
+	<key>There is cct</key>
+	<string>Você tem %@ encargo de cartão não usado.</string>
+	<key>There is rpt</key>
+	<string>Há %@ relatório que não foi submetido por um total de %@.</string>
+	<key>There must have been a typo. Please re-enter the password so it matches exactly in both fields</key>
+	<string>Deve ter havido um erro de digitação. Digite novamente a senha de modo que corresponda exatamente em ambos os campos</string>
+	<key>There was an error processing your request. It may be due to a poor network connection. Please try again later. If this condition continues</key>
+	<string>Ocorreu um erro ao processar seu pedido. Pode ser devido a uma conexão ruim com a rede. Tente novamente mais tarde. Se essa condição continuar, entre em contato com seu administrador</string>
+	<key>There were no unassigned expenses found</key>
+	<string>Não foram encontradas despesas não atribuídas</string>
+	<key>This application crashed the last time you ran it.  Please help us determine the cause of the crash by sending us the application log.</key>
+	<string>Este aplicativo travou da última vez que você o executou.  Ajude-nos a determinar a causa do travamento enviando-nos o registro do aplicativo.</string>
+	<key>This attendee cannot be edited.</key>
+	<string>Este participante não pode ser editado.</string>
+	<key>This attendee has been modified</key>
+	<string>Este participante foi modificado desde o seu último uso nesta despesa.  Qualquer edição precisa ser concluída no Perfil na web.</string>
+	<key>This device is not configured for sending mail.</key>
+	<string>Este dispositivo não está configurado para enviar correio.</string>
+	<key>This feature requires access</key>
+	<string>Este recurso requer acesso ao microfone do dispositivo. Habilite o acesso ao microfone para esse aplicativo em Configurações/Privacidade/Microfone.</string>
+	<key>This trip has already been expensed or the trip could not be synchronized.</key>
+	<string>Esta viagem já foi debitada ou não foi possível sincronizar a viagem.</string>
+	<key>Thursday_Short</key>
+	<string>Qui</string>
+	<key>Ticket Delivery</key>
+	<string>Entrega do bilhete</string>
+	<key>Ticket Type</key>
+	<string>Tipo de bilhete</string>
+	<key>Ticketing</key>
+	<string>Emissão de bilhete</string>
+	<key>Time</key>
+	<string>Hora</string>
+	<key>Title</key>
+	<string>Cargo</string>
+	<key>To</key>
+	<string>Para</string>
+	<key>To Location</key>
+	<string>Até local</string>
+	<key>To Station</key>
+	<string>Para a estação</string>
+	<key>ToReceiptStoreMsg</key>
+	<string>Leve-me ao Receipt Store.</string>
+	<key>Tomorrow</key>
+	<string>Amanhã</string>
+	<key>Total</key>
+	<string>Total</string>
+	<key>Total Amount</key>
+	<string>Montante total</string>
+	<key>Total Due Company Card</key>
+	<string>Montante total devido em cartão corporativo</string>
+	<key>Total Due Employee</key>
+	<string>Total devido ao funcionário</string>
+	<key>Total Owed by Employee</key>
+	<string>Total devido por funcionário</string>
+	<key>Total Paid by Company</key>
+	<string>Total pago pela empresa</string>
+	<key>Total Personal Amount</key>
+	<string>Valor de despesa pessoal</string>
+	<key>Total Price</key>
+	<string>Preço total</string>
+	<key>Total Rate</key>
+	<string>Tarifa total</string>
+	<key>Total Requested</key>
+	<string>Total de solicitações</string>
+	<key>Total Travel Points: %@</key>
+	<string>Total de pontos de viagem: %@</string>
+	<key>Total no card charges</key>
+	<string>Você não tem transações com cartão</string>
+	<key>Total no expenses</key>
+	<string>Você não tem despesas</string>
+	<key>Total num card charge</key>
+	<string>Você tem uma transação com cartão</string>
+	<key>Total num card charges</key>
+	<string>Você tem %@ transações de cartão</string>
+	<key>Total num expense</key>
+	<string>Você tem uma despesa</string>
+	<key>Total num expenses</key>
+	<string>Você tem %@ despesas</string>
+	<key>Total: %@</key>
+	<string>Total: %@</string>
+	<key>Tour</key>
+	<string>Visita</string>
+	<key>TourExpense2Subtitle</key>
+	<string>Então envie e seja reembolsado. Gerentes podem aprovar de qualquer lugar.</string>
+	<key>Train</key>
+	<string>Trem</string>
+	<key>Train Choices</key>
+	<string>Opções de trens</string>
+	<key>Train Detail</key>
+	<string>Detalhes sobre o trem</string>
+	<key>Train Number</key>
+	<string>Número do trem</string>
+	<key>Train: token</key>
+	<string>Trem %@</string>
+	<key>Transaction Amount</key>
+	<string>Montante da transação</string>
+	<key>Transaction Date</key>
+	<string>Data da transação</string>
+	<key>Transaction Location</key>
+	<string>Local da transação</string>
+	<key>Travel</key>
+	<string>Viagem</string>
+	<key>Travel Agency Info</key>
+	<string>Informações de agência de viagem</string>
+	<key>Travel Apps</key>
+	<string>Aplicativos de viagem</string>
+	<key>Travel Points</key>
+	<string>Pontos de viagem</string>
+	<key>Travel Points Awarded</key>
+	<string>Pontos de viagem recebidos</string>
+	<key>Travel Points Bank: %@ points</key>
+	<string>Banco de pontos de viagem: %@ pontos</string>
+	<key>Travel Points Booked</key>
+	<string>Pontos de viagens reservadas</string>
+	<key>Travel Policy</key>
+	<string>Política de viagens</string>
+	<key>Travel Requests</key>
+	<string>Solicitações de Viagem</string>
+	<key>Travel Time</key>
+	<string>Hora da viagem</string>
+	<key>TravelRequestCount</key>
+	<string>Você tem %d solicitação(ões) para aprovar</string>
+	<key>TravelRequestsToApproveRow_0</key>
+	<string>Você não tem solicitações para aprovar</string>
+	<key>TravelRequestsToApproveRow_1</key>
+	<string>Você tem 1 solicitação para aprovar</string>
+	<key>TravelRequestsToApproveRow_2</key>
+	<string>Você não tem %d solicitações para aprovar</string>
+	<key>Trip</key>
+	<string>Viagem atual</string>
+	<key>Trip Approval</key>
+	<string>Aprovação de viagem</string>
+	<key>Trip Approvals</key>
+	<string>Aprovações de viagem</string>
+	<key>Trip Feed</key>
+	<string>Importação de dados de viagem</string>
+	<key>Trip Fields</key>
+	<string>Campos de viagem</string>
+	<key>Trip Locator</key>
+	<string>Localizador de viagem</string>
+	<key>Trip Record Locator for this trip could not be retrieved.</key>
+	<string>O Localizador de Registros de Viagem não pôde ser recuperado.</string>
+	<key>Trip data updated on</key>
+	<string>Dados da viagem atualizados em %@</string>
+	<key>Trip data updated on hrt</key>
+	<string>Dados da viagem atualizados em %@</string>
+	<key>Trip just trip</key>
+	<string>Viagem</string>
+	<key>TripIt Account Not Activated</key>
+	<string>A conta TripIt não está ativada</string>
+	<key>TripIt Trips</key>
+	<string>Viagens TripIt</string>
+	<key>TripIt not linked</key>
+	<string>A conta TripIt não foi vinculada à SmartExpense.  Siga o link para TripIt clicando na fileira TripIt a partir da tela inicial</string>
+	<key>TripIt not linked together</key>
+	<string>A conta TripIt que está vinculada ao usuário SmartExpense conectado é diferente da conta na qual o aplicativo TripIt móvel entrou.  Entre no TripIt usando a mesma conta que você vinculou ao SmartExpense.</string>
+	<key>TripIt trip key not found</key>
+	<string>Não foi possível para o sistema processar sua solicitação para debitar uma viagem.  O código de viagem TripIt não foi encontrada.</string>
+	<key>Trips</key>
+	<string>Viagens</string>
+	<key>Try Again</key>
+	<string>Tentar novamente</string>
+	<key>Try again to re-enter your password or select I Forgot to receive signin in instructions</key>
+	<string>Tente inserir novamente sua senha ou selecione Esqueci para receber as instruções de acesso.</string>
+	<key>Tuesday_Short</key>
+	<string>Ter</string>
+	<key>Type</key>
+	<string>Tipo</string>
+	<key>Type in emails seperated by commas or choose from contacts list</key>
+	<string>Digite os endereços de e-mail separados por vírgulas ou selecione da lista de contatos.</string>
+	<key>Type name or select frequent attendee</key>
+	<string>Introduza o último ou o primeiro nome</string>
+	<key>Type to search for a location</key>
+	<string>Tipo a pesquisar para um local</string>
+	<key>UNDEFINED_MSG</key>
+	<string>Pelo menos uma das despesas selecionadas tem um tipo de despesa indefinido.</string>
+	<key>Unable to Sign In</key>
+	<string>Não foi possível efetuar login</string>
+	<key>Unable to add expense</key>
+	<string>Não é possível adicionar despesa</string>
+	<key>Unable to add itemization</key>
+	<string>Não é possível adicionar especificação por item</string>
+	<key>Unable to attach expense. Please check that this report policy allows Japan Public Transit.</key>
+	<string>Não é possível anexar despesa. Verifique se a política deste relatório aceita transporte público japonês.</string>
+	<key>Unable to link</key>
+	<string>Não é possível vincular</string>
+	<key>Unable to load location data.</key>
+	<string>Não é possível carregar dados de local.</string>
+	<key>Unable to sign in</key>
+	<string>Não é possível fazer o seu login neste momento. Entre em contato com o suporte ou o departamento de viagens/despesas de sua empresa.</string>
+	<key>Unavailable</key>
+	<string>Indisponível</string>
+	<key>Undefined</key>
+	<string>Não definido</string>
+	<key>Unexpected Error</key>
+	<string>Erro inesperado</string>
+	<key>Unknown Station</key>
+	<string>Estação desconhecida</string>
+	<key>Unlink Dropbox</key>
+	<string>Desvincular a Dropbox</string>
+	<key>Unlink Succeeded</key>
+	<string>Desvinculado com êxito</string>
+	<key>Unlink from TripIt</key>
+	<string>Desconectar do TripIt</string>
+	<key>Unmatch</key>
+	<string>Incompatível</string>
+	<key>Unsaved Receipts</key>
+	<string>Recibos não salvos</string>
+	<key>Unselect All</key>
+	<string>Cancelar todos</string>
+	<key>Unsubmitted Reports</key>
+	<string>Relatórios não submetidos</string>
+	<key>UnsubmittedReportsRow_0</key>
+	<string>Você não tem relatórios que não foram submetidos</string>
+	<key>UnsubmittedReportsRow_1</key>
+	<string>Você tem 1 relatório que não foi submetido</string>
+	<key>UnsubmittedReportsRow_2</key>
+	<string>Você tem %d relatórios que não foram submetidos</string>
+	<key>Update</key>
+	<string>Atualizar</string>
+	<key>Update Itemizations</key>
+	<string>Atualizar especificações de itens</string>
+	<key>Update Receipt</key>
+	<string>Atualizar recibo</string>
+	<key>Updating</key>
+	<string>Atualizando</string>
+	<key>Updating Itinerary</key>
+	<string>Carregando itinerário</string>
+	<key>Upload</key>
+	<string>Carregar</string>
+	<key>Upload Failed</key>
+	<string>Carregamento falhou</string>
+	<key>Upload Queue</key>
+	<string>Carregar fila</string>
+	<key>Upload Receipt</key>
+	<string>Carregar recibo</string>
+	<key>Upload Success</key>
+	<string>Carregado com êxito</string>
+	<key>Uploading Please Wait</key>
+	<string>Carregando, por favor aguarde</string>
+	<key>Uploading count</key>
+	<string>Carregando %d de %d</string>
+	<key>Uploading to Dropbox</key>
+	<string>Atualizando para Dropbox</string>
+	<key>Uploading to Dropbox failed</key>
+	<string>Falha ao atualizar para Dropbox</string>
+	<key>Uploading to Dropbox was successful</key>
+	<string>Carregamento para Dropbox com êxito</string>
+	<key>Use %@ Travel Points</key>
+	<string>Usar %@ pontos de viagem</string>
+	<key>Use %d pts.</key>
+	<string>Use %d pontos</string>
+	<key>Use-ImagePicker</key>
+	<string>Usar</string>
+	<key>User Name</key>
+	<string>Nome de usuário</string>
+	<key>Username and Password</key>
+	<string>Nome de usuário e senha</string>
+	<key>Username or PIN is invalid</key>
+	<string>Nome de usuário ou PIN inválidos. Você pode criar ou redefinir seu PIN móvel clicando em 'Precisa configurar seu PIN' ou navegando até 'Perfil -&gt; Registro móvel' no Concur on-line.</string>
+	<key>Username or Password is invalid</key>
+	<string>Nome de usuário ou senha inválidos.</string>
+	<key>Username or Password is invalid SU</key>
+	<string>Nome de usuário ou senha inválidos. Você pode reiniciar sua senha clicando no link 'Reiniciar sua senha'. Se não tiver conta, clique em 'Registrar'.</string>
+	<key>Using Points</key>
+	<string>Usando Pontos</string>
+	<key>VALUE_RANGE_MSG</key>
+	<string>Digite um valor entre %d e %d caracteres.</string>
+	<key>VALUE_RANGE_MSG_FIXED_LENGTH</key>
+	<string>Digite um valor que tenha %d caracteres de comprimento.</string>
+	<key>VALUE_RANGE_MSG_LOWER_BOUND</key>
+	<string>Digite um valor maior do que %d caracteres.</string>
+	<key>VALUE_RANGE_MSG_NO_BOUNDS</key>
+	<string>Informe um valor para válido para este campo.</string>
+	<key>VALUE_RANGE_MSG_UPPER_BOUND</key>
+	<string>Digite um valor menor do que %d caracteres.</string>
+	<key>VERIFY_PWD</key>
+	<string>Verificar senha</string>
+	<key>VehicleId</key>
+	<string>ID do veículo</string>
+	<key>Vendor</key>
+	<string>Fornecedor</string>
+	<key>Vendor Hours</key>
+	<string>Horas do fornecedor</string>
+	<key>Vendor Names</key>
+	<string>Nomes de fornecedores</string>
+	<key>Vendor Web Site</key>
+	<string>Site do fornecedor</string>
+	<key>Verification is simple. Just tap on the link in the email we sent to</key>
+	<string>A verificação é simples. Simplesmente clique no link no e-mail que lhe enviamos %@</string>
+	<key>View Allowance</key>
+	<string>Visualizar ajuda de custo</string>
+	<key>View Images</key>
+	<string>Exibir imagens</string>
+	<key>View Rates</key>
+	<string>Exibir tarifas</string>
+	<key>View Receipt</key>
+	<string>Exibir recibo</string>
+	<key>View Report Offline</key>
+	<string>Não foi possível acessar o relatório.  Tente mais tarde, quando estiver on-line.</string>
+	<key>View in Chatter</key>
+	<string>Visualização no Chatter</string>
+	<key>View your travel requests</key>
+	<string>Visualizar suas solicitações</string>
+	<key>View your trips</key>
+	<string>Exibir suas viagens</string>
+	<key>View your uploaded receipts</key>
+	<string>Exibir seus recibos carregados</string>
+	<key>Violation</key>
+	<string>Violação</string>
+	<key>Violation Justification</key>
+	<string>Justificação de violação</string>
+	<key>Violation Reason</key>
+	<string>Motivo da violação</string>
+	<key>Violation Reason Code</key>
+	<string>Código de motivo da violação</string>
+	<key>Violation Summary</key>
+	<string>Resumo da violação</string>
+	<key>Violations</key>
+	<string>Violações</string>
+	<key>WAIT_FOR_CAR_RATES_DATA</key>
+	<string>Você está aguardando por dados de tarifas de automóvel.  Tente esta ação novamente mais tarde.</string>
+	<key>WARNING</key>
+	<string>Aviso</string>
+	<key>WARNING_INVALID_VALUE_RANGE_NOT_REQUIRED</key>
+	<string>Este valor não está no intervalo especificado de %d a %d caracteres. Tem certeza de que deseja prosseguir?</string>
+	<key>WARN_MISSING_REQ_FLD</key>
+	<string>Você tem campos obrigatórios não preenchidos no formulário.  Deseja continuar salvando?</string>
+	<key>WEBVIEW</key>
+	<string>Exibição de dados da web</string>
+	<key>Waiting</key>
+	<string>Em espera</string>
+	<key>Warning</key>
+	<string>Aviso</string>
+	<key>Warning on Itinerary Stop update</key>
+	<string>Aviso sobre atualização de escala de itinerário</string>
+	<key>Watch setup video</key>
+	<string>Assista a um vídeo de configuração</string>
+	<key>We are unable to sign you in with this information</key>
+	<string>Não é possível fazer o seu login com essas informações.</string>
+	<key>We couldnt find any hotels with the given search criteria. Please try again with different criteria.</key>
+	<string>Não conseguimos localizar hotéis com esse critério. Tente novamente com outro critério.</string>
+	<key>Web Site</key>
+	<string>Site</string>
+	<key>Wednesday_Short</key>
+	<string>Qua</string>
+	<key>Welcome to Concur</key>
+	<string>Bem-vindo ao Concur</string>
+	<key>What Flights can I find for you?</key>
+	<string>Que voo posso encontrar para você?</string>
+	<key>What Hotel can I find for you?</key>
+	<string>Que hotel posso encontrar para você?</string>
+	<key>What's New</key>
+	<string>O que há de novo</string>
+	<key>When auto login is on</key>
+	<string>Quando o login automático estiver ligado, o nome do usuário é salvo automaticamente.</string>
+	<key>Work email or Concur username</key>
+	<string>E-mail comercial ou nome de usuário do Concur</string>
+	<key>Would you like to create an Expense Report from the selected trip segments</key>
+	<string>Deseja criar um relatório de despesas a partir dos segmentos de viagem selecionados?</string>
+	<key>Wrong agency code</key>
+	<string>Código da agência incorreto</string>
+	<key>Wrong company code</key>
+	<string>Código de companhia incorreto</string>
+	<key>YCOOK</key>
+	<string>Outros cozinhando</string>
+	<key>YODLEE_CARD_LOGIN_FORM_FAILED_MSG</key>
+	<string>Falha ao recuperar formulário de login para seu cartão de crédito.  Tente mais tarde.</string>
+	<key>Yes</key>
+	<string>Sim</string>
+	<key>You already have a corporate account with Concur.</key>
+	<string>Você já tem uma conta corporativa com o Concur</string>
+	<key>You are offline. Please expense trip later.</key>
+	<string>Você está off-line.  Aguarde para debitar sua viagem até você estar on-line.</string>
+	<key>You are using %@ Travel Points.</key>
+	<string>Você está usando %@ pontos de viagem.</string>
+	<key>You do not have an email in your Concur profile. We are unable to send you a password reset email without one. Please go to the Concur Website and add your work email to your profile.</key>
+	<string>Você não tem um e-mail em seu perfil do Concur. Não foi possível enviar um e-mail de redefinição de senha sem um. Acesse o site do Concur e adicione seu e-mail comercial ao seu perfil.</string>
+	<key>You have %@ Travel Points in your bank.</key>
+	<string>Você tem %@ pontos de viagem em seu banco.</string>
+	<key>You have already registered for SmartExpense.</key>
+	<string>Você já se registrou para SmartExpense.</string>
+	<key>You have no approvals</key>
+	<string>Você não tem aprovações</string>
+	<key>You have no messages</key>
+	<string>Você não tem mensagens</string>
+	<key>You have no upcoming trips</key>
+	<string>Não há viagens agendadas</string>
+	<key>You have stayed here %@ times</key>
+	<string>Você ficou aqui %@ vezes</string>
+	<key>You have stayed here earlier</key>
+	<string>Você ficou aqui anteriormente</string>
+	<key>You have successfully linked your TripIt account to SmartExpense.</key>
+	<string>Você vinculou sua conta TripIt corretamente à SmartExpense.</string>
+	<key>You must be online before you can upload your items</key>
+	<string>Você precisa estar on-line antes de poder carregar os seus itens.</string>
+	<key>You must enter in a valid PIN in order to log in</key>
+	<string>Você deve digitar um PIN válido para efetuar login</string>
+	<key>You must enter in a valid email address in order for Concur to verify it</key>
+	<string>Você precisa entrar em um endereço de e-mail válido para que o Concur o verifique</string>
+	<key>You must enter in a valid email for your approver</key>
+	<string>Você precisa digitar um e-mail válido para o seu aprovador</string>
+	<key>You must enter in a valid password in order to log in</key>
+	<string>Você deve digitar uma senha válida para efetuar login</string>
+	<key>You must enter in a valid password or PIN in order to log in</key>
+	<string>Você deve inserir uma senha ou PIN válidos para efetuar login</string>
+	<key>You must enter in a valid user name in order to log in</key>
+	<string>Você deve digitar um nome de usuário válido para efetuar login</string>
+	<key>You need to select a Delivery Option in order to reserve your train</key>
+	<string>Você precisa selecionar uma opção de entrega para reservar seu trem.</string>
+	<key>You need to select a valid credit card in order to reserve your train</key>
+	<string>Você precisa selecionar um cartão de crédito válido para reservar seu trem.</string>
+	<key>Your account data has been wiped from this device.  Please contact your company administrator for assistance.</key>
+	<string>Os dados da sua conta foram apagados deste dispositivo.  Entre em contato com o seu administrador para obter assistência.</string>
+	<key>Your account is no longer linked to TripIt.</key>
+	<string>Sua conta não está mais vinculada ao TripIt.</string>
+	<key>Your agent may ask for the Trip Record Locator: %@</key>
+	<string>O seu agente pode solicitar um Localizador de Registros de Viagem: %@</string>
+	<key>Your colleague has stayed here</key>
+	<string>Um dos seus colegas ficou aqui</string>
+	<key>Your colleague is staying here on your check-in date</key>
+	<string>O seu colega ficará aqui na data de check-in</string>
+	<key>Your colleague's favorite</key>
+	<string>O preferido de seu colega</string>
+	<key>Your colleagues have stayed here %@ times</key>
+	<string>Seus colegas ficaram aqui %@ vezes</string>
+	<key>Your company has disabled Concur for mobile. Please contact your administrator.</key>
+	<string>Sua empresa desativou o Concur para celular. Entre em contato com o seu administrador.</string>
+	<key>Your company's preferred</key>
+	<string>O preferido de sua empresa</string>
+	<key>Your company's travel policy will not allow this reservation.</key>
+	<string>A política de viagem de sua empresa não permitirá esta reserva.</string>
+	<key>Your device cannot make a phone call.</key>
+	<string>O seu dispositivo não pode efetuar uma chamada telefônica.</string>
+	<key>Your entry does not appear to be a valid work email or Concur Username. For example</key>
+	<string>Sua entrada não parece ser um endereço de e-mail comercial ou nome de usuário do Concur válido. Por exemplo, talvez esteja faltando o @ ou .com</string>
+	<key>Your expense has been queued</key>
+	<string>Sua despesa for colocada em fila para carregamento.</string>
+	<key>Your favorite</key>
+	<string>Seu favorito</string>
+	<key>Your hotel reservation has been successfully cancelled. Cancellation Number: %@</key>
+	<string>A sua reserva foi cancelada com sucesso. Número do cancelamento: %@</string>
+	<key>Your receipt has been queued</key>
+	<string>Seu recibo foi enfileirado para carregamento.</string>
+	<key>add_as_favorite</key>
+	<string>Adicionar como Favorito</string>
+	<key>add_new_route</key>
+	<string>Adicionar Nova Rota</string>
+	<key>add_route</key>
+	<string>Adicionar Itinerário</string>
+	<key>add_to_report</key>
+	<string>Adicionar ao relatório</string>
+	<key>additional_charge</key>
+	<string>Tarifa adicional</string>
+	<key>are missing</key>
+	<string> estão faltando.</string>
+	<key>arrival_station</key>
+	<string>Estação de chegada</string>
+	<key>available from</key>
+	<string>disponível a partir de</string>
+	<key>business_purpose</key>
+	<string>Finalidade do negócio</string>
+	<key>cheap</key>
+	<string>Econômico</string>
+	<key>check in on</key>
+	<string>check-in em</string>
+	<key>choices</key>
+	<string>escolhas</string>
+	<key>commuter_pass</key>
+	<string>Passe do Trocador</string>
+	<key>corporate card transactions</key>
+	<string>transação(ões) do cartão corporativo</string>
+	<key>cost</key>
+	<string>Custo</string>
+	<key>day</key>
+	<string>dia</string>
+	<key>days</key>
+	<string>dias</string>
+	<key>departure_station</key>
+	<string>Estação de partida</string>
+	<key>easy</key>
+	<string>Fácil</string>
+	<key>email saved into your drafts</key>
+	<string>e-mail salvo em seus rascunhos</string>
+	<key>expense_route</key>
+	<string>Rota de Despesa</string>
+	<key>fast</key>
+	<string>Rápido</string>
+	<key>favorites</key>
+	<string>Favoritos</string>
+	<key>green</key>
+	<string>Primeira classe (assento verde)</string>
+	<key>hour</key>
+	<string>hora</string>
+	<key>hour_quantity</key>
+	<string>%d hora</string>
+	<key>hours</key>
+	<string>horas</string>
+	<key>hours_quantity</key>
+	<string>%d horas</string>
+	<key>ic_card</key>
+	<string>Cartão IC</string>
+	<key>ic_card_fare</key>
+	<string>Tarifa com cartão IC</string>
+	<key>int active int upcoming</key>
+	<string>%d ativo, %d agendado</string>
+	<key>invoice to review</key>
+	<string>fatura para revisar</string>
+	<key>invoices to approve</key>
+	<string>Faturas para aprovar</string>
+	<key>invoices to review</key>
+	<string>faturas para revisar</string>
+	<key>is missing</key>
+	<string> está faltando.</string>
+	<key>items to upload</key>
+	<string>itens para carregar</string>
+	<key>japan_public_transit</key>
+	<string>Transporte Público Japonês</string>
+	<key>line</key>
+	<string>Linha</string>
+	<key>manual</key>
+	<string>Manual</string>
+	<key>menu</key>
+	<string>menu</string>
+	<key>miles</key>
+	<string>milhas</string>
+	<key>minute</key>
+	<string>minuto</string>
+	<key>minute_quantity</key>
+	<string>%d min</string>
+	<key>minutes</key>
+	<string>minutos</string>
+	<key>minutes_quantity</key>
+	<string>%d min</string>
+	<key>mobile entries</key>
+	<string>lançamentos móveis</string>
+	<key>near</key>
+	<string>próximo de</string>
+	<key>no</key>
+	<string>não</string>
+	<key>noReceipt</key>
+	<string>A imagem do recibo não está disponível no momento. Tente novamente mais tarde.</string>
+	<key>noReceipts</key>
+	<string>No momento você não tem recibos no Receipt Store.</string>
+	<key>no_favorite_routes</key>
+	<string>Sem rotas favoritas</string>
+	<key>no_recent_routes</key>
+	<string>Sem rotas recentes</string>
+	<key>no_saved_routes</key>
+	<string>Nenhuma Rota Salva</string>
+	<key>other</key>
+	<string>Outros</string>
+	<key>paper_ticket</key>
+	<string>Bilhete em papel</string>
+	<key>per day</key>
+	<string>por dia</string>
+	<key>per night</key>
+	<string>por noite</string>
+	<key>personal_expense</key>
+	<string>Despesa Particular</string>
+	<key>pickup on</key>
+	<string>retirada em</string>
+	<key>purchase request to review</key>
+	<string>solicitações de compra para revisar</string>
+	<key>purchase requests to review</key>
+	<string>solicitações de compras para revisar</string>
+	<key>report to approve</key>
+	<string>relatório para aprovar</string>
+	<key>reports to approve</key>
+	<string>relatórios para aprovar</string>
+	<key>resend the verification email</key>
+	<string>reenviar o e-mail de verificação</string>
+	<key>reserved</key>
+	<string>Assento reservado</string>
+	<key>results by</key>
+	<string>resultados por</string>
+	<key>results by Duration</key>
+	<string>resultados por duração</string>
+	<key>results by Earliest Departure</key>
+	<string>resultados por primeira partida</string>
+	<key>results by Fare Price</key>
+	<string>resultados por preço da tarifa</string>
+	<key>results by Preferred Carrier</key>
+	<string>resultados por transportadora preferencial</string>
+	<key>route_added_to_report_confirmation</key>
+	<string>Sua rota foi adicionada a </string>
+	<key>route_saved_confirmation</key>
+	<string>Sua rota foi salva</string>
+	<key>route_search</key>
+	<string>Pesquisa de Itinerário</string>
+	<key>routes</key>
+	<string>Rotas</string>
+	<key>save_for_later</key>
+	<string>Salvar para depois</string>
+	<key>search_stations</key>
+	<string>Pesquisar por estações</string>
+	<key>select_route</key>
+	<string>Selecionar Itinerário</string>
+	<key>sorted by</key>
+	<string>Ordenando por</string>
+	<key>tap here to cancel reservation</key>
+	<string>clique aqui para cancelar uma reserva</string>
+	<key>through_station</key>
+	<string>Pela Estação</string>
+	<key>through_stations</key>
+	<string>Pelas estações</string>
+	<key>to</key>
+	<string>para</string>
+	<key>today</key>
+	<string>Hoje</string>
+	<key>token hour(s) token minute(s)</key>
+	<string>%d hora(s) %d minuto(s)</string>
+	<key>token minute(s)</key>
+	<string>%d minuto(s)</string>
+	<key>token results</key>
+	<string>%d resultados</string>
+	<key>travel request to approve</key>
+	<string>solicitação de viagem para aprovar</string>
+	<key>travel requests to approve</key>
+	<string>solicitações de viagem para aprovar</string>
+	<key>trip to approve</key>
+	<string>viagem para aprovar</string>
+	<key>trip_date</key>
+	<string>Data da Viagem</string>
+	<key>trips to approve</key>
+	<string>viagens para aprovar</string>
+	<key>unknown</key>
+	<string>Desconhecido</string>
+	<key>unreserved</key>
+	<string>Assento não reservado</string>
+	<key>unsubmitted Reports</key>
+	<string>relatório(s) não enviado(s)</string>
+	<key>view_report</key>
+	<string>Visualizar Relatório</string>
+</dict>
+</plist>

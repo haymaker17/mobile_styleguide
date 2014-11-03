@@ -1,0 +1,3928 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key># of Cars</key>
+	<string>число автомобилей</string>
+	<key>%@ has been submitted</key>
+	<string>%@ отправлено</string>
+	<key>%@ km</key>
+	<string>%@ км</string>
+	<key>%@ kms</key>
+	<string>%@ км</string>
+	<key>%@ mile</key>
+	<string>%@ миля</string>
+	<key>%@ miles</key>
+	<string>%@ миль</string>
+	<key>%@ of your colleagues are staying here on your check-in date</key>
+	<string>на дату вашего прибытия здесь проживают %@ ваших коллег</string>
+	<key>%@ of your colleagues' favourite</key>
+	<string>предпочитаемое %@ вашими коллегами</string>
+	<key>%@ per day</key>
+	<string>%@ в день</string>
+	<key>%d Hour and %d Minute(s)</key>
+	<string>%d час и %d минуты (минут)</string>
+	<key>%d Hours and %d Minute(s)</key>
+	<string>%d часов и %d минут</string>
+	<key>%d Minute(s)</key>
+	<string>%d минут(-ы)</string>
+	<key>(Refundable)</key>
+	<string>(Подлежащие возмещению)</string>
+	<key>1 Stop</key>
+	<string>1 Остановка</string>
+	<key>@Concur2Go Twitter Feed</key>
+	<string>Twitter-канал@Concur2Go</string>
+	<key>A Receipt is</key>
+	<string>На сервере показано, что к этому расходу приложена квитанция, но в Менеджере счетов эта квитанция больше не существует. Повторно приложите квитанцию к этому расходу и сохраните его.</string>
+	<key>ACTIVEREQUESTS</key>
+	<string>АКТИВНЫХ ЗАПРОСОВ</string>
+	<key>ACTIVE_ENTRIES</key>
+	<string>Отчет</string>
+	<key>ACTIVE_REPORTS</key>
+	<string>Активные отчеты</string>
+	<key>ADD_CAR_MILEAGE_HOME_NOT_SUPPORTED</key>
+	<string>В конфигурации вашего личного автомобиля отсутствуют ставки оплаты дальности пробега автомобиля, либо конфигурация ставок конкретно для вашего автомобиля в настоящее время не поддерживается. Включите, пожалуйста, расходы на пробег автомобиля в отчет по мобильному устройству ли через Интернет.</string>
+	<key>ADD_CAR_MILEAGE_NOT_SUPPORTED</key>
+	<string>В конфигурации вашего личного автомобиля отсутствуют ставки оплаты за дальность пробега автомобиля, либо конфигурация ставок конкретно для вашего автомобиля в настоящее время не поддерживается.</string>
+	<key>ADD_EXISTING_CARD</key>
+	<string>Эта конкретная карточка уже добавлена и повторно ее добавить невозможно.</string>
+	<key>ADD_EXPENSE_OFFLINE_NOT_SUPPORTED</key>
+	<string>Функция добавления расхода еще не поддерживается в автономном режиме.</string>
+	<key>ADD_TO_RPT_CONFIRM_MSG</key>
+	<string>Добавить в отчет выбранные расходы? Вы можете прикрепить квитанции и редактировать расходы после включения их в отчет.</string>
+	<key>ADD_TO_RPT_CONFIRM_TITLE</key>
+	<string>Подтвердить</string>
+	<key>ADD_YODLEE_CARD_COMPLETE_MSG</key>
+	<string>Ваша карточка, заканчивающаяся на %@, был добавлена в ваш аккаунт программы SmartExpense.</string>
+	<key>ADD_YODLEE_CARD_FAILED_MSG</key>
+	<string>При добавлении вашей кредитной карточки произошел сбой. Попытайтесь, пожалуйста, сделать это позже.</string>
+	<key>ADD_YODLEE_CARD_INSTRUCTION</key>
+	<string>Введите регистрационные данные для своего аккаунта. Программа Concur зашифрует эту информацию и будет использовать ее защищенным образом для загрузки начислений на вашу карточку.</string>
+	<key>AIR_BOOKING</key>
+	<string>Заказ авиабилетов</string>
+	<key>AIR_BOOKING_DISABLED_MSG</key>
+	<string>Ваша компания отключила возможность заказа авиабилетов по мобильному устройству. Заказывайте, пожалуйста, авиабилеты по Интернету или по телефону в бюро путешествий.</string>
+	<key>AIR_BOOKING_PROFILE_1_MSG</key>
+	<string>Ваш командировочный профиль требует, чтобы были указаны значения в полях Отчество, Пол и Дата рождения. Войдите в веб-версию программы Concur Travel и выберите Профиль в меню.</string>
+	<key>AIR_BOOKING_PROFILE_21_MSG</key>
+	<string>Ваш командировочный профиль ни разу не был сохранен, перед резервированием его необходимо сохранить хотя бы один раз. Войдите в веб-версию программы Concur Travel, выберите Профиль и сохраните его.</string>
+	<key>AIR_BOOKING_PROFILE_22_MSG</key>
+	<string>Код / тип выставления счета в вашей командировочной конфигурации предусматривает наличие проектов. Обратитесь, пожалуйста, к администратору компании, чтобы задать соответствующие проекты.</string>
+	<key>AIR_BOOKING_PROFILE_23_MSG</key>
+	<string>Программа Vinnet больше не существует! Клиент не должен получать код проверки этого профиля.</string>
+	<key>AIR_BOOKING_PROFILE_24_MSG</key>
+	<string>Ваш командировочный профиль требует, чтобы в нем был указан номер сотового телефона. Войдите в веб-версию программы Concur Travel и выберите Профиль в меню.</string>
+	<key>AIR_BOOKING_PROFILE_25_MSG</key>
+	<string>Ваш командировочный профиль требует, чтобы было указано значение в поле Паспорт Гражданство. Войдите в веб-версию программы Concur Travel и выберите Профиль в меню.</string>
+	<key>AIR_BOOKING_PROFILE_26_MSG</key>
+	<string>Ваш командировочный профиль требует, чтобы в поле Название должности было указано значение. Войдите в веб-версию программы Concur Travel и выберите Профиль в меню.</string>
+	<key>AIR_BOOKING_PROFILE_27_MSG</key>
+	<string>Ваш командировочный профиль требует, чтобы было указано значение в поле Организационная единица. Войдите в веб-версию программы Concur Travel и выберите Профиль в меню.</string>
+	<key>AIR_BOOKING_PROFILE_28_MSG</key>
+	<string>Ваш командировочный профиль требует, чтобы было указано значение в поле Имя-Замечание. Войдите в веб-версию программы Concur Travel и выберите Профиль в меню.\nПРИМЕЧАНИЕ. Это поле может иметь особую метку. Если оно не будет найдено, обратитесь к администратору своей компании.</string>
+	<key>AIR_BOOKING_PROFILE_29_MSG</key>
+	<string>Ваш командировочный профиль требует, чтобы было указано значение в поле Менеджер. Войдите в веб-версию программы Concur Travel и выберите Профиль в меню.</string>
+	<key>AIR_BOOKING_PROFILE_2_MSG</key>
+	<string>Прежде чем вы сможете заказать авиабилет, вам необходимо заполнить свой командировочный профиль. Войдите в веб-версию программы Concur Travel и выберите Профиль в меню.</string>
+	<key>AIR_BOOKING_PROFILE_30_MSG</key>
+	<string>Ваш командировочный профиль требует, чтобы было указано значение в поле Идентификатор сотрудника. Войдите в веб-версию программы Concur Travel и выберите Профиль в меню.</string>
+	<key>AIR_BOOKING_PROFILE_31_MSG</key>
+	<string>Ваш командировочный профиль требует, чтобы был указан действительный адрес электронной почты. Войдите в веб-версию программы Concur Travel и выберите Профиль в меню.</string>
+	<key>AIR_BOOKING_PROFILE_32_MSG</key>
+	<string>Ваш командировочный профиль требует, чтобы были указаны значения в поле адреса места работы (улица, город и страна). Войдите в веб-версию программы Concur Travel и выберите Профиль в меню.</string>
+	<key>AIR_BOOKING_PROFILE_33_MSG</key>
+	<string>Ваш командировочный профиль требует, чтобы было указано значение либо для рабочего, либо для домашнего номера телефона. Войдите в веб-версию программы Concur Travel и выберите Профиль в меню.</string>
+	<key>AIR_BOOKING_PROFILE_PROLOG_MSG</key>
+	<string>Выйдите из программы, а затем, предоставив указанную информацию, войдите в нее снова.</string>
+	<key>AIR_BOOKING_REQ_CUSTOM_FIELDS_MSG</key>
+	<string>У вашей компании имеются особые требования для заказа авиабилетов. Заказывайте, пожалуйста, авиабилеты, используя веб-версию программы Concur.</string>
+	<key>AIR_WARNING_JUSTIFICATION</key>
+	<string>Перед заказом билета на этот рейс в нарушение правил компании вы должны ввести обоснование в поле, выделенное красным цветом.</string>
+	<key>AIR_WARNING_REASON</key>
+	<string>Перед резервированием этого рейса в нарушение правил компании вы должны ввести обоснование в поле, выделенное красным цветом.</string>
+	<key>AIR_WARNING_REASON_JUSTIFICATION</key>
+	<string>Перед бронированием билета на этот рейс в нарушение правил компании вы должны ввести причину и обоснование в поле, выделенное красным цветом.</string>
+	<key>ALERT_CLEAR_CACHE</key>
+	<string>Это удалит все офлайновые данные. Приложение продолжит работу.</string>
+	<key>AMOUNT_TOO_BIG_ERR_MSG</key>
+	<string>Введите сумму в пределах 999999999999999</string>
+	<key>APPROVALS_NEG_TEXT</key>
+	<string>Утверждайте статьи расхода, находясь в любом месте, и в любое время</string>
+	<key>APPROVEDREQUESTS</key>
+	<string>ОДОБРЕННЫЕ ЗАПРОСЫ</string>
+	<key>APPROVE_APPROVE_BUTTON_TITLE</key>
+	<string>Утвердить</string>
+	<key>APPROVE_CANCEL</key>
+	<string>Отменить</string>
+	<key>APPROVE_ENTER_COMMENT_FOR_SENDBACK</key>
+	<string>Введите комментарий</string>
+	<key>APPROVE_ENTRIES</key>
+	<string>Записи отчета</string>
+	<key>APPROVE_ENTRIES_ACTION_SECTION_REPORT_SUMMARY_ROW</key>
+	<string>Обобщенные данные отчета</string>
+	<key>APPROVE_ENTRIES_ACTION_SECTION_VIEW_COMMENTS_ROW</key>
+	<string>Посмотреть комментарии</string>
+	<key>APPROVE_ENTRIES_ACTION_SECTION_VIEW_EXCEPTIONS_ROW</key>
+	<string>Просмотреть исключения</string>
+	<key>APPROVE_ENTRIES_ACTION_SECTION_VIEW_RECEIPTS_ROW</key>
+	<string>Просмотреть квитанции</string>
+	<key>APPROVE_ENTRIES_VIEW_TITLE</key>
+	<string>Список расходов</string>
+	<key>APPROVE_EXPENSE_DETAILS</key>
+	<string>Детали расхода</string>
+	<key>APPROVE_EXPENSE_DETAILS_ATTENDEES</key>
+	<string>Участники</string>
+	<key>APPROVE_EXPENSE_DETAILS_COMMENT</key>
+	<string>Комментарий</string>
+	<key>APPROVE_EXPENSE_DETAILS_DETAILS</key>
+	<string>Детали</string>
+	<key>APPROVE_EXPENSE_DETAILS_EXCEPTIONS</key>
+	<string>Исключения</string>
+	<key>APPROVE_EXPENSE_DETAILS_VIEW_ATTENDEES</key>
+	<string>Просмотреть участников</string>
+	<key>APPROVE_EXPENSE_DETAILS_VIEW_ITEMIZATIONS</key>
+	<string>Просмотр детализаций</string>
+	<key>APPROVE_EXPENSE_DETAILS_VIEW_TITLE</key>
+	<string>Расход</string>
+	<key>APPROVE_INVOICES</key>
+	<string>Утвердить счета</string>
+	<key>APPROVE_OK</key>
+	<string>OK</string>
+	<key>APPROVE_PLEASE_COMMENT</key>
+	<string>Прокомментируйте, пожалуйста</string>
+	<key>APPROVE_PLEASE_CONFIRM</key>
+	<string>Подтвердите, пожалуйста</string>
+	<key>APPROVE_QUESTION_AREYOUSURE</key>
+	<string>Вы действительно хотите утвердить этот отчет?</string>
+	<key>APPROVE_QUESTION_PART1</key>
+	<string>Утвердить</string>
+	<key>APPROVE_QUESTION_PART2</key>
+	<string>отчет о затратах на</string>
+	<key>APPROVE_REPORT</key>
+	<string>Утвердить отчет</string>
+	<key>APPROVE_REPORTS</key>
+	<string>Утвердить отчеты</string>
+	<key>APPROVE_REPORTS_VIEW_TITLE</key>
+	<string>Отчеты к утверждению</string>
+	<key>APPROVE_REPORT_CHECK_RECEIPT_IMAGE</key>
+	<string>Проверить изображение квитанции</string>
+	<key>APPROVE_REPORT_RECEIPT_IMAGE</key>
+	<string>Просмотреть изображение квитанции</string>
+	<key>APPROVE_REPORT_SUMMARY</key>
+	<string>Обобщенные данные отчета</string>
+	<key>APPROVE_REPORT_SUMMARY_AMOUNT_APPROVED</key>
+	<string>Сумма утверждена</string>
+	<key>APPROVE_REPORT_SUMMARY_AMOUNT_CLAIMED</key>
+	<string>Истребованная сумма</string>
+	<key>APPROVE_REPORT_SUMMARY_AMOUNT_DUE_COMPANY</key>
+	<string>Сумма, причитающаяся компании</string>
+	<key>APPROVE_REPORT_SUMMARY_AMOUNT_DUE_CREDIT_CARD</key>
+	<string>Сумма, причитающаяся для уплаты на кредитную карточку</string>
+	<key>APPROVE_REPORT_SUMMARY_AMOUNT_DUE_EMPLOYEE</key>
+	<string>Сумма, причитающаяся сотруднику</string>
+	<key>APPROVE_REPORT_SUMMARY_AMOUNT_REJECTED</key>
+	<string>Сумма отклонена</string>
+	<key>APPROVE_REPORT_SUMMARY_COMMENTS</key>
+	<string>Комментарии</string>
+	<key>APPROVE_REPORT_SUMMARY_COMPANYDISBURSEMENT</key>
+	<string>Выплата компании</string>
+	<key>APPROVE_REPORT_SUMMARY_COMPANY_PAID_TO_CREDIT_CARD</key>
+	<string>Компания произвела выплату на кредитную карточку</string>
+	<key>APPROVE_REPORT_SUMMARY_EMPLOYEEDISBURSEMENTS</key>
+	<string>Подотчетные суммы сотрудника</string>
+	<key>APPROVE_REPORT_SUMMARY_HEADER</key>
+	<string>Заголовок</string>
+	<key>APPROVE_REPORT_SUMMARY_LESS_PERSONAL_AMOUNT</key>
+	<string>Минус персональная сумма</string>
+	<key>APPROVE_REPORT_SUMMARY_POLICY</key>
+	<string>Правила</string>
+	<key>APPROVE_REPORT_SUMMARY_REPORT_HEADER</key>
+	<string>Заголовок отчета</string>
+	<key>APPROVE_REPORT_SUMMARY_REPORT_ID</key>
+	<string>Идентификатор отчета</string>
+	<key>APPROVE_REPORT_SUMMARY_REPORT_TOTAL</key>
+	<string>Всего по отчету</string>
+	<key>APPROVE_REPORT_SUMMARY_TOTAL_PAID_BY_COMPANY</key>
+	<string>Всего уплачено компанией</string>
+	<key>APPROVE_REPORT_SUMMARY_TOTAL_PAID_BY_EMPLOYEE</key>
+	<string>Всего уплачено сотрудником</string>
+	<key>APPROVE_REPORT_SUMMARY_VIEW_TITLE</key>
+	<string>Обобщенные данные</string>
+	<key>APPROVE_SENDBACK_BUTTON_TITLE</key>
+	<string>Отправить назад</string>
+	<key>APPROVE_VIEW_ATTENDEES</key>
+	<string>Участники</string>
+	<key>APPROVE_VIEW_ATTENDEES_ATTENDEE_AMOUNT_TITLE</key>
+	<string>Сумма</string>
+	<key>APPROVE_VIEW_ATTENDEES_ATTENDEE_COMPANY_TITLE</key>
+	<string>Компания</string>
+	<key>APPROVE_VIEW_ATTENDEES_ATTENDEE_NAME_TITLE</key>
+	<string>Имя участника</string>
+	<key>APPROVE_VIEW_ATTENDEES_ATTENDEE_TITLE_TITLE</key>
+	<string>Должность участника</string>
+	<key>APPROVE_VIEW_ATTENDEES_ATTENDEE_TYPE_TITLE</key>
+	<string>Тип участника</string>
+	<key>APPROVE_VIEW_COMMENTS</key>
+	<string>Посмотреть комментарии</string>
+	<key>APPROVE_VIEW_COMMENTS_VIEW_TITLE</key>
+	<string>Комментарии</string>
+	<key>APPROVE_VIEW_EXCEPTIONS</key>
+	<string>Просмотреть исключения</string>
+	<key>APPROVE_VIEW_EXCEPTIONS_EXPENSE_LEVEL_EXCEPTION_SECTION_HEADER</key>
+	<string>Расходы</string>
+	<key>APPROVE_VIEW_EXCEPTIONS_REPORT_LEVEL_EXCEPTION_SECTION_HEADER</key>
+	<string>Отчет</string>
+	<key>APPROVE_VIEW_EXCEPTIONS_VIEW_TITLE</key>
+	<string>Исключения</string>
+	<key>APPROVE_VIEW_ITEMIZATIONS</key>
+	<string>Детализация</string>
+	<key>APPROVE_VIEW_ITEMIZATIONS_SUMMARY_SECTION_TITLE</key>
+	<string>Обобщенные данные</string>
+	<key>APP_RATING_MSG</key>
+	<string>Теперь, когда вы использовали наше приложение, сообщите нам, пожалуйста, в том, что вы о нем думаете, оценив его в App Store.</string>
+	<key>APP_RATING_MSG_DISMISS</key>
+	<string>Больше не спрашивать</string>
+	<key>APP_RATING_TITLE</key>
+	<string>Оценить это приложение?</string>
+	<key>ATTENDEES</key>
+	<string>Участники</string>
+	<key>ATTENDEES_EXCLUDED_FOR_TYPE</key>
+	<string>Некоторых участников невозможно добавить, поскольку их типы участников исключены из этого вида расхода.</string>
+	<key>ATTENDEE_ADD</key>
+	<string>Добавить участника</string>
+	<key>ATTENDEE_ADD_BUMP</key>
+	<string>Добавить участника через %@</string>
+	<key>ATTENDEE_ADD_CONTACT</key>
+	<string>Добавить участника вручную</string>
+	<key>ATTENDEE_ENTRY</key>
+	<string>Участник</string>
+	<key>ATTENDEE_SEARCH_FOR_ATTENDEE</key>
+	<string>Выполнить поиск участника</string>
+	<key>ATTENDEE_SELECT_CONTACT</key>
+	<string>Выберите из Контактов</string>
+	<key>AUTHENTICATION_FAILURE_MSG</key>
+	<string>Нарушение в виде несанкционированного доступа. Проверьте свои имя пользователя и (или) ПИН-код.</string>
+	<key>AUTHENTICATION_TIMED_OUT_MSG</key>
+	<string>Время подключения к сервису аутентификации истекло. Убедитесь, пожалуйста, в том, что вы подсоединены к правильному URL-адресу.</string>
+	<key>A_ACCO</key>
+	<string>Утвержденные с дополн.; в контроле счетов</string>
+	<key>A_APPR</key>
+	<string>Утверждено</string>
+	<key>A_EXTV</key>
+	<string>Ожидание внешней проверки</string>
+	<key>A_FILE</key>
+	<string>Отправлено</string>
+	<key>A_NOTF</key>
+	<string>Не отправлено</string>
+	<key>A_PECO</key>
+	<string>Ожидание утверждения объекта затрат</string>
+	<key>A_PEND</key>
+	<string>Представленные, с дополн.; Ожидание утверждения</string>
+	<key>A_PVAL</key>
+	<string>Ожидание проверки</string>
+	<key>A_RESU</key>
+	<string>Отправлено назад сотруднику</string>
+	<key>A_RHLD</key>
+	<string>Подождите изображения квитанции</string>
+	<key>A_TEXP</key>
+	<string>Время на утверждение истекло</string>
+	<key>Abukai Expenses</key>
+	<string>Оформление расходов через программу Abukai</string>
+	<key>Accept</key>
+	<string>Принять</string>
+	<key>Access other areas of the app</key>
+	<string>Обратитесь к другим областям приложения</string>
+	<key>Accounting Code</key>
+	<string>Код бухгалтерского учета</string>
+	<key>Actions offline</key>
+	<string>Ваше устройство в настоящее время работает в автономном режиме. Подключите его к сети и попытайтесь выполнить эту операцию снова.</string>
+	<key>Actual Arrival</key>
+	<string>Фактическое прибытие</string>
+	<key>Actual Departure</key>
+	<string>Фактическое отправление</string>
+	<key>Actual Equipment</key>
+	<string>Фактическое оборудование</string>
+	<key>Actual Terminal</key>
+	<string>Фактический терминал</string>
+	<key>Add Account to Concur</key>
+	<string>Добавьте аккаунт в сервис по программе Concur</string>
+	<key>Add Amtrak</key>
+	<string>Добавить компанию Amtrak</string>
+	<key>Add Another</key>
+	<string>Добавить еще один</string>
+	<key>Add Attendee</key>
+	<string>Добавить участника</string>
+	<key>Add Car</key>
+	<string>Добавить автомобиль</string>
+	<key>Add Car Mileage</key>
+	<string>Добавить пробег автомобиля</string>
+	<key>Add Card</key>
+	<string>Добавить карточку</string>
+	<key>Add Comment</key>
+	<string>Добавить комментарий</string>
+	<key>Add Credit Card</key>
+	<string>Добавить кредитную карточку</string>
+	<key>Add Entry</key>
+	<string>Добавить запись</string>
+	<key>Add Expense</key>
+	<string>Добавить расход</string>
+	<key>Add Hotel</key>
+	<string>Добавить гостиницу</string>
+	<key>Add Itemization</key>
+	<string>Добавить детализацию</string>
+	<key>Add Itinerary Stop Header</key>
+	<string>Для того, чтобы дать вам наиболее точные надбавок, нам нужно знать, где вы остановили во время вашей поездки. Добавьте по крайней мере две остановки завершить свой маршрут.</string>
+	<key>Add Mileage</key>
+	<string>Добавить пробег</string>
+	<key>Add New Expense</key>
+	<string>Добавить новый расход</string>
+	<key>Add Receipt</key>
+	<string>Добавить квитанцию</string>
+	<key>Add Selected Attendee</key>
+	<string>Добавить выбранного участника</string>
+	<key>Add Single Day Itinerary Stop Header</key>
+	<string>Для того, чтобы дать вам наиболее точные надбавок, нам нужно знать, где вы остановили во время вашей поездки. Добавьте по крайней мере две остановки завершить свой маршрут.</string>
+	<key>Add a Cash Expense</key>
+	<string>Добавить расход</string>
+	<key>Add a Receipt using the below buttons</key>
+	<string>Добавьте квитанцию, используя кнопки ниже</string>
+	<key>Add an Attendee</key>
+	<string>Добавить участника</string>
+	<key>Add an Entry from a Picture</key>
+	<string>Ввести запись в виде фотографии</string>
+	<key>Add credit card</key>
+	<string>Добавить кредитную карточку</string>
+	<key>Add expenses to your report.</key>
+	<string>Добавьте расходы в свой отчет.</string>
+	<key>Add expenses with attendees</key>
+	<string>Добавлять расходы и участников</string>
+	<key>Add from Photo Album</key>
+	<string>Добавить из фотоальбома</string>
+	<key>Add to Report</key>
+	<string>Добавить в отчет</string>
+	<key>AddAnotherItemToThisRequest</key>
+	<string>Добавить еще один элемент этот запрос</string>
+	<key>Adding to Report</key>
+	<string>Выполняется добавление в отчет</string>
+	<key>Additional Charges (each night)</key>
+	<string>Дополнительные начисления (каждые сутки)</string>
+	<key>Address</key>
+	<string>Адрес</string>
+	<key>Address point of interest airport code</key>
+	<string>Адрес, объект повышенного интереса, код аэропорта</string>
+	<key>Adds processing time</key>
+	<string>Увеличивает время обработки</string>
+	<key>Adjust Allowance</key>
+	<string>Отрегулируйте пособие</string>
+	<key>Adjustments</key>
+	<string>Корректировки</string>
+	<key>Adults</key>
+	<string>Взрослые</string>
+	<key>Advanced Search</key>
+	<string>Расширенный поиск</string>
+	<key>Afternoon</key>
+	<string>Пополудни</string>
+	<key>Agency Code Sign In</key>
+	<string>Регистрация кода агентства</string>
+	<key>Agency Record Locator: %@</key>
+	<string>Регистрационный код агентства: %@</string>
+	<key>Agency Sign In</key>
+	<string>Регистрация агентства</string>
+	<key>Air Booking</key>
+	<string>Заказ авиабилетов</string>
+	<key>Air Price to Beat</key>
+	<string>Контрольная цена для сравнения стоимости авиабилетов</string>
+	<key>Air cancelled from mobile device</key>
+	<string>Заказ авиабилета отменен с мобильного устройства</string>
+	<key>Aircraft</key>
+	<string>Самолет</string>
+	<key>Airfare Price to Beat</key>
+	<string>Контрольная цена для сравнения стоимости авиабилетов</string>
+	<key>Airfare quoted total</key>
+	<string>Полная объявленная цена авиабилета</string>
+	<key>Airline</key>
+	<string>Авиакомпания</string>
+	<key>Airports</key>
+	<string>Аэропорты</string>
+	<key>All</key>
+	<string>Все</string>
+	<key>All Expenses</key>
+	<string>Все расходы</string>
+	<key>All Flights</key>
+	<string>Все рейсы</string>
+	<key>All Items</key>
+	<string>Все элементы</string>
+	<key>All Nonstop</key>
+	<string>Все без остановок</string>
+	<key>All Results</key>
+	<string>Все результаты</string>
+	<key>All States &amp; Provinces</key>
+	<string>Все штаты с дополн.; Провинции</string>
+	<key>All day</key>
+	<string>Весь день</string>
+	<key>All token</key>
+	<string>Все % @</string>
+	<key>All token (token results)</key>
+	<string>Все %@ (%d результаты)</string>
+	<key>Allowance Adjustments</key>
+	<string>Пособие корректировки</string>
+	<key>Allowance Itinerary</key>
+	<string>Пособие маршрут</string>
+	<key>Already Expensed</key>
+	<string>Уже отнесено на расходы</string>
+	<key>Already have an account SU</key>
+	<string>У вас уже есть аккаунт?</string>
+	<key>Amount</key>
+	<string>Сумма</string>
+	<key>Amount in</key>
+	<string>Сумма в</string>
+	<key>Amtrak</key>
+	<string>Amtrak</string>
+	<key>An Expense Report</key>
+	<string>Отчет о расходе</string>
+	<key>An email containing the application's log has been placed in your outbox.</key>
+	<string>Сообщение электронной почты, содержащее регистрационный журнал приложения, находится в папке Исходящие.</string>
+	<key>An email containing the application's log has been saved in your Drafts folder.</key>
+	<string>Письмо, содержащее регистрационный журнал приложения, сохранен в папке Черновики.</string>
+	<key>An email has been sent containing your report.</key>
+	<string>Вам отправлено сообщение электронной почты с вашим отчетом.</string>
+	<key>An error has occurred retrieving sell information fields. Reservation cannot be done at this time. Please try later.</key>
+	<string>При загрузке полей данных продажи произошла ошибка. В данный момент бронирование выполнить невозможно. Попытайтесь, пожалуйста, позже.</string>
+	<key>An invalid station for arrival has been specified.  Please select a station to arrive at.</key>
+	<string>Указана недействительная станция прибытия. Выберите, пожалуйста, станцию прибытия.</string>
+	<key>An invalid station for departure has been specified.  Please select a station to depart from.</key>
+	<string>Указана недействительная станция отправления. Выберите, пожалуйста, станцию отправления.</string>
+	<key>An unexpected error occurred. Please try again later.</key>
+	<string>Произошла неожиданная ошибка. Попытайтесь, пожалуйста, позже.</string>
+	<key>And view upcoming itineraries.</key>
+	<string>и просмотр предстоящих маршрутов.</string>
+	<key>Any</key>
+	<string>Смешанные классы</string>
+	<key>Any Car Class</key>
+	<string>Автомобиль любого класса</string>
+	<key>Anytime</key>
+	<string>В любое время</string>
+	<key>AppStore Expense</key>
+	<string>Если вы являетесь пользователем программ Concur Expense или Concur Breeze, вы можете использовать мобильное устройство для: * фотографирования быстрых расходов и квитанций с помощью камеры мобильного устройства (сканирование, отправка по факсу или электронной почте больше не требуется) * просмотра и редактирования начислений на кредитную карточку * добавления расходов в существующий или новый отчет о расходах и для отправки отчетов * редактирования заголовка отчета и расходов * добавления детализации / дальности пробега * утверждения или отклонения отчетов с включением комментариев и даже для просмотра соответствующих квитанций!</string>
+	<key>Append</key>
+	<string>Прикрепить</string>
+	<key>Append Confirmation</key>
+	<string>Прикрепить подтверждение</string>
+	<key>Append or Replace Receipt</key>
+	<string>Для этого расхода уже имеется связанная с ним квитанция. Выберите «Прикрепить», чтобы прикрепить эту новую квитанцию к данному расходу, или «Заменить», чтобы заменить имеющуюся квитанцию на эту новую квитанцию</string>
+	<key>Application Information</key>
+	<string>Сведения о приложении</string>
+	<key>Approval Summary</key>
+	<string>Обобщенные данные по утверждениям</string>
+	<key>Approvals</key>
+	<string>Утверждения</string>
+	<key>Approve</key>
+	<string>Утвердить</string>
+	<key>Approve Trips</key>
+	<string>Утвердить поездки</string>
+	<key>Approve by</key>
+	<string>Утвердить до</string>
+	<key>Approver</key>
+	<string>Ответственный за утверждение</string>
+	<key>Approving Report</key>
+	<string>Утверждение отчета</string>
+	<key>Approving Trip</key>
+	<string>Выполняется утверждение поездки</string>
+	<key>Apps</key>
+	<string>Приложения</string>
+	<key>Are you sure</key>
+	<string>Вы действительно хотите удалить выбранный(-е) расход(-ы)?</string>
+	<key>Are you sure about adding smart expenses</key>
+	<string>Расходы программы Smart Expense будут объединены в отчете в одну запись</string>
+	<key>Are you sure about smart expenses</key>
+	<string>Вы действительно хотите удалить выбранные расходы? Элемент(-ы) записи(-ей) программы Smart Expense, полученный(-е) с мобильного устройства, будет(-ут) удален(-ны) безвозвратно, а связанное(-ые) с ним(-ми) начисление(-я) на карточках будет(-ут) скрыто(-ы).</string>
+	<key>Are you sure that you want to delete this receipt</key>
+	<string>Вы действительно хотите удалить эту квитанцию?</string>
+	<key>Are you sure that you want to reserve the selected train(s)?</key>
+	<string>Вы действительно хотите зарезервировать места в выбранном(-ых) поезде(-ах)?</string>
+	<key>Are you sure you want to approve this trip?</key>
+	<string>Вы действительно хотите утвердить эту поездку?</string>
+	<key>Are you sure you want to cancel this air reservation?</key>
+	<string>Вы действительно хотите отменить этот заказ авиабилета?</string>
+	<key>Are you sure you want to cancel this car reservation?</key>
+	<string>Вы действительно хотите отменить это резервирование автомобиля?</string>
+	<key>Are you sure you want to cancel this hotel reservation?</key>
+	<string>Вы действительно хотите отменить резервирование этой гостиницы?</string>
+	<key>Are you sure you want to cancel this rail reservation?</key>
+	<string>Вы действительно хотите отменить этот заказ железнодорожного билета?</string>
+	<key>Are you sure you want to delete the open report?</key>
+	<string>Вы действительно хотите удалить этот открытый отчет?</string>
+	<key>Are you sure you want to reserve this car?</key>
+	<string>Вы действительно хотите заказать этот автомобиль?</string>
+	<key>Are you sure you want to reserve this flight?</key>
+	<string>Вы действительно хотите забронировать этот рейс?</string>
+	<key>Are you sure you want to unlink from your TripIt account?</key>
+	<string>Вы действительно хотите отключиться от программы TripIt?</string>
+	<key>Arrival</key>
+	<string>Прибытие</string>
+	<key>Arrival City</key>
+	<string>Город прибытия</string>
+	<key>Arrival Information</key>
+	<string>Информация о прибытии</string>
+	<key>Arrival Station</key>
+	<string>Станция назначения</string>
+	<key>Arrival Terminal</key>
+	<string>Терминал прибытия</string>
+	<key>Arrival Time</key>
+	<string>Время прибытия</string>
+	<key>Arrive</key>
+	<string>Прибытие</string>
+	<key>Arriving trains</key>
+	<string>Прибытие: %@</string>
+	<key>Ask Me Later</key>
+	<string>Спросите меня позже</string>
+	<key>At Least 1 Month</key>
+	<string>Как минимум 1 месяц</string>
+	<key>At Least 1 Week</key>
+	<string>Как минимум 1 неделя</string>
+	<key>Attach Receipt</key>
+	<string>Вложить квитанцию</string>
+	<key>Attach via Receipt Store</key>
+	<string>Прикрепить, используя хранилище квитанций</string>
+	<key>Attendee</key>
+	<string>Участник</string>
+	<key>Attendee Amount</key>
+	<string>Количество участников</string>
+	<key>Attendee Count</key>
+	<string>Количество участников</string>
+	<key>Attendee Group</key>
+	<string>Группа участников</string>
+	<key>Attendee Search Results</key>
+	<string>Результаты поиска участников</string>
+	<key>Attendee Type</key>
+	<string>Тип участника</string>
+	<key>Attendee data is unavailable.</key>
+	<string>Данные участника отсутствуют</string>
+	<key>Attendee type cannot be changed.  Create a new attendee instead.</key>
+	<string>Тип участника изменить невозможно. Вместо этого создайте нового участника.</string>
+	<key>Attendees</key>
+	<string>Участники</string>
+	<key>Attendees not editable offline</key>
+	<string>Данные Участников нельзя редактировать в автономном режиме.</string>
+	<key>Attention</key>
+	<string>Внимание!</string>
+	<key>Authenticating</key>
+	<string>Аутентификация</string>
+	<key>Auto Login</key>
+	<string>Автоматический вход в систему</string>
+	<key>Available From States/Provinces</key>
+	<string>Имеющиеся штаты / провинции отправления</string>
+	<key>Available From Stations</key>
+	<string>Имеющиеся станции</string>
+	<key>Available Itineraries</key>
+	<string>имеющиеся маршруты следования</string>
+	<key>Available States/Provinces</key>
+	<string>Имеющиеся штаты / провинции</string>
+	<key>Available Stations</key>
+	<string>Имеющиеся станции</string>
+	<key>Available To States/Provinces</key>
+	<string>Имеющиеся штаты / провинции назначения</string>
+	<key>Available To Stations</key>
+	<string>Имеющиеся станции назначения</string>
+	<key>Awaiting Approval</key>
+	<string>Ожидается утверждение</string>
+	<key>BOOKING_UNDER_P2B_EARNS_POINTS</key>
+	<string>Выбор вариантов, стоимость которых ниже контрольной цены для сравнения, позволяет вам зарабатывать очки, которые вы можете использовать в счет будущих льгот.</string>
+	<key>BOOKING_UNDER_P2B_SAVES_MONEY</key>
+	<string>Заказ по цене ниже контрольной цены для сравнения экономит деньги вашей компании.</string>
+	<key>BRONX_USER_CORP_APP_MSG</key>
+	<string>Вы не можете войти в программу Concur Mobile, воспользовавшись своими регистрационными данными для версии SmartExpense программы Concur. Хотите ли вы вместо этого использовать версию SmartExpense?</string>
+	<key>BRONX_USER_CORP_APP_TITLE</key>
+	<string>Пользователь программы SmartExpense не поддерживается</string>
+	<key>BTN_EDIT</key>
+	<string>Редактировать</string>
+	<key>BUMP_HELP_TEXT1</key>
+	<string>Вы можете поделиться информацией об участнике, выбрав команду «Стань участником» ниже.</string>
+	<key>BUMP_HELP_TEXT2</key>
+	<string>Ваш коллега должен выбрать команду «Добавить участника через %@» в разделе участников в окне элемента строки отчета.</string>
+	<key>BUMP_INSTRUCTION</key>
+	<string>Чтобы добавить вас в элемент строки отчета в качестве участника, ваш коллега должен выбрать команду «Добавить участника через %@» в разделе участников в окне элемента строки отчета.</string>
+	<key>BUMP_SHARE_HELP_TEXT1</key>
+	<string>Чтобы добавить участника, выберите ниже команду «Добавить участника».</string>
+	<key>BUMP_SHARE_HELP_TEXT2</key>
+	<string>Ваш коллега должен выбрать кнопку «Участник» в стартовом окне.</string>
+	<key>BUSGUEST</key>
+	<string>Гость, прибывший в служебную командировку</string>
+	<key>Back</key>
+	<string>Назад</string>
+	<key>Baggage Claim</key>
+	<string>Востребование багажа</string>
+	<key>Become an Attendee</key>
+	<string>Стать участником</string>
+	<key>Before reserving this car in</key>
+	<string>Перед резервированием этого автомобиля в нарушение правил компании вы должны ввести обоснование и обоснование в выделенные красным цветом поля.</string>
+	<key>Before reserving this car in justification</key>
+	<string>Перед бронированием этого автомобиля в нарушение правил компании вы должны ввести обоснование в поле, выделенное красным цветом.</string>
+	<key>Before reserving this car in reason</key>
+	<string>Перед резервированием этого автомобиля в нарушение правил компании вы должны ввести обоснование в поле, выделенное красным цветом.</string>
+	<key>Before reserving this flight</key>
+	<string>Перед тем как заказать билет на этот авиарейс, заполните поля, выделенные красным цветом.</string>
+	<key>Benchmark</key>
+	<string>Основа сравнения</string>
+	<key>Book</key>
+	<string>Бронировать</string>
+	<key>Book Air</key>
+	<string>Заказать авиабилет</string>
+	<key>Book Car</key>
+	<string>Заказать автомобиль</string>
+	<key>Book Hotel</key>
+	<string>Зарезервировать гостиницу</string>
+	<key>Book Rail</key>
+	<string>Заказать железнодорожный билет</string>
+	<key>Book Train</key>
+	<string>Зарезервировать место в поезде</string>
+	<key>Book Travel</key>
+	<string>Заказать билет для поездки</string>
+	<key>Book Travel from anywhere.</key>
+	<string>Книга поездки из любой точки мира</string>
+	<key>Book Travel on the go with Concur</key>
+	<string>Бронируйте места на ходу с помощью программы Concur</string>
+	<key>Book a Hotel Car and more</key>
+	<string>Резервируйте авиабилеты, гостиницы и другое</string>
+	<key>Book a Trip</key>
+	<string>Забронируй поездку</string>
+	<key>Book a train</key>
+	<string>Забронировать место в поезде</string>
+	<key>Book flights</key>
+	<string>Заказать билеты на авиарейсы</string>
+	<key>Book under this price to earn Travel Points.</key>
+	<string>Заказывайте по цене ниже этой, зарабатывая дорожные баллы.</string>
+	<key>Booker Comments</key>
+	<string>Комментарии заказчика</string>
+	<key>Booking Info</key>
+	<string>Информация о бронировании</string>
+	<key>Booking cancelled</key>
+	<string>Бронирование отменено</string>
+	<key>Booking under this amount saves your company money.</key>
+	<string>Заказ по цене ниже указанной суммы экономит деньги вашей компании.</string>
+	<key>Bookings</key>
+	<string>Бронирование</string>
+	<key>Bookings offline</key>
+	<string>Бронирование невозможно, пока ваше устройство находится в автономном режиме. Подключитесь, пожалуйста, к Интернету и повторите попытку.</string>
+	<key>Border Crossing</key>
+	<string>Пересечение границы</string>
+	<key>Bump Phones to Become an Attendee</key>
+	<string>%@ Телефонов, чтобы стать участником</string>
+	<key>Bump Phones to Exchange Attendee Info</key>
+	<string>%@ Телефоны для обмена информацией об участнике</string>
+	<key>Bus</key>
+	<string>Автобус</string>
+	<key>Business</key>
+	<string>Деловая</string>
+	<key>By State or Province</key>
+	<string>По штатам или провинциям</string>
+	<key>CANNOT_ADD_TO_RPT_WAIT_IMAGE</key>
+	<string>Выполняется загрузка квитанции. Подождите, пожалуйста, несколько секунд и попытайтесь снова.</string>
+	<key>CAR</key>
+	<string>Прокат автомобилей</string>
+	<key>CARDS_LIST</key>
+	<string>Карточки</string>
+	<key>CARD_AUTH_MSG</key>
+	<string>Это – авторизация карточки. Прежде чем отправить, подождите, пока будет сделано начисление на карточке.</string>
+	<key>CAR_DETAILS</key>
+	<string>Данные об автомобиле</string>
+	<key>CAR_LIST</key>
+	<string>Выберите автомобиль</string>
+	<key>CHECK_OUT_DATE_ERR_MSG</key>
+	<string>Введите дату, более позднюю, чем дата регистрации прибытия.</string>
+	<key>COMMENTS</key>
+	<string>Комментарии</string>
+	<key>COMPANY_NAME</key>
+	<string>Название компании</string>
+	<key>COMPANY_SSO_DISABLED_MSG</key>
+	<string>Для вашей компании функция регистрации компании отключена. Обратитесь, пожалуйста, к администратору своей компании.</string>
+	<key>COMPANY_SSO_INITIATED_REMOTE_WIPE</key>
+	<string>Данные вашей учетной записи были удалены с этого устройства. Обратитесь за помощью к администратору вашей компании.</string>
+	<key>CONFIGURING_SESSION</key>
+	<string>Выполняется настройка конфигурации мобильного сеанса связи...</string>
+	<key>CONFIRM_CONTINUE</key>
+	<string>Вы действительно хотите продолжить?</string>
+	<key>CONFIRM_DETACH_TEXT</key>
+	<string>Вы действительно хотите отсоединить изображение квитанции?</string>
+	<key>CONFIRM_PIN</key>
+	<string>Подтвердите новый ПИН-код</string>
+	<key>CONFIRM_RECEIPT_DELETE</key>
+	<string>Вы действительно хотите удалить эту квитанцию?</string>
+	<key>CONFIRM_RECEIPT_DELETION</key>
+	<string>Вы действительно хотите удалить эту квитанцию?</string>
+	<key>CONFIRM_REPORT_SUBMISSION</key>
+	<string>Вы действительно хотите отправить этот отчет о расходах?</string>
+	<key>COPY_DOWN_ENTRY_MSG</key>
+	<string>Вы изменили %@ полей в этой записи. Хотите ли вы также заменить значения в %@ полях всех записей и детализаций, связанных с данной записью, новым значением, которое было введено здесь? Чтобы изменить значения, нажмите Да. Чтобы сохранить изменения только в этой записи, нажмите Нет.</string>
+	<key>COPY_DOWN_RPT_MSG</key>
+	<string>Вы изменили %@ полей в заголовке этого отчета. Хотите ли вы также заменить значения в %@ полях всех записей и детализаций в данном отчете новым значением, которое было введено здесь? Чтобы перезаписать значения, нажмите Да. Чтобы сохранить только изменения в заголовке отчета, нажмите Нет.</string>
+	<key>CORP_CARDS_0</key>
+	<string>У вас отсутствуют начисления на неиспользованной корпоративной карточке.</string>
+	<key>CORP_CARDS_1</key>
+	<string>У вас имеется 1 начисление на неиспользованной корпоративной карточке</string>
+	<key>CORP_CARDS_2</key>
+	<string>У вас имеется %d начислений на неиспользованной корпоративной карточке.</string>
+	<key>CORP_SSO_MSG</key>
+	<string>Если ваша компания использует функцию единой регистрации входа (SSO) и создала код компании, введите его здесь.</string>
+	<key>CORP_SSO_MSG_GOV</key>
+	<string>Если ваше агентство выдало вам код агентства, введите его ниже.</string>
+	<key>CORP_USER_SU_APP_MSG</key>
+	<string>Вы не можете войти в эту версию SmartExpense программы Concur, воспользовавшись своими регистрационными данными для программы Concur Mobile. Хотите ли вы вместо этого использовать программе Concur Mobile?</string>
+	<key>CORP_USER_SU_APP_TITLE</key>
+	<string>Корпоративный пользователь не поддерживается</string>
+	<key>CREATE_ADD</key>
+	<string>Создать &amp; Добавить</string>
+	<key>CREATE_PIN</key>
+	<string>Чтобы войти в сервис Concur, задайте ПИН-код для мобильной связи.</string>
+	<key>CREATE_PIN_NOTES</key>
+	<string>ПИН-код может включать буквы, цифры и специальные символы, такие как !, $ или #, но не пробелы.</string>
+	<key>CREATE_PIN_TITLE</key>
+	<string>ПИН-код для мобильной связи</string>
+	<key>CVV Number</key>
+	<string>Верификационный номер</string>
+	<key>Cache</key>
+	<string>Кэш</string>
+	<key>Cache Done Title</key>
+	<string>Очитка кэша завершена</string>
+	<key>Calculate Allowances</key>
+	<string>Рассчитать пособия</string>
+	<key>Call</key>
+	<string>Вызов</string>
+	<key>Call Travel Agent</key>
+	<string>Позвоните турагенту</string>
+	<key>Camera</key>
+	<string>Приложить, используя камеру</string>
+	<key>Cancel</key>
+	<string>Отменить</string>
+	<key>Cancel Air</key>
+	<string>Отменить заказ авиабилета</string>
+	<key>Cancel Car</key>
+	<string>Отменить резервирование автомобиля</string>
+	<key>Cancel Failed</key>
+	<string>При выполнении отмены произошел сбой</string>
+	<key>Cancel Hotel</key>
+	<string>Отменить резервирование гостиницы</string>
+	<key>Cancel Rail</key>
+	<string>Отменить заказ железнодорожного билета</string>
+	<key>Cancel Trip</key>
+	<string>Отменить поездку</string>
+	<key>Cancel Upload</key>
+	<string>Отменить загрузку</string>
+	<key>Cancel air reservation</key>
+	<string>Отменить заказ авиабилета</string>
+	<key>Cancel car reservation</key>
+	<string>Отменить резервирование автомобиля</string>
+	<key>Cancel hotel reservation</key>
+	<string>Отменить резервирование гостиницы</string>
+	<key>Cancellation Policy</key>
+	<string>Правила отмены</string>
+	<key>Cannot Save Changes</key>
+	<string>Сохранить изменения невозможно</string>
+	<key>Cannot Submit Report</key>
+	<string>Невозможно отправить отчет</string>
+	<key>Cannot access receipt</key>
+	<string>Невозможно получить доступ к квитанции</string>
+	<key>Cannot append receipt</key>
+	<string>Невозможно прикрепить квитанцию</string>
+	<key>Cannot expense trip</key>
+	<string>Невозможно отнести поездку на расходы</string>
+	<key>Capture Receipt</key>
+	<string>Сфотографировать квитанцию</string>
+	<key>Capture car mileage</key>
+	<string>Ввести дальность пробега автомобиля</string>
+	<key>Capture expense and receipt</key>
+	<string>Сфотографировать расход и квитанцию</string>
+	<key>Capture your expenses while you travel</key>
+	<string>Фотографируйте свои расходы во время поездки</string>
+	<key>Car</key>
+	<string>Автомобиль</string>
+	<key>Car Hire Airport Location</key>
+	<string>Местонахождение аэропорта</string>
+	<key>Car Mileage</key>
+	<string>Пробег автомобиля</string>
+	<key>Car Mileage Text</key>
+	<string>Отнести на расходы пробег</string>
+	<key>Car Rule Violation</key>
+	<string>Нарушение правила заказа автомобилей</string>
+	<key>Car Type</key>
+	<string>Тип автомобиля</string>
+	<key>Car cancelled from mobile device</key>
+	<string>Резервирование автомобиля отменено с мобильного устройства</string>
+	<key>Card</key>
+	<string>Карточка</string>
+	<key>Card Charges</key>
+	<string>Начисления на карточке</string>
+	<key>Card Transactions</key>
+	<string>Операции по кредитным карточкам</string>
+	<key>Cards</key>
+	<string>Карточки</string>
+	<key>Cars</key>
+	<string>Автомобили</string>
+	<key>Cars near</key>
+	<string>Автомобили вблизи</string>
+	<key>Cars_subline</key>
+	<string>Выберите пару классных машин</string>
+	<key>Cash</key>
+	<string>Наличные средства</string>
+	<key>Chain Least Preferred</key>
+	<string>Наименее предпочтительная сеть</string>
+	<key>Chain Most Preferred</key>
+	<string>Наиболее предпочтительная сеть</string>
+	<key>Chain Preferred</key>
+	<string>Предпочтительная сеть</string>
+	<key>Changing the expense type will remove all itemized data</key>
+	<string>Изменение типа счета удалит из этого расхода все детализированные данные. Хотите ли вы продолжить?</string>
+	<key>Chatter</key>
+	<string>Приложение Chatter</string>
+	<key>Chatter post help text</key>
+	<string>Эта поездка еще не включена в приложение Chatter. Включите свою поездку и ознакомьтесь с советами и мнениями своих коллег о пункте назначения.</string>
+	<key>Check  In</key>
+	<string>Регистрация прибытия</string>
+	<key>Check In</key>
+	<string>Регистрация прибытия</string>
+	<key>Check In Complete</key>
+	<string>Регистрация прибытия выполнена</string>
+	<key>Check In Complete Message</key>
+	<string>Вы успешно зарегистрировали прибытие при использовании вашего текущего местонахождения</string>
+	<key>Check In Failed Message</key>
+	<string>В настоящее время зарегистрировать прибытие невозможно. Повторите, пожалуйста, попытку позже.</string>
+	<key>Check Invoice Image</key>
+	<string>Проверить изображение счета</string>
+	<key>Check connection retry from receipt store</key>
+	<string>Проверьте, пожалуйста, свой подключение к сети и повторно вложите квитанцию из хранилища квитанций.</string>
+	<key>Check your email to reset your password and sign in</key>
+	<string>Проверьте электронную почту, чтобы восстановить свой пароль и войти в систему.</string>
+	<key>Check your email to reset your password and sign in.</key>
+	<string>Проверьте электронную почту, чтобы восстановить свой пароль и войти в систему.</string>
+	<key>Check your spam folder or</key>
+	<string>Не видите его? Проверьте папку для спама или</string>
+	<key>Check-In Date</key>
+	<string>Дата заезда</string>
+	<key>Check-Out Date</key>
+	<string>Дата выезда</string>
+	<key>Check-in</key>
+	<string>Прибытие</string>
+	<key>Check-out</key>
+	<string>Регистрация выбытия</string>
+	<key>Checking In</key>
+	<string>Выполняется регистрация прибытия</string>
+	<key>Checking Network Connection</key>
+	<string>Выполняется проверка сетевого подключения</string>
+	<key>Checking Out</key>
+	<string>Регистрация выбытия</string>
+	<key>Children</key>
+	<string>Дети</string>
+	<key>ChoosePhoto-ImagePicker</key>
+	<string>Предварительный просмотр</string>
+	<key>Class &amp; Seat Number</key>
+	<string>Класс с дополн.; Номер места</string>
+	<key>Class / Seat</key>
+	<string>Класс / Место</string>
+	<key>Class of Service</key>
+	<string>Класс обслуживания</string>
+	<key>Class: %@</key>
+	<string>Класс: % @</string>
+	<key>Clear Current Selection</key>
+	<string>Снять текущее выделение</string>
+	<key>Clear out the local cache</key>
+	<string>Очистить локальный кэш</string>
+	<key>Close</key>
+	<string>Закрыть</string>
+	<key>Closed</key>
+	<string>Закрыто</string>
+	<key>Comment</key>
+	<string>Комментарий</string>
+	<key>Comments</key>
+	<string>Комментарии</string>
+	<key>Commonly Used</key>
+	<string>Часто используемые</string>
+	<key>Compact</key>
+	<string>Компактный</string>
+	<key>Compact Hybrid</key>
+	<string>Компактный гибридный автомобиль</string>
+	<key>Company</key>
+	<string>Компания</string>
+	<key>Company Code</key>
+	<string>Код компании для SSO</string>
+	<key>Company Code Sign In</key>
+	<string>Вход SSO с использованием кода компании</string>
+	<key>Company Name</key>
+	<string>Название компании</string>
+	<key>Company Sign In</key>
+	<string>Регистрация входа компании</string>
+	<key>Company Sign On</key>
+	<string>Регистрация компании</string>
+	<key>Concur was unable to obtain a cancellation number for your hotel cancellation. In order to obtain a cancellation number</key>
+	<string>Сервис Concur не смог получить номер отмены вашего заказа гостиницы. Чтобы получить номер отмены заказа, обратитесь, пожалуйста, в гостиницу.</string>
+	<key>Confirm Delete</key>
+	<string>Подтвердить удаление</string>
+	<key>Confirm Detach</key>
+	<string>Подтвердить отсоединение</string>
+	<key>Confirm New Mobile Password (PIN)</key>
+	<string>Подтвердите новый Мобильный пароль (PIN)</string>
+	<key>Confirm New Password</key>
+	<string>Подтвердите новый пароль</string>
+	<key>Connect to a WiFi or cellular data network.</key>
+	<string>Подключитесь к Wi-Fi или к сотовой сети передачи данных.</string>
+	<key>Connecting with TripIt</key>
+	<string>Выполняется подключение к программе TripIt</string>
+	<key>Connection Error</key>
+	<string>Ошибка при подключении</string>
+	<key>Connection Settings</key>
+	<string>Параметры подключения</string>
+	<key>Contact Received</key>
+	<string>Контакт получен</string>
+	<key>Continue</key>
+	<string>Продолжить</string>
+	<key>Copyright Concur 2010</key>
+	<string>© Concur, 2013 г.</string>
+	<key>Corp Cards</key>
+	<string>Карточки</string>
+	<key>Corporate Card</key>
+	<string>Корпоративная карточка</string>
+	<key>Corporate Cards</key>
+	<string>Корпоративные карточки</string>
+	<key>Could not connect to Concur.</key>
+	<string>Невозможно подключиться к программе Concur.</string>
+	<key>Could not expense trip</key>
+	<string>Эта поездка уже отнесена на расходы</string>
+	<key>Could not load attendee data.</key>
+	<string>Система не смогла загрузить данные участника.</string>
+	<key>Could not load attendee form data.</key>
+	<string>Система не смогла загрузить данные формы участника.</string>
+	<key>Could not load attendee search fields data.</key>
+	<string>Система не смогла загрузить данные полей поиска участника.</string>
+	<key>Could not load expense data.</key>
+	<string>Данные расхода загрузить невозможно.</string>
+	<key>Could not save attendee data.  Please try again later.</key>
+	<string>Система не смогла сохранить данные участника. Повторите, пожалуйста, попытку позже.</string>
+	<key>Crash Detected</key>
+	<string>Обнаружен системный сбой</string>
+	<key>Create &amp; Add</key>
+	<string>Создать &amp; Добавить</string>
+	<key>Create Password</key>
+	<string>Создать пароль</string>
+	<key>Create Report</key>
+	<string>Создать отчет</string>
+	<key>Create a Report</key>
+	<string>Создать отчет</string>
+	<key>Create a report for your expenses to go into</key>
+	<string>Создайте отчет для включения в него ваших расходов</string>
+	<key>Create an Account</key>
+	<string>Создайте аккаунт</string>
+	<key>Create and submit your expense reports</key>
+	<string>Создавать и отправлять отчеты о расходах</string>
+	<key>Credit Card</key>
+	<string>Кредитная карточка</string>
+	<key>Currency</key>
+	<string>Валюта</string>
+	<key>Currency Code</key>
+	<string>Код валюты</string>
+	<key>Current Location</key>
+	<string>Текущее местоположение</string>
+	<key>Current Trip</key>
+	<string>Текущий</string>
+	<key>Current Trip Information</key>
+	<string>Данные текущей поездки</string>
+	<key>Currently Offline</key>
+	<string>В настоящее время отключено</string>
+	<key>Custom fields required message</key>
+	<string>Правила вашей компании в отношении резервирования мест в настоящее время не поддерживаются. Поддержка настраиваемых полей вскоре будет обеспечена. Резервируйте, пожалуйста, места, пользуясь веб-версией программы Concur</string>
+	<key>DISALLOW_EXPENSEIT_DELETE</key>
+	<string>Удаление элементов в приложении ExpenseIt с помощью мобильных устройств не поддерживается</string>
+	<key>DISALLOW_TRANS_DELETE</key>
+	<string>Удаление начислений на карточке с помощью мобильных устройств не поддерживается</string>
+	<key>DISTANCE</key>
+	<string>Найти гостиницы в пределах</string>
+	<key>Daily Rate</key>
+	<string>Ежедневная расценка</string>
+	<key>Date</key>
+	<string>Дата</string>
+	<key>Day</key>
+	<string>День</string>
+	<key>Day Trip</key>
+	<string>Однодневная поездка</string>
+	<key>Days</key>
+	<string>Дни</string>
+	<key>Days Remaining at Location</key>
+	<string>Оставшиеся дни в месте нахождения</string>
+	<key>Delete</key>
+	<string>Удалить</string>
+	<key>Delete Entry Failed</key>
+	<string>Произошел сбой при удалении записи</string>
+	<key>Delete Receipt</key>
+	<string>Удалить квитанцию</string>
+	<key>Delete Report Failed</key>
+	<string>Произошел сбой при удалении отчета</string>
+	<key>Deleting Out of Pocket Expense(s)</key>
+	<string>Выполняется удаление расхода(-ов)</string>
+	<key>Deleting Receipt</key>
+	<string>Выполняется удаление квитанции</string>
+	<key>Deleting Report</key>
+	<string>Выполняется удаление отчета</string>
+	<key>Delivery Options</key>
+	<string>Варианты доставки</string>
+	<key>Depart</key>
+	<string>Отправление</string>
+	<key>Departing</key>
+	<string>Отправление</string>
+	<key>Departing Train</key>
+	<string>Отправление поезда</string>
+	<key>Departing trains</key>
+	<string>Отправление: %@ %@ %@</string>
+	<key>Departing: token token</key>
+	<string>Отправление: %@ %@</string>
+	<key>Departure</key>
+	<string>Отправление</string>
+	<key>Departure City</key>
+	<string>Город отправления</string>
+	<key>Departure Date</key>
+	<string>Дата отправления</string>
+	<key>Departure Gate</key>
+	<string>Выход на посадку</string>
+	<key>Departure Information</key>
+	<string>Информация об отправлении</string>
+	<key>Departure Matches Arrival</key>
+	<string>Отправление совпадает с прибытием</string>
+	<key>Departure Matches Arrival Message</key>
+	<string>Аэропорты отправления вылета и прибытия одинаковы. Выберите, пожалуйста, разные аэропорты для вашей поездки.</string>
+	<key>Departure Point</key>
+	<string>Пункт отправления</string>
+	<key>Departure Station</key>
+	<string>Станция отправления</string>
+	<key>Departure Status</key>
+	<string>Статус отправления</string>
+	<key>Departure Time</key>
+	<string>Время отправления</string>
+	<key>Depending upon your company configuration some of the Concur for Mobile features may not be avaiable to you</key>
+	<string>В зависимости от настроек для вашей компании некоторые функции сервиса Concur для мобильной связи могут быть для вас недоступны</string>
+	<key>Deposit required</key>
+	<string>Требуется авансовый платеж</string>
+	<key>Destination</key>
+	<string>Пункт назначения</string>
+	<key>Destination Location</key>
+	<string>Место назначения</string>
+	<key>Destination Point</key>
+	<string>Пункт назначения</string>
+	<key>Detach</key>
+	<string>Отсоединить</string>
+	<key>Details</key>
+	<string>Детали</string>
+	<key>Dining</key>
+	<string>Деловые обеды</string>
+	<key>Directions</key>
+	<string>Направления</string>
+	<key>Disabled by administrator</key>
+	<string>Отключено администратором</string>
+	<key>Discover great hotels</key>
+	<string>Откройте для себя лучшие гостиницы</string>
+	<key>Dismiss tip overlay</key>
+	<string>Убрать наложенную подсказку</string>
+	<key>Distance</key>
+	<string>Расстояние</string>
+	<key>Distance calculated by Google</key>
+	<string>Расстояние, рассчитанное сервисом Google</string>
+	<key>Distance to Date = %@</key>
+	<string>Расстояние, пройденное до настоящего времени = %@</string>
+	<key>Diversion Airport</key>
+	<string>Аэропорт изменения маршрута полета</string>
+	<key>Diversion City</key>
+	<string>Город изменения маршрута полета</string>
+	<key>Don't know your PIN?</key>
+	<string>Не знаете свой ПИН-код?</string>
+	<key>Don't know your password or PIN?</key>
+	<string>Вы не знаете свой пароль или ПИН-код?</string>
+	<key>Don't know your user name?</key>
+	<string>Вы не знаете своего имени пользователя?</string>
+	<key>Done</key>
+	<string>Готово</string>
+	<key>Done cache killing</key>
+	<string>Кэш на этом устройстве был очищен. Вам потребуется закрыть приложение, а затем перезапустить его. Невыполнение этого, вероятнее всего, приведет к неустойчивости системы</string>
+	<key>Dont have an Account Sign Up</key>
+	<string>У вас нет учетной записи?</string>
+	<key>Download receipts in background</key>
+	<string>В фоновом режиме все еще выполняется загрузка квитанций. Вы можете ждать, нажав кнопку Отменить, или продолжить, нажав кнопку ОК.</string>
+	<key>Drop-off</key>
+	<string>Возврат</string>
+	<key>Drop-off Date</key>
+	<string>Дата возврата</string>
+	<key>Drop-off Time</key>
+	<string>Время возврата</string>
+	<key>Dropbox</key>
+	<string>Общий банк данных Dropbox</string>
+	<key>Duplicate Attendees</key>
+	<string>Внимание! Дублирующие участники</string>
+	<key>Duplicates Found</key>
+	<string>Найдены дублирующие данные</string>
+	<key>Duration</key>
+	<string>Продолжительность</string>
+	<key>E Ticket</key>
+	<string>Электронный билет</string>
+	<key>E-Receipt</key>
+	<string>Электронная квитанция</string>
+	<key>EMAIL</key>
+	<string>Отправить по электронной почте</string>
+	<key>EMAIL_LINK_EXPIRED_MSG</key>
+	<string>Попытайтесь, пожалуйста, снова, при этом используйте ссылку в течение 24 часов с момента получения квитанции.</string>
+	<key>EMPLOYEE</key>
+	<string>Сотрудник</string>
+	<key>ENTER_NEW_PIN</key>
+	<string>Новый ПИН-код</string>
+	<key>ENTER_PIN_MSG</key>
+	<string>Введите PIN-код, состоящий как минимум из 4 символов, используя буквы или цифры. Ваша компания может потребовать использования дополнительных символов.</string>
+	<key>ENTER_VALID_COMPANY_CODE</key>
+	<string>Укажите значение для кода компании.</string>
+	<key>ENTRIES_NOT_MATCH_MSG</key>
+	<string>Введенные записи не совпадают. Попытайтесь, пожалуйста, снова.</string>
+	<key>ENTRY_REQ_FIELDS</key>
+	<string>Перед тем, как сохранить введенные данные, заполните все обязательные поля и исправьте в форме все имеющиеся ошибки.</string>
+	<key>ERROR</key>
+	<string>Ошибка</string>
+	<key>ERROR_ACCOUNT_NOT_CONFIGURED</key>
+	<string>Конфигурация вашего аккаунта не настроена для отправки отчетов.</string>
+	<key>ERROR_BAD_CONFIG_MSG</key>
+	<string>Ваши настройки не поддерживают квитанции. Обратитесь, пожалуйста, к своему администратору.</string>
+	<key>ERROR_CONFIGURING_SESSION</key>
+	<string>При настройке конфигурации сеанса мобильной связи посредством единой регистрации произошел сбой. Обратитесь, пожалуйста, к администратору своей компании.</string>
+	<key>ERROR_EXPENSE_SITE_DOWN</key>
+	<string>Расход проходит текущее обслуживание. Сделайте повторную попытку приблизительно через час.</string>
+	<key>ERROR_INVALID_AGENCY_CODE</key>
+	<string>Введите, пожалуйста, код своего агентства.</string>
+	<key>ERROR_INVALID_COMPANY_CODE</key>
+	<string>Введите код вашей компании</string>
+	<key>ERROR_INVALID_PIN</key>
+	<string>Ваш ПИН-код недействителен. Введите ПИН-код повторно.</string>
+	<key>ERROR_MSG_VISIT_WEBSITE</key>
+	<string>Посетите вебсайт программы Concur, чтобы ввести значение.</string>
+	<key>ERROR_REQUIRED_FIELDS_MISSING</key>
+	<string>Как минимум в одном поле этого отчета отсутствуют данные. Красный флажок исключения обозначает статью расхода, а в списке указано(-ы) поле(-я), которое(-ые) должно(-ы) быть заполнено(-ы).</string>
+	<key>ERROR_SUBMIT_FAILED</key>
+	<string>Произошел сбой при отправке</string>
+	<key>EXCEPTIONS</key>
+	<string>Исключения</string>
+	<key>EXPENSES_NEG_TEXT</key>
+	<string>Фотографируйте ваши расходы на ходу</string>
+	<key>EXPENSE_DETAILS_ITEMIZATIONS</key>
+	<string>Детализации</string>
+	<key>EXPENSE_REPORTS</key>
+	<string>Отчеты о расходах</string>
+	<key>EXPENSE_REPORTS_NEG_TEXT</key>
+	<string>Проверьте и отправьте свои отчеты</string>
+	<key>EXPENSE_TYPES_LIST</key>
+	<string>Типы расходов</string>
+	<key>Earliest Departure</key>
+	<string>Самые ранние отправления</string>
+	<key>Earn %d pts.</key>
+	<string>Заработать %d дорожных баллов.</string>
+	<key>Economy</key>
+	<string>Малоразмерный автомобиль</string>
+	<key>Economy Hybrid</key>
+	<string>Малоразмерный гибридный автомобиль</string>
+	<key>Edit</key>
+	<string>Редактировать</string>
+	<key>Email</key>
+	<string>Отправить по электронной почте</string>
+	<key>Email Address</key>
+	<string>Адрес электронной почты</string>
+	<key>Email Log</key>
+	<string>Отправить журналом регистрации по электронной почте</string>
+	<key>Email link expired</key>
+	<string>Срок действия ссылки в электронном сообщении истек</string>
+	<key>Enter Approver Email</key>
+	<string>Введите адрес электронной почты ответственного за утверждение</string>
+	<key>Enter Field</key>
+	<string>Введите %@</string>
+	<key>Enter in the URL that connects to the Concur servers</key>
+	<string>Перейдите на URL-адрес, который подключен к серверам программы Concur</string>
+	<key>Enter your Agency Code</key>
+	<string>Введите код своего агентства.</string>
+	<key>Enter your mobile password (PIN) to sign in</key>
+	<string>Введите ваш мобильный пароль (PIN) для входа в</string>
+	<key>Enter your password to sign in</key>
+	<string>Введите свой пароль для входа в систему</string>
+	<key>Entries Don't Match</key>
+	<string>Записи не совпадают</string>
+	<key>Error</key>
+	<string>Ошибка</string>
+	<key>Error loading content</key>
+	<string>Произошла ошибка при загрузке содержимого</string>
+	<key>ErrorReceiptsFetch</key>
+	<string>Квитанции не загружены. Коснитесь кнопки + ниже, чтобы загрузить квитанции сейчас и использовать их позже из вашего отчета или из записей расходов.</string>
+	<key>Estimated Arrival</key>
+	<string>Расчетное время прибытия</string>
+	<key>Estimated Departure</key>
+	<string>Расчетное время отправления</string>
+	<key>Evening</key>
+	<string>Вечер</string>
+	<key>Exception Details</key>
+	<string>Сведения об исключении</string>
+	<key>Exceptions</key>
+	<string>Исключения</string>
+	<key>Exchange Rate</key>
+	<string>Обменный курс</string>
+	<key>Existing Reports</key>
+	<string>Существующие отчеты</string>
+	<key>Expense</key>
+	<string>Расход</string>
+	<key>Expense Locations</key>
+	<string>Места расходов</string>
+	<key>Expense Queued</key>
+	<string>Расход поставлен в очередь</string>
+	<key>Expense Trip</key>
+	<string>Отнести поездку на расходы</string>
+	<key>Expense Type</key>
+	<string>Вид расхода</string>
+	<key>Expense Updates</key>
+	<string>Обновления расходов</string>
+	<key>Expense a trip from TripIt</key>
+	<string>Отнести поездку, заказанную по программе TripIt, на расходы</string>
+	<key>ExpenseIt Entries</key>
+	<string>Записи в приложении ExpenseIt</string>
+	<key>ExpenseIt Entry</key>
+	<string>Запись в приложении ExpenseIt</string>
+	<key>ExpenseTracker version</key>
+	<string>Версия %@ программы SmartExpense</string>
+	<key>Expensed</key>
+	<string>Отнесенные на расходы</string>
+	<key>Expenses</key>
+	<string>Расходы</string>
+	<key>Expenses Combined</key>
+	<string>Объединенные расходы</string>
+	<key>Expenses cannot be added offline</key>
+	<string>Расходы не могут вводиться в автономном режиме.</string>
+	<key>Expensing the Trip</key>
+	<string>Выполняется отнесение поездки на расход</string>
+	<key>Export</key>
+	<string>Экспорт</string>
+	<key>Express</key>
+	<string>Экспресс</string>
+	<key>FACEBOOK_AUTH_FAILED</key>
+	<string>Не удалось использовать сервис Facebook для аутентификации. Убедитесь, пожалуйста, в том, что в браузере Safari отключен режим Private Browsing.</string>
+	<key>FACEBOOK_INCOMPLETE_INFO_SIGNIN_MSG</key>
+	<string>Невозможно зарегистрировать вход, используя ваши регистрационные данные пользователя сервиса Facebook. Убедитесь, пожалуйста, в том, что ваш профиль в сервисе Facebook включает действительный адрес электронной почты и войдите в свой аккаунт сервиса Facebook по электронной почте.</string>
+	<key>FACEBOOK_INCOMPLETE_INFO_SIGNUP_MSG</key>
+	<string>Невозможно зарегистрировать вход, используя ваши регистрационные данные пользователя сервиса Facebook. Убедитесь, пожалуйста, в том, что ваш профиль в сервисе Facebook включает электронную почту, имя и фамилию и войдите в свой аккаунт в сервисе Facebook по электронной почте.</string>
+	<key>FACEBOOK_SIGNIN_FAILED_MSG</key>
+	<string>Неожиданная ошибка. Попытайтесь снова войти в Facebook или попробуйте другой способ входа со страницы входа в систему.</string>
+	<key>FACEBOOK_SIGNUP_FAILED_MSG</key>
+	<string>Неожиданная ошибка. Попытайтесь снова войти в Facebook или попробуйте другой способ входа со страницы входа в систему.</string>
+	<key>FIELD_MAX_LENGTH_ERR_MSG</key>
+	<string>Введите не более %@ символов.</string>
+	<key>FILL_IN_PARENT_MLIST_FIELD</key>
+	<string>Вначале заполните родительское поле %@.</string>
+	<key>FIRST_NAME</key>
+	<string>Имя</string>
+	<key>FIX_EMAIL_RESET_PASSWORD</key>
+	<string>Прежде чем щелкнуть кнопкой мыши на ссылке Сбросить пароль, введите в поле «Адрес электронной почты» действительный адрес электронной почты.</string>
+	<key>FIX_REPORT_NAME_MSG</key>
+	<string>Выберите, пожалуйста, существующий отчет или введите действительное имя отчета, после чего выберите новый отчет.</string>
+	<key>FLEX_FARING_ERROR_MSG</key>
+	<string>Чтобы зарезервировать рейс для авиаперелета между этими городами, используйте Интернет.</string>
+	<key>FLIGHT_STATUS_MSG</key>
+	<string>Статус рейса обновлен</string>
+	<key>FORM</key>
+	<string>ФОРМА</string>
+	<key>FORM_FIELDS_INVALID</key>
+	<string>Перед сохранением заполните все обязательные поля и исправьте в форме любые ошибки.</string>
+	<key>FOUND_COUNT</key>
+	<string>найдено: %i</string>
+	<key>FREQUENT_FLYER_NO_SEL_MSG</key>
+	<string>У вас имеется один или несколько аккаунтов по программе Frequent Flyer, но вы не выбрали ни один из них для заказа этого авиабилета. Нажмите OK, чтобы продолжить без использования аккаунта, или Отменить, чтобы выбрать аккаунт.</string>
+	<key>Facebook</key>
+	<string>Facebook</string>
+	<key>Failed</key>
+	<string>Произошел сбой</string>
+	<key>Failed to add to report</key>
+	<string>Произошел сбой при добавлении записей в отчет.</string>
+	<key>Failed to download receipt</key>
+	<string>При загрузке квитанции произошел сбой</string>
+	<key>Failed to import Itinerary</key>
+	<string>Не удалось импортировать маршрут</string>
+	<key>Failed to import entry</key>
+	<string>Невозможно загрузить некоторые из расходов.</string>
+	<key>Failed to retrieve attendees in selected group</key>
+	<string>Произошел сбой при загрузке имен участников в выбранной группе</string>
+	<key>Failed to save Itinerary Stop</key>
+	<string>Не удалось сохранить маршрут остановить</string>
+	<key>Failed to save external list item</key>
+	<string>Произошел сбой при сохранении внешнего элемента списка</string>
+	<key>Failure</key>
+	<string>Сбой</string>
+	<key>Fare Choices</key>
+	<string>Выбор транспортного тарифа</string>
+	<key>Feature not enabled for this demo</key>
+	<string>Для этой демонстрационной версии функция не активирована</string>
+	<key>Features</key>
+	<string>Свойства</string>
+	<key>Fee</key>
+	<string>Плата</string>
+	<key>Fetching Data</key>
+	<string>Выполняется выборка данных</string>
+	<key>Fetching Expense Data</key>
+	<string>Выполняется вызов данных о расходах</string>
+	<key>Fetching Filter Results</key>
+	<string>Выполняется вызов результатов фильтрации</string>
+	<key>Fetching Hotel Rates</key>
+	<string>Выполняется вызов расценок на проживание в гостиницах</string>
+	<key>Fetching Location Data</key>
+	<string>Выполняется выборка данных о местоположении</string>
+	<key>Fetching Trip</key>
+	<string>Выполняется выборка поездки</string>
+	<key>Fetching the Feed</key>
+	<string>Выполняется вызов канала</string>
+	<key>Filter</key>
+	<string>Фильтр</string>
+	<key>Find Travel</key>
+	<string>Найти поездку</string>
+	<key>First</key>
+	<string>Первый</string>
+	<key>First Name</key>
+	<string>Имя</string>
+	<key>Flight Details</key>
+	<string>Сведения о рейсе</string>
+	<key>Flight Duration</key>
+	<string>Продолжительность полета</string>
+	<key>Flight Options</key>
+	<string>Варианты авиарейсов</string>
+	<key>Flight Rule Violation</key>
+	<string>Нарушение правила заказа авиабилетов</string>
+	<key>Flight Schedules</key>
+	<string>Расписания полетов</string>
+	<key>Flight Search</key>
+	<string>Поиск авиарейсов</string>
+	<key>Flight Status</key>
+	<string>Статус рейса</string>
+	<key>Flights</key>
+	<string>Авиарейсы</string>
+	<key>Flights_subline</key>
+	<string>Быстро найти и заказать билеты на авиарейсы</string>
+	<key>For Example: say Find a Flight from San Francisco to New York for next week</key>
+	<string>Например, скажите: найти авиарейс из Сан-Франциско в Нью-Йорке на следующей неделе</string>
+	<key>For Example: say Find a hotel in San Francisco for next week</key>
+	<string>Например, скажите: «Найти гостиницу в Сан-Франциско на следующей неделе на трое суток»</string>
+	<key>Forgot Username or Password?</key>
+	<string>Вы забыли имя пользователя или пароль?</string>
+	<key>Forgot mobile password (PIN)?</key>
+	<string>Забыл Мобильный пароль (PIN-код)?</string>
+	<key>Forgot password?</key>
+	<string>Вы забыли пароль?</string>
+	<key>Free up memory and retry receipt upload</key>
+	<string>Освободите память и позже попытайтесь загрузить квитанцию снова.</string>
+	<key>Frequent Flyer Program</key>
+	<string>Программа Frequent Flyer</string>
+	<key>Frequent Flyer Warning</key>
+	<string>Предупреждение программы Frequent Flyer</string>
+	<key>Friday_Short</key>
+	<string>Пт</string>
+	<key>From</key>
+	<string>Из</string>
+	<key>From Location</key>
+	<string>Из места</string>
+	<key>From Station</key>
+	<string>От станции</string>
+	<key>Full</key>
+	<string>Полный</string>
+	<key>Full Hybrid</key>
+	<string>Полноразмерный гибридный автомобиль.</string>
+	<key>Full Pickup</key>
+	<string>Полноразмерный пикап</string>
+	<key>Full SUV</key>
+	<string>Полноразмерный автомобиль-внедорожник</string>
+	<key>Future Trips</key>
+	<string>Предстоящие</string>
+	<key>GOOGLE_AUTH_FAILED_MSG</key>
+	<string>Невозможно использовать сервис Google для авторизации вашего доступа в программу Concur SmartExpense.</string>
+	<key>GOOGLE_INCOMPLETE_INFO_SIGNIN_MSG</key>
+	<string>Невозможно зарегистрировать вход, используя ваши регистрационные данные пользователя сервиса Google. Убедитесь, пожалуйста, в том,что в вашем аккаунте сервиса Google указаны действительный адрес электронной почты и профиль.</string>
+	<key>GOOGLE_INCOMPLETE_INFO_SIGNUP_MSG</key>
+	<string>Невозможно зарегистрировать вход, используя ваши регистрационные данные пользователя сервиса Google. Убедитесь, пожалуйста, в том, что ваш профиль в сервисе Google включает адрес электронной почты, имя и фамилию.</string>
+	<key>Gate token</key>
+	<string>Выход %@</string>
+	<key>GateGuru</key>
+	<string>программа GateGuru</string>
+	<key>Gathering data from TripIt</key>
+	<string>Выполняется получение данных по программе TripIt</string>
+	<key>Generate Expenses</key>
+	<string>Генерировать расходы</string>
+	<key>Get Help</key>
+	<string>Получить помощь</string>
+	<key>GetApprovedForAirHotelAndMore</key>
+	<string>Получить одобренным для воздуха, отель и многое другое</string>
+	<key>Google</key>
+	<string>Сервис Google</string>
+	<key>Greater than 25</key>
+	<string>Больше 25</string>
+	<key>HAS_DYNAMIC_FIELDS_MSG</key>
+	<string>Правила вашей компании в отношении резервирования в настоящее время не поддерживаются. Поддержка вскоре будет обеспечена. Бронируйте, пожалуйста, места, используя веб-версию программы Concur.</string>
+	<key>HIGH_RESOLUTION_IMAGE</key>
+	<string>Высокое разрешение (1000 x 1000 пикселей)</string>
+	<key>HOME_PAGE</key>
+	<string>Программа Concur</string>
+	<key>HOME_PAGE_BREEZE</key>
+	<string>Программа Concur Breeze</string>
+	<key>HOTEL</key>
+	<string>Отель / нет</string>
+	<key>HOTEL_BOOKING</key>
+	<string>Зарезервировать номер в гостинице</string>
+	<key>HOTEL_BOOKING_ADDRESS_MISSING_VIOLATIONS</key>
+	<string>Перед тем, как забронировать этот номер, вы должны устранить нарушения правил, выделенные красным цветом.</string>
+	<key>HOTEL_BOOKING_VIEW_BOOKING_ERROR_MESSAGE</key>
+	<string>Заказать гостиницу не удалось</string>
+	<key>HOTEL_BOOKING_VIEW_CANCELLATION_POLICY_DESCRIPTION</key>
+	<string>Перед тем, как забронировать этот номер, вы должны прочитать информацию о правилах отмены заказа.</string>
+	<key>HOTEL_BOOKING_VIEW_CANCELLATION_POLICY_TITLE</key>
+	<string>Правила отмены</string>
+	<key>HOTEL_BOOKING_VIEW_CONFIRM_BOOKING_MESSAGE</key>
+	<string>Вы действительно хотите зарезервировать этот номер?</string>
+	<key>HOTEL_BOOKING_VIEW_CONFIRM_BOOKING_TITLE</key>
+	<string>Подтвердите, пожалуйста</string>
+	<key>HOTEL_BOOKING_VIEW_DAILY_RATE</key>
+	<string>Ежедневная расценка:</string>
+	<key>HOTEL_BOOKING_VIEW_MISSING_VIOLATION_INFO_TITLE</key>
+	<string>Отсутствующие поля</string>
+	<key>HOTEL_BOOKING_VIEW_MISSING_VIOLATION_JUSTIFICATION</key>
+	<string>Перед резервированием этого номера в нарушение правил компании вы должны ввести обоснование в поле, выделенное красным цветом.</string>
+	<key>HOTEL_BOOKING_VIEW_MISSING_VIOLATION_REASON</key>
+	<string>Перед резервированием этого номера в нарушение правил компании вы должны ввести обоснование в поле, выделенное красным цветом.</string>
+	<key>HOTEL_BOOKING_VIEW_MISSING_VIOLATION_REASON_AND_JUSTIFICATION</key>
+	<string>Перед бронированием этого номера в нарушение правил компании вы должны ввести обоснование и обоснование в выделенные красным цветом поля.</string>
+	<key>HOTEL_BOOKING_VIEW_ROOM</key>
+	<string>Номер в гостинице</string>
+	<key>HOTEL_BOOKING_VIOLATION_JUSTIFICATION_TITLE</key>
+	<string>Обоснование нарушения</string>
+	<key>HOTEL_BOOKING_WITH_DEPOSIT_CONFIRM_BOOKING_MESSAGE</key>
+	<string>Вы действительно хотите забронировать этот номер? Я понимаю, что начисление на мою кредитную карточку будет сделано немедленно без возможности последующей отмены заказа в ходе бронирования. В случае отмены заказа вся внесенная сумма или его части будут утрачены.</string>
+	<key>HOTEL_BOOKNIG_VIOLATION_JUSTIFICATION_PLACEHOLDER_TEXT</key>
+	<string>Введите обоснование для резервирования этого номера.</string>
+	<key>HOTEL_CREDIT_CARD</key>
+	<string>Выберите кредитную карточку</string>
+	<key>HOTEL_DETAILS_VIEW_FEES</key>
+	<string>Плата</string>
+	<key>HOTEL_ROOM_LIST</key>
+	<string>Выберите номер</string>
+	<key>HOTEL_SEARCH_RESULTS</key>
+	<string>Выберите гостиницу</string>
+	<key>HOTEL_VIEW_FIND_HOTELS_WITHIN</key>
+	<string>Искать гостиницы в пределах</string>
+	<key>HOTEL_VIEW_HOTEL_NAME_RESTRICTIONS</key>
+	<string>Ограничения в отношении названия гостиницы</string>
+	<key>HOTEL_VIEW_HOTEL_NAME_RESTRICTIONS_PLACEHOLDER_TEXT</key>
+	<string>Найти гостиницы, названия которых содержат этот текст</string>
+	<key>HOTEL_VIEW_KILOMETERS</key>
+	<string>км</string>
+	<key>HOTEL_VIEW_LOCATION</key>
+	<string>Местоположение</string>
+	<key>HOTEL_VIEW_MILE</key>
+	<string>миля</string>
+	<key>HOTEL_VIEW_NO_HOTELS_MESSAGE</key>
+	<string>Соответствующие гостиницы отсутствуют. Измените критерии поиска и попытайтесь снова.</string>
+	<key>HOTEL_VIEW_NO_HOTELS_TITLE</key>
+	<string>Соответствующие гостиницы отсутствуют</string>
+	<key>HOTEL_VIEW_NUMBER_SPACE_KILOMETERS_OR_MILES</key>
+	<string>%@ %@</string>
+	<key>HOTEL_VIEW_SEARCHING_FOR_HOTELS_AT</key>
+	<string>Поиск гостиниц в</string>
+	<key>HOTEL_VIEW_SEARCHING_FOR_HOTELS_TO</key>
+	<string>до</string>
+	<key>HOTEL_VIEW_SEARCHING_FOR_HOTELS_WITH_AVAILABILITY</key>
+	<string>с номерами, свободными с</string>
+	<key>HOTEL_VIEW_SEARCH_BUTTON_TITLE</key>
+	<string>Поиск гостиниц</string>
+	<key>HOTEL_VIEW_SELECT_PREFERENCE</key>
+	<string>Выбрать предпочтения</string>
+	<key>HOTEL_VIEW_SMOKING_PREFERENCE</key>
+	<string>Предпочтение по курению</string>
+	<key>HOTEL_VIEW_SPECIFY_LOCATION_MESSAGE</key>
+	<string>Укажите местоположение.</string>
+	<key>HOTEL_VIEW_SPECIFY_LOCATION_TITLE</key>
+	<string>Требуется местоположение</string>
+	<key>HOTEL_VIEW_TIMEOUT_MESSAGE</key>
+	<string>Соответствующие расценки на проживание в гостиницах не найдены. Измените критерии поиска и попытайтесь снова.</string>
+	<key>HOTEL_VIEW_TIMEOUT_TITLE</key>
+	<string>Соответствующие расценки на проживание в гостиницах отсутствуют</string>
+	<key>HOTEL_VIEW_WITH_NAMES_CONTAINING</key>
+	<string>С именами, содержащими</string>
+	<key>Having trouble signing in?</key>
+	<string>Проблемы с регистрацией входа в систему?</string>
+	<key>Help for PIN</key>
+	<string>Ваш ПИН-код является альтернативным способом входа в систему и может создаваться в тех случаях, когда ваша компания автоматически регистрирует вас в веб-версии программы Concur и вы не знаете пароля. Чтобы создать ПИН-код, посетите веб-версию программы Concur (Профиль &gt; Регистрация мобильного устройства).</string>
+	<key>Help for PIN - Gov</key>
+	<string>Ваш ПИН-код является альтернативным способом входа в систему и может создаваться в тех случаях, когда ваша компания автоматически регистрирует вас в веб-версии программы Concur и вы не знаете пароль. Чтобы создать ПИН-код, посетите веб-версию программы Concur (Профиль &gt; Регистрация мобильного устройства).</string>
+	<key>Help for Password</key>
+	<string>Если ваша компания разрешает использование ПИН-кода для входа в систему по мобильной связи: вернитесь в предыдущий экран и введите адрес электронной почты, зарегистрированный в сервисе Concur. Мы отправим вам инструкцию по входу в систему. Если ваша компания требует пароль, используйте тот же пароль, которым вы пользуетесь для входа на вебсайт Concur.</string>
+	<key>Help for Password - Gov</key>
+	<string>Ваш пароль совпадает с паролем для входа в веб-версию программы Concur. Вы должны использовать свой пароль для мобильного приложения. Если вы не знаете своего пароля для программы Concur, обратитесь к администратору вашего агентства.</string>
+	<key>Help for User Name</key>
+	<string>В большинстве случаев для входа в наше приложение вы будете использовать те же имя пользователя и пароль, которые вы используете для входа в веб-версию Concur. Если у вас нет этой информации, вернитесь в предыдущий экран и введите адрес электронной почты, чтобы получить данные для входа в систему, или обратитесь к администратору компании.</string>
+	<key>Help for User Name - Gov</key>
+	<string>Ваше имя пользователя совпадает с именем пользователя для входа в веб-версию программы Concur. Вы должны использовать имя пользователя для мобильного приложения. Если вы не знаете своего имени пользователя для программы Concur, обратитесь к администратору вашего агентства.</string>
+	<key>Hide Offers</key>
+	<string>Скрыть предложения</string>
+	<key>Home</key>
+	<string>Домашняя страница</string>
+	<key>Hotel</key>
+	<string>Гостиница</string>
+	<key>Hotel Dates</key>
+	<string>Даты пребывания в гостинице</string>
+	<key>Hotel Name</key>
+	<string>Название гостиницы</string>
+	<key>Hotel Price to Beat</key>
+	<string>Контрольная цена номера гостиницы для сравнения</string>
+	<key>Hotel Rule Violation</key>
+	<string>Нарушение правила заказа гостиницы</string>
+	<key>Hotel Search</key>
+	<string>Поиск гостиницы</string>
+	<key>Hotel cancelled from mobile device</key>
+	<string>Заказ гостиницы отменен с мобильного устройства</string>
+	<key>Hotels</key>
+	<string>Гостиницы</string>
+	<key>Hotels With Names Containing</key>
+	<string>Отели с названиями содержащий</string>
+	<key>Hotels Within</key>
+	<string>Отели в пределах</string>
+	<key>Hotels near</key>
+	<string>Гостиницы поблизости</string>
+	<key>Hotels near you</key>
+	<string>Отели рядом с вами</string>
+	<key>Hotels_subline</key>
+	<string>Забронируйте отличную гостиницу</string>
+	<key>Hour</key>
+	<string>Час</string>
+	<key>How would you like to book?</key>
+	<string>Как вы хотите сделать заказ?</string>
+	<key>I Forgot</key>
+	<string>Я забыл(-а)</string>
+	<key>IDV Arrive</key>
+	<string>Прибытие</string>
+	<key>IDV Arrives in t at t</key>
+	<string>Прибывает в %@ в %@</string>
+	<key>IDV Body</key>
+	<string>Кузов</string>
+	<key>IDV Check In</key>
+	<string>Регистрация прибытия</string>
+	<key>IDV Check Out</key>
+	<string>Извлечение</string>
+	<key>IDV Confirmation</key>
+	<string>Подтверждение</string>
+	<key>IDV Daily</key>
+	<string>Ежедневно</string>
+	<key>IDV Depart</key>
+	<string>Отправление</string>
+	<key>IDV Departs from t at t</key>
+	<string>Отправляется из %@ в %@</string>
+	<key>IDV Drop Off</key>
+	<string>Возврат</string>
+	<key>IDV Operated by t Flight t</key>
+	<string>Выполняемый авиакомпанией %@ рейс %@</string>
+	<key>IDV Persons</key>
+	<string>Лица</string>
+	<key>IDV Pick Up</key>
+	<string>Получение</string>
+	<key>IDV Reserved for</key>
+	<string>Зарезервировано для</string>
+	<key>IDV Rooms</key>
+	<string>Номера</string>
+	<key>IDV Seat Map for t</key>
+	<string>Схема расположения мест в %@</string>
+	<key>IDV Social Publishing</key>
+	<string>Социальные публикации</string>
+	<key>IDV Terminal Map for t</key>
+	<string>Карта терминала для %@</string>
+	<key>IDV Terminal t Gate t</key>
+	<string>Терминал %@ Выход %@</string>
+	<key>IDV Web site for t</key>
+	<string>Вебсайт для %@</string>
+	<key>IDV property name</key>
+	<string>Имя свойства</string>
+	<key>IDV t Flight t</key>
+	<string>%@ Рейс @%</string>
+	<key>IMAGE_DOWN_SCALED_MSG</key>
+	<string>Размер изображения уменьшен до величины в пределах 4 МБ. Проверьте содержимое Перед тем, как сохранить изображение вместе с записью, проверьте его содержимое.</string>
+	<key>INFO</key>
+	<string>Информация</string>
+	<key>INTEGER_NEGATIVE_ERR_MSG</key>
+	<string>Это поле не может иметь отрицательное значение</string>
+	<key>INTEGER_TOO_BIG_ERR_MSG</key>
+	<string>Целое число слишком большое</string>
+	<key>INTEGER_VALIDATION_ERR_MSG</key>
+	<string>Это поле требует целого значения.</string>
+	<key>INVALID_CONCUR_CREDENTIALS</key>
+	<string>Неверные регистрационные данные</string>
+	<key>INVALID_DEVICE_MSG</key>
+	<string>Запрос о восстановлении ПИН-кода поступил с другого устройства. Используйте то же устройство, с которого вы запросили восстановление ПИН-кода.</string>
+	<key>INVALID_LOGIN_MSG</key>
+	<string>Попытайтесь снова ввести ваши регистрационные данные или выберите команду «Я забыл(-а)», чтобы получить инструкцию по входу в систему.</string>
+	<key>INVALID_PIN_LEN_MSG</key>
+	<string>Длина вашего ПИН-код должна составлять как минимум %@ символов</string>
+	<key>INVALID_PIN_MSG</key>
+	<string>ПИН-код может включать буквы, цифры &amp; специальные символы, но не пробелы</string>
+	<key>INVALID_PIN_SPECIAL_CHARACTERS</key>
+	<string>Введенный ПИН-код не содержит специальных символов. ПИН-код для мобильной связи должен включать как минимум один специальный символ. Например, такие: !, $, %, + и =.</string>
+	<key>INVALID_PIN_SPECIAL_MIXED_CASE</key>
+	<string>ПИН-код должен включать как минимум одну букву верхнего регистра [A-Z] и одну букву нижнего регистра [a-z].</string>
+	<key>INVALID_USERID_MSG</key>
+	<string>Введите действительное имя пользователя.%@Оно должно включать ваше регистрационное имя, за которым следуют знак @ и доменное имя вашей компании.</string>
+	<key>INVOICE_LINEITEMS</key>
+	<string>Детали счета</string>
+	<key>INVOICE_LINEITEM_DETAIL</key>
+	<string>Позиция строки</string>
+	<key>INVOICE_SUMMARY</key>
+	<string>Обобщенные данные счета</string>
+	<key>INVOICE_VENDOR</key>
+	<string>Счет от поставщика услуг</string>
+	<key>ITEMIZATIONS</key>
+	<string>Детализации</string>
+	<key>ITEMIZATION_LIST</key>
+	<string>Список детализаций</string>
+	<key>ITEMS_TO_APPROVE</key>
+	<string>%d элементов к утверждению</string>
+	<key>ITIN_DETAILS</key>
+	<string>Детали сегмента</string>
+	<key>ITIN_DETAILS_VIEW_AIR</key>
+	<string>Авиа</string>
+	<key>ITIN_DETAILS_VIEW_AIRCOND</key>
+	<string>Кондиционирование воздуха</string>
+	<key>ITIN_DETAILS_VIEW_AIRCRAFT</key>
+	<string>Самолет</string>
+	<key>ITIN_DETAILS_VIEW_AIRPORT</key>
+	<string>Аэропорт</string>
+	<key>ITIN_DETAILS_VIEW_ALLOWABLE_MILES</key>
+	<string>Допустимая дальность в милях</string>
+	<key>ITIN_DETAILS_VIEW_AMENITIES</key>
+	<string>Удобства</string>
+	<key>ITIN_DETAILS_VIEW_ARRIVAL</key>
+	<string>Прибытие</string>
+	<key>ITIN_DETAILS_VIEW_ARRIVE</key>
+	<string>Прибытие</string>
+	<key>ITIN_DETAILS_VIEW_BAGGAGE</key>
+	<string>Багаж</string>
+	<key>ITIN_DETAILS_VIEW_BODY</key>
+	<string>Тип кузова</string>
+	<key>ITIN_DETAILS_VIEW_BOOKING</key>
+	<string>Резервирование</string>
+	<key>ITIN_DETAILS_VIEW_CABIN</key>
+	<string>Салон</string>
+	<key>ITIN_DETAILS_VIEW_CANCEL_POLICY</key>
+	<string>Правила отмены заказов</string>
+	<key>ITIN_DETAILS_VIEW_CAR</key>
+	<string>Прокат автомобилей</string>
+	<key>ITIN_DETAILS_VIEW_CARRIER</key>
+	<string>Перевозчик</string>
+	<key>ITIN_DETAILS_VIEW_CHECK_IN</key>
+	<string>Регистрация прибытия</string>
+	<key>ITIN_DETAILS_VIEW_CHECK_OUT</key>
+	<string>Извлечение</string>
+	<key>ITIN_DETAILS_VIEW_CITY</key>
+	<string>Город</string>
+	<key>ITIN_DETAILS_VIEW_CLASS</key>
+	<string>Класс</string>
+	<key>ITIN_DETAILS_VIEW_CONFIRM_NUM</key>
+	<string>Подтвердите №</string>
+	<key>ITIN_DETAILS_VIEW_CONF_NUM</key>
+	<string>Подтверждение №</string>
+	<key>ITIN_DETAILS_VIEW_CONTACT</key>
+	<string>Контакт</string>
+	<key>ITIN_DETAILS_VIEW_DAILY_RATE</key>
+	<string>Ежедневная расценка</string>
+	<key>ITIN_DETAILS_VIEW_DEPART</key>
+	<string>Отправление</string>
+	<key>ITIN_DETAILS_VIEW_DEPARTURE</key>
+	<string>Отправление</string>
+	<key>ITIN_DETAILS_VIEW_DISCOUNT</key>
+	<string>Код скидки</string>
+	<key>ITIN_DETAILS_VIEW_DIVERSION</key>
+	<string>Изменение маршрута полета</string>
+	<key>ITIN_DETAILS_VIEW_DROP_OFF</key>
+	<string>Возврат</string>
+	<key>ITIN_DETAILS_VIEW_DROP_OFF_ADDRESS</key>
+	<string>Адрес возврата</string>
+	<key>ITIN_DETAILS_VIEW_DROP_OFF_INSTRUCTIONS</key>
+	<string>Инструкция по возврату</string>
+	<key>ITIN_DETAILS_VIEW_DURATION</key>
+	<string>Продолжительность</string>
+	<key>ITIN_DETAILS_VIEW_END</key>
+	<string>Окончание</string>
+	<key>ITIN_DETAILS_VIEW_EQUIP</key>
+	<string>Специальное оборудование</string>
+	<key>ITIN_DETAILS_VIEW_FLIGHT</key>
+	<string>Рейс</string>
+	<key>ITIN_DETAILS_VIEW_FLIGHT_WITH_OB</key>
+	<string>%@ #%@ (%@ #%@)</string>
+	<key>ITIN_DETAILS_VIEW_GATE</key>
+	<string>Выход</string>
+	<key>ITIN_DETAILS_VIEW_HOTEL</key>
+	<string>Гостиница</string>
+	<key>ITIN_DETAILS_VIEW_INFO</key>
+	<string>Информация</string>
+	<key>ITIN_DETAILS_VIEW_MAP</key>
+	<string>Карта</string>
+	<key>ITIN_DETAILS_VIEW_MEAL</key>
+	<string>Питание</string>
+	<key>ITIN_DETAILS_VIEW_MEETING_INSTRUCTIONS</key>
+	<string>Выполнение инструкций</string>
+	<key>ITIN_DETAILS_VIEW_MINUTES</key>
+	<string>%@ минут</string>
+	<key>ITIN_DETAILS_VIEW_NUMBER_IN_PARTY</key>
+	<string>Количество в партии</string>
+	<key>ITIN_DETAILS_VIEW_NUMBER_OF_PERSONS</key>
+	<string>Количество человек</string>
+	<key>ITIN_DETAILS_VIEW_OPERATED</key>
+	<string>Выполняемый авиакомпанией %@ - %@</string>
+	<key>ITIN_DETAILS_VIEW_PARKING</key>
+	<string>Центр автомобильной стоянки</string>
+	<key>ITIN_DETAILS_VIEW_PICKUP_ADDRESS</key>
+	<string>Адрес получения</string>
+	<key>ITIN_DETAILS_VIEW_PICKUP_INSTRUCTIONS</key>
+	<string>Инструкция по получению</string>
+	<key>ITIN_DETAILS_VIEW_PLATFORM</key>
+	<string>Платформа</string>
+	<key>ITIN_DETAILS_VIEW_PRICE</key>
+	<string>Цена</string>
+	<key>ITIN_DETAILS_VIEW_RAIL</key>
+	<string>Железнодорожный</string>
+	<key>ITIN_DETAILS_VIEW_RATE</key>
+	<string>Расценка</string>
+	<key>ITIN_DETAILS_VIEW_RATE_DESCRIPTION</key>
+	<string>Описание расценки</string>
+	<key>ITIN_DETAILS_VIEW_RATE_TYPE</key>
+	<string>Тип расценок</string>
+	<key>ITIN_DETAILS_VIEW_RESERVATION</key>
+	<string>Бронирование</string>
+	<key>ITIN_DETAILS_VIEW_REZ</key>
+	<string>Бронирование</string>
+	<key>ITIN_DETAILS_VIEW_ROOM</key>
+	<string>Номер в гостинице</string>
+	<key>ITIN_DETAILS_VIEW_SEAT</key>
+	<string>Место</string>
+	<key>ITIN_DETAILS_VIEW_SEGMENT_DETAILS</key>
+	<string>Детали сегмента</string>
+	<key>ITIN_DETAILS_VIEW_SPECIAL_INSTRUCTIONS</key>
+	<string>Специальные инструкции</string>
+	<key>ITIN_DETAILS_VIEW_START</key>
+	<string>Дата начала</string>
+	<key>ITIN_DETAILS_VIEW_STATION</key>
+	<string>Станция</string>
+	<key>ITIN_DETAILS_VIEW_STATUS</key>
+	<string>Статус</string>
+	<key>ITIN_DETAILS_VIEW_STOPS</key>
+	<string>Остановки</string>
+	<key>ITIN_DETAILS_VIEW_TERMINAL</key>
+	<string>Терминал</string>
+	<key>ITIN_DETAILS_VIEW_TOTAL_RATE</key>
+	<string>Общий размер расценки</string>
+	<key>ITIN_DETAILS_VIEW_TRAIN_TYPE</key>
+	<string>Тип поезда</string>
+	<key>ITIN_DETAILS_VIEW_TRANSMISSION</key>
+	<string>Передача</string>
+	<key>ITIN_DETAILS_VIEW_TYPE</key>
+	<string>Тип</string>
+	<key>ITIN_DETAILS_VIEW_VENDOR</key>
+	<string>Поставщик услуг</string>
+	<key>ITIN_DETAILS_VIEW_WAGON_NUM</key>
+	<string>Вагон №</string>
+	<key>If any changes have been made by your agent</key>
+	<string>Если вашим агентом были внесены какие-либо изменения, то обновление вашего маршрута следования может занять несколько минут.</string>
+	<key>If you continue to experience</key>
+	<string>Попытайтесь, пожалуйста, снова. Если ошибка доступа в систему будeт повторяться, обратитесь, пожалуйста, в справочную службу или в отдел делового туризма / расходов своей компании.</string>
+	<key>If you continue to experience SU</key>
+	<string>Попытайтесь, пожалуйста, снова. Если ошибка доступа в систему будет повторяться, обратитесь, пожалуйста, в службу помощи программы Concur.</string>
+	<key>If your plans change</key>
+	<string>В случае изменения ваших планов, отменять бронь и забронировать другую гостиницу на ходу</string>
+	<key>Image Not Available</key>
+	<string>Изображение отсутствует</string>
+	<key>Immediate Assistance Required</key>
+	<string>Требуется немедленная помощь</string>
+	<key>Import Error</key>
+	<string>Ошибка при загрузке</string>
+	<key>Import Expenses</key>
+	<string>Загрузить расходы</string>
+	<key>Import and Match</key>
+	<string>Загрузить и согласовать</string>
+	<key>Incorrect Password</key>
+	<string>Неправильный пароль</string>
+	<key>Individual Edition</key>
+	<string>Индивидуальное издание</string>
+	<key>Infants</key>
+	<string>Младенцы</string>
+	<key>Info</key>
+	<string>Информация</string>
+	<key>Intermediate</key>
+	<string>Среднеразмерный</string>
+	<key>Intermediate Hybrid</key>
+	<string>Среднеразмерный гибридный автомобиль</string>
+	<key>Intermediate SUV</key>
+	<string>Среднеразмерный автомобиль-внедорожник</string>
+	<key>Invalid Arrival Location</key>
+	<string>Недействительный пункт прибытия</string>
+	<key>Invalid Departure Date</key>
+	<string>Недействительная дата отправления</string>
+	<key>Invalid Departure Location</key>
+	<string>Недействительный пункт отправления</string>
+	<key>Invalid Device</key>
+	<string>Неразрешенное устройство</string>
+	<key>Invalid Email or Username</key>
+	<string>Недопустимый адрес электронной почты или имя пользователя</string>
+	<key>Invalid Login Credentials</key>
+	<string>Недействительные регистрационные данные для входа в систему</string>
+	<key>Invalid PIN</key>
+	<string>Недействительный ПИН-код</string>
+	<key>Invalid PIN length</key>
+	<string>Недействительная длина ПИН-кода</string>
+	<key>Invalid Password</key>
+	<string>Недействительный пароль</string>
+	<key>Invalid Return Date</key>
+	<string>Недействительная дата возвращения</string>
+	<key>Invalid User Name</key>
+	<string>Недействительное имя пользователя</string>
+	<key>Invalid email address</key>
+	<string>Недействительный адрес электронной почты</string>
+	<key>Invitation(s) Sent</key>
+	<string>Приглашение(-я) отправлено(-ы)</string>
+	<key>Invitations Sent</key>
+	<string>Благодарим вас за то, что вы распространяете информацию о программе SmartExpense.</string>
+	<key>Invite</key>
+	<string>Пригласить</string>
+	<key>Invite colleagues to use SmartExpense</key>
+	<string>Пригласите коллег использовать программу SmartExpense</string>
+	<key>Invoice</key>
+	<string>Счет</string>
+	<key>Invoice Approval</key>
+	<string>Утверждение счета</string>
+	<key>Invoice Image</key>
+	<string>Изображение счета</string>
+	<key>InvoiceApprove</key>
+	<string>Счет</string>
+	<key>Invoices</key>
+	<string>Счета</string>
+	<key>Itemization not allowed</key>
+	<string>Детализация для этой записи не допускается</string>
+	<key>Itemizations</key>
+	<string>Детализации</string>
+	<key>Itemize</key>
+	<string>Детализировать</string>
+	<key>Itemized Entry</key>
+	<string>Детализированная запись</string>
+	<key>Itemized:</key>
+	<string>Детализировано:</string>
+	<key>Itineraries</key>
+	<string>Маршруты</string>
+	<key>Itinerary</key>
+	<string>Маршрут следования</string>
+	<key>Itinerary List</key>
+	<string>Маршрут список</string>
+	<key>Itinerary Rule Violation</key>
+	<string>Нарушение правила, касающегося маршрута следования</string>
+	<key>Join</key>
+	<string>Присоединитесь</string>
+	<key>Join with Facebook</key>
+	<string>Подключитесь к сервису Facebook</string>
+	<key>LABEL_ADD_BTN</key>
+	<string>Добавить</string>
+	<key>LABEL_AIR</key>
+	<string>Авиа</string>
+	<key>LABEL_APPROVE_EXPENSES</key>
+	<string>Утвердить расходы</string>
+	<key>LABEL_CANCEL_BTN</key>
+	<string>Отменить</string>
+	<key>LABEL_CAR_RENTAL</key>
+	<string>Прокат автомобилей</string>
+	<key>LABEL_CLOSE_BTN</key>
+	<string>Закрыть</string>
+	<key>LABEL_DONE_BTN</key>
+	<string>Готово</string>
+	<key>LABEL_EXPENSE</key>
+	<string>Расход</string>
+	<key>LABEL_EXPENSES</key>
+	<string>Расходы</string>
+	<key>LABEL_HOTELS</key>
+	<string>Гостиницы</string>
+	<key>LABEL_LOGIN_NO_PIN</key>
+	<string>Вам требуется установить ПИН-код?</string>
+	<key>LABEL_LOGIN_PASSWORD</key>
+	<string>Пароль или ПИН-код</string>
+	<key>LABEL_LOGIN_REGISTER</key>
+	<string>Зарегистрироваться</string>
+	<key>LABEL_LOGIN_SIGN_IN</key>
+	<string>Войти</string>
+	<key>LABEL_LOGIN_USER_NAME</key>
+	<string>Имя пользователя</string>
+	<key>LABEL_OK_BTN</key>
+	<string>OK</string>
+	<key>LABEL_QUICK_EXPENSE</key>
+	<string>Наличные средства</string>
+	<key>LABEL_REGISTER_ENTER_PIN</key>
+	<string>Введите ПИН-код</string>
+	<key>LABEL_REGISTER_PASSWORD</key>
+	<string>Пароль</string>
+	<key>LABEL_REGISTER_REENTER_PIN</key>
+	<string>Повторно введите ПИН-код</string>
+	<key>LABEL_REGISTER_SIGN_IN</key>
+	<string>Войти</string>
+	<key>LABEL_SAVE_BTN</key>
+	<string>Сохранить</string>
+	<key>LABEL_SEND_BTN</key>
+	<string>Отправить</string>
+	<key>LABEL_SETTINGS</key>
+	<string>Настройки</string>
+	<key>LABEL_SETTINGS_VIEW_APP_INFO</key>
+	<string>Сведения о приложении</string>
+	<key>LABEL_SETTINGS_VIEW_APP_NAME</key>
+	<string>Имя приложения</string>
+	<key>LABEL_SETTINGS_VIEW_CONNECTION_SETTINGS</key>
+	<string>Параметры подключения</string>
+	<key>LABEL_SETTINGS_VIEW_REMEMBER_USER</key>
+	<string>Сохранить имя пользователя</string>
+	<key>LABEL_SETTINGS_VIEW_SAVE_BTN</key>
+	<string>Сохранить настройки</string>
+	<key>LABEL_SETTINGS_VIEW_TWITTER</key>
+	<string>Показать Twitter</string>
+	<key>LABEL_SETTINGS_VIEW_URI_NON_SSL</key>
+	<string>URI-адрес, не имеющий SSL-сертификата</string>
+	<key>LABEL_SETTINGS_VIEW_URL</key>
+	<string>URI-адрес сервера</string>
+	<key>LABEL_SETTINGS_VIEW_VERSION</key>
+	<string>Версия</string>
+	<key>LABEL_SUBMIT_BTN</key>
+	<string>Отправить</string>
+	<key>LABEL_TAXI</key>
+	<string>Такси</string>
+	<key>LABEL_TRAVEL</key>
+	<string>Поездка</string>
+	<key>LABEL_TRIPS</key>
+	<string>Поездки</string>
+	<key>LABEL_VENDOR_ADDR_CODE</key>
+	<string>Код адреса:</string>
+	<key>LABEL_VENDOR_CODE</key>
+	<string>Код поставщика услуг</string>
+	<key>LAST_NAME</key>
+	<string>Фамилия</string>
+	<key>LNA_LOADING_TEXT</key>
+	<string>Выполняется получение вашего текущего местоположения...</string>
+	<key>LOCATION_NOT_FOUND_MSG</key>
+	<string>Ваше текущее местоположение установить не удалось.</string>
+	<key>LOGIN</key>
+	<string>Войти</string>
+	<key>LOG_UNAVAILABLE_MSG</key>
+	<string>Регистрационные данные недоступны</string>
+	<key>LOW_RESOLUTION_IMAGE</key>
+	<string>Низкое разрешение (320 x 320 пикселей)</string>
+	<key>Last Name</key>
+	<string>Фамилия</string>
+	<key>Last updated</key>
+	<string>Последний обновленный %@</string>
+	<key>Last updated on</key>
+	<string>Последнее обновление произведено:</string>
+	<key>Layover in</key>
+	<string>Остановка для стыковки рейсов в</string>
+	<key>Learn More</key>
+	<string>Подробнее</string>
+	<key>Least Preferred</key>
+	<string>Наименее предпочтительные</string>
+	<key>Legs: token</key>
+	<string>Участки: %@</string>
+	<key>Link Dropbox</key>
+	<string>Связаться с общим банком данных Dropbox</string>
+	<key>Link Success</key>
+	<string>Связь установлена успешно</string>
+	<key>Link to TripIt</key>
+	<string>Ссылка к программе TripIt</string>
+	<key>Link with TripIt</key>
+	<string>Связь с программой TripIt</string>
+	<key>Link with TripIt Header</key>
+	<string>Подключитесь к программе TripIt и введите ваши поездки в отчеты о расходах.</string>
+	<key>Linked to Dropbox</key>
+	<string>Установлена связь с общим банком данных Dropbox</string>
+	<key>List</key>
+	<string>Список</string>
+	<key>List of your expenses</key>
+	<string>Список ваших расходов</string>
+	<key>Load Logs</key>
+	<string>Загрузить журналы регистрации</string>
+	<key>Load more hotels</key>
+	<string>Загрузить больше названий гостиниц...</string>
+	<key>Loading Data</key>
+	<string>Выполняется загрузка данных</string>
+	<key>Loading Image</key>
+	<string>Выполняется загрузка изображения</string>
+	<key>Loading Receipt Image(s)</key>
+	<string>Выполняется загрузка изображения(-й) квитанции(-й)</string>
+	<key>Loading Receipts</key>
+	<string>Выполняется загрузка квитанций</string>
+	<key>Loading Stations</key>
+	<string>Выполняется загрузка станций</string>
+	<key>Loading Trip</key>
+	<string>Выполняется загрузка поездки</string>
+	<key>Loading delivery options</key>
+	<string>Загрузка вариантов доставки</string>
+	<key>Loading more Hotels</key>
+	<string>Выполняется загрузка дополнительных гостиниц</string>
+	<key>Loading trip data</key>
+	<string>Выполняется загрузка данных поездки</string>
+	<key>Loading...</key>
+	<string>Выполняется загрузка ...</string>
+	<key>Location</key>
+	<string>Местоположение</string>
+	<key>Location Check Offline</key>
+	<string>Ваше местоположение не может быть проверено до тех пор, пока вы работаете в автономном режиме. Попытайтесь, пожалуйста, позже.</string>
+	<key>Location Not Found</key>
+	<string>Место не найдено</string>
+	<key>Location Required</key>
+	<string>Требуется местоположение</string>
+	<key>Log</key>
+	<string>Журнал регистрации</string>
+	<key>Log Saved</key>
+	<string>Журнал регистрации сохранен</string>
+	<key>Log Unavailable</key>
+	<string>Журнал регистрации недоступен</string>
+	<key>Log out from Concur Mobile</key>
+	<string>Выйти из мобильного приложения сервиса Concur</string>
+	<key>Log out from SmartExpense</key>
+	<string>Выход из программы SmartExpense</string>
+	<key>Logging In</key>
+	<string>Выполняется регистрация входа в систему</string>
+	<key>Login Settings</key>
+	<string>Настройки входа</string>
+	<key>Logout</key>
+	<string>Выйти из системы</string>
+	<key>Looks like we are experience some difficulties. Please check back in a few minutes.</key>
+	<string>Похоже, мы испытывать некоторые трудности. Пожалуйста, проверьте еще в течение нескольких минут.</string>
+	<key>Luxury</key>
+	<string>Класс «люкс»</string>
+	<key>MAP</key>
+	<string>Вид «карта»</string>
+	<key>MAPVIEW_ACCESS_DENIED</key>
+	<string>Извините, но для составления маршрута сервису Concur требуется доступ к вашему местоположению. Активируйте службу локализации для сервиса Concur.</string>
+	<key>MAPVIEW_LOCATION_UNKNOWN</key>
+	<string>К сожалению, ваше нынешнее местоположение в настоящее время неизвестно, но сервис Concur будет продолжать попытки найти вас.</string>
+	<key>MAPVIEW_NETWORK_ERROR</key>
+	<string>К сожалению, сервис Concur не может установить ваше нынешнее местоположение. Проверьте, пожалуйста, свое подключение к сети и убедитесь, что Авиарежим отключен.</string>
+	<key>MAPVIEW_UNKNOWN_ERROR</key>
+	<string>К сожалению, сервис Concur не может установить ваше нынешнее местоположение. Проверьте, пожалуйста, свое подключение к сети, убедитесь, что служба локализации активирована, а Авиарежим отключен.</string>
+	<key>MEDIUM_RESOLUTION_IMAGE</key>
+	<string>Среднее разрешение (640 x 640 пикселей)</string>
+	<key>MLIST_FIELD_EDIT_NOT_SUPPORT</key>
+	<string>Редактирование этого поля подключенного списка в настоящее время не поддерживается. Используйте вместо этого сеть CTE.</string>
+	<key>MLIST_MRU_NOT_SUPPORT</key>
+	<string>Выбор последних использованных элементов списка не поддерживается для этого поля. Вместо этого используйте функцию CTE web.</string>
+	<key>MOBILE_DISABLED_MSG</key>
+	<string>Ваша компания отключила сервис Concur для мобильных устройств. Обратитесь, пожалуйста, к администратору.</string>
+	<key>MODULE_DISABLED_ALERT_TEXT</key>
+	<string>Ваша компания отключила эту функцию для мобильных устройств.</string>
+	<key>MODULE_DISABLED_ALERT_TITLE</key>
+	<string>Функция отключена</string>
+	<key>MSG_ADDITIONAL_RECEIPT_NOT_REQUIRED</key>
+	<string>Дополнительные квитанции не требуются.</string>
+	<key>MSG_APPROVE_INVOICE_AREYOUSURE</key>
+	<string>Вы действительно хотите утвердить этот счет?</string>
+	<key>MSG_NO_INVOICE_DETAIL</key>
+	<string>Детали счета отсутствуют</string>
+	<key>MSG_NO_INVOICE_TO_APPROVE</key>
+	<string>Нет счета к утверждению</string>
+	<key>MSG_RECEIPT_NOT_REQUIRED</key>
+	<string>Квитанции не требуются.</string>
+	<key>MSG_RECEIPT_REQUIRED</key>
+	<string>Напоминание: требуются квитанции!</string>
+	<key>MSG_REPORT_SUBMISSION</key>
+	<string>Если вы еще не представили квитанцию, посетите, пожалуйста, вебсайт программы Concur. Если вы уже сделали это, можете отправить отчет сейчас.</string>
+	<key>MSG_TRAIN_SELL_NOT_READY</key>
+	<string>Заказ билетов на поезда еще не осуществляется. У вас будет возможность заказать билеты на поезд в одной из более поздних версий.</string>
+	<key>MSG_WAIT_FETCHING_INFO</key>
+	<string>Мы выполняем выборку информации для отправки отчета. Подождите, пожалуйста, и попытайтесь снова.</string>
+	<key>Mail Queued</key>
+	<string>Почта поставлена в очередь</string>
+	<key>Mail Saved</key>
+	<string>Почта сохранена</string>
+	<key>Mail Unavailable</key>
+	<string>Почта недоступна</string>
+	<key>Manage Receipts</key>
+	<string>Управление квитанциями</string>
+	<key>Manage Violations</key>
+	<string>Управление нарушениями</string>
+	<key>ManageYourAuthorizations</key>
+	<string>Управление вашего разрешения</string>
+	<key>Manager approval</key>
+	<string>Разрешение диспетчера</string>
+	<key>Map</key>
+	<string>Карта</string>
+	<key>Map Address</key>
+	<string>Обозначить адрес</string>
+	<key>Matching transactions combined into a single expense</key>
+	<string>Совпадающие операции объединены в единый расход</string>
+	<key>Meal Allowances</key>
+	<string>Питание-надбавок</string>
+	<key>Menu</key>
+	<string>Меню</string>
+	<key>Message Center</key>
+	<string>Центр сообщений</string>
+	<key>Microphone Access Denied</key>
+	<string>В доступе к микрофону отказано</string>
+	<key>Midnight</key>
+	<string>Полночь</string>
+	<key>Mileage</key>
+	<string>Дальность пробега</string>
+	<key>Mini</key>
+	<string>Мини</string>
+	<key>Mini Van</key>
+	<string>Миниавтобус</string>
+	<key>Missing Arrival</key>
+	<string>Отсутствует пункт прибытия</string>
+	<key>Missing Arrival Message</key>
+	<string>Аэропорт прибытия отсутствует. Выберите, пожалуйста, аэропорт прибытия.</string>
+	<key>Missing Departure</key>
+	<string>Отсутствует пункт отправления</string>
+	<key>Missing Departure Message</key>
+	<string>Аэропорт отправления отсутствует. Выберите, пожалуйста, аэропорт отправления.</string>
+	<key>Missing fields</key>
+	<string>Отсутствующие поля</string>
+	<key>Missing required information for Itinerary Stop</key>
+	<string>Отсутствует необходимая информация для остановки маршрута</string>
+	<key>Mobile Disabled</key>
+	<string>Мобильная функция отключена</string>
+	<key>Mobile Expenses</key>
+	<string>Расходы по мобильной связи</string>
+	<key>Mobile Log</key>
+	<string>Программа Mobile Log</string>
+	<key>Mobile Log: iPhone Crash</key>
+	<string>Mobile Log: сбой iPhone</string>
+	<key>Mobile PIN title</key>
+	<string>ПИН-код для мобильной связи</string>
+	<key>Mobile Password (PIN)</key>
+	<string>Мобильный пароль (PIN)</string>
+	<key>Mobile Password (PIN) Reset Link Sent</key>
+	<string>Мобильный пароля (PIN) ссылке</string>
+	<key>Mobile Password (PIN) Successfully Reset</key>
+	<string>Успешно сброса мобильного пароля (PIN)</string>
+	<key>Monday_Short</key>
+	<string>Пн</string>
+	<key>Month of stay</key>
+	<string>Месяц проживания</string>
+	<key>More Help</key>
+	<string>Дополнительная помощь</string>
+	<key>Morning</key>
+	<string>Утро</string>
+	<key>Most Preferred</key>
+	<string>Наиболее предпочтительный</string>
+	<key>Most Recently Used</key>
+	<string>Последние использованные</string>
+	<key>Must log in online first</key>
+	<string>Прежде чем аутентифицироваться для работы в автономном режиме, вам необходимо войти в систему в режиме онлайн.</string>
+	<key>N Stops</key>
+	<string>%d остановок</string>
+	<key>NCOOK</key>
+	<string>Другие без варки</string>
+	<key>NEED_TO_RESET_PASSWORD</key>
+	<string>Восстановите свой пароль, после чего войдите в систему. Если у вас возникнут трудности, обратитесь к своему администратору.</string>
+	<key>NEED_TO_RESET_PIN</key>
+	<string>Восстановите свой ПИН-код, после чего войдите в систему. Если у вас возникнут трудности, обратитесь к своему администратору.</string>
+	<key>NIGHTS_TOO_LARGE_ERR_MSG</key>
+	<string>Детализировать расходы за 90 дней или менее</string>
+	<key>NON_REFUNDABLE_WARN_MSG</key>
+	<string>Клиенты, которые приобрели билеты, НЕ ПОДЛЕЖАЩИЕ ВОЗВРАТУ, могут отменить свою поездку и снова использовать эти билеты для перелета в любой пункт назначения самолетами данной авиакомпании, в течение одного года после ДАТЫ ВЫДАЧИ. Заказ ДОЛЖЕН быть отменен до предполагаемой (первоначальной) даты отправления, в противном случае билеты будут считаться недействительными и НЕ будут иметь какой-либо ценности для будущего использования. Эти правила применяются только при оформлении билетов ВНУТРИ СТРАНЫ. Все равно выбрать эти рейсы?</string>
+	<key>NO_RATES_SOLD_OUT_USER_MESSAGE</key>
+	<string>Нет номера этого отеля доступны для указанной даты. Пожалуйста, выберите другой отель.</string>
+	<key>NO_RECEIPTS_NEG</key>
+	<string>Квитанции отсутствуют</string>
+	<key>NO_RECEIPT_FOUND</key>
+	<string>Квитанции на сервере не найдены. Если вы уже вложили квитанцию в отчет, вернитесь, пожалуйста, позже и проверьте снова.</string>
+	<key>NO_RECEIPT_MSG</key>
+	<string>Как минимум у одного из выбранных расходов отсутствует квитанция.</string>
+	<key>NO_RECEIPT_NEG</key>
+	<string>Без квитанции</string>
+	<key>NO_REPORTRECEIPT_NEG</key>
+	<string>К расходам не приложена квитанция</string>
+	<key>NUMBER_OF_ROOMS</key>
+	<string>Количество номеров</string>
+	<key>NUMERIC_TOO_BIG_ERR_MSG</key>
+	<string>Номер слишком длинный</string>
+	<key>NUMERIC_VALIDATION_ERR_MSG</key>
+	<string>Это поле требует ввода численного значения.</string>
+	<key>Navigator</key>
+	<string>Навигатор</string>
+	<key>Network Error</key>
+	<string>Ошибка сети</string>
+	<key>New Attendee</key>
+	<string>Новый участник</string>
+	<key>New Mobile Password (PIN)</key>
+	<string>Новый Мобильный пароль (PIN)</string>
+	<key>New Password</key>
+	<string>Новый пароль</string>
+	<key>New Report</key>
+	<string>Новый отчет</string>
+	<key>Next</key>
+	<string>Вперед</string>
+	<key>Nightly Lodging Expenses</key>
+	<string>Расходы на ночлег</string>
+	<key>No</key>
+	<string>Нет</string>
+	<key>No Active Reports</key>
+	<string>В настоящее время у вас нет активных отчетов</string>
+	<key>No Active Trips</key>
+	<string>Активные поездки отсутствуют</string>
+	<key>No Attendee Found</key>
+	<string>Участники не найдены</string>
+	<key>No Attendee Type Available</key>
+	<string>Невозможно добавить участников, так как для этого вида расхода действительные типы участников отсутствуют.</string>
+	<key>No Attendees</key>
+	<string>Участники отсутствуют</string>
+	<key>No Card Charges</key>
+	<string>Неиспользованные начисления на карточке отсутствуют.</string>
+	<key>No Comments</key>
+	<string>Комментарии отсутствуют</string>
+	<key>No Credit Card</key>
+	<string>Данные кредитной карточки отсутствуют</string>
+	<key>No Delivery Option</key>
+	<string>Вариант доставки отсутствует</string>
+	<key>No Email in Profile</key>
+	<string>Нет электронной почты в профиле</string>
+	<key>No Email(s)</key>
+	<string>Сообщений электронной почты нет</string>
+	<key>No Expenses</key>
+	<string>Расходы отсутствуют</string>
+	<key>No Flights Found</key>
+	<string>Рейсы не найдены</string>
+	<key>No Itemization</key>
+	<string>Детализация отсутствует</string>
+	<key>No Matching Cars</key>
+	<string>Соответствующие автомобили отсутствуют</string>
+	<key>No Network Connection</key>
+	<string>Отсутствует подключение к сети</string>
+	<key>No Out of Pocket Expenses</key>
+	<string>Расходы отсутствуют</string>
+	<key>No Rates</key>
+	<string>Расценки отсутствуют</string>
+	<key>No Receipts</key>
+	<string>Организуйте все ваши квитанции в одном месте, что позволит содержать в порядке фотоальбом. Папка квитанций ведет учет квитанций, используемых в расходах. Вы также можете копировать квитанции из своего фотоальбома в папку квитанций или делать новые фотографии квитанций и хранить их в ней.</string>
+	<key>No Reports</key>
+	<string>Отчеты отсутствуют</string>
+	<key>No Results</key>
+	<string>Результаты отсутствуют</string>
+	<key>No Segments Selected</key>
+	<string>Не выбраны сегменты</string>
+	<key>No Shows</key>
+	<string>Неявившиеся к вылету</string>
+	<key>No Shows Tip</key>
+	<string>Введите число %@.</string>
+	<key>No TripIt Trips</key>
+	<string>Поездки, заказанные с использованием программы TripIt, отсутствуют</string>
+	<key>No Trips</key>
+	<string>Поездки отсутствуют</string>
+	<key>No date specified</key>
+	<string>Не указана дата</string>
+	<key>No email(s) were specified for the invite</key>
+	<string>В приглашении не указан(-ы) адрес(-а) электронной почты</string>
+	<key>No items to upload</key>
+	<string>Элементы для загрузки отсутствуют</string>
+	<key>No matching cars were found.  Please modify your search criteria and try again.</key>
+	<string>Соответствующие автомобили отсутствуют. Измените критерии поиска и попытайтесь снова.</string>
+	<key>No new twitter message</key>
+	<string>Новых twitter-сообщений нет</string>
+	<key>No preference</key>
+	<string>Нет предпочтений</string>
+	<key>No trains were found</key>
+	<string>Поезда не были найдены</string>
+	<key>No trip segments have been selected</key>
+	<string>Сегменты поездки не выбраны</string>
+	<key>Non-smoking</key>
+	<string>Для некурящих</string>
+	<key>None</key>
+	<string>Отсутствует</string>
+	<key>Nonstop</key>
+	<string>Без остановок</string>
+	<key>Not Available</key>
+	<string>Не доступно</string>
+	<key>Not Filed Reports</key>
+	<string>Отчеты</string>
+	<key>Not Linked</key>
+	<string>Не связан</string>
+	<key>Not Preferred</key>
+	<string>Не предпочтительные</string>
+	<key>Not Provided</key>
+	<string>Не предоставляется</string>
+	<key>Not Sure</key>
+	<string>Не уверен(-а)</string>
+	<key>Now</key>
+	<string>Теперь</string>
+	<key>Number Of Nights</key>
+	<string>Количество суток</string>
+	<key>Number of hotels</key>
+	<string>Количество гостиниц</string>
+	<key>Number of schedules found: token</key>
+	<string>Найдено расписаний: %d</string>
+	<key>OFFLINE_MSG</key>
+	<string>Вы работаете в автономном режиме. Подождите, пожалуйста, до тех пор, пока вы не будете подключены к сети, чтобы отправить отчет.</string>
+	<key>OK</key>
+	<string>OK</string>
+	<key>OR</key>
+	<string>ИЛИ</string>
+	<key>OUT_OF_POCKET_FORM</key>
+	<string>Расход</string>
+	<key>OUT_OF_POCKET_FORM_VIEW_CONFIRM_SPLIT_SMART_EXPENSE_MESSAGE</key>
+	<string>Вы действительно хотите разделить начисление на карточку в записи, полученной с мобильного устройства?</string>
+	<key>OUT_OF_POCKET_FORM_VIEW_CONFIRM_SPLIT_SMART_EXPENSE_TITLE</key>
+	<string>Подтвердите, пожалуйста</string>
+	<key>OUT_OF_POCKET_FORM_VIEW_SPLIT_SMART_EXPENSE_BUTTON_TITLE</key>
+	<string>Разделение по программе Smart Expense</string>
+	<key>OUT_OF_POCKET_LIST</key>
+	<string>Расходы</string>
+	<key>Off</key>
+	<string>Выкл.</string>
+	<key>Off Airport</key>
+	<string>Вне аэропорта</string>
+	<key>Offers</key>
+	<string>Предложения</string>
+	<key>Office</key>
+	<string>Офис</string>
+	<key>Office Locations</key>
+	<string>Офисы</string>
+	<key>Offline</key>
+	<string>Автономный режим</string>
+	<key>Offline limits features</key>
+	<string>Ваше устройство в настоящее время работает в автономном режиме. Некоторые функции не будут доступны.</string>
+	<key>Ok let's start over. What Hotel can I find for you</key>
+	<string>Хорошо, давайте начнем сначала. Какую гостиницу найти для вас?</string>
+	<key>Old Trips</key>
+	<string>Прошлые</string>
+	<key>On</key>
+	<string>Вкл.</string>
+	<key>One Way</key>
+	<string>В одном направлении</string>
+	<key>Open the email from this device to reset your mobile password (PIN) and sign in.</key>
+	<string>Открытое письмо от этого устройства для сброса пароля мобильный (контактный) и войдите в систему.</string>
+	<key>Open the email from this device to reset your password and sign in.</key>
+	<string>Открытое письмо от этого устройства, чтобы сбросить свой пароль и войдите в систему.</string>
+	<key>Operated By</key>
+	<string>Выполняемый авиакомпанией</string>
+	<key>Operated by</key>
+	<string>Выполняемый авиакомпанией</string>
+	<key>Operation Not Supported Offline</key>
+	<string>Эта функция не поддерживается в автономном режиме. Попытайтесь, пожалуйста, снова, когда появится возможность подключения к сети.</string>
+	<key>Or Sign In with...</key>
+	<string>или войдите в систему, используя...</string>
+	<key>Or Sign Up with...</key>
+	<string>Или зарегистрируйтесь, используя...</string>
+	<key>Organization</key>
+	<string>Организация</string>
+	<key>Original receipt required</key>
+	<string>Оригинал квитанции требуется</string>
+	<key>Other</key>
+	<string>Социальные и другие</string>
+	<key>Other Allowances</key>
+	<string>Другие пособия</string>
+	<key>Other Reports</key>
+	<string>Другие отчеты</string>
+	<key>Other Room Tax 1</key>
+	<string>Налог 1 на стоимость проживания во втором номере</string>
+	<key>Other Room Tax 2</key>
+	<string>Налог 2 на стоимость проживания во втором номере</string>
+	<key>Out of Pocket Entry has been Saved</key>
+	<string>Пароль сохранен</string>
+	<key>Outbound</key>
+	<string>Отправление</string>
+	<key>P2B_AIR_BOOKING_HEADER_POINTS_DISABLED</key>
+	<string>Станьте более подготовленным в организации поездки! Заказ по цене ниже контрольной цены для сравнения экономит деньги вашей компании.</string>
+	<key>P2B_AIR_BOOKING_HEADER_POINTS_ENABLED</key>
+	<string>Зарабатывайте дорожные баллы, выбирая варианты, стоимость которых ниже контрольной цены для сравнения. При отнесении поездки на расходы отображается общее количество заработанных дорожных баллов, которые вы можете использовать в счет будущих льгот.</string>
+	<key>PDF Receipt</key>
+	<string>Квитанция в формате PDF</string>
+	<key>PENDING_REQUIRED_TRAVEL_CUSTOM_FIELDS</key>
+	<string>Перед тем, как продолжить, заполните все обязательные поля данных резервирования</string>
+	<key>PER_VARIABLE_NO_RATES</key>
+	<string>Отсутствуют расценки, установленные на указанный день</string>
+	<key>PIN</key>
+	<string>ПИН-код</string>
+	<key>PIN Tip</key>
+	<string>Если вы не знаете свои регистрационные данные, войдите в свой веб-аккаунт в программе Concur и перейдите в раздел «Профиль &gt; Регистрация мобильного устройства». Пользователи программы Concur Breeze должны перейти в раздел «Мой аккаунт &gt; ПИН-код мобильного устройства». За дополнительной помощью обратитесь к администратору компании.</string>
+	<key>PIN has been reset successfully</key>
+	<string>ПИН-код успешно восстановлен</string>
+	<key>PIN_EXPIRED</key>
+	<string>Срок действия вашего ПИН-кода истек. Зарегистрируйте свой ПИН-код снова, а затем войдите а систему.</string>
+	<key>PIN_MOBILE_NOTES</key>
+	<string>Этот ПИН-код предназначен только для мобильного приложения сервиса Concur.</string>
+	<key>PLEASE_SELECT_VALUE</key>
+	<string>Выберите вариант из списка.</string>
+	<key>PRICE_TO_BEAT_AIR_RESULTS_HEADER</key>
+	<string>Заказ авиабилета, стоимость которого ниже контрольной цены для сравнения, позволяет вам зарабатывать дорожные баллы, которые вы можете использовать позже!</string>
+	<key>PRICE_TO_BEAT_AIR_SEARCH_HEADER</key>
+	<string>Зарабатывайте дорожные баллы и тем самым экономьте деньги! Введите ниже критерии поиска авиарейсов, чтобы при заказе билета на самолет найти контрольную цену для сравнения.</string>
+	<key>PRICE_TO_BEAT_DISABLED_AIR_RESULTS_HEADER</key>
+	<string>Заказ авиабилета, стоимость которого ниже контрольной цены для сравнения, экономит деньги вашей компании!</string>
+	<key>PRICE_TO_BEAT_DISABLED_AIR_SEARCH_HEADER</key>
+	<string>Будьте более подготовленным в организации поездки! Введите ниже критерии поиска авиарейсов, чтобы при заказе билета на самолет найти контрольную цену для сравнения</string>
+	<key>PRICE_TO_BEAT_DISABLED_HOTEL_RESULTS_HEADER</key>
+	<string>Бронирование номера, стоимость которого ниже контрольной цены для сравнения, экономит деньги вашей компании!</string>
+	<key>PRICE_TO_BEAT_DISABLED_HOTEL_SEARCH_HEADER</key>
+	<string>Будьте более подготовленным в организации поездки! Введите ниже критерии поиска гостиницы, чтобы при бронировании номера найти контрольную цену для сравнения.</string>
+	<key>PRICE_TO_BEAT_HOTEL_RESULTS_HEADER</key>
+	<string>Бронирование номера, стоимость которого ниже контрольной цены для сравнения, позволяет вам зарабатывать дорожные баллы, которые вы можете использовать позже!</string>
+	<key>PRICE_TO_BEAT_HOTEL_SEARCH_HEADER</key>
+	<string>Зарабатывайте дорожные баллы и тем самым экономьте деньги! Введите ниже критерии поиска гостиницы, чтобы при бронировании номера найти контрольную цену для сравнения.</string>
+	<key>PROCEED_TO_ADD_MSG</key>
+	<string>Вы можете продолжить и добавить их в отчет, но вам потребуется вложить квитанцию через вебсайт.</string>
+	<key>PWD</key>
+	<string>Пароль</string>
+	<key>PWD_LOGIN</key>
+	<string>Зарегистрироваться</string>
+	<key>Paid Reports</key>
+	<string>Отчеты по уплате</string>
+	<key>Passenger</key>
+	<string>Пассажирский</string>
+	<key>PassengerCount</key>
+	<string>Число пассажиров</string>
+	<key>Passengers</key>
+	<string>Пассажиры</string>
+	<key>Password</key>
+	<string>Пароль</string>
+	<key>Password Expired</key>
+	<string>Срок действия пароля истек</string>
+	<key>Password Reset Link Sent</key>
+	<string>Ссылка для восстановления пароля отправлена</string>
+	<key>Password Successfully Reset</key>
+	<string>Пароль успешно сброшен</string>
+	<key>Passwords Don't Match</key>
+	<string>Пароли не совпадают</string>
+	<key>Personal Car Mileage</key>
+	<string>Пробег личного автомобиля</string>
+	<key>PersonalCardCount_0</key>
+	<string>У вас отсутствуют начисления на неиспользованной карточке с %@</string>
+	<key>PersonalCardCount_1</key>
+	<string>У вас имеется 1 неиспользованное начисление на карточке от %@</string>
+	<key>PersonalCardCount_2</key>
+	<string>У вас имеется %d неиспользованных начислений на карточке от %@</string>
+	<key>Phone</key>
+	<string>Телефон</string>
+	<key>Photo Album</key>
+	<string>Вложить из фотоальбома</string>
+	<key>Pick-up</key>
+	<string>Получение</string>
+	<key>Pick-up Date</key>
+	<string>Дата получения</string>
+	<key>Pick-up Time</key>
+	<string>Время получения</string>
+	<key>Pickup</key>
+	<string>Грузовик-пикап</string>
+	<key>Pickup Location</key>
+	<string>Место получения</string>
+	<key>Please Confirm</key>
+	<string>Подтвердите, пожалуйста</string>
+	<key>Please Enter Your Email Address</key>
+	<string>Введите ваш рабочий адрес электронной почты</string>
+	<key>Please Select To View</key>
+	<string>Выберите, чтобы просмотреть</string>
+	<key>Please Specify Program</key>
+	<string>Укажите программу</string>
+	<key>Please Wait</key>
+	<string>Подождите, пожалуйста</string>
+	<key>Please address policy violations</key>
+	<string>Устраните нарушения правил</string>
+	<key>Please check your connection and retry later.</key>
+	<string>Проверьте, пожалуйста, подключение к сети и повторите попытку позже.</string>
+	<key>Please enter a justification for booking this car.</key>
+	<string>Введите обоснование для резервирования этого автомобиля.</string>
+	<key>Please enter a justification for this booking.</key>
+	<string>Введите обоснование для этого заказа.</string>
+	<key>Please enter and confirm the PIN</key>
+	<string>Введите и подтвердите свой ПИН-код</string>
+	<key>Please enter in your distance</key>
+	<string>Введите ваше расстояние</string>
+	<key>Please enter values for required fields</key>
+	<string>Перед сохранением введите значения для обязательных полей, выделенных красным цветом.</string>
+	<key>Please fill in the missing required fields before saving the entry.</key>
+	<string>Перед тем, как сохранить запись, просьба заполнить незаполненные обязательные поля.</string>
+	<key>Please follow the instructions in the email</key>
+	<string>Следуйте, пожалуйста, указаниям, содержащимся в сообщении электронной почты, которое вы получили по программе TripIt при создании своей учетной записи.</string>
+	<key>Please log in to SmartExpense and then link your accounts together.</key>
+	<string>Войдите в программу SmartExpense, а затем свяжите свои аккаунты.</string>
+	<key>Please log in to SmartExpense using the same account already linked to TripIt.</key>
+	<string>Войдите в программу SmartExpense, используя тот аккаунт, который уже связан с программой TripIt.</string>
+	<key>Please select a destination location</key>
+	<string>Пожалуйста, выберите место назначения</string>
+	<key>Please select a report or create a new report first</key>
+	<string>Выберите отчет или вначале создайте новый отчет</string>
+	<key>Please select a starting location</key>
+	<string>Пожалуйста, выберите начальное расположение</string>
+	<key>Please specify</key>
+	<string>Уточните, пожалуйста</string>
+	<key>Please specify a location.</key>
+	<string>Укажите местоположение.</string>
+	<key>Please try again and use the link within 24 hours of receipt.</key>
+	<string>Пожалуйста, попробуйте еще раз и используйте ссылку в течение 24 часов с момента получения.</string>
+	<key>Please type a description into this email message describing what you were doing when the application crashed.  For example: I was uploading an expense receipt.</key>
+	<string>Опишите в этом сообщении электронной почты что вы делали в тот момент, когда произошел сбой в работе приложения. Например: я загружал(-а) квитанцию о расходе</string>
+	<key>Please verify your email</key>
+	<string>Проверьте, пожалуйста, свою электронную почту</string>
+	<key>Please verify your email address</key>
+	<string>Проверьте, пожалуйста, свой адрес электронной почты</string>
+	<key>Please wait for your verification email to continue the registration process.</key>
+	<string>Перед тем, как продолжить процесс регистрации, подождите, пожалуйста, до получения проверочного сообщения электронной почты.</string>
+	<key>Please wait until online to edit field</key>
+	<string>Эти поля нельзя редактировать в автономном режиме.</string>
+	<key>Please wait until you are online to login</key>
+	<string>Подождите, пожалуйста, до тех пор, пока вы не будете подключены к сети, и зарегистрируйте вход в систему.</string>
+	<key>Points or Approval</key>
+	<string>Баллы или Утверждение</string>
+	<key>Popular Cards</key>
+	<string>Популярные карты</string>
+	<key>Post Trip</key>
+	<string>Провести поездку</string>
+	<key>Preferred</key>
+	<string>Предпочтительные</string>
+	<key>Preferred Vendors</key>
+	<string>Предпочтительные поставщики услуг</string>
+	<key>Premium</key>
+	<string>Класс «люкс»</string>
+	<key>Premium Economy</key>
+	<string>Малоразмерный автомобиль повышенного класса</string>
+	<key>Prev</key>
+	<string>Назад</string>
+	<key>Preview</key>
+	<string>Предварительный просмотр</string>
+	<key>Previous</key>
+	<string>Предыдущий</string>
+	<key>Price</key>
+	<string>Цена</string>
+	<key>Price to Beat</key>
+	<string>Контрольная цена для сравнения</string>
+	<key>Print</key>
+	<string>Распечатать</string>
+	<key>Proceed to Sign In</key>
+	<string>Продолжить вход в систему</string>
+	<key>Property</key>
+	<string>Свойство</string>
+	<key>Provided</key>
+	<string>Условии</string>
+	<key>Pull to Refresh</key>
+	<string>Обновите страницу жестом Pull to Refresh</string>
+	<key>Purchase Requests</key>
+	<string>Запросы о покупке</string>
+	<key>Quick Expense</key>
+	<string>Быстрый расход</string>
+	<key>Quick Search</key>
+	<string>Быстрый поиск</string>
+	<key>Quick Tips</key>
+	<string>Быстрые подсказки</string>
+	<key>RECEIPT</key>
+	<string>Квитанция</string>
+	<key>RECEIPT_CELL_TITLE</key>
+	<string>Квитанция</string>
+	<key>RECEIPT_DETAIL_NO_DATA_INSTRUCTION</key>
+	<string>Или же отправьте цифровые квитанции из вашего аккаунта %@ по адресу receipts@smartexpense.com</string>
+	<key>RECEIPT_IMG_UPLOADED</key>
+	<string>Изображение квитанции загружено</string>
+	<key>RECEIPT_IMG_UPLOADING</key>
+	<string>Выполняется загрузка изображения квитанции</string>
+	<key>RECEIPT_MANAGER</key>
+	<string>Папка квитанций</string>
+	<key>RECEIPT_MANAGER_IMAGES</key>
+	<string>Папка квитанций</string>
+	<key>RECEIPT_MIGRATE_MSG</key>
+	<string>У вас имеется %d нераспределенных квитанций расходов, сохраненных локально в папке документов программы Concur Mobile. Хотите ли вы скопировать изображения нераспределенных квитанций в фотоальбом на iPhone?</string>
+	<key>RECEIPT_MIGRATION_STATUS_MSG</key>
+	<string>В фотоальбом скопировано %d из %d квитанций</string>
+	<key>RECEIPT_MIGRATION_WAIT_MSG</key>
+	<string>Выполняется копирование изображения. Завершение работы приложения или выход из него в данный момент может привести к потере изображений.</string>
+	<key>RECEIPT_NOT_ON_SERVER</key>
+	<string>На сервере показано, что к этому расходу приложена квитанция, но в Менеджере счетов эта квитанция больше не существует</string>
+	<key>RECEIPT_STORE_HELP_TEXT</key>
+	<string>Загрузите ваши квитанции в хранилище квитанций. Затем откройте отчет или запись расхода и прикрепите квитанцию.</string>
+	<key>RECEIPT_STORE_NO_DATA_INSTRUCTION</key>
+	<string>Вы также можете отправлять цифровые квитанции из своего аккаунта %@ по адресу receipts@smartexpense.com</string>
+	<key>RECEIPT_VIEWER</key>
+	<string>Средство просмотра квитанций</string>
+	<key>REGISTER</key>
+	<string>Введите ПИН-код</string>
+	<key>REGISTERED_EMAIL</key>
+	<string>Рабочий адрес электронной почты</string>
+	<key>REGISTER_MSG</key>
+	<string>Чтобы получить помощь, войдите в веб-версию программы Concur и перейдите в раздел «Профиль &gt; Регистрация мобильного устройства».</string>
+	<key>REGISTER_PINS_DIFF_ERR</key>
+	<string>ПИН-коды отличаются. Повторите ввод ПИН-кодов.</string>
+	<key>REPORTS</key>
+	<string>Список отчетов</string>
+	<key>REPORTS_TO_SUBMIT</key>
+	<string>%d отчет(-а, -ов) к утверждению</string>
+	<key>REPORT_DETAIL</key>
+	<string>Отчет</string>
+	<key>REPORT_DETAIL_RECEIPTS</key>
+	<string>Квитанции</string>
+	<key>REPORT_NAME_TIP</key>
+	<string>Введите имя нового отчета</string>
+	<key>REPORT_REQ_FIELDS</key>
+	<string>Перед тем, как сохранить введенные данные, заполните все обязательные поля и исправьте в форме все имеющиеся ошибки.</string>
+	<key>REPORT_TA_ITINERARY</key>
+	<string>Командировочная квота</string>
+	<key>REPORT_TA_ITINERARY_ADD</key>
+	<string>Расход по квоте</string>
+	<key>RESET_PASSWORD_FAILED</key>
+	<string>При сбросе вашего пароля произошел сбой</string>
+	<key>RESET_PASSWORD_SUCCEEDED</key>
+	<string>Вскоре вы получите электронное письмо с инструкцией по восстановлению пароля.</string>
+	<key>RESET_PASSWORD_USER_NOT_EXIST</key>
+	<string>Пользователь отсутствует в системе. Убедитесь в том, что вы завершили процесс регистрации, прежде чем щелкнуть кнопкой мыши на ссылке «Восстановить пароль»</string>
+	<key>ROLE_DISABLED_ALERT_TITLE</key>
+	<string>Функция отключена</string>
+	<key>ROLE_DISABLED_TEXT</key>
+	<string>Эта функция недоступна для вашей компании или роли.</string>
+	<key>RPT_NO_ENTRY_INSTRUCTION_1</key>
+	<string>В этом отчете о расходах отсутствуют какие-либо расходы. Для того чтобы отправить отчет, вы должны создать или загрузить хотя бы один расход.</string>
+	<key>RPT_NO_ENTRY_INSTRUCTION_2</key>
+	<string>Для создания или загрузки расхода коснитесь значка + ниже.</string>
+	<key>RPT_QUIT_CONFIRM_MSG</key>
+	<string>Хотите ли вы вначале сохранить этот отчет?</string>
+	<key>RPT_SAVE_CONFIRM_MSG</key>
+	<string>Если вы продолжите, внесенные изменения могут быть потеряны. Хотите ли вы сохранить эти изменения?</string>
+	<key>Rail</key>
+	<string>Железнодорожный</string>
+	<key>Rail Rule Violation</key>
+	<string>Нарушение правила заказа железнодорожных билетов</string>
+	<key>Rail cancelled from mobile device</key>
+	<string>Заказ железнодорожного билета отменен с мобильного устройства</string>
+	<key>Rail violation justification is missing</key>
+	<string>Перед резервированием места в этом поезде в нарушение правил компании вы должны ввести обоснование в поле, выделенное красным цветом.</string>
+	<key>Rail violation reason and justification are missing</key>
+	<string>Перед резервированием мест в этом поезде в нарушение правил компании вы должны ввести причину и обоснование в выделенные красным цветом поля.</string>
+	<key>Rail violation reason is missing</key>
+	<string>Перед резервированием мест в этом поезде в нарушение правил компании вы должны ввести обоснование в поле, выделенное красным цветом.</string>
+	<key>Rail_subline</key>
+	<string>Забронируй место в вагоне и поезжай</string>
+	<key>Rate It!</key>
+	<string>Оцените это!</string>
+	<key>Rate Location:</key>
+	<string>Местоположение курса:</string>
+	<key>Rating</key>
+	<string>Оценка</string>
+	<key>Re-enter Password</key>
+	<string>Введите пароль повторно</string>
+	<key>Recalculate Allowances</key>
+	<string>Пересчет пособий</string>
+	<key>Recall</key>
+	<string>Вызвать повторно</string>
+	<key>Recall Failed</key>
+	<string>Сбой повторного вызова</string>
+	<key>Receipt</key>
+	<string>Квитанция</string>
+	<key>Receipt Capture</key>
+	<string>Фотография квитанции</string>
+	<key>Receipt Folder</key>
+	<string>Папка квитанций</string>
+	<key>Receipt Images</key>
+	<string>Подтверждающие документы</string>
+	<key>Receipt Queued</key>
+	<string>Квитанция поставлена в очередь</string>
+	<key>Receipt Store</key>
+	<string>Хранилище квитанций</string>
+	<key>Receipt image required</key>
+	<string>Требуется изображение квитанции</string>
+	<key>Receipt upload complete</key>
+	<string>Загрузка квитанции завершена</string>
+	<key>Receipt upload failed</key>
+	<string>При загрузке расхода произошел сбой</string>
+	<key>Receipt uploaded</key>
+	<string>Квитанция загружена</string>
+	<key>ReceiptUploadFailMsg</key>
+	<string>В настоящее время невозможно сохранить квитанцию. Попытайтесь, пожалуйста, сделать это позже.</string>
+	<key>Receipts</key>
+	<string>Квитанции</string>
+	<key>Receipts cannot be added offline</key>
+	<string>Квитанции нельзя вводить в автономном режиме.</string>
+	<key>Recommendation</key>
+	<string>Вариант</string>
+	<key>Recommended</key>
+	<string>Предложенный вариант</string>
+	<key>Recurring Charges (each night)</key>
+	<string>Регулярные начисления (за каждые сутки)</string>
+	<key>Refresh Data</key>
+	<string>Обновить данные</string>
+	<key>Refresh Data Offline</key>
+	<string>Ваши данные не могут быть обновлены в автономном режиме. Попытайтесь, пожалуйста, сделать это позже.</string>
+	<key>Refresh Trip</key>
+	<string>Обновить поездку</string>
+	<key>Refreshing</key>
+	<string>Выполняется обновление</string>
+	<key>Refreshing Data</key>
+	<string>Выполняется обновление данных</string>
+	<key>Refreshing View</key>
+	<string>Выполняется обновление представления</string>
+	<key>Refundable Only</key>
+	<string>Только подлежащие возмещению</string>
+	<key>Regional</key>
+	<string>Региональные</string>
+	<key>Register a credit card</key>
+	<string>Зарегистрировать кредитную карточку</string>
+	<key>Reject</key>
+	<string>Отклонить</string>
+	<key>Rejected</key>
+	<string>Отклонено</string>
+	<key>Rejecting Trip</key>
+	<string>Выполняется отклонение поездки</string>
+	<key>Remaining:</key>
+	<string>Осталось:</string>
+	<key>Removed Link to Dropbox</key>
+	<string>Удалена ссылка к общему банку данных Dropbox</string>
+	<key>Removing entry</key>
+	<string>Выполняется удаление записи</string>
+	<key>Rent a car</key>
+	<string>Взять автомобиль на прокат</string>
+	<key>Replace</key>
+	<string>Заменить</string>
+	<key>Report</key>
+	<string>Отчет</string>
+	<key>Report Approvals</key>
+	<string>Утверждения отчетов</string>
+	<key>Report Comments</key>
+	<string>Комментарии по отчету</string>
+	<key>Report Entry</key>
+	<string>Запись в отчете</string>
+	<key>Report Exceptions</key>
+	<string>Исключения в отчете</string>
+	<key>Report Header</key>
+	<string>Заголовок отчета</string>
+	<key>Report Name</key>
+	<string>Имя отчета</string>
+	<key>Report Not Ready</key>
+	<string>Отчет не готов</string>
+	<key>Report Summary</key>
+	<string>Обобщенные данные отчета</string>
+	<key>Report is open</key>
+	<string>Отчет открыт</string>
+	<key>Reports</key>
+	<string>Отчеты</string>
+	<key>Reports List</key>
+	<string>Список отчетов</string>
+	<key>Reports cannot be approved offline</key>
+	<string>Отчеты не могут утверждаться в автономном режиме.</string>
+	<key>ReportsToApproveRow_0</key>
+	<string>У вас нет отчетов к утверждению</string>
+	<key>ReportsToApproveRow_1</key>
+	<string>У вас есть 1 отчет для утверждения</string>
+	<key>ReportsToApproveRow_2</key>
+	<string>У вас имеется %d отчетов к утверждению</string>
+	<key>Request</key>
+	<string>Запрос</string>
+	<key>Requested</key>
+	<string>Запрошено</string>
+	<key>Requests</key>
+	<string>Запросы</string>
+	<key>Required Fields Missing</key>
+	<string>Отсутствуют обязательные поля</string>
+	<key>Reservation Date</key>
+	<string>Дата резервирования</string>
+	<key>Reservation Not Allowed</key>
+	<string>Бронирование не разрешается</string>
+	<key>Reservation Status</key>
+	<string>Статус резервирования</string>
+	<key>Reservation Time</key>
+	<string>Срок резервирования</string>
+	<key>Reserve</key>
+	<string>Зарезервировать</string>
+	<key>Reserve Train</key>
+	<string>Заказать билет на поезд</string>
+	<key>Reserving Car</key>
+	<string>Резервирование автомобиля</string>
+	<key>Reserving Flights</key>
+	<string>Выполняется заказ авиабилетов</string>
+	<key>Reserving Hotel Room</key>
+	<string>Зарезервировать номер</string>
+	<key>Reserving Train</key>
+	<string>Выполняется бронирование места в вагоне поезда</string>
+	<key>Reset</key>
+	<string>Восстановить</string>
+	<key>Reset Concur Password</key>
+	<string>Сброс пароля Concur</string>
+	<key>Reset Mobile Password (PIN)</key>
+	<string>Мобильные пароля (PIN)</string>
+	<key>Reset PIN</key>
+	<string>Восстановить ПИН-код</string>
+	<key>Reset Password</key>
+	<string>Сброс пароля</string>
+	<key>Reset to factory defaults</key>
+	<string>Вернуться к заводским настройкам по умолчанию</string>
+	<key>Reset your password</key>
+	<string>Восстановить пароль</string>
+	<key>Resetting the PIN</key>
+	<string>Выполняется восстановление ПИН-кода</string>
+	<key>Results</key>
+	<string>Результаты</string>
+	<key>Results Summary</key>
+	<string>Обобщенные результаты</string>
+	<key>Retake</key>
+	<string>Снять повторно</string>
+	<key>Return</key>
+	<string>Возвращение</string>
+	<key>Return Date</key>
+	<string>Дата возвращения</string>
+	<key>Return Date must be</key>
+	<string>Дата возвращения</string>
+	<key>Return Date must be Message</key>
+	<string>Дата возвращения должна быть позднее даты отправления.</string>
+	<key>Return Time</key>
+	<string>Время возвращения</string>
+	<key>Returning</key>
+	<string>Выполняется возвращение</string>
+	<key>Returning: token token</key>
+	<string>Возвращение: %@ %@</string>
+	<key>Review Approver Instruction</key>
+	<string>Просмотрите данные ответственного за утверждение, а затем отправьте отчет</string>
+	<key>Room Rate</key>
+	<string>Стоимость номера</string>
+	<key>Room Tax</key>
+	<string>Налог 1 на стоимость проживания в номере</string>
+	<key>Rooms</key>
+	<string>Номера</string>
+	<key>Round Trip</key>
+	<string>Круговой маршрут</string>
+	<key>Rule Messages</key>
+	<string>Сообщения правил</string>
+	<key>SAFETY_CHECK_IN_HELP</key>
+	<string>Для получения помощи зарегистрируйте прибытие, используя ваше текущее местоположение</string>
+	<key>SAVE_REPORT_RECEIPT_FAILURE</key>
+	<string>Невозможно прикрепить квитанцию</string>
+	<key>SEARCH_LOCN</key>
+	<string>Поиск местоположения</string>
+	<key>SEC_TITLE_COMMENTS</key>
+	<string>Комментарии</string>
+	<key>SEC_TITLE_INVOICE_HEADER</key>
+	<string>Заголовок счета</string>
+	<key>SEE ALL token RESULTS</key>
+	<string>СМ. ВСЕ %@ РЕЗУЛЬТАТОВ</string>
+	<key>SEE ALL token RESULTS (starting at token)</key>
+	<string>СМ. все %d результатОВ (начиная с %@)</string>
+	<key>SELECT_HELP_TOPIC</key>
+	<string>Или выберите раздел справки</string>
+	<key>SELECT_REPORT</key>
+	<string>Выберите отчет</string>
+	<key>SELECT_REPORT_HELP</key>
+	<string>Выберите отчет из приведенного ниже списка, чтобы добавить ваши расходы. Или создайте новый отчет, коснувшись кнопки + выше.</string>
+	<key>SETTINGS_VIEW</key>
+	<string>Настройки</string>
+	<key>SIGN_IN_EMAIL</key>
+	<string>Чтобы получить данные для входа в систему, введите свой рабочий адрес электронной почты.</string>
+	<key>SIGN_IN_INSTRUCT_MSG</key>
+	<string>Если ваш адрес электронной почты находится в нашей системе, вы получите сообщение по электронной почте. Для доступа в приложение сервиса Concur откройте его на этом устройстве.</string>
+	<key>SLV_AT</key>
+	<string>в</string>
+	<key>SLV_BOOK_A_TAXI</key>
+	<string>Заказать такси</string>
+	<key>SLV_CLICK_ON</key>
+	<string>Щелкните кнопкой мыши на этой ячейке, чтобы сделать заказ</string>
+	<key>SLV_CONFIRMATION</key>
+	<string>Подтверждение</string>
+	<key>SLV_DROP_OFF</key>
+	<string>%@ возвратить в % @</string>
+	<key>SLV_FROM</key>
+	<string>Из</string>
+	<key>SLV_GATE</key>
+	<string>Выход</string>
+	<key>SLV_GOES_FROM</key>
+	<string>Направляется из %@ в %@</string>
+	<key>SLV_NUM_BOOKINGS</key>
+	<string>%d заказ(-ов) в этой поездке</string>
+	<key>SLV_PICKUP_AT</key>
+	<string>Получить в %@</string>
+	<key>SLV_PICKUP_BY</key>
+	<string>Получить до %@</string>
+	<key>SLV_PLATFORM_WAGON</key>
+	<string>Платформа %@ вагон № %@</string>
+	<key>SLV_TAXI_MAGIC</key>
+	<string>такси с вызовом по программе Taxi Magic</string>
+	<key>SLV_TAXI_MAGIC2</key>
+	<string>Вы будете перенаправлены в программу Taxi Magic</string>
+	<key>SLV_TERMINAL</key>
+	<string>Терминал</string>
+	<key>SLV_TO</key>
+	<string>до</string>
+	<key>SLV_TOTAL_SEGS</key>
+	<string>С общим числом %d сегментов на поездку</string>
+	<key>SLV_TRIP_LOCATOR</key>
+	<string>Локатор поездок: %@</string>
+	<key>SOUTHWEST</key>
+	<string>Резервирование рейсов компании Southwest</string>
+	<key>SPLASH</key>
+	<string>Программа Splash</string>
+	<key>SPOUSE</key>
+	<string>Супруг(-а)</string>
+	<key>SSO_FETCHING_DATA</key>
+	<string>Выполняется загрузка регистрационной информации компании...</string>
+	<key>SSO_LOGIN_REQUIRED_MSG</key>
+	<string>Необходим вход с использованием кода компании (SSO). Чтобы продолжить, введите код компании на следующем экране</string>
+	<key>SU Password Expired Instruction</key>
+	<string>Войдите на вебсайт Concur, чтобы изменить свой пароль.</string>
+	<key>SUBMIT_BUTTON</key>
+	<string>Отправить</string>
+	<key>SUBMIT_ERROR_CCT_AUTH</key>
+	<string>Прежде чем отправить, подождите, пока текущие операции не будут проведены по карточке Amex.</string>
+	<key>SUBMIT_ERROR_NO_ENTRY_MSG</key>
+	<string>В этом отчете о расходах отсутствуют какие-либо расходы. Для того чтобы отправить отчет, вы должны создать или загрузить хотя бы один расход.</string>
+	<key>SUBMIT_ERROR_RPT_XCT_LEVEL_MSG</key>
+	<string>Этот отчет о расходах невозможно отправить до тех пор, пока не будут устранены все исключения с красными метками.</string>
+	<key>SUBMIT_ERROR_UNDEF_MSG</key>
+	<string>Отчет о расходах содержит один или более расходов, вид которых не определен. Чтобы отправить этот отчет, вы должны выбрать вид расхода.</string>
+	<key>SUBMIT_HOW_TO_RECEIPT_MSG</key>
+	<string>Согласно правилам компании вы должны предоставить квитанции за указанные ниже статьи расходов. Вы можете либо отправить эти квитанции по факсу, либо приложить их отсканированные изображения. Если вы уже предоставили квитанции, то можете отправить отчет сейчас.</string>
+	<key>SUBMIT_REQUIRE_PAPER_RECEIPT</key>
+	<string>Согласно правилам компании, вы должны предоставить квитанции за указанные ниже статьи расходов. Вы можете прикрепить отсканированные изображения к отдельным расходам или ко всему отчету, однако оригинальные бумажные квитанции также должны быть представлены. Если вы уже предоставили квитанции, то можете отправить отчет сейчас.</string>
+	<key>SU_ADD_YODLEE_CARD_INSTRUCTION</key>
+	<string>Введите регистрационные данные для своего сета кредитной карточки. Программа SmartExpense зашифрует эту информацию и будет использовать ее защищенным образом для загрузки операций на вашу карточку. (Не беспокойтесь, это доступно только для чтения).</string>
+	<key>SU_APPROVER_AB_NO_EMAIL</key>
+	<string>Выбранный контакт не имеет адреса электронной почты для отправки отчета.</string>
+	<key>SU_CHECK_TEMP_PWD</key>
+	<string>Найдите, пожалуйста, в вашей электронной почте сообщение с временным паролем для программы SmartExpense.</string>
+	<key>SU_SIGN_UP_CHECK_EMAIL</key>
+	<string>Нам требуется проверить ваш адрес электронной почты. Проверьте, имеется ли в вашей электронной почте наше сообщение и щелкните кнопкой мыши на проверочной ссылке.</string>
+	<key>SYSEMP</key>
+	<string>Этот сотрудник</string>
+	<key>Safety Check In</key>
+	<string>Регистрация прибытия на место</string>
+	<key>Saturday_Short</key>
+	<string>Сб</string>
+	<key>Save</key>
+	<string>Сохранить</string>
+	<key>Save &amp; Generate Allowances</key>
+	<string>Сохранить и создать надбавок</string>
+	<key>Save Itemizations</key>
+	<string>Сохранить Детализации</string>
+	<key>Save entry receipt failed</key>
+	<string>При сохранении квитанции в записи произошел сбой</string>
+	<key>Saved</key>
+	<string>Сохранено</string>
+	<key>Saving Expense</key>
+	<string>Сохранение статьи расхода</string>
+	<key>Saving Report</key>
+	<string>Выполняется сохранение отчета</string>
+	<key>Saving offline receipt</key>
+	<string>Выполняется сохранение квитанции вне сети</string>
+	<key>Scheduled Arrival</key>
+	<string>Прибытие по расписанию</string>
+	<key>Scheduled Departure</key>
+	<string>Отправление по расписанию</string>
+	<key>Scheduled Equipment</key>
+	<string>Плановое оборудование</string>
+	<key>Scheduled On-time</key>
+	<string>Ожидается по расписанию</string>
+	<key>Scheduled Terminal</key>
+	<string>Терминал по расписанию</string>
+	<key>Search</key>
+	<string>Поиск</string>
+	<key>Search Again</key>
+	<string>Искать снова</string>
+	<key>Search Approver</key>
+	<string>Выполнить поиск ответственного за утверждение</string>
+	<key>Search Approver Instruction</key>
+	<string>Найдите, пожалуйста, ответственного за утверждение, а затем отправьте отчет.</string>
+	<key>Search Failed</key>
+	<string>Произошел сбой поиска</string>
+	<key>Search Results</key>
+	<string>Результаты поиска</string>
+	<key>Search and book flights</key>
+	<string>Выполнять поиск и заказ авиабилетов, бронирование гостиниц, автомобилей и многое другое</string>
+	<key>Search for Attendee</key>
+	<string>Выполнить поиск участника</string>
+	<key>Search for Cars</key>
+	<string>Поиск автомобилей</string>
+	<key>Search for an office location</key>
+	<string>Поиск для расположения офиса</string>
+	<key>Search schedules</key>
+	<string>Поиск по расписаниям</string>
+	<key>Searching for Hotels near you</key>
+	<string>Поиск отелей рядом с вами</string>
+	<key>Searching for cars</key>
+	<string>Выполняется поиск автомобилей</string>
+	<key>Searching for cars at</key>
+	<string>Выполняется поиск автомобилей в</string>
+	<key>Searching for flights</key>
+	<string>Выполняется поиск рейсов</string>
+	<key>Searching for hotels</key>
+	<string>Поиск гостиниц</string>
+	<key>Searching for trains</key>
+	<string>Поиск поездов</string>
+	<key>Seat: %@</key>
+	<string>Место: %@</string>
+	<key>Seats</key>
+	<string>Места</string>
+	<key>See All</key>
+	<string>Посмотреть все</string>
+	<key>See All (token results)</key>
+	<string>Просмотреть все (%d результатов)</string>
+	<key>See Alternative Flights</key>
+	<string>См. альтернативные рейсы</string>
+	<key>See what you can do with Concur</key>
+	<string>Посмотрите, какие возможности вам предоставляет сервис Concur</string>
+	<key>Select</key>
+	<string>Выберите</string>
+	<key>Select All</key>
+	<string>Выбрать все</string>
+	<key>Select Attendee Type</key>
+	<string>Выберите тип участника</string>
+	<key>Select Attendee to Add</key>
+	<string>Выберите участника для добавления</string>
+	<key>Select Car Type</key>
+	<string>Выберите тип автомобиля</string>
+	<key>Select Card</key>
+	<string>Выберите карточку</string>
+	<key>Select Email Address</key>
+	<string>Выберите адрес электронной почты</string>
+	<key>Select Preference</key>
+	<string>Выбрать предпочтения</string>
+	<key>Select Program</key>
+	<string>Выберите программу</string>
+	<key>Select Reason</key>
+	<string>Выберите причину</string>
+	<key>Select Train</key>
+	<string>Выбрать поезд</string>
+	<key>Select an office location</key>
+	<string>Выберите место офиса</string>
+	<key>Select delivery option</key>
+	<string>Выберите вариант доставки</string>
+	<key>Select seat class below</key>
+	<string>Выберите ниже класс салона</string>
+	<key>Send Again</key>
+	<string>Отправить повторно</string>
+	<key>Send Failed</key>
+	<string>При отправке произошел сбой</string>
+	<key>Send Invite</key>
+	<string>Отправить приглашение</string>
+	<key>Send Invite To</key>
+	<string>Отправить приглашение</string>
+	<key>Send Log</key>
+	<string>Отправить журнал регистрации</string>
+	<key>Send My Sign In Details</key>
+	<string>Отправить инструкцию по входу в систему</string>
+	<key>Send to Approver</key>
+	<string>Отправлен ответственному за утверждение</string>
+	<key>Sending Back Report</key>
+	<string>Выполняется возврат отчета</string>
+	<key>Sending Email</key>
+	<string>Отправка электронной почты</string>
+	<key>Sent</key>
+	<string>Отправлено</string>
+	<key>Set Mobile PIN</key>
+	<string>Установить ПИН-код для мобильной связи</string>
+	<key>Set PIN</key>
+	<string>Установить ПИН-код</string>
+	<key>Set PIN Tip</key>
+	<string>Задать подсказку для ПИН-кода</string>
+	<key>Set PIN succeeded</key>
+	<string>Ваш ПИН-код для мобильной связи успешно сохранен.</string>
+	<key>Settings</key>
+	<string>Настройки</string>
+	<key>Share Trip</key>
+	<string>Поделиться информацией о поездке</string>
+	<key>Show Home Panels</key>
+	<string>Показать панели стартового окна</string>
+	<key>Show Offers</key>
+	<string>Показать предложения</string>
+	<key>Sign In</key>
+	<string>Войти</string>
+	<key>Sign In Help</key>
+	<string>Помощь для входа в систему</string>
+	<key>Sign In Instructions Sent to This Device</key>
+	<string>Инструкция по входу в систему отправлена</string>
+	<key>Sign In with Concur</key>
+	<string>Зарегистрируйте вход в программу Concur</string>
+	<key>Sign In with Facebook</key>
+	<string>Войдите в систему, используя Facebook</string>
+	<key>Sign Up</key>
+	<string>Регистрация</string>
+	<key>Sign Up Failed</key>
+	<string>Произошел сбой регистрации</string>
+	<key>Sign in to Concur</key>
+	<string>Войти</string>
+	<key>Sign in to TripIt</key>
+	<string>Войдите в программу TripIt</string>
+	<key>Signing up accepts our</key>
+	<string>Регистрация принимает наши</string>
+	<key>Similar users like this hotel</key>
+	<string>Похожим пользователям нравится эта гостиница</string>
+	<key>Single Sign On</key>
+	<string>Единая регистрация</string>
+	<key>Smart Matching</key>
+	<string>Smart Matching</string>
+	<key>SmartExpense Report</key>
+	<string>Отчет по программе SmartExpense</string>
+	<key>SmartExpense version</key>
+	<string>Добро пожаловать в программу SmartExpense</string>
+	<key>SmartExpense was denied access to your TripIt account.</key>
+	<string>Программа SmartExpense не получила доступ к вашему аккаунту TripIt.</string>
+	<key>SmartExpense was unable to access your TripIt account.  Please try again later.</key>
+	<string>Программа SmartExpense не получила доступ к вашему аккаунту в TripIt. Повторите, пожалуйста, попытку позже.</string>
+	<key>SmartExpense was unable to expense your trip. Please try again later.</key>
+	<string>Программа SmartExpense не смогла отнести вашу поездку на расходы. Попытайтесь, пожалуйста, позже.</string>
+	<key>Smoking</key>
+	<string>Для некурящих</string>
+	<key>Sold Out</key>
+	<string>Распроданы</string>
+	<key>Sorry</key>
+	<string>Извините, подключение к Интернету, видимо, отсутствует. Попытайтесь, пожалуйста, позже.</string>
+	<key>Sorry I didn't quite get that.</key>
+	<string>К сожалению, я не совсем получить это. Давайте начинать.</string>
+	<key>Sort</key>
+	<string>Сортировать</string>
+	<key>Sort By</key>
+	<string>Сортировать по</string>
+	<key>Sort by</key>
+	<string>Сортировать по</string>
+	<key>Sort by Amount</key>
+	<string>Сортировать по сумме</string>
+	<key>Sort by Date</key>
+	<string>Сортировать по дате</string>
+	<key>Sort by Distance</key>
+	<string>Сортировать по расстоянию</string>
+	<key>Sort by Duration</key>
+	<string>Сортировать по продолжительности</string>
+	<key>Sort by Earliest Departure</key>
+	<string>Сортировать по самым ранним отправлениям</string>
+	<key>Sort by Preference</key>
+	<string>Сортировать по предпочтениям</string>
+	<key>Sort by Preferred Vendors</key>
+	<string>Сортировать по предпочтительным поставщикам услуг</string>
+	<key>Sort by Price</key>
+	<string>Сортировать по цене</string>
+	<key>Sort by Rating</key>
+	<string>Сортировать по рейтингу</string>
+	<key>Sort by Recommendation</key>
+	<string>Сортировать по вариантам</string>
+	<key>Sort by Vendor Names</key>
+	<string>Сортировать по именам поставщиков услуг</string>
+	<key>Standard</key>
+	<string>Стандарт</string>
+	<key>Standard Hybrid</key>
+	<string>Гибридный автомобиль стандартного класса</string>
+	<key>Standard SUV</key>
+	<string>Стандартный автомобиль-внедорожник</string>
+	<key>Star Rating</key>
+	<string>Звездочная оценка</string>
+	<key>StartARequest</key>
+	<string>Запустить запрос</string>
+	<key>StartYourRequest</key>
+	<string>Начните ваш запрос</string>
+	<key>Starting</key>
+	<string>Начиная с</string>
+	<key>Station</key>
+	<string>Станция</string>
+	<key>Stations</key>
+	<string>Станции</string>
+	<key>Stop</key>
+	<string>Остановка</string>
+	<key>Stopping Upload</key>
+	<string>Выполняется прекращение загрузки</string>
+	<key>Stops</key>
+	<string>Остановки</string>
+	<key>Submit Invoices</key>
+	<string>Отправить счета</string>
+	<key>Submit Report</key>
+	<string>Отправить отчет</string>
+	<key>SubmitRequest</key>
+	<string>Отправить запрос</string>
+	<key>Submitted Reports</key>
+	<string>Отправленные отчеты</string>
+	<key>Suggested based on co-worker</key>
+	<string>Предложил на основе сотрудник</string>
+	<key>Suggested based on past stay</key>
+	<string>Предложил на основе прошлых пребывания</string>
+	<key>Suggested based on popularity</key>
+	<string>Предложил на основе популярности</string>
+	<key>Sunday_Short</key>
+	<string>Вск</string>
+	<key>Swipe for more</key>
+	<string>Проведите пальцем по экрану, чтобы увидеть больше</string>
+	<key>Swipe to delete</key>
+	<string>Проведите пальцем по экрану, чтобы удалить</string>
+	<key>Switch to KM</key>
+	<string>Переключиться на километры</string>
+	<key>Switch to Miles</key>
+	<string>Переключиться на мили</string>
+	<key>Sync Credit Card</key>
+	<string>Синхронизировать кредитную карточку</string>
+	<key>Sync account with SmartExpense</key>
+	<string>Синхронизировать аккаунт с функцией SmartExpense</string>
+	<key>Sync credit card</key>
+	<string>Синхронизировать кредитную карточку</string>
+	<key>TA Import Heading Text</key>
+	<string>Выберите бронирования или обвинения карты, чтобы помочь начать свой маршрут путешествия пособие</string>
+	<key>TITLE_REGISTER_REENTER_PIN</key>
+	<string>Введите ПИН-код</string>
+	<key>TRAVEL_NEG_TEXT</key>
+	<string>Начните с планирования своей поездки</string>
+	<key>TRAVEL_REQUESTS</key>
+	<string>Запросы</string>
+	<key>TRIPS</key>
+	<string>Список поездок</string>
+	<key>TRIP_DETAILS</key>
+	<string>Детали поездки</string>
+	<key>TRY_AGAIN</key>
+	<string>Попытайтесь снова</string>
+	<key>TWITTER_MESSAGES</key>
+	<string>Twitter от Concur</string>
+	<key>Take photos of your receipts.</key>
+	<string>Сфотографируйте свои квитанции.</string>
+	<key>Take pictures of receipts &amp; upload</key>
+	<string>Фотографировать квитанции &amp; загружать</string>
+	<key>Tap microphone to get started</key>
+	<string>Чтобы начать, коснитесь значка микрофона</string>
+	<key>Tap to get directions</key>
+	<string>Коснитесь, чтобы получить указания</string>
+	<key>Taxable</key>
+	<string>Облагаемый налогом</string>
+	<key>Taxi</key>
+	<string>Такси</string>
+	<key>Taxi Magic</key>
+	<string>Программа Taxi Magic</string>
+	<key>Terminal token</key>
+	<string>Терминал %@</string>
+	<key>Terms of Use</key>
+	<string>Договор пользования</string>
+	<key>Thank You</key>
+	<string>Благодарим вас</string>
+	<key>The Out of Pocket Entry could not be saved because the network is unavailable.  Please try again later.</key>
+	<string>Невозможно сохранить запись расходов наличными, ввиду отсутствия подключения к сети. Попытайтесь еще раз позже.</string>
+	<key>The Out of Pocket Entry could not be saved.  Please try again later.</key>
+	<string>Невозможно сохранить запись расходов наличными. Попытайтесь еще раз позже.</string>
+	<key>The Price-to-Beat is %@.</key>
+	<string>Контрольная цена для сравнения составляет %@.</string>
+	<key>The Price-to-Beat range is between %@.</key>
+	<string>Контрольные цены для сравнения находятся в диапазоне между %@.</string>
+	<key>The account could not be unlinked.</key>
+	<string>Аккаунт отключить невозможно.</string>
+	<key>The car could not be booked.</key>
+	<string>Зарезервировать автомобиль не удалось</string>
+	<key>The check-out date must be later than the check-in date.</key>
+	<string>Дата выбытия должна быть после даты прибытия.</string>
+	<key>The date specified for departure is invalid.</key>
+	<string>Указанная дата для отправления недействительна.</string>
+	<key>The date specified for the departure occurs in the past.</key>
+	<string>Дата, указанная для отправления относится к прошлому.</string>
+	<key>The date specified for the return is earlier than the date of departure.</key>
+	<string>Дата, указанная для возвращения, предшествует дате отправления.</string>
+	<key>The flight could not be booked.</key>
+	<string>Заказать билет на авиарейс не удалось.</string>
+	<key>The log could not be sent.</key>
+	<string>Невозможно отправить журнал</string>
+	<key>The log mail has been placed in your outbox.</key>
+	<string>Сообщение электронной почты, содержащее регистрационный журнал, находится в папке Исходящие.</string>
+	<key>The log mail has been saved in your Drafts folder.</key>
+	<string>Письмо с журналом регистрации сохранено в папке Черновики</string>
+	<key>The password reset was requested from another device. Please use the same device you requested the password reset.</key>
+	<string>Восстановление пароля была запрошена с другого устройства. Пожалуйста, используйте то же устройство, которую вы запросили, сброса пароля.</string>
+	<key>The selected credit card will be charged and the ticket will be issued immediately. The reservation may not be eligible for changes or refunds. Are you sure you want to reserve this flight?</key>
+	<string>Начисление на кредитную карточку и выдача билета будут произведены немедленно. Этот заказ не подлежит изменениям или возврату платежа. Вы действительно хотите забронировать билет на этот авиарейс?</string>
+	<key>The server encountered an error.</key>
+	<string>На сервере произошла ошибка.</string>
+	<key>The train could not be booked</key>
+	<string>Заказать билет на поезд не удалось.</string>
+	<key>There are</key>
+	<string>Имеется %@ отчетов, ожидающих вашего утверждения.</string>
+	<key>There are cct</key>
+	<string>У вас имеется %@ неиспользованных начислений на карточке.</string>
+	<key>There are no cct</key>
+	<string>У вас отсутствуют начисления на карточке.</string>
+	<key>There are no reports to approve</key>
+	<string>Отчетов к утверждению нет</string>
+	<key>There are no rpt</key>
+	<string>Все отчеты отправлены</string>
+	<key>There are no travel requests to approve</key>
+	<string>Запросы к утверждению отсутствуют</string>
+	<key>There are rpt</key>
+	<string>Имеется %@ неотправленных отчетов всего на %@.</string>
+	<key>There is</key>
+	<string>Имеется %@ доклад, ожидающий вашего утверждения.</string>
+	<key>There is cct</key>
+	<string>У вас имеется %@ неиспользованных начислений на карточке.</string>
+	<key>There is rpt</key>
+	<string>Имеется %@ неотправленных отчетов на общую сумму %@.</string>
+	<key>There must have been a typo. Please re-enter the password so it matches exactly in both fields</key>
+	<string>Там должны были опечатки. Пожалуйста введите пароль, чтобы он соответствовал именно в обеих областях</string>
+	<key>There was an error processing your request. It may be due to a poor network connection. Please try again later. If this condition continues</key>
+	<string>Произошла ошибка при обработке вашего запроса. Это может быть связано плохое сетевое подключение. Пожалуйста, повторите попытку позже. Если это состояние продолжается, обратитесь к администратору</string>
+	<key>There were no unassigned expenses found</key>
+	<string>Нераспределенные расходы не найдены</string>
+	<key>This application crashed the last time you ran it.  Please help us determine the cause of the crash by sending us the application log.</key>
+	<string>Когда вы в последний раз пользовались этим приложением, в его работе произошел сбой, им. Помогите, пожалуйста, установить причину сбоя, отправив нам регистрационный журнал приложения.</string>
+	<key>This attendee cannot be edited.</key>
+	<string>Данные этого участника откорректировать невозможно.</string>
+	<key>This attendee has been modified</key>
+	<string>Данные этого участника были изменены после их последнего применения для данной статьи расхода. Любые изменения должны быть внесены в Профиль на вебсайте.</string>
+	<key>This device is not configured for sending mail.</key>
+	<string>Это устройство не настроено для отправки почты.</string>
+	<key>This feature requires access</key>
+	<string>Эта функция требует доступа к микрофону вашего устройства. Активируйте доступ к микрофону для этого приложения в разделе Настройки / Конфиденциальность / Микрофон</string>
+	<key>This trip has already been expensed or the trip could not be synchronized.</key>
+	<string>Эта поездка уже была отнесена на расходы, либо ее невозможно было синхронизировать.</string>
+	<key>Thursday_Short</key>
+	<string>Чт</string>
+	<key>Ticket Delivery</key>
+	<string>Доставка билетов</string>
+	<key>Ticket Type</key>
+	<string>Тип билета</string>
+	<key>Ticketing</key>
+	<string>Оформление билетов</string>
+	<key>Time</key>
+	<string>Время</string>
+	<key>Title</key>
+	<string>Название</string>
+	<key>To</key>
+	<string>В</string>
+	<key>To Location</key>
+	<string>До места</string>
+	<key>To Station</key>
+	<string>До станции</string>
+	<key>ToReceiptStoreMsg</key>
+	<string>Возьми меня в хранилище квитанций.</string>
+	<key>Tomorrow</key>
+	<string>Завтра</string>
+	<key>Total</key>
+	<string>Всего</string>
+	<key>Total Amount</key>
+	<string>Общая сумма</string>
+	<key>Total Due Company Card</key>
+	<string>Итого причитается на карточку компании</string>
+	<key>Total Due Employee</key>
+	<string>Итого причитается сотруднику</string>
+	<key>Total Owed by Employee</key>
+	<string>Итого причитается к оплате сотрудником</string>
+	<key>Total Paid by Company</key>
+	<string>Всего уплачено компанией</string>
+	<key>Total Personal Amount</key>
+	<string>Общая сумма на личном счете</string>
+	<key>Total Price</key>
+	<string>Итоговая цена</string>
+	<key>Total Rate</key>
+	<string>Общий размер расценки</string>
+	<key>Total Requested</key>
+	<string>Всего запрошено</string>
+	<key>Total Travel Points: %@</key>
+	<string>Всего дорожных баллов: %@</string>
+	<key>Total no card charges</key>
+	<string>По вашей карточке операции отсутствуют</string>
+	<key>Total no expenses</key>
+	<string>У вас нет никаких расходов</string>
+	<key>Total num card charge</key>
+	<string>У вас есть одна операция на карточке</string>
+	<key>Total num card charges</key>
+	<string>У вас имеется %@ операций на карточке</string>
+	<key>Total num expense</key>
+	<string>У вас имеется одна статья расхода</string>
+	<key>Total num expenses</key>
+	<string>У вас имеется %@ статей расходов</string>
+	<key>Total: %@</key>
+	<string>Всего: %@</string>
+	<key>Tour</key>
+	<string>Поездка</string>
+	<key>TourExpense2Subtitle</key>
+	<string>Затем отправить и получать возмещение. Менеджеры могут утвердить из любой точки мира.</string>
+	<key>Train</key>
+	<string>Поезд</string>
+	<key>Train Choices</key>
+	<string>Выбор поездов</string>
+	<key>Train Detail</key>
+	<string>Деталь поезда</string>
+	<key>Train Number</key>
+	<string>Номер поезда</string>
+	<key>Train: token</key>
+	<string>Поезд %@</string>
+	<key>Transaction Amount</key>
+	<string>Сумма операции</string>
+	<key>Transaction Date</key>
+	<string>Дата операции</string>
+	<key>Transaction Location</key>
+	<string>Место проведения операции</string>
+	<key>Travel</key>
+	<string>Поездка</string>
+	<key>Travel Agency Info</key>
+	<string>Информация об агентстве путешествий</string>
+	<key>Travel Apps</key>
+	<string>Приложения для поездок</string>
+	<key>Travel Points</key>
+	<string>Дорожные баллы</string>
+	<key>Travel Points Awarded</key>
+	<string>Присужденные дорожные баллы</string>
+	<key>Travel Points Bank: %@ points</key>
+	<string>Банк дорожных баллов: %@ баллов</string>
+	<key>Travel Points Booked</key>
+	<string>Дорожные баллы использованы</string>
+	<key>Travel Policy</key>
+	<string>Правила в отношении командировок</string>
+	<key>Travel Requests</key>
+	<string>Заявки на поездки</string>
+	<key>Travel Time</key>
+	<string>Время поездки</string>
+	<key>TravelRequestCount</key>
+	<string>У вас имеется %d запросов на утверждение</string>
+	<key>TravelRequestsToApproveRow_0</key>
+	<string>У вас нет запросов к утверждению</string>
+	<key>TravelRequestsToApproveRow_1</key>
+	<string>У вас имеется 1 запрос на утверждение</string>
+	<key>TravelRequestsToApproveRow_2</key>
+	<string>У вас имеется %d запросов к утверждению</string>
+	<key>Trip</key>
+	<string>Текущая поездка</string>
+	<key>Trip Approval</key>
+	<string>Утверждение поездки</string>
+	<key>Trip Approvals</key>
+	<string>Утверждение поездок</string>
+	<key>Trip Feed</key>
+	<string>Канал подачи поездок</string>
+	<key>Trip Fields</key>
+	<string>Поля поездки</string>
+	<key>Trip Locator</key>
+	<string>Локатор поездок</string>
+	<key>Trip Record Locator for this trip could not be retrieved.</key>
+	<string>Невозможно получить регистрационный код этой поездки.</string>
+	<key>Trip data updated on</key>
+	<string>Данные поездки обновлены %@</string>
+	<key>Trip data updated on hrt</key>
+	<string>Данные поездки обновлены %@</string>
+	<key>Trip just trip</key>
+	<string>Поездка</string>
+	<key>TripIt Account Not Activated</key>
+	<string>Учетная запись в программе TripIt не активирована</string>
+	<key>TripIt Trips</key>
+	<string>Поездки, зарезервированные по программе TripIt</string>
+	<key>TripIt not linked</key>
+	<string>Аккаунт в программе TripIt не связан с программой SmartExpense. Установите связь с программой TripIt, коснувшись строки TripIt в стартовом окне</string>
+	<key>TripIt not linked together</key>
+	<string>Ваш аккаунт в программе TripIt, который связан с пользователем, зарегистрировавшим вход в программу SmartExpense, отличается от аккаунта, в котором зарегистрировано мобильное приложение программы TripIt. Войдите в программу TripIt, используя тот же аккаунт, который связан с программой SmartExpense.</string>
+	<key>TripIt trip key not found</key>
+	<string>Система не смогла обработать ваш запрос об отнесении поездки на расходы. Не был найден ключ поездки в программе TripIt.</string>
+	<key>Trips</key>
+	<string>Поездки</string>
+	<key>Try Again</key>
+	<string>Попытайтесь снова</string>
+	<key>Try again to re-enter your password or select I Forgot to receive signin in instructions</key>
+	<string>Попытайтесь снова ввести ваши регистрационные данные или выберите команду «Я забыл(-а)», чтобы получить инструкцию по входу в систему.</string>
+	<key>Tuesday_Short</key>
+	<string>Вт</string>
+	<key>Type</key>
+	<string>Тип</string>
+	<key>Type in emails seperated by commas or choose from contacts list</key>
+	<string>Введите адреса электронной почты, разделенные запятыми, или выберите их из списка ваших контактов.</string>
+	<key>Type name or select frequent attendee</key>
+	<string>Введите имя или фамилию</string>
+	<key>Type to search for a location</key>
+	<string>Введите данные для поиска места</string>
+	<key>UNDEFINED_MSG</key>
+	<string>Как минимум для одного из выбранных расходов не определен его вид.</string>
+	<key>Unable to Sign In</key>
+	<string>Невозможно зарегистрировать вход в систему</string>
+	<key>Unable to add expense</key>
+	<string>Невозможно добавить расход</string>
+	<key>Unable to add itemization</key>
+	<string>Невозможно добавить детализацию</string>
+	<key>Unable to attach expense. Please check that this report policy allows Japan Public Transit.</key>
+	<string>Невозможно прикрепить расход. Проверьте, пожалуйста, разрешают ли правила, применяемые к настоящему отчету, пользование общественным транспортом в Японии.</string>
+	<key>Unable to link</key>
+	<string>Невозможно установить связь</string>
+	<key>Unable to load location data.</key>
+	<string>Невозможно загрузить данные о местоположении.</string>
+	<key>Unable to sign in</key>
+	<string>В настоящее время невозможно зарегистрировать ваш вход в систему. Обратитесь, пожалуйста, в справочную службу или в отдел путешествий и расходов своей компании.</string>
+	<key>Unavailable</key>
+	<string>Недоступен</string>
+	<key>Undefined</key>
+	<string>Не определено</string>
+	<key>Unexpected Error</key>
+	<string>Неожиданная ошибка</string>
+	<key>Unknown Station</key>
+	<string>Неизвестная станция</string>
+	<key>Unlink Dropbox</key>
+	<string>Отключиться от общего банка данных Dropbox</string>
+	<key>Unlink Succeeded</key>
+	<string>Отключение выполнено успешно</string>
+	<key>Unlink from TripIt</key>
+	<string>Отключиться от программы TripIt</string>
+	<key>Unmatch</key>
+	<string>Устранить совпадение</string>
+	<key>Unsaved Receipts</key>
+	<string>Несохраненные поступления</string>
+	<key>Unselect All</key>
+	<string>Снять всё выделение</string>
+	<key>Unsubmitted Reports</key>
+	<string>Неотправленные отчеты</string>
+	<key>UnsubmittedReportsRow_0</key>
+	<string>У вас нет неотправленных отчетов</string>
+	<key>UnsubmittedReportsRow_1</key>
+	<string>У вас имеется 1 неотправленный отчет</string>
+	<key>UnsubmittedReportsRow_2</key>
+	<string>У вас имеется %d неотправленных отчетов</string>
+	<key>Update</key>
+	<string>Обновление</string>
+	<key>Update Itemizations</key>
+	<string>Обновить детализации</string>
+	<key>Update Receipt</key>
+	<string>Изменить квитанцию</string>
+	<key>Updating</key>
+	<string>Выполняется обновление</string>
+	<key>Updating Itinerary</key>
+	<string>Выполняется обновление маршрута следования</string>
+	<key>Upload</key>
+	<string>Загрузка</string>
+	<key>Upload Failed</key>
+	<string>Произошел сбой при загрузке</string>
+	<key>Upload Queue</key>
+	<string>Очередь отправки</string>
+	<key>Upload Receipt</key>
+	<string>Загрузить квитанцию</string>
+	<key>Upload Success</key>
+	<string>Загрузка произведена успешно</string>
+	<key>Uploading Please Wait</key>
+	<string>Выполняется загрузка, подождите, пожалуйста.</string>
+	<key>Uploading count</key>
+	<string>Выполняется загрузка %d из %d</string>
+	<key>Uploading to Dropbox</key>
+	<string>Загрузка в общий банк данных Dropbox</string>
+	<key>Uploading to Dropbox failed</key>
+	<string>Произошел сбой при загрузке в общий банк данных Dropbox</string>
+	<key>Uploading to Dropbox was successful</key>
+	<string>Загрузка в общий банк данных Dropbox выполнена успешно</string>
+	<key>Use %@ Travel Points</key>
+	<string>Используйте %@ дорожных баллов</string>
+	<key>Use %d pts.</key>
+	<string>Использовать %d дорожных баллов.</string>
+	<key>Use-ImagePicker</key>
+	<string>Использование</string>
+	<key>User Name</key>
+	<string>Имя пользователя</string>
+	<key>Username and Password</key>
+	<string>Имя пользователя и пароль</string>
+	<key>Username or PIN is invalid</key>
+	<string>Недействительные имя пользователя или ПИН-код. Вы можете создать или восстановить ПИН-код ПИН-код для мобильной связи, щелкнув кнопкой мыши на вопросе \«Вам требуется установить ПИН-код?\» или перейдя в раздел в раздел «Профиль -&gt; Регистрация мобильного устройства» онлайн-версии программы Concur.</string>
+	<key>Username or Password is invalid</key>
+	<string>Имя пользователя или пароль недействительны</string>
+	<key>Username or Password is invalid SU</key>
+	<string>Имя пользователя или пароль недействительны. Вы можете восстановить свой пароль, щелкнув кнопкой мыши на ссылке «Восстановить пароль». Если у вас нет аккаунта, щелкните кнопкой мыши на ссылке «Зарегистрироваться».</string>
+	<key>Using Points</key>
+	<string>Использование баллов</string>
+	<key>VALUE_RANGE_MSG</key>
+	<string>Введите значение длиной от %d до %d символов.</string>
+	<key>VALUE_RANGE_MSG_FIXED_LENGTH</key>
+	<string>Введите значение, содержащее %d символов.</string>
+	<key>VALUE_RANGE_MSG_LOWER_BOUND</key>
+	<string>Введите значение, содержащее более %d символов.</string>
+	<key>VALUE_RANGE_MSG_NO_BOUNDS</key>
+	<string>Введите действительное для этого поля значение.</string>
+	<key>VALUE_RANGE_MSG_UPPER_BOUND</key>
+	<string>Введите значение длиной менее %d символов.</string>
+	<key>VERIFY_PWD</key>
+	<string>Проверить пароль</string>
+	<key>VehicleId</key>
+	<string>Идентификатор автомобиля</string>
+	<key>Vendor</key>
+	<string>Поставщик услуг</string>
+	<key>Vendor Hours</key>
+	<string>Часы работы поставщика услуг</string>
+	<key>Vendor Names</key>
+	<string>Имена поставщиков услуг</string>
+	<key>Vendor Web Site</key>
+	<string>Вебсайт поставщика услуг</string>
+	<key>Verification is simple. Just tap on the link in the email we sent to</key>
+	<string>Подтвердить несложно. Просто коснитесь ссылки в тексте сообщения электронной почты, которое мы отправили на адрес %@</string>
+	<key>View Allowance</key>
+	<string>Вид пособия</string>
+	<key>View Images</key>
+	<string>Просмотреть изображения</string>
+	<key>View Rates</key>
+	<string>Просмотреть расценки</string>
+	<key>View Receipt</key>
+	<string>Просмотреть квитанцию</string>
+	<key>View Report Offline</key>
+	<string>Система не получила доступ к отчету. Повторите, пожалуйста, попытку в режиме онлайн.</string>
+	<key>View in Chatter</key>
+	<string>Просмотреть в приложении Chatter</string>
+	<key>View your travel requests</key>
+	<string>Просмотреть свои запросы</string>
+	<key>View your trips</key>
+	<string>Просмотреть свои поездки</string>
+	<key>View your uploaded receipts</key>
+	<string>Просмотреть загруженные квитанции</string>
+	<key>Violation</key>
+	<string>Нарушение</string>
+	<key>Violation Justification</key>
+	<string>Обоснование нарушения</string>
+	<key>Violation Reason</key>
+	<string>Причина нарушения</string>
+	<key>Violation Reason Code</key>
+	<string>Код причины нарушения</string>
+	<key>Violation Summary</key>
+	<string>Сводные данные о нарушениях</string>
+	<key>Violations</key>
+	<string>Нарушения</string>
+	<key>WAIT_FOR_CAR_RATES_DATA</key>
+	<string>Вы ожидаете данные расценок на автомобили. Повторите, пожалуйста, эту функцию.</string>
+	<key>WARNING</key>
+	<string>Внимание!</string>
+	<key>WARNING_INVALID_VALUE_RANGE_NOT_REQUIRED</key>
+	<string>Это значение не находится в заданном диапазоне от %d до %d символов. Вы действительно хотите продолжить?</string>
+	<key>WARN_MISSING_REQ_FLD</key>
+	<string>В форме отсутствуют обязательные поля. Хотите ли вы продолжить операцию сохранения?</string>
+	<key>WEBVIEW</key>
+	<string>Представление сетевых данных</string>
+	<key>Waiting</key>
+	<string>Ожидание</string>
+	<key>Warning</key>
+	<string>Внимание!</string>
+	<key>Warning on Itinerary Stop update</key>
+	<string>Предупреждение на маршрут остановить обновление</string>
+	<key>Watch setup video</key>
+	<string>Смотреть видео по установке</string>
+	<key>We are unable to sign you in with this information</key>
+	<string>Невозможно зарегистрировать ваш вход в систему, используя эти данные</string>
+	<key>We couldnt find any hotels with the given search criteria. Please try again with different criteria.</key>
+	<string>Мы не смогли найти каких-либо Отели с заданным критериям поиска. Пожалуйста, попробуйте еще раз, с разными критериями.</string>
+	<key>Web Site</key>
+	<string>Вебсайт</string>
+	<key>Wednesday_Short</key>
+	<string>Ср</string>
+	<key>Welcome to Concur</key>
+	<string>Добро пожаловать в программу Concur</string>
+	<key>What Flights can I find for you?</key>
+	<string>Какие авиарейсы найти для вас?</string>
+	<key>What Hotel can I find for you?</key>
+	<string>Какую гостиницу найти для вас?</string>
+	<key>What's New</key>
+	<string>Новые возможности</string>
+	<key>When auto login is on</key>
+	<string>При автоматическом входе в систему имя пользователя сохраняется автоматически.</string>
+	<key>Work email or Concur username</key>
+	<string>Работа электронной почты или имя пользователя Concur</string>
+	<key>Would you like to create an Expense Report from the selected trip segments</key>
+	<string>Хотите ли вы создать отчет о расходах по выбранным сегментов поездки?</string>
+	<key>Wrong agency code</key>
+	<string>Неправильный код агентства</string>
+	<key>Wrong company code</key>
+	<string>Неправильный код компании</string>
+	<key>YCOOK</key>
+	<string>Другие с приготовления пищи</string>
+	<key>YODLEE_CARD_LOGIN_FORM_FAILED_MSG</key>
+	<string>Произошел сбой при загрузке формы входа в вашу кредитную карточку. Попытайтесь, пожалуйста, сделать это позже.</string>
+	<key>Yes</key>
+	<string>Да</string>
+	<key>You already have a corporate account with Concur.</key>
+	<string>У вас уже есть корпоративный аккаунт в программе Concur.</string>
+	<key>You are offline. Please expense trip later.</key>
+	<string>Вы находитесь в автономном режиме. Подождите, пожалуйста, и не относите поездку на расход до тех пор, пока вы не будете подключены к сети.</string>
+	<key>You are using %@ Travel Points.</key>
+	<string>Вы используете %@ дорожных баллов.</string>
+	<key>You do not have an email in your Concur profile. We are unable to send you a password reset email without one. Please go to the Concur Website and add your work email to your profile.</key>
+	<string>Вас нет электронной почты в вашем профиле Concur. Мы не сможем отправить вам письмо сброс пароля без одного. Пожалуйста, зайдите на сайт Concur и добавить ваши работы электронной почты в свой профиль.</string>
+	<key>You have %@ Travel Points in your bank.</key>
+	<string>У вас в банке имеется %@ дорожных баллов.</string>
+	<key>You have already registered for SmartExpense.</key>
+	<string>Вы уже зарегистрированы в программе SmartExpense.</string>
+	<key>You have no approvals</key>
+	<string>На ваше имя нет утверждений</string>
+	<key>You have no messages</key>
+	<string>На ваше имя нет сообщений</string>
+	<key>You have no upcoming trips</key>
+	<string>У вас нет предстоящих поездок</string>
+	<key>You have stayed here %@ times</key>
+	<string>Вы останавливались здесь %@ раз</string>
+	<key>You have stayed here earlier</key>
+	<string>Вы здесь останавливались раньше</string>
+	<key>You have successfully linked your TripIt account to SmartExpense.</key>
+	<string>Вы успешно подключили свой аккаунт в программе TripIt к программе SmartExpense.</string>
+	<key>You must be online before you can upload your items</key>
+	<string>Перед тем, как загружать эти элементы, вы должны подключиться к Интернету.</string>
+	<key>You must enter in a valid PIN in order to log in</key>
+	<string>Для входа в систему вы должны ввести действительный ПИН-код</string>
+	<key>You must enter in a valid email address in order for Concur to verify it</key>
+	<string>Вы должны ввести действительный адрес электронной почты, для того чтобы программа Concur могла проверить его</string>
+	<key>You must enter in a valid email for your approver</key>
+	<string>Вы должны ввести действительный адрес электронной почты ответственного за утверждение</string>
+	<key>You must enter in a valid password in order to log in</key>
+	<string>Для входа в систему вы должны ввести действительный пароль</string>
+	<key>You must enter in a valid password or PIN in order to log in</key>
+	<string>Для входа в систему вам необходимо ввести действительный пароль или ПИН-код</string>
+	<key>You must enter in a valid user name in order to log in</key>
+	<string>Для входа в систему вы должны ввести действительное имя пользователя</string>
+	<key>You need to select a Delivery Option in order to reserve your train</key>
+	<string>Для того чтобы заказать билет на поезд, вам необходимо выбрать вариант доставки</string>
+	<key>You need to select a valid credit card in order to reserve your train</key>
+	<string>Чтобы сделать заказ билета на поезд вам необходимо выбрать действующую кредитную карточку.</string>
+	<key>Your account data has been wiped from this device.  Please contact your company administrator for assistance.</key>
+	<string>Данные вашей учетной записи были удалены с этого устройства. Обратитесь за помощью к администратору вашей компании.</string>
+	<key>Your account is no longer linked to TripIt.</key>
+	<string>Ваш аккаунт больше не связан с программой TripIt.</string>
+	<key>Your agent may ask for the Trip Record Locator: %@</key>
+	<string>Ваш агент может запросить регистрационный код поездки: %@</string>
+	<key>Your colleague has stayed here</key>
+	<string>Один из ваших коллег останавливался здесь</string>
+	<key>Your colleague is staying here on your check-in date</key>
+	<string>На дату вашего прибытия здесь проживает ваш коллега</string>
+	<key>Your colleague's favorite</key>
+	<string>Предпочитаемое вашим коллегой</string>
+	<key>Your colleagues have stayed here %@ times</key>
+	<string>Ваши коллеги останавливались здесь %@ раз</string>
+	<key>Your company has disabled Concur for mobile. Please contact your administrator.</key>
+	<string>Ваша компания отключила сервис Concur для мобильных устройств. Обратитесь, пожалуйста, к администратору.</string>
+	<key>Your company's preferred</key>
+	<string>Предпочтительная для вашей компании</string>
+	<key>Your company's travel policy will not allow this reservation.</key>
+	<string>Согласно правилам вашей компании в отношении командировок это резервирование не будет разрешено.</string>
+	<key>Your device cannot make a phone call.</key>
+	<string>Ваше устройство не может выполнять телефонные звонки.</string>
+	<key>Your entry does not appear to be a valid work email or Concur Username. For example</key>
+	<string>Запись, как представляется, не быть действительный работа электронной почты или имя пользователя Concur. Например, вам может отсутствовать @ или .com</string>
+	<key>Your expense has been queued</key>
+	<string>Ваш расход поставлен в очередь на загрузку.</string>
+	<key>Your favorite</key>
+	<string>Предпочитаемое вами</string>
+	<key>Your hotel reservation has been successfully cancelled. Cancellation Number: %@</key>
+	<string>Ваш заказ номера в гостинице успешно отменен. Номер отмены заказа: %@</string>
+	<key>Your receipt has been queued</key>
+	<string>Ваша квитанция поставлена в очередь для загрузки.</string>
+	<key>add_as_favorite</key>
+	<string>Добавить в Избранное</string>
+	<key>add_new_route</key>
+	<string>Добавить новый маршрут</string>
+	<key>add_route</key>
+	<string>Добавить маршрут</string>
+	<key>add_to_report</key>
+	<string>Добавить в отчет</string>
+	<key>additional_charge</key>
+	<string>Дополнительное начисление</string>
+	<key>are missing</key>
+	<string>отсутствуют.</string>
+	<key>arrival_station</key>
+	<string>Станция назначения</string>
+	<key>available from</key>
+	<string>свободен с</string>
+	<key>back_to_list</key>
+	<string>Вернуться к списку</string>
+	<key>business_purpose</key>
+	<string>Деловая цель</string>
+	<key>cheap</key>
+	<string>Дешевые</string>
+	<key>check in on</key>
+	<string>дата регистрации прибытия</string>
+	<key>choices</key>
+	<string>варианты</string>
+	<key>commuter_pass</key>
+	<string>Проездной билет для регулярных поездок</string>
+	<key>corporate card transactions</key>
+	<string>операция(-и) по корпоративной карточке</string>
+	<key>cost</key>
+	<string>Стоимость</string>
+	<key>day</key>
+	<string>день</string>
+	<key>days</key>
+	<string>дня(-ей)</string>
+	<key>departure_station</key>
+	<string>Станция отправления</string>
+	<key>easy</key>
+	<string>Простой</string>
+	<key>email saved into your drafts</key>
+	<string>сообщение электронной почты сохранено в вашей папке Черновики</string>
+	<key>expense_route</key>
+	<string>Отнести маршрут на расходы</string>
+	<key>fast</key>
+	<string>Быстрый</string>
+	<key>favorites</key>
+	<string>Избранное</string>
+	<key>green</key>
+	<string>Первый класс (зеленое место)</string>
+	<key>hour</key>
+	<string>час</string>
+	<key>hour_quantity</key>
+	<string>%d ч.</string>
+	<key>hours</key>
+	<string>часы</string>
+	<key>hours_quantity</key>
+	<string>%d ч.</string>
+	<key>ic_card</key>
+	<string>IC карт</string>
+	<key>ic_card_fare</key>
+	<string>IC-карты тарифа</string>
+	<key>int active int upcoming</key>
+	<string>%d активных, %d предстоящих</string>
+	<key>invoice to review</key>
+	<string>счет для проверки</string>
+	<key>invoices to approve</key>
+	<string>Счета к утверждению</string>
+	<key>invoices to review</key>
+	<string>счет для проверки</string>
+	<key>is missing</key>
+	<string>отсутствует.</string>
+	<key>items to upload</key>
+	<string>элементы к загрузке</string>
+	<key>japan_public_transit</key>
+	<string>Общественный транспорт в Японии</string>
+	<key>line</key>
+	<string>Линия</string>
+	<key>manual</key>
+	<string>Вручную</string>
+	<key>menu</key>
+	<string>меню</string>
+	<key>miles</key>
+	<string>миль</string>
+	<key>minute</key>
+	<string>минута</string>
+	<key>minute_quantity</key>
+	<string>%d мин.</string>
+	<key>minutes</key>
+	<string>минут(-ы)</string>
+	<key>minutes_quantity</key>
+	<string>%d мин.</string>
+	<key>mobile entries</key>
+	<string>Мобильные записи</string>
+	<key>near</key>
+	<string>вблизи</string>
+	<key>no</key>
+	<string>нет</string>
+	<key>noReceipt</key>
+	<string>Изображение квитанции в настоящее время недоступно. Повторите, пожалуйста, попытку позже.</string>
+	<key>noReceipts</key>
+	<string>В настоящее время в хранилище квитанций ваших квитанций нет.</string>
+	<key>no_favorite_routes</key>
+	<string>Избранные маршруты отсутствуют</string>
+	<key>no_recent_routes</key>
+	<string>Недавние маршруты отсутствуют</string>
+	<key>no_saved_routes</key>
+	<string>Сохраненные маршруты отсутствуют</string>
+	<key>other</key>
+	<string>Другой</string>
+	<key>paper_ticket</key>
+	<string>Бумажный билет</string>
+	<key>per day</key>
+	<string>в день</string>
+	<key>per night</key>
+	<string>в сутки</string>
+	<key>personal_expense</key>
+	<string>Личный расход</string>
+	<key>pickup on</key>
+	<string>дата получения</string>
+	<key>purchase request to review</key>
+	<string>запросы о покупке для проверки</string>
+	<key>purchase requests to review</key>
+	<string>запросы о покупке для проверки</string>
+	<key>recent</key>
+	<string>Недавние</string>
+	<key>report to approve</key>
+	<string>отчет к утверждению</string>
+	<key>reports to approve</key>
+	<string>отчеты к утверждению</string>
+	<key>resend the verification email</key>
+	<string>повторно отправить проверочное сообщение электронной почты</string>
+	<key>reserved</key>
+	<string>Забронированное место</string>
+	<key>results by</key>
+	<string>результаты по</string>
+	<key>results by Duration</key>
+	<string>результаты по продолжительности</string>
+	<key>results by Earliest Departure</key>
+	<string>результаты по самым ранним отправлениям</string>
+	<key>results by Fare Price</key>
+	<string>результаты по транспортным тарифам</string>
+	<key>results by Preferred Carrier</key>
+	<string>результаты по предпочтительным перевозчикам</string>
+	<key>route_added_to_report_confirmation</key>
+	<string>Ваш маршрут добавлен в</string>
+	<key>route_saved_confirmation</key>
+	<string>Ваш маршрут был сохранен</string>
+	<key>route_search</key>
+	<string>Поиск маршрута</string>
+	<key>routes</key>
+	<string>Маршруты</string>
+	<key>save_for_later</key>
+	<string>Сохранить на потом</string>
+	<key>search_stations</key>
+	<string>Искать станции</string>
+	<key>seat_type</key>
+	<string>Тип места</string>
+	<key>select_route</key>
+	<string>Выберите маршрут</string>
+	<key>sorted by</key>
+	<string>рассортировано по</string>
+	<key>tap here to cancel reservation</key>
+	<string>чтобы отменить бронь, коснитесь здесь.</string>
+	<key>through_station</key>
+	<string>Через станцию</string>
+	<key>through_stations</key>
+	<string>Через станции</string>
+	<key>to</key>
+	<string>до</string>
+	<key>today</key>
+	<string>Сегодня</string>
+	<key>token hour(s) token minute(s)</key>
+	<string>%d часов %d минут</string>
+	<key>token minute(s)</key>
+	<string>%d минут(-ы)</string>
+	<key>token results</key>
+	<string>%d результатов</string>
+	<key>travel request to approve</key>
+	<string>запрос о командировке к утверждению</string>
+	<key>travel requests to approve</key>
+	<string>запросы о командировках к утверждению</string>
+	<key>trip to approve</key>
+	<string>поездка к утверждению</string>
+	<key>trip_date</key>
+	<string>Дата поездки</string>
+	<key>trips to approve</key>
+	<string>поездки к утверждению</string>
+	<key>unknown</key>
+	<string>Неизвестный</string>
+	<key>unreserved</key>
+	<string>Незабронированное место</string>
+	<key>unsubmitted Reports</key>
+	<string>неотправленный(-е) отчет(-ы)</string>
+	<key>view_report</key>
+	<string>Просмотреть отчет</string>
+</dict>
+</plist>

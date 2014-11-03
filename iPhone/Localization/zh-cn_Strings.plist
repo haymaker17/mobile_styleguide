@@ -1,0 +1,3939 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key># of Cars</key>
+	<string>汽车数</string>
+	<key>%@ has been submitted</key>
+	<string>已提交 %@</string>
+	<key>%@ km</key>
+	<string>%@ 公里</string>
+	<key>%@ kms</key>
+	<string>%@ 公里</string>
+	<key>%@ mile</key>
+	<string>%@ 英里</string>
+	<key>%@ miles</key>
+	<string>%@ 英里</string>
+	<key>%@ of your colleagues are staying here on your check-in date</key>
+	<string>在您的入住日期，您的 %@ 位同事正在此处居住</string>
+	<key>%@ of your colleagues' favourite</key>
+	<string>%@ 个同事的收藏夹</string>
+	<key>%@ per day</key>
+	<string>%@ 每天</string>
+	<key>%d Hour and %d Minute(s)</key>
+	<string>%d 小时 %d 分钟</string>
+	<key>%d Hours and %d Minute(s)</key>
+	<string>%d 小时 %d 分钟</string>
+	<key>%d Minute(s)</key>
+	<string>%d 分钟</string>
+	<key>(Refundable)</key>
+	<string>（可退款）</string>
+	<key>1 Stop</key>
+	<string>1 站</string>
+	<key>@Concur2Go Twitter Feed</key>
+	<string>@Concur2Go Twitter 信息来源</string>
+	<key>A Receipt is</key>
+	<string>在服务器中，发票显示为附加到费用中，但发票管理器中已不存在发票。请重新向此费用附加发票并保存。</string>
+	<key>ACTIVEREQUESTS</key>
+	<string>活动的申请</string>
+	<key>ACTIVE_ENTRIES</key>
+	<string>费用报告</string>
+	<key>ACTIVE_REPORTS</key>
+	<string>活动的费用报告</string>
+	<key>ADD_CAR_MILEAGE_HOME_NOT_SUPPORTED</key>
+	<string>您的私人汽车配置没有汽车里程补助率，或您的特定汽车补助率配置当前不受支持。请通过手机或 Web 向费用报告中添加里程费用。</string>
+	<key>ADD_CAR_MILEAGE_NOT_SUPPORTED</key>
+	<string>您的私人汽车配置没有汽车里程补助率，或您的特定汽车补助率配置当前不受支持。</string>
+	<key>ADD_EXISTING_CARD</key>
+	<string>此特定卡已被添加，无法再次添加。</string>
+	<key>ADD_EXPENSE_OFFLINE_NOT_SUPPORTED</key>
+	<string>脱机模式下尚不支持添加费用。</string>
+	<key>ADD_TO_RPT_CONFIRM_MSG</key>
+	<string>向报告添加所选的费用？向费用报告添加它们后，您可以附加发票和编辑费用。</string>
+	<key>ADD_TO_RPT_CONFIRM_TITLE</key>
+	<string>确认</string>
+	<key>ADD_YODLEE_CARD_COMPLETE_MSG</key>
+	<string>您尾号为 %@ 的卡已添加到您的 SmartExpense 帐户。</string>
+	<key>ADD_YODLEE_CARD_FAILED_MSG</key>
+	<string>无法添加您的信用卡。请稍后尝试。</string>
+	<key>ADD_YODLEE_CARD_INSTRUCTION</key>
+	<string>输入您帐户的登录信息。Concur 将对此信息加密并确保其安全使用以下载您的卡消费信息。</string>
+	<key>AIR_BOOKING</key>
+	<string>机票预订</string>
+	<key>AIR_BOOKING_DISABLED_MSG</key>
+	<string>您公司已禁止在移动设备上进行机票预订。请联机预订航班或致电旅行社。</string>
+	<key>AIR_BOOKING_PROFILE_1_MSG</key>
+	<string>您的差旅配置文件要求在“中间名称”、“性别”和“出生日期”中输入值。请登录到 Web 版 Concur Travel，并在菜单上选择“配置文件”。</string>
+	<key>AIR_BOOKING_PROFILE_21_MSG</key>
+	<string>您的差旅配置文件从未进行保存，在预订前必须至少保存一次。请登录到 Web 版 Concur Travel，并选择“配置文件”和“保存”。</string>
+	<key>AIR_BOOKING_PROFILE_22_MSG</key>
+	<string>您的差旅配置记账代码/类型需要存在项目。请与公司管理员联系设置相应的项目。</string>
+	<key>AIR_BOOKING_PROFILE_23_MSG</key>
+	<string>Vinnet 已不再存在！客户端不应接收此配置文件检查代码。</string>
+	<key>AIR_BOOKING_PROFILE_24_MSG</key>
+	<string>您的差旅配置文件要求在“手机”中输入值。请登录到 Web 版 Concur Travel，并在菜单上选择“配置文件”。</string>
+	<key>AIR_BOOKING_PROFILE_25_MSG</key>
+	<string>您的差旅配置文件要求在“护照国籍”中输入值。请登录到 Web 版 Concur Travel，并在菜单上选择“配置文件”。</string>
+	<key>AIR_BOOKING_PROFILE_26_MSG</key>
+	<string>您的差旅配置文件要求在“工作职位”中输入值。请登录到 Web 版 Concur Travel，并在菜单上选择“配置文件”。</string>
+	<key>AIR_BOOKING_PROFILE_27_MSG</key>
+	<string>您的差旅配置文件需要在“机构单位”中输入值。请登录到 Web 版 Concur Travel，并在菜单上选择“配置文件”。</string>
+	<key>AIR_BOOKING_PROFILE_28_MSG</key>
+	<string>您的差旅配置文件在“名称注释”中需要输入值。请登录到 Web 版 Concur Travel，并在菜单上选择“配置文件”。\n注意:此字段可能有自定义的标签。如果找不到，请与公司管理员联系。</string>
+	<key>AIR_BOOKING_PROFILE_29_MSG</key>
+	<string>您的差旅配置文件要求在“经理”中输入值。请登录到 Web 版 Concur Travel，并在菜单上选择“配置文件”。</string>
+	<key>AIR_BOOKING_PROFILE_2_MSG</key>
+	<string>预订机票旅行前，您必须完成差旅配置文件。请登录到 Web 版 Concur Travel，并在菜单上选择“配置文件”。</string>
+	<key>AIR_BOOKING_PROFILE_30_MSG</key>
+	<string>您的差旅配置文件要求在“员工 ID”中输入值。请登录到 Web 版 Concur Travel，并在菜单上选择“配置文件”。</string>
+	<key>AIR_BOOKING_PROFILE_31_MSG</key>
+	<string>您的差旅配置文件需要有效的电子邮件地址。请登录到 Web 版 Concur Travel，并在菜单上选择“配置文件”。</string>
+	<key>AIR_BOOKING_PROFILE_32_MSG</key>
+	<string>您的差旅配置文件要求提供工作地址（街道、城市和国家/地区）。请登录到 Web 版 Concur Travel，并在菜单上选择“配置文件”。</string>
+	<key>AIR_BOOKING_PROFILE_33_MSG</key>
+	<string>您的差旅配置文件要求提供工作电话或家庭电话。请登录到 Web 版 Concur Travel，并在菜单上选择“配置文件”。</string>
+	<key>AIR_BOOKING_PROFILE_PROLOG_MSG</key>
+	<string>请注销，并在提供上述信息后返回登录。</string>
+	<key>AIR_BOOKING_REQ_CUSTOM_FIELDS_MSG</key>
+	<string>您的公司在预订机票时具有特殊要求。请使用 Concur 的 Web 版预订机票。</string>
+	<key>AIR_WARNING_JUSTIFICATION</key>
+	<string>在违反公司策略预订此航班前，必须在以红色显示的字段中提供理由。</string>
+	<key>AIR_WARNING_REASON</key>
+	<string>在违反公司策略预订此航班前，必须在以红色显示的字段中提供原因。</string>
+	<key>AIR_WARNING_REASON_JUSTIFICATION</key>
+	<string>在违反公司策略预订此航班前，必须在以红色显示的字段中提供原因和理由。</string>
+	<key>ALERT_CLEAR_CACHE</key>
+	<string>这样将删除所有脱机数据。您的应用程序将会继续运行。</string>
+	<key>AMOUNT_TOO_BIG_ERR_MSG</key>
+	<string>输入 999999999999999 以内的金额</string>
+	<key>APPROVALS_NEG_TEXT</key>
+	<string>随时随地审批项目</string>
+	<key>APPROVEDREQUESTS</key>
+	<string>审批的申请</string>
+	<key>APPROVE_APPROVE_BUTTON_TITLE</key>
+	<string>审批</string>
+	<key>APPROVE_CANCEL</key>
+	<string>取消</string>
+	<key>APPROVE_ENTER_COMMENT_FOR_SENDBACK</key>
+	<string>请输入备注。</string>
+	<key>APPROVE_ENTRIES</key>
+	<string>费用报告条目</string>
+	<key>APPROVE_ENTRIES_ACTION_SECTION_REPORT_SUMMARY_ROW</key>
+	<string>费用报告摘要</string>
+	<key>APPROVE_ENTRIES_ACTION_SECTION_VIEW_COMMENTS_ROW</key>
+	<string>查看备注</string>
+	<key>APPROVE_ENTRIES_ACTION_SECTION_VIEW_EXCEPTIONS_ROW</key>
+	<string>查看例外</string>
+	<key>APPROVE_ENTRIES_ACTION_SECTION_VIEW_RECEIPTS_ROW</key>
+	<string>查看发票</string>
+	<key>APPROVE_ENTRIES_VIEW_TITLE</key>
+	<string>费用列表</string>
+	<key>APPROVE_EXPENSE_DETAILS</key>
+	<string>费用详细信息</string>
+	<key>APPROVE_EXPENSE_DETAILS_ATTENDEES</key>
+	<string>参加者</string>
+	<key>APPROVE_EXPENSE_DETAILS_COMMENT</key>
+	<string>备注</string>
+	<key>APPROVE_EXPENSE_DETAILS_DETAILS</key>
+	<string>详细信息</string>
+	<key>APPROVE_EXPENSE_DETAILS_EXCEPTIONS</key>
+	<string>例外</string>
+	<key>APPROVE_EXPENSE_DETAILS_VIEW_ATTENDEES</key>
+	<string>查看参加者</string>
+	<key>APPROVE_EXPENSE_DETAILS_VIEW_ITEMIZATIONS</key>
+	<string>查看明细</string>
+	<key>APPROVE_EXPENSE_DETAILS_VIEW_TITLE</key>
+	<string>费用</string>
+	<key>APPROVE_INVOICES</key>
+	<string>审批发票</string>
+	<key>APPROVE_OK</key>
+	<string>确定</string>
+	<key>APPROVE_PLEASE_COMMENT</key>
+	<string>请提供备注</string>
+	<key>APPROVE_PLEASE_CONFIRM</key>
+	<string>请确认</string>
+	<key>APPROVE_QUESTION_AREYOUSURE</key>
+	<string>是否确定批准此费用报告？</string>
+	<key>APPROVE_QUESTION_PART1</key>
+	<string>审批</string>
+	<key>APPROVE_QUESTION_PART2</key>
+	<string>费用报告</string>
+	<key>APPROVE_REPORT</key>
+	<string>审批费用报告</string>
+	<key>APPROVE_REPORTS</key>
+	<string>审批费用报告</string>
+	<key>APPROVE_REPORTS_VIEW_TITLE</key>
+	<string>要审批的费用报告</string>
+	<key>APPROVE_REPORT_CHECK_RECEIPT_IMAGE</key>
+	<string>查看发票图像</string>
+	<key>APPROVE_REPORT_RECEIPT_IMAGE</key>
+	<string>查看收据图像</string>
+	<key>APPROVE_REPORT_SUMMARY</key>
+	<string>费用报告摘要</string>
+	<key>APPROVE_REPORT_SUMMARY_AMOUNT_APPROVED</key>
+	<string>审批金额</string>
+	<key>APPROVE_REPORT_SUMMARY_AMOUNT_CLAIMED</key>
+	<string>要求报账的金额</string>
+	<key>APPROVE_REPORT_SUMMARY_AMOUNT_DUE_COMPANY</key>
+	<string>应付给公司的金额</string>
+	<key>APPROVE_REPORT_SUMMARY_AMOUNT_DUE_CREDIT_CARD</key>
+	<string>应付给信用卡的金额</string>
+	<key>APPROVE_REPORT_SUMMARY_AMOUNT_DUE_EMPLOYEE</key>
+	<string>应付给员工的金额</string>
+	<key>APPROVE_REPORT_SUMMARY_AMOUNT_REJECTED</key>
+	<string>被否决的金额</string>
+	<key>APPROVE_REPORT_SUMMARY_COMMENTS</key>
+	<string>备注</string>
+	<key>APPROVE_REPORT_SUMMARY_COMPANYDISBURSEMENT</key>
+	<string>公司支出</string>
+	<key>APPROVE_REPORT_SUMMARY_COMPANY_PAID_TO_CREDIT_CARD</key>
+	<string>公司支付到信用卡</string>
+	<key>APPROVE_REPORT_SUMMARY_EMPLOYEEDISBURSEMENTS</key>
+	<string>员工支出</string>
+	<key>APPROVE_REPORT_SUMMARY_HEADER</key>
+	<string>标题</string>
+	<key>APPROVE_REPORT_SUMMARY_LESS_PERSONAL_AMOUNT</key>
+	<string>应减私人金额</string>
+	<key>APPROVE_REPORT_SUMMARY_POLICY</key>
+	<string>策略</string>
+	<key>APPROVE_REPORT_SUMMARY_REPORT_HEADER</key>
+	<string>费用报告标题</string>
+	<key>APPROVE_REPORT_SUMMARY_REPORT_ID</key>
+	<string>费用报告 ID</string>
+	<key>APPROVE_REPORT_SUMMARY_REPORT_TOTAL</key>
+	<string>费用报告总计</string>
+	<key>APPROVE_REPORT_SUMMARY_TOTAL_PAID_BY_COMPANY</key>
+	<string>由公司支付的总额</string>
+	<key>APPROVE_REPORT_SUMMARY_TOTAL_PAID_BY_EMPLOYEE</key>
+	<string>由员工支付的总额</string>
+	<key>APPROVE_REPORT_SUMMARY_VIEW_TITLE</key>
+	<string>摘要</string>
+	<key>APPROVE_SENDBACK_BUTTON_TITLE</key>
+	<string>发回</string>
+	<key>APPROVE_VIEW_ATTENDEES</key>
+	<string>参加者</string>
+	<key>APPROVE_VIEW_ATTENDEES_ATTENDEE_AMOUNT_TITLE</key>
+	<string>金额</string>
+	<key>APPROVE_VIEW_ATTENDEES_ATTENDEE_COMPANY_TITLE</key>
+	<string>公司</string>
+	<key>APPROVE_VIEW_ATTENDEES_ATTENDEE_NAME_TITLE</key>
+	<string>参加者姓名</string>
+	<key>APPROVE_VIEW_ATTENDEES_ATTENDEE_TITLE_TITLE</key>
+	<string>参加者称谓</string>
+	<key>APPROVE_VIEW_ATTENDEES_ATTENDEE_TYPE_TITLE</key>
+	<string>参加者类型</string>
+	<key>APPROVE_VIEW_COMMENTS</key>
+	<string>查看备注</string>
+	<key>APPROVE_VIEW_COMMENTS_VIEW_TITLE</key>
+	<string>备注</string>
+	<key>APPROVE_VIEW_EXCEPTIONS</key>
+	<string>查看例外</string>
+	<key>APPROVE_VIEW_EXCEPTIONS_EXPENSE_LEVEL_EXCEPTION_SECTION_HEADER</key>
+	<string>费用</string>
+	<key>APPROVE_VIEW_EXCEPTIONS_REPORT_LEVEL_EXCEPTION_SECTION_HEADER</key>
+	<string>费用报告</string>
+	<key>APPROVE_VIEW_EXCEPTIONS_VIEW_TITLE</key>
+	<string>例外</string>
+	<key>APPROVE_VIEW_ITEMIZATIONS</key>
+	<string>明细</string>
+	<key>APPROVE_VIEW_ITEMIZATIONS_SUMMARY_SECTION_TITLE</key>
+	<string>摘要</string>
+	<key>APP_RATING_MSG</key>
+	<string> 现在您已使用了我们的应用程序，请在 App Store 中对其评级告诉我们您对它的看法。</string>
+	<key>APP_RATING_MSG_DISMISS</key>
+	<string>不再询问</string>
+	<key>APP_RATING_TITLE</key>
+	<string>对此应用程序评级？</string>
+	<key>ATTENDEES</key>
+	<string>参加者</string>
+	<key>ATTENDEES_EXCLUDED_FOR_TYPE</key>
+	<string>由于此费用类型不含部分参加者类型，所以可能无法添加部分参加者。</string>
+	<key>ATTENDEE_ADD</key>
+	<string>添加参加者</string>
+	<key>ATTENDEE_ADD_BUMP</key>
+	<string>通过 %@ 添加参加者</string>
+	<key>ATTENDEE_ADD_CONTACT</key>
+	<string>手动添加参加者</string>
+	<key>ATTENDEE_ENTRY</key>
+	<string>参加者</string>
+	<key>ATTENDEE_SEARCH_FOR_ATTENDEE</key>
+	<string>搜索参加者</string>
+	<key>ATTENDEE_SELECT_CONTACT</key>
+	<string>从联系人中选择</string>
+	<key>AUTHENTICATION_FAILURE_MSG</key>
+	<string>未授权访问违规。请检查您的用户名和/或 PIN。</string>
+	<key>AUTHENTICATION_TIMED_OUT_MSG</key>
+	<string>连接身份验证服务超时。请确保您指向正确的 URL。</string>
+	<key>A_ACCO</key>
+	<string>已审批，正在进行会计检查</string>
+	<key>A_APPR</key>
+	<string>已审批</string>
+	<key>A_EXTV</key>
+	<string>等待外部验证</string>
+	<key>A_FILE</key>
+	<string>已提交</string>
+	<key>A_NOTF</key>
+	<string>未提交</string>
+	<key>A_PECO</key>
+	<string>待批成本对象审批</string>
+	<key>A_PEND</key>
+	<string>已提交，等待审批</string>
+	<key>A_PVAL</key>
+	<string>等待验证</string>
+	<key>A_RESU</key>
+	<string>已发回给员工</string>
+	<key>A_RHLD</key>
+	<string>等待发票图像</string>
+	<key>A_TEXP</key>
+	<string>审批时间过期</string>
+	<key>Abukai Expenses</key>
+	<string>Abukai 费用</string>
+	<key>Accept</key>
+	<string>接受</string>
+	<key>Access other areas of the app</key>
+	<string>访问应用程序的其他区域</string>
+	<key>Accounting Code</key>
+	<string>会计代码</string>
+	<key>Actions offline</key>
+	<string>您的设备当前处于脱机状态。请连接到 Internet 并重试此操作。</string>
+	<key>Actual Arrival</key>
+	<string>实际到达</string>
+	<key>Actual Departure</key>
+	<string>实际出发</string>
+	<key>Actual Equipment</key>
+	<string>实际设备</string>
+	<key>Actual Terminal</key>
+	<string>实际航站楼</string>
+	<key>Add Account to Concur</key>
+	<string>向 Concur 添加帐户</string>
+	<key>Add Amtrak</key>
+	<string>添加 Amtrak</string>
+	<key>Add Another</key>
+	<string>添加另一个</string>
+	<key>Add Attendee</key>
+	<string>添加参加者</string>
+	<key>Add Car</key>
+	<string>添加汽车</string>
+	<key>Add Car Mileage</key>
+	<string>添加汽车里程</string>
+	<key>Add Card</key>
+	<string>添加卡</string>
+	<key>Add Comment</key>
+	<string>添加备注</string>
+	<key>Add Credit Card</key>
+	<string>添加信用卡</string>
+	<key>Add Entry</key>
+	<string>添加条目</string>
+	<key>Add Expense</key>
+	<string>添加费用</string>
+	<key>Add Hotel</key>
+	<string>添加宾馆</string>
+	<key>Add Itemization</key>
+	<string>添加明细</string>
+	<key>Add Itinerary Stop Header</key>
+	<string>为了向您提供最准确的补助，我们需要知道您在旅行期间的停留地点。 添加至少两个停留地点以完成您的路线。</string>
+	<key>Add Mileage</key>
+	<string>添加里程</string>
+	<key>Add New Expense</key>
+	<string>添加新的费用</string>
+	<key>Add Receipt</key>
+	<string>添加发票</string>
+	<key>Add Selected Attendee</key>
+	<string>添加所选的参加者</string>
+	<key>Add Single Day Itinerary Stop Header</key>
+	<string>为了向您提供最准确的补助，我们需要知道您在旅行期间的停留地点。 添加至少两个停留地点以完成您的路线。</string>
+	<key>Add a Cash Expense</key>
+	<string>添加费用</string>
+	<key>Add a Receipt using the below buttons</key>
+	<string>使用以下按钮添加发票</string>
+	<key>Add an Attendee</key>
+	<string>添加参加者</string>
+	<key>Add an Entry from a Picture</key>
+	<string>从图片中添加条目</string>
+	<key>Add credit card</key>
+	<string>添加信用卡</string>
+	<key>Add expenses to your report.</key>
+	<string>将费用添加到报告。</string>
+	<key>Add expenses with attendees</key>
+	<string>添加参加者费用</string>
+	<key>Add from Photo Album</key>
+	<string>从照片库添加</string>
+	<key>Add to Report</key>
+	<string>添加到费用报告</string>
+	<key>AddAnotherItemToThisRequest</key>
+	<string>向此申请中添加其他项目</string>
+	<key>Adding to Report</key>
+	<string>添加到费用报告</string>
+	<key>Additional Charges (each night)</key>
+	<string>附加收费（每夜）</string>
+	<key>Address</key>
+	<string>地址</string>
+	<key>Address point of interest airport code</key>
+	<string>地址、兴趣点、机场代码</string>
+	<key>Adds processing time</key>
+	<string>添加处理时间</string>
+	<key>Adjust Allowance</key>
+	<string>调整补助</string>
+	<key>Adjustments</key>
+	<string>调整</string>
+	<key>Adults</key>
+	<string>成人</string>
+	<key>Advanced Search</key>
+	<string>高级搜索</string>
+	<key>Afternoon</key>
+	<string>下午</string>
+	<key>Agency Code Sign In</key>
+	<string>旅行社代码登录</string>
+	<key>Agency Record Locator: %@</key>
+	<string>旅行社记录定位器: %@</string>
+	<key>Agency Sign In</key>
+	<string>旅行社登录</string>
+	<key>Air Booking</key>
+	<string>机票预订</string>
+	<key>Air Price to Beat</key>
+	<string>机票起始价格</string>
+	<key>Air cancelled from mobile device</key>
+	<string>从移动设备取消机票</string>
+	<key>Aircraft</key>
+	<string>飞机</string>
+	<key>Airfare Price to Beat</key>
+	<string>机票起始价格</string>
+	<key>Airfare quoted total</key>
+	<string>机票报价总览</string>
+	<key>Airline</key>
+	<string>航空公司</string>
+	<key>Airports</key>
+	<string>机场</string>
+	<key>All</key>
+	<string>全部</string>
+	<key>All Expenses</key>
+	<string>所有费用</string>
+	<key>All Flights</key>
+	<string>所有航班</string>
+	<key>All Items</key>
+	<string>所有项目</string>
+	<key>All Nonstop</key>
+	<string>所有直达</string>
+	<key>All Results</key>
+	<string>所有结果</string>
+	<key>All States &amp; Provinces</key>
+	<string>所有州和省</string>
+	<key>All day</key>
+	<string>整日</string>
+	<key>All token</key>
+	<string>全部 %@</string>
+	<key>All token (token results)</key>
+	<string>所有 %@ （%d 个结果）</string>
+	<key>Allowance Adjustments</key>
+	<string>补助调整</string>
+	<key>Allowance Itinerary</key>
+	<string>补助路线</string>
+	<key>Already Expensed</key>
+	<string>已计费</string>
+	<key>Already have an account SU</key>
+	<string>已拥有帐户？</string>
+	<key>Amount</key>
+	<string>金额</string>
+	<key>Amount in</key>
+	<string>金额</string>
+	<key>Amtrak</key>
+	<string>Amtrak</string>
+	<key>An Expense Report</key>
+	<string>费用报告</string>
+	<key>An email containing the application's log has been placed in your outbox.</key>
+	<string>包含应用程序日志的电子邮件已存到您的发件箱。</string>
+	<key>An email containing the application's log has been saved in your Drafts folder.</key>
+	<string>包含应用程序日志的电子邮件已保存到您的“草稿”文件夹中。</string>
+	<key>An email has been sent containing your report.</key>
+	<string>已发送包含您的费用报告的电子邮件。</string>
+	<key>An invalid station for arrival has been specified.  Please select a station to arrive at.</key>
+	<string>指定的到达站点无效。请选择要到达的站点。</string>
+	<key>An invalid station for departure has been specified.  Please select a station to depart from.</key>
+	<string>指定的出发站点无效。请选择出发站点。</string>
+	<key>An unexpected error occurred. Please try again later.</key>
+	<string>发生意外错误。请稍后重试。</string>
+	<key>And view upcoming itineraries.</key>
+	<string>并查看即将开始的路线。</string>
+	<key>Any</key>
+	<string>混合等级</string>
+	<key>Any Car Class</key>
+	<string>任何汽车等级</string>
+	<key>Anytime</key>
+	<string>任何时间</string>
+	<key>AppStore Expense</key>
+	<string>如果您是 Concur Expense 或 Concur Breeze 用户，则可以使用移动解决方案执行以下操作:         
+* 使用设备的相机获取快速费用和发票（无需再进行扫描、传真或邮寄）
+* 查看和编辑信用卡消费
+* 向现有或新的费用报告添加费用，并提交费用报告
+* 编辑报告的标题/费用
+* 添加明细/里程
+* 通过备注乃至视图相关的发票审批或否决费用报告！</string>
+	<key>Append</key>
+	<string>附加</string>
+	<key>Append Confirmation</key>
+	<string>附加确认</string>
+	<key>Append or Replace Receipt</key>
+	<string>此费用已具有相关联的发票。请选择“附加”以将此新发票附加到此费用，或选择“替换”以用此新发票替换现有发票。</string>
+	<key>Application Information</key>
+	<string>应用程序信息</string>
+	<key>Approval Summary</key>
+	<string>审批摘要</string>
+	<key>Approvals</key>
+	<string>审批</string>
+	<key>Approve</key>
+	<string>审批</string>
+	<key>Approve Trips</key>
+	<string>审批旅行</string>
+	<key>Approve by</key>
+	<string>审批者</string>
+	<key>Approver</key>
+	<string>审批者</string>
+	<key>Approving Report</key>
+	<string>审批报告</string>
+	<key>Approving Trip</key>
+	<string>审批旅行</string>
+	<key>Apps</key>
+	<string>应用程序</string>
+	<key>Are you sure</key>
+	<string>是否确定要删除所选的费用？</string>
+	<key>Are you sure about adding smart expenses</key>
+	<string>智能费用将在费用报告中组合为单一条目。</string>
+	<key>Are you sure about smart expenses</key>
+	<string>是否确定要删除所选的费用？智能费用的移动条目部分将被永久删除，相关的卡消费将被隐藏。</string>
+	<key>Are you sure that you want to delete this receipt</key>
+	<string>是否确实要删除此发票?</string>
+	<key>Are you sure that you want to reserve the selected train(s)?</key>
+	<string>是否确定要预定所选择的火车？</string>
+	<key>Are you sure you want to approve this trip?</key>
+	<string>是否确定要批准此旅行？</string>
+	<key>Are you sure you want to cancel this air reservation?</key>
+	<string>是否确定要取消此机票预定？</string>
+	<key>Are you sure you want to cancel this car reservation?</key>
+	<string>是否确定要取消此汽车预定？</string>
+	<key>Are you sure you want to cancel this hotel reservation?</key>
+	<string>是否确定要取消此宾馆预定？</string>
+	<key>Are you sure you want to cancel this rail reservation?</key>
+	<string>是否确定要取消此火车预定？</string>
+	<key>Are you sure you want to delete the open report?</key>
+	<string>是否确定要删除打开的报告？</string>
+	<key>Are you sure you want to reserve this car?</key>
+	<string>是否确定要预订此汽车？</string>
+	<key>Are you sure you want to reserve this flight?</key>
+	<string>是否确定要预订此航班？</string>
+	<key>Are you sure you want to unlink from your TripIt account?</key>
+	<string>是否确定要取消与 TripIt 帐户的链接？</string>
+	<key>Arrival</key>
+	<string>到达</string>
+	<key>Arrival City</key>
+	<string>到达城市</string>
+	<key>Arrival Information</key>
+	<string>到达信息</string>
+	<key>Arrival Station</key>
+	<string>到达站点</string>
+	<key>Arrival Terminal</key>
+	<string>到达航站楼</string>
+	<key>Arrival Time</key>
+	<string>到达时间</string>
+	<key>Arrive</key>
+	<string>到达</string>
+	<key>Arriving trains</key>
+	<string>到达: %@</string>
+	<key>Ask Me Later</key>
+	<string>稍后询问</string>
+	<key>At Least 1 Month</key>
+	<string>至少 1 个月</string>
+	<key>At Least 1 Week</key>
+	<string>至少 1 周</string>
+	<key>Attach Receipt</key>
+	<string>附加发票</string>
+	<key>Attach via Receipt Store</key>
+	<string>通过发票库附加</string>
+	<key>Attendee</key>
+	<string>参加者</string>
+	<key>Attendee Amount</key>
+	<string>参加者批金额</string>
+	<key>Attendee Count</key>
+	<string>参加者计数</string>
+	<key>Attendee Group</key>
+	<string>参加者组</string>
+	<key>Attendee Search Results</key>
+	<string>参加者搜索结果</string>
+	<key>Attendee Type</key>
+	<string>参加者类型</string>
+	<key>Attendee data is unavailable.</key>
+	<string>参加者数据不可用。</string>
+	<key>Attendee type cannot be changed.  Create a new attendee instead.</key>
+	<string>（不能更改参加者类型。）请新建一个参加者。</string>
+	<key>Attendees</key>
+	<string>参加者</string>
+	<key>Attendees not editable offline</key>
+	<string>无法脱机编辑参加者。</string>
+	<key>Attention</key>
+	<string>注意</string>
+	<key>Authenticating</key>
+	<string>身份验证</string>
+	<key>Auto Login</key>
+	<string>自动登录</string>
+	<key>Available From States/Provinces</key>
+	<string>可用的出发州/省</string>
+	<key>Available From Stations</key>
+	<string>可用的出发站点</string>
+	<key>Available Itineraries</key>
+	<string>可用行程</string>
+	<key>Available States/Provinces</key>
+	<string>可用的州/省</string>
+	<key>Available Stations</key>
+	<string>可用的站点</string>
+	<key>Available To States/Provinces</key>
+	<string>可用的目标州/省</string>
+	<key>Available To Stations</key>
+	<string>可用到达站点</string>
+	<key>Awaiting Approval</key>
+	<string>等待审批</string>
+	<key>BOOKING_UNDER_P2B_EARNS_POINTS</key>
+	<string>选择低于起始价格的消费选择即可赚取差旅点供您以后使用。</string>
+	<key>BOOKING_UNDER_P2B_SAVES_MONEY</key>
+	<string>根据起始价格预订可为贵公司节省成本。</string>
+	<key>BRONX_USER_CORP_APP_MSG</key>
+	<string>使用 Concur 的 SmartExpense 版登录信息无法登录到 Concur Mobile。是否要替换使用 SmartExpense 版？</string>
+	<key>BRONX_USER_CORP_APP_TITLE</key>
+	<string>不支持 SmartExpense 用户</string>
+	<key>BTN_EDIT</key>
+	<string>编辑</string>
+	<key>BUMP_HELP_TEXT1</key>
+	<string>您可以通过选择以下“成为参加者”分享您的参加者信息。</string>
+	<key>BUMP_HELP_TEXT2</key>
+	<string>您的同事应在费用报告单项屏幕的参加者部分选择通过%@' '添加参加者。</string>
+	<key>BUMP_INSTRUCTION</key>
+	<string>您的同事应在费用报告单项屏幕的参加者部分选择通过 %@'  '添加参加者，才能将您作为参加者添加到费用报告单项。</string>
+	<key>BUMP_SHARE_HELP_TEXT1</key>
+	<string>您可以通过选择以下“添加参加者”添加参加者。</string>
+	<key>BUMP_SHARE_HELP_TEXT2</key>
+	<string>您的同事应在主屏幕上选择“参加者”按钮。</string>
+	<key>BUSGUEST</key>
+	<string>商务来宾</string>
+	<key>Back</key>
+	<string>后退</string>
+	<key>Baggage Claim</key>
+	<string>行李费报账</string>
+	<key>Become an Attendee</key>
+	<string>成为参加者</string>
+	<key>Before reserving this car in</key>
+	<string>在违反公司策略预订此汽车前，必须在以红色显示的字段中提供原因和理由。</string>
+	<key>Before reserving this car in justification</key>
+	<string>在违反公司策略预订汽车前，必须在以红色显示的字段中提供理由。</string>
+	<key>Before reserving this car in reason</key>
+	<string>在违反公司策略预订汽车前，必须在以红色显示的字段中提供原因。</string>
+	<key>Before reserving this flight</key>
+	<string>在预订此航班前，请填写红色显示的字段。</string>
+	<key>Benchmark</key>
+	<string>基准</string>
+	<key>Book</key>
+	<string>预定</string>
+	<key>Book Air</key>
+	<string>预订机票</string>
+	<key>Book Car</key>
+	<string>预订汽车</string>
+	<key>Book Hotel</key>
+	<string>预订宾馆</string>
+	<key>Book Rail</key>
+	<string>预订火车票</string>
+	<key>Book Train</key>
+	<string>预订火车票</string>
+	<key>Book Travel</key>
+	<string>预订差旅</string>
+	<key>Book Travel from anywhere.</key>
+	<string>在任何地点进行差旅预订</string>
+	<key>Book Travel on the go with Concur</key>
+	<string>使用 Concur 在旅途中预订旅行</string>
+	<key>Book a Hotel Car and more</key>
+	<string>预订机票、宾馆以及更多内容</string>
+	<key>Book a Trip</key>
+	<string>预订旅程 </string>
+	<key>Book a train</key>
+	<string>预订火车</string>
+	<key>Book flights</key>
+	<string>预订航班</string>
+	<key>Book under this price to earn Travel Points.</key>
+	<string>根据该价格预订以赚取差旅点。</string>
+	<key>Booker Comments</key>
+	<string>预订者备注</string>
+	<key>Booking Info</key>
+	<string>预订信息</string>
+	<key>Booking cancelled</key>
+	<string>预订已取消</string>
+	<key>Booking under this amount saves your company money.</key>
+	<string>根据该金额预订可节省贵公司成本。</string>
+	<key>Bookings</key>
+	<string>预订</string>
+	<key>Bookings offline</key>
+	<string>当设备处于脱机状态时，无法进行预订。请重新连接到 Internet 并重试。</string>
+	<key>Border Crossing</key>
+	<string>过境</string>
+	<key>Bump Phones to Become an Attendee</key>
+	<string>%@ 致电成为参加者</string>
+	<key>Bump Phones to Exchange Attendee Info</key>
+	<string>%@ 致电交换参加者信息</string>
+	<key>Bus</key>
+	<string>公共汽车</string>
+	<key>Business</key>
+	<string>商务舱</string>
+	<key>By State or Province</key>
+	<string>按州或省</string>
+	<key>CANNOT_ADD_TO_RPT_WAIT_IMAGE</key>
+	<string>正在上传发票。请等待几秒钟，然后重试</string>
+	<key>CAR</key>
+	<string>汽车租赁</string>
+	<key>CARDS_LIST</key>
+	<string>公司卡</string>
+	<key>CARD_AUTH_MSG</key>
+	<string>这是卡授权。在提交之前，请等待卡消费。</string>
+	<key>CAR_DETAILS</key>
+	<string>汽车详细信息</string>
+	<key>CAR_LIST</key>
+	<string>选择汽车</string>
+	<key>CHECK_OUT_DATE_ERR_MSG</key>
+	<string>输入一个入住日期之后的日期。</string>
+	<key>COMMENTS</key>
+	<string>备注</string>
+	<key>COMPANY_NAME</key>
+	<string>公司名称</string>
+	<key>COMPANY_SSO_DISABLED_MSG</key>
+	<string>您公司已禁用公司登录。请与公司管理员联系。</string>
+	<key>COMPANY_SSO_INITIATED_REMOTE_WIPE</key>
+	<string>已从此设备中清除您的帐户数据。请与公司管理员联系以获得帮助。</string>
+	<key>CONFIGURING_SESSION</key>
+	<string>正在配置移动会话...</string>
+	<key>CONFIRM_CONTINUE</key>
+	<string>是否确实要继续？</string>
+	<key>CONFIRM_DETACH_TEXT</key>
+	<string>是否确实要分离发票图像？</string>
+	<key>CONFIRM_PIN</key>
+	<string>确认新 PIN</string>
+	<key>CONFIRM_RECEIPT_DELETE</key>
+	<string>是否确定要删除此发票？</string>
+	<key>CONFIRM_RECEIPT_DELETION</key>
+	<string>是否确定要删除此发票？</string>
+	<key>CONFIRM_REPORT_SUBMISSION</key>
+	<string>是否确定提交此费用报告？</string>
+	<key>COPY_DOWN_ENTRY_MSG</key>
+	<string>您已更改此条目中的 %@ 字段。在与此条目相关的所有条目和明细中，是否还要用此处输入的新值改写 %@ 字段？单击“是”改写这些值。单击“否”仅在此条目中保存更改。 </string>
+	<key>COPY_DOWN_RPT_MSG</key>
+	<string>您已更改此报告标题中的 %@ 字段。在此费用报告的所有条目和明细中，是否还要用此处输入的新值改写 %@ 字段?单击“是”改写这些值。单击“否”仅在报告标题中保存更改。 </string>
+	<key>CORP_CARDS_0</key>
+	<string>您没有未使用的公司卡消费</string>
+	<key>CORP_CARDS_1</key>
+	<string>您有 1 笔未使用的公司卡消费</string>
+	<key>CORP_CARDS_2</key>
+	<string>您有 %d 笔未使用的公司卡消费</string>
+	<key>CORP_SSO_MSG</key>
+	<string>如果贵公司使用单一登录 (SSO) 且已发出公司代码，请在此处输入该代码。</string>
+	<key>CORP_SSO_MSG_GOV</key>
+	<string>如果您的旅行社已发布旅行社代码，请在以下位置输入该代码。</string>
+	<key>CORP_USER_SU_APP_MSG</key>
+	<string>使用 Concur Mobile 登录信息无法登录到 Concur 的 SmartExpense 版。是否要替换使用 Concur Mobile？</string>
+	<key>CORP_USER_SU_APP_TITLE</key>
+	<string>不支持企业用户</string>
+	<key>CREATE_ADD</key>
+	<string>创建并添加</string>
+	<key>CREATE_PIN</key>
+	<string>设置您的移动 PIN 以登录 Concur</string>
+	<key>CREATE_PIN_NOTES</key>
+	<string>PIN 可以是字母、数字和 !、$ 或 # 等特殊字符，但是不能有空格。</string>
+	<key>CREATE_PIN_TITLE</key>
+	<string>Mobile PIN</string>
+	<key>CVV Number</key>
+	<string>CVV 编号</string>
+	<key>Cache</key>
+	<string>缓存</string>
+	<key>Cache Done Title</key>
+	<string>缓存清除完成</string>
+	<key>Calculate Allowances</key>
+	<string>计算补助</string>
+	<key>Call</key>
+	<string>致电</string>
+	<key>Call Travel Agent</key>
+	<string>呼叫旅行社</string>
+	<key>Camera</key>
+	<string>通过相机附加</string>
+	<key>Cancel</key>
+	<string>取消</string>
+	<key>Cancel Air</key>
+	<string>取消机票</string>
+	<key>Cancel Car</key>
+	<string>取消汽车</string>
+	<key>Cancel Failed</key>
+	<string>取消失败</string>
+	<key>Cancel Hotel</key>
+	<string>取消宾馆</string>
+	<key>Cancel Rail</key>
+	<string>取消火车</string>
+	<key>Cancel Trip</key>
+	<string>取消旅行</string>
+	<key>Cancel Upload</key>
+	<string>取消上载</string>
+	<key>Cancel air reservation</key>
+	<string>取消机票预订</string>
+	<key>Cancel car reservation</key>
+	<string>取消汽车预订</string>
+	<key>Cancel hotel reservation</key>
+	<string>取消宾馆预订</string>
+	<key>Cancellation Policy</key>
+	<string>取消策略</string>
+	<key>Cannot Save Changes</key>
+	<string>无法保存更改</string>
+	<key>Cannot Submit Report</key>
+	<string>无法提交费用报告</string>
+	<key>Cannot access receipt</key>
+	<string>无法访问发票</string>
+	<key>Cannot append receipt</key>
+	<string>无法附加发票</string>
+	<key>Cannot expense trip</key>
+	<string>无法对旅行计费</string>
+	<key>Capture Receipt</key>
+	<string>获取发票</string>
+	<key>Capture car mileage</key>
+	<string>捕捉汽车里程</string>
+	<key>Capture expense and receipt</key>
+	<string>获取费用和发票</string>
+	<key>Capture your expenses while you travel</key>
+	<string>获取差旅期间的费用</string>
+	<key>Car</key>
+	<string>汽车</string>
+	<key>Car Hire Airport Location</key>
+	<string>机场位置</string>
+	<key>Car Mileage</key>
+	<string>汽车里程</string>
+	<key>Car Mileage Text</key>
+	<string>将您的里程计入费用</string>
+	<key>Car Rule Violation</key>
+	<string>违反汽车规则</string>
+	<key>Car Type</key>
+	<string>汽车类型</string>
+	<key>Car cancelled from mobile device</key>
+	<string>从移动设备取消汽车</string>
+	<key>Card</key>
+	<string>卡</string>
+	<key>Card Charges</key>
+	<string>卡消费</string>
+	<key>Card Transactions</key>
+	<string>卡交易</string>
+	<key>Cards</key>
+	<string>公司卡</string>
+	<key>Cars</key>
+	<string>汽车</string>
+	<key>Cars near</key>
+	<string>汽车靠近</string>
+	<key>Cars_subline</key>
+	<string>取用靓车</string>
+	<key>Cash</key>
+	<string>现金</string>
+	<key>Chain Least Preferred</key>
+	<string>非首选的链</string>
+	<key>Chain Most Preferred</key>
+	<string>最首选的链</string>
+	<key>Chain Preferred</key>
+	<string>首选链</string>
+	<key>Changing the expense type will remove all itemized data</key>
+	<string>更改费用类型会将所有明细化数据从此费用中删除。是否要继续？</string>
+	<key>Chatter</key>
+	<string>Chatter</string>
+	<key>Chatter post help text</key>
+	<string>此次旅行尚未在 Chatter 上发布。发布您的旅行，从同事那里获取有关目的地的提示和建议。 </string>
+	<key>Check  In</key>
+	<string>签入</string>
+	<key>Check In</key>
+	<string>入住</string>
+	<key>Check In Complete</key>
+	<string>入住完成</string>
+	<key>Check In Complete Message</key>
+	<string>您已成功签入当前的地点。</string>
+	<key>Check In Failed Message</key>
+	<string>此时无法签入。请稍后重试。</string>
+	<key>Check Invoice Image</key>
+	<string>查看发票图像</string>
+	<key>Check connection retry from receipt store</key>
+	<string>请检查连接状况并从发票库重新附加发票。</string>
+	<key>Check your email to reset your password and sign in</key>
+	<string>检查电子邮件以重设密码并登录。</string>
+	<key>Check your email to reset your password and sign in.</key>
+	<string>检查电子邮件以重设密码并登录。</string>
+	<key>Check your spam folder or</key>
+	<string>没有看到？请检查您的垃圾邮件文件夹或</string>
+	<key>Check-In Date</key>
+	<string>入住日期</string>
+	<key>Check-Out Date</key>
+	<string>退房日期</string>
+	<key>Check-in</key>
+	<string>入住</string>
+	<key>Check-out</key>
+	<string>退房</string>
+	<key>Checking In</key>
+	<string>入住</string>
+	<key>Checking Network Connection</key>
+	<string>检查网络连接</string>
+	<key>Checking Out</key>
+	<string>退房</string>
+	<key>Children</key>
+	<string>儿童</string>
+	<key>ChoosePhoto-ImagePicker</key>
+	<string>预览</string>
+	<key>Class &amp; Seat Number</key>
+	<string>等级和座位号</string>
+	<key>Class / Seat</key>
+	<string>等级/座位</string>
+	<key>Class of Service</key>
+	<string>舱位等级</string>
+	<key>Class: %@</key>
+	<string>等级: %@</string>
+	<key>Clear Current Selection</key>
+	<string>清除当前选择</string>
+	<key>Clear out the local cache</key>
+	<string>清除本地缓存</string>
+	<key>Close</key>
+	<string>关闭</string>
+	<key>Closed</key>
+	<string>已关闭</string>
+	<key>Comment</key>
+	<string>备注</string>
+	<key>Comments</key>
+	<string>备注</string>
+	<key>Commonly Used</key>
+	<string>常用</string>
+	<key>Compact</key>
+	<string>紧凑型</string>
+	<key>Compact Hybrid</key>
+	<string>紧凑型混合动力车</string>
+	<key>Company</key>
+	<string>公司</string>
+	<key>Company Code</key>
+	<string>SSO 公司代码</string>
+	<key>Company Code Sign In</key>
+	<string>SSO 公司代码登录</string>
+	<key>Company Name</key>
+	<string>公司名称</string>
+	<key>Company Sign In</key>
+	<string>公司登录</string>
+	<key>Company Sign On</key>
+	<string>公司登录</string>
+	<key>Concur was unable to obtain a cancellation number for your hotel cancellation. In order to obtain a cancellation number</key>
+	<string>Concur 无法获取您取消宾馆预订的取消编号。要获取取消编号，请联系宾馆。</string>
+	<key>Confirm Delete</key>
+	<string>确认删除</string>
+	<key>Confirm Detach</key>
+	<string>确认分离</string>
+	<key>Confirm New Mobile Password (PIN)</key>
+	<string>确认新移动密码 (PIN)</string>
+	<key>Confirm New Password</key>
+	<string>确认新密码</string>
+	<key>Connect to a WiFi or cellular data network.</key>
+	<string>连接到 WiFi 或蜂窝数据网络。</string>
+	<key>Connecting with TripIt</key>
+	<string>连接 TripIt</string>
+	<key>Connection Error</key>
+	<string>连接错误</string>
+	<key>Connection Settings</key>
+	<string>连接设置</string>
+	<key>Contact Received</key>
+	<string>已收到联系人</string>
+	<key>Continue</key>
+	<string>继续</string>
+	<key>Copyright Concur 2010</key>
+	<string>版权所有 Concur 2013</string>
+	<key>Corp Cards</key>
+	<string>公司卡</string>
+	<key>Corporate Card</key>
+	<string>公司卡</string>
+	<key>Corporate Cards</key>
+	<string>公司卡</string>
+	<key>Could not connect to Concur.</key>
+	<string>无法连接 Concur。</string>
+	<key>Could not expense trip</key>
+	<string>此旅行已经计费</string>
+	<key>Could not load attendee data.</key>
+	<string>无法加载参加者数据。</string>
+	<key>Could not load attendee form data.</key>
+	<string>无法加载参加者表单数据。</string>
+	<key>Could not load attendee search fields data.</key>
+	<string>无法加载参加者搜索字段数据。</string>
+	<key>Could not load expense data.</key>
+	<string>无法加载费用数据。</string>
+	<key>Could not save attendee data.  Please try again later.</key>
+	<string>无法保存参加者数据。请稍后重试。</string>
+	<key>Crash Detected</key>
+	<string>检测到崩溃</string>
+	<key>Create &amp; Add</key>
+	<string>创建并添加</string>
+	<key>Create Password</key>
+	<string>创建密码</string>
+	<key>Create Report</key>
+	<string>创建费用报告</string>
+	<key>Create a Report</key>
+	<string>创建费用报告</string>
+	<key>Create a report for your expenses to go into</key>
+	<string>为您的费用创建一个报告</string>
+	<key>Create an Account</key>
+	<string>创建帐户</string>
+	<key>Create and submit your expense reports</key>
+	<string>创建并提交费用报告</string>
+	<key>Credit Card</key>
+	<string>信用卡</string>
+	<key>Currency</key>
+	<string>货币</string>
+	<key>Currency Code</key>
+	<string>货币代码</string>
+	<key>Current Location</key>
+	<string>当前地点</string>
+	<key>Current Trip</key>
+	<string>当前</string>
+	<key>Current Trip Information</key>
+	<string>当前的旅行信息</string>
+	<key>Currently Offline</key>
+	<string>当前处于脱机状态</string>
+	<key>Custom fields required message</key>
+	<string>当前不支持您公司的预订策略。自定义字段支持即将推出。请使用 Concur 的 Web 版预订差旅。</string>
+	<key>DISALLOW_EXPENSEIT_DELETE</key>
+	<string>移动设备上不支持删除 ExpenseIt 项目</string>
+	<key>DISALLOW_TRANS_DELETE</key>
+	<string>移动设备上不支持删除卡消费</string>
+	<key>DISTANCE</key>
+	<string>宾馆查找范围</string>
+	<key>Daily Rate</key>
+	<string>每日费率</string>
+	<key>Date</key>
+	<string>日期</string>
+	<key>Day</key>
+	<string>日</string>
+	<key>Day Trip</key>
+	<string>单日旅行</string>
+	<key>Days</key>
+	<string>天</string>
+	<key>Days Remaining at Location</key>
+	<string>该地点剩余的天数</string>
+	<key>Delete</key>
+	<string>删除</string>
+	<key>Delete Entry Failed</key>
+	<string>删除条目失败</string>
+	<key>Delete Receipt</key>
+	<string>删除发票</string>
+	<key>Delete Report Failed</key>
+	<string>删除费用报告失败</string>
+	<key>Deleting Out of Pocket Expense(s)</key>
+	<string>正在删除费用</string>
+	<key>Deleting Receipt</key>
+	<string>删除发票</string>
+	<key>Deleting Report</key>
+	<string>删除费用报告</string>
+	<key>Delivery Options</key>
+	<string>送票选项</string>
+	<key>Depart</key>
+	<string>出发</string>
+	<key>Departing</key>
+	<string>出发</string>
+	<key>Departing Train</key>
+	<string>出发火车</string>
+	<key>Departing trains</key>
+	<string>出发: %@ %@ %@ </string>
+	<key>Departing: token token</key>
+	<string>出发: %@ %@</string>
+	<key>Departure</key>
+	<string>出发</string>
+	<key>Departure City</key>
+	<string>出发城市</string>
+	<key>Departure Date</key>
+	<string>出发日期</string>
+	<key>Departure Gate</key>
+	<string>登机口</string>
+	<key>Departure Information</key>
+	<string>出发信息</string>
+	<key>Departure Matches Arrival</key>
+	<string>出发匹配到达</string>
+	<key>Departure Matches Arrival Message</key>
+	<string>出发和到达机场相同。请为您的旅程选择不同机场。</string>
+	<key>Departure Point</key>
+	<string>出发地</string>
+	<key>Departure Station</key>
+	<string>出发站点</string>
+	<key>Departure Status</key>
+	<string>出发状态</string>
+	<key>Departure Time</key>
+	<string>出发时间</string>
+	<key>Depending upon your company configuration some of the Concur for Mobile features may not be avaiable to you</key>
+	<string>根据您的公司配置，某些 Concur 移动版功能可能无法供您使用</string>
+	<key>Deposit required</key>
+	<string>需要存款</string>
+	<key>Destination</key>
+	<string>目的地</string>
+	<key>Destination Location</key>
+	<string>目的地</string>
+	<key>Destination Point</key>
+	<string>目的地</string>
+	<key>Detach</key>
+	<string>分离</string>
+	<key>Details</key>
+	<string>详细信息</string>
+	<key>Dining</key>
+	<string>用餐</string>
+	<key>Directions</key>
+	<string>方向</string>
+	<key>Disabled by administrator</key>
+	<string>被管理员禁用</string>
+	<key>Discover great hotels</key>
+	<string>发现优质宾馆</string>
+	<key>Dismiss tip overlay</key>
+	<string>忽略提示覆盖</string>
+	<key>Distance</key>
+	<string>距离</string>
+	<key>Distance calculated by Google</key>
+	<string>Google 计算的距离</string>
+	<key>Distance to Date = %@</key>
+	<string>目前里程记录 = %@</string>
+	<key>Diversion Airport</key>
+	<string>转移机场</string>
+	<key>Diversion City</key>
+	<string>转移城市</string>
+	<key>Don't know your PIN?</key>
+	<string>不知道您的 PIN?</string>
+	<key>Don't know your password or PIN?</key>
+	<string>不知道您的密码或 PIN?</string>
+	<key>Don't know your user name?</key>
+	<string>不知道您的用户名?</string>
+	<key>Done</key>
+	<string>完成</string>
+	<key>Done cache killing</key>
+	<string>此设备的缓存已被清除。您需要关闭应用程序，并重新启动它。否则，很可能会出现系统不稳定。</string>
+	<key>Dont have an Account Sign Up</key>
+	<string>还没有帐户？</string>
+	<key>Download receipts in background</key>
+	<string>仍然在后台下载发票。您可以单击“取消”等待，或单击“确定”继续。</string>
+	<key>Drop-off</key>
+	<string>还车</string>
+	<key>Drop-off Date</key>
+	<string>还车日期</string>
+	<key>Drop-off Time</key>
+	<string>还车时间</string>
+	<key>Dropbox</key>
+	<string>Dropbox</string>
+	<key>Duplicate Attendees</key>
+	<string>重复参加者警告</string>
+	<key>Duplicates Found</key>
+	<string>发现重复项目</string>
+	<key>Duration</key>
+	<string>持续时间</string>
+	<key>E Ticket</key>
+	<string>电子票</string>
+	<key>E-Receipt</key>
+	<string>电子发票</string>
+	<key>EMAIL</key>
+	<string>电子邮件</string>
+	<key>EMAIL_LINK_EXPIRED_MSG</key>
+	<string>请在收到后 24 小时之内重试并使用链接</string>
+	<key>EMPLOYEE</key>
+	<string>员工</string>
+	<key>ENTER_NEW_PIN</key>
+	<string>新 PIN</string>
+	<key>ENTER_PIN_MSG</key>
+	<string>输入由至少 4 个字母和数字字符组成的 PIN。您公司可能要求更多字符。</string>
+	<key>ENTER_VALID_COMPANY_CODE</key>
+	<string>请为“公司代码”提供一个值。</string>
+	<key>ENTRIES_NOT_MATCH_MSG</key>
+	<string>您输入的条目不匹配。请重试。</string>
+	<key>ENTRY_REQ_FIELDS</key>
+	<string>请填写表单中所有必填的字段并解决任何错误，再保存条目。</string>
+	<key>ERROR</key>
+	<string>错误</string>
+	<key>ERROR_ACCOUNT_NOT_CONFIGURED</key>
+	<string>没有为您的帐户配置提交费用报告。</string>
+	<key>ERROR_BAD_CONFIG_MSG</key>
+	<string>您的配置不支持发票。请与管理员核实。</string>
+	<key>ERROR_CONFIGURING_SESSION</key>
+	<string>通过单一登录配置移动会话失败。请与公司管理员联系。</string>
+	<key>ERROR_EXPENSE_SITE_DOWN</key>
+	<string>Expense 正在进行维护。请在大约 1 小时后重试。</string>
+	<key>ERROR_INVALID_AGENCY_CODE</key>
+	<string>请输入您的旅行社代码。</string>
+	<key>ERROR_INVALID_COMPANY_CODE</key>
+	<string>请输入您的公司代码。</string>
+	<key>ERROR_INVALID_PIN</key>
+	<string>您的 PIN 无效。请重新输入您的 PIN。</string>
+	<key>ERROR_MSG_VISIT_WEBSITE</key>
+	<string>请访问 Concur 网站以提供值。</string>
+	<key>ERROR_REQUIRED_FIELDS_MISSING</key>
+	<string>此费用报告中的至少一个必填字段缺少数据。已通过红色例外标记指出该费用，并通过列表指出要填写的字段。</string>
+	<key>ERROR_SUBMIT_FAILED</key>
+	<string>提交失败</string>
+	<key>EXCEPTIONS</key>
+	<string>例外</string>
+	<key>EXPENSES_NEG_TEXT</key>
+	<string>在旅途中获取您的费用</string>
+	<key>EXPENSE_DETAILS_ITEMIZATIONS</key>
+	<string>明细</string>
+	<key>EXPENSE_REPORTS</key>
+	<string>费用报告</string>
+	<key>EXPENSE_REPORTS_NEG_TEXT</key>
+	<string>检查并提交您的费用报告</string>
+	<key>EXPENSE_TYPES_LIST</key>
+	<string>费用类型</string>
+	<key>Earliest Departure</key>
+	<string>最早出发</string>
+	<key>Earn %d pts.</key>
+	<string>赚取 %d 点。</string>
+	<key>Economy</key>
+	<string>经济舱</string>
+	<key>Economy Hybrid</key>
+	<string>经济型混合动力车</string>
+	<key>Edit</key>
+	<string>编辑</string>
+	<key>Email</key>
+	<string>电子邮件</string>
+	<key>Email Address</key>
+	<string>电子邮件地址</string>
+	<key>Email Log</key>
+	<string>电子邮件日志</string>
+	<key>Email link expired</key>
+	<string>电子邮件链接已过期</string>
+	<key>Enter Approver Email</key>
+	<string>输入审批者电子邮件</string>
+	<key>Enter Field</key>
+	<string>输入 %@</string>
+	<key>Enter in the URL that connects to the Concur servers</key>
+	<string>输入连接到 Concur 服务器的 URL</string>
+	<key>Enter your Agency Code</key>
+	<string>输入您的旅行社代码</string>
+	<key>Enter your mobile password (PIN) to sign in</key>
+	<string>输入移动密码 (PIN) 并登录</string>
+	<key>Enter your password to sign in</key>
+	<string>输入密码并登录</string>
+	<key>Entries Don't Match</key>
+	<string>项目不匹配</string>
+	<key>Error</key>
+	<string>错误</string>
+	<key>Error loading content</key>
+	<string>加载内容时出错</string>
+	<key>ErrorReceiptsFetch</key>
+	<string>未上传发票。轻按以下 '+' 按钮立即上传发票，并稍后从您的费用报告或费用条目使用它们。</string>
+	<key>Estimated Arrival</key>
+	<string>预计到达时间</string>
+	<key>Estimated Departure</key>
+	<string>预计出发时间</string>
+	<key>Evening</key>
+	<string>晚上</string>
+	<key>Exception Details</key>
+	<string>例外详细信息</string>
+	<key>Exceptions</key>
+	<string>例外</string>
+	<key>Exchange Rate</key>
+	<string>汇率</string>
+	<key>Existing Reports</key>
+	<string>现有费用报告</string>
+	<key>Expense</key>
+	<string>费用</string>
+	<key>Expense Locations</key>
+	<string>费用地点</string>
+	<key>Expense Queued</key>
+	<string>已排队费用</string>
+	<key>Expense Trip</key>
+	<string>费用旅行</string>
+	<key>Expense Type</key>
+	<string>费用类型</string>
+	<key>Expense Updates</key>
+	<string>费用更新</string>
+	<key>Expense a trip from TripIt</key>
+	<string>从 TripIt 创建旅行费用</string>
+	<key>ExpenseIt Entries</key>
+	<string>ExpenseIt 条目</string>
+	<key>ExpenseIt Entry</key>
+	<string>ExpenseIt 条目</string>
+	<key>ExpenseTracker version</key>
+	<string>SmartExpense 版 %@</string>
+	<key>Expensed</key>
+	<string>已计费</string>
+	<key>Expenses</key>
+	<string>费用</string>
+	<key>Expenses Combined</key>
+	<string>费用已组合</string>
+	<key>Expenses cannot be added offline</key>
+	<string>无法脱机添加费用。</string>
+	<key>Expensing the Trip</key>
+	<string>旅行计费</string>
+	<key>Export</key>
+	<string>导出</string>
+	<key>Express</key>
+	<string>快速</string>
+	<key>FACEBOOK_AUTH_FAILED</key>
+	<string>无法使用 Facebook 进行身份验证。请确保您的 Safari 浏览器中禁用了私人浏览。</string>
+	<key>FACEBOOK_INCOMPLETE_INFO_SIGNIN_MSG</key>
+	<string>无法使用 Facebook 凭据登录。请确保在您的 Facebook 配置文件中提供了有效的电子邮件，并利用 Facebook 帐户通过电子邮件登录。</string>
+	<key>FACEBOOK_INCOMPLETE_INFO_SIGNUP_MSG</key>
+	<string>无法使用 Facebook 凭据注册。请确保在您的 Facebook 配置文件中填写了电子邮件、名字和姓氏，并利用 Facebook 帐户通过电子邮件登录。</string>
+	<key>FACEBOOK_SIGNIN_FAILED_MSG</key>
+	<string>意外错误。请重试 Facebook 登录或从“登录”页面尝试其它登录方法。</string>
+	<key>FACEBOOK_SIGNUP_FAILED_MSG</key>
+	<string>意外错误。请重试 Facebook 注册或从“注册”页面尝试其它注册方法。</string>
+	<key>FIELD_MAX_LENGTH_ERR_MSG</key>
+	<string>请输入不超过 %@ 个字符。</string>
+	<key>FILL_IN_PARENT_MLIST_FIELD</key>
+	<string>请首先填写所有父字段 %@。</string>
+	<key>FIRST_NAME</key>
+	<string>名字</string>
+	<key>FIX_EMAIL_RESET_PASSWORD</key>
+	<string>请在“电子邮件地址”字段输入有效的电子邮件，然后单击重设密码链接。</string>
+	<key>FIX_REPORT_NAME_MSG</key>
+	<string>请选择现有的费用报告或输入有效的费用报告名称，然后选择新费用报告。</string>
+	<key>FLEX_FARING_ERROR_MSG</key>
+	<string>对于这些城市间的航空旅行，请使用 Web 来预订航班。</string>
+	<key>FLIGHT_STATUS_MSG</key>
+	<string>航班状态更新日期</string>
+	<key>FORM</key>
+	<string>表单</string>
+	<key>FORM_FIELDS_INVALID</key>
+	<string>请在保存前填写表单中所有的必填字段并解决任何错误。</string>
+	<key>FOUND_COUNT</key>
+	<string>找到: %i</string>
+	<key>FREQUENT_FLYER_NO_SEL_MSG</key>
+	<string>您有一个或多个常旅客帐户，但此次预订没有选择。请选择“确定”继续不使用任何帐户，或选择“取消”选择帐户。</string>
+	<key>Facebook</key>
+	<string>Facebook</string>
+	<key>Failed</key>
+	<string>失败</string>
+	<key>Failed to add to report</key>
+	<string>向费用报告添加条目失败。</string>
+	<key>Failed to download receipt</key>
+	<string>无法下载发票</string>
+	<key>Failed to import Itinerary</key>
+	<string>无法导入路线</string>
+	<key>Failed to import entry</key>
+	<string>无法导入部分费用。</string>
+	<key>Failed to retrieve attendees in selected group</key>
+	<string>无法检索所选组的参加者</string>
+	<key>Failed to save Itinerary Stop</key>
+	<string>未能保存路线站</string>
+	<key>Failed to save external list item</key>
+	<string>无法保存外部列表项目</string>
+	<key>Failure</key>
+	<string>失败</string>
+	<key>Fare Choices</key>
+	<string>票价选择</string>
+	<key>Feature not enabled for this demo</key>
+	<string>此演示未启动此功能</string>
+	<key>Features</key>
+	<string>功能</string>
+	<key>Fee</key>
+	<string>费用</string>
+	<key>Fetching Data</key>
+	<string>正在获取数据</string>
+	<key>Fetching Expense Data</key>
+	<string>正在获取费用数据</string>
+	<key>Fetching Filter Results</key>
+	<string>获取筛选结果</string>
+	<key>Fetching Hotel Rates</key>
+	<string>正在获取宾馆费率</string>
+	<key>Fetching Location Data</key>
+	<string>正在获取地点数据</string>
+	<key>Fetching Trip</key>
+	<string>正在获取旅行</string>
+	<key>Fetching the Feed</key>
+	<string>正在获取信息来源</string>
+	<key>Filter</key>
+	<string>筛选</string>
+	<key>Find Travel</key>
+	<string>查找差旅</string>
+	<key>First</key>
+	<string>头等舱</string>
+	<key>First Name</key>
+	<string>名字</string>
+	<key>Flight Details</key>
+	<string>航班详细信息</string>
+	<key>Flight Duration</key>
+	<string>航班时长</string>
+	<key>Flight Options</key>
+	<string>航班选项</string>
+	<key>Flight Rule Violation</key>
+	<string>违反航班规则</string>
+	<key>Flight Schedules</key>
+	<string>航班计划</string>
+	<key>Flight Search</key>
+	<string>航班搜索</string>
+	<key>Flight Status</key>
+	<string>航班状态</string>
+	<key>Flights</key>
+	<string>航班</string>
+	<key>Flights_subline</key>
+	<string>快速查找和预订航班</string>
+	<key>For Example: say Find a Flight from San Francisco to New York for next week</key>
+	<string>例如：查找下周从旧金山飞往纽约的航班</string>
+	<key>For Example: say Find a hotel in San Francisco for next week</key>
+	<string>例如：说：“在旧金山市寻找下周住宿 3 晚的宾馆”</string>
+	<key>Forgot Username or Password?</key>
+	<string>忘记用户名或密码?</string>
+	<key>Forgot mobile password (PIN)?</key>
+	<string>忘记移动密码 (PIN)？</string>
+	<key>Forgot password?</key>
+	<string>忘记密码?</string>
+	<key>Free up memory and retry receipt upload</key>
+	<string>请释放内存并在稍后重试发票上传。</string>
+	<key>Frequent Flyer Program</key>
+	<string>常旅客计划</string>
+	<key>Frequent Flyer Warning</key>
+	<string>常旅客警告</string>
+	<key>Friday_Short</key>
+	<string>周五</string>
+	<key>From</key>
+	<string>从</string>
+	<key>From Location</key>
+	<string>出发地点</string>
+	<key>From Station</key>
+	<string>出发站点</string>
+	<key>Full</key>
+	<string>完整</string>
+	<key>Full Hybrid</key>
+	<string>全尺寸混合动力车</string>
+	<key>Full Pickup</key>
+	<string>全尺寸皮卡</string>
+	<key>Full SUV</key>
+	<string>全尺寸 SUV</string>
+	<key>Future Trips</key>
+	<string>即将开始</string>
+	<key>GOOGLE_AUTH_FAILED_MSG</key>
+	<string>无法使用 Google 授权您访问 Concur SmartExpense。</string>
+	<key>GOOGLE_INCOMPLETE_INFO_SIGNIN_MSG</key>
+	<string>无法使用 Google 凭据登录。请确保您的 Google 帐户中拥有有效的电子邮件和配置文件。</string>
+	<key>GOOGLE_INCOMPLETE_INFO_SIGNUP_MSG</key>
+	<string>无法使用 Google 凭据注册。请确保在您的 Google 配置文件中填写了电子邮件、名字和姓氏。</string>
+	<key>Gate token</key>
+	<string>门口 %@</string>
+	<key>GateGuru</key>
+	<string>GateGuru</string>
+	<key>Gathering data from TripIt</key>
+	<string>从 TripIt 搜集数据</string>
+	<key>Generate Expenses</key>
+	<string>生成费用</string>
+	<key>Get Help</key>
+	<string>获得帮助</string>
+	<key>GetApprovedForAirHotelAndMore</key>
+	<string>获得航班、宾馆等审批</string>
+	<key>Google</key>
+	<string>Google</string>
+	<key>Greater than 25</key>
+	<string>大于 25</string>
+	<key>HAS_DYNAMIC_FIELDS_MSG</key>
+	<string>当前不支持您公司的预订策略。该支持即将推出。请使用 Concur 的 Web 版预订差旅。</string>
+	<key>HIGH_RESOLUTION_IMAGE</key>
+	<string>高分辨率（1000x1000 像素）</string>
+	<key>HOME_PAGE</key>
+	<string>Concur</string>
+	<key>HOME_PAGE_BREEZE</key>
+	<string>Concur Breeze</string>
+	<key>HOTEL</key>
+	<string>宾馆/无</string>
+	<key>HOTEL_BOOKING</key>
+	<string>预订房间</string>
+	<key>HOTEL_BOOKING_ADDRESS_MISSING_VIOLATIONS</key>
+	<string>在预定此房间之前，您必须处理显示为红色的策略违反。</string>
+	<key>HOTEL_BOOKING_VIEW_BOOKING_ERROR_MESSAGE</key>
+	<string>无法预订该宾馆。</string>
+	<key>HOTEL_BOOKING_VIEW_CANCELLATION_POLICY_DESCRIPTION</key>
+	<string>预订此房间前，您必须阅读取消政策详细信息。</string>
+	<key>HOTEL_BOOKING_VIEW_CANCELLATION_POLICY_TITLE</key>
+	<string>取消策略</string>
+	<key>HOTEL_BOOKING_VIEW_CONFIRM_BOOKING_MESSAGE</key>
+	<string>是否确定要预订此房间？</string>
+	<key>HOTEL_BOOKING_VIEW_CONFIRM_BOOKING_TITLE</key>
+	<string>请确认</string>
+	<key>HOTEL_BOOKING_VIEW_DAILY_RATE</key>
+	<string>每日费率: </string>
+	<key>HOTEL_BOOKING_VIEW_MISSING_VIOLATION_INFO_TITLE</key>
+	<string>缺少字段</string>
+	<key>HOTEL_BOOKING_VIEW_MISSING_VIOLATION_JUSTIFICATION</key>
+	<string>在违反公司策略预订此房间前，必须在以红色显示的字段中提供理由。</string>
+	<key>HOTEL_BOOKING_VIEW_MISSING_VIOLATION_REASON</key>
+	<string>在违反公司策略预订此房间前，必须在以红色显示的字段中提供原因。</string>
+	<key>HOTEL_BOOKING_VIEW_MISSING_VIOLATION_REASON_AND_JUSTIFICATION</key>
+	<string>在违反公司策略预订此房间前，必须在以红色显示的字段中提供原因和理由。</string>
+	<key>HOTEL_BOOKING_VIEW_ROOM</key>
+	<string>房间</string>
+	<key>HOTEL_BOOKING_VIOLATION_JUSTIFICATION_TITLE</key>
+	<string>违反理由</string>
+	<key>HOTEL_BOOKING_WITH_DEPOSIT_CONFIRM_BOOKING_MESSAGE</key>
+	<string>是否确定要预订此房间?</string>
+	<key>HOTEL_BOOKNIG_VIOLATION_JUSTIFICATION_PLACEHOLDER_TEXT</key>
+	<string>请输入预订此房间的理由。</string>
+	<key>HOTEL_CREDIT_CARD</key>
+	<string>选择信用卡</string>
+	<key>HOTEL_DETAILS_VIEW_FEES</key>
+	<string>费用</string>
+	<key>HOTEL_ROOM_LIST</key>
+	<string>选择房间</string>
+	<key>HOTEL_SEARCH_RESULTS</key>
+	<string>选择宾馆</string>
+	<key>HOTEL_VIEW_FIND_HOTELS_WITHIN</key>
+	<string>宾馆查找范围</string>
+	<key>HOTEL_VIEW_HOTEL_NAME_RESTRICTIONS</key>
+	<string>宾馆名称限制</string>
+	<key>HOTEL_VIEW_HOTEL_NAME_RESTRICTIONS_PLACEHOLDER_TEXT</key>
+	<string>查找名称包含此文本的宾馆</string>
+	<key>HOTEL_VIEW_KILOMETERS</key>
+	<string>公里</string>
+	<key>HOTEL_VIEW_LOCATION</key>
+	<string>地点</string>
+	<key>HOTEL_VIEW_MILE</key>
+	<string>英里</string>
+	<key>HOTEL_VIEW_NO_HOTELS_MESSAGE</key>
+	<string>未找到匹配的宾馆。请修改搜索条件并重试。</string>
+	<key>HOTEL_VIEW_NO_HOTELS_TITLE</key>
+	<string>没有匹配的宾馆</string>
+	<key>HOTEL_VIEW_NUMBER_SPACE_KILOMETERS_OR_MILES</key>
+	<string>%@ %@</string>
+	<key>HOTEL_VIEW_SEARCHING_FOR_HOTELS_AT</key>
+	<string>宾馆搜索范围</string>
+	<key>HOTEL_VIEW_SEARCHING_FOR_HOTELS_TO</key>
+	<string>到</string>
+	<key>HOTEL_VIEW_SEARCHING_FOR_HOTELS_WITH_AVAILABILITY</key>
+	<string>房间可用范围</string>
+	<key>HOTEL_VIEW_SEARCH_BUTTON_TITLE</key>
+	<string>搜索宾馆</string>
+	<key>HOTEL_VIEW_SELECT_PREFERENCE</key>
+	<string>选择首选项</string>
+	<key>HOTEL_VIEW_SMOKING_PREFERENCE</key>
+	<string>吸烟首选项</string>
+	<key>HOTEL_VIEW_SPECIFY_LOCATION_MESSAGE</key>
+	<string>请指定一个位置。</string>
+	<key>HOTEL_VIEW_SPECIFY_LOCATION_TITLE</key>
+	<string>地点为必填字段</string>
+	<key>HOTEL_VIEW_TIMEOUT_MESSAGE</key>
+	<string>无法找到匹配的宾馆费率。请修改搜索条件并重试。</string>
+	<key>HOTEL_VIEW_TIMEOUT_TITLE</key>
+	<string>没有匹配的宾馆费率</string>
+	<key>HOTEL_VIEW_WITH_NAMES_CONTAINING</key>
+	<string>名称包含</string>
+	<key>Having trouble signing in?</key>
+	<string>登录时遇到问题？</string>
+	<key>Help for PIN</key>
+	<string>您的 PIN 是您登录的备用方式，当贵公司将您自动登录到 Concur 的 Web 版，而您不知道密码时，可以创建 PIN。 
+
+要创建 PIN，请访问 Concur 的 Web 版(“配置文件”&gt;“移动注册”)。</string>
+	<key>Help for PIN - Gov</key>
+	<string>您的 PIN 是您登录的备用方式，当贵旅行社将您自动登录到 Concur 的 Web 版，而您不知道密码时，可以创建 PIN。 
+
+要创建 PIN，请访问 Concur 的 Web 版 (“配置文件”&gt;“移动注册”)。</string>
+	<key>Help for Password</key>
+	<string>如果您的公司允许使用 PIN 进行移动登录：返回到上一屏幕，并提交您在 Concur 注册的电子邮件。我们将向您发送有关如何登录的说明。
+
+如果您的公司要求提供密码：使用与 Concur 网站登录密码相同的密码。</string>
+	<key>Help for Password - Gov</key>
+	<string>您的密码是您用来登录 Web 版 Concur 的密码。您应该将您的密码用于移动应用程序。
+
+如果您不知道您的 Concur 密码，请与贵旅行社的管理员核实。</string>
+	<key>Help for User Name</key>
+	<string>大多数情况下，您可以使用您用于网页版 Concur 的同一用户名和密码登录我们的应用程序。
+ 
+如果您没有此信息，请在上一个屏幕上提交您的电子邮件以接收登录信息，或联系您公司的管理员。
+
+</string>
+	<key>Help for User Name - Gov</key>
+	<string>您的用户名是您用来登录 Web 版 Concur 的用户名。您应该将您的用户名用于移动应用程序。
+
+如果您不知道您的 Concur 用户名，请与贵旅行社的管理员核实。</string>
+	<key>Hide Offers</key>
+	<string>隐藏服务</string>
+	<key>Home</key>
+	<string>主页</string>
+	<key>Hotel</key>
+	<string>宾馆</string>
+	<key>Hotel Dates</key>
+	<string>住宿日期</string>
+	<key>Hotel Name</key>
+	<string>宾馆名称</string>
+	<key>Hotel Price to Beat</key>
+	<string>宾馆起始价格</string>
+	<key>Hotel Rule Violation</key>
+	<string>违反宾馆规则</string>
+	<key>Hotel Search</key>
+	<string>宾馆搜索</string>
+	<key>Hotel cancelled from mobile device</key>
+	<string>从移动设备取消宾馆</string>
+	<key>Hotels</key>
+	<string>宾馆</string>
+	<key>Hotels With Names Containing</key>
+	<string>宾馆名称包含</string>
+	<key>Hotels Within</key>
+	<string>宾馆范围</string>
+	<key>Hotels near</key>
+	<string>宾馆靠近</string>
+	<key>Hotels near you</key>
+	<string>您附近的宾馆</string>
+	<key>Hotels_subline</key>
+	<string>入住优质宾馆</string>
+	<key>Hour</key>
+	<string>小时</string>
+	<key>How would you like to book?</key>
+	<string>想要如何预订?</string>
+	<key>I Forgot</key>
+	<string>我忘记了</string>
+	<key>IDV Arrive</key>
+	<string>到达</string>
+	<key>IDV Arrives in t at t</key>
+	<string>到达 %@ 时间：%@</string>
+	<key>IDV Body</key>
+	<string>正文</string>
+	<key>IDV Check In</key>
+	<string>入住</string>
+	<key>IDV Check Out</key>
+	<string>退房</string>
+	<key>IDV Confirmation</key>
+	<string>确认</string>
+	<key>IDV Daily</key>
+	<string>每天</string>
+	<key>IDV Depart</key>
+	<string>出发</string>
+	<key>IDV Departs from t at t</key>
+	<string>从 %@ 于 %@ 出发</string>
+	<key>IDV Drop Off</key>
+	<string>还车</string>
+	<key>IDV Operated by t Flight t</key>
+	<string>由 %@ 承运，航班 %@</string>
+	<key>IDV Persons</key>
+	<string>人员</string>
+	<key>IDV Pick Up</key>
+	<string>取车</string>
+	<key>IDV Reserved for</key>
+	<string>预订</string>
+	<key>IDV Rooms</key>
+	<string>房间数</string>
+	<key>IDV Seat Map for t</key>
+	<string>%@ 的座位图</string>
+	<key>IDV Social Publishing</key>
+	<string>社交发布</string>
+	<key>IDV Terminal Map for t</key>
+	<string>%@ 的航站楼地图</string>
+	<key>IDV Terminal t Gate t</key>
+	<string>航站楼 %@ 门口 %@</string>
+	<key>IDV Web site for t</key>
+	<string>%@ 的网站</string>
+	<key>IDV property name</key>
+	<string>属性名称</string>
+	<key>IDV t Flight t</key>
+	<string>%@ 航班 @%</string>
+	<key>IMAGE_DOWN_SCALED_MSG</key>
+	<string>图像大小已缩小到 4MB 以内。请检查图像的内容，再将其保存到条目中。</string>
+	<key>INFO</key>
+	<string>信息</string>
+	<key>INTEGER_NEGATIVE_ERR_MSG</key>
+	<string>此字段不能包含负值</string>
+	<key>INTEGER_TOO_BIG_ERR_MSG</key>
+	<string>整数太大</string>
+	<key>INTEGER_VALIDATION_ERR_MSG</key>
+	<string>此字段要求整数值。</string>
+	<key>INVALID_CONCUR_CREDENTIALS</key>
+	<string>登录凭据不正确</string>
+	<key>INVALID_DEVICE_MSG</key>
+	<string>另一部设备请求 PIN 重设。请使用您请求 PIN 重设的同一部设备。</string>
+	<key>INVALID_LOGIN_MSG</key>
+	<string>再次尝试重新输入您的凭据或选择“我忘记”以接收登录说明。</string>
+	<key>INVALID_PIN_LEN_MSG</key>
+	<string>您的 PIN 必须至少为 %@ 个字符</string>
+	<key>INVALID_PIN_MSG</key>
+	<string>PIN 可以是字母、数字和特殊字符，但是不能有空格。</string>
+	<key>INVALID_PIN_SPECIAL_CHARACTERS</key>
+	<string>您输入的 PIN 未包含特殊字符。移动 PIN 必须包含至少一个特殊字符。例如 !、$、%、+ 和 =。</string>
+	<key>INVALID_PIN_SPECIAL_MIXED_CASE</key>
+	<string>PIN 必须包含至少一个大写字母 [A-Z] 和一个小写字母 [a-z]。</string>
+	<key>INVALID_USERID_MSG</key>
+	<string>请输入有效的登录 ID。%@它应该由登录名后跟 @ 符号及公司域组成。</string>
+	<key>INVOICE_LINEITEMS</key>
+	<string>发票详细信息</string>
+	<key>INVOICE_LINEITEM_DETAIL</key>
+	<string>单项</string>
+	<key>INVOICE_SUMMARY</key>
+	<string>发票摘要</string>
+	<key>INVOICE_VENDOR</key>
+	<string>发票供应商</string>
+	<key>ITEMIZATIONS</key>
+	<string>明细</string>
+	<key>ITEMIZATION_LIST</key>
+	<string>明细列表</string>
+	<key>ITEMS_TO_APPROVE</key>
+	<string>%d待审批项目</string>
+	<key>ITIN_DETAILS</key>
+	<string>段详细信息</string>
+	<key>ITIN_DETAILS_VIEW_AIR</key>
+	<string>飞机</string>
+	<key>ITIN_DETAILS_VIEW_AIRCOND</key>
+	<string>空调</string>
+	<key>ITIN_DETAILS_VIEW_AIRCRAFT</key>
+	<string>飞机</string>
+	<key>ITIN_DETAILS_VIEW_AIRPORT</key>
+	<string>机场</string>
+	<key>ITIN_DETAILS_VIEW_ALLOWABLE_MILES</key>
+	<string>允许的英里数</string>
+	<key>ITIN_DETAILS_VIEW_AMENITIES</key>
+	<string>康乐设施</string>
+	<key>ITIN_DETAILS_VIEW_ARRIVAL</key>
+	<string>到达</string>
+	<key>ITIN_DETAILS_VIEW_ARRIVE</key>
+	<string>到达</string>
+	<key>ITIN_DETAILS_VIEW_BAGGAGE</key>
+	<string>行李费</string>
+	<key>ITIN_DETAILS_VIEW_BODY</key>
+	<string>正文类型</string>
+	<key>ITIN_DETAILS_VIEW_BOOKING</key>
+	<string>正在预订</string>
+	<key>ITIN_DETAILS_VIEW_CABIN</key>
+	<string>舱位</string>
+	<key>ITIN_DETAILS_VIEW_CANCEL_POLICY</key>
+	<string>取消策略</string>
+	<key>ITIN_DETAILS_VIEW_CAR</key>
+	<string>汽车租赁</string>
+	<key>ITIN_DETAILS_VIEW_CARRIER</key>
+	<string>承运商</string>
+	<key>ITIN_DETAILS_VIEW_CHECK_IN</key>
+	<string>入住</string>
+	<key>ITIN_DETAILS_VIEW_CHECK_OUT</key>
+	<string>退房</string>
+	<key>ITIN_DETAILS_VIEW_CITY</key>
+	<string>城市</string>
+	<key>ITIN_DETAILS_VIEW_CLASS</key>
+	<string>等级</string>
+	<key>ITIN_DETAILS_VIEW_CONFIRM_NUM</key>
+	<string>确认号码</string>
+	<key>ITIN_DETAILS_VIEW_CONF_NUM</key>
+	<string>确认号</string>
+	<key>ITIN_DETAILS_VIEW_CONTACT</key>
+	<string>联系人</string>
+	<key>ITIN_DETAILS_VIEW_DAILY_RATE</key>
+	<string>每日费率</string>
+	<key>ITIN_DETAILS_VIEW_DEPART</key>
+	<string>出发</string>
+	<key>ITIN_DETAILS_VIEW_DEPARTURE</key>
+	<string>出发</string>
+	<key>ITIN_DETAILS_VIEW_DISCOUNT</key>
+	<string>折扣代码</string>
+	<key>ITIN_DETAILS_VIEW_DIVERSION</key>
+	<string>转移</string>
+	<key>ITIN_DETAILS_VIEW_DROP_OFF</key>
+	<string>还车</string>
+	<key>ITIN_DETAILS_VIEW_DROP_OFF_ADDRESS</key>
+	<string>还车地址</string>
+	<key>ITIN_DETAILS_VIEW_DROP_OFF_INSTRUCTIONS</key>
+	<string>还车说明</string>
+	<key>ITIN_DETAILS_VIEW_DURATION</key>
+	<string>持续时间</string>
+	<key>ITIN_DETAILS_VIEW_END</key>
+	<string>结束</string>
+	<key>ITIN_DETAILS_VIEW_EQUIP</key>
+	<string>特殊设备</string>
+	<key>ITIN_DETAILS_VIEW_FLIGHT</key>
+	<string>航班</string>
+	<key>ITIN_DETAILS_VIEW_FLIGHT_WITH_OB</key>
+	<string>%@ #%@ (%@ #%@)</string>
+	<key>ITIN_DETAILS_VIEW_GATE</key>
+	<string>门口</string>
+	<key>ITIN_DETAILS_VIEW_HOTEL</key>
+	<string>宾馆</string>
+	<key>ITIN_DETAILS_VIEW_INFO</key>
+	<string>信息</string>
+	<key>ITIN_DETAILS_VIEW_MAP</key>
+	<string>对应</string>
+	<key>ITIN_DETAILS_VIEW_MEAL</key>
+	<string>餐饮</string>
+	<key>ITIN_DETAILS_VIEW_MEETING_INSTRUCTIONS</key>
+	<string>会议说明</string>
+	<key>ITIN_DETAILS_VIEW_MINUTES</key>
+	<string>%@ 分钟</string>
+	<key>ITIN_DETAILS_VIEW_NUMBER_IN_PARTY</key>
+	<string>宴会人数</string>
+	<key>ITIN_DETAILS_VIEW_NUMBER_OF_PERSONS</key>
+	<string>人数</string>
+	<key>ITIN_DETAILS_VIEW_OPERATED</key>
+	<string>由 %@ - %@ 承运</string>
+	<key>ITIN_DETAILS_VIEW_PARKING</key>
+	<string>停车中心</string>
+	<key>ITIN_DETAILS_VIEW_PICKUP_ADDRESS</key>
+	<string>取车地址</string>
+	<key>ITIN_DETAILS_VIEW_PICKUP_INSTRUCTIONS</key>
+	<string>取车说明</string>
+	<key>ITIN_DETAILS_VIEW_PLATFORM</key>
+	<string>站台</string>
+	<key>ITIN_DETAILS_VIEW_PRICE</key>
+	<string>价格</string>
+	<key>ITIN_DETAILS_VIEW_RAIL</key>
+	<string>火车票</string>
+	<key>ITIN_DETAILS_VIEW_RATE</key>
+	<string>费率</string>
+	<key>ITIN_DETAILS_VIEW_RATE_DESCRIPTION</key>
+	<string>费率说明</string>
+	<key>ITIN_DETAILS_VIEW_RATE_TYPE</key>
+	<string>费率类型</string>
+	<key>ITIN_DETAILS_VIEW_RESERVATION</key>
+	<string>预订</string>
+	<key>ITIN_DETAILS_VIEW_REZ</key>
+	<string>预订</string>
+	<key>ITIN_DETAILS_VIEW_ROOM</key>
+	<string>房间</string>
+	<key>ITIN_DETAILS_VIEW_SEAT</key>
+	<string>座位</string>
+	<key>ITIN_DETAILS_VIEW_SEGMENT_DETAILS</key>
+	<string>段详细信息</string>
+	<key>ITIN_DETAILS_VIEW_SPECIAL_INSTRUCTIONS</key>
+	<string>特殊说明</string>
+	<key>ITIN_DETAILS_VIEW_START</key>
+	<string>开始</string>
+	<key>ITIN_DETAILS_VIEW_STATION</key>
+	<string>站点</string>
+	<key>ITIN_DETAILS_VIEW_STATUS</key>
+	<string>状态</string>
+	<key>ITIN_DETAILS_VIEW_STOPS</key>
+	<string>经停</string>
+	<key>ITIN_DETAILS_VIEW_TERMINAL</key>
+	<string>航站楼</string>
+	<key>ITIN_DETAILS_VIEW_TOTAL_RATE</key>
+	<string>总额</string>
+	<key>ITIN_DETAILS_VIEW_TRAIN_TYPE</key>
+	<string>火车类型</string>
+	<key>ITIN_DETAILS_VIEW_TRANSMISSION</key>
+	<string>传输</string>
+	<key>ITIN_DETAILS_VIEW_TYPE</key>
+	<string>类型</string>
+	<key>ITIN_DETAILS_VIEW_VENDOR</key>
+	<string>供应商</string>
+	<key>ITIN_DETAILS_VIEW_WAGON_NUM</key>
+	<string>旅行车编号</string>
+	<key>If any changes have been made by your agent</key>
+	<string>如果您的旅行社进行了任何更改，则您的路线可能需要几分种进行更新。</string>
+	<key>If you continue to experience</key>
+	<string>请重试。如果在访问系统时继续遇到问题，请联系您公司的帮助中心或差旅/费用部门。</string>
+	<key>If you continue to experience SU</key>
+	<string>请重试。如果您在访问系统时仍然遇到问题，请与 Concur 支持联系。</string>
+	<key>If your plans change</key>
+	<string>如果您的计划有变，可随时取消并重新预订其他宾馆</string>
+	<key>Image Not Available</key>
+	<string>图像不可用</string>
+	<key>Immediate Assistance Required</key>
+	<string>需要即时帮助</string>
+	<key>Import Error</key>
+	<string>导入错误</string>
+	<key>Import Expenses</key>
+	<string>导入费用</string>
+	<key>Import and Match</key>
+	<string>导入和匹配</string>
+	<key>Incorrect Password</key>
+	<string>不正确的密码</string>
+	<key>Individual Edition</key>
+	<string>个人版本</string>
+	<key>Infants</key>
+	<string>婴儿</string>
+	<key>Info</key>
+	<string>信息</string>
+	<key>Intermediate</key>
+	<string>中型</string>
+	<key>Intermediate Hybrid</key>
+	<string>中型混合动力车</string>
+	<key>Intermediate SUV</key>
+	<string>中型 SUV</string>
+	<key>Invalid Arrival Location</key>
+	<string>到达地点无效</string>
+	<key>Invalid Departure Date</key>
+	<string>出发日期无效</string>
+	<key>Invalid Departure Location</key>
+	<string>出发地点无效</string>
+	<key>Invalid Device</key>
+	<string>无效设备</string>
+	<key>Invalid Email or Username</key>
+	<string>电子邮件或用户名无效</string>
+	<key>Invalid Login Credentials</key>
+	<string>无效登录凭据</string>
+	<key>Invalid PIN</key>
+	<string>无效 PIN</string>
+	<key>Invalid PIN length</key>
+	<string>无效 PIN 长度</string>
+	<key>Invalid Password</key>
+	<string>密码无效</string>
+	<key>Invalid Return Date</key>
+	<string>返回日期无效</string>
+	<key>Invalid User Name</key>
+	<string>无效用户名</string>
+	<key>Invalid email address</key>
+	<string>无效的电子邮件地址</string>
+	<key>Invitation(s) Sent</key>
+	<string>已发送邀请</string>
+	<key>Invitations Sent</key>
+	<string>感谢您帮助宣传 SmartExpense。</string>
+	<key>Invite</key>
+	<string>邀请</string>
+	<key>Invite colleagues to use SmartExpense</key>
+	<string>邀请同事使用 SmartExpense</string>
+	<key>Invoice</key>
+	<string>发票</string>
+	<key>Invoice Approval</key>
+	<string>发票审批</string>
+	<key>Invoice Image</key>
+	<string>发票图像</string>
+	<key>InvoiceApprove</key>
+	<string>发票</string>
+	<key>Invoices</key>
+	<string>发票</string>
+	<key>Itemization not allowed</key>
+	<string>此条目不允许分列明细</string>
+	<key>Itemizations</key>
+	<string>明细</string>
+	<key>Itemize</key>
+	<string>分列明细</string>
+	<key>Itemized Entry</key>
+	<string>明细条目</string>
+	<key>Itemized:</key>
+	<string>已分列明细:</string>
+	<key>Itineraries</key>
+	<string>路线</string>
+	<key>Itinerary</key>
+	<string>行程</string>
+	<key>Itinerary List</key>
+	<string>路线列表</string>
+	<key>Itinerary Rule Violation</key>
+	<string>违反路线规则</string>
+	<key>Join</key>
+	<string>加入</string>
+	<key>Join with Facebook</key>
+	<string>利用 Facebook 加入</string>
+	<key>LABEL_ADD_BTN</key>
+	<string>添加</string>
+	<key>LABEL_AIR</key>
+	<string>飞机</string>
+	<key>LABEL_APPROVE_EXPENSES</key>
+	<string>审批费用</string>
+	<key>LABEL_CANCEL_BTN</key>
+	<string>取消</string>
+	<key>LABEL_CAR_RENTAL</key>
+	<string>汽车租赁</string>
+	<key>LABEL_CLOSE_BTN</key>
+	<string>关闭</string>
+	<key>LABEL_DONE_BTN</key>
+	<string>完成</string>
+	<key>LABEL_EXPENSE</key>
+	<string>费用</string>
+	<key>LABEL_EXPENSES</key>
+	<string>费用</string>
+	<key>LABEL_HOTELS</key>
+	<string>宾馆</string>
+	<key>LABEL_LOGIN_NO_PIN</key>
+	<string>是否需要设置 PIN？</string>
+	<key>LABEL_LOGIN_PASSWORD</key>
+	<string>密码或 PIN</string>
+	<key>LABEL_LOGIN_REGISTER</key>
+	<string>注册</string>
+	<key>LABEL_LOGIN_SIGN_IN</key>
+	<string>登录</string>
+	<key>LABEL_LOGIN_USER_NAME</key>
+	<string>用户名</string>
+	<key>LABEL_OK_BTN</key>
+	<string>确定</string>
+	<key>LABEL_QUICK_EXPENSE</key>
+	<string>现金</string>
+	<key>LABEL_REGISTER_ENTER_PIN</key>
+	<string>输入 PIN</string>
+	<key>LABEL_REGISTER_PASSWORD</key>
+	<string>密码</string>
+	<key>LABEL_REGISTER_REENTER_PIN</key>
+	<string>重新输入 PIN</string>
+	<key>LABEL_REGISTER_SIGN_IN</key>
+	<string>登录</string>
+	<key>LABEL_SAVE_BTN</key>
+	<string>保存</string>
+	<key>LABEL_SEND_BTN</key>
+	<string>发送</string>
+	<key>LABEL_SETTINGS</key>
+	<string>设置</string>
+	<key>LABEL_SETTINGS_VIEW_APP_INFO</key>
+	<string>应用程序信息</string>
+	<key>LABEL_SETTINGS_VIEW_APP_NAME</key>
+	<string>应用程序名称</string>
+	<key>LABEL_SETTINGS_VIEW_CONNECTION_SETTINGS</key>
+	<string>连接设置</string>
+	<key>LABEL_SETTINGS_VIEW_REMEMBER_USER</key>
+	<string>保存用户名</string>
+	<key>LABEL_SETTINGS_VIEW_SAVE_BTN</key>
+	<string>保存设置</string>
+	<key>LABEL_SETTINGS_VIEW_TWITTER</key>
+	<string>显示 Twitter</string>
+	<key>LABEL_SETTINGS_VIEW_URI_NON_SSL</key>
+	<string>非 SSL URI</string>
+	<key>LABEL_SETTINGS_VIEW_URL</key>
+	<string>服务器 URI</string>
+	<key>LABEL_SETTINGS_VIEW_VERSION</key>
+	<string>版本</string>
+	<key>LABEL_SUBMIT_BTN</key>
+	<string>提交</string>
+	<key>LABEL_TAXI</key>
+	<string>出租车</string>
+	<key>LABEL_TRAVEL</key>
+	<string>差旅</string>
+	<key>LABEL_TRIPS</key>
+	<string>旅行</string>
+	<key>LABEL_VENDOR_ADDR_CODE</key>
+	<string>地址代码:</string>
+	<key>LABEL_VENDOR_CODE</key>
+	<string>供应商代码:</string>
+	<key>LAST_NAME</key>
+	<string>姓氏</string>
+	<key>LNA_LOADING_TEXT</key>
+	<string>正在获取您的当前地点...</string>
+	<key>LOCATION_NOT_FOUND_MSG</key>
+	<string>找不到您当前的地点。</string>
+	<key>LOGIN</key>
+	<string>登录</string>
+	<key>LOG_UNAVAILABLE_MSG</key>
+	<string>日志数据不可用。</string>
+	<key>LOW_RESOLUTION_IMAGE</key>
+	<string>低分辨率（320x320 像素）</string>
+	<key>Last Name</key>
+	<string>姓氏</string>
+	<key>Last updated</key>
+	<string>上次更新时间 %@</string>
+	<key>Last updated on</key>
+	<string>上次更新日期</string>
+	<key>Layover in</key>
+	<string>中途停留地点</string>
+	<key>Learn More</key>
+	<string>了解详情</string>
+	<key>Least Preferred</key>
+	<string>非首选</string>
+	<key>Legs: token</key>
+	<string>航段数: %@</string>
+	<key>Link Dropbox</key>
+	<string>链接 Dropbox</string>
+	<key>Link Success</key>
+	<string>链接成功</string>
+	<key>Link to TripIt</key>
+	<string>链接到 TripIt</string>
+	<key>Link with TripIt</key>
+	<string>链接到 TripIt</string>
+	<key>Link with TripIt Header</key>
+	<string>链接到 TripIt 并将您的旅行转换为费用报告。</string>
+	<key>Linked to Dropbox</key>
+	<string>链接到 Dropbox</string>
+	<key>List</key>
+	<string>列表</string>
+	<key>List of your expenses</key>
+	<string>您的费用列表</string>
+	<key>Load Logs</key>
+	<string>加载日志</string>
+	<key>Load more hotels</key>
+	<string>加载更多宾馆...</string>
+	<key>Loading Data</key>
+	<string>正在加载数据</string>
+	<key>Loading Image</key>
+	<string>正在加载图像</string>
+	<key>Loading Receipt Image(s)</key>
+	<string>正在加载发票图像</string>
+	<key>Loading Receipts</key>
+	<string>正在加载发票</string>
+	<key>Loading Stations</key>
+	<string>正在加载站点</string>
+	<key>Loading Trip</key>
+	<string>正在加载旅行</string>
+	<key>Loading delivery options</key>
+	<string>正在加载送票选项</string>
+	<key>Loading more Hotels</key>
+	<string>加载更多宾馆</string>
+	<key>Loading trip data</key>
+	<string>正在加载旅行数据</string>
+	<key>Loading...</key>
+	<string>正在加载...</string>
+	<key>Location</key>
+	<string>地点</string>
+	<key>Location Check Offline</key>
+	<string>当您处于脱机状态时，无法选中您的位置。请稍后尝试。</string>
+	<key>Location Not Found</key>
+	<string>未找到地点</string>
+	<key>Location Required</key>
+	<string>地点为必填字段</string>
+	<key>Log</key>
+	<string>日志</string>
+	<key>Log Saved</key>
+	<string>已保存登录</string>
+	<key>Log Unavailable</key>
+	<string>日志不可用</string>
+	<key>Log out from Concur Mobile</key>
+	<string>从 Concur Mobile 中注销</string>
+	<key>Log out from SmartExpense</key>
+	<string>从 SmartExpense 中注销</string>
+	<key>Logging In</key>
+	<string>正在登录</string>
+	<key>Login Settings</key>
+	<string>登录设置</string>
+	<key>Logout</key>
+	<string>注销</string>
+	<key>Looks like we are experience some difficulties. Please check back in a few minutes.</key>
+	<string>我们可能遇到了一些问题。 请在几分钟后重试。</string>
+	<key>Luxury</key>
+	<string>豪华型</string>
+	<key>MAP</key>
+	<string>地图查看</string>
+	<key>MAPVIEW_ACCESS_DENIED</key>
+	<string>很抱歉，Concur 需要访问您的位置以生成路线。 请激活 Concur 的“Location Services”（位置服务）。</string>
+	<key>MAPVIEW_LOCATION_UNKNOWN</key>
+	<string>很抱歉，目前不知道您当前的位置，但 Concur 将继续尝试找到您的位置。</string>
+	<key>MAPVIEW_NETWORK_ERROR</key>
+	<string>很抱歉，Concur 无法确定您当前的位置。 请检查您的网络连接并确保已禁用“Airplane Mode”（飞行模式）。</string>
+	<key>MAPVIEW_UNKNOWN_ERROR</key>
+	<string>很抱歉，Concur 无法确定您当前的位置。 请检查您的网络连接，确保已激活“Location Services”（位置服务）并已禁用“Airplane Mode”（飞行模式）。</string>
+	<key>MEDIUM_RESOLUTION_IMAGE</key>
+	<string>中分辨率（640x640 像素）</string>
+	<key>MLIST_FIELD_EDIT_NOT_SUPPORT</key>
+	<string>此时不支持在移动设备上编辑此连接列表字段。请使用 CTE Web 替代。</string>
+	<key>MLIST_MRU_NOT_SUPPORT</key>
+	<string>此字段不支持选择最近使用的列表项目。请使用 CTE Web 替代。</string>
+	<key>MOBILE_DISABLED_MSG</key>
+	<string>贵公司已经禁用 Concur 移动版。请与管理员联系。</string>
+	<key>MODULE_DISABLED_ALERT_TEXT</key>
+	<string>贵公司已经禁用该项交通功能。</string>
+	<key>MODULE_DISABLED_ALERT_TITLE</key>
+	<string>功能已禁用</string>
+	<key>MSG_ADDITIONAL_RECEIPT_NOT_REQUIRED</key>
+	<string>其它发票非必需。</string>
+	<key>MSG_APPROVE_INVOICE_AREYOUSURE</key>
+	<string>是否确定要批准此发票？</string>
+	<key>MSG_NO_INVOICE_DETAIL</key>
+	<string>无发票详细信息</string>
+	<key>MSG_NO_INVOICE_TO_APPROVE</key>
+	<string>无要审批的发票</string>
+	<key>MSG_RECEIPT_NOT_REQUIRED</key>
+	<string>发票非必填信息。</string>
+	<key>MSG_RECEIPT_REQUIRED</key>
+	<string>提醒:要求发票！</string>
+	<key>MSG_REPORT_SUBMISSION</key>
+	<string>如果您尚未提供发票，请访问 Concur 网站。否则，可立即提交费用报告。</string>
+	<key>MSG_TRAIN_SELL_NOT_READY</key>
+	<string>火车票预订销售尚未实施。在稍后的版本中，您将能够预订火车票。</string>
+	<key>MSG_WAIT_FETCHING_INFO</key>
+	<string>我们正在获取信息以提交报告。请稍等并重试。</string>
+	<key>Mail Queued</key>
+	<string>已排队邮件</string>
+	<key>Mail Saved</key>
+	<string>已保存邮件</string>
+	<key>Mail Unavailable</key>
+	<string>邮件不可用</string>
+	<key>Manage Receipts</key>
+	<string>管理发票</string>
+	<key>Manage Violations</key>
+	<string>管理违反</string>
+	<key>ManageYourAuthorizations</key>
+	<string>管理您的授权</string>
+	<key>Manager approval</key>
+	<string>经理审批</string>
+	<key>Map</key>
+	<string>对应</string>
+	<key>Map Address</key>
+	<string>对应地址</string>
+	<key>Matching transactions combined into a single expense</key>
+	<string>匹配的交易组合为单项费用</string>
+	<key>Meal Allowances</key>
+	<string>餐饮补助</string>
+	<key>Menu</key>
+	<string>菜单</string>
+	<key>Message Center</key>
+	<string>消息中心</string>
+	<key>Microphone Access Denied</key>
+	<string>麦克风访问已拒绝</string>
+	<key>Midnight</key>
+	<string>午夜</string>
+	<key>Mileage</key>
+	<string>里程</string>
+	<key>Mini</key>
+	<string>小型</string>
+	<key>Mini Van</key>
+	<string>小型厢式车</string>
+	<key>Missing Arrival</key>
+	<string>缺少到达时间</string>
+	<key>Missing Arrival Message</key>
+	<string>缺少到达机场。请选择要到达的机场。</string>
+	<key>Missing Departure</key>
+	<string>缺少出发时间</string>
+	<key>Missing Departure Message</key>
+	<string>缺少出发机场。请选择要出发的机场。</string>
+	<key>Missing fields</key>
+	<string>缺少字段</string>
+	<key>Missing required information for Itinerary Stop</key>
+	<string>缺少路线站必需的信息</string>
+	<key>Mobile Disabled</key>
+	<string>已禁用移动版</string>
+	<key>Mobile Expenses</key>
+	<string>移动费用</string>
+	<key>Mobile Log</key>
+	<string>移动日志</string>
+	<key>Mobile Log: iPhone Crash</key>
+	<string>移动日志:iPhone 崩溃</string>
+	<key>Mobile PIN title</key>
+	<string>Mobile PIN</string>
+	<key>Mobile Password (PIN)</key>
+	<string>移动密码 (PIN)</string>
+	<key>Mobile Password (PIN) Reset Link Sent</key>
+	<string>移动密码 (PIN) 重设链接已发送</string>
+	<key>Mobile Password (PIN) Successfully Reset</key>
+	<string>移动密码 (PIN) 重设成功</string>
+	<key>Monday_Short</key>
+	<string>周一</string>
+	<key>Month of stay</key>
+	<string>入住月份</string>
+	<key>More Help</key>
+	<string>更多帮助</string>
+	<key>Morning</key>
+	<string>上午</string>
+	<key>Most Preferred</key>
+	<string>最首选</string>
+	<key>Most Recently Used</key>
+	<string>最近使用</string>
+	<key>Must log in online first</key>
+	<string>您需要首先联机登录，才能在脱机模式下对您进行身份验证。</string>
+	<key>N Stops</key>
+	<string>%d 站</string>
+	<key>NCOOK</key>
+	<string>其它无烹饪</string>
+	<key>NEED_TO_RESET_PASSWORD</key>
+	<string>请重设您的密码，然后进行登录。如果存在问题，请与管理员联系。</string>
+	<key>NEED_TO_RESET_PIN</key>
+	<string>请重设您的 PIN，然后进行登录。如果存在问题，请与管理员联系。</string>
+	<key>NIGHTS_TOO_LARGE_ERR_MSG</key>
+	<string>分列 90 天或以下时间的费用明细</string>
+	<key>NON_REFUNDABLE_WARN_MSG</key>
+	<string>持有不可退款类型机票的客户可以取消其旅程，并在出票日期一年期内重新使用这些机票到达承运商系统的任何目的地。预订必须在预期（原始）出发之日前取消，否则机票将会失效，不能再供将来使用。这些规则仅适用于国内机票。是否依然选择这些航班？</string>
+	<key>NO_RATES_SOLD_OUT_USER_MESSAGE</key>
+	<string>此属性的房间在特定日期内都不可用。请选择其他宾馆。</string>
+	<key>NO_RECEIPTS_NEG</key>
+	<string>没有发票</string>
+	<key>NO_RECEIPT_FOUND</key>
+	<string>服务器中未找到任何发票。如果您已向费用报告中附加发票，请稍后返回并重新检查。</string>
+	<key>NO_RECEIPT_MSG</key>
+	<string>至少其中一个所选费用缺少发票。</string>
+	<key>NO_RECEIPT_NEG</key>
+	<string>没有发票</string>
+	<key>NO_REPORTRECEIPT_NEG</key>
+	<string>发票未附加到费用</string>
+	<key>NUMBER_OF_ROOMS</key>
+	<string>房间数量</string>
+	<key>NUMERIC_TOO_BIG_ERR_MSG</key>
+	<string>数值太大</string>
+	<key>NUMERIC_VALIDATION_ERR_MSG</key>
+	<string>此字段要求数值。</string>
+	<key>Navigator</key>
+	<string>导航器</string>
+	<key>Network Error</key>
+	<string>网络错误</string>
+	<key>New Attendee</key>
+	<string>新建参加者</string>
+	<key>New Mobile Password (PIN)</key>
+	<string>新建移动密码 (PIN)</string>
+	<key>New Password</key>
+	<string>新密码</string>
+	<key>New Report</key>
+	<string>新报告</string>
+	<key>Next</key>
+	<string>下一个</string>
+	<key>Nightly Lodging Expenses</key>
+	<string>每夜住宿费用</string>
+	<key>No</key>
+	<string>否</string>
+	<key>No Active Reports</key>
+	<string>您当前没有活动的费用报告</string>
+	<key>No Active Trips</key>
+	<string>没有活动的旅行</string>
+	<key>No Attendee Found</key>
+	<string>未找到参加者</string>
+	<key>No Attendee Type Available</key>
+	<string>无法添加任何参加者，因为此费用类型没有可用的有效参加者类型。</string>
+	<key>No Attendees</key>
+	<string>没有参加者</string>
+	<key>No Card Charges</key>
+	<string>没有卡消费</string>
+	<key>No Comments</key>
+	<string>无备注</string>
+	<key>No Credit Card</key>
+	<string>无信用卡</string>
+	<key>No Delivery Option</key>
+	<string>没有送票选项</string>
+	<key>No Email in Profile</key>
+	<string>配置文件中无电子邮件</string>
+	<key>No Email(s)</key>
+	<string>没有电子邮件</string>
+	<key>No Expenses</key>
+	<string>无费用</string>
+	<key>No Flights Found</key>
+	<string>未找到航班</string>
+	<key>No Itemization</key>
+	<string>无明细</string>
+	<key>No Matching Cars</key>
+	<string>没有匹配的汽车</string>
+	<key>No Network Connection</key>
+	<string>无网络连接</string>
+	<key>No Out of Pocket Expenses</key>
+	<string>无费用</string>
+	<key>No Rates</key>
+	<string>无补助率</string>
+	<key>No Receipts</key>
+	<string>集中管理所有发票，降低照片库杂乱程度。发票文件夹跟踪费用中使用的发票。您还可以从照片库复制发票到发票文件夹，或对发票拍照并在此存储它们。</string>
+	<key>No Reports</key>
+	<string>没有费用报告</string>
+	<key>No Results</key>
+	<string>无结果</string>
+	<key>No Segments Selected</key>
+	<string>未选择段</string>
+	<key>No Shows</key>
+	<string>未入住</string>
+	<key>No Shows Tip</key>
+	<string>请输入 %@ 的号码。</string>
+	<key>No TripIt Trips</key>
+	<string>没有要计费的 TripIt 旅行</string>
+	<key>No Trips</key>
+	<string>没有旅行</string>
+	<key>No date specified</key>
+	<string>未指定日期</string>
+	<key>No email(s) were specified for the invite</key>
+	<string>该邀请未指定电子邮件</string>
+	<key>No items to upload</key>
+	<string>没有要上载的项目</string>
+	<key>No matching cars were found.  Please modify your search criteria and try again.</key>
+	<string>未找到匹配的汽车。请修改搜索条件并重试。</string>
+	<key>No new twitter message</key>
+	<string>没有新的 Twitter 消息</string>
+	<key>No preference</key>
+	<string>无首选项</string>
+	<key>No trains were found</key>
+	<string>未找到火车票</string>
+	<key>No trip segments have been selected</key>
+	<string>没有选择旅行段。</string>
+	<key>Non-smoking</key>
+	<string>不吸烟</string>
+	<key>None</key>
+	<string>无</string>
+	<key>Nonstop</key>
+	<string>直达</string>
+	<key>Not Available</key>
+	<string>不可用</string>
+	<key>Not Filed Reports</key>
+	<string>费用报告</string>
+	<key>Not Linked</key>
+	<string>未链接</string>
+	<key>Not Preferred</key>
+	<string>非首选</string>
+	<key>Not Provided</key>
+	<string>未提供</string>
+	<key>Not Sure</key>
+	<string>不确定</string>
+	<key>Now</key>
+	<string>现在</string>
+	<key>Number Of Nights</key>
+	<string>住宿夜数</string>
+	<key>Number of hotels</key>
+	<string>宾馆数</string>
+	<key>Number of schedules found: token</key>
+	<string>找到的计划数: %d</string>
+	<key>OFFLINE_MSG</key>
+	<string>您处于脱机状态。请等待联机后提交报告。</string>
+	<key>OK</key>
+	<string>确定</string>
+	<key>OR</key>
+	<string>或</string>
+	<key>OUT_OF_POCKET_FORM</key>
+	<string>费用</string>
+	<key>OUT_OF_POCKET_FORM_VIEW_CONFIRM_SPLIT_SMART_EXPENSE_MESSAGE</key>
+	<string>是否确实要从移动条目中分拆卡消费？</string>
+	<key>OUT_OF_POCKET_FORM_VIEW_CONFIRM_SPLIT_SMART_EXPENSE_TITLE</key>
+	<string>请确认</string>
+	<key>OUT_OF_POCKET_FORM_VIEW_SPLIT_SMART_EXPENSE_BUTTON_TITLE</key>
+	<string>拆分智能费用</string>
+	<key>OUT_OF_POCKET_LIST</key>
+	<string>费用</string>
+	<key>Off</key>
+	<string>关</string>
+	<key>Off Airport</key>
+	<string>机场外</string>
+	<key>Offers</key>
+	<string>服务</string>
+	<key>Office</key>
+	<string>办公室</string>
+	<key>Office Locations</key>
+	<string>办公地点</string>
+	<key>Offline</key>
+	<string>脱机</string>
+	<key>Offline limits features</key>
+	<string>您的设备当前处于脱机状态。某些功能将不可用。</string>
+	<key>Ok let's start over. What Hotel can I find for you</key>
+	<string>好，让我们从头再来。我可以为您查找哪家宾馆</string>
+	<key>Old Trips</key>
+	<string>过去</string>
+	<key>On</key>
+	<string>开</string>
+	<key>One Way</key>
+	<string>单程</string>
+	<key>Open the email from this device to reset your mobile password (PIN) and sign in.</key>
+	<string>从此设备打开电子邮件以重设您的移动密码 (PIN) 并登录。</string>
+	<key>Open the email from this device to reset your password and sign in.</key>
+	<string>从此设备打开电子邮件以重设您的密码并登录。</string>
+	<key>Operated By</key>
+	<string>承运商</string>
+	<key>Operated by</key>
+	<string>承运商</string>
+	<key>Operation Not Supported Offline</key>
+	<string>脱机模式下不支持此操作。请在网络连接可用后重试。</string>
+	<key>Or Sign In with...</key>
+	<string>或登录...</string>
+	<key>Or Sign Up with...</key>
+	<string>或注册...</string>
+	<key>Organization</key>
+	<string>单位</string>
+	<key>Original receipt required</key>
+	<string>需要收据正本</string>
+	<key>Other</key>
+	<string>社交及其它</string>
+	<key>Other Allowances</key>
+	<string>其他补助</string>
+	<key>Other Reports</key>
+	<string>其它报告</string>
+	<key>Other Room Tax 1</key>
+	<string>其它房间税 1</string>
+	<key>Other Room Tax 2</key>
+	<string>其它房间税 2</string>
+	<key>Out of Pocket Entry has been Saved</key>
+	<string>费用已保存</string>
+	<key>Outbound</key>
+	<string>去程</string>
+	<key>P2B_AIR_BOOKING_HEADER_POINTS_DISABLED</key>
+	<string>成为更聪明的差旅买家！根据起始价格预订可为贵公司节省成本。</string>
+	<key>P2B_AIR_BOOKING_HEADER_POINTS_ENABLED</key>
+	<string>选择低于起始价格的选项即可赚取差旅点。计算旅行费用时，赚取的差旅点会反应在您今后旅行可以使用的总差旅点中。</string>
+	<key>PDF Receipt</key>
+	<string>PDF 发票</string>
+	<key>PENDING_REQUIRED_TRAVEL_CUSTOM_FIELDS</key>
+	<string>请在继续前填写所有必要的预订信息</string>
+	<key>PER_VARIABLE_NO_RATES</key>
+	<string>对于所提供的日期，没有定义费率。</string>
+	<key>PIN</key>
+	<string>PIN</string>
+	<key>PIN Tip</key>
+	<string>如果您不知道自己的凭据，请登录 Concur Web 帐户并导航到“配置文件”&gt;“移动注册”。Concur Breeze 用户应导航到“我的帐户”&gt;“移动 PIN”。请与公司管理员联系以获得更多帮助。</string>
+	<key>PIN has been reset successfully</key>
+	<string>PIN 已成功重设</string>
+	<key>PIN_EXPIRED</key>
+	<string>您的 PIN 已过期。请重新注册您的 PIN，然后进行登录。</string>
+	<key>PIN_MOBILE_NOTES</key>
+	<string>PIN 仅可用于 Concur 移动应用程序。</string>
+	<key>PLEASE_SELECT_VALUE</key>
+	<string>请从列表中选择一个选项。</string>
+	<key>PRICE_TO_BEAT_AIR_RESULTS_HEADER</key>
+	<string>预订低于起始价格的航班即可赚取差旅点供您以后使用！</string>
+	<key>PRICE_TO_BEAT_AIR_SEARCH_HEADER</key>
+	<string>节约金钱，同时赚取差旅点！预订航班时，在下方输入航空搜索详细信息以查找起始价格。</string>
+	<key>PRICE_TO_BEAT_DISABLED_AIR_RESULTS_HEADER</key>
+	<string>预订低于起始价格的航班即可为贵公司节省成本！</string>
+	<key>PRICE_TO_BEAT_DISABLED_AIR_SEARCH_HEADER</key>
+	<string>成为更聪明的差旅买家！预订航班时，在下方输入航空搜索详细信息以查找起始价格。</string>
+	<key>PRICE_TO_BEAT_DISABLED_HOTEL_RESULTS_HEADER</key>
+	<string>预订低于起始价格的房间即可为贵公司节省成本！</string>
+	<key>PRICE_TO_BEAT_DISABLED_HOTEL_SEARCH_HEADER</key>
+	<string>成为更聪明的差旅买家！预订房间时，在下方输入宾馆搜索详细信息以查找起始价格。</string>
+	<key>PRICE_TO_BEAT_HOTEL_RESULTS_HEADER</key>
+	<string>预订低于起始价格的房间即可赚取差旅点供您以后使用！</string>
+	<key>PRICE_TO_BEAT_HOTEL_SEARCH_HEADER</key>
+	<string>节约金钱，同时赚取差旅点！预订房间时，在下方输入宾馆搜索详细信息以查找起始价格。 </string>
+	<key>PROCEED_TO_ADD_MSG</key>
+	<string>您可以继续并将它们添加到费用报告，但需要通过网站附加发票。</string>
+	<key>PWD</key>
+	<string>密码</string>
+	<key>PWD_LOGIN</key>
+	<string>注册</string>
+	<key>Paid Reports</key>
+	<string>已付款的费用报告</string>
+	<key>Passenger</key>
+	<string>乘客</string>
+	<key>PassengerCount</key>
+	<string>乘客人数</string>
+	<key>Passengers</key>
+	<string>乘客</string>
+	<key>Password</key>
+	<string>密码</string>
+	<key>Password Reset Link Sent</key>
+	<string>密码重设链接已发送</string>
+	<key>Password Successfully Reset</key>
+	<string>密码重设成功</string>
+	<key>Passwords Don't Match</key>
+	<string>密码不匹配</string>
+	<key>Personal Car Mileage</key>
+	<string>私人汽车里程</string>
+	<key>PersonalCardCount_0</key>
+	<string>您没有未使用的 %@ 卡消费</string>
+	<key>PersonalCardCount_1</key>
+	<string>您有 1 笔未使用的 %@ 卡消费</string>
+	<key>PersonalCardCount_2</key>
+	<string>您有 %d 笔未使用的 %@ 卡消费</string>
+	<key>Phone</key>
+	<string>电话</string>
+	<key>Photo Album</key>
+	<string>通过照片库附加</string>
+	<key>Pick-up</key>
+	<string>取车</string>
+	<key>Pick-up Date</key>
+	<string>取车日期</string>
+	<key>Pick-up Time</key>
+	<string>取车时间</string>
+	<key>Pickup</key>
+	<string>取车</string>
+	<key>Pickup Location</key>
+	<string>取车地点</string>
+	<key>Please Confirm</key>
+	<string>请确认</string>
+	<key>Please Enter Your Email Address</key>
+	<string>请输入工作电子邮件地址</string>
+	<key>Please Select To View</key>
+	<string>请选择以查看</string>
+	<key>Please Specify Program</key>
+	<string>请指定计划</string>
+	<key>Please Wait</key>
+	<string>请稍候</string>
+	<key>Please address policy violations</key>
+	<string>请处理策略违反</string>
+	<key>Please check your connection and retry later.</key>
+	<string>请检查您的连接状况并稍后重试。</string>
+	<key>Please enter a justification for booking this car.</key>
+	<string>请输入预订此汽车的理由。</string>
+	<key>Please enter a justification for this booking.</key>
+	<string>请输入此次预订的理由。</string>
+	<key>Please enter and confirm the PIN</key>
+	<string>请输入并确认 PIN</string>
+	<key>Please enter in your distance</key>
+	<string>请输入您的距离</string>
+	<key>Please enter values for required fields</key>
+	<string>请在保存前为所有以红色显示的必填字段输入值。</string>
+	<key>Please fill in the missing required fields before saving the entry.</key>
+	<string>请在保存条目前填写缺少的必填字段。</string>
+	<key>Please follow the instructions in the email</key>
+	<string>请按照来自 TripIt 的电子邮件中的说明设置您的帐户。</string>
+	<key>Please log in to SmartExpense and then link your accounts together.</key>
+	<string>请登录到 SmartExpense，然后一起链接您的帐户。</string>
+	<key>Please log in to SmartExpense using the same account already linked to TripIt.</key>
+	<string>请使用已链接到 TripIt 的同一帐户登录 SmartExpense。</string>
+	<key>Please select a destination location</key>
+	<string>请选择目的地</string>
+	<key>Please select a report or create a new report first</key>
+	<string>请首先选择费用报告或创建一个新的报告</string>
+	<key>Please select a starting location</key>
+	<string>请选择起始地点。</string>
+	<key>Please specify</key>
+	<string>请指定</string>
+	<key>Please specify a location.</key>
+	<string>请指定一个位置。</string>
+	<key>Please try again and use the link within 24 hours of receipt.</key>
+	<string>请在收到后 24 小时之内重试并使用链接。</string>
+	<key>Please type a description into this email message describing what you were doing when the application crashed.  For example: I was uploading an expense receipt.</key>
+	<string>请在电子邮件消息中键入描述，说明应用程序发生崩溃时您正在做什么。例如：我正在上传费用发票。</string>
+	<key>Please verify your email</key>
+	<string>请验证您的电子邮件</string>
+	<key>Please verify your email address</key>
+	<string>请验证您的电子邮件地址</string>
+	<key>Please wait for your verification email to continue the registration process.</key>
+	<string>请等待您的验证电子邮件以继续注册流程。</string>
+	<key>Please wait until online to edit field</key>
+	<string>无法脱机编辑这些字段。</string>
+	<key>Please wait until you are online to login</key>
+	<string>请等待联机后登录。</string>
+	<key>Points or Approval</key>
+	<string>差旅点或审批</string>
+	<key>Popular Cards</key>
+	<string>热门卡</string>
+	<key>Post Trip</key>
+	<string>发布旅程</string>
+	<key>Preferred</key>
+	<string>首选</string>
+	<key>Preferred Vendors</key>
+	<string>首选供应商</string>
+	<key>Premium</key>
+	<string>高级</string>
+	<key>Premium Economy</key>
+	<string>豪华经济舱</string>
+	<key>Prev</key>
+	<string>上一个</string>
+	<key>Preview</key>
+	<string>预览</string>
+	<key>Previous</key>
+	<string>上一个</string>
+	<key>Price</key>
+	<string>价格</string>
+	<key>Price to Beat</key>
+	<string>起始价格</string>
+	<key>Print</key>
+	<string>打印</string>
+	<key>Proceed to Sign In</key>
+	<string>继续登录</string>
+	<key>Property</key>
+	<string>属性</string>
+	<key>Provided</key>
+	<string>提供</string>
+	<key>Pull to Refresh</key>
+	<string>拉动以刷新</string>
+	<key>Purchase Requests</key>
+	<string>购买申请</string>
+	<key>Quick Expense</key>
+	<string>快速费用</string>
+	<key>Quick Search</key>
+	<string>快速搜索</string>
+	<key>Quick Tips</key>
+	<string>快速提示</string>
+	<key>RECEIPT</key>
+	<string>发票</string>
+	<key>RECEIPT_CELL_TITLE</key>
+	<string>发票</string>
+	<key>RECEIPT_DETAIL_NO_DATA_INSTRUCTION</key>
+	<string>或者将数字发票从 %@ 帐户转发到 receipts@smartexpense.com</string>
+	<key>RECEIPT_IMG_UPLOADED</key>
+	<string>已上传发票图像</string>
+	<key>RECEIPT_IMG_UPLOADING</key>
+	<string>正在上传发票图像</string>
+	<key>RECEIPT_MANAGER</key>
+	<string>发票文件夹</string>
+	<key>RECEIPT_MANAGER_IMAGES</key>
+	<string>发票文件夹</string>
+	<key>RECEIPT_MIGRATE_MSG</key>
+	<string>您有 %d 个未分配的发票图像已本地保存到 Concur 移动文档文件夹中。是否要继续将未分配的发票图像复制到 iPhone 的照片库中？</string>
+	<key>RECEIPT_MIGRATION_STATUS_MSG</key>
+	<string>将 %d 个（共 %d 个）发票复制到照片库</string>
+	<key>RECEIPT_MIGRATION_WAIT_MSG</key>
+	<string>正在复制图像。现在终止或离开应用程序可能会导致图像丢失。</string>
+	<key>RECEIPT_NOT_ON_SERVER</key>
+	<string>在服务器中，发票显示为附加到费用中，但发票管理器中已不存在发票。</string>
+	<key>RECEIPT_STORE_HELP_TEXT</key>
+	<string>将您的发票上传到发票库。然后打开费用报告或费用条目并附加发票。</string>
+	<key>RECEIPT_STORE_NO_DATA_INSTRUCTION</key>
+	<string>您还可以将数字发票从 %@ 帐户转发到 receipts@smartexpense.com</string>
+	<key>RECEIPT_VIEWER</key>
+	<string>发票查看器</string>
+	<key>REGISTER</key>
+	<string>输入 PIN</string>
+	<key>REGISTERED_EMAIL</key>
+	<string>工作电子邮件</string>
+	<key>REGISTER_MSG</key>
+	<string>如需帮助，请登录到 Web 版的 Concur 并导航到“配置文件”&gt;“移动注册”。</string>
+	<key>REGISTER_PINS_DIFF_ERR</key>
+	<string>PIN 不同。请重新输入 PIN。</string>
+	<key>REPORTS</key>
+	<string>费用报告列表</string>
+	<key>REPORTS_TO_SUBMIT</key>
+	<string>有 %d 个要提交的费用报告</string>
+	<key>REPORT_DETAIL</key>
+	<string>费用报告</string>
+	<key>REPORT_DETAIL_RECEIPTS</key>
+	<string>发票</string>
+	<key>REPORT_NAME_TIP</key>
+	<string>键入新报告名称</string>
+	<key>REPORT_REQ_FIELDS</key>
+	<string>请填写表单中所有必填的字段并解决任何错误，再保存费用报告。</string>
+	<key>REPORT_TA_ITINERARY</key>
+	<string>差旅补助</string>
+	<key>REPORT_TA_ITINERARY_ADD</key>
+	<string>补助费用</string>
+	<key>RESET_PASSWORD_FAILED</key>
+	<string>无法重设您的密码</string>
+	<key>RESET_PASSWORD_SUCCEEDED</key>
+	<string>您很快将收到一封电子邮件，说明如何重设您的密码。</string>
+	<key>RESET_PASSWORD_USER_NOT_EXIST</key>
+	<string>系统中不存在用户。请确保您已完成注册流程，再单击重设密码链接。</string>
+	<key>ROLE_DISABLED_ALERT_TITLE</key>
+	<string>功能已禁用</string>
+	<key>ROLE_DISABLED_TEXT</key>
+	<string>此功能对您的公司或角色不可用。</string>
+	<key>RPT_NO_ENTRY_INSTRUCTION_1</key>
+	<string>该费用报告中没有费用。您必须创建或导入至少一项费用，才能提交费用报告。 </string>
+	<key>RPT_NO_ENTRY_INSTRUCTION_2</key>
+	<string>要创建或导入某个费用，请单击以下“+”图标。</string>
+	<key>RPT_QUIT_CONFIRM_MSG</key>
+	<string>是否要保存该费用报告?</string>
+	<key>RPT_SAVE_CONFIRM_MSG</key>
+	<string>如果继续，您的更改可能丢失。是否要保存这些更改？</string>
+	<key>Rail</key>
+	<string>火车票</string>
+	<key>Rail Rule Violation</key>
+	<string>违反火车规则</string>
+	<key>Rail cancelled from mobile device</key>
+	<string>从移动设备取消火车</string>
+	<key>Rail violation justification is missing</key>
+	<string>在违反公司策略预订此火车前，必须在以红色显示的字段中提供理由。</string>
+	<key>Rail violation reason and justification are missing</key>
+	<string>在违反公司策略预订此火车前，必须在以红色显示的字段中提供原因和理由。</string>
+	<key>Rail violation reason is missing</key>
+	<string>在违反公司策略预订此火车前，必须在以红色显示的字段中提供理由。</string>
+	<key>Rail_subline</key>
+	<string>预订火车及交通服务</string>
+	<key>Rate It!</key>
+	<string>进行评级！</string>
+	<key>Rate Location:</key>
+	<string>补助率地点：</string>
+	<key>Rating</key>
+	<string>评级</string>
+	<key>Re-enter Password</key>
+	<string>重新输入密码</string>
+	<key>Recalculate Allowances</key>
+	<string>重新计算补助</string>
+	<key>Recall</key>
+	<string>撤回</string>
+	<key>Recall Failed</key>
+	<string>撤回失败</string>
+	<key>Receipt</key>
+	<string>发票</string>
+	<key>Receipt Capture</key>
+	<string>发票获取</string>
+	<key>Receipt Folder</key>
+	<string>发票文件夹</string>
+	<key>Receipt Images</key>
+	<string>发票图像</string>
+	<key>Receipt Queued</key>
+	<string>已排队发票</string>
+	<key>Receipt Store</key>
+	<string>发票库</string>
+	<key>Receipt image required</key>
+	<string>需要收据图像</string>
+	<key>Receipt upload complete</key>
+	<string>发票上传完成</string>
+	<key>Receipt upload failed</key>
+	<string>发票上传失败</string>
+	<key>Receipt uploaded</key>
+	<string>已上传发票</string>
+	<key>ReceiptUploadFailMsg</key>
+	<string>此时无法保存发票。请稍后重试。</string>
+	<key>Receipts</key>
+	<string>发票</string>
+	<key>Receipts cannot be added offline</key>
+	<string>无法脱机添加发票。</string>
+	<key>Recommendation</key>
+	<string>建议</string>
+	<key>Recommended</key>
+	<string>已建议</string>
+	<key>Recurring Charges (each night)</key>
+	<string>重复性收费（每夜）</string>
+	<key>Refresh Data</key>
+	<string>刷新数据</string>
+	<key>Refresh Data Offline</key>
+	<string>当您处于脱机状态时，无法刷新您的数据。请稍后尝试。</string>
+	<key>Refresh Trip</key>
+	<string>刷新旅行</string>
+	<key>Refreshing</key>
+	<string>正在刷新</string>
+	<key>Refreshing Data</key>
+	<string>刷新数据</string>
+	<key>Refreshing View</key>
+	<string>正在刷新视图</string>
+	<key>Refundable Only</key>
+	<string>仅可退款类型</string>
+	<key>Regional</key>
+	<string>地区</string>
+	<key>Register a credit card</key>
+	<string>注册信用卡</string>
+	<key>Reject</key>
+	<string>拒绝</string>
+	<key>Rejected</key>
+	<string>被否决</string>
+	<key>Rejecting Trip</key>
+	<string>否决旅行</string>
+	<key>Remaining:</key>
+	<string>剩余:</string>
+	<key>Removed Link to Dropbox</key>
+	<string>已删除 Dropbox 链接</string>
+	<key>Removing entry</key>
+	<string>正在删除条目</string>
+	<key>Rent a car</key>
+	<string>租车</string>
+	<key>Replace</key>
+	<string>替换</string>
+	<key>Report</key>
+	<string>费用报告</string>
+	<key>Report Approvals</key>
+	<string>报告审批</string>
+	<key>Report Comments</key>
+	<string>费用报告备注</string>
+	<key>Report Entry</key>
+	<string>费用报告条目</string>
+	<key>Report Exceptions</key>
+	<string>费用报告例外</string>
+	<key>Report Header</key>
+	<string>费用报告标题</string>
+	<key>Report Name</key>
+	<string>费用报告名称</string>
+	<key>Report Not Ready</key>
+	<string>报告尚未准备就绪</string>
+	<key>Report Summary</key>
+	<string>费用报告摘要</string>
+	<key>Report is open</key>
+	<string>报告已打开</string>
+	<key>Reports</key>
+	<string>费用报告</string>
+	<key>Reports List</key>
+	<string>申请报告列表</string>
+	<key>Reports cannot be approved offline</key>
+	<string>无法脱机审批费用报告。</string>
+	<key>ReportsToApproveRow_0</key>
+	<string>您没有要审批的费用报告</string>
+	<key>ReportsToApproveRow_1</key>
+	<string>您有 1 个报告要审批</string>
+	<key>ReportsToApproveRow_2</key>
+	<string>您有 %d 个要审批的报告</string>
+	<key>Request</key>
+	<string>申请</string>
+	<key>Requested</key>
+	<string>已申请</string>
+	<key>Requests</key>
+	<string>申请</string>
+	<key>Required Fields Missing</key>
+	<string>缺少必填字段</string>
+	<key>Reservation Date</key>
+	<string>预订日期</string>
+	<key>Reservation Not Allowed</key>
+	<string>不允许预订</string>
+	<key>Reservation Status</key>
+	<string>预订状态</string>
+	<key>Reservation Time</key>
+	<string>预订时间</string>
+	<key>Reserve</key>
+	<string>预订</string>
+	<key>Reserve Train</key>
+	<string>预订火车票</string>
+	<key>Reserving Car</key>
+	<string>预订汽车</string>
+	<key>Reserving Flights</key>
+	<string>正在预订航班...</string>
+	<key>Reserving Hotel Room</key>
+	<string>预订房间</string>
+	<key>Reserving Train</key>
+	<string>正在预订火车票</string>
+	<key>Reset</key>
+	<string>重设</string>
+	<key>Reset Concur Password</key>
+	<string>重设 Concur 密码</string>
+	<key>Reset Mobile Password (PIN)</key>
+	<string>重设移动密码 (PIN)</string>
+	<key>Reset PIN</key>
+	<string>重设 PIN</string>
+	<key>Reset Password</key>
+	<string>重设密码</string>
+	<key>Reset to factory defaults</key>
+	<string>重设为出厂默认设置</string>
+	<key>Reset your password</key>
+	<string>重设密码</string>
+	<key>Resetting the PIN</key>
+	<string>重设 PIN</string>
+	<key>Results</key>
+	<string>结果</string>
+	<key>Results Summary</key>
+	<string>结果摘要</string>
+	<key>Retake</key>
+	<string>取回</string>
+	<key>Return</key>
+	<string>返程</string>
+	<key>Return Date</key>
+	<string>返程日期</string>
+	<key>Return Date must be</key>
+	<string>返程日期</string>
+	<key>Return Date must be Message</key>
+	<string>返程日期必须晚于出发日期。</string>
+	<key>Return Time</key>
+	<string>返程时间</string>
+	<key>Returning</key>
+	<string>返程</string>
+	<key>Returning: token token</key>
+	<string>返程: %@ %@</string>
+	<key>Review Approver Instruction</key>
+	<string>请查看审批者，然后提交费用报告</string>
+	<key>Room Rate</key>
+	<string>房间费率</string>
+	<key>Room Tax</key>
+	<string>房间税</string>
+	<key>Rooms</key>
+	<string>房间数</string>
+	<key>Round Trip</key>
+	<string>往返</string>
+	<key>Rule Messages</key>
+	<string>规则消息</string>
+	<key>SAFETY_CHECK_IN_HELP</key>
+	<string>签入当前地点以获取帮助</string>
+	<key>SAVE_REPORT_RECEIPT_FAILURE</key>
+	<string>无法附加收据</string>
+	<key>SEARCH_LOCN</key>
+	<string>地点搜索</string>
+	<key>SEC_TITLE_COMMENTS</key>
+	<string>备注</string>
+	<key>SEC_TITLE_INVOICE_HEADER</key>
+	<string>发票标题</string>
+	<key>SEE ALL token RESULTS</key>
+	<string>查看全部 %@ 结果</string>
+	<key>SEE ALL token RESULTS (starting at token)</key>
+	<string>查看所有 %d 结果（从 %@ 开始）</string>
+	<key>SELECT_HELP_TOPIC</key>
+	<string>或者选择帮助主题</string>
+	<key>SELECT_REPORT</key>
+	<string>选择费用报告</string>
+	<key>SELECT_REPORT_HELP</key>
+	<string>从以下列表中选择费用报告，以添加您的费用。或通过轻按以上 '+' 按钮添加到新费用报告。</string>
+	<key>SETTINGS_VIEW</key>
+	<string>设置</string>
+	<key>SIGN_IN_EMAIL</key>
+	<string>输入您的工作电子邮件以接收登录信息。</string>
+	<key>SIGN_IN_INSTRUCT_MSG</key>
+	<string>如果系统中存有您的电子邮件地址，您将会收到一封电子邮件。从该设备打开它以访问 Concur 应用程序。</string>
+	<key>SLV_AT</key>
+	<string>于</string>
+	<key>SLV_BOOK_A_TAXI</key>
+	<string>预订出租车</string>
+	<key>SLV_CLICK_ON</key>
+	<string>单击此单元格预订</string>
+	<key>SLV_CONFIRMATION</key>
+	<string>确认</string>
+	<key>SLV_DROP_OFF</key>
+	<string>%@ 还车日期 %@</string>
+	<key>SLV_FROM</key>
+	<string>从</string>
+	<key>SLV_GATE</key>
+	<string>门口</string>
+	<key>SLV_GOES_FROM</key>
+	<string>从 %@ 到 %@</string>
+	<key>SLV_NUM_BOOKINGS</key>
+	<string>此旅行中的 %d 预订</string>
+	<key>SLV_PICKUP_AT</key>
+	<string>在 %@ 取车</string>
+	<key>SLV_PICKUP_BY</key>
+	<string>通过 %@ 取车</string>
+	<key>SLV_PLATFORM_WAGON</key>
+	<string>站台 %@ 车厢 %@</string>
+	<key>SLV_TAXI_MAGIC</key>
+	<string>配备 Taxi Magic 的出租车</string>
+	<key>SLV_TAXI_MAGIC2</key>
+	<string>您将重定向到 Taxi Magic 应用</string>
+	<key>SLV_TERMINAL</key>
+	<string>航站楼</string>
+	<key>SLV_TO</key>
+	<string>到</string>
+	<key>SLV_TOTAL_SEGS</key>
+	<string>该旅行共有 %d 段</string>
+	<key>SLV_TRIP_LOCATOR</key>
+	<string>旅行定位器: %@</string>
+	<key>SOUTHWEST</key>
+	<string>西南航空公司预订</string>
+	<key>SPLASH</key>
+	<string>飞溅</string>
+	<key>SPOUSE</key>
+	<string>配偶</string>
+	<key>SSO_FETCHING_DATA</key>
+	<string>正在检索公司登录信息...</string>
+	<key>SSO_LOGIN_REQUIRED_MSG</key>
+	<string>必须使用公司代码 (SSO) 登录。在下一个屏幕上输入公司代码以便继续</string>
+	<key>SU Password Expired Instruction</key>
+	<string>请登录 Concur 网站以更改密码。</string>
+	<key>SUBMIT_BUTTON</key>
+	<string>提交</string>
+	<key>SUBMIT_ERROR_CCT_AUTH</key>
+	<string>在提交之前，请等待 Amex 待批交易发布。</string>
+	<key>SUBMIT_ERROR_NO_ENTRY_MSG</key>
+	<string>该费用报告中没有费用。您必须创建至少一项费用，才能提交费用报告。</string>
+	<key>SUBMIT_ERROR_RPT_XCT_LEVEL_MSG</key>
+	<string>直到解决所有带有红色标记的例外，才能提交此费用报告。</string>
+	<key>SUBMIT_ERROR_UNDEF_MSG</key>
+	<string>该费用报告包含一个或多个未定义费用类型的费用。您必须选择费用类型，才能提交费用报告。</string>
+	<key>SUBMIT_HOW_TO_RECEIPT_MSG</key>
+	<string>根据公司策略，您必须提供下列费用的发票。您可以传真发票或附加扫描的发票图像。如果已经提供发票，您可以现在提交费用报告。</string>
+	<key>SUBMIT_REQUIRE_PAPER_RECEIPT</key>
+	<string>根据公司策略，您必须提供下列费用的发票。您可以将扫描的图像附加到各项费用或者附加到费用报告，但是还必须提交原纸质发票。如果已经提供发票，您现在就可以提交费用报告。</string>
+	<key>SU_ADD_YODLEE_CARD_INSTRUCTION</key>
+	<string>输入您信用卡帐户的登录信息。SmartExpense 将对此信息加密并确保其安全使用以下载您的卡交易信息。（不要担心，它是只读格式。）</string>
+	<key>SU_APPROVER_AB_NO_EMAIL</key>
+	<string>所选的联系人没有接收费用报告提交的电子邮件地址。</string>
+	<key>SU_CHECK_TEMP_PWD</key>
+	<string>请检查电子邮件以使用临时 SmartExpense 密码。</string>
+	<key>SU_SIGN_UP_CHECK_EMAIL</key>
+	<string>我们需要验证您的电子邮件地址。请根据我们的消息检查您的电子邮件并单击验证链接。</string>
+	<key>SYSEMP</key>
+	<string>此员工</string>
+	<key>Safety Check In</key>
+	<string>地点签到</string>
+	<key>Saturday_Short</key>
+	<string>周六</string>
+	<key>Save</key>
+	<string>保存</string>
+	<key>Save &amp; Generate Allowances</key>
+	<string>保存并生成补助</string>
+	<key>Save Itemizations</key>
+	<string>保存明细</string>
+	<key>Save entry receipt failed</key>
+	<string>无法将发票保存到条目</string>
+	<key>Saved</key>
+	<string>已保存</string>
+	<key>Saving Expense</key>
+	<string>正在保存费用</string>
+	<key>Saving Report</key>
+	<string>保存费用报告</string>
+	<key>Saving offline receipt</key>
+	<string>正在保存离线收据</string>
+	<key>Scheduled Arrival</key>
+	<string>计划到达</string>
+	<key>Scheduled Departure</key>
+	<string>计划出发</string>
+	<key>Scheduled Equipment</key>
+	<string>计划设备</string>
+	<key>Scheduled On-time</key>
+	<string>计划工作时间</string>
+	<key>Scheduled Terminal</key>
+	<string>航站楼安排</string>
+	<key>Search</key>
+	<string>搜索</string>
+	<key>Search Again</key>
+	<string>重新搜索</string>
+	<key>Search Approver</key>
+	<string>搜索审批者</string>
+	<key>Search Approver Instruction</key>
+	<string>请查找审批者，然后提交费用报告</string>
+	<key>Search Failed</key>
+	<string>搜索失败</string>
+	<key>Search Results</key>
+	<string>搜索结果</string>
+	<key>Search and book flights</key>
+	<string>搜索并预订航班、宾馆、汽车等</string>
+	<key>Search for Attendee</key>
+	<string>搜索参加者</string>
+	<key>Search for Cars</key>
+	<string>搜索汽车</string>
+	<key>Search for an office location</key>
+	<string>搜索办公地点</string>
+	<key>Search schedules</key>
+	<string>搜索计划</string>
+	<key>Searching for Hotels near you</key>
+	<string>搜索您附近的宾馆</string>
+	<key>Searching for cars</key>
+	<string>搜索汽车</string>
+	<key>Searching for cars at</key>
+	<string>汽车搜索范围</string>
+	<key>Searching for flights</key>
+	<string>搜索航班</string>
+	<key>Searching for hotels</key>
+	<string>正在搜索酒店</string>
+	<key>Searching for trains</key>
+	<string>正在搜索火车</string>
+	<key>Seat: %@</key>
+	<string>座位: %@</string>
+	<key>Seats</key>
+	<string>座位</string>
+	<key>See All</key>
+	<string>查看全部</string>
+	<key>See All (token results)</key>
+	<string>查看全部（%d 个结果）</string>
+	<key>See Alternative Flights</key>
+	<string>查看替代航班</string>
+	<key>See what you can do with Concur</key>
+	<string>查看 Concur 能为您实现什么</string>
+	<key>Select</key>
+	<string>选择</string>
+	<key>Select All</key>
+	<string>全选</string>
+	<key>Select Attendee Type</key>
+	<string>选择参加者类型</string>
+	<key>Select Attendee to Add</key>
+	<string>选择要添加的参加者</string>
+	<key>Select Car Type</key>
+	<string>选择汽车类型</string>
+	<key>Select Card</key>
+	<string>选择卡</string>
+	<key>Select Email Address</key>
+	<string>选择电子邮件地址</string>
+	<key>Select Preference</key>
+	<string>选择首选项</string>
+	<key>Select Program</key>
+	<string>选择计划</string>
+	<key>Select Reason</key>
+	<string>选择原因</string>
+	<key>Select Train</key>
+	<string>选择火车</string>
+	<key>Select an office location</key>
+	<string>选择办公地点</string>
+	<key>Select delivery option</key>
+	<string>选择送票选项</string>
+	<key>Select seat class below</key>
+	<string>选择以下座位等级</string>
+	<key>Send Again</key>
+	<string>重新发送</string>
+	<key>Send Failed</key>
+	<string>发送失败</string>
+	<key>Send Invite</key>
+	<string>发送邀请</string>
+	<key>Send Invite To</key>
+	<string>发送邀请到</string>
+	<key>Send Log</key>
+	<string>发送日志</string>
+	<key>Send My Sign In Details</key>
+	<string>发送登录说明</string>
+	<key>Send to Approver</key>
+	<string>发送到审批者</string>
+	<key>Sending Back Report</key>
+	<string>正在发回费用报告</string>
+	<key>Sending Email</key>
+	<string>发送电子邮件</string>
+	<key>Sent</key>
+	<string>已发送</string>
+	<key>Set Mobile PIN</key>
+	<string>设置 Mobile PIN</string>
+	<key>Set PIN</key>
+	<string>设置 PIN</string>
+	<key>Set PIN Tip</key>
+	<string>设置 PIN 提示</string>
+	<key>Set PIN succeeded</key>
+	<string>已成功保存您的移动 PIN。</string>
+	<key>Settings</key>
+	<string>设置</string>
+	<key>Share Trip</key>
+	<string>共享旅程</string>
+	<key>Show Home Panels</key>
+	<string>显示主面板</string>
+	<key>Show Offers</key>
+	<string>显示服务</string>
+	<key>Sign In</key>
+	<string>登录</string>
+	<key>Sign In Help</key>
+	<string>登录帮助</string>
+	<key>Sign In Instructions Sent to This Device</key>
+	<string>已发送登录说明</string>
+	<key>Sign In with Concur</key>
+	<string>使用 Concur 登录</string>
+	<key>Sign In with Facebook</key>
+	<string>使用 Facebook 登录</string>
+	<key>Sign Up</key>
+	<string>注册</string>
+	<key>Sign Up Failed</key>
+	<string>注册失败</string>
+	<key>Sign in to Concur</key>
+	<string>登录</string>
+	<key>Sign in to TripIt</key>
+	<string>登录到 TripIt</string>
+	<key>Signing up accepts our</key>
+	<string>注册接受我们的</string>
+	<key>Similar users like this hotel</key>
+	<string>喜欢此宾馆的类似用户</string>
+	<key>Single Sign On</key>
+	<string>单一登录</string>
+	<key>Smart Matching</key>
+	<string>智能匹配</string>
+	<key>SmartExpense Report</key>
+	<string>SmartExpense 报告</string>
+	<key>SmartExpense version</key>
+	<string>欢迎使用 SmartExpense</string>
+	<key>SmartExpense was denied access to your TripIt account.</key>
+	<string>SmartExpense 无法访问您的 TripIt 帐户。</string>
+	<key>SmartExpense was unable to access your TripIt account.  Please try again later.</key>
+	<string>SmartExpense 无法访问您的 TripIt 帐户。请稍后重试。</string>
+	<key>SmartExpense was unable to expense your trip. Please try again later.</key>
+	<string>SmartExpense 无法对您的旅行计费。请稍后重试。</string>
+	<key>Smoking</key>
+	<string>吸烟</string>
+	<key>Sold Out</key>
+	<string>售完</string>
+	<key>Sorry</key>
+	<string>抱歉，我们没有找到起始价格。请再次尝试搜索。</string>
+	<key>Sorry I didn't quite get that.</key>
+	<string>抱歉，我不太明白。让我们重新开始。</string>
+	<key>Sort</key>
+	<string>排序</string>
+	<key>Sort By</key>
+	<string>排序依据</string>
+	<key>Sort by</key>
+	<string>排序依据</string>
+	<key>Sort by Amount</key>
+	<string>按金额排序</string>
+	<key>Sort by Date</key>
+	<string>按日期排序</string>
+	<key>Sort by Distance</key>
+	<string>按距离排序</string>
+	<key>Sort by Duration</key>
+	<string>按持续时间排序</string>
+	<key>Sort by Earliest Departure</key>
+	<string>按最早出发时间排序</string>
+	<key>Sort by Preference</key>
+	<string>按首选项排序</string>
+	<key>Sort by Preferred Vendors</key>
+	<string>按首选供应商排序</string>
+	<key>Sort by Price</key>
+	<string>按价格排序</string>
+	<key>Sort by Rating</key>
+	<string>按等级排序</string>
+	<key>Sort by Recommendation</key>
+	<string>按建议排序</string>
+	<key>Sort by Vendor Names</key>
+	<string>按供应商名称排序</string>
+	<key>Standard</key>
+	<string>标准</string>
+	<key>Standard Hybrid</key>
+	<string>标准混合动力车</string>
+	<key>Standard SUV</key>
+	<string>标准 SUV</string>
+	<key>Star Rating</key>
+	<string>星级</string>
+	<key>StartARequest</key>
+	<string>开始申请</string>
+	<key>StartYourRequest</key>
+	<string>开始您的申请</string>
+	<key>Starting</key>
+	<string>开始</string>
+	<key>Station</key>
+	<string>站点</string>
+	<key>Stations</key>
+	<string>站点</string>
+	<key>Stop</key>
+	<string>停止</string>
+	<key>Stopping Upload</key>
+	<string>正在停止上载</string>
+	<key>Stops</key>
+	<string>经停</string>
+	<key>Submit Invoices</key>
+	<string>提交发票</string>
+	<key>Submit Report</key>
+	<string>提交报告</string>
+	<key>SubmitRequest</key>
+	<string>提交申请</string>
+	<key>Submitted Reports</key>
+	<string>已提交费用报告</string>
+	<key>Suggested based on co-worker</key>
+	<string>基于同事的建议</string>
+	<key>Suggested based on past stay</key>
+	<string>基于已往住宿的建议</string>
+	<key>Suggested based on popularity</key>
+	<string>基于知名度的建议</string>
+	<key>Sunday_Short</key>
+	<string>周日</string>
+	<key>Swipe for more</key>
+	<string>查看更多信息</string>
+	<key>Swipe to delete</key>
+	<string>滑动删除</string>
+	<key>Switch to KM</key>
+	<string>转换为公里</string>
+	<key>Switch to Miles</key>
+	<string>转换为英里</string>
+	<key>Sync Credit Card</key>
+	<string>同步信用卡</string>
+	<key>Sync account with SmartExpense</key>
+	<string>与 SmartExpense 同步帐户</string>
+	<key>Sync credit card</key>
+	<string>同步信用卡</string>
+	<key>TA Import Heading Text</key>
+	<string>选择差旅预订或卡消费，以帮助您启动差旅补助路线</string>
+	<key>TITLE_REGISTER_REENTER_PIN</key>
+	<string>输入 PIN</string>
+	<key>TRAVEL_NEG_TEXT</key>
+	<string>从规划您的差旅开始</string>
+	<key>TRAVEL_REQUESTS</key>
+	<string>申请</string>
+	<key>TRIPS</key>
+	<string>旅行列表</string>
+	<key>TRIP_DETAILS</key>
+	<string>详细行程</string>
+	<key>TRY_AGAIN</key>
+	<string>重试</string>
+	<key>TWITTER_MESSAGES</key>
+	<string>Concur 的 Twitter</string>
+	<key>Take photos of your receipts.</key>
+	<string>给发票拍照。</string>
+	<key>Take pictures of receipts &amp; upload</key>
+	<string>获取收据照片并上传</string>
+	<key>Tap microphone to get started</key>
+	<string>轻按麦克风开始操作</string>
+	<key>Tap to get directions</key>
+	<string>切换获取指示</string>
+	<key>Taxable</key>
+	<string>应纳税</string>
+	<key>Taxi</key>
+	<string>出租车</string>
+	<key>Taxi Magic</key>
+	<string>Taxi Magic</string>
+	<key>Terminal token</key>
+	<string>航站楼 %@</string>
+	<key>Terms of Use</key>
+	<string>使用条款</string>
+	<key>Thank You</key>
+	<string>谢谢您</string>
+	<key>The Out of Pocket Entry could not be saved because the network is unavailable.  Please try again later.</key>
+	<string>由于网络不可用，无法保存“现金支付”条目。请稍后重试。</string>
+	<key>The Out of Pocket Entry could not be saved.  Please try again later.</key>
+	<string>无法保存现金支付条目。请稍后重试。</string>
+	<key>The Price-to-Beat is %@.</key>
+	<string>起始价格为 %@。</string>
+	<key>The Price-to-Beat range is between %@.</key>
+	<string>起始价格范围在 %@ 之间。</string>
+	<key>The account could not be unlinked.</key>
+	<string>无法取消该帐户的链接。</string>
+	<key>The car could not be booked.</key>
+	<string>无法预订汽车。</string>
+	<key>The check-out date must be later than the check-in date.</key>
+	<string>退房日期必须晚于入住日期。</string>
+	<key>The date specified for departure is invalid.</key>
+	<string>指定的出发日期无效。</string>
+	<key>The date specified for the departure occurs in the past.</key>
+	<string>指定的出发日期已经过去。</string>
+	<key>The date specified for the return is earlier than the date of departure.</key>
+	<string>指定的返回日期早于出发日期。</string>
+	<key>The flight could not be booked.</key>
+	<string>无法预订航班。</string>
+	<key>The log could not be sent.</key>
+	<string>无法发送日志。</string>
+	<key>The log mail has been placed in your outbox.</key>
+	<string>日志邮件已存于您的发件箱。</string>
+	<key>The log mail has been saved in your Drafts folder.</key>
+	<string>日志邮件已保存到您的“草稿”文件夹。</string>
+	<key>The password reset was requested from another device. Please use the same device you requested the password reset.</key>
+	<string>另一部设备请求密码重设。请使用您请求密码重设的同一部设备。</string>
+	<key>The selected credit card will be charged and the ticket will be issued immediately. The reservation may not be eligible for changes or refunds. Are you sure you want to reserve this flight?</key>
+	<string>将从选择的信用卡扣款，并自动出票。 预订可能无法更改或退款。 是否确定要预订此航班？</string>
+	<key>The server encountered an error.</key>
+	<string>服务器遇到错误。</string>
+	<key>The train could not be booked</key>
+	<string>无法预订该火车。</string>
+	<key>There are</key>
+	<string>有 %@ 个费用报告等待审批。</string>
+	<key>There are cct</key>
+	<string>您有 %@ 笔未使用的卡消费。</string>
+	<key>There are no cct</key>
+	<string>您没有卡消费。</string>
+	<key>There are no reports to approve</key>
+	<string>没有要审批的费用报告</string>
+	<key>There are no rpt</key>
+	<string>已提交所有费用报告。</string>
+	<key>There are no travel requests to approve</key>
+	<string>没有要审批的申请</string>
+	<key>There are rpt</key>
+	<string>%@ 个未提交的报告，总计 %@ 个。</string>
+	<key>There is</key>
+	<string>有 %@ 个费用报告等待审批。</string>
+	<key>There is cct</key>
+	<string>您有 %@ 笔未使用的卡消费。</string>
+	<key>There is rpt</key>
+	<string>总计 %@ 个费用报告中有 %@ 个未提交的报告。</string>
+	<key>There must have been a typo. Please re-enter the password so it matches exactly in both fields</key>
+	<string>必然有输入错误。请重新输入密码，使其在两个字段中完全相同</string>
+	<key>There was an error processing your request. It may be due to a poor network connection. Please try again later. If this condition continues</key>
+	<string>处理您的申请时出现错误。可能是由于网络连接状况不佳。请稍后重试。如果此情况仍然存在，请与管理员联系。</string>
+	<key>There were no unassigned expenses found</key>
+	<string>未找到未分配的费用</string>
+	<key>This application crashed the last time you ran it.  Please help us determine the cause of the crash by sending us the application log.</key>
+	<string>此应用程序在您上次运行时崩溃。请向我们发送应用程序日志，以帮助我们确定崩溃的原因。</string>
+	<key>This attendee cannot be edited.</key>
+	<string>无法编辑此参加者。</string>
+	<key>This attendee has been modified</key>
+	<string>此参加者自从上次在此费用中使用后已被修改。任何编辑都必须在 Web 上的“配置文件”中完成。</string>
+	<key>This device is not configured for sending mail.</key>
+	<string>没有为此设备配置发送邮件。</string>
+	<key>This feature requires access</key>
+	<string>此功能需要访问您的设备的麦克风。请在设置/隐私/麦克风中启用该应用程序的麦克风访问</string>
+	<key>This trip has already been expensed or the trip could not be synchronized.</key>
+	<string>此旅行已经计费或无法同步该旅行。</string>
+	<key>Thursday_Short</key>
+	<string>周四</string>
+	<key>Ticket Delivery</key>
+	<string>送票</string>
+	<key>Ticket Type</key>
+	<string>机票类型</string>
+	<key>Ticketing</key>
+	<string>机票</string>
+	<key>Time</key>
+	<string>时间</string>
+	<key>Title</key>
+	<string>标题</string>
+	<key>To</key>
+	<string>到</string>
+	<key>To Location</key>
+	<string>到达地点</string>
+	<key>To Station</key>
+	<string>目标站点</string>
+	<key>ToReceiptStoreMsg</key>
+	<string>转到发票库。</string>
+	<key>Tomorrow</key>
+	<string>明天</string>
+	<key>Total</key>
+	<string>总额</string>
+	<key>Total Amount</key>
+	<string>总金额</string>
+	<key>Total Due Company Card</key>
+	<string>应付公司卡款项总计</string>
+	<key>Total Due Employee</key>
+	<string>应付员工款总计</string>
+	<key>Total Owed by Employee</key>
+	<string>员工所欠总额</string>
+	<key>Total Paid by Company</key>
+	<string>由公司支付的总额</string>
+	<key>Total Personal Amount</key>
+	<string>个人总金额</string>
+	<key>Total Price</key>
+	<string>总价</string>
+	<key>Total Rate</key>
+	<string>总额</string>
+	<key>Total Requested</key>
+	<string>申请总额</string>
+	<key>Total Travel Points: %@</key>
+	<string>总差旅点： %@</string>
+	<key>Total no card charges</key>
+	<string>您没有卡交易</string>
+	<key>Total no expenses</key>
+	<string>您没有费用</string>
+	<key>Total num card charge</key>
+	<string>您有一笔卡交易</string>
+	<key>Total num card charges</key>
+	<string>您有 %@ 笔卡交易</string>
+	<key>Total num expense</key>
+	<string>您有一笔费用</string>
+	<key>Total num expenses</key>
+	<string>您有 %@ 笔费用</string>
+	<key>Total: %@</key>
+	<string>总额: %@</string>
+	<key>Tour</key>
+	<string>旅行</string>
+	<key>TourExpense2Subtitle</key>
+	<string>然后提交并报销。经理可以在任何地点进行审批。</string>
+	<key>Train</key>
+	<string>火车</string>
+	<key>Train Choices</key>
+	<string>火车选择</string>
+	<key>Train Detail</key>
+	<string>火车详细信息</string>
+	<key>Train Number</key>
+	<string>列车号</string>
+	<key>Train: token</key>
+	<string>火车 %@</string>
+	<key>Transaction Amount</key>
+	<string>交易金额</string>
+	<key>Transaction Date</key>
+	<string>交易日期</string>
+	<key>Transaction Location</key>
+	<string>交易地点</string>
+	<key>Travel</key>
+	<string>差旅</string>
+	<key>Travel Agency Info</key>
+	<string>旅行社信息</string>
+	<key>Travel Apps</key>
+	<string>差旅应用程序</string>
+	<key>Travel Points</key>
+	<string>差旅点</string>
+	<key>Travel Points Awarded</key>
+	<string>已授予差旅点</string>
+	<key>Travel Points Bank: %@ points</key>
+	<string>差旅点银行:%@ 个点</string>
+	<key>Travel Points Booked</key>
+	<string>已预订差旅点</string>
+	<key>Travel Policy</key>
+	<string>旅行策略</string>
+	<key>Travel Requests</key>
+	<string>差旅申请</string>
+	<key>Travel Time</key>
+	<string>差旅时间</string>
+	<key>TravelRequestCount</key>
+	<string>您有 %d 个要审批的申请</string>
+	<key>TravelRequestsToApproveRow_0</key>
+	<string>您没有要审批的申请</string>
+	<key>TravelRequestsToApproveRow_1</key>
+	<string>您有 1 个申请要审批</string>
+	<key>TravelRequestsToApproveRow_2</key>
+	<string>您有 %d 个要审批的申请</string>
+	<key>Trip</key>
+	<string>当前的旅行</string>
+	<key>Trip Approval</key>
+	<string>旅程审批</string>
+	<key>Trip Approvals</key>
+	<string>旅行审批</string>
+	<key>Trip Feed</key>
+	<string>旅程信息来源</string>
+	<key>Trip Fields</key>
+	<string>旅行字段</string>
+	<key>Trip Locator</key>
+	<string>旅行定位器</string>
+	<key>Trip Record Locator for this trip could not be retrieved.</key>
+	<string>无法检索此旅程的旅程记录定位器。</string>
+	<key>Trip data updated on</key>
+	<string>旅行数据更新时间 %@</string>
+	<key>Trip data updated on hrt</key>
+	<string>更新旅行数据
+	%@</string>
+	<key>Trip just trip</key>
+	<string>旅行</string>
+	<key>TripIt Account Not Activated</key>
+	<string>TripIt 帐户未激活</string>
+	<key>TripIt Trips</key>
+	<string>TripIt 旅行</string>
+	<key>TripIt not linked</key>
+	<string>该 TripIt 帐户尚未链接到 SmartExpense。请在主屏幕中通过轻按 TripIt 行链接到 TripIt</string>
+	<key>TripIt not linked together</key>
+	<string>链接到 SmartExpense 登录用户的 TripIt 帐户与登录到 TripIt 移动应用程序的帐户不同。请使用链接到 SmartExpense 的同一帐户登录 TripIt。</string>
+	<key>TripIt trip key not found</key>
+	<string>系统无法处理您对旅行计费的请求。未找到 TripIt 旅行键。</string>
+	<key>Trips</key>
+	<string>旅行</string>
+	<key>Try Again</key>
+	<string>重试</string>
+	<key>Try again to re-enter your password or select I Forgot to receive signin in instructions</key>
+	<string>再次尝试重新输入您的密码或选择“我忘记”以接收登录说明</string>
+	<key>Tuesday_Short</key>
+	<string>周二</string>
+	<key>Type</key>
+	<string>类型</string>
+	<key>Type in emails seperated by commas or choose from contacts list</key>
+	<string>键入电子邮件（用逗号分开）或从联系人列表中选择</string>
+	<key>Type name or select frequent attendee</key>
+	<string>请输入姓氏或名字</string>
+	<key>Type to search for a location</key>
+	<string>键入搜索地点</string>
+	<key>UNDEFINED_MSG</key>
+	<string>至少其中一个所选费用的费用类型未定义。</string>
+	<key>Unable to Sign In</key>
+	<string>无法登录</string>
+	<key>Unable to add expense</key>
+	<string>无法添加费用</string>
+	<key>Unable to add itemization</key>
+	<string>无法添加明细</string>
+	<key>Unable to attach expense. Please check that this report policy allows Japan Public Transit.</key>
+	<string>无法附加费用。请确保此报告策略允许日本公共交通。</string>
+	<key>Unable to link</key>
+	<string>无法链接</string>
+	<key>Unable to load location data.</key>
+	<string>无法加载地点数据。</string>
+	<key>Unable to sign in</key>
+	<string>此时我们无法将您登录。请与贵公司的帮助中心或差旅/费用部门联系。</string>
+	<key>Unavailable</key>
+	<string>不可用</string>
+	<key>Undefined</key>
+	<string>未定义</string>
+	<key>Unexpected Error</key>
+	<string>意外错误</string>
+	<key>Unknown Station</key>
+	<string>未知站点</string>
+	<key>Unlink Dropbox</key>
+	<string>取消 Dropbox 链接</string>
+	<key>Unlink Succeeded</key>
+	<string>已成功取消链接</string>
+	<key>Unlink from TripIt</key>
+	<string>断开与 TripIt 的链接</string>
+	<key>Unmatch</key>
+	<string>不匹配</string>
+	<key>Unsaved Receipts</key>
+	<string>未保存的发票</string>
+	<key>Unselect All</key>
+	<string>取消全选</string>
+	<key>Unsubmitted Reports</key>
+	<string>未提交的费用报告</string>
+	<key>UnsubmittedReportsRow_0</key>
+	<string>您没有未提交的报告</string>
+	<key>UnsubmittedReportsRow_1</key>
+	<string>您有 1 个未提交的报告</string>
+	<key>UnsubmittedReportsRow_2</key>
+	<string>您有 %d 个未提交的报告</string>
+	<key>Update</key>
+	<string>更新</string>
+	<key>Update Itemizations</key>
+	<string>更新明细</string>
+	<key>Update Receipt</key>
+	<string>更新发票</string>
+	<key>Updating</key>
+	<string>正在更新</string>
+	<key>Updating Itinerary</key>
+	<string>正在更新行程</string>
+	<key>Upload</key>
+	<string>上载</string>
+	<key>Upload Failed</key>
+	<string>上载失败</string>
+	<key>Upload Queue</key>
+	<string>上载队列</string>
+	<key>Upload Receipt</key>
+	<string>上传发票</string>
+	<key>Upload Success</key>
+	<string>上传成功</string>
+	<key>Uploading Please Wait</key>
+	<string>正在上载，请稍候</string>
+	<key>Uploading count</key>
+	<string>正在上载第 %d 个，共 %d 个</string>
+	<key>Uploading to Dropbox</key>
+	<string>上传到 Dropbox</string>
+	<key>Uploading to Dropbox failed</key>
+	<string>上传到 Dropbox 失败</string>
+	<key>Uploading to Dropbox was successful</key>
+	<string>已成功上传到 Dropbox</string>
+	<key>Use %@ Travel Points</key>
+	<string>使用 %@ 差旅点</string>
+	<key>Use %d pts.</key>
+	<string>使用 %d 点。</string>
+	<key>Use-ImagePicker</key>
+	<string>使用</string>
+	<key>User Name</key>
+	<string>用户名</string>
+	<key>Username and Password</key>
+	<string>用户名和密码</string>
+	<key>Username or PIN is invalid</key>
+	<string>用户名或 PIN 无效。您可以创建或重设移动 PIN，方法为单击“是否需要设置 PIN？”，或在联机版 Concur 中导航到“配置文件”-&gt;“移动注册”。</string>
+	<key>Username or Password is invalid</key>
+	<string>用户名或密码无效。</string>
+	<key>Username or Password is invalid SU</key>
+	<string>用户名或密码无效。您可以单击“重设密码”链接重设您的密码。如果您没有帐户，请单击“注册”。</string>
+	<key>Using Points</key>
+	<string>正在使用差旅点</string>
+	<key>VALUE_RANGE_MSG</key>
+	<string>请输入介于 %d 到 %d 个字符的值。</string>
+	<key>VALUE_RANGE_MSG_FIXED_LENGTH</key>
+	<string>请输入长为 %d 个字符的值。</string>
+	<key>VALUE_RANGE_MSG_LOWER_BOUND</key>
+	<string>请输入大于 %d 个字符的值。</string>
+	<key>VALUE_RANGE_MSG_NO_BOUNDS</key>
+	<string>请为此字段输入一个有效值。</string>
+	<key>VALUE_RANGE_MSG_UPPER_BOUND</key>
+	<string>请输入小于 %d 个字符的值。</string>
+	<key>VERIFY_PWD</key>
+	<string>验证密码</string>
+	<key>VehicleId</key>
+	<string>车辆 ID</string>
+	<key>Vendor</key>
+	<string>供应商</string>
+	<key>Vendor Hours</key>
+	<string>供应商小时数</string>
+	<key>Vendor Names</key>
+	<string>供应商名称</string>
+	<key>Vendor Web Site</key>
+	<string>供应商网站</string>
+	<key>Verification is simple. Just tap on the link in the email we sent to</key>
+	<string>验证非常简单。只需轻按我们发送到 %@ 的电子邮件中的链接即可</string>
+	<key>View Allowance</key>
+	<string>查看补助</string>
+	<key>View Images</key>
+	<string>查看图像</string>
+	<key>View Rates</key>
+	<string>查看费率</string>
+	<key>View Receipt</key>
+	<string>查看发票</string>
+	<key>View Report Offline</key>
+	<string>无法访问费用报告。请在稍后处于联机状态时重试。</string>
+	<key>View in Chatter</key>
+	<string>在 Chatter 中查看</string>
+	<key>View your travel requests</key>
+	<string>查看您的申请</string>
+	<key>View your trips</key>
+	<string>查看您的差旅</string>
+	<key>View your uploaded receipts</key>
+	<string>查看您上传的发票</string>
+	<key>Violation</key>
+	<string>违反</string>
+	<key>Violation Justification</key>
+	<string>违反理由</string>
+	<key>Violation Reason</key>
+	<string>违反原因</string>
+	<key>Violation Reason Code</key>
+	<string>违反原因代码</string>
+	<key>Violation Summary</key>
+	<string>违反摘要</string>
+	<key>Violations</key>
+	<string>违反</string>
+	<key>WAIT_FOR_CAR_RATES_DATA</key>
+	<string>您正在等待汽车补助率数据。请稍后重试此操作。</string>
+	<key>WARNING</key>
+	<string>警告</string>
+	<key>WARNING_INVALID_VALUE_RANGE_NOT_REQUIRED</key>
+	<string>该值没有在指定的 %d 到 %d 个字符的范围内。是否确实要继续？</string>
+	<key>WARN_MISSING_REQ_FLD</key>
+	<string>您的表单中缺少必填字段。是否要继续保存？</string>
+	<key>WEBVIEW</key>
+	<string>Web 数据视图</string>
+	<key>Waiting</key>
+	<string>等待</string>
+	<key>Warning</key>
+	<string>警告</string>
+	<key>Warning on Itinerary Stop update</key>
+	<string>线路站更新警告</string>
+	<key>Watch setup video</key>
+	<string>观看设置视频</string>
+	<key>We are unable to sign you in with this information</key>
+	<string>我们无法使用此信息将您登录</string>
+	<key>We couldnt find any hotels with the given search criteria. Please try again with different criteria.</key>
+	<string>找不到符合给定搜索条件的任何宾馆。 请重试其他条件。</string>
+	<key>Web Site</key>
+	<string>网站</string>
+	<key>Wednesday_Short</key>
+	<string>周三</string>
+	<key>Welcome to Concur</key>
+	<string>欢迎使用 Concur</string>
+	<key>What Flights can I find for you?</key>
+	<string>我可以为您查找哪些航班?</string>
+	<key>What Hotel can I find for you?</key>
+	<string>我可以为您查找哪家宾馆？</string>
+	<key>What's New</key>
+	<string>新增功能</string>
+	<key>When auto login is on</key>
+	<string>启用自动登录后，将自动保存用户名。</string>
+	<key>Work email or Concur username</key>
+	<string>工作电子邮件或 Concur 用户名</string>
+	<key>Would you like to create an Expense Report from the selected trip segments</key>
+	<string>是否要基于所选的旅行段创建费用报告？</string>
+	<key>Wrong agency code</key>
+	<string>错误的旅行社代码</string>
+	<key>Wrong company code</key>
+	<string>错误的公司代码</string>
+	<key>YCOOK</key>
+	<string>其它有烹饪</string>
+	<key>YODLEE_CARD_LOGIN_FORM_FAILED_MSG</key>
+	<string>检索您信用卡的登录表单失败。请稍后尝试。</string>
+	<key>Yes</key>
+	<string>是</string>
+	<key>You already have a corporate account with Concur.</key>
+	<string>您已拥有 Concur 企业帐户。</string>
+	<key>You are offline. Please expense trip later.</key>
+	<string>您处于脱机状态。请等待联机后支付旅行费用。</string>
+	<key>You are using %@ Travel Points.</key>
+	<string>您将要使用 %@ 个差旅点。</string>
+	<key>You do not have an email in your Concur profile. We are unable to send you a password reset email without one. Please go to the Concur Website and add your work email to your profile.</key>
+	<string>您的 Concur 配置文件中没有电子邮件。如果没有电子邮件，我们无法向您发送密码重设电子邮件。请转至 Concur 网站并向您的配置文件中添加工作电子邮件。</string>
+	<key>You have %@ Travel Points in your bank.</key>
+	<string>您的银行中有 %@ 个差旅点。</string>
+	<key>You have already registered for SmartExpense.</key>
+	<string>您已注册 SmartExpense。</string>
+	<key>You have no approvals</key>
+	<string>您没有审批</string>
+	<key>You have no messages</key>
+	<string>您没有消息</string>
+	<key>You have no upcoming trips</key>
+	<string>您没有即将到来的旅行</string>
+	<key>You have stayed here %@ times</key>
+	<string>您曾在此处居住 %@ 次</string>
+	<key>You have stayed here earlier</key>
+	<string>您以前曾在此处居住</string>
+	<key>You have successfully linked your TripIt account to SmartExpense.</key>
+	<string>您已成功将 TripIt 帐户链接到 SmartExpense。</string>
+	<key>You must be online before you can upload your items</key>
+	<string>您必须处于联机状态才能上载项目。</string>
+	<key>You must enter in a valid PIN in order to log in</key>
+	<string>您必须输入有效的 PIN 才能进行登录</string>
+	<key>You must enter in a valid email address in order for Concur to verify it</key>
+	<string>您必须输入有效的电子邮件地址以便 Concur 进行验证</string>
+	<key>You must enter in a valid email for your approver</key>
+	<string>您必须为审批者输入有效的电子邮件</string>
+	<key>You must enter in a valid password in order to log in</key>
+	<string>您必须输入有效的密码才能进行登录</string>
+	<key>You must enter in a valid password or PIN in order to log in</key>
+	<string>您必须输入有效的密码或 PIN 才能进行登录</string>
+	<key>You must enter in a valid user name in order to log in</key>
+	<string>您必须输入有效的用户名才能进行登录</string>
+	<key>You need to select a Delivery Option in order to reserve your train</key>
+	<string>您需要选择一种送票选项，才能预订火车票。</string>
+	<key>You need to select a valid credit card in order to reserve your train</key>
+	<string>您需要选择一种有效信用卡，才能预订火车票。</string>
+	<key>Your account data has been wiped from this device.  Please contact your company administrator for assistance.</key>
+	<string>已从此设备中清除您的帐户数据。请与公司管理员联系以获得帮助。</string>
+	<key>Your account is no longer linked to TripIt.</key>
+	<string>您的帐户已与 TripIt 没有链接。</string>
+	<key>Your agent may ask for the Trip Record Locator: %@</key>
+	<string>您的旅行社可能要求提供旅行记录定位器: %@</string>
+	<key>Your colleague has stayed here</key>
+	<string>您的一个同事曾在此处居住</string>
+	<key>Your colleague is staying here on your check-in date</key>
+	<string>在您的入住日期，您的同事正在此处居住</string>
+	<key>Your colleague's favorite</key>
+	<string>您同事的收藏夹</string>
+	<key>Your colleagues have stayed here %@ times</key>
+	<string>您的同事曾在此处居住 %@ 次</string>
+	<key>Your company has disabled Concur for mobile. Please contact your administrator.</key>
+	<string>贵公司已经禁用 Concur 移动版。请与管理员联系。</string>
+	<key>Your company's preferred</key>
+	<string>您公司的首选</string>
+	<key>Your company's travel policy will not allow this reservation.</key>
+	<string>您公司的差旅策略不允许此预订。</string>
+	<key>Your device cannot make a phone call.</key>
+	<string>您的设备无法拨打电话。</string>
+	<key>Your entry does not appear to be a valid work email or Concur Username. For example</key>
+	<string>您输入的似乎不是有效的工作电子邮件或 Concur 用户名。例如，可能缺少 @ 或 .com</string>
+	<key>Your expense has been queued</key>
+	<string>您的费用已排队等候上载。</string>
+	<key>Your favorite</key>
+	<string>您的收藏夹</string>
+	<key>Your hotel reservation has been successfully cancelled. Cancellation Number: %@</key>
+	<string>您的宾馆预订已成功取消。取消编号： %@</string>
+	<key>Your receipt has been queued</key>
+	<string>您的发票已排队等候上载。</string>
+	<key>add_as_favorite</key>
+	<string>添加为偏好路线</string>
+	<key>add_new_route</key>
+	<string>添加新路线</string>
+	<key>add_route</key>
+	<string>添加路线</string>
+	<key>add_to_report</key>
+	<string>添加到费用报告</string>
+	<key>additional_charge</key>
+	<string>附加收费</string>
+	<key>are missing</key>
+	<string> 缺少。</string>
+	<key>arrival_station</key>
+	<string>到达站点</string>
+	<key>available from</key>
+	<string>可用范围</string>
+	<key>business_purpose</key>
+	<string>商务用途</string>
+	<key>cheap</key>
+	<string>便宜</string>
+	<key>check in on</key>
+	<string>签入日期</string>
+	<key>choices</key>
+	<string>选择</string>
+	<key>commuter_pass</key>
+	<string>月票</string>
+	<key>corporate card transactions</key>
+	<string>公司卡交易</string>
+	<key>cost</key>
+	<string>成本</string>
+	<key>day</key>
+	<string>天</string>
+	<key>days</key>
+	<string>天</string>
+	<key>departure_station</key>
+	<string>出发站点</string>
+	<key>easy</key>
+	<string>简单</string>
+	<key>email saved into your drafts</key>
+	<string>电子邮件已保存为您的草稿</string>
+	<key>expense_route</key>
+	<string>费用路线</string>
+	<key>fast</key>
+	<string>快速</string>
+	<key>favorites</key>
+	<string>经常性参加者</string>
+	<key>green</key>
+	<string>头等舱（绿色座位）</string>
+	<key>hour</key>
+	<string>小时</string>
+	<key>hour_quantity</key>
+	<string>%d 小时</string>
+	<key>hours</key>
+	<string>小时</string>
+	<key>hours_quantity</key>
+	<string>%d 小时</string>
+	<key>ic_card</key>
+	<string>IC 卡</string>
+	<key>ic_card_fare</key>
+	<string>IC 卡票价</string>
+	<key>int active int upcoming</key>
+	<string>%d 个活动，%d 个即将开始</string>
+	<key>invoice to review</key>
+	<string>要检查的发票</string>
+	<key>invoices to approve</key>
+	<string>要审批的发票</string>
+	<key>invoices to review</key>
+	<string>要检查的发票</string>
+	<key>is missing</key>
+	<string> 缺少。</string>
+	<key>items to upload</key>
+	<string>要上载的项目</string>
+	<key>japan_public_transit</key>
+	<string>日本公共交通</string>
+	<key>line</key>
+	<string>行</string>
+	<key>manual</key>
+	<string>手动</string>
+	<key>menu</key>
+	<string>菜单</string>
+	<key>miles</key>
+	<string>英里</string>
+	<key>minute</key>
+	<string>分</string>
+	<key>minute_quantity</key>
+	<string>%d 分钟</string>
+	<key>minutes</key>
+	<string>分</string>
+	<key>minutes_quantity</key>
+	<string>%d 分钟</string>
+	<key>mobile entries</key>
+	<string>移动条目</string>
+	<key>near</key>
+	<string>靠近</string>
+	<key>no</key>
+	<string>否</string>
+	<key>noReceipt</key>
+	<string>发票图像当前不可用。请稍后重试。</string>
+	<key>noReceipts</key>
+	<string>您当前在发票库中没有发票。</string>
+	<key>no_favorite_routes</key>
+	<string>没有偏好路线</string>
+	<key>no_recent_routes</key>
+	<string>没有近期路线</string>
+	<key>no_saved_routes</key>
+	<string>没有已保存的线路</string>
+	<key>other</key>
+	<string>其它</string>
+	<key>paper_ticket</key>
+	<string>纸质票</string>
+	<key>per day</key>
+	<string>每天</string>
+	<key>per night</key>
+	<string>每晚</string>
+	<key>personal_expense</key>
+	<string>私人费用</string>
+	<key>pickup on</key>
+	<string>取车时间</string>
+	<key>purchase request to review</key>
+	<string>要检查的购买申请</string>
+	<key>purchase requests to review</key>
+	<string>要检查的购买申请</string>
+	<key>report to approve</key>
+	<string>要审批的报告</string>
+	<key>reports to approve</key>
+	<string>要审批的报告</string>
+	<key>resend the verification email</key>
+	<string>重新发送验证电子邮件</string>
+	<key>reserved</key>
+	<string>保留座位</string>
+	<key>results by</key>
+	<string>结果排序依据：</string>
+	<key>results by Duration</key>
+	<string>按持续时间排序的结果</string>
+	<key>results by Earliest Departure</key>
+	<string>按最早出发时间排序的结果</string>
+	<key>results by Fare Price</key>
+	<string>按票价排序的结果</string>
+	<key>results by Preferred Carrier</key>
+	<string>按首选承运商排序的结果</string>
+	<key>route_added_to_report_confirmation</key>
+	<string>您的路线已添加到</string>
+	<key>route_saved_confirmation</key>
+	<string>您的路线已保存</string>
+	<key>route_search</key>
+	<string>路线搜索</string>
+	<key>routes</key>
+	<string>路线</string>
+	<key>save_for_later</key>
+	<string>保存以供日后使用</string>
+	<key>search_stations</key>
+	<string>搜索站点</string>
+	<key>select_route</key>
+	<string>选择路线</string>
+	<key>sorted by</key>
+	<string>排序依据</string>
+	<key>tap here to cancel reservation</key>
+	<string>轻按此处可取消预订</string>
+	<key>through_station</key>
+	<string>通过站点</string>
+	<key>through_stations</key>
+	<string>通过站点</string>
+	<key>to</key>
+	<string>到</string>
+	<key>today</key>
+	<string>今天</string>
+	<key>token hour(s) token minute(s)</key>
+	<string>%d 小时 %d 分钟</string>
+	<key>token minute(s)</key>
+	<string>%d 分钟</string>
+	<key>token results</key>
+	<string>%d 结果</string>
+	<key>travel request to approve</key>
+	<string>要审批的差旅申请</string>
+	<key>travel requests to approve</key>
+	<string>要审批的差旅申请</string>
+	<key>trip to approve</key>
+	<string>要审批的旅行</string>
+	<key>trip_date</key>
+	<string>旅行日期</string>
+	<key>trips to approve</key>
+	<string>要审批的旅行</string>
+	<key>unknown</key>
+	<string>未知</string>
+	<key>unreserved</key>
+	<string>非保留座位</string>
+	<key>unsubmitted Reports</key>
+	<string>未提交的费用报告</string>
+	<key>view_report</key>
+	<string>查看报告</string>
+</dict>
+</plist>

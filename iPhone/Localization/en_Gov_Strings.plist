@@ -1,0 +1,188 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>Select &apos;OK&apos; if you are sure you want to reserve this flight.</key>
+	<string>Select &apos;OK&apos; if you are sure you want to reserve this flight.</string>
+	<key>Select &apos;OK&apos; if you are sure you want to reserve this car.</key>
+	<string>Select &apos;OK&apos; if you are sure you want to reserve this car.</string>
+	<key>Select &apos;OK&apos; if you are sure you want to reserve this room.</key>
+	<string>Select &apos;OK&apos; if you are sure you want to reserve this room.</string>
+	<key>Select &apos;OK&apos; if you are sure you want to cancel this hotel reservation.</key>
+	<string>Select &apos;OK&apos; if you are sure you want to cancel this hotel reservation.</string>
+	<key>Select &apos;OK&apos; if you are sure you want to cancel this car reservation.</key>
+	<string>Select &apos;OK&apos; if you are sure you want to cancel this car reservation.</string>
+	<key>Accounting Allocation</key>
+	<string>Accounting Allocation</string>
+	<key>Add to Document</key>
+	<string>Add to Document</string>
+	<key>Advance Applied</key>
+	<string>Advance Applied</string>
+	<key>Booking Successful!</key>
+	<string>Booking Successful!</string>
+	<key>Existing Authorizations</key>
+	<string>Existing Authorizations</string>
+	<key>Advance Requested</key>
+	<string>Advance Requested</string>
+	<key>All token flights</key>
+	<string>All %@ flights</string>
+	<key>Approve authorizations and vouchers</key>
+	<string>Approve authorizations and vouchers</string>
+	<key>Audits</key>
+	<string>Audits</string>
+	<key>Authorization</key>
+	<string>Authorization</string>
+	<key>Authorizations</key>
+	<string>Authorizations</string>
+	<key>Auths</key>
+	<string>Auths</string>
+	<key>Could not delete expense.</key>
+	<string>Could not delete expense.  Please try again later.</string>
+	<key>Create from Authorization</key>
+	<string>Create from Authorization</string>
+	<key>Create New</key>
+	<string>Create New</string>
+	<key>Create Voucher</key>
+	<string>Create Voucher</string>
+	<key>Comments</key>
+	<string>Comments</string>
+	<key>Delete Failed</key>
+	<string>Delete Failed</string>
+	<key>Deleting Expense</key>
+	<string>Deleting Expense</string>
+	<key>Doc Audits</key>
+	<string>Doc Audits</string>
+	<key>Documents</key>
+	<string>Documents</string>
+	<key>Documents List</key>
+	<string>Documents List</string>
+	<key>Document Summary</key>
+	<string>Document Summary</string>
+	<key>Estimated Cost</key>
+	<string>Estimated Cost</string>
+	<key>Enter Justification</key>
+	<string>Enter Justification</string>
+	<key>Fail</key>
+	<string>Fail</string>
+	<key>Govt. Contract Discounted</key>
+	<string>Govt. Contract Discounted</string>
+	<key>Govt. Contract</key>
+	<string>Govt. Contract</string>
+	<key>Lowest Published</key>
+	<string>Lowest Published</string>
+	<key>No comment</key>
+	<string>No comment</string>
+	<key>No Document Found</key>
+	<string>No Document Found</string>
+	<key>Non - Contract Government</key>
+	<string>Non - Contract Government</string>
+	<key>Non - Reimbursable Expenses</key>
+	<string>Non - Reimbursable Expenses</string>
+	<key>Open or Group Auths</key>
+	<string>Open or Group Auths</string>
+	<key>Other Rate Type</key>
+	<string>Other</string>
+	<key>Pass</key>
+	<string>Pass</string>
+	<key>Pay to Charge Card</key>
+	<string>Pay to Charge Card</string>
+	<key>Pay to Traveler</key>
+	<string>Pay to Traveler</string>
+	<key>Per Diem Locations</key>
+	<string>Per Diem Locations</string>
+	<key>Payment Type</key>
+	<string>Payment Type</string>
+	<key>Reason</key>
+	<string>Reason</string>
+	<key>Unable to attach receipt to document</key>
+	<string>Unable to attach receipt to document</string>
+	<key>Return To</key>
+	<string>Return To</string>
+	<key>Failed to stamp document</key>
+	<string>Failed to stamp document</string>
+	<key>View unapplied expenses</key>
+	<string>View unapplied expenses</string>
+	<key>Select Authorization</key>
+	<string>Select Authorization</string>
+	<key>Travel Authorization</key>
+	<string>Travel Authorization</string>
+	<key>TA_AUTH_NEW</key>
+	<string>Create New Authorization for Travel</string>
+	<key>TA_AUTH_OPEN_GROUP</key>
+	<string>Add Travel to Open or Group Auth</string>
+	<key>TA_AUTH_EXISTING</key>
+	<string>Add Travel to Existing Authorization</string>
+	<key>The authorization is available for review under the Authorizations.</key>
+	<string>The authorization is available for review under the Authorizations.</string>
+	<key>Select Expenses</key>
+	<string>Select Expenses</string>
+	<key>Select from Existing</key>
+	<string>Select from Existing</string>
+	<key>Select Flight</key>
+	<string>Select Flight</string>
+	<key>Signing Pin</key>
+	<string>Signing Pin</string>
+	<key>STAMP_MISSING_REQ_FLD</key>
+	<string>Please fill in all required fields before stamp document.</string>
+	<key>Stamp</key>
+	<string>Stamp</string>
+	<key>Stamp Docs</key>
+	<string>Stamp Docs</string>
+	<key>No per-diem rates found on chosen location and date</key>
+	<string>No per-diem rates found on chosen location and date.  </string>
+	<key>Stamp Document</key>
+	<string>Stamp Document</string>
+	<key>New Authorization</key>
+	<string>New Authorization</string>
+	<key>Use Existing Authorization</key>
+	<string>Use Existing Authorization</string>
+	<key>Use Existing Duty Location</key>
+	<string>Use Existing Duty Location</string>
+	<key>Unable To Access</key>
+	<string>Unable To Access</string>
+	<key>To view a stamped document use the Authorizations tab on the Home screen</key>
+	<string>To view a stamped document use the Authorizations tab on the Home screen.</string>
+	<key>Creating Authorization</key>
+	<string>Creating Authorization</string>
+	<key>Rules of Behavior</key>
+	<string>Rules of Behavior</string>
+	<key>Stamp Documents</key>
+	<string>Stamp Documents</string>
+	<key>Totals and Travel Advances</key>
+	<string>Totals and Travel Advances</string>
+	<key>Selected Authorization for Travel</key>
+	<string>Selected Authorization for Travel</string>
+	<key>TDY Per-Diem Location</key>
+	<string>TDY Per-Diem Location</string>
+	<key>Total Expenses</key>
+	<string>Total Expenses</string>
+	<key>TDY Per Diem Location</key>
+	<string>TDY Per Diem Location</string>
+	<key>Unable to create voucher</key>
+	<string>Unable to create voucher</string>
+	<key>Unable to find document. Please try again later.</key>
+	<string>Unable to find document. Please try again later.</string>
+	<key>View Authorization</key>
+	<string>View Authorization</string>
+	<key>View, create and update vouchers</key>
+	<string>View, create and update vouchers</string>
+	<key>View and update authorizations</key>
+	<string>View and update authorizations</string>
+	<key>Voucher</key>
+	<string>Voucher</string>
+	<key>Vouchers</key>
+	<string>Vouchers</string>
+	<key>Duty Location</key>
+	<string>Duty Location</string>
+	<key>Type code (Trip Type)</key>
+	<string>Type code (Trip Type)</string>
+	<key>Please specify *</key>
+	<string>Please specify *</string>
+	<key>Please specify</key>
+	<string>Please specify</string>
+	<key>Document Save Error</key>
+	<string>Document Save Error</string>
+	<key>Saving</key>
+	<string>Saving</string>
+</dict>
+</plist>

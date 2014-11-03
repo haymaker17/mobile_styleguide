@@ -1,0 +1,204 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="6245" systemVersion="13F34" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES">
+    <dependencies>
+        <deployment defaultVersion="1536" identifier="iOS"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="6238"/>
+    </dependencies>
+    <objects>
+        <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner"/>
+        <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
+        <view multipleTouchEnabled="YES" contentMode="scaleToFill" id="iN0-l3-epB" customClass="HotelRoomReserveView">
+            <rect key="frame" x="0.0" y="0.0" width="320" height="550"/>
+            <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+            <subviews>
+                <view contentMode="top" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="70U-wp-rcd" userLabel="Image and Description">
+                    <rect key="frame" x="0.0" y="0.0" width="320" height="220"/>
+                    <subviews>
+                        <imageView userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="JnG-SI-OPj" userLabel="Hotel Image">
+                            <rect key="frame" x="0.0" y="0.0" width="320" height="110"/>
+                        </imageView>
+                        <view contentMode="scaleToFill" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="5Wb-jc-epa" userLabel="View to indent text">
+                            <rect key="frame" x="0.0" y="110" width="320" height="110"/>
+                            <subviews>
+                                <textView clipsSubviews="YES" multipleTouchEnabled="YES" userInteractionEnabled="NO" contentMode="scaleToFill" fixedFrame="YES" bounces="NO" scrollEnabled="NO" showsHorizontalScrollIndicator="NO" showsVerticalScrollIndicator="NO" text="Room Description placeholder" translatesAutoresizingMaskIntoConstraints="NO" id="MOC-gv-0hS" userLabel="Text View - Room Description placeholder">
+                                    <rect key="frame" x="20" y="10" width="280" height="90"/>
+                                    <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
+                                    <fontDescription key="fontDescription" type="system" pointSize="15"/>
+                                    <textInputTraits key="textInputTraits" autocapitalizationType="sentences"/>
+                                </textView>
+                            </subviews>
+                            <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
+                        </view>
+                        <view contentMode="scaleToFill" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="CPg-o4-6dg" userLabel="Grey Line">
+                            <rect key="frame" x="0.0" y="219" width="320" height="1"/>
+                            <color key="backgroundColor" red="0.87058823529999996" green="0.87843137250000003" blue="0.89019607840000003" alpha="1" colorSpace="calibratedRGB"/>
+                        </view>
+                        <view contentMode="scaleToFill" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="sz9-SC-n6l" userLabel="View to block image overflow">
+                            <rect key="frame" x="0.0" y="220" width="320" height="580"/>
+                            <color key="backgroundColor" red="0.94117647059999998" green="0.94117647059999998" blue="0.94117647059999998" alpha="1" colorSpace="calibratedRGB"/>
+                        </view>
+                    </subviews>
+                    <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
+                </view>
+                <view contentMode="scaleToFill" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="Dqi-f5-ItH" userLabel="Date and Price">
+                    <rect key="frame" x="0.0" y="235" width="320" height="120"/>
+                    <subviews>
+                        <view contentMode="scaleToFill" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="aWa-pV-9fm" userLabel="Grey Line">
+                            <rect key="frame" x="0.0" y="0.0" width="320" height="1"/>
+                            <color key="backgroundColor" red="0.87058823529999996" green="0.87843137250000003" blue="0.89019607840000003" alpha="1" colorSpace="calibratedRGB"/>
+                        </view>
+                        <imageView userInteractionEnabled="NO" contentMode="center" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" image="calendar_light_grey" translatesAutoresizingMaskIntoConstraints="NO" id="g2U-sz-3il">
+                            <rect key="frame" x="13" y="21" width="20" height="20"/>
+                        </imageView>
+                        <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Date placeholder" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="5XD-SY-fdM">
+                            <rect key="frame" x="41" y="21" width="195" height="21"/>
+                            <fontDescription key="fontDescription" type="system" pointSize="15"/>
+                            <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
+                            <nil key="highlightedColor"/>
+                        </label>
+                        <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="12 Nights" textAlignment="right" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="QIB-Io-9bL">
+                            <rect key="frame" x="250" y="21" width="50" height="20"/>
+                            <fontDescription key="fontDescription" type="system" pointSize="11"/>
+                            <color key="textColor" red="0.1843137255" green="0.41176470590000003" blue="0.58823529409999997" alpha="1" colorSpace="calibratedRGB"/>
+                            <nil key="highlightedColor"/>
+                        </label>
+                        <view contentMode="scaleToFill" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="vkV-9Y-uCU" userLabel="Grey Line">
+                            <rect key="frame" x="40" y="50" width="280" height="1"/>
+                            <color key="backgroundColor" red="0.87058823529999996" green="0.87843137250000003" blue="0.89019607840000003" alpha="1" colorSpace="calibratedRGB"/>
+                        </view>
+                        <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Total:" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="edw-sk-O9g">
+                            <rect key="frame" x="41" y="59" width="53" height="30"/>
+                            <fontDescription key="fontDescription" type="boldSystem" pointSize="15"/>
+                            <nil key="highlightedColor"/>
+                        </label>
+                        <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Price placeholder" textAlignment="right" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="UBO-D3-gP8">
+                            <rect key="frame" x="77" y="60" width="223" height="30"/>
+                            <fontDescription key="fontDescription" type="boldSystem" pointSize="20"/>
+                            <color key="textColor" red="0.0" green="0.396078431372549" blue="0.73725490196078436" alpha="1" colorSpace="calibratedRGB"/>
+                            <nil key="highlightedColor"/>
+                        </label>
+                        <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="estimated total" textAlignment="right" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="mwB-dc-Ifo">
+                            <rect key="frame" x="134" y="84" width="166" height="16"/>
+                            <fontDescription key="fontDescription" type="system" pointSize="12"/>
+                            <color key="textColor" white="0.5" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
+                            <nil key="highlightedColor"/>
+                        </label>
+                        <view contentMode="scaleToFill" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="qHO-VZ-0Sb" userLabel="Grey Line">
+                            <rect key="frame" x="0.0" y="119" width="320" height="1"/>
+                            <color key="backgroundColor" red="0.87058823529999996" green="0.87843137250000003" blue="0.89019607840000003" alpha="1" colorSpace="calibratedRGB"/>
+                        </view>
+                    </subviews>
+                    <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
+                </view>
+                <view contentMode="scaleToFill" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="uEH-e2-ymn" userLabel="Cancellation Policy Button">
+                    <rect key="frame" x="0.0" y="370" width="320" height="40"/>
+                    <subviews>
+                        <view contentMode="scaleToFill" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="KPk-8d-Bf7" userLabel="Grey Line">
+                            <rect key="frame" x="0.0" y="0.0" width="320" height="1"/>
+                            <color key="backgroundColor" red="0.87058823529999996" green="0.87843137250000003" blue="0.89019607840000003" alpha="1" colorSpace="calibratedRGB"/>
+                        </view>
+                        <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Cancellation Policy &amp; Rate Details" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="7ON-Tl-7Bu">
+                            <rect key="frame" x="20" y="10" width="280" height="21"/>
+                            <fontDescription key="fontDescription" type="system" pointSize="15"/>
+                            <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
+                            <nil key="highlightedColor"/>
+                        </label>
+                        <imageView userInteractionEnabled="NO" contentMode="center" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" image="disclosure_light_grey" translatesAutoresizingMaskIntoConstraints="NO" id="ONB-cq-s7g">
+                            <rect key="frame" x="300" y="10" width="20" height="20"/>
+                        </imageView>
+                        <view contentMode="scaleToFill" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="1Zj-xC-6AO" userLabel="Grey Line">
+                            <rect key="frame" x="0.0" y="39" width="320" height="1"/>
+                            <color key="backgroundColor" red="0.87058823529999996" green="0.87843137250000003" blue="0.89019607840000003" alpha="1" colorSpace="calibratedRGB"/>
+                        </view>
+                    </subviews>
+                    <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
+                    <gestureRecognizers/>
+                    <connections>
+                        <outletCollection property="gestureRecognizers" destination="6Ii-M8-A38" appends="YES" id="UG7-J1-3Fm"/>
+                    </connections>
+                </view>
+                <view contentMode="scaleToFill" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="dDc-ma-D5y" userLabel="Credit Card Button">
+                    <rect key="frame" x="0.0" y="425" width="320" height="65"/>
+                    <subviews>
+                        <view contentMode="scaleToFill" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="m5B-6X-gc9" userLabel="Grey Line">
+                            <rect key="frame" x="0.0" y="0.0" width="320" height="1"/>
+                            <color key="backgroundColor" red="0.87058823529999996" green="0.87843137250000003" blue="0.89019607840000003" alpha="1" colorSpace="calibratedRGB"/>
+                        </view>
+                        <imageView userInteractionEnabled="NO" contentMode="center" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" image="disclosure_light_grey" translatesAutoresizingMaskIntoConstraints="NO" id="Zkh-0k-YUl">
+                            <rect key="frame" x="300" y="24" width="20" height="20"/>
+                        </imageView>
+                        <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Credit Card" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="5og-Gg-w6w">
+                            <rect key="frame" x="43" y="14" width="260" height="22"/>
+                            <fontDescription key="fontDescription" type="system" pointSize="15"/>
+                            <color key="textColor" white="0.66666666666666663" alpha="1" colorSpace="calibratedWhite"/>
+                            <nil key="highlightedColor"/>
+                        </label>
+                        <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Card name placeholder" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Scp-pL-YcB">
+                            <rect key="frame" x="43" y="35" width="260" height="21"/>
+                            <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                            <color key="textColor" red="0.0" green="0.39607843139999999" blue="0.73725490199999999" alpha="1" colorSpace="calibratedRGB"/>
+                            <nil key="highlightedColor"/>
+                        </label>
+                        <imageView userInteractionEnabled="NO" contentMode="center" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" image="credit_card_light_grey" translatesAutoresizingMaskIntoConstraints="NO" id="prp-9w-K6a">
+                            <rect key="frame" x="13" y="15" width="22" height="21"/>
+                        </imageView>
+                        <view contentMode="scaleToFill" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="cuQ-Rm-LHd" userLabel="Grey Line">
+                            <rect key="frame" x="0.0" y="64" width="320" height="1"/>
+                            <color key="backgroundColor" red="0.87058823529999996" green="0.87843137250000003" blue="0.89019607840000003" alpha="1" colorSpace="calibratedRGB"/>
+                        </view>
+                    </subviews>
+                    <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
+                    <connections>
+                        <outletCollection property="gestureRecognizers" destination="c1C-jk-F67" appends="YES" id="AcR-c2-Xim"/>
+                    </connections>
+                </view>
+                <view contentMode="scaleToFill" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="bFD-9F-wEP" userLabel="Violations Header">
+                    <rect key="frame" x="0.0" y="500" width="320" height="50"/>
+                    <subviews>
+                        <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="VIOLATIONS" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="jfy-tg-HD9">
+                            <rect key="frame" x="20" y="26" width="280" height="21"/>
+                            <fontDescription key="fontDescription" type="system" pointSize="15"/>
+                            <color key="textColor" red="0.058823529411764705" green="0.44313725490196076" blue="0.72549019607843135" alpha="1" colorSpace="calibratedRGB"/>
+                            <nil key="highlightedColor"/>
+                        </label>
+                    </subviews>
+                    <color key="backgroundColor" red="0.94117647059999998" green="0.94117647059999998" blue="0.94117647059999998" alpha="1" colorSpace="calibratedRGB"/>
+                </view>
+            </subviews>
+            <color key="backgroundColor" red="0.94117647059999998" green="0.94117647059999998" blue="0.94117647059999998" alpha="1" colorSpace="calibratedRGB"/>
+            <nil key="simulatedStatusBarMetrics"/>
+            <freeformSimulatedSizeMetrics key="simulatedDestinationMetrics"/>
+            <connections>
+                <outlet property="cancellationPolicyButton" destination="7ON-Tl-7Bu" id="GsN-cl-AmW"/>
+                <outlet property="creditCardButton" destination="Scp-pL-YcB" id="X2O-J1-pDU"/>
+                <outlet property="dateRange" destination="5XD-SY-fdM" id="Ch5-h2-roN"/>
+                <outlet property="image" destination="JnG-SI-OPj" id="jIg-uM-HEN"/>
+                <outlet property="numberOfNights" destination="QIB-Io-9bL" id="Sr2-xa-clF"/>
+                <outlet property="price" destination="UBO-D3-gP8" id="ZJH-Qc-N80"/>
+                <outlet property="roomDescription" destination="MOC-gv-0hS" id="qmL-GU-03s"/>
+                <outlet property="violationsHeader" destination="bFD-9F-wEP" id="NOq-4g-BZm"/>
+            </connections>
+            <point key="canvasLocation" x="483" y="253.5"/>
+        </view>
+        <tapGestureRecognizer id="6Ii-M8-A38" userLabel="Cancellation Policy">
+            <connections>
+                <action selector="openCancellationPolicy" destination="iN0-l3-epB" id="ma0-cp-cwN"/>
+            </connections>
+        </tapGestureRecognizer>
+        <tapGestureRecognizer id="c1C-jk-F67" userLabel="Credit Card">
+            <connections>
+                <action selector="openCreditCardSelection" destination="iN0-l3-epB" id="6DF-lq-10X"/>
+            </connections>
+        </tapGestureRecognizer>
+    </objects>
+    <resources>
+        <image name="calendar_light_grey" width="12" height="14"/>
+        <image name="credit_card_light_grey" width="16" height="10"/>
+        <image name="disclosure_light_grey" width="8" height="13"/>
+    </resources>
+    <simulatedMetricsContainer key="defaultSimulatedMetrics">
+        <simulatedStatusBarMetrics key="statusBar"/>
+        <simulatedOrientationMetrics key="orientation"/>
+        <simulatedScreenMetrics key="destination" type="retina4"/>
+    </simulatedMetricsContainer>
+</document>

@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ArrayOfIpmMsg xmlns="http://schemas.datacontract.org/2004/07/Concur.Shared.Services.Ipm" xmlns:i="http://www.w3.org/2001/XMLSchema-instance">
+    <IpmMsg>
+        <ExternalSrc>/6253334/dfp_example_ad</ExternalSrc>
+        <ExternalSrcType>DFP</ExternalSrcType>
+        <ExternalSrcParams>{"CteProduct":["mobile","travel"],"CteUnused":[],"IpmRole":["IHGAdmin"],"CteCfg":["NoIhgCode"],"Lang":"en-GB"}</ExternalSrcParams>
+        <IpmMsgKey>dfp1_Mobile1</IpmMsgKey>
+        <Target>webLHBanner</Target>
+    </IpmMsg>
+    <IpmMsg>
+        <ExternalSrc>/8765422/dfp_example_ad2</ExternalSrc>
+        <ExternalSrcType>DFP</ExternalSrcType>
+        <ExternalSrcParams>{"CteProduct":["mobile","travel"],"CteUnused":[],"IpmRole":["IHGAdmin"],"CteCfg":["NoIhgCode"],"Lang":"en-GB"}</ExternalSrcParams>
+        <IpmMsgKey>dfp1_Mobile2</IpmMsgKey>
+        <Target>webLHBanner</Target>
+    </IpmMsg>
+    <IpmMsg>
+        <ExternalSrc>/9472453/dfp_example_ad3</ExternalSrc>
+        <ExternalSrcType>DFP</ExternalSrcType>
+        <ExternalSrcParams>{"CteProduct":["mobile","travel"],"CteUnused":[],"IpmRole":["IHGAdmin"],"CteCfg":["NoIhgCode"],"Lang":"en-GB"}</ExternalSrcParams>
+        <IpmMsgKey>dfp1_Mobile3</IpmMsgKey>
+        <Target>webLHBanner</Target>
+    </IpmMsg>
+</ArrayOfIpmMsg>

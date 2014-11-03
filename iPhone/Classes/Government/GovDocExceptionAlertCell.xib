@@ -1,0 +1,77 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="5056" systemVersion="13E28" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES">
+    <dependencies>
+        <deployment defaultVersion="1536" identifier="iOS"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="3733"/>
+    </dependencies>
+    <objects>
+        <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="GovDocExceptionAlertCell"/>
+        <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
+        <tableViewCell contentMode="scaleToFill" selectionStyle="blue" accessoryType="disclosureIndicator" indentationWidth="10" reuseIdentifier="GovDocExceptionAlertCell" id="3" userLabel="Exception Alert Cell" customClass="GovDocExceptionAlertCell">
+            <rect key="frame" x="0.0" y="0.0" width="320" height="44"/>
+            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+            <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="3" id="xwd-w0-V9p">
+                <rect key="frame" x="0.0" y="0.0" width="287" height="43"/>
+                <autoresizingMask key="autoresizingMask"/>
+                <subviews>
+                    <imageView userInteractionEnabled="NO" contentMode="scaleToFill" image="icon_redex.png" translatesAutoresizingMaskIntoConstraints="NO" id="13" userLabel="Image View - warningImg">
+                        <rect key="frame" x="12" y="24" width="19" height="17"/>
+                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                        <constraints>
+                            <constraint firstAttribute="width" constant="19" id="mdO-WQ-shg"/>
+                        </constraints>
+                    </imageView>
+                    <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" misplaced="YES" text="Label" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="4" userLabel="Label - exceptionName">
+                        <rect key="frame" x="12" y="2" width="213" height="21"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMaxY="YES"/>
+                        <fontDescription key="fontDescription" name="HelveticaNeue" family="Helvetica Neue" pointSize="14"/>
+                        <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
+                        <color key="highlightedColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                    </label>
+                    <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" misplaced="YES" text="Label" lineBreakMode="tailTruncation" numberOfLines="2" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" preferredMaxLayoutWidth="186" translatesAutoresizingMaskIntoConstraints="NO" id="9" userLabel="Label - warningName">
+                        <rect key="frame" x="39" y="20" width="186" height="21"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMaxY="YES"/>
+                        <fontDescription key="fontDescription" name="HelveticaNeue" family="Helvetica Neue" pointSize="10"/>
+                        <color key="textColor" red="1" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
+                        <color key="highlightedColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                    </label>
+                    <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="249" text="PASS" textAlignment="right" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="17">
+                        <rect key="frame" x="245" y="11" width="42" height="21"/>
+                        <autoresizingMask key="autoresizingMask" flexibleMinX="YES" flexibleMaxY="YES"/>
+                        <constraints>
+                            <constraint firstAttribute="width" relation="greaterThanOrEqual" constant="42" id="cui-DQ-hgQ"/>
+                        </constraints>
+                        <fontDescription key="fontDescription" name="HelveticaNeue" family="Helvetica Neue" pointSize="14"/>
+                        <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
+                        <color key="highlightedColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                    </label>
+                </subviews>
+                <constraints>
+                    <constraint firstAttribute="bottom" secondItem="4" secondAttribute="bottom" constant="20" symbolic="YES" id="8IC-wT-Sbr"/>
+                    <constraint firstItem="17" firstAttribute="leading" relation="greaterThanOrEqual" secondItem="9" secondAttribute="trailing" constant="8" symbolic="YES" id="AAz-oY-Pg9"/>
+                    <constraint firstAttribute="bottom" secondItem="13" secondAttribute="bottom" constant="2" id="BAA-jf-R8e"/>
+                    <constraint firstItem="13" firstAttribute="top" secondItem="4" secondAttribute="bottom" constant="1" id="CCp-MO-QxZ"/>
+                    <constraint firstItem="17" firstAttribute="centerY" secondItem="xwd-w0-V9p" secondAttribute="centerY" id="PDe-Xc-3ak"/>
+                    <constraint firstAttribute="trailing" secondItem="17" secondAttribute="trailing" id="Syv-Pz-ii8"/>
+                    <constraint firstItem="4" firstAttribute="leading" secondItem="13" secondAttribute="leading" id="VzO-0c-YVy"/>
+                    <constraint firstItem="9" firstAttribute="top" secondItem="xwd-w0-V9p" secondAttribute="top" constant="20" symbolic="YES" id="Xam-Bz-jPR"/>
+                    <constraint firstItem="4" firstAttribute="top" secondItem="xwd-w0-V9p" secondAttribute="top" constant="2" id="cpj-EP-bZQ"/>
+                    <constraint firstItem="9" firstAttribute="bottom" secondItem="13" secondAttribute="bottom" id="jfz-Be-V4z"/>
+                    <constraint firstItem="9" firstAttribute="leading" secondItem="13" secondAttribute="trailing" constant="8" symbolic="YES" id="xM2-qR-cPN"/>
+                    <constraint firstItem="4" firstAttribute="leading" secondItem="xwd-w0-V9p" secondAttribute="leading" constant="12" id="y7Y-Di-gjO"/>
+                    <constraint firstItem="17" firstAttribute="leading" relation="greaterThanOrEqual" secondItem="4" secondAttribute="trailing" constant="8" symbolic="YES" id="yUJ-Pk-IJU"/>
+                    <constraint firstItem="17" firstAttribute="top" secondItem="xwd-w0-V9p" secondAttribute="top" constant="11" id="z8Y-fs-L8u"/>
+                </constraints>
+            </tableViewCellContentView>
+            <connections>
+                <outlet property="alertImg" destination="13" id="14"/>
+                <outlet property="alertName" destination="9" id="16"/>
+                <outlet property="exceptionName" destination="4" id="15"/>
+                <outlet property="passOrFail" destination="17" id="20"/>
+            </connections>
+        </tableViewCell>
+    </objects>
+    <resources>
+        <image name="icon_redex.png" width="19" height="19"/>
+    </resources>
+</document>

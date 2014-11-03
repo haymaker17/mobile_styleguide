@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>IDESourceControlProjectFavoriteDictionaryKey</key>
+	<false/>
+	<key>IDESourceControlProjectIdentifier</key>
+	<string>FA7E56BC-2532-4C07-A97F-1E4B24F8B0F0</string>
+	<key>IDESourceControlProjectName</key>
+	<string>ConcurMobile</string>
+	<key>IDESourceControlProjectOriginsDictionary</key>
+	<dict>
+		<key>995E2C4B-8A2A-4F82-A25B-FC3B06D20405</key>
+		<string>http://sandbox2/svn/cte/Mobile/trunk/iPhone</string>
+	</dict>
+	<key>IDESourceControlProjectPath</key>
+	<string>ConcurMobile.xcworkspace</string>
+	<key>IDESourceControlProjectRelativeInstallPathDictionary</key>
+	<dict>
+		<key>995E2C4B-8A2A-4F82-A25B-FC3B06D20405</key>
+		<string>..</string>
+	</dict>
+	<key>IDESourceControlProjectRepositoryRootDictionary</key>
+	<dict>
+		<key>995E2C4B-8A2A-4F82-A25B-FC3B06D20405</key>
+		<string>http://sandbox2/svn/cte</string>
+	</dict>
+	<key>IDESourceControlProjectURL</key>
+	<string>http://sandbox2/svn/cte/Mobile/trunk/iPhone/ConcurMobile.xcworkspace</string>
+	<key>IDESourceControlProjectVersion</key>
+	<integer>110</integer>
+	<key>IDESourceControlProjectWCCIdentifier</key>
+	<string>995E2C4B-8A2A-4F82-A25B-FC3B06D20405</string>
+	<key>IDESourceControlProjectWCConfigurations</key>
+	<array>
+		<dict>
+			<key>IDESourceControlRepositoryBranchesRelativeLocationKey</key>
+			<string>Mobile/branches</string>
+			<key>IDESourceControlRepositoryExtensionIdentifierKey</key>
+			<string>public.vcs.subversion</string>
+			<key>IDESourceControlRepositoryTagsRelativeLocationKey</key>
+			<string>Mobile/tags</string>
+			<key>IDESourceControlRepositoryTrunkRelativeLocationKey</key>
+			<string>Mobile/trunk</string>
+			<key>IDESourceControlWCCIdentifierKey</key>
+			<string>995E2C4B-8A2A-4F82-A25B-FC3B06D20405</string>
+			<key>IDESourceControlWCCName</key>
+			<string>ConcurMobile</string>
+		</dict>
+	</array>
+</dict>
+</plist>

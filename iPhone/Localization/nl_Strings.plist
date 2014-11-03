@@ -1,0 +1,3932 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key># of Cars</key>
+	<string>Aantal auto's</string>
+	<key>%@ has been submitted</key>
+	<string>%@ is ingediend</string>
+	<key>%@ km</key>
+	<string>%@ km</string>
+	<key>%@ kms</key>
+	<string>%@ km</string>
+	<key>%@ mile</key>
+	<string>%@ mijl</string>
+	<key>%@ miles</key>
+	<string>%@ mijlen</string>
+	<key>%@ of your colleagues are staying here on your check-in date</key>
+	<string>%@ van uw collega's verblijft hier op uw incheckdatum</string>
+	<key>%@ of your colleagues' favourite</key>
+	<string>%@ van uw collega's favoriete</string>
+	<key>%@ per day</key>
+	<string>%@ per dag</string>
+	<key>%d Hour and %d Minute(s)</key>
+	<string>%d uur en %d minuut/minuten</string>
+	<key>%d Hours and %d Minute(s)</key>
+	<string>%d uur en %d minuut/minuten</string>
+	<key>%d Minute(s)</key>
+	<string>%d minuut/minuten</string>
+	<key>(Refundable)</key>
+	<string>(Restitueerbaar)</string>
+	<key>1 Stop</key>
+	<string>1 tussenstop</string>
+	<key>@Concur2Go Twitter Feed</key>
+	<string>Twitter-feed @Concur2Go</string>
+	<key>A Receipt is</key>
+	<string>Een kwitantie wordt als gekoppeld aan deze onkosten weergegeven op de server, maar de kwitantie bestaat niet meer in Kwitantiebeheer.  Koppel de kwitantie opnieuw aan deze onkosten en sla deze op.</string>
+	<key>ACTIVEREQUESTS</key>
+	<string>ACTIEVE AANVRAGEN</string>
+	<key>ACTIVE_ENTRIES</key>
+	<string>Nota</string>
+	<key>ACTIVE_REPORTS</key>
+	<string>Actieve nota's</string>
+	<key>ADD_CAR_MILEAGE_HOME_NOT_SUPPORTED</key>
+	<string>Er zijn geen kilometertarieven gevonden voor uw privéautoconfiguratie of uw specifieke privéautoconfiguratie wordt momenteel niet ondersteund.  Voeg uw onkosten voor de reisafstand aan een nota toe via de mobiele app of via de webversie.</string>
+	<key>ADD_CAR_MILEAGE_NOT_SUPPORTED</key>
+	<string>Er zijn geen kilometertarieven gevonden voor uw privéautoconfiguratie of uw specifieke privéautoconfiguratie wordt momenteel niet ondersteund.</string>
+	<key>ADD_EXISTING_CARD</key>
+	<string>Deze kaart is al toegevoegd en kan niet opnieuw worden toegevoegd.</string>
+	<key>ADD_EXPENSE_OFFLINE_NOT_SUPPORTED</key>
+	<string>Offline toevoegen van onkosten wordt niet ondersteund.</string>
+	<key>ADD_TO_RPT_CONFIRM_MSG</key>
+	<string>Geselecteerde onkosten toevoegen aan nota? U kunt kwitanties koppelen en onkosten bewerken nadat deze zijn toegevoegd aan een nota.</string>
+	<key>ADD_TO_RPT_CONFIRM_TITLE</key>
+	<string>Bevestigen</string>
+	<key>ADD_YODLEE_CARD_COMPLETE_MSG</key>
+	<string>Uw kaart die op %@ eindigt, is toegevoegd aan uw SmartExpense-account.</string>
+	<key>ADD_YODLEE_CARD_FAILED_MSG</key>
+	<string>Uw kredietkaart kan niet worden toegevoegd.  Probeer het later opnieuw.</string>
+	<key>ADD_YODLEE_CARD_INSTRUCTION</key>
+	<string>Voer de aanmeldingsgegevens voor uw account in. Concur zal deze informatie versleutelen en veilig gebruiken om uw kaartafschrijvingen te downloaden.</string>
+	<key>AIR_BOOKING</key>
+	<string>Vlucht boeken</string>
+	<key>AIR_BOOKING_DISABLED_MSG</key>
+	<string>Uw bedrijf heeft het boeken van vluchten met de mobiele toepassing uitgeschakeld. Boek uw vlucht online of bel uw reisbureau.</string>
+	<key>AIR_BOOKING_PROFILE_1_MSG</key>
+	<string>In uw reisprofiel is een waarde verplicht voor Tweede voornaam, Geslacht en Geboortedatum. Meld u aan bij de webversie van Concur Travel en selecteer Profiel in het menu.</string>
+	<key>AIR_BOOKING_PROFILE_21_MSG</key>
+	<string>Uw reisprofiel is nooit opgeslagen, maar moet ten minste één keer worden opgeslagen voordat u kunt boeken. Meld u aan bij de webversie van Concur Travel, selecteer Profiel en sla uw profiel op.</string>
+	<key>AIR_BOOKING_PROFILE_22_MSG</key>
+	<string>Voor de factureringscode/het factureringstype in uw reisconfiguratie moeten er projecten bestaan. Neem contact op met de beheerder voor uw bedrijf voor het instellen van de juiste projecten.</string>
+	<key>AIR_BOOKING_PROFILE_23_MSG</key>
+	<string>Vinnet bestaan niet meer! De klant zou deze profielcontrolecode niet moeten ontvangen.</string>
+	<key>AIR_BOOKING_PROFILE_24_MSG</key>
+	<string>In uw reisprofiel is een waarde verplicht voor een mobiel telefoonnummer. Meld u aan bij de webversie van Concur Travel en selecteer Profiel in het menu.</string>
+	<key>AIR_BOOKING_PROFILE_25_MSG</key>
+	<string>In uw reisprofiel is een waarde verplicht voor Paspoortnationaliteit. Meld u aan bij de webversie van Concur Travel en selecteer Profiel in het menu.</string>
+	<key>AIR_BOOKING_PROFILE_26_MSG</key>
+	<string>In uw reisprofiel is een waarde verplicht voor Functie. Meld u aan bij de webversie van Concur Travel en selecteer Profiel in het menu.</string>
+	<key>AIR_BOOKING_PROFILE_27_MSG</key>
+	<string>In uw reisprofiel is een waarde verplicht voor Organisatie-eenheid. Meld u aan bij de webversie van Concur Travel en selecteer Profiel in het menu.</string>
+	<key>AIR_BOOKING_PROFILE_28_MSG</key>
+	<string>In uw reisprofiel is een waarde verplicht voor Opmerking bij naam. Meld u aan bij de webversie van Concur Travel en selecteer Profiel in het menu.\nOPMERKING: Dit veld heeft mogelijk een aangepast label. Als u het niet kunt vinden, neem dan contact op met de beheerder voor uw bedrijf.</string>
+	<key>AIR_BOOKING_PROFILE_29_MSG</key>
+	<string>In uw reisprofiel is een waarde verplicht voor Manager. Meld u aan bij de webversie van Concur Travel en selecteer Profiel in het menu.</string>
+	<key>AIR_BOOKING_PROFILE_2_MSG</key>
+	<string>Voordat u een vlucht kunt boeken, moet u uw reisprofiel voltooien. Meld u aan bij de webversie van Concur Travel en selecteer Profiel in het menu.</string>
+	<key>AIR_BOOKING_PROFILE_30_MSG</key>
+	<string>In uw reisprofiel is een waarde verplicht voor Werknemer-ID. Meld u aan bij de webversie van Concur Travel en selecteer Profiel in het menu.</string>
+	<key>AIR_BOOKING_PROFILE_31_MSG</key>
+	<string>In uw reisprofiel is een geldig e-mailadres verplicht. Meld u aan bij de webversie van Concur Travel en selecteer Profiel in het menu.</string>
+	<key>AIR_BOOKING_PROFILE_32_MSG</key>
+	<string>In uw reisprofiel is een waarde verplicht voor uw werkadres (straat, plaats en land). Meld u aan bij de webversie van Concur Travel en selecteer Profiel in het menu.</string>
+	<key>AIR_BOOKING_PROFILE_33_MSG</key>
+	<string>In uw reisprofiel is een waarde verplicht voor een telefoonnummer thuis of op het werk. Meld u aan bij de webversie van Concur Travel en selecteer Profiel in het menu.</string>
+	<key>AIR_BOOKING_PROFILE_PROLOG_MSG</key>
+	<string>Meld u af en meld u opnieuw aan nadat u bovenstaande informatie hebt opgegeven.</string>
+	<key>AIR_BOOKING_REQ_CUSTOM_FIELDS_MSG</key>
+	<string>Uw bedrijf stelt speciale eisen bij het boeken van vluchten.  Boek vluchten met de webversie van Concur.</string>
+	<key>AIR_WARNING_JUSTIFICATION</key>
+	<string>Voordat u het bedrijfsbeleid overtreedt door deze vlucht te reserveren, moet u een verantwoording opgeven in het rode veld.</string>
+	<key>AIR_WARNING_REASON</key>
+	<string>Voordat u het bedrijfsbeleid overtreedt door deze vlucht te reserveren, moet u een reden opgeven in het rode veld.</string>
+	<key>AIR_WARNING_REASON_JUSTIFICATION</key>
+	<string>Voordat u het bedrijfsbeleid overtreedt door deze vlucht te reserveren, moet u een reden en een verantwoording opgeven in de rode velden.</string>
+	<key>ALERT_CLEAR_CACHE</key>
+	<string>Hiermee verwijdert u alle offlinegegevens. Uw toepassing blijft werken.</string>
+	<key>AMOUNT_TOO_BIG_ERR_MSG</key>
+	<string>Voer bedrag in van maximaal 999999999999999</string>
+	<key>APPROVALS_NEG_TEXT</key>
+	<string>Overal en op elk moment items goedkeuren</string>
+	<key>APPROVEDREQUESTS</key>
+	<string>GOEDGEKEURDE AANVRAGEN</string>
+	<key>APPROVE_APPROVE_BUTTON_TITLE</key>
+	<string>Goedkeuren</string>
+	<key>APPROVE_CANCEL</key>
+	<string>Annuleren</string>
+	<key>APPROVE_ENTER_COMMENT_FOR_SENDBACK</key>
+	<string>Voer een opmerking in.</string>
+	<key>APPROVE_ENTRIES</key>
+	<string>Nota-items</string>
+	<key>APPROVE_ENTRIES_ACTION_SECTION_REPORT_SUMMARY_ROW</key>
+	<string>Notasamenvatting</string>
+	<key>APPROVE_ENTRIES_ACTION_SECTION_VIEW_COMMENTS_ROW</key>
+	<string>Opmerkingen weergeven</string>
+	<key>APPROVE_ENTRIES_ACTION_SECTION_VIEW_EXCEPTIONS_ROW</key>
+	<string>Uitzonderingen weergeven</string>
+	<key>APPROVE_ENTRIES_ACTION_SECTION_VIEW_RECEIPTS_ROW</key>
+	<string>Kwitanties weergeven</string>
+	<key>APPROVE_ENTRIES_VIEW_TITLE</key>
+	<string>Onkostenlijst</string>
+	<key>APPROVE_EXPENSE_DETAILS</key>
+	<string>Onkostendetails</string>
+	<key>APPROVE_EXPENSE_DETAILS_ATTENDEES</key>
+	<string>Deelnemers</string>
+	<key>APPROVE_EXPENSE_DETAILS_COMMENT</key>
+	<string>Opmerking</string>
+	<key>APPROVE_EXPENSE_DETAILS_DETAILS</key>
+	<string>Details</string>
+	<key>APPROVE_EXPENSE_DETAILS_EXCEPTIONS</key>
+	<string>Uitzonderingen</string>
+	<key>APPROVE_EXPENSE_DETAILS_VIEW_ATTENDEES</key>
+	<string>Deelnemers weergeven</string>
+	<key>APPROVE_EXPENSE_DETAILS_VIEW_ITEMIZATIONS</key>
+	<string>Specificaties weergeven</string>
+	<key>APPROVE_EXPENSE_DETAILS_VIEW_TITLE</key>
+	<string>Onkosten</string>
+	<key>APPROVE_INVOICES</key>
+	<string>Facturen goedkeuren</string>
+	<key>APPROVE_OK</key>
+	<string>OK</string>
+	<key>APPROVE_PLEASE_COMMENT</key>
+	<string>Voeg een opmerking toe</string>
+	<key>APPROVE_PLEASE_CONFIRM</key>
+	<string>Bevestig a.u.b.</string>
+	<key>APPROVE_QUESTION_AREYOUSURE</key>
+	<string>Weet u zeker dat u deze nota wilt goedkeuren?</string>
+	<key>APPROVE_QUESTION_PART1</key>
+	<string>Goedkeuren</string>
+	<key>APPROVE_QUESTION_PART2</key>
+	<string>onkostennota voor</string>
+	<key>APPROVE_REPORT</key>
+	<string>Nota goedkeuren</string>
+	<key>APPROVE_REPORTS</key>
+	<string>Nota's goedkeuren</string>
+	<key>APPROVE_REPORTS_VIEW_TITLE</key>
+	<string>Goed te keuren nota's</string>
+	<key>APPROVE_REPORT_CHECK_RECEIPT_IMAGE</key>
+	<string>Kwitantieafbeelding controleren</string>
+	<key>APPROVE_REPORT_RECEIPT_IMAGE</key>
+	<string>Kwitantieafbeelding weergeven</string>
+	<key>APPROVE_REPORT_SUMMARY</key>
+	<string>Notasamenvatting</string>
+	<key>APPROVE_REPORT_SUMMARY_AMOUNT_APPROVED</key>
+	<string>Goedgekeurd bedrag</string>
+	<key>APPROVE_REPORT_SUMMARY_AMOUNT_CLAIMED</key>
+	<string>Declaratiebedrag</string>
+	<key>APPROVE_REPORT_SUMMARY_AMOUNT_DUE_COMPANY</key>
+	<string>Verschuldigd bedrag bedrijf</string>
+	<key>APPROVE_REPORT_SUMMARY_AMOUNT_DUE_CREDIT_CARD</key>
+	<string>Verschuldigd bedrag kredietkaart</string>
+	<key>APPROVE_REPORT_SUMMARY_AMOUNT_DUE_EMPLOYEE</key>
+	<string>Bedrag verschuldigd aan werknemer</string>
+	<key>APPROVE_REPORT_SUMMARY_AMOUNT_REJECTED</key>
+	<string>Afgekeurd bedrag</string>
+	<key>APPROVE_REPORT_SUMMARY_COMMENTS</key>
+	<string>Opmerkingen</string>
+	<key>APPROVE_REPORT_SUMMARY_COMPANYDISBURSEMENT</key>
+	<string>Bedrijfsuitgave</string>
+	<key>APPROVE_REPORT_SUMMARY_COMPANY_PAID_TO_CREDIT_CARD</key>
+	<string>Door bedrijf betaald aan kredietkaart</string>
+	<key>APPROVE_REPORT_SUMMARY_EMPLOYEEDISBURSEMENTS</key>
+	<string>Werknemersuitgaven</string>
+	<key>APPROVE_REPORT_SUMMARY_HEADER</key>
+	<string>Koptekst</string>
+	<key>APPROVE_REPORT_SUMMARY_LESS_PERSONAL_AMOUNT</key>
+	<string>Min persoonlijk bedrag</string>
+	<key>APPROVE_REPORT_SUMMARY_POLICY</key>
+	<string>Beleid</string>
+	<key>APPROVE_REPORT_SUMMARY_REPORT_HEADER</key>
+	<string>Notakoptekst</string>
+	<key>APPROVE_REPORT_SUMMARY_REPORT_ID</key>
+	<string>Nota-ID</string>
+	<key>APPROVE_REPORT_SUMMARY_REPORT_TOTAL</key>
+	<string>Totaal van nota</string>
+	<key>APPROVE_REPORT_SUMMARY_TOTAL_PAID_BY_COMPANY</key>
+	<string>Totaal betaald door bedrijf</string>
+	<key>APPROVE_REPORT_SUMMARY_TOTAL_PAID_BY_EMPLOYEE</key>
+	<string>Totaal betaald door werknemer</string>
+	<key>APPROVE_REPORT_SUMMARY_VIEW_TITLE</key>
+	<string>Overzicht</string>
+	<key>APPROVE_SENDBACK_BUTTON_TITLE</key>
+	<string>Terugsturen</string>
+	<key>APPROVE_VIEW_ATTENDEES</key>
+	<string>Deelnemers</string>
+	<key>APPROVE_VIEW_ATTENDEES_ATTENDEE_AMOUNT_TITLE</key>
+	<string>Bedrag</string>
+	<key>APPROVE_VIEW_ATTENDEES_ATTENDEE_COMPANY_TITLE</key>
+	<string>Bedrijf</string>
+	<key>APPROVE_VIEW_ATTENDEES_ATTENDEE_NAME_TITLE</key>
+	<string>Naam van deelnemer</string>
+	<key>APPROVE_VIEW_ATTENDEES_ATTENDEE_TITLE_TITLE</key>
+	<string>Functie deelnemer</string>
+	<key>APPROVE_VIEW_ATTENDEES_ATTENDEE_TYPE_TITLE</key>
+	<string>Deelnemertype</string>
+	<key>APPROVE_VIEW_COMMENTS</key>
+	<string>Opmerkingen weergeven</string>
+	<key>APPROVE_VIEW_COMMENTS_VIEW_TITLE</key>
+	<string>Opmerkingen</string>
+	<key>APPROVE_VIEW_EXCEPTIONS</key>
+	<string>Uitzonderingen weergeven</string>
+	<key>APPROVE_VIEW_EXCEPTIONS_EXPENSE_LEVEL_EXCEPTION_SECTION_HEADER</key>
+	<string>Onkosten</string>
+	<key>APPROVE_VIEW_EXCEPTIONS_REPORT_LEVEL_EXCEPTION_SECTION_HEADER</key>
+	<string>Nota</string>
+	<key>APPROVE_VIEW_EXCEPTIONS_VIEW_TITLE</key>
+	<string>Uitzonderingen</string>
+	<key>APPROVE_VIEW_ITEMIZATIONS</key>
+	<string>Specificatie</string>
+	<key>APPROVE_VIEW_ITEMIZATIONS_SUMMARY_SECTION_TITLE</key>
+	<string>Overzicht</string>
+	<key>APP_RATING_MSG</key>
+	<string> Nu u onze app hebt gebruikt, kunt u ons laten weten wat u ervan vindt door de app te beoordelen in de App Store.</string>
+	<key>APP_RATING_MSG_DISMISS</key>
+	<string>Niet opnieuw vragen</string>
+	<key>APP_RATING_TITLE</key>
+	<string>Een waardering geven voor deze app?</string>
+	<key>ATTENDEES</key>
+	<string>Deelnemers</string>
+	<key>ATTENDEES_EXCLUDED_FOR_TYPE</key>
+	<string>Sommige deelnemers kunnen niet worden toegevoegd, omdat hun deelnemertype niet mogelijk is bij dit onkostentype.</string>
+	<key>ATTENDEE_ADD</key>
+	<string>Deelnemer toevoegen</string>
+	<key>ATTENDEE_ADD_BUMP</key>
+	<string>Deelnemer toevoegen via %@</string>
+	<key>ATTENDEE_ADD_CONTACT</key>
+	<string>Deelnemer handmatig toevoegen</string>
+	<key>ATTENDEE_ENTRY</key>
+	<string>Deelnemer</string>
+	<key>ATTENDEE_SEARCH_FOR_ATTENDEE</key>
+	<string>Zoeken naar deelnemer</string>
+	<key>ATTENDEE_SELECT_CONTACT</key>
+	<string>Selecteren bij contactpersoon</string>
+	<key>AUTHENTICATION_FAILURE_MSG</key>
+	<string>Overtreding door onbevoegde toegang.  Controleer uw gebruikersnaam en/of pincode.</string>
+	<key>AUTHENTICATION_TIMED_OUT_MSG</key>
+	<string>De verbinding met de verificatieservice is verlopen.  Zorg dat u verwijst naar de juiste URL.</string>
+	<key>A_ACCO</key>
+	<string>Goedgekeurd en nota in behandeling</string>
+	<key>A_APPR</key>
+	<string>Goedgekeurd</string>
+	<key>A_EXTV</key>
+	<string>In behandeling voor externe validatie</string>
+	<key>A_FILE</key>
+	<string>Ingediend</string>
+	<key>A_NOTF</key>
+	<string>Niet ingediend</string>
+	<key>A_PECO</key>
+	<string>Goedkeuring kostenobject in behandeling</string>
+	<key>A_PEND</key>
+	<string>Verzonden en wacht op goedkeuring</string>
+	<key>A_PVAL</key>
+	<string>Validatie in behandeling</string>
+	<key>A_RESU</key>
+	<string>Teruggestuurd naar werknemer</string>
+	<key>A_RHLD</key>
+	<string>Vasthouden voor kwitantieafbeelding</string>
+	<key>A_TEXP</key>
+	<string>Goedkeuringstijd verlopen</string>
+	<key>Abukai Expenses</key>
+	<string>Abukai Expenses</string>
+	<key>Accept</key>
+	<string>Accepteren</string>
+	<key>Access other areas of the app</key>
+	<string>Toegang tot andere gebieden van de app</string>
+	<key>Accounting Code</key>
+	<string>Boekhoudcode</string>
+	<key>Actions offline</key>
+	<string>Uw apparaat is momenteel offline.  Maak verbinding met internet en probeer het daarna opnieuw.</string>
+	<key>Actual Arrival</key>
+	<string>Werkelijke aankomst</string>
+	<key>Actual Departure</key>
+	<string>Werkelijk vertrek</string>
+	<key>Actual Equipment</key>
+	<string>Werkelijke apparatuur</string>
+	<key>Actual Terminal</key>
+	<string>Werkelijke terminal</string>
+	<key>Add Account to Concur</key>
+	<string>Account toevoegen aan Concur</string>
+	<key>Add Amtrak</key>
+	<string>Amtrak toevoegen</string>
+	<key>Add Another</key>
+	<string>Nog een toevoegen</string>
+	<key>Add Attendee</key>
+	<string>Deelnemer toevoegen</string>
+	<key>Add Car</key>
+	<string>Auto toevoegen</string>
+	<key>Add Car Mileage</key>
+	<string>Kilometerstand toevoegen</string>
+	<key>Add Card</key>
+	<string>Kaart toevoegen</string>
+	<key>Add Comment</key>
+	<string>Opmerking toevoegen</string>
+	<key>Add Credit Card</key>
+	<string>Kredietkaart toevoegen</string>
+	<key>Add Entry</key>
+	<string>Item toevoegen</string>
+	<key>Add Expense</key>
+	<string>Onkosten toevoegen</string>
+	<key>Add Hotel</key>
+	<string>Hotel toevoegen</string>
+	<key>Add Itemization</key>
+	<string>Specificatie toevoegen</string>
+	<key>Add Itinerary Stop Header</key>
+	<string>Om u de juiste vergoedingen te kunnen geven, willen we graag weten waar u tijdens uw reis bent gestopt. Voeg ten minste twee stops toe om het reisschema te voltooien.</string>
+	<key>Add Mileage</key>
+	<string>Reisafstand toevoegen</string>
+	<key>Add New Expense</key>
+	<string>Nieuwe onkosten toevoegen</string>
+	<key>Add Receipt</key>
+	<string>Kwitantie toevoegen</string>
+	<key>Add Selected Attendee</key>
+	<string>Geselecteerde deelnemer toevoegen</string>
+	<key>Add Single Day Itinerary Stop Header</key>
+	<string>Om u de juiste vergoedingen te kunnen geven, willen we graag weten waar u tijdens uw reis bent gestopt. Voeg ten minste twee stops toe om het reisschema te voltooien.</string>
+	<key>Add a Cash Expense</key>
+	<string>Onkosten toevoegen</string>
+	<key>Add a Receipt using the below buttons</key>
+	<string>Voeg een kwitantie toe met de knoppen hieronder</string>
+	<key>Add an Attendee</key>
+	<string>Een deelnemer toevoegen</string>
+	<key>Add an Entry from a Picture</key>
+	<string>Een afbeelding toevoegen als item</string>
+	<key>Add credit card</key>
+	<string>Kredietkaart toevoegen</string>
+	<key>Add expenses to your report.</key>
+	<string>Voeg onkosten toe aan uw nota.</string>
+	<key>Add expenses with attendees</key>
+	<string>Onkosten met deelnemers toevoegen</string>
+	<key>Add from Photo Album</key>
+	<string>Toevoegen uit fotoalbum</string>
+	<key>Add to Report</key>
+	<string>Aan nota toevoegen</string>
+	<key>AddAnotherItemToThisRequest</key>
+	<string>Een ander item aan deze aanvraag toevoegen</string>
+	<key>Adding to Report</key>
+	<string>Aan nota toevoegen</string>
+	<key>Additional Charges (each night)</key>
+	<string>Aanvullende kosten (elke nacht)</string>
+	<key>Address</key>
+	<string>Adres</string>
+	<key>Address point of interest airport code</key>
+	<string>Adres, interessepunt, luchthavencode</string>
+	<key>Adds processing time</key>
+	<string>Draagt bij aan verwerkingstijd</string>
+	<key>Adjust Allowance</key>
+	<string>Vergoeding aanpassen</string>
+	<key>Adjustments</key>
+	<string>Correcties</string>
+	<key>Adults</key>
+	<string>Volwassenen</string>
+	<key>Advanced Search</key>
+	<string>Geavanceerd zoeken</string>
+	<key>Afternoon</key>
+	<string>Middag</string>
+	<key>Agency Code Sign In</key>
+	<string>Aanmelden met code van reisbureau</string>
+	<key>Agency Record Locator: %@</key>
+	<string>Recordlocator van reisbureau: %@</string>
+	<key>Agency Sign In</key>
+	<string>Aanmelden via reisbureau</string>
+	<key>Air Booking</key>
+	<string>Vlucht boeken</string>
+	<key>Air Price to Beat</key>
+	<string>Price-to-Beat voor vlucht</string>
+	<key>Air cancelled from mobile device</key>
+	<string>Vlucht geannuleerd met mobiel apparaat</string>
+	<key>Aircraft</key>
+	<string>Vliegtuig</string>
+	<key>Airfare Price to Beat</key>
+	<string>Price to Beat voor vliegtarief</string>
+	<key>Airfare quoted total</key>
+	<string>Totale aangegeven vluchtprijs</string>
+	<key>Airline</key>
+	<string>Luchtvaartmaatschappij</string>
+	<key>Airports</key>
+	<string>Luchthavens</string>
+	<key>All</key>
+	<string>Alle</string>
+	<key>All Expenses</key>
+	<string>Alle onkosten</string>
+	<key>All Flights</key>
+	<string>Alle vluchten</string>
+	<key>All Items</key>
+	<string>Alle items</string>
+	<key>All Nonstop</key>
+	<string>Alle zonder tussenstops</string>
+	<key>All Results</key>
+	<string>Alle resultaten</string>
+	<key>All States &amp; Provinces</key>
+	<string>Alle staten en provincies</string>
+	<key>All day</key>
+	<string>Hele dag</string>
+	<key>All token</key>
+	<string>Alle %@</string>
+	<key>All token (token results)</key>
+	<string>All %@ (%d resultaten)</string>
+	<key>Allowance Adjustments</key>
+	<string>Correcties in vergoedingen</string>
+	<key>Allowance Itinerary</key>
+	<string>Reisvergoeding</string>
+	<key>Already Expensed</key>
+	<string>Onkosten zijn al opgegeven</string>
+	<key>Already have an account SU</key>
+	<string>Hebt u al een account?</string>
+	<key>Amount</key>
+	<string>Bedrag</string>
+	<key>Amount in</key>
+	<string>Bedrag in</string>
+	<key>Amtrak</key>
+	<string>Amtrak</string>
+	<key>An Expense Report</key>
+	<string>Een onkostennota</string>
+	<key>An email containing the application's log has been placed in your outbox.</key>
+	<string>Er is een e-mail met het logboek van de toepassing bij uw uitgaande berichten geplaatst.</string>
+	<key>An email containing the application's log has been saved in your Drafts folder.</key>
+	<string>Er is een e-mail met het logboek van de toepassing in uw map met concepten geplaatst.</string>
+	<key>An email has been sent containing your report.</key>
+	<string>Er is een e-mailbericht verzonden dat uw nota bevat.</string>
+	<key>An invalid station for arrival has been specified.  Please select a station to arrive at.</key>
+	<string>Er is een ongeldig aankomststation opgegeven.  Selecteer een aankomststation.</string>
+	<key>An invalid station for departure has been specified.  Please select a station to depart from.</key>
+	<string>Er is een ongeldig vertrekstation opgegeven.  Selecteer een vertrekstation.</string>
+	<key>An unexpected error occurred. Please try again later.</key>
+	<string>Er is een onverwachte fout opgetreden. Probeer het later opnieuw.</string>
+	<key>And view upcoming itineraries.</key>
+	<string>en komende reisschema's weergeven.</string>
+	<key>Any</key>
+	<string>Gemengde klassen</string>
+	<key>Any Car Class</key>
+	<string>Alle autotypen</string>
+	<key>Anytime</key>
+	<string>Geen voorkeur</string>
+	<key>AppStore Expense</key>
+	<string>Als u een gebruiker van Concur Expense of Concur Breeze bent, kunt u de mobiele oplossing gebruiken voor het volgende: * Snel onkosten en kwitanties vastleggen met de camera van het apparaat (u hoeft niet meer te scannen, te faxen of te mailen) * Kredietkaartafschrijvingen bekijken en bewerken * Onkosten toevoegen aan een bestaande of nieuwe onkostennota en nota's indienen * De koptekst/onkosten van een nota bewerken * Specificaties/reisafstand toevoegen * Onkostennota's goedkeuren of afkeuren met een opmerking en zelfs bijbehorende kwitanties bekijken!</string>
+	<key>Append</key>
+	<string>Toevoegen</string>
+	<key>Append Confirmation</key>
+	<string>Bevestiging toevoegen</string>
+	<key>Append or Replace Receipt</key>
+	<string>Aan deze onkosten is al een kwitantie gekoppeld.  Selecteer 'Toevoegen' om deze nieuwe kwitantie toe te voegen aan deze onkosten of selecteer 'Vervangen' om de bestaande kwitantie door deze kwitantie te vervangen.</string>
+	<key>Application Information</key>
+	<string>Toepassingsinformatie</string>
+	<key>Approval Summary</key>
+	<string>Goedkeuringssamenvatting</string>
+	<key>Approvals</key>
+	<string>Goedkeuringen</string>
+	<key>Approve</key>
+	<string>Goedkeuren</string>
+	<key>Approve Trips</key>
+	<string>Reizen goedkeuren</string>
+	<key>Approve by</key>
+	<string>Goedgekeurd door</string>
+	<key>Approver</key>
+	<string>Fiatteur</string>
+	<key>Approving Report</key>
+	<string>Nota goedkeuren</string>
+	<key>Approving Trip</key>
+	<string>Reis goedkeuren</string>
+	<key>Apps</key>
+	<string>Apps</string>
+	<key>Are you sure</key>
+	<string>Weet u zeker dat u de geselecteerde onkosten wilt verwijderen?</string>
+	<key>Are you sure about adding smart expenses</key>
+	<string>Smart Expenses worden gecombineerd tot een enkel item op de nota.</string>
+	<key>Are you sure about smart expenses</key>
+	<string>Weet u zeker dat u de geselecteerde onkosten wilt verwijderen?  De mobiele itemgedeelten van de Smart Expenses worden definitief verwijderd en de bijbehorende kaartafschrijvingen worden verborgen.</string>
+	<key>Are you sure that you want to delete this receipt</key>
+	<string>Weet u zeker dat u deze kwitantie wilt verwijderen?</string>
+	<key>Are you sure that you want to reserve the selected train(s)?</key>
+	<string>Weet u zeker dat u de geselecteerde trein(en) wilt reserveren?</string>
+	<key>Are you sure you want to approve this trip?</key>
+	<string>Weet u zeker dat u deze reis wilt goedkeuren?</string>
+	<key>Are you sure you want to cancel this air reservation?</key>
+	<string>Weet u zeker dat u deze vluchtreservering wilt annuleren?</string>
+	<key>Are you sure you want to cancel this car reservation?</key>
+	<string>Weet u zeker dat u deze autoreservering wilt annuleren?</string>
+	<key>Are you sure you want to cancel this hotel reservation?</key>
+	<string>Weet u zeker dat u deze hotelreservering wilt annuleren?</string>
+	<key>Are you sure you want to cancel this rail reservation?</key>
+	<string>Weet u zeker dat u deze treinreservering wilt annuleren?</string>
+	<key>Are you sure you want to delete the open report?</key>
+	<string>Weet u zeker dat u de geopende nota wilt verwijderen?</string>
+	<key>Are you sure you want to reserve this car?</key>
+	<string>Weet u zeker dat u deze auto wilt reserveren?</string>
+	<key>Are you sure you want to reserve this flight?</key>
+	<string>Weet u zeker dat u deze vlucht wilt reserveren?</string>
+	<key>Are you sure you want to unlink from your TripIt account?</key>
+	<string>Weet u zeker dat u dit wilt loskoppelen van uw TripIt-account?</string>
+	<key>Arrival</key>
+	<string>Aankomst</string>
+	<key>Arrival City</key>
+	<string>Plaats van aankomst</string>
+	<key>Arrival Information</key>
+	<string>Aankomstgegevens</string>
+	<key>Arrival Station</key>
+	<string>Aankomststation</string>
+	<key>Arrival Terminal</key>
+	<string>Aankomstterminal</string>
+	<key>Arrival Time</key>
+	<string>Aankomsttijd</string>
+	<key>Arrive</key>
+	<string>Aankomst</string>
+	<key>Arriving trains</key>
+	<string>Komt aan: %@</string>
+	<key>Ask Me Later</key>
+	<string>Later vragen</string>
+	<key>At Least 1 Month</key>
+	<string>Ten minste 1 maand</string>
+	<key>At Least 1 Week</key>
+	<string>Ten minste 1 week</string>
+	<key>Attach Receipt</key>
+	<string>Kwitantie koppelen</string>
+	<key>Attach via Receipt Store</key>
+	<string>Koppelen via kwitantiearchief</string>
+	<key>Attendee</key>
+	<string>Deelnemer</string>
+	<key>Attendee Amount</key>
+	<string>Deelnemerbedrag</string>
+	<key>Attendee Count</key>
+	<string>Aantal deelnemers</string>
+	<key>Attendee Group</key>
+	<string>Deelnemersgroep</string>
+	<key>Attendee Search Results</key>
+	<string>Zoekresultaten voor deelnemer</string>
+	<key>Attendee Type</key>
+	<string>Deelnemertype</string>
+	<key>Attendee data is unavailable.</key>
+	<string>Deelnemersgegevens zijn niet beschikbaar.</string>
+	<key>Attendee type cannot be changed.  Create a new attendee instead.</key>
+	<string>Deelnemertype kan niet worden gewijzigd.  Maak in plaats daarvan een nieuwe deelnemer.</string>
+	<key>Attendees</key>
+	<string>Deelnemers</string>
+	<key>Attendees not editable offline</key>
+	<string>Deelnemers kunnen niet offline worden bewerkt.</string>
+	<key>Attention</key>
+	<string>Let op</string>
+	<key>Authenticating</key>
+	<string>Verifiëren</string>
+	<key>Auto Login</key>
+	<string>Automatisch aanmelden</string>
+	<key>Available From States/Provinces</key>
+	<string>Beschikbare staten/provincies voor vertrek</string>
+	<key>Available From Stations</key>
+	<string>Beschikbare Van-stations</string>
+	<key>Available Itineraries</key>
+	<string>beschikbare reisschema's</string>
+	<key>Available States/Provinces</key>
+	<string>Beschikbare staten/provincies</string>
+	<key>Available Stations</key>
+	<string>Beschikbare stations</string>
+	<key>Available To States/Provinces</key>
+	<string>Beschikbare staten/provincies voor aankomst</string>
+	<key>Available To Stations</key>
+	<string>Beschikbare Naar-stations</string>
+	<key>Awaiting Approval</key>
+	<string>Wacht op goedkeuring</string>
+	<key>BOOKING_UNDER_P2B_EARNS_POINTS</key>
+	<string>Als u opties selecteert die minder kosten dan de Price-to-Beat verdient u reispunten waarmee u later korting kunt krijgen.</string>
+	<key>BOOKING_UNDER_P2B_SAVES_MONEY</key>
+	<string>Boeken onder de Price-to-Beat bespaart uw bedrijf geld.</string>
+	<key>BRONX_USER_CORP_APP_MSG</key>
+	<string>U kunt zich niet bij Concur Mobile aanmelden met uw aanmeldingsgegevens voor de SmartExpense-versie van Concur. Wilt u in plaats daarvan de SmartExpense-versie gebruiken?</string>
+	<key>BRONX_USER_CORP_APP_TITLE</key>
+	<string>Geen ondersteuning voor SmartExpense-gebruiker</string>
+	<key>BTN_EDIT</key>
+	<string>Bewerken</string>
+	<key>BUMP_HELP_TEXT1</key>
+	<string>U kunt uw deelnemersgegevens delen als u hieronder 'Deelnemer worden' selecteert.</string>
+	<key>BUMP_HELP_TEXT2</key>
+	<string>Uw partner moet 'Deelnemer toevoegen via %@' selecteren in de deelnemerssectie van het scherm met regelitems voor de nota.</string>
+	<key>BUMP_INSTRUCTION</key>
+	<string>Uw partner moet 'Deelnemer toevoegen via %@' selecteren in de deelnemerssectie van het scherm met regelitems voor de nota om u als deelnemer toe te voegen aan het regelitem.</string>
+	<key>BUMP_SHARE_HELP_TEXT1</key>
+	<string>U voegt een deelnemer toe door hieronder 'Een deelnemer toevoegen' te selecteren.</string>
+	<key>BUMP_SHARE_HELP_TEXT2</key>
+	<string>Uw partner moet de knop 'Deelnemer' in het startscherm selecteren.</string>
+	<key>BUSGUEST</key>
+	<string>Zakelijke gast</string>
+	<key>Back</key>
+	<string>Terug</string>
+	<key>Baggage Claim</key>
+	<string>Bagage ophalen</string>
+	<key>Become an Attendee</key>
+	<string>Deelnemer worden</string>
+	<key>Before reserving this car in</key>
+	<string>Voordat u het bedrijfsbeleid overtreedt door deze auto te reserveren, moet u een reden en een verantwoording opgeven in de rode velden.</string>
+	<key>Before reserving this car in justification</key>
+	<string>Voordat u het bedrijfsbeleid overtreedt door deze auto te reserveren, moet u een verantwoording opgeven in het rode veld.</string>
+	<key>Before reserving this car in reason</key>
+	<string>Voordat u het bedrijfsbeleid overtreedt door deze auto te reserveren, moet u een reden opgeven in het rode veld.</string>
+	<key>Before reserving this flight</key>
+	<string>Voordat u deze vlucht boekt, moet u de velden in rood invullen.</string>
+	<key>Benchmark</key>
+	<string>Norm</string>
+	<key>Book</key>
+	<string>Boeken</string>
+	<key>Book Air</key>
+	<string>Vlucht boeken</string>
+	<key>Book Car</key>
+	<string>Auto boeken</string>
+	<key>Book Hotel</key>
+	<string>Hotel boeken</string>
+	<key>Book Rail</key>
+	<string>Trein boeken</string>
+	<key>Book Train</key>
+	<string>Trein boeken</string>
+	<key>Book Travel</key>
+	<string>Reis boeken</string>
+	<key>Book Travel from anywhere.</key>
+	<string>Overal reizen boeken</string>
+	<key>Book Travel on the go with Concur</key>
+	<string>Boek uw reizen onderweg met Concur</string>
+	<key>Book a Hotel Car and more</key>
+	<string>Vluchten, hotels en meer boeken</string>
+	<key>Book a Trip</key>
+	<string>Een reis boeken</string>
+	<key>Book a train</key>
+	<string>Een treinreis boeken</string>
+	<key>Book flights</key>
+	<string>Vluchten boeken</string>
+	<key>Book under this price to earn Travel Points.</key>
+	<string>Boek onder deze prijs om reispunten te verdienen.</string>
+	<key>Booker Comments</key>
+	<string>Opmerkingen boeker</string>
+	<key>Booking Info</key>
+	<string>Boekingsgegevens</string>
+	<key>Booking cancelled</key>
+	<string>Boeking geannuleerd</string>
+	<key>Booking under this amount saves your company money.</key>
+	<string>Een boeking onder dit bedrag bespaart uw bedrijf geld.</string>
+	<key>Bookings</key>
+	<string>Boekingen</string>
+	<key>Bookings offline</key>
+	<string>U kunt geen boekingen maken als uw apparaat offline is.  Maak verbinding met internet en probeer het opnieuw.</string>
+	<key>Border Crossing</key>
+	<string>Grensoverschrijding</string>
+	<key>Bump Phones to Become an Attendee</key>
+	<string>%@ belt om deelnemer te worden</string>
+	<key>Bump Phones to Exchange Attendee Info</key>
+	<string>%@ belt om deelnemersgegevens uit te wisselen</string>
+	<key>Bus</key>
+	<string>Bus</string>
+	<key>Business</key>
+	<string>Zakelijk</string>
+	<key>By State or Province</key>
+	<string>Op staat of provincie</string>
+	<key>CANNOT_ADD_TO_RPT_WAIT_IMAGE</key>
+	<string>Kwitantie wordt geüpload. Wacht enkele seconden en probeer het opnieuw.</string>
+	<key>CAR</key>
+	<string>Autohuur</string>
+	<key>CARDS_LIST</key>
+	<string>Kaarten</string>
+	<key>CARD_AUTH_MSG</key>
+	<string>Dit is een kaartautorisatie. Wacht totdat de kaart is geladen voordat u de gegevens indient.</string>
+	<key>CAR_DETAILS</key>
+	<string>Autodetails</string>
+	<key>CAR_LIST</key>
+	<string>Auto selecteren</string>
+	<key>CHECK_OUT_DATE_ERR_MSG</key>
+	<string>Voer een datum later dan de incheckdatum in.</string>
+	<key>COMMENTS</key>
+	<string>Opmerkingen</string>
+	<key>COMPANY_NAME</key>
+	<string>Bedrijfsnaam</string>
+	<key>COMPANY_SSO_DISABLED_MSG</key>
+	<string>Aanmelden via bedrijf is uitgeschakeld voor uw bedrijf. Neem contact op met de beheerder voor uw bedrijf.</string>
+	<key>COMPANY_SSO_INITIATED_REMOTE_WIPE</key>
+	<string>Uw accountgegevens zijn op dit apparaat gewist.  Neem voor hulp contact op met de beheerder voor uw bedrijf.</string>
+	<key>CONFIGURING_SESSION</key>
+	<string>Mobiele sessie configureren...</string>
+	<key>CONFIRM_CONTINUE</key>
+	<string>Weet u zeker dat u wilt doorgaan?</string>
+	<key>CONFIRM_DETACH_TEXT</key>
+	<string>Weet u zeker dat u de kwitantieafbeelding wilt loskoppelen?</string>
+	<key>CONFIRM_PIN</key>
+	<string>Nieuwe pincode bevestigen</string>
+	<key>CONFIRM_RECEIPT_DELETE</key>
+	<string>Weet u zeker dat u deze kwitantie wilt verwijderen?</string>
+	<key>CONFIRM_RECEIPT_DELETION</key>
+	<string>Weet u zeker dat u deze kwitantie wilt verwijderen?</string>
+	<key>CONFIRM_REPORT_SUBMISSION</key>
+	<string>Weet u zeker dat u deze onkostennota wilt indienen?</string>
+	<key>COPY_DOWN_ENTRY_MSG</key>
+	<string>U hebt de %@-velden in dit item gewijzigd. Wilt u de waarde van de %@-velden in alle items en specificaties van dit item ook overschrijven met de nieuwe waarde? Klik op Ja om de waarden te overschrijven. Klik op Nee om de wijzigingen alleen in het item op te slaan. </string>
+	<key>COPY_DOWN_RPT_MSG</key>
+	<string>U hebt de %@-velden in deze notakoptekst gewijzigd. Wilt u de waarde van de %@-velden in alle items en specificaties van deze nota ook overschrijven met de nieuwe waarde? Klik op Ja om de waarden te overschrijven. Klik op Nee om de wijzigingen alleen in de notakoptekst op te slaan. </string>
+	<key>CORP_CARDS_0</key>
+	<string>U hebt geen ongebruikte afschrijvingen van de bedrijfskaart</string>
+	<key>CORP_CARDS_1</key>
+	<string>U hebt 1 ongebruikte zakelijke kaartafschrijving</string>
+	<key>CORP_CARDS_2</key>
+	<string>U hebt %d ongebruikte zakelijke kaartafschrijvingen</string>
+	<key>CORP_SSO_MSG</key>
+	<string>Als uw bedrijf eenmalige aanmelding (Single Sign On, SSO) gebruikt en een bedrijfscode heeft verstrekt, voer deze dan hier in.</string>
+	<key>CORP_SSO_MSG_GOV</key>
+	<string>Als uw reisbureau een code heeft verstrekt, voert u deze hieronder in.</string>
+	<key>CORP_USER_SU_APP_MSG</key>
+	<string>U kunt zich bij deze SmartExpense-versie van Concur niet aanmelden met uw aanmeldingsgegevens voor Concur Mobile. Wilt u in plaats daarvan Mobile gebruiken?</string>
+	<key>CORP_USER_SU_APP_TITLE</key>
+	<string>Geen ondersteuning voor zakelijke gebruikers</string>
+	<key>CREATE_ADD</key>
+	<string>Maken en toevoegen</string>
+	<key>CREATE_PIN</key>
+	<string>Uw Mobile-pincode instellen voor aanmelding bij Concur</string>
+	<key>CREATE_PIN_NOTES</key>
+	<string>De pincode mag letters, cijfers en speciale tekens zoals !,$ of # bevatten, maar geen spaties.</string>
+	<key>CREATE_PIN_TITLE</key>
+	<string>Mobile-pincode</string>
+	<key>CVV Number</key>
+	<string>CVV-nummer</string>
+	<key>Cache</key>
+	<string>Cache</string>
+	<key>Cache Done Title</key>
+	<string>Cache is gewist</string>
+	<key>Calculate Allowances</key>
+	<string>Vergoedingen berekenen</string>
+	<key>Call</key>
+	<string>Bellen</string>
+	<key>Call Travel Agent</key>
+	<string>Reisagent bellen</string>
+	<key>Camera</key>
+	<string>Koppelen via camera</string>
+	<key>Cancel</key>
+	<string>Annuleren</string>
+	<key>Cancel Air</key>
+	<string>Vlucht annuleren</string>
+	<key>Cancel Car</key>
+	<string>Auto annuleren</string>
+	<key>Cancel Failed</key>
+	<string>Annuleren is mislukt</string>
+	<key>Cancel Hotel</key>
+	<string>Hotel annuleren</string>
+	<key>Cancel Rail</key>
+	<string>Trein annuleren</string>
+	<key>Cancel Trip</key>
+	<string>Reis annuleren</string>
+	<key>Cancel Upload</key>
+	<string>Uploaden annuleren</string>
+	<key>Cancel air reservation</key>
+	<string>Vluchtreservering annuleren</string>
+	<key>Cancel car reservation</key>
+	<string>Autoreservering annuleren</string>
+	<key>Cancel hotel reservation</key>
+	<string>Hotelreservering annuleren</string>
+	<key>Cancellation Policy</key>
+	<string>Annuleringsbeleid</string>
+	<key>Cannot Save Changes</key>
+	<string>Kan wijzigingen niet opslaan</string>
+	<key>Cannot Submit Report</key>
+	<string>Kan nota niet indienen</string>
+	<key>Cannot access receipt</key>
+	<string>Geen toegang tot kwitantie</string>
+	<key>Cannot append receipt</key>
+	<string>Kan kwitantie niet toevoegen</string>
+	<key>Cannot expense trip</key>
+	<string>Kan geen onkosten voor reis opgeven</string>
+	<key>Capture Receipt</key>
+	<string>Kwitantie vastleggen</string>
+	<key>Capture car mileage</key>
+	<string>Reisafstand vastleggen</string>
+	<key>Capture expense and receipt</key>
+	<string>Onkosten en kwitantie vastleggen</string>
+	<key>Capture your expenses while you travel</key>
+	<string>Uw onkosten vastleggen terwijl u op reis bent</string>
+	<key>Car</key>
+	<string>Auto</string>
+	<key>Car Hire Airport Location</key>
+	<string>Locatie luchthaven</string>
+	<key>Car Mileage</key>
+	<string>Afgelegde afstand</string>
+	<key>Car Mileage Text</key>
+	<string>Onkosten voor reisafstand</string>
+	<key>Car Rule Violation</key>
+	<string>Overtreding autoregel</string>
+	<key>Car Type</key>
+	<string>Type auto</string>
+	<key>Car cancelled from mobile device</key>
+	<string>Auto geannuleerd met mobiel apparaat</string>
+	<key>Card</key>
+	<string>Kaart</string>
+	<key>Card Charges</key>
+	<string>Kaartafschrijvingen</string>
+	<key>Card Transactions</key>
+	<string>Kaarttransacties</string>
+	<key>Cards</key>
+	<string>Kaarten</string>
+	<key>Cars</key>
+	<string>Auto's</string>
+	<key>Cars near</key>
+	<string>Auto's nabij</string>
+	<key>Cars_subline</key>
+	<string>Kies een coole auto</string>
+	<key>Cash</key>
+	<string>Contant</string>
+	<key>Chain Least Preferred</key>
+	<string>Keten met de laagste voorkeur</string>
+	<key>Chain Most Preferred</key>
+	<string>Keten met hoogste voorkeur</string>
+	<key>Chain Preferred</key>
+	<string>Keten met voorkeur</string>
+	<key>Changing the expense type will remove all itemized data</key>
+	<string>Als u het onkostentype wijzigt, worden alle gespecificeerde gegevens van dit onkostenitem verwijderd. Wilt u doorgaan?</string>
+	<key>Chatter</key>
+	<string>Chatter</string>
+	<key>Chatter post help text</key>
+	<string>Deze reis is nog niet op Chatter geplaatst.  Plaats uw reis en ontvang reizen en informatie over uw bestemming van collega's. </string>
+	<key>Check  In</key>
+	<string>Inchecken</string>
+	<key>Check In</key>
+	<string>Inchecken</string>
+	<key>Check In Complete</key>
+	<string>Inchecken is voltooid</string>
+	<key>Check In Complete Message</key>
+	<string>U bent ingecheckt met uw huidige locatie.</string>
+	<key>Check In Failed Message</key>
+	<string>U kunt op dit moment niet inchecken.  Probeer het later opnieuw.</string>
+	<key>Check Invoice Image</key>
+	<string>Factuurafbeelding controleren</string>
+	<key>Check connection retry from receipt store</key>
+	<string>Controleer uw verbinding en probeer de kwitantie opnieuw te koppelen aan het kwitantiearchief.</string>
+	<key>Check your email to reset your password and sign in</key>
+	<string>Controleer uw e-mail om uw wachtwoord opnieuw in te stellen en meld u aan.</string>
+	<key>Check your email to reset your password and sign in.</key>
+	<string>Controleer uw e-mail om uw wachtwoord opnieuw in te stellen en meld u aan.</string>
+	<key>Check your spam folder or</key>
+	<string>Ziet u het niet? Kijk in de map met ongewenste e-mail of</string>
+	<key>Check-In Date</key>
+	<string>Incheckdatum</string>
+	<key>Check-Out Date</key>
+	<string>Uitcheckdatum</string>
+	<key>Check-in</key>
+	<string>Inchecken</string>
+	<key>Check-out</key>
+	<string>Uitchecken </string>
+	<key>Checking In</key>
+	<string>Inchecken</string>
+	<key>Checking Network Connection</key>
+	<string>Netwerkverbinding controleren</string>
+	<key>Checking Out</key>
+	<string>Uitchecken</string>
+	<key>Children</key>
+	<string>Kinderen</string>
+	<key>ChoosePhoto-ImagePicker</key>
+	<string>Voorbeeld</string>
+	<key>Class &amp; Seat Number</key>
+	<string>Klasse en stoelnummer</string>
+	<key>Class / Seat</key>
+	<string>Klasse / stoel</string>
+	<key>Class of Service</key>
+	<string>Serviceklasse</string>
+	<key>Class: %@</key>
+	<string>Klasse: %@</string>
+	<key>Clear Current Selection</key>
+	<string>Huidige selectie wissen</string>
+	<key>Clear out the local cache</key>
+	<string>De lokale cache wissen</string>
+	<key>Close</key>
+	<string>Sluiten</string>
+	<key>Closed</key>
+	<string>Gesloten</string>
+	<key>Comment</key>
+	<string>Opmerking</string>
+	<key>Comments</key>
+	<string>Opmerkingen</string>
+	<key>Commonly Used</key>
+	<string>Vaak gebruikt</string>
+	<key>Compact</key>
+	<string>Compact</string>
+	<key>Compact Hybrid</key>
+	<string>Hybride compact</string>
+	<key>Company</key>
+	<string>Bedrijf</string>
+	<key>Company Code</key>
+	<string>SSO-bedrijfscode</string>
+	<key>Company Code Sign In</key>
+	<string>Aanmelden met SSO-bedrijfscode</string>
+	<key>Company Name</key>
+	<string>Bedrijfsnaam</string>
+	<key>Company Sign In</key>
+	<string>Aanmelden via bedrijf</string>
+	<key>Company Sign On</key>
+	<string>Aanmelden via bedrijf</string>
+	<key>Concur was unable to obtain a cancellation number for your hotel cancellation. In order to obtain a cancellation number</key>
+	<string>Concur kan geen annuleringsnummer voor uw hotelannulering krijgen. Neem contact op met het hotel voor een annuleringsnummer.</string>
+	<key>Confirm Delete</key>
+	<string>Verwijderen bevestigen</string>
+	<key>Confirm Detach</key>
+	<string>Loskoppelen bevestigen</string>
+	<key>Confirm New Mobile Password (PIN)</key>
+	<string>Nieuw mobiel wachtwoord (PIN) bevestigen</string>
+	<key>Confirm New Password</key>
+	<string>Nieuw wachtwoord bevestigen</string>
+	<key>Connect to a WiFi or cellular data network.</key>
+	<string>Maak verbinding met een WiFi- of mobiel gegevensnetwerk.</string>
+	<key>Connecting with TripIt</key>
+	<string>Verbinding maken met TripIt</string>
+	<key>Connection Error</key>
+	<string>Verbindingsfout</string>
+	<key>Connection Settings</key>
+	<string>Verbindingsinstellingen</string>
+	<key>Contact Received</key>
+	<string>Contactpersoon ontvangen</string>
+	<key>Continue</key>
+	<string>Doorgaan</string>
+	<key>Copyright Concur 2010</key>
+	<string>Copyright Concur 2013</string>
+	<key>Corp Cards</key>
+	<string>Kaarten</string>
+	<key>Corporate Card</key>
+	<string>Bedrijfskaart</string>
+	<key>Corporate Cards</key>
+	<string>Bedrijfskaarten</string>
+	<key>Could not connect to Concur.</key>
+	<string>Kan geen verbinding maken met Concur.</string>
+	<key>Could not expense trip</key>
+	<string>De onkosten voor deze reis zijn al opgegeven</string>
+	<key>Could not load attendee data.</key>
+	<string>Kan deelnemersgegevens niet laden.</string>
+	<key>Could not load attendee form data.</key>
+	<string>Kan gegevens van deelnemersformulier niet laden.</string>
+	<key>Could not load attendee search fields data.</key>
+	<string>Kan gegevens van zoekvelden voor deelnemer niet laden.</string>
+	<key>Could not load expense data.</key>
+	<string>Kan onkostengegevens niet laden.</string>
+	<key>Could not save attendee data.  Please try again later.</key>
+	<string>Kan deelnemersgegevens niet opslaan  Probeer het later opnieuw.</string>
+	<key>Crash Detected</key>
+	<string>Crash gedetecteerd</string>
+	<key>Create &amp; Add</key>
+	<string>Maken en toevoegen</string>
+	<key>Create Password</key>
+	<string>Wachtwoord maken</string>
+	<key>Create Report</key>
+	<string>Nota maken</string>
+	<key>Create a Report</key>
+	<string>Een nota maken</string>
+	<key>Create a report for your expenses to go into</key>
+	<string>Maak een nota voor uw onkosten</string>
+	<key>Create an Account</key>
+	<string>Een account maken</string>
+	<key>Create and submit your expense reports</key>
+	<string>Onkostennota's maken en indienen</string>
+	<key>Credit Card</key>
+	<string>Kredietkaart</string>
+	<key>Currency</key>
+	<string>Valuta</string>
+	<key>Currency Code</key>
+	<string>Valutacode</string>
+	<key>Current Location</key>
+	<string>Huidige locatie</string>
+	<key>Current Trip</key>
+	<string>Actueel</string>
+	<key>Current Trip Information</key>
+	<string>Informatie van huidige reis</string>
+	<key>Currently Offline</key>
+	<string>Momenteel offline</string>
+	<key>Custom fields required message</key>
+	<string>Het boekingsbeleid van uw bedrijf wordt op dit moment niet ondersteund. Ondersteuning voor aangepaste velden is binnenkort beschikbaar. Boek de reis met de webversie van Concur.</string>
+	<key>DISALLOW_EXPENSEIT_DELETE</key>
+	<string>U kunt geen ExpenseIt-items verwijderen in de mobiele toepassing.</string>
+	<key>DISALLOW_TRANS_DELETE</key>
+	<string>U kunt geen kaartafschrijvingen verwijderen in de mobiele toepassing.</string>
+	<key>DISTANCE</key>
+	<string>Hotels zoeken binnen</string>
+	<key>Daily Rate</key>
+	<string>Dagtarief</string>
+	<key>Date</key>
+	<string>Datum</string>
+	<key>Day</key>
+	<string>Dag</string>
+	<key>Day Trip</key>
+	<string>Reis van één dag</string>
+	<key>Days</key>
+	<string>Dagen</string>
+	<key>Days Remaining at Location</key>
+	<string>Resterende dagen op locatie</string>
+	<key>Delete</key>
+	<string>Verwijderen</string>
+	<key>Delete Entry Failed</key>
+	<string>Verwijderen van item is mislukt</string>
+	<key>Delete Receipt</key>
+	<string>Kwitantie verwijderen</string>
+	<key>Delete Report Failed</key>
+	<string>Verwijderen van nota is mislukt</string>
+	<key>Deleting Out of Pocket Expense(s)</key>
+	<string>Onkosten verwijderen</string>
+	<key>Deleting Receipt</key>
+	<string>Kwitantie verwijderen</string>
+	<key>Deleting Report</key>
+	<string>Nota verwijderen</string>
+	<key>Delivery Options</key>
+	<string>Leveringsopties</string>
+	<key>Depart</key>
+	<string>Vertrek</string>
+	<key>Departing</key>
+	<string>Vertrekt</string>
+	<key>Departing Train</key>
+	<string>Vertrekkende trein</string>
+	<key>Departing trains</key>
+	<string>Vertrekt: %@ %@ %@ </string>
+	<key>Departing: token token</key>
+	<string>Vertrekt: %@ %@</string>
+	<key>Departure</key>
+	<string>Vertrek</string>
+	<key>Departure City</key>
+	<string>Plaats van vertrek</string>
+	<key>Departure Date</key>
+	<string>Vertrekdatum</string>
+	<key>Departure Gate</key>
+	<string>Vertrekgate</string>
+	<key>Departure Information</key>
+	<string>Vertrekgegevens</string>
+	<key>Departure Matches Arrival</key>
+	<string>Vertrek komt overeen met aankomst</string>
+	<key>Departure Matches Arrival Message</key>
+	<string>De luchthavens voor vertrek en aankomst zijn dezelfde.  Selecteer verschillende luchthavens voor uw reis.</string>
+	<key>Departure Point</key>
+	<string>Vertrekpunt</string>
+	<key>Departure Station</key>
+	<string>Vertrekstation</string>
+	<key>Departure Status</key>
+	<string>Vertrekstatus</string>
+	<key>Departure Time</key>
+	<string>Vertrektijd</string>
+	<key>Depending upon your company configuration some of the Concur for Mobile features may not be avaiable to you</key>
+	<string>Afhankelijk van de configuratie van uw bedrijf zijn sommige functies van Concur Mobile mogelijk niet beschikbaar</string>
+	<key>Deposit required</key>
+	<string>Aanbetaling vereist</string>
+	<key>Destination</key>
+	<string>Bestemming</string>
+	<key>Destination Location</key>
+	<string>Doellocatie</string>
+	<key>Destination Point</key>
+	<string>Eindbestemming</string>
+	<key>Detach</key>
+	<string>Loskoppelen</string>
+	<key>Details</key>
+	<string>Details</string>
+	<key>Dining</key>
+	<string>Dineren</string>
+	<key>Directions</key>
+	<string>Routebeschrijving</string>
+	<key>Disabled by administrator</key>
+	<string>Uitgeschakeld door beheerder</string>
+	<key>Discover great hotels</key>
+	<string>Geweldige hotels ontdekken</string>
+	<key>Dismiss tip overlay</key>
+	<string>Tipoverlay verwijderen</string>
+	<key>Distance</key>
+	<string>Afstand</string>
+	<key>Distance calculated by Google</key>
+	<string>Afstand wordt berekend door Google</string>
+	<key>Distance to Date = %@</key>
+	<string>Afstand tot heden = %@</string>
+	<key>Diversion Airport</key>
+	<string>Luchthaven voor omleiding</string>
+	<key>Diversion City</key>
+	<string>Plaats omleiding</string>
+	<key>Don't know your PIN?</key>
+	<string>Weet u uw pincode niet?</string>
+	<key>Don't know your password or PIN?</key>
+	<string>Weet u uw wachtwoord of PIN niet?</string>
+	<key>Don't know your user name?</key>
+	<string>Weet u uw gebruikersnaam niet?</string>
+	<key>Done</key>
+	<string>Gereed</string>
+	<key>Done cache killing</key>
+	<string>De cache van dit apparaat is gewist.  U moet de toepassing sluiten en opnieuw starten.  Als u dat niet doet, wordt het systeem waarschijnlijk instabiel.</string>
+	<key>Dont have an Account Sign Up</key>
+	<string>Hebt u geen account?</string>
+	<key>Download receipts in background</key>
+	<string>Kwitanties worden nog gedownload op de achtergrond.  Als u wilt wachten, klikt u op Annuleren en als u wilt doorgaan, klikt u op OK.</string>
+	<key>Drop-off</key>
+	<string>Terugbrengen</string>
+	<key>Drop-off Date</key>
+	<string>Retourdatum</string>
+	<key>Drop-off Time</key>
+	<string>Retourtijdstip</string>
+	<key>Dropbox</key>
+	<string>Dropbox</string>
+	<key>Duplicate Attendees</key>
+	<string>Waarschuwing bij dubbele deelnemers</string>
+	<key>Duplicates Found</key>
+	<string>Duplicaten gevonden</string>
+	<key>Duration</key>
+	<string>Duur</string>
+	<key>E Ticket</key>
+	<string>E-ticket</string>
+	<key>E-Receipt</key>
+	<string>Elektronische kwitantie</string>
+	<key>EMAIL</key>
+	<string>E-mail</string>
+	<key>EMAIL_LINK_EXPIRED_MSG</key>
+	<string>Probeer het opnieuw en gebruik de link binnen 24 uur na ontvangst.</string>
+	<key>EMPLOYEE</key>
+	<string>Werknemer</string>
+	<key>ENTER_NEW_PIN</key>
+	<string>Nieuwe pincode</string>
+	<key>ENTER_PIN_MSG</key>
+	<string>Voer een pincode in van ten minste 4 tekens (gebruik letters of cijfers).  Voor uw bedrijf zijn mogelijk meer tekens vereist.</string>
+	<key>ENTER_VALID_COMPANY_CODE</key>
+	<string>Geef een waarde op voor de bedrijfscode.</string>
+	<key>ENTRIES_NOT_MATCH_MSG</key>
+	<string>De ingevoerde items komen niet overeen. Probeer het opnieuw.</string>
+	<key>ENTRY_REQ_FIELDS</key>
+	<string>Vul alle verplichte velden in en corrigeer alle fouten in het formulier, voordat u het item opslaat.</string>
+	<key>ERROR</key>
+	<string>Fout</string>
+	<key>ERROR_ACCOUNT_NOT_CONFIGURED</key>
+	<string>Uw account is niet geconfigureerd voor het indienen van nota's.</string>
+	<key>ERROR_BAD_CONFIG_MSG</key>
+	<string>Uw configuratie ondersteunt geen kwitanties.  Neem contact op met uw beheerder.</string>
+	<key>ERROR_CONFIGURING_SESSION</key>
+	<string>Het configureren van uw mobiele sessie via eenmalige aanmelding is mislukt. Neem contact op met de beheerder voor uw bedrijf.</string>
+	<key>ERROR_EXPENSE_SITE_DOWN</key>
+	<string>Expense niet beschikbaar wegens onderhoud. Probeer het over een uur opnieuw.</string>
+	<key>ERROR_INVALID_AGENCY_CODE</key>
+	<string>Voer de code van uw reisbureau in.</string>
+	<key>ERROR_INVALID_COMPANY_CODE</key>
+	<string>Voer uw bedrijfscode in.</string>
+	<key>ERROR_INVALID_PIN</key>
+	<string>Uw pincode is niet geldig. Voer uw pincode opnieuw in.</string>
+	<key>ERROR_MSG_VISIT_WEBSITE</key>
+	<string>Ga naar de website van Concur om een waarde op te geven.</string>
+	<key>ERROR_REQUIRED_FIELDS_MISSING</key>
+	<string>In ten minste één verplicht veld in deze nota ontbreken gegevens. Een rode uitzonderingsvlag markeert het onkostenitem en er is een lijst die aangeeft welk veld of welke velden moeten worden ingevuld.</string>
+	<key>ERROR_SUBMIT_FAILED</key>
+	<string>Indienen is mislukt</string>
+	<key>EXCEPTIONS</key>
+	<string>Uitzonderingen</string>
+	<key>EXPENSES_NEG_TEXT</key>
+	<string>Onderweg uw onkosten vastleggen</string>
+	<key>EXPENSE_DETAILS_ITEMIZATIONS</key>
+	<string>Specificaties</string>
+	<key>EXPENSE_REPORTS</key>
+	<string>Onkostennota's</string>
+	<key>EXPENSE_REPORTS_NEG_TEXT</key>
+	<string>Uw nota's controleren en indienen</string>
+	<key>EXPENSE_TYPES_LIST</key>
+	<string>Onkostentypen</string>
+	<key>Earliest Departure</key>
+	<string>Vroegste vertrek</string>
+	<key>Earn %d pts.</key>
+	<string>%d punten verdienen.</string>
+	<key>Economy</key>
+	<string>Budget</string>
+	<key>Economy Hybrid</key>
+	<string>Hybride budget</string>
+	<key>Edit</key>
+	<string>Bewerken</string>
+	<key>Email</key>
+	<string>E-mail</string>
+	<key>Email Address</key>
+	<string>E-mailadres</string>
+	<key>Email Log</key>
+	<string>Logboek verzenden via e-mail</string>
+	<key>Email link expired</key>
+	<string>E-maillink verlopen</string>
+	<key>Enter Approver Email</key>
+	<string>E-mailadres van fiatteur invoeren</string>
+	<key>Enter Field</key>
+	<string>%@ invoeren</string>
+	<key>Enter in the URL that connects to the Concur servers</key>
+	<string>Voer de URL in voor verbinding met de Concur-servers</string>
+	<key>Enter your Agency Code</key>
+	<string>Voer uw de code van uw reisbureau in</string>
+	<key>Enter your mobile password (PIN) to sign in</key>
+	<string>Voer uw mobiel wachtwoord (PIN) in om u aan te melden</string>
+	<key>Enter your password to sign in</key>
+	<string>Voer uw wachtwoord in om u aan te melden</string>
+	<key>Entries Don't Match</key>
+	<string>Items komen niet overeen</string>
+	<key>Error</key>
+	<string>Fout</string>
+	<key>Error loading content</key>
+	<string>Fout bij laden van inhoud</string>
+	<key>ErrorReceiptsFetch</key>
+	<string>Geen kwitanties geüpload. Tik hieronder op de knop '+' om nu een kwitantie te uploaden en deze later te gebruiken vanuit uw nota of onkostenitems.</string>
+	<key>Estimated Arrival</key>
+	<string>Geschatte aankomst</string>
+	<key>Estimated Departure</key>
+	<string>Geschat vertrek</string>
+	<key>Evening</key>
+	<string>Avond</string>
+	<key>Exception Details</key>
+	<string>Details van uitzondering</string>
+	<key>Exceptions</key>
+	<string>Uitzonderingen</string>
+	<key>Exchange Rate</key>
+	<string>Wisselkoers</string>
+	<key>Existing Reports</key>
+	<string>Bestaande nota's</string>
+	<key>Expense</key>
+	<string>Onkosten</string>
+	<key>Expense Locations</key>
+	<string>Onkostenlocaties</string>
+	<key>Expense Queued</key>
+	<string>Onkosten in wachtrij geplaatst</string>
+	<key>Expense Trip</key>
+	<string>Onkosten reis</string>
+	<key>Expense Type</key>
+	<string>Onkostentype</string>
+	<key>Expense Updates</key>
+	<string>Onkostenupdates</string>
+	<key>Expense a trip from TripIt</key>
+	<string>Onkosten van een reis vanuit TripIt</string>
+	<key>ExpenseIt Entries</key>
+	<string>ExpenseIt-items</string>
+	<key>ExpenseIt Entry</key>
+	<string>ExpenseIt-item</string>
+	<key>ExpenseTracker version</key>
+	<string>SmartExpense-versie %@</string>
+	<key>Expensed</key>
+	<string>Onkosten opgegeven</string>
+	<key>Expenses</key>
+	<string>Onkosten</string>
+	<key>Expenses Combined</key>
+	<string>Gecombineerde onkosten</string>
+	<key>Expenses cannot be added offline</key>
+	<string>Onkosten kunnen niet offline worden toegevoegd.</string>
+	<key>Expensing the Trip</key>
+	<string>Onkosten voor de reis opgeven</string>
+	<key>Export</key>
+	<string>Exporteren</string>
+	<key>Express</key>
+	<string>Expres</string>
+	<key>FACEBOOK_AUTH_FAILED</key>
+	<string>Verificatie met Facebook is mislukt.  Zorg dat Private Browsing is uitgeschakeld in uw Safari-browser.</string>
+	<key>FACEBOOK_INCOMPLETE_INFO_SIGNIN_MSG</key>
+	<string>Aanmelden met uw Facebook-referenties is niet mogelijk. Controleer of uw Facebook-profiel een geldig e-mailadres bevat en meld u aan met het e-mailadres van uw Facebook-account.</string>
+	<key>FACEBOOK_INCOMPLETE_INFO_SIGNUP_MSG</key>
+	<string>Aanmelden met uw Facebook-referenties is niet mogelijk.  Controleer of uw e-mailadres, uw voornaam en uw achternaam zijn ingevuld in uw Facebook-profiel en meld u aan met het e-mailadres van uw Facebook-account.</string>
+	<key>FACEBOOK_SIGNIN_FAILED_MSG</key>
+	<string>Onverwachte fout.  Probeer u opnieuw bij Facebook aan te melden of probeer een andere aanmeldingsmethode op de aanmeldingspagina.</string>
+	<key>FACEBOOK_SIGNUP_FAILED_MSG</key>
+	<string>Onverwachte fout.  Probeer u opnieuw bij Facebook aan te melden of probeer een andere aanmeldingsmethode op de aanmeldingspagina.</string>
+	<key>FIELD_MAX_LENGTH_ERR_MSG</key>
+	<string>Voer niet meer dan %@ tekens in.</string>
+	<key>FILL_IN_PARENT_MLIST_FIELD</key>
+	<string>Vul het bovenliggende veld %@ eerst in.</string>
+	<key>FIRST_NAME</key>
+	<string>Voornaam</string>
+	<key>FIX_EMAIL_RESET_PASSWORD</key>
+	<string>Voer in het e-mailveld een geldig e-mailadres in voordat u op de link Uw wachtwoord opnieuw instellen klikt.</string>
+	<key>FIX_REPORT_NAME_MSG</key>
+	<string>Selecteer een bestaande nota of voer een geldige notanaam in en selecteer de nieuwe nota.</string>
+	<key>FLEX_FARING_ERROR_MSG</key>
+	<string>Gebruik de webversie voor het boeken van een vlucht tussen deze plaatsen.</string>
+	<key>FLIGHT_STATUS_MSG</key>
+	<string>Vluchtstatistieken bijgewerkt op</string>
+	<key>FORM</key>
+	<string>FORMULIER</string>
+	<key>FORM_FIELDS_INVALID</key>
+	<string>Vul alle verplichte velden in en corrigeer alle fouten in het formulier, voordat u het opslaat.</string>
+	<key>FOUND_COUNT</key>
+	<string>gevonden: %i</string>
+	<key>FREQUENT_FLYER_NO_SEL_MSG</key>
+	<string>U hebt een of meer accounts voor loyaliteitsprogramma's, maar u hebt er geen geselecteerd voor deze boeking.  Selecteer 'OK' als u verder wilt gaan zonder account of 'Annuleren' als u een account wilt selecteren.</string>
+	<key>Facebook</key>
+	<string>Facebook</string>
+	<key>Failed</key>
+	<string>Mislukt</string>
+	<key>Failed to add to report</key>
+	<string>Toevoegen van items aan nota is mislukt</string>
+	<key>Failed to download receipt</key>
+	<string>Downloaden van kwitantie is mislukt</string>
+	<key>Failed to import Itinerary</key>
+	<string>Het importeren van het reisschema is mislukt</string>
+	<key>Failed to import entry</key>
+	<string>Kan niet alle onkosten importeren.</string>
+	<key>Failed to retrieve attendees in selected group</key>
+	<string>Ophalen van deelnemers in geselecteerde groep is mislukt</string>
+	<key>Failed to save Itinerary Stop</key>
+	<string>Tussenstop is niet opgeslagen</string>
+	<key>Failed to save external list item</key>
+	<string>Opslaan van extern lijstitem is mislukt</string>
+	<key>Failure</key>
+	<string>Mislukt</string>
+	<key>Fare Choices</key>
+	<string>Tariefopties</string>
+	<key>Feature not enabled for this demo</key>
+	<string>Functie niet beschikbaar voor deze demo</string>
+	<key>Features</key>
+	<string>Functies</string>
+	<key>Fee</key>
+	<string>Kosten</string>
+	<key>Fetching Data</key>
+	<string>Gegevens ophalen</string>
+	<key>Fetching Expense Data</key>
+	<string>Onkostengegevens ophalen</string>
+	<key>Fetching Filter Results</key>
+	<string>Filterresultaten ophalen</string>
+	<key>Fetching Hotel Rates</key>
+	<string>Hoteltarieven ophalen</string>
+	<key>Fetching Location Data</key>
+	<string>Locatiegegevens ophalen</string>
+	<key>Fetching Trip</key>
+	<string>Reis ophalen</string>
+	<key>Fetching the Feed</key>
+	<string>De feed ophalen</string>
+	<key>Filter</key>
+	<string>Filter</string>
+	<key>Find Travel</key>
+	<string>Reis zoeken</string>
+	<key>First</key>
+	<string>Eerste</string>
+	<key>First Name</key>
+	<string>Voornaam</string>
+	<key>Flight Details</key>
+	<string>Vluchtdetails</string>
+	<key>Flight Duration</key>
+	<string>Vluchtduur</string>
+	<key>Flight Options</key>
+	<string>Vluchtopties</string>
+	<key>Flight Rule Violation</key>
+	<string>Overtreding vluchtregel</string>
+	<key>Flight Schedules</key>
+	<string>Vluchtschema's</string>
+	<key>Flight Search</key>
+	<string>Vlucht zoeken</string>
+	<key>Flight Status</key>
+	<string>Vluchtstatus</string>
+	<key>Flights</key>
+	<string>Vluchten</string>
+	<key>Flights_subline</key>
+	<string>Snel vluchten vinden en boeken</string>
+	<key>For Example: say Find a Flight from San Francisco to New York for next week</key>
+	<string>Bijvoorbeeld: u wilt naar een vlucht zoeken van Amsterdam naar Parijs voor volgende week</string>
+	<key>For Example: say Find a hotel in San Francisco for next week</key>
+	<string>Bijvoorbeeld: zeg 'een hotel in San Francisco voor volgende week voor 3 nachten vinden'</string>
+	<key>Forgot Username or Password?</key>
+	<string>Gebruikersnaam of wachtwoord vergeten?</string>
+	<key>Forgot mobile password (PIN)?</key>
+	<string>Mobiel wachtwoord (PIN) vergeten?</string>
+	<key>Forgot password?</key>
+	<string>Wachtwoord vergeten?</string>
+	<key>Free up memory and retry receipt upload</key>
+	<string>Maak geheugen vrij en probeer de kwitantie later te uploaden.</string>
+	<key>Frequent Flyer Program</key>
+	<string>Loyaliteitsprogramma</string>
+	<key>Frequent Flyer Warning</key>
+	<string>Waarschuwing loyaliteitsprogramma</string>
+	<key>Friday_Short</key>
+	<string>vr</string>
+	<key>From</key>
+	<string>Van</string>
+	<key>From Location</key>
+	<string>Vertreklocatie</string>
+	<key>From Station</key>
+	<string>Van-station</string>
+	<key>Full</key>
+	<string>Volledig</string>
+	<key>Full Hybrid</key>
+	<string>Hybride groot</string>
+	<key>Full Pickup</key>
+	<string>Pickup groot</string>
+	<key>Full SUV</key>
+	<string>SUV groot</string>
+	<key>Future Trips</key>
+	<string>Aanstaande</string>
+	<key>GOOGLE_AUTH_FAILED_MSG</key>
+	<string>Uw toegang tot Concur SmartExpense kan niet worden geautoriseerd met Google.</string>
+	<key>GOOGLE_INCOMPLETE_INFO_SIGNIN_MSG</key>
+	<string>Aanmelden met uw Google-referenties is niet mogelijk.  Controleer of uw Google-account een geldig e-mailadres en een geldig profiel heeft.</string>
+	<key>GOOGLE_INCOMPLETE_INFO_SIGNUP_MSG</key>
+	<string>Aanmelden met uw Google-referenties is niet mogelijk.  Controleer of uw e-mailadres, voornaam en achternaam zijn ingevuld in uw Google-profiel.</string>
+	<key>Gate token</key>
+	<string>Gate %@</string>
+	<key>GateGuru</key>
+	<string>GateGuru</string>
+	<key>Gathering data from TripIt</key>
+	<string>Gegevens ophalen uit TripIt</string>
+	<key>Generate Expenses</key>
+	<string>Onkosten genereren</string>
+	<key>Get Help</key>
+	<string>Hulp vragen</string>
+	<key>GetApprovedForAirHotelAndMore</key>
+	<string>Goedkeuring krijgen voor vluchten, hotels en meer</string>
+	<key>Google</key>
+	<string>Google</string>
+	<key>Greater than 25</key>
+	<string>Meer dan 25</string>
+	<key>HAS_DYNAMIC_FIELDS_MSG</key>
+	<string>Het boekingsbeleid van uw bedrijf wordt op dit moment niet ondersteund. Ondersteuning is binnenkort beschikbaar. Boek de reis met de webversie van Concur.</string>
+	<key>HIGH_RESOLUTION_IMAGE</key>
+	<string>Hoge resolutie (1000x1000 px)</string>
+	<key>HOME_PAGE</key>
+	<string>Concur</string>
+	<key>HOME_PAGE_BREEZE</key>
+	<string>Concur Breeze</string>
+	<key>HOTEL</key>
+	<string>Hotel/geen</string>
+	<key>HOTEL_BOOKING</key>
+	<string>Kamer boeken</string>
+	<key>HOTEL_BOOKING_ADDRESS_MISSING_VIOLATIONS</key>
+	<string>Voordat u deze kamer reserveert, moet u in rood weergegeven beleidsschendingen verhelpen.</string>
+	<key>HOTEL_BOOKING_VIEW_BOOKING_ERROR_MESSAGE</key>
+	<string>Het hotel kan niet worden geboekt.</string>
+	<key>HOTEL_BOOKING_VIEW_CANCELLATION_POLICY_DESCRIPTION</key>
+	<string>Neem de details van het annuleringsbeleid door voordat u deze kamer reserveert.</string>
+	<key>HOTEL_BOOKING_VIEW_CANCELLATION_POLICY_TITLE</key>
+	<string>Annuleringsbeleid</string>
+	<key>HOTEL_BOOKING_VIEW_CONFIRM_BOOKING_MESSAGE</key>
+	<string>Weet u zeker dat u deze kamer wilt reserveren?</string>
+	<key>HOTEL_BOOKING_VIEW_CONFIRM_BOOKING_TITLE</key>
+	<string>Bevestig a.u.b.</string>
+	<key>HOTEL_BOOKING_VIEW_DAILY_RATE</key>
+	<string>Dagtarief: </string>
+	<key>HOTEL_BOOKING_VIEW_MISSING_VIOLATION_INFO_TITLE</key>
+	<string>Ontbrekende velden</string>
+	<key>HOTEL_BOOKING_VIEW_MISSING_VIOLATION_JUSTIFICATION</key>
+	<string>Voordat u het bedrijfsbeleid overtreedt door deze kamer te reserveren, moet u een verantwoording opgeven in het rode veld.</string>
+	<key>HOTEL_BOOKING_VIEW_MISSING_VIOLATION_REASON</key>
+	<string>Voordat u het bedrijfsbeleid overtreedt door deze kamer te reserveren, moet u een reden opgeven in het rode veld.</string>
+	<key>HOTEL_BOOKING_VIEW_MISSING_VIOLATION_REASON_AND_JUSTIFICATION</key>
+	<string>Voordat u het bedrijfsbeleid overtreedt door deze kamer te reserveren, moet u een reden en een verantwoording opgeven in de rode velden.</string>
+	<key>HOTEL_BOOKING_VIEW_ROOM</key>
+	<string>Kamer</string>
+	<key>HOTEL_BOOKING_VIOLATION_JUSTIFICATION_TITLE</key>
+	<string>Verantwoording voor overtreding</string>
+	<key>HOTEL_BOOKING_WITH_DEPOSIT_CONFIRM_BOOKING_MESSAGE</key>
+	<string>Weet u zeker dat u deze kamer wilt reserveren?</string>
+	<key>HOTEL_BOOKNIG_VIOLATION_JUSTIFICATION_PLACEHOLDER_TEXT</key>
+	<string>Voer een verantwoording in voor het boeken van deze kamer.</string>
+	<key>HOTEL_CREDIT_CARD</key>
+	<string>Kredietkaart selecteren</string>
+	<key>HOTEL_DETAILS_VIEW_FEES</key>
+	<string>Kosten</string>
+	<key>HOTEL_ROOM_LIST</key>
+	<string>Kamer selecteren</string>
+	<key>HOTEL_SEARCH_RESULTS</key>
+	<string>Hotel selecteren</string>
+	<key>HOTEL_VIEW_FIND_HOTELS_WITHIN</key>
+	<string>Hotels zoeken binnen</string>
+	<key>HOTEL_VIEW_HOTEL_NAME_RESTRICTIONS</key>
+	<string>Beperkingen voor hotelnaam</string>
+	<key>HOTEL_VIEW_HOTEL_NAME_RESTRICTIONS_PLACEHOLDER_TEXT</key>
+	<string>Hotels zoeken met namen die deze tekst bevatten</string>
+	<key>HOTEL_VIEW_KILOMETERS</key>
+	<string>km</string>
+	<key>HOTEL_VIEW_LOCATION</key>
+	<string>Locatie</string>
+	<key>HOTEL_VIEW_MILE</key>
+	<string>mijl</string>
+	<key>HOTEL_VIEW_NO_HOTELS_MESSAGE</key>
+	<string>Er zijn geen overeenkomende hotels gevonden.  Wijzig uw zoekcriteria en probeer het opnieuw.</string>
+	<key>HOTEL_VIEW_NO_HOTELS_TITLE</key>
+	<string>Geen overeenkomende hotels</string>
+	<key>HOTEL_VIEW_NUMBER_SPACE_KILOMETERS_OR_MILES</key>
+	<string>%@ %@</string>
+	<key>HOTEL_VIEW_SEARCHING_FOR_HOTELS_AT</key>
+	<string>Zoeken naar hotels op</string>
+	<key>HOTEL_VIEW_SEARCHING_FOR_HOTELS_TO</key>
+	<string>naar</string>
+	<key>HOTEL_VIEW_SEARCHING_FOR_HOTELS_WITH_AVAILABILITY</key>
+	<string>met kamers beschikbaar vanaf</string>
+	<key>HOTEL_VIEW_SEARCH_BUTTON_TITLE</key>
+	<string>Zoeken naar hotels</string>
+	<key>HOTEL_VIEW_SELECT_PREFERENCE</key>
+	<string>Voorkeur selecteren</string>
+	<key>HOTEL_VIEW_SMOKING_PREFERENCE</key>
+	<string>Voorkeur voor roken</string>
+	<key>HOTEL_VIEW_SPECIFY_LOCATION_MESSAGE</key>
+	<string>Geef een locatie op.</string>
+	<key>HOTEL_VIEW_SPECIFY_LOCATION_TITLE</key>
+	<string>Locatie verplicht</string>
+	<key>HOTEL_VIEW_TIMEOUT_MESSAGE</key>
+	<string>Er zijn geen overeenkomende hoteltarieven gevonden. Wijzig uw zoekcriteria en probeer het opnieuw.</string>
+	<key>HOTEL_VIEW_TIMEOUT_TITLE</key>
+	<string>Geen overeenkomstige hoteltarieven</string>
+	<key>HOTEL_VIEW_WITH_NAMES_CONTAINING</key>
+	<string>Met namen die het volgende bevatten</string>
+	<key>Having trouble signing in?</key>
+	<string>Hebt u problemen met aanmelden?</string>
+	<key>Help for PIN</key>
+	<string>Uw pincode is een alternatieve manier om u aan te melden en u kunt deze maken wanneer u door uw bedrijf automatisch wordt aangemeld bij de webversie van Concur en u uw wachtwoord niet kent. 
+
+Als u een pincode wilt maken, gaat u naar de webversie van Concur (Profiel&gt;Mobile-registratie).</string>
+	<key>Help for PIN - Gov</key>
+	<string>Uw pincode is een alternatieve manier om u aan te melden en u kunt deze maken wanneer u door uw reisbureau automatisch wordt aangemeld bij de webversie van Concur en u uw wachtwoord niet kent. 
+
+Als u een pincode wilt maken, gaat u naar de webversie van Concur (Profiel&gt;Mobile-registratie).</string>
+	<key>Help for Password</key>
+	<string>Als uw bedrijf PIN toestaat voor mobiel aanmelden: Ga terug naar het vorige scherm en dien uw bij Concur registreerde e-mail in. Wij zullen u instructies sturen hoe u zich moet aanmelden.
+
+Als uw bedrijf een wachtwoord vereist: Gebruik het wachtwoord dat u ook gebruikt om u aan te melden op de website van Concur.</string>
+	<key>Help for Password - Gov</key>
+	<string>Uw wachtwoord is het wachtwoord waarmee u zich aanmeldt bij de webversie van Concur. U moet uw wachtwoord gebruiken voor de mobiele app.
+
+Als u uw wachtwoord voor Concur niet weet, neem dan contact op met uw reisbureau.</string>
+	<key>Help for User Name</key>
+	<string>In de meeste gevallen logt u in bij onze app met dezelfde gebruikersnaam en hetzelfde wachtwoord die u gebruikt voor de webversie van Concur.
+ 
+Als u deze gegevens niet heeft, verstuurt u uw e-mail op het vorige scherm om inloginformatie te ontvangen, of neemt u contact op met de beheerder van uw bedrijf.
+
+</string>
+	<key>Help for User Name - Gov</key>
+	<string>Uw gebruikersnaam is de naam waarmee u zich aanmeldt bij de webversie van Concur. U moet uw gebruikersnaam gebruiken voor de mobiele app.
+
+Als u uw gebruikersnaam voor Concur niet weet, neem dan contact op met de beheerder van uw reisbureau.</string>
+	<key>Hide Offers</key>
+	<string>Aanbiedingen verbergen</string>
+	<key>Home</key>
+	<string>Start</string>
+	<key>Hotel</key>
+	<string>Hotel</string>
+	<key>Hotel Dates</key>
+	<string>Hoteldatums</string>
+	<key>Hotel Name</key>
+	<string>Hotelnaam</string>
+	<key>Hotel Price to Beat</key>
+	<string>Price-to-Beat voor hotel</string>
+	<key>Hotel Rule Violation</key>
+	<string>Overtreding hotelregel</string>
+	<key>Hotel Search</key>
+	<string>Hotel zoeken</string>
+	<key>Hotel cancelled from mobile device</key>
+	<string>Hotel geannuleerd met mobiel apparaat</string>
+	<key>Hotels</key>
+	<string>Hotels</string>
+	<key>Hotels With Names Containing</key>
+	<string>Hotels met namen die het volgende bevatten</string>
+	<key>Hotels Within</key>
+	<string>Hotels binnen</string>
+	<key>Hotels near</key>
+	<string>Hotels nabij </string>
+	<key>Hotels near you</key>
+	<string>Hotels in uw buurt</string>
+	<key>Hotels_subline</key>
+	<string>Check in in het perfecte hotel</string>
+	<key>Hour</key>
+	<string>Uur</string>
+	<key>How would you like to book?</key>
+	<string>Hoe wilt u boeken?</string>
+	<key>I Forgot</key>
+	<string>Ik ben het vergeten</string>
+	<key>IDV Arrive</key>
+	<string>Aankomst</string>
+	<key>IDV Arrives in t at t</key>
+	<string>Komt aan in %@ op %@</string>
+	<key>IDV Body</key>
+	<string>Hoofdtekst</string>
+	<key>IDV Check In</key>
+	<string>Inchecken</string>
+	<key>IDV Check Out</key>
+	<string>Uitchecken</string>
+	<key>IDV Confirmation</key>
+	<string>Bevestiging</string>
+	<key>IDV Daily</key>
+	<string>Dagelijks</string>
+	<key>IDV Depart</key>
+	<string>Vertrek</string>
+	<key>IDV Departs from t at t</key>
+	<string>Vertrekt uit %@ op %@</string>
+	<key>IDV Drop Off</key>
+	<string>Terugbrengen</string>
+	<key>IDV Operated by t Flight t</key>
+	<string>Uitgevoerd door %@ vlucht %@</string>
+	<key>IDV Persons</key>
+	<string>Personen</string>
+	<key>IDV Pick Up</key>
+	<string>Afhalen</string>
+	<key>IDV Reserved for</key>
+	<string>Gereserveerd voor</string>
+	<key>IDV Rooms</key>
+	<string>Kamers</string>
+	<key>IDV Seat Map for t</key>
+	<string>Stoelenoverzicht voor %@</string>
+	<key>IDV Social Publishing</key>
+	<string>Sociaal publiceren</string>
+	<key>IDV Terminal Map for t</key>
+	<string>Terminalkaart voor %@</string>
+	<key>IDV Terminal t Gate t</key>
+	<string>Terminal %@ Gate %@</string>
+	<key>IDV Web site for t</key>
+	<string>Website voor %@</string>
+	<key>IDV property name</key>
+	<string>Naam van eigenschap</string>
+	<key>IDV t Flight t</key>
+	<string>%@ Vlucht @%</string>
+	<key>IMAGE_DOWN_SCALED_MSG</key>
+	<string>De afbeelding is verkleind tot minder dan 4 MB.  Controleer de inhoud van de afbeelding voordat u deze met het item opslaat.</string>
+	<key>INFO</key>
+	<string>Informatie</string>
+	<key>INTEGER_NEGATIVE_ERR_MSG</key>
+	<string>Dit veld mag geen negatieve waarde bevatten</string>
+	<key>INTEGER_TOO_BIG_ERR_MSG</key>
+	<string>Geheel getal is te groot</string>
+	<key>INTEGER_VALIDATION_ERR_MSG</key>
+	<string>In dit veld moet een geheel getal worden ingevoerd.</string>
+	<key>INVALID_CONCUR_CREDENTIALS</key>
+	<string>Onjuiste aanmeldingsgegevens</string>
+	<key>INVALID_DEVICE_MSG</key>
+	<string>De aanvraag voor het opnieuw instellen van de pincode is vanaf een ander apparaat gedaan. Gebruik hetzelfde apparaat als het apparaat dat u gebruikt heeft voor de anvraag voor het opnieuw instellen van de pincode</string>
+	<key>INVALID_LOGIN_MSG</key>
+	<string>Probeer uw aanmeldingsgegevens opnieuw in te voeren of selecteer 'Ik ben vergeten om aanmeldingsinstructies te ontvangen'.</string>
+	<key>INVALID_PIN_LEN_MSG</key>
+	<string>Uw pincode moet uit minimaal %@ tekens bestaan</string>
+	<key>INVALID_PIN_MSG</key>
+	<string>De pincode mag letters, cijfers en speciale tekens bevatten, maar geen spatie.</string>
+	<key>INVALID_PIN_SPECIAL_CHARACTERS</key>
+	<string>De door u ingevoerde pincode bevat geen speciale tekens. De pincode voor mobiel moet minstens 1 speciaal teken bevatten. Bijvoorbeeld: !, $, %, +, en =.</string>
+	<key>INVALID_PIN_SPECIAL_MIXED_CASE</key>
+	<string>De pincode moet minimaal één hoofdletter [A-Z] en één kleine letter [a-z] bevatten.</string>
+	<key>INVALID_USERID_MSG</key>
+	<string>Voer een geldige aanmeldings-ID in.%@Deze moet bestaan uit uw aanmeldingsnaam, gevolgd door een @-symbool en het domein van uw bedrijf.</string>
+	<key>INVOICE_LINEITEMS</key>
+	<string>Factuurdetails</string>
+	<key>INVOICE_LINEITEM_DETAIL</key>
+	<string>Regelitem</string>
+	<key>INVOICE_SUMMARY</key>
+	<string>Factuuroverzicht</string>
+	<key>INVOICE_VENDOR</key>
+	<string>Leverancier van factuur</string>
+	<key>ITEMIZATIONS</key>
+	<string>Specificaties</string>
+	<key>ITEMIZATION_LIST</key>
+	<string>Specificatielijst</string>
+	<key>ITEMS_TO_APPROVE</key>
+	<string>%d items om goed te keuren</string>
+	<key>ITIN_DETAILS</key>
+	<string>Segmentdetails</string>
+	<key>ITIN_DETAILS_VIEW_AIR</key>
+	<string>Vlucht</string>
+	<key>ITIN_DETAILS_VIEW_AIRCOND</key>
+	<string>Airconditioning</string>
+	<key>ITIN_DETAILS_VIEW_AIRCRAFT</key>
+	<string>Vliegtuig</string>
+	<key>ITIN_DETAILS_VIEW_AIRPORT</key>
+	<string>Luchthaven</string>
+	<key>ITIN_DETAILS_VIEW_ALLOWABLE_MILES</key>
+	<string>Toegestane mijlen</string>
+	<key>ITIN_DETAILS_VIEW_AMENITIES</key>
+	<string>Voorzieningen</string>
+	<key>ITIN_DETAILS_VIEW_ARRIVAL</key>
+	<string>Aankomst</string>
+	<key>ITIN_DETAILS_VIEW_ARRIVE</key>
+	<string>Aankomst</string>
+	<key>ITIN_DETAILS_VIEW_BAGGAGE</key>
+	<string>Bagage</string>
+	<key>ITIN_DETAILS_VIEW_BODY</key>
+	<string>Carrosserietype</string>
+	<key>ITIN_DETAILS_VIEW_BOOKING</key>
+	<string>Boeking</string>
+	<key>ITIN_DETAILS_VIEW_CABIN</key>
+	<string>Cabine</string>
+	<key>ITIN_DETAILS_VIEW_CANCEL_POLICY</key>
+	<string>Annuleringsbeleid</string>
+	<key>ITIN_DETAILS_VIEW_CAR</key>
+	<string>Autohuur</string>
+	<key>ITIN_DETAILS_VIEW_CARRIER</key>
+	<string>Vervoerder</string>
+	<key>ITIN_DETAILS_VIEW_CHECK_IN</key>
+	<string>Inchecken</string>
+	<key>ITIN_DETAILS_VIEW_CHECK_OUT</key>
+	<string>Uitchecken</string>
+	<key>ITIN_DETAILS_VIEW_CITY</key>
+	<string>Plaats</string>
+	<key>ITIN_DETAILS_VIEW_CLASS</key>
+	<string>Klasse</string>
+	<key>ITIN_DETAILS_VIEW_CONFIRM_NUM</key>
+	<string>Bevestigingsnr.</string>
+	<key>ITIN_DETAILS_VIEW_CONF_NUM</key>
+	<string>Bevestigingsnr.</string>
+	<key>ITIN_DETAILS_VIEW_CONTACT</key>
+	<string>Contactpersoon</string>
+	<key>ITIN_DETAILS_VIEW_DAILY_RATE</key>
+	<string>Dagtarief</string>
+	<key>ITIN_DETAILS_VIEW_DEPART</key>
+	<string>Vertrek</string>
+	<key>ITIN_DETAILS_VIEW_DEPARTURE</key>
+	<string>Vertrek</string>
+	<key>ITIN_DETAILS_VIEW_DISCOUNT</key>
+	<string>Kortingscode</string>
+	<key>ITIN_DETAILS_VIEW_DIVERSION</key>
+	<string>Omleiding</string>
+	<key>ITIN_DETAILS_VIEW_DROP_OFF</key>
+	<string>Terugbrengen</string>
+	<key>ITIN_DETAILS_VIEW_DROP_OFF_ADDRESS</key>
+	<string>Retouradres</string>
+	<key>ITIN_DETAILS_VIEW_DROP_OFF_INSTRUCTIONS</key>
+	<string>Terugbrenginstructies</string>
+	<key>ITIN_DETAILS_VIEW_DURATION</key>
+	<string>Duur</string>
+	<key>ITIN_DETAILS_VIEW_END</key>
+	<string>Einde</string>
+	<key>ITIN_DETAILS_VIEW_EQUIP</key>
+	<string>Speciale uitrusting:</string>
+	<key>ITIN_DETAILS_VIEW_FLIGHT</key>
+	<string>Vlucht</string>
+	<key>ITIN_DETAILS_VIEW_FLIGHT_WITH_OB</key>
+	<string>%@ #%@ (%@ #%@)</string>
+	<key>ITIN_DETAILS_VIEW_GATE</key>
+	<string>Gate</string>
+	<key>ITIN_DETAILS_VIEW_HOTEL</key>
+	<string>Hotel</string>
+	<key>ITIN_DETAILS_VIEW_INFO</key>
+	<string>Info</string>
+	<key>ITIN_DETAILS_VIEW_MAP</key>
+	<string>Toewijzen</string>
+	<key>ITIN_DETAILS_VIEW_MEAL</key>
+	<string>Maaltijd</string>
+	<key>ITIN_DETAILS_VIEW_MEETING_INSTRUCTIONS</key>
+	<string>Instructies voor vergadering</string>
+	<key>ITIN_DETAILS_VIEW_MINUTES</key>
+	<string>%@ minuten</string>
+	<key>ITIN_DETAILS_VIEW_NUMBER_IN_PARTY</key>
+	<string>Aantal in gezelschap</string>
+	<key>ITIN_DETAILS_VIEW_NUMBER_OF_PERSONS</key>
+	<string>Aantal personen</string>
+	<key>ITIN_DETAILS_VIEW_OPERATED</key>
+	<string>Uitgevoerd door %@ - %@</string>
+	<key>ITIN_DETAILS_VIEW_PARKING</key>
+	<string>Parkeerplaatsen</string>
+	<key>ITIN_DETAILS_VIEW_PICKUP_ADDRESS</key>
+	<string>Afhaaladres</string>
+	<key>ITIN_DETAILS_VIEW_PICKUP_INSTRUCTIONS</key>
+	<string>Afhaalinstructies</string>
+	<key>ITIN_DETAILS_VIEW_PLATFORM</key>
+	<string>Perron</string>
+	<key>ITIN_DETAILS_VIEW_PRICE</key>
+	<string>Prijs</string>
+	<key>ITIN_DETAILS_VIEW_RAIL</key>
+	<string>Trein</string>
+	<key>ITIN_DETAILS_VIEW_RATE</key>
+	<string>Tarief</string>
+	<key>ITIN_DETAILS_VIEW_RATE_DESCRIPTION</key>
+	<string>Beschrijving tarief</string>
+	<key>ITIN_DETAILS_VIEW_RATE_TYPE</key>
+	<string>Tarieftype</string>
+	<key>ITIN_DETAILS_VIEW_RESERVATION</key>
+	<string>Reservering</string>
+	<key>ITIN_DETAILS_VIEW_REZ</key>
+	<string>Reservering</string>
+	<key>ITIN_DETAILS_VIEW_ROOM</key>
+	<string>Kamer</string>
+	<key>ITIN_DETAILS_VIEW_SEAT</key>
+	<string>Stoel</string>
+	<key>ITIN_DETAILS_VIEW_SEGMENT_DETAILS</key>
+	<string>Segmentdetails</string>
+	<key>ITIN_DETAILS_VIEW_SPECIAL_INSTRUCTIONS</key>
+	<string>Speciale instructies</string>
+	<key>ITIN_DETAILS_VIEW_START</key>
+	<string>Begin</string>
+	<key>ITIN_DETAILS_VIEW_STATION</key>
+	<string>Station</string>
+	<key>ITIN_DETAILS_VIEW_STATUS</key>
+	<string>Status</string>
+	<key>ITIN_DETAILS_VIEW_STOPS</key>
+	<string>Tussenstops</string>
+	<key>ITIN_DETAILS_VIEW_TERMINAL</key>
+	<string>Terminal</string>
+	<key>ITIN_DETAILS_VIEW_TOTAL_RATE</key>
+	<string>Totaalprijs</string>
+	<key>ITIN_DETAILS_VIEW_TRAIN_TYPE</key>
+	<string>Type trein</string>
+	<key>ITIN_DETAILS_VIEW_TRANSMISSION</key>
+	<string>Verzending</string>
+	<key>ITIN_DETAILS_VIEW_TYPE</key>
+	<string>Type</string>
+	<key>ITIN_DETAILS_VIEW_VENDOR</key>
+	<string>Leverancier</string>
+	<key>ITIN_DETAILS_VIEW_WAGON_NUM</key>
+	<string>Wagonnr.</string>
+	<key>If any changes have been made by your agent</key>
+	<string>Als uw agent wijzigingen heeft aangebracht, duurt het mogelijk enkele minuten voordat uw reisschema's is bijgewerkt.</string>
+	<key>If you continue to experience</key>
+	<string>Probeer het opnieuw.  Als de problemen met de toegang tot het systeem blijven optreden, moet u contact opnemen met de helpdesk van uw bedrijf of met de afdeling voor reizen/onkosten.</string>
+	<key>If you continue to experience SU</key>
+	<string>Probeer het opnieuw.  Als u problemen blijft houden met de toegang tot het systeem, neem dan contact op met de ondersteuning van Concur.</string>
+	<key>If your plans change</key>
+	<string>Als uw plannen wijzigen, deze annuleren en onderweg een ander hotel boeken</string>
+	<key>Image Not Available</key>
+	<string>Afbeelding niet beschikbaar</string>
+	<key>Immediate Assistance Required</key>
+	<string>Onmiddellijk hulp vereist</string>
+	<key>Import Error</key>
+	<string>Importfout</string>
+	<key>Import Expenses</key>
+	<string>Onkosten importeren</string>
+	<key>Import and Match</key>
+	<string>Importeren en matchen</string>
+	<key>Incorrect Password</key>
+	<string>Onjuist wachtwoord</string>
+	<key>Individual Edition</key>
+	<string>Individuele editie</string>
+	<key>Infants</key>
+	<string>Baby's</string>
+	<key>Info</key>
+	<string>Info</string>
+	<key>Intermediate</key>
+	<string>Middenklasse</string>
+	<key>Intermediate Hybrid</key>
+	<string>Hybride middenklasse</string>
+	<key>Intermediate SUV</key>
+	<string>SUV middenklasse</string>
+	<key>Invalid Arrival Location</key>
+	<string>Ongeldige aankomstlocatie</string>
+	<key>Invalid Departure Date</key>
+	<string>Ongeldige vertrekdatum</string>
+	<key>Invalid Departure Location</key>
+	<string>Ongeldige vertreklocatie</string>
+	<key>Invalid Device</key>
+	<string>Ongeldig apparaat</string>
+	<key>Invalid Email or Username</key>
+	<string>Ongeldige e-mail of gebruikersnaam</string>
+	<key>Invalid Login Credentials</key>
+	<string>Ongeldige aanmeldingsreferenties</string>
+	<key>Invalid PIN</key>
+	<string>Ongeldige pincode</string>
+	<key>Invalid PIN length</key>
+	<string>Pincode is te lang</string>
+	<key>Invalid Password</key>
+	<string>Ongeldig wachtwoord</string>
+	<key>Invalid Return Date</key>
+	<string>Ongeldige retourdatum</string>
+	<key>Invalid User Name</key>
+	<string>Ongeldige gebruikersnaam</string>
+	<key>Invalid email address</key>
+	<string>Ongeldig e-mailadres</string>
+	<key>Invitation(s) Sent</key>
+	<string>Uitnodiging(en) verzonden</string>
+	<key>Invitations Sent</key>
+	<string>Hartelijk dank dat u SmartExpense bekend hebt gemaakt.</string>
+	<key>Invite</key>
+	<string>Uitnodigen</string>
+	<key>Invite colleagues to use SmartExpense</key>
+	<string>Nodig collega's uit om SmartExpense te gebruiken</string>
+	<key>Invoice</key>
+	<string>Factuur</string>
+	<key>Invoice Approval</key>
+	<string>Factuurgoedkeuring</string>
+	<key>Invoice Image</key>
+	<string>Factuurafbeelding</string>
+	<key>InvoiceApprove</key>
+	<string>Factuur</string>
+	<key>Invoices</key>
+	<string>Facturen</string>
+	<key>Itemization not allowed</key>
+	<string>Specificatie is niet toegestaan voor dit item</string>
+	<key>Itemizations</key>
+	<string>Specificaties</string>
+	<key>Itemize</key>
+	<string>Specificeren</string>
+	<key>Itemized Entry</key>
+	<string>Gespecificeerd item</string>
+	<key>Itemized:</key>
+	<string>Gespecificeerd:</string>
+	<key>Itineraries</key>
+	<string>Reisschema’s</string>
+	<key>Itinerary</key>
+	<string>Reisschema</string>
+	<key>Itinerary List</key>
+	<string>Lijst met reisschema's</string>
+	<key>Itinerary Rule Violation</key>
+	<string>Overtreding reisschemaregel</string>
+	<key>Join</key>
+	<string>Samenvoegen</string>
+	<key>Join with Facebook</key>
+	<string>Deelnemen met Facebook</string>
+	<key>LABEL_ADD_BTN</key>
+	<string>Toevoegen</string>
+	<key>LABEL_AIR</key>
+	<string>Vlucht</string>
+	<key>LABEL_APPROVE_EXPENSES</key>
+	<string>Onkosten goedkeuren</string>
+	<key>LABEL_CANCEL_BTN</key>
+	<string>Annuleren</string>
+	<key>LABEL_CAR_RENTAL</key>
+	<string>Autohuur</string>
+	<key>LABEL_CLOSE_BTN</key>
+	<string>Sluiten</string>
+	<key>LABEL_DONE_BTN</key>
+	<string>Gereed</string>
+	<key>LABEL_EXPENSE</key>
+	<string>Onkosten</string>
+	<key>LABEL_EXPENSES</key>
+	<string>Onkosten</string>
+	<key>LABEL_HOTELS</key>
+	<string>Hotels</string>
+	<key>LABEL_LOGIN_NO_PIN</key>
+	<string>Wilt u een pincode instellen?</string>
+	<key>LABEL_LOGIN_PASSWORD</key>
+	<string>Wachtwoord of pincode</string>
+	<key>LABEL_LOGIN_REGISTER</key>
+	<string>Registreren</string>
+	<key>LABEL_LOGIN_SIGN_IN</key>
+	<string>Aanmelden</string>
+	<key>LABEL_LOGIN_USER_NAME</key>
+	<string>Gebruikersnaam</string>
+	<key>LABEL_OK_BTN</key>
+	<string>OK</string>
+	<key>LABEL_QUICK_EXPENSE</key>
+	<string>Contant</string>
+	<key>LABEL_REGISTER_ENTER_PIN</key>
+	<string>Pincode invoeren</string>
+	<key>LABEL_REGISTER_PASSWORD</key>
+	<string>Wachtwoord</string>
+	<key>LABEL_REGISTER_REENTER_PIN</key>
+	<string>Pincode opnieuw invoeren</string>
+	<key>LABEL_REGISTER_SIGN_IN</key>
+	<string>Aanmelden</string>
+	<key>LABEL_SAVE_BTN</key>
+	<string>Opslaan</string>
+	<key>LABEL_SEND_BTN</key>
+	<string>Verzenden</string>
+	<key>LABEL_SETTINGS</key>
+	<string>Instellingen</string>
+	<key>LABEL_SETTINGS_VIEW_APP_INFO</key>
+	<string>Toepassingsinformatie</string>
+	<key>LABEL_SETTINGS_VIEW_APP_NAME</key>
+	<string>Toepassingsnaam</string>
+	<key>LABEL_SETTINGS_VIEW_CONNECTION_SETTINGS</key>
+	<string>Verbindingsinstellingen</string>
+	<key>LABEL_SETTINGS_VIEW_REMEMBER_USER</key>
+	<string>Gebruikersnaam opslaan</string>
+	<key>LABEL_SETTINGS_VIEW_SAVE_BTN</key>
+	<string>Instellingen opslaan</string>
+	<key>LABEL_SETTINGS_VIEW_TWITTER</key>
+	<string>Twitter weergeven</string>
+	<key>LABEL_SETTINGS_VIEW_URI_NON_SSL</key>
+	<string>Geen SSL URI</string>
+	<key>LABEL_SETTINGS_VIEW_URL</key>
+	<string>URI van server</string>
+	<key>LABEL_SETTINGS_VIEW_VERSION</key>
+	<string>Versie</string>
+	<key>LABEL_SUBMIT_BTN</key>
+	<string>Indienen</string>
+	<key>LABEL_TAXI</key>
+	<string>Taxi</string>
+	<key>LABEL_TRAVEL</key>
+	<string>Reizen</string>
+	<key>LABEL_TRIPS</key>
+	<string>Reizen</string>
+	<key>LABEL_VENDOR_ADDR_CODE</key>
+	<string>Adrescode:</string>
+	<key>LABEL_VENDOR_CODE</key>
+	<string>Leverancierscode:</string>
+	<key>LAST_NAME</key>
+	<string>Achternaam</string>
+	<key>LNA_LOADING_TEXT</key>
+	<string>Uw huidige locatie ophalen...</string>
+	<key>LOCATION_NOT_FOUND_MSG</key>
+	<string>Uw huidige locatie is niet gevonden.</string>
+	<key>LOGIN</key>
+	<string>Aanmelden</string>
+	<key>LOG_UNAVAILABLE_MSG</key>
+	<string>Logboekgegevens zijn niet beschikbaar.</string>
+	<key>LOW_RESOLUTION_IMAGE</key>
+	<string>Lage resolutie (320x320 px)</string>
+	<key>Last Name</key>
+	<string>Achternaam</string>
+	<key>Last updated</key>
+	<string>Laatst bijgewerkt: %@</string>
+	<key>Last updated on</key>
+	<string>Laatst bijgewerkt op</string>
+	<key>Layover in</key>
+	<string>Reisonderbreking in</string>
+	<key>Learn More</key>
+	<string>Meer informatie</string>
+	<key>Least Preferred</key>
+	<string>Laagste voorkeur</string>
+	<key>Legs: token</key>
+	<string>Etappes: %@</string>
+	<key>Link Dropbox</key>
+	<string>Dropbox koppelen</string>
+	<key>Link Success</key>
+	<string>Koppeling is geslaagd</string>
+	<key>Link to TripIt</key>
+	<string>Koppelen aan TripIt</string>
+	<key>Link with TripIt</key>
+	<string>Koppelen met TripIt</string>
+	<key>Link with TripIt Header</key>
+	<string>Koppelen aan TripIt en uw reizen omzetten in onkostennota's.</string>
+	<key>Linked to Dropbox</key>
+	<string>Gekoppeld aan Dropbox</string>
+	<key>List</key>
+	<string>Lijst</string>
+	<key>List of your expenses</key>
+	<string>Uw onkostenlijst</string>
+	<key>Load Logs</key>
+	<string>Logboeken laden</string>
+	<key>Load more hotels</key>
+	<string>Meer hotels laden...</string>
+	<key>Loading Data</key>
+	<string>Gegevens laden</string>
+	<key>Loading Image</key>
+	<string>Afbeelding laden</string>
+	<key>Loading Receipt Image(s)</key>
+	<string>Kwitantieafbeelding(en) laden</string>
+	<key>Loading Receipts</key>
+	<string>Kwitanties laden</string>
+	<key>Loading Stations</key>
+	<string>Stations laden</string>
+	<key>Loading Trip</key>
+	<string>Reis laden</string>
+	<key>Loading delivery options</key>
+	<string>Leveringsopties laden</string>
+	<key>Loading more Hotels</key>
+	<string>Meer hotels laden</string>
+	<key>Loading trip data</key>
+	<string>Reisgegevens laden</string>
+	<key>Loading...</key>
+	<string>Laden...</string>
+	<key>Location</key>
+	<string>Locatie</string>
+	<key>Location Check Offline</key>
+	<string>Uw locatie kan niet worden gecontroleerd als u offline bent.  Probeer het later opnieuw.</string>
+	<key>Location Not Found</key>
+	<string>Locatie niet gevonden</string>
+	<key>Location Required</key>
+	<string>Locatie verplicht</string>
+	<key>Log</key>
+	<string>Logboek</string>
+	<key>Log Saved</key>
+	<string>Logboek opgeslagen</string>
+	<key>Log Unavailable</key>
+	<string>Logboek niet beschikbaar</string>
+	<key>Log out from Concur Mobile</key>
+	<string>Afmelden bij Concur Mobile</string>
+	<key>Log out from SmartExpense</key>
+	<string>Afmelden bij SmartExpense</string>
+	<key>Logging In</key>
+	<string>Aanmelden</string>
+	<key>Login Settings</key>
+	<string>Aanmeldingsinstellingen</string>
+	<key>Logout</key>
+	<string>Afmelden</string>
+	<key>Looks like we are experience some difficulties. Please check back in a few minutes.</key>
+	<string>Het lijkt erop dat we enkele problemen ondervinden. Probeer het over enkele minuten opnieuw.</string>
+	<key>Luxury</key>
+	<string>Luxe</string>
+	<key>MAP</key>
+	<string>Kaartweergave</string>
+	<key>MAPVIEW_ACCESS_DENIED</key>
+	<string>Helaas heeft Concur toegang nodig tot uw locatie om routes te genereren. Activeer locatieservices voor Concur.</string>
+	<key>MAPVIEW_LOCATION_UNKNOWN</key>
+	<string>Helaas, uw huidige locatie is momenteel niet bekend, maar Concur zal proberen u te lokaliseren.</string>
+	<key>MAPVIEW_NETWORK_ERROR</key>
+	<string>Helaas kan Concur uw huidige locatie niet identificeren. Controleer uw netwerkverbinding en zorg ervoor dat Vliegtuigmodus is uitgeschakeld.</string>
+	<key>MAPVIEW_UNKNOWN_ERROR</key>
+	<string>Helaas kan Concur uw huidige locatie niet identificeren. Controleer uw netwerkverbinding, zorg ervoor dat Locatieservices is geactiveerd en dat Vliegtuigmodus is uitgeschakeld.</string>
+	<key>MEDIUM_RESOLUTION_IMAGE</key>
+	<string>Gemiddelde resolutie (640x640 px)</string>
+	<key>MLIST_FIELD_EDIT_NOT_SUPPORT</key>
+	<string>Bewerken van dit gekoppelde lijstveld wordt momenteel niet ondersteund in de mobiele toepassing.  Gebruik in plaats daarvan de CTE-website.</string>
+	<key>MLIST_MRU_NOT_SUPPORT</key>
+	<string>U kunt het meest recent gebruikte lijstitem niet selecteren in dit veld.  Gebruik in plaats daarvan de CTE-website.</string>
+	<key>MOBILE_DISABLED_MSG</key>
+	<string>Uw bedrijf heeft Concur for Mobile uitgeschakeld. Neem contact op met uw beheerder.</string>
+	<key>MODULE_DISABLED_ALERT_TEXT</key>
+	<string>Uw bedrijf heeft deze functie uitgeschakeld voor de mobiele toepassing.</string>
+	<key>MODULE_DISABLED_ALERT_TITLE</key>
+	<string>Functie uitgeschakeld</string>
+	<key>MSG_ADDITIONAL_RECEIPT_NOT_REQUIRED</key>
+	<string>Extra kwitanties zijn niet verplicht.</string>
+	<key>MSG_APPROVE_INVOICE_AREYOUSURE</key>
+	<string>Weet u zeker dat u deze factuur wilt goedkeuren?</string>
+	<key>MSG_NO_INVOICE_DETAIL</key>
+	<string>Geen factuurdetails</string>
+	<key>MSG_NO_INVOICE_TO_APPROVE</key>
+	<string>Geen factuur om goed te keuren</string>
+	<key>MSG_RECEIPT_NOT_REQUIRED</key>
+	<string>Kwitanties zijn niet verplicht.</string>
+	<key>MSG_RECEIPT_REQUIRED</key>
+	<string>Herinnering: Kwitanties vereist</string>
+	<key>MSG_REPORT_SUBMISSION</key>
+	<string>Als u nog geen kwitanties hebt geleverd, ga dan naar de website van Concur.  Anders kunt u de nota nu indienen.</string>
+	<key>MSG_TRAIN_SELL_NOT_READY</key>
+	<string>De verkoop van treinreserveringen is nog niet geïmplementeerd.  In een latere versie kunt u een trein reserveren.</string>
+	<key>MSG_WAIT_FETCHING_INFO</key>
+	<string>We halen nu informatie op voor het indienen van de nota.  Wacht een ogenblik en probeer het opnieuw.</string>
+	<key>Mail Queued</key>
+	<string>E-mail in wachtrij</string>
+	<key>Mail Saved</key>
+	<string>Opgeslagen e-mail</string>
+	<key>Mail Unavailable</key>
+	<string>E-mail niet beschikbaar</string>
+	<key>Manage Receipts</key>
+	<string>Kwitanties beheren</string>
+	<key>Manage Violations</key>
+	<string>Schendingen verwerken</string>
+	<key>ManageYourAuthorizations</key>
+	<string>Uw autorisaties beheren</string>
+	<key>Manager approval</key>
+	<string>Goedkeuring door manager</string>
+	<key>Map</key>
+	<string>Toewijzen</string>
+	<key>Map Address</key>
+	<string>Adres toewijzen</string>
+	<key>Matching transactions combined into a single expense</key>
+	<string>Overeenkomende transacties gecombineerd in één onkostenitem</string>
+	<key>Meal Allowances</key>
+	<string>Maaltijdvergoedingen</string>
+	<key>Menu</key>
+	<string>Menu</string>
+	<key>Message Center</key>
+	<string>Berichtencentrum</string>
+	<key>Microphone Access Denied</key>
+	<string>Toegang via microfoon geweigerd</string>
+	<key>Midnight</key>
+	<string>Middernacht</string>
+	<key>Mileage</key>
+	<string>Reisafstand</string>
+	<key>Mini</key>
+	<string>Mini</string>
+	<key>Mini Van</key>
+	<string>Minivan</string>
+	<key>Missing Arrival</key>
+	<string>Aankomst ontbreekt</string>
+	<key>Missing Arrival Message</key>
+	<string>De aankomstluchthaven ontbreekt.  Selecteer een luchthaven voor aankomst.</string>
+	<key>Missing Departure</key>
+	<string>Vertrek ontbreekt</string>
+	<key>Missing Departure Message</key>
+	<string>De vertrekluchthaven ontbreekt.  Selecteer een luchthaven voor vertrek.</string>
+	<key>Missing fields</key>
+	<string>Ontbrekende velden</string>
+	<key>Missing required information for Itinerary Stop</key>
+	<string>Vereiste informatie voor tussenstop ontbreekt</string>
+	<key>Mobile Disabled</key>
+	<string>Mobile is uitgeschakeld</string>
+	<key>Mobile Expenses</key>
+	<string>Mobiele onkosten</string>
+	<key>Mobile Log</key>
+	<string>Mobiel logboek</string>
+	<key>Mobile Log: iPhone Crash</key>
+	<string>Mobiel logboek: iPhone vastgelopen</string>
+	<key>Mobile PIN title</key>
+	<string>Mobile-pincode</string>
+	<key>Mobile Password (PIN)</key>
+	<string>Mobiel wachtwoord (PIN)</string>
+	<key>Mobile Password (PIN) Reset Link Sent</key>
+	<string>Link voor opnieuw instellen van mobiel wachtwoord (PIN) verzonden</string>
+	<key>Mobile Password (PIN) Successfully Reset</key>
+	<string>Mobiel wachtwoord (PIN) opnieuw ingesteld</string>
+	<key>Monday_Short</key>
+	<string>ma</string>
+	<key>Month of stay</key>
+	<string>Maand van verblijf</string>
+	<key>More Help</key>
+	<string>Meer ondersteuning</string>
+	<key>Morning</key>
+	<string>Ochtend</string>
+	<key>Most Preferred</key>
+	<string>Sterkste voorkeur</string>
+	<key>Most Recently Used</key>
+	<string>Meest recent gebruikt</string>
+	<key>Must log in online first</key>
+	<string>U moet zich eerst online aanmelden voordat u offline kunt worden geverifieerd.</string>
+	<key>N Stops</key>
+	<string>%d tussenstops</string>
+	<key>NCOOK</key>
+	<string>Overige zonder koken</string>
+	<key>NEED_TO_RESET_PASSWORD</key>
+	<string>Stel uw wachtwoord opnieuw in en meld u daarna aan.  Neem contact op met de beheerder als u problemen hebt.</string>
+	<key>NEED_TO_RESET_PIN</key>
+	<string>Stel uw pincode opnieuw in en meld u daarna aan.  Neem contact op met de beheerder als u problemen hebt.</string>
+	<key>NIGHTS_TOO_LARGE_ERR_MSG</key>
+	<string>Onkosten specificeren voor maximaal 90 dagen</string>
+	<key>NON_REFUNDABLE_WARN_MSG</key>
+	<string>Klanten met NIET-RESTITUEERBARE tickets kunnen hun reis annuleren en deze tickets binnen een jaar na de DATUM VAN UITGIFTE opnieuw gebruiken voor een bestemming in het systeem van de maatschappij. Reserveringen MOETEN zijn geannuleerd voor de voorgenomen (oorspronkelijke) vertrekdag omdat deze anders ongeldig worden en in de toekomst NIET meer opnieuw kunnen worden gebruikt. Deze regels zijn alleen van toepassing op BINNENLANDSE tickets. Wilt u deze vluchten toch selecteren?</string>
+	<key>NO_RATES_SOLD_OUT_USER_MESSAGE</key>
+	<string>Er zijn voor deze accommodatie geen kamers beschikbaar voor de opgegeven datum. Selecteer een ander hotel.</string>
+	<key>NO_RECEIPTS_NEG</key>
+	<string>Geen kwitanties</string>
+	<key>NO_RECEIPT_FOUND</key>
+	<string>Er is geen kwitantie gevonden op de server.  Als u al een kwitantie aan de nota hebt gekoppeld, controleer het dan later opnieuw.</string>
+	<key>NO_RECEIPT_MSG</key>
+	<string>Bij ten minste een van de geselecteerde onkosten ontbreekt een kwitantie.</string>
+	<key>NO_RECEIPT_NEG</key>
+	<string>Geen kwitantie</string>
+	<key>NO_REPORTRECEIPT_NEG</key>
+	<string>Geen kwitantie gekoppeld aan onkosten</string>
+	<key>NUMBER_OF_ROOMS</key>
+	<string>Aantal kamers</string>
+	<key>NUMERIC_TOO_BIG_ERR_MSG</key>
+	<string>Getal is te groot</string>
+	<key>NUMERIC_VALIDATION_ERR_MSG</key>
+	<string>In dit veld moet een numerieke waarde worden ingevoerd.</string>
+	<key>Navigator</key>
+	<string>Navigator</string>
+	<key>Network Error</key>
+	<string>Netwerkfout</string>
+	<key>New Attendee</key>
+	<string>Nieuwe deelnemer</string>
+	<key>New Mobile Password (PIN)</key>
+	<string>Nieuw mobiel wachtwoord (PIN)</string>
+	<key>New Password</key>
+	<string>Nieuw wachtwoord</string>
+	<key>New Report</key>
+	<string>Nieuwe nota</string>
+	<key>Next</key>
+	<string>Volgende</string>
+	<key>Nightly Lodging Expenses</key>
+	<string>Dagelijkse accommodatiekosten</string>
+	<key>No</key>
+	<string>Nee</string>
+	<key>No Active Reports</key>
+	<string>U hebt momenteel geen actieve nota's</string>
+	<key>No Active Trips</key>
+	<string>Geen actieve reizen</string>
+	<key>No Attendee Found</key>
+	<string>Geen deelnemer gevonden</string>
+	<key>No Attendee Type Available</key>
+	<string>Er mogen geen deelnemers worden toegevoegd als er geen geldige deelnemertypen beschikbaar zijn voor dit onkostentype.</string>
+	<key>No Attendees</key>
+	<string>Geen deelnemers</string>
+	<key>No Card Charges</key>
+	<string>Geen kaartafschrijvingen</string>
+	<key>No Comments</key>
+	<string>Geen opmerkingen</string>
+	<key>No Credit Card</key>
+	<string>Geen kredietkaart</string>
+	<key>No Delivery Option</key>
+	<string>Geen leveringsoptie</string>
+	<key>No Email in Profile</key>
+	<string>Geen e-mail in profiel</string>
+	<key>No Email(s)</key>
+	<string>Geen e-mail</string>
+	<key>No Expenses</key>
+	<string>Geen onkosten</string>
+	<key>No Flights Found</key>
+	<string>Geen vluchten gevonden</string>
+	<key>No Itemization</key>
+	<string>Geen specificatie</string>
+	<key>No Matching Cars</key>
+	<string>Geen overeenkomende auto's</string>
+	<key>No Network Connection</key>
+	<string>Geen netwerkverbinding</string>
+	<key>No Out of Pocket Expenses</key>
+	<string>Geen onkosten</string>
+	<key>No Rates</key>
+	<string>Geen tarieven</string>
+	<key>No Receipts</key>
+	<string>Beheer al uw kwitanties op één plaats en verminder het aantal bestanden in uw fotoalbum. In de kwitantiemap worden de kwitanties bijgehouden die zijn gebruikt voor onkosten. U kunt ook kwitanties uit uw fotoalbum naar de kwitantiemap kopiëren of nieuwe foto's van kwitanties maken en deze hier opslaan.</string>
+	<key>No Reports</key>
+	<string>Geen nota's</string>
+	<key>No Results</key>
+	<string>Geen resultaten</string>
+	<key>No Segments Selected</key>
+	<string>Geen segmenten geselecteerd</string>
+	<key>No Shows</key>
+	<string>Niet komen opdagen</string>
+	<key>No Shows Tip</key>
+	<string>Voer het aantal %@ in.</string>
+	<key>No TripIt Trips</key>
+	<string>Geen onkosten voor TripIt-reizen</string>
+	<key>No Trips</key>
+	<string>Geen reizen</string>
+	<key>No date specified</key>
+	<string>Geen datum opgegeven</string>
+	<key>No email(s) were specified for the invite</key>
+	<string>Er is geen e-mailadres opgegeven voor de genodigde</string>
+	<key>No items to upload</key>
+	<string>Geen items om te uploaden</string>
+	<key>No matching cars were found.  Please modify your search criteria and try again.</key>
+	<string>Er zijn geen overeenkomende auto's gevonden.  Wijzig uw zoekcriteria en probeer het opnieuw.</string>
+	<key>No new twitter message</key>
+	<string>Geen nieuw Twitter-bericht</string>
+	<key>No preference</key>
+	<string>Geen voorkeur</string>
+	<key>No trains were found</key>
+	<string>Er zijn geen treinen gevonden</string>
+	<key>No trip segments have been selected</key>
+	<string>Er zijn geen reissegmenten geselecteerd.</string>
+	<key>Non-smoking</key>
+	<string>Niet roken</string>
+	<key>None</key>
+	<string>Geen</string>
+	<key>Nonstop</key>
+	<string>Rechtstreeks</string>
+	<key>Not Available</key>
+	<string>Niet beschikbaar</string>
+	<key>Not Filed Reports</key>
+	<string>Nota's</string>
+	<key>Not Linked</key>
+	<string>Niet gekoppeld</string>
+	<key>Not Preferred</key>
+	<string>Geen voorkeur</string>
+	<key>Not Provided</key>
+	<string>Niet inbegrepen</string>
+	<key>Not Sure</key>
+	<string>Niet zeker</string>
+	<key>Now</key>
+	<string>Nu</string>
+	<key>Number Of Nights</key>
+	<string>Aantal nachten</string>
+	<key>Number of hotels</key>
+	<string>Aantal hotels</string>
+	<key>Number of schedules found: token</key>
+	<string>Aantal gevonden schema's: %d</string>
+	<key>OFFLINE_MSG</key>
+	<string>U bent offline.  Wacht met het indienen van de nota tot u online bent.</string>
+	<key>OK</key>
+	<string>OK</string>
+	<key>OR</key>
+	<string>OF</string>
+	<key>OUT_OF_POCKET_FORM</key>
+	<string>Onkosten</string>
+	<key>OUT_OF_POCKET_FORM_VIEW_CONFIRM_SPLIT_SMART_EXPENSE_MESSAGE</key>
+	<string>Weet u zeker dat u de kaartafschrijving en het mobiele item wilt splitsen?</string>
+	<key>OUT_OF_POCKET_FORM_VIEW_CONFIRM_SPLIT_SMART_EXPENSE_TITLE</key>
+	<string>Bevestig a.u.b.</string>
+	<key>OUT_OF_POCKET_FORM_VIEW_SPLIT_SMART_EXPENSE_BUTTON_TITLE</key>
+	<string>Smart Expense splitsen</string>
+	<key>OUT_OF_POCKET_LIST</key>
+	<string>Onkosten</string>
+	<key>Off</key>
+	<string>Uit</string>
+	<key>Off Airport</key>
+	<string>Buiten luchthaven</string>
+	<key>Offers</key>
+	<string>Aanbiedingen</string>
+	<key>Office</key>
+	<string>Kantoor</string>
+	<key>Office Locations</key>
+	<string>Kantoorlocaties</string>
+	<key>Offline</key>
+	<string>Offline</string>
+	<key>Offline limits features</key>
+	<string>Uw apparaat is momenteel offline.  Sommige functies zijn niet beschikbaar.</string>
+	<key>Ok let's start over. What Hotel can I find for you</key>
+	<string>Ok, laten we opnieuw beginnen. Welk hotel kan ik voor u zoeken?</string>
+	<key>Old Trips</key>
+	<string>In verleden</string>
+	<key>On</key>
+	<string>Aan</string>
+	<key>One Way</key>
+	<string>Enkele reis</string>
+	<key>Open the email from this device to reset your mobile password (PIN) and sign in.</key>
+	<string>Open de mail op dit apparaat om uw mobiele wachtwoord (PIN) opnieuw in te stellen en meld u aan.</string>
+	<key>Open the email from this device to reset your password and sign in.</key>
+	<string>Open de e-mail op dit apparaat om uw wachtwoord opnieuw in te stellen en meld u aan.</string>
+	<key>Operated By</key>
+	<string>Uitgevoerd door</string>
+	<key>Operated by</key>
+	<string>Uitgevoerd door</string>
+	<key>Operation Not Supported Offline</key>
+	<string>Deze bewerking wordt offline niet ondersteund.  Probeer het opnieuw wanneer u verbinding hebt.</string>
+	<key>Or Sign In with...</key>
+	<string>Of meld u aan met...</string>
+	<key>Or Sign Up with...</key>
+	<string>Of meld u aan met...</string>
+	<key>Organization</key>
+	<string>Organisatie</string>
+	<key>Original receipt required</key>
+	<string>Oorspronkelijke kwitantie vereist</string>
+	<key>Other</key>
+	<string>Sociaal en overige</string>
+	<key>Other Allowances</key>
+	<string>Andere vergoedingen</string>
+	<key>Other Reports</key>
+	<string>Overige nota's</string>
+	<key>Other Room Tax 1</key>
+	<string>Overige belasting 1 voor kamer</string>
+	<key>Other Room Tax 2</key>
+	<string>Overige belasting 2 voor kamer</string>
+	<key>Out of Pocket Entry has been Saved</key>
+	<string>Onkosten zijn opgeslagen</string>
+	<key>Outbound</key>
+	<string>Heenreis</string>
+	<key>P2B_AIR_BOOKING_HEADER_POINTS_DISABLED</key>
+	<string>Boek uw reizen slimmer! Boeken onder de Price-to-Beat bespaart uw bedrijf geld.</string>
+	<key>P2B_AIR_BOOKING_HEADER_POINTS_ENABLED</key>
+	<string>Verdien reispunten als u voor opties kiest die goedkoper zijn dan de Price-to-Beat. Als de reis is betaald, worden de verdiende reispunten weergegeven in het totaal aantal reispunten dat u voor toekomstige reizen kunt gebruiken.</string>
+	<key>PDF Receipt</key>
+	<string>PDF-kwitantie</string>
+	<key>PENDING_REQUIRED_TRAVEL_CUSTOM_FIELDS</key>
+	<string>Vul alle verplichte boekingsgegevens in voordat u verdergaat.</string>
+	<key>PER_VARIABLE_NO_RATES</key>
+	<string>Er zijn geen tarieven ingesteld voor de opgegeven datum.</string>
+	<key>PIN</key>
+	<string>Pincode</string>
+	<key>PIN Tip</key>
+	<string>Als u uw referenties niet weet, meldt u zich aan bij uw Concur-webaccount en gaat u naar Profiel &gt; Mobile-registratie.  Gebruikers van Concur Breeze moeten naar Mijn account &gt; Mobile-pincode gaan.  Neem voor meer hulp contact op met de beheerder voor uw bedrijf.</string>
+	<key>PIN has been reset successfully</key>
+	<string>Pincode is opnieuw ingesteld</string>
+	<key>PIN_EXPIRED</key>
+	<string>Uw pincode is verlopen.  Registreer uw pincode opnieuw en meld u daarna aan.</string>
+	<key>PIN_MOBILE_NOTES</key>
+	<string>De pincode is uitsluitend bestemd voor de Concur Mobile-app</string>
+	<key>PLEASE_SELECT_VALUE</key>
+	<string>Selecteer een optie in de lijst.</string>
+	<key>PRICE_TO_BEAT_AIR_RESULTS_HEADER</key>
+	<string>Een vlucht boeken die goedkoper is dan de Price-to-Beat levert u reispunten op die u later kunt gebruiken!</string>
+	<key>PRICE_TO_BEAT_AIR_SEARCH_HEADER</key>
+	<string>Verdien reispunten als u geld bespaart! Voer uw vluchtzoekgegevens hieronder in om de Price-to-Beat tijdens het boeken van uw vlucht te vinden.</string>
+	<key>PRICE_TO_BEAT_DISABLED_AIR_RESULTS_HEADER</key>
+	<string>Een vlucht boeken die goedkoper is dan de Price-to-Beat bespaart uw bedrijf geld!</string>
+	<key>PRICE_TO_BEAT_DISABLED_AIR_SEARCH_HEADER</key>
+	<string>Boek uw reizen slimmer! Voer uw vluchtzoekgegevens hieronder in om de Price-to-Beat tijdens het boeken van uw vlucht te vinden.</string>
+	<key>PRICE_TO_BEAT_DISABLED_HOTEL_RESULTS_HEADER</key>
+	<string>Een kamer boeken die goedkoper is dan de Price-to-Beat bespaart uw bedrijf geld!</string>
+	<key>PRICE_TO_BEAT_DISABLED_HOTEL_SEARCH_HEADER</key>
+	<string>Boek uw reizen slimmer! Voer uw hotelzoekgegevens hieronder in om de Price-to-Beat tijdens het boeken van uw hotel te vinden.</string>
+	<key>PRICE_TO_BEAT_HOTEL_RESULTS_HEADER</key>
+	<string>Een kamer boeken die goedkoper is dan de Price-to-Beat levert u reispunten op die u later kunt gebruiken!</string>
+	<key>PRICE_TO_BEAT_HOTEL_SEARCH_HEADER</key>
+	<string>Verdien reispunten als u geld bespaart! Voer uw hotelzoekgegevens hieronder in om de Price-to-Beat tijdens het boeken van uw hotel te vinden. </string>
+	<key>PROCEED_TO_ADD_MSG</key>
+	<string>U kunt doorgaan en deze toevoegen aan een nota, maar u moet een kwitantie koppelen via de website.</string>
+	<key>PWD</key>
+	<string>Wachtwoord</string>
+	<key>PWD_LOGIN</key>
+	<string>Registreren</string>
+	<key>Paid Reports</key>
+	<string>Betaalde nota’s</string>
+	<key>Passenger</key>
+	<string>Passagier</string>
+	<key>PassengerCount</key>
+	<string>Aantal passagiers</string>
+	<key>Passengers</key>
+	<string>Passagiers</string>
+	<key>Password</key>
+	<string>Wachtwoord</string>
+	<key>Password Reset Link Sent</key>
+	<string>Link voor opnieuw instellen wachtwoord verzonden</string>
+	<key>Password Successfully Reset</key>
+	<string>Wachtwoord opnieuw ingesteld</string>
+	<key>Passwords Don't Match</key>
+	<string>Wachtwoorden komen niet overeen</string>
+	<key>Personal Car Mileage</key>
+	<string>Privé afgelegde afstand</string>
+	<key>PersonalCardCount_0</key>
+	<string>U hebt geen ongebruikte kaartafschrijvingen van %@</string>
+	<key>PersonalCardCount_1</key>
+	<string>U hebt 1 ongebruikte kaartafschrijving van %@</string>
+	<key>PersonalCardCount_2</key>
+	<string>U hebt %d ongebruikte kaartafschrijvingen van %@</string>
+	<key>Phone</key>
+	<string>Telefoon</string>
+	<key>Photo Album</key>
+	<string>Koppelen via fotoalbum</string>
+	<key>Pick-up</key>
+	<string>Afhalen</string>
+	<key>Pick-up Date</key>
+	<string>Afhaaldatum</string>
+	<key>Pick-up Time</key>
+	<string>Afhaaltijdstip</string>
+	<key>Pickup</key>
+	<string>Afhalen</string>
+	<key>Pickup Location</key>
+	<string>Afhaallocatie</string>
+	<key>Please Confirm</key>
+	<string>Bevestig a.u.b.</string>
+	<key>Please Enter Your Email Address</key>
+	<string>Voer uw e-mailadres op het werk in</string>
+	<key>Please Select To View</key>
+	<string>Selecteer om weer te geven</string>
+	<key>Please Specify Program</key>
+	<string>Geef het programma op</string>
+	<key>Please Wait</key>
+	<string>Wachten</string>
+	<key>Please address policy violations</key>
+	<string>Verhelp beleidsschendingen</string>
+	<key>Please check your connection and retry later.</key>
+	<string>Controleer uw verbinding en probeer het later opnieuw.</string>
+	<key>Please enter a justification for booking this car.</key>
+	<string>Voer een verantwoording in voor het boeken van deze auto.</string>
+	<key>Please enter a justification for this booking.</key>
+	<string>Voer een verantwoording in voor deze boeking.</string>
+	<key>Please enter and confirm the PIN</key>
+	<string>Voer de pincode in en bevestig deze</string>
+	<key>Please enter in your distance</key>
+	<string>Voer uw afstand in</string>
+	<key>Please enter values for required fields</key>
+	<string>Voor in de verplichte, rode velden waarden in voordat u de gegevens opslaat.</string>
+	<key>Please fill in the missing required fields before saving the entry.</key>
+	<string>Vul de ontbrekende velden in voordat u het item opslaat.</string>
+	<key>Please follow the instructions in the email</key>
+	<string>Volg de instructies in de e-mail die u van TripIt hebt ontvangen bij het instellen van uw account.</string>
+	<key>Please log in to SmartExpense and then link your accounts together.</key>
+	<string>Meld u aan bij SmartExpense en koppel uw accounts.</string>
+	<key>Please log in to SmartExpense using the same account already linked to TripIt.</key>
+	<string>Meld u bij SmartExpense aan met het account dat al is gekoppeld aan TripIt.</string>
+	<key>Please select a destination location</key>
+	<string>Selecteer een doellocatie.</string>
+	<key>Please select a report or create a new report first</key>
+	<string>Selecteer een nota of maak eerst een nieuwe nota</string>
+	<key>Please select a starting location</key>
+	<string>Selecteer een beginlocatie</string>
+	<key>Please specify</key>
+	<string>Geef op</string>
+	<key>Please specify a location.</key>
+	<string>Geef een locatie op.</string>
+	<key>Please try again and use the link within 24 hours of receipt.</key>
+	<string>Probeer het opnieuw en gebruik de link binnen 24 uur na ontvangst.</string>
+	<key>Please type a description into this email message describing what you were doing when the application crashed.  For example: I was uploading an expense receipt.</key>
+	<string>Typ in dit e-mailbericht wat u aan het doen was toen de toepassing vastliep.  Bijvoorbeeld: Ik was bezig een onkostennota te uploaden.</string>
+	<key>Please verify your email</key>
+	<string>Controleer uw e-mailadres</string>
+	<key>Please verify your email address</key>
+	<string>Controleer uw e-mailadres</string>
+	<key>Please wait for your verification email to continue the registration process.</key>
+	<string>Wacht op uw verificatie-e-mail om te kunnen doorgaan met het registratieproces.</string>
+	<key>Please wait until online to edit field</key>
+	<string>Deze velden kunt u niet offline bewerken.</string>
+	<key>Please wait until you are online to login</key>
+	<string>Wacht met aanmelden tot u online bent.</string>
+	<key>Points or Approval</key>
+	<string>Punten of Goedkeuring</string>
+	<key>Popular Cards</key>
+	<string>Populaire kaarten</string>
+	<key>Post Trip</key>
+	<string>Reis plaatsen</string>
+	<key>Preferred</key>
+	<string>Voorkeur</string>
+	<key>Preferred Vendors</key>
+	<string>Voorkeursleveranciers</string>
+	<key>Premium</key>
+	<string>Premium</string>
+	<key>Premium Economy</key>
+	<string>Luxe economy</string>
+	<key>Prev</key>
+	<string>Vorige</string>
+	<key>Preview</key>
+	<string>Voorbeeld</string>
+	<key>Previous</key>
+	<string>Vorige</string>
+	<key>Price</key>
+	<string>Prijs</string>
+	<key>Price to Beat</key>
+	<string>Price-to-Beat</string>
+	<key>Print</key>
+	<string>Afdrukken</string>
+	<key>Proceed to Sign In</key>
+	<string>Verder naar aanmelden</string>
+	<key>Property</key>
+	<string>Eigenschap</string>
+	<key>Provided</key>
+	<string>Inbegrepen</string>
+	<key>Pull to Refresh</key>
+	<string>Pull-bewerking voor vernieuwen</string>
+	<key>Purchase Requests</key>
+	<string>Inkoopaanvragen</string>
+	<key>Quick Expense</key>
+	<string>Snelle onkosten</string>
+	<key>Quick Search</key>
+	<string>Snel zoeken</string>
+	<key>Quick Tips</key>
+	<string>Snelle tips</string>
+	<key>RECEIPT</key>
+	<string>Kwitantie</string>
+	<key>RECEIPT_CELL_TITLE</key>
+	<string>Kwitantie</string>
+	<key>RECEIPT_DETAIL_NO_DATA_INSTRUCTION</key>
+	<string>Of stuur digitale kwitanties door naar receipts@smartexpense.com vanaf uw %@-account.</string>
+	<key>RECEIPT_IMG_UPLOADED</key>
+	<string>Kwitantieafbeelding is geüpload</string>
+	<key>RECEIPT_IMG_UPLOADING</key>
+	<string>Kwitantieafbeelding uploaden</string>
+	<key>RECEIPT_MANAGER</key>
+	<string>Kwitantiemap</string>
+	<key>RECEIPT_MANAGER_IMAGES</key>
+	<string>Kwitantiemap</string>
+	<key>RECEIPT_MIGRATE_MSG</key>
+	<string>Er zijn %d niet-toegewezen kwitantieafbeeldingen lokaal opgeslagen in de documentenmap van Concur Mobile. Wilt u de niet-toegewezen kwitantieafbeeldingen kopiëren naar het fotoalbum van uw iPhone?</string>
+	<key>RECEIPT_MIGRATION_STATUS_MSG</key>
+	<string>%d van %d kwitanties gekopieerd naar fotoalbum</string>
+	<key>RECEIPT_MIGRATION_WAIT_MSG</key>
+	<string>Afbeelding wordt gekopieerd. Als u de toepassing nu beëindigt of verlaat, kunnen afbeeldingen verloren gaan.</string>
+	<key>RECEIPT_NOT_ON_SERVER</key>
+	<string>Een kwitantie wordt als gekoppeld aan deze onkosten weergegeven op de server, maar de kwitantie bestaat niet meer in Kwitantiebeheer.</string>
+	<key>RECEIPT_STORE_HELP_TEXT</key>
+	<string>Upload uw kwitanties naar het kwitantiearchief. Open daarna een nota of een onkostenitem en koppel de kwitantie.</string>
+	<key>RECEIPT_STORE_NO_DATA_INSTRUCTION</key>
+	<string>U kunt ook digitale kwitanties doorsturen naar receipts@smartexpense.com vanaf uw %@-account.</string>
+	<key>RECEIPT_VIEWER</key>
+	<string>Kwitantieviewer</string>
+	<key>REGISTER</key>
+	<string>Pincode invoeren</string>
+	<key>REGISTERED_EMAIL</key>
+	<string>E-mailadres op het werk</string>
+	<key>REGISTER_MSG</key>
+	<string>Als u hulp nodig hebt, meldt u zich dan aan bij de webversie van Concur en ga naar Profiel &gt; Mobile-registratie.</string>
+	<key>REGISTER_PINS_DIFF_ERR</key>
+	<string>Pincodes zijn verschillend.  Voer de pincodes opnieuw in.</string>
+	<key>REPORTS</key>
+	<string>Notalijst</string>
+	<key>REPORTS_TO_SUBMIT</key>
+	<string>%d nota(s) om in te dienen</string>
+	<key>REPORT_DETAIL</key>
+	<string>Nota</string>
+	<key>REPORT_DETAIL_RECEIPTS</key>
+	<string>Kwitanties</string>
+	<key>REPORT_NAME_TIP</key>
+	<string>Typ een nieuwe notanaam</string>
+	<key>REPORT_REQ_FIELDS</key>
+	<string>Vul alle verplichte velden in en corrigeer alle fouten in het formulier, voordat u de nota opslaat.</string>
+	<key>REPORT_TA_ITINERARY</key>
+	<string>Reiskostenvergoeding</string>
+	<key>REPORT_TA_ITINERARY_ADD</key>
+	<string>Onkosten voor vergoedingen</string>
+	<key>RESET_PASSWORD_FAILED</key>
+	<string>Opnieuw instellen van uw wachtwoord is mislukt</string>
+	<key>RESET_PASSWORD_SUCCEEDED</key>
+	<string>U ontvangt snel een e-mailbericht met instructies om uw wachtwoord opnieuw in te stellen.</string>
+	<key>RESET_PASSWORD_USER_NOT_EXIST</key>
+	<string>Gebruiker bestaat niet in het systeem.  Controleer of u het aanmeldingsproces hebt voltooid, voordat u op de link Uw wachtwoord opnieuw instellen klikt.</string>
+	<key>ROLE_DISABLED_ALERT_TITLE</key>
+	<string>Functie uitgeschakeld</string>
+	<key>ROLE_DISABLED_TEXT</key>
+	<string>Deze functie is niet beschikbaar voor uw bedrijf of uw rol.</string>
+	<key>RPT_NO_ENTRY_INSTRUCTION_1</key>
+	<string>Deze onkostennota bevat geen onkosten.  U moet ten minste één onkostenitem maken of importeren voordat u de nota kunt indienen. </string>
+	<key>RPT_NO_ENTRY_INSTRUCTION_2</key>
+	<string>Tik op hieronder het symbool + als u onkosten wilt maken of importeren.</string>
+	<key>RPT_QUIT_CONFIRM_MSG</key>
+	<string>Wilt u deze nota al opslaan?</string>
+	<key>RPT_SAVE_CONFIRM_MSG</key>
+	<string>Als u doorgaat, gaan uw wijzigingen mogelijk verloren.  Wilt u deze wijzigingen opslaan?</string>
+	<key>Rail</key>
+	<string>Trein</string>
+	<key>Rail Rule Violation</key>
+	<string>Overtreding treinregel</string>
+	<key>Rail cancelled from mobile device</key>
+	<string>Trein geannuleerd met mobiel apparaat</string>
+	<key>Rail violation justification is missing</key>
+	<string>Voordat u het bedrijfsbeleid overtreedt door deze trein te reserveren, moet u een verantwoording opgeven in het rode veld.</string>
+	<key>Rail violation reason and justification are missing</key>
+	<string>Voordat u het bedrijfsbeleid overtreedt door deze trein te reserveren, moet u een reden en een verantwoording opgeven in de rode velden.</string>
+	<key>Rail violation reason is missing</key>
+	<string>Voordat u het bedrijfsbeleid overtreedt door deze trein te reserveren, moet u een reden opgeven in het rode veld.</string>
+	<key>Rail_subline</key>
+	<string>Boek een trein en ga op reis</string>
+	<key>Rate It!</key>
+	<string>Beoordelen</string>
+	<key>Rate Location:</key>
+	<string>Tarief locatie:</string>
+	<key>Rating</key>
+	<string>Waardering</string>
+	<key>Re-enter Password</key>
+	<string>Wachtwoord opnieuw invoeren</string>
+	<key>Recalculate Allowances</key>
+	<string>Vergoedingen opnieuw berekenen</string>
+	<key>Recall</key>
+	<string>Intrekken</string>
+	<key>Recall Failed</key>
+	<string>Intrekken is mislukt</string>
+	<key>Receipt</key>
+	<string>Kwitantie</string>
+	<key>Receipt Capture</key>
+	<string>Kwitantie vastleggen</string>
+	<key>Receipt Folder</key>
+	<string>Kwitantiemap</string>
+	<key>Receipt Images</key>
+	<string>Kwitantieafbeeldingen</string>
+	<key>Receipt Queued</key>
+	<string>Kwitantie in wachtrij</string>
+	<key>Receipt Store</key>
+	<string>Kwitantiearchief</string>
+	<key>Receipt image required</key>
+	<string>Kwitantieafbeelding vereist</string>
+	<key>Receipt upload complete</key>
+	<string>Uploaden kwitantie voltooid</string>
+	<key>Receipt upload failed</key>
+	<string>Uploaden van kwitantie is mislukt</string>
+	<key>Receipt uploaded</key>
+	<string>Kwitantie geüpload</string>
+	<key>ReceiptUploadFailMsg</key>
+	<string>Kan kwitantie op dit moment niet opslaan. Probeer het later opnieuw.</string>
+	<key>Receipts</key>
+	<string>Kwitanties</string>
+	<key>Receipts cannot be added offline</key>
+	<string>Kwitanties kunnen niet offline worden toegevoegd.</string>
+	<key>Recommendation</key>
+	<string>Suggestie</string>
+	<key>Recommended</key>
+	<string>Voorgesteld</string>
+	<key>Recurring Charges (each night)</key>
+	<string>Terugkerende kosten (elke nacht)</string>
+	<key>Refresh Data</key>
+	<string>Gegevens vernieuwen</string>
+	<key>Refresh Data Offline</key>
+	<string>Uw gegevens kunnen niet worden vernieuwd als u offline bent.  Probeer het later opnieuw.</string>
+	<key>Refresh Trip</key>
+	<string>Reis vernieuwen</string>
+	<key>Refreshing</key>
+	<string>Vernieuwen</string>
+	<key>Refreshing Data</key>
+	<string>Gegevens vernieuwen</string>
+	<key>Refreshing View</key>
+	<string>Weergave vernieuwen</string>
+	<key>Refundable Only</key>
+	<string>Alleen met teruggave</string>
+	<key>Regional</key>
+	<string>Regionaal</string>
+	<key>Register a credit card</key>
+	<string>Een kredietkaart registreren</string>
+	<key>Reject</key>
+	<string>Afkeuren</string>
+	<key>Rejected</key>
+	<string>Afgekeurd</string>
+	<key>Rejecting Trip</key>
+	<string>Reis afkeuren</string>
+	<key>Remaining:</key>
+	<string>Resterend:</string>
+	<key>Removed Link to Dropbox</key>
+	<string>Koppeling naar Dropbox verwijderd</string>
+	<key>Removing entry</key>
+	<string>Item verwijderen</string>
+	<key>Rent a car</key>
+	<string>Een auto huren</string>
+	<key>Replace</key>
+	<string>Vervangen</string>
+	<key>Report</key>
+	<string>Nota</string>
+	<key>Report Approvals</key>
+	<string>Notagoedkeuringen</string>
+	<key>Report Comments</key>
+	<string>Opmerkingen bij nota</string>
+	<key>Report Entry</key>
+	<string>Nota-item</string>
+	<key>Report Exceptions</key>
+	<string>Uitzonderingen op nota</string>
+	<key>Report Header</key>
+	<string>Notakoptekst</string>
+	<key>Report Name</key>
+	<string>Notanaam</string>
+	<key>Report Not Ready</key>
+	<string>Rapport niet klaar</string>
+	<key>Report Summary</key>
+	<string>Notasamenvatting</string>
+	<key>Report is open</key>
+	<string>Nota is geopend</string>
+	<key>Reports</key>
+	<string>Nota's</string>
+	<key>Reports List</key>
+	<string>Notalijst</string>
+	<key>Reports cannot be approved offline</key>
+	<string>Nota's kunnen niet offline worden goedgekeurd.</string>
+	<key>ReportsToApproveRow_0</key>
+	<string>U hebt geen goed te keuren nota's</string>
+	<key>ReportsToApproveRow_1</key>
+	<string>U moet nog 1 nota goedkeuren</string>
+	<key>ReportsToApproveRow_2</key>
+	<string>U moet nog %d nota's goedkeuren</string>
+	<key>Request</key>
+	<string>Aanvraag</string>
+	<key>Requested</key>
+	<string>Aangevraagd</string>
+	<key>Requests</key>
+	<string>Aanvragen</string>
+	<key>Required Fields Missing</key>
+	<string>Er ontbreken verplichte velden</string>
+	<key>Reservation Date</key>
+	<string>Reserveringsdatum</string>
+	<key>Reservation Not Allowed</key>
+	<string>Reservering is niet toegestaan</string>
+	<key>Reservation Status</key>
+	<string>Reserveringsstatus</string>
+	<key>Reservation Time</key>
+	<string>Reserveringstijd</string>
+	<key>Reserve</key>
+	<string>Reserveren</string>
+	<key>Reserve Train</key>
+	<string>Trein reserveren</string>
+	<key>Reserving Car</key>
+	<string>Auto reserveren</string>
+	<key>Reserving Flights</key>
+	<string>Vluchten reserveren</string>
+	<key>Reserving Hotel Room</key>
+	<string>Kamer reserveren</string>
+	<key>Reserving Train</key>
+	<string>Trein reserveren</string>
+	<key>Reset</key>
+	<string>Opnieuw instellen</string>
+	<key>Reset Concur Password</key>
+	<string>Wachtwoord voor Concur opnieuw instellen</string>
+	<key>Reset Mobile Password (PIN)</key>
+	<string>Mobiel wachtwoord (PIN) opnieuw instellen</string>
+	<key>Reset PIN</key>
+	<string>Pincode opnieuw instellen</string>
+	<key>Reset Password</key>
+	<string>Wachtwoord opnieuw instellen</string>
+	<key>Reset to factory defaults</key>
+	<string>Fabrieksinstellingen herstellen</string>
+	<key>Reset your password</key>
+	<string>Uw wachtwoord opnieuw instellen</string>
+	<key>Resetting the PIN</key>
+	<string>De pincode opnieuw instellen</string>
+	<key>Results</key>
+	<string>Resultaten</string>
+	<key>Results Summary</key>
+	<string>Samenvatting van resultaten</string>
+	<key>Retake</key>
+	<string>Weer opnemen</string>
+	<key>Return</key>
+	<string>Retour</string>
+	<key>Return Date</key>
+	<string>Retourdatum</string>
+	<key>Return Date must be</key>
+	<string>Retourdatum</string>
+	<key>Return Date must be Message</key>
+	<string>De retourdatum moet later zijn dan de vertrekdatum.</string>
+	<key>Return Time</key>
+	<string>Retourtijd</string>
+	<key>Returning</key>
+	<string>Terugkeren</string>
+	<key>Returning: token token</key>
+	<string>Terugkeer: %@ %@</string>
+	<key>Review Approver Instruction</key>
+	<string>Controleer fiatteur, dien nota daarna in</string>
+	<key>Room Rate</key>
+	<string>Kamertarief</string>
+	<key>Room Tax</key>
+	<string>Kamerbelasting</string>
+	<key>Rooms</key>
+	<string>Kamers</string>
+	<key>Round Trip</key>
+	<string>Retourreis</string>
+	<key>Rule Messages</key>
+	<string>Berichten voor regel</string>
+	<key>SAFETY_CHECK_IN_HELP</key>
+	<string>Check voor hulp in met uw huidige locatie</string>
+	<key>SAVE_REPORT_RECEIPT_FAILURE</key>
+	<string>Kwitantie kan niet worden gekoppeld</string>
+	<key>SEARCH_LOCN</key>
+	<string>Zoeken op locatie</string>
+	<key>SEC_TITLE_COMMENTS</key>
+	<string>Opmerkingen</string>
+	<key>SEC_TITLE_INVOICE_HEADER</key>
+	<string>Koptekst van factuur</string>
+	<key>SEE ALL token RESULTS</key>
+	<string>ALLE %@ RESULTATEN BEKIJKEN</string>
+	<key>SEE ALL token RESULTS (starting at token)</key>
+	<string>ALLE RESULTATEN %d BEKIJKEN (te beginnen bij %@)</string>
+	<key>SELECT_HELP_TOPIC</key>
+	<string>Of selecteer een Help-onderwerp</string>
+	<key>SELECT_REPORT</key>
+	<string>Nota selecteren</string>
+	<key>SELECT_REPORT_HELP</key>
+	<string>Kies in de lijst hieronder een nota om uw onkosten aan toe te voegen.  Of voeg deze aan een nieuwe nota toe door hierboven op de knop '+' te tikken.</string>
+	<key>SETTINGS_VIEW</key>
+	<string>Instellingen</string>
+	<key>SIGN_IN_EMAIL</key>
+	<string>Voer uw werke-mail in om uw aanmeldinformatie te ontvangen.</string>
+	<key>SIGN_IN_INSTRUCT_MSG</key>
+	<string>Als uw e-mailadres in ons systeem staat, ontvangt u een e-mail. Open de e-mail op dit apparaat om toegang te krijgen tot de Concur-app.</string>
+	<key>SLV_AT</key>
+	<string>om</string>
+	<key>SLV_BOOK_A_TAXI</key>
+	<string>Een taxi boeken</string>
+	<key>SLV_CLICK_ON</key>
+	<string>Klik in deze cel om te boeken</string>
+	<key>SLV_CONFIRMATION</key>
+	<string>Bevestiging</string>
+	<key>SLV_DROP_OFF</key>
+	<string>%@ terugbrengen naar %@</string>
+	<key>SLV_FROM</key>
+	<string>Van</string>
+	<key>SLV_GATE</key>
+	<string>Gate</string>
+	<key>SLV_GOES_FROM</key>
+	<string>Gaat van %@ naar %@</string>
+	<key>SLV_NUM_BOOKINGS</key>
+	<string>%d boeking(en) in deze reis</string>
+	<key>SLV_PICKUP_AT</key>
+	<string>Afhalen bij %@</string>
+	<key>SLV_PICKUP_BY</key>
+	<string>Afhalen om %@</string>
+	<key>SLV_PLATFORM_WAGON</key>
+	<string>Perron %@ wagonnr. %@</string>
+	<key>SLV_TAXI_MAGIC</key>
+	<string>een taxi met Taxi Magic</string>
+	<key>SLV_TAXI_MAGIC2</key>
+	<string>U wordt omgeleid naar de Taxi Magic-app</string>
+	<key>SLV_TERMINAL</key>
+	<string>Terminal</string>
+	<key>SLV_TO</key>
+	<string>naar</string>
+	<key>SLV_TOTAL_SEGS</key>
+	<string>Met een totaal van %d segmenten voor de reis</string>
+	<key>SLV_TRIP_LOCATOR</key>
+	<string>Reislocator: %@</string>
+	<key>SOUTHWEST</key>
+	<string>Boeking bij Southwest</string>
+	<key>SPLASH</key>
+	<string>Splash</string>
+	<key>SPOUSE</key>
+	<string>Partner</string>
+	<key>SSO_FETCHING_DATA</key>
+	<string>Aanmeldingsgegevens van bedrijf ophalen...</string>
+	<key>SSO_LOGIN_REQUIRED_MSG</key>
+	<string>Bedrijfscode voor eenmalige aanmelding (SSO) is verplicht. Voer de bedrijfscode in het volgende scherm in om door te gaan</string>
+	<key>SU Password Expired Instruction</key>
+	<string>Meld u aan bij de Concur-website om uw wachtwoord te wijzigen.</string>
+	<key>SUBMIT_BUTTON</key>
+	<string>Indienen</string>
+	<key>SUBMIT_ERROR_CCT_AUTH</key>
+	<string>Wacht totdat de transacties die Amex in behandeling heeft zijn verzonden voordat u gaat indienen.</string>
+	<key>SUBMIT_ERROR_NO_ENTRY_MSG</key>
+	<string>De onkostennota bevat geen onkosten.  U moet ten minste één onkostenitem maken voordat u de nota kunt indienen.</string>
+	<key>SUBMIT_ERROR_RPT_XCT_LEVEL_MSG</key>
+	<string>Deze onkostennota kan pas worden ingediend als alle uitzonderingen met rode vlaggen zijn opgelost.</string>
+	<key>SUBMIT_ERROR_UNDEF_MSG</key>
+	<string>De onkostennota bevat een of meer onkosten met het onkostentype Niet-gedefinieerd.  U moet het onkostentype selecteren om het rapport in te dienen.</string>
+	<key>SUBMIT_HOW_TO_RECEIPT_MSG</key>
+	<string>Volgens het bedrijfsbeleid moet u kwitanties verstrekken voor de onkosten die hieronder worden vermeld.  U kunt de kwitanties faxen of u kunt gescande afbeeldingen bijvoegen.  Als u al kwitanties hebt verstrekt, kunt u nu uw nota indienen.</string>
+	<key>SUBMIT_REQUIRE_PAPER_RECEIPT</key>
+	<string>Volgens het bedrijfsbeleid moet u kwitanties verstrekken voor de onkosten die hieronder worden vermeld.  U kunt gescande afbeeldingen toevoegen aan afzonderlijke onkosten of aan het rapport. De originele papieren kwitanties moeten echter eveneens worden verstrekt. Als u al kwitanties heeft verstrekt, kunt u nu uw nota indienen.</string>
+	<key>SU_ADD_YODLEE_CARD_INSTRUCTION</key>
+	<string>Voer uw aanmeldingsgegevens voor uw kredietkaartrekening in. SmartExpense zal deze informatie versleutelen en veilig gebruiken om uw kaarttransacties te downloaden. (Wees niet ongerust, de informatie is alleen-lezen.)</string>
+	<key>SU_APPROVER_AB_NO_EMAIL</key>
+	<string>De geselecteerde contactpersoon heeft geen e-mailadres om de nota naartoe te verzenden.</string>
+	<key>SU_CHECK_TEMP_PWD</key>
+	<string>Controleer of u een e-mail met uw tijdelijk SmartExpense-wachtwoord hebt ontvangen.</string>
+	<key>SU_SIGN_UP_CHECK_EMAIL</key>
+	<string>We moeten uw e-mailadres controleren.  Controleer of u een e-mailbericht van ons hebt ontvangen en klik op de verificatielink.</string>
+	<key>SYSEMP</key>
+	<string>Deze werknemer</string>
+	<key>Safety Check In</key>
+	<string>Inchecken met locatie</string>
+	<key>Saturday_Short</key>
+	<string>za</string>
+	<key>Save</key>
+	<string>Opslaan</string>
+	<key>Save &amp; Generate Allowances</key>
+	<string>Opslaan &amp; vergoedingen genereren</string>
+	<key>Save Itemizations</key>
+	<string>Specificaties opslaan</string>
+	<key>Save entry receipt failed</key>
+	<string>Opslaan van kwitantie bij item is mislukt</string>
+	<key>Saved</key>
+	<string>Opgeslagen</string>
+	<key>Saving Expense</key>
+	<string>Onkosten opslaan</string>
+	<key>Saving Report</key>
+	<string>Nota opslaan</string>
+	<key>Saving offline receipt</key>
+	<string>Offline kwitantie opslaan</string>
+	<key>Scheduled Arrival</key>
+	<string>Geplande aankomst</string>
+	<key>Scheduled Departure</key>
+	<string>Gepland vertrek</string>
+	<key>Scheduled Equipment</key>
+	<string>Geplande apparatuur</string>
+	<key>Scheduled On-time</key>
+	<string>Op tijd gepland</string>
+	<key>Scheduled Terminal</key>
+	<string>Geplande terminal</string>
+	<key>Search</key>
+	<string>Zoeken</string>
+	<key>Search Again</key>
+	<string>Opnieuw zoeken</string>
+	<key>Search Approver</key>
+	<string>Fiatteur zoeken</string>
+	<key>Search Approver Instruction</key>
+	<string>Zoek een fiatteur, dien de nota daarna in</string>
+	<key>Search Failed</key>
+	<string>Zoeken is mislukt</string>
+	<key>Search Results</key>
+	<string>Zoekresultaten</string>
+	<key>Search and book flights</key>
+	<string>Vluchten, hotels, auto's en meer zoeken en boeken</string>
+	<key>Search for Attendee</key>
+	<string>Zoeken naar deelnemer</string>
+	<key>Search for Cars</key>
+	<string>Zoeken naar auto’s</string>
+	<key>Search for an office location</key>
+	<string>Een kantoorlocatie zoeken</string>
+	<key>Search schedules</key>
+	<string>Schema's zoeken</string>
+	<key>Searching for Hotels near you</key>
+	<string>Zoeken naar hotels in uw buurt</string>
+	<key>Searching for cars</key>
+	<string>Zoeken naar auto’s</string>
+	<key>Searching for cars at</key>
+	<string>Zoeken naar auto’s op</string>
+	<key>Searching for flights</key>
+	<string>Zoeken naar vluchten</string>
+	<key>Searching for hotels</key>
+	<string>Zoeken naar hotels</string>
+	<key>Searching for trains</key>
+	<string>Zoeken naar treinen</string>
+	<key>Seat: %@</key>
+	<string>Stoel: %@</string>
+	<key>Seats</key>
+	<string>Stoelen</string>
+	<key>See All</key>
+	<string>Alles bekijken</string>
+	<key>See All (token results)</key>
+	<string>Alles bekijken (%d resultaten)</string>
+	<key>See Alternative Flights</key>
+	<string>Alternatieve vluchten weergeven</string>
+	<key>See what you can do with Concur</key>
+	<string>Ontdek wat u kunt doen met Concur</string>
+	<key>Select</key>
+	<string>Selecteren</string>
+	<key>Select All</key>
+	<string>Alles selecteren</string>
+	<key>Select Attendee Type</key>
+	<string>Deelnemertype selecteren</string>
+	<key>Select Attendee to Add</key>
+	<string>Deelnemer die u wilt toevoegen selecteren</string>
+	<key>Select Car Type</key>
+	<string>Autotype selecteren</string>
+	<key>Select Card</key>
+	<string>Kaart selecteren</string>
+	<key>Select Email Address</key>
+	<string>E-mailadres selecteren</string>
+	<key>Select Preference</key>
+	<string>Voorkeur selecteren</string>
+	<key>Select Program</key>
+	<string>Programma selecteren</string>
+	<key>Select Reason</key>
+	<string>Reden selecteren</string>
+	<key>Select Train</key>
+	<string>Trein selecteren</string>
+	<key>Select an office location</key>
+	<string>Een kantoorlocatie selecteren</string>
+	<key>Select delivery option</key>
+	<string>Leveringsoptie selecteren</string>
+	<key>Select seat class below</key>
+	<string>Selecteer hieronder de stoelklasse</string>
+	<key>Send Again</key>
+	<string>Opnieuw verzenden</string>
+	<key>Send Failed</key>
+	<string>Verzenden mislukt</string>
+	<key>Send Invite</key>
+	<string>Uitnodiging verzenden</string>
+	<key>Send Invite To</key>
+	<string>Uitnodiging verzenden naar</string>
+	<key>Send Log</key>
+	<string>Logboek verzenden</string>
+	<key>Send My Sign In Details</key>
+	<string>Aanmeldinstructies versturen</string>
+	<key>Send to Approver</key>
+	<string>Verzenden naar fiatteur</string>
+	<key>Sending Back Report</key>
+	<string>Nota terugsturen</string>
+	<key>Sending Email</key>
+	<string>E-mail verzenden</string>
+	<key>Sent</key>
+	<string>Verzonden</string>
+	<key>Set Mobile PIN</key>
+	<string>Mobile-pincode instellen</string>
+	<key>Set PIN</key>
+	<string>Pincode instellen</string>
+	<key>Set PIN Tip</key>
+	<string>Tip voor instellen van pincode</string>
+	<key>Set PIN succeeded</key>
+	<string>Uw mobiele pincode is opgeslagen.</string>
+	<key>Settings</key>
+	<string>Instellingen</string>
+	<key>Share Trip</key>
+	<string>Reis delen</string>
+	<key>Show Home Panels</key>
+	<string>Startvensters weergeven</string>
+	<key>Show Offers</key>
+	<string>Aanbiedingen weergeven</string>
+	<key>Sign In</key>
+	<string>Aanmelden</string>
+	<key>Sign In Help</key>
+	<string>Hulp bij aanmelden</string>
+	<key>Sign In Instructions Sent to This Device</key>
+	<string>Aanmeldingsinstructies verzonden</string>
+	<key>Sign In with Concur</key>
+	<string>Aanmelden bij Concur</string>
+	<key>Sign In with Facebook</key>
+	<string>Aanmelden bij Facebook</string>
+	<key>Sign Up</key>
+	<string>Aanmelden</string>
+	<key>Sign Up Failed</key>
+	<string>Aanmelden is mislukt</string>
+	<key>Sign in to Concur</key>
+	<string>Aanmelden</string>
+	<key>Sign in to TripIt</key>
+	<string>Aanmelden bij TripIt</string>
+	<key>Signing up accepts our</key>
+	<string>Als u zich aanmeldt, accepteert u onze</string>
+	<key>Similar users like this hotel</key>
+	<string>Vergelijkbare gebruikers waren tevreden over dit hotel</string>
+	<key>Single Sign On</key>
+	<string>Eenmalig aanmelden (SSO)</string>
+	<key>Smart Matching</key>
+	<string>Smart Matching</string>
+	<key>SmartExpense Report</key>
+	<string>SmartExpense-nota</string>
+	<key>SmartExpense version</key>
+	<string>Welkom bij SmartExpense</string>
+	<key>SmartExpense was denied access to your TripIt account.</key>
+	<string>SmartExpense krijgt geen toegang tot uw TripIt-account.</string>
+	<key>SmartExpense was unable to access your TripIt account.  Please try again later.</key>
+	<string>SmartExpense krijgt geen toegang tot uw TripIt-account.  Probeer het later opnieuw.</string>
+	<key>SmartExpense was unable to expense your trip. Please try again later.</key>
+	<string>SmartExpense kan de onkosten voor uw reis niet verwerken. Probeer het later opnieuw.</string>
+	<key>Smoking</key>
+	<string>Roken</string>
+	<key>Sold Out</key>
+	<string>Volgeboekt</string>
+	<key>Sorry</key>
+	<string>We hebben helaas geen Price to Beat gevonden. Probeer opnieuw te zoeken.</string>
+	<key>Sorry I didn't quite get that.</key>
+	<string>Ik heb dit helaas niet helemaal begrepen. Laten we opnieuw beginnen.</string>
+	<key>Sort</key>
+	<string>Sorteren</string>
+	<key>Sort By</key>
+	<string>Sorteren op</string>
+	<key>Sort by</key>
+	<string>Sorteren op</string>
+	<key>Sort by Amount</key>
+	<string>Sorteren op bedrag</string>
+	<key>Sort by Date</key>
+	<string>Sorteren op datum</string>
+	<key>Sort by Distance</key>
+	<string>Sorteren op afstand</string>
+	<key>Sort by Duration</key>
+	<string>Sorteren op duur</string>
+	<key>Sort by Earliest Departure</key>
+	<string>Sorteren op vroegste vertrek</string>
+	<key>Sort by Preference</key>
+	<string>Sorteren op voorkeur</string>
+	<key>Sort by Preferred Vendors</key>
+	<string>Sorteren op voorkeursleverancier</string>
+	<key>Sort by Price</key>
+	<string>Sorteren op prijs</string>
+	<key>Sort by Rating</key>
+	<string>Sorteren op waardering</string>
+	<key>Sort by Recommendation</key>
+	<string>Sorteren op suggestie</string>
+	<key>Sort by Vendor Names</key>
+	<string>Sorteren op leveranciersnaam</string>
+	<key>Standard</key>
+	<string>Standaard</string>
+	<key>Standard Hybrid</key>
+	<string>Hybride standaard</string>
+	<key>Standard SUV</key>
+	<string>SUV standaard</string>
+	<key>Star Rating</key>
+	<string>Sterwaardering</string>
+	<key>StartARequest</key>
+	<string>Een aanvraag beginnen</string>
+	<key>StartYourRequest</key>
+	<string>Uw aanvraag beginnen</string>
+	<key>Starting</key>
+	<string>Vanaf</string>
+	<key>Station</key>
+	<string>Station</string>
+	<key>Stations</key>
+	<string>Stations</string>
+	<key>Stop</key>
+	<string>Stoppen</string>
+	<key>Stopping Upload</key>
+	<string>Uploaden stoppen</string>
+	<key>Stops</key>
+	<string>Tussenstops</string>
+	<key>Submit Invoices</key>
+	<string>Facturen indienen</string>
+	<key>Submit Report</key>
+	<string>Nota indienen</string>
+	<key>SubmitRequest</key>
+	<string>Aanvraag indienen</string>
+	<key>Submitted Reports</key>
+	<string>Ingediende nota's</string>
+	<key>Suggested based on co-worker</key>
+	<string>Voorgesteld op basis van collega</string>
+	<key>Suggested based on past stay</key>
+	<string>Voorgesteld op basis van vorig verblijf</string>
+	<key>Suggested based on popularity</key>
+	<string>Voorgesteld op basis van populariteit</string>
+	<key>Sunday_Short</key>
+	<string>zo</string>
+	<key>Swipe for more</key>
+	<string>Veeg voor meer</string>
+	<key>Swipe to delete</key>
+	<string>Veeg om te verwijderen</string>
+	<key>Switch to KM</key>
+	<string>Overschakelen naar KM</string>
+	<key>Switch to Miles</key>
+	<string>Overschakelen naar mijlen</string>
+	<key>Sync Credit Card</key>
+	<string>Kredietkaart synchroniseren</string>
+	<key>Sync account with SmartExpense</key>
+	<string>Account synchroniseren met SmartExpense</string>
+	<key>Sync credit card</key>
+	<string>Kredietkaart synchroniseren</string>
+	<key>TA Import Heading Text</key>
+	<string>Selecteer reisreserveringen of kaartafschrijvingen om uw reisschema voor reiskostenvergoeding te starten</string>
+	<key>TITLE_REGISTER_REENTER_PIN</key>
+	<string>Pincode invoeren</string>
+	<key>TRAVEL_NEG_TEXT</key>
+	<string>Begin met het plannen van uw reis</string>
+	<key>TRAVEL_REQUESTS</key>
+	<string>Aanvragen</string>
+	<key>TRIPS</key>
+	<string>Lijst met reizen</string>
+	<key>TRIP_DETAILS</key>
+	<string>Reisdetails</string>
+	<key>TRY_AGAIN</key>
+	<string>Opnieuw proberen</string>
+	<key>TWITTER_MESSAGES</key>
+	<string>Twitter van Concur</string>
+	<key>Take photos of your receipts.</key>
+	<string>Maak foto's van uw kwitanties.</string>
+	<key>Take pictures of receipts &amp; upload</key>
+	<string>Foto's van kwitanties maken en uploaden</string>
+	<key>Tap microphone to get started</key>
+	<string>Tik op de microfoon om te beginnen</string>
+	<key>Tap to get directions</key>
+	<string>Tik voor routebeschrijving</string>
+	<key>Taxable</key>
+	<string>Belastbaar</string>
+	<key>Taxi</key>
+	<string>Taxi</string>
+	<key>Taxi Magic</key>
+	<string>Taxi Magic</string>
+	<key>Terminal token</key>
+	<string>Terminal %@</string>
+	<key>Terms of Use</key>
+	<string>Gebruiksvoorwaarden</string>
+	<key>Thank You</key>
+	<string>Hartelijk dank</string>
+	<key>The Out of Pocket Entry could not be saved because the network is unavailable.  Please try again later.</key>
+	<string>Het contante item kan niet worden opgeslagen omdat het netwerk niet beschikbaar is.  Probeer het later opnieuw.</string>
+	<key>The Out of Pocket Entry could not be saved.  Please try again later.</key>
+	<string>Het contante item kan niet worden opgeslagen.  Probeer het later opnieuw.</string>
+	<key>The Price-to-Beat is %@.</key>
+	<string>De Price-to-Beat is %@.</string>
+	<key>The Price-to-Beat range is between %@.</key>
+	<string>Het bereik voor de Price-to-Beat ligt tussen %@.</string>
+	<key>The account could not be unlinked.</key>
+	<string>Het account kan niet worden losgekoppeld.</string>
+	<key>The car could not be booked.</key>
+	<string>De auto kan niet worden geboekt.</string>
+	<key>The check-out date must be later than the check-in date.</key>
+	<string>De uitcheckdatum moet later zijn dan de incheckdatum.</string>
+	<key>The date specified for departure is invalid.</key>
+	<string>De opgegeven vertrekdatum is ongeldig.</string>
+	<key>The date specified for the departure occurs in the past.</key>
+	<string>De datum van het vertrek ligt in het verleden.</string>
+	<key>The date specified for the return is earlier than the date of departure.</key>
+	<string>De retourdatum is eerder dan de vertrekdatum.</string>
+	<key>The flight could not be booked.</key>
+	<string>De vlucht kan niet worden geboekt.</string>
+	<key>The log could not be sent.</key>
+	<string>Het logboek kan niet worden verzonden.</string>
+	<key>The log mail has been placed in your outbox.</key>
+	<string>De e-mail met het logboek is bij uw uitgaande berichten geplaatst.</string>
+	<key>The log mail has been saved in your Drafts folder.</key>
+	<string>De e-mail met het logboek is in uw map met concepten geplaatst.</string>
+	<key>The password reset was requested from another device. Please use the same device you requested the password reset.</key>
+	<string>De aanvraag voor het opnieuw instellen van het wachtwoord is vanaf een ander apparaat gedaan. Gebruik hetzelfde apparaat als datgene dat u gebruikt heeft voor de aanvraag voor het opnieuw instellen van het wachtwoord.</string>
+	<key>The selected credit card will be charged and the ticket will be issued immediately. The reservation may not be eligible for changes or refunds. Are you sure you want to reserve this flight?</key>
+	<string>De geselecteerde kredietkaart wordt gecrediteerd en het ticket wordt direct uitgegeven De boeking kan mogelijk niet in aanmerking komen voor wijzigingen of terugbetalingen. Weet u zeker dat u deze vlucht wilt reserveren?</string>
+	<key>The server encountered an error.</key>
+	<string>De server heeft een fout aangetroffen.</string>
+	<key>The train could not be booked</key>
+	<string>De trein kan niet worden geboekt.</string>
+	<key>There are</key>
+	<string>Er wachten %@ nota's op uw goedkeuring.</string>
+	<key>There are cct</key>
+	<string>U hebt %@ ongebruikte kaartafschrijvingen.</string>
+	<key>There are no cct</key>
+	<string>U hebt geen kaartafschrijvingen.</string>
+	<key>There are no reports to approve</key>
+	<string>Er zijn geen nota's om goed te keuren</string>
+	<key>There are no rpt</key>
+	<string>Alle nota's zijn ingediend.</string>
+	<key>There are no travel requests to approve</key>
+	<string>Er zijn geen aanvragen om goed te keuren</string>
+	<key>There are rpt</key>
+	<string>Er zijn %@ nota's niet ingediend voor een totaal of %@.</string>
+	<key>There is</key>
+	<string>Er wacht %@ nota op uw goedkeuring.</string>
+	<key>There is cct</key>
+	<string>U hebt %@ ongebruikte kaartafschrijving.</string>
+	<key>There is rpt</key>
+	<string>Er is %@ nota niet ingediend voor een totaal of %@.</string>
+	<key>There must have been a typo. Please re-enter the password so it matches exactly in both fields</key>
+	<string>Wellicht hebt u een fout getypt. Voer het wachtwoord opnieuw in zodat het in beide velden identiek is.</string>
+	<key>There was an error processing your request. It may be due to a poor network connection. Please try again later. If this condition continues</key>
+	<string>Er is een fout opgetreden bij het verwerken van uw verzoek. Misschien is de netwerkverbinding ondermaats. Probeer het later opnieuw. Neem contact op met de beheerder als dit zich blijft voordoen</string>
+	<key>There were no unassigned expenses found</key>
+	<string>Er zijn geen niet-toegewezen onkosten gevonden</string>
+	<key>This application crashed the last time you ran it.  Please help us determine the cause of the crash by sending us the application log.</key>
+	<string>Deze toepassing is de laatste keer vastgelopen.  Help ons de oorzaak hiervan te bepalen door het toepassingslogboek naar ons te verzenden.</string>
+	<key>This attendee cannot be edited.</key>
+	<string>Deze deelnemer kan niet worden bewerkt.</string>
+	<key>This attendee has been modified</key>
+	<string>Deze deelnemer is gewijzigd sinds deze voor het laatst voor deze onkosten is gebruikt.  Eventuele wijzigingen moeten worden ingevuld in het profiel op het web.</string>
+	<key>This device is not configured for sending mail.</key>
+	<string>Dit apparaat is niet geconfigureerd voor het verzenden van e-mail.</string>
+	<key>This feature requires access</key>
+	<string>Voor deze functie heeft u toegang nodig tot de microfoon van uw apparaat. Schakel toegang tot de microfoon in voor deze app in Instellingen / Privacy / Microfoon</string>
+	<key>This trip has already been expensed or the trip could not be synchronized.</key>
+	<string>De onkosten voor deze reis zijn al opgegeven of de reis kan niet worden gesynchroniseerd.</string>
+	<key>Thursday_Short</key>
+	<string>do</string>
+	<key>Ticket Delivery</key>
+	<string>Ticketlevering</string>
+	<key>Ticket Type</key>
+	<string>Tickettype</string>
+	<key>Ticketing</key>
+	<string>Ticketverkoop</string>
+	<key>Time</key>
+	<string>Tijd</string>
+	<key>Title</key>
+	<string>Functie</string>
+	<key>To</key>
+	<string>Naar</string>
+	<key>To Location</key>
+	<string>Bestemmingslocatie</string>
+	<key>To Station</key>
+	<string>Naar-station</string>
+	<key>ToReceiptStoreMsg</key>
+	<string>Naar het kwitantiearchief.</string>
+	<key>Tomorrow</key>
+	<string>Morgen</string>
+	<key>Total</key>
+	<string>Totaal</string>
+	<key>Total Amount</key>
+	<string>Totaalbedrag</string>
+	<key>Total Due Company Card</key>
+	<string>Totaal verschuldigd bedrijfskaart</string>
+	<key>Total Due Employee</key>
+	<string>Totaal verschuldigd werknemer</string>
+	<key>Total Owed by Employee</key>
+	<string>Totaal verschuldigd door werknemer</string>
+	<key>Total Paid by Company</key>
+	<string>Totaal betaald door bedrijf</string>
+	<key>Total Personal Amount</key>
+	<string>Totaal persoonlijk bedrag</string>
+	<key>Total Price</key>
+	<string>Totale prijs</string>
+	<key>Total Rate</key>
+	<string>Totaalprijs</string>
+	<key>Total Requested</key>
+	<string>Totaal aangevraagd</string>
+	<key>Total Travel Points: %@</key>
+	<string>Totaal aantal reispunten: %@</string>
+	<key>Total no card charges</key>
+	<string>U hebt geen kaarttransacties</string>
+	<key>Total no expenses</key>
+	<string>U hebt geen onkosten</string>
+	<key>Total num card charge</key>
+	<string>U hebt één kaarttransactie</string>
+	<key>Total num card charges</key>
+	<string>U hebt %@ kaarttransacties</string>
+	<key>Total num expense</key>
+	<string>U hebt één onkostenpost</string>
+	<key>Total num expenses</key>
+	<string>U hebt %@ onkosten</string>
+	<key>Total: %@</key>
+	<string>Totaal: %@</string>
+	<key>Tour</key>
+	<string>Tour</string>
+	<key>TourExpense2Subtitle</key>
+	<string>Stuur het vervolgens in en wordt terugbetaald. Managers kunnen overal hun goedkeuring geven.</string>
+	<key>Train</key>
+	<string>Trein</string>
+	<key>Train Choices</key>
+	<string>Treinopties</string>
+	<key>Train Detail</key>
+	<string>Treindetails</string>
+	<key>Train Number</key>
+	<string>Treinnummer</string>
+	<key>Train: token</key>
+	<string>Trein %@</string>
+	<key>Transaction Amount</key>
+	<string>Transactiebedrag</string>
+	<key>Transaction Date</key>
+	<string>Transactiedatum</string>
+	<key>Transaction Location</key>
+	<string>Transactielocatie</string>
+	<key>Travel</key>
+	<string>Reizen</string>
+	<key>Travel Agency Info</key>
+	<string>Info over reisbureau</string>
+	<key>Travel Apps</key>
+	<string>Reis-apps</string>
+	<key>Travel Points</key>
+	<string>Reispunten</string>
+	<key>Travel Points Awarded</key>
+	<string>Toegekende reispunten</string>
+	<key>Travel Points Bank: %@ points</key>
+	<string>Reispuntenaccount: %@ punten</string>
+	<key>Travel Points Booked</key>
+	<string>Geboekte reispunten</string>
+	<key>Travel Policy</key>
+	<string>Reisbeleid</string>
+	<key>Travel Requests</key>
+	<string>Reisaanvragen</string>
+	<key>Travel Time</key>
+	<string>Reistijd</string>
+	<key>TravelRequestCount</key>
+	<string>U moet nog %d aanvraag/aanvragen goedkeuren</string>
+	<key>TravelRequestsToApproveRow_0</key>
+	<string>U hebt geen goed te keuren aanvragen</string>
+	<key>TravelRequestsToApproveRow_1</key>
+	<string>U moet nog 1 aanvraag goedkeuren</string>
+	<key>TravelRequestsToApproveRow_2</key>
+	<string>U moet nog %d aanvragen goedkeuren</string>
+	<key>Trip</key>
+	<string>Huidige reis</string>
+	<key>Trip Approval</key>
+	<string>Goedkeuring reis</string>
+	<key>Trip Approvals</key>
+	<string>Goedgekeurde reizen</string>
+	<key>Trip Feed</key>
+	<string>Reisinvoer</string>
+	<key>Trip Fields</key>
+	<string>Reisvelden</string>
+	<key>Trip Locator</key>
+	<string>Reislocator</string>
+	<key>Trip Record Locator for this trip could not be retrieved.</key>
+	<string>De recordlocator van de reis kan niet worden opgehaald.</string>
+	<key>Trip data updated on</key>
+	<string>Reisgegevens bijgewerkt op %@</string>
+	<key>Trip data updated on hrt</key>
+	<string>Reisgegevens bijgewerkt op %@</string>
+	<key>Trip just trip</key>
+	<string>Reis</string>
+	<key>TripIt Account Not Activated</key>
+	<string>TripIt-account is niet geactiveerd</string>
+	<key>TripIt Trips</key>
+	<string>TripIt-reizen</string>
+	<key>TripIt not linked</key>
+	<string>Het TripIt-account is niet gekoppeld aan SmartExpense.  Koppel het aan TripIt door in het startscherm op de TripIt-rij te tikken</string>
+	<key>TripIt not linked together</key>
+	<string>Het TripIt-account dat is gekoppeld aan de aangemelde SmartExpense-gebruiker is niet het account waarmee bij de mobiele TripIt-app is aangemeld.  Meld u bij TripIt aan met het account dat u aan SmartExpense hebt gekoppeld.</string>
+	<key>TripIt trip key not found</key>
+	<string>Uw aanvraag voor het opgeven van onkosten voor een reis kan niet worden verwerkt.  De TripIt-sleutel is niet gevonden.</string>
+	<key>Trips</key>
+	<string>Reizen</string>
+	<key>Try Again</key>
+	<string>Opnieuw proberen</string>
+	<key>Try again to re-enter your password or select I Forgot to receive signin in instructions</key>
+	<string>Probeer uw wachtwoord opnieuw in te voeren of selecteer 'Ik ben het vergeten' om aanmeldingsinstructies te ontvangen.</string>
+	<key>Tuesday_Short</key>
+	<string>di</string>
+	<key>Type</key>
+	<string>Type</string>
+	<key>Type in emails seperated by commas or choose from contacts list</key>
+	<string>Typ e-mailadressen gescheiden door komma's of kies adressen in de lijst met contactpersonen</string>
+	<key>Type name or select frequent attendee</key>
+	<string>Voor- of achternaam invoeren</string>
+	<key>Type to search for a location</key>
+	<string>Typ om te zoeken naar een locatie</string>
+	<key>UNDEFINED_MSG</key>
+	<string>Ten minste een van de geselecteerde onkosten heeft een ongedefinieerd onkostentype.</string>
+	<key>Unable to Sign In</key>
+	<string>Kan niet aanmelden</string>
+	<key>Unable to add expense</key>
+	<string>Kan onkosten niet toevoegen</string>
+	<key>Unable to add itemization</key>
+	<string>Kan specificatie niet toevoegen</string>
+	<key>Unable to attach expense. Please check that this report policy allows Japan Public Transit.</key>
+	<string>Kan onkosten niet bijvoegen. Controleer of dit rapportbeleid 'openbaar vervoer Japan' toestaat.</string>
+	<key>Unable to link</key>
+	<string>Koppelen is niet mogelijk</string>
+	<key>Unable to load location data.</key>
+	<string>Kan locatiegegevens niet opslaan.</string>
+	<key>Unable to sign in</key>
+	<string>U kunt zich op dit moment niet aanmelden. Neem contact met de helpdesk van uw bedrijf of met de afdeling voor reizen/onkosten.</string>
+	<key>Unavailable</key>
+	<string>Niet beschikbaar</string>
+	<key>Undefined</key>
+	<string>Niet gedefinieerd</string>
+	<key>Unexpected Error</key>
+	<string>Onverwachte fout</string>
+	<key>Unknown Station</key>
+	<string>Onbekend station</string>
+	<key>Unlink Dropbox</key>
+	<string>Dropbox loskoppelen</string>
+	<key>Unlink Succeeded</key>
+	<string>Loskoppelen is gelukt</string>
+	<key>Unlink from TripIt</key>
+	<string>Loskoppelen van TripIt</string>
+	<key>Unmatch</key>
+	<string>Match ongedaan maken</string>
+	<key>Unsaved Receipts</key>
+	<string>Niet-opgeslagen kwitanties</string>
+	<key>Unselect All</key>
+	<string>Alles deselecteren</string>
+	<key>Unsubmitted Reports</key>
+	<string>Niet-ingediende nota's</string>
+	<key>UnsubmittedReportsRow_0</key>
+	<string>U hebt geen niet-ingediende nota's</string>
+	<key>UnsubmittedReportsRow_1</key>
+	<string>U hebt 1 niet-ingediende nota</string>
+	<key>UnsubmittedReportsRow_2</key>
+	<string>U hebt %d niet-ingediende nota's</string>
+	<key>Update</key>
+	<string>Bijwerken</string>
+	<key>Update Itemizations</key>
+	<string>Specificaties bijwerken</string>
+	<key>Update Receipt</key>
+	<string>Kwitantie bijwerken</string>
+	<key>Updating</key>
+	<string>Bijwerken</string>
+	<key>Updating Itinerary</key>
+	<string>Reisschema bijwerken</string>
+	<key>Upload</key>
+	<string>Uploaden</string>
+	<key>Upload Failed</key>
+	<string>Uploaden is mislukt</string>
+	<key>Upload Queue</key>
+	<string>Wachtrij uploaden</string>
+	<key>Upload Receipt</key>
+	<string>Kwitantie uploaden</string>
+	<key>Upload Success</key>
+	<string>Uploaden is geslaagd</string>
+	<key>Uploading Please Wait</key>
+	<string>Bezig met uploaden. Even geduld.</string>
+	<key>Uploading count</key>
+	<string>%d van %d uploaden</string>
+	<key>Uploading to Dropbox</key>
+	<string>Uploaden naar Dropbox</string>
+	<key>Uploading to Dropbox failed</key>
+	<string>Uploaden naar Dropbox is mislukt</string>
+	<key>Uploading to Dropbox was successful</key>
+	<string>Uploaden naar Dropbox is geslaagd</string>
+	<key>Use %@ Travel Points</key>
+	<string>Reispunten %@ gebruiken</string>
+	<key>Use %d pts.</key>
+	<string>%d punten gebruiken.</string>
+	<key>Use-ImagePicker</key>
+	<string>Gebruiken</string>
+	<key>User Name</key>
+	<string>Gebruikersnaam</string>
+	<key>Username and Password</key>
+	<string>Gebruikersnaam en wachtwoord</string>
+	<key>Username or PIN is invalid</key>
+	<string>Gebruikersnaam of pincode is ongeldig. Als u een mobiele pincode wilt maken of opnieuw wilt instellen, klikt u op 'Wilt u een pincode instellen' of gaat u naar 'Profiel -&gt; Mobile-registratie' bij Concur online.</string>
+	<key>Username or Password is invalid</key>
+	<string>Gebruikersnaam of wachtwoord is ongeldig.</string>
+	<key>Username or Password is invalid SU</key>
+	<string>Gebruikersnaam of wachtwoord is ongeldig. U kunt uw wachtwoord opnieuw instellen door op de link 'Uw wachtwoord opnieuw instellen' te klikken. Als u geen account, klik dan op 'Aanmelden'.</string>
+	<key>Using Points</key>
+	<string>Punten gebruiken</string>
+	<key>VALUE_RANGE_MSG</key>
+	<string>Voer een waarde in tussen %d en %d tekens.</string>
+	<key>VALUE_RANGE_MSG_FIXED_LENGTH</key>
+	<string>Voer een waarde in van %d tekens.</string>
+	<key>VALUE_RANGE_MSG_LOWER_BOUND</key>
+	<string>Voer een waarde in van meer dan %d tekens.</string>
+	<key>VALUE_RANGE_MSG_NO_BOUNDS</key>
+	<string>Voer een geldige waarde in voor dit veld.</string>
+	<key>VALUE_RANGE_MSG_UPPER_BOUND</key>
+	<string>Voer een waarde in van minder dan %d tekens.</string>
+	<key>VERIFY_PWD</key>
+	<string>Wachtwoord controleren</string>
+	<key>VehicleId</key>
+	<string>Voertuig-ID</string>
+	<key>Vendor</key>
+	<string>Leverancier</string>
+	<key>Vendor Hours</key>
+	<string>Leverancieruren</string>
+	<key>Vendor Names</key>
+	<string>Leveranciersnamen</string>
+	<key>Vendor Web Site</key>
+	<string>Website van leverancier</string>
+	<key>Verification is simple. Just tap on the link in the email we sent to</key>
+	<string>Controleren is eenvoudig. Tik op de link in het e-mailbericht dat we naar hebben %@ verzonden</string>
+	<key>View Allowance</key>
+	<string>Vergoeding bekijken</string>
+	<key>View Images</key>
+	<string>Beelden weergeven</string>
+	<key>View Rates</key>
+	<string>Tarieven weergeven</string>
+	<key>View Receipt</key>
+	<string>Kwitantie weergeven</string>
+	<key>View Report Offline</key>
+	<string>Geen toegang tot nota.  Probeer het later wanneer u online bent.</string>
+	<key>View in Chatter</key>
+	<string>Weergeven in Chatter</string>
+	<key>View your travel requests</key>
+	<string>Uw aanvragen weergeven</string>
+	<key>View your trips</key>
+	<string>Uw reizen weergeven</string>
+	<key>View your uploaded receipts</key>
+	<string>Uw geüploade kwitanties weergeven</string>
+	<key>Violation</key>
+	<string>Overtreding</string>
+	<key>Violation Justification</key>
+	<string>Verantwoording voor overtreding</string>
+	<key>Violation Reason</key>
+	<string>Reden voor overtreding</string>
+	<key>Violation Reason Code</key>
+	<string>Overtreding redencode</string>
+	<key>Violation Summary</key>
+	<string>Overtreding samenvatting</string>
+	<key>Violations</key>
+	<string>Schendingen</string>
+	<key>WAIT_FOR_CAR_RATES_DATA</key>
+	<string>U wacht op gegevens van autotarieven.  Probeer deze actie later opnieuw.</string>
+	<key>WARNING</key>
+	<string>Waarschuwing</string>
+	<key>WARNING_INVALID_VALUE_RANGE_NOT_REQUIRED</key>
+	<string>Deze waarde ligt niet in het opgegeven bereik van %d t/m %d tekens. Weet u zeker dat u wilt doorgaan?</string>
+	<key>WARN_MISSING_REQ_FLD</key>
+	<string>U hebt verplichte velden in het formulier niet ingevuld.  Wilt u doorgaan met opslaan?</string>
+	<key>WEBVIEW</key>
+	<string>Webgegevensweergave</string>
+	<key>Waiting</key>
+	<string>Wachten</string>
+	<key>Warning</key>
+	<string>Waarschuwing</string>
+	<key>Warning on Itinerary Stop update</key>
+	<string>Waarschuwing bij bijwerken tussenstop</string>
+	<key>Watch setup video</key>
+	<string>Instellingsvideo weergeven</string>
+	<key>We are unable to sign you in with this information</key>
+	<string>U kunt zich op dit moment niet aanmelden met deze informatie.</string>
+	<key>We couldnt find any hotels with the given search criteria. Please try again with different criteria.</key>
+	<string>We konden geen hotels vinden met de opgegeven zoekcriteria. Probeer het opnieuw met andere criteria.</string>
+	<key>Web Site</key>
+	<string>Website</string>
+	<key>Wednesday_Short</key>
+	<string>wo</string>
+	<key>Welcome to Concur</key>
+	<string>Welkom bij Concur</string>
+	<key>What Flights can I find for you?</key>
+	<string>Welke vluchten kan ik voor u zoeken?</string>
+	<key>What Hotel can I find for you?</key>
+	<string>Welk hotel kan ik voor u zoeken?</string>
+	<key>What's New</key>
+	<string>Nieuwe functies</string>
+	<key>When auto login is on</key>
+	<string>Als automatisch aanmelden is ingeschakeld, wordt de gebruikersnaam automatisch opgeslagen.</string>
+	<key>Work email or Concur username</key>
+	<string>E-mailadres op uw werk of Concur-gebruikersnaam</string>
+	<key>Would you like to create an Expense Report from the selected trip segments</key>
+	<string>Wilt u een onkostennota maken van de geselecteerde reissegmenten?</string>
+	<key>Wrong agency code</key>
+	<string>Onjuiste code van reisbureau</string>
+	<key>Wrong company code</key>
+	<string>Onjuiste bedrijfscode</string>
+	<key>YCOOK</key>
+	<string>Overige met koken</string>
+	<key>YODLEE_CARD_LOGIN_FORM_FAILED_MSG</key>
+	<string>Ophalen aanmeldingsformulier voor uw kredietkaart is mislukt.  Probeer het later opnieuw.</string>
+	<key>Yes</key>
+	<string>Ja</string>
+	<key>You already have a corporate account with Concur.</key>
+	<string>U hebt al een zakelijke account bij Concur.</string>
+	<key>You are offline. Please expense trip later.</key>
+	<string>U bent offline.  Wacht met het opgeven van onkosten voor de reis tot u online bent.</string>
+	<key>You are using %@ Travel Points.</key>
+	<string>U gebruikt %@ reispunten.</string>
+	<key>You do not have an email in your Concur profile. We are unable to send you a password reset email without one. Please go to the Concur Website and add your work email to your profile.</key>
+	<string>Er staat geen e-mailadres in uw Concur-profiel. Zo kunnen wij geen e-mail versturen om uw wachtwoord opnieuw in te stellen. Ga naar de Concur-website en voeg het e-mailadres op uw werk toe aan uw profiel.</string>
+	<key>You have %@ Travel Points in your bank.</key>
+	<string>U heeft %@ reispunten op uw account.</string>
+	<key>You have already registered for SmartExpense.</key>
+	<string>U hebt zich al geregistreerd voor SmartExpense.</string>
+	<key>You have no approvals</key>
+	<string>U hebt geen goedkeuringen</string>
+	<key>You have no messages</key>
+	<string>U hebt geen berichten</string>
+	<key>You have no upcoming trips</key>
+	<string>U hebt geen aanstaande reizen</string>
+	<key>You have stayed here %@ times</key>
+	<string>U verbleef hier %@ keer</string>
+	<key>You have stayed here earlier</key>
+	<string>U bent hier al eens eerder geweest</string>
+	<key>You have successfully linked your TripIt account to SmartExpense.</key>
+	<string>U hebt uw TripIt-account aan SmartExpense gekoppeld.</string>
+	<key>You must be online before you can upload your items</key>
+	<string>U moet online zijn als u uw items wilt uploaden.</string>
+	<key>You must enter in a valid PIN in order to log in</key>
+	<string>U moet een geldige pincode invoeren om u aan te melden</string>
+	<key>You must enter in a valid email address in order for Concur to verify it</key>
+	<string>U moet een geldig e-mailadres invoeren dat Concur kan controleren</string>
+	<key>You must enter in a valid email for your approver</key>
+	<string>U moet een geldig e-mailadres invoeren voor de fiatteur</string>
+	<key>You must enter in a valid password in order to log in</key>
+	<string>U moet een geldig wachtwoord invoeren om u aan te melden</string>
+	<key>You must enter in a valid password or PIN in order to log in</key>
+	<string>U moet een geldig wachtwoord of een geldige pincode invoeren om u aan te melden</string>
+	<key>You must enter in a valid user name in order to log in</key>
+	<string>U moet een geldige gebruikersnaam invoeren om u aan te melden</string>
+	<key>You need to select a Delivery Option in order to reserve your train</key>
+	<string>U moet een leveringsoptie selecteren om uw trein te reserveren.</string>
+	<key>You need to select a valid credit card in order to reserve your train</key>
+	<string>U moet een geldige kredietkaart selecteren om uw trein te reserveren.</string>
+	<key>Your account data has been wiped from this device.  Please contact your company administrator for assistance.</key>
+	<string>Uw accountgegevens zijn op dit apparaat gewist.  Neem voor hulp contact op met de beheerder voor uw bedrijf.</string>
+	<key>Your account is no longer linked to TripIt.</key>
+	<string>Uw account is niet meer gekoppeld aan TripIt.</string>
+	<key>Your agent may ask for the Trip Record Locator: %@</key>
+	<string>Uw agent vraagt u mogelijk om de recordlocator van de reis: %@</string>
+	<key>Your colleague has stayed here</key>
+	<string>Een van uw collega's is hier al eens eerder geweest</string>
+	<key>Your colleague is staying here on your check-in date</key>
+	<string>Uw collega verblijft hier op uw incheckdatum</string>
+	<key>Your colleague's favorite</key>
+	<string>Uw collega's favoriete</string>
+	<key>Your colleagues have stayed here %@ times</key>
+	<string>U collega's verbleven hier %@ keer</string>
+	<key>Your company has disabled Concur for mobile. Please contact your administrator.</key>
+	<string>Uw bedrijf heeft Concur for Mobile uitgeschakeld. Neem contact op met uw beheerder.</string>
+	<key>Your company's preferred</key>
+	<string>Uw bedrijf heeft een voorkeur voor de volgende</string>
+	<key>Your company's travel policy will not allow this reservation.</key>
+	<string>Deze reservering is niet toegestaan volgens het reisbeleid van uw bedrijf.</string>
+	<key>Your device cannot make a phone call.</key>
+	<string>Uw apparaat kan geen oproep plaatsen.</string>
+	<key>Your entry does not appear to be a valid work email or Concur Username. For example</key>
+	<string>U heeft een ongeldig e-mailadres op uw werk of een ongeldige Concur-gebruikersnaam ingevoerd. Er ontbreekt bijvoorbeeld een @ of .com</string>
+	<key>Your expense has been queued</key>
+	<string>Uw onkosten staan in de wachtrij voor uploaden.</string>
+	<key>Your favorite</key>
+	<string>Uw favoriete</string>
+	<key>Your hotel reservation has been successfully cancelled. Cancellation Number: %@</key>
+	<string>Uw hotelreservering is geannuleerd. Annuleringsnummer: %@</string>
+	<key>Your receipt has been queued</key>
+	<string>Uw kwitantie staat in de wachtrij voor uploaden.</string>
+	<key>add_as_favorite</key>
+	<string>Toevoegen als favoriet</string>
+	<key>add_new_route</key>
+	<string>Nieuwe route toevoegen</string>
+	<key>add_route</key>
+	<string>Route toevoegen</string>
+	<key>add_to_report</key>
+	<string>Aan nota toevoegen</string>
+	<key>additional_charge</key>
+	<string>Aanvullende kosten</string>
+	<key>are missing</key>
+	<string> ontbreken.</string>
+	<key>arrival_station</key>
+	<string>Aankomststation</string>
+	<key>available from</key>
+	<string>beschikbaar bij</string>
+	<key>business_purpose</key>
+	<string>Zakelijk doel</string>
+	<key>cheap</key>
+	<string>Goedkoop</string>
+	<key>check in on</key>
+	<string>inchecken op</string>
+	<key>choices</key>
+	<string>opties</string>
+	<key>commuter_pass</key>
+	<string>Forensenpas</string>
+	<key>corporate card transactions</key>
+	<string>bedrijfskaarttransactie(s)</string>
+	<key>cost</key>
+	<string>Kosten</string>
+	<key>day</key>
+	<string>dag</string>
+	<key>days</key>
+	<string>dagen</string>
+	<key>departure_station</key>
+	<string>Vertrekstation</string>
+	<key>easy</key>
+	<string>Gemakkelijk</string>
+	<key>email saved into your drafts</key>
+	<string>e-mail is opgeslagen bij uw concepten</string>
+	<key>expense_route</key>
+	<string>Onkostenroute</string>
+	<key>fast</key>
+	<string>Snel</string>
+	<key>favorites</key>
+	<string>Favorieten</string>
+	<key>green</key>
+	<string>First Class (groene stoel)</string>
+	<key>hour</key>
+	<string>uur</string>
+	<key>hour_quantity</key>
+	<string>%d u</string>
+	<key>hours</key>
+	<string>uur</string>
+	<key>hours_quantity</key>
+	<string>%d uur</string>
+	<key>ic_card</key>
+	<string>IC-kaart</string>
+	<key>ic_card_fare</key>
+	<string>Tarief IC-kaart</string>
+	<key>int active int upcoming</key>
+	<string>%d actief, %d aanstaande</string>
+	<key>invoice to review</key>
+	<string>te controleren factuur</string>
+	<key>invoices to approve</key>
+	<string>Goed te keuren facturen</string>
+	<key>invoices to review</key>
+	<string>te controleren facturen</string>
+	<key>is missing</key>
+	<string> ontbreekt.</string>
+	<key>items to upload</key>
+	<string>items om te uploaden</string>
+	<key>japan_public_transit</key>
+	<string>Openbaar vervoer Japan</string>
+	<key>line</key>
+	<string>Lijn</string>
+	<key>manual</key>
+	<string>Handmatig</string>
+	<key>menu</key>
+	<string>menu</string>
+	<key>miles</key>
+	<string>mijlen</string>
+	<key>minute</key>
+	<string>minuut</string>
+	<key>minute_quantity</key>
+	<string>%d min</string>
+	<key>minutes</key>
+	<string>minuten</string>
+	<key>minutes_quantity</key>
+	<string>%d min.</string>
+	<key>mobile entries</key>
+	<string>mobiele items</string>
+	<key>near</key>
+	<string>nabij</string>
+	<key>no</key>
+	<string>nee</string>
+	<key>noReceipt</key>
+	<string>De kwitantieafbeelding is momenteel niet beschikbaar. Probeer het later opnieuw.</string>
+	<key>noReceipts</key>
+	<string>U hebt momenteel geen kwitanties in het kwitantiearchief.</string>
+	<key>no_favorite_routes</key>
+	<string>Geen favoriete routes</string>
+	<key>no_recent_routes</key>
+	<string>Geen recente routes</string>
+	<key>no_saved_routes</key>
+	<string>Geen opgeslagen routes</string>
+	<key>other</key>
+	<string>Overige</string>
+	<key>paper_ticket</key>
+	<string>Papieren ticket</string>
+	<key>per day</key>
+	<string>per dag</string>
+	<key>per night</key>
+	<string>per nacht</string>
+	<key>personal_expense</key>
+	<string>Persoonlijke onkosten</string>
+	<key>pickup on</key>
+	<string>afhalen op</string>
+	<key>purchase request to review</key>
+	<string>te controleren aankoopaanvraag</string>
+	<key>purchase requests to review</key>
+	<string>te controleren aanvragen aanschaffen</string>
+	<key>report to approve</key>
+	<string>goed te keuren nota</string>
+	<key>reports to approve</key>
+	<string>goed te keuren nota's</string>
+	<key>resend the verification email</key>
+	<string>de verificatie-e-mail opnieuw verzenden</string>
+	<key>reserved</key>
+	<string>Gereserveerde stoel</string>
+	<key>results by</key>
+	<string>resultaten op</string>
+	<key>results by Duration</key>
+	<string>resultaten op duur</string>
+	<key>results by Earliest Departure</key>
+	<string>resultaten op vroegste vertrek</string>
+	<key>results by Fare Price</key>
+	<string>resultaten op prijs</string>
+	<key>results by Preferred Carrier</key>
+	<string>resultaten per voorkeursvervoerder</string>
+	<key>route_added_to_report_confirmation</key>
+	<string>Uw route is toegevoegd aan</string>
+	<key>route_saved_confirmation</key>
+	<string>Uw route is opgeslagen</string>
+	<key>route_search</key>
+	<string>Route zoeken</string>
+	<key>routes</key>
+	<string>Routes</string>
+	<key>save_for_later</key>
+	<string>Opslaan voor later</string>
+	<key>search_stations</key>
+	<string>Stations zoeken</string>
+	<key>select_route</key>
+	<string>Route selecteren</string>
+	<key>sorted by</key>
+	<string>gesorteerd op </string>
+	<key>tap here to cancel reservation</key>
+	<string>tik hier om de reservering te annuleren</string>
+	<key>through_station</key>
+	<string>Via station</string>
+	<key>through_stations</key>
+	<string>Via stations</string>
+	<key>to</key>
+	<string>naar</string>
+	<key>today</key>
+	<string>Vandaag</string>
+	<key>token hour(s) token minute(s)</key>
+	<string>%d uur %d minuut/minuten</string>
+	<key>token minute(s)</key>
+	<string>%d minuut/minuten</string>
+	<key>token results</key>
+	<string>%d resultaten</string>
+	<key>travel request to approve</key>
+	<string>goed te keuren reisaanvraag</string>
+	<key>travel requests to approve</key>
+	<string>goed te keuren reisaanvragen</string>
+	<key>trip to approve</key>
+	<string>goed te keuren reis</string>
+	<key>trip_date</key>
+	<string>Reisdatum</string>
+	<key>trips to approve</key>
+	<string>goed te keuren reizen</string>
+	<key>unknown</key>
+	<string>Onbekend</string>
+	<key>unreserved</key>
+	<string>Niet-gereserveerde stoel</string>
+	<key>unsubmitted Reports</key>
+	<string>niet-ingediende nota('s)</string>
+	<key>view_report</key>
+	<string>Rapport weergeven</string>
+</dict>
+</plist>

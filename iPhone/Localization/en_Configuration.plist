@@ -1,0 +1,762 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>ACTIVE_REPORTS</key>
+	<dict>
+		<key>NO_RECEIPT_FOUND</key>
+		<string>No receipt has been found on the server.  If you have already attached a receipt to the report, please come back later and check again.</string>
+		<key>SUBMIT_HOW_TO_RECEIPT_MSG</key>
+		<string>This report can be submitted but contains at least one expense entry missing a required receipt.  Attach a receipt using Concur web, or via mobile, remove the expense from the report, attach the receipt and add it back to the report.</string>
+		<key>No Active Reports</key>
+		<string>You currently have no Active Reports</string>
+		<key>SUBMIT_ERROR_UNDEF_MSG</key>
+		<string>The expense report contains one or more expenses with an expense type of Undefined.  You can either select the expense type using Concur web, or via mobile, remove the expense from the report, select the expense type and re-add it to the report.</string>
+		<key>SUBMIT_ERROR_RPT_XCT_LEVEL_MSG</key>
+		<string>This expense report cannot be submitted until all exceptions with red flags are resolved.</string>
+		<key>SUBMIT_ERROR_NO_ENTRY_MSG</key>
+		<string>The expense report has no expenses.  You must create at least one expense in order to submit the report.</string>
+	</dict>
+	<key>SELECT_REPORT</key>
+	<dict>
+		<key>PROCEED_TO_ADD_MSG</key>
+		<string>You can proceed and add them to a report, but will need to attach a receipt via the website.</string>
+		<key>UNDEFINED_MSG</key>
+		<string>%d expense(s) have an unspecified expense type.  </string>
+		<key>NO_RECEIPT_MSG</key>
+		<string>%d expense(s) do not have receipts. </string>
+		<key>FIX_REPORT_NAME_MSG</key>
+		<string>Please select an existing report or enter a valid report name and then select the new report.</string>
+		<key>ADD_TO_RPT_CONFIRM_MSG</key>
+		<string>Add selected expense(s) to report?</string>
+		<key>ADD_TO_RPT_CONFIRM_TITLE</key>
+		<string>Confirm</string>
+	</dict>
+	<key>COMMON</key>
+	<dict>
+		<key>Waiting</key>
+		<string>Waiting</string>
+		<key>LABEL_ADD_BTN</key>
+		<string>Add</string>
+		<key>LABEL_CLOSE_BTN</key>
+		<string>Close</string>
+		<key>LABEL_CANCEL_BTN</key>
+		<string>Cancel</string>
+		<key>LABEL_SAVE_BTN</key>
+		<string>Save</string>
+		<key>LABEL_DONE_BTN</key>
+		<string>Done</string>
+		<key>Offline</key>
+		<string>Offline</string>
+	</dict>
+	<key>view_names</key>
+	<dict>
+		<key>CAR</key>
+		<string>Car Rental</string>
+		<key>CAR_LIST</key>
+		<string>Select Car</string>
+		<key>CAR_DETAILS</key>
+		<string>Car Details</string>
+		<key>HOTEL</key>
+		<string>Hotel</string>
+		<key>DISTANCE</key>
+		<string>Find Hotels Within</string>
+		<key>HOTEL_SEARCH_RESULTS</key>
+		<string>Select Hotel</string>
+		<key>HOTEL_ROOM_LIST</key>
+		<string>Select Room</string>
+		<key>HOTEL_BOOKING</key>
+		<string>Book Room</string>
+		<key>HOTEL_CREDIT_CARD</key>
+		<string>Select Credit Card</string>
+		<key>SELECT_REPORT</key>
+		<string>Select Report</string>
+		<key>ACTIVE_ENTRIES</key>
+		<string>Report</string>
+		<key>ACTIVE_REPORTS</key>
+		<string>Active Reports</string>
+		<key>PWD_LOGIN</key>
+		<string>Register</string>
+		<key>REGISTER</key>
+		<string>Enter Pin</string>
+		<key>SPLASH</key>
+		<string>Splash</string>
+		<key>HOME_PAGE</key>
+		<string>Concur Home</string>
+		<key>LOGIN</key>
+		<string>Sign In</string>
+		<key>INFO</key>
+		<string>Information</string>
+		<key>REPORTS</key>
+		<string>Report List</string>
+		<key>TRIPS</key>
+		<string>Trips List</string>
+		<key>TRIP_DETAILS</key>
+		<string>Trip Details</string>
+		<key>ITIN_DETAILS</key>
+		<string>Segment Details</string>
+		<key>MAP</key>
+		<string>Map View</string>
+		<key>TWITTER_MESSAGES</key>
+		<string>Twitter From Concur</string>
+		<key>WEBVIEW</key>
+		<string>Web Data View</string>
+		<key>SOUTHWEST</key>
+		<string>Southwest Booking</string>
+		<key>SETTINGS_VIEW</key>
+		<string>Settings</string>
+		<key>APPROVE_REPORTS</key>
+		<string>Approve Reports</string>
+		<key>APPROVE_ENTRIES</key>
+		<string>Report Entries</string>
+		<key>APPROVE_EXPENSE_DETAILS</key>
+		<string>Expense Details</string>
+		<key>APPROVE_REPORT_SUMMARY</key>
+		<string>Report Summary</string>
+		<key>APPROVE_VIEW_RECEIPTS</key>
+		<string>View Receipts</string>
+		<key>APPROVE_VIEW_EXCEPTIONS</key>
+		<string>View Exceptions</string>
+		<key>APPROVE_VIEW_COMMENTS</key>
+		<string>View Comments</string>
+		<key>HOME_PAGE_BREEZE</key>
+		<string>Concur Breeze</string>
+		<key>OUT_OF_POCKET_LIST</key>
+		<string>Expenses</string>
+		<key>OUT_OF_POCKET_FORM</key>
+		<string>Expense</string>
+		<key>EXPENSE_TYPES_LIST</key>
+		<string>Expense Types</string>
+		<key>RECEIPT_MANAGER</key>
+		<string>Receipt Folder</string>
+		<key>RECEIPT_MANAGER_IMAGES</key>
+		<string>Receipt Folder</string>
+		<key>ITEMIZATION_LIST</key>
+		<string>Itemization List</string>
+		<key>CARDS_LIST</key>
+		<string>Cards</string>
+		<key>APPROVE_VIEW_ITEMIZATIONS</key>
+		<string>Itemization</string>
+	</dict>
+	<key>HOME_PAGE</key>
+	<dict>
+		<key>ReportsToApproveRow_2</key>
+		<string>You have %d reports to approve</string>
+		<key>ReportsToApproveRow_1</key>
+		<string>You have 1 report to approve</string>
+		<key>ReportsToApproveRow_0</key>
+		<string>You have no report to approve</string>
+		<key>UnsubmittedReportsRow_2</key>
+		<string>You have %d unsubmitted reports</string>
+		<key>UnsubmittedReportsRow_1</key>
+		<string>You have 1 unsubmitted report</string>
+		<key>UnsubmittedReportsRow_0</key>
+		<string>You have no unsubmitted report</string>
+		<key>CORP_CARDS_2</key>
+		<string>You have %d unused corporate card charges</string>
+		<key>CORP_CARDS_1</key>
+		<string>You have 1 unused corporate card charge</string>
+		<key>CORP_CARDS_0</key>
+		<string>You have no unused corporate card charge</string>
+		<key>PersonalCardCount_2</key>
+		<string>You have %d unused card charges from %@</string>
+		<key>PersonalCardCount_1</key>
+		<string>You have 1 unused card charge from %@</string>
+		<key>PersonalCardCount_0</key>
+		<string>You have no unused card charge from %@</string>
+		<key>LABEL_TRIPS</key>
+		<string>Trips</string>
+		<key>LABEL_EXPENSES</key>
+		<string>Expenses</string>
+		<key>LABEL_SETTINGS</key>
+		<string>Settings</string>
+		<key>LABEL_HOTELS</key>
+		<string>Hotels</string>
+		<key>LABEL_CAR_RENTAL</key>
+		<string>Car Rental</string>
+		<key>LABEL_TAXI</key>
+		<string>Taxi</string>
+		<key>LABEL_AIR</key>
+		<string>Air</string>
+		<key>LABEL_APPROVE_EXPENSES</key>
+		<string>Approve Expenses</string>
+		<key>LABEL_QUICK_EXPENSE</key>
+		<string>Cash</string>
+		<key>LABEL_TRAVEL</key>
+		<string>Travel</string>
+		<key>LABEL_EXPENSE</key>
+		<string>Expense</string>
+		<key>LABEL_LOGOUT</key>
+		<string>Log Out</string>
+		<key>Report</key>
+		<string>Expense Updates</string>
+		<key>Trip</key>
+		<string>Current Trip</string>
+		<key>Import your credit card</key>
+		<string>Import your credit card charges directly into expense reports! Simply go to Concur online to do the quick and easy, one time setup.</string>
+		<key>Expenses</key>
+		<string>Expenses</string>
+		<key>Reports</key>
+		<string>Reports</string>
+		<key>Receipts</key>
+		<string>Receipts</string>
+		<key>Approve</key>
+		<string>Approve</string>
+		<key>Cards</key>
+		<string>Cards</string>
+		<key>There are</key>
+		<string>There are %@ reports waiting for your approval.</string>
+		<key>There is</key>
+		<string>There is %@ report waiting for your approval.</string>
+		<key>no</key>
+		<string>no</string>
+		<key>There are rpt</key>
+		<string>There are %@ unsubmitted reports for a total of %@.</string>
+		<key>There is rpt</key>
+		<string>There is %@ unsubmitted report for a total of %@.</string>
+		<key>There are no rpt</key>
+		<string>All reports have been submitted.</string>
+		<key>There are cct</key>
+		<string>You have %@ unused card charges.</string>
+		<key>There is cct</key>
+		<string>You have %@ unused card charge.</string>
+		<key>There are no cct</key>
+		<string>You have no card charges.</string>
+		<key>Not Filed Reports</key>
+		<string>Reports</string>
+		<key>Approvals</key>
+		<string>Approvals</string>
+		<key>Add a Cash Expense</key>
+		<string>Add expense</string>
+		<key>TwitterConcur</key>
+		<string>Twitter From Concur</string>
+	</dict>
+	<key>LOGIN</key>
+	<dict>
+		<key>Set PIN succeeded</key>
+		<string>Your mobile PIN was saved successfully.</string>
+		<key>Mobile PIN title</key>
+		<string>Mobile PIN</string>
+		<key>ENTER_PIN_MSG</key>
+		<string>Please enter a PIN consisting of at least 4 characters. You can use alphabets or numbers.</string>
+		<key>REGISTER_MSG</key>
+		<string>Sign in using your web account. If you are using single sign on you will need to sign in using a web browser and then establish your PIN using the Profile menu. If you do not have a web account, go to www.concurbreeze.com to learn more.</string>
+		<key>LABEL_REGISTER_REENTER_PIN</key>
+		<string>Reenter Pin</string>
+		<key>LABEL_REGISTER_ENTER_PIN</key>
+		<string>Enter Pin</string>
+		<key>REGISTER_PINS_DIFF_ERR</key>
+		<string>Pins are different.  Please reenter the pins.</string>
+		<key>TITLE_REGISTER_REENTER_PIN</key>
+		<string>Reenter Pins</string>
+		<key>LABEL_REGISTER_SIGN_IN</key>
+		<string>Sign In</string>
+		<key>LABEL_REGISTER_PASSWORD</key>
+		<string>Password</string>
+		<key>LABEL_LOGIN_REGISTER</key>
+		<string>Register</string>
+		<key>LABEL_LOGIN_NO_PIN</key>
+		<string>Need to set your PIN?</string>
+		<key>LABEL_LOGIN_USER_NAME</key>
+		<string>User Name / Email Address</string>
+		<key>LABEL_LOGIN_PASSWORD</key>
+		<string>PIN</string>
+		<key>LABEL_LOGIN_SIGN_IN</key>
+		<string>Sign In</string>
+		<key>AUTHENTICATION_FAILURE_MSG</key>
+		<string>Unauthorized access violation.  Please check your user name and/or pin.</string>
+		<key>AUTHENTICATION_TIMED_OUT_MSG</key>
+		<string>The connection to the authentication service timed out.  Please make sure that you are pointing to the proper URL.</string>
+		<key>Username or PIN is invalid</key>
+		<string>Username or PIN is invalid.</string>
+		<key>Username or Password is invalid</key>
+		<string>Username or Password is invalid.</string>
+		<key>If you continue to experience</key>
+		<string>Please try again.  If you continue to experience problems accessing the system, please contact your company&apos;s help desk or travel/expense department.</string>
+		<key>Close</key>
+		<string>Close</string>
+		<key>Invalid Login Credentials</key>
+		<string>Invalid Login Credentials</string>
+		<key>Your PIN or User Id was entered in incorrectly.</key>
+		<string>Your PIN or User Id was entered in incorrectly.</string>
+		<key>Must log in online first</key>
+		<string>You need to log in online first before you can be authenticated offline.</string>
+		<key>OK</key>
+		<string>OK</string>
+		<key>Are you sure</key>
+		<string>Are you sure that you want to clean out the cache?  Choosing OK will remove local data.  After the cache has been cleaned you will need to close the application and then restart it.</string>
+		<key>Done cache killing</key>
+		<string>The cache has been wiped from this device.  You will need to close the application and then restart it.  Failure to do so will most likely result in system instability.</string>
+		<key>Cache Done Title</key>
+		<string>Cache Clean Complete</string>
+	</dict>
+	<key>SETTINGS_VIEW</key>
+	<dict>
+		<key>LABEL_SETTINGS_VIEW_URL</key>
+		<string>Server URI</string>
+		<key>LABEL_SETTINGS_VIEW_REMEMBER_USER</key>
+		<string>Save User Name</string>
+		<key>LABEL_SETTINGS_VIEW_AUTO_LOGIN</key>
+		<string>Auto Login</string>
+		<key>LABEL_SETTINGS_VIEW_SAVE_BTN</key>
+		<string>Save Settings</string>
+		<key>LABEL_SETTINGS_VIEW_APP_NAME</key>
+		<string>Application Name</string>
+		<key>LABEL_SETTINGS_VIEW_VERSION</key>
+		<string>Version</string>
+		<key>LABEL_SETTINGS_VIEW_CONNECTION_SETTINGS</key>
+		<string>Connection Settings</string>
+		<key>LABEL_SETTINGS_VIEW_LOGIN</key>
+		<string>Login Settings</string>
+		<key>LABEL_SETTINGS_VIEW_APP_INFO</key>
+		<string>Application Information</string>
+		<key>LABEL_SETTINGS_VIEW_URI_NON_SSL</key>
+		<string>Non SSL URI</string>
+	</dict>
+	<key>ITIN_DETAILS_VIEW</key>
+	<dict>
+		<key>ITIN_DETAILS_VIEW_CONF_NUM</key>
+		<string>Confirmation #</string>
+		<key>ITIN_DETAILS_VIEW_START</key>
+		<string>Start</string>
+		<key>ITIN_DETAILS_VIEW_END</key>
+		<string>End</string>
+		<key>ITIN_DETAILS_VIEW_RESERVATION</key>
+		<string>Reservation</string>
+		<key>ITIN_DETAILS_VIEW_AIR</key>
+		<string>Air</string>
+		<key>ITIN_DETAILS_VIEW_CAR</key>
+		<string>Car Rental</string>
+		<key>ITIN_DETAILS_VIEW_HOTEL</key>
+		<string>Hotel</string>
+		<key>ITIN_DETAILS_VIEW_RAIL</key>
+		<string>Rail</string>
+		<key>ITIN_DETAILS_VIEW_DEPARTURE</key>
+		<string>Departure</string>
+		<key>ITIN_DETAILS_VIEW_REZ</key>
+		<string>Reservation</string>
+		<key>ITIN_DETAILS_VIEW_VENDOR</key>
+		<string>Vendor</string>
+		<key>ITIN_DETAILS_VIEW_BOOKING</key>
+		<string>Booking</string>
+		<key>ITIN_DETAILS_VIEW_PARKING</key>
+		<string>Parking Center</string>
+		<key>ITIN_DETAILS_VIEW_CARRIER</key>
+		<string>Carrier</string>
+		<key>ITIN_DETAILS_VIEW_ARRIVAL</key>
+		<string>Arrival</string>
+		<key>ITIN_DETAILS_VIEW_OPERATED</key>
+		<string>Operated by %@ - %@</string>
+		<key>ITIN_DETAILS_VIEW_FLIGHT_WITH_OB</key>
+		<string>%@ #%@ (%@ #%@)</string>
+		<key>ITIN_DETAILS_VIEW_CONFIRM_NUM</key>
+		<string>Confirm #</string>
+		<key>ITIN_DETAILS_VIEW_ARRIVE</key>
+		<string>Arrive</string>
+		<key>ITIN_DETAILS_VIEW_DEPART</key>
+		<string>Depart</string>
+		<key>ITIN_DETAILS_VIEW_SEGMENT_DETAILS</key>
+		<string>Segment Details</string>
+		<key>ITIN_DETAILS_VIEW_MAP</key>
+		<string>Map</string>
+		<key>ITIN_DETAILS_VIEW_TYPE</key>
+		<string>Type</string>
+		<key>ITIN_DETAILS_VIEW_STATUS</key>
+		<string>Status</string>
+		<key>ITIN_DETAILS_VIEW_RATE</key>
+		<string>Rate</string>
+		<key>ITIN_DETAILS_VIEW_ALLOWABLE_MILES</key>
+		<string>Allowable Miles</string>
+		<key>ITIN_DETAILS_VIEW_PICKUP</key>
+		<string>Pickup</string>
+		<key>ITIN_DETAILS_VIEW_RETURN</key>
+		<string>Return</string>
+		<key>ITIN_DETAILS_VIEW_CHECK_IN</key>
+		<string>Check In</string>
+		<key>ITIN_DETAILS_VIEW_CHECK_OUT</key>
+		<string>Check Out</string>
+		<key>ITIN_DETAILS_VIEW_DAILY_RATE</key>
+		<string>Daily Rate</string>
+		<key>ITIN_DETAILS_VIEW_TOTAL_RATE</key>
+		<string>Total Rate</string>
+		<key>ITIN_DETAILS_VIEW_CANCEL_POLICY</key>
+		<string>Cancel Policy</string>
+		<key>ITIN_DETAILS_VIEW_ROOM</key>
+		<string>Room</string>
+		<key>ITIN_DETAILS_VIEW_PICKUP_ADDRESS</key>
+		<string>Pickup Address</string>
+		<key>ITIN_DETAILS_VIEW_PICKUP_INSTRUCTIONS</key>
+		<string>Pickup Instructions</string>
+		<key>ITIN_DETAILS_VIEW_MEETING_INSTRUCTIONS</key>
+		<string>Meeting Instructions</string>
+		<key>ITIN_DETAILS_VIEW_DROP_OFF</key>
+		<string>Drop Off</string>
+		<key>ITIN_DETAILS_VIEW_DROP_OFF_ADDRESS</key>
+		<string>Drop Off Address</string>
+		<key>ITIN_DETAILS_VIEW_DROP_OFF_INSTRUCTIONS</key>
+		<string>Drop Off Instructions</string>
+		<key>ITIN_DETAILS_VIEW_RATE_DESCRIPTION</key>
+		<string>Rate Description</string>
+		<key>ITIN_DETAILS_VIEW_NUMBER_IN_PARTY</key>
+		<string>Number in Party</string>
+		<key>ITIN_DETAILS_VIEW_TRAIN_TYPE</key>
+		<string>Train Type</string>
+		<key>ITIN_DETAILS_VIEW_CONTACT</key>
+		<string>Contact</string>
+		<key>ITIN_DETAILS_VIEW_INFO</key>
+		<string>Info</string>
+		<key>ITIN_DETAILS_VIEW_CLASS</key>
+		<string>Class</string>
+		<key>ITIN_DETAILS_VIEW_CABIN</key>
+		<string>Cabin</string>
+		<key>ITIN_DETAILS_VIEW_CITY</key>
+		<string>City</string>
+		<key>ITIN_DETAILS_VIEW_PLATFORM</key>
+		<string>Platform</string>
+		<key>ITIN_DETAILS_VIEW_STATION</key>
+		<string>Station</string>
+		<key>ITIN_DETAILS_VIEW_WAGON_NUM</key>
+		<string>Wagon #</string>
+		<key>ITIN_DETAILS_VIEW_AMENITIES</key>
+		<string>Amenities</string>
+		<key>ITIN_DETAILS_VIEW_DURATION</key>
+		<string>Duration</string>
+		<key>ITIN_DETAILS_VIEW_STOPS</key>
+		<string>Stops</string>
+		<key>ITIN_DETAILS_VIEW_MEAL</key>
+		<string>Meal</string>
+		<key>ITIN_DETAILS_VIEW_NUMBER_OF_PERSONS</key>
+		<string>Number of Persons</string>
+		<key>ITIN_DETAILS_VIEW_SPECIAL_INSTRUCTIONS</key>
+		<string>Special Instructions</string>
+		<key>ITIN_DETAILS_VIEW_AIRCRAFT</key>
+		<string>Aircraft</string>
+		<key>ITIN_DETAILS_VIEW_FLIGHT</key>
+		<string>Flight</string>
+		<key>ITIN_DETAILS_VIEW_AIRPORT</key>
+		<string>Airport</string>
+		<key>ITIN_DETAILS_VIEW_TERMINAL</key>
+		<string>Terminal</string>
+		<key>ITIN_DETAILS_VIEW_GATE</key>
+		<string>Gate</string>
+		<key>ITIN_DETAILS_VIEW_SEAT</key>
+		<string>Seat</string>
+		<key>ITIN_DETAILS_VIEW_PRICE</key>
+		<string>Price</string>
+		<key>ITIN_DETAILS_VIEW_MINUTES</key>
+		<string>%@ minutes</string>
+		<key>ITIN_DETAILS_VIEW_RATE_TYPE</key>
+		<string>Rate Type</string>
+		<key>ITIN_DETAILS_VIEW_BODY</key>
+		<string>Body Type</string>
+		<key>ITIN_DETAILS_VIEW_TRANSMISSION</key>
+		<string>Transmission</string>
+		<key>ITIN_DETAILS_VIEW_AIRCOND</key>
+		<string>Air Condition</string>
+		<key>ITIN_DETAILS_VIEW_DISCOUNT</key>
+		<string>Discount Code</string>
+		<key>ITIN_DETAILS_VIEW_EQUIP</key>
+		<string>Special Equipment</string>
+		<key>IDV t Flight t</key>
+		<string>%@ Flight @%</string>
+		<key>IDV Operated by t Flight t</key>
+		<string>Operated by %@ Flight %@</string>
+		<key>IDV Departs from t at t</key>
+		<string>Departs from %@ at %@</string>
+		<key>IDV Arrives in t at t</key>
+		<string>Arrives in %@ at %@</string>
+		<key>IDV Social Publishing</key>
+		<string>Social Publishing</string>
+		<key>IDV Depart</key>
+		<string>Depart</string>
+		<key>IDV Arrive</key>
+		<string>Arrive</string>
+		<key>IDV Drop Off</key>
+		<string>Drop Off</string>
+		<key>IDV Pick Up</key>
+		<string>Pick Up</string>
+		<key>IDV Check In</key>
+		<string>Check In</string>
+		<key>IDV Check Out</key>
+		<string>Check Out</string>
+		<key>IDV Reserved for</key>
+		<string>Reserved for</string>
+		<key>IDV Body</key>
+		<string>Body</string>
+		<key>IDV Persons</key>
+		<string>Persons</string>
+		<key>IDV Rooms</key>
+		<string>Rooms</string>
+		<key>IDV Daily</key>
+		<string>Daily</string>
+		<key>IDV Confirmation</key>
+		<string>Confirmation</string>
+		<key>IDV Terminal Map for t</key>
+		<string>Terminal Map for %@</string>
+		<key>IDV Terminal t Gate t</key>
+		<string>Terminal %@ Gate %@</string>
+		<key>IDV Seat Map for t</key>
+		<string>Seat Map for %@</string>
+		<key>IDV Web site for t</key>
+		<string>Web site for %@</string>
+		<key>IDV property name</key>
+		<string>Property Name</string>
+	</dict>
+	<key>APPROVE_REPORTS</key>
+	<dict>
+		<key>APPROVE_REPORTS_VIEW_TITLE</key>
+		<string>Reports To Approve</string>
+		<key>APPROVE_APPROVE_BUTTON_TITLE</key>
+		<string>Approve</string>
+		<key>APPROVE_SENDBACK_BUTTON_TITLE</key>
+		<string>Send Back</string>
+		<key>APPROVE_QUESTION_PART1</key>
+		<string>Approve</string>
+		<key>APPROVE_QUESTION_PART2</key>
+		<string>expense report for</string>
+		<key>APPROVE_QUESTION_AREYOUSURE</key>
+		<string>Are you sure you want to approve this report?</string>
+		<key>APPROVE_PLEASE_CONFIRM</key>
+		<string>Please Confirm</string>
+		<key>APPROVE_OK</key>
+		<string>OK</string>
+		<key>APPROVE_CANCEL</key>
+		<string>Cancel</string>
+		<key>APPROVE_PLEASE_COMMENT</key>
+		<string>Please Comment</string>
+	</dict>
+	<key>APPROVE_ENTRIES</key>
+	<dict>
+		<key>APPROVE_ENTRIES_VIEW_TITLE</key>
+		<string>Expense List</string>
+		<key>APPROVE_ENTRIES_ACTION_SECTION_REPORT_SUMMARY_ROW</key>
+		<string>Report Summary</string>
+		<key>APPROVE_ENTRIES_ACTION_SECTION_VIEW_EXCEPTIONS_ROW</key>
+		<string>View Exceptions</string>
+		<key>APPROVE_ENTRIES_ACTION_SECTION_VIEW_RECEIPTS_ROW</key>
+		<string>View Receipts</string>
+		<key>APPROVE_ENTRIES_ACTION_SECTION_VIEW_COMMENTS_ROW</key>
+		<string>View Comments</string>
+	</dict>
+	<key>APPROVE_EXPENSE_DETAILS</key>
+	<dict>
+		<key>RECEIPT_NOT_ON_SERVER</key>
+		<string>A Receipt is showing attached to this Expense on the server, but the receipt no longer exists in Receipt Manager.</string>
+		<key>APPROVE_EXPENSE_DETAILS_VIEW_TITLE</key>
+		<string>Expense</string>
+		<key>APPROVE_EXPENSE_DETAILS_VIEW_ITEMIZATIONS</key>
+		<string>View Itemizations</string>
+		<key>APPROVE_EXPENSE_DETAILS_VIEW_ATTENDEES</key>
+		<string>View Attendees</string>
+		<key>APPROVE_EXPENSE_DETAILS_EXCEPTIONS</key>
+		<string>Exceptions</string>
+		<key>APPROVE_EXPENSE_DETAILS_DETAILS</key>
+		<string>Details</string>
+		<key>APPROVE_EXPENSE_DETAILS_COMMENT</key>
+		<string>Comment</string>
+	</dict>
+	<key>APPROVE_REPORT_SUMMARY</key>
+	<dict>
+		<key>APPROVE_REPORT_SUMMARY_VIEW_TITLE</key>
+		<string>Summary</string>
+		<key>APPROVE_REPORT_SUMMARY_HEADER</key>
+		<string>Header</string>
+		<key>APPROVE_REPORT_SUMMARY_COMMENTS</key>
+		<string>Comments</string>
+		<key>APPROVE_REPORT_SUMMARY_REPORT_ID</key>
+		<string>Report id</string>
+		<key>APPROVE_REPORT_SUMMARY_POLICY</key>
+		<string>Policy</string>
+		<key>APPROVE_REPORT_SUMMARY_REPORT_TOTAL</key>
+		<string>Report Total</string>
+		<key>APPROVE_REPORT_SUMMARY_LESS_PERSONAL_AMOUNT</key>
+		<string>Less  Personal Amount</string>
+		<key>APPROVE_REPORT_SUMMARY_AMOUNT_CLAIMED</key>
+		<string>Amount Claimed</string>
+		<key>APPROVE_REPORT_SUMMARY_AMOUNT_REJECTED</key>
+		<string>Amount Rejected</string>
+		<key>APPROVE_REPORT_SUMMARY_AMOUNT_APPROVED</key>
+		<string>Amount Approved</string>
+		<key>APPROVE_REPORT_SUMMARY_COMPANYDISBURSEMENT</key>
+		<string>Company Disbursement</string>
+		<key>APPROVE_REPORT_SUMMARY_AMOUNT_DUE_EMPLOYEE</key>
+		<string>Amount Due Employee</string>
+		<key>APPROVE_REPORT_SUMMARY_COMPANY_PAID_TO_CREDIT_CARD</key>
+		<string>Company Paid To Credit Card</string>
+		<key>APPROVE_REPORT_SUMMARY_TOTAL_PAID_BY_COMPANY</key>
+		<string>Total Paid By Company</string>
+		<key>APPROVE_REPORT_SUMMARY_EMPLOYEEDISBURSEMENTS</key>
+		<string>Employee Disbursements</string>
+		<key>APPROVE_REPORT_SUMMARY_AMOUNT_DUE_COMPANY</key>
+		<string>Amount Due Company</string>
+		<key>APPROVE_REPORT_SUMMARY_AMOUNT_DUE_CREDIT_CARD</key>
+		<string>Amount Due Credit Card</string>
+		<key>APPROVE_REPORT_SUMMARY_TOTAL_PAID_BY_EMPLOYEE</key>
+		<string>Total Paid By Employee</string>
+	</dict>
+	<key>APPROVE_VIEW_RECEIPTS</key>
+	<dict>
+		<key>APPROVE_VIEW_RECEIPTS_VIEW_TITLE</key>
+		<string>Receipts</string>
+	</dict>
+	<key>APPROVE_VIEW_EXCEPTIONS</key>
+	<dict>
+		<key>APPROVE_VIEW_EXCEPTIONS_VIEW_TITLE</key>
+		<string>Exceptions</string>
+		<key>APPROVE_VIEW_EXCEPTIONS_REPORT_LEVEL_EXCEPTION_SECTION_HEADER</key>
+		<string>Report</string>
+		<key>APPROVE_VIEW_EXCEPTIONS_EXPENSE_LEVEL_EXCEPTION_SECTION_HEADER</key>
+		<string>Expenses</string>
+	</dict>
+	<key>APPROVE_VIEW_COMMENTS</key>
+	<dict>
+		<key>APPROVE_VIEW_COMMENTS_VIEW_TITLE</key>
+		<string>Comments</string>
+	</dict>
+	<key>APPROVE_VIEW_ITEMIZATIONS</key>
+	<dict>
+		<key>APPROVE_VIEW_ITEMIZATIONS_SUMMARY_SECTION_TITLE</key>
+		<string>Summary</string>
+	</dict>
+	<key>APPROVE_VIEW_ATTENDEES</key>
+	<dict>
+		<key>APPROVE_VIEW_ATTENDEES_ATTENDEE_NAME_TITLE</key>
+		<string>Attendee Name</string>
+		<key>APPROVE_VIEW_ATTENDEES_ATTENDEE_AMOUNT_TITLE</key>
+		<string>Amount</string>
+		<key>APPROVE_VIEW_ATTENDEES_ATTENDEE_TITLE_TITLE</key>
+		<string>Attendee Title</string>
+		<key>APPROVE_VIEW_ATTENDEES_ATTENDEE_COMPANY_TITLE</key>
+		<string>Company</string>
+		<key>APPROVE_VIEW_ATTENDEES_ATTENDEE_TYPE_TITLE</key>
+		<string>Attendee Type</string>
+	</dict>
+	<key>SEGMENT_LIST_VIEW</key>
+	<dict>
+		<key>SLV_BOOK_A_TAXI</key>
+		<string>Book a Taxi</string>
+		<key>SLV_TRIP_LOCATOR</key>
+		<string>Trip Locator: %@</string>
+		<key>SLV_GOES_FROM</key>
+		<string>Goes from %@ to %@</string>
+		<key>SLV_NUM_BOOKINGS</key>
+		<string>%d Booking(s) in this trip</string>
+		<key>SLV_TOTAL_SEGS</key>
+		<string>With a total of %d segments for the trip</string>
+		<key>SLV_CONFIRMATION</key>
+		<string>Confirmation</string>
+		<key>SLV_TO</key>
+		<string>to</string>
+		<key>SLV_TERMINAL</key>
+		<string>Terminal</string>
+		<key>SLV_GATE</key>
+		<string>Gate</string>
+		<key>SLV_CLICK_ON</key>
+		<string>Click on this cell to book</string>
+		<key>SLV_TAXI_MAGIC</key>
+		<string>a cab with Taxi Magic</string>
+		<key>SLV_TAXI_MAGIC2</key>
+		<string>You will be redirected to the Taxi Magic app</string>
+		<key>SLV_PICKUP_AT</key>
+		<string>Pick up at %@</string>
+		<key>SLV_FROM</key>
+		<string>From</string>
+		<key>SLV_PICKUP_BY</key>
+		<string>Pick up by %@</string>
+		<key>SLV_AT</key>
+		<string>at</string>
+		<key>SLV_PLATFORM_WAGON</key>
+		<string>from Platform %@ Wagon #%@</string>
+		<key>SLV_DROP_OFF</key>
+		<string>%@ drop off at %@</string>
+	</dict>
+	<key>OOPE_FORM</key>
+	<dict>
+		<key>Loading Receipt Image</key>
+		<string>Loading Receipt Image</string>
+		<key>A Receipt is</key>
+		<string>A Receipt is showing attached to this Expense on the server, but the receipt no longer exists in Receipt Manager.  Please reattach the receipt to this Expense and Save.</string>
+		<key>Add a Receipt using the below buttons</key>
+		<string>Add a Receipt using the below buttons</string>
+		<key>Prev</key>
+		<string>Prev</string>
+		<key>Next</key>
+		<string>Next</string>
+		<key>Transaction Amount</key>
+		<string>Transaction Amount</string>
+		<key>Transaction Date</key>
+		<string>Transaction Date</string>
+		<key>Currency Code</key>
+		<string>Currency Code</string>
+		<key>Expense Type</key>
+		<string>Expense Type</string>
+		<key>is missing</key>
+		<string> is missing.</string>
+		<key>are missing</key>
+		<string> are missing.</string>
+		<key>Please fill in the missing required fields before saving the entry.</key>
+		<string>Please fill in the missing required fields before saving the entry.</string>
+		<key>Required Fields Missing</key>
+		<string>Required Fields Missing</string>
+		<key>OK</key>
+		<string>OK</string>
+		<key>Cancel</key>
+		<string>Cancel</string>
+		<key>Edit</key>
+		<string>Edit</string>
+		<key>Out of Pocket Entry has been Saved</key>
+		<string>Expense has been Saved</string>
+		<key>Type</key>
+		<string>Type</string>
+		<key>Amount</key>
+		<string>Amount</string>
+		<key>Currency</key>
+		<string>Currency</string>
+		<key>Vendor</key>
+		<string>Vendor</string>
+		<key>Location</key>
+		<string>Location</string>
+		<key>Comment</key>
+		<string>Comment</string>
+		<key>Saving Expense</key>
+		<string>Saving Expense</string>
+	</dict>
+	<key>OOPE_LIST</key>
+	<dict>
+		<key>No Expenses</key>
+		<string>You currently have no Expenses</string>
+		<key>Cancel</key>
+		<string>Cancel</string>
+		<key>Select All</key>
+		<string>Select All</string>
+		<key>Add to Report</key>
+		<string>Add to Report</string>
+		<key>Unselect All</key>
+		<string>Unselect All</string>
+		<key>No Out of Pocket Expenses</key>
+		<string>No Expenses</string>
+		<key>Deleting Out of Pocket Expense(s)</key>
+		<string>Deleting Expense(s)</string>
+		<key>Delete</key>
+		<string>Delete</string>
+		<key>Are you sure</key>
+		<string>Are you sure that you want to delete the selected expense(s)?</string>
+		<key>Confirm Delete</key>
+		<string>Confirm Deletion</string>
+		<key>OK</key>
+		<string>OK</string>
+	</dict>
+	<key>EXPENSE_TYPES</key>
+	<dict>
+		<key>Search Results</key>
+		<string>Search Results</string>
+		<key>New item</key>
+		<string></string>
+	</dict>
+	<key>RECEIPTS</key>
+	<dict>
+		<key>No Receipts</key>
+		<string>Manage all your receipts in one place and reduce the clutter in your photo album. The Receipt Folder keeps track of receipts used in expenses. You can also copy receipts from your photo album to the Receipt Folder or take new pictures of receipts and store them here.</string>
+	</dict>
+</dict>
+</plist>

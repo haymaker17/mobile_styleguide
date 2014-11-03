@@ -1,0 +1,18 @@
+# Podfile
+
+platform :ios, '5.1'
+
+link_with [ 
+	'ConcurMobile', 
+	'SmartExpense Enterprise', 
+	'ConcurMobileiPhone Only', 
+	'ConcurMobile Enterprise', 
+	'ConcurGov', 
+	'ConcurGovEnterprise', 
+	'ConcurMobile AppleDemo' ]
+
+# pod 'CCImageUtils', :svn => 'http://10.24.62.100/svn/cte/Mobile/trunk/iOS/CCImageUtils/tags/0.0.1'
+
+target :ConcurMobileTests, :exclusive => true do
+   pod 'Kiwi'
+end

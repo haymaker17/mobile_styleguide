@@ -1,0 +1,199 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="4514" systemVersion="13B42" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES">
+    <dependencies>
+        <deployment defaultVersion="1536" identifier="iOS"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="3747"/>
+    </dependencies>
+    <objects>
+        <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="LoginViewController">
+            <connections>
+                <outlet property="btnSSOSignIn" destination="144" id="wXY-hn-h23"/>
+                <outlet property="ivBackground" destination="102" id="103"/>
+                <outlet property="lblHaveNoAccount" destination="134" id="137"/>
+                <outlet property="tableList" destination="91" id="92"/>
+                <outlet property="view" destination="1" id="178"/>
+                <outlet property="viewCorpSignUp" destination="142" id="150"/>
+                <outlet property="viewGovNotice" destination="167" id="177"/>
+                <outlet property="viewSignUp" destination="133" id="139"/>
+                <outlet property="viewSignUpBtn" destination="163" id="164"/>
+            </connections>
+        </placeholder>
+        <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
+        <view contentMode="scaleToFill" id="1">
+            <rect key="frame" x="0.0" y="0.0" width="320" height="436"/>
+            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+            <subviews>
+                <imageView userInteractionEnabled="NO" contentMode="scaleToFill" fixedFrame="YES" image="iPad_Login_landscape_2.png" translatesAutoresizingMaskIntoConstraints="NO" id="102">
+                    <rect key="frame" x="0.0" y="0.0" width="320" height="436"/>
+                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                </imageView>
+                <tableView clipsSubviews="YES" contentMode="scaleToFill" fixedFrame="YES" alwaysBounceVertical="YES" style="grouped" separatorStyle="default" allowsSelection="NO" rowHeight="44" sectionHeaderHeight="10" sectionFooterHeight="10" translatesAutoresizingMaskIntoConstraints="NO" id="91">
+                    <rect key="frame" x="0.0" y="0.0" width="320" height="436"/>
+                    <autoresizingMask key="autoresizingMask" flexibleMinX="YES" flexibleMaxX="YES" heightSizable="YES"/>
+                    <color key="backgroundColor" cocoaTouchSystemColor="groupTableViewBackgroundColor"/>
+                    <connections>
+                        <outlet property="dataSource" destination="-1" id="96"/>
+                        <outlet property="delegate" destination="-1" id="97"/>
+                    </connections>
+                </tableView>
+                <view contentMode="scaleToFill" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="133">
+                    <rect key="frame" x="0.0" y="392" width="320" height="44"/>
+                    <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMinY="YES"/>
+                    <subviews>
+                        <imageView userInteractionEnabled="NO" contentMode="scaleToFill" fixedFrame="YES" image="bar_signin_up.png" translatesAutoresizingMaskIntoConstraints="NO" id="136">
+                            <rect key="frame" x="0.0" y="0.0" width="320" height="44"/>
+                            <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        </imageView>
+                        <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" fixedFrame="YES" text="Label" textAlignment="right" lineBreakMode="tailTruncation" minimumFontSize="10" translatesAutoresizingMaskIntoConstraints="NO" id="134">
+                            <rect key="frame" x="10" y="14" width="170" height="21"/>
+                            <autoresizingMask key="autoresizingMask" flexibleMinX="YES" widthSizable="YES" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                            <fontDescription key="fontDescription" name="HelveticaNeue" family="Helvetica Neue" pointSize="14"/>
+                            <color key="textColor" white="0.33333333333333331" alpha="1" colorSpace="calibratedWhite"/>
+                            <nil key="highlightedColor"/>
+                        </label>
+                        <view opaque="NO" contentMode="scaleToFill" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="163">
+                            <rect key="frame" x="182" y="2" width="110" height="40"/>
+                            <autoresizingMask key="autoresizingMask" flexibleMinX="YES" widthSizable="YES" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                            <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
+                        </view>
+                    </subviews>
+                    <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
+                </view>
+                <view contentMode="scaleToFill" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="142" userLabel="View -Corporate Sign Up">
+                    <rect key="frame" x="0.0" y="376" width="320" height="60"/>
+                    <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMinY="YES"/>
+                    <subviews>
+                        <imageView userInteractionEnabled="NO" contentMode="scaleToFill" fixedFrame="YES" image="signin_help_bar.png" translatesAutoresizingMaskIntoConstraints="NO" id="145">
+                            <rect key="frame" x="0.0" y="0.0" width="320" height="60"/>
+                            <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        </imageView>
+                        <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="144">
+                            <rect key="frame" x="0.0" y="0.0" width="320" height="60"/>
+                            <autoresizingMask key="autoresizingMask" flexibleMinX="YES" widthSizable="YES" flexibleMaxY="YES"/>
+                            <color key="backgroundColor" red="0.0" green="0.0" blue="0.0" alpha="0.0" colorSpace="calibratedRGB"/>
+                            <fontDescription key="fontDescription" name="HelveticaNeue-Bold" family="Helvetica Neue" pointSize="18"/>
+                            <state key="normal">
+                                <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
+                            </state>
+                            <state key="highlighted">
+                                <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                            </state>
+                            <connections>
+                                <action selector="buttonSSOPressed:" destination="-1" eventType="touchUpInside" id="Vrp-kz-SRs"/>
+                            </connections>
+                        </button>
+                        <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="156">
+                            <rect key="frame" x="291" y="1" width="29" height="59"/>
+                            <autoresizingMask key="autoresizingMask" flexibleMinX="YES" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                            <color key="backgroundColor" red="0.42894582279999999" green="1" blue="0.34790151200000002" alpha="0.0" colorSpace="calibratedRGB"/>
+                            <fontDescription key="fontDescription" type="boldSystem" pointSize="15"/>
+                            <state key="normal" image="disclosure_white.png">
+                                <color key="titleColor" red="0.19607843459999999" green="0.30980393290000002" blue="0.52156865600000002" alpha="1" colorSpace="calibratedRGB"/>
+                                <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
+                            </state>
+                            <state key="highlighted">
+                                <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                            </state>
+                            <connections>
+                                <action selector="buttonSSOPressed:" destination="-1" eventType="touchUpInside" id="e2m-cU-Tqg"/>
+                            </connections>
+                        </button>
+                    </subviews>
+                    <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
+                </view>
+                <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="167" userLabel="View - Gov Notice">
+                    <rect key="frame" x="0.0" y="311" width="320" height="105"/>
+                    <autoresizingMask key="autoresizingMask" flexibleMinX="YES" flexibleMaxX="YES" flexibleMinY="YES"/>
+                    <subviews>
+                        <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" text="Warning" textAlignment="center" lineBreakMode="tailTruncation" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="171" userLabel="Label - Warning">
+                            <rect key="frame" x="132" y="0.0" width="56" height="18"/>
+                            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                            <fontDescription key="fontDescription" name="Helvetica" family="Helvetica" pointSize="15"/>
+                            <color key="textColor" red="0.0078431372550000003" green="0.21176470589999999" blue="0.3294117647" alpha="1" colorSpace="calibratedRGB"/>
+                            <nil key="highlightedColor"/>
+                        </label>
+                        <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" text="This is a U.S. Federal Government information system that is &quot;FOR OFFICIAL USE ONLY.&quot;" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="2" adjustsFontSizeToFit="NO" preferredMaxLayoutWidth="241" translatesAutoresizingMaskIntoConstraints="NO" id="170">
+                            <rect key="frame" x="40" y="20" width="241" height="27"/>
+                            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                            <fontDescription key="fontDescription" type="system" pointSize="11"/>
+                            <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
+                            <nil key="highlightedColor"/>
+                        </label>
+                        <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" text="Privacy Act Notice" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="173">
+                            <rect key="frame" x="97" y="58" width="127" height="18"/>
+                            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                            <fontDescription key="fontDescription" type="system" pointSize="15"/>
+                            <color key="textColor" red="0.0078431372550000003" green="0.21176470589999999" blue="0.3294117647" alpha="1" colorSpace="calibratedRGB"/>
+                            <nil key="highlightedColor"/>
+                        </label>
+                        <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" text="This system contains information protected under the provisions of the Privacy Act of 1974 (Public Law 93-579)." textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="2" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" preferredMaxLayoutWidth="284" translatesAutoresizingMaskIntoConstraints="NO" id="172">
+                            <rect key="frame" x="3" y="78" width="284" height="27"/>
+                            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                            <fontDescription key="fontDescription" type="system" pointSize="11"/>
+                            <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
+                            <nil key="highlightedColor"/>
+                        </label>
+                        <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="175">
+                            <rect key="frame" x="286" y="28" width="34" height="26"/>
+                            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                            <fontDescription key="fontDescription" type="boldSystem" pointSize="11"/>
+                            <state key="normal" title="[More]">
+                                <color key="titleColor" red="0.0078431372550000003" green="0.21176470589999999" blue="0.3294117647" alpha="1" colorSpace="calibratedRGB"/>
+                                <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
+                            </state>
+                            <state key="highlighted">
+                                <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                            </state>
+                            <connections>
+                                <action selector="btnWarningPressed:" destination="-1" eventType="touchDown" id="255"/>
+                            </connections>
+                        </button>
+                        <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="174">
+                            <rect key="frame" x="286" y="86" width="34" height="26"/>
+                            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                            <fontDescription key="fontDescription" type="boldSystem" pointSize="11"/>
+                            <state key="normal" title="[More]">
+                                <color key="titleColor" red="0.0078431372550000003" green="0.21176470589999999" blue="0.3294117647" alpha="1" colorSpace="calibratedRGB"/>
+                                <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
+                            </state>
+                            <state key="highlighted">
+                                <color key="titleColor" red="0.0078431372550000003" green="0.21176470589999999" blue="0.3294117647" alpha="1" colorSpace="calibratedRGB"/>
+                            </state>
+                            <connections>
+                                <action selector="btnPrivacyActPressed:" destination="-1" eventType="touchDown" id="254"/>
+                            </connections>
+                        </button>
+                    </subviews>
+                    <color key="backgroundColor" white="1" alpha="0.0" colorSpace="calibratedWhite"/>
+                    <constraints>
+                        <constraint firstItem="172" firstAttribute="leading" secondItem="167" secondAttribute="leading" constant="3" id="4DZ-kI-Ebj"/>
+                        <constraint firstAttribute="bottom" secondItem="172" secondAttribute="bottom" id="6Kz-np-5cm"/>
+                        <constraint firstItem="174" firstAttribute="baseline" secondItem="172" secondAttribute="baseline" id="NwJ-0M-bea"/>
+                        <constraint firstAttribute="trailing" secondItem="174" secondAttribute="trailing" id="X1R-2F-6vP"/>
+                        <constraint firstAttribute="centerX" secondItem="173" secondAttribute="centerX" id="Xr3-wK-jcA"/>
+                        <constraint firstAttribute="centerX" secondItem="171" secondAttribute="centerX" id="blT-iF-7Pb"/>
+                        <constraint firstAttribute="trailing" secondItem="175" secondAttribute="trailing" id="gDx-QQ-ArR"/>
+                        <constraint firstItem="171" firstAttribute="top" secondItem="167" secondAttribute="top" id="hUx-ya-ZO6"/>
+                        <constraint firstItem="172" firstAttribute="top" secondItem="173" secondAttribute="bottom" constant="2" id="qNT-JY-Izv"/>
+                        <constraint firstAttribute="centerX" secondItem="170" secondAttribute="centerX" id="qnC-pT-Yil"/>
+                        <constraint firstAttribute="height" constant="105" id="u1h-qe-2b6"/>
+                        <constraint firstItem="170" firstAttribute="top" secondItem="171" secondAttribute="bottom" constant="2" id="u83-P9-Lzc"/>
+                        <constraint firstItem="170" firstAttribute="baseline" secondItem="175" secondAttribute="baseline" id="v7d-ZA-RpI"/>
+                    </constraints>
+                </view>
+            </subviews>
+            <color key="backgroundColor" red="0.90588241820000004" green="0.90980398650000005" blue="0.91372555489999996" alpha="1" colorSpace="deviceRGB"/>
+            <constraints>
+                <constraint firstAttribute="trailing" secondItem="167" secondAttribute="trailing" id="0Aj-aI-N85"/>
+                <constraint firstAttribute="bottom" secondItem="167" secondAttribute="bottom" constant="20" id="800-w2-CuR"/>
+                <constraint firstItem="167" firstAttribute="leading" secondItem="1" secondAttribute="leading" id="tuL-w0-Jtr"/>
+            </constraints>
+        </view>
+    </objects>
+    <resources>
+        <image name="bar_signin_up.png" width="320" height="45"/>
+        <image name="disclosure_white.png" width="13" height="13"/>
+        <image name="iPad_Login_landscape_2.png" width="1024" height="748"/>
+        <image name="signin_help_bar.png" width="320" height="60"/>
+    </resources>
+</document>

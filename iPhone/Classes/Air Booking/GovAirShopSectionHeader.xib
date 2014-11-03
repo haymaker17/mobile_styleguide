@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="5053" systemVersion="13C64" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES">
+    <dependencies>
+        <deployment defaultVersion="1536" identifier="iOS"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="3733"/>
+    </dependencies>
+    <objects>
+        <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner"/>
+        <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
+        <view contentMode="scaleToFill" id="1" customClass="GovAirShopSectionHeader">
+            <rect key="frame" x="0.0" y="0.0" width="320" height="55"/>
+            <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+            <subviews>
+                <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" misplaced="YES" translatesAutoresizingMaskIntoConstraints="NO" id="Zys-U6-tT0" userLabel="iv - ButtonBackground">
+                    <rect key="frame" x="180" y="25" width="130" height="19"/>
+                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                    <color key="backgroundColor" red="0.0" green="0.48235297199999999" blue="0.75686281919999998" alpha="1" colorSpace="deviceRGB"/>
+                    <constraints>
+                        <constraint firstAttribute="height" constant="19" id="HHE-Ho-dNc"/>
+                        <constraint firstAttribute="width" constant="130" id="bQF-dX-FkH"/>
+                    </constraints>
+                </imageView>
+                <button opaque="NO" contentMode="scaleToFill" misplaced="YES" contentHorizontalAlignment="center" contentVerticalAlignment="bottom" buttonType="roundedRect" lineBreakMode="tailTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="D1B-oG-lru">
+                    <rect key="frame" x="180" y="6" width="130" height="41"/>
+                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                    <fontDescription key="fontDescription" name="HelveticaNeue" family="Helvetica Neue" pointSize="12"/>
+                    <state key="normal" title="SEE ALL 16 RESULTS">
+                        <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                        <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
+                    </state>
+                </button>
+                <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Lowest Published" lineBreakMode="tailTruncation" numberOfLines="2" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" preferredMaxLayoutWidth="152" translatesAutoresizingMaskIntoConstraints="NO" id="6zX-pD-RmL" customClass="VerticallyAlignedLabel">
+                    <rect key="frame" x="20" y="6" width="152" height="40"/>
+                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                    <fontDescription key="fontDescription" name="HelveticaNeue" family="Helvetica Neue" pointSize="16"/>
+                    <color key="textColor" red="0.25882354378700256" green="0.38823533058166504" blue="0.46274513006210327" alpha="1" colorSpace="deviceRGB"/>
+                    <nil key="highlightedColor"/>
+                </label>
+            </subviews>
+            <color key="backgroundColor" red="0.86666673421859741" green="0.94509810209274292" blue="0.99215692281723022" alpha="1" colorSpace="deviceRGB"/>
+            <constraints>
+                <constraint firstAttribute="bottom" secondItem="D1B-oG-lru" secondAttribute="bottom" constant="7" id="LN9-al-NHw"/>
+                <constraint firstAttribute="bottom" secondItem="Zys-U6-tT0" secondAttribute="bottom" constant="10" id="hA2-3z-h8g"/>
+                <constraint firstAttribute="trailing" secondItem="D1B-oG-lru" secondAttribute="trailing" constant="15" id="krb-Uf-4IO"/>
+                <constraint firstAttribute="trailing" secondItem="Zys-U6-tT0" secondAttribute="trailing" constant="10" id="uxb-2V-q3b"/>
+            </constraints>
+            <freeformSimulatedSizeMetrics key="simulatedDestinationMetrics"/>
+            <connections>
+                <outlet property="btnAllResults" destination="D1B-oG-lru" id="kRA-OU-goW"/>
+                <outlet property="lblResultsType" destination="6zX-pD-RmL" id="DQn-6A-nIa"/>
+            </connections>
+        </view>
+    </objects>
+</document>

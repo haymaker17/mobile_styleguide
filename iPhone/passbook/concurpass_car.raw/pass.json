@@ -1,0 +1,76 @@
+{
+  "formatVersion" : 1,
+  "passTypeIdentifier" : "pass.concur.speedcheckin",
+  "serialNumber" : "nmyuxofgnc",
+  "teamIdentifier" : "Z339R6HVU8",
+  "webServiceURL":"https:\/\/www.concursolutions.com\/mobile\/",
+  "authenticationToken":"vxwxd7J8AlNNFPS8k0a0FfUFtq0ewzFdc",
+  "relevantDate" : "2012-11-18T13:00-08:00",
+  "labelColor":"rgb(255, 255, 255)",
+  "foregroundColor":"rgb(255, 255, 255)",
+  "backgroundColor":"rgb(29, 101, 162)",
+  "locations" : [
+    {
+      "longitude" : -122.123876,
+      "latitude" : 47.669414
+    }
+  ],
+  "barcode" : {
+    "message" : "1234567890123",
+    "format" : "PKBarcodeFormatQR",
+    "messageEncoding" : "iso-8859-1",
+    "altText":"1234567890123"
+  },
+  "organizationName" : "Concur",
+  "description" : "Concur",
+  "logoText" : "Rental Car Pick Up",
+  "eventTicket" : {
+    "headerFields" : [
+      {
+        "key" : "date",
+        "label" : "Dec",
+        "value" : "20"
+      }
+    ],
+    "primaryFields" : [
+      {
+        "key" : "event",
+        "label" : "Confirmation #",
+        "value" : "33425TY7"
+      }
+    ],
+    "secondaryFields": [
+      {
+        "key" : "vendor",
+        "label" : "Vendor",
+        "value" : "Hertz"
+      }
+    ],
+	"auxiliaryFields" : [
+      {
+        "key" : "loc",
+        "label" : "Pick Up",
+        "value" : "Dec 20, 2012"
+      },
+      {
+        "key" : "dropoff",
+        "label" : "Drop Off",
+        "value" : "Dec 22, 2012"
+      }
+    ],
+    "backFields" : [
+      {
+        "key" : "address",
+        "label" : "Address",
+        "value" : "20 Market St\nSan Francisco, CA 94104",
+        "textAlignment":"PKTextAlignmentNatural"
+      },
+      {
+        "key" : "source",
+        "label" : "Created by Concur Technologies, Inc.",
+        "value" : "For more information, visit: http:\/\/www.concur.com\n"
+      }
+
+    ]
+  }
+}

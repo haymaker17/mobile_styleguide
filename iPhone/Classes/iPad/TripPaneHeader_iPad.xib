@@ -1,0 +1,94 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.iPad.XIB" version="3.0" toolsVersion="4510" systemVersion="12F37" targetRuntime="iOS.CocoaTouch.iPad" propertyAccessControl="none">
+    <dependencies>
+        <deployment defaultVersion="1296" identifier="iOS"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="3742"/>
+    </dependencies>
+    <objects>
+        <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="TripPaneHeader_iPad"/>
+        <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
+        <view contentMode="scaleToFill" id="6" userLabel="View: Trip Summary" customClass="TripPaneHeader_iPad">
+            <rect key="frame" x="0.0" y="0.0" width="300" height="170"/>
+            <autoresizingMask key="autoresizingMask" flexibleMinX="YES" flexibleMaxX="YES" flexibleMinY="YES" flexibleMaxY="YES"/>
+            <subviews>
+                <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" text="Trip from Orlando to San Francisco" lineBreakMode="tailTruncation" numberOfLines="2" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="7" userLabel="Label: Trip Name">
+                    <rect key="frame" x="12" y="24" width="276" height="52"/>
+                    <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMaxY="YES"/>
+                    <fontDescription key="fontDescription" name="HelveticaNeue-Bold" family="Helvetica Neue" pointSize="20"/>
+                    <color key="textColor" red="0.2156862745" green="0.23921568630000001" blue="0.28235294119999998" alpha="1" colorSpace="calibratedRGB"/>
+                    <nil key="highlightedColor"/>
+                </label>
+                <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" text="Date" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="9" userLabel="Label: Date">
+                    <rect key="frame" x="12" y="83" width="276" height="21"/>
+                    <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMaxY="YES"/>
+                    <fontDescription key="fontDescription" name="HelveticaNeue" family="Helvetica Neue" pointSize="16"/>
+                    <color key="textColor" red="0.2156862745" green="0.23921568630000001" blue="0.28235294119999998" alpha="1" colorSpace="calibratedRGB"/>
+                    <nil key="highlightedColor"/>
+                </label>
+                <label hidden="YES" opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" text="Agency Record Locator: PXMZZO" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="42" userLabel="Label: Record Locator">
+                    <rect key="frame" x="12" y="112" width="276" height="15"/>
+                    <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMaxY="YES"/>
+                    <fontDescription key="fontDescription" name="HelveticaNeue" family="Helvetica Neue" pointSize="14"/>
+                    <color key="textColor" red="0.2156862745" green="0.23921568630000001" blue="0.28235294119999998" alpha="1" colorSpace="calibratedRGB"/>
+                    <nil key="highlightedColor"/>
+                </label>
+                <label hidden="YES" opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" text="Total Travel Points Booked: --" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="tjn-3C-8bl" userLabel="Label: Travel Points">
+                    <rect key="frame" x="12" y="112" width="276" height="15"/>
+                    <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMaxY="YES"/>
+                    <fontDescription key="fontDescription" name="HelveticaNeue" family="Helvetica Neue" pointSize="14"/>
+                    <color key="textColor" red="0.2156862745" green="0.23921568630000001" blue="0.28235294119999998" alpha="1" colorSpace="calibratedRGB"/>
+                    <nil key="highlightedColor"/>
+                </label>
+                <imageView userInteractionEnabled="NO" contentMode="scaleToFill" id="20" userLabel="Image view: iv0">
+                    <rect key="frame" x="12" y="132" width="24" height="24"/>
+                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                    <accessibility key="accessibilityConfiguration" label=""/>
+                </imageView>
+                <imageView userInteractionEnabled="NO" contentMode="scaleToFill" id="18" userLabel="Image view: iv1">
+                    <rect key="frame" x="38" y="132" width="24" height="24"/>
+                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                </imageView>
+                <imageView userInteractionEnabled="NO" contentMode="scaleToFill" id="19" userLabel="Image view: iv2">
+                    <rect key="frame" x="64" y="132" width="24" height="24"/>
+                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                </imageView>
+                <imageView userInteractionEnabled="NO" contentMode="scaleToFill" id="21" userLabel="Image view: iv3">
+                    <rect key="frame" x="90" y="132" width="24" height="24"/>
+                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                </imageView>
+                <imageView userInteractionEnabled="NO" contentMode="scaleToFill" id="34" userLabel="Image view: iv4">
+                    <rect key="frame" x="116" y="132" width="24" height="24"/>
+                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                    <accessibility key="accessibilityConfiguration" label=""/>
+                </imageView>
+                <imageView userInteractionEnabled="NO" contentMode="scaleToFill" id="35" userLabel="Image view: iv5">
+                    <rect key="frame" x="142" y="132" width="24" height="24"/>
+                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                </imageView>
+                <imageView userInteractionEnabled="NO" contentMode="scaleToFill" id="36" userLabel="Image view: iv6">
+                    <rect key="frame" x="168" y="132" width="24" height="24"/>
+                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                </imageView>
+                <imageView userInteractionEnabled="NO" contentMode="scaleToFill" id="37" userLabel="Image view: iv7">
+                    <rect key="frame" x="194" y="132" width="24" height="24"/>
+                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                </imageView>
+            </subviews>
+            <color key="backgroundColor" red="0.84705882349999995" green="0.87450980389999999" blue="0.90980392160000001" alpha="1" colorSpace="calibratedRGB"/>
+            <connections>
+                <outlet property="iv0" destination="20" id="30"/>
+                <outlet property="iv1" destination="18" id="31"/>
+                <outlet property="iv2" destination="19" id="32"/>
+                <outlet property="iv3" destination="21" id="33"/>
+                <outlet property="iv4" destination="34" id="38"/>
+                <outlet property="iv5" destination="35" id="39"/>
+                <outlet property="iv6" destination="36" id="40"/>
+                <outlet property="iv7" destination="37" id="41"/>
+                <outlet property="tripDate" destination="9" id="29"/>
+                <outlet property="tripName" destination="7" id="28"/>
+                <outlet property="tripRecordLocator" destination="42" id="44"/>
+                <outlet property="tripTravelPoints" destination="tjn-3C-8bl" id="dV9-pK-G3n"/>
+            </connections>
+        </view>
+    </objects>
+</document>

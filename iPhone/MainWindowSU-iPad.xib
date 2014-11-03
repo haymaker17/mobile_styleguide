@@ -1,0 +1,1491 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<archive type="com.apple.InterfaceBuilder3.CocoaTouch.iPad.XIB" version="7.10">
+	<data>
+		<int key="IBDocument.SystemTarget">1280</int>
+		<string key="IBDocument.SystemVersion">11B26</string>
+		<string key="IBDocument.InterfaceBuilderVersion">1934</string>
+		<string key="IBDocument.AppKitVersion">1138</string>
+		<string key="IBDocument.HIToolboxVersion">566.00</string>
+		<object class="NSMutableDictionary" key="IBDocument.PluginVersions">
+			<string key="NS.key.0">com.apple.InterfaceBuilder.IBCocoaTouchPlugin</string>
+			<string key="NS.object.0">931</string>
+		</object>
+		<object class="NSArray" key="IBDocument.IntegratedClassDependencies">
+			<bool key="EncodedWithXMLCoder">YES</bool>
+			<string>IBUIWindow</string>
+			<string>IBUICustomObject</string>
+			<string>IBUIViewController</string>
+			<string>IBProxyObject</string>
+		</object>
+		<object class="NSArray" key="IBDocument.PluginDependencies">
+			<bool key="EncodedWithXMLCoder">YES</bool>
+			<string>com.apple.InterfaceBuilder.IBCocoaTouchPlugin</string>
+		</object>
+		<object class="NSMutableDictionary" key="IBDocument.Metadata">
+			<string key="NS.key.0">PluginDependencyRecalculationVersion</string>
+			<integer value="1" key="NS.object.0"/>
+		</object>
+		<object class="NSMutableArray" key="IBDocument.RootObjects" id="1000">
+			<bool key="EncodedWithXMLCoder">YES</bool>
+			<object class="IBProxyObject" id="841351856">
+				<string key="IBProxiedObjectIdentifier">IBFilesOwner</string>
+				<string key="targetRuntimeIdentifier">IBIPadFramework</string>
+			</object>
+			<object class="IBProxyObject" id="427554174">
+				<string key="IBProxiedObjectIdentifier">IBFirstResponder</string>
+				<string key="targetRuntimeIdentifier">IBIPadFramework</string>
+			</object>
+			<object class="IBUICustomObject" id="664661524">
+				<string key="targetRuntimeIdentifier">IBIPadFramework</string>
+			</object>
+			<object class="IBUIWindow" id="380026005">
+				<reference key="NSNextResponder"/>
+				<int key="NSvFlags">1316</int>
+				<object class="NSPSMatrix" key="NSFrameMatrix"/>
+				<string key="NSFrameSize">{768, 1024}</string>
+				<reference key="NSSuperview"/>
+				<reference key="NSWindow"/>
+				<reference key="NSNextKeyView"/>
+				<object class="NSColor" key="IBUIBackgroundColor">
+					<int key="NSColorSpace">1</int>
+					<bytes key="NSRGB">MSAxIDEAA</bytes>
+				</object>
+				<bool key="IBUIOpaque">NO</bool>
+				<bool key="IBUIClearsContextBeforeDrawing">NO</bool>
+				<object class="IBUISimulatedStatusBarMetrics" key="IBUISimulatedStatusBarMetrics">
+					<int key="IBUIStatusBarStyle">2</int>
+				</object>
+				<string key="targetRuntimeIdentifier">IBIPadFramework</string>
+				<bool key="IBUIResizesToFullScreen">YES</bool>
+			</object>
+			<object class="IBUIViewController" id="1045784846">
+				<object class="NSArray" key="IBUIToolbarItems" id="0">
+					<bool key="EncodedWithXMLCoder">YES</bool>
+				</object>
+				<string key="IBUINibName">iPadHomeSU</string>
+				<object class="IBUISimulatedOrientationMetrics" key="IBUISimulatedOrientationMetrics">
+					<int key="IBUIInterfaceOrientation">1</int>
+					<int key="interfaceOrientation">1</int>
+				</object>
+				<string key="targetRuntimeIdentifier">IBIPadFramework</string>
+				<bool key="IBUIHorizontal">NO</bool>
+			</object>
+		</object>
+		<object class="IBObjectContainer" key="IBDocument.Objects">
+			<object class="NSMutableArray" key="connectionRecords">
+				<bool key="EncodedWithXMLCoder">YES</bool>
+				<object class="IBConnectionRecord">
+					<object class="IBCocoaTouchOutletConnection" key="connection">
+						<string key="label">delegate</string>
+						<reference key="source" ref="841351856"/>
+						<reference key="destination" ref="664661524"/>
+					</object>
+					<int key="connectionID">4</int>
+				</object>
+				<object class="IBConnectionRecord">
+					<object class="IBCocoaTouchOutletConnection" key="connection">
+						<string key="label">window</string>
+						<reference key="source" ref="664661524"/>
+						<reference key="destination" ref="380026005"/>
+					</object>
+					<int key="connectionID">5</int>
+				</object>
+				<object class="IBConnectionRecord">
+					<object class="IBCocoaTouchOutletConnection" key="connection">
+						<string key="label">padHomeVC</string>
+						<reference key="source" ref="664661524"/>
+						<reference key="destination" ref="1045784846"/>
+					</object>
+					<int key="connectionID">97</int>
+				</object>
+			</object>
+			<object class="IBMutableOrderedSet" key="objectRecords">
+				<object class="NSArray" key="orderedObjects">
+					<bool key="EncodedWithXMLCoder">YES</bool>
+					<object class="IBObjectRecord">
+						<int key="objectID">0</int>
+						<reference key="object" ref="0"/>
+						<reference key="children" ref="1000"/>
+						<nil key="parent"/>
+					</object>
+					<object class="IBObjectRecord">
+						<int key="objectID">2</int>
+						<reference key="object" ref="380026005"/>
+						<object class="NSMutableArray" key="children">
+							<bool key="EncodedWithXMLCoder">YES</bool>
+						</object>
+						<reference key="parent" ref="0"/>
+					</object>
+					<object class="IBObjectRecord">
+						<int key="objectID">-1</int>
+						<reference key="object" ref="841351856"/>
+						<reference key="parent" ref="0"/>
+						<string key="objectName">File's Owner</string>
+					</object>
+					<object class="IBObjectRecord">
+						<int key="objectID">3</int>
+						<reference key="object" ref="664661524"/>
+						<reference key="parent" ref="0"/>
+					</object>
+					<object class="IBObjectRecord">
+						<int key="objectID">-2</int>
+						<reference key="object" ref="427554174"/>
+						<reference key="parent" ref="0"/>
+					</object>
+					<object class="IBObjectRecord">
+						<int key="objectID">95</int>
+						<reference key="object" ref="1045784846"/>
+						<reference key="parent" ref="0"/>
+					</object>
+				</object>
+			</object>
+			<object class="NSMutableDictionary" key="flattenedProperties">
+				<bool key="EncodedWithXMLCoder">YES</bool>
+				<object class="NSArray" key="dict.sortedKeys">
+					<bool key="EncodedWithXMLCoder">YES</bool>
+					<string>-1.CustomClassName</string>
+					<string>-1.IBPluginDependency</string>
+					<string>-2.CustomClassName</string>
+					<string>-2.IBPluginDependency</string>
+					<string>2.IBAttributePlaceholdersKey</string>
+					<string>2.IBLastUsedUIStatusBarStylesToTargetRuntimesMap</string>
+					<string>2.IBPluginDependency</string>
+					<string>3.CustomClassName</string>
+					<string>3.IBPluginDependency</string>
+					<string>95.CustomClassName</string>
+					<string>95.IBPluginDependency</string>
+				</object>
+				<object class="NSMutableArray" key="dict.values">
+					<bool key="EncodedWithXMLCoder">YES</bool>
+					<string>UIApplication</string>
+					<string>com.apple.InterfaceBuilder.IBCocoaTouchPlugin</string>
+					<string>UIResponder</string>
+					<string>com.apple.InterfaceBuilder.IBCocoaTouchPlugin</string>
+					<object class="NSMutableDictionary">
+						<bool key="EncodedWithXMLCoder">YES</bool>
+						<reference key="dict.sortedKeys" ref="0"/>
+						<reference key="dict.values" ref="0"/>
+					</object>
+					<object class="NSMutableDictionary">
+						<string key="NS.key.0">IBCocoaTouchFramework</string>
+						<integer value="0" key="NS.object.0"/>
+					</object>
+					<string>com.apple.InterfaceBuilder.IBCocoaTouchPlugin</string>
+					<string>ConcurMobileAppDelegate</string>
+					<string>com.apple.InterfaceBuilder.IBCocoaTouchPlugin</string>
+					<string>iPadHomeVC</string>
+					<string>com.apple.InterfaceBuilder.IBCocoaTouchPlugin</string>
+				</object>
+			</object>
+			<object class="NSMutableDictionary" key="unlocalizedProperties">
+				<bool key="EncodedWithXMLCoder">YES</bool>
+				<reference key="dict.sortedKeys" ref="0"/>
+				<reference key="dict.values" ref="0"/>
+			</object>
+			<nil key="activeLocalization"/>
+			<object class="NSMutableDictionary" key="localizations">
+				<bool key="EncodedWithXMLCoder">YES</bool>
+				<reference key="dict.sortedKeys" ref="0"/>
+				<reference key="dict.values" ref="0"/>
+			</object>
+			<nil key="sourceID"/>
+			<int key="maxID">97</int>
+		</object>
+		<object class="IBClassDescriber" key="IBDocument.Classes">
+			<object class="NSMutableArray" key="referencedPartialClassDescriptions">
+				<bool key="EncodedWithXMLCoder">YES</bool>
+				<object class="IBPartialClassDescription">
+					<string key="className">ConcurMobileAppDelegate</string>
+					<string key="superclassName">NSObject</string>
+					<object class="NSMutableDictionary" key="outlets">
+						<bool key="EncodedWithXMLCoder">YES</bool>
+						<object class="NSArray" key="dict.sortedKeys">
+							<bool key="EncodedWithXMLCoder">YES</bool>
+							<string>detailViewController</string>
+							<string>navController</string>
+							<string>padHomeVC</string>
+							<string>splitViewController</string>
+							<string>window</string>
+						</object>
+						<object class="NSMutableArray" key="dict.values">
+							<bool key="EncodedWithXMLCoder">YES</bool>
+							<string>DetailViewController</string>
+							<string>UINavigationController</string>
+							<string>iPadHomeVC</string>
+							<string>UISplitViewController</string>
+							<string>UIWindow</string>
+						</object>
+					</object>
+					<object class="NSMutableDictionary" key="toOneOutletInfosByName">
+						<bool key="EncodedWithXMLCoder">YES</bool>
+						<object class="NSArray" key="dict.sortedKeys">
+							<bool key="EncodedWithXMLCoder">YES</bool>
+							<string>detailViewController</string>
+							<string>navController</string>
+							<string>padHomeVC</string>
+							<string>splitViewController</string>
+							<string>window</string>
+						</object>
+						<object class="NSMutableArray" key="dict.values">
+							<bool key="EncodedWithXMLCoder">YES</bool>
+							<object class="IBToOneOutletInfo">
+								<string key="name">detailViewController</string>
+								<string key="candidateClassName">DetailViewController</string>
+							</object>
+							<object class="IBToOneOutletInfo">
+								<string key="name">navController</string>
+								<string key="candidateClassName">UINavigationController</string>
+							</object>
+							<object class="IBToOneOutletInfo">
+								<string key="name">padHomeVC</string>
+								<string key="candidateClassName">iPadHomeVC</string>
+							</object>
+							<object class="IBToOneOutletInfo">
+								<string key="name">splitViewController</string>
+								<string key="candidateClassName">UISplitViewController</string>
+							</object>
+							<object class="IBToOneOutletInfo">
+								<string key="name">window</string>
+								<string key="candidateClassName">UIWindow</string>
+							</object>
+						</object>
+					</object>
+					<object class="IBClassDescriptionSource" key="sourceIdentifier">
+						<string key="majorKey">IBProjectSource</string>
+						<string key="minorKey">./Classes/ConcurMobileAppDelegate.h</string>
+					</object>
+				</object>
+				<object class="IBPartialClassDescription">
+					<string key="className">DetailViewController</string>
+					<string key="superclassName">MobileViewController</string>
+					<object class="NSMutableDictionary" key="actions">
+						<bool key="EncodedWithXMLCoder">YES</bool>
+						<object class="NSArray" key="dict.sortedKeys">
+							<bool key="EncodedWithXMLCoder">YES</bool>
+							<string>buttonReportsPressed:</string>
+							<string>loadWebView:WebViewTitle:</string>
+							<string>loadWebViewSeat:WebViewTitle:</string>
+						</object>
+						<object class="NSMutableArray" key="dict.values">
+							<bool key="EncodedWithXMLCoder">YES</bool>
+							<string>id</string>
+							<string>NSString</string>
+							<string>NSString</string>
+						</object>
+					</object>
+					<object class="NSMutableDictionary" key="actionInfosByName">
+						<bool key="EncodedWithXMLCoder">YES</bool>
+						<object class="NSArray" key="dict.sortedKeys">
+							<bool key="EncodedWithXMLCoder">YES</bool>
+							<string>buttonReportsPressed:</string>
+							<string>loadWebView:WebViewTitle:</string>
+							<string>loadWebViewSeat:WebViewTitle:</string>
+						</object>
+						<object class="NSMutableArray" key="dict.values">
+							<bool key="EncodedWithXMLCoder">YES</bool>
+							<object class="IBActionInfo">
+								<string key="name">buttonReportsPressed:</string>
+								<string key="candidateClassName">id</string>
+							</object>
+							<object class="IBActionInfo">
+								<string key="name">loadWebView:WebViewTitle:</string>
+								<string key="candidateClassName">NSString</string>
+							</object>
+							<object class="IBActionInfo">
+								<string key="name">loadWebViewSeat:WebViewTitle:</string>
+								<string key="candidateClassName">NSString</string>
+							</object>
+						</object>
+					</object>
+					<object class="NSMutableDictionary" key="outlets">
+						<bool key="EncodedWithXMLCoder">YES</bool>
+						<object class="NSArray" key="dict.sortedKeys">
+							<bool key="EncodedWithXMLCoder">YES</bool>
+							<string>btnCancel</string>
+							<string>btnCar</string>
+							<string>btnHotel</string>
+							<string>btnNext</string>
+							<string>btnPrevious</string>
+							<string>btnRefresh</string>
+							<string>detailDescriptionLabel</string>
+							<string>headerImg</string>
+							<string>holdActivity</string>
+							<string>holdText</string>
+							<string>holdView</string>
+							<string>ivBack</string>
+							<string>ivBarLeft</string>
+							<string>ivBarMiddle</string>
+							<string>ivBarRight</string>
+							<string>ivBlotter</string>
+							<string>ivBottomTable</string>
+							<string>ivLoading</string>
+							<string>ivLogo</string>
+							<string>ivTopTable</string>
+							<string>ivTripIcon</string>
+							<string>ivTripPanel</string>
+							<string>lblBackBorder</string>
+							<string>lblNextTrip</string>
+							<string>lblOffline</string>
+							<string>lblOfflineBack</string>
+							<string>lblPreviousTrip</string>
+							<string>lblTripDates</string>
+							<string>lblTripDetails</string>
+							<string>lblTripName</string>
+							<string>navTitle</string>
+							<string>navigationBar</string>
+							<string>pageControl</string>
+							<string>scroller</string>
+							<string>scrollerButtons</string>
+							<string>tableDetails</string>
+							<string>tripTable</string>
+						</object>
+						<object class="NSMutableArray" key="dict.values">
+							<bool key="EncodedWithXMLCoder">YES</bool>
+							<string>UIButton</string>
+							<string>UIButton</string>
+							<string>UIButton</string>
+							<string>UIButton</string>
+							<string>UIButton</string>
+							<string>UIButton</string>
+							<string>UILabel</string>
+							<string>UIImageView</string>
+							<string>UIActivityIndicatorView</string>
+							<string>UILabel</string>
+							<string>UIView</string>
+							<string>UIImageView</string>
+							<string>UIImageView</string>
+							<string>UIImageView</string>
+							<string>UIImageView</string>
+							<string>UIImageView</string>
+							<string>UIImageView</string>
+							<string>UIImageView</string>
+							<string>UIImageView</string>
+							<string>UIImageView</string>
+							<string>UIImageView</string>
+							<string>UIImageView</string>
+							<string>UILabel</string>
+							<string>UILabel</string>
+							<string>UILabel</string>
+							<string>UILabel</string>
+							<string>UILabel</string>
+							<string>UILabel</string>
+							<string>UILabel</string>
+							<string>UILabel</string>
+							<string>UINavigationItem</string>
+							<string>UINavigationBar</string>
+							<string>UIPageControl</string>
+							<string>UIScrollView</string>
+							<string>UIScrollView</string>
+							<string>UITableView</string>
+							<string>UITableView</string>
+						</object>
+					</object>
+					<object class="NSMutableDictionary" key="toOneOutletInfosByName">
+						<bool key="EncodedWithXMLCoder">YES</bool>
+						<object class="NSArray" key="dict.sortedKeys">
+							<bool key="EncodedWithXMLCoder">YES</bool>
+							<string>btnCancel</string>
+							<string>btnCar</string>
+							<string>btnHotel</string>
+							<string>btnNext</string>
+							<string>btnPrevious</string>
+							<string>btnRefresh</string>
+							<string>detailDescriptionLabel</string>
+							<string>headerImg</string>
+							<string>holdActivity</string>
+							<string>holdText</string>
+							<string>holdView</string>
+							<string>ivBack</string>
+							<string>ivBarLeft</string>
+							<string>ivBarMiddle</string>
+							<string>ivBarRight</string>
+							<string>ivBlotter</string>
+							<string>ivBottomTable</string>
+							<string>ivLoading</string>
+							<string>ivLogo</string>
+							<string>ivTopTable</string>
+							<string>ivTripIcon</string>
+							<string>ivTripPanel</string>
+							<string>lblBackBorder</string>
+							<string>lblNextTrip</string>
+							<string>lblOffline</string>
+							<string>lblOfflineBack</string>
+							<string>lblPreviousTrip</string>
+							<string>lblTripDates</string>
+							<string>lblTripDetails</string>
+							<string>lblTripName</string>
+							<string>navTitle</string>
+							<string>navigationBar</string>
+							<string>pageControl</string>
+							<string>scroller</string>
+							<string>scrollerButtons</string>
+							<string>tableDetails</string>
+							<string>tripTable</string>
+						</object>
+						<object class="NSMutableArray" key="dict.values">
+							<bool key="EncodedWithXMLCoder">YES</bool>
+							<object class="IBToOneOutletInfo">
+								<string key="name">btnCancel</string>
+								<string key="candidateClassName">UIButton</string>
+							</object>
+							<object class="IBToOneOutletInfo">
+								<string key="name">btnCar</string>
+								<string key="candidateClassName">UIButton</string>
+							</object>
+							<object class="IBToOneOutletInfo">
+								<string key="name">btnHotel</string>
+								<string key="candidateClassName">UIButton</string>
+							</object>
+							<object class="IBToOneOutletInfo">
+								<string key="name">btnNext</string>
+								<string key="candidateClassName">UIButton</string>
+							</object>
+							<object class="IBToOneOutletInfo">
+								<string key="name">btnPrevious</string>
+								<string key="candidateClassName">UIButton</string>
+							</object>
+							<object class="IBToOneOutletInfo">
+								<string key="name">btnRefresh</string>
+								<string key="candidateClassName">UIButton</string>
+							</object>
+							<object class="IBToOneOutletInfo">
+								<string key="name">detailDescriptionLabel</string>
+								<string key="candidateClassName">UILabel</string>
+							</object>
+							<object class="IBToOneOutletInfo">
+								<string key="name">headerImg</string>
+								<string key="candidateClassName">UIImageView</string>
+							</object>
+							<object class="IBToOneOutletInfo">
+								<string key="name">holdActivity</string>
+								<string key="candidateClassName">UIActivityIndicatorView</string>
+							</object>
+							<object class="IBToOneOutletInfo">
+								<string key="name">holdText</string>
+								<string key="candidateClassName">UILabel</string>
+							</object>
+							<object class="IBToOneOutletInfo">
+								<string key="name">holdView</string>
+								<string key="candidateClassName">UIView</string>
+							</object>
+							<object class="IBToOneOutletInfo">
+								<string key="name">ivBack</string>
+								<string key="candidateClassName">UIImageView</string>
+							</object>
+							<object class="IBToOneOutletInfo">
+								<string key="name">ivBarLeft</string>
+								<string key="candidateClassName">UIImageView</string>
+							</object>
+							<object class="IBToOneOutletInfo">
+								<string key="name">ivBarMiddle</string>
+								<string key="candidateClassName">UIImageView</string>
+							</object>
+							<object class="IBToOneOutletInfo">
+								<string key="name">ivBarRight</string>
+								<string key="candidateClassName">UIImageView</string>
+							</object>
+							<object class="IBToOneOutletInfo">
+								<string key="name">ivBlotter</string>
+								<string key="candidateClassName">UIImageView</string>
+							</object>
+							<object class="IBToOneOutletInfo">
+								<string key="name">ivBottomTable</string>
+								<string key="candidateClassName">UIImageView</string>
+							</object>
+							<object class="IBToOneOutletInfo">
+								<string key="name">ivLoading</string>
+								<string key="candidateClassName">UIImageView</string>
+							</object>
+							<object class="IBToOneOutletInfo">
+								<string key="name">ivLogo</string>
+								<string key="candidateClassName">UIImageView</string>
+							</object>
+							<object class="IBToOneOutletInfo">
+								<string key="name">ivTopTable</string>
+								<string key="candidateClassName">UIImageView</string>
+							</object>
+							<object class="IBToOneOutletInfo">
+								<string key="name">ivTripIcon</string>
+								<string key="candidateClassName">UIImageView</string>
+							</object>
+							<object class="IBToOneOutletInfo">
+								<string key="name">ivTripPanel</string>
+								<string key="candidateClassName">UIImageView</string>
+							</object>
+							<object class="IBToOneOutletInfo">
+								<string key="name">lblBackBorder</string>
+								<string key="candidateClassName">UILabel</string>
+							</object>
+							<object class="IBToOneOutletInfo">
+								<string key="name">lblNextTrip</string>
+								<string key="candidateClassName">UILabel</string>
+							</object>
+							<object class="IBToOneOutletInfo">
+								<string key="name">lblOffline</string>
+								<string key="candidateClassName">UILabel</string>
+							</object>
+							<object class="IBToOneOutletInfo">
+								<string key="name">lblOfflineBack</string>
+								<string key="candidateClassName">UILabel</string>
+							</object>
+							<object class="IBToOneOutletInfo">
+								<string key="name">lblPreviousTrip</string>
+								<string key="candidateClassName">UILabel</string>
+							</object>
+							<object class="IBToOneOutletInfo">
+								<string key="name">lblTripDates</string>
+								<string key="candidateClassName">UILabel</string>
+							</object>
+							<object class="IBToOneOutletInfo">
+								<string key="name">lblTripDetails</string>
+								<string key="candidateClassName">UILabel</string>
+							</object>
+							<object class="IBToOneOutletInfo">
+								<string key="name">lblTripName</string>
+								<string key="candidateClassName">UILabel</string>
+							</object>
+							<object class="IBToOneOutletInfo">
+								<string key="name">navTitle</string>
+								<string key="candidateClassName">UINavigationItem</string>
+							</object>
+							<object class="IBToOneOutletInfo">
+								<string key="name">navigationBar</string>
+								<string key="candidateClassName">UINavigationBar</string>
+							</object>
+							<object class="IBToOneOutletInfo">
+								<string key="name">pageControl</string>
+								<string key="candidateClassName">UIPageControl</string>
+							</object>
+							<object class="IBToOneOutletInfo">
+								<string key="name">scroller</string>
+								<string key="candidateClassName">UIScrollView</string>
+							</object>
+							<object class="IBToOneOutletInfo">
+								<string key="name">scrollerButtons</string>
+								<string key="candidateClassName">UIScrollView</string>
+							</object>
+							<object class="IBToOneOutletInfo">
+								<string key="name">tableDetails</string>
+								<string key="candidateClassName">UITableView</string>
+							</object>
+							<object class="IBToOneOutletInfo">
+								<string key="name">tripTable</string>
+								<string key="candidateClassName">UITableView</string>
+							</object>
+						</object>
+					</object>
+					<object class="IBClassDescriptionSource" key="sourceIdentifier">
+						<string key="majorKey">IBProjectSource</string>
+						<string key="minorKey">./Classes/DetailViewController.h</string>
+					</object>
+				</object>
+				<object class="IBPartialClassDescription">
+					<string key="className">MobileViewController</string>
+					<string key="superclassName">UIViewController</string>
+					<object class="IBClassDescriptionSource" key="sourceIdentifier">
+						<string key="majorKey">IBProjectSource</string>
+						<string key="minorKey">./Classes/MobileViewController.h</string>
+					</object>
+				</object>
+				<object class="IBPartialClassDescription">
+					<string key="className">UILayoutView</string>
+					<string key="superclassName">UIView</string>
+					<object class="IBClassDescriptionSource" key="sourceIdentifier">
+						<string key="majorKey">IBProjectSource</string>
+						<string key="minorKey">./Classes/UILayoutView.h</string>
+					</object>
+				</object>
+				<object class="IBPartialClassDescription">
+					<string key="className">iPadHomeVC</string>
+					<string key="superclassName">MobileViewController</string>
+					<object class="NSMutableDictionary" key="actions">
+						<bool key="EncodedWithXMLCoder">YES</bool>
+						<object class="NSArray" key="dict.sortedKeys">
+							<bool key="EncodedWithXMLCoder">YES</bool>
+							<string>becomeAttendeeViaBump:</string>
+							<string>buttonAddPressed:</string>
+							<string>buttonAirPressed:</string>
+							<string>buttonApprovalsFromScrollerPressed:</string>
+							<string>buttonCarPressed:</string>
+							<string>buttonExpensesPressed:</string>
+							<string>buttonHotelPressed:</string>
+							<string>buttonLogoutPressed:</string>
+							<string>buttonRailPressed:</string>
+							<string>buttonReportsFromScrollerPressed:</string>
+							<string>buttonReportsPressed:</string>
+							<string>buttonSettingsPressed:</string>
+							<string>buttonTripItPressed:</string>
+							<string>buttonTripsPressed:</string>
+							<string>closeBumpHelp:</string>
+							<string>closeNew:</string>
+							<string>launchConcurBreezeURL:</string>
+							<string>loadWebViewSeat:WebViewTitle:</string>
+							<string>showBumpHelpAlert:</string>
+							<string>showCurrentTrip:</string>
+							<string>showHotelImages:</string>
+							<string>showMap:</string>
+						</object>
+						<object class="NSMutableArray" key="dict.values">
+							<bool key="EncodedWithXMLCoder">YES</bool>
+							<string>id</string>
+							<string>id</string>
+							<string>id</string>
+							<string>id</string>
+							<string>id</string>
+							<string>id</string>
+							<string>id</string>
+							<string>id</string>
+							<string>id</string>
+							<string>id</string>
+							<string>id</string>
+							<string>id</string>
+							<string>id</string>
+							<string>id</string>
+							<string>id</string>
+							<string>id</string>
+							<string>id</string>
+							<string>NSString</string>
+							<string>id</string>
+							<string>id</string>
+							<string>id</string>
+							<string>id</string>
+						</object>
+					</object>
+					<object class="NSMutableDictionary" key="actionInfosByName">
+						<bool key="EncodedWithXMLCoder">YES</bool>
+						<object class="NSArray" key="dict.sortedKeys">
+							<bool key="EncodedWithXMLCoder">YES</bool>
+							<string>becomeAttendeeViaBump:</string>
+							<string>buttonAddPressed:</string>
+							<string>buttonAirPressed:</string>
+							<string>buttonApprovalsFromScrollerPressed:</string>
+							<string>buttonCarPressed:</string>
+							<string>buttonExpensesPressed:</string>
+							<string>buttonHotelPressed:</string>
+							<string>buttonLogoutPressed:</string>
+							<string>buttonRailPressed:</string>
+							<string>buttonReportsFromScrollerPressed:</string>
+							<string>buttonReportsPressed:</string>
+							<string>buttonSettingsPressed:</string>
+							<string>buttonTripItPressed:</string>
+							<string>buttonTripsPressed:</string>
+							<string>closeBumpHelp:</string>
+							<string>closeNew:</string>
+							<string>launchConcurBreezeURL:</string>
+							<string>loadWebViewSeat:WebViewTitle:</string>
+							<string>showBumpHelpAlert:</string>
+							<string>showCurrentTrip:</string>
+							<string>showHotelImages:</string>
+							<string>showMap:</string>
+						</object>
+						<object class="NSMutableArray" key="dict.values">
+							<bool key="EncodedWithXMLCoder">YES</bool>
+							<object class="IBActionInfo">
+								<string key="name">becomeAttendeeViaBump:</string>
+								<string key="candidateClassName">id</string>
+							</object>
+							<object class="IBActionInfo">
+								<string key="name">buttonAddPressed:</string>
+								<string key="candidateClassName">id</string>
+							</object>
+							<object class="IBActionInfo">
+								<string key="name">buttonAirPressed:</string>
+								<string key="candidateClassName">id</string>
+							</object>
+							<object class="IBActionInfo">
+								<string key="name">buttonApprovalsFromScrollerPressed:</string>
+								<string key="candidateClassName">id</string>
+							</object>
+							<object class="IBActionInfo">
+								<string key="name">buttonCarPressed:</string>
+								<string key="candidateClassName">id</string>
+							</object>
+							<object class="IBActionInfo">
+								<string key="name">buttonExpensesPressed:</string>
+								<string key="candidateClassName">id</string>
+							</object>
+							<object class="IBActionInfo">
+								<string key="name">buttonHotelPressed:</string>
+								<string key="candidateClassName">id</string>
+							</object>
+							<object class="IBActionInfo">
+								<string key="name">buttonLogoutPressed:</string>
+								<string key="candidateClassName">id</string>
+							</object>
+							<object class="IBActionInfo">
+								<string key="name">buttonRailPressed:</string>
+								<string key="candidateClassName">id</string>
+							</object>
+							<object class="IBActionInfo">
+								<string key="name">buttonReportsFromScrollerPressed:</string>
+								<string key="candidateClassName">id</string>
+							</object>
+							<object class="IBActionInfo">
+								<string key="name">buttonReportsPressed:</string>
+								<string key="candidateClassName">id</string>
+							</object>
+							<object class="IBActionInfo">
+								<string key="name">buttonSettingsPressed:</string>
+								<string key="candidateClassName">id</string>
+							</object>
+							<object class="IBActionInfo">
+								<string key="name">buttonTripItPressed:</string>
+								<string key="candidateClassName">id</string>
+							</object>
+							<object class="IBActionInfo">
+								<string key="name">buttonTripsPressed:</string>
+								<string key="candidateClassName">id</string>
+							</object>
+							<object class="IBActionInfo">
+								<string key="name">closeBumpHelp:</string>
+								<string key="candidateClassName">id</string>
+							</object>
+							<object class="IBActionInfo">
+								<string key="name">closeNew:</string>
+								<string key="candidateClassName">id</string>
+							</object>
+							<object class="IBActionInfo">
+								<string key="name">launchConcurBreezeURL:</string>
+								<string key="candidateClassName">id</string>
+							</object>
+							<object class="IBActionInfo">
+								<string key="name">loadWebViewSeat:WebViewTitle:</string>
+								<string key="candidateClassName">NSString</string>
+							</object>
+							<object class="IBActionInfo">
+								<string key="name">showBumpHelpAlert:</string>
+								<string key="candidateClassName">id</string>
+							</object>
+							<object class="IBActionInfo">
+								<string key="name">showCurrentTrip:</string>
+								<string key="candidateClassName">id</string>
+							</object>
+							<object class="IBActionInfo">
+								<string key="name">showHotelImages:</string>
+								<string key="candidateClassName">id</string>
+							</object>
+							<object class="IBActionInfo">
+								<string key="name">showMap:</string>
+								<string key="candidateClassName">id</string>
+							</object>
+						</object>
+					</object>
+					<object class="NSMutableDictionary" key="outlets">
+						<bool key="EncodedWithXMLCoder">YES</bool>
+						<object class="NSArray" key="dict.sortedKeys">
+							<bool key="EncodedWithXMLCoder">YES</bool>
+							<string>addFuncNext</string>
+							<string>addFuncPrev</string>
+							<string>addFuncScroller</string>
+							<string>addFunctionsView</string>
+							<string>adsView</string>
+							<string>btnBumpCancel</string>
+							<string>btnBumpShare</string>
+							<string>btnLocationAddress</string>
+							<string>btnLocationImage</string>
+							<string>btnNewOK</string>
+							<string>canvas</string>
+							<string>currentTripSummaryView</string>
+							<string>expSummaryNext</string>
+							<string>expSummaryPrev</string>
+							<string>expSummaryScroller</string>
+							<string>expSummaryView</string>
+							<string>h1</string>
+							<string>h1_2</string>
+							<string>h1_3</string>
+							<string>h1_4</string>
+							<string>h2</string>
+							<string>headerImgView</string>
+							<string>imageExpenseWait</string>
+							<string>ivActionButtonsLeftArrow</string>
+							<string>ivActionButtonsRightArrow</string>
+							<string>ivBackground</string>
+							<string>ivBarLeft</string>
+							<string>ivBarMiddle</string>
+							<string>ivBarRight</string>
+							<string>ivBumpBackground</string>
+							<string>ivExpSummaryButtonsLeftArrow</string>
+							<string>ivExpSummaryButtonsRightArrow</string>
+							<string>ivHotelBackground</string>
+							<string>ivLocation</string>
+							<string>ivLocationIcon</string>
+							<string>ivLocationImage</string>
+							<string>ivLocationLoading</string>
+							<string>ivNewBackground</string>
+							<string>ivTravelUserPromoBanner</string>
+							<string>ivTripIcon</string>
+							<string>ivTripInfo</string>
+							<string>ivTwitBackground</string>
+							<string>ivTwitterLoading</string>
+							<string>ivWeather</string>
+							<string>lblBumpHelpText1</string>
+							<string>lblBumpHelpText2</string>
+							<string>lblBumpHelpTitle</string>
+							<string>lblCurrentTrip</string>
+							<string>lblExpense</string>
+							<string>lblExpenseWait</string>
+							<string>lblHotel1</string>
+							<string>lblHotel2</string>
+							<string>lblHotel3</string>
+							<string>lblHotel4</string>
+							<string>lblHotelName</string>
+							<string>lblNewTitle</string>
+							<string>lblOffline</string>
+							<string>lblOfflineBack</string>
+							<string>lblQuickTips</string>
+							<string>lblTripData</string>
+							<string>lblTripDate</string>
+							<string>lblTripDated</string>
+							<string>lblTripName</string>
+							<string>lblTripSummary</string>
+							<string>lblTripWait</string>
+							<string>lblTwitterName</string>
+							<string>lblWaitLocation</string>
+							<string>lblWaitTwitter</string>
+							<string>lblWeather</string>
+							<string>lblWeatherCity</string>
+							<string>lblWeatherTemp</string>
+							<string>scrollerButtons</string>
+							<string>scrollerExpense</string>
+							<string>scrollerNew</string>
+							<string>scrollerQT</string>
+							<string>scrollerTripDetails</string>
+							<string>scrollerTwit</string>
+							<string>separatorView</string>
+							<string>showAdBtn</string>
+							<string>skinExpense</string>
+							<string>splitViewController</string>
+							<string>tableList</string>
+							<string>tripCategoryIconsView</string>
+							<string>v1</string>
+							<string>v2</string>
+							<string>viewBumpHelp</string>
+							<string>viewExpense</string>
+							<string>viewExpenseWait</string>
+							<string>viewHotel</string>
+							<string>viewHotelInfo</string>
+							<string>viewHotelWait</string>
+							<string>viewNew</string>
+							<string>viewQT</string>
+							<string>viewTrip</string>
+							<string>viewTripDetails</string>
+							<string>viewTwitter</string>
+							<string>viewTwitterWait</string>
+						</object>
+						<object class="NSMutableArray" key="dict.values">
+							<bool key="EncodedWithXMLCoder">YES</bool>
+							<string>UIButton</string>
+							<string>UIButton</string>
+							<string>UIScrollView</string>
+							<string>UILayoutView</string>
+							<string>UILayoutView</string>
+							<string>UIButton</string>
+							<string>UIButton</string>
+							<string>UIButton</string>
+							<string>UIButton</string>
+							<string>UIButton</string>
+							<string>UILayoutView</string>
+							<string>UILayoutView</string>
+							<string>UIButton</string>
+							<string>UIButton</string>
+							<string>UIScrollView</string>
+							<string>UILayoutView</string>
+							<string>UILayoutView</string>
+							<string>UILayoutView</string>
+							<string>UILayoutView</string>
+							<string>UILayoutView</string>
+							<string>UILayoutView</string>
+							<string>UIImageView</string>
+							<string>UIImageView</string>
+							<string>UIImageView</string>
+							<string>UIImageView</string>
+							<string>UIImageView</string>
+							<string>UIImageView</string>
+							<string>UIImageView</string>
+							<string>UIImageView</string>
+							<string>UIImageView</string>
+							<string>UIImageView</string>
+							<string>UIImageView</string>
+							<string>UIImageView</string>
+							<string>UIImageView</string>
+							<string>UIImageView</string>
+							<string>UIImageView</string>
+							<string>UIImageView</string>
+							<string>UIImageView</string>
+							<string>UIImageView</string>
+							<string>UIImageView</string>
+							<string>UIImageView</string>
+							<string>UIImageView</string>
+							<string>UIImageView</string>
+							<string>UIImageView</string>
+							<string>UILabel</string>
+							<string>UILabel</string>
+							<string>UILabel</string>
+							<string>UILabel</string>
+							<string>UILabel</string>
+							<string>UILabel</string>
+							<string>UILabel</string>
+							<string>UILabel</string>
+							<string>UILabel</string>
+							<string>UILabel</string>
+							<string>UILabel</string>
+							<string>UILabel</string>
+							<string>UILabel</string>
+							<string>UILabel</string>
+							<string>UILabel</string>
+							<string>UILabel</string>
+							<string>UILabel</string>
+							<string>UILabel</string>
+							<string>UILabel</string>
+							<string>UILabel</string>
+							<string>UILabel</string>
+							<string>UILabel</string>
+							<string>UILabel</string>
+							<string>UILabel</string>
+							<string>UILabel</string>
+							<string>UILabel</string>
+							<string>UILabel</string>
+							<string>UIScrollView</string>
+							<string>UIScrollView</string>
+							<string>UIScrollView</string>
+							<string>UIScrollView</string>
+							<string>UIScrollView</string>
+							<string>UIScrollView</string>
+							<string>UILayoutView</string>
+							<string>UIButton</string>
+							<string>UIImageView</string>
+							<string>UISplitViewController</string>
+							<string>UITableView</string>
+							<string>UILayoutView</string>
+							<string>UILayoutView</string>
+							<string>UILayoutView</string>
+							<string>UIView</string>
+							<string>UIView</string>
+							<string>UIView</string>
+							<string>UIView</string>
+							<string>UIView</string>
+							<string>UIView</string>
+							<string>UIView</string>
+							<string>UIView</string>
+							<string>UIView</string>
+							<string>UIView</string>
+							<string>UIView</string>
+							<string>UIView</string>
+						</object>
+					</object>
+					<object class="NSMutableDictionary" key="toOneOutletInfosByName">
+						<bool key="EncodedWithXMLCoder">YES</bool>
+						<object class="NSArray" key="dict.sortedKeys">
+							<bool key="EncodedWithXMLCoder">YES</bool>
+							<string>addFuncNext</string>
+							<string>addFuncPrev</string>
+							<string>addFuncScroller</string>
+							<string>addFunctionsView</string>
+							<string>adsView</string>
+							<string>btnBumpCancel</string>
+							<string>btnBumpShare</string>
+							<string>btnLocationAddress</string>
+							<string>btnLocationImage</string>
+							<string>btnNewOK</string>
+							<string>canvas</string>
+							<string>currentTripSummaryView</string>
+							<string>expSummaryNext</string>
+							<string>expSummaryPrev</string>
+							<string>expSummaryScroller</string>
+							<string>expSummaryView</string>
+							<string>h1</string>
+							<string>h1_2</string>
+							<string>h1_3</string>
+							<string>h1_4</string>
+							<string>h2</string>
+							<string>headerImgView</string>
+							<string>imageExpenseWait</string>
+							<string>ivActionButtonsLeftArrow</string>
+							<string>ivActionButtonsRightArrow</string>
+							<string>ivBackground</string>
+							<string>ivBarLeft</string>
+							<string>ivBarMiddle</string>
+							<string>ivBarRight</string>
+							<string>ivBumpBackground</string>
+							<string>ivExpSummaryButtonsLeftArrow</string>
+							<string>ivExpSummaryButtonsRightArrow</string>
+							<string>ivHotelBackground</string>
+							<string>ivLocation</string>
+							<string>ivLocationIcon</string>
+							<string>ivLocationImage</string>
+							<string>ivLocationLoading</string>
+							<string>ivNewBackground</string>
+							<string>ivTravelUserPromoBanner</string>
+							<string>ivTripIcon</string>
+							<string>ivTripInfo</string>
+							<string>ivTwitBackground</string>
+							<string>ivTwitterLoading</string>
+							<string>ivWeather</string>
+							<string>lblBumpHelpText1</string>
+							<string>lblBumpHelpText2</string>
+							<string>lblBumpHelpTitle</string>
+							<string>lblCurrentTrip</string>
+							<string>lblExpense</string>
+							<string>lblExpenseWait</string>
+							<string>lblHotel1</string>
+							<string>lblHotel2</string>
+							<string>lblHotel3</string>
+							<string>lblHotel4</string>
+							<string>lblHotelName</string>
+							<string>lblNewTitle</string>
+							<string>lblOffline</string>
+							<string>lblOfflineBack</string>
+							<string>lblQuickTips</string>
+							<string>lblTripData</string>
+							<string>lblTripDate</string>
+							<string>lblTripDated</string>
+							<string>lblTripName</string>
+							<string>lblTripSummary</string>
+							<string>lblTripWait</string>
+							<string>lblTwitterName</string>
+							<string>lblWaitLocation</string>
+							<string>lblWaitTwitter</string>
+							<string>lblWeather</string>
+							<string>lblWeatherCity</string>
+							<string>lblWeatherTemp</string>
+							<string>scrollerButtons</string>
+							<string>scrollerExpense</string>
+							<string>scrollerNew</string>
+							<string>scrollerQT</string>
+							<string>scrollerTripDetails</string>
+							<string>scrollerTwit</string>
+							<string>separatorView</string>
+							<string>showAdBtn</string>
+							<string>skinExpense</string>
+							<string>splitViewController</string>
+							<string>tableList</string>
+							<string>tripCategoryIconsView</string>
+							<string>v1</string>
+							<string>v2</string>
+							<string>viewBumpHelp</string>
+							<string>viewExpense</string>
+							<string>viewExpenseWait</string>
+							<string>viewHotel</string>
+							<string>viewHotelInfo</string>
+							<string>viewHotelWait</string>
+							<string>viewNew</string>
+							<string>viewQT</string>
+							<string>viewTrip</string>
+							<string>viewTripDetails</string>
+							<string>viewTwitter</string>
+							<string>viewTwitterWait</string>
+						</object>
+						<object class="NSMutableArray" key="dict.values">
+							<bool key="EncodedWithXMLCoder">YES</bool>
+							<object class="IBToOneOutletInfo">
+								<string key="name">addFuncNext</string>
+								<string key="candidateClassName">UIButton</string>
+							</object>
+							<object class="IBToOneOutletInfo">
+								<string key="name">addFuncPrev</string>
+								<string key="candidateClassName">UIButton</string>
+							</object>
+							<object class="IBToOneOutletInfo">
+								<string key="name">addFuncScroller</string>
+								<string key="candidateClassName">UIScrollView</string>
+							</object>
+							<object class="IBToOneOutletInfo">
+								<string key="name">addFunctionsView</string>
+								<string key="candidateClassName">UILayoutView</string>
+							</object>
+							<object class="IBToOneOutletInfo">
+								<string key="name">adsView</string>
+								<string key="candidateClassName">UILayoutView</string>
+							</object>
+							<object class="IBToOneOutletInfo">
+								<string key="name">btnBumpCancel</string>
+								<string key="candidateClassName">UIButton</string>
+							</object>
+							<object class="IBToOneOutletInfo">
+								<string key="name">btnBumpShare</string>
+								<string key="candidateClassName">UIButton</string>
+							</object>
+							<object class="IBToOneOutletInfo">
+								<string key="name">btnLocationAddress</string>
+								<string key="candidateClassName">UIButton</string>
+							</object>
+							<object class="IBToOneOutletInfo">
+								<string key="name">btnLocationImage</string>
+								<string key="candidateClassName">UIButton</string>
+							</object>
+							<object class="IBToOneOutletInfo">
+								<string key="name">btnNewOK</string>
+								<string key="candidateClassName">UIButton</string>
+							</object>
+							<object class="IBToOneOutletInfo">
+								<string key="name">canvas</string>
+								<string key="candidateClassName">UILayoutView</string>
+							</object>
+							<object class="IBToOneOutletInfo">
+								<string key="name">currentTripSummaryView</string>
+								<string key="candidateClassName">UILayoutView</string>
+							</object>
+							<object class="IBToOneOutletInfo">
+								<string key="name">expSummaryNext</string>
+								<string key="candidateClassName">UIButton</string>
+							</object>
+							<object class="IBToOneOutletInfo">
+								<string key="name">expSummaryPrev</string>
+								<string key="candidateClassName">UIButton</string>
+							</object>
+							<object class="IBToOneOutletInfo">
+								<string key="name">expSummaryScroller</string>
+								<string key="candidateClassName">UIScrollView</string>
+							</object>
+							<object class="IBToOneOutletInfo">
+								<string key="name">expSummaryView</string>
+								<string key="candidateClassName">UILayoutView</string>
+							</object>
+							<object class="IBToOneOutletInfo">
+								<string key="name">h1</string>
+								<string key="candidateClassName">UILayoutView</string>
+							</object>
+							<object class="IBToOneOutletInfo">
+								<string key="name">h1_2</string>
+								<string key="candidateClassName">UILayoutView</string>
+							</object>
+							<object class="IBToOneOutletInfo">
+								<string key="name">h1_3</string>
+								<string key="candidateClassName">UILayoutView</string>
+							</object>
+							<object class="IBToOneOutletInfo">
+								<string key="name">h1_4</string>
+								<string key="candidateClassName">UILayoutView</string>
+							</object>
+							<object class="IBToOneOutletInfo">
+								<string key="name">h2</string>
+								<string key="candidateClassName">UILayoutView</string>
+							</object>
+							<object class="IBToOneOutletInfo">
+								<string key="name">headerImgView</string>
+								<string key="candidateClassName">UIImageView</string>
+							</object>
+							<object class="IBToOneOutletInfo">
+								<string key="name">imageExpenseWait</string>
+								<string key="candidateClassName">UIImageView</string>
+							</object>
+							<object class="IBToOneOutletInfo">
+								<string key="name">ivActionButtonsLeftArrow</string>
+								<string key="candidateClassName">UIImageView</string>
+							</object>
+							<object class="IBToOneOutletInfo">
+								<string key="name">ivActionButtonsRightArrow</string>
+								<string key="candidateClassName">UIImageView</string>
+							</object>
+							<object class="IBToOneOutletInfo">
+								<string key="name">ivBackground</string>
+								<string key="candidateClassName">UIImageView</string>
+							</object>
+							<object class="IBToOneOutletInfo">
+								<string key="name">ivBarLeft</string>
+								<string key="candidateClassName">UIImageView</string>
+							</object>
+							<object class="IBToOneOutletInfo">
+								<string key="name">ivBarMiddle</string>
+								<string key="candidateClassName">UIImageView</string>
+							</object>
+							<object class="IBToOneOutletInfo">
+								<string key="name">ivBarRight</string>
+								<string key="candidateClassName">UIImageView</string>
+							</object>
+							<object class="IBToOneOutletInfo">
+								<string key="name">ivBumpBackground</string>
+								<string key="candidateClassName">UIImageView</string>
+							</object>
+							<object class="IBToOneOutletInfo">
+								<string key="name">ivExpSummaryButtonsLeftArrow</string>
+								<string key="candidateClassName">UIImageView</string>
+							</object>
+							<object class="IBToOneOutletInfo">
+								<string key="name">ivExpSummaryButtonsRightArrow</string>
+								<string key="candidateClassName">UIImageView</string>
+							</object>
+							<object class="IBToOneOutletInfo">
+								<string key="name">ivHotelBackground</string>
+								<string key="candidateClassName">UIImageView</string>
+							</object>
+							<object class="IBToOneOutletInfo">
+								<string key="name">ivLocation</string>
+								<string key="candidateClassName">UIImageView</string>
+							</object>
+							<object class="IBToOneOutletInfo">
+								<string key="name">ivLocationIcon</string>
+								<string key="candidateClassName">UIImageView</string>
+							</object>
+							<object class="IBToOneOutletInfo">
+								<string key="name">ivLocationImage</string>
+								<string key="candidateClassName">UIImageView</string>
+							</object>
+							<object class="IBToOneOutletInfo">
+								<string key="name">ivLocationLoading</string>
+								<string key="candidateClassName">UIImageView</string>
+							</object>
+							<object class="IBToOneOutletInfo">
+								<string key="name">ivNewBackground</string>
+								<string key="candidateClassName">UIImageView</string>
+							</object>
+							<object class="IBToOneOutletInfo">
+								<string key="name">ivTravelUserPromoBanner</string>
+								<string key="candidateClassName">UIImageView</string>
+							</object>
+							<object class="IBToOneOutletInfo">
+								<string key="name">ivTripIcon</string>
+								<string key="candidateClassName">UIImageView</string>
+							</object>
+							<object class="IBToOneOutletInfo">
+								<string key="name">ivTripInfo</string>
+								<string key="candidateClassName">UIImageView</string>
+							</object>
+							<object class="IBToOneOutletInfo">
+								<string key="name">ivTwitBackground</string>
+								<string key="candidateClassName">UIImageView</string>
+							</object>
+							<object class="IBToOneOutletInfo">
+								<string key="name">ivTwitterLoading</string>
+								<string key="candidateClassName">UIImageView</string>
+							</object>
+							<object class="IBToOneOutletInfo">
+								<string key="name">ivWeather</string>
+								<string key="candidateClassName">UIImageView</string>
+							</object>
+							<object class="IBToOneOutletInfo">
+								<string key="name">lblBumpHelpText1</string>
+								<string key="candidateClassName">UILabel</string>
+							</object>
+							<object class="IBToOneOutletInfo">
+								<string key="name">lblBumpHelpText2</string>
+								<string key="candidateClassName">UILabel</string>
+							</object>
+							<object class="IBToOneOutletInfo">
+								<string key="name">lblBumpHelpTitle</string>
+								<string key="candidateClassName">UILabel</string>
+							</object>
+							<object class="IBToOneOutletInfo">
+								<string key="name">lblCurrentTrip</string>
+								<string key="candidateClassName">UILabel</string>
+							</object>
+							<object class="IBToOneOutletInfo">
+								<string key="name">lblExpense</string>
+								<string key="candidateClassName">UILabel</string>
+							</object>
+							<object class="IBToOneOutletInfo">
+								<string key="name">lblExpenseWait</string>
+								<string key="candidateClassName">UILabel</string>
+							</object>
+							<object class="IBToOneOutletInfo">
+								<string key="name">lblHotel1</string>
+								<string key="candidateClassName">UILabel</string>
+							</object>
+							<object class="IBToOneOutletInfo">
+								<string key="name">lblHotel2</string>
+								<string key="candidateClassName">UILabel</string>
+							</object>
+							<object class="IBToOneOutletInfo">
+								<string key="name">lblHotel3</string>
+								<string key="candidateClassName">UILabel</string>
+							</object>
+							<object class="IBToOneOutletInfo">
+								<string key="name">lblHotel4</string>
+								<string key="candidateClassName">UILabel</string>
+							</object>
+							<object class="IBToOneOutletInfo">
+								<string key="name">lblHotelName</string>
+								<string key="candidateClassName">UILabel</string>
+							</object>
+							<object class="IBToOneOutletInfo">
+								<string key="name">lblNewTitle</string>
+								<string key="candidateClassName">UILabel</string>
+							</object>
+							<object class="IBToOneOutletInfo">
+								<string key="name">lblOffline</string>
+								<string key="candidateClassName">UILabel</string>
+							</object>
+							<object class="IBToOneOutletInfo">
+								<string key="name">lblOfflineBack</string>
+								<string key="candidateClassName">UILabel</string>
+							</object>
+							<object class="IBToOneOutletInfo">
+								<string key="name">lblQuickTips</string>
+								<string key="candidateClassName">UILabel</string>
+							</object>
+							<object class="IBToOneOutletInfo">
+								<string key="name">lblTripData</string>
+								<string key="candidateClassName">UILabel</string>
+							</object>
+							<object class="IBToOneOutletInfo">
+								<string key="name">lblTripDate</string>
+								<string key="candidateClassName">UILabel</string>
+							</object>
+							<object class="IBToOneOutletInfo">
+								<string key="name">lblTripDated</string>
+								<string key="candidateClassName">UILabel</string>
+							</object>
+							<object class="IBToOneOutletInfo">
+								<string key="name">lblTripName</string>
+								<string key="candidateClassName">UILabel</string>
+							</object>
+							<object class="IBToOneOutletInfo">
+								<string key="name">lblTripSummary</string>
+								<string key="candidateClassName">UILabel</string>
+							</object>
+							<object class="IBToOneOutletInfo">
+								<string key="name">lblTripWait</string>
+								<string key="candidateClassName">UILabel</string>
+							</object>
+							<object class="IBToOneOutletInfo">
+								<string key="name">lblTwitterName</string>
+								<string key="candidateClassName">UILabel</string>
+							</object>
+							<object class="IBToOneOutletInfo">
+								<string key="name">lblWaitLocation</string>
+								<string key="candidateClassName">UILabel</string>
+							</object>
+							<object class="IBToOneOutletInfo">
+								<string key="name">lblWaitTwitter</string>
+								<string key="candidateClassName">UILabel</string>
+							</object>
+							<object class="IBToOneOutletInfo">
+								<string key="name">lblWeather</string>
+								<string key="candidateClassName">UILabel</string>
+							</object>
+							<object class="IBToOneOutletInfo">
+								<string key="name">lblWeatherCity</string>
+								<string key="candidateClassName">UILabel</string>
+							</object>
+							<object class="IBToOneOutletInfo">
+								<string key="name">lblWeatherTemp</string>
+								<string key="candidateClassName">UILabel</string>
+							</object>
+							<object class="IBToOneOutletInfo">
+								<string key="name">scrollerButtons</string>
+								<string key="candidateClassName">UIScrollView</string>
+							</object>
+							<object class="IBToOneOutletInfo">
+								<string key="name">scrollerExpense</string>
+								<string key="candidateClassName">UIScrollView</string>
+							</object>
+							<object class="IBToOneOutletInfo">
+								<string key="name">scrollerNew</string>
+								<string key="candidateClassName">UIScrollView</string>
+							</object>
+							<object class="IBToOneOutletInfo">
+								<string key="name">scrollerQT</string>
+								<string key="candidateClassName">UIScrollView</string>
+							</object>
+							<object class="IBToOneOutletInfo">
+								<string key="name">scrollerTripDetails</string>
+								<string key="candidateClassName">UIScrollView</string>
+							</object>
+							<object class="IBToOneOutletInfo">
+								<string key="name">scrollerTwit</string>
+								<string key="candidateClassName">UIScrollView</string>
+							</object>
+							<object class="IBToOneOutletInfo">
+								<string key="name">separatorView</string>
+								<string key="candidateClassName">UILayoutView</string>
+							</object>
+							<object class="IBToOneOutletInfo">
+								<string key="name">showAdBtn</string>
+								<string key="candidateClassName">UIButton</string>
+							</object>
+							<object class="IBToOneOutletInfo">
+								<string key="name">skinExpense</string>
+								<string key="candidateClassName">UIImageView</string>
+							</object>
+							<object class="IBToOneOutletInfo">
+								<string key="name">splitViewController</string>
+								<string key="candidateClassName">UISplitViewController</string>
+							</object>
+							<object class="IBToOneOutletInfo">
+								<string key="name">tableList</string>
+								<string key="candidateClassName">UITableView</string>
+							</object>
+							<object class="IBToOneOutletInfo">
+								<string key="name">tripCategoryIconsView</string>
+								<string key="candidateClassName">UILayoutView</string>
+							</object>
+							<object class="IBToOneOutletInfo">
+								<string key="name">v1</string>
+								<string key="candidateClassName">UILayoutView</string>
+							</object>
+							<object class="IBToOneOutletInfo">
+								<string key="name">v2</string>
+								<string key="candidateClassName">UILayoutView</string>
+							</object>
+							<object class="IBToOneOutletInfo">
+								<string key="name">viewBumpHelp</string>
+								<string key="candidateClassName">UIView</string>
+							</object>
+							<object class="IBToOneOutletInfo">
+								<string key="name">viewExpense</string>
+								<string key="candidateClassName">UIView</string>
+							</object>
+							<object class="IBToOneOutletInfo">
+								<string key="name">viewExpenseWait</string>
+								<string key="candidateClassName">UIView</string>
+							</object>
+							<object class="IBToOneOutletInfo">
+								<string key="name">viewHotel</string>
+								<string key="candidateClassName">UIView</string>
+							</object>
+							<object class="IBToOneOutletInfo">
+								<string key="name">viewHotelInfo</string>
+								<string key="candidateClassName">UIView</string>
+							</object>
+							<object class="IBToOneOutletInfo">
+								<string key="name">viewHotelWait</string>
+								<string key="candidateClassName">UIView</string>
+							</object>
+							<object class="IBToOneOutletInfo">
+								<string key="name">viewNew</string>
+								<string key="candidateClassName">UIView</string>
+							</object>
+							<object class="IBToOneOutletInfo">
+								<string key="name">viewQT</string>
+								<string key="candidateClassName">UIView</string>
+							</object>
+							<object class="IBToOneOutletInfo">
+								<string key="name">viewTrip</string>
+								<string key="candidateClassName">UIView</string>
+							</object>
+							<object class="IBToOneOutletInfo">
+								<string key="name">viewTripDetails</string>
+								<string key="candidateClassName">UIView</string>
+							</object>
+							<object class="IBToOneOutletInfo">
+								<string key="name">viewTwitter</string>
+								<string key="candidateClassName">UIView</string>
+							</object>
+							<object class="IBToOneOutletInfo">
+								<string key="name">viewTwitterWait</string>
+								<string key="candidateClassName">UIView</string>
+							</object>
+						</object>
+					</object>
+					<object class="IBClassDescriptionSource" key="sourceIdentifier">
+						<string key="majorKey">IBProjectSource</string>
+						<string key="minorKey">./Classes/iPadHomeVC.h</string>
+					</object>
+				</object>
+			</object>
+		</object>
+		<int key="IBDocument.localizationMode">0</int>
+		<string key="IBDocument.TargetRuntimeIdentifier">IBIPadFramework</string>
+		<object class="NSMutableDictionary" key="IBDocument.PluginDeclaredDependencyDefaults">
+			<string key="NS.key.0">com.apple.InterfaceBuilder.CocoaTouchPlugin.iPhoneOS</string>
+			<real value="1280" key="NS.object.0"/>
+		</object>
+		<object class="NSMutableDictionary" key="IBDocument.PluginDeclaredDevelopmentDependencies">
+			<string key="NS.key.0">com.apple.InterfaceBuilder.CocoaTouchPlugin.InterfaceBuilder3</string>
+			<integer value="3100" key="NS.object.0"/>
+		</object>
+		<bool key="IBDocument.PluginDeclaredDependenciesTrackSystemTargetVersion">YES</bool>
+		<int key="IBDocument.defaultPropertyAccessControl">3</int>
+		<string key="IBCocoaTouchPluginVersion">931</string>
+	</data>
+</archive>

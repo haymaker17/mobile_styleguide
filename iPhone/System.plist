@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>VIEW_MAP</key>
+	<dict>
+		<key>LOGIN</key>
+		<dict>
+			<key>NIB_NAME</key>
+			<string>LoginView</string>
+			<key>VC_CLASS</key>
+			<string></string>
+		</dict>
+		<key>HOME_PAGE</key>
+		<string>HomePageView</string>
+		<key>SETTINGS_VIEW</key>
+		<string>SettingsView</string>
+	</dict>
+</dict>
+</plist>

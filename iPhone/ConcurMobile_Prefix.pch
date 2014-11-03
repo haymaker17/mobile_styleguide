@@ -1,0 +1,46 @@
+//
+// Prefix header for all source files of the 'ConcurMobile' target in the 'ConcurMobile' project
+//
+
+#ifdef __OBJC__
+    #import <Foundation/Foundation.h>
+    #import <UIKit/UIKit.h>
+    #import <MobileCoreServices/MobileCoreServices.h>
+    #import <SystemConfiguration/SystemConfiguration.h>
+	#import "Localizer.h"
+	#import "NSStringAdditions.h"
+    #import <CoreData/CoreData.h>
+    #import "ExSystem.h"
+    #import "Localizer.h"
+    #import "ViewConstants.h"
+    #import "GlobalMacros.h"
+    #import "Flurry.h"
+    #import "Flurry+Additions.h"
+    #import "UIColor+CCPalette.h"
+    #import "NSDateFormatter+additions.h"
+    #import "Base64Additions.h"
+    #import "NSString+Validations.h"
+    #import "NSString+Additions.h"
+    #import "NSArray+Additions.h"
+    #import "UIDevice+Additions.h"
+    #import "ATConnect.h"
+    #import "UIColor+ConcurColor.h"
+    #import "ConcurTestDrive.h"
+    #import "CCDateUtilities.h"
+    #import "UIViewController+Logging.h"
+#endif
+
+
+#ifdef DEBUG
+#   define DLog(fmt, ...) NSLog((@"%s [Line %d] " fmt), __PRETTY_FUNCTION__, __LINE__, ##__VA_ARGS__);
+#else
+#   define DLog(...)
+#endif
+
+#define ALog(fmt, ...) NSLog((@"%s [Line %d] " fmt), __PRETTY_FUNCTION__, __LINE__, ##__VA_ARGS__);
+
+#ifdef DEBUG
+#   define ULog(fmt, ...)  { UIAlertView *alert = [[UIAlertView alloc] initWithTitle:[NSString stringWithFormat:@"%s\n [Line %d] ", __PRETTY_FUNCTION__, __LINE__] message:[NSString stringWithFormat:fmt, ##__VA_ARGS__]  delegate:nil cancelButtonTitle:@"Ok" otherButtonTitles:nil]; [alert show]; }
+#else
+#   define ULog(...)
+#endif

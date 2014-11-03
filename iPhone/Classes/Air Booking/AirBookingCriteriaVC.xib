@@ -1,0 +1,140 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="4514" systemVersion="13B42" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none">
+    <dependencies>
+        <deployment defaultVersion="1536" identifier="iOS"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="3747"/>
+    </dependencies>
+    <objects>
+        <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="AirBookingCriteriaVC">
+            <connections>
+                <outlet property="EvaBtnView" destination="uRt-5Z-59h" id="l8B-OR-lub"/>
+                <outlet property="lblSearchFrom" destination="13" id="22"/>
+                <outlet property="lblSearchTitle" destination="12" id="21"/>
+                <outlet property="lblSearchTo" destination="14" id="23"/>
+                <outlet property="segmentTripDirection" destination="9" id="18"/>
+                <outlet property="tableList" destination="4" id="5"/>
+                <outlet property="view" destination="1" id="3"/>
+                <outlet property="viewSearching" destination="10" id="20"/>
+                <outlet property="viewSegmentHeader" destination="8" id="17"/>
+            </connections>
+        </placeholder>
+        <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
+        <view contentMode="scaleToFill" id="1">
+            <rect key="frame" x="0.0" y="0.0" width="320" height="480"/>
+            <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+            <subviews>
+                <view contentMode="scaleToFill" id="8" userLabel="View Segment Header">
+                    <rect key="frame" x="0.0" y="0.0" width="320" height="50"/>
+                    <autoresizingMask key="autoresizingMask" flexibleMinX="YES" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                    <subviews>
+                        <segmentedControl opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="top" segmentControlStyle="bar" selectedSegmentIndex="1" id="9" userLabel="Segmented Control - One Way, Round Trip">
+                            <rect key="frame" x="20" y="10" width="280" height="30"/>
+                            <autoresizingMask key="autoresizingMask" flexibleMinX="YES" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                            <segments>
+                                <segment title="One Way"/>
+                                <segment title="Round Trip"/>
+                            </segments>
+                            <color key="tintColor" red="0.0" green="0.47058823529411764" blue="0.78431372549019607" alpha="1" colorSpace="calibratedRGB"/>
+                            <connections>
+                                <action selector="setRoundTrip:" destination="-1" eventType="valueChanged" id="19"/>
+                            </connections>
+                        </segmentedControl>
+                    </subviews>
+                    <color key="backgroundColor" red="0.90588241820000004" green="0.90980398650000005" blue="0.91372555489999996" alpha="1" colorSpace="deviceRGB"/>
+                </view>
+                <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" style="grouped" separatorStyle="default" rowHeight="44" sectionHeaderHeight="10" sectionFooterHeight="10" id="4">
+                    <rect key="frame" x="0.0" y="0.0" width="320" height="480"/>
+                    <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                    <color key="backgroundColor" cocoaTouchSystemColor="groupTableViewBackgroundColor"/>
+                    <connections>
+                        <outlet property="dataSource" destination="-1" id="6"/>
+                        <outlet property="delegate" destination="-1" id="7"/>
+                    </connections>
+                </tableView>
+                <view contentMode="scaleToFill" id="10" userLabel="View Super Searching">
+                    <rect key="frame" x="0.0" y="0.0" width="320" height="480"/>
+                    <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                    <subviews>
+                        <view contentMode="scaleToFill" id="11" userLabel="View Searching">
+                            <rect key="frame" x="0.0" y="64" width="320" height="416"/>
+                            <autoresizingMask key="autoresizingMask" flexibleMinX="YES" flexibleMaxX="YES" flexibleMinY="YES" flexibleMaxY="YES"/>
+                            <subviews>
+                                <imageView userInteractionEnabled="NO" contentMode="center" image="searching_glass.png" id="15">
+                                    <rect key="frame" x="115" y="109" width="90" height="90"/>
+                                    <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                                </imageView>
+                                <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" text="Label" textAlignment="center" lineBreakMode="tailTruncation" minimumFontSize="14" id="12" userLabel="Label - Search Title">
+                                    <rect key="frame" x="20" y="223" width="280" height="24"/>
+                                    <fontDescription key="fontDescription" name="HelveticaNeue-Bold" family="Helvetica Neue" pointSize="22"/>
+                                    <color key="textColor" name="controlShadowColor" catalog="System" colorSpace="catalog"/>
+                                    <nil key="highlightedColor"/>
+                                    <color key="shadowColor" red="0.96078431369999995" green="0.96078431369999995" blue="0.96078431369999995" alpha="1" colorSpace="calibratedRGB"/>
+                                    <size key="shadowOffset" width="0.0" height="1"/>
+                                </label>
+                                <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" text="Label" textAlignment="center" lineBreakMode="tailTruncation" minimumFontSize="14" id="13" userLabel="Label - Line1">
+                                    <rect key="frame" x="20" y="252" width="280" height="24"/>
+                                    <fontDescription key="fontDescription" name="HelveticaNeue-Bold" family="Helvetica Neue" pointSize="22"/>
+                                    <color key="textColor" name="controlShadowColor" catalog="System" colorSpace="catalog"/>
+                                    <nil key="highlightedColor"/>
+                                    <color key="shadowColor" red="0.96078431369999995" green="0.96078431369999995" blue="0.96078431369999995" alpha="1" colorSpace="calibratedRGB"/>
+                                    <size key="shadowOffset" width="0.0" height="1"/>
+                                </label>
+                                <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" text="Label" textAlignment="center" lineBreakMode="tailTruncation" minimumFontSize="14" id="14" userLabel="Label - Line 2">
+                                    <rect key="frame" x="20" y="282" width="280" height="24"/>
+                                    <fontDescription key="fontDescription" name="HelveticaNeue-Bold" family="Helvetica Neue" pointSize="22"/>
+                                    <color key="textColor" name="controlShadowColor" catalog="System" colorSpace="catalog"/>
+                                    <nil key="highlightedColor"/>
+                                    <color key="shadowColor" red="0.96078431369999995" green="0.96078431369999995" blue="0.96078431369999995" alpha="1" colorSpace="calibratedRGB"/>
+                                    <size key="shadowOffset" width="0.0" height="1"/>
+                                </label>
+                                <activityIndicatorView opaque="NO" contentMode="scaleToFill" hidesWhenStopped="YES" animating="YES" style="whiteLarge" id="16">
+                                    <rect key="frame" x="133" y="127" width="37" height="37"/>
+                                    <autoresizingMask key="autoresizingMask" flexibleMinX="YES" flexibleMaxX="YES" flexibleMinY="YES" flexibleMaxY="YES"/>
+                                </activityIndicatorView>
+                            </subviews>
+                            <color key="backgroundColor" red="0.90588241820000004" green="0.90980398650000005" blue="0.91372555489999996" alpha="1" colorSpace="deviceRGB"/>
+                        </view>
+                    </subviews>
+                    <color key="backgroundColor" red="0.90588241820000004" green="0.90980398650000005" blue="0.91372555489999996" alpha="1" colorSpace="deviceRGB"/>
+                </view>
+            </subviews>
+            <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
+            <simulatedStatusBarMetrics key="simulatedStatusBarMetrics"/>
+            <simulatedNavigationBarMetrics key="simulatedTopBarMetrics" prompted="NO"/>
+            <simulatedToolbarMetrics key="simulatedBottomBarMetrics"/>
+        </view>
+        <view contentMode="center" id="uRt-5Z-59h">
+            <rect key="frame" x="0.0" y="0.0" width="320" height="125"/>
+            <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+            <subviews>
+                <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" text="Tap Microphone to start voice search" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="D55-SI-ywg">
+                    <rect key="frame" x="0.0" y="5" width="320" height="21"/>
+                    <autoresizingMask key="autoresizingMask" flexibleMinX="YES" flexibleMaxX="YES"/>
+                    <fontDescription key="fontDescription" name="HelveticaNeue" family="Helvetica Neue" pointSize="17"/>
+                    <color key="textColor" white="0.33333333333333331" alpha="1" colorSpace="calibratedWhite"/>
+                    <nil key="highlightedColor"/>
+                </label>
+                <button opaque="NO" clipsSubviews="YES" contentMode="center" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" id="fHh-hN-i5G">
+                    <rect key="frame" x="120" y="40" width="80" height="80"/>
+                    <autoresizingMask key="autoresizingMask" flexibleMinX="YES" flexibleMaxX="YES"/>
+                    <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
+                    <fontDescription key="fontDescription" type="boldSystem" pointSize="15"/>
+                    <state key="normal" image="button_voice.png">
+                        <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
+                    </state>
+                    <state key="highlighted">
+                        <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                    </state>
+                    <connections>
+                        <action selector="showEvaSearchUI:" destination="-1" eventType="touchUpInside" id="wmx-AA-dDg"/>
+                    </connections>
+                </button>
+            </subviews>
+            <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
+        </view>
+    </objects>
+    <resources>
+        <image name="button_voice.png" width="80" height="80"/>
+        <image name="searching_glass.png" width="90" height="89"/>
+    </resources>
+</document>

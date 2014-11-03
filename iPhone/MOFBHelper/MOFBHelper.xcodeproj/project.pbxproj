@@ -1,0 +1,350 @@
+// !$*UTF8*$!
+{
+	archiveVersion = 1;
+	classes = {
+	};
+	objectVersion = 45;
+	objects = {
+
+/* Begin PBXBuildFile section */
+		1D3623260D0F684500981E51 /* MOFBHelperAppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 1D3623250D0F684500981E51 /* MOFBHelperAppDelegate.m */; };
+		1D60589B0D05DD56006BFB54 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 29B97316FDCFA39411CA2CEA /* main.m */; };
+		1D60589F0D05DD5A006BFB54 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1D30AB110D05D00D00671497 /* Foundation.framework */; };
+		1DF5F4E00D08C38300B7A737 /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1DF5F4DF0D08C38300B7A737 /* UIKit.framework */; };
+		26639A660FDEAA370055DD06 /* MOFBStatus.m in Sources */ = {isa = PBXBuildFile; fileRef = 26639A650FDEAA370055DD06 /* MOFBStatus.m */; };
+		26639A690FDEAA5E0055DD06 /* MOFBPermission.m in Sources */ = {isa = PBXBuildFile; fileRef = 26639A680FDEAA5E0055DD06 /* MOFBPermission.m */; };
+		26639A930FDEAC060055DD06 /* FBConnectGlobal.m in Sources */ = {isa = PBXBuildFile; fileRef = 26639A810FDEAC060055DD06 /* FBConnectGlobal.m */; };
+		26639A940FDEAC060055DD06 /* FBSession.m in Sources */ = {isa = PBXBuildFile; fileRef = 26639A830FDEAC060055DD06 /* FBSession.m */; };
+		26639A950FDEAC060055DD06 /* FBRequest.m in Sources */ = {isa = PBXBuildFile; fileRef = 26639A850FDEAC060055DD06 /* FBRequest.m */; };
+		26639A960FDEAC060055DD06 /* FBXMLHandler.m in Sources */ = {isa = PBXBuildFile; fileRef = 26639A870FDEAC060055DD06 /* FBXMLHandler.m */; };
+		26639A970FDEAC060055DD06 /* FBLoginButton.m in Sources */ = {isa = PBXBuildFile; fileRef = 26639A890FDEAC060055DD06 /* FBLoginButton.m */; };
+		26639A980FDEAC060055DD06 /* FBDialog.m in Sources */ = {isa = PBXBuildFile; fileRef = 26639A8B0FDEAC060055DD06 /* FBDialog.m */; };
+		26639A990FDEAC060055DD06 /* FBLoginDialog.m in Sources */ = {isa = PBXBuildFile; fileRef = 26639A8D0FDEAC060055DD06 /* FBLoginDialog.m */; };
+		26639A9A0FDEAC060055DD06 /* FBPermissionDialog.m in Sources */ = {isa = PBXBuildFile; fileRef = 26639A8F0FDEAC060055DD06 /* FBPermissionDialog.m */; };
+		26639A9B0FDEAC060055DD06 /* FBFeedDialog.m in Sources */ = {isa = PBXBuildFile; fileRef = 26639A910FDEAC060055DD06 /* FBFeedDialog.m */; };
+		26639A9C0FDEAC060055DD06 /* FBConnect.bundle in Resources */ = {isa = PBXBuildFile; fileRef = 26639A920FDEAC060055DD06 /* FBConnect.bundle */; };
+		26639B7E0FDECA8F0055DD06 /* MOFBHelper.m in Sources */ = {isa = PBXBuildFile; fileRef = 26639B7C0FDECA8F0055DD06 /* MOFBHelper.m */; };
+		288765A50DF7441C002DB57D /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 288765A40DF7441C002DB57D /* CoreGraphics.framework */; };
+		2899E5220DE3E06400AC0155 /* MOFBHelperViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 2899E5210DE3E06400AC0155 /* MOFBHelperViewController.xib */; };
+		28AD733F0D9D9553002E5188 /* MainWindow.xib in Resources */ = {isa = PBXBuildFile; fileRef = 28AD733E0D9D9553002E5188 /* MainWindow.xib */; };
+		28D7ACF80DDB3853001CB0EB /* MOFBHelperViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 28D7ACF70DDB3853001CB0EB /* MOFBHelperViewController.m */; };
+/* End PBXBuildFile section */
+
+/* Begin PBXFileReference section */
+		1D30AB110D05D00D00671497 /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
+		1D3623240D0F684500981E51 /* MOFBHelperAppDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MOFBHelperAppDelegate.h; sourceTree = "<group>"; };
+		1D3623250D0F684500981E51 /* MOFBHelperAppDelegate.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MOFBHelperAppDelegate.m; sourceTree = "<group>"; };
+		1D6058910D05DD3D006BFB54 /* MOFBHelper.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = MOFBHelper.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		1DF5F4DF0D08C38300B7A737 /* UIKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = UIKit.framework; path = System/Library/Frameworks/UIKit.framework; sourceTree = SDKROOT; };
+		2654917B0FE011E100FD22CB /* README.markdown */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = README.markdown; sourceTree = "<group>"; };
+		26639A640FDEAA370055DD06 /* MOFBStatus.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MOFBStatus.h; sourceTree = "<group>"; };
+		26639A650FDEAA370055DD06 /* MOFBStatus.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MOFBStatus.m; sourceTree = "<group>"; };
+		26639A670FDEAA5E0055DD06 /* MOFBPermission.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MOFBPermission.h; sourceTree = "<group>"; };
+		26639A680FDEAA5E0055DD06 /* MOFBPermission.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MOFBPermission.m; sourceTree = "<group>"; };
+		26639A7F0FDEAC060055DD06 /* FBConnect.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = FBConnect.h; path = "../fbconnect-iphone/src/FBConnect/FBConnect.h"; sourceTree = SOURCE_ROOT; };
+		26639A800FDEAC060055DD06 /* FBConnectGlobal.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = FBConnectGlobal.h; path = "../fbconnect-iphone/src/FBConnect/FBConnectGlobal.h"; sourceTree = SOURCE_ROOT; };
+		26639A810FDEAC060055DD06 /* FBConnectGlobal.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = FBConnectGlobal.m; path = "../fbconnect-iphone/src/FBConnectGlobal.m"; sourceTree = SOURCE_ROOT; };
+		26639A820FDEAC060055DD06 /* FBSession.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = FBSession.h; path = "../fbconnect-iphone/src/FBConnect/FBSession.h"; sourceTree = SOURCE_ROOT; };
+		26639A830FDEAC060055DD06 /* FBSession.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = FBSession.m; path = "../fbconnect-iphone/src/FBSession.m"; sourceTree = SOURCE_ROOT; };
+		26639A840FDEAC060055DD06 /* FBRequest.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = FBRequest.h; path = "../fbconnect-iphone/src/FBConnect/FBRequest.h"; sourceTree = SOURCE_ROOT; };
+		26639A850FDEAC060055DD06 /* FBRequest.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = FBRequest.m; path = "../fbconnect-iphone/src/FBRequest.m"; sourceTree = SOURCE_ROOT; };
+		26639A860FDEAC060055DD06 /* FBXMLHandler.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = FBXMLHandler.h; path = "../fbconnect-iphone/src/FBXMLHandler.h"; sourceTree = SOURCE_ROOT; };
+		26639A870FDEAC060055DD06 /* FBXMLHandler.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = FBXMLHandler.m; path = "../fbconnect-iphone/src/FBXMLHandler.m"; sourceTree = SOURCE_ROOT; };
+		26639A880FDEAC060055DD06 /* FBLoginButton.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = FBLoginButton.h; path = "../fbconnect-iphone/src/FBConnect/FBLoginButton.h"; sourceTree = SOURCE_ROOT; };
+		26639A890FDEAC060055DD06 /* FBLoginButton.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = FBLoginButton.m; path = "../fbconnect-iphone/src/FBLoginButton.m"; sourceTree = SOURCE_ROOT; };
+		26639A8A0FDEAC060055DD06 /* FBDialog.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = FBDialog.h; path = "../fbconnect-iphone/src/FBConnect/FBDialog.h"; sourceTree = SOURCE_ROOT; };
+		26639A8B0FDEAC060055DD06 /* FBDialog.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = FBDialog.m; path = "../fbconnect-iphone/src/FBDialog.m"; sourceTree = SOURCE_ROOT; };
+		26639A8C0FDEAC060055DD06 /* FBLoginDialog.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = FBLoginDialog.h; path = "../fbconnect-iphone/src/FBConnect/FBLoginDialog.h"; sourceTree = SOURCE_ROOT; };
+		26639A8D0FDEAC060055DD06 /* FBLoginDialog.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = FBLoginDialog.m; path = "../fbconnect-iphone/src/FBLoginDialog.m"; sourceTree = SOURCE_ROOT; };
+		26639A8E0FDEAC060055DD06 /* FBPermissionDialog.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = FBPermissionDialog.h; path = "../fbconnect-iphone/src/FBConnect/FBPermissionDialog.h"; sourceTree = SOURCE_ROOT; };
+		26639A8F0FDEAC060055DD06 /* FBPermissionDialog.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = FBPermissionDialog.m; path = "../fbconnect-iphone/src/FBPermissionDialog.m"; sourceTree = SOURCE_ROOT; };
+		26639A900FDEAC060055DD06 /* FBFeedDialog.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = FBFeedDialog.h; path = "../fbconnect-iphone/src/FBConnect/FBFeedDialog.h"; sourceTree = SOURCE_ROOT; };
+		26639A910FDEAC060055DD06 /* FBFeedDialog.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = FBFeedDialog.m; path = "../fbconnect-iphone/src/FBFeedDialog.m"; sourceTree = SOURCE_ROOT; };
+		26639A920FDEAC060055DD06 /* FBConnect.bundle */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.plug-in"; name = FBConnect.bundle; path = "../fbconnect-iphone/src/FBConnect.bundle"; sourceTree = SOURCE_ROOT; };
+		26639B7B0FDECA8F0055DD06 /* MOFBHelper.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MOFBHelper.h; sourceTree = "<group>"; };
+		26639B7C0FDECA8F0055DD06 /* MOFBHelper.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MOFBHelper.m; sourceTree = "<group>"; };
+		26ACD2C80FDF071B00C0AA19 /* MOFBErrors.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MOFBErrors.h; sourceTree = "<group>"; };
+		288765A40DF7441C002DB57D /* CoreGraphics.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreGraphics.framework; path = System/Library/Frameworks/CoreGraphics.framework; sourceTree = SDKROOT; };
+		2899E5210DE3E06400AC0155 /* MOFBHelperViewController.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = MOFBHelperViewController.xib; sourceTree = "<group>"; };
+		28AD733E0D9D9553002E5188 /* MainWindow.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = MainWindow.xib; sourceTree = "<group>"; };
+		28D7ACF60DDB3853001CB0EB /* MOFBHelperViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MOFBHelperViewController.h; sourceTree = "<group>"; };
+		28D7ACF70DDB3853001CB0EB /* MOFBHelperViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MOFBHelperViewController.m; sourceTree = "<group>"; };
+		29B97316FDCFA39411CA2CEA /* main.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
+		32CA4F630368D1EE00C91783 /* MOFBHelper_Prefix.pch */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MOFBHelper_Prefix.pch; sourceTree = "<group>"; };
+		8D1107310486CEB800E47090 /* MOFBHelper-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "MOFBHelper-Info.plist"; plistStructureDefinitionIdentifier = "com.apple.xcode.plist.structure-definition.iphone.info-plist"; sourceTree = "<group>"; };
+/* End PBXFileReference section */
+
+/* Begin PBXFrameworksBuildPhase section */
+		1D60588F0D05DD3D006BFB54 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				1D60589F0D05DD5A006BFB54 /* Foundation.framework in Frameworks */,
+				1DF5F4E00D08C38300B7A737 /* UIKit.framework in Frameworks */,
+				288765A50DF7441C002DB57D /* CoreGraphics.framework in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXFrameworksBuildPhase section */
+
+/* Begin PBXGroup section */
+		080E96DDFE201D6D7F000001 /* SampleApp */ = {
+			isa = PBXGroup;
+			children = (
+				1D3623240D0F684500981E51 /* MOFBHelperAppDelegate.h */,
+				1D3623250D0F684500981E51 /* MOFBHelperAppDelegate.m */,
+				28D7ACF60DDB3853001CB0EB /* MOFBHelperViewController.h */,
+				28D7ACF70DDB3853001CB0EB /* MOFBHelperViewController.m */,
+			);
+			name = SampleApp;
+			path = Classes;
+			sourceTree = "<group>";
+		};
+		19C28FACFE9D520D11CA2CBB /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				1D6058910D05DD3D006BFB54 /* MOFBHelper.app */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+		26639A4E0FDEA8FE0055DD06 /* MOFBHelper */ = {
+			isa = PBXGroup;
+			children = (
+				26639B7B0FDECA8F0055DD06 /* MOFBHelper.h */,
+				26639B7C0FDECA8F0055DD06 /* MOFBHelper.m */,
+				26639A640FDEAA370055DD06 /* MOFBStatus.h */,
+				26639A650FDEAA370055DD06 /* MOFBStatus.m */,
+				26639A670FDEAA5E0055DD06 /* MOFBPermission.h */,
+				26639A680FDEAA5E0055DD06 /* MOFBPermission.m */,
+				26ACD2C80FDF071B00C0AA19 /* MOFBErrors.h */,
+			);
+			name = MOFBHelper;
+			sourceTree = "<group>";
+		};
+		26639A7E0FDEAC060055DD06 /* FBConnect */ = {
+			isa = PBXGroup;
+			children = (
+				26639A7F0FDEAC060055DD06 /* FBConnect.h */,
+				26639A800FDEAC060055DD06 /* FBConnectGlobal.h */,
+				26639A810FDEAC060055DD06 /* FBConnectGlobal.m */,
+				26639A820FDEAC060055DD06 /* FBSession.h */,
+				26639A830FDEAC060055DD06 /* FBSession.m */,
+				26639A840FDEAC060055DD06 /* FBRequest.h */,
+				26639A850FDEAC060055DD06 /* FBRequest.m */,
+				26639A860FDEAC060055DD06 /* FBXMLHandler.h */,
+				26639A870FDEAC060055DD06 /* FBXMLHandler.m */,
+				26639A880FDEAC060055DD06 /* FBLoginButton.h */,
+				26639A890FDEAC060055DD06 /* FBLoginButton.m */,
+				26639A8A0FDEAC060055DD06 /* FBDialog.h */,
+				26639A8B0FDEAC060055DD06 /* FBDialog.m */,
+				26639A8C0FDEAC060055DD06 /* FBLoginDialog.h */,
+				26639A8D0FDEAC060055DD06 /* FBLoginDialog.m */,
+				26639A8E0FDEAC060055DD06 /* FBPermissionDialog.h */,
+				26639A8F0FDEAC060055DD06 /* FBPermissionDialog.m */,
+				26639A900FDEAC060055DD06 /* FBFeedDialog.h */,
+				26639A910FDEAC060055DD06 /* FBFeedDialog.m */,
+				26639A920FDEAC060055DD06 /* FBConnect.bundle */,
+			);
+			name = FBConnect;
+			sourceTree = "<group>";
+		};
+		29B97314FDCFA39411CA2CEA /* CustomTemplate */ = {
+			isa = PBXGroup;
+			children = (
+				26639A7E0FDEAC060055DD06 /* FBConnect */,
+				26639A4E0FDEA8FE0055DD06 /* MOFBHelper */,
+				080E96DDFE201D6D7F000001 /* SampleApp */,
+				29B97315FDCFA39411CA2CEA /* Other Sources */,
+				29B97317FDCFA39411CA2CEA /* Resources */,
+				29B97323FDCFA39411CA2CEA /* Frameworks */,
+				19C28FACFE9D520D11CA2CBB /* Products */,
+				2654917B0FE011E100FD22CB /* README.markdown */,
+			);
+			name = CustomTemplate;
+			sourceTree = "<group>";
+		};
+		29B97315FDCFA39411CA2CEA /* Other Sources */ = {
+			isa = PBXGroup;
+			children = (
+				32CA4F630368D1EE00C91783 /* MOFBHelper_Prefix.pch */,
+				29B97316FDCFA39411CA2CEA /* main.m */,
+			);
+			name = "Other Sources";
+			sourceTree = "<group>";
+		};
+		29B97317FDCFA39411CA2CEA /* Resources */ = {
+			isa = PBXGroup;
+			children = (
+				2899E5210DE3E06400AC0155 /* MOFBHelperViewController.xib */,
+				28AD733E0D9D9553002E5188 /* MainWindow.xib */,
+				8D1107310486CEB800E47090 /* MOFBHelper-Info.plist */,
+			);
+			name = Resources;
+			sourceTree = "<group>";
+		};
+		29B97323FDCFA39411CA2CEA /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				1DF5F4DF0D08C38300B7A737 /* UIKit.framework */,
+				1D30AB110D05D00D00671497 /* Foundation.framework */,
+				288765A40DF7441C002DB57D /* CoreGraphics.framework */,
+			);
+			name = Frameworks;
+			sourceTree = "<group>";
+		};
+/* End PBXGroup section */
+
+/* Begin PBXNativeTarget section */
+		1D6058900D05DD3D006BFB54 /* MOFBHelper */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 1D6058960D05DD3E006BFB54 /* Build configuration list for PBXNativeTarget "MOFBHelper" */;
+			buildPhases = (
+				1D60588D0D05DD3D006BFB54 /* Resources */,
+				1D60588E0D05DD3D006BFB54 /* Sources */,
+				1D60588F0D05DD3D006BFB54 /* Frameworks */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = MOFBHelper;
+			productName = MOFBHelper;
+			productReference = 1D6058910D05DD3D006BFB54 /* MOFBHelper.app */;
+			productType = "com.apple.product-type.application";
+		};
+/* End PBXNativeTarget section */
+
+/* Begin PBXProject section */
+		29B97313FDCFA39411CA2CEA /* Project object */ = {
+			isa = PBXProject;
+			buildConfigurationList = C01FCF4E08A954540054247B /* Build configuration list for PBXProject "MOFBHelper" */;
+			compatibilityVersion = "Xcode 3.1";
+			hasScannedForEncodings = 1;
+			mainGroup = 29B97314FDCFA39411CA2CEA /* CustomTemplate */;
+			projectDirPath = "";
+			projectRoot = "";
+			targets = (
+				1D6058900D05DD3D006BFB54 /* MOFBHelper */,
+			);
+		};
+/* End PBXProject section */
+
+/* Begin PBXResourcesBuildPhase section */
+		1D60588D0D05DD3D006BFB54 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				28AD733F0D9D9553002E5188 /* MainWindow.xib in Resources */,
+				2899E5220DE3E06400AC0155 /* MOFBHelperViewController.xib in Resources */,
+				26639A9C0FDEAC060055DD06 /* FBConnect.bundle in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXResourcesBuildPhase section */
+
+/* Begin PBXSourcesBuildPhase section */
+		1D60588E0D05DD3D006BFB54 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				1D60589B0D05DD56006BFB54 /* main.m in Sources */,
+				1D3623260D0F684500981E51 /* MOFBHelperAppDelegate.m in Sources */,
+				28D7ACF80DDB3853001CB0EB /* MOFBHelperViewController.m in Sources */,
+				26639A660FDEAA370055DD06 /* MOFBStatus.m in Sources */,
+				26639A690FDEAA5E0055DD06 /* MOFBPermission.m in Sources */,
+				26639A930FDEAC060055DD06 /* FBConnectGlobal.m in Sources */,
+				26639A940FDEAC060055DD06 /* FBSession.m in Sources */,
+				26639A950FDEAC060055DD06 /* FBRequest.m in Sources */,
+				26639A960FDEAC060055DD06 /* FBXMLHandler.m in Sources */,
+				26639A970FDEAC060055DD06 /* FBLoginButton.m in Sources */,
+				26639A980FDEAC060055DD06 /* FBDialog.m in Sources */,
+				26639A990FDEAC060055DD06 /* FBLoginDialog.m in Sources */,
+				26639A9A0FDEAC060055DD06 /* FBPermissionDialog.m in Sources */,
+				26639A9B0FDEAC060055DD06 /* FBFeedDialog.m in Sources */,
+				26639B7E0FDECA8F0055DD06 /* MOFBHelper.m in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXSourcesBuildPhase section */
+
+/* Begin XCBuildConfiguration section */
+		1D6058940D05DD3E006BFB54 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				COPY_PHASE_STRIP = NO;
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_PRECOMPILE_PREFIX_HEADER = YES;
+				GCC_PREFIX_HEADER = MOFBHelper_Prefix.pch;
+				INFOPLIST_FILE = "MOFBHelper-Info.plist";
+				PRODUCT_NAME = MOFBHelper;
+			};
+			name = Debug;
+		};
+		1D6058950D05DD3E006BFB54 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				COPY_PHASE_STRIP = YES;
+				GCC_PRECOMPILE_PREFIX_HEADER = YES;
+				GCC_PREFIX_HEADER = MOFBHelper_Prefix.pch;
+				INFOPLIST_FILE = "MOFBHelper-Info.plist";
+				PRODUCT_NAME = MOFBHelper;
+			};
+			name = Release;
+		};
+		C01FCF4F08A954540054247B /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ARCHS = "$(ARCHS_STANDARD_32_BIT)";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				GCC_C_LANGUAGE_STANDARD = c99;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				HEADER_SEARCH_PATHS = "../fbconnect-iphone/src";
+				PREBINDING = NO;
+				SDKROOT = iphoneos3.0;
+			};
+			name = Debug;
+		};
+		C01FCF5008A954540054247B /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ARCHS = "$(ARCHS_STANDARD_32_BIT)";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				GCC_C_LANGUAGE_STANDARD = c99;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				HEADER_SEARCH_PATHS = "../fbconnect-iphone/src";
+				PREBINDING = NO;
+				SDKROOT = iphoneos3.0;
+			};
+			name = Release;
+		};
+/* End XCBuildConfiguration section */
+
+/* Begin XCConfigurationList section */
+		1D6058960D05DD3E006BFB54 /* Build configuration list for PBXNativeTarget "MOFBHelper" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				1D6058940D05DD3E006BFB54 /* Debug */,
+				1D6058950D05DD3E006BFB54 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		C01FCF4E08A954540054247B /* Build configuration list for PBXProject "MOFBHelper" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				C01FCF4F08A954540054247B /* Debug */,
+				C01FCF5008A954540054247B /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+/* End XCConfigurationList section */
+	};
+	rootObject = 29B97313FDCFA39411CA2CEA /* Project object */;
+}

@@ -1,0 +1,131 @@
+{
+    "data": {
+        "hotel": {
+            "chainCode": "",
+            "contact": {
+                "addressLine1": ""
+            },
+            "distance": 12373.49961,
+            "imagePairs": [],
+            "isPreferredChain": false,
+            "latitude": 0.0,
+            "longitude": 0.0,
+            "lowestRate": 79.99,
+            "name": "",
+            "preferences": {
+                "companyPriority": 0,
+                "isCompanyPreferredChain": false,
+                "isContracted": false,
+                "preferenceType": 0
+            },
+            "propertyIds": [
+                            {
+                            "propertyId": "39409",
+                            "source": "GDS",
+                            "vendorId": 4
+                            }
+                            ],
+            "rates": [
+                      {
+                      "amount": 79.99,
+                      "currency": "USD",
+                      "description": "Best Available Rate\u00a0-\u00a01 Queen Bed Non-smoking Room With Free Continental Breakfast, Free Wi-fi, Refrigerator And Microwave",
+                      "estimatedBedtype": "Queen",
+                      "guaranteeSurcharge": "Guaranteed",
+                      "hotelRatesPerDateRange": [],
+                      "rateCode": "NQ1RAC",
+                      "rateId": "5afc8b74-b44c-462a-bb88-7aa5c06528c0",
+                      "roomType": "",
+                      "sellOptions": {
+                      "href": "/mobile/travel/v1.0/Hotels/773647a0-2bd1-479e-9b79-f5031ee17cd1/39409/NQ1RAC/SellOptions"
+                      },
+                      "source": "GDS",
+                      "violationValueIds": []
+                      },
+                      {
+                      "amount": 79.99,
+                      "currency": "USD",
+                      "description": "Best Available Rate\u00a0-\u00a01 Queen Bed Smoking Room With Free Continental Breakfast, Free Wi-fi, Refrigerator, Microwave And Safe",
+                      "estimatedBedtype": "Queen",
+                      "guaranteeSurcharge": "Guaranteed",
+                      "hotelRatesPerDateRange": [],
+                      "rateCode": "Q11RAC",
+                      "rateId": "e81b7669-65c2-4727-ad90-9257f3c05527",
+                      "roomType": "",
+                      "sellOptions": {
+                      "href": "/mobile/travel/v1.0/Hotels/773647a0-2bd1-479e-9b79-f5031ee17cd1/39409/Q11RAC/SellOptions"
+                      },
+                      "source": "GDS",
+                      "violationValueIds": []
+                      },
+                      {
+                      "amount": 79.99,
+                      "currency": "USD",
+                      "description": "Best Available Rate\u00a0-\u00a0Accessible 1 Queen Bed Non-smoking Room With Bathroom Rails, Safety --npq1--bars And Free Breakfast",
+                      "estimatedBedtype": "Queen",
+                      "guaranteeSurcharge": "Guaranteed",
+                      "hotelRatesPerDateRange": [],
+                      "rateCode": "PNQ1RAC",
+                      "rateId": "fc9f79f6-7113-430e-b503-73dcdfa300eb",
+                      "roomType": "",
+                      "sellOptions": {
+                      "href": "/mobile/travel/v1.0/Hotels/773647a0-2bd1-479e-9b79-f5031ee17cd1/39409/PNQ1RAC/SellOptions"
+                      },
+                      "source": "GDS",
+                      "violationValueIds": []
+                      },
+                      {
+                      "amount": 84.99,
+                      "currency": "USD",
+                      "description": "Best Available Rate\u00a0-\u00a01 King Bed Non-smoking Room With Free Continental Breakfast, Free Wi-fi, Refrigerator And Microwave",
+                      "estimatedBedtype": "King",
+                      "guaranteeSurcharge": "Guaranteed",
+                      "hotelRatesPerDateRange": [],
+                      "rateCode": "NK1RAC",
+                      "rateId": "ea88e250-cbef-4221-a3fe-a277944c1024",
+                      "roomType": "",
+                      "sellOptions": {
+                      "href": "/mobile/travel/v1.0/Hotels/773647a0-2bd1-479e-9b79-f5031ee17cd1/39409/NK1RAC/SellOptions"
+                      },
+                      "source": "GDS",
+                      "violationValueIds": []
+                      },
+                      {
+                      "amount": 89.99,
+                      "currency": "USD",
+                      "description": "Best Available Rate\u00a0-\u00a02 Queen Beds Non-smoking Room With Free Continental Breakfast, Free Wi-fi, Refrigerator And Microwave",
+                      "estimatedBedtype": "Queen",
+                      "guaranteeSurcharge": "Guaranteed",
+                      "hotelRatesPerDateRange": [],
+                      "rateCode": "NQQ1RAC",
+                      "rateId": "9d024689-5dbd-48ca-ae49-f036faa1cb3c",
+                      "roomType": "", 
+                      "sellOptions": {
+                      "href": "/mobile/travel/v1.0/Hotels/773647a0-2bd1-479e-9b79-f5031ee17cd1/39409/NQQ1RAC/SellOptions"
+                      }, 
+                      "source": "GDS", 
+                      "violationValueIds": []
+                      }, 
+                      {
+                      "amount": 89.99, 
+                      "currency": "USD", 
+                      "description": "Best Available Rate\u00a0-\u00a02 Queen Beds Smoking Room With Free Continental Breakfast, Free Wi-fi, Refrigerator, Microwave And Safe", 
+                      "estimatedBedtype": "Queen", 
+                      "guaranteeSurcharge": "Guaranteed", 
+                      "hotelRatesPerDateRange": [], 
+                      "rateCode": "QQ1RAC", 
+                      "rateId": "8ec6347f-a4d8-47f4-8474-3915c161f98e", 
+                      "roomType": "", 
+                      "sellOptions": {
+                      "href": "/mobile/travel/v1.0/Hotels/773647a0-2bd1-479e-9b79-f5031ee17cd1/39409/QQ1RAC/SellOptions"
+                      }, 
+                      "source": "GDS", 
+                      "violationValueIds": []
+                      }
+                      ], 
+            "ratesURL": {
+                "href": "/mobile/travel/v1.0/Hotels/773647a0-2bd1-479e-9b79-f5031ee17cd1/39409/Rates"
+            }
+        }
+    }
+}

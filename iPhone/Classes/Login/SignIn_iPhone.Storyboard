@@ -1,0 +1,344 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="6245" systemVersion="13F34" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" initialViewController="P5o-bc-Fjs">
+    <dependencies>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="6238"/>
+    </dependencies>
+    <scenes>
+        <!--Sign In User Type View Controller-->
+        <scene sceneID="6vi-uR-NvF">
+            <objects>
+                <viewController storyboardIdentifier="EnterEmail" automaticallyAdjustsScrollViewInsets="NO" id="P5o-bc-Fjs" customClass="SignInUserTypeViewController" sceneMemberID="viewController">
+                    <layoutGuides>
+                        <viewControllerLayoutGuide type="top" id="6xo-ar-wpj"/>
+                        <viewControllerLayoutGuide type="bottom" id="vVY-RF-Ffl"/>
+                    </layoutGuides>
+                    <view key="view" contentMode="scaleToFill" id="6VL-ME-QsP">
+                        <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
+                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                        <subviews>
+                            <imageView userInteractionEnabled="NO" contentMode="center" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" image="icon_testdrive_logo" translatesAutoresizingMaskIntoConstraints="NO" id="dGh-HI-0dn">
+                                <rect key="frame" x="10" y="20" width="300" height="50"/>
+                            </imageView>
+                            <view contentMode="scaleToFill" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="0yB-7n-77y">
+                                <rect key="frame" x="10" y="89" width="300" height="50"/>
+                                <subviews>
+                                    <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="bottom" placeholder="Work email" minimumFontSize="17" clearButtonMode="always" translatesAutoresizingMaskIntoConstraints="NO" id="ZHb-7Q-2dC" customClass="RPFloatingPlaceholderTextField">
+                                        <rect key="frame" x="0.0" y="11" width="300" height="25"/>
+                                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                        <accessibility key="accessibilityConfiguration">
+                                            <accessibilityTraits key="traits" none="YES" staticText="YES"/>
+                                        </accessibility>
+                                        <color key="textColor" red="0.53700000049999996" green="0.55299997329999995" blue="0.55299997329999995" alpha="1" colorSpace="calibratedRGB"/>
+                                        <fontDescription key="fontDescription" name="HelveticaNeue" family="Helvetica Neue" pointSize="18"/>
+                                        <textInputTraits key="textInputTraits" autocorrectionType="no" keyboardType="emailAddress" returnKeyType="next" enablesReturnKeyAutomatically="YES"/>
+                                        <userDefinedRuntimeAttributes>
+                                            <userDefinedRuntimeAttribute type="number" keyPath="cornerRadius">
+                                                <integer key="value" value="3"/>
+                                            </userDefinedRuntimeAttribute>
+                                        </userDefinedRuntimeAttributes>
+                                        <connections>
+                                            <outlet property="nextUIResponder" destination="abY-xk-zUI" id="5yl-2t-3Mu"/>
+                                        </connections>
+                                    </textField>
+                                </subviews>
+                                <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                <userDefinedRuntimeAttributes>
+                                    <userDefinedRuntimeAttribute type="number" keyPath="cornerRadius">
+                                        <integer key="value" value="5"/>
+                                    </userDefinedRuntimeAttribute>
+                                </userDefinedRuntimeAttributes>
+                            </view>
+                            <button opaque="NO" contentMode="scaleToFill" ambiguous="YES" misplaced="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" reversesTitleShadowWhenHighlighted="YES" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="abY-xk-zUI">
+                                <rect key="frame" x="10" y="158" width="300" height="45"/>
+                                <color key="backgroundColor" red="0.0" green="0.66299998760000001" blue="0.94900000100000004" alpha="1" colorSpace="calibratedRGB"/>
+                                <fontDescription key="fontDescription" name="HelveticaNeue" family="Helvetica Neue" pointSize="18"/>
+                                <state key="normal" title="Continue">
+                                    <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
+                                </state>
+                                <userDefinedRuntimeAttributes>
+                                    <userDefinedRuntimeAttribute type="number" keyPath="cornerRadius">
+                                        <integer key="value" value="3"/>
+                                    </userDefinedRuntimeAttribute>
+                                </userDefinedRuntimeAttributes>
+                                <connections>
+                                    <action selector="btnContinueTapped:" destination="P5o-bc-Fjs" eventType="touchUpInside" id="SDt-A6-9CH"/>
+                                </connections>
+                            </button>
+                            <button opaque="NO" contentMode="scaleToFill" ambiguous="YES" misplaced="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="E0C-Uv-Iri" userLabel="Button - SSO SignIn">
+                                <rect key="frame" x="103" y="223" width="115" height="29"/>
+                                <constraints>
+                                    <constraint firstAttribute="width" relation="lessThanOrEqual" constant="300" id="3tZ-Xz-Xgn"/>
+                                </constraints>
+                                <fontDescription key="fontDescription" name="HelveticaNeue" family="Helvetica Neue" pointSize="14"/>
+                                <state key="normal" title="Company Sign On">
+                                    <color key="titleColor" red="0.66200000049999996" green="0.87000000479999995" blue="1" alpha="1" colorSpace="calibratedRGB"/>
+                                </state>
+                                <connections>
+                                    <action selector="btnSSOSignInTapped:" destination="P5o-bc-Fjs" eventType="touchUpInside" id="d8i-1y-nwd"/>
+                                </connections>
+                            </button>
+                        </subviews>
+                        <color key="backgroundColor" red="0.0" green="0.47099998589999997" blue="0.78799998760000001" alpha="1" colorSpace="calibratedRGB"/>
+                        <constraints>
+                            <constraint firstAttribute="centerX" secondItem="E0C-Uv-Iri" secondAttribute="centerX" id="cwK-Wk-MUw"/>
+                            <constraint firstItem="E0C-Uv-Iri" firstAttribute="top" secondItem="abY-xk-zUI" secondAttribute="bottom" constant="20" id="iUP-Xi-BIK"/>
+                        </constraints>
+                    </view>
+                    <extendedEdge key="edgesForExtendedLayout" bottom="YES"/>
+                    <connections>
+                        <outlet property="btnContinue" destination="abY-xk-zUI" id="XQa-OQ-122"/>
+                        <outlet property="txtWorkEmailField" destination="ZHb-7Q-2dC" id="7kR-J9-VDf"/>
+                        <segue destination="xZB-Ic-JhT" kind="push" identifier="ShowPasswordScreen" id="Lct-ea-840"/>
+                        <segue destination="zU0-7g-iYU" kind="push" identifier="ShowSSOLoginScreen" id="Kr2-Rt-eiU"/>
+                        <segue destination="GRj-wo-7LN" kind="push" identifier="ShowPasswordResetScreen" id="Cgy-gF-iWT"/>
+                    </connections>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="Sia-Ya-2sT" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="-124" y="16"/>
+        </scene>
+        <!--Sign In Password View Controller-->
+        <scene sceneID="FhZ-jt-2dV">
+            <objects>
+                <viewController storyboardIdentifier="EnterPassword" automaticallyAdjustsScrollViewInsets="NO" id="xZB-Ic-JhT" customClass="SignInPasswordViewController" sceneMemberID="viewController">
+                    <layoutGuides>
+                        <viewControllerLayoutGuide type="top" id="t2I-5M-blv"/>
+                        <viewControllerLayoutGuide type="bottom" id="D8m-3y-GQL"/>
+                    </layoutGuides>
+                    <view key="view" contentMode="scaleToFill" id="5aV-UW-q3h">
+                        <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
+                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                        <subviews>
+                            <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Enter your mobile Password (PIN) to sign in" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="2" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" preferredMaxLayoutWidth="300" translatesAutoresizingMaskIntoConstraints="NO" id="DJi-Hd-faw">
+                                <rect key="frame" x="10" y="20" width="300" height="50"/>
+                                <fontDescription key="fontDescription" name="HelveticaNeue" family="Helvetica Neue" pointSize="17"/>
+                                <color key="textColor" red="0.66200000047683716" green="0.87000000476837158" blue="1" alpha="1" colorSpace="calibratedRGB"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                            <view contentMode="scaleToFill" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="nic-Ty-I5y">
+                                <rect key="frame" x="10" y="78" width="300" height="50"/>
+                                <subviews>
+                                    <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="bottom" placeholder="Mobile password" minimumFontSize="17" clearButtonMode="always" translatesAutoresizingMaskIntoConstraints="NO" id="5iA-2J-g5D" userLabel="placeholder - password" customClass="RPFloatingPlaceholderTextField">
+                                        <rect key="frame" x="0.0" y="11" width="300" height="25"/>
+                                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                        <accessibility key="accessibilityConfiguration">
+                                            <accessibilityTraits key="traits" none="YES" staticText="YES"/>
+                                        </accessibility>
+                                        <color key="textColor" red="0.53700000049999996" green="0.55299997329999995" blue="0.55299997329999995" alpha="1" colorSpace="calibratedRGB"/>
+                                        <fontDescription key="fontDescription" name="HelveticaNeue" family="Helvetica Neue" pointSize="18"/>
+                                        <textInputTraits key="textInputTraits" autocorrectionType="no" returnKeyType="next" enablesReturnKeyAutomatically="YES" secureTextEntry="YES"/>
+                                        <userDefinedRuntimeAttributes>
+                                            <userDefinedRuntimeAttribute type="number" keyPath="cornerRadius">
+                                                <integer key="value" value="3"/>
+                                            </userDefinedRuntimeAttribute>
+                                        </userDefinedRuntimeAttributes>
+                                        <connections>
+                                            <outlet property="nextUIResponder" destination="KEE-DH-M4W" id="2n2-Ze-k3d"/>
+                                        </connections>
+                                    </textField>
+                                </subviews>
+                                <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                <userDefinedRuntimeAttributes>
+                                    <userDefinedRuntimeAttribute type="number" keyPath="cornerRadius">
+                                        <integer key="value" value="5"/>
+                                    </userDefinedRuntimeAttribute>
+                                </userDefinedRuntimeAttributes>
+                            </view>
+                            <button opaque="NO" contentMode="scaleToFill" verticalHuggingPriority="249" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" reversesTitleShadowWhenHighlighted="YES" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="KEE-DH-M4W">
+                                <rect key="frame" x="10" y="139" width="301" height="45"/>
+                                <color key="backgroundColor" red="0.0" green="0.66299998760000001" blue="0.94900000100000004" alpha="1" colorSpace="calibratedRGB"/>
+                                <fontDescription key="fontDescription" name="HelveticaNeue" family="Helvetica Neue" pointSize="18"/>
+                                <state key="normal" title="Sign in to Concur">
+                                    <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
+                                </state>
+                                <userDefinedRuntimeAttributes>
+                                    <userDefinedRuntimeAttribute type="number" keyPath="cornerRadius">
+                                        <integer key="value" value="3"/>
+                                    </userDefinedRuntimeAttribute>
+                                </userDefinedRuntimeAttributes>
+                                <connections>
+                                    <action selector="btnSignInTapped:" destination="xZB-Ic-JhT" eventType="touchUpInside" id="ADG-A5-gc2"/>
+                                </connections>
+                            </button>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="No8-LQ-BQc" userLabel="Button - forgot password">
+                                <rect key="frame" x="103" y="215" width="114" height="29"/>
+                                <constraints>
+                                    <constraint firstAttribute="width" relation="lessThanOrEqual" constant="300" id="4yx-8o-MgU"/>
+                                </constraints>
+                                <fontDescription key="fontDescription" name="HelveticaNeue" family="Helvetica Neue" pointSize="14"/>
+                                <state key="normal" title="Forgot password?">
+                                    <color key="titleColor" red="0.66200000049999996" green="0.87000000479999995" blue="1" alpha="1" colorSpace="calibratedRGB"/>
+                                </state>
+                                <connections>
+                                    <action selector="btnForgotPasswordTapped:" destination="xZB-Ic-JhT" eventType="touchUpInside" id="muY-Ni-DQP"/>
+                                </connections>
+                            </button>
+                        </subviews>
+                        <color key="backgroundColor" red="0.0" green="0.47099998589999997" blue="0.78799998760000001" alpha="1" colorSpace="calibratedRGB"/>
+                        <constraints>
+                            <constraint firstAttribute="centerX" secondItem="No8-LQ-BQc" secondAttribute="centerX" id="zDS-bP-hR6"/>
+                            <constraint firstItem="No8-LQ-BQc" firstAttribute="top" secondItem="t2I-5M-blv" secondAttribute="bottom" constant="195" id="zVd-XT-5yK"/>
+                        </constraints>
+                    </view>
+                    <extendedEdge key="edgesForExtendedLayout" bottom="YES"/>
+                    <navigationItem key="navigationItem" id="New-WN-JXS"/>
+                    <connections>
+                        <outlet property="btnForgotPassword" destination="No8-LQ-BQc" id="w7y-2d-Qp6"/>
+                        <outlet property="btnSignIn" destination="KEE-DH-M4W" id="r9x-7K-SOP"/>
+                        <outlet property="lblEnterPassword" destination="DJi-Hd-faw" id="fAV-IH-mAO"/>
+                        <outlet property="txtPasswordField" destination="5iA-2J-g5D" id="uIA-Mz-oAh"/>
+                    </connections>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="Sfl-zR-bOe" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="313" y="16"/>
+        </scene>
+        <!--Sign InSSO Web View Controller-->
+        <scene sceneID="gWu-rH-H2J">
+            <objects>
+                <viewController storyboardIdentifier="SSOWebView" id="zU0-7g-iYU" customClass="SignInSSOWebViewController" sceneMemberID="viewController">
+                    <layoutGuides>
+                        <viewControllerLayoutGuide type="top" id="lsZ-4F-KLn"/>
+                        <viewControllerLayoutGuide type="bottom" id="byu-Z3-9QA"/>
+                    </layoutGuides>
+                    <view key="view" contentMode="scaleToFill" id="SQu-Qf-ieo">
+                        <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
+                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                        <subviews>
+                            <webView contentMode="scaleToFill" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="Dr5-Km-yKG" customClass="CTESingleSignOnWebView">
+                                <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
+                                <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
+                            </webView>
+                        </subviews>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
+                    </view>
+                    <navigationItem key="navigationItem" id="aUU-od-f04"/>
+                    <connections>
+                        <outlet property="cteSSOWebView" destination="Dr5-Km-yKG" id="uuZ-t1-AI2"/>
+                    </connections>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="Egg-68-OlT" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="-155" y="691"/>
+        </scene>
+        <!--Sign In Reset Password View Controller-->
+        <scene sceneID="u4x-dg-Kgq">
+            <objects>
+                <viewController storyboardIdentifier="ResetPasswordScreen" automaticallyAdjustsScrollViewInsets="NO" id="GRj-wo-7LN" customClass="SignInResetPasswordViewController" sceneMemberID="viewController">
+                    <layoutGuides>
+                        <viewControllerLayoutGuide type="top" id="pik-RR-Nzj"/>
+                        <viewControllerLayoutGuide type="bottom" id="8Kn-3S-LfP"/>
+                    </layoutGuides>
+                    <view key="view" contentMode="scaleToFill" id="GIK-4M-rQy">
+                        <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
+                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                        <subviews>
+                            <view contentMode="scaleToFill" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="Gc9-bJ-rli">
+                                <rect key="frame" x="10" y="19" width="300" height="50"/>
+                                <subviews>
+                                    <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="bottom" placeholder="New password" minimumFontSize="17" clearButtonMode="always" translatesAutoresizingMaskIntoConstraints="NO" id="D2r-ax-MX8" customClass="RPFloatingPlaceholderTextField">
+                                        <rect key="frame" x="0.0" y="12" width="300" height="25"/>
+                                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                        <accessibility key="accessibilityConfiguration">
+                                            <accessibilityTraits key="traits" none="YES" staticText="YES"/>
+                                        </accessibility>
+                                        <color key="textColor" red="0.53700000049999996" green="0.55299997329999995" blue="0.55299997329999995" alpha="1" colorSpace="calibratedRGB"/>
+                                        <fontDescription key="fontDescription" name="HelveticaNeue" family="Helvetica Neue" pointSize="18"/>
+                                        <textInputTraits key="textInputTraits" autocorrectionType="no" returnKeyType="next" enablesReturnKeyAutomatically="YES" secureTextEntry="YES"/>
+                                        <userDefinedRuntimeAttributes>
+                                            <userDefinedRuntimeAttribute type="number" keyPath="cornerRadius">
+                                                <integer key="value" value="3"/>
+                                            </userDefinedRuntimeAttribute>
+                                        </userDefinedRuntimeAttributes>
+                                        <connections>
+                                            <outlet property="nextUIResponder" destination="sBf-tO-DCT" id="41d-kO-E6q"/>
+                                        </connections>
+                                    </textField>
+                                </subviews>
+                                <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                <userDefinedRuntimeAttributes>
+                                    <userDefinedRuntimeAttribute type="number" keyPath="cornerRadius">
+                                        <integer key="value" value="5"/>
+                                    </userDefinedRuntimeAttribute>
+                                </userDefinedRuntimeAttributes>
+                            </view>
+                            <view contentMode="scaleToFill" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="8F8-Ji-J3e">
+                                <rect key="frame" x="10" y="79" width="300" height="50"/>
+                                <subviews>
+                                    <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="bottom" placeholder="Confirm new password" minimumFontSize="17" clearButtonMode="always" translatesAutoresizingMaskIntoConstraints="NO" id="sBf-tO-DCT" customClass="RPFloatingPlaceholderTextField">
+                                        <rect key="frame" x="0.0" y="11" width="300" height="25"/>
+                                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                        <accessibility key="accessibilityConfiguration">
+                                            <accessibilityTraits key="traits" none="YES" staticText="YES"/>
+                                        </accessibility>
+                                        <color key="textColor" red="0.53700000049999996" green="0.55299997329999995" blue="0.55299997329999995" alpha="1" colorSpace="calibratedRGB"/>
+                                        <fontDescription key="fontDescription" name="HelveticaNeue" family="Helvetica Neue" pointSize="18"/>
+                                        <textInputTraits key="textInputTraits" autocorrectionType="no" returnKeyType="done" enablesReturnKeyAutomatically="YES" secureTextEntry="YES"/>
+                                        <userDefinedRuntimeAttributes>
+                                            <userDefinedRuntimeAttribute type="number" keyPath="cornerRadius">
+                                                <integer key="value" value="3"/>
+                                            </userDefinedRuntimeAttribute>
+                                        </userDefinedRuntimeAttributes>
+                                        <connections>
+                                            <outlet property="nextUIResponder" destination="cRM-aa-JDS" id="EPE-jt-isS"/>
+                                        </connections>
+                                    </textField>
+                                </subviews>
+                                <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
+                                <userDefinedRuntimeAttributes>
+                                    <userDefinedRuntimeAttribute type="number" keyPath="cornerRadius">
+                                        <integer key="value" value="5"/>
+                                    </userDefinedRuntimeAttribute>
+                                </userDefinedRuntimeAttributes>
+                            </view>
+                            <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" reversesTitleShadowWhenHighlighted="YES" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="cRM-aa-JDS">
+                                <rect key="frame" x="10" y="142" width="300" height="45"/>
+                                <color key="backgroundColor" red="0.0" green="0.66299998760000001" blue="0.94900000100000004" alpha="1" colorSpace="calibratedRGB"/>
+                                <fontDescription key="fontDescription" name="HelveticaNeue" family="Helvetica Neue" pointSize="18"/>
+                                <state key="normal" title="Reset Password">
+                                    <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
+                                </state>
+                                <userDefinedRuntimeAttributes>
+                                    <userDefinedRuntimeAttribute type="number" keyPath="cornerRadius">
+                                        <integer key="value" value="3"/>
+                                    </userDefinedRuntimeAttribute>
+                                </userDefinedRuntimeAttributes>
+                                <connections>
+                                    <action selector="btnResetPasswordTapped:" destination="GRj-wo-7LN" eventType="touchUpInside" id="ZfU-ZP-3ad"/>
+                                </connections>
+                            </button>
+                            <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="The password must be alteat 6 characters in length and can contain special chars such as &amp; and  # but not spaces" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="0" adjustsFontSizeToFit="NO" preferredMaxLayoutWidth="280" translatesAutoresizingMaskIntoConstraints="NO" id="6Sx-qB-ZaJ">
+                                <rect key="frame" x="20" y="211" width="280" height="80"/>
+                                <accessibility key="accessibilityConfiguration">
+                                    <accessibilityTraits key="traits" none="YES" staticText="YES" notEnabled="YES"/>
+                                </accessibility>
+                                <fontDescription key="fontDescription" name="HelveticaNeue" family="Helvetica Neue" pointSize="17"/>
+                                <color key="textColor" red="0.66200000049999996" green="0.87000000479999995" blue="1" alpha="1" colorSpace="calibratedRGB"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                        </subviews>
+                        <color key="backgroundColor" red="0.0" green="0.47099998589999997" blue="0.78799998760000001" alpha="1" colorSpace="calibratedRGB"/>
+                    </view>
+                    <extendedEdge key="edgesForExtendedLayout" bottom="YES"/>
+                    <navigationItem key="navigationItem" id="EWu-be-Ng5"/>
+                    <connections>
+                        <outlet property="btnResetPassword" destination="cRM-aa-JDS" id="HRk-jm-fc3"/>
+                        <outlet property="lblHelpText" destination="6Sx-qB-ZaJ" id="OEx-xe-XiR"/>
+                        <outlet property="txtConfirmNewPassword" destination="sBf-tO-DCT" id="p4l-1d-zro"/>
+                        <outlet property="txtNewPassword" destination="D2r-ax-MX8" id="UfI-aO-pVa"/>
+                    </connections>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="c18-hh-oZx" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="327" y="700"/>
+        </scene>
+    </scenes>
+    <resources>
+        <image name="icon_testdrive_logo" width="155" height="40"/>
+    </resources>
+    <simulatedMetricsContainer key="defaultSimulatedMetrics">
+        <simulatedStatusBarMetrics key="statusBar"/>
+        <simulatedOrientationMetrics key="orientation"/>
+        <simulatedScreenMetrics key="destination" type="retina4"/>
+    </simulatedMetricsContainer>
+</document>

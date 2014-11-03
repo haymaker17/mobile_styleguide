@@ -1,0 +1,3174 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key># of Cars</key>
+	<string>počet aut</string>
+	<key>%@ has been submitted</key>
+	<string>byla předložena % @</string>
+	<key>%@ km</key>
+	<string>% @ km</string>
+	<key>%@ kms</key>
+	<string>% @ km</string>
+	<key>%@ mile</key>
+	<string>% @ míle</string>
+	<key>%@ miles</key>
+	<string>% @ mil</string>
+	<key>%@ per day</key>
+	<string>% @ za den</string>
+	<key>%d Hour and %d Minute(s)</key>
+	<string>%d hodinu a %d minut</string>
+	<key>%d Hours and %d Minute(s)</key>
+	<string>%d minut a %d hodin</string>
+	<key>%d Minute(s)</key>
+	<string>%d minut</string>
+	<key>(Refundable)</key>
+	<string>(Vratná)</string>
+	<key>1 Stop</key>
+	<string>1 Stop</string>
+	<key>@Concur2Go Twitter Feed</key>
+	<string>@ Concur2Go Twitter kanál</string>
+	<key>A Receipt is</key>
+	<string>Potvrzení o ukazuje připojené k tomuto výdajů na serveru, ale příjem již existuje v potvrzení správce. Znovu připojte prosím potvrzení výdajů a uložit.</string>
+	<key>ACTIVE_ENTRIES</key>
+	<string>Zpráva</string>
+	<key>ACTIVE_REPORTS</key>
+	<string>Aktivní zprávy</string>
+	<key>ADD_CAR_MILEAGE_HOME_NOT_SUPPORTED</key>
+	<string>Pro konfiguraci osobního automobilu - bylo nalezeno žádné auto najeto sazby nebo - míra konfigurace vaší konkrétní auto není nyní podporován. Přidejte svůj Tachometr výdajů v rámci zprávy přes mobilní nebo prostřednictvím webu.</string>
+	<key>ADD_CAR_MILEAGE_NOT_SUPPORTED</key>
+	<string>Pro konfiguraci osobního automobilu - bylo nalezeno žádné auto najeto sazby nebo - míra konfigurace vaší konkrétní auto není nyní podporován.</string>
+	<key>ADD_EXISTING_CARD</key>
+	<string>Tato konkrétní karta již byly přidány a nelze jej znovu přidat.</string>
+	<key>ADD_EXPENSE_OFFLINE_NOT_SUPPORTED</key>
+	<string>Přidejte účet není zatím podporováno v režimu offline.</string>
+	<key>ADD_TO_RPT_CONFIRM_MSG</key>
+	<string>Do zprávy přidat vybrané expense(s)? Lze připojit příjmy a výdaje upravit po přidání do sestavy.</string>
+	<key>ADD_TO_RPT_CONFIRM_TITLE</key>
+	<string>Potvrdit</string>
+	<key>ADD_YODLEE_CARD_COMPLETE_MSG</key>
+	<string>Vaše karta končící v % @ byla přidána k účtu SmartExpense.</string>
+	<key>ADD_YODLEE_CARD_FAILED_MSG</key>
+	<string>Nepodařilo se přidat vaši kreditní kartu. Zkuste to prosím později.</string>
+	<key>ADD_YODLEE_CARD_INSTRUCTION</key>
+	<string>Zadejte přihlašovací informace pro účet. Concur bude šifrování a bezpečně použít tuto informaci ke stažení karty obvinění.</string>
+	<key>AIR_BOOKING</key>
+	<string>Rezervace vzduchu</string>
+	<key>AIR_BOOKING_DISABLED_MSG</key>
+	<string>Vaše společnost je zakázána vzduchu rezervace na mobil. Prosím rezervaci letu, online nebo telefonicky vaše cestovní kancelář.</string>
+	<key>AIR_BOOKING_PROFILE_1_MSG</key>
+	<string>Váš cestovní profil vyžaduje hodnotu pro druhé křestní jméno, pohlaví a datum narození. Přihlaste se k webovou verzi Concur cestování a vyberte profil v nabídce.</string>
+	<key>AIR_BOOKING_PROFILE_21_MSG</key>
+	<string>Váš cestovní profil nikdy nebyly uloženy a musí být uložen alespoň jednou před rezervace. Přihlaste se k webu verzi Concur cestování, vyberte profil a uložit.</string>
+	<key>AIR_BOOKING_PROFILE_22_MSG</key>
+	<string>Vaše cestovní konfiguraci účtování/typ kódu vyžaduje existenci projektů. Obraťte se na správce společnosti zřídit vhodných projektů.</string>
+	<key>AIR_BOOKING_PROFILE_23_MSG</key>
+	<string>Vinnet už neexistuje! Klient nesmí přijímat tento profil kontrolní kód.</string>
+	<key>AIR_BOOKING_PROFILE_24_MSG</key>
+	<string>Váš cestovní profil vyžaduje hodnotu pro mobilní telefon. Přihlaste se k webovou verzi Concur cestování a vyberte profil v nabídce.</string>
+	<key>AIR_BOOKING_PROFILE_25_MSG</key>
+	<string>Váš cestovní profil vyžaduje hodnotu pro služby Passport národnost. Přihlaste se k webovou verzi Concur cestování a vyberte profil v nabídce.</string>
+	<key>AIR_BOOKING_PROFILE_26_MSG</key>
+	<string>Váš cestovní profil vyžaduje hodnotu pro funkce. Přihlaste se k webovou verzi Concur cestování a vyberte profil v nabídce.</string>
+	<key>AIR_BOOKING_PROFILE_27_MSG</key>
+	<string>Váš cestovní profil vyžaduje hodnotu pro organizační jednotku. Přihlaste se k webovou verzi Concur cestování a vyberte profil v nabídce.</string>
+	<key>AIR_BOOKING_PROFILE_28_MSG</key>
+	<string>Váš cestovní profil vyžaduje hodnotu pro název-Poznámka. Přihlaste se na web verzi Concur cestování a vyberte profil na menu. \nNOTE: Toto pole může obsahovat vlastní štítek. Ne-li nalezeno, kontaktujte prosím správce společnosti.</string>
+	<key>AIR_BOOKING_PROFILE_29_MSG</key>
+	<string>Váš cestovní profil vyžaduje hodnotu pro správce. Přihlaste se k webovou verzi Concur cestování a vyberte profil v nabídce.</string>
+	<key>AIR_BOOKING_PROFILE_2_MSG</key>
+	<string>Předtím, než si můžete rezervovat letenky, je třeba dokončit váš cestovní profil. Přihlaste se k webovou verzi Concur cestování a vyberte profil v nabídce.</string>
+	<key>AIR_BOOKING_PROFILE_30_MSG</key>
+	<string>Váš cestovní profil vyžaduje hodnotu pro ID zaměstnance. Přihlaste se k webovou verzi Concur cestování a vyberte profil v nabídce.</string>
+	<key>AIR_BOOKING_PROFILE_31_MSG</key>
+	<string>Váš cestovní profil vyžaduje platnou e-mailovou adresu. Přihlaste se k webové verzi Concur cestování a vyberte profil v nabídce.</string>
+	<key>AIR_BOOKING_PROFILE_32_MSG</key>
+	<string>Váš cestovní profil vyžaduje hodnotu pro práci adresu (ulice, město a země). Přihlaste se k webovou verzi Concur cestování a vyberte profil v nabídce.</string>
+	<key>AIR_BOOKING_PROFILE_33_MSG</key>
+	<string>Váš cestovní profil vyžaduje hodnotu pro pracovní nebo telefonní číslo domů. Přihlaste se k webovou verzi Concur cestování a vyberte profil v nabídce.</string>
+	<key>AIR_BOOKING_PROFILE_PROLOG_MSG</key>
+	<string>Odhlásit a znovu přihlásit po poskytnutí výše uvedených informací.</string>
+	<key>AIR_BOOKING_REQ_CUSTOM_FIELDS_MSG</key>
+	<string>Vaše společnost má zvláštní požadavky při rezervaci vzduch. Objednat vzduchu ve webové verzi Concur.</string>
+	<key>AIR_WARNING_JUSTIFICATION</key>
+	<string>Před rezervováním tohoto letu v rozporu s firemní politiky, musíte poskytnout odůvodnění v poli zobrazené červeně.</string>
+	<key>AIR_WARNING_REASON</key>
+	<string>Před rezervováním tohoto letu v rozporu s firemní politiky, je třeba zadat důvod v poli zobrazené červeně.</string>
+	<key>AIR_WARNING_REASON_JUSTIFICATION</key>
+	<string>Před rezervováním tohoto letu v rozporu s firemní politiky, musíte zadat důvod a zdůvodnění v polích vypsány v červené barvě.</string>
+	<key>ALERT_CLEAR_CACHE</key>
+	<string>Tímto odstraníte všechna data v režimu Offline. Vaše aplikace bude nadále fungovat.</string>
+	<key>AMOUNT_TOO_BIG_ERR_MSG</key>
+	<string>Zadejte částku v rámci 999999999999999</string>
+	<key>APPROVALS_NEG_TEXT</key>
+	<string>Schválit položky, kdekoli a kdykoli</string>
+	<key>APPROVE_APPROVE_BUTTON_TITLE</key>
+	<string>Schválit</string>
+	<key>APPROVE_CANCEL</key>
+	<string>Storno</string>
+	<key>APPROVE_ENTER_COMMENT_FOR_SENDBACK</key>
+	<string>Zadejte komentář.</string>
+	<key>APPROVE_ENTRIES</key>
+	<string>Sestava položky</string>
+	<key>APPROVE_ENTRIES_ACTION_SECTION_REPORT_SUMMARY_ROW</key>
+	<string>Souhrn sestavy</string>
+	<key>APPROVE_ENTRIES_ACTION_SECTION_VIEW_COMMENTS_ROW</key>
+	<string>Zobrazit komentáře</string>
+	<key>APPROVE_ENTRIES_ACTION_SECTION_VIEW_EXCEPTIONS_ROW</key>
+	<string>Výjimky z pohledu</string>
+	<key>APPROVE_ENTRIES_ACTION_SECTION_VIEW_RECEIPTS_ROW</key>
+	<string>Zobrazit příjmy</string>
+	<key>APPROVE_ENTRIES_VIEW_TITLE</key>
+	<string>Seznam výdajů</string>
+	<key>APPROVE_EXPENSE_DETAILS</key>
+	<string>Rozpis výdajů</string>
+	<key>APPROVE_EXPENSE_DETAILS_ATTENDEES</key>
+	<string>Účastníci</string>
+	<key>APPROVE_EXPENSE_DETAILS_COMMENT</key>
+	<string>Komentář</string>
+	<key>APPROVE_EXPENSE_DETAILS_DETAILS</key>
+	<string>Podrobnosti</string>
+	<key>APPROVE_EXPENSE_DETAILS_EXCEPTIONS</key>
+	<string>Výjimky</string>
+	<key>APPROVE_EXPENSE_DETAILS_VIEW_ATTENDEES</key>
+	<string>Zobrazit účastníky</string>
+	<key>APPROVE_EXPENSE_DETAILS_VIEW_ITEMIZATIONS</key>
+	<string>Zobrazit Itemizations</string>
+	<key>APPROVE_EXPENSE_DETAILS_VIEW_TITLE</key>
+	<string>Výdaj</string>
+	<key>APPROVE_INVOICES</key>
+	<string>Schválit faktury</string>
+	<key>APPROVE_OK</key>
+	<string>Ok</string>
+	<key>APPROVE_PLEASE_COMMENT</key>
+	<string>Prosím komentář</string>
+	<key>APPROVE_PLEASE_CONFIRM</key>
+	<string>Prosím, potvrďte</string>
+	<key>APPROVE_QUESTION_AREYOUSURE</key>
+	<string>Jste si jistý, že chcete schválit tuto zprávu?</string>
+	<key>APPROVE_QUESTION_PART1</key>
+	<string>Schválit</string>
+	<key>APPROVE_QUESTION_PART2</key>
+	<string>vyúčtování za</string>
+	<key>APPROVE_REPORT</key>
+	<string>Schválit zprávu</string>
+	<key>APPROVE_REPORTS</key>
+	<string>Schválit zprávy</string>
+	<key>APPROVE_REPORTS_VIEW_TITLE</key>
+	<string>Zprávy ke schválení</string>
+	<key>APPROVE_REPORT_CHECK_RECEIPT_IMAGE</key>
+	<string>Kontrola příjmu obrazu</string>
+	<key>APPROVE_REPORT_RECEIPT_IMAGE</key>
+	<string>Zobrazit příjem obrázek</string>
+	<key>APPROVE_REPORT_SUMMARY</key>
+	<string>Souhrn sestavy</string>
+	<key>APPROVE_REPORT_SUMMARY_AMOUNT_APPROVED</key>
+	<string>Částka schválená</string>
+	<key>APPROVE_REPORT_SUMMARY_AMOUNT_CLAIMED</key>
+	<string>Částku</string>
+	<key>APPROVE_REPORT_SUMMARY_AMOUNT_DUE_COMPANY</key>
+	<string>Společnost splatnosti částky</string>
+	<key>APPROVE_REPORT_SUMMARY_AMOUNT_DUE_CREDIT_CARD</key>
+	<string>Částku patřičným kreditní karta</string>
+	<key>APPROVE_REPORT_SUMMARY_AMOUNT_DUE_EMPLOYEE</key>
+	<string>Částku splatnosti zaměstnanec</string>
+	<key>APPROVE_REPORT_SUMMARY_AMOUNT_REJECTED</key>
+	<string>Částka zamítnut</string>
+	<key>APPROVE_REPORT_SUMMARY_COMMENTS</key>
+	<string>Poznámky</string>
+	<key>APPROVE_REPORT_SUMMARY_COMPANYDISBURSEMENT</key>
+	<string>Společnost výdajového</string>
+	<key>APPROVE_REPORT_SUMMARY_COMPANY_PAID_TO_CREDIT_CARD</key>
+	<string>Společnost zaplatit kreditní kartou</string>
+	<key>APPROVE_REPORT_SUMMARY_EMPLOYEEDISBURSEMENTS</key>
+	<string>Výplaty zaměstnance</string>
+	<key>APPROVE_REPORT_SUMMARY_HEADER</key>
+	<string>Záhlaví</string>
+	<key>APPROVE_REPORT_SUMMARY_LESS_PERSONAL_AMOUNT</key>
+	<string>Méně Osobní částka</string>
+	<key>APPROVE_REPORT_SUMMARY_POLICY</key>
+	<string>Politika</string>
+	<key>APPROVE_REPORT_SUMMARY_REPORT_HEADER</key>
+	<string>Záhlaví sestavy</string>
+	<key>APPROVE_REPORT_SUMMARY_REPORT_ID</key>
+	<string>Id sestavy</string>
+	<key>APPROVE_REPORT_SUMMARY_REPORT_TOTAL</key>
+	<string>Celkem za sestavu</string>
+	<key>APPROVE_REPORT_SUMMARY_TOTAL_PAID_BY_COMPANY</key>
+	<string>Celkem zaplaceno společností</string>
+	<key>APPROVE_REPORT_SUMMARY_TOTAL_PAID_BY_EMPLOYEE</key>
+	<string>Celkem zaplaceno podle zaměstnance</string>
+	<key>APPROVE_REPORT_SUMMARY_VIEW_TITLE</key>
+	<string>Shrnutí</string>
+	<key>APPROVE_SENDBACK_BUTTON_TITLE</key>
+	<string>Odeslat zpět</string>
+	<key>APPROVE_VIEW_ATTENDEES</key>
+	<string>Účastníci</string>
+	<key>APPROVE_VIEW_ATTENDEES_ATTENDEE_AMOUNT_TITLE</key>
+	<string>Částka</string>
+	<key>APPROVE_VIEW_ATTENDEES_ATTENDEE_COMPANY_TITLE</key>
+	<string>Společnost</string>
+	<key>APPROVE_VIEW_ATTENDEES_ATTENDEE_NAME_TITLE</key>
+	<string>Jméno návštěvníka</string>
+	<key>APPROVE_VIEW_ATTENDEES_ATTENDEE_TITLE_TITLE</key>
+	<string>Titul účastníka</string>
+	<key>APPROVE_VIEW_ATTENDEES_ATTENDEE_TYPE_TITLE</key>
+	<string>Typ účastníka</string>
+	<key>APPROVE_VIEW_COMMENTS</key>
+	<string>Zobrazit komentáře</string>
+	<key>APPROVE_VIEW_COMMENTS_VIEW_TITLE</key>
+	<string>Poznámky</string>
+	<key>APPROVE_VIEW_EXCEPTIONS</key>
+	<string>Výjimky z pohledu</string>
+	<key>APPROVE_VIEW_EXCEPTIONS_EXPENSE_LEVEL_EXCEPTION_SECTION_HEADER</key>
+	<string>Výdaje</string>
+	<key>APPROVE_VIEW_EXCEPTIONS_REPORT_LEVEL_EXCEPTION_SECTION_HEADER</key>
+	<string>Zpráva</string>
+	<key>APPROVE_VIEW_EXCEPTIONS_VIEW_TITLE</key>
+	<string>Výjimky</string>
+	<key>APPROVE_VIEW_ITEMIZATIONS</key>
+	<string>Rozpis</string>
+	<key>APPROVE_VIEW_ITEMIZATIONS_SUMMARY_SECTION_TITLE</key>
+	<string>Shrnutí</string>
+	<key>APP_RATING_MSG</key>
+	<string>Teď, když jste použili naše aplikace, prosím dejte nám vědět co si myslíte o tom dle hodnocení v App Store.</string>
+	<key>APP_RATING_MSG_DISMISS</key>
+	<string>Neptát se znovu</string>
+	<key>APP_RATING_TITLE</key>
+	<string>Ohodnoťte tuto aplikaci?</string>
+	<key>ATTENDEES</key>
+	<string>Účastníci</string>
+	<key>ATTENDEES_EXCLUDED_FOR_TYPE</key>
+	<string>Někteří z účastníků nelze přidat, protože jejich účastníků jsou vyňaty z tohoto druhu výdajů.</string>
+	<key>ATTENDEE_ADD</key>
+	<string>Přidat účastníka</string>
+	<key>ATTENDEE_ADD_BUMP</key>
+	<string>Přidat účastníka prostřednictvím % @</string>
+	<key>ATTENDEE_ADD_CONTACT</key>
+	<string>Ručně přidat účastníka</string>
+	<key>ATTENDEE_ENTRY</key>
+	<string>Účastník</string>
+	<key>ATTENDEE_SEARCH_FOR_ATTENDEE</key>
+	<string>Vyhledávání pro účastníka</string>
+	<key>ATTENDEE_SELECT_CONTACT</key>
+	<string>Vybrat kontakt</string>
+	<key>AUTHENTICATION_FAILURE_MSG</key>
+	<string>Porušení neoprávněnému přístupu. Zkontrolujte prosím vaše uživatelské jméno nebo kód PIN.</string>
+	<key>AUTHENTICATION_TIMED_OUT_MSG</key>
+	<string>Vypršel časový limit připojení ke službě. Zkontrolujte, že jste směřují na správné URL.</string>
+	<key>A_ACCO</key>
+	<string>Schválené &amp; v účetnictví recenze</string>
+	<key>A_APPR</key>
+	<string>Schváleno</string>
+	<key>A_EXTV</key>
+	<string>Čekající na vnější ověření</string>
+	<key>A_FILE</key>
+	<string>Předložené</string>
+	<key>A_NOTF</key>
+	<string>Neodesláno</string>
+	<key>A_PECO</key>
+	<string>Čeká na schválení náklady objektu</string>
+	<key>A_PEND</key>
+	<string>Odeslaný &amp; čekající na schválení</string>
+	<key>A_PVAL</key>
+	<string>Čekající na potvrzení</string>
+	<key>A_RESU</key>
+	<string>Odesláno zpět na zaměstnance</string>
+	<key>A_RHLD</key>
+	<string>Blokováno pro příjem obrazu</string>
+	<key>A_TEXP</key>
+	<string>Schválení čas vypršel.</string>
+	<key>Abukai Expenses</key>
+	<string>Abukai výdaje</string>
+	<key>Accept</key>
+	<string>Přijmout</string>
+	<key>Access other areas of the app</key>
+	<string>Přístup k jiným oblastem aplikace</string>
+	<key>Accounting Code</key>
+	<string>Účetní kód</string>
+	<key>Actions offline</key>
+	<string>Vaše zařízení, je aktuálně offline. Připojit k Internetu a zkuste akci znovu.</string>
+	<key>Actual Arrival</key>
+	<string>Skutečné doručení</string>
+	<key>Actual Departure</key>
+	<string>Skutečný odlet</string>
+	<key>Actual Equipment</key>
+	<string>Skutečné zařízení</string>
+	<key>Actual Terminal</key>
+	<string>Skutečné terminál</string>
+	<key>Add Account to Concur</key>
+	<string>Přidání účtu do Concur</string>
+	<key>Add Amtrak</key>
+	<string>Přidat Amtrak</string>
+	<key>Add Another</key>
+	<string>Přidat další</string>
+	<key>Add Attendee</key>
+	<string>Přidat účastníka</string>
+	<key>Add Car</key>
+	<string>Přidat auto</string>
+	<key>Add Car Mileage</key>
+	<string>Přidat auto ujetých kilometrů</string>
+	<key>Add Card</key>
+	<string>Přidat kartu</string>
+	<key>Add Comment</key>
+	<string>Přidat komentář</string>
+	<key>Add Credit Card</key>
+	<string>Přidat kreditní kartu</string>
+	<key>Add Entry</key>
+	<string>Přidat položku</string>
+	<key>Add Expense</key>
+	<string>Přidat účet</string>
+	<key>Add Hotel</key>
+	<string>Přidat Hotel</string>
+	<key>Add Itemization</key>
+	<string>Přidat rozpis</string>
+	<key>Add Mileage</key>
+	<string>Přidat ujetých kilometrů</string>
+	<key>Add New Expense</key>
+	<string>Přidat nové výdaje</string>
+	<key>Add Receipt</key>
+	<string>Přidat příjem</string>
+	<key>Add Selected Attendee</key>
+	<string>Přidat vybrané účastníka</string>
+	<key>Add a Cash Expense</key>
+	<string>Přidat účet</string>
+	<key>Add a Receipt using the below buttons</key>
+	<string>Příjem pomocí pod tlačítky</string>
+	<key>Add an Attendee</key>
+	<string>Přidat účastníka</string>
+	<key>Add an Entry from a Picture</key>
+	<string>Přidejte položku z obrázku</string>
+	<key>Add credit card</key>
+	<string>Přidat kreditní kartu</string>
+	<key>Add expenses with attendees</key>
+	<string>Přidat výdaje s účastníky</string>
+	<key>Add from Photo Album</key>
+	<string>Přidat z fotoalba</string>
+	<key>Add to Report</key>
+	<string>Přidat do zprávy</string>
+	<key>Adding to Report</key>
+	<string>Přidání zprávy</string>
+	<key>Additional Charges (each night)</key>
+	<string>Další poplatky (každou noc)</string>
+	<key>Address</key>
+	<string>Adresa</string>
+	<key>Address point of interest airport code</key>
+	<string>Adresa, zajímavostí, kód letiště</string>
+	<key>Adults</key>
+	<string>Dospělí</string>
+	<key>Advanced Search</key>
+	<string>Rozšířené hledání</string>
+	<key>Afternoon</key>
+	<string>Odpoledne</string>
+	<key>Agency Code Sign In</key>
+	<string>Agentura kód přihlášení</string>
+	<key>Agency Sign In</key>
+	<string>Agentura přihlásit</string>
+	<key>Air Booking</key>
+	<string>Rezervace vzduchu</string>
+	<key>Air cancelled from mobile device</key>
+	<string>Vzduch zrušen z mobilního zařízení</string>
+	<key>Aircraft</key>
+	<string>Letadla</string>
+	<key>Airline</key>
+	<string>Letecká</string>
+	<key>Airports</key>
+	<string>Letiště</string>
+	<key>All</key>
+	<string>Všechny</string>
+	<key>All Expenses</key>
+	<string>Všechny výdaje</string>
+	<key>All Flights</key>
+	<string>Všechny lety</string>
+	<key>All Items</key>
+	<string>Všechny položky</string>
+	<key>All Nonstop</key>
+	<string>Vše Nonstop</string>
+	<key>All Results</key>
+	<string>Všechny výsledky</string>
+	<key>All States &amp; Provinces</key>
+	<string>Všechny státy &amp; provincie</string>
+	<key>All token (token results)</key>
+	<string>Všechny % @ (%d výsledky)</string>
+	<key>Already Expensed</key>
+	<string>Již vykazována</string>
+	<key>Already have an account SU</key>
+	<string>Máte již účet?</string>
+	<key>Amount</key>
+	<string>Částka</string>
+	<key>Amount in</key>
+	<string>Částka v</string>
+	<key>Amtrak</key>
+	<string>Amtrak</string>
+	<key>An Expense Report</key>
+	<string>Vyúčtování</string>
+	<key>An email containing the application's log has been placed in your outbox.</key>
+	<string>E-mail obsahující aplikace protokolu byl umístěn do složky Pošta k odeslání.</string>
+	<key>An email containing the application's log has been saved in your Drafts folder.</key>
+	<string>E-mail obsahující aplikace protokolu byla uložena do složky Koncepty.</string>
+	<key>An email has been sent containing your report.</key>
+	<string>E-mail byl odeslán obsahující vaše zpráva.</string>
+	<key>An invalid station for arrival has been specified.  Please select a station to arrive at.</key>
+	<string>Byla zadána neplatná stanice pro příchod. Zvolte prosím stanici dospět.</string>
+	<key>An invalid station for departure has been specified.  Please select a station to depart from.</key>
+	<string>Byla zadána neplatná stanice k odletu. Zvolte prosím odchýlit se od stanice.</string>
+	<key>An unexpected error occurred. Please try again later.</key>
+	<string>Došlo k neočekávané chybě. Opakujte akci později.</string>
+	<key>Any</key>
+	<string>Smíšené třídy</string>
+	<key>Any Car Class</key>
+	<string>Jakákoliv třída, auto</string>
+	<key>Anytime</key>
+	<string>Kdykoli</string>
+	<key>AppStore Expense</key>
+	<string>Pokud jste uživatelem Concur výdajů nebo Concur vánek a pak můžete použít mobilní řešení: | zachytit rychlé výdaje a příjmy pomocí zařízení fotoaparátu (žádné skenování, faxování nebo pošty požaduje) | zobrazit a upravit poplatky kreditní karty | výdaje přidat do existující nebo nový výdaj zprávu a odeslat zprávy | upravit sestavy záhlaví/výdaje | přidat itemizations /mileage | výdajů schválit nebo odmítnout zprávy s komentářem - dokonce zobrazte související příjmy!</string>
+	<key>Append</key>
+	<string>Připojit</string>
+	<key>Append Confirmation</key>
+	<string>Doplnit potvrzení</string>
+	<key>Append or Replace Receipt</key>
+	<string>Tento účet již účtenku s ním spojené. Prosím zvolte "Připojit" přidat tento nový příjem tohoto výdaje, nebo "Nahradit" nahradit stávající příjem s touto novou příjemku.</string>
+	<key>Application Information</key>
+	<string>Informace o aplikaci</string>
+	<key>Approval Summary</key>
+	<string>Schválení shrnutí</string>
+	<key>Approvals</key>
+	<string>Schválení</string>
+	<key>Approve</key>
+	<string>Schválit</string>
+	<key>Approve Trips</key>
+	<string>Schválit výlety</string>
+	<key>Approve by</key>
+	<string>Schválit</string>
+	<key>Approver</key>
+	<string>Schvalovatel</string>
+	<key>Approving Report</key>
+	<string>Schvalování zprávy</string>
+	<key>Approving Trip</key>
+	<string>Schvalování Trip</string>
+	<key>Apps</key>
+	<string>Apps</string>
+	<key>Are you sure</key>
+	<string>Jste si jisti, že chcete odstranit vybrané expense(s)?</string>
+	<key>Are you sure about adding smart expenses</key>
+	<string>Inteligentní výdaje budou sloučeny do jednu položku v sestavě.</string>
+	<key>Are you sure about smart expenses</key>
+	<string>Jste si jisti, že chcete odstranit vybrané expense(s)? Mobilní vstup portion(s) smart expense(s) z ní budou trvale odstraněny a související karty charge(s) bude skryta.</string>
+	<key>Are you sure that you want to delete this receipt</key>
+	<string>Jste si jisti, že chcete odstranit toto potvrzení?</string>
+	<key>Are you sure that you want to reserve the selected train(s)?</key>
+	<string>Jste si jisti, že chcete rezervovat vybranou vlaku nebo vlaků?</string>
+	<key>Are you sure you want to approve this trip?</key>
+	<string>Opravdu že chcete schválit tento výlet?</string>
+	<key>Are you sure you want to cancel this air reservation?</key>
+	<string>Opravdu že chcete zrušit rezervaci tohoto vzduch?</string>
+	<key>Are you sure you want to cancel this car reservation?</key>
+	<string>Opravdu že chcete zrušit rezervaci tohoto auta?</string>
+	<key>Are you sure you want to cancel this hotel reservation?</key>
+	<string>Opravdu že chcete zrušit tuto rezervaci v hotelu?</string>
+	<key>Are you sure you want to cancel this rail reservation?</key>
+	<string>Jste si jisti, že chcete zrušit rezervaci železniční?</string>
+	<key>Are you sure you want to delete the open report?</key>
+	<string>Jste si jisti, že chcete odstranit otevřenou sestavu?</string>
+	<key>Are you sure you want to reserve this car?</key>
+	<string>Jste si jistý, že chcete rezervovat auto?</string>
+	<key>Are you sure you want to reserve this flight?</key>
+	<string>Jste si jistý, že chcete rezervovat tento let?</string>
+	<key>Are you sure you want to unlink from your TripIt account?</key>
+	<string>Jste si jistý, že chcete odpojit od účtu TripIt?</string>
+	<key>Arrival City</key>
+	<string>Město příjezdu</string>
+	<key>Arrival Information</key>
+	<string>Informace o příjezdu</string>
+	<key>Arrival Station</key>
+	<string>Příchod stanice</string>
+	<key>Arrival Terminal</key>
+	<string>Příchod terminál</string>
+	<key>Arrive</key>
+	<string>Doručení</string>
+	<key>Arriving trains</key>
+	<string>Přijíždí: % @</string>
+	<key>Ask Me Later</key>
+	<string>Zeptejte se později</string>
+	<key>At Least 1 Month</key>
+	<string>Nejméně 1 měsíc</string>
+	<key>At Least 1 Week</key>
+	<string>Alespoň 1 týden</string>
+	<key>Attach Receipt</key>
+	<string>Připojit potvrzení</string>
+	<key>Attach via Receipt Store</key>
+	<string>Připojit prostřednictvím přijetí Store</string>
+	<key>Attendee</key>
+	<string>Účastník</string>
+	<key>Attendee Amount</key>
+	<string>Částka účastníka</string>
+	<key>Attendee Count</key>
+	<string>Počet návštěvníků</string>
+	<key>Attendee Group</key>
+	<string>Skupina účastníků</string>
+	<key>Attendee Search Results</key>
+	<string>Výsledky hledání účastníků</string>
+	<key>Attendee Type</key>
+	<string>Typ účastníka</string>
+	<key>Attendee data is unavailable.</key>
+	<string>Účastník údaje jsou k dispozici.</string>
+	<key>Attendee type cannot be changed.  Create a new attendee instead.</key>
+	<string>Nelze změnit typ účastníka. Místo toho vytvořte nového účastníka.</string>
+	<key>Attendees</key>
+	<string>Účastníci</string>
+	<key>Attendees not editable offline</key>
+	<string>Účastníci nelze upravovat offline.</string>
+	<key>Authenticating</key>
+	<string>Ověřování</string>
+	<key>Auto Login</key>
+	<string>Automatické přihlášení</string>
+	<key>Available From States/Provinces</key>
+	<string>K dispozici od státy/Provinces</string>
+	<key>Available From Stations</key>
+	<string>K dispozici od stanice</string>
+	<key>Available Itineraries</key>
+	<string>k dispozici trasy</string>
+	<key>Available States/Provinces</key>
+	<string>Dostupné státy/Provinces</string>
+	<key>Available Stations</key>
+	<string>Dostupné stanice</string>
+	<key>Available To States/Provinces</key>
+	<string>K dispozici pro státy/Provinces</string>
+	<key>Available To Stations</key>
+	<string>K dispozici pro stanice</string>
+	<key>Awaiting Approval</key>
+	<string>Čeká na schválení</string>
+	<key>BRONX_USER_CORP_APP_MSG</key>
+	<string>Nelze se přihlásit k Concur Mobile pomocí přihlašovací jméno pro SmartExpense verzi Concur. Chcete místo toho použít verzi SmartExpense?</string>
+	<key>BRONX_USER_CORP_APP_TITLE</key>
+	<string>SmartExpense uživatel není podporován</string>
+	<key>BTN_EDIT</key>
+	<string>Upravit</string>
+	<key>BUMP_HELP_TEXT1</key>
+	<string>Účastníkovi informace můžete sdílet výběrem "Stala účastníkem" níže.</string>
+	<key>BUMP_HELP_TEXT2</key>
+	<string>Váš spolupracovník zvolte přidat účastníka prostřednictvím % @ na účastníka část obrazovky, položky řádku zpráva.</string>
+	<key>BUMP_INSTRUCTION</key>
+	<string>Váš spolupracovník zvolte přidat účastníka prostřednictvím % @ na účastníka část obrazovky, položky řádku sestavy přidat vás jako účastníka k položce řádku zpráva.</string>
+	<key>BUMP_SHARE_HELP_TEXT1</key>
+	<string>Přidat účastníka výběrem "Přidat účastníka" níže.</string>
+	<key>BUMP_SHARE_HELP_TEXT2</key>
+	<string>Váš spolupracovník zvolte tlačítko "Účastník" na domovské obrazovce.</string>
+	<key>BUSGUEST</key>
+	<string>Obchodní host</string>
+	<key>Back</key>
+	<string>Zpět</string>
+	<key>Baggage Claim</key>
+	<string>Reklamace zavazadel</string>
+	<key>Become an Attendee</key>
+	<string>Stát se účastníkem</string>
+	<key>Before reserving this car in</key>
+	<string>Před rezervováním auto v rozporu s firemní politiky, musíte zadat důvod a zdůvodnění v polích vypsány v červené barvě.</string>
+	<key>Before reserving this car in justification</key>
+	<string>Před rezervováním auto v rozporu s firemní politiky, musíte poskytnout odůvodnění v poli zobrazené červeně.</string>
+	<key>Before reserving this car in reason</key>
+	<string>Před rezervováním auto v rozporu s firemní politiky, je třeba zadat důvod v poli zobrazené červeně.</string>
+	<key>Book Air</key>
+	<string>Kniha Air</string>
+	<key>Book Car</key>
+	<string>Kniha auto</string>
+	<key>Book Hotel</key>
+	<string>Kniha Hotel</string>
+	<key>Book Rail</key>
+	<string>Kniha Rail</string>
+	<key>Book Train</key>
+	<string>Kniha vlak</string>
+	<key>Book Travel</key>
+	<string>Kniha cestování</string>
+	<key>Book Travel on the go with Concur</key>
+	<string>Kniha cestování na cestách s Concur</string>
+	<key>Book a Hotel Car and more</key>
+	<string>Kniha vzduch, Hotel a další</string>
+	<key>Book a Trip</key>
+	<string>Kniha cesta</string>
+	<key>Booking Info</key>
+	<string>Informace o rezervaci</string>
+	<key>Bookings</key>
+	<string>Rezervace</string>
+	<key>Bookings offline</key>
+	<string>Rezervace nelze provést, zatímco vaše zařízení není v režimu offline. Připojte se k Internetu a akci opakujte.</string>
+	<key>Bump Phones to Become an Attendee</key>
+	<string>% @ Telefony se stát účastníkem</string>
+	<key>Bump Phones to Exchange Attendee Info</key>
+	<string>% @ Telefony na výměnu účastníkovi informace</string>
+	<key>Bus</key>
+	<string>Autobus</string>
+	<key>Business</key>
+	<string>Obchodní</string>
+	<key>By State or Province</key>
+	<string>Stát nebo provincie</string>
+	<key>CANNOT_ADD_TO_RPT_WAIT_IMAGE</key>
+	<string>Probíhá odesílání příjem. Počkejte několik sekund a opakujte akci</string>
+	<key>CAR</key>
+	<string>Vypůjčení auta</string>
+	<key>CARDS_LIST</key>
+	<string>Karty</string>
+	<key>CAR_DETAILS</key>
+	<string>Podrobnosti o auto</string>
+	<key>CAR_LIST</key>
+	<string>Vybrat auto</string>
+	<key>CHECK_OUT_DATE_ERR_MSG</key>
+	<string>Zadejte datum, později než datum se změnami.</string>
+	<key>COMMENTS</key>
+	<string>Poznámky</string>
+	<key>COMPANY_NAME</key>
+	<string>Název společnosti</string>
+	<key>COMPANY_SSO_DISABLED_MSG</key>
+	<string>Společnost-přihlášení bylo zakázáno pro vaši společnost. Obraťte se na správce společnosti.</string>
+	<key>COMPANY_SSO_INITIATED_REMOTE_WIPE</key>
+	<string>Váš účet údaje byly vymazány z tohoto zařízení. Obraťte se na správce společnosti.</string>
+	<key>CONFIGURING_SESSION</key>
+	<string>Konfigurace mobilních session...</string>
+	<key>CONFIRM_CONTINUE</key>
+	<string>Jste si jisti, že chcete pokračovat?</string>
+	<key>CONFIRM_DETACH_TEXT</key>
+	<string>Jste si jisti, že chcete odpojit obraz příjem?</string>
+	<key>CONFIRM_RECEIPT_DELETE</key>
+	<string>Opravdu že chcete odstranit toto potvrzení?</string>
+	<key>CONFIRM_RECEIPT_DELETION</key>
+	<string>Opravdu že chcete odstranit toto potvrzení?</string>
+	<key>CONFIRM_REPORT_SUBMISSION</key>
+	<string>Jste si jistý, že chcete odeslat toto vyúčtování?</string>
+	<key>COPY_DOWN_ENTRY_MSG</key>
+	<string>Změnili jste % @ pole v této položce. Chcete přepsat % @ pole ve všech položek a itemizations spojené s touto položkou s novou hodnotou zadanou tady? Klepněte na tlačítko Ano, chcete-li přepsat hodnoty. Klepněte na tlačítko Ne, chcete-li uložit změny pouze v položce.</string>
+	<key>COPY_DOWN_RPT_MSG</key>
+	<string>Změnili jste % @ pole v záhlaví této zprávy. Chcete přepsat % @ pole ve všech položkách a itemizations v této zprávě se nová hodnota zadaná? Klepněte na tlačítko Ano, chcete-li přepsat hodnoty. Klepněte na tlačítko Ne, chcete-li uložit změny pouze v záhlaví sestavy.</string>
+	<key>CORP_CARDS_0</key>
+	<string>Nemáte žádné poplatky za nevyužité corporate card</string>
+	<key>CORP_CARDS_1</key>
+	<string>Máte 1 nepoužité firemní karta zdarma</string>
+	<key>CORP_CARDS_2</key>
+	<string>Máte %d poplatky za nevyužité corporate card</string>
+	<key>CORP_SSO_MSG</key>
+	<string>Pokud vaše společnost vydala společnost kód, zadejte ji níže.</string>
+	<key>CORP_SSO_MSG_GOV</key>
+	<string>Je-li vaše agentura vydala agentura kód, vložte jej níže.</string>
+	<key>CORP_USER_SU_APP_MSG</key>
+	<string>Nemůžete přihlásit k této SmartExpense verzi Concur s Concur Mobile přihlášení. Chcete místo toho použít Concur Mobile?</string>
+	<key>CORP_USER_SU_APP_TITLE</key>
+	<string>Firemní uživatel není podporován</string>
+	<key>CREATE_ADD</key>
+	<string>Vytvořit &amp; přidat</string>
+	<key>Cache</key>
+	<string>Mezipaměť</string>
+	<key>Cache Done Title</key>
+	<string>Cache čištění dokončeno</string>
+	<key>Camera</key>
+	<string>Připojit přes Camera</string>
+	<key>Cancel</key>
+	<string>Storno</string>
+	<key>Cancel Air</key>
+	<string>Zrušit vzduch</string>
+	<key>Cancel Car</key>
+	<string>Zrušit auto</string>
+	<key>Cancel Failed</key>
+	<string>Zrušit selhala</string>
+	<key>Cancel Hotel</key>
+	<string>Storno Hotel</string>
+	<key>Cancel Rail</key>
+	<string>Zrušit železniční</string>
+	<key>Cancel Trip</key>
+	<string>Zrušit cestu</string>
+	<key>Cancel Upload</key>
+	<string>Zrušit odesílání</string>
+	<key>Cancel air reservation</key>
+	<string>Zrušit rezervaci vzduchu</string>
+	<key>Cancel car reservation</key>
+	<string>Zrušit rezervaci vozu</string>
+	<key>Cancel hotel reservation</key>
+	<string>Zrušit rezervaci v hotelu</string>
+	<key>Cannot Save Changes</key>
+	<string>Změny nelze uložit.</string>
+	<key>Cannot Submit Report</key>
+	<string>Nelze odeslat zprávu</string>
+	<key>Cannot access receipt</key>
+	<string>Nelze získat přístup k příjmu</string>
+	<key>Cannot append receipt</key>
+	<string>Nelze připojit potvrzení</string>
+	<key>Cannot expense trip</key>
+	<string>Nelze výdaje trip</string>
+	<key>Capture Receipt</key>
+	<string>Digitalizace příjem</string>
+	<key>Capture car mileage</key>
+	<string>Zachycení car Tachometr</string>
+	<key>Capture expense and receipt</key>
+	<string>Náklady a příjem</string>
+	<key>Capture your expenses while you travel</key>
+	<string>Digitalizovat své výdaje při cestování</string>
+	<key>Car</key>
+	<string>Auto</string>
+	<key>Car Mileage</key>
+	<string>Auto vzdálenost</string>
+	<key>Car Mileage Text</key>
+	<string>Náklady na vaše najetých kilometrů</string>
+	<key>Car Type</key>
+	<string>Typ vozu</string>
+	<key>Car cancelled from mobile device</key>
+	<string>Auto zrušen z mobilního zařízení</string>
+	<key>Card</key>
+	<string>Karta</string>
+	<key>Card Charges</key>
+	<string>Poplatky za kartu</string>
+	<key>Card Transactions</key>
+	<string>Transakce kartou</string>
+	<key>Cards</key>
+	<string>Karty</string>
+	<key>Cars</key>
+	<string>Automobily</string>
+	<key>Cars near</key>
+	<string>Vozy v blízkosti</string>
+	<key>Cars_subline</key>
+	<string>Vyzvednout nějaké skvělé kola</string>
+	<key>Cash</key>
+	<string>Hotovost</string>
+	<key>Chain Least Preferred</key>
+	<string>Řetěz alespoň přednost</string>
+	<key>Chain Most Preferred</key>
+	<string>Řetěz nejvíce preferované</string>
+	<key>Chain Preferred</key>
+	<string>Řetěz preferované</string>
+	<key>Changing the expense type will remove all itemized data</key>
+	<string>Změníte-li typ výdaje odeberete veškeré jednotlivé údaje z tohoto vyúčtování výdajů. Chcete pokračovat?</string>
+	<key>Check  In</key>
+	<string>Přihlásit se</string>
+	<key>Check In</key>
+	<string>Přihlásit se</string>
+	<key>Check In Complete</key>
+	<string>Kontrola úplné</string>
+	<key>Check In Complete Message</key>
+	<string>Úspěšně jste zkontrolovali s aktuálním umístění.</string>
+	<key>Check In Failed Message</key>
+	<string>Nemůžete přihlášení v tuto chvíli. Opakujte akci později.</string>
+	<key>Check Invoice Image</key>
+	<string>Kontrola obrazu faktury</string>
+	<key>Check connection retry from receipt store</key>
+	<string>Zkontrolujte připojení a pokuste se znovu připojte příjmu z příjmu úložiště.</string>
+	<key>Check your spam folder or</key>
+	<string>Máš to? Zkontrolujte složku Nevyžádaná pošta nebo</string>
+	<key>Check-in</key>
+	<string>Check-in</string>
+	<key>Check-in Date</key>
+	<string>Datum vrácení se změnami</string>
+	<key>Check-out</key>
+	<string>Check-out</string>
+	<key>Check-out Date</key>
+	<string>Check-out data</string>
+	<key>Checking In</key>
+	<string>Kontrola</string>
+	<key>Checking Network Connection</key>
+	<string>Kontrola síťového připojení</string>
+	<key>Checking Out</key>
+	<string>Rezervování</string>
+	<key>Children</key>
+	<string>Děti</string>
+	<key>Class &amp; Seat Number</key>
+	<string>Číslo třídy &amp; sedadla</string>
+	<key>Class / Seat</key>
+	<string>Třída / sedadla</string>
+	<key>Class of Service</key>
+	<string>Třída služby</string>
+	<key>Class: %@</key>
+	<string>Třída: % @</string>
+	<key>Clear out the local cache</key>
+	<string>Vymazat z místní mezipaměti</string>
+	<key>Close</key>
+	<string>Zavřít</string>
+	<key>Comment</key>
+	<string>Komentář</string>
+	<key>Comments</key>
+	<string>Poznámky</string>
+	<key>Commonly Used</key>
+	<string>Běžně používané</string>
+	<key>Compact</key>
+	<string>Kompaktní</string>
+	<key>Compact Hybrid</key>
+	<string>Kompaktní hybridní</string>
+	<key>Company</key>
+	<string>Společnost</string>
+	<key>Company Code Sign In</key>
+	<string>Společnost kód přihlášení</string>
+	<key>Company Name</key>
+	<string>Název společnosti</string>
+	<key>Company Sign In</key>
+	<string>Přihlásit se společnost</string>
+	<key>Company Sign On</key>
+	<string>Společnost přihlášení</string>
+	<key>Confirm Delete</key>
+	<string>Potvrdit odstranění</string>
+	<key>Confirm Detach</key>
+	<string>Potvrzení odpojení</string>
+	<key>Connecting with TripIt</key>
+	<string>Připojení s TripIt</string>
+	<key>Connection Error</key>
+	<string>Chyba připojení</string>
+	<key>Connection Settings</key>
+	<string>Nastavení připojení</string>
+	<key>Contact Received</key>
+	<string>Kontakt přijaté</string>
+	<key>Copyright Concur 2010</key>
+	<string>Copyright Concur 2013</string>
+	<key>Corp Cards</key>
+	<string>Karty</string>
+	<key>Corporate Card</key>
+	<string>Corporate Card</string>
+	<key>Corporate Cards</key>
+	<string>Firemní karty</string>
+	<key>Could not connect to Concur.</key>
+	<string>Nelze se připojit k Concur.</string>
+	<key>Could not expense trip</key>
+	<string>Tato cesta již byla vykazována</string>
+	<key>Could not load attendee data.</key>
+	<string>Nelze načíst data účastníka.</string>
+	<key>Could not load attendee form data.</key>
+	<string>Nelze načíst data formuláře účastník.</string>
+	<key>Could not load attendee search fields data.</key>
+	<string>Nelze načíst data pole vyhledávání účastníků.</string>
+	<key>Could not load expense data.</key>
+	<string>Nelze načíst data s náklady.</string>
+	<key>Could not save attendee data.  Please try again later.</key>
+	<string>Nelze uložit data účastníka. Opakujte akci později.</string>
+	<key>Crash Detected</key>
+	<string>Selhání zjištěných</string>
+	<key>Create &amp; Add</key>
+	<string>Vytvořit &amp; přidat</string>
+	<key>Create Password</key>
+	<string>Vytvořit heslo</string>
+	<key>Create Report</key>
+	<string>Vytvořit zprávu</string>
+	<key>Create a Report</key>
+	<string>Vytvořit sestavu</string>
+	<key>Create a report for your expenses to go into</key>
+	<string>Vytvořit sestavu pro vaše náklady do</string>
+	<key>Create an Account</key>
+	<string>Vytvořit účet</string>
+	<key>Create and submit your expense reports</key>
+	<string>Vytvořit a odeslat vaše vyúčtování</string>
+	<key>Credit Card</key>
+	<string>Kreditní karta</string>
+	<key>Currency</key>
+	<string>Měna</string>
+	<key>Currency Code</key>
+	<string>Kód měny</string>
+	<key>Current Location</key>
+	<string>Aktuální umístění</string>
+	<key>Current Trip</key>
+	<string>Aktuální</string>
+	<key>Current Trip Information</key>
+	<string>Aktuální informace o výjezdu</string>
+	<key>Currently Offline</key>
+	<string>V současné době Offline</string>
+	<key>Custom fields required message</key>
+	<string>Vaše rezervace politika společnosti není zatím podporována. Vlastní pole podpora už brzy přijde. Objednat cestování ve webové verzi Concur.</string>
+	<key>DISTANCE</key>
+	<string>Hledat hotely v rámci</string>
+	<key>Daily Rate</key>
+	<string>Denní sazba</string>
+	<key>Date</key>
+	<string>Datum</string>
+	<key>Day</key>
+	<string>Den</string>
+	<key>Days</key>
+	<string>Dny</string>
+	<key>Days Remaining at Location</key>
+	<string>Dní zbývá na místě</string>
+	<key>Delete</key>
+	<string>Odstranit</string>
+	<key>Delete Entry Failed</key>
+	<string>Odstranit položky se nezdařilo.</string>
+	<key>Delete Receipt</key>
+	<string>Odstranit příjem</string>
+	<key>Delete Report Failed</key>
+	<string>Odstranit zprávy se nezdařilo.</string>
+	<key>Deleting Out of Pocket Expense(s)</key>
+	<string>Odstraňování Expense(s)</string>
+	<key>Deleting Receipt</key>
+	<string>Odstranění příjem</string>
+	<key>Deleting Report</key>
+	<string>Odstranění zprávy</string>
+	<key>Delivery Options</key>
+	<string>Možnosti doručování</string>
+	<key>Depart</key>
+	<string>Odejít</string>
+	<key>Departing</key>
+	<string>Odcházející</string>
+	<key>Departing Train</key>
+	<string>Odjíždějící vlak</string>
+	<key>Departing trains</key>
+	<string>Odjezdy: % @ % @ % @</string>
+	<key>Departing: token token</key>
+	<string>Odjezdy: % @ % @</string>
+	<key>Departure</key>
+	<string>Odlet</string>
+	<key>Departure City</key>
+	<string>Město odletu</string>
+	<key>Departure Date</key>
+	<string>Datum odjezdu</string>
+	<key>Departure Gate</key>
+	<string>Východ k letadlům</string>
+	<key>Departure Information</key>
+	<string>Odeslání informací</string>
+	<key>Departure Station</key>
+	<string>Stanice odeslání</string>
+	<key>Departure Status</key>
+	<string>Odeslání Status</string>
+	<key>Departure Time</key>
+	<string>Čas odjezdu</string>
+	<key>Depending upon your company configuration some of the Concur for Mobile features may not be avaiable to you</key>
+	<string>V závislosti na konfigurace vaší společnosti a některé z Concur pro mobilní funkce nemusí být dostupné pro vás</string>
+	<key>Detach</key>
+	<string>Odpojit</string>
+	<key>Details</key>
+	<string>Podrobnosti</string>
+	<key>Dining</key>
+	<string>Stravování</string>
+	<key>Directions</key>
+	<string>Směry</string>
+	<key>Disabled by administrator</key>
+	<string>Zakázáno správcem</string>
+	<key>Dismiss tip overlay</key>
+	<string>Zrušit překryv tip</string>
+	<key>Distance</key>
+	<string>Vzdálenost</string>
+	<key>Distance calculated by Google</key>
+	<string>Vzdálenost vypočtená podle Google</string>
+	<key>Distance to Date = %@</key>
+	<string>Vzdálenost k datu = % @</string>
+	<key>Diversion Airport</key>
+	<string>Zneužívání letiště</string>
+	<key>Diversion City</key>
+	<string>Zneužívání město</string>
+	<key>Don't know your PIN?</key>
+	<string>Nevíte, že váš PIN?</string>
+	<key>Don't know your password?</key>
+	<string>Nevíte vaše heslo?</string>
+	<key>Don't know your user name?</key>
+	<string>Nevíte své uživatelské jméno?</string>
+	<key>Done</key>
+	<string>V</string>
+	<key>Done cache killing</key>
+	<string>Mezipaměť byly vymazány z tohoto zařízení. Bude třeba ukončit aplikaci a pak ji znovu spusťte. K tomu bude s největší pravděpodobností následek nestabilitu systému.</string>
+	<key>Dont have an Account Sign Up</key>
+	<string>Nemáte účet?</string>
+	<key>Download receipts in background</key>
+	<string>Stále stahování příjmy v pozadí. Můžete počkat, klepnutím na tlačítko Storno nebo pokračujte klepnutím na tlačítko OK.</string>
+	<key>Drop-off</key>
+	<string>Předání</string>
+	<key>Drop-off Date</key>
+	<string>Datum předání</string>
+	<key>Drop-off Time</key>
+	<string>Předání čas</string>
+	<key>Dropbox</key>
+	<string>Odkládací schránky</string>
+	<key>Duplicate Attendees</key>
+	<string>Účastníci duplicitní varování</string>
+	<key>Duplicates Found</key>
+	<string>Duplikáty</string>
+	<key>Duration</key>
+	<string>Doba trvání</string>
+	<key>E Ticket</key>
+	<string>E jízdenka</string>
+	<key>EMAIL</key>
+	<string>E-mail</string>
+	<key>EMPLOYEE</key>
+	<string>Zaměstnanec</string>
+	<key>ENTER_PIN_MSG</key>
+	<string>Zadejte kód PIN sestávající z nejméně 4 znaky pomocí písmen nebo čísel. Vaše společnost může vyžadovat další znaky.</string>
+	<key>ENTER_VALID_COMPANY_CODE</key>
+	<string>Zadejte hodnotu pro kód společnosti.</string>
+	<key>ENTRY_REQ_FIELDS</key>
+	<string>Prosím vyplňte všechna požadovaná pole a opravte případné chyby na formuláři před uložením vstupu.</string>
+	<key>ERROR</key>
+	<string>Chyba</string>
+	<key>ERROR_ACCOUNT_NOT_CONFIGURED</key>
+	<string>Váš účet není nakonfigurován pro odesílání zpráv.</string>
+	<key>ERROR_BAD_CONFIG_MSG</key>
+	<string>Konfigurace nepodporuje příjmy. Obraťte se na správce systému.</string>
+	<key>ERROR_CONFIGURING_SESSION</key>
+	<string>Konfigurace mobilní relace prostřednictvím jednotné přihlášení se nezdařilo. Obraťte se na správce společnosti.</string>
+	<key>ERROR_EXPENSE_SITE_DOWN</key>
+	<string>Výdajů prochází údržbou. Akci zopakujte asi za hodinu.</string>
+	<key>ERROR_INVALID_AGENCY_CODE</key>
+	<string>Zadejte váš kód agentury.</string>
+	<key>ERROR_INVALID_COMPANY_CODE</key>
+	<string>Zadejte prosím kód společnosti.</string>
+	<key>ERROR_INVALID_PIN</key>
+	<string>Váš kód PIN aplikace není platný. Zadejte váš kód PIN.</string>
+	<key>ERROR_MSG_VISIT_WEBSITE</key>
+	<string>Prosím navštivte web Concur poskytnout hodnotu.</string>
+	<key>ERROR_REQUIRED_FIELDS_MISSING</key>
+	<string>Nejméně jedna požadovaná pole v této zprávě chybí data. Červená výjimky vlajka vyznačuje výdajů a seznam identifikuje pole vyplnit.</string>
+	<key>ERROR_SUBMIT_FAILED</key>
+	<string>Odeslání se nezdařilo</string>
+	<key>EXCEPTIONS</key>
+	<string>Výjimky</string>
+	<key>EXPENSES_NEG_TEXT</key>
+	<string>Digitalizovat své výdaje na cestách</string>
+	<key>EXPENSE_DETAILS_ITEMIZATIONS</key>
+	<string>Itemizations</string>
+	<key>EXPENSE_REPORTS</key>
+	<string>Sestavy výdajů</string>
+	<key>EXPENSE_REPORTS_NEG_TEXT</key>
+	<string>Přezkoumat a předložit vaše zprávy</string>
+	<key>EXPENSE_TYPES_LIST</key>
+	<string>Výdajovými typy</string>
+	<key>Earliest Departure</key>
+	<string>Nejdřívější odjezd</string>
+	<key>Economy</key>
+	<string>Ekonomika</string>
+	<key>Economy Hybrid</key>
+	<string>Hybridní ekonomiky</string>
+	<key>Edit</key>
+	<string>Upravit</string>
+	<key>Email</key>
+	<string>E-mail</string>
+	<key>Email Address</key>
+	<string>E-mailová adresa</string>
+	<key>Email Log</key>
+	<string>E-mailů Log</string>
+	<key>Enter Approver Email</key>
+	<string>Vstoupit schvalovatel E-mail</string>
+	<key>Enter Field</key>
+	<string>Zadejte % @</string>
+	<key>Enter in the URL that connects to the Concur servers</key>
+	<string>Zadejte adresu URL, která se připojuje k Concur servery</string>
+	<key>Enter your Agency Code</key>
+	<string>Zadejte kód agentury</string>
+	<key>Enter your Company Code</key>
+	<string>Zadejte kód vaší společnosti</string>
+	<key>Error</key>
+	<string>Chyba</string>
+	<key>Error loading content</key>
+	<string>Chyba při načítání obsahu</string>
+	<key>ErrorReceiptsFetch</key>
+	<string>Odeslat žádné příjmy. Klepnutím na tlačítko '+' níže teď nahrání stvrzenku a použít je později z vaší zprávy nebo náklady položek.</string>
+	<key>Estimated Arrival</key>
+	<string>Odhad příletu</string>
+	<key>Estimated Departure</key>
+	<string>Odhad odjezd</string>
+	<key>Evening</key>
+	<string>Večer</string>
+	<key>Exception Details</key>
+	<string>Podrobnosti o výjimce</string>
+	<key>Exceptions</key>
+	<string>Výjimky</string>
+	<key>Existing Reports</key>
+	<string>Stávající sestavy</string>
+	<key>Expense</key>
+	<string>Výdaj</string>
+	<key>Expense Locations</key>
+	<string>Výdaje umístění</string>
+	<key>Expense Queued</key>
+	<string>Výdajů ve frontě</string>
+	<key>Expense Trip</key>
+	<string>Výdaje Trip</string>
+	<key>Expense Type</key>
+	<string>Druh výdaje</string>
+	<key>Expense Updates</key>
+	<string>Výdaje aktualizace</string>
+	<key>Expense a trip from TripIt</key>
+	<string>Výlet od TripIt výdaje</string>
+	<key>ExpenseTracker version</key>
+	<string>Verze % SmartExpense @</string>
+	<key>Expensed</key>
+	<string>Vykazována</string>
+	<key>Expenses</key>
+	<string>Výdaje</string>
+	<key>Expenses cannot be added offline</key>
+	<string>Výdaje nelze přidat do režimu offline.</string>
+	<key>Expensing the Trip</key>
+	<string>Expensing cesta</string>
+	<key>Export</key>
+	<string>Exportovat</string>
+	<key>Express</key>
+	<string>Express</string>
+	<key>FACEBOOK_AUTH_FAILED</key>
+	<string>Nepodařilo se použít Facebook k ověření. Ujistěte se prosím, že Private Browsing je zakázán na prohlížeče Safari.</string>
+	<key>FACEBOOK_INCOMPLETE_INFO_SIGNIN_MSG</key>
+	<string>Nelze se přihlásit se pomocí pověření Facebook. Zkontrolujte, zda máte platnou e-mailovou v profilu Facebook a přihlásit prostřednictvím e-mailu s účtem Facebook.</string>
+	<key>FACEBOOK_INCOMPLETE_INFO_SIGNUP_MSG</key>
+	<string>Nelze se přihlásit se pomocí pověření Facebook. Prosím zkontrolujte, zda e-mail, jméno a příjmení jsou vyplněné v profilu Facebook a přihlásit prostřednictvím e-mailu s účtem Facebook.</string>
+	<key>FACEBOOK_SIGNIN_FAILED_MSG</key>
+	<string>Neočekávaná chyba. Opakujte přihlášení Facebook nebo použijte jinou metodu SignIn z přihlašovací stránky.</string>
+	<key>FACEBOOK_SIGNUP_FAILED_MSG</key>
+	<string>Neočekávaná chyba. Znovu Facebook zápisu nebo použijte jinou metodu zápisu ze stránky zaregistrovat.</string>
+	<key>FIELD_MAX_LENGTH_ERR_MSG</key>
+	<string>Prosím zadejte nejvýše % @ znaky.</string>
+	<key>FILL_IN_PARENT_MLIST_FIELD</key>
+	<string>Vyplňte, prosím, nadřazené pole % @ první.</string>
+	<key>FIRST_NAME</key>
+	<string>Křestní jméno</string>
+	<key>FIX_EMAIL_RESET_PASSWORD</key>
+	<string>Před klepnutím na obnovit odkaz vaše heslo zadejte platný e-mail do pole e-mailová adresa.</string>
+	<key>FIX_REPORT_NAME_MSG</key>
+	<string>Vyberte existující sestavu nebo zadejte platný název sestavy a poté vyberte novou sestavu.</string>
+	<key>FLEX_FARING_ERROR_MSG</key>
+	<string>Pro letecké cestování mezi těmito městy použijte k rezervaci letu na web.</string>
+	<key>FLIGHT_STATUS_MSG</key>
+	<string>Statistika letu aktualizováno</string>
+	<key>FORM</key>
+	<string>FORMULÁŘ</string>
+	<key>FORM_FIELDS_INVALID</key>
+	<string>Prosím vyplňte všechny požadované pole a opravte případné chyby na formuláři před uložením.</string>
+	<key>FOUND_COUNT</key>
+	<string>nalezeno: %i</string>
+	<key>FREQUENT_FLYER_NO_SEL_MSG</key>
+	<string>Jste jeden nebo více účtů frequent flyer, ale pro tuto rezervaci nevybrali. Vyberte tlačítko OK pokračovat bez účtu, nebo "Storno" Vybrat účet.</string>
+	<key>Facebook</key>
+	<string>Facebook</string>
+	<key>Failed</key>
+	<string>Se nezdařilo.</string>
+	<key>Failed to add to report</key>
+	<string>Nepodařilo se přidat položky do zprávy.</string>
+	<key>Failed to download receipt</key>
+	<string>Nepodařilo se stáhnout příjem</string>
+	<key>Failed to import entry</key>
+	<string>Nelze importovat některých výdajů.</string>
+	<key>Failed to retrieve attendees in selected group</key>
+	<string>Načtení účastníků ve vybrané skupině se nezdařilo.</string>
+	<key>Failed to save external list item</key>
+	<string>Nepodařilo se uložit položku externí seznamu</string>
+	<key>Failure</key>
+	<string>Neúspěch</string>
+	<key>Fare Choices</key>
+	<string>Jízdné možností</string>
+	<key>Feature not enabled for this demo</key>
+	<string>Funkce není povolena pro tuto demo</string>
+	<key>Features</key>
+	<string>Funkce</string>
+	<key>Fetching Data</key>
+	<string>Načítání dat</string>
+	<key>Fetching Expense Data</key>
+	<string>Načítání dat výdajů</string>
+	<key>Fetching Filter Results</key>
+	<string>Načítání výsledky filtru</string>
+	<key>Fetching Location Data</key>
+	<string>Načítání umístění dat</string>
+	<key>Fetching Trip</key>
+	<string>Načítání Trip</string>
+	<key>Fetching the Feed</key>
+	<string>Načítání kanálu</string>
+	<key>Find Travel</key>
+	<string>Najít cestování</string>
+	<key>First</key>
+	<string>První</string>
+	<key>First Name</key>
+	<string>Křestní jméno</string>
+	<key>Flight Details</key>
+	<string>Jednotlivé údaje o letu</string>
+	<key>Flight Duration</key>
+	<string>Doba trvání letu</string>
+	<key>Flight Schedules</key>
+	<string>Letové řády</string>
+	<key>Flight Status</key>
+	<string>Letecký Status</string>
+	<key>Flights</key>
+	<string>Lety</string>
+	<key>Flights_subline</key>
+	<string>Najít a rezervovat lety rychle</string>
+	<key>Free up memory and retry receipt upload</key>
+	<string>Uvolněte paměť a akci opakujte potvrzení odeslat později.</string>
+	<key>Frequent Flyer Program</key>
+	<string>Frequent Flyer programu</string>
+	<key>Frequent Flyer Warning</key>
+	<string>Frequent Flyer varování</string>
+	<key>From</key>
+	<string>Od</string>
+	<key>From Location</key>
+	<string>Z místa</string>
+	<key>From Station</key>
+	<string>Od stanice</string>
+	<key>Full</key>
+	<string>Úplné</string>
+	<key>Full Hybrid</key>
+	<string>Vyšší třídy hybridní</string>
+	<key>Full Pickup</key>
+	<string>Pickup vyšší třídy</string>
+	<key>Full SUV</key>
+	<string>Vyšší třídy SUV</string>
+	<key>Future Trips</key>
+	<string>Nadcházející</string>
+	<key>GOOGLE_AUTH_FAILED_MSG</key>
+	<string>Nelze použít Google povolit přístup k Concur SmartExpense.</string>
+	<key>GOOGLE_INCOMPLETE_INFO_SIGNIN_MSG</key>
+	<string>Nelze se přihlásit se pomocí pověření společnosti Google. Ujistěte se prosím, že máte platnou e-mailovou a profilu ve vašem účtu Google.</string>
+	<key>GOOGLE_INCOMPLETE_INFO_SIGNUP_MSG</key>
+	<string>Nelze se přihlásit se pomocí pověření společnosti Google. Ujistěte se prosím, že e-mail, jméno a příjmení jsou vyplněné v profilu Google.</string>
+	<key>Gate token</key>
+	<string>Gate % @</string>
+	<key>GateGuru</key>
+	<string>GateGuru</string>
+	<key>Gathering data from TripIt</key>
+	<string>Shromažďování dat z TripIt</string>
+	<key>Get Help</key>
+	<string>Získat pomoc</string>
+	<key>Google</key>
+	<string>Google</string>
+	<key>Greater than 25</key>
+	<string>Větší než 25</string>
+	<key>HAS_DYNAMIC_FIELDS_MSG</key>
+	<string>Vaše rezervace politika společnosti není zatím podporována. Podpora pro to už brzy přijde. Objednat cestování ve webové verzi Concur.</string>
+	<key>HIGH_RESOLUTION_IMAGE</key>
+	<string>Vysoké rozlišení (1000x1000px)</string>
+	<key>HOME_PAGE</key>
+	<string>Concur</string>
+	<key>HOME_PAGE_BREEZE</key>
+	<string>Concur vánek</string>
+	<key>HOTEL</key>
+	<string>Hotel</string>
+	<key>HOTEL_BOOKING</key>
+	<string>Kniha místnost</string>
+	<key>HOTEL_BOOKING_VIEW_BOOKING_ERROR_MESSAGE</key>
+	<string>Hotel nelze rezervovat.</string>
+	<key>HOTEL_BOOKING_VIEW_CONFIRM_BOOKING_MESSAGE</key>
+	<string>Jste si jistý, že chcete rezervovat tuto místnost?</string>
+	<key>HOTEL_BOOKING_VIEW_CONFIRM_BOOKING_TITLE</key>
+	<string>Prosím, potvrďte</string>
+	<key>HOTEL_BOOKING_VIEW_DAILY_RATE</key>
+	<string>Denní sazba:</string>
+	<key>HOTEL_BOOKING_VIEW_MISSING_VIOLATION_INFO_TITLE</key>
+	<string>Chybějící pole</string>
+	<key>HOTEL_BOOKING_VIEW_MISSING_VIOLATION_JUSTIFICATION</key>
+	<string>Před rezervováním tuto místnost v rozporu s firemní politiky, musíte poskytnout odůvodnění v poli zobrazené červeně.</string>
+	<key>HOTEL_BOOKING_VIEW_MISSING_VIOLATION_REASON</key>
+	<string>Před rezervováním tuto místnost v rozporu s firemní politiky, je třeba zadat důvod v poli zobrazené červeně.</string>
+	<key>HOTEL_BOOKING_VIEW_MISSING_VIOLATION_REASON_AND_JUSTIFICATION</key>
+	<string>Před rezervováním tuto místnost v rozporu s firemní politiky, musíte zadat důvod a zdůvodnění v polích vypsány v červené barvě.</string>
+	<key>HOTEL_BOOKING_VIEW_ROOM</key>
+	<string>Místnost</string>
+	<key>HOTEL_BOOKING_VIOLATION_JUSTIFICATION_TITLE</key>
+	<string>Narušení zarovnání</string>
+	<key>HOTEL_BOOKNIG_VIOLATION_JUSTIFICATION_PLACEHOLDER_TEXT</key>
+	<string>Zadejte prosím ospravedlnění pro rezervace tuto místnost.</string>
+	<key>HOTEL_CREDIT_CARD</key>
+	<string>Vybrat kreditní kartu</string>
+	<key>HOTEL_DETAILS_VIEW_FEES</key>
+	<string>Poplatky</string>
+	<key>HOTEL_ROOM_LIST</key>
+	<string>Vybrat místnost</string>
+	<key>HOTEL_SEARCH_RESULTS</key>
+	<string>Vybrat Hotel</string>
+	<key>HOTEL_VIEW_FIND_HOTELS_WITHIN</key>
+	<string>Hledat hotely v rámci</string>
+	<key>HOTEL_VIEW_HOTEL_NAME_RESTRICTIONS</key>
+	<string>Název hotelu omezení</string>
+	<key>HOTEL_VIEW_HOTEL_NAME_RESTRICTIONS_PLACEHOLDER_TEXT</key>
+	<string>Hledat hotely, jejichž názvy obsahují tento text</string>
+	<key>HOTEL_VIEW_KILOMETERS</key>
+	<string>km</string>
+	<key>HOTEL_VIEW_LOCATION</key>
+	<string>Umístění</string>
+	<key>HOTEL_VIEW_MILE</key>
+	<string>míle</string>
+	<key>HOTEL_VIEW_MILES</key>
+	<string>Miles</string>
+	<key>HOTEL_VIEW_NO_HOTELS_MESSAGE</key>
+	<string>Nebyly nalezeny žádné odpovídající hotely. Prosím pozměnit kritéria hledání a opakujte akci.</string>
+	<key>HOTEL_VIEW_NO_HOTELS_TITLE</key>
+	<string>Žádné odpovídající hotely</string>
+	<key>HOTEL_VIEW_NUMBER_SPACE_KILOMETERS_OR_MILES</key>
+	<string>%@ %@</string>
+	<key>HOTEL_VIEW_SEARCHING_FOR_HOTELS_AT</key>
+	<string>Pro hotely na hledání</string>
+	<key>HOTEL_VIEW_SEARCHING_FOR_HOTELS_TO</key>
+	<string>do</string>
+	<key>HOTEL_VIEW_SEARCHING_FOR_HOTELS_WITH_AVAILABILITY</key>
+	<string>pokoje k dispozici od</string>
+	<key>HOTEL_VIEW_SEARCH_BUTTON_TITLE</key>
+	<string>Hledat hotely</string>
+	<key>HOTEL_VIEW_SELECT_PREFERENCE</key>
+	<string>Vybrat předvolbu</string>
+	<key>HOTEL_VIEW_SMOKING_PREFERENCE</key>
+	<string>Kouření přednost</string>
+	<key>HOTEL_VIEW_SPECIFY_LOCATION_MESSAGE</key>
+	<string>Zadejte umístění.</string>
+	<key>HOTEL_VIEW_SPECIFY_LOCATION_TITLE</key>
+	<string>Umístění vyžaduje</string>
+	<key>HOTEL_VIEW_WITH_NAMES_CONTAINING</key>
+	<string>S názvy obsahující</string>
+	<key>Having trouble signing in?</key>
+	<string>Potíže s přihlášením?</string>
+	<key>Help for PIN</key>
+	<string>Váš kód PIN je alternativní způsob, jak se přihlásit a mohou být vytvořeny v případech, kdy jste automaticky přihlášeni do webové verze Concur vaší firmou a neznáte heslo. Chcete-li vytvořit kód PIN, navštivte webovou verzi Concur (profil &gt; Mobile registrace).</string>
+	<key>Help for PIN - Gov</key>
+	<string>Váš kód PIN je alternativní způsob, jak se přihlásit a mohou být vytvořeny v případech, kdy jste automaticky přihlášeni do webové verze Concur vaší agenturou a neznáte heslo. Chcete-li vytvořit kód PIN, navštivte webovou verzi Concur (profil &gt; Mobile registrace).</string>
+	<key>Help for Password</key>
+	<string>Vaše heslo je ten, který používáte k přihlášení k webové verzi Concur. Byste měli použít heslo pro mobilní aplikace. Pokud neznáte heslo Concur konzultujte se správcem společnosti.</string>
+	<key>Help for Password - Gov</key>
+	<string>Vaše heslo je ten, který používáte k přihlášení k webové verzi Concur. Byste měli použít heslo pro mobilní aplikace. Pokud neznáte heslo Concur, obraťte se na správce agentura.</string>
+	<key>Help for User Name</key>
+	<string>Vaše uživatelské jméno je ten, který používáte k přihlášení k webové verzi Concur. Používejte své uživatelské jméno pro mobilní aplikace. Pokud neznáte Concur uživatelské jméno šek s správce společnosti.</string>
+	<key>Help for User Name - Gov</key>
+	<string>Vaše uživatelské jméno je ten, který používáte k přihlášení k webové verzi Concur. Byste měli použít své uživatelské jméno pro mobilní aplikace. Pokud neznáte Concur uživatelské jméno šek s správce agentura.</string>
+	<key>Hide Offers</key>
+	<string>Skrýt nabídky</string>
+	<key>Home</key>
+	<string>Domů</string>
+	<key>Hotel</key>
+	<string>Hotel</string>
+	<key>Hotel Dates</key>
+	<string>Hotel data</string>
+	<key>Hotel Name</key>
+	<string>Název hotelu</string>
+	<key>Hotel Search</key>
+	<string>Hotel hledání</string>
+	<key>Hotel cancelled from mobile device</key>
+	<string>Hotel zrušen z mobilního zařízení</string>
+	<key>Hotels</key>
+	<string>Hotely</string>
+	<key>Hotels near</key>
+	<string>Hotely poblíž</string>
+	<key>Hotels_subline</key>
+	<string>Ubytoval se v hotelu perfektní</string>
+	<key>Hour</key>
+	<string>Hodina</string>
+	<key>IDV Arrive</key>
+	<string>Doručení</string>
+	<key>IDV Arrives in t at t</key>
+	<string>Přichází v % @ % @</string>
+	<key>IDV Body</key>
+	<string>Tělo</string>
+	<key>IDV Check In</key>
+	<string>Přihlásit se</string>
+	<key>IDV Check Out</key>
+	<string>Mrkni se</string>
+	<key>IDV Confirmation</key>
+	<string>Potvrzení</string>
+	<key>IDV Daily</key>
+	<string>Denně</string>
+	<key>IDV Depart</key>
+	<string>Odejít</string>
+	<key>IDV Departs from t at t</key>
+	<string>Odjíždí z % @ % @</string>
+	<key>IDV Drop Off</key>
+	<string>Vysadit</string>
+	<key>IDV Operated by t Flight t</key>
+	<string>Provozuje @ letu % @</string>
+	<key>IDV Persons</key>
+	<string>Osoby</string>
+	<key>IDV Pick Up</key>
+	<string>Pick Up</string>
+	<key>IDV Reserved for</key>
+	<string>Rezervováno pro</string>
+	<key>IDV Rooms</key>
+	<string>Pokoje</string>
+	<key>IDV Seat Map for t</key>
+	<string>Mapa sedadla pro % @</string>
+	<key>IDV Social Publishing</key>
+	<string>Sociální Publishing</string>
+	<key>IDV Terminal Map for t</key>
+	<string>Terminál mapa pro % @</string>
+	<key>IDV Terminal t Gate t</key>
+	<string>Terminál @ Gate % @</string>
+	<key>IDV Web site for t</key>
+	<string>Webová stránka pro % @</string>
+	<key>IDV property name</key>
+	<string>Název vlastnosti</string>
+	<key>IDV t Flight t</key>
+	<string>@ Letu @ %</string>
+	<key>IMAGE_DOWN_SCALED_MSG</key>
+	<string>Velikost obrazu snížena na do 4 MB. Zkontrolujte, zda obsah obrazu před uložením s položkou.</string>
+	<key>INFO</key>
+	<string>Informace</string>
+	<key>INTEGER_NEGATIVE_ERR_MSG</key>
+	<string>Toto pole nemůže mít zápornou hodnotu</string>
+	<key>INTEGER_TOO_BIG_ERR_MSG</key>
+	<string>Příliš velké celé číslo</string>
+	<key>INTEGER_VALIDATION_ERR_MSG</key>
+	<string>Toto pole vyžaduje celočíselnou hodnotu.</string>
+	<key>INVOICES_TO_REVIEW</key>
+	<string>Faktury k přezkoumání</string>
+	<key>INVOICE_LINEITEMS</key>
+	<string>Podrobnosti faktury</string>
+	<key>INVOICE_LINEITEM_DETAIL</key>
+	<string>Položka řádku</string>
+	<key>INVOICE_SUMMARY</key>
+	<string>Přehled faktur</string>
+	<key>INVOICE_VENDOR</key>
+	<string>Fakturace (dodavatel)</string>
+	<key>ITEMIZATIONS</key>
+	<string>Itemizations</string>
+	<key>ITEMIZATION_LIST</key>
+	<string>Rozpis seznam</string>
+	<key>ITEMS_TO_APPROVE</key>
+	<string>%d položek ke schválení</string>
+	<key>ITIN_DETAILS</key>
+	<string>Podrobnosti o segment</string>
+	<key>ITIN_DETAILS_VIEW_AIR</key>
+	<string>Vzduch</string>
+	<key>ITIN_DETAILS_VIEW_AIRCOND</key>
+	<string>Klimatizace</string>
+	<key>ITIN_DETAILS_VIEW_AIRCRAFT</key>
+	<string>Letadla</string>
+	<key>ITIN_DETAILS_VIEW_AIRPORT</key>
+	<string>Letiště</string>
+	<key>ITIN_DETAILS_VIEW_ALLOWABLE_MILES</key>
+	<string>Přípustné mil</string>
+	<key>ITIN_DETAILS_VIEW_AMENITIES</key>
+	<string>Vybavení</string>
+	<key>ITIN_DETAILS_VIEW_ARRIVAL</key>
+	<string>Příjezd</string>
+	<key>ITIN_DETAILS_VIEW_ARRIVE</key>
+	<string>Doručení</string>
+	<key>ITIN_DETAILS_VIEW_BAGGAGE</key>
+	<string>Zavazadla</string>
+	<key>ITIN_DETAILS_VIEW_BODY</key>
+	<string>Typ těla</string>
+	<key>ITIN_DETAILS_VIEW_BOOKING</key>
+	<string>Rezervace</string>
+	<key>ITIN_DETAILS_VIEW_CABIN</key>
+	<string>Kabina</string>
+	<key>ITIN_DETAILS_VIEW_CANCEL_POLICY</key>
+	<string>Zrušit politika</string>
+	<key>ITIN_DETAILS_VIEW_CAR</key>
+	<string>Vypůjčení auta</string>
+	<key>ITIN_DETAILS_VIEW_CARRIER</key>
+	<string>Dopravce</string>
+	<key>ITIN_DETAILS_VIEW_CHECK_IN</key>
+	<string>Přihlásit se</string>
+	<key>ITIN_DETAILS_VIEW_CHECK_OUT</key>
+	<string>Mrkni se</string>
+	<key>ITIN_DETAILS_VIEW_CITY</key>
+	<string>Město</string>
+	<key>ITIN_DETAILS_VIEW_CLASS</key>
+	<string>Třída</string>
+	<key>ITIN_DETAILS_VIEW_CONFIRM_NUM</key>
+	<string>Potvrdit #</string>
+	<key>ITIN_DETAILS_VIEW_CONF_NUM</key>
+	<string>Potvrzení #</string>
+	<key>ITIN_DETAILS_VIEW_CONTACT</key>
+	<string>Kontakt</string>
+	<key>ITIN_DETAILS_VIEW_DAILY_RATE</key>
+	<string>Denní sazba</string>
+	<key>ITIN_DETAILS_VIEW_DEPART</key>
+	<string>Odejít</string>
+	<key>ITIN_DETAILS_VIEW_DEPARTURE</key>
+	<string>Odlet</string>
+	<key>ITIN_DETAILS_VIEW_DISCOUNT</key>
+	<string>Kód slevy</string>
+	<key>ITIN_DETAILS_VIEW_DIVERSION</key>
+	<string>Zneužívání</string>
+	<key>ITIN_DETAILS_VIEW_DROP_OFF</key>
+	<string>Vysadit</string>
+	<key>ITIN_DETAILS_VIEW_DROP_OFF_ADDRESS</key>
+	<string>Vysadit adresy</string>
+	<key>ITIN_DETAILS_VIEW_DROP_OFF_INSTRUCTIONS</key>
+	<string>Vysadit instrukce</string>
+	<key>ITIN_DETAILS_VIEW_DURATION</key>
+	<string>Doba trvání</string>
+	<key>ITIN_DETAILS_VIEW_END</key>
+	<string>Konec</string>
+	<key>ITIN_DETAILS_VIEW_EQUIP</key>
+	<string>Zvláštní zařízení</string>
+	<key>ITIN_DETAILS_VIEW_FLIGHT</key>
+	<string>Let</string>
+	<key>ITIN_DETAILS_VIEW_FLIGHT_WITH_OB</key>
+	<string>%@ #%@ (%@ #%@)</string>
+	<key>ITIN_DETAILS_VIEW_GATE</key>
+	<string>Brána</string>
+	<key>ITIN_DETAILS_VIEW_HOTEL</key>
+	<string>Hotel</string>
+	<key>ITIN_DETAILS_VIEW_INFO</key>
+	<string>Informace</string>
+	<key>ITIN_DETAILS_VIEW_MAP</key>
+	<string>Mapa</string>
+	<key>ITIN_DETAILS_VIEW_MEAL</key>
+	<string>Jídlo</string>
+	<key>ITIN_DETAILS_VIEW_MEETING_INSTRUCTIONS</key>
+	<string>Setkání instrukce</string>
+	<key>ITIN_DETAILS_VIEW_MINUTES</key>
+	<string>% @ minut</string>
+	<key>ITIN_DETAILS_VIEW_NUMBER_IN_PARTY</key>
+	<string>Číslo strany</string>
+	<key>ITIN_DETAILS_VIEW_NUMBER_OF_PERSONS</key>
+	<string>Počet osob</string>
+	<key>ITIN_DETAILS_VIEW_OPERATED</key>
+	<string>Provozuje % @-% @</string>
+	<key>ITIN_DETAILS_VIEW_PARKING</key>
+	<string>Parkovací centrum</string>
+	<key>ITIN_DETAILS_VIEW_PICKUP_ADDRESS</key>
+	<string>Adresa nakládky</string>
+	<key>ITIN_DETAILS_VIEW_PICKUP_INSTRUCTIONS</key>
+	<string>Snímací instrukce</string>
+	<key>ITIN_DETAILS_VIEW_PLATFORM</key>
+	<string>Platforma</string>
+	<key>ITIN_DETAILS_VIEW_PRICE</key>
+	<string>Cena</string>
+	<key>ITIN_DETAILS_VIEW_RAIL</key>
+	<string>Železnice</string>
+	<key>ITIN_DETAILS_VIEW_RATE</key>
+	<string>Míra</string>
+	<key>ITIN_DETAILS_VIEW_RATE_DESCRIPTION</key>
+	<string>Popis kurzu</string>
+	<key>ITIN_DETAILS_VIEW_RATE_TYPE</key>
+	<string>Typ sazby</string>
+	<key>ITIN_DETAILS_VIEW_RESERVATION</key>
+	<string>Rezervace</string>
+	<key>ITIN_DETAILS_VIEW_REZ</key>
+	<string>Rezervace</string>
+	<key>ITIN_DETAILS_VIEW_ROOM</key>
+	<string>Místnost</string>
+	<key>ITIN_DETAILS_VIEW_SEAT</key>
+	<string>Sídlo</string>
+	<key>ITIN_DETAILS_VIEW_SEGMENT_DETAILS</key>
+	<string>Podrobnosti o segment</string>
+	<key>ITIN_DETAILS_VIEW_SPECIAL_INSTRUCTIONS</key>
+	<string>Speciální instrukce</string>
+	<key>ITIN_DETAILS_VIEW_START</key>
+	<string>Spustit</string>
+	<key>ITIN_DETAILS_VIEW_STATION</key>
+	<string>Nádraží</string>
+	<key>ITIN_DETAILS_VIEW_STATUS</key>
+	<string>Stav</string>
+	<key>ITIN_DETAILS_VIEW_STOPS</key>
+	<string>Zastaví</string>
+	<key>ITIN_DETAILS_VIEW_TERMINAL</key>
+	<string>Terminál</string>
+	<key>ITIN_DETAILS_VIEW_TOTAL_RATE</key>
+	<string>Celková míra</string>
+	<key>ITIN_DETAILS_VIEW_TRAIN_TYPE</key>
+	<string>Typ vlaku</string>
+	<key>ITIN_DETAILS_VIEW_TRANSMISSION</key>
+	<string>Přenos</string>
+	<key>ITIN_DETAILS_VIEW_TYPE</key>
+	<string>Typ</string>
+	<key>ITIN_DETAILS_VIEW_VENDOR</key>
+	<string>Dodavatel</string>
+	<key>ITIN_DETAILS_VIEW_WAGON_NUM</key>
+	<string>Vozu #</string>
+	<key>If you continue to experience</key>
+	<string>Opakujte akci. Budete-li mít problémy s přístupem systému, kontaktujte prosím pomoci stůl nebo cestování/výdaje oddělení vaší společnosti.</string>
+	<key>If you continue to experience SU</key>
+	<string>Opakujte akci. Budete-li mít problémy s přístupem systému, obraťte se na podporu Concur.</string>
+	<key>If your plans change</key>
+	<string>Pokud vaše plány změní, zruší a zamluvit další hotel on-the-go</string>
+	<key>Image Not Available</key>
+	<string>Obrázek není k dispozici.</string>
+	<key>Immediate Assistance Required</key>
+	<string>Okamžitá pomoc potřebnou</string>
+	<key>Import Error</key>
+	<string>Chyba při importování</string>
+	<key>Import Expenses</key>
+	<string>Importovat výdaje</string>
+	<key>Individual Edition</key>
+	<string>Jednotlivá vydání</string>
+	<key>Infants</key>
+	<string>Kojenci</string>
+	<key>Info</key>
+	<string>Informace</string>
+	<key>Intermediate</key>
+	<string>Střední</string>
+	<key>Intermediate Hybrid</key>
+	<string>Zprostředkující hybridní</string>
+	<key>Intermediate SUV</key>
+	<string>Střední SUV</string>
+	<key>Invalid Arrival Location</key>
+	<string>Neplatné umístění příjezdu</string>
+	<key>Invalid Concur Credentials</key>
+	<string>Neplatná pověření Concur</string>
+	<key>Invalid Departure Date</key>
+	<string>Neplatné datum odjezdu</string>
+	<key>Invalid Departure Location</key>
+	<string>Neplatné umístění odjezdu</string>
+	<key>Invalid Login Credentials</key>
+	<string>Neplatné přihlašovací pověření</string>
+	<key>Invalid PIN</key>
+	<string>Neplatný kód PIN</string>
+	<key>Invalid Password</key>
+	<string>Neplatné heslo</string>
+	<key>Invalid Password or PIN</key>
+	<string>Neplatné heslo nebo kód PIN</string>
+	<key>Invalid Pin</key>
+	<string>Neplatný kód PIN</string>
+	<key>Invalid Return Date</key>
+	<string>Neplatné datum vrácení</string>
+	<key>Invalid User Name</key>
+	<string>Neplatné uživatelské jméno</string>
+	<key>Invalid email address</key>
+	<string>Neplatná e-mailová adresa</string>
+	<key>Invitation(s) Sent</key>
+	<string>Odeslání pozvánky</string>
+	<key>Invitations Sent</key>
+	<string>Díky za šíření slovo o SmartExpense.</string>
+	<key>Invite</key>
+	<string>Pozvat</string>
+	<key>Invite colleagues to use SmartExpense</key>
+	<string>Pozvat kolegy využívat SmartExpense</string>
+	<key>Invoice</key>
+	<string>Faktura</string>
+	<key>Invoice Approval</key>
+	<string>Schvalování faktur</string>
+	<key>Invoice Image</key>
+	<string>Obrázek faktury</string>
+	<key>InvoiceApprove</key>
+	<string>Faktura</string>
+	<key>Invoices</key>
+	<string>Faktury</string>
+	<key>Itemization not allowed</key>
+	<string>Rozpis není povolen pro tuto položku</string>
+	<key>Itemizations</key>
+	<string>Itemizations</string>
+	<key>Itemize</key>
+	<string>Vytvořit seznam</string>
+	<key>Itemized Entry</key>
+	<string>Položka podrobného</string>
+	<key>Itemized:</key>
+	<string>Rozpis:</string>
+	<key>Join</key>
+	<string>Připojit</string>
+	<key>Join with Facebook</key>
+	<string>Spojit s Facebookem</string>
+	<key>LABEL_ADD_BTN</key>
+	<string>Přidat</string>
+	<key>LABEL_AIR</key>
+	<string>Vzduch</string>
+	<key>LABEL_APPROVE_EXPENSES</key>
+	<string>Schválení výdajů</string>
+	<key>LABEL_CANCEL_BTN</key>
+	<string>Storno</string>
+	<key>LABEL_CAR_RENTAL</key>
+	<string>Vypůjčení auta</string>
+	<key>LABEL_CLOSE_BTN</key>
+	<string>Zavřít</string>
+	<key>LABEL_DONE_BTN</key>
+	<string>V</string>
+	<key>LABEL_EXPENSE</key>
+	<string>Výdaj</string>
+	<key>LABEL_EXPENSES</key>
+	<string>Výdaje</string>
+	<key>LABEL_HOTELS</key>
+	<string>Hotely</string>
+	<key>LABEL_LOGIN_NO_PIN</key>
+	<string>Je třeba nastavit PIN?</string>
+	<key>LABEL_LOGIN_PASSWORD</key>
+	<string>Zadejte kód PIN nebo heslo Concur</string>
+	<key>LABEL_LOGIN_REGISTER</key>
+	<string>Registrace</string>
+	<key>LABEL_LOGIN_SIGN_IN</key>
+	<string>Přihlásit se</string>
+	<key>LABEL_LOGIN_USER_NAME</key>
+	<string>Zadejte uživatelské jméno Concur</string>
+	<key>LABEL_LOGOUT</key>
+	<string>Odhlásit se</string>
+	<key>LABEL_OK_BTN</key>
+	<string>Ok</string>
+	<key>LABEL_QUICK_EXPENSE</key>
+	<string>Hotovost</string>
+	<key>LABEL_REGISTER_ENTER_PIN</key>
+	<string>Zadejte kód PIN</string>
+	<key>LABEL_REGISTER_PASSWORD</key>
+	<string>Heslo</string>
+	<key>LABEL_REGISTER_REENTER_PIN</key>
+	<string>Zadejte kód PIN znovu</string>
+	<key>LABEL_REGISTER_SIGN_IN</key>
+	<string>Přihlásit se</string>
+	<key>LABEL_SAVE_BTN</key>
+	<string>Uložit</string>
+	<key>LABEL_SEND_BTN</key>
+	<string>Odeslat</string>
+	<key>LABEL_SETTINGS</key>
+	<string>Nastavení</string>
+	<key>LABEL_SETTINGS_VIEW_APP_INFO</key>
+	<string>Informace o aplikaci</string>
+	<key>LABEL_SETTINGS_VIEW_APP_NAME</key>
+	<string>Název aplikace</string>
+	<key>LABEL_SETTINGS_VIEW_AUTO_LOGIN</key>
+	<string>Automatické přihlášení</string>
+	<key>LABEL_SETTINGS_VIEW_CONNECTION_SETTINGS</key>
+	<string>Nastavení připojení</string>
+	<key>LABEL_SETTINGS_VIEW_LOGIN</key>
+	<string>Nastavení přihlášení</string>
+	<key>LABEL_SETTINGS_VIEW_REMEMBER_USER</key>
+	<string>Uložit uživatelské jméno</string>
+	<key>LABEL_SETTINGS_VIEW_SAVE_BTN</key>
+	<string>Uložit nastavení</string>
+	<key>LABEL_SETTINGS_VIEW_TWITTER</key>
+	<string>Zobrazit Twitter</string>
+	<key>LABEL_SETTINGS_VIEW_URI_NON_SSL</key>
+	<string>Bez SSL URI</string>
+	<key>LABEL_SETTINGS_VIEW_URL</key>
+	<string>URI serveru</string>
+	<key>LABEL_SETTINGS_VIEW_VERSION</key>
+	<string>Verze</string>
+	<key>LABEL_SUBMIT_BTN</key>
+	<string>Odeslat</string>
+	<key>LABEL_TAXI</key>
+	<string>Taxi</string>
+	<key>LABEL_TRAVEL</key>
+	<string>Cestování</string>
+	<key>LABEL_TRIPS</key>
+	<string>Výlety</string>
+	<key>LABEL_VENDOR_ADDR_CODE</key>
+	<string>Kód adresy:</string>
+	<key>LABEL_VENDOR_CODE</key>
+	<string>Kód dodavatele:</string>
+	<key>LAST_NAME</key>
+	<string>Příjmení</string>
+	<key>LNA_LOADING_TEXT</key>
+	<string>Získání aktuálního umístění...</string>
+	<key>LOCATION_NOT_FOUND_MSG</key>
+	<string>Vaše současné umístění nelze nalézt.</string>
+	<key>LOGIN</key>
+	<string>Přihlásit se</string>
+	<key>LOG_UNAVAILABLE_MSG</key>
+	<string>Data protokolu není k dispozici.</string>
+	<key>LOW_RESOLUTION_IMAGE</key>
+	<string>Nízké rozlišení (320x320px)</string>
+	<key>Last Name</key>
+	<string>Příjmení</string>
+	<key>Last updated</key>
+	<string>Poslední aktualizované % @</string>
+	<key>Layover in</key>
+	<string>Volno v</string>
+	<key>Learn More</key>
+	<string>Víc se uč</string>
+	<key>Least Preferred</key>
+	<string>Nejméně upřednostňovaný</string>
+	<key>Legs: token</key>
+	<string>Nohy: % @</string>
+	<key>Link Dropbox</key>
+	<string>Odkládací schránky Link</string>
+	<key>Link Success</key>
+	<string>Spojení úspěch</string>
+	<key>Link to TripIt</key>
+	<string>Odkaz na TripIt</string>
+	<key>Link with TripIt</key>
+	<string>Spojení s TripIt</string>
+	<key>Link with TripIt Header</key>
+	<string>Odkaz na TripIt a proměnit vaše výlety do vyúčtování.</string>
+	<key>Linked to Dropbox</key>
+	<string>Spojené s odkládací schránky</string>
+	<key>List</key>
+	<string>Seznam</string>
+	<key>Load Logs</key>
+	<string>Načíst záznamy</string>
+	<key>Load more hotels</key>
+	<string>Načíst další hotely...</string>
+	<key>Loading Data</key>
+	<string>Načítání dat</string>
+	<key>Loading Image</key>
+	<string>Načítání obrázku</string>
+	<key>Loading Receipt Image(s)</key>
+	<string>Načítání příjmu obrázky</string>
+	<key>Loading Receipts</key>
+	<string>Načítání příjemky</string>
+	<key>Loading Stations</key>
+	<string>Načítání stanice</string>
+	<key>Loading Trip</key>
+	<string>Načítání Trip</string>
+	<key>Loading delivery options</key>
+	<string>Možnosti doručování načítání</string>
+	<key>Loading more Hotels</key>
+	<string>Načítání hotely</string>
+	<key>Loading trip data</key>
+	<string>Načítání dat pro výlet</string>
+	<key>Location</key>
+	<string>Umístění</string>
+	<key>Location Check Offline</key>
+	<string>Vaše umístění nelze zkontrolovat, když jste v režimu offline. Opakujte později.</string>
+	<key>Location Not Found</key>
+	<string>Místo nebyl nalezen.</string>
+	<key>Location Required</key>
+	<string>Umístění vyžaduje</string>
+	<key>Log</key>
+	<string>Protokol</string>
+	<key>Log Saved</key>
+	<string>Protokol uložen</string>
+	<key>Log Unavailable</key>
+	<string>Protokol není k dispozici</string>
+	<key>Log out from Concur Mobile</key>
+	<string>Odhlásit se od Concur Mobile</string>
+	<key>Log out from SmartExpense</key>
+	<string>Odhlásit se od SmartExpense</string>
+	<key>Logging In</key>
+	<string>Přihlášení</string>
+	<key>Login Settings</key>
+	<string>Nastavení přihlášení</string>
+	<key>Logout</key>
+	<string>Odhlásit se</string>
+	<key>Luxury</key>
+	<string>Luxusní</string>
+	<key>MAP</key>
+	<string>Zobrazení mapy</string>
+	<key>MEDIUM_RESOLUTION_IMAGE</key>
+	<string>Střední rozlišení (640x640px)</string>
+	<key>MLIST_FIELD_EDIT_NOT_SUPPORT</key>
+	<string>Úpravy pro toto připojení seznamu pole není podporován v tomto okamžiku na mobil. Použijte CTE web.</string>
+	<key>MLIST_MRU_NOT_SUPPORT</key>
+	<string>Výběr naposledy použité položky seznamu není podporována pro toto pole. Použijte CTE web.</string>
+	<key>MODULE_DISABLED_ALERT_TEXT</key>
+	<string>Vaše společnost zakázal tuto funkci pro mobilní telefony.</string>
+	<key>MODULE_DISABLED_ALERT_TITLE</key>
+	<string>Funkce zakázána</string>
+	<key>MSG_ADDITIONAL_RECEIPT_NOT_REQUIRED</key>
+	<string>Další příjmy nejsou vyžadována.</string>
+	<key>MSG_APPROVE_INVOICE_AREYOUSURE</key>
+	<string>Jste si jistý, že chcete schválit tuto fakturu?</string>
+	<key>MSG_NO_INVOICE_DETAIL</key>
+	<string>Žádný Detail faktury</string>
+	<key>MSG_NO_INVOICE_TO_APPROVE</key>
+	<string>Faktura pro schválení</string>
+	<key>MSG_RECEIPT_NOT_REQUIRED</key>
+	<string>Příjmy nejsou vyžadována.</string>
+	<key>MSG_RECEIPT_REQUIRED</key>
+	<string>Připomenutí: Příjmy nutné!</string>
+	<key>MSG_REPORT_SUBMISSION</key>
+	<string>Pokud již jste nezadali příjmy, naleznete na webu Concur. Jinak může předložit zprávu nyní.</string>
+	<key>MSG_TRAIN_SELL_NOT_READY</key>
+	<string>Prodáváme vlakové rezervace nebyla dosud implementována. Měli byste být schopni vyhradit vlak v pozdější verzi.</string>
+	<key>MSG_WAIT_FETCHING_INFO</key>
+	<string>Jsme se načítání informací pro odeslání zprávy. Počkejte a opakujte akci.</string>
+	<key>Mail Queued</key>
+	<string>Mail ve frontě</string>
+	<key>Mail Saved</key>
+	<string>Pošta uloženy</string>
+	<key>Mail Unavailable</key>
+	<string>Mail není k dispozici</string>
+	<key>Manage Receipts</key>
+	<string>Správa příjmy</string>
+	<key>Map</key>
+	<string>Mapa</string>
+	<key>Map Address</key>
+	<string>Mapa na adresu</string>
+	<key>Menu</key>
+	<string>Nabídka</string>
+	<key>Message Center</key>
+	<string>Centrum zpráv</string>
+	<key>Midnight</key>
+	<string>Midnight</string>
+	<key>Mileage</key>
+	<string>Vzdálenost</string>
+	<key>Mini</key>
+	<string>Mini</string>
+	<key>Mini Van</key>
+	<string>Mini Van</string>
+	<key>Missing Arrival</key>
+	<string>Chybí příchod</string>
+	<key>Missing Arrival Message</key>
+	<string>Letiště příletu chybí. Vyberte prosím přijet na letiště.</string>
+	<key>Missing Departure</key>
+	<string>Chybí odchod</string>
+	<key>Missing Departure Message</key>
+	<string>Letiště odletu chybí. Vyberte prosím letiště odchýlit se od.</string>
+	<key>Missing fields</key>
+	<string>Chybějící pole</string>
+	<key>Mobile Expenses</key>
+	<string>Mobilní výdaje</string>
+	<key>Mobile Log</key>
+	<string>Mobilní Log</string>
+	<key>Mobile Log: iPhone Crash</key>
+	<string>Mobilní protokol: iPhone Crash</string>
+	<key>Mobile PIN title</key>
+	<string>Mobilní PIN</string>
+	<key>Morning</key>
+	<string>Ráno</string>
+	<key>Most Preferred</key>
+	<string>Nejvíce preferované</string>
+	<key>Most Recently Used</key>
+	<string>Naposledy</string>
+	<key>Must log in online first</key>
+	<string>Musíte se přihlásit online nejprve dříve, než si můžete ověřit v režimu offline.</string>
+	<key>N Stops</key>
+	<string>%d zarážky</string>
+	<key>NEED_TO_RESET_PASSWORD</key>
+	<string>Obnovte heslo a pak přihlášení. Pokud máte potíže, obraťte se na správce systému.</string>
+	<key>NEED_TO_RESET_PIN</key>
+	<string>Obnovte váš kód PIN a poté přihlášení. Pokud máte potíže, obraťte se na správce systému.</string>
+	<key>NIGHTS_TOO_LARGE_ERR_MSG</key>
+	<string>Vytvořit seznam výdajů za 90 dnů nebo méně</string>
+	<key>NON_REFUNDABLE_WARN_MSG</key>
+	<string>Zákazníci mají NON-VRATNÁ typu lístky může zrušit svou cestu a znovu použít tyto lístky na místo určení v systému dopravci do jednoho roku od data vydání. Rezervace musí být zrušeno zamýšlené (původní) den odjezdu, nebo lístky budou neplatné a nemají žádnou hodnotu pro budoucí použití. Tato pravidla se vztahují na domácí prodeje letenek pouze. Vyberte možnost přesto se tyto lety?</string>
+	<key>NO_RECEIPTS_NEG</key>
+	<string>Žádné příjmy</string>
+	<key>NO_RECEIPT_FOUND</key>
+	<string>/NV serveru nebyly nalezeny žádné potvrzení. Pokud jste již připojili oznámení ke zprávě, pojďte prosím zpět později a znovu zkontrolovat.</string>
+	<key>NO_RECEIPT_MSG</key>
+	<string>Chybí nejméně jeden z vybraných výdajů stvrzenku.</string>
+	<key>NO_RECEIPT_NEG</key>
+	<string>Žádný příjem</string>
+	<key>NO_REPORTRECEIPT_NEG</key>
+	<string>Žádný příjem, připojené k výdaje</string>
+	<key>NUMBER_OF_ROOMS</key>
+	<string>Počet pokojů</string>
+	<key>NUMERIC_TOO_BIG_ERR_MSG</key>
+	<string>Příliš velké číslo</string>
+	<key>NUMERIC_VALIDATION_ERR_MSG</key>
+	<string>Toto pole vyžaduje číselnou hodnotu.</string>
+	<key>Navigator</key>
+	<string>Navigátor</string>
+	<key>Network Error</key>
+	<string>Chyba sítě</string>
+	<key>New Attendee</key>
+	<string>Nový účastník</string>
+	<key>New Report</key>
+	<string>Nová zpráva</string>
+	<key>Next</key>
+	<string>Další</string>
+	<key>Nightly Lodging Expenses</key>
+	<string>Noční výdaje na ubytování</string>
+	<key>No</key>
+	<string>Ne</string>
+	<key>No Active Reports</key>
+	<string>V současné době nemáte žádné aktivní zprávy</string>
+	<key>No Active Trips</key>
+	<string>Žádná aktivní výlety</string>
+	<key>No Attendee Found</key>
+	<string>Žádný účastník nalezena</string>
+	<key>No Attendee Type Available</key>
+	<string>Žádní účastníci mohou být přidány, žádné platné účastníka typy nejsou k dispozici pro tento typ výdaje.</string>
+	<key>No Attendees</key>
+	<string>Žádní účastníci</string>
+	<key>No Card Charges</key>
+	<string>Žádné poplatky za kartu</string>
+	<key>No Comments</key>
+	<string>Žádné komentáře</string>
+	<key>No Credit Card</key>
+	<string>Žádné kreditní karty</string>
+	<key>No Delivery Option</key>
+	<string>Žádná možnost doručení</string>
+	<key>No Email(s)</key>
+	<string>Žádný Email(s)</string>
+	<key>No Expenses</key>
+	<string>Žádné výdaje</string>
+	<key>No Flights Found</key>
+	<string>Žádné lety nalezena</string>
+	<key>No Itemization</key>
+	<string>Žádný rozpis</string>
+	<key>No Matching Cars</key>
+	<string>Žádná odpovídající auta</string>
+	<key>No Out of Pocket Expenses</key>
+	<string>Žádné výdaje</string>
+	<key>No Receipts</key>
+	<string>Spravovat všechny vaše příjmy v jednom místě a přehlednost v albu fotografií. Složky příjmu uchovává záznamy o příjmu používáno pro výdaje. Můžete také zkopírovat příjmy z fotoalba do složky příjmu nebo nové obrázky z příjmů a uložit je zde.</string>
+	<key>No Reports</key>
+	<string>Žádné zprávy</string>
+	<key>No Segments Selected</key>
+	<string>Žádné vybrané segmenty</string>
+	<key>No Shows</key>
+	<string>Žádné pořady</string>
+	<key>No Shows Tip</key>
+	<string>Zadejte počet % @.</string>
+	<key>No TripIt Trips</key>
+	<string>Žádné TripIt výlety do výdajů</string>
+	<key>No Trips</key>
+	<string>Žádné výlety</string>
+	<key>No date specified</key>
+	<string>Žádné datum zadané</string>
+	<key>No email(s) were specified for the invite</key>
+	<string>Nebyly zadány žádné email(s) za pozvání</string>
+	<key>No items to upload</key>
+	<string>Žádné zboží k odeslání</string>
+	<key>No matching cars were found.  Please modify your search criteria and try again.</key>
+	<string>Nebyly nalezeny žádné odpovídající auta. Prosím pozměnit kritéria hledání a opakujte akci.</string>
+	<key>No new twitter message</key>
+	<string>Žádná nová zpráva twitter</string>
+	<key>No preference</key>
+	<string>Žádná předvolba</string>
+	<key>No trains were found</key>
+	<string>Nebyly nalezeny žádné vlaky</string>
+	<key>No trip segments have been selected</key>
+	<string>Nebyly vybrány žádné segmenty cesty.</string>
+	<key>Non-smoking</key>
+	<string>Nekuřácké</string>
+	<key>None</key>
+	<string>Žádný</string>
+	<key>Nonstop</key>
+	<string>Nonstop</string>
+	<key>Not Filed Reports</key>
+	<string>Zprávy</string>
+	<key>Not Linked</key>
+	<string>Nepropojeno</string>
+	<key>Not Preferred</key>
+	<string>Není upřednostňovaný</string>
+	<key>Not Sure</key>
+	<string>Těžko říct</string>
+	<key>Now</key>
+	<string>Nyní</string>
+	<key>Number Of Nights</key>
+	<string>Počet nocí</string>
+	<key>Number of hotels</key>
+	<string>Počet hotelů</string>
+	<key>Number of schedules found: token</key>
+	<string>Počet plány nalezeno: %d</string>
+	<key>OFFLINE_MSG</key>
+	<string>Jste v režimu offline. Počkejte, prosím, podat zprávu, dokud jste v režimu online.</string>
+	<key>OK</key>
+	<string>Ok</string>
+	<key>OR</key>
+	<string>NEBO</string>
+	<key>OUT_OF_POCKET_FORM</key>
+	<string>Výdaj</string>
+	<key>OUT_OF_POCKET_FORM_VIEW_CONFIRM_SPLIT_SMART_EXPENSE_MESSAGE</key>
+	<string>Jste si jisti, že chcete rozdělit karty poplatek z mobilní vstupu?</string>
+	<key>OUT_OF_POCKET_FORM_VIEW_CONFIRM_SPLIT_SMART_EXPENSE_TITLE</key>
+	<string>Prosím, potvrďte</string>
+	<key>OUT_OF_POCKET_FORM_VIEW_SPLIT_SMART_EXPENSE_BUTTON_TITLE</key>
+	<string>Smart výdaje Split</string>
+	<key>OUT_OF_POCKET_LIST</key>
+	<string>Výdaje</string>
+	<key>Off</key>
+	<string>Vypnuto</string>
+	<key>Off Airport</key>
+	<string>Mimo letiště</string>
+	<key>Offers</key>
+	<string>Nabídky</string>
+	<key>Office</key>
+	<string>Kancelář</string>
+	<key>Offline</key>
+	<string>V režimu offline</string>
+	<key>Offline limits features</key>
+	<string>Vaše zařízení, je aktuálně offline. Některé funkce nebudou k dispozici, dokud jste v režimu online.</string>
+	<key>Old Trips</key>
+	<string>Minulost</string>
+	<key>On</key>
+	<string>Na</string>
+	<key>One Way</key>
+	<string>Jednosměrka</string>
+	<key>Operated By</key>
+	<string>Provozuje</string>
+	<key>Operated by</key>
+	<string>Provozuje</string>
+	<key>Operation Not Supported Offline</key>
+	<string>Tato operace není podporována v režimu offline. Opakujte akci, kdy je k dispozici připojení k síti.</string>
+	<key>Or Sign In with...</key>
+	<string>Nebo přihlášení ve s...</string>
+	<key>Or Sign Up with...</key>
+	<string>Nebo zapsat s...</string>
+	<key>Organization</key>
+	<string>Organizace</string>
+	<key>Other</key>
+	<string>Sociální a další</string>
+	<key>Other Reports</key>
+	<string>Další zprávy</string>
+	<key>Other Room Tax 1</key>
+	<string>Ostatní místnosti daň 1</string>
+	<key>Other Room Tax 2</key>
+	<string>Ostatní místnosti daň 2</string>
+	<key>Out of Pocket Entry has been Saved</key>
+	<string>Výdaje byly uloženy.</string>
+	<key>Outbound</key>
+	<string>Odchozí</string>
+	<key>PDF Receipt</key>
+	<string>PDF příjem</string>
+	<key>PENDING_REQUIRED_TRAVEL_CUSTOM_FIELDS</key>
+	<string>Vyplňte prosím všechny požadované informace rezervace před pokračováním</string>
+	<key>PER_VARIABLE_NO_RATES</key>
+	<string>Žádný sazeb definovaných pro stanovenému datu.</string>
+	<key>PIN</key>
+	<string>KÓD PIN</string>
+	<key>PIN Tip</key>
+	<string>Pokud neznáte vaše pověření, přihlaste se k účtu Concur webu a přejděte na profil &gt; mobilní registrace. Concur vánek uživatelé by měla přejít na můj účet &gt; mobilní PIN. Požádejte o další pomoc správce společnosti.</string>
+	<key>PIN_EXPIRED</key>
+	<string>Jste PIN již vypršela. Zaregistrujte se prosím váš kód PIN znovu a pak přihlášení.</string>
+	<key>PLEASE_SELECT_VALUE</key>
+	<string>Vyberte volbu ze seznamu.</string>
+	<key>PROCEED_TO_ADD_MSG</key>
+	<string>Můžete pokračovat a přidejte je do zprávy, ale bude muset přiložit potvrzení prostřednictvím webu.</string>
+	<key>PWD</key>
+	<string>Heslo</string>
+	<key>PWD_LOGIN</key>
+	<string>Registrace</string>
+	<key>Paid Reports</key>
+	<string>Zaplacené zprávy</string>
+	<key>Passenger</key>
+	<string>Osobní</string>
+	<key>PassengerCount</key>
+	<string>Počet cestujících</string>
+	<key>Passengers</key>
+	<string>Cestující</string>
+	<key>Password</key>
+	<string>Heslo</string>
+	<key>Personal Car Mileage</key>
+	<string>Osobní auto vzdálenost</string>
+	<key>PersonalCardCount_0</key>
+	<string>Nemáte žádné nevyužité karty poplatky od % @</string>
+	<key>PersonalCardCount_1</key>
+	<string>Máte 1 nepoužívané karty účtují od % @</string>
+	<key>PersonalCardCount_2</key>
+	<string>Máte %d nepoužívané karty obvinění z % @</string>
+	<key>Phone</key>
+	<string>Telefon</string>
+	<key>Photo Album</key>
+	<string>Připojit prostřednictvím Photo Album</string>
+	<key>Pick-up</key>
+	<string>Vyzvednutí</string>
+	<key>Pick-up Date</key>
+	<string>Datum vyzvednutí</string>
+	<key>Pick-up Time</key>
+	<string>Čas vyzvednutí</string>
+	<key>Pickup</key>
+	<string>Vyzvednutí</string>
+	<key>Pickup Location</key>
+	<string>Skl. místo výdeje</string>
+	<key>Please Confirm</key>
+	<string>Prosím, potvrďte</string>
+	<key>Please Specify Program</key>
+	<string>Zadejte Program.</string>
+	<key>Please Wait</key>
+	<string>Počkejte prosím</string>
+	<key>Please check your connection and retry later.</key>
+	<string>Zkontrolujte připojení a opakujte akci později.</string>
+	<key>Please enter a justification for booking this car.</key>
+	<string>Zadejte prosím ospravedlnění pro rezervace to auto.</string>
+	<key>Please enter in your distance</key>
+	<string>Zadejte prosím své vzdálenosti</string>
+	<key>Please enter values for required fields</key>
+	<string>Zadejte hodnoty požadovaných polí, v červené barvě, před uložením.</string>
+	<key>Please fill in the missing required fields before saving the entry.</key>
+	<string>Vyplňte prosím chybí požadovaná pole před uložením vstupu.</string>
+	<key>Please follow the instructions in the email</key>
+	<string>Postupujte podle pokynů v e-mailu, že kterou jste obdrželi od TripIt, když nastavíte váš účet.</string>
+	<key>Please log in to SmartExpense and then link your accounts together.</key>
+	<string>Přihlaste se k SmartExpense a pak spojují své účty.</string>
+	<key>Please log in to SmartExpense using the same account already linked to TripIt.</key>
+	<string>Přihlaste se na SmartExpense pomocí stejného účtu již propojen s TripIt.</string>
+	<key>Please select a report or create a new report first</key>
+	<string>Vyberte zprávu nebo nejprve vytvořit novou zprávu</string>
+	<key>Please specify</key>
+	<string>Prosím zadejte</string>
+	<key>Please specify a location.</key>
+	<string>Zadejte umístění.</string>
+	<key>Please type a description into this email message describing what you were doing when the application crashed.  For example: I was uploading an expense receipt.</key>
+	<string>Zadejte popis do této e-mailové zprávy popisující, co jste dělali, když havaroval aplikace. Například: byl odesílání potvrzení výdajů.</string>
+	<key>Please verify your email</key>
+	<string>Zkontrolujte prosím váš email</string>
+	<key>Please verify your email address</key>
+	<string>Zkontrolujte prosím vaši e-mailovou adresu</string>
+	<key>Please wait for your verification email to continue the registration process.</key>
+	<string>Počkejte prosím na váš ověřovací e-mail pokračovat v procesu registrace.</string>
+	<key>Please wait until online to edit field</key>
+	<string>Tato pole nelze upravovat offline.</string>
+	<key>Please wait until you are online to login</key>
+	<string>Počkejte prosím, než online přihlášení.</string>
+	<key>Popular Cards</key>
+	<string>Populární karty</string>
+	<key>Preference</key>
+	<string>Předvolba</string>
+	<key>Preferences</key>
+	<string>Předvolby</string>
+	<key>Preferred</key>
+	<string>Upřednostňovaný</string>
+	<key>Preferred Vendors</key>
+	<string>Preferované dodavatelé</string>
+	<key>Premium</key>
+	<string>Premium</string>
+	<key>Premium Economy</key>
+	<string>Premium ekonomika</string>
+	<key>Prev</key>
+	<string>Předchozí</string>
+	<key>Preview</key>
+	<string>Náhled</string>
+	<key>Previous</key>
+	<string>Předchozí</string>
+	<key>Price</key>
+	<string>Cena</string>
+	<key>Print</key>
+	<string>Tisk</string>
+	<key>Property</key>
+	<string>Vlastnost</string>
+	<key>Quick Expense</key>
+	<string>Rychlé výdaje</string>
+	<key>Quick Search</key>
+	<string>Rychlé hledání</string>
+	<key>Quick Tips</key>
+	<string>Rychlé tipy</string>
+	<key>RECEIPT</key>
+	<string>Příjem</string>
+	<key>RECEIPT_CELL_TITLE</key>
+	<string>Příjem</string>
+	<key>RECEIPT_DETAIL_NO_DATA_INSTRUCTION</key>
+	<string>Nebo digitální příjem předat receipts@smartexpense.com z vašeho % @ účet</string>
+	<key>RECEIPT_IMG_UPLOADED</key>
+	<string>Příjem obrázek nebyl načten.</string>
+	<key>RECEIPT_IMG_UPLOADING</key>
+	<string>Odesílání potvrzení o obrazu</string>
+	<key>RECEIPT_MANAGER</key>
+	<string>Složka příjmu</string>
+	<key>RECEIPT_MANAGER_IMAGES</key>
+	<string>Složka příjmu</string>
+	<key>RECEIPT_MIGRATE_MSG</key>
+	<string>Máte %d nenastavene příjem obrázků lokálně uložen do složky Dokumenty Mobile Concur. Chcete kopírovat obrazy nepřiřazené příjmu do fotoalba iPhone?</string>
+	<key>RECEIPT_MIGRATION_STATUS_MSG</key>
+	<string>Zkopírovaný %d z %d příjmů do fotoalba</string>
+	<key>RECEIPT_MIGRATION_WAIT_MSG</key>
+	<string>Obrázek kopírování probíhá. Ukončení nebo opuštění aplikace nyní může mít za následek ztracených obrazů.</string>
+	<key>RECEIPT_NOT_ON_SERVER</key>
+	<string>Potvrzení o ukazuje připojené k tomuto výdajů na serveru, ale příjem již existuje v potvrzení správce.</string>
+	<key>RECEIPT_STORE_HELP_TEXT</key>
+	<string>Nahrát své příjmy k úložišti příjmu. Pak otevřete zprávu nebo výdajů položku a připojit příjmu.</string>
+	<key>RECEIPT_STORE_NO_DATA_INSTRUCTION</key>
+	<string>Můžete také předat digitální příjem receipts@smartexpense.com z vašeho % @ účet</string>
+	<key>REGISTER</key>
+	<string>Zadejte kód PIN</string>
+	<key>REGISTER_MSG</key>
+	<string>Pro pomoc, přihlášení na webovou verzi Concur a přejděte na profil &gt; mobilní registrace.</string>
+	<key>REGISTER_PINS_DIFF_ERR</key>
+	<string>Spojky jsou jiné. Zadejte prosím kolíky.</string>
+	<key>REPORTS</key>
+	<string>Sestava seznam</string>
+	<key>REPORTS_TO_SUBMIT</key>
+	<string>%d sestavy k odeslání</string>
+	<key>REPORT_DETAIL</key>
+	<string>Zpráva</string>
+	<key>REPORT_DETAIL_RECEIPTS</key>
+	<string>Příjmy</string>
+	<key>REPORT_NAME_TIP</key>
+	<string>Zadejte nový název sestavy</string>
+	<key>REPORT_REQ_FIELDS</key>
+	<string>Prosím vyplňte všechna požadovaná pole a opravte případné chyby na formuláři před uložením zprávy.</string>
+	<key>RESET_PASSWORD_FAILED</key>
+	<string>Obnovení hesla se nezdařilo.</string>
+	<key>RESET_PASSWORD_SUCCEEDED</key>
+	<string>Zanedlouho obdržíte e-mail s pokyny pro obnovení hesla.</string>
+	<key>RESET_PASSWORD_USER_NOT_EXIST</key>
+	<string>Uživatel v systému neexistuje. Ujistěte se, že jste dokončili procesu zápisu před klepnutím na odpočinek odkaz vaše heslo.</string>
+	<key>ROLE_DISABLED_ALERT_TITLE</key>
+	<string>Funkce zakázána</string>
+	<key>ROLE_DISABLED_TEXT</key>
+	<string>Tato funkce není k dispozici pro vaší firmy nebo role.</string>
+	<key>RPT_NO_ENTRY_INSTRUCTION_1</key>
+	<string>Tato vyúčtování nemá žádné výdaje. Je třeba vytvořit nebo importovat alespoň jeden výdajů s cílem předložit zprávu.</string>
+	<key>RPT_NO_ENTRY_INSTRUCTION_2</key>
+	<string>Chcete-li vytvořit nebo importovat výdaj, klepněte na + ikonu níže.</string>
+	<key>RPT_QUIT_CONFIRM_MSG</key>
+	<string>Chcete tuto zprávu před uložit?</string>
+	<key>RPT_SAVE_CONFIRM_MSG</key>
+	<string>Budete-li pokračovat, mohou být ztraceny vaše změny. Chcete tyto změny uložit?</string>
+	<key>Rail</key>
+	<string>Železnice</string>
+	<key>Rail cancelled from mobile device</key>
+	<string>Železnice zrušena z mobilního zařízení</string>
+	<key>Rail violation justification is missing</key>
+	<string>Před rezervováním tohoto vlaku v rozporu s firemní politiky, je třeba zadat odůvodnění v tomto poli zobrazeno v červené barvě.</string>
+	<key>Rail violation reason and justification are missing</key>
+	<string>Před rezervováním tohoto vlaku v rozporu s firemní politiky, je nutné zadat důvod a zdůvodnění v polích, v červené barvě.</string>
+	<key>Rail violation reason is missing</key>
+	<string>Před rezervováním tohoto vlaku v rozporu s firemní politiky, je třeba zadat důvod v poli zobrazené červeně.</string>
+	<key>Rail_subline</key>
+	<string>Kniha vlak a jezdit</string>
+	<key>Rate It!</key>
+	<string>Sazba!</string>
+	<key>Re-enter Password</key>
+	<string>Zadejte znovu heslo</string>
+	<key>Recall</key>
+	<string>Odvolání</string>
+	<key>Recall Failed</key>
+	<string>Odvolání se nepodařilo</string>
+	<key>Receipt</key>
+	<string>Příjem</string>
+	<key>Receipt Capture</key>
+	<string>Digitalizaci příjmu</string>
+	<key>Receipt Folder</key>
+	<string>Složka příjmu</string>
+	<key>Receipt Images</key>
+	<string>Příjem obrázků</string>
+	<key>Receipt Queued</key>
+	<string>Příjem ve frontě</string>
+	<key>Receipt Store</key>
+	<string>Příjem Store</string>
+	<key>Receipt image required</key>
+	<string>Příjem obrázek vyžaduje</string>
+	<key>Receipt upload complete</key>
+	<string>Příjem odesílání dokončeno</string>
+	<key>Receipt upload failed</key>
+	<string>Potvrzení odeslání se nezdařilo.</string>
+	<key>Receipt uploaded</key>
+	<string>Potvrzení odeslání</string>
+	<key>ReceiptUploadFailMsg</key>
+	<string>V tuto chvíli nelze uložit příjem. Opakujte akci později.</string>
+	<key>Receipts</key>
+	<string>Příjmy</string>
+	<key>Receipts cannot be added offline</key>
+	<string>Příjmy nelze přidat do režimu offline.</string>
+	<key>Recurring Charges (each night)</key>
+	<string>Opakovaná obvinění (každou noc)</string>
+	<key>Refresh Data</key>
+	<string>Aktualizovat Data</string>
+	<key>Refresh Data Offline</key>
+	<string>Data nelze aktualizovat, když jste v režimu offline. Opakujte později.</string>
+	<key>Refresh Trip</key>
+	<string>Aktualizovat Trip</string>
+	<key>Refreshing</key>
+	<string>Aktualizace</string>
+	<key>Refreshing Data</key>
+	<string>Aktualizace dat</string>
+	<key>Refreshing View</key>
+	<string>Aktualizace zobrazení</string>
+	<key>Refundable Only</key>
+	<string>Vratná pouze</string>
+	<key>Regional</key>
+	<string>Regionální</string>
+	<key>Register a credit card</key>
+	<string>Registrace kreditní kartu</string>
+	<key>Reject</key>
+	<string>Odmítnout</string>
+	<key>Rejecting Trip</key>
+	<string>Zamítnutí Trip</string>
+	<key>Remaining:</key>
+	<string>Zbývá:</string>
+	<key>Removed Link to Dropbox</key>
+	<string>Odstraněn odkaz na odkládací schránky</string>
+	<key>Removing entry</key>
+	<string>Odstranění položky</string>
+	<key>Replace</key>
+	<string>Nahradit</string>
+	<key>Report</key>
+	<string>Zpráva</string>
+	<key>Report Approvals</key>
+	<string>Schválení zprávy</string>
+	<key>Report Comments</key>
+	<string>Zpráva komentáře</string>
+	<key>Report Entry</key>
+	<string>Zpráva vstupu</string>
+	<key>Report Exceptions</key>
+	<string>Zpráva výjimky</string>
+	<key>Report Header</key>
+	<string>Záhlaví sestavy</string>
+	<key>Report Name</key>
+	<string>Název zprávy</string>
+	<key>Report Summary</key>
+	<string>Souhrn sestavy</string>
+	<key>Report is open</key>
+	<string>Zpráva je otevřen</string>
+	<key>Reports</key>
+	<string>Zprávy</string>
+	<key>Reports List</key>
+	<string>Seznam sestav</string>
+	<key>Reports cannot be approved offline</key>
+	<string>Zprávy nelze schválit offline.</string>
+	<key>Reports to approve</key>
+	<string>sestavy schválit</string>
+	<key>ReportsToApproveRow_0</key>
+	<string>Nemáte žádné zprávy o schválení</string>
+	<key>ReportsToApproveRow_1</key>
+	<string>Máte 1 zprávu schválit</string>
+	<key>ReportsToApproveRow_2</key>
+	<string>Máte %d zpráv schválit</string>
+	<key>Requested</key>
+	<string>Požadováno</string>
+	<key>Requests</key>
+	<string>Požadavky na</string>
+	<key>Required Fields Missing</key>
+	<string>Chybějící vyžadovaná pole</string>
+	<key>Reservation Date</key>
+	<string>Datum rezervace</string>
+	<key>Reservation Not Allowed</key>
+	<string>Rezervace není povoleno</string>
+	<key>Reservation Status</key>
+	<string>Stav rezervace</string>
+	<key>Reservation Time</key>
+	<string>Čas rezervace</string>
+	<key>Reserve</key>
+	<string>Rezervace</string>
+	<key>Reserve Train</key>
+	<string>Rezervní vlak</string>
+	<key>Reserving Car</key>
+	<string>Rezervace vozu</string>
+	<key>Reserving Flights</key>
+	<string>Rezervace letů</string>
+	<key>Reserving Hotel Room</key>
+	<string>Rezervace místností</string>
+	<key>Reset</key>
+	<string>Obnovit</string>
+	<key>Reset PIN</key>
+	<string>Resetovat kód PIN</string>
+	<key>Reset to factory defaults</key>
+	<string>Obnoveno na výchozí nastavení</string>
+	<key>Reset your password</key>
+	<string>Obnovení hesla</string>
+	<key>Results</key>
+	<string>Výsledky</string>
+	<key>Results Summary</key>
+	<string>Shrnutí výsledků</string>
+	<key>Return</key>
+	<string>NÁVRAT</string>
+	<key>Return Date</key>
+	<string>Datum vrácení</string>
+	<key>Return Date must be</key>
+	<string>Datum vrácení</string>
+	<key>Return Date must be Message</key>
+	<string>Datum vrátit musí být po odchodu.</string>
+	<key>Return Time</key>
+	<string>Čas návratu</string>
+	<key>Returning</key>
+	<string>Vrácení</string>
+	<key>Returning: token token</key>
+	<string>Vrací: % @ % @</string>
+	<key>Review Approver Instruction</key>
+	<string>Prosím zkontrolujte schvalovatel a pak odeslat zprávu</string>
+	<key>Room Rate</key>
+	<string>Místnost míra</string>
+	<key>Room Tax</key>
+	<string>Místnost daň</string>
+	<key>Round Trip</key>
+	<string>Zpáteční</string>
+	<key>Rule Messages</key>
+	<string>Pravidlo zprávy</string>
+	<key>SAFETY_CHECK_IN_HELP</key>
+	<string>Hlaš se u vašeho současného umístění pro pomoc</string>
+	<key>SAVE_REPORT_RECEIPT_FAILURE</key>
+	<string>Nelze připojit potvrzení</string>
+	<key>SEARCH_LOCN</key>
+	<string>Místo hledání</string>
+	<key>SEC_TITLE_COMMENTS</key>
+	<string>Poznámky</string>
+	<key>SEC_TITLE_INVOICE_HEADER</key>
+	<string>Záhlaví faktury</string>
+	<key>SELECT_REPORT</key>
+	<string>Vybrat sestavu</string>
+	<key>SELECT_REPORT_HELP</key>
+	<string>Vyberte zprávu ze seznamu níže můžete přidat své výdaje. Nebo přidat novou sestavu klepnutím na tlačítko '+', výše.</string>
+	<key>SETTINGS_VIEW</key>
+	<string>Nastavení</string>
+	<key>SLV_AT</key>
+	<string>na</string>
+	<key>SLV_BOOK_A_TAXI</key>
+	<string>Kniha Taxi</string>
+	<key>SLV_CLICK_ON</key>
+	<string>Klepněte na tuto buňku do knihy</string>
+	<key>SLV_CONFIRMATION</key>
+	<string>Potvrzení</string>
+	<key>SLV_DROP_OFF</key>
+	<string>% @ drop off na % @</string>
+	<key>SLV_FROM</key>
+	<string>Od</string>
+	<key>SLV_GATE</key>
+	<string>Brána</string>
+	<key>SLV_GOES_FROM</key>
+	<string>Přejde-li od % @ % @</string>
+	<key>SLV_NUM_BOOKINGS</key>
+	<string>%d booking(s) v tomto výletu</string>
+	<key>SLV_PICKUP_AT</key>
+	<string>Vyzvednout v % @</string>
+	<key>SLV_PICKUP_BY</key>
+	<string>Pick up % @</string>
+	<key>SLV_PLATFORM_WAGON</key>
+	<string>Platforma % @ vozu # @</string>
+	<key>SLV_TAXI_MAGIC</key>
+	<string>Taxi Taxi magie</string>
+	<key>SLV_TAXI_MAGIC2</key>
+	<string>Budete přesměrováni na Taxi Magic app</string>
+	<key>SLV_TERMINAL</key>
+	<string>Terminál</string>
+	<key>SLV_TO</key>
+	<string>do</string>
+	<key>SLV_TOTAL_SEGS</key>
+	<string>S celkem %d segmentů pro cestu</string>
+	<key>SLV_TRIP_LOCATOR</key>
+	<string>Trip Locator: % @</string>
+	<key>SOUTHWEST</key>
+	<string>Jihozápadní rezervace</string>
+	<key>SPLASH</key>
+	<string>Úvodní</string>
+	<key>SPOUSE</key>
+	<string>Manžel (manželka)</string>
+	<key>SSO_FETCHING_DATA</key>
+	<string>Načítání přihlášení informace o společnosti...</string>
+	<key>SSO_LOGIN_REQUIRED_MSG</key>
+	<string>Společnosti kód (SSO) přihlášení požadováno. Prosím klepnutím na společnost kód přihlásit přihlášení</string>
+	<key>SU Password Expired Instruction</key>
+	<string>Vaše heslo vypršelo. Prosím klepněte na obnovit své heslo odkaz na stránce přihlásit na pokyny prostřednictvím e-mailu.</string>
+	<key>SUBMIT_ERROR_NO_ENTRY_MSG</key>
+	<string>Vyúčtování nemá žádné výdaje. K odeslání zprávy, musíte vytvořit alespoň jeden účet.</string>
+	<key>SUBMIT_ERROR_RPT_XCT_LEVEL_MSG</key>
+	<string>Tato vyúčtování nelze odeslat, dokud nebudou vyřešeny všechny výjimky s červené vlajky.</string>
+	<key>SUBMIT_ERROR_UNDEF_MSG</key>
+	<string>Vyúčtování obsahuje jeden nebo více výdaje s typem výdajů Nedefinováno. K odeslání zprávy je nutné vybrat typ výdaje.</string>
+	<key>SUBMIT_HOW_TO_RECEIPT_MSG</key>
+	<string>Podle politiky společnosti musíte poskytnout příjmy za výdaje uvedené níže. Můžete se buď fax příjmy nebo připojit naskenované obrazy. Pokud jste již zadali příjmy, můžete odeslat zprávu o teď.</string>
+	<key>SU_ADD_YODLEE_CARD_INSTRUCTION</key>
+	<string>Zadejte přihlašovací informace účtu kreditních karet. SmartExpense bude šifrování a bezpečně použít tuto informaci ke stažení transakcích s kartou. (Nebojte, to je jen pro čtení.)</string>
+	<key>SU_APPROVER_AB_NO_EMAIL</key>
+	<string>Vybraný kontakt nemá e-mailovou adresu k odeslání zprávy.</string>
+	<key>SU_CHECK_TEMP_PWD</key>
+	<string>Zkontrolujte prosím váš email pro dočasné heslo SmartExpense.</string>
+	<key>SU_SIGN_UP_CHECK_EMAIL</key>
+	<string>Potřebujeme ověřit vaši e-mailovou adresu. Zkontrolujte svůj email pro zprávu od nás a klepněte na odkaz ověřování.</string>
+	<key>SYSEMP</key>
+	<string>Zaměstnanec</string>
+	<key>Safety Check In</key>
+	<string>Umístění vrátit se změnami</string>
+	<key>Save</key>
+	<string>Uložit</string>
+	<key>Save Itemizations</key>
+	<string>Uložit Itemizations</string>
+	<key>Save entry receipt failed</key>
+	<string>Nepodařilo se uložit příjmu na vstupu</string>
+	<key>Saved</key>
+	<string>Uloženo</string>
+	<key>Saving Expense</key>
+	<string>Spořicí účet</string>
+	<key>Saving Report</key>
+	<string>Ukládání zprávy</string>
+	<key>Scheduled Arrival</key>
+	<string>Plánovaný</string>
+	<key>Scheduled Departure</key>
+	<string>Odletu</string>
+	<key>Scheduled Equipment</key>
+	<string>Plánované zařízení</string>
+	<key>Scheduled On-time</key>
+	<string>Plánovaný na čas</string>
+	<key>Scheduled Terminal</key>
+	<string>Plánované terminál</string>
+	<key>Search</key>
+	<string>Hledat</string>
+	<key>Search Again</key>
+	<string>Hledat znovu</string>
+	<key>Search Approver</key>
+	<string>Hledání schvalovatel</string>
+	<key>Search Approver Instruction</key>
+	<string>Prosím najít schvalovatele, pak odeslat zprávu</string>
+	<key>Search Failed</key>
+	<string>Hledání se nezdařilo.</string>
+	<key>Search Results</key>
+	<string>Výsledky hledání</string>
+	<key>Search and book flights</key>
+	<string>Hledat a rezervovat letenky, hotely, auto a další</string>
+	<key>Search for Attendee</key>
+	<string>Vyhledávání pro účastníka</string>
+	<key>Search for Cars</key>
+	<string>Vyhledávání pro automobily</string>
+	<key>Search schedules</key>
+	<string>Plány hledání</string>
+	<key>Searching for cars</key>
+	<string>Hledání pro automobily</string>
+	<key>Searching for cars at</key>
+	<string>Pro automobily na hledání</string>
+	<key>Searching for flights</key>
+	<string>Vyhledávání letů</string>
+	<key>Searching for hotels</key>
+	<string>Hledání hotelů</string>
+	<key>Searching for trains</key>
+	<string>Hledání pro vlaky</string>
+	<key>Seat: %@</key>
+	<string>Sídlo: % @</string>
+	<key>Seats</key>
+	<string>Sedačky</string>
+	<key>See All (token results)</key>
+	<string>Zobrazit všechny (%d výsledky)</string>
+	<key>See Alternative Flights</key>
+	<string>Viz alternativní lety</string>
+	<key>See what you can do with Concur</key>
+	<string>Co můžete dělat s Concur</string>
+	<key>Select</key>
+	<string>Vybrat</string>
+	<key>Select All</key>
+	<string>Vybrat vše</string>
+	<key>Select Attendee Type</key>
+	<string>Vyberte typ účastníka</string>
+	<key>Select Attendee to Add</key>
+	<string>Vyberte účastníka přidáte</string>
+	<key>Select Car Type</key>
+	<string>Vyberte typ auta</string>
+	<key>Select Card</key>
+	<string>Vyberte kartu</string>
+	<key>Select Email Address</key>
+	<string>Vyberte e-mailovou adresu</string>
+	<key>Select Preference</key>
+	<string>Vybrat předvolbu</string>
+	<key>Select Program</key>
+	<string>"Vyberte Program"</string>
+	<key>Select Reason</key>
+	<string>Vybrat důvod</string>
+	<key>Select Train</key>
+	<string>Vyberte vlak</string>
+	<key>Select an office location</key>
+	<string>Vyberte umístění kanceláře</string>
+	<key>Select delivery option</key>
+	<string>Vyberte možnost dodávky</string>
+	<key>Select seat class below</key>
+	<string>Vyberte místo třídy pod</string>
+	<key>Send Failed</key>
+	<string>Odesílání se nezdařilo.</string>
+	<key>Send Invite</key>
+	<string>Poslat pozvánku</string>
+	<key>Send Invite To</key>
+	<string>Poslat pozvánky do</string>
+	<key>Send Log</key>
+	<string>Odesílání Log</string>
+	<key>Send to Approver</key>
+	<string>Poslat schvalovateli</string>
+	<key>Sending Back Report</key>
+	<string>Odeslání zprávy zpět</string>
+	<key>Sending Email</key>
+	<string>Odesílání e-mailu</string>
+	<key>Sent</key>
+	<string>Odesláno</string>
+	<key>Set PIN</key>
+	<string>Nastavit PIN</string>
+	<key>Set PIN Tip</key>
+	<string>Nastavit PIN Tip</string>
+	<key>Set PIN succeeded</key>
+	<string>Váš kód PIN aplikace mobilní byl úspěšně uložen.</string>
+	<key>Settings</key>
+	<string>Nastavení</string>
+	<key>Show Home Panels</key>
+	<string>Zobrazit domů panely</string>
+	<key>Show Offers</key>
+	<string>Zobrazit nabídky</string>
+	<key>Sign In</key>
+	<string>Přihlásit se</string>
+	<key>Sign In Help</key>
+	<string>Pomoc s přihlášením</string>
+	<key>Sign In with Concur</key>
+	<string>Přihlásit Concur</string>
+	<key>Sign In with Facebook</key>
+	<string>Přihlásit Facebook</string>
+	<key>Sign Up</key>
+	<string>Registrace</string>
+	<key>Sign Up Failed</key>
+	<string>Přihlášení nezdařilo</string>
+	<key>Sign in to TripIt</key>
+	<string>Přihlášení k TripIt</string>
+	<key>Signing up accepts our</key>
+	<string>Registrující se přijímá naši</string>
+	<key>Single Sign On</key>
+	<string>Jednotného přihlášení</string>
+	<key>SmartExpense Report</key>
+	<string>SmartExpense zpráva</string>
+	<key>SmartExpense version</key>
+	<string>Vítejte v SmartExpense</string>
+	<key>SmartExpense was denied access to your TripIt account.</key>
+	<string>SmartExpense byl odepřen přístup k vašemu účtu TripIt.</string>
+	<key>SmartExpense was unable to access your TripIt account.  Please try again later.</key>
+	<string>SmartExpense se nepodařilo získat přístup k účtu TripIt. Opakujte akci později.</string>
+	<key>SmartExpense was unable to expense your trip. Please try again later.</key>
+	<string>SmartExpense se nepodařilo výdajů výletu. Opakujte akci později.</string>
+	<key>Smoking</key>
+	<string>Kouření</string>
+	<key>Sort</key>
+	<string>Seřadit</string>
+	<key>Sort by</key>
+	<string>Seřadit podle</string>
+	<key>Sort by Distance</key>
+	<string>Seřadit podle vzdálenosti</string>
+	<key>Sort by Preferred Vendors</key>
+	<string>Seřadit podle upřednostňované dodavatelé</string>
+	<key>Sort by Price</key>
+	<string>Seřadit podle ceny</string>
+	<key>Sort by Rating</key>
+	<string>Seřadit podle hodnocení</string>
+	<key>Sort by Vendor Names</key>
+	<string>Seřadit podle názvy dodavatelů</string>
+	<key>Standard</key>
+	<string>Standardní</string>
+	<key>Standard Hybrid</key>
+	<string>Standardní hybridní</string>
+	<key>Standard SUV</key>
+	<string>Standardní SUV</string>
+	<key>Star Rating</key>
+	<string>Hodnocení hvězdičkami</string>
+	<key>Starting</key>
+	<string>Spouštění</string>
+	<key>Station</key>
+	<string>Nádraží</string>
+	<key>Stations</key>
+	<string>Stanice</string>
+	<key>Stop</key>
+	<string>Stop</string>
+	<key>Stopping Upload</key>
+	<string>Zastavení odesílání</string>
+	<key>Stops</key>
+	<string>Zastaví</string>
+	<key>Submit Invoices</key>
+	<string>Odeslání faktury</string>
+	<key>Submit Report</key>
+	<string>Odeslat zprávu</string>
+	<key>Submitted Reports</key>
+	<string>Odeslané zprávy</string>
+	<key>Swipe for more</key>
+	<string>Swipe více</string>
+	<key>Swipe to delete</key>
+	<string>Swipe odstranit</string>
+	<key>Switch to KM</key>
+	<string>Přepněte do KM</string>
+	<key>Switch to Miles</key>
+	<string>Přepněte do Miles</string>
+	<key>Sync Credit Card</key>
+	<string>Synchronizace kreditní karta</string>
+	<key>Sync account with SmartExpense</key>
+	<string>Synchronizovat účet s SmartExpense</string>
+	<key>Sync credit card</key>
+	<string>Synchronizace kreditní karta</string>
+	<key>TITLE_REGISTER_REENTER_PIN</key>
+	<string>Zadejte kód PIN</string>
+	<key>TRAVEL_NEG_TEXT</key>
+	<string>Začít tím, že plánování vaší cesty</string>
+	<key>TRIPS</key>
+	<string>Seznam výletů</string>
+	<key>TRIP_DETAILS</key>
+	<string>Detaily výletu</string>
+	<key>TWITTER_MESSAGES</key>
+	<string>Twitter Z Concur</string>
+	<key>Take pictures of receipts &amp; upload</key>
+	<string>Fotit příjmy a odeslání</string>
+	<key>Tap to get directions</key>
+	<string>Klepnutím sem dostat pokyny</string>
+	<key>Taxi</key>
+	<string>Taxi</string>
+	<key>Taxi Magic</key>
+	<string>Taxi magie</string>
+	<key>Terminal token</key>
+	<string>Terminálu % @</string>
+	<key>Terms of Use</key>
+	<string>Podmínky použití</string>
+	<key>Thank You</key>
+	<string>Děkuju</string>
+	<key>The Out of Pocket Entry could not be saved because the network is unavailable.  Please try again later.</key>
+	<string>Pocket vstup z nelze uložit, protože není k dispozici síť. Opakujte akci později.</string>
+	<key>The Out of Pocket Entry could not be saved.  Please try again later.</key>
+	<string>Pocket vstup z nelze uložit. Opakujte akci později.</string>
+	<key>The account could not be unlinked.</key>
+	<string>Tento účet nemůže být odpojené.</string>
+	<key>The car could not be booked.</key>
+	<string>Auto nelze rezervovat.</string>
+	<key>The date specified for departure is invalid.</key>
+	<string>Datum určené pro odeslání je neplatný.</string>
+	<key>The date specified for the departure occurs in the past.</key>
+	<string>Data zadaná pro odchod se koná v minulosti.</string>
+	<key>The date specified for the return is earlier than the date of departure.</key>
+	<string>Datum zadané pro návrat je starší než datum odjezdu.</string>
+	<key>The log could not be sent.</key>
+	<string>Protokol nelze odeslat.</string>
+	<key>The log mail has been placed in your outbox.</key>
+	<string>Protokol mail byl umístěn do složky Pošta k odeslání.</string>
+	<key>The log mail has been saved in your Drafts folder.</key>
+	<string>Protokol mail byla uložena do složky Koncepty.</string>
+	<key>The server encountered an error.</key>
+	<string>Na serveru došlo k chybě.</string>
+	<key>There are</key>
+	<string>Existují % @ zprávy čekající na vaše schválení.</string>
+	<key>There are cct</key>
+	<string>Máte % @ nepoužívané karty obvinění.</string>
+	<key>There are no cct</key>
+	<string>Nemáte žádné poplatky za kartu.</string>
+	<key>There are no reports to approve</key>
+	<string>Nejsou žádné zprávy o schválení</string>
+	<key>There are no rpt</key>
+	<string>Byly předloženy všechny zprávy.</string>
+	<key>There are no travel requests to approve</key>
+	<string>Neexistují žádné požadavky pro schválení</string>
+	<key>There are rpt</key>
+	<string>Existují % @ neodeslané zprávy celkem % @.</string>
+	<key>There is</key>
+	<string>Existuje % @ zpráva čeká na schválení.</string>
+	<key>There is cct</key>
+	<string>Máte % @ nepoužívané karty zdarma.</string>
+	<key>There is rpt</key>
+	<string>Existuje % @ neodeslané zprávy pro celkem % @.</string>
+	<key>There were no unassigned expenses found</key>
+	<string>Nebyly žádné nepřiřazené výdaje nalezen</string>
+	<key>This application crashed the last time you ran it.  Please help us determine the cause of the crash by sending us the application log.</key>
+	<string>Tato aplikace havaroval naposled, co jste jej spustili. Prosím, pomozte nám určit příčinu krachu nám pošlete do protokolu aplikace.</string>
+	<key>This attendee cannot be edited.</key>
+	<string>Tomuto účastníkovi nelze upravovat.</string>
+	<key>This attendee has been modified</key>
+	<string>Tento účastník byl upraven od byl naposledy použité na tomto výdajů. Veškeré úpravy musí vyplnit v profilu na webu.</string>
+	<key>This device is not configured for sending mail.</key>
+	<string>Toto zařízení není konfigurován pro odesílání pošty.</string>
+	<key>This trip has already been expensed or the trip could not be synchronized.</key>
+	<string>Tato cesta již byla vykazována nebo cesta nemůže být synchronizována.</string>
+	<key>Ticket Delivery</key>
+	<string>Letenky</string>
+	<key>Ticket Type</key>
+	<string>Typ lístku</string>
+	<key>Ticketing</key>
+	<string>Výdej jízdenek</string>
+	<key>Time</key>
+	<string>Čas</string>
+	<key>Title</key>
+	<string>Název</string>
+	<key>To</key>
+	<string>Do</string>
+	<key>To Location</key>
+	<string>Umístění</string>
+	<key>To Station</key>
+	<string>Na stanici</string>
+	<key>ToReceiptStoreMsg</key>
+	<string>Vezměte mě k úložišti příjmu.</string>
+	<key>Tomorrow</key>
+	<string>Zítra</string>
+	<key>Total</key>
+	<string>Celkem</string>
+	<key>Total Amount</key>
+	<string>Celková částka</string>
+	<key>Total Due Company Card</key>
+	<string>Karta společnosti splatnosti celkem</string>
+	<key>Total Due Employee</key>
+	<string>Celková splnění zaměstnanec</string>
+	<key>Total Owed by Employee</key>
+	<string>Celkem připadajícího na zaměstnance</string>
+	<key>Total Paid by Company</key>
+	<string>Celkem zaplaceno společností</string>
+	<key>Total Personal Amount</key>
+	<string>Celkové osobní</string>
+	<key>Total Price</key>
+	<string>Celková cena</string>
+	<key>Total Rate</key>
+	<string>Celková míra</string>
+	<key>Total Requested</key>
+	<string>Celkem požadováno</string>
+	<key>Total no card charges</key>
+	<string>Nemáte žádné transakce kartou</string>
+	<key>Total no expenses</key>
+	<string>Nemáte žádné výdaje</string>
+	<key>Total num card charge</key>
+	<string>Máte jednu transakce kartou</string>
+	<key>Total num card charges</key>
+	<string>Máte % @ transakce kartou</string>
+	<key>Total num expense</key>
+	<string>Máte jednu výdajů</string>
+	<key>Total num expenses</key>
+	<string>Máte % @ výdaje</string>
+	<key>Total: %@</key>
+	<string>Celkem: % @</string>
+	<key>Tour</key>
+	<string>Prohlídka</string>
+	<key>Train</key>
+	<string>Vlak</string>
+	<key>Train Choices</key>
+	<string>Vlak možností</string>
+	<key>Train Detail</key>
+	<string>Vlak Detail</string>
+	<key>Train Number</key>
+	<string>Vlak číslo</string>
+	<key>Train: token</key>
+	<string>Vlak % @</string>
+	<key>Transaction Amount</key>
+	<string>Částka transakce</string>
+	<key>Transaction Date</key>
+	<string>Datum transakce</string>
+	<key>Transaction Location</key>
+	<string>Transakce umístění</string>
+	<key>Travel</key>
+	<string>Cestování</string>
+	<key>Travel Agency Info</key>
+	<string>Informace o cestovní kanceláři</string>
+	<key>Travel Apps</key>
+	<string>Cestovní Apps</string>
+	<key>Travel Policy</key>
+	<string>Cestovní politika</string>
+	<key>Travel Requests</key>
+	<string>Požadavky na</string>
+	<key>Travel Time</key>
+	<string>Cestovní čas</string>
+	<key>TravelRequestCount</key>
+	<string>Máte %d požadavcích ke schválení</string>
+	<key>TravelRequestsToApproveRow_0</key>
+	<string>Už žádné žádosti o schválení</string>
+	<key>TravelRequestsToApproveRow_1</key>
+	<string>Máte 1 žádost o schválení</string>
+	<key>TravelRequestsToApproveRow_2</key>
+	<string>Máte %d žádostí o schválení</string>
+	<key>Trip</key>
+	<string>Výjezdu</string>
+	<key>Trip Approval</key>
+	<string>Výlet schválení</string>
+	<key>Trip Approvals</key>
+	<string>Schválení Trip</string>
+	<key>Trip Fields</key>
+	<string>Trip pole</string>
+	<key>Trip Locator</key>
+	<string>Trip Lokátor</string>
+	<key>Trip data updated on</key>
+	<string>Trip údaje aktualizovány na % @</string>
+	<key>Trip data updated on hrt</key>
+	<string>Trip údaje aktualizovány na % @</string>
+	<key>Trip just trip</key>
+	<string>Cesta</string>
+	<key>TripIt Account Not Activated</key>
+	<string>TripIt účet není aktivován</string>
+	<key>TripIt Trips</key>
+	<string>TripIt výlety</string>
+	<key>TripIt not linked</key>
+	<string>TripIt účet nesouvisel s SmartExpense. Prosím odkaz na TripIt pomocí klepnutí na řádku TripIt z domovské obrazovky</string>
+	<key>TripIt not linked together</key>
+	<string>TripIt účet, který je spojen s přihlášený SmartExpense uživatel je jiný, než účet, na který TripIt mobilní aplikace je přihlášen do. Přihlaste se do TripIt pomocí stejného účtu, který jste propojili s SmartExpense.</string>
+	<key>TripIt trip key not found</key>
+	<string>Systém nemohl zpracovat váš požadavek na výdajích na výlet. TripIt výlet klíč nebyl nalezen.</string>
+	<key>Trips</key>
+	<string>Výlety</string>
+	<key>Try Again</key>
+	<string>Zkuste to znovu</string>
+	<key>TwitterConcur</key>
+	<string>Twitter Z Concur</string>
+	<key>Type</key>
+	<string>Typ</string>
+	<key>Type in emails seperated by commas or choose from contacts list</key>
+	<string>Zadejte v e-mailech oddělená čárkami nebo vyberte ze seznamu kontaktů</string>
+	<key>Type name or select frequent attendee</key>
+	<string>Zadejte křestní jméno nebo příjmení</string>
+	<key>Type to search for a location</key>
+	<string>Typ hledat místo</string>
+	<key>UNDEFINED_MSG</key>
+	<string>Nejméně jeden z vybraných výdajů má typ Nedefinovaný výdajů.</string>
+	<key>Unable to add expense</key>
+	<string>Nepodařilo se přidat výdajů</string>
+	<key>Unable to add itemization</key>
+	<string>Nepodařilo se přidat rozpis</string>
+	<key>Unable to link</key>
+	<string>Nelze připojit</string>
+	<key>Unable to load location data.</key>
+	<string>Nelze načíst údaje o poloze.</string>
+	<key>Unable to sign in</key>
+	<string>Jsme schopni vás přihlásit v tuto chvíli. Prosím, kontaktujte vaši pomoc stolu nebo cestování/výdaje oddělení společnosti.</string>
+	<key>Unavailable</key>
+	<string>Nedostupné</string>
+	<key>Undefined</key>
+	<string>Nedefinováno</string>
+	<key>Unexpected Error</key>
+	<string>Neočekávaná chyba</string>
+	<key>Unknown Station</key>
+	<string>Neznámá stanice</string>
+	<key>Unlink Dropbox</key>
+	<string>Propojení odkládací schránky</string>
+	<key>Unlink Succeeded</key>
+	<string>Propojení bylo provedeno úspěšně.</string>
+	<key>Unlink from TripIt</key>
+	<string>Odpojit od TripIt</string>
+	<key>Unsaved Receipts</key>
+	<string>Neuložená příjemky</string>
+	<key>Unselect All</key>
+	<string>Zrušit výběr</string>
+	<key>Unsubmitted Reports</key>
+	<string>Neodeslané zprávy</string>
+	<key>UnsubmittedReportsRow_0</key>
+	<string>Nemáte žádné neodeslané zprávy</string>
+	<key>UnsubmittedReportsRow_1</key>
+	<string>Máte 1 neodeslané zprávy</string>
+	<key>UnsubmittedReportsRow_2</key>
+	<string>Máte %d unsubmitted zprávy</string>
+	<key>Update</key>
+	<string>Aktualizovat</string>
+	<key>Update Itemizations</key>
+	<string>Aktualizace Itemizations</string>
+	<key>Update Receipt</key>
+	<string>Aktualizovat příjem</string>
+	<key>Updating</key>
+	<string>Aktualizace</string>
+	<key>Updating Itinerary</key>
+	<string>Aktualizace itinerář</string>
+	<key>Upload</key>
+	<string>Nahrát</string>
+	<key>Upload Failed</key>
+	<string>Odesílání se nezdařilo.</string>
+	<key>Upload Queue</key>
+	<string>Uložit fronty</string>
+	<key>Upload Receipt</key>
+	<string>Odesílání potvrzení</string>
+	<key>Upload Success</key>
+	<string>Uložit úspěch</string>
+	<key>Uploading Please Wait</key>
+	<string>Odesílání prosím počkejte</string>
+	<key>Uploading count</key>
+	<string>Odesílání %d z %d</string>
+	<key>Uploading to Dropbox</key>
+	<string>Ukládání na odkládací schránky</string>
+	<key>Uploading to Dropbox failed</key>
+	<string>Ukládání na odkládací schránky se nezdařilo.</string>
+	<key>Uploading to Dropbox was successful</key>
+	<string>Ukládání na odkládací schránky byl úspěšný</string>
+	<key>User Name</key>
+	<string>Uživatelské jméno</string>
+	<key>Username or PIN is invalid</key>
+	<string>Uživatelské jméno nebo kód PIN je neplatný. Můžete vytvářet nebo resetovat kód PIN mobilní kliknutím na "Potřeba nastavit PIN?" nebo přechodem do "Profilu-&gt; mobilní registrace" v Concur online.</string>
+	<key>Username or Password is invalid</key>
+	<string>Uživatelské jméno nebo heslo je neplatné.</string>
+	<key>Username or Password is invalid SU</key>
+	<string>Uživatelské jméno nebo heslo je neplatné. Své heslo můžete obnovit tak, že kliknutím na odkaz "Obnovení hesla". Pokud nemáte účet, klikněte prosím na znamení se.</string>
+	<key>VALUE_RANGE_MSG</key>
+	<string>Zadejte hodnotu mezi %d a %d znaky.</string>
+	<key>VALUE_RANGE_MSG_FIXED_LENGTH</key>
+	<string>Zadejte hodnotu, která je %d znaků.</string>
+	<key>VALUE_RANGE_MSG_LOWER_BOUND</key>
+	<string>Zadejte hodnotu větší než %d znaků.</string>
+	<key>VALUE_RANGE_MSG_NO_BOUNDS</key>
+	<string>Zadejte platnou hodnotu pro toto pole.</string>
+	<key>VALUE_RANGE_MSG_UPPER_BOUND</key>
+	<string>Zadejte hodnotu menší než %d znaků.</string>
+	<key>VERIFY_PWD</key>
+	<string>Ověření hesla</string>
+	<key>VehicleId</key>
+	<string>Vozidlo Id</string>
+	<key>Vendor</key>
+	<string>Dodavatel</string>
+	<key>Vendor Names</key>
+	<string>Názvy dodavatelů</string>
+	<key>Vendor Web Site</key>
+	<string>Web dodavatele</string>
+	<key>Verification is simple. Just tap on the link in the email we sent to</key>
+	<string>Ověřování je jednoduchý. Jen klepněte na odkaz v e-mailu, který jsme poslali do % @</string>
+	<key>View Images</key>
+	<string>Zobrazit obrázky</string>
+	<key>View Rates</key>
+	<string>Zobrazit kurzy</string>
+	<key>View Receipt</key>
+	<string>Zobrazit příjem</string>
+	<key>View Report Offline</key>
+	<string>Zprávu nelze přistupovat. Opakujte později online.</string>
+	<key>View your travel requests</key>
+	<string>Vaše žádosti</string>
+	<key>View your uploaded receipts</key>
+	<string>Zobrazit odeslaná příjmy</string>
+	<key>Violation</key>
+	<string>Porušení</string>
+	<key>Violation Justification</key>
+	<string>Narušení zarovnání</string>
+	<key>Violation Reason</key>
+	<string>Důvod porušení</string>
+	<key>WAIT_FOR_CAR_RATES_DATA</key>
+	<string>Čekáte na auto sazby data. Opakujte akci později.</string>
+	<key>WARNING</key>
+	<string>Varování</string>
+	<key>WARNING_INVALID_VALUE_RANGE_NOT_REQUIRED</key>
+	<string>Tato hodnota není v rámci zadaného rozsahu %d až %d znaků. Jste si jisti, že chcete pokračovat?</string>
+	<key>WARN_MISSING_REQ_FLD</key>
+	<string>Máte chybí požadovaná pole na formuláři. Chcete pokračovat v ukládání?</string>
+	<key>WEBVIEW</key>
+	<string>Webové zobrazení dat</string>
+	<key>Waiting</key>
+	<string>Čekání</string>
+	<key>Warning</key>
+	<string>Varování</string>
+	<key>Web Site</key>
+	<string>Webová stránka</string>
+	<key>What's New</key>
+	<string>Co je nového</string>
+	<key>When auto login is on</key>
+	<string>Když je automatické přihlášení, uživatelské jméno je automaticky ukládány.</string>
+	<key>Would you like to create an Expense Report from the selected trip segments</key>
+	<string>Chcete vytvořit vyúčtování ze segmentů vybrané cesty?</string>
+	<key>Would you like to try again or get sign in help?</key>
+	<string>Chcete zkusit znovu, nebo si znamení v nápovědě?</string>
+	<key>Wrong agency code</key>
+	<string>Kód nesprávné agentury</string>
+	<key>Wrong company code</key>
+	<string>Kód špatné společnosti</string>
+	<key>YODLEE_CARD_LOGIN_FORM_FAILED_MSG</key>
+	<string>Nepodařilo se získat přihlašovací formulář pro vaši kreditní kartu. Zkuste to prosím později.</string>
+	<key>Yes</key>
+	<string>Ano</string>
+	<key>You already have a corporate account with Concur.</key>
+	<string>Již máte firemní účet u Concur.</string>
+	<key>You are offline. Please expense trip later.</key>
+	<string>Jste v režimu offline. Počkejte, prosím, na výdaje na cestu, dokud jste v režimu online.</string>
+	<key>You have already registered for SmartExpense.</key>
+	<string>Jste si již zaregistrovali SmartExpense.</string>
+	<key>You have no approvals</key>
+	<string>Už žádné schválení</string>
+	<key>You have no messages</key>
+	<string>Nemáte žádné vzkazy</string>
+	<key>You have no upcoming trips</key>
+	<string>Nemáte žádné nadcházející výlety</string>
+	<key>You have successfully linked your TripIt account to SmartExpense.</key>
+	<string>Úspěšně jste propojili účet TripIt na SmartExpense.</string>
+	<key>You must be online before you can upload your items</key>
+	<string>Musíte být online dříve, než můžete nahrát své zboží.</string>
+	<key>You must enter in a valid PIN in order to log in</key>
+	<string>Musíte zadat platný kód PIN pro přihlášení</string>
+	<key>You must enter in a valid email address in order for Concur to verify it</key>
+	<string>Musíte zadat platnou e-mailovou adresu, aby Concur ověření</string>
+	<key>You must enter in a valid email for your approver</key>
+	<string>Musíte zadat do platný e-mail pro vaše schvalovatele</string>
+	<key>You must enter in a valid password in order to log in</key>
+	<string>Musíte zadat platné heslo pro přihlášení</string>
+	<key>You must enter in a valid password or PIN in order to log in</key>
+	<string>Musíte zadat platné heslo nebo kód PIN pro přihlášení</string>
+	<key>You must enter in a valid user name in order to log in</key>
+	<string>Musíte zadat platné uživatelské jméno pro přihlášení</string>
+	<key>You need to select a Delivery Option in order to reserve your train</key>
+	<string>Musíte vybrat možnost doručení rezervuje vlak.</string>
+	<key>Your account data has been wiped from this device.  Please contact your company administrator for assistance.</key>
+	<string>Váš účet údaje byly vymazány z tohoto zařízení. Obraťte se na správce společnosti.</string>
+	<key>Your account is no longer linked to TripIt.</key>
+	<string>Váš účet je již propojen s TripIt.</string>
+	<key>Your company's travel policy will not allow this reservation.</key>
+	<string>Vaše společnost cestovní politiky nedovolí, aby tuto rezervaci.</string>
+	<key>Your expense has been queued</key>
+	<string>Vaše náklady byly do fronty pro odesílání.</string>
+	<key>Your receipt has been queued</key>
+	<string>Příjem byl do fronty pro odesílání.</string>
+	<key>are missing</key>
+	<string>chybí.</string>
+	<key>available from</key>
+	<string>dostupný od</string>
+	<key>check in on</key>
+	<string>zkontrolovat</string>
+	<key>choices</key>
+	<string>Možnosti</string>
+	<key>corporate card transactions</key>
+	<string>firemní karty transakce</string>
+	<key>day</key>
+	<string>den</string>
+	<key>days</key>
+	<string>dny</string>
+	<key>email saved into your drafts</key>
+	<string>e-mail uložený do své koncepty</string>
+	<key>hour</key>
+	<string>hodina</string>
+	<key>hours</key>
+	<string>hodin</string>
+	<key>int active int upcoming</key>
+	<string>%d aktivní, %d nadcházející</string>
+	<key>invoices to approve</key>
+	<string>Faktury ke schválení</string>
+	<key>is missing</key>
+	<string>chybí.</string>
+	<key>items to upload</key>
+	<string>zboží k odeslání</string>
+	<key>menu</key>
+	<string>Nabídka</string>
+	<key>miles</key>
+	<string>Miles</string>
+	<key>minute</key>
+	<string>minuta</string>
+	<key>minutes</key>
+	<string>minut</string>
+	<key>mobile entries</key>
+	<string>mobilní položky</string>
+	<key>near</key>
+	<string>blízko</string>
+	<key>no</key>
+	<string>Ne</string>
+	<key>noReceipt</key>
+	<string>Příjem obrázek není v současné době k dispozici. Opakujte akci později.</string>
+	<key>noReceipts</key>
+	<string>V současné době nemáte žádné příjmy v úložišti příjmu.</string>
+	<key>per day</key>
+	<string>denně</string>
+	<key>pickup on</key>
+	<string>vyzvednutí na</string>
+	<key>resend the verification email</key>
+	<string>Odeslat ověřovací e-mail</string>
+	<key>results by Duration</key>
+	<string>výsledky podle doby trvání</string>
+	<key>results by Earliest Departure</key>
+	<string>výsledky podle nejdřívější odjezd</string>
+	<key>results by Fare Price</key>
+	<string>výsledky podle ceny jízdného</string>
+	<key>results by Preferred Carrier</key>
+	<string>výsledky preferovaný dopravce</string>
+	<key>sorted by</key>
+	<string>Seřadit podle</string>
+	<key>tap here to cancel reservation</key>
+	<string>Klepnutím sem zrušíte rezervaci</string>
+	<key>to</key>
+	<string>do</string>
+	<key>token hour(s) token minute(s)</key>
+	<string>%d hodin, %d min.</string>
+	<key>token minute(s)</key>
+	<string>%d minut</string>
+	<key>token results</key>
+	<string>výsledky: %d</string>
+	<key>travel requests to approve</key>
+	<string>žádosti o schválení</string>
+	<key>trips to approve</key>
+	<string>Trip(s) odmítl</string>
+	<key>unsubmitted Reports</key>
+	<string>neodeslané sestavy</string>
+</dict>
+</plist>

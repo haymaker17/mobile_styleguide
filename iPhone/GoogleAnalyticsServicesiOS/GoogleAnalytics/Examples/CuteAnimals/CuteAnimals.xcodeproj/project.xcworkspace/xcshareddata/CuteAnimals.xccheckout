@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>IDESourceControlProjectFavoriteDictionaryKey</key>
+	<false/>
+	<key>IDESourceControlProjectIdentifier</key>
+	<string>CF22FA45-E0E6-405E-B2DE-031BAFC69ED2</string>
+	<key>IDESourceControlProjectName</key>
+	<string>CuteAnimals</string>
+	<key>IDESourceControlProjectOriginsDictionary</key>
+	<dict>
+		<key>5BB994D2-F778-4366-9028-2925F2B22142</key>
+		<string>http://10.24.62.100/svn/cte/Mobile/trunk</string>
+	</dict>
+	<key>IDESourceControlProjectPath</key>
+	<string>iPhone/GoogleAnalyticsServicesiOS/GoogleAnalytics/Examples/CuteAnimals/CuteAnimals.xcodeproj/project.xcworkspace</string>
+	<key>IDESourceControlProjectRelativeInstallPathDictionary</key>
+	<dict>
+		<key>5BB994D2-F778-4366-9028-2925F2B22142</key>
+		<string>../../../../../../..</string>
+	</dict>
+	<key>IDESourceControlProjectRepositoryRootDictionary</key>
+	<dict>
+		<key>5BB994D2-F778-4366-9028-2925F2B22142</key>
+		<string>http://10.24.62.100/svn/cte</string>
+	</dict>
+	<key>IDESourceControlProjectURL</key>
+	<string>http://10.24.62.100/svn/cte/Mobile/trunk/iPhone/GoogleAnalyticsServicesiOS/GoogleAnalytics/Examples/CuteAnimals/CuteAnimals.xcodeproj</string>
+	<key>IDESourceControlProjectVersion</key>
+	<integer>110</integer>
+	<key>IDESourceControlProjectWCCIdentifier</key>
+	<string>5BB994D2-F778-4366-9028-2925F2B22142</string>
+	<key>IDESourceControlProjectWCConfigurations</key>
+	<array>
+		<dict>
+			<key>IDESourceControlRepositoryBranchesRelativeLocationKey</key>
+			<string>Mobile/branches</string>
+			<key>IDESourceControlRepositoryExtensionIdentifierKey</key>
+			<string>public.vcs.subversion</string>
+			<key>IDESourceControlRepositoryTagsRelativeLocationKey</key>
+			<string>Mobile/tags</string>
+			<key>IDESourceControlRepositoryTrunkRelativeLocationKey</key>
+			<string>Mobile/trunk</string>
+			<key>IDESourceControlWCCIdentifierKey</key>
+			<string>5BB994D2-F778-4366-9028-2925F2B22142</string>
+			<key>IDESourceControlWCCName</key>
+			<string>Jarvis</string>
+		</dict>
+	</array>
+</dict>
+</plist>

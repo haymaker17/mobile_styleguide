@@ -1,0 +1,75 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="4514" systemVersion="13A603" targetRuntime="iOS.CocoaTouch.iPad" propertyAccessControl="none" useAutolayout="YES" initialViewController="NeQ-iS-N9T">
+    <dependencies>
+        <deployment defaultVersion="1536" identifier="iOS"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="3747"/>
+    </dependencies>
+    <scenes>
+        <!--Wait View Controller-->
+        <scene sceneID="5Na-iY-5IF">
+            <objects>
+                <viewController storyboardIdentifier="WaitViewController" id="NeQ-iS-N9T" customClass="WaitViewController" sceneMemberID="viewController">
+                    <layoutGuides>
+                        <viewControllerLayoutGuide type="top" id="r1e-RA-arB"/>
+                        <viewControllerLayoutGuide type="bottom" id="29B-TQ-trn"/>
+                    </layoutGuides>
+                    <view key="view" contentMode="scaleToFill" id="DIx-D8-lIq">
+                        <rect key="frame" x="0.0" y="0.0" width="768" height="1024"/>
+                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                        <subviews>
+                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Xnt-7n-vv3">
+                                <rect key="frame" x="34" y="256" width="700" height="512"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <subviews>
+                                    <activityIndicatorView opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" style="whiteLarge" translatesAutoresizingMaskIntoConstraints="NO" id="APf-2d-1KU">
+                                        <rect key="frame" x="332" y="161" width="37" height="37"/>
+                                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                        <color key="color" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                    </activityIndicatorView>
+                                    <textView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleToFill" bounces="NO" scrollEnabled="NO" showsHorizontalScrollIndicator="NO" showsVerticalScrollIndicator="NO" editable="NO" text="Please Wait" textAlignment="center" translatesAutoresizingMaskIntoConstraints="NO" id="yRM-kr-NqZ">
+                                        <rect key="frame" x="0.0" y="230" width="700" height="268"/>
+                                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                                        <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
+                                        <constraints>
+                                            <constraint firstAttribute="width" constant="700" id="Pi4-8N-RWL"/>
+                                            <constraint firstAttribute="height" constant="268" id="tix-En-9JY"/>
+                                        </constraints>
+                                        <color key="textColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                        <fontDescription key="fontDescription" name="HelveticaNeue" family="Helvetica Neue" pointSize="24"/>
+                                        <textInputTraits key="textInputTraits" autocapitalizationType="sentences" autocorrectionType="no"/>
+                                    </textView>
+                                </subviews>
+                                <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
+                                <color key="tintColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
+                                <constraints>
+                                    <constraint firstItem="yRM-kr-NqZ" firstAttribute="top" secondItem="APf-2d-1KU" secondAttribute="bottom" constant="32" id="3cp-Lo-tqM"/>
+                                    <constraint firstAttribute="centerX" secondItem="yRM-kr-NqZ" secondAttribute="centerX" id="F7T-vO-V9Q"/>
+                                    <constraint firstAttribute="height" constant="512" id="Qc4-We-xsQ"/>
+                                    <constraint firstAttribute="centerX" secondItem="APf-2d-1KU" secondAttribute="centerX" id="Rz4-lV-Uzd"/>
+                                    <constraint firstAttribute="width" constant="700" id="VLd-OS-peN"/>
+                                    <constraint firstItem="APf-2d-1KU" firstAttribute="top" secondItem="Xnt-7n-vv3" secondAttribute="top" constant="161" id="fMQ-Fd-BUU"/>
+                                </constraints>
+                            </view>
+                        </subviews>
+                        <color key="backgroundColor" white="0.0" alpha="0.75" colorSpace="calibratedWhite"/>
+                        <constraints>
+                            <constraint firstAttribute="centerY" secondItem="Xnt-7n-vv3" secondAttribute="centerY" id="eUC-Hx-hG4"/>
+                            <constraint firstAttribute="centerX" secondItem="Xnt-7n-vv3" secondAttribute="centerX" id="xio-Qx-ezc"/>
+                        </constraints>
+                    </view>
+                    <connections>
+                        <outlet property="spinnerView" destination="APf-2d-1KU" id="cbv-Rv-MWU"/>
+                        <outlet property="textView" destination="yRM-kr-NqZ" id="vCy-8w-Ebp"/>
+                    </connections>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="aJE-YM-Jyx" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="882" y="204"/>
+        </scene>
+    </scenes>
+    <simulatedMetricsContainer key="defaultSimulatedMetrics">
+        <simulatedStatusBarMetrics key="statusBar" statusBarStyle="lightContent"/>
+        <simulatedOrientationMetrics key="orientation"/>
+        <simulatedScreenMetrics key="destination"/>
+    </simulatedMetricsContainer>
+</document>

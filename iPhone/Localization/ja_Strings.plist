@@ -1,0 +1,3947 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key># of Cars</key>
+	<string>車両の数</string>
+	<key>%@ has been submitted</key>
+	<string>%@ が提出されました</string>
+	<key>%@ km</key>
+	<string>%@ km</string>
+	<key>%@ kms</key>
+	<string>%@ km</string>
+	<key>%@ mile</key>
+	<string>%@ マイル</string>
+	<key>%@ miles</key>
+	<string>%@ マイル</string>
+	<key>%@ of your colleagues are staying here on your check-in date</key>
+	<string>チェックインの日に%@名の同僚がここに滞在</string>
+	<key>%@ of your colleagues' favourite</key>
+	<string>%@ 名の同僚のお気に入り</string>
+	<key>%@ per day</key>
+	<string>1 日あたり %@</string>
+	<key>%d Hour and %d Minute(s)</key>
+	<string>%d 時間 %d 分</string>
+	<key>%d Hours and %d Minute(s)</key>
+	<string>%d 時間 %d 分</string>
+	<key>%d Minute(s)</key>
+	<string>%d 分</string>
+	<key>(Refundable)</key>
+	<string>(払戻可)</string>
+	<key>1 Stop</key>
+	<string>1 回乗継</string>
+	<key>@Concur2Go Twitter Feed</key>
+	<string>@Concur2Go ツイッター フィード</string>
+	<key>A Receipt is</key>
+	<string>サーバー上のこの経費に領収書が添付されていることが示されていますが、領収書は領収書マネージャーに存在していません。  領収書をこの経費に再度添付し、保存してください。</string>
+	<key>ACTIVEREQUESTS</key>
+	<string>アクティブな申請</string>
+	<key>ACTIVE_ENTRIES</key>
+	<string>レポート</string>
+	<key>ACTIVE_REPORTS</key>
+	<string>アクティブなレポート</string>
+	<key>ADD_CAR_MILEAGE_HOME_NOT_SUPPORTED</key>
+	<string>私有車設定の走行距離単価がないか、現在サポートされていない構成を使用しています。モバイルまたは Web 経由で、レポートに走行距離経費を追加してください。</string>
+	<key>ADD_CAR_MILEAGE_NOT_SUPPORTED</key>
+	<string>私有車設定の走行距離単価がないか、現在サポートされていない構成を使用しています。</string>
+	<key>ADD_EXISTING_CARD</key>
+	<string>この特定のカードは追加済のため、もう一度追加はできません。</string>
+	<key>ADD_EXPENSE_OFFLINE_NOT_SUPPORTED</key>
+	<string>オフライン モードでの経費の追加は、まだサポートされていません。</string>
+	<key>ADD_TO_RPT_CONFIRM_MSG</key>
+	<string>選択した経費をレポートに追加しますか? これらをレポートに追加した後、領収書を添付し、経費を編集できます。</string>
+	<key>ADD_TO_RPT_CONFIRM_TITLE</key>
+	<string>確認</string>
+	<key>ADD_YODLEE_CARD_COMPLETE_MSG</key>
+	<string>%@ で終わるカードがスマート経費アカウントに追加されました。</string>
+	<key>ADD_YODLEE_CARD_FAILED_MSG</key>
+	<string>クレジット カードを追加できませんでした。後でもう一度お試しください。</string>
+	<key>ADD_YODLEE_CARD_INSTRUCTION</key>
+	<string>口座のログイン情報を入力してください。Concur では、この情報を暗号化して安全に使用し、カード課金をダウンロードします。</string>
+	<key>AIR_BOOKING</key>
+	<string>空路の予約</string>
+	<key>AIR_BOOKING_DISABLED_MSG</key>
+	<string>会社が携帯端末で空路予約ができないように構成しています。オンラインまたは旅行代理店に電話して、フライトを予約してください。</string>
+	<key>AIR_BOOKING_PROFILE_1_MSG</key>
+	<string>この出張プロファイルには、ミドルネーム、性別、生年月日が必須です。Concur Travel Web バージョンにログインし、メニューからプロファイルを選択してください。</string>
+	<key>AIR_BOOKING_PROFILE_21_MSG</key>
+	<string>出張プロファイルがまだ保存されていません。予約する前に 1 回以上保存する必要があります。Concur Travel Web バージョンにログインし、[プロファイル]、[保存] の順に選択してください。</string>
+	<key>AIR_BOOKING_PROFILE_22_MSG</key>
+	<string>この出張構成の請求コード/タイプには、プロジェクトの設定が必須です。適切なプロジェクトを設定するように、法人管理者に依頼してください。</string>
+	<key>AIR_BOOKING_PROFILE_23_MSG</key>
+	<string>Vinnet が存在しません。クライアントはこのプロファイル チェック コードを受取りません。</string>
+	<key>AIR_BOOKING_PROFILE_24_MSG</key>
+	<string>この出張プロファイルには携帯電話番号が必須です。Concur Travel Web バージョンにログインし、メニューからプロファイルを選択してください。</string>
+	<key>AIR_BOOKING_PROFILE_25_MSG</key>
+	<string>この出張プロファイルにはパスポートの国籍が必須です。Concur Travel Web バージョンにログインし、メニューからプロファイルを選択してください。</string>
+	<key>AIR_BOOKING_PROFILE_26_MSG</key>
+	<string>この出張プロファイルには役職の値が必須です。Concur Travel Web バージョンにログインし、メニューからプロファイルを選択してください。</string>
+	<key>AIR_BOOKING_PROFILE_27_MSG</key>
+	<string>この出張プロファイルには部署の値が必須です。Concur Travel Web バージョンにログインし、メニューからプロファイルを選択してください。</string>
+	<key>AIR_BOOKING_PROFILE_28_MSG</key>
+	<string>この出張プロファイルには名前の注釈が必須です。Concur Travel Web バージョンにログインし、メニューからプロファイルを選択してください。\n注意: このフィールドにはカスタマイズされたラベルが付けられている場合があります。見つからない場合は、法人管理者に問い合わせてください。</string>
+	<key>AIR_BOOKING_PROFILE_29_MSG</key>
+	<string>この出張プロファイルにはマネージャーの値が必須です。Concur Travel Web バージョンにログインし、メニューからプロファイルを選択してください。</string>
+	<key>AIR_BOOKING_PROFILE_2_MSG</key>
+	<string>航空出張を予約する前に、出張プロファイルを完了する必要があります。Concur Travel Web バージョンにログインし、メニューからプロファイルを選択してください。</string>
+	<key>AIR_BOOKING_PROFILE_30_MSG</key>
+	<string>この出張プロファイルには従業員 ID が必須です。Concur Travel Web バージョンにログインし、メニューからプロファイルを選択してください。</string>
+	<key>AIR_BOOKING_PROFILE_31_MSG</key>
+	<string>この出張プロファイルでは有効なメール アドレスが必須です。Concur Travel Web バージョンにログインし、メニューからプロファイルを選択してください。</string>
+	<key>AIR_BOOKING_PROFILE_32_MSG</key>
+	<string>この出張プロファイルには、職場の住所 (番地、市、国) が必須です。Concur Travel Web バージョンにログインし、メニューからプロファイルを選択してください。</string>
+	<key>AIR_BOOKING_PROFILE_33_MSG</key>
+	<string>この出張プロファイルには、職場または自宅の電話番号が必須です。Concur Travel Web バージョンにログインし、メニューからプロファイルを選択してください。</string>
+	<key>AIR_BOOKING_PROFILE_PROLOG_MSG</key>
+	<string>ログアウトして、上記の情報を入力してから再度ログインしてください。</string>
+	<key>AIR_BOOKING_REQ_CUSTOM_FIELDS_MSG</key>
+	<string>空路の予約時に会社に特別な要件があります。Web バージョンの Concur を使用して空路を予約してください。</string>
+	<key>AIR_WARNING_JUSTIFICATION</key>
+	<string>このフライトの予約が会社のポリシー違反にならないように、赤色で表示されたフィールドに理由を入力する必要があります。</string>
+	<key>AIR_WARNING_REASON</key>
+	<string>このフライトの予約が会社のポリシー違反にならないように、赤で表示されたフィールドに理由を入力する必要があります。</string>
+	<key>AIR_WARNING_REASON_JUSTIFICATION</key>
+	<string>このフライトの予約が会社のポリシー違反にならないように、赤で表示されたフィールドに理由および妥当性を入力する必要があります。</string>
+	<key>ALERT_CLEAR_CACHE</key>
+	<string>これにより、すべてのオフライン データが削除されます。 アプリケーションは継続して動作します。</string>
+	<key>AMOUNT_TOO_BIG_ERR_MSG</key>
+	<string>999999999999999 以下の値を入力</string>
+	<key>APPROVALS_NEG_TEXT</key>
+	<string>いつでも、どこでも項目を承認</string>
+	<key>APPROVEDREQUESTS</key>
+	<string>承認済の申請</string>
+	<key>APPROVE_APPROVE_BUTTON_TITLE</key>
+	<string>承認</string>
+	<key>APPROVE_CANCEL</key>
+	<string>キャンセル</string>
+	<key>APPROVE_ENTER_COMMENT_FOR_SENDBACK</key>
+	<string>コメントを入力してください。</string>
+	<key>APPROVE_ENTRIES</key>
+	<string>レポート入力</string>
+	<key>APPROVE_ENTRIES_ACTION_SECTION_REPORT_SUMMARY_ROW</key>
+	<string>レポートのサマリー</string>
+	<key>APPROVE_ENTRIES_ACTION_SECTION_VIEW_COMMENTS_ROW</key>
+	<string>コメントの表示</string>
+	<key>APPROVE_ENTRIES_ACTION_SECTION_VIEW_EXCEPTIONS_ROW</key>
+	<string>規定違反の表示</string>
+	<key>APPROVE_ENTRIES_ACTION_SECTION_VIEW_RECEIPTS_ROW</key>
+	<string>領収書の表示</string>
+	<key>APPROVE_ENTRIES_VIEW_TITLE</key>
+	<string>経費リスト</string>
+	<key>APPROVE_EXPENSE_DETAILS</key>
+	<string>経費詳細</string>
+	<key>APPROVE_EXPENSE_DETAILS_ATTENDEES</key>
+	<string>同席者</string>
+	<key>APPROVE_EXPENSE_DETAILS_COMMENT</key>
+	<string>コメント</string>
+	<key>APPROVE_EXPENSE_DETAILS_DETAILS</key>
+	<string>詳細</string>
+	<key>APPROVE_EXPENSE_DETAILS_EXCEPTIONS</key>
+	<string>規定違反</string>
+	<key>APPROVE_EXPENSE_DETAILS_VIEW_ATTENDEES</key>
+	<string>同席者の表示</string>
+	<key>APPROVE_EXPENSE_DETAILS_VIEW_ITEMIZATIONS</key>
+	<string>明細の表示</string>
+	<key>APPROVE_EXPENSE_DETAILS_VIEW_TITLE</key>
+	<string>経費</string>
+	<key>APPROVE_INVOICES</key>
+	<string>支払請求の承認</string>
+	<key>APPROVE_OK</key>
+	<string>OK</string>
+	<key>APPROVE_PLEASE_COMMENT</key>
+	<string>コメントを入力してください</string>
+	<key>APPROVE_PLEASE_CONFIRM</key>
+	<string>確認してください</string>
+	<key>APPROVE_QUESTION_AREYOUSURE</key>
+	<string>このレポートを承認してもよろしいですか?</string>
+	<key>APPROVE_QUESTION_PART1</key>
+	<string>承認</string>
+	<key>APPROVE_QUESTION_PART2</key>
+	<string>経費精算レポートの対象</string>
+	<key>APPROVE_REPORT</key>
+	<string>レポートの承認</string>
+	<key>APPROVE_REPORTS</key>
+	<string>レポートの承認</string>
+	<key>APPROVE_REPORTS_VIEW_TITLE</key>
+	<string>承認するレポート</string>
+	<key>APPROVE_REPORT_CHECK_RECEIPT_IMAGE</key>
+	<string>領収書イメージの確認</string>
+	<key>APPROVE_REPORT_RECEIPT_IMAGE</key>
+	<string>領収書イメージを表示</string>
+	<key>APPROVE_REPORT_SUMMARY</key>
+	<string>レポートのサマリー</string>
+	<key>APPROVE_REPORT_SUMMARY_AMOUNT_APPROVED</key>
+	<string>承認金額</string>
+	<key>APPROVE_REPORT_SUMMARY_AMOUNT_CLAIMED</key>
+	<string>請求金額</string>
+	<key>APPROVE_REPORT_SUMMARY_AMOUNT_DUE_COMPANY</key>
+	<string>会社への支払金額</string>
+	<key>APPROVE_REPORT_SUMMARY_AMOUNT_DUE_CREDIT_CARD</key>
+	<string>クレジット カードへの支払金額</string>
+	<key>APPROVE_REPORT_SUMMARY_AMOUNT_DUE_EMPLOYEE</key>
+	<string>従業員への支払金額</string>
+	<key>APPROVE_REPORT_SUMMARY_AMOUNT_REJECTED</key>
+	<string>却下金額</string>
+	<key>APPROVE_REPORT_SUMMARY_COMMENTS</key>
+	<string>コメント</string>
+	<key>APPROVE_REPORT_SUMMARY_COMPANYDISBURSEMENT</key>
+	<string>会社の支出</string>
+	<key>APPROVE_REPORT_SUMMARY_COMPANY_PAID_TO_CREDIT_CARD</key>
+	<string>クレジット カードに会社が支払</string>
+	<key>APPROVE_REPORT_SUMMARY_EMPLOYEEDISBURSEMENTS</key>
+	<string>従業員の支出</string>
+	<key>APPROVE_REPORT_SUMMARY_HEADER</key>
+	<string>ヘッダー</string>
+	<key>APPROVE_REPORT_SUMMARY_LESS_PERSONAL_AMOUNT</key>
+	<string>− 私用金額</string>
+	<key>APPROVE_REPORT_SUMMARY_POLICY</key>
+	<string>ポリシー</string>
+	<key>APPROVE_REPORT_SUMMARY_REPORT_HEADER</key>
+	<string>レポート ヘッダー</string>
+	<key>APPROVE_REPORT_SUMMARY_REPORT_ID</key>
+	<string>レポート ID</string>
+	<key>APPROVE_REPORT_SUMMARY_REPORT_TOTAL</key>
+	<string>レポート総計</string>
+	<key>APPROVE_REPORT_SUMMARY_TOTAL_PAID_BY_COMPANY</key>
+	<string>会社の支払総額</string>
+	<key>APPROVE_REPORT_SUMMARY_TOTAL_PAID_BY_EMPLOYEE</key>
+	<string>従業員の支払総額</string>
+	<key>APPROVE_REPORT_SUMMARY_VIEW_TITLE</key>
+	<string>サマリー</string>
+	<key>APPROVE_SENDBACK_BUTTON_TITLE</key>
+	<string>差戻す</string>
+	<key>APPROVE_VIEW_ATTENDEES</key>
+	<string>同席者</string>
+	<key>APPROVE_VIEW_ATTENDEES_ATTENDEE_AMOUNT_TITLE</key>
+	<string>金額</string>
+	<key>APPROVE_VIEW_ATTENDEES_ATTENDEE_COMPANY_TITLE</key>
+	<string>社用</string>
+	<key>APPROVE_VIEW_ATTENDEES_ATTENDEE_NAME_TITLE</key>
+	<string>同席者の名前</string>
+	<key>APPROVE_VIEW_ATTENDEES_ATTENDEE_TITLE_TITLE</key>
+	<string>同席者の役職</string>
+	<key>APPROVE_VIEW_ATTENDEES_ATTENDEE_TYPE_TITLE</key>
+	<string>同席者タイプ</string>
+	<key>APPROVE_VIEW_COMMENTS</key>
+	<string>コメントの表示</string>
+	<key>APPROVE_VIEW_COMMENTS_VIEW_TITLE</key>
+	<string>コメント</string>
+	<key>APPROVE_VIEW_EXCEPTIONS</key>
+	<string>規定違反の表示</string>
+	<key>APPROVE_VIEW_EXCEPTIONS_EXPENSE_LEVEL_EXCEPTION_SECTION_HEADER</key>
+	<string>経費</string>
+	<key>APPROVE_VIEW_EXCEPTIONS_REPORT_LEVEL_EXCEPTION_SECTION_HEADER</key>
+	<string>レポート</string>
+	<key>APPROVE_VIEW_EXCEPTIONS_VIEW_TITLE</key>
+	<string>規定違反</string>
+	<key>APPROVE_VIEW_ITEMIZATIONS</key>
+	<string>明細</string>
+	<key>APPROVE_VIEW_ITEMIZATIONS_SUMMARY_SECTION_TITLE</key>
+	<string>サマリー</string>
+	<key>APP_RATING_MSG</key>
+	<string> このアプリをご使用になったところで、アプリのレーティングを App Store に入力して、評価をお聞かせください。</string>
+	<key>APP_RATING_MSG_DISMISS</key>
+	<string>今後は非通知</string>
+	<key>APP_RATING_TITLE</key>
+	<string>このアプリケーションの評価は?</string>
+	<key>ATTENDEES</key>
+	<string>同席者</string>
+	<key>ATTENDEES_EXCLUDED_FOR_TYPE</key>
+	<string>同席者タイプがこの経費タイプから除外されるため、一部の同席者は追加できません。</string>
+	<key>ATTENDEE_ADD</key>
+	<string>同席者の追加</string>
+	<key>ATTENDEE_ADD_BUMP</key>
+	<string>%@ から同席者を追加</string>
+	<key>ATTENDEE_ADD_CONTACT</key>
+	<string>同席者を手動で追加</string>
+	<key>ATTENDEE_ENTRY</key>
+	<string>同席者</string>
+	<key>ATTENDEE_SEARCH_FOR_ATTENDEE</key>
+	<string>同席者の検索</string>
+	<key>ATTENDEE_SELECT_CONTACT</key>
+	<string>連絡先から選択</string>
+	<key>AUTHENTICATION_FAILURE_MSG</key>
+	<string>不正なアクセス違反です。ユーザー名や PIN を確認してください。</string>
+	<key>AUTHENTICATION_TIMED_OUT_MSG</key>
+	<string>認証サービスへの接続がタイムアウトしました。  正しい URL が指定されていることを確認してください。</string>
+	<key>A_ACCO</key>
+	<string>承認済および経理審査中</string>
+	<key>A_APPR</key>
+	<string>承認済</string>
+	<key>A_EXTV</key>
+	<string>外部検証待ち</string>
+	<key>A_FILE</key>
+	<string>提出済</string>
+	<key>A_NOTF</key>
+	<string>未提出</string>
+	<key>A_PECO</key>
+	<string>原価対象の承認待ち</string>
+	<key>A_PEND</key>
+	<string>提出済および承認待ち</string>
+	<key>A_PVAL</key>
+	<string>検証待ち</string>
+	<key>A_RESU</key>
+	<string>従業員へ差戻し</string>
+	<key>A_RHLD</key>
+	<string>領収書イメージの保留</string>
+	<key>A_TEXP</key>
+	<string>承認期限切れ</string>
+	<key>Abukai Expenses</key>
+	<string>Abukai 経費</string>
+	<key>Accept</key>
+	<string>承認</string>
+	<key>Access other areas of the app</key>
+	<string>アプリケーションのその他のエリアにアクセス</string>
+	<key>Accounting Code</key>
+	<string>勘定科目コード</string>
+	<key>Actions offline</key>
+	<string>デバイスは現在オフラインです。  デバイスをインターネットに接続し、このアクションをもう一度お試しください。</string>
+	<key>Actual Arrival</key>
+	<string>実際の到着</string>
+	<key>Actual Departure</key>
+	<string>実際の出発</string>
+	<key>Actual Equipment</key>
+	<string>実際の機器</string>
+	<key>Actual Terminal</key>
+	<string>実際のターミナル</string>
+	<key>Add Account to Concur</key>
+	<string>Concur に口座を追加</string>
+	<key>Add Amtrak</key>
+	<string>Amtrak の追加</string>
+	<key>Add Another</key>
+	<string>さらに追加</string>
+	<key>Add Attendee</key>
+	<string>同席者の追加</string>
+	<key>Add Car</key>
+	<string>車の追加</string>
+	<key>Add Car Mileage</key>
+	<string>走行距離の追加</string>
+	<key>Add Card</key>
+	<string>カードの追加</string>
+	<key>Add Comment</key>
+	<string>コメントを追加</string>
+	<key>Add Credit Card</key>
+	<string>クレジット カードを追加</string>
+	<key>Add Entry</key>
+	<string>入力の追加</string>
+	<key>Add Expense</key>
+	<string>経費の追加</string>
+	<key>Add Hotel</key>
+	<string>ホテルの追加</string>
+	<key>Add Itemization</key>
+	<string>明細の追加</string>
+	<key>Add Itinerary Stop Header</key>
+	<string>手当を正確に計算するために、出張の経由地情報が必要になります。旅程には少なくとも 2 つの経由地を追加してください。</string>
+	<key>Add Mileage</key>
+	<string>走行距離を追加</string>
+	<key>Add New Expense</key>
+	<string>新しい経費の追加</string>
+	<key>Add Receipt</key>
+	<string>領収書を追加</string>
+	<key>Add Selected Attendee</key>
+	<string>選択した同席者を追加</string>
+	<key>Add Single Day Itinerary Stop Header</key>
+	<string>手当を正確に計算するために、出張の経由地情報が必要になります。旅程には少なくとも 2 つの経由地を追加してください。</string>
+	<key>Add a Cash Expense</key>
+	<string>経費の追加</string>
+	<key>Add a Receipt using the below buttons</key>
+	<string>下のボタンを使用して領収書を追加</string>
+	<key>Add an Attendee</key>
+	<string>同席者の追加</string>
+	<key>Add an Entry from a Picture</key>
+	<string>画像から入力を追加</string>
+	<key>Add credit card</key>
+	<string>クレジット カードを追加</string>
+	<key>Add expenses to your report.</key>
+	<string>経費をレポートに追加します。</string>
+	<key>Add expenses with attendees</key>
+	<string>同席者のある経費を追加</string>
+	<key>Add from Photo Album</key>
+	<string>フォト アルバムから追加</string>
+	<key>Add to Report</key>
+	<string>レポートに追加</string>
+	<key>AddAnotherItemToThisRequest</key>
+	<string>この申請に別の項目を追加</string>
+	<key>Adding to Report</key>
+	<string>レポートに追加中</string>
+	<key>Additional Charges (each night)</key>
+	<string>追加料金 (1 泊あたり)</string>
+	<key>Address</key>
+	<string>住所</string>
+	<key>Address point of interest airport code</key>
+	<string>住所、Point Of Interest、空港コード</string>
+	<key>Adds processing time</key>
+	<string>処理時間を追加</string>
+	<key>Adjust Allowance</key>
+	<string>手当を調整</string>
+	<key>Adjustments</key>
+	<string>調整</string>
+	<key>Adults</key>
+	<string>大人</string>
+	<key>Advanced Search</key>
+	<string>詳細な検索</string>
+	<key>Afternoon</key>
+	<string>午後</string>
+	<key>Agency Code Sign In</key>
+	<string>代理店コードのサインイン</string>
+	<key>Agency Record Locator: %@</key>
+	<string>代理店レコード ロケーター: %@</string>
+	<key>Agency Sign In</key>
+	<string>代理店のサインイン</string>
+	<key>Air Booking</key>
+	<string>空路の予約</string>
+	<key>Air Price to Beat</key>
+	<string>航空運賃の小売基準価格</string>
+	<key>Air cancelled from mobile device</key>
+	<string>モバイル デバイスからキャンセルされた空路</string>
+	<key>Aircraft</key>
+	<string>航空機</string>
+	<key>Airfare Price to Beat</key>
+	<string>航空運賃の小売基準価格</string>
+	<key>Airfare quoted total</key>
+	<string>航空運賃見積合計</string>
+	<key>Airline</key>
+	<string>航空会社</string>
+	<key>Airports</key>
+	<string>空港</string>
+	<key>All</key>
+	<string>すべて</string>
+	<key>All Expenses</key>
+	<string>すべての経費</string>
+	<key>All Flights</key>
+	<string>すべてのフライト</string>
+	<key>All Items</key>
+	<string>すべての項目</string>
+	<key>All Nonstop</key>
+	<string>すべての直行便</string>
+	<key>All Results</key>
+	<string>すべての結果</string>
+	<key>All States &amp; Provinces</key>
+	<string>すべての州 &amp; 県</string>
+	<key>All day</key>
+	<string>終日</string>
+	<key>All token</key>
+	<string>すべての %@</string>
+	<key>All token (token results)</key>
+	<string>すべての %@ (%d の結果)</string>
+	<key>Allowance Adjustments</key>
+	<string>手当調整</string>
+	<key>Allowance Itinerary</key>
+	<string>手当旅程</string>
+	<key>Already Expensed</key>
+	<string>経費精算済</string>
+	<key>Already have an account SU</key>
+	<string>アカウントをお持ちですか?</string>
+	<key>Amount</key>
+	<string>金額</string>
+	<key>Amount in</key>
+	<string>次の金額</string>
+	<key>Amtrak</key>
+	<string>Amtrak</string>
+	<key>An Expense Report</key>
+	<string>経費精算レポート</string>
+	<key>An email containing the application's log has been placed in your outbox.</key>
+	<string>アプリケーションのログが記載されたメールが送信トレイに作成されました。</string>
+	<key>An email containing the application's log has been saved in your Drafts folder.</key>
+	<string>アプリケーションのログが記載されているメールは [下書き] フォルダに保存されています。</string>
+	<key>An email has been sent containing your report.</key>
+	<string>レポートを含むメールが送信されました。</string>
+	<key>An invalid station for arrival has been specified.  Please select a station to arrive at.</key>
+	<string>無効な到着駅が指定されています。  到着駅を選択してください。</string>
+	<key>An invalid station for departure has been specified.  Please select a station to depart from.</key>
+	<string>無効な出発駅が指定されています。  出発駅を選択してください。</string>
+	<key>An unexpected error occurred. Please try again later.</key>
+	<string>予期しないエラーが発生しました。後でもう一度お試しください。</string>
+	<key>And view upcoming itineraries.</key>
+	<string>予定の旅程を表示します。</string>
+	<key>Any</key>
+	<string>混合クラス</string>
+	<key>Any Car Class</key>
+	<string>任意の車両クラス</string>
+	<key>Anytime</key>
+	<string>いつでも</string>
+	<key>AppStore Expense</key>
+	<string>
+        Concur Expense または Concur Breeze のユーザーは、モバイル ソリューションを使って次の操作ができます。
+        * デバイスのカメラを使ったクイック経費および領収書を取り込む (スキャン、FAXまたはメール送信は必須ではありません)
+        * クレジット カード料金の表示および編集
+        * 既存または新規の経費精算レポートへの経費の追加およびレポートの提出
+        * レポートのヘッダー/経費の編集
+        * 明細/走行距離の追加 * 経費精算レポートのコメント付きでの承認または却下 - 関連領収書の表示も可能
+    </string>
+	<key>Append</key>
+	<string>追加</string>
+	<key>Append Confirmation</key>
+	<string>確認の追加</string>
+	<key>Append or Replace Receipt</key>
+	<string>この経費には既に領収書が関連しています。[追加] を選択してこの新しい領収書をこの経費に追加するか、[置換] を選択して既存の領収書をこの新しい領収書に置換します。</string>
+	<key>Application Information</key>
+	<string>アプリケーション情報</string>
+	<key>Approval Summary</key>
+	<string>承認サマリー</string>
+	<key>Approvals</key>
+	<string>承認</string>
+	<key>Approve</key>
+	<string>承認</string>
+	<key>Approve Trips</key>
+	<string>出張の承認</string>
+	<key>Approve by</key>
+	<string>承認者</string>
+	<key>Approver</key>
+	<string>承認者</string>
+	<key>Approving Report</key>
+	<string>レポートの承認</string>
+	<key>Approving Trip</key>
+	<string>出張の承認</string>
+	<key>Apps</key>
+	<string>アプリ</string>
+	<key>Are you sure</key>
+	<string>選択した経費を削除してもよろしいですか?</string>
+	<key>Are you sure about adding smart expenses</key>
+	<string>スマート経費は、レポートの単一入力に結合されます。</string>
+	<key>Are you sure about smart expenses</key>
+	<string>選択した経費を削除してもよろしいですか?  スマート経費のモバイル入力部分は永久に削除され、関連するカード課金が非表示になります。</string>
+	<key>Are you sure that you want to delete this receipt</key>
+	<string>この領収書を削除しますか?</string>
+	<key>Are you sure that you want to reserve the selected train(s)?</key>
+	<string>選択した鉄道を予約してもよろしいですか?</string>
+	<key>Are you sure you want to approve this trip?</key>
+	<string>この出張を承認してもよろしいですか?</string>
+	<key>Are you sure you want to cancel this air reservation?</key>
+	<string>この空路の予約をキャンセルしてもよろしいですか?</string>
+	<key>Are you sure you want to cancel this car reservation?</key>
+	<string>この車両の予約をキャンセルしてもよろしいですか?</string>
+	<key>Are you sure you want to cancel this hotel reservation?</key>
+	<string>このホテル予約をキャンセルしてもよろしいですか?</string>
+	<key>Are you sure you want to cancel this rail reservation?</key>
+	<string>この鉄道の予約をキャンセルしてもよろしいですか</string>
+	<key>Are you sure you want to delete the open report?</key>
+	<string>開いているレポートを削除してもよろしいですか?</string>
+	<key>Are you sure you want to reserve this car?</key>
+	<string>この車両を予約してもよろしいですか?</string>
+	<key>Are you sure you want to reserve this flight?</key>
+	<string>このフライトを予約してもよろしいですか?</string>
+	<key>Are you sure you want to unlink from your TripIt account?</key>
+	<string>TripIt アカウントからリンクを削除してもよろしいですか?</string>
+	<key>Arrival</key>
+	<string>到着</string>
+	<key>Arrival City</key>
+	<string>到着都市</string>
+	<key>Arrival Information</key>
+	<string>到着情報</string>
+	<key>Arrival Station</key>
+	<string>到着駅</string>
+	<key>Arrival Terminal</key>
+	<string>到着ターミナル</string>
+	<key>Arrival Time</key>
+	<string>到着時刻</string>
+	<key>Arrive</key>
+	<string>到着</string>
+	<key>Arriving trains</key>
+	<string>到着時刻: %@</string>
+	<key>Ask Me Later</key>
+	<string>後で決定</string>
+	<key>At Least 1 Month</key>
+	<string>1 か月以上</string>
+	<key>At Least 1 Week</key>
+	<string>1 週間以上</string>
+	<key>Attach Receipt</key>
+	<string>領収書の添付</string>
+	<key>Attach via Receipt Store</key>
+	<string>領収書ストアを通じて添付</string>
+	<key>Attendee</key>
+	<string>同席者</string>
+	<key>Attendee Amount</key>
+	<string>同席者金額</string>
+	<key>Attendee Count</key>
+	<string>同席者数</string>
+	<key>Attendee Group</key>
+	<string>同席者グループ</string>
+	<key>Attendee Search Results</key>
+	<string>同席者の検索結果</string>
+	<key>Attendee Type</key>
+	<string>同席者タイプ</string>
+	<key>Attendee data is unavailable.</key>
+	<string>同席者データを利用できません。</string>
+	<key>Attendee type cannot be changed.  Create a new attendee instead.</key>
+	<string>同席者タイプは変更できません。代わりに、同席者を新規作成します。</string>
+	<key>Attendees</key>
+	<string>同席者</string>
+	<key>Attendees not editable offline</key>
+	<string>オフラインでは同席者を編集できません。</string>
+	<key>Attention</key>
+	<string>注意</string>
+	<key>Authenticating</key>
+	<string>認証中</string>
+	<key>Auto Login</key>
+	<string>自動サインイン</string>
+	<key>Available From States/Provinces</key>
+	<string>都道府県や州から利用可能</string>
+	<key>Available From Stations</key>
+	<string>駅から利用可能</string>
+	<key>Available Itineraries</key>
+	<string>利用可能な旅程</string>
+	<key>Available States/Provinces</key>
+	<string>利用可能な都道府県や州</string>
+	<key>Available Stations</key>
+	<string>利用可能な駅</string>
+	<key>Available To States/Provinces</key>
+	<string>都道府県や州に利用可能</string>
+	<key>Available To Stations</key>
+	<string>駅まで利用可能</string>
+	<key>Awaiting Approval</key>
+	<string>承認待ち</string>
+	<key>BOOKING_UNDER_P2B_EARNS_POINTS</key>
+	<string>小売基準価格未満のオプションを選択すると、出張ポイントを獲得し将来の特典に利用できます。</string>
+	<key>BOOKING_UNDER_P2B_SAVES_MONEY</key>
+	<string>小売基準価格未満で予約すると、会社のお金を節約できます。</string>
+	<key>BRONX_USER_CORP_APP_MSG</key>
+	<string>Concur スマート経費用ログインを使用して Concur Mobile にログインできません。代わりに、スマート経費バージョンを使用しますか?</string>
+	<key>BRONX_USER_CORP_APP_TITLE</key>
+	<string>スマート経費ユーザーはサポートされていません</string>
+	<key>BTN_EDIT</key>
+	<string>編集</string>
+	<key>BUMP_HELP_TEXT1</key>
+	<string>同席者の情報を共有するには、この下の [同席者になる] を選択します。</string>
+	<key>BUMP_HELP_TEXT2</key>
+	<string>同僚にレポート行項目画面の同席者セクションで [%@ を通じて同席者を追加] を選択してもらいます。</string>
+	<key>BUMP_INSTRUCTION</key>
+	<string>ご自身を同席者としてレポート行項目に追加するには、同僚にレポート行項目画面の同席者セクションで [%@ を通じて同席者を追加] を選択してもらいます。</string>
+	<key>BUMP_SHARE_HELP_TEXT1</key>
+	<string>同席者を追加するには、この下の [同席者を追加] を選択します。</string>
+	<key>BUMP_SHARE_HELP_TEXT2</key>
+	<string>同僚にホーム画面の [同席者] ボタンを選択してもらいます。</string>
+	<key>BUSGUEST</key>
+	<string>仕事上の顧客</string>
+	<key>Back</key>
+	<string>戻る</string>
+	<key>Baggage Claim</key>
+	<string>手荷物受取所</string>
+	<key>Become an Attendee</key>
+	<string>同席者になる</string>
+	<key>Before reserving this car in</key>
+	<string>この車両の予約が会社のポリシー違反にならないように、赤色で表示されたフィールドに理由と説明を入力する必要があります。</string>
+	<key>Before reserving this car in justification</key>
+	<string>この車両の予約が会社のポリシー違反にならないように、赤色で表示されたフィールドに説明を入力する必要があります。</string>
+	<key>Before reserving this car in reason</key>
+	<string>この車両の予約が会社のポリシー違反にならないように、赤色で表示されたフィールドに理由を入力する必要があります。</string>
+	<key>Before reserving this flight</key>
+	<string>このフライトを予約する前に、赤色で示されているフィールドを入力してください。</string>
+	<key>Benchmark</key>
+	<string>水準</string>
+	<key>Book</key>
+	<string>予約</string>
+	<key>Book Air</key>
+	<string>空路の予約</string>
+	<key>Book Car</key>
+	<string>車の予約</string>
+	<key>Book Hotel</key>
+	<string>ホテルの予約</string>
+	<key>Book Rail</key>
+	<string>鉄道の予約</string>
+	<key>Book Train</key>
+	<string>鉄道の予約</string>
+	<key>Book Travel</key>
+	<string>出張の予約</string>
+	<key>Book Travel from anywhere.</key>
+	<string>どこからでも出張を予約できます</string>
+	<key>Book Travel on the go with Concur</key>
+	<string>移動中に Concur で出張を予約</string>
+	<key>Book a Hotel Car and more</key>
+	<string>空路、ホテルなどを予約</string>
+	<key>Book a Trip</key>
+	<string>出張を予約</string>
+	<key>Book a train</key>
+	<string>鉄道の予約</string>
+	<key>Book flights</key>
+	<string>フライトの予約</string>
+	<key>Book under this price to earn Travel Points.</key>
+	<string>この価格未満で予約し、出張ポイントを獲得します。</string>
+	<key>Booker Comments</key>
+	<string>予約者のコメント</string>
+	<key>Booking Info</key>
+	<string>予約情報</string>
+	<key>Booking cancelled</key>
+	<string>予約がキャンセルされました</string>
+	<key>Booking under this amount saves your company money.</key>
+	<string>この金額で予約すると、会社のお金を節約できます。</string>
+	<key>Bookings</key>
+	<string>予約</string>
+	<key>Bookings offline</key>
+	<string>デバイスがオフラインの時には予約を実行できません。  デバイスを再度インターネットに接続し、もう一度お試しください。</string>
+	<key>Border Crossing</key>
+	<string>国境通過</string>
+	<key>Bump Phones to Become an Attendee</key>
+	<string>電話を %@ して同席者になる</string>
+	<key>Bump Phones to Exchange Attendee Info</key>
+	<string>同席者情報を交換する電話 %@</string>
+	<key>Bus</key>
+	<string>バス</string>
+	<key>Business</key>
+	<string>事業</string>
+	<key>By State or Province</key>
+	<string>州または県別</string>
+	<key>CANNOT_ADD_TO_RPT_WAIT_IMAGE</key>
+	<string>領収書のアップロードは実行中です。 しばらく待ってから、もう一度お試しください</string>
+	<key>CAR</key>
+	<string>レンタカー</string>
+	<key>CARDS_LIST</key>
+	<string>カード</string>
+	<key>CARD_AUTH_MSG</key>
+	<string>これはカード購買申請です。カード課金を待って送信してください。</string>
+	<key>CAR_DETAILS</key>
+	<string>車の詳細</string>
+	<key>CAR_LIST</key>
+	<string>車の選択</string>
+	<key>CHECK_OUT_DATE_ERR_MSG</key>
+	<string>チェックイン日より後の日付を入力してください。</string>
+	<key>COMMENTS</key>
+	<string>コメント</string>
+	<key>COMPANY_NAME</key>
+	<string>会社名</string>
+	<key>COMPANY_SSO_DISABLED_MSG</key>
+	<string>会社のサインオンが無効になっています。法人管理者に問い合わせてください。</string>
+	<key>COMPANY_SSO_INITIATED_REMOTE_WIPE</key>
+	<string>このデバイスから口座データが消去されました。法人管理者に問い合わせて、サポートを受けてください。</string>
+	<key>CONFIGURING_SESSION</key>
+	<string>モバイル セッション構成中...</string>
+	<key>CONFIRM_CONTINUE</key>
+	<string>続行しますか?</string>
+	<key>CONFIRM_DETACH_TEXT</key>
+	<string>領収書イメージの添付を解除しますか?</string>
+	<key>CONFIRM_PIN</key>
+	<string>新しい PIN の確認</string>
+	<key>CONFIRM_RECEIPT_DELETE</key>
+	<string>この領収書を削除してもよろしいですか?</string>
+	<key>CONFIRM_RECEIPT_DELETION</key>
+	<string>この領収書を削除してもよろしいですか?</string>
+	<key>CONFIRM_REPORT_SUBMISSION</key>
+	<string>この経費精算レポートを提出してもよろしいですか?</string>
+	<key>COPY_DOWN_ENTRY_MSG</key>
+	<string>このエントリの %@ フィールドが変更されています。 このエントリに関連するすべてのエントリと明細の %@ フィールドも、ここに入力された新しい値で上書きしますか?[はい] をクリックすると、値が上書きされます。 エントリの変更のみを保存する場合は、[いいえ] をクリックしてください。 </string>
+	<key>COPY_DOWN_RPT_MSG</key>
+	<string>このレポート ヘッダーの %@ フィールドが変更されています。 このレポート内のすべてのエントリと明細の %@ フィールドも、ここに入力された新しい値で上書きしますか? [はい] をクリックすると、値が上書きされます。 レポート ヘッダーの変更のみを保存する場合は、[いいえ] をクリックします。 </string>
+	<key>CORP_CARDS_0</key>
+	<string>未使用のコーポレート カード課金はありません</string>
+	<key>CORP_CARDS_1</key>
+	<string>未使用のコーポレート カード課金 が 1 件あります</string>
+	<key>CORP_CARDS_2</key>
+	<string>未使用のコーポレート カード課金が %d 件あります</string>
+	<key>CORP_SSO_MSG</key>
+	<string>会社でシングル サインオン (SSO) を使用しており、会社コードが発行済の場合は、その会社コードをここに入力します。</string>
+	<key>CORP_SSO_MSG_GOV</key>
+	<string>代理店コードが発行済の場合は、その旅行代理店コードを以下に入力します。</string>
+	<key>CORP_USER_SU_APP_MSG</key>
+	<string>Concur Mobile のログインを使用してスマート経費バージョンの Concur へはログインできません。代わりに、Concur Mobile を使用しますか?</string>
+	<key>CORP_USER_SU_APP_TITLE</key>
+	<string>法人ユーザーはサポートされていません</string>
+	<key>CREATE_ADD</key>
+	<string>作成および追加</string>
+	<key>CREATE_PIN</key>
+	<string>Concur にサインインするためのモバイル PIN を設定</string>
+	<key>CREATE_PIN_NOTES</key>
+	<string>PIN は文字、数値、およびスペース以外の !、$、または # などの特殊文字で構成できます。</string>
+	<key>CREATE_PIN_TITLE</key>
+	<string>モバイル PIN</string>
+	<key>CVV Number</key>
+	<string>CVV 番号</string>
+	<key>Cache</key>
+	<string>キャッシュ</string>
+	<key>Cache Done Title</key>
+	<string>キャッシュ消去の完了</string>
+	<key>Calculate Allowances</key>
+	<string>手当を計算</string>
+	<key>Call</key>
+	<string>通話</string>
+	<key>Call Travel Agent</key>
+	<string>旅行代理店に電話</string>
+	<key>Camera</key>
+	<string>カメラから添付</string>
+	<key>Cancel</key>
+	<string>キャンセル</string>
+	<key>Cancel Air</key>
+	<string>空路のキャンセル</string>
+	<key>Cancel Car</key>
+	<string>車のキャンセル</string>
+	<key>Cancel Failed</key>
+	<string>キャンセルに失敗しました</string>
+	<key>Cancel Hotel</key>
+	<string>ホテルのキャンセル</string>
+	<key>Cancel Rail</key>
+	<string>鉄道をキャンセル</string>
+	<key>Cancel Trip</key>
+	<string>出張キャンセル</string>
+	<key>Cancel Upload</key>
+	<string>アップロードをキャンセル</string>
+	<key>Cancel air reservation</key>
+	<string>空路の予約をキャンセル</string>
+	<key>Cancel car reservation</key>
+	<string>車両の予約をキャンセル</string>
+	<key>Cancel hotel reservation</key>
+	<string>ホテル予約のキャンセル</string>
+	<key>Cancellation Policy</key>
+	<string>キャンセル ポリシー</string>
+	<key>Cannot Save Changes</key>
+	<string>変更内容を保存できません</string>
+	<key>Cannot Submit Report</key>
+	<string>レポートを提出できません</string>
+	<key>Cannot access receipt</key>
+	<string>領収書にアクセスできません</string>
+	<key>Cannot append receipt</key>
+	<string>領収書を追加できません</string>
+	<key>Cannot expense trip</key>
+	<string>出張を経費精算できません。</string>
+	<key>Capture Receipt</key>
+	<string>領収書を取り込む</string>
+	<key>Capture car mileage</key>
+	<string>車両走行経費を取り込む</string>
+	<key>Capture expense and receipt</key>
+	<string>経費と領収書を取り込む</string>
+	<key>Capture your expenses while you travel</key>
+	<string>出張中に経費を取り込み</string>
+	<key>Car</key>
+	<string>自動車</string>
+	<key>Car Hire Airport Location</key>
+	<string>空港の場所</string>
+	<key>Car Mileage</key>
+	<string>走行経費</string>
+	<key>Car Mileage Text</key>
+	<string>走行距離を経費精算</string>
+	<key>Car Rule Violation</key>
+	<string>車両ルール違反</string>
+	<key>Car Type</key>
+	<string>車タイプ</string>
+	<key>Car cancelled from mobile device</key>
+	<string>モバイル デバイスからキャンセルされた車</string>
+	<key>Card</key>
+	<string>カード</string>
+	<key>Card Charges</key>
+	<string>カード課金</string>
+	<key>Card Transactions</key>
+	<string>カード取引</string>
+	<key>Cards</key>
+	<string>カード</string>
+	<key>Cars</key>
+	<string>車両</string>
+	<key>Cars near</key>
+	<string>近くの車両</string>
+	<key>Cars_subline</key>
+	<string>素敵な車に乗車</string>
+	<key>Cash</key>
+	<string>現金</string>
+	<key>Chain Least Preferred</key>
+	<string>低推奨チェーン</string>
+	<key>Chain Most Preferred</key>
+	<string>高推奨のチェーン</string>
+	<key>Chain Preferred</key>
+	<string>推奨チェーン</string>
+	<key>Changing the expense type will remove all itemized data</key>
+	<string>経費タイプを変更すると、この経費からすべての明細データが削除されます。続行しますか?</string>
+	<key>Chatter</key>
+	<string>Chatter</string>
+	<key>Chatter post help text</key>
+	<string>この出張を Chatter にまだ投稿していません。出張を投稿し、目的地に関するヒントと正確で詳細な情報を同僚から得てください。 </string>
+	<key>Check  In</key>
+	<string>チェックイン</string>
+	<key>Check In</key>
+	<string>チェックイン</string>
+	<key>Check In Complete</key>
+	<string>チェックインが完了しました</string>
+	<key>Check In Complete Message</key>
+	<string>現在の場所で正常にチェックインしました。</string>
+	<key>Check In Failed Message</key>
+	<string>現在、チェックインできません。後でもう一度お試しください。</string>
+	<key>Check Invoice Image</key>
+	<string>支払請求書イメージの確認</string>
+	<key>Check connection retry from receipt store</key>
+	<string>接続を確認し、領収書ストアから領収書を再度添付してください。</string>
+	<key>Check your email to reset your password and sign in</key>
+	<string>メールをチェックしてパスワードをリセットし、サインインしてください。</string>
+	<key>Check your email to reset your password and sign in.</key>
+	<string>メールをチェックしてパスワードをリセットし、サインインしてください。</string>
+	<key>Check your spam folder or</key>
+	<string>見当たりませんか?スパム フォルダーを確認するか、当社にお問い合わせください。</string>
+	<key>Check-In Date</key>
+	<string>チェックイン日</string>
+	<key>Check-Out Date</key>
+	<string>チェックアウト日</string>
+	<key>Check-in</key>
+	<string>チェックイン</string>
+	<key>Check-out</key>
+	<string>チェックアウト</string>
+	<key>Checking In</key>
+	<string>チェックイン</string>
+	<key>Checking Network Connection</key>
+	<string>ネットワーク接続の確認</string>
+	<key>Checking Out</key>
+	<string>チェックアウト</string>
+	<key>Children</key>
+	<string>子</string>
+	<key>ChoosePhoto-ImagePicker</key>
+	<string>プレビュー</string>
+	<key>Class &amp; Seat Number</key>
+	<string>クラス &amp; 座席番号</string>
+	<key>Class / Seat</key>
+	<string>クラス/座席</string>
+	<key>Class of Service</key>
+	<string>サービス クラス</string>
+	<key>Class: %@</key>
+	<string>クラス: %@</string>
+	<key>Clear Current Selection</key>
+	<string>現在の選択を解除</string>
+	<key>Clear out the local cache</key>
+	<string>ローカル キャッシュの消去</string>
+	<key>Close</key>
+	<string>閉じる</string>
+	<key>Closed</key>
+	<string>終了</string>
+	<key>Comment</key>
+	<string>コメント</string>
+	<key>Comments</key>
+	<string>コメント</string>
+	<key>Commonly Used</key>
+	<string>一般的に使用されるもの</string>
+	<key>Compact</key>
+	<string>小型車</string>
+	<key>Compact Hybrid</key>
+	<string>小型ハイブリッド車</string>
+	<key>Company</key>
+	<string>社用</string>
+	<key>Company Code</key>
+	<string>SSO 会社コード</string>
+	<key>Company Code Sign In</key>
+	<string>SSO 会社コードのサインイン</string>
+	<key>Company Name</key>
+	<string>会社名</string>
+	<key>Company Sign In</key>
+	<string>会社のサインイン</string>
+	<key>Company Sign On</key>
+	<string>会社のサインオン</string>
+	<key>Concur was unable to obtain a cancellation number for your hotel cancellation. In order to obtain a cancellation number</key>
+	<string>Concur はホテル予約のキャンセルに伴うキャンセル番号を取得できませんでした。キャンセル番号を取得するには、ホテルにお問い合わせください。</string>
+	<key>Confirm Delete</key>
+	<string>削除の確認</string>
+	<key>Confirm Detach</key>
+	<string>添付解除の確認</string>
+	<key>Confirm New Mobile Password (PIN)</key>
+	<string>新しいモバイル パスワード (PIN) を確認</string>
+	<key>Confirm New Password</key>
+	<string>新しいパスワードの確認入力</string>
+	<key>Connect to a WiFi or cellular data network.</key>
+	<string>Wi-Fi またはセルラー データ ネットワークに接続します。</string>
+	<key>Connecting with TripIt</key>
+	<string>TripIt との接続</string>
+	<key>Connection Error</key>
+	<string>接続エラー</string>
+	<key>Connection Settings</key>
+	<string>接続の設定</string>
+	<key>Contact Received</key>
+	<string>連絡先が受信されました</string>
+	<key>Continue</key>
+	<string>続行</string>
+	<key>Copyright Concur 2010</key>
+	<string>Copyright Concur 2013</string>
+	<key>Corp Cards</key>
+	<string>カード</string>
+	<key>Corporate Card</key>
+	<string>コーポレート カード</string>
+	<key>Corporate Cards</key>
+	<string>コーポレート カード</string>
+	<key>Could not connect to Concur.</key>
+	<string>Concur に接続できませんでした。</string>
+	<key>Could not expense trip</key>
+	<string>この出張は経費精算済です。</string>
+	<key>Could not load attendee data.</key>
+	<string>同席者データを読み込めません。</string>
+	<key>Could not load attendee form data.</key>
+	<string>同席者のフォーム データを読み込めません。</string>
+	<key>Could not load attendee search fields data.</key>
+	<string>同席者検索フィールドのデータを読み込めません。</string>
+	<key>Could not load expense data.</key>
+	<string>経費データを読み込めません。</string>
+	<key>Could not save attendee data.  Please try again later.</key>
+	<string>同席者データを保存できません。後でもう一度お試しください。</string>
+	<key>Crash Detected</key>
+	<string>クラッシュが検出されました</string>
+	<key>Create &amp; Add</key>
+	<string>作成および追加</string>
+	<key>Create Password</key>
+	<string>パスワードを作成</string>
+	<key>Create Report</key>
+	<string>レポートの作成</string>
+	<key>Create a Report</key>
+	<string>レポートの作成</string>
+	<key>Create a report for your expenses to go into</key>
+	<string>経費レポートを作成</string>
+	<key>Create an Account</key>
+	<string>アカウントを作成</string>
+	<key>Create and submit your expense reports</key>
+	<string>経費精算レポートの作成と提出</string>
+	<key>Credit Card</key>
+	<string>クレジット カード</string>
+	<key>Currency</key>
+	<string>通貨</string>
+	<key>Currency Code</key>
+	<string>通貨コード</string>
+	<key>Current Location</key>
+	<string>現在の場所</string>
+	<key>Current Trip</key>
+	<string>現在</string>
+	<key>Current Trip Information</key>
+	<string>現在の出張情報</string>
+	<key>Currently Offline</key>
+	<string>現在オフライン</string>
+	<key>Custom fields required message</key>
+	<string>現在、お客様の会社の予約ポリシーはサポートされていません。近日中に、カスタム フィールドがサポートされます。Web バージョンの Concur を使用して出張を予約してください。</string>
+	<key>DISALLOW_EXPENSEIT_DELETE</key>
+	<string>ExpenseIt 項目の削除は、モバイルではサポートしていません。</string>
+	<key>DISALLOW_TRANS_DELETE</key>
+	<string>カード課金の削除は、モバイルではサポートしていません。</string>
+	<key>DISTANCE</key>
+	<string>ホテルの検索範囲</string>
+	<key>Daily Rate</key>
+	<string>1 日あたりの料金</string>
+	<key>Date</key>
+	<string>日付</string>
+	<key>Day</key>
+	<string>日</string>
+	<key>Day Trip</key>
+	<string>日帰り出張</string>
+	<key>Days</key>
+	<string>日</string>
+	<key>Days Remaining at Location</key>
+	<string>場所の残り日数</string>
+	<key>Delete</key>
+	<string>削除</string>
+	<key>Delete Entry Failed</key>
+	<string>入力の削除に失敗しました</string>
+	<key>Delete Receipt</key>
+	<string>領収書の削除</string>
+	<key>Delete Report Failed</key>
+	<string>レポートの削除に失敗しました</string>
+	<key>Deleting Out of Pocket Expense(s)</key>
+	<string>経費の削除</string>
+	<key>Deleting Receipt</key>
+	<string>領収書の削除中</string>
+	<key>Deleting Report</key>
+	<string>レポートの削除中</string>
+	<key>Delivery Options</key>
+	<string>配達オプション</string>
+	<key>Depart</key>
+	<string>出発</string>
+	<key>Departing</key>
+	<string>出発</string>
+	<key>Departing Train</key>
+	<string>鉄道の出発</string>
+	<key>Departing trains</key>
+	<string>出発: %@ %@ %@ </string>
+	<key>Departing: token token</key>
+	<string>出発: %@ %@</string>
+	<key>Departure</key>
+	<string>出発</string>
+	<key>Departure City</key>
+	<string>出発都市</string>
+	<key>Departure Date</key>
+	<string>出発日</string>
+	<key>Departure Gate</key>
+	<string>出発ゲート</string>
+	<key>Departure Information</key>
+	<string>出発情報</string>
+	<key>Departure Matches Arrival</key>
+	<string>出発と到着が一致</string>
+	<key>Departure Matches Arrival Message</key>
+	<string>出発空港と到着空港が同じです。  出張には異なる空港を選択してください。</string>
+	<key>Departure Point</key>
+	<string>出発地ポイント</string>
+	<key>Departure Station</key>
+	<string>出発駅</string>
+	<key>Departure Status</key>
+	<string>出発ステータス</string>
+	<key>Departure Time</key>
+	<string>出発時刻</string>
+	<key>Depending upon your company configuration some of the Concur for Mobile features may not be avaiable to you</key>
+	<string>会社の構成によっては、Concur for Mobile の一部の機能を使用できません</string>
+	<key>Deposit required</key>
+	<string>予約金必須</string>
+	<key>Destination</key>
+	<string>宛先</string>
+	<key>Destination Location</key>
+	<string>目的地</string>
+	<key>Destination Point</key>
+	<string>目的地ポイント</string>
+	<key>Detach</key>
+	<string>添付解除</string>
+	<key>Details</key>
+	<string>詳細</string>
+	<key>Dining</key>
+	<string>食事</string>
+	<key>Directions</key>
+	<string>ルート案内</string>
+	<key>Disabled by administrator</key>
+	<string>管理者による無効化</string>
+	<key>Discover great hotels</key>
+	<string>一流ホテルを見つける</string>
+	<key>Dismiss tip overlay</key>
+	<string>ヒント オーバーレイを閉じる</string>
+	<key>Distance</key>
+	<string>距離</string>
+	<key>Distance calculated by Google</key>
+	<string>Google の算出した距離</string>
+	<key>Distance to Date = %@</key>
+	<string>現在までの距離 = %@</string>
+	<key>Diversion Airport</key>
+	<string>経由空港</string>
+	<key>Diversion City</key>
+	<string>経由都市</string>
+	<key>Don't know your PIN?</key>
+	<string>PIN がわからない場合</string>
+	<key>Don't know your password or PIN?</key>
+	<string>パスワードまたは PIN がわからない場合</string>
+	<key>Don't know your user name?</key>
+	<string>ユーザー名がわからない場合</string>
+	<key>Done</key>
+	<string>完了</string>
+	<key>Done cache killing</key>
+	<string>このデバイスからキャッシュが消去されました。  アプリケーションを終了した後、再起動する必要があります。  再起動しない場合、システムが不安定になる可能性があります。</string>
+	<key>Dont have an Account Sign Up</key>
+	<string>アカウントをお持ちですか。</string>
+	<key>Download receipts in background</key>
+	<string>領収書は、まだバックグラウンドでダウンロード中です。待つ場合は [キャンセル] をクリックし、続行する場合は [OK] をクリックします。</string>
+	<key>Drop-off</key>
+	<string>降車</string>
+	<key>Drop-off Date</key>
+	<string>降車日時</string>
+	<key>Drop-off Time</key>
+	<string>降車時刻</string>
+	<key>Dropbox</key>
+	<string>ドロップボックス</string>
+	<key>Duplicate Attendees</key>
+	<string>同席者の重複に対する警告</string>
+	<key>Duplicates Found</key>
+	<string>重複を検出しました</string>
+	<key>Duration</key>
+	<string>期間</string>
+	<key>E Ticket</key>
+	<string>電子チケット</string>
+	<key>E-Receipt</key>
+	<string>電子領収書</string>
+	<key>EMAIL</key>
+	<string>メール</string>
+	<key>EMAIL_LINK_EXPIRED_MSG</key>
+	<string>受領後 24 時間以内にもう一度お試しになり、リンクを使用してください</string>
+	<key>EMPLOYEE</key>
+	<string>従業員</string>
+	<key>ENTER_NEW_PIN</key>
+	<string>新規 PIN</string>
+	<key>ENTER_PIN_MSG</key>
+	<string>4 文字以上の英数字で構成された PIN を入力してください。会社によってはさらに多くの文字数が必須な場合があります。</string>
+	<key>ENTER_VALID_COMPANY_CODE</key>
+	<string>会社コードの値を入力してください。</string>
+	<key>ENTRIES_NOT_MATCH_MSG</key>
+	<string>入力した内容が一致しません。もう一度お試しください。</string>
+	<key>ENTRY_REQ_FIELDS</key>
+	<string>入力を保存する前に、すべての必須フィールドに入力し、フォーム上のすべてのエラーを修正してください。</string>
+	<key>ERROR</key>
+	<string>エラー</string>
+	<key>ERROR_ACCOUNT_NOT_CONFIGURED</key>
+	<string>このアカウントはレポートの提出用に構成されていません。</string>
+	<key>ERROR_BAD_CONFIG_MSG</key>
+	<string>領収書をサポートしない構成になっています。管理者に確認してください。</string>
+	<key>ERROR_CONFIGURING_SESSION</key>
+	<string>シングル サインオンを使用したモバイル セッションの構成が失敗しました。法人管理者に問い合わせてください。</string>
+	<key>ERROR_EXPENSE_SITE_DOWN</key>
+	<string>経費は保守中です。1 時間ほどお待ちになり、もう一度お試しください。</string>
+	<key>ERROR_INVALID_AGENCY_CODE</key>
+	<string>正しい代理店コードを入力してください。</string>
+	<key>ERROR_INVALID_COMPANY_CODE</key>
+	<string>正しい会社コードを入力してください。</string>
+	<key>ERROR_INVALID_PIN</key>
+	<string>PIN が無効です。PIN を再入力してください。</string>
+	<key>ERROR_MSG_VISIT_WEBSITE</key>
+	<string>Concur Web サイトにアクセスして、値を入力してください。</string>
+	<key>ERROR_REQUIRED_FIELDS_MISSING</key>
+	<string>このレポートでは、1 つ以上の必須フィールドにデータが入力されていません。 赤色の規定違反フラグは必須フィールドが未入力である経費を示し、リストは記入が必要なフィールドを示しています。</string>
+	<key>ERROR_SUBMIT_FAILED</key>
+	<string>提出に失敗しました</string>
+	<key>EXCEPTIONS</key>
+	<string>規定違反</string>
+	<key>EXPENSES_NEG_TEXT</key>
+	<string>移動中に経費を取り込む</string>
+	<key>EXPENSE_DETAILS_ITEMIZATIONS</key>
+	<string>明細</string>
+	<key>EXPENSE_REPORTS</key>
+	<string>経費精算レポート</string>
+	<key>EXPENSE_REPORTS_NEG_TEXT</key>
+	<string>レポートを確認して提出</string>
+	<key>EXPENSE_TYPES_LIST</key>
+	<string>経費タイプ</string>
+	<key>Earliest Departure</key>
+	<string>最も早い出発時刻</string>
+	<key>Earn %d pts.</key>
+	<string>%d ポイントを獲得。</string>
+	<key>Economy</key>
+	<string>エコノミー</string>
+	<key>Economy Hybrid</key>
+	<string>エコノミー ハイブリッド車</string>
+	<key>Edit</key>
+	<string>編集</string>
+	<key>Email</key>
+	<string>メール</string>
+	<key>Email Address</key>
+	<string>メールアドレス</string>
+	<key>Email Log</key>
+	<string>メール ログ</string>
+	<key>Email link expired</key>
+	<string>メールのリンクが期限切れ</string>
+	<key>Enter Approver Email</key>
+	<string>承認者メールの入力</string>
+	<key>Enter Field</key>
+	<string>%@ を入力</string>
+	<key>Enter in the URL that connects to the Concur servers</key>
+	<string>Concur サーバーに接続する URL を入力してください。</string>
+	<key>Enter your Agency Code</key>
+	<string>代理店コードを入力</string>
+	<key>Enter your mobile password (PIN) to sign in</key>
+	<string>モバイル パスワード (PIN) を入力してサインインしてください</string>
+	<key>Enter your password to sign in</key>
+	<string>パスワードを入力してサインインしてください</string>
+	<key>Entries Don't Match</key>
+	<string>入力の不一致</string>
+	<key>Error</key>
+	<string>エラー</string>
+	<key>Error loading content</key>
+	<string>コンテンツの読み込み中のエラー</string>
+	<key>ErrorReceiptsFetch</key>
+	<string>領収書がアップロードされていません。下の [+] ボタンをタップして今すぐに領収書をアップロードし、後でレポートまたは経費入力からそれらの領収書を使用してください。</string>
+	<key>Estimated Arrival</key>
+	<string>到着予定</string>
+	<key>Estimated Departure</key>
+	<string>出発予定</string>
+	<key>Evening</key>
+	<string>夕方</string>
+	<key>Exception Details</key>
+	<string>規定違反の詳細</string>
+	<key>Exceptions</key>
+	<string>規定違反</string>
+	<key>Exchange Rate</key>
+	<string>為替レート</string>
+	<key>Existing Reports</key>
+	<string>既存レポート</string>
+	<key>Expense</key>
+	<string>経費</string>
+	<key>Expense Locations</key>
+	<string>経費の場所</string>
+	<key>Expense Queued</key>
+	<string>経費を順番待ちに入れました</string>
+	<key>Expense Trip</key>
+	<string>出張経費を計上</string>
+	<key>Expense Type</key>
+	<string>経費タイプ</string>
+	<key>Expense Updates</key>
+	<string>経費の更新</string>
+	<key>Expense a trip from TripIt</key>
+	<string>TripIt の出張を経費処理</string>
+	<key>ExpenseIt Entries</key>
+	<string>ExpenseIt の入力</string>
+	<key>ExpenseIt Entry</key>
+	<string>ExpenseIt の入力</string>
+	<key>ExpenseTracker version</key>
+	<string>スマート経費バージョン %@</string>
+	<key>Expensed</key>
+	<string>経費精算済</string>
+	<key>Expenses</key>
+	<string>経費</string>
+	<key>Expenses Combined</key>
+	<string>複合経費</string>
+	<key>Expenses cannot be added offline</key>
+	<string>オフラインでは経費を追加できません。</string>
+	<key>Expensing the Trip</key>
+	<string>出張経費を精算</string>
+	<key>Export</key>
+	<string>エクスポート</string>
+	<key>Express</key>
+	<string>急行</string>
+	<key>FACEBOOK_AUTH_FAILED</key>
+	<string>Facebook を使用して認証できませんでした。Safari ブラウザのプライベート ブラウジング機能が無効になっていることを確認してください。</string>
+	<key>FACEBOOK_INCOMPLETE_INFO_SIGNIN_MSG</key>
+	<string>Facebook 資格情報を使用してサインインできません。Facebook プロファイルに有効なメール アドレスが記入されていることを確認し、Facebook アカウントを含むメール経由でサインインしてください。</string>
+	<key>FACEBOOK_INCOMPLETE_INFO_SIGNUP_MSG</key>
+	<string>Facebook 資格情報を使用してサインアップできません。Facebook プロファイルにメールと姓名が記入されていることを確認し、Facebook アカウントを含むメール経由でサインインしてください。</string>
+	<key>FACEBOOK_SIGNIN_FAILED_MSG</key>
+	<string>予期しないエラー。Facebook サインインを再試行するか、[サインイン] ページで別のサインイン方法を試してください。</string>
+	<key>FACEBOOK_SIGNUP_FAILED_MSG</key>
+	<string>予期しないエラー。Facebook サインアップを再試行するか、[サインアップ] ページで別のサインアップ方法を試してください。</string>
+	<key>FIELD_MAX_LENGTH_ERR_MSG</key>
+	<string>%@ 文字以下で入力してください。</string>
+	<key>FILL_IN_PARENT_MLIST_FIELD</key>
+	<string>最初に親フィールド %@ に記入してください。</string>
+	<key>FIRST_NAME</key>
+	<string>名</string>
+	<key>FIX_EMAIL_RESET_PASSWORD</key>
+	<string>[パスワードをリセット] リンクをクリックする前に、[メール アドレス] フィールドに有効なメール アドレスを入力してください。</string>
+	<key>FIX_REPORT_NAME_MSG</key>
+	<string>既存のレポートを選択するか、有効なレポート名を入力した後、その新規レポートを選択してください。</string>
+	<key>FLEX_FARING_ERROR_MSG</key>
+	<string>これらの都市間の航空出張の場合、Web を使用してフライトを予約してください。</string>
+	<key>FLIGHT_STATUS_MSG</key>
+	<string>Flight Stats の更新日</string>
+	<key>FORM</key>
+	<string>フォーム</string>
+	<key>FORM_FIELDS_INVALID</key>
+	<string>保存する前に、すべての必須フィールドに入力し、フォーム上のすべてのエラーを修正してください。</string>
+	<key>FOUND_COUNT</key>
+	<string>見つかったキーワード: %i</string>
+	<key>FREQUENT_FLYER_NO_SEL_MSG</key>
+	<string>マイレージ会員アカウントをお持ちですが、この予約のアカウントを選択していません。[OK] を選択してアカウントなしで操作を続けるか、[キャンセル] を選択して、アカウントを選択します。</string>
+	<key>Facebook</key>
+	<string>Facebook</string>
+	<key>Failed</key>
+	<string>失敗</string>
+	<key>Failed to add to report</key>
+	<string>入力項目をレポートに追加できませんでした。</string>
+	<key>Failed to download receipt</key>
+	<string>領収書のダウンロードに失敗しました</string>
+	<key>Failed to import Itinerary</key>
+	<string>取引のインポートに失敗</string>
+	<key>Failed to import entry</key>
+	<string>一部の経費をインポートできません。</string>
+	<key>Failed to retrieve attendees in selected group</key>
+	<string>選択したグループ内の同席者を取得できませんでした</string>
+	<key>Failed to save Itinerary Stop</key>
+	<string>旅程の経由地を保存できませんでした</string>
+	<key>Failed to save external list item</key>
+	<string>外部リスト項目を保存できません</string>
+	<key>Failure</key>
+	<string>失敗</string>
+	<key>Fare Choices</key>
+	<string>運賃の選択</string>
+	<key>Feature not enabled for this demo</key>
+	<string>このデモ用に機能が有効になっていません</string>
+	<key>Features</key>
+	<string>機能</string>
+	<key>Fee</key>
+	<string>料金</string>
+	<key>Fetching Data</key>
+	<string>データの取得</string>
+	<key>Fetching Expense Data</key>
+	<string>経費データの取得</string>
+	<key>Fetching Filter Results</key>
+	<string>フィルター結果の取得</string>
+	<key>Fetching Hotel Rates</key>
+	<string>ホテル料金を取得</string>
+	<key>Fetching Location Data</key>
+	<string>場所データの取得</string>
+	<key>Fetching Trip</key>
+	<string>出張の取得</string>
+	<key>Fetching the Feed</key>
+	<string>フィードの取得</string>
+	<key>Filter</key>
+	<string>フィルター</string>
+	<key>Find Travel</key>
+	<string>出張を検索</string>
+	<key>First</key>
+	<string>ファースト</string>
+	<key>First Name</key>
+	<string>名</string>
+	<key>Flight Details</key>
+	<string>フライトの詳細</string>
+	<key>Flight Duration</key>
+	<string>フライト所要時間</string>
+	<key>Flight Options</key>
+	<string>フライト オプション</string>
+	<key>Flight Rule Violation</key>
+	<string>フライト ルール違反</string>
+	<key>Flight Schedules</key>
+	<string>フライト スケジュール</string>
+	<key>Flight Search</key>
+	<string>フライトの検索</string>
+	<key>Flight Status</key>
+	<string>フライト ステータス</string>
+	<key>Flights</key>
+	<string>フライト</string>
+	<key>Flights_subline</key>
+	<string>素早くフライトを検索して予約</string>
+	<key>For Example: say Find a Flight from San Francisco to New York for next week</key>
+	<string>例： 来週のサンフランシスコ発ニューヨーク行きのフライトを検索 と言います</string>
+	<key>For Example: say Find a hotel in San Francisco for next week</key>
+	<string>例： 「来週に 3 泊でサンフランシスコのホテルを検索する」と言います。</string>
+	<key>Forgot Username or Password?</key>
+	<string>ユーザー名またはパスワードをお忘れの場合</string>
+	<key>Forgot mobile password (PIN)?</key>
+	<string>モバイル パスワード (PIN) を忘れた場合</string>
+	<key>Forgot password?</key>
+	<string>パスワードを忘れた場合</string>
+	<key>Free up memory and retry receipt upload</key>
+	<string>メモリを解放し、後でもう一度領収書をアップロードしてください。</string>
+	<key>Frequent Flyer Program</key>
+	<string>マイレージ会員プログラム</string>
+	<key>Frequent Flyer Warning</key>
+	<string>ポイント サービスの警告</string>
+	<key>Friday_Short</key>
+	<string>(金)</string>
+	<key>From</key>
+	<string>開始時刻</string>
+	<key>From Location</key>
+	<string>出発地</string>
+	<key>From Station</key>
+	<string>出発駅</string>
+	<key>Full</key>
+	<string>全体</string>
+	<key>Full Hybrid</key>
+	<string>大型ハイブリッド車</string>
+	<key>Full Pickup</key>
+	<string>大型ピックアップ車</string>
+	<key>Full SUV</key>
+	<string>大型 SUV 車</string>
+	<key>Future Trips</key>
+	<string>予定</string>
+	<key>GOOGLE_AUTH_FAILED_MSG</key>
+	<string>Google を使用して Concur スマート経費へのアクセスを許可できません。</string>
+	<key>GOOGLE_INCOMPLETE_INFO_SIGNIN_MSG</key>
+	<string>Google 資格情報を使用してサインインできません。Google アカウントに有効なメールとプロファイルがあるか確認してください。</string>
+	<key>GOOGLE_INCOMPLETE_INFO_SIGNUP_MSG</key>
+	<string>Google 資格情報を使用してサインアップできません。Google プロファイルにメールと姓名が記入されていることを確認してください。</string>
+	<key>Gate token</key>
+	<string>ゲート %@</string>
+	<key>GateGuru</key>
+	<string>GateGuru</string>
+	<key>Gathering data from TripIt</key>
+	<string>TripIt からデータを収集</string>
+	<key>Generate Expenses</key>
+	<string>経費を作成</string>
+	<key>Get Help</key>
+	<string>ヘルプの表示</string>
+	<key>GetApprovedForAirHotelAndMore</key>
+	<string>空路、ホテルなどの承認を取得</string>
+	<key>Google</key>
+	<string>Google</string>
+	<key>Greater than 25</key>
+	<string>25 より大きい</string>
+	<key>HAS_DYNAMIC_FIELDS_MSG</key>
+	<string>現在、お客様の会社の予約ポリシーはサポートされていません。近日中に、サポートされます。Web バージョンの Concur を使用して出張を予約してください。</string>
+	<key>HIGH_RESOLUTION_IMAGE</key>
+	<string>高解像度 (1000x1000 ピクセル)</string>
+	<key>HOME_PAGE</key>
+	<string>Concur</string>
+	<key>HOME_PAGE_BREEZE</key>
+	<string>Concur Breeze</string>
+	<key>HOTEL</key>
+	<string>ホテル/なし</string>
+	<key>HOTEL_BOOKING</key>
+	<string>部屋の予約</string>
+	<key>HOTEL_BOOKING_ADDRESS_MISSING_VIOLATIONS</key>
+	<string>この部屋を予約する前に、赤色で示されたポリシー違反に対応する必要があります。</string>
+	<key>HOTEL_BOOKING_VIEW_BOOKING_ERROR_MESSAGE</key>
+	<string>ホテルを予約できませんでした。</string>
+	<key>HOTEL_BOOKING_VIEW_CANCELLATION_POLICY_DESCRIPTION</key>
+	<string>この部屋を予約する前に、キャンセル ポリシーの詳細を理解しておく必要があります。</string>
+	<key>HOTEL_BOOKING_VIEW_CANCELLATION_POLICY_TITLE</key>
+	<string>キャンセル ポリシー</string>
+	<key>HOTEL_BOOKING_VIEW_CONFIRM_BOOKING_MESSAGE</key>
+	<string>この部屋を予約してもよろしいですか?</string>
+	<key>HOTEL_BOOKING_VIEW_CONFIRM_BOOKING_TITLE</key>
+	<string>確認してください</string>
+	<key>HOTEL_BOOKING_VIEW_DAILY_RATE</key>
+	<string>1 日あたりの料金: </string>
+	<key>HOTEL_BOOKING_VIEW_MISSING_VIOLATION_INFO_TITLE</key>
+	<string>フィールドの欠落</string>
+	<key>HOTEL_BOOKING_VIEW_MISSING_VIOLATION_JUSTIFICATION</key>
+	<string>この部屋の予約が会社のポリシー違反にならないように、赤色で表示されたフィールドに説明を入力する必要があります。</string>
+	<key>HOTEL_BOOKING_VIEW_MISSING_VIOLATION_REASON</key>
+	<string>この部屋の予約が会社のポリシー違反にならないように、赤色で表示されたフィールドに理由を入力する必要があります。</string>
+	<key>HOTEL_BOOKING_VIEW_MISSING_VIOLATION_REASON_AND_JUSTIFICATION</key>
+	<string>この部屋の予約が会社のポリシー違反にならないように、赤色で表示されたフィールドに理由と説明を入力する必要があります。</string>
+	<key>HOTEL_BOOKING_VIEW_ROOM</key>
+	<string>部屋</string>
+	<key>HOTEL_BOOKING_VIOLATION_JUSTIFICATION_TITLE</key>
+	<string>違反理由の説明</string>
+	<key>HOTEL_BOOKING_WITH_DEPOSIT_CONFIRM_BOOKING_MESSAGE</key>
+	<string>この部屋を予約してもよろしいですか?</string>
+	<key>HOTEL_BOOKNIG_VIOLATION_JUSTIFICATION_PLACEHOLDER_TEXT</key>
+	<string>この部屋を予約する説明を入力してください。</string>
+	<key>HOTEL_CREDIT_CARD</key>
+	<string>クレジット カードの選択</string>
+	<key>HOTEL_DETAILS_VIEW_FEES</key>
+	<string>料金</string>
+	<key>HOTEL_ROOM_LIST</key>
+	<string>部屋の選択</string>
+	<key>HOTEL_SEARCH_RESULTS</key>
+	<string>ホテルの選択</string>
+	<key>HOTEL_VIEW_FIND_HOTELS_WITHIN</key>
+	<string>ホテルの検索範囲</string>
+	<key>HOTEL_VIEW_HOTEL_NAME_RESTRICTIONS</key>
+	<string>ホテル名に関する制限</string>
+	<key>HOTEL_VIEW_HOTEL_NAME_RESTRICTIONS_PLACEHOLDER_TEXT</key>
+	<string>名前にこのテキストが含まれるホテルの検索</string>
+	<key>HOTEL_VIEW_KILOMETERS</key>
+	<string> km </string>
+	<key>HOTEL_VIEW_LOCATION</key>
+	<string>場所</string>
+	<key>HOTEL_VIEW_MILE</key>
+	<string>マイル</string>
+	<key>HOTEL_VIEW_NO_HOTELS_MESSAGE</key>
+	<string>一致するホテルが見つかりませんでした。  検索基準を修正してから、もう一度お試しください。</string>
+	<key>HOTEL_VIEW_NO_HOTELS_TITLE</key>
+	<string>一致するホテルなし</string>
+	<key>HOTEL_VIEW_NUMBER_SPACE_KILOMETERS_OR_MILES</key>
+	<string>%@ %@</string>
+	<key>HOTEL_VIEW_SEARCHING_FOR_HOTELS_AT</key>
+	<string>ホテルの検索対象地域</string>
+	<key>HOTEL_VIEW_SEARCHING_FOR_HOTELS_TO</key>
+	<string>—</string>
+	<key>HOTEL_VIEW_SEARCHING_FOR_HOTELS_WITH_AVAILABILITY</key>
+	<string>利用可能な部屋</string>
+	<key>HOTEL_VIEW_SEARCH_BUTTON_TITLE</key>
+	<string>ホテルの検索</string>
+	<key>HOTEL_VIEW_SELECT_PREFERENCE</key>
+	<string>優先設定を選択</string>
+	<key>HOTEL_VIEW_SMOKING_PREFERENCE</key>
+	<string>喫煙/禁煙の希望</string>
+	<key>HOTEL_VIEW_SPECIFY_LOCATION_MESSAGE</key>
+	<string>場所を指定してください。</string>
+	<key>HOTEL_VIEW_SPECIFY_LOCATION_TITLE</key>
+	<string>必須の場所</string>
+	<key>HOTEL_VIEW_TIMEOUT_MESSAGE</key>
+	<string>一致するホテル料金が見つかりません。検索基準を修正してから、もう一度お試しください。</string>
+	<key>HOTEL_VIEW_TIMEOUT_TITLE</key>
+	<string>一致するホテル料金なし</string>
+	<key>HOTEL_VIEW_WITH_NAMES_CONTAINING</key>
+	<string>名前に含まれる文字列</string>
+	<key>Having trouble signing in?</key>
+	<string>サインインに問題がありますか?</string>
+	<key>Help for PIN</key>
+	<string>PIN はログインするための代替方法であり、会社によって Web バージョンの Concur に自動的にログインする場合、およびパスワードがわからない場合に作成できます。 
+
+PIN を作成するには、Web バージョンの Concur にアクセスします ([プロファイル] &gt; [Mobile の登録])。</string>
+	<key>Help for PIN - Gov</key>
+	<string>
+        PIN はログインするための代替方法であり、代理店によって Web バージョンの Concur に自動的にログインする場合、およびパスワードがわからない場合に作成できます。
+
+        PIN を作成するには、Web バージョンの Concur にアクセスします ([プロファイル] &gt; [Mobile の登録])。
+    </string>
+	<key>Help for Password</key>
+	<string>会社でモバイル サインイン用の PIN が許可されている場合: 前の画面に戻り、Concur 登録済メールを送信します。 サインイン方法に関する指示を送信します。
+
+会社でパスワードが要求される場合: Concur Web サイトにサインインするときのパスワードと同じものを使用します。</string>
+	<key>Help for Password - Gov</key>
+	<string>パスワードは、Web バージョンの Concur にログインする際に使用します。モバイル アプリケーションのパスワードを使用する必要があります。
+
+Concur パスワードが分からない場合は、代理店の管理者にお問い合わせください。</string>
+	<key>Help for User Name</key>
+	<string>ほとんどの場合、Concur の Web バージョンを使用する場合と同じユーザー名とパスワードを使用して、当社のアプリにサインインします。
+ 
+この情報をお持ちでない場合は、前の画面でメールを送信しサインイン情報を取得するか、または会社の管理者までご連絡ください。
+
+</string>
+	<key>Help for User Name - Gov</key>
+	<string>ユーザー名は、Web バージョンの Concur にログインする際に使用します。モバイル アプリケーションのユーザー名を使用する必要があります。
+
+Concur ユーザー名が分からない場合は、代理店の管理者にお問い合わせください。</string>
+	<key>Hide Offers</key>
+	<string>割引価格を非表示</string>
+	<key>Home</key>
+	<string>ホーム</string>
+	<key>Hotel</key>
+	<string>ホテル</string>
+	<key>Hotel Dates</key>
+	<string>ホテルの日程</string>
+	<key>Hotel Name</key>
+	<string>ホテル名</string>
+	<key>Hotel Price to Beat</key>
+	<string>ホテルの小売基準価格</string>
+	<key>Hotel Rule Violation</key>
+	<string>ホテル ルール違反</string>
+	<key>Hotel Search</key>
+	<string>ホテル検索</string>
+	<key>Hotel cancelled from mobile device</key>
+	<string>モバイル デバイスからキャンセルされたホテル</string>
+	<key>Hotels</key>
+	<string>ホテル</string>
+	<key>Hotels With Names Containing</key>
+	<string>ホテルの名前に含まれる文字列</string>
+	<key>Hotels Within</key>
+	<string>ホテルの範囲</string>
+	<key>Hotels near</key>
+	<string>近くのホテル</string>
+	<key>Hotels near you</key>
+	<string>近くのホテル</string>
+	<key>Hotels_subline</key>
+	<string>最高のホテルにチェック イン</string>
+	<key>Hour</key>
+	<string>時</string>
+	<key>How would you like to book?</key>
+	<string>予約する方法</string>
+	<key>I Forgot</key>
+	<string>忘れた場合</string>
+	<key>IDV Arrive</key>
+	<string>到着</string>
+	<key>IDV Arrives in t at t</key>
+	<string>%@ へ %@ に到着</string>
+	<key>IDV Body</key>
+	<string>本文</string>
+	<key>IDV Check In</key>
+	<string>チェックイン</string>
+	<key>IDV Check Out</key>
+	<string>チェックアウト</string>
+	<key>IDV Confirmation</key>
+	<string>確認</string>
+	<key>IDV Daily</key>
+	<string>毎日</string>
+	<key>IDV Depart</key>
+	<string>出発</string>
+	<key>IDV Departs from t at t</key>
+	<string>%@ に %@ から出発</string>
+	<key>IDV Drop Off</key>
+	<string>降車</string>
+	<key>IDV Operated by t Flight t</key>
+	<string>%@ フライト %@による運航</string>
+	<key>IDV Persons</key>
+	<string>人数</string>
+	<key>IDV Pick Up</key>
+	<string>乗車</string>
+	<key>IDV Reserved for</key>
+	<string>予約済内容</string>
+	<key>IDV Rooms</key>
+	<string>部屋数</string>
+	<key>IDV Seat Map for t</key>
+	<string>%@ の座席マップ</string>
+	<key>IDV Social Publishing</key>
+	<string>ソーシャル パブリッシング</string>
+	<key>IDV Terminal Map for t</key>
+	<string>%@ のターミナル マップ</string>
+	<key>IDV Terminal t Gate t</key>
+	<string>ターミナル %@ ゲート %@</string>
+	<key>IDV Web site for t</key>
+	<string>%@ の Web サイト</string>
+	<key>IDV property name</key>
+	<string>プロパティ名</string>
+	<key>IDV t Flight t</key>
+	<string>%@ Flight @%</string>
+	<key>IMAGE_DOWN_SCALED_MSG</key>
+	<string>イメージのサイズが 4MB 以下に縮小されています。 入力とともにイメージを保存する前に、イメージの内容を確認してください。</string>
+	<key>INFO</key>
+	<string>情報</string>
+	<key>INTEGER_NEGATIVE_ERR_MSG</key>
+	<string>このフィールドには負の値を入力できません</string>
+	<key>INTEGER_TOO_BIG_ERR_MSG</key>
+	<string>整数値が過大</string>
+	<key>INTEGER_VALIDATION_ERR_MSG</key>
+	<string>このフィールドには整数値が必須です。</string>
+	<key>INVALID_CONCUR_CREDENTIALS</key>
+	<string>サインイン資格情報の間違い</string>
+	<key>INVALID_DEVICE_MSG</key>
+	<string>別のデバイスから PIN のリセットが申請されました。PIN リセットを申請したものと同じデバイスを使用してください。</string>
+	<key>INVALID_LOGIN_MSG</key>
+	<string>もう一度資格情報を入力するか [忘れた場合] を選択してサインイン手順を入手します。</string>
+	<key>INVALID_PIN_LEN_MSG</key>
+	<string>PIN は、%@ 文字以上の長さでなければなりません</string>
+	<key>INVALID_PIN_MSG</key>
+	<string>PIN は文字、数値、およびスペース以外の特殊文字で構成できます。</string>
+	<key>INVALID_PIN_SPECIAL_CHARACTERS</key>
+	<string>入力した PIN には特殊文字が含まれていません。モバイル PIN には特殊文字が 1 つ以上は必要です。たとえば、!、$、%、+、= などです。</string>
+	<key>INVALID_PIN_SPECIAL_MIXED_CASE</key>
+	<string>PIN には、必ず 1 つ以上の大文字の英文字 [A 〜 Z] および 1 つ以上の小文字の英文字 [a 〜 z] を含めてください。</string>
+	<key>INVALID_USERID_MSG</key>
+	<string>有効なログイン ID を入力してください。%@これは「ユーザーのログイン名 @ 会社のドメイン名」という構成にする必要があります。</string>
+	<key>INVOICE_LINEITEMS</key>
+	<string>支払請求の詳細</string>
+	<key>INVOICE_LINEITEM_DETAIL</key>
+	<string>行項目</string>
+	<key>INVOICE_SUMMARY</key>
+	<string>支払請求サマリー</string>
+	<key>INVOICE_VENDOR</key>
+	<string>支払請求の納入業者</string>
+	<key>ITEMIZATIONS</key>
+	<string>明細</string>
+	<key>ITEMIZATION_LIST</key>
+	<string>明細リスト</string>
+	<key>ITEMS_TO_APPROVE</key>
+	<string>%d 件の承認する項目</string>
+	<key>ITIN_DETAILS</key>
+	<string>セグメントの詳細</string>
+	<key>ITIN_DETAILS_VIEW_AIR</key>
+	<string>空路</string>
+	<key>ITIN_DETAILS_VIEW_AIRCOND</key>
+	<string>エアコン</string>
+	<key>ITIN_DETAILS_VIEW_AIRCRAFT</key>
+	<string>航空機</string>
+	<key>ITIN_DETAILS_VIEW_AIRPORT</key>
+	<string>空港</string>
+	<key>ITIN_DETAILS_VIEW_ALLOWABLE_MILES</key>
+	<string>許容マイル数</string>
+	<key>ITIN_DETAILS_VIEW_AMENITIES</key>
+	<string>アメニティー</string>
+	<key>ITIN_DETAILS_VIEW_ARRIVAL</key>
+	<string>到着</string>
+	<key>ITIN_DETAILS_VIEW_ARRIVE</key>
+	<string>到着</string>
+	<key>ITIN_DETAILS_VIEW_BAGGAGE</key>
+	<string>手荷物</string>
+	<key>ITIN_DETAILS_VIEW_BODY</key>
+	<string>本文タイプ</string>
+	<key>ITIN_DETAILS_VIEW_BOOKING</key>
+	<string>予約</string>
+	<key>ITIN_DETAILS_VIEW_CABIN</key>
+	<string>客室</string>
+	<key>ITIN_DETAILS_VIEW_CANCEL_POLICY</key>
+	<string>キャンセル ポリシー</string>
+	<key>ITIN_DETAILS_VIEW_CAR</key>
+	<string>レンタカー</string>
+	<key>ITIN_DETAILS_VIEW_CARRIER</key>
+	<string>運輸会社</string>
+	<key>ITIN_DETAILS_VIEW_CHECK_IN</key>
+	<string>チェックイン</string>
+	<key>ITIN_DETAILS_VIEW_CHECK_OUT</key>
+	<string>チェックアウト</string>
+	<key>ITIN_DETAILS_VIEW_CITY</key>
+	<string>都市</string>
+	<key>ITIN_DETAILS_VIEW_CLASS</key>
+	<string>クラス</string>
+	<key>ITIN_DETAILS_VIEW_CONFIRM_NUM</key>
+	<string>確認番号</string>
+	<key>ITIN_DETAILS_VIEW_CONF_NUM</key>
+	<string>確認番号</string>
+	<key>ITIN_DETAILS_VIEW_CONTACT</key>
+	<string>連絡先</string>
+	<key>ITIN_DETAILS_VIEW_DAILY_RATE</key>
+	<string>1 日あたりの料金</string>
+	<key>ITIN_DETAILS_VIEW_DEPART</key>
+	<string>出発</string>
+	<key>ITIN_DETAILS_VIEW_DEPARTURE</key>
+	<string>出発</string>
+	<key>ITIN_DETAILS_VIEW_DISCOUNT</key>
+	<string>割引コード</string>
+	<key>ITIN_DETAILS_VIEW_DIVERSION</key>
+	<string>振替</string>
+	<key>ITIN_DETAILS_VIEW_DROP_OFF</key>
+	<string>降車</string>
+	<key>ITIN_DETAILS_VIEW_DROP_OFF_ADDRESS</key>
+	<string>降車地の住所</string>
+	<key>ITIN_DETAILS_VIEW_DROP_OFF_INSTRUCTIONS</key>
+	<string>降車手順</string>
+	<key>ITIN_DETAILS_VIEW_DURATION</key>
+	<string>期間</string>
+	<key>ITIN_DETAILS_VIEW_END</key>
+	<string>終了</string>
+	<key>ITIN_DETAILS_VIEW_EQUIP</key>
+	<string>特殊機器</string>
+	<key>ITIN_DETAILS_VIEW_FLIGHT</key>
+	<string>フライト</string>
+	<key>ITIN_DETAILS_VIEW_FLIGHT_WITH_OB</key>
+	<string>%@ #%@ (%@ #%@)</string>
+	<key>ITIN_DETAILS_VIEW_GATE</key>
+	<string>ゲート</string>
+	<key>ITIN_DETAILS_VIEW_HOTEL</key>
+	<string>ホテル</string>
+	<key>ITIN_DETAILS_VIEW_INFO</key>
+	<string>参考</string>
+	<key>ITIN_DETAILS_VIEW_MAP</key>
+	<string>マップ</string>
+	<key>ITIN_DETAILS_VIEW_MEAL</key>
+	<string>食事</string>
+	<key>ITIN_DETAILS_VIEW_MEETING_INSTRUCTIONS</key>
+	<string>会議の説明</string>
+	<key>ITIN_DETAILS_VIEW_MINUTES</key>
+	<string>%@ 分</string>
+	<key>ITIN_DETAILS_VIEW_NUMBER_IN_PARTY</key>
+	<string>同席者数</string>
+	<key>ITIN_DETAILS_VIEW_NUMBER_OF_PERSONS</key>
+	<string>人数</string>
+	<key>ITIN_DETAILS_VIEW_OPERATED</key>
+	<string>%@ — %@ による運航</string>
+	<key>ITIN_DETAILS_VIEW_PARKING</key>
+	<string>駐車場センター</string>
+	<key>ITIN_DETAILS_VIEW_PICKUP_ADDRESS</key>
+	<string>乗車地の住所</string>
+	<key>ITIN_DETAILS_VIEW_PICKUP_INSTRUCTIONS</key>
+	<string>乗車手順</string>
+	<key>ITIN_DETAILS_VIEW_PLATFORM</key>
+	<string>プラットフォーム</string>
+	<key>ITIN_DETAILS_VIEW_PRICE</key>
+	<string>価格</string>
+	<key>ITIN_DETAILS_VIEW_RAIL</key>
+	<string>鉄道</string>
+	<key>ITIN_DETAILS_VIEW_RATE</key>
+	<string>料金</string>
+	<key>ITIN_DETAILS_VIEW_RATE_DESCRIPTION</key>
+	<string>料金の説明</string>
+	<key>ITIN_DETAILS_VIEW_RATE_TYPE</key>
+	<string>レート タイプ</string>
+	<key>ITIN_DETAILS_VIEW_RESERVATION</key>
+	<string>予約</string>
+	<key>ITIN_DETAILS_VIEW_REZ</key>
+	<string>予約</string>
+	<key>ITIN_DETAILS_VIEW_ROOM</key>
+	<string>部屋</string>
+	<key>ITIN_DETAILS_VIEW_SEAT</key>
+	<string>座席</string>
+	<key>ITIN_DETAILS_VIEW_SEGMENT_DETAILS</key>
+	<string>セグメントの詳細</string>
+	<key>ITIN_DETAILS_VIEW_SPECIAL_INSTRUCTIONS</key>
+	<string>特記事項</string>
+	<key>ITIN_DETAILS_VIEW_START</key>
+	<string>起動</string>
+	<key>ITIN_DETAILS_VIEW_STATION</key>
+	<string>駅</string>
+	<key>ITIN_DETAILS_VIEW_STATUS</key>
+	<string>ステータス</string>
+	<key>ITIN_DETAILS_VIEW_STOPS</key>
+	<string>経由地</string>
+	<key>ITIN_DETAILS_VIEW_TERMINAL</key>
+	<string>ターミナル</string>
+	<key>ITIN_DETAILS_VIEW_TOTAL_RATE</key>
+	<string>合計料金</string>
+	<key>ITIN_DETAILS_VIEW_TRAIN_TYPE</key>
+	<string>鉄道タイプ</string>
+	<key>ITIN_DETAILS_VIEW_TRANSMISSION</key>
+	<string>伝送</string>
+	<key>ITIN_DETAILS_VIEW_TYPE</key>
+	<string>タイプ</string>
+	<key>ITIN_DETAILS_VIEW_VENDOR</key>
+	<string>納入業者</string>
+	<key>ITIN_DETAILS_VIEW_WAGON_NUM</key>
+	<string>ワゴン番号</string>
+	<key>If any changes have been made by your agent</key>
+	<string>旅行代理店により変更が行われた場合は、旅程の更新に数分かかる場合があります。</string>
+	<key>If you continue to experience</key>
+	<string>もう一度お試しください。システムへのアクセスの問題が解消しない場合、会社のヘルプ デスクまたは出張/経費担当部門に問い合わせてください。</string>
+	<key>If you continue to experience SU</key>
+	<string>もう一度お試しください。システムへのアクセスの問題が解消しない場合は、Concur サポートに問い合わせてください。</string>
+	<key>If your plans change</key>
+	<string>予定を変更する場合、移動中にキャンセルして別のホテルを再予約</string>
+	<key>Image Not Available</key>
+	<string>イメージを利用できません</string>
+	<key>Immediate Assistance Required</key>
+	<string>早急な支援が必須</string>
+	<key>Import Error</key>
+	<string>インポート エラー</string>
+	<key>Import Expenses</key>
+	<string>経費のインポート</string>
+	<key>Import and Match</key>
+	<string>インポートおよび一致</string>
+	<key>Incorrect Password</key>
+	<string>パスワードの間違い</string>
+	<key>Individual Edition</key>
+	<string>個別エディション</string>
+	<key>Infants</key>
+	<string>幼児</string>
+	<key>Info</key>
+	<string>参考</string>
+	<key>Intermediate</key>
+	<string>中型車</string>
+	<key>Intermediate Hybrid</key>
+	<string>中型ハイブリッド車</string>
+	<key>Intermediate SUV</key>
+	<string>中型 SUV 車</string>
+	<key>Invalid Arrival Location</key>
+	<string>無効な到着地</string>
+	<key>Invalid Departure Date</key>
+	<string>無効な出発日</string>
+	<key>Invalid Departure Location</key>
+	<string>無効な出発地</string>
+	<key>Invalid Device</key>
+	<string>無効なデバイス</string>
+	<key>Invalid Email or Username</key>
+	<string>無効なメールまたはユーザー名</string>
+	<key>Invalid Login Credentials</key>
+	<string>無効なログイン資格情報</string>
+	<key>Invalid PIN</key>
+	<string>無効な PIN</string>
+	<key>Invalid PIN length</key>
+	<string>PIN の長さが無効</string>
+	<key>Invalid Password</key>
+	<string>無効なパスワード</string>
+	<key>Invalid Return Date</key>
+	<string>無効な帰着日</string>
+	<key>Invalid User Name</key>
+	<string>無効なユーザー名</string>
+	<key>Invalid email address</key>
+	<string>無効なメール アドレス</string>
+	<key>Invitation(s) Sent</key>
+	<string>招待状送信済</string>
+	<key>Invitations Sent</key>
+	<string>スマート経費の評判を広めていただきありがとうございます。</string>
+	<key>Invite</key>
+	<string>勧誘</string>
+	<key>Invite colleagues to use SmartExpense</key>
+	<string>同僚がスマート経費を使用するように招待</string>
+	<key>Invoice</key>
+	<string>支払請求</string>
+	<key>Invoice Approval</key>
+	<string>支払請求の承認</string>
+	<key>Invoice Image</key>
+	<string>支払請求書イメージ</string>
+	<key>InvoiceApprove</key>
+	<string>支払請求</string>
+	<key>Invoices</key>
+	<string>支払請求</string>
+	<key>Itemization not allowed</key>
+	<string>この入力については明細を表示できません。</string>
+	<key>Itemizations</key>
+	<string>明細</string>
+	<key>Itemize</key>
+	<string>明細</string>
+	<key>Itemized Entry</key>
+	<string>明細入力</string>
+	<key>Itemized:</key>
+	<string>明細化:</string>
+	<key>Itineraries</key>
+	<string>旅程</string>
+	<key>Itinerary</key>
+	<string>旅程</string>
+	<key>Itinerary List</key>
+	<string>旅程リスト</string>
+	<key>Itinerary Rule Violation</key>
+	<string>旅程ルール違反</string>
+	<key>Join</key>
+	<string>結合</string>
+	<key>Join with Facebook</key>
+	<string>Facebook に参加</string>
+	<key>LABEL_ADD_BTN</key>
+	<string>追加</string>
+	<key>LABEL_AIR</key>
+	<string>空路</string>
+	<key>LABEL_APPROVE_EXPENSES</key>
+	<string>経費の承認</string>
+	<key>LABEL_CANCEL_BTN</key>
+	<string>キャンセル</string>
+	<key>LABEL_CAR_RENTAL</key>
+	<string>レンタカー</string>
+	<key>LABEL_CLOSE_BTN</key>
+	<string>閉じる</string>
+	<key>LABEL_DONE_BTN</key>
+	<string>完了</string>
+	<key>LABEL_EXPENSE</key>
+	<string>経費</string>
+	<key>LABEL_EXPENSES</key>
+	<string>経費</string>
+	<key>LABEL_HOTELS</key>
+	<string>ホテル</string>
+	<key>LABEL_LOGIN_NO_PIN</key>
+	<string>PIN を設定する必要がありますか?</string>
+	<key>LABEL_LOGIN_PASSWORD</key>
+	<string>パスワードまたは PIN</string>
+	<key>LABEL_LOGIN_REGISTER</key>
+	<string>登録</string>
+	<key>LABEL_LOGIN_SIGN_IN</key>
+	<string>サインイン</string>
+	<key>LABEL_LOGIN_USER_NAME</key>
+	<string>ユーザー名</string>
+	<key>LABEL_OK_BTN</key>
+	<string>OK</string>
+	<key>LABEL_QUICK_EXPENSE</key>
+	<string>現金</string>
+	<key>LABEL_REGISTER_ENTER_PIN</key>
+	<string>PIN を入力</string>
+	<key>LABEL_REGISTER_PASSWORD</key>
+	<string>パスワード</string>
+	<key>LABEL_REGISTER_REENTER_PIN</key>
+	<string>PIN の再入力</string>
+	<key>LABEL_REGISTER_SIGN_IN</key>
+	<string>サインイン</string>
+	<key>LABEL_SAVE_BTN</key>
+	<string>保存</string>
+	<key>LABEL_SEND_BTN</key>
+	<string>送信</string>
+	<key>LABEL_SETTINGS</key>
+	<string>設定</string>
+	<key>LABEL_SETTINGS_VIEW_APP_INFO</key>
+	<string>アプリケーション情報</string>
+	<key>LABEL_SETTINGS_VIEW_APP_NAME</key>
+	<string>アプリケーション名</string>
+	<key>LABEL_SETTINGS_VIEW_CONNECTION_SETTINGS</key>
+	<string>接続の設定</string>
+	<key>LABEL_SETTINGS_VIEW_REMEMBER_USER</key>
+	<string>ユーザー名の保存</string>
+	<key>LABEL_SETTINGS_VIEW_SAVE_BTN</key>
+	<string>設定の保存</string>
+	<key>LABEL_SETTINGS_VIEW_TWITTER</key>
+	<string>ツイッターの表示</string>
+	<key>LABEL_SETTINGS_VIEW_URI_NON_SSL</key>
+	<string>SSL ではない URI</string>
+	<key>LABEL_SETTINGS_VIEW_URL</key>
+	<string>サーバー URI</string>
+	<key>LABEL_SETTINGS_VIEW_VERSION</key>
+	<string>バージョン</string>
+	<key>LABEL_SUBMIT_BTN</key>
+	<string>提出</string>
+	<key>LABEL_TAXI</key>
+	<string>タクシー</string>
+	<key>LABEL_TRAVEL</key>
+	<string>出張</string>
+	<key>LABEL_TRIPS</key>
+	<string>出張</string>
+	<key>LABEL_VENDOR_ADDR_CODE</key>
+	<string>住所コード:</string>
+	<key>LABEL_VENDOR_CODE</key>
+	<string>納入業者コード:</string>
+	<key>LAST_NAME</key>
+	<string>姓</string>
+	<key>LNA_LOADING_TEXT</key>
+	<string>現在の場所を取得しています...</string>
+	<key>LOCATION_NOT_FOUND_MSG</key>
+	<string>現在の場所が見つかりませんでした。</string>
+	<key>LOGIN</key>
+	<string>サインイン</string>
+	<key>LOG_UNAVAILABLE_MSG</key>
+	<string>ログ データを利用できません。</string>
+	<key>LOW_RESOLUTION_IMAGE</key>
+	<string>低解像度 (320x320 ピクセル)</string>
+	<key>Last Name</key>
+	<string>姓</string>
+	<key>Last updated</key>
+	<string>最終更新日 %@</string>
+	<key>Last updated on</key>
+	<string>最終更新日</string>
+	<key>Layover in</key>
+	<string>乗り継ぎ</string>
+	<key>Learn More</key>
+	<string>詳細はこちら</string>
+	<key>Least Preferred</key>
+	<string>低推奨</string>
+	<key>Legs: token</key>
+	<string>行程: %@</string>
+	<key>Link Dropbox</key>
+	<string>Dropbox へのリンクを作成</string>
+	<key>Link Success</key>
+	<string>リンクが正常に完了</string>
+	<key>Link to TripIt</key>
+	<string>TripIt へのリンク</string>
+	<key>Link with TripIt</key>
+	<string>TripIt によるリンク</string>
+	<key>Link with TripIt Header</key>
+	<string>TripIt に接続して、出張を経費精算レポートに入力してください。</string>
+	<key>Linked to Dropbox</key>
+	<string>Dropbox へのリンク</string>
+	<key>List</key>
+	<string>リスト</string>
+	<key>List of your expenses</key>
+	<string>経費のリスト</string>
+	<key>Load Logs</key>
+	<string>ログの読み込み</string>
+	<key>Load more hotels</key>
+	<string>その他のホテルの読み込み...</string>
+	<key>Loading Data</key>
+	<string>データの読み込み</string>
+	<key>Loading Image</key>
+	<string>イメージの読み込み</string>
+	<key>Loading Receipt Image(s)</key>
+	<string>領収書イメージの読み込み</string>
+	<key>Loading Receipts</key>
+	<string>領収書の読み込み中</string>
+	<key>Loading Stations</key>
+	<string>駅の読み込み</string>
+	<key>Loading Trip</key>
+	<string>出張の読み込み</string>
+	<key>Loading delivery options</key>
+	<string>配達オプションの読み込み</string>
+	<key>Loading more Hotels</key>
+	<string>その他のホテルの読み込み</string>
+	<key>Loading trip data</key>
+	<string>出張データの読み込み</string>
+	<key>Loading...</key>
+	<string>読み込み中...</string>
+	<key>Location</key>
+	<string>場所</string>
+	<key>Location Check Offline</key>
+	<string>オフラインの間は場所を確認できません。後でもう一度試してください。</string>
+	<key>Location Not Found</key>
+	<string>場所が見つかりません</string>
+	<key>Location Required</key>
+	<string>必須の場所</string>
+	<key>Log</key>
+	<string>ログ</string>
+	<key>Log Saved</key>
+	<string>ログを保存しました</string>
+	<key>Log Unavailable</key>
+	<string>ログを利用できません</string>
+	<key>Log out from Concur Mobile</key>
+	<string>Concur モバイルからサインアウト</string>
+	<key>Log out from SmartExpense</key>
+	<string>スマート経費からログアウト</string>
+	<key>Logging In</key>
+	<string>ログイン</string>
+	<key>Login Settings</key>
+	<string>サインイン設定</string>
+	<key>Logout</key>
+	<string>サインアウト</string>
+	<key>Looks like we are experience some difficulties. Please check back in a few minutes.</key>
+	<string>いくつかの問題が発生したようです。数分後に再確認してください。</string>
+	<key>Luxury</key>
+	<string>高級車</string>
+	<key>MAP</key>
+	<string>マップの表示</string>
+	<key>MAPVIEW_ACCESS_DENIED</key>
+	<string>道順を生成するために、Concur では現在の場所へのアクセスが必要です。 Concur の位置情報サービスを有効にしてください。</string>
+	<key>MAPVIEW_LOCATION_UNKNOWN</key>
+	<string>現在の場所が不明です。Concur では場所の特定を継続します。</string>
+	<key>MAPVIEW_NETWORK_ERROR</key>
+	<string>Concur が現在の場所を特定できません。 ネットワーク接続をチェックし、機内モードが無効になっていることを確認してください。</string>
+	<key>MAPVIEW_UNKNOWN_ERROR</key>
+	<string>Concur が現在の場所を特定できません。 ネットワーク接続をチェックし、位置情報サービスが有効で機内モードが無効になっていることを確認してください。</string>
+	<key>MEDIUM_RESOLUTION_IMAGE</key>
+	<string>中解像度 (640x640 ピクセル)</string>
+	<key>MLIST_FIELD_EDIT_NOT_SUPPORT</key>
+	<string>モバイルからのこの連結リスト フィールドの編集は、現時点ではサポートされていません。  代わりに CTE Web を使用してください。</string>
+	<key>MLIST_MRU_NOT_SUPPORT</key>
+	<string>このフィールドでは、前回使用したリスト項目は選択できません。代わりに CTE Web を使用してください。</string>
+	<key>MOBILE_DISABLED_MSG</key>
+	<string>貴社では、Concur for mobile が無効になっています。 管理者に問い合わせてください。</string>
+	<key>MODULE_DISABLED_ALERT_TEXT</key>
+	<string>貴社では、モバイル向けのこの機能を無効にしています。</string>
+	<key>MODULE_DISABLED_ALERT_TITLE</key>
+	<string>無効な機能</string>
+	<key>MSG_ADDITIONAL_RECEIPT_NOT_REQUIRED</key>
+	<string>追加の領収書は必須ではありません。</string>
+	<key>MSG_APPROVE_INVOICE_AREYOUSURE</key>
+	<string>この支払請求を承認してもよろしいですか?</string>
+	<key>MSG_NO_INVOICE_DETAIL</key>
+	<string>支払請求の詳細なし</string>
+	<key>MSG_NO_INVOICE_TO_APPROVE</key>
+	<string>承認する支払請求なし</string>
+	<key>MSG_RECEIPT_NOT_REQUIRED</key>
+	<string>領収書は必須ではありません。</string>
+	<key>MSG_RECEIPT_REQUIRED</key>
+	<string>備忘通知: 領収書が必須です。</string>
+	<key>MSG_REPORT_SUBMISSION</key>
+	<string>まだ領収書を提出していない場合は、Concur Web サイトにアクセスしてください。  領収書を提出済の場合、すぐにレポートを提出できます。</string>
+	<key>MSG_TRAIN_SELL_NOT_READY</key>
+	<string>鉄道予約の販売はまだ実装されていません。  鉄道の予約は今後のバージョンで対応する予定です。</string>
+	<key>MSG_WAIT_FETCHING_INFO</key>
+	<string>レポートを提出するための情報を取得中です。  しばらく待ってから、もう一度お試しください。</string>
+	<key>Mail Queued</key>
+	<string>メールを順番待ちに入れました</string>
+	<key>Mail Saved</key>
+	<string>メールを保存しました</string>
+	<key>Mail Unavailable</key>
+	<string>メールを利用できません</string>
+	<key>Manage Receipts</key>
+	<string>領収書の管理</string>
+	<key>Manage Violations</key>
+	<string>違反を管理</string>
+	<key>ManageYourAuthorizations</key>
+	<string>許可を管理</string>
+	<key>Manager approval</key>
+	<string>管理者承認</string>
+	<key>Map</key>
+	<string>マップ</string>
+	<key>Map Address</key>
+	<string>住所</string>
+	<key>Matching transactions combined into a single expense</key>
+	<string>一致する取引は単一の経費にまとめる</string>
+	<key>Meal Allowances</key>
+	<string>食事手当</string>
+	<key>Menu</key>
+	<string>メニュー</string>
+	<key>Message Center</key>
+	<string>メッセージ センター</string>
+	<key>Microphone Access Denied</key>
+	<string>マイクロフォンによるアクセスが拒否されました</string>
+	<key>Midnight</key>
+	<string>深夜</string>
+	<key>Mileage</key>
+	<string>走行距離</string>
+	<key>Mini</key>
+	<string>軽自動車</string>
+	<key>Mini Van</key>
+	<string>ミニ バン</string>
+	<key>Missing Arrival</key>
+	<string>到着時刻なし</string>
+	<key>Missing Arrival Message</key>
+	<string>到着空港が指定されていません。到着空港を選択してください。</string>
+	<key>Missing Departure</key>
+	<string>出発地なし</string>
+	<key>Missing Departure Message</key>
+	<string>出発空港が指定されていません。出発空港を選択してください。</string>
+	<key>Missing fields</key>
+	<string>フィールドの欠落</string>
+	<key>Missing required information for Itinerary Stop</key>
+	<string>旅程の経由地に必要な情報が不足しています</string>
+	<key>Mobile Disabled</key>
+	<string>モバイル無効</string>
+	<key>Mobile Expenses</key>
+	<string>モバイル経費</string>
+	<key>Mobile Log</key>
+	<string>モバイル ログ</string>
+	<key>Mobile Log: iPhone Crash</key>
+	<string>モバイル ログ: iPhone のクラッシュ</string>
+	<key>Mobile PIN title</key>
+	<string>モバイル PIN</string>
+	<key>Mobile Password (PIN)</key>
+	<string>モバイル パスワード (PIN)</string>
+	<key>Mobile Password (PIN) Reset Link Sent</key>
+	<string>モバイル パスワード (PIN) リセット リンクが送信されました</string>
+	<key>Mobile Password (PIN) Successfully Reset</key>
+	<string>モバイル パスワード (PIN) が正常にリセットされました</string>
+	<key>Monday_Short</key>
+	<string>(月)</string>
+	<key>Month of stay</key>
+	<string>滞在月</string>
+	<key>More Help</key>
+	<string>その他のヘルプ</string>
+	<key>Morning</key>
+	<string>午前</string>
+	<key>Most Preferred</key>
+	<string>高推奨</string>
+	<key>Most Recently Used</key>
+	<string>最近使用されたもの</string>
+	<key>Must log in online first</key>
+	<string>オフラインで認証を受けるには、最初にオンラインでログインする必要があります。</string>
+	<key>N Stops</key>
+	<string>%d 経由地</string>
+	<key>NCOOK</key>
+	<string>その他食事なし</string>
+	<key>NEED_TO_RESET_PASSWORD</key>
+	<string>パスワードを再設定した後、ログインしてください。問題がある場合は、管理者に問い合わせてください。</string>
+	<key>NEED_TO_RESET_PIN</key>
+	<string>PIN を再設定した後、ログインしてください。問題がある場合は、管理者に問い合わせてください。</string>
+	<key>NIGHTS_TOO_LARGE_ERR_MSG</key>
+	<string>90 日以下の経費を明細化</string>
+	<key>NON_REFUNDABLE_WARN_MSG</key>
+	<string>払戻不可タイプのチケットをお持ちのお客様は、出張をキャンセルして、発行日から 1 年以内に、これらのチケットを航空会社のシステムで任意の目的地で再利用できます。予約のキャンセルは、元の出発予定日までに行わないとチケットが無効になり、以後使用できなくなります。これらのルールは国内便のチケットのみに適用されます。これらのフライトを選択しますか?</string>
+	<key>NO_RATES_SOLD_OUT_USER_MESSAGE</key>
+	<string>このホテルには指定された日付に空室がありません。別のホテルを選択してください。</string>
+	<key>NO_RECEIPTS_NEG</key>
+	<string>領収書なし</string>
+	<key>NO_RECEIPT_FOUND</key>
+	<string>サーバー上に領収書が見つかりません。  既に領収書をレポートに添付している場合は、後でもう一度確認してください。</string>
+	<key>NO_RECEIPT_MSG</key>
+	<string>選択した経費の 1 つ以上に領収書の欠落があります。</string>
+	<key>NO_RECEIPT_NEG</key>
+	<string>領収書なし</string>
+	<key>NO_REPORTRECEIPT_NEG</key>
+	<string>経費に領収書の添付なし</string>
+	<key>NUMBER_OF_ROOMS</key>
+	<string>部屋数</string>
+	<key>NUMERIC_TOO_BIG_ERR_MSG</key>
+	<string>数値が過大</string>
+	<key>NUMERIC_VALIDATION_ERR_MSG</key>
+	<string>このフィールドには数値が必須です。</string>
+	<key>Navigator</key>
+	<string>ナビゲータ</string>
+	<key>Network Error</key>
+	<string>ネットワーク エラー</string>
+	<key>New Attendee</key>
+	<string>新規の同席者</string>
+	<key>New Mobile Password (PIN)</key>
+	<string>新しいモバイル パスワード (PIN)</string>
+	<key>New Password</key>
+	<string>新しいパスワード</string>
+	<key>New Report</key>
+	<string>新規レポート</string>
+	<key>Next</key>
+	<string>次へ</string>
+	<key>Nightly Lodging Expenses</key>
+	<string>宿泊</string>
+	<key>No</key>
+	<string>いいえ</string>
+	<key>No Active Reports</key>
+	<string>現在、アクティブ レポートはありません</string>
+	<key>No Active Trips</key>
+	<string>アクティブな出張なし</string>
+	<key>No Attendee Found</key>
+	<string>同席者が見つかりません</string>
+	<key>No Attendee Type Available</key>
+	<string>この経費タイプでは無効な同席者タイプを使用できないため、同席者を追加はできません。</string>
+	<key>No Attendees</key>
+	<string>同席者なし</string>
+	<key>No Card Charges</key>
+	<string>カード課金なし</string>
+	<key>No Comments</key>
+	<string>コメントなし</string>
+	<key>No Credit Card</key>
+	<string>クレジット カードなし</string>
+	<key>No Delivery Option</key>
+	<string>配達オプションなし</string>
+	<key>No Email in Profile</key>
+	<string>プロファイルにメール アドレスが存在しません。</string>
+	<key>No Email(s)</key>
+	<string>メールなし</string>
+	<key>No Expenses</key>
+	<string>経費なし</string>
+	<key>No Flights Found</key>
+	<string>フライトが見つかりません</string>
+	<key>No Itemization</key>
+	<string>明細なし</string>
+	<key>No Matching Cars</key>
+	<string>一致する車両なし</string>
+	<key>No Network Connection</key>
+	<string>ネットワークに接続していません</string>
+	<key>No Out of Pocket Expenses</key>
+	<string>経費なし</string>
+	<key>No Rates</key>
+	<string>レートなし</string>
+	<key>No Receipts</key>
+	<string>すべての領収書を 1 つの場所で管理し、フォト アルバムを整理しましょう。 領収書フォルダには、経費で使用された領収書が追跡記録されています。 領収書をフォト アルバムから領収書フォルダにコピーすることや、領収書の画像を新しく撮影し、ここに保存することもできます。</string>
+	<key>No Reports</key>
+	<string>レポートなし</string>
+	<key>No Results</key>
+	<string>結果なし</string>
+	<key>No Segments Selected</key>
+	<string>セグメントの選択なし</string>
+	<key>No Shows</key>
+	<string>欠席</string>
+	<key>No Shows Tip</key>
+	<string>%@ の数を入力してください。</string>
+	<key>No TripIt Trips</key>
+	<string>TripIt 出張の経費精算なし</string>
+	<key>No Trips</key>
+	<string>出張なし</string>
+	<key>No date specified</key>
+	<string>日付の指定なし</string>
+	<key>No email(s) were specified for the invite</key>
+	<string>招待のメールが指定されていません</string>
+	<key>No items to upload</key>
+	<string>アップロードする項目なし</string>
+	<key>No matching cars were found.  Please modify your search criteria and try again.</key>
+	<string>一致する車両が見つかりませんでした。  検索基準を修正してから、もう一度お試しください。</string>
+	<key>No new twitter message</key>
+	<string>新しいツイッター メッセージなし</string>
+	<key>No preference</key>
+	<string>希望なし</string>
+	<key>No trains were found</key>
+	<string>鉄道が見つかりません</string>
+	<key>No trip segments have been selected</key>
+	<string>出張セグメントが選択されていません。</string>
+	<key>Non-smoking</key>
+	<string>禁煙</string>
+	<key>None</key>
+	<string>なし</string>
+	<key>Nonstop</key>
+	<string>直行</string>
+	<key>Not Available</key>
+	<string>利用不能</string>
+	<key>Not Filed Reports</key>
+	<string>レポート</string>
+	<key>Not Linked</key>
+	<string>リンクなし</string>
+	<key>Not Preferred</key>
+	<string>非推奨</string>
+	<key>Not Provided</key>
+	<string>提供されなかった</string>
+	<key>Not Sure</key>
+	<string>不明</string>
+	<key>Now</key>
+	<string>現在</string>
+	<key>Number Of Nights</key>
+	<string>宿泊日数</string>
+	<key>Number of hotels</key>
+	<string>ホテル数</string>
+	<key>Number of schedules found: token</key>
+	<string>見つかったスケジュールの数: %d</string>
+	<key>OFFLINE_MSG</key>
+	<string>オフラインです。  オンラインになるまでレポートの提出はお待ちください。</string>
+	<key>OK</key>
+	<string>OK</string>
+	<key>OR</key>
+	<string>OR</string>
+	<key>OUT_OF_POCKET_FORM</key>
+	<string>経費</string>
+	<key>OUT_OF_POCKET_FORM_VIEW_CONFIRM_SPLIT_SMART_EXPENSE_MESSAGE</key>
+	<string>カード課金をモバイル入力項目から分離してもよろしいですか?</string>
+	<key>OUT_OF_POCKET_FORM_VIEW_CONFIRM_SPLIT_SMART_EXPENSE_TITLE</key>
+	<string>確認してください</string>
+	<key>OUT_OF_POCKET_FORM_VIEW_SPLIT_SMART_EXPENSE_BUTTON_TITLE</key>
+	<string>スマート経費の分割</string>
+	<key>OUT_OF_POCKET_LIST</key>
+	<string>経費</string>
+	<key>Off</key>
+	<string>オフ</string>
+	<key>Off Airport</key>
+	<string>空港以外</string>
+	<key>Offers</key>
+	<string>割引価格</string>
+	<key>Office</key>
+	<string>オフィス</string>
+	<key>Office Locations</key>
+	<string>オフィスの場所</string>
+	<key>Offline</key>
+	<string>オフライン</string>
+	<key>Offline limits features</key>
+	<string>デバイスは現在オフラインです。  一部の機能が利用できなくなります。</string>
+	<key>Ok let's start over. What Hotel can I find for you</key>
+	<string>最初からやり直してください。どのホテルを検索しますか</string>
+	<key>Old Trips</key>
+	<string>過去</string>
+	<key>On</key>
+	<string>オン</string>
+	<key>One Way</key>
+	<string>片道</string>
+	<key>Open the email from this device to reset your mobile password (PIN) and sign in.</key>
+	<string>このデバイスからメールを開き、モバイル パスワード (PIN) をリセットしてサインインしてください。</string>
+	<key>Open the email from this device to reset your password and sign in.</key>
+	<string>このデバイスからメールを開き、パスワードをリセットしてサインインしてください。</string>
+	<key>Operated By</key>
+	<string>運航航空会社</string>
+	<key>Operated by</key>
+	<string>運航航空会社</string>
+	<key>Operation Not Supported Offline</key>
+	<string>この操作は、オフライン モードではサポートされていません。ネットワーク接続が利用可能なときにもう一度お試しください。</string>
+	<key>Or Sign In with...</key>
+	<string>またはサインイン...</string>
+	<key>Or Sign Up with...</key>
+	<string>またはサインアップ...</string>
+	<key>Organization</key>
+	<string>組織</string>
+	<key>Original receipt required</key>
+	<string>領収書の原本が必須</string>
+	<key>Other</key>
+	<string>社会およびその他</string>
+	<key>Other Allowances</key>
+	<string>その他の手当</string>
+	<key>Other Reports</key>
+	<string>その他のレポート</string>
+	<key>Other Room Tax 1</key>
+	<string>その他の宿泊税 1</string>
+	<key>Other Room Tax 2</key>
+	<string>その他の宿泊税 2</string>
+	<key>Out of Pocket Entry has been Saved</key>
+	<string>経費が保存されました</string>
+	<key>Outbound</key>
+	<string>行き</string>
+	<key>P2B_AIR_BOOKING_HEADER_POINTS_DISABLED</key>
+	<string>出張の購入がよりスマートになります。小売基準価格未満で予約すると、会社のお金を節約できます。</string>
+	<key>P2B_AIR_BOOKING_HEADER_POINTS_ENABLED</key>
+	<string>小売基準価格未満のオプションを選択すると、出張ポイントが獲得できます。出張経費が精算されると、将来の特典に使用できる合計出張ポイントに、獲得した出張ポイントが反映されます。</string>
+	<key>PDF Receipt</key>
+	<string>PDF 領収書</string>
+	<key>PENDING_REQUIRED_TRAVEL_CUSTOM_FIELDS</key>
+	<string>処理前に、すべての必須予約情報に記入してください</string>
+	<key>PER_VARIABLE_NO_RATES</key>
+	<string>入力された日付に対して料金が定義されていません。</string>
+	<key>PIN</key>
+	<string>PIN</string>
+	<key>PIN Tip</key>
+	<string>資格情報が不明な場合は、Concur Web アカウントにログインして、[プロファイル] &gt; [Mobile の登録] に移動します。Concur Breeze のユーザーは、[自分のアカウント] &gt; [モバイル PIN] に移動してください。詳細については法人管理者に問い合わせてください。</string>
+	<key>PIN has been reset successfully</key>
+	<string>PIN は正常にリセットされました</string>
+	<key>PIN_EXPIRED</key>
+	<string>PIN は有効期限切れです。PIN を登録した後、再度ログインしてください。</string>
+	<key>PIN_MOBILE_NOTES</key>
+	<string>この PIN は Concur のモバイル アプリ専用です。</string>
+	<key>PLEASE_SELECT_VALUE</key>
+	<string>リストからオプションを選択してください。</string>
+	<key>PRICE_TO_BEAT_AIR_RESULTS_HEADER</key>
+	<string>小売基準価格未満のフライトを予約すると、後で使える出張ポイントが獲得できます。</string>
+	<key>PRICE_TO_BEAT_AIR_SEARCH_HEADER</key>
+	<string>出張ポイントを獲得して経費を削減しましょう。航空機の予約時に、以下の詳細なフライト検索情報を入力して小売基準価格を明らかにします。</string>
+	<key>PRICE_TO_BEAT_DISABLED_AIR_RESULTS_HEADER</key>
+	<string>小売基準価格未満のフライトを予約すると、会社のお金を節約できます。</string>
+	<key>PRICE_TO_BEAT_DISABLED_AIR_SEARCH_HEADER</key>
+	<string>出張の購入がよりスマートになります。航空機の予約時に、以下の詳細なフライト検索情報を入力して小売基準価格を明らかにします。</string>
+	<key>PRICE_TO_BEAT_DISABLED_HOTEL_RESULTS_HEADER</key>
+	<string>小売基準価格未満の部屋を予約すると、会社のお金を節約できます。</string>
+	<key>PRICE_TO_BEAT_DISABLED_HOTEL_SEARCH_HEADER</key>
+	<string>出張の購入がよりスマートになります。部屋の予約時に、以下の詳細なホテル検索情報を入力して小売基準価格を明らかにします。</string>
+	<key>PRICE_TO_BEAT_HOTEL_RESULTS_HEADER</key>
+	<string>小売基準価格未満の部屋を予約すると、後で使える出張ポイントが獲得できます。</string>
+	<key>PRICE_TO_BEAT_HOTEL_SEARCH_HEADER</key>
+	<string>出張ポイントを獲得して経費を削減しましょう。部屋の予約時に、以下の詳細なホテル検索情報を入力して小売基準価格を明らかにします。 </string>
+	<key>PROCEED_TO_ADD_MSG</key>
+	<string>続行してこれらをレポートに追加できますが、Web サイトから領収書を添付する必要があります。</string>
+	<key>PWD</key>
+	<string>パスワード</string>
+	<key>PWD_LOGIN</key>
+	<string>登録</string>
+	<key>Paid Reports</key>
+	<string>支払済のレポート</string>
+	<key>Passenger</key>
+	<string>乗客</string>
+	<key>PassengerCount</key>
+	<string>乗客数</string>
+	<key>Passengers</key>
+	<string>乗客</string>
+	<key>Password</key>
+	<string>パスワード</string>
+	<key>Password Reset Link Sent</key>
+	<string>パスワード リセット リンクが送信されました</string>
+	<key>Password Successfully Reset</key>
+	<string>パスワードが正常にリセットされました</string>
+	<key>Passwords Don't Match</key>
+	<string>パスワードが不一致</string>
+	<key>Personal Car Mileage</key>
+	<string>私有車の走行距離</string>
+	<key>PersonalCardCount_0</key>
+	<string>%@ からの未使用カード課金はありません</string>
+	<key>PersonalCardCount_1</key>
+	<string>%@ からの未使用カード課金が 1 件あります</string>
+	<key>PersonalCardCount_2</key>
+	<string>%@ からの未使用カード課金が %d 件あります</string>
+	<key>Phone</key>
+	<string>電話</string>
+	<key>Photo Album</key>
+	<string>フォト アルバムから添付</string>
+	<key>Pick-up</key>
+	<string>乗車</string>
+	<key>Pick-up Date</key>
+	<string>乗車日時</string>
+	<key>Pick-up Time</key>
+	<string>乗車時刻</string>
+	<key>Pickup</key>
+	<string>ピックアップ</string>
+	<key>Pickup Location</key>
+	<string>乗車場所</string>
+	<key>Please Confirm</key>
+	<string>確認してください</string>
+	<key>Please Enter Your Email Address</key>
+	<string>職場のメール アドレスを入力してください</string>
+	<key>Please Select To View</key>
+	<string>表示対象を選択してください</string>
+	<key>Please Specify Program</key>
+	<string>プログラムを指定してください</string>
+	<key>Please Wait</key>
+	<string>しばらくお待ちください</string>
+	<key>Please address policy violations</key>
+	<string>ポリシー違反に対応してください</string>
+	<key>Please check your connection and retry later.</key>
+	<string>接続を確認し、後で再試行してください。</string>
+	<key>Please enter a justification for booking this car.</key>
+	<string>この車両を予約する説明を入力してください。</string>
+	<key>Please enter a justification for this booking.</key>
+	<string>この予約の説明を入力してください。</string>
+	<key>Please enter and confirm the PIN</key>
+	<string>PIN を入力し、確認してください</string>
+	<key>Please enter in your distance</key>
+	<string>距離で入力してください</string>
+	<key>Please enter values for required fields</key>
+	<string>保存する前に、赤色で示された必須フィールドに値を入力してください。</string>
+	<key>Please fill in the missing required fields before saving the entry.</key>
+	<string>エントリを保存する前に、未入力の必須フィールドに入力してください。</string>
+	<key>Please follow the instructions in the email</key>
+	<string>アカウントを設定するときは、TripIt から受信したメールに記載されている手順に従ってください。</string>
+	<key>Please log in to SmartExpense and then link your accounts together.</key>
+	<string>スマート経費にログインして、複数の口座をリンクしてください。</string>
+	<key>Please log in to SmartExpense using the same account already linked to TripIt.</key>
+	<string>スマート経費にログインするには、TripIt にリンク済のアカウントと同じものを使用してください。</string>
+	<key>Please select a destination location</key>
+	<string>目的地を選択してください</string>
+	<key>Please select a report or create a new report first</key>
+	<string>レポートを選択するか、最初に新規レポートを作成してください。</string>
+	<key>Please select a starting location</key>
+	<string>出発地を選択してください。</string>
+	<key>Please specify</key>
+	<string>指定してください</string>
+	<key>Please specify a location.</key>
+	<string>場所を指定してください。</string>
+	<key>Please try again and use the link within 24 hours of receipt.</key>
+	<string>受領後 24 時間以内にもう一度お試しになり、リンクを使用してください。</string>
+	<key>Please type a description into this email message describing what you were doing when the application crashed.  For example: I was uploading an expense receipt.</key>
+	<string>アプリケーションがクラッシュしたときの操作内容の説明をこのメール メッセージに入力してください。  以下に例を挙げます。 経費領収書をアップロードしていました。</string>
+	<key>Please verify your email</key>
+	<string>メールを確認してください</string>
+	<key>Please verify your email address</key>
+	<string>メール アドレスを確認してください</string>
+	<key>Please wait for your verification email to continue the registration process.</key>
+	<string>照合メールを待ち、登録プロセスを続行してください。</string>
+	<key>Please wait until online to edit field</key>
+	<string>オフラインではこれらのフィールドを編集できません。</string>
+	<key>Please wait until you are online to login</key>
+	<string>ログインできるまでお待ちください。</string>
+	<key>Points or Approval</key>
+	<string>ポイントまたは承認</string>
+	<key>Popular Cards</key>
+	<string>一般的なカード</string>
+	<key>Post Trip</key>
+	<string>出張を計上</string>
+	<key>Preferred</key>
+	<string>推奨</string>
+	<key>Preferred Vendors</key>
+	<string>推奨納入業者</string>
+	<key>Premium</key>
+	<string>プレミアム車</string>
+	<key>Premium Economy</key>
+	<string>プレミアム エコノミー</string>
+	<key>Prev</key>
+	<string>前へ</string>
+	<key>Preview</key>
+	<string>プレビュー</string>
+	<key>Previous</key>
+	<string>前へ</string>
+	<key>Price</key>
+	<string>価格</string>
+	<key>Price to Beat</key>
+	<string>小売基準価格</string>
+	<key>Print</key>
+	<string>印刷</string>
+	<key>Proceed to Sign In</key>
+	<string>サインインに進む</string>
+	<key>Property</key>
+	<string>プロパティ</string>
+	<key>Provided</key>
+	<string>提供済</string>
+	<key>Pull to Refresh</key>
+	<string>取得して更新</string>
+	<key>Purchase Requests</key>
+	<string>発注申請</string>
+	<key>Quick Expense</key>
+	<string>クイック経費</string>
+	<key>Quick Search</key>
+	<string>クイック検索</string>
+	<key>Quick Tips</key>
+	<string>クイック ヒント</string>
+	<key>RECEIPT</key>
+	<string>領収書</string>
+	<key>RECEIPT_CELL_TITLE</key>
+	<string>領収書</string>
+	<key>RECEIPT_DETAIL_NO_DATA_INSTRUCTION</key>
+	<string>または、デジタル領収書を %@ 口座から receipts@smartexpense.com に転送</string>
+	<key>RECEIPT_IMG_UPLOADED</key>
+	<string>領収書イメージがアップロードされました</string>
+	<key>RECEIPT_IMG_UPLOADING</key>
+	<string>領収書イメージのアップロード</string>
+	<key>RECEIPT_MANAGER</key>
+	<string>領収書フォルダ</string>
+	<key>RECEIPT_MANAGER_IMAGES</key>
+	<string>領収書フォルダ</string>
+	<key>RECEIPT_MIGRATE_MSG</key>
+	<string>ローカルのConcur Mobile Documents フォルダに割り当てていない %d の領収書イメージを保存しました。割り当てていない領収書イメージを iPhone のフォト アルバムにコピーしてもよろしいですか?</string>
+	<key>RECEIPT_MIGRATION_STATUS_MSG</key>
+	<string>%d 件のうち %d 件の領収書をフォト アルバムにコピーしました</string>
+	<key>RECEIPT_MIGRATION_WAIT_MSG</key>
+	<string>イメージ コピーの実行中です。この時点でアプリケーションを終了または中止すると、イメージが失われる可能性があります。</string>
+	<key>RECEIPT_NOT_ON_SERVER</key>
+	<string>サーバー上のこの経費に領収書が添付されていることが示されていますが、領収書は領収書マネージャーに存在していません。</string>
+	<key>RECEIPT_STORE_HELP_TEXT</key>
+	<string>領収書を領収書ストアにアップロードします。次にレポートか入力を開いて領収書を添付します。</string>
+	<key>RECEIPT_STORE_NO_DATA_INSTRUCTION</key>
+	<string>デジタル領収書を %@ 口座から receipts@smartexpense.com に転送もできます</string>
+	<key>RECEIPT_VIEWER</key>
+	<string>領収書ビューワー</string>
+	<key>REGISTER</key>
+	<string>PIN を入力</string>
+	<key>REGISTERED_EMAIL</key>
+	<string>業務で使うメール</string>
+	<key>REGISTER_MSG</key>
+	<string>ヘルプを利用するには、Web バージョンの Concur にログインし、[プロファイル] &gt; [Mobile の登録] に移動します。</string>
+	<key>REGISTER_PINS_DIFF_ERR</key>
+	<string>PIN が異なります。PIN を再入力してください。</string>
+	<key>REPORTS</key>
+	<string>レポート リスト</string>
+	<key>REPORTS_TO_SUBMIT</key>
+	<string>%d 件の提出するレポート</string>
+	<key>REPORT_DETAIL</key>
+	<string>レポート</string>
+	<key>REPORT_DETAIL_RECEIPTS</key>
+	<string>領収書</string>
+	<key>REPORT_NAME_TIP</key>
+	<string>新しいレポート名を入力</string>
+	<key>REPORT_REQ_FIELDS</key>
+	<string>レポートを保存する前に、すべての必須フィールドに入力し、フォーム上のすべてのエラーを修正してください。</string>
+	<key>REPORT_TA_ITINERARY</key>
+	<string>出張手当</string>
+	<key>REPORT_TA_ITINERARY_ADD</key>
+	<string>手当経費</string>
+	<key>RESET_PASSWORD_FAILED</key>
+	<string>パスワードを再設定できませんでした</string>
+	<key>RESET_PASSWORD_SUCCEEDED</key>
+	<string>パスワードの再設定手順を示すメールがまもなく届きます。</string>
+	<key>RESET_PASSWORD_USER_NOT_EXIST</key>
+	<string>ユーザーはシステム内に存在しません。必ずサインアップ プロセスを完了してから、[パスワード リンクをリセット] をクリックしてください。</string>
+	<key>ROLE_DISABLED_ALERT_TITLE</key>
+	<string>無効な機能</string>
+	<key>ROLE_DISABLED_TEXT</key>
+	<string>この機能は、貴社またはこのロールではご利用いただけません。</string>
+	<key>RPT_NO_ENTRY_INSTRUCTION_1</key>
+	<string>この経費精算レポートには経費がありません。レポートを提出するには、1 つ以上の経費を作成またはインポートする必要があります。 </string>
+	<key>RPT_NO_ENTRY_INSTRUCTION_2</key>
+	<string>経費を作成またはインポートするには、この下の [+] アイコンをクリックします。</string>
+	<key>RPT_QUIT_CONFIRM_MSG</key>
+	<string>このレポートを先に保存しますか?</string>
+	<key>RPT_SAVE_CONFIRM_MSG</key>
+	<string>続行した場合、変更が失われる可能性があります。これらの変更を保存しますか?</string>
+	<key>Rail</key>
+	<string>鉄道</string>
+	<key>Rail Rule Violation</key>
+	<string>鉄道ルール違反</string>
+	<key>Rail cancelled from mobile device</key>
+	<string>モバイル デバイスからキャンセルされた鉄道</string>
+	<key>Rail violation justification is missing</key>
+	<string>この鉄道の予約が会社のポリシー違反にならないように、赤色で表示されたフィールドに理由を入力する必要があります。</string>
+	<key>Rail violation reason and justification are missing</key>
+	<string>この鉄道の予約が会社のポリシー違反にならないように、赤で表示されたフィールドに理由および妥当性を入力する必要があります。</string>
+	<key>Rail violation reason is missing</key>
+	<string>この鉄道の予約が会社のポリシー違反にならないように、赤で表示されたフィールドに理由を入力する必要があります。</string>
+	<key>Rail_subline</key>
+	<string>列車と車両を予約</string>
+	<key>Rate It!</key>
+	<string>評価してください。</string>
+	<key>Rate Location:</key>
+	<string>レート地:</string>
+	<key>Rating</key>
+	<string>評価</string>
+	<key>Re-enter Password</key>
+	<string>パスワードを再入力</string>
+	<key>Recalculate Allowances</key>
+	<string>手当を再計算</string>
+	<key>Recall</key>
+	<string>撤回</string>
+	<key>Recall Failed</key>
+	<string>撤回できませんでした</string>
+	<key>Receipt</key>
+	<string>領収書</string>
+	<key>Receipt Capture</key>
+	<string>領収書取り込み</string>
+	<key>Receipt Folder</key>
+	<string>領収書フォルダ</string>
+	<key>Receipt Images</key>
+	<string>領収書のイメージ</string>
+	<key>Receipt Queued</key>
+	<string>領収書を順番待ちに入れました</string>
+	<key>Receipt Store</key>
+	<string>領収書ストア</string>
+	<key>Receipt image required</key>
+	<string>領収書イメージが必須</string>
+	<key>Receipt upload complete</key>
+	<string>領収書のアップロードが完了しました</string>
+	<key>Receipt upload failed</key>
+	<string>領収書のアップロードに失敗しました</string>
+	<key>Receipt uploaded</key>
+	<string>アップロードされた領収書</string>
+	<key>ReceiptUploadFailMsg</key>
+	<string>現在、領収書を保存できません。後でもう一度お試しください。</string>
+	<key>Receipts</key>
+	<string>領収書</string>
+	<key>Receipts cannot be added offline</key>
+	<string>オフラインでは領収書を追加できません。</string>
+	<key>Recommendation</key>
+	<string>提案</string>
+	<key>Recommended</key>
+	<string>提案済</string>
+	<key>Recurring Charges (each night)</key>
+	<string>反復料金 (1 泊あたり)</string>
+	<key>Refresh Data</key>
+	<string>データの更新</string>
+	<key>Refresh Data Offline</key>
+	<string>オフラインの間はデータを更新できません。後でもう一度試してください。</string>
+	<key>Refresh Trip</key>
+	<string>出張の更新</string>
+	<key>Refreshing</key>
+	<string>更新</string>
+	<key>Refreshing Data</key>
+	<string>データの更新</string>
+	<key>Refreshing View</key>
+	<string>表示の更新</string>
+	<key>Refundable Only</key>
+	<string>払戻可能のみ</string>
+	<key>Regional</key>
+	<string>地域</string>
+	<key>Register a credit card</key>
+	<string>クレジット カードを登録</string>
+	<key>Reject</key>
+	<string>却下</string>
+	<key>Rejected</key>
+	<string>却下</string>
+	<key>Rejecting Trip</key>
+	<string>出張の却下</string>
+	<key>Remaining:</key>
+	<string>残り:</string>
+	<key>Removed Link to Dropbox</key>
+	<string>Dropbox へのリンクが削除されました</string>
+	<key>Removing entry</key>
+	<string>入力の削除</string>
+	<key>Rent a car</key>
+	<string>車両の予約</string>
+	<key>Replace</key>
+	<string>置換</string>
+	<key>Report</key>
+	<string>レポート</string>
+	<key>Report Approvals</key>
+	<string>レポートの承認</string>
+	<key>Report Comments</key>
+	<string>レポート コメント</string>
+	<key>Report Entry</key>
+	<string>レポート入力</string>
+	<key>Report Exceptions</key>
+	<string>レポートの規定違反</string>
+	<key>Report Header</key>
+	<string>レポート ヘッダー</string>
+	<key>Report Name</key>
+	<string>レポート名</string>
+	<key>Report Not Ready</key>
+	<string>レポートの準備ができていません</string>
+	<key>Report Summary</key>
+	<string>レポートのサマリー</string>
+	<key>Report is open</key>
+	<string>レポートが開いています</string>
+	<key>Reports</key>
+	<string>レポート</string>
+	<key>Reports List</key>
+	<string>レポート リスト</string>
+	<key>Reports cannot be approved offline</key>
+	<string>オフラインではレポートを承認できません。</string>
+	<key>ReportsToApproveRow_0</key>
+	<string>承認するレポートはありません</string>
+	<key>ReportsToApproveRow_1</key>
+	<string>承認するレポートが 1 件あります。</string>
+	<key>ReportsToApproveRow_2</key>
+	<string>承認するレポートが %d 件あります</string>
+	<key>Request</key>
+	<string>申請</string>
+	<key>Requested</key>
+	<string>申請額</string>
+	<key>Requests</key>
+	<string>申請</string>
+	<key>Required Fields Missing</key>
+	<string>必須フィールドに入力されていません</string>
+	<key>Reservation Date</key>
+	<string>予約データ</string>
+	<key>Reservation Not Allowed</key>
+	<string>予約不可</string>
+	<key>Reservation Status</key>
+	<string>予約ステータス</string>
+	<key>Reservation Time</key>
+	<string>予約時刻</string>
+	<key>Reserve</key>
+	<string>予約</string>
+	<key>Reserve Train</key>
+	<string>鉄道の予約</string>
+	<key>Reserving Car</key>
+	<string>車両の予約</string>
+	<key>Reserving Flights</key>
+	<string>フライトを予約中</string>
+	<key>Reserving Hotel Room</key>
+	<string>部屋の予約</string>
+	<key>Reserving Train</key>
+	<string>鉄道を予約中</string>
+	<key>Reset</key>
+	<string>リセット</string>
+	<key>Reset Concur Password</key>
+	<string>Concur パスワードのリセット</string>
+	<key>Reset Mobile Password (PIN)</key>
+	<string>モバイル パスワード (PIN) をリセット</string>
+	<key>Reset PIN</key>
+	<string>PIN を再設定</string>
+	<key>Reset Password</key>
+	<string>パスワードをリセット</string>
+	<key>Reset to factory defaults</key>
+	<string>出荷時の既定値に戻す</string>
+	<key>Reset your password</key>
+	<string>パスワードをリセット</string>
+	<key>Resetting the PIN</key>
+	<string>PIN をリセット中</string>
+	<key>Results</key>
+	<string>結果</string>
+	<key>Results Summary</key>
+	<string>結果のサマリー</string>
+	<key>Retake</key>
+	<string>もう一度撮る</string>
+	<key>Return</key>
+	<string>帰り</string>
+	<key>Return Date</key>
+	<string>帰着日</string>
+	<key>Return Date must be</key>
+	<string>帰着日</string>
+	<key>Return Date must be Message</key>
+	<string>帰着日は出発日より後にする必要があります。</string>
+	<key>Return Time</key>
+	<string>帰着時刻</string>
+	<key>Returning</key>
+	<string>帰り</string>
+	<key>Returning: token token</key>
+	<string>返却: %@ %@</string>
+	<key>Review Approver Instruction</key>
+	<string>承認者を確認してレポートを提出してください</string>
+	<key>Room Rate</key>
+	<string>室料</string>
+	<key>Room Tax</key>
+	<string>宿泊税</string>
+	<key>Rooms</key>
+	<string>部屋数</string>
+	<key>Round Trip</key>
+	<string>往復</string>
+	<key>Rule Messages</key>
+	<string>ルール メッセージ</string>
+	<key>SAFETY_CHECK_IN_HELP</key>
+	<string>現在の場所でチェックイン</string>
+	<key>SAVE_REPORT_RECEIPT_FAILURE</key>
+	<string>領収書を添付できません</string>
+	<key>SEARCH_LOCN</key>
+	<string>場所の検索</string>
+	<key>SEC_TITLE_COMMENTS</key>
+	<string>コメント</string>
+	<key>SEC_TITLE_INVOICE_HEADER</key>
+	<string>支払請求のヘッダー</string>
+	<key>SEE ALL token RESULTS</key>
+	<string>すべての%@結果を表示</string>
+	<key>SEE ALL token RESULTS (starting at token)</key>
+	<string>すべての%d結果を表示 (%@から開始)</string>
+	<key>SELECT_HELP_TOPIC</key>
+	<string>またはヘルプ トピックを選択</string>
+	<key>SELECT_REPORT</key>
+	<string>レポートの選択</string>
+	<key>SELECT_REPORT_HELP</key>
+	<string>以下のリストから経費を追加するレポートを選択してください。または、上の [+] ボタンを押して新しいレポートに追加してください。</string>
+	<key>SETTINGS_VIEW</key>
+	<string>設定</string>
+	<key>SIGN_IN_EMAIL</key>
+	<string>勤務先メール アドレスを入力しサインイン情報を受信します。</string>
+	<key>SIGN_IN_INSTRUCT_MSG</key>
+	<string>メール アドレスがシステムに存在する場合は、メールが届きます。このデバイスからメールを開き Concur アプリにアクセスします。</string>
+	<key>SLV_AT</key>
+	<string>—</string>
+	<key>SLV_BOOK_A_TAXI</key>
+	<string>タクシーの予約</string>
+	<key>SLV_CLICK_ON</key>
+	<string>このセルをクリックして予約</string>
+	<key>SLV_CONFIRMATION</key>
+	<string>確認</string>
+	<key>SLV_DROP_OFF</key>
+	<string>%@ を %@ に降車</string>
+	<key>SLV_FROM</key>
+	<string>開始時刻</string>
+	<key>SLV_GATE</key>
+	<string>ゲート</string>
+	<key>SLV_GOES_FROM</key>
+	<string>%@ から %@ に進む</string>
+	<key>SLV_NUM_BOOKINGS</key>
+	<string>この出張で %d 件の予約</string>
+	<key>SLV_PICKUP_AT</key>
+	<string>%@ に乗車</string>
+	<key>SLV_PICKUP_BY</key>
+	<string>%@ までに乗車</string>
+	<key>SLV_PLATFORM_WAGON</key>
+	<string>プラットフォーム %@ Wagon #%@</string>
+	<key>SLV_TAXI_MAGIC</key>
+	<string>Taxi Magic によるタクシー</string>
+	<key>SLV_TAXI_MAGIC2</key>
+	<string>Taxi Magic アプリケーションにリダイレクト</string>
+	<key>SLV_TERMINAL</key>
+	<string>ターミナル</string>
+	<key>SLV_TO</key>
+	<string>—</string>
+	<key>SLV_TOTAL_SEGS</key>
+	<string>その出張の合計セグメント数 %d</string>
+	<key>SLV_TRIP_LOCATOR</key>
+	<string>出張検索機能: %@</string>
+	<key>SOUTHWEST</key>
+	<string>Southwest の予約</string>
+	<key>SPLASH</key>
+	<string>Splash</string>
+	<key>SPOUSE</key>
+	<string>配偶者</string>
+	<key>SSO_FETCHING_DATA</key>
+	<string>会社のサインオン情報を取得しています...</string>
+	<key>SSO_LOGIN_REQUIRED_MSG</key>
+	<string>会社コード (SSO) ログインが必須です。次の画面で会社コードを入力して処理を続行</string>
+	<key>SU Password Expired Instruction</key>
+	<string>Concur Web サイトにログインしてパスワードを変更してください。</string>
+	<key>SUBMIT_BUTTON</key>
+	<string>提出</string>
+	<key>SUBMIT_ERROR_CCT_AUTH</key>
+	<string>Amex の保留中取引が提出前に計上されるまでお待ちください。</string>
+	<key>SUBMIT_ERROR_NO_ENTRY_MSG</key>
+	<string>経費精算レポートは経費を含んでいません。  レポートを提出するには、1 つ以上の経費を作成する必要があります。</string>
+	<key>SUBMIT_ERROR_RPT_XCT_LEVEL_MSG</key>
+	<string>赤色フラグの規定違反がすべて解決するまで、経費精算レポートを提出できません。</string>
+	<key>SUBMIT_ERROR_UNDEF_MSG</key>
+	<string>経費精算レポートは、「未定義」の経費タイプがあります。経費タイプを選択して、レポートを提出します。</string>
+	<key>SUBMIT_HOW_TO_RECEIPT_MSG</key>
+	<string>会社のポリシーによると、下記の経費に関する領収書を提出する必要があります。  領収書をFAXで送信するか、またはスキャンしたイメージを添付することができます。  領収書を既に受け取っている場合は、今レポートを提出できます。</string>
+	<key>SUBMIT_REQUIRE_PAPER_RECEIPT</key>
+	<string>会社のポリシーによると、下記の経費に関する領収書を提出する必要があります。領収書はスキャンしたイメージを個別の経費またはレポートに添付できますが、次いで原本も提出する必要があります。領収書を既に提出している場合は、今すぐレポートを提出できます。</string>
+	<key>SU_ADD_YODLEE_CARD_INSTRUCTION</key>
+	<string>クレジット カード口座のログイン情報を入力してください。スマート経費では、この情報を暗号化して安全に使用し、カード取引をダウンロードします。(ご安心ください。読取専用です。)</string>
+	<key>SU_APPROVER_AB_NO_EMAIL</key>
+	<string>選択した連絡先には、レポート提出先のメール アドレスがありません。</string>
+	<key>SU_CHECK_TEMP_PWD</key>
+	<string>スマート経費の仮パスワードがないかメールをチェックしてください。</string>
+	<key>SU_SIGN_UP_CHECK_EMAIL</key>
+	<string>当社ではお客様のメール アドレスを照合する必要があります。メールを調べて当社からのメッセージを確認し、照合リンクをクリックしてください。</string>
+	<key>SYSEMP</key>
+	<string>この従業員</string>
+	<key>Safety Check In</key>
+	<string>場所でのチェックイン</string>
+	<key>Saturday_Short</key>
+	<string>(土)</string>
+	<key>Save</key>
+	<string>保存</string>
+	<key>Save &amp; Generate Allowances</key>
+	<string>手当の保存および生成&amp;</string>
+	<key>Save Itemizations</key>
+	<string>明細の保存</string>
+	<key>Save entry receipt failed</key>
+	<string>入力する領収書を保存できませんでした</string>
+	<key>Saved</key>
+	<string>保存済</string>
+	<key>Saving Expense</key>
+	<string>経費の保存</string>
+	<key>Saving Report</key>
+	<string>レポートの保存</string>
+	<key>Saving offline receipt</key>
+	<string>オフライン領収書の保存</string>
+	<key>Scheduled Arrival</key>
+	<string>到着予定</string>
+	<key>Scheduled Departure</key>
+	<string>スケジュール済の出発</string>
+	<key>Scheduled Equipment</key>
+	<string>スケジュール済機器</string>
+	<key>Scheduled On-time</key>
+	<string>定刻にスケジュール済</string>
+	<key>Scheduled Terminal</key>
+	<string>スケジュール済ターミナル</string>
+	<key>Search</key>
+	<string>検索</string>
+	<key>Search Again</key>
+	<string>もう一度検索</string>
+	<key>Search Approver</key>
+	<string>承認者の検索</string>
+	<key>Search Approver Instruction</key>
+	<string>承認者を特定してレポートを提出してください</string>
+	<key>Search Failed</key>
+	<string>検索に失敗しました</string>
+	<key>Search Results</key>
+	<string>検索結果</string>
+	<key>Search and book flights</key>
+	<string>フライト、ホテル、車両などを検索して予約</string>
+	<key>Search for Attendee</key>
+	<string>同席者の検索</string>
+	<key>Search for Cars</key>
+	<string>車両の検索</string>
+	<key>Search for an office location</key>
+	<string>オフィスの場所を検索</string>
+	<key>Search schedules</key>
+	<string>スケジュールの検索</string>
+	<key>Searching for Hotels near you</key>
+	<string>周辺でホテルを検索</string>
+	<key>Searching for cars</key>
+	<string>車両の検索</string>
+	<key>Searching for cars at</key>
+	<string>車両の検索場所</string>
+	<key>Searching for flights</key>
+	<string>フライトの検索</string>
+	<key>Searching for hotels</key>
+	<string>ホテルを検索中</string>
+	<key>Searching for trains</key>
+	<string>鉄道の検索</string>
+	<key>Seat: %@</key>
+	<string>座席: %@</string>
+	<key>Seats</key>
+	<string>座席</string>
+	<key>See All</key>
+	<string>すべてを表示</string>
+	<key>See All (token results)</key>
+	<string>すべてを表示 (%d の結果)</string>
+	<key>See Alternative Flights</key>
+	<string>代替フライトの参照</string>
+	<key>See what you can do with Concur</key>
+	<string>Concur でできる作業を見る</string>
+	<key>Select</key>
+	<string>選択</string>
+	<key>Select All</key>
+	<string>すべて選択</string>
+	<key>Select Attendee Type</key>
+	<string>同席者タイプの選択</string>
+	<key>Select Attendee to Add</key>
+	<string>追加する同席者を選択</string>
+	<key>Select Car Type</key>
+	<string>車タイプの選択</string>
+	<key>Select Card</key>
+	<string>カードを選択</string>
+	<key>Select Email Address</key>
+	<string>メール アドレスを選択</string>
+	<key>Select Preference</key>
+	<string>優先設定を選択</string>
+	<key>Select Program</key>
+	<string>プログラムを選択</string>
+	<key>Select Reason</key>
+	<string>理由の選択</string>
+	<key>Select Train</key>
+	<string>鉄道の選択</string>
+	<key>Select an office location</key>
+	<string>オフィスの場所を選択</string>
+	<key>Select delivery option</key>
+	<string>配達オプションの選択</string>
+	<key>Select seat class below</key>
+	<string>下のリストから座席クラスを選択</string>
+	<key>Send Again</key>
+	<string>再度送信</string>
+	<key>Send Failed</key>
+	<string>送信に失敗しました</string>
+	<key>Send Invite</key>
+	<string>招待状を送信</string>
+	<key>Send Invite To</key>
+	<string>招待状送信先</string>
+	<key>Send Log</key>
+	<string>ログの送信</string>
+	<key>Send My Sign In Details</key>
+	<string>サインイン手順を送信</string>
+	<key>Send to Approver</key>
+	<string>承認者に送信</string>
+	<key>Sending Back Report</key>
+	<string>レポートの差戻し</string>
+	<key>Sending Email</key>
+	<string>メールの送信</string>
+	<key>Sent</key>
+	<string>送信済</string>
+	<key>Set Mobile PIN</key>
+	<string>モバイル PIN の設定</string>
+	<key>Set PIN</key>
+	<string>PIN の設定</string>
+	<key>Set PIN Tip</key>
+	<string>PIN 設定のヒント</string>
+	<key>Set PIN succeeded</key>
+	<string>モバイル PIN は正常に保存されました。</string>
+	<key>Settings</key>
+	<string>設定</string>
+	<key>Share Trip</key>
+	<string>出張の共有</string>
+	<key>Show Home Panels</key>
+	<string>ホーム パネルを表示</string>
+	<key>Show Offers</key>
+	<string>割引価格を表示</string>
+	<key>Sign In</key>
+	<string>サインイン</string>
+	<key>Sign In Help</key>
+	<string>サインイン ヘルプ</string>
+	<key>Sign In Instructions Sent to This Device</key>
+	<string>送信された説明にサインイン</string>
+	<key>Sign In with Concur</key>
+	<string>Concur でサインイン</string>
+	<key>Sign In with Facebook</key>
+	<string>Facebook でサインイン</string>
+	<key>Sign Up</key>
+	<string>サインアップ</string>
+	<key>Sign Up Failed</key>
+	<string>サインアップできませんでした</string>
+	<key>Sign in to Concur</key>
+	<string>サインイン</string>
+	<key>Sign in to TripIt</key>
+	<string>TripIt にサインイン</string>
+	<key>Signing up accepts our</key>
+	<string>サインアップすることにより使用条件を承認したものと見なされます</string>
+	<key>Similar users like this hotel</key>
+	<string>このホテルを気に入っている類似ユーザー</string>
+	<key>Single Sign On</key>
+	<string>シングル サインオン</string>
+	<key>Smart Matching</key>
+	<string>スマート一致</string>
+	<key>SmartExpense Report</key>
+	<string>スマート経費レポート</string>
+	<key>SmartExpense version</key>
+	<string>スマート経費へようこそ</string>
+	<key>SmartExpense was denied access to your TripIt account.</key>
+	<string>スマート経費から TripIt アカウントへのアクセスが拒否されました。</string>
+	<key>SmartExpense was unable to access your TripIt account.  Please try again later.</key>
+	<string>スマート経費から TripIt アカウントにアクセスできませんでした。後でもう一度お試しください。</string>
+	<key>SmartExpense was unable to expense your trip. Please try again later.</key>
+	<string>スマート経費から出張経費を精算できませんでした。後でもう一度お試しください。</string>
+	<key>Smoking</key>
+	<string>喫煙</string>
+	<key>Sold Out</key>
+	<string>完売</string>
+	<key>Sorry</key>
+	<string>小売基準価格が見つかりませんでした。もう一度検索してください。</string>
+	<key>Sorry I didn't quite get that.</key>
+	<string>適切に処理できませんでした。最初からやり直しましょう。</string>
+	<key>Sort</key>
+	<string>並べ替え</string>
+	<key>Sort By</key>
+	<string>並べ替え基準</string>
+	<key>Sort by</key>
+	<string>並べ替え</string>
+	<key>Sort by Amount</key>
+	<string>金額によって並べ替え</string>
+	<key>Sort by Date</key>
+	<string>日付で並べ替え</string>
+	<key>Sort by Distance</key>
+	<string>距離による並べ替え</string>
+	<key>Sort by Duration</key>
+	<string>期間で並べ替え</string>
+	<key>Sort by Earliest Departure</key>
+	<string>「最も早い出発時刻」で並べ替え</string>
+	<key>Sort by Preference</key>
+	<string>優先設定で並べ替え</string>
+	<key>Sort by Preferred Vendors</key>
+	<string>推奨納入業者による並べ替え</string>
+	<key>Sort by Price</key>
+	<string>価格による並べ替え</string>
+	<key>Sort by Rating</key>
+	<string>レーティングによる並べ替え</string>
+	<key>Sort by Recommendation</key>
+	<string>提案ごとに並べ替え</string>
+	<key>Sort by Vendor Names</key>
+	<string>納入業者名による並べ替え</string>
+	<key>Standard</key>
+	<string>標準</string>
+	<key>Standard Hybrid</key>
+	<string>標準ハイブリッド車</string>
+	<key>Standard SUV</key>
+	<string>スタンダード SUV 車</string>
+	<key>Star Rating</key>
+	<string>星による評価</string>
+	<key>StartARequest</key>
+	<string>申請を始める</string>
+	<key>StartYourRequest</key>
+	<string>申請を始める</string>
+	<key>Starting</key>
+	<string>起動中</string>
+	<key>Station</key>
+	<string>駅</string>
+	<key>Stations</key>
+	<string>駅</string>
+	<key>Stop</key>
+	<string>経由地</string>
+	<key>Stopping Upload</key>
+	<string>アップロードを中止</string>
+	<key>Stops</key>
+	<string>経由地</string>
+	<key>Submit Invoices</key>
+	<string>支払請求の提出</string>
+	<key>Submit Report</key>
+	<string>レポートの提出</string>
+	<key>SubmitRequest</key>
+	<string>申請を提出</string>
+	<key>Submitted Reports</key>
+	<string>提出済のレポート</string>
+	<key>Suggested based on co-worker</key>
+	<string>同僚に基づく提案</string>
+	<key>Suggested based on past stay</key>
+	<string>過去の滞在に基づく提案</string>
+	<key>Suggested based on popularity</key>
+	<string>人気に基づく提案</string>
+	<key>Sunday_Short</key>
+	<string>(日)</string>
+	<key>Swipe for more</key>
+	<string>スワイプして詳細を表示</string>
+	<key>Swipe to delete</key>
+	<string>スワイプして削除</string>
+	<key>Switch to KM</key>
+	<string> km  に切り替え</string>
+	<key>Switch to Miles</key>
+	<string>マイルに切り替え</string>
+	<key>Sync Credit Card</key>
+	<string>クレジット カードを同期</string>
+	<key>Sync account with SmartExpense</key>
+	<string>アカウントをスマート経費と同期</string>
+	<key>Sync credit card</key>
+	<string>クレジット カードを同期</string>
+	<key>TA Import Heading Text</key>
+	<string>出張手当旅程の開始時に、出張予約またはカード課金を選択します。</string>
+	<key>TITLE_REGISTER_REENTER_PIN</key>
+	<string>PIN を入力</string>
+	<key>TRAVEL_NEG_TEXT</key>
+	<string>出張計画の開始</string>
+	<key>TRAVEL_REQUESTS</key>
+	<string>申請</string>
+	<key>TRIPS</key>
+	<string>出張リスト</string>
+	<key>TRIP_DETAILS</key>
+	<string>出張の詳細</string>
+	<key>TRY_AGAIN</key>
+	<string>もう一度試す</string>
+	<key>TWITTER_MESSAGES</key>
+	<string>Concur 発信のツイッター</string>
+	<key>Take photos of your receipts.</key>
+	<string>領収書の写真を撮影します。</string>
+	<key>Take pictures of receipts &amp; upload</key>
+	<string>領収書を撮影してアップロード&amp;</string>
+	<key>Tap microphone to get started</key>
+	<string>マイクをタップして開始</string>
+	<key>Tap to get directions</key>
+	<string>タップしてルートを検索</string>
+	<key>Taxable</key>
+	<string>課税可能</string>
+	<key>Taxi</key>
+	<string>タクシー</string>
+	<key>Taxi Magic</key>
+	<string>Taxi Magic</string>
+	<key>Terminal token</key>
+	<string>ターミナル %@</string>
+	<key>Terms of Use</key>
+	<string>使用条件</string>
+	<key>Thank You</key>
+	<string>お疲れさまでした</string>
+	<key>The Out of Pocket Entry could not be saved because the network is unavailable.  Please try again later.</key>
+	<string>ネットワークが利用できないため、立替払入力を保存できませんでした。後でもう一度お試しください。</string>
+	<key>The Out of Pocket Entry could not be saved.  Please try again later.</key>
+	<string>立替払入力を保存できませんでした。後でもう一度お試しください。</string>
+	<key>The Price-to-Beat is %@.</key>
+	<string>小売基準価格は %@ です。</string>
+	<key>The Price-to-Beat range is between %@.</key>
+	<string>小売基準価格の範囲は、%@ の中間です。</string>
+	<key>The account could not be unlinked.</key>
+	<string>口座へのリンクを削除できませんでした。</string>
+	<key>The car could not be booked.</key>
+	<string>この車両を予約できませんでした。</string>
+	<key>The check-out date must be later than the check-in date.</key>
+	<string>チェックアウト日はチェックイン日の後でなければなりません。</string>
+	<key>The date specified for departure is invalid.</key>
+	<string>出発日に指定した日付は無効です。</string>
+	<key>The date specified for the departure occurs in the past.</key>
+	<string>出発日に指定した日付は過去の日付です。</string>
+	<key>The date specified for the return is earlier than the date of departure.</key>
+	<string>帰着日に指定した日付は出発日より前の日付です。</string>
+	<key>The flight could not be booked.</key>
+	<string>フライトを予約できませんでした。</string>
+	<key>The log could not be sent.</key>
+	<string>ログを送信できませんでした。</string>
+	<key>The log mail has been placed in your outbox.</key>
+	<string>ログ メールが送信トレイに作成されました。</string>
+	<key>The log mail has been saved in your Drafts folder.</key>
+	<string>下書きフォルダにログ メールがあります。</string>
+	<key>The password reset was requested from another device. Please use the same device you requested the password reset.</key>
+	<string>別のデバイスからパスワードのリセットが申請されました。パスワードのリセットを申請したデバイスと同じものを使用してください。</string>
+	<key>The selected credit card will be charged and the ticket will be issued immediately. The reservation may not be eligible for changes or refunds. Are you sure you want to reserve this flight?</key>
+	<string>選択したクレジット カードに請求され、チケットが即時発行されます。 この予約は変更または払戻の対象にできません。 このフライトを予約してもよろしいですか?</string>
+	<key>The server encountered an error.</key>
+	<string>サーバーでエラーが発生しました。</string>
+	<key>The train could not be booked</key>
+	<string>列車を予約できませんでした。</string>
+	<key>There are</key>
+	<string>承認待ちのレポートが %@ 件あります。</string>
+	<key>There are cct</key>
+	<string>未使用のカード課金が %@ 件あります。</string>
+	<key>There are no cct</key>
+	<string>カード課金はありません。</string>
+	<key>There are no reports to approve</key>
+	<string>承認するレポートはありません</string>
+	<key>There are no rpt</key>
+	<string>すべてレポートを提出しました。</string>
+	<key>There are no travel requests to approve</key>
+	<string>承認する申請はありません</string>
+	<key>There are rpt</key>
+	<string>合計 %@ 件に対して %@ 件の未提出のレポートがあります。</string>
+	<key>There is</key>
+	<string>承認待ちのレポートが %@ 件あります。</string>
+	<key>There is cct</key>
+	<string>未使用のカード課金が %@ 件あります。</string>
+	<key>There is rpt</key>
+	<string>合計 %@ 件に対して %@ 件の未提出のレポートがあります。</string>
+	<key>There must have been a typo. Please re-enter the password so it matches exactly in both fields</key>
+	<string>入力ミスがあるようです。両方のフィールドに正確に一致するようにパスワードを再入力してください。</string>
+	<key>There was an error processing your request. It may be due to a poor network connection. Please try again later. If this condition continues</key>
+	<string>申請の処理中にエラーが発生しました。ネットワーク接続の不良が原因であると考えられます。後でもう一度お試しください。問題が解決しない場合は、管理者にご連絡ください。</string>
+	<key>There were no unassigned expenses found</key>
+	<string>割り当てられていない経費はありませんでした</string>
+	<key>This application crashed the last time you ran it.  Please help us determine the cause of the crash by sending us the application log.</key>
+	<string>このアプリケーションは、最後の実行時にクラッシュしました。  クラッシュ原因を特定するために、アプリケーション ログを送信してください。</string>
+	<key>This attendee cannot be edited.</key>
+	<string>この同席者は編集できません。</string>
+	<key>This attendee has been modified</key>
+	<string>この同席者は、この経費で最後に使用された時点から修正されています。Web の [プロファイル] で修正を完了する必要があります。</string>
+	<key>This device is not configured for sending mail.</key>
+	<string>このデバイスにはメールの送信が構成されていません。</string>
+	<key>This feature requires access</key>
+	<string>この機能は、デバイスのマイクロフォンアクセスが必要です。このアプリの Settings / Privacy / Microphone で、マイクロフォンによるアクセスを有効にしてください。</string>
+	<key>This trip has already been expensed or the trip could not be synchronized.</key>
+	<string>この出張は既に経費精算済か、同期できませんでした。</string>
+	<key>Thursday_Short</key>
+	<string>(木)</string>
+	<key>Ticket Delivery</key>
+	<string>チケットの配達</string>
+	<key>Ticket Type</key>
+	<string>チケット タイプ</string>
+	<key>Ticketing</key>
+	<string>チケット販売</string>
+	<key>Time</key>
+	<string>時刻</string>
+	<key>Title</key>
+	<string>役職</string>
+	<key>To</key>
+	<string>終了時刻</string>
+	<key>To Location</key>
+	<string>到着地</string>
+	<key>To Station</key>
+	<string>到着駅</string>
+	<key>ToReceiptStoreMsg</key>
+	<string>領収書ストアに移動します。</string>
+	<key>Tomorrow</key>
+	<string>明日</string>
+	<key>Total</key>
+	<string>総計</string>
+	<key>Total Amount</key>
+	<string>総額</string>
+	<key>Total Due Company Card</key>
+	<string>法人カードへの支払総額</string>
+	<key>Total Due Employee</key>
+	<string>従業員への支払総額</string>
+	<key>Total Owed by Employee</key>
+	<string>従業員の未払総額</string>
+	<key>Total Paid by Company</key>
+	<string>会社の支払総額</string>
+	<key>Total Personal Amount</key>
+	<string>私用総額</string>
+	<key>Total Price</key>
+	<string>合計価格</string>
+	<key>Total Rate</key>
+	<string>合計料金</string>
+	<key>Total Requested</key>
+	<string>申請総額</string>
+	<key>Total Travel Points: %@</key>
+	<string>合計出張ポイント: %@</string>
+	<key>Total no card charges</key>
+	<string>カード取引はありません</string>
+	<key>Total no expenses</key>
+	<string>経費はありません</string>
+	<key>Total num card charge</key>
+	<string>カード取引が 1 件あります</string>
+	<key>Total num card charges</key>
+	<string>カード取引が %@ 件あります</string>
+	<key>Total num expense</key>
+	<string>経費が 1 件あります</string>
+	<key>Total num expenses</key>
+	<string>経費が %@ 件あります</string>
+	<key>Total: %@</key>
+	<string>合計: %@</string>
+	<key>Tour</key>
+	<string>ツアー</string>
+	<key>TourExpense2Subtitle</key>
+	<string>その後提出し、払戻を受けてください。マネージャーはどこからでも承認できます。</string>
+	<key>Train</key>
+	<string>鉄道</string>
+	<key>Train Choices</key>
+	<string>鉄道の選択</string>
+	<key>Train Detail</key>
+	<string>鉄道の詳細</string>
+	<key>Train Number</key>
+	<string>鉄道番号</string>
+	<key>Train: token</key>
+	<string>鉄道 %@</string>
+	<key>Transaction Amount</key>
+	<string>取引金額</string>
+	<key>Transaction Date</key>
+	<string>取引日</string>
+	<key>Transaction Location</key>
+	<string>取引場所</string>
+	<key>Travel</key>
+	<string>出張</string>
+	<key>Travel Agency Info</key>
+	<string>旅行代理店情報</string>
+	<key>Travel Apps</key>
+	<string>出張アプリ</string>
+	<key>Travel Points</key>
+	<string>出張ポイント</string>
+	<key>Travel Points Awarded</key>
+	<string>獲得した出張ポイント</string>
+	<key>Travel Points Bank: %@ points</key>
+	<string>出張ポイント バンク: %@ ポイント</string>
+	<key>Travel Points Booked</key>
+	<string>予約した出張ポイント</string>
+	<key>Travel Policy</key>
+	<string>出張ポリシー</string>
+	<key>Travel Requests</key>
+	<string>申請</string>
+	<key>Travel Time</key>
+	<string>移動時刻</string>
+	<key>TravelRequestCount</key>
+	<string>承認する申請が %d 件あります</string>
+	<key>TravelRequestsToApproveRow_0</key>
+	<string>承認する申請はありません</string>
+	<key>TravelRequestsToApproveRow_1</key>
+	<string>承認する申請が 1 件あります</string>
+	<key>TravelRequestsToApproveRow_2</key>
+	<string>%d 件の承認する申請があります</string>
+	<key>Trip</key>
+	<string>現在の出張</string>
+	<key>Trip Approval</key>
+	<string>出張の承認</string>
+	<key>Trip Approvals</key>
+	<string>出張の承認</string>
+	<key>Trip Feed</key>
+	<string>出張フィード</string>
+	<key>Trip Fields</key>
+	<string>出張フィールド</string>
+	<key>Trip Locator</key>
+	<string>出張検索機能</string>
+	<key>Trip Record Locator for this trip could not be retrieved.</key>
+	<string>この出張の出張レコード ロケーターを取得できませんでした。</string>
+	<key>Trip data updated on</key>
+	<string>出張データが %@ に更新されました</string>
+	<key>Trip data updated on hrt</key>
+	<string>出張データが %@ に更新されました</string>
+	<key>Trip just trip</key>
+	<string>出張</string>
+	<key>TripIt Account Not Activated</key>
+	<string>TripIt アカウントがアクティブになっていません</string>
+	<key>TripIt Trips</key>
+	<string>TripIt 出張</string>
+	<key>TripIt not linked</key>
+	<string>TripIt アカウントはスマート経費にリンクされていません。ホーム画面で TripIt 行をタップして、TripIt にリンク</string>
+	<key>TripIt not linked together</key>
+	<string>ログイン済のスマート経費ユーザーにリンクされている TripIt アカウントは、TripIt モバイル アプリがサインインしているアカウントとは異なります。スマート経費へのリンクに使用しているアカウントと同じものを使用して、TripIt にサインインしてください。</string>
+	<key>TripIt trip key not found</key>
+	<string>システムは出張経費の申請を処理できませんでした。TripIt の出張キーが見つかりませんでした。</string>
+	<key>Trips</key>
+	<string>出張</string>
+	<key>Try Again</key>
+	<string>もう一度試す</string>
+	<key>Try again to re-enter your password or select I Forgot to receive signin in instructions</key>
+	<string>もう一度パスワードを入力するか [忘れた場合] を選択してサインイン手順を入手します。</string>
+	<key>Tuesday_Short</key>
+	<string>(火)</string>
+	<key>Type</key>
+	<string>タイプ</string>
+	<key>Type in emails seperated by commas or choose from contacts list</key>
+	<string>メールアドレスをコンマで区切って入力するか、連絡先リストから選択</string>
+	<key>Type name or select frequent attendee</key>
+	<string>名または姓の入力</string>
+	<key>Type to search for a location</key>
+	<string>場所検索のタイプ</string>
+	<key>UNDEFINED_MSG</key>
+	<string>選択した経費の 1 つ以上に未定義の経費タイプがあります。</string>
+	<key>Unable to Sign In</key>
+	<string>サインインできません</string>
+	<key>Unable to add expense</key>
+	<string>経費を追加できません</string>
+	<key>Unable to add itemization</key>
+	<string>明細を追加できません</string>
+	<key>Unable to attach expense. Please check that this report policy allows Japan Public Transit.</key>
+	<string>経費を添付できません。このレポート ポリシーで日本の公共交通機関が許可されていることを確認してください。</string>
+	<key>Unable to link</key>
+	<string>リンクできません</string>
+	<key>Unable to load location data.</key>
+	<string>場所データを読み込めません。</string>
+	<key>Unable to sign in</key>
+	<string>現在サインインできません。会社のヘルプ デスクまたは出張/経費担当部門にお問い合わせください。</string>
+	<key>Unavailable</key>
+	<string>利用できません</string>
+	<key>Undefined</key>
+	<string>未定義</string>
+	<key>Unexpected Error</key>
+	<string>予期しないエラー</string>
+	<key>Unknown Station</key>
+	<string>不明な駅</string>
+	<key>Unlink Dropbox</key>
+	<string>Dropbox へのリンクを削除</string>
+	<key>Unlink Succeeded</key>
+	<string>リンク解除しました</string>
+	<key>Unlink from TripIt</key>
+	<string>TripIt へのリンクを削除</string>
+	<key>Unmatch</key>
+	<string>不一致</string>
+	<key>Unsaved Receipts</key>
+	<string>領収書が保存されていません</string>
+	<key>Unselect All</key>
+	<string>すべて選択解除</string>
+	<key>Unsubmitted Reports</key>
+	<string>未提出のレポート</string>
+	<key>UnsubmittedReportsRow_0</key>
+	<string>未提出のレポートはありません</string>
+	<key>UnsubmittedReportsRow_1</key>
+	<string>未提出のレポートが 1 件あります</string>
+	<key>UnsubmittedReportsRow_2</key>
+	<string>未提出のレポートが %d 件あります</string>
+	<key>Update</key>
+	<string>更新</string>
+	<key>Update Itemizations</key>
+	<string>明細の更新</string>
+	<key>Update Receipt</key>
+	<string>領収書の更新</string>
+	<key>Updating</key>
+	<string>更新中</string>
+	<key>Updating Itinerary</key>
+	<string>旅程の更新</string>
+	<key>Upload</key>
+	<string>アップロード</string>
+	<key>Upload Failed</key>
+	<string>アップロードに失敗しました</string>
+	<key>Upload Queue</key>
+	<string>アップロード順番待ち</string>
+	<key>Upload Receipt</key>
+	<string>領収書のアップロード</string>
+	<key>Upload Success</key>
+	<string>アップロードが正常に完了</string>
+	<key>Uploading Please Wait</key>
+	<string>アップロードしています。しばらくお待ちください。</string>
+	<key>Uploading count</key>
+	<string>%d/%d をアップロード中</string>
+	<key>Uploading to Dropbox</key>
+	<string>ドロップボックスにアップロード中</string>
+	<key>Uploading to Dropbox failed</key>
+	<string>ドロップボックスへのアップロードが失敗しました</string>
+	<key>Uploading to Dropbox was successful</key>
+	<string>ドロップボックスへのアップロードが正常に完了しました</string>
+	<key>Use %@ Travel Points</key>
+	<string>%@ の出張ポイントを使用</string>
+	<key>Use %d pts.</key>
+	<string>%d ポイントを使用します。</string>
+	<key>Use-ImagePicker</key>
+	<string>使用</string>
+	<key>User Name</key>
+	<string>ユーザー名</string>
+	<key>Username and Password</key>
+	<string>ユーザー名とパスワード</string>
+	<key>Username or PIN is invalid</key>
+	<string>ユーザー名または PIN が無効です。[PIN を設定する必要がありますか?] をクリックするか、Concur オンラインで [プロファイル] -&gt; [Mobile の登録] に進むと、モバイル PIN を作成または再設定できます。</string>
+	<key>Username or Password is invalid</key>
+	<string>ユーザー名またはパスワードが無効です。</string>
+	<key>Username or Password is invalid SU</key>
+	<string>ユーザー名またはパスワードが無効です。[パスワードをリセット] リンクをクリックすると、パスワードをリセットできます。アカウントを持っていない場合は、[サインアップ] をクリックしてください。</string>
+	<key>Using Points</key>
+	<string>ポイントを使用</string>
+	<key>VALUE_RANGE_MSG</key>
+	<string>%d 〜 %d 文字の範囲で値を入力してください。</string>
+	<key>VALUE_RANGE_MSG_FIXED_LENGTH</key>
+	<string>%d 文字の値を入力してください。</string>
+	<key>VALUE_RANGE_MSG_LOWER_BOUND</key>
+	<string>%d 文字より大きい値を入力してください。</string>
+	<key>VALUE_RANGE_MSG_NO_BOUNDS</key>
+	<string>このフィールドに有効な値を入力してください。</string>
+	<key>VALUE_RANGE_MSG_UPPER_BOUND</key>
+	<string>%d 文字未満の値を入力してください。</string>
+	<key>VERIFY_PWD</key>
+	<string>パスワードの確認</string>
+	<key>VehicleId</key>
+	<string>車両 ID</string>
+	<key>Vendor</key>
+	<string>納入業者</string>
+	<key>Vendor Hours</key>
+	<string>納入業者時間</string>
+	<key>Vendor Names</key>
+	<string>納入業者名</string>
+	<key>Vendor Web Site</key>
+	<string>納入業者の Web サイト</string>
+	<key>Verification is simple. Just tap on the link in the email we sent to</key>
+	<string>照合は簡単です。%@ にお送りしたメール内のリンクをタップするだけです</string>
+	<key>View Allowance</key>
+	<string>手当を表示</string>
+	<key>View Images</key>
+	<string>イメージを表示</string>
+	<key>View Rates</key>
+	<string>料金の表示</string>
+	<key>View Receipt</key>
+	<string>領収書の表示</string>
+	<key>View Report Offline</key>
+	<string>レポートにアクセスできません。オンラインの状態でもう一度試してください。</string>
+	<key>View in Chatter</key>
+	<string>Chatter で表示</string>
+	<key>View your travel requests</key>
+	<string>申請を表示</string>
+	<key>View your trips</key>
+	<string>出張の表示</string>
+	<key>View your uploaded receipts</key>
+	<string>アップロードした領収書を表示</string>
+	<key>Violation</key>
+	<string>違反</string>
+	<key>Violation Justification</key>
+	<string>違反理由の説明</string>
+	<key>Violation Reason</key>
+	<string>違反理由</string>
+	<key>Violation Reason Code</key>
+	<string>違反理由コード</string>
+	<key>Violation Summary</key>
+	<string>違反サマリー</string>
+	<key>Violations</key>
+	<string>違反</string>
+	<key>WAIT_FOR_CAR_RATES_DATA</key>
+	<string>車両レートのデータを待機しています。このアクションを後でもう一度お試しください。</string>
+	<key>WARNING</key>
+	<string>警告</string>
+	<key>WARNING_INVALID_VALUE_RANGE_NOT_REQUIRED</key>
+	<string>この値は、%d 〜 %d 文字の指定範囲外です。続行してもよろしいですか?</string>
+	<key>WARN_MISSING_REQ_FLD</key>
+	<string>フォームの必須フィールドが不足しています。  保存を続行しますか?</string>
+	<key>WEBVIEW</key>
+	<string>Web データ表示</string>
+	<key>Waiting</key>
+	<string>待機中</string>
+	<key>Warning</key>
+	<string>警告</string>
+	<key>Warning on Itinerary Stop update</key>
+	<string>旅程の経由地の更新に関する警告</string>
+	<key>Watch setup video</key>
+	<string>設定ビデオを見る</string>
+	<key>We are unable to sign you in with this information</key>
+	<string>この情報ではサインインを許可できません。</string>
+	<key>We couldnt find any hotels with the given search criteria. Please try again with different criteria.</key>
+	<string>指定した検索条件に一致するホテルは見つかりませんでした。別の条件でもう一度お試しください。</string>
+	<key>Web Site</key>
+	<string>Web サイト</string>
+	<key>Wednesday_Short</key>
+	<string>(水)</string>
+	<key>Welcome to Concur</key>
+	<string>Concur へようこそ</string>
+	<key>What Flights can I find for you?</key>
+	<string>どのフライトを検索しますか?</string>
+	<key>What Hotel can I find for you?</key>
+	<string>どのホテルを検索しますか?</string>
+	<key>What's New</key>
+	<string>新機能</string>
+	<key>When auto login is on</key>
+	<string>自動ログインがオンの場合、ユーザー名は自動的に保存されます。</string>
+	<key>Work email or Concur username</key>
+	<string>業務で使うメールまたは Concur ユーザー名</string>
+	<key>Would you like to create an Expense Report from the selected trip segments</key>
+	<string>選択した出張セグメントから経費精算レポートを作成しますか?</string>
+	<key>Wrong agency code</key>
+	<string>代理店コードが正しくありません</string>
+	<key>Wrong company code</key>
+	<string>会社コードが正しくありません</string>
+	<key>YCOOK</key>
+	<string>その他食事あり</string>
+	<key>YODLEE_CARD_LOGIN_FORM_FAILED_MSG</key>
+	<string>クレジット カードのログインフォームの取得に失敗しました。後でもう一度お試しください。</string>
+	<key>Yes</key>
+	<string>はい</string>
+	<key>You already have a corporate account with Concur.</key>
+	<string>既に Concur の法人アカウントを持っています。</string>
+	<key>You are offline. Please expense trip later.</key>
+	<string>オフラインです。オンラインになるまで出張経費の精算はお待ちください。</string>
+	<key>You are using %@ Travel Points.</key>
+	<string>%@ の出張ポイントを使用します。</string>
+	<key>You do not have an email in your Concur profile. We are unable to send you a password reset email without one. Please go to the Concur Website and add your work email to your profile.</key>
+	<string>Concur プロファイルにメール アドレスが登録されていません。メール アドレスがなければ、パスワード リセット メールを送信できません。Concur Web サイトにアクセスし、プロファイルに業務で使うメールを追加してください。</string>
+	<key>You have %@ Travel Points in your bank.</key>
+	<string>%@ の出張ポイントが銀行にあります。</string>
+	<key>You have already registered for SmartExpense.</key>
+	<string>スマート経費に登録済です。</string>
+	<key>You have no approvals</key>
+	<string>承認はありません</string>
+	<key>You have no messages</key>
+	<string>メッセージはありません</string>
+	<key>You have no upcoming trips</key>
+	<string>出張予定はありません</string>
+	<key>You have stayed here %@ times</key>
+	<string>ここに%@回滞在したことがあります</string>
+	<key>You have stayed here earlier</key>
+	<string>以前ここに滞在したことがあります</string>
+	<key>You have successfully linked your TripIt account to SmartExpense.</key>
+	<string>TripIt アカウントがスマート経費に正常にリンクしました。</string>
+	<key>You must be online before you can upload your items</key>
+	<string>項目をアップロードする前にオンラインにする必要があります。</string>
+	<key>You must enter in a valid PIN in order to log in</key>
+	<string>ログインするには有効な PIN の入力が必須</string>
+	<key>You must enter in a valid email address in order for Concur to verify it</key>
+	<string>有効なメールアドレスを入力して、Concur で確認する必要があります</string>
+	<key>You must enter in a valid email for your approver</key>
+	<string>承認者には有効なメール アドレスの入力が必須</string>
+	<key>You must enter in a valid password in order to log in</key>
+	<string>ログインするには有効なパスワードの入力が必須</string>
+	<key>You must enter in a valid password or PIN in order to log in</key>
+	<string>ログインするには有効なパスワードまたは PIN を入力する必要があります。</string>
+	<key>You must enter in a valid user name in order to log in</key>
+	<string>ログインするには有効なユーザー名の入力が必須</string>
+	<key>You need to select a Delivery Option in order to reserve your train</key>
+	<string>鉄道を予約するには、配達オプションを選択する必要があります。</string>
+	<key>You need to select a valid credit card in order to reserve your train</key>
+	<string>鉄道を予約するには、有効なクレジット カードを選択する必要があります。</string>
+	<key>Your account data has been wiped from this device.  Please contact your company administrator for assistance.</key>
+	<string>このデバイスから口座データが消去されました。法人管理者に問い合わせて、サポートを受けてください。</string>
+	<key>Your account is no longer linked to TripIt.</key>
+	<string>アカウントは、TripIt にリンクされていません。</string>
+	<key>Your agent may ask for the Trip Record Locator: %@</key>
+	<string>旅行代理店から出張レコード ロケーターが求められる場合があります。 %@</string>
+	<key>Your colleague has stayed here</key>
+	<string>1 名の同僚がここに滞在したことがあります</string>
+	<key>Your colleague is staying here on your check-in date</key>
+	<string>チェックインの日に同僚がここに滞在</string>
+	<key>Your colleague's favorite</key>
+	<string>同僚のお気に入り</string>
+	<key>Your colleagues have stayed here %@ times</key>
+	<string>同僚はここに%@回滞在したことがあります</string>
+	<key>Your company has disabled Concur for mobile. Please contact your administrator.</key>
+	<string>貴社では、Concur for mobile が無効になっています。 管理者に問い合わせてください。</string>
+	<key>Your company's preferred</key>
+	<string>会社の推奨</string>
+	<key>Your company's travel policy will not allow this reservation.</key>
+	<string>会社の出張ポリシーでは、この予約は許可されていません。</string>
+	<key>Your device cannot make a phone call.</key>
+	<string>お使いの機器から通話できません。</string>
+	<key>Your entry does not appear to be a valid work email or Concur Username. For example</key>
+	<string>有効な業務で使うメールまたは Concur ユーザー名が入力されていません。@ または .com がないことなどが考えられます。</string>
+	<key>Your expense has been queued</key>
+	<string>経費をアップロードの順番待ちに入れました。</string>
+	<key>Your favorite</key>
+	<string>お気に入り</string>
+	<key>Your hotel reservation has been successfully cancelled. Cancellation Number: %@</key>
+	<string>ホテルの予約は正常にキャンセルされました。キャンセル番号 : %@</string>
+	<key>Your receipt has been queued</key>
+	<string>領収書をアップロードの順番待ちに入れました。</string>
+	<key>add_as_favorite</key>
+	<string>お気に入りとして追加</string>
+	<key>add_new_route</key>
+	<string>新しい経路を追加</string>
+	<key>add_route</key>
+	<string>経路追加</string>
+	<key>add_to_report</key>
+	<string>レポートに追加</string>
+	<key>additional_charge</key>
+	<string>追加料金</string>
+	<key>are missing</key>
+	<string> が見つかりません。</string>
+	<key>arrival_station</key>
+	<string>到着駅</string>
+	<key>available from</key>
+	<string>利用可能</string>
+	<key>back_to_list</key>
+	<string>リストへ戻る</string>
+	<key>business_purpose</key>
+	<string>業務目的</string>
+	<key>cheap</key>
+	<string>安い</string>
+	<key>check in on</key>
+	<string>チェックイン場所</string>
+	<key>choices</key>
+	<string>選択肢</string>
+	<key>commuter_pass</key>
+	<string>定期券</string>
+	<key>corporate card transactions</key>
+	<string>件のコーポレート カード取引</string>
+	<key>cost</key>
+	<string>コスト</string>
+	<key>day</key>
+	<string>日</string>
+	<key>days</key>
+	<string>日</string>
+	<key>departure_station</key>
+	<string>出発駅</string>
+	<key>easy</key>
+	<string>簡単</string>
+	<key>email saved into your drafts</key>
+	<string>メールは下書きに保存済</string>
+	<key>expense_route</key>
+	<string>経費の経路</string>
+	<key>fast</key>
+	<string>早い</string>
+	<key>favorites</key>
+	<string>お気に入り</string>
+	<key>green</key>
+	<string>グリーン車</string>
+	<key>hour</key>
+	<string>時</string>
+	<key>hour_quantity</key>
+	<string>%d 時間</string>
+	<key>hours</key>
+	<string>時間</string>
+	<key>hours_quantity</key>
+	<string>%d 時間</string>
+	<key>ic_card</key>
+	<string>IC カード</string>
+	<key>ic_card_fare</key>
+	<string>IC カード運賃</string>
+	<key>int active int upcoming</key>
+	<string>%d がアクティブ、予定が %d</string>
+	<key>invoice to review</key>
+	<string>審査する支払請求</string>
+	<key>invoices to approve</key>
+	<string>承認する支払請求</string>
+	<key>invoices to review</key>
+	<string>審査する支払請求</string>
+	<key>is missing</key>
+	<string> が見つかりません。</string>
+	<key>items to upload</key>
+	<string>アップロードする項目</string>
+	<key>japan_public_transit</key>
+	<string>日本の公共交通機関</string>
+	<key>line</key>
+	<string>路線</string>
+	<key>manual</key>
+	<string>マニュアル</string>
+	<key>menu</key>
+	<string>メニュー</string>
+	<key>miles</key>
+	<string>マイル</string>
+	<key>minute</key>
+	<string>分</string>
+	<key>minute_quantity</key>
+	<string>%d 分</string>
+	<key>minutes</key>
+	<string>分</string>
+	<key>minutes_quantity</key>
+	<string>%d 分</string>
+	<key>mobile entries</key>
+	<string>モバイル入力</string>
+	<key>near</key>
+	<string>付近</string>
+	<key>no</key>
+	<string>なし</string>
+	<key>noReceipt</key>
+	<string>現在、領収書イメージがありません。後でもう一度お試しください。</string>
+	<key>noReceipts</key>
+	<string>現在、領収書ストアに領収書はありません。</string>
+	<key>no_favorite_routes</key>
+	<string>お気に入りの推奨経路なし</string>
+	<key>no_recent_routes</key>
+	<string>最近の経路なし</string>
+	<key>no_saved_routes</key>
+	<string>保存経路なし</string>
+	<key>other</key>
+	<string>その他</string>
+	<key>paper_ticket</key>
+	<string>きっぷ</string>
+	<key>per day</key>
+	<string>1 日あたり</string>
+	<key>per night</key>
+	<string>1 泊あたり</string>
+	<key>personal_expense</key>
+	<string>私的出費</string>
+	<key>pickup on</key>
+	<string>乗車場所</string>
+	<key>purchase request to review</key>
+	<string>審査する発注申請</string>
+	<key>purchase requests to review</key>
+	<string>審査する発注申請</string>
+	<key>recent</key>
+	<string>最近</string>
+	<key>report to approve</key>
+	<string>承認するレポート</string>
+	<key>reports to approve</key>
+	<string>承認するレポート</string>
+	<key>resend the verification email</key>
+	<string>照合メールを再送信</string>
+	<key>reserved</key>
+	<string>指定席</string>
+	<key>results by</key>
+	<string>結果の原因</string>
+	<key>results by Duration</key>
+	<string>「期間」に基づく結果</string>
+	<key>results by Earliest Departure</key>
+	<string>「最も早い出発時刻」に基づく結果</string>
+	<key>results by Fare Price</key>
+	<string>運賃による結果</string>
+	<key>results by Preferred Carrier</key>
+	<string>推奨されている航空会社による結果</string>
+	<key>route_added_to_report_confirmation</key>
+	<string>経路が追加されました</string>
+	<key>route_saved_confirmation</key>
+	<string>経路は保存されました</string>
+	<key>route_search</key>
+	<string>経路検索</string>
+	<key>routes</key>
+	<string>経路</string>
+	<key>save_for_later</key>
+	<string>保存して後で使用</string>
+	<key>search_stations</key>
+	<string>駅の検索</string>
+	<key>seat_type</key>
+	<string>座席種別</string>
+	<key>select_route</key>
+	<string>経路選択</string>
+	<key>sorted by</key>
+	<string>並べ替え基準</string>
+	<key>tap here to cancel reservation</key>
+	<string>予約をキャンセルするにはここをタップ</string>
+	<key>through_station</key>
+	<string>経由駅</string>
+	<key>through_stations</key>
+	<string>経由駅</string>
+	<key>to</key>
+	<string>—</string>
+	<key>today</key>
+	<string>今日</string>
+	<key>token hour(s) token minute(s)</key>
+	<string>%d 時間 %d 分</string>
+	<key>token minute(s)</key>
+	<string>%d 分</string>
+	<key>token results</key>
+	<string>%d の結果</string>
+	<key>travel request to approve</key>
+	<string>承認する申請</string>
+	<key>travel requests to approve</key>
+	<string>承認する申請</string>
+	<key>trip to approve</key>
+	<string>承認する出張</string>
+	<key>trip_date</key>
+	<string>出張日</string>
+	<key>trips to approve</key>
+	<string>承認する出張</string>
+	<key>unknown</key>
+	<string>不明</string>
+	<key>unreserved</key>
+	<string>自由席</string>
+	<key>unsubmitted Reports</key>
+	<string>未提出のレポート</string>
+	<key>view_report</key>
+	<string>レポートの表示</string>
+</dict>
+</plist>
