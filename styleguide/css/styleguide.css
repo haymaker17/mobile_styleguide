@@ -301,28 +301,55 @@ figure.phone p {
 }
 
 .dark_grey {
-	background: #5e6c75;
+	background: #7f8f97;
 }
 
 .light_grey {
 	background: #a7b6bf;
 }
 
+.line_grey {
+	background: #dbe1e6;
+}
+
 .off_white {
 	background: #f7fafd;
 }
+
+.off_white span, .white span, .line_grey span {
+	color: #5e6c75;
+}
+
+
+
 
 .red {
     background: #d65b42;
 }
 
-.orange {
-	background: #d25533;
+.light_red {
+	background: #fff5f5;
 }
+
+.light_red span {
+	color: #d65b42;
+}
+
+
+
 
 .yellow {
 	background: #f4a900;
 }
+
+.light_yellow {
+	background: #fffcef;
+}
+
+.light_yellow span {
+	color: #f4a900;
+}
+
 
 
 
@@ -336,9 +363,6 @@ figure.phone p {
 
 .light_green span {
 	color: #62ac64;
-}
-.off_white span, .white span {
-	color: #5e6c75;
 }
 
 
