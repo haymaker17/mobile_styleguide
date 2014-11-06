@@ -196,3 +196,38 @@ function setHeader(inTitle,inCategory,topCategory) {
    $("#body").removeClass().addClass(topCategory);
 }  
 
+
+// get the commit notes from github so there's a changelist on the site
+function getGithubCommits() {
+  var html = "<ul>";
+  $.getJSON("https://api.github.com/repos/haymaker17/mobile_labs/commits", function(data){
+    $.each(data, function(key, val){
+      var item = data[key];
+      var message = item.commit.message;
+      
+      //format date
+      var formattedDate = new Date(item.commit.author.date);
+      var d = formattedDate.getDate();
+      var m =  formattedDate.getMonth();
+      m += 1;  // JavaScript months are 0-11
+      var y = formattedDate.getFullYear();
+
+      var date = (m + "." + d + "." + y);
+
+
+
+      html+= "<li>" + date + "<br><span>" + message + "</span></li>";
+    });
+
+    html += "</ul>"
+
+    $(".changelist_body").html(html);
+  });
+
+
+
+}
+
+
+
+

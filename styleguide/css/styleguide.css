@@ -395,6 +395,22 @@ a.icon span {
 
 
 
+/* CHANGELIST */
+
+.changelist ul {
+	list-style: none;
+	padding: 0;
+}
+
+.changelist li {
+	margin: 0 0 20px 0;
+	line-height: 1rem;
+}
+
+.changelist span {
+	font-size: 85%;
+	color: #a7b6bf;
+}
 
 
 
