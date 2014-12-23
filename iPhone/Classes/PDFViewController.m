@@ -131,13 +131,18 @@
     NSDictionary *dict = @{@"Added Using": @"Open PDF", @"Added To": @"Receipt Store"};
     [Flurry logEvent:@"Receipts: Add" withParameters:dict];
     
-    [self showWaitViewWithProgress:YES withText:[Localizer getLocalizedText:@"RECEIPT_IMG_UPLOADING"]];
     NSData *data = [NSData dataWithContentsOfURL:self.url];
     
-    self.uploader = [[ReceiptUploader alloc] init];
-    self.uploader.delegate = self;
-    [self.uploader setSeedDataPdf:self withPdf:data];
-    [self.uploader startUploadPdf];
+    if (![ExSystem connectedToNetwork]) {
+        [self queuePdfReceipt:data];
+    }
+    else {
+        [self showWaitViewWithProgress:YES withText:[Localizer getLocalizedText:@"RECEIPT_IMG_UPLOADING"]];
+        self.uploader = [[ReceiptUploader alloc] init];
+        self.uploader.delegate = self;
+        [self.uploader setSeedDataPdf:self withPdf:data];
+        [self.uploader startUploadPdf];
+    }
 }
 
 
@@ -269,7 +274,8 @@
         
         // If offline is supported, then queue the receipt that failed to upload
         [[MCLogging getInstance] log:@"Receipt upload failed and queue the receipt for upload later" Level:MC_LOG_DEBU];
-        [self queueReceipt:self.uploader.receiptImage];
+        // MOB-21462: need to save the pdf data to local
+        [self queuePdfReceipt:self.uploader.pdfData];
     }
     else
         // Receipt Configuration error.
@@ -296,9 +302,10 @@
 
 
 #pragma mark - Queue Receipt Methods
--(void) queueReceipt:(UIImage*)receiptImage
+-(void) queuePdfReceipt:(NSData*)pdfData
 {
-    [ReceiptEditorVC queueReceiptImage:receiptImage date:[NSDate date]];
+	// MOB-21462: queue Pdf receipt 
+    [ReceiptEditorVC queuePdfReceipt:pdfData date:[NSDate date]];
     [self receiptQueued];
 }
 

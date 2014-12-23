@@ -1,3 +1,7 @@
+VERSION: 6.0.0 updated on Dec 18th 2014
+Renamed libFlurry_6.0.0.a to libFlurry.a
+-Pavan
+===============
 VERSION: 5.0.0 updated on May 15th 2014
 Renamed libFlurry_5.0.0.a to libFlurry.a
 -Pavan

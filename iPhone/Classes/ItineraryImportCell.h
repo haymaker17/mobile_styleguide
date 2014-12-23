@@ -16,5 +16,11 @@
 @property (strong, nonatomic) IBOutlet UILabel *endDate;
 @property (strong, nonatomic) IBOutlet UITextView *messageText;
 @property (strong, nonatomic) IBOutlet UIImageView *selectedImage;
+@property (strong, nonatomic) IBOutlet UIImageView *iconImageOne;
+@property (strong, nonatomic) IBOutlet UIImageView *iconImageTwo;
+@property (strong, nonatomic) IBOutlet UIImageView *iconImageThree;
+@property (strong, nonatomic) IBOutlet UIImageView *iconImageFour;
+@property (strong, nonatomic) IBOutlet UIImageView *iconImageFive;
+@property (strong, nonatomic) IBOutlet NSLayoutConstraint *iconImageOneHeight;
 
 @end

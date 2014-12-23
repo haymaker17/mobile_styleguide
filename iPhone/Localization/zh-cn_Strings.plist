@@ -670,6 +670,8 @@
 	<string>当设备处于脱机状态时，无法进行预订。请重新连接到 Internet 并重试。</string>
 	<key>Border Crossing</key>
 	<string>过境</string>
+	<key>Breakfast Amount *</key>
+	<string>早餐金额 *</string>
 	<key>Bump Phones to Become an Attendee</key>
 	<string>%@ 致电成为参加者</string>
 	<key>Bump Phones to Exchange Attendee Info</key>
@@ -876,6 +878,8 @@
 	<string>退房</string>
 	<key>Children</key>
 	<string>儿童</string>
+	<key>Choose a location</key>
+	<string>选择地点</string>
 	<key>ChoosePhoto-ImagePicker</key>
 	<string>预览</string>
 	<key>Class &amp; Seat Number</key>
@@ -2062,8 +2066,8 @@
 	<string>登录设置</string>
 	<key>Logout</key>
 	<string>注销</string>
-	<key>Looks like we are experience some difficulties. Please check back in a few minutes.</key>
-	<string>我们可能遇到了一些问题。 请在几分钟后重试。</string>
+	<key>Looks like we are experiencing some difficulties. Please check back in a few minutes.</key>
+	<string>我们可能遇到了一些问题。请在几分钟后重试。</string>
 	<key>Luxury</key>
 	<string>豪华型</string>
 	<key>MAP</key>
@@ -2124,10 +2128,14 @@
 	<string>对应</string>
 	<key>Map Address</key>
 	<string>对应地址</string>
+	<key>Matched Expense</key>
+	<string>匹配的费用</string>
 	<key>Matching transactions combined into a single expense</key>
 	<string>匹配的交易组合为单项费用</string>
 	<key>Meal Allowances</key>
 	<string>餐饮补助</string>
+	<key>Meals Amount</key>
+	<string>餐饮金额</string>
 	<key>Menu</key>
 	<string>菜单</string>
 	<key>Message Center</key>
@@ -2400,6 +2408,20 @@
 	<string>成为更聪明的差旅买家！根据起始价格预订可为贵公司节省成本。</string>
 	<key>P2B_AIR_BOOKING_HEADER_POINTS_ENABLED</key>
 	<string>选择低于起始价格的选项即可赚取差旅点。计算旅行费用时，赚取的差旅点会反应在您今后旅行可以使用的总差旅点中。</string>
+	<key>P2B_AIR_BOOKING_MANAGE_VIOLATIONS_HEADER</key>
+	<string>您有必须处理的策略违例。您可以使用差旅点或遵循公司正常的策略违例工作流程。</string>
+	<key>P2B_AIR_BOOKING_USING_POINTS_HEADER</key>
+	<string>您可以通过选择低于起始价格的机票或宾馆住宿来获得差旅点。您可以使用银行提供的差旅点来绕过贵公司的典型通知或审批流程，预订违反策略的选项。
+        
+由于不符合贵公司的差旅规则，本次机票预订需要您使用差旅点或提交到贵公司的典型通知或审批流程。
+        
+差旅消费结束之后，您获得或使用的任何差旅点将反映在您的银行帐户上。</string>
+	<key>P2B_HOTEL_BOOKING_USING_POINTS_HEADER</key>
+	<string>您可以通过选择低于起始价格的机票或宾馆住宿来获得差旅点。您可以使用银行提供的差旅点来绕过贵公司的典型通知或审批流程，预订违反策略的选项。
+        
+由于不符合贵公司的差旅规则，本次宾馆预订需要您使用差旅点或提交到贵公司的典型通知或审批流程。
+        
+差旅消费结束之后，您获得或使用的任何差旅点将反映在您的银行帐户上。</string>
 	<key>PDF Receipt</key>
 	<string>PDF 发票</string>
 	<key>PENDING_REQUIRED_TRAVEL_CUSTOM_FIELDS</key>
@@ -2562,6 +2584,8 @@
 	<string>打印</string>
 	<key>Proceed to Sign In</key>
 	<string>继续登录</string>
+	<key>Profile</key>
+	<string>配置文件</string>
 	<key>Property</key>
 	<string>属性</string>
 	<key>Provided</key>
@@ -2694,6 +2718,10 @@
 	<string>发票上传失败</string>
 	<key>Receipt uploaded</key>
 	<string>已上传发票</string>
+	<key>ReceiptImageUnavailable</key>
+	<string>您的发票图片当前不可用。请稍后重试。</string>
+	<key>ReceiptImageUnavailableTitle</key>
+	<string>发票图片不可用</string>
 	<key>ReceiptUploadFailMsg</key>
 	<string>此时无法保存发票。请稍后重试。</string>
 	<key>Receipts</key>
@@ -2732,6 +2760,8 @@
 	<string>否决旅行</string>
 	<key>Remaining:</key>
 	<string>剩余:</string>
+	<key>Removal of E-Receipt items is not supported on mobile</key>
+	<string>移动设备上不支持删除电子发票项目</string>
 	<key>Removed Link to Dropbox</key>
 	<string>已删除 Dropbox 链接</string>
 	<key>Removing entry</key>
@@ -2774,6 +2804,8 @@
 	<string>您有 %d 个要审批的报告</string>
 	<key>Request</key>
 	<string>申请</string>
+	<key>RequestHeader</key>
+	<string>申请标题</string>
 	<key>Requested</key>
 	<string>已申请</string>
 	<key>Requests</key>
@@ -3380,6 +3412,8 @@
 	<string>您有 %@ 笔费用</string>
 	<key>Total: %@</key>
 	<string>总额: %@</string>
+	<key>Touch ID</key>
+	<string>Touch ID</string>
 	<key>Tour</key>
 	<string>旅行</string>
 	<key>TourExpense2Subtitle</key>
@@ -3491,6 +3525,8 @@
 	<string>无法加载地点数据。</string>
 	<key>Unable to sign in</key>
 	<string>此时我们无法将您登录。请与贵公司的帮助中心或差旅/费用部门联系。</string>
+	<key>Unauthorized</key>
+	<string>未授权</string>
 	<key>Unavailable</key>
 	<string>不可用</string>
 	<key>Undefined</key>

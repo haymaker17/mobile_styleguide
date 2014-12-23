@@ -57,6 +57,7 @@
 -(void) removeTestDriveStoryBoard;
 -(void) showPasswordRestScreen;
 -(void) showSignInScreen;
+-(void) showSafariSignInScreen;
 // this should be made more generic, as part of a base class controller that will work for iPhone or iPad
 // this system to be refactored in 9.3 to better include Amex QE launching
 -(void)SwitchToApprovalsView;

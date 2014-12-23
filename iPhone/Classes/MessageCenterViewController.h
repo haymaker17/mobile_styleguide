@@ -8,8 +8,10 @@
 
 #import "MessageCenterManager.h"
 #import "DFPBannerView.h"
+#import "GADAppEventDelegate.h"
+#import "GADBannerViewDelegate.h"
 
-@interface MessageCenterViewController : UIViewController <UITableViewDataSource, UITableViewDelegate>
+@interface MessageCenterViewController : UIViewController <UITableViewDataSource, UITableViewDelegate, GADAppEventDelegate, GADBannerViewDelegate>
 {
 }
 

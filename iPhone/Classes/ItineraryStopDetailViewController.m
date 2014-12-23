@@ -11,7 +11,6 @@
 #import "ItineraryStopCell.h"
 #import "Itinerary.h"
 #import "ItineraryConfig.h"
-#import "CXRequest.h"
 #import "CXClient.h"
 #import "ItineraryStopDetailDateViewController.h"
 #import "AnalyticsManager.h"
@@ -282,21 +281,31 @@ NSUInteger DeviceSystemMajorVersion()
         }
         else if (indexPath.row == From1DateIndex)
         {
-            cell = [self.tableView dequeueReusableCellWithIdentifier:@"ItinStopDateWithInput" forIndexPath:indexPath];
-            if(firstStop.departureDate != nil)
+            if([UIDevice isPad])
             {
-                [self prepareDepartureDatePart:cell selectedFunction:[self getSingleDayDateChangedFunction] departureDate:firstStop.departureDate];
+                cell = [self.tableView dequeueReusableCellWithIdentifier:@"ItinStopDepartureDate" forIndexPath:indexPath];
+                NSDateFormatter *timeFormatter= [ItineraryStopDetailViewController getItineraryDateFormatter];
+                NSString *dateString = [timeFormatter stringFromDate:firstStop.departureDate];
+                cell.departureDate.text = dateString;
             }
             else
             {
-                cell.stopDate.text = @"";
+                cell = [self.tableView dequeueReusableCellWithIdentifier:@"ItinStopDateWithInput" forIndexPath:indexPath];
+                if (firstStop.departureDate != nil)
+                {
+                    [self prepareDepartureDatePart:cell selectedFunction:[self getSingleDayDateChangedFunction] departureDate:firstStop.departureDate];
+                }
+                else
+                {
+                    cell.stopDate.text = @"";
+                }
+                cell.whichStop = @"FROM";
             }
-            cell.whichStop = @"FROM";
         }
         else if (indexPath.row == From2DatePickerIndex)
         {
             c = (ItineraryStopCalendarTableViewCell *)[self.tableView dequeueReusableCellWithIdentifier:@"ItinStopCalendar" forIndexPath:indexPath];
-            c.onDateSelected = [self getRegularDepartureDateChangedFunction];
+            c.onDateSelected = [self getSingleDayDateChangedFunction];
             //TODO this seems like the wrong place to call this method
             [c.calendarView selectDate:firstStop.departureDate makeVisible:YES];
             c.clipsToBounds = YES;
@@ -530,18 +539,28 @@ NSUInteger DeviceSystemMajorVersion()
 
             cell.whichStop = @"FROM";
         }
-        else if (indexPath.row == From1DateIndex)
+        else if (indexPath.row == From1DateIndex )
         {
-            cell = [self.tableView dequeueReusableCellWithIdentifier:@"ItinStopDateWithInput" forIndexPath:indexPath];
-            if(self.itineraryStop.departureDate != nil)
+            if([UIDevice isPad])
             {
-                [self prepareDepartureDatePart:cell selectedFunction:[self getRegularDepartureDateChangedFunction] departureDate:self.itineraryStop.departureDate];
+                cell = [self.tableView dequeueReusableCellWithIdentifier:@"ItinStopDepartureDate" forIndexPath:indexPath];
+                NSDateFormatter *timeFormatter= [ItineraryStopDetailViewController getItineraryDateFormatter];
+                NSString *dateString = [timeFormatter stringFromDate:self.itineraryStop.departureDate];
+                cell.departureDate.text = dateString;
             }
             else
             {
-                cell.stopDate.text = @"";
+                cell = [self.tableView dequeueReusableCellWithIdentifier:@"ItinStopDateWithInput" forIndexPath:indexPath];
+                if (self.itineraryStop.departureDate != nil)
+                {
+                    [self prepareDepartureDatePart:cell selectedFunction:[self getRegularDepartureDateChangedFunction] departureDate:self.itineraryStop.departureDate];
+                }
+                else
+                {
+                    cell.stopDate.text = @"";
+                }
+                cell.whichStop = @"FROM";
             }
-            cell.whichStop = @"FROM";
         }
         else if (indexPath.row == From2DatePickerIndex)
         {
@@ -648,16 +667,26 @@ NSUInteger DeviceSystemMajorVersion()
         }
         else if (indexPath.row == To1DateIndex)
         {
-            cell = [self.tableView dequeueReusableCellWithIdentifier:@"ItinStopDateWithInput" forIndexPath:indexPath];
-            if(self.itineraryStop.arrivalDate != nil)
+            if([UIDevice isPad])
             {
-                [self prepareArrivalDatePart:cell selectedFunction:[self getArrivalDateChangedFunction:RegularToSectionIndex itineraryStop:self.itineraryStop] arrivalDate:self.itineraryStop.arrivalDate];
+                cell = [self.tableView dequeueReusableCellWithIdentifier:@"ItinStopArrivalDate" forIndexPath:indexPath];
+                NSDateFormatter *timeFormatter= [ItineraryStopDetailViewController getItineraryDateFormatter];
+                NSString *dateString = [timeFormatter stringFromDate:self.itineraryStop.arrivalDate];
+                cell.arrivalDate.text = dateString;
             }
             else
             {
-                cell.stopDate.text = @"";
+                cell = [self.tableView dequeueReusableCellWithIdentifier:@"ItinStopDateWithInput" forIndexPath:indexPath];
+                if (self.itineraryStop.arrivalDate != nil)
+                {
+                    [self prepareArrivalDatePart:cell selectedFunction:[self getArrivalDateChangedFunction:RegularToSectionIndex itineraryStop:self.itineraryStop] arrivalDate:self.itineraryStop.arrivalDate];
+                }
+                else
+                {
+                    cell.stopDate.text = @"";
+                }
+                cell.whichStop = @"TO";
             }
-            cell.whichStop = @"TO";
         }
         else if (indexPath.row == To2DatePickerIndex)
         {
@@ -858,6 +887,16 @@ NSUInteger DeviceSystemMajorVersion()
     return tableView.sectionHeaderHeight;
 }
 
+- (void)tableView:(UITableView *)tableView willDisplayHeaderView:(UIView *)view forSection:(NSInteger)section
+{
+    UITableViewHeaderFooterView *header = (UITableViewHeaderFooterView *)view;
+
+//    header.textLabel.textColor = [UIColor redColor];
+    header.textLabel.font = [UIFont systemFontOfSize:16];
+    header.tintColor = [UIColor colorWithRed:(247.0/255) green:(250.0/255) blue:(253.0/255) alpha:1.0];
+
+}
+
 
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath
 {
@@ -904,13 +943,38 @@ NSUInteger DeviceSystemMajorVersion()
                     d = cell.frame.size.height;
                     break;
                 case From1DateIndex:
-                    cell = [self.tableView dequeueReusableCellWithIdentifier:@"ItinStopDateWithInput"];
-                    d = cell.frame.size.height;
+                    if([UIDevice isPad])
+                    {
+                        cell = [self.tableView dequeueReusableCellWithIdentifier:@"ItinStopDepartureDate"];
+                        d = cell.frame.size.height;
+                    }
+                    else
+                    {
+                        cell = [self.tableView dequeueReusableCellWithIdentifier:@"ItinStopDateWithInput"];
+                        d = cell.frame.size.height;
+                    }
                     break;
                 case From2DatePickerIndex:
-                    cell = [self.tableView dequeueReusableCellWithIdentifier:@"ItinStopCalendar"];
-                    d = cell.frame.size.height;
                     d = 0;
+                    if([UIDevice isPad])
+                    {
+                        ItineraryStop *firstStop = [self.itinerary.stops firstObject];
+                        if(firstStop.showDepartureDateCalendar)
+                        {
+                            cell = [self.tableView dequeueReusableCellWithIdentifier:@"ItinStopCalendar"];
+                            d = cell.frame.size.height;
+
+                            CGRect rect = self.view.superview.bounds;
+                            if (rect.size.width > 0)
+                            {
+                                d = rect.size.width;
+                            }
+                        }
+                        else
+                        {
+                            d = 0;
+                        }
+                    }
                     break;
                 case From3TimeInput:
                     cell = [self.tableView dequeueReusableCellWithIdentifier:@"ItinStopTimeWithInput"];
@@ -1037,12 +1101,44 @@ NSUInteger DeviceSystemMajorVersion()
                     d = cell.frame.size.height;
                     break;
                 case From1DateIndex:
-                    cell = [self.tableView dequeueReusableCellWithIdentifier:@"ItinStopDateWithInput"];
-                    d = cell.frame.size.height;
+                    if([UIDevice isPad])
+                    {
+                        cell = [self.tableView dequeueReusableCellWithIdentifier:@"ItinStopDepartureDate"];
+                        d = cell.frame.size.height;
+                    }
+                    else
+                    {
+                        cell = [self.tableView dequeueReusableCellWithIdentifier:@"ItinStopDateWithInput"];
+                        d = cell.frame.size.height;
+                        NSLog(@"d = %f", d);
+                        if(d == 0)
+                        {
+                            d = 64;  //TODO  This is getting zero'd when switching back from single day
+                        }
+                    }
                     break;
-                case From2DatePickerIndex:  //TODO REMOVE
-//                    cell = [self.tableView dequeueReusableCellWithIdentifier:@"ItinStopCalendar"];
+                case From2DatePickerIndex:
                     d = 0;
+
+                    if([UIDevice isPad])
+                    {
+                        if(self.itineraryStop.showDepartureDateCalendar)
+                        {
+
+                            cell = [self.tableView dequeueReusableCellWithIdentifier:@"ItinStopCalendar"];
+                            d = cell.frame.size.height;
+
+                            CGRect rect = self.view.superview.bounds;
+                            if (rect.size.width > 0)
+                            {
+                                d = rect.size.width;
+                            }
+                        }
+                        else
+                        {
+                            d = 0;
+                        }
+                    }
                     break;
                 case From3TimeInput:
                     cell = [self.tableView dequeueReusableCellWithIdentifier:@"ItinStopTimeWithInput"];
@@ -1074,12 +1170,43 @@ NSUInteger DeviceSystemMajorVersion()
                     d = cell.frame.size.height;
                     break;
                 case To1DateIndex:
-                    cell = [self.tableView dequeueReusableCellWithIdentifier:@"ItinStopDateWithInput"];
-                    d = cell.frame.size.height;
+                    if([UIDevice isPad])
+                    {
+                        cell = [self.tableView dequeueReusableCellWithIdentifier:@"ItinStopArrivalDate"];
+                        d = cell.frame.size.height;
+                    }
+                    else
+                    {
+                        cell = [self.tableView dequeueReusableCellWithIdentifier:@"ItinStopDateWithInput"];
+                        d = cell.frame.size.height;
+                        if(d == 0)
+                        {
+                            d = 64; //TODO  This is getting zero'd when switching back from single day
+                        }
+                    }
                     break;
-                case To2DatePickerIndex:   //TODO Remove
-//                    cell = [self.tableView dequeueReusableCellWithIdentifier:@"ItinStopCalendar"];
+                case To2DatePickerIndex:
                     d = 0;
+
+                    if([UIDevice isPad])
+                    {
+                        if(self.itineraryStop.showArrivalDateCalendar)
+                        {
+
+                            cell = [self.tableView dequeueReusableCellWithIdentifier:@"ItinStopCalendar"];
+                            d = cell.frame.size.height;
+
+                            CGRect rect = self.view.superview.bounds;
+                            if (rect.size.width > 0)
+                            {
+                                d = rect.size.width;
+                            }
+                        }
+                        else
+                        {
+                            d = 0;
+                        }
+                    }
                     break;
                 case To3TimeInput:
                     cell = [self.tableView dequeueReusableCellWithIdentifier:@"ItinStopTimeWithInput"];
@@ -1105,9 +1232,23 @@ NSUInteger DeviceSystemMajorVersion()
 
     NSLog(@"didSelectRowAtIndexPath cell.reuseIdentifier = %@", cell.reuseIdentifier);
 
-    if ([cell.reuseIdentifier isEqualToString:@"ItinStopDepartureDate"]
-            || [cell.reuseIdentifier isEqualToString:@"ItinStopArrivalDate"]
-            || [cell.reuseIdentifier isEqualToString:@"ItinStopBorderCrossingDate"])
+    if ([cell.reuseIdentifier isEqualToString:@"ItinStopDepartureDate"] )
+    {
+        self.itineraryStop.showDepartureDateCalendar = !self.itineraryStop.showDepartureDateCalendar;
+        //TODO set the first date
+        ItineraryStop *firstStop = (ItineraryStop *)[self.itinerary.stops firstObject];
+        firstStop.showDepartureDateCalendar = !firstStop.showDepartureDateCalendar;
+
+
+        [self displayInlineDatePickerForRowAtIndexPath:indexPath];
+    }
+    else if([cell.reuseIdentifier isEqualToString:@"ItinStopArrivalDate"] )
+    {
+        self.itineraryStop.showArrivalDateCalendar = !self.itineraryStop.showArrivalDateCalendar;
+
+        [self displayInlineDatePickerForRowAtIndexPath:indexPath];
+    }
+    else if( [cell.reuseIdentifier isEqualToString:@"ItinStopBorderCrossingDate"])
     {
         if (EMBEDDED_DATE_PICKER)
         {
@@ -1129,6 +1270,18 @@ NSUInteger DeviceSystemMajorVersion()
  @param indexPath The indexPath to reveal the UIDatePicker.
  */
 - (void)toggleDatePickerForSelectedIndexPath:(NSIndexPath *)indexPath
+{
+    NSArray *indexPaths = @[[NSIndexPath indexPathForRow:indexPath.row inSection:indexPath.section]];
+    NSLog(@"toggle indexPath = %@", indexPath);
+    if(indexPath.section == RegularFromSectionIndex)
+    {
+//        ItineraryStopCalendarTableViewCell *cell = (ItineraryStopCalendarTableViewCell *)[self.tableView dequeueReusableCellWithIdentifier:@"ItinStopCalendar" forIndexPath:indexPath];
+
+
+    }
+}
+
+- (void)XXXtoggleDatePickerForSelectedIndexPath:(NSIndexPath *)indexPath
 {
     [self.tableView beginUpdates];
 
@@ -1210,7 +1363,10 @@ NSUInteger DeviceSystemMajorVersion()
         NSIndexPath *timeRow = [NSIndexPath indexPathForRow:3 inSection:RegularFromSectionIndex];
         NSIndexPath *pickerRow = [NSIndexPath indexPathForRow:4 inSection:RegularFromSectionIndex];
         NSArray *indexArray = [NSArray arrayWithObjects:dateRow, calendarRow, timeRow, pickerRow, nil];
-        [self.tableView reloadRowsAtIndexPaths:indexArray withRowAnimation:UITableViewRowAnimationNone];
+        self.itineraryStop.showDepartureDateCalendar = NO;
+
+        [self.tableView reloadRowsAtIndexPaths:indexArray withRowAnimation:UITableViewRowAnimationFade];
+
 
     };
     return onDateSelected;
@@ -1250,6 +1406,12 @@ NSUInteger DeviceSystemMajorVersion()
         NSIndexPath *timeRow = [NSIndexPath indexPathForRow:3 inSection:RegularFromSectionIndex];
         NSIndexPath *pickerRow = [NSIndexPath indexPathForRow:4 inSection:RegularFromSectionIndex];
         NSArray *indexArray = [NSArray arrayWithObjects:dateRow, calendarRow, timeRow, pickerRow, nil];
+
+        firstStop.showDepartureDateCalendar = NO;
+        firstStop.showArrivalDateCalendar = NO;
+        lastStop.showDepartureDateCalendar = NO;
+        lastStop.showArrivalDateCalendar = NO;
+
         [self.tableView reloadRowsAtIndexPaths:indexArray withRowAnimation:UITableViewRowAnimationNone];
     };
     return onDateSelected;
@@ -1270,6 +1432,9 @@ NSUInteger DeviceSystemMajorVersion()
         NSIndexPath *timeRow = [NSIndexPath indexPathForRow:3 inSection:section];
         NSIndexPath *pickerRow = [NSIndexPath indexPathForRow:4 inSection:section];
         NSArray *indexArray = [NSArray arrayWithObjects:dateRow, calendarRow, timeRow, pickerRow, nil];
+
+        self.itineraryStop.showArrivalDateCalendar = NO;
+
         [self.tableView reloadRowsAtIndexPaths:indexArray withRowAnimation:UITableViewRowAnimationNone];
 
     };
@@ -1292,6 +1457,7 @@ NSUInteger DeviceSystemMajorVersion()
     NSIndexPath *timeRow = [NSIndexPath indexPathForRow:3 inSection:RegularFromSectionIndex];
     NSIndexPath *pickerRow = [NSIndexPath indexPathForRow:4 inSection:RegularFromSectionIndex];
     NSArray *indexArray = [NSArray arrayWithObjects:dateRow, calendarRow, timeRow, pickerRow, nil];
+    self.itineraryStop.showDepartureDateCalendar = NO;
     [self.tableView reloadRowsAtIndexPaths:indexArray withRowAnimation:UITableViewRowAnimationNone];
 
 }
@@ -1314,7 +1480,8 @@ NSUInteger DeviceSystemMajorVersion()
     NSIndexPath *timeRow = [NSIndexPath indexPathForRow:3 inSection:RegularToSectionIndex];
     NSIndexPath *pickerRow = [NSIndexPath indexPathForRow:4 inSection:RegularToSectionIndex];
     NSArray *indexArray = [NSArray arrayWithObjects:dateRow, calendarRow, timeRow, pickerRow, nil];
-    [self.tableView reloadRowsAtIndexPaths:indexArray withRowAnimation:UITableViewRowAnimationNone];
+    self.itineraryStop.showArrivalDateCalendar = NO;
+    [self.tableView reloadRowsAtIndexPaths:indexArray withRowAnimation:UITableViewRowAnimationFade];
 
 }
 
@@ -1343,9 +1510,10 @@ NSUInteger DeviceSystemMajorVersion()
 - (void)displayInlineDatePickerForRowAtIndexPath:(NSIndexPath *)indexPath
 {
     // display the date picker inline with the table content
-    [self.tableView beginUpdates];
 
     NSLog(@"indexPath = %@", indexPath);
+    // always deselect the row containing the start or end date
+    [self.tableView deselectRowAtIndexPath:indexPath animated:NO];
 
     if ([self hasPickerForIndexPath:indexPath])
     {
@@ -1354,17 +1522,11 @@ NSUInteger DeviceSystemMajorVersion()
     else
     {
         NSIndexPath *indexPathToReveal = [NSIndexPath indexPathForRow:(indexPath.row + 1) inSection:indexPath.section];
-        [self toggleDatePickerForSelectedIndexPath:indexPathToReveal];
-
+//        [self toggleDatePickerForSelectedIndexPath:indexPathToReveal];
+//        [self.tableView reloadRowsAtIndexPaths:indexPathToReveal withRowAnimation:UITableViewRowAnimationFade];
+        [self.tableView reloadSections:[NSIndexSet indexSetWithIndex:indexPathToReveal.section]  withRowAnimation:UITableViewRowAnimationFade];
     }
 
-    // always deselect the row containing the start or end date
-    [self.tableView deselectRowAtIndexPath:indexPath animated:YES];
-
-    [self.tableView endUpdates];
-
-    // inform our date picker of the current date to match the current cell
-//    [self updateDatePicker:indexPath];
 }
 
 /*! Updates the UIDatePicker's value to match with the date of the cell above it.
@@ -2021,6 +2183,22 @@ NSUInteger DeviceSystemMajorVersion()
     //Reload
     [self.tableView reloadData];
 
+}
+
+-(void)tableView:(UITableView *)tableView willDisplayCell:(UITableViewCell *)cell forRowAtIndexPath:(NSIndexPath *)indexPath{
+    NSLog(@"indexPath = %@", indexPath);
+    if([tableView respondsToSelector:@selector(setSeparatorInset:)])
+    {
+        [tableView setSeparatorInset:UIEdgeInsetsZero];
+    }
+    if([tableView respondsToSelector:@selector(setLayoutMargins:)])
+    {
+        [tableView setLayoutMargins:UIEdgeInsetsZero];
+    }
+    if([cell respondsToSelector:@selector(setLayoutMargins:)])
+    {
+        [cell setLayoutMargins:UIEdgeInsetsZero];
+    }
 }
 
 

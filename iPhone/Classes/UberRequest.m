@@ -49,7 +49,7 @@
 
 -(void)requestPriceWithSuccess:(void (^) (NSArray *prices))success failure:(void (^)(CTEError *error))failure
 {
-    [self.network getJSON:self.buildWebRequestForPrice success:^(NSDictionary *responseObject) {
+    [self.network getJSONFromURL:self.buildWebRequestForPrice success:^(NSDictionary *responseObject) {
         UberParser *uberParser = [[UberParser alloc] initWithPricesJSON:responseObject];
         if (success) {
             success(uberParser.prices);
@@ -63,7 +63,7 @@
 
 -(void)requestTimeWithSuccess:(void (^) (NSArray *times))success failure:(void (^)(CTEError *error))failure
 {
-    [self.network getJSON:self.buildWebRequestForTime success:^(NSDictionary *responseObject) {
+    [self.network getJSONFromURL:self.buildWebRequestForTime success:^(NSDictionary *responseObject) {
         UberParser *uberParser = [[UberParser alloc] initWithTimesJSON:responseObject];
         if (success) {
             success(uberParser.times);

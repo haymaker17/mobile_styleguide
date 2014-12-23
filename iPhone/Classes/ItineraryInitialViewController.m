@@ -73,7 +73,7 @@
     // Return the number of rows in the section.
     if(section == 0) // Info section
     {
-        return 2;
+        return 3;
     }
     else if (section == 1)
     {
@@ -103,13 +103,17 @@
         ItineraryInformationCell *cell;
         if(indexPath.row == 0)
         {
+            cell = [tableView dequeueReusableCellWithIdentifier:@"ItineraryInformation" forIndexPath:indexPath];
+        }
+        else if(indexPath.row == 1)
+        {
             cell = [tableView dequeueReusableCellWithIdentifier:@"ImportItineraryCell" forIndexPath:indexPath];
         }
-        else if (indexPath.row == 1)
+        else if (indexPath.row == 2)
         {
             cell = [tableView dequeueReusableCellWithIdentifier:@"ManualAddItinerary" forIndexPath:indexPath];
         }
-        else if (indexPath.row == 2)
+        else if (indexPath.row == 3)
         {
             cell = [tableView dequeueReusableCellWithIdentifier:@"SingleDayItinerary" forIndexPath:indexPath];
         }
@@ -137,6 +141,11 @@
     return retCell;
 }
 
+- (CGFloat)tableView:(UITableView *)tableView estimatedHeightForRowAtIndexPath:(NSIndexPath *)indexPath
+{
+     return 100;
+}
+
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath
 {
     if(indexPath.section == 0)
@@ -149,9 +158,21 @@
         UITableViewCell *cell;
         if(indexPath.row == 0)
         {
+            if([ExSystem is8Plus])
+            {
+                return UITableViewAutomaticDimension;
+            }
+            cell = [tableView dequeueReusableCellWithIdentifier:@"ItineraryInformation"];
+        }
+        else if(indexPath.row == 1)
+        {
             BOOL canImportTrips = [[ExSystem sharedInstance] siteSettingCanImportTrips];
             if(canImportTrips)
             {
+                if([ExSystem is8Plus])
+                {
+                    return UITableViewAutomaticDimension;
+                }
                 cell = [tableView dequeueReusableCellWithIdentifier:@"ImportItineraryCell"];
             }
             else
@@ -159,11 +180,15 @@
                 return 0;
             }
         }
-        else if (indexPath.row == 1)
+        else if (indexPath.row == 2)
         {
+            if([ExSystem is8Plus])
+            {
+                return UITableViewAutomaticDimension;
+            }
             cell = [tableView dequeueReusableCellWithIdentifier:@"ManualAddItinerary"];
         }
-        else if (indexPath.row == 2)
+        else if (indexPath.row == 3)
         {
             cell = [tableView dequeueReusableCellWithIdentifier:@"SingleDayItinerary"];
         }
@@ -175,8 +200,12 @@
     }
     else if (indexPath.section == 1)
     {
+        if([ExSystem is8Plus])
+        {
+            return UITableViewAutomaticDimension;
+        }
+
         UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:@"ItineraryCellForInitial"];
-        NSLog(@"--------cell = %@", cell);
         return [cell bounds].size.height;
     }
     return 0;
@@ -185,18 +214,9 @@
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView
 {
     return 2;
-
-
-    //TODO - This is causing an exception when deleting a itinerary.  The redraw is expecting two.
-    // Return the number of sections.
-    if(self.itineraries != nil && [self.itineraries count] > 0)
-    {
-        return 2;
-    }
-
-    return 1;
 }
 
+/*
 - (UIView *)tableView:(UITableView *)tableView viewForHeaderInSection:(NSInteger)section
 {
     if(section == 1)
@@ -211,19 +231,11 @@
 
     return cell;
 }
+*/
 
 - (CGFloat)tableView:(UITableView *)tableView heightForHeaderInSection:(NSInteger)section
 {
-    if(section == 0)
-    {
-        ItineraryInformationCell *cell = (ItineraryInformationCell *)[tableView dequeueReusableCellWithIdentifier:@"ItineraryInformation"];
-        return [cell bounds].size.height;
-    }
-    else if (section == 1)
-    {
-        return 0; //Turn off the trip header
-    }
-    return 44;
+    return 0;
 }
 
 - (NSString *)tableView:(UITableView *)tableView titleForHeaderInSection:(NSInteger)section
@@ -705,5 +717,21 @@
         [self.navigationController popViewControllerAnimated:YES];
 }
 
+
+-(void)tableView:(UITableView *)tableView willDisplayCell:(UITableViewCell *)cell forRowAtIndexPath:(NSIndexPath *)indexPath{
+    NSLog(@"indexPath = %@", indexPath);
+    if([tableView respondsToSelector:@selector(setSeparatorInset:)])
+    {
+        [tableView setSeparatorInset:UIEdgeInsetsZero];
+    }
+    if([tableView respondsToSelector:@selector(setLayoutMargins:)])
+    {
+        [tableView setLayoutMargins:UIEdgeInsetsZero];
+    }
+    if([cell respondsToSelector:@selector(setLayoutMargins:)])
+    {
+        [cell setLayoutMargins:UIEdgeInsetsZero];
+    }
+}
 
 @end

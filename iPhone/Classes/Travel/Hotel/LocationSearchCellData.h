@@ -13,7 +13,9 @@
 
 @interface LocationSearchCellData : AbstractTableViewCellData
 
+@property BOOL isCurrentLocation;
 -(instancetype)initWithCTELocation:(CTELocation *)cteLocation;
+-(instancetype)initWithCurrentLocation:(CTELocation *)cteLocation;
 -(instancetype)initWithOfficeLocation:(OfficeLocationResult *)officeLocation;
 -(CTELocation *)getCTELocation;
 

@@ -9,6 +9,7 @@
 #import "MoreMenuData.h"
 #import "MoreMenuSectionData.h"
 #import "SettingsViewController.h"
+#import "ProfileViewController.h"
 #import "AppsUtil.h"
 #import "QuickExpensesReceiptStoreVC.h"
 #import "TravelBookingActionSheet.h"
@@ -30,6 +31,7 @@
 
 typedef NS_ENUM(NSUInteger, MenuItem) {
     // tags to decide what view should be opened
+    MENU_PROFILE,
     MENU_TRAVEL_BOOKING,
     MENU_PRICE_TO_BEAT,
     MENU_RECEIPTS,
@@ -130,6 +132,9 @@ typedef NS_ENUM(NSUInteger, MenuItem) {
         }
         
         switch (tag) {
+            case MENU_PROFILE:
+                [self openProfileMenu:parentView];
+                break;
             case MENU_SETTINGS:
                 [self openSettingsMenu:viewController];
                 break;
@@ -472,6 +477,18 @@ typedef NS_ENUM(NSUInteger, MenuItem) {
     [AppsUtil launchExpenseItApp];
 }
 
+- (void)openProfileMenu:(UIViewController *)parentView
+{
+
+    ProfileViewController *vc = [[ProfileViewController alloc] initWithTitle];
+    if([UIDevice isPad]){
+        [parentView presentViewController:[self getNavigationControllerWithRootVC:vc] animated:YES completion:nil];
+    }
+    else{
+        [parentView.navigationController pushViewController:vc animated:YES];
+    }
+}
+
 - (void)openSettingsMenu:(UIViewController *)parentView
 {
     SettingsViewController *vc = [[SettingsViewController alloc] init];
@@ -489,7 +506,15 @@ typedef NS_ENUM(NSUInteger, MenuItem) {
 {
     self.sections = [[NSMutableArray alloc] init];
     
-    MoreMenuSectionData *tmp = [self getTopRows];
+    
+    
+    MoreMenuSectionData *tmp = [self getProfileRow];
+    
+    if([tmp getRowCount]>0){
+        [self.sections addObject:tmp];
+    }
+    
+    tmp = [self getTopRows];
     if ([tmp getRowCount] > 0) {
         [self.sections addObject:tmp];
     }
@@ -503,6 +528,20 @@ typedef NS_ENUM(NSUInteger, MenuItem) {
     if ([tmp getRowCount] > 0) {
         [self.sections addObject:tmp];
     }
+}
+
+- (MoreMenuSectionData *)getProfileRow
+{
+    MoreMenuSectionData *tmp = [[MoreMenuSectionData alloc] init];
+    tmp.sectionTitle = @"";
+    
+    // Add Profile
+    if ([Config isProfileEnable]){
+        NSString *text = [@"Profile" localize];
+        [tmp saveRowData:text withImage:@"icon_profile" withTag:MENU_PROFILE];
+    }
+    
+    return tmp;
 }
 
 - (MoreMenuSectionData *)getSettingsRow
@@ -579,7 +618,8 @@ typedef NS_ENUM(NSUInteger, MenuItem) {
 - (MoreMenuSectionData *)getTopRows
 {
     MoreMenuSectionData *tmp = [[MoreMenuSectionData alloc] init];
-    tmp.sectionTitle = @"";
+    tmp.sectionTitle = [Config isProfileEnable] ? @"ShortCuts"
+                                                : @"";
     
     // booking options
     if ([[ExSystem sharedInstance] hasTravelBooking]) {

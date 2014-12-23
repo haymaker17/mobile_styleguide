@@ -75,6 +75,9 @@
 
 // <DepartDateTime>2013-12-19 12:00</DepartDateTime>
 @property (nonatomic, strong) NSDate *departureDate;
+@property BOOL showDepartureDateCalendar;
+@property BOOL showArrivalDateCalendar;
+
 
 // <DepartLocation>Seattle, Washington</DepartLocation>
 @property NSString *departureLocation;

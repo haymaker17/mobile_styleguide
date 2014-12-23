@@ -8,6 +8,7 @@
 
 #import "NSStringAdditions.h"
 #import "Localizer.h"
+#import "CountryPhoneFormatDict.h"
 
 static char base64EncodingTable[64] = {
 	'A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J', 'K', 'L', 'M', 'N', 'O', 'P',
@@ -143,6 +144,7 @@ static char base64EncodingTable[64] = {
  */
 + (BOOL)isValidConcurUserId:(NSString *)concurUserId
 {
+    /*
     NSUInteger occurs = [NSString findAllOccurrences:concurUserId ofString:@"@"];
     NSUInteger firstOccurrence = [NSString findFirstOccurrence:concurUserId ofString:@"@"];
     
@@ -150,6 +152,95 @@ static char base64EncodingTable[64] = {
         return NO;
     else
         return YES;
+     */
+    
+    // Simplify the logic
+    NSArray *tmp = [concurUserId componentsSeparatedByString:@"@"];
+    if ([tmp count]!=2) {
+        return NO;
+    }
+    else if(![tmp[0] lengthIgnoreWhitespace] || ![tmp[1] lengthIgnoreWhitespace]){
+        return NO;
+    }
+    else
+        return YES;
+}
+
++(NSString *)formatPhoneNo:(NSString *)phoneNumber withLocale:(NSString *)countryCode {
+    
+    CountryPhoneFormatDict *predefinedFormats = [[CountryPhoneFormatDict alloc] init];
+    
+    NSArray *localeFormats = [predefinedFormats objectForKey:countryCode];
+    // If no such country code in dictionary, return the input string
+    if(localeFormats == nil){
+        return phoneNumber;
+    }
+    /*
+     Other wise, follow the patterns in dictionary
+        1. delete the useless character which user input
+        2. For each patterns in dictionary, get the pattern string "phoneFormat"
+        3. for each character in "phoneFormat"
+            1)delete the useless character
+            2)if input is the same as character in formatter, continue
+              if not, append the character string to "temp"
+        4. use the index "i" to track the length, if meet the end of input string, return the
+           appended string we created
+     */
+    NSString *input = [self strip:phoneNumber];
+    for(NSString *phoneFormat in localeFormats) {
+        int i = 0;
+        NSMutableString *temp = [[NSMutableString alloc] init];
+        for(int p = 0; temp != nil && i < [input length] && p < [phoneFormat length]; p++) {
+            char c = [phoneFormat characterAtIndex:p];
+            BOOL required = [self canBeInputByPhonePad:c];      //if the format character is needed
+            char next = [input characterAtIndex:i];
+            switch(c) {
+                case '$':
+                    p--;
+                    [temp appendFormat:@"%c", next]; i++;
+                    break;
+                case '#':
+                    if(next < '0' || next > '9') {
+                        temp = nil;
+                        break;
+                    }
+                    [temp appendFormat:@"%c", next]; i++;
+                    break;
+                default:
+                    if(required){
+                        if(next != c) {
+                            temp = nil;
+                            break;
+                        }
+                        [temp appendFormat:@"%c", next]; i++;
+                    }else{
+                        [temp appendFormat:@"%c", c];
+                        if(next == c) i++;
+                    }
+                    break;
+            }
+        }
+        if(i == [input length]) {       //if meet the length limit
+            return temp;
+        }
+    }
+    return input;
+}
+
++ (NSString *)strip:(NSString *)phoneNumber {
+    NSMutableString *res = [[NSMutableString alloc] init];
+    for(int i = 0; i < [phoneNumber length]; i++) {
+        char next = [phoneNumber characterAtIndex:i];
+        if([self canBeInputByPhonePad:next])
+            [res appendFormat:@"%c", next];
+    }
+    return res;
+}
+
++ (BOOL)canBeInputByPhonePad:(char)c {
+    if(c == '+' || c == '*' || c == '#' || (c >= '0' && c <= '9'))
+        return YES;
+    return NO;
 }
 
 - (NSString *) localize

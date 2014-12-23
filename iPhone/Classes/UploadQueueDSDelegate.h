@@ -12,7 +12,8 @@
 @protocol UploadQueueDSDelegate <NSObject>
 
 -(void) didSelectMobileEntry:(EntityMobileEntry*)mobileEntry;
--(void) didSelectReceiptWithId:(NSString*)receiptId;
+    // MOB-21462: modify this delegat for showing pdf receipt
+-(void) didSelectReceiptWithId:(NSString*)receiptId isPdfReceipt:(BOOL)isPdfReceipt;
 -(void) showNoDataView;
 -(void) hideNoDataView;
 

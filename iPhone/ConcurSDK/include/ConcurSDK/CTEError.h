@@ -18,9 +18,11 @@
 @interface CTEError : NSError
 
 /**
- Server endpoints provide an error XML.  The error xml format is inconsistent and can be nil.
+ Some endpoints send back non-standard errors, store them just in case we want to pass them all the way back.
+ 
+ This can be nil.
  */
-@property (nonatomic, readonly, strong) NSString *concurErrorXML;
+@property (nonatomic, readonly, strong) NSString *concurErrorResponse;
 
 /**
  Whenever possible, the SDK should process the error XML into CTEErrorMessages
@@ -37,13 +39,21 @@
 
 /**
  Creates a Concur NSError with error information from the Concur server.
- 
- @param concurErrorXML
-        error XML from server
+
+ @param concurErrorJSON 
+        error JSON from server
+ */
+- (id)initWithJSON:(NSDictionary *)concurErrorJSON;
+
+/**
+ Creates a Concur NSError with error information from the Concur server.
+
+ @param concurErrorResponse
+        non-standard error response
  @param errorMessage
         non-standard errors need to be parsed into a CTEErrorMessage
  */
-- (id)initWithNonStandardXML:(NSString *)concurErrorXML errorMessage:(CTEErrorMessage *)errorMessage;
+- (id)initWithNonStandardErrorResponse:(NSString *)concurErrorResponse errorMessage:(CTEErrorMessage *)errorMessage;
 
 /**
  YES if this is a network error.
@@ -69,7 +79,6 @@
  
  This method tries to return the first CTEErrorMessage.userMessage
  If that fails, it returns a generic error message
- 
  */
 - (NSString *)simpleErrorMessage;
 

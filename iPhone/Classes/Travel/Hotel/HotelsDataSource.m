@@ -44,9 +44,14 @@
 // For Google Analytics
 @property (nonatomic, strong) NSMutableDictionary *topFiveRecommendations;
 
+@property (nonatomic) int stayDurationInDays;
+
 @end
 
 @implementation HotelsDataSource
+
+NSString* const CHECKIN_DATE_STRING = @"Check-In Date";
+NSString* const CHECKOUT_DATE_STRING = @"Check-Out Date";
 
 -(instancetype)init
 {
@@ -59,6 +64,7 @@
     self.searchResultList = [[NSMutableArray alloc] init];
     self.sourceSections = [[NSMutableArray alloc] init];
     self.sectionTitles = [[NSMutableArray alloc] init];
+    self.stayDurationInDays = 1;
     
     // By default set the dates to tonight
     _hotelSearchCriteria = [[HotelSearchCriteriaV2 alloc] init];
@@ -203,7 +209,7 @@
             }
             if (self.onSearchError) {
                 // Default message to show user
-                NSString *userMessage = [@"Looks like we are experience some difficulties. Please check back in a few minutes." localize];
+                NSString *userMessage = [@"Looks like we are experiencing some difficulties. Please check back in a few minutes." localize];
                 // Check if the error has a userMessage inside it
                 if (error.concurErrorMessages != nil && [error.concurErrorMessages count] > 0)
                 {
@@ -458,8 +464,11 @@
     cellData.cellIdentifier = @"SearchCriteriaCell";
     cellData.cellType = kDatePicker;
     cellData.cellHeight = 60;
-    cellData.keyValue = [[NSDictionary alloc] initWithObjectsAndKeys:self.hotelSearchCriteria.checkinDate,@"cellvalue", nil];
-    cellData.cellName = @"Check-In Date";
+    NSMutableDictionary *keyValPairs = [[NSMutableDictionary alloc] initWithObjectsAndKeys:self.hotelSearchCriteria.checkinDate,@"cellvalue", nil];
+    keyValPairs[@"minDate"] = [NSDate date];
+    keyValPairs[@"maxDate"] = [CTEDateUtility addDaysToDate:[NSDate date] daysToAdd:355];
+    cellData.keyValue = keyValPairs;
+    cellData.cellName = CHECKIN_DATE_STRING;
     
     if (startIndexPath != nil) {
         [self insertItemAtIndexPath:cellData indexPath:[NSIndexPath indexPathForRow:row++ inSection:section]];
@@ -479,9 +488,12 @@
     cellData.cellIdentifier = @"SearchCriteriaCell";
     cellData.cellType = kDatePicker;
     cellData.cellHeight = 60;
-    cellData.keyValue = [[NSDictionary alloc] initWithObjectsAndKeys:self.hotelSearchCriteria.checkoutDate,@"cellvalue", nil];
-    cellData.cellName = @"Check-Out Date";
-    
+    keyValPairs = [[NSMutableDictionary alloc] initWithObjectsAndKeys:self.hotelSearchCriteria.checkoutDate,@"cellvalue", nil];
+    keyValPairs[@"minDate"] = [CTEDateUtility addDaysToDate:[NSDate date] daysToAdd:1];
+    keyValPairs[@"maxDate"] = [CTEDateUtility addDaysToDate:[NSDate date] daysToAdd:356];
+    cellData.keyValue = keyValPairs;
+    cellData.cellName = CHECKOUT_DATE_STRING;
+
     if (startIndexPath != nil) {
         [self insertItemAtIndexPath:cellData indexPath:[NSIndexPath indexPathForRow:row++ inSection:section]];
     }
@@ -595,11 +607,11 @@
 
             }
         }
-        if (index == 1) {
+        if ([cellData.cellName isEqualToString:CHECKIN_DATE_STRING]) {
             NSDate *checkinDate = (NSDate *)cellData.keyValue[@"cellvalue"];
             _hotelSearchCriteria.checkinDate = checkinDate;
         }
-        if (index == 2) {
+        if ([cellData.cellName isEqualToString:CHECKOUT_DATE_STRING]) {//index == 2) {
             // checkout date
             NSDate *checkoutDate = (NSDate *)cellData.keyValue[@"cellvalue"];
             _hotelSearchCriteria.checkoutDate = checkoutDate;
@@ -635,11 +647,15 @@
     }
     // Stupid way to save keyvalue pairs.
     NSIndexPath *indexPath  = [self indexPathsForItem:destinationData][0];
-    destinationData.keyValue = [[NSDictionary alloc] initWithObjectsAndKeys:cteLocation,@"cellvalue", nil];
-    destinationData.subTitle = cteLocation.location;
-    [self.delegate dataSourceWillChangeData:self];
-    [self.delegate dataSource:self didChangeObject:destinationData atIndexPath:indexPath forChangeType:kDataSourceChangeUpdate newIndexPath:nil];
-    [self.delegate dataSourceDidChangeContent:self];
+    // Need null-check as it is possible
+    if (indexPath != nil)
+    {
+        destinationData.keyValue = [[NSDictionary alloc] initWithObjectsAndKeys:cteLocation,@"cellvalue", nil];
+        destinationData.subTitle = cteLocation.location;
+        [self.delegate dataSourceWillChangeData:self];
+        [self.delegate dataSource:self didChangeObject:destinationData atIndexPath:indexPath forChangeType:kDataSourceChangeUpdate newIndexPath:nil];
+        [self.delegate dataSourceDidChangeContent:self];
+    }
     
 }
 
@@ -657,23 +673,25 @@
     SearchCriteriaCellData *previousCellData = [self itemAtIndexPath:previousCellIndexPath];
     
     // set cell name
-    if ([previousCellData.cellName isEqualToString:@"Check-Out Date"]) {
+    if ([previousCellData.cellName isEqualToString:CHECKOUT_DATE_STRING]) {
         datePickerCellData.cellName = @"Check-Out Date Picker";
     }
-    else if ([previousCellData.cellName isEqualToString:@"Check-In Date"]){
+    else if ([previousCellData.cellName isEqualToString:CHECKIN_DATE_STRING]){
         datePickerCellData.cellName = @"Check-In Date Picker";
     }
     
     if ([previousCellData.keyValue objectForKey:@"cellvalue"] != nil) {
-        datePickerCellData.keyValue = [[NSDictionary alloc] initWithObjectsAndKeys:[previousCellData.keyValue objectForKey:@"cellvalue"],@"cellvalue", nil];
+        datePickerCellData.keyValue = [previousCellData.keyValue copy];
     }
     else{
+        NSMutableDictionary *keyValDictionary = [[NSMutableDictionary alloc] initWithDictionary:previousCellData.keyValue];
         if (index.row == 1) {
-            datePickerCellData.keyValue = [[NSDictionary alloc] initWithObjectsAndKeys:_hotelSearchCriteria.checkinDate,@"cellvalue", nil];
+            keyValDictionary[@"cellvalue"] = _hotelSearchCriteria.checkinDate;
         } else
         {
-            datePickerCellData.keyValue = [[NSDictionary alloc] initWithObjectsAndKeys:_hotelSearchCriteria.checkoutDate,@"cellvalue", nil];
+            keyValDictionary[@"cellvalue"] = _hotelSearchCriteria.checkoutDate;
         }
+        datePickerCellData.keyValue = keyValDictionary;
     }
 
     NSLog(@"index.row = %d , value = %@", index.row,self.searchCriteriaCells[index.row] );
@@ -704,23 +722,27 @@
     
     // update cell data for selected date picker first
     cellData.subTitle =  [CTEDateUtility convertDateToString:targetDate withOutputFormat:@"MM/dd/yyyy" timeZone:[NSTimeZone localTimeZone]];
-    cellData.keyValue = [[NSDictionary alloc] initWithObjectsAndKeys:targetDate,@"cellvalue", nil];
+    NSMutableDictionary *keyValuePairs = [[NSMutableDictionary alloc] initWithDictionary:cellData.keyValue];
+    keyValuePairs[@"cellvalue"] = targetDate;
+    cellData.keyValue = keyValuePairs;
     
     // when check-in date is selected
-    if ([cellData.cellName isEqualToString:@"Check-In Date"]) {
+    if ([cellData.cellName isEqualToString:CHECKIN_DATE_STRING]) {
         DLog(@"Check-in Date");
         NSIndexPath *checkOutCellIndexPath = [NSIndexPath indexPathForRow:indexPath.row + 2 inSection:indexPath.section];
         SearchCriteriaCellData *checkOutCellData = [self itemAtIndexPath:checkOutCellIndexPath];
-        NSDate *checkOutDate = [checkOutCellData.keyValue objectForKey:@"cellvalue"];
 
-        if ([self daysBetweenDate:targetDate andDate:checkOutDate] <= 0) {
-            [self changeDateCellDataWithDate:targetDate dayInterval:1 cellData:checkOutCellData];
-            [self.delegate dataSourceWillChangeData:self];
-            [self.delegate dataSource:self didChangeObject:cellData atIndexPath:indexPath forChangeType:kDataSourceChangeUpdate newIndexPath:nil];
-            [self.delegate dataSource:self didChangeObject:cellData atIndexPath:checkOutCellIndexPath forChangeType:kDataSourceChangeUpdate newIndexPath:nil];
-            [self.delegate dataSourceDidChangeContent:self];
-            return;
+        NSDate *newDate = [CTEDateUtility addDaysToDate:targetDate daysToAdd:self.stayDurationInDays];
+        NSDate *maxCheckoutDate = [checkOutCellData.keyValue objectForKey:@"maxDate"];
+        if ([maxCheckoutDate compare:newDate] != NSOrderedDescending) { // if check-in Date + stay duration > max checkout date
+            self.stayDurationInDays = [self daysBetweenDate:targetDate andDate:maxCheckoutDate];
         }
+        [self changeDateCellDataWithDate:targetDate dayInterval:self.stayDurationInDays cellData:checkOutCellData];
+        [self.delegate dataSourceWillChangeData:self];
+        [self.delegate dataSource:self didChangeObject:cellData atIndexPath:indexPath forChangeType:kDataSourceChangeUpdate newIndexPath:nil];
+        [self.delegate dataSource:self didChangeObject:cellData atIndexPath:checkOutCellIndexPath forChangeType:kDataSourceChangeUpdate newIndexPath:nil];
+        [self.delegate dataSourceDidChangeContent:self];
+        return;
     }
     else{ // check-out date cell is selected
         DLog(@"Check-Out Date");
@@ -734,8 +756,13 @@
             [self.delegate dataSource:self didChangeObject:cellData atIndexPath:indexPath forChangeType:kDataSourceChangeUpdate newIndexPath:nil];
             [self.delegate dataSource:self didChangeObject:cellData atIndexPath:checkInCellIndexPath forChangeType:kDataSourceChangeUpdate newIndexPath:nil];
             [self.delegate dataSourceDidChangeContent:self];
+            self.stayDurationInDays = 1;
             return;
         }
+        else {
+            self.stayDurationInDays = [self daysBetweenDate:checkInDate andDate:targetDate];
+        }
+            
     }
     
     [self.delegate dataSourceWillChangeData:self];
@@ -765,7 +792,9 @@
 {
     NSDate *newDate = [CTEDateUtility addDaysToDate:date daysToAdd:numOfDay];
     cellData.subTitle =  [CTEDateUtility convertDateToString:newDate withOutputFormat:@"MM/dd/yyyy" timeZone:[NSTimeZone localTimeZone]];
-    cellData.keyValue = [[NSDictionary alloc] initWithObjectsAndKeys:newDate,@"cellvalue", nil];
+    NSMutableDictionary *replacementKeyVal = [[NSMutableDictionary alloc] initWithDictionary:cellData.keyValue];
+    replacementKeyVal[@"cellvalue"] = newDate;
+    cellData.keyValue = replacementKeyVal;
 }
 
 
@@ -791,7 +820,13 @@
         section++;
     }
     
-    return @[indexPath];
+    // Check if nil, otherwise app crashes
+    if (indexPath != nil){
+        return @[indexPath];
+    }
+    else{
+        return nil;
+    }
 }
 
 
@@ -966,13 +1001,11 @@
             return (NSComparisonResult)NSOrderedAscending;
         }
         else{
-            if (data1.cteHotel.isCompanyPreferredChain && !data2.cteHotel.isCompanyPreferredChain){
-                return (NSComparisonResult)NSOrderedAscending;
-            }
-            else if(!data1.cteHotel.isCompanyPreferredChain && data2.cteHotel.isCompanyPreferredChain){
-                return (NSComparisonResult)NSOrderedDescending;
-            }
-            return (NSComparisonResult)NSOrderedSame;
+            if (data1.cteHotel.companyPreference > data2.cteHotel.companyPreference)
+                return NSOrderedAscending;
+            else if (data1.cteHotel.companyPreference < data2.cteHotel.companyPreference)
+                return NSOrderedDescending;
+            return NSOrderedSame;
         }
 
     }] mutableCopy];

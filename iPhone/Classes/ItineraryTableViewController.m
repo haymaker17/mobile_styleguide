@@ -20,6 +20,7 @@
 #import "ItineraryStopDetailViewController.h"
 #import "ItineraryAllowanceAdjustmentViewController.h"
 #import "ItineraryImport.h"
+#import "CTEBadge.h"
 
 @interface ItineraryTableViewController ()
 
@@ -143,6 +144,12 @@
         cell.itineraryName.text = itinerary.itinName;
         cell.numberOfStops.text = [NSString stringWithFormat:@"%u Stops", [itinerary.stops count]];
 
+        //TODO Config for the Approver, not the target
+        NSString *tripLengthValue = [self.itineraryConfig.tripLengthListValues valueForKey:itinerary.tripLength];
+//        cell.itineraryTripLength.text = tripLengthValue;
+        //TODO This needs to point at the config of the employee being approved, so  we'll leave it blank for now.
+        cell.itineraryTripLength.text = @"";
+
         [ItineraryCell composeItineraryDateRange:itinerary cell:cell format:@"MMM dd"];
 
         UIImage *plus = [UIImage imageNamed:@"icon_expand_arrow"];
@@ -197,6 +204,12 @@
         cell.itineraryStop = stop;
         cell.itineraryIndex = indexPath.section;
 
+        [cell.stopBadge updateBadgeCount:stop.stopNumber];
+//        int xxx = [stop.stopNumber intValue] + [@100 intValue];
+//        [cell.stopBadge updateBadgeCount:[NSNumber numberWithInteger:(xxx)]];
+
+        [cell.stopBadge updateBadgeColor:[UIColor colorWithRed:0.0/255.0 green:120.0/255.0 blue:200.0/255.0 alpha:1]];
+
         cell.departureCity.text = stop.departureLocation;
         cell.arrivalCity.text = stop.arrivalLocation;
 
@@ -244,15 +257,29 @@
     return cell;
 }
 
+- (CGFloat)tableView:(UITableView *)tableView estimatedHeightForRowAtIndexPath:(NSIndexPath *)indexPath
+{
+    return 86;
+}
+
+
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath
 {
     ItineraryStopCell  *cell = nil;
     if(indexPath.row == 0)
     {
+        if([ExSystem is8Plus])
+        {
+            return UITableViewAutomaticDimension;
+        }
         cell = (ItineraryCell *)[tableView dequeueReusableCellWithIdentifier:@"ItineraryListCell"];
     }
     else
     {
+        if([ExSystem is8Plus])
+        {
+            return UITableViewAutomaticDimension;
+        }
         cell = [tableView dequeueReusableCellWithIdentifier:@"ItinStop2ProtoCell"];
     }
     return [cell bounds].size.height;

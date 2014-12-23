@@ -792,7 +792,6 @@ static ExSystem *sharedInstance;
     return [hasTravelRequest isEqualToString:@"true"];
 }
 
-
 - (BOOL)hasTravelBooking // This checks if Booking a Trip is allowed for the user (checks on Roles and siteSettings)
 {
     // apparently we have a long list of roles to check now...
@@ -887,6 +886,22 @@ static ExSystem *sharedInstance;
         return @"CTE";
     }
     return @"";
+}
+
+- (BOOL) isLoginFromSafari{
+    
+    NSArray *companyNeedSafari = @[@"e2l43y"];
+    NSString *companySsoCode = [self.keychainManager loadCompanyCode];
+    
+    BOOL needSafari = NO;
+    for (NSString *str in companyNeedSafari) {
+        if([companySsoCode isEqualToString:str]){
+            needSafari = YES;
+            break;
+        }
+    }
+    
+    return needSafari;
 }
 
 #pragma mark -
@@ -1551,6 +1566,20 @@ static ExSystem *sharedInstance;
     [self.keychainManager saveConcurAccessTokenSecret:cSecret];
 }
 
+-(NSString *)loadConcurSSOAccessToken
+{
+    return self.concurSSOAccessToken;
+}
+
+-(void)saveConcurSSOAccessToken:(NSString *)ssoToken
+{
+    self.concurSSOAccessToken = ssoToken;
+}
+
+-(void)clearConcurSSOAccessToken
+{
+    self.concurSSOAccessToken = nil;
+}
 
 -(void)clearCompanySSOLoginPageUrl
 {

@@ -80,7 +80,8 @@
         pBag[@"TRIP_KEY"] = tripKey;
 
         UIViewController *homeVC = [ConcurMobileAppDelegate findHomeVC];
-        if ([homeVC respondsToSelector:@selector(refreshTripsData)])
+        // In iOS 8 onwards, Home is displayed for a split-second before TripDetailsVC is pushed over it. This causes viewDidAppear on Home9VC to be triggered which in-turn reloads Trips data. This causes MOB-21531 and an app crash
+        if (![ExSystem is8Plus] && [homeVC respondsToSelector:@selector(refreshTripsData)])
         {
             [homeVC performSelector:@selector(refreshTripsData) withObject:nil];
         }
@@ -351,7 +352,9 @@
     
     if ([self getViolationsCount] > 0)
     {
-        [self.aKeys addObject:@"Violations"];
+        if ([self hasDisallowedViolations] || [[[self getViolations] stringByTrimmingCharactersInSet:[NSCharacterSet whitespaceAndNewlineCharacterSet]] length]) {
+            [self.aKeys addObject:@"Violations"];
+        }
     }
     
     RailChoiceSegmentData *rcsd = (railChoice.segments)[0];
@@ -1107,7 +1110,7 @@ heightForRowAtIndexPath:(NSIndexPath *)indexPath
 {
     if ([railChoice maxEnforcementLevel])
     {
-        if ([[railChoice maxEnforcementLevel] intValue] != kViolationAllow)
+        if ([[railChoice maxEnforcementLevel] intValue] > kViolationExcludeFromLLF)
         {
             return YES;
         }
@@ -1122,9 +1125,12 @@ heightForRowAtIndexPath:(NSIndexPath *)indexPath
 	NSMutableString *str = [[NSMutableString alloc] initWithString:@""];
 	for (HotelViolation* violation in violations)
 	{
-		if ([str length] > 0)
-			[str appendString:@"\n"];
-		[str appendString:violation.message];
+        if ([violation.message length])
+        {
+            if ([str length] > 0)
+                [str appendString:@"\n"];
+            [str appendString:violation.message];
+        }
 	}
 	return str;
 }

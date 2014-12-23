@@ -129,7 +129,9 @@
     NSString *currentVersion = @"1.0";
     NSString *versionInKeychain = [self keychainStorageVersion];
 
-    if (![currentVersion isEqualToString:versionInKeychain]) {
+    if (![currentVersion isEqualToString:versionInKeychain])
+    {
+        [[MCLogging getInstance] log:@"KeychainManager::Possible deleting AccessToken. AutoLogin will fail!" Level:MC_LOG_INFO];
         NSMutableDictionary *oldValues = [self retrieveOldConcurKeychainData];
         [self clearKeychain];
         [self migrateOldConcurKeychainData:oldValues];
@@ -177,7 +179,8 @@
 
     // set the data class
     [query setObject:(__bridge id)kSecClassGenericPassword forKey:(__bridge id)kSecClass];
-
+    if ([ExSystem is8Plus])
+        [query setObject:@YES forKey:(__bridge id)kSecUseNoAuthenticationUI];
     CFTypeRef result = NULL;
     SecItemCopyMatching((__bridge CFDictionaryRef)query, &result);
 

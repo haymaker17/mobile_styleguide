@@ -34,8 +34,11 @@
 	{
 		[bodyXML appendString:[NSString stringWithFormat:@"<ParentRpeKey>%@</ParentRpeKey>", self.entry.parentRpeKey]];
 	}
-	
-    if ([self.entry.receiptImageId length])
+
+    // MOB-21311
+    // in order to be compatible with the old UI logic, we had to put the EReceiptImageId in the ReceiptImageId field
+    // this causes subtle problems if we try to save with it.
+    if ([self.entry.receiptImageId length] && self.entry.eReceiptImageId == nil)
 	{
 		[bodyXML appendString:[NSString stringWithFormat:@"<ReceiptImageId>%@</ReceiptImageId>", self.entry.receiptImageId]];
 	}

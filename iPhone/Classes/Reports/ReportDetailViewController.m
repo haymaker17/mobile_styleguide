@@ -38,9 +38,10 @@
 #import "UIActionSheet+Blocks.h"
 #import "ItineraryAllowanceAdjustmentViewController.h"
 
-@interface ReportDetailViewController (Private)
+@interface ReportDetailViewController ()
 //Receipt actions
 - (void)showReceiptViewer;
+@property BOOL isDeleteCarMileageExpense;
 @end
 
 @implementation ReportDetailViewController
@@ -82,6 +83,11 @@
 
 - (void)setSeedData:(NSDictionary*)pBag
 {
+    if ([pBag[@"SOURCE_SECTION"]isEqualToString:@"REPORT_APPROVAL_SECTION"])
+    {
+        self.isReportApproval = YES;
+    }
+    
     if (pBag[@"REPORT"] == nil)
     {
         [self setSeedDataWithIDOnly:pBag[@"ID_KEY"] role:pBag[@"ROLE"]];
@@ -427,8 +433,12 @@
 								  otherButtonTitles:nil];
 			[alert show];
 		}
-		else 
-		{
+		else {
+            // MOB-21980: if deleting a car mileage expense, need to update car rates data
+            if (self.isDeleteCarMileageExpense){
+                [self updateCarRatesData];
+            }
+
             [self refreshWithUpdatedReport:srd.rpt];
 		}
 	}
@@ -569,7 +579,21 @@
 	{
         [self fetchReportDetail];
 	}
-	
+    
+    else if([msg.idKey isEqualToString:CAR_RATES_DATA])
+    {
+        NSString* errMsg = msg.errBody;
+        if (errMsg == nil){
+            [ConcurMobileAppDelegate findRootViewController].carRatesData = (CarRatesData*) msg.responder;
+        }
+    }
+}
+
+// get the car rate data
+- (void)updateCarRatesData
+{
+    NSMutableDictionary *pBag = [[NSMutableDictionary alloc] initWithObjectsAndKeys:nil];
+    [[ExSystem sharedInstance].msgControl createMsg:CAR_RATES_DATA CacheOnly:@"NO" ParameterBag:pBag SkipCache: YES RespondTo:self];
 }
 
 -(void)rptHeaderTapped:(id) sender
@@ -728,10 +752,24 @@
 		
 		pBag[@"ENTRY"] = entry;
 		pBag[@"ID_KEY"] = rpt.rptKey;
+        if (self.isReportApproval) {
+            pBag[@"SOURCE_SECTION"] = @"REPORT_APPROVAL_SECTION";
+        }
         [ConcurMobileAppDelegate switchToView:APPROVE_EXPENSE_DETAILS viewFrom:[self getViewIDKey] ParameterBag:pBag];
 	}
 	
     [self.tableList deselectRowAtIndexPath:newIndexPath animated:NO];
+}
+
+-(BOOL) isCompanyCarMileageExpType:(NSString*)expType
+{
+    ExpenseTypeData* expTypeData = [[ExpenseTypesManager sharedInstance]
+                                    expenseTypeForVersion:@"V3" policyKey:self.rpt.polKey
+                                    expenseKey:expType forChild:NO];
+
+    if (expTypeData == nil && [expType isEqualToString:@"CARMI"])
+        return TRUE;
+    return [expTypeData isCompanyCarMileage];
 }
 
 - (void)showTravelAllowanceActionSheet:(NSMutableDictionary *)pBag storyboard:(UIStoryboard *)storyboard
@@ -857,7 +895,13 @@ heightForRowAtIndexPath:(NSIndexPath *)indexPath
 		{
 			[self showWaitView];
 
+            // Why it is a array???
 			NSArray * rpeKeys = @[(rpt.keys)[row]];
+            
+            // MOB-21980: need to check if the deleted item is a car mileage expense. if so, need to update car rates data
+            EntryData *entry = (self.rpt.entries)[rpeKeys[0]];
+            self.isDeleteCarMileageExpense = [self isCompanyCarMileageExpType:entry.expKey];
+            
 			NSMutableDictionary *pBag = [[NSMutableDictionary alloc] initWithObjectsAndKeys: 
 										 self.rpt.rptKey, @"RPT_KEY",
 										 rpeKeys, @"RPE_KEYS",

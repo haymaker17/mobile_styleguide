@@ -403,12 +403,6 @@
         [Flurry logEvent:@"Settings: Action" withParameters:dictionary];
         
     }
-    NSString* newEnableTouchID = dictRowData[kSectionTouchID];
-    if (![[ExSystem sharedInstance].entitySettings.enableTouchID isEqualToString:newEnableTouchID])
-    {
-        NSDictionary *dictionary = @{@"Action": @"Enable TouchID", @"New Value": newEnableTouchID};
-        [Flurry logEvent:@"Settings: Action" withParameters:dictionary];
-    }
     
     [ExSystem sharedInstance].entitySettings.autoLogin = dictRowData[kSectionLoginAuto];
     [ExSystem sharedInstance].entitySettings.saveUserName = dictRowData[kSectionLoginSaveUser];
@@ -663,6 +657,7 @@
             {
                 cell.lblHeading.text = [Localizer getLocalizedText:@"Touch ID"];
                 cell.switchView.tag = kTagTouchID;
+                [cell.switchView addTarget:self action:@selector(switchToggled:) forControlEvents:UIControlEventValueChanged];
             }
             
 			NSString *switchState = dictRowData[rowKey];
@@ -1136,7 +1131,6 @@
 
 }
 
-
 -(void)confirmCacheClear:(id)sender
 {	
 	// Mob-2602 Changed to a more user friendly message
@@ -1150,6 +1144,20 @@
 						  nil];
 	alert.tag = 999;
 	[alert show];
+}
+
+- (void) switchToggled:(id)sender
+{
+    if ([self.dictRowData[kSectionTouchID] isEqualToString:@"NO"])
+    {
+        NSString *eventLlabel = [NSString stringWithFormat:@"Fingerprint value: %@", @"OFF"];
+        [AnalyticsTracker logEventWithCategory:@"Settings" eventAction:@"Toggle" eventLabel:eventLlabel eventValue:nil];
+    }
+    else if ([self.dictRowData[kSectionTouchID] isEqualToString:@"YES"])
+    {
+        NSString *eventLlabel = [NSString stringWithFormat:@"Fingerprint value: %@", @"ON"];
+        [AnalyticsTracker logEventWithCategory:@"Settings" eventAction:@"Toggle" eventLabel:eventLlabel eventValue:nil];
+    }
 }
 
 @end

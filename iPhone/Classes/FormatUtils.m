@@ -50,6 +50,11 @@
     return [FormatUtils formatMoneyWithNumber:num crnCode:crnCode decimalPlaces:customDecimalOFF withCurrency:YES];
 }
 
++ (NSString*) formatMoneyString:(NSString*)numberString crnCode:(NSString*)crnCode decimalPlaces:(int)fractionDigits
+{
+    return [FormatUtils formatMoneyWithNumber:@([numberString doubleValue]) crnCode:crnCode decimalPlaces:fractionDigits withCurrency:YES];
+}
+
 +(NSNumberFormatter *) getCurrencyFormatter:(NSString*) crnCode
 {
 	NSNumberFormatter *currencyStyle = [[NSNumberFormatter alloc] init];

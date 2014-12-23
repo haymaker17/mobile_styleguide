@@ -56,7 +56,6 @@
 
 #import	"UploadReceiptData.h"
 #import "ExReceiptManager.h"
-#import "UncaughtExceptionHandler.h"
 
 #import "ReportDetailViewController.h"
 
@@ -414,17 +413,6 @@ int sectionCorpReport = 1;
 
 - (void)viewDidAppear:(BOOL)animated
 {
-	if (DetectedUncaughtException())  // If a flag indicates that an uncaught exception occured the last time the app ran
-	{
-		// Log failed cache id
-		[[ExSystem sharedInstance].cacheData clearLastCorruptedCache];
-		// Clear the flag
-		SetDetectedUncaughtException(NO);
-		
-		// Ask the user if they want to send the crash log
-		[ExceptionLogSender offerToSendExceptionLogFromViewController:self];
-	}
-    
 	[self checkOffline];
 	[self.navigationController.navigationBar setHidden:YES];
 	[super viewDidAppear:animated];

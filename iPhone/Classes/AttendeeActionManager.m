@@ -173,8 +173,11 @@ const int kAddAttendeeActions = 802;
 - (void)showAttendeeSearch
 {
 	// It is possible that the same issue as MOB-4477 is occurring here.
-	if (viewController.presentedViewController != nil)
+    // MOB-21896 As of iOS 8, the presentedViewController includes alerts.  So it won't be nil anymore.
+    // Quick fix.  really should rethink the way we do this safety check.
+    if (viewController.presentedViewController != nil && [viewController.presentedViewController isKindOfClass:[AttendeeFullSearchVC class]]) {
 		return;
+    }
 
     // MOB-7283 - SU app only supports Attendee quick search
     // MOB-6079

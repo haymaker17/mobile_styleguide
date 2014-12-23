@@ -8,6 +8,7 @@
 
 #import "OverlayView2.h"
 #import "HelpOverlayStatusList.h"
+#import "Config.h"
 
 // this UILabel or UIImageView should be used as the dismiss button
 #define DISMISS_LABEL_TAG 1
@@ -136,6 +137,10 @@
     {
         // Replace with Fusion14 Hotel Search result screen
         [self.delegate buttonYesClicked];
+        [self closeOverlay];
+    }
+    else if ([Config isSprintDemoBuild])
+    {
         [self closeOverlay];
     }
 }

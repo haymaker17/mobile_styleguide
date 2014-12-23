@@ -666,6 +666,8 @@
 	<string>Бронирование невозможно, пока ваше устройство находится в автономном режиме. Подключитесь, пожалуйста, к Интернету и повторите попытку.</string>
 	<key>Border Crossing</key>
 	<string>Пересечение границы</string>
+	<key>Breakfast Amount *</key>
+	<string>Завтрак сумма *</string>
 	<key>Bump Phones to Become an Attendee</key>
 	<string>%@ Телефонов, чтобы стать участником</string>
 	<key>Bump Phones to Exchange Attendee Info</key>
@@ -872,6 +874,8 @@
 	<string>Регистрация выбытия</string>
 	<key>Children</key>
 	<string>Дети</string>
+	<key>Choose a location</key>
+	<string>Выберите местоположение</string>
 	<key>ChoosePhoto-ImagePicker</key>
 	<string>Предварительный просмотр</string>
 	<key>Class &amp; Seat Number</key>
@@ -2044,8 +2048,8 @@
 	<string>Настройки входа</string>
 	<key>Logout</key>
 	<string>Выйти из системы</string>
-	<key>Looks like we are experience some difficulties. Please check back in a few minutes.</key>
-	<string>Похоже, мы испытывать некоторые трудности. Пожалуйста, проверьте еще в течение нескольких минут.</string>
+	<key>Looks like we are experiencing some difficulties. Please check back in a few minutes.</key>
+	<string>Похоже, мы испытываем некоторые трудности. Пожалуйста, проверьте еще в течение нескольких минут.</string>
 	<key>Luxury</key>
 	<string>Класс «люкс»</string>
 	<key>MAP</key>
@@ -2106,10 +2110,14 @@
 	<string>Карта</string>
 	<key>Map Address</key>
 	<string>Обозначить адрес</string>
+	<key>Matched Expense</key>
+	<string>Соответствующие расходы</string>
 	<key>Matching transactions combined into a single expense</key>
 	<string>Совпадающие операции объединены в единый расход</string>
 	<key>Meal Allowances</key>
 	<string>Питание-надбавок</string>
+	<key>Meals Amount</key>
+	<string>Питание сумма</string>
 	<key>Menu</key>
 	<string>Меню</string>
 	<key>Message Center</key>
@@ -2382,6 +2390,12 @@
 	<string>Станьте более подготовленным в организации поездки! Заказ по цене ниже контрольной цены для сравнения экономит деньги вашей компании.</string>
 	<key>P2B_AIR_BOOKING_HEADER_POINTS_ENABLED</key>
 	<string>Зарабатывайте дорожные баллы, выбирая варианты, стоимость которых ниже контрольной цены для сравнения. При отнесении поездки на расходы отображается общее количество заработанных дорожных баллов, которые вы можете использовать в счет будущих льгот.</string>
+	<key>P2B_AIR_BOOKING_MANAGE_VIOLATIONS_HEADER</key>
+	<string>У вас есть нарушения политики, которые должны быть решены. Вы можете использовать точки путешествия или следовать рабочему нарушение нормальной политики фирменных.</string>
+	<key>P2B_AIR_BOOKING_USING_POINTS_HEADER</key>
+	<string>Вы зарабатываете очки путешествия, выбрав жилье авиабилет или отель, которые стоят меньше, чем цена до биться. Можно использовать точки путешествия от вашего банка обойти ваших фирменных типичный уведомления или процессов утверждения для out-of-policy варианты бронирования. Эта оговорка воздуха необходимо использовать точки путешествия или представить типичный уведомления Ваших фирменных или утверждения процессов, потому что это не в соответствии с вашего ассортимента, правила путешествия. После того, как вы за свой счет вашей поездки, любые путешествия очков вы зарабатываете или использовать будут отражены в вашем банке.</string>
+	<key>P2B_HOTEL_BOOKING_USING_POINTS_HEADER</key>
+	<string>Вы зарабатываете очки путешествия, выбрав жилье авиабилет или отель, которые стоят меньше, чем цена до биться. Можно использовать точки путешествия от вашего банка обойти ваших фирменных типичный уведомления или процессов утверждения для out-of-policy варианты бронирования. Это бронирование необходимо использовать точки путешествия или представить типичный уведомления Ваших фирменных или утверждения процессов, потому что это не в соответствии с вашего ассортимента, правила путешествия. После того, как вы за свой счет вашей поездки, любые путешествия очков вы зарабатываете или использовать будут отражены в вашем банке.</string>
 	<key>PDF Receipt</key>
 	<string>Квитанция в формате PDF</string>
 	<key>PENDING_REQUIRED_TRAVEL_CUSTOM_FIELDS</key>
@@ -2546,6 +2560,8 @@
 	<string>Распечатать</string>
 	<key>Proceed to Sign In</key>
 	<string>Продолжить вход в систему</string>
+	<key>Profile</key>
+	<string>Профиль</string>
 	<key>Property</key>
 	<string>Свойство</string>
 	<key>Provided</key>
@@ -2678,6 +2694,10 @@
 	<string>При загрузке расхода произошел сбой</string>
 	<key>Receipt uploaded</key>
 	<string>Квитанция загружена</string>
+	<key>ReceiptImageUnavailable</key>
+	<string>Получение изображения в настоящее время недоступна. Пожалуйста, повторите попытку позже.</string>
+	<key>ReceiptImageUnavailableTitle</key>
+	<string>Получение изображения недоступны</string>
 	<key>ReceiptUploadFailMsg</key>
 	<string>В настоящее время невозможно сохранить квитанцию. Попытайтесь, пожалуйста, сделать это позже.</string>
 	<key>Receipts</key>
@@ -2716,6 +2736,8 @@
 	<string>Выполняется отклонение поездки</string>
 	<key>Remaining:</key>
 	<string>Осталось:</string>
+	<key>Removal of E-Receipt items is not supported on mobile</key>
+	<string>Удаление E-получение элементов не поддерживается на мобильный</string>
 	<key>Removed Link to Dropbox</key>
 	<string>Удалена ссылка к общему банку данных Dropbox</string>
 	<key>Removing entry</key>
@@ -2758,6 +2780,8 @@
 	<string>У вас имеется %d отчетов к утверждению</string>
 	<key>Request</key>
 	<string>Запрос</string>
+	<key>RequestHeader</key>
+	<string>Заголовок запроса</string>
 	<key>Requested</key>
 	<string>Запрошено</string>
 	<key>Requests</key>
@@ -3364,6 +3388,8 @@
 	<string>У вас имеется %@ статей расходов</string>
 	<key>Total: %@</key>
 	<string>Всего: %@</string>
+	<key>Touch ID</key>
+	<string>Касание ID</string>
 	<key>Tour</key>
 	<string>Поездка</string>
 	<key>TourExpense2Subtitle</key>
@@ -3474,6 +3500,8 @@
 	<string>Невозможно загрузить данные о местоположении.</string>
 	<key>Unable to sign in</key>
 	<string>В настоящее время невозможно зарегистрировать ваш вход в систему. Обратитесь, пожалуйста, в справочную службу или в отдел путешествий и расходов своей компании.</string>
+	<key>Unauthorized</key>
+	<string>Несанкционированное</string>
 	<key>Unavailable</key>
 	<string>Недоступен</string>
 	<key>Undefined</key>

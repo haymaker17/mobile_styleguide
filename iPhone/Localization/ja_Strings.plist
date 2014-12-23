@@ -57,7 +57,7 @@
 	<key>ADD_YODLEE_CARD_FAILED_MSG</key>
 	<string>クレジット カードを追加できませんでした。後でもう一度お試しください。</string>
 	<key>ADD_YODLEE_CARD_INSTRUCTION</key>
-	<string>口座のログイン情報を入力してください。Concur では、この情報を暗号化して安全に使用し、カード課金をダウンロードします。</string>
+	<string>口座のログイン情報を入力してください。Concur では、この情報を暗号化して安全に使用し、カード請求をダウンロードします。</string>
 	<key>AIR_BOOKING</key>
 	<string>空路の予約</string>
 	<key>AIR_BOOKING_DISABLED_MSG</key>
@@ -500,7 +500,7 @@
 	<key>Are you sure about adding smart expenses</key>
 	<string>スマート経費は、レポートの単一入力に結合されます。</string>
 	<key>Are you sure about smart expenses</key>
-	<string>選択した経費を削除してもよろしいですか?  スマート経費のモバイル入力部分は永久に削除され、関連するカード課金が非表示になります。</string>
+	<string>選択した経費を削除してもよろしいですか?  スマート経費のモバイル入力部分は永久に削除され、関連するカード請求が非表示になります。</string>
 	<key>Are you sure that you want to delete this receipt</key>
 	<string>この領収書を削除しますか?</string>
 	<key>Are you sure that you want to reserve the selected train(s)?</key>
@@ -671,6 +671,8 @@
 	<string>デバイスがオフラインの時には予約を実行できません。  デバイスを再度インターネットに接続し、もう一度お試しください。</string>
 	<key>Border Crossing</key>
 	<string>国境通過</string>
+	<key>Breakfast Amount *</key>
+	<string>朝食代金 *</string>
 	<key>Bump Phones to Become an Attendee</key>
 	<string>電話を %@ して同席者になる</string>
 	<key>Bump Phones to Exchange Attendee Info</key>
@@ -688,7 +690,7 @@
 	<key>CARDS_LIST</key>
 	<string>カード</string>
 	<key>CARD_AUTH_MSG</key>
-	<string>これはカード購買申請です。カード課金を待って送信してください。</string>
+	<string>これはカード購買申請です。カード請求を待って送信してください。</string>
 	<key>CAR_DETAILS</key>
 	<string>車の詳細</string>
 	<key>CAR_LIST</key>
@@ -722,11 +724,11 @@
 	<key>COPY_DOWN_RPT_MSG</key>
 	<string>このレポート ヘッダーの %@ フィールドが変更されています。 このレポート内のすべてのエントリと明細の %@ フィールドも、ここに入力された新しい値で上書きしますか? [はい] をクリックすると、値が上書きされます。 レポート ヘッダーの変更のみを保存する場合は、[いいえ] をクリックします。 </string>
 	<key>CORP_CARDS_0</key>
-	<string>未使用のコーポレート カード課金はありません</string>
+	<string>未使用のコーポレート カード請求はありません</string>
 	<key>CORP_CARDS_1</key>
-	<string>未使用のコーポレート カード課金 が 1 件あります</string>
+	<string>未使用のコーポレート カード請求 が 1 件あります</string>
 	<key>CORP_CARDS_2</key>
-	<string>未使用のコーポレート カード課金が %d 件あります</string>
+	<string>未使用のコーポレート カード請求が %d 件あります</string>
 	<key>CORP_SSO_MSG</key>
 	<string>会社でシングル サインオン (SSO) を使用しており、会社コードが発行済の場合は、その会社コードをここに入力します。</string>
 	<key>CORP_SSO_MSG_GOV</key>
@@ -816,7 +818,7 @@
 	<key>Card</key>
 	<string>カード</string>
 	<key>Card Charges</key>
-	<string>カード課金</string>
+	<string>カード請求</string>
 	<key>Card Transactions</key>
 	<string>カード取引</string>
 	<key>Cards</key>
@@ -877,6 +879,8 @@
 	<string>チェックアウト</string>
 	<key>Children</key>
 	<string>子</string>
+	<key>Choose a location</key>
+	<string>場所を選択</string>
 	<key>ChoosePhoto-ImagePicker</key>
 	<string>プレビュー</string>
 	<key>Class &amp; Seat Number</key>
@@ -996,7 +1000,7 @@
 	<key>DISALLOW_EXPENSEIT_DELETE</key>
 	<string>ExpenseIt 項目の削除は、モバイルではサポートしていません。</string>
 	<key>DISALLOW_TRANS_DELETE</key>
-	<string>カード課金の削除は、モバイルではサポートしていません。</string>
+	<string>カード請求の削除は、モバイルではサポートしていません。</string>
 	<key>DISTANCE</key>
 	<string>ホテルの検索範囲</string>
 	<key>Daily Rate</key>
@@ -1062,7 +1066,7 @@
 	<key>Depending upon your company configuration some of the Concur for Mobile features may not be avaiable to you</key>
 	<string>会社の構成によっては、Concur for Mobile の一部の機能を使用できません</string>
 	<key>Deposit required</key>
-	<string>予約金必須</string>
+	<string>要予約金</string>
 	<key>Destination</key>
 	<string>宛先</string>
 	<key>Destination Location</key>
@@ -2065,8 +2069,8 @@ Concur ユーザー名が分からない場合は、代理店の管理者にお�
 	<string>サインイン設定</string>
 	<key>Logout</key>
 	<string>サインアウト</string>
-	<key>Looks like we are experience some difficulties. Please check back in a few minutes.</key>
-	<string>いくつかの問題が発生したようです。数分後に再確認してください。</string>
+	<key>Looks like we are experiencing some difficulties. Please check back in a few minutes.</key>
+	<string>いくつか問題が発生したようです。数分後に再確認してください。</string>
 	<key>Luxury</key>
 	<string>高級車</string>
 	<key>MAP</key>
@@ -2127,10 +2131,14 @@ Concur ユーザー名が分からない場合は、代理店の管理者にお�
 	<string>マップ</string>
 	<key>Map Address</key>
 	<string>住所</string>
+	<key>Matched Expense</key>
+	<string>一致した経費</string>
 	<key>Matching transactions combined into a single expense</key>
 	<string>一致する取引は単一の経費にまとめる</string>
 	<key>Meal Allowances</key>
 	<string>食事手当</string>
+	<key>Meals Amount</key>
+	<string>食事代金</string>
 	<key>Menu</key>
 	<string>メニュー</string>
 	<key>Message Center</key>
@@ -2246,7 +2254,7 @@ Concur ユーザー名が分からない場合は、代理店の管理者にお�
 	<key>No Attendees</key>
 	<string>同席者なし</string>
 	<key>No Card Charges</key>
-	<string>カード課金なし</string>
+	<string>カード請求なし</string>
 	<key>No Comments</key>
 	<string>コメントなし</string>
 	<key>No Credit Card</key>
@@ -2338,7 +2346,7 @@ Concur ユーザー名が分からない場合は、代理店の管理者にお�
 	<key>OUT_OF_POCKET_FORM</key>
 	<string>経費</string>
 	<key>OUT_OF_POCKET_FORM_VIEW_CONFIRM_SPLIT_SMART_EXPENSE_MESSAGE</key>
-	<string>カード課金をモバイル入力項目から分離してもよろしいですか?</string>
+	<string>カード請求をモバイル入力項目から分離してもよろしいですか?</string>
 	<key>OUT_OF_POCKET_FORM_VIEW_CONFIRM_SPLIT_SMART_EXPENSE_TITLE</key>
 	<string>確認してください</string>
 	<key>OUT_OF_POCKET_FORM_VIEW_SPLIT_SMART_EXPENSE_BUTTON_TITLE</key>
@@ -2403,6 +2411,20 @@ Concur ユーザー名が分からない場合は、代理店の管理者にお�
 	<string>出張の購入がよりスマートになります。小売基準価格未満で予約すると、会社のお金を節約できます。</string>
 	<key>P2B_AIR_BOOKING_HEADER_POINTS_ENABLED</key>
 	<string>小売基準価格未満のオプションを選択すると、出張ポイントが獲得できます。出張経費が精算されると、将来の特典に使用できる合計出張ポイントに、獲得した出張ポイントが反映されます。</string>
+	<key>P2B_AIR_BOOKING_MANAGE_VIOLATIONS_HEADER</key>
+	<string>対処すべきポリシー違反があります。出張ポイントを使用するか、会社で規定されている通常のポリシー違反ワークフローに従ってください。</string>
+	<key>P2B_AIR_BOOKING_USING_POINTS_HEADER</key>
+	<string>出張ポイントを獲得するには、小売基準価格よりも安価な航空運賃またはホテルの宿泊を選択します。銀行の出張ポイントを使用すると、ポリシー違反のオプションの予約に対する、会社の一般的な通知や承認のプロセスが不要になります。
+        
+この航空機予約は会社の出張ルールに準拠していないため、出張ポイントを使用するか、出張ポイントを使用しない場合は、会社の一般的な通知や承認のプロセスに従う必要があります。
+        
+出張を経費として計上すると、獲得した出張ポイントや使用した出張ポイントがポイント バンクに反映されます。</string>
+	<key>P2B_HOTEL_BOOKING_USING_POINTS_HEADER</key>
+	<string>出張ポイントを獲得するには、小売基準価格よりも安価な航空運賃またはホテルの宿泊を選択します。銀行の出張ポイントを使用すると、ポリシー違反のオプションの予約に対する、会社の一般的な通知や承認のプロセスが不要になります。
+        
+このホテル予約は会社の出張ルールに準拠していないため、出張ポイントを使用するか、出張ポイントを使用しない場合は、会社の一般的な通知や承認のプロセスに従う必要があります。
+        
+出張を経費として計上すると、獲得した出張ポイントや使用した出張ポイントがポイント バンクに反映されます。</string>
 	<key>PDF Receipt</key>
 	<string>PDF 領収書</string>
 	<key>PENDING_REQUIRED_TRAVEL_CUSTOM_FIELDS</key>
@@ -2462,11 +2484,11 @@ Concur ユーザー名が分からない場合は、代理店の管理者にお�
 	<key>Personal Car Mileage</key>
 	<string>私有車の走行距離</string>
 	<key>PersonalCardCount_0</key>
-	<string>%@ からの未使用カード課金はありません</string>
+	<string>%@ からの未使用カード請求はありません</string>
 	<key>PersonalCardCount_1</key>
-	<string>%@ からの未使用カード課金が 1 件あります</string>
+	<string>%@ からの未使用カード請求が 1 件あります</string>
 	<key>PersonalCardCount_2</key>
-	<string>%@ からの未使用カード課金が %d 件あります</string>
+	<string>%@ からの未使用カード請求が %d 件あります</string>
 	<key>Phone</key>
 	<string>電話</string>
 	<key>Photo Album</key>
@@ -2565,6 +2587,8 @@ Concur ユーザー名が分からない場合は、代理店の管理者にお�
 	<string>印刷</string>
 	<key>Proceed to Sign In</key>
 	<string>サインインに進む</string>
+	<key>Profile</key>
+	<string>プロファイル</string>
 	<key>Property</key>
 	<string>プロパティ</string>
 	<key>Provided</key>
@@ -2697,6 +2721,10 @@ Concur ユーザー名が分からない場合は、代理店の管理者にお�
 	<string>領収書のアップロードに失敗しました</string>
 	<key>Receipt uploaded</key>
 	<string>アップロードされた領収書</string>
+	<key>ReceiptImageUnavailable</key>
+	<string>領収書イメージが現在利用できません。後でもう一度お試しください。</string>
+	<key>ReceiptImageUnavailableTitle</key>
+	<string>領収書イメージ利用不可</string>
 	<key>ReceiptUploadFailMsg</key>
 	<string>現在、領収書を保存できません。後でもう一度お試しください。</string>
 	<key>Receipts</key>
@@ -2735,6 +2763,8 @@ Concur ユーザー名が分からない場合は、代理店の管理者にお�
 	<string>出張の却下</string>
 	<key>Remaining:</key>
 	<string>残り:</string>
+	<key>Removal of E-Receipt items is not supported on mobile</key>
+	<string>E-Receipt 項目の削除は、モバイルではサポートしていません。</string>
 	<key>Removed Link to Dropbox</key>
 	<string>Dropbox へのリンクが削除されました</string>
 	<key>Removing entry</key>
@@ -2777,6 +2807,8 @@ Concur ユーザー名が分からない場合は、代理店の管理者にお�
 	<string>承認するレポートが %d 件あります</string>
 	<key>Request</key>
 	<string>申請</string>
+	<key>RequestHeader</key>
+	<string>申請ヘッダー</string>
 	<key>Requested</key>
 	<string>申請額</string>
 	<key>Requests</key>
@@ -3194,7 +3226,7 @@ Concur ユーザー名が分からない場合は、代理店の管理者にお�
 	<key>Submitted Reports</key>
 	<string>提出済のレポート</string>
 	<key>Suggested based on co-worker</key>
-	<string>同僚に基づく提案</string>
+	<string>他の従業員に基づく提案</string>
 	<key>Suggested based on past stay</key>
 	<string>過去の滞在に基づく提案</string>
 	<key>Suggested based on popularity</key>
@@ -3216,7 +3248,7 @@ Concur ユーザー名が分からない場合は、代理店の管理者にお�
 	<key>Sync credit card</key>
 	<string>クレジット カードを同期</string>
 	<key>TA Import Heading Text</key>
-	<string>出張手当旅程の開始時に、出張予約またはカード課金を選択します。</string>
+	<string>出張手当旅程の開始時に、出張予約またはカード請求を選択します。</string>
 	<key>TITLE_REGISTER_REENTER_PIN</key>
 	<string>PIN を入力</string>
 	<key>TRAVEL_NEG_TEXT</key>
@@ -3290,9 +3322,9 @@ Concur ユーザー名が分からない場合は、代理店の管理者にお�
 	<key>There are</key>
 	<string>承認待ちのレポートが %@ 件あります。</string>
 	<key>There are cct</key>
-	<string>未使用のカード課金が %@ 件あります。</string>
+	<string>未使用のカード請求が %@ 件あります。</string>
 	<key>There are no cct</key>
-	<string>カード課金はありません。</string>
+	<string>カード請求はありません。</string>
 	<key>There are no reports to approve</key>
 	<string>承認するレポートはありません</string>
 	<key>There are no rpt</key>
@@ -3304,7 +3336,7 @@ Concur ユーザー名が分からない場合は、代理店の管理者にお�
 	<key>There is</key>
 	<string>承認待ちのレポートが %@ 件あります。</string>
 	<key>There is cct</key>
-	<string>未使用のカード課金が %@ 件あります。</string>
+	<string>未使用のカード請求が %@ 件あります。</string>
 	<key>There is rpt</key>
 	<string>合計 %@ 件に対して %@ 件の未提出のレポートがあります。</string>
 	<key>There must have been a typo. Please re-enter the password so it matches exactly in both fields</key>
@@ -3383,6 +3415,8 @@ Concur ユーザー名が分からない場合は、代理店の管理者にお�
 	<string>経費が %@ 件あります</string>
 	<key>Total: %@</key>
 	<string>合計: %@</string>
+	<key>Touch ID</key>
+	<string>タッチ ID</string>
 	<key>Tour</key>
 	<string>ツアー</string>
 	<key>TourExpense2Subtitle</key>
@@ -3493,6 +3527,8 @@ Concur ユーザー名が分からない場合は、代理店の管理者にお�
 	<string>場所データを読み込めません。</string>
 	<key>Unable to sign in</key>
 	<string>現在サインインできません。会社のヘルプ デスクまたは出張/経費担当部門にお問い合わせください。</string>
+	<key>Unauthorized</key>
+	<string>認証されていません</string>
 	<key>Unavailable</key>
 	<string>利用できません</string>
 	<key>Undefined</key>

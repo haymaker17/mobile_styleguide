@@ -69,6 +69,7 @@
     if ([Config isNewSignInFlowEnabled]) {
         SignInUserTypeViewController *loginViewController = (SignInUserTypeViewController*)[ConcurMobileAppDelegate getMobileViewControllerByViewIdKey:@"LOGIN"];
         loginViewController.skipKeyboardDisplayHack = false;
+        [loginViewController viewWillAppear:YES];
         [loginViewController setFocusToTextField];
     }
     else{

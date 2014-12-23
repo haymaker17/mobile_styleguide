@@ -16,6 +16,6 @@
 @property bool skipKeyboardDisplayHack;
 -(NSString *) getViewIDKey;
 -(void)setFocusToTextField;
-
+-(void)viewWillAppear:(BOOL)animated;
 
 @end

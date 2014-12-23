@@ -45,6 +45,7 @@
     NSString                    *pin;
     NSString                    *concurAccessToken;
     NSString                    *concurAccessTokenSecret;
+    NSString                    *concurSSOAccessToken;
     NSArray                     *siteSettings, *roles;
     EntitySystem                *sys;
     NSString                    *backUpReceiptsFilePath;
@@ -99,6 +100,7 @@
 @property (strong, nonatomic) NSString *pin;
 @property (strong, nonatomic) NSString *concurAccessToken;
 @property (strong, nonatomic) NSString *concurAccessTokenSecret;
+@property (strong, nonatomic) NSString *concurSSOAccessToken;        //token from safari for sso
 @property (strong, nonatomic) NSString *backUpReceiptsFilePath;
 @property BOOL                        isCorpSSOUser;
 
@@ -194,6 +196,8 @@
 - (BOOL)canUseConditionalFields;
 - (NSString*)getUserType;
 
+- (BOOL)isLoginFromSafari;      // Check if it is login from outside web browser.
+
 #pragma mark -
 #pragma salesforce credentials
 - (void)saveSalesForceToken:(NSString *)token andUrl:(NSString *)url;
@@ -252,6 +256,9 @@
 -(void) saveConcurAccessToken:(NSString*)token;
 -(NSString *)loadConcurAccessTokenSecret;
 -(void) saveConcurAccessTokenSecret:(NSString*)secret;
+-(NSString *)loadConcurSSOAccessToken;
+-(void)saveConcurSSOAccessToken:(NSString *)ssoToken;
+-(void)clearConcurSSOAccessToken;
 
 #pragma mark -
 #pragma mark Stolen methods from SettingsData

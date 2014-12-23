@@ -81,9 +81,11 @@
 	[_labelLocations setTextColor:[UIColor textSubTitle]];
 	[_labelDate setTextColor:[UIColor textSubTitle]];
 	
+	//adjust the bottom separator
+	[self setSeparatorInset:UIEdgeInsetsMake(0.f, 40.f, 0.f, 0.f)];
 	
 	
-	[self fitAmountToContentWidthMaxWidth:120];
+	[self fitAmountToContentWidthMaxWidth:125];
 }
 
 //public
@@ -113,16 +115,13 @@
 	
 	[_constrainteLeadingTopAmount setConstant:11]; // amount is biggest than total label
 	[_labelAmount needsUpdateConstraints];
-	
-	
-	//display a bottom border
-	[self.contentView setBorders:@"b" WithColor:[UIColor borderViewToHighlightWhiteSubview] andBorderWidth:1];
+
 	
 	/*
 	 * adjust startDate width size depending on its content and leave max place to request name if no startDate
 	 * we use many constraints to do the job
 	 */
-	[self fitAmountToContentWidthMaxWidth:135];
+	[self fitAmountToContentWidthMaxWidth:220];
 }
 
 

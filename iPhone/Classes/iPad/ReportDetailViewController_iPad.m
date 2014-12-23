@@ -308,6 +308,12 @@
 -(void) loadReport:(NSMutableDictionary *)pBag
 {
     [self showWaitViewWithText:[Localizer getLocalizedText:@"Loading Data"]];
+
+     // MOB-21355 CRMC - Wrong Vehicle ID displayed when it is an approving report 
+    if ([pBag[@"SOURCE_SECTION"]isEqualToString:@"REPORT_APPROVAL_SECTION"])
+    {
+        self.isReportApproval = YES;
+    }
     
 	ReportData *rptData = pBag[@"REPORT"];
 
@@ -1473,14 +1479,13 @@
 	pBag[@"REPORT"] = rptDetail;
 	pBag[@"RECORD_KEY"] = rptDetail.rptKey;
 	pBag[@"REPORT_OG"] = rptDetail;
+
+    if (self.isReportApproval) {
+        pBag[@"SOURCE_SECTION"] = @"REPORT_APPROVAL_SECTION";
+    }
 	
 
 	EntryData *entry = e; //[rptDetail.entries objectForKey:key];
-	for(NSString *eKey in rptDetail.entries)
-	{
-		//EntryData *e = [rptDetail.entries objectForKey:eKey];
-		//NSLog(@"e.rpeKey = %@", e.rpeKey);
-	}
 	
 	pBag[@"ENTRY"] = entry;
 	pBag[@"ID_KEY"] = rptDetail.rptKey;

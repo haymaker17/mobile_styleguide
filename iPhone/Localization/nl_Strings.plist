@@ -664,6 +664,8 @@
 	<string>U kunt geen boekingen maken als uw apparaat offline is.  Maak verbinding met internet en probeer het opnieuw.</string>
 	<key>Border Crossing</key>
 	<string>Grensoverschrijding</string>
+	<key>Breakfast Amount *</key>
+	<string>Ontbijtkosten *</string>
 	<key>Bump Phones to Become an Attendee</key>
 	<string>%@ belt om deelnemer te worden</string>
 	<key>Bump Phones to Exchange Attendee Info</key>
@@ -870,6 +872,8 @@
 	<string>Uitchecken</string>
 	<key>Children</key>
 	<string>Kinderen</string>
+	<key>Choose a location</key>
+	<string>Kies een plaats</string>
 	<key>ChoosePhoto-ImagePicker</key>
 	<string>Voorbeeld</string>
 	<key>Class &amp; Seat Number</key>
@@ -2056,7 +2060,7 @@ Als u uw gebruikersnaam voor Concur niet weet, neem dan contact op met de beheer
 	<string>Aanmeldingsinstellingen</string>
 	<key>Logout</key>
 	<string>Afmelden</string>
-	<key>Looks like we are experience some difficulties. Please check back in a few minutes.</key>
+	<key>Looks like we are experiencing some difficulties. Please check back in a few minutes.</key>
 	<string>Het lijkt erop dat we enkele problemen ondervinden. Probeer het over enkele minuten opnieuw.</string>
 	<key>Luxury</key>
 	<string>Luxe</string>
@@ -2118,10 +2122,14 @@ Als u uw gebruikersnaam voor Concur niet weet, neem dan contact op met de beheer
 	<string>Toewijzen</string>
 	<key>Map Address</key>
 	<string>Adres toewijzen</string>
+	<key>Matched Expense</key>
+	<string>Overeenkomende onkosten</string>
 	<key>Matching transactions combined into a single expense</key>
 	<string>Overeenkomende transacties gecombineerd in één onkostenitem</string>
 	<key>Meal Allowances</key>
 	<string>Maaltijdvergoedingen</string>
+	<key>Meals Amount</key>
+	<string>Maaltijdenbedrag</string>
 	<key>Menu</key>
 	<string>Menu</string>
 	<key>Message Center</key>
@@ -2394,6 +2402,20 @@ Als u uw gebruikersnaam voor Concur niet weet, neem dan contact op met de beheer
 	<string>Boek uw reizen slimmer! Boeken onder de Price-to-Beat bespaart uw bedrijf geld.</string>
 	<key>P2B_AIR_BOOKING_HEADER_POINTS_ENABLED</key>
 	<string>Verdien reispunten als u voor opties kiest die goedkoper zijn dan de Price-to-Beat. Als de reis is betaald, worden de verdiende reispunten weergegeven in het totaal aantal reispunten dat u voor toekomstige reizen kunt gebruiken.</string>
+	<key>P2B_AIR_BOOKING_MANAGE_VIOLATIONS_HEADER</key>
+	<string>Er zijn beleidsschendingen die verholpen moeten worden. U moet reispunten gebruiken of de standaard werkstroom voor beleidsschendingen van uw bedrijf volgen.</string>
+	<key>P2B_AIR_BOOKING_USING_POINTS_HEADER</key>
+	<string>U spaart reispunten door vluchten of hotelkamers die goedkoper zijn dan de Price-to-Beat te boeken. U kunt reispunten van uw account gebruiken om de typische kennisgevings- of goedkeuringsprocessen voor het boeken van opties die buiten het beleid van uw bedrijf vallen, te omzeilen.
+        
+Voor de vliegticketreservering moet u reispunten gebruiken of voldoen aan de typische kennisgevings- of goedkeuringsprocessen van uw bedrijf, aangezien het niet overeenstemt met de reisvoorwaarden van uw bedrijf.
+        
+Nadat u uw reis heeft betaald, wordt er in uw account aangegeven welke reispunten u gespaard of gebruikt heeft.</string>
+	<key>P2B_HOTEL_BOOKING_USING_POINTS_HEADER</key>
+	<string>U spaart reispunten door vluchten of hotelkamers die goedkoper zijn dan de Price-to-Beat te boeken.  U kunt reispunten van uw account gebruiken om de typische kennisgevings- of goedkeuringsprocessen voor het boeken van opties die buiten het beleid van uw bedrijf vallen, te omzeilen.
+        
+Voor de hotelreservering moet u reispunten gebruiken of voldoen aan de typische kennisgevings- of goedkeuringsprocessen van uw bedrijf, aangezien het niet overeenstemt met de reisvoorwaarden van uw bedrijf.
+        
+Nadat u uw reis heeft betaald, wordt er in uw account aangegeven welke reispunten u gespaard of gebruikt heeft.</string>
 	<key>PDF Receipt</key>
 	<string>PDF-kwitantie</string>
 	<key>PENDING_REQUIRED_TRAVEL_CUSTOM_FIELDS</key>
@@ -2556,6 +2578,8 @@ Als u uw gebruikersnaam voor Concur niet weet, neem dan contact op met de beheer
 	<string>Afdrukken</string>
 	<key>Proceed to Sign In</key>
 	<string>Verder naar aanmelden</string>
+	<key>Profile</key>
+	<string>Profiel</string>
 	<key>Property</key>
 	<string>Eigenschap</string>
 	<key>Provided</key>
@@ -2688,6 +2712,10 @@ Als u uw gebruikersnaam voor Concur niet weet, neem dan contact op met de beheer
 	<string>Uploaden van kwitantie is mislukt</string>
 	<key>Receipt uploaded</key>
 	<string>Kwitantie geüpload</string>
+	<key>ReceiptImageUnavailable</key>
+	<string>Uw kwitantieafbeelding is momenteel niet beschikbaar. Probeer het later opnieuw.</string>
+	<key>ReceiptImageUnavailableTitle</key>
+	<string>Kwitantieafbeelding niet beschikbaar</string>
 	<key>ReceiptUploadFailMsg</key>
 	<string>Kan kwitantie op dit moment niet opslaan. Probeer het later opnieuw.</string>
 	<key>Receipts</key>
@@ -2726,6 +2754,8 @@ Als u uw gebruikersnaam voor Concur niet weet, neem dan contact op met de beheer
 	<string>Reis afkeuren</string>
 	<key>Remaining:</key>
 	<string>Resterend:</string>
+	<key>Removal of E-Receipt items is not supported on mobile</key>
+	<string>U kunt geen E-Receipt-items verwijderen in de mobiele toepassing</string>
 	<key>Removed Link to Dropbox</key>
 	<string>Koppeling naar Dropbox verwijderd</string>
 	<key>Removing entry</key>
@@ -2768,6 +2798,8 @@ Als u uw gebruikersnaam voor Concur niet weet, neem dan contact op met de beheer
 	<string>U moet nog %d nota's goedkeuren</string>
 	<key>Request</key>
 	<string>Aanvraag</string>
+	<key>RequestHeader</key>
+	<string>Koptekst voor aanvraag</string>
 	<key>Requested</key>
 	<string>Aangevraagd</string>
 	<key>Requests</key>
@@ -3374,6 +3406,8 @@ Als u uw gebruikersnaam voor Concur niet weet, neem dan contact op met de beheer
 	<string>U hebt %@ onkosten</string>
 	<key>Total: %@</key>
 	<string>Totaal: %@</string>
+	<key>Touch ID</key>
+	<string>Touch-id</string>
 	<key>Tour</key>
 	<string>Tour</string>
 	<key>TourExpense2Subtitle</key>
@@ -3484,6 +3518,8 @@ Als u uw gebruikersnaam voor Concur niet weet, neem dan contact op met de beheer
 	<string>Kan locatiegegevens niet opslaan.</string>
 	<key>Unable to sign in</key>
 	<string>U kunt zich op dit moment niet aanmelden. Neem contact met de helpdesk van uw bedrijf of met de afdeling voor reizen/onkosten.</string>
+	<key>Unauthorized</key>
+	<string>Niet-geautoriseerd</string>
 	<key>Unavailable</key>
 	<string>Niet beschikbaar</string>
 	<key>Undefined</key>

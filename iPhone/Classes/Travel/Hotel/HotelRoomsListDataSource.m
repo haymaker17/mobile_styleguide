@@ -12,6 +12,7 @@
 #import "RoomsListCellData.h"
 #import "CTENetworkSettings.h"
 #import "HotelDetailsCellData.h"
+#import "HotelPhoneCellData.h"
 #import "HotelDetailsMapViewCellData.h"
 #import "HotelDetailSegmentsCellData.h"
 #import "PhotoAlbumTableViewCellData.h"
@@ -207,9 +208,10 @@
     if ([self.hotelDetailsCells count] == 0) {
         HotelDetailsMapViewCellData *mapViewCellData = [[HotelDetailsMapViewCellData alloc] initWithCTEHotelCellData:self.hotelCellData];
         HotelDetailsCellData *hotelDetailsCellData = [[HotelDetailsCellData alloc] initWithCTEHotelCellData:self.hotelCellData];
+        HotelPhoneCellData *hotelPhoneCellData = [[HotelPhoneCellData alloc] initWithCTEHotelCellData:self.hotelCellData];
         
         [self.hotelDetailsCells addObject:mapViewCellData];
-        [self addHotelDetailsCallHotelCell];
+        [self.hotelDetailsCells addObject:hotelPhoneCellData];
         [self.hotelDetailsCells addObject:hotelDetailsCellData];
         [self addHotelDetailsFindRoomCell];
     }
@@ -234,14 +236,6 @@
 }
 
 #pragma mark - set up cells for hotel details view
--(void)addHotelDetailsCallHotelCell
-{
-    AbstractTableViewCellData *hotelDetailsCallCellData = [[AbstractTableViewCellData alloc] init];
-    hotelDetailsCallCellData.cellIdentifier = @"hotelDetailsCallCell";
-    hotelDetailsCallCellData.cellHeight = 50.0;
-    [self.hotelDetailsCells addObject:hotelDetailsCallCellData];
-}
-
 -(void)addHotelDetailsFindRoomCell
 {
     AbstractTableViewCellData *hotelDetailsFindRoom = [[AbstractTableViewCellData alloc] init];

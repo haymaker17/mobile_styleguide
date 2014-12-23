@@ -358,7 +358,7 @@ NSString * const constMobileDisabledServerError = @"error.mobile_disabled";
     [alert show];
     
     // log info
-    ALog(@"::Login failed for user:%@:: with error ::%@::" , self.userId, cteErrorMessage.systemMessage == nil ? cteErrorMessage.systemMessage : error.concurErrorXML);
+    [[MCLogging getInstance] log:[NSString stringWithFormat:@"::Login failed for user:%@:: with error ::%@::" , self.userId, cteErrorMessage.systemMessage == nil ? cteErrorMessage.systemMessage : error.concurErrorResponse] Level:MC_LOG_INFO];
     alert.Tag = kInvalidPassword;
     
     NSString *eventLabel = nil;

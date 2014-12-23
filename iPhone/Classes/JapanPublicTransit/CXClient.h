@@ -17,7 +17,7 @@ typedef void (^CXFailureBlock)(NSError *error);
 
 + (CXClient *)sharedClient;
 
-- (void *)performRequest:(CXRequest *)apiRequest
+- (void)performRequest:(CXRequest *)apiRequest
                             success:(CXSuccessBlock)success
                             failure:(CXFailureBlock)failure;
 

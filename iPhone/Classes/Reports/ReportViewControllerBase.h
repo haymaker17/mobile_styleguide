@@ -45,6 +45,9 @@
 @property BOOL                                          doReload;
 @property (strong, nonatomic) NSString                  *approvalStatKey;
 
+// MOB-21355: check if the report is from ReportApprovalListViewController REPORT_APPROVALS section
+@property BOOL                                           isReportApproval;
+
 -(NSString *)getViewDisplayType;
 
 -(IBAction) actionApproveActions:(id)sender;

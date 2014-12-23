@@ -73,8 +73,7 @@ static NSMutableDictionary* msgIdToClassMap = nil;
 	return thing;
 }
 
--(Msg*) makeMsg:(NSString *)msgIdKey CacheOnly:(NSString *)cacheOnly 
-   ParameterBag:(NSMutableDictionary *)parameterBag SkipCache:(BOOL)skipCache Options:(int)msgOptions RespondTo:(NSObject<ExMsgRespondDelegate>*)mvc 
+-(Msg*) makeMsg:(NSString *)msgIdKey CacheOnly:(NSString *)cacheOnly ParameterBag:(NSMutableDictionary *)parameterBag SkipCache:(BOOL)skipCache Options:(int)msgOptions RespondTo:(NSObject<ExMsgRespondDelegate>*)mvc
 {
     [[MCLogging getInstance] log:[NSString stringWithFormat:@"MsgControl::makeMsg(%@)", msgIdKey] Level:MC_LOG_INFO];
 	MsgResponder* thing = [self newMsgResponder:msgIdKey CacheOnly:cacheOnly ParameterBag:parameterBag SkipCache:skipCache];

@@ -17,6 +17,7 @@
 @property (weak,nonatomic) IBOutlet UILabel *amount;
 @property (weak,nonatomic) IBOutlet UISwitch *markedExcluded;
 @property (weak, nonatomic) IBOutlet UILabel *location;
+@property (weak, nonatomic) IBOutlet UILabel *excludedText;
 
 @property (weak,nonatomic) IBOutlet UILabel *mealLabel;
 @property (weak,nonatomic) IBOutlet UILabel *mealProvidedLabel;

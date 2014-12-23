@@ -664,6 +664,8 @@
 	<string>Il est impossible d'effectuer des réservations lorsque votre périphérique est hors ligne.  Veuillez le reconnecter à Internet puis réessayer.</string>
 	<key>Border Crossing</key>
 	<string>Passage de frontière</string>
+	<key>Breakfast Amount *</key>
+	<string>Montant du petit-déjeuner*</string>
 	<key>Bump Phones to Become an Attendee</key>
 	<string>%@ téléphone pour devenir un participant</string>
 	<key>Bump Phones to Exchange Attendee Info</key>
@@ -870,6 +872,8 @@
 	<string>Départ</string>
 	<key>Children</key>
 	<string>Enfants</string>
+	<key>Choose a location</key>
+	<string>Sélectionner un emplacement</string>
 	<key>ChoosePhoto-ImagePicker</key>
 	<string>Voir un aperçu</string>
 	<key>Class &amp; Seat Number</key>
@@ -2056,7 +2060,7 @@ Si vous ne connaissez pas votre nom d'utilisateur Concur, consultez l'administra
 	<string>Paramètres de connexion</string>
 	<key>Logout</key>
 	<string>Se déconnecter</string>
-	<key>Looks like we are experience some difficulties. Please check back in a few minutes.</key>
+	<key>Looks like we are experiencing some difficulties. Please check back in a few minutes.</key>
 	<string>Nous rencontrons quelques difficultés. Veuillez réessayer dans quelques minutes.</string>
 	<key>Luxury</key>
 	<string>Luxe</string>
@@ -2118,10 +2122,14 @@ Si vous ne connaissez pas votre nom d'utilisateur Concur, consultez l'administra
 	<string>Carte</string>
 	<key>Map Address</key>
 	<string>Associer l'adresse</string>
+	<key>Matched Expense</key>
+	<string>Note de frais correspondante</string>
 	<key>Matching transactions combined into a single expense</key>
 	<string>Les transactions correspondantes sont regroupées dans une seule note de frais.</string>
 	<key>Meal Allowances</key>
 	<string>Indemnités de forfait repas</string>
+	<key>Meals Amount</key>
+	<string>Montant des repas</string>
 	<key>Menu</key>
 	<string>Menu</string>
 	<key>Message Center</key>
@@ -2394,6 +2402,20 @@ Si vous ne connaissez pas votre nom d'utilisateur Concur, consultez l'administra
 	<string>Voyagez intelligemment et économiquement ! Si vous réservez à un tarif inférieur au prix à battre, votre entreprise réalise des économies.</string>
 	<key>P2B_AIR_BOOKING_HEADER_POINTS_ENABLED</key>
 	<string>Gagnez des points de voyage lorsque vous sélectionnez des options dont le tarif est inférieur au prix à battre. Une fois que le voyage a fait l'objet d'une note de frais, les points gagnés sont répercutés dans le total que vous pourrez utiliser ultérieurement.</string>
+	<key>P2B_AIR_BOOKING_MANAGE_VIOLATIONS_HEADER</key>
+	<string>Des violations de politique doivent être traitées. Vous pouvez utiliser des points de voyage ou suivre le workflow normal en cas de violation de la politique établie par votre société.</string>
+	<key>P2B_AIR_BOOKING_USING_POINTS_HEADER</key>
+	<string>Vous pouvez gagner des points de voyage en sélectionnant des déplacements aériens ou des hébergements à l'hôtel dont le tarif est inférieur au prix à battre. Vous pouvez utiliser des points de voyage stockés dans votre banque afin de contourner les procédures de notification ou d'approbation standard de votre société et de réserver des options exclues par le règlement.
+        
+Cette réservation de billet d'avion vous oblige à utiliser des points de voyage ou à respecter les procédures de notification ou d'approbation standard de votre société, car elle n'est pas conforme aux règles de voyage définies par cette dernière.
+        
+Une fois que le voyage a fait l'objet d'une note de frais, les points gagnés ou utilisés sont répercutés dans votre banque.</string>
+	<key>P2B_HOTEL_BOOKING_USING_POINTS_HEADER</key>
+	<string>Vous pouvez gagner des points de voyage en sélectionnant des déplacements aériens ou des hébergements à l'hôtel dont le tarif est inférieur au prix à battre.  Vous pouvez utiliser des points de voyage stockés dans votre banque afin de contourner les procédures de notification ou d'approbation standard de votre société et de réserver des options exclues par le règlement.
+        
+Cette réservation d'hôtel vous oblige à utiliser des points de voyage ou à respecter les procédures de notification ou d'approbation standard de votre société, car elle n'est pas conforme aux règles de voyage définies par cette dernière.
+        
+Une fois que le voyage a fait l'objet d'une note de frais, les points gagnés ou utilisés sont répercutés dans votre banque.</string>
 	<key>PDF Receipt</key>
 	<string>Justificatif au format PDF</string>
 	<key>PENDING_REQUIRED_TRAVEL_CUSTOM_FIELDS</key>
@@ -2556,6 +2578,8 @@ Si vous ne connaissez pas votre nom d'utilisateur Concur, consultez l'administra
 	<string>Imprimer</string>
 	<key>Proceed to Sign In</key>
 	<string>Continuer et se connecter</string>
+	<key>Profile</key>
+	<string>Profil</string>
 	<key>Property</key>
 	<string>Propriété</string>
 	<key>Provided</key>
@@ -2688,6 +2712,10 @@ Si vous ne connaissez pas votre nom d'utilisateur Concur, consultez l'administra
 	<string>Échec de chargement du justificatif</string>
 	<key>Receipt uploaded</key>
 	<string>Justificatif téléchargé</string>
+	<key>ReceiptImageUnavailable</key>
+	<string>L'image du justificatif n'est pas disponible actuellement. Veuillez réessayer ultérieurement.</string>
+	<key>ReceiptImageUnavailableTitle</key>
+	<string>Image du justificatif non disponible</string>
 	<key>ReceiptUploadFailMsg</key>
 	<string>Impossible d'enregistrer le justificatif pour l'instant. Veuillez réessayer ultérieurement.</string>
 	<key>Receipts</key>
@@ -2726,6 +2754,8 @@ Si vous ne connaissez pas votre nom d'utilisateur Concur, consultez l'administra
 	<string>Voyage en cours de rejet</string>
 	<key>Remaining:</key>
 	<string>Restant :</string>
+	<key>Removal of E-Receipt items is not supported on mobile</key>
+	<string>La suppression de justificatifs électroniques n'est pas prise en charge sur les périphériques mobiles.</string>
 	<key>Removed Link to Dropbox</key>
 	<string>Lien vers Dropbox supprimé</string>
 	<key>Removing entry</key>
@@ -2768,6 +2798,8 @@ Si vous ne connaissez pas votre nom d'utilisateur Concur, consultez l'administra
 	<string>Vous avez %d notes de frais à approuver.</string>
 	<key>Request</key>
 	<string>Ordre de mission</string>
+	<key>RequestHeader</key>
+	<string>En-tête de l'ordre de mission</string>
 	<key>Requested</key>
 	<string>Obligatoire</string>
 	<key>Requests</key>
@@ -3374,6 +3406,8 @@ Si vous ne connaissez pas votre nom d'utilisateur Concur, consultez l'administra
 	<string>Vous avez %@ frais</string>
 	<key>Total: %@</key>
 	<string>Total : %@</string>
+	<key>Touch ID</key>
+	<string>Touch ID</string>
 	<key>Tour</key>
 	<string>Circuit</string>
 	<key>TourExpense2Subtitle</key>
@@ -3484,6 +3518,8 @@ Si vous ne connaissez pas votre nom d'utilisateur Concur, consultez l'administra
 	<string>Impossible de charger les données d'emplacement.</string>
 	<key>Unable to sign in</key>
 	<string>Nous ne pouvons pas vous connecter pour le moment. Veuillez contacter le service d'assistance ou de déplacements/dépenses de votre société.</string>
+	<key>Unauthorized</key>
+	<string>Non autorisé</string>
 	<key>Unavailable</key>
 	<string>Non disponible</string>
 	<key>Undefined</key>

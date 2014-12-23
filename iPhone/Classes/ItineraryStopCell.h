@@ -12,6 +12,8 @@
 #import "CKCalendarView.h"
 
 @class CKCalendarView;
+@class CTETriangleBadge;
+@class CTEBadge;
 
 @interface ItineraryStopCell : UITableViewCell <CKCalendarDelegate>
 
@@ -36,10 +38,12 @@
 @property (weak,nonatomic) IBOutlet UILabel *stopLabel;
 
 @property (strong, nonatomic) IBOutlet UIImageView *stopErrorIndicator;
+@property (strong, nonatomic) IBOutlet CTETriangleBadge *triangleBadge;
 
 @property (weak, nonatomic) IBOutlet UITextField *stopTimeText;
 @property (weak, nonatomic) IBOutlet UITextField *stopDateText;
 
+@property (strong, nonatomic) IBOutlet CTEBadge *stopBadge;
 @property (weak,nonatomic) IBOutlet UILabel *stopNumber;
 @property (weak,nonatomic) IBOutlet UILabel *arrivalRateLocation;
 @property (weak,nonatomic) IBOutlet UILabel *borderCrossingDate;

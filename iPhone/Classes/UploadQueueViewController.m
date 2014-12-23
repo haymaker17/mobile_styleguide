@@ -133,9 +133,11 @@
     [self.navigationController pushViewController:formVC animated:YES];
 }
 
--(void) didSelectReceiptWithId:(NSString*)receiptId
+-(void) didSelectReceiptWithId:(NSString*)receiptId isPdfReceipt:(BOOL)isPdfReceipt
 {
     ReceiptStoreDetailViewController *receiptDetailVC = [ReceiptStoreDetailViewController receiptStoreDetailViewControllerForLocalReceiptId:receiptId];
+	// MOB-21462: for display pdf receipt in upload queue
+    receiptDetailVC.isPDF = isPdfReceipt;
     [self.navigationController pushViewController:receiptDetailVC animated:YES];
 }
 

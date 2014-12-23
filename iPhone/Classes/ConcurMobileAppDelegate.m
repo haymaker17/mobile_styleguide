@@ -20,7 +20,6 @@
 
 #import "PostQueue.h"
 #import "LoginViewController.h"
-#import "UncaughtExceptionHandler.h"
 #import "FileManager.h"
 #import "Localizer.h"
 #import "MobileAlertView.h"
@@ -36,7 +35,7 @@
 #import "PDFViewController.h"
 #import "NotificationController.h"
 #import "LoginOptionsViewController.h"
-#import "KeychainManager.h"
+#import "SafariLoginViewController.h"
 
 // For RVC change
 #import "HotelTextEditorViewController.h"
@@ -259,43 +258,14 @@
     self.coverView = nil;
 }
 
-
-#pragma mark - Exception Handling
-- (void)installUncaughtExceptionHandler
-{
-	InstallUncaughtExceptionHandler();
-}
-
-
 #pragma mark - Application Methods
-- (void)applicationDidFinishLaunching:(UIApplication *)application {
-
-    // here we fix keychain
-    KeychainManager *keychainManager = [[KeychainManager alloc] init];
-    [keychainManager cleanUpOldKeychain];
-
-    //[[MockServer sharedInstance] addMockForHotelSearch];
-    //[[MockServer sharedInstance] addMockForHotelRates];
-
-    // enable mock api
-    // [NSURLProtocol registerClass:[ConcurURLProtocol class]];
-
+- (void)applicationDidFinishLaunching:(UIApplication *)application
+{
     ATConnect *connection = [ATConnect sharedConnection];
     connection.apiKey = @"2a4d9d876b481b64c9481db061e4028f716ea74ac57cab35e8a48a2cee9ba7a2";
     
     // Initialize GoogleAnalytics and Flurry
     [AnalyticsTracker initAnalytics];
-
-	// Once the main run loop is fully configured, install the uncaught excpetion handler.
-	[self performSelector:@selector(installUncaughtExceptionHandler) withObject:nil afterDelay:0];
-	
-    //NSLog(@"%@",[ExSystem sharedInstance].description);
-	// If a flag indicates that an uncaught exception occured the last time the app ran
-	if (DetectedUncaughtException())
-	{
-		// Clear the cache
-		[FileManager cleanCache];  //todo: This call is killing off the sqllite db.  why?
-	}
 
     [FileManager cleanOldLogs];
     
@@ -305,36 +275,27 @@
 	if ([UIDevice isPad])
 	{
 		[[UIDevice currentDevice] beginGeneratingDeviceOrientationNotifications];
-        if ([Config isCorpHome])
-        {
-            HomeLoaderVC *newiPadHomeVC = [[UIStoryboard storyboardWithName:@"iPadHome" bundle:nil] instantiateInitialViewController];
-            navController = [[UINavigationController alloc] initWithRootViewController:newiPadHomeVC];
-            [window setRootViewController:navController];
-        }
-        else if ([Config isGov])
+        if ([Config isGov])
         {
             HomeLoaderVC *newiPadHomeVC = [[UIStoryboard storyboardWithName:@"iPadHome" bundle:nil] instantiateViewControllerWithIdentifier:@"GoviPadHomeLoaderVC"];
             navController = [[UINavigationController alloc] initWithRootViewController:newiPadHomeVC];
             [window setRootViewController:navController];
         }
-        else        //for Ignite
+        else
         {
-            navController = [[UINavigationController alloc] initWithRootViewController:self.padHomeVC];
-            [navController.navigationBar setHidden:YES];
+            HomeLoaderVC *newiPadHomeVC = [[UIStoryboard storyboardWithName:@"iPadHome" bundle:nil] instantiateInitialViewController];
+            navController = [[UINavigationController alloc] initWithRootViewController:newiPadHomeVC];
+            [window setRootViewController:navController];
+            // MOB-21435 : hack to ensure that viewdidload is called and homeloader is initialized other wise findhomeVC will be nil.
+            // This need to be removed when we re-write the login flow
+            newiPadHomeVC.view;
         }
-        
         // Needed for auto rotation to work on iOS6
         [window setRootViewController:navController];
 	}
 	else
     {
-        if ([Config isCorpHome])
-        {
-            HomeLoaderVC *newHomeVC = [[UIStoryboard storyboardWithName:@"Home" bundle:nil] instantiateInitialViewController];
-            navController = [[UINavigationController alloc] initWithRootViewController:newHomeVC];
-            [window setRootViewController:navController];
-        }
-        else if ([Config isGov])
+        if ([Config isGov])
         {
             HomeLoaderVC *newHomeVC = [[UIStoryboard storyboardWithName:@"Home" bundle:nil] instantiateViewControllerWithIdentifier:@"GovHomeLoaderVC"];
             navController = [[UINavigationController alloc] initWithRootViewController:newHomeVC];
@@ -342,12 +303,18 @@
         }
         else
         {
-            [navController.view setAutoresizingMask:UIViewAutoresizingFlexibleWidth];
-            [window addSubview:navController.view];            
+            HomeLoaderVC *newHomeVC = [[UIStoryboard storyboardWithName:@"Home" bundle:nil] instantiateInitialViewController];
+            navController = [[UINavigationController alloc] initWithRootViewController:newHomeVC];
+            [window setRootViewController:navController];
+            // MOB-21435 : hack to ensure that viewdidload is called and homeloader is initialized other wise findhomeVC will be nil.
+            newHomeVC.view;
         }
 	}
 	
     [window makeKeyAndVisible];
+
+    UIViewController *homevc = [ConcurMobileAppDelegate findHomeVC];
+    [[MCLogging getInstance] log:[NSString stringWithFormat:@"ConcurMobileAppDelegate::applicationDidFinishLaunching:: homevc===::%@, navcontroller:%@ ", homevc,navController] Level:MC_LOG_DEBU];
 
 	[[ApplicationLock sharedInstance] onApplicationDidFinishLaunching];
 }       
@@ -740,7 +707,7 @@ static NSString *isTest = @"N";
     {
         // do nothing
     }
-    else    
+    else
     {
         // MOB-18214 - With new sign in flow, we donot use company code anymore. user has to enter email to get his ssourl.
         if ([Config isNewSignInFlowEnabled]) {
@@ -750,7 +717,7 @@ static NSString *isTest = @"N";
             if (view && [view respondsToSelector:@selector(showPasswordRestScreen)]) {
                 [view performSelector:@selector(showSignInScreen)];
             }
-
+            
         }
         else
         {
@@ -762,6 +729,24 @@ static NSString *isTest = @"N";
             }
         }
     }
+}
+
+-(void) switchToSafariSignInView{
+    
+    UIViewController* view = [ConcurMobileAppDelegate findHomeVC];
+
+        /*
+         LoginWebViewController *lWVC = [[LoginWebViewController alloc] init];
+         [lWVC setLoginUrl:ssoUrl];
+         lWVC.loginDelegate = loginDelegate;
+         [self.navigationController pushViewController:lWVC animated:YES];
+         */
+        if (view && [view respondsToSelector:@selector(showSafariSignInScreen)]) {
+            [view performSelector:@selector(showSafariSignInScreen)];
+        }
+    
+    
+
 }
 
 - (BOOL) handlePreAuthCharge:(NSDictionary*) data
@@ -843,7 +828,7 @@ static NSString *isTest = @"N";
     [[ApplicationLock sharedInstance] onApplicationDidEnterBackground];
 	[self sendApplicationDidEnterBackgroundNotifications];
     [GlobalLocationManager stopTrackingSignificantLocationUpdates];
-
+    [ApplicationLock sharedInstance].shouldPopUpTouchID = YES;
 }
 
 - (void)applicationWillResignActive:(UIApplication *)application
@@ -1184,13 +1169,19 @@ static NSString *isTest = @"N";
 	return nil;
 }
 
-+(Boolean) isLoginViewShowing
++(BOOL) isLoginViewShowing
 {
     MobileViewController *loginViewController = [self getMobileViewControllerByViewIdKey:@"LOGIN"];
     ConcurMobileAppDelegate *appDelegate = (ConcurMobileAppDelegate*) [[UIApplication sharedApplication] delegate];
     // TODO: Temporary hack to make the new login appear.
-    // Ideal fix is to check if user is logged in from library. 
-	return (loginViewController != nil || [Config isNewSignInFlowEnabled] ? [appDelegate.topView isEqualToString:LOGIN] : NO ) ;
+    // Ideal fix is to check if user is logged in from library.
+
+    if (loginViewController != nil)
+        return YES;
+    else if ([Config isNewSignInFlowEnabled])
+        return [appDelegate.topView isEqualToString:LOGIN];
+    else
+        return NO;
 }
 
 +(BOOL) hasMobileViewController:(MobileViewController*)viewController
@@ -1247,7 +1238,7 @@ static NSString *isTest = @"N";
 		{
 			// Pop to the root of the nav controller
 			UINavigationController *nav = (UINavigationController*)vc;
-			[[MCLogging getInstance] log:[NSString stringWithFormat:@"    Popping to the root of the nav which is showing %@", [[nav.viewControllers lastObject] class]] Level:MC_LOG_DEBU];
+			[[MCLogging getInstance] log:[NSString stringWithFormat:@"Popping to the root of the nav which is showing %@", [[nav.viewControllers lastObject] class]] Level:MC_LOG_DEBU];
 			[nav popToRootViewControllerAnimated:NO];
 		}
         
@@ -1264,7 +1255,7 @@ static NSString *isTest = @"N";
             
             if (pvc.modalViewController == vc)
             {
-                [[MCLogging getInstance] log:[NSString stringWithFormat:@"    Dismissing modal %@", [vc class]] Level:MC_LOG_DEBU];
+                [[MCLogging getInstance] log:[NSString stringWithFormat:@"Dismissing modal %@", [vc class]] Level:MC_LOG_DEBU];
                 [vc dismissModalViewControllerAnimated:NO];
             }
         }
@@ -1272,7 +1263,7 @@ static NSString *isTest = @"N";
 		// If this view controller is a popup, then dismiss it
 		if ([vc isKindOfClass:[UIPopoverController class]])
 		{
-			[[MCLogging getInstance] log:[NSString stringWithFormat:@"    Dismissing popover %@", [vc class]] Level:MC_LOG_DEBU];
+			[[MCLogging getInstance] log:[NSString stringWithFormat:@"Dismissing popover %@", [vc class]] Level:MC_LOG_DEBU];
 			UIPopoverController *popover = (UIPopoverController*)vc;
 			[popover dismissPopoverAnimated:NO];
 		}
@@ -1311,8 +1302,7 @@ static NSString *isTest = @"N";
 			nestedVC = [((UINavigationController*)nestedVC).viewControllers lastObject];
 		}
 		// Else if it is the parent of a modal, then process the modal view controller
-		else if ([nestedVC isKindOfClass:[UIViewController class]] &&
-				 ((UIViewController*)nestedVC).modalViewController != nil)
+		else if ([nestedVC isKindOfClass:[UIViewController class]] && ((UIViewController*)nestedVC).modalViewController != nil)
 		{
 			[[MCLogging getInstance] log:[NSString stringWithFormat:@"Next up: modal"] Level:MC_LOG_DEBU];
 			nestedVC = ((UIViewController*)nestedVC).modalViewController;

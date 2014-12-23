@@ -13,6 +13,8 @@
 #import "ImageUtil.h"
 #import "ReceiptCache.h"
 #import "WaitViewController.h"
+#import "Config.h"
+#import "CTEOCRExpense.h"
 
 @interface ReceiptStoreUploadHelper()
 {
@@ -61,13 +63,16 @@
             [weakSelf didTakePicture: smallerImage];
         }];
     }];
-
-     [self.picker setExpense:^(CCImagePickerViewController *picker, NSDictionary *info) {
-         [weakSelf.vc dismissViewControllerAnimated:YES completion:^{
-             UIImage* smallerImage = [weakSelf restrictImageSize:[info objectForKey:UIImagePickerControllerOriginalImage]];
-             [weakSelf showQuickExpense:smallerImage];
-         }];
-     }];
+    
+    // if it is OCR user, don't show the expense button
+    if (![Config isOCRExpenseEnabled]) {
+        [self.picker setExpense:^(CCImagePickerViewController *picker, NSDictionary *info) {
+            [weakSelf.vc dismissViewControllerAnimated:YES completion:^{
+                UIImage* smallerImage = [weakSelf restrictImageSize:[info objectForKey:UIImagePickerControllerOriginalImage]];
+                [weakSelf showQuickExpense:smallerImage];
+            }];
+        }];
+    }
     self.picker.isToShowImagePickerView = YES;
     [weakSelf.vc presentViewController:self.picker animated:YES completion:nil];
 }
@@ -281,10 +286,19 @@
             [self.receiptEditorVC.delegate receiptUpdated:self.receiptEditorVC.receipt useV2Endpoint:true];
             [self.vc.navigationController popViewControllerAnimated:NO];
         }
+        
+        // when user clicks on done button
         else {
-            QuickExpensesReceiptStoreVC *view = [[QuickExpensesReceiptStoreVC alloc] initWithNibName:@"MobileTableViewController" bundle:nil];
-            [view setSeedDataAndShowReceiptsInitially:YES allowSegmentSwitch:YES allowListEdit:YES];
-            [self.vc.navigationController pushViewController:view animated:YES];
+            // just for testing startOCR server call for now...
+            if ([Config isOCRExpenseEnabled]) {
+                [self processingOCRExpense:receiptImageId];
+            }
+            // upload to receipt store
+            else {
+                QuickExpensesReceiptStoreVC *view = [[QuickExpensesReceiptStoreVC alloc] initWithNibName:@"MobileTableViewController" bundle:nil];
+                [view setSeedDataAndShowReceiptsInitially:YES allowSegmentSwitch:YES allowListEdit:YES];
+                [self.vc.navigationController pushViewController:view animated:YES];
+            }
         }
     }
     
@@ -373,6 +387,18 @@
                                               cancelButtonTitle:[Localizer getLocalizedText:@"OK"]
                                               otherButtonTitles:nil];
     [alert show];
+}
+
+#pragma mark - OCR Expense
+// This method just for testing for now, will not need it when OCR feature is completed
+-(void)processingOCRExpense:(NSString*)receiptImageId
+{
+    CTEOCRExpense *ocrExpense = [[CTEOCRExpense alloc] initWithReceiptImageID:receiptImageId];
+    [ocrExpense startOCRWithSuccess:^(CTEOCRExpenseDetails *expenseDetails){
+        DLog(@"successfully making startOCR server call.");
+    }failure:^(CTEError *error){
+        DLog(@"fail on startOCR server call %@", error);
+    }];
 }
 
 #pragma mark - AlertView delegate methods

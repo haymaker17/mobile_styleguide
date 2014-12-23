@@ -167,8 +167,51 @@
         cell.endDate.text = [self formatDateForStop:header.endDate];
         cell.startDate.text = [self formatDateForStop:header.startDate];
 
+        NSMutableArray *arrayOfIcons = [[NSMutableArray alloc]init];
+        [arrayOfIcons addObject:cell.iconImageOne];
+        [arrayOfIcons addObject:cell.iconImageTwo];
+        [arrayOfIcons addObject:cell.iconImageThree];
+        [arrayOfIcons addObject:cell.iconImageFour];
+        [arrayOfIcons addObject:cell.iconImageFive];
+
+        for(UIImageView *icon in arrayOfIcons)
+        {
+            [icon setHidden:YES];
+        }
+
+        UIImage *iconAir = [UIImage imageNamed:@"itin_icon_flight"];
+        UIImage *iconLodging = [UIImage imageNamed:@"itin_icon_lodging"];
+        UIImage *iconRail = [UIImage imageNamed:@"itin_icon_rail"];
+
+        int index = 0;
+
+        if(header.hasAir)
+        {
+            UIImageView *icon = (UIImageView *)[arrayOfIcons objectAtIndex:index];
+            [icon setImage:iconAir];
+            [icon setHidden:NO];
+            index++;
+        }
+
+        if(header.hasHotel)
+        {
+            UIImageView *icon = (UIImageView *)[arrayOfIcons objectAtIndex:index];
+            [icon setImage:iconLodging];
+            [icon setHidden:NO];
+            index++;
+        }
+
+        if(header.hasRail)
+        {
+            UIImageView *icon = (UIImageView *)[arrayOfIcons objectAtIndex:index];
+            [icon setImage:iconRail];
+            [icon setHidden:NO];
+//            index++;
+        }
+
+
         UIImage *notSelectedImage = [UIImage imageNamed:@"check_unselect"];
-        UIImage *selectedImage = [UIImage imageNamed:@"check_greenselect"];
+        UIImage *selectedImage = [UIImage imageNamed:@"check_blueselect"];
 
         if(header.include)
         {
@@ -210,7 +253,18 @@
 
 
 }
+// Seems to be necessary on the iOS 8 - 6plus or the cells get messed up after a selection
+- (CGFloat)tableView:(UITableView *)tableView estimatedHeightForRowAtIndexPath:(NSIndexPath *)indexPath
+{
+    CGFloat heightForRowAtIndexPath = 44;
 
+    if(indexPath.section == 1)
+    {
+        heightForRowAtIndexPath = 185;
+    }
+
+    return heightForRowAtIndexPath;
+}
 
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath
 {
@@ -221,9 +275,14 @@
     }
     else
     {
-        ItineraryImportCell *cell = (ItineraryImportCell *)[tableView dequeueReusableCellWithIdentifier:@"TripLegWithCheck"];
-        return [cell bounds].size.height;
+        if([ExSystem is8Plus])
+        {
+            return UITableViewAutomaticDimension;
+        }
 
+        ItineraryImportCell *cell = (ItineraryImportCell *)[tableView dequeueReusableCellWithIdentifier:@"TripLegWithCheck"];
+        CGFloat height = [cell bounds].size.height;
+        return height;
     }
 //    return 44;
 }

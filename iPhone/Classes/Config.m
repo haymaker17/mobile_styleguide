@@ -13,6 +13,7 @@
 
 @implementation Config
 
+# pragma mark - Build Targets
 // This is intended for dev build only
 +(BOOL) isDevBuild
 {
@@ -29,6 +30,79 @@
     return NO;
 }
 
++(BOOL) isGov
+{
+    NSDictionary* infoDict = [[NSBundle mainBundle] infoDictionary];
+    return [[infoDict objectForKey:@"Government"] boolValue];
+}
+
++(BOOL) isEnterprise
+{
+#ifdef ENTERPRISE
+    return YES;
+#else
+    return NO;
+#endif
+}
+
++(BOOL) isSprintDemoBuild
+{
+#if SPRINT_DEMO
+    return YES;
+#else
+    return NO;
+#endif
+}
+
+# pragma mark - Feature in Development
++(BOOL) isNewHotelBooking
+{
+    return NO;
+}
+
++(BOOL) isNewEditingEnabled
+{
+    // set to YES to enable in-line editing for QE
+    return NO;
+}
+
+/**
+ MOB-18709 - Flag for new travel
+ */
++(BOOL) isNewTravel
+{
+    return NO;
+}
+
++(BOOL) isNewAirBooking
+{
+    return YES;
+}
+
+// just for testing now, will remove after OCR feature is completed
++(BOOL) isOCRExpenseEnabled
+{
+    BOOL isOCRUser = ([self isOCRTesting] && [[ExSystem sharedInstance] hasExpenseIt]);
+    return isOCRUser;
+}
+
+// Note: should return NO when commit to trunk!
++(BOOL)isOCRTesting
+{
+    return NO;
+}
+
+// new profile workflow
++(BOOL)isProfileEnable
+{
+    if([self isSprintDemoBuild])
+        return YES;
+    else
+        return NO;
+}
+
+
+# pragma mark - Developer tools
 // This is for network debugging on dev machines.  Do NOT commit this set to YES.
 +(BOOL) isNetworkDebugEnabled
 {
@@ -39,26 +113,11 @@
 #endif
 }
 
-// Salesforce Chatter
-+(BOOL) isSalesforceChatterEnabled
-{
-    if ([[SalesForceUserManager sharedInstance] getInstanceUrl] != nil) {
-        return YES;
-    }
-    return NO;
-}
-
-+(BOOL) isGov
-{
-    NSDictionary* infoDict = [[NSBundle mainBundle] infoDictionary];
-    return [infoDict objectForKey:@"Government"];
-}
-
-
+# pragma mark - Feature complete (IN USE)
 +(BOOL) isCorpHome
 {
     NSDictionary* infoDict = [[NSBundle mainBundle] infoDictionary];
-    return [infoDict objectForKey:@"Corporate Home 9"];
+    return [[infoDict objectForKey:@"Corporate Home 9"] boolValue];
 }
 
 // To enable/Disable voice.
@@ -74,39 +133,6 @@
     return [[ExSystem sharedInstance] siteSettingVoiceBookingEnabled] && isLangugageSupported && ![self isGov];
 }
 
-+(BOOL) isNewEditingEnabled
-{
-    // set to YES to enable in-line editing for QE
-    return NO;
-}
-
-+(BOOL) isEnterprise
-{
-#ifdef ENTERPRISE
-    return true;
-#else
-    return false;
-#endif
-}
-
-/**
-  MOB-18709 - Flag for new travel
- */
-+(BOOL) isNewTravel
-{
-    return NO;	
-}
-
-+(BOOL) isNewHotelBooking
-{
-    return NO;
-}
-
-+(BOOL) isNewAirBooking
-{
-    return NO;
-}
-
 +(BOOL)isNewSignInFlowEnabled
 {
     return YES;
@@ -116,36 +142,46 @@
 {
     if ([ExSystem is7Plus]) // New UI works only for iOS 7 and above
     {
-       return YES;
+        return YES;
     }
+    
+    return NO;
+}
+
++(BOOL) isTravelRequestEnabled
+{
+    
+    /*
+     * return always false for trunc and branch until Travel Request Will be published
+     *
+     if ([self isDevBuild] == YES) {
+     return YES;
+     }*/
     
     return NO;
 }
 
 +(BOOL) isEreceiptsEnabled
 {
-//     NSUserDefaults *userDefault = [NSUserDefaults standardUserDefaults];
-//    return [userDefault objectForKey:@"Ereceipts"] == nil ? NO : [[userDefault objectForKey:@"Ereceipts"] boolValue] ;
+    //     NSUserDefaults *userDefault = [NSUserDefaults standardUserDefaults];
+    //    return [userDefault objectForKey:@"Ereceipts"] == nil ? NO : [[userDefault objectForKey:@"Ereceipts"] boolValue] ;
     // Ereceipts is always on.
     return YES;
-}
-
-+(BOOL) isTravelRequestEnabled
-{
-	
-    /*
-	 * return always false for trunc and branch until Travel Request Will be published
-	 *
-	 if ([self isDevBuild] == YES) {
-        return YES;
-    }*/
-    
-    return NO;
 }
 
 +(BOOL) isTouchIDEnabled
 {
     return [[ExSystem sharedInstance] siteSettingAllowsTouchID] && [SignInWithTouchID canEvaluatePolicy];
+}
+
+# pragma mark - OLD (may not be in use)
+// Salesforce Chatter
++(BOOL) isSalesforceChatterEnabled
+{
+    if ([[SalesForceUserManager sharedInstance] getInstanceUrl] != nil) {
+        return YES;
+    }
+    return NO;
 }
 
 @end

@@ -49,6 +49,7 @@
 -(void) showTestDriveStoryBoard;
 -(void) showPasswordRestScreen;
 -(void) showSignInScreen;
+-(void) showSafariSignInScreen;
 
 // methods HomeDataProvider needs to update the UI
 - (void)setExpensesCount:(NSNumber *)count;

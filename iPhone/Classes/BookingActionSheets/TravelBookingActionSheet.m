@@ -152,7 +152,7 @@
     } else {
         if ([UIDevice isPad] && self.navigationController == nil)
         {
-            if ([Config isNewHotelBooking] && [UIDevice isPhone]) {
+            if ([Config isNewHotelBooking]) {
                 [HotelSearchTableViewController showHotelsNearMe:[self getBookTripsNavigationController]];
             }else{
                 [HotelViewController showHotelVC:[self getBookTripsNavigationController] withTAFields:nil];

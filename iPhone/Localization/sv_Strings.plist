@@ -664,6 +664,8 @@
 	<string>Det går inte att göra bokningar när enheten är offline.  Återanslut till internet och försök sedan igen.</string>
 	<key>Border Crossing</key>
 	<string>Gränspassage</string>
+	<key>Breakfast Amount *</key>
+	<string>Frukostbelopp *</string>
 	<key>Bump Phones to Become an Attendee</key>
 	<string>%@ ringer för att bli en deltagare</string>
 	<key>Bump Phones to Exchange Attendee Info</key>
@@ -870,6 +872,8 @@
 	<string>Checkar ut</string>
 	<key>Children</key>
 	<string>Barn</string>
+	<key>Choose a location</key>
+	<string>Välj en plats</string>
 	<key>ChoosePhoto-ImagePicker</key>
 	<string>Förhandsgranska</string>
 	<key>Class &amp; Seat Number</key>
@@ -2056,8 +2060,8 @@ Om du inte känner till ditt användarnamn för Concur kontaktar du resebyråns 
 	<string>Inloggningsinställningar</string>
 	<key>Logout</key>
 	<string>Logga ut</string>
-	<key>Looks like we are experience some difficulties. Please check back in a few minutes.</key>
-	<string>Det verkar som vi har stött på problem. Försök igen om några minuter.</string>
+	<key>Looks like we are experiencing some difficulties. Please check back in a few minutes.</key>
+	<string>Det verkar som om vi har stött på problem. Försök igen om några minuter.</string>
 	<key>Luxury</key>
 	<string>Lyx</string>
 	<key>MAP</key>
@@ -2118,10 +2122,14 @@ Om du inte känner till ditt användarnamn för Concur kontaktar du resebyråns 
 	<string>Mappa</string>
 	<key>Map Address</key>
 	<string>Kartadress</string>
+	<key>Matched Expense</key>
+	<string>Matchat utlägg</string>
 	<key>Matching transactions combined into a single expense</key>
 	<string>Matchande transaktioner som kombinerats till ett enda utlägg</string>
 	<key>Meal Allowances</key>
 	<string>Måltidstraktamenten</string>
+	<key>Meals Amount</key>
+	<string>Måltidsbelopp</string>
 	<key>Menu</key>
 	<string>Meny</string>
 	<key>Message Center</key>
@@ -2394,6 +2402,20 @@ Om du inte känner till ditt användarnamn för Concur kontaktar du resebyråns 
 	<string>Bli en smartare reseköpare! Bokning under priset att slå sparar pengar åt ditt företag.</string>
 	<key>P2B_AIR_BOOKING_HEADER_POINTS_ENABLED</key>
 	<string>Du kan tjäna in respoäng när du väljer alternativ som kostar mindre än priset att slå. När resan bokförs som utlägg registreras de intjänade respoängen i totalsumman som du kan använda vid framtida förmåner.</string>
+	<key>P2B_AIR_BOOKING_MANAGE_VIOLATIONS_HEADER</key>
+	<string>Du har policyöverträdelser som måste behandlas. Du kan använda respoäng eller följa ditt företags vanliga arbetsflöde för policyöverträdelser.</string>
+	<key>P2B_AIR_BOOKING_USING_POINTS_HEADER</key>
+	<string>Du kan tjäna in respoäng genom att välja flygbiljett eller hotellboende som kostar mindre än Priset att slå. Du kan använda respoäng från din bank för att kringgå ditt företags vanliga aviserings- eller attesteringsprocesser för bokning av alternativ som inte följer policyn.
+        
+Du måste använda respoäng eller följa ditt företags vanliga aviserings- och attesteringsprocesser för den här flygbokningen eftersom den inte följer ditt företags reseregler.
+        
+När du har bokfört din resa som utlägg kommer alla respoäng du tjänar in eller använder att visas i din bank.</string>
+	<key>P2B_HOTEL_BOOKING_USING_POINTS_HEADER</key>
+	<string>Du kan tjäna in respoäng genom att välja flygbiljett eller hotellboende som kostar mindre än Priset att slå.  Du kan använda respoäng från din bank för att kringgå ditt företags vanliga aviserings- eller attesteringsprocesser för bokning av alternativ som inte följer policyn.
+        
+Du måste använda respoäng eller följa ditt företags vanliga aviserings- och attesteringsprocesser för den här hotellbokningen eftersom den inte följer ditt företags reseregler.
+        
+När du har bokfört din resa som utlägg kommer alla respoäng du tjänar in eller använder att visas i din bank.</string>
 	<key>PDF Receipt</key>
 	<string>PDF-kvitto</string>
 	<key>PENDING_REQUIRED_TRAVEL_CUSTOM_FIELDS</key>
@@ -2556,6 +2578,8 @@ Om du inte känner till ditt användarnamn för Concur kontaktar du resebyråns 
 	<string>Skriv ut</string>
 	<key>Proceed to Sign In</key>
 	<string>Gå vidare till inloggning</string>
+	<key>Profile</key>
+	<string>Profil</string>
 	<key>Property</key>
 	<string>Anläggning</string>
 	<key>Provided</key>
@@ -2688,6 +2712,10 @@ Om du inte känner till ditt användarnamn för Concur kontaktar du resebyråns 
 	<string>Det gick inte att ladda upp kvittot</string>
 	<key>Receipt uploaded</key>
 	<string>Kvittot har laddats upp</string>
+	<key>ReceiptImageUnavailable</key>
+	<string>Din kvittobild är för tillfället inte tillgänglig. Försök igen senare.</string>
+	<key>ReceiptImageUnavailableTitle</key>
+	<string>Kvittobild inte tillgänglig</string>
 	<key>ReceiptUploadFailMsg</key>
 	<string>Det gick inte att spara kvittot just nu. Försök igen senare.</string>
 	<key>Receipts</key>
@@ -2726,6 +2754,8 @@ Om du inte känner till ditt användarnamn för Concur kontaktar du resebyråns 
 	<string>Avvisar resa</string>
 	<key>Remaining:</key>
 	<string>Återstående:</string>
+	<key>Removal of E-Receipt items is not supported on mobile</key>
+	<string>Borttagning av e-kvittoposter stöds inte på mobiler</string>
 	<key>Removed Link to Dropbox</key>
 	<string>Tog bort länk till Dropbox</string>
 	<key>Removing entry</key>
@@ -2768,6 +2798,8 @@ Om du inte känner till ditt användarnamn för Concur kontaktar du resebyråns 
 	<string>Du har %d rapporter att attestera</string>
 	<key>Request</key>
 	<string>Begäran</string>
+	<key>RequestHeader</key>
+	<string>Rubrik till begäran</string>
 	<key>Requested</key>
 	<string>Begärd</string>
 	<key>Requests</key>
@@ -3374,6 +3406,8 @@ Om du inte känner till ditt användarnamn för Concur kontaktar du resebyråns 
 	<string>Du har %@ utlägg</string>
 	<key>Total: %@</key>
 	<string>Summa: %@</string>
+	<key>Touch ID</key>
+	<string>Touch ID</string>
 	<key>Tour</key>
 	<string>Rundtur</string>
 	<key>TourExpense2Subtitle</key>
@@ -3484,6 +3518,8 @@ Om du inte känner till ditt användarnamn för Concur kontaktar du resebyråns 
 	<string>Det gick inte att ladda platsdata.</string>
 	<key>Unable to sign in</key>
 	<string>Det går inte att logga in dig just nu. Kontakta supportavdelningen på ditt företag eller rese-/utläggsavdelningen.</string>
+	<key>Unauthorized</key>
+	<string>Ej auktoriserad</string>
 	<key>Unavailable</key>
 	<string>Otillgänglig</string>
 	<key>Undefined</key>

@@ -19,6 +19,8 @@
 #import "WaitViewController.h"
 #import "ItineraryCell.h"
 #import "ItinerarySummaryViewController.h"
+#import "CTETriangleBadge.h"
+#import "CTEBadge.h"
 
 @interface ItineraryStopViewController ()
 
@@ -53,6 +55,8 @@
     //Localize
     [self.navBar setTitle:[Localizer getLocalizedText:@"Itinerary"]];
     [self.saveGenerateButton setTitle:[Localizer getLocalizedText:@"Calculate Allowances"]];
+    self.view.backgroundColor = [UIColor clearColor];
+
 
     self.role = self.paramBag[@"ROLE"];
 
@@ -457,20 +461,40 @@
     return 0;
 }
 
+- (CGFloat)tableView:(UITableView *)tableView estimatedHeightForHeaderInSection:(NSInteger)section
+{
+    return 0;
+}
 
 - (CGFloat)tableView:(UITableView *)tableView heightForHeaderInSection:(NSInteger)section
 {
     return 0;
 }
 
+- (CGFloat)tableView:(UITableView *)tableView estimatedHeightForRowAtIndexPath:(NSIndexPath *)indexPath
+{
+    return 100;
+}
+
 -(CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath{
     if(indexPath.section == HeaderSection)
     {
+        if([ExSystem is8Plus])
+        {
+            return UITableViewAutomaticDimension;
+        }
+
         ItineraryCell *cell = (ItineraryCell *) [tableView dequeueReusableCellWithIdentifier:@"ItineraryListCell"];
-        return [cell bounds].size.height;
+        CGFloat height = [cell bounds].size.height;
+        return height;
     }
     else if(indexPath.section == InformationHeader)
     {
+        if([ExSystem is8Plus])
+        {
+            return UITableViewAutomaticDimension;
+        }
+
         ItineraryCell *cell = (ItineraryCell *) [tableView dequeueReusableCellWithIdentifier:@"ItineraryInformationCell"];
         CGFloat height = [cell bounds].size.height;
 
@@ -495,9 +519,15 @@
     }
     else if(indexPath.section == StopSection)
     {
+        if([ExSystem is8Plus])
+        {
+            return UITableViewAutomaticDimension;
+        }
+
         NSString *cellIdentifier = @"ItinStop2ProtoCell";
         id cellId = [self.tableView dequeueReusableCellWithIdentifier:cellIdentifier];
-        return [cellId bounds].size.height;
+        CGFloat height = [cellId bounds].size.height;
+        return height;
     }
     return 0;
 }
@@ -645,11 +675,23 @@
 
     if([stop.stopNumber intValue] == 0)
     {
-        cell.stopNumber.text = [NSString stringWithFormat:@"%i", (indexPath.row + 1)];
+        NSInteger indexPlusOne = indexPath.row + 1;
+
+        cell.stopNumber.text = [NSString stringWithFormat:@"%i", indexPlusOne];
+
+        [cell.stopBadge updateBadgeCount:[NSNumber numberWithInteger:indexPlusOne]];
+
+        [cell.stopBadge updateBadgeColor:[UIColor colorWithRed:0.0/255.0 green:120.0/255.0 blue:200.0/255.0 alpha:1]];
     }
     else
     {
         cell.stopNumber.text = [stop.stopNumber stringValue];
+
+        [cell.stopBadge updateBadgeCount:stop.stopNumber];
+//        int xxx = [stop.stopNumber intValue] + [@100 intValue];
+//        [cell.stopBadge updateBadgeCount:[NSNumber numberWithInteger:(xxx)]];
+
+        [cell.stopBadge updateBadgeColor:[UIColor colorWithRed:0.0/255.0 green:120.0/255.0 blue:200.0/255.0 alpha:1]];
     }
 
     cell.stopLabel.text = [Localizer getLocalizedText:@"Stop"];
@@ -657,14 +699,22 @@
     cell.ToLabel.text = [Localizer getLocalizedText:@"To"];
     cell.RateLocationLabel.text = [Localizer getLocalizedText:@"Rate Location:"];
 
+    UIColor *errorFlagColor = [UIColor colorWithRed:191.0/255.0 green:103.0/255.0 blue:103.0/255.0 alpha:1];
+
     if(stop.isFailed)
     {
         [cell.stopErrorIndicator setHidden:NO];
+
+        [cell.triangleBadge setHidden:NO];
+        [cell.triangleBadge updateBadgeColor:errorFlagColor];
 
     }
     else
     {
         [cell.stopErrorIndicator setHidden:YES];
+
+        [cell.triangleBadge setHidden:YES];
+        [cell.triangleBadge updateBadgeColor:errorFlagColor];
     }
 
     //TODO change this
@@ -1092,6 +1142,22 @@
 {
     ItineraryCell *cell = gestureRecognizer.view;
     [self performSegueWithIdentifier:@"SelectSummarySegue" sender:cell];
+}
+
+-(void)tableView:(UITableView *)tableView willDisplayCell:(UITableViewCell *)cell forRowAtIndexPath:(NSIndexPath *)indexPath{
+    NSLog(@"indexPath = %@", indexPath);
+    if([tableView respondsToSelector:@selector(setSeparatorInset:)])
+    {
+        [tableView setSeparatorInset:UIEdgeInsetsZero];
+    }
+    if([tableView respondsToSelector:@selector(setLayoutMargins:)])
+    {
+        [tableView setLayoutMargins:UIEdgeInsetsZero];
+    }
+    if([cell respondsToSelector:@selector(setLayoutMargins:)])
+    {
+        [cell setLayoutMargins:UIEdgeInsetsZero];
+    }
 }
 
 

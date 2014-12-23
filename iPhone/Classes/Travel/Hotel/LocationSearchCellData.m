@@ -27,6 +27,13 @@
     
     return self;
 }
+-(instancetype)initWithCurrentLocation:(CTELocation *)cteLocation
+{
+    self = [self initWithCTELocation:cteLocation];
+    self.cellHeight = 50.0;
+    self.isCurrentLocation = YES;
+    return self;
+}
 -(instancetype)initWithOfficeLocation:(OfficeLocationResult *)officeLocation
 {
     self = [super init];

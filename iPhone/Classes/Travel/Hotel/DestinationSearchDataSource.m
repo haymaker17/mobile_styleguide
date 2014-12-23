@@ -174,7 +174,7 @@
     CLLocation *currentLocation = [GlobalLocationManager sharedInstance].currentLocation;
     mylocation.longitude = currentLocation.coordinate.longitude;
     mylocation.latitude = currentLocation.coordinate.latitude;
-    LocationSearchCellData *currentLocationCellData = [[LocationSearchCellData alloc] initWithCTELocation:mylocation];
+    LocationSearchCellData *currentLocationCellData = [[LocationSearchCellData alloc] initWithCurrentLocation:mylocation];
     return currentLocationCellData;
 
 }

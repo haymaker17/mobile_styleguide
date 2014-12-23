@@ -144,7 +144,10 @@ static UploadQueue *sharedInstance;
         if (uploadableItem == nil)
             [self didFailToUploadItemWithUUID:item.uuid];
         else
-            [uploadableItem uploadItemWithUUID:item.uuid delegate:self];
+        {
+        // MOB-21462: pass down the image data type, the server will need to know if it is a pdf or regular image data type.
+            [uploadableItem uploadItemWithUUID:item.uuid isPdfReceipt:[item.entityTypeName isEqualToString:@"PdfReceipt"] delegate:self];
+        }
     }
     else
     {
@@ -471,7 +474,7 @@ static UploadQueue *sharedInstance;
             if (item.relRequires != nil && item.relRequires.count > 0)
                 totalQuickExpensesWithReceipts++;
         }
-        else if ([item.entityTypeName isEqualToString:@"Receipt"])
+        else if ([item.entityTypeName isEqualToString:@"Receipt"] || [item.entityTypeName isEqualToString:@"PdfReceipt"])
             totalReceipts++;
     }
     

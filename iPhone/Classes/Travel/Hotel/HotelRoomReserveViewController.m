@@ -48,6 +48,11 @@
 
     [self loadReserveScreen];
     [self updateAmountLabel];
+    
+    // As the previous VC has no title, we provide a custom title for the back button
+    UIBarButtonItem *barButton = [[UIBarButtonItem alloc] init];
+    barButton.title = [@"Rooms" localize];
+    self.navigationController.navigationBar.topItem.backBarButtonItem = barButton;
 
     [AnalyticsTracker initializeScreenName:@"Reserve Screen"];
 }
@@ -107,7 +112,7 @@
 
 - (void)updateAmountLabel
 {
-    NSString *amount = [NSString stringWithFormat:@"$%@", self.selectedRate.totalAmount];
+    NSString *amount = [FormatUtils formatMoneyString:self.selectedRate.totalAmount crnCode:self.selectedRate.currency decimalPlaces:0];
     [self.amountLabel setText:amount];
 }
 

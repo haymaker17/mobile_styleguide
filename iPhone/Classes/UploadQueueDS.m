@@ -18,6 +18,7 @@
 #import "FormatUtils.h"
 #import "UploadableReceipt.h"
 #import "UploadQueueItemManager.h"
+#import "ReceiptCache.h"
 
 @implementation UploadQueueDS
 
@@ -153,8 +154,16 @@
     else
     {
         NSDate *receiptDate = item.creationDate;
-        UIImage *receiptImage = [UploadableReceipt imageForLocalReceiptImageId:item.entityInstanceId];
-        return [self tableView:tableView configureCellForReceiptImage:receiptImage date:receiptDate];
+        UIImage *receiptImage = nil;
+        NSData *receiptData = nil;
+        // MOB-21462: need to consider the case when the receipt data type is pdf
+        BOOL isPdfReceipt = [item.entityTypeName isEqualToString:@"PdfReceipt"];
+        if (isPdfReceipt) {
+            receiptData = [UploadableReceipt receiptDataForLocalReceiptImageId:item.entityInstanceId];
+        } else {
+            receiptImage = [UploadableReceipt imageForLocalReceiptImageId:item.entityInstanceId];
+        }
+        return [self tableView:tableView configureCellForReceiptImage:receiptImage date:receiptDate pdfData:receiptData];
     }
 }
 
@@ -228,7 +237,7 @@
     return cell;
 }
 
--(UITableViewCell*)tableView:(UITableView *)tableView configureCellForReceiptImage:(UIImage *)receiptImage date:(NSDate *)receiptDate
+-(UITableViewCell*)tableView:(UITableView *)tableView configureCellForReceiptImage:(UIImage *)receiptImage date:(NSDate *)receiptDate pdfData:(NSData *)pdfData
 {
     static NSString *CellIdentifier = @"ReceiptStoreListCell";
 	
@@ -245,7 +254,17 @@
     
     [cell.activityView stopAnimating];
     [cell.activityView setHidden:YES];
-    [cell.thumbImageView setImage:receiptImage];//[UIImage imageNamed:@"receipt_store"]];
+    // MOB-21462: if it is pdf, need to display on webview
+    if ([pdfData length]) {
+        [cell.imageView setHidden:YES];
+        [cell.pdfWebView setHidden:NO]; // it is pdf receipt, need webview
+        [cell.pdfWebView loadData:pdfData MIMEType:@"application/pdf" textEncodingName:@"UTF-8" baseURL:nil];
+        
+    } else {
+        [cell.pdfWebView setHidden:YES];    // it is regular jpg receipt, no need webview
+        [cell.imageView setHidden:NO];
+        [cell.thumbImageView setImage:receiptImage];//[UIImage imageNamed:@"receipt_store"]];
+    }
     
     NSString* imgDate = [DateTimeFormatter formatDateEEEMMMddyyyyByDate:receiptDate];
 	[cell.imageDateLbl setText:imgDate];
@@ -298,12 +317,13 @@
         EntityMobileEntry *mobileEntry = [[MobileEntryManager sharedInstance] fetchByLocalId:item.entityInstanceId];
         [self.delegate didSelectMobileEntry:mobileEntry];
     }
-    else if ([item.entityTypeName isEqualToString:@"Receipt"])
+    else if ([item.entityTypeName isEqualToString:@"Receipt"] || [item.entityTypeName isEqualToString:@"PdfReceipt"])
     {
         NSDictionary *dict = @{@"Type": @"Queued Receipt"};
         [Flurry logEvent:@"Offline: Viewed" withParameters:dict];
         
-        [self.delegate didSelectReceiptWithId:item.entityInstanceId];
+        // MOB-21462: need to know if the receipt data type for displaying on the upload queue
+        [self.delegate didSelectReceiptWithId:item.entityInstanceId isPdfReceipt:[item.entityTypeName isEqualToString:@"PdfReceipt"]];
     }
 }
 @end

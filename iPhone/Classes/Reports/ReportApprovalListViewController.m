@@ -794,26 +794,25 @@ NSString *const PURCHASE_REQUEST_SECTION = @"Purchase Requests";
 
 	NSString *key = (self.aKeys)[row];
 	ReportData *rpt = self.rals[key];
-	
+    
+//    MOB-21355: need to check if it is a report approval
+    NSString *sourceSection = nil;
+    if ([sectionID isEqualToString:REPORT_APPROVAL_SECTION]) {
+        sourceSection = @"REPORT_APPROVAL_SECTION";
+    }
+    
 	if(![UIDevice isPad])
 	{
-        NSMutableDictionary *pBag = [[NSMutableDictionary alloc] initWithObjectsAndKeys: rpt, @"REPORT", rpt.rptKey, @"ID_KEY", rpt.rptKey, @"RECORD_KEY", ROLE_EXPENSE_MANAGER, @"ROLE", @"YES", @"SHORT_CIRCUIT", nil]; 
+        NSMutableDictionary *pBag = [[NSMutableDictionary alloc] initWithObjectsAndKeys: rpt, @"REPORT", rpt.rptKey, @"ID_KEY", rpt.rptKey, @"RECORD_KEY", ROLE_EXPENSE_MANAGER, @"ROLE", @"YES", @"SHORT_CIRCUIT", sourceSection,@"SOURCE_SECTION", nil];
         
         ReportDetailViewController *view = [[ReportDetailViewController alloc] initWithNibName:@"ReportHeaderView" bundle:nil];
         [view setSeedData:pBag];
         [self.navigationController pushViewController:view animated:YES];
-        
-        //AJC -- is this code needed? delete after 2013-09-20 if not needed by then
-        /*
-        // old switchToView code, this is so hard to understand
-		NSMutableDictionary *pBag = [[NSMutableDictionary alloc] initWithObjectsAndKeys: rpt, @"REPORT", rpt.rptKey, @"ID_KEY", rpt.rptKey, @"RECORD_KEY", ROLE_EXPENSE_MANAGER, @"ROLE", @"YES", @"SHORT_CIRCUIT", nil]; 
-		[ConcurMobileAppDelegate switchToView:APPROVE_ENTRIES viewFrom:APPROVE_REPORTS ParameterBag:pBag];
-         */
 	}
 	else
     {
 		NSMutableDictionary *pBag = [[NSMutableDictionary alloc] initWithObjectsAndKeys: rpt, @"REPORT", rpt.rptKey, @"ID_KEY", rpt.rptKey, @"RECORD_KEY", ROLE_EXPENSE_MANAGER, @"ROLE", @"YES", @"SHORT_CIRCUIT"
-									 ,self.aKeys, @"REPORT_KEYS", self.rals, @"REPORT_DICT", nil]; //, @"YES", @"SKIP_PARSE"
+									 ,self.aKeys, @"REPORT_KEYS", self.rals, @"REPORT_DICT", sourceSection,@"SOURCE_SECTION", nil]; //, @"YES", @"SKIP_PARSE"
         
         pBag[@"COMING_FROM"] = @"APPROVAL";
 		

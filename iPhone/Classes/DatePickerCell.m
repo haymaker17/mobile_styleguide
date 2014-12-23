@@ -42,7 +42,12 @@
     }
 
     self.datePicker.date = cellData.keyValue[@"cellvalue"];
-    //TODO: Set max date too.
+    if (cellData.keyValue[@"minDate"]) {
+        self.datePicker.minimumDate = cellData.keyValue[@"minDate"];
+    }
+    if (cellData.keyValue[@"maxDate"]) {
+        self.datePicker.maximumDate = cellData.keyValue[@"maxDate"];
+    }
 
 }
 @end

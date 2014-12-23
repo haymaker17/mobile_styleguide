@@ -59,5 +59,6 @@
 
 +(NSData *) receiptImageDataFromReceiptImage:(UIImage*)receiptImage;
 +(EntityUploadQueueItem *) queueReceiptImage:(UIImage*)receiptImage date:(NSDate*)creationDate;
++(EntityUploadQueueItem *) queuePdfReceipt:(NSData*)pdfData date:(NSDate*)creationDate;
 
 @end

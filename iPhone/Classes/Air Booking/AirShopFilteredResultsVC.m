@@ -110,8 +110,8 @@
         pBag[@"TRIP_KEY"] = tripKey;
 
 		UIViewController *homeVC = [ConcurMobileAppDelegate findHomeVC];
-        // Force home screen refresh
-        if ([homeVC respondsToSelector:@selector(refreshTripsData)])
+        // In iOS 8 onwards, Home is displayed for a split-second before TripDetailsVC is pushed over it. This causes viewDidAppear on Home9VC to be triggered which in-turn reloads Trips data. This causes MOB-21531 and an app crash
+        if (![ExSystem is8Plus] && [homeVC respondsToSelector:@selector(refreshTripsData)])
         {
             [homeVC performSelector:@selector(refreshTripsData) withObject:nil];
         }
@@ -493,7 +493,7 @@
     if ([self getViolationsCount])
     {
         NSString *violationCrnCode = [self getViolationsByFareId:airSummary.fareId];
-        int numberOfRowsInViolationSection = [self hasDisallowedViolations] ? 3 : 1; // Only show Violation Justification and code rows if user input is required.
+        int numberOfRowsInViolationSection = [self hasDisallowedViolations] ? 3 : ([[violationCrnCode stringByTrimmingCharactersInSet:[NSCharacterSet whitespaceAndNewlineCharacterSet]] length] ? 1 : 0); // Only show Violation Justification and code rows if user input is required.
         for (int j=0; j < numberOfRowsInViolationSection; j++)
         {
             EntityAirFilter *afViolation = (EntityAirFilter*)[[AirFilterManager sharedInstance] makeNew];
@@ -1424,7 +1424,7 @@
 {
     if ([airSummary maxEnforcementLevel] != nil)
     {
-        if ([[airSummary maxEnforcementLevel] intValue] != kViolationAllow)
+        if ([[airSummary maxEnforcementLevel] intValue] > kViolationExcludeFromLLF)
         {
             return YES;
         }

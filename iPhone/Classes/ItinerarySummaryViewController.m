@@ -133,10 +133,20 @@
     return cell;
 }
 
+- (CGFloat)tableView:(UITableView *)tableView estimatedHeightForRowAtIndexPath:(NSIndexPath *)indexPath
+{
+    return 100;
+}
+
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath
 {
     if(indexPath.row == 0)
     {
+        if([ExSystem is8Plus])
+        {
+            return UITableViewAutomaticDimension;
+        }
+
         ItineraryCell *cell = [tableView dequeueReusableCellWithIdentifier:@"ItineraryName"];
 
         return [cell bounds].size.height;
@@ -144,6 +154,11 @@
     else if(indexPath.row == 1)
     {
         if(self.itineraryConfig.useShortDistance == YES) {
+            if([ExSystem is8Plus])
+            {
+                return UITableViewAutomaticDimension;
+            }
+
             ItineraryCell *cell = [tableView dequeueReusableCellWithIdentifier:@"ShortDistanceTrip"];
             return [cell bounds].size.height;
         }
@@ -152,6 +167,11 @@
     else if(indexPath.row == 2)
     {
         if(self.itineraryConfig.tripLengthList == YES) {
+            if([ExSystem is8Plus])
+            {
+                return UITableViewAutomaticDimension;
+            }
+
             ItineraryCell *cell = [tableView dequeueReusableCellWithIdentifier:@"ItineraryTripLength"];
             return [cell bounds].size.height;
         }
@@ -321,6 +341,22 @@
         self.itinerary.shortDistanceTrip = @"N";
     }
 
+}
+
+-(void)tableView:(UITableView *)tableView willDisplayCell:(UITableViewCell *)cell forRowAtIndexPath:(NSIndexPath *)indexPath{
+    NSLog(@"indexPath = %@", indexPath);
+    if([tableView respondsToSelector:@selector(setSeparatorInset:)])
+    {
+        [tableView setSeparatorInset:UIEdgeInsetsZero];
+    }
+    if([tableView respondsToSelector:@selector(setLayoutMargins:)])
+    {
+        [tableView setLayoutMargins:UIEdgeInsetsZero];
+    }
+    if([cell respondsToSelector:@selector(setLayoutMargins:)])
+    {
+        [cell setLayoutMargins:UIEdgeInsetsZero];
+    }
 }
 
 

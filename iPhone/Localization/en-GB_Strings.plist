@@ -662,6 +662,8 @@
 	<string>Bookings cannot be made while your device is offline.  Please reconnect to the internet and then try again.</string>
 	<key>Border Crossing</key>
 	<string>Border Crossing</string>
+	<key>Breakfast Amount *</key>
+	<string>Breakfast Amount *</string>
 	<key>Bump Phones to Become an Attendee</key>
 	<string>%@ Phones to Become an Attendee</string>
 	<key>Bump Phones to Exchange Attendee Info</key>
@@ -862,6 +864,8 @@
 	<string>Checking Out</string>
 	<key>Children</key>
 	<string>Children</string>
+	<key>Choose a location</key>
+	<string>Choose a location</string>
 	<key>ChoosePhoto-ImagePicker</key>
 	<string>Preview</string>
 	<key>Class &amp; Seat Number</key>
@@ -2012,8 +2016,8 @@ If you do not know your Concur user name check with your agency administrator.</
 	<string>Sign In Settings</string>
 	<key>Logout</key>
 	<string>Sign Out</string>
-	<key>Looks like we are experience some difficulties. Please check back in a few minutes.</key>
-	<string>Looks like we are experience some difficulties. Please check back in a few minutes.</string>
+	<key>Looks like we are experiencing some difficulties. Please check back in a few minutes.</key>
+	<string>Looks like we are experiencing some difficulties. Please check back in a few minutes.</string>
 	<key>Luxury</key>
 	<string>Luxury</string>
 	<key>MAP</key>
@@ -2074,10 +2078,14 @@ If you do not know your Concur user name check with your agency administrator.</
 	<string>Map</string>
 	<key>Map Address</key>
 	<string>Map Address</string>
+	<key>Matched Expense</key>
+	<string>Matched Expense</string>
 	<key>Matching transactions combined into a single expense</key>
 	<string>Matching transactions combined into a single expense</string>
 	<key>Meal Allowances</key>
 	<string>Meal Allowances</string>
+	<key>Meals Amount</key>
+	<string>Meals Amount</string>
 	<key>Menu</key>
 	<string>Menu</string>
 	<key>Message Center</key>
@@ -2346,6 +2354,20 @@ If you do not know your Concur user name check with your agency administrator.</
 	<string>Be a smarter travel buyer! Booking under the Price-to-Beat saves your company money.</string>
 	<key>P2B_AIR_BOOKING_HEADER_POINTS_ENABLED</key>
 	<string>Earn Travel Points when you select options that cost less than the Price-to-Beat. When the trip is expensed, the earned Travel Points are reflected in the total that you can use toward future benefits.</string>
+	<key>P2B_AIR_BOOKING_MANAGE_VIOLATIONS_HEADER</key>
+	<string>You have policy violations that must be addressed. You may use Travel Points or follow your companyÕs normal policy violation workflow.</string>
+	<key>P2B_AIR_BOOKING_USING_POINTS_HEADER</key>
+	<string>You earn Travel Points by selecting airfare or hotel accommodations that cost less than the Price-to-Beat. You can use Travel Points from your bank to bypass your companyÕs typical notification or approval processes for booking out-of-policy options.
+        
+This air reservation requires you to use Travel Points or submit to your companyÕs typical notification or approval processes because it is not in compliance with your companyÕs travel rules.
+        
+After you expense your trip, any Travel Points you earn or use will be reflected in your bank.</string>
+	<key>P2B_HOTEL_BOOKING_USING_POINTS_HEADER</key>
+	<string>You earn Travel Points by selecting airfare or hotel accommodations that cost less than the Price-to-Beat.  You can use Travel Points from your bank to bypass your companyÕs typical notification or approval processes for booking out-of-policy options.
+        
+This hotel reservation requires you to use Travel Points or submit to your companyÕs typical notification or approval processes because it is not in compliance with your companyÕs travel rules.
+        
+After you expense your trip, any Travel Points you earn or use will be reflected in your bank.</string>
 	<key>PDF Receipt</key>
 	<string>PDF Receipt</string>
 	<key>PENDING_REQUIRED_TRAVEL_CUSTOM_FIELDS</key>
@@ -2502,6 +2524,8 @@ If you do not know your Concur user name check with your agency administrator.</
 	<string>Print</string>
 	<key>Proceed to Sign In</key>
 	<string>Proceed to Sign In</string>
+	<key>Profile</key>
+	<string>Profile</string>
 	<key>Property</key>
 	<string>Property</string>
 	<key>Provided</key>
@@ -2632,6 +2656,10 @@ If you do not know your Concur user name check with your agency administrator.</
 	<string>Receipt upload failed</string>
 	<key>Receipt uploaded</key>
 	<string>Receipt uploaded</string>
+	<key>ReceiptImageUnavailable</key>
+	<string>Your receipt image is currently unavailable. Please try again later.</string>
+	<key>ReceiptImageUnavailableTitle</key>
+	<string>Receipt Image Unavailable</string>
 	<key>ReceiptUploadFailMsg</key>
 	<string>Could not save receipt at this time. Please try again later.</string>
 	<key>Receipts</key>
@@ -2666,6 +2694,8 @@ If you do not know your Concur user name check with your agency administrator.</
 	<string>Rejecting Trip</string>
 	<key>Remaining:</key>
 	<string>Remaining:</string>
+	<key>Removal of E-Receipt items is not supported on mobile</key>
+	<string>Removal of E-Receipt items is not supported on mobile</string>
 	<key>Removed Link to Dropbox</key>
 	<string>Removed Link to Dropbox</string>
 	<key>Removing entry</key>
@@ -2706,6 +2736,8 @@ If you do not know your Concur user name check with your agency administrator.</
 	<string>You have %d claims to approve</string>
 	<key>Request</key>
 	<string>Request</string>
+	<key>RequestHeader</key>
+	<string>Request Header</string>
 	<key>Requested</key>
 	<string>Requested</string>
 	<key>Requests</key>
@@ -3301,6 +3333,8 @@ Please enable Microphone access for this app in Settings / Privacy / Microphone<
 	<string>You have %@ expenses</string>
 	<key>Total: %@</key>
 	<string>Total: %@</string>
+	<key>Touch ID</key>
+	<string>Touch ID</string>
 	<key>Tour</key>
 	<string>Tour</string>
 	<key>TourExpense2Subtitle</key>
@@ -3413,6 +3447,8 @@ Managers can approve from anywhere.</string>
 	<string>Unable to load location data.</string>
 	<key>Unable to sign in</key>
 	<string>We are unable to sign you in at this time. Please contact your company's help desk or travel/expense department.</string>
+	<key>Unauthorized</key>
+	<string>Unauthorised</string>
 	<key>Unavailable</key>
 	<string>Unavailable</string>
 	<key>Undefined</key>

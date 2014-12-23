@@ -39,7 +39,7 @@
     CGContextSaveGState(context);
     
     CGSize size = [self.text sizeWithFont:self.font];
-    if (size.width > requestedRect.size.width) {
+    if (size.width > requestedRect.size.width + 0.6) { // There is a diff of 0.5 between the auto adjusted label size and the sizeWithFont calculation
         UIImage* image = [[self class]
                           getLinearGradient:requestedRect
                           fadeHead:((self.truncateMode & FadeTruncatingHead) > 0)

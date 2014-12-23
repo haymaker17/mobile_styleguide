@@ -24,4 +24,6 @@
 @property (nonatomic,strong) IBOutlet UILabel					*imageDateLbl;
 @property (nonatomic,strong) IBOutlet UIActivityIndicatorView	*activityView;
 @property (nonatomic,strong) NSString                           *receiptId;
+// MOB-21462: show pdf receipt thumb nail on upload queue
+@property (weak, nonatomic) IBOutlet UIWebView *pdfWebView;
 @end

@@ -22,6 +22,9 @@
 #import "IpmMessage.h"
 #import "DFPExtras.h"
 #import "GADAdMobExtras.h"
+#import "HotelSearchTableViewController.h"
+#import "HotelViewController.h"
+#import "SendFeedBackVC.h"
 
 @interface MessageCenterViewController ()
 
@@ -75,11 +78,11 @@
 #endif
 }
 
-- (void)viewDidLoad {
+- (void)viewDidLoad
+{
     [super viewDidLoad];
     
     // If iOS 7
-    //
     if ([self respondsToSelector:@selector(setEdgesForExtendedLayout:)]) {
         self.edgesForExtendedLayout = UIRectEdgeNone;
     }
@@ -104,7 +107,20 @@
      self.navigationItem.rightBarButtonItem = addMockOffer;
      }
      */
-    
+
+    [self loadDFPbanner];
+}
+
+- (void)loadDFPbanner
+{
+    // Huge apologies to all for the content below, this area is in constant development
+    //
+    //
+    //
+    //
+    //
+    //
+
     // call IPM to get the details we need to pass to DfP
     IpmRequest *request = [[IpmRequest alloc] initWithTarget:@"mobileMessageCenter"];
     [request requestIpmMessagesWithSuccess:^(NSArray *messages) {
@@ -112,13 +128,30 @@
             IpmMessage *firstMessage = messages[0];
             
             // Setup DfP
-            self.dfpBannerView = [[DFPBannerView alloc] initWithAdSize:kGADAdSizeSmartBannerPortrait];
+            //            GADAdSize customAdSize = GADAdSizeFromCGSize(CGSizeMake(808, 253));
+            if ([UIDevice isPad])
+            {
+                self.dfpBannerView = [[DFPBannerView alloc] initWithAdSize:GADAdSizeFromCGSize(CGSizeMake(540, 297))];
+            } else {
+                self.dfpBannerView = [[DFPBannerView alloc] initWithAdSize:GADAdSizeFromCGSize(CGSizeMake(300, 165))];
+            }
+            NSLog(@"pane width: %f", self.view.bounds.size.width);
+            NSLog(@"pane height: %f", self.view.bounds.size.height);
+            //self.dfpBannerView = [[DFPBannerView alloc] initWithAdSize: kGADAdSizeSmartBannerPortrait];
             [self.dfpBannerView setAdUnitID:firstMessage.adUnitId];
+            //[self.dfpBannerView setAdUnitID:@"/19197427/Dev/DevMobile"];
+            //[self.dfpBannerView setAdUnitID:@"/19197427/Dev/DevMobileImages"];
+            //[self.dfpBannerView setAdUnitID:@"/19197427/Dev/DevMobileTextAd"];
+            //[self.dfpBannerView setAdUnitID:@"/19197427/Dev/DevMobileAlpha"];
             [self.dfpBannerView setRootViewController:self];
-            
+            [self.dfpBannerView setAppEventDelegate:self];
+            [self.dfpBannerView setDelegate:self];
+//            [self.dfpBannerView setEnableManualImpressions:YES];
+
             // Add DfP banner to view
-            [self.view addSubview:self.dfpBannerView];
-            
+//            [self.view addSubview:self.dfpBannerView];
+            NSLog(@"pane width: %f", self.view.bounds.size.width);
+
             // Pass additional parameters to DfP for banner customisation
             GADRequest *request = [GADRequest request];
             DFPExtras *extras = [[DFPExtras alloc] init];
@@ -127,20 +160,141 @@
             
             // Tell the banner to fetch content from DfP
             [self.dfpBannerView loadRequest:request];
+//            NSLog(@"%f", self.dfpBannerView.bounds.origin.x);
+//            NSLog(@"%f", self.dfpBannerView.bounds.origin.y);
+//            NSLog(@"%f", self.dfpBannerView.bounds.size.height);
+//            NSLog(@"%f", self.dfpBannerView.bounds.size.width);
+            
+            [self.table reloadData];
         }
     } failure:^(CTEError *error) {
         ALog(@"Whoops, couldn't get IPM for MessageCenter: %@", [error localizedDescription]);
     }];
+}
+
+/// Called when an ad request loaded an ad.
+- (void)adViewDidReceiveAd:(DFPBannerView *)adView {
+    NSLog(@"adViewDidReceiveAd");
+}
+
+/// Called when an ad request failed.
+- (void)adView:(DFPBannerView *)adView didFailToReceiveAdWithError:(GADRequestError *)error {
+    NSLog(@"adViewDidFailToReceiveAdWithError: %@", [error localizedDescription]);
+}
+
+- (void)adView:(DFPBannerView *)banner didReceiveAppEvent:(NSString *)name withInfo:(NSString *)info {
+    // Huge apologies to all for the content below, this area is in constant development
+    //
+    //
+    //
+    //
+    //
+    //
     
+    NSLog(@"app event");
+    if ([name isEqualToString:@"goto"]) {
+        NSLog(@"goto");
+        if ([info isEqualToString:@"uber"]) {
+            NSLog(@"call uber");
+            // lets go visit Uber!
+            UIViewController *webViewController = [[UIViewController alloc] init];
+            
+            UIWebView *uiWebView = [[UIWebView alloc] initWithFrame: CGRectMake(0, 0, self.view.frame.size.width, self.view.frame.size.height+self.view.frame.origin.y)];
+            
+            //            UIWebView *uiWebView = [[UIWebView alloc] init];
+            //            uiWebView.frame = self.view.bounds;
+            //            CGRect bounds = self.view.bounds;
+            //            CGRect frame = self.view.frame;
+            [uiWebView loadRequest:[NSURLRequest requestWithURL:[NSURL URLWithString:@"https://m.uber.com/sign-up?client_id=xxxx"]]];
+            [uiWebView setScalesPageToFit:YES];
+            [webViewController.view addSubview: uiWebView];
+            
+            [self.navigationController pushViewController:webViewController animated:YES];
+            
+        } else if ([info isEqualToString:@"hotel"]) {
+            NSLog(@"book hotel");
+            // lets book a hotel!
+            [self openHotelBooking];
+        } else if ([info isEqualToString:@"feedback"]) {
+            NSLog(@"send feedback");
+            // lets send alpha feedback!
+            [self openFeedBacks:self];
+        } else {
+            // nothing
+            NSLog(@"nothing");
+        }
+    }
+}
+
+/**
+ *  Open a email dialog box to send feedbacks to "mobilealphafeedbackios@concur.com"
+ */
+- (void)openFeedBacks:(UIViewController *)parentView
+{
+    if (![MFMailComposeViewController canSendMail])
+    {
+        UIAlertView *alert = [[MobileAlertView alloc]
+                              initWithTitle:[Localizer getLocalizedText:@"Mail Unavailable"]
+                              message:[Localizer getLocalizedText:@"This device is not configured for sending mail."]
+                              delegate:nil
+                              cancelButtonTitle:[Localizer getLocalizedText:@"LABEL_CLOSE_BTN"]
+                              otherButtonTitles:nil];
+        [alert show];
+    }
+    else{
+        SendFeedBackVC *vc = [[SendFeedBackVC alloc] init];
+        [vc sendLogAction];
+        if([UIDevice isPad]){
+            vc.modalPresentationStyle = UIModalPresentationFormSheet;
+            [parentView presentViewController:vc animated:YES completion:nil];
+        }
+        else{
+            [parentView presentViewController:vc animated:YES completion:nil];
+        }
+    }
+}
+- (void)openHotelBooking
+{
+    if ([UIDevice isPad] && self.navigationController == nil)
+    {
+        if ([Config isNewHotelBooking] && [UIDevice isPhone]) {
+            [HotelSearchTableViewController showHotelsNearMe:[self getBookTripsNavigationController]];
+        }else{
+            [HotelViewController showHotelVC:[self getBookTripsNavigationController] withTAFields:nil];
+        }
+    }else{
+        if ([Config isNewHotelBooking] && [UIDevice isPhone]) {
+            [HotelSearchTableViewController showHotelsNearMe:self.navigationController];
+        }else{
+            [HotelViewController showHotelVC:self.navigationController withTAFields:nil];
+        }
+    }
+}
+
+-(UINavigationController*)getBookTripsNavigationController
+{
+    TripsViewController *tripsListVC = [[TripsViewController alloc] initWithNibName:@"TripsView" bundle:nil];
+    UINavigationController *navcontroller = [[UINavigationController alloc] initWithRootViewController:tripsListVC];
+    navcontroller.modalPresentationStyle = UIModalPresentationFormSheet;
+    
+    [navcontroller setToolbarHidden:NO];
+    
+    return navcontroller;
+}
+
+- (void)dealloc {
+    [self.dfpBannerView setAppEventDelegate:nil];
 }
 
 - (void)viewWillAppear:(BOOL)animated {
     [super viewWillAppear:animated];
-    
-    [self.table reloadData];
 }
 
 - (void)closeMe:(id)sender {
+    NSLog(@"%f", self.dfpBannerView.bounds.origin.x);
+    NSLog(@"%f", self.dfpBannerView.bounds.origin.y);
+    NSLog(@"%f", self.dfpBannerView.bounds.size.height);
+    NSLog(@"%f", self.dfpBannerView.bounds.size.width);
     [self dismissViewControllerAnimated:YES completion:nil];
 }
 
@@ -184,38 +338,18 @@
 }
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
-    MessageCenterTableCell *cell = [tableView
-                                    dequeueReusableCellWithIdentifier:@"MessageViewTableCell"];
+    UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:@"tableCell"];
     
     if (cell == nil) {
-        NSArray *nib = [[NSBundle mainBundle] loadNibNamed:@"MessageCenterTableCell" owner:self options:nil];
-        cell = [nib objectAtIndex:0];
+        cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:@"tableCell"];
     }
     
-    NSUInteger row = [indexPath row];
-    
-    MessageCenterMessage *message = [self.messageCenterManager messageAtIndex:row];
-    
-    cell.image.image = [UIImage imageNamed:message.iconName];
-    
-    cell.title.text = message.title;
-    [cell.title sizeToFit];
-    
-    CGRect titleFrame = cell.title.frame;
-    
-    cell.message.text = message.message;
-    [cell.message sizeToFit];
-    
-    CGRect messageFrame = CGRectMake(cell.message.frame.origin.x,
-                                     titleFrame.origin.y + titleFrame.size.height + 5,
-                                     cell.message.frame.size.width,
-                                     cell.message.frame.size.height);
-    
-    cell.message.frame = messageFrame;
-    
-    if (message.commandName == nil) {
-        cell.accessoryType = UITableViewCellAccessoryNone;
+    if (indexPath.row == 0) {
+        self.dfpBannerView.center = cell.center;
+        [cell addSubview:self.dfpBannerView];
+        
     }
+//    [cell addSubview:self.dfpBannerView];
     
     return cell;
 }
@@ -235,7 +369,7 @@
 }
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
-    return [self.messageCenterManager numMessagesForType:MessageTypeAny];
+    return 3;
 }
 
 #pragma mark - UITableViewDelegate
@@ -243,36 +377,38 @@
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
     [tableView deselectRowAtIndexPath:indexPath animated:YES];
     
-	if (![ExSystem connectedToNetwork]) {
-        [self showOfflineAlert];
-        return;
-    }
-    
-    NSUInteger row = [indexPath row];
-    
-    MessageCenterMessage *message = [self.messageCenterManager messageAtIndex:row];
-    
-    [self.messageCenterManager setType:MessageTypeRead forMessage:message];
-    
-    // Temporary hack specifically for single instance Gogo.
-    //
-    if (message.commandName == nil) {
-        [self copyConfirmationString:message.stringExtra];
-    } else {
-        [self navigateToOffer:message];
-    }
+//	if (![ExSystem connectedToNetwork]) {
+//        [self showOfflineAlert];
+//        return;
+//    }
+//    
+//    NSUInteger row = [indexPath row];
+//    
+//    MessageCenterMessage *message = [self.messageCenterManager messageAtIndex:row];
+//    
+//    [self.messageCenterManager setType:MessageTypeRead forMessage:message];
+//    
+//    // Temporary hack specifically for single instance Gogo.
+//    //
+//    if (message.commandName == nil) {
+//        [self copyConfirmationString:message.stringExtra];
+//    } else {
+//        [self navigateToOffer:message];
+//    }
 }
 
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath {
     
-    MessageCenterMessage *message = [self.messageCenterManager messageAtIndex:[indexPath row]];
+    CGFloat height = 0;
     
-    CGFloat titleHeight = [self heightForString:message.title withFont:[UIFont fontWithName:@"Helvetica Neue" size:15]];
-    CGFloat messageHeight = [self heightForString:message.message withFont:[UIFont fontWithName:@"Helvetica Neue" size:13]];
-    
-    // Add labels, plus cell margin, plus inter-label padding.
-    //
-    CGFloat height = titleHeight + messageHeight + 40 + 5;
+    if ([UIDevice isPad])
+    {
+        height = 297;
+    }
+    else
+    {
+        height = 176;
+    }
     
     return height;
 }

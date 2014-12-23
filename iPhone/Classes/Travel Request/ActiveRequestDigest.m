@@ -33,19 +33,23 @@
 
 @property (weak, nonatomic) IBOutlet UIView *viewBusinessPurpose;
 @property (weak, nonatomic) IBOutlet UILabel *labelBusinessPurpose;
-@property (weak, nonatomic) IBOutlet UITextView *textViewBusinessPurpose;
+@property (weak, nonatomic) IBOutlet UILabel *labelBusinessPurposeValue;
 @property (weak, nonatomic) IBOutlet NSLayoutConstraint *constrainteHeightViewBusinessPurpose;
+@property (weak, nonatomic) IBOutlet NSLayoutConstraint *constrainteHeightLabelBusinessPurposeValue;
 
 @property (weak, nonatomic) IBOutlet UIView *viewComment;
 @property (weak, nonatomic) IBOutlet UILabel *labelComment;
-@property (weak, nonatomic) IBOutlet UITextView *textviewComment;
+@property (weak, nonatomic) IBOutlet UILabel *labelCommentValue;
 @property (weak, nonatomic) IBOutlet NSLayoutConstraint *constrainteHeightViewComment;
+@property (weak, nonatomic) IBOutlet NSLayoutConstraint *constrainteHeightLabelCommentValue;
 
-@property (weak, nonatomic) IBOutlet NSLayoutConstraint *constrainteVertSpaceViewBottom;
 @property (weak, nonatomic) IBOutlet UIView *viewBottomNestedSubmitButton;
+@property (weak, nonatomic) IBOutlet NSLayoutConstraint *constrainteVertSpaceTopViewBottomToViewBusinessPurpose;
 @property (weak, nonatomic) IBOutlet UIButton *buttonSubmitRequest;
 @property (weak, nonatomic) IBOutlet UILabel *labelAmount;
 @property (weak, nonatomic) IBOutlet NSLayoutConstraint *constrainteAmountWidth;
+
+
 
 @property (copy, nonatomic) NSArray *entries;
 
@@ -72,9 +76,9 @@ static NSString* const _fluryReportTitleRequestId = @"RequestId";
 -(void)viewDidLoad{
 	
 	[self setInitBlocHidden:YES];
-	[_textViewBusinessPurpose setHidden:YES];
+	[_labelBusinessPurposeValue setHidden:YES];
 	[_viewComment setHidden:YES];
-	[_textviewComment setHidden:YES];
+	[_labelCommentValue setHidden:YES];
 	
 	[super viewDidLoad];
 	[_tableViewEntries sizeToFit];
@@ -162,13 +166,13 @@ static NSString* const _fluryReportTitleRequestId = @"RequestId";
 	[_viewToolbar setBackgroundColor:[UIColor backgroundToolBar]];
 	[_buttonAddAnotherItemToThisRequest setTitleColor:[UIColor textToolBarButton] forState:UIControlStateNormal];
 	
-	[_viewBusinessPurpose applyStyleWhiteBlocWithBorderTemplateOrNil:nil];
+	//[_viewBusinessPurpose applyStyleWhiteBlocWithBorderTemplateOrNil:nil];
 	[_labelBusinessPurpose setTextColor:[UIColor textLightTitle]];
-	[_textViewBusinessPurpose setTextColor:[UIColor textDetail]];
+	[_labelBusinessPurposeValue setTextColor:[UIColor textDetail]];
 	
-	[_viewComment applyStyleWhiteBlocWithBorderTemplateOrNil:nil];
+	//[_viewComment applyStyleWhiteBlocWithBorderTemplateOrNil:nil];
 	[_labelComment setTextColor:[UIColor textLightTitle]];
-	[_textviewComment setTextColor:[UIColor textDetail]];
+	[_labelCommentValue setTextColor:[UIColor textDetail]];
 	
 	[_viewBottomNestedSubmitButton applyStyleWhiteBlocWithBorderTemplateOrNil:nil];
 	[_buttonSubmitRequest applyStyleButtonWorkflow];
@@ -191,13 +195,17 @@ static NSString* const _fluryReportTitleRequestId = @"RequestId";
 -(void)updateConstraintes{
 	
 	//******************* adjust height tableview to its content (rows count (+- total row)
-	double heightTableViewByEntriesAndTotalRow = _tableViewEntries.rowHeight * [self tableView:nil numberOfRowsInSection:1];
-	
-	_constrainteHeightTableView.constant = heightTableViewByEntriesAndTotalRow;
+	_constrainteHeightTableView.constant = _tableViewEntries.rowHeight * [self tableView:nil numberOfRowsInSection:1];
 	
 	//_scrollView.contentSize = CGSizeMake(self.view.frame.size.width, 800);
 	[_tableViewEntries needsUpdateConstraints];
+	
+	[_viewBusinessPurpose needsUpdateConstraints];
+	[_labelBusinessPurposeValue needsUpdateConstraints];
+	
 	[_viewComment needsUpdateConstraints];
+	[_labelCommentValue needsUpdateConstraints];
+	
 	[_viewBottomNestedSubmitButton needsUpdateConstraints];
 	
 	
@@ -249,39 +257,42 @@ static NSString* const _fluryReportTitleRequestId = @"RequestId";
 			
 			
 			//convert Amount to localized
-			CGFloat textViewHeightMax = 0.0;
-			CGFloat margeTopTextView = 8.0;
-			CGFloat heightMaxTextView = 42.0;
+			CGFloat labelHeight = 0.0;
+			CGFloat margeBottomLabel = 10.0;
+			CGFloat heightMaxLabel = 10000.0; //no limit
 			
 			[_labelAmount setText:[CCFormatUtilities formatAmount:request.TotalPostedAmount withCurrency:request.CurrencyCode localisedOrNil:nil]];
 			
 			//business Purpose
 			if (request.Purpose != nil && ![request.Purpose isEqualToString:@""]) {
+				[_labelBusinessPurposeValue setText:request.Purpose];
+				labelHeight = [_labelBusinessPurposeValue getTextViewFitToContentWithHeightMax:heightMaxLabel];
+				[_labelBusinessPurposeValue setHidden:NO];
+				[_constrainteHeightViewBusinessPurpose setConstant:_labelBusinessPurposeValue.frame.origin.y + labelHeight + margeBottomLabel];
+				[_constrainteHeightLabelBusinessPurposeValue setConstant:labelHeight];
+			}
+			else {
 				
-				[_textViewBusinessPurpose setText:request.Purpose];
-				textViewHeightMax = [_textViewBusinessPurpose getTextViewFitToContentWithHeightMax:heightMaxTextView];
-				[_textViewBusinessPurpose setHidden:NO];
-				[_constrainteHeightViewBusinessPurpose setConstant:(90 - heightMaxTextView + textViewHeightMax + margeTopTextView)];
+				[_constrainteHeightViewBusinessPurpose setConstant:_labelBusinessPurposeValue.frame.origin.y + margeBottomLabel];
 			}
 			
 			//Comment
-			NSString *commentText;
 			NSString *lastComment = [[request getLastComment] getCommentTextOnly];
-			[_constrainteVertSpaceViewBottom setConstant:10];
 			if (lastComment != nil && ![lastComment isEqualToString:@""]) {
 				
-				NSError *error = nil;
-				NSRegularExpression *regex = [NSRegularExpression regularExpressionWithPattern:@"#[^=]*=" options:NSRegularExpressionCaseInsensitive error:&error];
-				commentText = [regex stringByReplacingMatchesInString:lastComment options:0 range:NSMakeRange(0, [lastComment length]) withTemplate:@""];
-				[_textviewComment setText:commentText];
-				textViewHeightMax = [_textviewComment getTextViewFitToContentWithHeightMax:heightMaxTextView];
+				[_labelCommentValue setText:lastComment];
+				labelHeight = [_labelCommentValue getTextViewFitToContentWithHeightMax:heightMaxLabel];
 				[_viewComment setHidden:NO];
-				[_textviewComment setHidden:NO];
-				[_constrainteHeightViewComment setConstant:90 - heightMaxTextView + textViewHeightMax + margeTopTextView];
-				[_constrainteVertSpaceViewBottom setConstant:110 - heightMaxTextView + textViewHeightMax + margeTopTextView];
+				[_labelCommentValue setHidden:NO];
+				[_constrainteHeightViewComment setConstant:_labelCommentValue.frame.origin.y + labelHeight + margeBottomLabel];
+				[_constrainteHeightLabelCommentValue setConstant:labelHeight];
+				[_constrainteVertSpaceTopViewBottomToViewBusinessPurpose setConstant:_labelCommentValue.frame.origin.y + labelHeight + margeBottomLabel + 20.0];
+			}
+			else {
+				
+				[_constrainteHeightViewComment setConstant:0];
 			}
 
-			
 			[self updateConstraintes];
 			
 			//display entries on tableview
@@ -296,7 +307,7 @@ static NSString* const _fluryReportTitleRequestId = @"RequestId";
 }
 
 
-#pragma mark - tableView Entries
+#pragma mark - tableView
 
 
 //(protocol mandatory : uitableviewsource)
@@ -334,6 +345,25 @@ static NSString* const _fluryReportTitleRequestId = @"RequestId";
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath{
 	
 	return _heightRow;
+}
+
+//to remove inset margin (bottom separator
+-(void)tableView:(UITableView *)tableView willDisplayCell:(UITableViewCell *)cell forRowAtIndexPath:(NSIndexPath *)indexPath{
+
+	if (indexPath.row == [_entries count]) { //remove only for total row
+
+		if ([tableView respondsToSelector:@selector(setSeparatorInset:)]) {
+			[tableView setSeparatorInset:UIEdgeInsetsZero];
+		}
+		
+		if ([tableView respondsToSelector:@selector(setLayoutMargins:)]) {
+			[tableView setLayoutMargins:UIEdgeInsetsZero];
+		}
+		
+		if ([cell respondsToSelector:@selector(setLayoutMargins:)]) {
+			[cell setLayoutMargins:UIEdgeInsetsZero];
+		}
+	}
 }
 
 

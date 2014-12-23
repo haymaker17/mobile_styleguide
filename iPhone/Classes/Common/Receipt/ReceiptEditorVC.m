@@ -90,7 +90,7 @@ SEL actionShetSelector = nil;
             else if ([self.receipt.localReceiptId length])
             {
                 // We have a local receipt, i.e. one that has not yet been uploaded to the server
-                NSString *filePath = [UploadableReceipt filePathForLocalReceiptImageId:self.receipt.localReceiptId];
+                NSString *filePath = [UploadableReceipt filePathForLocalReceiptImageId:self.receipt.localReceiptId isPdfReceipt:[self.receipt isPDF]];
                 if (filePath != nil && filePath.length > 0)
                 {
                     // We found the file in which the local receipt image is stored
@@ -935,11 +935,11 @@ SEL actionShetSelector = nil;
     // Add a hack to solve the problem of receipt ID
     if([self.receipt.receiptId isEqualToString:@"HACK e-receipt Image ID"]){
 
-        UIAlertView *alert = [[MobileAlertView alloc] initWithTitle:[Localizer getLocalizedText:@"Receipt image could not be loaded, but your expense details are saved. Please visit the web if you need to view this receipt image."]
-                                                            message:nil
-                                                           delegate:self
-                                                  cancelButtonTitle:[Localizer getLocalizedText:@"LABEL_CLOSE_BTN"]
-                                                  otherButtonTitles:nil];
+    UIAlertView *alert = [[MobileAlertView alloc] initWithTitle:[Localizer getLocalizedText:@"ReceiptImageUnavailableTitle"]
+                                                message:[Localizer getLocalizedText:@"ReceiptImageUnavailable"]
+                                                delegate:self
+                                                cancelButtonTitle:[Localizer getLocalizedText:@"LABEL_CLOSE_BTN"]
+                                                otherButtonTitles:nil];
 
         alert.tag = kAlertViewEReceiptWithoutReceipt;
         [AnalyticsTracker logEventWithCategory:@"All Mobile Expenses" eventAction:@"E-Receipt Image Error" eventLabel:nil eventValue:nil];
@@ -1264,11 +1264,25 @@ SEL actionShetSelector = nil;
     NSData *newLocalReceiptImageData = [self receiptImageDataFromReceiptImage:receiptImage];
     
     // Save the receipt to disk
-    NSString *filePath = [UploadableReceipt filePathForLocalReceiptImageId:newLocalReceiptImageId];
+    NSString *filePath = [UploadableReceipt filePathForLocalReceiptImageId:newLocalReceiptImageId isPdfReceipt:NO];
     [newLocalReceiptImageData writeToFile:filePath atomically:YES];
     
     // Queue the receipt
     return [UploadQueue queueItemWithId:newLocalReceiptImageId entityTypeName:@"Receipt" creationDate:creationDate];
+}
+
+// MOB-21462:Save PDF receipt to local
++(EntityUploadQueueItem *) queuePdfReceipt:(NSData*)pdfData date:(NSDate*)creationDate
+{
+    // Create an id for the local receipt
+    NSString *newLocalReceiptImageId = [PostMsgInfo getUUID]; // Happens to be a UUID.  It could be anything.
+    
+    // Save the receipt to disk
+     NSString *filePath = [UploadableReceipt filePathForLocalReceiptImageId:newLocalReceiptImageId isPdfReceipt:YES];
+    [pdfData writeToFile:filePath atomically:YES];
+    
+    // Queue the receipt
+    return [UploadQueue queueItemWithId:newLocalReceiptImageId entityTypeName:@"PdfReceipt" creationDate:creationDate];
 }
 
 -(void) receiptQueued
