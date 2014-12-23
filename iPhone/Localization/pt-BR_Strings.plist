@@ -664,6 +664,8 @@
 	<string>As reservas não podem ser feitas enquanto seu dispositivo estiver off-line.  Conecte novamente à internet e depois tente novamente.</string>
 	<key>Border Crossing</key>
 	<string>Travessia de fronteira</string>
+	<key>Breakfast Amount *</key>
+	<string>Montante do café-da-manhã *</string>
 	<key>Bump Phones to Become an Attendee</key>
 	<string>%@ Telefones para tornar-se participante</string>
 	<key>Bump Phones to Exchange Attendee Info</key>
@@ -870,6 +872,8 @@
 	<string>Efetuando check out</string>
 	<key>Children</key>
 	<string>Crianças</string>
+	<key>Choose a location</key>
+	<string>Escolha uma localidade</string>
 	<key>ChoosePhoto-ImagePicker</key>
 	<string>Pré-visualização</string>
 	<key>Class &amp; Seat Number</key>
@@ -2056,7 +2060,7 @@ Se não souber seu nome de usuário do Concur, verifique junto ao administrador 
 	<string>Acessar configurações</string>
 	<key>Logout</key>
 	<string>Sair</string>
-	<key>Looks like we are experience some difficulties. Please check back in a few minutes.</key>
+	<key>Looks like we are experiencing some difficulties. Please check back in a few minutes.</key>
 	<string>Parece que estamos passando por algumas dificuldades. Tente novamente em alguns minutos.</string>
 	<key>Luxury</key>
 	<string>Luxo</string>
@@ -2118,10 +2122,14 @@ Se não souber seu nome de usuário do Concur, verifique junto ao administrador 
 	<string>Mapear</string>
 	<key>Map Address</key>
 	<string>Endereço do mapa</string>
+	<key>Matched Expense</key>
+	<string>Despesa compatível</string>
 	<key>Matching transactions combined into a single expense</key>
 	<string>Correspondência de transações combinadas em uma única despesa</string>
 	<key>Meal Allowances</key>
 	<string>Ajuda de custo para refeição</string>
+	<key>Meals Amount</key>
+	<string>Montante em refeições</string>
 	<key>Menu</key>
 	<string>Menu</string>
 	<key>Message Center</key>
@@ -2394,6 +2402,20 @@ Se não souber seu nome de usuário do Concur, verifique junto ao administrador 
 	<string>Compre passagens de forma mais inteligente! Uma reserva sob o preço a vencer economiza o dinheiro de sua empresa.</string>
 	<key>P2B_AIR_BOOKING_HEADER_POINTS_ENABLED</key>
 	<string>Ganhe pontos de viagem ao selecionar opções que custam menos que o preço a vencer. Quando uma viagem é debitada, os pontos de viagem ganhos e gastos refletem no total do qual você poderá usufruir como benefícios futuros.</string>
+	<key>P2B_AIR_BOOKING_MANAGE_VIOLATIONS_HEADER</key>
+	<string>Você tem violações de políticas que precisam ser abordadas. Você pode usar Pontos de viagem ou seguir o fluxo de violação de política normal de sua empresa.</string>
+	<key>P2B_AIR_BOOKING_USING_POINTS_HEADER</key>
+	<string>Você pode ganhar Pontos de viagem ao selecionar a tarifa aérea ou as acomodações em hotel com tarifas mais baixas do que o preço a vencer. É possível usar os Pontos de viagem do seu banco para evitar a notificação ou os processos de aprovação típicos da empresa para reserva de opções fora da política.
+        
+Esta reserva aérea requer que você use pontos de viagem ou se submeta aos processos de notificação ou aprovação típicos da sua empresa, por não estar em conformidade com as regras de viagem da sua empresa.
+        
+Após registrar as despesas da sua viagem, os Pontos de viagem que você obtiver ou usar serão refletidos em seu banco.</string>
+	<key>P2B_HOTEL_BOOKING_USING_POINTS_HEADER</key>
+	<string>Você pode ganhar Pontos de viagem ao selecionar a tarifa aérea ou as acomodações em hotel com tarifas mais baixas do que o preço a vencer.  É possível usar os Pontos de viagem do seu banco para evitar a notificação ou os processos de aprovação típicos da empresa para reserva de opções fora da política.
+        
+Esta reserva de hotel requer que você use Pontos de viagem ou se submeta aos processos de notificação ou aprovação típicos da sua empresa, pois não está em conformidade com as regras de viagem da sua empresa.
+        
+Após registrar as despesas da sua viagem, os Pontos de viagem que você obtiver ou usar serão refletidos em seu banco.</string>
 	<key>PDF Receipt</key>
 	<string>Recibo em PDF</string>
 	<key>PENDING_REQUIRED_TRAVEL_CUSTOM_FIELDS</key>
@@ -2556,6 +2578,8 @@ Se não souber seu nome de usuário do Concur, verifique junto ao administrador 
 	<string>Imprimir</string>
 	<key>Proceed to Sign In</key>
 	<string>Prosseguir para acessar</string>
+	<key>Profile</key>
+	<string>Perfil</string>
 	<key>Property</key>
 	<string>Propriedade</string>
 	<key>Provided</key>
@@ -2688,6 +2712,10 @@ Se não souber seu nome de usuário do Concur, verifique junto ao administrador 
 	<string>Falha ao carregar recibo</string>
 	<key>Receipt uploaded</key>
 	<string>Recibo carregado</string>
+	<key>ReceiptImageUnavailable</key>
+	<string>Sua imagem de recibo está indisponível no momento. Tente novamente mais tarde.</string>
+	<key>ReceiptImageUnavailableTitle</key>
+	<string>Imagem de recibo indisponível</string>
 	<key>ReceiptUploadFailMsg</key>
 	<string>Não foi possível salvar o recibo neste momento. Tente novamente mais tarde.</string>
 	<key>Receipts</key>
@@ -2726,6 +2754,8 @@ Se não souber seu nome de usuário do Concur, verifique junto ao administrador 
 	<string>Rejeitando viagem</string>
 	<key>Remaining:</key>
 	<string>Restantes:</string>
+	<key>Removal of E-Receipt items is not supported on mobile</key>
+	<string>A remoção de itens de recibo eletrônico não é suportada em dispositivos móveis</string>
 	<key>Removed Link to Dropbox</key>
 	<string>Removido o link para Dropbox</string>
 	<key>Removing entry</key>
@@ -2768,6 +2798,8 @@ Se não souber seu nome de usuário do Concur, verifique junto ao administrador 
 	<string>Você tem %d relatórios para aprovar</string>
 	<key>Request</key>
 	<string>Solicitação</string>
+	<key>RequestHeader</key>
+	<string>Cabeçalho da solicitação</string>
 	<key>Requested</key>
 	<string>Solicitado</string>
 	<key>Requests</key>
@@ -3374,6 +3406,8 @@ Se não souber seu nome de usuário do Concur, verifique junto ao administrador 
 	<string>Você tem %@ despesas</string>
 	<key>Total: %@</key>
 	<string>Total: %@</string>
+	<key>Touch ID</key>
+	<string>Touch ID</string>
 	<key>Tour</key>
 	<string>Visita</string>
 	<key>TourExpense2Subtitle</key>
@@ -3484,6 +3518,8 @@ Se não souber seu nome de usuário do Concur, verifique junto ao administrador 
 	<string>Não é possível carregar dados de local.</string>
 	<key>Unable to sign in</key>
 	<string>Não é possível fazer o seu login neste momento. Entre em contato com o suporte ou o departamento de viagens/despesas de sua empresa.</string>
+	<key>Unauthorized</key>
+	<string>Não autorizada</string>
 	<key>Unavailable</key>
 	<string>Indisponível</string>
 	<key>Undefined</key>

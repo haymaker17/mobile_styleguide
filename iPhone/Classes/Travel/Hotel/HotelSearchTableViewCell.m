@@ -45,7 +45,7 @@
     self.hotelName.text = cteHotel.propertyName;        // Default: FadeTruncatingTail
     self.hotelAvailability.hidden = YES;
     // there's no addressLine2 anymore
-    if (cteHotel.addressLine1 != nil && [cteHotel.addressLine1 length] > 0)
+    if ([cteHotel.addressLine1 lengthIgnoreWhitespace] > 0)
     {
         self.hotelCityAndState.text = [NSString stringWithFormat:@"%@ %@", cteHotel.addressLine1, cteHotel.city];
     }
@@ -57,9 +57,7 @@
     
     // the if statement is just for now, temporary, will need to remove after the polling stuffs get completed!
     if (cteHotel.lowestRate) {
-        //TODO:Need to get hotel rate with currency symbol.
-        // adding the $ is just temporary...
-        self.hotelPrice.text = [NSString stringWithFormat:@"$%@", cteHotel.lowestRate];
+        self.hotelPrice.text = [FormatUtils formatMoneyString:cteHotel.lowestRate crnCode:cteHotel.currency decimalPlaces:0];
         self.hotelPrice.textColor = [UIColor concurBlueColor];
     }
     else if ([cteHotel.availabilityErrorCode length]) {
@@ -67,8 +65,8 @@
         self.isCellEnabled = cteHotelData.isAvailable;
     }
     else {
-        self.hotelPrice.text = [@"View Rates" localize];
-        self.hotelPrice.textColor = [UIColor darkGrayConcur];
+        self.hotelPrice.text = @"";//[@"View Rates" localize];
+//        self.hotelPrice.textColor = [UIColor darkGrayConcur];
     }
     
      // get the rating stars image
@@ -126,7 +124,9 @@
     
     [self setHotelImageIcon:cteHotelData indexPath:indexPath];
     // Show preferred only if the
-    self.hotelPreferred.hidden = ! cteHotel.isCompanyPreferredChain || ! cteHotelData.isAvailable;
+    self.hotelPreferred.hidden = (cteHotel.companyPreference < CTEHotelPreferenceRankLessPreferred) || ! cteHotelData.isAvailable;
+    // MOB-21732 Set background color on Preferred label
+    [self.hotelPreferred setPersistentBackgroundColor:[UIColor backgroundForMainButtonWorkflow]];
     [self displayCellAsEnabled:self.isCellEnabled];
 }
 

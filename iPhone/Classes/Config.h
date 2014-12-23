@@ -12,6 +12,7 @@
 
 +(BOOL) isDevBuild;
 +(BOOL) isDevConBuild;
++(BOOL) isSprintDemoBuild;
 +(BOOL) isNetworkDebugEnabled;
 +(BOOL) isSalesforceChatterEnabled;
 +(BOOL) isGov;
@@ -30,5 +31,7 @@
 +(BOOL) isTravelRequestEnabled;
 +(BOOL) isEreceiptsEnabled;
 +(BOOL) isTouchIDEnabled;
++(BOOL) isOCRExpenseEnabled;
++(BOOL) isProfileEnable;
 
 @end

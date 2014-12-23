@@ -91,7 +91,24 @@ static NSMutableDictionary *_currentDownloads;
     }
     else
     {
-        [downloader getReceiptUrlFromServer];
+        // This is comepletly a hack for MOB-21641 to get rid of the error message when trying to get receipt image url from server. The cause of the error is that
+        // we pass in a wrong recieptImageId. for report header reciept, should use the pdfURL to download image
+        BOOL isReportHeaderReceipt = NO;
+        if ([receiptId length] > 4) {
+            NSString *subString = [receiptId substringToIndex:4];
+            if ([subString isEqualToString:@"RPT_"]) {
+                isReportHeaderReceipt = YES;
+            }
+        }
+        
+        // for downloading receipt at report header only
+        if (isReportHeaderReceipt) {
+            [downloader download];
+        }
+        else {
+            // for downloading receipt for individual expense
+            [downloader getReceiptUrlFromServer];
+        }
     }
     return YES;
 }

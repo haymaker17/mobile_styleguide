@@ -305,6 +305,7 @@ NSString * const RESET_PIN_RESET_USER_PIN = @"RESET_PIN_RESET_USER_PIN";
 NSString * const MOB_PIN_RSET = @"MOB_PIN_RSET";
 NSString * const MOB_PWD_RSET = @"MOB_PWD_RSET";
 NSString * const MOB_SSO_LGIN = @"MOB_SSO_LGIN";
+NSString * const MOB_SSO_LGIN_SAFARI = @"MOB_SSO_LGIN_SAFARI";      //login from safari
 
 #pragma mark flurry keys
 NSString * const FLURRY_VOICE_BOOK_USAGE_SUCCESS = @"Voice Book: Usage Success";

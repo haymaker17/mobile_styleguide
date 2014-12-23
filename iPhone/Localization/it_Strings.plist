@@ -664,6 +664,8 @@
 	<string>Non è possibile effettuare prenotazioni mentre il dispositivo è off-line.  Ricollegarsi a Internet, quindi riprovare.</string>
 	<key>Border Crossing</key>
 	<string>Superamento confine</string>
+	<key>Breakfast Amount *</key>
+	<string>Importo colazione *</string>
 	<key>Bump Phones to Become an Attendee</key>
 	<string>%@ telefoni per diventare un partecipante</string>
 	<key>Bump Phones to Exchange Attendee Info</key>
@@ -870,6 +872,8 @@
 	<string>Check-out</string>
 	<key>Children</key>
 	<string>Bambini</string>
+	<key>Choose a location</key>
+	<string>Scegliere una località</string>
 	<key>ChoosePhoto-ImagePicker</key>
 	<string>Anteprima</string>
 	<key>Class &amp; Seat Number</key>
@@ -2056,8 +2060,8 @@ Se non si conosce il nome utente Concur, chiedere all'amministratore dell'agenzi
 	<string>Impostazioni di accesso</string>
 	<key>Logout</key>
 	<string>Esci</string>
-	<key>Looks like we are experience some difficulties. Please check back in a few minutes.</key>
-	<string>A quanto pare abbiamo dei problemi. Ricontrollare fra qualche minuto.</string>
+	<key>Looks like we are experiencing some difficulties. Please check back in a few minutes.</key>
+	<string>A quanto pare stiamo riscontrando dei problemi. Ricontrollare fra qualche minuto.</string>
 	<key>Luxury</key>
 	<string>Luxury</string>
 	<key>MAP</key>
@@ -2118,10 +2122,14 @@ Se non si conosce il nome utente Concur, chiedere all'amministratore dell'agenzi
 	<string>Mappa</string>
 	<key>Map Address</key>
 	<string>Associa indirizzo</string>
+	<key>Matched Expense</key>
+	<string>Spesa corrispondente</string>
 	<key>Matching transactions combined into a single expense</key>
 	<string>Transazioni corrispondenti combinate in un'unica nota spese</string>
 	<key>Meal Allowances</key>
 	<string>Indennità pasto</string>
+	<key>Meals Amount</key>
+	<string>Importo vitto</string>
 	<key>Menu</key>
 	<string>Menu</string>
 	<key>Message Center</key>
@@ -2394,6 +2402,20 @@ Se non si conosce il nome utente Concur, chiedere all'amministratore dell'agenzi
 	<string>Acquistate viaggi in modo intelligente! La prenotazione al di sotto del Prezzo da battere consente all'azienda di risparmiare denaro.</string>
 	<key>P2B_AIR_BOOKING_HEADER_POINTS_ENABLED</key>
 	<string>L'utente può guadagnare punti viaggio quando seleziona opzioni che costano meno del prezzo da battere. Quando viene addebitato un viaggio, i punti viaggio ottenuti si riflettono nel totale che è possibile utilizzare per viaggi futuri.</string>
+	<key>P2B_AIR_BOOKING_MANAGE_VIOLATIONS_HEADER</key>
+	<string>Sono presenti violazioni della policy da risolvere. Si può scegliere di utilizzare i punti viaggio o di seguire il normale flusso di lavoro aziendale per le violazioni della policy.</string>
+	<key>P2B_AIR_BOOKING_USING_POINTS_HEADER</key>
+	<string>È possibile ottenere punti viaggio selezionando tariffe aeree o sistemazioni in albergo che costano meno del Prezzo da battere. È possibile utilizzare i punti viaggio della propria banca per evitare i normali processi di notifica o di approvazione dell'azienda per le prenotazioni di opzioni non conformi alla policy.
+        
+La prenotazione di questo volo richiede l'utilizzo di punti viaggio o l'invio all'azienda dei normali processi di notifica o di approvazione perché non è conforme alle regole di viaggio aziendali.
+        
+Una volta addebitato il viaggio, gli eventuali punti viaggio ottenuti o utilizzati compariranno nella propria banca.</string>
+	<key>P2B_HOTEL_BOOKING_USING_POINTS_HEADER</key>
+	<string>È possibile ottenere punti viaggio selezionando tariffe aeree o sistemazioni in albergo che costano meno del Prezzo da battere.  È possibile utilizzare i punti viaggio della propria banca per evitare i normali processi di notifica o di approvazione dell'azienda per le prenotazioni di opzioni non conformi alla policy.
+        
+La prenotazione di questo albergo richiede l'utilizzo di punti viaggio o l'invio all'azienda dei normali processi di notifica o di approvazione perché non è conforme alle regole di viaggio aziendali.
+        
+Una volta addebitato il viaggio, gli eventuali punti viaggio ottenuti o utilizzati compariranno nella propria banca.</string>
 	<key>PDF Receipt</key>
 	<string>Ricevuta PDF</string>
 	<key>PENDING_REQUIRED_TRAVEL_CUSTOM_FIELDS</key>
@@ -2556,6 +2578,8 @@ Se non si conosce il nome utente Concur, chiedere all'amministratore dell'agenzi
 	<string>Stampa</string>
 	<key>Proceed to Sign In</key>
 	<string>Procedi con l'accesso</string>
+	<key>Profile</key>
+	<string>Profilo</string>
 	<key>Property</key>
 	<string>Proprietà</string>
 	<key>Provided</key>
@@ -2688,6 +2712,10 @@ Se non si conosce il nome utente Concur, chiedere all'amministratore dell'agenzi
 	<string>Caricamento ricevuta non riuscito</string>
 	<key>Receipt uploaded</key>
 	<string>Ricevuta caricata</string>
+	<key>ReceiptImageUnavailable</key>
+	<string>L'immagine della ricevuta non è attualmente disponibile. Riprovare in un secondo momento.</string>
+	<key>ReceiptImageUnavailableTitle</key>
+	<string>Immagine ricevuta non disponibile</string>
 	<key>ReceiptUploadFailMsg</key>
 	<string>Al momento non è possibile salvare la ricevuta. Riprovare più tardi.</string>
 	<key>Receipts</key>
@@ -2726,6 +2754,8 @@ Se non si conosce il nome utente Concur, chiedere all'amministratore dell'agenzi
 	<string>Rifiuto viaggio</string>
 	<key>Remaining:</key>
 	<string>Rimanente:</string>
+	<key>Removal of E-Receipt items is not supported on mobile</key>
+	<string>La rimozione di elementi di ricevuta elettronica non è supportata sulla versione mobile</string>
 	<key>Removed Link to Dropbox</key>
 	<string>Collegamento a Dropbox rimosso</string>
 	<key>Removing entry</key>
@@ -2768,6 +2798,8 @@ Se non si conosce il nome utente Concur, chiedere all'amministratore dell'agenzi
 	<string>L’utente ha %d note spese da approvare</string>
 	<key>Request</key>
 	<string>Richiesta</string>
+	<key>RequestHeader</key>
+	<string>Intestazione richiesta</string>
 	<key>Requested</key>
 	<string>Richiesto</string>
 	<key>Requests</key>
@@ -3374,6 +3406,8 @@ Se non si conosce il nome utente Concur, chiedere all'amministratore dell'agenzi
 	<string>Sono presenti %@ spese</string>
 	<key>Total: %@</key>
 	<string>Totale: %@</string>
+	<key>Touch ID</key>
+	<string>ID touch</string>
 	<key>Tour</key>
 	<string>Tour</string>
 	<key>TourExpense2Subtitle</key>
@@ -3484,6 +3518,8 @@ Se non si conosce il nome utente Concur, chiedere all'amministratore dell'agenzi
 	<string>Impossibile caricare i dati relativi alla località.</string>
 	<key>Unable to sign in</key>
 	<string>Non è possibile consentire l'accesso ora. Contattare l'help desk aziendale o l'ufficio viaggi/spese.</string>
+	<key>Unauthorized</key>
+	<string>Non autorizzato</string>
 	<key>Unavailable</key>
 	<string>Non disponibile</string>
 	<key>Undefined</key>

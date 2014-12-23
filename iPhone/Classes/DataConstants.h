@@ -307,6 +307,7 @@ extern NSString * const RESET_PIN_RESET_USER_PIN;
 extern NSString * const MOB_PIN_RSET;
 extern NSString * const MOB_PWD_RSET;
 extern NSString * const MOB_SSO_LGIN;
+extern NSString * const MOB_SSO_LGIN_SAFARI;
 
 #pragma mark flurry keys
 extern NSString * const FLURRY_VOICE_BOOK_USAGE_SUCCESS;

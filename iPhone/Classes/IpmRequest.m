@@ -37,7 +37,7 @@
 
 -(void)requestIpmMessagesWithSuccess:(void (^) (NSArray *messages))success failure:(void (^)(CTEError *error))failure
 {
-    [self.network getXML:self.serviceURL success:^(NSString *response){
+    [self.network getXMLFromURL:self.serviceURL success:^(NSString *response){
         IpmMessageParser *ipmMsg = [[IpmMessageParser alloc] initWithXmlResponse:response];
         if (success) {
             success(ipmMsg.messages);

@@ -16,9 +16,9 @@
 {
     if ([entityTypeName isEqualToString:@"EntityMobileEntry"])
         return [[UploadableMobileEntry alloc] initWithEntityInstanceId:entityInstanceId inContext:context];
-    else if ([entityTypeName isEqualToString:@"Receipt"])
+    else if ([entityTypeName isEqualToString:@"Receipt"] || [entityTypeName isEqualToString:@"PdfReceipt"])
         return [[UploadableReceipt alloc] initWithLocalReceiptImageId:entityInstanceId];
-    
+      
     NSString *itemDescription = [NSString stringWithFormat:@"EntityTypeName: %@, EntityInstanceId: %@", entityTypeName, entityInstanceId];
     [[MCLogging getInstance] log:[NSString stringWithFormat:@"UploadableItemMap::uploadableItemForEntityInstanceId - Could not find item in queue matching %@", itemDescription] Level:MC_LOG_ERRO];
     return nil;
@@ -28,8 +28,9 @@
 {
     if ([entityTypeName isEqualToString:@"EntityMobileEntry"])
         [UploadableMobileEntry didDequeueEntityInstanceId:entityInstanceId inContext:context];
-    else if ([entityTypeName isEqualToString:@"Receipt"])
-        [UploadableReceipt didDequeueEntityInstanceId:entityInstanceId];
+      // MOB-21462: include the case of Pdf receipt
+    else if ([entityTypeName isEqualToString:@"Receipt"] || [entityTypeName isEqualToString:@"PdfReceipt"])
+        [UploadableReceipt didDequeueEntityInstanceId:entityInstanceId isPdfReceipt:[entityTypeName isEqualToString:@"PdfReceipt"]];
 }
 
 @end

@@ -74,4 +74,12 @@ typedef void(^HotelItineraryTransitionHackBlock)();
     [[ExSystem sharedInstance].msgControl createMsg:TRIPS_DATA CacheOnly:@"NO" ParameterBag:pBag SkipCache:YES RespondTo:nil];
 }
 
+- (void)handleTimeOut
+{
+    [self goToOldItineraryScreen];
+
+    if (self.completion) {
+        self.completion();
+    }
+}
 @end

@@ -35,7 +35,21 @@
 -(void)setCellData:(HotelDetailsMapViewCellData *)cellData
 {
     CTEHotelCellData *cteHotelCellData = [cellData getCTEHotelCellData];
+    // This method is called twice, so we need to cull the annotations to prevent duplicates
+    [self removeAllPinsButUserLocation];
     [self setUpMapViewAnnotation:cteHotelCellData];
+}
+
+-(void)removeAllPinsButUserLocation
+{
+    id userLocation = [self.mapView userLocation];
+    NSMutableArray *pins = [[NSMutableArray alloc] initWithArray:[self.mapView annotations]];
+    if ( userLocation != nil ) {
+        [pins removeObject:userLocation]; // avoid removing user location from the map
+    }
+    
+    [self.mapView removeAnnotations:pins];
+    pins = nil;
 }
 
 -(void)setUpMapViewAnnotation:(CTEHotelCellData *)cteHotelCellData
@@ -79,14 +93,18 @@
 {
     static NSString *HotelAnnotationIdentifier = @"HotelAnnotationIdentifier";
 	
-	__autoreleasing MKPinAnnotationView	*annotationView = (MKPinAnnotationView*) [thismapView dequeueReusableAnnotationViewWithIdentifier:HotelAnnotationIdentifier];
-	if (annotationView == nil)
-		annotationView = [[MKPinAnnotationView alloc] initWithAnnotation:annotation reuseIdentifier:HotelAnnotationIdentifier];
-    
-    annotationView.image = [UIImage imageNamed:@"icon_map_pin_selected"];
-    
-    annotationView.canShowCallout = NO;
- 	return annotationView;
+    if(annotation != thismapView.userLocation)
+    {
+        __autoreleasing MKAnnotationView	*annotationView = (MKAnnotationView*) [thismapView dequeueReusableAnnotationViewWithIdentifier:HotelAnnotationIdentifier];
+        if (annotationView == nil)
+            annotationView = [[MKAnnotationView alloc] initWithAnnotation:annotation reuseIdentifier:HotelAnnotationIdentifier];
+        
+        annotationView.image = [UIImage imageNamed:@"icon_map_pin_selected"];
+        
+        annotationView.canShowCallout = NO;
+        return annotationView;
+    }
+    return nil;
     
 }
 
@@ -124,19 +142,44 @@
     region.span.longitudeDelta = fabs(bottomRightCoord.longitude - topLeftCoord.longitude) * 1.8; // Add a little extra space on the sides
     
     region = [mapView regionThatFits:region];
-    [mapView setRegion:region animated:YES];
+    [mapView setRegion:region animated:NO];
     
     MKAnnotationView *aV;
     for (aV in views) {
+        // Don't pin drop if annotation is user location
+        if ([aV.annotation isKindOfClass:[MKUserLocation class]]) {
+            continue;
+        }
+        
+        // Check if current annotation is inside visible map rect, else go to next one
+        MKMapPoint point =  MKMapPointForCoordinate(aV.annotation.coordinate);
+        if (!MKMapRectContainsPoint(self.mapView.visibleMapRect, point)) {
+            continue;
+        }
         CGRect endFrame = aV.frame;
         
         aV.frame = CGRectMake(aV.frame.origin.x, aV.frame.origin.y - 230.0, aV.frame.size.width, aV.frame.size.height);
         
-        [UIView beginAnimations:nil context:NULL];
-        [UIView setAnimationDuration:0.45];
-        [UIView setAnimationCurve:UIViewAnimationCurveEaseInOut];
-        [aV setFrame:endFrame];
-        [UIView commitAnimations];
+        // Animate drop
+        [UIView animateWithDuration:0.5 delay:0.04*[views indexOfObject:aV] options: UIViewAnimationOptionCurveLinear animations:^{
+            
+            aV.frame = endFrame;
+            
+            // Animate squash
+        }completion:^(BOOL finished){
+            if (finished) {
+                [UIView animateWithDuration:0.05 animations:^{
+                    aV.transform = CGAffineTransformMakeScale(1.0, 0.8);
+                    
+                }completion:^(BOOL finished){
+                    if (finished) {
+                        [UIView animateWithDuration:0.1 animations:^{
+                            aV.transform = CGAffineTransformIdentity;
+                        }];
+                    }
+                }];
+            }
+        }];
     }
 }
 

@@ -68,7 +68,7 @@
                                     <outlet property="stopNumber" destination="eUl-f3-PWY" id="OzJ-si-T9x"/>
                                 </connections>
                             </tableViewCell>
-                            <tableViewCell contentMode="scaleToFill" selectionStyle="default" accessoryType="disclosureIndicator" indentationWidth="10" reuseIdentifier="ItinStop2ProtoCell" rowHeight="133" id="aUd-nP-c7z" customClass="ItineraryStopCell">
+                            <tableViewCell contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" reuseIdentifier="ItinStop2ProtoCell" rowHeight="133" id="aUd-nP-c7z" customClass="ItineraryStopCell">
                                 <rect key="frame" x="0.0" y="232" width="320" height="133"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="aUd-nP-c7z" id="YAM-tk-vxU">
@@ -129,6 +129,10 @@
                                                     <fontDescription key="fontDescription" type="system" pointSize="14"/>
                                                     <nil key="highlightedColor"/>
                                                 </label>
+                                                <view clipsSubviews="YES" contentMode="scaleToFill" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="abG-Au-eDV" customClass="CTETriangleBadge">
+                                                    <rect key="frame" x="227" y="1" width="25" height="25"/>
+                                                    <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                                </view>
                                             </subviews>
                                             <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
                                         </view>
@@ -156,6 +160,7 @@
                                     <outlet property="stopErrorIndicator" destination="XFN-Pn-6tE" id="yYL-rv-CBA"/>
                                     <outlet property="stopLabel" destination="FiO-1J-O2h" id="nYi-ZA-sJ7"/>
                                     <outlet property="stopNumber" destination="vnR-FP-qu3" id="HIy-YC-tQI"/>
+                                    <outlet property="triangleBadge" destination="abG-Au-eDV" id="egl-Kt-EW0"/>
                                     <segue destination="f4a-2x-PT7" kind="push" identifier="SelectStopSegue" id="6TU-6J-jih"/>
                                 </connections>
                             </tableViewCell>
@@ -454,30 +459,6 @@
                                     <segue destination="f4a-2x-PT7" kind="push" identifier="StopLocation" id="jiM-Xh-37G"/>
                                 </connections>
                             </tableViewCell>
-                            <tableViewCell contentMode="scaleToFill" selectionStyle="blue" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" reuseIdentifier="ItinStopDepartureDate" rowHeight="64" id="q83-Es-gvB" customClass="ItineraryStopCell">
-                                <rect key="frame" x="0.0" y="238" width="320" height="64"/>
-                                <autoresizingMask key="autoresizingMask"/>
-                                <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="q83-Es-gvB" id="dT7-La-kAB">
-                                    <rect key="frame" x="0.0" y="0.0" width="320" height="63"/>
-                                    <autoresizingMask key="autoresizingMask"/>
-                                    <subviews>
-                                        <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Date" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="hLy-k6-0Ob">
-                                            <rect key="frame" x="20" y="11" width="280" height="21"/>
-                                            <fontDescription key="fontDescription" type="system" pointSize="17"/>
-                                            <nil key="highlightedColor"/>
-                                        </label>
-                                        <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Departure" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="DxF-yq-LKx">
-                                            <rect key="frame" x="20" y="34" width="280" height="21"/>
-                                            <fontDescription key="fontDescription" type="system" pointSize="17"/>
-                                            <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
-                                            <nil key="highlightedColor"/>
-                                        </label>
-                                    </subviews>
-                                </tableViewCellContentView>
-                                <connections>
-                                    <outlet property="departureDate" destination="DxF-yq-LKx" id="5x3-Mp-CQi"/>
-                                </connections>
-                            </tableViewCell>
                             <tableViewCell contentMode="scaleToFill" selectionStyle="blue" accessoryType="disclosureIndicator" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" reuseIdentifier="ItinStopDepartureDateExternal" id="cq4-vo-ieE" customClass="ItineraryStopCell">
                                 <rect key="frame" x="0.0" y="302" width="320" height="44"/>
                                 <autoresizingMask key="autoresizingMask"/>
@@ -503,28 +484,6 @@
                                     <segue destination="BFA-RO-bDd" kind="push" identifier="ItinStopDetailDepartureDatePicker" id="lpY-cM-0kO"/>
                                 </connections>
                             </tableViewCell>
-                            <tableViewCell contentMode="scaleToFill" selectionStyle="blue" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" reuseIdentifier="ItinStopDepartureDatePicker" rowHeight="200" id="tUC-iw-jP7" customClass="ItineraryStopCell">
-                                <rect key="frame" x="0.0" y="346" width="320" height="200"/>
-                                <autoresizingMask key="autoresizingMask"/>
-                                <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="tUC-iw-jP7" id="did-St-OBv">
-                                    <rect key="frame" x="0.0" y="0.0" width="320" height="199"/>
-                                    <autoresizingMask key="autoresizingMask"/>
-                                    <subviews>
-                                        <datePicker contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" datePickerMode="time" minuteInterval="1" translatesAutoresizingMaskIntoConstraints="NO" id="dfG-Ue-Xui">
-                                            <rect key="frame" x="0.0" y="-1" width="320" height="162"/>
-                                            <date key="date" timeIntervalSinceReferenceDate="413490332.06568801">
-                                                <!--2014-02-07 18:25:32 +0000-->
-                                            </date>
-                                            <connections>
-                                                <action selector="departureDatePickerChangedAction:" destination="f4a-2x-PT7" eventType="valueChanged" id="34c-Ud-LOA"/>
-                                            </connections>
-                                        </datePicker>
-                                    </subviews>
-                                </tableViewCellContentView>
-                                <connections>
-                                    <outlet property="DepartureDatePicker" destination="dfG-Ue-Xui" id="lU5-ib-WiY"/>
-                                </connections>
-                            </tableViewCell>
                             <tableViewCell contentMode="scaleToFill" selectionStyle="blue" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" reuseIdentifier="ItinStopBorderCrossingDatePicker" rowHeight="200" id="Q5y-xV-Rd3" customClass="ItineraryStopCell">
                                 <rect key="frame" x="0.0" y="546" width="320" height="200"/>
                                 <autoresizingMask key="autoresizingMask"/>
@@ -545,6 +504,28 @@
                                 </tableViewCellContentView>
                                 <connections>
                                     <outlet property="BorderCrossingDatePicker" destination="ovX-Je-Oe7" id="lTH-eX-kUv"/>
+                                </connections>
+                            </tableViewCell>
+                            <tableViewCell contentMode="scaleToFill" selectionStyle="blue" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" reuseIdentifier="ItinStopDepartureDatePicker" rowHeight="200" id="tUC-iw-jP7" customClass="ItineraryStopCell">
+                                <rect key="frame" x="0.0" y="346" width="320" height="200"/>
+                                <autoresizingMask key="autoresizingMask"/>
+                                <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="tUC-iw-jP7" id="did-St-OBv">
+                                    <rect key="frame" x="0.0" y="0.0" width="320" height="199"/>
+                                    <autoresizingMask key="autoresizingMask"/>
+                                    <subviews>
+                                        <datePicker contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" datePickerMode="time" minuteInterval="1" translatesAutoresizingMaskIntoConstraints="NO" id="dfG-Ue-Xui">
+                                            <rect key="frame" x="0.0" y="-1" width="320" height="162"/>
+                                            <date key="date" timeIntervalSinceReferenceDate="413490332.06568801">
+                                                <!--2014-02-07 18:25:32 +0000-->
+                                            </date>
+                                            <connections>
+                                                <action selector="departureDatePickerChangedAction:" destination="f4a-2x-PT7" eventType="valueChanged" id="34c-Ud-LOA"/>
+                                            </connections>
+                                        </datePicker>
+                                    </subviews>
+                                </tableViewCellContentView>
+                                <connections>
+                                    <outlet property="DepartureDatePicker" destination="dfG-Ue-Xui" id="lU5-ib-WiY"/>
                                 </connections>
                             </tableViewCell>
                             <tableViewCell contentMode="scaleToFill" selectionStyle="blue" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" reuseIdentifier="ItinStopArrivalDatePicker" rowHeight="200" id="JiB-m9-BoI" customClass="ItineraryStopCell">
@@ -569,7 +550,7 @@
                                     <outlet property="ArrivalDatePicker" destination="elb-w4-JIZ" id="sQb-nv-e2W"/>
                                 </connections>
                             </tableViewCell>
-                            <tableViewCell contentMode="scaleToFill" selectionStyle="blue" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" reuseIdentifier="ItinStopArrivalDate" id="3sQ-hP-Vli" customClass="ItineraryStopCell">
+                            <tableViewCell contentMode="scaleToFill" selectionStyle="blue" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" reuseIdentifier="ItinStopArrivalDate" rowHeight="64" id="3sQ-hP-Vli" customClass="ItineraryStopCell">
                                 <rect key="frame" x="0.0" y="946" width="320" height="44"/>
                                 <autoresizingMask key="autoresizingMask"/>
                                 <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="3sQ-hP-Vli" id="5j5-s1-hvF">
@@ -582,7 +563,7 @@
                                             <nil key="highlightedColor"/>
                                         </label>
                                         <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Arrival" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="PUt-qe-8lG">
-                                            <rect key="frame" x="70" y="11" width="230" height="21"/>
+                                            <rect key="frame" x="20" y="35" width="292" height="21"/>
                                             <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                             <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
                                             <nil key="highlightedColor"/>
@@ -650,6 +631,30 @@
                                     <outlet property="stopTimeText" destination="5up-bY-99S" id="WOP-ji-qMW"/>
                                 </connections>
                             </tableViewCell>
+                            <tableViewCell contentMode="scaleToFill" selectionStyle="blue" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" reuseIdentifier="ItinStopDepartureDate" rowHeight="64" id="q83-Es-gvB" customClass="ItineraryStopCell">
+                                <rect key="frame" x="0.0" y="238" width="320" height="64"/>
+                                <autoresizingMask key="autoresizingMask"/>
+                                <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="q83-Es-gvB" id="dT7-La-kAB">
+                                    <rect key="frame" x="0.0" y="0.0" width="320" height="63"/>
+                                    <autoresizingMask key="autoresizingMask"/>
+                                    <subviews>
+                                        <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Date" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="hLy-k6-0Ob">
+                                            <rect key="frame" x="20" y="11" width="280" height="21"/>
+                                            <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                            <nil key="highlightedColor"/>
+                                        </label>
+                                        <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Static Label - Departure" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="DxF-yq-LKx">
+                                            <rect key="frame" x="20" y="34" width="280" height="21"/>
+                                            <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                            <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
+                                            <nil key="highlightedColor"/>
+                                        </label>
+                                    </subviews>
+                                </tableViewCellContentView>
+                                <connections>
+                                    <outlet property="departureDate" destination="DxF-yq-LKx" id="5x3-Mp-CQi"/>
+                                </connections>
+                            </tableViewCell>
                             <tableViewCell contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" reuseIdentifier="ItinStopDateWithInput" rowHeight="64" id="2dq-v7-yVJ" customClass="ItineraryStopCell">
                                 <rect key="frame" x="0.0" y="1432" width="320" height="64"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
@@ -663,7 +668,7 @@
                                             <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
                                             <nil key="highlightedColor"/>
                                         </label>
-                                        <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="left" contentVerticalAlignment="center" text="Label" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="pDH-GB-dkV">
+                                        <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="left" contentVerticalAlignment="center" text="Input Text Field" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="pDH-GB-dkV">
                                             <rect key="frame" x="20" y="26" width="280" height="30"/>
                                             <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                             <textInputTraits key="textInputTraits"/>
@@ -1859,7 +1864,7 @@
                 <placeholder placeholderIdentifier="IBFirstResponder" id="bhG-rw-a3O" userLabel="First Responder" sceneMemberID="firstResponder"/>
                 <exit id="m7o-am-W0O" userLabel="Exit" sceneMemberID="exit"/>
             </objects>
-            <point key="canvasLocation" x="3665" y="-511"/>
+            <point key="canvasLocation" x="3703" y="-635"/>
         </scene>
         <!--Navigation Controller-->
         <scene sceneID="6Lb-fl-8UL">
@@ -1911,10 +1916,10 @@
         <simulatedScreenMetrics key="destination" type="retina4"/>
     </simulatedMetricsContainer>
     <inferredMetricsTieBreakers>
+        <segue reference="szZ-3Y-Epp"/>
         <segue reference="t3l-sT-fzm"/>
-        <segue reference="Eni-d1-61k"/>
-        <segue reference="zSu-YO-zFq"/>
         <segue reference="EFo-nl-Dl7"/>
+        <segue reference="zSu-YO-zFq"/>
         <segue reference="VRo-is-fFE"/>
     </inferredMetricsTieBreakers>
 </document>

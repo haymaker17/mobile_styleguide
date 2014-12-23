@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="6250" systemVersion="14A389" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" initialViewController="KcI-ES-Lv3">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="6254" systemVersion="14B25" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" initialViewController="KcI-ES-Lv3">
     <dependencies>
         <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="6244"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="6247"/>
         <capability name="Constraints to layout margins" minToolsVersion="6.0"/>
     </dependencies>
     <scenes>
@@ -235,6 +235,7 @@
                         <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                        <inset key="separatorInset" minX="0.0" minY="0.0" maxX="0.0" maxY="0.0"/>
                         <color key="sectionIndexColor" red="0.0" green="0.47843137250000001" blue="1" alpha="1" colorSpace="calibratedRGB"/>
                         <searchBar key="tableHeaderView" contentMode="redraw" searchBarStyle="minimal" placeholder="Current Location" translucent="NO" id="2xH-Wi-Z30">
                             <rect key="frame" x="0.0" y="64" width="320" height="44"/>
@@ -485,8 +486,8 @@
                                             <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
                                             <color key="highlightedColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                         </label>
-                                        <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" ambiguous="YES" misplaced="YES" text="$1000.00" textAlignment="right" lineBreakMode="wordWrap" numberOfLines="0" minimumFontSize="13" preferredMaxLayoutWidth="76" translatesAutoresizingMaskIntoConstraints="NO" id="oDf-9i-D7v" userLabel="Vertically Aligned Label - room rate" customClass="VerticallyAlignedLabel">
-                                            <rect key="frame" x="232" y="15" width="76" height="26"/>
+                                        <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" ambiguous="YES" misplaced="YES" text="$1000.00" textAlignment="right" lineBreakMode="wordWrap" minimumFontSize="13" preferredMaxLayoutWidth="76" translatesAutoresizingMaskIntoConstraints="NO" id="oDf-9i-D7v" userLabel="Vertically Aligned Label - room rate" customClass="VerticallyAlignedLabel">
+                                            <rect key="frame" x="215" y="15" width="93" height="26"/>
                                             <fontDescription key="fontDescription" name="HelveticaNeue-Medium" family="Helvetica Neue" pointSize="20"/>
                                             <color key="textColor" red="0.0" green="0.47058823529999999" blue="0.7843137255" alpha="1" colorSpace="calibratedRGB"/>
                                             <color key="highlightedColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
@@ -543,7 +544,7 @@
                                     <outlet property="triangleBadge" destination="aeS-DT-qIf" id="lwc-4u-xXY"/>
                                 </connections>
                             </tableViewCell>
-                            <tableViewCell contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" reuseIdentifier="hotelDetailsMapViewCell" rowHeight="75" id="ahp-Hq-8pq" customClass="HotelDetailsMapViewTableViewCell">
+                            <tableViewCell contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" reuseIdentifier="hotelDetailsMapViewCell" rowHeight="75" id="ahp-Hq-8pq" userLabel="HotelDetailsMapViewTableViewCell" customClass="HotelDetailsMapViewTableViewCell">
                                 <rect key="frame" x="0.0" y="383" width="320" height="75"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="ahp-Hq-8pq" id="NXm-Mi-MY5">
@@ -552,6 +553,9 @@
                                     <subviews>
                                         <mapView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" fixedFrame="YES" mapType="standard" translatesAutoresizingMaskIntoConstraints="NO" id="QGa-s9-UPQ">
                                             <rect key="frame" x="0.0" y="0.0" width="320" height="75"/>
+                                            <connections>
+                                                <outlet property="delegate" destination="ahp-Hq-8pq" id="STU-XW-p1d"/>
+                                            </connections>
                                         </mapView>
                                     </subviews>
                                 </tableViewCellContentView>
@@ -584,7 +588,7 @@
                                     <outlet property="btnFindRoom" destination="iv9-j4-WSA" id="xHO-EU-xeS"/>
                                 </connections>
                             </tableViewCell>
-                            <tableViewCell contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" reuseIdentifier="hotelDetailsCallCell" rowHeight="50" id="P82-4G-b4F" userLabel="Table View Cell - call hotel">
+                            <tableViewCell contentMode="scaleToFill" selectionStyle="none" indentationWidth="10" reuseIdentifier="hotelDetailsCallCell" rowHeight="50" id="P82-4G-b4F" userLabel="HotelDetailsCallHotelTableViewCell" customClass="HotelDetailsCallHotelTableViewCell">
                                 <rect key="frame" x="0.0" y="518" width="320" height="50"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="P82-4G-b4F" id="lVm-gD-ho7">
@@ -594,7 +598,7 @@
                                         <imageView userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" image="icon_hotel_phone" translatesAutoresizingMaskIntoConstraints="NO" id="Mee-LX-sg4">
                                             <rect key="frame" x="15" y="22" width="14" height="16"/>
                                         </imageView>
-                                        <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Call Hotel" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Qzv-Za-afS" customClass="VerticallyAlignedLabel">
+                                        <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Call Hotel" lineBreakMode="tailTruncation" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Qzv-Za-afS">
                                             <rect key="frame" x="35" y="15" width="178" height="30"/>
                                             <fontDescription key="fontDescription" name="HelveticaNeue-Medium" family="Helvetica Neue" pointSize="16"/>
                                             <color key="textColor" red="0.0" green="0.47058823529999999" blue="0.7843137255" alpha="1" colorSpace="calibratedRGB"/>
@@ -602,6 +606,10 @@
                                         </label>
                                     </subviews>
                                 </tableViewCellContentView>
+                                <connections>
+                                    <outlet property="imgCallHotel" destination="Mee-LX-sg4" id="QsX-cS-CLn"/>
+                                    <outlet property="lblCallHotel" destination="Qzv-Za-afS" id="Uej-PU-dzO"/>
+                                </connections>
                             </tableViewCell>
                             <tableViewCell contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" reuseIdentifier="hotelDetailsAddressCell" rowHeight="123" id="6Um-8h-QU0" customClass="HotelDetailsTableViewCell">
                                 <rect key="frame" x="0.0" y="568" width="320" height="123"/>
@@ -1045,7 +1053,7 @@
         <simulatedScreenMetrics key="destination" type="retina4"/>
     </simulatedMetricsContainer>
     <inferredMetricsTieBreakers>
-        <segue reference="MjT-5E-Gfi"/>
+        <segue reference="Ta3-SG-PUk"/>
         <segue reference="4KI-9O-sfe"/>
     </inferredMetricsTieBreakers>
 </document>

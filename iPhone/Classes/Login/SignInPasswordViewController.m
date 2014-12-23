@@ -260,6 +260,10 @@
             errorTitle = [@"Incorrect Password" localize];
         }
         errorMessage = cteErrorMessage.userMessage;
+        // Only translating unauthorized.
+        if([errorMessage isEqualToString:@"Unauthorized"]){
+            errorMessage = [errorMessage localize];
+        }
         
     }
     else
@@ -277,7 +281,7 @@
     [alertView show];
     
     // log info
-    ALog(@"::Login failed for user:%@:: with error ::%@::" , self.userId, cteErrorMessage.systemMessage == nil ? cteErrorMessage.systemMessage : error.concurErrorXML);
+    [[MCLogging getInstance] log:[NSString stringWithFormat:@"::Login failed for user:%@:: with error ::%@::" , self.userId, cteErrorMessage.systemMessage == nil ? cteErrorMessage.systemMessage : error.concurErrorResponse] Level:MC_LOG_INFO];
     self.alertTag = kInvalidPassword;
     
     NSString *eventLabel = nil;

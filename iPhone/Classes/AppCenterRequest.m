@@ -37,7 +37,7 @@
 
 -(void)requestListOfApps:(void (^) (NSArray *appListings, NSString *info))success failure:(void (^)(CTEError *error))failure
 {
-    [self.network getJSON:self.serviceURL success:^(NSDictionary *responseObject) {
+    [self.network getJSONFromURL:self.serviceURL success:^(NSDictionary *responseObject) {
         AppCenterResponseParser *parser = [[AppCenterResponseParser alloc] initWithJsonResponse:responseObject];
         if (success) {
             success(parser.appListings, parser.info);

@@ -8,6 +8,7 @@
 
 #import "HelpOverlayFactory.h"
 #import "HelpOverlayStatusList.h"
+#import "Config.h"
 
 @implementation HelpOverlayFactory
 
@@ -81,6 +82,16 @@
     return [HelpOverlayFactory addTestDriveOverlay:@"iPadApprovalDetailOverlay" toView:view];
 }
 
++ (bool)addiPhoneHomeReleaseNoteOverlayToView:(UIView *)view
+{
+    return [HelpOverlayFactory addOverlay:@"iPhoneHomeReleaseNoteOverlay" toView:view];
+}
+
++ (bool)addiPadHomeReleaseNoteOverlayToView:(UIView *)view
+{
+    return [HelpOverlayFactory addOverlay:@"iPadHomeReleaseNoteOverlay" toView:view];
+}
+
 /**
  Adds example Test Drive overlay to the view
  */
@@ -110,7 +121,8 @@
     bool added = NO;
     
     HelpOverlayStatusList *list = [HelpOverlayStatusList sharedList];
-    if (![list isOverlayDisabled:overlayName] && ![HelpOverlayFactory isCoveredByAnOverlay:view]) {
+    if ((![list isOverlayDisabled:overlayName] && ![HelpOverlayFactory isCoveredByAnOverlay:view]) || [Config isSprintDemoBuild])
+    {
         OverlayView2 *overlay = [[OverlayView2 alloc] initWithNibNamed:overlayName];
         overlay.frame = view.bounds;
         [view addSubview:overlay];

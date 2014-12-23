@@ -18,11 +18,15 @@
 @property (nonatomic, weak) id<UploadableItemDelegate> uploadableItemDelegate;
 @property (nonatomic, strong) NSString* localReceiptImageId;
 
-+(NSString*) filePathForLocalReceiptImageId:(NSString*)localReceiptImageId;
+
++(NSString*) filePathForLocalReceiptImageId:(NSString*)localReceiptImageId isPdfReceipt:(BOOL)isPdfReceipt;
+
 +(UIImage*) imageForLocalReceiptImageId:(NSString*)localReceiptImageId;
 
 -(id) initWithLocalReceiptImageId:(NSString*)localId;
 
-+(void) didDequeueEntityInstanceId:(NSString*)entityInstanceId;
++(void) didDequeueEntityInstanceId:(NSString*)entityInstanceId isPdfReceipt:(BOOL)isPdfReceipt;
+
++(NSData*) receiptDataForLocalReceiptImageId:(NSString*)localReceiptImageId;
 
 @end

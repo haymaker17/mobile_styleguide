@@ -8,6 +8,17 @@
 
 #import <Foundation/Foundation.h>
 
+typedef NS_ENUM(NSInteger, CTEHotelPreferenceRank)
+{
+    CTEHotelPreferenceRankUndefined = 0,
+    CTEHotelPreferenceRankNotPreferred = 1,
+    CTEHotelPreferenceRankUndefined2 = 2,
+    CTEHotelPreferenceRankUndefined3 = 3,
+    CTEHotelPreferenceRankLessPreferred = 4,
+    CTEHotelPreferenceRankPreferred = 5,
+    CTEHotelPreferenceRankMostPreferred = 10
+};
+
 @interface CTEHotel : NSObject
 
 // basic search info
@@ -40,11 +51,8 @@
 @property (nonatomic, readonly, assign) double distance;
 @property (nonatomic, readonly, assign) BOOL distanceInKM;
 
-// preference data, this is only part of what's in the server response
-// we should simplify the logic around preferences and recommendations
-@property (nonatomic, readonly, assign) BOOL isPreferredChain;
-@property (nonatomic, readonly, assign) BOOL isCompanyPreferredChain;
-@property (nonatomic, readonly, assign) int preferenceType;
+// preference data
+@property (nonatomic, readonly, assign) CTEHotelPreferenceRank companyPreference;
 @property (nonatomic, readonly, assign) int starRating;
 
 // recommendation

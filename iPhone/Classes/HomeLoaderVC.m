@@ -324,7 +324,9 @@
 - (void)setMessageCenterIcon {
     SEL messageCenterSelector = @selector(showMessageCenter:);
     
-    if ([[MessageCenterManager sharedInstance] numMessagesForType:MessageTypeUnread] > 0) {
+    // We want to show the badge if there are messages or this is an alpha version
+    NSString *appVersion = [[NSBundle mainBundle] objectForInfoDictionaryKey:@"CFBundleVersion"];
+    if ([[MessageCenterManager sharedInstance] numMessagesForType:MessageTypeUnread] > 0 || [appVersion rangeOfString:@"alpha"].location != NSNotFound) {
         self.navigationItem.rightBarButtonItem = [self getNavBarButtonWithImage:@"icon_messagecenter_badged" withSelector:messageCenterSelector];
     } else {
         if ([ExSystem is7Plus]) {

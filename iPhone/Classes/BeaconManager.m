@@ -161,7 +161,7 @@ __strong static id _sharedInstance = nil;
     
     CTENetworking *request = [[CTENetworking alloc] init];
     
-    [request postJSON:REGION_ENTER_SERVICE_URL requestJSON:json success:nil failure:^(CTEError *error) {
+    [request postJSONToURL:REGION_ENTER_SERVICE_URL requestJSON:json success:nil failure:^(CTEError *error) {
         DLog(@"Beacon service error: %@", error);
     }];
 }

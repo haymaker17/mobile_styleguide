@@ -7,7 +7,12 @@
 //
 
 #import <UIKit/UIKit.h>
+#import "HotelPhoneCellData.h"
 
 @interface HotelDetailsCallHotelTableViewCell : UITableViewCell
+
+@property (weak, nonatomic) IBOutlet UILabel *lblCallHotel;
+@property (weak, nonatomic) IBOutlet UIImageView *imgCallHotel;
+-(void)setCellData:(HotelPhoneCellData *)hotelDetailsCellData;
 
 @end

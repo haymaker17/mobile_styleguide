@@ -34,19 +34,16 @@
 {
     [super viewDidLoad];
     [self.navigationController setNavigationBarHidden:NO];
-     self.title = [@"Hotels" localize];
+    if(!self.isSingleMapView)
+        self.title = [@"Hotels" localize];
 
-    [self.tableView registerNib:[UINib nibWithNibName:@"HotelSearchTableViewCell" bundle:nil] forCellReuseIdentifier:@"HotelSearchTableViewCell"];
-    // Do any additional setup after loading the view.
-    //TODO: localize the string
-    NSString *dismissButtonText = @"Hotels List";
+    // Turn on the user location
+    self.mapView.delegate = self;
+    self.mapView.showsUserLocation = YES;
     
-    if(self.isSingleMapView)
-    {
-        dismissButtonText = @"Room List";
-    }
-        
-    UIBarButtonItem *doneButton = [[UIBarButtonItem alloc] initWithTitle:dismissButtonText
+    [self.tableView registerNib:[UINib nibWithNibName:@"HotelSearchTableViewCell" bundle:nil] forCellReuseIdentifier:@"HotelSearchTableViewCell"];
+    
+    UIBarButtonItem *doneButton = [[UIBarButtonItem alloc] initWithTitle:[@"Close" localize]
                                                                    style:UIBarButtonItemStyleDone
                                                                   target:self
                                                                   action:@selector(dismissMapView)];
@@ -104,56 +101,69 @@
 
 -(MKAnnotationView *)mapView:(MKMapView *)thismapView viewForAnnotation:(id <MKAnnotation>)annotation
 {
-    static NSString *HotelAnnotationIdentifier = @"HotelAnnotationIdentifier";
-	
-	__autoreleasing MKPinAnnotationView	*annotationView = (MKPinAnnotationView*) [thismapView dequeueReusableAnnotationViewWithIdentifier:HotelAnnotationIdentifier];
-	if (annotationView == nil)
-		annotationView = [[MKPinAnnotationView alloc] initWithAnnotation:annotation reuseIdentifier:HotelAnnotationIdentifier];
-    
-    // Customize the pin
-    HotelAnnotation *hotelAnnotation = (HotelAnnotation *)annotation;
-
-    //We always show the first one by default. show the selected hotel index pin in different color
-    if (hotelAnnotation.hotelIndex == self.selectedIndex) {
-         annotationView.image = [UIImage imageNamed:@"icon_map_pin_selected"];
+    if (annotation == thismapView.userLocation)
+    {
+        // Do not add a custom pin for the user location, allow default to appear
+        return nil;
     }
     else
-        annotationView.image = [UIImage imageNamed:@"icon_map_pin"];
-    
-    annotationView.canShowCallout = NO;
- 	return annotationView;
+    {
+        static NSString *HotelAnnotationIdentifier = @"HotelAnnotationIdentifier";
+        
+        __autoreleasing MKPinAnnotationView	*annotationView = (MKPinAnnotationView*) [thismapView dequeueReusableAnnotationViewWithIdentifier:HotelAnnotationIdentifier];
+        if (annotationView == nil)
+            annotationView = [[MKPinAnnotationView alloc] initWithAnnotation:annotation reuseIdentifier:HotelAnnotationIdentifier];
+        
+        // Customize the pin
+        HotelAnnotation *hotelAnnotation = (HotelAnnotation *)annotation;
 
+        //We always show the first one by default. show the selected hotel index pin in different color
+        if (hotelAnnotation.hotelIndex == self.selectedIndex) {
+             annotationView.image = [UIImage imageNamed:@"icon_map_pin_selected"];
+        }
+        else
+            annotationView.image = [UIImage imageNamed:@"icon_map_pin"];
+        
+        annotationView.canShowCallout = NO;
+        return annotationView;
+    }
 }
 
 - (void)mapView:(MKMapView *)mapView didSelectAnnotationView:(MKAnnotationView *)view
 {
-    [mapView deselectAnnotation:view.annotation animated:YES];
-    
-    HotelAnnotation *annotation = (HotelAnnotation *)view.annotation;
-    
-    // Set the old selected pin back to its old view
-    // Hotels are added in the same order as in the hotellist so the index of previous pin 
-    if (self.selectedIndex != -1) {
+    // We don't want selecting the current location to clear a hotel selection
+    if (view.annotation != mapView.userLocation)
+    {
+        [mapView deselectAnnotation:view.annotation animated:YES];
         
-        for (HotelAnnotation *ann in mapView.annotations)
-        {
-            if (ann.hotelIndex == self.selectedIndex) {
-                MKPinAnnotationView *oldAnnotationView = (MKPinAnnotationView*)[mapView viewForAnnotation:ann];
-                oldAnnotationView.image = [UIImage imageNamed:@"icon_map_pin"];
+        HotelAnnotation *annotation = (HotelAnnotation *)view.annotation;
+        
+        // Set the old selected pin back to its old view
+        // Hotels are added in the same order as in the hotellist so the index of previous pin 
+        if (self.selectedIndex != -1) {
+            
+            for (HotelAnnotation *ann in mapView.annotations)
+            {
+                // Only affect hotel location annotations - leave user location alone
+                if ((MKUserLocation*)ann != mapView.userLocation)
+                {
+                    if (ann.hotelIndex == self.selectedIndex) {
+                        MKPinAnnotationView *oldAnnotationView = (MKPinAnnotationView*)[mapView viewForAnnotation:ann];
+                        oldAnnotationView.image = [UIImage imageNamed:@"icon_map_pin"];
+                    }
+                }
             }
+
         }
 
+        self.selectedIndex = annotation.hotelIndex;
+        // Set the selected pin color to different color.
+        view.image = [UIImage imageNamed:@"icon_map_pin_selected"];
+        
+        DLog(@" selected view index: %d ", self.selectedIndex);
+        [self adjustTableHeight];
+        [self.tableView reloadData];
     }
-
-    self.selectedIndex = annotation.hotelIndex;
-    // Set the selected pin color to different color.
-    view.image = [UIImage imageNamed:@"icon_map_pin_selected"];
-    
-    DLog(@" selected view index: %d ", self.selectedIndex);
-    [self adjustTableHeight];
-    [self.tableView reloadData];
-
-
 }
 
 #pragma mark - animate the pin drop
@@ -174,9 +184,7 @@
         [UIView setAnimationCurve:UIViewAnimationCurveEaseInOut];
         [aV setFrame:endFrame];
         [UIView commitAnimations];
-        
     }
- 
 }
 
 
@@ -281,13 +289,39 @@
     
     for(id <MKAnnotation> annotation in self.mapView.annotations)
     {
-        topLeftCoord.longitude = fmin(topLeftCoord.longitude, annotation.coordinate.longitude);
-        topLeftCoord.latitude = fmax(topLeftCoord.latitude, annotation.coordinate.latitude);
-        
-        bottomRightCoord.longitude = fmax(bottomRightCoord.longitude, annotation.coordinate.longitude);
-        bottomRightCoord.latitude = fmin(bottomRightCoord.latitude, annotation.coordinate.latitude);
+        if ((MKUserLocation*)annotation != self.mapView.userLocation)
+        {
+            topLeftCoord.longitude = fmin(topLeftCoord.longitude, annotation.coordinate.longitude);
+            topLeftCoord.latitude = fmax(topLeftCoord.latitude, annotation.coordinate.latitude);
+            
+            bottomRightCoord.longitude = fmax(bottomRightCoord.longitude, annotation.coordinate.longitude);
+            bottomRightCoord.latitude = fmin(bottomRightCoord.latitude, annotation.coordinate.latitude);
+        }
+        else{
+            // If we are showing the user location, then ensure that the region contains this as well
+            if (self.mapView.showsUserLocation)
+            {
+                CLLocation *currentLocation = [[CLLocation alloc] initWithLatitude:annotation.coordinate.latitude longitude:annotation.coordinate.longitude];
+                CLLocation *topLeftLocation = [[CLLocation alloc] initWithLatitude:topLeftCoord.latitude longitude:topLeftCoord.longitude];
+                CLLocation *bottomRightLocation = [[CLLocation alloc] initWithLatitude:bottomRightCoord.latitude longitude:bottomRightCoord.longitude];
+
+                // We only want to include the current location in the region if we are within a reasonable
+                // distance of the other annotations, using 200 metres as the guide
+                CLLocationDistance distance1 = [currentLocation distanceFromLocation: topLeftLocation];
+                CLLocationDistance distance2 = [currentLocation distanceFromLocation: bottomRightLocation];
+                
+                if (distance1 < 200 && distance2 < 200)
+                {
+                    topLeftCoord.longitude = fmin(topLeftCoord.longitude, currentLocation.coordinate.longitude);
+                    topLeftCoord.latitude = fmax(topLeftCoord.latitude, currentLocation.coordinate.latitude);
+                    
+                    bottomRightCoord.longitude = fmax(bottomRightCoord.longitude, currentLocation.coordinate.longitude);
+                    bottomRightCoord.latitude = fmin(bottomRightCoord.latitude, currentLocation.coordinate.latitude);
+                }
+            }
+        }
     }
-    
+
     MKCoordinateRegion region;
     region.center.latitude = topLeftCoord.latitude - (topLeftCoord.latitude - bottomRightCoord.latitude) * 0.5;
     region.center.longitude = topLeftCoord.longitude + (bottomRightCoord.longitude - topLeftCoord.longitude) * 0.5;

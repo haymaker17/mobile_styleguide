@@ -108,10 +108,14 @@
     // Enable location services tracking, but dont get fire the search.
     if (![ExSystem sharedInstance].isGovernment)
     {
-        [GlobalLocationManager startTrackingSignificantLocationUpdates];
         // default value for BOOL property is NO,
         [self startListeningToCurrentLocationUpdates];
         [self startListeningToCurrentLocationAuthorization];
+
+        // Reset the location manager, otherwise significant updates won't work
+        [GlobalLocationManager sharedInstance].locationManager = nil;
+        [GlobalLocationManager startTrackingSignificantLocationUpdates];
+
     }
     
      __weak typeof(self) weakSelf = self;
@@ -152,6 +156,7 @@
     self.btnSort.enabled = NO;
     [self.tableData setAfterDoneSearch:^{
         weakSelf.btnSort.enabled = YES;
+        weakSelf.btnSort.tag = 1;   // Default sort order to Preferred
         weakSelf.btnMapView.enabled = YES;
         weakSelf.btnFilter.enabled = YES;
     }];
@@ -186,8 +191,16 @@
     if ([self.navigationController.viewControllers indexOfObject:self]==NSNotFound) {
         // MOB-21116 - We only want to hide the wait window if we are navigating back to the home screen
         [TravelWaitViewController hideAnimated:YES withCompletionBlock:nil];
+
+        // MOB-21587 We need to release references and listeners when the screen is closed,
+        // otherwise they are maintained and we get a crash when you come into the screen
+        // again after a search was performed. Only happens after a search. This call also
+        // stops the image downloads
+        [self releaseReferencesAndListeners];
     }
-    [self.imageDownloadQueue setSuspended:YES];
+    else{
+        [self.imageDownloadQueue setSuspended:YES];
+    }
 }
 
 - (void)didReceiveMemoryWarning
@@ -732,7 +745,7 @@
     UIBarButtonItem *doneButton = [[UIBarButtonItem alloc] initWithTitle:@"Close"
                                                                    style:UIBarButtonItemStyleDone
                                                                   target:self
-                                                                  action:@selector(toggleSearchCriteriaSection)];
+                                                                  action:@selector(closeButtonClicked)];
     [self.navigationItem setLeftBarButtonItem:doneButton];
     
 }
@@ -740,13 +753,23 @@
 /*!
  Removes the close button from nav bar when search criteria section is hidden
  */
--(void)removeCloseButtun
+-(void)removeCloseButton
 {
     [self.navigationItem setLeftBarButtonItem:nil];
     
 }
 
 
+-(void)closeButtonClicked
+{
+    // MOB-21318 When Close is clicked from criteria screen, and there are no search results, unload the VC
+    if (self.tableData != nil && self.tableData.hotelListSection != nil && [self.tableData.hotelListSection numberOfObjects] > 0){
+        [self toggleSearchCriteriaSection];
+    }
+    else{
+        [self.navigationController popViewControllerAnimated:YES];
+    }
+}
 /*! Show/Hide Search Criteria section for hotel search
  */
 - (void)toggleSearchCriteriaSection
@@ -761,7 +784,7 @@
         UIBarButtonItem *fixedItem = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemFixedSpace target:nil action:nil];
         fixedItem.width = 20.0f; // or whatever you want
         [self.navigationItem setRightBarButtonItems:[NSArray arrayWithObjects:_btnMapView,fixedItem,_btnVoice, nil]];
-        [self removeCloseButtun];
+        [self removeCloseButton];
         
         
         
@@ -844,9 +867,6 @@
     ListViewController *vc = [[ListViewController alloc] initWithNibName:@"ListView" bundle:nil];
     
     vc.dataSourceArray = [self getListItems];
-    if([self.tableData isSpecificCity]){
-        self.btnSort.tag = 4;
-    }
     vc.defaultSelectedIdxPath = [NSIndexPath indexPathForRow:self.btnSort.tag inSection:0];
     vc.delegate = self;
     
@@ -927,10 +947,9 @@
     if (!self.isSearchViewShowing) {
         [self setupToolbar];
     }
-    
 }
 
-#pragma mark - ImageDownloaderOperationDelegate 
+#pragma mark - ImageDownloaderOperationDelegate
 -(void)ImageDownloaderOperationDidFinish:(ImageDownloaderOperation *)downloader
 {
     // 1: Check for the indexPath of the operation, whether it is a download, or filtration.
@@ -1075,25 +1094,20 @@
 
 
 #pragma mark - memory management
-
-- (void)viewDidUnload {
-    // Relinquish ownership of anything that can be recreated in viewDidLoad or on demand.
-    // For example: self.myOutlet = nil;
-    self.tableData.delegate = nil;
-	self.tableData = nil;
-	[self.imageDownloadQueue cancelAllOperations];
-    // Disable locaiton tracking
-    [GlobalLocationManager stopTrackingSignificantLocationUpdates];
-    [self stopListeningToCurrentLocationUpdates];
-    [self stopListeningToCurrentLocationAuthorization];
-}
-
-
 - (void)dealloc
 {
     [TravelWaitViewController hideAnimated:YES withCompletionBlock:nil];
-	self.tableData.delegate = nil;
+    [self releaseReferencesAndListeners];
+}
+
+-(void)releaseReferencesAndListeners
+{
+    // Relinquish ownership of anything that can be recreated in viewDidLoad or on demand.
+    // For example: self.myOutlet = nil;
+    self.tableData.delegate = nil;
     self.tableData = nil;
+    [self.imageDownloadQueue cancelAllOperations];
+    // Disable locaiton tracking
     [GlobalLocationManager stopTrackingSignificantLocationUpdates];
     [self stopListeningToCurrentLocationUpdates];
     [self stopListeningToCurrentLocationAuthorization];

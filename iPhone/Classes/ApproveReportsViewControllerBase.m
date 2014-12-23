@@ -90,10 +90,6 @@ NSString * const SUBMIT_ERROR_RPT_XCT_LEVEL_MSG = @"SUBMIT_ERROR_RPT_XCT_LEVEL_M
                     [self afterChoiceToRateApp];
                 }];
             }
-
-//			[[ExSystem sharedInstance].cacheData removeCache:APPROVE_REPORT_DETAIL_DATA UserID:[ExSystem sharedInstance].userName RecordKey:rpt.rptKey];
-//			parameterBag = [[NSMutableDictionary alloc] initWithObjectsAndKeys: @"YES", @"POP_TO_ROOT_VIEW", nil];
-//			[ConcurMobileAppDelegate switchToView:APPROVE_REPORTS viewFrom:APPROVE_ENTRIES ParameterBag:parameterBag];
 		}
 		
 		[self hideWaitView];

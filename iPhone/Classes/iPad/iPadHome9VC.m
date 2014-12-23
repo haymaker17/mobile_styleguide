@@ -56,6 +56,7 @@
 #import "MobileTourViewController.h"
 #import "SignInUserTypeViewController.h"
 #import "SignInResetPasswordViewController.h"
+#import "SafariLoginViewController.h"
 
 #import "AnalyticsTracker.h"
 
@@ -175,7 +176,10 @@ UILabel *offlineText;
     // update based on role information
     [self updateCollectionViewLayout];
     [HelpOverlayFactory addiPadHomeOverlayToView:self.navigationController.view];
-
+    if ([Config isSprintDemoBuild])
+    {
+        [HelpOverlayFactory addiPadHomeReleaseNoteOverlayToView:self.navigationController.view];
+    }
     // if user logged in through testdrive or some other Storyboard then dismiss the login storyboard.
     if(self.signInViewNavigationController != nil)
     {
@@ -1549,6 +1553,18 @@ UILabel *offlineText;
             [self.signInViewNavigationController popToRootViewControllerAnimated:YES];
         }
     }
+    
+}
+
+-(void) showSafariSignInScreen
+{
+    [[MCLogging getInstance] log:[NSString stringWithFormat:@"Home9VC::showSafariLoginScreen"] Level:MC_LOG_DEBU];
+    [[ConcurTestDrive sharedInstance] removeAnimated:NO];
+    
+    //TODO: Clean up the logic
+    
+    SafariLoginViewController *vc = [[SafariLoginViewController alloc] init];
+    [self presentViewController:vc animated:YES completion:nil];
     
 }
 

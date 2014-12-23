@@ -59,9 +59,7 @@
     CTEHotelRate *hotelRatesData = [cellData getHotelRatesData];
     self.labelRoomDescription.text = hotelRatesData.roomDescription;
 
-    //TODO:Need to get hotel rate with currency symbol.
-    // adding the $ is just temporary...
-    self.labelRoomRate.text = [NSString stringWithFormat:@"$%@", hotelRatesData.dailyAmount];
+    self.labelRoomRate.text = [FormatUtils formatMoneyString:hotelRatesData.dailyAmount crnCode:hotelRatesData.currency decimalPlaces:0];
     
     // check if deposit is required
     if (![hotelRatesData.guaranteeSurcharge isEqualToString:@"DepositRequired"]) {

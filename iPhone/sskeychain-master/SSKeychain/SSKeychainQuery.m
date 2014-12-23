@@ -9,7 +9,7 @@
 #import "SSKeychainQuery.h"
 #import "SSKeychain.h"
 #import "SignInWithTouchID.h"
-//#import "Config.h"
+#import "AnalyticsTracker.h"
 
 @implementation SSKeychainQuery
 
@@ -157,6 +157,13 @@
 		*error = [[self class] errorWithCode:status];
 		return NO;
 	}
+    else if (status != errSecUserCanceled)
+    {
+        if ([self.account isEqualToString:@"ACLpassword"] || [self.account isEqualToString:@"ACLuserID"])
+        {
+            [AnalyticsTracker logEventWithCategory:@"Sign In" eventAction:@"Cancel" eventLabel:@"Fingerprint" eventValue:nil];
+        }
+    }
 
 	self.passwordData = (__bridge_transfer NSData *)result;
 	return YES;

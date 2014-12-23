@@ -103,7 +103,9 @@
 
     if (entry.localReceiptImageId != nil && entry.localReceiptImageId.length > 0) {
         // We have a local receipt, i.e. one that has not yet been uploaded to the server
-        NSString *filePath = [UploadableReceipt filePathForLocalReceiptImageId:entry.localReceiptImageId];
+        // Need to add a flag of PdfReceipt because of MOB-21462
+        // currently we cannot attach a pdf to an expense offline, so it is not a pdf receipt
+        NSString *filePath = [UploadableReceipt filePathForLocalReceiptImageId:entry.localReceiptImageId isPdfReceipt:NO];
         if (filePath != nil && filePath.length > 0)
         {
             // We found the file in which the local receipt image is stored
@@ -702,11 +704,6 @@
         {
             return [self makeTableHeaderView:[Localizer getLocalizedText:@"ExpenseIt Entry"]];
         }
-        else if ([MobileEntryManager isSmartMatched:self.entry]) // MOB-21064
-        {
-            return [self makeTableHeaderView:[Localizer getLocalizedText:@"Matched Expense"]];
-        }
-
         else if (self.entry.ereceiptId != nil || self.entry.eReceiptImageId != nil)
         {
             return [self makeTableHeaderView:[Localizer getLocalizedText:@"E-Receipt"]];
@@ -1009,30 +1006,6 @@
     [alert show];
       
     return;
-}
-
--(void) writeReceiptImageToFileSystem:(UIImage*)receiptImage withReceiptId:(NSString*)localReceiptId
-{
-    if (receiptImage != nil)
-    {
-        // Get the NSData object from the UIImage
-        NSData *receiptImageData = [ReceiptEditorVC receiptImageDataFromReceiptImage:receiptImage];
-        
-        // Save the receipt to disk
-        NSString *filePath = [UploadableReceipt filePathForLocalReceiptImageId:localReceiptId];
-        [receiptImageData writeToFile:filePath atomically:YES];
-    }
-}
-
--(void) removeReceiptImageFromFileSystem:(NSString*)localReceiptId
-{
-    if (localReceiptId != nil)
-    {
-        NSError *error = nil;
-        NSString *filePath = [UploadableReceipt filePathForLocalReceiptImageId:localReceiptId];
-        if ([[NSFileManager defaultManager] removeItemAtPath:filePath error:&error] != YES)
-            [[MCLogging getInstance] log:[NSString stringWithFormat:@"QEFormVC::removeReceiptFromFileSystem Unable to delete file: %@", [error localizedDescription]] Level:MC_LOG_ERRO];
-    }
 }
 
 -(void) writeToQueue

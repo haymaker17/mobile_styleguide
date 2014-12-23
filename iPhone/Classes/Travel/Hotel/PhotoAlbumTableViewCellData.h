@@ -11,6 +11,8 @@
 
 @interface PhotoAlbumTableViewCellData : AbstractTableViewCellData
 
+@property (nonatomic) BOOL isCellHeightSetAccordingToContentSize;
+
 -(instancetype)initWithCTEHotelCellData:(CTEHotelCellData *)cteHotelCellData;
 -(CTEHotelCellData *)getHotelData;
 

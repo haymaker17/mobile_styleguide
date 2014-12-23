@@ -15,6 +15,7 @@
 #import "WaitViewController.h"
 #import "CTENetworkSettings.h"
 #import "SignInSSOWebViewController.h"
+#import "SafariLoginViewController.h"
 #import "CTEErrorMessage.h"
 #import "AnalyticsTracker.h"
 #import "LoginOptionsViewController.h"
@@ -37,7 +38,7 @@
 
 - (IBAction) btnContinueTapped:(id)sender;
 - (IBAction) btnSSOSignInTapped:(id)sender;
-- (IBAction)btnTouchIDTapped:(id)sender;
+- (IBAction) btnTouchIDTapped:(id)sender;
 
 @end
 
@@ -47,17 +48,19 @@ NSString * const constShowSSOLoginScreen = @"ShowSSOLoginScreen";
 NSString * const constShowPasswordScreen = @"ShowPasswordScreen";
 
 // TODO : Add diagnostic logging to all the login flow.
-- (void)appDidEnterForeground:(NSNotification *)notification
+- (void)appDidBecomeActive:(NSNotification *)notification
 {
-    if ([[ExSystem sharedInstance].entitySettings.enableTouchID isEqualToString:@"YES"] && [Config isTouchIDEnabled] && ![[ApplicationLock sharedInstance] isLoggedIn] && self.ssoURL == nil)
+    if([self canPopUpTouchID])
     {
-        [self btnTouchIDTapped:self];
+        if (![[ApplicationLock sharedInstance] isLoggedIn]) {
+            [self btnTouchIDTapped:self];
+        }
     }
 }
 
 - (void)dealloc
 {
-    [[NSNotificationCenter defaultCenter] removeObserver:self name:UIApplicationWillEnterForegroundNotification object:nil];
+    [[NSNotificationCenter defaultCenter] removeObserver:self name:UIApplicationDidBecomeActiveNotification object:nil];
 }
 
 - (void)viewDidLoad
@@ -82,6 +85,16 @@ NSString * const constShowPasswordScreen = @"ShowPasswordScreen";
     self.title = [@"Sign In" localize];
     [self.btnContinue setTitle:[@"Continue" localize] forState:UIControlStateNormal];
     [self.txtWorkEmailField setPlaceholder:[@"Work email or Concur username" localize]];
+    
+    //
+    // MOB-19274 The placeholder for Russsian words are too long and currently we only show email for russian,
+    //           I don't like this solution but it seems this is best choice we have since the "email" translation for
+    //           Russian is a verb.
+    NSString *preferredLocale = [[NSLocale currentLocale] localeIdentifier];
+    if([preferredLocale hasPrefix:@"ru_"]){
+        [self.txtWorkEmailField setPlaceholder:@"электронной почте"];
+    }
+    
     [self.btnSSOSignIn setTitle:[@"Company Sign On" localize] forState:UIControlStateNormal];
     
 	// Do any additional setup after loading the view.
@@ -104,9 +117,6 @@ NSString * const constShowPasswordScreen = @"ShowPasswordScreen";
     [super viewDidLoad];
     
     [AnalyticsTracker initializeScreenName:@"Email Lookup"];
-    
-    //TouchID
-    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(appDidEnterForeground:) name:UIApplicationWillEnterForegroundNotification object:nil];
 }
 
 -(void)viewWillAppear:(BOOL)animated
@@ -133,15 +143,21 @@ NSString * const constShowPasswordScreen = @"ShowPasswordScreen";
         
     }
 
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(appDidBecomeActive:) name:UIApplicationDidBecomeActiveNotification object:nil];
     [super viewWillAppear:animated];
+}
+
+- (void)viewWillDisappear:(BOOL)animated
+{
+    [[NSNotificationCenter defaultCenter] removeObserver:self name:UIApplicationDidBecomeActiveNotification object:nil];
 }
 
 - (void)viewDidAppear:(BOOL)animated
 {
     [super viewDidAppear:animated];
-
-    // TouchID Flow
-    if ([[ExSystem sharedInstance].entitySettings.enableTouchID isEqualToString:@"YES"] && [Config isTouchIDEnabled] && self.ssoURL == nil)
+    
+    //TouchID
+    if ([self canPopUpTouchID])
     {
         [self btnTouchIDTapped:self];
     }
@@ -161,6 +177,7 @@ NSString * const constShowPasswordScreen = @"ShowPasswordScreen";
 
 -(void)showTestDrive
 {
+    [self viewWillDisappear:YES];
     [self.view endEditing:YES];
     [[ConcurTestDrive sharedInstance] showTestDriveAnimated:YES];
 }
@@ -187,7 +204,26 @@ NSString * const constShowPasswordScreen = @"ShowPasswordScreen";
         {
             [self signInWithTouchID:touchID userID:self.userId password:password];
         }
+        else
+        {
+            NSString *eventLabel = [NSString stringWithFormat:@"Type: %@", @"Fingerprint"];
+            [AnalyticsTracker logEventWithCategory:@"Sign In" eventAction:@"Failed Attempt" eventLabel:eventLabel eventValue:nil];
+        }
     });
+    
+    [AnalyticsTracker logEventWithCategory:@"Sign In" eventAction:@"Shows (auto trigger)" eventLabel:@"Fingerprint" eventValue:nil];
+    [ApplicationLock sharedInstance].shouldPopUpTouchID = NO;
+}
+
+- (BOOL) canPopUpTouchID
+{
+    // check1: company entity allowed, user allowed, device allowed, not SSO
+    BOOL check1 = [[ExSystem sharedInstance].entitySettings.enableTouchID isEqualToString:@"YES"] && [Config isTouchIDEnabled] && self.ssoURL == nil;
+    
+    // check2: good use ability, only show touchID when desired.
+    BOOL check2 = [[ApplicationLock sharedInstance] shouldPopUpTouchID];
+    
+    return (check1 && check2);
 }
 
 - (void)signInWithTouchID:(SignInWithTouchID *)obj userID:(NSString *)userID password:(NSString *)password
@@ -282,12 +318,16 @@ NSString * const constShowPasswordScreen = @"ShowPasswordScreen";
                 {
                     errorTitle = [@"Network Error" localize];
                 }
+                else{
+                    // this case maybe wrong sever address
+                    errorMessage = [@"We are unable to sign you in with this information" localize];
+                }
             }
             else {
                 errorMessage = [@"We are unable to sign you in with this information" localize];
             }
             // log info
-            ALog(@"::EmailLookup Failed for user:%@:: with error ::%@::" , self.userId, cteErrorMessage.systemMessage == nil ? cteErrorMessage.systemMessage : error.concurErrorXML);
+            [[MCLogging getInstance] log:[NSString stringWithFormat:@"::EmailLookup Failed for user:%@:: with error ::%@::" , self.userId, cteErrorMessage.systemMessage != nil ? cteErrorMessage.systemMessage : (error.concurErrorResponse != nil ? error.concurErrorResponse : errorMessage)] Level:MC_LOG_INFO];
             [WaitViewController hideAnimated:YES withCompletionBlock:nil];
             MobileAlertView *alertView = [[MobileAlertView alloc] initWithTitle:errorTitle
                                                                   message:errorMessage
@@ -312,9 +352,18 @@ NSString * const constShowPasswordScreen = @"ShowPasswordScreen";
          [WaitViewController hideAnimated:YES withCompletionBlock:nil];
     }
     if ([segue.identifier isEqualToString:constShowSSOLoginScreen]) {
-        // Segue to SSO webview
-        SignInSSOWebViewController *nextVC = (SignInSSOWebViewController*)segue.destinationViewController;
-        nextVC.ssoURL = self.ssoURL ;
+        
+        // Segue to SSO webview/ Safari Login
+        if([[ExSystem sharedInstance] isLoginFromSafari]){
+            //Open Safari
+            NSURL *url = [NSURL URLWithString:self.ssoURL];
+            [[ExSystem sharedInstance] saveCompanySSOLoginPageUrl:self.ssoURL];
+            [[UIApplication sharedApplication] openURL:url];
+        }
+        else{
+            SignInSSOWebViewController *nextVC = (SignInSSOWebViewController*)segue.destinationViewController;
+            nextVC.ssoURL = self.ssoURL;
+        }
     }
 }
 

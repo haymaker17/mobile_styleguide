@@ -188,8 +188,8 @@
         pBag[@"TRIP_KEY"] = tripKey;
         
         UIViewController *homeVC = [ConcurMobileAppDelegate findHomeVC];
-        // Force home screen refresh
-        if ([homeVC respondsToSelector:@selector(refreshTripsData)])
+        // In iOS 8 onwards, Home is displayed for a split-second before TripDetailsVC is pushed over it. This causes viewDidAppear on Home9VC to be triggered which in-turn reloads Trips data. This causes MOB-21531 and an app crash
+        if (![ExSystem is8Plus] && [homeVC respondsToSelector:@selector(refreshTripsData)])
         {
             [homeVC performSelector:@selector(refreshTripsData) withObject:nil];
         }

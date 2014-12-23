@@ -3832,8 +3832,6 @@ Managers can approve from anywhere.</string>
     <string>Breakfast Amount *</string>
     <key>Meals Amount</key>
     <string>Meals Amount</string>
-    <key></key>
-    <string></string>
 	<key>Rate Location:</key>
 	<string>Rate Location:</string>
 	<key>Exchange Rate</key>
@@ -3970,8 +3968,8 @@ Managers can approve from anywhere.</string>
 	<string>Add another item to this request</string>
 	<key>RequestHeader</key>
 	<string>Request Header</string>
-	<key>Looks like we are experience some difficulties. Please check back in a few minutes.</key>
-	<string>Looks like we are experience some difficulties. Please check back in a few minutes.</string>
+	<key>Looks like we are experiencing some difficulties. Please check back in a few minutes.</key>
+	<string>Looks like we are experiencing some difficulties. Please check back in a few minutes.</string>
 	<key>Suggested based on past stay</key>
 	<string>Suggested based on past stay</string>
 	<key>Suggested based on co-worker</key>
@@ -3980,7 +3978,13 @@ Managers can approve from anywhere.</string>
 	<string>Suggested based on popularity</string>
 	<key>Choose a location</key>
 	<string>Choose a location</string>
-	<key>Receipt image could not be loaded, but your expense details are saved. Please visit the web if you need to view this receipt image.</key>
-	<string>Receipt image could not be loaded, but your expense details are saved. Please visit the web if you need to view this receipt image.</string>
+    <key>ReceiptImageUnavailableTitle</key>
+    <string>Receipt Image Unavailable</string>
+    <key>ReceiptImageUnavailable</key>
+    <string>Your receipt image is currently unavailable. Please try again later.</string>
+	<key>Unauthorized</key>
+	<string>Unauthorized</string>
+	<key>Profile</key>
+	<string>Profile</string>
 </dict>
 </plist>

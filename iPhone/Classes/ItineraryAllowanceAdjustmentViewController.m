@@ -154,6 +154,15 @@
             cell.expandedIndicatorImage.image = minus;
         }
 
+        if(allowance.markedExcluded)
+        {
+            cell.excludedText.text = @"excluded";
+            [cell.excludedText setHidden:NO];
+        }
+        else{
+            [cell.excludedText setHidden:YES];
+        }
+
         UITapGestureRecognizer *singleTapRecogniser = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(headerTappedHandler:)];
         [singleTapRecogniser setDelegate:self];
         singleTapRecogniser.numberOfTouchesRequired = 1;
@@ -762,6 +771,10 @@
     [self callServerToUpdateAmounts:allowance index:sw.tag];
 }
 
+- (CGFloat)tableView:(UITableView *)tableView estimatedHeightForRowAtIndexPath:(NSIndexPath *)indexPath
+{
+    return 60;
+}
 
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath {
 
@@ -771,6 +784,10 @@
 
     if(indexPath.row == dayHeaderCellRowIndex)
     {
+        if([ExSystem is8Plus])
+        {
+            return UITableViewAutomaticDimension;
+        }
         UITableViewCell *headerText = [self.tableView dequeueReusableCellWithIdentifier:@"DayHeader"];
         d = headerText.frame.size.height;
     }

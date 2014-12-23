@@ -129,7 +129,7 @@ static NSMutableDictionary* userContactMap = nil;
     NSString *isCorpSSO = (NSString *)parameterBag[@"IS_CORP_SSO"];
     
 	NSString* loginWithConcurAccessTokenStr = parameterBag[@"LOGIN_WITH_CONCUR_ACCESS_TOKEN"];
-	bool loginWithConcurAccessToken = (loginWithConcurAccessTokenStr != nil || [loginWithConcurAccessTokenStr isEqualToString:@"YES"]);
+	BOOL loginWithConcurAccessToken = [loginWithConcurAccessTokenStr isEqualToString:@"YES"];
 		
     if ([isCorpSSO length])
         self.path = [NSString stringWithFormat:@"%@/mobile/MobileSession/CorpSsoLogin",[ExSystem sharedInstance].entitySettings.uri];
@@ -177,7 +177,6 @@ static NSMutableDictionary* userContactMap = nil;
     {
         [msg setBody:[self makeXMLBodyLocaleOnly]];
     }
-    
 
 	return msg;
 }
@@ -283,8 +282,7 @@ static NSMutableDictionary* userContactMap = nil;
 
 #pragma mark -
 #pragma mark URL Methods
-- (BOOL)connection:(NSURLConnection *)connection
-canAuthenticateAgainstProtectionSpace:(NSURLProtectionSpace *) space 
+- (BOOL)connection:(NSURLConnection *)connection canAuthenticateAgainstProtectionSpace:(NSURLProtectionSpace *) space
 {
 	if([[space authenticationMethod] 
 		isEqualToString:NSURLAuthenticationMethodServerTrust]) {
@@ -302,7 +300,6 @@ canAuthenticateAgainstProtectionSpace:(NSURLProtectionSpace *) space
 	// Otherwise maybe YES for NSURLAuthenticationMethodDefault and etc.
 	return NO;
 }
-
 
 - (void)parserDidStartDocument:(NSXMLParser *)parser 
 {

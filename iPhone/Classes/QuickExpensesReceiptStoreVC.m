@@ -1394,7 +1394,8 @@ EditorMode;
 			if ([oneObject isKindOfClass:[ReceiptStoreListCell class]])
 				cell = (ReceiptStoreListCell *)oneObject;
 	}
-    
+    // MOB-21462: can get thumb mail image from server, so do not need the pdf webview for pdf receipt
+    [cell.pdfWebView setHidden:YES];
     cell.receiptId = receipt.receiptId;
 	
 	[cell.imageBackgroundView setIsRoundingDisabled:YES];
@@ -1641,7 +1642,14 @@ EditorMode;
 	// if selected expense has smartExpenseID it means its from GSEL
 	// MOB-21203
     if ([entity.smartExpenseId lengthIgnoreWhitespace]) {
-        (self.selectedItems)[entity.smartExpenseId] = SMART_EXPENSE_ID;
+        //(self.selectedItems)[entity.smartExpenseId] = SMART_EXPENSE_ID;
+
+        // MOB-21203
+        // prevents crash, but I don't like this solution.  It relies on ignoring user input until the data is ready.
+        // the root cause of the crash is trying to save a nil as a dictionary key
+        if (entity.smartExpenseId) {
+            [self.selectedItems setObject:SMART_EXPENSE_ID forKey:entity.smartExpenseId];
+        }
     }
     else{
         if (entity.isMergedSmartExpense.boolValue) {

@@ -1,8 +1,9 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="6250" systemVersion="14A389" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="6250" systemVersion="14B25" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES">
     <dependencies>
         <deployment identifier="iOS"/>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="6244"/>
+        <capability name="Constraints to layout margins" minToolsVersion="6.0"/>
     </dependencies>
     <objects>
         <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner"/>
@@ -14,44 +15,40 @@
                 <rect key="frame" x="0.0" y="0.0" width="320" height="129"/>
                 <autoresizingMask key="autoresizingMask"/>
                 <subviews>
-                    <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="UB1-Rh-dvX">
+                    <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="UB1-Rh-dvX">
                         <rect key="frame" x="8" y="13" width="64" height="64"/>
+                        <constraints>
+                            <constraint firstAttribute="width" constant="64" id="1PA-u9-FW2"/>
+                            <constraint firstAttribute="height" constant="64" id="RMR-gG-YKV"/>
+                        </constraints>
                     </imageView>
-                    <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" fixedFrame="YES" text="Hotel Name" lineBreakMode="clip" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="EZ4-gs-eVf" customClass="FadeTruncatingLabel">
+                    <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalCompressionResistancePriority="749" ambiguous="YES" misplaced="YES" text="Hotel Name" lineBreakMode="clip" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="EZ4-gs-eVf" customClass="FadeTruncatingLabel">
                         <rect key="frame" x="80" y="13" width="162" height="17"/>
                         <fontDescription key="fontDescription" name="HelveticaNeue-Medium" family="Helvetica Neue" pointSize="14"/>
                         <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
                         <color key="highlightedColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                     </label>
-                    <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" fixedFrame="YES" text="Location" lineBreakMode="tailTruncation" minimumFontSize="12" translatesAutoresizingMaskIntoConstraints="NO" id="9LU-X6-hhQ" customClass="VerticallyAlignedLabel">
+                    <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" ambiguous="YES" misplaced="YES" text="Location" lineBreakMode="tailTruncation" minimumFontSize="12" translatesAutoresizingMaskIntoConstraints="NO" id="9LU-X6-hhQ" customClass="VerticallyAlignedLabel">
                         <rect key="frame" x="80" y="32" width="170" height="16"/>
                         <fontDescription key="fontDescription" name="HelveticaNeue" family="Helvetica Neue" pointSize="12"/>
                         <color key="textColor" red="0.65098039220000004" green="0.70588235290000001" blue="0.74117647060000003" alpha="1" colorSpace="calibratedRGB"/>
-                        <color key="highlightedColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                        <color key="highlightedColor" red="0.65098039220000004" green="0.70588235290000001" blue="0.74117647060000003" alpha="1" colorSpace="calibratedRGB"/>
                         <size key="shadowOffset" width="0.0" height="0.0"/>
                     </label>
                     <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" fixedFrame="YES" text="Distance" lineBreakMode="tailTruncation" minimumFontSize="12" translatesAutoresizingMaskIntoConstraints="NO" id="qI7-5o-SKl" customClass="VerticallyAlignedLabel">
                         <rect key="frame" x="95" y="51" width="112" height="16"/>
                         <fontDescription key="fontDescription" name="HelveticaNeue" family="Helvetica Neue" pointSize="12"/>
-                        <color key="highlightedColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                         <size key="shadowOffset" width="0.0" height="0.0"/>
                     </label>
-                    <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" image="icon_locator" translatesAutoresizingMaskIntoConstraints="NO" id="oLk-re-bhH">
+                    <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" ambiguous="YES" misplaced="YES" image="icon_locator" translatesAutoresizingMaskIntoConstraints="NO" id="oLk-re-bhH">
                         <rect key="frame" x="80" y="52" width="12" height="13"/>
                     </imageView>
-                    <imageView userInteractionEnabled="NO" contentMode="scaleAspectFit" fixedFrame="YES" image="stars_5.png" translatesAutoresizingMaskIntoConstraints="NO" id="aPU-JM-agB">
+                    <imageView userInteractionEnabled="NO" contentMode="scaleAspectFit" ambiguous="YES" misplaced="YES" image="stars_5.png" translatesAutoresizingMaskIntoConstraints="NO" id="aPU-JM-agB">
                         <rect key="frame" x="80" y="82" width="89" height="18"/>
                     </imageView>
-                    <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" fixedFrame="YES" text="View Rates" textAlignment="right" lineBreakMode="clip" minimumFontSize="8" translatesAutoresizingMaskIntoConstraints="NO" id="gZp-8R-DRK" userLabel="Vertically Aligned Label - Price" customClass="VerticallyAlignedLabel">
-                        <rect key="frame" x="243" y="13" width="67" height="17"/>
-                        <fontDescription key="fontDescription" name="HelveticaNeue-Medium" family="Helvetica Neue" pointSize="16"/>
-                        <color key="textColor" red="0.0" green="0.47058823529999999" blue="0.7843137255" alpha="1" colorSpace="calibratedRGB"/>
-                        <color key="highlightedColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
-                        <size key="shadowOffset" width="0.0" height="0.0"/>
-                    </label>
-                    <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Preferred" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" preferredMaxLayoutWidth="67" translatesAutoresizingMaskIntoConstraints="NO" id="iGq-dV-yTB">
+                    <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Preferred" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" preferredMaxLayoutWidth="67" translatesAutoresizingMaskIntoConstraints="NO" id="iGq-dV-yTB" customClass="PersistentBackgroundLabel">
                         <rect key="frame" x="243" y="75" width="67" height="25"/>
-                        <color key="backgroundColor" red="0.0" green="0.47058823529999999" blue="0.7843137255" alpha="1" colorSpace="calibratedRGB"/>
+                        <color key="backgroundColor" red="0.0" green="0.47058823529411764" blue="0.78431372549019607" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                         <fontDescription key="fontDescription" name="HelveticaNeue-Light" family="Helvetica Neue" pointSize="12"/>
                         <color key="textColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                         <nil key="highlightedColor"/>
@@ -90,7 +87,25 @@
                         <color key="textColor" red="0.0" green="0.47058823529411764" blue="0.78431372549019607" alpha="1" colorSpace="calibratedRGB"/>
                         <nil key="highlightedColor"/>
                     </label>
+                    <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" ambiguous="YES" misplaced="YES" text="View Rates" textAlignment="right" lineBreakMode="clip" minimumFontSize="8" translatesAutoresizingMaskIntoConstraints="NO" id="gZp-8R-DRK" userLabel="Vertically Aligned Label - Price" customClass="VerticallyAlignedLabel">
+                        <rect key="frame" x="234" y="11" width="76" height="17"/>
+                        <fontDescription key="fontDescription" name="HelveticaNeue-Medium" family="Helvetica Neue" pointSize="16"/>
+                        <color key="textColor" red="0.0" green="0.47058823529999999" blue="0.7843137255" alpha="1" colorSpace="calibratedRGB"/>
+                        <color key="highlightedColor" red="0.0" green="0.47058823529999999" blue="0.7843137255" alpha="1" colorSpace="calibratedRGB"/>
+                        <size key="shadowOffset" width="0.0" height="0.0"/>
+                    </label>
                 </subviews>
+                <constraints>
+                    <constraint firstItem="gZp-8R-DRK" firstAttribute="leading" secondItem="EZ4-gs-eVf" secondAttribute="trailing" id="1Cy-Ku-jbh"/>
+                    <constraint firstItem="UB1-Rh-dvX" firstAttribute="top" secondItem="IMB-eN-tQw" secondAttribute="topMargin" constant="5" id="7cs-b4-vXn"/>
+                    <constraint firstAttribute="trailingMargin" secondItem="gZp-8R-DRK" secondAttribute="trailing" constant="2" id="HGA-YH-KdL"/>
+                    <constraint firstItem="9LU-X6-hhQ" firstAttribute="leading" secondItem="aPU-JM-agB" secondAttribute="leading" id="MmD-IP-sqa"/>
+                    <constraint firstItem="UB1-Rh-dvX" firstAttribute="leading" secondItem="IMB-eN-tQw" secondAttribute="leadingMargin" id="UH9-Yr-Upa"/>
+                    <constraint firstItem="9LU-X6-hhQ" firstAttribute="leading" secondItem="oLk-re-bhH" secondAttribute="leading" id="h1u-yV-PJx"/>
+                    <constraint firstItem="9LU-X6-hhQ" firstAttribute="leading" secondItem="EZ4-gs-eVf" secondAttribute="leading" id="jxI-3n-PK6"/>
+                    <constraint firstItem="gZp-8R-DRK" firstAttribute="bottom" secondItem="EZ4-gs-eVf" secondAttribute="bottom" id="mUC-Qc-eI2"/>
+                    <constraint firstItem="EZ4-gs-eVf" firstAttribute="leading" secondItem="UB1-Rh-dvX" secondAttribute="trailing" constant="8" id="mYb-XZ-oY5"/>
+                </constraints>
             </tableViewCellContentView>
             <connections>
                 <outlet property="hotelAvailability" destination="aLy-qL-7a2" id="RzR-pH-IHa"/>
@@ -104,6 +119,7 @@
                 <outlet property="ivHotelStarRating" destination="aPU-JM-agB" id="bEj-Wa-oeo"/>
                 <outlet property="travelPoints" destination="qvQ-gL-WbO" id="nxz-rk-bb9"/>
             </connections>
+            <point key="canvasLocation" x="-44" y="267"/>
         </tableViewCell>
     </objects>
     <resources>

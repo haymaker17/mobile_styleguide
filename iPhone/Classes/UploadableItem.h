@@ -16,7 +16,7 @@
 @required
 
 #pragma mark - Upload Method
--(void) uploadItemWithUUID:(NSString*)uuid delegate:(id<UploadableItemDelegate>)delegate;
+-(void) uploadItemWithUUID:(NSString*)uuid isPdfReceipt:(BOOL)isPdfReceipt delegate:(id<UploadableItemDelegate>)delegate;
 
 #pragma mark - Notification Methods
 

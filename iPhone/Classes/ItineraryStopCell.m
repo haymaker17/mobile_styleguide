@@ -8,6 +8,7 @@
 
 #import "ItineraryStopCell.h"
 #import "ItineraryStopDetailViewController.h"
+#import "CTEBadge.h"
 
 @implementation ItineraryStopCell
 

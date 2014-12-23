@@ -19,6 +19,7 @@
 + (NSInteger) findFirstOccurrence:(NSString*) text ofString:(NSString*) token;
 + (BOOL)isValidConcurUserId:(NSString *)concurUserId ;
 - (NSString *) localize;
++ (NSString *)formatPhoneNo:(NSString *)phoneNumber withLocale:(NSString *)countryCode;
 
 @end
 

@@ -9,6 +9,7 @@
 #import <UIKit/UIKit.h>
 #import "CTEHotelCellData.h"
 #import "FadeTruncatingLabel.h"
+#import "PersistentBackgroundLabel.h"
 
 @interface HotelSearchTableViewCell : UITableViewCell <ImageDownloaderOperationDelegate>
 
@@ -18,7 +19,7 @@
 @property (weak, nonatomic) IBOutlet UILabel *hotelCityAndState;
 @property (weak, nonatomic) IBOutlet UILabel *hotelDistance;
 @property (weak, nonatomic) IBOutlet UILabel *hotelPrice;
-@property (weak, nonatomic) IBOutlet UILabel *hotelPreferred;
+@property (weak, nonatomic) IBOutlet PersistentBackgroundLabel *hotelPreferred;
 @property (weak, nonatomic) IBOutlet UILabel *travelPoints;
 @property (weak, nonatomic) IBOutlet UILabel *hotelAvailability;
 @property (weak, nonatomic) IBOutlet UILabel *hotelSuggestedText;

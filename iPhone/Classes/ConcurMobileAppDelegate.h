@@ -82,6 +82,7 @@
 - (void) registerPush;
 - (void) initPush:(NSDictionary *)launchOptions;
 
+-(void) switchToSafariSignInView;
 -(void) switchToPinResetView;
 -(void) switchToCompanySignInView;
 
@@ -98,7 +99,7 @@
 +(NSArray*)getAllViewControllers;
 +(NSArray*)getViewControllersInNavController:(UINavigationController*)navController;
 +(MobileViewController*)getMobileViewControllerByViewIdKey:(NSString*)key;
-+(Boolean) isLoginViewShowing;
++(BOOL) isLoginViewShowing;
 +(BOOL) hasMobileViewController:(MobileViewController*)viewController;
 +(void) unwindToRootView;
 +(void) addViewControllersToUnwindToArray:(NSMutableArray*)viewControllersToUnwind;

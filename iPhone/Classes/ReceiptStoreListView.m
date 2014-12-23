@@ -725,6 +725,7 @@
     // The cell needs to know its receipt id, so that when a receipt image finishes loading, we can tell whether it needs to be displayed in the cell
     cell.receiptId = receiptInfo.receiptImageId;
 	
+    [cell.pdfWebView setHidden:YES];
 	[cell.imageBackgroundView setIsRoundingDisabled:YES];
 
     NSString *dataType = nil;

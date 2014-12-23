@@ -41,7 +41,7 @@
 }
 
 #pragma mark - UploadableItem Methods
--(void) uploadItemWithUUID:(NSString*)uuid delegate:(id<UploadableItemDelegate>)delegate
+-(void) uploadItemWithUUID:(NSString*)uuid isPdfReceipt:(BOOL)isPdf delegate:(id<UploadableItemDelegate>)delegate
 {
     self.uploadableItemDelegate = delegate;
 
@@ -71,6 +71,9 @@
     {
         mobileEntry.localReceiptImageId = nil;
         mobileEntry.receiptImageId = details[@"SERVER_RECEIPT_IMAGE_ID"];
+        if ([mobileEntry.receiptImageId length]) {
+            mobileEntry.hasReceipt = @"Y";
+        }
         [UploadableMobileEntry saveChangesToContext:self.managedObjectContext];
     }
 }

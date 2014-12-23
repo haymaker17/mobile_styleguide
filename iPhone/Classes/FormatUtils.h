@@ -31,6 +31,8 @@
 + (NSString *)formatMoneyWithNumber :(NSNumber*)num crnCode:(NSString*) crnCode decimalPlaces:(int)fractionDigits;
 + (NSString *)formatMoneyWithNumber :(NSNumber*)num crnCode:(NSString*) crnCode withCurrency:(BOOL) crnFlag;
 
++ (NSString*) formatMoneyString:(NSString*)numberString crnCode:(NSString*)crnCode decimalPlaces:(int)fractionDigits;
+
 + (NSString *)formatStyledMoneyWithoutCrn:(NSString *)amount crnCode:(NSString *)crnCode;
 + (NSString*) formatMoneyWithoutCrnInternational:(NSString*)amount crnCode:(NSString*) crnCode;
 + (NSString *)formatMoneyWithoutCrn :(NSString*)amount crnCode:(NSString*) crnCode;

@@ -15,6 +15,11 @@
 #import "MobileEntryManager.h"
 #import "ReceiptCache.h"
 
+@interface UploadableReceipt ()
+    @property BOOL isPdfReceipt;
+
+@end
+
 @implementation UploadableReceipt
 
 @synthesize uploadableItemDelegate = _uploadableItemDelegate;
@@ -34,18 +39,25 @@
 
 #pragma mark - UploadableItem Methods
 
--(void) uploadItemWithUUID:(NSString*)uuid delegate:(id<UploadableItemDelegate>)delegate
+-(void) uploadItemWithUUID:(NSString*)uuid isPdfReceipt:(BOOL)isPdf delegate:(id<UploadableItemDelegate>)delegate
 {
     self.uploadableItemDelegate = delegate;
+    self.isPdfReceipt = isPdf;
     
-    NSString *receiptImagePath = [UploadableReceipt filePathForLocalReceiptImageId: localReceiptImageId];
+    NSString *receiptImagePath = [UploadableReceipt filePathForLocalReceiptImageId:localReceiptImageId isPdfReceipt:isPdf];
     NSData *receiptImageData = [NSData dataWithContentsOfFile:receiptImagePath];
     
     NSString *url = [NSString stringWithFormat:@"%@/mobile/Expense/SaveReceipt/%@", [ExSystem sharedInstance].entitySettings.uri, @"mobile"];
 
     // TODO: check that server supports uuid at this endpoint
-    NSMutableDictionary *pBag = [[NSMutableDictionary alloc] initWithObjectsAndKeys:url, @"URL", receiptImageData,@"IMAGE", uuid, @"MSG_UUID", nil];
-    
+    // MOB-21462: include the case of Pdf receipt
+    NSMutableDictionary *pBag;
+    if (isPdf) {
+         pBag = [[NSMutableDictionary alloc] initWithObjectsAndKeys:url, @"URL", receiptImageData,@"PDF", uuid, @"MSG_UUID", nil];
+    } else {
+         pBag = [[NSMutableDictionary alloc] initWithObjectsAndKeys:url, @"URL", receiptImageData,@"IMAGE", uuid, @"MSG_UUID", nil];
+    }
+   
     [[ExSystem sharedInstance].msgControl createMsg:UPLOAD_IMAGE_DATA CacheOnly:@"NO" ParameterBag:pBag SkipCache:YES RespondTo:self];
 }
 
@@ -83,10 +95,12 @@
             ReceiptCache *receiptCache = [[ReceiptCache alloc] init];
 
             // Get the path of the uploadable receipt image
-            NSString *uploadableReceiptImagePath = [UploadableReceipt filePathForLocalReceiptImageId:self.localReceiptImageId];
+            NSString *uploadableReceiptImagePath = [UploadableReceipt filePathForLocalReceiptImageId:self.localReceiptImageId isPdfReceipt:self.isPdfReceipt];
             
             // Write the full size image to the receipt cache
-            [receiptCache cacheFullSizeReceiptFromFilePath:uploadableReceiptImagePath dataType:JPG receiptId:receiptData.receiptImageId];
+            // MOB-21462: set data type as pdf when it is a pdf receipt
+            NSString *dataType = self.isPdfReceipt ? PDF : JPG;
+            [receiptCache cacheFullSizeReceiptFromFilePath:uploadableReceiptImagePath dataType:dataType receiptId:receiptData.receiptImageId];
             
             // Write the thumb nail image to the receipt cache
             NSData *receiptImageData = [NSData dataWithContentsOfFile:uploadableReceiptImagePath];
@@ -105,17 +119,18 @@
 
 #pragma mark - Dequeue method
 
-+(void) didDequeueEntityInstanceId:(NSString*)entityInstanceId
++(void) didDequeueEntityInstanceId:(NSString*)entityInstanceId isPdfReceipt:(BOOL)isPdfReceipt
 {
     // Delete the receipt image from the ReceiptsToUpload folder
-    NSString *localReceiptImageFilePath = [UploadableReceipt filePathForLocalReceiptImageId:entityInstanceId];
+    NSString *localReceiptImageFilePath = [UploadableReceipt filePathForLocalReceiptImageId:entityInstanceId isPdfReceipt:isPdfReceipt];
     NSError *error = nil;
     [[NSFileManager defaultManager] removeItemAtPath:localReceiptImageFilePath error:&error];
 }
 
+
 #pragma mark - Helpers
     
-+(NSString*) filePathForLocalReceiptImageId:(NSString*)localReceiptImageId
++(NSString*) filePathForLocalReceiptImageId:(NSString*)localReceiptImageId isPdfReceipt:(BOOL)isPdfReceipt
 {
     NSString* userFolderName = [ExSystem sharedInstance].userName;
     NSString* const folderName = @"ReceiptsToUpload";
@@ -134,16 +149,32 @@
 			return nil;
 		}
 	}
-    
-    NSString *filePath = [folderPath stringByAppendingPathComponent:[NSString stringWithFormat:@"%@.jpg", localReceiptImageId]];
+    // hanlde the pdf also
+    // get the entitytype from localreceiptimageid
+    // MOB-21462: if it is pdf receipt, the extension name should be .pdf
+    NSString *filePath;
+    if (isPdfReceipt) {
+        filePath = [folderPath stringByAppendingPathComponent:[NSString stringWithFormat:@"%@.pdf", localReceiptImageId]];
+    }
+    else{
+        filePath = [folderPath stringByAppendingPathComponent:[NSString stringWithFormat:@"%@.jpg", localReceiptImageId]];
+    }
     return filePath;
 }
 
 +(UIImage*) imageForLocalReceiptImageId:(NSString*)localReceiptImageId
 {
-    NSString *receiptImagePath = [UploadableReceipt filePathForLocalReceiptImageId:localReceiptImageId];
+    NSString *receiptImagePath = [UploadableReceipt filePathForLocalReceiptImageId:localReceiptImageId isPdfReceipt:NO];
     UIImage *receiptImage = [UIImage imageWithContentsOfFile:receiptImagePath];
     return receiptImage;
+}
+
+// MOB-21462: get pdf receipt data
++(NSData*) receiptDataForLocalReceiptImageId:(NSString*)localReceiptImageId
+{
+    NSString *receiptImagePath = [UploadableReceipt filePathForLocalReceiptImageId:localReceiptImageId isPdfReceipt:YES];
+    NSData *receiptData = [NSData dataWithContentsOfFile:receiptImagePath];
+    return receiptData;
 }
 
 @end

@@ -31,4 +31,9 @@
 
 + (bool)addExampleTestDriveOverlayToView:(UIView *)view;
 
+// iPhone internal release notes overlays
++ (bool)addiPhoneHomeReleaseNoteOverlayToView:(UIView *)view;
+// iPad internal release notes overlays
++ (bool)addiPadHomeReleaseNoteOverlayToView:(UIView *)view;
+
 @end

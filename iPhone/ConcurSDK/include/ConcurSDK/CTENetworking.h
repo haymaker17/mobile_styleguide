@@ -49,7 +49,7 @@
  *  @param success    success callback block.
  *  @param failure    failure callback block.
  */
-- (void)getXML:(NSString *)serviceURL success:(void (^)(NSString *responseObject))success failure:(void (^)(CTEError *error))failure;
+- (void)getXMLFromURL:(NSString *)serviceURL success:(void (^)(NSString *responseObject))success failure:(void (^)(CTEError *error))failure;
 
 /**
  *  Post an XML to a Concur web service
@@ -59,7 +59,7 @@
  *  @param success    success callback block.  Returns an response xml as an NSString
  *  @param failure    failure callback block.  Returns a CTEError
  */
-- (void)postXML:(NSString *)serviceURL requestXML:(NSString *)requestXML success:(void (^)(NSString *responseObject))success failure:(void (^)(CTEError *error))failure;
+- (void)postXMLToURL:(NSString *)serviceURL requestXML:(NSString *)requestXML success:(void (^)(NSString *responseObject))success failure:(void (^)(CTEError *error))failure;
 
 /**
  *  Get a JSON from a Concur web service
@@ -68,7 +68,7 @@
  *  @param success    success callback block.  Returns an NSDictionary
  *  @param failure    failure callback block.  Returns a CTEError
  */
-- (void)getJSON:(NSString *)serviceURL success:(void (^)(NSDictionary *responseObject))success failure:(void (^)(CTEError *error))failure;
+- (void)getJSONFromURL:(NSString *)serviceURL success:(void (^)(NSDictionary *responseObject))success failure:(void (^)(CTEError *error))failure;
 
 /**
  *  Post a JSON to a Concur web service
@@ -78,7 +78,7 @@
  *  @param success     success callback block.  Returns an NSDictionary
  *  @param failure     failure callback block.  Returns a CTEError
  */
-- (void)postJSON:(NSString *)serviceURL requestJSON:(NSDictionary *)requestJSON success:(void (^)(NSDictionary *responseObject))success failure:(void (^)(CTEError *error))failure;
+- (void)postJSONToURL:(NSString *)serviceURL requestJSON:(NSDictionary *)requestJSON success:(void (^)(NSDictionary *responseObject))success failure:(void (^)(CTEError *error))failure;
 
 /**
  *  Get an Image from a Concur web service
@@ -87,7 +87,7 @@
  *  @param success    success callback block.  Returns an UIImage
  *  @param failure    failure callback block.  Returns a CTEError
  */
-- (void)getImage:(NSString *)serviceURL success:(void (^)(UIImage *image))success failure:(void (^)(CTEError *error))failure;
+- (void)getImageFromURL:(NSString *)serviceURL success:(void (^)(UIImage *image))success failure:(void (^)(CTEError *error))failure;
 
 /**
  *  Utility method that encodes a string for the Concur server

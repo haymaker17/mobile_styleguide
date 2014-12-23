@@ -17,6 +17,7 @@
 
 @property (nonatomic,strong) DestinationSearchDataSource *tableData;
 @property (nonatomic, strong) NSTimer *timer;
+@property (nonatomic) BOOL searchIsActive;
 
 @end
 
@@ -43,6 +44,7 @@
     
     // We need the searchbar in the tableView to appear as it does in the insight demo
     self.tableView.tableHeaderView = self.searchDisplayController.searchBar;
+    self.tableView.tableFooterView = [[UIView alloc] initWithFrame:CGRectZero];
     [self addCloseButtun];
     self.title = @"Destination";
 
@@ -52,6 +54,7 @@
     // initialize the datasource
     self.tableData = [[DestinationSearchDataSource alloc] init];
     self.tableData.delegate = self;
+    self.searchDisplayController.searchBar.delegate = self;
     
     if (self.selectedLocation != nil)
     {
@@ -64,6 +67,8 @@
             self.tableData.showCurrentLocation = YES;
         // TODO : Check if location is current location.
     }
+    else //if ([GlobalLocationManager sharedInstance].currentLocation != nil)
+        self.tableData.showCurrentLocation = YES;
     
     self.searchDisplayController.searchBar.placeholder = @"enter location to search";
     
@@ -126,13 +131,56 @@
 
 -(void)searchBarTextDidBeginEditing:(UISearchBar *)searchBar
 {
+    // Clear text for new search
+    if (self.searchIsActive == NO)
+    {
+        [searchBar setText:@""];
+        self.searchIsActive = YES;
+    }
+    
     [self.tableData beginEditing];
 }
 
 -(void)searchBarTextDidEndEditing:(UISearchBar *)searchBar
 {
     if(![searchBar.text lengthIgnoreWhitespace])
+    {
+        [searchBar setText:self.selectedLocation.location];
+        if([searchBar.text isEqualToString:[@"Current Location" localize]])
+        {
+            self.tableData.showCurrentLocation = NO;
+        }
+        else{
+            self.tableData.showCurrentLocation = YES;
+        }
+        self.searchIsActive = NO;
         [self.tableData endEditing];
+    }
+}
+
+- (void)searchBarCancelButtonClicked:(UISearchBar *)searchBar
+{
+    if(self.selectedLocation != nil)
+    {
+        [searchBar setText:self.selectedLocation.location];
+        if([searchBar.text isEqualToString:[@"Current Location" localize]])
+        {
+            self.tableData.showCurrentLocation = NO;
+        }
+        else{
+            self.tableData.showCurrentLocation = YES;
+        }
+    }
+    self.searchIsActive = NO;
+    [searchBar becomeFirstResponder];
+}
+- (void)searchBarResultsListButtonClicked:(UISearchBar *)searchBar
+{
+    self.searchIsActive = NO;
+}
+- (void)searchBar:(UISearchBar *)searchBar selectedScopeButtonIndexDidChange:(NSInteger)selectedScope
+{
+    self.searchIsActive = NO;
 }
 
 #pragma mark - Table view data source
@@ -170,7 +218,7 @@
         cell.textLabel.text = cellData.title;
         cell.textLabel.font = [UIFont fontWithName:@"HelveticaNeue" size:17.0f];
         cell.textLabel.textColor = [UIColor concurBlueColor];
-
+        cell.imageView.image = [UIImage imageNamed:@"hotel_office_location"];
         return cell;
     }
     else if ([dataObject isKindOfClass:[LocationSearchCellData class]]) {
@@ -180,7 +228,16 @@
         CTELocation *location = [cellData getCTELocation];
         cell.textLabel.text = location.location;
         cell.textLabel.font = [UIFont fontWithName:@"HelveticaNeue" size:17.0f];
-        cell.textLabel.textColor = [UIColor grayColor];
+        if ([cellData isCurrentLocation])
+        {
+            cell.textLabel.textColor = [UIColor concurBlueColor];
+            cell.imageView.image = [UIImage imageNamed:@"hotel_office_target"];
+            cell.textLabel.textAlignment = NSTextAlignmentLeft;
+        }
+        else
+        {
+            cell.textLabel.textColor = [UIColor grayColor];
+        }
 
         return cell;
     }

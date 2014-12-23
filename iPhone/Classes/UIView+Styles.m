@@ -201,12 +201,12 @@
 		UILabel *label = (UILabel*)self;
 		lineBreakMode = label.lineBreakMode;
 	}
-		 else {
-			 
-			 lineBreakMode = me.textContainer.lineBreakMode;
-		 }
-		 
-		 
+	else {
+		
+		lineBreakMode = me.textContainer.lineBreakMode;
+	}
+	
+	
 	CGFloat currentWidth = CGRectGetWidth(me.frame);
 	UIFont *currentFont = me.font;
 	CGSize CGText = [me.text sizeWithFont:currentFont

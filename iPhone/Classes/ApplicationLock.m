@@ -41,6 +41,7 @@
 @property BOOL isSessionExpiredOverrideOnce;
 @property (nonatomic, readwrite, assign) BOOL shouldWaitForHomeScreenToLoad;
 @property (nonatomic,copy) NSString *resetPinKeyPartB;
+@property BOOL explicitSignOut;
 @end
 
 @implementation ApplicationLock
@@ -64,55 +65,42 @@ static ApplicationLock *sharedInstance;
 
 #pragma mark - Auto Login Methods
 
--(bool) shouldLoginWithConcurAccessToken
+-(BOOL) shouldLoginWithConcurAccessToken
 {
 	NSString *token = [ExSystem sharedInstance].concurAccessToken;
 	
-	bool shouldLogin = (token != nil && [token length] > 0);
+	BOOL shouldLogin = (token != nil && [token length] > 0);
 	
 	[[MCLogging getInstance] log:[NSString stringWithFormat:@"ApplicationLock::shouldLoginWithConcurAccessToken returning %@", shouldLogin ? @"true" : @"false"] Level:MC_LOG_INFO];
 	
 	return shouldLogin;
 }
 
-
--(bool) canAttemptAutoLoginWithConcurAccessToken
-{
-	ExSystem *exSys = [ExSystem sharedInstance];
-	bool canAttempt = (exSys.concurAccessToken != nil && [exSys.concurAccessToken length] > 0);
-	
-	[[MCLogging getInstance] log:[NSString stringWithFormat:@"ApplicationLock::canAttemptAutoLoginWthConcurAccessToken returning %@", canAttempt ? @"true" : @"false"] Level:MC_LOG_INFO];
-	
-	return canAttempt;
-}
-
--(bool) canAttemptAutoLogin
+-(BOOL) canAttemptAutoLogin
 {
     if ([Config isGov])
     {
         [[MCLogging getInstance] log:@"ApplicationLock::canAttemptAutoLogin: auto login not allowed for Gov" Level:MC_LOG_INFO];
-        return false;
+        return NO;
     }
-
-	if (![[ExSystem sharedInstance].entitySettings.autoLogin isEqualToString:@"YES"])
+	else if (![[ExSystem sharedInstance].entitySettings.autoLogin isEqualToString:@"YES"])
 	{
 		[[MCLogging getInstance] log:@"ApplicationLock::canAttemptAutoLogin: auto login is turned off" Level:MC_LOG_INFO];
-		return false;
+		return NO;
 	}
-    
     // MOB-9804, MOB-9293 Do not attempt auto-login while in offline mode.
-    if(![ExSystem connectedToNetwork])
+    else if(![ExSystem connectedToNetwork])
 	{
 		[[MCLogging getInstance] log:@"ApplicationLock::canAttemptAutoLogin: offline precludes auto login" Level:MC_LOG_DEBU];
-		return false;
+		return NO;
 	}
 	
     if ([self shouldLoginWithConcurAccessToken])
-		return [self canAttemptAutoLoginWithConcurAccessToken];
+        return YES;
 	else if([ExSystem sharedInstance].isCorpSSOUser)
-        return true;
+        return YES;
     
-    return false;
+    return NO;
 }
 
 -(void) attemptAutoLogin
@@ -153,7 +141,6 @@ static ApplicationLock *sharedInstance;
 	}
 	
 	[[ExSystem sharedInstance].msgControl createMsg:AUTHENTICATION_DATA CacheOnly:@"NO" ParameterBag:pBag SkipCache:YES RespondTo:self];
-
 }
 
 -(void) didAttemptAutoLogin:(Msg*)msg
@@ -193,14 +180,14 @@ static ApplicationLock *sharedInstance;
 
 #pragma mark - Login Methods
 
--(bool) isLoggedIn
+-(BOOL) isLoggedIn
 {
 	[[MCLogging getInstance] log:[NSString stringWithFormat:@"ApplicationLock::isLoggedIn returned %@", self.isUserLoggedIn ? @"true" : @"false"] Level:MC_LOG_INFO];
 
 	return self.isUserLoggedIn;
 }
 
--(void) loginAndAllowAutoLogin:(bool)allowAutoLogin
+-(void) loginAndAllowAutoLogin:(BOOL)allowAutoLogin
 {
 	if (self.isAutoLoginInProgress)
 	{
@@ -230,7 +217,6 @@ static ApplicationLock *sharedInstance;
 	{
 		[[MCLogging getInstance] log:@"ApplicationLock::loginAndAllowAutoLogin: login view not showing. Unwinding to root." Level:MC_LOG_INFO];
         [ConcurMobileAppDelegate unwindToRootView];
-        
 	}
 	
     if (allowAutoLogin && [self canAttemptAutoLogin])
@@ -275,14 +261,14 @@ static ApplicationLock *sharedInstance;
 	else
 	{
 		[[MCLogging getInstance] log:@"ApplicationLock::showManualLoginView" Level:MC_LOG_INFO];
-
-            UIViewController *homevc = [ConcurMobileAppDelegate findHomeVC];
-            
-            
-            if ([homevc respondsToSelector:@selector(showManualLoginView)])
-            {
-                [homevc performSelector:@selector(showManualLoginView) withObject:nil];
-            }
+        self.shouldPopUpTouchID = self.explicitSignOut ? NO:YES;
+        UIViewController *homevc = [ConcurMobileAppDelegate findHomeVC];
+        
+        
+        if ([homevc respondsToSelector:@selector(showManualLoginView)])
+        {
+            [homevc performSelector:@selector(showManualLoginView) withObject:nil];
+        }
 	}
 	self.isManualLoginScheduled = false;
 }
@@ -361,9 +347,11 @@ static ApplicationLock *sharedInstance;
     
     UIViewController *homevc = [ConcurMobileAppDelegate findHomeVC];
     
-      
+    [[MCLogging getInstance] log:[NSString stringWithFormat:@"ApplicationLock::doPostLoginInitialization. homevc===::%@  ", homevc] Level:MC_LOG_DEBU];
+  
     if ([homevc respondsToSelector:@selector(doPostLoginInitialization)])
     {
+        [[MCLogging getInstance] log:[NSString stringWithFormat:@"ApplicationLock::doPostLoginInitialization. calling homevc::doPostLoginInitialization::%@  ", homevc] Level:MC_LOG_DEBU];
         [homevc performSelector:@selector(doPostLoginInitialization) withObject:nil];
     }
     // Load userConfig once on login rather than checking and loading at all the VCs that need it
@@ -456,13 +444,13 @@ static ApplicationLock *sharedInstance;
 {
 	if (self.isApplicationBackgrounded)
 	{
-		[[MCLogging getInstance] log:@"ConcurMobileAppDelegate::onHomeScreenAppeared: app is backgrounded. Ignoring notification." Level:MC_LOG_DEBU];
+		[[MCLogging getInstance] log:@"ApplicationLock::onHomeScreenAppeared: app is backgrounded. Ignoring notification." Level:MC_LOG_DEBU];
 		return;
 	}
 	
 	if ([self isLoggedIn])
 	{
-		[[MCLogging getInstance] log:@"ConcurMobileAppDelegate::onHomeScreenAppeared: already logged in." Level:MC_LOG_DEBU];
+		[[MCLogging getInstance] log:@"ApplicationLock::onHomeScreenAppeared: already logged in." Level:MC_LOG_DEBU];
 	}
 	else
 	{
@@ -472,22 +460,23 @@ static ApplicationLock *sharedInstance;
 
 -(void) onLogoutButtonPressed
 {
-	[[MCLogging getInstance] log:@"ConcurMobileAppDelegate::onLogoutButtonPressed" Level:MC_LOG_DEBU];
+	[[MCLogging getInstance] log:@"ApplicationLock::onLogoutButtonPressed" Level:MC_LOG_DEBU];
 	self.isShowLoginView = [ConcurMobileAppDelegate isLoginViewShowing];
+    self.explicitSignOut = YES;
 	[self logout];
 	[self loginAndAllowAutoLogin:false];
 }
 
 -(void) onServerRejectedRequest
 {
-	[[MCLogging getInstance] log:@"ConcurMobileAppDelegate::onServerRejectedRequest" Level:MC_LOG_DEBU];
+	[[MCLogging getInstance] log:@"ApplicationLock::onServerRejectedRequest" Level:MC_LOG_DEBU];
 	
 	[self loginAndAllowAutoLogin:true];
 }
 
 -(void) onApplicationDidEnterBackground
 {
-	[[MCLogging getInstance] log:@"ConcurMobileAppDelegate::onApplicationDidEnterBackground" Level:MC_LOG_DEBU];
+	[[MCLogging getInstance] log:@"ApplicationLock::onApplicationDidEnterBackground" Level:MC_LOG_DEBU];
 	
     if (self.isUserLoggedIn)
         [[UploadQueue sharedInstance] onApplicationDidEnterBackground];
@@ -499,7 +488,7 @@ static ApplicationLock *sharedInstance;
 
 -(void) onApplicationWillEnterForeground
 {
-	[[MCLogging getInstance] log:@"ConcurMobileAppDelegate::onApplicationWillEnterForeground" Level:MC_LOG_DEBU];
+	[[MCLogging getInstance] log:@"ApplicationLock::onApplicationWillEnterForeground" Level:MC_LOG_DEBU];
     self.isUserLoggedIn = false;
     self.isApplicationBackgrounded = false;
 	[self checkConnectionAndSessionWhileLaunching:NO];
@@ -508,7 +497,7 @@ static ApplicationLock *sharedInstance;
 
 -(void) onApplicationDidFinishLaunching
 {
-    [[MCLogging getInstance] log:@"ConcurMobileAppDelegate::onApplicationDidFinishLaunching" Level:MC_LOG_DEBU];
+    [[MCLogging getInstance] log:@"ApplicationLock::onApplicationDidFinishLaunching" Level:MC_LOG_DEBU];
 	self.isUserLoggedIn = false;
     
     //
@@ -542,7 +531,7 @@ static ApplicationLock *sharedInstance;
 
 -(void) showOfflineAlert
 {
-    [[MCLogging getInstance] log:[NSString stringWithFormat:@"ConcurMobileAppDelegate::showOfflineAlert"] Level:MC_LOG_DEBU];
+    [[MCLogging getInstance] log:[NSString stringWithFormat:@"ApplicationLock::showOfflineAlert"] Level:MC_LOG_DEBU];
 
     MobileAlertView *alert = [[MobileAlertView alloc] 
                               initWithTitle:[Localizer getLocalizedText:@"Offline"]
@@ -569,12 +558,12 @@ static ApplicationLock *sharedInstance;
     [self checkConnectionWhileLaunching:isAppLaunching];
 }
 
--(bool) hasSession
+-(BOOL) hasSession
 {
 	return [[ExSystem sharedInstance] isValidSessionID:[ExSystem sharedInstance].sessionID];
 }
 
--(bool) isSessionExpired
+-(BOOL) isSessionExpired
 {
     if( self.isSessionExpiredOverrideOnce )
     {
@@ -582,7 +571,7 @@ static ApplicationLock *sharedInstance;
         return true;
     }
     
-	bool isExpired = false;
+	BOOL isExpired = false;
     
     int minutesUntilSessionExpiration = [[ExSystem sharedInstance].msgControl minutesUntilSessionExpires];
     
@@ -600,17 +589,17 @@ static ApplicationLock *sharedInstance;
     return isExpired;
 }
 
--(bool) canUseExpiredSession
+-(BOOL) canUseExpiredSession
 {
-    bool isOffline = ![ExSystem connectedToNetwork];
-    bool isAutoLoginTurnedOn = [[ExSystem sharedInstance].entitySettings.autoLogin isEqualToString:@"YES"];
+    BOOL isOffline = ![ExSystem connectedToNetwork];
+    BOOL isAutoLoginTurnedOn = [[ExSystem sharedInstance].entitySettings.autoLogin isEqualToString:@"YES"];
 
     if ([Config isGov])
         isAutoLoginTurnedOn = NO;
     return (isOffline && isAutoLoginTurnedOn);
 }
 
--(bool) canUseExistingSession
+-(BOOL) canUseExistingSession
 {
     if (![self hasSession])
         return false;
@@ -619,12 +608,12 @@ static ApplicationLock *sharedInstance;
     {
         if ([self canUseExpiredSession])
         {
-            [[MCLogging getInstance] log:@"ConcurMobileAppDelegate::canUseExistingSession: session expired, working offline" Level:MC_LOG_DEBU];
+            [[MCLogging getInstance] log:@"ApplicationLock::canUseExistingSession: session expired, working offline" Level:MC_LOG_DEBU];
             return true;
         }
         else
         {
-            [[MCLogging getInstance] log:@"ConcurMobileAppDelegate::canUseExistingSession: not enough minutes left in session" Level:MC_LOG_DEBU];
+            [[MCLogging getInstance] log:@"ApplicationLock::canUseExistingSession: not enough minutes left in session" Level:MC_LOG_DEBU];
             return false;
         }
     }
@@ -795,9 +784,9 @@ static ApplicationLock *sharedInstance;
 
 - (BOOL) handleOpenURL:(NSURL *)url
 {
-    [[MCLogging getInstance] log:[NSString stringWithFormat:@"ConcurMobileAppDelegate::application:handleOpenURL %@", url] Level:MC_LOG_DEBU];
+    [[MCLogging getInstance] log:[NSString stringWithFormat:@"ApplicationLock::application:handleOpenURL %@", url] Level:MC_LOG_DEBU];
     if ([self handleIfValidLaunchUrl:url])
-        return true;
+        return YES;
     
     NSString *cacheKey = [self tryGetTripItCacheKeyFromUrl:url];
     
@@ -806,10 +795,10 @@ static ApplicationLock *sharedInstance;
         [[MCLogging getInstance] log:@"ApplicationLock:handleOpenURL: got TripIt cache key" Level:MC_LOG_INFO];
         self.tripItCacheKey = cacheKey;
         [self checkForTripItCacheKey];
-        return true;
+        return YES;
     }
     
-    return false;
+    return NO;
 }
 
 - (NSString*) tryGetTripItCacheKeyFromUrl:(NSURL*) url
@@ -854,10 +843,11 @@ static ApplicationLock *sharedInstance;
 //concurmobile://notification?type=MOB_PWD_RSET
 //concurmobile://notification?type=TRV_TRP_APPR
 //concurmobile://notification?type=MOB_SSO_LGIN
+//concurmobile://notification?type=MOB_SSO_LGIN_SAFARI
 
 -(BOOL) handleIfValidLaunchUrl: (NSURL *)url
 {
-    [[MCLogging getInstance] log:[NSString stringWithFormat:@"ConcurMobileAppDelegate::application:handleIfValidLaunchUrl: %@", url] Level:MC_LOG_DEBU];
+    [[MCLogging getInstance] log:[NSString stringWithFormat:@"ApplicationLock::application:handleIfValidLaunchUrl: %@", url] Level:MC_LOG_DEBU];
     
     NSString *scheme = [url scheme];
     if (![@"concurmobile" isEqualToString:[scheme lowercaseString]])
@@ -885,22 +875,29 @@ static ApplicationLock *sharedInstance;
     // handle push notification launch url
     if ([PUSH_NOTIFICATION_TYPE_EXP_RPT_APPR isEqualToString:typeValue] || [PUSH_NOTIFICATION_TYPE_TRV_TRP_APPR isEqualToString:typeValue]) {
         [self handlePushNotificationLaunchWithType:typeValue];
-        return true;
+        return YES;
     }
 
     // handle pin/mobile password / password reset launch url
     if ([MOB_PIN_RSET isEqualToString:typeValue] || [MOB_PWD_RSET isEqualToString:typeValue]) {
         [self handlePinResetLaunchUrlWithKey:[queryParams objectForKey:@"keypart"]];
-        return true;
+        return YES;
     }
 
     // handle sso launch url
     if ([MOB_SSO_LGIN isEqualToString:typeValue]) {
         [self handleSSOLaunchURLWithCompanyCode:[queryParams objectForKey:@"companycode"]];
-        return true;
+        return YES;
     }
-    
-    return false;
+
+    // handle sso login from safari
+    if([MOB_SSO_LGIN_SAFARI isEqualToString:typeValue]){
+        [self handleSSOLaunchWithToken:[queryParams objectForKey:@"token"]];
+        return YES;
+    }
+
+    return NO;
+
 }
 
 /**
@@ -918,7 +915,7 @@ static ApplicationLock *sharedInstance;
  */
 - (void)handlePinResetLaunchUrlWithKey:(NSString *)key
 {
-    [[MCLogging getInstance] log:[NSString stringWithFormat:@"ConcurMobileAppDelegate::application:handlePinResetLaunchUrlWithKey: shouldWaitForHomeScreenToLoad %@::", self.shouldWaitForHomeScreenToLoad? @"YES": @"NO"] Level:MC_LOG_DEBU];
+    [[MCLogging getInstance] log:[NSString stringWithFormat:@"ApplicationLock::application:handlePinResetLaunchUrlWithKey: shouldWaitForHomeScreenToLoad %@::", self.shouldWaitForHomeScreenToLoad? @"YES": @"NO"] Level:MC_LOG_DEBU];
 
     self.resetPinKeyPartB = key;
 
@@ -936,12 +933,29 @@ static ApplicationLock *sharedInstance;
 {
     KeychainManager *keychainManager = [[KeychainManager alloc] init];
     [keychainManager saveCompanyCode:companyCode];
-
+    
+    
     if (self.shouldWaitForHomeScreenToLoad) {
         [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(openSsoLoginView) name:@"MESSAGE_LOGIN_VIEW_HAS_LOADED" object:nil];
     } else {
         [self openSsoLoginView];
     }
+}
+
+
+/**
+ Handles app lauch from safari pass us a token.
+ */
+- (void)handleSSOLaunchWithToken:(NSString *)token
+{
+    [[ExSystem sharedInstance] saveConcurSSOAccessToken:token];
+    
+    if (self.shouldWaitForHomeScreenToLoad) {
+        [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(openSsofromSafari) name:@"MESSAGE_LOGIN_VIEW_HAS_LOADED" object:nil];
+    } else {
+        [self openSsofromSafari];
+    }
+    
 }
 
 /**
@@ -980,6 +994,13 @@ static ApplicationLock *sharedInstance;
     [[NSNotificationCenter defaultCenter] removeObserver:self name:@"MESSAGE_LOGIN_VIEW_HAS_LOADED" object:nil];
     ConcurMobileAppDelegate *delegate = (ConcurMobileAppDelegate*) [[UIApplication sharedApplication] delegate];
     [delegate switchToCompanySignInView];
+}
+
+-(void)openSsofromSafari
+{
+    [[NSNotificationCenter defaultCenter] removeObserver:self name:@"MESSAGE_LOGIN_VIEW_HAS_LOADED" object:nil];
+    ConcurMobileAppDelegate *delegate = (ConcurMobileAppDelegate*) [[UIApplication sharedApplication] delegate];
+    [delegate switchToSafariSignInView];
 }
 
 -(void) checkForTripItCacheKey

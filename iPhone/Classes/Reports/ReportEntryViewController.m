@@ -85,6 +85,10 @@
 @property BOOL hasCloseButton;
 @property BOOL requirePaperReceipt;
 
+// MOB-21970: if it is add a new expense, need to get the start odometer from server
+@property BOOL isAddNewExpense;
+@property BOOL isCarKeySwitched;
+
 @end
 
 @implementation ReportEntryViewController
@@ -122,6 +126,9 @@
 #pragma mark - Init data
 - (void)setSeedData:(NSDictionary*)pBag
 {
+    if ([pBag[@"SOURCE_SECTION"] isEqualToString:@"REPORT_APPROVAL_SECTION"]) {
+        self.isReportApproval = YES;
+    }
     [self setSeedData:pBag[@"REPORT"] entry:pBag[@"ENTRY"] role:pBag[@"ROLE"]];
 
 }
@@ -752,21 +759,21 @@
         // if the vehicle is not preselected Set Vehicle id to first company car by default  (in edit mode the fieldvalue is not nil so need not change).
         // Potential bug/request : if user has more than one car then user might complain that he wants his last selected value.
         //                          we default to first value always.
-        if(isBusCarExpType && carKeyFld.fieldValue == nil)
+        if(!self.isReportApproval && isBusCarExpType && carKeyFld.fieldValue == nil)
         {
             NSArray *allCars = [[crd fetchCompanyCarDetails:@""] allValues];
             CarDetailData *firstcar = nil;
-            // Only if there is a company car 
+            // Only if there is a company car
+            // MOB-21355: if it is a report approval, should not manipulate the Vehicle ID and display what server provides
             if ([allCars count] > 0)
             {
-               firstcar  = [allCars objectAtIndex:0];
+                firstcar  = [allCars objectAtIndex:0];
                 carKeyFld.fieldValue = firstcar.vehicleId;
                 carKeyFld.liKey = firstcar.carKey;
-
                 [self refreshCarRates];
             }
          }
-		if (tranAmtFld != nil) //BusinessDistance
+		if (!self.isReportApproval && tranAmtFld != nil) //BusinessDistance
 		{
 			tranAmtFld.tip = [crd fetchCarReimbursementRates:[NSDate date]
                        isPersonal:YES distance:@"1" carKey:carKey==nil? @"":carKey ctryCode:@""];
@@ -780,9 +787,9 @@
             businessDistanceFld.tip = [NSString stringWithFormat:@"%@\n%@", businessDistanceFld.tip, rateTip];
         }
         
-        [self fetchCarDistanceToDate];
-     
-
+        if (!self.isReportApproval) {
+            [self fetchCarDistanceToDate];
+        }
 	}
 	
 	// Let's consolidate both vendor fields
@@ -1272,6 +1279,11 @@
 		else 
 			vendorDescFld.fieldValue = nil;
 	}
+    
+    // MOB-21991: if switch to a different car, need to recalute everything
+    if ([field.iD isEqualToString:@"CarKey"]) {
+        self.isCarKeySwitched = YES;
+    }
 
 	// Update exchange rate for crn change
 	[self updateAmountFields:field];
@@ -1473,35 +1485,9 @@
 	}
     else if ([field.iD isEqualToString:@"OdometerStart"] || [field.iD isEqualToString:@"OdometerEnd"])
     {
-        FormFieldData* fdStart = [self findEditingField:@"OdometerStart"];
-        FormFieldData* fdEnd = [self findEditingField:@"OdometerEnd"];
-        FormFieldData *fdTotal = [self findEditingField:@"TotalDistance"];
-        FormFieldData *fdBiz = [self findEditingField:@"BusinessDistance"];
-        FormFieldData *fdPer = [self findEditingField:@"PersonalDistance"];
-        
-        int start = [fdStart.fieldValue intValue];
-        int end = [fdEnd.fieldValue intValue];
-        int total = end-start;
-        
-        fdTotal.fieldValue = [NSString stringWithFormat:@"%d", total];
-        [self refreshField:fdTotal];
-        
-        if (total <= 0)
-        {
-            fdBiz.fieldValue = @"0";
-            [self refreshField:fdBiz];
-            
-            fdPer.fieldValue = @"0";
-            [self refreshField:fdPer];
-        }
-        else{
-            int per = [fdPer.fieldValue intValue];
-            fdBiz.fieldValue = [NSString stringWithFormat:@"%d", total-per];
-            [self refreshField:fdBiz];
-        }
-        
+        // MOB-21991: refactor the code by creating another method for it so it can be reused at the other place
+        [self refreshBusinessDistance];
         [self recalculateCarMileageAmount:NO];
-        
     }
 	else if ([field.iD isEqualToString:@"PersonalDistance"])
     {
@@ -1587,6 +1573,39 @@
 	}
 }
 
+-(void)refreshBusinessDistance
+{
+    FormFieldData* fdStart = [self findEditingField:@"OdometerStart"];
+    FormFieldData* fdEnd = [self findEditingField:@"OdometerEnd"];
+    FormFieldData *fdTotal = [self findEditingField:@"TotalDistance"];
+    FormFieldData *fdBiz = [self findEditingField:@"BusinessDistance"];
+    FormFieldData *fdPer = [self findEditingField:@"PersonalDistance"];
+    
+    int start = [fdStart.fieldValue intValue];
+    int end = [fdEnd.fieldValue intValue];
+    int total = 0;
+    if (end > 0) {
+        total = end-start;
+    }
+
+    fdTotal.fieldValue = [NSString stringWithFormat:@"%d", total];
+    [self refreshField:fdTotal];
+    
+    if (total <= 0)
+    {
+        fdBiz.fieldValue = @"0";
+        [self refreshField:fdBiz];
+        
+        fdPer.fieldValue = @"0";
+        [self refreshField:fdPer];
+    }
+    else{
+        int per = [fdPer.fieldValue intValue];
+        fdBiz.fieldValue = [NSString stringWithFormat:@"%d", total-per];
+        [self refreshField:fdBiz];
+    }
+}
+
 -(void) refreshOdometerStart:(NSString*)carKey
 {
     // MOB-10710 Update odometer start
@@ -1599,14 +1618,16 @@
             odometerStartFld.fieldValue = [NSString stringWithFormat:@"%d", carDetail.odometerStart];//[FormatUtils formatInteger:[NSString stringWithFormat:@"%d", carDetail.odometerStart]];
             [self refreshField:odometerStartFld];
             
+            // MOB-21970: recalculate end odomenter only if the user is not adding a new expense. If the user is adding a new expense, should enter end odometer value manually
             // Recalculate odometerEnd
-            FormFieldData* fdTotal = [self findEditingField:@"TotalDistance"];
-            int total = [fdTotal.fieldValue intValue];
-            int end = carDetail.odometerStart + total;
-            
-            FormFieldData* fdEnd = [self findEditingField:@"OdometerEnd"];
-            fdEnd.fieldValue = [NSString stringWithFormat:@"%d", end];
-            [self refreshField:fdEnd];
+            if (!self.isAddNewExpense) {
+                FormFieldData* fdTotal = [self findEditingField:@"TotalDistance"];
+                int total = [fdTotal.fieldValue intValue];
+                int end = carDetail.odometerStart + total;
+                FormFieldData* fdEnd = [self findEditingField:@"OdometerEnd"];
+                fdEnd.fieldValue = [NSString stringWithFormat:@"%d", end];
+                [self refreshField:fdEnd];
+            }
         }
     }
 }
@@ -1622,7 +1643,11 @@
     // however due to mob-15034 MWS doesnt send updated odo reading
     
     FormFieldData* odometerEndFld = [self findEditingField:@"OdometerEnd"];
-    int total = [odometerEndFld.fieldValue intValue] - [odometerStartFld.fieldValue intValue] ;
+    
+    int total = 0;
+    if (!newCarKey) {
+        total = [odometerEndFld.fieldValue intValue] - [odometerStartFld.fieldValue intValue];
+    }
 
     if (odometerStartFld != nil)
     {
@@ -1643,30 +1668,9 @@
         
         BOOL isBusCarExpType = [self isCompanyCarMileageExpType:self.entry.expKey];
         
-        float buisAmt = 0.0;
-        float perAmt = 0.0;
-    
-        if (isBusCarExpType)
-        {
-            // MAN-23252
-            NSString *numPassengers = @"0";
-            FormFieldData* passengerCountField = [self findEditingField:@"PassengerCount"];
-            if(passengerCountField != nil)
-                numPassengers = passengerCountField.fieldValue;
-            
-            buisAmt = [[self getCarRates] fetchRate:date isPersonal:NO  isPersonalPartOfBusiness:NO distance:buisDistanceField.fieldValue carKey:carKey ctryCode:@"" numPassengers:numPassengers distanceToDate:dToDate];
-            
-            perAmt = [[self getCarRates] fetchRate:date isPersonal:NO  isPersonalPartOfBusiness:YES distance:perDistanceField.fieldValue carKey:carKey ctryCode:@"" numPassengers:@"0" distanceToDate:dToDate];
-        }
-        else
-        {
-            perAmt = [[self getCarRates] fetchRate:date isPersonal:YES  isPersonalPartOfBusiness:NO distance:perDistanceField.fieldValue carKey:carKey ctryCode:@"" numPassengers:@"0" distanceToDate:dToDate];
-        }
-        
-        
+        NSString *transactionAmount = [self calculateCarmileageAmount:isBusCarExpType distanceTodate:dToDate date:date carKey:carKey];
         FormFieldData* tranAmountFld = [self findEditingField:@"TransactionAmount"];
-        NSString* tranAmtStr = [NSNumberFormatter localizedStringFromNumber:@(buisAmt + perAmt)  numberStyle:NSNumberFormatterDecimalStyle];
-        tranAmountFld.fieldValue = [FormatUtils formatMoneyWithoutCrn:tranAmtStr crnCode:[self getReportCrnCode]];
+        tranAmountFld.fieldValue = [FormatUtils formatMoneyWithoutCrn:transactionAmount crnCode:[self getReportCrnCode]];
 
         // If we're doing biz AND biz/personal amounts are zero
         // then we're starting a new expense. If so, go ahead and
@@ -1674,9 +1678,21 @@
         // MOB-14357/MOB-15034 - Do not reset the ODO if the total < 0 - since if user enters a wrong data in odo end we dont want to reset the odo start
    		// MOB-16441 - CRMC - Company Car Mileage on iPad cannot update odometer / can in CTE
    		// The below newCarKey ensure that the odo is refreshed only if the user changes the car key in the form.
-   		// Without the below check the odo start will be reset to car config default 
-        if (isBusCarExpType && buisAmt == 0 && perAmt == 0 && total >= 0 && newCarKey)
+   		// Without the below check the odo start will be reset to car config default
+        
+        float businessAmount = [self calculateBusinessAmountWithDistanceToDate:dToDate date:date carKey:carKey];
+        float personalAmount = [self calculatePersonalAmountWithDistanceToDate:dToDate date:date carKey:carKey isBusinessExpenseType:isBusCarExpType];
+        if (self.isCarKeySwitched || (isBusCarExpType && businessAmount == 0 && personalAmount == 0 && total >= 0 && newCarKey) ){
             [self refreshOdometerStart:carKey];
+            
+            // MOB-21991: if user change to a different car, the business distance could has been changed, need to recalculate the transaction amount
+            if (self.isCarKeySwitched) {
+                [self refreshBusinessDistance];
+                NSString *transactionAmount = [self calculateCarmileageAmount:isBusCarExpType distanceTodate:dToDate date:date carKey:carKey];
+                FormFieldData* tranAmountFld = [self findEditingField:@"TransactionAmount"];
+                tranAmountFld.fieldValue = [FormatUtils formatMoneyWithoutCrn:transactionAmount crnCode:[self getReportCrnCode]];
+            }
+        }
         
         NSString* perRateTip = [[self getCarRates] fetchCarReimbursementRates:date isPersonal:YES distance:perDistanceField.fieldValue carKey:carKey ctryCode:@""];
         NSString* buisRateTip = [[self getCarRates] fetchCarReimbursementRates:date isPersonal:NO distance:buisDistanceField.fieldValue carKey:carKey ctryCode:@""];
@@ -1744,6 +1760,51 @@
     [self recalculateAttendeeAmounts];
 }
 
+
+-(NSString *)calculateCarmileageAmount:(BOOL)isBusCarExpType distanceTodate:(int)distanceToDate date:(NSDate *)date carKey:(NSString *)carKey
+{
+    float buisAmt = 0.0;
+    float perAmt = 0.0;
+    
+    if (isBusCarExpType){
+        buisAmt = [self calculateBusinessAmountWithDistanceToDate:distanceToDate date:date carKey:carKey];
+        perAmt = [self calculatePersonalAmountWithDistanceToDate:distanceToDate date:date carKey:carKey isBusinessExpenseType:isBusCarExpType];
+    }
+    else {
+        perAmt = [self calculatePersonalAmountWithDistanceToDate:distanceToDate date:date carKey:carKey isBusinessExpenseType:isBusCarExpType];
+    }
+    NSString* tranAmtStr = [NSNumberFormatter localizedStringFromNumber:@(buisAmt + perAmt)  numberStyle:NSNumberFormatterDecimalStyle];
+    return tranAmtStr;
+}
+
+-(float)calculateBusinessAmountWithDistanceToDate:(int)distanceToDate date:(NSDate *)date carKey:(NSString *)carKey
+{
+    FormFieldData* buisDistanceField = [self findEditingField:@"BusinessDistance"];
+    FormFieldData* passengerCountField = [self findEditingField:@"PassengerCount"];
+    
+    NSString *numPassengers = @"0";
+    if(passengerCountField != nil){
+        numPassengers = passengerCountField.fieldValue;
+    }
+    
+    float buisAmt = [[self getCarRates] fetchRate:date isPersonal:NO  isPersonalPartOfBusiness:NO distance:buisDistanceField.fieldValue carKey:carKey ctryCode:@"" numPassengers:numPassengers distanceToDate:distanceToDate];
+    return buisAmt;
+}
+
+-(float)calculatePersonalAmountWithDistanceToDate:(int)distanceToDate date:(NSDate *)date carKey:(NSString *)carKey isBusinessExpenseType:(BOOL)isBusinessExpense
+{
+    float personalAmount = 0.0;
+    FormFieldData* perDistanceField = [self findEditingField:@"PersonalDistance"];
+    if (isBusinessExpense) {
+       personalAmount = [[self getCarRates] fetchRate:date isPersonal:NO  isPersonalPartOfBusiness:YES distance:perDistanceField.fieldValue carKey:carKey ctryCode:@"" numPassengers:@"0" distanceToDate:distanceToDate];
+    }
+    else{
+        personalAmount = [[self getCarRates] fetchRate:date isPersonal:YES  isPersonalPartOfBusiness:NO distance:perDistanceField.fieldValue carKey:carKey ctryCode:@"" numPassengers:@"0" distanceToDate:distanceToDate];
+    }
+
+    return personalAmount;
+}
+
 -(void) refreshCarRates
 {
 	FormFieldData* distanceFld = [self findEditingField:@"BusinessDistance"];
@@ -1769,7 +1830,6 @@
 	[self refreshField:tranAmtFld];	
     
 }
-
 
 -(void) recalculatePostedAmount
 {
@@ -1835,7 +1895,7 @@
 }
 
 #pragma mark Car Mileage methods
--(void) refreshWithDistanceToDateMsg:(Msg*) msg
+-(void) refreshWithDistanceToDateMsg:(Msg*) msg isNewCarMileage:(BOOL)isNewCarMileage
 {
 	ExCarDistanceToDateData* distanceToDate = (ExCarDistanceToDateData*) msg.responder;
 	if (msg.errBody == nil && distanceToDate.distanceToDate!= nil)
@@ -1848,7 +1908,10 @@
 		if (businessDistanceFld != nil && distanceToDateFld != nil)
 			businessDistanceFld.tip = [NSString stringWithFormat:[Localizer getLocalizedText:@"Distance to Date = %@"], distanceToDateFld.fieldValue == nil ? @"":distanceToDateFld.fieldValue];
 		[self refreshField:businessDistanceFld];
-		[self recalculateCarMileageAmount:YES];
+        
+        // MOB-16441: The problem is that we always recalculate the start odometer by fetch the data from cache which is from the carConfig when user log in.
+        // MOB-21384: if it is an existing car mileage item, do not need to recalculate the start odometer, simply just display whatever server provided
+		[self recalculateCarMileageAmount:isNewCarMileage];
 	}
     
 	[self hideWaitView];
@@ -2418,7 +2481,9 @@
         if ([self isViewLoaded]) {
             [self hideLoadingView];
         }
-		[self refreshWithDistanceToDateMsg:msg];
+        // MOB-21384: add a boolean prameter: if it is an existing car mileage item, do not need to recalculate the start odometer,
+        // simply just display whatever server provided
+        [self refreshWithDistanceToDateMsg:msg isNewCarMileage:self.isAddNewExpense];
 	}
 	else if ([msg.idKey isEqualToString:REPORT_ENTRY_FORM_DATA])
 	{
@@ -2432,7 +2497,7 @@
         
         NSString* expKey = [self getCurrentExpType];
         BOOL isPerCarExpType = [self isPersonalCarMileageExpType:expKey];
-        if (isPerCarExpType && self.entry.rpeKey == nil)
+        if (!self.isReportApproval && isPerCarExpType && self.entry.rpeKey == nil)
         {
             // MOB-4829 Let's fetch distanceToDate for new entry
             [self fetchCarDistanceToDate];
@@ -2463,6 +2528,18 @@
 		ReportData* report = (msg.parameterBag)[@"REPORT"];
 		EntryData* curEntry = (msg.parameterBag)[@"ENTRY"];
         
+//        MOB-21970: for car mileage only: if it is a new expense, need to get the start odometer from server
+        NSString *newExpense = (msg.parameterBag)[@"TITLE"];
+        if ([newExpense isEqualToString:@"Add Expense"]) {
+            self.isAddNewExpense = YES;
+        }
+        
+        //  MOB-21355 CRMC - Wrong Vehicle ID displayed when it is an approving report.
+        // iPad comes to this block from ReportDetailViewController_iPad
+        if ([msg.parameterBag[@"SOURCE_SECTION"] isEqualToString:@"REPORT_APPROVAL_SECTION"] ) {
+            self.isReportApproval = YES;
+        }
+        
         [self loadEntry:curEntry withReport:report];
 		if (self.entry.fields != nil && [self.entry.fields count]>0)
 		{
@@ -2481,7 +2558,7 @@
             }
 
 
-            if (isPerCarExpType && self.entry.rpeKey == nil)
+            if (!self.isReportApproval && isPerCarExpType && self.entry.rpeKey == nil)
             {
                 // MOB-4829 Let's fetch distanceToDate for new entry
                 [self fetchCarDistanceToDate];
@@ -2560,9 +2637,7 @@
         
             
 	}
-	else if ([msg.idKey isEqualToString:APPROVE_REPORT_DETAIL_DATA])
-	{
-	} 
+
 	else if ([msg.idKey isEqualToString:DELETE_REPORT_ENTRY_DATA])
 	{
         // Called when deleting itemizations

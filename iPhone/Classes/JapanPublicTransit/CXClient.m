@@ -46,12 +46,12 @@ __strong static id _sharedClient = nil;
     return self;
 }
 
-- (void *)performRequest:(CXRequest *)apiRequest success:(CXSuccessBlock)success failure:(CXFailureBlock)failure {
+- (void)performRequest:(CXRequest *)apiRequest success:(CXSuccessBlock)success failure:(CXFailureBlock)failure {
 
     CTENetworking *manager = [[CTENetworking alloc] init];
 
     if ([apiRequest.method isEqualToString:@"POST"]) {
-        [manager postXML:apiRequest.path requestXML:apiRequest.requestXML success:^(NSString *responseObject) {
+        [manager postXMLToURL:apiRequest.path requestXML:apiRequest.requestXML success:^(NSString *responseObject) {
             if (success) {
                 success(responseObject);
             }
@@ -61,7 +61,7 @@ __strong static id _sharedClient = nil;
             }
         }];
     } else {
-        [manager getXML:apiRequest.path success:^(NSString *responseObject) {
+        [manager getXMLFromURL:apiRequest.path success:^(NSString *responseObject) {
             if (success) {
                 success(responseObject);
             }

@@ -94,28 +94,38 @@ NSString * const VIEW_DISPLAY_TYPE_MODAL = @"VIEW_DISPLAY_TYPE_MODAL";
 
 -(void) respondToConnectionFailure:(Msg* )msg
 {
-    if ([self isWaitViewShowing])
+    // Check if the VC is able to handle timeouts itself thru a selector
+    if ([self respondsToSelector:@selector(handleTimeOut)])
     {
-        [self hideWaitView];
-// Login Time out error should not show offline message at the same time
-// This is trigered by a connection failuar (mostly time out, or wrong request address) to the server
-        if(![ExSystem connectedToNetwork])
+        [self performSelector:@selector(handleTimeOut) withObject:nil];
+    }
+    else
+    {
+        // otherwise use default timeout handling
+        if ([self isWaitViewShowing])
         {
-            MobileAlertView *alert = [[MobileAlertView alloc]
-                                      initWithTitle:[Localizer getLocalizedText:@"Offline"]
-                                      message:[Localizer getLocalizedText:@"Operation Not Supported Offline"]
-                                      delegate:nil
-                                      cancelButtonTitle:[Localizer getLocalizedText:@"LABEL_CLOSE_BTN"]
-                                      otherButtonTitles:nil];
-            [alert show];
+            [self hideWaitView];
+    // Login Time out error should not show offline message at the same time
+    // This is trigered by a connection failuar (mostly time out, or wrong request address) to the server
+            if(![ExSystem connectedToNetwork])
+            {
+                MobileAlertView *alert = [[MobileAlertView alloc]
+                                          initWithTitle:[Localizer getLocalizedText:@"Offline"]
+                                          message:[Localizer getLocalizedText:@"Operation Not Supported Offline"]
+                                          delegate:nil
+                                          cancelButtonTitle:[Localizer getLocalizedText:@"LABEL_CLOSE_BTN"]
+                                          otherButtonTitles:nil];
+                [alert show];
+            }
+        }
+        
+        if ([self isLoadingViewShowing])
+        {
+            [self hideLoadingView];
+            [self showOfflineView:self];
         }
     }
-    
-    if ([self isLoadingViewShowing])
-    {
-        [self hideLoadingView];
-        [self showOfflineView:self];
-    }
+
 }
 
 -(void) respondToFoundData:(Msg *)msg

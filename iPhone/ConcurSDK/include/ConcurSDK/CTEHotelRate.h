@@ -42,6 +42,7 @@
 
 - (void)reserveWithCreditCard:(CTECreditCard *)selectedCreditCard
              violationReasons:(NSArray *)violationsReasons
+                    addToTrip:(NSString *)tripId
                       success:(void (^)(CTEHotelReserveConfirmation *reservation))success
                       failure:(void (^)(CTEError *error))failure;
 

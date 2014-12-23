@@ -154,9 +154,19 @@
     scrollView.delegate = self;
     
     UIImage *receiptImage = nil;
+    // MOB-21462 : view the pdf receipt in offline upload queue
     if (self.localReceiptId != nil)
     {
-        receiptImage = [UploadableReceipt imageForLocalReceiptImageId:self.localReceiptId];
+        if (self.isPDF) {
+           NSData *pdfReceiptData = [UploadableReceipt receiptDataForLocalReceiptImageId:self.localReceiptId];
+            if ([pdfReceiptData length]) {
+                isPDF = YES;
+                self.pdfData = pdfReceiptData;
+                [self initReceiptWebView];
+            }
+        } else {
+            receiptImage = [UploadableReceipt imageForLocalReceiptImageId:self.localReceiptId];
+        }
     }
     else
     {

@@ -17,6 +17,7 @@
 #import "HotelSearchTableViewCell.h"
 #import "RoomListSegmentsTableViewCell.h"
 #import "HotelDetailsCellData.h"
+#import "HotelPhoneCellData.h"
 #import "HotelDetailsTableViewCell.h"
 #import "HotelDetailsMapViewCellData.h"
 #import "HotelDetailsMapViewTableViewCell.h"
@@ -24,6 +25,7 @@
 #import "HotelDetailsFindRoomTableViewCell.h"
 #import "HotelDetailSegmentsCellData.h"
 #import "PhotoAlbumTableViewCell.h"
+#import "PhotoAlbumTableViewCellData.h"
 #import "ImageCollectionViewCell.h"
 #import "ImagesScrollView.h"
 #import "ExSystem.h"
@@ -56,8 +58,6 @@
     self.tableData = [[HotelRoomsListDataSource alloc] initWithHotelCellData:self.hotelCellData];
     self.tableData.delegate = self;
     
-    // Need title set for back button to work
-    self.title = @"Rooms";
     _btnMapView = [self getNavBarButtonWithImage:@"icon_nav_map" withSelector:@selector(showMapView)];
     _btnMapView.enabled = NO;
     
@@ -131,6 +131,20 @@
 -(CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath
 {
     AbstractTableViewCellData *cellData = [self.tableData itemAtIndexPath:indexPath];
+    
+    if ([cellData isKindOfClass:[PhotoAlbumTableViewCellData class]]) {
+        PhotoAlbumTableViewCellData *photoAlbumCellData = (PhotoAlbumTableViewCellData *)cellData;
+        if (!photoAlbumCellData.isCellHeightSetAccordingToContentSize) { // Calculate the height manually based on number of photos to be displayed, 2 photocells per row with spacing set at 8
+            CGSize individualPhotoCellSize = [self sizeForCollectionViewCell];
+            int numberOfImagesToDisplay = self.hotelCellData.downLoadableUIImages.count ? self.hotelCellData.downLoadableUIImages.count : self.hotelCellData.cteHotel.images.count;
+            int numberOfRowsOfHotelCells = (int) (numberOfImagesToDisplay / 2.0 + 0.5); // 2 photocells per row
+            CGFloat heightOfPhotoAlbumView = (individualPhotoCellSize.height + 8) * numberOfRowsOfHotelCells + 8; // spacing between photocells = 8
+            
+            return heightOfPhotoAlbumView;
+        }
+        
+    }
+    
     return cellData.cellHeight;
 }
 
@@ -213,25 +227,32 @@
          return hotelDetailsCell;
      }
      
-     if ([dataObject.cellIdentifier isEqualToString:@"hotelDetailsCallCell"]) {
-         HotelDetailsCallHotelTableViewCell *tableViewCell = [self.tableView dequeueReusableCellWithIdentifier:@"hotelDetailsCallCell" forIndexPath:indexPath];
-         return tableViewCell;
+     if ([dataObject isKindOfClass:[HotelPhoneCellData class]]) {
+         HotelDetailsCallHotelTableViewCell *hotelCallCell = [self.tableView dequeueReusableCellWithIdentifier:@"hotelDetailsCallCell" forIndexPath:indexPath];
+         HotelPhoneCellData *cellData = (HotelPhoneCellData *)dataObject;
+         [hotelCallCell setCellData:cellData];
+         return hotelCallCell;
      }
      
      if ([dataObject.cellIdentifier isEqualToString:@"hotelDetailsFindRoomCell"]) {
          HotelDetailsFindRoomTableViewCell *tableViewCell = [self.tableView dequeueReusableCellWithIdentifier:@"hotelDetailsFindRoomCell" forIndexPath:indexPath];
+         HotelDetailsCellData *cellData = (HotelDetailsCellData *)dataObject;
          [tableViewCell setBtnFindRoomPressed:^{
              [self.tableData showRoomList];
          }];
          return tableViewCell;
      }
      
-     if ([dataObject.cellIdentifier isEqualToString:@"PhotoAlbumTableViewCell"]) {
+     if ([dataObject isKindOfClass:[PhotoAlbumTableViewCellData class]]) {
          PhotoAlbumTableViewCell *photoAlbumCell = [self.tableView dequeueReusableCellWithIdentifier:dataObject.cellIdentifier forIndexPath:indexPath];
          [photoAlbumCell setCollectionViewDataSourceDelegate:self];
-         dataObject.cellHeight = photoAlbumCell.photosCollectionView.superview.frame.size.height;
-         [self.tableView beginUpdates];
-         [self.tableView endUpdates]; // This resizes the row
+         PhotoAlbumTableViewCellData *cellData = (PhotoAlbumTableViewCellData *)dataObject;
+         if (!cellData.isCellHeightSetAccordingToContentSize) {
+             cellData.cellHeight = photoAlbumCell.photosCollectionView.superview.frame.size.height;
+             cellData.isCellHeightSetAccordingToContentSize = YES;
+             [self.tableView beginUpdates];
+             [self.tableView endUpdates]; // This resizes the row (doesn't work in iOS 7 though, hence view height is manually calculated in heightForRowAtIndexPath:)
+         }
          return photoAlbumCell;
      }
      
@@ -454,7 +475,8 @@
     [self.tableView endUpdates];
     
     // adding this line just for refresh the header cell after checking if there's any right image available
-    [self.tableView reloadData];
+    // Commented as it was causing PhotoAlbum cell to be overlapped on Rooms cells in iOS 7 // MOB-21522
+    //[self.tableView reloadData];
 }
 
 #pragma mark - alert view delegate methods

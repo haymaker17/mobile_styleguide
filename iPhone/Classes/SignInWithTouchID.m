@@ -123,6 +123,8 @@
         [vc loginAndShowHome:loginXML];
         [WaitViewController hideAnimated:YES withCompletionBlock:nil];
         
+        NSString *eventLabel = [NSString stringWithFormat:@"Fingerprint"];;
+        [AnalyticsTracker logEventWithCategory:@"Sign In" eventAction:@"Successful Attempt" eventLabel:eventLabel eventValue:nil];
     } failure:^(CTEError *error) {
         [WaitViewController hideAnimated:YES withCompletionBlock:nil];
         [vc handleSignInError:error];

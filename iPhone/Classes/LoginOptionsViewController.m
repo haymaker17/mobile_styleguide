@@ -97,10 +97,19 @@
                     [[ExSystem sharedInstance] saveSettings];
                 }
                 
-                LoginWebViewController *lWVC = [[LoginWebViewController alloc] init];
-                [lWVC setLoginUrl:ssoUrl];
-                lWVC.loginDelegate = loginDelegate;
-                [self.navigationController pushViewController:lWVC animated:YES];
+                //
+                // Hack for Login with Safari.
+                if([[ExSystem sharedInstance] isLoginFromSafari]){
+                    // Open Safari
+                    NSURL *url = [NSURL URLWithString:response.ssoUrl];
+                    [[UIApplication sharedApplication] openURL:url];
+                }
+                else{
+                    LoginWebViewController *lWVC = [[LoginWebViewController alloc] init];
+                    [lWVC setLoginUrl:ssoUrl];
+                    lWVC.loginDelegate = loginDelegate;
+                    [self.navigationController pushViewController:lWVC animated:YES];
+                }
             }
             else 
             {

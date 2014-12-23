@@ -137,7 +137,7 @@ static BOOL lookupQueued = FALSE;
     // Contact Google and make a geocoding request
 	// See Google API docs at: http://googlegeodevelopers.blogspot.com/2010/03/introducing-new-google-geocoding-web.html
 	// See http://code.google.com/apis/maps/documentation/geocoding/ for documentation about "results influenced by the region"
-    NSString *requestString = [NSString stringWithFormat:@"http://maps.google.com/maps/api/geocode/xml?latlng=%@&sensor=false", escaped_address];
+    NSString *requestString = [NSString stringWithFormat:@"https://maps.google.com/maps/api/geocode/xml?latlng=%@&sensor=false", escaped_address];
 	
 	//OLD API:
     //NSString *requestString = [NSString stringWithFormat:@"http://maps.google.com/maps/geo?q=%@&output=xml&oe=utf8&key=%@&sensor=false&gl=it", escaped_address, MAPS_API_KEY];

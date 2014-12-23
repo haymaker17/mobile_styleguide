@@ -8,8 +8,7 @@
 
 #import "ExceptionLogging.h"
 #import "MCLogging.h"
-#import "UncaughtExceptionHandler.h"
-#import "ExSystem.h" 
+#import "ExSystem.h"
 
 
 static NSString* exceptionLogFileName = @"exceptionLog.txt";
@@ -106,9 +105,6 @@ static const int maxExceptionLogFileSize = 100 * 1024;	// 100 kilobytes
 + (NSData*) getExceptionData:(NSException*)exception
 {
 	NSArray *callStackArray = nil;
-	
-	if (exception.userInfo != nil)
-		callStackArray = (exception.userInfo)[UncaughtExceptionHandlerAddressesKey];
 
 #if __IPHONE_OS_VERSION_MAX_ALLOWED >= 40000
     if (callStackArray == nil)

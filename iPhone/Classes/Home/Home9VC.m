@@ -49,6 +49,7 @@
 #import "CarRatesData.h"
 #import "SignInUserTypeViewController.h"
 #import "SignInResetPasswordViewController.h"
+#import "SafariLoginViewController.h"
 #import "HotelSearchTableViewController.h"
 
 #import "ActiveRequestListViewController.h"
@@ -194,6 +195,10 @@ static int const constAccountExpiredAlert = 102;
 
     [self updateTableViewLayout];
     [HelpOverlayFactory addiPhoneHomeOverlayToView:self.navigationController.view];
+    if ([Config isSprintDemoBuild])
+    {
+        [HelpOverlayFactory addiPhoneHomeReleaseNoteOverlayToView:self.navigationController.view];
+    }
     
     // if user logged in through testdrive or some other Storyboard then dismiss the login storyboard.
     if(self.signInViewNavigationController != nil)
@@ -263,7 +268,7 @@ static int const constAccountExpiredAlert = 102;
     // If user is already seeing the login storyboard then use the storboard to segue to the reset screen.
     SignInUserTypeViewController *initialViewController = nil;
     if (self.signInViewNavigationController == nil) {
-         initialViewController = [[UIStoryboard storyboardWithName:[@"SignIn" storyboardName] bundle:nil] instantiateViewControllerWithIdentifier:@"ResetPasswordScreen"];
+        initialViewController = [[UIStoryboard storyboardWithName:[@"SignIn" storyboardName] bundle:nil] instantiateViewControllerWithIdentifier:@"ResetPasswordScreen"];
         self.signInViewNavigationController = [[UINavigationController alloc] initWithRootViewController:initialViewController];
         [initialViewController performSegueWithIdentifier:@"ShowPasswordResetScreen" sender:self];
         [self presentViewController:self.signInViewNavigationController animated:YES completion:nil];
@@ -301,6 +306,22 @@ static int const constAccountExpiredAlert = 102;
             [self.signInViewNavigationController popToRootViewControllerAnimated:YES];
         }
     }
+    
+}
+
+-(void) showSafariSignInScreen
+{
+    [[MCLogging getInstance] log:[NSString stringWithFormat:@"Home9VC::showSafariLoginScreen"] Level:MC_LOG_DEBU];
+    [[ConcurTestDrive sharedInstance] removeAnimated:NO];
+    
+    //TODO: Clean up the logic
+    
+    SafariLoginViewController *vc = [[SafariLoginViewController alloc] init];
+    [self presentViewController:vc animated:YES completion:nil];
+//    if (![[self.signInViewNavigationController visibleViewController] isMemberOfClass:[SafariLoginViewController class]] ) {
+//        [self.signInViewNavigationController popToRootViewControllerAnimated:YES];
+//    }
+    
     
 }
 
@@ -806,6 +827,7 @@ This method actally removes the login view and not the home view itself
         if ([[ExSystem sharedInstance] hasRole:ROLE_EXPENSE_TRAVELER])
         {
             // MOB-13132 : Initialze carmileage data
+              [[MCLogging getInstance] log:[NSString stringWithFormat:@"Home9VC::fetchHomePageDataAndSkipCache. calling fetchCarRatesAndSkipCache:%@  ", (shouldSkipCache ? @"YES" : @"NO")] Level:MC_LOG_DEBU];
             [self fetchCarRatesAndSkipCache:shouldSkipCache];
         }
         

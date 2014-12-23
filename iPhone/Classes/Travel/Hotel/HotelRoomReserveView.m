@@ -114,8 +114,7 @@ typedef void(^UpdateActiveFieldBlock)(UIView *activeField);
 
 - (void)updateAmountLabel
 {
-    // TODO: need to set currency symbol based on currency code
-    NSString *amount = [NSString stringWithFormat:@"$%@", self.selectedRate.totalAmount];
+    NSString *amount = [FormatUtils formatMoneyString:self.selectedRate.totalAmount crnCode:self.selectedRate.currency decimalPlaces:0];
     [self.price setText:amount];
 }
 
@@ -214,7 +213,9 @@ typedef void(^UpdateActiveFieldBlock)(UIView *activeField);
     [WaitViewController showWithText:@"Reserving Room" animated:YES];
 
     NSArray *violationReasons = [self getViolationReasonsFromViolationViews];
-    [self.selectedRate reserveWithCreditCard:self.selectedCreditCard violationReasons:violationReasons success:^(CTEHotelReserveConfirmation *reservation) {
+    // Travel team!  I put this temporary change in just to make sure it compiles.  Please double check!  - Ernest
+    [self.selectedRate reserveWithCreditCard:self.selectedCreditCard violationReasons:violationReasons addToTrip:nil
+success:^(CTEHotelReserveConfirmation *reservation) {
         [WaitViewController hideAnimated:YES withCompletionBlock:^{
             [self goToItineraryWithRecordLocator:reservation.recordLocator itineraryLocator:reservation.itineraryLocator];
         }];
