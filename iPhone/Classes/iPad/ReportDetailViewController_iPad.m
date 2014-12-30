@@ -76,6 +76,11 @@
 #define		kAlertViewRateAppApproval	101782
 #define     kActionSheetTravelAllowance  101705
 
+@interface ReportDetailViewController_iPad ()
+@property BOOL isDeleteCarMileageExpense;
+@property BOOL isAddNewExpense;
+@end
+
 @interface ReportButtonDescriptor : NSObject
 @property (copy, nonatomic) NSString *buttonId;
 @property (copy, nonatomic) NSString *title;
@@ -439,6 +444,12 @@
 		}
 		else 
 		{
+            // need to update the car rates data after deleting a car mileage expense item
+//            so the start OD will be accurate next time when creating a new car mileage expense
+            if (self.isDeleteCarMileageExpense) {
+                [self updateCarRatesData];
+            }
+            
 			self.rpt =  srd.rpt;
 			self.rptDetail = self.rpt;
 			//self.entries = rpt.entries;
@@ -461,17 +472,17 @@
 											, self.reportKeys, @"REPORT_KEYS"
 											,self.reportDictionary, @"REPORT_DICT", nil];
 			[self loadReport:pBagNew];
-			
-//			if([comingFrom isEqualToString:@"REPORT"])
-//			{
-//				NSMutableDictionary *pBagNew = [[NSMutableDictionary alloc] initWithObjectsAndKeys:rptData, @"REPORT", rptData.rptKey, @"ID_KEY", rptData.rptKey, @"RECORD_KEY",
-//												ACTIVE_ENTRIES, @"TO_VIEW", [pBag objectForKey:@"REPORT_KEYS"], @"REPORT_KEYS", [pBag objectForKey:@"REPORT_DICT"], @"REPORT_DICT", nil];
-//				
-			
-			// MOB-1868
-			//[rootViewController.viewState setObject:@"FETCH" forKey:ACTIVE_REPORTS];
 		}
 	}
+    
+    else if([msg.idKey isEqualToString:CAR_RATES_DATA])
+    {
+        NSString* errMsg = msg.errBody;
+        if (errMsg == nil){
+            [ConcurMobileAppDelegate findRootViewController].carRatesData = (CarRatesData*) msg.responder;
+        }
+    }
+    
 	else if ([msg.idKey isEqualToString:SAVE_REPORT_RECEIPT2])
 	{
 		if ([self isViewLoaded])
@@ -726,8 +737,21 @@
 
             [resp.rpt.entry createDefaultAttendeeUsingExpenseTypeVersion:@"V3" policyKey:self.rpt.polKey forChild:NO];
             
-            self.pBagAddExpense = [[NSMutableDictionary alloc] initWithObjectsAndKeys: @"YES", @"SHORT_CIRCUIT", self.rpt, @"REPORT", resp.rpt.entry, @"ENTRY", 
+            // MOB-21980: if it is adding a new expense, need to pass the info to the next view controller
+           // ReportEntryViewController to get the right info for car mileage
+            if (self.isAddNewExpense) {
+                self.pBagAddExpense = [[NSMutableDictionary alloc] initWithObjectsAndKeys: @"YES", @"SHORT_CIRCUIT",
+                                       self.rpt, @"REPORT",
+                                       resp.rpt.entry, @"ENTRY",
+                                       @"YES", @"ADD_NEW_EXPENSE",
+                                       nil];
+            }
+            else {
+            self.pBagAddExpense = [[NSMutableDictionary alloc] initWithObjectsAndKeys: @"YES", @"SHORT_CIRCUIT",
+                                   self.rpt, @"REPORT",
+                                   resp.rpt.entry, @"ENTRY",
                                     nil];
+            }
             
             if (self.role != nil)
                 pBagAddExpense[@"ROLE"] = self.role;
@@ -793,10 +817,30 @@
     [self updateViews];
 }
 
+#pragma mark - car mileage
+// get the car rate data
+- (void)updateCarRatesData
+{
+    NSMutableDictionary *pBag = [[NSMutableDictionary alloc] initWithObjectsAndKeys:nil];
+    [[ExSystem sharedInstance].msgControl createMsg:CAR_RATES_DATA CacheOnly:@"NO" ParameterBag:pBag SkipCache: YES RespondTo:self];
+}
+
+-(BOOL) isCompanyCarMileageExpType:(NSString*)expType
+{
+    ExpenseTypeData* expTypeData = [[ExpenseTypesManager sharedInstance]
+                                    expenseTypeForVersion:@"V3" policyKey:self.rpt.polKey
+                                    expenseKey:expType forChild:NO];
+    
+    if (expTypeData == nil && [expType isEqualToString:@"CARMI"])
+        return TRUE;
+    return [expTypeData isCompanyCarMileage];
+}
+
 -(void)nextStepForAddExpense
 {
 	if (self.etDlgDismissed && self.pBagAddExpense != nil)
 	{
+        // It is crazy that it is navigated to ReportDetailViewController which is a class only for iPhone! just like a huge knock, loop, not good.
 		[ReportDetailViewController showEntryView:self withParameterBag: self.pBagAddExpense carMileageFlag:NO];
 	}
 }
@@ -1240,7 +1284,7 @@
             [self showWaitViewWithText:[Localizer getLocalizedText:@"Removing entry"]];
             
 			EntryData *entry = aSections[section];
-			//NSMutableArray *a = [entryDetailsDict objectForKey:entry.rpeKey];
+            self.isDeleteCarMileageExpense = [self isCompanyCarMileageExpType:entry.expKey];
 			
 			NSArray * rpeKeys = @[entry.rpeKey];
 			NSMutableDictionary *pBag = [[NSMutableDictionary alloc] initWithObjectsAndKeys: 
@@ -1288,6 +1332,7 @@
 								 rpt.rptKey, @"RPT_KEY", 
 								 //								 entry.rpeKey, @"PARENT_RPE_KEY",
 								 nil];
+    self.isAddNewExpense = YES;
 	[[ExSystem sharedInstance].msgControl createMsg:REPORT_ENTRY_FORM_DATA CacheOnly:@"NO" ParameterBag:pBag SkipCache:YES RespondTo:self];
     
    	[self dismissViewControllerAnimated:YES completion:nil];

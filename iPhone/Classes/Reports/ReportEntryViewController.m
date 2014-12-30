@@ -2530,8 +2530,16 @@
         
 //        MOB-21970: for car mileage only: if it is a new expense, need to get the start odometer from server
         NSString *newExpense = (msg.parameterBag)[@"TITLE"];
+        
         if ([newExpense isEqualToString:@"Add Expense"]) {
             self.isAddNewExpense = YES;
+        }
+        // MOB-21980: iPad adding a new expense. if it is a car mileage expense, need to show the right start OD
+        else {
+            NSString *iPadAddNewExpense =msg.parameterBag[@"ADD_NEW_EXPENSE"];
+            if ([iPadAddNewExpense isEqualToString:@"YES"]) {
+                self.isAddNewExpense = YES;
+            }
         }
         
         //  MOB-21355 CRMC - Wrong Vehicle ID displayed when it is an approving report.
