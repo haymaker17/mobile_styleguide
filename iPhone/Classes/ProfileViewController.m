@@ -11,6 +11,7 @@
 #import "ProfileTelCell.h"
 #import "NameCell.h"
 #import "CityCell2.h"
+#import "RPFloatingPlaceholderTextField.h"
 
 #define kTagFirstName   1181
 #define kTagLastName    1182
@@ -23,7 +24,6 @@
 
 @interface ProfileViewController ()
 
-@property (nonatomic,strong) CTEProfile *profile;
 
 @end
 
@@ -47,16 +47,16 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     // Do any additional setup after loading the view.
-    CTEProfile *tmpProfile = [[CTEProfile alloc] init];
-    tmpProfile.firstName = @"Ray";
-    tmpProfile.lastName = @"Chi";
-    tmpProfile.phoneNo = @"111-111-1111";
-    tmpProfile.workAddress = @"the dark side of the moon";
-    tmpProfile.city = @"ABJIEOJSOF";
-    tmpProfile.state = @"WA";
-    tmpProfile.zipCode = @"98004";
-    
-    self.profile = tmpProfile;
+
+//    CTEProfilePersonalInfo *test = [[CTEProfilePersonalInfo alloc] initWithFirstName:@"Ray"
+//                                                                            lastName:@"CHI"
+//                                                                             phoneNo:@"2222222222"
+//                                                                         workAddress:@"Concur"
+//                                                                                city:@"Bellevue"
+//                                                                               state:@"WA"
+//                                                                             country:@"USE"
+//                                                                             zipCode:@"98008"];
+
     
     //Register Nib
     [self.tableView registerNib:[UINib nibWithNibName:@"CardCell" bundle:nil] forCellReuseIdentifier:@"CardCell"];
@@ -242,13 +242,13 @@
         }
         [tableView deselectRowAtIndexPath:indexPath animated:NO];
     }
-    else if(section == 2){     //Emergency Contact
+    else if(section == 1){     //Emergency Contact
+        [self performSegueWithIdentifier:@"Profile_Emergency_Contact" sender:self];
+    }
+    else if(section == 2){     //Credit Card
         
     }
-    else if(section == 3){     //Credit Card
-        
-    }
-    else if(section == 4){     //Bank Account
+    else if(section == 3){     //Bank Account
         
     }
 }
@@ -275,6 +275,9 @@
         NSString *countryCode = [[NSLocale currentLocale] objectForKey:NSLocaleCountryCode];
         NSString *phoneNo = [NSString formatPhoneNo:newString withLocale:countryCode];
         textField.text = phoneNo;
+        
+        RPFloatingPlaceholderTextField *curTextfiled = (RPFloatingPlaceholderTextField *)textField;
+        curTextfiled.floatingLabel.textColor = [UIColor colorWithRed:0 green:122/255.0 blue:1 alpha:1];
         return NO;
     }
     return YES;
@@ -287,14 +290,13 @@
     [self.view endEditing:YES];
 }
 
-/*
- #pragma mark - Navigation
- 
- // In a storyboard-based application, you will often want to do a little preparation before navigation
- - (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
- // Get the new view controller using [segue destinationViewController].
- // Pass the selected object to the new view controller.
- }
- */
+
+#pragma mark - Navigation
+- (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
+     if([[segue identifier] isEqualToString:@"Profile_Emergency_Contact"]){
+
+     }
+}
+
 
 @end

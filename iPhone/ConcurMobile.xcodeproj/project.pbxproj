@@ -2164,11 +2164,11 @@
 		409843B91A2FD11F00E2CB35 /* UserProfileManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 409843B61A2FD11F00E2CB35 /* UserProfileManager.m */; };
 		409843BA1A2FD11F00E2CB35 /* UserProfileManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 409843B61A2FD11F00E2CB35 /* UserProfileManager.m */; };
 		409843BB1A2FD11F00E2CB35 /* UserProfileManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 409843B61A2FD11F00E2CB35 /* UserProfileManager.m */; };
-		409843BE1A2FDADE00E2CB35 /* CTEProfile.m in Sources */ = {isa = PBXBuildFile; fileRef = 409843BD1A2FDADE00E2CB35 /* CTEProfile.m */; };
-		409843BF1A2FDADE00E2CB35 /* CTEProfile.m in Sources */ = {isa = PBXBuildFile; fileRef = 409843BD1A2FDADE00E2CB35 /* CTEProfile.m */; };
-		409843C01A2FDADE00E2CB35 /* CTEProfile.m in Sources */ = {isa = PBXBuildFile; fileRef = 409843BD1A2FDADE00E2CB35 /* CTEProfile.m */; };
-		409843C11A2FDADE00E2CB35 /* CTEProfile.m in Sources */ = {isa = PBXBuildFile; fileRef = 409843BD1A2FDADE00E2CB35 /* CTEProfile.m */; };
-		409843C21A2FDADE00E2CB35 /* CTEProfile.m in Sources */ = {isa = PBXBuildFile; fileRef = 409843BD1A2FDADE00E2CB35 /* CTEProfile.m */; };
+		40D9D13F1A48CC2300DE0F18 /* EmergencyContactVC.m in Sources */ = {isa = PBXBuildFile; fileRef = 40D9D13E1A48CC2300DE0F18 /* EmergencyContactVC.m */; };
+		40D9D1401A48CC2300DE0F18 /* EmergencyContactVC.m in Sources */ = {isa = PBXBuildFile; fileRef = 40D9D13E1A48CC2300DE0F18 /* EmergencyContactVC.m */; };
+		40D9D1411A48CC2300DE0F18 /* EmergencyContactVC.m in Sources */ = {isa = PBXBuildFile; fileRef = 40D9D13E1A48CC2300DE0F18 /* EmergencyContactVC.m */; };
+		40D9D1421A48CC2300DE0F18 /* EmergencyContactVC.m in Sources */ = {isa = PBXBuildFile; fileRef = 40D9D13E1A48CC2300DE0F18 /* EmergencyContactVC.m */; };
+		40D9D1431A48CC2300DE0F18 /* EmergencyContactVC.m in Sources */ = {isa = PBXBuildFile; fileRef = 40D9D13E1A48CC2300DE0F18 /* EmergencyContactVC.m */; };
 		40E341501A3A27C000AE1092 /* CountryPhoneFormatDict.m in Sources */ = {isa = PBXBuildFile; fileRef = 40E3414F1A3A27C000AE1092 /* CountryPhoneFormatDict.m */; };
 		40E341511A3A27C000AE1092 /* CountryPhoneFormatDict.m in Sources */ = {isa = PBXBuildFile; fileRef = 40E3414F1A3A27C000AE1092 /* CountryPhoneFormatDict.m */; };
 		40E341521A3A27C000AE1092 /* CountryPhoneFormatDict.m in Sources */ = {isa = PBXBuildFile; fileRef = 40E3414F1A3A27C000AE1092 /* CountryPhoneFormatDict.m */; };
@@ -10171,24 +10171,11 @@
 		CF4C141B180477FA002EC3C5 /* btn_decimal_pressed_bkg_ios7.png in Resources */ = {isa = PBXBuildFile; fileRef = CF4C1415180477FA002EC3C5 /* btn_decimal_pressed_bkg_ios7.png */; };
 		CF4D6F4C1871F27D0042A001 /* Login.Storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 8BEDB651184673F3009C2E9C /* Login.Storyboard */; };
 		CF4D6F4E1871F27E0042A001 /* Login.Storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 8BEDB651184673F3009C2E9C /* Login.Storyboard */; };
-		CF4F155619805EB6005F6E63 /* URBSegmentedControl.m in Sources */ = {isa = PBXBuildFile; fileRef = CF4F155519805EB6005F6E63 /* URBSegmentedControl.m */; };
-		CF4F155719805EB6005F6E63 /* URBSegmentedControl.m in Sources */ = {isa = PBXBuildFile; fileRef = CF4F155519805EB6005F6E63 /* URBSegmentedControl.m */; };
-		CF4F155819805EB6005F6E63 /* URBSegmentedControl.m in Sources */ = {isa = PBXBuildFile; fileRef = CF4F155519805EB6005F6E63 /* URBSegmentedControl.m */; };
-		CF4F156819808661005F6E63 /* HotelSearchResultsFilterVC.m in Sources */ = {isa = PBXBuildFile; fileRef = CF4F156619808661005F6E63 /* HotelSearchResultsFilterVC.m */; };
-		CF4F156919808661005F6E63 /* HotelSearchResultsFilterVC.m in Sources */ = {isa = PBXBuildFile; fileRef = CF4F156619808661005F6E63 /* HotelSearchResultsFilterVC.m */; };
-		CF4F156A19808661005F6E63 /* HotelSearchResultsFilterVC.m in Sources */ = {isa = PBXBuildFile; fileRef = CF4F156619808661005F6E63 /* HotelSearchResultsFilterVC.m */; };
-		CF4F156E19809415005F6E63 /* HotelSearchResultsFilterVC.xib in Resources */ = {isa = PBXBuildFile; fileRef = CF4F156719808661005F6E63 /* HotelSearchResultsFilterVC.xib */; };
-		CF4F156F19809415005F6E63 /* HotelSearchResultsFilterVC.xib in Resources */ = {isa = PBXBuildFile; fileRef = CF4F156719808661005F6E63 /* HotelSearchResultsFilterVC.xib */; };
-		CF4F157019809416005F6E63 /* HotelSearchResultsFilterVC.xib in Resources */ = {isa = PBXBuildFile; fileRef = CF4F156719808661005F6E63 /* HotelSearchResultsFilterVC.xib */; };
 		CF4F1578198170C4005F6E63 /* HotelSearchResultsViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 2BE64FD411D559BD00176FC6 /* HotelSearchResultsViewController.xib */; };
 		CF4F1579198170C4005F6E63 /* HotelSearchResultsViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 2BE64FD411D559BD00176FC6 /* HotelSearchResultsViewController.xib */; };
 		CF4F157A198170C5005F6E63 /* HotelSearchResultsViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 2BE64FD411D559BD00176FC6 /* HotelSearchResultsViewController.xib */; };
 		CF4F157B198170C5005F6E63 /* HotelSearchResultsViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 2BE64FD411D559BD00176FC6 /* HotelSearchResultsViewController.xib */; };
 		CF4F157C198170C6005F6E63 /* HotelSearchResultsViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 2BE64FD411D559BD00176FC6 /* HotelSearchResultsViewController.xib */; };
-		CF4F15831981CD32005F6E63 /* HotelSearchResultsFilterVC.m in Sources */ = {isa = PBXBuildFile; fileRef = CF4F156619808661005F6E63 /* HotelSearchResultsFilterVC.m */; };
-		CF4F15841981CD33005F6E63 /* HotelSearchResultsFilterVC.m in Sources */ = {isa = PBXBuildFile; fileRef = CF4F156619808661005F6E63 /* HotelSearchResultsFilterVC.m */; };
-		CF4F15851981CD6E005F6E63 /* URBSegmentedControl.m in Sources */ = {isa = PBXBuildFile; fileRef = CF4F155519805EB6005F6E63 /* URBSegmentedControl.m */; };
-		CF4F15861981CD6E005F6E63 /* URBSegmentedControl.m in Sources */ = {isa = PBXBuildFile; fileRef = CF4F155519805EB6005F6E63 /* URBSegmentedControl.m */; };
 		CF4F15891982D326005F6E63 /* FadeTruncatingLabel.m in Sources */ = {isa = PBXBuildFile; fileRef = CF4F15881982D326005F6E63 /* FadeTruncatingLabel.m */; };
 		CF4F158A1982D326005F6E63 /* FadeTruncatingLabel.m in Sources */ = {isa = PBXBuildFile; fileRef = CF4F15881982D326005F6E63 /* FadeTruncatingLabel.m */; };
 		CF4F158B1982D326005F6E63 /* FadeTruncatingLabel.m in Sources */ = {isa = PBXBuildFile; fileRef = CF4F15881982D326005F6E63 /* FadeTruncatingLabel.m */; };
@@ -12391,8 +12378,13 @@
 		4098439A1A2FC51F00E2CB35 /* ProfileViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ProfileViewController.m; sourceTree = "<group>"; };
 		409843B51A2FD11F00E2CB35 /* UserProfileManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = UserProfileManager.h; path = Managers/UserProfileManager.h; sourceTree = "<group>"; };
 		409843B61A2FD11F00E2CB35 /* UserProfileManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = UserProfileManager.m; path = Managers/UserProfileManager.m; sourceTree = "<group>"; };
-		409843BC1A2FDADE00E2CB35 /* CTEProfile.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CTEProfile.h; sourceTree = "<group>"; };
-		409843BD1A2FDADE00E2CB35 /* CTEProfile.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CTEProfile.m; sourceTree = "<group>"; };
+		40C33ACB1A4DE29C00577DB3 /* CTEProfile.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CTEProfile.h; sourceTree = "<group>"; };
+		40C33ACC1A4DE29C00577DB3 /* CTEProfileBankAccount.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CTEProfileBankAccount.h; sourceTree = "<group>"; };
+		40C33ACD1A4DE29C00577DB3 /* CTEProfileCreditCard.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CTEProfileCreditCard.h; sourceTree = "<group>"; };
+		40C33ACE1A4DE29C00577DB3 /* CTEProfileEmergencyContact.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CTEProfileEmergencyContact.h; sourceTree = "<group>"; };
+		40C33ACF1A4DE29C00577DB3 /* CTEProfilePersonalInfo.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CTEProfilePersonalInfo.h; sourceTree = "<group>"; };
+		40D9D13D1A48CC2300DE0F18 /* EmergencyContactVC.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = EmergencyContactVC.h; sourceTree = "<group>"; };
+		40D9D13E1A48CC2300DE0F18 /* EmergencyContactVC.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = EmergencyContactVC.m; sourceTree = "<group>"; };
 		40E3414E1A3A27C000AE1092 /* CountryPhoneFormatDict.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CountryPhoneFormatDict.h; sourceTree = "<group>"; };
 		40E3414F1A3A27C000AE1092 /* CountryPhoneFormatDict.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CountryPhoneFormatDict.m; sourceTree = "<group>"; };
 		40E3C40719BFAEAC004F09DF /* SendFeedBackVC.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = SendFeedBackVC.m; path = Classes/MoreMenu/SendFeedBackVC.m; sourceTree = "<group>"; };
@@ -14753,11 +14745,6 @@
 		CF3E3CD416E45C4800F444E4 /* GovDocStampVCDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = GovDocStampVCDelegate.h; path = Document/GovDocStampVCDelegate.h; sourceTree = "<group>"; };
 		CF3EDA761781EC6800B30AA4 /* ExModel 19 for 9.3-Gov4.0.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = "ExModel 19 for 9.3-Gov4.0.xcdatamodel"; sourceTree = "<group>"; };
 		CF4C1415180477FA002EC3C5 /* btn_decimal_pressed_bkg_ios7.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = btn_decimal_pressed_bkg_ios7.png; path = ../images/buttons/btn_decimal_pressed_bkg_ios7.png; sourceTree = "<group>"; };
-		CF4F155419805EB6005F6E63 /* URBSegmentedControl.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = URBSegmentedControl.h; path = URBSegmentedControl/URBSegmentedControl.h; sourceTree = "<group>"; };
-		CF4F155519805EB6005F6E63 /* URBSegmentedControl.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = URBSegmentedControl.m; path = URBSegmentedControl/URBSegmentedControl.m; sourceTree = "<group>"; };
-		CF4F156519808661005F6E63 /* HotelSearchResultsFilterVC.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HotelSearchResultsFilterVC.h; sourceTree = "<group>"; };
-		CF4F156619808661005F6E63 /* HotelSearchResultsFilterVC.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HotelSearchResultsFilterVC.m; sourceTree = "<group>"; };
-		CF4F156719808661005F6E63 /* HotelSearchResultsFilterVC.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = HotelSearchResultsFilterVC.xib; sourceTree = "<group>"; };
 		CF4F15871982D326005F6E63 /* FadeTruncatingLabel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = FadeTruncatingLabel.h; path = Classes/FadeTruncatingLabel.h; sourceTree = "<group>"; };
 		CF4F15881982D326005F6E63 /* FadeTruncatingLabel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = FadeTruncatingLabel.m; path = Classes/FadeTruncatingLabel.m; sourceTree = "<group>"; };
 		CF5295C41843AC28005F97FC /* iPadHome.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; name = iPadHome.storyboard; path = Home/iPadHome.storyboard; sourceTree = "<group>"; };
@@ -15701,7 +15688,6 @@
 			isa = PBXGroup;
 			children = (
 				8B65313D1A00A40000E3012D /* GoogleAnalyticsServicesiOS */,
-				CF4F155319805E5B005F6E63 /* URBSegmentedControl */,
 				010C2E7B186F48B700088E2A /* SocketIO */,
 				015AC059186E3ADC0087000D /* SocketRocket */,
 				5FA736AB1869022700E5308E /* SSKeyChain */,
@@ -15723,24 +15709,24 @@
 		080E96DDFE201D6D7F000001 /* Classes */ = {
 			isa = PBXGroup;
 			children = (
-				3C2491391492B90100FD7024 /* AdsViewController.h */,
-				1C27D0CA1464816300A1DC1A /* AppsUtil.h */,
-				3D69E0201880B1FD00AA185B /* CCDateUtilities.h */,
-				1D3623240D0F684500981E51 /* ConcurMobileAppDelegate.h */,
 				3BAAE894172B1ABE0079969B /* Config.h */,
-				6778371D1387027B004F9577 /* GlobalMacros.h */,
-				6774BB2710D15AAD0079C7CD /* MobileViewController.h */,
-				323890F718F87AA30067E7E2 /* PushWithNoAnimationSegue.h */,
-				67769CC71200842C00C79510 /* RotatingDatePicker.h */,
-				3B6454C6175E66C200A8156B /* SaveReportReceipt2.h */,
-				3C24913A1492B90200FD7024 /* AdsViewController.m */,
-				1C27D0CB1464816300A1DC1A /* AppsUtil.m */,
-				3D69E0211880B1FD00AA185B /* CCDateUtilities.m */,
-				1D3623250D0F684500981E51 /* ConcurMobileAppDelegate.m */,
 				3BAAE895172B1ABE0079969B /* Config.m */,
+				6778371D1387027B004F9577 /* GlobalMacros.h */,
+				1D3623240D0F684500981E51 /* ConcurMobileAppDelegate.h */,
+				1D3623250D0F684500981E51 /* ConcurMobileAppDelegate.m */,
+				3C2491391492B90100FD7024 /* AdsViewController.h */,
+				3C24913A1492B90200FD7024 /* AdsViewController.m */,
+				1C27D0CA1464816300A1DC1A /* AppsUtil.h */,
+				1C27D0CB1464816300A1DC1A /* AppsUtil.m */,
+				3D69E0201880B1FD00AA185B /* CCDateUtilities.h */,
+				3D69E0211880B1FD00AA185B /* CCDateUtilities.m */,
+				6774BB2710D15AAD0079C7CD /* MobileViewController.h */,
 				6774BB2810D15AAD0079C7CD /* MobileViewController.m */,
+				323890F718F87AA30067E7E2 /* PushWithNoAnimationSegue.h */,
 				323890F818F87AA30067E7E2 /* PushWithNoAnimationSegue.m */,
+				67769CC71200842C00C79510 /* RotatingDatePicker.h */,
 				67769CC81200842C00C79510 /* RotatingDatePicker.m */,
+				3B6454C6175E66C200A8156B /* SaveReportReceipt2.h */,
 				3B6454C7175E66C300A8156B /* SaveReportReceipt2.m */,
 				3D69E01918805D5800AA185B /* Analytics */,
 				2BD5046C146C8B1E00F23926 /* App Lock */,
@@ -17183,8 +17169,8 @@
 				4098439A1A2FC51F00E2CB35 /* ProfileViewController.m */,
 				40671D0F1A2D392C00FE7FEC /* Cells */,
 				406F6EDD1A153A61005D99E7 /* Profile_iPhone.Storyboard */,
-				409843BC1A2FDADE00E2CB35 /* CTEProfile.h */,
-				409843BD1A2FDADE00E2CB35 /* CTEProfile.m */,
+				40D9D13D1A48CC2300DE0F18 /* EmergencyContactVC.h */,
+				40D9D13E1A48CC2300DE0F18 /* EmergencyContactVC.m */,
 			);
 			name = Profile;
 			sourceTree = "<group>";
@@ -17192,9 +17178,6 @@
 		40E3C42019C8E982004F09DF /* Filter Screen */ = {
 			isa = PBXGroup;
 			children = (
-				CF4F156519808661005F6E63 /* HotelSearchResultsFilterVC.h */,
-				CF4F156619808661005F6E63 /* HotelSearchResultsFilterVC.m */,
-				CF4F156719808661005F6E63 /* HotelSearchResultsFilterVC.xib */,
 				40E3C4A119CBFC4B004F09DF /* FilterCheckBox.h */,
 				40E3C4A219CBFC4B004F09DF /* FilterCheckBox.m */,
 				40E3C4A919CBFCA7004F09DF /* FilterSegmentedControlGroup.h */,
@@ -17786,6 +17769,11 @@
 		5FD5929218D37EC3004EA369 /* ConcurSDK */ = {
 			isa = PBXGroup;
 			children = (
+				40C33ACB1A4DE29C00577DB3 /* CTEProfile.h */,
+				40C33ACC1A4DE29C00577DB3 /* CTEProfileBankAccount.h */,
+				40C33ACD1A4DE29C00577DB3 /* CTEProfileCreditCard.h */,
+				40C33ACE1A4DE29C00577DB3 /* CTEProfileEmergencyContact.h */,
+				40C33ACF1A4DE29C00577DB3 /* CTEProfilePersonalInfo.h */,
 				4064898E1A1C0FE2000CA4D9 /* CTECorpSsoLogin.h */,
 				0A35FB2E1A16B47F000EF2F7 /* CTEOCRExpenseDetails.h */,
 				0A35FB2D1A16B2B0000EF2F7 /* CTEOCRExpense.h */,
@@ -22514,15 +22502,6 @@
 			name = Goverment;
 			sourceTree = "<group>";
 		};
-		CF4F155319805E5B005F6E63 /* URBSegmentedControl */ = {
-			isa = PBXGroup;
-			children = (
-				CF4F155419805EB6005F6E63 /* URBSegmentedControl.h */,
-				CF4F155519805EB6005F6E63 /* URBSegmentedControl.m */,
-			);
-			name = URBSegmentedControl;
-			sourceTree = "<group>";
-		};
 		CF5BFEAF17AC1BC100C70DB8 /* Keyborad */ = {
 			isa = PBXGroup;
 			children = (
@@ -23517,7 +23496,6 @@
 				676F258313B2970B002C3D63 /* icon_add_card.png in Resources */,
 				676F258413B2970B002C3D63 /* icon_add_card@2x.png in Resources */,
 				6798AF4313BA5D54006C4E41 /* tripit_ad_ipad_landscape.png in Resources */,
-				CF4F156E19809415005F6E63 /* HotelSearchResultsFilterVC.xib in Resources */,
 				6798AF4413BA5D54006C4E41 /* tripit_ad_ipad_portrait.png in Resources */,
 				6785AD8D13BCF56F0061565A /* diamondsGRAY_1.png in Resources */,
 				6785AD8E13BCF56F0061565A /* diamondsGRAY_1@2x.png in Resources */,
@@ -25087,7 +25065,6 @@
 				F6DFF3AA17340C1D0044DA60 /* TripRejectCommentVC.xib in Resources */,
 				CF2AB052173817EA00722D5B /* TourVC.xib in Resources */,
 				CFFF9C0E17395F2E00B14900 /* TourContentVC.xib in Resources */,
-				CF4F157019809416005F6E63 /* HotelSearchResultsFilterVC.xib in Resources */,
 				CFFF9C1A1739609800B14900 /* icon_tour.png in Resources */,
 				CFA1661B1A31153600886496 /* iPadHomeReleaseNoteOverlay.xib in Resources */,
 				CFFF9C1D1739609800B14900 /* icon_tour@2x.png in Resources */,
@@ -26147,7 +26124,6 @@
 				5F9F7D1C16FD89BF00BD5279 /* tip_camera_ipad@2x.png in Resources */,
 				5F9F7D1F16FD89BF00BD5279 /* tip_menu_ipad.png in Resources */,
 				5F9F7D2216FD89BF00BD5279 /* tip_menu_ipad@2x.png in Resources */,
-				CF4F156F19809415005F6E63 /* HotelSearchResultsFilterVC.xib in Resources */,
 				8B052D6518431527003CBFB4 /* banner@2x.png in Resources */,
 				3EDC11DB16FE691900376832 /* ReportPaneHeader_iPad.xib in Resources */,
 				3EDC11E416FE91AA00376832 /* ReportPaneFooter_iPad.xib in Resources */,
@@ -28621,7 +28597,6 @@
 				67D4645B12075526000F80FB /* HotelImagesData.m in Sources */,
 				67D46464120755EF000F80FB /* HotelImageData.m in Sources */,
 				938A6409120A5FEE00BBED80 /* LinkedTextCell.m in Sources */,
-				CF4F155619805EB6005F6E63 /* URBSegmentedControl.m in Sources */,
 				939F63E11210CF4C0041C0E1 /* ReferenceData.m in Sources */,
 				2BF7929A1210A5AC0025DADF /* HotelLocationAddressHandler.m in Sources */,
 				2BF7933C1210B1030025DADF /* HotelLocationHandler.m in Sources */,
@@ -29139,6 +29114,7 @@
 				BF261C6016715336003414D3 /* GovDocPerdiemTDY.m in Sources */,
 				8B7CDB2C18240ED900C929FA /* SigninRegisterVC.m in Sources */,
 				BF261C6816717040003414D3 /* GovDocExpenseCatInfo.m in Sources */,
+				40D9D13F1A48CC2300DE0F18 /* EmergencyContactVC.m in Sources */,
 				0A93699018B576D6002D4A3F /* MobileTourViewController.m in Sources */,
 				BF261C701671A4D2003414D3 /* GovDocException.m in Sources */,
 				BF261C781671A86D003414D3 /* GovDocExpense.m in Sources */,
@@ -29266,7 +29242,6 @@
 				8B9CCBDA177BF97D00833C0C /* EvaTime.m in Sources */,
 				5F51A6F61781479700FC3CC6 /* ChatterPostLookup.m in Sources */,
 				5F51A7011781528400FC3CC6 /* ChatterTripPostViewController.m in Sources */,
-				CF4F156819808661005F6E63 /* HotelSearchResultsFilterVC.m in Sources */,
 				5F51A711178169FD00FC3CC6 /* IgniteChatterPostData.m in Sources */,
 				0AE4050B17821F8600C5E67E /* ResetPinUserEmailData.m in Sources */,
 				3D1F3D37182C668A00DE025E /* UIView+OrientationChangeSupport.m in Sources */,
@@ -29375,7 +29350,6 @@
 				CF5BFDD417A9871100C70DB8 /* GovDocTotalsVC.m in Sources */,
 				CF5BFDD517A9871100C70DB8 /* GovSelectAuthForVoucherVC.m in Sources */,
 				F6D9F1E619F91E92002A0F0B /* ImageCollectionViewCell.m in Sources */,
-				409843BE1A2FDADE00E2CB35 /* CTEProfile.m in Sources */,
 				CF5BFDD617A9871100C70DB8 /* GovExpListFieldSearchData.m in Sources */,
 				CF5BFDD717A9871100C70DB8 /* GovListFieldEditVC.m in Sources */,
 				3D7107A417A6EA14009F8D62 /* NSString+DateFormat.m in Sources */,
@@ -29505,7 +29479,6 @@
 				6726248E156BD2CB00E8199B /* SeatData.m in Sources */,
 				017B2863182AFB160098F4EF /* CXStack.m in Sources */,
 				8B359A301843F92D004D331D /* TestDriveRegisterVC_ipad.m in Sources */,
-				409843C01A2FDADE00E2CB35 /* CTEProfile.m in Sources */,
 				6726248F156BD2CB00E8199B /* AirlineTicket.m in Sources */,
 				67262490156BD2CB00E8199B /* MCLogging.m in Sources */,
 				67262491156BD2CB00E8199B /* MCLogInfo.m in Sources */,
@@ -29700,7 +29673,6 @@
 				6726252D156BD2CB00E8199B /* TrainBookVC.m in Sources */,
 				6726252E156BD2CB00E8199B /* BookingCellData.m in Sources */,
 				6726252F156BD2CB00E8199B /* TrainBookingCell.m in Sources */,
-				CF4F156A19808661005F6E63 /* HotelSearchResultsFilterVC.m in Sources */,
 				5C519BD219C9F2DA00967C70 /* UberParser.m in Sources */,
 				67262530156BD2CB00E8199B /* CarDetailCell.m in Sources */,
 				67262531156BD2CB00E8199B /* CarDetailsViewController.m in Sources */,
@@ -29893,7 +29865,6 @@
 				672625C6156BD2CB00E8199B /* LoadFormData.m in Sources */,
 				8BDB810B181F04C000847270 /* ChangingImageView.m in Sources */,
 				672625C7156BD2CB00E8199B /* AttendeeActionManager.m in Sources */,
-				CF4F155819805EB6005F6E63 /* URBSegmentedControl.m in Sources */,
 				01F64431184573630093AFFD /* CreditCardManager.m in Sources */,
 				672625C8156BD2CB00E8199B /* ItemizeHotelData.m in Sources */,
 				672625C9156BD2CB00E8199B /* ReportEntryItemizedCell.m in Sources */,
@@ -30293,6 +30264,7 @@
 				3D1F3D3A182C668A00DE025E /* UIView+OrientationChangeSupport.m in Sources */,
 				01687E9517EE942E003C01CB /* SearchResultRouteView.m in Sources */,
 				497269621681126000B1D392 /* FlightScheduleData.m in Sources */,
+				40D9D1411A48CC2300DE0F18 /* EmergencyContactVC.m in Sources */,
 				8B42618118D784370093138B /* SignInPasswordViewController.m in Sources */,
 				4972696C168112B600B1D392 /* FSSegment.m in Sources */,
 				49726976168112CE00B1D392 /* FSSegmentOption.m in Sources */,
@@ -30852,7 +30824,6 @@
 				67D81A8915138FD2003CA266 /* TrainBookingDetailCell.m in Sources */,
 				67D81A8A15138FD2003CA266 /* TrainBookListingVC.m in Sources */,
 				67D81A8B15138FD2003CA266 /* TrainBookingItem.m in Sources */,
-				CF4F155719805EB6005F6E63 /* URBSegmentedControl.m in Sources */,
 				67D81A8C15138FD2003CA266 /* DownloadSystemConfig.m in Sources */,
 				67D81A8D15138FD2003CA266 /* SystemConfig.m in Sources */,
 				67D81A8E15138FD2003CA266 /* ViolationReason.m in Sources */,
@@ -30971,6 +30942,7 @@
 				67D81AFB15138FD2003CA266 /* TrainFareChoiceCell.m in Sources */,
 				67D81AFC15138FD2003CA266 /* TrainDetailVC.m in Sources */,
 				67D81AFD15138FD2003CA266 /* TrainDeliveryVC.m in Sources */,
+				40D9D1401A48CC2300DE0F18 /* EmergencyContactVC.m in Sources */,
 				67D81AFE15138FD2003CA266 /* TrainDeliveryData.m in Sources */,
 				67D81AFF15138FD2003CA266 /* DeliveryData.m in Sources */,
 				67D81B0015138FD2003CA266 /* TrainDetailHeaderCell.m in Sources */,
@@ -31080,7 +31052,6 @@
 				67D81B4E15138FD2003CA266 /* ReportHeaderViewControllerBase.m in Sources */,
 				3DB2787D17F5033C0023EE85 /* UIDevice+Additions.m in Sources */,
 				67D81B4F15138FD2003CA266 /* ReportDetailViewController.m in Sources */,
-				CF4F156919808661005F6E63 /* HotelSearchResultsFilterVC.m in Sources */,
 				67D81B5015138FD2003CA266 /* UtilityMethods.m in Sources */,
 				67D81B5115138FD2003CA266 /* DrillCell.m in Sources */,
 				67D81B5215138FD2003CA266 /* ReportEntryViewController.m in Sources */,
@@ -31112,7 +31083,6 @@
 				67D81B6515138FD2003CA266 /* ItinDetailsCellInfo.m in Sources */,
 				67D81B6615138FD2003CA266 /* ItinDetailsCellLabel.m in Sources */,
 				67D81B6715138FD2003CA266 /* TripDetailCell.m in Sources */,
-				409843BF1A2FDADE00E2CB35 /* CTEProfile.m in Sources */,
 				67D81B6815138FD2003CA266 /* CarImageDH.m in Sources */,
 				67D81B6915138FD2003CA266 /* ItemizedToolbarHelper.m in Sources */,
 				5F80D5511843F9A000615434 /* PackingCollectionViewLayout.m in Sources */,
@@ -32238,7 +32208,6 @@
 				BFE07BCA1679988700711085 /* TripSegmentCell.m in Sources */,
 				BFE07BCB1679988700711085 /* ItinDetailCell.m in Sources */,
 				BFE07BCC1679988700711085 /* ItinDetailsCellInfo.m in Sources */,
-				CF4F15851981CD6E005F6E63 /* URBSegmentedControl.m in Sources */,
 				0AACDB7E19D6280800782177 /* HotelDetailsCallHotelTableViewCell.m in Sources */,
 				BFE07BCD1679988700711085 /* ItinDetailsCellLabel.m in Sources */,
 				BFE07BCE1679988700711085 /* TripDetailCell.m in Sources */,
@@ -32388,7 +32357,6 @@
 				32CF4386191A9DB500529A41 /* ItineraryInitialViewController.m in Sources */,
 				F656591218D88EA2008DF39B /* EntityHotelRoom+ViolationDetails.m in Sources */,
 				BFE07C4C1679988700711085 /* TravelCustomFieldAttributeValue.m in Sources */,
-				409843C11A2FDADE00E2CB35 /* CTEProfile.m in Sources */,
 				0AEE21B418FE561A00FD843E /* RoomsListHeaderImageCell.m in Sources */,
 				BFE07C4D1679988700711085 /* TravelCustomFieldsManager.m in Sources */,
 				BFE07C4E1679988700711085 /* LoginOptionsViewController.m in Sources */,
@@ -32425,6 +32393,7 @@
 				010C2E8D186F48B700088E2A /* SocketIOJSONSerialization.m in Sources */,
 				BFE07C6D1679988700711085 /* ExpenseConfirmation.m in Sources */,
 				BFE07C6E1679988700711085 /* EntityTravelCustomFieldAttribute.m in Sources */,
+				40D9D1421A48CC2300DE0F18 /* EmergencyContactVC.m in Sources */,
 				BFE07C6F1679988700711085 /* TripItLink.m in Sources */,
 				BFE07C701679988700711085 /* TravelRequestViewController.m in Sources */,
 				BFE07C711679988700711085 /* AttendeeWithFieldsBaseData.m in Sources */,
@@ -32707,7 +32676,6 @@
 				8B9CCBD6177BF25E00833C0C /* EvaLocation.m in Sources */,
 				8B9CCBE0177BF97D00833C0C /* EvaTime.m in Sources */,
 				5F51A6FC1781479700FC3CC6 /* ChatterPostLookup.m in Sources */,
-				CF4F15831981CD32005F6E63 /* HotelSearchResultsFilterVC.m in Sources */,
 				5F51A7071781528400FC3CC6 /* ChatterTripPostViewController.m in Sources */,
 				5F51A71617816A0400FC3CC6 /* IgniteChatterPostData.m in Sources */,
 				0AE4051117821F8600C5E67E /* ResetPinUserEmailData.m in Sources */,
@@ -32827,6 +32795,7 @@
 				011E89F617ED0C99005E056D /* UIColor+JPT.m in Sources */,
 				0151BBAF17ED07DF00EBAD01 /* FavoriteRoutesRequestFactory.m in Sources */,
 				0151BBB017ED07DF00EBAD01 /* LineSearchRequestFactory.m in Sources */,
+				40D9D1431A48CC2300DE0F18 /* EmergencyContactVC.m in Sources */,
 				0151BBB117ED07DF00EBAD01 /* RoutesRequestFactory.m in Sources */,
 				013720C417ED076D00BF3FB4 /* Line.m in Sources */,
 				01B271A017ED06F900D79618 /* ChooseLineViewController.m in Sources */,
@@ -33512,7 +33481,6 @@
 				5FEC9E181821843D00CA392D /* HelpOverlayStatusList.m in Sources */,
 				0169CBCA1844263600667F0A /* GoGoOfferViewController.m in Sources */,
 				BFE082851679988E00711085 /* EntityOAuthUser.m in Sources */,
-				CF4F15861981CD6E005F6E63 /* URBSegmentedControl.m in Sources */,
 				BFE082861679988E00711085 /* OAuthUserManager.m in Sources */,
 				5CBC89D8182BEFA600B7F200 /* EntityCar.m in Sources */,
 				015AC064186E3ADC0087000D /* base64.c in Sources */,
@@ -33637,7 +33605,6 @@
 				BFE082E41679988E00711085 /* EntityPolicyExpenseType.m in Sources */,
 				BFE082E51679988E00711085 /* MobileTableViewController.m in Sources */,
 				BFE082E61679988E00711085 /* ViewStateHelper.m in Sources */,
-				409843C21A2FDADE00E2CB35 /* CTEProfile.m in Sources */,
 				BFE082E71679988E00711085 /* QEEntryDefaultLayoutCell.m in Sources */,
 				BFE082E81679988E00711085 /* UploadQueueItemDescriptor.m in Sources */,
 				BFE082E91679988E00711085 /* GovDocumentManager.m in Sources */,
@@ -33898,7 +33865,6 @@
 				3D9BE5F317AB0C7D00C5ECB4 /* NSString+Additions.m in Sources */,
 				3D9BE60517B01A5600C5ECB4 /* NSArray+Additions.m in Sources */,
 				5F850AB417B2DDDB00EA7FC0 /* EntityMRU.m in Sources */,
-				CF4F15841981CD33005F6E63 /* HotelSearchResultsFilterVC.m in Sources */,
 				0AA7016C17BB09E80087283B /* CCImagePickerViewController.m in Sources */,
 				0AA7017617BB0E720087283B /* ReceiptCameraOverlayView.m in Sources */,
 				5F3AB73F17BF385600DF1B6C /* SmartExpenseManager2.m in Sources */,

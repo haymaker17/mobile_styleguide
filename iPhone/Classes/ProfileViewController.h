@@ -7,7 +7,6 @@
 //
 
 #import <UIKit/UIKit.h>
-#import "CTEProfile.h"
 
 @interface ProfileViewController : UITableViewController <UITextFieldDelegate,UITableViewDataSource>
 
