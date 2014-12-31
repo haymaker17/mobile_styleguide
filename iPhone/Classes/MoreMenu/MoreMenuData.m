@@ -519,10 +519,6 @@ typedef NS_ENUM(NSUInteger, MenuItem) {
         [self.sections addObject:tmp];
     }
     
-    tmp = [self getAppsRows];
-    if ([tmp getRowCount] > 0) {
-        [self.sections addObject:tmp];
-    }
     
     tmp = [self getSettingsRow];
     if ([tmp getRowCount] > 0) {
@@ -554,33 +550,33 @@ typedef NS_ENUM(NSUInteger, MenuItem) {
     return tmp;
 }
 
-- (MoreMenuSectionData *)getAppsRows
-{
-    MoreMenuSectionData *tmp = [[MoreMenuSectionData alloc] init];
-    tmp.sectionTitle = [Localizer getLocalizedText:@"Apps"];
-    
-    if ([[ExSystem sharedInstance] hasRole:ROLE_TRIPITAD_USER])
-    {
-        [tmp saveRowData:@"TripIt" withImage:@"icon_menu_tripit" withTag:MENU_TRIP_IT];
-    }
-
-    if ([[ExSystem sharedInstance] hasExpenseIt]) {
-        [tmp saveRowData:@"ExpenseIt" withImage:@"icon_menu_expenseit" withTag:MENU_EXPENSEIT];
-    }
-
-    [tmp saveRowData:@"Uber" withImage:@"icon_menu_uber" withTag:MENU_UBER];
-
-    if ([[ExSystem sharedInstance] hasTaxiMagic])
-    {
-        [tmp saveRowData:@"Curb" withImage:@"icon_menu_curb" withTag:MENU_TAXI_MAGIC];
-    }
-
-    // MOB-16556
-    // Henry says we show this to everyone!!!
-    [tmp saveRowData:@"TravelText" withImage:@"icon_menu_traveltext" withTag:MENU_TRAVEL_TEXT];
-
-    return tmp;
-}
+//- (MoreMenuSectionData *)getAppsRows
+//{
+//    MoreMenuSectionData *tmp = [[MoreMenuSectionData alloc] init];
+//    tmp.sectionTitle = [Localizer getLocalizedText:@"Apps"];
+//    
+//    if ([[ExSystem sharedInstance] hasRole:ROLE_TRIPITAD_USER])
+//    {
+//        [tmp saveRowData:@"TripIt" withImage:@"icon_menu_tripit" withTag:MENU_TRIP_IT];
+//    }
+//
+//    if ([[ExSystem sharedInstance] hasExpenseIt]) {
+//        [tmp saveRowData:@"ExpenseIt" withImage:@"icon_menu_expenseit" withTag:MENU_EXPENSEIT];
+//    }
+//
+//    [tmp saveRowData:@"Uber" withImage:@"icon_menu_uber" withTag:MENU_UBER];
+//
+//    if ([[ExSystem sharedInstance] hasTaxiMagic])
+//    {
+//        [tmp saveRowData:@"Curb" withImage:@"icon_menu_curb" withTag:MENU_TAXI_MAGIC];
+//    }
+//
+//    // MOB-16556
+//    // Henry says we show this to everyone!!!
+//    [tmp saveRowData:@"TravelText" withImage:@"icon_menu_traveltext" withTag:MENU_TRAVEL_TEXT];
+//
+//    return tmp;
+//}
 
 // Get the list of configured Apps from the Concur App Center, populate a list of connected apps
 -(void)setupAppCenter
