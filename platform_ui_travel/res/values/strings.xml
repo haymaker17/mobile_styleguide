@@ -1,0 +1,84 @@
+<resources>
+
+    <!-- start of general strings -->
+    <string name="general_view_rates">View Rates</string>
+    <string name="general_no_rates">No Rates</string>
+    <string name="general_not_available">Not Available</string>
+    <string name="general_sold_out">Sold Out</string>
+    <string name="general_preferred">Preferred</string>
+    <string name="general_label_miles">miles</string>
+    <string name="general_number_of_miles">%%0!number of miles%% miles</string>
+    <string name="general_label_km">km</string>
+    <string name="general_number_of_km">%%0!number of kilometeres%% km</string>
+    <string name="general_filter">Filter</string>
+    <string name="general_sort">Sort</string>
+    <!-- end of general strings -->
+
+    <string name="app_name">ConcurPlatformUITravel</string>
+    <string name="hotel_search_progress_message">Searching for hotels</string>
+    <string name="hotel_search_progress_no_hotels">No Hotels Found</string>
+    <string name="hotel_search_travel_header">HOTELS NEAR %%0%%</string>
+    <string name="hotel_search_travel_header_location_you">YOU</string>
+    <string name="dlg_travel_hotel_search_failed_title">Hotel Search Failed</string>
+    <string name="dlg_travel_hotel_search_failed_general_msg">Could not search hotels, please try again.</string>
+    <string name="current_location">Destination</string>
+    <string name="search">Search</string>
+    <string name="action_item_maps">Maps</string>
+    <string name="voice_search">Voice Search</string>
+
+    <!-- Hotel -->
+    <string name="hotel_search_resutls_title">Hotels</string>
+    <string name="hotel_search_resutls_size">%%0!number of results%% results</string>
+
+    <!-- start of hotel company preference -->
+    <string name="hotel_less_preferred">Less Preferred</string>
+    <string name="hotel_preferred">Preferred</string>
+    <string name="hotel_most_preferred">Most Preferred</string>
+    <!-- end of hotel company preference -->
+
+
+    <!-- start of hotel suggestions -->
+    <string name="hotel_suggestion_personal_history">Suggested based on past stay</string>
+    <string name="hotel_suggestion_company_favorite">Suggested based on co-worker</string>
+    <string name="hotel_suggestion_algorithm">Suggested based on popularity</string>
+    <!-- end of hotel suggestions -->
+
+
+    <!-- start of hotel search results sort menu items -->
+    <string name="hotel_search_results_sort_option_distance">Distance</string>
+    <string name="hotel_search_results_sort_option_preferred">Preferred</string>
+    <string name="hotel_search_results_sort_option_price">Price</string>
+    <string name="hotel_search_results_sort_option_rating">Rating</string>
+    <string name="hotel_search_results_sort_option_suggested">Suggested</string>
+    <string name="hotel_search_results_sorted_by_distance">results sorted by distance</string>
+    <string name="hotel_search_results_sorted_by_preference">results sorted by preference</string>
+    <string name="hotel_search_results_sorted_by_price">results sorted by price</string>
+    <string name="hotel_search_results_sorted_by_rating">results sorted by rating</string>
+    <string name="hotel_search_results_sorted_by_suggestion">results sorted by suggestion</string>
+
+    <!-- end of hotel search results sort menu items -->
+
+
+    <!-- start of hotel search results filter screen -->
+    <string name="hotel_search_results_filter_star_rating_label">STAR RATING</string>
+    <string name="hotel_search_results_filter_all">ALL</string>
+    <string name="hotel_search_results_filter_star_rating_3">3+</string>
+    <string name="hotel_search_results_filter_star_rating_4">4+</string>
+    <string name="hotel_search_results_filter_star_rating_5">5</string>
+    <string name="hotel_search_results_filter_distance_label">DISTANCE</string>
+    <string name="hotel_search_results_filter_distance_5miles">5 miles</string>
+    <string name="hotel_search_results_filter_distance_15miles">15 miles</string>
+    <string name="hotel_search_results_filter_distance_25miles">25 miles</string>
+    <string name="hotel_search_results_filter_distance_5km">5 km</string>
+    <string name="hotel_search_results_filter_distance_15km">15 km</string>
+    <string name="hotel_search_results_filter_distance_25km">25 km</string>
+    <string name="hotel_search_results_filter_name_containing_label">WITH NAME CONTAINING</string>
+    <string name="hotel_search_results_filter_name_containing_hint">Search by hotel name i.e. Westin</string>
+    <!-- end of hotel search results filter screen -->
+
+    <string name="hotel_tab_details">DETAILS</string>
+    <string name="hotel_tab_rooms">ROOMS</string>
+    <string name="hotel_tab_images">PHOTOS</string>
+    <string name="find_rooms_button">Find Rooms</string>
+
+</resources>

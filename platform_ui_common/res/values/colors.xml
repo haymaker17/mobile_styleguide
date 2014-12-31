@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <!-- Default Colors. -->
+    <color name="StandardBlueBackground">#1A84C6</color>
+    <color name="StandardBlueButton">#4fbbff</color>
+    
+    <!-- Tour screens. -->
+    <color name="universal_tour_text">#A9DEFF</color>
+    <color name="universal_tour_ab_menu">#2077BD</color>
+    
+    <color name="PrimaryText">#373d48</color>
+    <color name="exception">#FF0000</color>
+    <color name="gray">#444444</color>
+    <color name="White">#FFFFFF</color>
+
+    <!-- field label/value colors -->
+    <color name="FormLabel">#666666</color>
+    <color name="FormValue">#292929</color>
+
+    <!-- Main screen background gradient; used in drawable/gradient_background -->
+    <color name="GradientBackgroundTop">#f5f6f7</color>
+    <color name="GradientBackgroundBottom">#e5e6e6</color>
+
+    <!-- Gradient for cells; used in drawable/cell_gradient_background -->
+    <color name="CellBackgroundTop">#fdfdfd</color>
+    <color name="CellBackgroundBottom">#efefef</color>
+    <color name="SquareBoxBorder">#FFABABAB</color>
+    <color name="SquareBoxBorderTransparent">#00ABABAB</color>
+    <color name="FareGreen">#6f9916</color>
+    <color name="FareYellow">#edb300</color>
+    <color name="FareRed">#c52d47</color>
+    <color name="FareGray">#7f7f7f</color>
+    <!-- List divider color -->
+    <color name="ListDivider">#c4cdd1</color>
+    <color name="ButtonCellBackground">#DEF2FF</color>
+
+    <!-- The main header/footer bars -->
+    <color name="GradientHeaderTop">#2f6996</color>
+    <color name="GradientHeaderBottom">#023e70</color>
+    <color name="GradientHomeFooterTop">#e8e9eb</color>
+    <color name="GradientHomeFooterBottom">#d7d8d9</color>
+    <color name="StrokeHomeFooter">#8e8e8e</color>
+    
+    <!-- Offline header -->
+    <color name="offline_header">#0078c8</color>    
+    
+</resources>

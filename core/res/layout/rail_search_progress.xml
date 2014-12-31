@@ -1,0 +1,87 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    style="@style/ConcurTheme"
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent"
+    android:background="@drawable/gradient_background" >
+
+    <!-- Include the standard header bits -->
+
+    <include
+        android:layout_alignParentTop="true"
+        layout="@layout/standard_header" />
+
+    <ImageView
+        android:id="@+id/searchGlass"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerHorizontal="true"
+        android:layout_centerVertical="true"
+        android:src="@drawable/searching_glass" />
+
+    <ProgressBar
+        android:id="@+id/searchProgress"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignLeft="@id/searchGlass"
+        android:layout_alignTop="@id/searchGlass"
+        android:layout_marginLeft="12dp"
+        android:layout_marginTop="11dp" />
+
+    <TextView
+        android:id="@+id/searchFor"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/searchGlass"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="24dp"
+        android:text="@string/rail_search_label_for"
+        android:textAppearance="@style/FareSearchProgress" />
+
+    <LinearLayout
+        android:id="@+id/searchDeparting"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/searchFor"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="2dp" >
+
+        <TextView
+            android:id="@+id/searchDepartingLabel"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginRight="4dp"
+            android:text="@string/search_label_departing"
+            android:textAppearance="@style/FareSearchProgress" />
+
+        <TextView
+            android:id="@+id/searchDepartingValue"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textAppearance="@style/FareSearchProgress" />
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/searchReturning"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/searchDeparting"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="2dp" >
+
+        <TextView
+            android:id="@+id/searchReturningLabel"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginRight="4dp"
+            android:text="@string/search_label_returning"
+            android:textAppearance="@style/FareSearchProgress" />
+
+        <TextView
+            android:id="@+id/searchReturningValue"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textAppearance="@style/FareSearchProgress" />
+    </LinearLayout>
+
+</RelativeLayout>

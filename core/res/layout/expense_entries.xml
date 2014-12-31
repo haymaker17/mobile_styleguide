@@ -1,0 +1,210 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--  Top level layout file for ExpenseList activity. -->
+<LinearLayout
+  xmlns:android="http://schemas.android.com/apk/res/android"
+  android:layout_width="fill_parent"
+  android:layout_height="fill_parent"
+  android:orientation="vertical"
+  style="@style/ConcurTheme" >
+	   	
+	<!--  Include the standard header bits -->
+	<include layout="@layout/standard_header"/>
+	
+	<!--  Include the expense title header -->
+	<include android:id="@+id/title_header" layout="@layout/expense_report_title_header"/>
+	<!--  Include the group separator -->
+	<include layout="@layout/group_separator"/>
+ 
+	<ScrollView
+		android:id="@+id/scroll_view"
+		android:layout_height="fill_parent"
+		android:layout_width="fill_parent"
+		android:layout_weight="1"
+		android:background="@drawable/gradient_background"
+	>
+  		<LinearLayout
+  			android:id="@+id/linear_layout"
+  			android:layout_height="fill_parent"
+  			android:layout_width="fill_parent"
+  			android:orientation="vertical"
+  		>
+  			<LinearLayout
+				android:layout_width="fill_parent"
+				android:layout_height="fill_parent"
+				android:orientation="vertical"
+				android:layout_marginTop="18dp"
+				android:layout_marginLeft="@dimen/list_item_horizontal_margin"
+	  			android:layout_marginRight="@dimen/list_item_horizontal_margin"
+			>
+  				<LinearLayout
+					android:id="@+id/header_list"
+	  				android:layout_height="wrap_content"
+	  				android:layout_width="fill_parent"
+	  				android:orientation="vertical"
+	  				android:background="@drawable/square_border"
+	  				android:padding="1dp"
+	  			>
+	  				<LinearLayout
+	  					android:id="@+id/header_report_summary"
+	  					android:orientation="horizontal"
+	  					android:layout_width="fill_parent"
+	  					android:layout_height="wrap_content"
+	  					android:background="@drawable/list_selector_gradient_background"
+	  					android:paddingLeft="@dimen/list_cell_padding_left"
+	  					android:paddingRight="@dimen/list_cell_padding_right"
+	  					android:paddingTop="@dimen/list_cell_padding_top"
+	  					android:paddingBottom="@dimen/list_cell_padding_bottom"
+	  				>
+	  					<ImageView
+	  						android:layout_width="wrap_content"
+	  						android:layout_height="wrap_content"
+	  						android:src="@drawable/icon_summary_button"
+	  						android:layout_marginLeft="@dimen/exp_list_header_row_icon_margin"
+  							android:layout_marginRight="@dimen/exp_list_header_row_icon_margin"
+	  					/>
+	  					<TextView
+	  						android:layout_width="wrap_content"
+	  						android:layout_height="wrap_content"
+	  						android:layout_marginLeft="@dimen/exp_list_header_row_title_left_margin"
+	  						android:text="@string/report_summary"
+	  						android:textAppearance="@style/ListCellHeaderText"
+	  					/>
+	  				</LinearLayout>
+	  				<!--  Separator between summary and view/attach receipt -->
+					<include layout="@layout/group_separator"/>
+	  				<LinearLayout
+	  					android:id="@+id/header_view_attach_receipts"
+	  					android:orientation="horizontal"
+	  					android:layout_width="fill_parent"
+	  					android:layout_height="wrap_content"
+	  					android:background="@drawable/list_selector_gradient_background"
+	  					android:paddingLeft="@dimen/list_cell_padding_left"
+	  					android:paddingRight="@dimen/list_cell_padding_right"
+	  					android:paddingTop="@dimen/list_cell_padding_top"
+	  					android:paddingBottom="@dimen/list_cell_padding_bottom"
+	  				>
+	  					<ImageView
+	  						android:layout_width="wrap_content"
+	  						android:layout_height="wrap_content"
+	  						android:src="@drawable/icon_receipt_button"
+	  						android:layout_marginLeft="@dimen/exp_list_header_row_icon_margin"
+  							android:layout_marginRight="@dimen/exp_list_header_row_icon_margin"
+	  					/>
+	  					<TextView
+	  						android:id="@+id/view_receipts"
+	  						android:layout_width="wrap_content"
+	  						android:layout_height="wrap_content"
+	  						android:layout_marginLeft="@dimen/exp_list_header_row_title_left_margin"
+	  						android:text="@string/receipts"
+	  						android:textAppearance="@style/ListCellHeaderText"
+	  					/>
+	  				</LinearLayout>
+
+                    <!--  Separator between view/attach receipt and itinerary  -->
+                    <include layout="@layout/group_separator"/>
+                    <LinearLayout
+                        android:id="@+id/header_itinerary"
+                        android:orientation="horizontal"
+                        android:layout_width="fill_parent"
+                        android:layout_height="wrap_content"
+                        android:background="@drawable/list_selector_gradient_background"
+                        android:paddingLeft="@dimen/list_cell_padding_left"
+                        android:paddingRight="@dimen/list_cell_padding_right"
+                        android:paddingTop="@dimen/list_cell_padding_top"
+                        android:paddingBottom="@dimen/list_cell_padding_bottom"
+                    >
+                        <ImageView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:src="@drawable/icon_receipt_button"
+                            android:layout_marginLeft="@dimen/exp_list_header_row_icon_margin"
+                            android:layout_marginRight="@dimen/exp_list_header_row_icon_margin"
+                        />
+                        <TextView
+                            android:id="@+id/view_itinerary"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginLeft="@dimen/exp_list_header_row_title_left_margin"
+                            android:text="@string/itinerary"
+                            android:textAppearance="@style/ListCellHeaderText"
+                        />
+                    </LinearLayout>
+	  			</LinearLayout>
+	  			<View
+	  				android:layout_width="fill_parent"
+	  				android:background="@drawable/square_border_shadow"
+	  				android:layout_height="3dp"
+	  				android:layout_marginLeft="1dp"
+	  				android:layout_marginRight="1dp"
+	  			/>
+	  		</LinearLayout>
+	  		<TextView
+	  			android:id="@+id/long_press_msg_view"
+	  			android:layout_width="fill_parent"
+	  			android:layout_height="wrap_content"
+	  			android:text="@string/long_press_message"
+	  			android:textAppearance="@style/LongPressMessage"
+	  			android:layout_marginLeft="@dimen/list_item_horizontal_margin"
+	  			android:layout_marginTop="@dimen/list_item_vertical_margin"
+	  		/>
+	  		<LinearLayout
+	  			android:id="@+id/entries"
+				android:layout_width="fill_parent"
+				android:layout_height="fill_parent"
+				android:orientation="vertical"
+				android:layout_marginLeft="@dimen/list_item_horizontal_margin"
+	  			android:layout_marginRight="@dimen/list_item_horizontal_margin"
+	  			android:layout_marginBottom="@dimen/list_item_vertical_margin"
+			>
+	  			<!-- This LinearLayout view is populated programmatically. -->
+				<LinearLayout
+					android:id="@+id/entries_list"
+	  				android:layout_height="wrap_content"
+	  				android:layout_width="fill_parent"
+	  				android:orientation="vertical"
+	  				android:background="@drawable/square_border"
+	  				android:padding="1dp"
+	  			/>
+	  			<View
+	  				android:layout_width="fill_parent"
+	  				android:background="@drawable/square_border_shadow"
+	  				android:layout_height="3dp"
+	  				android:layout_marginLeft="1dp"
+	  				android:layout_marginRight="1dp"
+	  			/>
+	  		</LinearLayout>
+	  		<LinearLayout
+	  			android:id="@+id/no_entries"
+	  			android:layout_width="fill_parent"
+	  			android:layout_height="fill_parent"
+	  			android:layout_marginTop="@dimen/list_item_vertical_margin"
+	  			android:orientation="vertical"
+	  			android:gravity="center"
+	  			android:visibility="gone"
+	  		>
+	  			<ImageView
+	  				android:layout_width="wrap_content"
+	  				android:layout_height="wrap_content"
+	  				android:src="@drawable/neg_expense_icon"
+	  			/>
+	  			<TextView
+	  				android:layout_width="wrap_content"
+	  				android:layout_height="wrap_content"
+	  				android:text="@string/no_expenses"
+	  				android:textAppearance="@style/NoDataText"
+	  				android:layout_marginTop="@dimen/list_item_vertical_margin"
+	  			/>
+	  			<Button
+	  				android:id="@+id/add_expense"
+	  				android:layout_width="wrap_content"
+	  				android:layout_height="wrap_content"
+	  				android:layout_marginTop="@dimen/list_item_vertical_margin"
+	  				android:text="@string/add_expenses"
+	  			/>
+	  		</LinearLayout>
+  		</LinearLayout>
+  		</ScrollView>
+  	<!--  Include the expense footer navigation bar. -->
+  	<include android:id="@+id/expense_nav_bar_footer" layout="@layout/expense_footer_navigation_bar"/>
+</LinearLayout>
+

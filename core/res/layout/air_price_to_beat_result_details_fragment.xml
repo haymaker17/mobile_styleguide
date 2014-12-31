@@ -1,0 +1,87 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout
+	xmlns:android="http://schemas.android.com/apk/res/android"
+	android:layout_width="fill_parent"
+	android:layout_height="fill_parent"
+	android:background="@drawable/gradient_background"
+	style="@style/ConcurTheme">
+
+	<!--  Include the standard header bits -->
+	<include layout="@layout/standard_header"/>
+ 
+	<LinearLayout
+	    	android:id="@+id/price_to_beat_text_view"
+    		android:layout_height="wrap_content"
+    		android:orientation="vertical"
+    		android:layout_width="fill_parent"
+    		android:layout_gravity="top"
+    		android:paddingLeft="@dimen/list_item_horizontal_margin"
+    		android:paddingRight="@dimen/list_item_horizontal_margin"
+    		android:paddingTop="@dimen/report_list_cell_padding_top"
+    		android:paddingBottom="@dimen/report_list_cell_padding_bottom"
+    		android:background="@drawable/subheader_gradient_background"
+    	>
+        	<TextView
+        		android:layout_width="fill_parent"
+        		android:layout_height="wrap_content"
+        		android:textAppearance="@style/SubHeaderText"
+        		android:layout_gravity="top|left"
+        		android:gravity="top|left"
+        		android:id="@+id/details_text_view"
+        		android:text="Book under this price to earn travel points."
+        	/>
+
+        	<TextView
+        		android:layout_width="fill_parent"
+        		android:layout_height="wrap_content"
+        		android:layout_gravity="top|left"
+        		android:gravity="top|left"
+	    		android:scrollHorizontally="true"
+	    		android:ellipsize="end"
+	    		android:paddingTop="@dimen/list_cell_padding_top"	    		
+        		android:id="@+id/details_text_departloc"
+        		android:text="Departure: LHR"
+        	/>   	
+        	
+        	<TextView
+        		android:layout_width="fill_parent"
+        		android:layout_height="wrap_content"        		
+        		android:layout_gravity="top|left"
+        		android:gravity="top|left"
+	    		android:scrollHorizontally="true"
+	    		android:ellipsize="end"	    			    		
+        		android:id="@+id/details_text_arriveloc"
+        		android:text="Arrival: PRG"
+        	/>    
+        	<TextView
+        		android:layout_width="fill_parent"
+        		android:layout_height="wrap_content"        		
+        		android:layout_gravity="top|left"
+        		android:gravity="top|left"
+	    		android:scrollHorizontally="true"
+	    		android:ellipsize="end"	    			    		
+        		android:id="@+id/details_text_departDate"
+        		android:text="Depart: Fri, Jan 17, 2014"
+        	/>    
+        	<TextView
+        		android:layout_width="fill_parent"
+        		android:layout_height="wrap_content"
+        		android:textAppearance="@style/ListCellSubHeaderTextBold"
+        		android:layout_gravity="top|left"
+        		android:gravity="top|left"
+        		android:paddingTop="@dimen/list_cell_padding_top"
+	    		android:scrollHorizontally="true"
+	    		android:ellipsize="end"	    			    		
+        		android:id="@+id/details_text_price_to_beat_label"
+        		android:text="Air Price to Beat"
+        	/>        	     	
+    </LinearLayout>
+    <ListView 
+    	android:id="@+id/price_to_beat_list_view"
+    	android:layout_below="@+id/price_to_beat_text_view"
+    	android:layout_height="fill_parent"
+    	android:layout_width="fill_parent"
+    	android:background="@drawable/gradient_background"
+    	android:divider="@color/ListDivider"    	
+    />
+</RelativeLayout>

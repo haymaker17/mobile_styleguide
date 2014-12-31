@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/home_tour_dots"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:gravity="center"
+    android:paddingBottom="8dp"
+    android:paddingTop="8dp" >
+
+    <View
+        android:id="@+id/homeTourDot1"
+        android:layout_width="@dimen/home_tour_dot_size"
+        android:layout_height="@dimen/home_tour_dot_size"
+        android:layout_marginRight="@dimen/tour_flipper_square_margin"
+        android:background="@drawable/home_tour_blue_dot" />
+
+    <View
+        android:id="@+id/homeTourDot2"
+        android:layout_width="@dimen/home_tour_dot_size"
+        android:layout_height="@dimen/home_tour_dot_size"
+        android:layout_marginRight="@dimen/tour_flipper_square_margin"
+        android:background="@drawable/home_tour_white_dot" />
+
+    <View
+        android:id="@+id/homeTourDot3"
+        android:layout_width="@dimen/home_tour_dot_size"
+        android:layout_height="@dimen/home_tour_dot_size"
+        android:layout_marginRight="@dimen/tour_flipper_square_margin"
+        android:background="@drawable/home_tour_white_dot" />
+
+</LinearLayout>

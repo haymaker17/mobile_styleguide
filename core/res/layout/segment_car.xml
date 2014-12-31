@@ -1,0 +1,93 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+	android:layout_width="fill_parent" android:layout_height="fill_parent"
+	android:orientation="vertical" style="@style/ConcurTheme">
+
+	<!--  Include the standard header bits -->
+	<include layout="@layout/standard_header"/>
+
+	<ScrollView android:layout_height="0px"
+		android:layout_width="fill_parent" android:layout_weight="1.0"
+		android:background="@color/ListBackground">
+
+		<LinearLayout android:layout_width="fill_parent"
+			android:background="@color/ListBackground" android:orientation="vertical"
+			android:layout_height="fill_parent">
+
+			<LinearLayout android:layout_width="fill_parent"
+				android:layout_height="wrap_content" android:orientation="horizontal"
+				android:background="@drawable/subheader_gradient_background"
+				android:paddingLeft="8dp" android:paddingRight="8dp"
+				android:paddingBottom="6dp" android:paddingTop="4dp">
+				<com.concur.mobile.core.view.AsyncImageView
+					android:id="@+id/carModelImage" android:layout_height="80dp"
+					android:layout_width="80dp" android:layout_marginRight="8dp"
+					android:background="@color/White" android:layout_marginTop="4dp"/>
+				<LinearLayout android:layout_height="wrap_content"
+					android:orientation="vertical" android:layout_width="fill_parent"
+					android:layout_gravity="top" android:layout_weight="1.0">
+					<TextView android:layout_width="fill_parent"
+						android:layout_height="wrap_content" android:textAppearance="@style/ListCellHeaderText"
+						android:lines="1" android:scrollHorizontally="true"
+						android:ellipsize="end" android:text="Vendor" android:id="@+id/carVendor" />
+					<TextView android:layout_width="fill_parent"
+						android:layout_height="wrap_content" android:textAppearance="@style/SubHeaderText"
+						android:lines="1" android:scrollHorizontally="true"
+						android:ellipsize="end" android:text="Confirm # 999999"
+						android:id="@+id/carConfirm" android:textStyle="bold" />
+					<TextView android:layout_width="fill_parent"
+						android:layout_height="wrap_content" android:textAppearance="@style/SubHeaderText"
+						android:lines="1" android:scrollHorizontally="true"
+						android:ellipsize="end" android:text="Pick-up: Day, Mon 33, 0000"
+						android:id="@+id/carPickup" />
+					<TextView android:layout_width="fill_parent"
+						android:layout_height="wrap_content" android:textAppearance="@style/SubHeaderText"
+						android:lines="1" android:scrollHorizontally="true"
+						android:ellipsize="end" android:text="Drop-off: Day, Mon 33, 0000"
+						android:id="@+id/carDropoff" />
+				</LinearLayout>
+			</LinearLayout>
+
+			<LinearLayout android:layout_width="fill_parent"
+				android:orientation="vertical" android:layout_height="fill_parent"
+				android:paddingLeft="6dp" android:paddingRight="6dp"
+				android:paddingTop="10dp">
+
+				<LinearLayout android:orientation="vertical"
+					android:layout_width="fill_parent" android:layout_height="wrap_content"
+					android:id="@+id/carPhone">
+					<include layout="@layout/static_text_form_field" />
+					<include layout="@layout/group_separator" />
+				</LinearLayout>
+				<include layout="@layout/static_text_form_field" android:id="@+id/carLocation" />
+				<View android:layout_width="fill_parent" android:background="@drawable/square_border_shadow"
+					android:layout_height="3dp" android:layout_marginLeft="1dp"
+					android:layout_marginRight="1dp" android:layout_marginBottom="10dp" />
+
+				<include layout="@layout/static_text_form_field" android:id="@+id/carType" />
+				<include layout="@layout/group_separator" />
+				<include layout="@layout/static_text_form_field" android:id="@+id/carStatus" />
+				<include layout="@layout/group_separator" />
+				<include layout="@layout/static_text_form_field" android:id="@+id/carDailyRate" />
+				<include layout="@layout/group_separator" />
+				<include layout="@layout/static_text_form_field" android:id="@+id/carTotalRate" />
+				<View android:layout_width="fill_parent" android:background="@drawable/square_border_shadow"
+					android:layout_height="3dp" android:layout_marginLeft="1dp"
+					android:layout_marginRight="1dp" android:layout_marginBottom="10dp" />
+
+			</LinearLayout>
+			<Button
+			    android:id="@+id/cancel"
+			    android:layout_width="wrap_content"
+			    android:layout_height="wrap_content"
+			    android:paddingLeft="40dp"
+			    android:paddingRight="40dp"
+			    android:layout_gravity="center"
+			    android:gravity="center"
+			    android:text="@string/general_cancel_car"
+			    style="@style/StandardButton"
+			    android:layout_marginBottom="10dp"
+			/>
+		</LinearLayout>
+	</ScrollView>
+</LinearLayout>

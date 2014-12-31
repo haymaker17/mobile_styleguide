@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent"
+    android:orientation="vertical" >
+
+    <ListView
+        android:id="@+id/list_view"
+        android:layout_width="fill_parent"
+        android:layout_height="0px"
+        android:layout_weight="1.0"
+        android:alwaysDrawnWithCache="false"
+        android:background="@color/WhiteBackground"
+        android:cacheColorHint="#00000000"
+        android:divider="@color/ListDivider"
+        android:dividerHeight="2dp" />
+
+    <LinearLayout
+        android:id="@+id/expenseListButtonBar"
+        android:layout_width="fill_parent"
+        android:layout_height="@dimen/footer_height"
+        android:background="@drawable/gradient_title_bar"
+        android:gravity="center_vertical"
+        android:orientation="horizontal"
+        android:paddingBottom="2dp"
+        android:paddingTop="4dp" >
+
+        <Button
+            android:id="@+id/expenseListBtnDelete"
+            android:layout_width="0dp"
+            android:layout_height="@dimen/standard_button_height"
+            android:layout_marginLeft="@dimen/footer_button_horizontal_margin"
+            android:layout_marginRight="25dp"
+            android:layout_weight="1.0"
+            android:background="@drawable/btn_standard"
+            android:text="@string/cardlist_btn_delete"
+            android:textSize="14sp" />
+
+        <Button
+            android:id="@+id/expenseListBtnAdd"
+            android:layout_width="0dp"
+            android:layout_height="@dimen/standard_button_height"
+            android:layout_marginLeft="25dp"
+            android:layout_marginRight="@dimen/footer_button_horizontal_margin"
+            android:layout_weight="1.0"
+            android:background="@drawable/btn_standard"
+            android:text="@string/cardlist_btn_add"
+            android:textSize="14sp" />
+    </LinearLayout>
+
+</LinearLayout>

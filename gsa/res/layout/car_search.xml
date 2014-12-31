@@ -1,0 +1,187 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    style="@style/ConcurTheme"
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent"
+    android:background="@drawable/gradient_background"
+    android:orientation="vertical" >
+
+    <include
+        android:id="@+id/header"
+        layout="@layout/standard_header" />
+
+    <ScrollView
+        android:layout_width="fill_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1" >
+
+        <LinearLayout
+            android:layout_width="fill_parent"
+            android:layout_height="fill_parent"
+            android:orientation="vertical" >
+
+            <!-- auth -->
+
+            <LinearLayout
+                android:id="@+id/car_search_auth_layout"
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="@dimen/list_item_horizontal_margin"
+                android:layout_marginRight="@dimen/list_item_horizontal_margin"
+                android:layout_marginTop="@dimen/list_group_vertical_margin"
+                android:orientation="vertical" >
+
+                <LinearLayout
+                    android:layout_width="fill_parent"
+                    android:layout_height="wrap_content"
+                    android:background="@drawable/square_border"
+                    android:orientation="vertical"
+                    android:padding="1dp" >
+
+                    <include
+                        android:id="@+id/car_search_selected_auth"
+                        layout="@layout/static_text_form_field" />
+
+                    <include layout="@layout/group_separator" />
+
+                    <include
+                        android:id="@+id/car_search_selected_perdiem"
+                        layout="@layout/image_form_field" />
+                </LinearLayout>
+            </LinearLayout>
+
+            <!-- Location Group -->
+
+            <LinearLayout
+                android:id="@+id/car_search_location"
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="@dimen/list_item_horizontal_margin"
+                android:layout_marginRight="@dimen/list_item_horizontal_margin"
+                android:layout_marginTop="@dimen/list_group_vertical_margin"
+                android:orientation="vertical" >
+
+                <LinearLayout
+                    android:layout_width="fill_parent"
+                    android:layout_height="wrap_content"
+                    android:background="@drawable/square_border"
+                    android:orientation="vertical"
+                    android:padding="1dp" >
+
+                    <include
+                        android:id="@+id/car_search_loc"
+                        layout="@layout/image_form_field" />
+                </LinearLayout>
+
+                <View
+                    android:layout_width="fill_parent"
+                    android:layout_height="3dp"
+                    android:layout_marginLeft="1dp"
+                    android:layout_marginRight="1dp"
+                    android:background="@drawable/square_border_shadow" />
+            </LinearLayout>
+
+            <!-- Car Pick-up/Drop-off Date/Time Group -->
+
+            <LinearLayout
+                android:id="@+id/car_search_pickup_dropoff_date_time"
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="@dimen/list_item_horizontal_margin"
+                android:layout_marginRight="@dimen/list_item_horizontal_margin"
+                android:layout_marginTop="@dimen/list_group_vertical_margin"
+                android:orientation="vertical" >
+
+                <LinearLayout
+                    android:layout_width="fill_parent"
+                    android:layout_height="wrap_content"
+                    android:background="@drawable/square_border"
+                    android:orientation="vertical"
+                    android:padding="1dp" >
+
+                    <!-- Pick-up date -->
+
+                    <include
+                        android:id="@+id/car_search_pickup_date"
+                        layout="@layout/image_form_field" />
+
+                    <include layout="@layout/group_separator" />
+                    <!-- Pick-up time -->
+
+                    <include
+                        android:id="@+id/car_search_pickup_time"
+                        layout="@layout/image_form_field" />
+
+                    <include layout="@layout/group_separator" />
+                    <!-- Drop-off date -->
+
+                    <include
+                        android:id="@+id/car_search_dropoff_date"
+                        layout="@layout/image_form_field" />
+
+                    <include layout="@layout/group_separator" />
+                    <!-- Drop-off time -->
+
+                    <include
+                        android:id="@+id/car_search_dropoff_time"
+                        layout="@layout/image_form_field" />
+                </LinearLayout>
+
+                <View
+                    android:layout_width="fill_parent"
+                    android:layout_height="3dp"
+                    android:layout_marginLeft="1dp"
+                    android:layout_marginRight="1dp"
+                    android:background="@drawable/square_border_shadow" />
+            </LinearLayout>
+
+            <!-- Car-type Group -->
+
+            <LinearLayout
+                android:id="@+id/car_type_group"
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="@dimen/list_group_vertical_margin"
+                android:layout_marginLeft="@dimen/list_item_horizontal_margin"
+                android:layout_marginRight="@dimen/list_item_horizontal_margin"
+                android:layout_marginTop="@dimen/list_group_vertical_margin"
+                android:orientation="vertical" >
+
+                <LinearLayout
+                    android:layout_width="fill_parent"
+                    android:layout_height="wrap_content"
+                    android:background="@drawable/square_border"
+                    android:orientation="vertical"
+                    android:padding="1dp" >
+
+                    <include
+                        android:id="@+id/car_type"
+                        layout="@layout/image_form_field" />
+                </LinearLayout>
+
+                <View
+                    android:layout_width="fill_parent"
+                    android:layout_height="3dp"
+                    android:layout_marginLeft="1dp"
+                    android:layout_marginRight="1dp"
+                    android:background="@drawable/square_border_shadow" />
+            </LinearLayout>
+
+            <!-- Custom Fields View Group -->
+
+            <LinearLayout
+                android:id="@+id/booking_custom_fields"
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="@dimen/list_group_vertical_margin"
+                android:layout_marginLeft="@dimen/list_item_horizontal_margin"
+                android:layout_marginRight="@dimen/list_item_horizontal_margin"
+                android:orientation="vertical" />
+        </LinearLayout>
+    </ScrollView>
+
+    <include
+        android:id="@+id/footer"
+        layout="@layout/footer_navigation_bar_one_button" />
+
+</LinearLayout>

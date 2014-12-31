@@ -1,0 +1,1781 @@
+<MWSResponse xmlns:i="http://www.w3.org/2001/XMLSchema-instance">
+	<Response>
+		<AllowedCarTypes>
+			<CarType>
+				<Code>E*</Code>
+				<Description>Economy</Description>
+				<IsDefault>true</IsDefault>
+			</CarType>
+			<CarType>
+				<Code>S*</Code>
+				<Description>Standard</Description>
+			</CarType>
+			<CarType>
+				<Code>MV</Code>
+				<Description>Mini Van</Description>
+			</CarType>
+		</AllowedCarTypes>
+		<AttendeeColumnDefs xmlns:a="http://schemas.datacontract.org/2004/07/Snowbird">
+			<a:FormField>
+				<a:Access>RO</a:Access>
+				<a:CtrlType>edit</a:CtrlType>
+				<a:DataType>VARCHAR</a:DataType>
+				<a:Id>AttendeeName</a:Id>
+				<a:Label>Attendee Name</a:Label>
+			</a:FormField>
+			<a:FormField>
+				<a:Access>RW</a:Access>
+				<a:CtrlType>edit</a:CtrlType>
+				<a:DataType>VARCHAR</a:DataType>
+				<a:Id>Title</a:Id>
+				<a:Label>Attendee Title</a:Label>
+			</a:FormField>
+			<a:FormField>
+				<a:Access>RW</a:Access>
+				<a:CtrlType>edit</a:CtrlType>
+				<a:DataType>VARCHAR</a:DataType>
+				<a:Id>Company</a:Id>
+				<a:Label>Company</a:Label>
+			</a:FormField>
+			<a:FormField>
+				<a:Access>RW</a:Access>
+				<a:CtrlType>picklist</a:CtrlType>
+				<a:DataType>INTEGER</a:DataType>
+				<a:Id>AtnTypeKey</a:Id>
+				<a:Label>Attendee Type</a:Label>
+			</a:FormField>
+			<a:FormField>
+				<a:Access>RW</a:Access>
+				<a:CtrlType>edit</a:CtrlType>
+				<a:DataType>INTEGER</a:DataType>
+				<a:Id>InstanceCount</a:Id>
+				<a:Label>Attendee Count</a:Label>
+			</a:FormField>
+			<a:FormField>
+				<a:Access>RW</a:Access>
+				<a:CtrlType>edit</a:CtrlType>
+				<a:DataType>VARCHAR</a:DataType>
+				<a:Id>ExternalId</a:Id>
+				<a:Label>External ID</a:Label>
+			</a:FormField>
+			<a:FormField>
+				<a:Access>RW</a:Access>
+				<a:CtrlType>edit</a:CtrlType>
+				<a:DataType>VARCHAR</a:DataType>
+				<a:Id>FirstName</a:Id>
+				<a:Label>First Name</a:Label>
+			</a:FormField>
+			<a:FormField>
+				<a:Access>RW</a:Access>
+				<a:CtrlType>edit</a:CtrlType>
+				<a:DataType>VARCHAR</a:DataType>
+				<a:Id>LastName</a:Id>
+				<a:Label>Last Name</a:Label>
+			</a:FormField>
+			<a:FormField>
+				<a:Access>RW</a:Access>
+				<a:CtrlType>edit</a:CtrlType>
+				<a:DataType>VARCHAR</a:DataType>
+				<a:Id>Mi</a:Id>
+				<a:Label>Middle Initial</a:Label>
+			</a:FormField>
+			<a:FormField>
+				<a:Access>RW</a:Access>
+				<a:CtrlType>picklist</a:CtrlType>
+				<a:DataType>VARCHAR</a:DataType>
+				<a:Id>Custom1</a:Id>
+				<a:Label>Organization (Att)</a:Label>
+			</a:FormField>
+			<a:FormField>
+				<a:Access>RW</a:Access>
+				<a:CtrlType>edit</a:CtrlType>
+				<a:DataType>VARCHAR</a:DataType>
+				<a:Id>Suffix</a:Id>
+				<a:Label>Suffix</a:Label>
+			</a:FormField>
+			<a:FormField>
+				<a:Access>RO</a:Access>
+				<a:CtrlType>edit</a:CtrlType>
+				<a:DataType>MONEY</a:DataType>
+				<a:Id>TotalAmountPrevYear</a:Id>
+				<a:Label>Total Amount Previous Year</a:Label>
+			</a:FormField>
+			<a:FormField>
+				<a:Access>RO</a:Access>
+				<a:CtrlType>edit</a:CtrlType>
+				<a:DataType>MONEY</a:DataType>
+				<a:Id>TotalAmountYtd</a:Id>
+				<a:Label>Total Amount YTD</a:Label>
+			</a:FormField>
+		</AttendeeColumnDefs>
+		<AttendeeTypes>
+			<AttendeeType>
+				<AllowEditAtnCount>Y</AllowEditAtnCount>
+				<AtnTypeCode>BUSGUEST</AtnTypeCode>
+				<AtnTypeKey>1</AtnTypeKey>
+				<AtnTypeName>Business Guest</AtnTypeName>
+				<FormKey>1067</FormKey>
+				<IsExternal>N</IsExternal>
+			</AttendeeType>
+			<AttendeeType>
+				<AllowEditAtnCount>Y</AllowEditAtnCount>
+				<AtnTypeCode>EMPLOYEE</AtnTypeCode>
+				<AtnTypeKey>2</AtnTypeKey>
+				<AtnTypeName>Employee</AtnTypeName>
+				<FormKey>1020</FormKey>
+				<IsExternal>N</IsExternal>
+			</AttendeeType>
+			<AttendeeType>
+				<AllowEditAtnCount>N</AllowEditAtnCount>
+				<AtnTypeCode>FLE</AtnTypeCode>
+				<AtnTypeKey>2004</AtnTypeKey>
+				<AtnTypeName>Fraulein</AtnTypeName>
+				<FormKey>1020</FormKey>
+				<IsExternal>N</IsExternal>
+			</AttendeeType>
+			<AttendeeType>
+				<AllowEditAtnCount>Y</AllowEditAtnCount>
+				<AtnTypeCode>HEALTH</AtnTypeCode>
+				<AtnTypeKey>2005</AtnTypeKey>
+				<AtnTypeName>HCP Attendee (MedPro)</AtnTypeName>
+				<FormKey>1047</FormKey>
+				<IsExternal>Y</IsExternal>
+			</AttendeeType>
+			<AttendeeType>
+				<AllowEditAtnCount>N</AllowEditAtnCount>
+				<AtnTypeCode>NOSHOWS</AtnTypeCode>
+				<AtnTypeKey>2000</AtnTypeKey>
+				<AtnTypeName>No Shows</AtnTypeName>
+				<FormKey>1020</FormKey>
+				<IsExternal>N</IsExternal>
+			</AttendeeType>
+			<AttendeeType>
+				<AllowEditAtnCount>N</AllowEditAtnCount>
+				<AtnTypeCode>SPOUSE</AtnTypeCode>
+				<AtnTypeKey>3</AtnTypeKey>
+				<AtnTypeName>Spouse</AtnTypeName>
+				<FormKey>1057</FormKey>
+				<IsExternal>N</IsExternal>
+			</AttendeeType>
+			<AttendeeType>
+				<AllowEditAtnCount>N</AllowEditAtnCount>
+				<AtnTypeCode>SYSEMP</AtnTypeCode>
+				<AtnTypeKey>2001</AtnTypeKey>
+				<AtnTypeName>This Employee</AtnTypeName>
+				<FormKey>1020</FormKey>
+				<IsExternal>N</IsExternal>
+			</AttendeeType>
+		</AttendeeTypes>
+		<Contact>
+			<CompanyName>snwrqa3</CompanyName>
+			<Email>martin.stefan@concurstd99.com</Email>
+			<FirstName>WilliaM</FirstName>
+			<HomeAddress>
+				<City>Redmond</City>
+				<Country>US</Country>
+				<State>WA</State>
+				<Street>9210 Redmond Woodinville Rd NE</Street>
+				<ZipCode>98052</ZipCode>
+			</HomeAddress>
+			<LastName>NeVeR</LastName>
+			<WorkAddress>
+				<City />
+				<Country>US</Country>
+				<State />
+				<Street />
+				<ZipCode />
+			</WorkAddress>
+		</Contact>
+		<Currencies>
+			<Currency>
+				<CrnCode>AFN</CrnCode>
+				<CrnName>Afghanistan, Afghani</CrnName>
+				<DecimalDigits>2</DecimalDigits>
+			</Currency>
+			<Currency>
+				<CrnCode>ALL</CrnCode>
+				<CrnName>Albania, Lek</CrnName>
+				<DecimalDigits>2</DecimalDigits>
+			</Currency>
+			<Currency>
+				<CrnCode>DZD</CrnCode>
+				<CrnName>Algeria, Dinar</CrnName>
+				<DecimalDigits>2</DecimalDigits>
+			</Currency>
+			<Currency>
+				<CrnCode>AOA</CrnCode>
+				<CrnName>Angola, Kwanza</CrnName>
+				<DecimalDigits>2</DecimalDigits>
+			</Currency>
+			<Currency>
+				<CrnCode>ARS</CrnCode>
+				<CrnName>Argentina, Peso</CrnName>
+				<DecimalDigits>2</DecimalDigits>
+			</Currency>
+			<Currency>
+				<CrnCode>AMD</CrnCode>
+				<CrnName>Armenia, Dram</CrnName>
+				<DecimalDigits>2</DecimalDigits>
+			</Currency>
+			<Currency>
+				<CrnCode>AWG</CrnCode>
+				<CrnName>Aruba, Florin</CrnName>
+				<DecimalDigits>2</DecimalDigits>
+			</Currency>
+			<Currency>
+				<CrnCode>AUD</CrnCode>
+				<CrnName>Australia, Dollar</CrnName>
+				<DecimalDigits>2</DecimalDigits>
+			</Currency>
+			<Currency>
+				<CrnCode>AZN</CrnCode>
+				<CrnName>Azerbaijan, Manat</CrnName>
+				<DecimalDigits>2</DecimalDigits>
+			</Currency>
+			<Currency>
+				<CrnCode>BSD</CrnCode>
+				<CrnName>Bahamas, Dollar</CrnName>
+				<DecimalDigits>2</DecimalDigits>
+			</Currency>
+			<Currency>
+				<CrnCode>BHD</CrnCode>
+				<CrnName>Bahrain, Dinar</CrnName>
+				<DecimalDigits>3</DecimalDigits>
+			</Currency>
+			<Currency>
+				<CrnCode>BDT</CrnCode>
+				<CrnName>Bangladesh, Taka</CrnName>
+				<DecimalDigits>2</DecimalDigits>
+			</Currency>
+			<Currency>
+				<CrnCode>BBD</CrnCode>
+				<CrnName>Barbados, Dollar</CrnName>
+				<DecimalDigits>2</DecimalDigits>
+			</Currency>
+			<Currency>
+				<CrnCode>BYR</CrnCode>
+				<CrnName>Belarus, Ruble</CrnName>
+			</Currency>
+			<Currency>
+				<CrnCode>BZD</CrnCode>
+				<CrnName>Belize, Dollar</CrnName>
+				<DecimalDigits>2</DecimalDigits>
+			</Currency>
+			<Currency>
+				<CrnCode>BMD</CrnCode>
+				<CrnName>Bermuda, Dollar</CrnName>
+				<DecimalDigits>2</DecimalDigits>
+			</Currency>
+			<Currency>
+				<CrnCode>BTN</CrnCode>
+				<CrnName>Bhutan, Ngultrum</CrnName>
+				<DecimalDigits>2</DecimalDigits>
+			</Currency>
+			<Currency>
+				<CrnCode>BOB</CrnCode>
+				<CrnName>Bolivia, Boliviano</CrnName>
+				<DecimalDigits>2</DecimalDigits>
+			</Currency>
+			<Currency>
+				<CrnCode>BWP</CrnCode>
+				<CrnName>Botswana, Pula</CrnName>
+				<DecimalDigits>2</DecimalDigits>
+			</Currency>
+			<Currency>
+				<CrnCode>BAM</CrnCode>
+				<CrnName>Boznia and Herzegovina, Convertible Marks</CrnName>
+				<DecimalDigits>2</DecimalDigits>
+			</Currency>
+			<Currency>
+				<CrnCode>BRL</CrnCode>
+				<CrnName>Brazil, Real</CrnName>
+				<DecimalDigits>2</DecimalDigits>
+			</Currency>
+			<Currency>
+				<CrnCode>BND</CrnCode>
+				<CrnName>Brunei, Dollar</CrnName>
+				<DecimalDigits>2</DecimalDigits>
+			</Currency>
+			<Currency>
+				<CrnCode>BGN</CrnCode>
+				<CrnName>Bulgaria, Bulgarian Lev</CrnName>
+				<DecimalDigits>2</DecimalDigits>
+			</Currency>
+			<Currency>
+				<CrnCode>BIF</CrnCode>
+				<CrnName>Burundi, Franc</CrnName>
+			</Currency>
+			<Currency>
+				<CrnCode>KHR</CrnCode>
+				<CrnName>Cambodia, Riel</CrnName>
+				<DecimalDigits>2</DecimalDigits>
+			</Currency>
+			<Currency>
+				<CrnCode>CAD</CrnCode>
+				<CrnName>Canada, Dollar</CrnName>
+				<DecimalDigits>2</DecimalDigits>
+			</Currency>
+			<Currency>
+				<CrnCode>CVE</CrnCode>
+				<CrnName>Cape Verde, Escudo</CrnName>
+				<DecimalDigits>2</DecimalDigits>
+			</Currency>
+			<Currency>
+				<CrnCode>KYD</CrnCode>
+				<CrnName>Cayman Islands, Dollar</CrnName>
+				<DecimalDigits>2</DecimalDigits>
+			</Currency>
+			<Currency>
+				<CrnCode>XOF</CrnCode>
+				<CrnName>CFA Franc BCEAO</CrnName>
+			</Currency>
+			<Currency>
+				<CrnCode>XAF</CrnCode>
+				<CrnName>CFA Franc BEAC</CrnName>
+			</Currency>
+			<Currency>
+				<CrnCode>XPF</CrnCode>
+				<CrnName>CFP Franc</CrnName>
+			</Currency>
+			<Currency>
+				<CrnCode>CLP</CrnCode>
+				<CrnName>Chile, Peso</CrnName>
+			</Currency>
+			<Currency>
+				<CrnCode>CNY</CrnCode>
+				<CrnName>China, Yuan Renminbi</CrnName>
+				<DecimalDigits>2</DecimalDigits>
+			</Currency>
+			<Currency>
+				<CrnCode>COP</CrnCode>
+				<CrnName>Colombia, Peso</CrnName>
+				<DecimalDigits>2</DecimalDigits>
+			</Currency>
+			<Currency>
+				<CrnCode>KMF</CrnCode>
+				<CrnName>Comoros, Franc</CrnName>
+			</Currency>
+			<Currency>
+				<CrnCode>CDF</CrnCode>
+				<CrnName>Congo, Franc Congolais</CrnName>
+				<DecimalDigits>2</DecimalDigits>
+			</Currency>
+			<Currency>
+				<CrnCode>CRC</CrnCode>
+				<CrnName>Costa Rica, Colon</CrnName>
+				<DecimalDigits>2</DecimalDigits>
+			</Currency>
+			<Currency>
+				<CrnCode>HRK</CrnCode>
+				<CrnName>Croatia, Kuna</CrnName>
+				<DecimalDigits>2</DecimalDigits>
+			</Currency>
+			<Currency>
+				<CrnCode>CUP</CrnCode>
+				<CrnName>Cuba, Peso</CrnName>
+				<DecimalDigits>2</DecimalDigits>
+			</Currency>
+			<Currency>
+				<CrnCode>CUC</CrnCode>
+				<CrnName>Cuba, Peso Convertible</CrnName>
+				<DecimalDigits>2</DecimalDigits>
+			</Currency>
+			<Currency>
+				<CrnCode>CZK</CrnCode>
+				<CrnName>Czech Republic, Koruna</CrnName>
+				<DecimalDigits>2</DecimalDigits>
+			</Currency>
+			<Currency>
+				<CrnCode>DKK</CrnCode>
+				<CrnName>Denmark, Krone</CrnName>
+				<DecimalDigits>2</DecimalDigits>
+			</Currency>
+			<Currency>
+				<CrnCode>DJF</CrnCode>
+				<CrnName>Djibouti, Franc</CrnName>
+			</Currency>
+			<Currency>
+				<CrnCode>DOP</CrnCode>
+				<CrnName>Dominican Republic, Peso</CrnName>
+				<DecimalDigits>2</DecimalDigits>
+			</Currency>
+			<Currency>
+				<CrnCode>XCD</CrnCode>
+				<CrnName>East Caribbean Dollar</CrnName>
+				<DecimalDigits>2</DecimalDigits>
+			</Currency>
+			<Currency>
+				<CrnCode>EGP</CrnCode>
+				<CrnName>Egypt, Pound</CrnName>
+				<DecimalDigits>2</DecimalDigits>
+			</Currency>
+			<Currency>
+				<CrnCode>ERN</CrnCode>
+				<CrnName>Eritrea, Nakfa</CrnName>
+				<DecimalDigits>2</DecimalDigits>
+			</Currency>
+			<Currency>
+				<CrnCode>ETB</CrnCode>
+				<CrnName>Ethiopia, Birr</CrnName>
+				<DecimalDigits>2</DecimalDigits>
+			</Currency>
+			<Currency>
+				<CrnCode>EUR</CrnCode>
+				<CrnName>Euro</CrnName>
+				<DecimalDigits>2</DecimalDigits>
+			</Currency>
+			<Currency>
+				<CrnCode>FKP</CrnCode>
+				<CrnName>Falkland Islands, Pound</CrnName>
+				<DecimalDigits>2</DecimalDigits>
+			</Currency>
+			<Currency>
+				<CrnCode>FJD</CrnCode>
+				<CrnName>Fiji, Dollar</CrnName>
+				<DecimalDigits>2</DecimalDigits>
+			</Currency>
+			<Currency>
+				<CrnCode>GMD</CrnCode>
+				<CrnName>Gambia, Dalasi</CrnName>
+				<DecimalDigits>2</DecimalDigits>
+			</Currency>
+			<Currency>
+				<CrnCode>GEL</CrnCode>
+				<CrnName>Georgia, Lari</CrnName>
+				<DecimalDigits>2</DecimalDigits>
+			</Currency>
+			<Currency>
+				<CrnCode>GHS</CrnCode>
+				<CrnName>Ghana, Cedi</CrnName>
+				<DecimalDigits>2</DecimalDigits>
+			</Currency>
+			<Currency>
+				<CrnCode>GIP</CrnCode>
+				<CrnName>Gibraltar, Pound</CrnName>
+				<DecimalDigits>2</DecimalDigits>
+			</Currency>
+			<Currency>
+				<CrnCode>GTQ</CrnCode>
+				<CrnName>Guatemala, Quetzal</CrnName>
+				<DecimalDigits>2</DecimalDigits>
+			</Currency>
+			<Currency>
+				<CrnCode>GNF</CrnCode>
+				<CrnName>Guinea, Franc</CrnName>
+			</Currency>
+			<Currency>
+				<CrnCode>GYD</CrnCode>
+				<CrnName>Guyana, Dollar</CrnName>
+				<DecimalDigits>2</DecimalDigits>
+			</Currency>
+			<Currency>
+				<CrnCode>HTG</CrnCode>
+				<CrnName>Haiti, Gourde</CrnName>
+				<DecimalDigits>2</DecimalDigits>
+			</Currency>
+			<Currency>
+				<CrnCode>HNL</CrnCode>
+				<CrnName>Honduras, Lempira</CrnName>
+				<DecimalDigits>2</DecimalDigits>
+			</Currency>
+			<Currency>
+				<CrnCode>HKD</CrnCode>
+				<CrnName>Hong Kong, Dollar</CrnName>
+				<DecimalDigits>2</DecimalDigits>
+			</Currency>
+			<Currency>
+				<CrnCode>HUF</CrnCode>
+				<CrnName>Hungary, Forint</CrnName>
+				<DecimalDigits>2</DecimalDigits>
+			</Currency>
+			<Currency>
+				<CrnCode>ISK</CrnCode>
+				<CrnName>Iceland, Krona</CrnName>
+			</Currency>
+			<Currency>
+				<CrnCode>INR</CrnCode>
+				<CrnName>India, Rupee</CrnName>
+				<DecimalDigits>2</DecimalDigits>
+			</Currency>
+			<Currency>
+				<CrnCode>IDR</CrnCode>
+				<CrnName>Indonesia, Rupiah</CrnName>
+				<DecimalDigits>2</DecimalDigits>
+			</Currency>
+			<Currency>
+				<CrnCode>IRR</CrnCode>
+				<CrnName>Iran, Rial</CrnName>
+				<DecimalDigits>2</DecimalDigits>
+			</Currency>
+			<Currency>
+				<CrnCode>IQD</CrnCode>
+				<CrnName>Iraq, Dinar</CrnName>
+				<DecimalDigits>3</DecimalDigits>
+			</Currency>
+			<Currency>
+				<CrnCode>ILS</CrnCode>
+				<CrnName>Israel, New Israeli Sheqel</CrnName>
+				<DecimalDigits>2</DecimalDigits>
+			</Currency>
+			<Currency>
+				<CrnCode>JMD</CrnCode>
+				<CrnName>Jamaica, Dollar</CrnName>
+				<DecimalDigits>2</DecimalDigits>
+			</Currency>
+			<Currency>
+				<CrnCode>JPY</CrnCode>
+				<CrnName>Japan, Yen</CrnName>
+			</Currency>
+			<Currency>
+				<CrnCode>JOD</CrnCode>
+				<CrnName>Jordan, Dinar</CrnName>
+				<DecimalDigits>3</DecimalDigits>
+			</Currency>
+			<Currency>
+				<CrnCode>KZT</CrnCode>
+				<CrnName>Kazakhstan, Tenge</CrnName>
+				<DecimalDigits>2</DecimalDigits>
+			</Currency>
+			<Currency>
+				<CrnCode>KES</CrnCode>
+				<CrnName>Kenya, Shilling</CrnName>
+				<DecimalDigits>2</DecimalDigits>
+			</Currency>
+			<Currency>
+				<CrnCode>KPW</CrnCode>
+				<CrnName>Korea (Democratic), North Korean Won</CrnName>
+				<DecimalDigits>2</DecimalDigits>
+			</Currency>
+			<Currency>
+				<CrnCode>KRW</CrnCode>
+				<CrnName>Korea (Republic), Won</CrnName>
+			</Currency>
+			<Currency>
+				<CrnCode>KWD</CrnCode>
+				<CrnName>Kuwait, Dinar</CrnName>
+				<DecimalDigits>3</DecimalDigits>
+			</Currency>
+			<Currency>
+				<CrnCode>KGS</CrnCode>
+				<CrnName>Kyrgyzstan, Som</CrnName>
+				<DecimalDigits>2</DecimalDigits>
+			</Currency>
+			<Currency>
+				<CrnCode>LAK</CrnCode>
+				<CrnName>Laos, Kip</CrnName>
+				<DecimalDigits>2</DecimalDigits>
+			</Currency>
+			<Currency>
+				<CrnCode>LBP</CrnCode>
+				<CrnName>Lebanon, Pound</CrnName>
+				<DecimalDigits>2</DecimalDigits>
+			</Currency>
+			<Currency>
+				<CrnCode>LSL</CrnCode>
+				<CrnName>Lesotho, Loti</CrnName>
+				<DecimalDigits>2</DecimalDigits>
+			</Currency>
+			<Currency>
+				<CrnCode>LRD</CrnCode>
+				<CrnName>Liberia, Dollar</CrnName>
+				<DecimalDigits>2</DecimalDigits>
+			</Currency>
+			<Currency>
+				<CrnCode>LYD</CrnCode>
+				<CrnName>Libya, Dinar</CrnName>
+				<DecimalDigits>3</DecimalDigits>
+			</Currency>
+			<Currency>
+				<CrnCode>LTL</CrnCode>
+				<CrnName>Lithuania, Litas</CrnName>
+				<DecimalDigits>2</DecimalDigits>
+			</Currency>
+			<Currency>
+				<CrnCode>MOP</CrnCode>
+				<CrnName>Macao, Pataca</CrnName>
+				<DecimalDigits>2</DecimalDigits>
+			</Currency>
+			<Currency>
+				<CrnCode>MKD</CrnCode>
+				<CrnName>Macedonia, Denar</CrnName>
+				<DecimalDigits>2</DecimalDigits>
+			</Currency>
+			<Currency>
+				<CrnCode>MGA</CrnCode>
+				<CrnName>Madagascar, Ariary (MGA)</CrnName>
+				<DecimalDigits>2</DecimalDigits>
+			</Currency>
+			<Currency>
+				<CrnCode>MWK</CrnCode>
+				<CrnName>Malawi, Kwacha</CrnName>
+				<DecimalDigits>2</DecimalDigits>
+			</Currency>
+			<Currency>
+				<CrnCode>MYR</CrnCode>
+				<CrnName>Malaysia, Ringgit</CrnName>
+				<DecimalDigits>2</DecimalDigits>
+			</Currency>
+			<Currency>
+				<CrnCode>MVR</CrnCode>
+				<CrnName>Maldives, Rufiyaa</CrnName>
+				<DecimalDigits>2</DecimalDigits>
+			</Currency>
+			<Currency>
+				<CrnCode>MRO</CrnCode>
+				<CrnName>Mauritania, Ouguiya</CrnName>
+				<DecimalDigits>2</DecimalDigits>
+			</Currency>
+			<Currency>
+				<CrnCode>MUR</CrnCode>
+				<CrnName>Mauritius, Rupee</CrnName>
+				<DecimalDigits>2</DecimalDigits>
+			</Currency>
+			<Currency>
+				<CrnCode>MXN</CrnCode>
+				<CrnName>Mexico, Peso</CrnName>
+				<DecimalDigits>2</DecimalDigits>
+			</Currency>
+			<Currency>
+				<CrnCode>MDL</CrnCode>
+				<CrnName>Moldova, Leu</CrnName>
+				<DecimalDigits>2</DecimalDigits>
+			</Currency>
+			<Currency>
+				<CrnCode>MNT</CrnCode>
+				<CrnName>Mongolia, Tugrik</CrnName>
+				<DecimalDigits>2</DecimalDigits>
+			</Currency>
+			<Currency>
+				<CrnCode>MAD</CrnCode>
+				<CrnName>Morocco, Dirham</CrnName>
+				<DecimalDigits>2</DecimalDigits>
+			</Currency>
+			<Currency>
+				<CrnCode>MZN</CrnCode>
+				<CrnName>Mozambique, Metical</CrnName>
+				<DecimalDigits>2</DecimalDigits>
+			</Currency>
+			<Currency>
+				<CrnCode>MMK</CrnCode>
+				<CrnName>Myanmar, Kyat</CrnName>
+				<DecimalDigits>2</DecimalDigits>
+			</Currency>
+			<Currency>
+				<CrnCode>NAD</CrnCode>
+				<CrnName>Namibia, Dollar</CrnName>
+				<DecimalDigits>2</DecimalDigits>
+			</Currency>
+			<Currency>
+				<CrnCode>NPR</CrnCode>
+				<CrnName>Nepal, Rupee</CrnName>
+				<DecimalDigits>2</DecimalDigits>
+			</Currency>
+			<Currency>
+				<CrnCode>ANG</CrnCode>
+				<CrnName>Netherlands Antilles, Guilder</CrnName>
+				<DecimalDigits>2</DecimalDigits>
+			</Currency>
+			<Currency>
+				<CrnCode>NZD</CrnCode>
+				<CrnName>New Zealand, Dollar</CrnName>
+				<DecimalDigits>2</DecimalDigits>
+			</Currency>
+			<Currency>
+				<CrnCode>NIO</CrnCode>
+				<CrnName>Nicaragua, Cordoba Oro</CrnName>
+				<DecimalDigits>2</DecimalDigits>
+			</Currency>
+			<Currency>
+				<CrnCode>NGN</CrnCode>
+				<CrnName>Nigeria, Naira</CrnName>
+				<DecimalDigits>2</DecimalDigits>
+			</Currency>
+			<Currency>
+				<CrnCode>NOK</CrnCode>
+				<CrnName>Norway, Krone</CrnName>
+				<DecimalDigits>2</DecimalDigits>
+			</Currency>
+			<Currency>
+				<CrnCode>OMR</CrnCode>
+				<CrnName>Oman, Rial Omani</CrnName>
+				<DecimalDigits>3</DecimalDigits>
+			</Currency>
+			<Currency>
+				<CrnCode>PKR</CrnCode>
+				<CrnName>Pakistan, Rupee</CrnName>
+				<DecimalDigits>2</DecimalDigits>
+			</Currency>
+			<Currency>
+				<CrnCode>PAB</CrnCode>
+				<CrnName>Panama, Balboa</CrnName>
+				<DecimalDigits>2</DecimalDigits>
+			</Currency>
+			<Currency>
+				<CrnCode>PGK</CrnCode>
+				<CrnName>Papua New Guinea, Kina</CrnName>
+				<DecimalDigits>2</DecimalDigits>
+			</Currency>
+			<Currency>
+				<CrnCode>PYG</CrnCode>
+				<CrnName>Paraguay, Guarani</CrnName>
+			</Currency>
+			<Currency>
+				<CrnCode>PEN</CrnCode>
+				<CrnName>Peru, Nuevo Sol</CrnName>
+				<DecimalDigits>2</DecimalDigits>
+			</Currency>
+			<Currency>
+				<CrnCode>PHP</CrnCode>
+				<CrnName>Philippines, Peso</CrnName>
+				<DecimalDigits>2</DecimalDigits>
+			</Currency>
+			<Currency>
+				<CrnCode>PLN</CrnCode>
+				<CrnName>Poland, Zloty</CrnName>
+				<DecimalDigits>2</DecimalDigits>
+			</Currency>
+			<Currency>
+				<CrnCode>QAR</CrnCode>
+				<CrnName>Qatar, Rial</CrnName>
+				<DecimalDigits>2</DecimalDigits>
+			</Currency>
+			<Currency>
+				<CrnCode>RON</CrnCode>
+				<CrnName>Romania, Leu</CrnName>
+				<DecimalDigits>2</DecimalDigits>
+			</Currency>
+			<Currency>
+				<CrnCode>RUB</CrnCode>
+				<CrnName>Russia, Ruble (RUB)</CrnName>
+				<DecimalDigits>2</DecimalDigits>
+			</Currency>
+			<Currency>
+				<CrnCode>RWF</CrnCode>
+				<CrnName>Rwanda, Franc</CrnName>
+			</Currency>
+			<Currency>
+				<CrnCode>SHP</CrnCode>
+				<CrnName>Saint Helena, Pound</CrnName>
+				<DecimalDigits>2</DecimalDigits>
+			</Currency>
+			<Currency>
+				<CrnCode>WST</CrnCode>
+				<CrnName>Samoa, Tala</CrnName>
+				<DecimalDigits>2</DecimalDigits>
+			</Currency>
+			<Currency>
+				<CrnCode>STD</CrnCode>
+				<CrnName>Sao Tome and Principe, Dobra</CrnName>
+				<DecimalDigits>2</DecimalDigits>
+			</Currency>
+			<Currency>
+				<CrnCode>SAR</CrnCode>
+				<CrnName>Saudi Arabia, Riyal</CrnName>
+				<DecimalDigits>2</DecimalDigits>
+			</Currency>
+			<Currency>
+				<CrnCode>RSD</CrnCode>
+				<CrnName>Serbia, Dinar</CrnName>
+				<DecimalDigits>2</DecimalDigits>
+			</Currency>
+			<Currency>
+				<CrnCode>SCR</CrnCode>
+				<CrnName>Seychelles, Rupee</CrnName>
+				<DecimalDigits>2</DecimalDigits>
+			</Currency>
+			<Currency>
+				<CrnCode>SLL</CrnCode>
+				<CrnName>Sierra Leone, Leone</CrnName>
+				<DecimalDigits>2</DecimalDigits>
+			</Currency>
+			<Currency>
+				<CrnCode>SGD</CrnCode>
+				<CrnName>Singapore, Dollar</CrnName>
+				<DecimalDigits>2</DecimalDigits>
+			</Currency>
+			<Currency>
+				<CrnCode>SBD</CrnCode>
+				<CrnName>Solomon Islands, Dollar</CrnName>
+				<DecimalDigits>2</DecimalDigits>
+			</Currency>
+			<Currency>
+				<CrnCode>SOS</CrnCode>
+				<CrnName>Somalia, Shilling</CrnName>
+				<DecimalDigits>2</DecimalDigits>
+			</Currency>
+			<Currency>
+				<CrnCode>ZAR</CrnCode>
+				<CrnName>South Africa, Rand</CrnName>
+				<DecimalDigits>2</DecimalDigits>
+			</Currency>
+			<Currency>
+				<CrnCode>SSP</CrnCode>
+				<CrnName>South Sudan, Pound</CrnName>
+				<DecimalDigits>2</DecimalDigits>
+			</Currency>
+			<Currency>
+				<CrnCode>LKR</CrnCode>
+				<CrnName>Sri Lanka, Rupee</CrnName>
+				<DecimalDigits>2</DecimalDigits>
+			</Currency>
+			<Currency>
+				<CrnCode>SDG</CrnCode>
+				<CrnName>Sudan, Pound</CrnName>
+				<DecimalDigits>2</DecimalDigits>
+			</Currency>
+			<Currency>
+				<CrnCode>SRD</CrnCode>
+				<CrnName>Suriname, Dollar</CrnName>
+				<DecimalDigits>2</DecimalDigits>
+			</Currency>
+			<Currency>
+				<CrnCode>SZL</CrnCode>
+				<CrnName>Swaziland, Lilangeni</CrnName>
+				<DecimalDigits>2</DecimalDigits>
+			</Currency>
+			<Currency>
+				<CrnCode>SEK</CrnCode>
+				<CrnName>Sweden, Krona</CrnName>
+				<DecimalDigits>2</DecimalDigits>
+			</Currency>
+			<Currency>
+				<CrnCode>CHF</CrnCode>
+				<CrnName>Switzerland, Franc</CrnName>
+				<DecimalDigits>2</DecimalDigits>
+			</Currency>
+			<Currency>
+				<CrnCode>SYP</CrnCode>
+				<CrnName>Syria, Pound</CrnName>
+				<DecimalDigits>2</DecimalDigits>
+			</Currency>
+			<Currency>
+				<CrnCode>TWD</CrnCode>
+				<CrnName>Taiwan, New Taiwan Dollar</CrnName>
+				<DecimalDigits>2</DecimalDigits>
+			</Currency>
+			<Currency>
+				<CrnCode>TJS</CrnCode>
+				<CrnName>Tajikistan, Somoni</CrnName>
+				<DecimalDigits>2</DecimalDigits>
+			</Currency>
+			<Currency>
+				<CrnCode>TZS</CrnCode>
+				<CrnName>Tanzania, Shilling</CrnName>
+				<DecimalDigits>2</DecimalDigits>
+			</Currency>
+			<Currency>
+				<CrnCode>THB</CrnCode>
+				<CrnName>Thailand, Baht</CrnName>
+				<DecimalDigits>2</DecimalDigits>
+			</Currency>
+			<Currency>
+				<CrnCode>TOP</CrnCode>
+				<CrnName>Tonga, Pa´anga</CrnName>
+				<DecimalDigits>2</DecimalDigits>
+			</Currency>
+			<Currency>
+				<CrnCode>TTD</CrnCode>
+				<CrnName>Trinidad and Tobago, Dollar</CrnName>
+				<DecimalDigits>2</DecimalDigits>
+			</Currency>
+			<Currency>
+				<CrnCode>TND</CrnCode>
+				<CrnName>Tunisia, Dinar</CrnName>
+				<DecimalDigits>3</DecimalDigits>
+			</Currency>
+			<Currency>
+				<CrnCode>TRY</CrnCode>
+				<CrnName>Turkey, Lira</CrnName>
+				<DecimalDigits>2</DecimalDigits>
+			</Currency>
+			<Currency>
+				<CrnCode>TMT</CrnCode>
+				<CrnName>Turkmenistan, New Manat</CrnName>
+				<DecimalDigits>2</DecimalDigits>
+			</Currency>
+			<Currency>
+				<CrnCode>AED</CrnCode>
+				<CrnName>UAE, Dirham</CrnName>
+				<DecimalDigits>2</DecimalDigits>
+			</Currency>
+			<Currency>
+				<CrnCode>UGX</CrnCode>
+				<CrnName>Uganda, Shilling</CrnName>
+			</Currency>
+			<Currency>
+				<CrnCode>GBP</CrnCode>
+				<CrnName>UK, Pound Sterling</CrnName>
+				<DecimalDigits>2</DecimalDigits>
+			</Currency>
+			<Currency>
+				<CrnCode>UAH</CrnCode>
+				<CrnName>Ukraine, Hryvnia</CrnName>
+				<DecimalDigits>2</DecimalDigits>
+			</Currency>
+			<Currency>
+				<CrnCode>UYU</CrnCode>
+				<CrnName>Uruguay, Peso Uruguayo</CrnName>
+				<DecimalDigits>2</DecimalDigits>
+			</Currency>
+			<Currency>
+				<CrnCode>USD</CrnCode>
+				<CrnName>US, Dollar</CrnName>
+				<DecimalDigits>2</DecimalDigits>
+			</Currency>
+			<Currency>
+				<CrnCode>UZS</CrnCode>
+				<CrnName>Uzbekistan, Sum</CrnName>
+				<DecimalDigits>2</DecimalDigits>
+			</Currency>
+			<Currency>
+				<CrnCode>VUV</CrnCode>
+				<CrnName>Vanuatu, Vatu</CrnName>
+			</Currency>
+			<Currency>
+				<CrnCode>VEF</CrnCode>
+				<CrnName>Venezuela, Bolivar</CrnName>
+				<DecimalDigits>2</DecimalDigits>
+			</Currency>
+			<Currency>
+				<CrnCode>VND</CrnCode>
+				<CrnName>Viet Nam, Dong</CrnName>
+			</Currency>
+			<Currency>
+				<CrnCode>YER</CrnCode>
+				<CrnName>Yemen, Rial</CrnName>
+				<DecimalDigits>2</DecimalDigits>
+			</Currency>
+			<Currency>
+				<CrnCode>ZMW</CrnCode>
+				<CrnName>Zambia, Kwacha</CrnName>
+				<DecimalDigits>2</DecimalDigits>
+			</Currency>
+			<Currency>
+				<CrnCode>ZWL</CrnCode>
+				<CrnName>Zimbabwe, Dollar</CrnName>
+				<DecimalDigits>2</DecimalDigits>
+			</Currency>
+		</Currencies>
+		<ExpenseConfirmations />
+		<ExpensePolicies>
+			<Policy>
+				<PolKey>nFGb$pzTyvp2KyyEFRPbhG0jmedtc</PolKey>
+				<SupportsImaging>Y</SupportsImaging>
+			</Policy>
+			<Policy>
+				<PolKey>nFGb9xp7KQjlR2N7gXvJFAobGcAY</PolKey>
+				<SupportsImaging>Y</SupportsImaging>
+			</Policy>
+			<Policy>
+				<PolKey>nFGb$pw9ouOq$s5ORR4i1hS6RwIAKc</PolKey>
+				<SupportsImaging>Y</SupportsImaging>
+			</Policy>
+			<Policy>
+				<PolKey>nFGb9x8NNVKe7N43AVz03vjMyXSE</PolKey>
+				<SupportsImaging>Y</SupportsImaging>
+			</Policy>
+			<Policy>
+				<PolKey>nFGb9xGjQOPqrR5YVRkSNoK0Va4s</PolKey>
+				<SupportsImaging>Y</SupportsImaging>
+			</Policy>
+			<Policy>
+				<PolKey>nFGb9xQp0PGKrPVRB4Kk8nxJHaQk</PolKey>
+				<SupportsImaging>Y</SupportsImaging>
+			</Policy>
+			<Policy>
+				<PolKey>nFGb$sx2YEFE8FWXXPrmYG4ARo98M</PolKey>
+				<SupportsImaging>Y</SupportsImaging>
+			</Policy>
+			<Policy>
+				<PolKey>nFJIFtjW8rVss6gc2pdHCR7A</PolKey>
+				<SupportsImaging>Y</SupportsImaging>
+			</Policy>
+			<Policy>
+				<PolKey>nFGb$sw1B9eass9iDT6VLlW02WzY4</PolKey>
+				<SupportsImaging>Y</SupportsImaging>
+			</Policy>
+		</ExpensePolicies>
+		<Info>
+			<Hash>c094d473af2b1a5c7cfa39e704b88786</Hash>
+			<ResponseId>UPDATED</ResponseId>
+		</Info>
+		<ReimbursmentCurrencies>
+			<Currency>
+				<CrnCode>AFN</CrnCode>
+				<CrnName>Afghanistan, Afghani</CrnName>
+				<DecimalDigits>2</DecimalDigits>
+			</Currency>
+			<Currency>
+				<CrnCode>ALL</CrnCode>
+				<CrnName>Albania, Lek</CrnName>
+				<DecimalDigits>2</DecimalDigits>
+			</Currency>
+			<Currency>
+				<CrnCode>DZD</CrnCode>
+				<CrnName>Algeria, Dinar</CrnName>
+				<DecimalDigits>2</DecimalDigits>
+			</Currency>
+			<Currency>
+				<CrnCode>AOA</CrnCode>
+				<CrnName>Angola, Kwanza</CrnName>
+				<DecimalDigits>2</DecimalDigits>
+			</Currency>
+			<Currency>
+				<CrnCode>ARS</CrnCode>
+				<CrnName>Argentina, Peso</CrnName>
+				<DecimalDigits>2</DecimalDigits>
+			</Currency>
+			<Currency>
+				<CrnCode>AMD</CrnCode>
+				<CrnName>Armenia, Dram</CrnName>
+				<DecimalDigits>2</DecimalDigits>
+			</Currency>
+			<Currency>
+				<CrnCode>AWG</CrnCode>
+				<CrnName>Aruba, Florin</CrnName>
+				<DecimalDigits>2</DecimalDigits>
+			</Currency>
+			<Currency>
+				<CrnCode>AUD</CrnCode>
+				<CrnName>Australia, Dollar</CrnName>
+				<DecimalDigits>2</DecimalDigits>
+			</Currency>
+			<Currency>
+				<CrnCode>AZN</CrnCode>
+				<CrnName>Azerbaijan, Manat</CrnName>
+				<DecimalDigits>2</DecimalDigits>
+			</Currency>
+			<Currency>
+				<CrnCode>BSD</CrnCode>
+				<CrnName>Bahamas, Dollar</CrnName>
+				<DecimalDigits>2</DecimalDigits>
+			</Currency>
+			<Currency>
+				<CrnCode>BHD</CrnCode>
+				<CrnName>Bahrain, Dinar</CrnName>
+				<DecimalDigits>3</DecimalDigits>
+			</Currency>
+			<Currency>
+				<CrnCode>BDT</CrnCode>
+				<CrnName>Bangladesh, Taka</CrnName>
+				<DecimalDigits>2</DecimalDigits>
+			</Currency>
+			<Currency>
+				<CrnCode>BBD</CrnCode>
+				<CrnName>Barbados, Dollar</CrnName>
+				<DecimalDigits>2</DecimalDigits>
+			</Currency>
+			<Currency>
+				<CrnCode>BYR</CrnCode>
+				<CrnName>Belarus, Ruble</CrnName>
+			</Currency>
+			<Currency>
+				<CrnCode>BZD</CrnCode>
+				<CrnName>Belize, Dollar</CrnName>
+				<DecimalDigits>2</DecimalDigits>
+			</Currency>
+			<Currency>
+				<CrnCode>BMD</CrnCode>
+				<CrnName>Bermuda, Dollar</CrnName>
+				<DecimalDigits>2</DecimalDigits>
+			</Currency>
+			<Currency>
+				<CrnCode>BTN</CrnCode>
+				<CrnName>Bhutan, Ngultrum</CrnName>
+				<DecimalDigits>2</DecimalDigits>
+			</Currency>
+			<Currency>
+				<CrnCode>BOB</CrnCode>
+				<CrnName>Bolivia, Boliviano</CrnName>
+				<DecimalDigits>2</DecimalDigits>
+			</Currency>
+			<Currency>
+				<CrnCode>BWP</CrnCode>
+				<CrnName>Botswana, Pula</CrnName>
+				<DecimalDigits>2</DecimalDigits>
+			</Currency>
+			<Currency>
+				<CrnCode>BAM</CrnCode>
+				<CrnName>Boznia and Herzegovina, Convertible Marks</CrnName>
+				<DecimalDigits>2</DecimalDigits>
+			</Currency>
+			<Currency>
+				<CrnCode>BRL</CrnCode>
+				<CrnName>Brazil, Real</CrnName>
+				<DecimalDigits>2</DecimalDigits>
+			</Currency>
+			<Currency>
+				<CrnCode>BND</CrnCode>
+				<CrnName>Brunei, Dollar</CrnName>
+				<DecimalDigits>2</DecimalDigits>
+			</Currency>
+			<Currency>
+				<CrnCode>BGN</CrnCode>
+				<CrnName>Bulgaria, Bulgarian Lev</CrnName>
+				<DecimalDigits>2</DecimalDigits>
+			</Currency>
+			<Currency>
+				<CrnCode>BIF</CrnCode>
+				<CrnName>Burundi, Franc</CrnName>
+			</Currency>
+			<Currency>
+				<CrnCode>KHR</CrnCode>
+				<CrnName>Cambodia, Riel</CrnName>
+				<DecimalDigits>2</DecimalDigits>
+			</Currency>
+			<Currency>
+				<CrnCode>CAD</CrnCode>
+				<CrnName>Canada, Dollar</CrnName>
+				<DecimalDigits>2</DecimalDigits>
+			</Currency>
+			<Currency>
+				<CrnCode>CVE</CrnCode>
+				<CrnName>Cape Verde, Escudo</CrnName>
+				<DecimalDigits>2</DecimalDigits>
+			</Currency>
+			<Currency>
+				<CrnCode>KYD</CrnCode>
+				<CrnName>Cayman Islands, Dollar</CrnName>
+				<DecimalDigits>2</DecimalDigits>
+			</Currency>
+			<Currency>
+				<CrnCode>XOF</CrnCode>
+				<CrnName>CFA Franc BCEAO</CrnName>
+			</Currency>
+			<Currency>
+				<CrnCode>XAF</CrnCode>
+				<CrnName>CFA Franc BEAC</CrnName>
+			</Currency>
+			<Currency>
+				<CrnCode>XPF</CrnCode>
+				<CrnName>CFP Franc</CrnName>
+			</Currency>
+			<Currency>
+				<CrnCode>CLP</CrnCode>
+				<CrnName>Chile, Peso</CrnName>
+			</Currency>
+			<Currency>
+				<CrnCode>CNY</CrnCode>
+				<CrnName>China, Yuan Renminbi</CrnName>
+				<DecimalDigits>2</DecimalDigits>
+			</Currency>
+			<Currency>
+				<CrnCode>COP</CrnCode>
+				<CrnName>Colombia, Peso</CrnName>
+				<DecimalDigits>2</DecimalDigits>
+			</Currency>
+			<Currency>
+				<CrnCode>KMF</CrnCode>
+				<CrnName>Comoros, Franc</CrnName>
+			</Currency>
+			<Currency>
+				<CrnCode>CDF</CrnCode>
+				<CrnName>Congo, Franc Congolais</CrnName>
+				<DecimalDigits>2</DecimalDigits>
+			</Currency>
+			<Currency>
+				<CrnCode>CRC</CrnCode>
+				<CrnName>Costa Rica, Colon</CrnName>
+				<DecimalDigits>2</DecimalDigits>
+			</Currency>
+			<Currency>
+				<CrnCode>HRK</CrnCode>
+				<CrnName>Croatia, Kuna</CrnName>
+				<DecimalDigits>2</DecimalDigits>
+			</Currency>
+			<Currency>
+				<CrnCode>CUP</CrnCode>
+				<CrnName>Cuba, Peso</CrnName>
+				<DecimalDigits>2</DecimalDigits>
+			</Currency>
+			<Currency>
+				<CrnCode>CUC</CrnCode>
+				<CrnName>Cuba, Peso Convertible</CrnName>
+				<DecimalDigits>2</DecimalDigits>
+			</Currency>
+			<Currency>
+				<CrnCode>CZK</CrnCode>
+				<CrnName>Czech Republic, Koruna</CrnName>
+				<DecimalDigits>2</DecimalDigits>
+			</Currency>
+			<Currency>
+				<CrnCode>DKK</CrnCode>
+				<CrnName>Denmark, Krone</CrnName>
+				<DecimalDigits>2</DecimalDigits>
+			</Currency>
+			<Currency>
+				<CrnCode>DJF</CrnCode>
+				<CrnName>Djibouti, Franc</CrnName>
+			</Currency>
+			<Currency>
+				<CrnCode>DOP</CrnCode>
+				<CrnName>Dominican Republic, Peso</CrnName>
+				<DecimalDigits>2</DecimalDigits>
+			</Currency>
+			<Currency>
+				<CrnCode>XCD</CrnCode>
+				<CrnName>East Caribbean Dollar</CrnName>
+				<DecimalDigits>2</DecimalDigits>
+			</Currency>
+			<Currency>
+				<CrnCode>EGP</CrnCode>
+				<CrnName>Egypt, Pound</CrnName>
+				<DecimalDigits>2</DecimalDigits>
+			</Currency>
+			<Currency>
+				<CrnCode>ERN</CrnCode>
+				<CrnName>Eritrea, Nakfa</CrnName>
+				<DecimalDigits>2</DecimalDigits>
+			</Currency>
+			<Currency>
+				<CrnCode>ETB</CrnCode>
+				<CrnName>Ethiopia, Birr</CrnName>
+				<DecimalDigits>2</DecimalDigits>
+			</Currency>
+			<Currency>
+				<CrnCode>EUR</CrnCode>
+				<CrnName>Euro</CrnName>
+				<DecimalDigits>2</DecimalDigits>
+			</Currency>
+			<Currency>
+				<CrnCode>FKP</CrnCode>
+				<CrnName>Falkland Islands, Pound</CrnName>
+				<DecimalDigits>2</DecimalDigits>
+			</Currency>
+			<Currency>
+				<CrnCode>FJD</CrnCode>
+				<CrnName>Fiji, Dollar</CrnName>
+				<DecimalDigits>2</DecimalDigits>
+			</Currency>
+			<Currency>
+				<CrnCode>GMD</CrnCode>
+				<CrnName>Gambia, Dalasi</CrnName>
+				<DecimalDigits>2</DecimalDigits>
+			</Currency>
+			<Currency>
+				<CrnCode>GEL</CrnCode>
+				<CrnName>Georgia, Lari</CrnName>
+				<DecimalDigits>2</DecimalDigits>
+			</Currency>
+			<Currency>
+				<CrnCode>GHS</CrnCode>
+				<CrnName>Ghana, Cedi</CrnName>
+				<DecimalDigits>2</DecimalDigits>
+			</Currency>
+			<Currency>
+				<CrnCode>GIP</CrnCode>
+				<CrnName>Gibraltar, Pound</CrnName>
+				<DecimalDigits>2</DecimalDigits>
+			</Currency>
+			<Currency>
+				<CrnCode>GTQ</CrnCode>
+				<CrnName>Guatemala, Quetzal</CrnName>
+				<DecimalDigits>2</DecimalDigits>
+			</Currency>
+			<Currency>
+				<CrnCode>GNF</CrnCode>
+				<CrnName>Guinea, Franc</CrnName>
+			</Currency>
+			<Currency>
+				<CrnCode>GYD</CrnCode>
+				<CrnName>Guyana, Dollar</CrnName>
+				<DecimalDigits>2</DecimalDigits>
+			</Currency>
+			<Currency>
+				<CrnCode>HTG</CrnCode>
+				<CrnName>Haiti, Gourde</CrnName>
+				<DecimalDigits>2</DecimalDigits>
+			</Currency>
+			<Currency>
+				<CrnCode>HNL</CrnCode>
+				<CrnName>Honduras, Lempira</CrnName>
+				<DecimalDigits>2</DecimalDigits>
+			</Currency>
+			<Currency>
+				<CrnCode>HKD</CrnCode>
+				<CrnName>Hong Kong, Dollar</CrnName>
+				<DecimalDigits>2</DecimalDigits>
+			</Currency>
+			<Currency>
+				<CrnCode>HUF</CrnCode>
+				<CrnName>Hungary, Forint</CrnName>
+				<DecimalDigits>2</DecimalDigits>
+			</Currency>
+			<Currency>
+				<CrnCode>ISK</CrnCode>
+				<CrnName>Iceland, Krona</CrnName>
+			</Currency>
+			<Currency>
+				<CrnCode>INR</CrnCode>
+				<CrnName>India, Rupee</CrnName>
+				<DecimalDigits>2</DecimalDigits>
+			</Currency>
+			<Currency>
+				<CrnCode>IDR</CrnCode>
+				<CrnName>Indonesia, Rupiah</CrnName>
+				<DecimalDigits>2</DecimalDigits>
+			</Currency>
+			<Currency>
+				<CrnCode>IRR</CrnCode>
+				<CrnName>Iran, Rial</CrnName>
+				<DecimalDigits>2</DecimalDigits>
+			</Currency>
+			<Currency>
+				<CrnCode>IQD</CrnCode>
+				<CrnName>Iraq, Dinar</CrnName>
+				<DecimalDigits>3</DecimalDigits>
+			</Currency>
+			<Currency>
+				<CrnCode>ILS</CrnCode>
+				<CrnName>Israel, New Israeli Sheqel</CrnName>
+				<DecimalDigits>2</DecimalDigits>
+			</Currency>
+			<Currency>
+				<CrnCode>JMD</CrnCode>
+				<CrnName>Jamaica, Dollar</CrnName>
+				<DecimalDigits>2</DecimalDigits>
+			</Currency>
+			<Currency>
+				<CrnCode>JPY</CrnCode>
+				<CrnName>Japan, Yen</CrnName>
+			</Currency>
+			<Currency>
+				<CrnCode>JOD</CrnCode>
+				<CrnName>Jordan, Dinar</CrnName>
+				<DecimalDigits>3</DecimalDigits>
+			</Currency>
+			<Currency>
+				<CrnCode>KZT</CrnCode>
+				<CrnName>Kazakhstan, Tenge</CrnName>
+				<DecimalDigits>2</DecimalDigits>
+			</Currency>
+			<Currency>
+				<CrnCode>KES</CrnCode>
+				<CrnName>Kenya, Shilling</CrnName>
+				<DecimalDigits>2</DecimalDigits>
+			</Currency>
+			<Currency>
+				<CrnCode>KPW</CrnCode>
+				<CrnName>Korea (Democratic), North Korean Won</CrnName>
+				<DecimalDigits>2</DecimalDigits>
+			</Currency>
+			<Currency>
+				<CrnCode>KRW</CrnCode>
+				<CrnName>Korea (Republic), Won</CrnName>
+			</Currency>
+			<Currency>
+				<CrnCode>KWD</CrnCode>
+				<CrnName>Kuwait, Dinar</CrnName>
+				<DecimalDigits>3</DecimalDigits>
+			</Currency>
+			<Currency>
+				<CrnCode>KGS</CrnCode>
+				<CrnName>Kyrgyzstan, Som</CrnName>
+				<DecimalDigits>2</DecimalDigits>
+			</Currency>
+			<Currency>
+				<CrnCode>LAK</CrnCode>
+				<CrnName>Laos, Kip</CrnName>
+				<DecimalDigits>2</DecimalDigits>
+			</Currency>
+			<Currency>
+				<CrnCode>LBP</CrnCode>
+				<CrnName>Lebanon, Pound</CrnName>
+				<DecimalDigits>2</DecimalDigits>
+			</Currency>
+			<Currency>
+				<CrnCode>LSL</CrnCode>
+				<CrnName>Lesotho, Loti</CrnName>
+				<DecimalDigits>2</DecimalDigits>
+			</Currency>
+			<Currency>
+				<CrnCode>LRD</CrnCode>
+				<CrnName>Liberia, Dollar</CrnName>
+				<DecimalDigits>2</DecimalDigits>
+			</Currency>
+			<Currency>
+				<CrnCode>LYD</CrnCode>
+				<CrnName>Libya, Dinar</CrnName>
+				<DecimalDigits>3</DecimalDigits>
+			</Currency>
+			<Currency>
+				<CrnCode>LTL</CrnCode>
+				<CrnName>Lithuania, Litas</CrnName>
+				<DecimalDigits>2</DecimalDigits>
+			</Currency>
+			<Currency>
+				<CrnCode>MOP</CrnCode>
+				<CrnName>Macao, Pataca</CrnName>
+				<DecimalDigits>2</DecimalDigits>
+			</Currency>
+			<Currency>
+				<CrnCode>MKD</CrnCode>
+				<CrnName>Macedonia, Denar</CrnName>
+				<DecimalDigits>2</DecimalDigits>
+			</Currency>
+			<Currency>
+				<CrnCode>MGA</CrnCode>
+				<CrnName>Madagascar, Ariary (MGA)</CrnName>
+				<DecimalDigits>2</DecimalDigits>
+			</Currency>
+			<Currency>
+				<CrnCode>MWK</CrnCode>
+				<CrnName>Malawi, Kwacha</CrnName>
+				<DecimalDigits>2</DecimalDigits>
+			</Currency>
+			<Currency>
+				<CrnCode>MYR</CrnCode>
+				<CrnName>Malaysia, Ringgit</CrnName>
+				<DecimalDigits>2</DecimalDigits>
+			</Currency>
+			<Currency>
+				<CrnCode>MVR</CrnCode>
+				<CrnName>Maldives, Rufiyaa</CrnName>
+				<DecimalDigits>2</DecimalDigits>
+			</Currency>
+			<Currency>
+				<CrnCode>MRO</CrnCode>
+				<CrnName>Mauritania, Ouguiya</CrnName>
+				<DecimalDigits>2</DecimalDigits>
+			</Currency>
+			<Currency>
+				<CrnCode>MUR</CrnCode>
+				<CrnName>Mauritius, Rupee</CrnName>
+				<DecimalDigits>2</DecimalDigits>
+			</Currency>
+			<Currency>
+				<CrnCode>MXN</CrnCode>
+				<CrnName>Mexico, Peso</CrnName>
+				<DecimalDigits>2</DecimalDigits>
+			</Currency>
+			<Currency>
+				<CrnCode>MDL</CrnCode>
+				<CrnName>Moldova, Leu</CrnName>
+				<DecimalDigits>2</DecimalDigits>
+			</Currency>
+			<Currency>
+				<CrnCode>MNT</CrnCode>
+				<CrnName>Mongolia, Tugrik</CrnName>
+				<DecimalDigits>2</DecimalDigits>
+			</Currency>
+			<Currency>
+				<CrnCode>MAD</CrnCode>
+				<CrnName>Morocco, Dirham</CrnName>
+				<DecimalDigits>2</DecimalDigits>
+			</Currency>
+			<Currency>
+				<CrnCode>MZN</CrnCode>
+				<CrnName>Mozambique, Metical</CrnName>
+				<DecimalDigits>2</DecimalDigits>
+			</Currency>
+			<Currency>
+				<CrnCode>MMK</CrnCode>
+				<CrnName>Myanmar, Kyat</CrnName>
+				<DecimalDigits>2</DecimalDigits>
+			</Currency>
+			<Currency>
+				<CrnCode>NAD</CrnCode>
+				<CrnName>Namibia, Dollar</CrnName>
+				<DecimalDigits>2</DecimalDigits>
+			</Currency>
+			<Currency>
+				<CrnCode>NPR</CrnCode>
+				<CrnName>Nepal, Rupee</CrnName>
+				<DecimalDigits>2</DecimalDigits>
+			</Currency>
+			<Currency>
+				<CrnCode>ANG</CrnCode>
+				<CrnName>Netherlands Antilles, Guilder</CrnName>
+				<DecimalDigits>2</DecimalDigits>
+			</Currency>
+			<Currency>
+				<CrnCode>NZD</CrnCode>
+				<CrnName>New Zealand, Dollar</CrnName>
+				<DecimalDigits>2</DecimalDigits>
+			</Currency>
+			<Currency>
+				<CrnCode>NIO</CrnCode>
+				<CrnName>Nicaragua, Cordoba Oro</CrnName>
+				<DecimalDigits>2</DecimalDigits>
+			</Currency>
+			<Currency>
+				<CrnCode>NGN</CrnCode>
+				<CrnName>Nigeria, Naira</CrnName>
+				<DecimalDigits>2</DecimalDigits>
+			</Currency>
+			<Currency>
+				<CrnCode>NOK</CrnCode>
+				<CrnName>Norway, Krone</CrnName>
+				<DecimalDigits>2</DecimalDigits>
+			</Currency>
+			<Currency>
+				<CrnCode>OMR</CrnCode>
+				<CrnName>Oman, Rial Omani</CrnName>
+				<DecimalDigits>3</DecimalDigits>
+			</Currency>
+			<Currency>
+				<CrnCode>PKR</CrnCode>
+				<CrnName>Pakistan, Rupee</CrnName>
+				<DecimalDigits>2</DecimalDigits>
+			</Currency>
+			<Currency>
+				<CrnCode>PAB</CrnCode>
+				<CrnName>Panama, Balboa</CrnName>
+				<DecimalDigits>2</DecimalDigits>
+			</Currency>
+			<Currency>
+				<CrnCode>PGK</CrnCode>
+				<CrnName>Papua New Guinea, Kina</CrnName>
+				<DecimalDigits>2</DecimalDigits>
+			</Currency>
+			<Currency>
+				<CrnCode>PYG</CrnCode>
+				<CrnName>Paraguay, Guarani</CrnName>
+			</Currency>
+			<Currency>
+				<CrnCode>PEN</CrnCode>
+				<CrnName>Peru, Nuevo Sol</CrnName>
+				<DecimalDigits>2</DecimalDigits>
+			</Currency>
+			<Currency>
+				<CrnCode>PHP</CrnCode>
+				<CrnName>Philippines, Peso</CrnName>
+				<DecimalDigits>2</DecimalDigits>
+			</Currency>
+			<Currency>
+				<CrnCode>PLN</CrnCode>
+				<CrnName>Poland, Zloty</CrnName>
+				<DecimalDigits>2</DecimalDigits>
+			</Currency>
+			<Currency>
+				<CrnCode>QAR</CrnCode>
+				<CrnName>Qatar, Rial</CrnName>
+				<DecimalDigits>2</DecimalDigits>
+			</Currency>
+			<Currency>
+				<CrnCode>RON</CrnCode>
+				<CrnName>Romania, Leu</CrnName>
+				<DecimalDigits>2</DecimalDigits>
+			</Currency>
+			<Currency>
+				<CrnCode>RUB</CrnCode>
+				<CrnName>Russia, Ruble (RUB)</CrnName>
+				<DecimalDigits>2</DecimalDigits>
+			</Currency>
+			<Currency>
+				<CrnCode>RWF</CrnCode>
+				<CrnName>Rwanda, Franc</CrnName>
+			</Currency>
+			<Currency>
+				<CrnCode>SHP</CrnCode>
+				<CrnName>Saint Helena, Pound</CrnName>
+				<DecimalDigits>2</DecimalDigits>
+			</Currency>
+			<Currency>
+				<CrnCode>WST</CrnCode>
+				<CrnName>Samoa, Tala</CrnName>
+				<DecimalDigits>2</DecimalDigits>
+			</Currency>
+			<Currency>
+				<CrnCode>STD</CrnCode>
+				<CrnName>Sao Tome and Principe, Dobra</CrnName>
+				<DecimalDigits>2</DecimalDigits>
+			</Currency>
+			<Currency>
+				<CrnCode>SAR</CrnCode>
+				<CrnName>Saudi Arabia, Riyal</CrnName>
+				<DecimalDigits>2</DecimalDigits>
+			</Currency>
+			<Currency>
+				<CrnCode>RSD</CrnCode>
+				<CrnName>Serbia, Dinar</CrnName>
+				<DecimalDigits>2</DecimalDigits>
+			</Currency>
+			<Currency>
+				<CrnCode>SCR</CrnCode>
+				<CrnName>Seychelles, Rupee</CrnName>
+				<DecimalDigits>2</DecimalDigits>
+			</Currency>
+			<Currency>
+				<CrnCode>SLL</CrnCode>
+				<CrnName>Sierra Leone, Leone</CrnName>
+				<DecimalDigits>2</DecimalDigits>
+			</Currency>
+			<Currency>
+				<CrnCode>SGD</CrnCode>
+				<CrnName>Singapore, Dollar</CrnName>
+				<DecimalDigits>2</DecimalDigits>
+			</Currency>
+			<Currency>
+				<CrnCode>SBD</CrnCode>
+				<CrnName>Solomon Islands, Dollar</CrnName>
+				<DecimalDigits>2</DecimalDigits>
+			</Currency>
+			<Currency>
+				<CrnCode>SOS</CrnCode>
+				<CrnName>Somalia, Shilling</CrnName>
+				<DecimalDigits>2</DecimalDigits>
+			</Currency>
+			<Currency>
+				<CrnCode>ZAR</CrnCode>
+				<CrnName>South Africa, Rand</CrnName>
+				<DecimalDigits>2</DecimalDigits>
+			</Currency>
+			<Currency>
+				<CrnCode>SSP</CrnCode>
+				<CrnName>South Sudan, Pound</CrnName>
+				<DecimalDigits>2</DecimalDigits>
+			</Currency>
+			<Currency>
+				<CrnCode>LKR</CrnCode>
+				<CrnName>Sri Lanka, Rupee</CrnName>
+				<DecimalDigits>2</DecimalDigits>
+			</Currency>
+			<Currency>
+				<CrnCode>SDG</CrnCode>
+				<CrnName>Sudan, Pound</CrnName>
+				<DecimalDigits>2</DecimalDigits>
+			</Currency>
+			<Currency>
+				<CrnCode>SRD</CrnCode>
+				<CrnName>Suriname, Dollar</CrnName>
+				<DecimalDigits>2</DecimalDigits>
+			</Currency>
+			<Currency>
+				<CrnCode>SZL</CrnCode>
+				<CrnName>Swaziland, Lilangeni</CrnName>
+				<DecimalDigits>2</DecimalDigits>
+			</Currency>
+			<Currency>
+				<CrnCode>SEK</CrnCode>
+				<CrnName>Sweden, Krona</CrnName>
+				<DecimalDigits>2</DecimalDigits>
+			</Currency>
+			<Currency>
+				<CrnCode>CHF</CrnCode>
+				<CrnName>Switzerland, Franc</CrnName>
+				<DecimalDigits>2</DecimalDigits>
+			</Currency>
+			<Currency>
+				<CrnCode>SYP</CrnCode>
+				<CrnName>Syria, Pound</CrnName>
+				<DecimalDigits>2</DecimalDigits>
+			</Currency>
+			<Currency>
+				<CrnCode>TWD</CrnCode>
+				<CrnName>Taiwan, New Taiwan Dollar</CrnName>
+				<DecimalDigits>2</DecimalDigits>
+			</Currency>
+			<Currency>
+				<CrnCode>TJS</CrnCode>
+				<CrnName>Tajikistan, Somoni</CrnName>
+				<DecimalDigits>2</DecimalDigits>
+			</Currency>
+			<Currency>
+				<CrnCode>TZS</CrnCode>
+				<CrnName>Tanzania, Shilling</CrnName>
+				<DecimalDigits>2</DecimalDigits>
+			</Currency>
+			<Currency>
+				<CrnCode>THB</CrnCode>
+				<CrnName>Thailand, Baht</CrnName>
+				<DecimalDigits>2</DecimalDigits>
+			</Currency>
+			<Currency>
+				<CrnCode>TOP</CrnCode>
+				<CrnName>Tonga, Pa´anga</CrnName>
+				<DecimalDigits>2</DecimalDigits>
+			</Currency>
+			<Currency>
+				<CrnCode>TTD</CrnCode>
+				<CrnName>Trinidad and Tobago, Dollar</CrnName>
+				<DecimalDigits>2</DecimalDigits>
+			</Currency>
+			<Currency>
+				<CrnCode>TND</CrnCode>
+				<CrnName>Tunisia, Dinar</CrnName>
+				<DecimalDigits>3</DecimalDigits>
+			</Currency>
+			<Currency>
+				<CrnCode>TRY</CrnCode>
+				<CrnName>Turkey, Lira</CrnName>
+				<DecimalDigits>2</DecimalDigits>
+			</Currency>
+			<Currency>
+				<CrnCode>TMT</CrnCode>
+				<CrnName>Turkmenistan, New Manat</CrnName>
+				<DecimalDigits>2</DecimalDigits>
+			</Currency>
+			<Currency>
+				<CrnCode>AED</CrnCode>
+				<CrnName>UAE, Dirham</CrnName>
+				<DecimalDigits>2</DecimalDigits>
+			</Currency>
+			<Currency>
+				<CrnCode>UGX</CrnCode>
+				<CrnName>Uganda, Shilling</CrnName>
+			</Currency>
+			<Currency>
+				<CrnCode>GBP</CrnCode>
+				<CrnName>UK, Pound Sterling</CrnName>
+				<DecimalDigits>2</DecimalDigits>
+			</Currency>
+			<Currency>
+				<CrnCode>UAH</CrnCode>
+				<CrnName>Ukraine, Hryvnia</CrnName>
+				<DecimalDigits>2</DecimalDigits>
+			</Currency>
+			<Currency>
+				<CrnCode>UYU</CrnCode>
+				<CrnName>Uruguay, Peso Uruguayo</CrnName>
+				<DecimalDigits>2</DecimalDigits>
+			</Currency>
+			<Currency>
+				<CrnCode>USD</CrnCode>
+				<CrnName>US, Dollar</CrnName>
+				<DecimalDigits>2</DecimalDigits>
+			</Currency>
+			<Currency>
+				<CrnCode>UZS</CrnCode>
+				<CrnName>Uzbekistan, Sum</CrnName>
+				<DecimalDigits>2</DecimalDigits>
+			</Currency>
+			<Currency>
+				<CrnCode>VUV</CrnCode>
+				<CrnName>Vanuatu, Vatu</CrnName>
+			</Currency>
+			<Currency>
+				<CrnCode>VEF</CrnCode>
+				<CrnName>Venezuela, Bolivar</CrnName>
+				<DecimalDigits>2</DecimalDigits>
+			</Currency>
+			<Currency>
+				<CrnCode>VND</CrnCode>
+				<CrnName>Viet Nam, Dong</CrnName>
+			</Currency>
+			<Currency>
+				<CrnCode>YER</CrnCode>
+				<CrnName>Yemen, Rial</CrnName>
+				<DecimalDigits>2</DecimalDigits>
+			</Currency>
+			<Currency>
+				<CrnCode>ZMW</CrnCode>
+				<CrnName>Zambia, Kwacha</CrnName>
+				<DecimalDigits>2</DecimalDigits>
+			</Currency>
+			<Currency>
+				<CrnCode>ZWL</CrnCode>
+				<CrnName>Zimbabwe, Dollar</CrnName>
+				<DecimalDigits>2</DecimalDigits>
+			</Currency>
+		</ReimbursmentCurrencies>
+		<ShowGDSNameInSearchResults>true</ShowGDSNameInSearchResults>
+		<TravelPointsConfig>
+			<AirTravelPointsEnabled>true</AirTravelPointsEnabled>
+			<HotelTravelPointsEnabled>true</HotelTravelPointsEnabled>
+		</TravelPointsConfig>
+	</Response>
+	<Status>
+		<IsSuccess>true</IsSuccess>
+	</Status>
+</MWSResponse>

@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+	<!-- Network Connectivity stuff. -->
+    <string name="dlg_no_connectivity_title">Klant is offline</string>
+    <string name="dlg_no_connectivity_message">Deze bewerking wordt offline niet ondersteund.  Probeer het opnieuw wanneer u verbinding hebt.</string>
+        
+    <!-- Login UI Strings -->
+	<!-- Email Lookup -->
+    <string name="email_lookup_hint">E-mailadres op uw werk of Concur-gebruikersnaam</string>
+    <string name="email_lookup_continue">Doorgaan</string>
+    <string name="email_lookup_unable_to_login_title">Kan niet aanmelden</string>
+    <string name="email_lookup_unable_to_login_msg">U kunt zich op dit moment niet aanmelden met deze informatie.</string>
+    <string name="email_lookup_wrong_email_format_title">Ongeldige e-mail of gebruikersnaam</string>
+    <string name="email_lookup_wrong_email_username_format_msg">U heeft een ongeldige e-mail of Concur-gebruikersnaam ingevoerd.</string>
+    
+    <!-- PIN/Password Login Strings -->
+    <string name="login_enter_password_pin">Mobiel wachtwoord (PIN)</string>
+    <string name="login_button">Aanmelden bij Concur</string>
+    <string name="login_no_offline">Offline aanmelden is niet mogelijk.  U moet zich online aanmelden voordat u offline kunt werken.</string>            
+    <string name="register_button">Wilt u een pincode instellen?</string>
+    <string name="login_help_with_signin">Forgot Mobile Password (PIN)?</string>
+    <string name="login_help_with_signin_password">Forgot Password?</string>
+	<string name="login_password">Wachtwoord</string>    
+    <string name="login_password_or_pin_invalid">Probeer uw wachtwoord opnieuw in te voeren of selecteer \'Ik ben het vergeten\' om aanmeldingsinstructies te ontvangen.</string>
+    <string name="login_invalid_concur_credentials">Onjuist wachtwoord</string>    
+    <string name="try_again">Opnieuw proberen</string>
+    <string name="i_forgot">Ik ben het vergeten</string>
+    <string name="dlg_logging_in">Aanmelden&#8230;</string>
+            
+	<!-- SSO Login -->
+	<string name="sso_sign_in">Aanmelden met SSO-bedrijfscode</string>
+	  
+</resources>

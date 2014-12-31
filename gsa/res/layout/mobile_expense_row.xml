@@ -1,0 +1,95 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="fill_parent"
+    android:layout_height="wrap_content"
+    android:background="@drawable/list_selector_gradient_background"
+    android:paddingBottom="@dimen/list_cell_padding_bottom"
+    android:paddingLeft="@dimen/list_cell_padding_left"
+    android:paddingRight="@dimen/list_cell_padding_right"
+    android:paddingTop="@dimen/list_cell_padding_top" >
+
+    <RelativeLayout
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content" >
+
+        <CheckBox
+            android:id="@+id/expense_row_check"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentLeft="true" 
+            android:paddingRight="@dimen/list_cell_padding_right"
+            android:visibility="gone" />
+
+        <LinearLayout
+            android:id="@+id/expnese_row_Llayout"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:layout_toRightOf="@+id/expense_row_check"
+            android:orientation="horizontal"
+            android:paddingRight="@dimen/list_cell_padding_right" >
+
+            <TextView
+                android:id="@+id/expense_row_expname"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_gravity="left|center_vertical"
+                android:layout_weight="1"
+                android:ellipsize="end"
+                android:singleLine="true"
+                android:text="Name"
+                android:textAppearance="@style/SegmentListRowHeaderText" />
+
+            <TextView
+                android:id="@+id/expense_row_amount"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:ellipsize="end"
+                android:lines="1"
+                android:scrollHorizontally="true"
+                android:text="$1000"
+                android:textAppearance="@style/SegmentListRowHeaderText" />
+        </LinearLayout>
+
+        <RelativeLayout
+            android:id="@+id/expnese_row_date_iconlayout"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/expnese_row_Llayout"
+            android:layout_toRightOf="@+id/expense_row_check"
+            android:orientation="horizontal"
+            android:paddingRight="@dimen/list_cell_padding_right"
+            android:paddingTop="5dp" >
+
+            <TextView
+                android:id="@+id/expense_row_date"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentLeft="true"
+                android:layout_below="@+id/expnese_row_Llayout"
+                android:ellipsize="end"
+                android:gravity="center_vertical"
+                android:lines="1"
+                android:scrollHorizontally="true"
+                android:text="VCH0500"
+                android:textAppearance="@style/ListCellSubHeaderText" />
+
+            <ImageView
+                android:id="@+id/expense_row_receipt"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentRight="true"
+                android:layout_below="@+id/expnese_row_Llayout"
+                android:src="@drawable/icon_receipt" />
+        </RelativeLayout>
+    </RelativeLayout>
+
+</RelativeLayout>
+
+
+
+
+
+
+
+
+

@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+  xmlns:android="http://schemas.android.com/apk/res/android"
+  android:orientation="vertical"
+  android:layout_width="fill_parent"
+  android:layout_height="wrap_content"
+  android:paddingTop="@dimen/list_cell_padding_top"
+  android:paddingBottom="@dimen/list_cell_padding_bottom"
+  android:paddingLeft="@dimen/list_cell_padding_left"
+  android:paddingRight="@dimen/list_cell_padding_right"
+  android:background="@drawable/list_selector_gradient_background"
+>
+	<TextView
+		android:id="@+id/expense_name"
+		android:layout_width="fill_parent"
+		android:layout_height="wrap_content"
+		android:textAppearance="@style/FormFieldValueText"
+	/>
+</LinearLayout>

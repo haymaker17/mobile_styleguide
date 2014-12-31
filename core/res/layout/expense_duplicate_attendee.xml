@@ -1,0 +1,68 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Top level layout file for ExpenseEntryAttendee activity. -->
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    style="@style/ConcurTheme"
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent"
+    android:background="@drawable/gradient_background"
+    android:orientation="vertical" >
+
+	<!--  Include the standard header bits -->
+	<include layout="@layout/standard_header"/>
+	
+    <!-- Include the group separator -->
+
+    <include layout="@layout/group_separator" />
+
+    <ScrollView
+        android:layout_width="fill_parent"
+        android:layout_height="fill_parent"
+        android:layout_weight="1" >
+
+        <!--
+              Making this a RadioGroup is unnecessary because the radio buttons are not immediate 
+        		children.  However, a RadioGroup is just an immediate sub-class of a LinearLayout so
+        		leave it a RadioGroup to at least express the desired intent.
+        -->
+
+        <RadioGroup
+            android:id="@+id/attendees"
+            android:layout_width="fill_parent"
+            android:layout_height="fill_parent"
+            android:orientation="vertical" >
+
+            <TextView
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:background="@color/SectionHeaderBackground"
+                android:gravity="left|center_vertical"
+                android:paddingBottom="@dimen/list_section_header_padding_bottom"
+                android:paddingLeft="8dp"
+                android:paddingTop="@dimen/list_section_header_padding_top"
+                android:text="@string/duplicate_attendee_new_section"
+                android:textAppearance="@style/ListSectionHeaderText" />
+
+            <!-- New Attendee row goes here, programmagically -->
+
+            <TextView
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:background="@color/SectionHeaderBackground"
+                android:gravity="left|center_vertical"
+                android:paddingBottom="@dimen/list_section_header_padding_bottom"
+                android:paddingLeft="8dp"
+                android:paddingTop="@dimen/list_section_header_padding_top"
+                android:text="@string/duplicate_attendee_dupe_section"
+                android:textAppearance="@style/ListSectionHeaderText" />
+
+            <!-- Duplicate Attendee rows go here, programmagically -->
+        </RadioGroup>
+    </ScrollView>
+
+    <!-- Include the expense footer navigation bar. -->
+
+    <include
+        android:id="@+id/expense_nav_bar_footer"
+        layout="@layout/expense_footer_navigation_bar" />
+
+</LinearLayout>

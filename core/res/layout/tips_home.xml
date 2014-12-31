@@ -1,0 +1,307 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent"
+    android:background="@color/TipsTransparentBlack" >
+
+    <!-- Menu Icon Row -->
+
+    <RelativeLayout
+        android:id="@+id/tip_menu_icon_row"
+        android:layout_width="fill_parent"
+        android:layout_height="@dimen/header_height" >
+
+        <ImageView
+            android:id="@+id/tip_nav_menu"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:layout_gravity="center_vertical"
+            android:paddingLeft="8dp"
+            android:src="@drawable/icon_menu" />
+
+        <ImageView
+            android:id="@+id/tip_title_button"
+            style="@style/ScreenTitleText"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:layout_gravity="center_vertical"
+            android:layout_marginLeft="@dimen/home_concur_logo_left_margin"
+            android:layout_toRightOf="@id/tip_nav_menu"
+            android:src="@drawable/concur_logo" />
+
+        <ImageView
+            android:id="@+id/tip_message_center"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:layout_alignParentRight="true"
+            android:layout_centerVertical="true"
+            android:layout_gravity="right|center_vertical"
+            android:minWidth="47dp"
+            android:scaleType="center"
+            android:src="@drawable/icon_messagecenter" />
+    </RelativeLayout>
+    
+    <!-- Menu Arrow Row -->
+
+    <LinearLayout
+        android:id="@+id/tip_menu_arrow_row"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentLeft="true"
+        android:layout_below="@id/tip_menu_icon_row"
+        android:clipToPadding="false"
+        android:orientation="horizontal"
+        android:paddingBottom="8dp" >
+
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src="@drawable/tip_arrowup" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="@dimen/tip_home_menu_text_arrow_side_margin"
+            android:layout_marginRight="8dp"
+            android:layout_weight="0.65"
+            android:gravity="center_horizontal"
+            android:paddingTop="16dp"
+            android:text="@string/home_tip_menu"
+            android:textAppearance="@style/TipHomeText" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="8dp"
+            android:layout_marginRight="@dimen/tip_home_menu_text_arrow_side_margin"
+            android:layout_weight="0.35"
+            android:gravity="center_horizontal"
+            android:paddingTop="16dp"
+            android:text="@string/msg_cntr_title"
+            android:textAppearance="@style/TipHomeText" />
+
+                <ImageView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginRight="6dp"
+                    android:src="@drawable/tip_arrowup_right" />
+        
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/tips_dismiss"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerInParent="true"
+        android:orientation="horizontal" >
+
+        <View
+            android:layout_width="5dp"
+            android:layout_height="fill_parent"
+            android:layout_marginTop="3dp"
+            android:background="@color/TipDismissShadow" />
+
+        <LinearLayout
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical" >
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:background="@color/NavigationItemSelectedBackground"
+                android:paddingBottom="4sp"
+                android:paddingLeft="14sp"
+                android:paddingRight="14sp"
+                android:paddingTop="4sp"
+                android:text="@string/home_tip_dismiss"
+                android:textAppearance="@style/TipHomeDismissText" />
+
+            <View
+                android:layout_width="fill_parent"
+                android:layout_height="5dp"
+                android:layout_marginRight="3dp"
+                android:background="@color/TipDismissShadow" />
+        </LinearLayout>
+    </LinearLayout>
+    <!-- Icon Row -->
+
+    <LinearLayout
+        android:id="@+id/tip_icon_row"
+        android:layout_width="fill_parent"
+        android:layout_height="@dimen/footer_height"
+        android:layout_alignParentBottom="true"
+        android:layout_alignParentLeft="true"
+        android:baselineAligned="false"
+        android:orientation="horizontal" >
+
+        <FrameLayout
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:layout_weight="1"
+            android:gravity="center" >
+
+            <ImageView
+                android:id="@+id/tip_icon_trip"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:src="@drawable/tip_add_trip" />
+        </FrameLayout>
+
+        <FrameLayout
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:layout_weight="1"
+            android:gravity="center" >
+
+            <ImageView
+                android:id="@+id/tip_icon_camera"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:src="@drawable/tip_camera" />
+        </FrameLayout>
+
+        <FrameLayout
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:layout_weight="1"
+            android:gravity="center" >
+
+            <ImageView
+                android:id="@+id/tip_icon_quickexpense"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:src="@drawable/tip_add_quickexpense" />
+        </FrameLayout>
+    </LinearLayout>
+
+    <!-- Arrow Row -->
+
+    <LinearLayout
+        android:id="@+id/tip_arrow_row"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:layout_above="@id/tip_icon_row"
+        android:layout_alignParentLeft="true"
+        android:baselineAligned="false"
+        android:orientation="horizontal" >
+
+        <FrameLayout
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:layout_weight="1"
+            android:gravity="center" >
+
+            <ImageView
+                android:id="@+id/tip_trip_arrowdown"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:layout_marginLeft="@dimen/tip_home_arrow_left_margin"
+                android:src="@drawable/tip_arrowdown" />
+        </FrameLayout>
+
+        <FrameLayout
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:layout_weight="1"
+            android:gravity="center" >
+
+            <ImageView
+                android:id="@+id/tip_camera_arrowdown"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:layout_marginLeft="@dimen/tip_home_arrow_left_margin"
+                android:src="@drawable/tip_arrowdown" />
+        </FrameLayout>
+
+        <FrameLayout
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:layout_weight="1"
+            android:gravity="center" >
+
+            <ImageView
+                android:id="@+id/tip_quick_expense_arrowdown"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:layout_marginLeft="@dimen/tip_home_arrow_left_margin"
+                android:src="@drawable/tip_arrowdown" />
+        </FrameLayout>
+    </LinearLayout>
+
+    <!-- Text Row -->
+
+    <LinearLayout
+        android:id="@+id/tip_text_row"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:layout_above="@id/tip_arrow_row"
+        android:layout_alignParentLeft="true"
+        android:baselineAligned="false"
+        android:orientation="horizontal"
+        android:paddingBottom="@dimen/tip_home_text_padding_bottom" >
+
+        <FrameLayout
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:layout_weight="1"
+            android:gravity="center" >
+
+            <TextView
+                android:id="@+id/tip_trip_text"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:text="@string/home_tip_book_travel"
+                android:textAppearance="@style/TipHomeText" />
+        </FrameLayout>
+
+        <FrameLayout
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:layout_weight="1"
+            android:gravity="center" >
+
+            <TextView
+                android:id="@+id/tip_camera_text"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:text="@string/home_tip_receipt_capture"
+                android:textAppearance="@style/TipHomeText" />
+        </FrameLayout>
+
+        <FrameLayout
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:layout_weight="1"
+            android:gravity="center" >
+
+            <TextView
+                android:id="@+id/tip_quick_text"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:text="@string/home_tip_quick_expense"
+                android:textAppearance="@style/TipHomeText" />
+        </FrameLayout>
+    </LinearLayout>
+
+</RelativeLayout>

@@ -1,0 +1,68 @@
+// Configures the code driving the build.
+// In this case, this declares that it uses the Maven Central repository,
+// and that there is a classpath dependency on a Maven artifact. This artifact
+// is the library that contains the Android plugin for Gradle in version 0.9.0
+// Note: This only affects the code running the build, not the project. The
+// project itself needs to declare its own repositories and dependencies.
+buildscript {
+	repositories {
+        mavenCentral()
+        maven {
+            url "https://oss.sonatype.org/content/repositories/snapshots/"
+        }
+    }
+    
+	// add to dependancies
+	dependencies {
+		classpath "com.android.tools.build:gradle:0.9.+"
+      	classpath "com.squareup.gradle:gradle-android-test-plugin:0.9.1-SNAPSHOT"
+	}
+}
+apply plugin: "android"
+apply plugin: "android-test"
+
+// add to repositories
+repositories {
+	mavenCentral()
+	maven {
+		url "https://oss.sonatype.org/content/repositories/snapshots/"
+  	}
+}
+ 
+
+android {
+	compileSdkVersion 19
+    buildToolsVersion "19.0.0"
+    
+ 	sourceSets {
+        main {
+            manifest.srcFile '../base/AndroidManifest.xml'
+            java.srcDirs = ['../base/src']
+            resources.srcDirs = ['../base/src']
+            aidl.srcDirs = ['../base/src']
+            renderscript.srcDirs = ['../base/src']
+            res.srcDirs = ['../base/res']
+            assets.srcDirs = ['../base/assets']
+        }
+        
+      	instrumentTest.setRoot("src/test")
+    }    
+}
+ 
+// add to dependancies
+dependencies {
+	compile fileTree(dir: "../appcompat/libs", include: "*.jar")
+	
+	testCompile "junit:junit:4.11"
+	testCompile files("../mobile_test_lib/lib/robolectric/android-all-4.4_r1-robolectric-0.jar")
+	testCompile files("../mobile_test_lib/lib/robolectric/robolectric-2.2-jar-with-dependencies.jar")	
+	testCompile "com.squareup:fest-android:1.0.+"
+	testCompile files("build/classes/debug")
+	
+	instrumentTestCompile "junit:junit:4.11"
+	instrumentTestCompile files("../mobile_test_lib/lib/robolectric/android-all-4.4_r1-robolectric-0.jar")
+	instrumentTestCompile files("../mobile_test_lib/lib/robolectric/robolectric-2.2-jar-with-dependencies.jar")
+	testCompile "com.squareup:fest-android:1.0.+"		
+	instrumentTestCompile files("build/classes/debug")		
+	
+}

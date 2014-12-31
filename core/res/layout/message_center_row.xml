@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/main_layout"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:background="@color/PrimaryBackgroundColor"
+    android:orientation="vertical"
+    android:paddingBottom="@dimen/list_group_vertical_margin"
+    android:paddingLeft="@dimen/list_group_vertical_margin"
+    android:paddingRight="@dimen/list_group_vertical_margin" >
+
+    <TextView
+        android:id="@+id/title"
+        style="@style/ListCellSubHeaderTextBold"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:paddingLeft="@dimen/list_cell_padding"
+        android:paddingRight="@dimen/list_cell_padding"
+        android:paddingTop="@dimen/list_cell_padding" />
+
+    <TextView
+        android:id="@+id/msgbody"
+        style="@style/ListCellSubHeaderTextNormal"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:padding="@dimen/list_cell_padding" />
+
+</LinearLayout>

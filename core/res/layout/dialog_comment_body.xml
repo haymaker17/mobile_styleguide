@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+  xmlns:android="http://schemas.android.com/apk/res/android"
+  android:layout_width="fill_parent"
+  android:layout_height="fill_parent"
+  android:orientation="vertical"
+  android:background="@drawable/gradient_background"
+>
+	<RelativeLayout
+		android:layout_width="fill_parent"
+		android:layout_height="wrap_content"
+		android:paddingTop="@dimen/list_cell_padding_top"
+  		android:paddingBottom="@dimen/list_cell_padding_bottom"
+	>
+		<TextView
+			android:id="@+id/comment_author"
+			android:text="Author"
+			android:layout_width="wrap_content"
+			android:layout_height="wrap_content"
+			android:layout_alignParentLeft="true"
+			android:layout_toLeftOf="@+id/comment_date"
+			android:textAppearance="@style/ListCellSubHeaderText"
+			android:paddingLeft="18dp"
+			android:lines="1"
+	 		android:scrollHorizontally="true"
+	 		android:ellipsize="end"
+		/>
+		<TextView
+			android:id="@+id/comment_date"
+			android:text="Jan 3, 2010"
+			android:layout_width="wrap_content"
+			android:layout_height="wrap_content"
+			android:layout_alignParentRight="true"
+			android:textAppearance="@style/ListCellSubHeaderText"
+			android:paddingRight="@dimen/list_cell_padding_right"
+			android:lines="1"
+	 		android:scrollHorizontally="true"
+	 		android:ellipsize="end"
+		/>
+	</RelativeLayout>
+	<ScrollView
+		android:layout_width="fill_parent"
+		android:layout_height="fill_parent"
+		android:layout_weight="1"
+	>
+		<TextView
+			android:id="@+id/comment_text"
+			android:text="Sample Comment!"
+			android:layout_width="fill_parent"
+			android:layout_height="wrap_content"
+			android:textAppearance="@style/ListCellHeaderText"
+			android:paddingRight="@dimen/list_cell_padding_right"
+			android:paddingLeft="18dp"
+		/>
+	</ScrollView>
+</LinearLayout>

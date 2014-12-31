@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="voice_book_unable_to_determine_departure_loc">Sorry, I couldn\'t determine your departure location. Please try again.</string>
+    <string name="voice_book_unable_to_determine_arrival_loc">Sorry, I couldn\'t determine your arrival location. Please try again.</string>
+    <string name="voice_book_unable_to_loc">Sorry, I couldn\'t determine your location. Please try again.</string>
+    <string name="voice_search_not_supported_category">This search is not supported in this category.</string>
+    <string name="voice_air_search_different_scope">Try again with an air search.</string>
+    <string name="voice_car_search_different_scope">Try again with an car search.</string>
+    <string name="voice_hotel_search_different_scope">Try again with an hotel search.</string>
+    <string name="voice_book_unable_to_determine_pickup_loc">Sorry, I couldn\'t determine your pick up location. Please try again.</string>
+    <string name="voice_book_unable_to_search">Sorry, I didn\'t quite get that. Please try again.</string>
+    <string name="voice_book_speech_to_text_unsupported">Sorry, but speech-to-text is not supported on this device.</string>
+</resources>

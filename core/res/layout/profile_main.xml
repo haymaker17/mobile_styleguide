@@ -1,0 +1,75 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/main_scroll_layout"
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent"
+    android:background="@color/White"
+    android:scrollbars="none" >
+
+    <LinearLayout
+        android:id="@+id/main_layout"
+        android:layout_width="fill_parent"
+        android:layout_height="0dp"
+        android:layout_marginBottom="10dp"
+        android:layout_marginEnd="10dp"
+        android:layout_marginLeft="20dp"
+        android:layout_marginRight="10dp"
+        android:layout_marginStart="20dp"
+        android:layout_marginTop="10dp"
+        android:background="@color/White"
+        android:orientation="vertical" >
+
+        <include
+            android:id="@+id/profile_view"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            layout="@layout/profile_name_form_field" />
+
+        <View
+            android:layout_width="fill_parent"
+            android:layout_height="5dp" />
+
+        <TextView
+            android:id="@+id/other_title"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:ellipsize="end"
+            android:maxLines="1"
+            android:padding="5dp"
+            android:text="Super Long Text Super Long Text Super Long Text Super Long Text Super Long Text Super Long Text Super Long Text"
+            android:textColor="#8b8b8b"
+            android:textSize="12dp"
+            android:textStyle="bold" />
+
+        <View
+            android:layout_width="fill_parent"
+            android:layout_height="5dp" />
+
+        <include
+            android:id="@+id/emergency_contact_view"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            layout="@layout/profile_text_form_field" />
+
+        <View
+            android:layout_width="fill_parent"
+            android:layout_height="5dp" />
+
+        <include
+            android:id="@+id/add_card_view"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            layout="@layout/profile_text_form_field" />
+
+        <View
+            android:layout_width="fill_parent"
+            android:layout_height="5dp" />
+
+        <include
+            android:id="@+id/bank_account_info_view"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            layout="@layout/profile_text_form_field" />
+    </LinearLayout>
+
+</ScrollView>

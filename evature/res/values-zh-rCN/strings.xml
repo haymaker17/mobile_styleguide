@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="voice_book_unable_to_determine_departure_loc">对不起，无法确定您的出发地点。请重试。</string>
+    <string name="voice_book_unable_to_determine_arrival_loc">对不起，无法确定您的到达地点。请重试。</string>
+    <string name="voice_book_unable_to_loc">对不起，无法确定您的地点。请重试。</string>
+    <string name="voice_search_not_supported_category">此类别不支持此搜索。</string>
+    <string name="voice_air_search_different_scope">使用航空搜索重试。</string>
+    <string name="voice_car_search_different_scope">使用汽车搜索重试。</string>
+    <string name="voice_hotel_search_different_scope">使用宾馆搜索重试。</string>
+    <string name="voice_book_unable_to_determine_pickup_loc">对不起，无法确定您的取车地点。请重试。</string>
+    <string name="voice_book_unable_to_search">抱歉，我不太明白。请重试。</string>
+    <string name="voice_book_speech_to_text_unsupported">很抱歉，该设备上不支持语音到文本。</string>
+</resources>

@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    style="@style/ConcurTheme"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical" >
+
+    <!-- Include the offline bars. -->
+    
+    <include layout="@layout/offline_header_bar" />
+
+    <include layout="@layout/offline_upload_queue" />
+    
+    
+</LinearLayout>

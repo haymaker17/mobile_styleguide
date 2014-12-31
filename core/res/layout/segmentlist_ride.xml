@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+  xmlns:android="http://schemas.android.com/apk/res/android"
+  android:orientation="horizontal"
+  android:layout_width="fill_parent"
+  android:layout_height="wrap_content"
+  android:paddingRight="5sp"
+  android:paddingLeft="5sp" 
+  android:paddingBottom="5sp"
+  android:background="@drawable/list_selector_gradient_background"
+>
+	<ImageView
+		android:id="@+id/segmentListSegmentIconView"
+		android:layout_width="wrap_content"
+		android:layout_height="wrap_content"  
+    	android:layout_gravity="center_vertical"
+    android:src="@drawable/itin_icon_taxi"/>
+    
+    <RelativeLayout android:gravity="right" android:layout_marginRight="8dp" android:layout_height="fill_parent" android:layout_width="46dp">
+        <TextView android:layout_width="wrap_content" android:id="@+id/segmentListRideTime" android:layout_height="wrap_content" android:text="00:00" android:textAppearance="@style/SegmentListRowHeaderText"></TextView>
+        <TextView android:layout_width="wrap_content" android:id="@+id/segmentListRideTimeAMPM" android:layout_height="wrap_content" android:layout_below="@+id/segmentListRideTime" android:layout_alignRight="@+id/segmentListRideTime" android:textAppearance="@style/ListCellSmallText" android:text="XX"/>
+    </RelativeLayout>
+    
+	<LinearLayout
+		android:id="@+id/segmentListSegmentRowLayout"
+		android:layout_width="fill_parent" 
+    	android:layout_weight="1"
+    	android:orientation="vertical"
+    	android:layout_height="wrap_content"
+    >
+
+    <TextView android:layout_width="wrap_content" android:layout_height="fill_parent" 
+        android:id="@+id/segmentListRideVendor" android:textAppearance="@style/PrimaryText" android:text="Ride Vendor" android:textStyle="bold"></TextView>
+    <TextView android:layout_width="wrap_content" android:layout_height="wrap_content"
+        android:id="@+id/segmentListRideAddress" android:textAppearance="@style/ListCellSubHeaderText" android:text="Address"></TextView>
+    <TextView android:layout_width="wrap_content" android:layout_height="wrap_content"
+        android:id="@+id/segmentListRideAddress2" android:textAppearance="@style/ListCellSubHeaderText" android:text="City, ST"></TextView>
+
+    </LinearLayout>
+</LinearLayout>
+

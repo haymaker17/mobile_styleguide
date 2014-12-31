@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+	<!-- Network Connectivity stuff. -->
+    <string name="dlg_no_connectivity_title">Клиент находится в автономном режиме</string>
+    <string name="dlg_no_connectivity_message">Эта функция не поддерживается в автономном режиме. Попытайтесь, пожалуйста, снова, когда появится возможность подключения к данным.</string>
+        
+    <!-- Login UI Strings -->
+	<!-- Email Lookup -->
+    <string name="email_lookup_hint">Работа электронной почты или имя пользователя Concur</string>
+    <string name="email_lookup_continue">Продолжить</string>
+    <string name="email_lookup_unable_to_login_title">Невозможно зарегистрировать вход в систему</string>
+    <string name="email_lookup_unable_to_login_msg">Невозможно зарегистрировать ваш вход в систему, используя эти данные</string>
+    <string name="email_lookup_wrong_email_format_title">Недопустимый адрес электронной почты или имя пользователя</string>
+    <string name="email_lookup_wrong_email_username_format_msg">Запись, как представляется, не быть действительный адрес электронной почты или имя пользователя Concur.</string>
+    
+    <!-- PIN/Password Login Strings -->
+    <string name="login_enter_password_pin">Мобильный пароль (PIN)</string>
+    <string name="login_button">Войдите в сервис Concur</string>
+    <string name="login_no_offline">Автономный вход не доступен. Успешный вход должно произойти в то время как онлайн прежде, чем автономный режим может быть использован.</string>            
+    <string name="register_button">Вам требуется установить ПИН-код?</string>
+    <string name="login_help_with_signin">Forgot Mobile Password (PIN)?</string>
+    <string name="login_help_with_signin_password">Forgot Password?</string>
+	<string name="login_password">Пароль</string>    
+    <string name="login_password_or_pin_invalid">Попытайтесь снова ввести ваши регистрационные данные или выберите команду «Я забыл(-а)», чтобы получить инструкцию по входу в систему.</string>
+    <string name="login_invalid_concur_credentials">Неправильный пароль</string>    
+    <string name="try_again">Попытайтесь снова</string>
+    <string name="i_forgot">Я забыл(-а)</string>
+    <string name="dlg_logging_in">Выполняется регистрация входа в систему&#8230;</string>
+            
+	<!-- SSO Login -->
+	<string name="sso_sign_in">Вход SSO с использованием кода компании</string>
+	  
+</resources>

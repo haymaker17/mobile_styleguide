@@ -1,0 +1,28 @@
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:gravity="right"
+    android:orientation="vertical" >
+
+    <!-- Include the standard header bits -->
+    <include layout="@layout/standard_header" />
+
+    <LinearLayout
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical" >
+
+        <TextView
+            android:id="@+id/itin_infotext"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/itin_stops_infotext" />
+
+        <ListView
+            android:id="@+id/itinStops"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content" 
+            >
+        </ListView>
+    </LinearLayout>
+</LinearLayout>

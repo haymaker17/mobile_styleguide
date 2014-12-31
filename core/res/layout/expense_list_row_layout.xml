@@ -1,0 +1,115 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/White"
+    android:orientation="vertical" >
+
+    <ImageView
+        android:id="@+id/status_triangle_icon"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentRight="true"
+        android:paddingRight="-1dp"
+        android:src="@drawable/expense_icon_complete_triangle"
+        android:visibility="invisible" />
+
+    <RelativeLayout
+        android:id="@+id/expense_check_parent"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="horizontal"
+        android:paddingBottom="@dimen/list_cell_padding_bottom"
+        android:paddingLeft="16dp"
+        android:paddingRight="20dp"
+        android:paddingTop="12dp" >
+
+        <LinearLayout
+            android:id="@+id/rightMostColumn"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:layout_alignParentRight="true"
+            android:orientation="vertical" >
+
+            <TextView
+                android:id="@+id/transaction_amount"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="right"
+                android:scrollHorizontally="true"
+                android:singleLine="true"
+                android:text="$64.44"
+                android:textAppearance="@style/ExpensesListItemAmountText" />
+
+            <TextView
+                android:id="@+id/transaction_date"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="right"
+                android:paddingTop="2dp"
+                android:scrollHorizontally="true"
+                android:singleLine="true"
+                android:text="Sep 28"
+                android:textAppearance="@style/ExpenseListItemSubText" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentLeft="true"
+            android:layout_gravity="top"
+            android:layout_toLeftOf="@id/rightMostColumn"
+            android:orientation="vertical" >
+
+            <TextView
+                android:id="@+id/transaction_description"
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:layout_gravity="top|left"
+                android:ellipsize="end"
+                android:gravity="top|left"
+                android:singleLine="true"
+                android:text="Commment"
+                android:textAppearance="@style/ExpensesListItemHeaderText" />
+
+            <TextView
+                android:id="@+id/transaction_type"
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:layout_gravity="top|left"
+                android:ellipsize="end"
+                android:gravity="top|left"
+                android:paddingTop="2dp"
+                android:singleLine="true"
+                android:text="Trade Shows"
+                android:textAppearance="@style/ExpenseListItemSubText" />
+
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="0dp"
+                android:layout_gravity="left|top"
+                android:layout_marginTop="@dimen/list_cell_secondary_text_top_margin"
+                android:layout_weight="1.0"
+                android:orientation="horizontal" >
+
+                <ImageView
+                    android:id="@+id/expense_entry_receipt_icon"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="right|top"
+                    android:layout_marginRight="@dimen/list_cell_icon_margin_right"
+                    android:layout_marginTop="@dimen/list_cell_sub_header_icon_top_margin"
+                    android:src="@drawable/expense_icon_receipt" />
+
+                <ImageView
+                    android:id="@+id/expense_entry_card_icon"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="right|top"
+                    android:layout_marginTop="@dimen/list_cell_sub_header_icon_top_margin"
+                    android:src="@drawable/expense_icon_card" />
+            </LinearLayout>
+        </LinearLayout>
+    </RelativeLayout>
+
+</RelativeLayout>

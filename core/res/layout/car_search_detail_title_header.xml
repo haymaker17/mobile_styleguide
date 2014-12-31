@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="fill_parent"
+    android:layout_height="wrap_content"
+    android:background="@drawable/subheader_gradient_background"
+    android:orientation="vertical"
+    android:paddingLeft="@dimen/list_item_horizontal_margin"
+    android:paddingRight="@dimen/list_item_horizontal_margin" >
+
+    <LinearLayout
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:layout_gravity="top"
+        android:orientation="horizontal" >
+
+        <com.concur.mobile.core.view.AsyncImageView
+            android:id="@+id/carDetailModelImage"
+            android:layout_width="80dp"
+            android:layout_height="80dp"
+            android:scaleType="centerInside" />
+
+        <LinearLayout
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_vertical"
+            android:layout_marginLeft="10dp"
+            android:orientation="vertical" >
+
+            <TextView
+                android:id="@+id/carDetailVendor"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textAppearance="@style/HeaderText" />
+
+            <TextView
+                android:id="@+id/carDetailPickup"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="pick-up"
+                android:textAppearance="@style/SubHeaderText" />
+
+            <TextView
+                android:id="@+id/carDetailReturn"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="drop-off"
+                android:textAppearance="@style/SubHeaderText" />
+        </LinearLayout>
+    </LinearLayout>
+
+</LinearLayout>

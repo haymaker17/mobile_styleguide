@@ -1,0 +1,186 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_marginTop="@dimen/list_item_vertical_margin"
+    android:layout_marginBottom="@dimen/list_item_vertical_margin"
+    android:layout_marginLeft="@dimen/list_item_horizontal_margin"
+    android:layout_marginRight="@dimen/list_item_horizontal_margin"
+    android:orientation="horizontal"
+    android:id="@+id/requestRow" >
+    
+    <ImageView 
+        android:id="@+id/requestIcon"
+        android:layout_alignParentTop="true"
+        android:layout_alignParentLeft="true"
+        android:src="@drawable/icon_requests"
+        android:layout_width="40dp"
+        android:layout_height="40dp"
+        android:paddingLeft="15dp"
+        android:layout_marginRight="15dp"
+        />
+    
+    <LinearLayout
+        android:id="@+id/rowNameLayout"
+    	android:orientation="horizontal"
+   		android:layout_width="wrap_content"
+	    android:layout_height="wrap_content"
+        android:layout_toRightOf="@id/requestIcon"
+        android:layout_alignParentTop="true"
+        android:layout_marginLeft="5dp"
+        android:layout_marginTop="5dp"
+	    >
+	    <ImageView 
+	        android:id="@+id/requestRowExceptionIcon"
+	        android:layout_width="wrap_content"
+	        android:layout_height="wrap_content"
+	        android:layout_marginRight="5dp"
+	        android:visibility="gone"
+	        />
+	    
+	    <TextView 
+	        android:id="@+id/requestRowName"
+	        style="@style/FormFieldLabelText"
+	        android:layout_width="wrap_content"
+	        android:layout_height="wrap_content"
+	        android:textSize="15dp"
+	        android:textColor="#000000"
+	        android:textAppearance="@style/ListCellHeaderText"
+	        />
+	    
+	    <TextView 
+	        android:id="@+id/requestRowId"
+	        style="@style/FormFieldLabelText"
+	        android:layout_width="0dp"
+	        android:layout_height="0dp"
+	        android:visibility="gone"
+	        />
+    </LinearLayout>
+    
+    
+    <TextView 
+        android:id="@+id/requestSegmentTypes"
+        android:textAppearance="@style/ListCellSmallText"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/rowNameLayout"
+        android:layout_alignLeft="@id/rowNameLayout"
+        android:layout_toLeftOf="@+id/requestRowAmount"
+        android:textSize="12dp"
+        android:textColor="#666666"
+        android:layout_marginTop="5dp"
+        android:layout_marginRight="85px"
+        android:ellipsize="end"
+		android:singleLine="true"
+        />
+    
+    <TextView
+        android:id="@+id/requestRowAmount"
+        style="@style/FormFieldLabelText"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentRight="true"
+        android:layout_below="@id/rowNameLayout"
+        android:layout_alignBaseline="@id/requestSegmentTypes"
+        android:textAppearance="@style/ListCellSmallText"
+        android:textSize="16dp"
+        android:textColor="#0078c8"
+        android:layout_marginTop="5dp"
+        android:layout_marginRight="15dp"
+        />
+    <!-- <TextView
+        android:id="@+id/requestRowCurrency"
+        style="@style/FormFieldLabelText"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/requestRowName"
+        android:layout_alignBaseline="@id/requestRowCurrency"
+        android:layout_toLeftOf="@id/requestRowCurrency"
+        android:textAppearance="@style/ListCellSmallText"
+        android:textSize="14sp"
+        /> -->
+
+     
+    <RelativeLayout
+	    android:id="@+id/requestStatusBox"
+	    android:layout_width="wrap_content"
+	    android:layout_height="wrap_content"
+	    android:layout_centerHorizontal="true"
+	    android:layout_centerVertical="true"
+	    android:background="#DDDDDD"
+	    android:layout_below="@id/requestSegmentTypes"
+		android:layout_alignLeft="@id/requestSegmentTypes"
+		android:layout_marginTop="5dp"
+	>
+
+	    <TextView 
+	        android:id="@+id/requestStatus"
+	        android:textAppearance="@style/ListCellSmallText"
+	        android:layout_width="wrap_content"
+	        android:layout_height="wrap_content"
+	        android:textSize="9dp"
+	        android:textColor="#0078c8"
+	        android:background="@android:color/white"
+	        android:layout_margin="1dp"
+	        android:padding="3dp"
+	        />
+    </RelativeLayout>
+    
+    <!-- <TextView 
+        android:id="@+id/requestStartDateTitle"
+        style="@style/FormFieldLabelText"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/requestRowName"
+        android:layout_alignParentLeft="true"
+        android:layout_marginLeft="5dp"
+        android:textAppearance="@style/ListCellSmallText"
+        android:text="@string/general_from"
+        /> -->
+        
+    <TextView 
+        android:id="@+id/requestStartDate"
+        style="@style/FormFieldLabelText"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/requestSegmentTypes"
+        android:layout_alignParentRight="true"
+        android:textAppearance="@style/ListCellSmallText"
+        android:layout_marginLeft="5dp"
+        android:textSize="12dp"
+        android:textColor="#666666"
+        android:layout_marginTop="5dp"
+        android:layout_marginRight="15dp"
+        />
+    
+    <View
+        android:layout_width="fill_parent"
+        android:layout_height="10dp"
+        android:layout_below="@id/requestStatusBox"
+        >
+    </View>
+    
+    <!-- <TextView 
+        android:id="@+id/requestEndDateTitle"
+        style="@style/FormFieldLabelText"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/requestStartDateTitle"
+        android:layout_alignParentLeft="true"
+        android:layout_marginLeft="5dp"
+        android:textAppearance="@style/ListCellSmallText"
+        android:text="@string/general_to"
+        />
+    <TextView 
+        android:id="@+id/requestEndDate"
+        style="@style/FormFieldLabelText"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/requestStartDate"
+        android:layout_toRightOf="@id/requestEndDateTitle"
+        android:layout_alignBaseline="@id/requestEndDateTitle"
+        android:textAppearance="@style/ListCellSmallText"
+        android:layout_marginLeft="5dp"
+        /> -->
+
+</RelativeLayout>

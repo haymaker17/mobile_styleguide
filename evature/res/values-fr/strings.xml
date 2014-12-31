@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="voice_book_unable_to_determine_departure_loc">Nous sommes désolés, mais nous n\'avons pas pu déterminer votre emplacement de départ. Veuillez réessayer.</string>
+    <string name="voice_book_unable_to_determine_arrival_loc">Nous sommes désolés, mais nous n\'avons pas pu déterminer votre emplacement d\'arrivée. Veuillez réessayer.</string>
+    <string name="voice_book_unable_to_loc">Nous sommes désolés, mais nous n\'avons pas pu déterminer votre emplacement. Veuillez réessayer.</string>
+    <string name="voice_search_not_supported_category">Cette recherche n\'est pas prise en charge dans cette catégorie.</string>
+    <string name="voice_air_search_different_scope">Réessayez avec une recherche d\'avion.</string>
+    <string name="voice_car_search_different_scope">Réessayez avec une recherche de véhicule.</string>
+    <string name="voice_hotel_search_different_scope">Réessayez avec une recherche d\'hôtel.</string>
+    <string name="voice_book_unable_to_determine_pickup_loc">Nous sommes désolés, mais nous n\'avons pas pu déterminer votre lieu de retrait. Veuillez réessayer.</string>
+    <string name="voice_book_unable_to_search">Désolé, je n\'ai pas bien compris. Veuillez réessayer.</string>
+    <string name="voice_book_speech_to_text_unsupported">Désolé, mais la reconnaissance vocale n\'est pas prise en charge par cet appareil.</string>
+</resources>

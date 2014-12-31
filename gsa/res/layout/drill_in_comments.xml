@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent"
+    android:background="@drawable/gradient_background"
+    android:orientation="vertical" >
+
+    <!-- Include the expense header navigation bar. -->
+
+    <include
+        android:id="@+id/header"
+        layout="@layout/standard_header" />
+
+    <RelativeLayout
+        style="@style/ConcurTheme"
+        android:layout_width="fill_parent"
+        android:layout_height="fill_parent"
+        android:background="@drawable/gradient_background"
+        android:visibility="visible" >
+
+        <EditText
+            android:id="@+id/comment_edittext_value"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="6dp"
+            android:layout_marginRight="6dp"
+            android:gravity="left|top"
+            android:minLines="5"
+            android:focusable="false"
+            android:focusableInTouchMode="false"
+            android:textAppearance="@style/FormFieldValueText"
+            android:textStyle="normal">
+        </EditText>
+        <TextView 
+            android:id="@+id/comment_novalue"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="@dimen/list_cell_padding_top"
+            android:textColor="@color/Black"
+            android:gravity="center"
+            android:text="@string/gov_docdetail_comment_novalue"
+            android:layout_below="@+id/comment_edittext_value"
+            android:visibility="gone" />
+            
+    </RelativeLayout>
+
+</LinearLayout>

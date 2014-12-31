@@ -1,0 +1,344 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.v4.widget.DrawerLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/home_frame"
+    style="@style/ConcurTheme"
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent" >
+
+    <LinearLayout
+        android:id="@+id/home"
+        android:layout_width="fill_parent"
+        android:layout_height="fill_parent"
+        android:background="@drawable/gradient_background"
+        android:orientation="vertical" >
+
+        <!-- Screen Title -->
+        <include layout="@layout/offline_header_bar" />
+
+        <include layout="@layout/offline_upload_queue" />
+
+        <android.gesture.GestureOverlayView
+            android:id="@+id/gestures"
+            android:layout_width="fill_parent"
+            android:layout_height="fill_parent"
+            android:eventsInterceptionEnabled="true"
+            android:gestureColor="#0000"
+            android:gestureStrokeType="single"
+            android:orientation="vertical"
+            android:uncertainGestureColor="#0000" >
+
+            <LinearLayout
+                android:layout_width="fill_parent"
+                android:layout_height="fill_parent"
+                android:background="@color/PrimaryBackgroundColor"
+                android:orientation="vertical" >
+
+                <ScrollView
+                    android:layout_width="fill_parent"
+                    android:layout_height="0dp"
+                    android:layout_weight="1"
+                    android:fadingEdgeLength="20dp"
+                    android:padding="@dimen/home_list_padding"
+                    android:scrollbars="none" >
+
+                    <LinearLayout
+                        android:layout_width="fill_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="vertical" >
+
+                        <FrameLayout
+                            android:id="@+id/homeTrips"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_marginBottom="@dimen/home_list_padding"
+                            android:background="@drawable/home_row"
+                            android:clickable="true"
+                            android:onClick="onClick" >
+
+                            <!--
+                                 The scaleType and src params are not actually used here.  However, leave them
+                                 in place because it makes layout work easier.  Just switch 'ImageSwitcher' to
+                                 'ImageView' and you can see it properly laid out in the designer
+                            -->
+
+                            <ImageView
+                                android:id="@+id/travelCityscape"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:scaleType="fitXY"
+                                android:src="@drawable/govt_cityscape" />
+
+                            <RelativeLayout
+                                android:layout_width="match_parent"
+                                android:layout_height="68dp"
+                                android:layout_gravity="bottom"
+                               	android:background="@color/HomeCellBackground" >
+                               	
+
+                                <ImageView
+                                    android:id="@+id/tripIcon"
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:layout_alignParentLeft="true"
+                                    android:layout_centerVertical="true"
+                                    android:layout_marginLeft="4dp"
+                                    android:src="@drawable/icon_travel" />
+
+                                <TextView
+                                    android:id="@+id/tripHeader"
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:layout_alignTop="@+id/tripIcon"
+                                    android:layout_marginLeft="4dp"
+                                    android:layout_marginTop="-8dp"
+                                    android:layout_toRightOf="@+id/tripIcon"
+                                    android:text="@string/home_row_trips"
+                                    android:textAppearance="@style/HomeRowHeader" />
+
+                                <TextView
+                                    android:id="@+id/tripSubheader"
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:layout_alignLeft="@+id/tripHeader"
+                                    android:layout_below="@+id/tripHeader"
+                                    android:layout_marginLeft="1dp"
+                                    android:text="@string/home_row_travel_subheader_negative"
+                                    android:textAppearance="@style/HomeRowSubHeader" />
+
+                            </RelativeLayout>
+                        </FrameLayout>
+
+                        <RelativeLayout
+                            android:id="@+id/homeAuthorizations"
+                            android:layout_width="match_parent"
+                            android:layout_height="68dp"
+                            android:layout_marginBottom="@dimen/home_list_padding"
+                            android:background="@drawable/home_row"
+                            android:clickable="true"
+                            android:onClick="onClick" >
+
+                            <ImageView
+                                android:id="@+id/authIcon"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_alignParentLeft="true"
+                                android:layout_centerVertical="true"
+                                android:layout_marginLeft="4dp"
+                                android:src="@drawable/icon_authorizations" />
+
+                            <TextView
+                                android:id="@+id/authHeader"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_alignTop="@+id/authIcon"
+                                android:layout_marginLeft="4dp"
+                                android:layout_marginTop="-8dp"
+                                android:layout_toRightOf="@+id/authIcon"
+                                android:text="@string/gov_authorization_title"
+                                android:textAppearance="@style/HomeRowHeader" />
+
+                            <TextView
+                                android:id="@+id/authSubheader"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_alignLeft="@+id/authHeader"
+                                android:layout_below="@+id/authHeader"
+                                android:layout_marginLeft="1dp"
+                                android:text="@string/gov_authorization_subtitle"
+                                android:textAppearance="@style/HomeRowSubHeader" />
+                        </RelativeLayout>
+
+                        <RelativeLayout
+                            android:id="@+id/homeVouchers"
+                            android:layout_width="match_parent"
+                            android:layout_height="68dp"
+                            android:layout_marginBottom="@dimen/home_list_padding"
+                            android:background="@drawable/home_row"
+                            android:clickable="true"
+                            android:onClick="onClick" >
+
+                            <ImageView
+                                android:id="@+id/vchIcon"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_alignParentLeft="true"
+                                android:layout_centerVertical="true"
+                                android:layout_marginLeft="4dp"
+                                android:src="@drawable/icon_expensereport" />
+
+                            <TextView
+                                android:id="@+id/vchHeader"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_alignTop="@+id/vchIcon"
+                                android:layout_marginLeft="4dp"
+                                android:layout_marginTop="-8dp"
+                                android:layout_toRightOf="@+id/vchIcon"
+                                android:text="@string/gov_vouchers_title"
+                                android:textAppearance="@style/HomeRowHeader" />
+
+                            <TextView
+                                android:id="@+id/vchSubheader"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_alignLeft="@+id/vchHeader"
+                                android:layout_below="@+id/vchHeader"
+                                android:layout_marginLeft="1dp"
+                                android:text="@string/gov_vouchers_subtitle"
+                                android:textAppearance="@style/HomeRowSubHeader" />
+                        </RelativeLayout>
+
+                        <RelativeLayout
+                            android:id="@+id/homeStampDocuments"
+                            android:layout_width="match_parent"
+                            android:layout_height="68dp"
+                            android:layout_marginBottom="@dimen/home_list_padding"
+                            android:background="@drawable/home_row"
+                            android:clickable="true"
+                            android:onClick="onClick" >
+
+                            <ImageView
+                                android:id="@+id/stampIcon"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_alignParentLeft="true"
+                                android:layout_centerVertical="true"
+                                android:layout_marginLeft="4dp"
+                                android:src="@drawable/icon_approvals" />
+
+                            <TextView
+                                android:id="@+id/stampHeader"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_alignTop="@+id/stampIcon"
+                                android:layout_marginLeft="4dp"
+                                android:layout_marginTop="-8dp"
+                                android:layout_toRightOf="@+id/stampIcon"
+                                android:text="@string/gov_stamp_doc_title"
+                                android:textAppearance="@style/HomeRowHeader" />
+
+                            <TextView
+                                android:id="@+id/stampSubheader"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_alignLeft="@+id/stampHeader"
+                                android:layout_below="@+id/stampHeader"
+                                android:layout_marginLeft="1dp"
+                                android:text="@string/gov_stamp_doc_subtitle"
+                                android:textAppearance="@style/HomeRowSubHeader" />
+                        </RelativeLayout>
+                        
+                        <RelativeLayout
+                            android:id="@+id/homeExpense"
+                            android:layout_width="match_parent"
+                            android:layout_height="68dp"
+                            android:layout_marginBottom="@dimen/home_list_padding"
+                            android:background="@drawable/home_row"
+                            android:clickable="true"
+                            android:onClick="onClick" >
+
+                            <ImageView
+                                android:id="@+id/expIcon"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_alignParentLeft="true"
+                                android:layout_centerVertical="true"
+                                android:layout_marginLeft="4dp"
+                                android:src="@drawable/icon_expenses" />
+
+                            <TextView
+                                android:id="@+id/expHeader"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_alignTop="@+id/expIcon"
+                                android:layout_marginLeft="4dp"
+                                android:layout_marginTop="-8dp"
+                                android:layout_toRightOf="@+id/expIcon"
+                                android:text="@string/home_row_expenses"
+                                android:textAppearance="@style/HomeRowHeader" />
+
+                            <TextView
+                                android:id="@+id/expSubheader"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_alignLeft="@+id/expHeader"
+                                android:layout_below="@+id/expHeader"
+                                android:layout_marginLeft="1dp"
+                                android:text="@string/gov_home_unapplied_expense_subtitle"
+                                android:textAppearance="@style/HomeRowSubHeader" />
+                        </RelativeLayout>
+                        
+                    </LinearLayout>
+                </ScrollView>
+
+                <LinearLayout
+                    android:id="@+id/homeFooter"
+                    android:layout_width="match_parent"
+                    android:layout_height="@dimen/footer_height"
+                    android:background="@drawable/gradient_home_footer_bar"
+                    android:baselineAligned="false"
+                    android:orientation="horizontal" >
+
+                    <RelativeLayout
+                        android:id="@+id/homeBook"
+                        android:layout_width="wrap_content"
+                        android:layout_height="match_parent"
+                        android:layout_gravity="center"
+                        android:layout_weight="1"
+                        android:background="@drawable/home_footer"
+                        android:clickable="true"
+                        android:gravity="center"
+                        android:onClick="onClick" >
+
+                        <ImageView
+                            android:id="@+id/homeBookIcon"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:src="@drawable/icon_book_travel" />
+                    </RelativeLayout>
+
+                    <View
+                        android:layout_width="1px"
+                        android:layout_height="match_parent"
+                        android:background="@color/StrokeHomeFooter" />
+
+                    <RelativeLayout
+                        android:id="@+id/homeQuickExpense"
+                        android:layout_width="wrap_content"
+                        android:layout_height="fill_parent"
+                        android:layout_gravity="center"
+                        android:layout_weight="1"
+                        android:background="@drawable/home_footer"
+                        android:clickable="true"
+                        android:gravity="center"
+                        android:onClick="onClick" >
+
+                        <ImageView
+                            android:id="@+id/homeQuickExpenseIcon"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:src="@drawable/icon_quickexpense" />
+                    </RelativeLayout>
+                </LinearLayout>
+            </LinearLayout>
+        </android.gesture.GestureOverlayView>
+    </LinearLayout>
+    
+    <ScrollView
+		android:id="@+id/left_drawer"
+		android:layout_width="wrap_content"
+		android:layout_height="match_parent"
+		android:layout_gravity="start"
+		android:choiceMode="singleChoice"
+		android:divider="@android:color/transparent"
+		android:dividerHeight="0dp"
+		android:background="@color/NavigationItemBackground"
+	>
+		<LinearLayout
+		    android:id="@+id/drawer_item_container"
+		    android:orientation="vertical"
+	        android:layout_width="wrap_content"
+	        android:layout_height="wrap_content">
+		</LinearLayout>
+	</ScrollView>
+</android.support.v4.widget.DrawerLayout>

@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="voice_book_unable_to_determine_departure_loc">Jag är ledsen, men jag kunde inte fastställa din avreseplats. Försök igen.</string>
+    <string name="voice_book_unable_to_determine_arrival_loc">Jag är ledsen, men jag kunde inte fastställa din ankomstplats. Försök igen.</string>
+    <string name="voice_book_unable_to_loc">Jag är ledsen, men jag kunde inte fastställa din plats. Försök igen.</string>
+    <string name="voice_search_not_supported_category">Denna sökning stöds inte för kategorin.</string>
+    <string name="voice_air_search_different_scope">Försök igen genom att söka efter flygresor.</string>
+    <string name="voice_car_search_different_scope">Försök igen genom att söka efter bilar.</string>
+    <string name="voice_hotel_search_different_scope">Försök igen genom att söka efter hotell.</string>
+    <string name="voice_book_unable_to_determine_pickup_loc">Jag är ledsen, men jag kunde inte fastställa din upphämtningsplats. Försök igen.</string>
+    <string name="voice_book_unable_to_search">Jag är ledsen, men jag förstår inte riktigt vad du menar. Försök igen.</string>
+    <string name="voice_book_speech_to_text_unsupported">Tal till text stöds tyvärr inte på den här enheten.</string>
+</resources>

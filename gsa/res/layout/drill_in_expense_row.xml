@@ -1,0 +1,85 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="fill_parent"
+    android:layout_height="wrap_content"
+    android:background="@drawable/list_selector_gradient_background"
+    android:paddingBottom="@dimen/list_cell_padding_bottom"
+    android:paddingLeft="@dimen/list_cell_padding_left"
+    android:paddingRight="@dimen/list_cell_padding_right"
+    android:paddingTop="@dimen/list_cell_padding_top" >
+
+    <LinearLayout
+        android:id="@+id/expnese_row_Llayout"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal" >
+
+        <TextView
+            android:id="@+id/expense_row_expname"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_gravity="left|center_vertical"
+            android:layout_weight="1"
+            android:ellipsize="end"
+            android:singleLine="true"
+            android:text="Name"
+            android:textAppearance="@style/SegmentListRowHeaderText" />
+
+        <TextView
+            android:id="@+id/expense_row_amount"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:ellipsize="end"
+            android:lines="1"
+            android:scrollHorizontally="true"
+            android:text="$1000"
+            android:textAppearance="@style/SegmentListRowHeaderText" />
+    </LinearLayout>
+
+    <TextView
+        android:id="@+id/expense_row_category"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentLeft="true"
+        android:layout_below="@+id/expnese_row_Llayout"
+        android:ellipsize="end"
+        android:lines="1"
+        android:scrollHorizontally="true"
+        android:text="VCH0500"
+        android:textAppearance="@style/ListCellSubHeaderText" />
+
+    <ImageView
+        android:id="@+id/expense_row_receipt"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentRight="true"
+        android:layout_below="@+id/expnese_row_Llayout"
+        android:layout_marginLeft="@dimen/list_cell_icon_margin_right"
+        android:layout_marginTop="@dimen/list_cell_sub_header_icon_top_margin"
+        android:src="@drawable/icon_receipt" />
+
+    <TextView
+        android:id="@+id/expense_row_date"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentLeft="true"
+        android:layout_below="@+id/expense_row_receipt"
+        android:ellipsize="end"
+        android:lines="1"
+        android:scrollHorizontally="true"
+        android:text="NOV 11,2012"
+        android:textAppearance="@style/ListCellSubHeaderText" />
+
+    <TextView
+        android:id="@+id/expense_row_payent_type"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentRight="true"
+        android:layout_below="@+id/expense_row_receipt"
+        android:ellipsize="end"
+        android:lines="1"
+        android:scrollHorizontally="true"
+        android:text="CARD"
+        android:textAppearance="@style/ListCellSubHeaderText" />
+
+</RelativeLayout>

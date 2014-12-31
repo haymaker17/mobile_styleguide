@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <!--
+    =======================================================
+                      PRE 9.0
+    ======================================================= 
+    -->
+    <dimen name="header_height">47dp</dimen>
+    <dimen name="header_cell_width">47dp</dimen>
+    <dimen name="footer_height">47dp</dimen>
+    <dimen name="footer_button_horizontal_margin">10dp</dimen>
+    <dimen name="standard_button_height">38dp</dimen>
+    <dimen name="standard_button_min_width">100dp</dimen>
+    <dimen name="standard_button_padding">4dp</dimen>
+    <dimen name="form_cell_padding_top">8dp</dimen>
+    <dimen name="form_cell_padding_bottom">8dp</dimen>
+    <dimen name="list_cell_padding">8dp</dimen>
+    <dimen name="list_cell_padding_left">8dp</dimen>
+    <dimen name="list_cell_padding_right">8dp</dimen>
+    <dimen name="list_cell_padding_top">12dp</dimen>
+    <dimen name="list_cell_padding_bottom">12dp</dimen>
+    <dimen name="list_cell_text_bottom_margin">4dp</dimen>
+        <dimen name="list_header_padding_top">6dp</dimen>
+    <dimen name="list_header_padding_bottom">6dp</dimen>
+
+    <!-- New search result screen -->
+    <dimen name="search_result_cell_padding_left">16dp</dimen>
+    <dimen name="search_result_cell_padding_right">16dp</dimen>
+    <dimen name="search_result_cell_padding_top">6dp</dimen>
+    <dimen name="search_result_cell_padding_bottom">6dp</dimen>
+
+</resources>

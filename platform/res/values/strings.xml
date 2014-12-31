@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="platform_config_provider_name">Platform Config Provider</string>
+    <string name="platform_travel_provider_name">Platform Travel Provider</string>
+    <string name="platform_expense_provider_name">Platform Expense Provider</string>
+    
+    <!-- ReceiptPreviewDialogFragment -->
+    <string name="receipt_preview_dialog_fragment_use_receipt">Use This Receipt</string>
+    <string name="receipt_preview_dialog_fragment_cancel">Cancel</string>
+    <string name="receipt_preview_dialog_fragment_capture_new">Capture New Image</string>
+    
+</resources>

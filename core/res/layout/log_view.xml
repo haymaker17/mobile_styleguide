@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+	xmlns:android="http://schemas.android.com/apk/res/android"
+  	android:layout_width="fill_parent"
+  	android:layout_height="fill_parent"
+  	android:orientation="vertical"
+  	style="@style/ConcurTheme"
+  	android:background="@color/White"
+>
+	<!-- Screen Title -->
+	<FrameLayout
+    	android:layout_width="fill_parent" 
+    	android:layout_height="44dp"
+    >   
+		<ImageView
+	    	android:layout_height="44dp"
+	    	android:layout_width="fill_parent"
+	    	android:src="@drawable/gradient_title_bar"
+	    />
+		<TextView
+	    	android:layout_height="wrap_content"
+	    	android:layout_width="wrap_content"
+	    	android:layout_gravity="center" 
+	    	android:text="@string/log_view_title" 
+	    	style="@style/ScreenTitleText"
+	    />
+	</FrameLayout>
+	<ListView
+		android:id="@+id/log_list_view"
+		android:layout_width="fill_parent"
+		android:layout_height="fill_parent"
+		android:layout_weight="1.0"
+	/>
+	<LinearLayout
+		android:layout_width="fill_parent"
+		android:layout_height="wrap_content"
+		android:layout_gravity="bottom"
+		android:background="@drawable/gradient_background"
+		android:orientation="vertical"
+		android:padding="8dp"
+	>
+		<Button
+			android:layout_width="wrap_content"
+			android:layout_height="wrap_content"
+			android:layout_gravity="center"
+			android:text="@string/log_send"
+			android:onClick="sendLog"
+			android:paddingLeft="30sp"
+			android:paddingRight="30sp"
+		/>
+	</LinearLayout>
+</LinearLayout>

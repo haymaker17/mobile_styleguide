@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="utf-8"?>
+<TableLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="fill_parent"
+    android:layout_height="wrap_content"
+    android:layout_alignWithParentIfMissing="true"
+    android:background="@drawable/gov_gradient_section_header"
+    android:orientation="horizontal"
+    android:padding="@dimen/list_cell_padding_left"
+    android:shrinkColumns="0"
+    android:stretchColumns="0" >
+
+    <TableRow android:id="@+id/gov_table_row_name_count" >
+
+        
+    <TextView
+        android:id="@+id/list_section_header"
+        android:ellipsize="end"
+        android:gravity="left|center_vertical"
+        android:singleLine="true"
+        android:text="Govt. Contract"
+        android:textAppearance="@style/ListSectionHeaderText" >
+    </TextView>
+
+    <TextView
+        android:id="@+id/list_section_total_count"
+        android:background="#1A84C6"
+         android:paddingLeft="8dp"
+        android:paddingRight="8dp"
+        android:ellipsize="end"
+        android:gravity="right|center_vertical"
+        android:singleLine="true"
+        android:text="SEE ALL 1000 RESULTS"
+        android:textAppearance="@style/ListSectionHeaderText"
+        android:textColor="#FFFFFF" />
+
+
+        
+    </TableRow>
+
+</TableLayout>

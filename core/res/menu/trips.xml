@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:yourapp="http://schemas.android.com/apk/res-auto" >
+
+    <item
+        android:id="@+id/refresh"
+        android:icon="@drawable/ic_menu_refresh"
+        android:title="@string/refresh"/>
+    <item
+        android:id="@+id/travel_apps"
+        android:icon="@android:drawable/ic_menu_set_as"
+        android:title="@string/triplist_menu_travel_apps_title">
+        <menu>
+            <item
+                android:id="@+id/travel_app_taxi_magic"
+                android:title="Taxi Magic"/>
+        </menu>
+    </item>
+    <item
+        android:id="@+id/travel_agency"
+        android:icon="@android:drawable/ic_menu_info_details"
+        android:title="@string/triplist_menu_travel_agency_info"/>
+
+</menu>

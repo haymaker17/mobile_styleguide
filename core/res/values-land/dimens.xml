@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <!-- Test Drive Overlay Dimens -->
+    <dimen name="td_dummy_action_bar_height">40dip</dimen>
+	<dimen name="td_dummy_ab_icon_arrow_margin">34dp</dimen>
+	<dimen name="td_arrow_length_from_ab">48dp</dimen>
+	<dimen name="td_extra_long_arrow">80dp</dimen>
+	<dimen name="td_bottom_button_center">128dp</dimen>
+	<dimen name="td_sample_report_top_margin">128dp</dimen>
+	
+	<!-- TD Overlay Expenses and Receipts -->
+	<dimen name="td_enr_short_arrow_length">32dp</dimen>
+	<dimen name="td_enr_long_arrow_length">64dp</dimen>
+	<dimen name="td_enr_sample_exp_bottom_margin">16dp</dimen>
+	<dimen name="td_enr_sample_rec_bottom_margin">40dp</dimen>
+	<dimen name="td_enr_exp_rec_toggle_height">72dp</dimen>
+	<dimen name="td_enr_exp_rec_toggle_width">224dp</dimen>
+</resources>

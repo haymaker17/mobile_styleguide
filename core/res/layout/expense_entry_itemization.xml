@@ -1,0 +1,157 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--  Top level layout file for ExpenseEntryItemization activity. -->
+<LinearLayout
+  xmlns:android="http://schemas.android.com/apk/res/android"
+  android:layout_width="fill_parent"
+  android:layout_height="fill_parent"
+  android:orientation="vertical"
+  style="@style/ConcurTheme"
+>
+	<!--  Include the standard header bits -->
+	<include layout="@layout/standard_header"/>
+	
+	<ScrollView
+		android:id="@+id/scroll_view"
+		android:layout_height="fill_parent"
+		android:layout_width="fill_parent"
+		android:layout_weight="1"
+		android:background="@drawable/gradient_background"
+	>
+  		<LinearLayout
+  			android:id="@+id/linear_layout"
+  			android:layout_height="fill_parent"
+  			android:layout_width="fill_parent"
+  			android:orientation="vertical"
+  			android:layout_weight="1"
+  		>
+  			<TextView
+	  			android:id="@+id/long_press_msg_view"
+	  			android:layout_width="fill_parent"
+	  			android:layout_height="wrap_content"
+	  			android:text="@string/long_press_message"
+	  			android:textAppearance="@style/LongPressMessage"
+	  			android:layout_marginLeft="@dimen/list_item_horizontal_margin"
+	  			android:layout_marginTop="@dimen/list_item_vertical_margin"
+	  		/>
+			<!-- Itemization Entries -->
+  			<LinearLayout
+  				android:id="@+id/entries"
+				android:layout_width="fill_parent"
+				android:layout_height="fill_parent"
+				android:orientation="vertical"
+				android:layout_marginLeft="@dimen/list_item_horizontal_margin"
+	  			android:layout_marginRight="@dimen/list_item_horizontal_margin"
+	  			android:layout_marginBottom="@dimen/list_group_vertical_margin"
+			>
+				<LinearLayout
+	  				android:layout_height="wrap_content"
+	  				android:layout_width="fill_parent"
+	  				android:orientation="vertical"
+	  				android:background="@drawable/square_border"
+	  				android:padding="1dp"
+	  			>
+	  				<!-- This LinearLayout view is populated programmatically. -->
+					<LinearLayout
+						android:id="@+id/entries_list"
+	  					android:layout_height="wrap_content"
+	  					android:layout_width="fill_parent"
+	  					android:orientation="vertical"
+	  				/>
+	  			</LinearLayout>
+	  			<View
+	  				android:layout_width="fill_parent"
+	  				android:background="@drawable/square_border_shadow"
+	  				android:layout_height="3dp"
+	  				android:layout_marginLeft="1dp"
+	  				android:layout_marginRight="1dp"
+	  			/>
+	  		</LinearLayout>
+  		</LinearLayout>
+  	</ScrollView>
+  	<!--  The no itemizations layout. -->
+	<LinearLayout
+	  	android:id="@+id/no_entries"
+	  	android:layout_width="fill_parent"
+	  	android:layout_height="fill_parent"
+	  	android:layout_weight="1"
+	  	android:orientation="vertical"
+	  	android:background="@drawable/gradient_background"
+	  	android:gravity="center" android:visibility="gone">
+	  	<ImageView
+	  		android:layout_width="wrap_content"
+	  		android:layout_height="wrap_content"
+	  		android:src="@drawable/neg_itemize_icon"
+	  	/>
+	  	<TextView
+	  		android:layout_width="wrap_content"
+	  		android:layout_height="wrap_content"
+	  		android:text="@string/no_itemization"
+	  		android:textAppearance="@style/NoDataText"
+	  		android:layout_marginTop="@dimen/list_item_vertical_margin"
+	  	/>
+	  	<Button
+	  		android:id="@+id/add_expense"
+	  		android:layout_width="wrap_content"
+	  		android:layout_height="wrap_content"
+	  		android:layout_marginTop="@dimen/list_item_vertical_margin"
+	  		android:text="@string/entry_add_itemization"
+	  	style="@style/StandardButton"/>
+	</LinearLayout>
+  	<!--  Include the group separator -->
+	<include layout="@layout/group_separator"/>
+  	<!--  Itemization Total/Remaining UI. -->
+  	<TableLayout
+		android:orientation="vertical"
+		android:layout_height="wrap_content"
+		android:layout_width="fill_parent"
+		android:layout_weight="0"
+		android:background="@drawable/gradient_title_bar"
+    	android:layout_gravity="bottom" 
+    	android:gravity="center"
+    	android:paddingTop="@dimen/list_group_vertical_margin"
+		android:paddingLeft="@dimen/list_item_horizontal_margin"
+	  	android:paddingRight="@dimen/list_item_horizontal_margin"
+	  	android:paddingBottom="@dimen/list_group_vertical_margin"
+    >
+    	<TableRow>
+    		<TextView
+        		android:id="@+id/itemizedAmountLabel"
+            	android:layout_height="wrap_content" 
+            	android:layout_width="wrap_content" 
+            	android:textAppearance="@style/FooterTextLarge" 
+            	android:layout_gravity="right"
+            	android:gravity="right"
+            	android:text="@string/itemize_itemized_amount_label"
+			/>
+    		<TextView
+        		android:id="@+id/itemizedAmount"
+            	android:layout_height="wrap_content" 
+            	android:layout_width="fill_parent" 
+            	android:textAppearance="@style/FooterTextLarge" 
+            	android:gravity="left"
+            	android:layout_gravity="left"
+            	android:layout_marginLeft="6dp"
+			/>
+		</TableRow>
+		<TableRow>
+			<TextView
+				android:id="@+id/itemizedRemainingAmountLabel"
+				android:layout_width="wrap_content"
+            	android:layout_height="wrap_content" 
+            	android:textAppearance="@style/FooterTextLarge" 
+            	android:gravity="right"
+            	android:layout_gravity="right"
+            	android:text="@string/itemize_remaining_label"
+			/>
+    		<TextView
+				android:id="@+id/itemizedRemainingAmount"
+				android:layout_width="fill_parent"
+            	android:layout_height="wrap_content" 
+            	android:textAppearance="@style/FooterTextLarge"
+            	android:gravity="left"
+            	android:layout_gravity="left"
+            	android:layout_marginLeft="6dp"
+			/>
+		</TableRow>
+	</TableLayout>
+</LinearLayout>

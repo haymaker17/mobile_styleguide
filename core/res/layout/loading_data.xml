@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+	android:layout_width="fill_parent" android:layout_height="fill_parent"
+	android:background="@drawable/gradient_background" style="@style/ConcurTheme">
+	<ProgressBar
+	    android:id="@+id/data_loading_progress"
+	    android:layout_width="wrap_content"
+		android:layout_height="wrap_content" 
+		android:layout_centerInParent="true"
+		android:gravity="center"
+		android:indeterminate="true"
+		style="?android:attr/progressBarStyleLarge"
+	/>
+	<TextView
+        android:id="@+id/data_loading_text"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="15dp"
+        android:gravity="center"
+        android:layout_above="@+id/data_loading_progress"
+        android:text="Loading Data..."
+        style="@style/DataLoadingText"
+    />
+</RelativeLayout>

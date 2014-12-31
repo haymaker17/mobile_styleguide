@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+  	xmlns:android="http://schemas.android.com/apk/res/android"
+  	android:orientation="horizontal"
+  	android:layout_width="fill_parent"
+  	android:layout_height="wrap_content"
+  	android:paddingTop="3dp"
+  	android:paddingBottom="3dp"
+  	android:paddingLeft="3dp"
+  	android:background="@drawable/gradient_background"
+>
+	<TextView
+		android:id="@+id/suggestion"
+		android:layout_height="wrap_content"
+		android:layout_width="fill_parent"
+		android:maxLines="1"
+		android:minLines="1"
+	    android:layout_centerVertical="true"
+	    android:layout_marginLeft="10dp"
+	    android:layout_marginTop="1dp"
+		android:layout_marginBottom="1dp"
+	    android:textAppearance="@style/PrimaryText"
+	    android:textSize="16sp"
+	    android:textStyle="bold"
+	    android:layout_gravity="center_vertical"
+	/>
+</LinearLayout>

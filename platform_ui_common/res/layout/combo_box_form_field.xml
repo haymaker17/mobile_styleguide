@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+  xmlns:android="http://schemas.android.com/apk/res/android"
+  android:orientation="vertical"
+  android:layout_width="fill_parent"
+  android:layout_height="wrap_content"
+  android:paddingTop="@dimen/form_cell_padding_top"
+  android:paddingBottom="@dimen/form_cell_padding_bottom"
+  android:background="@drawable/gradient_background"
+>
+	<TextView
+		android:id="@+id/field_name"
+		android:layout_height="wrap_content"
+		android:layout_width="fill_parent"
+		android:text="Field Name"
+	    android:layout_marginLeft="6dp"
+	    android:layout_marginRight="6dp"
+	    android:textAppearance="@style/FormFieldLabelText"
+	/>
+	<LinearLayout
+	   	android:layout_width="fill_parent"
+	   	android:layout_height="wrap_content"
+	   	android:orientation="horizontal"
+	   	android:layout_marginLeft="6dp"
+	   	android:layout_marginRight="6dp"
+	>
+		<EditText
+			android:id="@+id/field_value"
+			android:layout_height="wrap_content"
+			android:layout_width="0dp"
+			android:layout_marginRight="6dp"
+			android:layout_weight="1"
+			android:text="Field Value"
+	    	android:textAppearance="@style/FormFieldValueText"
+	    	android:minLines="1"
+	    	android:maxLines="1"
+	    	android:singleLine="true"
+		/>
+		<ImageView
+	    	android:id="@+id/field_search"
+	    	android:src="@drawable/ic_btn_search"
+	    	android:layout_width="wrap_content"
+	    	android:layout_height="wrap_content"
+	    	android:layout_marginLeft="3dp"
+	    	android:layout_gravity="center"
+		/>
+	</LinearLayout>
+</LinearLayout>

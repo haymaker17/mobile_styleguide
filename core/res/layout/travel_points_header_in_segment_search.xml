@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="fill_parent"
+    android:layout_height="wrap_content" >
+
+    <TextView
+        android:id="@+id/desc_field"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@drawable/gradient_background"
+        android:paddingBottom="@dimen/report_list_cell_padding_bottom"
+        android:paddingLeft="@dimen/list_item_horizontal_margin"
+        android:paddingRight="@dimen/list_item_horizontal_margin"
+        android:paddingTop="@dimen/report_list_cell_padding_top"
+        android:text="Select a flight under $266.20 to earn Travel Points. You have 300 points in your travel bank."
+        android:textAppearance="@style/ListCellSubHeaderTextBold" />
+
+    <ImageView
+        android:id="@+id/arrow_right_image"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentRight="true"
+        android:layout_centerInParent="true"
+        android:paddingRight="5dp"
+        android:src="@drawable/arrow_right" />
+
+</RelativeLayout>

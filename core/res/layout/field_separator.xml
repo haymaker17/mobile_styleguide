@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- This layout file is basically used as a separator between a group of objects. -->
+<View xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/group_view_separator"
+    android:layout_width="fill_parent"
+    android:layout_height="1dp"
+    android:background="@color/divider_gray" />

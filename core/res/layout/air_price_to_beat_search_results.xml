@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout
+	xmlns:android="http://schemas.android.com/apk/res/android"
+	android:layout_width="fill_parent"
+	android:layout_height="fill_parent"
+	android:background="@drawable/gradient_background"
+	style="@style/ConcurTheme">
+
+	<!--  Include the standard header bits -->
+	<include layout="@layout/standard_header"/>
+ 
+	<fragment
+	    android:id="@+id/details_fragment"
+	    android:name="com.concur.mobile.core.travel.air.fragment.AirPriceToBeatSearchResultsFragment"
+	    android:layout_width="wrap_content"
+	    android:layout_height="wrap_content" />
+
+</RelativeLayout>

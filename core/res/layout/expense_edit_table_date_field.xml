@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+  xmlns:android="http://schemas.android.com/apk/res/android"
+  android:orientation="horizontal"
+  android:layout_width="fill_parent"
+  android:layout_height="fill_parent"
+  android:paddingTop="3dp"
+  android:paddingBottom="3dp"
+>
+	<TextView
+		android:id="@+id/field_name"
+		android:layout_height="wrap_content"
+		android:layout_width="0dp"
+		android:text="Field Name"
+		android:layout_weight="1"
+		android:maxLines="1"
+		android:minLines="1"
+	    android:layout_centerVertical="true"
+	    android:layout_marginLeft="10dp"
+	    android:textColor="@color/blue"
+	    android:textSize="14sp"
+	    android:layout_gravity="center_vertical"
+	/>
+	<TextView
+	  	android:id="@+id/field_value"
+	  	android:layout_width="0dp"
+	  	android:layout_height="wrap_content"
+	  	android:layout_weight="1"
+	  	android:layout_marginLeft="10dp"
+	    android:layout_marginRight="10dp"
+	  	android:text="Mar 25, 2010"
+	  	android:textAppearance="@style/PrimaryText"
+	  	android:layout_gravity="center_vertical"
+	/>
+	<ImageButton
+		android:id="@+id/field_button"
+	  	android:src="@android:drawable/ic_menu_month"
+	  	android:layout_width="48dp"
+	  	android:layout_height="48dp"
+	  	android:scaleType="centerInside"
+	  	android:padding="6dp"
+	  	android:layout_gravity="center_vertical"
+	  	android:layout_marginLeft="10dp"
+	    android:layout_marginRight="10dp"
+	    android:focusable="true"
+	    android:focusableInTouchMode="true"
+	/>
+</LinearLayout>

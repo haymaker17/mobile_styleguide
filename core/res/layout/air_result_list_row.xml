@@ -1,0 +1,103 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="fill_parent"
+    android:layout_height="wrap_content"
+    android:background="@drawable/list_selector_gradient_background"
+    android:paddingBottom="@dimen/list_cell_padding_bottom"
+    android:paddingLeft="@dimen/list_cell_padding_left"
+    android:paddingRight="@dimen/list_cell_padding_right"
+    android:paddingTop="@dimen/list_cell_padding_top" >
+
+    <ImageView
+        android:id="@+id/airlineLogo"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentTop="true"
+        android:layout_marginTop="@dimen/airline_logo_icon_top_margin"
+        android:src="@drawable/dl" />
+
+    <TextView
+        android:id="@+id/airlineName"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentTop="true"
+        android:layout_marginLeft="4dp"
+        android:layout_toRightOf="@id/airlineLogo"
+        android:text="Delta"
+        android:textAppearance="@style/ListCellHeaderText" />
+    <!-- This layout is dynamically filled with data from air booking segment objects. -->
+
+    <LinearLayout
+        android:id="@+id/segment_list"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentLeft="true"
+        android:layout_below="@id/airlineName"
+        android:orientation="vertical" />
+
+    <TextView
+        android:id="@+id/air_gds_name"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/segment_list"
+        android:textAppearance="@style/SmallPrimaryText"
+        android:visibility="gone" />
+
+    <TextView
+        android:id="@+id/fare_cost"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentRight="true"
+        android:layout_alignParentTop="true"
+        android:text="34343"
+        android:textAppearance="@style/AirFareNormal" />
+
+    <TextView
+        android:id="@+id/travel_points"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentRight="true"
+        android:layout_alignParentTop="true"
+        android:layout_alignRight="@id/fare_cost"
+        android:layout_below="@id/fare_cost"
+        android:layout_gravity="right"
+        android:layout_marginTop="15dp"
+        android:text="Earn 25 pts"
+        android:textAppearance="@style/TravelPointsAtItemLevel"
+        android:visibility="gone" />
+
+    <TextView
+        android:id="@+id/refundable"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignRight="@id/fare_cost"
+        android:layout_below="@id/travel_points"
+        android:layout_gravity="right"
+        android:layout_marginTop="2dp"
+        android:text="@string/general_refundable"
+        android:textAppearance="@style/ListCellSmallText"
+        android:visibility="gone" />
+
+    <ImageView
+        android:id="@+id/diamonds"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignRight="@id/fare_cost"
+        android:layout_below="@id/refundable"
+        android:layout_gravity="right"
+        android:layout_marginTop="2dp"
+        android:src="@drawable/diamonds_3" />
+
+    <ImageView
+        android:id="@+id/violation_icon"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignRight="@id/fare_cost"
+        android:layout_below="@id/diamonds"
+        android:layout_gravity="right"
+        android:layout_marginTop="2dp"
+        android:src="@drawable/icon_redex"
+        android:visibility="gone" />
+
+</RelativeLayout>

@@ -1,0 +1,111 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+	android:layout_width="fill_parent" android:layout_height="fill_parent"
+	android:orientation="vertical" style="@style/ConcurTheme"
+	android:background="@drawable/gradient_background">
+
+	<!--  Include the standard header bits -->
+	<include layout="@layout/standard_header"/>
+
+	<ScrollView android:layout_width="fill_parent"
+		android:layout_height="0dp" android:layout_weight="1">
+		<LinearLayout android:layout_width="fill_parent"
+			android:layout_height="fill_parent" android:orientation="vertical">
+
+			<LinearLayout android:layout_height="wrap_content"
+				android:layout_width="fill_parent" android:gravity="center"
+				android:padding="3dp">
+
+				<Button android:id="@+id/rail_search_oneway" android:text="@string/rail_search_btn_oneway"
+					android:layout_weight="1" android:layout_width="fill_parent"
+					android:layout_marginRight="-1dp" style="@style/StandardButton"
+					android:layout_height="wrap_content" />
+
+				<Button android:id="@+id/rail_search_roundtrip" android:text="@string/rail_search_btn_roundtrip"
+					android:layout_weight="1" android:layout_width="fill_parent"
+					android:layout_height="wrap_content" style="@style/StandardButton" />
+
+				<Button android:id="@+id/rail_search_multi" android:text="@string/rail_search_btn_multiseg"
+					android:layout_weight="1" android:layout_width="fill_parent"
+					android:lines="1" android:scrollHorizontally="true"
+					android:layout_marginLeft="-1dp" android:enabled="false"
+					style="@style/StandardButton" android:layout_height="wrap_content"
+					android:visibility="gone" />
+
+			</LinearLayout>
+
+			<LinearLayout android:id="@+id/rail_search_locations"
+				android:layout_width="fill_parent" android:orientation="vertical"
+				android:layout_marginTop="@dimen/list_group_vertical_margin"
+				android:layout_marginLeft="@dimen/list_item_horizontal_margin"
+				android:layout_marginRight="@dimen/list_item_horizontal_margin"
+				android:layout_height="wrap_content">
+				<LinearLayout android:layout_height="wrap_content"
+					android:layout_width="fill_parent" android:orientation="vertical"
+					android:background="@drawable/square_border" android:padding="1dp">
+					<include layout="@layout/image_form_field" android:id="@+id/rail_search_depart_loc" />
+					<include layout="@layout/group_separator" />
+					<include layout="@layout/image_form_field" android:id="@+id/rail_search_arrive_loc" />
+
+				</LinearLayout>
+				<View android:layout_width="fill_parent" android:background="@drawable/square_border_shadow"
+					android:layout_height="3dp" android:layout_marginLeft="1dp"
+					android:layout_marginRight="1dp" />
+			</LinearLayout>
+
+			<LinearLayout android:id="@+id/rail_search_departure"
+				android:layout_width="fill_parent" android:orientation="vertical"
+				android:layout_marginTop="@dimen/list_group_vertical_margin"
+				android:layout_marginLeft="@dimen/list_item_horizontal_margin"
+				android:layout_marginRight="@dimen/list_item_horizontal_margin"
+				android:layout_height="wrap_content">
+				<LinearLayout android:layout_height="wrap_content"
+					android:layout_width="fill_parent" android:orientation="vertical"
+					android:background="@drawable/square_border" android:padding="1dp">
+					<include layout="@layout/image_form_field" android:id="@+id/rail_search_depart_date" />
+					<include layout="@layout/group_separator" />
+					<include layout="@layout/image_form_field" android:id="@+id/rail_search_depart_time" />
+
+				</LinearLayout>
+				<View android:layout_width="fill_parent" android:background="@drawable/square_border_shadow"
+					android:layout_height="3dp" android:layout_marginLeft="1dp"
+					android:layout_marginRight="1dp" />
+			</LinearLayout>
+
+			<LinearLayout android:id="@+id/rail_search_return"
+				android:layout_width="fill_parent" android:orientation="vertical"
+				android:layout_marginTop="@dimen/list_group_vertical_margin"
+				android:layout_marginLeft="@dimen/list_item_horizontal_margin"
+				android:layout_marginRight="@dimen/list_item_horizontal_margin"
+				android:layout_marginBottom="@dimen/list_group_vertical_margin"
+				android:layout_height="wrap_content">
+				<LinearLayout android:layout_height="wrap_content"
+					android:layout_width="fill_parent" android:orientation="vertical"
+					android:background="@drawable/square_border" android:padding="1dp">
+					<include layout="@layout/image_form_field" android:id="@+id/rail_search_return_date" />
+					<include layout="@layout/group_separator" />
+					<include layout="@layout/image_form_field" android:id="@+id/rail_search_return_time" />
+
+				</LinearLayout>
+				<View android:layout_width="fill_parent" android:background="@drawable/square_border_shadow"
+					android:layout_height="3dp" android:layout_marginLeft="1dp"
+					android:layout_marginRight="1dp" />
+			</LinearLayout>
+			
+			<!-- Custom Fields View Group -->
+		    <LinearLayout android:id="@+id/booking_custom_fields"
+		        android:layout_width="fill_parent"
+		        android:layout_height="wrap_content"
+		        android:orientation="vertical"
+		        android:layout_marginBottom="@dimen/list_group_vertical_margin"
+		        android:layout_marginLeft="@dimen/list_item_horizontal_margin"
+		        android:layout_marginRight="@dimen/list_item_horizontal_margin"
+		    />
+			
+		</LinearLayout>
+	</ScrollView>
+
+	<include layout="@layout/footer_navigation_bar_one_button"
+		android:id="@+id/footer" />
+</LinearLayout>
+

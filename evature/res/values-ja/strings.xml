@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="voice_book_unable_to_determine_departure_loc">出発地を特定できませんでした。もう一度お試しください。</string>
+    <string name="voice_book_unable_to_determine_arrival_loc">到着地を特定できませんでした。もう一度お試しください。</string>
+    <string name="voice_book_unable_to_loc">現在の場所を特定できませんでした。もう一度お試しください。</string>
+    <string name="voice_book_unable_to_determine_pickup_loc">乗車地を特定できませんでした。もう一度お試しください。</string>
+    <string name="voice_book_unable_to_search">適切に処理できませんでした。もう一度お試しください。</string>
+    <string name="voice_book_speech_to_text_unsupported">申し訳ございませんが、このデバイスでは音声テキスト変換がサポートされていません。</string>
+</resources>

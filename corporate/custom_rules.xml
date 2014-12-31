@@ -1,0 +1,13 @@
+<project>
+	<target name="-post-compile">
+		<taskdef name="injector"
+			classname="com.appdynamics.android.ant.EUMAgentInjectorTask"
+			classpath="ADEUMInjector.jar" />
+		<injector classfilespath="${out.classes.absolute.dir}"
+			outputlocation="${out.absolute.dir}/instrumented-jars/"
+			instrumentationjarlocation="${jar.libs.absolute.dir}/ADEUMAgent.jar"
+			jarfilesrefid="project.all.jars.path"
+			androidjarlocation="${project.target.android.jar}">
+		</injector>
+	</target>
+</project>

@@ -1,0 +1,90 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+	android:layout_width="fill_parent" android:layout_height="fill_parent"
+	android:orientation="vertical" style="@style/ConcurTheme" 
+	android:background="@drawable/gradient_background">
+
+	<!--  Include the standard header bits -->
+	<include layout="@layout/standard_header"/>
+ 
+	<LinearLayout android:layout_height="wrap_content"
+		android:layout_width="fill_parent" android:gravity="center"
+		android:padding="3dp">
+
+		<Button android:id="@+id/air_search_oneway" android:text="@string/air_search_btn_oneway"
+			android:layout_weight="1" android:layout_width="fill_parent"
+			android:layout_marginRight="-1dp" style="@style/StandardButton" android:layout_height="wrap_content"/>
+
+		<Button android:id="@+id/air_search_roundtrip"
+			android:text="@string/air_search_btn_roundtrip"
+			android:layout_weight="1" android:layout_width="fill_parent"
+			android:layout_height="wrap_content" android:layout_marginLeft="-1dp" style="@style/StandardButton"/>
+	</LinearLayout>
+	
+	<LinearLayout
+    		android:layout_height="wrap_content"
+    		android:orientation="vertical"
+    		android:layout_width="fill_parent"
+    		android:layout_gravity="top"
+    		android:paddingLeft="@dimen/list_item_horizontal_margin"
+    		android:paddingRight="@dimen/list_item_horizontal_margin"
+    		android:paddingTop="@dimen/report_list_cell_padding_top"
+    		android:paddingBottom="@dimen/report_list_cell_padding_bottom"
+    		android:background="@drawable/subheader_gradient_background"
+    	>
+        	<TextView
+        		android:layout_width="fill_parent"
+        		android:layout_height="wrap_content"
+        		android:textAppearance="@style/SubHeaderText"
+        		android:layout_gravity="top|left"
+        		android:gravity="top|left"
+        		android:id="@+id/air_search_header"
+        		android:text="Earn travel points ..."
+        	/>
+    </LinearLayout>
+    <ScrollView
+        android:layout_width="fill_parent"
+        android:layout_height="0dp"
+        android:layout_weight="0.42" 
+        >
+
+	    <LinearLayout android:layout_width="fill_parent" android:layout_height="wrap_content" 
+	        android:orientation="vertical">
+	
+			<LinearLayout android:id="@+id/air_search_locations"
+				android:layout_width="fill_parent" android:orientation="vertical" android:layout_marginTop="@dimen/list_group_vertical_margin"
+				android:layout_marginLeft="@dimen/list_item_horizontal_margin"
+				android:layout_marginRight="@dimen/list_item_horizontal_margin"
+				android:layout_height="wrap_content">
+				<LinearLayout android:layout_height="wrap_content"
+					android:layout_width="fill_parent" android:orientation="vertical"
+					android:background="@drawable/square_border" android:padding="1dp">
+					<include layout="@layout/image_form_field" android:id="@+id/air_search_depart_loc"/>
+					<include layout="@layout/group_separator" />
+					<include layout="@layout/image_form_field" android:id="@+id/air_search_arrive_loc" />
+		
+				</LinearLayout>
+				<View android:layout_width="fill_parent" android:background="@drawable/square_border_shadow"
+					android:layout_height="3dp" android:layout_marginLeft="1dp"
+					android:layout_marginRight="1dp" />
+			</LinearLayout>
+		
+		    <LinearLayout android:id="@+id/air_search_departure"
+		        android:layout_width="fill_parent" android:orientation="vertical" android:layout_marginTop="@dimen/list_group_vertical_margin"
+		        android:layout_marginLeft="@dimen/list_item_horizontal_margin"
+		        android:layout_marginRight="@dimen/list_item_horizontal_margin"
+		        android:layout_height="wrap_content">
+		        <LinearLayout android:layout_height="wrap_content"
+		            android:layout_width="fill_parent" android:orientation="vertical"
+		            android:background="@drawable/square_border" android:padding="1dp">
+		            <include layout="@layout/image_form_field" android:id="@+id/air_search_depart_date"/>
+		        </LinearLayout>
+		        <View android:layout_width="fill_parent" android:background="@drawable/square_border_shadow"
+		            android:layout_height="3dp" android:layout_marginLeft="1dp"
+		            android:layout_marginRight="1dp" />
+		    </LinearLayout>	    
+	    </LinearLayout>
+    </ScrollView>
+    
+ 	<include layout="@layout/footer_navigation_bar_one_button" android:id="@+id/footer"/>
+</LinearLayout>

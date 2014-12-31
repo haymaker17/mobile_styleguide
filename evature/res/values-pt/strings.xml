@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="voice_book_unable_to_determine_departure_loc">Não foi possível determinar seu local de partida. Tente novamente.</string>
+    <string name="voice_book_unable_to_determine_arrival_loc">Não foi possível determinar seu local de chegada. Tente novamente.</string>
+    <string name="voice_book_unable_to_loc">Não foi possível determinar seu local. Tente novamente.</string>
+    <string name="voice_search_not_supported_category">Esta busca não é suportada nessa categoria.</string>
+    <string name="voice_air_search_different_scope">Tente novamente com uma busca por passagens aéreas.</string>
+    <string name="voice_car_search_different_scope">Tente novamente com uma busca por automóvel.</string>
+    <string name="voice_hotel_search_different_scope">Tente novamente com uma busca por hotéis.</string>
+    <string name="voice_book_unable_to_determine_pickup_loc">Não foi possível determinar seu local de retirada. Tente novamente.</string>
+    <string name="voice_book_unable_to_search">Lamento, mas não era isso que queria obter. Tente novamente.</string>
+    <string name="voice_book_speech_to_text_unsupported">Lamentamos, mas fala para texto não é suportada neste dispositivo.</string>
+</resources>

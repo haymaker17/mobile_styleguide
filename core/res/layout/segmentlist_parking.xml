@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+  xmlns:android="http://schemas.android.com/apk/res/android"
+  android:orientation="horizontal"
+  android:layout_width="fill_parent"
+  android:layout_height="wrap_content"
+  android:paddingRight="5sp"
+  android:paddingLeft="5sp" 
+  android:paddingBottom="5sp"
+  android:background="@drawable/list_selector_gradient_background"
+>
+	<ImageView
+		android:id="@+id/segmentListSegmentIconView"
+		android:layout_width="wrap_content"
+		android:layout_height="wrap_content"  
+    	android:layout_gravity="center_vertical"
+    android:src="@drawable/itin_icon_parking"/>
+
+    <RelativeLayout android:gravity="right" android:layout_marginRight="8dp" android:layout_height="fill_parent" android:layout_width="46dp">
+        <TextView android:layout_width="wrap_content" android:id="@+id/segmentListParkingTime" android:layout_height="wrap_content" android:text="00:00" android:textAppearance="@style/SegmentListRowHeaderText"></TextView>
+        <TextView android:layout_width="wrap_content" android:id="@+id/segmentListParkingTimeAMPM" android:layout_height="wrap_content" android:layout_below="@+id/segmentListParkingTime" android:layout_alignRight="@+id/segmentListParkingTime" android:textAppearance="@style/ListCellSmallText" android:text="XX"/>
+    </RelativeLayout>
+    
+	<LinearLayout
+		android:id="@+id/segmentListSegmentRowLayout"
+		android:layout_width="fill_parent" 
+    	android:layout_weight="1"
+    	android:orientation="vertical"
+    	android:layout_height="wrap_content"
+    >
+    
+    <TextView android:layout_width="wrap_content" android:layout_height="fill_parent" 
+        android:id="@+id/segmentListParkingVendor" android:textAppearance="@style/PrimaryText" android:text="Parking Vendor" android:textStyle="bold"></TextView>
+    <TextView android:layout_width="wrap_content" android:layout_height="wrap_content"
+        android:id="@+id/segmentListParkingDropoff" android:textAppearance="@style/ListCellSubHeaderText" android:text="Dropoff Location"></TextView>
+    <TextView android:layout_width="wrap_content" android:layout_height="wrap_content"
+        android:id="@+id/segmentListParkingConfirm" android:textAppearance="@style/ListCellSubHeaderText" android:text="Confirm 999999"></TextView>
+
+    </LinearLayout>
+</LinearLayout>

@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="voice_book_unable_to_determine_departure_loc">Spiacenti, non è stato possibile determinare la località di partenza. Riprovare.</string>
+    <string name="voice_book_unable_to_determine_arrival_loc">Spiacenti, non è stato possibile determinare la località di arrivo. Riprovare.</string>
+    <string name="voice_book_unable_to_loc">Spiacenti, non è stato possibile determinare la località. Riprovare.</string>
+    <string name="voice_search_not_supported_category">Questa ricerca non è supportata per questa categoria.</string>
+    <string name="voice_air_search_different_scope">Eseguire di nuovo la ricerca di un aereo.</string>
+    <string name="voice_car_search_different_scope">Eseguire di nuovo la ricerca di una vettura.</string>
+    <string name="voice_hotel_search_different_scope">Eseguire di nuovo la ricerca di un albergo.</string>
+    <string name="voice_book_unable_to_determine_pickup_loc">Spiacenti, non è stato possibile determinare la località di ritiro. Riprovare.</string>
+    <string name="voice_book_unable_to_search">Spiacenti, non è molto chiaro. Riprovare.</string>
+    <string name="voice_book_speech_to_text_unsupported">Questo dispositivo non supporta la funzione di digitazione vocale.</string>
+</resources>

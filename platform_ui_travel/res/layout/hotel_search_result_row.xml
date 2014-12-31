@@ -1,0 +1,112 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    style="@style/ConcurBaseTheme.White.New"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:background="#FFFFFF"
+    android:orientation="horizontal"
+    android:paddingBottom="10dp"
+    android:paddingLeft="10dp"
+    android:paddingRight="@dimen/search_result_cell_padding_right"
+    android:paddingTop="@dimen/search_result_cell_padding_top" >
+
+    <RelativeLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="@dimen/list_cell_padding_left"
+        android:orientation="horizontal" >
+
+        <ImageView
+            android:id="@+id/hotel_image_id"
+            android:layout_width="78dp"
+            android:layout_height="78dp"
+            android:layout_alignParentLeft="true"
+            android:layout_marginRight="10dp"
+            android:layout_marginTop="5dp"
+            android:src="@drawable/hotel_results_default_image" />
+
+        <TextView
+            android:id="@+id/hotel_price"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentRight="true"
+            android:fontFamily="sans-serif-medium"
+            android:text="$169"
+            android:textColor="#0078c8"
+            android:textSize="18sp" />
+
+        <TextView
+            android:id="@+id/hotel_name"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="4dp"
+            android:layout_marginRight="6dp"
+            android:layout_toLeftOf="@id/hotel_price"
+            android:layout_toRightOf="@id/hotel_image_id"
+            android:fontFamily="sans-serif"
+            android:text="Hotel Name Here"
+            android:textColor="#383f46"
+            android:textSize="16sp" />
+
+        <TextView
+            android:id="@+id/hotel_address"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/hotel_name"
+            android:layout_marginBottom="4dp"
+            android:layout_toRightOf="@id/hotel_image_id"
+            android:fontFamily="sans-serif-light"
+            android:text="Hotel Address Here"
+            android:textColor="#687278"
+            android:textSize="12sp" />
+
+        <TextView
+            android:id="@+id/hotel_distance"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/hotel_address"
+            android:layout_marginBottom="4dp"
+            android:layout_toRightOf="@id/hotel_image_id"
+            android:drawableLeft="@drawable/icon_cell_locator"
+            android:drawablePadding="@dimen/standard_button_padding"
+            android:fontFamily="sans-serif"
+            android:text="0.16 miles"
+            android:textColor="#383f46"
+            android:textSize="12sp" />
+
+        <ImageView
+            android:id="@+id/recom_stars"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/hotel_distance"
+            android:layout_marginBottom="4dp"
+            android:layout_toRightOf="@id/hotel_image_id"
+            android:padding="4dp"
+            android:src="@drawable/icon_cell_stars_5" />
+
+        <TextView
+            android:id="@+id/preference_text"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentRight="true"
+            android:layout_below="@id/hotel_distance"
+            android:fontFamily="sans-serif-light"
+            android:gravity="center"
+            android:padding="6dp"
+            android:text="Preferred"
+            android:textSize="12sp" />
+
+        <TextView
+            android:id="@+id/recom_text"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/recom_stars"
+            android:layout_marginTop="4dp"
+            android:layout_toRightOf="@id/hotel_image_id"
+            android:fontFamily="sans-serif-light"
+            android:text="Suggested based on past stay dgdfgdf dfg dfg dsfg dfg dsfg dfg sd dg dfg dsfg dsfg dfgs "
+            android:textColor="#0078c8"
+            android:textSize="12sp" />
+    </RelativeLayout>
+
+</LinearLayout>

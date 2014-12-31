@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    style="@style/ConcurTheme"
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent"
+    android:background="@drawable/gradient_background" >
+
+	<!--  Include the standard header bits -->
+	<include layout="@layout/standard_header"/>
+
+    <include
+        android:id="@+id/alternative_travel_header"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/alternative_header"
+        layout="@layout/travel_title_header" />
+
+    <ListView
+        android:id="@+id/alternative_list_view"
+        android:layout_width="fill_parent"
+        android:layout_height="fill_parent"
+        android:layout_below="@+id/alternative_travel_header"
+        android:background="@drawable/gradient_background"
+        android:divider="@color/ListDivider" 
+        />
+
+    <TextView
+        android:id="@+id/alternative_nodata"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerHorizontal="true"
+        android:layout_centerVertical="true"
+        android:text="@string/dlg_travel_alternative_flight_retrieve_fail"
+        android:textAppearance="@style/PrimaryText" 
+        android:visibility="gone"/>
+
+</RelativeLayout>

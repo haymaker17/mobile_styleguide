@@ -1,0 +1,76 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Top level layout file for ExpenseReceipt activity. -->
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/document_receipt_view"
+    style="@style/ConcurTheme"
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent"
+    android:orientation="vertical" >
+
+    <!-- Include the header navigation bar. -->
+
+    <include
+        android:id="@+id/nav_bar_header"
+        layout="@layout/standard_header" />
+
+    <WebView
+        android:id="@+id/receipt_web_view"
+        android:layout_width="fill_parent"
+        android:layout_height="fill_parent"
+        android:layout_weight="1"
+        android:background="@drawable/gradient_background"
+        android:visibility="gone" />
+
+    <LinearLayout
+        android:id="@+id/receipt_neg_view"
+        android:layout_width="fill_parent"
+        android:layout_height="fill_parent"
+        android:background="@drawable/gradient_background"
+        android:gravity="center"
+        android:orientation="vertical"
+        >
+
+        <ImageView
+            android:id="@+id/no_data_icon"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src="@drawable/neg_receipt_icon" />
+
+        <TextView
+            android:id="@+id/no_data_text"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dp"
+            android:text="@string/no_receipt"
+            android:textAppearance="@style/NoDataText" />
+
+        <Button
+            android:id="@+id/attach_receipt"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dp"
+            android:onClick="onAttachReceipt"
+            android:text="@string/attach_receipt"
+            android:textAppearance="@style/NoDataText" />
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/view_pdf_layout"
+        android:layout_width="fill_parent"
+        android:layout_height="fill_parent"
+        android:background="@drawable/gradient_background"
+        android:gravity="center"
+        android:orientation="vertical" 
+         android:visibility="gone">
+
+        <Button
+            android:id="@+id/view_pdf_receipt"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dp"
+            android:text="@string/view_receipt"
+            android:textAppearance="@style/NoDataText" />
+        
+    </LinearLayout>
+
+</LinearLayout>

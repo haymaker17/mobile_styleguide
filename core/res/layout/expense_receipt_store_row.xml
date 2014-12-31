@@ -1,0 +1,86 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+  xmlns:android="http://schemas.android.com/apk/res/android"
+  android:layout_width="fill_parent"
+  android:layout_height="wrap_content"
+  android:orientation="horizontal"
+  android:padding="@dimen/list_cell_padding"
+  android:background="@drawable/list_selector_gradient_background"
+>
+	<!-- Thumbnail Image View -->
+    <ImageView
+    	android:id="@+id/receipt_thumbnail"
+    	android:layout_height="wrap_content"
+    	android:layout_width="wrap_content"
+    	android:layout_gravity="center"
+    	android:visibility="gone"
+    />
+    <!--  No thumbnail available message -->
+    <TextView
+    	android:id="@+id/receipt_no_thumbnail_message"
+    	android:text="@string/no_receipt_thumbnail_available"
+    	android:layout_width="wrap_content"
+    	android:layout_height="wrap_content"
+    	android:layout_gravity="center"
+    	android:gravity="center"
+    	android:visibility="visible"
+    />
+    <LinearLayout
+    	android:layout_width="wrap_content"
+    	android:layout_height="wrap_content"
+    	android:orientation="vertical"
+    	android:layout_marginLeft="10dp"
+    >
+        <TextView
+    		android:text="@string/receipt_added_on"
+    		android:layout_width="fill_parent"
+    		android:layout_height="wrap_content"
+    		android:layout_marginBottom="0sp"
+    		android:textSize="14sp"
+    		android:textColor="@color/ReceiptAttributeTitle"
+    	/>
+    	<TextView
+    		android:id="@+id/receipt_image_date"
+    		android:text="January 5th, 2011 2:39PM"
+    		android:layout_width="fill_parent"
+    		android:layout_height="wrap_content"
+    		android:textAppearance="@style/ReceiptAttributeValueBig"
+    		android:layout_marginBottom="10sp"
+    		android:layout_marginTop="0sp"
+    		android:paddingTop="0sp"
+    	/>
+    	<TextView
+    		android:text="@string/receipt_added_from"
+    		android:layout_width="fill_parent"
+    		android:layout_height="wrap_content"
+    		android:layout_marginBottom="0sp"
+    		android:textSize="12sp"
+    		android:textColor="@color/ReceiptAttributeTitle"
+    	/>
+    	<TextView
+    		android:id="@+id/receipt_image_source"
+    		android:text="@string/receipt_source_fax"
+    		android:layout_width="fill_parent"
+    		android:layout_height="wrap_content"
+    		android:textAppearance="@style/ReceiptAttributeValueMedium"
+    		android:layout_marginBottom="6sp"
+    		android:layout_marginTop="0sp"
+    	/>
+    	<TextView
+    		android:text="@string/receipt_document_type"
+    		android:layout_width="fill_parent"
+    		android:layout_height="wrap_content"
+    		android:layout_marginBottom="0sp"
+    		android:textSize="10sp"
+    		android:textColor="@color/ReceiptAttributeTitle"
+    	/>
+    	<TextView
+    		android:id="@+id/receipt_file_type"
+    		android:text="@string/receipt_document_type_pdf"
+    		android:layout_width="fill_parent"
+    		android:layout_height="wrap_content"
+    		android:textAppearance="@style/ReceiptAttributeValueSmall"
+    		android:layout_marginTop="0sp"
+    	/>
+    </LinearLayout>
+</LinearLayout>

@@ -1,0 +1,136 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/home_tour"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/tourBackgroundAlpha"
+    android:clickable="true" >
+
+    <ViewFlipper
+        android:id="@+id/home_tour_view_flipper"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerInParent="true" >
+
+        <RelativeLayout
+            android:id="@+id/homeTourExpense1"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent" >
+
+            <ImageView
+                android:id="@+id/tourImageExpense1"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:adjustViewBounds="true"
+                android:src="@drawable/home_tour_expense1" />
+        </RelativeLayout>
+
+        <RelativeLayout
+            android:id="@+id/homeTourExpense2"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent" >
+
+            <ImageView
+                android:id="@+id/tourImageExpense2"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:adjustViewBounds="true"
+                android:src="@drawable/home_tour_expense2" />
+        </RelativeLayout>
+
+        <RelativeLayout
+            android:id="@+id/homeTourTravel1"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent" >
+
+            <ImageView
+                android:id="@+id/tourImageTravel1"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:adjustViewBounds="true"
+                android:src="@drawable/home_tour_travel1" />
+        </RelativeLayout>
+    </ViewFlipper>
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_above="@id/home_tour_view_flipper"
+        android:gravity="center"
+        android:paddingBottom="8dp"
+        android:paddingRight="9dp"
+        android:text="@string/home_tour_welcome_to_concur"
+        android:textColor="@color/White"
+        android:textSize="18sp" />
+
+    <!-- Begin drop shadow for tour images in ViewFlipper -->
+
+    <View
+        android:id="@+id/home_tour_drop_shadow_bottom"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/home_tour_drop_shadow_edge_width"
+        android:layout_alignLeft="@id/home_tour_view_flipper"
+        android:layout_alignRight="@id/home_tour_view_flipper"
+        android:layout_below="@id/home_tour_view_flipper"
+        android:background="@drawable/home_tour_drop_shadow_bottom" />
+
+    <View
+        android:layout_width="@dimen/home_tour_drop_shadow_edge_width"
+        android:layout_height="match_parent"
+        android:layout_alignBottom="@id/home_tour_view_flipper"
+        android:layout_alignTop="@id/home_tour_view_flipper"
+        android:layout_toRightOf="@id/home_tour_view_flipper"
+        android:background="@drawable/home_tour_drop_shadow_right" />
+
+    <View
+        android:layout_width="@dimen/home_tour_drop_shadow_corner_width"
+        android:layout_height="@dimen/home_tour_drop_shadow_corner_width"
+        android:layout_alignTop="@id/home_tour_drop_shadow_bottom"
+        android:layout_toRightOf="@id/home_tour_drop_shadow_bottom"
+        android:background="@drawable/home_tour_drop_shadow_bottom_right" />
+    <!-- End drop shadow -->
+
+    <ImageView
+        android:id="@+id/home_tour_icon_cancel"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignRight="@id/home_tour_view_flipper"
+        android:layout_alignTop="@id/home_tour_view_flipper"
+        android:paddingRight="10dp"
+        android:paddingTop="10dp"
+        android:src="@drawable/tour_icon_cancel" />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignBottom="@id/home_tour_view_flipper"
+        android:layout_alignLeft="@+id/home_tour_view_flipper"
+        android:layout_alignRight="@id/home_tour_view_flipper"
+        android:layout_marginBottom="14dp"
+        android:orientation="vertical" >
+
+        <TextView
+            android:id="@+id/home_tour_text_title"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:fontFamily="sans-serif-light"
+            android:gravity="center_horizontal"
+            android:text="@string/home_tour_expense1_title"
+            android:textColor="@color/Black"
+            android:textSize="16sp" />
+
+        <TextView
+            android:id="@+id/home_tour_text_message"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:fontFamily="sans-serif-light"
+            android:gravity="center_horizontal"
+            android:text="@string/home_tour_expense1_message"
+            android:textColor="@color/Black"
+            android:textSize="16sp" />
+
+        <include layout="@layout/home_tour_dots" />
+    </LinearLayout>
+
+</RelativeLayout>

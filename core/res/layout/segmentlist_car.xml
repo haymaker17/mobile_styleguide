@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+	android:orientation="horizontal" android:layout_width="fill_parent"
+	android:layout_height="wrap_content" android:background="@drawable/list_selector_gradient_background" android:paddingBottom="5dp" android:paddingLeft="5dp" android:paddingRight="5dp">
+	<ImageView android:id="@+id/segmentListSegmentIconView"
+		android:layout_width="wrap_content" android:layout_height="wrap_content"
+		android:layout_gravity="center_vertical" android:src="@drawable/itin_icon_car" />
+	<RelativeLayout android:gravity="right" android:layout_marginRight="8dp" android:layout_height="fill_parent" android:layout_width="46dp">
+		<TextView android:layout_width="wrap_content" android:id="@+id/segmentListCarPickup" android:layout_height="wrap_content" android:text="00:00" android:textAppearance="@style/SegmentListRowHeaderText"></TextView>
+        <TextView android:layout_width="wrap_content" android:id="@+id/segmentListCarPickupAMPM" android:layout_height="wrap_content" android:layout_below="@+id/segmentListCarPickup" android:layout_alignRight="@+id/segmentListCarPickup" android:textAppearance="@style/ListCellSmallText" android:text="XX"/>
+	</RelativeLayout>
+	<LinearLayout android:id="@+id/segmentListSegmentRowLayout"
+		android:layout_width="fill_parent" android:layout_weight="1"
+		android:orientation="vertical" android:layout_height="wrap_content">
+
+		<TextView android:layout_width="wrap_content"
+			android:layout_height="wrap_content" android:id="@+id/segmentListCarVendor"
+			android:textAppearance="@style/PrimaryText" android:text="Car Vendor"
+			android:textStyle="bold"></TextView>
+		<TextView android:layout_width="wrap_content"
+			android:layout_height="fill_parent" android:id="@+id/segmentListCarFrom"
+			android:text="(IAT) Car From" android:textAppearance="@style/ListCellSubHeaderText" android:ellipsize="end" android:lines="1" android:scrollHorizontally="true"></TextView>
+		<TextView android:layout_width="wrap_content"
+			android:layout_height="fill_parent" android:id="@+id/segmentListCarFromCity"
+			android:text="City, ST" android:textAppearance="@style/ListCellSubHeaderText"></TextView>
+		<TextView android:layout_width="wrap_content"
+			android:layout_height="fill_parent" android:id="@+id/segmentListLongPress"
+			android:text="@string/segmentlist_long_press_message" android:visibility="gone"  android:textAppearance="@style/LongPressMessage"></TextView>
+		
+
+	</LinearLayout>
+</LinearLayout>
+    
+
+

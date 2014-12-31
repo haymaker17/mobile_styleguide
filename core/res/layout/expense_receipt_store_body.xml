@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+  xmlns:android="http://schemas.android.com/apk/res/android"
+  android:layout_width="fill_parent"
+  android:layout_height="fill_parent"
+  android:orientation="vertical"
+  android:background="@color/WhiteBackground"
+>
+	<TextView
+		android:id="@+id/long_press_message"
+		android:layout_width="fill_parent"
+		android:layout_height="wrap_content"
+		android:layout_weight="0"
+		android:text="@string/receipt_store_long_press_message"
+		android:gravity="center"
+		android:textAppearance="@style/LongPressMessage"
+		android:textSize="14sp"
+		android:paddingTop="4sp"
+		android:paddingBottom="4sp"
+	/>
+	<ListView
+		android:id="@+id/receipt_list"
+		android:layout_height="fill_parent"
+	  	android:layout_width="fill_parent"
+	  	android:layout_weight="1"
+	  	style="@style/ConcurTheme"
+	  	android:alwaysDrawnWithCache="false"
+		android:cacheColorHint="#00000000"
+	/>
+</LinearLayout>

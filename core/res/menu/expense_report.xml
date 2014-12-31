@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android" 
+    xmlns:yourapp="http://schemas.android.com/apk/res-auto" >
+    <item
+        android:id="@+id/menuAdd"
+        android:icon="@drawable/icon_add"
+        android:title="@string/add_expense"
+        yourapp:showAsAction="ifRoom">
+        <menu>
+            <item
+                android:id="@+id/new_expense"
+                android:icon="@android:drawable/ic_menu_add"
+                android:title="@string/new_expense"/>
+            <item
+                android:id="@+id/import_expenses"
+                android:icon="@android:drawable/ic_menu_add"
+                android:title="@string/import_expenses"/>
+        </menu>
+    </item>
+    <item
+        android:id="@+id/capture_receipt_picture"
+        android:icon="@android:drawable/ic_menu_camera"
+        android:title="@string/capture_report_receipt"/>
+    <item
+        android:id="@+id/select_picture"
+        android:icon="@android:drawable/ic_menu_gallery"
+        android:title="@string/select_report_receipt">
+        <menu>
+            <item
+                android:id="@+id/select_receipt_cloud_picture"
+                android:icon="@android:drawable/ic_menu_gallery"
+                android:title="@string/select_from_cloud"/>
+            <item
+                android:id="@+id/select_receipt_picture"
+                android:icon="@android:drawable/ic_menu_gallery"
+                android:title="@string/select_from_device"/>
+        </menu>
+    </item>
+    <item
+        android:id="@+id/report_delete"
+        android:icon="@android:drawable/ic_menu_delete"
+        android:title="@string/delete_report"/>
+
+</menu>

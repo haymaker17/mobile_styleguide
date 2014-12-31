@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    style="@style/ConcurTheme"
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent"
+    android:orientation="vertical" >
+
+    <!-- Include the standard header bits -->
+
+    <include layout="@layout/standard_header" />
+
+    <TextView
+        android:id="@+id/content"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:paddingLeft="@dimen/list_item_horizontal_margin"
+        android:paddingRight="@dimen/list_item_horizontal_margin"
+        android:paddingTop="@dimen/report_list_cell_padding_top"
+        android:text="When a trip is expensed, the trip\&apos;s earned or used points are reflected in the total travel points that you can use toward future travel.\n\nEarn Travel Points when you book under the Price-to-Beat and bank Travel Points by booking under the Price-to-Beat. Use these points toward future benefits."
+        android:textAppearance="@style/ListCellSubHeaderTextBold" />
+
+    <TextView
+        android:id="@+id/details_text_price_to_beat_label"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:layout_gravity="top|left"
+        android:ellipsize="end"
+        android:gravity="top|left"
+        android:paddingLeft="@dimen/list_item_horizontal_margin"
+        android:paddingRight="@dimen/list_item_horizontal_margin"
+        android:paddingTop="@dimen/list_cell_padding_top"
+        android:scrollHorizontally="true"
+        android:text="Hotel Price to Beat"
+        android:textAppearance="@style/ListCellSubHeaderTextBold"
+        android:visibility="gone" />
+
+    <ListView
+        android:id="@+id/price_to_beat_list_view"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:background="@drawable/gradient_background"
+        android:divider="@color/ListDivider"
+        android:visibility="gone" />
+
+</LinearLayout>

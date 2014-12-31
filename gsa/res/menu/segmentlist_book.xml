@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android" >
+
+    <item
+        android:id="@+id/vch_optionmenu"
+        android:icon="@drawable/icon_add"
+        android:showAsAction="ifRoom">
+        <menu>
+            <item
+                android:id="@+id/menuTripBookCar"
+                android:title="@string/segment_car_add"/>
+            <item
+                android:id="@+id/menuTripBookHotel"
+                android:title="@string/segment_hotel_add"/>
+            <item
+                android:id="@+id/menuTripViewAuth"
+                android:title="@string/gov_travel_authorization_menu_view_auth"/>
+        </menu>
+    </item>
+
+</menu>

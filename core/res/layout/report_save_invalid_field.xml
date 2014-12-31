@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+  xmlns:android="http://schemas.android.com/apk/res/android"
+  android:layout_width="fill_parent"
+  android:layout_height="wrap_content"
+  android:orientation="vertical"
+>
+	<TextView
+		android:id="@+id/invalid_field_message"
+		android:layout_width="fill_parent"
+		android:layout_height="wrap_content"
+		android:textAppearance="@style/CustomDialogMessageText"
+		android:layout_margin="@dimen/custom_dialog_message_margin"
+		android:layout_gravity="center"
+	/>
+	<ScrollView
+		android:id="@+id/expense_scroll_view"
+		android:layout_width="fill_parent"
+		android:layout_height="0dp"
+		android:layout_weight="1"
+		android:layout_marginLeft="6dp"
+	>
+		<TableLayout
+			android:id="@+id/field_list_table"
+			android:layout_width="fill_parent"
+			android:layout_height="wrap_content"
+			android:stretchColumns="0,1"
+			android:shrinkColumns="0"
+			android:layout_marginRight="6dp"
+			android:layout_marginLeft="6dp"
+		>
+			<TableRow
+				android:id="@+id/field_list_table_header"
+			>
+				<TextView
+					android:text="@string/field_name"
+					android:textAppearance="@style/CustomDialogColumnHeaderText"
+					android:layout_marginRight="6dp"
+				/>
+				<TextView
+					android:text="@string/current_value"
+					android:textAppearance="@style/CustomDialogColumnHeaderText"
+					android:layout_marginRight="6dp"
+				/>
+			</TableRow>
+		</TableLayout>
+	</ScrollView>
+</LinearLayout>
+

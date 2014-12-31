@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent"
+    android:orientation="vertical"
+    android:background="@drawable/whatsnew_bckgrd_full"
+>
+	<ImageView
+	    android:id="@+id/close"
+	    android:layout_width="wrap_content"
+	    android:layout_height="wrap_content"
+	    android:layout_alignParentTop="true"
+	    android:layout_alignParentLeft="true"
+	    android:layout_marginLeft="8dp"
+	    android:layout_marginTop="8dp"
+	    android:src="@drawable/whats_new_close_button_selector"
+	    android:scaleType="center"
+	/>
+	<ViewSwitcher
+	    android:id="@+id/view_switcher"
+	    android:layout_width="fill_parent"
+	    android:layout_height="wrap_content"
+	    android:layout_centerHorizontal="true"
+	    android:layout_below="@id/close"
+	/>
+	<LinearLayout
+	    android:id="@+id/view_bullets"
+	    android:layout_width="wrap_content"
+	    android:layout_height="wrap_content"
+	    android:layout_centerHorizontal="true"
+	    android:layout_below="@id/view_switcher"
+	    android:layout_marginTop="28dp"
+	    android:orientation="horizontal"
+	/>
+	<TextView
+	    android:id="@+id/swipe_message"
+	    android:layout_width="wrap_content"
+	    android:layout_height="wrap_content"
+	    android:layout_marginTop="2dp"
+	    android:layout_centerHorizontal="true"
+	    android:layout_below="@id/view_bullets"
+	    android:text="@string/swipe_for_more"
+	    android:textAppearance="@style/WhatsNewDialogSmallText"
+	    android:gravity="center"
+	/>
+</RelativeLayout>

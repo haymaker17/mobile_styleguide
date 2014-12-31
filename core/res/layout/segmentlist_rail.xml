@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+  xmlns:android="http://schemas.android.com/apk/res/android"
+  android:orientation="horizontal"
+  android:layout_width="fill_parent"
+  android:layout_height="wrap_content"
+  android:paddingRight="5sp"
+  android:paddingLeft="5sp" 
+  android:paddingBottom="5sp"
+  android:background="@drawable/list_selector_gradient_background"
+>
+	<ImageView
+		android:id="@+id/segmentListSegmentIconView"
+		android:layout_width="wrap_content"
+		android:layout_height="wrap_content"  
+    	android:layout_gravity="center_vertical"
+    android:src="@drawable/itin_icon_rail"/>
+    
+    <RelativeLayout android:gravity="right" android:layout_marginRight="8dp" android:layout_height="fill_parent" android:layout_width="46dp">
+        <TextView android:layout_width="wrap_content" android:id="@+id/segmentListRailTime" android:layout_height="wrap_content" android:text="00:00" android:textAppearance="@style/SegmentListRowHeaderText"></TextView>
+        <TextView android:layout_width="wrap_content" android:id="@+id/segmentListRailTimeAMPM" android:layout_height="wrap_content" android:layout_below="@+id/segmentListRailTime" android:layout_alignRight="@+id/segmentListRailTime" android:textAppearance="@style/ListCellSmallText" android:text="XX"/>
+    </RelativeLayout>
+    
+	<LinearLayout
+		android:id="@+id/segmentListSegmentRowLayout"
+		android:layout_width="fill_parent" 
+    	android:layout_weight="1"
+    	android:orientation="vertical"
+    	android:layout_height="wrap_content"
+    >
+	    <TextView android:layout_width="wrap_content" android:layout_height="fill_parent" 
+	        android:id="@+id/segmentListRailFrom" android:textAppearance="@style/PrimaryText" android:textStyle="bold" android:text="Station Name"/>
+	    <TextView android:layout_width="wrap_content" android:layout_height="wrap_content"
+	        android:id="@+id/segmentListRailTrain" android:textAppearance="@style/ListCellSubHeaderText" android:text="Train 00"/>
+	
+	    <RelativeLayout android:layout_height="wrap_content" android:layout_width="fill_parent">
+	        <TextView android:layout_width="wrap_content" android:layout_height="wrap_content"
+	            android:id="@+id/segmentListRailPlatform" android:textAppearance="@style/ListCellSubHeaderText" android:text="Platform --"></TextView>
+	        <TextView android:layout_width="wrap_content" android:layout_height="wrap_content"
+	            android:id="@+id/segmentListRailWagon" android:textAppearance="@style/ListCellSubHeaderText" android:layout_marginLeft="8dp" android:layout_toRightOf="@id/segmentListRailPlatform" android:text="Wagon --"></TextView>
+	    </RelativeLayout>
+	    <TextView android:layout_width="wrap_content"
+			android:layout_height="fill_parent" android:id="@+id/segmentListLongPress"
+			android:text="@string/segmentlist_long_press_message" android:visibility="gone"  android:textAppearance="@style/LongPressMessage"></TextView>
+
+    </LinearLayout>
+</LinearLayout>
+

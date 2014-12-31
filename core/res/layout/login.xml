@@ -1,0 +1,128 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/main_scroll_layout"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@drawable/blue_background"
+    android:fadingEdgeLength="20dp"
+    android:fillViewport="true"
+    android:scrollbars="none" >
+
+    <LinearLayout
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:background="@drawable/blue_background"
+        android:orientation="vertical" >
+
+        <include
+            android:id="@+id/login_offline_header"
+            layout="@layout/standard_header" />
+
+        <LinearLayout
+            android:layout_width="fill_parent"
+            android:layout_height="0dp"
+            android:layout_marginLeft="8dp"
+            android:layout_marginRight="8dp"
+            android:layout_marginTop="18dp"
+            android:layout_weight="1"
+            android:orientation="vertical" >
+
+            <LinearLayout
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:padding="1dp" >
+
+                <EditText
+                    android:id="@+id/loginId"
+                    android:layout_width="fill_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:background="@drawable/square_no_border"
+                    android:hint="@string/login_enter_name_password"
+                    android:inputType="textEmailAddress"
+                    android:maxLines="1"
+                    android:padding="10dp"
+                    android:textAppearance="@style/PrimaryText" />
+
+                <View
+                    android:layout_width="fill_parent"
+                    android:layout_height="10dp"
+                    android:background="@color/BlueBackground" />
+
+                <EditText
+                    android:id="@+id/loginPin"
+                    android:layout_width="fill_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:background="@drawable/square_no_border"
+                    android:hint="@string/login_enter_password_pin"
+                    android:imeOptions="actionGo"
+                    android:inputType="textPassword"
+                    android:padding="10dp"
+                    android:textAppearance="@style/PrimaryText" />
+            </LinearLayout>
+
+            <View
+                android:layout_width="fill_parent"
+                android:layout_height="3dp" />
+
+            <Button
+                android:id="@+id/loginButton"
+                style="@style/StandardBlueButton"
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:layout_marginTop="10dp"
+                android:text="@string/login_button" />
+
+            <TextView
+                android:id="@+id/loginText"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:layout_marginTop="15dp"
+                android:text="@string/login_no_offline"
+                android:textAppearance="@style/PrimaryText"
+                android:visibility="gone" />
+
+            <Button
+                android:id="@+id/registerButton"
+                style="@style/StandardBlueButton"
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:layout_marginTop="10dp"
+                android:text="@string/register_button"
+                android:visibility="gone" />
+
+            <TextView
+                android:id="@+id/login_help"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:layout_marginTop="15dp"
+                android:clickable="true"
+                android:onClick="onClick"
+                android:padding="8dp"
+                android:text="@string/login_help_with_signin"
+                android:textAppearance="@style/TourSmallPrimaryText"
+                android:visibility="visible" />
+        </LinearLayout>
+
+        <Button
+            android:id="@+id/company_sso_login"
+            style="@style/TransparantWhiteBoarderButton"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:layout_marginBottom="10dp"
+            android:layout_marginLeft="8dp"
+            android:layout_marginRight="8dp"
+            android:clickable="true"
+            android:padding="1dp"
+            android:text="@string/sso_sign_in"
+            android:visibility="visible" />
+    </LinearLayout>
+
+</ScrollView>

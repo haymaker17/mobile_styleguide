@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+	<!-- Network Connectivity stuff. -->
+    <string name="dlg_no_connectivity_title">客户端处于脱机状态</string>
+    <string name="dlg_no_connectivity_message">脱机模式下不支持此操作。请在数据连接可用后重试。</string>
+        
+    <!-- Login UI Strings -->
+	<!-- Email Lookup -->
+    <string name="email_lookup_hint">工作电子邮件或 Concur 用户名</string>
+    <string name="email_lookup_continue">继续</string>
+    <string name="email_lookup_unable_to_login_title">无法登录</string>
+    <string name="email_lookup_unable_to_login_msg">我们无法使用此信息将您登录。</string>
+    <string name="email_lookup_wrong_email_format_title">电子邮件或用户名无效</string>
+    <string name="email_lookup_wrong_email_username_format_msg">您输入的似乎不是有效的电子邮件或 Concur 用户名。</string>
+    
+    <!-- PIN/Password Login Strings -->
+    <string name="login_enter_password_pin">移动密码 (PIN)</string>
+    <string name="login_button">登录 Concur</string>
+    <string name="login_no_offline">脱机登录不可用。必须在联机时成功登录，才能使用脱机模式。</string>            
+    <string name="register_button">是否需要设置 PIN？</string>
+    <string name="login_help_with_signin">Forgot Mobile Password (PIN)?</string>
+    <string name="login_help_with_signin_password">Forgot Password?</string>
+	<string name="login_password">密码</string>    
+    <string name="login_password_or_pin_invalid">再次尝试重新输入您的密码或选择“我忘记”以接收登录说明。</string>
+    <string name="login_invalid_concur_credentials">不正确的密码</string>    
+    <string name="try_again">重试</string>
+    <string name="i_forgot">我忘记了</string>
+    <string name="dlg_logging_in">正在登录&#8230;</string>
+            
+	<!-- SSO Login -->
+	<string name="sso_sign_in">SSO 公司代码登录</string>
+	  
+</resources>

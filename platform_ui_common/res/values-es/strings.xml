@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+	<!-- Network Connectivity stuff. -->
+    <string name="dlg_no_connectivity_title">El cliente no está conectado</string>
+    <string name="dlg_no_connectivity_message">Esta operación no está admitida en modo sin conexión.  Vuelva a intentarlo cuando la conectividad de datos esté disponible.</string>
+        
+    <!-- Login UI Strings -->
+	<!-- Email Lookup -->
+    <string name="email_lookup_hint">Correo electrónico de trabajo o nombre de usuario de Concur</string>
+    <string name="email_lookup_continue">Continuar</string>
+    <string name="email_lookup_unable_to_login_title">No se ha podido iniciar sesión</string>
+    <string name="email_lookup_unable_to_login_msg">No podemos iniciar su sesión con esta información.</string>
+    <string name="email_lookup_wrong_email_format_title">Correo electrónico o nombre de usuario no válidos</string>
+    <string name="email_lookup_wrong_email_username_format_msg">Parece que su entrada no tiene un correo electrónico o un nombre de usuario de Concur válidos.</string>
+    
+    <!-- PIN/Password Login Strings -->
+    <string name="login_enter_password_pin">Contraseña de móvil (PIN)</string>
+    <string name="login_button">Iniciar sesión en Concur</string>
+    <string name="login_no_offline">El inicio de sesión sin conexión no está disponible.  Debe realizar un inicio de sesión correcto mientras se está en línea antes de poder usar el modo sin conexión.</string>            
+    <string name="register_button">¿Necesita establecer su PIN?</string>
+    <string name="login_help_with_signin">Forgot Mobile Password (PIN)?</string>
+    <string name="login_help_with_signin_password">Forgot Password?</string>
+	<string name="login_password">Contraseña</string>    
+    <string name="login_password_or_pin_invalid">Intente de nuevo introducir la contraseña o seleccione He olvidado para recibir instrucciones para el inicio de sesión.</string>
+    <string name="login_invalid_concur_credentials">Contraseña incorrecta</string>    
+    <string name="try_again">Volver a intentarlo</string>
+    <string name="i_forgot">He olvidado</string>
+    <string name="dlg_logging_in">Iniciando sesión&#8230;</string>
+            
+	<!-- SSO Login -->
+	<string name="sso_sign_in">Inicio de sesión con el código de empresa SSO</string>
+	  
+</resources>

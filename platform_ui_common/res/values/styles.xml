@@ -1,0 +1,271 @@
+<resources>
+
+    <!--
+    =================================================
+                       THEMES
+    =================================================
+    -->
+
+    <!-- New Login Screen -->
+    <style name="ConcurBaseTheme.New" parent="Theme.AppCompat.Light">
+
+        <!--
+            Theme customizations available in newer API levels can go in
+            res/values-vXX/styles.xml, while customizations related to
+            backward-compatibility can go here.
+        -->
+        <item name="actionBarStyle">@style/Widget.Styled.ActionBar.New</item>
+        <item name="actionMenuTextColor">@color/universal_tour_ab_menu</item>
+        <item name="homeAsUpIndicator">@drawable/icon_drawer</item>
+        <item name="actionOverflowButtonStyle">@style/ActionBarOverflowButton</item>
+    </style>
+
+    <style name="ConcurBaseTheme.White.New" parent="ConcurBaseTheme.New">
+        <item name="actionOverflowButtonStyle">@style/ActionBarOverflowButton.White</item>
+    </style>
+
+    <style name="ConcurBaseTheme" parent="Theme.AppCompat.Light.DarkActionBar">
+
+        <!--
+            Theme customizations available in newer API levels can go in
+            res/values-vXX/styles.xml, while customizations related to
+            backward-compatibility can go here.
+        -->
+        <item name="actionBarStyle">@style/Widget.Styled.ActionBar</item>
+        <item name="homeAsUpIndicator">@drawable/icon_drawer</item>
+        <item name="actionOverflowButtonStyle">@style/ActionBarOverflowButton</item>
+    </style>
+
+    <style name="ConcurBaseTheme.NoActionBar">
+
+        <!--
+            Theme customizations available in newer API levels can go in
+            res/values-vXX/styles.xml, while customizations related to
+            backward-compatibility can go here.
+        -->
+        <item name="windowActionBar">false</item>
+        <item name="android:windowNoTitle">true</item>
+    </style>
+
+    <style name="ConcurBaseTheme.Translucent">
+        <item name="android:windowIsTranslucent">true</item>
+    </style>
+
+    <style name="ConcurBaseTheme.Translucent.NoActionBar">
+        <item name="windowActionBar">false</item>
+        <item name="android:windowNoTitle">true</item>
+    </style>
+
+    <style name="ConcurTheme" parent="ConcurBaseTheme">
+        <item name="android:textAppearanceSmall">@style/PrimaryText</item>
+    </style>
+
+    <style name="ConcurTheme.NoActionBar" parent="ConcurBaseTheme.NoActionBar"></style>
+
+    <style name="ConcurTheme.Translucent.NoActionBar" parent="ConcurBaseTheme.Translucent.NoActionBar"></style>
+
+    <style name="ConcurTheme.Dialog" parent="android:Theme.Dialog">
+        <item name="android:windowNoTitle">true</item>
+    </style>
+
+    <style name="ConcurTheme.Dialog.Light" parent="android:Theme.Dialog">
+        <item name="android:windowNoTitle">true</item>
+    </style>
+
+    <!-- MOB-14596 - work around to fix in 2.x devices -->
+    <style name="ConcurTheme.Sherlock.Dialog.Light" parent="Theme.AppCompat.CompactMenu.Dialog">
+        <item name="android:windowNoTitle">true</item>
+    </style>
+
+    <style name="ConcurTheme.Dialog.WhatsNew" parent="@android:Theme.Dialog">
+        <item name="android:layout_width">wrap_content</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:gravity">center</item>
+        <item name="android:windowNoTitle">true</item>
+        <item name="android:windowIsTranslucent">true</item>
+        <item name="android:windowFrame">@null</item>
+        <item name="android:windowBackground">@android:color/transparent</item>
+    </style>
+
+    <style name="BigPrimaryText" parent="PrimaryText">
+        <item name="android:textSize">16sp</item>
+    </style>
+
+    <style name="SmallPrimaryText" parent="PrimaryText">
+        <item name="android:textSize">12sp</item>
+    </style>
+
+    <style name="TinyPrimaryText" parent="PrimaryText">
+        <item name="android:textSize">9sp</item>
+    </style>
+
+    <!--
+    ================================================= 
+                   STYLES - NEW 9.0
+    =================================================
+    -->
+
+    <style name="Widget"></style>
+
+    <style name="Widget.Styled"></style>
+
+    <style name="Widget.Styled.ActionBar" parent="Widget.AppCompat.ActionBar">
+
+        <!-- parent="Widget.Sherlock.Light.ActionBar.Solid.Inverse" -->
+        <!-- There is a V11+ override of this.  Make sure to keep them in sync. -->
+        <item name="background">@drawable/gradient_title_bar</item>
+        <item name="displayOptions">showTitle</item>
+        <item name="titleTextStyle">@style/NewHeaderText</item>
+        <item name="actionButtonStyle">@style/Widget.Styled.ActionButton</item>
+    </style>
+
+    <style name="Widget.Styled.ActionBar.New" parent="Widget.AppCompat.ActionBar">
+
+        <!-- parent="Widget.Sherlock.Light.ActionBar.Solid.Inverse" -->
+        <!-- There is a V11+ override of this.  Make sure to keep them in sync. -->
+        <item name="background">@drawable/gradient_title_white_bar</item>
+        <item name="displayOptions">showTitle</item>
+        <item name="titleTextStyle">@style/NewActionBarNewHeaderText</item>
+        <item name="actionButtonStyle">@style/Widget.Styled.ActionButton</item>
+    </style>
+
+    <style name="Widget.Styled.ActionButton" parent="Widget.AppCompat.ActionButton"></style>
+
+    <style name="ActionBarOverflowButton" parent="Widget.AppCompat.ActionButton.Overflow">
+        <item name="android:src">@drawable/icon_overflow_white</item>
+    </style>
+
+    <style name="ActionBarOverflowButton.White" parent="ActionBarOverflowButton">
+        <item name="android:src">@drawable/icon_overflow</item>
+    </style>
+
+    <style name="PrimaryText" parent="@android:style/TextAppearance">
+        <item name="android:textColor">@color/PrimaryText</item>
+        <item name="android:textSize">14sp</item>
+    </style>
+
+    <style name="FormFieldLabelText" parent="PrimaryText">
+        <item name="android:textSize">12sp</item>
+        <item name="android:textStyle">normal</item>
+        <item name="android:textColor">@color/FormLabel</item>
+    </style>
+
+    <style name="FormFieldValueText" parent="PrimaryText">
+        <item name="android:textSize">16sp</item>
+        <item name="android:textStyle">bold</item>
+        <item name="android:textColor">@color/FormValue</item>
+    </style>
+
+    <style name="FormFieldLabelRequired" parent="PrimaryText">
+        <item name="android:textSize">10sp</item>
+        <item name="android:textStyle">italic</item>
+        <item name="android:textColor">@color/gray</item>
+    </style>
+
+    <style name="FormFieldLabelRequiredBlank" parent="FormFieldLabelRequired">
+        <item name="android:textColor">@color/exception</item>
+    </style>
+
+    <style name="PrimaryTextRed" parent="PrimaryText">
+        <item name="android:textColor">@color/exception</item>
+    </style>
+
+    <!-- Normal form field note -->
+    <style name="FormFieldNoteText" parent="PrimaryText">
+        <item name="android:textSize">10sp</item>
+        <item name="android:textStyle">normal</item>
+        <item name="android:textColor">@color/FormLabel</item>
+    </style>
+
+    <!-- Red form field note -->
+    <style name="FormFieldNoteRedText" parent="FormFieldNoteText">
+        <item name="android:textColor">@color/FareRed</item>
+    </style>
+
+    <style name="DialogText" parent="PrimaryText">
+        <item name="android:textSize">14sp</item>
+    </style>
+
+    <style name="WhatsNewDialogSmallText" parent="DialogText">
+        <item name="android:textSize">10sp</item>
+        <item name="android:textColor">@color/White</item>
+    </style>
+
+    <style name="NewHeaderText" parent="PrimaryText">
+        <item name="android:textSize">22sp</item>
+        <item name="android:textStyle">bold</item>
+        <item name="android:textColor">#FFFFFF</item>
+    </style>
+
+    <style name="NewActionBarNewHeaderText" parent="PrimaryText">
+        <item name="android:textSize">22sp</item>
+        <item name="android:textStyle">bold</item>
+        <item name="android:textColor">#0078c8</item>
+    </style>
+
+    <style name="StandardBlueButton">
+        <item name="android:textSize">18sp</item>
+        <item name="android:minWidth">@dimen/standard_button_min_width</item>
+        <item name="android:background">@drawable/btn_blue_standard</item>
+        <item name="android:textColor">@color/White</item>
+        <item name="android:height">@dimen/standard_button_height</item>
+    </style>
+    
+	<style name="TransparantButton">
+        <item name="android:textSize">16sp</item>
+        <item name="android:minWidth">@dimen/standard_button_min_width</item>
+        <item name="android:background">@drawable/btn_transparent_standard</item>
+        <item name="android:height">@dimen/standard_button_height</item>
+        <item name="android:textColor">@color/btn_transparent_text</item>
+    </style>    
+    
+	<!-- Universal tour and new  login -->
+    <style name="TourPrimaryText" parent="PrimaryText">
+        <item name="android:textColor">@color/White</item>
+        <item name="android:textSize">20sp</item>
+    </style>
+    	
+	<style name="TourSmallPrimaryText" parent="TourPrimaryText">
+        <item name="android:textSize">16sp</item>
+    </style>
+
+    <style name="TourSmallSecondaryText" parent="TourSmallPrimaryText">
+        <item name="android:textColor">@color/universal_tour_text</item>
+    </style>
+
+    <style name="TestRegPrimary" parent="TourPrimaryText">
+        <item name="android:textSize">18sp</item>
+    </style>
+
+    <style name="TestRegSecondary" parent="TourPrimaryText">
+        <item name="android:textSize">14sp</item>
+    </style>
+
+    <style name="TourSubHeaderBold" parent="TourPrimaryText">
+        <item name="android:textSize">14sp</item>
+        <item name="android:textStyle">bold</item>
+    </style>
+
+    <style name="TourSubHeaderTextNormal" parent="TourPrimaryText">
+        <item name="android:textSize">14sp</item>
+        <item name="android:textStyle">normal</item>
+    </style>
+
+    <style name="TourSubHeaderTextLargeText" parent="TourPrimaryText">
+        <item name="android:textSize">16sp</item>
+        <item name="android:textStyle">normal</item>
+    </style>
+    <!-- End Tour Styles. -->
+    
+    
+    <!-- Offline Header Styles -->
+    
+    <style name="OfflineHeaderText" parent="PrimaryText">
+        <item name="android:textSize">22sp</item>
+        <item name="android:textStyle">normal</item>
+        <item name="android:textColor">@color/White</item>
+    </style>    
+    
+    <!-- END Offline Header Styles -->
+    
+</resources>

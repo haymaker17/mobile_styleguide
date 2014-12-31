@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    style="@style/ConcurTheme"
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent"
+    android:background="@drawable/gradient_background"
+    android:orientation="vertical" >
+
+    <!-- Include the standard header bits -->
+
+    <include layout="@layout/standard_header" />
+
+    <com.concur.mobile.core.widget.SafeViewFlipper
+        android:id="@+id/view_flipper"
+        android:layout_width="fill_parent"
+        android:layout_height="0px"
+        android:layout_weight="1.0" >
+
+        <include
+            android:id="@+id/local_data"
+            layout="@layout/receipt_share_list_body" />
+
+        <include
+            android:id="@+id/restore_app_state"
+            layout="@layout/restore_app_state" />
+
+        <include
+            android:id="@+id/no_data"
+            layout="@layout/no_receipt_shares" />
+
+        <include
+            android:id="@+id/loading_data"
+            layout="@layout/loading_data" />
+    </com.concur.mobile.core.widget.SafeViewFlipper>
+
+</LinearLayout>

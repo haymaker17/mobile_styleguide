@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+	android:layout_width="fill_parent" android:layout_height="fill_parent"
+	android:background="@drawable/gradient_background" style="@style/ConcurTheme">
+
+	<!--  Include the standard header bits -->
+	<include android:id="@+id/header" layout="@layout/standard_header"/>
+	
+    <include android:id="@+id/travel_header" layout="@layout/travel_title_header" 
+        android:layout_width="fill_parent" android:layout_height="wrap_content" android:layout_below="@id/header"/>
+	<ImageView android:layout_width="wrap_content"
+		android:layout_height="wrap_content" android:src="@drawable/searching_glass"
+		android:layout_centerVertical="true" android:layout_centerHorizontal="true"
+		android:id="@+id/searchGlass"></ImageView>
+	<ProgressBar android:layout_width="wrap_content"
+		android:layout_height="wrap_content" android:id="@+id/searchProgress"
+		android:layout_alignLeft="@id/searchGlass" android:layout_alignTop="@id/searchGlass"
+		android:layout_marginLeft="12dp" android:layout_marginTop="11dp"></ProgressBar>
+	<TextView android:layout_width="wrap_content"
+		android:layout_height="wrap_content" android:layout_below="@+id/searchGlass"
+		android:layout_centerHorizontal="true" android:layout_marginTop="24dp"
+		android:text="@string/air_search_label_for" android:id="@+id/searchFor" android:textAppearance="@style/FareSearchProgress"/>
+	<LinearLayout android:layout_width="wrap_content"
+		android:layout_height="wrap_content" android:layout_below="@+id/searchFor"
+		android:layout_centerHorizontal="true" android:id="@+id/searchDepartingLoc"
+		android:layout_marginTop="2dp">
+		<TextView android:layout_width="wrap_content"
+			android:layout_height="wrap_content" android:id="@+id/searchDepartLabel"
+			android:text="@string/search_label_departing"
+			android:layout_marginRight="4dp" android:textAppearance="@style/FareSearchProgress"/>
+		<TextView android:layout_width="wrap_content"
+			android:layout_height="wrap_content" android:id="@+id/searchDepartValue"
+			android:text="SEA" android:textAppearance="@style/FareSearchProgress"/>
+	</LinearLayout>
+	<TextView android:layout_width="wrap_content"
+		android:layout_height="wrap_content" android:layout_below="@+id/searchDepartingLoc"
+		android:layout_centerHorizontal="true" android:id="@+id/searchDepartingDateTime"
+		android:text="Wed, Mar 09, 9:00 AM" android:textAppearance="@style/FareSearchProgress"/>
+	<LinearLayout android:layout_width="wrap_content"
+		android:layout_height="wrap_content" android:layout_marginTop="2dp"
+		android:baselineAligned="false" android:layout_below="@id/searchDepartingDateTime"
+		android:id="@+id/searchReturningLoc" android:layout_centerHorizontal="true">
+		<TextView android:layout_height="wrap_content"
+			android:layout_width="wrap_content" android:layout_marginRight="4dp"
+			android:id="@+id/searchReturnLabel" android:text="@string/search_label_returning" android:textAppearance="@style/FareSearchProgress"/>
+		<TextView android:layout_height="wrap_content"
+			android:layout_width="wrap_content" android:text="PDX"
+			android:id="@+id/searchReturnValue" android:textAppearance="@style/FareSearchProgress"/>
+	</LinearLayout>
+	<TextView android:layout_width="wrap_content"
+		android:layout_height="wrap_content" android:layout_below="@+id/searchReturningLoc"
+		android:layout_centerHorizontal="true" android:id="@+id/searchReturningDateTime"
+		android:text="Sun, Mar 13, 3:15 PM" android:textAppearance="@style/FareSearchProgress"/>
+</RelativeLayout>

@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+	android:layout_width="fill_parent"
+	android:layout_height="fill_parent"
+	android:orientation="vertical"
+	style="@style/ConcurTheme" 
+	android:background="@drawable/gradient_background"
+>
+	<!--  Include the standard header bits -->
+	<include layout="@layout/standard_header"/>
+	
+	<LinearLayout 
+	    android:layout_height="wrap_content"
+		android:layout_width="fill_parent"
+		android:gravity="center"
+		android:padding="3dp"
+	>
+		<Button
+		    android:id="@+id/attendee_search_favorites"
+		    android:layout_width="fill_parent"
+		    android:layout_height="wrap_content"
+		    android:layout_weight="1"
+		    android:text="@string/general_favorites"
+			android:layout_marginRight="-1dp"
+			style="@style/StandardButton"
+		/>
+		<Button
+		    android:id="@+id/attendee_search_advanced"
+		    android:layout_width="fill_parent"
+		    android:layout_height="wrap_content"
+		    android:layout_weight="1"
+			android:text="@string/general_advanced"
+			style="@style/StandardButton"
+		/>
+	</LinearLayout>
+	<com.concur.mobile.core.widget.SafeViewFlipper
+		android:id="@+id/attendee_search_favorites_advanced_flipper"
+		android:layout_width="fill_parent"
+		android:layout_height="0dp"
+		android:layout_weight="1"
+	>
+		<!-- Attendee Search Favorites View -->
+		<include android:id="@+id/attendee_search_favorites" layout="@layout/attendee_search_favorites"/>
+		<!-- Attendee Search Advanced View -->
+		<include android:id="@+id/attendee_search_advanced" layout="@layout/attendee_search_advanced"/>
+	</com.concur.mobile.core.widget.SafeViewFlipper>
+ 	<include layout="@layout/footer_navigation_bar_button_text" android:id="@+id/footer"/>
+</LinearLayout>

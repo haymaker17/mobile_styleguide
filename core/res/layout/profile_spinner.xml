@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent"
+    android:background="@color/White"
+    android:clickable="true"
+    android:focusable="true"
+    android:orientation="vertical"
+    android:paddingBottom="@dimen/form_cell_padding_bottom">
+
+    <TextView
+        android:id="@+id/field_name"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:ellipsize="end"
+        android:maxLines="1"
+        android:maxWidth="150dp"
+        android:minWidth="150dp"
+        android:text="Super Long Text Super Long Text Super Long Text Super Long Text Super Long Text Super Long Text Super Long Text"
+        android:textColor="@color/expenseFieldLabelText"
+        android:textSize="12dp" />
+
+    <Spinner
+        android:id="@+id/spinner_view"
+        android:layout_width="fill_parent"
+        android:layout_height="fill_parent"
+        android:layout_gravity="bottom"
+        android:ellipsize="end"
+        android:fontFamily="sans-serif-light"
+        android:maxWidth="150dp"
+        android:minWidth="150dp"
+        android:textColor="@color/expenseFieldValueText" />
+
+</LinearLayout>

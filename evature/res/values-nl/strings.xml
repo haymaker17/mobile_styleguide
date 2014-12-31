@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="voice_book_unable_to_determine_departure_loc">Uw vertreklocatie kan helaas niet worden vastgesteld. Probeer het opnieuw.</string>
+    <string name="voice_book_unable_to_determine_arrival_loc">Uw aankomstlocatie kan helaas niet worden vastgesteld. Probeer het opnieuw.</string>
+    <string name="voice_book_unable_to_loc">Uw locatie kan helaas niet worden vastgesteld. Probeer het opnieuw.</string>
+    <string name="voice_search_not_supported_category">Deze zoekopdracht is niet mogelijk in deze categorie.</string>
+    <string name="voice_air_search_different_scope">Probeer het opnieuw met zoeken op vlucht.</string>
+    <string name="voice_car_search_different_scope">Probeer het opnieuw met zoeken op auto.</string>
+    <string name="voice_hotel_search_different_scope">Probeer het opnieuw met zoeken op hotel.</string>
+    <string name="voice_book_unable_to_determine_pickup_loc">Uw afhaallocatie kan helaas niet worden vastgesteld. Probeer het opnieuw.</string>
+    <string name="voice_book_unable_to_search">Dat is helaas niet gelukt. Probeer het opnieuw.</string>
+    <string name="voice_book_speech_to_text_unsupported">Spraak naar tekst wordt helaas niet ondersteund op dit apparaat.</string>
+</resources>

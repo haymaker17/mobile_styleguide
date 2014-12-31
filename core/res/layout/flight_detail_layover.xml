@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="utf-8"?>
+<TextView
+  xmlns:android="http://schemas.android.com/apk/res/android"
+  android:id="@+id/text"
+  android:layout_width="fill_parent"
+  android:layout_height="wrap_content"
+  android:background="@drawable/gradient_background"
+  android:textAppearance="@style/ListCellSubHeaderTextNormal"
+  android:gravity="center"
+  android:paddingTop="4dp"
+  android:paddingBottom="4dp"
+/>

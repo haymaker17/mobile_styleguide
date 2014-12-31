@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android" >
+
+    <item
+        android:id="@+id/go_vch_add_to_vch_optionmenu"
+       android:icon="@drawable/icon_add"
+        android:title="@string/gov_add_to_vch_select_title"
+        android:showAsAction="ifRoom">
+        <menu>
+           <!--  <item
+                android:id="@+id/gov_vch_add_to_vch_create"
+                android:title="@string/gov_add_to_vch_create"/> -->
+            <item
+                android:id="@+id/gov_vch_add_to_vch_existing"
+                android:title="@string/gov_add_to_vch_create_existing"/>
+        </menu>
+    </item>
+
+</menu>

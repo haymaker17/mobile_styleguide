@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="utf-8"?>
+ <RelativeLayout 
+         android:id="@+id/gov_docdetail_main_layout"
+        xmlns:android="http://schemas.android.com/apk/res/android"
+        android:layout_width="fill_parent"
+        android:layout_height="fill_parent"
+        android:layout_weight="1"
+        android:background="@drawable/gradient_background"
+        android:paddingBottom="@dimen/list_cell_padding_bottom"
+        android:visibility="visible">
+
+        <TextView
+            android:id="@+id/gov_docdetail_msg"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerHorizontal="true"
+            android:layout_centerVertical="true"
+            android:text="@string/gov_retrieve_documents_detail"
+            android:textAppearance="@style/ListCellSubHeaderText"  />
+        
+    </RelativeLayout>

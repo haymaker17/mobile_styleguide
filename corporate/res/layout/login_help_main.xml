@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="fill_parent"
+    android:layout_height="match_parent"
+    android:background="@drawable/blue_background"
+    android:fadingEdgeLength="20dp"
+    android:paddingBottom="@dimen/navigation_item_padding_bottom"
+    android:paddingLeft="@dimen/navigation_item_padding_left"
+    android:paddingRight="@dimen/navigation_item_padding_right"
+    android:paddingTop="@dimen/list_group_vertical_margin"
+    android:scrollbars="none" >
+
+    <LinearLayout
+        android:id="@+id/pinRequestLayout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical" >
+
+        <TextView
+            android:id="@+id/emailHelpText"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:gravity="center_horizontal"
+            android:text="@string/login_help_email_prompt"
+            android:textAppearance="@style/TourSmallSecondaryText"
+            android:textColor="@color/White" />
+
+        <EditText
+            android:id="@+id/email"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:layout_marginTop="12dp"
+            android:background="@drawable/square_no_border"
+            android:hint="@string/login_help_email_hint"
+            android:imeOptions="actionGo"
+            android:inputType="textEmailAddress"
+            android:padding="10dp"
+            android:textAppearance="@style/PrimaryText" />
+
+        <View
+            android:layout_width="fill_parent"
+            android:layout_height="3dp"
+            android:layout_marginLeft="1dp"
+            android:layout_marginRight="1dp"
+            android:background="@drawable/square_border_shadow" />
+
+        <Button
+            android:id="@+id/submitButton"
+            style="@style/StandardBlueButton"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:layout_marginTop="12dp"
+            android:onClick="onClick"
+            android:text="@string/login_help_submit" />
+    </LinearLayout>
+
+</ScrollView>

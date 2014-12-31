@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android" 
+  android:layout_width="fill_parent"
+  android:layout_height="fill_parent"
+  android:orientation="vertical"
+  style="@style/ConcurTheme">
+
+	<!--  Include the standard header bits -->
+	<include layout="@layout/standard_header"/>
+
+<ScrollView 
+    android:layout_height="0px" 
+    android:layout_width="fill_parent"
+    android:layout_weight="1.0" 
+    android:background="@color/ListBackground">
+
+<LinearLayout android:layout_width="fill_parent" android:background="@color/ListBackground" android:orientation="vertical" android:layout_height="fill_parent">
+
+    <LinearLayout android:orientation="vertical" android:layout_width="fill_parent" android:layout_height="wrap_content" android:layout_margin="5sp" android:background="@drawable/round_border">
+    
+        <FrameLayout android:orientation="horizontal" android:layout_width="fill_parent" android:layout_height="wrap_content" android:paddingBottom="5sp" android:paddingLeft="8sp" android:paddingRight="8sp" android:paddingTop="5sp">
+            <ImageView android:id="@+id/diningPhoneImage" android:layout_height="wrap_content" android:layout_width="wrap_content" android:src="@drawable/icon_call" android:layout_gravity="left|center_vertical"/>
+            <TextView android:id="@+id/diningPhone" android:layout_height="wrap_content" android:layout_width="wrap_content" android:textAppearance="@style/PrimaryText" android:layout_gravity="center_vertical" android:layout_marginLeft="40dp"></TextView>
+        </FrameLayout>
+    
+        <View android:layout_width="fill_parent" android:background="@color/ListBackground" android:layout_height="1sp"></View>
+    
+        <FrameLayout android:orientation="horizontal" android:layout_width="fill_parent" android:layout_height="wrap_content" android:paddingBottom="5sp" android:paddingLeft="8sp" android:paddingRight="8sp" android:paddingTop="5sp">
+            <ImageView android:id="@+id/diningDirectionsImage" android:layout_height="wrap_content" android:layout_width="wrap_content" android:src="@drawable/icon_directions" android:layout_gravity="left|center_vertical"/>
+            <TextView android:id="@+id/diningDirections" android:layout_height="wrap_content" android:layout_width="wrap_content" android:textAppearance="@style/PrimaryText" android:layout_gravity="center_vertical" android:layout_marginLeft="40dp"></TextView>
+        </FrameLayout>
+
+
+</LinearLayout>
+
+    <LinearLayout android:orientation="vertical" android:layout_width="fill_parent" android:layout_height="wrap_content" android:layout_margin="5sp" android:background="@drawable/round_border">
+    
+    <RelativeLayout android:layout_height="wrap_content" android:layout_width="fill_parent" android:padding="1sp">
+        <TextView android:id="@+id/diningReservationLabel" android:layout_height="wrap_content" android:paddingLeft="3sp" android:text="@string/segment_dining_reservation" android:textAppearance="@style/DetailLabel" android:layout_width="90sp"></TextView>
+        <TextView android:layout_width="wrap_content" android:layout_height="wrap_content" android:id="@+id/diningReservation" android:textAppearance="@style/PrimaryText" android:layout_toRightOf="@id/diningReservationLabel"></TextView>
+    </RelativeLayout>
+    
+    <View android:layout_width="fill_parent" android:background="@color/ListBackground" android:layout_height="1sp"></View>
+    <RelativeLayout android:layout_height="wrap_content" android:layout_width="fill_parent" android:padding="1sp">
+        <TextView android:id="@+id/diningNumberLabel" android:layout_height="wrap_content" android:paddingLeft="3sp" android:textAppearance="@style/DetailLabel" android:layout_width="90sp" android:text="@string/segment_dining_number"></TextView>
+        <TextView android:layout_width="wrap_content" android:layout_height="wrap_content" android:textAppearance="@style/PrimaryText" android:layout_toRightOf="@id/diningNumberLabel" android:id="@+id/diningNumber"></TextView>
+    </RelativeLayout>
+    
+    </LinearLayout>
+
+</LinearLayout>
+</ScrollView>
+</LinearLayout>

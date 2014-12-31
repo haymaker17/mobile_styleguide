@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="fill_parent"
+    android:layout_height="wrap_content"
+    android:background="@drawable/list_selector_gradient_background"
+    android:orientation="horizontal"
+    android:padding="@dimen/list_cell_padding" >
+
+    <CheckBox
+        android:id="@+id/receipt_check"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:focusable="false"
+        android:focusableInTouchMode="false" 
+        android:paddingRight="@dimen/list_cell_padding_right"/>
+
+    <!-- Thumbnail Image View -->
+    <com.concur.mobile.core.view.AsyncImageView
+        android:id="@+id/receipt_thumbnail"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:visibility="gone" />
+
+    <!-- No thumbnail available message -->
+    <TextView
+        android:id="@+id/receipt_no_thumbnail_message"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:gravity="center"
+        android:text="@string/no_receipt_thumbnail_available"
+        android:visibility="visible" />
+
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="10dp"
+        android:orientation="vertical" >
+
+        <TextView
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="0sp"
+            android:text="@string/receipt_added_on"
+            android:textColor="@color/ReceiptAttributeTitle"
+            android:textSize="14sp" />
+
+        <TextView
+            android:id="@+id/receipt_image_date"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="10sp"
+            android:layout_marginTop="0sp"
+            android:paddingTop="0sp"
+            android:text="January 5th, 2011 2:39PM"
+            android:textAppearance="@style/ReceiptAttributeValueBig" />
+    </LinearLayout>
+
+</LinearLayout>

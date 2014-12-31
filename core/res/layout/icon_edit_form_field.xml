@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="fill_parent"
+    android:layout_height="wrap_content"
+    android:background="@color/White"
+    android:clickable="true"
+    android:focusable="true"
+    android:orientation="horizontal"
+    android:paddingBottom="@dimen/form_cell_padding_bottom"
+    android:paddingLeft="@dimen/form_cell_padding_left"
+    android:paddingTop="@dimen/form_cell_padding_top" >
+
+    <ImageView
+        android:id="@+id/field_icon"
+        android:layout_width="16dp"
+        android:layout_height="wrap_content"
+        android:layout_marginRight="6dp"
+        android:maxHeight="20dp"
+        android:scaleType="fitXY"
+        android:src="@drawable/icon_card" />
+
+    <RelativeLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="@dimen/list_cell_padding_left"
+        android:orientation="vertical" >
+
+        <TextView
+            android:id="@+id/field_name"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="@dimen/list_cell_primary_text_bottom_margin"
+            android:text="TextView"
+            android:textColor="@color/expenseFieldLabelText"
+            android:textSize="10sp" />
+
+        <EditText
+            android:id="@+id/field_value"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/field_name"
+            android:fontFamily="sans-serif-light"
+            android:singleLine="false"
+            android:text="TextView"
+            android:textColor="@color/expenseFieldValueText" />
+
+        <TextView
+            android:id="@+id/field_hint"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:textColor="@color/FareGray"
+            android:textSize="16sp"
+            android:visibility="gone" />
+    </RelativeLayout>
+
+</LinearLayout>

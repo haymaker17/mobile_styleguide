@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+  xmlns:android="http://schemas.android.com/apk/res/android"
+  android:layout_width="fill_parent"
+  android:layout_height="50dp"
+  android:orientation="horizontal"
+  android:paddingTop="@dimen/list_section_header_padding_top"
+  android:paddingBottom="@dimen/list_section_header_padding_bottom"
+  android:background="#F7FAFD" 
+>
+<!-- Temporary layout to fit specs which are closer to Gateway incoming design -->
+	<TextView
+		android:id="@+id/list_section_header"
+		android:layout_width="fill_parent"
+		android:layout_height="50dp"
+		android:paddingLeft="15dp"
+		android:gravity="left|center_vertical"
+		android:textAppearance="@style/ListSectionHeaderText"
+		android:text="@string/tr_list_header_active"
+		android:textSize="16dp"
+	    android:textColor="#3B739B"
+	/>
+</LinearLayout>

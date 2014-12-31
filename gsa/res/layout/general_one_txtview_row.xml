@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="fill_parent"
+    android:layout_height="wrap_content"
+    android:background="@drawable/list_selector_gradient_background"
+    android:paddingBottom="@dimen/list_cell_padding_bottom"
+    android:paddingLeft="@dimen/list_cell_padding_left"
+    android:paddingRight="@dimen/list_cell_padding_right"
+    android:paddingTop="@dimen/list_cell_padding_top"
+    android:visibility="visible" >
+
+    <TextView
+        android:id="@+id/row_name"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentLeft="true"
+        android:layout_gravity="left|center_vertical"
+        android:maxLines="2"
+        android:ellipsize="end"
+        android:text="location name"
+        android:textAppearance="@style/SegmentListRowHeaderText"  />
+
+</RelativeLayout>

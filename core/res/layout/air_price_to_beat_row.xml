@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout
+	xmlns:android="http://schemas.android.com/apk/res/android"
+	android:layout_width="fill_parent"
+	android:layout_height="wrap_content"
+	android:paddingLeft="@dimen/list_cell_padding_left"
+	android:paddingRight="@dimen/list_cell_padding_right"
+	android:paddingTop="@dimen/list_cell_padding_top"
+	android:paddingBottom="@dimen/list_cell_padding_bottom"
+	android:background="@drawable/list_selector_gradient_background"
+>
+		<TextView
+		    android:id="@+id/price"
+		    android:layout_width="125dp"
+		    android:layout_height="wrap_content"
+		    android:textAppearance="@style/ListCellHeaderText"
+		    android:text="$540.758888888888"
+		    android:paddingRight="@dimen/list_cell_padding_right"
+		    android:layout_centerVertical="true"		    
+		/>
+		<View
+		    android:id="@+id/viewSpacer"
+		    android:layout_width="10dp"
+		    android:layout_height="0dp"
+		    android:layout_centerHorizontal="false"
+		    android:layout_toRightOf="@id/price" 
+		/>
+		<TextView
+		    android:id="@+id/iata"
+		    android:layout_toRightOf="@id/viewSpacer"
+		    android:layout_width="wrap_content"
+		    android:layout_height="wrap_content"
+		    android:textAppearance="@style/ListCellHeaderText"		    		    
+		    android:text="LHR, London, UK, sdfsdf,d fsdf,s df,s dfs,d fs,df sd,f as"
+		    android:ellipsize="end"		        
+		/>
+
+</RelativeLayout>

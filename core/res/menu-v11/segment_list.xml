@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu
+  xmlns:android="http://schemas.android.com/apk/res/android"
+  xmlns:yourapp="http://schemas.android.com/apk/res-auto" >
+  <item
+  	android:id="@+id/toggle_offers"
+    android:title="Toggle Offer"
+    android:icon="@android:drawable/ic_menu_view"
+  />
+
+  <item
+  	android:id="@+id/toggle_offer_validity"
+    android:title="Toggle Validity Check"
+    android:icon="@android:drawable/ic_menu_manage"
+  />
+
+  <item
+  	android:id="@+id/add_car"
+    android:title="@string/segment_car_add"
+    android:icon="@android:drawable/ic_menu_add"
+  />
+
+  <item
+  	android:id="@+id/add_hotel"
+    android:title="@string/segment_hotel_add"
+    android:icon="@android:drawable/ic_menu_add"
+  />
+  
+  <item
+  	android:id="@+id/refresh"
+    android:title="@string/refresh"
+    android:icon="@drawable/ic_menu_refresh"
+  />
+  
+</menu>

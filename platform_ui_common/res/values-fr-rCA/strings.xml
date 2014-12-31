@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+	<!-- Network Connectivity stuff. -->
+    <string name="dlg_no_connectivity_title">Le client est hors ligne</string>
+    <string name="dlg_no_connectivity_message">Cette opération n\'est pas prise en charge en mode hors ligne.  Veuillez essayer de nouveau lorsque la connectivité est rétablie.</string>
+        
+    <!-- Login UI Strings -->
+	<!-- Email Lookup -->
+    <string name="email_lookup_hint">Courriel professionnel ou nom d\'utilisateur Concur</string>
+    <string name="email_lookup_continue">Continuer</string>
+    <string name="email_lookup_unable_to_login_title">Impossible de se connecter</string>
+    <string name="email_lookup_unable_to_login_msg">Impossible de vous connecter à l\'aide de ces renseignements.</string>
+    <string name="email_lookup_wrong_email_format_title">Courriel ou nom d\'utilisateur non valide</string>
+    <string name="email_lookup_wrong_email_username_format_msg">L’adresse courriel saisie ne semble être ni une adresse courriel ni un nom d\'utilisateur Concur valide.</string>
+    
+    <!-- PIN/Password Login Strings -->
+    <string name="login_enter_password_pin">Mot de passe mobile (NIP)</string>
+    <string name="login_button">Connectez-vous à Concur</string>
+    <string name="login_no_offline">L’ouverture de session hors ligne n’est pas accessible.  Vous devez d’abord ouvrir une session lorsque vous êtes en ligne avant de pouvoir utiliser le mode hors ligne.</string>            
+    <string name="register_button">Besoin de définir votre NIP?</string>
+    <string name="login_help_with_signin">Forgot Mobile Password (PIN)?</string>
+    <string name="login_help_with_signin_password">Forgot Password?</string>
+	<string name="login_password">Mot de passe</string>    
+    <string name="login_password_or_pin_invalid">Essayez d\'entrer votre mot de passe de nouveau ou sélectionnez J\'ai oublié pour recevoir des instructions d\'ouverture de session.</string>
+    <string name="login_invalid_concur_credentials">Mot de passe incorrect</string>    
+    <string name="try_again">Essayer de nouveau</string>
+    <string name="i_forgot">J\'ai oublié</string>
+    <string name="dlg_logging_in">Connexion en cours&#8230;</string>
+            
+	<!-- SSO Login -->
+	<string name="sso_sign_in">Connexion à l\'aide du code SSO de la société</string>
+	  
+</resources>

@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+  xmlns:android="http://schemas.android.com/apk/res/android"
+  android:layout_width="fill_parent"
+  android:layout_height="wrap_content"
+  android:paddingTop="@dimen/form_cell_padding_top"
+  android:paddingBottom="@dimen/form_cell_padding_bottom"
+  android:paddingLeft="6dp"
+  android:paddingRight="6dp"
+  android:background="@drawable/list_selector_gradient_background"
+>
+	<ImageView
+		android:id="@+id/exception_icon"
+		android:layout_width="wrap_content"
+		android:layout_height="wrap_content"
+		android:layout_gravity="center_vertical"
+		android:src="@drawable/icon_yellowex"
+	/>
+	<TextView
+		android:id="@+id/exception_text"
+		android:layout_width="wrap_content"
+		android:layout_weight="1"
+		android:layout_height="wrap_content"
+		android:layout_gravity="center_vertical"
+		android:textAppearance="@style/PrimaryText"
+		android:layout_marginLeft="12dp"
+		android:layout_marginRight="6dp"
+		android:lines="1"
+	 	android:scrollHorizontally="true"
+	 	android:ellipsize="end"
+	/>
+	<ImageView
+		android:src="@drawable/field_popup"
+		android:layout_width="36dp"
+		android:layout_height="36dp"
+		android:maxWidth="36dp"
+		android:maxHeight="36dp"
+		android:scaleType="fitXY"
+		android:layout_gravity="right|center_vertical"
+	/>
+</LinearLayout>

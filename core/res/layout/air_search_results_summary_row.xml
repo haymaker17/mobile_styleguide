@@ -1,0 +1,81 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="fill_parent"
+    android:layout_height="wrap_content"
+    android:background="@drawable/list_selector_gradient_background"
+    android:paddingBottom="@dimen/list_cell_padding_bottom"
+    android:paddingLeft="@dimen/list_cell_padding_left"
+    android:paddingRight="@dimen/list_cell_padding_right"
+    android:paddingTop="@dimen/list_cell_padding_top" >
+
+    <com.concur.mobile.core.view.AsyncImageView
+        android:id="@+id/airlineLogo"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentTop="true"
+        android:layout_marginTop="@dimen/airline_logo_icon_top_margin"
+        android:src="@drawable/dl" >
+    </com.concur.mobile.core.view.AsyncImageView>
+
+    <TextView
+        android:id="@+id/airlineName"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentTop="true"
+        android:layout_marginLeft="4dp"
+        android:layout_toRightOf="@id/airlineLogo"
+        android:text="Delta"
+        android:textAppearance="@style/ListCellHeaderText" >
+    </TextView>
+
+    <TextView
+        android:id="@+id/resultCount"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignLeft="@id/airlineName"
+        android:layout_below="@id/airlineName"
+        android:text="7 results"
+        android:textAppearance="@style/ListCellSubHeaderText" >
+    </TextView>
+
+    <TextView
+        android:id="@+id/starting"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentRight="true"
+        android:layout_marginLeft="14dp"
+        android:text="@string/air_search_starting"
+        android:textAppearance="@style/ListCellSmallText" >
+    </TextView>
+
+    <TextView
+        android:id="@+id/startingCost"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignRight="@id/starting"
+        android:layout_below="@id/starting"
+        android:text="$423.15"
+        android:textAppearance="@style/AirFareNormal" />
+
+    <TextView
+        android:id="@+id/travel_points"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignRight="@id/starting"
+        android:layout_below="@id/startingCost"
+        android:text="Use 125 pts."
+        android:textAppearance="@style/TravelPointsAtItemLevel"
+        android:visibility="gone" />
+
+    <ImageView
+        android:id="@+id/diamonds"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignRight="@id/startingCost"
+        android:layout_below="@id/startingCost"
+        android:layout_marginTop="18dp"
+        android:src="@drawable/diamonds_3" >
+    </ImageView>
+
+</RelativeLayout>

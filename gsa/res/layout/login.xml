@@ -1,0 +1,246 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent"
+    android:background="@drawable/gradient_background"
+    android:orientation="vertical" >
+    
+
+    <LinearLayout
+        android:id="@+id/offline_header"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/offline_header"
+        android:orientation="vertical"
+        android:visibility="visible" >
+
+        <View
+            android:layout_width="fill_parent"
+            android:layout_height="2dp"
+            android:background="@drawable/offline_header_border_shadow_top" />
+
+        <TextView
+            style="@style/FooterText"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_vertical"
+            android:gravity="center_horizontal"
+            android:paddingBottom="1dp"
+            android:paddingTop="1dp"
+            android:text="@string/offline_header_text"
+            android:textStyle="bold" />
+
+        <View
+            android:layout_width="fill_parent"
+            android:layout_height="2dp"
+            android:background="@drawable/offline_header_border_shadow_bottom" />
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="fill_parent"
+        android:layout_height="0dp"
+        android:layout_marginLeft="8dp"
+        android:layout_marginRight="8dp"
+        android:layout_marginTop="18dp"
+        android:layout_weight="1"
+        android:orientation="vertical" >
+
+        <LinearLayout
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:background="@drawable/square_border"
+            android:orientation="vertical"
+            android:padding="1dp" >
+
+            <EditText
+                android:id="@+id/loginId"
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:background="@drawable/square_no_border"
+                android:hint="@string/login_enter_name_password"
+                android:inputType="textEmailAddress"
+                android:maxLines="1"
+                android:padding="10dp"
+                android:textAppearance="@style/PrimaryText" />
+
+            <View
+                android:layout_width="fill_parent"
+                android:layout_height="1dp"
+                android:background="@color/SquareBoxBorder" />
+
+            <EditText
+                android:id="@+id/loginPin"
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:background="@drawable/square_no_border"
+                android:hint="@string/login_enter_password_pin"
+                android:imeOptions="actionGo"
+                android:inputType="textPassword"
+                android:padding="10dp"
+                android:textAppearance="@style/PrimaryText" />
+        </LinearLayout>
+
+        <View
+            android:layout_width="fill_parent"
+            android:layout_height="3dp"
+            android:layout_marginLeft="1dp"
+            android:layout_marginRight="1dp"
+            android:background="@drawable/square_border_shadow" />
+
+        <Button
+            android:id="@+id/loginButton"
+            style="@style/StandardButton"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:layout_marginLeft="70dp"
+            android:layout_marginRight="70dp"
+            android:layout_marginTop="10dp"
+            android:text="@string/login_button" />
+
+        <TextView
+            android:id="@+id/loginText"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:layout_marginTop="15dp"
+            android:text="@string/login_no_offline"
+            android:textAppearance="@style/PrimaryText"
+            android:visibility="gone" />
+
+        <Button
+            android:id="@+id/registerButton"
+            style="@style/StandardButton"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:layout_marginLeft="70dp"
+            android:layout_marginRight="70dp"
+            android:layout_marginTop="15dp"
+            android:text="@string/register_button"
+            android:visibility="gone" />
+
+        <TextView
+            android:id="@+id/companySignInText"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:layout_marginTop="15dp"
+            android:clickable="true"
+            android:onClick="onClick"
+            android:padding="8dp"
+            android:text="@string/login_company_sign_in_link"
+            android:textAppearance="@style/PrimaryText"
+            android:textColor="#024074"
+            android:visibility="visible" />
+
+        <RelativeLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="5dp" >
+
+            <RelativeLayout
+                android:id="@+id/warning_layout"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content" >
+
+                <TextView
+                    android:id="@+id/warningTitle"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_centerHorizontal="true"
+                    android:layout_gravity="center"
+                    android:layout_marginTop="10dp"
+                    android:clickable="true"
+                    android:padding="8dp"
+                    android:text="@string/gov_login_warining_title"
+                    android:textAppearance="@style/SmallPrimaryText"
+                    android:textColor="#024074" />
+
+                <TextView
+                    android:id="@+id/warningmsg"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@+id/warningTitle"
+                    android:layout_centerHorizontal="true"
+                    android:layout_gravity="center"
+                    android:layout_marginTop="1dp"
+                    android:clickable="true"
+                    android:lines="2"
+                    android:paddingLeft="8dp"
+                    android:paddingRight="8dp"
+                    android:singleLine="false"
+                    android:text=""
+                    android:textAppearance="@style/SmallPrimaryText"
+                    android:textColor="@color/Black" />
+
+                <TextView
+                    android:id="@+id/warning_more"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentRight="true"
+                    android:layout_below="@+id/warningmsg"
+                    android:layout_gravity="center"
+                    android:clickable="true"
+                    android:text="@string/gov_more_with_brackets"
+                    android:textAppearance="@style/SmallPrimaryText"
+                    android:textColor="#024074" />
+            </RelativeLayout>
+
+            <RelativeLayout
+                android:id="@+id/pan_layout"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/warning_layout" >
+
+                <TextView
+                    android:id="@+id/privacyANTitle"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@+id/warning_more"
+                    android:layout_centerHorizontal="true"
+                    android:layout_gravity="center"
+                    android:clickable="true"
+                    android:padding="8dp"
+                    android:text="@string/gov_privacy_act_notice_title"
+                    android:textAppearance="@style/SmallPrimaryText"
+                    android:textColor="#024074" />
+
+                <TextView
+                    android:id="@+id/privacyANMsg"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@+id/privacyANTitle"
+                    android:layout_centerHorizontal="true"
+                    android:layout_gravity="center"
+                    android:layout_marginTop="1dp"
+                    android:clickable="true"
+                    android:lines="2"
+                    android:paddingLeft="8dp"
+                    android:paddingRight="8dp"
+                    android:text=""
+                    android:textAppearance="@style/SmallPrimaryText"
+                    android:textColor="@color/Black" />
+
+                <TextView
+                    android:id="@+id/privacy_more"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentRight="true"
+                    android:layout_below="@+id/privacyANMsg"
+                    android:layout_gravity="center"
+                    android:clickable="true"
+                    android:text="@string/gov_more_with_brackets"
+                    android:textAppearance="@style/SmallPrimaryText"
+                    android:textColor="#024074" />
+            </RelativeLayout>
+        </RelativeLayout>
+    </LinearLayout>
+
+    <include
+        android:id="@+id/footer"
+        layout="@layout/footer_navigation_bar_text_view" />
+
+</LinearLayout>

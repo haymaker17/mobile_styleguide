@@ -1,0 +1,136 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--  Top level layout file for ExpenseEntryAttendee activity. -->
+<LinearLayout
+  xmlns:android="http://schemas.android.com/apk/res/android"
+  android:layout_width="fill_parent"
+  android:layout_height="fill_parent"
+  android:orientation="vertical"
+  android:background="@drawable/gradient_background"
+  style="@style/ConcurTheme"
+>
+	<!--  Include the standard header bits -->
+	<include layout="@layout/standard_header"/>
+	
+		<!--  Include the expense title header -->
+	<include android:id="@+id/expense_entry_title_header" layout="@layout/expense_entry_title_header"/>
+	<!--  Include the group separator -->
+	<include layout="@layout/group_separator"/>
+ 
+	<ScrollView
+		android:id="@+id/attendees"
+		android:layout_height="fill_parent"
+		android:layout_width="fill_parent"
+		android:layout_weight="1"
+	>
+  		<LinearLayout
+  			android:id="@+id/linear_layout"
+  			android:layout_height="fill_parent"
+  			android:layout_width="fill_parent"
+  			android:orientation="vertical"
+  		>
+  		  	<!-- Start of Attendee Fields Group -->
+  			<LinearLayout
+  				android:id="@+id/attendee_noshow_group"
+				android:layout_width="fill_parent"
+				android:layout_height="fill_parent"
+				android:orientation="vertical"
+				android:layout_marginTop="@dimen/list_group_vertical_margin"
+				android:layout_marginLeft="@dimen/list_item_horizontal_margin"
+	  			android:layout_marginRight="@dimen/list_item_horizontal_margin"
+	  			android:layout_marginBottom="@dimen/list_group_vertical_margin"
+	  			android:visibility="gone"
+			>
+				<LinearLayout
+	  				android:layout_height="wrap_content"
+	  				android:layout_width="fill_parent"
+	  				android:orientation="vertical"
+	  				android:background="@drawable/square_border"
+	  				android:padding="1dp"
+	  			>
+  					<!-- This LinearLayout view is populated programmatically. -->
+  					<LinearLayout
+						android:id="@+id/attendee_noshow_field"
+	  					android:layout_height="wrap_content"
+	  					android:layout_width="fill_parent"
+	  					android:orientation="vertical"
+	  				/>
+	  			</LinearLayout>
+	  			<View
+	  				android:layout_width="fill_parent"
+	  				android:background="@drawable/square_border_shadow"
+	  				android:layout_height="3dp"
+	  				android:layout_marginLeft="1dp"
+	  				android:layout_marginRight="1dp"
+	  			/>
+	  		</LinearLayout>
+  			<!-- End of Attendee Fields Group -->
+  		    
+  		    <!-- Start of Attendee List Group -->
+	  		<LinearLayout
+				android:layout_width="fill_parent"
+				android:layout_height="fill_parent"
+				android:orientation="vertical"
+				android:layout_marginTop="18dp"
+				android:layout_marginLeft="@dimen/list_item_horizontal_margin"
+	  			android:layout_marginRight="@dimen/list_item_horizontal_margin"
+	  			android:layout_marginBottom="@dimen/list_item_vertical_margin"
+			>
+				<TextView
+	  				android:id="@+id/long_press_msg_view"
+	  				android:layout_width="fill_parent"
+	  				android:layout_height="wrap_content"
+	  				android:text="@string/expense_attendee_long_press_message"
+	  				android:textAppearance="@style/LongPressMessage"
+	  				android:layout_marginLeft="@dimen/list_item_horizontal_margin"
+	  			/>
+	  			<!-- This LinearLayout view is populated programmatically. -->
+				<LinearLayout
+					android:id="@+id/attendees_list"
+	  				android:layout_height="wrap_content"
+	  				android:layout_width="fill_parent"
+	  				android:orientation="vertical"
+	  				android:background="@drawable/square_border"
+	  				android:padding="1dp"
+	  			/>
+	  			<View
+	  				android:layout_width="fill_parent"
+	  				android:background="@drawable/square_border_shadow"
+	  				android:layout_height="3dp"
+	  				android:layout_marginLeft="1dp"
+	  				android:layout_marginRight="1dp"
+	  			/>
+	  		</LinearLayout>
+	  		<!-- End of Attendee List Group -->
+  		</LinearLayout>
+  	</ScrollView>
+  	<!--  No attendees view -->
+	<LinearLayout
+	  	android:id="@+id/no_attendees"
+	  	android:layout_width="fill_parent"
+	  	android:layout_height="fill_parent"
+	  	android:layout_marginTop="@dimen/list_item_vertical_margin"
+	  	android:orientation="vertical"
+	  	android:gravity="center"
+	  	android:visibility="gone"
+	>
+	  	<ImageView
+	  		android:layout_width="wrap_content"
+	  		android:layout_height="wrap_content"
+	  		android:src="@drawable/neg_attendee_icon"
+	  	/>
+	  	<TextView
+	  		android:layout_width="wrap_content"
+	  		android:layout_height="wrap_content"
+	  		android:text="@string/no_attendees"
+	  		android:textAppearance="@style/NoDataText"
+	  		android:layout_marginTop="@dimen/list_item_vertical_margin"
+	  	/>
+	  	<Button
+	  		android:id="@+id/add_attendee"
+	  		android:layout_width="wrap_content"
+	  		android:layout_height="wrap_content"
+	  		android:layout_marginTop="@dimen/list_item_vertical_margin"
+	  		android:text="@string/add_attendees"
+	  	/>
+	  </LinearLayout>
+</LinearLayout>

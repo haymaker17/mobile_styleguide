@@ -1,0 +1,236 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <!-- Preserved from Core -->
+    <!-- These strings were removed from core but are needed here until Gov updates its home -->
+    <!-- REMOVE THESE WHEN GOV IS UPDATED -->
+    <string name="home_row_trips">Trips</string>
+    <string name="home_row_trips_sub_none">No upcoming trips</string>
+    <string name="home_row_trips_sub_some">%%0!number%% active, %%1!number%% upcoming</string>
+    <string name="home_row_trips_to_approve">Trips to Approve</string>
+    <string name="home_row_book">Book Travel</string>
+    <string name="home_row_book_sub">Book Air, Hotel, and more</string>
+    <string name="home_row_quick">Quick Expense</string>
+    <string name="home_row_quick_sub">Capture expense and receipt</string>
+    <string name="home_row_reports">Reports</string>
+    <string name="home_row_reports_sub_none">No unsubmitted reports</string>
+    <string name="home_row_reports_sub_one">1 unsubmitted report</string>
+    <string name="home_row_reports_sub_some">%%0!number%% unsubmitted reports</string>
+    <string name="home_row_expenses">Expenses</string>
+    <string name="home_row_expenses_sub_none">No corporate card charges</string>
+    <string name="home_row_expenses_sub_one">1 corporate card charge</string>
+    <string name="home_row_expenses_sub_some">%%0!number%% corporate card charges</string>
+    <string name="home_row_approvals">Approvals</string>
+    <string name="home_row_approvals_sub_one">1 report to approve</string>
+    <string name="home_row_approvals_sub_some">%%0!number%% reports to approve</string>
+    <string name="home_row_approvals_none">There are no reports to approve</string>
+
+    <!-- General -->
+    <string name="gov_app_name">Concur Gov</string>
+    <string name="gov_more_with_brackets">[More]</string>
+    <string name="gov_agree">Agree</string>
+    <string name="gov_not_agree">Do Not Agree</string>
+    <string name="gov_sending_agreement">Sending Agreement &#8230;</string>
+    <string name="gov_sending_agreement_failed_msg">Safe Harbor Agreement Failed</string>
+    <string name="gov_sending_agreement_succeeded_failed_title">Safe Harbor Agreement Result</string>
+    <string name="gov_sending_agreement_succeeded_msg">Safe Harbor Agreement Succeeded</string>
+
+    <!-- Privacy Act -->
+    <string name="gov_privacy_act_notice_title">Privacy Act Notice</string>
+    <!-- Login -->
+    <string name="gov_login_warining_title">Warning</string>
+    <string name="gov_login_rules_title">Rules of Behavior</string>
+    <string name="gov_login_warning_msg_fails">Failed To Get Messages</string>
+
+    <!-- Home -->
+    <string name="gov_home_unapplied_expense_subtitle">View unapplied expenses</string>
+    <string name="gov_home_unapplied_expense_nodata">There are no expenses available.\nPlease try again</string>
+
+    <!-- Authorizations -->
+    <string name="gov_authorization_title">Authorizations</string>
+    <string name="gov_authorization_select_title">Select Authorization</string>
+    <string name="gov_authorization_subtitle">View/Approve/Update authorizations</string>
+    <string name="gov_authorization_noValue">No Authorization Available</string>
+    <string name="gov_authorization_create">Create Authorization</string>
+    <string name="gov_authorization_create_vch_error">You have no Authorizations that can be attached to a Voucher</string>
+
+    <!-- Vouchers -->
+    <string name="gov_vouchers_title">Vouchers</string>
+    <string name="gov_vouchers_subtitle">View, create and update vouchers</string>
+    <string name="gov_vouchers_noValue">No Voucher Available</string>
+    <string name="gov_vouchers_create_title">Create Voucher</string>
+    <string name="gov_vouchers_create">Create</string>
+    <string name="gov_vouchers_create_auth">Create from Authorization</string>
+
+    <!-- Stemp Document -->
+    <string name="gov_stamp_doc_title">Stamp Documents</string>
+    <string name="gov_stamp_doc_subtitle">Approve authorizations and vouchers</string>
+    <string name="gov_stamp_doc_noValue">No Stamp Document Available</string>
+
+    <!-- Gov Document Specific -->
+    <string name="gov_retrieve_documents">Searching documents &#8230;</string>
+    <string name="gov_refresh_documents">Updating documents list &#8230;</string>
+    <string name="gov_retrieve_documents_detail">Retrieving document detail &#8230;</string>
+    <string name="gov_retrieve_document_stamp_list">Retrieving stamp detail &#8230;</string>
+    <string name="gov_retrieve_documents_stamp_reqinfo">Retrieving stamp required info &#8230;</string>
+    <string name="gov_retrieve_unapplied_expenses">Searching unapplied expenses &#8230;</string>
+    <string name="gov_stamp_document_progress">Stamping document &#8230;</string>
+    <string name="gov_create_voucher">Creating voucher &#8230;</string>
+    <string name="gov_dlg_create_voucher_fail_title">There was an error creating the voucher.</string>
+    <string name="gov_retrieve_msgs">Loading Privacy Act Notice &#8230;</string>
+    <string name="gov_retrieve_documents_fail_title">No Document Found</string>
+    <string name="gov_retrieve_documents_fail_msg">Unable to find document. Please try again later.</string>
+    <string name="gov_retrieve_auth_for_vch_documents">Searching authorization document documents &#8230;</string>
+    <!-- Doc Detail -->
+    <string name="gov_docdetail_doc_status">Document Status</string>
+    <string name="gov_docdetail_tano">TA Number</string>
+    <string name="gov_docdetail_trip_purpose">Trip Purpose</string>
+    <string name="gov_docdetail_emission">Emissions</string>
+    <string name="gov_docdetail_receipt">Receipt</string>
+    <string name="gov_docdetail_perdiem_location">Per Diem Locations</string>
+    <string name="gov_docdetail_expenses">Expenses</string>
+    <string name="gov_docdetail_accounting_allocation">Accounting Allocation</string>
+    <string name="gov_docdetail_totals_travel">Total And Travel Advances</string>
+    <string name="gov_docdetail_audits">Audits</string>
+    <string name="gov_docdetail_return">Return</string>
+    <string name="gov_docdetail_stamp">Stamp</string>
+    <string name="gov_docdetail_comment">Comments</string>
+    <string name="gov_docdetail_digit"> (%d) </string>
+    <string name="gov_docdetail_pass_fail_digit">Pass(%1$d) Fail(%2$d)</string>
+    <string name="gov_docdetail_doc_expense">Doc Expenses</string>
+    <string name="gov_docdetail_doc_audit">Doc Audit</string>
+    <string name="gov_docdetail_comment_novalue">No comment</string>
+    <string name="gov_retrieve_expense_types">Retrieving Expense Types</string>
+    <string name="gov_expense_type_prompt">Expense Description</string>
+    <string name="gov_retrieve_expense_form">Retrieving Expense Form</string>
+    <string name="gov_dlg_expense_fields_message">Please fill in all required fields and fix any error on the form before saving.</string>
+    <string name="gov_saving_expense">Saving expense...</string>
+    <string name="gov_dlg_save_fail_title">Error Saving Expense</string>
+    <string name="gov_field_label_description">Description</string>
+    <string name="gov_field_label_date">Date</string>
+    <string name="gov_field_label_amount">Amount</string>
+    <string name="gov_field_label_pay_method">Payment Method</string>
+    <string name="gov_field_label_category">Category</string>
+    <string name="gov_field_label_reimbursable">Reimbursable</string>
+    <string name="gov_dlg_retrieve_receipt">Retrieving Receipt</string>
+    <string name="gov_dlg_receipt_unavailable">The receipt is unavailable at this time.  Please try again later.</string>
+    <string name="gov_dlg_receipt_attach_failed">Receipt Upload Failed</string>
+    <string name="gov_dlg_delete_doc_expense_confirmation">Are you sure you wish to delete the selected Doc Expense?</string>
+    <string name="gov_dlg_delete_unapplied_expense_confirmation">Are you sure you wish to delete the selected Unapplied Expense?</string>
+    <string name="gov_dlg_title_delete_expense_error">Delete Expense Error</string>
+    <string name="gov_delete_doc_expense">Deleting doc expense &#8230;</string>
+    <string name="gov_delete_unapplied_expense">Deleting unapplied expense &#8230;</string>
+    <string name="gov_dlg_updating_unapplied_expenses">Updating unapplied expenses &#8230;</string>
+
+    <!-- Total Travels -->
+    <string name="gov_docdetail_tnt_expense">Total Expenses</string>
+    <string name="gov_docdetail_tnt_non_rimexpense">Non-Reimbursable Expenses</string>
+    <string name="gov_docdetail_tnt_advance_applied">Advance Applied</string>
+    <string name="gov_docdetail_tnt_paytocard">Pay To Charge Card</string>
+    <string name="gov_docdetail_tnt_paytotravel">Pay To Traveler</string>
+
+    <!-- Stamp Document -->
+    <string name="gov_stamp_doc_awaiting_status">Awaiting Status:</string>
+    <string name="gov_stamp_doc_status_to_apply">Status to apply</string>
+    <string name="gov_stamp_doc_returnto">Return To *</string>
+    <string name="gov_stamp_doc_reason">Reason *</string>
+    <string name="gov_stamp_doc_comment">Comment</string>
+    <string name="gov_stamp_doc_signing_pin">Signing pin *</string>
+    <string name="gov_stamp_doc_stamplist_prompt">Select Status to Apply</string>
+    <string name="gov_stamp_doc_reasonlist_prompt">Select Reason</string>
+    <string name="gov_stamp_doc_returntot_prompt">Select Return To</string>
+    <string name="gov_stamp_doc_comment_promptmsg">Enter Comment</string>
+    <string name="gov_stamp_doc_signing_pin_promptmsg">Enter Signing pin</string>
+    <string name="gov_stamp_doc_fail_title">Stamp Document Failed</string>
+
+    <!-- Add to Voucher -->
+    <string name="gov_add_to_vch_selectall">Select All</string>
+    <string name="gov_add_to_vch_unselectall">Unselect All</string>
+    <string name="gov_add_to_vch">Add to Document</string>
+    <string name="gov_add_to_vch_progress">Uploading expenses &#8230;</string>
+    <string name="gov_add_to_vch_fail_title">Expense Upload Failed</string>
+    <string name="gov_add_to_vch_fail_message">Uploading of the expense has failed at this time.  Please try again later, or contact your company administrator if this continues.</string>
+    <string name="gov_add_to_vch_create">Create New</string>
+    <string name="gov_add_to_vch_create_existing">Select from Existing</string>
+    <string name="gov_add_to_vch_select_title">Add Expense</string>
+    <string name="gov_delete_expense">Delete Expense</string>
+    <string name="gov_deleting_expense">Deleting expense &#8230;</string>
+
+    <!-- Air Search -->
+    <string name="air_cat_limited_capacity">Govt. Contract Discounted</string>
+    <string name="air_cat_contract">Govt. Contract</string>
+    <string name="air_cat_contract_business">Govt. Contract Business</string>
+    <string name="air_cat_me_too">Non-Contract Government</string>
+    <string name="air_cat_lowest_published">Lowest Published</string>
+
+    <!-- Travel Booking -->
+    <string name="gov_get_auth_nums">Searching for existing auth numbers &#8230;</string>
+    <string name="gov_generate_auth_num">Generating auth number &#8230;</string>
+    <string name="gov_get_per_diem_location">Searching perdiem locations &#8230; </string>
+    <string name="gov_get_per_diem_rate_location">Searching perdiem rates &#8230; </string>
+    <string name="gov_get_auth_nums_fail_title">Fail to get Auth Numbers</string>
+    <string name="gov_get_auth_nums_fail_msg">No Auth number existed, please try again or create new auth number</string>
+    <string name="gov_generate_auth_num_fail_title">Fail to Generate Auth Number</string>
+    <string name="gov_generate_auth_num_fail_msg">Generating new auth failed at this time. please try again later, or contact your company administrator if this continues.</string>
+    <string name="gov_get_per_diem_location_fail_title">Location Not Found</string>
+    <string name="gov_get_per_diem_location_fail_msg">Cannot find per diem location. Please try again later.</string>
+    <string name="gov_get_per_diem_rate_location_fail_title">Per Diem Rate Not Found</string>
+    <string name="gov_get_per_diem_rate_location_fail_msg">Cannot find per diem rate for selected per diem location. Please try later.</string>
+    <string name="gov_travel_authorization_title">Travel Authorization</string>
+    <string name="gov_travel_authorization_msg">Select the Type of Authorization to add your travel to.</string>
+    <string name="gov_travel_authorization_create_new_auth_row_title">Create New Authorization for Travel</string>
+    <string name="gov_travel_authorization_open_group_auth_row_title">Add Travel to Open or Group Authorization</string>
+    <string name="gov_travel_authorization_add_to_existing_auth_row_title">Add Travel to Existing Authorization</string>
+    <string name="gov_travel_authorization_open_group_auth_title">Open &amp; Group Auths</string>
+    <string name="gov_travel_authorization_add_to_existing_auth_title">Auths without Reservations</string>
+    <string name="gov_travel_authorization_duty_location_title">Duty Location</string>
+    <string name="gov_travel_authorization_perdiem_location">TDY Per Diem Location</string>
+    <string name="gov_travel_authorization_selected_auth">Selected Authorization for Travel</string>
+    <string name="gov_travel_authorization_selected__existing_auth">Use Existing Authorization</string>
+    <string name="gov_travel_authorization_existing_perdiem_location">Use Existing Duty Location</string>
+    <string name="gov_travel_booking_success_groupauth_msg">The authorization is available for review under the Authorizations.</string>
+    <string name="gov_travel_authorization_use_created_auth">Create New Authorization</string>
+    <string name="gov_travel_authorization_menu_view_auth">View Authorizations</string>
+    <string name="gov_travel_book_travel">Book Travel</string>
+    <string name="gov_travel_quick_expense">Quick Expense</string>
+
+    <plurals name="gov_travel_see_all_result">
+        <item quantity="one">SEE 1 RESULT</item>
+        <item quantity="other">SEE ALL %d RESULTS</item>
+    </plurals>
+
+    <string name="gov_travel_see_all_result_negative">No Result</string>
+
+    <string name="gov_travel_see_results_all_flights">SEE ALL %1$d RESULTS (starting at %2$s)</string>
+        
+    
+    
+    <!-- Travel Sorting -->
+    <string name="gov_travel_sort_criteria_preference">Preference</string>
+    <string name="gov_travel_sort_criteria_price_low_high">Price-Low to High</string>
+    <string name="gov_travel_sort_criteria_price_high_low">Price-High to Low</string>
+    <string name="gov_travel_sort_criteria_earliest_departure">Earliest Departure</string>
+    <string name="gov_travel_sort_criteria_latest_departure">Latest Departure</string>
+    <string name="gov_travel_sort_criteria_earliest_arrival">Earliest Arrival</string>
+    <string name="gov_travel_sort_criteria_latest_arrival">Latest Arrival</string>
+    <string name="gov_travel_sort_criteria_total_travel_time">Duration</string>
+    <string name="gov_travel_sort_criteria_most_compl_policy">Most Compliant Policy</string>
+    <string name="gov_travel_sort_criteria_least_compl_policy">Least Compliant Policy</string>
+    <string name="gov_travel_sort_criteria_stops">Stops</string>
+    <string name="gov_travel_sort_criteria_emissions">Emissions</string>
+    
+    <!-- Dialog texts -->
+    <string name="dlg_book_missing_fields_message">Please select/provide the following information:</string>
+
+      <!-- New Trip Reservation/Cancel Dialog Texts -->
+    <string name="air_confirm_flight_message">Select \u0027OK\u0027 if you are sure you want to reserve this flight.</string>
+    <string name="dlg_travel_car_confirm_message">Select \u0027OK\u0027 if you are sure you want to reserve this car.</string>
+    <string name="dlg_travel_rail_confirm_message">Select \u0027OK\u0027 if you are sure you want to reserve this train.</string>
+    <string name="dlg_travel_hotel_confirm_message">Select \u0027OK\u0027 if you are sure you want to reserve this room.</string>
+    <string name="dlg_car_confirm_cancel_message">Select \u0027OK\u0027 if you are sure you want to cancel this car reservation.</string>
+    <string name="dlg_hotel_confirm_cancel_message">Select \u0027OK\u0027 if you are sure you want to cancel this hotel reservation.</string>
+    <string name="dlg_hotel_confirm_cancel_message">Select \u0027OK\u0027 if you are sure you want to cancel this hotel reservation.</string>
+
+    
+
+</resources>

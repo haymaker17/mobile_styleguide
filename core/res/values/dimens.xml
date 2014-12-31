@@ -1,0 +1,121 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <!--
+    =======================================================
+                      NEW 9.0
+    ======================================================= 
+    -->
+    <dimen name="home_cell_height">70dp</dimen>
+    <dimen name="home_list_padding">4dp</dimen>
+
+    <!-- Navigation item spacing -->
+    <dimen name="navigation_item_padding_top">8dp</dimen>
+    <dimen name="navigation_item_padding_bottom">8dp</dimen>
+    <dimen name="navigation_item_padding_left">8dp</dimen>
+    <dimen name="navigation_item_padding_right">8dp</dimen>
+    <dimen name="navigation_segment_padding_top">4dp</dimen>
+    <dimen name="navigation_segment_padding_bottom">4dp</dimen>
+    <dimen name="navigation_segment_padding_left">8dp</dimen>
+    <dimen name="navigation_segment_padding_right">8dp</dimen>
+    <dimen name="tip_home_arrow_left_margin">-10dp</dimen>
+    <dimen name="tip_home_text_padding_bottom">6dp</dimen>
+    <dimen name="tip_home_menu_text_arrow_side_margin">4dp</dimen>
+    <dimen name="home_concur_logo_left_margin">4dp</dimen>
+    <dimen name="custom_dialog_message_margin">12dp</dimen>
+    <dimen name="tour_flipper_square_size">6dp</dimen>
+    <dimen name="tour_flipper_square_margin">9dp</dimen>
+    <dimen name="universal_layout_margin_bottom">22dp</dimen>
+    <dimen name="universal_layout_margin_top">22dp</dimen>
+
+    <!-- Test Drive Overlay Dimens -->
+    <dimen name="td_dummy_action_bar_height">48dp</dimen>
+    <dimen name="td_dummy_ab_icon_arrow_margin">38dp</dimen>
+    <dimen name="td_dummy_ab_add_icon_center_width">80.5dp</dimen>
+    <dimen name="td_arrow_length_from_ab">96dp</dimen>
+    <dimen name="td_extra_long_arrow">128dp</dimen>
+    <dimen name="td_arrow_width">2dp</dimen>
+    <dimen name="td_bottom_button_center">80dp</dimen>
+    <dimen name="td_bottom_button_height">48dp</dimen>
+    <dimen name="td_sample_report_top_margin">134dp</dimen>
+    <dimen name="status_bar_height">25dp</dimen>
+
+    <!-- TD Overlay Expenses and Receipts -->
+    <dimen name="td_enr_short_arrow_length">48dp</dimen>
+    <dimen name="td_enr_long_arrow_length">128dp</dimen>
+    <dimen name="td_enr_sample_exp_bottom_margin">96dp</dimen>
+    <dimen name="td_enr_sample_exp_right_margin">40dp</dimen>
+    <dimen name="td_enr_sample_rec_bottom_margin">176dp</dimen>
+    <dimen name="td_enr_sample_rec_left_margin">88dp</dimen>
+    <dimen name="td_enr_exp_rec_toggle_height">80dp</dimen>
+    <dimen name="td_enr_exp_rec_toggle_width">96dp</dimen>
+    <dimen name="td_enr_icon_camera_center_width">138.5dp</dimen>
+
+    <!-- test drive tour -->
+    <dimen name="test_drive_tour_img_margin_top">25dip</dimen>
+    <dimen name="test_drive_tour_img_margin_bottom">30dip</dimen>
+    <dimen name="test_drive_tour_text_margin_top">15dip</dimen>
+    <dimen name="test_drive_tour_topic_margin">10dip</dimen>
+    <dimen name="test_drive_tour_topic_img_text_margin_left">6dip</dimen>
+    <dimen name="test_drive_tour_max_image_size">175dp</dimen>
+
+    <!-- Home Tour Dimens -->
+    <dimen name="home_tour_dot_size">6dp</dimen>
+    <dimen name="home_tour_drop_shadow_edge_width">6dp</dimen>
+    <dimen name="home_tour_drop_shadow_corner_width">4dp</dimen>
+
+    <!-- Dynamically set text sizes -->
+    <dimen name="homeFooterSmallText">11sp</dimen>
+
+    <!-- New search result screen -->
+    <dimen name="search_result_cell_padding_left">16dp</dimen>
+    <dimen name="search_result_cell_padding_right">16dp</dimen>
+    <dimen name="search_result_cell_padding_top">6dp</dimen>
+    <dimen name="search_result_cell_padding_bottom">6dp</dimen>
+
+    <!--
+    =======================================================
+                      PRE 9.0
+    ======================================================= 
+    -->
+    <dimen name="header_height">47dp</dimen>
+    <dimen name="header_cell_width">47dp</dimen>
+    <dimen name="footer_height">47dp</dimen>
+    <dimen name="footer_button_horizontal_margin">10dp</dimen>
+    <dimen name="standard_button_height">38dp</dimen>
+    <dimen name="standard_button_min_width">100dp</dimen>
+    <dimen name="standard_button_padding">4dp</dimen>
+    <dimen name="list_cell_padding">8dp</dimen>
+    <dimen name="list_cell_padding_left">8dp</dimen>
+    <dimen name="list_cell_padding_right">8dp</dimen>
+    <dimen name="list_cell_padding_top">12dp</dimen>
+    <dimen name="list_cell_padding_bottom">12dp</dimen>
+    <dimen name="list_cell_primary_text_bottom_margin">4dp</dimen>
+    <dimen name="list_cell_secondary_text_top_margin">2dp</dimen>
+    <dimen name="list_cell_icon_margin_right">4dp</dimen>
+    <dimen name="list_cell_pull_right_left_margin">5dp</dimen>
+    <dimen name="list_item_vertical_margin">10sp</dimen>
+    <dimen name="list_item_horizontal_margin">13dp</dimen>
+    <dimen name="list_group_vertical_margin">12dp</dimen>
+    <dimen name="exp_list_header_row_icon_margin">6dp</dimen>
+    <dimen name="exp_list_header_row_title_left_margin">12dp</dimen>
+    <dimen name="list_section_header_padding_top">3dp</dimen>
+    <dimen name="list_section_header_padding_bottom">3dp</dimen>
+    <dimen name="list_cell_sub_header_icon_top_margin">5dp</dimen>
+    <dimen name="comment_cell_sub_header_icon_top_margin">4dp</dimen>
+    <dimen name="report_list_cell_padding_top">6dp</dimen>
+    <dimen name="report_list_cell_padding_bottom">6dp</dimen>
+    <dimen name="report_list_cell_secondary_text_top_margin">2dp</dimen>
+    <dimen name="form_cell_padding_left">16dp</dimen>
+    <dimen name="form_cell_padding_top">8dp</dimen>
+    <dimen name="form_cell_padding_bottom">8dp</dimen>
+    <dimen name="airline_logo_icon_top_margin">7dp</dimen>
+    <dimen name="ta_activity_horizontal_margin">16dp</dimen>
+    <dimen name="ta_activity_vertical_margin">16dp</dimen>
+
+    <!-- OCR Detail View -->
+    <dimen name="ocr_detail_receipt_field_right_offset">104dp</dimen>
+    <dimen name="hint_text_view_padding_top">12dp</dimen>
+    <dimen name="hint_text_view_padding_bottom">12dp</dimen>
+
+</resources>

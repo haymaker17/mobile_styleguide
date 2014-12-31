@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--  This layout is used to populate an expense header row, i.e., "Report Summary",
+	  "View Exceptions", "View Receipts", etc.
+ -->
+<RelativeLayout
+  xmlns:android="http://schemas.android.com/apk/res/android"
+  android:layout_width="wrap_content"
+  android:layout_height="?android:attr/listPreferredItemHeight"
+  android:paddingTop="@dimen/list_cell_padding"
+  android:paddingBottom="@dimen/list_cell_padding"
+  android:background="@android:drawable/list_selector_background"
+>
+  
+    <ImageView
+  		android:id="@+id/exp_ent_header_row_icon"
+  		android:src="@drawable/report_summary_24"
+  		android:layout_width="wrap_content"
+  		android:layout_alignParentLeft="true"
+  		android:layout_centerVertical="true"
+  		android:layout_height="wrap_content"
+  		android:layout_marginLeft="@dimen/exp_list_header_row_icon_margin"
+  		android:layout_marginRight="@dimen/exp_list_header_row_icon_margin">
+  	</ImageView>
+  	
+  	<TextView
+  		android:id = "@+id/exp_ent_header_row_title"
+  		android:text="@string/report_summary"
+  		android:layout_width="wrap_content"
+  		android:layout_height="wrap_content"
+  		android:layout_centerVertical="true"
+  		android:layout_toRightOf="@+id/exp_ent_header_row_icon"
+  		android:layout_marginLeft="@dimen/exp_list_header_row_title_left_margin"
+  		android:textAppearance="@style/ExpenseListSummaryHeader"
+  	/>
+  
+	<ImageView
+  		android:id="@+id/exp_app_row_pull_right"
+  		android:src="@drawable/arrow_right"
+  		android:layout_width="19dp"
+  		android:layout_height="19dp"
+  		android:scaleType="fitCenter"
+  		android:layout_alignParentRight="true"
+  		android:layout_centerVertical="true"
+  		android:layout_marginLeft="@dimen/list_cell_pull_right_left_margin"
+  		android:visibility="gone"
+  	/>
+  
+</RelativeLayout>

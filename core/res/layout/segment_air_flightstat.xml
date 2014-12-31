@@ -1,0 +1,128 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+	android:layout_width="fill_parent" android:layout_height="fill_parent"
+	android:orientation="vertical" style="@style/ConcurTheme">
+
+	<!--  Include the standard header bits -->
+	<include layout="@layout/standard_header"/>
+
+	<ScrollView android:layout_height="0px"
+		android:layout_width="fill_parent" android:layout_weight="1.0"
+		android:background="@color/ListBackground">
+
+		<LinearLayout android:layout_width="fill_parent"
+			android:background="@color/ListBackground" android:orientation="vertical"
+			android:layout_height="fill_parent" android:paddingLeft="6dp"
+			android:paddingRight="6dp" android:paddingTop="10dp">
+
+			<LinearLayout
+				android:orientation="vertical" android:layout_width="fill_parent"
+				android:layout_height="wrap_content" android:paddingTop="@dimen/form_cell_padding_top"
+				android:paddingBottom="@dimen/form_cell_padding_bottom"
+				android:background="@drawable/gradient_background">
+				<TextView android:lines="1" android:ellipsize="end"
+					android:layout_marginLeft="6dp" android:textAppearance="@style/FormFieldValueText"
+					android:scrollHorizontally="true" android:layout_marginRight="6dp"
+					android:text="@string/segment_air_fs_powered"
+					android:layout_height="wrap_content" android:layout_width="wrap_content"
+					android:id="@+id/field_value" android:layout_gravity="center_horizontal" />
+			</LinearLayout>
+			<View android:layout_width="fill_parent" android:background="@drawable/square_border_shadow"
+				android:layout_height="3dp" android:layout_marginLeft="1dp"
+				android:layout_marginRight="1dp" android:layout_marginBottom="10dp" />
+
+			<Button android:layout_width="wrap_content"
+				android:layout_height="wrap_content" android:id="@+id/fsRefresh"
+				android:layout_gravity="center_horizontal" android:text="@string/segment_air_fs_refresh"
+				style="@style/StandardButton" android:layout_marginBottom="10dp" />
+
+            <LinearLayout 
+                android:orientation="vertical" android:layout_width="fill_parent"
+                android:layout_height="wrap_content" android:paddingTop="@dimen/form_cell_padding_top"
+                android:paddingBottom="@dimen/form_cell_padding_bottom"
+                android:background="@drawable/gradient_background" android:id="@+id/fsDepStatus">
+                <TextView android:id="@+id/field_name"
+                    android:layout_height="wrap_content" android:layout_width="fill_parent"
+                    android:text="Field Name" android:layout_marginLeft="6dp"
+                    android:layout_marginRight="6dp" android:textAppearance="@style/FormFieldLabelText" />
+                <LinearLayout android:layout_height="wrap_content"
+                    android:layout_width="match_parent">
+                    <ImageView android:layout_height="wrap_content"
+                        android:layout_width="wrap_content" android:src="@drawable/flight_status_green"
+                        android:id="@+id/fsIcon" android:layout_marginLeft="6dp"
+                        android:layout_gravity="center_vertical"></ImageView>
+                    <TextView android:lines="1" android:ellipsize="end"
+                        android:layout_marginLeft="6dp" android:textAppearance="@style/FormFieldValueText"
+                        android:scrollHorizontally="true" android:layout_marginRight="6dp"
+                        android:text="Field Value" android:layout_height="wrap_content"
+                        android:layout_width="fill_parent" android:id="@+id/field_value"/>
+                </LinearLayout>
+            </LinearLayout>
+			<include layout="@layout/group_separator" />
+			<include layout="@layout/static_text_form_field" android:id="@+id/fsDepSched" />
+			<include layout="@layout/group_separator" />
+			<include layout="@layout/static_text_form_field" android:id="@+id/fsDepEstim" />
+			<include layout="@layout/group_separator" />
+			<include layout="@layout/static_text_form_field" android:id="@+id/fsDepActual" />
+			<include layout="@layout/group_separator" />
+			<include layout="@layout/static_text_form_field" android:id="@+id/fsDepTermSched" />
+			<include layout="@layout/group_separator" />
+			<include layout="@layout/static_text_form_field" android:id="@+id/fsDepTermActual" />
+			<include layout="@layout/group_separator" />
+			<include layout="@layout/static_text_form_field" android:id="@+id/fsDepGate" />
+			<LinearLayout android:orientation="vertical"
+				android:layout_width="fill_parent" android:layout_height="wrap_content"
+				android:id="@+id/fsDivCity">
+				<include layout="@layout/group_separator" />
+				<include layout="@layout/static_text_form_field" />
+			</LinearLayout>
+			<LinearLayout android:orientation="vertical"
+				android:layout_width="fill_parent" android:layout_height="wrap_content"
+				android:id="@+id/fsDivAirport">
+				<include layout="@layout/group_separator" />
+				<include layout="@layout/static_text_form_field" />
+			</LinearLayout>
+			<include layout="@layout/group_separator" />
+			<include layout="@layout/static_text_form_field" android:id="@+id/fsArrSched" />
+			<include layout="@layout/group_separator" />
+			<include layout="@layout/static_text_form_field" android:id="@+id/fsArrEstim" />
+			<include layout="@layout/group_separator" />
+			<include layout="@layout/static_text_form_field" android:id="@+id/fsArrTerm" />
+			<include layout="@layout/group_separator" />
+			<include layout="@layout/static_text_form_field" android:id="@+id/fsArrGate" />
+			<include layout="@layout/group_separator" />
+            <LinearLayout 
+                android:orientation="vertical" android:layout_width="fill_parent"
+                android:layout_height="wrap_content" android:paddingTop="@dimen/form_cell_padding_top"
+                android:paddingBottom="@dimen/form_cell_padding_bottom"
+                android:background="@drawable/gradient_background" android:id="@+id/fsArrStatus">
+                <TextView android:id="@+id/field_name"
+                    android:layout_height="wrap_content" android:layout_width="fill_parent"
+                    android:text="Field Name" android:layout_marginLeft="6dp"
+                    android:layout_marginRight="6dp" android:textAppearance="@style/FormFieldLabelText" />
+                <LinearLayout android:layout_height="wrap_content"
+                    android:layout_width="match_parent">
+                    <ImageView android:layout_height="wrap_content"
+                        android:layout_width="wrap_content" android:src="@drawable/flight_status_green"
+                        android:id="@+id/fsIcon" android:layout_marginLeft="6dp"
+                        android:layout_gravity="center_vertical"></ImageView>
+                    <TextView android:lines="1" android:ellipsize="end"
+                        android:layout_marginLeft="6dp" android:textAppearance="@style/FormFieldValueText"
+                        android:scrollHorizontally="true" android:layout_marginRight="6dp"
+                        android:text="Field Value" android:layout_height="wrap_content"
+                        android:layout_width="fill_parent" android:id="@+id/field_value"/>
+                </LinearLayout>
+            </LinearLayout>
+			<include layout="@layout/group_separator" />
+			<include layout="@layout/static_text_form_field" android:id="@+id/fsBaggage" />
+			<include layout="@layout/group_separator" />
+			<include layout="@layout/static_text_form_field" android:id="@+id/fsAircraft" />
+			<View android:layout_width="fill_parent" android:background="@drawable/square_border_shadow"
+				android:layout_height="3dp" android:layout_marginLeft="1dp"
+				android:layout_marginRight="1dp" android:layout_marginBottom="10dp" />
+
+		</LinearLayout>
+
+	</ScrollView>
+
+</LinearLayout>

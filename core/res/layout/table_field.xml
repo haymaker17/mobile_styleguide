@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--  This layout file provides a two-element field for re-use in tables. -->
+<LinearLayout
+  xmlns:android="http://schemas.android.com/apk/res/android"
+  android:orientation="vertical"
+  android:layout_width="fill_parent"
+  android:layout_height="wrap_content"
+  android:paddingTop="3dp"
+  android:paddingBottom="3dp"
+  android:background="@drawable/list_selector_gradient_background"
+>
+	<TextView
+		android:id="@+id/field_name"
+		android:layout_height="wrap_content"
+		android:layout_width="fill_parent"
+		android:text="Field Name"
+	    android:layout_marginLeft="6dp"
+	    android:layout_marginRight="6dp"
+	    android:textAppearance="@style/FormFieldLabelText"
+	/>
+	<TextView
+		android:id="@+id/field_value"
+		android:layout_height="wrap_content"
+		android:layout_width="fill_parent"
+		android:text="Field Value"
+	    android:layout_marginLeft="6dp"
+	    android:layout_marginRight="6dp"
+	    android:textAppearance="@style/FormFieldValueText"
+	/>
+</LinearLayout>

@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="fill_parent"
+    android:layout_height="wrap_content"
+    android:background="@drawable/list_selector_gradient_background"
+    android:gravity="center"
+    android:orientation="horizontal" >
+	
+	<TextView
+		android:id="@+id/row_label"
+		android:layout_width="0dp"
+		android:layout_weight="0.3"
+		android:layout_height="fill_parent"
+		android:textAppearance="@style/BigFormFieldLabelText"
+		android:paddingLeft="6dp"
+		android:paddingTop="6dp"
+		android:visibility="gone"
+	/>
+	<TextView
+		android:id="@+id/row_value"
+		android:layout_width="0dp"
+		android:layout_weight="0.7"
+		android:layout_height="wrap_content"
+		android:textAppearance="@style/PrimaryText"
+		android:padding="6dp"
+	/>
+		
+</LinearLayout>
+

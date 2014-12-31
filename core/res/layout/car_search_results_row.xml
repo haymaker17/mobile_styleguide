@@ -1,0 +1,132 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="fill_parent"
+    android:layout_height="wrap_content"
+    android:background="@drawable/list_selector_gradient_background"
+    android:paddingBottom="3dp"
+    android:paddingLeft="@dimen/list_cell_padding_left"
+    android:paddingTop="3dp" >
+
+    <ImageView
+        android:id="@+id/field_image"
+        android:layout_width="36dp"
+        android:layout_height="36dp"
+        android:layout_alignParentRight="true"
+        android:layout_centerVertical="true"
+        android:layout_gravity="center"
+        android:maxHeight="36dp"
+        android:maxWidth="36dp"
+        android:scaleType="fitXY"
+        android:src="@drawable/field_popup" />
+
+    <LinearLayout
+        android:id="@+id/carResultVendorRatePane"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerVertical="true"
+        android:layout_marginLeft="5dp"
+        android:layout_toLeftOf="@+id/field_image"
+        android:orientation="vertical"
+        android:paddingBottom="3dp"
+        android:paddingTop="3dp" >
+
+        <ImageView
+            android:id="@+id/carResultVendorImage"
+            android:layout_width="84dp"
+            android:layout_height="16dp"
+            android:background="#AAAAAA" />
+
+        <TextView
+            android:id="@+id/carResultDailyRate"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_horizontal"
+            android:layout_marginTop="4dp"
+            android:text="$95.83"
+            android:textAppearance="@style/PrimaryText"
+            android:textStyle="bold" />
+
+        <ImageView
+            android:id="@+id/violation_icon"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_horizontal"
+            android:src="@drawable/icon_yellowex"
+            android:visibility="invisible" />
+
+        <TextView
+            android:id="@+id/carResultDailyRateLabel"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_horizontal"
+            android:text="@string/car_results_daily_rate"
+            android:textAppearance="@style/TinyPrimaryText" />
+    </LinearLayout>
+
+    <TextView
+        android:id="@+id/carResultClassBody"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="1dp"
+        android:textAppearance="@style/PrimaryText"
+        android:textStyle="bold" >
+    </TextView>
+
+    <TextView
+        android:id="@+id/carResultTransmission"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/carResultClassBody"
+        android:layout_marginLeft="8dp"
+        android:textAppearance="@style/SmallPrimaryText" >
+    </TextView>
+
+    <TextView
+        android:id="@+id/carResultFuelAC"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/carResultTransmission"
+        android:layout_marginLeft="8dp"
+        android:textAppearance="@style/SmallPrimaryText" >
+    </TextView>
+
+    <TextView
+        android:id="@+id/carResultMiles"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/carResultFuelAC"
+        android:layout_marginLeft="8dp"
+        android:textAppearance="@style/SmallPrimaryText" >
+    </TextView>
+
+    <TextView
+        android:id="@+id/carResultTotalRateLabel"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/carResultMiles"
+        android:layout_marginLeft="8dp"
+        android:layout_marginRight="5dp"
+        android:text="@string/car_results_total_label"
+        android:textAppearance="@style/SmallPrimaryText" >
+    </TextView>
+
+    <TextView
+        android:id="@+id/carResultTotalRate"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignBaseline="@+id/carResultTotalRateLabel"
+        android:layout_toRightOf="@+id/carResultTotalRateLabel"
+        android:textAppearance="@style/SmallPrimaryText" >
+    </TextView>
+
+    <TextView
+        android:id="@+id/carGDSName"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/carResultTotalRateLabel"
+        android:layout_marginLeft="8dp"
+        android:textAppearance="@style/SmallPrimaryText"
+        android:visibility="gone" >
+    </TextView>
+
+</RelativeLayout>

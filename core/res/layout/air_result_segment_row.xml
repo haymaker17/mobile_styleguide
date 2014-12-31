@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout
+  xmlns:android="http://schemas.android.com/apk/res/android"
+  android:layout_width="wrap_content"
+  android:layout_height="wrap_content"
+>
+	<TextView
+		android:id="@+id/segment_location_time"
+		android:layout_width="wrap_content"
+		android:layout_height="wrap_content"
+		android:layout_alignParentTop="true"
+		android:layout_alignParentLeft="true"
+		android:text="SEA Wed 8:40a - BWI Wed 3:45p"
+		android:textAppearance="@style/ListCellSubHeaderTextNormal"
+	/>
+	<TextView
+		android:id="@+id/segment_duration_stops"
+		android:layout_width="wrap_content"
+		android:layout_height="wrap_content"
+		android:layout_alignParentLeft="true"
+		android:layout_below="@id/segment_location_time"
+		android:text="4h / 0 Stops"
+		android:textAppearance="@style/ListCellSmallText"
+	/>
+	<ImageView
+		android:id="@+id/overnight"
+		android:layout_width="wrap_content"
+		android:layout_height="wrap_content"
+		android:layout_toRightOf="@id/segment_duration_stops"
+		android:layout_alignBottom="@id/segment_duration_stops"
+		android:layout_marginLeft="18dp"
+		android:src="@drawable/overnight_flight"
+	/>
+</RelativeLayout>

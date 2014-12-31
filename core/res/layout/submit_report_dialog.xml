@@ -1,0 +1,76 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="fill_parent"
+    android:layout_height="wrap_content"
+    android:padding="@dimen/list_cell_padding" >
+
+    <TableLayout
+        android:id="@+id/name_amount_row"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentTop="true"
+        android:layout_alignWithParentIfMissing="true"
+        android:layout_centerInParent="true"
+        android:orientation="horizontal" >
+
+        <TableRow android:id="@+id/table_row_title" >
+
+            <TextView
+                android:id="@+id/title"
+                android:text="@string/expense_report"
+                android:textAppearance="@style/CustomDialogColumnHeaderText"/>
+        </TableRow>
+
+        <TableRow android:id="@+id/table_row_report_total" >
+
+            <TextView
+                android:id="@+id/report_total_title"
+                android:gravity="right"
+                android:maxWidth="196dp"
+                android:text="@string/report_total_colon"
+                android:textAppearance="@style/CustomDialogColumnValueText"/>
+
+            <TextView
+                android:id="@+id/report_total_amount"
+                android:layout_marginLeft="15dp"
+                android:gravity="right"
+                android:text="$35.00"
+                android:textAppearance="@style/CustomDialogColumnValueText"/>
+        </TableRow>
+
+        <TableRow android:id="@+id/table_row_less_personal_amount" >
+
+            <TextView
+                android:id="@+id/less_personal_amount_title"
+                android:gravity="right"
+                android:maxWidth="196dp"
+                android:text="@string/less_personal_amount_colon"
+                android:textAppearance="@style/CustomDialogColumnValueText"/>
+
+            <TextView
+                android:id="@+id/less_personal_amount_total"
+                android:layout_marginLeft="15dp"
+                android:gravity="right"
+                android:text="$00.00"
+                android:textAppearance="@style/CustomDialogColumnValueText"/>
+        </TableRow>
+
+        <TableRow android:id="@+id/table_row_amount_claimed" >
+
+            <TextView
+                android:id="@+id/amount_claimed_title"
+                android:gravity="right"
+                android:maxWidth="196dp"
+                android:text="@string/amount_claimed_colon"
+                android:textAppearance="@style/CustomDialogColumnValueText"/>
+
+            <TextView
+                android:id="@+id/amount_claimed_total"
+                android:layout_marginLeft="15dp"
+                android:gravity="right"
+                android:text="$35.00"
+                android:textAppearance="@style/CustomDialogColumnValueText"/>
+        </TableRow>
+    </TableLayout>
+
+</RelativeLayout>

@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:yourapp="http://schemas.android.com/apk/res-auto" >
+    <item android:title="@string/home_action_receipt_store" android:id="@+id/menuHomeReceiptStore"/>
+    <item android:title="@string/home_action_add_mileage" android:id="@+id/menuHomeAddMileage" />
+    <item android:title="@string/home_action_location_check_in" android:id="@+id/menuHomeLocationCheckIn"/>
+</menu>

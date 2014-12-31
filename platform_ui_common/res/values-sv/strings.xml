@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+	<!-- Network Connectivity stuff. -->
+    <string name="dlg_no_connectivity_title">Klienten är offline</string>
+    <string name="dlg_no_connectivity_message">Den här åtgärden stöds inte i offlineläge.  Försök igen när en dataanslutning är tillgänglig.</string>
+        
+    <!-- Login UI Strings -->
+	<!-- Email Lookup -->
+    <string name="email_lookup_hint">E-postadress till arbete eller Concur-användarnamn</string>
+    <string name="email_lookup_continue">Fortsätt</string>
+    <string name="email_lookup_unable_to_login_title">Det går inte att logga in</string>
+    <string name="email_lookup_unable_to_login_msg">Vi kan inte att logga in dig med de här uppgifterna.</string>
+    <string name="email_lookup_wrong_email_format_title">Ogiltig e-postadress eller ogiltigt användarnamn</string>
+    <string name="email_lookup_wrong_email_username_format_msg">Det du har skrivit in verkar inte vara en giltig e-postadress eller ett giltigt Concur-användarnamn.</string>
+    
+    <!-- PIN/Password Login Strings -->
+    <string name="login_enter_password_pin">Mobillösenord (PIN-kod)</string>
+    <string name="login_button">Logga in på Concur</string>
+    <string name="login_no_offline">Offlineinloggning är inte tillgänglig.  Du måste logga in i onlineläge innan du kan använda offlineläget.</string>            
+    <string name="register_button">Behöver du ange din PIN-kod?</string>
+    <string name="login_help_with_signin">Forgot Mobile Password (PIN)?</string>
+    <string name="login_help_with_signin_password">Forgot Password?</string>
+	<string name="login_password">Lösenord</string>    
+    <string name="login_password_or_pin_invalid">Försök att ange ditt lösenord igen eller välj Jag har glömt för att få inloggningsanvisningar.</string>
+    <string name="login_invalid_concur_credentials">Fel lösenord</string>    
+    <string name="try_again">Försök igen</string>
+    <string name="i_forgot">Jag har glömt</string>
+    <string name="dlg_logging_in">Loggar in &#8230;</string>
+            
+	<!-- SSO Login -->
+	<string name="sso_sign_in">Inloggning med företagskod för enkel inloggning (SSO)</string>
+	  
+</resources>

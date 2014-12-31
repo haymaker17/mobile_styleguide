@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layer-list xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <!-- Background -->
+    <item>
+	<shape>
+    <gradient android:angle="270"
+        android:startColor="@color/ButtonClickStartGradient"
+        android:centerColor="@color/ButtonClickCenterGradient"
+        android:endColor="@color/ButtonClickEndGradient"
+        android:centerY="0.95"/>
+    <stroke android:width="1px" android:color="#77000000"/>
+            <corners android:radius="1dp"/>
+	</shape>
+    </item>
+</layer-list>

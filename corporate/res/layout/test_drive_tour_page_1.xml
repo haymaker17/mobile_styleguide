@@ -1,0 +1,79 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/main_layout"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:paddingBottom="@dimen/list_group_vertical_margin"
+    android:paddingLeft="@dimen/list_item_horizontal_margin"
+    android:paddingRight="@dimen/list_item_horizontal_margin"
+    android:paddingTop="@dimen/list_group_vertical_margin" >
+
+    <ScrollView
+        android:id="@+id/main_scroll_layout"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:fadingEdgeLength="20dp"
+        android:fillViewport="true"
+        android:scrollbars="none" >
+
+        <RelativeLayout
+            android:id="@+id/tourPage1"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content" >
+
+            <ImageView
+                android:id="@+id/tourImage"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:maxWidth="@dimen/test_drive_tour_max_image_size"
+                android:adjustViewBounds="true"
+                android:layout_centerHorizontal="true"
+                android:layout_marginBottom="@dimen/test_drive_tour_img_margin_bottom"
+                android:layout_marginTop="@dimen/test_drive_tour_img_margin_top"
+                android:scaleType="fitCenter"
+                android:src="@drawable/tour_graphic2" />
+
+            <LinearLayout
+                android:id="@+id/container_layout"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_below="@+id/tourImage"
+                android:orientation="vertical" >
+
+                <include layout="@layout/dot_group_saparator" />
+
+                <TextView
+                    android:id="@+id/td_tour_welcome_title"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="@dimen/test_drive_tour_text_margin_top"
+                    android:layout_marginTop="@dimen/test_drive_tour_text_margin_top"
+                    android:gravity="center"
+                    android:text="@string/test_drive_tour_welcome_pg1_title"
+                    android:textAppearance="@style/TourText" />
+
+                <TextView
+                    android:id="@+id/td_tour_welcome_subtitle"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="@dimen/test_drive_tour_text_margin_top"
+                    android:gravity="center"
+                    android:text="@string/test_drive_tour_welcome_pg1_subtitle"
+                    android:textAppearance="@style/TourText" />
+
+                <include
+                    android:id="@+id/td_tour_topic1"
+                    layout="@layout/test_drive_tour_topic" />
+
+                <include
+                    android:id="@+id/td_tour_topic2"
+                    layout="@layout/test_drive_tour_topic" />
+
+                <include
+                    android:id="@+id/td_tour_topic3"
+                    layout="@layout/test_drive_tour_topic" />
+            </LinearLayout>
+        </RelativeLayout>
+    </ScrollView>
+
+</RelativeLayout>

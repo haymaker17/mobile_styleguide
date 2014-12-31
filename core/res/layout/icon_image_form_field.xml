@@ -1,0 +1,75 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--  This layout file provides three-element form field with a right aligned button. -->
+<LinearLayout
+ 	xmlns:android="http://schemas.android.com/apk/res/android"
+  	android:orientation="horizontal"
+  	android:layout_width="fill_parent"
+  	android:layout_height="wrap_content"
+  	android:paddingTop="@dimen/form_cell_padding_top"
+  	android:paddingBottom="@dimen/form_cell_padding_bottom"
+  	android:background="@drawable/list_selector_gradient_background"
+	android:focusable="true"
+	android:clickable="true"
+>
+    <LinearLayout
+    	android:orientation="vertical"
+    	android:layout_width="0dp"
+    	android:layout_height="wrap_content"
+    	android:layout_weight="1.0"
+    	android:paddingLeft="6dp"
+    >
+    	<LinearLayout
+    		android:orientation="horizontal"
+    		android:layout_width="fill_parent"
+    		android:layout_height="wrap_content"
+    	>
+    		<ImageView
+				android:id="@+id/field_icon"
+				android:layout_width="wrap_content"
+				android:layout_height="wrap_content"
+				android:layout_gravity="top"
+				android:layout_marginRight="6dp"
+				android:maxWidth="36dp"
+				android:maxHeight="36dp"
+				android:scaleType="fitXY"
+				android:src="@drawable/icon_redex"
+			/>
+			<TextView
+				android:id="@+id/field_name"
+				android:layout_height="wrap_content"
+				android:layout_width="fill_parent"
+	    		android:layout_marginRight="6dp"
+	    		android:textAppearance="@style/FormFieldLabelText"
+				android:text="Field Name"
+			/>
+		</LinearLayout>
+		<TextView
+			android:id="@+id/field_value"
+			android:layout_height="wrap_content"
+			android:layout_width="fill_parent"
+			android:layout_gravity="center_vertical"
+	    	android:layout_marginRight="6dp"
+	    	android:textAppearance="@style/FormFieldValueText"
+	    	android:minLines="1"
+	    	android:maxLines="1"
+	    	android:gravity="center_vertical"
+	    	android:lines="1"
+	    	android:scrollHorizontally="true"
+	    	android:ellipsize="end"
+	    	android:text="Field Value"
+		/>
+	</LinearLayout>
+	<ImageView
+		android:id="@+id/field_image"
+		android:layout_width="36dp"
+		android:layout_height="36dp"
+		android:layout_gravity="top"
+		android:layout_marginLeft="6dp"
+		android:layout_marginRight="6dp"
+		android:maxWidth="36dp"
+		android:maxHeight="36dp"
+		android:scaleType="fitXY"
+		android:src="@drawable/field_popup"
+	/>
+</LinearLayout>
+

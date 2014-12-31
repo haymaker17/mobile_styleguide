@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--  Top level layout file for ExpenseEntry activity. -->
+<LinearLayout
+  xmlns:android="http://schemas.android.com/apk/res/android"
+  android:layout_width="match_parent"
+  android:layout_height="match_parent"
+  android:orientation="vertical"
+  style="@style/ConcurTheme"
+>
+	<!--  Include the standard header bits -->
+	<include layout="@layout/standard_header"/>
+	
+	<ScrollView
+		android:id="@+id/scroll_view"
+		android:layout_height="0dp"
+		android:layout_width="match_parent"
+		android:layout_weight="1"
+		android:background="@drawable/gradient_background"
+	>
+	
+	  	<LinearLayout
+  			android:id="@+id/attendee_search_field_list"
+  			android:layout_height="0dp"
+  			android:layout_width="match_parent"
+  			android:orientation="vertical"
+  		>
+  		</LinearLayout>
+  	</ScrollView>
+</LinearLayout>

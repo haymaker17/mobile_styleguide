@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android" 
+    xmlns:yourapp="http://schemas.android.com/apk/res-auto" >
+    <item
+        android:id="@+id/menuAdd"
+        android:icon="@drawable/icon_add"
+        android:title="@string/itin_add_stop"
+        yourapp:showAsAction="ifRoom">
+    </item>
+    <item
+        android:id="@+id/menuProceed"
+        android:icon="@drawable/arrow_right"
+        android:title="@string/itin_proceed_to_expenses"
+        yourapp:showAsAction="ifRoom">
+    </item>
+</menu>

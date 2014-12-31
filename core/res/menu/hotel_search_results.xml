@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu
+  xmlns:android="http://schemas.android.com/apk/res/android"
+  xmlns:yourapp="http://schemas.android.com/apk/res-auto" >
+  <item
+  	android:id="@+id/hotel_search_results_sort_menu"
+    android:title="@string/sort_by"
+    android:icon="@android:drawable/ic_menu_sort_by_size"
+  />
+
+</menu>

@@ -1,0 +1,42 @@
+<manifest
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    package="com.concur.mobile.platform.test"
+    android:versionCode="2999"
+    android:versionName="0.0.0"
+>
+    <uses-sdk
+        android:minSdkVersion="16"
+        android:targetSdkVersion="16"
+    />
+    <uses-permission android:name="android.permission.INTERNET" />
+    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
+    <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION"/>
+    <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION"/>
+    
+  <application android:name=".PlatformTestApplication" >
+      <!-- Providers -->
+      <!-- Configuration Information Provider -->
+      <provider
+          android:name="com.concur.mobile.platform.config.provider.ConfigProvider"
+          android:authorities="com.concur.mobile.platform.config"
+          android:enabled="true"
+          android:exported="false"
+          android:initOrder="1"
+          android:label="@string/platform_config_provider_name"
+          android:syncable="false" >
+            <!-- TODO: define mime types here, etc. -->
+      </provider>
+      <!--  Travel Information Provider -->
+      <provider
+          android:name="com.concur.mobile.platform.travel.provider.TravelProvider"
+          android:authorities="com.concur.mobile.platform.travel"
+          android:enabled="true"
+          android:exported="false"
+          android:initOrder="1"
+          android:label="@string/platform_travel_provider_name"
+          android:syncable="false" >
+          <!-- TODO: define mime types here, etc. -->
+      </provider>
+  </application>
+
+</manifest>

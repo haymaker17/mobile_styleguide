@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/main_layout"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/PrimaryBackgroundColor"
+    android:minHeight="420dp"
+    android:minWidth="300dp"
+    android:orientation="vertical" >
+
+    <ListView
+        android:id="@+id/msgCenterList"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="0.15"
+        android:divider="@color/ListDivider"
+        android:dividerHeight="1dp"
+        android:gravity="top" >
+    </ListView>
+
+    <include
+        android:id="@+id/ads"
+        layout="@layout/dfp_ads_footer" />
+
+</LinearLayout>

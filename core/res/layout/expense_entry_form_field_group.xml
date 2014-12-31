@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+	xmlns:android="http://schemas.android.com/apk/res/android"
+	android:id="@+id/form_field_group"
+	android:orientation="vertical"
+>
+	<TextView
+		android:id="@+id/form_field_group_title"
+		android:layout_width="wrap_content"
+		android:layout_height="wrap_content"
+	/>
+	<!-- This LinearLayout view is populated programmatically. -->
+	<LinearLayout
+		android:id="@+id/form_field_group_list"
+		android:layout_height="wrap_content"
+		android:layout_width="fill_parent"
+		android:orientation="vertical"
+		android:background="@drawable/round_border"
+		android:layout_marginTop="@dimen/list_item_vertical_margin"
+		android:layout_marginLeft="@dimen/list_item_horizontal_margin"
+		android:layout_marginRight="@dimen/list_item_horizontal_margin"
+		android:layout_marginBottom="@dimen/list_item_vertical_margin"
+	/>
+</LinearLayout>

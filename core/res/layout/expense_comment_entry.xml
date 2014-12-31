@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout
+	xmlns:android="http://schemas.android.com/apk/res/android"
+	android:layout_width="fill_parent"
+	android:layout_height="wrap_content"
+	android:paddingTop="@dimen/list_cell_padding_top"
+  	android:paddingBottom="@dimen/list_cell_padding_bottom"
+  	android:background="@drawable/list_selector_gradient_background"
+>
+	<ImageView
+		android:id="@+id/comment_icon"
+		android:layout_width="wrap_content"
+		android:layout_height="wrap_content"
+		android:src="@drawable/icon_comment"
+		android:layout_alignParentLeft="true"
+		android:layout_marginLeft="@dimen/list_cell_padding_left"
+		android:layout_marginTop="@dimen/comment_cell_sub_header_icon_top_margin"
+	/>
+	<TextView
+		android:id="@+id/comment_author"
+		android:text="Author"
+		android:layout_width="wrap_content"
+		android:layout_height="wrap_content"
+		android:layout_toRightOf="@id/comment_icon"
+		android:layout_toLeftOf="@id/comment_date"
+		android:textAppearance="@style/FormFieldLabelText"
+		android:paddingLeft="18dp"
+		android:lines="1"
+	 	android:scrollHorizontally="true"
+	 	android:ellipsize="end"
+	/>
+	<TextView
+		android:id="@+id/comment_date"
+		android:text="Jan 3, 2010"
+		android:layout_width="wrap_content"
+		android:layout_height="wrap_content"
+		android:layout_alignParentRight="true"
+		android:textAppearance="@style/FormFieldLabelText"
+		android:paddingRight="@dimen/list_cell_padding_right"
+		android:lines="1"
+	 	android:scrollHorizontally="true"
+	 	android:ellipsize="end"
+	/>
+	<TextView
+		android:id="@+id/comment_text"
+		android:text="Sample Comment!"
+		android:layout_width="fill_parent"
+		android:layout_height="wrap_content"
+		android:layout_alignLeft="@id/comment_author"
+		android:layout_below="@id/comment_author"
+		android:textAppearance="@style/FormFieldValueText"
+		android:paddingRight="@dimen/list_cell_padding_right"
+		android:paddingLeft="18dp"
+		android:lines="1"
+	 	android:scrollHorizontally="true"
+	 	android:ellipsize="end"
+	/>
+</RelativeLayout>

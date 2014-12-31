@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="fill_parent"
+    android:layout_height="wrap_content"
+    android:layout_marginRight="@dimen/test_drive_tour_topic_margin"
+    android:layout_marginTop="@dimen/test_drive_tour_topic_margin"
+    android:orientation="vertical" >
+
+    <ImageView
+        android:id="@+id/universal_tour_img"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerVertical="true"
+        android:layout_gravity="center"
+        android:src="@drawable/check_mark" />
+
+    <TextView
+        android:id="@+id/universal_tour_text"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:layout_centerVertical="true"
+        android:layout_marginLeft="@dimen/test_drive_tour_topic_img_text_margin_left"
+        android:layout_toRightOf="@+id/universal_tour_img"
+        android:text="Book your business trip on the go."
+        android:textAppearance="@style/TourSmallSecondaryText" />
+
+</RelativeLayout>

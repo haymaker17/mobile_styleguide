@@ -1,0 +1,83 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <!--
+        Localization parameter format
+        %%99!desc%%
+        
+        99 - an integer used as an index into the replacement strings in the code
+        desc - a simple description to aid whoever does localization; ignored in the code
+    -->
+
+
+    <!-- start of general strings -->
+    <string name="general_server_error">Server Error</string>
+    <string name="general_ok">OK</string>
+    <string name="general_cancel">Cancel</string>
+    <string name="general_search">Search</string>
+    <string name="general_no">No</string>
+    <string name="general_yes">Yes</string>
+    <string name="general_error">Error</string>
+    <string name="general_network_error">Network Error</string>
+    <string name="general_error_message">There was an error processing your request.  Please try again.</string>
+    <string name="general_approve">Approve</string>
+    <string name="general_reject">Reject</string>
+    <string name="general_loading">Loading&#8230;</string>
+    <string name="general_status">Status</string>
+    <string name="general_pending">Pending</string>
+    <string name="general_preparing">Preparing</string>
+    <string name="general_uploading">Uploading</string>
+    <string name="general_elapsed_min">%%0%%m</string>
+    <string name="general_elapsed_hour_min">%%0%%h %%1%%m</string>
+    <string name="general_elapsed_day_hour_min">%%0%%d %%1%%h %%2%%m</string>
+    <string name="general_elapsed_min_long">%%0%% mins</string>
+    <string name="general_elapsed_hour_min_long">%%0%% hrs, %%1%% mins</string>
+    <string name="general_elapsed_day_hour_min_long">%%0%% days, %%1%% hrs, %%2%% mins</string>
+    <string name="required">required</string>
+    <string name="general_enter_n_to_m_characters_hint">Enter %%0!min%% to %%1!max%% characters</string>
+    <string name="general_enter_n_to_m_digits_hint">Enter %%0!min%% to %%1!max%% digits</string>
+    <string name="general_enter_up_to_n_characters_hint">Enter up to %%0!max%% characters</string>
+    <string name="general_enter_up_to_n_digits_hint">Enter up to %%0!max%% digits</string>
+    <string name="general_enter_at_least_n_characters_hint">Enter at least %%0!min%% characters</string>
+    <string name="general_enter_at_least_n_digits_hint">Enter at least %%0!min%% digits</string>
+    <string name="general_requires_selection">Select a value</string>
+    <string name="general_field_value_too_large">Value \'%%0%%\' is too large.</string>
+    <string name="general_field_value_invalid">Value is invalid.</string>
+    <string name="okay">OK</string>
+    <string name="cancel">Cancel</string>
+    <string name="dlg_dependent_field_value_title">Dependent Field Value</string>
+    <string name="dlg_dependent_field_value_message">Please fill in parent field \'%%0%%\' first.</string>
+    <string name="swipe_for_more">Swipe for more</string>
+    
+    <!-- Network Connectivity stuff. -->
+    <string name="dlg_no_connectivity_title">Client Is Offline</string>
+    <string name="dlg_no_connectivity_message">This operation is not supported in offline mode.  Please try again when data connectivity is available.</string>
+    <string name="offline_header_text">Offline</string>
+        
+    <!-- Login UI Strings -->
+	<!-- Email Lookup -->
+    <string name="email_lookup_hint">Work email or Concur username</string>
+    <string name="email_lookup_continue">Continue</string>
+    <string name="email_lookup_unable_to_login_title">Unable to Sign In</string>
+    <string name="email_lookup_unable_to_login_msg">We are unable to sign you in with this information.</string>
+    <string name="email_lookup_wrong_email_format_title">Invalid Email or Username</string>
+    <string name="email_lookup_wrong_email_username_format_msg">Your entry does not appear to be a valid email or Concur username.</string>
+    
+    <!-- PIN/Password Login Strings -->
+    <string name="login_enter_password_pin">Mobile Password (PIN)</string>
+    <string name="login_button">Sign In to Concur</string>
+    <string name="login_no_offline">Offline sign in is not available.  A successful sign in must occur while online before offline mode can be used.</string>            
+    <string name="register_button">Need to set your PIN?</string>
+    <string name="login_help_with_signin">Forgot Mobile Password (PIN)?</string>
+    <string name="login_help_with_signin_password">Forgot Password?</string>
+	<string name="login_password">Password</string>    
+    <string name="login_password_or_pin_invalid">Try again to re-enter your password or select I Forgot to receive sign in instructions.</string>
+    <string name="login_invalid_concur_credentials">Incorrect Password</string>    
+    <string name="try_again">Try Again</string>
+    <string name="i_forgot">I Forgot</string>
+    <string name="dlg_logging_in">Signing in&#8230;</string>
+            
+	<!-- SSO Login -->
+	<string name="sso_sign_in">Company Code Sign In</string>
+	
+</resources>

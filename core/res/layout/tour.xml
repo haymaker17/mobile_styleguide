@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/main_layout"
+    android:layout_width="match_parent"
+    android:layout_height="fill_parent"
+    android:background="@color/PrimaryBackgroundColor"
+    android:orientation="vertical" >
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@drawable/gradient_splash_background"
+        android:orientation="vertical" >
+
+        <ViewFlipper
+            android:id="@+id/tourFlipper"
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight="1" >
+
+        </ViewFlipper>
+        
+        <LinearLayout
+            android:id="@+id/tourPageMarkers"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:minHeight="48dp"
+            android:paddingBottom="8dp" >
+
+            <View android:id="@+id/touPage1Marker" 
+                android:layout_width="@dimen/tour_flipper_square_size"
+                android:layout_height="@dimen/tour_flipper_square_size"
+                android:layout_marginRight="@dimen/tour_flipper_square_margin"
+                android:background="#ffffff"/>
+            
+            <View android:id="@+id/touPage2Marker"
+                android:layout_width="@dimen/tour_flipper_square_size"
+                android:layout_height="@dimen/tour_flipper_square_size"
+                android:layout_marginRight="@dimen/tour_flipper_square_margin"
+                android:background="#66ffffff" />
+            
+            <View android:id="@+id/touPage3Marker"
+                android:layout_width="@dimen/tour_flipper_square_size"
+                android:layout_height="@dimen/tour_flipper_square_size"
+                android:background="#66ffffff" />
+        </LinearLayout>
+    </LinearLayout>
+
+</LinearLayout>

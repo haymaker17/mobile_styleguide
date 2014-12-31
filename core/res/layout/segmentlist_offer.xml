@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="fill_parent"
+    android:layout_height="wrap_content"
+    android:background="@drawable/list_selector_gradient_background"
+    android:orientation="horizontal"
+    android:paddingBottom="4dp"
+    android:paddingLeft="8dp"
+    android:paddingRight="8dp"
+    android:paddingTop="4dp">
+
+    <com.concur.mobile.core.view.AsyncImageView 
+        android:id="@+id/segmentListSegmentIconView"
+        android:layout_width="26dp"
+        android:layout_height="26dp"
+        android:layout_marginRight="16dp"
+        android:layout_gravity="center_vertical"/>
+
+    <TextView
+        android:id="@+id/segmentListOfferTitle"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:ellipsize="end"
+        android:gravity="center_vertical"
+        android:text="Offer title text"
+        android:textAppearance="@style/TinyPrimaryText" android:textSize="11sp" android:layout_gravity="center_vertical">
+    </TextView>
+
+</LinearLayout>

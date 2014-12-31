@@ -1,0 +1,136 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+  xmlns:android="http://schemas.android.com/apk/res/android"
+ android:layout_width="fill_parent"
+  android:layout_height="fill_parent"
+  android:orientation="vertical"
+  style="@style/ConcurTheme"
+>
+	<!--  Include the standard header bits -->
+	<include layout="@layout/standard_header"/>
+	
+    <!--  Include the expense title header -->
+	<include android:id="@+id/expense_entry_title_header" layout="@layout/expense_entry_title_header"/>
+	<!--  Include the group separator -->
+	<include layout="@layout/group_separator"/>
+    
+    <ScrollView
+        android:id="@+id/scroll_view"
+        android:layout_height="fill_parent"
+        android:layout_width="fill_parent"
+        android:layout_weight="1"
+        android:background="@drawable/gradient_background"
+    >
+        <LinearLayout
+            android:id="@+id/linear_layout"
+            android:layout_height="fill_parent"
+            android:layout_width="fill_parent"
+            android:orientation="vertical"
+        >
+        	<!-- Number of Nights -->
+        	<LinearLayout
+				android:layout_width="fill_parent"
+				android:layout_height="fill_parent"
+				android:orientation="vertical"
+				android:layout_marginTop="@dimen/list_group_vertical_margin"
+				android:layout_marginLeft="@dimen/list_item_horizontal_margin"
+	  			android:layout_marginRight="@dimen/list_item_horizontal_margin"
+			>
+				<TextView
+					android:text="@string/hotel_wizard_section_dates"
+	  				android:textAppearance="@style/GroupSectionHeaderText"
+	  				android:paddingLeft="@dimen/list_cell_padding"
+	  				android:paddingBottom="@dimen/list_cell_padding"
+	  				android:layout_width="fill_parent"
+	  				android:layout_height="wrap_content"
+	  			/>
+  				<LinearLayout
+					android:id="@+id/hotel_wizard_night_details"
+	  				android:layout_height="wrap_content"
+	  				android:layout_width="fill_parent"
+	  				android:orientation="vertical"
+	  				android:background="@drawable/square_border"
+	  				android:padding="1dp"
+	  			/>
+            	<View
+	  				android:layout_width="fill_parent"
+	  				android:background="@drawable/square_border_shadow"
+	  				android:layout_height="3dp"
+	  				android:layout_marginLeft="1dp"
+	  				android:layout_marginRight="1dp"
+	  			/>
+	  		</LinearLayout>
+	  		<!-- Room Charges -->
+	  		<LinearLayout
+				android:layout_width="fill_parent"
+				android:layout_height="fill_parent"
+				android:orientation="vertical"
+				android:layout_marginTop="@dimen/list_group_vertical_margin"
+				android:layout_marginLeft="@dimen/list_item_horizontal_margin"
+	  			android:layout_marginRight="@dimen/list_item_horizontal_margin"
+			>
+				<TextView
+					android:text="@string/hotel_wizard_section_room_charges"
+	  				android:textAppearance="@style/GroupSectionHeaderText"
+	  				android:paddingLeft="@dimen/list_cell_padding"
+	  				android:paddingBottom="@dimen/list_cell_padding"
+	  				android:layout_width="fill_parent"
+	  				android:layout_height="wrap_content"
+	  			/>
+            	<LinearLayout
+                	android:id="@+id/hotel_wizard_room_charges"
+                	android:layout_height="wrap_content"
+                	android:layout_width="fill_parent"
+                	android:orientation="vertical"
+                	android:background="@drawable/square_border"
+	  				android:padding="1dp"
+            	/>
+            	<View
+	  				android:layout_width="fill_parent"
+	  				android:background="@drawable/square_border_shadow"
+	  				android:layout_height="3dp"
+	  				android:layout_marginLeft="1dp"
+	  				android:layout_marginRight="1dp"
+	  			/>
+	  		</LinearLayout>
+			<!--  Other Charges -->
+			<LinearLayout
+				android:layout_width="fill_parent"
+				android:layout_height="fill_parent"
+				android:orientation="vertical"
+				android:layout_marginTop="@dimen/list_group_vertical_margin"
+				android:layout_marginLeft="@dimen/list_item_horizontal_margin"
+	  			android:layout_marginRight="@dimen/list_item_horizontal_margin"
+	  			android:layout_marginBottom="@dimen/list_group_vertical_margin"
+			>
+				<TextView
+					android:text="@string/hotel_wizard_section_room_charges"
+	  				android:textAppearance="@style/GroupSectionHeaderText"
+	  				android:paddingLeft="@dimen/list_cell_padding"
+	  				android:paddingBottom="@dimen/list_cell_padding"
+	  				android:layout_width="fill_parent"
+	  				android:layout_height="wrap_content"
+	  			/>
+            	<LinearLayout
+                	android:id="@+id/hotel_wizard_other_charges"
+                	android:layout_height="wrap_content"
+                	android:layout_width="fill_parent"
+                	android:orientation="vertical"
+                	android:background="@drawable/square_border"
+	  				android:padding="1dp"
+           		 />
+				<View
+	  				android:layout_width="fill_parent"
+	  				android:background="@drawable/square_border_shadow"
+	  				android:layout_height="3dp"
+	  				android:layout_marginLeft="1dp"
+	  				android:layout_marginRight="1dp"
+	  			/>
+	  		</LinearLayout>
+        </LinearLayout>
+    </ScrollView>
+    
+    <!--  Include the expense footer navigation bar. -->
+    <include android:id="@+id/expense_nav_bar_footer" layout="@layout/expense_footer_navigation_bar"/>
+    
+</LinearLayout>

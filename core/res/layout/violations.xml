@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- This view group is for violation reason/justification -->
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/violation_reason_justification"
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent"
+    android:layout_marginLeft="@dimen/list_item_horizontal_margin"
+    android:layout_marginRight="@dimen/list_item_horizontal_margin"
+    android:layout_marginTop="@dimen/list_item_vertical_margin"
+    android:orientation="vertical" >
+
+    <LinearLayout
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:background="@drawable/square_border"
+        android:orientation="vertical"
+        android:padding="1dp" >
+
+        <LinearLayout
+            android:id="@+id/reason_justification"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical" >
+
+            <include
+                android:id="@+id/violation_reason"
+                layout="@layout/icon_image_form_field" />
+
+            <include layout="@layout/group_separator" />
+
+            <include
+                android:id="@+id/violation_justification"
+                layout="@layout/icon_image_form_field" />
+
+            <include layout="@layout/group_separator" />
+        </LinearLayout>
+        <!-- This layout object is dynamically populated with violation messages. -->
+
+        <LinearLayout
+            android:id="@+id/violation"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical" />
+
+        <include
+            android:id="@+id/manage_violations_group_sep"
+            layout="@layout/group_separator"
+            android:visibility="gone" />
+
+        <include
+            android:id="@+id/manage_violations"
+            layout="@layout/image_field_right_arrow"
+            android:visibility="gone" />
+    </LinearLayout>
+
+    <View
+        android:layout_width="fill_parent"
+        android:layout_height="3dp"
+        android:layout_marginLeft="1dp"
+        android:layout_marginRight="1dp"
+        android:background="@drawable/square_border_shadow" />
+
+</LinearLayout>

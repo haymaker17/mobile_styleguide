@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android" 
+    xmlns:yourapp="http://schemas.android.com/apk/res-auto" >
+
+    <item
+        android:id="@+id/menuSave"
+        android:icon="@drawable/icon_savebutton"
+        yourapp:showAsAction="ifRoom"
+        android:title="@string/save"/>
+    <item
+        android:id="@+id/capture_receipt_picture"
+        android:icon="@android:drawable/ic_menu_camera"
+        android:title="@string/capture_receipt"/>
+    <item
+        android:id="@+id/select_picture"
+        android:icon="@android:drawable/ic_menu_gallery"
+        android:title="@string/select_receipt">
+        <menu>
+            <item
+                android:id="@+id/select_receipt_cloud_picture"
+                android:icon="@android:drawable/ic_menu_gallery"
+                android:title="@string/select_from_cloud"/>
+            <item
+                android:id="@+id/select_receipt_picture"
+                android:icon="@android:drawable/ic_menu_gallery"
+                android:title="@string/select_from_device"/>
+        </menu>
+    </item>
+
+</menu>

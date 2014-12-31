@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+	<string-array name="voiceLanguageNames">
+	    <item>English (US)</item>
+	    <item>English (UK)</item>
+	    <item>Español</item>
+<!-- 	    <item>Deutsch</item> -->
+<!-- 	    <item>Français (France)</item> -->
+<!-- 	    <item>Français (Canada)</item> -->
+<!-- 	    <item>Italiano</item> -->
+<!-- 	    <item>日本人</item> -->
+<!--        <item>中国的 (Simplified)</item> -->
+<!-- 	    <item>中國的 (Traditional)</item> -->
+	</string-array>
+	<string-array name="voiceLanguageValues">
+	    <item>en_US</item>
+	    <item>en_GB</item>	    
+	    <item>es_ES</item>
+<!-- 	    <item>de_DE</item> -->
+<!-- 	    <item>fr_FR</item> -->
+<!-- 	    <item>fr_CA</item> -->
+<!-- 		<item>it_IT</item> -->
+<!-- 	    <item>ja_JP</item> -->
+<!--  	    <item>zh_CN</item> -->
+<!-- 	    <item>zh_TW</item> -->
+	</string-array>
+</resources>

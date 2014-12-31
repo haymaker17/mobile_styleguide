@@ -1,0 +1,227 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--  Top level layout file for ExpenseHeader activity. -->
+<LinearLayout
+  xmlns:android="http://schemas.android.com/apk/res/android"
+  android:layout_width="fill_parent"
+  android:layout_height="fill_parent"
+  android:orientation="vertical"
+  style="@style/ConcurTheme"
+>
+	<!--  Include the standard header bits -->
+	<include layout="@layout/standard_header"/>
+	
+	<!--  Include the expense title header -->
+	<include android:id="@+id/title_header" layout="@layout/expense_report_title_header"/>
+	<!--  Include the group separator -->
+	<include android:id="@+id/header_separator" layout="@layout/group_separator"/>
+ 
+	<ScrollView
+		android:id="@+id/scroll_view"
+		android:layout_height="fill_parent"
+		android:layout_width="fill_parent"
+		android:layout_weight="1"
+		android:background="@drawable/gradient_background"
+	>
+  		<LinearLayout
+  			android:id="@+id/linear_layout"
+  			android:layout_height="fill_parent"
+  			android:layout_width="fill_parent"
+  			android:orientation="vertical"
+  		>
+  			<LinearLayout
+  				android:id="@+id/header_exception_group"
+				android:layout_width="fill_parent"
+				android:layout_height="fill_parent"
+				android:orientation="vertical"
+				android:layout_marginTop="@dimen/list_group_vertical_margin"
+				android:layout_marginLeft="@dimen/list_item_horizontal_margin"
+	  			android:layout_marginRight="@dimen/list_item_horizontal_margin"
+			>
+				<LinearLayout
+					android:id="@+id/header_exception_list"
+	  				android:layout_height="wrap_content"
+	  				android:layout_width="fill_parent"
+	  				android:orientation="vertical"
+	  				android:background="@drawable/square_border"
+	  				android:padding="1dp"
+	  			>
+  					<!-- This LinearLayout view is populated programmatically. -->
+  					<LinearLayout
+						android:id="@+id/report_summary_exception_list"
+	  					android:layout_height="wrap_content"
+	  					android:layout_width="fill_parent"
+	  					android:orientation="vertical"
+	  				>
+	  				</LinearLayout>
+	  			</LinearLayout>
+	  			<View
+	  				android:layout_width="fill_parent"
+	  				android:background="@drawable/square_border_shadow"
+	  				android:layout_height="3dp"
+	  				android:layout_marginLeft="1dp"
+	  				android:layout_marginRight="1dp"
+	  			/>
+	  		</LinearLayout>
+	  		<!-- This LinearLayout view is populated programmatically. -->
+	  		<LinearLayout
+  				android:id="@+id/header_comment_group"
+				android:layout_width="fill_parent"
+				android:layout_height="fill_parent"
+				android:orientation="vertical"
+				android:layout_marginTop="@dimen/list_group_vertical_margin"
+				android:layout_marginLeft="@dimen/list_item_horizontal_margin"
+	  			android:layout_marginRight="@dimen/list_item_horizontal_margin"
+			>
+				<LinearLayout
+					android:id="@+id/header_comment_list"
+	  				android:layout_height="wrap_content"
+	  				android:layout_width="fill_parent"
+	  				android:orientation="vertical"
+	  				android:background="@drawable/square_border"
+	  				android:padding="1dp"
+	  			>
+	  				<LinearLayout
+						android:id="@+id/report_summary_comment_list"
+	  					android:layout_height="wrap_content"
+	  					android:layout_width="fill_parent"
+	  					android:orientation="vertical"
+	  				>
+	  				</LinearLayout>
+	  			</LinearLayout>
+	  			<View
+	  				android:layout_width="fill_parent"
+	  				android:background="@drawable/square_border_shadow"
+	  				android:layout_height="3dp"
+	  				android:layout_marginLeft="1dp"
+	  				android:layout_marginRight="1dp"
+	  			/>
+	  		</LinearLayout>
+	  		<LinearLayout
+  				android:id="@+id/header_summary_group"
+				android:layout_width="fill_parent"
+				android:layout_height="fill_parent"
+				android:orientation="vertical"
+				android:layout_marginTop="@dimen/list_group_vertical_margin"
+				android:layout_marginLeft="@dimen/list_item_horizontal_margin"
+	  			android:layout_marginRight="@dimen/list_item_horizontal_margin"
+			>
+				<LinearLayout
+					android:id="@+id/header_summary_list"
+	  				android:layout_height="wrap_content"
+	  				android:layout_width="fill_parent"
+	  				android:orientation="vertical"
+	  				android:background="@drawable/square_border"
+	  				android:padding="1dp"
+	  			>
+  					<!-- This LinearLayout view is populated programmatically. -->
+  					<LinearLayout
+						android:id="@+id/report_summary_header_list"
+	  					android:layout_height="wrap_content"
+	  					android:layout_width="fill_parent"
+	  					android:orientation="vertical"
+	  				>
+	  			  	</LinearLayout>
+	  			 </LinearLayout>
+	  			<View
+	  				android:layout_width="fill_parent"
+	  				android:background="@drawable/square_border_shadow"
+	  				android:layout_height="3dp"
+	  				android:layout_marginLeft="1dp"
+	  				android:layout_marginRight="1dp"
+	  			/>
+	  		</LinearLayout>
+	  		<LinearLayout
+  				android:id="@+id/company_disbursement_group"
+				android:layout_width="fill_parent"
+				android:layout_height="fill_parent"
+				android:orientation="vertical"
+				android:layout_marginTop="@dimen/list_group_vertical_margin"
+				android:layout_marginLeft="@dimen/list_item_horizontal_margin"
+	  			android:layout_marginRight="@dimen/list_item_horizontal_margin"
+			>
+				<TextView
+	  				android:text="@string/company_disbursement"
+	  				android:textAppearance="@style/GroupSectionHeaderText"
+	  				android:paddingLeft="@dimen/list_cell_padding"
+	  				android:paddingBottom="@dimen/list_cell_padding"
+	  				android:layout_width="fill_parent"
+	  				android:layout_height="wrap_content"
+	  			/>
+				<LinearLayout
+					android:id="@+id/header_company_disbursement_list"
+	  				android:layout_height="wrap_content"
+	  				android:layout_width="fill_parent"
+	  				android:orientation="vertical"
+	  				android:background="@drawable/square_border"
+	  				android:padding="1dp"
+	  			>
+	  				<!-- This LinearLayout view is populated programmatically. -->
+					<LinearLayout
+						android:id="@+id/report_summary_company_disbursement_list"
+	  					android:layout_height="wrap_content"
+	  					android:layout_width="fill_parent"
+	  					android:orientation="vertical"
+	  				>
+	  					<include android:id="@+id/report_amount_due_employee" layout="@layout/static_text_form_field"/>
+	  					<include layout="@layout/group_separator"/>
+	  					<include android:id="@+id/report_company_paid_to_credit_card" layout="@layout/static_text_form_field"/>
+	  					<include android:id="@+id/report_company_paid_to_credit_card_separator" layout="@layout/group_separator"/>
+	  					<include android:id="@+id/report_total_paid_by_company" layout="@layout/static_text_form_field"/>
+	  				</LinearLayout>
+	  			</LinearLayout>
+	  			<View
+	  				android:layout_width="fill_parent"
+	  				android:background="@drawable/square_border_shadow"
+	  				android:layout_height="3dp"
+	  				android:layout_marginLeft="1dp"
+	  				android:layout_marginRight="1dp"
+	  			/>
+	  		</LinearLayout>
+	  		<LinearLayout
+  				android:id="@+id/employee_disbursement_group"
+				android:layout_width="fill_parent"
+				android:layout_height="fill_parent"
+				android:orientation="vertical"
+				android:layout_marginTop="@dimen/list_group_vertical_margin"
+				android:layout_marginLeft="@dimen/list_item_horizontal_margin"
+	  			android:layout_marginRight="@dimen/list_item_horizontal_margin"
+	  			android:layout_marginBottom="@dimen/list_group_vertical_margin"
+			>
+				<TextView
+	  				android:text="@string/employee_disbursements"
+	  				android:textAppearance="@style/GroupSectionHeaderText"
+	  				android:paddingLeft="@dimen/list_cell_padding"
+	  				android:paddingBottom="@dimen/list_cell_padding"
+	  				android:layout_width="fill_parent"
+	  				android:layout_height="wrap_content"
+	  			/>
+				<LinearLayout
+					android:id="@+id/header_employee_disbursement_list"
+	  				android:layout_height="wrap_content"
+	  				android:layout_width="fill_parent"
+	  				android:orientation="vertical"
+	  				android:background="@drawable/square_border"
+	  				android:padding="1dp"
+	  			>
+	  				<!-- This LinearLayout view is populated programmatically. -->
+	  				<LinearLayout
+						android:id="@+id/report_summary_employee_disbursement_list"
+	  					android:layout_height="wrap_content"
+	  					android:layout_width="fill_parent"
+	  					android:orientation="vertical"
+	  				>
+	  				</LinearLayout>
+	  			</LinearLayout>
+	  			<View
+	  				android:layout_width="fill_parent"
+	  				android:background="@drawable/square_border_shadow"
+	  				android:layout_height="3dp"
+	  				android:layout_marginLeft="1dp"
+	  				android:layout_marginRight="1dp"
+	  			/>
+	  		</LinearLayout>
+  		</LinearLayout>
+  		</ScrollView>
+  	<!--  Include the expense footer navigation bar. -->
+  	<include android:id="@+id/expense_nav_bar_footer" layout="@layout/expense_footer_navigation_bar"/>
+</LinearLayout>

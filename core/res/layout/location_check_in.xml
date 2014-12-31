@@ -1,0 +1,94 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+	android:layout_width="fill_parent" android:layout_height="fill_parent"
+	android:orientation="vertical" style="@style/ConcurTheme" 
+	android:background="@drawable/gradient_background">
+
+	<!--  Include the standard header bits -->
+	<include layout="@layout/standard_header"/>
+	
+    <ScrollView android:layout_width="fill_parent" android:layout_height="0dp" 
+        android:layout_weight="1">
+	    <LinearLayout android:layout_width="fill_parent" android:layout_height="fill_parent" 
+	        android:orientation="vertical">
+	        
+			<TextView
+				android:layout_height="fill_parent"
+				android:layout_width="wrap_content"
+				android:layout_gravity="center_horizontal"
+				android:gravity="center"
+				android:paddingTop="5dp"				
+	        	android:text="@string/location_check_in_hint"
+			/>
+			
+			<!-- Current location -->
+			<LinearLayout
+				android:layout_width="fill_parent" android:orientation="vertical" android:layout_marginTop="@dimen/list_group_vertical_margin"
+				android:layout_marginLeft="@dimen/list_item_horizontal_margin"
+				android:layout_marginRight="@dimen/list_item_horizontal_margin"
+				android:layout_height="wrap_content">
+				<LinearLayout android:layout_height="wrap_content"
+					android:layout_width="fill_parent" android:orientation="vertical"
+					android:background="@drawable/square_border" android:padding="1dp">
+					<include layout="@layout/image_form_field" android:id="@+id/location_check_in_current_loc"/>
+				</LinearLayout>
+				<View android:layout_width="fill_parent" android:background="@drawable/square_border_shadow"
+					android:layout_height="3dp" android:layout_marginLeft="1dp"
+					android:layout_marginRight="1dp" />
+			</LinearLayout>
+			
+			<!-- Days remaining -->
+			<LinearLayout
+				android:layout_width="fill_parent" android:orientation="vertical" android:layout_marginTop="@dimen/list_group_vertical_margin"
+				android:layout_marginLeft="@dimen/list_item_horizontal_margin"
+				android:layout_marginRight="@dimen/list_item_horizontal_margin"
+				android:layout_height="wrap_content">
+				<LinearLayout android:layout_height="wrap_content"
+					android:layout_width="fill_parent" android:orientation="vertical"
+					android:background="@drawable/square_border" android:padding="1dp">
+					<include android:id="@+id/location_check_in_days_remaining" layout="@layout/image_form_field"/>
+				</LinearLayout>
+				<View android:layout_width="fill_parent" android:background="@drawable/square_border_shadow"
+					android:layout_height="3dp" android:layout_marginLeft="1dp"
+					android:layout_marginRight="1dp" />
+			</LinearLayout>
+			
+			<!-- Immediate Assistance -->
+			<LinearLayout
+				android:layout_width="fill_parent" android:orientation="vertical" android:layout_marginTop="@dimen/list_group_vertical_margin"
+				android:layout_marginLeft="@dimen/list_item_horizontal_margin"
+				android:layout_marginRight="@dimen/list_item_horizontal_margin"
+				android:layout_height="wrap_content">
+				<LinearLayout android:layout_height="wrap_content"
+					android:layout_width="fill_parent" android:orientation="vertical"
+					android:background="@drawable/square_border" android:padding="1dp">
+					<include layout="@layout/checkbox_form_field" android:id="@+id/location_check_in_assistance_required"/>
+				</LinearLayout>
+				<View android:layout_width="fill_parent" android:background="@drawable/square_border_shadow"
+					android:layout_height="3dp" android:layout_marginLeft="1dp"
+					android:layout_marginRight="1dp" />
+			</LinearLayout>
+			
+			<!-- Comment -->
+			<LinearLayout
+				android:layout_width="fill_parent" android:orientation="vertical" android:layout_marginTop="@dimen/list_group_vertical_margin"
+				android:layout_marginLeft="@dimen/list_item_horizontal_margin"
+				android:layout_marginRight="@dimen/list_item_horizontal_margin"
+				android:layout_height="wrap_content">
+				<LinearLayout android:layout_height="wrap_content"
+					android:layout_width="fill_parent" android:orientation="vertical"
+					android:background="@drawable/square_border" android:padding="1dp">
+	  				<include layout="@layout/image_form_field" android:id="@+id/location_check_in_comment"/>
+				</LinearLayout>
+				<View android:layout_width="fill_parent" android:background="@drawable/square_border_shadow"
+					android:layout_height="3dp" android:layout_marginLeft="1dp"
+					android:layout_marginRight="1dp" />
+			</LinearLayout>									
+			
+		    
+	    </LinearLayout>
+    </ScrollView>
+    
+ 	<include layout="@layout/footer_navigation_bar_one_button" android:id="@+id/footer"/>
+</LinearLayout>
+

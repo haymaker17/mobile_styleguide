@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="fill_parent"
+    android:layout_height="wrap_content"
+    android:background="@color/White"
+    android:clickable="true"
+    android:focusable="true"
+    android:orientation="vertical"
+    android:paddingBottom="@dimen/form_cell_padding_bottom"
+    android:paddingLeft="@dimen/form_cell_padding_left"
+    android:paddingRight="@dimen/form_cell_padding_left"
+    android:paddingTop="@dimen/form_cell_padding_top" >
+
+    <TextView
+        android:id="@+id/field_name"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:text="TextView"
+        android:textColor="@color/expenseFieldLabelText"
+        android:textSize="10sp" />
+
+    <EditText
+        android:id="@+id/field_value"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:fontFamily="sans-serif-light"
+        android:text="TextView"
+        android:textColor="@color/expenseFieldValueText" />
+
+    <LinearLayout
+        android:id="@+id/field_note_frame"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:visibility="gone" >
+
+        <ImageView
+            android:id="@+id/alert"
+            android:layout_width="14dp"
+            android:layout_height="14dp"
+            android:layout_marginRight="10dp"
+            android:background="@color/transparent"
+            android:scaleType="fitXY"
+            android:src="@drawable/alert_24" />
+
+        <TextView
+            android:id="@+id/field_note"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:text="TextView"
+            android:textSize="10sp" />
+    </LinearLayout>
+
+    <TextView
+        android:id="@+id/field_hint"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:paddingBottom="@dimen/hint_text_view_padding_bottom"
+        android:paddingTop="@dimen/hint_text_view_padding_top"
+        android:textColor="@color/FareGray"
+        android:textSize="16sp"
+        android:visibility="gone" />
+
+</LinearLayout>

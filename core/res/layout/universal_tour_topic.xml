@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="fill_parent"
+    android:layout_height="wrap_content"
+    android:layout_marginBottom="@dimen/universal_layout_margin_bottom"
+    android:layout_marginLeft="@dimen/list_item_horizontal_margin"
+    android:layout_marginRight="@dimen/list_item_horizontal_margin"
+    android:layout_marginTop="@dimen/universal_layout_margin_top"
+    android:orientation="vertical" >
+
+    <TableLayout
+        android:id="@+id/table_universal_tour_image_text"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentTop="true"
+        android:layout_alignWithParentIfMissing="true"
+        android:orientation="horizontal"
+        android:shrinkColumns="1"
+        android:stretchColumns="1" >
+
+        <TableRow android:id="@+id/tablerow_img_txt" >
+
+            <ImageView
+                android:id="@+id/universal_tour_img"
+                android:layout_gravity="left|top"
+                android:src="@drawable/launch" />
+
+            <TextView
+                android:id="@+id/universal_tour_text"
+                android:layout_gravity="center"
+                android:layout_marginLeft="@dimen/list_cell_padding_left"
+                android:ellipsize="end"
+                android:lines="2"
+                android:text="Book your business trip on the go."
+                android:textAppearance="@style/TourSmallSecondaryText" />
+        </TableRow>
+    </TableLayout>
+
+</RelativeLayout>

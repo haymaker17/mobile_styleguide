@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu
+  xmlns:android="http://schemas.android.com/apk/res/android"
+  xmlns:yourapp="http://schemas.android.com/apk/res-auto" >
+  <item
+  	android:id="@+id/capture_receipt_picture"
+    android:title="@string/receipt_store_import_from_camera"
+    android:icon="@android:drawable/ic_menu_camera"
+  />
+  <item
+  	android:id="@+id/select_receipt_picture"
+    android:title="@string/receipt_store_import_from_gallery"
+    android:icon="@android:drawable/ic_menu_gallery"
+  />
+</menu>
+

@@ -1,0 +1,72 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+	android:layout_width="fill_parent" android:layout_height="wrap_content"
+	android:paddingLeft="@dimen/list_cell_padding_left"
+	android:paddingTop="@dimen/list_cell_padding_top"
+	android:paddingBottom="@dimen/list_cell_padding_bottom"
+	android:background="@drawable/list_selector_gradient_background">
+				
+		<TextView android:id="@+id/railDetailHeaderEquipmentLabel"
+			android:layout_width="wrap_content" android:layout_height="wrap_content"
+			android:textStyle="bold" android:textAppearance="@style/BigPrimaryText"
+			android:text="@string/rail_general_train" />
+		<TextView android:id="@+id/railDetailHeaderTrain"
+			android:layout_width="wrap_content" android:layout_height="wrap_content"
+			android:layout_marginLeft="2dp" android:layout_toRightOf="@+id/railDetailHeaderEquipmentLabel"
+			android:layout_alignBaseline="@+id/railDetailHeaderEquipmentLabel"
+			android:textStyle="bold" 
+			android:textAppearance="@style/BigPrimaryText" android:text="000" />
+		<TextView android:layout_width="wrap_content"
+			android:layout_height="wrap_content" android:id="@+id/railDetailHeaderDate"
+			android:layout_below="@+id/railDetailHeaderEquipmentLabel"
+			android:textAppearance="@style/PrimaryText"
+			android:layout_marginRight="3dp"
+			android:text="11/27" />			
+		<TextView android:layout_width="wrap_content"
+			android:layout_height="wrap_content" android:id="@+id/railDetailHeaderDepStation"
+			android:layout_below="@+id/railDetailHeaderEquipmentLabel"
+			android:textAppearance="@style/PrimaryText"
+			android:layout_marginRight="3dp"
+			android:layout_toRightOf="@+id/railDetailHeaderDate"
+			android:text="CTY" />
+		<TextView android:layout_width="wrap_content"
+			android:layout_height="wrap_content"
+			android:layout_toRightOf="@+id/railDetailHeaderDepStation"
+			android:id="@+id/railDetailHeaderDepTime"
+			android:layout_alignBaseline="@+id/railDetailHeaderDepStation"
+			android:layout_below="@+id/railDetailHeaderTrain"
+			android:textAppearance="@style/PrimaryText" android:text="00:00 AM" />
+		<TextView android:id="@+id/railDetailHeaderArrow"
+			android:layout_width="wrap_content" android:layout_height="wrap_content"
+			android:textAppearance="@style/PrimaryText" android:layout_toRightOf="@+id/railDetailHeaderDepTime"
+			android:layout_below="@id/railDetailHeaderTrain" android:text="-"
+			android:layout_alignBaseline="@+id/railDetailHeaderDepTime"
+			android:layout_marginLeft="8dp" android:layout_marginRight="8dp" />
+		<TextView android:layout_width="wrap_content"
+			android:layout_height="wrap_content" android:layout_toRightOf="@id/railDetailHeaderArrow"
+			android:layout_below="@id/railDetailHeaderTrain"
+			android:layout_alignBaseline="@id/railDetailHeaderDepTime"
+			android:textAppearance="@style/PrimaryText" android:id="@+id/railDetailHeaderArrStation"
+			android:layout_marginRight="3dp" android:text="CTY" />
+		<TextView android:layout_width="wrap_content"
+			android:layout_height="wrap_content" android:id="@+id/railDetailHeaderArrTime"
+			android:layout_below="@id/railDetailHeaderTrain"
+			android:layout_alignBaseline="@id/railDetailHeaderDepTime"
+			android:layout_toRightOf="@id/railDetailHeaderArrStation"
+			android:textAppearance="@style/PrimaryText"
+			android:text="00:00 PM"></TextView>
+		<TextView android:id="@+id/railDetailHeaderTotalTime"
+			android:layout_width="wrap_content" android:layout_height="wrap_content"
+			android:layout_toRightOf="@id/railDetailHeaderTrain"
+			android:layout_alignBaseline="@id/railDetailHeaderTrain"
+			android:textAppearance="@style/PrimaryText"
+			android:layout_marginLeft="4dp" android:text="(0h 00m)" />
+		<TextView android:layout_width="wrap_content"
+				android:layout_height="wrap_content"
+				android:layout_below="@+id/railDetailHeaderDepStation"
+				android:textAppearance="@style/PrimaryText"
+				android:id="@+id/railDetailHeaderClass"
+				android:layout_marginRight="3dp"
+				android:text="CLASS" />	
+				
+</RelativeLayout> 

@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+	This layout file provides a two-element editable text form field.
+-->
+<LinearLayout
+  xmlns:android="http://schemas.android.com/apk/res/android"
+  android:orientation="vertical"
+  android:layout_width="fill_parent"
+  android:layout_height="wrap_content"
+  android:paddingTop="@dimen/form_cell_padding_top"
+  android:paddingBottom="@dimen/form_cell_padding_bottom"
+  android:background="@drawable/gradient_background"
+>
+	<TextView
+		android:id="@+id/field_name"
+		android:layout_height="wrap_content"
+		android:layout_width="fill_parent"
+		android:text="Field Name"
+	    android:layout_marginLeft="6dp"
+	    android:layout_marginRight="6dp"
+	    android:textAppearance="@style/FormFieldLabelText"
+	/>
+	<EditText
+		android:id="@+id/field_value"
+		android:layout_height="wrap_content"
+		android:layout_width="fill_parent"
+		android:text="Field Value"
+	    android:layout_marginLeft="6dp"
+	    android:layout_marginRight="6dp"
+	    android:textAppearance="@style/FormFieldValueText"
+	    android:minLines="1"
+	    android:maxLines="1"
+	    android:singleLine="true"
+	/>
+	<TextView
+		android:id="@+id/field_note"
+		android:layout_height="wrap_content"
+		android:layout_width="fill_parent"
+		android:text="Field Note"
+		android:layout_marginLeft="6dp"
+		android:layout_marginRight="6dp"
+		android:textAppearance="@style/FormFieldNoteText"
+		android:visibility="gone"
+	/>
+</LinearLayout>

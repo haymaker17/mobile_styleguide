@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8"?>
+<TableRow
+  xmlns:android="http://schemas.android.com/apk/res/android"
+  android:layout_width="wrap_content"
+  android:layout_height="wrap_content"
+>
+	<TextView
+		android:id="@+id/receipt_row_expense_type"
+		android:textAppearance="@style/CustomDialogColumnValueText"
+	/>
+	<TextView
+		android:id="@+id/receipt_row_expense_date"
+		android:textAppearance="@style/CustomDialogColumnValueText"
+	/>
+	<TextView
+		android:id="@+id/receipt_row_expense_amount"
+		android:textAppearance="@style/CustomDialogColumnValueText"
+	/>
+</TableRow>

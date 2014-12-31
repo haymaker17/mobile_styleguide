@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="fill_parent"
+    android:layout_height="wrap_content"
+    android:background="@drawable/list_selector_gradient_background"
+    android:paddingBottom="@dimen/list_cell_padding_bottom"
+    android:paddingLeft="@dimen/list_cell_padding_left"
+    android:paddingRight="@dimen/list_cell_padding_right"
+    android:paddingTop="@dimen/list_cell_padding_top" >
+
+    <TextView
+        android:id="@+id/tripListTripName"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:ellipsize="end"
+        android:lines="1"
+        android:scrollHorizontally="true"
+        android:text="DummyTextTripName"
+        android:textAppearance="@style/ListCellHeaderText" />
+
+    <TextView
+        android:id="@+id/tripListTripSpan"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignLeft="@+id/tripListTripName"
+        android:layout_below="@+id/tripListTripName"
+        android:text="Dum Feb 99 - Dum Mar 99"
+        android:textAppearance="@style/ListCellSubHeaderText" />
+
+    <TextView
+        android:id="@+id/tripListTripState"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignLeft="@+id/tripListTripSpan"
+        android:layout_below="@+id/tripListTripSpan"
+        android:text="@string/trip_state_awaiting_approval"
+        android:textAppearance="@style/ListCellSubHeaderTextNormal" android:visibility="gone"/>
+    
+    <TextView
+        android:id="@+id/tripListTripStateMessage"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignLeft="@+id/tripListTripSpan"
+        android:layout_below="@+id/tripListTripSpan"
+        android:textAppearance="@style/ListCellSubHeaderTextNormal" android:visibility="gone"/>
+
+</RelativeLayout>

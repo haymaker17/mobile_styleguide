@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<!-- Use your own values here: -->
+
+<resources xmlns:tools="http://schemas.android.com/tools" tools:ignore="TypographyDashes">
+    <string name="EVA_API_KEY">0585a2f5-9d6c-41a4-981a-842fc791b5dc</string>
+    <string name="EVA_SITE_CODE">concur_m</string>
+    <string name="EVA_WS_URL">http://vproxy.evaws.com/v1.0</string>
+    <string name="EVA_API_DEV_KEY">1ee20d8e-7423-41d3-88e1-2034db5d96bb</string>
+    <string name="EVA_SITE_DEV_CODE">concur_dev</string>
+    <string name="EVA_WS_DEV_URL">http://dev.evaws.com</string>     
+</resources>

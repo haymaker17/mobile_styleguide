@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:yourapp="http://schemas.android.com/apk/res-auto" >
+    
+    <item android:title="@string/new_expense" android:id="@+id/new_expense"/>
+    <item android:title="@string/import_expenses" android:id="@+id/import_expenses"/>
+</menu>

@@ -1,0 +1,114 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent"
+    android:background="@drawable/list_selector_gradient_background"
+    android:orientation="vertical"
+    android:paddingBottom="@dimen/list_cell_padding_bottom"
+    android:paddingLeft="@dimen/list_cell_padding_left"
+    android:paddingRight="@dimen/list_cell_padding_right"
+    android:paddingTop="@dimen/list_cell_padding_top" >
+
+    <LinearLayout
+        android:id="@+id/expense_check_parent"
+        android:layout_width="fill_parent"
+        android:layout_height="fill_parent"
+        android:orientation="horizontal" >
+
+        <CheckBox
+            android:id="@+id/expense_check"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:focusable="false"
+            android:focusableInTouchMode="false" />
+
+        <LinearLayout
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:layout_gravity="top"
+            android:layout_weight="1.0"
+            android:orientation="vertical"
+            android:paddingLeft="@dimen/list_cell_padding_left" >
+
+            <TextView
+                android:id="@+id/transaction_type"
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:layout_gravity="top|left"
+                android:ellipsize="end"
+                android:gravity="top|left"
+                android:lines="1"
+                android:scrollHorizontally="true"
+                android:textAppearance="@style/ListCellHeaderText" />
+
+            <TextView
+                android:id="@+id/transaction_date"
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:layout_gravity="top|left"
+                android:layout_marginTop="@dimen/list_cell_secondary_text_top_margin"
+                android:ellipsize="end"
+                android:gravity="top|left"
+                android:lines="1"
+                android:scrollHorizontally="true"
+                android:textAppearance="@style/ListCellSubHeaderText" />
+
+            <TextView
+                android:id="@+id/transaction_description"
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:layout_gravity="top|left"
+                android:layout_marginTop="@dimen/list_cell_secondary_text_top_margin"
+                android:ellipsize="end"
+                android:gravity="top|left"
+                android:lines="1"
+                android:scrollHorizontally="true"
+                android:textAppearance="@style/ListCellSubHeaderText" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="fill_parent"
+            android:layout_marginLeft="@dimen/list_cell_icon_margin_right"
+            android:orientation="vertical" >
+
+            <TextView
+                android:id="@+id/transaction_amount"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="right|top"
+                android:ellipsize="end"
+                android:lines="1"
+                android:scrollHorizontally="true"
+                android:textAppearance="@style/ListCellHeaderText" />
+
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="0dp"
+                android:layout_gravity="right|top"
+                android:layout_marginTop="@dimen/list_cell_secondary_text_top_margin"
+                android:layout_weight="1.0"
+                android:orientation="horizontal" >
+
+                <ImageView
+                    android:id="@+id/expense_entry_receipt_icon"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="right|top"
+                    android:layout_marginTop="@dimen/list_cell_sub_header_icon_top_margin"
+                    android:src="@drawable/icon_receipt" />
+
+                <ImageView
+                    android:id="@+id/expense_entry_card_icon"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="right|top"
+                    android:layout_marginLeft="@dimen/list_cell_icon_margin_right"
+                    android:layout_marginTop="@dimen/list_cell_sub_header_icon_top_margin"
+                    android:src="@drawable/icon_card" />
+            </LinearLayout>
+        </LinearLayout>
+    </LinearLayout>
+
+</LinearLayout>

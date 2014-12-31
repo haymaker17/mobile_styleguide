@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <!-- Hotel List divider color -->
+    <color name="HotelListDivider">#c1cbd2</color>
+    <color name="transparent">#00000000</color>
+    <color name="blueTabs">#0078c8</color>
+
+</resources>

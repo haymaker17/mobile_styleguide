@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+  xmlns:android="http://schemas.android.com/apk/res/android"
+  android:layout_width="fill_parent"
+  android:layout_height="fill_parent"
+  android:orientation="vertical"
+  style="@style/ConcurTheme"
+  android:background="@drawable/gradient_background"
+>
+	<com.concur.mobile.core.widget.SafeViewFlipper
+		android:id="@+id/view_flipper"
+		android:layout_width="fill_parent"
+		android:layout_height="0px"
+		android:layout_weight="1.0"
+	>
+		<!--  NOTE: Code in 'AllExpenseView' depends upon the ordering of these children! -->
+		<include android:id="@+id/local_data" layout="@layout/expense_all_body"/>
+		<include android:id="@+id/restore_app_state" layout="@layout/restore_app_state"/>
+		<include android:id="@+id/no_data" layout="@layout/no_expenses"/>
+		<include android:id="@+id/loading_data" layout="@layout/loading_data"/>
+	</com.concur.mobile.core.widget.SafeViewFlipper>
+</LinearLayout>

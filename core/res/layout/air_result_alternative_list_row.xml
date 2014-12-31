@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="fill_parent"
+    android:layout_height="wrap_content"
+    android:background="@drawable/list_selector_gradient_background"
+    android:paddingBottom="@dimen/list_cell_padding_bottom"
+    android:paddingLeft="@dimen/list_cell_padding_left"
+    android:paddingRight="@dimen/list_cell_padding_right"
+    android:paddingTop="@dimen/list_cell_padding_top" >
+
+    <!-- <ImageView
+        android:id="@+id/alternative_list_item_airlineLogo"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentTop="true"
+        android:layout_marginTop="@dimen/airline_logo_icon_top_margin"
+        android:src="@drawable/dl" /> -->
+
+    <TextView
+        android:id="@+id/alternative_list_item_airlineName"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentTop="true"
+        android:layout_marginLeft="4dp"
+       android:layout_alignParentLeft="true"
+        android:text="@string/segment_air_label_flight"
+        android:textAppearance="@style/ListCellHeaderText" />
+    <!-- This layout is dynamically filled with data from air booking segment objects. -->
+
+    <LinearLayout
+        android:id="@+id/alternative_list_item_segment_list"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentLeft="true"
+        android:layout_below="@+id/alternative_list_item_airlineName"
+        android:orientation="vertical" />
+
+    <TextView
+        android:id="@+id/alternative_list_item_seats"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentRight="true"
+        android:layout_alignParentTop="true"
+        android:text="@string/general_seats"
+        android:textAppearance="@style/ListCellSubHeaderText" />
+
+    <TextView
+        android:id="@+id/alternative_list_item_seats_value"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignRight="@+id/alternative_list_item_seats"
+        android:layout_below="@+id/alternative_list_item_seats"
+        android:layout_gravity="right"
+        android:layout_marginTop="2dp"
+        android:text="9+"
+        android:textAppearance="@style/ListCellSubHeaderTextNormal"
+        android:textStyle="bold"
+        android:visibility="visible" />
+
+</RelativeLayout>

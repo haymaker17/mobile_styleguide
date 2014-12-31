@@ -1,0 +1,80 @@
+{
+    "data": {
+        "receiptListStatus": {
+            "status": "SUCCESS"
+        },
+        "ocrReceiptInfos": [
+            {
+                "ocrStatus": "OCR_STAT_UNKNOWN",
+                "receiptImageId": "gWmdeW4XhX$pZgeyG5r53Uj4KMN8EhWzMHh2OQNVTq$pHtsXit0ecLfN$sbPmcr7LVyOaA",
+                "fileType": "JPG",
+                "imageDate": "2014-07-09 00:25:36",
+                "fileName": "1404865534031",
+                "imageOrigin": "UPLOAD",
+                "imageUrl": "https://rqa3imaging.concurtech.net/file/phos123488/777663A798C6AE35A4197409DF10A9421AEFEEFC203080CE77D8702D155D5D8AEAF9F45618725190B62841E63888517D34A5DBBD26D605FBB01A8EADA7940BB5HDBE83F370995F76854E85121FCA3220D",
+                "thumbUrl": "https://rqa3imaging.concurtech.net/file/phos123488/3C6E8FA8B25ACCA4E8F88EF88507348F2E607439EB013FD368EB4211BE3A8D5C3702F93AFFFE68A5C01D07D38B3AF04351CC3BF13CFC93A210867087FD031DC8H1F21EB0B09FFBAFC5FF0EF1ECEA9E34A"
+            },
+            {
+                "ocrStatus": "M_DONE",
+                "rejectCode": "NR",
+                "receiptImageId": "gWmgtLPPmVIRoCC3K253X$sYSMQrclLDJzhhGRNymZj39p$pxn$pgkhYKNWAtf6ZVlsKNA",
+                "fileType": "JPG",
+                "imageDate": "2014-10-30 21:24:17",
+                "fileName": "1414704253369",
+                "imageOrigin": "mobile",
+                "imageUrl": "https://rqa3imaging.concurtech.net/file/phos123488/FF611EBFB6565F96D3D6101EF25008BF4D18C3E91BD201163D51C4912FC290C91FF906751B7E9BAF17BA4343F452021880D57118DBA74934959F1610301033A1H3A335B8AF57C943495F038AD2EF07566",
+                "thumbUrl": "https://rqa3imaging.concurtech.net/file/phos123488/3A04944F817097B6F3D6298332E76AD6FF0021CD6B43CD3F52E7FF02094EFF19CA684B3B9419599FA26B978E24AB9F1A80523E94968923E52496F18CFCF66A64H656F20846AB7E0F3C8403C7B8AB5FB5B"
+            },
+            {
+                "ocrStatus": "A_PEND",
+                "receiptImageId": "gWmYmK$pScI4VoDFjKqZ2gi4L2N7RUX0Z0iRDgMCGbiA5ur7gARn2f$sRk$peoDVSycfUg",
+                "fileType": "JPG",
+                "imageDate": "2014-10-15 17:11:39",
+                "fileName": "1413393097358",
+                "imageOrigin": "UPLOAD",
+                "imageUrl": "https://rqa3imaging.concurtech.net/file/phos123488/8984191F7A616D5B005E13C3AAAEDC8800F6D0E47BB872FA4B379AE448AA581F533E0C24D88A4A8CAE33078FA5A60B260E408D194E5F0CD89D7A6B1030DF57B0H250DF97E43BB04E980A5B64658E4AD3C",
+                "thumbUrl": "https://rqa3imaging.concurtech.net/file/phos123488/C00B07495C2EE4788C48D263004CEC09290F78308306A5B59802CA519A5F25AE56B62E028E415AED26D7C928D772BE1D84F4F9BCDD9935799F8078BDB592357FH315F2ADB753D354E5853A57429451DC7"
+            },
+            {
+                "ocrStatus": "OCR_STAT_UNKNOWN",
+                "receiptImageId": "gWhopKYGUVIVhCyHA3p3VgPWMQ8UlUkZ6$smvgNCPrjX5pfP9yodfF$pk2fhusaZWuwcA",
+                "fileType": "JPG",
+                "imageDate": "2014-10-30 20:56:20",
+                "fileName": "1414702576601",
+                "imageOrigin": "mobile",
+                "imageUrl": "https://rqa3imaging.concurtech.net/file/phos123488/8BB668C06F03D37EB0CDDFF9D47E833A306ED87C768B55C3A9BC988F23D46404B231A7378B4684EA7387D78357FD94EB83F4C744635E051DF11686EB7DA6136FH4DA90A168207099A927461EDF1528A14",
+                "thumbUrl": "https://rqa3imaging.concurtech.net/file/phos123488/BF833A86A60EB20FAAE4A7F3153A267D84CB7891BF4F376EF977D8CFD57EEA0D6E82B182D93D1841361714B81E8FA3478496E417A946FA243C68DC6DED89CD5CH8FA85AD412E49C2471A85535A3FB5745"
+            },
+            {
+                "ocrStatus": "OCR_STAT_UNKNOWN",
+                "receiptImageId": "gWmgsWPLgX4BhAFzJpJ3S$pIeMQMIiK0V3jBOUN1WZjH5tTwCkSOCW465i69w9ie179w",
+                "fileType": "JPG",
+                "imageDate": "2014-10-15 17:16:47",
+                "fileName": "1413393405968",
+                "imageOrigin": "mobile",
+                "imageUrl": "https://rqa3imaging.concurtech.net/file/phos123488/962A34C7397B77A6292AC3594020853FB7CE6633FA2B0DDDAF97A6BADEAB9F2D46E2EAE47FB8F817C82013EC21953F3F1575C62C50ECF59BC3C50AA0E433C0E4H0DA50F5ABA091A19C14940433376B2FF",
+                "thumbUrl": "https://rqa3imaging.concurtech.net/file/phos123488/DB8F94CB07F82C470835F6C72B8DC14FBD8F6DC4F6A3B9B0F9CB51B890E696452AE21D04FB264F8B344F1B9A2DA7259EAEAA65C772D95EBAF2C4FD8513FBB2CEHDF960A2657C824D5FFFFF6EB32824A07"
+            },
+            {
+                "ocrStatus": "OCR_STAT_UNKNOWN",
+                "receiptImageId": "gWmZeWvGQUYZqCS6$srp3QjoH2N8kiWUF2h2aXQlSbi3sbRI2f0ni5hiGudPo4G$pdnvA",
+                "fileType": "JPG",
+                "imageDate": "2014-10-20 20:05:01",
+                "fileName": "test.jpg",
+                "imageOrigin": "CTE",
+                "imageUrl": "https://rqa3imaging.concurtech.net/file/phos123488/25028DBE04E220B8E46159FCE4B25B23ABE8F34A7B29C83F1E6DF58917C0F0315F6EDFF3F5376A9971441AA3D3B9CCE8E8533ABA8440A333406CB2414C8F187FHEB99CE0F37F8AB9EF539F7227A3584E8",
+                "thumbUrl": "https://rqa3imaging.concurtech.net/file/phos123488/51F1D54F4531FBBDFDCB394AFA50098A18EFA6231648248AC199BBE15673036385F8FBCAFE1A9D69E0F293D51A25A1E8DF1692A4F60A2889CB792AE2C392205BH14E3D267472F520056A460AB75E920B0"
+            },
+            {
+                "ocrStatus": "OCR_STAT_UNKNOWN",
+                "receiptImageId": "gWm1bWYOXJoFpDinN252jgIX2QsRWXEdwjGafOFaY$sH5rO269a$pFVkXN0Kol8ZBBWiw",
+                "fileType": "JPG",
+                "imageDate": "2014-10-15 17:06:54",
+                "fileName": "1413392812618",
+                "imageOrigin": "UPLOAD",
+                "imageUrl": "https://rqa3imaging.concurtech.net/file/phos123488/98D6338DFF6DBD8F83507310AB7E228613E24BF4B7F4373F6BE339F8A11A92231EA48E8C604EA814B8DFF6DE68C2749F55FC81145E8E832EC34B8449D6C65097H8822B615B930535D1ED097A3D181602F",
+                "thumbUrl": "https://rqa3imaging.concurtech.net/file/phos123488/6A1DF8C1DC77D73C97572E01826E68B1CAA4FA6E3B0246F7712CB9B94F54D00C54D80DEF0768B369619DDE35B12DD825A92DC97C86B4C5C3E820414A9B546213H9B00B07D6078FD2BCB195904758631DF"
+            }
+        ]
+    }
+}

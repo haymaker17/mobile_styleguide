@@ -1,0 +1,81 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@drawable/blue_background" >
+
+    <LinearLayout
+        android:id="@+id/mainlayout"
+        android:layout_width="fill_parent"
+        android:layout_height="fill_parent"
+        android:layout_marginLeft="@dimen/list_item_horizontal_margin"
+        android:layout_marginRight="@dimen/list_item_horizontal_margin"
+        android:orientation="vertical"
+        android:paddingBottom="18dp"
+        android:paddingTop="18dp" >
+
+        <TextView
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:paddingBottom="18dp"
+            android:gravity="left"
+            android:text="@string/test_drive_welcome_text"
+            android:textAppearance="@style/TestRegPrimary" >
+        </TextView>
+
+        <EditText
+            android:id="@+id/test_drive_email"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:background="@drawable/square_no_border"
+            android:hint="@string/test_drive_username_hint"
+            android:imeOptions="actionNext"
+            android:inputType="textEmailAddress"
+            android:padding="10dp"
+            android:textAppearance="@style/PrimaryText" >
+        </EditText>
+
+        <View
+            android:layout_width="fill_parent"
+            android:layout_height="10dp" />
+
+        <EditText
+            android:id="@+id/test_drive_password"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:background="@drawable/square_no_border"
+            android:hint="@string/test_drive_password_hint"
+            android:imeOptions="actionGo"
+            android:inputType="textPassword"
+            android:padding="10dp"
+            android:textAppearance="@style/PrimaryText" >
+        </EditText>
+
+        <View
+            android:layout_width="fill_parent"
+            android:layout_height="3dp" />
+
+        <Button
+            android:id="@+id/test_drive_submit"
+            style="@style/StandardBlueButton"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dp"
+            android:text="@string/test_drive_submit" >
+        </Button>
+
+        <TextView
+            android:id="@+id/test_drive_termsandcondition"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="10dp"
+            android:layout_marginTop="16dp"
+            android:gravity="center"
+            android:text="@string/test_drive_terms_and_condition"
+            android:textAppearance="@style/TestRegSecondary" >
+        </TextView>
+    </LinearLayout>
+
+</RelativeLayout>

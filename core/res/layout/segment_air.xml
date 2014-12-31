@@ -1,0 +1,287 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    style="@style/ConcurTheme"
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent"
+    android:orientation="vertical" >
+
+	<!--  Include the standard header bits -->
+	<include layout="@layout/standard_header"/>
+
+    <ScrollView
+        android:layout_width="fill_parent"
+        android:layout_height="0px"
+        android:layout_weight="1.0"
+        android:background="@color/ListBackground" >
+
+        <LinearLayout
+            android:layout_width="fill_parent"
+            android:layout_height="fill_parent"
+            android:background="@color/ListBackground"
+            android:orientation="vertical" >
+
+            <LinearLayout
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:background="@drawable/subheader_gradient_background"
+                android:orientation="vertical"
+                android:paddingBottom="6dp"
+                android:paddingLeft="8dp"
+                android:paddingRight="8dp"
+                android:paddingTop="4dp" >
+
+                <TextView
+                    android:id="@+id/airFromTo"
+                    android:layout_width="fill_parent"
+                    android:layout_height="wrap_content"
+                    android:ellipsize="end"
+                    android:lines="1"
+                    android:scrollHorizontally="true"
+                    android:text="City to City"
+                    android:textAppearance="@style/ListCellHeaderText" />
+
+                <TextView
+                    android:id="@+id/airConfirm"
+                    android:layout_width="fill_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="10dp"
+                    android:ellipsize="end"
+                    android:lines="1"
+                    android:scrollHorizontally="true"
+                    android:text="Confirm # 999999"
+                    android:textAppearance="@style/SubHeaderText"
+                    android:textStyle="bold" />
+
+                <TextView
+                    android:id="@+id/airFlight"
+                    android:layout_width="fill_parent"
+                    android:layout_height="wrap_content"
+                    android:ellipsize="end"
+                    android:lines="1"
+                    android:scrollHorizontally="true"
+                    android:text="Airline 999"
+                    android:textAppearance="@style/SubHeaderText"
+                    android:textStyle="bold" />
+
+                <RelativeLayout
+                    android:layout_width="fill_parent"
+                    android:layout_height="wrap_content" >
+
+                    <LinearLayout
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_alignParentLeft="true"
+                        android:orientation="vertical" >
+
+                        <TextView
+                            android:id="@+id/airDepartCity"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_gravity="left"
+                            android:layout_marginBottom="2dp"
+                            android:text="Depart (CTY)"
+                            android:textAppearance="@style/SmallPrimaryText" />
+
+                        <include
+                            android:id="@+id/airDepartTime"
+                            android:layout_width="112dp"
+                            android:layout_height="40dp"
+                            android:layout_marginLeft="2dp"
+                            layout="@layout/time_flipper" />
+
+                        <TextView
+                            android:id="@+id/airDepartDate"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_gravity="left"
+                            android:text="Day, Mon 33, 0000"
+                            android:textAppearance="@style/SmallPrimaryText" />
+
+                        <TextView
+                            android:id="@+id/airDepartTerminal"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_gravity="left"
+                            android:text="Terminal: X"
+                            android:textAppearance="@style/SmallPrimaryText"
+                            android:textStyle="bold" />
+
+                        <TextView
+                            android:id="@+id/airDepartGate"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_gravity="left"
+                            android:text="Gate: X"
+                            android:textAppearance="@style/SmallPrimaryText"
+                            android:textStyle="bold" />
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_alignParentRight="true"
+                        android:orientation="vertical" >
+
+                        <TextView
+                            android:id="@+id/airArriveCity"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_gravity="right"
+                            android:layout_marginBottom="2dp"
+                            android:text="Arrive (CTY)"
+                            android:textAppearance="@style/SmallPrimaryText" />
+
+                        <include
+                            android:id="@+id/airArriveTime"
+                            android:layout_width="112dp"
+                            android:layout_height="40dp"
+                            android:layout_gravity="right"
+                            android:layout_marginRight="2dp"
+                            layout="@layout/time_flipper" />
+
+                        <TextView
+                            android:id="@+id/airArriveDate"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_gravity="right"
+                            android:text="Day, Mon 33, 0000"
+                            android:textAppearance="@style/SmallPrimaryText" />
+
+                        <TextView
+                            android:id="@+id/airArriveTerminal"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_gravity="right"
+                            android:text="Terminal: X"
+                            android:textAppearance="@style/SmallPrimaryText"
+                            android:textStyle="bold" />
+
+                        <TextView
+                            android:id="@+id/airArriveGate"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_gravity="right"
+                            android:text="Gate: X"
+                            android:textAppearance="@style/SmallPrimaryText"
+                            android:textStyle="bold" />
+                    </LinearLayout>
+                </RelativeLayout>
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="fill_parent"
+                android:layout_height="fill_parent"
+                android:orientation="vertical"
+                android:paddingLeft="6dp"
+                android:paddingRight="6dp"
+                android:paddingTop="10dp" >
+
+                <LinearLayout
+                    android:id="@+id/airFlightStatus"
+                    android:layout_width="fill_parent"
+                    android:layout_height="wrap_content"
+                    android:background="@drawable/gradient_background"
+                    android:orientation="vertical"
+                    android:paddingBottom="@dimen/form_cell_padding_bottom"
+                    android:paddingTop="@dimen/form_cell_padding_top" >
+
+                    <TextView
+                        android:id="@+id/field_name"
+                        android:layout_width="fill_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="6dp"
+                        android:layout_marginRight="6dp"
+                        android:text="Field Name"
+                        android:textAppearance="@style/FormFieldLabelText" />
+
+                    <LinearLayout
+                        android:layout_width="fill_parent"
+                        android:layout_height="wrap_content" >
+
+                        <ImageView
+                            android:id="@+id/airFlightStatusIcon"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_gravity="center_vertical"
+                            android:layout_marginLeft="6dp"
+                            android:src="@drawable/flight_status_green" >
+                        </ImageView>
+
+                        <TextView
+                            android:id="@+id/field_value"
+                            android:layout_width="fill_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_marginLeft="6dp"
+                            android:layout_marginRight="6dp"
+                            android:ellipsize="end"
+                            android:lines="1"
+                            android:scrollHorizontally="true"
+                            android:text="Field Value"
+                            android:textAppearance="@style/FormFieldValueText" />
+                    </LinearLayout>
+                </LinearLayout>
+
+                <LinearLayout
+                    android:id="@+id/airOperatedBy"
+                    android:layout_width="fill_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical" >
+
+                    <include layout="@layout/group_separator" />
+
+                    <include layout="@layout/static_text_form_field" />
+                </LinearLayout>
+
+                <include layout="@layout/group_separator" />
+
+                <include
+                    android:id="@+id/airClassSeat"
+                    layout="@layout/static_text_form_field" />
+
+                <include layout="@layout/group_separator" />
+
+                <include
+                    android:id="@+id/airDuration"
+                    layout="@layout/static_text_form_field" />
+
+                <include layout="@layout/group_separator" />
+
+                <include
+                    android:id="@+id/airDistance"
+                    layout="@layout/static_text_form_field" />
+
+                <include layout="@layout/group_separator" />
+
+                <include
+                    android:id="@+id/airAircraft"
+                    layout="@layout/static_text_form_field" />
+
+                <include layout="@layout/group_separator" />
+
+                <include
+                    android:id="@+id/airBookingStatus"
+                    layout="@layout/static_text_form_field" />
+                
+                <include layout="@layout/group_separator" />
+                
+                 <include
+                    android:id="@+id/alternativeFlightSchedule"
+                    layout="@layout/static_text_form_field" />
+                 
+                <include layout="@layout/group_separator" />
+				<include layout="@layout/static_text_form_field" android:id="@+id/travel_points" />
+				<include layout="@layout/group_separator" />
+				<include layout="@layout/static_text_form_field" android:id="@+id/travel_points_price_to_beat" />
+                  
+                <View
+                    android:layout_width="fill_parent"
+                    android:layout_height="3dp"
+                    android:layout_marginBottom="10dp"
+                    android:layout_marginLeft="1dp"
+                    android:layout_marginRight="1dp"
+                    android:background="@drawable/square_border_shadow" />
+            </LinearLayout>
+        </LinearLayout>
+    </ScrollView>
+
+</LinearLayout>

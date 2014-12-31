@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+	android:layout_width="fill_parent" android:layout_height="fill_parent"
+	android:background="@drawable/gradient_background" style="@style/ConcurTheme">
+
+	<!--  Include the standard header bits -->
+	<include android:id="@+id/header" layout="@layout/standard_header"/>
+	
+	<include android:id="@+id/travel_header" layout="@layout/travel_title_header"
+		android:layout_width="fill_parent" android:layout_height="wrap_content"
+		android:layout_below="@id/header" />
+	<ImageView android:layout_width="wrap_content"
+		android:layout_height="wrap_content" android:id="@+id/imageView1"
+		android:src="@drawable/neg_airbooking_icon" android:layout_centerVertical="true"
+		android:layout_centerHorizontal="true"></ImageView>
+	<TextView android:layout_height="wrap_content"
+		android:layout_width="wrap_content" android:id="@+id/textView1"
+		android:layout_below="@+id/imageView1"
+		android:layout_centerHorizontal="true" android:text="@string/air_search_no_flights"
+		android:layout_marginTop="14dp" android:textAppearance="@style/PrimaryText"></TextView>
+	<Button android:layout_width="wrap_content" android:layout_below="@+id/textView1" android:layout_centerHorizontal="true" android:id="@+id/searchAgain" android:layout_marginTop="18dp" style="@style/StandardButton" android:layout_height="wrap_content" android:text="@string/search_again"></Button>
+</RelativeLayout>

@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    style="@style/ConcurBaseTheme.White.New"
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent"
+    android:background="@color/White" >
+
+    <!-- Include the standard header bits -->
+
+    <include
+        android:id="@+id/header"
+        layout="@layout/standard_header" />
+
+    <ImageView
+        android:id="@+id/searchGlass"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerHorizontal="true"
+        android:layout_centerVertical="true"
+        android:src="@drawable/searching_glass" />
+
+    <ProgressBar
+        android:id="@+id/searchProgress"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignLeft="@id/searchGlass"
+        android:layout_alignTop="@id/searchGlass"
+        android:layout_marginLeft="12dp"
+        android:layout_marginTop="11dp" />
+
+    <TextView
+        android:id="@+id/searchFor"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/searchGlass"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="24dp"
+        android:text="@string/hotel_search_label_for_v1"
+        android:textAppearance="@style/FareSearchProgress" />
+
+    <LinearLayout
+        android:id="@+id/searchNearLoc"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/searchFor"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="2dp" >
+
+        <TextView
+            android:id="@+id/searchNearLabel"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginRight="4dp"
+            android:text="@string/hotel_search_label_near_v1"
+            android:textAppearance="@style/FareSearchProgress" />
+
+        <TextView
+            android:id="@+id/searchNearValue"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textAppearance="@style/FareSearchProgress" />
+    </LinearLayout>
+
+</RelativeLayout>

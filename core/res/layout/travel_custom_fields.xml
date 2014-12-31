@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent"
+    android:orientation="vertical"
+>
+	<TextView
+	    android:id="@+id/custom_fields_header"
+	  	android:text="@string/travel_booking_info_header"
+	  	android:textAppearance="@style/FlightSegmentHeaderText"
+	  	android:paddingLeft="@dimen/list_cell_padding"
+	  	android:paddingBottom="@dimen/list_section_header_padding_bottom"
+	  	android:layout_width="fill_parent"
+	  	android:layout_height="wrap_content"
+	/>
+	<LinearLayout
+	    android:id="@+id/custom_fields"
+	    android:layout_width="fill_parent"
+	    android:layout_height="wrap_content"
+		android:orientation="vertical"
+		android:background="@drawable/square_border"
+		android:padding="1dp"
+	/>
+	<View
+	    android:layout_width="fill_parent"
+	    android:layout_height="3dp"
+		android:layout_marginLeft="1dp"
+		android:layout_marginRight="1dp"
+		android:background="@drawable/square_border_shadow"
+	/>
+</LinearLayout>
+
+    

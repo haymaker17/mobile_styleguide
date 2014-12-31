@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="wrap_content"
+    android:layout_height="fill_parent"
+    android:fillViewport="true"
+>
+	<RelativeLayout
+    	android:layout_width="wrap_content"
+    	android:layout_height="wrap_content"
+    	android:background="@color/NavigationItemBackground"
+	>
+    	<LinearLayout
+        	android:orientation="vertical"
+        	android:layout_width="wrap_content"
+        	android:layout_height="fill_parent"
+        	android:layout_alignParentTop="true"
+        	android:layout_alignParentLeft="true"
+    	>
+       		<LinearLayout
+           		android:id="@+id/item_container"
+           		android:orientation="vertical"
+           		android:layout_width="wrap_content"
+           		android:layout_height="wrap_content"
+       		/>
+       		<LinearLayout
+           		android:id="@+id/ad_container"
+           		android:orientation="vertical"
+           		android:layout_width="wrap_content"
+           		android:layout_height="0dp"
+           		android:layout_weight="1"
+           		android:gravity="bottom|center_horizontal"
+       		/>
+    	</LinearLayout>
+    	<ImageView
+    		android:layout_width="wrap_content"
+    		android:layout_height="fill_parent"
+    		android:src="@drawable/menu_shadow"
+    		android:layout_alignParentRight="true"
+    		android:layout_alignParentTop="true"
+    		android:scaleType="fitXY"
+		/>
+	</RelativeLayout>
+</ScrollView>

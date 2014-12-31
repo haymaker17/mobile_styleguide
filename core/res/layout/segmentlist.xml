@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    style="@style/ConcurTheme"
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent"
+    android:background="@drawable/gradient_background"
+    android:orientation="vertical" >
+    
+        <!-- Include the standard header bits -->
+
+        <include
+            android:id="@+id/header"
+            layout="@layout/standard_header" />
+
+        <include
+            android:id="@+id/trip_approver_header"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            layout="@layout/trip_approval_row" />
+
+        <include
+            android:id="@+id/travel_header"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            layout="@layout/travel_title_header" />
+
+        <View
+            android:id="@+id/travel_header_separator"
+            android:layout_width="fill_parent"
+            android:layout_height="1dp"
+            android:background="@color/White" />
+
+        <ListView
+            android:id="@+id/seg_list"
+            android:layout_width="fill_parent"
+            android:layout_height="0px"
+          	android:layout_weight="1.0"
+            android:background="@drawable/gradient_background"
+            android:divider="@color/ListDivider" />
+
+        <!-- Only one of the following includes will be shown in the UI in a scenario -->
+
+
+        <!-- Include the expense footer navigation bar which has reject and approve buttons. -->
+
+        <include
+            android:id="@+id/trip_approver_footer"
+            android:layout_width="fill_parent"
+            android:layout_height="@dimen/footer_height"
+            layout="@layout/expense_footer_navigation_bar" />
+
+        <!-- Include the footer for 'Call Travel Agent' -->
+
+        <include
+            android:id="@+id/call_travel_agent"
+            android:layout_width="fill_parent"
+            android:layout_height="@dimen/footer_height"
+            layout="@layout/footer_navigation_bar_one_button_left"
+            android:visibility="gone" />
+
+</LinearLayout>

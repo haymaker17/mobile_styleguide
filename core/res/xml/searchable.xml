@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="utf-8"?>
+<searchable xmlns:android="http://schemas.android.com/apk/res/android"
+    android:hint="Search"
+    android:includeInGlobalSearch="true"
+    android:label="@string/loc_search_hint_v1"
+    android:queryAfterZeroResults="true"
+    android:searchMode="queryRewriteFromText"
+    android:searchSettingsDescription="@string/loc_search_hint_v1"
+    android:searchSuggestThreshold="3" >
+
+    <!--
+  android:searchSuggestAuthority="com.concur.mobile.platform.travel"
+    android:searchSuggestIntentAction="android.intent.action.VIEW"
+    android:searchSuggestIntentData="content://com.concur.mobile.platform.TravelProvider/location_choices"
+    -->
+
+
+    <!--
+    allow green action key for search-bar and per-suggestion clicks 
+    <actionkey
+        android:keycode="KEYCODE_CALL"
+        android:queryActionMsg="call"
+        android:suggestActionMsg="call" />
+    -->
+
+</searchable>

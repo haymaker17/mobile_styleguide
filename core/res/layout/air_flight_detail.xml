@@ -1,0 +1,187 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    style="@style/ConcurTheme"
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent"
+    android:orientation="vertical" >
+
+    <!-- Include the standard header bits -->
+
+    <include layout="@layout/standard_header" />
+
+    <include
+        android:id="@+id/travel_header"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        layout="@layout/travel_title_header" />
+
+    <ScrollView
+        android:id="@+id/scroll_view"
+        android:layout_width="fill_parent"
+        android:layout_height="fill_parent"
+        android:layout_weight="1"
+        android:background="@drawable/gradient_background" >
+
+        <LinearLayout
+            android:id="@+id/linear_layout"
+            android:layout_width="fill_parent"
+            android:layout_height="fill_parent"
+            android:orientation="vertical" >
+
+            <TextView
+                android:id="@+id/violations_with_travel_points_header"
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="@dimen/list_item_horizontal_margin"
+                android:layout_marginRight="@dimen/list_item_horizontal_margin"
+                android:layout_marginTop="@dimen/list_item_vertical_margin"
+                android:text="@string/travel_points_violations_header"
+                android:textAppearance="@style/FlightSegmentHeaderText"
+                android:visibility="gone" />
+
+            <!-- Include the section to display violation reason/justification/messages -->
+
+            <include layout="@layout/violations" />
+
+            <!-- This view group is programmatically populated. -->
+
+            <LinearLayout
+                android:id="@+id/flight_segment_list"
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="@dimen/list_item_vertical_margin"
+                android:layout_marginLeft="@dimen/list_item_horizontal_margin"
+                android:layout_marginRight="@dimen/list_item_horizontal_margin"
+                android:layout_marginTop="@dimen/list_item_vertical_margin"
+                android:orientation="vertical" />
+
+            <LinearLayout
+                android:layout_width="fill_parent"
+                android:layout_height="fill_parent"
+                android:layout_marginBottom="@dimen/list_item_vertical_margin"
+                android:layout_marginLeft="@dimen/list_item_horizontal_margin"
+                android:layout_marginRight="@dimen/list_item_horizontal_margin"
+                android:orientation="vertical" >
+
+                <LinearLayout
+                    android:id="@+id/flight_detail_fare_info"
+                    android:layout_width="fill_parent"
+                    android:layout_height="wrap_content"
+                    android:background="@drawable/square_border"
+                    android:orientation="vertical"
+                    android:padding="1dp" >
+
+                    <LinearLayout
+                        android:id="@+id/affinity_group"
+                        android:layout_width="fill_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="vertical" >
+
+                        <include
+                            android:id="@+id/affinity_selection"
+                            layout="@layout/image_form_field" />
+
+                        <include layout="@layout/group_separator" />
+                    </LinearLayout>
+
+                    <include
+                        android:id="@+id/total_price"
+                        layout="@layout/static_text_fields" />
+
+                    <include layout="@layout/group_separator" />
+
+                    <include
+                        android:id="@+id/card_selection"
+                        layout="@layout/image_form_field" />
+
+                    <include
+                        android:id="@+id/card_cvv_number_layout"
+                        layout="@layout/group_separator"
+                        android:visibility="gone" />
+                    <!-- include android:id="@+id/card_cvv_number" layout="@layout/edit_text_form_field" android:visibility="gone"/ -->
+
+
+                    <!-- a temporary code fix for card cvv number as include edit_text_form_field is messing up on orientation change, will fix this when adressing other segments -->
+
+                    <LinearLayout
+                        android:id="@+id/card_cvv_number"
+                        android:layout_width="fill_parent"
+                        android:layout_height="wrap_content"
+                        android:background="@drawable/gradient_background"
+                        android:orientation="vertical"
+                        android:paddingBottom="@dimen/form_cell_padding_bottom"
+                        android:paddingTop="@dimen/form_cell_padding_top"
+                        android:visibility="gone" >
+
+                        <TextView
+                            android:id="@+id/card_cvv_number_field_name"
+                            android:layout_width="fill_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_marginLeft="6dp"
+                            android:layout_marginRight="6dp"
+                            android:text="Field Name"
+                            android:textAppearance="@style/FormFieldLabelText" />
+
+                        <EditText
+                            android:id="@+id/card_cvv_number_field_value"
+                            android:layout_width="fill_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_marginLeft="6dp"
+                            android:layout_marginRight="6dp"
+                            android:maxLines="1"
+                            android:minLines="1"
+                            android:singleLine="true"
+                            android:text="Field Value"
+                            android:textAppearance="@style/FormFieldValueText" />
+
+                        <TextView
+                            android:id="@+id/card_cvv_number_field_note"
+                            android:layout_width="fill_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_marginLeft="6dp"
+                            android:layout_marginRight="6dp"
+                            android:text="Field Note"
+                            android:textAppearance="@style/FormFieldNoteText"
+                            android:visibility="gone" />
+                    </LinearLayout>
+                </LinearLayout>
+
+                <View
+                    android:layout_width="fill_parent"
+                    android:layout_height="3dp"
+                    android:layout_marginLeft="1dp"
+                    android:layout_marginRight="1dp"
+                    android:background="@drawable/square_border_shadow" />
+            </LinearLayout>
+
+            <!-- Flight Option Fields View Group -->
+
+            <LinearLayout
+                android:id="@+id/flight_options_fields"
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="@dimen/list_group_vertical_margin"
+                android:layout_marginLeft="@dimen/list_item_horizontal_margin"
+                android:layout_marginRight="@dimen/list_item_horizontal_margin"
+                android:orientation="vertical"
+                android:visibility="gone" />
+
+            <!-- Custom Fields View Group -->
+
+            <LinearLayout
+                android:id="@+id/booking_custom_fields"
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="@dimen/list_group_vertical_margin"
+                android:layout_marginLeft="@dimen/list_item_horizontal_margin"
+                android:layout_marginRight="@dimen/list_item_horizontal_margin"
+                android:orientation="vertical" />
+        </LinearLayout>
+    </ScrollView>
+    <!-- Footer for the booking button. -->
+
+    <include
+        android:id="@+id/flight_detail_footer"
+        layout="@layout/footer_navigation_bar_one_button" />
+
+</LinearLayout>

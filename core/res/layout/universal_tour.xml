@@ -1,0 +1,69 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/main_scroll_layout"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@drawable/blue_background"
+    android:fadingEdgeLength="20dp"
+    android:fillViewport="true"
+    android:paddingBottom="@dimen/list_group_vertical_margin"
+    android:paddingLeft="@dimen/list_item_horizontal_margin"
+    android:paddingRight="@dimen/list_item_horizontal_margin"
+    android:paddingTop="@dimen/list_group_vertical_margin"
+    android:scrollbars="none" >
+
+    <LinearLayout
+        android:id="@+id/container_outer_layout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical" >
+
+        <LinearLayout
+            android:id="@+id/container_layout"
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight="1"
+            android:orientation="vertical" >
+
+            <TextView
+                android:id="@+id/welcomeText"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="@dimen/list_group_vertical_margin"
+                android:gravity="center_vertical"
+                android:textAppearance="@style/TourSmallSecondaryText" />
+
+            <include layout="@layout/dot_group_saparator" />
+
+            <include
+                android:id="@+id/universal_tour_topic_flight"
+                layout="@layout/universal_tour_topic" />
+
+            <include layout="@layout/dot_group_saparator" />
+
+            <include
+                android:id="@+id/universal_tour_topic_snap"
+                layout="@layout/universal_tour_topic" />
+
+            <include layout="@layout/dot_group_saparator" />
+
+            <include
+                android:id="@+id/universal_tour_topic_report"
+                layout="@layout/universal_tour_topic" />
+
+            <include
+                android:id="@+id/universal_tour_feature_saparator"
+                layout="@layout/dot_group_saparator" />
+        </LinearLayout>
+
+        <TextView
+            android:id="@+id/feature_text"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="@dimen/universal_layout_margin_bottom"
+            android:layout_marginTop="@dimen/list_group_vertical_margin"
+            android:gravity="center_horizontal"
+            android:textAppearance="@style/TourSmallPrimaryText" />
+    </LinearLayout>
+
+</ScrollView>

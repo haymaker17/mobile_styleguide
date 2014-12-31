@@ -1,0 +1,60 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent"
+    android:orientation="vertical" >
+
+    <RelativeLayout
+        android:id="@+id/gov_docdetail_layout"
+        android:layout_width="fill_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1"
+        android:background="@drawable/gradient_background"
+        android:paddingBottom="@dimen/list_cell_padding_bottom"
+        android:visibility="visible" >
+
+        <include
+            android:id="@+id/header"
+            layout="@layout/header_navigation_bar" />
+
+        <com.concur.mobile.gov.util.GovScrollViewExtension
+            android:id="@+id/gov_rules_scrollview"
+            android:layout_width="fill_parent"
+            android:layout_height="fill_parent"
+            android:layout_below="@+id/header" >
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content" >
+
+                <TextView
+                    android:id="@+id/gov_rules_title"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@+id/header"
+                    android:layout_centerHorizontal="true"
+                    android:layout_margin="@dimen/list_cell_padding_top"
+                    android:layout_marginTop="@dimen/list_cell_padding_top"
+                    android:gravity="center_horizontal"
+                    android:textAppearance="@style/DialogText"
+                    android:textColor="@color/Black" />
+
+                <TextView
+                    android:id="@+id/gov_rules_msg"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@+id/gov_rules_title"
+                    android:layout_centerHorizontal="true"
+                    android:layout_margin="@dimen/list_cell_padding_top"
+                    android:layout_marginTop="@dimen/list_cell_padding_top"
+                    android:textAppearance="@style/WhatsNewDialogMediumText"
+                    android:textColor="@color/Black" />
+            </RelativeLayout>
+        </com.concur.mobile.gov.util.GovScrollViewExtension>
+    </RelativeLayout>
+
+    <include
+        android:id="@+id/footer"
+        layout="@layout/general_two_button_footer" />
+
+</LinearLayout>

@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+	xmlns:android="http://schemas.android.com/apk/res/android"
+	android:layout_width="fill_parent"
+	android:layout_height="fill_parent"
+	android:layout_weight="1"
+	android:orientation="vertical"
+	android:background="@drawable/gradient_background"
+	android:gravity="center"
+>
+	<ImageView
+	  	android:layout_width="wrap_content"
+	  	android:layout_height="wrap_content"
+	  	android:src="@drawable/neg_receipt_icon"
+	/>
+	<TextView
+	  	android:layout_width="wrap_content"
+	  	android:layout_height="wrap_content"
+	  	android:text="@string/no_receipts"
+	  	android:textAppearance="@style/NoDataText"
+	  	android:layout_marginTop="@dimen/list_item_vertical_margin"
+	/>
+	<TextView
+		android:id="@+id/upload_receipt_message"
+		android:layout_width="wrap_content"
+		android:layout_height="wrap_content"
+		android:textAppearance="@style/NoDataLargeGrayText"
+		android:layout_marginTop="@dimen/list_item_vertical_margin"
+		android:layout_marginLeft="@dimen/list_item_horizontal_margin"
+		android:layout_marginRight="@dimen/list_item_horizontal_margin"
+		android:gravity="center"
+	/>
+	<Button
+	  	android:id="@+id/add_receipt"
+	  	android:layout_width="wrap_content"
+	  	android:layout_height="wrap_content"
+	  	android:layout_marginTop="@dimen/list_group_vertical_margin"
+	  	android:text="@string/upload_receipt"
+	  	android:textAppearance="@style/NoDataText"
+	  	android:onClick="onUploadReceipt"
+	/>
+</LinearLayout>
+

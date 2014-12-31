@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="voice_book_unable_to_determine_departure_loc">Lo sentimos, no se ha podido determinar la ubicación de salida. Inténtelo de nuevo.</string>
+    <string name="voice_book_unable_to_determine_arrival_loc">Lo sentimos, no se ha podido determinar la ubicación de llegada. Inténtelo de nuevo.</string>
+    <string name="voice_book_unable_to_loc">Lo sentimos, no se ha podido determinar su ubicación. Inténtelo de nuevo.</string>
+    <string name="voice_search_not_supported_category">Esta búsqueda no se admite en esta categoría.</string>
+    <string name="voice_air_search_different_scope">Vuelva a intentarlo con una búsqueda de vuelos.</string>
+    <string name="voice_car_search_different_scope">Vuelva a intentarlo con una búsqueda de sedán.</string>
+    <string name="voice_hotel_search_different_scope">Vuelva a intentarlo con una búsqueda de hotel.</string>
+    <string name="voice_book_unable_to_determine_pickup_loc">Lo sentimos, no se ha podido determinar la ubicación de recogida. Inténtelo de nuevo.</string>
+    <string name="voice_book_unable_to_search">Lo siento, no lo conseguí. Inténtelo de nuevo.</string>
+    <string name="voice_book_speech_to_text_unsupported">Lo sentimos, la función de conversión de voz en texto no es compatible con este dispositivo.</string>
+</resources>

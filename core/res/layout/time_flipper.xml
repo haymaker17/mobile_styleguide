@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+	android:layout_height="wrap_content" android:layout_width="wrap_content">
+	<View android:id="@+id/topHalf" android:layout_height="20dp"
+		android:layout_alignParentTop="true" android:layout_centerHorizontal="true"
+		android:background="@drawable/time_flipper_background_top"
+		android:layout_width="fill_parent" />
+	<View android:id="@+id/bottomHalf" android:layout_height="20dp"
+		android:layout_alignParentBottom="true"
+		android:layout_centerHorizontal="true"
+		android:background="@drawable/time_flipper_background_bottom"
+		android:layout_alignRight="@+id/topHalf" android:layout_alignLeft="@+id/topHalf"
+		android:layout_width="wrap_content" />
+	<View android:id="@+id/underDivider1" android:background="#141414"
+		android:layout_width="fill_parent" android:layout_height="1px"
+		android:layout_centerVertical="true" />
+	<View android:id="@+id/underDivider2" android:background="#060606"
+		android:layout_width="fill_parent" android:layout_height="1px"
+		android:layout_below="@+id/underDivider1" />
+	<TextView android:id="@+id/time" android:textAppearance="@style/PrimaryText"
+		android:textColor="@color/White" android:layout_height="wrap_content"
+		android:layout_width="wrap_content" android:text="12:14" android:layout_alignParentRight="true" android:layout_marginRight="30dp" android:textSize="30sp" android:layout_marginTop="-2dp"/>
+	<View android:id="@+id/overDivider1" android:background="#AA141414"
+		android:layout_width="fill_parent" android:layout_height="1px"
+		android:layout_centerVertical="true" />
+	<View android:id="@+id/overDivider2" android:background="#AA060606"
+		android:layout_width="fill_parent" android:layout_height="1px"
+		android:layout_below="@+id/overDivider1" />
+	<TextView android:id="@+id/ampm" android:textColor="@color/White"
+		android:layout_height="wrap_content" android:layout_width="wrap_content"
+		android:textSize="12sp" android:text="PM"
+		android:layout_alignParentRight="true" android:layout_alignTop="@+id/time"
+		android:layout_marginTop="5dp" android:layout_marginRight="6dp"/>
+</RelativeLayout>

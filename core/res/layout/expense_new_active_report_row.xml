@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+  xmlns:android="http://schemas.android.com/apk/res/android"
+  android:layout_width="wrap_content"
+  android:layout_height="wrap_content"
+  android:background="@drawable/list_selector_gradient_background"
+>
+	<TextView
+		android:id="@+id/text"
+		android:layout_width="fill_parent"
+		android:layout_height="wrap_content"
+		android:textAppearance="@style/ActiveReportListEntry"
+		android:text="@string/add_to_new_report"
+		android:layout_margin="6dp"
+	/>
+</LinearLayout>

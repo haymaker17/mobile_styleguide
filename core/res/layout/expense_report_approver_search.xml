@@ -1,0 +1,67 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+	android:orientation="vertical"
+	android:layout_height="fill_parent"
+	android:layout_width="fill_parent"
+	android:minWidth="300dp"
+	android:minHeight="420dp"
+	android:background="#FFFFFFFF"
+>
+	<!--  Include the standard header bits -->
+	<include layout="@layout/standard_header"/>
+    
+	<!-- Search by field. -->
+
+	<LinearLayout
+	    android:layout_height="wrap_content"
+		android:layout_width="fill_parent"
+		android:orientation="vertical"
+		android:background="@drawable/square_border"
+		android:padding="1dp"
+		android:layout_marginTop="1dp"
+		android:layout_marginLeft="5dp"
+		android:layout_marginRight="5dp"
+		android:layout_marginBottom="4dp"
+		>
+		
+		<include layout="@layout/image_form_field" android:id="@+id/search_approver_by_field"/>
+		
+	</LinearLayout>
+		
+	<EditText
+		android:id="@+id/listSearchEdit"
+		android:layout_height="wrap_content"
+		android:drawableRight="@drawable/ic_btn_search"
+		android:drawablePadding="6dp"
+		android:layout_width="fill_parent"
+		android:hint="@string/loc_search_hint"
+		android:inputType="text"
+		android:lines="1"
+		android:layout_margin="4dp"
+	/>
+	
+	<ListView
+		android:id="@+id/listSearchResults"
+		android:layout_height="fill_parent"
+		android:layout_width="fill_parent"
+		android:divider="#00000000"
+	/>
+	
+	<LinearLayout
+	    android:id="@+id/default_approver_layout"
+	    android:visibility="gone"
+	    android:layout_height="wrap_content"
+		android:layout_width="fill_parent"
+		android:orientation="vertical"
+		android:background="@drawable/square_border"
+		android:padding="1dp"
+		android:layout_marginTop="1dp"
+		android:layout_marginLeft="5dp"
+		android:layout_marginRight="5dp"
+		android:layout_marginBottom="4dp"
+		>	
+	
+		<include layout="@layout/image_form_field" android:id="@+id/default_approver_field" />
+
+	</LinearLayout>
+</LinearLayout>

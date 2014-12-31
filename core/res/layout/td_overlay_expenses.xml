@@ -1,0 +1,154 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:clickable="true"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:paddingTop="@dimen/status_bar_height"
+    android:background="#AF000000" >
+
+	<!-- This frame keeps the height of the ActionBar in each orientation, so we align the X button here -->
+	<FrameLayout android:layout_width="@dimen/td_dummy_action_bar_height"
+			android:layout_height="@dimen/td_dummy_action_bar_height"
+			android:layout_alignParentRight="true"
+			android:layout_alignParentTop="true"
+			android:id="@+id/td_icon_cancel_button"
+			android:background="#00000000" >
+
+		<ImageView
+		    android:layout_width="wrap_content"
+		    android:layout_height="wrap_content"
+		    android:layout_gravity="right|center_vertical"
+		    android:src="@drawable/td_icon_cancel"
+		    android:layout_marginRight="14dp" />
+	</FrameLayout>
+	
+	<LinearLayout
+	    android:layout_width="match_parent"
+	    android:layout_height="match_parent"
+	    android:orientation="vertical"
+	    android:weightSum="1" >
+		
+	    <LinearLayout
+	        android:layout_width="match_parent"
+	        android:layout_height="0dp"
+	        android:orientation="horizontal"
+	        android:layout_weight="1"
+	        android:baselineAligned="false" >
+	        
+			<LinearLayout
+	            android:layout_width="wrap_content"
+	            android:layout_height="wrap_content"
+	            android:orientation="vertical"
+	            android:layout_gravity="right"
+	            android:gravity="right"
+	            android:layout_marginLeft="@dimen/td_enr_exp_rec_toggle_width"
+	            android:id="@+id/td_toggle_expenses" >
+	            
+	            <LinearLayout
+			        android:layout_width="wrap_content"
+			        android:layout_height="wrap_content"
+			        android:orientation="vertical"
+			        android:layout_gravity="right"
+	            	android:gravity="right"
+	            	android:layout_marginTop="@dimen/td_enr_exp_rec_toggle_height" >
+			        
+				    <ImageView
+				        android:src="@drawable/td_arrow_up"
+				        android:layout_width="wrap_content"
+				        android:layout_height="wrap_content" />
+				    
+				    <View
+					    android:layout_width="@dimen/td_arrow_width"
+					    android:layout_height="@dimen/td_enr_short_arrow_length"
+					    android:background="@android:color/white" 
+					    android:layout_gravity="center"/>
+	    		</LinearLayout>
+	    
+				<TextView
+			        android:layout_width="80dp"
+			        android:layout_height="wrap_content"
+			        android:textAppearance="@style/TestDriveOverlayText"
+			        android:text="@string/td_overlay_toggle_expenses" />
+	            
+			</LinearLayout>
+			
+			<LinearLayout
+	            android:layout_width="0dp"
+	            android:layout_height="wrap_content"
+	            android:orientation="vertical"
+	            android:layout_gravity="right"
+	            android:gravity="right"
+	            android:layout_weight="1.0" >
+	            
+	            <LinearLayout
+			        android:layout_width="wrap_content"
+			        android:layout_height="wrap_content"
+			        android:orientation="vertical"
+					android:layout_gravity="right"
+			        android:layout_marginRight="@dimen/td_dummy_ab_add_icon_center_width"
+			        android:layout_marginTop="@dimen/td_dummy_ab_icon_arrow_margin" >
+			        
+				    <ImageView
+				        android:src="@drawable/td_arrow_up"
+				        android:layout_width="wrap_content"
+				        android:layout_height="wrap_content" />
+				    
+				    <View
+					    android:layout_width="@dimen/td_arrow_width"
+					    android:layout_height="@dimen/td_enr_long_arrow_length"
+					    android:background="@android:color/white" 
+					    android:layout_gravity="center"/>
+	    		</LinearLayout>
+	    
+				<TextView
+			        android:layout_width="wrap_content"
+			        android:layout_height="wrap_content"
+			        android:layout_marginRight="@dimen/td_enr_sample_exp_right_margin"
+			        android:layout_gravity="right"
+			        android:textAppearance="@style/TestDriveOverlayText"
+			        android:text="@string/td_overlay_create_new_expense" />
+
+	            
+			</LinearLayout>
+			
+	    </LinearLayout>
+	    
+	    <LinearLayout
+	        android:layout_width="match_parent"
+	        android:layout_height="wrap_content"
+	        android:orientation="vertical"
+	        android:layout_gravity="right"
+	        android:gravity="right"
+	        android:layout_marginRight="@dimen/td_enr_sample_exp_right_margin"
+	        android:layout_marginBottom="@dimen/td_enr_sample_exp_bottom_margin"
+	        android:layout_weight="0" >
+	        
+	        <LinearLayout
+		        android:layout_width="wrap_content"
+		        android:layout_height="wrap_content"
+		        android:orientation="vertical" >
+		        
+	            <ImageView
+			        android:src="@drawable/td_arrow_up"
+			        android:layout_width="wrap_content"
+			        android:layout_height="wrap_content" />
+			    <View
+				    android:layout_width="@dimen/td_arrow_width"
+				    android:layout_height="@dimen/td_enr_short_arrow_length"
+				    android:background="@android:color/white" 
+				    android:layout_gravity="center" />
+			    
+		    </LinearLayout>
+			
+			<TextView
+		        android:layout_width="match_parent"
+		        android:layout_height="wrap_content"
+		        android:gravity="right"
+		        android:textAppearance="@style/TestDriveOverlayText"
+		        android:text="@string/td_overlay_sample_expenses" />
+				        
+	    </LinearLayout>
+	    
+	</LinearLayout>
+
+</RelativeLayout>

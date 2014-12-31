@@ -1,0 +1,168 @@
+<?xml version="1.0" encoding="utf-8"?>
+<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    package="com.concur.gov"
+    android:installLocation="auto"
+    android:versionCode="1"
+    android:versionName="1.1" >
+
+    <uses-sdk
+        android:minSdkVersion="16"
+        android:targetSdkVersion="21" />
+
+    <!-- user permission -->
+    <uses-permission android:name="android.permission.INTERNET" />
+    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
+    <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
+    <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
+    <uses-permission android:name="android.permission.BROADCAST_STICKY" />
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
+
+    <application
+        android:name="com.concur.mobile.gov.GovAppMobile"
+        android:allowBackup="false"
+        android:icon="@drawable/launch"
+        android:label="@string/gov_app_name"
+        android:logo="@drawable/concur_logo"
+        android:theme="@style/ConcurTheme" >
+        <activity
+            android:name="com.concur.mobile.gov.activity.Startup"
+            android:icon="@drawable/launch"
+            android:label="@string/gov_app_name"
+            android:theme="@style/ConcurTheme.NoActionBar" >
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+
+                <category android:name="android.intent.category.LAUNCHER" />
+                <category android:name="android.intent.category.DEFAULT" />
+            </intent-filter>
+        </activity>
+        <activity android:name="com.concur.mobile.gov.activity.Login" />
+        <activity
+            android:name="com.concur.mobile.gov.activity.Home"
+            android:configChanges="orientation" />
+
+        <service android:name="com.concur.mobile.gov.service.GovService" />
+
+        <activity android:name="com.concur.mobile.core.activity.Preferences" />
+
+        <!-- SSO Login -->
+        <activity
+            android:name="com.concur.mobile.gov.activity.CompanyLogin"
+            android:windowSoftInputMode="adjustResize" />
+        <activity android:name="com.concur.mobile.gov.activity.CompanySignOn" />
+
+        <!-- Form fields -->
+        <activity
+            android:name="com.concur.mobile.core.expense.activity.ListSearch"
+            android:theme="@style/ConcurTheme.Dialog.Light" />
+        <activity
+            android:name="com.concur.mobile.gov.expense.activity.GovListSearch"
+            android:theme="@style/ConcurTheme.Dialog.Light" />
+        <!-- Travel activities -->
+
+        <activity android:name="com.concur.mobile.core.travel.activity.SegmentDetail" />
+        <activity android:name="com.concur.mobile.gov.travel.air.activity.GovAirSegmentDetail" />
+        <activity android:name="com.concur.mobile.core.travel.air.activity.AirSegmentFlightStatDetail" />
+        <activity android:name="com.concur.mobile.core.travel.car.activity.CarSegmentDetail" />
+        <activity android:name="com.concur.mobile.core.travel.activity.DiningSegmentDetail" />
+        <activity android:name="com.concur.mobile.core.travel.activity.EventSegmentDetail" />
+        <activity android:name="com.concur.mobile.core.travel.hotel.activity.HotelSegmentDetail" />
+        <activity android:name="com.concur.mobile.core.travel.activity.ParkingSegmentDetail" />
+        <activity android:name="com.concur.mobile.core.travel.rail.activity.RailSegmentDetail" />
+        <activity android:name="com.concur.mobile.core.travel.activity.RideSegmentDetail" />
+        <activity
+            android:name="com.concur.mobile.core.travel.request.activity.TravelRequestApprovalsWebView"
+            android:configChanges="orientation" />
+        <activity
+            android:name="com.concur.mobile.core.travel.activity.LocationSearch"
+            android:theme="@style/ConcurTheme.Dialog"
+            android:windowSoftInputMode="stateVisible" />
+
+        <!-- Air Search -->
+
+        <activity android:name="com.concur.mobile.gov.travel.air.activity.GovAirSearch" />
+        <activity android:name="com.concur.mobile.gov.travel.air.activity.GovAirSearchProgress" />
+        <activity android:name="com.concur.mobile.gov.travel.air.activity.GovAirSearchResultsSummary" />
+        <activity android:name="com.concur.mobile.core.travel.air.activity.AirSearchNoResults" />
+        <activity android:name="com.concur.mobile.gov.travel.air.activity.GovAirResultsList" />
+        <activity android:name="com.concur.mobile.gov.travel.air.activity.GovAirFlightDetail" />
+        <activity
+            android:name="com.concur.mobile.core.travel.activity.AgencyInformation"
+            android:configChanges="orientation"
+            android:theme="@android:style/Theme.Black.NoTitleBar" />
+        <activity android:name="com.concur.mobile.core.travel.air.activity.AlternativeAirScheduleList" />
+
+        <!-- Authorizations -->
+
+        <activity android:name="com.concur.mobile.gov.expense.doc.authorization.activity.AuthorizationListActivity" />
+        <activity android:name="com.concur.mobile.gov.expense.doc.authorization.activity.AuthorizationDetailActivity" />
+        <activity android:name="com.concur.mobile.gov.expense.doc.authorization.activity.AuthForVchListActivity"/>
+
+        <!-- Vouchers -->
+
+        <activity android:name="com.concur.mobile.gov.expense.doc.voucher.activity.VouchersListActivity" />
+        <activity android:name="com.concur.mobile.gov.expense.doc.voucher.activity.VoucherDetailActivity" />
+
+        <!-- Stamp Document -->
+
+        <activity android:name="com.concur.mobile.gov.expense.doc.stamp.activity.StampDocumentListActivity" />
+        <activity android:name="com.concur.mobile.gov.expense.doc.stamp.activity.StampDocumentDetailActivity" />
+        <activity android:name="com.concur.mobile.gov.expense.doc.stamp.activity.StampDocumentActivity" />
+
+        <!-- Drill-In Options -->
+
+        <activity android:name="com.concur.mobile.gov.expense.doc.activity.ExpenseListActivity" />
+        <activity android:name="com.concur.mobile.gov.expense.doc.activity.ExceptionsListActivity" />
+        <activity android:name="com.concur.mobile.gov.expense.doc.activity.AccAllocationListActivity" />
+        <activity android:name="com.concur.mobile.gov.expense.doc.activity.TotalsAndTravelsActivity" />
+        <activity android:name="com.concur.mobile.gov.expense.doc.activity.PerDiemLocationListActivity" />
+        <activity android:name="com.concur.mobile.gov.expense.doc.activity.CommentsActivity" />
+        <activity android:name="com.concur.mobile.gov.expense.charge.activity.UnAppliedExpenseListActivty" />
+        <activity android:name="com.concur.mobile.gov.expense.charge.activity.UnAppExpMultiChoiceListActivty" />
+        <activity android:name="com.concur.mobile.gov.activity.GovRulesActivity" />
+        <activity android:name="com.concur.mobile.gov.expense.doc.activity.DocumentReceipt" />
+        <activity android:name="com.concur.mobile.gov.expense.doc.activity.Expense" />
+
+        <!-- Gov Travel -->
+
+        <activity android:name="com.concur.mobile.gov.travel.activity.TravelAuthType" />
+        <activity android:name="com.concur.mobile.gov.travel.activity.GovLocationSearch" />
+        <activity android:name="com.concur.mobile.gov.travel.activity.OpenOrExistingAuthList" />
+        <activity android:name="com.concur.mobile.gov.travel.activity.TDYPerDiemLocations" />
+        <activity android:name="com.concur.mobile.gov.travel.activity.GovTripList" />
+        <activity android:name="com.concur.mobile.gov.travel.activity.GovSegmentList" />
+        <activity
+            android:name="com.concur.mobile.gov.travel.activity.DocInfoFromTripLocator"
+            android:theme="@style/ConcurTheme.Dialog"
+            android:windowSoftInputMode="adjustResize" />
+
+        <!-- Car Search -->
+        <activity android:name="com.concur.mobile.gov.travel.car.activity.GovCarSearch" />
+        <activity android:name="com.concur.mobile.gov.travel.car.activity.GovCarSearchNoResults" />
+        <activity android:name="com.concur.mobile.gov.travel.car.activity.GovCarSearchResults" />
+        <activity android:name="com.concur.mobile.gov.travel.car.activity.GovCarSearchDetail" />
+        <activity android:name="com.concur.mobile.gov.travel.car.activity.GovCarSearchProgress" >
+        </activity>
+
+        <!-- Hotel Search -->
+        <activity
+            android:name="com.concur.mobile.gov.travel.hotel.activity.GovHotelSearch"
+            android:windowSoftInputMode="adjustResize" />
+        <activity android:name="com.concur.mobile.gov.travel.hotel.activity.GovHotelSearchProgress" />
+        <activity android:name="com.concur.mobile.gov.travel.hotel.activity.GovHotelSearchResults" />
+        <activity android:name="com.concur.mobile.gov.travel.hotel.activity.GovHotelSearchRooms" />
+        <activity android:name="com.concur.mobile.gov.travel.hotel.activity.GovHotelSearchRoomDetails" />
+        <activity android:name="com.concur.mobile.gov.travel.hotel.activity.GovHotelSearchNoResults" />
+        <activity android:name="com.concur.mobile.core.travel.activity.ImageActivity" />
+        <activity android:name="com.concur.mobile.gov.travel.hotel.activity.GovHotelReserveRoom" />
+
+        <!-- Rail Search -->
+        <activity android:name="com.concur.mobile.gov.travel.rail.activity.GovRailSearch" />
+        <activity android:name="com.concur.mobile.gov.travel.rail.activity.GovRailSearchProgress" />
+        <activity android:name="com.concur.mobile.gov.travel.rail.activity.GovRailSearchNoResults" />
+        <activity android:name="com.concur.mobile.gov.travel.rail.activity.GovRailSearchResults" />
+        <activity android:name="com.concur.mobile.gov.travel.rail.activity.GovRailSearchResultsFares" />
+        <activity android:name="com.concur.mobile.gov.travel.rail.activity.GovRailSearchDetail" />
+    </application>
+
+</manifest>

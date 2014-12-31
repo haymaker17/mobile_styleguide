@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="voice_book_unable_to_determine_departure_loc">Ihr Abflugort konnte leider nicht bestimmt werden. Bitte versuchen Sie es erneut.</string>
+    <string name="voice_book_unable_to_determine_arrival_loc">Ihr Ankunftsort konnte leider nicht bestimmt werden. Bitte versuchen Sie es erneut.</string>
+    <string name="voice_book_unable_to_loc">Ihr Standort konnte leider nicht bestimmt werden. Bitte versuchen Sie es erneut.</string>
+    <string name="voice_search_not_supported_category">Diese Suche wird in dieser Kategorie nicht unterstützt.</string>
+    <string name="voice_air_search_different_scope">Versuchen Sie es erneut mit einer Flugsuche.</string>
+    <string name="voice_car_search_different_scope">Versuchen Sie es erneut mit einer Mietwagensuche.</string>
+    <string name="voice_hotel_search_different_scope">Versuchen Sie es erneut mit einer Hotelsuche.</string>
+    <string name="voice_book_unable_to_determine_pickup_loc">Ihr Abholort konnte leider nicht bestimmt werden. Bitte versuchen Sie es erneut.</string>
+    <string name="voice_book_unable_to_search">Das habe ich nicht verstanden. Bitte versuchen Sie es erneut.</string>
+    <string name="voice_book_speech_to_text_unsupported">Für dieses Gerät wird Sprache-in-Text leider nicht unterstützt.</string>
+</resources>

@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="utf-8"?>
+<TableRow
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="fill_parent"
+    android:layout_height="wrap_content"
+>
+	<ImageView
+	    android:src="@drawable/dot_off"
+	    android:layout_gravity="center"
+	    android:layout_marginRight="4dp"
+	    android:layout_marginTop="4dp"
+	    android:layout_marginBottom="4dp"
+	    android:layout_marginLeft="4dp"
+	/>
+	<TextView
+	    android:id="@+id/whats_new_item_text"
+	    android:textSize="12sp"
+	   	android:layout_marginTop="4dp"
+	    android:layout_marginBottom="4dp"
+	    android:layout_marginRight="4dp"
+	    android:textAppearance="@style/WhatsNewDialogMediumText"
+	/>
+</TableRow>

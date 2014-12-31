@@ -1,0 +1,81 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="#FFFFFF"
+    android:orientation="horizontal" >
+
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="1dp"
+        android:layout_marginTop="1dp"
+        android:layout_weight="1"
+        android:orientation="vertical"
+        android:paddingBottom="3dp"
+        android:paddingLeft="@dimen/list_cell_padding_left"
+        android:paddingRight="@dimen/list_cell_padding_right"
+        android:paddingTop="3dp" >
+
+        <TextView
+            android:id="@+id/hotel_room_summary"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textAppearance="@style/PrimaryText" />
+
+        <TextView
+            android:id="@+id/hotel_room_deposit_required"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textAppearance="@style/PrimaryText"
+            android:textStyle="bold"
+            android:visibility="gone" />
+
+        <TextView
+            android:id="@+id/hotel_room_gds_name"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textAppearance="@style/PrimaryText"
+            android:visibility="gone" />
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="vertical" >
+
+        <ImageView
+            android:id="@+id/violation_icon"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="top|right"
+            android:src="@drawable/ic_action_voilation"
+            android:visibility="invisible" />
+
+        <TextView
+            android:id="@+id/hotel_room_rate"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="right|center_vertical"
+            android:paddingBottom="10dp"
+            android:paddingLeft="5dp"
+            android:paddingRight="@dimen/list_cell_padding_right"
+            android:paddingTop="3dp"
+            android:text="$0.00"
+            android:textAppearance="@style/PrimaryText"
+            android:textStyle="bold" />
+
+        <!--
+             <TextView
+            android:id="@+id/hotel_price"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentRight="true"
+            android:fontFamily="sans-serif-medium"
+            android:text="$169"
+            android:textColor="#0078c8"
+            android:textSize="18sp" />
+        -->
+    </LinearLayout>
+
+</LinearLayout>

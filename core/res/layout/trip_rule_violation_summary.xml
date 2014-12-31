@@ -1,0 +1,74 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+	style="@style/ConcurTheme"
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent"
+    android:background="@drawable/gradient_background"
+    android:paddingLeft="10dp" 
+    android:paddingBottom="5dp" 
+    android:paddingTop="5dp" >
+        
+	<LinearLayout 
+	    android:id="@+id/trip_rule_violation_summary_row"
+		android:layout_width="fill_parent"
+		android:orientation="vertical"
+		android:layout_height="wrap_content">
+		<TextView 
+		    android:layout_width="wrap_content"
+			android:layout_height="wrap_content"
+			android:id="@+id/segment_text"
+			android:textAppearance="@style/ListCellSubHeaderText"			
+			android:text="Choose different time if possible - require approval"/>
+		<TextView 
+		    android:layout_width="wrap_content"
+			android:layout_height="fill_parent"
+			android:id="@+id/violation_reason_header"
+			android:textAppearance="@style/PrimaryText"
+			android:textStyle="bold"
+			android:text="Violation Reason Code:"
+			android:ellipsize="end"
+			android:lines="1"
+			android:paddingTop="5dp"			
+			android:scrollHorizontally="true"/>
+		<TextView 
+		    android:layout_width="wrap_content"
+			android:layout_height="wrap_content"
+			android:id="@+id/violation_reason_text"
+			android:textAppearance="@style/ListCellSubHeaderText"
+			android:text="YC - Declined lower fare due to carrier preference"/>
+		<TextView 
+		    android:layout_width="wrap_content"
+			android:layout_height="fill_parent"
+			android:id="@+id/booker_comments_header"
+			android:textAppearance="@style/PrimaryText"
+			android:textStyle="bold"
+			android:text="Booker Comments:"
+			android:ellipsize="end"
+			android:lines="1"
+			android:paddingTop="5dp"
+			android:scrollHorizontally="true"/>
+		<TextView 
+		    android:layout_width="wrap_content"
+			android:layout_height="wrap_content"
+			android:id="@+id/booker_comments_text"
+			android:textAppearance="@style/ListCellSubHeaderText"
+			android:text="test comments"/>
+		<TextView 
+		    android:layout_width="wrap_content"
+			android:layout_height="fill_parent"
+			android:id="@+id/segment_rate_header"
+			android:textAppearance="@style/PrimaryText"
+			android:textStyle="bold"
+			android:text="Airfare quoted total:"
+			android:ellipsize="end"
+			android:lines="1"
+			android:paddingTop="5dp"
+			android:scrollHorizontally="true"/>
+		<TextView 
+		    android:layout_width="wrap_content"
+			android:layout_height="wrap_content"
+			android:id="@+id/segment_rate_text"
+			android:textAppearance="@style/ListCellSubHeaderText"
+			android:text="2003.10"/>		
+	</LinearLayout>
+</LinearLayout>

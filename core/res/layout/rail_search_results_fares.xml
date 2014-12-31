@@ -1,0 +1,79 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+  xmlns:android="http://schemas.android.com/apk/res/android"
+  android:layout_width="fill_parent"
+  android:layout_height="fill_parent"
+  android:orientation="vertical"
+  style="@style/ConcurTheme" android:background="@drawable/gradient_background">
+  
+	<!--  Include the standard header bits -->
+	<include layout="@layout/standard_header"/>
+	
+	<include
+		android:id="@+id/travel_header"
+		layout="@layout/travel_title_header"
+		android:layout_width="fill_parent"
+		android:layout_height="wrap_content"
+	/>
+	
+    <ScrollView android:layout_width="fill_parent" android:layout_height="0dp" 
+        android:layout_weight="1" android:layout_marginBottom="3dp">
+        
+	    <LinearLayout android:layout_width="fill_parent" android:layout_height="fill_parent" 
+	        android:orientation="vertical">		
+	
+			<LinearLayout
+				android:layout_width="fill_parent" android:orientation="vertical"
+				android:layout_marginTop="@dimen/list_group_vertical_margin"
+				android:layout_marginLeft="@dimen/list_item_horizontal_margin"
+				android:layout_marginRight="@dimen/list_item_horizontal_margin"
+				android:layout_height="wrap_content">
+				
+				<LinearLayout android:layout_height="wrap_content"
+					android:layout_width="fill_parent" android:orientation="vertical"
+					android:background="@drawable/square_border" android:padding="1dp">		
+					<include
+						layout="@layout/rail_search_results_row"
+						android:layout_width="fill_parent"
+						android:layout_height="wrap_content"
+						android:layout_marginTop="0dp"
+					/>
+				</LinearLayout>
+				
+				<View android:layout_width="fill_parent"
+					android:background="@drawable/square_border_shadow"
+					android:layout_height="3dp" android:layout_marginLeft="1dp"
+					android:layout_marginRight="1dp" />
+			</LinearLayout>
+			
+			<TextView android:layout_width="fill_parent"
+				android:layout_height="wrap_content"
+				android:gravity="center"
+				android:textAppearance="@style/PrimaryText"
+				android:layout_marginTop="4dp"
+				android:text="@string/rail_results_fares_select_seat_class" />
+				
+			<LinearLayout
+				android:layout_width="fill_parent" android:orientation="vertical"
+				android:layout_marginLeft="@dimen/list_item_horizontal_margin"
+				android:layout_marginRight="@dimen/list_item_horizontal_margin"
+				android:layout_height="wrap_content">
+
+				<LinearLayout
+					android:id="@+id/railSearchResultsFaresLayout" 
+					android:layout_height="wrap_content"
+					android:layout_width="fill_parent" android:orientation="vertical"
+					android:background="@drawable/square_border" android:padding="1dp">
+						
+					<!-- Each fare entry will be inflated here. -->
+				</LinearLayout>
+							
+				<View android:layout_width="fill_parent"
+					android:background="@drawable/square_border_shadow"
+					android:layout_height="3dp" android:layout_marginLeft="1dp"
+					android:layout_marginRight="1dp" />
+		    </LinearLayout>
+  		</LinearLayout>
+  	</ScrollView>
+  	
+</LinearLayout>

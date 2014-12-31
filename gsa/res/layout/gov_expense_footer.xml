@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="fill_parent"
+    android:layout_height="@dimen/footer_height"
+    android:layout_gravity="bottom"
+    android:layout_weight="0"
+    android:background="@drawable/gradient_title_bar"
+    android:gravity="center_vertical"
+    android:orientation="horizontal"
+    android:visibility="gone" >
+
+    <Button
+        android:id="@+id/gov_footer_selectall"
+        android:layout_width="0dp"
+        android:layout_height="@dimen/standard_button_height"
+        android:layout_marginLeft="@dimen/footer_button_horizontal_margin"
+        android:layout_marginRight="25dp"
+        android:layout_weight="1.0"
+        android:background="@drawable/btn_standard"
+        android:text="@string/gov_add_to_vch_selectall"
+        android:textSize="14sp" 
+        android:visibility="visible"/>
+
+    <Button
+        android:id="@+id/gov_footer_unselectall"
+        android:layout_width="0dp"
+        android:layout_height="@dimen/standard_button_height"
+        android:layout_marginLeft="@dimen/footer_button_horizontal_margin"
+        android:layout_marginRight="25dp"
+        android:layout_weight="1.0"
+        android:background="@drawable/btn_standard"
+        android:text="@string/gov_add_to_vch_unselectall"
+        android:textSize="14sp" 
+         android:visibility="gone"/>
+    
+    <Button
+        android:id="@+id/gov_footer_add_to_voucher"
+        android:layout_width="0dp"
+        android:layout_height="@dimen/standard_button_height"
+        android:layout_marginLeft="25dp"
+        android:layout_marginRight="@dimen/footer_button_horizontal_margin"
+        android:layout_weight="1.0"
+        android:background="@drawable/btn_standard"
+        android:text="@string/gov_add_to_vch"
+        android:textSize="14sp" />
+
+</LinearLayout>

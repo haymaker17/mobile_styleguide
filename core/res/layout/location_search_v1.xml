@@ -1,0 +1,82 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/search_bar"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/locationBackground"
+    android:orientation="vertical" >
+
+    <LinearLayout
+        android:id="@+id/search_edit_frame"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_vertical"
+        android:layout_marginBottom="4dip"
+        android:background="@color/White"
+        android:minHeight="56dp"
+        android:orientation="horizontal" >
+
+        <ImageView
+            android:id="@+id/search_back_button"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_vertical"
+            android:drawablePadding="20dp"
+            android:focusable="true"
+            android:paddingLeft="20dp"
+            android:src="@drawable/search_icon_back" />
+
+        <!-- Inner layout contains the app icon, button(s) and EditText -->
+
+        <SearchView
+            android:id="@+id/searchView"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_vertical"
+            android:layout_weight="1"
+            android:indeterminate="true" >
+        </SearchView>
+
+        <ImageView
+            android:id="@+id/search_icon"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:indeterminate="true"
+            android:paddingRight="20dp"
+            android:src="@drawable/search_icon_search"
+            android:visibility="gone" />
+    </LinearLayout>
+
+    <Button
+        android:id="@+id/officeLocation"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="20dp"
+        android:background="@color/White"
+        android:drawableLeft="@drawable/search_icon_office_location"
+        android:drawablePadding="20dp"
+        android:fontFamily="sans-serif-light"
+        android:gravity="center_vertical|center_horizontal|left"
+        android:minHeight="56dp"
+        android:paddingLeft="20dp"
+        android:paddingRight="20dp"
+        android:text="@string/loc_search_office"
+        android:textColor="@color/Black"
+        android:textSize="16sp"
+        android:visibility="gone" >
+    </Button>
+
+    <ListView
+        android:id="@+id/locSearchResults"
+        android:layout_width="wrap_content"
+        android:layout_height="match_parent"
+        android:background="@color/CustomDialogTextColor"
+        android:divider="@color/cellDivider"
+        android:dividerHeight="1dp"
+        android:minHeight="54dp"
+        android:paddingBottom="20dp"
+        android:paddingLeft="50dp"
+        android:paddingRight="20dp" >
+    </ListView>
+
+</LinearLayout>

@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent"
+    android:background="#FFFFFFFF"
+    android:orientation="vertical" >
+
+    <RelativeLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content" >
+
+        <include
+            android:id="@+id/header"
+            layout="@layout/standard_header" />
+
+        <Spinner
+			android:id="@+id/locSearchMode"
+			android:layout_height="wrap_content"
+			android:layout_width="fill_parent"
+			android:layout_marginLeft="4dp"
+			android:layout_below="@+id/header"
+			android:layout_marginRight="4dp"
+			android:layout_marginTop="4dp"
+		android:visibility="gone"/>
+        <EditText
+            android:id="@+id/locSearchEdit"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/locSearchMode"
+            android:layout_margin="4dp"
+            android:drawablePadding="6dp"
+            android:drawableRight="@drawable/ic_btn_search"
+            android:hint="@string/loc_search_hint"
+            android:imeOptions="actionSearch"
+            android:inputType="text"
+            android:lines="1" />
+
+        <ProgressBar
+            android:id="@+id/network_indicator"
+            style="?android:attr/progressBarStyleSmall"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignRight="@id/locSearchEdit"
+            android:layout_alignTop="@id/locSearchEdit"
+            android:layout_centerVertical="true"
+            android:layout_gravity="center_vertical|right"
+            android:layout_marginRight="16dp"
+            android:layout_marginTop="13dp"
+            android:indeterminate="true"
+            android:visibility="invisible" />
+    </RelativeLayout>
+
+    <ListView
+        android:id="@+id/locSearchResults"
+        android:layout_width="fill_parent"
+        android:layout_height="fill_parent"
+        android:divider="#00000000" />
+
+</LinearLayout>

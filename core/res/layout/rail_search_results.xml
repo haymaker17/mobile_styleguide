@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android" 
+  android:layout_width="fill_parent"
+  android:layout_height="fill_parent"
+  android:orientation="vertical" style="@style/ConcurTheme"
+  android:background="@drawable/gradient_background">
+
+	<!--  Include the standard header bits -->
+	<include layout="@layout/standard_header"/>
+	
+	<include
+		android:id="@+id/travel_header"
+		layout="@layout/travel_title_header"
+		android:layout_width="fill_parent"
+		android:layout_height="wrap_content"
+	/>
+
+    <ListView android:id="@android:id/list"
+		android:layout_height="fill_parent" 
+		android:layout_width="fill_parent"
+		android:layout_weight="1"
+		android:background="@drawable/gradient_background"
+		android:divider="@color/ListDivider"
+	/>
+	
+ 	<include android:id="@+id/footer"
+ 		layout="@layout/footer_navigation_bar_text_view" />
+ 	
+</LinearLayout>

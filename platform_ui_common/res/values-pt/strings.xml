@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+	<!-- Network Connectivity stuff. -->
+    <string name="dlg_no_connectivity_title">Cliente está off-line</string>
+    <string name="dlg_no_connectivity_message">Esta operação não é suportada em modo off-line.  Tente novamente quando a conectividade de dados estiver disponível.</string>
+        
+    <!-- Login UI Strings -->
+	<!-- Email Lookup -->
+    <string name="email_lookup_hint">E-mail comercial ou nome de usuário do Concur</string>
+    <string name="email_lookup_continue">Continuar</string>
+    <string name="email_lookup_unable_to_login_title">Não foi possível efetuar login</string>
+    <string name="email_lookup_unable_to_login_msg">Não é possível fazer o seu login com essas informações.</string>
+    <string name="email_lookup_wrong_email_format_title">E-mail ou nome de usuário inválido</string>
+    <string name="email_lookup_wrong_email_username_format_msg">Sua entrada não parece ser um endereço de e-mail ou nome de usuário do Concur válido.</string>
+    
+    <!-- PIN/Password Login Strings -->
+    <string name="login_enter_password_pin">Senha móvel (PIN)</string>
+    <string name="login_button">Acessar o Concur</string>
+    <string name="login_no_offline">O login off-line não está disponível.  Um login com sucesso deve ocorrer enquanto estiver on-line antes que o modo off-line possa ser usado.</string>            
+    <string name="register_button">Precisa definir seu PIN?</string>
+    <string name="login_help_with_signin">Forgot Mobile Password (PIN)?</string>
+    <string name="login_help_with_signin_password">Forgot Password?</string>
+	<string name="login_password">Senha</string>    
+    <string name="login_password_or_pin_invalid">Tente inserir novamente sua senha ou selecione Esqueci para receber as instruções de acesso.</string>
+    <string name="login_invalid_concur_credentials">Senha Incorreta</string>    
+    <string name="try_again">Tentar novamente</string>
+    <string name="i_forgot">Esqueci</string>
+    <string name="dlg_logging_in">Efetuando login&#8230;</string>
+            
+	<!-- SSO Login -->
+	<string name="sso_sign_in">Login pelo código da empresa SSO</string>
+	  
+</resources>

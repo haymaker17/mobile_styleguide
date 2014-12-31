@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--  Top level layout file for ExpenseReceipt activity. -->
+<LinearLayout
+  xmlns:android="http://schemas.android.com/apk/res/android"
+  android:id="@+id/expense_receipt_view"
+  android:layout_width="fill_parent"
+  android:layout_height="fill_parent"
+  android:orientation="vertical"
+  style="@style/ConcurTheme"
+>
+	<!--  Include the standard header bits -->
+	<include layout="@layout/standard_header"/>
+	
+	<!--  Include the expense title header -->
+	<include android:id="@+id/expense_title_header" layout="@layout/expense_title_header"/>
+	<WebView
+		android:id="@+id/receipt_web_view"
+		android:layout_width="fill_parent"
+		android:layout_height="fill_parent"
+		android:layout_weight="1"
+		android:background="@drawable/gradient_background"
+	/>
+  	<!--  Include the expense footer navigation bar. -->
+  	<include android:id="@+id/expense_nav_bar_footer" layout="@layout/expense_footer_navigation_bar"/>
+</LinearLayout>

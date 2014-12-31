@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+	android:layout_width="fill_parent" android:layout_height="wrap_content"
+	android:paddingLeft="@dimen/list_cell_padding_left"
+	android:paddingRight="@dimen/list_cell_padding_right"
+	android:paddingTop="@dimen/list_cell_padding_top"
+	android:paddingBottom="@dimen/list_cell_padding_bottom"
+	android:background="@drawable/list_selector_gradient_background">
+	<TextView android:layout_width="wrap_content"
+		android:layout_height="wrap_content" android:textAppearance="@style/ListCellHeaderText"
+		android:layout_centerVertical="true" android:text="See All (98 results)" android:id="@+id/allCount"></TextView>
+
+</RelativeLayout>

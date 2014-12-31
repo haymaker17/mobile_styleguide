@@ -1,0 +1,26 @@
+{
+   "data": {
+       "actionStatus": {
+           "status": "FAILURE"
+       },
+       "receiptImageId": "0DA0CE03B1DA39F0BCB6DA8A95D4D2EE"
+   },
+   "errors": [
+       {
+           "code": "UNEXPECTED_ERROR",
+           "systemMessage": "This is one awesome error message!"
+       },
+       {
+           "code": "UNEXPECTED_ERROR",
+           "systemMessage": "ProtectedValue tampered with: 0DA0CE03B1DA39F0BCB6DA8A95D4D2EE\r\nParameter name: protectedValue"
+       },
+       {
+           "code": "9999",
+           "systemMessage": "Unexpected Exception Occurred"
+       },
+       {
+           "code": "REQUEST_ERROR",
+           "systemMessage": "Error connecting to: http://localhost:8087/ocr/babel/OcrService/Enqueue\r\n\r\nHttpStatus: 500\r\n\r\nHeaders: \r\n\r\nHttp Response: "
+       }
+   ]
+}

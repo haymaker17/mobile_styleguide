@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <!--
+    	More EventTracker Parameters can be found here:
+    	https://developers.google.com/analytics/devguides/collection/android/parameters
+    -->
+
+
+    <!-- Replace placeholder ID with your tracking ID -->
+    <string name="ga_trackingId">UA-47360705-4</string>
+    <!-- <string name="ga_trackingId">UA-48488316-1</string> -->
+
+
+    <!--
+  		The name of your app, used in the app name dimension in your reports.
+  		Defaults to the value found in the package.
+    -->
+    <string name="ga_appName">Concur</string>
+
+    <!-- The dispatch period in seconds. Defaults to 30 minutes. -->
+    <integer name="ga_dispatchPeriod">120</integer>
+
+    <!-- Enable automatic activity tracking -->
+    <bool name="ga_autoActivityTracking">true</bool>
+
+    <!-- Enable automatic exception tracking -->
+    <bool name="ga_reportUncaughtExceptions">true</bool>
+
+    <!--
+  		The amount of time (in seconds) your application can stay in the
+  		background before the session is ended. Default is 30 seconds.
+  		Negative value disables EasyTracker session management.
+    -->
+    <integer name="ga_sessionTimeout">300</integer>
+
+    <string name="com.concur.aftest.MainActivity">Home</string>
+    <string name="com.concur.aftest.SubActivity">Sub</string>
+    <string name="com.concur.aftest.SettingsActivity">Settings</string>
+    <!-- screen names for Hotel Droo Off Goal flow -->
+    <string name="com.concur.mobile.core.travel.hotel.activity.HotelSearch">Hotel Criteria</string>
+    <string name="com.concur.mobile.core.travel.hotel.activity.HotelSearchProgress">Hotel Search Progress</string>
+    <string name="com.concur.mobile.core.travel.hotel.activity.HotelSearchNoResults">Hotel Search NoResults</string>
+    <string name="com.concur.mobile.core.travel.activity.TravelPointsExplanation">Travel Points Page</string>
+    <string name="com.concur.mobile.core.travel.hotel.activity.HotelSearchResults">Hotel Listings</string>
+    <string name="com.concur.mobile.core.travel.hotel.activity.HotelSearchRooms">Hotel Rooms List</string>
+    <string name="com.concur.mobile.core.travel.hotel.activity.HotelSearchRoomDetails">Hotel Room Details</string>
+    <string name="com.concur.mobile.core.travel.hotel.activity.HotelReserveRoom">Hotel Booking</string>
+    <string name="com.concur.mobile.core.travel.activity.SegmentList">Trips Itinerary</string>
+    <!-- Flurry stuff -->
+    <string name="flurry_key">DSNR475FZ4552YZJ5NDN</string>
+
+</resources>

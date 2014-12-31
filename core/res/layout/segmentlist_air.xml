@@ -1,0 +1,90 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="fill_parent"
+    android:layout_height="wrap_content"
+    android:background="@drawable/list_selector_gradient_background"
+    android:orientation="horizontal"
+    android:paddingBottom="5dp"
+    android:paddingLeft="5dp"
+    android:paddingRight="5dp" >
+
+    <ImageView
+        android:id="@+id/segmentListSegmentIconView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_vertical"
+        android:src="@drawable/itin_icon_flight" />
+
+    <RelativeLayout
+        android:layout_width="46dp"
+        android:layout_height="fill_parent"
+        android:layout_marginRight="8dp"
+        android:gravity="right" >
+
+        <TextView
+            android:id="@+id/segmentListAirTime"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="00:00"
+            android:textAppearance="@style/SegmentListRowHeaderText"
+            android:textStyle="bold" >
+        </TextView>
+
+        <TextView
+            android:id="@+id/segmentListAirTimeAMPM"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignRight="@+id/segmentListAirTime"
+            android:layout_below="@+id/segmentListAirTime"
+            android:text="XX"
+            android:textAppearance="@style/ListCellSmallText" >
+        </TextView>
+    </RelativeLayout>
+
+    <LinearLayout
+        android:id="@+id/segmentListSegmentRowLayout"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical" >
+
+        <TextView
+            android:id="@+id/segmentListAirFromTo"
+            android:layout_width="wrap_content"
+            android:layout_height="fill_parent"
+            android:ellipsize="end"
+            android:lines="1"
+            android:scrollHorizontally="true"
+            android:text="Origin to Destination"
+            android:textAppearance="@style/PrimaryText"
+            android:textStyle="bold" />
+
+        <TextView
+            android:id="@+id/segmentListAirFlight"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Airline 123"
+            android:textAppearance="@style/ListCellSubHeaderText" />
+
+        <RelativeLayout
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content" >
+
+            <TextView
+                android:id="@+id/segmentListAirTerminal"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginRight="8dp"
+                android:text="Terminal: srwaer"
+                android:textAppearance="@style/ListCellSubHeaderText" />
+
+            <TextView
+                android:id="@+id/segmentListAirGate"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/segmentListAirTerminal"
+                android:text="Gate: --"
+                android:textAppearance="@style/ListCellSubHeaderText" />
+        </RelativeLayout>
+    </LinearLayout>
+
+</LinearLayout>

@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+	xmlns:android="http://schemas.android.com/apk/res/android" 
+	android:id="@+id/hotel_room_details_view"
+  	android:layout_width="fill_parent"
+  	android:layout_height="fill_parent"
+  	android:orientation="vertical"
+  	style="@style/ConcurTheme"
+  	android:background="@drawable/gradient_background"
+>
+
+	<!--  Include the standard header bits -->
+	<include android:id="@+id/header" layout="@layout/standard_header"/>
+    
+	 <ScrollView android:layout_width="fill_parent" android:layout_height="0dp" 
+	     android:layout_weight="1">
+	     
+	     <LinearLayout android:layout_width="fill_parent" android:layout_height="fill_parent" 
+	         android:orientation="vertical">
+	         
+	         <!-- Include the hotel header view. -->
+	         <include android:id="@+id/hotel_header" layout="@layout/travel_hotel_header"
+			    android:layout_width="fill_parent"
+				android:layout_height="wrap_content"
+				/>
+	         
+	         <LinearLayout
+	             android:id="@+id/hotel_search_result_room_details_list" 
+	             android:layout_height="wrap_content"
+	             android:layout_width="fill_parent" android:orientation="vertical"
+	             android:background="@drawable/square_border"
+	             android:paddingTop="1dp">
+
+				<!-- Each hotel detail segments will be inflated here. -->
+				
+			</LinearLayout>	         
+
+		</LinearLayout>
+	</ScrollView>
+	     
+</LinearLayout>

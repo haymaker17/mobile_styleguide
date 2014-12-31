@@ -1,0 +1,130 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    style="@style/ConcurTheme"
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent"
+    android:background="@drawable/voice_gradient_background" >
+
+	<!--  Include the standard header bits -->
+	<include android:id="@+id/header" layout="@layout/standard_header"/>
+    
+    <!-- The Voice-to-Text conversation -->
+    <RelativeLayout
+        android:id="@+id/conversationLayout"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/header"
+        >
+        
+        <TextSwitcher
+			android:id="@+id/voiceBookTextSwitcher"            
+			android:layout_width="fill_parent"
+		    android:layout_height="wrap_content"
+		    android:layout_centerInParent="true"
+			android:layout_margin="15dp"
+            >
+        </TextSwitcher>
+        
+	    <ImageView
+	        android:id="@+id/voiceBookArrowLeft"
+	        android:layout_width="wrap_content"
+	        android:layout_height="wrap_content"
+	        android:layout_alignParentLeft="true"
+	        android:layout_marginLeft="4.5dp"
+	        android:layout_marginTop="15dp"
+	        android:src="@drawable/arrow_left"
+	        android:visibility="visible" />
+	
+	    <ImageView
+	        android:id="@+id/voiceBookArrowRight"
+	        android:layout_width="wrap_content"
+	        android:layout_height="wrap_content"
+	        android:layout_alignParentRight="true"
+	        android:layout_marginRight="4.5dp"
+	        android:layout_marginTop="15dp"
+	        android:src="@drawable/arrow_right"
+	        android:visibility="visible" />
+        
+	</RelativeLayout>
+
+    <!-- The Concur Voice-to-Text conversation -->
+    <RelativeLayout
+        android:id="@+id/conversationResponseLayout"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/conversationLayout"
+        android:visibility="gone"
+        >
+        
+        <TextSwitcher
+			android:id="@+id/responseTextSwitcher"            
+			android:layout_width="fill_parent"
+		    android:layout_height="wrap_content"
+			android:layout_marginLeft="15dp"
+			android:layout_marginRight="15dp"
+			android:layout_marginBottom="15dp"
+            >
+            
+        </TextSwitcher>
+        
+	    <ImageView
+	        android:layout_width="wrap_content"
+	        android:layout_height="wrap_content"
+	        android:layout_alignParentLeft="true"
+	        android:layout_marginLeft="4.5dp"
+	        android:layout_marginTop="10dp"
+	        android:src="@drawable/arrow_left"
+	       	/>
+
+	</RelativeLayout> 
+    
+    <ImageButton
+        android:id="@+id/voiceBookSpeakButton"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_above="@+id/voiceBookHintText"
+        android:layout_centerHorizontal="true"
+        android:background="@drawable/voice_speak_button"
+        android:contentDescription="@string/general_speak_now"
+        />
+    
+    <TextView
+        android:id="@+id/voiceBookHintText"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:layout_marginBottom="75dp"
+        android:layout_marginTop="10dp"
+        android:gravity="center"
+        android:text="@string/voice_book_hint"
+        android:textAppearance="@style/VoiceBookHintText"
+        android:textColor="#292929" />
+
+
+    <!-- The (anmiated) Search Progress -->
+    <RelativeLayout
+        android:id="@+id/voiceBookProgressLayout"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:layout_above="@+id/voiceBookHintText"
+        android:visibility="gone"
+        >
+        
+	    <ImageView
+	        android:id="@+id/voiceBookSpeakBlank"
+	        android:layout_width="wrap_content"
+	        android:layout_height="wrap_content"
+	        android:layout_centerInParent="true"
+	        android:background="@android:color/transparent"        
+	        android:contentDescription="@string/home_action_hotel_voice_search"
+	        android:src="@drawable/voice_button_blank" />
+	
+	    <ProgressBar
+	        android:id="@+id/searchProgress"
+	        android:layout_width="wrap_content"
+	        android:layout_height="wrap_content"
+	        android:layout_centerInParent="true"
+	    />
+        
+    </RelativeLayout>
+</RelativeLayout>

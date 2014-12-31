@@ -1,0 +1,143 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent"
+    android:background="@drawable/gradient_background"
+    android:orientation="vertical" >
+
+    <RelativeLayout
+        android:id="@+id/gov_stampdoc_layout"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:layout_weight="1"
+        android:paddingBottom="@dimen/list_cell_padding_bottom" >
+
+        <include
+            android:id="@+id/header"
+            layout="@layout/standard_header" />
+
+        <TableLayout
+            android:id="@+id/gov_stampdoc_status_layout"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentLeft="true"
+            android:layout_alignWithParentIfMissing="true"
+            android:layout_below="@+id/header"
+            android:background="@drawable/subheader_gradient_background"
+            android:orientation="horizontal"
+            android:paddingLeft="@dimen/list_cell_padding_left"
+            android:paddingRight="@dimen/list_cell_padding_right"
+            android:shrinkColumns="0"
+            android:stretchColumns="1" >
+
+            <TableRow android:id="@+id/gov_stampdoc_status_row" >
+
+                <TextView
+                    android:id="@+id/gov_stampdoc_status_label"
+                    android:layout_gravity="left|top"
+                    android:ellipsize="end"
+                    android:lines="1"
+                    android:scrollHorizontally="true"
+                    android:text="@string/gov_stamp_doc_awaiting_status"
+                    android:textAppearance="@style/GovScreenTitleText" />
+
+                <TextView
+                    android:id="@+id/gov_stampdoc_status_value"
+                    android:layout_gravity="right|top"
+                    android:layout_marginRight="@dimen/list_cell_icon_margin_right"
+                    android:text="APPRBYTRAV"
+                    android:textAppearance="@style/GovScreenTitleText"
+                    android:textSize="14sp" />
+            </TableRow>
+        </TableLayout>
+
+        <ScrollView
+            android:id="@+id/scroll_view"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/gov_stampdoc_status_layout"
+            android:background="@drawable/gradient_background" >
+
+            <LinearLayout
+                android:id="@+id/gov_stampdoc_scroll_layout"
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical" >
+
+                <LinearLayout
+                    android:id="@+id/gov_stampdoc_statustoapply_layout"
+                    android:layout_width="fill_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical" >
+
+                    <include
+                        android:id="@+id/gov_stampdoc_statustoapply"
+                        layout="@layout/image_form_field" />
+
+                    <include layout="@layout/group_separator" />
+                </LinearLayout>
+
+                <LinearLayout
+                    android:id="@+id/gov_stampdoc_returnTo_layout"
+                    android:layout_width="fill_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical"
+                    android:visibility="gone" >
+
+                    <include
+                        android:id="@+id/gov_stampdoc_returnTo"
+                        layout="@layout/image_form_field" />
+
+                    <include
+                        android:id="@+id/gov_stampdoc_returnTo_saparator"
+                        layout="@layout/group_separator" />
+                </LinearLayout>
+
+                <LinearLayout
+                    android:id="@+id/gov_stampdoc_reason_layout"
+                    android:layout_width="fill_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical"
+                    android:visibility="gone" >
+
+                    <include
+                        android:id="@+id/gov_stampdoc_reason"
+                        layout="@layout/image_form_field" />
+
+                    <include
+                        android:id="@+id/gov_stampdoc_reason_saparator"
+                        layout="@layout/group_separator" />
+                </LinearLayout>
+                
+                <LinearLayout
+                    android:id="@+id/gov_stampdoc_comment_pin_layout"
+                    android:layout_width="fill_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical"
+                    android:visibility="gone" >
+
+                    <include
+                        android:id="@+id/gov_stampdoc_comment"
+                        layout="@layout/image_form_field" />
+
+                    <include
+                        android:id="@+id/gov_stampdoc_comment_saparator"
+                        layout="@layout/group_separator" />
+
+                    <include
+                        android:id="@+id/gov_stampdoc_signingpin"
+                        layout="@layout/image_form_field" />
+
+                    <include
+                        android:id="@+id/gov_stampdoc_signingpin_saparator"
+                        layout="@layout/group_separator" />
+                </LinearLayout>
+            </LinearLayout>
+        </ScrollView>
+    </RelativeLayout>
+
+    <include
+        android:id="@+id/footer"
+        layout="@layout/gov_stamp_footer" />
+
+</LinearLayout>

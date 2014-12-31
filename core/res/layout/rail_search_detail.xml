@@ -1,0 +1,130 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+	android:layout_width="fill_parent" android:layout_height="fill_parent"
+	android:orientation="vertical" style="@style/ConcurTheme"
+	android:background="@drawable/gradient_background">
+
+	<!--  Include the standard header bits -->
+	<include layout="@layout/standard_header"/>
+	
+	<include
+		android:id="@+id/travel_header"
+		layout="@layout/travel_title_header"
+		android:layout_width="fill_parent"
+		android:layout_height="wrap_content"
+	/>	
+	
+    <ScrollView android:layout_width="fill_parent" android:layout_height="0dp" 
+        android:layout_weight="1">
+	    <LinearLayout android:layout_width="fill_parent" android:layout_height="fill_parent" 
+	        android:orientation="vertical">	
+	        
+	       	<!--  Include the section to display violation reason/justification/messages -->
+  			<include layout="@layout/violations"/>
+			
+			<LinearLayout android:id="@+id/rail_search_detail_header"
+				android:layout_width="fill_parent" android:orientation="vertical"
+				android:layout_marginTop="@dimen/list_group_vertical_margin"
+				android:layout_marginLeft="@dimen/list_item_horizontal_margin"
+				android:layout_marginRight="@dimen/list_item_horizontal_margin"
+				android:layout_height="wrap_content">
+				
+				<LinearLayout android:layout_height="wrap_content"
+						android:layout_width="fill_parent" 
+						android:orientation="vertical"
+						android:layout_marginTop="4dp">
+										
+					<TextView
+						android:layout_height="wrap_content"
+						android:layout_width="fill_parent"
+				    	android:layout_marginRight="6dp"
+				    	android:layout_marginBottom="6dp"
+				    	android:textAppearance="@style/BigFormFieldLabelText"
+						android:text="@string/general_departure"/>
+						
+					<LinearLayout
+						android:id="@+id/railDetailDepartureLegsLayout" 
+						android:layout_height="wrap_content"
+						android:layout_width="fill_parent" android:orientation="vertical"
+						android:background="@drawable/square_border" android:padding="1dp">
+							
+						<!-- Each segment leg will be inflated here. -->
+					</LinearLayout>
+				</LinearLayout>
+				<View android:layout_width="fill_parent"
+					android:background="@drawable/square_border_shadow"
+					android:layout_height="3dp" android:layout_marginLeft="1dp"
+					android:layout_marginRight="1dp" />
+									
+				<LinearLayout android:layout_height="wrap_content"
+						android:layout_width="fill_parent" 
+						android:orientation="vertical"
+						android:layout_marginTop="6dp"
+						android:id="@+id/railDetailReturnMainLayout">
+						
+					<TextView
+						android:layout_height="wrap_content"
+						android:layout_width="fill_parent"
+				    	android:layout_marginRight="6dp"
+				    	android:layout_marginBottom="6dp"
+				    	android:textAppearance="@style/BigFormFieldLabelText"
+						android:text="@string/general_return"/>
+					<LinearLayout
+						android:id="@+id/railDetailReturnLegsLayout" 
+						android:layout_height="wrap_content"
+						android:layout_width="fill_parent" android:orientation="vertical"
+						android:background="@drawable/square_border" android:padding="1dp">
+
+						<!-- Each segment leg will be inflated here. -->
+					</LinearLayout>				
+				</LinearLayout>
+				
+				<View android:layout_width="fill_parent"
+					android:background="@drawable/square_border_shadow"
+					android:layout_height="3dp" android:layout_marginLeft="1dp"
+					android:layout_marginRight="1dp"
+					android:id="@+id/railDetailReturnMainLayoutShadow"/>
+					
+			</LinearLayout>			
+		
+			<LinearLayout android:id="@+id/rail_search_detail_cost"
+				android:layout_width="fill_parent" android:orientation="vertical"
+				android:layout_marginTop="@dimen/list_group_vertical_margin"
+				android:layout_marginLeft="@dimen/list_item_horizontal_margin"
+				android:layout_marginRight="@dimen/list_item_horizontal_margin"
+				android:layout_marginBottom="@dimen/list_group_vertical_margin"
+				android:layout_height="wrap_content">
+				
+				<LinearLayout android:layout_height="wrap_content"
+					android:layout_width="fill_parent" android:orientation="vertical"
+					android:background="@drawable/square_border" android:padding="1dp">
+							
+					<include layout="@layout/image_form_field" android:id="@+id/railDetailTotal"/>
+ 					<include layout="@layout/group_separator" />
+	  				<include layout="@layout/image_form_field" android:id="@+id/card_selection"/>
+ 					<include layout="@layout/group_separator" />	  				
+	  				<include layout="@layout/image_form_field" android:id="@+id/railDetailDeliveryOption"/>
+				</LinearLayout>
+				
+				<View android:layout_width="fill_parent"
+					android:background="@drawable/square_border_shadow"
+					android:layout_height="3dp" android:layout_marginLeft="1dp"
+					android:layout_marginRight="1dp" />
+			</LinearLayout>
+			
+			<!-- Custom Fields View Group -->
+		    <LinearLayout android:id="@+id/booking_custom_fields"
+		        android:layout_width="fill_parent"
+		        android:layout_height="wrap_content"
+		        android:orientation="vertical"
+		        android:layout_marginBottom="@dimen/list_group_vertical_margin"
+		        android:layout_marginLeft="@dimen/list_item_horizontal_margin"
+		        android:layout_marginRight="@dimen/list_item_horizontal_margin"
+		    />
+	
+		</LinearLayout>
+	</ScrollView>
+	
+ 	<include layout="@layout/footer_navigation_bar_one_button" android:id="@+id/footer"/>
+
+</LinearLayout>

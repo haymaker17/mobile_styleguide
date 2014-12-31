@@ -1,0 +1,244 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Top level layout file for ExpenseApproval activity. -->
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    style="@style/ConcurTheme"
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent"
+    android:orientation="vertical" >
+
+    <!-- Include the standard header bits -->
+
+    <include layout="@layout/standard_header" />
+
+    <LinearLayout
+        android:id="@+id/quick_expense_subtitle_layout"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:background="@drawable/upload_queue_bar"
+        android:orientation="vertical"
+        android:visibility="gone" >
+
+        <View
+            android:layout_width="fill_parent"
+            android:layout_height="1dp"
+            android:background="@color/Black" />
+
+        <TextView
+            android:id="@+id/quick_expense_subtitle"
+            style="@style/FooterTextLarge"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:layout_gravity="center_vertical"
+            android:layout_marginLeft="15dp"
+            android:layout_marginTop="8dp"
+            android:gravity="center_vertical"
+            android:text="@string/quick_expenseit_title" />
+    </LinearLayout>
+
+    <LinearLayout             
+        android:id="@+id/ocr_conversion"
+        android:orientation="vertical"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:visibility="gone" 
+        >
+        
+        <RelativeLayout
+            android:id="@+id/ocr_conversion_container"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:background="@color/ocrStatusRedBackground"
+            android:orientation="horizontal"
+            android:paddingBottom="@dimen/form_cell_padding_bottom"
+            android:paddingLeft="@dimen/form_cell_padding_left"
+            android:paddingRight="@dimen/form_cell_padding_left"
+            android:paddingTop="@dimen/form_cell_padding_top" 
+            >
+
+            <ImageView
+                android:id="@+id/progress_icon"
+                android:layout_width="34dp"
+                android:layout_height="24dp"
+                android:layout_centerVertical="true"
+                android:layout_marginEnd="6dp"
+                android:layout_marginRight="6dp"
+                android:scaleType="fitXY"
+                android:src="@drawable/expense_icon_cloud_red" />
+
+            <TextView
+                android:id="@+id/ocr_conversion_title"
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="@dimen/list_cell_primary_text_bottom_margin"
+                android:layout_toRightOf="@id/progress_icon"
+                android:layout_toEndOf="@id/progress_icon"
+                android:text="@string/ocr_status_procesing_error"
+                android:textColor="@color/CellTextRed" />
+
+            <TextView
+                android:id="@+id/ocr_conversion_msg"
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:layout_alignLeft="@id/ocr_conversion_title"
+                android:layout_alignStart="@id/ocr_conversion_title"
+                android:layout_below="@id/ocr_conversion_title"
+                android:fontFamily="sans-serif-light"
+                android:text="@string/failed_ocr_conversion_text"
+                android:textColor="@color/CellTextRed" />
+            
+            
+        </RelativeLayout>
+        
+        <View
+            	android:id="@+id/group_view_separator"
+            	android:background="@color/SquareBoxBorder"
+            	android:layout_height="1dp"
+            	android:layout_width="fill_parent"
+        />
+        
+    </LinearLayout>
+    
+    <ScrollView
+        android:id="@+id/scroll_view"
+        android:layout_width="fill_parent"
+        android:layout_height="fill_parent"
+        android:layout_weight="1"
+        android:background="@drawable/gradient_background" >
+
+        <LinearLayout
+            android:id="@+id/linear_layout"
+            android:layout_width="fill_parent"
+            android:layout_height="fill_parent"
+            android:orientation="vertical" >
+
+            <LinearLayout
+                android:layout_width="fill_parent"
+                android:layout_height="fill_parent"
+                android:layout_marginLeft="@dimen/list_item_horizontal_margin"
+                android:layout_marginRight="@dimen/list_item_horizontal_margin"
+                android:layout_marginTop="@dimen/list_group_vertical_margin"
+                android:orientation="vertical" >
+
+                <LinearLayout
+                    android:id="@+id/header_list"
+                    android:layout_width="fill_parent"
+                    android:layout_height="wrap_content"
+                    android:background="@drawable/square_border"
+                    android:orientation="vertical"
+                    android:padding="1dp" >
+
+                    <LinearLayout
+                        android:id="@+id/header_view_attach_receipts"
+                        android:layout_width="fill_parent"
+                        android:layout_height="wrap_content"
+                        android:background="@drawable/list_selector_gradient_background"
+                        android:clickable="true"
+                        android:focusable="true"
+                        android:onClick="onClick"
+                        android:orientation="horizontal"
+                        android:paddingBottom="@dimen/list_cell_padding_bottom"
+                        android:paddingLeft="@dimen/list_cell_padding_left"
+                        android:paddingRight="@dimen/list_cell_padding_right"
+                        android:paddingTop="@dimen/list_cell_padding_top" >
+
+                        <ImageView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginLeft="@dimen/exp_list_header_row_icon_margin"
+                            android:layout_marginRight="@dimen/exp_list_header_row_icon_margin"
+                            android:src="@drawable/icon_receipt_button" />
+
+                        <TextView
+                            android:id="@+id/view_receipts"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginLeft="@dimen/exp_list_header_row_title_left_margin"
+                            android:text="@string/view_attach_receipt"
+                            android:textAppearance="@style/ListCellHeaderText" />
+                    </LinearLayout>
+                </LinearLayout>
+
+                <View
+                    android:layout_width="fill_parent"
+                    android:layout_height="3dp"
+                    android:layout_marginLeft="1dp"
+                    android:layout_marginRight="1dp"
+                    android:background="@drawable/square_border_shadow" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="fill_parent"
+                android:layout_height="fill_parent"
+                android:layout_marginBottom="@dimen/list_group_vertical_margin"
+                android:layout_marginLeft="@dimen/list_item_horizontal_margin"
+                android:layout_marginRight="@dimen/list_item_horizontal_margin"
+                android:layout_marginTop="@dimen/list_group_vertical_margin"
+                android:orientation="vertical" >
+
+                <LinearLayout
+                    android:id="@+id/header_list"
+                    android:layout_width="fill_parent"
+                    android:layout_height="wrap_content"
+                    android:background="@drawable/square_border"
+                    android:orientation="vertical"
+                    android:padding="1dp" >
+
+                    <LinearLayout
+                        android:id="@+id/expense_entry_header_fields"
+                        android:layout_width="fill_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="vertical" >
+
+                        <include
+                            android:id="@+id/expense_type"
+                            layout="@layout/image_form_field" />
+
+                        <include layout="@layout/group_separator" />
+
+                        <include
+                            android:id="@+id/expense_amount"
+                            layout="@layout/edit_text_form_field" />
+
+                        <include layout="@layout/group_separator" />
+
+                        <include
+                            android:id="@+id/expense_currency"
+                            layout="@layout/image_form_field" />
+
+                        <include layout="@layout/group_separator" />
+
+                        <include
+                            android:id="@+id/expense_date"
+                            layout="@layout/image_form_field" />
+
+                        <include layout="@layout/group_separator" />
+
+                        <include
+                            android:id="@+id/expense_location"
+                            layout="@layout/image_form_field" />
+
+                        <include layout="@layout/group_separator" />
+
+                        <include
+                            android:id="@+id/expense_vendor"
+                            layout="@layout/edit_text_form_field" />
+
+                        <include layout="@layout/group_separator" />
+
+                        <include
+                            android:id="@+id/expense_comment"
+                            layout="@layout/image_form_field" />
+                    </LinearLayout>
+                </LinearLayout>
+
+                <View
+                    android:layout_width="fill_parent"
+                    android:layout_height="3dp"
+                    android:layout_marginLeft="1dp"
+                    android:layout_marginRight="1dp"
+                    android:background="@drawable/square_border_shadow" />
+            </LinearLayout>
+        </LinearLayout>
+    </ScrollView>
+
+</LinearLayout>

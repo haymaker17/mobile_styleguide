@@ -1,0 +1,327 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent"
+    android:orientation="vertical" >
+
+    <include
+        android:id="@+id/gov_docdetail_msg_layout"
+        layout="@layout/gov_docdetail_invisible" />
+
+    <RelativeLayout
+        android:id="@+id/gov_docdetail_layout"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:layout_weight="1"
+        android:background="@drawable/subheader_gradient_background"
+        android:paddingBottom="@dimen/list_cell_padding_bottom"
+        android:visibility="gone" >
+
+        <include
+            android:id="@+id/header"
+            layout="@layout/standard_header" />
+
+        <TableLayout
+            android:id="@+id/gov_table_name_amount"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentLeft="true"
+            android:layout_alignWithParentIfMissing="true"
+            android:layout_below="@+id/header"
+            android:orientation="horizontal"
+            android:paddingLeft="@dimen/list_cell_padding_left"
+            android:paddingRight="@dimen/list_cell_padding_right"
+            android:shrinkColumns="0"
+            android:stretchColumns="1" >
+
+            <TableRow android:id="@+id/gov_table_row_name_amount" >
+
+                <TextView
+                    android:id="@+id/gov_traveller_name"
+                    android:layout_gravity="left|top"
+                    android:ellipsize="end"
+                    android:lines="1"
+                    android:scrollHorizontally="true"
+                    android:textAppearance="@style/ListCellHeaderText" />
+
+                <TextView
+                    android:id="@+id/gov_traveller_totalAmt"
+                    android:layout_gravity="right|top"
+                    android:layout_marginRight="@dimen/list_cell_icon_margin_right"
+                    android:textAppearance="@style/ListCellHeaderText" />
+            </TableRow>
+        </TableLayout>
+
+        <RelativeLayout
+            android:id="@+id/gov_icons"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/gov_table_name_amount"
+            android:layout_marginTop="0dp" >
+
+            <TextView
+                android:id="@+id/gov_doc_type"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentLeft="true"
+                android:layout_centerInParent="true"
+                android:ellipsize="end"
+                android:lines="1"
+                android:paddingLeft="@dimen/list_cell_padding_left"
+                android:paddingRight="@dimen/list_cell_padding_right"
+                android:scrollHorizontally="true"
+                android:textAppearance="@style/ListCellSubHeaderText" />
+
+            <ImageView
+                android:id="@+id/gov_trip_receipt"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentRight="true"
+                android:layout_marginLeft="@dimen/list_cell_icon_margin_right"
+                android:layout_marginTop="@dimen/list_cell_sub_header_icon_top_margin"
+                android:src="@drawable/icon_receipt"
+                android:visibility="invisible" />
+
+            <ImageView
+                android:id="@+id/gov_trip_violation"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="@dimen/list_cell_icon_margin_right"
+                android:layout_marginTop="@dimen/list_cell_sub_header_icon_top_margin"
+                android:layout_toLeftOf="@+id/gov_trip_receipt"
+                android:src="@drawable/icon_yellowex"
+                android:visibility="invisible" />
+        </RelativeLayout>
+
+        <RelativeLayout
+            android:id="@+id/gov_dat_type"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/gov_icons"
+            android:layout_marginTop="2dp" >
+
+            <TextView
+                android:id="@+id/gov_trip_date"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentLeft="true"
+                android:ellipsize="end"
+                android:lines="1"
+                android:paddingLeft="@dimen/list_cell_padding_left"
+                android:paddingRight="@dimen/list_cell_padding_right"
+                android:scrollHorizontally="true"
+                android:textAppearance="@style/ListCellSubHeaderText" />
+
+            <TextView
+                android:id="@+id/gov_trip_doclabelType"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentRight="true"
+                android:ellipsize="end"
+                android:lines="1"
+                android:paddingLeft="@dimen/list_cell_padding_left"
+                android:paddingRight="@dimen/list_cell_padding_right"
+                android:scrollHorizontally="true"
+                android:textAppearance="@style/ListCellSubHeaderText" />
+        </RelativeLayout>
+
+        <RelativeLayout
+            android:id="@+id/other_info"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/gov_dat_type"
+            android:layout_gravity="right"
+            android:layout_marginTop="10dp"
+            android:paddingLeft="@dimen/list_cell_padding_left"
+            android:paddingRight="@dimen/list_cell_padding_right" >
+
+            <View
+                android:id="@+id/saparator"
+                android:layout_width="fill_parent"
+                android:layout_height="2dp"
+                android:layout_marginBottom="12dp"
+                android:background="@drawable/square_border_shadow" />
+
+            <TextView
+                android:id="@+id/gov_doc_status"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentLeft="true"
+                android:layout_below="@+id/saparator"
+                android:ellipsize="end"
+                android:lines="1"
+                android:text="@string/gov_docdetail_doc_status"
+                android:textAppearance="@style/SegmentListRowHeaderText" />
+
+            <TextView
+                android:id="@+id/gov_doc_status_value"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentRight="true"
+                android:layout_below="@+id/saparator"
+                android:ellipsize="end"
+                android:lines="1"
+                android:scrollHorizontally="true"
+                android:textAppearance="@style/ListCellSubHeaderText"
+                android:textStyle="bold" />
+
+            <TextView
+                android:id="@+id/gov_doc_tanumber"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentLeft="true"
+                android:layout_below="@+id/gov_doc_status"
+                android:ellipsize="end"
+                android:lines="1"
+                android:text="@string/gov_docdetail_tano"
+                android:textAppearance="@style/SegmentListRowHeaderText" />
+
+            <TextView
+                android:id="@+id/gov_doc_tanumber_value"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentRight="true"
+                android:layout_below="@+id/gov_doc_status"
+                android:ellipsize="end"
+                android:lines="1"
+                android:scrollHorizontally="true"
+                android:textAppearance="@style/ListCellSubHeaderText"
+                android:textStyle="bold" />
+
+            <TextView
+                android:id="@+id/gov_doc_trip_purpose"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentLeft="true"
+                android:layout_below="@+id/gov_doc_tanumber"
+                android:ellipsize="end"
+                android:lines="1"
+                android:text="@string/gov_docdetail_trip_purpose"
+                android:textAppearance="@style/SegmentListRowHeaderText" />
+
+            <TextView
+                android:id="@+id/gov_doc_trip_purpose_value"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentRight="true"
+                android:layout_below="@+id/gov_doc_tanumber"
+                android:ellipsize="end"
+                android:lines="1"
+                android:scrollHorizontally="true"
+                android:textAppearance="@style/ListCellSubHeaderText"
+                android:textStyle="bold" />
+
+            <TextView
+                android:id="@+id/gov_doc_emissions"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentLeft="true"
+                android:layout_below="@+id/gov_doc_trip_purpose"
+                android:ellipsize="end"
+                android:lines="1"
+                android:text="@string/gov_docdetail_emission"
+                android:textAppearance="@style/SegmentListRowHeaderText" />
+
+            <TextView
+                android:id="@+id/gov_doc_emissions_value"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentRight="true"
+                android:layout_below="@+id/gov_doc_trip_purpose"
+                android:ellipsize="end"
+                android:lines="1"
+                android:scrollHorizontally="true"
+                android:textAppearance="@style/ListCellSubHeaderText"
+                android:textStyle="bold" />
+        </RelativeLayout>
+
+        <ScrollView
+            android:id="@+id/scroll_view"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/other_info"
+            android:background="@drawable/gradient_background" >
+
+            <LinearLayout
+                android:id="@+id/linear_scroll_layout"
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical" >
+
+                <RelativeLayout
+                    android:id="@+id/doc_detail_receipt"
+                    android:layout_width="fill_parent"
+                    android:layout_height="wrap_content"
+                    android:background="@drawable/list_selector_gradient_background"
+                    android:paddingBottom="@dimen/list_cell_padding_bottom"
+                    android:paddingLeft="@dimen/list_cell_padding_left"
+                    android:paddingRight="@dimen/list_cell_padding_right"
+                    android:paddingTop="@dimen/list_cell_padding_top" >
+
+                    <ImageView
+                        android:id="@+id/receipt_icon"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_alignParentLeft="true"
+                        android:layout_centerVertical="true"
+                        android:layout_marginRight="4dp"
+                        android:src="@drawable/icon_receipt"
+                        android:visibility="gone" />
+
+                    <TextView
+                        android:id="@+id/doc_detail_row_title"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_alignParentLeft="false"
+                        android:layout_alignWithParentIfMissing="true"
+                        android:layout_toRightOf="@+id/receipt_icon"
+                        android:text="@string/receipt"
+                        android:textAppearance="@style/ListCellHeaderText" />
+                </RelativeLayout>
+
+                <include layout="@layout/group_separator" />
+
+                <include
+                    android:id="@+id/doc_detail_perdiem_location"
+                    layout="@layout/doc_detail_row" />
+
+                <include layout="@layout/group_separator" />
+
+                <include
+                    android:id="@+id/doc_detail_expenses"
+                    layout="@layout/doc_detail_row" />
+
+                <include layout="@layout/group_separator" />
+
+                <include
+                    android:id="@+id/doc_detail_accounting_allocation"
+                    layout="@layout/doc_detail_row" />
+
+                <include layout="@layout/group_separator" />
+
+                <include
+                    android:id="@+id/doc_detail_TnTadvances"
+                    layout="@layout/doc_detail_row" />
+
+                <include layout="@layout/group_separator" />
+
+                <include
+                    android:id="@+id/doc_detail_audit"
+                    layout="@layout/doc_detail_row" />
+
+                <include layout="@layout/group_separator" />
+
+                <include
+                    android:id="@+id/doc_detail_comments"
+                    layout="@layout/doc_detail_row" />
+
+                <include layout="@layout/group_separator" />
+            </LinearLayout>
+        </ScrollView>
+    </RelativeLayout>
+
+    <include
+        android:id="@+id/footer"
+        layout="@layout/gov_stamp_footer" />
+
+</LinearLayout>

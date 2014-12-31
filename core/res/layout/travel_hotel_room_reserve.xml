@@ -1,0 +1,164 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/hotel_room_view"
+    style="@style/ConcurTheme"
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent"
+    android:background="@drawable/gradient_background"
+    android:orientation="vertical" >
+
+    <!-- Include the standard header bits -->
+
+    <include
+        android:id="@+id/header"
+        layout="@layout/standard_header" />
+
+    <ScrollView
+        android:layout_width="fill_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1" >
+
+        <LinearLayout
+            android:layout_width="fill_parent"
+            android:layout_height="fill_parent"
+            android:orientation="vertical" >
+
+            <!-- Include the hotel header view. -->
+
+            <include
+                android:id="@+id/hotel_header"
+                layout="@layout/travel_hotel_header" />
+
+            <TextView
+                android:id="@+id/violations_with_travel_points_header"
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="@dimen/list_item_horizontal_margin"
+                android:layout_marginRight="@dimen/list_item_horizontal_margin"
+                android:layout_marginTop="@dimen/list_item_vertical_margin"
+                android:text="@string/travel_points_violations_header"
+                android:textAppearance="@style/FlightSegmentHeaderText"
+                android:visibility="gone" />
+
+            <!-- Include the section to display violation reason/justification/messages -->
+
+            <include layout="@layout/violations" />
+
+            <!-- Hotel info. -->
+
+            <LinearLayout
+                android:id="@+id/hotelDetailInfoLayout"
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="@dimen/list_group_vertical_margin"
+                android:layout_marginLeft="@dimen/list_item_horizontal_margin"
+                android:layout_marginRight="@dimen/list_item_horizontal_margin"
+                android:layout_marginTop="@dimen/list_group_vertical_margin"
+                android:orientation="vertical" >
+
+                <LinearLayout
+                    android:layout_width="fill_parent"
+                    android:layout_height="wrap_content"
+                    android:background="@drawable/square_border"
+                    android:orientation="vertical"
+                    android:padding="1dp" >
+
+                    <include
+                        android:id="@+id/roomDetailDescription"
+                        layout="@layout/image_form_field" />
+
+                    <include layout="@layout/group_separator" />
+
+                    <include
+                        android:id="@+id/hotelDetailPhone"
+                        layout="@layout/image_form_field" />
+
+                    <include layout="@layout/group_separator" />
+
+                    <include
+                        android:id="@+id/hotelDetailAddress"
+                        layout="@layout/image_form_field" />
+                </LinearLayout>
+
+                <View
+                    android:layout_width="fill_parent"
+                    android:layout_height="3dp"
+                    android:layout_marginLeft="1dp"
+                    android:layout_marginRight="1dp"
+                    android:background="@drawable/square_border_shadow" />
+            </LinearLayout>
+
+            <!-- Room info. -->
+
+            <LinearLayout
+                android:id="@+id/roomDetailInfoLayout"
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="@dimen/list_group_vertical_margin"
+                android:layout_marginLeft="@dimen/list_item_horizontal_margin"
+                android:layout_marginRight="@dimen/list_item_horizontal_margin"
+                android:layout_marginTop="@dimen/list_group_vertical_margin"
+                android:orientation="vertical" >
+
+                <LinearLayout
+                    android:layout_width="fill_parent"
+                    android:layout_height="wrap_content"
+                    android:background="@drawable/square_border"
+                    android:orientation="vertical"
+                    android:padding="1dp" >
+
+                    <include
+                        android:id="@+id/roomDetailCheckin"
+                        layout="@layout/image_form_field" />
+
+                    <include layout="@layout/group_separator" />
+
+                    <include
+                        android:id="@+id/roomDetailCheckout"
+                        layout="@layout/image_form_field" />
+
+                    <include layout="@layout/group_separator" />
+
+                    <include
+                        android:id="@+id/roomDetailDailyRate"
+                        layout="@layout/static_text_fields" />
+
+                    <include layout="@layout/group_separator" />
+
+                    <include
+                        android:id="@+id/card_selection"
+                        layout="@layout/image_form_field" />
+
+                    <include layout="@layout/group_separator" />
+
+                    <include
+                        android:id="@+id/cancellation_policy"
+                        layout="@layout/image_form_field" />
+                </LinearLayout>
+
+                <View
+                    android:layout_width="fill_parent"
+                    android:layout_height="3dp"
+                    android:layout_marginLeft="1dp"
+                    android:layout_marginRight="1dp"
+                    android:background="@drawable/square_border_shadow" />
+            </LinearLayout>
+
+            <!-- Custom Fields View Group -->
+
+            <LinearLayout
+                android:id="@+id/booking_custom_fields"
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="@dimen/list_group_vertical_margin"
+                android:layout_marginLeft="@dimen/list_item_horizontal_margin"
+                android:layout_marginRight="@dimen/list_item_horizontal_margin"
+                android:orientation="vertical" />
+        </LinearLayout>
+    </ScrollView>
+
+    <include
+        android:id="@+id/footer"
+        layout="@layout/footer_navigation_bar_one_button" />
+
+</LinearLayout>

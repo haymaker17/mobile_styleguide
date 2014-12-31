@@ -1,0 +1,94 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent"
+    android:background="@drawable/gradient_background"
+    android:orientation="vertical" >
+
+    <RelativeLayout
+        android:id="@+id/gov_ta_layout"
+        android:layout_width="fill_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1"
+        android:background="@drawable/gradient_background"
+        android:paddingBottom="@dimen/list_cell_padding_bottom" >
+
+        <include
+            android:id="@+id/header"
+            layout="@layout/standard_header" />
+
+        <TableLayout
+            android:id="@+id/gov_ta_status_layout"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentLeft="true"
+            android:layout_alignWithParentIfMissing="true"
+            android:layout_below="@+id/header"
+            android:background="@drawable/subheader_gradient_background"
+            android:orientation="horizontal"
+            android:paddingLeft="@dimen/list_cell_padding_left"
+            android:paddingRight="@dimen/list_cell_padding_right"
+            android:shrinkColumns="0"
+            android:stretchColumns="0" >
+
+            <TableRow android:id="@+id/gov_ta_status_row" >
+
+                <TextView
+                    android:id="@+id/gov_ta_status_label"
+                    android:layout_gravity="left|top"
+                    android:ellipsize="end"
+                    android:lines="1"
+                    android:scrollHorizontally="true"
+                    android:text="@string/gov_travel_authorization_msg"
+                    android:textAppearance="@style/GovScreenMsgText" />
+            </TableRow>
+        </TableLayout>
+
+        <ScrollView
+            android:id="@+id/gov_ta_scroll_view"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/gov_ta_status_layout"
+            android:background="@drawable/gradient_background" >
+
+            <LinearLayout
+                android:id="@+id/gov_ta_scroll_layout"
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical" >
+
+                <include
+                    android:id="@+id/gov_ta_create_new"
+                    layout="@layout/general_one_txtview_row" />
+
+                <include layout="@layout/group_separator" />
+
+                <LinearLayout
+                    android:id="@+id/gov_ta_open_group_auth_layout"
+                    android:layout_width="fill_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical" >
+
+                    <include
+                        android:id="@+id/gov_ta_add_to_open_group"
+                        layout="@layout/general_one_txtview_row" />
+
+                    <include layout="@layout/group_separator" />
+                </LinearLayout>
+
+                 <LinearLayout
+                    android:id="@+id/gov_ta_existing_auth_layout"
+                    android:layout_width="fill_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical" >
+                <include
+                    android:id="@+id/gov_ta_add_to_existing"
+                    layout="@layout/general_one_txtview_row" />
+                </LinearLayout>
+
+                <include layout="@layout/group_separator" />
+            </LinearLayout>
+        </ScrollView>
+    </RelativeLayout>
+
+</LinearLayout>

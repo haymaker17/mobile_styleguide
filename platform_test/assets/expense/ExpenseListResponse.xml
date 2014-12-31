@@ -1,0 +1,181 @@
+<AllExpenses xmlns:i="http://www.w3.org/2001/XMLSchema-instance">
+    <CorporateCardTransactions>
+        <CorporateCardTransaction>
+            <CardTypeCode>AX</CardTypeCode>
+            <CardTypeName>American Express</CardTypeName>
+            <CctKey>nmz1zBzaKWhxkLqiY5g2XPO1b</CctKey>
+            <CctType>RPE</CctType>
+            <Description>KIRNFH GVOVTILFK WRE233-002-39</Description>
+            <DoingBusinessAs>KIRNFH GVOVX RMX.</DoingBusinessAs>
+            <ExpKey>UNDEF</ExpKey><ExpName>Undefined</ExpName>
+            <HasRichData>N</HasRichData>
+            <MerchantCity>FAIRFIELD</MerchantCity>
+            <MerchantCtryCode>US</MerchantCtryCode>
+            <MerchantName>KIRNFH GVOVX RMX.</MerchantName>
+            <MerchantState>IA</MerchantState>
+           	<MobileEntry>
+	        	<Comment/>
+	        	<CrnCode>USD</CrnCode>
+	        	<ExpKey>CARMA</ExpKey>
+	        	<ExpName>Company Car Maintenance</ExpName>
+	        	<HasReceiptImage>Y</HasReceiptImage>
+	        	<LocationName>Fairfield, Iowa</LocationName>
+	        	<MeKey>n$pPFRbffmLMKV1MRxv$p1egAZw$pu1</MeKey>
+	        	<ReceiptImageId>n1UCxE$sK$p6h$sjfyjfxVtIKBC7tZzsqM95ZW3WA1UgILhI40cRAY$sqMVo73NsbR$p6U</ReceiptImageId>
+	        	<TransactionAmount>1918.36000000</TransactionAmount>
+	        	<TransactionDate>2009-07-28T00:00:00</TransactionDate>
+	        	<VendorName>KIRNFH GVOVX RMX.</VendorName>
+	    	</MobileEntry>
+            <SmartExpense>n$pPFRbffmLMKV1MRxv$p1egAZw$puk</SmartExpense>
+            <TransactionAmount>1918.36</TransactionAmount>
+            <TransactionCrnCode>USD</TransactionCrnCode>
+            <TransactionDate>2009-07-28T00:00:00</TransactionDate>
+		</CorporateCardTransaction>
+		<CorporateCardTransaction>
+		    <CardTypeCode>AX</CardTypeCode>
+		    <CardTypeName>American Express</CardTypeName>
+		    <CctKey>nmzQ9z3VRR$pEMSXEeIy3IgW1K</CctKey>
+		    <CctType>RPE</CctType>
+		    <Description>HGZKOVH #693        DZGVIOLL          LM</Description>
+		    <DoingBusinessAs>YFHRMVHH WVKLG</DoingBusinessAs>
+		    <ExpKey>UNDEF</ExpKey>
+		    <ExpName>Undefined</ExpName>
+		    <HasRichData>N</HasRichData>
+		    <MerchantCity>WATERLOO</MerchantCity>
+		    <MerchantCtryCode>CA</MerchantCtryCode>
+		    <MerchantName>YFHRMVHH WVKLG</MerchantName>
+		    <MerchantState>ON</MerchantState>
+		    <TransactionAmount>45.80</TransactionAmount>
+		    <TransactionCrnCode>CAD</TransactionCrnCode>
+		    <TransactionDate>2009-07-26T00:00:00</TransactionDate>
+		</CorporateCardTransaction>
+	</CorporateCardTransactions>
+	<Entries>
+	    <MobileEntry>
+	        <Comment/>
+	        <CrnCode>USD</CrnCode>
+	        <ExpKey>CARMA</ExpKey>
+	        <ExpName>Company Car Maintenance</ExpName>
+	        <HasReceiptImage>N</HasReceiptImage>
+	        <LocationName>Fairfield, Iowa</LocationName>
+	        <MeKey>n$pPFRbffmLMKV1MRxv$p1egAZw$puk</MeKey>
+	        <TransactionAmount>1918.36000000</TransactionAmount>
+	        <TransactionDate>2009-07-28T00:00:00</TransactionDate>
+	        <VendorName>KIRNFH GVOVX RMX.</VendorName>
+	    </MobileEntry>
+	    <MobileEntry>
+	        <Comment/>
+	        <CrnCode>USD</CrnCode>
+	        <ExpKey>BRKFT</ExpKey>
+	        <ExpName>Breakfast</ExpName>
+	        <HasReceiptImage>N</HasReceiptImage>
+	        <LocationName>Seattle, Washington</LocationName>
+	        <MeKey>n$pPFQaiQnOh35FTIQQEXBLko4TlE</MeKey>
+	        <TransactionAmount>10.00000000</TransactionAmount>
+	        <TransactionDate>2014-06-04T00:00:00</TransactionDate>
+	        <VendorName/>
+	    </MobileEntry>
+	    <MobileEntry>
+	        <Comment/>
+	        <CrnCode>GBP</CrnCode>
+	        <ExpKey>TRDSH</ExpKey>
+	        <ExpName>Trade Shows</ExpName>
+	        <HasReceiptImage>Y</HasReceiptImage>
+	        <LocationName/>
+	        <MeKey>n$pPFQa$sga3gIPWgevSWm8N4314xY</MeKey>
+	        <ReceiptImageId>n1UCxE$sK$p6h$sjfyjfxVtIKBC7tZzsqM95ZW3WA1UgILhI40cRAY$sqMVo73NsbR$p6U</ReceiptImageId>
+	        <TransactionAmount>255.00000000</TransactionAmount>
+	        <TransactionDate>2014-06-05T00:00:00</TransactionDate>
+	        <VendorName/>
+	    </MobileEntry>
+	    <MobileEntry>
+	        <Comment/>
+	        <CrnCode>USD</CrnCode>
+	        <ExpKey>01012</ExpKey>
+	        <ExpName>Wes' Regex Test Expense Type</ExpName>
+	        <HasReceiptImage>Y</HasReceiptImage>
+	        <LocationName/>
+	        <MeKey>n$pPFQaPC54bqDY$sM00juuFfm3vG8</MeKey>
+	        <ReceiptImageId>n1zK9ZZCwnxrVeVnfxSlNIGq7tennqbgJYhTVAiEpU7iQBsD4taHtTFjBKkUMgzmj</ReceiptImageId>
+	        <TransactionAmount>1100.00000000</TransactionAmount>
+	        <TransactionDate>2014-06-05T00:00:00</TransactionDate>
+	        <VendorName/>
+	    </MobileEntry>
+	</Entries>
+	<PersonalCards>
+	    <PersonalCard>
+	        <AccountNumberLastFour>4567</AccountNumberLastFour>
+	        <CardName>Test Creditcard Special Case - Credit Card - DAG Bank QA&amp;#39;s Test Ca</CardName>
+	        <CrnCode>USD</CrnCode>
+	        <PcaKey>ny0i0$szwXY8IQo9ylwJ3axBw</PcaKey>
+	        <Transactions>
+	            <PersonalCardTransaction>
+	                <Amount>37.63000000</Amount>
+	                <Category>Gasoline/Fuel</Category>
+	                <DatePosted>2014-05-15T00:00:00</DatePosted>
+	                <Description>Shell 49122 Huntington NY</Description>
+	                <ExpKey>GASXX</ExpKey>
+	                <ExpName>Gas</ExpName>
+	                <MobileEntry>
+	        			<Comment/>
+	        			<CrnCode>USD</CrnCode>
+	        			<ExpKey>CARMA</ExpKey>
+	        			<ExpName>Company Car Maintenance</ExpName>
+	        			<HasReceiptImage>Y</HasReceiptImage>
+	        			<LocationName>Fairfield, Iowa</LocationName>
+	        			<MeKey>n$pPFRbffmLMKV1MRxv$p1egAZw$pu2</MeKey>
+	        			<ReceiptImageId>n1UCxE$sK$p6h$sjfyjfxVtIKBC7tZzsqM95ZW3WA1UgILhI40cRAY$sqMVo73NsbR$p6U</ReceiptImageId>
+	        			<TransactionAmount>37.63000000</TransactionAmount>
+	        			<TransactionDate>2014-05-15T00:00:00</TransactionDate>
+	        			<VendorName>KIRNFH GVOVX RMX.</VendorName>
+	    			</MobileEntry>
+	                <PctKey>nkf1dtLXIDAm1V6QHCQaLB8A</PctKey>
+	                <Status>UN</Status>
+	            </PersonalCardTransaction>
+	            <PersonalCardTransaction>
+	                <Amount>122.00000000</Amount>
+	                <Category>Restaurants/Dining</Category>
+	                <DatePosted>2014-05-14T00:00:00</DatePosted>
+	                <Description>Cheesecake Factory 745613 Smithtown NY</Description>
+	                <ExpKey>DINNR</ExpKey>
+	                <ExpName>Dinner</ExpName>
+	                <PctKey>nkvGJhAD1$sQVUNW4oGqXqBXc</PctKey>
+	                <Status>UN</Status>
+	            </PersonalCardTransaction>
+	            <PersonalCardTransaction>
+	                <Amount>370.25000000</Amount>
+	                <Category>Uncategorized</Category>
+	                <DatePosted>2014-05-12T00:00:00</DatePosted>
+	                <Description>Staple's 83701 Commack NY</Description>
+	                <ExpKey>UNDEF</ExpKey>
+	                <ExpName>Undefined</ExpName>
+	                <PctKey>nk9VcPvMj6cjJcljYSptZOag</PctKey>
+	                <Status>UN</Status>
+	            </PersonalCardTransaction>
+	            <PersonalCardTransaction>
+	                <Amount>187.55000000</Amount>
+	                <Category>Entertainment</Category>
+	                <DatePosted>2014-05-12T00:00:00</DatePosted>
+	                <Description>AMZ Purchase</Description>
+	                <ExpKey>ENTRT</ExpKey>
+	                <ExpName>Entertainment</ExpName>
+	                <PctKey>nlJHoAPTKRs0qy$snx6By8kXc</PctKey>
+	                <Status>UN</Status>
+	            </PersonalCardTransaction>
+	        </Transactions>
+	    </PersonalCard>
+	</PersonalCards>
+	<ReceiptCaptures>
+	    <ReceiptCapture>
+	        <CrnCode>USD</CrnCode>
+	        <ExpKey>LUNCH</ExpKey>
+	        <ExpName>Lunch</ExpName>
+	        <RcKey>nShAizr7UziTZ$p371lr$sDJr00lC03jR1rmg</RcKey>
+	        <ReceiptImageId>np0C3E5S3nxmgeVjYxSs4JBC6tJuaorgHYWjUDSMoJrsRVzzGRmDaxGbqdZ9zVH6P</ReceiptImageId>
+	        <SmartExpenseId>nShAizr7UziTZ$p371lr$sDJr00lC03jR1rmg</SmartExpenseId>
+	        <TransactionAmount>13.03000000</TransactionAmount>
+	        <TransactionDate>2013-10-24T13:04:00</TransactionDate>
+	        <VendorName>Tap House Grill</VendorName>
+	    </ReceiptCapture>
+	</ReceiptCaptures>
+</AllExpenses>

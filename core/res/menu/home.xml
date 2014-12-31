@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:yourapp="http://schemas.android.com/apk/res-auto" >
+    <item android:id="@+id/menuRefresh"
+        android:title="@string/refresh"
+        android:icon="@drawable/icon_refresh"
+        yourapp:showAsAction="ifRoom"
+        yourapp:actionLayout="@layout/ab_progress"/>
+    <item android:id="@+id/menuMessageCenter"
+        android:title="@string/msg_cntr_title"
+        android:icon="@drawable/message_center_with_badge"
+        yourapp:showAsAction="ifRoom"/>
+	<item android:title="@string/menu_settings" 
+			android:id="@+id/menuSettings" 
+			android:icon="@android:drawable/ic_menu_preferences"></item>
+    <item android:title="@string/menu_reset" 
+            android:id="@+id/menuReset" 
+            android:icon="@android:drawable/ic_menu_close_clear_cancel"></item>
+    <item android:title="@string/menu_logout" 
+            android:id="@+id/menuLogout" 
+            android:icon="@android:drawable/ic_menu_close_clear_cancel"></item>
+    <!-- 
+    <item android:title="@string/menu_log_view" 
+            android:id="@+id/menuViewLog" 
+            android:icon="@android:drawable/ic_menu_view"></item>
+             -->
+</menu>

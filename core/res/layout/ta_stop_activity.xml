@@ -1,0 +1,87 @@
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/LinearLayout1"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:paddingBottom="@dimen/ta_activity_vertical_margin"
+    android:paddingLeft="@dimen/ta_activity_horizontal_margin"
+    android:paddingRight="@dimen/ta_activity_horizontal_margin"
+    android:paddingTop="@dimen/ta_activity_vertical_margin"
+    tools:context=".TAStopActivity" >
+
+    <!-- Include the standard header bits -->
+
+    <include layout="@layout/standard_header" />
+
+    <ScrollView
+        android:layout_width="fill_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1" >
+
+        <LinearLayout
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="@dimen/list_item_horizontal_margin"
+            android:layout_marginRight="@dimen/list_item_horizontal_margin"
+            android:layout_marginTop="@dimen/list_group_vertical_margin"
+            android:orientation="vertical" >
+
+            <LinearLayout
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:background="@drawable/square_border"
+                android:orientation="vertical"
+                android:padding="1dp" >
+
+                <include
+                    android:id="@+id/editDepartLocation"
+                    layout="@layout/image_form_field" />
+
+                <include
+                    android:id="@+id/editDepartDate"
+                    layout="@layout/image_form_field" />
+
+                <include
+                    android:id="@+id/editDepartTime"
+                    layout="@layout/image_form_field" />
+            </LinearLayout>
+
+            <include layout="@layout/group_separator" />
+
+            <View
+                android:layout_width="fill_parent"
+                android:layout_height="3dp"
+                android:layout_marginLeft="1dp"
+                android:layout_marginRight="1dp"
+                android:background="@drawable/square_border_shadow" />
+
+            <LinearLayout
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:background="@drawable/square_border"
+                android:orientation="vertical"
+                android:padding="1dp" >
+
+                <include
+                    android:id="@+id/editArriveLocation"
+                    layout="@layout/image_form_field" />
+
+                <include
+                    android:id="@+id/editArriveDate"
+                    layout="@layout/image_form_field" />
+
+                <include
+                    android:id="@+id/editArriveTime"
+                    layout="@layout/image_form_field" />
+            </LinearLayout>
+
+            <View
+                android:layout_width="fill_parent"
+                android:layout_height="3dp"
+                android:layout_marginLeft="1dp"
+                android:layout_marginRight="1dp"
+                android:background="@drawable/square_border_shadow" />
+        </LinearLayout>
+    </ScrollView>
+</LinearLayout>

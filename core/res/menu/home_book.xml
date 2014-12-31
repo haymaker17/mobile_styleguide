@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:yourapp="http://schemas.android.com/apk/res-auto" >
+    
+    <item android:title="@string/home_action_book_air" android:id="@+id/menuHomeBookAir"/>
+    <item android:title="@string/home_action_book_hotel" android:id="@+id/menuHomeBookHotel"/>
+    <item android:title="@string/home_action_book_car" android:id="@+id/menuHomeBookCar" />
+    <item android:title="@string/home_action_book_rail" android:id="@+id/menuHomeBookRail"/>
+</menu>

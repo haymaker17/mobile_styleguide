@@ -1,0 +1,86 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+	android:layout_width="fill_parent" android:layout_height="fill_parent"
+	android:orientation="vertical" style="@style/ConcurTheme">
+
+	<!--  Include the standard header bits -->
+	<include layout="@layout/standard_header"/>
+
+	<ScrollView android:layout_height="0px"
+		android:layout_width="fill_parent" android:layout_weight="1.0"
+		android:background="@color/ListBackground">
+
+		<LinearLayout android:layout_width="fill_parent"
+			android:background="@color/ListBackground" android:orientation="vertical"
+			android:layout_height="fill_parent">
+
+			<LinearLayout android:layout_width="fill_parent"
+				android:layout_height="wrap_content" android:orientation="horizontal"
+				android:background="@drawable/subheader_gradient_background"
+				android:paddingLeft="8dp" android:paddingRight="8dp"
+				android:paddingBottom="6dp" android:paddingTop="4dp">
+				<ImageView android:layout_height="wrap_content"
+					android:layout_width="wrap_content" android:layout_marginRight="8dp"
+					android:src="@drawable/itin_icon_taxi44" android:layout_gravity="center_vertical" />
+				<LinearLayout android:layout_height="wrap_content"
+					android:orientation="vertical" android:layout_width="fill_parent"
+					android:layout_gravity="top" android:layout_weight="1.0">
+					<TextView android:layout_width="fill_parent"
+						android:layout_height="wrap_content" android:textAppearance="@style/ListCellHeaderText"
+						android:lines="1" android:scrollHorizontally="true"
+						android:ellipsize="end" android:text="Vendor" android:id="@+id/rideVendor" />
+					<TextView android:layout_width="fill_parent"
+						android:layout_height="wrap_content" android:textAppearance="@style/SubHeaderText"
+						android:lines="1" android:scrollHorizontally="true"
+						android:ellipsize="end" android:id="@+id/ridePickup" android:text="Day, Mon 33, 9:00 AM" />
+				</LinearLayout>
+			</LinearLayout>
+
+			<LinearLayout android:layout_width="fill_parent"
+				android:orientation="vertical" android:layout_height="fill_parent"
+				android:paddingLeft="6dp" android:paddingRight="6dp"
+				android:paddingTop="10dp">
+
+				<LinearLayout android:orientation="vertical"
+					android:layout_width="fill_parent" android:layout_height="wrap_content"
+					android:id="@+id/ridePhone">
+					<include layout="@layout/static_text_form_field" />
+					<include layout="@layout/group_separator" />
+				</LinearLayout>
+				<include layout="@layout/static_text_form_field" android:id="@+id/ridePickupLocation" />
+				<include layout="@layout/group_separator" />
+				<LinearLayout android:orientation="vertical"
+					android:layout_width="fill_parent" android:layout_height="wrap_content"
+					android:id="@+id/ridePickupInstructions">
+					<include layout="@layout/static_text_form_field" />
+					<include layout="@layout/group_separator" />
+				</LinearLayout>
+				<LinearLayout android:orientation="vertical"
+					android:layout_width="fill_parent" android:layout_height="wrap_content"
+					android:id="@+id/rideDropoffLocation">
+					<include layout="@layout/static_text_form_field" />
+					<include layout="@layout/group_separator" />
+				</LinearLayout>
+				<LinearLayout android:orientation="vertical"
+					android:layout_width="fill_parent" android:layout_height="wrap_content"
+					android:id="@+id/rideDropoffInstructions">
+					<include layout="@layout/static_text_form_field" />
+					<include layout="@layout/group_separator" />
+				</LinearLayout>
+				<LinearLayout android:orientation="vertical"
+					android:layout_width="fill_parent" android:layout_height="wrap_content"
+					android:id="@+id/rideRateDescription">
+					<include layout="@layout/static_text_form_field" />
+					<include layout="@layout/group_separator" />
+				</LinearLayout>
+				<include layout="@layout/static_text_form_field" android:id="@+id/rideConfirm" />
+				<include layout="@layout/group_separator" />
+				<View android:layout_width="fill_parent" android:background="@drawable/square_border_shadow"
+					android:layout_height="3dp" android:layout_marginLeft="1dp"
+					android:layout_marginRight="1dp" android:layout_marginBottom="10dp" />
+
+			</LinearLayout>
+		</LinearLayout>
+	</ScrollView>
+
+</LinearLayout>

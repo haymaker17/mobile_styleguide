@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    style="@style/ConcurRestTheme.White.ActionBarTabs"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:background="@drawable/tab_indicator_ab_restv1"
+    android:gravity="center"
+    android:paddingBottom="10dp"
+    android:paddingLeft="36dp"
+    android:paddingRight="36dp"
+    android:paddingTop="10dp" >
+
+    <TextView
+        android:id="@+id/text"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:background="#FFFFFF"
+        android:text="Details"
+        android:textColor="@drawable/tab_text_selector"
+        android:textSize="14sp"
+        android:textStyle="normal" />
+
+</LinearLayout>

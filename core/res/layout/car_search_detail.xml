@@ -1,0 +1,115 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android" 
+	android:layout_width="fill_parent"
+	android:layout_height="fill_parent"
+	android:orientation="vertical"
+	style="@style/ConcurTheme"
+	android:background="@drawable/gradient_background">
+  
+  
+	<!--  Include the standard header bits -->
+	<include android:id="@+id/header" layout="@layout/standard_header"/>
+	
+	<include
+		android:id="@+id/travel_header"
+		layout="@layout/car_search_detail_title_header"
+		android:layout_width="fill_parent"
+		android:layout_height="wrap_content"
+	/>	  
+  
+    <ScrollView android:layout_width="fill_parent" android:layout_height="0dp" 
+        android:layout_weight="1">
+	    <LinearLayout android:layout_width="fill_parent" android:layout_height="fill_parent" 
+	        android:orientation="vertical">
+	        
+	        <!--  Include the section to display violation reason/justification/messages -->
+  			<include layout="@layout/violations"/>
+	        
+			<LinearLayout
+			    	android:id="@+id/layout_credit_card_selection"
+				android:layout_width="fill_parent" android:orientation="vertical"
+				android:layout_marginTop="@dimen/list_group_vertical_margin"
+				android:layout_marginLeft="@dimen/list_item_horizontal_margin"
+				android:layout_marginRight="@dimen/list_item_horizontal_margin"
+				android:layout_marginBottom="@dimen/list_group_vertical_margin"
+				android:layout_height="wrap_content">
+				
+				<LinearLayout android:layout_height="wrap_content"
+					android:layout_width="fill_parent" android:orientation="vertical"
+					android:background="@drawable/square_border" android:padding="1dp">
+							
+	  				<include layout="@layout/image_form_field" android:id="@+id/card_selection"/>
+				</LinearLayout>
+				
+				<View android:layout_width="fill_parent"
+					android:background="@drawable/square_border_shadow"
+					android:layout_height="3dp" android:layout_marginLeft="1dp"
+					android:layout_marginRight="1dp" />
+			</LinearLayout>
+			
+			<LinearLayout android:id="@+id/carDetailAddressLayout"
+				android:layout_width="fill_parent" android:orientation="vertical"
+				android:layout_marginTop="@dimen/list_group_vertical_margin"
+				android:layout_marginLeft="@dimen/list_item_horizontal_margin"
+				android:layout_marginRight="@dimen/list_item_horizontal_margin"
+				android:layout_marginBottom="@dimen/list_group_vertical_margin"
+				android:layout_height="wrap_content">
+				
+				<LinearLayout android:layout_height="wrap_content"
+					android:layout_width="fill_parent" android:orientation="vertical"
+					android:background="@drawable/square_border" android:padding="1dp">
+							
+	  				<include layout="@layout/image_form_field" android:id="@+id/carDetailPhone"/>
+ 					<include layout="@layout/group_separator" />
+	  				<include layout="@layout/image_form_field" android:id="@+id/carDetailAddress"/>
+	  				
+				</LinearLayout>
+				
+				<View android:layout_width="fill_parent"
+					android:background="@drawable/square_border_shadow"
+					android:layout_height="3dp" android:layout_marginLeft="1dp"
+					android:layout_marginRight="1dp" />
+			</LinearLayout>				        
+	        
+	        
+			<LinearLayout
+				android:layout_width="fill_parent" android:orientation="vertical"
+				android:layout_marginTop="@dimen/list_group_vertical_margin"
+				android:layout_marginLeft="@dimen/list_item_horizontal_margin"
+				android:layout_marginRight="@dimen/list_item_horizontal_margin"
+				android:layout_marginBottom="@dimen/list_group_vertical_margin"
+				android:layout_height="wrap_content">
+				
+				<LinearLayout android:layout_height="wrap_content"
+					android:layout_width="fill_parent" android:orientation="vertical"
+					android:background="@drawable/square_border" android:padding="1dp">
+							
+	  				<include layout="@layout/image_form_field" android:id="@+id/carDetailCarType"/>
+ 					<include layout="@layout/group_separator" />
+					<include layout="@layout/image_form_field" android:id="@+id/carDetailDailyRate"/>
+ 					<include layout="@layout/group_separator" android:id="@+id/carDetailTotalRateSeparator" />
+					<include layout="@layout/image_form_field" android:id="@+id/carDetailTotalRate"/>
+				</LinearLayout>
+				
+				<View android:layout_width="fill_parent"
+					android:background="@drawable/square_border_shadow"
+					android:layout_height="3dp" android:layout_marginLeft="1dp"
+					android:layout_marginRight="1dp" />
+			</LinearLayout>	   
+			    
+			<!-- Custom Fields View Group -->
+		    <LinearLayout android:id="@+id/booking_custom_fields"
+		        android:layout_width="fill_parent"
+		        android:layout_height="wrap_content"
+		        android:orientation="vertical"
+		        android:layout_marginBottom="@dimen/list_group_vertical_margin"
+		        android:layout_marginLeft="@dimen/list_item_horizontal_margin"
+		        android:layout_marginRight="@dimen/list_item_horizontal_margin"
+		    />
+			
+		</LinearLayout>
+	</ScrollView>			        	  
+
+ 	<include layout="@layout/footer_navigation_bar_one_button" android:id="@+id/footer"/>  
+
+</LinearLayout>

@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="utf-8"?>
+<PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android"
+    android:title="@string/preference_screen_title" >
+
+    <PreferenceCategory
+        android:key="pref_cat_auto_login_key"
+        android:title="@string/pref_cat_login" >
+        <CheckBoxPreference
+            android:key="pref_save_login_key"
+            android:title="@string/pref_save_login" >
+        </CheckBoxPreference>
+        <CheckBoxPreference
+            android:dependency="pref_save_login_key"
+            android:key="pref_auto_login_key"
+            android:title="@string/pref_auto_login" >
+        </CheckBoxPreference>
+    </PreferenceCategory>
+    <PreferenceCategory
+        android:key="pref_cat_notif_key"
+        android:title="@string/pref_cat_notif" >
+        <CheckBoxPreference
+            android:key="pref_push_allow"
+            android:title="@string/pref_push_allow" />
+        <CheckBoxPreference
+            android:key="pref_push_vibrate"
+            android:title="@string/pref_push_vibrate" />
+    </PreferenceCategory>
+    <PreferenceCategory android:title="@string/pref_cat_server" >
+        <EditTextPreference
+            android:key="pref_mws_address_key"
+            android:title="@string/pref_mws_address" >
+        </EditTextPreference>
+    </PreferenceCategory>
+    <PreferenceCategory
+        android:key="pref_cat_general_key"
+        android:title="@string/pref_cat_general" >
+        <ListPreference
+            android:entries="@array/voiceLanguageNames"
+            android:entryValues="@array/voiceLanguageValues"
+            android:key="pref_voice_search_language"
+            android:summary="@string/pref_voice_language_summary"
+            android:title="@string/pref_voice_language" />
+
+        <Preference
+            android:key="pref_open_source_libraries"
+            android:summary="@string/pref_libraries_description"
+            android:title="@string/pref_libraries_title" >
+        </Preference>
+    </PreferenceCategory>
+    <PreferenceCategory android:title="@string/pref_cat_version" >
+        <Preference
+            android:key="pref_version_key"
+            android:selectable="true"
+            android:title="@string/corporate_name" />
+    </PreferenceCategory>
+
+</PreferenceScreen>

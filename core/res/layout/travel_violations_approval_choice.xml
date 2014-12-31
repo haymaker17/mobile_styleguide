@@ -1,0 +1,111 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    style="@style/ConcurTheme"
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent"
+    android:orientation="vertical" >
+
+    <!-- Include the standard header bits -->
+
+    <include layout="@layout/standard_header" />
+
+    <TextView
+        android:id="@+id/content"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:paddingBottom="@dimen/report_list_cell_padding_bottom"
+        android:paddingLeft="@dimen/list_item_horizontal_margin"
+        android:paddingRight="@dimen/list_item_horizontal_margin"
+        android:paddingTop="@dimen/report_list_cell_padding_top"
+        android:text="@string/travel_points_violations_desc_content"
+        android:textAppearance="@style/ListCellSubHeaderTextBold" />
+
+    <RelativeLayout
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content" >
+
+        <TextView
+            android:id="@+id/travel_points_bank_field"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@drawable/gradient_background"
+            android:paddingBottom="@dimen/report_list_cell_padding_bottom"
+            android:paddingLeft="@dimen/list_item_horizontal_margin"
+            android:paddingRight="@dimen/list_item_horizontal_margin"
+            android:paddingTop="@dimen/report_list_cell_padding_top"
+            android:text="@string/travel_points_hotel_booking_workflow_points_header"
+            android:textAppearance="@style/ListCellSubHeaderTextBold" />
+
+        <ImageView
+            android:id="@+id/arrow_right_image"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentRight="true"
+            android:layout_centerInParent="true"
+            android:paddingRight="5dp"
+            android:src="@drawable/arrow_right" />
+    </RelativeLayout>
+
+    <TextView
+        android:id="@+id/approval_choice_label"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:background="@drawable/gradient_background"
+        android:paddingLeft="@dimen/list_item_horizontal_margin"
+        android:paddingRight="@dimen/list_item_horizontal_margin"
+        android:paddingTop="@dimen/report_list_cell_padding_top"
+        android:text="@string/travel_violations_approval_choice_label"
+        android:textAppearance="@style/ListCellSubHeaderTextBold" />
+
+    <RadioGroup
+        android:id="@+id/violation_fix_group"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical" >
+
+        <RadioButton
+            android:id="@+id/use_travel_points_select"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="@dimen/list_cell_padding_left"
+            android:text="@string/travel_points_use_for_booking" />
+
+        <RadioButton
+            android:id="@+id/use_manager_approval_select"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentLeft="true"
+            android:layout_marginLeft="@dimen/list_cell_padding_left"
+            android:text="@string/travel_points_manager_approval_for_booking" />
+    </RadioGroup>
+
+    <!-- This layout object is dynamically populated with violation messages. -->
+
+    <ScrollView
+        android:id="@+id/scroll_view"
+        android:layout_width="fill_parent"
+        android:layout_height="fill_parent"
+        android:layout_weight="1"
+        android:background="@drawable/gradient_background" >
+
+        <LinearLayout
+            android:id="@+id/violation_messages"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="@dimen/list_item_horizontal_margin"
+            android:layout_marginRight="@dimen/list_item_horizontal_margin"
+            android:layout_marginTop="@dimen/list_item_vertical_margin"
+            android:orientation="vertical" >
+
+            <!-- view for list of violations -->
+
+        </LinearLayout>
+    </ScrollView>
+
+    <!-- Footer for the Continue button. -->
+
+    <include
+        android:id="@+id/continue_footer"
+        layout="@layout/footer_navigation_bar_one_button" />
+
+</LinearLayout>

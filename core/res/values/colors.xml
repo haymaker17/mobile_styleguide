@@ -1,0 +1,154 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <color name="BlueBackground">#1A84C6</color>
+    <color name="dot">#5FA9D7</color>
+    <color name="universal_tour_text">#A9DEFF</color>
+    <color name="universal_tour_ab_menu">#2077BD</color>
+    <color name="universal_tour_ab_menu_v1">#0078c8</color>
+    <color name="HomePrimaryBackgroundColor">#ffffff</color>
+    <color name="PrimaryBackgroundColor">#dee4e9</color>
+    <color name="PrimaryText">#373d48</color>
+    <color name="SecondaryText">#6f6f6f</color>
+    <color name="HomeButtonBackground">#0078c8</color>
+    <color name="HomeCellBackground">#f9f9f9</color>
+    <color name="HomeActionBarButtonBackground">#00000000</color>
+    <color name="HomeFooterButtonBackground">#00000000</color>
+    <color name="HomeFooterButtonText">#FFFFFF</color>
+    <color name="ButtonClickStartGradient">#ffde7a</color>
+    <color name="ButtonClickCenterGradient">#f3ac16</color>
+    <color name="ButtonClickEndGradient">#fcc71c</color>
+    <color name="ChildListItemBackground">#FFFFFF</color>
+    <color name="ListBackground">#CAD3DC</color>
+    <color name="RoundBoxBorder">#ACB2B7</color>
+    <color name="ExpenseListHeaderBackground">#8BA5FE</color>
+    <color name="GainFocus">#FF0000</color>
+    <color name="LostFocus">#00FF00</color>
+    <color name="blue">#0000FF</color>
+    <color name="exception">#FF0000</color>
+    <color name="WhiteBackground">#FFFFFF</color>
+    <color name="White">#FFFFFF</color>
+    <color name="ListScreenBackground">#78b0d0</color>
+    <color name="Black">#000000</color>
+    <color name="gray">#444444</color>
+    <color name="light_gray">#F8F7F6</color>
+    <color name="FareSearchProgressText">#666666</color>
+    <color name="offline_header_shadow">@android:color/black</color>
+    <color name="ListStripeWhite">#FFFFFFFF</color>
+    <color name="ListStripeBlue">#220088FF</color>
+    <color name="listSelectUnfocused">#FFFFFF</color>
+    <color name="listSelectDisabled">#333333</color>
+    <color name="listSelectTransition">#999999</color>
+    <color name="listSelectFocused">#CAD3DC</color>
+    <color name="transparent">#00000000</color>
+    <color name="transparent_black">#78000000</color>
+    <color name="ReceiptAttributeTitle">#8C8C8C</color>
+    <color name="DataInfoBarBackground">#155588</color>
+    <color name="tourPageMarkerActive">#ffffffff</color>
+    <color name="tourPageMarkerInactive">#66ffffff</color>
+    <color name="divider_gray">#cccccc</color>
+
+    <!-- Splash screen gradient; also used in the tour -->
+    <color name="SplashGradientTop">#85bef8</color>
+    <color name="SplashGradientBottom">#6292e1</color>
+
+    <!-- Main screen background gradient; used in drawable/gradient_background -->
+    <color name="GradientBackgroundTop">#f5f6f7</color>
+    <color name="GradientBackgroundBottom">#e5e6e6</color>
+
+    <!-- The main header/footer bars -->
+    <color name="GradientHeaderTop">#2f6996</color>
+    <color name="GradientHeaderBottom">#023e70</color>
+    <color name="GradientHomeFooterTop">#e8e9eb</color>
+    <color name="GradientHomeFooterBottom">#d7d8d9</color>
+    <color name="StrokeHomeFooter">#8e8e8e</color>
+
+    <!-- Pager strip for tabs -->
+    <color name="GradientPagerStripTop">#545454</color>
+    <color name="GradientPagerStripBottom">#3b3b3b</color>
+
+    <!-- What's new background color -->
+    <color name="WhatsNewBackground">#193D70</color>
+
+    <!-- List section header; newer designs use the gradient -->
+    <color name="GradientSectionHeaderTop">#e8e9eb</color>
+    <color name="GradientSectionHeaderBottom">#dadbdc</color>
+    <color name="SectionHeaderBackground">#abb2b6</color>
+
+    <!-- List divider color -->
+    <color name="ListDivider">#c4cdd1</color>
+    <color name="locationBackground">#f7fafd</color>
+    <color name="cellDivider">#d9d9d9</color>
+
+    <!-- Subheader background gradient (like for report information); used in drawable/subheader_gradient_background -->
+    <color name="SubHeaderBackgroundTop">#dcf1ff</color>
+    <color name="SubHeaderBackgroundBottom">#dcf1ff</color>
+
+    <!-- Gradient for cells; used in drawable/cell_gradient_background -->
+    <color name="CellBackgroundTop">#fdfdfd</color>
+    <color name="CellBackgroundBottom">#efefef</color>
+    <color name="SquareBoxBorder">#FFABABAB</color>
+    <color name="SquareBoxBorderTransparent">#00ABABAB</color>
+    <color name="SubHeaderGray">#949AA1</color>
+    <color name="ListCellSubText">#848b93</color>
+    <color name="CellTextBlue">#1f4272</color>
+    <color name="CellTextRed">#b9273b</color>
+    <color name="CellTextYellow">#d6aa00</color>
+    <color name="FareGreen">#6f9916</color>
+    <color name="FareYellow">#edb300</color>
+    <color name="FareRed">#c52d47</color>
+    <color name="FareGray">#7f7f7f</color>
+
+    <!-- field label/value colors -->
+    <color name="FormLabel">#666666</color>
+    <color name="FormValue">#292929</color>
+    <color name="FormValueV1">#0078c8</color>
+
+    <!-- navigation menu colors -->
+    <color name="NavigationItemTopLine">#c8c7cc</color>
+    <color name="NavigationItemBottomLine">#c8c7cc</color>
+    <color name="NavigationItemBackground">#FFFFFF</color>
+    <color name="NavigationItemTopGradient">#efefef</color>
+    <color name="NavigationItemBottomGradient">#efefef</color>
+    <color name="NavigationItemTextColor">#404040</color>
+    <color name="NavigationItemSelectedBackground">#0A94C2</color>
+    <color name="TipsTransparentBlack">#C8000000</color>
+    <color name="TipTextColor">#F9F9F9</color>
+    <color name="TipDismissShadow">#40000000</color>
+    <color name="CustomDialogTextColor">#F9F9F9</color>
+
+    <!-- Spalsh Screen -->
+    <color name="SplashScreenColor">#0078C9</color>
+
+    <!-- Test drive background; used in drawable/gradient_blue_background -->
+    <color name="TDBlueBackground">#0079C8</color>
+    <color name="universal_dot_saparator">#5FA9D7</color>
+
+    <!-- Tour colors -->
+    <color name="tourDropShadowEdges">#30000000</color>
+    <color name="tourDropShadowCorners">#20000000</color>
+    <color name="tourBackgroundAlpha">#C6000000</color>
+    <color name="tourTextOverlayAlpha">#8F000000</color>
+
+    <!-- New search screens -->
+    <color name="searchResultTitleText">#8A8A8A</color>
+    <color name="searchResultNameText">#666666</color>
+    <color name="searchResultAmountText">#4fbbff</color>
+    <color name="searchResultTravelPointsText">#4fbbff</color>
+    <color name="searchResultAddressText">#AAAAAA</color>
+    <color name="searchResultDistanceText">#8A8A8A</color>
+    <color name="searchResultRecommendBackground">#6f9916</color>
+
+    <!-- OCR expense detail screen -->
+    <color name="expenseFieldValueText">#0078c8</color>
+    <color name="expenseFieldLabelText">#666666</color>
+    <color name="expenseScreenBackground">#DAF3FC</color>
+    <color name="ocrStatusRedBackground">#fff5f5</color>
+    <color name="ocrStatusGreenBackground">#dfefd4</color>
+    <color name="ocrStatusGreenText">#479149</color>
+    <color name="ListCellDividerTopColor">#B9BFC2</color>
+    <color name="ListCellDividerBottomColor">#EEF0F0</color>
+    <color name="ListItemDivider">#F3F3F3</color>
+    <color name="ExpenseListHeaderText">#323232</color>
+
+</resources>

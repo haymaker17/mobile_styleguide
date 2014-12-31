@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    style="@style/ConcurTheme"
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent"
+    android:orientation="vertical" >
+
+    <!-- Include the standard header bits -->
+
+    <include layout="@layout/standard_header" />
+
+    <TextView
+        android:id="@+id/travel_violations_for_manager_approval_header"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:paddingBottom="@dimen/report_list_cell_padding_bottom"
+        android:paddingLeft="@dimen/list_item_horizontal_margin"
+        android:paddingRight="@dimen/list_item_horizontal_margin"
+        android:paddingTop="@dimen/report_list_cell_padding_top"
+        android:text="Before reserving this flight in violation of company policy, you must provide a reason in the fields shown in red."
+        android:textAppearance="@style/ListCellSubHeaderTextBold" />
+
+    <TextView
+        android:id="@+id/violations_with_travel_points_header"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="@dimen/list_item_horizontal_margin"
+        android:layout_marginRight="@dimen/list_item_horizontal_margin"
+        android:layout_marginTop="@dimen/list_item_vertical_margin"
+        android:text="@string/travel_points_violations_header"
+        android:textAppearance="@style/FlightSegmentHeaderText" />
+
+    <!-- This layout object is dynamically populated with violation messages. -->
+
+    <ScrollView
+        android:id="@+id/scroll_view"
+        android:layout_width="fill_parent"
+        android:layout_height="fill_parent"
+        android:layout_weight="1"
+        android:background="@drawable/gradient_background" >
+
+        <include layout="@layout/violations" />
+    </ScrollView>
+
+    <!-- Footer for the Continue button. -->
+
+    <include
+        android:id="@+id/continue_footer"
+        layout="@layout/footer_navigation_bar_one_button" />
+
+</LinearLayout>

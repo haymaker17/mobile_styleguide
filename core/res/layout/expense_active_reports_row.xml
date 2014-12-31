@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout
+  xmlns:android="http://schemas.android.com/apk/res/android"
+  android:layout_width="fill_parent"
+  android:layout_height="wrap_content"
+  android:padding="@dimen/list_cell_padding"
+  android:background="@drawable/list_selector_gradient_background"
+>
+  
+    <TableLayout
+    	android:id="@+id/table_report_name_amount"
+    	android:layout_alignParentTop="true"
+    	android:layout_alignWithParentIfMissing="true"
+    	android:layout_width="wrap_content"
+  		android:layout_height="wrap_content"
+  		android:shrinkColumns="0"
+  		android:stretchColumns="1"
+    >
+    	<TableRow
+    		android:id="@+id/table_row_report_name_amount"
+    	>
+			<TextView
+  				android:id="@+id/exp_rep_ent_row_report_name"
+  				android:text="Expense Report 03/01/2010"
+    			android:layout_marginBottom="@dimen/list_cell_primary_text_bottom_margin"
+    			android:textAppearance="@style/ActiveReportListEntry"
+    		/>
+    		<TextView
+  				android:id="@+id/exp_rep_ent_row_amount"
+  				android:text="$1,790.55"
+  				android:layout_gravity="right|top"
+    			android:textAppearance="@style/ActiveReportListEntry"
+    		/>
+    	</TableRow>
+    </TableLayout>
+    <TextView
+  		android:id="@+id/exp_rep_ent_row_expense_date"
+  		android:text="Oct 21, 2009"
+    	android:textSize="12sp"
+    	android:textColor="#000000"
+    	android:layout_below="@+id/table_report_name_amount"
+    	android:layout_alignWithParentIfMissing="true"
+    	android:gravity="left"
+    	android:layout_width="fill_parent"
+    	android:layout_height="wrap_content"
+    />
+</RelativeLayout>
+

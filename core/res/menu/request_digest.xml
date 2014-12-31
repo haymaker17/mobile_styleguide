@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:yourapp="http://schemas.android.com/apk/res-auto" >
+
+    <item
+        android:id="@+id/request_header_main"
+        android:icon="@drawable/overflow_icon"
+        android:title="@string/tr_header"
+        yourapp:showAsAction="ifRoom|collapseActionView">
+
+	    <menu>
+	        <item
+	            android:id="@+id/request_header"
+	            android:title="@string/tr_header"
+	            yourapp:showAsAction="ifRoom|collapseActionView"/>
+	    </menu>
+
+    </item>
+
+</menu>

@@ -1,0 +1,266 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="fill_parent"
+    android:layout_height="wrap_content"
+    android:background="@drawable/list_selector_gradient_background"
+    android:paddingBottom="@dimen/list_cell_padding_bottom"
+    android:paddingLeft="@dimen/list_cell_padding_left"
+    android:paddingTop="@dimen/list_cell_padding_top" >
+
+    <TextView
+        android:id="@+id/railResultOutboundEquipmentLabel"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/rail_general_train"
+        android:textAppearance="@style/BigPrimaryText"
+        android:textStyle="bold" />
+
+    <TextView
+        android:id="@+id/railResultOutboundTrain"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignBaseline="@id/railResultOutboundEquipmentLabel"
+        android:layout_marginLeft="2dp"
+        android:layout_marginTop="5dp"
+        android:layout_toRightOf="@id/railResultOutboundEquipmentLabel"
+        android:text="000"
+        android:textAppearance="@style/BigPrimaryText"
+        android:textStyle="bold" />
+
+    <TextView
+        android:id="@+id/railResultOutboundDepStation"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/railResultOutboundEquipmentLabel"
+        android:layout_marginRight="3dp"
+        android:text="CTY"
+        android:textAppearance="@style/PrimaryText" />
+
+    <TextView
+        android:id="@+id/railResultOutboundDepTime"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignBaseline="@id/railResultOutboundDepStation"
+        android:layout_below="@+id/railResultOutboundTrain"
+        android:layout_toRightOf="@id/railResultOutboundDepStation"
+        android:text="00:00 AM"
+        android:textAppearance="@style/PrimaryText" />
+
+    <TextView
+        android:id="@+id/railResultOutboundArrow"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignBaseline="@id/railResultOutboundDepTime"
+        android:layout_below="@id/railResultOutboundTrain"
+        android:layout_marginLeft="8dp"
+        android:layout_marginRight="8dp"
+        android:layout_toRightOf="@id/railResultOutboundDepTime"
+        android:text="-"
+        android:textAppearance="@style/PrimaryText" />
+
+    <TextView
+        android:id="@+id/railResultOutboundArrStation"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignBaseline="@id/railResultOutboundDepTime"
+        android:layout_below="@id/railResultOutboundTrain"
+        android:layout_marginRight="3dp"
+        android:layout_toRightOf="@id/railResultOutboundArrow"
+        android:text="CTY"
+        android:textAppearance="@style/PrimaryText" />
+
+    <TextView
+        android:id="@+id/railResultOutboundArrTime"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignBaseline="@id/railResultOutboundDepTime"
+        android:layout_below="@id/railResultOutboundTrain"
+        android:layout_toRightOf="@id/railResultOutboundArrStation"
+        android:text="00:00 PM"
+        android:textAppearance="@style/PrimaryText" >
+    </TextView>
+
+    <TextView
+        android:id="@+id/railResultOutboundTotalTime"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignBaseline="@id/railResultOutboundTrain"
+        android:layout_marginLeft="4dp"
+        android:layout_toRightOf="@id/railResultOutboundTrain"
+        android:text="(0h 00m)"
+        android:textAppearance="@style/PrimaryText" />
+
+    <TextView
+        android:id="@+id/railResultReturnEquipmentLabel"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/railResultOutboundDepTime"
+        android:text="@string/rail_general_train"
+        android:textAppearance="@style/BigPrimaryText"
+        android:textStyle="bold" />
+
+    <TextView
+        android:id="@+id/railResultReturnTrain"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignBaseline="@id/railResultReturnEquipmentLabel"
+        android:layout_below="@id/railResultOutboundDepTime"
+        android:layout_marginLeft="2dp"
+        android:layout_toRightOf="@id/railResultReturnEquipmentLabel"
+        android:text="000"
+        android:textAppearance="@style/BigPrimaryText"
+        android:textStyle="bold" />
+
+    <TextView
+        android:id="@+id/railResultReturnDepStation"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/railResultReturnEquipmentLabel"
+        android:layout_marginRight="3dp"
+        android:text="CTY"
+        android:textAppearance="@style/PrimaryText" />
+
+    <TextView
+        android:id="@+id/railResultReturnDepTime"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignBaseline="@id/railResultReturnDepStation"
+        android:layout_below="@id/railResultReturnTrain"
+        android:layout_toRightOf="@+id/railResultReturnDepStation"
+        android:text="00:00 PM"
+        android:textAppearance="@style/PrimaryText" >
+    </TextView>
+
+    <TextView
+        android:id="@+id/railResultReturnArrow"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignBaseline="@id/railResultReturnDepTime"
+        android:layout_below="@id/railResultReturnTrain"
+        android:layout_marginLeft="8dp"
+        android:layout_marginRight="8dp"
+        android:layout_toRightOf="@id/railResultReturnDepTime"
+        android:text="-"
+        android:textAppearance="@style/PrimaryText" />
+
+    <TextView
+        android:id="@+id/railResultReturnArrStation"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignBaseline="@id/railResultReturnDepTime"
+        android:layout_below="@id/railResultReturnTrain"
+        android:layout_marginRight="3dp"
+        android:layout_toRightOf="@id/railResultReturnArrow"
+        android:text="CTY"
+        android:textAppearance="@style/PrimaryText" />
+
+    <TextView
+        android:id="@+id/railResultReturnArrTime"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignBaseline="@+id/railResultReturnArrStation"
+        android:layout_below="@id/railResultReturnTrain"
+        android:layout_toRightOf="@+id/railResultReturnArrStation"
+        android:text="00:00 PM"
+        android:textAppearance="@style/PrimaryText" >
+    </TextView>
+
+    <TextView
+        android:id="@+id/railResultReturnTotalTime"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignBaseline="@id/railResultReturnTrain"
+        android:layout_marginLeft="4dp"
+        android:layout_toRightOf="@id/railResultReturnTrain"
+        android:text="(0h 00m)"
+        android:textAppearance="@style/PrimaryText" />
+
+    <TextView
+        android:id="@+id/railResultOutboundAcela"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignBaseline="@+id/railResultOutboundTotalTime"
+        android:layout_marginLeft="10dp"
+        android:layout_toRightOf="@+id/railResultOutboundTotalTime"
+        android:text="Acela"
+        android:textAppearance="@style/PrimaryText"
+        android:textStyle="bold"
+        android:visibility="gone" >
+    </TextView>
+
+    <TextView
+        android:id="@+id/railResultReturnAcela"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignBaseline="@+id/railResultReturnTotalTime"
+        android:layout_marginLeft="10dp"
+        android:layout_toRightOf="@+id/railResultReturnTotalTime"
+        android:text="Acela"
+        android:textAppearance="@style/PrimaryText"
+        android:textStyle="bold"
+        android:visibility="gone" >
+    </TextView>
+
+    <TextView
+        android:id="@+id/railGDSName"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/railResultReturnArrTime"
+        android:layout_gravity="left"
+        android:textAppearance="@style/PrimaryText"
+        android:visibility="gone" >
+    </TextView>
+
+    <LinearLayout
+        android:id="@+id/railPriceLayout"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentRight="true"
+        android:layout_centerVertical="true"
+        android:layout_marginLeft="14dp"
+        android:layout_weight="1"
+        android:orientation="horizontal" >
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:orientation="vertical" >
+
+            <TextView
+                android:id="@+id/railResultCostMin"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:gravity="center"
+                android:text="$000.00"
+                android:textAppearance="@style/RailFareNormal" />
+
+            <TextView
+                android:id="@+id/railResultCostSep"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:gravity="center"
+                android:text="@string/general_separator_to"
+                android:textAppearance="@style/RailFareSmall" />
+
+            <TextView
+                android:id="@+id/railResultCostMax"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:gravity="center"
+                android:text="$000.00"
+                android:textAppearance="@style/RailFareNormal" />
+        </LinearLayout>
+
+        <ImageView
+            android:id="@+id/field_image"
+            android:layout_width="36dp"
+            android:layout_height="36dp"
+            android:layout_gravity="center"
+            android:maxHeight="36dp"
+            android:maxWidth="36dp"
+            android:scaleType="fitXY"
+            android:src="@drawable/field_popup" />
+    </LinearLayout>
+
+</RelativeLayout>
