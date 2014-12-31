@@ -85,6 +85,7 @@
 @property BOOL hasCloseButton;
 @property BOOL requirePaperReceipt;
 
+// testing git commit
 // MOB-21970: if it is add a new expense, need to get the start odometer from server
 @property BOOL isAddNewExpense;
 @property BOOL isCarKeySwitched;
