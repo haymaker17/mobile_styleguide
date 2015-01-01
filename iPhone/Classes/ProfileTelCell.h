@@ -9,6 +9,7 @@
 #import <UIKit/UIKit.h>
 
 @interface ProfileTelCell : UITableViewCell <UITextFieldDelegate>
+
 @property (strong, nonatomic) IBOutlet UITextField *textField;
 @property (strong, nonatomic) IBOutlet UIImageView *custonImageView;
 @property (strong, nonatomic) IBOutlet UILabel *underLine;

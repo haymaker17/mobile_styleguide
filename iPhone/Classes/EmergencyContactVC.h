@@ -7,7 +7,17 @@
 //
 
 #import <UIKit/UIKit.h>
+#import "CTEProfileEmergencyContact.h"
 
-@interface EmergencyContactVC : UITableViewController
+@interface EmergencyContactVC : UITableViewController <UITextFieldDelegate>
+
+@property (nonatomic,strong) NSMutableDictionary *emergencyDict;
+@property (strong, nonatomic) IBOutlet UIButton *btnChoose;
+
+- (IBAction)btnClose:(id)sender;
+- (IBAction)btnDone:(id)sender;
+
+- (IBAction)switchToggle:(id)sender;
+- (IBAction)btnChooseClick:(id)sender;
 
 @end

@@ -2100,6 +2100,21 @@
 		3EF0DCEC1677E50000E5CC88 /* LoginHelpContentsCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 3EF0DCEB1677E50000E5CC88 /* LoginHelpContentsCell.xib */; };
 		3EF0DCEF1677E50000E5CC88 /* LoginHelpContentsCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 3EF0DCEB1677E50000E5CC88 /* LoginHelpContentsCell.xib */; };
 		3EF0DCF01677E50000E5CC88 /* LoginHelpContentsCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 3EF0DCEB1677E50000E5CC88 /* LoginHelpContentsCell.xib */; };
+		4043BD461A54C922001DF805 /* SwitchCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 4043BD451A54C922001DF805 /* SwitchCell.m */; };
+		4043BD471A54C922001DF805 /* SwitchCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 4043BD451A54C922001DF805 /* SwitchCell.m */; };
+		4043BD481A54C922001DF805 /* SwitchCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 4043BD451A54C922001DF805 /* SwitchCell.m */; };
+		4043BD491A54C922001DF805 /* SwitchCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 4043BD451A54C922001DF805 /* SwitchCell.m */; };
+		4043BD4A1A54C922001DF805 /* SwitchCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 4043BD451A54C922001DF805 /* SwitchCell.m */; };
+		4043BD4D1A54D1BC001DF805 /* ProfileTelCell2.m in Sources */ = {isa = PBXBuildFile; fileRef = 4043BD4C1A54D1BC001DF805 /* ProfileTelCell2.m */; };
+		4043BD4E1A54D1BC001DF805 /* ProfileTelCell2.m in Sources */ = {isa = PBXBuildFile; fileRef = 4043BD4C1A54D1BC001DF805 /* ProfileTelCell2.m */; };
+		4043BD4F1A54D1BC001DF805 /* ProfileTelCell2.m in Sources */ = {isa = PBXBuildFile; fileRef = 4043BD4C1A54D1BC001DF805 /* ProfileTelCell2.m */; };
+		4043BD501A54D1BC001DF805 /* ProfileTelCell2.m in Sources */ = {isa = PBXBuildFile; fileRef = 4043BD4C1A54D1BC001DF805 /* ProfileTelCell2.m */; };
+		4043BD511A54D1BC001DF805 /* ProfileTelCell2.m in Sources */ = {isa = PBXBuildFile; fileRef = 4043BD4C1A54D1BC001DF805 /* ProfileTelCell2.m */; };
+		4043BD541A54D256001DF805 /* CityCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 4043BD531A54D256001DF805 /* CityCell.m */; };
+		4043BD551A54D256001DF805 /* CityCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 4043BD531A54D256001DF805 /* CityCell.m */; };
+		4043BD561A54D256001DF805 /* CityCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 4043BD531A54D256001DF805 /* CityCell.m */; };
+		4043BD571A54D256001DF805 /* CityCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 4043BD531A54D256001DF805 /* CityCell.m */; };
+		4043BD581A54D256001DF805 /* CityCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 4043BD531A54D256001DF805 /* CityCell.m */; };
 		406489891A1AE4BB000CA4D9 /* SafariLoginViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 406489881A1AE4BB000CA4D9 /* SafariLoginViewController.m */; };
 		4064898A1A1AE4BB000CA4D9 /* SafariLoginViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 406489881A1AE4BB000CA4D9 /* SafariLoginViewController.m */; };
 		4064898B1A1AE4BB000CA4D9 /* SafariLoginViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 406489881A1AE4BB000CA4D9 /* SafariLoginViewController.m */; };
@@ -12350,6 +12365,12 @@
 		3EF3C87B15D5731C001FAF90 /* IgniteChatterPostVC.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = IgniteChatterPostVC.xib; path = iPad/Ignite/IgniteChatterPostVC.xib; sourceTree = "<group>"; };
 		3EF408F215D1EB7B003B0D93 /* IgniteItinDetailSocialFeedDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = IgniteItinDetailSocialFeedDelegate.h; path = iPad/Ignite/IgniteItinDetailSocialFeedDelegate.h; sourceTree = "<group>"; };
 		3EF408F315D1EE25003B0D93 /* IgniteChatterCellDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = IgniteChatterCellDelegate.h; path = iPad/Ignite/IgniteChatterCellDelegate.h; sourceTree = "<group>"; };
+		4043BD441A54C922001DF805 /* SwitchCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SwitchCell.h; sourceTree = "<group>"; };
+		4043BD451A54C922001DF805 /* SwitchCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SwitchCell.m; sourceTree = "<group>"; };
+		4043BD4B1A54D1BC001DF805 /* ProfileTelCell2.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ProfileTelCell2.h; sourceTree = "<group>"; };
+		4043BD4C1A54D1BC001DF805 /* ProfileTelCell2.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ProfileTelCell2.m; sourceTree = "<group>"; };
+		4043BD521A54D256001DF805 /* CityCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CityCell.h; sourceTree = "<group>"; };
+		4043BD531A54D256001DF805 /* CityCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CityCell.m; sourceTree = "<group>"; };
 		406489871A1AE4BB000CA4D9 /* SafariLoginViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = SafariLoginViewController.h; path = Login/SafariLoginViewController.h; sourceTree = "<group>"; };
 		406489881A1AE4BB000CA4D9 /* SafariLoginViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = SafariLoginViewController.m; path = Login/SafariLoginViewController.m; sourceTree = "<group>"; };
 		4064898E1A1C0FE2000CA4D9 /* CTECorpSsoLogin.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CTECorpSsoLogin.h; sourceTree = "<group>"; };
@@ -17151,13 +17172,19 @@
 				40671D1F1A2D405E00FE7FEC /* CardCell.xib */,
 				409843621A2F975300E2CB35 /* ProfileTelCell.h */,
 				409843631A2F975300E2CB35 /* ProfileTelCell.m */,
+				4043BD4B1A54D1BC001DF805 /* ProfileTelCell2.h */,
+				4043BD4C1A54D1BC001DF805 /* ProfileTelCell2.m */,
 				409843641A2F975300E2CB35 /* ProfileTelCell.xib */,
 				4098436C1A2F9A8900E2CB35 /* NameCell.h */,
 				4098436D1A2F9A8900E2CB35 /* NameCell.m */,
 				4098436E1A2F9A8900E2CB35 /* NameCell.xib */,
+				4043BD521A54D256001DF805 /* CityCell.h */,
+				4043BD531A54D256001DF805 /* CityCell.m */,
 				409843711A2F9AAC00E2CB35 /* CityCell2.h */,
 				409843721A2F9AAC00E2CB35 /* CityCell2.m */,
 				409843731A2F9AAC00E2CB35 /* CityCell2.xib */,
+				4043BD441A54C922001DF805 /* SwitchCell.h */,
+				4043BD451A54C922001DF805 /* SwitchCell.m */,
 			);
 			name = Cells;
 			sourceTree = "<group>";
@@ -28607,6 +28634,7 @@
 				3DF18614186E4C3B0059D07D /* ConcurTestDrive.m in Sources */,
 				6707F2FA12172A500039003E /* TrainStopsVC.m in Sources */,
 				0169CBD218451C7400667F0A /* GoGoPurchaseConfirmationViewController.m in Sources */,
+				4043BD461A54C922001DF805 /* SwitchCell.m in Sources */,
 				6707F2FF121746B10039003E /* TrainStopCell.m in Sources */,
 				2B6DC43C1215CF8B009CC4CF /* HotelDetailsTableSection.m in Sources */,
 				8B40F0B91964A05E0079F254 /* CTEHotelCellData.m in Sources */,
@@ -28753,6 +28781,7 @@
 				1C992940131EDC310077B818 /* DeleteReceipt.m in Sources */,
 				F6FA550218918B1C004D3AF0 /* HotelBenchmarkCell.m in Sources */,
 				93D0100A131EBC4F00A96445 /* ReportHeaderDetailData.m in Sources */,
+				4043BD541A54D256001DF805 /* CityCell.m in Sources */,
 				93D0100E131EBC6500A96445 /* ReportEntryDetailData.m in Sources */,
 				93C16246131EE1EA0004DB56 /* PartialReportDataBase.m in Sources */,
 				2BD1FFDD131ED3DD004147D1 /* MobileActionSheet.m in Sources */,
@@ -28799,6 +28828,7 @@
 				CF1F412B18BE68F0008EEF7C /* GovAirShopAllResultsCell.m in Sources */,
 				1CF36C49137DCE790032634F /* ExReceiptManager.m in Sources */,
 				677470271381B9990061CEA8 /* BaseManager.m in Sources */,
+				4043BD4D1A54D1BC001DF805 /* ProfileTelCell2.m in Sources */,
 				677470301381BC7E0061CEA8 /* HomeManager.m in Sources */,
 				6776DB0613842C3600CDAB97 /* EntityHome.m in Sources */,
 				8B052D421842FE1B003CBFB4 /* UniversalTourVC_ipad.m in Sources */,
@@ -29759,6 +29789,7 @@
 				67262565156BD2CB00E8199B /* TrainStopCell.m in Sources */,
 				67262566156BD2CB00E8199B /* HotelDetailsTableSection.m in Sources */,
 				40671D221A2D405E00FE7FEC /* CardCell.m in Sources */,
+				4043BD481A54C922001DF805 /* SwitchCell.m in Sources */,
 				67262567156BD2CB00E8199B /* ArchivedResponder.m in Sources */,
 				67262568156BD2CB00E8199B /* BookingChainCell.m in Sources */,
 				67262569156BD2CB00E8199B /* BookingImageCell.m in Sources */,
@@ -29905,6 +29936,7 @@
 				672625E2156BD2CB00E8199B /* ReportHeaderDetailData.m in Sources */,
 				409843811A2FC44600E2CB35 /* ProfileTelCell.m in Sources */,
 				672625E3156BD2CB00E8199B /* ReportEntryDetailData.m in Sources */,
+				4043BD561A54D256001DF805 /* CityCell.m in Sources */,
 				672625E4156BD2CB00E8199B /* PartialReportDataBase.m in Sources */,
 				3D8A1C2B1876211100778854 /* CCWebNavigationCrontroller.m in Sources */,
 				672625E5156BD2CB00E8199B /* MobileActionSheet.m in Sources */,
@@ -29951,6 +29983,7 @@
 				67262607156BD2CB00E8199B /* ExReceiptManager.m in Sources */,
 				32992F9A18906F210078A931 /* ItineraryStopCell.m in Sources */,
 				67262608156BD2CB00E8199B /* BaseManager.m in Sources */,
+				4043BD4F1A54D1BC001DF805 /* ProfileTelCell2.m in Sources */,
 				67262609156BD2CB00E8199B /* HomeManager.m in Sources */,
 				6726260A156BD2CB00E8199B /* EntityHome.m in Sources */,
 				0AE217941989BE2D00368671 /* TravelWaitViewController.m in Sources */,
@@ -30716,6 +30749,7 @@
 				67D81A3615138FD2003CA266 /* MyToolbar.m in Sources */,
 				67D81A3715138FD2003CA266 /* CCardTransaction.m in Sources */,
 				3BB500C1190F5CDF00AAE3A6 /* UMKMockURLProtocol+UMKHTTPConvenienceMethods.m in Sources */,
+				4043BD4E1A54D1BC001DF805 /* ProfileTelCell2.m in Sources */,
 				67D81A3815138FD2003CA266 /* ReceiptButtonCell.m in Sources */,
 				67D81A3915138FD2003CA266 /* RoundedRectView.m in Sources */,
 				67D81A3A15138FD2003CA266 /* AsyncImageView.m in Sources */,
@@ -31280,6 +31314,7 @@
 				67EE175A156DD670002E951F /* WhatsNewView.m in Sources */,
 				3EEDD026157FC6BD007771E1 /* TripItValidateAccessTokenData.m in Sources */,
 				6758AB4615865C1500055A12 /* TripManager.m in Sources */,
+				4043BD551A54D256001DF805 /* CityCell.m in Sources */,
 				6758AB4D1586613100055A12 /* EntityBooking.m in Sources */,
 				670BF11D1587AFC70072A5F9 /* EntityFlightStats.m in Sources */,
 				8B6871DB195DFFCB000C7C60 /* SearchCriteriaTableViewCell.m in Sources */,
@@ -31298,6 +31333,7 @@
 				3EC035EA15D3157B009BCAF3 /* EntitySalesForceUser.m in Sources */,
 				3E42A67215DDA0810032C4FA /* EntityChatterFeedEntry.m in Sources */,
 				3EB9056915DEB06A0016888F /* EntitySalesForceTrip.m in Sources */,
+				4043BD471A54C922001DF805 /* SwitchCell.m in Sources */,
 				3D8A1C1D18761EC200778854 /* CCWebBrowser.m in Sources */,
 				3EB9057915DEB1810016888F /* EntityChatterAbstractEntry.m in Sources */,
 				495E762015E2D1EC0050EEBD /* RegisterPush.m in Sources */,
@@ -31721,6 +31757,7 @@
 				5C519BC319C9F26100967C70 /* UberTime.m in Sources */,
 				BFE07A4C1679988700711085 /* FormatUtils.m in Sources */,
 				0AACDB8519D6282100782177 /* HotelDetailsFindRoomTableViewCell.m in Sources */,
+				4043BD491A54C922001DF805 /* SwitchCell.m in Sources */,
 				BFE07A4D1679988700711085 /* ImageControl.m in Sources */,
 				BFE07A4E1679988700711085 /* FindAddress.m in Sources */,
 				BFE07A4F1679988700711085 /* ViewConstants.m in Sources */,
@@ -32124,6 +32161,7 @@
 				0AACDB6919D33FFC00782177 /* HotelDetailsCellData.m in Sources */,
 				BFE07B8F1679988700711085 /* EditFormHelper.m in Sources */,
 				32DAA08218A565180015F4D6 /* ItineraryStopDetailViewController.m in Sources */,
+				4043BD501A54D1BC001DF805 /* ProfileTelCell2.m in Sources */,
 				BFE07B901679988700711085 /* CarDetailData.m in Sources */,
 				0AEE219F18FE55E900FD843E /* Fusion14HotelRoomDetailsViewController.m in Sources */,
 				BFE07B911679988700711085 /* CarRateTypeData.m in Sources */,
@@ -32177,6 +32215,7 @@
 				BFE07BB01679988700711085 /* SummaryCellMLines.m in Sources */,
 				BFE07BB11679988700711085 /* ListItemCell.m in Sources */,
 				BFE07BB21679988700711085 /* FormViewControllerBase.m in Sources */,
+				4043BD571A54D256001DF805 /* CityCell.m in Sources */,
 				CF1F414718BE68F0008EEF7C /* GovAirShopSummaryCell.m in Sources */,
 				BFE07BB31679988700711085 /* EditInlineCell.m in Sources */,
 				BFE07BB41679988700711085 /* ReportViewControllerBase.m in Sources */,
@@ -33519,6 +33558,7 @@
 				BFE082A41679988E00711085 /* Policy.m in Sources */,
 				BFE082A51679988E00711085 /* TripItUnlink.m in Sources */,
 				010D4E28186D2F0C00A23A9B /* InProductMessagingConstants.m in Sources */,
+				4043BD511A54D1BC001DF805 /* ProfileTelCell2.m in Sources */,
 				5F80D5341843F98C00615434 /* HomeCollectionView.m in Sources */,
 				5FC76C971820461E005C3B5D /* OverlayView2.m in Sources */,
 				BFE082A81679988E00711085 /* EntityAirShopResults.m in Sources */,
@@ -33745,6 +33785,7 @@
 				5F111A6416FBEB740096AF53 /* TravelBookingActionSheet.m in Sources */,
 				3EDC11F216FEAD2700376832 /* ReportPaneHeader_iPad.m in Sources */,
 				3EDC11FC16FEAE9D00376832 /* ReportPaneFooter_iPad.m in Sources */,
+				4043BD4A1A54C922001DF805 /* SwitchCell.m in Sources */,
 				3E0DE8F216FF4EF200E02443 /* ReportDetailCell_iPad.m in Sources */,
 				3E0C3B601701273300357BA9 /* TripPaneFooter_iPad.m in Sources */,
 				3E0C3B6A1701274E00357BA9 /* TripPaneHeader_iPad.m in Sources */,
@@ -33816,6 +33857,7 @@
 				0AE4051217821F8600C5E67E /* ResetPinUserEmailData.m in Sources */,
 				5F925850178374F80097D1DA /* ConcurJSONUtility.m in Sources */,
 				3B1AFB1717838061006A4C88 /* ResetUserPin.m in Sources */,
+				4043BD581A54D256001DF805 /* CityCell.m in Sources */,
 				BF9D897C17876783001A31DE /* NotificationController.m in Sources */,
 				8B6871E3195DFFCB000C7C60 /* SearchHeaderViewCell.m in Sources */,
 				BF9D89861787679F001A31DE /* NotificationHandler.m in Sources */,
@@ -34678,7 +34720,6 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
-				
 				CLANG_ENABLE_OBJC_ARC = YES;
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
@@ -34813,7 +34854,6 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
-				
 				CLANG_ENABLE_OBJC_ARC = YES;
 				CODE_SIGN_ENTITLEMENTS = Concur.entitlements;
 				CODE_SIGN_IDENTITY = "iPhone Developer";
@@ -34987,7 +35027,6 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
-				
 				CLANG_ENABLE_OBJC_ARC = YES;
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
