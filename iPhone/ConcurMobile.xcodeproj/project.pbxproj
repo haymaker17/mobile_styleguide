@@ -15033,6 +15033,8 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				936A04171253DE1800E073BF /* AddressBook.framework in Frameworks */,
+				936A04191253DE1800E073BF /* AddressBookUI.framework in Frameworks */,
 				5C1CA5C319B6025C009390C4 /* StoreKit.framework in Frameworks */,
 				8B6533431A00B28E00E3012D /* libAdIdAccess.a in Frameworks */,
 				015AC06F186E3CEF0087000D /* libicucore.dylib in Frameworks */,
@@ -15064,8 +15066,6 @@
 				3D2A8FB7197989CA009212A3 /* ADEUMInstrumentation.framework in Frameworks */,
 				67DE4A561191B8AF00181A24 /* MessageUI.framework in Frameworks */,
 				BFEC5FF4159120AA0019FC03 /* MobileCoreServices.framework in Frameworks */,
-				936A04171253DE1800E073BF /* AddressBook.framework in Frameworks */,
-				936A04191253DE1800E073BF /* AddressBookUI.framework in Frameworks */,
 				671BE9D612BBC28D00D159AB /* Security.framework in Frameworks */,
 				6776C48613425449007CAA97 /* CoreData.framework in Frameworks */,
 				5F979B7C1926963A00A7565C /* libApptentiveConnect.a in Frameworks */,
@@ -34301,7 +34301,6 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
-				
 				CLANG_ENABLE_OBJC_ARC = YES;
 				CODE_SIGN_ENTITLEMENTS = Concur.entitlements;
 				CODE_SIGN_IDENTITY = "iPhone Developer";
@@ -34366,7 +34365,6 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
-				
 				CLANG_ENABLE_OBJC_ARC = YES;
 				CODE_SIGN_ENTITLEMENTS = Concur.entitlements;
 				CODE_SIGN_IDENTITY = "iPhone Developer";
@@ -34432,7 +34430,6 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
-				
 				CLANG_ENABLE_OBJC_ARC = YES;
 				CODE_SIGN_ENTITLEMENTS = Concur.entitlements;
 				CODE_SIGN_IDENTITY = "iPhone Developer";
@@ -34489,7 +34486,6 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
-				
 				CLANG_ENABLE_OBJC_ARC = YES;
 				CODE_SIGN_ENTITLEMENTS = Concur.entitlements;
 				CODE_SIGN_IDENTITY = "iPhone Developer";
@@ -34547,7 +34543,6 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
-				
 				CLANG_ENABLE_OBJC_ARC = YES;
 				CODE_SIGN_ENTITLEMENTS = Concur.entitlements;
 				CODE_SIGN_IDENTITY = "iPhone Developer";
@@ -34605,7 +34600,6 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
-				
 				CLANG_ENABLE_OBJC_ARC = YES;
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
@@ -34667,7 +34661,6 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
-				
 				CLANG_ENABLE_OBJC_ARC = YES;
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
@@ -34773,7 +34766,6 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
-				
 				CLANG_ENABLE_OBJC_ARC = YES;
 				CODE_SIGN_IDENTITY = "iPhone Distribution";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Distribution";
@@ -34955,7 +34947,6 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
-				
 				CLANG_ENABLE_OBJC_ARC = YES;
 				CODE_SIGN_ENTITLEMENTS = Concur.entitlements;
 				CODE_SIGN_IDENTITY = "iPhone Developer";
@@ -35088,7 +35079,6 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
-				
 				CLANG_ENABLE_OBJC_ARC = YES;
 				CODE_SIGN_ENTITLEMENTS = Concur.entitlements;
 				CODE_SIGN_IDENTITY = "iPhone Developer";
@@ -35901,7 +35891,6 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
-				
 				CLANG_ENABLE_OBJC_ARC = YES;
 				CODE_SIGN_ENTITLEMENTS = Concur.entitlements;
 				CODE_SIGN_IDENTITY = "iPhone Developer";

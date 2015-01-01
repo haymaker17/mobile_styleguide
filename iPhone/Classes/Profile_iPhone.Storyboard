@@ -151,6 +151,32 @@
                                     <outlet property="textField2" destination="VpZ-C0-qDQ" id="vDa-zr-mQE"/>
                                 </connections>
                             </tableViewCell>
+                            <tableViewCell contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" reuseIdentifier="AddressBookCell" rowHeight="60" id="np5-q3-ELR" userLabel="Table View Cell - find room" customClass="HotelDetailsFindRoomTableViewCell">
+                                <rect key="frame" x="0.0" y="458" width="320" height="60"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="np5-q3-ELR" id="t8a-kM-f0L">
+                                    <rect key="frame" x="0.0" y="0.0" width="320" height="59"/>
+                                    <autoresizingMask key="autoresizingMask"/>
+                                    <subviews>
+                                        <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="msu-OG-ciR">
+                                            <rect key="frame" x="20" y="10" width="280" height="40"/>
+                                            <color key="backgroundColor" red="0.0" green="0.47058823529999999" blue="0.7843137255" alpha="1" colorSpace="calibratedRGB"/>
+                                            <fontDescription key="fontDescription" name="HelveticaNeue" family="Helvetica Neue" pointSize="18"/>
+                                            <state key="normal" title="Choose From Phone Book">
+                                                <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                                <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
+                                            </state>
+                                            <connections>
+                                                <action selector="btnChooseClick:" destination="cMY-3Z-lcb" eventType="touchUpInside" id="TNS-8k-Qqb"/>
+                                                <action selector="btnFindRoomTouchDown:" destination="np5-q3-ELR" eventType="touchDown" id="yob-1r-qBP"/>
+                                            </connections>
+                                        </button>
+                                    </subviews>
+                                </tableViewCellContentView>
+                                <connections>
+                                    <outlet property="btnFindRoom" destination="msu-OG-ciR" id="GGv-ib-oHr"/>
+                                </connections>
+                            </tableViewCell>
                         </prototypes>
                         <connections>
                             <outlet property="dataSource" destination="cMY-3Z-lcb" id="11A-8k-JeQ"/>

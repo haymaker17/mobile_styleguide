@@ -209,6 +209,11 @@
      else if(section == 1){     //Emergency Contact
          CardCell *cell = [tableView dequeueReusableCellWithIdentifier:@"CardCell" forIndexPath:indexPath];
          cell.customImageView.image = [UIImage imageNamed:@"icon_profile_emergency"];
+         
+         NSString *tmp = [self.personalInfoDict objectForKey:@"emergencyContactName"];
+         if(tmp != nil){
+             cell.label.text = tmp;
+         }
          return cell;
      }
      else if(section == 2){     //Credit Card
@@ -232,6 +237,31 @@
     return 0;
 }
 
+- (CGFloat)tableView:(UITableView *)tableView heightForFooterInSection:(NSInteger)section{
+    return 23;
+}
+
+- (NSString *)tableView:(UITableView *)tableView titleForHeaderInSection:(NSInteger)section
+{
+    NSString *ret = @"";
+    switch (section) {
+        case 0:
+            ret = @"";
+            break;
+        case 1:
+            ret = @"Emergency Contact";
+            break;
+        case 2:
+            ret = @"Credit Card";
+            break;
+        case 3:
+            ret = @"Bank Account";
+            break;
+        default:
+            break;
+    }
+    return ret;
+}
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath{
     NSUInteger section = [indexPath section];
@@ -393,6 +423,13 @@
          [vc.emergencyDict setValue:@"" forKey:@"firstName"];
          [vc.emergencyDict setValue:@"" forKey:@"lastName"];
          [vc.emergencyDict setValue:@"" forKey:@"phone"];
+         
+         
+         [vc setOnSelected:^(NSString *name){
+             [self.personalInfoDict setValue:name forKey:@"emergencyContactName"];
+             [self.tableView reloadData];
+                 
+         }];
      }
 }
 @end
