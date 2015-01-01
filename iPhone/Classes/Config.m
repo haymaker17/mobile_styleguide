@@ -50,7 +50,7 @@
 #if SPRINT_DEMO
     return YES;
 #else
-    return YES;
+    return NO;
 #endif
 }
 
