@@ -59,8 +59,8 @@
 }
 
 - (NSString *)description {
-    return [NSString stringWithFormat: @"Route: { uuid: %@, date: %@, fare: %d, minutes: %d, segments: [ %@ ] }",
-            self.uuid, self.date, self.fare, self.minutes, self.segments];
+    return [NSString stringWithFormat: @"Route: { uuid: %@, date: %@, fare: %lu, minutes: %lu, segments: [ %@ ] }",
+            self.uuid, self.date, (unsigned long)self.fare, (unsigned long)self.minutes, self.segments];
 }
 
 - (Segment *)firstSegment {

@@ -14,43 +14,43 @@
 - (id)initWithControlXML:(RXMLElement *)control
 {
 //  <ShowUserEntryOfBreakfastAmount>N</ShowUserEntryOfBreakfastAmount>
-    self.showUserEntryOfBreakfastAmount = (BOOL *) [[control child:@"ShowUserEntryOfBreakfastAmount"].text boolValue];
+    self.showUserEntryOfBreakfastAmount =  [[control child:@"ShowUserEntryOfBreakfastAmount"].text boolValue];
 
 //  <ShowUserEntryOfMealsAmount>N</ShowUserEntryOfMealsAmount>
-    self.showUserEntryOfMealsAmount = (BOOL *) [[control child:@"ShowUserEntryOfMealsAmount"].text boolValue];
+    self.showUserEntryOfMealsAmount =  [[control child:@"ShowUserEntryOfMealsAmount"].text boolValue];
 
 //  <ShowBreakfastProvidedCheckBox>Y</ShowBreakfastProvidedCheckBox>
-    self.showBreakfastProvidedCheckBox = (BOOL *) [[control child:@"ShowBreakfastProvidedCheckBox"].text boolValue];
+    self.showBreakfastProvidedCheckBox =  [[control child:@"ShowBreakfastProvidedCheckBox"].text boolValue];
 
 //  <ShowLunchProvidedCheckBox>N</ShowLunchProvidedCheckBox>
-    self.showLunchProvidedCheckBox = (BOOL *) [[control child:@"ShowLunchProvidedCheckBox"].text boolValue];
+    self.showLunchProvidedCheckBox =  [[control child:@"ShowLunchProvidedCheckBox"].text boolValue];
 
 //  <ShowDinnerProvidedCheckBox>N</ShowDinnerProvidedCheckBox>
-    self.showDinnerProvidedCheckBox = (BOOL *) [[control child:@"ShowDinnerProvidedCheckBox"].text boolValue];
+    self.showDinnerProvidedCheckBox =  [[control child:@"ShowDinnerProvidedCheckBox"].text boolValue];
 
 //  <ShowBreakfastProvidedPickList>N</ShowBreakfastProvidedPickList>
-    self.showBreakfastProvidedPickList = (BOOL *) [[control child:@"ShowBreakfastProvidedPickList"].text boolValue];
+    self.showBreakfastProvidedPickList =  [[control child:@"ShowBreakfastProvidedPickList"].text boolValue];
 
 //  <ShowLunchProvidedPickList>N</ShowLunchProvidedPickList>
-    self.showLunchProvidedPickList = (BOOL *) [[control child:@"ShowLunchProvidedPickList"].text boolValue];
+    self.showLunchProvidedPickList =  [[control child:@"ShowLunchProvidedPickList"].text boolValue];
 
 //  <ShowDinnerProvidedPickList>N</ShowDinnerProvidedPickList>
-    self.showDinnerProvidedPickList = (BOOL *) [[control child:@"ShowDinnerProvidedPickList"].text boolValue];
+    self.showDinnerProvidedPickList =  [[control child:@"ShowDinnerProvidedPickList"].text boolValue];
 
 //  <ShowOvernightCheckBox>N</ShowOvernightCheckBox>
-    self.showOvernightCheckBox = (BOOL *) [[control child:@"ShowOvernightCheckBox"].text boolValue];
+    self.showOvernightCheckBox =  [[control child:@"ShowOvernightCheckBox"].text boolValue];
 
 //  <ShowOvernightAsNightAllowance>N</ShowOvernightAsNightAllowance>
-    self.showOvernightAsNightAllowance = (BOOL *) [[control child:@"ShowOvernightAsNightAllowance"].text boolValue];
+    self.showOvernightAsNightAllowance =  [[control child:@"ShowOvernightAsNightAllowance"].text boolValue];
 
 //  <ShowAboveLimit>N</ShowAboveLimit>
-    self.showAboveLimit = (BOOL *) [[control child:@"ShowAboveLimit"].text boolValue];
+    self.showAboveLimit =  [[control child:@"ShowAboveLimit"].text boolValue];
 
 //    <ShowMealsBaseAmount>N</ShowMealsBaseAmount>
-    self.showMealsBaseAmount = (BOOL *) [[control child:@"ShowMealsBaseAmount"].text boolValue];
+    self.showMealsBaseAmount =  [[control child:@"ShowMealsBaseAmount"].text boolValue];
 
 //    <ShowLodgingTypePickList>N</ShowLodgingTypePickList>
-    self.showLodgingTypePickList = (BOOL *) [[control child:@"ShowLodgingTypePickList"].text boolValue];
+    self.showLodgingTypePickList =  [[control child:@"ShowLodgingTypePickList"].text boolValue];
 
     self.lodgingTypeValues = [[NSMutableArray alloc]init];
     self.lodgingTypeDictionary = [[NSMutableDictionary alloc]init];
@@ -77,19 +77,19 @@
     }
 
 //    <ShowPercentRuleCheckBox>N</ShowPercentRuleCheckBox>
-    self.showPercentRuleCheckBox = (BOOL *) [[control child:@"ShowPercentRuleCheckBox"].text boolValue];
+    self.showPercentRuleCheckBox =  [[control child:@"ShowPercentRuleCheckBox"].text boolValue];
 
 //    <ShowExtendedTripCheckBox>N</ShowExtendedTripCheckBox>
-    self.showExtendedTripCheckBox = (BOOL *) [[control child:@"ShowExtendedTripCheckBox"].text boolValue];
+    self.showExtendedTripCheckBox =  [[control child:@"ShowExtendedTripCheckBox"].text boolValue];
 
 //    <ShowMunicipalityCheckBox>N</ShowMunicipalityCheckBox>
-    self.showMunicipalityCheckBox = (BOOL *) [[control child:@"ShowMunicipalityCheckBox"].text boolValue];
+    self.showMunicipalityCheckBox =  [[control child:@"ShowMunicipalityCheckBox"].text boolValue];
 
 //    <ShowExcludeCheckBox>Y</ShowExcludeCheckBox>
-    self.showExcludeCheckBox = (BOOL *) [[control child:@"ShowExcludeCheckBox"].text boolValue];
+    self.showExcludeCheckBox =  [[control child:@"ShowExcludeCheckBox"].text boolValue];
 
 //    <ShowAllowanceAmount>Y</ShowAllowanceAmount>
-    self.showAllowanceAmount = (BOOL *) [[control child:@"ShowAllowanceAmount"].text boolValue];
+    self.showAllowanceAmount =  [[control child:@"ShowAllowanceAmount"].text boolValue];
 
 //    <ExcludeLabel>Exclude</ExcludeLabel>
     self.excludeLabel = [control child:@"ExcludeLabel"].text;
@@ -137,15 +137,15 @@
 
 - (void)printContents {
     NSLog(@"self.breakfastProvidedLabel = %@", self.breakfastProvidedLabel);
-    NSLog(@"self.showBreakfastProvidedCheckBox = %p", self.showBreakfastProvidedCheckBox);
-    NSLog(@"self.showBreakfastProvidedPickList = %p", self.showBreakfastProvidedPickList);
-    NSLog(@"self.showUserEntryOfBreakfastAmount = %p", self.showUserEntryOfBreakfastAmount);
+    NSLog(@"self.showBreakfastProvidedCheckBox = %@", self.showBreakfastProvidedCheckBox? @ "YES" : @"NO");
+    NSLog(@"self.showBreakfastProvidedPickList = %@", self.showBreakfastProvidedPickList? @ "YES" : @"NO");
+    NSLog(@"self.showUserEntryOfBreakfastAmount = %@", self.showUserEntryOfBreakfastAmount? @ "YES" : @"NO");
 
     NSLog(@"self.lunchProvidedLabel = %@", self.lunchProvidedLabel);
-    NSLog(@"self.showLunchProvidedCheckBox = %p", self.showLunchProvidedCheckBox);
-    NSLog(@"self.showLunchProvidedPickList = %p", self.showLunchProvidedPickList);
+    NSLog(@"self.showLunchProvidedCheckBox = %@", self.showLunchProvidedCheckBox? @ "YES" : @"NO");
+    NSLog(@"self.showLunchProvidedPickList = %@", self.showLunchProvidedPickList? @ "YES" : @"NO");
 
-    NSLog(@"self.showUserEntryOfBreakfastAmount = %p", self.showUserEntryOfBreakfastAmount);
+    NSLog(@"self.showUserEntryOfBreakfastAmount = %@", self.showUserEntryOfBreakfastAmount? @ "YES" : @"NO");
 
 }
 

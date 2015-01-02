@@ -284,9 +284,8 @@
 		
 	}
 	
-	int imageCount = [imageArray count];
 	
-	scroller.contentSize = CGSizeMake(imageCount * w, h);
+	scroller.contentSize = CGSizeMake([imageArray count] * w, h);
 	scroller.pagingEnabled = YES;
 	scroller.bounces = YES;
 	scroller.multipleTouchEnabled = YES;

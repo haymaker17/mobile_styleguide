@@ -107,7 +107,7 @@ NSString *const kStarRatingImage5 = @"hotel_star_rating5";
 	[control addTarget:self action:@selector(handleSelection:) forControlEvents:UIControlEventValueChanged];
 	// block-based value change handler
 	[control setControlEventBlock:^(NSInteger index, URBSegmentedControl *segmentedControl) {
-		NSLog(@"URBSegmentedControl: control block - index=%i", index);
+		NSLog(@"URBSegmentedControl: control block - index=%li", (long)index);
         switch (index) {
             case 0:
                 ;
@@ -145,7 +145,7 @@ NSString *const kStarRatingImage5 = @"hotel_star_rating5";
 	[control addTarget:self action:@selector(handleSelection:) forControlEvents:UIControlEventValueChanged];
 	// block-based value change handler
 	[control setControlEventBlock:^(NSInteger index, URBSegmentedControl *segmentedControl) {
-		NSLog(@"URBSegmentedControl: control block - index=%i", index);
+		NSLog(@"URBSegmentedControl: control block - index=%li", (long)index);
         switch (index) {
             case 0:
                 ;

@@ -57,7 +57,7 @@
     BOOL                    copyToChildForms, isFromAlert;
 	NSMutableDictionary     *ccopyDownSrcChanged;
 
-	int                     actionAfterSave;	// e.g. submit, itemization, or back.  Default to 0.
+	NSInteger                     actionAfterSave;	// e.g. submit, itemization, or back.  Default to 0.
 
     EditFormHelper          *helper;
 	DateTimePopoverVC		*pickerPopOverVC;
@@ -81,7 +81,7 @@
 @property BOOL isFromAlert;
 @property(nonatomic, strong) NSMutableDictionary		*ccopyDownSrcChanged; //copy down source changed
 @property(nonatomic, strong) EditFormHelper             *helper;
-@property int actionAfterSave;
+@property NSInteger actionAfterSave;
 @property (nonatomic, strong) DateTimePopoverVC			*pickerPopOverVC;
 @property BOOL noSaveConfirmationUponExit;
 
@@ -121,8 +121,8 @@
 -(void) actionBack:(id)sender;
 -(void)executeActionAfterSave;
 -(void)clearActionAfterSave;
--(BOOL)isSaveConfirmDialog:(int) tag;
--(BOOL)isReceiptUploadAlertTag:(int) tag;
+-(BOOL)isSaveConfirmDialog:(NSInteger) tag;
+-(BOOL)isReceiptUploadAlertTag:(NSInteger) tag;
 -(void) confirmToSave:(int) callerId;
 -(void)alertView:(UIAlertView *)alertView clickedButtonAtIndex:(NSInteger)buttonIndex;
 

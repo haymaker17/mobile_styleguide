@@ -253,14 +253,14 @@ static TravelCustomFieldsManager *sharedInstance;
 {
     NSArray *tripFields = [self fetchAll];
     
-    return (tripFields != nil)?[tripFields count]:0;
+    return (tripFields != nil)? (int)[tripFields count]:0;
 }
 
 -(int) getNumberOfAttributesForFieldId:(NSString *)attributeId
 {
     EntityTravelCustomFields *tcf = (EntityTravelCustomFields *)[self fetchById:attributeId];
     
-    return (tcf != nil)?[tcf.relAttribute count]:0;
+    return (tcf != nil)? (int)[tcf.relAttribute count]:0;
 }
 
 -(NSInteger)getCustomFieldIndex:(EntityTravelCustomFields *)field forAttributeValue:(NSString *)value

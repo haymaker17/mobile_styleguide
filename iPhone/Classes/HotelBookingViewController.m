@@ -1162,7 +1162,7 @@
 	return -1;
 }
 
--(int)numberOfRowsInViolationsSection
+-(NSUInteger)numberOfRowsInViolationsSection
 {
     if ([self.hotelBookingRoom.canUseTravelPoints boolValue])
     {

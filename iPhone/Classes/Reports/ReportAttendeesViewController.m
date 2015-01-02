@@ -165,7 +165,7 @@
 	
 	if ([scanner isAtEnd] == NO)
 	{
-		if (![scanner scanInteger:intVal])
+		if (![scanner scanInteger:*intVal])
 		{
 			return FALSE;
 		}
@@ -366,7 +366,7 @@ heightForRowAtIndexPath:(NSIndexPath *)indexPath
 		}
 	}
 	
-    int lineCount = [self.atnColumns count];
+    NSUInteger lineCount = [self.atnColumns count];
     NSString* name = [atn getNonNullableValueForFieldId:((FormFieldData*)(self.atnColumns)[0]).iD];
     NSString* line1 = lineCount>1? [atn getNonNullableValueForFieldId:((FormFieldData*)(self.atnColumns)[1]).iD] : @"";
     NSString* line2 = lineCount>2? [atn getNullableValueForFieldId:((FormFieldData*)(self.atnColumns)[2]).iD] : nil;
@@ -480,7 +480,7 @@ heightForRowAtIndexPath:(NSIndexPath *)indexPath
     if ([@"Y" isEqualToString:allowEditAtnCount])
         instanceCount = [NSString stringWithFormat:@"%d", attendee.instanceCount];
     
-    int lineCount = [self.atnColumns count];
+    NSUInteger lineCount = [self.atnColumns count];
     if (lineCount <=2)
         cell = [self makeCell:tblView name:name company:company amount:amt attendeeType:atnTypeName count:instanceCount];
     else 

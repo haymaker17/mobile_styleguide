@@ -63,7 +63,7 @@
 
 - (NSString *)pickerView:(UIPickerView *)pickerView titleForRow:(NSInteger)row forComponent:(NSInteger)component
 {
-    NSString *rowKey = [NSString stringWithFormat:@"%i",row + 1];
+    NSString *rowKey = [NSString stringWithFormat:@"%li",row + 1];
     NSString *valueForKey = [self.itineraryConfig.tripLengthListValues valueForKey:rowKey];
 //    NSLog(@"valueForKey(%i) = %@", row, valueForKey);
     return valueForKey;

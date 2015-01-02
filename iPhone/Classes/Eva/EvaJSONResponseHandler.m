@@ -103,7 +103,7 @@ NSData *jsonData = nil;
         NSString *localizedDescription = (error.localizedDescription == nil ? @"": error.localizedDescription);
         NSString *localizedFailureReason = (error.localizedFailureReason == nil ? @"" : error.localizedFailureReason);
         
-        NSString *errorMessage = [NSString stringWithFormat:@"EvaJSONResponseHandler.::parseJsonString: Error code = %i, domain = %@, description = %@, failure reason = %@", error.code, errorDomain, localizedDescription, localizedFailureReason];
+        NSString *errorMessage = [NSString stringWithFormat:@"EvaJSONResponseHandler.::parseJsonString: Error code = %li, domain = %@, description = %@, failure reason = %@", (long)error.code, errorDomain, localizedDescription, localizedFailureReason];
         
         [[MCLogging getInstance] log:errorMessage Level:MC_LOG_ERRO];
         return nil;
@@ -281,7 +281,7 @@ NSData *jsonData = nil;
         _hotelSearchCriteriaV2.checkinDate = hotelcheckinDate;
         if(hotelCheckoutDate == nil )
         {
-            int numofdays = 1;
+            NSInteger numofdays = 1;
             // Check if number of nights is given
             // Add delta days to the checkout date.
             numofdays = [hotelLocation getStayDuration];
@@ -358,7 +358,7 @@ NSData *jsonData = nil;
         hotelSearch.hotelSearchCriteria.checkinDate = hotelcheckinDate;
         if(hotelCheckoutDate == nil )
         {
-            int numofdays = 1;
+            NSInteger numofdays = 1;
             // Check if number of nights is given
             // Add delta days to the checkout date.
             numofdays = [hotelLocation getStayDuration];
@@ -470,7 +470,7 @@ NSData *jsonData = nil;
         NSDate* dawnDate = [DateTimeFormatter getDateWithoutTime:self.flightSearchCriteria.DepartureDate withTimeZoneAbbrev:nil];
         NSInteger tmInMinutes = [self.flightSearchCriteria.DepartureDate timeIntervalSinceDate:dawnDate]/60;
         
-        self.flightParameterBag[@"SearchTime"] = [NSString stringWithFormat:@"%d", (tmInMinutes+59)/60];
+        self.flightParameterBag[@"SearchTime"] = [NSString stringWithFormat:@"%ld", (tmInMinutes+59)/60];
         self.flightSearchCriteria.DepartureTime = [NSNumber numberWithInteger:(tmInMinutes+59)/60] ;
 
         if ([self.apireply isTwoWayFlightSearch])
@@ -481,7 +481,7 @@ NSData *jsonData = nil;
             dawnDate = [DateTimeFormatter getDateWithoutTime:[arrivalLocation.departureDateTime getDateTime] withTimeZoneAbbrev:nil];
             tmInMinutes = [[arrivalLocation.departureDateTime getDateTime] timeIntervalSinceDate:dawnDate]/60;
             
-            self.flightParameterBag[@"ReturnTime"] = [NSString stringWithFormat:@"%d", (tmInMinutes+59)/60];
+            self.flightParameterBag[@"ReturnTime"] = [NSString stringWithFormat:@"%ld", (tmInMinutes+59)/60];
             //        lastAir.ReturnTime = nil;
             self.flightSearchCriteria.ReturnDate = [arrivalLocation.departureDateTime getDateTime];
             self.flightSearchCriteria.ReturnTime = [NSNumber numberWithInteger:(tmInMinutes+59)/60] ;

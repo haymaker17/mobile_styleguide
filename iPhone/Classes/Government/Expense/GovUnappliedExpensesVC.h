@@ -46,7 +46,7 @@
 
 -(void) makeSelectAllButtons;
 -(void) makeUnSelectAllButtons;
--(UIBarButtonItem *) makeAddToVoucherButton:(int)count;
+-(UIBarButtonItem *) makeAddToVoucherButton:(NSInteger)count;
 
 -(void) setUpToolBar:(id)sender;
 

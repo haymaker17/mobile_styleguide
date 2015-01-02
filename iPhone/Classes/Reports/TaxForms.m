@@ -209,7 +209,7 @@
 	if (parseError != nil)
     {
 		NSLog(@"Error parsing response for GetTaxFormsV4: Parser Error : %@",[parseError localizedDescription]);
-        NSLog(@"Code %@",[NSString stringWithFormat:@"%i", [parseError code]]);
+        NSLog(@"Code %@",[NSString stringWithFormat:@"%li", (long)[parseError code]]);
     }
 }
 

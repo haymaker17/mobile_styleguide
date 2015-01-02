@@ -282,7 +282,7 @@ NSString* const CHECKOUT_DATE_STRING = @"Check-Out Date";
             if (![self isSearchCriteriaSectionVisbile] ) {
                 if ([self.sourceSections containsObject:self.searchResultList]) {
                     // Notify UI to stop animation
-                    int indexOfResultsList = [self.sourceSections indexOfObject:self.searchResultList];
+                    NSUInteger indexOfResultsList = [self.sourceSections indexOfObject:self.searchResultList];
                     [self.sourceSections removeObject:self.searchResultList];
                     [self.delegate dataSource:self didChangeSection:self.hotelListSection atIndex:indexOfResultsList forChangeType:kDataSourceChangeDelete];
                     
@@ -328,7 +328,7 @@ NSString* const CHECKOUT_DATE_STRING = @"Check-Out Date";
             if (![self isSearchCriteriaSectionVisbile] ) {
                 if ([self.sourceSections containsObject:self.searchResultList]) {
                     // Notify UI to stop animation
-                    int indexOfResultsList = [self.sourceSections indexOfObject:self.searchResultList];
+                    NSUInteger indexOfResultsList = [self.sourceSections indexOfObject:self.searchResultList];
                     [self.sourceSections removeObject:self.searchResultList];
                     [self.delegate dataSource:self didChangeSection:self.hotelListSection atIndex:indexOfResultsList forChangeType:kDataSourceChangeDelete];
                     
@@ -542,7 +542,7 @@ NSString* const CHECKOUT_DATE_STRING = @"Check-Out Date";
         [self insertSearchCriteriaCells:indexPath];
         // Hide the Hotels list section when showing Search Criteria
         if ([self isHotelSearchListSectionVisible]) {
-            int index = [self.sourceSections indexOfObject:self.searchResultList];
+            NSUInteger index = [self.sourceSections indexOfObject:self.searchResultList];
             [self.sourceSections removeObject:self.searchResultList];
              [self.delegate dataSource:self didChangeSection:self.hotelListSection atIndex:index forChangeType:kDataSourceChangeDelete];
         }
@@ -557,7 +557,8 @@ NSString* const CHECKOUT_DATE_STRING = @"Check-Out Date";
         NSArray *searchCells = [self.searchCriteriaCells copy];
         //
         // Start deleting rows from end to avoid NSIndexPath issues
-        for (int itemIndex = [searchCells count] - 1 ; itemIndex >= 0 ; itemIndex-- ) {
+        int count = (int)[searchCells count];
+        for (int itemIndex = count - 1 ; itemIndex >= 0 ; itemIndex-- ) {
             NSArray *indexPaths = [self indexPathsForItem:searchCells[itemIndex]];
             if (indexPaths != nil) {
                 for (NSIndexPath *indexPath in indexPaths) {
@@ -694,7 +695,7 @@ NSString* const CHECKOUT_DATE_STRING = @"Check-Out Date";
         datePickerCellData.keyValue = keyValDictionary;
     }
 
-    NSLog(@"index.row = %d , value = %@", index.row,self.searchCriteriaCells[index.row] );
+    NSLog(@"index.row = %ld , value = %@", (long)index.row,self.searchCriteriaCells[index.row] );
     [self.searchCriteriaCells insertObject:datePickerCellData atIndex:index.row + 1];
     
 }
@@ -706,7 +707,7 @@ NSString* const CHECKOUT_DATE_STRING = @"Check-Out Date";
     SearchCriteriaCellData *searchDistancePickerCellData = [[SearchCriteriaCellData alloc] init];
     searchDistancePickerCellData.cellIdentifier = @"distancePickerCell";
     searchDistancePickerCellData.cellHeight = 140;
-    NSLog(@"index.row = %d , value = %@", index.row,self.searchCriteriaCells[index.row] );
+    NSLog(@"index.row = %ld , value = %@", (long)index.row,self.searchCriteriaCells[index.row] );
     [self.searchCriteriaCells insertObject:searchDistancePickerCellData atIndex:index.row + 1];
 }
 
@@ -735,7 +736,7 @@ NSString* const CHECKOUT_DATE_STRING = @"Check-Out Date";
         NSDate *newDate = [CTEDateUtility addDaysToDate:targetDate daysToAdd:self.stayDurationInDays];
         NSDate *maxCheckoutDate = [checkOutCellData.keyValue objectForKey:@"maxDate"];
         if ([maxCheckoutDate compare:newDate] != NSOrderedDescending) { // if check-in Date + stay duration > max checkout date
-            self.stayDurationInDays = [self daysBetweenDate:targetDate andDate:maxCheckoutDate];
+            self.stayDurationInDays = (int)[self daysBetweenDate:targetDate andDate:maxCheckoutDate];
         }
         [self changeDateCellDataWithDate:targetDate dayInterval:self.stayDurationInDays cellData:checkOutCellData];
         [self.delegate dataSourceWillChangeData:self];
@@ -760,7 +761,7 @@ NSString* const CHECKOUT_DATE_STRING = @"Check-Out Date";
             return;
         }
         else {
-            self.stayDurationInDays = [self daysBetweenDate:checkInDate andDate:targetDate];
+            self.stayDurationInDays = (int) [self daysBetweenDate:checkInDate andDate:targetDate];
         }
             
     }
@@ -949,7 +950,7 @@ NSString* const CHECKOUT_DATE_STRING = @"Check-Out Date";
 
 - (void) sortSearchResultListByDistance
 {
-    int indexOfResultsList = [self.sourceSections indexOfObject:self.searchResultList];
+    NSUInteger indexOfResultsList = [self.sourceSections indexOfObject:self.searchResultList];
     
     self.searchResultList = [[_searchResultList sortedArrayUsingComparator:^NSComparisonResult(id obj1, id obj2) {
         CTEHotelCellData *data1 = obj1;
@@ -985,7 +986,7 @@ NSString* const CHECKOUT_DATE_STRING = @"Check-Out Date";
 
 - (void) sortSearchResultListByPreferred
 {
-    int indexOfResultsList = [self.sourceSections indexOfObject:self.searchResultList];
+    NSUInteger indexOfResultsList = [self.sourceSections indexOfObject:self.searchResultList];
     
     self.searchResultList = [[_searchResultList sortedArrayUsingComparator:^NSComparisonResult(id obj1, id obj2) {
         CTEHotelCellData *data1 = obj1;
@@ -1019,7 +1020,7 @@ NSString* const CHECKOUT_DATE_STRING = @"Check-Out Date";
 
 - (void) sortSearchResultListByStarRating
 {
-    int indexOfResultsList = [self.sourceSections indexOfObject:self.searchResultList];
+    NSUInteger indexOfResultsList = [self.sourceSections indexOfObject:self.searchResultList];
     
     self.searchResultList = [[_searchResultList sortedArrayUsingComparator:^NSComparisonResult(id obj1, id obj2) {
         CTEHotelCellData *data1 = obj1;
@@ -1056,7 +1057,7 @@ NSString* const CHECKOUT_DATE_STRING = @"Check-Out Date";
 - (void) sortSearchResultListByHotelRate
 {
 
-    int indexOfResultsList = [self.sourceSections indexOfObject:self.searchResultList];
+    NSUInteger indexOfResultsList = [self.sourceSections indexOfObject:self.searchResultList];
     
     self.searchResultList = [[_searchResultList sortedArrayUsingComparator:^NSComparisonResult(id obj1, id obj2) {
         CTEHotelCellData *data1 = obj1;
@@ -1095,7 +1096,7 @@ NSString* const CHECKOUT_DATE_STRING = @"Check-Out Date";
 
 - (void) sortSearchResultListByRecommendationScore
 {
-    int indexOfResultsList = [self.sourceSections indexOfObject:self.searchResultList];
+    NSUInteger indexOfResultsList = [self.sourceSections indexOfObject:self.searchResultList];
     
     self.searchResultList = [[_searchResultList sortedArrayUsingComparator:^NSComparisonResult(id obj1, id obj2) {
         CTEHotelCellData *data1 = obj1;
@@ -1183,7 +1184,7 @@ NSString* const CHECKOUT_DATE_STRING = @"Check-Out Date";
     }
     
     // No need to sorting the filter result because the sequence of "searchResultListCopy" has been sorted
-    int indexOfResultsList = [self.sourceSections indexOfObject:self.searchResultList];
+    NSUInteger indexOfResultsList = [self.sourceSections indexOfObject:self.searchResultList];
     self.searchResultList = ret;
     self.sourceSections[indexOfResultsList] = self.searchResultList;
     [self.delegate dataSourceWillChangeData:self];

@@ -732,10 +732,11 @@
 		if (![fldForEdit.access isEqualToString:@"HD"] && ![fldForEdit.iD isEqualToString:@"Attendees"])
 		{
 			[fields addObject:fldForEdit];
+            int fieldsCount = (int)[fields count];
 			if ([fldForEdit.iD isEqualToString:@"VendorDescription"])
-				vendorDescFldIndex = [fields count]-1;
+				vendorDescFldIndex = fieldsCount -1;
 			else if ([fldForEdit.iD isEqualToString:@"VenLiKey"])
-				venLiKeyFldIndex = [fields count] -1;
+				venLiKeyFldIndex = fieldsCount -1;
 		}
 		[self.allFields addObject:fldForEdit];
 	}
@@ -1615,7 +1616,7 @@
         FormFieldData* odometerStartFld = [self findEditingField:@"OdometerStart"];
         if (odometerStartFld != nil && carDetail != nil)
         {
-            odometerStartFld.fieldValue = [NSString stringWithFormat:@"%d", carDetail.odometerStart];//[FormatUtils formatInteger:[NSString stringWithFormat:@"%d", carDetail.odometerStart]];
+            odometerStartFld.fieldValue = [NSString stringWithFormat:@"%ld", (long)carDetail.odometerStart];//[FormatUtils formatInteger:[NSString stringWithFormat:@"%d", carDetail.odometerStart]];
             [self refreshField:odometerStartFld];
             
             // MOB-21970: recalculate end odomenter only if the user is not adding a new expense. If the user is adding a new expense, should enter end odometer value manually
@@ -1623,9 +1624,9 @@
             if (!self.isAddNewExpense) {
                 FormFieldData* fdTotal = [self findEditingField:@"TotalDistance"];
                 int total = [fdTotal.fieldValue intValue];
-                int end = carDetail.odometerStart + total;
+                NSInteger end = carDetail.odometerStart + total;
                 FormFieldData* fdEnd = [self findEditingField:@"OdometerEnd"];
-                fdEnd.fieldValue = [NSString stringWithFormat:@"%d", end];
+                fdEnd.fieldValue = [NSString stringWithFormat:@"%ld", (long)end];
                 [self refreshField:fdEnd];
             }
         }
@@ -2217,7 +2218,7 @@
 }
 
 
--(BOOL)isSaveConfirmDialog:(int) tag
+-(BOOL)isSaveConfirmDialog:(NSInteger) tag
 {
 	if (tag == kAlertViewConfirmSaveUponItem || tag == kAlertViewConfirmSaveUponReceipt)
 		return YES;
@@ -2366,7 +2367,7 @@
 		if (![newEntry.rpeKey isEqualToString:srData.rpeKey])
 		{
 			// Update parent entry in report
-			int vcCount = [self.navigationController.viewControllers count];
+			int vcCount = (int) [self.navigationController.viewControllers count];
 			for (int ix = 0; ix < 2; ix++)
 			{
 				int vcIx = vcCount - 2-ix;
@@ -2612,7 +2613,7 @@
         // Update parent entry in report
         if (![UIDevice isPad])
         {
-            int vcCount = [self.navigationController.viewControllers count];
+            NSUInteger vcCount = [self.navigationController.viewControllers count];
             for (int ix = 0; ix < vcCount; ix++)
             {
                 MobileViewController* mvc = (MobileViewController*) (self.navigationController.viewControllers)[vcCount-ix-1];
@@ -2824,7 +2825,7 @@
     // Step 1 : remove taxformfields from self.allfields
     for (FormFieldData *taxformfield in taxformFields) 
     {
-        int nFields = [self.allFields count];
+        NSUInteger nFields = [self.allFields count];
         int deleteindex = -1 ; 
         for (int ix = 0; ix < nFields; ix ++)
         {

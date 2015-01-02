@@ -663,11 +663,10 @@
         [self createTableData];
     }
     
-    int indexOfDepartureDate = NSNotFound;
-    int indexOfReturnDate = NSNotFound;
+    NSUInteger indexOfDepartureDate = NSNotFound;
+    NSUInteger indexOfReturnDate = NSNotFound;
     
-    int numCells = [aList count];
-    for (int i = 0; i < numCells; i++)
+    for (NSUInteger i = 0; i < [aList count]; i++)
     {
         BookingCellData *bcd = aList[i];
         
@@ -760,8 +759,8 @@
 
 -(void) reloadBookingCriteriaSection
 {
-    int bookingSection = [self.aSections indexOfObject:@"Everything"];
-    if (bookingSection >= 0)
+    NSUInteger bookingSection = [self.aSections indexOfObject:@"Everything"];
+    if (bookingSection != NSNotFound)
     {
         NSIndexSet *indexSet = [NSIndexSet indexSetWithIndex:bookingSection];
         [tableList reloadSections:indexSet withRowAnimation:UITableViewRowAnimationFade];
@@ -770,8 +769,8 @@
 
 -(void) reloadCustomFieldsSection
 {
-    int travelCustomFieldSection = [self.aSections indexOfObject:KSECTION_TRIP_CUSTOM_FIELDS];
-    if (travelCustomFieldSection >= 0)
+    NSUInteger travelCustomFieldSection = [self.aSections indexOfObject:KSECTION_TRIP_CUSTOM_FIELDS];
+    if (travelCustomFieldSection != NSNotFound)
     {
         NSIndexSet *indexSet = [NSIndexSet indexSetWithIndex:travelCustomFieldSection];
     
@@ -1358,7 +1357,7 @@
     pBag[@"Date"] = fmtDate;
     
     lastAir.DepartureDate = [bcd.dateValue dateByAddingTimeInterval:[bcd.val2 intValue]*60];
-    pBag[@"SearchTime"] = [NSString stringWithFormat:@"%d", bcd.extendedTime];
+    pBag[@"SearchTime"] = [NSString stringWithFormat:@"%ld", (long)bcd.extendedTime];
     lastAir.DepartureTime = nil;
     
     if (isRoundTrip)
@@ -1366,7 +1365,7 @@
         bcd = [self getBCD:@"ReturnDate"];
         pBag[@"ReturnDate"] = [DateTimeFormatter formatDateYYYYMMddByDate:bcd.dateValue];
         lastAir.ReturnDate = [bcd.dateValue dateByAddingTimeInterval:[bcd.val2 intValue]*60];
-        pBag[@"ReturnTime"] = [NSString stringWithFormat:@"%d", bcd.extendedTime];
+        pBag[@"ReturnTime"] = [NSString stringWithFormat:@"%ld", (long)bcd.extendedTime];
         lastAir.ReturnTime = nil;
     }
     
@@ -1617,7 +1616,7 @@
 	pickerPopOverVC.delegate = self;
 	pickerPopOverVC.indexPath = indexPath;
 	
-	int row = [indexPath row];
+	NSInteger row = [indexPath row];
     BookingCellData *bcd = nil;
     if(row == 2)
         bcd = [self getBCD:@"DepartureDate"];
@@ -1969,7 +1968,7 @@
 {
     if ([self.aSections containsObject:KSECTION_GOV_TA_FIELDS])
     {
-        int govSection = [self.aSections indexOfObject:KSECTION_GOV_TA_FIELDS];
+        NSInteger govSection = [self.aSections indexOfObject:KSECTION_GOV_TA_FIELDS];
         if (govSection >=0)
         {
             NSIndexSet *indexSet = [NSIndexSet indexSetWithIndex:govSection];

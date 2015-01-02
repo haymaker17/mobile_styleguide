@@ -856,7 +856,7 @@
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    int section = [indexPath section];
+    NSInteger section = [indexPath section];
 	EntryData *entry = aSections[section];
 
     BOOL hasComments = [entry.hasComments isEqualToString:@"Y"];
@@ -1046,7 +1046,7 @@
 
 - (BOOL) shouldShowCellExtension:(NSIndexPath*)indexPath
 {
-    int row = indexPath.section;
+    NSInteger row = indexPath.section;
     NSString *key = (rptDetail.keys)[row];
     EntryData *entry = (rptDetail.entries)[key];
 
@@ -1564,7 +1564,7 @@
     pBag[@"RECORD_KEY"] = rptDetail.rptKey;
     pBag[@"REPORT_OG"] = rptDetail;
 
-    NSLog(@"buttonTravelAllowanceTappedInRect - rect = ", rect);
+//    NSLog(@"buttonTravelAllowanceTappedInRect - rect = ", rect);
     if([self isApproving])
     {
         UIStoryboard* storyboard = [UIStoryboard storyboardWithName:[@"ItineraryApproverStoryboard" storyboardName] bundle:nil];
@@ -2317,7 +2317,7 @@
     //[self.pickerPopOver presentPopoverFromBarButtonItem:sender permittedArrowDirections:UIPopoverArrowDirectionDown animated:YES]; 
 	UIButton *btn = (UIButton *)sender;
 	float viewW = 80.0;
-	int btnPos = btn.tag;
+	NSInteger btnPos = btn.tag;
 	float x = middleX + (btnPos * viewW);
 	
 	float y = 660.0;
@@ -2340,7 +2340,7 @@
 #pragma mark PopOver Methods
 - (void)buttonAttendeesTapped:(id)sender IndexPath:(NSIndexPath *)newIndexPath
 {
-	int section = [newIndexPath section];
+	NSInteger section = [newIndexPath section];
 
 	EntryData *entry = aSections[section];
 	
@@ -2386,7 +2386,7 @@
 
 - (void)buttonCommentsTapped:(id)sender IndexPath:(NSIndexPath *)newIndexPath
 {
-	int section = [newIndexPath section];
+	NSInteger section = [newIndexPath section];
 	//    int row = [newIndexPath row];
 	EntryData *entry = aSections[section];
 	//	NSMutableArray *a = [entryDetailsDict objectForKey:entry.rpeKey];
@@ -2440,7 +2440,7 @@
 
 - (void)buttonExceptionsTapped:(id)sender IndexPath:(NSIndexPath *)newIndexPath
 {
-	int section = [newIndexPath section];
+	NSInteger section = [newIndexPath section];
 	//    int row = [newIndexPath row];
 	EntryData *entry = aSections[section];
 	//	NSMutableArray *a = [entryDetailsDict objectForKey:entry.rpeKey];
@@ -2486,7 +2486,7 @@
 
 - (void)buttonItemizationsTapped:(id)sender IndexPath:(NSIndexPath *)newIndexPath
 {
-	int section = [newIndexPath section];
+	NSInteger section = [newIndexPath section];
 	//    int row = [newIndexPath row];
 	EntryData *entry = aSections[section];
 	//	NSMutableArray *a = [entryDetailsDict objectForKey:entry.rpeKey];
@@ -2953,7 +2953,7 @@
 - (IBAction) buttonPressed:(id)sender
 {
     UIButton *button = (UIButton*)sender;
-    int buttonIndex = button.tag;
+    NSInteger buttonIndex = button.tag;
     
     if (buttonIndex < _buttonDescriptors.count)
     {
@@ -2963,7 +2963,7 @@
     }
 }
 
-- (UIButton*) buttonAtIndex:(int)index
+- (UIButton*) buttonAtIndex:(NSUInteger)index
 {
     if (index == 0)
         return self.button0;
@@ -3015,7 +3015,7 @@
         labelForButton.text = descriptor.title;
     }
     
-    for (int unusedButtonIndex = _buttonDescriptors.count; unusedButtonIndex < MAX_REPORT_BUTTONS; unusedButtonIndex++)
+    for (NSUInteger unusedButtonIndex = _buttonDescriptors.count; unusedButtonIndex < MAX_REPORT_BUTTONS; unusedButtonIndex++)
     {
         UIButton *unusedButton = [self buttonAtIndex:unusedButtonIndex];
         unusedButton.hidden = YES;
@@ -3044,7 +3044,7 @@
     return headerView;
 }
 
-- (void) didPressButtonAtIndex:(int)buttonIndex withId:(NSString*)buttonId inRect:(CGRect)rect
+- (void) didPressButtonAtIndex:(NSUInteger)buttonIndex withId:(NSString*)buttonId inRect:(CGRect)rect
 {
     if ([buttonId isEqualToString:BUTTON_ID_REPORT_SUMMARY])
         [self buttonReportSummaryPressed];

@@ -252,7 +252,7 @@
         NSString *priceToBeat = nil;
         if ([self.airShop.benchmark.price doubleValue]) {
             priceToBeat = [FormatUtils formatMoney:[self.airShop.benchmark.price stringValue] crnCode:self.airShop.benchmark.crnCode];
-            int index = [priceToBeat rangeOfString:@"."].location;
+            NSUInteger index = [priceToBeat rangeOfString:@"."].location;
             if (index > 0 && index < priceToBeat.length)
             {
                 priceToBeat = [priceToBeat substringToIndex:index];
@@ -313,7 +313,7 @@
 #pragma mark - Cell Config
 - (void)configureCell:(Fusion14FlightSearchResultsTableViewCell *)cell atIndexPath:(NSIndexPath *)indexPath
 {
-    NSString* cellId = [NSString stringWithFormat:@"%d", [indexPath row]];
+    NSString* cellId = [NSString stringWithFormat:@"%ld", (long)[indexPath row]];
     //    NSLog(@"configure cell for %@", cellId);
     NSManagedObject *managedObject = [self.fetchedResultsController objectAtIndexPath:indexPath];
     EntityAirFilterSummary *entity = (EntityAirFilterSummary *)managedObject;
@@ -374,7 +374,7 @@
     {
         cell.lblAirlineName.text = (self.vendors)[entity.airlineCode];
         NSString *price = [FormatUtils formatMoney:[entity.fare stringValue] crnCode:entity.crnCode];
-        int index = [price rangeOfString:@"."].location;
+        NSUInteger index = [price rangeOfString:@"."].location;
         if (index > 0 && index < price.length)
         {
             cell.lblPrice.text = [price substringToIndex:index];
@@ -388,7 +388,7 @@
     {
             cell.lblAirlineName.text = (self.airShop.vendors)[entity.airlineCode];
             NSString *price = [FormatUtils formatMoney:[entity.fare stringValue] crnCode:entity.crnCode];
-            int index = [price rangeOfString:@"."].location;
+            NSUInteger index = [price rangeOfString:@"."].location;
             if (index > 0 && index < price.length)
             {
                 cell.lblPrice.text = [price substringToIndex:index];
@@ -452,7 +452,7 @@
 {
     NSString *stopStr = nil;
     if (numOfStop > 1) {
-        stopStr = [NSString stringWithFormat:@"%i stops", numOfStop];
+        stopStr = [NSString stringWithFormat:@"%li stops", (long)numOfStop];
     }
     else if (numOfStop == 1) {
         stopStr = @"1 stop";

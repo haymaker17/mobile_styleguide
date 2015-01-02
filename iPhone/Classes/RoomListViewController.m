@@ -160,7 +160,7 @@
         [self hideLoadingView];
         [self refetchData];
         [tblView reloadData];
-        [self makeToolbar:hotelSearch.hotelSearchCriteria roomCount:[NSNumber numberWithInt:[hotelBooking.relHotelRoom count]]];
+        [self makeToolbar:hotelSearch.hotelSearchCriteria roomCount:[NSNumber numberWithInteger:[hotelBooking.relHotelRoom count]]];
     }
 }
 
@@ -399,7 +399,7 @@
     }
     
     [cell.lblSub1 setText:room.summary];
-    cell.roomIndex = indexPath.row;
+    cell.roomIndex = (int)indexPath.row;
     cell.rate.textColor = [UIColor bookingBlueColor];
     // MOB-8067 This was fixed in branch, but not migrated onto trunk
     if([room maxEnforcementLevel] != nil)
@@ -581,8 +581,7 @@
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
-//	NSInteger section = [indexPath section];
-	NSInteger row = [indexPath row];
+	int row = (int)[indexPath row];
 	
 	// As of today (July 28, 2010), the row contains a 'Reserve' button which does not
 	// look good when selected.  Clear the selection to work around the issue.

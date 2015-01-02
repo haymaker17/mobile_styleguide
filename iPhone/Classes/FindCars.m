@@ -72,7 +72,7 @@
 	NSCalendar *calendar = [NSCalendar currentCalendar];
 	calendar.timeZone = [NSTimeZone timeZoneWithAbbreviation:@"GMT"];
 	NSDateComponents *components = [calendar components:(NSHourCalendarUnit) fromDate:date];
-	NSString *hourString = [NSString stringWithFormat:@"%i", components.hour];
+	NSString *hourString = [NSString stringWithFormat:@"%li", (long)components.hour];
 	return hourString;
 }
 
@@ -105,9 +105,9 @@
 	NSString* pickupDate = [self makeDateString:criteria.pickupDate];
 //	NSLog(@"pickupDate=%@", pickupDate);
 //	NSLog(@"criteria.pickupDate=%@", [criteria.pickupDate description]);
-	NSString* pickupHour = [NSString stringWithFormat:@"%i", [ExtendedHour getHourFromExtendedHour:criteria.pickupExtendedHour]];
+	NSString* pickupHour = [NSString stringWithFormat:@"%li", (long)[ExtendedHour getHourFromExtendedHour:criteria.pickupExtendedHour]];
 	NSString* dropoffDate = [self makeDateString:criteria.dropoffDate];
-	NSString* dropoffHour = [NSString stringWithFormat:@"%i", [ExtendedHour getHourFromExtendedHour:criteria.dropoffExtendedHour]];
+	NSString* dropoffHour = [NSString stringWithFormat:@"%li", (long)[ExtendedHour getHourFromExtendedHour:criteria.dropoffExtendedHour]];
 	NSString* smoking = (criteria.smokingPreferenceCodes)[criteria.smokingIndex];
     NSString *offAirport = @"true";
     if(criteria.isOffAirport == NO)
@@ -139,7 +139,7 @@
 
 - (void)parser:(NSXMLParser *)parser parseErrorOccurred:(NSError *)parseError 
 {
-	NSString * errorString = [NSString stringWithFormat:@"Unable to get car search results (Error code %i )", [parseError code]];
+	NSString * errorString = [NSString stringWithFormat:@"Unable to get car search results (Error code %li )", (long)[parseError code]];
 	NSLog(@"error parsing XML: %@", errorString);
 	
 	// TODO: handle error

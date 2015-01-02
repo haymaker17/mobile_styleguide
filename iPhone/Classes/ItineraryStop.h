@@ -17,7 +17,7 @@
 
 
 + (CXRequest *)deleteItineraryStop:(NSString *)itinKey irKey:(NSString *)irKey;
-+ (BOOL *)wasDeleteItineraryStopSuccessful:(NSString *)result;
++ (BOOL )wasDeleteItineraryStopSuccessful:(NSString *)result;
 
 + (ItineraryStop *)parseItineraryRow:(RXMLElement *)row;
 

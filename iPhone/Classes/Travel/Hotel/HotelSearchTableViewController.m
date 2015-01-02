@@ -689,7 +689,7 @@
         self.btnSort = [[UIBarButtonItem alloc] initWithTitle:[Localizer getLocalizedText:@"Sort"] style:UIBarButtonItemStyleBordered target:self action:@selector(buttonSortPressed:)];
     
     // number of hotels
-    int hotelCount = [self.tableData.hotelListSection numberOfObjects];
+    int hotelCount = (int)[self.tableData.hotelListSection numberOfObjects];
     self.btnAllResults = [self makeHotelCountButton:hotelCount];
     // number of Hotels
     

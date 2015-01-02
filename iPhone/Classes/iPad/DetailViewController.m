@@ -625,7 +625,7 @@
 			NSMutableDictionary *segs = [TripData getSegmentsOrderByDate:trip];
             // MOB-11341 - log flurry event
             //Type:<Hotel, Car, Air, Train>, ItemsLeftInItin:<count>
-            NSDictionary *dictionary = @{@"Type": @"Car", @"ItemsLeftInItin": [NSString stringWithFormat:@"%d", [segs count]]};
+            NSDictionary *dictionary = @{@"Type": @"Car", @"ItemsLeftInItin": [NSString stringWithFormat:@"%lu", (unsigned long)[segs count]]};
             [Flurry logEvent:@"Book: Cancel" withParameters:dictionary];
 
             // MOB-6881
@@ -867,7 +867,8 @@
 					[ma addObject:seg];
 				else 
 				{
-					int lastPos = [ma count] - 1;
+					NSUInteger lastPos = [ma count] - 1;
+                    
 					SegmentData *lastSeg = ma[lastPos];
 					if([lastSeg.type isEqualToString:@"HOTEL"])
 					{
@@ -918,8 +919,8 @@
 	NSArray *sortedKeys = [holdKeys sortedArrayUsingSelector:@selector(caseInsensitiveCompare:)];
 	
 	holdKeys = [[NSMutableArray alloc] init];
-	int cnt = [sortedKeys count];
-	for (int x = 0; x < cnt; x++)
+	
+	for (int x = 0; x < [sortedKeys count]; x++)
 	{
 		NSString *sortedDate = sortedKeys[x]; 
 		[holdKeys addObject:[DateTimeFormatter formatDateEEEMMMdd:sortedDate]];
@@ -1452,7 +1453,7 @@
 	
 	self.pickerPopOver = [[UIPopoverController alloc] initWithContentViewController:itinDetailsVC];    
 	
-	int currPage = pageControl.currentPage;
+	NSInteger currPage = pageControl.currentPage;
 	//currPage = currPage - 1;
 	CGFloat adjustSide = currPage * dayWidth;
 	
@@ -1567,7 +1568,7 @@
 	
 	UIButton *btn = (UIButton *)sender;
 	float viewW = 80.0;
-	int btnPos = btn.tag;
+	NSInteger btnPos = btn.tag;
 	float x = middleX + (btnPos * viewW);
 	
 	float y = 660.0;
@@ -1765,7 +1766,7 @@
 			
 			cell.parentVC = self;
 
-			NSString *key = [NSString stringWithFormat:@"%d,%d,IMAGE0", section, row];
+			NSString *key = [NSString stringWithFormat:@"%lu,%lu,IMAGE0", (unsigned long)section, (unsigned long)row];
 			if(dictHotelImages[key] == nil && segment.gdsId != nil && segment.propertyId != nil && [ExSystem connectedToNetwork])
 			{
 				isLoadingHotelImage = YES;
@@ -1774,8 +1775,8 @@
 				dictHotelImages[key] = cell.ivHotelAlbum;
 				
 				//go fetch the array of images... don't do it for every cell draw!
-				NSString *sSection = [NSString stringWithFormat:@"%d", section];
-				NSString *sRow = [NSString stringWithFormat:@"%d", row];
+				NSString *sSection = [NSString stringWithFormat:@"%lu", (unsigned long)section];
+				NSString *sRow = [NSString stringWithFormat:@"%lu", (unsigned long)row];
 				NSMutableDictionary *pBag = [[NSMutableDictionary alloc] initWithObjectsAndKeys:@"HOTELCELL", @"TO_VIEW", @"YES", @"REFRESHING"
 											 , segment.gdsId, @"GDS", segment.propertyId, @"PROPERTY_ID", segment, @"SEGMENT", sSection, @"SECTION", sRow, @"ROW", nil]; //, cell, @"CELL"
 				[[ExSystem sharedInstance].msgControl createMsg:HOTEL_IMAGES CacheOnly:@"NO" ParameterBag:pBag SkipCache:YES RespondTo:self];
@@ -1787,7 +1788,7 @@
 				{
 					cell.ivHotelAlbum.image = iv.image;
                     // MOB-9821 pass in image urls instead image views
-                    key = [NSString stringWithFormat:@"%d-%d", section, row];
+                    key = [NSString stringWithFormat:@"%lu-%lu", (unsigned long)section, (unsigned long)row];
 					//key = [NSString stringWithFormat:@"%d,%d,IMAGES", section, row];
 					cell.imageArray = dictHotelImageURLs[key];
 				}
@@ -3149,8 +3150,8 @@
 	NSArray *sortedKeys = [holdKeys sortedArrayUsingSelector:@selector(caseInsensitiveCompare:)];
 	
 	holdKeys = [[NSMutableArray alloc] init];
-	int cnt = [sortedKeys count];
-	for (int x = 0; x < cnt; x++)
+	
+	for (int x = 0; x < [sortedKeys count]; x++)
 	{
 		NSString *sortedDate = sortedKeys[x]; 
 		[holdKeys addObject:[DateTimeFormatter formatDateForTravel:sortedDate]];
@@ -3931,7 +3932,7 @@
     NSMutableDictionary *segs = [TripData getSegmentsOrderByDate:trip];
     // MOB-11341 - log flurry event
     //Type:<Hotel, Car, Air, Train>, ItemsLeftInItin:<count>
-    NSDictionary *dictionary = @{@"Type": @"Hotel", @"ItemsLeftInItin": [NSString stringWithFormat:@"%d", [segs count]]};
+    NSDictionary *dictionary = @{@"Type": @"Hotel", @"ItemsLeftInItin": [NSString stringWithFormat:@"%lu", (unsigned long)[segs count]]};
     [Flurry logEvent:@"Book: Cancel" withParameters:dictionary];
     
     //
@@ -4123,7 +4124,7 @@
     [self setButtonDescriptors:descriptors];
 }
 
-- (void) didPressButtonAtIndex:(int)buttonIndex withId:(NSString*)buttonId inRect:(CGRect)rect
+- (void) didPressButtonAtIndex:(NSInteger)buttonIndex withId:(NSString*)buttonId inRect:(CGRect)rect
 {
     if ([buttonId isEqualToString:BUTTON_ID_BOOK_HOTEL])
         [self buttonBookHotelPressed:nil];

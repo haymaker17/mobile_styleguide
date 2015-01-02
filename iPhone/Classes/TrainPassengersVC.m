@@ -126,7 +126,7 @@
 	
 	cell.txt.text = val;
 	cell.parentVC = self;
-	cell.row = section;
+	cell.row = (int)section;
 	
 	return cell;
 }

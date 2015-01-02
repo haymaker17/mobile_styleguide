@@ -575,7 +575,7 @@
 {
     NSString *stopStr = nil;
     if (numOfStop > 1) {
-        stopStr = [NSString stringWithFormat:@"%i stops", numOfStop];
+        stopStr = [NSString stringWithFormat:@"%li stops", (long)numOfStop];
     }
     else if (numOfStop == 1) {
         stopStr = @"1 stop";

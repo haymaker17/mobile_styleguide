@@ -137,7 +137,7 @@
 
 - (void)parser:(NSXMLParser *)parser parseErrorOccurred:(NSError *)parseError 
 {
-	NSString * errorString = [NSString stringWithFormat:@"Unable to get car reservation results (Error code %i )", [parseError code]];
+	NSString * errorString = [NSString stringWithFormat:@"Unable to get car reservation results (Error code %li )", (long)[parseError code]];
 	NSLog(@"error parsing XML: %@", errorString);
 	
 	// TODO: handle error

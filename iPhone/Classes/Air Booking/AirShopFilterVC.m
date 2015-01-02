@@ -452,7 +452,7 @@
     else if(self.sortOrder == kSortPrice)
         sortByText = [Localizer getLocalizedText:@"results by Fare Price"];
     
-    lbl.text = [NSString stringWithFormat:@"%d %@", [a  count], sortByText];
+    lbl.text = [NSString stringWithFormat:@"%lu %@", (unsigned long)[a  count], sortByText];
     if(![ExSystem is7Plus])
 	{
         // Only change the results text color if using iOS6
@@ -516,7 +516,7 @@
 #pragma mark - Cell Config
 - (void)configureCell:(AirShopFilterCell *)cell atIndexPath:(NSIndexPath *)indexPath
 {
-    NSString* cellId = [NSString stringWithFormat:@"%d", [indexPath row]];
+    NSString* cellId = [NSString stringWithFormat:@"%ld", (long)[indexPath row]];
 //    NSLog(@"configure cell for %@", cellId);
     NSManagedObject *managedObject = [self.fetchedResultsController objectAtIndexPath:indexPath];
     EntityAirFilterSummary *entity = (EntityAirFilterSummary *)managedObject;

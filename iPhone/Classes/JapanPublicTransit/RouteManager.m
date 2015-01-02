@@ -91,8 +91,8 @@ __strong static id _sharedInstance = nil;
         
         [self.recentSearchRoutes insertObject:routeCopy atIndex:0];
         
-        int numSearches = [self.recentSearchRoutes count];
-        int numTooMany = numSearches - maxHistory;
+        NSUInteger numSearches = [self.recentSearchRoutes count];
+        NSInteger numTooMany = numSearches - maxHistory;
         
         for (int i = 0; i < numTooMany; i++) {
             [self.recentSearchRoutes removeLastObject];

@@ -229,7 +229,7 @@
 	// time it is encountered.  Since the traversal is backward, the dictionary entry for a given
 	// type will be the first address component in the list with that type.
 	//
-	int numAddressComponents = [addressComponents count];
+	int numAddressComponents = (int)[addressComponents count];
 	for (int i = numAddressComponents - 1; i >= 0; i--)
 	{
 		AddressComponent *comp = addressComponents[i];

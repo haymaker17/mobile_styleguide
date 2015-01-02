@@ -94,7 +94,7 @@
 #pragma mark Configure cell
 -(void) configureCell:(AppsMenuCell *)cell forIndexPath:(NSIndexPath *)indexPath
 {
-    int row = [indexPath row];
+    NSInteger row = [indexPath row];
     NSDictionary *data = nil;
     
     if (self.displayAppsOfType == BOOKING_APPS)

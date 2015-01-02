@@ -169,7 +169,7 @@
 
     if([fromView isEqualToString:@"HOTEL_BOOKING"] || [fromView isEqualToString:@"CAR" ] || [fromView isEqualToString:@"CAR_DETAILS" ] || [fromView isEqualToString:@"AIR_BOOKING"] || [fromView isEqualToString:@"TRAIN_DETAILS"])
     {
-        int vcCount = [self.navigationController.viewControllers count];
+        NSUInteger vcCount = [self.navigationController.viewControllers count];
         
         UIViewController *vc = (self.navigationController.viewControllers)[vcCount - 2];
         MobileViewController *mvc = (MobileViewController *)vc;

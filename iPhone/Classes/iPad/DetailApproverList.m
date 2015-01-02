@@ -127,7 +127,7 @@
          cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
 //    int section = [indexPath section];
-    int row = [indexPath row];
+    NSInteger row = [indexPath row];
     KeyValue *kv = nil;
 	
 	if(aSections == nil)

@@ -19,7 +19,7 @@
 		indent = [indent stringByAppendingString:@" "];
 	}
 	
-	NSLog(@"%@ - tag:%d, x:%.1f, y:%.1f, ht: %.1f, wd: %.1f",indent,self.tag,self.frame.origin.x,self.frame.origin.y,self.frame.size.height,self.frame.size.width);
+	NSLog(@"%@ - tag:%ld, x:%.1f, y:%.1f, ht: %.1f, wd: %.1f",indent,(long)self.tag,self.frame.origin.x,self.frame.origin.y,self.frame.size.height,self.frame.size.width);
 	
 	for (UIView* child in [self subviews] ) 
 	{

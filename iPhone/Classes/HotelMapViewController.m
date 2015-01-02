@@ -116,7 +116,7 @@
 	[mapView regionThatFits:region];
 	
 	// Add the annotations (push pins)
-	int hotelCount = [aHotel count];
+	NSUInteger hotelCount = [aHotel count];
 	for (int hotelIndex = 0; hotelIndex < hotelCount; hotelIndex++)
 	{
 		EntityHotelBooking* hotelResult = (EntityHotelBooking*)aHotel[hotelIndex];
@@ -141,7 +141,7 @@
 
 -(void)annotationSelected:(HotelAnnotationView*)annotation
 {
-    parentMVC.selectedHotelIndex = annotation.hotelIndex;
+    parentMVC.selectedHotelIndex = (int)annotation.hotelIndex;
 //	[parentMVC.hotelSearch selectHotel:annotation.hotelIndex];
 	[self showSelectedHotel];
 }

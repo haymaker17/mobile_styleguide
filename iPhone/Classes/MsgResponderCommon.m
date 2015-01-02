@@ -44,7 +44,7 @@
 
 - (void)parser:(NSXMLParser *)parser parseErrorOccurred:(NSError *)parseError 
 {
-    NSString * errorString = [NSString stringWithFormat:@"Unable to get data (Error code %i )", [parseError code]];
+    NSString * errorString = [NSString stringWithFormat:@"Unable to get data (Error code %li )", (long)[parseError code]];
     [[MCLogging getInstance] log:errorString Level:MC_LOG_WARN];
 }
 

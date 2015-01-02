@@ -151,7 +151,7 @@
 - (IBAction) buttonPressed:(id)sender
 {
     UIButton *button = (UIButton*)sender;
-    int buttonIndex = button.tag;
+    NSInteger buttonIndex = button.tag;
     
     if (buttonIndex < _buttonDescriptors.count)
     {
@@ -161,7 +161,7 @@
     }
 }
 
-- (UIButton*) buttonAtIndex:(int)index
+- (UIButton*) buttonAtIndex:(NSInteger)index
 {
     if (index == 0)
         return self.button0;
@@ -214,7 +214,7 @@
         labelForButton.hidden = NO;
     }
     
-    for (int unusedButtonIndex = _buttonDescriptors.count; unusedButtonIndex < MAX_BUTTONS; unusedButtonIndex++)
+    for (int unusedButtonIndex = (int)_buttonDescriptors.count; unusedButtonIndex < MAX_BUTTONS; unusedButtonIndex++)
     {
         UIButton *unusedButton = [self buttonAtIndex:unusedButtonIndex];
         unusedButton.hidden = YES;
@@ -245,7 +245,7 @@
     return nil;
 }
     
-- (void) didPressButtonAtIndex:(int)buttonIndex withId:(NSString*)buttonId inRect:(CGRect)rect
+- (void) didPressButtonAtIndex:(NSInteger)buttonIndex withId:(NSString*)buttonId inRect:(CGRect)rect
 {
 }
 

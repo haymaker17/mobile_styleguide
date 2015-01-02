@@ -14,7 +14,7 @@
 - (void)cancelPicker;
 - (void)donePicker:(NSDate *)dateSelected;
 - (void)pickedDate;
-- (void)pickedItem:(int)row;
+- (void)pickedItem:(NSInteger)row;
 @end
 
 @interface PickerPopoverVC : MobileViewController <UIPickerViewDelegate, UIPickerViewDataSource>{

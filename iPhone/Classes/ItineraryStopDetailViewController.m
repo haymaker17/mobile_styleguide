@@ -224,7 +224,7 @@ NSUInteger DeviceSystemMajorVersion()
 {
     NSLog(@"time changed sender = %@", sender);
     UIDatePicker *picker = (UIDatePicker *)sender;
-    NSLog(@"picker.tag = %i", picker.tag);
+    NSLog(@"picker.tag = %li", (long)picker.tag);
     NSLog(@"picker = %@", picker.date);
 
     if(picker.tag != nil)

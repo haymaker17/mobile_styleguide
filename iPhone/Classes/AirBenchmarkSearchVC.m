@@ -233,7 +233,7 @@
         vc.locationDelegate = self;
         vc.neverShowOffices = YES;
         vc.isAirportOnly = YES;
-        vc.tag = [NSString stringWithFormat:@"%d",indexPath.row]; // send selected row as Tag so we know which value to change later when user selects a location
+        vc.tag = [NSString stringWithFormat:@"%ld",(long)indexPath.row]; // send selected row as Tag so we know which value to change later when user selects a location
         if([UIDevice isPad])
         {
             if([ExSystem is6Plus])

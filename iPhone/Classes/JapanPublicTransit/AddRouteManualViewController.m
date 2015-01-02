@@ -349,8 +349,8 @@
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
     UITableViewCell *cell = nil;
     
-    int section = [indexPath section];
-    int row = [indexPath row];
+    NSUInteger section = [indexPath section];
+    NSUInteger row = [indexPath row];
     
     switch (section) {
         case 0: {
@@ -450,8 +450,8 @@
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
     [self.tableView deselectRowAtIndexPath:indexPath animated:YES];
     
-    int section = [indexPath section];
-    int row = [indexPath row];
+    NSUInteger section = [indexPath section];
+    NSUInteger row = [indexPath row];
     
     switch (section) {
         case 0:

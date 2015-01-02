@@ -645,8 +645,8 @@ NSString * const PICKUP_LOCATION_TAG = @"PICKUP_LOCATION_TAG";
 // Custom fields
 -(void) reloadCustomFieldsSection
 {
-    int travelCustomFieldSection = [self.aSections indexOfObject:KSECTION_TRIP_CUSTOM_FIELDS];
-    if (travelCustomFieldSection >= 0)
+    NSUInteger travelCustomFieldSection = [self.aSections indexOfObject:KSECTION_TRIP_CUSTOM_FIELDS];
+    if (travelCustomFieldSection != NSNotFound)
     {
         NSIndexSet *indexSet = [NSIndexSet indexSetWithIndex:travelCustomFieldSection];
         [tblView reloadSections:indexSet withRowAnimation:UITableViewRowAnimationFade];
@@ -947,7 +947,7 @@ NSString * const PICKUP_LOCATION_TAG = @"PICKUP_LOCATION_TAG";
                 optionsViewTitle = [Localizer getLocalizedText:@"Select Car Type"];
                 optionType = @"CAR_TYPE_PREFERENCE";
                 labels = carSearchCriteria.carTypeNames;
-                selectedRowIndex = [NSNumber numberWithInt:carSearchCriteria.carTypeIndex];
+                selectedRowIndex = [NSNumber numberWithInteger:carSearchCriteria.carTypeIndex];
             }
 
             if([UIDevice isPad])
@@ -1186,7 +1186,7 @@ NSString * const PICKUP_LOCATION_TAG = @"PICKUP_LOCATION_TAG";
 
 - (void)pickedDate:(NSDate *)dateSelected
 {
-	int row = [pickerPopOverVC.indexPath row];
+	NSInteger row = [pickerPopOverVC.indexPath row];
 	NSString* rowId = @"Dropoff";
 	if(row == kRowPickupDate)
         rowId = @"Pickup";
@@ -1234,8 +1234,8 @@ NSString * const PICKUP_LOCATION_TAG = @"PICKUP_LOCATION_TAG";
 {
     if ([Config isGov])
     {
-        int govSection = [self.aSections indexOfObject:KSECTION_GOV_TA_FIELDS];
-        if (govSection >=0)
+        NSUInteger govSection = [self.aSections indexOfObject:KSECTION_GOV_TA_FIELDS];
+        if (govSection != NSNotFound)
         {
             NSIndexSet *indexSet = [NSIndexSet indexSetWithIndex:govSection];
             [self.tblView reloadSections:indexSet withRowAnimation:UITableViewRowAnimationFade];

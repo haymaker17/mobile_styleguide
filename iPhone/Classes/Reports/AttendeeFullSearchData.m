@@ -51,8 +51,7 @@
 	
 	[bodyXML appendString:@"<Fields xmlns:a=\"http://schemas.datacontract.org/2004/07/Snowbird\">"];
 	
-	int nFields = [self.searchFields count];
-	for (int ix = 0; ix < nFields; ix ++)
+	for (int ix = 0; ix < [self.searchFields count]; ix ++)
 	{
 		FormFieldData* ff = (self.searchFields)[ix];
 		[bodyXML appendString:@"<a:FormField>"];

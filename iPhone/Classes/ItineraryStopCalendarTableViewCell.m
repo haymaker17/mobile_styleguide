@@ -33,7 +33,7 @@
     [self addSubview:self.calendarView];
 
     NSLog(@"self.initialDate = %@", self.initialDate);
-    NSLog(@"self.calendarView.bounds.size = ", self.calendarView.bounds.size);
+//    NSLog(@"self.calendarView.bounds.size = ", self.calendarView.bounds.size);
 
 }
 

@@ -171,7 +171,7 @@
     
 }
 
-- (void)checkIfImageIsAvailableForPage:(int)pageNumber withImageView:(id)imageView
+- (void)checkIfImageIsAvailableForPage:(NSInteger)pageNumber withImageView:(id)imageView
 {
     if ([imageView isKindOfClass:[UIImageView class]]) {
         UIImageView *imgView = (UIImageView *)imageView;

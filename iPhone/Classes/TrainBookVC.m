@@ -558,8 +558,8 @@
 // Custom fields
 -(void) reloadCustomFieldsSection
 {
-    int travelCustomFieldSection = [self.aSections indexOfObject:KSECTION_TRIP_CUSTOM_FIELDS];
-    if (travelCustomFieldSection >= 0)
+    NSUInteger travelCustomFieldSection = [self.aSections indexOfObject:KSECTION_TRIP_CUSTOM_FIELDS];
+    if (travelCustomFieldSection != NSNotFound)
     {
         NSIndexSet *indexSet = [NSIndexSet indexSetWithIndex:travelCustomFieldSection];
         [tableList reloadSections:indexSet withRowAnimation:UITableViewRowAnimationFade];
@@ -1273,8 +1273,8 @@
 	pickerPopOverVC.delegate = self;
 	pickerPopOverVC.indexPath = indexPath;
 	
-	int section = [indexPath section];
-	int row = [indexPath row];
+	NSInteger section = [indexPath section];
+	NSInteger row = [indexPath row];
 	//NSMutableArray *sectionValues = [aList objectAtIndex:section];
     BookingCellData *bcd = nil;
     if(row == 2)
@@ -1558,8 +1558,8 @@
 {
     if ([Config isGov])
     {
-        int govSection = [self.aSections indexOfObject:KSECTION_GOV_TA_FIELDS];
-        if (govSection >=0)
+        NSUInteger govSection = [self.aSections indexOfObject:KSECTION_GOV_TA_FIELDS];
+        if (govSection != NSNotFound)
         {
             NSIndexSet *indexSet = [NSIndexSet indexSetWithIndex:govSection];
             [self.tableList reloadSections:indexSet withRowAnimation:UITableViewRowAnimationFade];

@@ -44,7 +44,7 @@
 	if (hotelBooking.relHotelImage == nil)
 		return nil;
 	
-	int numPropertyImagePairs = [hotelBooking.relHotelImage count];
+	NSUInteger numPropertyImagePairs = [hotelBooking.relHotelImage count];
 	
 	__autoreleasing NSMutableArray *urls = [[NSMutableArray alloc] initWithCapacity:numPropertyImagePairs];
 	NSMutableDictionary *urlsAlreadySeen = [[NSMutableDictionary alloc] initWithCapacity:numPropertyImagePairs];
@@ -74,7 +74,7 @@
 	if (propertyImagePairs == nil)
 		return nil;
 	
-	int numPropertyImagePairs = [propertyImagePairs count];
+	NSUInteger numPropertyImagePairs = [propertyImagePairs count];
 	
 	__autoreleasing NSMutableArray *urls = [[NSMutableArray alloc] initWithCapacity:numPropertyImagePairs];
 	NSMutableDictionary *urlsAlreadySeen = [[NSMutableDictionary alloc] initWithCapacity:numPropertyImagePairs];

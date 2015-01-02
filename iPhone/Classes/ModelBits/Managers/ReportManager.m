@@ -78,7 +78,7 @@ static ReportManager *sharedInstance;
     NSArray *rptList = [self searchReportByPrefix:newRptNamePrefix];
     if (rptList != nil && [rptList count] >0)
     {
-        newRptNamePrefix = [NSString stringWithFormat:@"%@ #%d", newRptNamePrefix, [rptList count]+1];
+        newRptNamePrefix = [NSString stringWithFormat:@"%@ #%lu", newRptNamePrefix, [rptList count]+1];
     }
     return newRptNamePrefix;
 }

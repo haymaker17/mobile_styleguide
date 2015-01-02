@@ -523,17 +523,17 @@
     [super viewDidLoad];
     
     NSArray *viewList = [[self navigationController] viewControllers];
-    int count = [viewList count];
+    NSUInteger count = [viewList count];
     NSString *camefromvc = @"Select Receipt";
-    if(count>1)
-    {
-        UINavigationController *navStack = viewList[count-2];
+//    if(count>1)
+//    {
+//        UINavigationController *navStack = viewList[count-2];
         // TODO: Is this Safe to comment out or find another way
 //        if([navStack isKindOfClass:[RootViewController class]])
 //        {
 //           camefromvc = @"Home";
 //        }
-    }
+//    }
 
     [Flurry logEvent:@"Receipt Store: Viewed" withParameters:@{@"Viewed From": camefromvc}];
     

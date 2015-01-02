@@ -37,7 +37,7 @@
 -(void)segmentSelected:(id)sender
 {
     if (self.onSegmentsSelected) {
-        NSDictionary *dic = @{@"selectedSegmentIndex": [NSNumber numberWithInt:self.segmentedCtrl.selectedSegmentIndex]};
+        NSDictionary *dic = @{@"selectedSegmentIndex": [NSNumber numberWithInteger:self.segmentedCtrl.selectedSegmentIndex]};
         self.onSegmentsSelected(dic);
     }
 }

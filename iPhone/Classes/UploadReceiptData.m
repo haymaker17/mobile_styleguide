@@ -88,7 +88,7 @@
         [msg setBodyData:(NSMutableData*)imgData];
 	}
 	
-    [[MCLogging getInstance] log:[NSString stringWithFormat:@"Uploading receipt of size: %d bytes", imgData.length] Level:MC_LOG_INFO];
+    [[MCLogging getInstance] log:[NSString stringWithFormat:@"Uploading receipt of size: %lu bytes", (unsigned long)imgData.length] Level:MC_LOG_INFO];
 	[msg setHeader:[ExSystem sharedInstance].sessionID];
     if (parameterBag != nil && parameterBag[@"PDF"] != nil)
         [msg setContentType:@"application/pdf"];

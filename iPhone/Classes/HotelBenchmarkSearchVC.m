@@ -48,7 +48,7 @@
     NSDateFormatter *formatter = [[NSDateFormatter alloc] init];
     formatter.locale = [NSLocale currentLocale];
     self.monthSymbols = formatter.monthSymbols;
-    self.selectedMonth = [[[[NSCalendar alloc] initWithCalendarIdentifier:NSGregorianCalendar] components:NSCalendarUnitMonth fromDate:[NSDate date]] month]; // select current month by default
+    self.selectedMonth = (int) [[[[NSCalendar alloc] initWithCalendarIdentifier:NSGregorianCalendar] components:NSCalendarUnitMonth fromDate:[NSDate date]] month]; // select current month by default
     self.radius = 5;
     
     if([[UserConfig getSingleton].travelPointsConfig[@"HotelTravelPointsEnabled"] boolValue])

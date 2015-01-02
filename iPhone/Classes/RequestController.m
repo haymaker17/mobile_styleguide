@@ -254,7 +254,7 @@ canAuthenticateAgainstProtectionSpace:(NSURLProtectionSpace *) space
     NSError *error = nil;
     [[MCLogging getInstance] log:[NSString stringWithFormat:@"RequestControl::makeRequest(%@) Doing a Synchro fetch", msg.idKey] Level:MC_LOG_DEBU];
     NSData *data = [NSURLConnection sendSynchronousRequest: req returningResponse: &response error: &error]; 
-    int statusCode = [((NSHTTPURLResponse *)response) statusCode];
+    int statusCode = (int)[((NSHTTPURLResponse *)response) statusCode];
     //NSLog(@"Synchro Response StatusCode=%d", statusCode);
     msg.responseCode = statusCode;
     [[MCLogging getInstance] log:[NSString stringWithFormat:@"RequestControl::makeRequest(%@) Synchro Response code=%d", msg.idKey, statusCode] Level:MC_LOG_DEBU];
@@ -275,7 +275,7 @@ canAuthenticateAgainstProtectionSpace:(NSURLProtectionSpace *) space
     else if (statusCode == 0 && error != nil)
     {
 //        [[MCLogging getInstance] log:[NSString stringWithFormat:@"RequestControl::makeRequest(%@) Synchro %d %@ %@", msg.idKey, [error code], theXML, [error localizedDescription]] Level:MC_LOG_ERRO];
-        msg.errCode = [NSString stringWithFormat:@"%d", [error code]];
+        msg.errCode = [NSString stringWithFormat:@"%ld", (long)[error code]];
         msg.errBody = [error localizedDescription];	
     }
     
@@ -374,7 +374,7 @@ didReceiveResponse:(NSURLResponse *) response
 //    NSDictionary *headers = [httpResp allHeaderFields];
 //    [[MCLogging getInstance] log:[NSString stringWithFormat:@"Headers Content-Encoding %@", [headers objectForKey:@"Content-Encoding"]] Level:MC_LOG_DEBU];
     
-	int statusCode = [((NSHTTPURLResponse *)response) statusCode];
+	int statusCode = (int)[((NSHTTPURLResponse *)response) statusCode];
 	msg.responseCode = statusCode;// [NSString stringWithFormat:@"%d", statusCode];
 	[[MCLogging getInstance] log:[NSString stringWithFormat:@"RequestControl::didReceiveResponse(%@) Response Code = %d", msg.idKey, statusCode] Level:MC_LOG_DEBU];
 

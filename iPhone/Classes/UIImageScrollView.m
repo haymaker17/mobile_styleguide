@@ -49,7 +49,7 @@
 	if (propertyImagePairs == nil)
 		return;
 	
-	int numPropertyImagePairs = [propertyImagePairs count];
+	NSUInteger numPropertyImagePairs = [propertyImagePairs count];
 
 	NSMutableArray *urls = [[NSMutableArray alloc] initWithCapacity:numPropertyImagePairs];
 	NSMutableDictionary *urlsAlreadySeen = [[NSMutableDictionary alloc] initWithCapacity:numPropertyImagePairs];
@@ -85,7 +85,7 @@
 
 	self.parentVC = owner;
 	
-	int imageCount = [imageUrls count];
+	NSUInteger imageCount = [imageUrls count];
 	
 	if (imageCount == 0)
 	{

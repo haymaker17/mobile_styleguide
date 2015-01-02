@@ -46,7 +46,7 @@
 -(IBAction)goSomeplace:(id)sender
 {
 	UIButton *btn = (UIButton *)sender;
-	int aPos = btn.tag;
+	NSInteger aPos = btn.tag;
 	detail = aDetails[aPos];
 	
 	NSString *mapAddress = detail.mapAddress;
@@ -78,7 +78,7 @@
 	//(NSString *)specialValueWeb WebViewTitle:(NSString *)webViewTitle
 	//do web view
 	UIButton *btn = (UIButton *)sender;
-	int aPos = btn.tag;
+	NSInteger aPos = btn.tag;
 	detail = aDetails[aPos];
 	WebViewController *webView = [[WebViewController alloc] init];
 	webView.rootViewController = rootVC;
@@ -111,7 +111,7 @@
 
 // Customize the appearance of table view cells.
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
-    int row = indexPath.row;
+    NSInteger row = indexPath.row;
 	
 	//NSMutableArray *sectionData = nil;
 	SegmentRow *segRow = nil;
@@ -508,7 +508,7 @@
 - (CGFloat)tableView:(UITableView *)tableView 
 heightForRowAtIndexPath:(NSIndexPath *)indexPath
 {
-	int row = indexPath.row;
+	NSInteger row = indexPath.row;
 	
 	if([segment.type isEqualToString:SEG_TYPE_AIR] && row == 0)
 		return 80;

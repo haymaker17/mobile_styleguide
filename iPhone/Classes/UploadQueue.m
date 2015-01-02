@@ -87,7 +87,7 @@ static UploadQueue *sharedInstance;
     }
 
     self.currentItemIndex = 0;
-    self.lastItemIndex = queuedItems.count - 1;
+    self.lastItemIndex = (int)queuedItems.count - 1;
 
     if (self.delegate != nil)
         [self.delegate willUploadQueue];
@@ -412,7 +412,8 @@ static UploadQueue *sharedInstance;
 
 -(int) visibleQueuedItemCount
 {
-    return [self fetchQueuedItemsForTopLevelItemsOnly:YES].count;
+    // Type cast required for to enable 64 bit support. 
+    return (int)[self fetchQueuedItemsForTopLevelItemsOnly:YES].count;
 }
 
 -(NSFetchRequest*) makeFetchRequestForVisibleQueuedItemsInContext:(NSManagedObjectContext*)context

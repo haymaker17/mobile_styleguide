@@ -27,7 +27,7 @@
 }
 
 - (NSString *)description {
-    return [NSString stringWithFormat:@"RouteSearchModel: { isRoundTrip: %d, seatType: %d, %@ }",
+    return [NSString stringWithFormat:@"RouteSearchModel: { isRoundTrip: %d, seatType: %lu, %@ }",
             self.isRoundTrip, self.seatType, self.stations];
 }
 

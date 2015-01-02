@@ -124,7 +124,7 @@
 	if (parseError != nil)
     {
 		NSLog(@"Error parsing response for GetTaxFormsV4: Parser Error : %@",[parseError localizedDescription]);
-        NSLog(@"Code %@",[NSString stringWithFormat:@"%i", [parseError code]]);
+        NSLog(@"Code %@",[NSString stringWithFormat:@"%li", (long)[parseError code]]);
         //				[[MCLogging getInstance] log:[NSString stringWithFormat:@"ReportApprovalListData::foundCharacters IN RPT FIELD HANDLING currentElement = %@, string = %@", currentElement, string] Level:MC_LOG_DEBU];
 
     }

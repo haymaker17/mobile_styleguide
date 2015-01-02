@@ -415,7 +415,7 @@
 
     NSComparisonResult result = [dateA compare:dateB];
     NSLog(@"/// %@ -- %@", dateA, dateB);
-    NSLog(@"result = %d", result);
+    NSLog(@"result = %ld", result);
 
     return result;
 }

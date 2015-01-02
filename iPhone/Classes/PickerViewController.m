@@ -63,8 +63,8 @@
     self.lblSelectedText.text = self.pickerViewOptionLabels[row];
     if (self.pickerViewSelectedOptionIndex != row)
     {
-        self.pickerViewSelectedOptionIndex = row;
-        [self.delegate pickerSelectionChangedToRow:row tag:self.tag];
+        self.pickerViewSelectedOptionIndex = (int) row;
+        [self.delegate pickerSelectionChangedToRow:self.pickerViewSelectedOptionIndex tag:self.tag];
     }
 }
 

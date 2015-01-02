@@ -63,7 +63,7 @@
 - (void)continueClicked:(id)sender
 {
     if ([self allRequiredFieldsHandled]) {
-        int vcCount = [self.navigationController.viewControllers count];
+        NSInteger vcCount = [self.navigationController.viewControllers count];
         
         UIViewController *vc = (self.navigationController.viewControllers)[vcCount - 3];
         MobileViewController *mvc = (MobileViewController *)vc;

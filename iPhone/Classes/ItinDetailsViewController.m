@@ -601,7 +601,7 @@ NSString * const ITIN_DETAILS_VIEW = @"ITIN_DETAILS_VIEW";
 			NSMutableDictionary *segs = [TripData getSegmentsOrderByDate:trip];
             // MOB-11341 - log flurry event
             //Type:<Hotel, Car, Air, Train>, ItemsLeftInItin:<count>
-            NSDictionary *dictionary = @{@"Type": @"Car", @"ItemsLeftInItin": [NSString stringWithFormat:@"%d", [segs count]]};
+            NSDictionary *dictionary = @{@"Type": @"Car", @"ItemsLeftInItin": [NSString stringWithFormat:@"%lu", (unsigned long)[segs count]]};
             [Flurry logEvent:@"Book: Cancel" withParameters:dictionary];
 
             if([segs count] > 1)
@@ -806,7 +806,7 @@ NSString * const ITIN_DETAILS_VIEW = @"ITIN_DETAILS_VIEW";
     NSMutableDictionary *segs = [TripData getSegmentsOrderByDate:trip];
     // MOB-11341 - log flurry event
     //Type:<Hotel, Car, Air, Train>, ItemsLeftInItin:<count>
-    NSDictionary *dictionary = @{@"Type": @"Hotel", @"ItemsLeftInItin": [NSString stringWithFormat:@"%d", [segs count]]};
+    NSDictionary *dictionary = @{@"Type": @"Hotel", @"ItemsLeftInItin": [NSString stringWithFormat:@"%lu", (unsigned long)[segs count]]};
     [Flurry logEvent:@"Book: Cancel" withParameters:dictionary];
     
     //
@@ -827,7 +827,8 @@ NSString * const ITIN_DETAILS_VIEW = @"ITIN_DETAILS_VIEW";
 {
     if ([self.navigationController.viewControllers count])
     {
-        for (int i = [self.navigationController.viewControllers count] - 1; i >= 0; i--)
+        int count = (int)[self.navigationController.viewControllers count];
+        for (int i = count - 1; i >= 0; i--)
         {
             id parentVC = self.navigationController.viewControllers[i];
             if ([parentVC isKindOfClass:class] || [parentVC isKindOfClass:[TripsViewController class]])

@@ -160,7 +160,7 @@
         // Set the selected pin color to different color.
         view.image = [UIImage imageNamed:@"icon_map_pin_selected"];
         
-        DLog(@" selected view index: %d ", self.selectedIndex);
+        DLog(@" selected view index: %ld ", (long)self.selectedIndex);
         [self adjustTableHeight];
         [self.tableView reloadData];
     }

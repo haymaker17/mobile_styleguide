@@ -108,7 +108,7 @@
 	}
 
 	
-	int imageCount = [imageArray count];
+	NSInteger imageCount = [imageArray count];
 	
 	scroller.contentSize = CGSizeMake(imageCount * w, h);
 	scroller.pagingEnabled = YES;

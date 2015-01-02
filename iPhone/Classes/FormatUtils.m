@@ -76,7 +76,7 @@
 + (NSString*) getFractionDigits:(NSString*)roundedCurrencyNum decimalSeparator:(NSRange) decimalRange
 {
     // Get integer portion of the currency
-    int decimalPos = decimalRange.location;
+    NSUInteger decimalPos = decimalRange.location;
     NSString *result = @"";
     if (decimalPos != NSNotFound)
     {
@@ -103,8 +103,8 @@
     }
     //Currency Style
     NSNumberFormatter *currencyStyle = [self getCurrencyFormatter:crnCode];
-    int minFDigits = currencyStyle.minimumFractionDigits;
-    int maxFDigits = currencyStyle.maximumFractionDigits;
+    int minFDigits = (int)currencyStyle.minimumFractionDigits;
+    int maxFDigits = (int)currencyStyle.maximumFractionDigits;
     NSString *decimalSeparator = currencyStyle.decimalSeparator;
     
     NSString *roundedCurrencyNum = [currencyStyle stringFromNumber:num];

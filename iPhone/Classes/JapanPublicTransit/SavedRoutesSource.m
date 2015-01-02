@@ -67,8 +67,8 @@
 // Need this for row-moving.
 //
 - (void)tableView:(UITableView *)tableView moveRowAtIndexPath:(NSIndexPath *)fromIndexPath toIndexPath:(NSIndexPath *)toIndexPath {
-    int fromRow = [fromIndexPath row];
-    int toRow = [toIndexPath row];
+    NSInteger fromRow = [fromIndexPath row];
+    NSInteger toRow = [toIndexPath row];
     
     NSArray *savedExpenses = [[RouteExpenseManager sharedInstance] fetchSavedExpenses];
     

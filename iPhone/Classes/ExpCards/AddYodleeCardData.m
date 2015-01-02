@@ -24,8 +24,7 @@
 	[bodyXML appendString:@"<YodleeCardLoginInfo>"];
 	[bodyXML appendString:[NSString stringWithFormat:@"<ContentServiceId>%@</ContentServiceId><Fields>", self.contentServiceId]];
     
-    int nFields = [self.fields count];
-	for (int ix = 0; ix < nFields; ix ++)
+	for (int ix = 0; ix < [self.fields count]; ix ++)
 	{
 		FormFieldData* ff = (self.fields)[ix];
 		[bodyXML appendString:@"<FormField  xmlns=\"http://schemas.datacontract.org/2004/07/Snowbird\" xmlns:i=\"http://www.w3.org/2001/XMLSchema-instance\">"];

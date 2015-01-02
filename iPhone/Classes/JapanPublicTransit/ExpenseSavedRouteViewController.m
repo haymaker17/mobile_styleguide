@@ -264,8 +264,8 @@
         cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:@"FormCell"];
     }
     
-    int section = [indexPath section];
-    int row = [indexPath row];
+    NSInteger section = [indexPath section];
+    NSInteger row = [indexPath row];
     
     switch (section) {
         case 0:
@@ -302,8 +302,8 @@
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
     [tableView deselectRowAtIndexPath:indexPath animated:YES];
     
-    int section = [indexPath section];
-    int row = [indexPath row];
+    NSInteger section = [indexPath section];
+    NSInteger row = [indexPath row];
     
     switch (section) {
         case 0:

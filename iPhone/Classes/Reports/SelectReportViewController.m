@@ -664,7 +664,7 @@ NSString * const FIX_REPORT_NAME_MSG = @"FIX_REPORT_NAME_MSG";
     if([UIDevice isPad])
     {
         // MOB-6323 Do not use Close when popped above Expense List
-        int count = [self.navigationController.viewControllers count];
+        NSUInteger count = [self.navigationController.viewControllers count];
         // No other views behind this.  No need to set up fake back up button
         int viewIndex = 0;
         for (int ix = 0; ix <count; ix++)

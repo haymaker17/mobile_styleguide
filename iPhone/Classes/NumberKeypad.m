@@ -129,9 +129,9 @@ static NumberKeypad *CTEKeypad;
 
 - (void) addButton1ToKeyboard:(NegativeButton *)button1 andButton2:(DecimalPointButton *)button2 {
 	//Add a button to the top, above all windows
-	NSArray *allWindows = [[UIApplication sharedApplication] windows];
-	int topWindow = [allWindows count] - 1;
-	UIWindow *keyboardWindow = [allWindows objectAtIndex:topWindow];
+// Get top most window
+    UIWindow *keyboardWindow = [[UIApplication sharedApplication] keyWindow] ;
+
 	[keyboardWindow addSubview:button1];
     [keyboardWindow addSubview:button2];
 }

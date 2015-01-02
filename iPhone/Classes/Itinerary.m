@@ -194,7 +194,7 @@
         RXMLElement *itineraryRows = [itin child:@"ItineraryRows"];
 
         NSArray *rows = [itineraryRows children:@"ItineraryRow"];
-        NSLog(@"Itinerary Rows in Save [rows count] = %u", [rows count]);
+        NSLog(@"Itinerary Rows in Save [rows count] = %lu", (unsigned long)[rows count]);
         for (RXMLElement *row in rows) {
             NSString *status = [row child:@"Status"].text;
             NSLog(@"record save status = %@", status);
@@ -325,7 +325,7 @@
  */
 
 
-+ (BOOL *)wasDeleteItinerarySuccessful:(NSString *)result
++ (BOOL )wasDeleteItinerarySuccessful:(NSString *)result
 {
     RXMLElement *rootXML = [RXMLElement elementFromXMLString:result encoding:NSUTF8StringEncoding];
     if (rootXML != nil) {
@@ -334,7 +334,7 @@
 
     RXMLElement *body = [rootXML child:@"Body"];
     NSString *status = [body child:@"Status"].text;
-    NSString *statusText = [body child:@"StatusText"].text;
+//    NSString *statusText = [body child:@"StatusText"].text;
 
     if([status isEqualToString:@"SUCCESS"])
     {
@@ -344,7 +344,7 @@
     return NO;
 }
 
-+ (BOOL *)wasUnassignItinerarySuccessful:(NSString *)result
++ (BOOL )wasUnassignItinerarySuccessful:(NSString *)result
 {
     RXMLElement *rootXML = [RXMLElement elementFromXMLString:result encoding:NSUTF8StringEncoding];
     if (rootXML != nil) {
@@ -353,7 +353,7 @@
 
     RXMLElement *body = [rootXML child:@"Body"];
     NSString *status = [body child:@"Status"].text;
-    NSString *statusText = [body child:@"StatusText"].text;
+//    NSString *statusText = [body child:@"StatusText"].text;
 
     if([status isEqualToString:@"SUCCESS"])
     {

@@ -1126,7 +1126,7 @@ heightForRowAtIndexPath:(NSIndexPath *)indexPath
 	{
 		if(![UIDevice isPad])
 		{
-			int vcCount = [self.navigationController.viewControllers count];
+			NSUInteger vcCount = [self.navigationController.viewControllers count];
 			MobileViewController* parentMVC = vcCount >= 3?(self.navigationController.viewControllers)[vcCount - 3] : nil;
 			if (([[parentMVC getViewIDKey] isEqualToString:ACTIVE_REPORTS])
 				&& [parentMVC isKindOfClass:ActiveReportListViewController.class])

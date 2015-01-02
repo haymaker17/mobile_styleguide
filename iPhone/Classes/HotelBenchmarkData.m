@@ -66,7 +66,7 @@
 	NSCalendar *calendar = [NSCalendar currentCalendar];
 	calendar.timeZone = [NSTimeZone localTimeZone];
 	NSDateComponents *components = [calendar components:(NSYearCalendarUnit | NSMonthCalendarUnit | NSDayCalendarUnit) fromDate:date];
-	NSString *dateString = [NSString stringWithFormat:@"%i/%i/%i", components.month, components.day, components.year];
+	NSString *dateString = [NSString stringWithFormat:@"%li/%li/%li", (long)components.month, (long)components.day, (long)components.year];
 	return dateString;
 }
 

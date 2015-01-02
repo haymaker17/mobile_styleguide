@@ -17,7 +17,7 @@
 	NSMutableArray			*imageArray;
     UIPageControl           *pageControl;
 	BOOL                    pageControlIsChangingPage;
-	int						pagePos;
+	NSInteger						pagePos;
 	CGFloat					initialDistance;
 	BOOL					isThumbs;
 }
@@ -26,7 +26,7 @@
 @property (strong, nonatomic) IBOutlet UIToolbar				*tb;
 @property (strong, nonatomic) NSMutableArray                    *imageArray;
 @property (nonatomic, strong) IBOutlet UIPageControl            *pageControl;
-@property int pagePos;
+@property NSInteger pagePos;
 
 -(IBAction) closeMe:(id)sender;
 -(void) manipulateImages;

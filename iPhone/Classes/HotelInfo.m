@@ -34,9 +34,9 @@
 -(void)selectRoom:(NSUInteger)roomIndex
 {
 	if (roomIndex > [roomResults count])
-		NSLog(@"ERROR: Setting roomIndex to out-of-bounds value: %i.  Valid values are 0 through %i", roomIndex, [roomResults count]);
+		NSLog(@"ERROR: Setting roomIndex to out-of-bounds value: %ld.  Valid values are 0 through %lu", (unsigned long)roomIndex, (unsigned long)[roomResults count]);
 	
-	self.selectedRoomIndex = [NSNumber numberWithInt:roomIndex];
+	self.selectedRoomIndex = [NSNumber numberWithInteger:roomIndex];
 }
 
 -(id)init

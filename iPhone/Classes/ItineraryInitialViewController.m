@@ -386,7 +386,7 @@
             NSIndexPath *now = [NSIndexPath indexPathForItem:0 inSection:1];
             UITableViewCell *cell = [self.tableView cellForRowAtIndexPath:now];
 //            [self performSegueWithIdentifier:@"SelectItineraryFromInitialToStop" sender:cell];
-            NSLog(@"now.row = %i", now.row);
+            NSLog(@"now.row = %li", (long)now.row);
 
         }];
 
@@ -606,7 +606,7 @@
 // Override to support editing the table view.
 - (void)tableView:(UITableView *)tableView commitEditingStyle:(UITableViewCellEditingStyle)editingStyle forRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    NSLog(@"editingStyle = %d", editingStyle);
+//    NSLog(@"editingStyle = %d", editingStyle);
     if (editingStyle == UITableViewCellEditingStyleDelete)
     {
         UITableView *tView = self.tableView;
@@ -616,8 +616,8 @@
 
         void (^success)(NSString *) = ^(NSString *result)
         {                                                                        
-            BOOL *success = [Itinerary wasDeleteItinerarySuccessful:result];
-            NSLog(@"Delete Stop : success = %p", success);
+            BOOL success = [Itinerary wasDeleteItinerarySuccessful:result];
+            NSLog(@"Delete Stop : success = %@", success ? @"YES" : @"NO");
             if(success) {
                 // Reload Table
                 [tView beginUpdates];

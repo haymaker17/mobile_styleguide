@@ -59,9 +59,9 @@
 -(void)selectHotel:(NSUInteger)hotelIndex
 {
 	if (hotelIndex > [hotels count])
-		NSLog(@"ERROR: Setting hotelIndex to out-of-bounds value: %i.  Valid values are 0 through %i", hotelIndex, [hotels count]);
+		NSLog(@"ERROR: Setting hotelIndex to out-of-bounds value: %lu.  Valid values are 0 through %lu", (unsigned long)hotelIndex, (unsigned long)[hotels count]);
 	
-	self.selectedHotelIndex = [NSNumber numberWithInt:hotelIndex];
+	self.selectedHotelIndex = [NSNumber numberWithInteger:hotelIndex];
 }
 
 

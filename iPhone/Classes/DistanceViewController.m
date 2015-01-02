@@ -42,7 +42,7 @@
 {
 	NSMutableDictionary *pBag = [[NSMutableDictionary alloc] initWithObjectsAndKeys:distanceValue, @"DISTANCE_VALUE", isDistanceMetric, @"IS_METRIC_DISTANCE", @"YES", @"DONTPUSHVIEW", @"YES", @"POPTOVIEW", @"YES", @"SHORT_CIRCUIT", nil];
 
-    int vcCount = [self.navigationController.viewControllers count];
+    NSUInteger vcCount = [self.navigationController.viewControllers count];
     UIViewController *vc = (self.navigationController.viewControllers)[vcCount - 2];
     MobileViewController *mvc = (MobileViewController *)vc;
     Msg *msg = [[Msg alloc] init];

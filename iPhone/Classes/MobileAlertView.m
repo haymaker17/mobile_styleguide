@@ -145,7 +145,7 @@ static NSMutableArray* alertsCurrentlyShowing;
 
 - (void)alertView:(UIAlertView *)alertView didDismissWithButtonIndex:(NSInteger)buttonIndex
 {
-	[[MCLogging getInstance] log:[NSString stringWithFormat:@"MobileAlertView::alertView:didDismissWithButtonIndex: title = %@, message = %@, buttonIndex = %i", self.loggableTitle, self.loggableMessage, buttonIndex] Level:MC_LOG_DEBU];
+	[[MCLogging getInstance] log:[NSString stringWithFormat:@"MobileAlertView::alertView:didDismissWithButtonIndex: title = %@, message = %@, buttonIndex = %li", self.loggableTitle, self.loggableMessage, (long)buttonIndex] Level:MC_LOG_DEBU];
 	
     //suggest change to the following code to fix ALL double-alert problem in iOS 6.0
     //Maynot work in some cases due to apple framework bug. See Rev#: 287961, UploadQueueAlertView::didDismissWithButtonIndex

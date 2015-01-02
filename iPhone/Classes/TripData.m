@@ -124,7 +124,7 @@
 					[existingSegs addObject:seg];
 				else 
 				{
-					int lastPos = [existingSegs count] - 1;
+					int lastPos = (int)[existingSegs count] - 1;
 					SegmentData *lastSeg = existingSegs[lastPos];
 					if([lastSeg.type isEqualToString:@"HOTEL"])
 						[existingSegs insertObject:seg atIndex:lastPos];
@@ -313,7 +313,7 @@
 	
 -(NSString *)getRecLocsBySegmentType:(NSString *)segType
 {//return the booking record locators for all bookings
-	int cnt = [bookingKeys count];
+	NSUInteger cnt = [bookingKeys count];
 	////NSLog(@"Count=%@", [bookingKeys count]);
 	int x = 0;
 	__autoreleasing NSMutableString *recLocs = nil;
@@ -349,7 +349,7 @@
 
 -(NSString *)getBookingRecLocs
 {//return the booking record locators for all bookings
-	int cnt = [bookingKeys count];
+	NSUInteger cnt = [bookingKeys count];
 	int x = 0;
 	__autoreleasing NSMutableString *recLocs;
 	recLocs = nil;
@@ -554,7 +554,7 @@
 	{
 		NSString *recLoc = bookingKeys[x];
 		BookingData *thisBooking = bookings[recLoc];
-        i = i + [thisBooking.segments count];
+        i = i + (int)[thisBooking.segments count];
     }
     
     return i;
@@ -666,7 +666,7 @@
                 }
 				else 
 				{
-					int lastPos = [ma count] - 1;
+					int lastPos = (int)[ma count] - 1;
 					EntitySegment *lastSeg = ma[lastPos];
 					if([lastSeg isKindOfClass:[EntitySegment class]] && [lastSeg.type isEqualToString:@"HOTEL"])
 						[ma insertObject:seg atIndex:lastPos];
@@ -743,7 +743,7 @@
 	NSArray *sortedKeys = [holdKeys sortedArrayUsingSelector:@selector(caseInsensitiveCompare:)];
 	
 	holdKeys = [[NSMutableArray alloc] init];
-	int cnt = [sortedKeys count];
+	NSInteger cnt = [sortedKeys count];
 	for (int x = 0; x < cnt; x++)
 	{
 		NSString *sortedDate = sortedKeys[x]; 
@@ -803,7 +803,7 @@
 					[ma addObject:seg];
 				else 
 				{
-					int lastPos = [ma count] - 1;
+					int lastPos = (int)[ma count] - 1;
 					EntitySegment *lastSeg = ma[lastPos];
 					if([lastSeg.type isEqualToString:@"HOTEL"])
 						[ma insertObject:seg atIndex:lastPos];
@@ -837,7 +837,7 @@
 	NSArray *sortedKeys = [holdKeys sortedArrayUsingSelector:@selector(caseInsensitiveCompare:)];
 	
 	holdKeys = [[NSMutableArray alloc] init];
-	int cnt = [sortedKeys count];
+	NSInteger cnt = [sortedKeys count];
 	for (int x = 0; x < cnt; x++)
 	{
 		NSString *sortedDate = sortedKeys[x]; 

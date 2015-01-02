@@ -1034,7 +1034,7 @@
 #pragma mark Report editing/refresh methods
 -(void) refreshReportList
 {
-	int vcCount = [self.navigationController.viewControllers count];
+	NSUInteger vcCount = [self.navigationController.viewControllers count];
 	
     //	MobileViewController *detailVc = nil;
 	MobileViewController *listVc = nil;
@@ -1057,7 +1057,7 @@
 
 -(void) refreshWithUpdatedReport:(ReportData*) newRpt
 {
-	int vcCount = [self.navigationController.viewControllers count];
+	NSUInteger vcCount = [self.navigationController.viewControllers count];
 	
     //	MobileViewController *detailVc = nil;
 	MobileViewController *listVc = nil;

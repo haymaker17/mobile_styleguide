@@ -84,7 +84,7 @@
         
         NSArray *group = (NSArray*)groupedReportsLookup[@"Unsubmitted Reports"];
         NSArray *subGroup = (NSArray*)groupedReportsLookup[@"Submitted Reports"];
-        NSDictionary *dictionary = @{@"Unsubmitted Count": [NSString stringWithFormat:@"%d", [group count]],@"Submitted Pending Count": [NSString stringWithFormat:@"%d", [subGroup count]]};
+        NSDictionary *dictionary = @{@"Unsubmitted Count": [NSString stringWithFormat:@"%lu", (unsigned long)[group count]],@"Submitted Pending Count": [NSString stringWithFormat:@"%lu", (unsigned long)[subGroup count]]};
         [Flurry logEvent:@"Reports: List" withParameters:dictionary];
         
         if ([lst isKindOfClass:[ActiveReportListData class]])

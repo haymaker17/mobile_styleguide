@@ -108,14 +108,14 @@
     }
 
     if (self.chatterPostComments != nil) {
-        numPosts = self.chatterPostComments.count + numPosts;
+        numPosts = (int)self.chatterPostComments.count + numPosts;
     }
 
     return numPosts;
 }
 
 // The only reason I hide the EntityChatterFeedEntry from client classes is that I dont want them to know this is Core Data backed by a network call.
-- (ChatterFeedPost *)chatterPostAtIndex:(int)index
+- (ChatterFeedPost *)chatterPostAtIndex:(NSInteger)index
 {
     if (index == 0) {
         return [[ChatterFeedPost alloc] initWithEntityChatterFeedEntry:self.firstPost];

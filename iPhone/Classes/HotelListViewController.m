@@ -200,8 +200,7 @@
 		 NSUInteger selectedParentHotelIndex = [self.hotelSearchMVC.hotelSearch.selectedHotelIndex intValue];
 		 
 		 // TODO: maybe make this faster
-		 int hotelCount = [self.sortedHotels count];
-		 for (int i = 0; i < hotelCount; i++)
+		 for (NSUInteger i = 0; i < [self.sortedHotels count]; i++)
 		 {
 			 HotelDescriptor *hotel = self.sortedHotels[i];
 			 if (hotel.parentHotelIndex == selectedParentHotelIndex)
@@ -698,8 +697,8 @@
 	{
 		NSMutableArray *hotels = [[NSMutableArray alloc] init];
 		
-		int hotelCount = [self.hotelSearchMVC.hotelSearch.hotels count];
-		for (int i = 0; i < hotelCount; i++)
+
+		for (NSUInteger i = 0; i < [self.hotelSearchMVC.hotelSearch.hotels count]; i++)
 		{
 			HotelDescriptor* hotel = [[HotelDescriptor alloc] init];
 			
@@ -927,9 +926,9 @@
     [self showLoadingViewWithText:[Localizer getLocalizedText:@"Loading more Hotels"]];
     id <NSFetchedResultsSectionInfo> sectionInfo = [self.fetchedResultsController sections][0];
     
-    int newStart = [sectionInfo numberOfObjects];
-    int numberOfRecordsToRequest = MIN(self.hotelSearchMVC.totalCount - [sectionInfo numberOfObjects],30);
-    NSMutableDictionary *pBag = [[NSMutableDictionary alloc] initWithObjectsAndKeys:@"", @"HOTEL_SEARCH", @"YES", @"SKIP_CACHE", [NSString stringWithFormat:@"%d", newStart], @"STARTPOS", [NSString stringWithFormat:@"%d",numberOfRecordsToRequest], @"NUMRECORDS", self.hotelSearchCriteria, @"HOTEL_SEARCH_CRITERIA", self.hotelSearch, @"HOTEL_SEARCH",nil];
+    NSUInteger newStart = [sectionInfo numberOfObjects];
+    NSUInteger numberOfRecordsToRequest = MIN(self.hotelSearchMVC.totalCount - [sectionInfo numberOfObjects],30);
+    NSMutableDictionary *pBag = [[NSMutableDictionary alloc] initWithObjectsAndKeys:@"", @"HOTEL_SEARCH", @"YES", @"SKIP_CACHE", [NSString stringWithFormat:@"%lu", (unsigned long)newStart], @"STARTPOS", [NSString stringWithFormat:@"%lu",(unsigned long)numberOfRecordsToRequest], @"NUMRECORDS", self.hotelSearchCriteria, @"HOTEL_SEARCH_CRITERIA", self.hotelSearch, @"HOTEL_SEARCH",nil];
 	[[ExSystem sharedInstance].msgControl createMsg:FIND_HOTELS CacheOnly:@"NO" ParameterBag:pBag SkipCache:YES RespondTo:self];
 }
 @end

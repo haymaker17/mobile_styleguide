@@ -239,7 +239,7 @@
 #pragma mark - Table view data source
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView
 {
-    NSLog(@"Num of rows %i", [[self.fetchedResultsController sections] count]);
+    NSLog(@"Num of rows %lu", (unsigned long)[[self.fetchedResultsController sections] count]);
      return [[self.fetchedResultsController sections] count];
 }
 
@@ -251,7 +251,7 @@
     }
     
     id <NSFetchedResultsSectionInfo> sectionInfo = [self.fetchedResultsController sections][section];
-    NSLog(@"[sectionInfo numberOfObjects] = %d", [sectionInfo numberOfObjects]);
+    NSLog(@"[sectionInfo numberOfObjects] = %lu", (unsigned long)[sectionInfo numberOfObjects]);
     return [sectionInfo numberOfObjects];
 }
 
@@ -296,8 +296,8 @@
 //            }
 //        } else {
              NSString *price = [FormatUtils formatMoney:[NSString stringWithFormat:@"%f", [room.rate doubleValue]] crnCode:room.crnCode];
-             int indexOfDot = [price rangeOfString:@"."].location;
-             if (indexOfDot > 0 && indexOfDot < price.length) {
+             NSUInteger indexOfDot = [price rangeOfString:@"."].location;
+             if (indexOfDot != NSNotFound ) {
                  cell.labelRoomPrice.text = [price substringToIndex:indexOfDot];
              }
 

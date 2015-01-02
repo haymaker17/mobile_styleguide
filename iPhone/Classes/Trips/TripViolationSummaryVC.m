@@ -89,7 +89,7 @@
 
 #pragma TableView Data source
 
--(int)numberOfSectionsInTableView:(UITableView *)tableView
+-(NSInteger)numberOfSectionsInTableView:(UITableView *)tableView
 {
     return [self.violations count];
 }
@@ -100,7 +100,7 @@
     return [self getHeaderStringOnViolationType:violation.type];
 }
 
--(int) tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
+-(NSInteger) tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
 {
     return 1;
 }

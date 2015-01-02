@@ -34,16 +34,16 @@
     [numberFormatter setCurrencyCode:@"JPY"];
     [numberFormatter setNumberStyle:NSNumberFormatterCurrencyStyle];
     
-    return [numberFormatter stringFromNumber:[NSNumber numberWithInt:fare]];
+    return [numberFormatter stringFromNumber:[NSNumber numberWithInteger:fare]];
 }
 
 + (NSString *)labelForMinutes:(NSUInteger)minutes {
     NSString *label;
     
     if (minutes < 60) {
-        label = [NSString stringWithFormat:@"%d %@", minutes, [Localizer getLocalizedText:@"minutes"]];
+        label = [NSString stringWithFormat:@"%ld %@", (unsigned long)minutes, [Localizer getLocalizedText:@"minutes"]];
     } else {
-        int hours = minutes / 60;
+        NSUInteger hours = minutes / 60;
         int remaining = minutes % 60;
         
         NSString *hourLabel = (hours > 1) ? @"hours" : @"hour";
@@ -52,12 +52,12 @@
         // Instead of "1 hour, 0 minutes" we'll return "1 hour".
         //
         if (remaining > 0) {
-            label = [NSString stringWithFormat:@"%d %@, %d %@",
-                     hours, [Localizer getLocalizedText:hourLabel],
+            label = [NSString stringWithFormat:@"%ld %@, %d %@",
+                     (unsigned long)hours, [Localizer getLocalizedText:hourLabel],
                      remaining, [Localizer getLocalizedText:minutesLabel]];
         } else {
-            label = [NSString stringWithFormat:@"%d %@",
-                     hours, [Localizer getLocalizedText:hourLabel]];
+            label = [NSString stringWithFormat:@"%ld %@",
+                     (unsigned long)hours, [Localizer getLocalizedText:hourLabel]];
         }
     }
     
@@ -110,7 +110,7 @@
     if (fare == 0) {
         str = @"";
     } else {
-        str = [NSString stringWithFormat:@"%d", fare];
+        str = [NSString stringWithFormat:@"%lu", (unsigned long)fare];
     }
     
     return str;

@@ -57,7 +57,7 @@
     ChooseNumberViewController *vc = [[ChooseNumberViewController alloc] init];
     
     if (number != 0) {
-        vc.contents = [NSString stringWithFormat:@"%d", number];
+        vc.contents = [NSString stringWithFormat:@"%ld", (long)number];
     }
     
     vc.notificationName = notificationName;
