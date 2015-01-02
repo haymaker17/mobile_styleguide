@@ -230,6 +230,7 @@
             case 0:{
                 SwitchCell *cell = (SwitchCell*)[tableView cellForRowAtIndexPath:indexPath];
                 cell.addressSwitch.on = !cell.addressSwitch.on;
+                [self.tableView reloadData];
                 break;
             }
             case 1:{
@@ -466,10 +467,10 @@
         middleName = [middleName stringByAppendingString:@" "];
     }
     
-    NSString *name = [NSString stringWithFormat:@"%@%@%@%@",preFix==nil ? @"": preFix,
-                                                            firstName==nil ? @"" :firstName,
-                                                            middleName==nil ? @"" : middleName,
-                                                            lastName]==nil ? @"" : lastName;
+    NSString *name = [NSString stringWithFormat:@"%@%@%@%@",preFix ?: @"",
+                                                         firstName ?: @"",
+                                                        middleName ?: @"",
+                                                          lastName ?: @""];
     [self.dict setValue:name forKey:@"name"];
     
     //
@@ -526,6 +527,7 @@
         NSString *tmpPhone = (__bridge_transfer NSString*)ABMultiValueCopyValueAtIndex(self.phoneNumbers, buttonIndex-1);
         [self.dict setValue:tmpPhone forKey:@"phone"];
     }
+    [self.tableView reloadData];
 }
 
 -(BOOL)personViewController:(ABPersonViewController *)personViewController shouldPerformDefaultActionForPerson:(ABRecordRef)person property:(ABPropertyID)property identifier:(ABMultiValueIdentifier)identifier
