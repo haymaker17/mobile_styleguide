@@ -9,6 +9,7 @@
 #import <UIKit/UIKit.h>
 
 @interface CardCell : UITableViewCell
+
 @property (strong, nonatomic) IBOutlet UIImageView *customImageView;
 @property (strong, nonatomic) IBOutlet UILabel *label;
 

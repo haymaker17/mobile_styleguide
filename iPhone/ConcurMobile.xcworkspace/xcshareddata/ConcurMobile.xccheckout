@@ -10,42 +10,31 @@
 	<string>ConcurMobile</string>
 	<key>IDESourceControlProjectOriginsDictionary</key>
 	<dict>
-		<key>995E2C4B-8A2A-4F82-A25B-FC3B06D20405</key>
-		<string>http://sandbox2/svn/cte/Mobile/trunk/iPhone</string>
+		<key>066E5C787EB64E23C97CFD76B29FF801AC1B5ED5</key>
+		<string>https://cm-git.concurtech.net/mobile/ConcurMobileiOS.git</string>
 	</dict>
 	<key>IDESourceControlProjectPath</key>
-	<string>ConcurMobile.xcworkspace</string>
+	<string>iPhone/ConcurMobile.xcworkspace</string>
 	<key>IDESourceControlProjectRelativeInstallPathDictionary</key>
 	<dict>
-		<key>995E2C4B-8A2A-4F82-A25B-FC3B06D20405</key>
-		<string>..</string>
-	</dict>
-	<key>IDESourceControlProjectRepositoryRootDictionary</key>
-	<dict>
-		<key>995E2C4B-8A2A-4F82-A25B-FC3B06D20405</key>
-		<string>http://sandbox2/svn/cte</string>
+		<key>066E5C787EB64E23C97CFD76B29FF801AC1B5ED5</key>
+		<string>../..</string>
 	</dict>
 	<key>IDESourceControlProjectURL</key>
-	<string>http://sandbox2/svn/cte/Mobile/trunk/iPhone/ConcurMobile.xcworkspace</string>
+	<string>https://cm-git.concurtech.net/mobile/ConcurMobileiOS.git</string>
 	<key>IDESourceControlProjectVersion</key>
-	<integer>110</integer>
+	<integer>111</integer>
 	<key>IDESourceControlProjectWCCIdentifier</key>
-	<string>995E2C4B-8A2A-4F82-A25B-FC3B06D20405</string>
+	<string>066E5C787EB64E23C97CFD76B29FF801AC1B5ED5</string>
 	<key>IDESourceControlProjectWCConfigurations</key>
 	<array>
 		<dict>
-			<key>IDESourceControlRepositoryBranchesRelativeLocationKey</key>
-			<string>Mobile/branches</string>
 			<key>IDESourceControlRepositoryExtensionIdentifierKey</key>
-			<string>public.vcs.subversion</string>
-			<key>IDESourceControlRepositoryTagsRelativeLocationKey</key>
-			<string>Mobile/tags</string>
-			<key>IDESourceControlRepositoryTrunkRelativeLocationKey</key>
-			<string>Mobile/trunk</string>
+			<string>public.vcs.git</string>
 			<key>IDESourceControlWCCIdentifierKey</key>
-			<string>995E2C4B-8A2A-4F82-A25B-FC3B06D20405</string>
+			<string>066E5C787EB64E23C97CFD76B29FF801AC1B5ED5</string>
 			<key>IDESourceControlWCCName</key>
-			<string>ConcurMobile</string>
+			<string>ConcurMobileiOS</string>
 		</dict>
 	</array>
 </dict>

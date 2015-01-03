@@ -9,6 +9,7 @@
 #import <UIKit/UIKit.h>
 
 @interface CityCell2 : UITableViewCell <UITextFieldDelegate>
+
 @property (strong, nonatomic) IBOutlet UITextField *textField1;
 @property (strong, nonatomic) IBOutlet UITextField *textField2;
 @property (strong, nonatomic) IBOutlet UILabel *underLine;

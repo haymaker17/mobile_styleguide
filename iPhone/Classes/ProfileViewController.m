@@ -11,6 +11,11 @@
 #import "ProfileTelCell.h"
 #import "NameCell.h"
 #import "CityCell2.h"
+#import "RPFloatingPlaceholderTextField.h"
+#import "EmergencyContactVC.h"
+#import "CTEProfile.h"
+#import "CTEProfileEmergencyContact.h"
+#import "CTEProfilePersonalInfo.h"
 
 #define kTagFirstName   1181
 #define kTagLastName    1182
@@ -21,11 +26,16 @@
 #define kTagZipCode     1187
 #define kTagCountry     1188
 
-@interface ProfileViewController ()
+@interface ProfileViewController()
 
 @property (nonatomic,strong) CTEProfile *profile;
+@property (nonatomic,strong) CTEProfilePersonalInfo *personalInfo;
+
+@property (nonatomic,strong) NSMutableDictionary *personalInfoDict;
 
 @end
+
+
 
 @implementation ProfileViewController
 
@@ -46,17 +56,17 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
-    // Do any additional setup after loading the view.
-    CTEProfile *tmpProfile = [[CTEProfile alloc] init];
-    tmpProfile.firstName = @"Ray";
-    tmpProfile.lastName = @"Chi";
-    tmpProfile.phoneNo = @"111-111-1111";
-    tmpProfile.workAddress = @"the dark side of the moon";
-    tmpProfile.city = @"ABJIEOJSOF";
-    tmpProfile.state = @"WA";
-    tmpProfile.zipCode = @"98004";
+
+//    CTEProfilePersonalInfo *test = [[CTEProfilePersonalInfo alloc] initWithFirstName:@"Ray"
+//                                                                            lastName:@"CHI"
+//                                                                             phoneNo:@"2222222222"
+//                                                                         workAddress:@"Concur"
+//                                                                                city:@"Bellevue"
+//                                                                               state:@"WA"
+//                                                                             country:@"USE"
+//                                                                             zipCode:@"98008"];
     
-    self.profile = tmpProfile;
+    self.personalInfoDict = [[NSMutableDictionary alloc] init];
     
     //Register Nib
     [self.tableView registerNib:[UINib nibWithNibName:@"CardCell" bundle:nil] forCellReuseIdentifier:@"CardCell"];
@@ -72,6 +82,11 @@
     tapGr.cancelsTouchesInView = NO;
     [self.view addGestureRecognizer:tapGr];
     
+}
+
+- (void)viewWillAppear:(BOOL)animated{
+    [super viewWillAppear:animated];
+    [self.tableView deselectRowAtIndexPath:[self.tableView indexPathForSelectedRow] animated:YES];
 }
 
 - (void)didReceiveMemoryWarning {
@@ -126,7 +141,7 @@
 }
 
 
- - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
+- (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
      
      NSUInteger section = [indexPath section];
      NSUInteger row = [indexPath row];
@@ -176,7 +191,9 @@
                  cell.textField2.delegate = self;
                  cell.textField1.placeholder = @"Zip Code";
                  cell.textField1.tag = kTagZipCode;
+                 cell.textField1.keyboardType = UIKeyboardTypeNumberPad;
                  cell.textField2.placeholder = @"Country";
+                 cell.textField2.returnKeyType = UIReturnKeyDone;
                  cell.textField2.tag = kTagCountry;
                  cell.underLine.alpha = 0;
                  UILabel *underLine2 = [[UILabel alloc] initWithFrame:CGRectMake(0, 44, 320, 0.5f)];
@@ -192,6 +209,11 @@
      else if(section == 1){     //Emergency Contact
          CardCell *cell = [tableView dequeueReusableCellWithIdentifier:@"CardCell" forIndexPath:indexPath];
          cell.customImageView.image = [UIImage imageNamed:@"icon_profile_emergency"];
+         
+         NSString *tmp = [self.personalInfoDict objectForKey:@"emergencyContactName"];
+         if(tmp != nil){
+             cell.label.text = tmp;
+         }
          return cell;
      }
      else if(section == 2){     //Credit Card
@@ -215,6 +237,31 @@
     return 0;
 }
 
+- (CGFloat)tableView:(UITableView *)tableView heightForFooterInSection:(NSInteger)section{
+    return 23;
+}
+
+- (NSString *)tableView:(UITableView *)tableView titleForHeaderInSection:(NSInteger)section
+{
+    NSString *ret = @"";
+    switch (section) {
+        case 0:
+            ret = @"";
+            break;
+        case 1:
+            ret = @"Emergency Contact";
+            break;
+        case 2:
+            ret = @"Credit Card";
+            break;
+        case 3:
+            ret = @"Bank Account";
+            break;
+        default:
+            break;
+    }
+    return ret;
+}
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath{
     NSUInteger section = [indexPath section];
@@ -242,17 +289,36 @@
         }
         [tableView deselectRowAtIndexPath:indexPath animated:NO];
     }
-    else if(section == 2){     //Emergency Contact
+    else if(section == 1){     //Emergency Contact
+        [self performSegueWithIdentifier:@"Profile_Emergency_Contact" sender:self];
+    }
+    else if(section == 2){     //Credit Card
         
     }
-    else if(section == 3){     //Credit Card
-        
-    }
-    else if(section == 4){     //Bank Account
+    else if(section == 3){     //Bank Account
         
     }
 }
 
+/*
+ // Override to support conditional editing of the table view.
+ - (BOOL)tableView:(UITableView *)tableView canEditRowAtIndexPath:(NSIndexPath *)indexPath {
+ // Return NO if you do not want the specified item to be editable.
+ return YES;
+ }
+ */
+
+/*
+ // Override to support editing the table view.
+ - (void)tableView:(UITableView *)tableView commitEditingStyle:(UITableViewCellEditingStyle)editingStyle forRowAtIndexPath:(NSIndexPath *)indexPath {
+ if (editingStyle == UITableViewCellEditingStyleDelete) {
+ // Delete the row from the data source
+ [tableView deleteRowsAtIndexPaths:@[indexPath] withRowAnimation:UITableViewRowAnimationFade];
+ } else if (editingStyle == UITableViewCellEditingStyleInsert) {
+ // Create a new instance of the appropriate class, insert it into the array, and add a new row to the table view
+ }
+ }
+ */
 
 #pragma mark - TextField Delegate
 -(BOOL)textFieldShouldReturn:(UITextField *)textField
@@ -261,6 +327,10 @@
         NSUInteger *nextIndex = textField.tag+1;
         UITextField *nextTextFiled = (UITextField*)[self.tableView viewWithTag:nextIndex];
         [nextTextFiled becomeFirstResponder];
+        return NO;
+    }
+    else if(textField.returnKeyType == UIReturnKeyDone){
+        [textField resignFirstResponder];
         return NO;
     }
     return YES;
@@ -275,10 +345,60 @@
         NSString *countryCode = [[NSLocale currentLocale] objectForKey:NSLocaleCountryCode];
         NSString *phoneNo = [NSString formatPhoneNo:newString withLocale:countryCode];
         textField.text = phoneNo;
+        
+        RPFloatingPlaceholderTextField *curTextfiled = (RPFloatingPlaceholderTextField *)textField;
+        curTextfiled.floatingLabel.textColor = [UIColor colorWithRed:0 green:122/255.0 blue:1 alpha:1];
         return NO;
     }
     return YES;
 
+}
+
+-(void)textFieldDidBeginEditing:(UITextField *)textField
+{
+    if(textField.tag == kTagZipCode || textField.tag == kTagTelePhone){
+        UIToolbar* keyboardDoneButtonView = [[UIToolbar alloc] init];
+        [keyboardDoneButtonView sizeToFit];
+        UIBarButtonItem *nextButton = [[UIBarButtonItem alloc] initWithTitle:@"Next"
+                                                                       style:UIBarButtonItemStyleDone
+                                                                      target:self action:nil];
+        nextButton.tag = textField.tag;
+        nextButton.action = @selector(nextClicked:);
+        
+        [keyboardDoneButtonView setItems:[NSArray arrayWithObjects:[[UIBarButtonItem alloc]initWithBarButtonSystemItem:UIBarButtonSystemItemFlexibleSpace target:nil action:nil], nextButton,nil]];
+        textField.inputAccessoryView = keyboardDoneButtonView;
+    }
+}
+
+-(void)textFieldDidEndEditing:(UITextField *)textField{
+    switch (textField.tag) {
+        case kTagFirstName:
+            [self.personalInfoDict setValue:textField.text forKey:@"firstname"];
+            break;
+        case kTagLastName:
+            [self.personalInfoDict setValue:textField.text forKey:@"lastname"];
+            break;
+        case kTagTelePhone:
+            [self.personalInfoDict setValue:textField.text forKey:@"phone"];
+            break;
+        case kTagAddress:
+            [self.personalInfoDict setValue:textField.text forKey:@"address"];
+            break;
+        case kTagCity:
+            [self.personalInfoDict setValue:textField.text forKey:@"city"];
+            break;
+        case kTagState:
+            [self.personalInfoDict setValue:textField.text forKey:@"state"];
+            break;
+        case kTagZipCode:
+            [self.personalInfoDict setValue:textField.text forKey:@"zipcode"];
+            break;
+        case kTagCountry:
+            [self.personalInfoDict setValue:textField.text forKey:@"country"];
+            break;
+        default:
+            break;
+    }
 }
 
 #pragma mark -- Keyboard functions
@@ -287,14 +407,29 @@
     [self.view endEditing:YES];
 }
 
-/*
- #pragma mark - Navigation
- 
- // In a storyboard-based application, you will often want to do a little preparation before navigation
- - (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
- // Get the new view controller using [segue destinationViewController].
- // Pass the selected object to the new view controller.
- }
- */
+-(void)nextClicked:(UIBarButtonItem *)btn
+{
+    NSUInteger *nextIndex = btn.tag+1;
+    UITextField *nextTextFiled = (UITextField*)[self.tableView viewWithTag:nextIndex];
+    [nextTextFiled becomeFirstResponder];
+}
 
+
+#pragma mark - Navigation
+- (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
+     if([[segue identifier] isEqualToString:@"Profile_Emergency_Contact"]){
+         EmergencyContactVC *vc = [segue destinationViewController];
+         vc.emergencyDict = self.personalInfoDict;
+         [vc.emergencyDict setValue:@"" forKey:@"firstName"];
+         [vc.emergencyDict setValue:@"" forKey:@"lastName"];
+         [vc.emergencyDict setValue:@"" forKey:@"phone"];
+         
+         
+         [vc setOnSelected:^(NSString *name){
+             [self.personalInfoDict setValue:name forKey:@"emergencyContactName"];
+             [self.tableView reloadData];
+                 
+         }];
+     }
+}
 @end

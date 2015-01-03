@@ -9,6 +9,7 @@
 #import <UIKit/UIKit.h>
 
 @interface NameCell : UITableViewCell <UITextFieldDelegate>
+
 @property (strong, nonatomic) IBOutlet UIImageView *customImageView;
 @property (strong, nonatomic) IBOutlet UITextField *firstNameTextField;
 @property (strong, nonatomic) IBOutlet UITextField *lastNameTextField;
