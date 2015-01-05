@@ -189,7 +189,7 @@ heightForRowAtIndexPath:(NSIndexPath *)indexPath
         {
             cell.iv.image = [UIImage imageNamed:@"flightStatsDotGreen"];
             [tbBottom setTintColor:[UIColor greenColor]];
-            lblResults.text = [NSString stringWithFormat:@"%d tests run (%@)", [a count], [NSDate date]];
+            lblResults.text = [NSString stringWithFormat:@"%lu tests run (%@)", (unsigned long)[a count], [NSDate date]];
         }   
     }
     

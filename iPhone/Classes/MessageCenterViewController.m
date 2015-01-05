@@ -356,9 +356,8 @@
 
 - (void)tableView:(UITableView *)tableView commitEditingStyle:(UITableViewCellEditingStyle)editingStyle forRowAtIndexPath:(NSIndexPath *)indexPath {
     if (editingStyle == UITableViewCellEditingStyleDelete) {
-        int row = [indexPath row];
         
-        [self.messageCenterManager removeMessageAtIndex:row];
+        [self.messageCenterManager removeMessageAtIndex:[indexPath row]];
         
         [tableView beginUpdates];
         

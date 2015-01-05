@@ -84,7 +84,7 @@ EditorMode;
 @property (nonatomic, assign) BOOL                          deletePCTReturned;
 @property (nonatomic, assign) BOOL                          deleteCCTReturned;
 @property (nonatomic, assign) BOOL                          deleteRCReturned;
-@property (nonatomic, assign) int                           currentSegmentIndex;
+@property (nonatomic, assign) NSUInteger                           currentSegmentIndex;
 @property (nonatomic, assign) BOOL                          canSwitchSegments;
 @property (nonatomic, assign) BOOL                          canEditList;
 
@@ -665,7 +665,7 @@ EditorMode;
             camefromVC = @"Expense List";
         }
         
-        NSDictionary *dictionary = @{@"How many added": [NSString stringWithFormat:@"%d", [self.selectedItems count]], @"Came From": camefromVC, @"Has Credit Cards": (hasCards?@"Yes":@"No"), @"Has Receipts": (noReceiptCount >0? @"Yes":@"No")};
+        NSDictionary *dictionary = @{@"How many added": [NSString stringWithFormat:@"%lu", (unsigned long)[self.selectedItems count]], @"Came From": camefromVC, @"Has Credit Cards": (hasCards?@"Yes":@"No"), @"Has Receipts": (noReceiptCount >0? @"Yes":@"No")};
         [Flurry logEvent:@"All Mobile Expenses: Add to Report" withParameters:dictionary];
     }
 }
@@ -798,9 +798,9 @@ EditorMode;
     
     NSString *text = [Localizer getLocalizedText:@"Add to Report"];
     
-    int count = self.selectedItems.count;
+    NSUInteger count = self.selectedItems.count;
     if(count > 0)
-        text = [NSString stringWithFormat:@"%@ (%d)", text, count];
+        text = [NSString stringWithFormat:@"%@ (%lu)", text, (unsigned long)count];
     
     CGSize textSize = [text sizeWithFont:[UIFont boldSystemFontOfSize:12]];
     
@@ -1004,7 +1004,7 @@ EditorMode;
 
 -(UIBarButtonItem*) makeDeleteButton
 {
-    int numItemsToDelete = self.selectedItems.count;
+    NSUInteger numItemsToDelete = self.selectedItems.count;
     
     const int buttonWidth = 100;
     NSString *buttonColor = (numItemsToDelete == 0 ? @"DELETE_INACTIVE" : @"DELETE");
@@ -1025,7 +1025,7 @@ EditorMode;
 	{
 		lbl.textColor =  [UIColor whiteColor];
 		lbl.shadowColor = [UIColor darkGrayColor];
-		delText = [NSString stringWithFormat:@"%@ (%d)", delText, numItemsToDelete];
+		delText = [NSString stringWithFormat:@"%@ (%lu)", delText, (unsigned long)numItemsToDelete];
 	}
 	lbl.text = delText;
 	
@@ -1112,7 +1112,7 @@ EditorMode;
 
 -(BOOL) isExpensesSegmentSelected
 {
-    int segmentIndex = self.currentSegmentIndex;
+    NSUInteger segmentIndex = self.currentSegmentIndex;
     return (segmentIndex == 0);
 }
 
@@ -1234,7 +1234,7 @@ EditorMode;
 
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView
 {
-    int numSections = [[self.fetchedResultsController sections] count];
+    NSUInteger numSections = [[self.fetchedResultsController sections] count];
     
     id <NSFetchedResultsSectionInfo> sectionInfo = nil;
     if (numSections > 0)
@@ -1768,7 +1768,7 @@ EditorMode;
 									  self.reportToWhichToAddExpenses.rptKey, @"RECORD_KEY", @"YES", @"SHORT_CIRCUIT", nil];
 		msg.parameterBag = pBag;
         
-		int vcCount = [self.navigationController.viewControllers count];
+		NSUInteger vcCount = [self.navigationController.viewControllers count];
 		for (int ix = 0 ; ix < vcCount; ix++ )
 		{
 			MobileViewController *vc = (MobileViewController *)(self.navigationController.viewControllers)[ix];

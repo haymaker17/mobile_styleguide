@@ -14,9 +14,9 @@
 + (BOOL)isOptionalStringValid:(NSString *)str forCustomField:(EntityTravelCustomFields *)field {
     BOOL isValid = NO;
     
-    int length = (int)str.length;
-    int min = [field.minLength integerValue];
-    int max = [field.maxLength integerValue];
+    NSInteger length = str.length;
+    NSInteger min = [field.minLength integerValue];
+    NSInteger max = [field.maxLength integerValue];
     
     if (min <= max && length >= min && length <= max) {
         isValid = YES;

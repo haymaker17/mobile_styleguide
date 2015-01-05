@@ -157,7 +157,7 @@ NSString* const FILTER_CORP_CARDS = @"CORP_CARDS";
 		if (refreshToolbar && [self isViewLoaded])
 			[self configureToolBar];
         
-        NSDictionary *dictionary = @{@"Mobile Entry Count": [NSString stringWithFormat:@"%d", [oopData.oopes count]], @"Card Count": [NSString stringWithFormat:@"%d", [oopData.pCards count]], @"Receipt Count": @""};
+        NSDictionary *dictionary = @{@"Mobile Entry Count": [NSString stringWithFormat:@"%lu", (unsigned long)[oopData.oopes count]], @"Card Count": [NSString stringWithFormat:@"%lu", (unsigned long)[oopData.pCards count]], @"Receipt Count": @""};
         [Flurry logEvent:@"Mobile Entry: List" withParameters:dictionary];
 	}
 	else if ([msg.idKey isEqualToString:DELETE_OOP_DATA])
@@ -829,7 +829,7 @@ clickedButtonAtIndex:(NSInteger)buttonIndex
         camefromVC = @"Expense List";
     }
     
-    NSDictionary *dictionary = @{@"How many added": [NSString stringWithFormat:@"%d", [selectedRows count]], @"Came From": camefromVC, @"Has Credit Cards": (hasCards?@"Yes":@"No"), @"Has Receipts": (noReceiptCount >0? @"Yes":@"No")};
+    NSDictionary *dictionary = @{@"How many added": [NSString stringWithFormat:@"%lu", (unsigned long)[selectedRows count]], @"Came From": camefromVC, @"Has Credit Cards": (hasCards?@"Yes":@"No"), @"Has Receipts": (noReceiptCount >0? @"Yes":@"No")};
     [Flurry logEvent:@"Mobile Entry: Add to Report" withParameters:dictionary];
 //	}
 }
@@ -1130,7 +1130,7 @@ clickedButtonAtIndex:(NSInteger)buttonIndex
 	
 	if(tableList.editing)
 	{
-		NSString *sRow = [NSString stringWithFormat:@"%d", row];
+		NSString *sRow = [NSString stringWithFormat:@"%lu", (unsigned long)row];
 		if (selectedRows[sRow] != nil && self.inDeleteMode) 
 			cell.ivSelected.image = [UIImage imageNamed:@"check_redselect"]; // cell.isSelected = YES;
         else if (selectedRows[sRow] != nil && !self.inDeleteMode) 
@@ -1189,7 +1189,7 @@ clickedButtonAtIndex:(NSInteger)buttonIndex
 	if (tableView.isEditing)
 	{
 		selected = !selected;
-		NSString *sRow = [NSString stringWithFormat:@"%d", row];
+		NSString *sRow = [NSString stringWithFormat:@"%lu", (unsigned long)row];
 		
 		//NSString *key = [curKeys objectAtIndex:row];
 		//OOPEntry* entry = (OOPEntry*) [oopeDict objectForKey:key];

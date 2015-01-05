@@ -136,7 +136,7 @@
         PhotoAlbumTableViewCellData *photoAlbumCellData = (PhotoAlbumTableViewCellData *)cellData;
         if (!photoAlbumCellData.isCellHeightSetAccordingToContentSize) { // Calculate the height manually based on number of photos to be displayed, 2 photocells per row with spacing set at 8
             CGSize individualPhotoCellSize = [self sizeForCollectionViewCell];
-            int numberOfImagesToDisplay = self.hotelCellData.downLoadableUIImages.count ? self.hotelCellData.downLoadableUIImages.count : self.hotelCellData.cteHotel.images.count;
+            NSUInteger numberOfImagesToDisplay = self.hotelCellData.downLoadableUIImages.count ? self.hotelCellData.downLoadableUIImages.count : self.hotelCellData.cteHotel.images.count;
             int numberOfRowsOfHotelCells = (int) (numberOfImagesToDisplay / 2.0 + 0.5); // 2 photocells per row
             CGFloat heightOfPhotoAlbumView = (individualPhotoCellSize.height + 8) * numberOfRowsOfHotelCells + 8; // spacing between photocells = 8
             

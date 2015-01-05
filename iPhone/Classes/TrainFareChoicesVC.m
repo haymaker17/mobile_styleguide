@@ -153,7 +153,7 @@
 }
 
 
-+(NSString *) fetchSegmentSeats:(NSString *)seatDescription NumberOfSeatsDesired:(int) numberOfSeatsDesired FrontToBack:(BOOL) isForward  JustTheOne:(int) segmentPosition
++(NSString *) fetchSegmentSeats:(NSString *)seatDescription NumberOfSeatsDesired:(NSUInteger) numberOfSeatsDesired FrontToBack:(BOOL) isForward  JustTheOne:(int) segmentPosition
 {
 	__autoreleasing NSArray *aSeats = [seatDescription componentsSeparatedByString:@"/"];
 	
@@ -181,9 +181,9 @@
 		}
 	}
 	else {
-		int start = [aSeats count] - numberOfSeatsDesired;
+		NSInteger start = [aSeats count] - numberOfSeatsDesired;
 		
-		for(int i = start; i < [aSeats count]; i++)
+		for(NSInteger i = start; i < [aSeats count]; i++)
 		{
 			if([seats length] > 0)
 				[seats appendString:@" / "];

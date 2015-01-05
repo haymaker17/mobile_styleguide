@@ -27,7 +27,7 @@
 - (void) setButtonDescriptors:(NSArray*)descriptors;
 
 // Methods for subclasses to modify (optional)
-- (UIButton*) buttonAtIndex:(int)index;
+- (UIButton*) buttonAtIndex:(NSInteger)index;
 - (UILabel*) labelOnButtonAtIndex:(int)index;
 - (void) configureButtons;
 
@@ -35,6 +35,6 @@
 - (UIView*) loadHeaderView;
 - (UIView*) loadFooterView;
 
-- (void) didPressButtonAtIndex:(int)buttonIndex withId:(NSString*)buttonId inRect:(CGRect)rect;
+- (void) didPressButtonAtIndex:(NSInteger)buttonIndex withId:(NSString*)buttonId inRect:(CGRect)rect;
 
 @end

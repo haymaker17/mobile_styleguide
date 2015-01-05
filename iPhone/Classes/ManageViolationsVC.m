@@ -54,7 +54,7 @@
 	NSMutableDictionary *pBag = [[NSMutableDictionary alloc] initWithObjectsAndKeys:@(self.selectionChoice == 0), @"USE_TRAVEL_POINTS", @"YES", @"DONTPUSHVIEW", @"YES", @"POPTOVIEW", @"YES", @"SHORT_CIRCUIT", nil];
     
     
-    int vcCount = [self.navigationController.viewControllers count];
+    NSUInteger vcCount = [self.navigationController.viewControllers count];
     
     UIViewController *vc = (self.navigationController.viewControllers)[vcCount - 2];
     MobileViewController *mvc = (MobileViewController *)vc;

@@ -49,7 +49,7 @@
 		ListFieldSearchData *data = (ListFieldSearchData*)msg.responder;
 		if (data != nil && data.listItems != nil)
 		{
-			int listItemCount = [data.listItems count];
+			NSUInteger listItemCount = [data.listItems count];
 			for (int i = 0; i < listItemCount; i++)
 			{
 				ListItem* listItem = (data.listItems)[i];
@@ -145,7 +145,7 @@
         cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:CellIdentifier];
     }
     
-	int row = [indexPath row];
+	NSInteger row = [indexPath row];
 	
 	NSString *locationName = nil;
 	
@@ -165,7 +165,7 @@
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
-	int row = [indexPath row];
+	NSUInteger row = [indexPath row];
 	if (results != nil && row < [results count])
 	{
 		NSString *locationName = results[row];

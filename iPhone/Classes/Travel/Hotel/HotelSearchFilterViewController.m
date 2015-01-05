@@ -48,7 +48,7 @@
     // Add Rating segmented control Group
     _ratingGroup = [[FilterSegmentedControlGroup alloc] initWithFrame:CGRectMake(0, 59, 0, 0)];
     [_ratingGroup setOnSelected:^(NSInteger newIndex){
-        NSString *newIndexStr = [NSString stringWithFormat:@"%i",newIndex];
+        NSString *newIndexStr = [NSString stringWithFormat:@"%li",(long)newIndex];
         [weakSelf.selectedIndexDict setValue:newIndexStr forKey:@"Rating"];
     }];
     
@@ -62,7 +62,7 @@
     // Add Miles segmented control Group
     _milesGroup = [[FilterSegmentedControlGroup alloc] initWithFrame:CGRectMake(0, 191, 0, 0)];
     [_milesGroup setOnSelected:^(NSInteger newIndex){
-        NSString *newIndexStr = [NSString stringWithFormat:@"%i",newIndex];
+        NSString *newIndexStr = [NSString stringWithFormat:@"%li",(long)newIndex];
         [weakSelf.selectedIndexDict setValue:newIndexStr forKey:@"Miles"];
     }];
     

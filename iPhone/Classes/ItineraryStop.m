@@ -25,7 +25,7 @@
     return [[CXRequest alloc] initWithServicePath:path];
 }
 
-+ (BOOL *)wasDeleteItineraryStopSuccessful:(NSString *)result {
++ (BOOL )wasDeleteItineraryStopSuccessful:(NSString *)result {
     RXMLElement *rootXML = [RXMLElement elementFromXMLString:result encoding:NSUTF8StringEncoding];
     if (rootXML != nil) {
 
@@ -193,7 +193,7 @@
         RXMLElement *itineraryRows = [itin child:@"ItineraryRows"];
 
         NSArray *rows = [itineraryRows children:@"ItineraryRow"];
-        NSLog(@"Itinerary Rows in Save [rows count] = %u", [rows count]);
+        NSLog(@"Itinerary Rows in Save [rows count] = %lu", (unsigned long)[rows count]);
         for (RXMLElement *row in rows) {
             NSString *status = [row child:@"Status"].text;
             NSLog(@"record save status = %@", status);
@@ -226,7 +226,7 @@
         RXMLElement *itineraryRows = [itin child:@"ItineraryRows"];
 
         NSArray *rows = [itineraryRows children:@"ItineraryRow"];
-        NSLog(@"Itinerary Rows in Save [rows count] = %u", [rows count]);
+        NSLog(@"Itinerary Rows in Save [rows count] = %lu", (unsigned long)[rows count]);
         for (RXMLElement *row in rows) {
             NSString *status = [row child:@"Status"].text;
             NSLog(@"record save status = %@", status);
@@ -272,7 +272,7 @@
         RXMLElement *itineraryRows = [itin child:@"ItineraryRows"];
 
         NSArray *rows = [itineraryRows children:@"ItineraryRow"];
-        NSLog(@"Itinerary Rows in Save [rows count] = %u", [rows count]);
+        NSLog(@"Itinerary Rows in Save [rows count] = %lu", (unsigned long)[rows count]);
         for (RXMLElement *row in rows) {
             NSString *status = [row child:@"Status"].text;
             NSLog(@"record save status = %@", status);
@@ -347,7 +347,7 @@
 
     NSTimeZone *localTz = [NSTimeZone systemTimeZone];
     NSInteger secondsFromGMT = [localTz secondsFromGMTForDate:now];
-    NSLog(@"secondsFromGMT = %i", secondsFromGMT);
+    NSLog(@"secondsFromGMT = %li", (long)secondsFromGMT);
 
     now = [NSDate dateWithTimeInterval:secondsFromGMT sinceDate:now];
 

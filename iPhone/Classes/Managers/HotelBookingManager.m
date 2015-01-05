@@ -312,7 +312,7 @@ static HotelBookingManager *sharedInstance;
     
     if (error != nil)
     {
-        [Flurry logError:[NSString stringWithFormat:@"%d", [error code]] message:@"Hotel: fetchViolationsByRoom error" error:error];
+        [Flurry logError:[NSString stringWithFormat:@"%ld", (long)[error code]] message:@"Hotel: fetchViolationsByRoom error" error:error];
     }
     
     return aFetch;

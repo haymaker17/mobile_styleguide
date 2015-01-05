@@ -80,7 +80,7 @@
 	NSCalendar *calendar = [NSCalendar currentCalendar];
 	calendar.timeZone = [NSTimeZone localTimeZone];
 	NSDateComponents *components = [calendar components:(NSYearCalendarUnit | NSMonthCalendarUnit | NSDayCalendarUnit) fromDate:date];
-	NSString *dateString = [NSString stringWithFormat:@"%i/%i/%i", components.month, components.day, components.year];
+	NSString *dateString = [NSString stringWithFormat:@"%li/%li/%li", (long)components.month, (long)components.day, (long)components.year];
 	return dateString;
 }
 
@@ -153,7 +153,7 @@
 
 - (void)parser:(NSXMLParser *)parser parseErrorOccurred:(NSError *)parseError 
 {
-	NSString * errorString = [NSString stringWithFormat:@"Unable to get hotel search results (Error code %i )", [parseError code]];
+	NSString * errorString = [NSString stringWithFormat:@"Unable to get hotel search results (Error code %li )", (long)[parseError code]];
 	NSLog(@"error parsing XML: %@", errorString);
 	
 	// TODO: handle error

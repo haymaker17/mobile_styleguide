@@ -124,7 +124,7 @@ const int MAX_MSG_COUNT_PER_FILE = 50;
 		tmplogFileName = [logPath stringByAppendingPathComponent:fileShortName];
 	} else {
 		// move to one after the latestFile
-		int len = [tmplogFileName length];
+		NSInteger len = [tmplogFileName length];
 		unichar suffix = [tmplogFileName characterAtIndex:len-5];
 		if (suffix >= '0'+MAX_LOG_FILE_COUNT-1)
 		{
@@ -148,7 +148,7 @@ const int MAX_MSG_COUNT_PER_FILE = 50;
 	NSString* tmplogFileName = logFileName;
 
 	// move to one after the latestFile
-	int len = [tmplogFileName length];
+	int len = (int)[tmplogFileName length];
 	
 	unichar suffix = [tmplogFileName characterAtIndex:len-5];
 	//unichar suffixArr[] = { suffix };
@@ -175,7 +175,7 @@ const int MAX_MSG_COUNT_PER_FILE = 50;
 	NSString* tmplogFileName = startingLogFileName;
 	
 	// move to one after the latestFile
-	int len = [tmplogFileName length];
+	int len = (int)[tmplogFileName length];
 	
 	unichar suffix = [tmplogFileName characterAtIndex:len-5];
 	unichar suffixArr[] = { suffix };
@@ -413,7 +413,7 @@ const int MAX_MSG_COUNT_PER_FILE = 50;
 					NSArray *viewControllers = navController.viewControllers;
 					if (viewControllers)
 					{
-						int numViewControllers = [viewControllers count];
+						NSUInteger numViewControllers = [viewControllers count];
 						for (int i = 0; i < numViewControllers; i++)
 						{
 							UIViewController *eachViewController = viewControllers[i];
@@ -455,7 +455,7 @@ const int MAX_MSG_COUNT_PER_FILE = 50;
 	NSError *err = NULL;
 	NSString *fileContents = [NSString stringWithContentsOfFile:fileName encoding: NSUTF8StringEncoding error:&err];
 	NSArray *lines = [fileContents componentsSeparatedByString:@"\n"];
-	int lineCount = lines.count;
+	NSUInteger lineCount = lines.count;
 	int curLine = 0;
 	MCLogInfo * curInfo = nil;
 	while (curLine < lineCount) {

@@ -134,7 +134,7 @@ static ReceiptManager *sharedInstance;
 {
     NSArray *cachedReceipts = [self fetchAll:self.entityName];
     if (cachedReceipts != nil) {
-        return [cachedReceipts count];
+        return (int)[cachedReceipts count];
     }
     else
     {

@@ -656,10 +656,10 @@
 // Custom fields
 -(void) reloadCustomFieldsSection
 {
-    int travelCustomFieldSection = [self.aSections indexOfObject:KSECTION_TRIP_CUSTOM_FIELDS];
-    if (travelCustomFieldSection >= 0)
+
+    if ([self.aSections indexOfObject:KSECTION_TRIP_CUSTOM_FIELDS] != NSNotFound)
     {
-        NSIndexSet *indexSet = [NSIndexSet indexSetWithIndex:travelCustomFieldSection];
+        NSIndexSet *indexSet = [NSIndexSet indexSetWithIndex:[self.aSections indexOfObject:KSECTION_TRIP_CUSTOM_FIELDS]];
     
         [tblView reloadSections:indexSet withRowAnimation:UITableViewRowAnimationFade];
     }
@@ -1035,7 +1035,7 @@
             NSString *optionsViewTitle = [Localizer getLocalizedText:@"HOTEL_VIEW_SELECT_PREFERENCE"];
             NSString *optionType = @"SMOKING_PREFERENCE";
             NSArray *labels = hotelSearch.hotelSearchCriteria.smokingPreferenceNames;
-            NSNumber *selectedRowIndex = [NSNumber numberWithInt:hotelSearch.hotelSearchCriteria.smokingIndex];
+            NSNumber *selectedRowIndex = [NSNumber numberWithInteger:hotelSearch.hotelSearchCriteria.smokingIndex];
 
             NSMutableDictionary *pBag = [[NSMutableDictionary alloc] initWithObjectsAndKeys:[self getViewIDKey], @"FROM_VIEW", optionType, @"OPTION_TYPE_ID", optionsViewTitle, @"TITLE", labels, @"LABELS", selectedRowIndex, @"SELECTED_ROW_INDEX", @"YES", @"SHORT_CIRCUIT", nil];
             
@@ -1155,7 +1155,7 @@
 		pickerPopOverVC.datePicker.minimumDate = [self addDaysToDate:hotelSearch.hotelSearchCriteria.checkinDate NumDaysToAdd:1]; 
 	
 	//int section = [indexPath section];
-	int row = [indexPath row];
+	NSInteger row = [indexPath row];
 	
 	self.pickerPopOver = [[UIPopoverController alloc] initWithContentViewController:pickerPopOverVC];   
 	
@@ -1188,7 +1188,7 @@
 - (void)pickedDate:(NSDate *)dateSelected
 {
 	//int section = [pickerPopOverVC.indexPath section];
-	int row = [pickerPopOverVC.indexPath row];
+	NSInteger row = [pickerPopOverVC.indexPath row];
 	
 	//	NSMutableArray *sectionValues = [aList objectAtIndex:section];
 	//	BookingCellData *bcd = [sectionValues objectAtIndex:row];
@@ -1279,8 +1279,8 @@
 {
     if ([Config isGov])
     {
-        int govSection = [self.aSections indexOfObject:KSECTION_GOV_TA_FIELDS];
-        if (govSection >=0)
+        NSUInteger govSection = [self.aSections indexOfObject:KSECTION_GOV_TA_FIELDS];
+        if (govSection != NSNotFound)
         {
             NSIndexSet *indexSet = [NSIndexSet indexSetWithIndex:govSection];
             [self.tblView reloadSections:indexSet withRowAnimation:UITableViewRowAnimationFade];

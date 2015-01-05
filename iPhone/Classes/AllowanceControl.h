@@ -12,41 +12,41 @@
 
 @interface AllowanceControl : NSObject
 
-@property BOOL *showUserEntryOfBreakfastAmount;
+@property  BOOL showUserEntryOfBreakfastAmount;
 
-@property BOOL *showUserEntryOfMealsAmount;
+@property  BOOL showUserEntryOfMealsAmount;
 
-@property BOOL *showBreakfastProvidedCheckBox;
+@property  BOOL showBreakfastProvidedCheckBox;
 
-@property BOOL *showLunchProvidedCheckBox;
+@property  BOOL showLunchProvidedCheckBox;
 
-@property BOOL *showDinnerProvidedCheckBox;
+@property  BOOL showDinnerProvidedCheckBox;
 
-@property BOOL *showBreakfastProvidedPickList;
+@property  BOOL showBreakfastProvidedPickList;
 
-@property BOOL *showLunchProvidedPickList;
+@property  BOOL showLunchProvidedPickList;
 
-@property BOOL *showDinnerProvidedPickList;
+@property  BOOL showDinnerProvidedPickList;
 
-@property BOOL *showOvernightCheckBox;
+@property  BOOL showOvernightCheckBox;
 
-@property BOOL *showOvernightAsNightAllowance;
+@property  BOOL showOvernightAsNightAllowance;
 
-@property BOOL *showAboveLimit;
+@property  BOOL showAboveLimit;
 
-@property BOOL *showMealsBaseAmount;
+@property  BOOL showMealsBaseAmount;
 
-@property BOOL *showLodgingTypePickList;
+@property  BOOL showLodgingTypePickList;
 
-@property BOOL *showPercentRuleCheckBox;
+@property  BOOL showPercentRuleCheckBox;
 
-@property BOOL *showExtendedTripCheckBox;
+@property  BOOL showExtendedTripCheckBox;
 
-@property BOOL *showMunicipalityCheckBox;
+@property  BOOL showMunicipalityCheckBox;
 
-@property BOOL *showExcludeCheckBox;
+@property  BOOL showExcludeCheckBox;
 
-@property BOOL *showAllowanceAmount;
+@property  BOOL showAllowanceAmount;
 
 @property NSString *excludeLabel;
 
@@ -56,8 +56,8 @@
 
 @property(nonatomic, strong) NSMutableDictionary *lodgingTypeDictionary;
 
-@property BOOL *lodgingTypeGermany;
-@property BOOL *lodgingTypeNorway;
+@property  BOOL lodgingTypeGermany;
+@property  BOOL lodgingTypeNorway;
 
 @property NSString *applyPercentRuleLabel;
 

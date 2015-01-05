@@ -61,7 +61,7 @@
     [self.navigationController setNavigationBarHidden:YES animated:NO];
     //Add flurry
     NSInteger timeInSeconds =  -round( [self.startTime timeIntervalSinceNow]);
-    NSDictionary *dict = @{@"Seconds on Tour":[NSString stringWithFormat:@"%d" ,timeInSeconds]};
+    NSDictionary *dict = @{@"Seconds on Tour":[NSString stringWithFormat:@"%ld" ,(long)timeInSeconds]};
     [Flurry logEvent:@"Test Drive:Tour" withParameters:dict];
     // End timer
     [Flurry endTimedEvent:@"Test Drive:Tour" withParameters:nil];

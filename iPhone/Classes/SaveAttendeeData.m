@@ -56,8 +56,7 @@
 
 	[bodyXML appendString:@"<Fields xmlns:f='http://schemas.datacontract.org/2004/07/Snowbird'>"];
 	
-	int nFields = [attendeeToSave.fieldKeys count];
-	for (int ix = 0; ix < nFields; ix ++)
+	for (int ix = 0; ix < [attendeeToSave.fieldKeys count]; ix ++)
 	{
 		NSString *fieldKey = (attendeeToSave.fieldKeys)[ix];
 		FormFieldData* ff = (attendeeToSave.fields)[fieldKey];

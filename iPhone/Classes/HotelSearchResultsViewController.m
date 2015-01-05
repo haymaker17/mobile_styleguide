@@ -644,7 +644,7 @@
 	return btnSearchCriteria;
 }
 
-- (UIBarButtonItem*)makeHotelCountButton:(int)resultCount
+- (UIBarButtonItem*)makeHotelCountButton:(NSUInteger)resultCount
 {
 	const int buttonWidth = 200;
 	const int buttonHeight = 32;
@@ -687,7 +687,7 @@
             break;
     }
     //NSLog(@"%@", [NSString stringWithFormat:@"%d %@ %@ %@", resultCount, [Localizer getLocalizedText:@"Results"], [Localizer getLocalizedText:@"sorted by"], sortName]);
-    lblText.text = [NSString stringWithFormat:@"%d %@ %@", resultCount, [Localizer getLocalizedText:@"results by"], sortName];
+    lblText.text = [NSString stringWithFormat:@"%lu %@ %@", (unsigned long)resultCount, [Localizer getLocalizedText:@"results by"], sortName];
     
     if(![ExSystem is7Plus])
 	{
@@ -727,7 +727,7 @@
 
 - (void)makeToolbar
 {
-    int resultCount = [[[HotelBookingManager sharedInstance] fetchAll] count];
+    NSUInteger resultCount = [[[HotelBookingManager sharedInstance] fetchAll] count];
 	self.btnSearchCriteria = [HotelSearchResultsViewController makeSearchCriteriaButton:self.hotelSearch.hotelSearchCriteria];
 	self.btnFlexibleSpace = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemFlexibleSpace target:nil action:nil];
 	self.btnHotelCount = [self makeHotelCountButton:resultCount];
@@ -738,7 +738,7 @@
 
 - (void)showMinimalToolbar
 {
-    int resultCount = [[[HotelBookingManager sharedInstance] fetchAll] count];
+    NSUInteger resultCount = [[[HotelBookingManager sharedInstance] fetchAll] count];
     self.btnFlexibleSpace = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemFlexibleSpace target:nil action:nil];
     self.btnHotelCount = [self makeHotelCountButton:resultCount];
 	NSArray *toolbarItems = @[self.btnFlexibleSpace, self.btnHotelCount, self.btnFlexibleSpace];
@@ -754,7 +754,7 @@
             self.btnAction = [[UIBarButtonItem alloc] initWithTitle:[Localizer getLocalizedText:@"Sort"] style:UIBarButtonItemStyleBordered target:self action:@selector(buttonActionPressed:)];
         if (!self.btnFlexibleSpace) 
             self.btnFlexibleSpace = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemFlexibleSpace target:nil action:nil];
-        int resultCount = [[[HotelBookingManager sharedInstance] fetchAll] count];
+        NSUInteger resultCount = [[[HotelBookingManager sharedInstance] fetchAll] count];
         self.btnHotelCount = [self makeHotelCountButton:resultCount];
         //NSMutableArray *toolbarItems = [NSArray arrayWithObjects:btnSearchCriteria, btnFlexibleSpace, btnReorder, btnAction, nil];
         NSArray *toolbarItems = @[self.btnAction, self.btnFlexibleSpace, self.btnHotelCount, self.btnFlexibleSpace];
@@ -769,7 +769,7 @@
     if ([self.hotelBenchmarkRangeString length]) { // Find if Range string is actually a Range or it has just one unique value
         NSArray *distinctPrices = [hotelBenchmarks valueForKeyPath:@"@distinctUnionOfObjects.price"];
         BOOL benchmarksHaveUnavailablePrices = [[hotelBenchmarks valueForKeyPath:@"@min.price"] floatValue] == 0.0;
-        int countOfUniqueBenchmarks = benchmarksHaveUnavailablePrices ? [distinctPrices count] - 1 : [distinctPrices count];
+        NSUInteger countOfUniqueBenchmarks = benchmarksHaveUnavailablePrices ? [distinctPrices count] - 1 : [distinctPrices count];
         self.isBenchmarkRange = countOfUniqueBenchmarks > 1;
     }
 }

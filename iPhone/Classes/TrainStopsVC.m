@@ -221,7 +221,7 @@
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
 	int lastSelectedRow = selectedRow;
-	selectedRow = indexPath.row;
+	selectedRow = (int)indexPath.row;
 	
 	NSUInteger _path[2] = {indexPath.section, lastSelectedRow};
 	NSIndexPath *_indexPath = [[NSIndexPath alloc] initWithIndexes:_path length:2];

@@ -765,7 +765,7 @@
     return [a count];
 }
 
--(int)numberOfRowsInViolationsSection
+-(NSUInteger)numberOfRowsInViolationsSection
 {
     if ([self.airSummary.canUseTravelPoints boolValue])
     {
@@ -1106,7 +1106,7 @@
     }
 }
 
-- (void)handleSelectInViolationSectionAtRow:(int)row
+- (void)handleSelectInViolationSectionAtRow:(NSInteger)row
 {
     if ([kRowViolationsText isEqualToString:self.rowsInViolationSection[row]])
     {

@@ -695,22 +695,22 @@
 	// TODO: Handle rotation while action sheet is showing
     if (self.interfaceOrientation == UIInterfaceOrientationPortrait)
     {
-        NSLog(@"orientation: %d", self.interfaceOrientation);
+        NSLog(@"orientation: %ld", self.interfaceOrientation);
         [bookingAction showFromRect:CGRectMake(191, 954, 1, 1) inView:[UIApplication sharedApplication].keyWindow animated:NO];
     }
     else if (self.interfaceOrientation == UIInterfaceOrientationPortraitUpsideDown)
     {
-        NSLog(@"orientation: %d", self.interfaceOrientation);
+        NSLog(@"orientation: %ld", self.interfaceOrientation);
         [bookingAction showFromRect:CGRectMake(578, 77, 1, 1) inView:[UIApplication sharedApplication].keyWindow animated:NO];
     }
     else if (self.interfaceOrientation == UIInterfaceOrientationLandscapeRight)
     {
-        NSLog(@"orientation: %d", self.interfaceOrientation);
+        NSLog(@"orientation: %ld", self.interfaceOrientation);
         [bookingAction showFromRect:CGRectMake(78, 255, 1, 1) inView:[UIApplication sharedApplication].keyWindow animated:NO];
     }
     else if(self.interfaceOrientation == UIInterfaceOrientationLandscapeLeft)
     {
-        NSLog(@"orientation: %d", self.interfaceOrientation);
+        NSLog(@"orientation: %ld", self.interfaceOrientation);
         [bookingAction showFromRect:CGRectMake(695, 768, 1, 1) inView:[UIApplication sharedApplication].keyWindow animated:NO];
     }
 }

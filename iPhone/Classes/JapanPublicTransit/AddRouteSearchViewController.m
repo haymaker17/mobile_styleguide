@@ -312,8 +312,8 @@ NSInteger const ROUTE_ATTRIBUTE_SEAT_TYPE = 5;
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
     UITableViewCell *cell;
     
-    int section = [indexPath section];
-    int row = [indexPath row];
+    NSInteger section = [indexPath section];
+    NSInteger row = [indexPath row];
     
     switch (section) {
         case 0: {
@@ -397,8 +397,8 @@ NSInteger const ROUTE_ATTRIBUTE_SEAT_TYPE = 5;
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
     [tableView deselectRowAtIndexPath:indexPath animated:YES];
     
-    int section = [indexPath section];
-    int row = [indexPath row];
+    NSInteger section = [indexPath section];
+    NSInteger row = [indexPath row];
     
     switch (section) {
         case 0:

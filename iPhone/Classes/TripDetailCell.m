@@ -94,7 +94,7 @@
 -(IBAction)goSomeplace:(id)sender
 {
 	UIButton *btn = (UIButton *)sender;
-	int aPos = btn.tag;
+	NSInteger aPos = btn.tag;
 	detail = aDetails[aPos];
 	
 	NSString *mapAddress = detail.mapAddress;
@@ -125,7 +125,7 @@
 	//(NSString *)specialValueWeb WebViewTitle:(NSString *)webViewTitle
 	//do web view
 	UIButton *btn = (UIButton *)sender;
-	int aPos = btn.tag;
+	NSInteger aPos = btn.tag;
 	detail = aDetails[aPos];
 	WebViewController *webView = [[WebViewController alloc] init];
 //	webView.rootViewController = rootVC;

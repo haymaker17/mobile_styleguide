@@ -156,7 +156,7 @@
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
 {
-    NSLog(@"row count %d", [aRows count]);
+    NSLog(@"row count %lu", (unsigned long)[aRows count]);
     return [aRows count];
 }
 

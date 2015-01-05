@@ -215,7 +215,7 @@
 
 -(void)clearCache
 {
-	int limit = [self.receipts count];
+	NSUInteger limit = [self.receipts count];
 	for (int i=0; i<limit; i++) 
 	{
 		[self dequeue];

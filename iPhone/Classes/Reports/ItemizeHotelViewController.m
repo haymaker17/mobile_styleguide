@@ -104,7 +104,7 @@
             UINavigationController* navCtl = self.navigationController;
 		
             // Update entry/rpt object
-            int vcCount = [navCtl.viewControllers count];
+            NSUInteger vcCount = [navCtl.viewControllers count];
             if (vcCount >=2)
             {
                 MobileViewController *pvc = (MobileViewController *)(navCtl.viewControllers)[vcCount - 2];

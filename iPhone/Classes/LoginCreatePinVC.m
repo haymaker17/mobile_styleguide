@@ -374,7 +374,7 @@
             }
             else if ([responseData.PinMinLength lengthIgnoreWhitespace])
             {
-                int pinLen = secondEntryPin.length;
+                int pinLen =  (int)secondEntryPin.length;
                 if ( pinLen < [responseData.PinMinLength intValue])
                 {
                     errMsg = [Localizer getLocalizedText:@"Invalid PIN length"];
@@ -441,7 +441,7 @@
         else    // go to the login help screen to try the pin reset again
         {
             NSArray *viewControllers = self.navigationController.viewControllers;
-            int count = [viewControllers count];
+            NSUInteger count = [viewControllers count];
             if (count > 2)
             {
                 if ([viewControllers[count - 2] isKindOfClass:[LoginHelpContentsVC class]])

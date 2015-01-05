@@ -11,6 +11,6 @@
 
 @protocol ModalOptionsDelegate
 
--(void) optionSelectedAtIndex:(int)index;
+-(void) optionSelectedAtIndex:(NSInteger)index;
 
 @end

@@ -35,8 +35,8 @@
     self.pressedDone = YES;
     
 	NSString* text = (textField.text == nil) ? @"" : textField.text;
-    int min = [tcf.minLength integerValue];
-    int max = [tcf.maxLength integerValue];
+    NSInteger min = [tcf.minLength integerValue];
+    NSInteger max = [tcf.maxLength integerValue];
     int length = (int)text.length;
     
     // MOB-9174, MOB-9182

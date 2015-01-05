@@ -16,6 +16,6 @@
 
 - (void)requestSalesForceChatterFeed;
 - (int)numberOfChatterPostsInFeed;
-- (ChatterFeedPost *)chatterPostAtIndex:(int)index;
+- (ChatterFeedPost *)chatterPostAtIndex:(NSInteger)index;
 
 @end

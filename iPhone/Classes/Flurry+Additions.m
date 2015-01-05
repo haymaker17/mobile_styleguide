@@ -34,7 +34,7 @@ static NSInteger signInOverallCount = 0;
     }
     else
     {
-        countString = [NSString stringWithFormat:@"%i", signInOverallCount];
+        countString = [NSString stringWithFormat:@"%li", (long)signInOverallCount];
     }
     
     NSDictionary *dict = @{@"Try Again Count": countString, @"Final": finalAction };

@@ -414,8 +414,8 @@
                 
                 if (viewControllers != nil && [viewControllers count] >= 1)
                 {
-                    int count = [viewControllers count];
-                    topVC = viewControllers[count - 1];
+                    //MOB-21633 - Enable 64 bit support on iOS
+                    topVC = viewControllers[[viewControllers count] - 1];
                 }
                 // if the quick expense view is the top view
                 if ([topVC isKindOfClass:[QEFormVC class]])
@@ -600,8 +600,8 @@ static NSString *isTest = @"N";
     [[MCLogging getInstance] log:[NSString
                                   stringWithFormat:@"Succeeded registering for push notifications. Device token: %@", deviceToken]
                            Level:MC_LOG_INFO];
-    
-    deviceTokenStr = [NSString hexStringFromData:deviceToken length:[deviceToken length]];
+    //MOB-21633 - Enable 64 bit support on iOS - length will not run over int value.
+    deviceTokenStr = [NSString hexStringFromData:deviceToken length:(int)[deviceToken length]];
 
     //if (!(![deviceTokenStr length] || [ExSystem sharedInstance].sessionID == nil))
     
@@ -1004,8 +1004,9 @@ static NSString *isTest = @"N";
     {
         NSMutableArray *viewControllersToUnwind = [[NSMutableArray alloc] init];
         [ConcurMobileAppDelegate addViewControllersToUnwindToArray:viewControllersToUnwind];
-		
-        for (int i = [viewControllersToUnwind count] - 1; i >= 0; i--)
+//        MOB-21633 - Enable 64 bit support on iOS
+        int count  = (int)[viewControllersToUnwind count];
+        for (int i =  count - 1; i >= 0; i--)
         {
             UIViewController *vc = viewControllersToUnwind[i];
             if ([vc isKindOfClass:[MobileViewController class]])
@@ -1107,7 +1108,8 @@ static NSString *isTest = @"N";
 	if ([UIDevice isPad])
 	{
 		// Get the content controller of each popup controller belonging to a MobileViewController
-		int numNavAndModalViewControllers = [allControllers count];
+        // MOB-21633 : Enable 64 bit support on iOS
+		int numNavAndModalViewControllers = (int)[allControllers count];
 		for (int j = 0; j < numNavAndModalViewControllers; j++)
 		{
 			UIViewController *navOrModalViewController = allControllers[j];
@@ -1132,8 +1134,8 @@ static NSString *isTest = @"N";
 	// so nav controllers will have to be recursed for iPhone as well as iPad.
 	//
 	NSMutableArray* extraControllers = [[NSMutableArray alloc] initWithObjects:nil];
-	int numControllers = [allControllers count];
-	for (int k = 0; k < numControllers; k++)
+    // MOB-21633: Enable 64 bit support on iOS
+	for (NSUInteger k = 0; k < [allControllers count]; k++)
 	{
 		UIViewController *controller = allControllers[k];
 		if ([controller isKindOfClass:[UINavigationController class]])
@@ -1152,8 +1154,13 @@ static NSString *isTest = @"N";
 		return nil;
 	
 	NSArray* viewControllers = [ConcurMobileAppDelegate getAllViewControllers];
-	int numViewControllers = [viewControllers count];
-	
+	int numViewControllers = (int)[viewControllers count];
+
+    // MOB-21633: Enable 64 bit support on iOS
+    if ([viewControllers count] == 0) {
+        return nil;
+    }
+    
 	for (int j = numViewControllers - 1; j >= 0; j--)
 	{
 		UIViewController* viewController = viewControllers[j];
@@ -1221,7 +1228,9 @@ static NSString *isTest = @"N";
     NSMutableArray *viewControllersToUnwind = [[NSMutableArray alloc] init];
     [ConcurMobileAppDelegate addViewControllersToUnwindToArray:viewControllersToUnwind];
 	
-	for (int i = [viewControllersToUnwind count] - 1; i >= 0; i--)
+    int numViewControllers = (int)[viewControllersToUnwind count];
+    
+	for (int i = numViewControllers - 1; i >= 0; i--)
 	{
 		UIViewController *vc = viewControllersToUnwind[i];
 		[[MCLogging getInstance] log:[NSString stringWithFormat:@"Examining %@", [vc class]] Level:MC_LOG_DEBU];

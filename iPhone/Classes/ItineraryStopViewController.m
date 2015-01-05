@@ -627,7 +627,7 @@
     NSLog(@"tripLengthValue = %@", tripLengthValue);
     cell.itineraryTripLength.text = tripLengthValue;
 
-    NSLog(@"cell.accessoryType = %d", cell.accessoryType);
+    NSLog(@"cell.accessoryType = %ld", cell.accessoryType);
 
     if([itinerary.areAllRowsLocked boolValue])
     {
@@ -677,7 +677,7 @@
     {
         NSInteger indexPlusOne = indexPath.row + 1;
 
-        cell.stopNumber.text = [NSString stringWithFormat:@"%i", indexPlusOne];
+        cell.stopNumber.text = [NSString stringWithFormat:@"%li", (long)indexPlusOne];
 
         [cell.stopBadge updateBadgeCount:[NSNumber numberWithInteger:indexPlusOne]];
 
@@ -795,7 +795,7 @@
 - (void)tableView:(UITableView *)tableView commitEditingStyle:(UITableViewCellEditingStyle)editingStyle forRowAtIndexPath:(NSIndexPath *)indexPath
 {
     if (editingStyle == UITableViewCellEditingStyleDelete) {
-        NSLog(@"commitEditingStyle = editingStyle = %d", editingStyle);
+        NSLog(@"commitEditingStyle = editingStyle = %ld", editingStyle);
 //        [self tableView:<#(UITableView *)tableView#> cellForRowAtIndexPath:<#(NSIndexPath *)indexPath#>]
         ItineraryStopCell *cell = [self.tableView cellForRowAtIndexPath:indexPath];
 
@@ -1117,7 +1117,7 @@
     NSLog(@"tripLengthValue = %@", tripLengthValue);
     cell.itineraryTripLength.text = tripLengthValue;
 
-    NSLog(@"cell.accessoryType = %d", cell.accessoryType);
+    NSLog(@"cell.accessoryType = %ld", cell.accessoryType);
 
     if([itinerary.areAllRowsLocked boolValue])
     {

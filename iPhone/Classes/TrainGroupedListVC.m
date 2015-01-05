@@ -239,7 +239,7 @@
 	}
 
 
-	cell.lblChoices.text = [NSString stringWithFormat:@"%d %@", [railChoices count], [Localizer getLocalizedText:@"choices"]];
+	cell.lblChoices.text = [NSString stringWithFormat:@"%lu %@", (unsigned long)[railChoices count], [Localizer getLocalizedText:@"choices"]];
 	
 	return cell;
 }

@@ -60,7 +60,7 @@
         // existing logic, will check VC entries on stack
         if([fromView isEqualToString:@"HOTEL"] || [fromView isEqualToString:@"HOTEL_BOOKING"] || [fromView isEqualToString:@"CAR_DETAILS" ] || [fromView isEqualToString:@"AIR_BOOKING"] || [fromView isEqualToString:@"TRAIN_DETAILS"])
         {
-            int vcCount = [self.navigationController.viewControllers count];
+            NSUInteger vcCount = [self.navigationController.viewControllers count];
             UIViewController *vc = [self.navigationController.viewControllers lastObject] != self ? [self.navigationController.viewControllers lastObject] : (self.navigationController.viewControllers)[vcCount - 2];
             MobileViewController *mvc = (MobileViewController *)vc;
             [mvc respondToFoundData:msg];

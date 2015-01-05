@@ -48,7 +48,7 @@
         //cell.selectionStyle = UITableViewCellSelectionStyleNone;
     }
     
-    int row = [indexPath row];
+    NSInteger row = [indexPath row];
     
     cell.textLabel.text = [[CreditCardManager sharedInstance] cardAtIndex:row];
     
@@ -76,7 +76,7 @@
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
     [tableView deselectRowAtIndexPath:indexPath animated:YES];
     
-    int row = [indexPath row];
+    NSInteger row = [indexPath row];
     CreditCardManager.sharedInstance.selectedCardIndex = row;
     
     [self.navigationController popViewControllerAnimated:YES];

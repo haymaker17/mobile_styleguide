@@ -23,7 +23,7 @@ static NSMutableArray* sheetsCurrentlyShowing;
     if (btnIds == nil)
         return nil;
     
-    int offset = buttonIndex;
+    NSInteger offset = buttonIndex;
     
     if (self.firstOtherButtonIndex > 0)
         offset = buttonIndex - self.firstOtherButtonIndex;
@@ -187,7 +187,7 @@ static NSMutableArray* sheetsCurrentlyShowing;
 	else
 	{
 		NSString* buttonTitle = [self buttonTitleAtIndex:buttonIndex];
-		[[MCLogging getInstance] log:[NSString stringWithFormat:@"MobileActionSheet::actionSheet:didDismissWithButtonIndex: buttonIndex = %i, title: %@", buttonIndex, (buttonTitle != nil ? buttonTitle : @"<no title>")] Level:MC_LOG_DEBU];
+		[[MCLogging getInstance] log:[NSString stringWithFormat:@"MobileActionSheet::actionSheet:didDismissWithButtonIndex: buttonIndex = %li, title: %@", (long)buttonIndex, (buttonTitle != nil ? buttonTitle : @"<no title>")] Level:MC_LOG_DEBU];
 	}
 
 	if (mobileActionSheet_originalDelegate != nil && [mobileActionSheet_originalDelegate respondsToSelector:@selector(actionSheet:didDismissWithButtonIndex:)])

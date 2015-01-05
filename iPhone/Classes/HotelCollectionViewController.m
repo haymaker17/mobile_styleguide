@@ -168,7 +168,7 @@
 	else
 	{
         cell.ivStars.hidden = NO;
-        int starCount = [asterisks length];
+        NSUInteger starCount = [asterisks length];
         if(starCount == 1)
             cell.ivStars.image = [UIImage imageNamed:@"stars_1"];
         else if(starCount == 2)

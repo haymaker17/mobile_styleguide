@@ -42,7 +42,7 @@
     CGFloat width = self.view.frame.size.width;
     CGFloat tableHeight = 0.0f;
     
-    int numRows = [self.route.segments count] + 1;
+    NSUInteger numRows = [self.route.segments count] + 1;
     
     for (int i = 0; i < numRows; i ++) {
         tableHeight += [self tableView:self.tableView

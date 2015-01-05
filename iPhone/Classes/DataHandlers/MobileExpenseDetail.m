@@ -91,7 +91,7 @@ NSString *meKey = nil;
 
 - (void)parser:(NSXMLParser *)parser parseErrorOccurred:(NSError *)parseError
 {
-		NSString * errorString = [NSString stringWithFormat:@"Parser Error (Error code %i )", [parseError code]];
+		NSString * errorString = [NSString stringWithFormat:@"Parser Error (Error code %li )", (long)[parseError code]];
 		NSLog(@"MobileExpenseEntry: error parsing XML: %@", errorString);
 	//
 	//	UIAlertView * errorAlert = [[UIAlertView alloc] initWithTitle:@"Error Parsing Content" message:errorString delegate:self cancelButtonTitle:@"OK" otherButtonTitles:nil];

@@ -615,7 +615,7 @@
 - (void) headerTappedHandler:(UIGestureRecognizer *)gestureRecognizer
 {
     FixedAllowanceCell *cell = gestureRecognizer.view;
-    NSLog(@"cell.tag = %i", cell.tag);
+    NSLog(@"cell.tag = %li", (long)cell.tag);
 
     FixedAllowance *allowance = [self.allowanceRows objectAtIndex:cell.tag];
 
@@ -807,7 +807,7 @@
     {
         UITableViewCell *cell = nil;
         // Is the field enabled
-        BOOL *cb = self.allowanceControl.showBreakfastProvidedCheckBox;
+        BOOL cb = self.allowanceControl.showBreakfastProvidedCheckBox;
         if(cb)
         {
             cell = [self.tableView dequeueReusableCellWithIdentifier:@"BreakfastAllowanceSimple"];
@@ -1057,10 +1057,10 @@
     return should;
 }
 
-- (void)showListEditor:(NSString *)fieldName label:(NSString *)label crnKey:(NSInteger *)crnKey section:(NSInteger *)section meal:(NSString *)meal
+- (void)showListEditor:(NSString *)fieldName label:(NSString *)label crnKey:(NSInteger )crnKey section:(NSInteger )section meal:(NSString *)meal
 {
 
-    NSString *intValue = [NSString stringWithFormat:@"%d", crnKey];
+    NSString *intValue = [NSString stringWithFormat:@"%ld", (long)crnKey];
 
     MealsAmountFormFieldData *field = [[MealsAmountFormFieldData alloc] initField:fieldName label:label value:intValue ctrlType:@"edit" dataType:@"CURRENCY"];
 
@@ -1228,7 +1228,7 @@
     return body;
 }
 
-- (void)callServerToUpdateAmounts:(FixedAllowance *)allowance index:(NSUInteger *)index {
+- (void)callServerToUpdateAmounts:(FixedAllowance *)allowance index:(NSUInteger )index {
 
     void (^success)(NSString *) = ^(NSString *result)
     {

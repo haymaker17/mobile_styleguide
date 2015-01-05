@@ -13,48 +13,63 @@
 #include <unistd.h>
 #include <sys/sysctl.h>
 
-// break into GDB code complied from following sources: 
+#ifdef DEBUG
+// break into GDB code complied from following sources:
 // http://blog.timac.org/?p=190, http://developer.apple.com/library/mac/#qa/qa1361/_index.html, http://cocoawithlove.com/2008/03/break-into-debugger.html
 
-// Returns true if the current process is being debugged (either 
+// Returns true if the current process is being debugged (either
 // running under the debugger or has a debugger attached post facto).
 static bool AmIBeingDebugged(void)
 {
-	int                 junk;
-	int                 mib[4];
-	struct kinfo_proc   info;
-	size_t              size;
-
-	// Initialize the flags so that, if sysctl fails for some bizarre 
-	// reason, we get a predictable result.
-
-	info.kp_proc.p_flag = 0;
-
-	// Initialize mib, which tells sysctl the info we want, in this case
-	// we're looking for information about a specific process ID.
-
-	mib[0] = CTL_KERN;
-	mib[1] = KERN_PROC;
-	mib[2] = KERN_PROC_PID;
-	mib[3] = getpid();
-
-	// Call sysctl.
-
-	size = sizeof(info);
-	junk = sysctl(mib, sizeof(mib) / sizeof(*mib), &info, &size, NULL, 0);
-	assert(junk == 0);
-
-	// We're being debugged if the P_TRACED flag is set.
-
-	return ( (info.kp_proc.p_flag & P_TRACED) != 0 );
+    int                 junk;
+    int                 mib[4];
+    struct kinfo_proc   info;
+    size_t              size;
+    
+    // Initialize the flags so that, if sysctl fails for some bizarre
+    // reason, we get a predictable result.
+    
+    info.kp_proc.p_flag = 0;
+    
+    // Initialize mib, which tells sysctl the info we want, in this case
+    // we're looking for information about a specific process ID.
+    
+    mib[0] = CTL_KERN;
+    mib[1] = KERN_PROC;
+    mib[2] = KERN_PROC_PID;
+    mib[3] = getpid();
+    
+    // Call sysctl.
+    
+    size = sizeof(info);
+    junk = sysctl(mib, sizeof(mib) / sizeof(*mib), &info, &size, NULL, 0);
+    assert(junk == 0);
+    
+    // We're being debugged if the P_TRACED flag is set.
+    
+    return ( (info.kp_proc.p_flag & P_TRACED) != 0 );
 }
 
 #if TARGET_CPU_ARM
 #define DEBUGSTOP(signal) __asm__ __volatile__ ("mov r0, %0\nmov r1, %1\nmov r12, %2\nswi 128\n" : : "r"(getpid ()), "r"(signal), "r"(37) : "r12", "r0", "r1", "cc");
 #define DEBUGGER do { int trapSignal = AmIBeingDebugged () ? SIGINT : SIGSTOP; DEBUGSTOP(trapSignal); if (trapSignal == SIGSTOP) { DEBUGSTOP (SIGINT); } } while (false);
 #else
+#ifdef __LP64__
+#define DEBUGGER do { int trapSignal = AmIBeingDebugged () ? SIGINT : SIGSTOP; __asm__ __volatile__ ("pushq %0\npushq %1\npush $0\nmovl %2, %%eax\nint $0x80\nadd $12, %%esp" : : "g" (trapSignal), "g" (getpid ()), "n" (37) : "eax", "cc"); } while (false);
+#else
 #define DEBUGGER do { int trapSignal = AmIBeingDebugged () ? SIGINT : SIGSTOP; __asm__ __volatile__ ("pushl %0\npushl %1\npush $0\nmovl %2, %%eax\nint $0x80\nadd $12, %%esp" : : "g" (trapSignal), "g" (getpid ()), "n" (37) : "eax", "cc"); } while (false);
 #endif
+#endif
+#endif
+
+#ifdef DEBUG
+#define DCLog(MSG, ...) NSLog(MSG, ##__VA_ARGS__)
+#define DCNamedLog(MSG, ...) NSLog(@"%@: "MSG, NSStringFromClass([self class]), ##__VA_ARGS__)
+#else
+#define DCLog(MSG, ...) ({});
+#define DCNamedLog(MSG, ...) ({});
+#endif
+
 
 @interface DCIntrospect ()
 

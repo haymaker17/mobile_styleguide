@@ -76,7 +76,7 @@
 	// MOB-19851 Remove office location section when editing
     if ([self.sourceSections containsObject:self.officeLocationCells]) {
         [self.delegate dataSourceWillChangeData:self] ;
-        int index = [self.sourceSections indexOfObject:self.officeLocationCells];
+        NSUInteger index = [self.sourceSections indexOfObject:self.officeLocationCells];
         [self.sourceSections removeObject:self.officeLocationCells];
         [self.delegate dataSource:self didChangeSection:self.officeLocationsSectionInfo atIndex:index forChangeType:kDataSourceChangeDelete];
         [self.delegate dataSourceDidChangeContent:self];
@@ -90,7 +90,7 @@
     if ([self.sourceSections containsObject:self.locationCells]) {
         [self.delegate dataSourceWillChangeData:self] ;
         [self.locationCells removeAllObjects];
-        int index = [self.sourceSections indexOfObject:self.locationCells];
+        NSUInteger index = [self.sourceSections indexOfObject:self.locationCells];
         [self.sourceSections removeObject:self.locationCells];
         [self.delegate dataSource:self didChangeSection:self.locationsSectionInfo atIndex:index forChangeType:kDataSourceChangeDelete];
         [self.delegate dataSourceDidChangeContent:self];
@@ -116,7 +116,7 @@
     if ([self.sourceSections containsObject:self.locationCells]) {
         [self.delegate dataSourceWillChangeData:self] ;
         [self.locationCells removeAllObjects];
-        int index = [self.sourceSections indexOfObject:self.locationCells];
+        NSUInteger index = [self.sourceSections indexOfObject:self.locationCells];
         [self.sourceSections removeObject:self.locationCells];
         [self.delegate dataSource:self didChangeSection:self.locationsSectionInfo atIndex:index forChangeType:kDataSourceChangeDelete];
         [self.delegate dataSourceDidChangeContent:self];
@@ -127,7 +127,7 @@
     CTELocationSearch *locationSearch = [[CTELocationSearch alloc] initWithAddress:searchString isAirportsOnly:NO];
 
     [locationSearch searchLocationsWithSuccess:^(NSArray *locations) {
-        NSLog(@"Number of locations found : %d", [locations count]);
+        NSLog(@"Number of locations found : %lu", (unsigned long)[locations count]);
         if ([locations count] > 0) {
             // TODO : Handle the results here.
             [self handleLocationSearchResults:locations];

@@ -83,7 +83,7 @@
     
     [bodyXML appendString:@"<fields>"];
     // get field counts
-    int numOfFields = [fields count];
+    NSUInteger numOfFields = [fields count];
     // fill each field
     for (int i = 0; i < numOfFields; i++)
     {

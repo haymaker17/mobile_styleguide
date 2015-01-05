@@ -49,8 +49,8 @@
 + (CXRequest *)deleteItinerary:(NSString *)itinKey rptKey:(NSString *)rptKey;
 + (CXRequest *)unassignItinerary:(NSString *)itinKey rptKey:(NSString *)key;
 
-+ (BOOL *)wasDeleteItinerarySuccessful:(NSString *)result;
-+ (BOOL *)wasUnassignItinerarySuccessful:(NSString *)result;
++ (BOOL )wasDeleteItinerarySuccessful:(NSString *)result;
++ (BOOL )wasUnassignItinerarySuccessful:(NSString *)result;
 
 + (Itinerary *)getNewItineraryForSingleDay:(ItineraryConfig *)config itineraryName:(NSString *)itineraryName rptKey:(NSString *)rptKey;
 + (Itinerary *)getNewItineraryRegular:(ItineraryConfig *)config reportName:(NSString *)reportName rptKey:(NSString *)rptKey;

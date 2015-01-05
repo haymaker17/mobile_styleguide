@@ -49,8 +49,7 @@
 	[bodyXML appendString:[NSString stringWithFormat:@"<RptKey>%@</RptKey>", self.rptKey]];
 	[bodyXML appendString:@"<Fields>"];
 	
-	int nFields = [self.fields count];
-	for (int ix = 0; ix < nFields; ix ++)
+    for (int ix = 0; ix < [self.fields count]; ix ++)
 	{
 		FormFieldData* ff = (self.fields)[ix];
 		[bodyXML appendString:@"<FormField>"];

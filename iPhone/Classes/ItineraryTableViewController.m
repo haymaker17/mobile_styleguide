@@ -97,7 +97,7 @@
 - (void) headerTappedHandlerExpandCollapse:(UIGestureRecognizer *)gestureRecognizer
 {
     ItineraryCell *cell = gestureRecognizer.view;
-    NSLog(@"cell.tag = %i", cell.tag);
+    NSLog(@"cell.tag = %li", (long)cell.tag);
 
     Itinerary *itinerary = (Itinerary *)[self.itineraries objectAtIndex:cell.tag];
 
@@ -142,10 +142,10 @@
 
         // Configure the cell...
         cell.itineraryName.text = itinerary.itinName;
-        cell.numberOfStops.text = [NSString stringWithFormat:@"%u Stops", [itinerary.stops count]];
+        cell.numberOfStops.text = [NSString stringWithFormat:@"%lu Stops", (unsigned long)[itinerary.stops count]];
 
         //TODO Config for the Approver, not the target
-        NSString *tripLengthValue = [self.itineraryConfig.tripLengthListValues valueForKey:itinerary.tripLength];
+//        NSString *tripLengthValue = [self.itineraryConfig.tripLengthListValues valueForKey:itinerary.tripLength];
 //        cell.itineraryTripLength.text = tripLengthValue;
         //TODO This needs to point at the config of the employee being approved, so  we'll leave it blank for now.
         cell.itineraryTripLength.text = @"";
@@ -678,7 +678,7 @@
 - (void)actionSheet:(UIActionSheet *)actionSheet clickedButtonAtIndex:(NSInteger)buttonIndex
 {
     NSLog(@"actionSheet = %@", actionSheet);
-    NSLog(@"buttonIndex = %i", buttonIndex);
+    NSLog(@"buttonIndex = %li", (long)buttonIndex);
 
 }
 

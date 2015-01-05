@@ -731,7 +731,7 @@
 	else if ([@"Legs" isEqualToString:sectionName])
 	{
 		RailChoiceSegmentData *rcsd = (railChoice.segments)[0];
-		int currentCount = [rcsd.trains count];
+		NSUInteger currentCount = [rcsd.trains count];
         
         if([railChoice.segments count] == 2)
         {
@@ -807,7 +807,7 @@
 //		NSString *seat = @"";
         
         rcsd = (railChoice.segments)[0];
-        int departTrainsCount = [rcsd.trains count];
+        NSUInteger departTrainsCount = [rcsd.trains count];
         if(indexPath.row > (departTrainsCount -1))
         {
             //we are in seg 2

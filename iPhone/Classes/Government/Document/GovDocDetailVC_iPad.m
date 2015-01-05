@@ -128,7 +128,7 @@
 }
 
 #pragma mark - Base Detail Overriden Methods
-- (void) didPressButtonAtIndex:(int)buttonIndex withId:(NSString*)buttonId inRect:(CGRect)rect
+- (void) didPressButtonAtIndex:(NSInteger)buttonIndex withId:(NSString*)buttonId inRect:(CGRect)rect
 {
     if ([buttonId isEqualToString:BUTTON_ID_ACCT_ALLLOCATION])
         [self buttonAllocationClicked:self];
@@ -149,7 +149,7 @@
 - (IBAction) buttonPressed:(id)sender
 {
     UIButton *button = (UIButton*)sender;
-    int buttonIndex = button.tag;
+    NSInteger buttonIndex = button.tag;
     
     if (buttonIndex < _buttonDescriptors.count)
     {
@@ -159,7 +159,7 @@
     }
 }
 
-- (UIButton*) buttonAtIndex:(int)index
+- (UIButton*) buttonAtIndex:(NSInteger)index
 {
     if (index == 6)
         return self.button6;
@@ -195,7 +195,7 @@
         labelForButton.text = descriptor.title;
     }
     
-    for (int unusedButtonIndex = _buttonDescriptors.count; unusedButtonIndex < MAX_REPORT_BUTTONS; unusedButtonIndex++)
+    for (NSInteger unusedButtonIndex = _buttonDescriptors.count; unusedButtonIndex < MAX_REPORT_BUTTONS; unusedButtonIndex++)
     {
         UIButton *unusedButton = [self buttonAtIndex:unusedButtonIndex];
         unusedButton.hidden = YES;
@@ -220,7 +220,7 @@
 //    [descriptors addObject:[ButtonDescriptor buttonDescriptorWithId:BUTTON_ID_DOC_RECEIPTS title:[Localizer getLocalizedText:@"Receipts"]]];
     if (self.doc.perdiemTDY != nil && [self.doc.perdiemTDY count]>0)
     {
-        [descriptors addObject:[ButtonDescriptor buttonDescriptorWithId:BUTTON_ID_PDLOCATIONS title:[NSString stringWithFormat:@"%@ (%d)", [Localizer getLocalizedText:@"Per Diem Locations"], [self.doc.perdiemTDY count]]]];
+        [descriptors addObject:[ButtonDescriptor buttonDescriptorWithId:BUTTON_ID_PDLOCATIONS title:[NSString stringWithFormat:@"%@ (%lu)", [Localizer getLocalizedText:@"Per Diem Locations"], (unsigned long)[self.doc.perdiemTDY count]]]];
     }
     [descriptors addObject:[ButtonDescriptor buttonDescriptorWithId:BUTTON_ID_ADD_EXPENSE title:[Localizer getLocalizedText:@"Add Expense"]]];
     [descriptors addObject:[ButtonDescriptor buttonDescriptorWithId:BUTTON_ID_ACCT_ALLLOCATION title:[Localizer getLocalizedText:@"Accounting Allocation"]]];

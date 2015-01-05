@@ -25,7 +25,7 @@
 
 @property int totalCount;
 @property int selectedHotelIndex;
-@property int childSortOrder;
+@property NSUInteger childSortOrder;
 @property long ticks;
 @property int numberOfPolls;
 @property BOOL readyToSendPollRequest;
@@ -72,6 +72,6 @@
 - (void)logSearchComplete:(BOOL)success withError:(NSString*)errMsg;
 
 + (UIBarButtonItem *)makeSearchCriteriaButton:(HotelSearchCriteria*)hotelSearchCriteria;
-- (UIBarButtonItem*)makeHotelCountButton:(int)resultCount;
+- (UIBarButtonItem*)makeHotelCountButton:(NSUInteger)resultCount;
 
 @end

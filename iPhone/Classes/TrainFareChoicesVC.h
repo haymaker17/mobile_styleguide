@@ -49,7 +49,7 @@
 @property (strong, nonatomic) NSMutableArray        *taFields;  // TravelAuth fields for GOV
 
 -(void) adjustLabel:(UILabel *) lblHeading LabelValue:(UILabel*) lblVal HeadingText:(NSString *) headText ValueText:(NSString *) valText ValueColor:(UIColor *) color W:(float)wOverride;
-+(NSString *) fetchSegmentSeats:(NSString *)seatDescription NumberOfSeatsDesired:(int) numberOfSeatsDesired FrontToBack:(BOOL) isForward JustTheOne:(int) segmentPosition;
++(NSString *) fetchSegmentSeats:(NSString *)seatDescription NumberOfSeatsDesired:(NSUInteger) numberOfSeatsDesired FrontToBack:(BOOL) isForward JustTheOne:(int) segmentPosition;
 
 -(void) configureHeadingCell:(TrainGroupedCell*)cell atIndexPath:(NSIndexPath *)indexPath;
 @end

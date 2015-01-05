@@ -13,9 +13,9 @@
 @interface EditInlineCell : UITableViewCell <UITextFieldDelegate>{
     UITextField         *txt;
     MobileViewController *__weak parentVC;
-    int                 rowPos;
+    NSUInteger                 rowPos;
 }
-@property int rowPos;
+@property NSUInteger rowPos;
 @property (strong, nonatomic) IBOutlet UITextField *txt;
 @property (weak, nonatomic) MobileViewController *parentVC; // Do not use retain because parentVC retains the cell, and circular retains (where the cell also retains parentVC) will prevent either from ever getting released.
 

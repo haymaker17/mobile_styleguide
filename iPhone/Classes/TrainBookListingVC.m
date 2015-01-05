@@ -335,7 +335,7 @@
 			train.fltNum = @"--";
 		
 		NSString *numLegs = @"1";
-		numLegs = [NSString stringWithFormat:@"%d", [segmentDepart.trains count]];
+		numLegs = [NSString stringWithFormat:@"%lu", (unsigned long)[segmentDepart.trains count]];
 		
 		cell.lblTrain.text = [NSString stringWithFormat:@"Train %@, #Legs: %@", train.fltNum, numLegs];
 		//NSLog(@"Rail END");
@@ -422,7 +422,7 @@
 			train.fltNum = @"--";
 		
 		NSString *numLegs = @"1";
-		numLegs = [NSString stringWithFormat:@"%d", [segmentDepart.trains count]];
+		numLegs = [NSString stringWithFormat:@"%lu", (unsigned long)[segmentDepart.trains count]];
 		
 		cell.lblTrain.text = [NSString stringWithFormat:@"Train %@, #Legs: %@", train.fltNum, numLegs];
 		
@@ -454,7 +454,7 @@
 		if(train.fltNum == nil)
 			train.fltNum = @"--";
 		
-		numLegs = [NSString stringWithFormat:@"%d", [segmentDepart.trains count]];
+		numLegs = [NSString stringWithFormat:@"%lu", (unsigned long)[segmentDepart.trains count]];
 		
 		cell.lblTrainR.text = [NSString stringWithFormat:@"Train %@, #Legs: %@", train.fltNum, numLegs];
 		//cell.lblTrain.text = [NSString stringWithFormat:@"Train %@", train.fltNum];
@@ -641,7 +641,7 @@
 	tsvc.lblStation.text = stationDepart;
 	
 	NSString *numLegs = @"1";
-	numLegs = [NSString stringWithFormat:@"%d", [segmentDepart.trains count]];
+	numLegs = [NSString stringWithFormat:@"%lu", (unsigned long)[segmentDepart.trains count]];
 	tsvc.lblLegs.text = [NSString stringWithFormat:[Localizer getLocalizedText:@"Legs: token"], numLegs];
 	tsvc.lblTrain.text = [NSString stringWithFormat:[Localizer getLocalizedText:@"Train: token"], train.fltNum];
 	

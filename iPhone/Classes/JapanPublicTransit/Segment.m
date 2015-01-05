@@ -27,8 +27,8 @@
 }
 
 - (NSString *)description {
-    return [NSString stringWithFormat: @"Segment: { from: %@, to: %@, line: %@, fare: %d, minutes: %d }",
-            self.fromStation, self.toStation, self.line, self.fare, self.minutes];
+    return [NSString stringWithFormat: @"Segment: { from: %@, to: %@, line: %@, fare: %lu, minutes: %lu }",
+            self.fromStation, self.toStation, self.line, (unsigned long)self.fare, (unsigned long)self.minutes];
 }
 
 - (NSUInteger)totalCharge {

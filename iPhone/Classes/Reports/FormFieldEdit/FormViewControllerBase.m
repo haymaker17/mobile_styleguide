@@ -117,7 +117,7 @@ int kAlertViewReceiptUploadMessage = 101795;
         const int kButtonA2RW_Max = 100;
         const int kButtonA2RW_Min = 80; //40;
         
-        int count = [self.navigationController.viewControllers count];
+        NSUInteger count = [self.navigationController.viewControllers count];
         // TODO : count-2 could be negative
         UIViewController *parentView = self.navigationController.viewControllers[MAX(0,count-2)];
 
@@ -537,7 +537,7 @@ int kAlertViewReceiptUploadMessage = 101795;
             nodeTexts = [field.fieldValue componentsSeparatedByString:@"\t"];
 		}
 		NSMutableArray *fieldsToUpdate = [[NSMutableArray alloc] initWithObjects:field, nil];
-		int levelsUpdated = nodeKeys == nil? 1 : [nodeKeys count];
+		NSUInteger levelsUpdated = nodeKeys == nil? 1 : [nodeKeys count];
 		
 		// if isMru, then we need to make sure the first level is in the form.
 		BOOL canProceed = YES;
@@ -1230,8 +1230,8 @@ int kAlertViewReceiptUploadMessage = 101795;
 
 - (void)pickedDate:(NSDate *)dateSelected
 {
-	int section = [pickerPopOverVC.indexPath section];
-	int row = [pickerPopOverVC.indexPath row];
+	NSInteger section = [pickerPopOverVC.indexPath section];
+	NSInteger row = [pickerPopOverVC.indexPath row];
 	
 	NSString* sectionKey = (section >= [sections count])? nil : sections[section];
 	NSArray* fields = (sectionKey == nil)? nil : sectionFieldsMap[sectionKey];
@@ -1252,7 +1252,7 @@ int kAlertViewReceiptUploadMessage = 101795;
 {
 }
 
-- (void)pickedItem:(int)row
+- (void)pickedItem:(NSInteger)row
 {
 }
 
@@ -1474,12 +1474,12 @@ int kAlertViewReceiptUploadMessage = 101795;
 	self.actionAfterSave = 0;
 }
 
--(BOOL)isSaveConfirmDialog:(int) tag
+-(BOOL)isSaveConfirmDialog:(NSInteger) tag
 {
 	return tag == kAlertViewConfirmSaveUponBack;
 }
 
--(BOOL)isReceiptUploadAlertTag:(int) tag
+-(BOOL)isReceiptUploadAlertTag:(NSInteger) tag
 {
 	return tag == kAlertViewReceiptUploadMessage;
 }
@@ -1511,17 +1511,17 @@ int kAlertViewReceiptUploadMessage = 101795;
             //			[self.tableList reloadData];
 		}		
 	}
-	else if ([self isSaveConfirmDialog:alertView.tag])
+	else if ([self isSaveConfirmDialog:(int)alertView.tag])
 	{
 		self.isFromAlert = YES;
 		if (buttonIndex == 1) // Yes
 		{
-			self.actionAfterSave = alertView.tag;
+			self.actionAfterSave = (int)alertView.tag;
 			[self actionSaveImpl];
 		}
 		else if (buttonIndex == 2) // No
 		{
-			self.actionAfterSave = alertView.tag;
+			self.actionAfterSave = (int)alertView.tag;
 			[self initFields];  // Revert changes back
             isRevertBack = TRUE;
 			if (self.actionAfterSave == kActionAfterSaveDefault)

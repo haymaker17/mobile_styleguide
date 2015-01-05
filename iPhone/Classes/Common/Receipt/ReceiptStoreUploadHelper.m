@@ -164,7 +164,7 @@
     
     if (viewControllers != nil && [viewControllers count] >= 1)
     {
-        int count = [viewControllers count];
+        NSUInteger count = [viewControllers count];
         topVC = viewControllers[count - 1];
         
         if ([topVC isKindOfClass:[ReceiptEditorVC class]])

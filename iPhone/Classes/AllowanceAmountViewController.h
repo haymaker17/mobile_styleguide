@@ -14,7 +14,7 @@
 
 @property NSString *amount;
 @property NSString *meal;
-@property NSInteger *section;
+@property NSUInteger *section;
 @property NSString *mode;
 
 

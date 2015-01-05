@@ -95,7 +95,7 @@
 	}
     
     // ##TODO## to move it
-    NSDictionary *dictionary = @{@"Count": [NSString stringWithFormat:@"%d", [entry.items count]]};
+    NSDictionary *dictionary = @{@"Count": [NSString stringWithFormat:@"%lu", (unsigned long)[entry.items count]]};
     [Flurry logEvent:@"Report Entry: Itemized Entry List" withParameters:dictionary];
 	
     self.sections = newSections;
@@ -237,7 +237,7 @@
 		else 
 		{
 			// update previous screens.
-			int vcCount = [self.navigationController.viewControllers count];
+			NSUInteger vcCount = [self.navigationController.viewControllers count];
 			int stIx = [UIDevice isPad]?0:2;
 			for (int ix = stIx ; ix < vcCount; ix++ )
 			{

@@ -78,7 +78,7 @@
 
 -(void)setupNaviBar
 {
-    int count = [self.navigationController.viewControllers count];
+    NSInteger count = [self.navigationController.viewControllers count];
     int viewIndex = 0;
 	for (int ix = 0; ix <count; ix++)
 	{

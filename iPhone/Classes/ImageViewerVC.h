@@ -16,14 +16,14 @@
 	NSMutableArray			*imageArray;
 	IBOutlet UIPageControl* pageControl;
 	BOOL pageControlIsChangingPage;
-	int						pagePos;
+	NSInteger						pagePos;
 }
 
 @property (strong, nonatomic) IBOutlet UIScrollView				*scroller;
 @property (strong, nonatomic) IBOutlet UIToolbar				*tb;
 @property (strong, nonatomic) IBOutlet NSMutableArray			*imageArray;
 @property (nonatomic, strong) UIPageControl* pageControl;
-@property int pagePos;
+@property NSInteger pagePos;
 
 -(IBAction) closeMe;
 -(void) manipulateImages;

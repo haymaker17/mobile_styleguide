@@ -150,12 +150,12 @@
 #pragma mark - AddToReport Stuff
 #define kButtonA2RW 110
 #define kButtonA2RH 30
--(UIBarButtonItem *)makeAddAttendeeButton:(int)count 
+-(UIBarButtonItem *)makeAddAttendeeButton:(NSInteger)count
 {
     NSString *addText = count == -2? [@"Select Attendee to Add" localize] : [Localizer getLocalizedText:@"Add Attendee"];
     
     if(count > 0)
-        addText = [NSString stringWithFormat:@"%@ (%d)", addText, count];
+        addText = [NSString stringWithFormat:@"%@ (%ld)", addText, (long)count];
     //CGFloat fontSize = 13.0;
     
     CGSize textSize = [addText sizeWithFont:[UIFont boldSystemFontOfSize:12]];
@@ -188,7 +188,7 @@
     return nil;
 }
 
--(void) updateAddAttendeeButton:(int) count
+-(void) updateAddAttendeeButton:(NSInteger) count
 {
 	UIBarButtonItem *btnSelect = [self makeAddAttendeeButton:count];
 	UIBarButtonItem *flexibleSpace = [UIBarButtonItem alloc];
@@ -389,7 +389,7 @@
 		}
 	}
 	
-    int lineCount = self.atnColumns == nil? 0 : [self.atnColumns count];
+    NSUInteger lineCount = self.atnColumns == nil? 0 : [self.atnColumns count];
     // Line 0-1 should not be empty - default to FullName/Company if no column definition.
     NSString* name = lineCount >0?[atn getNonNullableValueForFieldId:((FormFieldData*)(self.atnColumns)[0]).iD]
                 :[atn getFullName];

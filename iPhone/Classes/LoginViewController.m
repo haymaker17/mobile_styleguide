@@ -285,7 +285,7 @@ typedef enum authType
 
     if([self isLoadedFromStoryboard])
     {
-     	NSLog(@"Loaded from StoryBoard: %hhd", [self isLoadedFromStoryboard]);
+        NSLog(@"Loaded from StoryBoard: %@", [self isLoadedFromStoryboard] ? @"YES" : @"NO");
         [self makeStoryBoardLabels];
     }
 }
@@ -858,18 +858,7 @@ typedef enum authType
         self.secret = self.txtPasswordField.text;
         [self.txtPasswordField resignFirstResponder];
     }
-    if (self.authenticationType == AuthenticationTypePinOrPassword)
-    {
-        NSDictionary *dict = @{@"Type": @"pin or password"};
-    }
-    else if (self.authenticationType == AuthenticationTypePassword)
-    {
-        NSDictionary *dict = @{@"Type": @"password"};
-    }
-    else
-    {
-        NSDictionary *dict = @{@"Type": @"pin"};
-    }
+
     
     if (![ExSystem connectedToNetwork] && self.authenticationType == AuthenticationTypePinOrPassword)
     {
@@ -926,7 +915,7 @@ typedef enum authType
         {
             // If pass/pin authenticated, then check the username is in the correct format
             NSUInteger occurs = [NSString findAllOccurrences:userId ofString:@"@"];
-            int firstOccurrence = [NSString findFirstOccurrence:userId ofString:@"@"];
+            NSUInteger firstOccurrence = [NSString findFirstOccurrence:userId ofString:@"@"];
             if (occurs != 1 || firstOccurrence < 1)
             {
                 // Inform the username of the correct username format

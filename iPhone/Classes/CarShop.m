@@ -45,11 +45,10 @@
 // Called after the car shop has been populated with the car choices returned from the server
 -(void)didPopulate
 {
-	int carCount = [carResults count];
 	
 	// For each CarResult object, create a corresponding Car object.
 	// The Cars array will have the same ordering as the CarResults array.
-	for (int i = 0; i < carCount; i++)
+	for (int i = 0; i < [carResults count]; i++)
 	{
 		Car *car = [[Car alloc] init];
 		car.carShop = self;

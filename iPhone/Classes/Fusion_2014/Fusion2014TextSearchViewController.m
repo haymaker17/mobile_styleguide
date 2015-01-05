@@ -182,7 +182,7 @@
         cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:@"ConversationCell"];
     }
     
-    int index = indexPath.row;
+    NSInteger index = indexPath.row;
     
     CXStatement *statement = [CXConversationManager.sharedInstance statementAtIndex:index];
     
@@ -214,7 +214,7 @@
 #pragma mark - UITableViewDelegate
 
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath {
-    int index = indexPath.row;
+    NSInteger index = indexPath.row;
     
     CXStatement *statement = [CXConversationManager.sharedInstance statementAtIndex:index];
     

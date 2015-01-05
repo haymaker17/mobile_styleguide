@@ -70,7 +70,7 @@
     if ([self.sourceSections containsObject:self.officeLocationCells]) {
         [self.delegate dataSourceWillChangeData:self] ;
         [self.officeLocationCells removeAllObjects];
-        int index = [self.sourceSections indexOfObject:self.officeLocationCells];
+        NSUInteger index = [self.sourceSections indexOfObject:self.officeLocationCells];
         [self.sourceSections removeObject:self.officeLocationCells];
         [self.delegate dataSource:self didChangeSection:self.officeLocationsSectionInfo atIndex:index forChangeType:kDataSourceChangeDelete];
         [self.delegate dataSourceDidChangeContent:self];

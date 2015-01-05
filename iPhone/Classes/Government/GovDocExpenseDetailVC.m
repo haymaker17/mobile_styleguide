@@ -117,7 +117,7 @@
         const int kButtonA2RW_Max = 100;
         const int kButtonA2RW_Min = 80; //40;
         
-        int count = [self.navigationController.viewControllers count];
+        NSUInteger count = [self.navigationController.viewControllers count];
         // TODO : count-2 could be negative
         UIViewController *parentView = self.navigationController.viewControllers[MAX(0,count-2)];
         

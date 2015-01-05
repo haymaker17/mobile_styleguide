@@ -190,7 +190,7 @@
 {
 	if (form == nil || form.atnTypeKey == nil || form.fields == nil)
 	{
-		int fieldCount = ((form == nil || form.fields == nil) ? -1 : [form.fields count]);
+		int fieldCount = ((form == nil || form.fields == nil) ? -1 : (int)[form.fields count]);
 		[[MCLogging getInstance] log:[NSString stringWithFormat:@"AttendeeData.newAttendeeFromAttendeeForm: failed to create attende form, atnTypeKey = %@, field count: %i ", form.atnTypeKey, fieldCount] Level:MC_LOG_DEBU];
 		return nil;
 	}

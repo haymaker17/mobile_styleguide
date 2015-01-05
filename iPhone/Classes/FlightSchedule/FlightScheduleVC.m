@@ -300,8 +300,8 @@
 
 - (void)configureCell:(FlightScheduleCell *)cell atIndexPath:(NSIndexPath *)indexPath
 {
-    int row = [indexPath row];
-    NSString* cellId = [NSString stringWithFormat:@"%d", row];
+    NSInteger row = [indexPath row];
+    NSString* cellId = [NSString stringWithFormat:@"%ld", (long)row];
     
     FSSegmentOption *flightOption = (FSSegmentOption*)flightOptions[row];
     cell.lblAirline.text = [flightOption carrierText];
@@ -328,7 +328,7 @@
         flightMinutes = flightMinutes - (flightHours * 60);
     NSString *dur = [NSString stringWithFormat:@"%dh %dm", flightHours, flightMinutes];
     
-    int numStops = [flightOption.flights count] - 1;
+    int numStops =  (int)[flightOption.flights count] - 1;
     int numSeats = 9999;
     
     

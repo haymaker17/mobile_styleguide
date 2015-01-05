@@ -132,7 +132,7 @@
         NSString *localizedDescription = (error.localizedDescription == nil ? @"": error.localizedDescription);
         NSString *localizedFailureReason = (error.localizedFailureReason == nil ? @"" : error.localizedFailureReason);
         
-        NSString *errorMessage = [NSString stringWithFormat:@"IgniteChatterFeedData::respondToXMLData: Error code = %i, domain = %@, description = %@, failure reason = %@", error.code, errorDomain, localizedDescription, localizedFailureReason];
+        NSString *errorMessage = [NSString stringWithFormat:@"IgniteChatterFeedData::respondToXMLData: Error code = %li, domain = %@, description = %@, failure reason = %@", (long)error.code, errorDomain, localizedDescription, localizedFailureReason];
         
         [[MCLogging getInstance] log:errorMessage Level:MC_LOG_ERRO];
         return;

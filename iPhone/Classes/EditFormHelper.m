@@ -258,7 +258,7 @@
         else if ([@"INTEGER" isEqualToString:fld.dataType] && [@"edit" isEqualToString:fld.ctrlType])
         {
         	// MOB-14437 - this ensures that the value is verified for zero and negative values
-            int intVal = [trimmedVal integerValue];
+            int intVal = [trimmedVal intValue];
             if (![self validateInteger:trimmedVal required:fReq missingReq:missingReqFields integerValue:&intVal field:(FormFieldData*)fld])
             {
                 result = FALSE;

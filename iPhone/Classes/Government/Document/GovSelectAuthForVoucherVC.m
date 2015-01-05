@@ -81,7 +81,7 @@
             // Need to remove the document from GovSelectAuthForVoucher
             // request document list again (see GovDocumentListVC.m)
             NSMutableDictionary *pBag = [[NSMutableDictionary alloc] initWithObjectsAndKeys:@"YES", @"REFRESHING", nil];
-            int vcIdx = [self.navigationController.viewControllers count]-1;
+            NSInteger vcIdx = [self.navigationController.viewControllers count] - 1;
             GovDocumentListVC *presentingVC = (GovDocumentListVC *)[self.navigationController.viewControllers objectAtIndex:vcIdx - 1];
             [[ExSystem sharedInstance].msgControl createMsg:GOV_DOCUMENTS_AUTH_FOR_VCH CacheOnly:@"NO" ParameterBag:pBag SkipCache:YES RespondTo:presentingVC];
             

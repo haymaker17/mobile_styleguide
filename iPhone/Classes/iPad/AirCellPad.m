@@ -38,7 +38,7 @@
 {
 
 	UIButton *btn = (UIButton *)sender;
-	int aPos = btn.tag;
+	NSInteger aPos = btn.tag;
 
 	WebViewController *webView = [[WebViewController alloc] init];
 	webView.rootViewController = rootVC;

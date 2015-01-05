@@ -196,7 +196,7 @@
 	lblText.numberOfLines = 1;
 	lblText.lineBreakMode = NSLineBreakByWordWrapping;
 	lblText.textAlignment = NSTextAlignmentCenter;
-    lblText.text = [NSString stringWithFormat:@"%d %@ %@", [self.carsInOriginalOrder count], [Localizer getLocalizedText:@"results by"], sortName];
+    lblText.text = [NSString stringWithFormat:@"%lu %@ %@", (unsigned long)[self.carsInOriginalOrder count], [Localizer getLocalizedText:@"results by"], sortName];
 
     if(![ExSystem is7Plus])
 	{

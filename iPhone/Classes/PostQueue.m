@@ -226,7 +226,7 @@ static PostQueue * sharedInstance = nil;
     if (self.postMsgs == nil)
         return 0;
     else {
-        return [self.postMsgs count];
+        return (int)[self.postMsgs count];
     }
 }
 

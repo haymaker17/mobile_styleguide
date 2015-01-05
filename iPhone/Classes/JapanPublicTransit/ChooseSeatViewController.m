@@ -97,7 +97,7 @@
     
     if (seatType != nil) {
         [[NSNotificationCenter defaultCenter] postNotificationName:@"SeatType"
-                                                            object:[NSNumber numberWithInt:[indexPath row]]];
+                                                            object:[NSNumber numberWithInteger:[indexPath row]]];
     }
     
     [[self navigationController] popViewControllerAnimated:YES];

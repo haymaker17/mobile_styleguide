@@ -363,12 +363,12 @@
         if ([menuId isEqualToString:kSection_PerDiem])
         {
             gdddCell.textLabel.text = [kSection_PerDiem localize];
-            gdddCell.detailTextLabel.text = [NSString stringWithFormat:@"(%d)", [self.doc.perdiemTDY count]];
+            gdddCell.detailTextLabel.text = [NSString stringWithFormat:@"(%lu)", (unsigned long)[self.doc.perdiemTDY count]];
         }
         else if ([menuId isEqualToString:kSection_Expenses])
         {
             gdddCell.textLabel.text = [kSection_Expenses localize];
-            gdddCell.detailTextLabel.text = [NSString stringWithFormat:@"(%d)", [self.doc.expenses count]];
+            gdddCell.detailTextLabel.text = [NSString stringWithFormat:@"(%lu)", (unsigned long)[self.doc.expenses count]];
         }
         else if ([menuId isEqualToString:kSection_Accounting])
             gdddCell.textLabel.text = [kSection_Accounting localize];

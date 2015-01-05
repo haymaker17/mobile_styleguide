@@ -178,7 +178,7 @@ typedef void (^SpeechDidFinishBlock)(void);
         cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:@"ConversationCell"];
     }
     
-    int index = indexPath.row;
+    NSInteger index = indexPath.row;
     
     CXStatement *statement = [CXConversationManager.sharedInstance statementAtIndex:index];
     
@@ -210,9 +210,9 @@ typedef void (^SpeechDidFinishBlock)(void);
 #pragma mark - UITableViewDelegate
 
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath {
-    int index = indexPath.row;
+
     
-    CXStatement *statement = [CXConversationManager.sharedInstance statementAtIndex:index];
+    CXStatement *statement = [CXConversationManager.sharedInstance statementAtIndex:indexPath.row];
     
     float h = [CXSpeechBubbleView heightForText:statement.text withWidth:self.tableView.frame.size.width];
 

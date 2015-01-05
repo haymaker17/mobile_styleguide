@@ -2046,8 +2046,8 @@ int sectionCorpReport = 1;
 	NSArray *sortedKeys = [holdKeys sortedArrayUsingSelector:@selector(caseInsensitiveCompare:)];
 	
 	holdKeys = [[NSMutableArray alloc] init];
-	int cnt = [sortedKeys count];
-	for (int x = 0; x < cnt; x++)
+	
+	for (int x = 0; x < [sortedKeys count]; x++)
 	{
 		NSString *sortedDate = sortedKeys[x];
 		[holdKeys addObject:[DateTimeFormatter formatDateForTravel:sortedDate]];
@@ -2429,7 +2429,7 @@ int sectionCorpReport = 1;
 {
 	int count;
 	CGRect frame;
-	count = [[scroller subviews] count];
+	count = (int)[[scroller subviews] count];
 	frame = CGRectMake(padding + (offset+buttonWidth)*count, 0, buttonWidth, buttonHeight);
     
 	if ((count + 1) > 3) //we are inserting the 4th and beyond, so we need to see if there are 3 already in there.
@@ -3577,7 +3577,7 @@ int sectionCorpReport = 1;
 	else
 		[self makeHomeButtons:NO ViewToAddTo:vc];
 	
-	int numButtons = [aBtns count]; //need to initially ask about roles...
+	NSUInteger numButtons = [aBtns count]; //need to initially ask about roles...
     
     if ([[ExSystem sharedInstance] hasRole:ROLE_GOVERNMENT_USER])
         viewW = GSA_HOME_BUTTON_WIDTH;

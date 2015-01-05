@@ -100,10 +100,10 @@
     
     // As we move toward more generalized IPM, we now just decrement badge count.
     //
-    int badgeCount = [[UIApplication sharedApplication] applicationIconBadgeNumber];
+    NSInteger badgeCount = [[UIApplication sharedApplication] applicationIconBadgeNumber];
     
     if (badgeCount > 0) {
-        int newBadgeCount = badgeCount - 1;
+        NSInteger newBadgeCount = badgeCount - 1;
         
         [[UIApplication sharedApplication] setApplicationIconBadgeNumber:newBadgeCount];
     }

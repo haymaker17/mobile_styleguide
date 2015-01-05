@@ -38,7 +38,7 @@
 	// Return to the view from which we originated
 	if([UIDevice isPad])
 	{
-		int parentIndex = [self.navigationController.viewControllers count] - 2;
+		int parentIndex = (int)[self.navigationController.viewControllers count] - 2;
 		
 		UIViewController *vc = (self.navigationController.viewControllers)[parentIndex];
 		MobileViewController *mvc = (MobileViewController *)vc;
@@ -181,7 +181,7 @@
     
     if(airShopFilteredResultsVC != nil)
     {
-        [airShopFilteredResultsVC chooseCard:row];
+        [airShopFilteredResultsVC chooseCard:(int)row];
     }
 	[self closeView];
 }

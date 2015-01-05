@@ -67,7 +67,7 @@
 #pragma mark Parsing
 - (void)parser:(NSXMLParser *)parser parseErrorOccurred:(NSError *)parseError 
 {
-	NSString * errorString = [NSString stringWithFormat:@"Unable to get load attendee form (Error code %i )", [parseError code]];
+	NSString * errorString = [NSString stringWithFormat:@"Unable to get load attendee form (Error code %li )", (long)[parseError code]];
 	NSLog(@"error parsing XML: %@", errorString);
 }
 

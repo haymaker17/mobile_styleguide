@@ -656,8 +656,8 @@ const NSString *allItemsKey = @"All Items";
 	BOOL listValueFound = NO;
 	if (self.searchResults != nil && [self.searchResults count]>0)
 	{
-		int nCount = [self.searchResults count];
-		for (int ix = 0; ix < nCount; ix++)
+
+		for (int ix = 0; ix < [self.searchResults count]; ix++)
 		{
 			ListItem* li = (self.searchResults)[ix];
 			if (li != nil && [li.liName caseInsensitiveCompare:self.field.fieldValue]==NSOrderedSame)
@@ -681,13 +681,13 @@ const NSString *allItemsKey = @"All Items";
 
 -(BOOL) enoughTextChange:(NSString*) sText
 {
-	int sLen = [sText length];
-	int cLen = self.searchText == nil? 0 : [self.searchText length];
+	NSUInteger sLen = [sText length];
+	NSUInteger cLen = self.searchText == nil? 0 : [self.searchText length];
 	if (sLen > cLen + 2 || sLen < cLen -2)
 		return YES;
 	
-	int minLen = sLen > cLen? cLen:sLen;
-	int maxLen = sLen > cLen? sLen:cLen;
+	NSUInteger minLen = sLen > cLen? cLen:sLen;
+	NSUInteger maxLen = sLen > cLen? sLen:cLen;
 	int firstDiffPos = 0;
 	for (int firstDiffPos = 0; firstDiffPos <minLen; firstDiffPos++)
 	{

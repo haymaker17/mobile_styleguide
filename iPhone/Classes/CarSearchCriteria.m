@@ -53,7 +53,7 @@
 	if (hourInTwelve == 0)
 		hourInTwelve = 12;
 	
-	NSString* hourString = [NSString stringWithFormat:@"%i %@", hourInTwelve, hourType];
+	NSString* hourString = [NSString stringWithFormat:@"%li %@", (long)hourInTwelve, hourType];
 	return hourString;
 }
 
@@ -302,7 +302,7 @@
 	NSString* carTypeCode = lastCar.carTypeCode; // [lastCar objectForKey:@"CAR_TYPE_CODE"];
 	if (carTypeCode != nil)
 	{
-		int numCarTypes = [carTypeCodes count];
+		NSUInteger numCarTypes = [carTypeCodes count];
 		for (int i = 0; i < numCarTypes; i++)
 		{
 			NSString *eachCarTypeCode = carTypeCodes[i];

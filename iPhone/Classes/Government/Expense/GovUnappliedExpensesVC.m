@@ -84,7 +84,7 @@
     [super viewDidAppear:animated];
     
     NSMutableDictionary *param = [NSMutableDictionary dictionary];
-    param[@"Count"] = [NSNumber numberWithInt:[[self.fetchedResultsController fetchedObjects] count]];
+    param[@"Count"] = [NSNumber numberWithInteger:[[self.fetchedResultsController fetchedObjects] count]];
 
     if (self.isAddingMode)          // add expense to document
     {
@@ -226,7 +226,7 @@
     [cell layoutWithSelect:self.isAddingMode];
     
     NSUInteger row = [indexPath row];
-    NSString *sRow = [NSString stringWithFormat:@"%d", row];
+    NSString *sRow = [NSString stringWithFormat:@"%lu", (unsigned long)row];
     
     if (self.isAddingMode)
         [cell selectCell:[selectedRows objectForKey:sRow] != nil];
@@ -269,7 +269,7 @@
     
     if (self.isAddingMode)      //show toggle selection with empty check mark
     {
-        NSString *sRow = [NSString stringWithFormat:@"%d", row];
+        NSString *sRow = [NSString stringWithFormat:@"%lu", (unsigned long)row];
         
         if ([selectedRows objectForKey:sRow] != nil)
             [selectedRows removeObjectForKey:sRow];         //de-select
@@ -304,7 +304,7 @@
 {
     NSUInteger row = [indexPath row];
     
-    NSString *sRow = [NSString stringWithFormat:@"%d", row];
+    NSString *sRow = [NSString stringWithFormat:@"%lu", (unsigned long)row];
     
     if ([selectedRows objectForKey:sRow] != nil)
         [selectedRows removeObjectForKey:sRow];         //de-select
@@ -560,7 +560,7 @@
     NSUInteger row = 0;
     for ( id oneObject in [self.fetchedResultsController fetchedObjects])
     {
-        NSString *sRow = [NSString stringWithFormat:@"%d", row];
+        NSString *sRow = [NSString stringWithFormat:@"%lu",(unsigned long) row];
         [selectedRows setObject:sRow forKey:sRow];
         row ++;
     }
@@ -578,7 +578,7 @@
 #pragma mark - attach expense UI set up
 -(void)makeSelectAllButtons
 {
-    int selCount = [selectedRows count];
+    int selCount = (int)[selectedRows count];
 	if(selCount == 0)
 		selCount = -1;
     
@@ -594,7 +594,7 @@
 
 -(void)makeUnSelectAllButtons
 {
-    int selCount = [selectedRows count];
+    int selCount = (int)[selectedRows count];
 	if(selCount == 0)
 		selCount = -1;
 	
@@ -620,7 +620,7 @@
 {
     if (isAddingMode)
     {
-        int selCount = [selectedRows count];
+        NSUInteger selCount = [selectedRows count];
         if(selCount == 0)
             selCount = -1;
         
@@ -641,12 +641,12 @@
     }
 }
 
--(UIBarButtonItem *)makeAddToVoucherButton:(int)count
+-(UIBarButtonItem *)makeAddToVoucherButton:(NSInteger)count
 {
     NSString *addText = [Localizer getLocalizedText:@"Add to Document"];
     
     if(count > 0)
-        addText = [NSString stringWithFormat:@"%@ (%d)", addText, count];
+        addText = [NSString stringWithFormat:@"%@ (%ld)", addText, (long)count];
     
     if ([ExSystem is7Plus])
     {
@@ -696,7 +696,7 @@
     }
     else
     {
-        int vcCount = [self.navigationController.viewControllers count];
+        NSUInteger vcCount = [self.navigationController.viewControllers count];
         for (int ix = 0 ; ix < vcCount; ix++ )
         {
             MobileViewController *vc = (MobileViewController *)[self.navigationController.viewControllers objectAtIndex:ix];

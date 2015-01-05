@@ -291,7 +291,7 @@
         if([ExSystem connectedToNetwork])
             isOffline = @"Yes";
 
-        NSDictionary *dict = @{@"Was Offline": isOffline, @"Queue Count": [NSString stringWithFormat: @"%i", [fetchedResultsController.fetchedObjects count]]};
+        NSDictionary *dict = @{@"Was Offline": isOffline, @"Queue Count": [NSString stringWithFormat: @"%lu", (unsigned long)[fetchedResultsController.fetchedObjects count]]};
         [Flurry logEvent:@"Offline: Delete" withParameters:dict];
         
         if ([[UploadQueue sharedInstance] visibleQueuedItemCount] == 0) {

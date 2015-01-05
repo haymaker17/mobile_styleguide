@@ -111,7 +111,7 @@ static NSMutableDictionary* formFieldXmlToPropertyMap = nil;
 
 +(NSMutableDictionary*) makeFieldDict:(NSArray*)fields
 {
-	int numFields = [fields count];
+	NSUInteger numFields = [fields count];
 	__autoreleasing NSMutableDictionary *dict = [[NSMutableDictionary alloc] initWithCapacity:(numFields > 0 ? numFields : 1)];
 	for (FormFieldData* field in fields)
 	{
