@@ -98,3 +98,12 @@ xcuserdata
 !Podfile.lock
 !Manifest.lock
 !Pods/Headers/Build
+
+#-----------------------------------------------------------------------------
+# JetBrains AppCode working directories
+#-----------------------------------------------------------------------------
+
+# ignore the configuration and temp files for AppCode
+
+.idea/
+iPhone/.idea/
