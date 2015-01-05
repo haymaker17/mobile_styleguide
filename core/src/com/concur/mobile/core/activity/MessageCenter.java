@@ -78,7 +78,7 @@ public class MessageCenter extends AbstractIpmMsgProgress {
         ListItemAdapter<MessageCenterListItem> adapter = new ListItemAdapter<MessageCenterListItem>(this, msgList, 1);
 
         // list view after dfp adview
-        ListView listView = (ListView) this.findViewById(R.id.msgCenterList);
+        ListView listView = (ListView) findViewById(R.id.msgCenterList);
         listView.setAdapter(adapter);
 
     }
