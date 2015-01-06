@@ -104,7 +104,7 @@ public class TravelViolationsForManagerApproval extends TravelBaseActivity {
         };
 
         LayoutUtil.layoutViolations(TravelViolationsForManagerApproval.this, violations, reasonCodeChoices, reasonCode,
-                violationClickListener, justificationText);
+                violationClickListener, justificationText, getTravelViolationJustificationCustomText());
     }
 
     @Override

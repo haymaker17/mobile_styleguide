@@ -53,6 +53,7 @@ import com.concur.mobile.core.data.SystemConfig;
 import com.concur.mobile.core.service.ConcurService;
 import com.concur.mobile.core.travel.activity.TravelCustomFieldsView.TravelCustomFieldHint;
 import com.concur.mobile.core.travel.data.AffinityProgram;
+import com.concur.mobile.core.travel.data.CustomTravelText;
 import com.concur.mobile.core.travel.data.HotelBenchmark;
 import com.concur.mobile.core.travel.data.IItineraryCache;
 import com.concur.mobile.core.travel.data.PreSellOption;
@@ -1243,7 +1244,16 @@ public class TravelBaseActivity extends BaseActivity {
             }
             case Const.DIALOG_TRAVEL_VIOLATION_JUSTIFICATION: {
                 AlertDialog.Builder dlgBldr = new AlertDialog.Builder(this);
-                dlgBldr.setTitle(R.string.general_provide_violation_justification);
+
+                // modified for MOB-15666
+                final String customText = getTravelViolationJustificationCustomText();
+                if (customText == null) {
+                    // if no custom travel text then show the general title
+                    dlgBldr.setTitle(R.string.general_provide_violation_justification);
+                } else {
+                    dlgBldr.setTitle(customText);
+                }
+
                 dlgBldr.setCancelable(true);
                 dlgBldr.setOnCancelListener(new OnCancelListener() {
 
@@ -1258,7 +1268,8 @@ public class TravelBaseActivity extends BaseActivity {
                         removeDialog(Const.DIALOG_TRAVEL_VIOLATION_JUSTIFICATION);
                         if (textEdit.getText() != null) {
                             justificationText = textEdit.getText().toString().trim();
-                            LayoutUtil.updateViolationJustificationView(TravelBaseActivity.this, justificationText);
+                            LayoutUtil.updateViolationJustificationView(TravelBaseActivity.this, justificationText,
+                                    customText);
                             needsViolationJustification = false;
                         }
                         lastChangedText = null;
@@ -2072,7 +2083,7 @@ public class TravelBaseActivity extends BaseActivity {
             };
 
             LayoutUtil.layoutViolations(this, getViolations(), reasonCodeChoices, reasonCode, violationClickListener,
-                    justificationText);
+                    justificationText, getTravelViolationJustificationCustomText());
         }
     }
 
@@ -3367,7 +3378,8 @@ public class TravelBaseActivity extends BaseActivity {
             if (violationsViewGroupVisible) {
                 // just update the reason code selected, justification text and the violation messages
                 LayoutUtil.updateViolationReasonChoiceView(TravelBaseActivity.this, reasonCode);
-                LayoutUtil.updateViolationJustificationView(TravelBaseActivity.this, justificationText);
+                LayoutUtil.updateViolationJustificationView(TravelBaseActivity.this, justificationText,
+                        getTravelViolationJustificationCustomText());
             } else {
                 // Construct the violation message click listener.
                 OnClickListener violationClickListener = new OnClickListener() {
@@ -3385,7 +3397,7 @@ public class TravelBaseActivity extends BaseActivity {
 
                 // add the views
                 LayoutUtil.layoutViolations(this, getViolations(), reasonCodeChoices, reasonCode,
-                        violationClickListener, justificationText);
+                        violationClickListener, justificationText, getTravelViolationJustificationCustomText());
             }
         }
 
@@ -3583,6 +3595,24 @@ public class TravelBaseActivity extends BaseActivity {
             TravelBaseActivity.this.startActivityForResult(travelViolationsActivity,
                     Const.REQUEST_CODE_USE_TRAVEL_POINTS);
         }
+    }
+
+    // get the custom text for the travel violation justification
+    public String getTravelViolationJustificationCustomText() {
+        String text = null;
+
+        CustomTravelText customTravelText = ((ConcurCore) getApplication()).getUserConfig().customTravelText;
+        if (customTravelText != null) {
+            if (getBookingType().toString().equalsIgnoreCase("Air")) {
+                text = customTravelText.airRulesViolationText;
+            } else if (getBookingType().toString().equalsIgnoreCase("Hotel")) {
+                text = customTravelText.hotelRulesViolationText;
+            } else if (getBookingType().toString().equalsIgnoreCase("Car")) {
+                text = customTravelText.carRulesViolationText;
+            }
+        }
+
+        return text;
     }
 
 }

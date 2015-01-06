@@ -12,6 +12,7 @@ import com.concur.mobile.core.expense.data.ListItem;
 import com.concur.mobile.core.expense.report.data.AttendeeType;
 import com.concur.mobile.core.expense.report.data.ExpenseConfirmation;
 import com.concur.mobile.core.travel.car.data.CarType;
+import com.concur.mobile.core.travel.data.CustomTravelText;
 import com.concur.mobile.core.travel.data.TravelPointsConfig;
 import com.concur.mobile.core.view.SpinnerItem;
 
@@ -27,6 +28,7 @@ public class UserConfig {
     public ArrayList<ListItem> yodleePaymentTypes;
     public TravelPointsConfig travelPointsConfig;
     public boolean showGDSNameInSearchResults;
+    public CustomTravelText customTravelText;
 
     /**
      * Contains the server computed hash code for the information contained in this user configuration object.

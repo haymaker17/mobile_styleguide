@@ -17,6 +17,7 @@ import com.concur.mobile.core.expense.data.ListItem;
 import com.concur.mobile.core.expense.report.data.AttendeeType;
 import com.concur.mobile.core.expense.report.data.ExpenseConfirmation;
 import com.concur.mobile.core.travel.car.data.CarType;
+import com.concur.mobile.core.travel.data.CustomTravelText;
 import com.concur.mobile.core.travel.data.TravelPointsConfig;
 import com.concur.mobile.platform.util.Parse;
 
@@ -74,6 +75,12 @@ public class UserConfigReply extends ServiceReply {
         private static final String TRAVEL_POINTS_CONFIG = "TravelPointsConfig";
         // MOB-15911 - flag to show GDSNames in travel search results - only for DEV & QA
         private static final String SHOW_GDS_NAME = "showGDSNameInSearchResults";
+
+        private static final String CUSTOM_TRAVEL_TEXT = "CustomTravelText";
+        private static final String AIR__RULES_VIOLATION_TEXT = "AirRulesViolationText";
+        private static final String HOTEL_RULES_VIOLATION_TEXT = "HotelRulesViolationText";
+        private static final String CAR_RULES_VIOLATION_TEXT = "CarRulesViolationText";
+
         // Fields to help parsing
         private StringBuilder chars;
 
@@ -87,6 +94,7 @@ public class UserConfigReply extends ServiceReply {
         private boolean inExpensePolicies;
         private boolean inYodleePaymentTypes;
         private boolean inTravelPointsConfig;
+        private boolean inCustomTravelText;
 
         // Holders for our parsed data
         private UserConfigReply reply;
@@ -98,6 +106,7 @@ public class UserConfigReply extends ServiceReply {
         private ExpensePolicy expensePolicy;
         private ListItem listItem;
         private TravelPointsConfig tpConfig;
+        private CustomTravelText customTravelText;
 
         protected UserConfigReply getReply() {
             return reply;
@@ -172,6 +181,9 @@ public class UserConfigReply extends ServiceReply {
             } else if (localName.equalsIgnoreCase(TRAVEL_POINTS_CONFIG)) {
                 inTravelPointsConfig = true;
                 tpConfig = new TravelPointsConfig();
+            } else if (localName.equalsIgnoreCase(CUSTOM_TRAVEL_TEXT)) {
+                inCustomTravelText = true;
+                customTravelText = new CustomTravelText();
             }
         }
 
@@ -306,6 +318,18 @@ public class UserConfigReply extends ServiceReply {
                 }
             } else if (localName.equalsIgnoreCase(SHOW_GDS_NAME)) {
                 reply.config.showGDSNameInSearchResults = Parse.safeParseBoolean(cleanChars);
+            } else if (inCustomTravelText) {
+                if (localName.equalsIgnoreCase(CUSTOM_TRAVEL_TEXT)) {
+                    inCustomTravelText = false;
+                    reply.config.customTravelText = customTravelText;
+                }
+                if (localName.equalsIgnoreCase(AIR__RULES_VIOLATION_TEXT)) {
+                    customTravelText.airRulesViolationText = cleanChars;
+                } else if (localName.equalsIgnoreCase(HOTEL_RULES_VIOLATION_TEXT)) {
+                    customTravelText.hotelRulesViolationText = cleanChars;
+                } else if (localName.equalsIgnoreCase(CAR_RULES_VIOLATION_TEXT)) {
+                    customTravelText.carRulesViolationText = cleanChars;
+                }
             } else if (localName.equalsIgnoreCase(RESPONSE)) {
                 // No-op.
             } else {

@@ -51,7 +51,7 @@ public class LayoutUtil {
      */
     public static void layoutViolations(final Activity activity, List<Violation> violations,
             final SpinnerItem[] reasonCodeChoices, SpinnerItem curReasonCode, OnClickListener violationClickListener,
-            String curJustificationText) {
+            String curJustificationText, String customJustificationText) {
 
         if (violations != null && violations.size() > 0) {
             // First, set up the violation reason selection UI.
@@ -138,7 +138,12 @@ public class LayoutUtil {
                     // Set the field name.
                     TextView txtView = (TextView) justificationView.findViewById(R.id.field_name);
                     if (txtView != null) {
-                        txtView.setText(R.string.general_violation_justification);
+                        // if custom justification text available then show it otherwise show general label
+                        if (customJustificationText == null) {
+                            txtView.setText(R.string.general_violation_justification);
+                        } else {
+                            txtView.setText(customJustificationText);
+                        }
                     } else {
                         Log.e(Const.LOG_TAG, CLS_TAG + ".layoutViolations: unable to locate 'field_name' view!");
                     }
@@ -157,7 +162,7 @@ public class LayoutUtil {
                     }
 
                     // Initialize the view.
-                    updateViolationJustificationView(activity, curJustificationText);
+                    updateViolationJustificationView(activity, curJustificationText, customJustificationText);
                     // Set the click handler.
                     justificationView.setOnClickListener(new OnClickListener() {
 
@@ -187,7 +192,8 @@ public class LayoutUtil {
     }
 
     public static void layoutViolationsForTravelPoints(final Activity activity, List<Violation> violations,
-            final SpinnerItem[] reasonCodeChoices, SpinnerItem curReasonCode, String curJustificationText) {
+            final SpinnerItem[] reasonCodeChoices, SpinnerItem curReasonCode, String curJustificationText,
+            String customJustificationText) {
 
         if (violations != null && violations.size() > 0) {
             // First, set up the violation reason selection UI.
@@ -274,7 +280,13 @@ public class LayoutUtil {
                     // Set the field name.
                     TextView txtView = (TextView) justificationView.findViewById(R.id.field_name);
                     if (txtView != null) {
-                        txtView.setText(R.string.general_violation_justification);
+                        // if custom justification text available then show it otherwise show general label
+                        if (customJustificationText == null) {
+                            txtView.setText(R.string.general_violation_justification);
+                        } else {
+                            txtView.setText(customJustificationText);
+                        }
+
                     } else {
                         Log.e(Const.LOG_TAG, CLS_TAG + ".layoutViolations: unable to locate 'field_name' view!");
                     }
@@ -293,7 +305,7 @@ public class LayoutUtil {
                     }
 
                     // Initialize the view.
-                    updateViolationJustificationView(activity, curJustificationText);
+                    updateViolationJustificationView(activity, curJustificationText, customJustificationText);
                     // Set the click handler.
                     justificationView.setOnClickListener(new OnClickListener() {
 
@@ -412,14 +424,20 @@ public class LayoutUtil {
     /**
      * Will update the violation justification view based on the value of <code>justificationText</code>.
      */
-    public static void updateViolationJustificationView(Activity activity, String justificationText) {
+    public static void updateViolationJustificationView(Activity activity, String justificationText,
+            String justificationCustomText) {
         View justificationView = activity.findViewById(R.id.violation_justification);
         if (justificationView != null) {
             TextView txtView = (TextView) justificationView.findViewById(R.id.field_value);
             if (justificationText != null) {
                 txtView.setText(justificationText);
             } else {
-                txtView.setText(R.string.general_specify_justification);
+                // if there is a custom justification text then do not show the please specify
+                if (justificationCustomText == null) {
+                    txtView.setText(R.string.general_specify_justification);
+                } else {
+                    txtView.setText("");
+                }
             }
         } else {
             Log.e(Const.LOG_TAG, CLS_TAG
