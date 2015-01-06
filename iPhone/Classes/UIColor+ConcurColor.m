@@ -92,15 +92,30 @@
 }
 
 
-+ (UIColor *)textLabelForm{
-	return [UIColor colorWithRed:102 / 255.0f
-						   green:102 / 255.0f
-							blue:102 / 255.0f
-						   alpha:1.0f];
++ (UIColor *)textFormInput{
+    return [UIColor colorWithRed:0 / 255.0f
+                           green:0 / 255.0f
+                            blue:0 / 255.0f
+                           alpha:1.0f];
+}
+
++ (UIColor *)textFormInputRW{
+    return [UIColor colorWithRed:0 / 255.0f
+                           green:120 / 255.0f
+                            blue:200 / 255.0f
+                           alpha:1.0f];
 }
 
 
-+ (UIColor *)textLabelFormInvalid{
++ (UIColor *)textFormLabel{
+    return [UIColor colorWithRed:102 / 255.0f
+                           green:102 / 255.0f
+                            blue:102 / 255.0f
+                           alpha:1.0f];
+}
+
+
++ (UIColor *)textFormLabelInvalid{
 	return [UIColor colorWithRed:255 / 255.0f
 						   green:0 / 255.0f
 							blue:0 / 255.0f
@@ -184,6 +199,20 @@
     return [UIColor colorWithRed:247 / 255.0f
                            green:250 / 255.0f
                             blue:253 / 255.0f
+                           alpha:1.0f];
+}
+
++ (UIColor *)backgroundFormCellLineSeparator{
+    return [UIColor colorWithRed:247 / 255.0f
+                           green:250 / 255.0f
+                            blue:253 / 255.0f
+                           alpha:1.0f];
+}
+
++ (UIColor *)borderFormCellLineSeparator{
+    return [UIColor colorWithRed:230 / 255.0f
+                           green:230 / 255.0f
+                            blue:230 / 255.0f
                            alpha:1.0f];
 }
 

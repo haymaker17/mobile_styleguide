@@ -10,7 +10,15 @@
 
 @protocol FFFormProtocol <NSObject>
 
--(void)becomeDirty;
+
+/*
+ * used to open external editor
+ */
 -(void)pushEditViewController:(UIViewController*)editViewController;
+
+/*
+ * depop keyboard if up
+ */
+-(void)viewEndEditing;
 
 @end

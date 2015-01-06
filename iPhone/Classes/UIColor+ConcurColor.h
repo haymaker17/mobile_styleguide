@@ -72,16 +72,30 @@
 /*
  * text color
  * Used for label on form (normal mode)
+ * 0,0,0
+ */
++ (UIColor *)textFormInput;
+
+/*
+ * text color
+ * Used for label on form (normal mode)
+ * 0,120,200
+ */
++ (UIColor *)textFormInputRW;
+
+/*
+ * text color
+ * Used for label on form (normal mode)
  * 102,102,102
  */
-+ (UIColor *)textLabelForm;
++ (UIColor *)textFormLabel;
 
 /*
  * text color
  * Used for label on form (invalid mode)
  * 255,0,0
  */
-+ (UIColor *)textLabelFormInvalid;
++ (UIColor *)textFormLabelInvalid;
 
 
 /*
@@ -165,10 +179,26 @@
 
 
 /*
+ * background color
+ * used for line separator in tableview form
+ * 247,250,253
+ */
++ (UIColor *)backgroundFormCellLineSeparator;
+
+
+
+/*
  *********************************************
  *  B O R D E R    C O L O R
  *********************************************
  */
+
+/*
+ * line separator to separate 2 values horizontaly in a form cell
+ * gray 247, 250, 253
+ */
++ (UIColor *)borderFormCellLineSeparator;
+
 
 /*
  * light border color

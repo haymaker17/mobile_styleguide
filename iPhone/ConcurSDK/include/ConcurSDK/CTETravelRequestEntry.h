@@ -9,79 +9,77 @@
 //
 
 #import <Foundation/Foundation.h>
+#import "CTEDataTypes.h"
 @class CTETravelRequestDigestCellInfos;
-@class CTETravelRequestComment;
+@class CTEComment;
 
 @interface CTETravelRequestEntry : NSObject
 
-@property (copy, nonatomic) NSString *ExpenseTypeName;
-@property (copy, nonatomic) NSString *ExchangeRate;
-@property (copy, nonatomic) NSString *ForeignAmount; //transactionAmount
-@property (copy, nonatomic) NSString *ForeignCurrencyName;
-@property (copy, nonatomic) NSString *ForeignCurrencyCode;
-@property (copy, nonatomic) NSString *PostedAmount;
-@property (copy, nonatomic) NSString *ApprovedAmount;
-@property (copy, nonatomic) NSString *RemainingAmount;
-@property (copy, nonatomic) NSString *TransactionDate;
-@property (copy, nonatomic) NSString *LastModifiedDate;
-@property (copy, nonatomic) NSString *CommentCount;
-@property (copy, nonatomic) NSArray *CommentsList;
-@property (copy, nonatomic) NSString *ExceptionCount;
-@property (copy, nonatomic) NSArray *ExceptionsList;
-@property (copy, nonatomic) NSString *AllocationCount;
-@property (copy, nonatomic) NSArray *AllocationsList;
-@property (copy, nonatomic) NSString *SegmentCount;
-@property (copy, nonatomic) NSArray *SegmentsList;
-@property (copy, nonatomic) NSString *CashAdvanceCount;
-@property (copy, nonatomic) NSString *OrgUnit1;
-@property (copy, nonatomic) NSString *OrgUnit2;
-@property (copy, nonatomic) NSString *OrgUnit3;
-@property (copy, nonatomic) NSString *OrgUnit4;
-@property (copy, nonatomic) NSString *OrgUnit5;
-@property (copy, nonatomic) NSString *OrgUnit6;
-@property (copy, nonatomic) NSString *Custom1;
-@property (copy, nonatomic) NSString *Custom2;
-@property (copy, nonatomic) NSString *Custom3;
-@property (copy, nonatomic) NSString *Custom4;
-@property (copy, nonatomic) NSString *Custom5;
-@property (copy, nonatomic) NSString *Custom6;
-@property (copy, nonatomic) NSString *Custom7;
-@property (copy, nonatomic) NSString *Custom8;
-@property (copy, nonatomic) NSString *Custom9;
-@property (copy, nonatomic) NSString *Custom10;
-@property (copy, nonatomic) NSString *Custom11;
-@property (copy, nonatomic) NSString *Custom12;
-@property (copy, nonatomic) NSString *Custom13;
-@property (copy, nonatomic) NSString *Custom14;
-@property (copy, nonatomic) NSString *Custom15;
-@property (copy, nonatomic) NSString *Custom16;
-@property (copy, nonatomic) NSString *Custom17;
-@property (copy, nonatomic) NSString *Custom18;
-@property (copy, nonatomic) NSString *Custom19;
-@property (copy, nonatomic) NSString *Custom20;
-@property (copy, nonatomic) NSString *Custom21;
-@property (copy, nonatomic) NSString *Custom22;
-@property (copy, nonatomic) NSString *Custom23;
-@property (copy, nonatomic) NSString *Custom24;
-@property (copy, nonatomic) NSString *Custom25;
-@property (copy, nonatomic) NSString *Custom26;
-@property (copy, nonatomic) NSString *Custom27;
-@property (copy, nonatomic) NSString *Custom28;
-@property (copy, nonatomic) NSString *Custom29;
-@property (copy, nonatomic) NSString *Custom30;
-@property (copy, nonatomic) NSString *Custom31;
-@property (copy, nonatomic) NSString *Custom32;
-@property (copy, nonatomic) NSString *Custom33;
-@property (copy, nonatomic) NSString *Custom34;
-@property (copy, nonatomic) NSString *Custom35;
-@property (copy, nonatomic) NSString *Custom36;
-@property (copy, nonatomic) NSString *Custom37;
-@property (copy, nonatomic) NSString *Custom38;
-@property (copy, nonatomic) NSString *Custom39;
-@property (copy, nonatomic) NSString *Custom40;
+@property (copy, nonatomic) CTEDataTypes *ExpenseTypeName;
+@property (copy, nonatomic) CTEDataTypes *ExchangeRate;
+@property (copy, nonatomic) CTEDataTypes *ForeignAmount; //transactionAmount
+@property (copy, nonatomic) CTEDataTypes *ForeignCurrencyName;
+@property (copy, nonatomic) CTEDataTypes *ForeignCurrencyCode;
+@property (copy, nonatomic) CTEDataTypes *PostedAmount;
+@property (copy, nonatomic) CTEDataTypes *ApprovedAmount;
+@property (copy, nonatomic) CTEDataTypes *RemainingAmount;
+@property (copy, nonatomic) CTEDataTypes *TransactionDate;
+@property (copy, nonatomic) CTEDataTypes *LastModifiedDate;
+@property (copy, nonatomic) NSArray *Comments;
+@property (copy, nonatomic) NSArray *Exceptions;
+@property (copy, nonatomic) NSArray *Allocations;
+@property (copy, nonatomic) NSArray *Segments;
+@property (copy, nonatomic) CTEDataTypes *OrgUnit1;
+@property (copy, nonatomic) CTEDataTypes *OrgUnit2;
+@property (copy, nonatomic) CTEDataTypes *OrgUnit3;
+@property (copy, nonatomic) CTEDataTypes *OrgUnit4;
+@property (copy, nonatomic) CTEDataTypes *OrgUnit5;
+@property (copy, nonatomic) CTEDataTypes *OrgUnit6;
+@property (copy, nonatomic) CTEDataTypes *Custom1;
+@property (copy, nonatomic) CTEDataTypes *Custom2;
+@property (copy, nonatomic) CTEDataTypes *Custom3;
+@property (copy, nonatomic) CTEDataTypes *Custom4;
+@property (copy, nonatomic) CTEDataTypes *Custom5;
+@property (copy, nonatomic) CTEDataTypes *Custom6;
+@property (copy, nonatomic) CTEDataTypes *Custom7;
+@property (copy, nonatomic) CTEDataTypes *Custom8;
+@property (copy, nonatomic) CTEDataTypes *Custom9;
+@property (copy, nonatomic) CTEDataTypes *Custom10;
+@property (copy, nonatomic) CTEDataTypes *Custom11;
+@property (copy, nonatomic) CTEDataTypes *Custom12;
+@property (copy, nonatomic) CTEDataTypes *Custom13;
+@property (copy, nonatomic) CTEDataTypes *Custom14;
+@property (copy, nonatomic) CTEDataTypes *Custom15;
+@property (copy, nonatomic) CTEDataTypes *Custom16;
+@property (copy, nonatomic) CTEDataTypes *Custom17;
+@property (copy, nonatomic) CTEDataTypes *Custom18;
+@property (copy, nonatomic) CTEDataTypes *Custom19;
+@property (copy, nonatomic) CTEDataTypes *Custom20;
+@property (copy, nonatomic) CTEDataTypes *Custom21;
+@property (copy, nonatomic) CTEDataTypes *Custom22;
+@property (copy, nonatomic) CTEDataTypes *Custom23;
+@property (copy, nonatomic) CTEDataTypes *Custom24;
+@property (copy, nonatomic) CTEDataTypes *Custom25;
+@property (copy, nonatomic) CTEDataTypes *Custom26;
+@property (copy, nonatomic) CTEDataTypes *Custom27;
+@property (copy, nonatomic) CTEDataTypes *Custom28;
+@property (copy, nonatomic) CTEDataTypes *Custom29;
+@property (copy, nonatomic) CTEDataTypes *Custom30;
+@property (copy, nonatomic) CTEDataTypes *Custom31;
+@property (copy, nonatomic) CTEDataTypes *Custom32;
+@property (copy, nonatomic) CTEDataTypes *Custom33;
+@property (copy, nonatomic) CTEDataTypes *Custom34;
+@property (copy, nonatomic) CTEDataTypes *Custom35;
+@property (copy, nonatomic) CTEDataTypes *Custom36;
+@property (copy, nonatomic) CTEDataTypes *Custom37;
+@property (copy, nonatomic) CTEDataTypes *Custom38;
+@property (copy, nonatomic) CTEDataTypes *Custom39;
+@property (copy, nonatomic) CTEDataTypes *Custom40;
 
--(CTETravelRequestDigestCellInfos *)getDigestCellInfos;
--(CTETravelRequestComment *)getLastComment;
-- (id)valueForUndefinedKey:(NSString *)key;
+-(CTETravelRequestDigestCellInfos*)getDigestCellInfos;
+-(CTEComment *)getLastComment;
+- (NSString*)segmentFormID;
+
+- (id)valueForUndefinedKey:(NSString*)key;
 
 @end

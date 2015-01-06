@@ -7,17 +7,18 @@
 //
 
 #import <Foundation/Foundation.h>
+#import "CTEDataTypes.h"
 @class CTETravelRequestEntry;
 
 @interface CTETravelRequestDigestCellInfos : NSObject
 
-@property (strong, nonatomic) NSString *Icon;
-@property (strong, nonatomic) NSString *SegmentName;
-@property (strong, nonatomic) NSString *Amount;
-@property (strong, nonatomic) NSString *CurrencyCode;
-@property (strong, nonatomic) NSString *EarlyDate;
-@property (strong, nonatomic) NSString *Location1;
-@property (strong, nonatomic) NSString *Location2;
+@property (copy, nonatomic) CTEDataTypes *Icon;
+@property (copy, nonatomic) CTEDataTypes *SegmentName;
+@property (copy, nonatomic) CTEDataTypes *Amount;
+@property (copy, nonatomic) CTEDataTypes *CurrencyCode;
+@property (copy, nonatomic) CTEDataTypes *EarlyDate;
+@property (copy, nonatomic) CTEDataTypes *Location1;
+@property (copy, nonatomic) CTEDataTypes *Location2;
 
 -(id)initWithEntry:(CTETravelRequestEntry *)entry;
 

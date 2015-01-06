@@ -9,73 +9,82 @@
 //
 
 #import <Foundation/Foundation.h>
+#import "CTEDataTypes.h"
+
 @class CTEError;
-@class CTETravelRequestComment;
+@class CTEComment;
+@class CTEUserAction;
 
 @interface CTETravelRequest : NSObject
 
-@property (copy, nonatomic) NSString *UserLoginId;
-@property (copy, nonatomic) NSString *ApproverLoginId;
-@property (copy, nonatomic) NSString *RequestId;
-@property (copy, nonatomic) NSString *Name;
-@property (copy, nonatomic) NSString *Purpose;
-@property (copy, nonatomic) NSString *CurrencyCode;
-@property (copy, nonatomic) NSString *CreationDate;
-@property (copy, nonatomic) NSString *HasException;
-@property (copy, nonatomic) NSString *EverSentBack;
-@property (copy, nonatomic) NSString *EmployeeName; //EmpName
-@property (copy, nonatomic) NSString *HeaderFormKey;
-@property (copy, nonatomic) NSString *ApprovalStatusName;
-@property (copy, nonatomic) NSString *ApprovalStatusCode;
-@property (copy, nonatomic) NSString *AuthorizedDate;
-@property (copy, nonatomic) NSString *SubmitDate;
-@property (copy, nonatomic) NSString *TotalPostedAmount;
-@property (copy, nonatomic) NSString *TotalApprovedAmount;
-@property (copy, nonatomic) NSString *TotalRemainingAmount;
-@property (copy, nonatomic) NSString *ApprovalLimitDate;
-@property (copy, nonatomic) NSString *AgencyOfficeName;
-@property (copy, nonatomic) NSString *StartDate;
-@property (copy, nonatomic) NSString *EndDate;
-@property (copy, nonatomic) NSString *StartTime;
-@property (copy, nonatomic) NSString *EndTime;
-@property (copy, nonatomic) NSString *ExtensionOf;
-@property (copy, nonatomic) NSString *LastModifiedDate;
-@property (copy, nonatomic) NSString *CommentCount;
-@property (copy, nonatomic) NSArray *CommentsList;
-@property (copy, nonatomic) NSString *ExceptionCount;
-@property (copy, nonatomic) NSArray *ExceptionsList;
-@property (copy, nonatomic) NSString *EntryCount;
-@property (copy, nonatomic) NSArray *EntriesList;
-@property (copy, nonatomic) NSString *CashAdvanceCount;
-@property (copy, nonatomic) NSArray *CashAdvancesList;
-@property (copy, nonatomic) NSString *Custom1;
-@property (copy, nonatomic) NSString *Custom2;
-@property (copy, nonatomic) NSString *Custom3;
-@property (copy, nonatomic) NSString *Custom4;
-@property (copy, nonatomic) NSString *Custom5;
-@property (copy, nonatomic) NSString *Custom6;
-@property (copy, nonatomic) NSString *Custom7;
-@property (copy, nonatomic) NSString *Custom8;
-@property (copy, nonatomic) NSString *Custom9;
-@property (copy, nonatomic) NSString *Custom10;
-@property (copy, nonatomic) NSString *Custom11;
-@property (copy, nonatomic) NSString *Custom12;
-@property (copy, nonatomic) NSString *Custom13;
-@property (copy, nonatomic) NSString *Custom14;
-@property (copy, nonatomic) NSString *Custom15;
-@property (copy, nonatomic) NSString *Custom16;
-@property (copy, nonatomic) NSString *Custom17;
-@property (copy, nonatomic) NSString *Custom18;
-@property (copy, nonatomic) NSString *Custom19;
-@property (copy, nonatomic) NSString *Custom20;
-@property (copy, nonatomic) NSString *LastComment;
+@property (copy, nonatomic) CTEDataTypes *UserLoginID;
+@property (copy, nonatomic) CTEDataTypes *ApproverLoginID;
+@property (copy, nonatomic) CTEDataTypes *RequestID;
+@property (copy, nonatomic) CTEDataTypes *ArPolID;
+@property (copy, nonatomic) CTEDataTypes *ArPolName;
+@property (copy, nonatomic) CTEDataTypes *Name;
+@property (copy, nonatomic) CTEDataTypes *Purpose;
+@property (copy, nonatomic) CTEDataTypes *CurrencyCode;
+@property (copy, nonatomic) CTEDataTypes *CurrencyName;
+@property (copy, nonatomic) CTEDataTypes *CreationDate;
+@property (copy, nonatomic) CTEDataTypes *HasException;
+@property (copy, nonatomic) CTEDataTypes *EverSentBack;
+@property (copy, nonatomic) CTEDataTypes *EmployeeName; //EmpName
+@property (copy, nonatomic) CTEDataTypes *HeaderFormID;
+@property (copy, nonatomic) CTEDataTypes *AllocationFormID;
+@property (copy, nonatomic) CTEDataTypes *ApprovalStatusName;
+@property (copy, nonatomic) CTEDataTypes *ApprovalStatusCode;
+@property (copy, nonatomic) CTEDataTypes *AuthorizedDate;
+@property (copy, nonatomic) CTEDataTypes *SubmitDate;
+@property (copy, nonatomic) CTEDataTypes *TotalPostedAmount;
+@property (copy, nonatomic) CTEDataTypes *TotalApprovedAmount;
+@property (copy, nonatomic) CTEDataTypes *TotalRemainingAmount;
+@property (copy, nonatomic) CTEDataTypes *ApprovalLimitDate;
+@property (copy, nonatomic) CTEDataTypes *AgencyOfficeName;
+@property (copy, nonatomic) CTEDataTypes *StartDate;
+@property (copy, nonatomic) CTEDataTypes *EndDate;
+@property (copy, nonatomic) CTEDataTypes *StartTime;
+@property (copy, nonatomic) CTEDataTypes *EndTime;
+@property (copy, nonatomic) CTEDataTypes *TransactionDate;
+@property (copy, nonatomic) CTEDataTypes *ExtensionOf;
+@property (copy, nonatomic) CTEDataTypes *LastModifiedDate;
+@property (copy, nonatomic) NSArray *Comments;
+@property (copy, nonatomic) NSArray *Exceptions;
+@property (copy, nonatomic) NSArray *Entries;
+@property (copy, nonatomic) NSArray *CashAdvances;
+@property (copy, nonatomic) NSArray *UserActions;
+@property (copy, nonatomic) CTEDataTypes *Custom1;
+@property (copy, nonatomic) CTEDataTypes *Custom2;
+@property (copy, nonatomic) CTEDataTypes *Custom3;
+@property (copy, nonatomic) CTEDataTypes *Custom4;
+@property (copy, nonatomic) CTEDataTypes *Custom5;
+@property (copy, nonatomic) CTEDataTypes *Custom6;
+@property (copy, nonatomic) CTEDataTypes *Custom7;
+@property (copy, nonatomic) CTEDataTypes *Custom8;
+@property (copy, nonatomic) CTEDataTypes *Custom9;
+@property (copy, nonatomic) CTEDataTypes *Custom10;
+@property (copy, nonatomic) CTEDataTypes *Custom11;
+@property (copy, nonatomic) CTEDataTypes *Custom12;
+@property (copy, nonatomic) CTEDataTypes *Custom13;
+@property (copy, nonatomic) CTEDataTypes *Custom14;
+@property (copy, nonatomic) CTEDataTypes *Custom15;
+@property (copy, nonatomic) CTEDataTypes *Custom16;
+@property (copy, nonatomic) CTEDataTypes *Custom17;
+@property (copy, nonatomic) CTEDataTypes *Custom18;
+@property (copy, nonatomic) CTEDataTypes *Custom19;
+@property (copy, nonatomic) CTEDataTypes *Custom20;
+@property (copy, nonatomic) CTEDataTypes *LastComment;
 
 //virtual field to merge all segments type name on one string (localized)
-@property (copy, nonatomic) NSString *SegmentTypes;
+@property (copy, nonatomic) CTEDataTypes *SegmentTypes;
 
 @property (strong, nonatomic) CTEError *CteError;
 
--(CTETravelRequestComment *)getLastComment;
-- (id)valueForUndefinedKey:(NSString *)key;
+-(CTEComment *)getLastComment;
+
+-(BOOL)hasPermittedAction:(NSString*)action;
+-(CTEUserAction*)getAction:(NSString*)action;
+
+- (id)valueForUndefinedKey:(NSString*)key;
 
 @end

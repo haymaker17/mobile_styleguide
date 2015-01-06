@@ -52,7 +52,7 @@
 #import "SafariLoginViewController.h"
 #import "HotelSearchTableViewController.h"
 
-#import "ActiveRequestListViewController.h"
+#import "RequestListVC.h"
 
 #import "AnalyticsTracker.h"
 
@@ -721,7 +721,7 @@ This method actally removes the login view and not the home view itself
         
         //redirect to Travel Request List
         UIStoryboard *sb = [UIStoryboard storyboardWithName:@"TravelRequest" bundle:nil];
-        ActiveRequestListViewController *nextController = [sb instantiateViewControllerWithIdentifier:@"ActiveTravelRequestList"];
+        RequestListVC *nextController = [sb instantiateViewControllerWithIdentifier:@"TravelRequestList"];
 		
 		[nextController setCallerViewName:@"Home"];
         [self.navigationController pushViewController:nextController animated:NO];

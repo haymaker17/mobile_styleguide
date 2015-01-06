@@ -10,7 +10,6 @@
 
 #import <Foundation/Foundation.h>
 @class CTETravelRequest;
-@class CTEError;
 
 
 @interface CTETravelRequestSearch : NSObject

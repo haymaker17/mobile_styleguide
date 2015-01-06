@@ -7,15 +7,14 @@
 //
 
 #import <Foundation/Foundation.h>
-@class CTEField;
 @class CTEError;
 
 @interface CTEFormFields: NSObject
 
-@property (copy, nonatomic, readonly) NSString *formKey;
+@property (copy, nonatomic, readonly) NSString *formID;
 @property (strong, nonatomic) CTEError *cteError;
 
--(CTEFormFields*)formbyKey:(NSString*)formKey;
+-(CTEFormFields*)formbyID:(NSString*)formID;
 -(NSArray*)fieldsOrdered;
 
 @end
