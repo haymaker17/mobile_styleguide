@@ -28,15 +28,17 @@
 
 // data we need to reserve
 @property (nonatomic, readonly, weak) CTEHotelRate *selectedRate;
+@property (nonatomic, strong) HotelSearchCriteriaV2 *searchCriteria;
 @end
 
 @implementation HotelRoomReserveViewController
 
-- (id)initWithSelectedRate:(CTEHotelRate *)selectedRate
+- (id)initWithSelectedRate:(CTEHotelRate *)selectedRate searchCriteria:(HotelSearchCriteriaV2 *)searchCriteria
 {
     self = [super initWithNibName:@"HotelRoomReserveViewController" bundle:nil];
     if (self) {
         _selectedRate = selectedRate;
+        _searchCriteria = searchCriteria;
     }
     return self;
 }
@@ -92,7 +94,7 @@
     __weak HotelRoomReserveViewController *weakSelf = self;
     _reserveView = [[[NSBundle mainBundle] loadNibNamed: @"HotelRoomReserveView" owner: self options: nil] objectAtIndex:0];
     if (self.reserveView) {
-        [self.reserveView setSelectedRate:self.selectedRate nextViewControllerBlock:^(UIViewController *nextViewController) {
+        [self.reserveView setSelectedRate:self.selectedRate searchCriteria:self.searchCriteria nextViewControllerBlock:^(UIViewController *nextViewController) {
             // this callback block pushes any screens that need to be pushed by the reserveView
             if (nextViewController) {
                 [weakSelf.navigationController pushViewController:nextViewController animated:YES];

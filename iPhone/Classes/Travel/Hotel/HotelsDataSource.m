@@ -16,7 +16,6 @@
 #import "CTEHotel.h"
 #import "CTEDateUtility.h"
 #import "CTENetworkSettings.h"
-#import "HotelSearchCriteriaV2.h"
 #import "LoadingSpinnerCellData.h"
 #import "AnalyticsTracker.h"
 
@@ -30,7 +29,6 @@
 @property (nonatomic, strong) NSMutableArray *searchResultListCopy;     // Copy of the result for filter
 
 @property (nonatomic, strong) SearchTableHeaderCellData *searchHeaderCellData ;
-@property (nonatomic, strong) HotelSearchCriteriaV2 *hotelSearchCriteria;
 
 // Internal Array to maintain sections
 // Each section consists of another Arry of objects.
@@ -53,7 +51,7 @@
 NSString* const CHECKIN_DATE_STRING = @"Check-In Date";
 NSString* const CHECKOUT_DATE_STRING = @"Check-Out Date";
 
--(instancetype)init
+-(instancetype)initWithSearchCriteria:(HotelSearchCriteriaV2 *)searchCriteria
 {
     self = [super init];
     
@@ -64,37 +62,49 @@ NSString* const CHECKOUT_DATE_STRING = @"Check-Out Date";
     self.searchResultList = [[NSMutableArray alloc] init];
     self.sourceSections = [[NSMutableArray alloc] init];
     self.sectionTitles = [[NSMutableArray alloc] init];
-    self.stayDurationInDays = 1;
     
-    // By default set the dates to tonight
-    _hotelSearchCriteria = [[HotelSearchCriteriaV2 alloc] init];
-    
-    CLLocation *currentLocation = [GlobalLocationManager sharedInstance].currentLocation;
-    // Set up search criteria
-    // Hotels for tonight. initialize hotelSearchCritera accordingly
-    NSDate *checkInDate = [CTEDateUtility addDaysToDate:[NSDate date] daysToAdd:0];
-    NSDate *checkOutDate = [CTEDateUtility addDaysToDate:checkInDate daysToAdd:1];
-    
-    
-    // First time get the current location by default.
-    //
-    if (currentLocation != nil) {
-        _hotelSearchCriteria.latitude = currentLocation.coordinate.longitude;
-        _hotelSearchCriteria.longitude = currentLocation.coordinate.latitude;
-
+    if (!searchCriteria) {
+        self.stayDurationInDays = 1;
+        
+        // By default set the dates to tonight
+        _hotelSearchCriteria = [[HotelSearchCriteriaV2 alloc] init];
+        
+        CLLocation *currentLocation = [GlobalLocationManager sharedInstance].currentLocation;
+        // Set up search criteria
+        // Hotels for tonight. initialize hotelSearchCritera accordingly
+        NSDate *checkInDate = [CTEDateUtility addDaysToDate:[NSDate date] daysToAdd:0];
+        NSDate *checkOutDate = [CTEDateUtility addDaysToDate:checkInDate daysToAdd:1];
+        
+        
+        // First time get the current location by default.
+        //
+        if (currentLocation != nil) {
+            _hotelSearchCriteria.latitude = currentLocation.coordinate.longitude;
+            _hotelSearchCriteria.longitude = currentLocation.coordinate.latitude;
+        }
+        
+        _hotelSearchCriteria.checkinDate = checkInDate;
+        _hotelSearchCriteria.checkoutDate = checkOutDate;
+        // default
+        _hotelSearchCriteria.distanceValue = 5;
+        _hotelSearchCriteria.hotelName = @"";
+    }
+    else {
+        _hotelSearchCriteria = searchCriteria;
+        self.stayDurationInDays = (int)[self daysBetweenDate:searchCriteria.checkinDate andDate:searchCriteria.checkoutDate];
     }
     
-    _hotelSearchCriteria.checkinDate = checkInDate;
-    _hotelSearchCriteria.checkoutDate = checkOutDate;
-    // default 
-    _hotelSearchCriteria.distanceValue = 5;
-    _hotelSearchCriteria.hotelName = @"";
 
     [self loadSearchHeaderCells];
     
     return self;
 
  }
+
+- (instancetype)init
+{
+    return [self initWithSearchCriteria:nil];
+}
 
 -(void)loadContent
 {
@@ -408,7 +418,7 @@ NSString* const CHECKOUT_DATE_STRING = @"Check-Out Date";
      _searchHeaderCellData = [[SearchTableHeaderCellData alloc] init];
     
     //default start with no location. if location service is available/ or if user chooses a location then it this will be updated with current location.
-      _searchHeaderCellData.location = [@"Choose a location" localize];
+    _searchHeaderCellData.location = self.hotelSearchCriteria.locationName ? self.hotelSearchCriteria.locationName : [@"Choose a location" localize];
     // SearchCriteria cells will have either header or criteria cells but not both.
     // Start with header first
      [self.searchCriteriaCells addObject:self.searchHeaderCellData];

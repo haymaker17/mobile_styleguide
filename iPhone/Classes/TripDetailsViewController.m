@@ -31,6 +31,7 @@
 #import "TripApproveOrReject.h"
 #import "AgencyAssistanceData.h"
 #import "TripViolationSummaryVC.h"
+#import "HotelSearchTableViewController.h"
 
 
 #import "GovTAField.h"
@@ -1441,6 +1442,10 @@
 
 	if ([@"Book Hotel" isEqualToString:[mas getButtonId:buttonIndex]])
     {
+        if ([Config isNewHotelBooking] && ![Config isGov]) {
+            [HotelSearchTableViewController showHotelSearchScreen:self.navigationController withSearchCriteria:[HotelSearchCriteriaV2 initializeDefaultsFromTripDictionary:pBag]];
+            return;
+        }
         mvc = [[HotelViewController alloc] initWithNibName:@"HotelViewController" bundle:nil];
         [(HotelViewController *)mvc setHideCustomFields:YES];
         if ([Config isGov])

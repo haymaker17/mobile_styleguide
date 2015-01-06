@@ -50,15 +50,17 @@ typedef void(^UpdateActiveFieldBlock)(UIView *activeField);
 
 // cannot have this stupid thing get dealloc'd
 @property (nonatomic, readonly, strong) HotelItineraryTransitionHack *itineraryTransitionHack;
+@property (nonatomic, strong) HotelSearchCriteriaV2 *searchCriteria;
 
 @end
 
 @implementation HotelRoomReserveView
 
 // this MUST be called before pushing the screen or else the screen will be useless
-- (void)setSelectedRate:(CTEHotelRate *)rate nextViewControllerBlock:(void (^)(UIViewController *nextViewController))nextViewControllerBlock updateActiveField:(void (^)(UIView *activeField))updateActiveField
+- (void)setSelectedRate:(CTEHotelRate *)rate searchCriteria:(HotelSearchCriteriaV2 *)searchCriteria nextViewControllerBlock:(void (^)(UIViewController *nextViewController))nextViewControllerBlock updateActiveField:(void (^)(UIView *activeField))updateActiveField
 {
     _selectedRate = rate;
+    _searchCriteria = searchCriteria;
     _nextViewControllerBlock = nextViewControllerBlock;
     _updateActiveFieldBlock = updateActiveField;
 
@@ -213,9 +215,7 @@ typedef void(^UpdateActiveFieldBlock)(UIView *activeField);
     [WaitViewController showWithText:@"Reserving Room" animated:YES];
 
     NSArray *violationReasons = [self getViolationReasonsFromViolationViews];
-    // Travel team!  I put this temporary change in just to make sure it compiles.  Please double check!  - Ernest
-    [self.selectedRate reserveWithCreditCard:self.selectedCreditCard violationReasons:violationReasons addToTrip:nil
-success:^(CTEHotelReserveConfirmation *reservation) {
+    [self.selectedRate reserveWithCreditCard:self.selectedCreditCard violationReasons:violationReasons addToTrip:self.searchCriteria.tripId success:^(CTEHotelReserveConfirmation *reservation) {
         [WaitViewController hideAnimated:YES withCompletionBlock:^{
             [self goToItineraryWithRecordLocator:reservation.recordLocator itineraryLocator:reservation.itineraryLocator];
         }];

@@ -236,7 +236,6 @@
      
      if ([dataObject.cellIdentifier isEqualToString:@"hotelDetailsFindRoomCell"]) {
          HotelDetailsFindRoomTableViewCell *tableViewCell = [self.tableView dequeueReusableCellWithIdentifier:@"hotelDetailsFindRoomCell" forIndexPath:indexPath];
-         HotelDetailsCellData *cellData = (HotelDetailsCellData *)dataObject;
          [tableViewCell setBtnFindRoomPressed:^{
              [self.tableData showRoomList];
          }];
@@ -276,7 +275,7 @@
         RoomsListCellData *data = [self.tableData itemAtIndexPath:indexPath];
         CTEHotelRate *selectedRate = [data getHotelRatesData];
         
-        HotelRoomReserveViewController *viewController = [[HotelRoomReserveViewController alloc] initWithSelectedRate:selectedRate];
+        HotelRoomReserveViewController *viewController = [[HotelRoomReserveViewController alloc] initWithSelectedRate:selectedRate searchCriteria:self.searchCriteria];
         [AnalyticsTracker logEventWithCategory:@"Hotel Booking" eventAction:@"Room Select" eventLabel: nil eventValue:nil];
         [self.navigationController pushViewController:viewController animated:YES];
     }

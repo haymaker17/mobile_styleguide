@@ -12,6 +12,7 @@
 
 //TODO: add location class
 // Sally: just add this for now, the latitude and longitude shoud be in Location class
+@property (nonatomic, strong) NSString  *locationName;
 @property double latitude;
 @property double longitude;
 @property double distanceValue;
@@ -22,7 +23,10 @@
 //
 // For Filter Use
 @property (strong, nonatomic) NSMutableDictionary *filterDict;
+@property (nonatomic, strong) NSString *tripId;
 
 -(BOOL) isHotelSearchCriteriaValid;
+
++ (HotelSearchCriteriaV2 *) initializeDefaultsFromTripDictionary:(NSDictionary *)pBag;
 
 @end

@@ -8,9 +8,10 @@
 
 #import <UIKit/UIKit.h>
 #import "CTEHotelRate.h"
+#import "HotelSearchCriteriaV2.h"
 
 @interface HotelRoomReserveViewController : UIViewController
 
-- (id)initWithSelectedRate:(CTEHotelRate *)selectedRate;
+- (id)initWithSelectedRate:(CTEHotelRate *)selectedRate searchCriteria:(HotelSearchCriteriaV2 *)searchCriteria;
 
 @end

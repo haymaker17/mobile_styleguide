@@ -11,6 +11,7 @@
 #import "ImageDownloaderOperation.h"
 #import "HotelRoomsListTableViewController.h"
 #import "OptionsSelectDelegate.h"
+#import "HotelSearchCriteriaV2.h"
 
 @interface HotelSearchTableViewController : UITableViewController <AbstractDataSourceDelegate, ImageDownloaderOperationDelegate, UIScrollViewDelegate, OptionsSelectDelegate>
 
@@ -18,5 +19,6 @@
 
 @property BOOL isSearchHotelsNearMeEnabled;
 +(void) showHotelsNearMe:(UINavigationController *)navi;
++(void) showHotelSearchScreen:(UINavigationController *)navi withSearchCriteria:(HotelSearchCriteriaV2 *)searchCriteria;
 
 @end

@@ -103,10 +103,13 @@
    
     self.title = @"Hotels";
     self.isSearchViewShowing = NO;
-    self.tableData = [[HotelsDataSource alloc] init];
+    BOOL isLocationPreset = [self.tableData.hotelSearchCriteria.locationName length];
+    if (!self.tableData) {
+        self.tableData = [[HotelsDataSource alloc] init];
+    }
 
     // Enable location services tracking, but dont get fire the search.
-    if (![ExSystem sharedInstance].isGovernment)
+    if (![ExSystem sharedInstance].isGovernment && !isLocationPreset)
     {
         // default value for BOOL property is NO,
         [self startListeningToCurrentLocationUpdates];
@@ -171,6 +174,13 @@
         // if hotels search near me is not enabled then show the search criteria.
     if (!self.isSearchHotelsNearMeEnabled) {
         [self toggleSearchCriteriaSection];
+        if (isLocationPreset) {
+            CTELocation *searchLocation = [[CTELocation alloc] init];
+            searchLocation.location = self.tableData.hotelSearchCriteria.locationName;
+            searchLocation.latitude = self.tableData.hotelSearchCriteria.latitude;
+            searchLocation.longitude = self.tableData.hotelSearchCriteria.longitude;
+            [self updateDestination:searchLocation];
+        }
     }
     
     [AnalyticsTracker initializeScreenName:@"Search Results/Criteria"];
@@ -878,10 +888,19 @@
 
 +(void) showHotelsNearMe:(UINavigationController *)navi
 {
+    [HotelSearchTableViewController showHotelSearchScreen:navi withSearchCriteria:nil];
+}
+
++(void) showHotelSearchScreen:(UINavigationController *)navi withSearchCriteria:(HotelSearchCriteriaV2 *)searchCriteria
+{
     HotelSearchTableViewController *hotelsNearMeTableViewController =
     [[UIStoryboard storyboardWithName:[@"HotelBookingFlow" storyboardName] bundle:nil] instantiateInitialViewController];
     
     hotelsNearMeTableViewController.title = @"Hotels";
+    if (searchCriteria) {
+        hotelsNearMeTableViewController.tableData = [[HotelsDataSource alloc] initWithSearchCriteria:searchCriteria];
+    }
+    
     // TODO : customize other stuff here like voice flags etc.
     //    hotelsNearMeTableViewController.category = EVA_HOTELS;
     [navi pushViewController:hotelsNearMeTableViewController animated:YES];
@@ -1016,6 +1035,7 @@
     if ([segue.identifier isEqualToString:@"hotelRoomsList"]) {
         HotelRoomsListTableViewController *roomsListViewController = segue.destinationViewController;
         roomsListViewController.hotelCellData = self.selectedHotelCellData;
+        roomsListViewController.searchCriteria = self.tableData.hotelSearchCriteria;
     }
 }
 

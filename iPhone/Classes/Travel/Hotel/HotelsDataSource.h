@@ -10,6 +10,7 @@
 #import "ConcreteDataSourceSectionInfo.h"
 #import "CTELocation.h"
 #import "CTEError.h"
+#import "HotelSearchCriteriaV2.h"
 
 @interface HotelsDataSource : AbstractDataSource
 
@@ -17,8 +18,10 @@
 @property (copy,nonatomic) void(^onSearchError)(NSString *error);
 @property (copy,nonatomic) void(^hideWaitView)();
 @property (copy,nonatomic) void(^afterDoneSearch)();
+@property (nonatomic, strong) HotelSearchCriteriaV2 *hotelSearchCriteria;
 @property BOOL searchDone;
 
+-(instancetype)initWithSearchCriteria:(HotelSearchCriteriaV2 *)searchCriteria;
 - (BOOL) isSearchCriteriaValid;
 - (BOOL) isSpecificCity;                   // Whether user choose city other than current location
 

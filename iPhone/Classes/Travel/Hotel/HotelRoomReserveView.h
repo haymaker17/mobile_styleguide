@@ -13,7 +13,7 @@
 
 @interface HotelRoomReserveView : UIView
 
-- (void)setSelectedRate:(CTEHotelRate *)rate nextViewControllerBlock:(void (^)(UIViewController *nextViewController))nextViewControllerBlock updateActiveField:(void (^)(UIView *activeField))updateActiveField;
+- (void)setSelectedRate:(CTEHotelRate *)rate searchCriteria:(HotelSearchCriteriaV2 *)searchCriteria nextViewControllerBlock:(void (^)(UIViewController *nextViewController))nextViewControllerBlock updateActiveField:(void (^)(UIView *activeField))updateActiveField;
 
 - (void)reserve;
 
