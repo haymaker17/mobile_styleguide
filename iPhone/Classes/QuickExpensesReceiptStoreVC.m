@@ -907,7 +907,7 @@ EditorMode;
             }
         }
 	}
-    [WaitViewController showWithText:@"Waiting" animated:YES fullScreen:NO];
+    [WaitViewController showWithText:[Localizer getLocalizedText:@"Waiting"] animated:YES fullScreen:NO];
    
 	if ([killMEKeys count] > 0)
 	{
