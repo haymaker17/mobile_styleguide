@@ -1076,8 +1076,27 @@
 
 - (NSIndexPath *)tableView:(UITableView *)tableView willSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    ItineraryStop *stop = [self.itinerary.stops objectAtIndex:indexPath.row];
-    if (stop.rowLocked)
+    if(indexPath.section == StopSection)
+    {
+        if(self.itinerary == nil)
+        {
+            return nil;
+        }
+        if(self.itinerary.stops == nil)
+        {
+            return nil;
+        }
+        if([self.itinerary.stops count] == 0)
+        {
+            return nil;
+        }
+        ItineraryStop *stop = [self.itinerary.stops objectAtIndex:indexPath.row];
+        if (stop.rowLocked)
+        {
+            return nil;
+        }
+    }
+    else
     {
         return nil;
     }
