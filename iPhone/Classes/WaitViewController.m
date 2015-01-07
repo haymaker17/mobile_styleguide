@@ -32,9 +32,23 @@
     return self;
 }
 
-+ (void)showWithText:(NSString*)text animated:(BOOL)animated{
++(void)showWithText:(NSString *)text animated:(BOOL)animated
+{
+    [self showWithText:text animated:animated fullScreen:YES];
+}
+
++(void)showWithText:(NSString*)text animated:(BOOL)animated fullScreen:(BOOL)isFullScreen
+{
     WaitViewController *wait = [WaitViewController sharedInstance];
-    wait.window = [[UIWindow alloc] initWithFrame:[[UIScreen mainScreen] bounds]];
+    CGRect bounds = [[UIScreen mainScreen] bounds];
+    
+    if (isFullScreen) {
+        wait.window = [[UIWindow alloc] initWithFrame:[[UIScreen mainScreen] bounds]];
+    }
+    else {
+        wait.window = [[UIWindow alloc] initWithFrame:CGRectMake(0, 64, bounds.size.width, (bounds.size.height - 64))];
+    }
+
     wait.window.autoresizingMask = UIViewAutoresizingFlexibleWidth|UIViewAutoresizingFlexibleHeight;
     wait.window.opaque = NO;
     wait.window.windowLevel = 1.3;

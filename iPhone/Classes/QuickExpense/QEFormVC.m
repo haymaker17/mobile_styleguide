@@ -27,6 +27,7 @@
 #import "ReportData.h"
 
 #import "HelpOverlayFactory.h"
+#import "WaitViewController.h"
 
 @interface QEFormVC ()
 -(void) showQueueAlert;
@@ -218,7 +219,7 @@
 
             if ([self isViewLoaded])
             {
-                [self hideWaitView];
+                [WaitViewController hideAnimated:YES withCompletionBlock:nil];
             }
             self.isSaving = NO;
 		}
@@ -237,7 +238,6 @@
                                              meKeys, @"ME_KEYS",
                                              nil];
                 pBag[@"RPT_KEY"] = self.selectedReport.rptKey;
-                //pBag[@"REPORT_NAME"] = self.selectedReport.reportName;
 
                 [[ExSystem sharedInstance].msgControl createMsg:ADD_TO_REPORT_DATA CacheOnly:@"NO" ParameterBag:pBag SkipCache:YES RespondTo:self];
             }
@@ -254,7 +254,7 @@
 
                 if ([self isViewLoaded])
                 {
-                    [self hideWaitView];
+                    [WaitViewController hideAnimated:YES withCompletionBlock:nil];
                 }
                 self.isSaving = NO;
                 
@@ -1123,8 +1123,7 @@
     else // Modified or made new quick expense while online
     {
         self.isSaving = YES;
-        
-        [self showWaitView];
+
         [self performSelector:@selector(forceSaveThread:) withObject:nil afterDelay:0.1f];
         
         // AJC - this needs to go into a Flurry class
@@ -1152,7 +1151,8 @@
 //thread routine
 -(void)saveOOPE:(id)sender
 {
-    [self showWaitViewWithText:[Localizer getLocalizedText:@"Saving Expense"]];
+    [WaitViewController showWithText:[Localizer getLocalizedText:@"Saving Expense"] animated:YES fullScreen:NO];
+
     [self processFieldsToEntry:nil];
     [self saveToMRU];
 

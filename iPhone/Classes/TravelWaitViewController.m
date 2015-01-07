@@ -65,7 +65,7 @@
     TravelWaitViewController *wait = [TravelWaitViewController sharedInstance];
     CGRect bounds = [[UIScreen mainScreen] bounds];
     if (isFullScreen) {
-        wait.window = wait.window = [[UIWindow alloc] initWithFrame:[[UIScreen mainScreen] bounds]];
+        wait.window = [[UIWindow alloc] initWithFrame:[[UIScreen mainScreen] bounds]];
     }
     else {
         wait.window = [[UIWindow alloc] initWithFrame:CGRectMake(0, 64, bounds.size.width, (bounds.size.height - 64))];

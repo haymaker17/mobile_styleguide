@@ -13,7 +13,13 @@
 @property (weak, nonatomic) IBOutlet UIActivityIndicatorView *spinnerView;
 @property (weak, nonatomic) IBOutlet UITextView *textView;
 
+// old version - full screen wait view
 + (void)showWithText:(NSString*)text animated:(BOOL)animated;
+
+// should use new version for wait view
++(void)showWithText:(NSString*)text animated:(BOOL)animated fullScreen:(BOOL)isFullScreen;
+
+
 + (void)hideAnimated:(BOOL)animated withCompletionBlock:(void(^)())completion;
 
 

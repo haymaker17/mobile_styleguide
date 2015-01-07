@@ -46,6 +46,7 @@
 #import "ExpenseTypesManager.h"
 
 #import "HelpOverlayFactory.h"
+#import "WaitViewController.h"
 
 #define SELECT_ALL_BUTTON_TAG 51
 
@@ -906,9 +907,7 @@ EditorMode;
             }
         }
 	}
-	
-	[self showWaitView];
-    
+    [WaitViewController showWithText:@"Waiting" animated:YES fullScreen:NO];
    
 	if ([killMEKeys count] > 0)
 	{
@@ -1827,10 +1826,11 @@ EditorMode;
             // transition to the normal mode of editing
             // MOB-12986 : ME_DELETE_DATA / ME_SAVE_DATA doesnt post server calls anymore. updates are done using coredata
             if ([self isViewLoaded]) {
-                [self hideWaitView];
+                // MOB-22069 making wait view covers up the tool bar
+                [WaitViewController hideAnimated:YES withCompletionBlock:nil];
                 
-            if ([self isRefreshing])
-                [self doneRefreshing];
+                if ([self isRefreshing])
+                    [self doneRefreshing];
             }
 
             [self transitionToMode:EditorModeNormal];
@@ -1839,10 +1839,8 @@ EditorMode;
         {
             if ([self isViewLoaded])
             {
-                if ([self isWaitViewShowing])
-                    [self hideWaitView];
-                if ([self isLoadingViewShowing])
-                    [self hideLoadingView];
+                // MOB-22069 making wait view covers up the tool bar
+                [WaitViewController hideAnimated:YES withCompletionBlock:nil];
                 
                 if ([self isRefreshing])
                     [self doneRefreshing];
@@ -1886,14 +1884,6 @@ EditorMode;
            }
             
         }
-//        else if ([@"RC_TYPE" isEqualToString:(NSString*)(msg.parameterBag)[@"TYPE"]])
-//        {
-//            for (id key in  deletedExpResponse.keysToKill)
-//            {
-//                //NSLog(@"Deleting personal Card entries with key : %@" , key);
-//                [[MobileEntryManager sharedInstance]deleteByrcKey:key];
-//            }
-//        }
 
         // MOB-13656 - Handle cctkeys and mekeys
         NSDictionary *deletedKeys = deletedExpResponse.returnFailures ;
@@ -1942,10 +1932,8 @@ EditorMode;
         if (self.editorMode == EditorModeMultiSelectDelete)
         {
             // hideWaitView
-            if ([self isWaitViewShowing])
-            {
-                [self hideWaitView];
-            }
+            [WaitViewController hideAnimated:YES withCompletionBlock:nil];
+
             [self transitionToMode:EditorModeNormal];
         }
 		
@@ -2086,8 +2074,9 @@ EditorMode;
 
 -(void) reloadExpensesWithLoadingView:(BOOL)showloadingView
 {
-    if (showloadingView)
-        [self showLoadingViewWithText:[Localizer getLocalizedText:@"Refreshing Data"]];
+    if (showloadingView){
+        [WaitViewController showWithText:[Localizer getLocalizedText:@"Refreshing Data"] animated:YES fullScreen:NO];
+    }
     
     [[ExSystem sharedInstance].msgControl createMsg:ME_LIST_DATA() CacheOnly:@"NO" ParameterBag:nil SkipCache:YES RespondTo:self];
 }
