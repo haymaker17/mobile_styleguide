@@ -831,7 +831,13 @@ public class RestHotelSearch extends Activity {
         // intent.putExtra(Const.EXTRA_TRAVEL_HOTEL_SEARCH_DISTANCE_AMOUNT, currentDistanceAmount.name);
         // intent.putExtra(Const.EXTRA_TRAVEL_HOTEL_SEARCH_DISTANCE_ID, distanceValue);
         // intent.putExtra(Const.EXTRA_TRAVEL_HOTEL_SEARCH_DISTANCE_UNIT_NAME, currentDistanceUnit.name);
-        // intent.putExtra(Const.EXTRA_TRAVEL_HOTEL_SEARCH_DISTANCE_UNIT_ID, distanceUnit);
+        String distanceUnit = core.getUserConfig().distanceUnitPreference;
+        if (distanceUnit == null) {
+            distanceUnit = "M";
+        } else {
+            distanceUnit = (distanceUnit.equalsIgnoreCase("Miles") ? "M" : "K");
+        }
+        intent.putExtra(Const.EXTRA_TRAVEL_HOTEL_SEARCH_DISTANCE_UNIT_ID, distanceUnit);
 
         intent.putExtra(Const.EXTRA_TRAVEL_LATITUDE, latitude);
         intent.putExtra(Const.EXTRA_TRAVEL_LONGITUDE, longitude);
