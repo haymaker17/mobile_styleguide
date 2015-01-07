@@ -905,9 +905,10 @@
     }
     else if ([kRowViolationJustification isEqualToString:self.rowsInViolationSection[row]])
     {
+        BOOL customLabelSpecified = [[UserConfig getSingleton].customTravelText[@"HotelRulesViolationText"] length] > 0;
         NSString *justification  = [self getViolationJustification];
-        NSString *label = [Localizer getLocalizedText:@"Violation Justification"];
-        NSString *value = ([justification length] ? justification : [Localizer getLocalizedText:@"Please specify"]);
+        NSString *label = customLabelSpecified ? [UserConfig getSingleton].customTravelText[@"HotelRulesViolationText"] : [Localizer getLocalizedText:@"Violation Justification"];
+        NSString *value = ([justification length] ? justification : (customLabelSpecified ? @"" : [Localizer getLocalizedText:@"Please specify"]));
         
         cell.lblLabel.text = label;
         cell.lblValue.text = value;
@@ -1391,8 +1392,9 @@
 		}
 		else if ([kRowViolationJustification isEqualToString:self.rowsInViolationSection[row]])
 		{
-			NSString *customTitle = [Localizer getLocalizedText:@"HOTEL_BOOKING_VIOLATION_JUSTIFICATION_TITLE"];
-			NSString *placeholder = [Localizer getLocalizedText:@"HOTEL_BOOKNIG_VIOLATION_JUSTIFICATION_PLACEHOLDER_TEXT"];
+            BOOL customLabelSpecified = [[UserConfig getSingleton].customTravelText[@"HotelRulesViolationText"] length] > 0;
+            NSString *customTitle = customLabelSpecified ? [UserConfig getSingleton].customTravelText[@"HotelRulesViolationText"] : [Localizer getLocalizedText:@"HOTEL_BOOKING_VIOLATION_JUSTIFICATION_TITLE"];
+			NSString *placeholder = customLabelSpecified ? [UserConfig getSingleton].customTravelText[@"HotelRulesViolationText"] : [Localizer getLocalizedText:@"HOTEL_BOOKNIG_VIOLATION_JUSTIFICATION_PLACEHOLDER_TEXT"];
 			NSMutableDictionary *pBag = [[NSMutableDictionary alloc] initWithObjectsAndKeys:[self getViewIDKey], @"FROM_VIEW", placeholder, @"PLACEHOLDER", customTitle, @"TITLE", @"YES", @"SHORT_CIRCUIT", nil];
 
 			NSString *justification = hotelBookingRoom.violationJustification; // hotelSearch.selectedHotel.detail.selectedRoom.violationJustification;

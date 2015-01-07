@@ -59,6 +59,7 @@ static UserConfig* userConfigSingleton = nil;
         self.attendeeTypes = [[NSMutableDictionary alloc] init];
         self.yodleePaymentTypes = [[NSMutableArray alloc] init];
         self.travelPointsConfig = [[NSMutableDictionary alloc] init];
+        self.customTravelText = [[NSMutableDictionary alloc] init];
     }
 	return self;
 }

@@ -17,6 +17,7 @@
 
 @interface DownloadUserConfig()
 @property (nonatomic) BOOL inTravelPointsConfig;
+@property (nonatomic) BOOL inCustomTravelText;
 @end
 
 @implementation DownloadUserConfig
@@ -82,6 +83,10 @@
     {
         self.inTravelPointsConfig = YES;
     }
+    else if ([elementName isEqualToString:@"CustomTravelText"])
+    {
+        self.inCustomTravelText = YES;
+    }
     else if (inYodleePaymentTypes && [elementName isEqualToString:@"ListItem"])
     {
         self.curYodleePaymentType = [[ListItem alloc] init];
@@ -102,6 +107,10 @@
     else if ([elementName isEqualToString:@"TravelPointsConfig"])
     {
         self.inTravelPointsConfig = NO;
+    }
+    else if ([elementName isEqualToString:@"CustomTravelText"])
+    {
+        self.inCustomTravelText = NO;
     }
     else if (curClassOfServices != nil && [elementName isEqualToString:@"AllowedAirClassesOfService"])
     {
@@ -148,6 +157,10 @@
     else if (self.inTravelPointsConfig)
     {
         self.userConfig.travelPointsConfig[self.currentElement] = buildString;
+    }
+    else if (self.inCustomTravelText)
+    {
+        self.userConfig.customTravelText[self.currentElement] = buildString;
     }
     else if([currentElement isEqualToString:@"AllowedAirClassesOfService"])
     {

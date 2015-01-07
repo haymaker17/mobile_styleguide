@@ -38,6 +38,7 @@
 @property (nonatomic, strong) NSMutableDictionary   *expenseConfirmations;
 @property (nonatomic, strong) NSMutableDictionary   *attendeeTypes;
 @property (nonatomic, strong) NSMutableDictionary   *travelPointsConfig;
+@property (nonatomic, strong) NSMutableDictionary   *customTravelText;
 @property (nonatomic) BOOL                          *showGDSNameInSearchResults;
 
 +(UserConfig*)getSingleton;
