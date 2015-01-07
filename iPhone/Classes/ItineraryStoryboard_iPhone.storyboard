@@ -2195,7 +2195,7 @@
                                         <imageView userInteractionEnabled="NO" contentMode="center" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="check_blueselect" translatesAutoresizingMaskIntoConstraints="NO" id="a5m-xT-Vgl">
                                             <rect key="frame" x="8" y="77" width="33" height="33"/>
                                         </imageView>
-                                        <imageView userInteractionEnabled="NO" contentMode="center" horizontalHuggingPriority="251" verticalHuggingPriority="252" ambiguous="YES" image="itin_icon_car" translatesAutoresizingMaskIntoConstraints="NO" id="2I3-WW-XtJ">
+                                        <imageView userInteractionEnabled="NO" contentMode="center" horizontalHuggingPriority="251" verticalHuggingPriority="252" image="itin_icon_car" translatesAutoresizingMaskIntoConstraints="NO" id="2I3-WW-XtJ">
                                             <rect key="frame" x="55" y="145" width="30" height="30"/>
                                             <constraints>
                                                 <constraint firstAttribute="height" constant="30" id="6xw-2s-gf8"/>
@@ -2209,17 +2209,17 @@
                                             <fontDescription key="fontDescription" name="HelveticaNeue" family="Helvetica Neue" pointSize="16"/>
                                             <nil key="highlightedColor"/>
                                         </label>
-                                        <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" ambiguous="YES" image="itin_icon_car" translatesAutoresizingMaskIntoConstraints="NO" id="Iaf-jm-hsQ">
+                                        <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="itin_icon_car" translatesAutoresizingMaskIntoConstraints="NO" id="Iaf-jm-hsQ">
                                             <rect key="frame" x="131" y="145" width="30" height="30"/>
                                         </imageView>
-                                        <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" ambiguous="YES" image="itin_icon_car" translatesAutoresizingMaskIntoConstraints="NO" id="Zc3-8a-FDd">
+                                        <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="itin_icon_car" translatesAutoresizingMaskIntoConstraints="NO" id="Zc3-8a-FDd">
                                             <rect key="frame" x="169" y="145" width="30" height="30"/>
                                         </imageView>
-                                        <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" ambiguous="YES" misplaced="YES" image="itin_icon_car" translatesAutoresizingMaskIntoConstraints="NO" id="omW-Q7-Pze">
-                                            <rect key="frame" x="207" y="145" width="29" height="30"/>
+                                        <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" horizontalCompressionResistancePriority="749" image="itin_icon_car" translatesAutoresizingMaskIntoConstraints="NO" id="omW-Q7-Pze">
+                                            <rect key="frame" x="207" y="145" width="27" height="30"/>
                                         </imageView>
-                                        <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" ambiguous="YES" misplaced="YES" image="itin_icon_car" translatesAutoresizingMaskIntoConstraints="NO" id="Byl-LK-u1z">
-                                            <rect key="frame" x="92" y="146" width="30" height="30"/>
+                                        <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="itin_icon_car" translatesAutoresizingMaskIntoConstraints="NO" id="Byl-LK-u1z">
+                                            <rect key="frame" x="93" y="145" width="30" height="30"/>
                                         </imageView>
                                     </subviews>
                                     <constraints>
