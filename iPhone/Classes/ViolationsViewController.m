@@ -181,9 +181,10 @@
     }
     else if ([kRowViolationJustification isEqualToString:self.rowsInViolationSection[indexPath.row]])
     {
-        BOOL customLabelSpecified = [[UserConfig getSingleton].customTravelText[@"HotelRulesViolationText"] length] > 0;
+        NSString* customJustificationLabelText = [[self.selectedFareOption getFareType] isEqualToString:@"H"] ? [UserConfig getSingleton].customTravelText[@"HotelRulesViolationText"] : [UserConfig getSingleton].customTravelText[@"AirRulesViolationText"];
+        BOOL customLabelSpecified = [customJustificationLabelText length] > 0;
         NSString *justification  = self.selectedFareOption.violationJustification;
-        NSString *label = customLabelSpecified ? [UserConfig getSingleton].customTravelText[@"HotelRulesViolationText"] : [Localizer getLocalizedText:@"Violation Justification"];
+        NSString *label = customLabelSpecified ? customJustificationLabelText : [Localizer getLocalizedText:@"Violation Justification"];
         NSString *value = ([justification length] ? justification : (customLabelSpecified ? @"" : [Localizer getLocalizedText:@"Please specify"]));
         
         cell.lblLabel.text = label;
@@ -250,9 +251,11 @@
     }
     else if ([kRowViolationJustification isEqualToString:self.rowsInViolationSection[row]])
     {
-        BOOL customLabelSpecified = [[UserConfig getSingleton].customTravelText[@"HotelRulesViolationText"] length] > 0;
-        NSString *customTitle = customLabelSpecified ? [UserConfig getSingleton].customTravelText[@"HotelRulesViolationText"] : [Localizer getLocalizedText:@"HOTEL_BOOKING_VIOLATION_JUSTIFICATION_TITLE"];
-        NSString *placeholder = customLabelSpecified ? [UserConfig getSingleton].customTravelText[@"HotelRulesViolationText"] : [Localizer getLocalizedText:@"HOTEL_BOOKNIG_VIOLATION_JUSTIFICATION_PLACEHOLDER_TEXT"];
+        NSString* customJustificationLabelText = [[self.selectedFareOption getFareType] isEqualToString:@"H"] ? [UserConfig getSingleton].customTravelText[@"HotelRulesViolationText"] : [UserConfig getSingleton].customTravelText[@"AirRulesViolationText"];
+
+        BOOL customLabelSpecified = [customJustificationLabelText length] > 0;
+        NSString *customTitle = customLabelSpecified ? customJustificationLabelText : [Localizer getLocalizedText:@"HOTEL_BOOKING_VIOLATION_JUSTIFICATION_TITLE"];
+        NSString *placeholder = customLabelSpecified ? customJustificationLabelText : [Localizer getLocalizedText:@"HOTEL_BOOKNIG_VIOLATION_JUSTIFICATION_PLACEHOLDER_TEXT"];
         NSMutableDictionary *pBag = [[NSMutableDictionary alloc] initWithObjectsAndKeys:@"HOTEL_BOOKING", @"FROM_VIEW",placeholder, @"PLACEHOLDER", customTitle, @"TITLE", @"YES", @"SHORT_CIRCUIT", nil];
         
         NSString *justification = self.selectedFareOption.violationJustification;
