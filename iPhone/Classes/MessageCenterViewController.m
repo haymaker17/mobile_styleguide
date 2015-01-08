@@ -27,7 +27,8 @@
 #import "SendFeedBackVC.h"
 
 @interface MessageCenterViewController ()
-
+@property (strong, nonatomic) NSMutableArray *messageArray;
+@property BOOL isAlpha;
 @end
 
 @implementation MessageCenterViewController
@@ -38,6 +39,12 @@
     if (self) {
         self.messageCenterManager = [MessageCenterManager sharedInstance];
     }
+    
+    NSString *appVersion = [[NSBundle mainBundle] objectForInfoDictionaryKey:@"CFBundleVersion"];
+    if ([appVersion rangeOfString:@"alpha"].location != NSNotFound) {
+        self.isAlpha = YES;
+    }
+    
     
     return self;
 }
@@ -98,17 +105,18 @@
     
     self.title = @"Message Center";
     
-    /*
-     if ([self isDevelopmentBuild]) {
-     UIBarButtonItem *addMockOffer = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemAdd
-     target:self
-     action:@selector(addMockOffer:)];
-     
-     self.navigationItem.rightBarButtonItem = addMockOffer;
-     }
-     */
-
-    [self loadDFPbanner];
+    if (self.isAlpha)
+    {
+        //     if ([self isDevelopmentBuild]) {
+        //     UIBarButtonItem *addMockOffer = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemAdd
+        //     target:self
+        //     action:@selector(addMockOffer:)];
+        //
+        //     self.navigationItem.rightBarButtonItem = addMockOffer;
+        //     }
+        
+        [self loadDFPbanner];
+    }
 }
 
 - (void)loadDFPbanner
@@ -120,51 +128,64 @@
     //
     //
     //
-
+    
+    self.messageArray = [[NSMutableArray alloc] init];
+    
     // call IPM to get the details we need to pass to DfP
-    IpmRequest *request = [[IpmRequest alloc] initWithTarget:@"mobileMessageCenter"];
-    [request requestIpmMessagesWithSuccess:^(NSArray *messages) {
+    IpmRequest *ipmRequest = [[IpmRequest alloc] initWithTarget:@"mobileMessageCenter2"];
+    [ipmRequest requestIpmMessagesWithSuccess:^(NSArray *messages) {
         if (messages != nil && [messages count] > 0){
-            IpmMessage *firstMessage = messages[0];
-            
-            // Setup DfP
-            //            GADAdSize customAdSize = GADAdSizeFromCGSize(CGSizeMake(808, 253));
-            if ([UIDevice isPad])
+            // Expand the messages...
+//            NSMutableArray *newArray = [[NSMutableArray alloc] init];
+//            [newArray addObjectsFromArray:messages];
+//            [newArray addObjectsFromArray:messages];
+//            [newArray addObjectsFromArray:messages];
+//            [newArray addObjectsFromArray:messages];
+//            messages = newArray;
+            for (IpmMessage *singleMessage in messages)
             {
-                self.dfpBannerView = [[DFPBannerView alloc] initWithAdSize:GADAdSizeFromCGSize(CGSizeMake(540, 297))];
-            } else {
-                self.dfpBannerView = [[DFPBannerView alloc] initWithAdSize:GADAdSizeFromCGSize(CGSizeMake(300, 165))];
+                DFPBannerView *newBanner;
+                
+                // Setup DfP
+                //            GADAdSize customAdSize = GADAdSizeFromCGSize(CGSizeMake(808, 253));
+                if ([UIDevice isPad])
+                {
+                    newBanner = [[DFPBannerView alloc] initWithAdSize:GADAdSizeFromCGSize(CGSizeMake(540, 297))];
+                } else {
+                    newBanner = [[DFPBannerView alloc] initWithAdSize:GADAdSizeFromCGSize(CGSizeMake(300, 165))];
+                }
+                //NSLog(@"pane width: %f", self.view.bounds.size.width);
+                //NSLog(@"pane height: %f", self.view.bounds.size.height);
+                //self.dfpBannerView = [[DFPBannerView alloc] initWithAdSize: kGADAdSizeSmartBannerPortrait];
+                [newBanner setAdUnitID:singleMessage.adUnitId];
+                //[self.dfpBannerView setAdUnitID:@"/19197427/Dev/DevMobile"];
+                //[self.dfpBannerView setAdUnitID:@"/19197427/Dev/DevMobileImages"];
+                //[self.dfpBannerView setAdUnitID:@"/19197427/Dev/DevMobileTextAd"];
+                //[self.dfpBannerView setAdUnitID:@"/19197427/Dev/DevMobileAlpha"];
+                NSLog(@"Ad - %@", singleMessage.adUnitId);
+                [newBanner setRootViewController:self];
+                [newBanner setAppEventDelegate:self];
+                [newBanner setDelegate:self];
+                //            [self.dfpBannerView setEnableManualImpressions:YES];
+                
+                // Add DfP banner to view
+                //            [self.view addSubview:self.dfpBannerView];
+                //NSLog(@"pane width: %f", self.view.bounds.size.width);
+                
+                // Pass additional parameters to DfP for banner customisation
+                GADRequest *request = [GADRequest request];
+                DFPExtras *extras = [[DFPExtras alloc] init];
+                [extras setAdditionalParameters:singleMessage.additionalParameters];
+                [request registerAdNetworkExtras:extras];
+                
+                // Tell the banner to fetch content from DfP
+                [newBanner loadRequest:request];
+                //            NSLog(@"%f", self.dfpBannerView.bounds.origin.x);
+                //            NSLog(@"%f", self.dfpBannerView.bounds.origin.y);
+                //            NSLog(@"%f", self.dfpBannerView.bounds.size.height);
+                //            NSLog(@"%f", self.dfpBannerView.bounds.size.width);
+                [self.messageArray addObject:newBanner];
             }
-            NSLog(@"pane width: %f", self.view.bounds.size.width);
-            NSLog(@"pane height: %f", self.view.bounds.size.height);
-            //self.dfpBannerView = [[DFPBannerView alloc] initWithAdSize: kGADAdSizeSmartBannerPortrait];
-            [self.dfpBannerView setAdUnitID:firstMessage.adUnitId];
-            //[self.dfpBannerView setAdUnitID:@"/19197427/Dev/DevMobile"];
-            //[self.dfpBannerView setAdUnitID:@"/19197427/Dev/DevMobileImages"];
-            //[self.dfpBannerView setAdUnitID:@"/19197427/Dev/DevMobileTextAd"];
-            //[self.dfpBannerView setAdUnitID:@"/19197427/Dev/DevMobileAlpha"];
-            [self.dfpBannerView setRootViewController:self];
-            [self.dfpBannerView setAppEventDelegate:self];
-            [self.dfpBannerView setDelegate:self];
-//            [self.dfpBannerView setEnableManualImpressions:YES];
-
-            // Add DfP banner to view
-//            [self.view addSubview:self.dfpBannerView];
-            NSLog(@"pane width: %f", self.view.bounds.size.width);
-
-            // Pass additional parameters to DfP for banner customisation
-            GADRequest *request = [GADRequest request];
-            DFPExtras *extras = [[DFPExtras alloc] init];
-            [extras setAdditionalParameters:firstMessage.additionalParameters];
-            [request registerAdNetworkExtras:extras];
-            
-            // Tell the banner to fetch content from DfP
-            [self.dfpBannerView loadRequest:request];
-//            NSLog(@"%f", self.dfpBannerView.bounds.origin.x);
-//            NSLog(@"%f", self.dfpBannerView.bounds.origin.y);
-//            NSLog(@"%f", self.dfpBannerView.bounds.size.height);
-//            NSLog(@"%f", self.dfpBannerView.bounds.size.width);
-            
             [self.table reloadData];
         }
     } failure:^(CTEError *error) {
@@ -174,12 +195,14 @@
 
 /// Called when an ad request loaded an ad.
 - (void)adViewDidReceiveAd:(DFPBannerView *)adView {
-    NSLog(@"adViewDidReceiveAd");
+    NSLog(@"adViewDidReceiveAd:%@", adView.adUnitID);
+    //    [self.messageArray addObject:adView];
+    //    [self.table reloadData];
 }
 
 /// Called when an ad request failed.
 - (void)adView:(DFPBannerView *)adView didFailToReceiveAdWithError:(GADRequestError *)error {
-    NSLog(@"adViewDidFailToReceiveAdWithError: %@", [error localizedDescription]);
+    NSLog(@"adViewDidFailToReceiveAdWithError: %@ %@", adView.adUnitID, [error localizedDescription]);
 }
 
 - (void)adView:(DFPBannerView *)banner didReceiveAppEvent:(NSString *)name withInfo:(NSString *)info {
@@ -338,26 +361,68 @@
 }
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
-    UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:@"tableCell"];
-    
-    if (cell == nil) {
-        cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:@"tableCell"];
-    }
-    
-    if (indexPath.row == 0) {
-        self.dfpBannerView.center = cell.center;
-        [cell addSubview:self.dfpBannerView];
+    if (self.isAlpha)
+    {
+        UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:@"tableCell"];
         
+        if (cell == nil) {
+            cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:@"tableCell"];
+        }
+        
+        if (self.messageArray != nil && [self.messageArray count] > 0)
+        {
+            DFPBannerView *cellBanner = self.messageArray[(int)indexPath.row];
+            [cell addSubview:cellBanner];
+            CGFloat cellHeight = [self tableView:tableView heightForRowAtIndexPath:indexPath];
+            cellBanner.center = CGPointMake(cell.contentView.bounds.size.width/2, cellHeight/2);
+        }
+        
+        return cell;
     }
-//    [cell addSubview:self.dfpBannerView];
-    
-    return cell;
+    else
+    {
+        MessageCenterTableCell *cell = [tableView
+                                        dequeueReusableCellWithIdentifier:@"MessageViewTableCell"];
+        
+        if (cell == nil) {
+            NSArray *nib = [[NSBundle mainBundle] loadNibNamed:@"MessageCenterTableCell" owner:self options:nil];
+            cell = [nib objectAtIndex:0];
+        }
+        
+        NSUInteger row = [indexPath row];
+        
+        MessageCenterMessage *message = [self.messageCenterManager messageAtIndex:row];
+        
+        cell.image.image = [UIImage imageNamed:message.iconName];
+        
+        cell.title.text = message.title;
+        [cell.title sizeToFit];
+        
+        CGRect titleFrame = cell.title.frame;
+        
+        cell.message.text = message.message;
+        [cell.message sizeToFit];
+        
+        CGRect messageFrame = CGRectMake(cell.message.frame.origin.x,
+                                         titleFrame.origin.y + titleFrame.size.height + 5,
+                                         cell.message.frame.size.width,
+                                         cell.message.frame.size.height);
+        
+        cell.message.frame = messageFrame;
+        
+        if (message.commandName == nil) {
+            cell.accessoryType = UITableViewCellAccessoryNone;
+        }
+        
+        return cell;
+    }
 }
 
 - (void)tableView:(UITableView *)tableView commitEditingStyle:(UITableViewCellEditingStyle)editingStyle forRowAtIndexPath:(NSIndexPath *)indexPath {
     if (editingStyle == UITableViewCellEditingStyleDelete) {
+        int row = (int)[indexPath row];
         
-        [self.messageCenterManager removeMessageAtIndex:[indexPath row]];
+        [self.messageCenterManager removeMessageAtIndex:row];
         
         [tableView beginUpdates];
         
@@ -368,7 +433,17 @@
 }
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
-    return 3;
+    if (self.isAlpha)
+    {
+        if (self.messageArray != nil && [self.messageArray count] > 0)
+        {
+            return self.messageArray.count;
+        }
+    }
+    else{
+        return [self.messageCenterManager numMessagesForType:MessageTypeAny];
+    }
+    return 0;
 }
 
 #pragma mark - UITableViewDelegate
@@ -376,41 +451,75 @@
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
     [tableView deselectRowAtIndexPath:indexPath animated:YES];
     
-//	if (![ExSystem connectedToNetwork]) {
-//        [self showOfflineAlert];
-//        return;
-//    }
-//    
-//    NSUInteger row = [indexPath row];
-//    
-//    MessageCenterMessage *message = [self.messageCenterManager messageAtIndex:row];
-//    
-//    [self.messageCenterManager setType:MessageTypeRead forMessage:message];
-//    
-//    // Temporary hack specifically for single instance Gogo.
-//    //
-//    if (message.commandName == nil) {
-//        [self copyConfirmationString:message.stringExtra];
-//    } else {
-//        [self navigateToOffer:message];
-//    }
+    if (!self.isAlpha)
+    {
+        if (![ExSystem connectedToNetwork]) {
+            [self showOfflineAlert];
+            return;
+        }
+        
+        NSUInteger row = [indexPath row];
+        
+        MessageCenterMessage *message = [self.messageCenterManager messageAtIndex:row];
+        
+        [self.messageCenterManager setType:MessageTypeRead forMessage:message];
+        
+        // Temporary hack specifically for single instance Gogo.
+        //
+        if (message.commandName == nil) {
+            [self copyConfirmationString:message.stringExtra];
+        } else {
+            [self navigateToOffer:message];
+        }
+    }
 }
 
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath {
     
     CGFloat height = 0;
     
-    if ([UIDevice isPad])
+    if (self.isAlpha)
     {
-        height = 297;
+        if ([UIDevice isPad])
+        {
+            height = 297;
+        }
+        else
+        {
+            height = 176;
+        }
     }
     else
     {
-        height = 176;
+        MessageCenterMessage *message = [self.messageCenterManager messageAtIndex:[indexPath row]];
+        
+        CGFloat titleHeight = [self heightForString:message.title withFont:[UIFont fontWithName:@"Helvetica Neue" size:15]];
+        CGFloat messageHeight = [self heightForString:message.message withFont:[UIFont fontWithName:@"Helvetica Neue" size:13]];
+        
+        // Add labels, plus cell margin, plus inter-label padding.
+        //
+        height = titleHeight + messageHeight + 40 + 5;
     }
     
     return height;
 }
+
+//- (CGFloat)tableView:(UITableView *)tableView estimatedHeightForRowAtIndexPath:(NSIndexPath *)indexPath
+//{
+//
+//    CGFloat height = 0;
+//
+//    if ([UIDevice isPad])
+//    {
+//        height = 297;
+//    }
+//    else
+//    {
+//        height = 176;
+//    }
+//
+//    return height;
+//}
 
 #pragma mark - Util
 
@@ -448,38 +557,38 @@
     }
 }
 
-/*
- - (void)addMockOffer:(id)sender {
- MessageCenterManager *messageCenterManager = [MessageCenterManager sharedInstance];
- 
- MessageCenterMessage *message = [[MessageCenterMessage alloc] init];
- 
- message.iconName = @"gogo.png";
- message.title = @"Gogo Wifi is available on your upcoming flight.";
- message.message = @"All-Day Pass is $14.00 when you buy now through Concur.";
- message.commandName = @"GoGoOfferViewController";
- message.messageId = @"23";
- message.status = MessageStatusUnread;
- message.isSilent = NO;
- 
- [messageCenterManager addMessage:message];
- 
- UILocalNotification *notification = [[UILocalNotification alloc] init];
- notification.alertBody = @"All-Day Pass is $14.00 when you buy now through Concur.";
- notification.soundName = UILocalNotificationDefaultSoundName;
- 
- [[UIApplication sharedApplication] presentLocalNotificationNow:notification];
- 
- int badgeCount = [[UIApplication sharedApplication] applicationIconBadgeNumber];
- 
- if (badgeCount > 0) {
- int newBadgeCount = badgeCount + 1;
- 
- [[UIApplication sharedApplication] setApplicationIconBadgeNumber:newBadgeCount];
- }
- 
- [self.table reloadData];
- }
- */
+
+- (void)addMockOffer:(id)sender {
+    MessageCenterManager *messageCenterManager = [MessageCenterManager sharedInstance];
+    
+    MessageCenterMessage *message = [[MessageCenterMessage alloc] init];
+    
+    message.iconName = @"gogo.png";
+    message.title = @"Gogo Wifi is available on your upcoming flight.";
+    message.message = @"All-Day Pass is $14.00 when you buy now through Concur.";
+    message.commandName = @"GoGoOfferViewController";
+    message.messageId = @"23";
+    message.status = MessageStatusUnread;
+    message.isSilent = NO;
+    
+    [messageCenterManager addMessage:message];
+    
+    UILocalNotification *notification = [[UILocalNotification alloc] init];
+    notification.alertBody = @"All-Day Pass is $14.00 when you buy now through Concur.";
+    notification.soundName = UILocalNotificationDefaultSoundName;
+    
+    [[UIApplication sharedApplication] presentLocalNotificationNow:notification];
+    
+    int badgeCount = [[UIApplication sharedApplication] applicationIconBadgeNumber];
+    
+    if (badgeCount > 0) {
+        int newBadgeCount = badgeCount + 1;
+        
+        [[UIApplication sharedApplication] setApplicationIconBadgeNumber:newBadgeCount];
+    }
+    
+    [self.table reloadData];
+}
+
 
 @end
