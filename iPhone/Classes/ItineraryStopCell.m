@@ -9,6 +9,7 @@
 #import "ItineraryStopCell.h"
 #import "ItineraryStopDetailViewController.h"
 #import "CTEBadge.h"
+#import "DateTimeConverter.h"
 
 @implementation ItineraryStopCell
 
@@ -164,7 +165,11 @@
 
 - (void)calendar:(CKCalendarView *)calendar didSelectDate:(NSDate *)date {
     if (self.onDateSelected) {
-        self.onDateSelected(date);
+        //date is in the local TZ, need to convert to GMT
+
+        NSDate *gmtDate = [DateTimeConverter gmtDateWithSameComponentsAsLocalDate:date];
+
+        self.onDateSelected(gmtDate);
     }
 }
 
