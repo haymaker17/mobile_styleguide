@@ -47,6 +47,7 @@ import com.concur.mobile.core.expense.report.data.ExpenseReportDetail;
 import com.concur.mobile.core.expense.report.data.ExpenseReportDisbursement;
 import com.concur.mobile.core.expense.report.data.ExpenseReportException;
 import com.concur.mobile.core.expense.report.data.ExpenseReportFormField;
+import com.concur.mobile.core.expense.report.data.ExpenseReportFormField.AccessType;
 import com.concur.mobile.core.expense.report.service.ConditionalFieldAction;
 import com.concur.mobile.core.expense.report.service.ReportFormRequest;
 import com.concur.mobile.core.expense.report.service.SaveReportRequest;
@@ -288,8 +289,21 @@ public class ExpenseReportHeader extends AbstractExpenseActivity {
             if (viewGroup != null) {
                 viewGroup.setVisibility(View.VISIBLE);
                 if (isReportEditable()) {
-                    List<FormFieldView> frmFldViews = populateViewWithFormFields(viewGroup, getExpenseReportDetail()
-                            .getFormFields(), null);
+
+                    // If we are editing, set the policy field to be read-only. This is not yet supported functionality
+                    // from the mobile side.
+                    // MOB-22071
+                    expRepDet = getExpenseReportDetail();
+                    List<ExpenseReportFormField> formFields = expRepDet.getFormFields();
+
+                    if (reportKeySource != Const.EXPENSE_REPORT_SOURCE_NEW) {
+                        ExpenseReportFormField polKeyField = FormUtil.findFieldById(formFields, POLICY_ID);
+                        if (polKeyField != null) {
+                            polKeyField.setAccessType(AccessType.RO);
+                        }
+                    }
+
+                    List<FormFieldView> frmFldViews = populateViewWithFormFields(viewGroup, formFields, null);
                     if (frmFldViews != null && frmFldViews.size() > 0) {
                         if (frmFldViewListener != null) {
                             frmFldViewListener.setFormFieldViews(frmFldViews);
