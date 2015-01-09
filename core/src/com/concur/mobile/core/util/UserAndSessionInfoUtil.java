@@ -16,6 +16,7 @@ import com.concur.mobile.core.ConcurCore;
 import com.concur.mobile.core.activity.Preferences;
 import com.concur.mobile.core.util.net.SiteSettings;
 import com.concur.mobile.platform.authentication.EmailLookUpRequestTask;
+import com.concur.mobile.platform.authentication.LoginResponseKeys;
 import com.concur.mobile.platform.authentication.Permissions;
 import com.concur.mobile.platform.authentication.SessionInfo;
 import com.concur.mobile.platform.authentication.SiteSettingInfo;
@@ -27,7 +28,7 @@ public class UserAndSessionInfoUtil {
 
     public static String CLS_TAG = UserAndSessionInfoUtil.class.getName();
 
-    public static void updateUserAndSessionInfo(Context ctx, Bundle emailLookUpBundle) {
+    public static void updateUserAndSessionInfo(Context ctx, Bundle emailLookUpBundle, Bundle loginBundle) {
         SessionInfo sessionInfo = ConfigUtil.getSessionInfo(ctx);
 
         // MOB-21232 - There can be a race condition where session is being renewed/re-authenticated
@@ -36,6 +37,18 @@ public class UserAndSessionInfoUtil {
             Log.w(Const.LOG_TAG, CLS_TAG
                     + ".updateUserAndSessionInfo() - SessionInfo is null! Perhaps the user has logged out.");
             return;
+        }
+
+        // disable autologin if required.
+        boolean disableAutoLogin = false;
+        if (loginBundle != null) {
+            disableAutoLogin = loginBundle.getBoolean(LoginResponseKeys.DISABLE_AUTO_LOGIN);
+        }
+        SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(ConcurCore.getContext());
+        if (disableAutoLogin) {
+            Preferences.disableAutoLogin(prefs);
+        } else {
+            Preferences.enableAutoLogin(prefs);
         }
 
         // Save the login response information.

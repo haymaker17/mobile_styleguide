@@ -137,7 +137,8 @@ public class LoginPasswordActivity extends BaseActivity implements LoginPassword
                 if (extras != null && extras.containsKey(EmailLookUpRequestTask.EXTRA_LOGIN_BUNDLE)) {
                     emailLookupBundle = extras.getBundle(EmailLookUpRequestTask.EXTRA_LOGIN_BUNDLE);
                 }
-                UserAndSessionInfoUtil.updateUserAndSessionInfo(ConcurCore.getContext(), emailLookupBundle);
+
+                UserAndSessionInfoUtil.updateUserAndSessionInfo(ConcurCore.getContext(), emailLookupBundle, resultData);
 
                 // GA analytics
                 trackLoginOverall("Success");

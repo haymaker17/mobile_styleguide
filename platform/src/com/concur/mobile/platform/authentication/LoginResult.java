@@ -36,6 +36,7 @@ public class LoginResult extends BaseParser {
     private static final String TAG_ROLES_MOBILE = "RolesMobile";
     private static final String TAG_USER_CURRENCY_CODE = "UserCrnCode";
     private static final String TAG_USER_ID = "UserId";
+    private static final String TAG_DISABLE_AUTOLOGIN = "DisableAutoLogin";
 
     // Tag codes.
     private static final int TAG_AUTHENTICATION_TYPE_CODE = 0;
@@ -49,6 +50,7 @@ public class LoginResult extends BaseParser {
     private static final int TAG_ROLES_MOBILE_CODE = 8;
     private static final int TAG_USER_CURRENCY_CODE_CODE = 10;
     private static final int TAG_USER_ID_CODE = 11;
+    private static final int TAG_DISABLE_AUTOLOGIN_CODE = 12;
 
     private static final Map<String, Integer> tagMap;
 
@@ -66,6 +68,7 @@ public class LoginResult extends BaseParser {
         tagMap.put(TAG_ROLES_MOBILE, TAG_ROLES_MOBILE_CODE);
         tagMap.put(TAG_USER_CURRENCY_CODE, TAG_USER_CURRENCY_CODE_CODE);
         tagMap.put(TAG_USER_ID, TAG_USER_ID_CODE);
+        tagMap.put(TAG_DISABLE_AUTOLOGIN, TAG_DISABLE_AUTOLOGIN_CODE);
     }
 
     /**
@@ -179,6 +182,11 @@ public class LoginResult extends BaseParser {
     private String startTag;
 
     /**
+     * Contains the disable auto-login flag.
+     */
+    public Boolean disableAutoLogin;
+
+    /**
      * Constructs an instance of <code>LoginResult</code> with a parser and start tag.
      * 
      * @param parser
@@ -214,7 +222,7 @@ public class LoginResult extends BaseParser {
 
         // Create and register the user contact parser.
         itemTag = "Permissions";
-        // parser parameter required to call the specific parsing constructor 
+        // parser parameter required to call the specific parsing constructor
         permissionsItemParser = new ItemParser<Permissions>(parser, itemTag, Permissions.class);
         parser.registerParser(permissionsItemParser, itemTag);
     }
@@ -291,6 +299,12 @@ public class LoginResult extends BaseParser {
             case TAG_USER_ID_CODE: {
                 if (!TextUtils.isEmpty(text)) {
                     userId = text.trim();
+                }
+                break;
+            }
+            case TAG_DISABLE_AUTOLOGIN_CODE: {
+                if (!TextUtils.isEmpty(text)) {
+                    disableAutoLogin = Parse.safeParseBoolean(text.trim());
                 }
                 break;
             }
