@@ -117,9 +117,16 @@ int kAlertViewReceiptUploadMessage = 101795;
         const int kButtonA2RW_Max = 100;
         const int kButtonA2RW_Min = 80; //40;
         
-        NSUInteger count = [self.navigationController.viewControllers count];
-        // TODO : count-2 could be negative
-        UIViewController *parentView = self.navigationController.viewControllers[MAX(0,count-2)];
+        NSUInteger viewIndex = [self.navigationController.viewControllers count];
+        
+        if(viewIndex<2){
+            viewIndex = 0;      // viewIndex cannot be negative
+        }
+        else{
+            viewIndex = viewIndex - 2;
+        }
+        
+        UIViewController *parentView = self.navigationController.viewControllers[viewIndex];
 
         CGSize s = [parentView.title sizeWithFont:[UIFont boldSystemFontOfSize:22]];
         int size = (s.width > kButtonA2RW_Max) ? kButtonA2RW_Max : ((s.width < kButtonA2RW_Min)?kButtonA2RW_Min:s.width);
