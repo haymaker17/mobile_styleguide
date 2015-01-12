@@ -2,6 +2,7 @@ package com.concur.mobile.core.travel.air.activity;
 
 import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.TimeZone;
 
 import android.app.AlertDialog;
 import android.app.Dialog;
@@ -613,12 +614,13 @@ public class AirSearch extends TravelBaseActivity implements View.OnClickListene
         // MOB-21681 - set user's preferred time zone
         // timeFormat.setTimeZone(TimeZone.getDefault());
 
-        setFieldValue(R.id.air_search_depart_date,
-                Format.safeFormatCalendar(FormatUtil.SHORT_WEEKDAY_MONTH_DAY_FULL_YEAR_DISPLAY, departDateTime));
+        java.text.DateFormat df = FormatUtil.SHORT_WEEKDAY_MONTH_DAY_FULL_YEAR_DISPLAY;
+        df.setTimeZone(TimeZone.getDefault());
+
+        setFieldValue(R.id.air_search_depart_date, Format.safeFormatCalendar(df, departDateTime));
         setFieldValue(R.id.air_search_depart_time, Format.safeFormatCalendar(timeFormat, departDateTime));
 
-        setFieldValue(R.id.air_search_return_date,
-                Format.safeFormatCalendar(FormatUtil.SHORT_WEEKDAY_MONTH_DAY_FULL_YEAR_DISPLAY, returnDateTime));
+        setFieldValue(R.id.air_search_return_date, Format.safeFormatCalendar(df, returnDateTime));
         setFieldValue(R.id.air_search_return_time, Format.safeFormatCalendar(timeFormat, returnDateTime));
     }
 
@@ -709,8 +711,8 @@ public class AirSearch extends TravelBaseActivity implements View.OnClickListene
                 }
 
                 if (dateUtil.isDateInValidForDefaultTimeZone(departDateTime, null, true)) {
-                    departDateTime = dateUtil.setDepartToCurrent(departDateTime, returnDateTime,
-                            dateUtil.getCurrentTime());
+                    departDateTime = dateUtil
+                            .setDepartToCurrent(departDateTime, returnDateTime, Calendar.getInstance());
                     // Adjust the return time if needed
                     if (departDateTime.after(returnDateTime)) {
                         returnDateTime = dateUtil.setReturnToCurrent(returnDateTime, departDateTime);
