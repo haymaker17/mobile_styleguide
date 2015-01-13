@@ -70,11 +70,6 @@ public class VerifyEmailLookUpResponse {
         String ssoUrl = resultData.getString(EmailLookUpRequestTask.EXTRA_SSO_URL_KEY);
         Assert.assertEquals(MTAG + ": (result data) sso url", response.ssoUrl, ssoUrl);
         Assert.assertEquals(MTAG + ": (session info) sso url", response.ssoUrl, sessInfo.getSSOUrl());
-
-        // // Verify email method.
-        // String email = resultData.getString(EmailLookUpRequestTask.EXTRA_EMAIL_KEY);
-        // Assert.assertEquals(MTAG + ": (result data) email", response.email, email);
-        // Assert.assertEquals(MTAG + ": (session info) email", response.email, sessInfo.getEmail());
     }
 
 }
