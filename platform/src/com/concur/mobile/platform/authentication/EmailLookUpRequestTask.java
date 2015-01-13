@@ -226,8 +226,6 @@ public class EmailLookUpRequestTask extends PlatformAsyncRequestTask {
         resultData.putString(EXTRA_SIGN_IN_METHOD_KEY, emailLookUpResponse.signInMethod);
         // Set the sso url.
         resultData.putString(EXTRA_SSO_URL_KEY, emailLookUpResponse.ssoUrl);
-        // Set the email.
-        // resultData.putString(EXTRA_EMAIL_KEY, emailLookUpResponse.email);
     }
 
 }

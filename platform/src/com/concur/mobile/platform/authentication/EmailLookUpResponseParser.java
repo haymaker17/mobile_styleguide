@@ -22,18 +22,12 @@ public class EmailLookUpResponseParser extends BaseParser {
     private static final String CLS_TAG = "EmailLookUpResponseParser";
 
     // Tags.
-    // private static final String TAG_LOGIN_ID = "LoginId";
     private static final String TAG_EMAIL = "Email";
     private static final String TAG_SERVER_URL = "ServerUrl";
-    /*
-     * In EmailLookUpV2 we are not getting LoginId or ServerUrl back.
-     */
     private static final String TAG_SIGN_IN_METHOD = "SignInMethod";
     private static final String TAG_SSO_URL = "SsoUrl";
 
     // Tag codes.
-    // private static final int TAG_LOGIN_ID_CODE = 0;
-    // private static final int TAG_EMAIL_CODE = 2;
     private static final int TAG_SIGN_IN_METHOD_CODE = 0;
     private static final int TAG_SSO_URL_CODE = 1;
     private static final int TAG_SERVER_URL_CODE = 2;
@@ -43,15 +37,10 @@ public class EmailLookUpResponseParser extends BaseParser {
     static {
         // Construct the map from text tags to tag codes.
         tagMap = new HashMap<String, Integer>();
-        // tagMap.put(TAG_LOGIN_ID, TAG_LOGIN_ID_CODE);
         tagMap.put(TAG_SIGN_IN_METHOD, TAG_SIGN_IN_METHOD_CODE);
         tagMap.put(TAG_SSO_URL, TAG_SSO_URL_CODE);
         tagMap.put(TAG_SERVER_URL, TAG_SERVER_URL_CODE);
     }
-
-    // public String loginId;
-
-    // public String email;
 
     public String serverUrl;
 
