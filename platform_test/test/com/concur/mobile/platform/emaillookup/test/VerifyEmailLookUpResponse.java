@@ -44,7 +44,7 @@ public class VerifyEmailLookUpResponse {
         sessInfo.setServerUrl(resultData.getString(EmailLookUpRequestTask.EXTRA_SERVER_URL_KEY));
         sessInfo.setSignInMethod(resultData.getString(EmailLookUpRequestTask.EXTRA_SIGN_IN_METHOD_KEY));
         sessInfo.setSSOUrl(resultData.getString(EmailLookUpRequestTask.EXTRA_SSO_URL_KEY));
-        sessInfo.setEmail(resultData.getString(EmailLookUpRequestTask.EXTRA_EMAIL_KEY));
+        // sessInfo.setEmail(resultData.getString(EmailLookUpRequestTask.EXTRA_EMAIL_KEY));
         boolean updatedSessionInfo = ConfigUtil.updateSessionInfo(context, sessInfo);
         Assert.assertTrue(MTAG + ": session info update", updatedSessionInfo);
 
@@ -71,10 +71,10 @@ public class VerifyEmailLookUpResponse {
         Assert.assertEquals(MTAG + ": (result data) sso url", response.ssoUrl, ssoUrl);
         Assert.assertEquals(MTAG + ": (session info) sso url", response.ssoUrl, sessInfo.getSSOUrl());
 
-        // Verify email method.
-        String email = resultData.getString(EmailLookUpRequestTask.EXTRA_EMAIL_KEY);
-        Assert.assertEquals(MTAG + ": (result data) email", response.email, email);
-        Assert.assertEquals(MTAG + ": (session info) email", response.email, sessInfo.getEmail());
+        // // Verify email method.
+        // String email = resultData.getString(EmailLookUpRequestTask.EXTRA_EMAIL_KEY);
+        // Assert.assertEquals(MTAG + ": (result data) email", response.email, email);
+        // Assert.assertEquals(MTAG + ": (session info) email", response.email, sessInfo.getEmail());
     }
 
 }
