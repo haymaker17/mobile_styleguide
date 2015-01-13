@@ -127,8 +127,6 @@ public class ConnectedListFormFieldView extends SearchListFormFieldView {
     @Override
     public void listItemSelected(String liCode, String liKey, String value) {
 
-        super.listItemSelected(liCode, liKey, value);
-
         if (listener != null) {
             if (listener.getFormFieldViews() != null && listener.getFormFieldViews().size() > 0) {
                 if (frmFld.getHierKey() > 0) {
@@ -213,6 +211,8 @@ public class ConnectedListFormFieldView extends SearchListFormFieldView {
         } else {
             Log.e(Const.LOG_TAG, CLS_TAG + ".listItemSelected: listener is null!");
         }
+
+        super.listItemSelected(liCode, liKey, value);
     }
 
     /**
@@ -228,6 +228,7 @@ public class ConnectedListFormFieldView extends SearchListFormFieldView {
         List<String> retVal = new ArrayList<String>();
         if (value.indexOf(delimiter) != -1) {
             TextUtils.SimpleStringSplitter splitter = new TextUtils.SimpleStringSplitter(delimiter);
+            splitter.setString(value);
             Iterator<String> splitIter = splitter.iterator();
             while (splitIter.hasNext()) {
                 retVal.add(splitIter.next());
