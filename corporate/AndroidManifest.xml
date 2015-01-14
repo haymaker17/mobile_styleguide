@@ -61,6 +61,7 @@
 
     <application
         android:name="com.concur.mobile.corp.ConcurMobile"
+        tools:replace="theme, allowBackup, icon, label"
         android:allowBackup="false"
         android:icon="@drawable/launch"
         android:label="@string/corporate_name"
