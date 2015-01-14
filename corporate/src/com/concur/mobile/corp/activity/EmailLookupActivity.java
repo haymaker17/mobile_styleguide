@@ -40,16 +40,16 @@ import com.concur.platform.PlatformProperties;
 
 @EventTracker.EventTrackerClassName(getClassName = "Email Lookup")
 public class EmailLookupActivity extends BaseActivity implements IProgressBarListener, EmailLookupCallbacks {
-    
+
     /**
      * Extra flag used to indicate if we should automatically advanced to the company sigin on screen.
      */
     public static final String EXTRA_ADVANCE_TO_COMPANY_SIGN_ON = "advance_to_company_sign_on";
-    
+
     private static final int LOGIN_PASSWORD_REQ_CODE = 1;
-    
+
     private static final int LOGIN_SSO_REQ_CODE = 2;
-    
+
     private static final String FRAGMENT_EMAIL_LOOKUP = "FRAGMENT_EMAIL_LOOKUP";
     private boolean progressbarVisible;
     private static final String PROGRESSBAR_VISIBLE = "PROGRESSBAR_VISIBLE";
@@ -91,8 +91,8 @@ public class EmailLookupActivity extends BaseActivity implements IProgressBarLis
                 }
             }
             startActivityForResult(i, Const.REQUEST_CODE_SSO_LOGIN);
-        }        
-        
+        }
+
         // See if we're to preload the email address.
         emailText = getIntent().getStringExtra(EmailLookupFragment.ARGS_EMAIL_TEXT_VALUE);
 
@@ -104,10 +104,10 @@ public class EmailLookupActivity extends BaseActivity implements IProgressBarLis
 
             // If we're supposed to load email lookup with text, push that to the fragment.
             // But first check if it's empty, and if it is and autologin is enabled, get it from the Prefs.
-            if(TextUtils.isEmpty(emailText)) {
+            if (TextUtils.isEmpty(emailText)) {
                 SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(this);
-                if(prefs.getBoolean(Const.PREF_SAVE_LOGIN, false)) {
-                    // Restore login ID : MOB-18534                    
+                if (prefs.getBoolean(Const.PREF_SAVE_LOGIN, false)) {
+                    // Restore login ID : MOB-18534
                     emailText = Preferences.getLogin(prefs, "");
                 }
             }
@@ -162,23 +162,25 @@ public class EmailLookupActivity extends BaseActivity implements IProgressBarLis
                 finish();
             }
         }
-        
+
     }
 
     /*
      * (non-Javadoc)
+     * 
      * @see android.app.Activity#onCreateOptionsMenu(android.view.Menu)
      */
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         MenuInflater inflater = getMenuInflater();
         inflater.inflate(R.menu.login, menu);
-        
+
         return true;
     }
-    
+
     /*
      * (non-Javadoc)
+     * 
      * @see android.app.Activity#onOptionsItemSelected(android.view.MenuItem)
      */
     @Override
@@ -194,14 +196,17 @@ public class EmailLookupActivity extends BaseActivity implements IProgressBarLis
     }
 
     // ############### EmailLookupCallbacks implementations ############# //
-    
+
     /*
      * (non-Javadoc)
-     * @see com.concur.mobile.platform.ui.common.login.EmailLookupFragment.EmailLookupCallbacks#onEmailLookupRequestSuccess(android.os.Bundle)
+     * 
+     * @see
+     * com.concur.mobile.platform.ui.common.login.EmailLookupFragment.EmailLookupCallbacks#onEmailLookupRequestSuccess(android
+     * .os.Bundle)
      */
     public void onEmailLookupRequestSuccess(Bundle resultData) {
         // Get the login id.
-        // String loginId = resultData.getString(EmailLookUpRequestTask.EXTRA_LOGIN_ID_KEY);
+        String loginId = resultData.getString(EmailLookUpRequestTask.EXTRA_LOGIN_ID_KEY);
         // Get the server url.
         String serverUrl = resultData.getString(EmailLookUpRequestTask.EXTRA_SERVER_URL_KEY);
         // Get the sign-in method. {Values: Password/MobilePassword/SSO}
@@ -217,11 +222,13 @@ public class EmailLookupActivity extends BaseActivity implements IProgressBarLis
 
         Bundle loginBundle = resultData;
         if (signInMethod.equalsIgnoreCase(com.concur.mobile.platform.ui.common.util.Const.LOGIN_METHOD_PASSWORD)
-                || (signInMethod.equalsIgnoreCase(com.concur.mobile.platform.ui.common.util.Const.LOGIN_METHOD_MOBILE_PASSWORD))) {
+                || (signInMethod
+                        .equalsIgnoreCase(com.concur.mobile.platform.ui.common.util.Const.LOGIN_METHOD_MOBILE_PASSWORD))) {
             Intent it = new Intent(this, LoginPasswordActivity.class);
             it.putExtra(EmailLookUpRequestTask.EXTRA_LOGIN_BUNDLE, loginBundle);
             startActivityForResult(it, LOGIN_PASSWORD_REQ_CODE);
-        } else if (signInMethod.equalsIgnoreCase(com.concur.mobile.platform.ui.common.util.Const.LOGIN_METHOD_SSO) && !TextUtils.isEmpty(ssoUrl)) {
+        } else if (signInMethod.equalsIgnoreCase(com.concur.mobile.platform.ui.common.util.Const.LOGIN_METHOD_SSO)
+                && !TextUtils.isEmpty(ssoUrl)) {
             // Launch the company sign-on activity.
             Intent it = new Intent(this, CompanySignOnActivity.class);
             it.putExtra(EmailLookUpRequestTask.EXTRA_LOGIN_BUNDLE, loginBundle);
@@ -234,7 +241,10 @@ public class EmailLookupActivity extends BaseActivity implements IProgressBarLis
 
     /*
      * (non-Javadoc)
-     * @see com.concur.mobile.platform.ui.common.login.EmailLookupFragment.EmailLookupCallbacks#onEmailLookupRequestFail(android.os.Bundle)
+     * 
+     * @see
+     * com.concur.mobile.platform.ui.common.login.EmailLookupFragment.EmailLookupCallbacks#onEmailLookupRequestFail(android.os
+     * .Bundle)
      */
     @SuppressWarnings("unchecked")
     public void onEmailLookupRequestFail(Bundle resultData) {
@@ -242,8 +252,7 @@ public class EmailLookupActivity extends BaseActivity implements IProgressBarLis
 
         // MOB-15531 - show error message from MWS (only in the case of Akamai related error) and
         // in other cases, show the general email lookup error message
-        if (resultData != null
-                && resultData.containsKey(PlatformAsyncRequestTask.EXTRA_MWS_RESPONSE_STATUS_ERRORS_KEY)) {
+        if (resultData != null && resultData.containsKey(PlatformAsyncRequestTask.EXTRA_MWS_RESPONSE_STATUS_ERRORS_KEY)) {
             List<com.concur.mobile.platform.service.parser.Error> errors = (List<com.concur.mobile.platform.service.parser.Error>) resultData
                     .getSerializable(PlatformAsyncRequestTask.EXTRA_MWS_RESPONSE_STATUS_ERRORS_KEY);
             if (errors != null && errors.size() > 0) {
@@ -252,7 +261,7 @@ public class EmailLookupActivity extends BaseActivity implements IProgressBarLis
 
                     // show error message from MWS
                     DialogFragmentFactory.getAlertOkayInstance(getText(R.string.general_network_error).toString(),
-                            errors.get(0).getUserMessage()).show(getSupportFragmentManager(), null);                        
+                            errors.get(0).getUserMessage()).show(getSupportFragmentManager(), null);
 
                     dialogShown = true;
                 }
@@ -269,6 +278,7 @@ public class EmailLookupActivity extends BaseActivity implements IProgressBarLis
 
     /*
      * (non-Javadoc)
+     * 
      * @see com.concur.mobile.platform.ui.common.login.EmailLookupFragment.OnCompanyCodePressedListener#onButtonPressed()
      */
     public void onCompanyCodeButtonPressed() {
@@ -278,28 +288,31 @@ public class EmailLookupActivity extends BaseActivity implements IProgressBarLis
 
     /*
      * (non-Javadoc)
+     * 
      * @see com.concur.mobile.platform.ui.common.login.EmailLookupFragment.EmailLookupCallbacks#isNetworkConnected()
      */
     public boolean isNetworkConnected() {
         return ConcurCore.isConnected();
     }
-    
+
     /*
      * (non-Javadoc)
-     * @see com.concur.mobile.platform.ui.common.login.EmailLookupFragment.EmailLookupCallbacks#trackEmailLookupFrailure(java.lang.String)
+     * 
+     * @see
+     * com.concur.mobile.platform.ui.common.login.EmailLookupFragment.EmailLookupCallbacks#trackEmailLookupFrailure(java.lang.
+     * String)
      */
     public void trackEmailLookupFailure(String failureType) {
         Map<String, String> params = new HashMap<String, String>();
         params.put("Type", failureType);
 
-        EventTracker.INSTANCE.track(Flurry.CATEGORY_SIGN_IN, Flurry.EVENT_EMAIL_LOOKUP_FAILURE, params);        
+        EventTracker.INSTANCE.track(Flurry.CATEGORY_SIGN_IN, Flurry.EVENT_EMAIL_LOOKUP_FAILURE, params);
     }
-    
+
     // ############### End of EmailLookupCallbacks implementations ############# //
 
-    
     // ############### HELPER METHODS ################ //
-    
+
     private Bundle getEmailLookUpBundleFromSessionInfo(SessionInfo sessionInfo) {
         // Determine whether a company sign-on URL has been cached. If so,
         // take the end-user to the company sign-on screen.
@@ -325,5 +338,5 @@ public class EmailLookupActivity extends BaseActivity implements IProgressBarLis
             emailLookupBundle.putString(EmailLookUpRequestTask.EXTRA_SSO_URL_KEY, ssoUrl);
         }
         return emailLookupBundle;
-    }    
+    }
 }

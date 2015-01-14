@@ -86,6 +86,7 @@ public class HotelSearchAndResultActivity extends Activity implements OnMenuItem
     private String location;
     private boolean fromLocationSearch;
     private boolean searchCriteriaChanged;
+    private String distanceUnit;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -108,6 +109,7 @@ public class HotelSearchAndResultActivity extends Activity implements OnMenuItem
             latitude = Double.valueOf(intent.getStringExtra(Const.EXTRA_TRAVEL_LATITUDE));
             longitude = Double.valueOf(intent.getStringExtra(Const.EXTRA_TRAVEL_LONGITUDE));
             fromLocationSearch = intent.getBooleanExtra(Const.EXTRA_LOCATION_SEARCH_MODE_USED, false);
+            distanceUnit = intent.getStringExtra(Const.EXTRA_TRAVEL_HOTEL_SEARCH_DISTANCE_UNIT_ID);
 
             // Initialize the loader.
             lm = getLoaderManager();
@@ -438,6 +440,11 @@ public class HotelSearchAndResultActivity extends Activity implements OnMenuItem
         if (filterFrag == null) {
             filterFrag = new HotelSearchResultFilterFragment();
         }
+
+        if (distanceUnit.equalsIgnoreCase("K")) {
+            filterFrag.setDistanceUnitInKm(true);
+        }
+
         FragmentTransaction ft = getFragmentManager().beginTransaction();
         ft.hide(hotelSearchRESTResultFrag);
         ft.add(R.id.container, filterFrag, FRAGMENT_SEARCH_RESULT_FILTER);
@@ -492,7 +499,6 @@ public class HotelSearchAndResultActivity extends Activity implements OnMenuItem
             }
         }
 
-      
     }
 
     // Will sort the results depending on the type of search and invoked the fragment to display the sorted results
@@ -546,17 +552,17 @@ public class HotelSearchAndResultActivity extends Activity implements OnMenuItem
             fromPolling = true;
             Log.d(Const.LOG_TAG, " ***** creating poll search loader *****  ");
             hotelSearchAsyncTaskLoader = new HotelSearchPollResultLoader(this, checkInDate, checkOutDate, latitude,
-                    longitude, 25, "M", 0, 10, pollingURL);
+                    longitude, 25, distanceUnit, 0, 10, pollingURL);
         } else {
             fromPolling = false;
             // request initial search
             Log.d(Const.LOG_TAG, " ***** creating search loader *****  ");
 
             // TODO - does this need to be fired in a separate thread?
-            TravelUtilHotel.deleteAllHotelDetails(this);
+            // TravelUtilHotel.deleteAllHotelDetails(this);
 
             hotelSearchAsyncTaskLoader = new HotelSearchResultLoader(this, checkInDate, checkOutDate, latitude,
-                    longitude, 25, "M", 0, 10);
+                    longitude, 25, distanceUnit, 0, 10);
         }
         return hotelSearchAsyncTaskLoader;
     }

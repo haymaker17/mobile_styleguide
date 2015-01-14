@@ -404,7 +404,7 @@ public class SessionManager {
                     // Set the sso url.
                     emailBundle.putString(EmailLookUpRequestTask.EXTRA_SSO_URL_KEY, ssoUrl);
 
-                    UserAndSessionInfoUtil.updateUserAndSessionInfo(context, emailBundle);
+                    UserAndSessionInfoUtil.updateUserAndSessionInfo(context, emailBundle, resultData);
 
                     // Save the login response information.
                     Log.d(Const.LOG_TAG, CLS_TAG + ".validateSessionId: successfully created new session id.");
