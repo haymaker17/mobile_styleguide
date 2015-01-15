@@ -88,11 +88,7 @@ public class AirSearchRequest extends PostServiceRequest {
         addElement(body, "RefundableOnly", Boolean.toString(refundableOnly));
         body.append("<Segments>");
         body.append("<AirSegmentCriteria>");
-
-        // MOB-22200
-        // java.text.DateFormat df = new SimpleDateFormat("yyyy-MM-dd");// FormatUtil.LONG_YEAR_MONTH_DAY;
-        // df.setTimeZone(TimeZone.getDefault());
-
+        // MOB-22200 - choose local time zone
         addElement(body, "Date", Format.safeFormatCalendar(FormatUtil.LONG_YEAR_MONTH_DAY_LOCAL, departDateTime));
         addElement(body, "EndIata", arriveIATA);
         addElement(body, "SearchTime", Integer.toString(departDateTime.get(Calendar.HOUR_OF_DAY)));
@@ -102,6 +98,7 @@ public class AirSearchRequest extends PostServiceRequest {
         body.append("</AirSegmentCriteria>");
         if (returnDateTime != null) {
             body.append("<AirSegmentCriteria>");
+            // MOB-22200 - choose local time zone
             addElement(body, "Date", Format.safeFormatCalendar(FormatUtil.LONG_YEAR_MONTH_DAY_LOCAL, returnDateTime));
             addElement(body, "EndIata", departIATA);
             addElement(body, "SearchTime", Integer.toString(returnDateTime.get(Calendar.HOUR_OF_DAY)));
