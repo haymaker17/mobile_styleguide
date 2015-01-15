@@ -196,7 +196,7 @@ public class Home extends BaseActivity implements View.OnClickListener, Navigati
     // Boolean value for flurry events
     private boolean isFromMoreMenu = false;
     protected boolean isTipsOverlayVisible = false;
-    protected boolean isProfileDisable = false;
+    protected boolean isProfileDisable = true;
 
     // Time values for flurry uptime events.
     protected long startTime = 0L;
@@ -2965,7 +2965,7 @@ public class Home extends BaseActivity implements View.OnClickListener, Navigati
         List<NavigationItem> navItems = new ArrayList<NavigationItem>();
         HomeScreenSimpleNavigationItem navItem = null;
         DefaultTextNavigationItem setSegNavItem = null;
-        if (isProfileDisable) {
+        if (!isProfileDisable) {
             // Add the navigation segment bar.
             setSegNavItem = new DefaultTextNavigationItem(NAVIGATION_HEADER, R.layout.navigation_segment,
                     R.string.home_navigation_settings, false);

@@ -630,9 +630,10 @@ public class AirResultsList extends TravelBaseActivity {
                 arriveIATACode }));
 
         StringBuilder sb = new StringBuilder();
-        sb.append(FormatUtil.SHORT_MONTH_DAY_FULL_YEAR_DISPLAY.format(departDateTime.getTime()));
+        sb.append(FormatUtil.SHORT_MONTH_DAY_FULL_YEAR_DISPLAY_LOCAL.format(departDateTime.getTime()));
         if (searchMode != SearchMode.OneWay) {
-            sb.append(" - ").append(FormatUtil.SHORT_MONTH_DAY_FULL_YEAR_DISPLAY.format(returnDateTime.getTime()));
+            sb.append(" - ")
+                    .append(FormatUtil.SHORT_MONTH_DAY_FULL_YEAR_DISPLAY_LOCAL.format(returnDateTime.getTime()));
         }
         tv = (TextView) findViewById(R.id.date_span);
         tv.setText(sb.toString());

@@ -1,6 +1,8 @@
 package com.concur.mobile.core.travel.air.activity;
 
+import java.text.SimpleDateFormat;
 import java.util.Calendar;
+import java.util.TimeZone;
 
 import android.content.BroadcastReceiver;
 import android.content.Context;
@@ -114,7 +116,11 @@ public class AirSearchProgress extends BaseActivity {
         TextView tv = (TextView) findViewById(R.id.searchDepartValue);
         tv.setText(departIATACode);
 
-        StringBuffer dt = new StringBuffer(Format.safeFormatCalendar(FormatUtil.SHORT_DAY_DISPLAY, departDateTime));
+        // MOB-22200
+        java.text.DateFormat df = new SimpleDateFormat("EEE, MMM d");// FormatUtil.SHORT_DAY_DISPLAY;
+        df.setTimeZone(TimeZone.getDefault());
+
+        StringBuffer dt = new StringBuffer(Format.safeFormatCalendar(df, departDateTime));
         dt.append(", ").append(Format.safeFormatCalendar(timeFormat, departDateTime));
         tv = (TextView) findViewById(R.id.searchDepartingDateTime);
         tv.setText(dt.toString());
@@ -129,7 +135,7 @@ public class AirSearchProgress extends BaseActivity {
             tv = (TextView) findViewById(R.id.searchReturnValue);
             tv.setText(arriveIATACode);
 
-            dt = new StringBuffer(Format.safeFormatCalendar(FormatUtil.SHORT_DAY_DISPLAY, returnDateTime));
+            dt = new StringBuffer(Format.safeFormatCalendar(df, returnDateTime));
             dt.append(", ").append(Format.safeFormatCalendar(timeFormat, returnDateTime));
             tv = (TextView) findViewById(R.id.searchReturningDateTime);
             tv.setText(dt.toString());
@@ -141,9 +147,15 @@ public class AirSearchProgress extends BaseActivity {
                 departIATACode, arriveIATACode }));
 
         StringBuilder sb = new StringBuilder();
-        sb.append(FormatUtil.SHORT_MONTH_DAY_FULL_YEAR_DISPLAY.format(departDateTime.getTime()));
+
+        // MOB-22200
+        // java.text.DateFormat dfShort = new SimpleDateFormat("MMM d, yyyy");// FormatUtil.SHORT_MONTH_DAY_FULL_YEAR_DISPLAY;
+        // dfShort.setTimeZone(TimeZone.getDefault());
+
+        sb.append(FormatUtil.SHORT_MONTH_DAY_FULL_YEAR_DISPLAY_LOCAL.format(departDateTime.getTime()));
         if (searchMode != SearchMode.OneWay) {
-            sb.append(" - ").append(FormatUtil.SHORT_MONTH_DAY_FULL_YEAR_DISPLAY.format(returnDateTime.getTime()));
+            sb.append(" - ")
+                    .append(FormatUtil.SHORT_MONTH_DAY_FULL_YEAR_DISPLAY_LOCAL.format(returnDateTime.getTime()));
         }
         tv = (TextView) findViewById(R.id.date_span);
         tv.setText(sb.toString());
