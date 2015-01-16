@@ -23,7 +23,9 @@ public class EntryListAdapter extends AbstractGenericAdapter<RequestEntryDTO> {
     @Override
     public void updateList(List<RequestEntryDTO> listSegments) {
         clearListItems();
-        getList().addAll(listSegments);
+        if (listSegments != null) {
+            getList().addAll(listSegments);
+        }
         notifyDataSetChanged();
     }
 

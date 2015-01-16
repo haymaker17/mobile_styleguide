@@ -2,6 +2,7 @@
 <!-- The version lines below need to remain on separate lines for CM build purposes. -->
 
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
     package="com.concur.breeze"
     android:installLocation="internalOnly"
     android:versionCode="2999"
@@ -60,6 +61,7 @@
 
     <application
         android:name="com.concur.mobile.corp.ConcurMobile"
+        tools:replace="theme, allowBackup, icon, label"
         android:allowBackup="false"
         android:icon="@drawable/launch"
         android:label="@string/corporate_name"
