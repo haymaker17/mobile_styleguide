@@ -135,8 +135,8 @@ public class AirSearchResultsSummary extends TravelBaseActivity implements View.
         tv.setText(Format.localizeText(this, R.string.segmentlist_air_fromto, new Object[] { departIATACode,
                 arriveIATACode }));
 
-        // MOB-22200
         StringBuilder sb = new StringBuilder();
+        // MOB-22200 - choose local time zone
         sb.append(FormatUtil.SHORT_MONTH_DAY_FULL_YEAR_DISPLAY_LOCAL.format(departDateTime.getTime()));
         if (searchMode != SearchMode.OneWay) {
             sb.append(" - ")
