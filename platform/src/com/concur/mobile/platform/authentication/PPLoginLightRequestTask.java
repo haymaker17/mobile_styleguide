@@ -37,8 +37,8 @@ public class PPLoginLightRequestTask extends PlatformAsyncRequestTask {
 
     private static final String CLS_TAG = "PPLoginLightRequestTask";
 
-    // Contains the service end-point for the <code>PPLoginV3Light</code> MWS call.
-    private final String SERVICE_END_POINT = "/mobile/MobileSession/PPLoginV3Light";
+    // Contains the service end-point for the <code>PPLogin2Light</code> MWS call.
+    private final String SERVICE_END_POINT = "/mobile/MobileSession/PPLogin2Light";
 
     /**
      * Contains the locale.
