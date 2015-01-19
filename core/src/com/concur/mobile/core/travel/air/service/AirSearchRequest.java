@@ -88,7 +88,8 @@ public class AirSearchRequest extends PostServiceRequest {
         addElement(body, "RefundableOnly", Boolean.toString(refundableOnly));
         body.append("<Segments>");
         body.append("<AirSegmentCriteria>");
-        addElement(body, "Date", Format.safeFormatCalendar(FormatUtil.LONG_YEAR_MONTH_DAY, departDateTime));
+        // MOB-22200 - choose local time zone
+        addElement(body, "Date", Format.safeFormatCalendar(FormatUtil.LONG_YEAR_MONTH_DAY_LOCAL, departDateTime));
         addElement(body, "EndIata", arriveIATA);
         addElement(body, "SearchTime", Integer.toString(departDateTime.get(Calendar.HOUR_OF_DAY)));
         addElement(body, "StartIata", departIATA);
@@ -97,7 +98,8 @@ public class AirSearchRequest extends PostServiceRequest {
         body.append("</AirSegmentCriteria>");
         if (returnDateTime != null) {
             body.append("<AirSegmentCriteria>");
-            addElement(body, "Date", Format.safeFormatCalendar(FormatUtil.LONG_YEAR_MONTH_DAY, returnDateTime));
+            // MOB-22200 - choose local time zone
+            addElement(body, "Date", Format.safeFormatCalendar(FormatUtil.LONG_YEAR_MONTH_DAY_LOCAL, returnDateTime));
             addElement(body, "EndIata", departIATA);
             addElement(body, "SearchTime", Integer.toString(returnDateTime.get(Calendar.HOUR_OF_DAY)));
             addElement(body, "StartIata", arriveIATA);

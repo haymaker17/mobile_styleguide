@@ -114,7 +114,9 @@ public class AirSearchProgress extends BaseActivity {
         TextView tv = (TextView) findViewById(R.id.searchDepartValue);
         tv.setText(departIATACode);
 
-        StringBuffer dt = new StringBuffer(Format.safeFormatCalendar(FormatUtil.SHORT_DAY_DISPLAY, departDateTime));
+        // MOB-22200 - choose local time zone
+        StringBuffer dt = new StringBuffer(
+                Format.safeFormatCalendar(FormatUtil.SHORT_DAY_DISPLAY_LOCAL, departDateTime));
         dt.append(", ").append(Format.safeFormatCalendar(timeFormat, departDateTime));
         tv = (TextView) findViewById(R.id.searchDepartingDateTime);
         tv.setText(dt.toString());
@@ -128,8 +130,8 @@ public class AirSearchProgress extends BaseActivity {
         } else {
             tv = (TextView) findViewById(R.id.searchReturnValue);
             tv.setText(arriveIATACode);
-
-            dt = new StringBuffer(Format.safeFormatCalendar(FormatUtil.SHORT_DAY_DISPLAY, returnDateTime));
+            // MOB-22200 - choose local time zone
+            dt = new StringBuffer(Format.safeFormatCalendar(FormatUtil.SHORT_DAY_DISPLAY_LOCAL, returnDateTime));
             dt.append(", ").append(Format.safeFormatCalendar(timeFormat, returnDateTime));
             tv = (TextView) findViewById(R.id.searchReturningDateTime);
             tv.setText(dt.toString());
@@ -141,9 +143,10 @@ public class AirSearchProgress extends BaseActivity {
                 departIATACode, arriveIATACode }));
 
         StringBuilder sb = new StringBuilder();
-        sb.append(FormatUtil.SHORT_MONTH_DAY_FULL_YEAR_DISPLAY.format(departDateTime.getTime()));
+        sb.append(FormatUtil.SHORT_MONTH_DAY_FULL_YEAR_DISPLAY_LOCAL.format(departDateTime.getTime()));
         if (searchMode != SearchMode.OneWay) {
-            sb.append(" - ").append(FormatUtil.SHORT_MONTH_DAY_FULL_YEAR_DISPLAY.format(returnDateTime.getTime()));
+            sb.append(" - ")
+                    .append(FormatUtil.SHORT_MONTH_DAY_FULL_YEAR_DISPLAY_LOCAL.format(returnDateTime.getTime()));
         }
         tv = (TextView) findViewById(R.id.date_span);
         tv.setText(sb.toString());

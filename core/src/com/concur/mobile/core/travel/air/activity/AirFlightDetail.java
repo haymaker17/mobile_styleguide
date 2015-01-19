@@ -331,9 +331,11 @@ public class AirFlightDetail extends TravelBaseActivity {
         txtView.setText(com.concur.mobile.base.util.Format.localizeText(this, R.string.segmentlist_air_fromto,
                 new Object[] { departIATACode, arriveIATACode }));
         StringBuilder sb = new StringBuilder();
-        sb.append(FormatUtil.SHORT_MONTH_DAY_FULL_YEAR_DISPLAY.format(departDateTime.getTime()));
+        // MOB-22200 - choose local time zone
+        sb.append(FormatUtil.SHORT_MONTH_DAY_FULL_YEAR_DISPLAY_LOCAL.format(departDateTime.getTime()));
         if (searchMode != SearchMode.OneWay) {
-            sb.append(" - ").append(FormatUtil.SHORT_MONTH_DAY_FULL_YEAR_DISPLAY.format(returnDateTime.getTime()));
+            sb.append(" - ")
+                    .append(FormatUtil.SHORT_MONTH_DAY_FULL_YEAR_DISPLAY_LOCAL.format(returnDateTime.getTime()));
         }
         txtView = (TextView) findViewById(R.id.date_span);
         txtView.setText(sb.toString());

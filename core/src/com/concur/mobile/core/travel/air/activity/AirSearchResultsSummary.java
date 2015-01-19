@@ -136,9 +136,11 @@ public class AirSearchResultsSummary extends TravelBaseActivity implements View.
                 arriveIATACode }));
 
         StringBuilder sb = new StringBuilder();
-        sb.append(FormatUtil.SHORT_MONTH_DAY_FULL_YEAR_DISPLAY.format(departDateTime.getTime()));
+        // MOB-22200 - choose local time zone
+        sb.append(FormatUtil.SHORT_MONTH_DAY_FULL_YEAR_DISPLAY_LOCAL.format(departDateTime.getTime()));
         if (searchMode != SearchMode.OneWay) {
-            sb.append(" - ").append(FormatUtil.SHORT_MONTH_DAY_FULL_YEAR_DISPLAY.format(returnDateTime.getTime()));
+            sb.append(" - ")
+                    .append(FormatUtil.SHORT_MONTH_DAY_FULL_YEAR_DISPLAY_LOCAL.format(returnDateTime.getTime()));
         }
         tv = (TextView) findViewById(R.id.date_span);
         tv.setText(sb.toString());

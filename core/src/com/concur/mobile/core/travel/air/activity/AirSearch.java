@@ -613,12 +613,13 @@ public class AirSearch extends TravelBaseActivity implements View.OnClickListene
         // MOB-21681 - set user's preferred time zone
         // timeFormat.setTimeZone(TimeZone.getDefault());
 
+        // MOB-22200 - choose local time zone
         setFieldValue(R.id.air_search_depart_date,
-                Format.safeFormatCalendar(FormatUtil.SHORT_WEEKDAY_MONTH_DAY_FULL_YEAR_DISPLAY, departDateTime));
+                Format.safeFormatCalendar(FormatUtil.SHORT_WEEKDAY_MONTH_DAY_FULL_YEAR_DISPLAY_LOCAL, departDateTime));
         setFieldValue(R.id.air_search_depart_time, Format.safeFormatCalendar(timeFormat, departDateTime));
-
+        // MOB-22200 - choose local time zone
         setFieldValue(R.id.air_search_return_date,
-                Format.safeFormatCalendar(FormatUtil.SHORT_WEEKDAY_MONTH_DAY_FULL_YEAR_DISPLAY, returnDateTime));
+                Format.safeFormatCalendar(FormatUtil.SHORT_WEEKDAY_MONTH_DAY_FULL_YEAR_DISPLAY_LOCAL, returnDateTime));
         setFieldValue(R.id.air_search_return_time, Format.safeFormatCalendar(timeFormat, returnDateTime));
     }
 
@@ -709,8 +710,8 @@ public class AirSearch extends TravelBaseActivity implements View.OnClickListene
                 }
 
                 if (dateUtil.isDateInValidForDefaultTimeZone(departDateTime, null, true)) {
-                    departDateTime = dateUtil.setDepartToCurrent(departDateTime, returnDateTime,
-                            dateUtil.getCurrentTime());
+                    departDateTime = dateUtil
+                            .setDepartToCurrent(departDateTime, returnDateTime, Calendar.getInstance());
                     // Adjust the return time if needed
                     if (departDateTime.after(returnDateTime)) {
                         returnDateTime = dateUtil.setReturnToCurrent(returnDateTime, departDateTime);
