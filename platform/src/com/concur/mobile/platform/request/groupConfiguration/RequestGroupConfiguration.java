@@ -13,6 +13,8 @@ public class RequestGroupConfiguration {
     private String id;
     @SerializedName("Name")
     private String name;
+    @SerializedName("DefaultPolicyID")
+    private String defaultPolicyId;
     @SerializedName("Agencies")
     private List<Agency> agencies;
     @SerializedName("Policies")
@@ -36,6 +38,14 @@ public class RequestGroupConfiguration {
 
     public void setName(String name) {
         this.name = name;
+    }
+
+    public String getDefaultPolicyId() {
+        return defaultPolicyId;
+    }
+
+    public void setDefaultPolicyId(String defaultPolicyId) {
+        this.defaultPolicyId = defaultPolicyId;
     }
 
     public List<Agency> getAgencies() {

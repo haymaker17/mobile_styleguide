@@ -60,7 +60,7 @@ public class RequestListActivity extends BaseActivity {
     private static final int ID_EMPTY_VIEW = 1;
     private static final int ID_LIST_VIEW = 2;
 
-    private static boolean IS_REQUEST_CREATION_AVAILABLE = false;
+    private static boolean HAS_CONFIGURATION = false;
 
     private final RequestParser requestParser = new RequestParser();
 
@@ -92,11 +92,11 @@ public class RequestListActivity extends BaseActivity {
 
         newRequestButton = ((Button) findViewById(R.id.newRequestButton));
         if (!concurCore.getRequestGroupConfigurationCache().hasCachedValues()) {
-            IS_REQUEST_CREATION_AVAILABLE = false;
+            HAS_CONFIGURATION = false;
             new RequestGroupConfigurationsTask(RequestListActivity.this, 1, asyncGroupConfigurationReceiver).execute();
         }
         else{
-            IS_REQUEST_CREATION_AVAILABLE = true;
+            HAS_CONFIGURATION = true;
         }
         new RequestListTask(RequestListActivity.this, 1, asyncTRListReceiver, searchedStatus).execute();
 
@@ -152,7 +152,7 @@ public class RequestListActivity extends BaseActivity {
      */
     private void setView(int viewID) {
         requestListVF.setDisplayedChild(viewID);
-        if (viewID == ID_LOADING_VIEW || !IS_REQUEST_CREATION_AVAILABLE)
+        if (viewID == ID_LOADING_VIEW || !isCreateRequestAvailable())
             newRequestButton.setVisibility(View.GONE);
         else
             newRequestButton.setVisibility(View.VISIBLE);
@@ -355,9 +355,11 @@ public class RequestListActivity extends BaseActivity {
                 for (RequestGroupConfiguration rgc : rgcc.getGroupConfigurations()){
                     getConcurCore().getRequestGroupConfigurationCache().addValue(userId, rgc);
                 }
-                // --- New Request button is set to visible only if we obtained a configuration (contains segment types)
-                IS_REQUEST_CREATION_AVAILABLE = true;
-                newRequestButton.setVisibility(View.VISIBLE);
+                // --- New Request button is set to visible only if we obtained a configuration (contains segment types) and it has a default policy
+                HAS_CONFIGURATION = true;
+                if (isCreateRequestAvailable()) {
+                    newRequestButton.setVisibility(View.VISIBLE);
+                }
             }
         }
 
@@ -377,6 +379,20 @@ public class RequestListActivity extends BaseActivity {
         public void cleanup() {
             asyncGroupConfigurationReceiver.setListener(null);
         }
+    }
+
+    /**
+     * Creation is available only if the user has a configuration in which a DefaultRequestPolicy specified.
+     * @return
+     */
+    private boolean isCreateRequestAvailable(){
+        if (HAS_CONFIGURATION){
+            final RequestGroupConfiguration rgc = getConcurCore().getRequestGroupConfigurationCache().getValue(getUserId());
+            if (rgc.getDefaultPolicyId() != null){
+                return true;
+            }
+        }
+        return false;
     }
 
     // TODO : see with PM if we should display cache or an empty list
