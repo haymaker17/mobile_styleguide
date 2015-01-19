@@ -16,6 +16,7 @@ import com.concur.mobile.platform.common.formfield.IFormField;
 import com.concur.mobile.platform.request.dto.RequestDTO;
 import com.concur.mobile.platform.request.dto.RequestEntryDTO;
 import com.concur.mobile.platform.request.dto.RequestSegmentDTO;
+import com.concur.mobile.platform.request.groupConfiguration.RequestGroupConfigurationsContainer;
 import com.concur.mobile.platform.util.BooleanDeserializer;
 import com.concur.mobile.platform.util.EnumDeserializer;
 import com.concur.mobile.platform.util.IntegerDeserializer;
@@ -235,5 +236,21 @@ public class RequestParser {
         final Gson gson = builder.create();
         Log.d("RequestParser", " starting parse");
         return gson.fromJson(jsonRes, ConnectForm.class);
+    }
+
+    /**
+     * Parse jsonRes content with Gson into a RequestGroupConfigurationsContainer with n RequestGroupConfiguration
+     *
+     * @param jsonRes
+     *            the json string
+     */
+    public RequestGroupConfigurationsContainer parseRequestGroupConfigurationsResponse(String jsonRes) {
+        final GsonBuilder builder = new GsonBuilder();
+        builder.registerTypeAdapter(Boolean.class, new BooleanDeserializer());
+        builder.registerTypeAdapter(Integer.class, new IntegerDeserializer());
+
+        final Gson gson = builder.create();
+        Log.d("RequestGroupConfigurationsParser", " starting parse");
+        return gson.fromJson(jsonRes, RequestGroupConfigurationsContainer.class);
     }
 }

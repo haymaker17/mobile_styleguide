@@ -31,7 +31,7 @@ public class RequestDetailsTask extends AbstractRequestWSCallTask {
      * @throws ServiceRequestException
      */
     protected String getServiceEndPoint() throws ServiceRequestException {
-        return ConnectHelper.getServiceEndpointURI(Module.TRAVEL_REQUEST, Action.DETAIL, new HashMap<String, Object>(),
+        return ConnectHelper.getServiceEndpointURI(Module.REQUEST, Action.DETAIL, new HashMap<String, Object>(),
                 requestID, true);
     }
 }

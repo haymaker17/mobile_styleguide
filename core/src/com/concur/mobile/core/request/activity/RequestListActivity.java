@@ -29,6 +29,7 @@ import com.concur.mobile.core.activity.BaseActivity;
 import com.concur.mobile.core.request.adapter.SplitRequestListAdapter;
 import com.concur.mobile.core.request.service.RequestParser;
 import com.concur.mobile.core.request.task.RequestFormFieldsTask;
+import com.concur.mobile.core.request.task.RequestGroupConfigurationsTask;
 import com.concur.mobile.core.request.task.RequestListTask;
 import com.concur.mobile.core.request.util.RequestStatus;
 import com.concur.mobile.core.util.Const;
@@ -38,6 +39,8 @@ import com.concur.mobile.platform.common.formfield.ConnectForm;
 import com.concur.mobile.platform.common.formfield.ConnectFormFieldsCache;
 import com.concur.mobile.platform.request.RequestListCache;
 import com.concur.mobile.platform.request.dto.RequestDTO;
+import com.concur.mobile.platform.request.groupConfiguration.RequestGroupConfiguration;
+import com.concur.mobile.platform.request.groupConfiguration.RequestGroupConfigurationsContainer;
 import com.concur.mobile.platform.ui.common.dialog.NoConnectivityDialogFragment;
 
 /**
@@ -47,7 +50,7 @@ public class RequestListActivity extends BaseActivity {
 
     // TODO : move somewhere else / use something existing
     public enum ListenerOutputType {
-        SUCCESS, ERROR, CANCEL;
+        SUCCESS, ERROR, CANCEL
     }
 
     public static final String KEY_SEARCHED_STATUS = "searchedStatus";
@@ -56,6 +59,8 @@ public class RequestListActivity extends BaseActivity {
     private static final int ID_LOADING_VIEW = 0;
     private static final int ID_EMPTY_VIEW = 1;
     private static final int ID_LIST_VIEW = 2;
+
+    private static boolean IS_REQUEST_CREATION_AVAILABLE = false;
 
     private final RequestParser requestParser = new RequestParser();
 
@@ -66,6 +71,7 @@ public class RequestListActivity extends BaseActivity {
     private ViewFlipper requestListVF;
     private BaseAsyncResultReceiver asyncTRListReceiver;
     private BaseAsyncResultReceiver asyncFormFieldsReceiver;
+    private BaseAsyncResultReceiver asyncGroupConfigurationReceiver;
 
     protected Boolean showCodes;
     protected int category;
@@ -79,10 +85,26 @@ public class RequestListActivity extends BaseActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         final ConcurCore concurCore = (ConcurCore) getApplication();
+        setContentView(R.layout.request_list);
+
+        asyncGroupConfigurationReceiver = new BaseAsyncResultReceiver(new Handler());
+        asyncGroupConfigurationReceiver.setListener(new GroupConfigurationListener());
+
+        newRequestButton = ((Button) findViewById(R.id.newRequestButton));
+        if (!concurCore.getRequestGroupConfigurationCache().hasCachedValues()) {
+            IS_REQUEST_CREATION_AVAILABLE = false;
+            new RequestGroupConfigurationsTask(RequestListActivity.this, 1, asyncGroupConfigurationReceiver).execute();
+        }
+        else{
+            IS_REQUEST_CREATION_AVAILABLE = true;
+        }
+        new RequestListTask(RequestListActivity.this, 1, asyncTRListReceiver, searchedStatus).execute();
+
+        // -------------
+
         requestListCache = (RequestListCache) concurCore.getRequestListCache();
         formFieldsCache = (ConnectFormFieldsCache) concurCore.getRequestFormFieldsCache();
 
-        setContentView(R.layout.request_list);
         category = getResources().getColor(R.color.SectionHeaderBackground);
         final Bundle bundle = getIntent().getExtras();
         if (bundle != null && bundle.containsKey(KEY_SEARCHED_STATUS))
@@ -98,7 +120,6 @@ public class RequestListActivity extends BaseActivity {
         getActionBar().setDisplayHomeAsUpEnabled(true);
         // Get components references
         requestListView = ((ListView) findViewById(R.id.requestListView));
-        newRequestButton = ((Button) findViewById(R.id.newRequestButton));
         requestListVF = ((ViewFlipper) findViewById(R.id.requestListVF));
         setView(ID_EMPTY_VIEW);
 
@@ -131,7 +152,7 @@ public class RequestListActivity extends BaseActivity {
      */
     private void setView(int viewID) {
         requestListVF.setDisplayedChild(viewID);
-        if (viewID == ID_LOADING_VIEW)
+        if (viewID == ID_LOADING_VIEW || !IS_REQUEST_CREATION_AVAILABLE)
             newRequestButton.setVisibility(View.GONE);
         else
             newRequestButton.setVisibility(View.VISIBLE);
@@ -168,7 +189,7 @@ public class RequestListActivity extends BaseActivity {
     }
 
     private void handleAwaitingRefresh(String formId, boolean isSuccess) {
-        if (formWaitingForRefresh != null && formId == formWaitingForRefresh) {
+        if (formWaitingForRefresh != null && formId.equals(formWaitingForRefresh)) {
             if (isSuccess)
                 displayTravelRequestDetail(formWaitingForRefresh);
             formWaitingForRefresh = null;
@@ -181,7 +202,6 @@ public class RequestListActivity extends BaseActivity {
      * 
      * @param reqId
      *            request object id
-     * @return intent
      */
     private void displayTravelRequestDetail(String reqId) {
         final RequestDTO tr = requestListCache.getValue(reqId);
@@ -316,6 +336,46 @@ public class RequestListActivity extends BaseActivity {
         @Override
         public void cleanup() {
             asyncFormFieldsReceiver.setListener(null);
+        }
+    }
+
+    /**
+     * Call asynchronous task to retrieve data through connect
+     */
+    private class GroupConfigurationListener implements AsyncReplyListener {
+
+        @Override
+        public void onRequestSuccess(Bundle resultData) {
+            // --- parse the configurations received
+            final RequestGroupConfigurationsContainer rgcc = requestParser.parseRequestGroupConfigurationsResponse(resultData
+                    .getString(BaseAsyncRequestTask.HTTP_RESPONSE));
+            if (rgcc != null && rgcc.getGroupConfigurations().size() > 0) {
+                // --- add configurations to cache if there is any
+                final String userId = getUserId();
+                for (RequestGroupConfiguration rgc : rgcc.getGroupConfigurations()){
+                    getConcurCore().getRequestGroupConfigurationCache().addValue(userId, rgc);
+                }
+                // --- New Request button is set to visible only if we obtained a configuration (contains segment types)
+                IS_REQUEST_CREATION_AVAILABLE = true;
+                newRequestButton.setVisibility(View.VISIBLE);
+            }
+        }
+
+        @Override
+        public void onRequestFail(Bundle resultData) {
+            Log.d(Const.LOG_TAG, CLS_TAG + " calling decrement from onrequestfails");
+            Log.d(Const.LOG_TAG, " onRequestFail in GroupConfigurationListener...");
+        }
+
+        @Override
+        public void onRequestCancel(Bundle resultData) {
+            Log.d(Const.LOG_TAG, CLS_TAG + " calling decrement from onrequestcancel");
+            Log.d(Const.LOG_TAG, " onRequestCancel in GroupConfigurationListener...");
+        }
+
+        @Override
+        public void cleanup() {
+            asyncGroupConfigurationReceiver.setListener(null);
         }
     }
 

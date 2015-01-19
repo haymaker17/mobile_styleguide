@@ -13,11 +13,15 @@ public class ConnectHelper {
     private static final String ENDPOINT_URI = "/api/v3.0/";
     public static final String REQUEST_ID = "id";
 
+    public static final String PARAM_LIMIT = "limit";
+    private static final int DEFAULT_LIST_LIMIT_VALUE = 10;
+
     // reminder - TR SERVICE_END_POINT =
     // "/api/v3.0/travelrequest/requests?status=PENDING_EBOOKING&offset=0&limit=25";
 
     public enum Module {
-        TRAVEL_REQUEST("travelrequest/requests"),
+        REQUEST("travelrequest/requests"),
+        GROUP_CONFIGURATIONS("travelrequest/requestgroupconfigurations"),
         FORM_FIELDS("expense/formfields");
 
         public String moduleValue;
@@ -33,7 +37,8 @@ public class ConnectHelper {
         FORM_FIELDS_HEADER(null), 
         FORM_FIELDS_SEGMENT(null), 
         SUBMIT("submit"), 
-        CREATE("save");
+        CREATE(null),
+        UPDATE(null);
 
         public String actionValue;
 
@@ -77,7 +82,9 @@ public class ConnectHelper {
 		switch(action){
 
 		//get output status (example) : "/api/v3.0/travelrequest/requests"
-		case LIST:			
+		case LIST:
+            // Set the limit parameter close to server limit (100) to avoid any pagination
+            queryStringParameters.put(PARAM_LIMIT, DEFAULT_LIST_LIMIT_VALUE);
 			break;
 
 		//get output status (example) : "/api/v3.0/travelrequest/requests/{id}"
@@ -92,7 +99,6 @@ public class ConnectHelper {
 
 		//post output status (example) "/api/v3.0/travelrequest/requests/{id}/submit"
 		case SUBMIT:
-
             if (id != null && id.length() > 0)
                 serviceUri.append("/" + id);
             else
@@ -103,6 +109,18 @@ public class ConnectHelper {
 			else
 				throw new ServiceRequestException("Action cannot be null");
 			break;
+
+        //post output status (example) "/api/v3.0/travelrequest/requests"
+        case CREATE:
+            break;
+
+        //post output status (example) "/api/v3.0/travelrequest/requests/{id}"
+        case UPDATE:
+            if (id != null && id.length() > 0)
+                serviceUri.append("/" + id);
+            else
+                throw new ServiceRequestException("ID cannot be null");
+            break;
 
 		//DEFAULT
 		default :
@@ -116,8 +134,8 @@ public class ConnectHelper {
     }
 
     /**
-     * @param parameters
-     * @param serviceUri
+     * @param parameters parameters to add
+     * @param serviceUri string representation of the uri to call
      */
     private static void addParameters(Map<String, Object> parameters, final StringBuilder serviceUri, boolean isGet) {
         if (isGet){

@@ -31,7 +31,7 @@ public class RequestSubmitTask extends AbstractRequestWSCallTask {
      * @throws ServiceRequestException
      */
     protected String getServiceEndPoint() throws ServiceRequestException {
-        return ConnectHelper.getServiceEndpointURI(Module.TRAVEL_REQUEST, Action.SUBMIT, new HashMap<String, Object>(),
+        return ConnectHelper.getServiceEndpointURI(Module.REQUEST, Action.SUBMIT, new HashMap<String, Object>(),
                 requestID, false);
     }
     
