@@ -81,6 +81,7 @@ public class RequestParser {
     private static final String RES_SEGMENT_FROM_LOCATION_NAME_KEY = "FromLocationName";
     private static final String RES_SEGMENT_TO_LOCATION_NAME_KEY = "ToLocationName";
     private static final String RES_SEGMENT_EXCEPTION_LIST = "Exceptions";
+    private static final String RES_SEGMENT_FORM_ID = "SegmentFormID";
 
     private Date parseDate(String baseStr, SimpleDateFormat sdf) {
         if (baseStr != null) {
@@ -95,8 +96,8 @@ public class RequestParser {
     }
 
     /**
-     * @param jsonRes
-     * @return
+     * @param jsonRes the string result of the ws call
+     * @return a list of RequestDTO
      */
     @SuppressWarnings("rawtypes")
     public List<RequestDTO> parseTRListResponse(String jsonRes) {
@@ -193,6 +194,7 @@ public class RequestParser {
                         RES_SEGMENT_CURRENCY_CODE_KEY));
                 trs.setForeignAmount(Parse.safeParseDouble(RequestParsingHelper.stringSafeParse(jsonSegment,
                         RES_SEGMENT_FOREIGN_AMOUNT_KEY)));
+                trs.setSegmentFormId(RequestParsingHelper.stringSafeParse(jsonSegment, RES_SEGMENT_FORM_ID));
                 trs.setDepartureDate(parseDate(
                         RequestParsingHelper.stringSafeParse(jsonSegment, RES_SEGMENT_DEPARTURE_DATE_KEY), sdf));
                 trs.setArrivalDate(parseDate(

@@ -383,7 +383,7 @@ public class RequestListActivity extends BaseActivity {
 
     /**
      * Creation is available only if the user has a configuration in which a DefaultRequestPolicy specified.
-     * @return
+     * @return true / false
      */
     private boolean isCreateRequestAvailable(){
         if (HAS_CONFIGURATION){
@@ -407,6 +407,12 @@ public class RequestListActivity extends BaseActivity {
     @Override
     protected void onResume() {
         super.onResume();
+        // --- Request Group Configuration
+        if (asyncGroupConfigurationReceiver == null) {
+            asyncGroupConfigurationReceiver = new BaseAsyncResultReceiver(new Handler());
+        }
+        asyncGroupConfigurationReceiver.setListener(new GroupConfigurationListener());
+
         // --- Forms & fields (called by list refresh)
         if (asyncFormFieldsReceiver == null) {
             asyncFormFieldsReceiver = new BaseAsyncResultReceiver(new Handler());
@@ -430,6 +436,7 @@ public class RequestListActivity extends BaseActivity {
         super.onPause();
         asyncTRListReceiver.setListener(null);
         asyncFormFieldsReceiver.setListener(null);
+        asyncGroupConfigurationReceiver.setListener(null);
     }
 
     @Override
@@ -450,6 +457,7 @@ public class RequestListActivity extends BaseActivity {
         super.onBackPressed();
         asyncTRListReceiver.setListener(null);
         asyncFormFieldsReceiver.setListener(null);
+        asyncGroupConfigurationReceiver.setListener(null);
     }
 
 }
