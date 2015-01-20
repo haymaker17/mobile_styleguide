@@ -47,6 +47,6 @@ public class RequestListTask extends AbstractRequestWSCallTask {
         final Map<String, Object> params = new HashMap<String, Object>();
         params.put(PARAM_STATUS, this.statusRequested);
         params.put(PARAM_WITH_SEGMENT_TYPES, Boolean.TRUE);
-        return ConnectHelper.getServiceEndpointURI(Module.TRAVEL_REQUEST, Action.LIST, params, true);
+        return ConnectHelper.getServiceEndpointURI(Module.REQUEST, Action.LIST, params, true);
     }
 }

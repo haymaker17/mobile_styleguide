@@ -43,8 +43,8 @@ public class EntryListAdapter extends AbstractGenericAdapter<RequestEntryDTO> {
         final TextView type = (TextView) row.findViewById(R.id.segmentTypeRow);
         final TextView foreignAmount = (TextView) row.findViewById(R.id.segmentRowAmount);
 
-        final String formattedAmount = FormatUtil.formatAmount(entry.getForeignAmount(), getContext().getResources()
-                .getConfiguration().locale, entry.getForeignCurrencyCode(), true, true);
+        final String formattedAmount = FormatUtil.formatAmount(entry.getForeignAmount() != null ? entry.getForeignAmount() : 0, getContext().getResources()
+                .getConfiguration().locale, entry.getForeignCurrencyCode() != null ? entry.getForeignCurrencyCode() : "", true, true);
 
         type.setText(entry.getSegmentType());
         foreignAmount.setText(formattedAmount);
@@ -58,5 +58,5 @@ public class EntryListAdapter extends AbstractGenericAdapter<RequestEntryDTO> {
     @Override
     public boolean isEnabled(int position) {
         return true;
-    };
+    }
 }

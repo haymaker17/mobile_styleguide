@@ -15,7 +15,16 @@ public class RequestSegmentDTO {
     private String fromLocationName;
     private String toLocationName;
     private int exceptionCount;
+    private String segmentFormId;
     private List<String> exeptionList = new ArrayList<String>();
+
+    public String getSegmentFormId() {
+        return segmentFormId;
+    }
+
+    public void setSegmentFormId(String segmentFormId) {
+        this.segmentFormId = segmentFormId;
+    }
 
     public String getSegmentType() {
         return segmentType;

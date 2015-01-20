@@ -16,6 +16,7 @@ import com.concur.mobile.platform.common.formfield.IFormField;
 import com.concur.mobile.platform.request.dto.RequestDTO;
 import com.concur.mobile.platform.request.dto.RequestEntryDTO;
 import com.concur.mobile.platform.request.dto.RequestSegmentDTO;
+import com.concur.mobile.platform.request.groupConfiguration.RequestGroupConfigurationsContainer;
 import com.concur.mobile.platform.util.BooleanDeserializer;
 import com.concur.mobile.platform.util.EnumDeserializer;
 import com.concur.mobile.platform.util.IntegerDeserializer;
@@ -80,6 +81,7 @@ public class RequestParser {
     private static final String RES_SEGMENT_FROM_LOCATION_NAME_KEY = "FromLocationName";
     private static final String RES_SEGMENT_TO_LOCATION_NAME_KEY = "ToLocationName";
     private static final String RES_SEGMENT_EXCEPTION_LIST = "Exceptions";
+    private static final String RES_SEGMENT_FORM_ID = "SegmentFormID";
 
     private Date parseDate(String baseStr, SimpleDateFormat sdf) {
         if (baseStr != null) {
@@ -94,8 +96,8 @@ public class RequestParser {
     }
 
     /**
-     * @param jsonRes
-     * @return
+     * @param jsonRes the string result of the ws call
+     * @return a list of RequestDTO
      */
     @SuppressWarnings("rawtypes")
     public List<RequestDTO> parseTRListResponse(String jsonRes) {
@@ -192,6 +194,7 @@ public class RequestParser {
                         RES_SEGMENT_CURRENCY_CODE_KEY));
                 trs.setForeignAmount(Parse.safeParseDouble(RequestParsingHelper.stringSafeParse(jsonSegment,
                         RES_SEGMENT_FOREIGN_AMOUNT_KEY)));
+                trs.setSegmentFormId(RequestParsingHelper.stringSafeParse(jsonSegment, RES_SEGMENT_FORM_ID));
                 trs.setDepartureDate(parseDate(
                         RequestParsingHelper.stringSafeParse(jsonSegment, RES_SEGMENT_DEPARTURE_DATE_KEY), sdf));
                 trs.setArrivalDate(parseDate(
@@ -235,5 +238,21 @@ public class RequestParser {
         final Gson gson = builder.create();
         Log.d("RequestParser", " starting parse");
         return gson.fromJson(jsonRes, ConnectForm.class);
+    }
+
+    /**
+     * Parse jsonRes content with Gson into a RequestGroupConfigurationsContainer with n RequestGroupConfiguration
+     *
+     * @param jsonRes
+     *            the json string
+     */
+    public RequestGroupConfigurationsContainer parseRequestGroupConfigurationsResponse(String jsonRes) {
+        final GsonBuilder builder = new GsonBuilder();
+        builder.registerTypeAdapter(Boolean.class, new BooleanDeserializer());
+        builder.registerTypeAdapter(Integer.class, new IntegerDeserializer());
+
+        final Gson gson = builder.create();
+        Log.d("RequestGroupConfigurationsParser", " starting parse");
+        return gson.fromJson(jsonRes, RequestGroupConfigurationsContainer.class);
     }
 }

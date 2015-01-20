@@ -31,13 +31,18 @@ import com.concur.mobile.core.activity.BaseActivity;
 import com.concur.mobile.core.request.adapter.EntryListAdapter;
 import com.concur.mobile.core.request.service.RequestParser;
 import com.concur.mobile.core.request.task.RequestDetailsTask;
+import com.concur.mobile.core.request.task.RequestFormFieldsTask;
 import com.concur.mobile.core.request.task.RequestSubmitTask;
 import com.concur.mobile.core.request.util.DateUtil;
 import com.concur.mobile.core.util.Const;
 import com.concur.mobile.core.util.EventTracker;
 import com.concur.mobile.core.util.Flurry;
 import com.concur.mobile.core.util.FormatUtil;
+import com.concur.mobile.platform.common.formfield.ConnectForm;
+import com.concur.mobile.platform.common.formfield.ConnectFormFieldsCache;
 import com.concur.mobile.platform.request.dto.RequestDTO;
+import com.concur.mobile.platform.request.dto.RequestEntryDTO;
+import com.concur.mobile.platform.request.dto.RequestSegmentDTO;
 import com.concur.mobile.platform.ui.common.dialog.NoConnectivityDialogFragment;
 
 public class RequestDigestActivity extends BaseActivity {
@@ -59,6 +64,10 @@ public class RequestDigestActivity extends BaseActivity {
     private BaseAsyncResultReceiver asyncReceiver;
     // for Submit
     private BaseAsyncResultReceiver asyncReceiverSubmit;
+    private BaseAsyncResultReceiver asyncReceiverFormFields;
+
+    private ConnectFormFieldsCache formFieldsCache = null;
+    private String formWaitingForRefresh = null;
 
     protected Boolean showCodes;
     protected int category;
@@ -71,27 +80,22 @@ public class RequestDigestActivity extends BaseActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.request_details);
         category = getResources().getColor(R.color.SectionHeaderBackground);
-        configure();
+
+        formFieldsCache = (ConnectFormFieldsCache) getConcurCore().getRequestFormFieldsCache();
+        asyncReceiverFormFields = new BaseAsyncResultReceiver(new Handler());
+        asyncReceiverFormFields.setListener(new SegmentFormFieldsListener());
 
         final Bundle bundle = getIntent().getExtras();
         final String requestId = bundle.getString(RequestListActivity.REQUEST_ID);
-        if (requestId != null)
-            tr = ((ConcurCore) getApplication()).getRequestListCache().getValue(requestId);
+        if (requestId != null) {
+            tr = getConcurCore().getRequestListCache().getValue(requestId);
+        }
         else {
             Log.e(Const.LOG_TAG, CLS_TAG + " onCreate() : problem on tr retrieved, going back to list activity.");
             // TODO : throw exception & display toast message ? @See with PM
             finish();
         }
-
-        submitButton = (RelativeLayout) findViewById(R.id.submitButton);
-        submitButton.setOnClickListener(new View.OnClickListener() {
-
-            public void onClick(View v) {
-                // CALL SUMMIT METHOD
-                submitRequest();
-            }
-        });
-
+        configure();
     }
 
     private void configure() {
@@ -109,6 +113,15 @@ public class RequestDigestActivity extends BaseActivity {
             Log.e(Const.LOG_TAG, CLS_TAG
                     + ".populateExpenseHeaderNavBarInfo: missing navigation bar title text resource!", resNotFndExc);
         }
+
+        submitButton = (RelativeLayout) findViewById(R.id.submitButton);
+        submitButton.setOnClickListener(new View.OnClickListener() {
+
+            public void onClick(View v) {
+                // CALL SUMMIT METHOD
+                submitRequest();
+            }
+        });
     }
 
     private void updateTRDetailsUI(RequestDTO request) {
@@ -198,6 +211,15 @@ public class RequestDigestActivity extends BaseActivity {
             requestParser.parseTRDetailResponse(tr, resultData.getString(BaseAsyncRequestTask.HTTP_RESPONSE));
             updateTRDetailsUI(tr);
 
+            if (tr.getEntriesList() != null) {
+                for (RequestEntryDTO re : tr.getEntriesList()) {
+                    for (RequestSegmentDTO segment : re.getListSegment()) {
+                        formFieldsCache.setFormRefreshStatus(segment.getSegmentFormId(), true);
+                        new RequestFormFieldsTask(RequestDigestActivity.this, 1, asyncReceiverFormFields, segment.getSegmentFormId(), false).execute();
+                    }
+                }
+            }
+
             // Display submit button?
             submitButton = (RelativeLayout) findViewById(R.id.submitButton);
             if (tr.isActionPermitted(RequestDTO.SUBMIT)) {
@@ -271,6 +293,68 @@ public class RequestDigestActivity extends BaseActivity {
         }
     }
 
+    /**
+     * Call asynchronous task to retrieve data through connect
+     */
+    private class SegmentFormFieldsListener implements AsyncReplyListener {
+
+        @Override
+        public void onRequestSuccess(Bundle resultData) {
+            final String formId = resultData.getString(RequestFormFieldsTask.PARAM_FORM_ID);
+            formFieldsCache.setFormRefreshStatus(formId, false);
+            // --- parse the form received
+            final ConnectForm rForm = requestParser.parseFormFieldsResponse(resultData
+                    .getString(BaseAsyncRequestTask.HTTP_RESPONSE));
+            if (rForm != null)
+                // --- add form to cache if there is any
+                formFieldsCache.addForm(formId, rForm);
+            // TODO see if there can be a nextPage, and if it's the case handle it
+            handleAwaitingRefresh(formId, true);
+        }
+
+        @Override
+        public void onRequestFail(Bundle resultData) {
+            final String formId = resultData.getString(RequestFormFieldsTask.PARAM_FORM_ID);
+            formFieldsCache.setFormRefreshStatus(formId, false);
+            Log.d(Const.LOG_TAG, CLS_TAG + " calling decrement from onrequestfails");
+            Log.d(Const.LOG_TAG, " onRequestFail in SegmentFormFieldsListener...");
+            handleAwaitingRefresh(formId, false);
+        }
+
+        @Override
+        public void onRequestCancel(Bundle resultData) {
+            final String formId = resultData.getString(RequestFormFieldsTask.PARAM_FORM_ID);
+            formFieldsCache.setFormRefreshStatus(formId, false);
+            Log.d(Const.LOG_TAG, CLS_TAG + " calling decrement from onrequestcancel");
+            Log.d(Const.LOG_TAG, " onRequestCancel in SegmentFormFieldsListener...");
+            handleAwaitingRefresh(formId, false);
+        }
+
+        @Override
+        public void cleanup() {
+            asyncReceiverFormFields.setListener(null);
+        }
+    }
+
+    private void handleAwaitingRefresh(String formId, boolean isSuccess) {
+        if (formWaitingForRefresh != null && formId.equals(formWaitingForRefresh)) {
+            if (isSuccess)
+                displaySegmentDetail(formWaitingForRefresh);
+            formWaitingForRefresh = null;
+        }
+
+    }
+
+    /**
+     * Generates *** intent
+     *
+     * @param formId
+     *            form ID
+     */
+    private void displaySegmentDetail(String formId) {
+        // --- TODO -- displays the corresponding segment ?
+    }
+
     private void handleRefreshFail() {
         if (!showCacheData()) {
             Log.d(Const.LOG_TAG, CLS_TAG + " onRequestCancel() : no cache data to display, going back to list.");
@@ -304,18 +388,30 @@ public class RequestDigestActivity extends BaseActivity {
         // activity restoration
         asyncReceiverSubmit.setListener(new TRSubmitListener());
 
+        // F & F
+        // activity creation
+        if (asyncReceiverFormFields == null) {
+            asyncReceiverFormFields = new BaseAsyncResultReceiver(new Handler());
+        }
+        // activity restoration
+        asyncReceiverFormFields.setListener(new SegmentFormFieldsListener());
+
     }
 
     @Override
     protected void onPause() {
         super.onPause();
         asyncReceiver.setListener(null);
+        asyncReceiverSubmit.setListener(null);
+        asyncReceiverFormFields.setListener(null);
     }
 
     @Override
     public void onBackPressed() {
         super.onBackPressed();
         asyncReceiver.setListener(null);
+        asyncReceiverSubmit.setListener(null);
+        asyncReceiverFormFields.setListener(null);
     }
 
     // OVERFLOW MENU

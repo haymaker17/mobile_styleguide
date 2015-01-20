@@ -2,13 +2,17 @@ package com.concur.mobile.core.request.util;
 
 import java.text.SimpleDateFormat;
 import java.util.Date;
+import java.util.HashMap;
 import java.util.Locale;
+import java.util.Map;
 
 /**
  * @author olivierb
  * 
  */
 public class DateUtil {
+    // Cache for SimpleDateFormat objects
+    private static final Map<String, SimpleDateFormat> formatByPattern = new HashMap<String, SimpleDateFormat>();
 
     /**
      * @See 
@@ -20,7 +24,9 @@ public class DateUtil {
      *      consider the lists below the different patterns)
      */
     public enum DatePattern {
-        SHORT("EEE, dd/MM", "EEE, MM/dd"), TIME("hh:mm aa", "hh:mm aa");
+        SHORT("EEE, dd/MM", "EEE, MM/dd"),
+        TIME("hh:mm aa", "hh:mm aa"),
+        DB_INPUT("yyyy-mm-dd", "yyyy-mm-dd");
 
         private String pattern = null;
         private String patternUS = null;
@@ -50,9 +56,12 @@ public class DateUtil {
      *            in-use locale
      * @param date
      *            the date to convert
-     * @return
+     * @return date formatted to given locale
      */
     public static String getFormattedDateForLocale(DatePattern pattern, Locale locale, Date date) {
-        return date != null ? ((new SimpleDateFormat(pattern.getPattern(locale))).format(date)) : "";
+        final String locPattern = pattern.getPattern(locale);
+        if (!formatByPattern.containsKey(locPattern))
+            formatByPattern.put(locPattern, new SimpleDateFormat(locPattern));
+        return date != null ? (formatByPattern.get(locPattern).format(date)) : "";
     }
 }
