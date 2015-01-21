@@ -466,7 +466,7 @@ public class HotelSearchAndResultActivity extends Activity implements OnMenuItem
             startActivity(i);
 
         } else {
-            Toast.makeText(this, "unavialable to show map", Toast.LENGTH_LONG).show();
+            Toast.makeText(this, "Map Unavailable", Toast.LENGTH_LONG).show();
         }
     }
 

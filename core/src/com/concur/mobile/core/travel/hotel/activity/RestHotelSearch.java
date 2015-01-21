@@ -721,15 +721,15 @@ public class RestHotelSearch extends Activity {
         // Set the check-in date.
         TextView txtView = (TextView) checkInDateView.findViewById(R.id.field_value);
         if (txtView != null) {
-            txtView.setText(Format.safeFormatCalendar(FormatUtil.SHORT_WEEKDAY_SHORT_MONTH_DAY_FULL_YEAR_V1_DISPLAY,
-                    checkInDate));
+            txtView.setText(Format
+                    .safeFormatCalendar(FormatUtil.SHORT_WEEKDAY_MONTH_DAY_FULL_YEAR_DISPLAY, checkInDate));
         } else {
             Log.e(Const.LOG_TAG, CLS_TAG + ".updateDateTimeButtons: unable to locate check-in field value!");
         }
         // Set the check-out date.
         txtView = (TextView) checkOutDateView.findViewById(R.id.field_value);
         if (txtView != null) {
-            txtView.setText(Format.safeFormatCalendar(FormatUtil.SHORT_WEEKDAY_SHORT_MONTH_DAY_FULL_YEAR_V1_DISPLAY,
+            txtView.setText(Format.safeFormatCalendar(FormatUtil.SHORT_WEEKDAY_MONTH_DAY_FULL_YEAR_DISPLAY,
                     checkOutDate));
         } else {
             Log.e(Const.LOG_TAG, CLS_TAG + ".updateDateTimeButtons: unable to locate check-out field value!");

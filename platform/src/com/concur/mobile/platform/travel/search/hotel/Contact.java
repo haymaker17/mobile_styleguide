@@ -26,33 +26,4 @@ public class Contact implements Serializable {
 
     public final String delimiter = ", ";
 
-    /***
-     * formatter to show address on Hotel Details screen
-     * 
-     * @return
-     */
-    public String getAddress() {
-        StringBuilder stb = new StringBuilder();
-        if (!addressLine1.isEmpty()) {
-            stb.append(addressLine1);
-            stb.append(delimiter);
-        } else if (!street.isEmpty()) {
-            stb.append(street);
-            stb.append(delimiter);
-        } else if (!city.isEmpty()) {
-            stb.append(city);
-            stb.append(delimiter);
-        } else if (!state.isEmpty()) {
-            stb.append(state);
-            stb.append(delimiter);
-        } else if (!country.isEmpty()) {
-            stb.append(country);
-            stb.append(delimiter);
-        } else if (!zip.isEmpty()) {
-            stb.append(zip);
-            stb.append(delimiter);
-        }
-
-        return stb.toString();
-    }
 }

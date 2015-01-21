@@ -1,12 +1,15 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
+
     <string name="platform_config_provider_name">Platform Config Provider</string>
     <string name="platform_travel_provider_name">Platform Travel Provider</string>
     <string name="platform_expense_provider_name">Platform Expense Provider</string>
-    
+
     <!-- ReceiptPreviewDialogFragment -->
     <string name="receipt_preview_dialog_fragment_use_receipt">Use This Receipt</string>
     <string name="receipt_preview_dialog_fragment_cancel">Cancel</string>
     <string name="receipt_preview_dialog_fragment_capture_new">Capture New Image</string>
-    
+    <string name="general_address2">%%0!city%%, %%1!state%% %%2!postcode%%</string>
+    <string name="general_citystatecountry">%%0!street%%, %%1!city%%, %%2!state%%, %%3!country%%, %%4!postcode%%</string>
+
 </resources>

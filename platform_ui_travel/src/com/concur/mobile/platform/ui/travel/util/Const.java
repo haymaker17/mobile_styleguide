@@ -29,9 +29,14 @@ public class Const {
     public static final String ACTION_HOTEL_SEARCH_RESULTS = "com.concur.mobile.action.HOTELS_FOUND";
     public static final String EXTRA_HOTELS_LIST = "hotel.list";
     public static final String EXTRA_HOTELS_DETAILS = "hotel.details";
+    public static final String EXTRA_HOTEL_IMAGE_ITEM = "hotel.image";
+    public static final String EXTRA_HOTEL_LOCATION = "hotel.location";
 
     // Activity result codes
     public static final int REQUEST_CODE_LOCATION = 1;
     public static final int REQUEST_CODE_BOOK_HOTEL = 2;
+
+    public static final String EXTRA_IMAGE_URL = "image.url";
+    public static final String EXTRA_IMAGE_TITLE = "image.title";
 
 }

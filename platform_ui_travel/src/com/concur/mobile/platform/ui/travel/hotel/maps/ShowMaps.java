@@ -58,7 +58,7 @@ public class ShowMaps extends Activity {
             Hotel firstHotel = hotels.get(0).getHotel();
             // TODO load custom icons
             LatLng position = new LatLng(firstHotel.latitude, firstHotel.longitude);
-            googleMap.moveCamera(CameraUpdateFactory.newLatLngZoom(position, 13));
+            googleMap.moveCamera(CameraUpdateFactory.newLatLngZoom(position, 15));
             googleMap.setInfoWindowAdapter(new HotelInfoWindowAdapter());
         }
 

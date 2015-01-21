@@ -27,11 +27,14 @@ import com.concur.mobile.platform.ui.travel.hotel.activity.HotelBookingActivity;
  * @author tejoa
  * 
  */
+// @SuppressLint("ResourceAsColor")
 public class HotelRoomDetailFragment extends PlatformFragmentV1 {
 
     private List<HotelRoomListItem> hotelRooms;
     private HotelRoomListItem room;
     private ListItemAdapter<HotelRoomListItem> listItemAdapater;
+    private HotelChoiceDetailsFragmentListener callBackListener;
+    private View mainView;
 
     public HotelRoomDetailFragment(List<HotelRate> rooms) {
         hotelRooms = new ArrayList<HotelRoomListItem>();

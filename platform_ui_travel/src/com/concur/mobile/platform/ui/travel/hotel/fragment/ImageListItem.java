@@ -1,5 +1,6 @@
 package com.concur.mobile.platform.ui.travel.hotel.fragment;
 
+import java.io.Serializable;
 import java.net.URI;
 
 import android.content.Context;
@@ -8,7 +9,6 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
-import android.widget.ImageView.ScaleType;
 
 import com.concur.mobile.platform.travel.search.hotel.HotelImagePair;
 import com.concur.mobile.platform.ui.common.util.ImageCache;
@@ -21,8 +21,12 @@ import com.concur.mobile.platform.ui.travel.R;
  * @author tejoa
  * 
  */
-public class ImageListItem extends ListItem {
+public class ImageListItem extends ListItem implements Serializable {
 
+    /**
+     * 
+     */
+    private static final long serialVersionUID = 65070319994788368L;
     private HotelImagePair hotelImage;
     private View hotelImageView;
 
@@ -81,12 +85,12 @@ public class ImageListItem extends ListItem {
         return false;
     }
 
-    public View previewPhoto(View view) {
-        ((ImageView) hotelImageView).setScaleType(ScaleType.FIT_XY);
-
-        // fullScreenIntent = new Intent(view.getContext(),FullImageActivity.class);
-        // fullScreenIntent.putExtra
-        // ProfilePageNormalUser.this.startActivity(fullScreenIntent);
-        return hotelImageView;
-    }
+    // public void previewPhoto(View view) {
+    // ((ImageView) view).setScaleType(ScaleType.FIT_XY);
+    // Intent intent = new Intent(view.getContext(), ImageActivity.class);
+    // intent.putExtra(Const.EXTRA_IMAGE_URL, hotelImage.image);
+    // view.getContext().startActivity(intent);
+    //
+    // // return view;
+    // }
 }

@@ -6,12 +6,15 @@
     <com.concur.mobile.platform.ui.travel.hotel.fragment.SquareImageView
         android:id="@+id/picture"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
+        android:layout_height="wrap_content"
         android:scaleType="centerCrop" >
 
         <!--
       android:onClick="previewPhoto" 
+          android:onClick="previewPhoto"
+       android:scaleType="centerCrop"
         android:scaleType="centerCrop" />
+        android:onClick="previewPhoto"
         -->
     </com.concur.mobile.platform.ui.travel.hotel.fragment.SquareImageView>
 

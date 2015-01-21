@@ -3,8 +3,9 @@ package com.concur.mobile.platform.ui.travel.hotel.fragment;
 import java.util.ArrayList;
 import java.util.List;
 
+import android.app.Activity;
 import android.os.Bundle;
-import android.view.Gravity;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -12,10 +13,14 @@ import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemClickListener;
 import android.widget.GridView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.concur.mobile.platform.travel.search.hotel.HotelImagePair;
 import com.concur.mobile.platform.ui.common.fragment.PlatformFragmentV1;
 import com.concur.mobile.platform.ui.common.view.ListItemAdapter;
+import com.concur.mobile.platform.ui.travel.R;
+import com.concur.mobile.platform.ui.travel.hotel.fragment.HotelChoiceDetailsFragment.HotelChoiceDetailsFragmentListener;
+import com.concur.mobile.platform.ui.travel.util.Const;
 
 /**
  * fragment for photos tab
@@ -29,6 +34,7 @@ public class ShowImagesFragment extends PlatformFragmentV1 {
     private List<ImageListItem> imagePairs;
     private ImageListItem item;
     private ListItemAdapter<ImageListItem> listItemAdapater;
+    private HotelChoiceDetailsFragmentListener callBackListener;
 
     public ShowImagesFragment(List<HotelImagePair> images) {
         imagePairs = new ArrayList<ImageListItem>();
@@ -44,32 +50,21 @@ public class ShowImagesFragment extends PlatformFragmentV1 {
         super.onCreateView(inflater, container, savedInstanceState);
 
         // inflate the details fragment
-        // View mainView = inflater.inflate(R.layout.hotel_images_layout, null, false);
-        GridView gridView = new GridView(getActivity().getApplicationContext()); // mainView.findViewById(R.id.gridview);
+        View mainView = inflater.inflate(R.layout.hotel_images_layout, container, false);
+        GridView gridView = (GridView) mainView.findViewById(R.id.gridview);
+        TextView tv = (TextView) mainView.findViewById(R.id.no_photos);
+        gridView.setVisibility(View.GONE);
+        tv.setVisibility(View.GONE);
+        // new GridView(getActivity().getApplicationContext()); //
 
         // if (config.orientation == Configuration.ORIENTATION_LANDSCAPE) {
         // gridView.setNumColumns(3);
         // } else {
-        gridView.setNumColumns(2);
-        // }
-        gridView.setHorizontalSpacing(4);
-        gridView.setVerticalSpacing(4);
-        gridView.setPadding(6, 12, 12, 12);
-
-        gridView.setOnItemClickListener(new OnItemClickListener() {
-
-            public void onItemClick(AdapterView<?> parent, View v, int position, long id) {
-                // this 'mActivity' parameter is Activity object, you can send the current activity.
-                // Intent i = new Intent(mActivity, ActvityToCall.class);
-                // mActivity.startActivity(i);
-                // ImageView icon = (ImageView) findViewById(R.id.myImage);
-                // BitmapFactory.Options options = new BitmapFactory.Options();
-                // options.inTempStorage = new byte[3*1024];
-                //
-                // Bitmap ops = BitmapFactory.decodeFile(path, options);
-                // icon.setImageBitmap(ops)
-            }
-        });
+        // gridView.setNumColumns(2);
+        // // }
+        // gridView.setHorizontalSpacing(12);
+        // gridView.setVerticalSpacing(12);
+        // gridView.setPadding(12, 12, 12, 12);
 
         // Configuration config = getResources().getConfiguration();
         // if (config.orientation == Configuration.ORIENTATION_LANDSCAPE) {
@@ -82,15 +77,68 @@ public class ShowImagesFragment extends PlatformFragmentV1 {
 
             listItemAdapater = new ListItemAdapter<ImageListItem>(getActivity().getApplicationContext(), imagePairs);
             gridView.setAdapter(listItemAdapater);
+            gridView.setVisibility(View.VISIBLE);
 
-            return gridView;
+            gridView.setOnItemClickListener(new OnItemClickListener() {
+
+                @Override
+                public void onItemClick(AdapterView<?> parent, View v, int position, long id) {
+
+                    Toast.makeText(getActivity(), position, Toast.LENGTH_SHORT).show();
+                    // ImageListItem imageItem = (ImageListItem) parent.getItemAtPosition(position);
+                    // callBackListener.onImageClicked(imageItem);
+                }
+            });
+
         } else {
-            TextView tv = new TextView(getActivity());
-            tv.setTextSize(25);
-            tv.setGravity(Gravity.CENTER_VERTICAL);
-            tv.setText("  No Photos Available");
-            return tv;
+
+            tv.setVisibility(View.VISIBLE);
 
         }
+        return mainView;
     }
+
+    @Override
+    public void onAttach(Activity activity) {
+        super.onAttach(activity);
+        // This makes sure that the container activity has implemented
+        // the callback interface. If not, it throws an exception
+        try {
+            callBackListener = (HotelChoiceDetailsFragmentListener) activity;
+        } catch (ClassCastException e) {
+            throw new ClassCastException(activity.toString() + " must implement HotelSearchResultsFragmentListener");
+        }
+    }
+
+    @Override
+    public void onSaveInstanceState(Bundle outState) {
+        // TODO Auto-generated method stub
+        super.onSaveInstanceState(outState);
+
+        Log.d(Const.LOG_TAG, " ***** HotelChoiceDetailsFragment, in onSaveInstanceState *****  ");
+    }
+
+    @Override
+    public void onPause() {
+        // TODO Auto-generated method stub
+        super.onPause();
+
+        Log.d(Const.LOG_TAG, " ***** HotelChoiceDetailsFragment, in onPause *****  ");
+
+        // retainer.put(STATE_HOTEL_LIST_ITEMS_KEY, hotelListItems);
+    }
+
+    @Override
+    public void onResume() {
+        // TODO Auto-generated method stub
+        super.onResume();
+
+        // if (retainer.contains(STATE_HOTEL_LIST_ITEMS_KEY)) {
+        // hotelListItems = (List<HotelSearchResultListItem>) retainer.get(STATE_HOTEL_LIST_ITEMS_KEY);
+        // }
+
+        // Log.d(Const.LOG_TAG, " ***** HotelSearchResultFragment, in onResume *****  hotelListItems = "
+        // + (hotelListItems != null ? hotelListItems.size() : 0));
+    }
+
 }

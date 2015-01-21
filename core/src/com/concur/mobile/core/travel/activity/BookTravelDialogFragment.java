@@ -48,7 +48,7 @@ public class BookTravelDialogFragment extends DialogFragment {
     /**
      * Flag to switch on or off new hotel booking screens
      */
-    protected static final Boolean USE_NEW_HOTEL_SCREENS = false; // default to false
+    protected static final Boolean USE_NEW_HOTEL_SCREENS = true; // default to false
 
     /**
      * An enumeration describing an booking action.
@@ -378,7 +378,7 @@ public class BookTravelDialogFragment extends DialogFragment {
     public Intent getHotelSearchIntent(Activity act) {
         if (USE_NEW_HOTEL_SCREENS)
             // return new Intent(act, HotelSearchAndResult.class);
-         
+
             return new Intent(act, RestHotelSearch.class);
         else
             return new Intent(act, HotelSearch.class);

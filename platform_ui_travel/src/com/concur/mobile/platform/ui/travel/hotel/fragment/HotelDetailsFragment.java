@@ -1,20 +1,27 @@
 package com.concur.mobile.platform.ui.travel.hotel.fragment;
 
-import android.app.FragmentManager;
+import android.app.Activity;
 import android.os.Bundle;
+import android.telephony.PhoneNumberUtils;
+import android.text.util.Linkify;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.TextView;
 
+import com.concur.mobile.platform.travel.search.hotel.Contact;
 import com.concur.mobile.platform.travel.search.hotel.Hotel;
 import com.concur.mobile.platform.ui.common.fragment.PlatformFragmentV1;
 import com.concur.mobile.platform.ui.common.util.ViewUtil;
 import com.concur.mobile.platform.ui.common.view.ListItemAdapter;
 import com.concur.mobile.platform.ui.travel.R;
+import com.concur.mobile.platform.ui.travel.hotel.fragment.HotelChoiceDetailsFragment.HotelChoiceDetailsFragmentListener;
+import com.concur.mobile.platform.ui.travel.util.Const;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.SupportMapFragment;
+import com.google.android.gms.maps.model.LatLng;
 
 /**
  * Fragment for Hotel Details tab
@@ -24,10 +31,15 @@ import com.google.android.gms.maps.SupportMapFragment;
  */
 public class HotelDetailsFragment extends PlatformFragmentV1 {
 
+    public static final String TAB_ROOMS = "ROOMS";
     private Hotel hotel;
     private GoogleMap hotelMap;
     SupportMapFragment mSupportMapFragment;
     private ListItemAdapter<HotelRoomListItem> listItemAdapater;
+    private HotelChoiceDetailsFragmentListener callBackListener;
+    // private int paramsHeight;
+    // private MapFragment mapFragment;
+    private LatLng post;
 
     public HotelDetailsFragment(Hotel hotel) {
         this.hotel = hotel;
@@ -90,8 +102,7 @@ public class HotelDetailsFragment extends PlatformFragmentV1 {
 
                 @Override
                 public void onClick(View v) {
-                    FragmentManager fm = getFragmentManager();
-                    fm.beginTransaction().add(new HotelRoomDetailFragment(hotel.rates), "ROOMS").commit();
+                    callBackListener.onFindRoomsClicked();
                 }
             });
 
@@ -99,4 +110,52 @@ public class HotelDetailsFragment extends PlatformFragmentV1 {
 
         return mainView;
     }
+
+    @Override
+    public void onAttach(Activity activity) {
+        super.onAttach(activity);
+        // This makes sure that the container activity has implemented
+        // the callback interface. If not, it throws an exception
+        try {
+            callBackListener = (HotelChoiceDetailsFragmentListener) activity;
+        } catch (ClassCastException e) {
+            throw new ClassCastException(activity.toString() + " must implement HotelSearchResultsFragmentListener");
+        }
+    }
+
+    @Override
+    public void onSaveInstanceState(Bundle outState) {
+        // TODO Auto-generated method stub
+        super.onSaveInstanceState(outState);
+
+        Log.d(Const.LOG_TAG, " ***** HotelChoiceDetailsFragment, in onSaveInstanceState *****  ");
+    }
+
+    @Override
+    public void onPause() {
+        // TODO Auto-generated method stub
+        super.onPause();
+
+        Log.d(Const.LOG_TAG, " ***** HotelChoiceDetailsFragment, in onPause *****  ");
+
+        // retainer.put(STATE_HOTEL_LIST_ITEMS_KEY, hotelListItems);
+    }
+
+    @Override
+    public void onResume() {
+        // TODO Auto-generated method stub
+        super.onResume();
+
+        // if (retainer.contains(STATE_HOTEL_LIST_ITEMS_KEY)) {
+        // hotelListItems = (List<HotelSearchResultListItem>) retainer.get(STATE_HOTEL_LIST_ITEMS_KEY);
+        // }
+
+        // Log.d(Const.LOG_TAG, " ***** HotelSearchResultFragment, in onResume *****  hotelListItems = "
+        // + (hotelListItems != null ? hotelListItems.size() : 0));
+    }
+
+    public void showFullMap(View view) {
+        callBackListener.onMapsClicked(post);
+    }
+
 }
