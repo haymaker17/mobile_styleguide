@@ -76,23 +76,37 @@ public class HotelDetailsFragment extends PlatformFragmentV1 {
         // FragmentManager fm = getFragmentManager();
         // fm.beginTransaction().add(hotelMap, "Maps").commit();
         // }
-        if (hotel.contact != null && hotel.contact.city != null) {
+        Contact contact = hotel.contact;
+        if (contact != null && contact.city != null) {
             // if (ViewUtil.isMappingAvailable(context)) {
             // ViewUtil.setText(mainView, R.id.hotel_address, hotel.contact.city, Linkify.MAP_ADDRESSES);
             // ViewUtil.setVisibility(mainView, R.id.hotel_address, View.VISIBLE);
             // } else {
-            if (hotel.contact.getAddress() != null) {
-                ((TextView) mainView.findViewById(R.id.hotel_address)).setText(hotel.contact.getAddress());
-
-            } else {
-                ViewUtil.setVisibility(mainView, R.id.hotel_address, View.GONE);
+            StringBuilder stb = new StringBuilder();
+            if (!contact.addressLine1.isEmpty()) {
+                stb.append(contact.addressLine1).append(", ");
             }
+            stb.append(com.concur.mobile.base.util.Format.localizeText(getActivity(),
+                    R.string.general_citystatecountry, contact.street, contact.city, contact.state, contact.country,
+                    contact.zip));
+            ((TextView) mainView.findViewById(R.id.hotel_address)).setText(stb.toString());
 
-            if (hotel.contact.phone != null) {
-                ((TextView) mainView.findViewById(R.id.hotel_phone)).setText(hotel.contact.phone);
-            }
-
+        } else {
+            ViewUtil.setVisibility(mainView, R.id.hotel_address, View.GONE);
         }
+
+        String s = contact.phone.trim();
+        if (s != null && s.length() > 0) {
+            String formattedNumber = PhoneNumberUtils.formatNumber(contact.phone);
+            // String formattedNumber = String.format("(%s) %s %s", s.subSequence(0, 3), s.subSequence(3, 6),
+            // s.subSequence(6, 10));
+            TextView tv = ((TextView) mainView.findViewById(R.id.hotel_phone));
+            tv.setText(formattedNumber);
+            Linkify.addLinks(tv, Linkify.PHONE_NUMBERS);
+        } else {
+            ViewUtil.setVisibility(mainView, R.id.hotel_phone, View.GONE);
+        }
+
         if (hotel.rates != null && hotel.rates.size() > 0) {
             Button findRooms = (Button) mainView.findViewById(R.id.footer_button);
             if (findRooms != null) {

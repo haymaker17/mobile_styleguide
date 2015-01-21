@@ -20,6 +20,7 @@ import com.concur.mobile.platform.travel.search.hotel.HotelRate;
 import com.concur.mobile.platform.ui.common.fragment.PlatformFragmentV1;
 import com.concur.mobile.platform.ui.common.view.ListItemAdapter;
 import com.concur.mobile.platform.ui.travel.hotel.activity.HotelBookingActivity;
+import com.concur.mobile.platform.ui.travel.hotel.fragment.HotelChoiceDetailsFragment.HotelChoiceDetailsFragmentListener;
 
 /**
  * Fragment for Hotel Room Details tab
@@ -69,7 +70,7 @@ public class HotelRoomDetailFragment extends PlatformFragmentV1 {
                     roomItemClicked((HotelRoomListItem) parent.getItemAtPosition(position));
                 }
             });
-            
+
             return listView;
         } else {
             TextView tv = new TextView(getActivity());
@@ -80,7 +81,7 @@ public class HotelRoomDetailFragment extends PlatformFragmentV1 {
 
         }
     }
-    
+
     private void roomItemClicked(HotelRoomListItem roomListItem) {
         Intent intent = new Intent(getActivity(), HotelBookingActivity.class);
         intent.putExtra("roomSelected", roomListItem.getHotelRoom());
