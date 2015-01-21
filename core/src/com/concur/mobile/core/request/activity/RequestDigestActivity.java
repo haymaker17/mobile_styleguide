@@ -95,10 +95,10 @@ public class RequestDigestActivity extends BaseActivity {
             // TODO : throw exception & display toast message ? @See with PM
             finish();
         }
-        configure();
+        configureUI();
     }
 
-    private void configure() {
+    private void configureUI() {
         requestDetailVF = ((ViewFlipper) findViewById(R.id.requestDetailVF));
         requestDetailVF.setDisplayedChild(ID_LOADING_VIEW);
         entryListView = ((ListView) findViewById(R.id.segmentListView));
@@ -130,16 +130,15 @@ public class RequestDigestActivity extends BaseActivity {
         final TextView amountInButton = (TextView) findViewById(R.id.requestDetailsAmountInButton);
         final TextView startDate = (TextView) findViewById(R.id.requestDetailsStartDate);
 
-        final String formattedAmount = FormatUtil.formatAmount(request.getTotal(), RequestDigestActivity.this
-                .getResources().getConfiguration().locale, request.getCurrency(), true, true);
+        final Locale loc = this.getResources().getConfiguration().locale != null ? this.getResources().getConfiguration().locale : Locale.US;
+
+        final String formattedAmount = FormatUtil.formatAmount(request.getTotal(), loc, request.getCurrency(), true, true);
 
         name.setText(request.getName());
         amount.setText(formattedAmount);
         amountInButton.setText(formattedAmount);
 
-        final Locale loc = this.getResources().getConfiguration().locale;
-        startDate.setText(DateUtil.getFormattedDateForLocale(DateUtil.DatePattern.SHORT, (loc != null) ? loc
-                : Locale.US, request.getStartDate()));
+        startDate.setText(DateUtil.getFormattedDateForLocale(DateUtil.DatePattern.SHORT, loc, request.getStartDate()));
 
         name.setTypeface(Typeface.DEFAULT_BOLD);
         amount.setTypeface(Typeface.DEFAULT_BOLD);
@@ -263,7 +262,7 @@ public class RequestDigestActivity extends BaseActivity {
             // metrics
             final Map<String, String> params = new HashMap<String, String>();
             params.put(Flurry.EVENT_NAME_SUBMIT, tr.getId());
-            EventTracker.INSTANCE.track(Flurry.CATEGORY_HOME, Flurry.PARAM_VALUE_TRAVEL_REQUEST, params);
+            EventTracker.INSTANCE.track(Flurry.CATEGORY_TRAVEL_REQUEST, Flurry.PARAM_VALUE_TRAVEL_REQUEST_DIGEST, params);
 
             // on retrourne sur la list
             finish();

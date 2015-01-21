@@ -8,37 +8,32 @@ import android.text.InputType;
 import android.text.TextUtils;
 import android.util.TypedValue;
 import android.view.View;
+import android.view.ViewGroup;
 import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.LinearLayout;
 import android.widget.TextView;
-
 import com.concur.core.R;
+import com.concur.mobile.core.request.util.DateUtil;
 import com.concur.mobile.platform.common.formfield.ConnectForm;
 import com.concur.mobile.platform.common.formfield.ConnectFormField;
 import com.concur.mobile.platform.common.formfield.IFormField;
 
-import java.text.SimpleDateFormat;
-import java.util.ArrayList;
-import java.util.Calendar;
-import java.util.Collections;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 /**
  * Created by OlivierB on 13/01/2015.
- *
+ * <p/>
  * An abstract class to extend on activities which uses Connect Forms & Fields
  * Extracted from RequestHeaderActivity.
  */
 public abstract class AbstractConnectFormFieldActivity extends BaseActivity {
 
     private static enum DisplayType {
-        TEXTFIELD,		//RequestID, Name, Status
-        TEXTAREA,		//Purpose, Comment
-        DATEFIELD,		//startDate, endate
-        MONEYFIELD		//totalAmount&currency
+        TEXTFIELD,        //RequestID, Name, Status
+        TEXTAREA,        //Purpose, Comment
+        DATEFIELD,        //startDate, endate
+        MONEYFIELD        //totalAmount&currency
     }
 
     private Map<Integer, String> views = new HashMap<Integer, String>(); // view ID, filed NAME
@@ -48,29 +43,34 @@ public abstract class AbstractConnectFormFieldActivity extends BaseActivity {
     private int viewID = 0;
 
     protected ConnectForm form;
-    protected SimpleDateFormat dateFormatter;
+    protected DateUtil.DatePattern inputDatePattern;
+    protected Locale locale;
 
     protected abstract String getValueFromFieldName(String fieldName);
 
     protected abstract void setValueFromFieldName(String fieldName, String value);
 
-    protected void setDisplayFields(final LinearLayout requestHeaderFieldLayout){
+    protected void setDisplayFields(final LinearLayout titleLayout, final LinearLayout fieldLayout,
+            final String fieldToTitle) {
+        if (form != null) {
+            final List<ConnectFormField> formfields = form.getFormFields();
+            Collections.sort(formfields);
 
-        List<ConnectFormField> formfields = form.getFormFields();
-        Collections.sort(formfields);
+            LinearLayout.LayoutParams llp = null;
 
-        LinearLayout.LayoutParams llp;
+            for (ConnectFormField ff : formfields) {
 
-        for(ConnectFormField ff : formfields){
+                final boolean isTitleField = ff.getName().equals(fieldToTitle);
+                final ViewGroup layout = isTitleField ? titleLayout : fieldLayout;
 
-            IFormField.DataType dataType = ff.getDataType();
-            IFormField.ControlType controlType = ff.getControlType();
-            IFormField.AccessType accesType = ff.getAccessType();
+                final IFormField.DataType dataType = ff.getDataType();
+                final IFormField.ControlType controlType = ff.getControlType();
+                final IFormField.AccessType accesType = ff.getAccessType();
 
+                DisplayType displayType = null;
+                TextView component = null;
 
-            DisplayType displayType = null;
-
-            switch(dataType){
+                switch (dataType) {
                 case BOOLEAN:
                     break;
                 case CHAR:
@@ -98,161 +98,156 @@ public abstract class AbstractConnectFormFieldActivity extends BaseActivity {
                 case UNSPECIFED:
                     break;
                 case VARCHAR:
-                    switch(controlType){
-                        case EDIT:
-                            displayType = DisplayType.TEXTFIELD;
-                            break;
-                        case TEXT_AREA:
-                            displayType = DisplayType.TEXTAREA;
-                            break;
-                        default :
-                            break;
+                    switch (controlType) {
+                    case EDIT:
+                        displayType = DisplayType.TEXTFIELD;
+                        break;
+                    case TEXT_AREA:
+                        displayType = DisplayType.TEXTAREA;
+                        break;
+                    default:
+                        break;
                     }
                     break;
                 default:
                     displayType = null;
                     break;
-            }
+                }
 
-
-            if(displayType != null)
-
-                switch(displayType){
+                if (displayType != null) {
+                    switch (displayType) {
                     case TEXTFIELD:
 
-                        TextView textField;
-                        if(accesType == IFormField.AccessType.RO)
-                            textField = new TextView(this);
-                        else
-                            textField = new EditText(this);
+                        if (accesType == IFormField.AccessType.RO) {
+                            component = new TextView(this);
+                        } else {
+                            component = new EditText(this);
+                        }
 
-                        requestHeaderFieldLayout.addView(getTextView_FieldName(getLabelFromFieldName(ff.getName())));
-                        textField.setText(getValueFromFieldName(ff.getName()));
-                        textField.setMaxLines(1);
-                        textField.setSingleLine(true); textField.setEllipsize(TextUtils.TruncateAt.END); //ellipses
-                        textField.setTextSize(TypedValue.COMPLEX_UNIT_SP, 15);
-                        requestHeaderFieldLayout.addView(textField);
+                        component.setText(getValueFromFieldName(ff.getName()));
+                        component.setMaxLines(1);
+                        component.setSingleLine(true);
+                        component.setEllipsize(TextUtils.TruncateAt.END); //ellipses
+                        component.setTextSize(TypedValue.COMPLEX_UNIT_SP, 15);
 
-                        llp = new LinearLayout.LayoutParams(ActionBar.LayoutParams.MATCH_PARENT, ActionBar.LayoutParams.MATCH_PARENT);
-                        if(accesType == IFormField.AccessType.RO) llp.setMargins(30, 0, 0, 0); // llp.setMargins(left, top, right, bottom);
-                        textField.setLayoutParams(llp);
-
-                        textField.setId(viewID);
-                        views.put(viewID, ff.getName()); viewID++;
-
-                        addWhiteSpace(requestHeaderFieldLayout);
-                        if(ff.isLineSeparator()) addSeparator(requestHeaderFieldLayout);
-
+                        llp = new LinearLayout.LayoutParams(ActionBar.LayoutParams.MATCH_PARENT,
+                                ActionBar.LayoutParams.MATCH_PARENT);
                         break;
 
                     case TEXTAREA:
 
-                        TextView textArea;
-                        if(accesType == IFormField.AccessType.RO)
-                            textArea = new TextView(this);
-                        else
-                            textArea = new EditText(this);
+                        if (accesType == IFormField.AccessType.RO) {
+                            component = new TextView(this);
+                        } else {
+                            component = new EditText(this);
+                        }
 
-                        requestHeaderFieldLayout.addView(getTextView_FieldName(getLabelFromFieldName(ff.getName())));
+                        component.setText(getValueFromFieldName(ff.getName()));
+                        component.setLines(5);
+                        component.setMaxLines(5);
+                        component.setTextSize(TypedValue.COMPLEX_UNIT_SP, 15);
 
-                        textArea.setText(getValueFromFieldName(ff.getName()));
-                        textArea.setLines(5);
-                        textArea.setMaxLines(5);
-                        textArea.setTextSize(TypedValue.COMPLEX_UNIT_SP, 15);
-                        requestHeaderFieldLayout.addView(textArea);
-
-                        llp = new LinearLayout.LayoutParams(ActionBar.LayoutParams.MATCH_PARENT, ActionBar.LayoutParams.MATCH_PARENT);
-                        if(accesType == IFormField.AccessType.RO) llp.setMargins(30, 0, 0, 0); // llp.setMargins(left, top, right, bottom);
-                        textArea.setLayoutParams(llp);
-
-                        textArea.setId(viewID);
-                        views.put(viewID, ff.getName()); viewID++;
-
-                        addWhiteSpace(requestHeaderFieldLayout);
-                        if(ff.isLineSeparator()) addSeparator(requestHeaderFieldLayout);
-
+                        llp = new LinearLayout.LayoutParams(ActionBar.LayoutParams.MATCH_PARENT,
+                                ActionBar.LayoutParams.MATCH_PARENT);
                         break;
 
                     case DATEFIELD:
 
-                        final TextView
-                                fromDateEtxt = new TextView(this);
+                        component = new TextView(this);
 
-                        requestHeaderFieldLayout.addView(getTextView_FieldName(getLabelFromFieldName(ff.getName())));
-
-                        fromDateEtxt.setText(getValueFromFieldName(ff.getName()));
-                        fromDateEtxt.setInputType(InputType.TYPE_NULL);
-                        fromDateEtxt.setTextSize(TypedValue.COMPLEX_UNIT_SP, 15);
-                        fromDateEtxt.requestFocus();
+                        component.setText(getValueFromFieldName(ff.getName()));
+                        component.setInputType(InputType.TYPE_NULL);
+                        component.setTextSize(TypedValue.COMPLEX_UNIT_SP, 15);
+                        component.requestFocus();
 
                         //ADD LISTENER for setting date
-                        if(!(accesType == IFormField.AccessType.RO)){
-                            fromDateEtxt.setOnClickListener((View.OnClickListener) this);
+                        if (!(accesType == IFormField.AccessType.RO)) {
+                            component.setOnClickListener((View.OnClickListener) this);
                             Calendar newCalendar = Calendar.getInstance();
+                            final TextView finalComp = component;
 
-                            DatePickerDialog.OnDateSetListener inDateListener = new DatePickerDialog.OnDateSetListener(){
+                            final DatePickerDialog.OnDateSetListener inDateListener = new DatePickerDialog.OnDateSetListener() {
 
                                 public void onDateSet(DatePicker view, int year, int monthOfYear, int dayOfMonth) {
                                     Calendar newDate = Calendar.getInstance();
                                     newDate.set(year, monthOfYear, dayOfMonth);
-                                    fromDateEtxt.setText(dateFormatter.format(newDate.getTime()));
+                                    finalComp.setText(formatDate(newDate.getTime()));
                                 }
                             };
 
-                            DatePickerDialog fromDatePickerDialog = new DatePickerDialog(this, inDateListener,
-                                    newCalendar.get(Calendar.YEAR), newCalendar.get(Calendar.MONTH), newCalendar.get(Calendar.DAY_OF_MONTH));
+                            final DatePickerDialog fromDatePickerDialog = new DatePickerDialog(this, inDateListener,
+                                    newCalendar.get(Calendar.YEAR), newCalendar.get(Calendar.MONTH),
+                                    newCalendar.get(Calendar.DAY_OF_MONTH));
 
                             dateViews.add(viewID);
                             datePickerDialogs.add(fromDatePickerDialog);
                         }
 
-                        fromDateEtxt.setId(viewID);
-                        llp = new LinearLayout.LayoutParams(ActionBar.LayoutParams.MATCH_PARENT, ActionBar.LayoutParams.MATCH_PARENT);
-                        llp.setMargins(30, 0, 0, 0); // llp.setMargins(left, top, right, bottom);
-                        fromDateEtxt.setLayoutParams(llp);
-
-                        views.put(viewID, ff.getName()); viewID++;
-
-                        requestHeaderFieldLayout.addView(fromDateEtxt);
-
-                        addWhiteSpace(requestHeaderFieldLayout);
-                        if(ff.isLineSeparator()) addSeparator(requestHeaderFieldLayout);
-
+                        llp = new LinearLayout.LayoutParams(ActionBar.LayoutParams.MATCH_PARENT,
+                                ActionBar.LayoutParams.MATCH_PARENT);
                         break;
 
                     case MONEYFIELD:
 
-                        requestHeaderFieldLayout.addView(getTextView_FieldName(getLabelFromFieldName(ff.getName())));
-
-                        TextView moneyField = new TextView(this);
-                        moneyField.setText(getValueFromFieldName("CurrencyName") + " " + getValueFromFieldName(ff.getName()));
-                        moneyField.setMaxLines(1);
-                        moneyField.setSingleLine(true); moneyField.setEllipsize(TextUtils.TruncateAt.END); //ellipses
-                        moneyField.setTextSize(TypedValue.COMPLEX_UNIT_SP, 15);
-                        requestHeaderFieldLayout.addView(moneyField);
-
-                        moneyField.setId(viewID);
-                        views.put(viewID, ff.getName()); viewID++;
-
-                        llp = new LinearLayout.LayoutParams(ActionBar.LayoutParams.MATCH_PARENT, ActionBar.LayoutParams.MATCH_PARENT);
-                        if(accesType == IFormField.AccessType.RO) llp.setMargins(30, 0, 0, 0); // llp.setMargins(left, top, right, bottom);
-                        moneyField.setLayoutParams(llp);
-
-                        addWhiteSpace(requestHeaderFieldLayout);
-                        if(ff.isLineSeparator()) addSeparator(requestHeaderFieldLayout);
-
+                        component = new TextView(this);
+                        component.setText(
+                                getValueFromFieldName("CurrencyName") + " " + getValueFromFieldName(ff.getName()));
+                        component.setMaxLines(1);
+                        component.setSingleLine(true);
+                        component.setEllipsize(TextUtils.TruncateAt.END); //ellipses
+                        component.setTextSize(TypedValue.COMPLEX_UNIT_SP, 15);
                         break;
 
                     default:
                         //displayType = null;
                         break;
+                    }
+
+                    if (component != null) {
+                        if (!isTitleField) {
+                            layout.addView(getTextViewFieldName(getLabelFromFieldName(ff.getName())));
+                        }
+                        
+                        component.setId(viewID);
+                        views.put(viewID, ff.getName());
+                        viewID++;
+
+                        // --- permits to apply specifics within the extending activity
+                        applySpecifics(component, llp, ff);
+
+                        if (llp != null) {
+                            if (accesType == IFormField.AccessType.RO) {
+                                llp.setMargins(30, 0, 0, 0); // llp.setMargins(left, top, right, bottom);
+                            }
+                            component.setLayoutParams(llp);
+                        }
+
+                        layout.addView(component);
+
+                        addWhiteSpace(layout);
+                        if (ff.isLineSeparator()) {
+                            addSeparator(layout);
+                        }
+                    }
                 }
+            }
         }
+    }
+
+    protected abstract void applySpecifics(final TextView component, final LinearLayout.LayoutParams llp,
+            final ConnectFormField ff);
+
+    protected String formatDate(Date date) {
+        return DateUtil.getFormattedDateForLocale(inputDatePattern, locale, date);
+    }
+
+    protected Date parseDate(String dateString) {
+        return DateUtil.parseFormattedDateForLocale(inputDatePattern, locale, dateString);
     }
 
     protected abstract String getLabelFromFieldName(String fieldName);
 
-    private void addWhiteSpace(LinearLayout mainLayout){
+    private void addWhiteSpace(ViewGroup mainLayout) {
 
         View view = new View(this);
         ColorDrawable backgroundColor = new ColorDrawable(this.getResources().getColor(R.color.White));
@@ -263,7 +258,7 @@ public abstract class AbstractConnectFormFieldActivity extends BaseActivity {
         mainLayout.addView(view, viewWidth, viewHeight);
     }
 
-    private void addSeparator(LinearLayout mainLayout){
+    private void addSeparator(ViewGroup mainLayout) {
 
         View view = new View(this);
         ColorDrawable backgroundColor = new ColorDrawable(this.getResources().getColor(R.color.ListDivider));
@@ -274,14 +269,15 @@ public abstract class AbstractConnectFormFieldActivity extends BaseActivity {
         mainLayout.addView(view, viewWidth, viewHeight);
     }
 
-    private TextView getTextView_FieldName(String text){
+    private TextView getTextViewFieldName(String text) {
 
         TextView textView = new TextView(this);
         textView.setText(text);
         textView.setTextSize(TypedValue.COMPLEX_UNIT_SP, 13);
         textView.setTextColor(Color.parseColor("#666666"));
 
-        LinearLayout.LayoutParams llp = new LinearLayout.LayoutParams(ActionBar.LayoutParams.MATCH_PARENT, ActionBar.LayoutParams.MATCH_PARENT);
+        LinearLayout.LayoutParams llp = new LinearLayout.LayoutParams(ActionBar.LayoutParams.MATCH_PARENT,
+                ActionBar.LayoutParams.MATCH_PARENT);
         llp.setMargins(30, 0, 0, 0); // llp.setMargins(left, top, right, bottom);
         textView.setLayoutParams(llp);
 

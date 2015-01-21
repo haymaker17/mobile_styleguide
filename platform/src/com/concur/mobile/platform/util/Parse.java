@@ -4,6 +4,7 @@ import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
+import java.util.Date;
 import java.util.TimeZone;
 
 import android.util.Log;
@@ -210,6 +211,28 @@ public class Parse {
                 result = Double.valueOf(text);
             } catch (NumberFormatException nfe) {
                 Log.w(Const.LOG_TAG, CLS_TAG + ".safeParseDouble: Unable to parse double: " + text, nfe);
+            }
+        }
+
+        return result;
+    }
+
+    /**
+     * Parse a String value into a Date. Checks for null and length before attempting the parse and will catch and log parse
+     * exceptions.
+     *
+     * @param text
+     *            A {@link String} containing the value to parse
+     * @return An {@link Date} value if the text parses okay; null otherwise.
+     */
+    public static Date safeParseDate(String text, DateFormat df) {
+        Date result = null;
+
+        if (text != null && text.length() > 0) {
+            try {
+                result = df.parse(text);
+            } catch (ParseException pe) {
+                Log.w(Const.LOG_TAG, CLS_TAG + ".safeParseDate: Unable to parse date: " + text, pe);
             }
         }
 

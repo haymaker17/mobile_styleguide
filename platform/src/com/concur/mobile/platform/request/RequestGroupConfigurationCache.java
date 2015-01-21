@@ -2,7 +2,6 @@ package com.concur.mobile.platform.request;
 
 import com.concur.mobile.platform.common.Cache;
 import com.concur.mobile.platform.request.groupConfiguration.RequestGroupConfiguration;
-import com.concur.mobile.platform.request.groupConfiguration.RequestGroupConfigurationsContainer;
 
 import java.util.Collection;
 import java.util.HashMap;

@@ -24,6 +24,8 @@ public class RequestGroupConfiguration {
     @SerializedName("URI")
     private String uri;
 
+    private String defaultFormId = null;
+
     public String getId() {
         return id;
     }
@@ -78,5 +80,17 @@ public class RequestGroupConfiguration {
 
     public void setUri(String uri) {
         this.uri = uri;
+    }
+
+    public String getFormId() {
+        if (defaultFormId == null && defaultPolicyId != null) {
+            for (Policy p : policies) {
+                if (p.getIsDefault()) {
+                    defaultFormId = p.getHeaderFormId();
+                    break;
+                }
+            }
+        }
+        return defaultFormId;
     }
 }

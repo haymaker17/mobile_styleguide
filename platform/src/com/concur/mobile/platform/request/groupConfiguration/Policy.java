@@ -13,6 +13,8 @@ public class Policy {
     private String id;
     @SerializedName("Name")
     private String name;
+    @SerializedName("HeaderFormID")
+    private String headerFormId;
     @SerializedName("IsDefault")
     private Boolean isDefault;
     @SerializedName("NoCreation")
@@ -34,6 +36,14 @@ public class Policy {
 
     public void setName(String name) {
         this.name = name;
+    }
+
+    public String getHeaderFormId() {
+        return headerFormId;
+    }
+
+    public void setHeaderFormId(String headerFormId) {
+        this.headerFormId = headerFormId;
     }
 
     public Boolean getIsDefault() {
