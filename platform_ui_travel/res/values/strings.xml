@@ -98,6 +98,7 @@
     <string name="hotel_reserve_num_of_nights">%%0!number of nights%% night</string>
     <string name="hotel_reserve_total_with_tax">total with tax</string>
     <string name="hotel_reserve_cancel_policy">Cancellation policy and rate details</string>
+    <string name="hotel_reserve_cancel_policy_not_available">Cancellation policy not available</string>
     <!-- end of hotel reservation screen -->
 
 </resources>

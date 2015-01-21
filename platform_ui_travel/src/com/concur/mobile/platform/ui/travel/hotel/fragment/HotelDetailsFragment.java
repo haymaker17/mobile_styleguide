@@ -82,7 +82,7 @@ public class HotelDetailsFragment extends PlatformFragmentV1 {
 
         }
         if (hotel.rates != null && hotel.rates.size() > 0) {
-            Button findRooms = (Button) mainView.findViewById(R.id.full_button);
+            Button findRooms = (Button) mainView.findViewById(R.id.footer_button);
             if (findRooms != null) {
                 findRooms.setText(getText(R.string.find_rooms_button));
             }

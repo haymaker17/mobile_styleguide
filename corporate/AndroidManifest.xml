@@ -193,6 +193,10 @@
         <activity
             android:name="com.concur.mobile.core.travel.hotel.activity.HotelSearchResults"
             android:screenOrientation="portrait" />
+        <activity
+            android:name="com.concur.mobile.platform.ui.travel.hotel.activity.HotelBookingActivity"
+            android:screenOrientation="portrait"
+            android:theme="@style/ConcurRestTheme.White.ActionBarTabs" />
         <activity android:name="com.concur.mobile.core.travel.hotel.activity.HotelSearchRooms" />
         <activity android:name="com.concur.mobile.core.travel.hotel.activity.HotelSearchRoomDetails" />
         <activity
@@ -325,7 +329,6 @@
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value="com.concur.mobile.core.request.activity.RequestDigestActivity" />
         </activity>
-        
 
         <!-- Invoice related activities. -->
         <activity
@@ -463,16 +466,17 @@
             android:name="com.concur.mobile.corp.activity.OpenSourceLicenseDisplay"
             android:theme="@style/ConcurBaseTheme" >
         </activity>
-         <activity
+        <activity
             android:name="com.concur.mobile.corp.activity.ProfileInfo"
             android:theme="@style/ConcurBaseTheme.New" >
         </activity>
         <activity
             android:name="com.concur.mobile.platform.ui.travel.hotel.maps.ShowMaps"
-            android:label="ShowMaps" 
-            android:theme="@style/ConcurRestTheme.White.ActionBarTabs">
+            android:label="ShowMaps"
+            android:theme="@style/ConcurRestTheme.White.ActionBarTabs" >
             <intent-filter>
                 <action android:name="android.intent.action.VIEW" />
+
                 <category android:name="android.intent.category.DEFAULT" />
             </intent-filter>
         </activity>
