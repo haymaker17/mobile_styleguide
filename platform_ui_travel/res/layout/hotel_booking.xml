@@ -1,0 +1,287 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@drawable/ab_tab_white_bg"
+    android:orientation="vertical" >
+
+    <ProgressBar
+        android:id="@+id/hotel_booking_screen_load"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerInParent="true" />
+
+    <TextView
+        android:id="@+id/hotel_preselloptions_progress_msg"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/hotel_booking_screen_load"
+        android:layout_centerHorizontal="true"
+        android:text="@string/hotel_sell_options_retrieving" >
+    </TextView>
+
+    <RelativeLayout
+        android:id="@+id/footer"
+        android:layout_width="match_parent"
+        android:layout_height="60dp"
+        android:layout_alignParentBottom="true"
+        android:layout_gravity="bottom" >
+
+        <Button
+            android:id="@+id/footer_button"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_alignParentTop="true"
+            android:layout_centerHorizontal="true"
+            android:background="#0078c8"
+            android:fontFamily="sans-serif-light"
+            android:gravity="center"
+            android:text="@string/hotel_reserve_this_room"
+            android:textColor="@color/White"
+            android:textSize="20sp" />
+    </RelativeLayout>
+
+    <View
+        android:id="@+id/footerDivider"
+        android:layout_width="fill_parent"
+        android:layout_height="1dp"
+        android:layout_above="@id/footer"
+        android:background="@color/HotelListDivider" />
+
+    <ScrollView
+        android:id="@+id/hotel_booking_scroll_view"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_above="@id/footerDivider"
+        android:layout_weight="1"
+        android:fillViewport="true" >
+
+        <RelativeLayout
+            android:id="@+id/hotel_booking_view"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical" >
+
+            <ImageView
+                android:id="@+id/hotel_room_image"
+                android:layout_width="match_parent"
+                android:layout_height="96dp"
+                android:contentDescription="Image banner"
+                android:scaleType="fitXY"
+                android:src="@drawable/hotel_results_default_image" />
+
+            <TextView
+                android:id="@+id/hotel_room_desc"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/hotel_room_image"
+                android:layout_marginLeft="12dp"
+                android:fontFamily="sans-serif"
+                android:paddingTop="16dp"
+                android:text="Room description here "
+                android:textColor="#383f46"
+                android:textSize="16sp" />
+
+            <View
+                android:id="@+id/view_separator1"
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:layout_below="@id/hotel_room_desc"
+                android:layout_marginLeft="12dp"
+                android:layout_marginTop="16dp"
+                android:background="#a7b6bf" />
+
+            <TextView
+                android:id="@+id/hotel_room_summary_label"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/view_separator1"
+                android:layout_marginLeft="12dp"
+                android:fontFamily="sans-serif-medium"
+                android:paddingBottom="10dp"
+                android:paddingTop="12dp"
+                android:text="@string/general_summary"
+                android:textColor="#8b8b8b"
+                android:textSize="14sp" />
+
+            <ImageView
+                android:id="@+id/hotel_cal_image"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/hotel_room_summary_label"
+                android:layout_marginLeft="12dp"
+                android:contentDescription="Image banner"
+                android:src="@drawable/icon_calendar" />
+
+            <LinearLayout
+                android:id="@+id/hotel_summary_layout"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_alignTop="@id/hotel_cal_image"
+                android:layout_below="@id/hotel_room_summary_label"
+                android:layout_marginLeft="10dp"
+                android:layout_marginRight="20dp"
+                android:layout_toRightOf="@id/hotel_cal_image"
+                android:orientation="horizontal"
+                android:weightSum="1.0" >
+
+                <TextView
+                    android:id="@+id/date_span"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="0.8"
+                    android:fontFamily="sans-serif"
+                    android:text="Dates here"
+                    android:textColor="#383f46"
+                    android:textSize="16sp" />
+
+                <TextView
+                    android:id="@+id/hotel_room_night"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="0.2"
+                    android:background="@drawable/blue_rectangle"
+                    android:fontFamily="sans-serif-light"
+                    android:gravity="center"
+                    android:padding="5dp"
+                    android:text="@string/hotel_reserve_num_of_nights"
+                    android:textColor="#0078c8"
+                    android:textSize="12sp" />
+            </LinearLayout>
+
+            <TextView
+                android:id="@+id/hotel_room_total_label"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignLeft="@id/hotel_summary_layout"
+                android:layout_below="@id/hotel_summary_layout"
+                android:layout_marginTop="10dp"
+                android:layout_toRightOf="@id/hotel_cal_image"
+                android:fontFamily="sans-serif"
+                android:text="@string/general_total"
+                android:textColor="#383f46"
+                android:textSize="14sp"
+                android:textStyle="bold" />
+
+            <LinearLayout
+                android:id="@+id/hotel_room_total"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_alignTop="@id/hotel_room_total_label"
+                android:layout_below="@id/hotel_summary_layout"
+                android:layout_gravity="right"
+                android:layout_marginLeft="10dp"
+                android:layout_marginRight="20dp"
+                android:layout_toRightOf="@id/hotel_room_total_label"
+                android:orientation="vertical" >
+
+                <TextView
+                    android:id="@+id/hotel_room_rate"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="right"
+                    android:drawablePadding="5dp"
+                    android:drawableRight="@drawable/checkout_icon_price_info"
+                    android:fontFamily="sans-serif-medium"
+                    android:text="room rate"
+                    android:textColor="#0078c8"
+                    android:textSize="18sp" />
+
+                <TextView
+                    android:id="@+id/total_with_tax_label"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="right"
+                    android:fontFamily="sans-serif"
+                    android:text="@string/hotel_reserve_total_with_tax"
+                    android:textColor="#a7b6bf"
+                    android:textSize="12sp" />
+            </LinearLayout>
+
+            <View
+                android:id="@+id/view_separator2"
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:layout_below="@id/hotel_room_total"
+                android:layout_marginLeft="12dp"
+                android:layout_marginTop="16dp"
+                android:background="#a7b6bf" />
+
+            <TextView
+                android:id="@+id/hotel_credit_card_label"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/view_separator2"
+                android:layout_marginLeft="12dp"
+                android:layout_marginTop="16dp"
+                android:fontFamily="sans-serif"
+                android:text="@string/general_credit_card"
+                android:textColor="#383f46"
+                android:textSize="16sp" />
+
+            <TextView
+                android:id="@+id/hotel_credit_card"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/hotel_credit_card_label"
+                android:layout_marginLeft="12dp"
+                android:fontFamily="sans-serif"
+                android:text="credit card number here"
+                android:textColor="#0078c8"
+                android:textSize="14sp" />
+
+            <View
+                android:id="@+id/view_separator3"
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:layout_below="@id/hotel_credit_card"
+                android:layout_marginLeft="12dp"
+                android:layout_marginTop="16dp"
+                android:background="#a7b6bf" />
+
+            <TextView
+                android:id="@+id/hotel_policy_label"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/view_separator3"
+                android:layout_marginLeft="12dp"
+                android:layout_marginTop="16dp"
+                android:fontFamily="sans-serif"
+                android:text="@string/general_policy"
+                android:textColor="#383f46"
+                android:textSize="16sp" />
+
+            <TextView
+                android:id="@+id/hotel_policy"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/hotel_policy_label"
+                android:layout_marginLeft="12dp"
+                android:fontFamily="sans-serif"
+                android:text="@string/hotel_reserve_cancel_policy"
+                android:textColor="#757575"
+                android:textSize="14sp" />
+
+            <View
+                android:id="@+id/view_separator4"
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:layout_below="@id/hotel_policy"
+                android:layout_marginLeft="12dp"
+                android:layout_marginTop="16dp"
+                android:background="#a7b6bf" />
+
+            <!-- Violations ViewStub -->
+
+            <ViewStub
+                android:id="@+id/violation_view"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_alignLeft="@id/hotel_policy"
+                android:layout_below="@id/view_separator4"
+                android:inflatedId="@+id/inflatedViolationView"
+                android:layout="@layout/violation_view_stub" />
+        </RelativeLayout>
+    </ScrollView>
+
+</RelativeLayout>

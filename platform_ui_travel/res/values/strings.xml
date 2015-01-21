@@ -12,6 +12,17 @@
     <string name="general_number_of_km">%%0!number of kilometeres%% km</string>
     <string name="general_filter">Filter</string>
     <string name="general_sort">Sort</string>
+    <string name="general_credit_card">Credit card</string>
+    <string name="general_select_card">Select credit card</string>
+    <string name="general_summary">Summary</string>
+    <string name="general_total">Total</string>
+    <string name="general_policy">Policy</string>
+    <string name="general_violation">Violation</string>
+    <string name="general_violation_description">Violation Description</string>
+    <string name="general_reason">Reason</string>
+    <string name="general_select_reason">Select a reason</string>
+    <string name="general_justification">Justification</string>
+    <string name="general_enter_justification">Enter a justification</string>
     <!-- end of general strings -->
 
     <string name="app_name">ConcurPlatformUITravel</string>
@@ -80,5 +91,13 @@
     <string name="hotel_tab_rooms">ROOMS</string>
     <string name="hotel_tab_images">PHOTOS</string>
     <string name="find_rooms_button">Find Rooms</string>
+
+    <!-- start of hotel reservation screen -->
+    <string name="hotel_sell_options_retrieving">Retrieving sell options</string>
+    <string name="hotel_reserve_this_room">Reserve This Room</string>
+    <string name="hotel_reserve_num_of_nights">%%0!number of nights%% night</string>
+    <string name="hotel_reserve_total_with_tax">total with tax</string>
+    <string name="hotel_reserve_cancel_policy">Cancellation policy and rate details</string>
+    <!-- end of hotel reservation screen -->
 
 </resources>

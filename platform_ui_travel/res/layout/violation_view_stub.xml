@@ -1,0 +1,88 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/hotel_room_violation_view"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_below="@id/view_separator4"
+    android:layout_marginLeft="12dp"
+    android:orientation="vertical" >
+
+    <TextView
+        android:id="@+id/hotel_room_violation_label"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:fontFamily="sans-serif-medium"
+        android:paddingBottom="10dp"
+        android:paddingTop="12dp"
+        android:text="@string/general_violation"
+        android:textColor="#8b8b8b"
+        android:textSize="14sp" />
+
+    <TextView
+        android:id="@+id/hotel_violation_desc_label"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:fontFamily="sans-serif"
+        android:text="@string/general_violation_description"
+        android:textColor="#383f46"
+        android:textSize="16sp" />
+
+    <TextView
+        android:id="@+id/hotel_violation_desc"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:fontFamily="sans-serif"
+        android:text="violation desc here"
+        android:textColor="#757575"
+        android:textSize="14sp" />
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:layout_marginTop="16dp"
+        android:background="#a7b6bf" />
+
+    <TextView
+        android:id="@+id/hotel_violation_reason_label"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="16dp"
+        android:fontFamily="sans-serif"
+        android:text="@string/general_reason"
+        android:textColor="#383f46"
+        android:textSize="16sp" />
+
+    <TextView
+        android:id="@+id/hotel_violation_reason"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:fontFamily="sans-serif"
+        android:text="@string/general_select_reason"
+        android:textColor="#0078c8"
+        android:textSize="14sp" />
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:layout_marginTop="16dp"
+        android:background="#a7b6bf" />
+
+    <TextView
+        android:id="@+id/hotel_violation_justification_label"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="16dp"
+        android:fontFamily="sans-serif"
+        android:text="@string/general_justification"
+        android:textColor="#383f46"
+        android:textSize="16sp" />
+
+    <TextView
+        android:id="@+id/hotel_violation_justification"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:fontFamily="sans-serif"
+        android:text="@string/general_enter_justification"
+        android:textColor="#757575"
+        android:textSize="14sp" />
+</LinearLayout>
