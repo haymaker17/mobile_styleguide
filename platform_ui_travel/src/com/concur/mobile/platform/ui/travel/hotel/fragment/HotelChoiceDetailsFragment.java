@@ -215,6 +215,8 @@ public class HotelChoiceDetailsFragment extends PlatformFragmentV1 implements On
 
         public void onFindRoomsClicked();
 
+        public void roomItemClicked(HotelRoomListItem roomListItem);
+
         public void onMapsClicked(LatLng post);
 
     }
@@ -254,13 +256,15 @@ public class HotelChoiceDetailsFragment extends PlatformFragmentV1 implements On
         case Configuration.ORIENTATION_PORTRAIT:
             headerImage.setVisibility(View.VISIBLE);
             if (headerImage != null && imagepairs != null && imagepairs.size() > 0) {
-                HotelImagePair image2 = hotelListItem.getHotel().imagePairs.get(1);
+                HotelImagePair image2 = imagepairs.get(1);
                 URI uri = URI.create(image2.image);
                 ImageCache imgCache = ImageCache.getInstance(getActivity());
                 Bitmap bitmap = imgCache.getBitmap(uri, null);
                 if (bitmap != null) {
                     headerImage.setImageBitmap(bitmap);
                 }
+            } else {
+                headerImage.setImageResource(R.drawable.cityscape_placeholder);
             }
 
             break;

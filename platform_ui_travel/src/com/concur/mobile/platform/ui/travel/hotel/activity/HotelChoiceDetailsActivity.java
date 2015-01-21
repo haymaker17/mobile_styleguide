@@ -22,6 +22,7 @@ import com.concur.mobile.platform.ui.travel.hotel.fragment.HotelChoiceDetailsFra
 import com.concur.mobile.platform.ui.travel.hotel.fragment.HotelDetailsFragment;
 import com.concur.mobile.platform.ui.travel.hotel.fragment.HotelMapFragment;
 import com.concur.mobile.platform.ui.travel.hotel.fragment.HotelRoomDetailFragment;
+import com.concur.mobile.platform.ui.travel.hotel.fragment.HotelRoomListItem;
 import com.concur.mobile.platform.ui.travel.hotel.fragment.HotelSearchResultListItem;
 import com.concur.mobile.platform.ui.travel.hotel.fragment.ImageListItem;
 import com.concur.mobile.platform.ui.travel.hotel.fragment.ShowImagesFragment;
@@ -163,6 +164,15 @@ public class HotelChoiceDetailsActivity extends Activity implements HotelChoiceD
                 fm.beginTransaction().replace(placeholder, new ShowImagesFragment(hotel.imagePairs), tabId).commit();
             }
         }
+    }
+
+    @Override
+    public void roomItemClicked(HotelRoomListItem roomListItem) {
+        Intent intent = new Intent(this, HotelBookingActivity.class);
+        intent.putExtra("roomSelected", roomListItem.getHotelRoom());
+
+        startActivity(intent);
+
     }
 
 }

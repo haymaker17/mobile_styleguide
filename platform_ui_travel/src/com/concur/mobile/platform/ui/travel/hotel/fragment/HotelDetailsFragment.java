@@ -76,6 +76,10 @@ public class HotelDetailsFragment extends PlatformFragmentV1 {
         // FragmentManager fm = getFragmentManager();
         // fm.beginTransaction().add(hotelMap, "Maps").commit();
         // }
+
+        post = new LatLng(hotel.latitude, hotel.longitude);
+        getFragmentManager().beginTransaction().replace(R.id.map_view, new HotelMapFragment(post)).commit();
+
         Contact contact = hotel.contact;
         if (contact != null && contact.city != null) {
             // if (ViewUtil.isMappingAvailable(context)) {
