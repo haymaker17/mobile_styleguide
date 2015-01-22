@@ -5,6 +5,7 @@ package com.concur.mobile.platform.authentication;
 
 import java.io.IOException;
 import java.io.InputStream;
+import java.net.HttpURLConnection;
 import java.util.Locale;
 
 import org.xmlpull.v1.XmlPullParserException;
@@ -103,6 +104,14 @@ public class PPLoginLightRequestTask extends PlatformAsyncRequestTask {
     @Override
     protected boolean requiresSessionId() {
         return false;
+    }
+
+    @Override
+    protected void configureConnection(HttpURLConnection connection) {
+        super.configureConnection(connection);
+        // Set timeout values
+        connection.setConnectTimeout(15000);
+        connection.setReadTimeout(45000);
     }
 
     @Override
