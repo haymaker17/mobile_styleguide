@@ -1,32 +1,35 @@
 package com.concur.mobile.core.request.service;
 
-import java.text.ParseException;
-import java.text.SimpleDateFormat;
-import java.util.ArrayList;
-import java.util.Date;
-import java.util.List;
-import java.util.Locale;
-import java.util.Map;
-
 import android.util.Log;
 
 import com.concur.mobile.core.request.util.RequestParsingHelper;
 import com.concur.mobile.platform.common.formfield.ConnectForm;
 import com.concur.mobile.platform.common.formfield.IFormField;
+import com.concur.mobile.platform.request.dto.RequestCommentDTO;
 import com.concur.mobile.platform.request.dto.RequestDTO;
 import com.concur.mobile.platform.request.dto.RequestEntryDTO;
 import com.concur.mobile.platform.request.dto.RequestSegmentDTO;
-import com.concur.mobile.platform.request.groupConfiguration.RequestGroupConfigurationsContainer;
+import com.concur.mobile.platform.request.groupConfiguration.RequestGroupConfiguration;
+import com.concur.mobile.platform.request.util.GsonListContainer;
 import com.concur.mobile.platform.util.BooleanDeserializer;
+import com.concur.mobile.platform.util.DateDeserializer;
+import com.concur.mobile.platform.util.DoubleDeserializer;
 import com.concur.mobile.platform.util.EnumDeserializer;
 import com.concur.mobile.platform.util.IntegerDeserializer;
 import com.concur.mobile.platform.util.Parse;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
+import com.google.gson.reflect.TypeToken;
+
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.ArrayList;
+import java.util.Date;
+import java.util.List;
+import java.util.Map;
 
 /**
  * @author olivierb
- * 
  */
 public class RequestParser {
 
@@ -36,7 +39,6 @@ public class RequestParser {
      */
 
     // REQUEST LIST
-    public final static String SERVER_DATE_FORMAT = "yyyy-dd-MM";
     private static final String LIST_ARRAY_KEY = "Items";// "RequestsList";
     private static final String LIST_NAME_KEY = "Name";
     private static final String LIST_ID_KEY = "RequestID";
@@ -128,7 +130,6 @@ public class RequestParser {
             tr.setEmployeeName(RequestParsingHelper.stringSafeParse(res, LIST_EPLOYEE_NAME_KEY));
             tr.setLastComment(RequestParsingHelper.stringSafeParse(res, LIST_LAST_COMMENT_KEY));
             tr.setStartDate(parseDate(RequestParsingHelper.stringSafeParse(res, LIST_START_DATE_KEY), sdf));
-            System.out.println("########## " + RequestParsingHelper.stringSafeParse(res, LIST_START_DATE_KEY) + " " + RequestParsingHelper.stringSafeParse(res, LIST_END_DATE_KEY));
             tr.setEndDate(parseDate(RequestParsingHelper.stringSafeParse(res, LIST_END_DATE_KEY), sdf));
             tr.setRequestDate(parseDate(RequestParsingHelper.stringSafeParse(res, LIST_REQUEST_DATE_KEY), sdf));
             tr.setPurpose(RequestParsingHelper.stringSafeParse(res, LIST_PURPOSE_KEY));
@@ -152,7 +153,8 @@ public class RequestParser {
         return requestList.getList();
     }
 
-    @SuppressWarnings("rawtypes") @Deprecated
+    @SuppressWarnings("rawtypes")
+    @Deprecated
     public void parseTRDetailsResponse(RequestDTO tr, String jsonRes) {
         final SimpleDateFormat sdf = new SimpleDateFormat("yyyy-mm-dd");
 
@@ -189,9 +191,9 @@ public class RequestParser {
             Comment.setValue(RequestParsingHelper.stringSafeParse(jsonEntry, RES_DETAILS_COMMENT_VALUE));
             Comment.setAuthorFirstName(RequestParsingHelper.stringSafeParse(jsonEntry, RES_DETAILS_COMMENT_FIRSTNAME));
             Comment.setAuthorLastName(RequestParsingHelper.stringSafeParse(jsonEntry, RES_DETAILS_COMMENT_LASTNAME));
-            Comment.setIsLatest(RequestParsingHelper.stringSafeParse(jsonEntry, RES_DETAILS_COMMENT_ISLATEST).equals("false")? false : true);
+            Comment.setIsLatest(RequestParsingHelper.stringSafeParse(jsonEntry, RES_DETAILS_COMMENT_ISLATEST).equals("false") ? false : true);
 
-            if(Comment.getIsLatest()){
+            if (Comment.getIsLatest()) {
                 tr.setLastComment(Comment.getValue());
             }
         }
