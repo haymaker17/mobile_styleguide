@@ -42,18 +42,20 @@ public abstract class AbstractConnectFormFieldActivity extends BaseActivity {
     private List<DatePickerDialog> datePickerDialogs = new ArrayList<DatePickerDialog>();
     private int viewID = 0;
 
-    protected ConnectForm form;
     protected DateUtil.DatePattern inputDatePattern;
-    protected Locale locale;
 
     protected abstract String getValueFromFieldName(String fieldName);
 
     protected abstract void setValueFromFieldName(String fieldName, String value);
 
+    protected abstract ConnectForm getForm();
+
+    protected abstract Locale getLocale();
+
     protected void setDisplayFields(final LinearLayout titleLayout, final LinearLayout fieldLayout,
             final String fieldToTitle) {
-        if (form != null) {
-            final List<ConnectFormField> formfields = form.getFormFields();
+        if (getForm() != null) {
+            final List<ConnectFormField> formfields = getForm().getFormFields();
             Collections.sort(formfields);
 
             LinearLayout.LayoutParams llp = null;
@@ -207,7 +209,7 @@ public abstract class AbstractConnectFormFieldActivity extends BaseActivity {
                         if (!isTitleField) {
                             layout.addView(getTextViewFieldName(getLabelFromFieldName(ff.getName())));
                         }
-                        
+
                         component.setId(viewID);
                         views.put(viewID, ff.getName());
                         viewID++;
@@ -238,11 +240,11 @@ public abstract class AbstractConnectFormFieldActivity extends BaseActivity {
             final ConnectFormField ff);
 
     protected String formatDate(Date date) {
-        return DateUtil.getFormattedDateForLocale(inputDatePattern, locale, date);
+        return DateUtil.getFormattedDateForLocale(inputDatePattern, getLocale(), date);
     }
 
     protected Date parseDate(String dateString) {
-        return DateUtil.parseFormattedDateForLocale(inputDatePattern, locale, dateString);
+        return DateUtil.parseFormattedDateForLocale(inputDatePattern, getLocale(), dateString);
     }
 
     protected abstract String getLabelFromFieldName(String fieldName);

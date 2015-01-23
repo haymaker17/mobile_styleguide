@@ -139,7 +139,7 @@ public class SplitRequestListAdapter extends AbstractGenericAdapter<RequestDTO> 
             segmentTypes.setText(request.getSegmentListString());
 
             final String formattedAmount = FormatUtil.formatAmount((request.getTotal() != null ? request.getTotal() : 0d), getContext().getResources()
-                    .getConfiguration().locale, request.getCurrency(), true, true);
+                    .getConfiguration().locale, request.getCurrencyCode(), true, true);
             amount.setText(formattedAmount);
             final Locale loc = getContext().getResources().getConfiguration().locale;
             startDate.setText(DateUtil.getFormattedDateForLocale(DateUtil.DatePattern.SHORT, (loc != null) ? loc

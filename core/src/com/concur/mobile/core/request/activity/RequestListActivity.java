@@ -207,13 +207,14 @@ public class RequestListActivity extends BaseActivity {
         if (!ConcurCore.isConnected() && (tr == null || tr.getEntriesList() == null)) {
             new NoConnectivityDialogFragment().show(getSupportFragmentManager(), CLS_TAG);
         } else {
-            final Intent i = new Intent(RequestListActivity.this, RequestDigestActivity.class);
+            final Intent i = new Intent(RequestListActivity.this, RequestSummaryActivity.class);
 
             // --- Flurry tracking
             i.putExtra(Flurry.PARAM_NAME_CAME_FROM, Flurry.PARAM_VALUE_TRAVEL_REQUEST_LIST);
             final Map<String, String> params = new HashMap<String, String>();
-            params.put(Flurry.PARAM_NAME_ACTION, Flurry.PARAM_VALUE_TRAVEL_REQUEST_DIGEST);
-            EventTracker.INSTANCE.track(Flurry.CATEGORY_TRAVEL_REQUEST, Flurry.EVENT_NAME_ACTION, params);
+            params.put(Flurry.PARAM_NAME_FROM, Flurry.PARAM_VALUE_TRAVEL_REQUEST_LIST);
+            params.put(Flurry.PARAM_NAME_TO, Flurry.PARAM_VALUE_TRAVEL_REQUEST_SUMMARY);
+            EventTracker.INSTANCE.track(Flurry.CATEGORY_TRAVEL_REQUEST, Flurry.EVENT_NAME_LAUNCH, params);
 
             startActivity(i);
         }
@@ -229,8 +230,9 @@ public class RequestListActivity extends BaseActivity {
             // --- Flurry tracking
             i.putExtra(Flurry.PARAM_NAME_CAME_FROM, Flurry.PARAM_VALUE_TRAVEL_REQUEST_LIST);
             final Map<String, String> params = new HashMap<String, String>();
-            params.put(Flurry.PARAM_NAME_ACTION, Flurry.PARAM_VALUE_TRAVEL_REQUEST_HEADER);
-            EventTracker.INSTANCE.track(Flurry.CATEGORY_TRAVEL_REQUEST, Flurry.EVENT_NAME_ACTION, params);
+            params.put(Flurry.PARAM_NAME_FROM, Flurry.PARAM_VALUE_TRAVEL_REQUEST_LIST);
+            params.put(Flurry.PARAM_NAME_TO, Flurry.PARAM_VALUE_TRAVEL_REQUEST_HEADER);
+            EventTracker.INSTANCE.track(Flurry.CATEGORY_TRAVEL_REQUEST, Flurry.EVENT_NAME_LAUNCH, params);
 
             startActivity(i);
         }

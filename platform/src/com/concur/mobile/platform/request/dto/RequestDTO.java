@@ -9,8 +9,8 @@ import java.util.List;
  * @author olivierb
  */
 public class RequestDTO {
-	
-	public static String SUBMIT = "submit";
+
+    public static String SUBMIT = "submit";
 
     @SerializedName("RequestID")
     private String id;
@@ -19,7 +19,7 @@ public class RequestDTO {
     @SerializedName("Purpose")
     private String purpose;
     @SerializedName("CurrencyCode")
-    private String currency;
+    private String currencyCode;
     @SerializedName("EmployeeName")
     private String employeeName;
     @SerializedName("ApprovalStatusName")
@@ -46,6 +46,10 @@ public class RequestDTO {
     private String segmentListString;
     @SerializedName("HeaderFormID")
     private String headerFormId;
+
+    // --- required to post/put
+    @SerializedName(("PolicyID"))
+    private String policyId;
 
     //@SerializedName("Entries")
     private List<RequestEntryDTO> entriesList;
@@ -76,12 +80,12 @@ public class RequestDTO {
         this.purpose = purpose;
     }
 
-    public String getCurrency() {
-        return currency;
+    public String getCurrencyCode() {
+        return currencyCode;
     }
 
-    public void setCurrency(String currency) {
-        this.currency = currency;
+    public void setCurrencyCode(String currencyCode) {
+        this.currencyCode = currencyCode;
     }
 
     public String getEmployeeName() {
@@ -196,19 +200,29 @@ public class RequestDTO {
         this.entriesList = entriesList;
     }
 
-	public List<String> getListPermittedActions() {
-		return listPermittedActions;
-	}
+    public List<String> getListPermittedActions() {
+        return listPermittedActions;
+    }
 
-	public void setListPermittedActions(List<String> listPermittedActions) {
-		this.listPermittedActions = listPermittedActions;
-	}
-	
-	public boolean isActionPermitted(String action){
-		for(String permittedAction : this.listPermittedActions)
-			if(permittedAction.equals(action))
-				return true;
-		return false;
-	}
-	
+    public void setListPermittedActions(List<String> listPermittedActions) {
+        this.listPermittedActions = listPermittedActions;
+    }
+
+    public String getPolicyId() {
+        return policyId;
+    }
+
+    public void setPolicyId(String policyId) {
+        this.policyId = policyId;
+    }
+
+    public boolean isActionPermitted(String action) {
+        for (String permittedAction : this.listPermittedActions) {
+            if (permittedAction.equals(action)) {
+                return true;
+            }
+        }
+        return false;
+    }
+
 }

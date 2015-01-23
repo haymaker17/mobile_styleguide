@@ -2,7 +2,7 @@ package com.concur.mobile.core.util;
 
 /**
  * A class providing public constants for use with the Flurry event reporting system.
- * 
+ *
  * @author andy
  */
 public class Flurry {
@@ -287,7 +287,7 @@ public class Flurry {
     public static final String PARAM_VALUE_LOCATION_CHECK_IN = "Location Checkin";
     public static final String PARAM_VALUE_TRAVEL_REQUEST = "Travel Request";
     public static final String PARAM_VALUE_TRAVEL_REQUEST_LIST = "Travel Request List";
-    public static final String PARAM_VALUE_TRAVEL_REQUEST_DIGEST = "Travel Request Digest";
+    public static final String PARAM_VALUE_TRAVEL_REQUEST_SUMMARY = "Travel Request Summary";
     public static final String PARAM_VALUE_TRAVEL_REQUEST_HEADER = "Travel Request Header";
     public static final String PARAM_VALUE_VIEW_EXPENSE_LIST = "View Expense List";
     public static final String PARAM_VALUE_VIEW_CURRENT_TRIP = "View Current Trip";
@@ -395,11 +395,9 @@ public class Flurry {
 
     /**
      * Formats a Flurry event name based on a category and name.
-     * 
-     * @param categoryName
-     *            contains the Flurry event category name.
-     * @param eventName
-     *            contains the Flurry event name.
+     *
+     * @param categoryName contains the Flurry event category name.
+     * @param eventName    contains the Flurry event name.
      * @return returns the formatted Flurry event name.
      */
     public static String formatFlurryEvent(String categoryName, String eventName) {
@@ -414,10 +412,8 @@ public class Flurry {
 
     /**
      * Returns the duration time as a range between <code>0-3</code>, <code>3-10</code>, and <code>10+</code>.
-     * 
-     * @param seconds
-     *            the duration time in seconds
-     * 
+     *
+     * @param seconds the duration time in seconds
      * @return A string representing a time range.
      */
     public static String formatDurationEventParam(long seconds) {

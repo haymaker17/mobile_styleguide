@@ -111,7 +111,7 @@ public class RequestParser {
             tr.setApprovalStatus(RequestParsingHelper.stringSafeParse(res, LIST_APPROVAL_STATUS_KEY));
             tr.setApprovalStatusCode(RequestParsingHelper.stringSafeParse(res, LIST_APPROVAL_STATUS_CODE));
             tr.setApproverLoginId(RequestParsingHelper.stringSafeParse(res, LIST_APPROVER_LOGIN_ID_KEY));
-            tr.setCurrency(RequestParsingHelper.stringSafeParse(res, LIST_CURRENCY_KEY));
+            tr.setCurrencyCode(RequestParsingHelper.stringSafeParse(res, LIST_CURRENCY_KEY));
             tr.setDetailsUrl(RequestParsingHelper.stringSafeParse(res, LIST_DETAILS_URL_KEY));
             tr.setEmployeeName(RequestParsingHelper.stringSafeParse(res, LIST_EPLOYEE_NAME_KEY));
             tr.setLastComment(RequestParsingHelper.stringSafeParse(res, LIST_LAST_COMMENT_KEY));
@@ -146,7 +146,7 @@ public class RequestParser {
         final Map trList = new Gson().fromJson(jsonRes, Map.class);
         tr.setId(RequestParsingHelper.stringSafeParse(trList, LIST_ID_KEY));
         tr.setName(RequestParsingHelper.stringSafeParse(trList, LIST_NAME_KEY));
-        tr.setCurrency(RequestParsingHelper.stringSafeParse(trList, RES_DETAILS_CURRENCY_KEY));
+        tr.setCurrencyCode(RequestParsingHelper.stringSafeParse(trList, RES_DETAILS_CURRENCY_KEY));
         tr.setStartDate(parseDate(RequestParsingHelper.stringSafeParse(trList, LIST_START_DATE_KEY), sdf));
         tr.setEndDate(parseDate(RequestParsingHelper.stringSafeParse(trList, LIST_END_DATE_KEY), sdf));
         tr.setTotal(Parse.safeParseDouble(RequestParsingHelper.stringSafeParse(trList, LIST_TOTAL_KEY)));

@@ -1,0 +1,222 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ViewFlipper 
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/requestDetailVF"
+	android:minWidth="300dp"
+	android:minHeight="420dp"
+   	android:layout_width="match_parent"
+   	android:layout_height="match_parent"
+	android:background="#F7FAFD"
+    >
+	<include android:id="@+id/loading_data" layout="@layout/loading_data"/>  
+	<LinearLayout
+    	android:layout_width="match_parent"
+    	android:layout_height="match_parent"
+		android:orientation="vertical"
+    >
+	
+	  	<RelativeLayout 
+		    android:layout_width="match_parent"
+		    android:layout_height="70dp"
+		    android:orientation="horizontal"
+		    android:id="@+id/requestDetails" 
+		    android:background="#0078c8"
+		    >
+				
+			<TextView 
+		        android:id="@+id/requestDetailsName"
+		        style="@style/FormFieldLabelText"
+		        android:layout_width="wrap_content"
+		        android:layout_height="wrap_content"
+		        android:layout_centerVertical="true"
+		        android:layout_alignParentLeft="true"
+		        android:layout_marginBottom="5dp"
+		        android:layout_marginLeft="15dp"
+		        android:textSize="18sp"
+		        android:textColor="@color/White"
+		        android:textAppearance="@style/ListCellHeaderText"
+		        />
+		    <TextView
+		        android:id="@+id/requestDetailsStartDate"
+		        style="@style/FormFieldLabelText"
+		        android:layout_width="wrap_content"
+		        android:layout_height="wrap_content"
+		        android:layout_alignBaseline="@id/requestDetailsName"
+		        android:layout_alignParentRight="true"
+		        android:textAppearance="@style/ListCellSmallText"
+		        android:layout_marginRight="15dp"
+		        android:textSize="12sp"
+		        android:textColor="@color/White"
+		        />
+	    
+	    </RelativeLayout>
+	    
+	    <RelativeLayout
+	        android:layout_width="match_parent"
+	        android:layout_height="40dp"
+	        android:background="#DEF2FF">
+	        <TextView 
+		        android:layout_width="wrap_content"
+		        android:layout_height="wrap_content"
+		        android:layout_centerVertical="true"
+		        android:layout_alignParentLeft="true"
+		        android:layout_marginLeft="15dp"
+		        android:textSize="14sp"
+		        android:textColor="#0078c8"
+		        android:textAppearance="@style/ListCellHeaderText"
+		        android:text="@string/add_another_item_to_request"
+		        android:textStyle="bold"
+	        />
+	    </RelativeLayout>
+	  	
+	    <RelativeLayout 
+	        android:id="@+id/segmentListViewLayout"
+		    android:layout_width="match_parent"
+		    android:layout_height="160dp"
+		    android:orientation="vertical"
+		    android:background="@color/White"
+		    >
+	
+			<ListView
+		    	android:id="@+id/segmentListView"
+				android:layout_height="wrap_content"
+				android:layout_width="wrap_content"
+				android:divider="#000000"
+				android:dividerHeight="1px"
+				android:background="@color/White"
+			/>
+		
+		</RelativeLayout>
+		
+	    <RelativeLayout 
+		    android:layout_width="match_parent"
+		    android:layout_height="62dp"
+		    android:orientation="horizontal"
+		    android:background="@color/White"
+	    >
+	        
+	    <TextView 
+	        android:id="@+id/requestDetailsTotalTitle"
+	        style="@style/FormFieldLabelText"
+	        android:layout_width="wrap_content"
+	        android:layout_height="wrap_content"
+	        android:layout_alignParentLeft="true"
+	        android:layout_centerVertical="true"
+	        android:layout_marginLeft="15dp"
+	        android:text="@string/request_digest_total"
+	        android:textSize="15sp"
+	        android:textColor="@color/Black"
+	        android:textStyle="bold"
+	        />
+	    <TextView
+	        android:id="@+id/requestDetailsAmount"
+	        style="@style/FormFieldLabelText"
+	        android:layout_width="wrap_content"
+	        android:layout_height="wrap_content"
+	        android:layout_alignBaseline="@id/requestDetailsTotalTitle"
+	        android:layout_alignParentRight="true"
+	        android:layout_marginRight="15dp"
+	        android:textSize="20sp"
+	        android:textColor="#0078c8"
+	        android:textStyle="bold"
+	        />
+	    
+		</RelativeLayout>
+		
+	    <RelativeLayout 
+	    android:layout_width="match_parent"
+	    android:layout_height="10dp"
+	    android:background="#F7FAFD"
+	    />
+	    
+	    <RelativeLayout 
+	    android:layout_width="match_parent"
+	    android:layout_height="55dp"
+	    android:background="@color/White"
+	    >
+	    	<TextView
+	        android:layout_width="wrap_content"
+	        android:layout_height="wrap_content"
+	        android:layout_alignParentLeft="true"
+	        android:layout_centerVertical="true"
+	        android:layout_marginLeft="15dp"
+	        android:text="@string/business_purpose"
+	        android:textSize="15sp"
+	        android:textColor="#666666"
+	        />
+	    </RelativeLayout>
+	    
+	    <RelativeLayout 
+	    android:layout_width="match_parent"
+	    android:layout_height="10dp"
+	    android:background="#F7FAFD"
+	    />
+	     
+	    <RelativeLayout 
+	    android:layout_width="match_parent"
+	    android:layout_height="55dp"
+	    android:background="@color/White"
+	    >
+	    	<TextView
+	        android:layout_width="wrap_content"
+	        android:layout_height="wrap_content"
+	        android:layout_alignParentLeft="true"
+	        android:layout_centerVertical="true"
+	        android:layout_marginLeft="15dp"
+	        android:text="@string/comment"
+	        android:textSize="15sp"
+	        android:textColor="#666666"
+	        />
+	    </RelativeLayout>
+	    
+	    <RelativeLayout 
+		    android:layout_width="match_parent"
+		    android:layout_height="0dp"
+		    android:background="#F7FAFD"
+		    android:layout_weight="1"
+	    />
+	    
+    	<RelativeLayout 
+	    android:layout_width="match_parent"
+	    android:layout_height="70dp"
+	    android:background="@color/White"
+        android:gravity="center"
+	    >
+	    	<RelativeLayout 
+	    	
+	    	android:id="@+id/submitButton"
+	    	
+		    android:layout_width="290dp"
+		    android:layout_height="44dp"
+		    android:background="#0078C8"
+		    
+		    android:clickable="true"
+		    android:onClick="submitRequestAction"
+		    >
+		    	<TextView 
+			        android:layout_width="wrap_content"
+			        android:layout_height="wrap_content"
+			        android:layout_alignParentLeft="true"
+			        android:layout_centerVertical="true"
+			        android:layout_marginLeft="19dp"
+			        android:text="@string/submit_request"
+			        android:textSize="17sp"
+			        android:textColor="@color/White"
+			        />
+			    <TextView
+			        android:id="@+id/requestDetailsAmountInButton"
+			        android:layout_width="wrap_content"
+			        android:layout_height="wrap_content"
+			        android:layout_alignParentRight="true"
+			        android:layout_centerVertical="true"
+			        android:layout_marginRight="15dp"
+			        android:textSize="17sp"
+			        android:padding = "6dp"
+			        android:textColor="@color/White"
+			        android:background="#0069AF"
+			        />
+		    </RelativeLayout>
+	    </RelativeLayout>
+
+	</LinearLayout>
+</ViewFlipper>
