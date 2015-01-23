@@ -1,5 +1,6 @@
 package com.concur.mobile.platform.request.dto;
 
+import com.google.gson.annotations.SerializedName;
 import java.util.Date;
 import java.util.List;
 
@@ -11,24 +12,44 @@ public class RequestDTO {
 	public static String SUBMIT = "submit";
     public static String SAVE = "save";
 
+    @SerializedName("RequestID")
     private String id;
+    @SerializedName("Name")
     private String name;
+    @SerializedName("Purpose")
     private String purpose;
+    @SerializedName("CurrencyCode")
     private String currency;
+    @SerializedName("EmployeeName")
     private String employeeName;
+    @SerializedName("ApprovalStatusName")
     private String approvalStatus;
+    @SerializedName("ApprovalStatusCode")
     private String approvalStatusCode;
+    @SerializedName("TotalApprovedAmount")
     private Double total;
+    @SerializedName("StartDate")
     private Date startDate;
+    @SerializedName("EndDate")
     private Date endDate;
+    @SerializedName("CreationDate")
     private Date requestDate;
+    @SerializedName("LastComment")
     private String lastComment;
+    @SerializedName("UserLoginID")
     private String userLoginId;
+    @SerializedName("ApproverLoginID")
     private String approverLoginId;
+    @SerializedName("RequestDetailsUrl")
     private String detailsUrl;
+    @SerializedName("SegmentTypes")
     private String segmentListString;
+    @SerializedName("HeaderFormID")
     private String headerFormId;
+
+    //@SerializedName("Entries")
     private List<RequestEntryDTO> entriesList;
+
     private List<String> listPermittedActions;
 
     public String getId() {

@@ -97,10 +97,10 @@ public class RequestDigestActivity extends BaseActivity {
             // TODO : throw exception & display toast message ? @See with PM
             finish();
         }
-        configure();
+        configureUI();
     }
 
-    private void configure() {
+    private void configureUI() {
         requestDetailVF = ((ViewFlipper) findViewById(R.id.requestDetailVF));
         requestDetailVF.setDisplayedChild(ID_LOADING_VIEW);
         entryListView = ((ListView) findViewById(R.id.segmentListView));
@@ -134,8 +134,9 @@ public class RequestDigestActivity extends BaseActivity {
         final TextView business_purpose = (TextView) findViewById(R.id.requestBusinessPurpose);
         final TextView requestComment = (TextView) findViewById(R.id.requestComment);
 
-        final String formattedAmount = FormatUtil.formatAmount(request.getTotal(), RequestDigestActivity.this
-                .getResources().getConfiguration().locale, request.getCurrency(), true, true);
+        final Locale loc = this.getResources().getConfiguration().locale != null ? this.getResources().getConfiguration().locale : Locale.US;
+
+        final String formattedAmount = FormatUtil.formatAmount(request.getTotal(), loc, request.getCurrency(), true, true);
 
         name.setText(request.getName());
         amount.setText(formattedAmount);
@@ -143,9 +144,7 @@ public class RequestDigestActivity extends BaseActivity {
         business_purpose.setText(request.getPurpose());
         requestComment.setText(request.getLastComment());
 
-        final Locale loc = this.getResources().getConfiguration().locale;
-        startDate.setText(DateUtil.getFormattedDateForLocale(DateUtil.DatePattern.SHORT, (loc != null) ? loc
-                : Locale.US, request.getStartDate()));
+        startDate.setText(DateUtil.getFormattedDateForLocale(DateUtil.DatePattern.SHORT, loc, request.getStartDate()));
 
         name.setTypeface(Typeface.DEFAULT_BOLD);
         amount.setTypeface(Typeface.DEFAULT_BOLD);
@@ -269,7 +268,7 @@ public class RequestDigestActivity extends BaseActivity {
             // metrics
             final Map<String, String> params = new HashMap<String, String>();
             params.put(Flurry.EVENT_NAME_SUBMIT, tr.getId());
-            EventTracker.INSTANCE.track(Flurry.CATEGORY_HOME, Flurry.PARAM_VALUE_TRAVEL_REQUEST, params);
+            EventTracker.INSTANCE.track(Flurry.CATEGORY_TRAVEL_REQUEST, Flurry.PARAM_VALUE_TRAVEL_REQUEST_DIGEST, params);
 
             // on retrourne sur la list
             finish();

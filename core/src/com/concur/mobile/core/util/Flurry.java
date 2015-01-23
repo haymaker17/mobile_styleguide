@@ -36,6 +36,7 @@ public class Flurry {
     public static final String CATEGORY_HOME_MORE = "Home More";
     public static final String CATEGORY_APPROVALS = "Approvals";
     public static final String CATEGORY_TRAVEL_AGENCY = "Travel Agency";
+    public static final String CATEGORY_TRAVEL_REQUEST = "Travel Request";
     public static final String CATEGORY_PUSH_NOTIFICATION = "Push Notification";
     public static final String CATEGORY_EMAIL_NOTIFICATION = "Email Notification";
     public static final String CATEGORY_QUICK_EXPENSE = "QuickExpense";
@@ -285,6 +286,9 @@ public class Flurry {
     public static final String PARAM_VALUE_REFRESH_DATA = "Refresh Data";
     public static final String PARAM_VALUE_LOCATION_CHECK_IN = "Location Checkin";
     public static final String PARAM_VALUE_TRAVEL_REQUEST = "Travel Request";
+    public static final String PARAM_VALUE_TRAVEL_REQUEST_LIST = "Travel Request List";
+    public static final String PARAM_VALUE_TRAVEL_REQUEST_DIGEST = "Travel Request Digest";
+    public static final String PARAM_VALUE_TRAVEL_REQUEST_HEADER = "Travel Request Header";
     public static final String PARAM_VALUE_VIEW_EXPENSE_LIST = "View Expense List";
     public static final String PARAM_VALUE_VIEW_CURRENT_TRIP = "View Current Trip";
     public static final String PARAM_VALUE_VIEW_INVOICES = "View Invoices";
