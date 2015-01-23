@@ -8,8 +8,9 @@ import java.util.List;
  */
 public class RequestDTO {
 	
-	public static String SUBMIT = "submit";	
-	
+	public static String SUBMIT = "submit";
+    public static String SAVE = "save";
+
     private String id;
     private String name;
     private String purpose;

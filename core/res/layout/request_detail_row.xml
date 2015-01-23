@@ -39,4 +39,32 @@
         android:layout_alignBaseline="@id/segmentTypeRow"
         />
 
+    <TextView
+        android:id="@+id/segmentTrip"
+        style="@style/FormFieldLabelText"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerVertical="true"
+        android:layout_alignParentLeft="true"
+        android:layout_below="@id/segmentTypeRow"
+        android:layout_alignLeft="@id/segmentTypeRow"
+        android:layout_marginLeft="15dp"
+        android:textSize="15sp"
+        android:textColor="@color/gray"
+        />
+
+    <TextView
+        android:id="@+id/segmentStartDate"
+        style="@style/FormFieldLabelText"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerVertical="true"
+        android:layout_below="@id/segmentRowAmount"
+        android:layout_alignBaseline="@id/segmentTrip"
+        android:layout_alignParentRight="true"
+        android:layout_marginRight="15dp"
+        android:textSize="15sp"
+        android:textColor="@color/gray"
+        />
+
 </RelativeLayout>

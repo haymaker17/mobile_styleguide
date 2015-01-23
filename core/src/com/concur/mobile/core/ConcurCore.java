@@ -118,7 +118,7 @@ import com.concur.platform.PlatformProperties;
 public abstract class ConcurCore extends Application {
 
     // Security lock to make sure TR is disabled on production environment
-    public static final boolean TR_DISABLED = true;
+    public static final boolean TR_DISABLED = false;
 
     // Maps between an activity class name and the list of currently running
     // AsyncTasks that were spawned while it was active.

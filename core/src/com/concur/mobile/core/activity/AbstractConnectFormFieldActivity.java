@@ -50,6 +50,8 @@ public abstract class AbstractConnectFormFieldActivity extends BaseActivity {
     protected ConnectForm form;
     protected SimpleDateFormat dateFormatter;
 
+    protected boolean isEditable = false;
+
     protected abstract String getValueFromFieldName(String fieldName);
 
     protected abstract void setValueFromFieldName(String fieldName, String value);
@@ -121,7 +123,7 @@ public abstract class AbstractConnectFormFieldActivity extends BaseActivity {
                     case TEXTFIELD:
 
                         TextView textField;
-                        if(accesType == IFormField.AccessType.RO)
+                        if(!this.isEditable || accesType == IFormField.AccessType.RO)
                             textField = new TextView(this);
                         else
                             textField = new EditText(this);
@@ -134,7 +136,7 @@ public abstract class AbstractConnectFormFieldActivity extends BaseActivity {
                         requestHeaderFieldLayout.addView(textField);
 
                         llp = new LinearLayout.LayoutParams(ActionBar.LayoutParams.MATCH_PARENT, ActionBar.LayoutParams.MATCH_PARENT);
-                        if(accesType == IFormField.AccessType.RO) llp.setMargins(30, 0, 0, 0); // llp.setMargins(left, top, right, bottom);
+                        if(!this.isEditable || accesType == IFormField.AccessType.RO) llp.setMargins(30, 0, 0, 0); // llp.setMargins(left, top, right, bottom);
                         textField.setLayoutParams(llp);
 
                         textField.setId(viewID);
@@ -148,7 +150,7 @@ public abstract class AbstractConnectFormFieldActivity extends BaseActivity {
                     case TEXTAREA:
 
                         TextView textArea;
-                        if(accesType == IFormField.AccessType.RO)
+                        if(!this.isEditable || accesType == IFormField.AccessType.RO)
                             textArea = new TextView(this);
                         else
                             textArea = new EditText(this);
@@ -162,7 +164,7 @@ public abstract class AbstractConnectFormFieldActivity extends BaseActivity {
                         requestHeaderFieldLayout.addView(textArea);
 
                         llp = new LinearLayout.LayoutParams(ActionBar.LayoutParams.MATCH_PARENT, ActionBar.LayoutParams.MATCH_PARENT);
-                        if(accesType == IFormField.AccessType.RO) llp.setMargins(30, 0, 0, 0); // llp.setMargins(left, top, right, bottom);
+                        if(!this.isEditable || accesType == IFormField.AccessType.RO) llp.setMargins(30, 0, 0, 0); // llp.setMargins(left, top, right, bottom);
                         textArea.setLayoutParams(llp);
 
                         textArea.setId(viewID);
@@ -186,7 +188,7 @@ public abstract class AbstractConnectFormFieldActivity extends BaseActivity {
                         fromDateEtxt.requestFocus();
 
                         //ADD LISTENER for setting date
-                        if(!(accesType == IFormField.AccessType.RO)){
+                        if(!(!this.isEditable || accesType == IFormField.AccessType.RO)){
                             fromDateEtxt.setOnClickListener((View.OnClickListener) this);
                             Calendar newCalendar = Calendar.getInstance();
 
@@ -235,7 +237,7 @@ public abstract class AbstractConnectFormFieldActivity extends BaseActivity {
                         views.put(viewID, ff.getName()); viewID++;
 
                         llp = new LinearLayout.LayoutParams(ActionBar.LayoutParams.MATCH_PARENT, ActionBar.LayoutParams.MATCH_PARENT);
-                        if(accesType == IFormField.AccessType.RO) llp.setMargins(30, 0, 0, 0); // llp.setMargins(left, top, right, bottom);
+                        if(!this.isEditable || accesType == IFormField.AccessType.RO) llp.setMargins(30, 0, 0, 0); // llp.setMargins(left, top, right, bottom);
                         moneyField.setLayoutParams(llp);
 
                         addWhiteSpace(requestHeaderFieldLayout);

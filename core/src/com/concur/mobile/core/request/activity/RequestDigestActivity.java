@@ -53,6 +53,8 @@ public class RequestDigestActivity extends BaseActivity {
     private static final String CLS_TAG = RequestDigestActivity.class.getSimpleName();
     private final RequestParser requestParser = new RequestParser();
 
+    public static final String REQUEST_IS_EDITABLE = "false";
+
     /**
      * A reference to the application instance representing the client.
      */
@@ -129,6 +131,8 @@ public class RequestDigestActivity extends BaseActivity {
         final TextView amount = (TextView) findViewById(R.id.requestDetailsAmount);
         final TextView amountInButton = (TextView) findViewById(R.id.requestDetailsAmountInButton);
         final TextView startDate = (TextView) findViewById(R.id.requestDetailsStartDate);
+        final TextView business_purpose = (TextView) findViewById(R.id.requestBusinessPurpose);
+        final TextView requestComment = (TextView) findViewById(R.id.requestComment);
 
         final String formattedAmount = FormatUtil.formatAmount(request.getTotal(), RequestDigestActivity.this
                 .getResources().getConfiguration().locale, request.getCurrency(), true, true);
@@ -136,6 +140,8 @@ public class RequestDigestActivity extends BaseActivity {
         name.setText(request.getName());
         amount.setText(formattedAmount);
         amountInButton.setText(formattedAmount);
+        business_purpose.setText(request.getPurpose());
+        requestComment.setText(request.getLastComment());
 
         final Locale loc = this.getResources().getConfiguration().locale;
         startDate.setText(DateUtil.getFormattedDateForLocale(DateUtil.DatePattern.SHORT, (loc != null) ? loc
@@ -431,6 +437,10 @@ public class RequestDigestActivity extends BaseActivity {
                 if (ConcurCore.isConnected()) {
                     Intent intent = new Intent(RequestDigestActivity.this, RequestHeaderActivity.class);
                 	intent.putExtra(RequestListActivity.REQUEST_ID, tr.getId());
+                    if (tr.isActionPermitted(RequestDTO.SAVE))
+                        intent.putExtra(RequestDigestActivity.REQUEST_IS_EDITABLE, "true");
+                    else
+                        intent.putExtra(RequestDigestActivity.REQUEST_IS_EDITABLE, "false");
                     startActivity(intent);
                 } else {
                     showDialog(Const.DIALOG_NO_CONNECTIVITY);
