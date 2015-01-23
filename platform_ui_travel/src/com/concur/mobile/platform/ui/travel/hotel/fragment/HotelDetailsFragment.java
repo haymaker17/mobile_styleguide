@@ -52,30 +52,6 @@ public class HotelDetailsFragment extends PlatformFragmentV1 {
 
         // inflate the details fragment
         View mainView = inflater.inflate(R.layout.hotel_details_layout, null, false);
-        // mSupportMapFragment = SupportMapFragment.newInstance();
-
-        // FragmentManager fm = getChildFragmentManager();
-        // SupportMapFragment fragment = (SupportMapFragment) fm.findFragmentById(R.id.map_view);
-        // if (fragment == null) {
-        // fragment = SupportMapFragment.newInstance();
-        // fm.beginTransaction().replace(R.id.map_view, fragment).commit();
-        // }
-        //
-        // if (hotelMap == null) {
-        // hotelMap = ((MapFragment) getFragmentManager().findFragmentById(R.id.map_view)).getMap();
-        // }
-        //
-        // // MapView hotelMap = (MapView) mainView.findViewById(R.id.map);
-        // if (hotelMap != null) {
-        //
-        // LatLng post = new LatLng(hotel.latitude, hotel.longitude);
-        // // TODO load custom icons
-        // MarkerOptions marker = new MarkerOptions().position(post);
-        // hotelMap.addMarker(marker);
-        // hotelMap.moveCamera(CameraUpdateFactory.newLatLngZoom(post, 15));
-        // FragmentManager fm = getFragmentManager();
-        // fm.beginTransaction().add(hotelMap, "Maps").commit();
-        // }
 
         post = new LatLng(hotel.latitude, hotel.longitude);
         getFragmentManager().beginTransaction().replace(R.id.map_view, new HotelMapFragment(post)).commit();
@@ -93,7 +69,9 @@ public class HotelDetailsFragment extends PlatformFragmentV1 {
             stb.append(com.concur.mobile.base.util.Format.localizeText(getActivity(),
                     R.string.general_citystatecountry, contact.street, contact.city, contact.state, contact.country,
                     contact.zip));
-            ((TextView) mainView.findViewById(R.id.hotel_address)).setText(stb.toString());
+            TextView tv = ((TextView) mainView.findViewById(R.id.hotel_address));
+            tv.setText(stb.toString());
+            tv.setTextIsSelectable(true);
 
         } else {
             ViewUtil.setVisibility(mainView, R.id.hotel_address, View.GONE);

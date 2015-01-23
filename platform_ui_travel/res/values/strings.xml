@@ -100,5 +100,8 @@
     <string name="hotel_reserve_cancel_policy">Cancellation policy and rate details</string>
     <string name="hotel_reserve_cancel_policy_not_available">Cancellation policy not available</string>
     <!-- end of hotel reservation screen -->
+    <dimen name="size_default_height">96dp</dimen>
+
+    <string name="action_settings">Settings</string>
 
 </resources>

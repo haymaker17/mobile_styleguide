@@ -14,6 +14,7 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ArrayAdapter;
 import android.widget.ImageView;
 import android.widget.TabHost;
 import android.widget.TabHost.OnTabChangeListener;
@@ -21,11 +22,13 @@ import android.widget.TabHost.TabSpec;
 import android.widget.TabWidget;
 import android.widget.TextView;
 
+import com.concur.mobile.platform.travel.search.hotel.Hotel;
 import com.concur.mobile.platform.travel.search.hotel.HotelImagePair;
 import com.concur.mobile.platform.ui.common.fragment.PlatformFragmentV1;
 import com.concur.mobile.platform.ui.common.util.ImageCache;
 import com.concur.mobile.platform.ui.travel.R;
 import com.concur.mobile.platform.ui.travel.util.Const;
+import com.concur.mobile.platform.ui.travel.util.ParallaxScollView;
 import com.google.android.gms.maps.model.LatLng;
 
 /**
@@ -49,6 +52,8 @@ public class HotelChoiceDetailsFragment extends PlatformFragmentV1 implements On
     private View mRoot;
     public TabHost mTabHost;
     public int mCurrentTab;
+    public ParallaxScollView mListView;
+    private ImageView mImageView;
 
     @Override
     public void onAttach(Activity activity) {
@@ -82,20 +87,29 @@ public class HotelChoiceDetailsFragment extends PlatformFragmentV1 implements On
         // inflate the details fragment
         mRoot = inflater.inflate(R.layout.hotel_choice_list_item, container, false);
         // mRoot = inflater.inflate(R.layout.hotel_choice_list_item, container, false);
-
-        View hotelView = mRoot.findViewById(R.id.hotel_row);
-        // View hotelView = inflater.inflate(R.layout.hotel_search_result_row, null);
         Intent i = getActivity().getIntent();
         final Bundle bundle = i.getExtras();
         // hotel = new HotelSearchResultListItem();
         hotelListItem = (HotelSearchResultListItem) bundle.getSerializable(Const.EXTRA_HOTELS_DETAILS);
-        setActionBar();
-        // TODO don't show rate
+
+        mListView = (ParallaxScollView) mRoot.findViewById(R.id.layout_listview);
+        View header = LayoutInflater.from(getActivity()).inflate(R.layout.hotel_choice_header, null);
+        mImageView = (ImageView) header.findViewById(R.id.travelCityscape);
+
+        View hotelView = header.findViewById(R.id.hotel_row);
         hotelListItem.getHotel().lowestRate = null;
 
-        ((HotelSearchResultListItem) hotelListItem).buildView(getActivity().getApplicationContext(), hotelView, null);
+        ((HotelSearchResultListItem) hotelListItem).buildView(getActivity(), hotelView, null);
         showHideHomeImage();
-        // mTabHost =
+
+        mListView.setParallaxImageView(mImageView);
+        mListView.addHeaderView(header);
+
+        ArrayAdapter<String> adapter = new ArrayAdapter<String>(getActivity(),
+                android.R.layout.simple_expandable_list_item_1, new String[] {});
+        mListView.setAdapter(adapter);
+
+        setActionBar();
         setupTabs();
 
         return mRoot;
@@ -249,27 +263,33 @@ public class HotelChoiceDetailsFragment extends PlatformFragmentV1 implements On
      */
     private void showHideHomeImage() {
         // Setup the cityscape image switcher and put the placeholder image in place
-        ImageView headerImage = (ImageView) mRoot.findViewById(R.id.travelCityscape);
-        List<HotelImagePair> imagepairs = hotelListItem.getHotel().imagePairs;
+
+        // ImageView hotelImageView = (ImageView) mRoot.findViewById(R.id.travelCityscape);
+        // hotelImageView.setTag(R.id.travelCityscape, hotelImageView.findViewById(R.id.travelCityscape));
+
+        // ImageView headerImage = (ImageView) mRoot.findViewById(R.id.travelCityscape);
+
+        Hotel hotel = hotelListItem.getHotel();
+        List<HotelImagePair> imagepairs = (hotel != null ? hotel.imagePairs : null);
         int orientation = getResources().getConfiguration().orientation;
         switch (orientation) {
         case Configuration.ORIENTATION_PORTRAIT:
-            headerImage.setVisibility(View.VISIBLE);
-            if (headerImage != null && imagepairs != null && imagepairs.size() > 0) {
+            mImageView.setVisibility(View.VISIBLE);
+            if (mImageView != null && imagepairs != null && imagepairs.size() > 0) {
                 HotelImagePair image2 = imagepairs.get(1);
                 URI uri = URI.create(image2.image);
                 ImageCache imgCache = ImageCache.getInstance(getActivity());
                 Bitmap bitmap = imgCache.getBitmap(uri, null);
                 if (bitmap != null) {
-                    headerImage.setImageBitmap(bitmap);
+                    mImageView.setImageBitmap(bitmap);
                 }
             } else {
-                headerImage.setImageResource(R.drawable.cityscape_placeholder);
+                mImageView.setImageResource(R.drawable.cityscape_placeholder);
             }
 
             break;
         case Configuration.ORIENTATION_LANDSCAPE:
-            headerImage.setVisibility(View.GONE);
+            mImageView.setVisibility(View.GONE);
             break;
         }
     }

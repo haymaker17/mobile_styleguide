@@ -4,11 +4,14 @@ import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.LinearLayout;
+import android.widget.LinearLayout.LayoutParams;
 
 import com.concur.mobile.platform.ui.common.fragment.PlatformFragmentV1;
 import com.concur.mobile.platform.ui.travel.R;
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
+import com.google.android.gms.maps.GoogleMap.OnMapClickListener;
 import com.google.android.gms.maps.MapFragment;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.MarkerOptions;
@@ -23,6 +26,7 @@ public class HotelMapFragment extends PlatformFragmentV1 {
 
     private static GoogleMap googleMap;
     private LatLng position;
+    private MapFragment mapFragment;
 
     public HotelMapFragment(LatLng position) {
         this.position = position;
@@ -43,6 +47,23 @@ public class HotelMapFragment extends PlatformFragmentV1 {
             // position = i.getParcelableExtra(Const.EXTRA_HOTEL_LOCATION);
             addMarkers();
 
+            googleMap.getUiSettings().setZoomControlsEnabled(false);
+            googleMap.setOnMapClickListener(new OnMapClickListener() {
+
+                @Override
+                public void onMapClick(LatLng arg0) {
+
+                    View view = mapFragment.getView();
+                    LinearLayout.LayoutParams p = new LinearLayout.LayoutParams(LayoutParams.MATCH_PARENT,
+                            LayoutParams.MATCH_PARENT);
+                    view.setLayoutParams(p);
+                    view.requestLayout();
+
+                    // LayoutParams params = new LayoutParams(LayoutParams.MATCH_PARENT, LayoutParams.MATCH_PARENT);
+                    // mapFragment.getFragmentManager().;
+
+                }
+            });
         }
 
         return mainView;
@@ -50,16 +71,13 @@ public class HotelMapFragment extends PlatformFragmentV1 {
 
     private void setUpMap() {
         if (googleMap == null) {
-            MapFragment mapFragment = ((MapFragment) getFragmentManager().findFragmentById(R.id.map));
+            mapFragment = ((MapFragment) getFragmentManager().findFragmentById(R.id.map));
             ViewGroup.LayoutParams params = mapFragment.getView().getLayoutParams();
 
             // // paramsHeight = 96;
             // // params.height = paramsHeight;
             // // mapFragment.getView().setLayoutParams(params);
             googleMap = mapFragment.getMap();
-            if (params.height == 96) {
-                googleMap.getUiSettings().setZoomControlsEnabled(false);
-            }
 
         }
     }
@@ -81,6 +99,16 @@ public class HotelMapFragment extends PlatformFragmentV1 {
             addMarkers();
         }
     }
+
+    // private void resizeFragment(Fragment f, int newWidth, int newHeight) {
+    // if (f != null) {
+    // View view = f.getView();
+    // RelativeLayout.LayoutParams p = new RelativeLayout.LayoutParams(newWidth, newHeight);
+    // view.setLayoutParams(p);
+    // view.requestLayout();
+    //
+    // }
+    // }
 
     /****
      * The mapfragment's id must be removed from the FragmentManager or else if the same it is passed on the next time then app

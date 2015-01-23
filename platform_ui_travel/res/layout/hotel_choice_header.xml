@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical" >
+
+    <ImageView
+        android:id="@+id/travelCityscape"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/size_default_height"
+        android:scaleType="centerCrop"
+        android:src="@drawable/cityscape_placeholder" />
+
+    <View
+        android:id="@+id/viewSpacer"
+        android:layout_width="match_parent"
+        android:layout_height="0dp" />
+
+    <include
+        android:id="@+id/hotel_row"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        layout="@layout/hotel_search_result_row" />
+
+</LinearLayout>

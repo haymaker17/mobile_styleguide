@@ -4,7 +4,6 @@ import java.util.ArrayList;
 import java.util.List;
 
 import android.app.Activity;
-import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -19,7 +18,6 @@ import com.concur.mobile.platform.travel.search.hotel.HotelRate;
 import com.concur.mobile.platform.ui.common.fragment.PlatformFragmentV1;
 import com.concur.mobile.platform.ui.common.view.ListItemAdapter;
 import com.concur.mobile.platform.ui.travel.R;
-import com.concur.mobile.platform.ui.travel.hotel.activity.HotelBookingActivity;
 import com.concur.mobile.platform.ui.travel.hotel.fragment.HotelChoiceDetailsFragment.HotelChoiceDetailsFragmentListener;
 import com.concur.mobile.platform.ui.travel.util.Const;
 
@@ -76,14 +74,6 @@ public class HotelRoomDetailFragment extends PlatformFragmentV1 {
             tv.setVisibility(View.VISIBLE);
         }
         return mainView;
-    }
-
-    private void roomItemClicked(HotelRoomListItem roomListItem) {
-        Intent intent = new Intent(getActivity(), HotelBookingActivity.class);
-        intent.putExtra("roomSelected", roomListItem.getHotelRoom());
-
-        startActivity(intent);
-
     }
 
     @Override

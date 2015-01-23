@@ -486,7 +486,7 @@ public class HotelSearchAndResultActivity extends Activity implements OnMenuItem
                 // background.
                 if (hotelSelected.rates == null || hotelSelected.rates.size() == 0) {
                     // no rooms
-                    Toast.makeText(this, "No Rooms avialable", Toast.LENGTH_LONG).show();
+                    Toast.makeText(this, "No Rooms Avilable", Toast.LENGTH_LONG).show();
                 } else {
                     Intent i = new Intent(this, HotelChoiceDetailsActivity.class);
                     Bundle bundle = new Bundle();

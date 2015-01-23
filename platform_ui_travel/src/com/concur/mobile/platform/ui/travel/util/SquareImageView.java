@@ -1,11 +1,11 @@
-package com.concur.mobile.platform.ui.travel.hotel.fragment;
+package com.concur.mobile.platform.ui.travel.util;
 
 import android.content.Context;
 import android.util.AttributeSet;
 import android.widget.ImageView;
 
 /**
- * class to stretch all images to same size
+ * view util to stretch all images to same size
  * 
  * @author tejoa
  * 
@@ -27,11 +27,7 @@ public class SquareImageView extends ImageView {
     @Override
     protected void onMeasure(int widthMeasureSpec, int heightMeasureSpec) {
         super.onMeasure(widthMeasureSpec, heightMeasureSpec);
-        if (heightMeasureSpec == 96) {
-            setMeasuredDimension(getMeasuredWidth(), heightMeasureSpec);
-        } else {
-            setMeasuredDimension(getMeasuredWidth(), (int) (getMeasuredWidth() * 0.6));
-        }// Snap to width
+        setMeasuredDimension(getMeasuredWidth(), (int) (getMeasuredWidth() * 0.6));
     }
 
     // public void previewPhoto(View view) {

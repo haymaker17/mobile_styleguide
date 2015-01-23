@@ -27,6 +27,7 @@ import com.concur.mobile.platform.ui.travel.hotel.fragment.HotelSearchResultList
 import com.concur.mobile.platform.ui.travel.hotel.fragment.ImageListItem;
 import com.concur.mobile.platform.ui.travel.hotel.fragment.ShowImagesFragment;
 import com.concur.mobile.platform.ui.travel.util.Const;
+import com.concur.mobile.platform.ui.travel.util.ParallaxScollView;
 import com.google.android.gms.common.ConnectionResult;
 import com.google.android.gms.common.GooglePlayServicesUtil;
 import com.google.android.gms.maps.model.LatLng;
@@ -51,6 +52,8 @@ public class HotelChoiceDetailsActivity extends Activity implements HotelChoiceD
     private int mCurrentTab;
     private HotelSearchResultListItem hotelListItem;
 
+    // private ParallaxScollListView mListView;
+    // private ImageView mImageView;
     // private HotelSearchResultListItem hotel;
 
     @Override
@@ -58,6 +61,15 @@ public class HotelChoiceDetailsActivity extends Activity implements HotelChoiceD
         MenuInflater inflater = getMenuInflater();
         inflater.inflate(R.menu.option_maps, menu);
         return true;
+    }
+
+    @Override
+    public void onWindowFocusChanged(boolean hasFocus) {
+        super.onWindowFocusChanged(hasFocus);
+
+        if (hasFocus) {
+            hotelDetailsFrag.mListView.setViewsBounds(ParallaxScollView.ZOOM_X2);
+        }
     }
 
     @Override
@@ -79,19 +91,36 @@ public class HotelChoiceDetailsActivity extends Activity implements HotelChoiceD
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.hotel_search_and_result);
+        setContentView(R.layout.hotel_choice_item);
+        Intent i = this.getIntent();
+        final Bundle bundle = i.getExtras();
+        // hotel = new HotelSearchResultListItem();
+        hotelListItem = (HotelSearchResultListItem) bundle.getSerializable(Const.EXTRA_HOTELS_DETAILS);
 
         hotelDetailsFrag = (HotelChoiceDetailsFragment) getFragmentManager().findFragmentByTag(FRAGMENT_HOTEL_DETAILS);
         if (hotelDetailsFrag == null) {
             hotelDetailsFrag = new HotelChoiceDetailsFragment();
             FragmentTransaction ft = getFragmentManager().beginTransaction();
-            ft.add(R.id.container, hotelDetailsFrag, FRAGMENT_HOTEL_DETAILS);
+            ft.add(R.id.tabcontainer, hotelDetailsFrag, FRAGMENT_HOTEL_DETAILS);
             ft.commit();
         }
-        Intent i = this.getIntent();
-        final Bundle bundle = i.getExtras();
-        // hotel = new HotelSearchResultListItem();
-        hotelListItem = (HotelSearchResultListItem) bundle.getSerializable(Const.EXTRA_HOTELS_DETAILS);
+
+        // mListView = (ParallaxScollListView) findViewById(R.id.layout_listview);
+        // View header = LayoutInflater.from(this).inflate(R.layout.hotel_choice_header, null);
+        // mImageView = (ImageView) header.findViewById(R.id.travelCityscape);
+        //
+        // View hotelView = header.findViewById(R.id.hotel_row);
+        // hotelListItem.getHotel().lowestRate = null;
+        //
+        // ((HotelSearchResultListItem) hotelListItem).buildView(this, hotelView, null);
+        // showHideHomeImage();
+        //
+        // mListView.setParallaxImageView(mImageView);
+        // mListView.addHeaderView(header);
+        //
+        // ArrayAdapter<String> adapter = new ArrayAdapter<String>(this, android.R.layout.simple_expandable_list_item_1,
+        // new String[] {});
+        // mListView.setAdapter(adapter);
 
     }
 

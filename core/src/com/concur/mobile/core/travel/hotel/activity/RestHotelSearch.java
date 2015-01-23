@@ -29,6 +29,7 @@ import android.widget.Toast;
 
 import com.concur.core.R;
 import com.concur.mobile.core.ConcurCore;
+import com.concur.mobile.core.data.UserConfig;
 import com.concur.mobile.core.travel.activity.LocationSearchV1;
 import com.concur.mobile.core.travel.data.CompanyLocation;
 import com.concur.mobile.core.travel.data.LocationChoice;
@@ -831,7 +832,8 @@ public class RestHotelSearch extends Activity {
         // intent.putExtra(Const.EXTRA_TRAVEL_HOTEL_SEARCH_DISTANCE_AMOUNT, currentDistanceAmount.name);
         // intent.putExtra(Const.EXTRA_TRAVEL_HOTEL_SEARCH_DISTANCE_ID, distanceValue);
         // intent.putExtra(Const.EXTRA_TRAVEL_HOTEL_SEARCH_DISTANCE_UNIT_NAME, currentDistanceUnit.name);
-        String distanceUnit = core.getUserConfig().distanceUnitPreference;
+        UserConfig userConfig = core.getUserConfig();
+        String distanceUnit = userConfig != null ? userConfig.distanceUnitPreference : null;
         if (distanceUnit == null) {
             distanceUnit = "M";
         } else {
