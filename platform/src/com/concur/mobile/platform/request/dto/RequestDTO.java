@@ -1,7 +1,6 @@
 package com.concur.mobile.platform.request.dto;
 
 import com.google.gson.annotations.SerializedName;
-
 import java.util.Date;
 import java.util.List;
 
@@ -9,6 +8,9 @@ import java.util.List;
  * @author olivierb
  */
 public class RequestDTO {
+	
+	public static String SUBMIT = "submit";
+    public static String SAVE = "save";
 
     public static String SUBMIT = "submit";
 

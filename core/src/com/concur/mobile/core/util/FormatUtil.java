@@ -65,6 +65,8 @@ public class FormatUtil {
     public static final DateFormat SHORT_WEEKDAY_SHORT_MONTH_DAY_FULL_YEAR_12HOUR_TIMEZONE_DISPLAY_LOCAL;
     public static final DateFormat SHORT_WEEKDAY_SHORT_MONTH_DAY_FULL_YEAR_24HOUR_TIMEZONE_DISPLAY_LOCAL;
     public static final DateFormat SHORT_WEEKDAY_SHORT_MONTH_DAY_FULL_YEAR_V1_DISPLAY;
+    public static final DateFormat LONG_YEAR_MONTH_DAY_LOCAL;
+    public static final DateFormat SHORT_DAY_OF_WEEK_TIME_DISPLAY_LOCAL;
 
     static {
         // We don't do date conversion, we just display. Force everything to UTC so we don't
@@ -127,6 +129,8 @@ public class FormatUtil {
         SHORT_WEEKDAY_SHORT_MONTH_DAY_FULL_YEAR_24HOUR_TIMEZONE_DISPLAY_LOCAL = new SimpleDateFormat(
                 "EEE, MMM dd, yyyy HH:mm z");
         SHORT_WEEKDAY_SHORT_MONTH_DAY_FULL_YEAR_V1_DISPLAY = new SimpleDateFormat("MM/dd/yyyy");
+        LONG_YEAR_MONTH_DAY_LOCAL = new SimpleDateFormat("yyyy-MM-dd");
+        SHORT_DAY_OF_WEEK_TIME_DISPLAY_LOCAL = new SimpleDateFormat("EEE h:mma");
     }
 
     private static final int MINUTES_IN_HOUR = 60;

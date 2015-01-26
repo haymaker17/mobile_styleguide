@@ -129,6 +129,11 @@ public class UserConfig extends BaseParser {
     public TravelPointsConfig travelPointsConfig;
 
     /**
+     * Contains the custom travel text
+     */
+    public CustomTravelText customTravelText;
+
+    /**
      * Contains the parser that parses a list of <code>Currency</code> objects.
      */
     protected ListParser<Currency> currencyListParser;
@@ -182,6 +187,11 @@ public class UserConfig extends BaseParser {
      * Contains the parser parsing one or none of <code>TravelPointsConfig</code> object.
      */
     protected ItemParser<TravelPointsConfig> travelPointsConfigParser;
+
+    /**
+     * Contains the parser parsing one or none of <code>CustomTravelText</code> object.
+     */
+    protected ItemParser<CustomTravelText> customTravelTextParser;
 
     /**
      * Contains the start tag used to register this parser.
@@ -248,6 +258,9 @@ public class UserConfig extends BaseParser {
 
         travelPointsConfigParser = new ItemParser<TravelPointsConfig>("TravelPointsConfig", TravelPointsConfig.class);
         parser.registerParser(travelPointsConfigParser, "TravelPointsConfig");
+
+        customTravelTextParser = new ItemParser<CustomTravelText>("CustomTravelText", CustomTravelText.class);
+        parser.registerParser(customTravelTextParser, "CustomTravelText");
     }
 
     @Override
@@ -309,6 +322,7 @@ public class UserConfig extends BaseParser {
                 creditCards = creditCardListParser.getList();
                 affinityPrograms = affinityListParser.getList();
                 travelPointsConfig = travelPointsConfigParser.getItem();
+                customTravelText = customTravelTextParser.getItem();
             }
         }
     }

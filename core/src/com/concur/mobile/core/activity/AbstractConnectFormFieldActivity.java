@@ -44,6 +44,8 @@ public abstract class AbstractConnectFormFieldActivity extends BaseActivity {
 
     protected DateUtil.DatePattern inputDatePattern;
 
+    protected boolean isEditable = false;
+
     protected abstract String getValueFromFieldName(String fieldName);
 
     protected abstract void setValueFromFieldName(String fieldName, String value);
@@ -120,7 +122,7 @@ public abstract class AbstractConnectFormFieldActivity extends BaseActivity {
                     switch (displayType) {
                     case TEXTFIELD:
 
-                        if (accesType == IFormField.AccessType.RO) {
+                        if (!this.isEditable || accesType == IFormField.AccessType.RO) {
                             component = new TextView(this);
                         } else {
                             component = new EditText(this);
@@ -138,7 +140,7 @@ public abstract class AbstractConnectFormFieldActivity extends BaseActivity {
 
                     case TEXTAREA:
 
-                        if (accesType == IFormField.AccessType.RO) {
+                        if (!this.isEditable || accesType == IFormField.AccessType.RO) {
                             component = new TextView(this);
                         } else {
                             component = new EditText(this);
@@ -163,7 +165,7 @@ public abstract class AbstractConnectFormFieldActivity extends BaseActivity {
                         component.requestFocus();
 
                         //ADD LISTENER for setting date
-                        if (!(accesType == IFormField.AccessType.RO)) {
+                        if (!(!this.isEditable || accesType == IFormField.AccessType.RO)) {
                             component.setOnClickListener((View.OnClickListener) this);
                             Calendar newCalendar = Calendar.getInstance();
                             final TextView finalComp = component;
@@ -218,7 +220,7 @@ public abstract class AbstractConnectFormFieldActivity extends BaseActivity {
                         applySpecifics(component, llp, ff);
 
                         if (llp != null) {
-                            if (accesType == IFormField.AccessType.RO) {
+                            if (!this.isEditable || accesType == IFormField.AccessType.RO) {
                                 llp.setMargins(30, 0, 0, 0); // llp.setMargins(left, top, right, bottom);
                             }
                             component.setLayoutParams(llp);

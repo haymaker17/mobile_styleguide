@@ -23,7 +23,7 @@ import com.concur.mobile.core.view.ListItemAdapter;
 public class MessageCenter extends AbstractIpmMsgProgress {
 
     public static final String CLS_TAG = MessageCenter.class.getSimpleName();
-    public static final String MESSAGE_CENTER = "MobileMessageCentre";
+    public static final String MESSAGE_CENTER = "mobileMessageCentre";
 
     private BaseAsyncResultReceiver ipmMsgResultsReceiver;
     private AsyncReplyListener ipmResultsListener;
@@ -34,9 +34,9 @@ public class MessageCenter extends AbstractIpmMsgProgress {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.message_center);
         initScreenHeader();
-        initScreenSubHeader();
         // IPM ads request
         createIPMrequest();
+        initScreenSubHeader();
 
         // Flurry Notification
         boolean badgeShown = Preferences.shouldShowNotificationBadge();
@@ -77,6 +77,7 @@ public class MessageCenter extends AbstractIpmMsgProgress {
 
         ListItemAdapter<MessageCenterListItem> adapter = new ListItemAdapter<MessageCenterListItem>(this, msgList, 1);
 
+        // list view after dfp adview
         ListView listView = (ListView) findViewById(R.id.msgCenterList);
         listView.setAdapter(adapter);
 

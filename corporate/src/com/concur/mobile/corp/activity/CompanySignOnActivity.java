@@ -351,14 +351,14 @@ public class CompanySignOnActivity extends BaseActivity {
         if ((keyCode == KeyEvent.KEYCODE_BACK) && webView.canGoBack()) {
             webView.goBack();
             return true;
-        } else if(keyCode == KeyEvent.KEYCODE_BACK) {
+        } else if (keyCode == KeyEvent.KEYCODE_BACK) {
             super.onKeyDown(keyCode, event);
             setResult(RESULT_OK);
             return true;
         }
         return super.onKeyDown(keyCode, event);
     }
-    
+
     @Override
     protected void onPause() {
         super.onPause();
@@ -488,7 +488,7 @@ public class CompanySignOnActivity extends BaseActivity {
         public void onRequestSuccess(Bundle resultData) {
             Log.i(Const.LOG_TAG, CLS_TAG + ".onRequestSuccess: mobile session login successful!");
 
-            UserAndSessionInfoUtil.updateUserAndSessionInfo(CompanySignOnActivity.this, emailLookupBundle);
+            UserAndSessionInfoUtil.updateUserAndSessionInfo(CompanySignOnActivity.this, emailLookupBundle, resultData);
 
             // Track the success
             Login.trackLoginSuccess(Flurry.PARAM_VALUE_LOGIN_USING_SSO);

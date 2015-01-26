@@ -13,6 +13,7 @@ import android.widget.TextView;
 import com.concur.core.R;
 import com.concur.mobile.core.util.FormatUtil;
 import com.concur.mobile.platform.request.dto.RequestEntryDTO;
+import com.concur.mobile.platform.request.dto.RequestSegmentDTO;
 
 public class EntryListAdapter extends AbstractGenericAdapter<RequestEntryDTO> {
 
@@ -42,6 +43,8 @@ public class EntryListAdapter extends AbstractGenericAdapter<RequestEntryDTO> {
 
         final TextView type = (TextView) row.findViewById(R.id.segmentTypeRow);
         final TextView foreignAmount = (TextView) row.findViewById(R.id.segmentRowAmount);
+        final TextView segmentTrip = (TextView) row.findViewById(R.id.segmentTrip);
+        final TextView segmentStartDate = (TextView) row.findViewById(R.id.segmentStartDate);
 
         final String formattedAmount = FormatUtil.formatAmount(entry.getForeignAmount() != null ? entry.getForeignAmount() : 0, getContext().getResources()
                 .getConfiguration().locale, entry.getForeignCurrencyCode() != null ? entry.getForeignCurrencyCode() : "", true, true);
@@ -51,6 +54,11 @@ public class EntryListAdapter extends AbstractGenericAdapter<RequestEntryDTO> {
 
         type.setTypeface(Typeface.DEFAULT_BOLD);
         foreignAmount.setTypeface(Typeface.DEFAULT_BOLD);
+
+        RequestSegmentDTO segment = entry.getListSegment().get(0);
+        String departureDate_ = segment.getDepartureDate() == null? "" : segment.getDepartureDate().toString();
+        segmentStartDate.setText(departureDate_);
+        segmentTrip.setText(segment.getFromLocationName()+" to "+segment.getToLocationName());
 
         return row;
     }

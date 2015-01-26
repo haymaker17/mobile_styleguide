@@ -68,6 +68,8 @@ public class RequestHeaderActivity extends AbstractConnectFormFieldActivity impl
 
         final Bundle bundle = getIntent().getExtras();
         final String requestId = bundle.getString(RequestListActivity.REQUEST_ID);
+        
+        this.isEditable = bundle.getString(RequestDigestActivity.REQUEST_IS_EDITABLE).equals("true")? true : false;
 
         locale = this.getResources().getConfiguration().locale != null ?
                 this.getResources().getConfiguration().locale :

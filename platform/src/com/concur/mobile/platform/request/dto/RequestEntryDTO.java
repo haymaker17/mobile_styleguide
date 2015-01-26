@@ -9,7 +9,6 @@ public class RequestEntryDTO {
     private String foreignCurrencyCode;
     private Double foreignAmount;
     private String approvalStatusCode;
-    
 
     public List<RequestSegmentDTO> getListSegment() {
         return listSegment;

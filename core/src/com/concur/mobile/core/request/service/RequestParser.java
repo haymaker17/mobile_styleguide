@@ -1,15 +1,22 @@
 package com.concur.mobile.core.request.service;
 
 import android.util.Log;
+
 import com.concur.mobile.core.request.util.RequestParsingHelper;
 import com.concur.mobile.platform.common.formfield.ConnectForm;
 import com.concur.mobile.platform.common.formfield.IFormField;
+import com.concur.mobile.platform.request.dto.RequestCommentDTO;
 import com.concur.mobile.platform.request.dto.RequestDTO;
 import com.concur.mobile.platform.request.dto.RequestEntryDTO;
 import com.concur.mobile.platform.request.dto.RequestSegmentDTO;
 import com.concur.mobile.platform.request.groupConfiguration.RequestGroupConfiguration;
 import com.concur.mobile.platform.request.util.GsonListContainer;
-import com.concur.mobile.platform.util.*;
+import com.concur.mobile.platform.util.BooleanDeserializer;
+import com.concur.mobile.platform.util.DateDeserializer;
+import com.concur.mobile.platform.util.DoubleDeserializer;
+import com.concur.mobile.platform.util.EnumDeserializer;
+import com.concur.mobile.platform.util.IntegerDeserializer;
+import com.concur.mobile.platform.util.Parse;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import com.google.gson.reflect.TypeToken;
@@ -23,7 +30,6 @@ import java.util.Map;
 
 /**
  * @author olivierb
- *         TODO : this should probably be changed to a static helper
  */
 public class RequestParser {
 
@@ -63,9 +69,17 @@ public class RequestParser {
     private static final String RES_DETAILS_ACTION = "Action";
     private static final String RES_DETAILS_URL = "Url";
 
+    private static final String RES_DETAILS_COMMENTS = "Comments";
+    private static final String RES_DETAILS_COMMENT_VALUE = "Value";
+    private static final String RES_DETAILS_COMMENT_FIRSTNAME = "AuthorFirstName";
+    private static final String RES_DETAILS_COMMENT_LASTNAME = "AuthorLastName";
+    private static final String RES_DETAILS_COMMENT_DATE = "CommentDateTime"; //ex : "2015-01-12T09:57:49"
+    private static final String RES_DETAILS_COMMENT_ISLATEST = "IsLatest";
+
     // ENTRY
     private static final String RES_ENTRY_CURRENCY_CODE_KEY = "ForeignCurrencyCode";
     private static final String RES_ENTRY_FOREIGN_AMOUNT_KEY = "ForeignAmount";
+
 
     // SEGMENT
     private static final String RES_SEGMENT_TYPE_KEY = "SegmentType";
@@ -139,7 +153,8 @@ public class RequestParser {
         return requestList.getList();
     }
 
-    @SuppressWarnings("rawtypes") @Deprecated
+    @SuppressWarnings("rawtypes")
+    @Deprecated
     public void parseTRDetailsResponse(RequestDTO tr, String jsonRes) {
         final SimpleDateFormat sdf = new SimpleDateFormat("yyyy-mm-dd");
 
@@ -165,6 +180,22 @@ public class RequestParser {
         for (int i = 0; i < links.size(); i++) {
             final Map jsonEntry = (Map) links.get(i);
             tr.getListPermittedActions().add(RequestParsingHelper.stringSafeParse(jsonEntry, RES_DETAILS_ACTION));
+        }
+
+        //COMMENTS
+        final List commentsList = (List) requestDetail.get(RES_DETAILS_COMMENTS);
+        for (int j = 0; j < commentsList.size(); j++) {
+            final Map jsonEntry = (Map) commentsList.get(j);
+            final RequestCommentDTO Comment = new RequestCommentDTO();
+
+            Comment.setValue(RequestParsingHelper.stringSafeParse(jsonEntry, RES_DETAILS_COMMENT_VALUE));
+            Comment.setAuthorFirstName(RequestParsingHelper.stringSafeParse(jsonEntry, RES_DETAILS_COMMENT_FIRSTNAME));
+            Comment.setAuthorLastName(RequestParsingHelper.stringSafeParse(jsonEntry, RES_DETAILS_COMMENT_LASTNAME));
+            Comment.setIsLatest(RequestParsingHelper.stringSafeParse(jsonEntry, RES_DETAILS_COMMENT_ISLATEST).equals("false") ? false : true);
+
+            if (Comment.getIsLatest()) {
+                tr.setLastComment(Comment.getValue());
+            }
         }
 
         // SEGMENTS

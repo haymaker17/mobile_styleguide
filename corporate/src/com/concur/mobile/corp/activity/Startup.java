@@ -487,7 +487,7 @@ public class Startup extends BaseActivity {
                         startLoginScreen();
                     } else {
                         // Save the login information.
-                        UserAndSessionInfoUtil.updateUserAndSessionInfo(Startup.this, emailLookupBundle);
+                        UserAndSessionInfoUtil.updateUserAndSessionInfo(Startup.this, emailLookupBundle, resultData);
 
                         // Statistics Notification
                         Map<String, String> params = new HashMap<String, String>();

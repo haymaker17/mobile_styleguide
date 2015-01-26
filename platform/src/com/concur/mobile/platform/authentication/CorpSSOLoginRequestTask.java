@@ -105,8 +105,8 @@ public class CorpSSOLoginRequestTask extends PlatformAsyncRequestTask {
         String content = null;
         StringBuilder strBldr = new StringBuilder();
         strBldr.append("<WebSession>");
-        strBldr.append("<SessionId>").append(Format.escapeForXML(webSessionId)).append("</SessionId>");
         strBldr.append("<Locale>").append(Format.escapeForXML(locale.toString())).append("</Locale>");
+        strBldr.append("<SessionId>").append(Format.escapeForXML(webSessionId)).append("</SessionId>");
         strBldr.append("</WebSession>");
         content = strBldr.toString();
 
@@ -177,6 +177,10 @@ public class CorpSSOLoginRequestTask extends PlatformAsyncRequestTask {
                 } else {
                     PlatformProperties.setSessionId(null);
                 }
+                // Add the outcome of remote wipe to the response.
+                Boolean disableAutologin = (loginResult.disableAutoLogin != null) ? loginResult.disableAutoLogin
+                        : Boolean.FALSE;
+                resultData.putBoolean(LoginResponseKeys.DISABLE_AUTO_LOGIN, disableAutologin);
             }
         }
         return result;

@@ -1,7 +1,9 @@
 package com.concur.mobile.core.travel.air.activity;
 
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.TimeZone;
 
 import android.app.AlertDialog;
 import android.app.Dialog;
@@ -38,7 +40,6 @@ import com.concur.mobile.core.travel.data.RefundableInfo;
 import com.concur.mobile.core.util.BookingDateUtil;
 import com.concur.mobile.core.util.Const;
 import com.concur.mobile.core.util.Flurry;
-import com.concur.mobile.core.util.FormatUtil;
 import com.concur.mobile.core.util.ViewUtil;
 import com.concur.mobile.core.view.SearchListFormFieldView;
 import com.concur.mobile.core.view.SpinnerItem;
@@ -613,12 +614,14 @@ public class AirSearch extends TravelBaseActivity implements View.OnClickListene
         // MOB-21681 - set user's preferred time zone
         // timeFormat.setTimeZone(TimeZone.getDefault());
 
-        setFieldValue(R.id.air_search_depart_date,
-                Format.safeFormatCalendar(FormatUtil.SHORT_WEEKDAY_MONTH_DAY_FULL_YEAR_DISPLAY, departDateTime));
+        // MOB-22200
+        java.text.DateFormat df = new SimpleDateFormat("EEE, MMM d, yyyy");// FormatUtil.SHORT_WEEKDAY_MONTH_DAY_FULL_YEAR_DISPLAY;
+        df.setTimeZone(TimeZone.getDefault());
+
+        setFieldValue(R.id.air_search_depart_date, Format.safeFormatCalendar(df, departDateTime));
         setFieldValue(R.id.air_search_depart_time, Format.safeFormatCalendar(timeFormat, departDateTime));
 
-        setFieldValue(R.id.air_search_return_date,
-                Format.safeFormatCalendar(FormatUtil.SHORT_WEEKDAY_MONTH_DAY_FULL_YEAR_DISPLAY, returnDateTime));
+        setFieldValue(R.id.air_search_return_date, Format.safeFormatCalendar(df, returnDateTime));
         setFieldValue(R.id.air_search_return_time, Format.safeFormatCalendar(timeFormat, returnDateTime));
     }
 
@@ -709,8 +712,8 @@ public class AirSearch extends TravelBaseActivity implements View.OnClickListene
                 }
 
                 if (dateUtil.isDateInValidForDefaultTimeZone(departDateTime, null, true)) {
-                    departDateTime = dateUtil.setDepartToCurrent(departDateTime, returnDateTime,
-                            dateUtil.getCurrentTime());
+                    departDateTime = dateUtil
+                            .setDepartToCurrent(departDateTime, returnDateTime, Calendar.getInstance());
                     // Adjust the return time if needed
                     if (departDateTime.after(returnDateTime)) {
                         returnDateTime = dateUtil.setReturnToCurrent(returnDateTime, departDateTime);
