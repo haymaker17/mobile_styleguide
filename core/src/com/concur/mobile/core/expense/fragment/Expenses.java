@@ -785,8 +785,10 @@ public class Expenses extends BaseFragment implements INetworkActivityListener {
                 }
             }
         }
+        
+        boolean hasOCRReceipts = ReceiptListUtil.getOcrReceiptList(app, activity.getUserId(), false).size() > 0;
 
-        if (filterHasItems && cacheList != null && cacheList.size() > 0) {
+        if ((filterHasItems && cacheList != null && cacheList.size() > 0) || hasOCRReceipts) {
             // Ensure the view containing the expense list is displayed.
             if (viewState != ViewState.LOCAL_DATA) {
                 viewState = ViewState.LOCAL_DATA;
