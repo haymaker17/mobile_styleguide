@@ -34,12 +34,9 @@ import com.concur.mobile.platform.common.formfield.ConnectForm;
 import com.concur.mobile.platform.common.formfield.ConnectFormFieldsCache;
 import com.concur.mobile.platform.request.dto.RequestDTO;
 import com.concur.mobile.platform.request.dto.RequestEntryDTO;
-import com.concur.mobile.platform.request.dto.RequestSegmentDTO;
 import com.concur.mobile.platform.ui.common.dialog.NoConnectivityDialogFragment;
 
-import java.util.HashMap;
-import java.util.Locale;
-import java.util.Map;
+import java.util.*;
 
 public class RequestSummaryActivity extends BaseActivity {
 
@@ -224,13 +221,22 @@ public class RequestSummaryActivity extends BaseActivity {
             requestParser.parseTRDetailResponse(tr, resultData.getString(BaseAsyncRequestTask.HTTP_RESPONSE));
             updateTRDetailsUI(tr);
 
+            // --- using an hashset to ensure uniqueness
+            final Set<String> segmentFormIds = new HashSet<String>();
             if (tr.getEntriesList() != null) {
+                /* All segments of an entry have the same form type so we just have to get the first one
+                 * (cf Jad 27/01/2015 - 17h16 GMT+1)
+                 */
                 for (RequestEntryDTO re : tr.getEntriesList()) {
-                    for (RequestSegmentDTO segment : re.getListSegment()) {
-                        formFieldsCache.setFormRefreshStatus(segment.getSegmentFormId(), true);
-                        new RequestFormFieldsTask(RequestSummaryActivity.this, 1, asyncReceiverFormFields,
-                                segment.getSegmentFormId(), false).execute();
+                    if (re.getListSegment() != null && re.getListSegment().size() > 0) {
+                        segmentFormIds.add(re.getListSegment().iterator().next().getSegmentFormId());
                     }
+                }
+                // --- iterating over unique ids to retrieve formfields
+                for (String segmentFormId : segmentFormIds) {
+                    formFieldsCache.setFormRefreshStatus(segmentFormId, true);
+                    new RequestFormFieldsTask(RequestSummaryActivity.this, 1, asyncReceiverFormFields, segmentFormId,
+                            false).execute();
                 }
             }
 
@@ -269,9 +275,7 @@ public class RequestSummaryActivity extends BaseActivity {
         @Override
         public void onRequestSuccess(Bundle resultData) {
             Context context = getApplicationContext();
-            final CharSequence text = "REQUEST SUBMITTED";
-            int duration = Toast.LENGTH_LONG;
-            final Toast toast = Toast.makeText(context, text, duration);
+            final Toast toast = Toast.makeText(context, "REQUEST SUBMITTED", Toast.LENGTH_LONG);
             toast.show();
 
             // metrics
@@ -292,8 +296,7 @@ public class RequestSummaryActivity extends BaseActivity {
         @Override
         public void onRequestFail(Bundle resultData) {
             final CharSequence text = resultData.getString(BaseAsyncRequestTask.HTTP_STATUS_MESSAGE);
-            int duration = Toast.LENGTH_LONG;
-            final Toast toast = Toast.makeText(getApplicationContext(), text, duration);
+            final Toast toast = Toast.makeText(getApplicationContext(), text, Toast.LENGTH_LONG);
             toast.show();
 
             Log.d(Const.LOG_TAG, CLS_TAG + " calling decrement from onrequestfails");
@@ -328,9 +331,13 @@ public class RequestSummaryActivity extends BaseActivity {
             // --- add form to cache if there is any
             {
                 formFieldsCache.addForm(formId, rForm);
+                handleAwaitingRefresh(formId, true);
+            } else {
+                handleAwaitingRefresh(formId, false);
             }
             // TODO see if there can be a nextPage, and if it's the case handle it
-            handleAwaitingRefresh(formId, true);
+            // => we should never have pagination, as we're supposed to maximise LIMIT to avoid that case
+            // (for now at least)
         }
 
         @Override

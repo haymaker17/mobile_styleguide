@@ -107,8 +107,6 @@ public class RequestHeaderActivity extends AbstractConnectFormFieldActivity impl
             tr.setRequestDate(new Date());
         }
 
-        inputDatePattern = DateUtil.DatePattern.DB_INPUT;
-
         configureUI();
     }
 
@@ -120,6 +118,11 @@ public class RequestHeaderActivity extends AbstractConnectFormFieldActivity impl
     @Override
     protected Locale getLocale() {
         return locale;
+    }
+
+    @Override
+    protected DateUtil.DatePattern getPattern() {
+        return DateUtil.DatePattern.DB_INPUT;
     }
 
     private void configureUI() {
@@ -184,7 +187,7 @@ public class RequestHeaderActivity extends AbstractConnectFormFieldActivity impl
     }
 
     @Override
-    public String getObjectValueByFieldName(String fieldName) {
+    public String getModelValueByFieldName(String fieldName) {
 
         if (fieldName.equals(FIELD_NAME)) {
             if (tr.getName() == null) {
@@ -229,7 +232,7 @@ public class RequestHeaderActivity extends AbstractConnectFormFieldActivity impl
     }
 
     @Override
-    protected void setObjectValueByFieldName(String fieldName, String value) {
+    protected void setModelValueByFieldName(String fieldName, String value) {
         if (fieldName.equals(FIELD_NAME)) {
             tr.setName(value);
         } else if (fieldName.equals(FIELD_START_DATE)) {
@@ -269,9 +272,7 @@ public class RequestHeaderActivity extends AbstractConnectFormFieldActivity impl
         @Override
         public void onRequestSuccess(Bundle resultData) {
             final boolean isCreation = tr.getId() == null;
-            final CharSequence text = "REQUEST SAVED";
-            int duration = Toast.LENGTH_LONG;
-            final Toast toast = Toast.makeText(getApplicationContext(), text, duration);
+            final Toast toast = Toast.makeText(getApplicationContext(), "REQUEST SAVED", Toast.LENGTH_LONG);
             toast.show();
 
             // metrics

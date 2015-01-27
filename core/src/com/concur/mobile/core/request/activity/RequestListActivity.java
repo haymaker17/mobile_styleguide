@@ -387,6 +387,8 @@ public class RequestListActivity extends BaseActivity {
             // converts the result string to a list of TravelRequestDTO
             final List<RequestDTO> listRequests = requestParser
                     .parseTRListResponse(resultData.getString(BaseAsyncRequestTask.HTTP_RESPONSE));
+
+            // --- using an hashset to ensure uniqueness
             final Set<String> headerFormIds = new HashSet<String>();
             if (requestListCache.hasCachedValues()) {
                 requestListCache.clear();

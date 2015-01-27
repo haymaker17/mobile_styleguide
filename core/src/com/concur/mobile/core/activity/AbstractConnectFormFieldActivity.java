@@ -40,26 +40,55 @@ public abstract class AbstractConnectFormFieldActivity extends BaseActivity {
 
     private List<Integer> dateViews = new ArrayList<Integer>();
     private List<DatePickerDialog> datePickerDialogs = new ArrayList<DatePickerDialog>();
+    /* Arbitrarily set to 100 to avoid any possible conflict.
+     * TODO : migrate to View.generateViewId() calls when we'll move to minSdk=17.
+     * Cf http://stackoverflow.com/a/15442898
+     */
     private int viewID = 100;
 
     private LinearLayout titleLayout = null;
     private LinearLayout fieldLayout = null;
     private String fieldToTitle = null;
 
-    protected DateUtil.DatePattern inputDatePattern;
-
     protected boolean isEditable = false;
 
-    protected abstract String getObjectValueByFieldName(String fieldName);
+    /**
+     * @param fieldName
+     * @return the value contained in the Model object for the given field name as a String
+     */
+    protected abstract String getModelValueByFieldName(String fieldName);
 
-    protected abstract void setObjectValueByFieldName(String fieldName, String value);
+    /**
+     * Set the value into the Model object for the given field name
+     *
+     * @param fieldName
+     * @param value
+     */
+    protected abstract void setModelValueByFieldName(String fieldName, String value);
 
+    /**
+     * @return the ConnectForm object associated to this view. This should be stored in the corresponding Cache.
+     */
     protected abstract ConnectForm getForm();
 
+    /**
+     * @return the locale in use for values processing such as dates
+     */
     protected abstract Locale getLocale();
 
     /**
-     * To execute before a save
+     * @return the pattern in use for date values processing
+     */
+    protected abstract DateUtil.DatePattern getPattern();
+
+    /**
+     * @param fieldName
+     * @return the label to display for the corresponding ConnectFormField's name
+     */
+    protected abstract String getLabelFromFieldName(String fieldName);
+
+    /**
+     * This has to be overriden with a super call to execute your own remote saving.
      */
     protected void save() {
         if (getForm() != null) {
@@ -67,11 +96,15 @@ public abstract class AbstractConnectFormFieldActivity extends BaseActivity {
             Collections.sort(formFields);
 
             for (ConnectFormField ff : formFields) {
-                setObjectValueByFieldName(ff.getName(), getValueByFieldName(ff.getName()));
+                setModelValueByFieldName(ff.getName(), getValueByFieldName(ff.getName()));
             }
         }
     }
 
+    /**
+     * @param fieldName
+     * @return the value currently displayed & contained in the View object
+     */
     private String getValueByFieldName(String fieldName) {
         if (views.containsKey(fieldName)) {
             final TextView tv = (TextView) findViewById(views.get(fieldName));
@@ -82,6 +115,14 @@ public abstract class AbstractConnectFormFieldActivity extends BaseActivity {
         return null;
     }
 
+    /**
+     * Handle fields generation within the given layouts. fieldToTitle define witch field will be displayed
+     * in the titleLayout
+     *
+     * @param titleLayout  layout of the header
+     * @param fieldLayout  layout of the content
+     * @param fieldToTitle the ConnectFormField name to display within the titleLayout
+     */
     protected void setDisplayFields(final LinearLayout titleLayout, final LinearLayout fieldLayout,
             final String fieldToTitle) {
         this.titleLayout = titleLayout;
@@ -159,7 +200,7 @@ public abstract class AbstractConnectFormFieldActivity extends BaseActivity {
                             component = new EditText(this);
                         }
 
-                        component.setText(getObjectValueByFieldName(ff.getName()));
+                        component.setText(getModelValueByFieldName(ff.getName()));
                         component.setMaxLines(1);
                         component.setSingleLine(true);
                         component.setEllipsize(TextUtils.TruncateAt.END); //ellipses
@@ -177,7 +218,7 @@ public abstract class AbstractConnectFormFieldActivity extends BaseActivity {
                             component = new EditText(this);
                         }
 
-                        component.setText(getObjectValueByFieldName(ff.getName()));
+                        component.setText(getModelValueByFieldName(ff.getName()));
                         component.setLines(5);
                         component.setMaxLines(5);
                         component.setTextSize(TypedValue.COMPLEX_UNIT_SP, 15);
@@ -190,7 +231,7 @@ public abstract class AbstractConnectFormFieldActivity extends BaseActivity {
 
                         component = new TextView(this);
 
-                        component.setText(getObjectValueByFieldName(ff.getName()));
+                        component.setText(getModelValueByFieldName(ff.getName()));
                         component.setInputType(InputType.TYPE_NULL);
                         component.setTextSize(TypedValue.COMPLEX_UNIT_SP, 15);
                         component.requestFocus();
@@ -225,7 +266,7 @@ public abstract class AbstractConnectFormFieldActivity extends BaseActivity {
                     case MONEYFIELD:
 
                         component = new TextView(this);
-                        component.setText(getObjectValueByFieldName("CurrencyName") + " " + getObjectValueByFieldName(
+                        component.setText(getModelValueByFieldName("CurrencyName") + " " + getModelValueByFieldName(
                                 ff.getName()));
                         component.setMaxLines(1);
                         component.setSingleLine(true);
@@ -269,18 +310,36 @@ public abstract class AbstractConnectFormFieldActivity extends BaseActivity {
         }
     }
 
+    /**
+     * Called on each formfield during the setDisplayFields() processing so that you can customize any component's
+     * rendering
+     *
+     * @param component component
+     * @param llp       layout params
+     * @param ff        ConnectFormField element
+     */
     protected abstract void applySpecifics(final TextView component, final LinearLayout.LayoutParams llp,
             final ConnectFormField ff);
 
+    /**
+     * Format a date with the locale & pattern defined with overriden corresponding methods
+     *
+     * @param date
+     * @return the date string
+     */
     protected String formatDate(Date date) {
-        return DateUtil.getFormattedDateForLocale(inputDatePattern, getLocale(), date);
+        return DateUtil.getFormattedDateForLocale(getPattern(), getLocale(), date);
     }
 
+    /**
+     * Parse a date with the locale & pattern defined with overriden corresponding methods
+     *
+     * @param dateString
+     * @return the date object
+     */
     protected Date parseDate(String dateString) {
-        return DateUtil.parseFormattedDateForLocale(inputDatePattern, getLocale(), dateString);
+        return DateUtil.parseFormattedDateForLocale(getPattern(), getLocale(), dateString);
     }
-
-    protected abstract String getLabelFromFieldName(String fieldName);
 
     private void addWhiteSpace(ViewGroup mainLayout) {
 
@@ -319,10 +378,20 @@ public abstract class AbstractConnectFormFieldActivity extends BaseActivity {
         return textView;
     }
 
+    /**
+     * TODO by ECO
+     *
+     * @return
+     */
     public List getDateViews() {
         return dateViews;
     }
 
+    /**
+     * TODO by ECO
+     *
+     * @return
+     */
     public List getDatePickerDialogs() {
         return datePickerDialogs;
     }
