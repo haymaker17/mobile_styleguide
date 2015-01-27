@@ -36,26 +36,57 @@ public abstract class AbstractConnectFormFieldActivity extends BaseActivity {
         MONEYFIELD        //totalAmount&currency
     }
 
-    private Map<Integer, String> views = new HashMap<Integer, String>(); // view ID, filed NAME
+    private Map<String, Integer> views = new HashMap<String, Integer>(); // view ID, filed NAME
 
     private List<Integer> dateViews = new ArrayList<Integer>();
     private List<DatePickerDialog> datePickerDialogs = new ArrayList<DatePickerDialog>();
-    private int viewID = 0;
+    private int viewID = 100;
+
+    private LinearLayout titleLayout = null;
+    private LinearLayout fieldLayout = null;
+    private String fieldToTitle = null;
 
     protected DateUtil.DatePattern inputDatePattern;
 
     protected boolean isEditable = false;
 
-    protected abstract String getValueFromFieldName(String fieldName);
+    protected abstract String getObjectValueByFieldName(String fieldName);
 
-    protected abstract void setValueFromFieldName(String fieldName, String value);
+    protected abstract void setObjectValueByFieldName(String fieldName, String value);
 
     protected abstract ConnectForm getForm();
 
     protected abstract Locale getLocale();
 
+    /**
+     * To execute before a save
+     */
+    protected void save() {
+        if (getForm() != null) {
+            final List<ConnectFormField> formFields = getForm().getFormFields();
+            Collections.sort(formFields);
+
+            for (ConnectFormField ff : formFields) {
+                setObjectValueByFieldName(ff.getName(), getValueByFieldName(ff.getName()));
+            }
+        }
+    }
+
+    private String getValueByFieldName(String fieldName) {
+        if (views.containsKey(fieldName)) {
+            final TextView tv = (TextView) findViewById(views.get(fieldName));
+            if (tv != null && tv.getText() != null) {
+                return tv.getText().toString();
+            }
+        }
+        return null;
+    }
+
     protected void setDisplayFields(final LinearLayout titleLayout, final LinearLayout fieldLayout,
             final String fieldToTitle) {
+        this.titleLayout = titleLayout;
+        this.fieldLayout = fieldLayout;
+        this.fieldToTitle = fieldToTitle;
         if (getForm() != null) {
             final List<ConnectFormField> formfields = getForm().getFormFields();
             Collections.sort(formfields);
@@ -128,7 +159,7 @@ public abstract class AbstractConnectFormFieldActivity extends BaseActivity {
                             component = new EditText(this);
                         }
 
-                        component.setText(getValueFromFieldName(ff.getName()));
+                        component.setText(getObjectValueByFieldName(ff.getName()));
                         component.setMaxLines(1);
                         component.setSingleLine(true);
                         component.setEllipsize(TextUtils.TruncateAt.END); //ellipses
@@ -146,7 +177,7 @@ public abstract class AbstractConnectFormFieldActivity extends BaseActivity {
                             component = new EditText(this);
                         }
 
-                        component.setText(getValueFromFieldName(ff.getName()));
+                        component.setText(getObjectValueByFieldName(ff.getName()));
                         component.setLines(5);
                         component.setMaxLines(5);
                         component.setTextSize(TypedValue.COMPLEX_UNIT_SP, 15);
@@ -159,7 +190,7 @@ public abstract class AbstractConnectFormFieldActivity extends BaseActivity {
 
                         component = new TextView(this);
 
-                        component.setText(getValueFromFieldName(ff.getName()));
+                        component.setText(getObjectValueByFieldName(ff.getName()));
                         component.setInputType(InputType.TYPE_NULL);
                         component.setTextSize(TypedValue.COMPLEX_UNIT_SP, 15);
                         component.requestFocus();
@@ -194,8 +225,8 @@ public abstract class AbstractConnectFormFieldActivity extends BaseActivity {
                     case MONEYFIELD:
 
                         component = new TextView(this);
-                        component.setText(
-                                getValueFromFieldName("CurrencyName") + " " + getValueFromFieldName(ff.getName()));
+                        component.setText(getObjectValueByFieldName("CurrencyName") + " " + getObjectValueByFieldName(
+                                ff.getName()));
                         component.setMaxLines(1);
                         component.setSingleLine(true);
                         component.setEllipsize(TextUtils.TruncateAt.END); //ellipses
@@ -213,7 +244,7 @@ public abstract class AbstractConnectFormFieldActivity extends BaseActivity {
                         }
 
                         component.setId(viewID);
-                        views.put(viewID, ff.getName());
+                        views.put(ff.getName(), viewID);
                         viewID++;
 
                         // --- permits to apply specifics within the extending activity

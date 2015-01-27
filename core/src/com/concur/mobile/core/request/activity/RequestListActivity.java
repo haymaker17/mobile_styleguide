@@ -1,5 +1,6 @@
 package com.concur.mobile.core.request.activity;
 
+import android.app.Activity;
 import android.content.Intent;
 import android.content.res.Resources;
 import android.os.Bundle;
@@ -50,6 +51,7 @@ public class RequestListActivity extends BaseActivity {
     private static final int ID_LOADING_VIEW = 0;
     private static final int ID_EMPTY_VIEW = 1;
     private static final int ID_LIST_VIEW = 2;
+    private static final int SUMMARY_RESULT = 1;
     private static boolean HAS_CONFIGURATION = false;
 
     private final RequestParser requestParser = new RequestParser();
@@ -82,15 +84,14 @@ public class RequestListActivity extends BaseActivity {
         setContentView(R.layout.request_list);
 
         asyncGroupConfigurationReceiver = new BaseAsyncResultReceiver(new Handler());
-        asyncGroupConfigurationReceiver.setListener(new GroupConfigurationListener());
 
         if (!concurCore.getRequestGroupConfigurationCache().hasCachedValues()) {
             HAS_CONFIGURATION = false;
+            asyncGroupConfigurationReceiver.setListener(new GroupConfigurationListener());
             new RequestGroupConfigurationsTask(RequestListActivity.this, 1, asyncGroupConfigurationReceiver).execute();
         } else {
             HAS_CONFIGURATION = true;
         }
-        new RequestListTask(RequestListActivity.this, 1, asyncTRListReceiver, searchedStatus).execute();
 
         // -------------
 
@@ -208,6 +209,7 @@ public class RequestListActivity extends BaseActivity {
             new NoConnectivityDialogFragment().show(getSupportFragmentManager(), CLS_TAG);
         } else {
             final Intent i = new Intent(RequestListActivity.this, RequestSummaryActivity.class);
+            i.putExtra(RequestListActivity.REQUEST_ID, reqId);
 
             // --- Flurry tracking
             i.putExtra(Flurry.PARAM_NAME_CAME_FROM, Flurry.PARAM_VALUE_TRAVEL_REQUEST_LIST);
@@ -216,7 +218,8 @@ public class RequestListActivity extends BaseActivity {
             params.put(Flurry.PARAM_NAME_TO, Flurry.PARAM_VALUE_TRAVEL_REQUEST_SUMMARY);
             EventTracker.INSTANCE.track(Flurry.CATEGORY_TRAVEL_REQUEST, Flurry.EVENT_NAME_LAUNCH, params);
 
-            startActivity(i);
+            cleanupReceivers();
+            startActivityForResult(i, SUMMARY_RESULT);
         }
     }
 
@@ -226,6 +229,7 @@ public class RequestListActivity extends BaseActivity {
     private void displayTravelRequestHeader() {
         if (HAS_CONFIGURATION) {
             final Intent i = new Intent(RequestListActivity.this, RequestHeaderActivity.class);
+            i.putExtra(RequestSummaryActivity.REQUEST_IS_EDITABLE, Boolean.TRUE.toString());
 
             // --- Flurry tracking
             i.putExtra(Flurry.PARAM_NAME_CAME_FROM, Flurry.PARAM_VALUE_TRAVEL_REQUEST_LIST);
@@ -234,6 +238,7 @@ public class RequestListActivity extends BaseActivity {
             params.put(Flurry.PARAM_NAME_TO, Flurry.PARAM_VALUE_TRAVEL_REQUEST_HEADER);
             EventTracker.INSTANCE.track(Flurry.CATEGORY_TRAVEL_REQUEST, Flurry.EVENT_NAME_LAUNCH, params);
 
+            cleanupReceivers();
             startActivity(i);
         }
     }
@@ -254,6 +259,9 @@ public class RequestListActivity extends BaseActivity {
         if (ConcurCore.isConnected()) {
             setView(ID_LOADING_VIEW);
             Log.d(Const.LOG_TAG, CLS_TAG + " calling increment from refreshList");
+            // --- creates the listener
+            asyncTRListReceiver.setListener(new TRListListener());
+            // --- onRequestResult calls cleanup() on execution, so listener will be destroyed by processing
             new RequestListTask(RequestListActivity.this, 1, asyncTRListReceiver, searchedStatus).execute();
         } else {
             new NoConnectivityDialogFragment().show(getSupportFragmentManager(), CLS_TAG);
@@ -304,20 +312,14 @@ public class RequestListActivity extends BaseActivity {
         if (asyncTRListReceiver == null) {
             // activity creation
             asyncTRListReceiver = new BaseAsyncResultReceiver(new Handler());
-            asyncTRListReceiver.setListener(new TRListListener());
             refreshData();
-        } else {
-            // activity restoration
-            asyncTRListReceiver.setListener(new TRListListener());
         }
     }
 
     @Override
     protected void onPause() {
         super.onPause();
-        asyncTRListReceiver.setListener(null);
-        asyncFormFieldsReceiver.setListener(null);
-        asyncGroupConfigurationReceiver.setListener(null);
+        cleanupReceivers();
     }
 
     @Override
@@ -336,9 +338,11 @@ public class RequestListActivity extends BaseActivity {
     @Override
     public void onBackPressed() {
         super.onBackPressed();
-        asyncTRListReceiver.setListener(null);
+        cleanupReceivers();
+    }
+
+    private void cleanupReceivers() {
         asyncFormFieldsReceiver.setListener(null);
-        asyncGroupConfigurationReceiver.setListener(null);
     }
 
     // TODO : move somewhere else / use something existing
@@ -471,7 +475,7 @@ public class RequestListActivity extends BaseActivity {
 
         @Override
         public void cleanup() {
-            asyncFormFieldsReceiver.setListener(null);
+            //asyncFormFieldsReceiver.setListener(null);
         }
     }
 
@@ -521,4 +525,22 @@ public class RequestListActivity extends BaseActivity {
         }
     }
 
+    @Override
+    public void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        switch (requestCode) {
+        case (SUMMARY_RESULT): {
+            if (resultCode == Activity.RESULT_OK) {
+                // --- no result means we came from a request creation, so we need a refresh
+                final Boolean doWSCall = data.getBooleanExtra(RequestHeaderActivity.DO_WS_REFRESH, true);
+                if (doWSCall) {
+                    refreshData();
+                } else {
+                    //TODO
+                }
+            }
+            break;
+        }
+        }
+    }
 }

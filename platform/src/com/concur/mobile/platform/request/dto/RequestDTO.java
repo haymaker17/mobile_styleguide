@@ -1,6 +1,8 @@
 package com.concur.mobile.platform.request.dto;
 
+import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
+
 import java.util.Date;
 import java.util.List;
 
@@ -8,35 +10,33 @@ import java.util.List;
  * @author olivierb
  */
 public class RequestDTO {
-	
-	public static String SUBMIT = "submit";
-    public static String SAVE = "save";
 
     public static String SUBMIT = "submit";
+    public static String SAVE = "save";
 
-    @SerializedName("RequestID")
+    @Expose @SerializedName("RequestID")
     private String id;
-    @SerializedName("Name")
+    @Expose @SerializedName("Name")
     private String name;
-    @SerializedName("Purpose")
+    @Expose @SerializedName("Purpose")
     private String purpose;
-    @SerializedName("CurrencyCode")
+    @Expose @SerializedName("CurrencyCode")
     private String currencyCode;
     @SerializedName("EmployeeName")
     private String employeeName;
     @SerializedName("ApprovalStatusName")
     private String approvalStatus;
-    @SerializedName("ApprovalStatusCode")
+    @Expose @SerializedName("ApprovalStatusCode")
     private String approvalStatusCode;
     @SerializedName("TotalApprovedAmount")
     private Double total;
-    @SerializedName("StartDate")
+    @Expose @SerializedName("StartDate")
     private Date startDate;
-    @SerializedName("EndDate")
+    @Expose @SerializedName("EndDate")
     private Date endDate;
-    @SerializedName("CreationDate")
+    @Expose @SerializedName("CreationDate")
     private Date requestDate;
-    @SerializedName("LastComment")
+    @Expose @SerializedName("LastComment")
     private String lastComment;
     @SerializedName("UserLoginID")
     private String userLoginId;
@@ -46,11 +46,11 @@ public class RequestDTO {
     private String detailsUrl;
     @SerializedName("SegmentTypes")
     private String segmentListString;
-    @SerializedName("HeaderFormID")
+    @Expose @SerializedName("HeaderFormID")
     private String headerFormId;
 
     // --- required to post/put
-    @SerializedName(("PolicyID"))
+    @Expose @SerializedName(("PolicyID"))
     private String policyId;
 
     //@SerializedName("Entries")

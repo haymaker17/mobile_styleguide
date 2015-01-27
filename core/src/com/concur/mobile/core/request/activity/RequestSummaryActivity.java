@@ -1,5 +1,6 @@
 package com.concur.mobile.core.request.activity;
 
+import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.content.res.Resources;
@@ -42,11 +43,15 @@ import java.util.Map;
 
 public class RequestSummaryActivity extends BaseActivity {
 
+    private static final String CLS_TAG = RequestSummaryActivity.class.getSimpleName();
+    private final RequestParser requestParser = new RequestParser();
+
     private static final int ID_LOADING_VIEW = 0;
     private static final int ID_DETAIL_VIEW = 1;
 
-    private static final String CLS_TAG = RequestSummaryActivity.class.getSimpleName();
-    private final RequestParser requestParser = new RequestParser();
+    public static final int HEADER_UPDATE_RESULT = 1;
+
+    public static final String REQUEST_IS_EDITABLE = "false";
 
     /**
      * A reference to the application instance representing the client.
@@ -115,7 +120,6 @@ public class RequestSummaryActivity extends BaseActivity {
             public void onClick(View v) {
                 // CALL SUMMIT METHOD
                 submitRequest();
-                // --- TODO : refresh list screen
             }
         });
     }
@@ -125,6 +129,8 @@ public class RequestSummaryActivity extends BaseActivity {
         final TextView amount = (TextView) findViewById(R.id.requestDetailsAmount);
         final TextView amountInButton = (TextView) findViewById(R.id.requestDetailsAmountInButton);
         final TextView startDate = (TextView) findViewById(R.id.requestDetailsStartDate);
+        final TextView business_purpose = (TextView) findViewById(R.id.requestBusinessPurpose);
+        final TextView requestComment = (TextView) findViewById(R.id.requestComment);
 
         final Locale loc = this.getResources().getConfiguration().locale != null ?
                 this.getResources().getConfiguration().locale :
@@ -136,6 +142,8 @@ public class RequestSummaryActivity extends BaseActivity {
         name.setText(request.getName());
         amount.setText(formattedAmount);
         amountInButton.setText(formattedAmount);
+        business_purpose.setText(request.getPurpose());
+        requestComment.setText(request.getLastComment());
 
         startDate.setText(DateUtil.getFormattedDateForLocale(DateUtil.DatePattern.SHORT, loc, request.getStartDate()));
 
@@ -161,6 +169,9 @@ public class RequestSummaryActivity extends BaseActivity {
                 requestDetailVF.setDisplayedChild(ID_LOADING_VIEW);
                 Log.d(Const.LOG_TAG, CLS_TAG + " calling increment from refreshList");
 
+                // --- creates the listener
+                asyncReceiver.setListener(new TRDetailsListener());
+                // --- onRequestResult calls cleanup() on execution, so listener will be destroyed by processing
                 new RequestDetailsTask(RequestSummaryActivity.this, 1, asyncReceiver, tr.getId()).execute();
             } else {
                 // --- we lost the request object. Should not happen, yet if it does just go back to the list & log it
@@ -174,6 +185,9 @@ public class RequestSummaryActivity extends BaseActivity {
 
     private void submitRequest() {
         if (ConcurCore.isConnected()) {
+            // --- creates the listener
+            asyncReceiverSubmit.setListener(new TRSubmitListener());
+            // --- onRequestResult calls cleanup() on execution, so listener will be destroyed by processing
             new RequestSubmitTask(RequestSummaryActivity.this, 1, asyncReceiverSubmit, tr.getId()).execute();
         } else {
             new NoConnectivityDialogFragment().show(getSupportFragmentManager(), CLS_TAG);
@@ -234,14 +248,14 @@ public class RequestSummaryActivity extends BaseActivity {
         public void onRequestFail(Bundle resultData) {
             handleRefreshFail();
             Log.d(Const.LOG_TAG, CLS_TAG + " calling decrement from onrequestfails");
-            Log.d(Const.LOG_TAG, " onRequestFail in TRListListener...");
+            Log.d(Const.LOG_TAG, " onRequestFail in TRDetailsListener...");
         }
 
         @Override
         public void onRequestCancel(Bundle resultData) {
             handleRefreshFail();
             Log.d(Const.LOG_TAG, CLS_TAG + " calling decrement from onrequestcancel");
-            Log.d(Const.LOG_TAG, " onRequestCancel in TRListListener...");
+            Log.d(Const.LOG_TAG, " onRequestCancel in TRDetailsListener...");
         }
 
         @Override
@@ -255,9 +269,9 @@ public class RequestSummaryActivity extends BaseActivity {
         @Override
         public void onRequestSuccess(Bundle resultData) {
             Context context = getApplicationContext();
-            CharSequence text = "REQUEST SUBMITTED";
+            final CharSequence text = "REQUEST SUBMITTED";
             int duration = Toast.LENGTH_LONG;
-            Toast toast = Toast.makeText(context, text, duration);
+            final Toast toast = Toast.makeText(context, text, duration);
             toast.show();
 
             // metrics
@@ -266,26 +280,30 @@ public class RequestSummaryActivity extends BaseActivity {
             EventTracker.INSTANCE
                     .track(Flurry.CATEGORY_TRAVEL_REQUEST, Flurry.PARAM_VALUE_TRAVEL_REQUEST_SUMMARY, params);
 
-            // on retrourne sur la list
+            // getting back to list screen
+            final Intent resIntent = new Intent();
+            resIntent.putExtra(RequestHeaderActivity.DO_WS_REFRESH, true);
+            setResult(Activity.RESULT_OK, resIntent);
+
+            cleanupReceivers();
             finish();
         }
 
         @Override
         public void onRequestFail(Bundle resultData) {
-            Context context = getApplicationContext();
-            CharSequence text = resultData.getString(BaseAsyncRequestTask.HTTP_STATUS_MESSAGE);
+            final CharSequence text = resultData.getString(BaseAsyncRequestTask.HTTP_STATUS_MESSAGE);
             int duration = Toast.LENGTH_LONG;
-            Toast toast = Toast.makeText(context, text, duration);
+            final Toast toast = Toast.makeText(getApplicationContext(), text, duration);
             toast.show();
 
             Log.d(Const.LOG_TAG, CLS_TAG + " calling decrement from onrequestfails");
-            Log.d(Const.LOG_TAG, " onRequestFail in TRListListener...");
+            Log.d(Const.LOG_TAG, " onRequestFail in TRSubmitListener...");
         }
 
         @Override
         public void onRequestCancel(Bundle resultData) {
             Log.d(Const.LOG_TAG, CLS_TAG + " calling decrement from onrequestcancel");
-            Log.d(Const.LOG_TAG, " onRequestCancel in TRListListener...");
+            Log.d(Const.LOG_TAG, " onRequestCancel in TRSubmitListener...");
         }
 
         @Override
@@ -335,7 +353,7 @@ public class RequestSummaryActivity extends BaseActivity {
 
         @Override
         public void cleanup() {
-            asyncReceiverFormFields.setListener(null);
+            //asyncReceiverFormFields.setListener(null);
         }
     }
 
@@ -346,7 +364,6 @@ public class RequestSummaryActivity extends BaseActivity {
             }
             formWaitingForRefresh = null;
         }
-
     }
 
     /**
@@ -355,12 +372,14 @@ public class RequestSummaryActivity extends BaseActivity {
      * @param formId form ID
      */
     private void displaySegmentDetail(String formId) {
+        //cleanupReceivers();
         // --- TODO -- displays the corresponding segment ?
     }
 
     private void handleRefreshFail() {
         if (!showCacheData()) {
             Log.d(Const.LOG_TAG, CLS_TAG + " onRequestCancel() : no cache data to display, going back to list.");
+            cleanupReceivers();
             startActivity(new Intent(RequestSummaryActivity.this, RequestListActivity.class));
         }
     }
@@ -376,11 +395,7 @@ public class RequestSummaryActivity extends BaseActivity {
         if (asyncReceiver == null) {
             // activity creation
             asyncReceiver = new BaseAsyncResultReceiver(new Handler());
-            asyncReceiver.setListener(new TRDetailsListener());
             refreshData(false);
-        } else {
-            // activity restoration
-            asyncReceiver.setListener(new TRDetailsListener());
         }
 
         // SUBMIT
@@ -388,8 +403,6 @@ public class RequestSummaryActivity extends BaseActivity {
         if (asyncReceiverSubmit == null) {
             asyncReceiverSubmit = new BaseAsyncResultReceiver(new Handler());
         }
-        // activity restoration
-        asyncReceiverSubmit.setListener(new TRSubmitListener());
 
         // F & F
         // activity creation
@@ -398,23 +411,22 @@ public class RequestSummaryActivity extends BaseActivity {
         }
         // activity restoration
         asyncReceiverFormFields.setListener(new SegmentFormFieldsListener());
+    }
 
+    private void cleanupReceivers() {
+        asyncReceiverFormFields.setListener(null);
     }
 
     @Override
     protected void onPause() {
         super.onPause();
-        asyncReceiver.setListener(null);
-        asyncReceiverSubmit.setListener(null);
-        asyncReceiverFormFields.setListener(null);
+        cleanupReceivers();
     }
 
     @Override
     public void onBackPressed() {
         super.onBackPressed();
-        asyncReceiver.setListener(null);
-        asyncReceiverSubmit.setListener(null);
-        asyncReceiverFormFields.setListener(null);
+        cleanupReceivers();
     }
 
     // OVERFLOW MENU
@@ -432,8 +444,13 @@ public class RequestSummaryActivity extends BaseActivity {
         if (itemId == R.id.request_header) {
             if (isServiceAvailable()) {
                 if (ConcurCore.isConnected()) {
-                    Intent intent = new Intent(RequestSummaryActivity.this, RequestHeaderActivity.class);
+                    final Intent intent = new Intent(RequestSummaryActivity.this, RequestHeaderActivity.class);
                     intent.putExtra(RequestListActivity.REQUEST_ID, tr.getId());
+                    if (tr.isActionPermitted(RequestDTO.SAVE)) {
+                        intent.putExtra(RequestSummaryActivity.REQUEST_IS_EDITABLE, Boolean.TRUE.toString());
+                    } else {
+                        intent.putExtra(RequestSummaryActivity.REQUEST_IS_EDITABLE, Boolean.FALSE.toString());
+                    }
 
                     // --- Flurry tracking
                     intent.putExtra(Flurry.PARAM_NAME_CAME_FROM, Flurry.PARAM_VALUE_TRAVEL_REQUEST_SUMMARY);
@@ -442,7 +459,8 @@ public class RequestSummaryActivity extends BaseActivity {
                     params.put(Flurry.PARAM_NAME_TO, Flurry.PARAM_VALUE_TRAVEL_REQUEST_HEADER);
                     EventTracker.INSTANCE.track(Flurry.CATEGORY_TRAVEL_REQUEST, Flurry.EVENT_NAME_LAUNCH, params);
 
-                    startActivity(intent);
+                    cleanupReceivers();
+                    startActivityForResult(intent, HEADER_UPDATE_RESULT);
                 } else {
                     new NoConnectivityDialogFragment().show(getSupportFragmentManager(), CLS_TAG);
                 }
@@ -453,4 +471,21 @@ public class RequestSummaryActivity extends BaseActivity {
         }
     }
 
+    @Override
+    public void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        switch (requestCode) {
+        case (HEADER_UPDATE_RESULT): {
+            if (resultCode == Activity.RESULT_OK) {
+                final Boolean newText = data.getBooleanExtra(RequestHeaderActivity.DO_WS_REFRESH, false);
+                if (newText) {
+                    refreshData(true);
+                } else {
+                    refreshData(false);
+                }
+            }
+            break;
+        }
+        }
+    }
 }

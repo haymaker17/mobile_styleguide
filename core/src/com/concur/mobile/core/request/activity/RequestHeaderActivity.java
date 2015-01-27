@@ -1,5 +1,6 @@
 package com.concur.mobile.core.request.activity;
 
+import android.app.Activity;
 import android.app.DatePickerDialog;
 import android.content.Intent;
 import android.graphics.Typeface;
@@ -15,6 +16,7 @@ import com.concur.mobile.base.service.BaseAsyncRequestTask;
 import com.concur.mobile.base.service.BaseAsyncResultReceiver;
 import com.concur.mobile.core.ConcurCore;
 import com.concur.mobile.core.activity.AbstractConnectFormFieldActivity;
+import com.concur.mobile.core.request.service.RequestParser;
 import com.concur.mobile.core.request.task.RequestSaveTask;
 import com.concur.mobile.core.request.util.DateUtil;
 import com.concur.mobile.core.util.Const;
@@ -44,6 +46,8 @@ public class RequestHeaderActivity extends AbstractConnectFormFieldActivity impl
     private static final String FIELD_CURRENCY_NAME = "CurrencyName";
     private static final String FIELD_TOTAL_POSTED_AMOUNT = "TotalPostedAmount";
 
+    public static final String DO_WS_REFRESH = "doWSRefresh";
+
     protected ConnectForm form;
     protected Locale locale;
 
@@ -54,6 +58,14 @@ public class RequestHeaderActivity extends AbstractConnectFormFieldActivity impl
     private RelativeLayout saveButton;
     private BaseAsyncResultReceiver asyncReceiverSave;
 
+    /**
+     * Bundle need to contain:
+     * - RequestSummaryActivity.REQUEST_IS_EDITABLE
+     * And for consultation / update:
+     * - RequestListActivity.REQUEST_ID
+     *
+     * @param savedInstanceState
+     */
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -68,8 +80,10 @@ public class RequestHeaderActivity extends AbstractConnectFormFieldActivity impl
 
         final Bundle bundle = getIntent().getExtras();
         final String requestId = bundle.getString(RequestListActivity.REQUEST_ID);
-        
-        this.isEditable = bundle.getString(RequestDigestActivity.REQUEST_IS_EDITABLE).equals("true")? true : false;
+
+        this.isEditable = bundle.getString(RequestSummaryActivity.REQUEST_IS_EDITABLE).equals(Boolean.TRUE.toString()) ?
+                true :
+                false;
 
         locale = this.getResources().getConfiguration().locale != null ?
                 this.getResources().getConfiguration().locale :
@@ -119,14 +133,18 @@ public class RequestHeaderActivity extends AbstractConnectFormFieldActivity impl
 
             public void onClick(View v) {
                 // CALL SUMMIT METHOD
-                saveRequest();
-                // --- TODO : refresh digest screen + list
+                save();
             }
         });
     }
 
-    private void saveRequest() {
+    @Override
+    protected void save() {
+        super.save();
         if (ConcurCore.isConnected()) {
+            // --- creates the listener
+            asyncReceiverSave.setListener(new SaveListener());
+            // --- onRequestResult calls cleanup() on execution, so listener will be destroyed by processing
             new RequestSaveTask(RequestHeaderActivity.this, 1, asyncReceiverSave, tr).execute();
         } else {
             new NoConnectivityDialogFragment().show(getSupportFragmentManager(), CLS_TAG);
@@ -166,7 +184,7 @@ public class RequestHeaderActivity extends AbstractConnectFormFieldActivity impl
     }
 
     @Override
-    public String getValueFromFieldName(String fieldName) {
+    public String getObjectValueByFieldName(String fieldName) {
 
         if (fieldName.equals(FIELD_NAME)) {
             if (tr.getName() == null) {
@@ -211,7 +229,7 @@ public class RequestHeaderActivity extends AbstractConnectFormFieldActivity impl
     }
 
     @Override
-    protected void setValueFromFieldName(String fieldName, String value) {
+    protected void setObjectValueByFieldName(String fieldName, String value) {
         if (fieldName.equals(FIELD_NAME)) {
             tr.setName(value);
         } else if (fieldName.equals(FIELD_START_DATE)) {
@@ -251,9 +269,9 @@ public class RequestHeaderActivity extends AbstractConnectFormFieldActivity impl
         @Override
         public void onRequestSuccess(Bundle resultData) {
             final boolean isCreation = tr.getId() == null;
-            CharSequence text = "REQUEST SAVED";
+            final CharSequence text = "REQUEST SAVED";
             int duration = Toast.LENGTH_LONG;
-            Toast toast = Toast.makeText(getApplicationContext(), text, duration);
+            final Toast toast = Toast.makeText(getApplicationContext(), text, duration);
             toast.show();
 
             // metrics
@@ -265,21 +283,34 @@ public class RequestHeaderActivity extends AbstractConnectFormFieldActivity impl
 
             // --- TODO Refresh values
 
-            // we go to the digest screen
-            if (isCreation) {
+            if (resultData != null) {
 
-                final Intent i = new Intent(RequestHeaderActivity.this, RequestSummaryActivity.class);
+                final String requestId = RequestParser
+                        .parseActionResponse(resultData.getString(BaseAsyncRequestTask.HTTP_RESPONSE));
 
-                // --- Flurry tracking
-                i.putExtra(Flurry.PARAM_NAME_CAME_FROM, Flurry.PARAM_VALUE_TRAVEL_REQUEST_HEADER);
-                params.clear();
-                params.put(Flurry.PARAM_NAME_FROM, Flurry.PARAM_VALUE_TRAVEL_REQUEST_HEADER);
-                params.put(Flurry.PARAM_NAME_TO, Flurry.PARAM_VALUE_TRAVEL_REQUEST_SUMMARY);
-                EventTracker.INSTANCE.track(Flurry.CATEGORY_TRAVEL_REQUEST, Flurry.EVENT_NAME_LAUNCH, params);
+                // we go to the digest screen
+                if (isCreation) {
 
-                startActivity(i);
-            } else {
-                finish();
+                    final Intent i = new Intent(RequestHeaderActivity.this, RequestSummaryActivity.class);
+                    i.putExtra(RequestListActivity.REQUEST_ID, requestId);
+
+                    // --- Flurry tracking
+                    i.putExtra(Flurry.PARAM_NAME_CAME_FROM, Flurry.PARAM_VALUE_TRAVEL_REQUEST_HEADER);
+                    params.clear();
+                    params.put(Flurry.PARAM_NAME_FROM, Flurry.PARAM_VALUE_TRAVEL_REQUEST_HEADER);
+                    params.put(Flurry.PARAM_NAME_TO, Flurry.PARAM_VALUE_TRAVEL_REQUEST_SUMMARY);
+                    EventTracker.INSTANCE.track(Flurry.CATEGORY_TRAVEL_REQUEST, Flurry.EVENT_NAME_LAUNCH, params);
+
+                    startActivity(i);
+                    finish();
+                } else {
+                    final Intent resIntent = new Intent();
+                    resIntent.putExtra(DO_WS_REFRESH, true);
+                    setResult(Activity.RESULT_OK, resIntent);
+
+                    finish();
+                }
+
             }
         }
 
@@ -305,6 +336,10 @@ public class RequestHeaderActivity extends AbstractConnectFormFieldActivity impl
         }
     }
 
+    private void cleanupReceivers() {
+        // NTD
+    }
+
     @Override
     protected void onResume() {
         super.onResume();
@@ -314,17 +349,17 @@ public class RequestHeaderActivity extends AbstractConnectFormFieldActivity impl
         if (asyncReceiverSave == null) {
             asyncReceiverSave = new BaseAsyncResultReceiver(new Handler());
         }
-        // activity restoration
-        asyncReceiverSave.setListener(new SaveListener());
     }
 
     @Override
     protected void onPause() {
         super.onPause();
+        cleanupReceivers();
     }
 
     @Override
     public void onBackPressed() {
         super.onBackPressed();
+        cleanupReceivers();
     }
 }

@@ -1,7 +1,6 @@
 package com.concur.mobile.core.request.service;
 
 import android.util.Log;
-
 import com.concur.mobile.core.request.util.RequestParsingHelper;
 import com.concur.mobile.platform.common.formfield.ConnectForm;
 import com.concur.mobile.platform.common.formfield.IFormField;
@@ -11,14 +10,10 @@ import com.concur.mobile.platform.request.dto.RequestEntryDTO;
 import com.concur.mobile.platform.request.dto.RequestSegmentDTO;
 import com.concur.mobile.platform.request.groupConfiguration.RequestGroupConfiguration;
 import com.concur.mobile.platform.request.util.GsonListContainer;
-import com.concur.mobile.platform.util.BooleanDeserializer;
-import com.concur.mobile.platform.util.DateDeserializer;
-import com.concur.mobile.platform.util.DoubleDeserializer;
-import com.concur.mobile.platform.util.EnumDeserializer;
-import com.concur.mobile.platform.util.IntegerDeserializer;
-import com.concur.mobile.platform.util.Parse;
+import com.concur.mobile.platform.util.*;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
+import com.google.gson.annotations.SerializedName;
 import com.google.gson.reflect.TypeToken;
 
 import java.text.ParseException;
@@ -39,24 +34,11 @@ public class RequestParser {
      */
 
     // REQUEST LIST
-    private static final String LIST_ARRAY_KEY = "Items";// "RequestsList";
     private static final String LIST_NAME_KEY = "Name";
     private static final String LIST_ID_KEY = "RequestID";
-    private static final String LIST_PURPOSE_KEY = "Purpose";
-    private static final String LIST_CURRENCY_KEY = "CurrencyCode";
-    private static final String LIST_EPLOYEE_NAME_KEY = "EmployeeName";
-    private static final String LIST_HEADER_FORM_ID = "HeaderFormID";
-    private static final String LIST_APPROVAL_STATUS_KEY = "ApprovalStatusName";
-    private static final String LIST_APPROVAL_STATUS_CODE = "ApprovalStatusCode";
     private static final String LIST_TOTAL_KEY = "TotalApprovedAmount";
     private static final String LIST_START_DATE_KEY = "StartDate";
     private static final String LIST_END_DATE_KEY = "EndDate";
-    private static final String LIST_REQUEST_DATE_KEY = "CreationDate";
-    private static final String LIST_LAST_COMMENT_KEY = "LastComment";
-    private static final String LIST_USER_LOGIN_ID_KEY = "UserLoginID";
-    private static final String LIST_APPROVER_LOGIN_ID_KEY = "ApproverLoginID";
-    private static final String LIST_DETAILS_URL_KEY = "RequestDetailsUrl";
-    private static final String LIST_SEGMENT_LIST = "SegmentTypes";
 
     // REQUEST DETAIL
     private static final String RES_DETAILS_CURRENCY_KEY = "CurrencyCode";
@@ -80,7 +62,6 @@ public class RequestParser {
     private static final String RES_ENTRY_CURRENCY_CODE_KEY = "ForeignCurrencyCode";
     private static final String RES_ENTRY_FOREIGN_AMOUNT_KEY = "ForeignAmount";
 
-
     // SEGMENT
     private static final String RES_SEGMENT_TYPE_KEY = "SegmentType";
     private static final String RES_SEGMENT_CURRENCY_NAME_KEY = "ForeignCurrencyName";
@@ -92,6 +73,22 @@ public class RequestParser {
     private static final String RES_SEGMENT_TO_LOCATION_NAME_KEY = "ToLocationName";
     private static final String RES_SEGMENT_EXCEPTION_LIST = "Exceptions";
     private static final String RES_SEGMENT_FORM_ID = "SegmentFormID";
+
+    public class ActionResponse {
+
+        @SerializedName("ID")
+        private String id = null;
+        @SerializedName("URI")
+        private String uri = null;
+
+        public String getId() {
+            return id;
+        }
+
+        public String getUri() {
+            return uri;
+        }
+    }
 
     private Date parseDate(String baseStr, SimpleDateFormat sdf) {
         if (baseStr != null) {
@@ -105,43 +102,6 @@ public class RequestParser {
         return null;
     }
 
-    /**
-     * @param jsonRes the string result of the ws call
-     * @return a list of RequestDTO
-     */
-    /*@SuppressWarnings("rawtypes")
-    @Deprecated
-    public List<RequestDTO> parseTRListResponseOld(String jsonRes) {
-        final List<RequestDTO> values = new ArrayList<RequestDTO>();
-        final SimpleDateFormat sdf = new SimpleDateFormat(SERVER_DATE_FORMAT, Locale.US);
-
-        final List trList = (List) new Gson().fromJson(jsonRes, Map.class).get(LIST_ARRAY_KEY);
-        final int listSize = trList.size();
-        for (int i = 0; i < listSize; i++) {
-            final Map res = (Map) trList.get(i);
-            final RequestDTO tr = new RequestDTO();
-            tr.setId(RequestParsingHelper.stringSafeParse(res, LIST_ID_KEY));
-            tr.setName(RequestParsingHelper.stringSafeParse(res, LIST_NAME_KEY));
-            tr.setApprovalStatus(RequestParsingHelper.stringSafeParse(res, LIST_APPROVAL_STATUS_KEY));
-            tr.setApprovalStatusCode(RequestParsingHelper.stringSafeParse(res, LIST_APPROVAL_STATUS_CODE));
-            tr.setApproverLoginId(RequestParsingHelper.stringSafeParse(res, LIST_APPROVER_LOGIN_ID_KEY));
-            tr.setCurrencyCode(RequestParsingHelper.stringSafeParse(res, LIST_CURRENCY_KEY));
-            tr.setDetailsUrl(RequestParsingHelper.stringSafeParse(res, LIST_DETAILS_URL_KEY));
-            tr.setEmployeeName(RequestParsingHelper.stringSafeParse(res, LIST_EPLOYEE_NAME_KEY));
-            tr.setLastComment(RequestParsingHelper.stringSafeParse(res, LIST_LAST_COMMENT_KEY));
-            tr.setStartDate(parseDate(RequestParsingHelper.stringSafeParse(res, LIST_START_DATE_KEY), sdf));
-            tr.setEndDate(parseDate(RequestParsingHelper.stringSafeParse(res, LIST_END_DATE_KEY), sdf));
-            tr.setRequestDate(parseDate(RequestParsingHelper.stringSafeParse(res, LIST_REQUEST_DATE_KEY), sdf));
-            tr.setPurpose(RequestParsingHelper.stringSafeParse(res, LIST_PURPOSE_KEY));
-            tr.setTotal(Parse.safeParseDouble(RequestParsingHelper.stringSafeParse(res, LIST_TOTAL_KEY)));
-            tr.setHeaderFormId(RequestParsingHelper.stringSafeParse(res, LIST_HEADER_FORM_ID));
-            tr.setUserLoginId(RequestParsingHelper.stringSafeParse(res, LIST_USER_LOGIN_ID_KEY));
-            tr.setSegmentListString(RequestParsingHelper.stringSafeParse(res, LIST_SEGMENT_LIST));
-            values.add(tr);
-        }
-
-        return values;
-    }*/
     public List<RequestDTO> parseTRListResponse(String jsonRes) {
         final GsonBuilder builder = new GsonBuilder();
         builder.registerTypeAdapter(Double.class, new DoubleDeserializer());
@@ -153,8 +113,7 @@ public class RequestParser {
         return requestList.getList();
     }
 
-    @SuppressWarnings("rawtypes")
-    @Deprecated
+    @SuppressWarnings("rawtypes") @Deprecated
     public void parseTRDetailsResponse(RequestDTO tr, String jsonRes) {
         final SimpleDateFormat sdf = new SimpleDateFormat("yyyy-mm-dd");
 
@@ -191,7 +150,10 @@ public class RequestParser {
             Comment.setValue(RequestParsingHelper.stringSafeParse(jsonEntry, RES_DETAILS_COMMENT_VALUE));
             Comment.setAuthorFirstName(RequestParsingHelper.stringSafeParse(jsonEntry, RES_DETAILS_COMMENT_FIRSTNAME));
             Comment.setAuthorLastName(RequestParsingHelper.stringSafeParse(jsonEntry, RES_DETAILS_COMMENT_LASTNAME));
-            Comment.setIsLatest(RequestParsingHelper.stringSafeParse(jsonEntry, RES_DETAILS_COMMENT_ISLATEST).equals("false") ? false : true);
+            Comment.setIsLatest(
+                    RequestParsingHelper.stringSafeParse(jsonEntry, RES_DETAILS_COMMENT_ISLATEST).equals("false") ?
+                            false :
+                            true);
 
             if (Comment.getIsLatest()) {
                 tr.setLastComment(Comment.getValue());
@@ -282,6 +244,19 @@ public class RequestParser {
     }
 
     /**
+     * Parse jsonRes content with Gson into an ActionResponse and return the ID field
+     *
+     * @param jsonRes the json string
+     * @return related ID
+     */
+    public static String parseActionResponse(String jsonRes) {
+        final Gson gson = new GsonBuilder().create();
+        Log.d("RequestParser", " starting parse");
+        final ActionResponse resp = gson.fromJson(jsonRes, ActionResponse.class);
+        return resp.getId();
+    }
+
+    /**
      * Parse jsonRes content with Gson into a RequestGroupConfigurationsContainer with n RequestGroupConfiguration
      *
      * @param jsonRes the json string
@@ -311,7 +286,7 @@ public class RequestParser {
         builder.registerTypeAdapter(Double.class, new DoubleDeserializer());
         builder.registerTypeAdapter(Date.class, new DateDeserializer());
         Log.d("RequestParser - parseTRListResponseV2", " starting parse");
-        final Gson gson = builder.create();
+        final Gson gson = builder.excludeFieldsWithoutExposeAnnotation().create();
         return gson.toJson(tr);
     }
 }

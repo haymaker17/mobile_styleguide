@@ -95,7 +95,12 @@
 		    android:background="@color/White"
 	    >
 	        
-	    <TextView 
+        <View
+            android:layout_width="fill_parent"
+            android:layout_height="2dp"
+            android:background="@android:color/darker_gray"/>
+
+	    <TextView
 	        android:id="@+id/requestDetailsTotalTitle"
 	        style="@style/FormFieldLabelText"
 	        android:layout_width="wrap_content"
@@ -144,6 +149,19 @@
 	        android:textSize="15sp"
 	        android:textColor="#666666"
 	        />
+
+            <TextView
+                android:id="@+id/requestBusinessPurpose"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentRight="true"
+                android:layout_centerVertical="true"
+                android:layout_alignBaseline="@id/requestBusinessPurpose"
+                android:layout_marginRight="15dp"
+                android:textSize="15sp"
+                android:textColor="@color/Black"
+                />
+
 	    </RelativeLayout>
 	    
 	    <RelativeLayout 
@@ -167,6 +185,19 @@
 	        android:textSize="15sp"
 	        android:textColor="#666666"
 	        />
+
+            <TextView
+                android:id="@+id/requestComment"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentRight="true"
+                android:layout_centerVertical="true"
+                android:layout_alignBaseline="@id/requestComment"
+                android:layout_marginRight="15dp"
+                android:textSize="15sp"
+                android:textColor="@color/Black"
+                />
+
 	    </RelativeLayout>
 	    
 	    <RelativeLayout 
