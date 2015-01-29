@@ -7,8 +7,10 @@ import android.text.util.Linkify;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
+import android.view.View.OnClickListener;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.concur.mobile.platform.travel.search.hotel.Contact;
@@ -20,7 +22,6 @@ import com.concur.mobile.platform.ui.travel.R;
 import com.concur.mobile.platform.ui.travel.hotel.fragment.HotelChoiceDetailsFragment.HotelChoiceDetailsFragmentListener;
 import com.concur.mobile.platform.ui.travel.util.Const;
 import com.google.android.gms.maps.GoogleMap;
-import com.google.android.gms.maps.SupportMapFragment;
 import com.google.android.gms.maps.model.LatLng;
 
 /**
@@ -29,17 +30,21 @@ import com.google.android.gms.maps.model.LatLng;
  * @author tejoa
  * 
  */
-public class HotelDetailsFragment extends PlatformFragmentV1 {
+public class HotelDetailsFragment extends PlatformFragmentV1 implements OnClickListener {
 
     public static final String TAB_ROOMS = "ROOMS";
     private Hotel hotel;
     private GoogleMap hotelMap;
-    SupportMapFragment mSupportMapFragment;
+    private HotelMapFragment mapFragment;
     private ListItemAdapter<HotelRoomListItem> listItemAdapater;
     private HotelChoiceDetailsFragmentListener callBackListener;
+    private LatLng post;
+    private ImageView mapView;
+    private Button findRooms;
+
     // private int paramsHeight;
     // private MapFragment mapFragment;
-    private LatLng post;
+    // private LatLng post;
 
     public HotelDetailsFragment(Hotel hotel) {
         this.hotel = hotel;
@@ -54,7 +59,21 @@ public class HotelDetailsFragment extends PlatformFragmentV1 {
         View mainView = inflater.inflate(R.layout.hotel_details_layout, null, false);
 
         post = new LatLng(hotel.latitude, hotel.longitude);
-        getFragmentManager().beginTransaction().replace(R.id.map_view, new HotelMapFragment(post)).commit();
+        // Bitmap map = ViewUtil.setUpStaticMap(hotel.latitude, hotel.longitude);
+
+        // mapFragment.CaptureMapScreen();
+        // mapFrame = (FrameLayout) mainView.findViewById(R.id.map_view);
+        // mapFrame.setOnClickListener(this);
+        // mapFrame.getLayoutParams().height = 168;
+        // getFragmentManager().beginTransaction().replace(R.id.map_view, new HotelMapFragment(post)).commit();
+
+        ImageView mapView = (ImageView) mainView.findViewById(R.id.map_view);
+        if (mapView != null) {
+            mapFragment = new HotelMapFragment(post, mapView);
+            mapFragment.takeSnapshot();
+            // mapView.setImageBitmap(map);
+
+        }
 
         Contact contact = hotel.contact;
         if (contact != null && contact.city != null) {
@@ -90,18 +109,11 @@ public class HotelDetailsFragment extends PlatformFragmentV1 {
         }
 
         if (hotel.rates != null && hotel.rates.size() > 0) {
-            Button findRooms = (Button) mainView.findViewById(R.id.footer_button);
+            findRooms = (Button) mainView.findViewById(R.id.footer_button);
             if (findRooms != null) {
                 findRooms.setText(getText(R.string.find_rooms_button));
             }
-            findRooms.setOnClickListener(new View.OnClickListener() {
-
-                @Override
-                public void onClick(View v) {
-                    callBackListener.onFindRoomsClicked();
-                }
-            });
-
+            findRooms.setOnClickListener(this);
         }
 
         return mainView;
@@ -150,8 +162,26 @@ public class HotelDetailsFragment extends PlatformFragmentV1 {
         // + (hotelListItems != null ? hotelListItems.size() : 0));
     }
 
-    public void showFullMap(View view) {
-        callBackListener.onMapsClicked(post);
+    @Override
+    public void onClick(View v) {
+        if (v == mapView) {
+            callBackListener.onMapsClicked(post);
+        } else if (v == findRooms) {
+            callBackListener.onFindRoomsClicked();
+        }
+
     }
+
+    // public void showFullMap(View view) {
+    // callBackListener.onMapsClicked(post);
+    // }
+
+    // @Override
+    // public void onDestroyView() {
+    // super.onDestroyView();
+    // getFragmentManager().beginTransaction().remove(getFragmentManager().findFragmentById(R.layout.map_view))
+    // .commit();
+    // }
+    // }
 
 }

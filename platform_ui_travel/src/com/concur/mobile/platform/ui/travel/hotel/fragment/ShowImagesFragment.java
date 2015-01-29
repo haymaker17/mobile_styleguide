@@ -9,11 +9,8 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.AdapterView;
-import android.widget.AdapterView.OnItemClickListener;
 import android.widget.GridView;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.concur.mobile.platform.travel.search.hotel.HotelImagePair;
 import com.concur.mobile.platform.ui.common.fragment.PlatformFragmentV1;
@@ -34,6 +31,7 @@ public class ShowImagesFragment extends PlatformFragmentV1 {
     private List<ImageListItem> imagePairs;
     private ImageListItem item;
     private ListItemAdapter<ImageListItem> listItemAdapater;
+    private GridView gridView;
     private HotelChoiceDetailsFragmentListener callBackListener;
 
     public ShowImagesFragment(List<HotelImagePair> images) {
@@ -51,47 +49,29 @@ public class ShowImagesFragment extends PlatformFragmentV1 {
 
         // inflate the details fragment
         View mainView = inflater.inflate(R.layout.hotel_images_layout, container, false);
-        GridView gridView = (GridView) mainView.findViewById(R.id.gridview);
-        TextView tv = (TextView) mainView.findViewById(R.id.no_photos);
-        gridView.setVisibility(View.GONE);
-        tv.setVisibility(View.GONE);
-        // new GridView(getActivity().getApplicationContext()); //
-
-        // if (config.orientation == Configuration.ORIENTATION_LANDSCAPE) {
-        // gridView.setNumColumns(3);
-        // } else {
-        // gridView.setNumColumns(2);
-        // // }
-        // gridView.setHorizontalSpacing(12);
-        // gridView.setVerticalSpacing(12);
-        // gridView.setPadding(12, 12, 12, 12);
-
-        // Configuration config = getResources().getConfiguration();
-        // if (config.orientation == Configuration.ORIENTATION_LANDSCAPE) {
-        // gridView.setNumColumns(3);
-        // } else {
-        // gridView.setNumColumns(2);
-        // }
-        // gridView.setPadding(6, 12, 12, 12);
         if (imagePairs != null && imagePairs.size() > 0) {
-
+            gridView = (GridView) mainView.findViewById(R.id.gridview);
+            // Intent i = new Intent(getActivity(), ImageActivity.class);
+            // Bundle bundle = new Bundle();
+            // bundle.putSerializable(Const.EXTRA_HOTEL_IMAGES, (Serializable) imagePairs);
             listItemAdapater = new ListItemAdapter<ImageListItem>(getActivity().getApplicationContext(), imagePairs);
             gridView.setAdapter(listItemAdapater);
-            gridView.setVisibility(View.VISIBLE);
+            // gridView.setOnItemClickListener(this);
 
-            gridView.setOnItemClickListener(new OnItemClickListener() {
-
-                @Override
-                public void onItemClick(AdapterView<?> parent, View v, int position, long id) {
-
-                    Toast.makeText(getActivity(), position, Toast.LENGTH_SHORT).show();
-                    // ImageListItem imageItem = (ImageListItem) parent.getItemAtPosition(position);
-                    // callBackListener.onImageClicked(imageItem);
-                }
-            });
+            // gridView.setOnItemClickListener(new OnItemClickListener() {
+            //
+            // @Override
+            // public void onItemClick(AdapterView<?> parent, View v, int position, long id) {
+            //
+            // Toast.makeText(getActivity(), position, Toast.LENGTH_SHORT).show();
+            // // ImageListItem imageItem = (ImageListItem) parent.getItemAtPosition(position);
+            // // callBackListener.onImageClicked(imageItem);
+            // }
+            // });
 
         } else {
 
+            TextView tv = (TextView) mainView.findViewById(R.id.no_photos);
             tv.setVisibility(View.VISIBLE);
 
         }
@@ -140,5 +120,24 @@ public class ShowImagesFragment extends PlatformFragmentV1 {
         // Log.d(Const.LOG_TAG, " ***** HotelSearchResultFragment, in onResume *****  hotelListItems = "
         // + (hotelListItems != null ? hotelListItems.size() : 0));
     }
+
+    // @Override
+    // public void onItemClick(AdapterView<?> parent, View v, int position, long id) {
+    //
+    // ImageListItem imageItem = (ImageListItem) parent.getItemAtPosition(position);
+    // callBackListener.onImageClicked(imageItem);
+    // // final Intent i = new Intent(getActivity(), ImageDetailActivity.class);
+    // i.putExtra(ImageDetailActivity.EXTRA_IMAGE, (int) id);
+    // if (Utils.hasJellyBean()) {
+    // // makeThumbnailScaleUpAnimation() looks kind of ugly here as the loading spinner may
+    // // show plus the thumbnail image in GridView is cropped. so using
+    // // makeScaleUpAnimation() instead.
+    // ActivityOptions options = ActivityOptions.makeScaleUpAnimation(v, 0, 0, v.getWidth(), v.getHeight());
+    // getActivity().startActivity(i, options.toBundle());
+    // } else {
+    // startActivity(i);
+    // }
+
+    // }
 
 }

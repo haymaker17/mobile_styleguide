@@ -33,6 +33,7 @@ public class Const {
     public static final String EXTRA_HOTELS_DETAILS = "hotel.details";
     public static final String EXTRA_HOTEL_IMAGE_ITEM = "hotel.image";
     public static final String EXTRA_HOTEL_LOCATION = "hotel.location";
+    public static final String EXTRA_HOTEL_IMAGES = "hotel.images";
 
     // Activity result codes
     public static final int REQUEST_CODE_LOCATION = 1;

@@ -92,6 +92,7 @@ public class HotelChoiceDetailsFragment extends PlatformFragmentV1 implements On
         // hotel = new HotelSearchResultListItem();
         hotelListItem = (HotelSearchResultListItem) bundle.getSerializable(Const.EXTRA_HOTELS_DETAILS);
 
+        // adding parallax view for the image header
         mListView = (ParallaxScollView) mRoot.findViewById(R.id.layout_listview);
         View header = LayoutInflater.from(getActivity()).inflate(R.layout.hotel_choice_header, null);
         mImageView = (ImageView) header.findViewById(R.id.travelCityscape);
@@ -265,29 +266,28 @@ public class HotelChoiceDetailsFragment extends PlatformFragmentV1 implements On
      */
     private void showHideHomeImage() {
         // Setup the cityscape image switcher and put the placeholder image in place
-
-        // ImageView hotelImageView = (ImageView) mRoot.findViewById(R.id.travelCityscape);
-        // hotelImageView.setTag(R.id.travelCityscape, hotelImageView.findViewById(R.id.travelCityscape));
-
-        // ImageView headerImage = (ImageView) mRoot.findViewById(R.id.travelCityscape);
-
         Hotel hotel = hotelListItem.getHotel();
         List<HotelImagePair> imagepairs = (hotel != null ? hotel.imagePairs : null);
         int orientation = getResources().getConfiguration().orientation;
         switch (orientation) {
         case Configuration.ORIENTATION_PORTRAIT:
             mImageView.setVisibility(View.VISIBLE);
+            HotelImagePair image2 = null;
             if (mImageView != null && imagepairs != null && imagepairs.size() > 0) {
-                HotelImagePair image2 = imagepairs.get(0);
 
-                // set the image uri in the activity associated with this fragment
-                callBackListener.setHeaderImageURL(image2.image);
+                if (imagepairs.size() > 1) {
+                    image2 = imagepairs.get(1);
+                } else {
+                    image2 = imagepairs.get(0);
+                }
 
                 URI uri = URI.create(image2.image);
                 ImageCache imgCache = ImageCache.getInstance(getActivity());
                 Bitmap bitmap = imgCache.getBitmap(uri, null);
                 if (bitmap != null) {
                     mImageView.setImageBitmap(bitmap);
+                    // set the image uri in the activity associated with this fragment
+                    callBackListener.setHeaderImageURL(image2.image);
                 }
             } else {
                 mImageView.setImageResource(R.drawable.cityscape_placeholder);

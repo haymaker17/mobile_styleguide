@@ -50,13 +50,15 @@
         android:layout_height="wrap_content"
         android:orientation="vertical" >
 
-        <ImageView
+        <!--
+             <ImageView
             android:id="@+id/violation_icon"
             android:layout_width="16dp"
             android:layout_height="16dp"
             android:layout_gravity="top|right"
             android:src="@drawable/ic_action_voilation"
             android:visibility="invisible" />
+        -->
 
         <TextView
             android:id="@+id/hotel_room_rate"
@@ -66,6 +68,7 @@
             android:fontFamily="sans-serif-medium"
             android:paddingLeft="5dp"
             android:paddingRight="@dimen/list_cell_padding_right"
+            android:paddingTop="16dp"
             android:text="$0.00"
             android:textColor="#0078c8"
             android:textSize="16sp"

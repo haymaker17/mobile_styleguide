@@ -140,7 +140,7 @@ public class HotelChoiceDetailsActivity extends Activity implements HotelChoiceD
             if (hotelImage != null) {
                 Intent i = new Intent(this, ImageActivity.class);
                 Bundle bundle = new Bundle();
-                bundle.putSerializable(Const.EXTRA_HOTELS_DETAILS, (Serializable) imageListItem);
+                bundle.putSerializable(Const.EXTRA_HOTEL_IMAGES, (Serializable) hotelListItem.getHotel().imagePairs);
                 i.putExtras(bundle);
 
                 startActivity(i);

@@ -133,23 +133,26 @@ public class HotelBookingActivity extends Activity implements LoaderManager.Load
         ActionBar actionBar = getActionBar();
         actionBar.setTitle(hotelName);
 
-        // header image
-        ParallaxScollView mListView = (ParallaxScollView) findViewById(R.id.hotel_room_image);
-        View header = LayoutInflater.from(this).inflate(R.layout.hotel_image_header, null);
-        ImageView imageview = (ImageView) header.findViewById(R.id.travelCityscape);
-        URI uri = URI.create(headerImageURL);
-        ImageCache imgCache = ImageCache.getInstance(this);
-        Bitmap bitmap = imgCache.getBitmap(uri, null);
-        if (bitmap != null) {
-            imageview.setImageBitmap(bitmap);
-        } else {
-            imageview.setImageResource(R.drawable.cityscape_placeholder);
+        // show header image only if available
+        if (headerImageURL != null) {
+            URI uri = URI.create(headerImageURL);
+            ImageCache imgCache = ImageCache.getInstance(this);
+            Bitmap bitmap = imgCache.getBitmap(uri, null);
+
+            if (bitmap != null) {
+                ParallaxScollView mListView = (ParallaxScollView) findViewById(R.id.hotel_room_image);
+                View header = LayoutInflater.from(this).inflate(R.layout.hotel_image_header, null);
+                ImageView imageview = (ImageView) header.findViewById(R.id.travelCityscape);
+                imageview.setImageBitmap(bitmap);
+
+                mListView.setParallaxImageView(imageview);
+                mListView.addHeaderView(header);
+
+                ArrayAdapter<String> adapter = new ArrayAdapter<String>(this,
+                        android.R.layout.simple_expandable_list_item_1, new String[] {});
+                mListView.setAdapter(adapter);
+            }
         }
-        mListView.setParallaxImageView(imageview);
-        mListView.addHeaderView(header);
-        ArrayAdapter<String> adapter = new ArrayAdapter<String>(this, android.R.layout.simple_expandable_list_item_1,
-                new String[] {});
-        mListView.setAdapter(adapter);
 
         // room desc
         TextView txtView = (TextView) findViewById(R.id.hotel_room_desc);

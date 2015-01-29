@@ -103,5 +103,6 @@
     <dimen name="size_default_height">96dp</dimen>
 
     <string name="action_settings">Settings</string>
+    <string name="no_photos">No Photos Available</string>
 
 </resources>
