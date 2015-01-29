@@ -6,6 +6,11 @@ import java.io.OutputStream;
 import java.util.List;
 import java.util.Locale;
 
+import org.apache.http.client.ClientProtocolException;
+import org.apache.http.client.HttpClient;
+import org.apache.http.client.methods.HttpGet;
+import org.apache.http.impl.client.DefaultHttpClient;
+
 import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
@@ -13,6 +18,8 @@ import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
 import android.content.pm.ResolveInfo;
 import android.content.res.Configuration;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.net.Uri;
 import android.os.IBinder;
 import android.preference.PreferenceManager;
@@ -50,6 +57,8 @@ public class ViewUtil {
     }
 
     public static final String CLS_TAG = ViewUtil.class.getSimpleName();
+    public static final String MAP_URI = "http://maps.google.com/maps/api/staticmap?center=";
+    public static final String MAP_PREFERRENCES = "&zoom=15&size=360x168&sensor=false";
 
     /**
      * Will add a separator view to a view group.
@@ -545,5 +554,42 @@ public class ViewUtil {
         if (immMthdMngr != null) {
             immMthdMngr.hideSoftInputFromWindow(windowToken, 0);
         }
+    }
+
+    /**
+     * Google static map
+     * 
+     * @param lati
+     * @param longi
+     * @return
+     */
+    public static Bitmap setUpStaticMap(double lati, double longi) {
+        String URL = MAP_URI + lati + "," + longi + MAP_PREFERRENCES;
+        Bitmap bmp = null;
+        // TODO add spdy
+        HttpClient httpclient = new DefaultHttpClient();
+        HttpGet request = new HttpGet(URL);
+
+        InputStream in = null;
+        try {
+
+            in = httpclient.execute(request).getEntity().getContent();
+            // URI uri = URI.create(image2.image);
+            // ImageCache imgCache = ImageCache.getInstance(getActivity());
+            // Bitmap bitmap = imgCache.getBitmap(uri, null);
+            bmp = BitmapFactory.decodeStream(in);
+            in.close();
+        } catch (IllegalStateException e) {
+            // TODO Auto-generated catch block
+            e.printStackTrace();
+        } catch (ClientProtocolException e) {
+            // TODO Auto-generated catch block
+            e.printStackTrace();
+        } catch (IOException e) {
+            // TODO Auto-generated catch block
+            e.printStackTrace();
+        }
+
+        return bmp;
     }
 }

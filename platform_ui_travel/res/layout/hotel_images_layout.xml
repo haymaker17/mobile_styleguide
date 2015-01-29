@@ -8,22 +8,27 @@
         android:id="@+id/gridview"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
+        android:clickable="true"
+        android:focusable="true"
+        android:focusableInTouchMode="true"
         android:gravity="center"
-        android:horizontalSpacing="8dp"
+        android:horizontalSpacing="6dp"
         android:numColumns="2"
-        android:padding="8dp"
+        android:padding="6dp"
         android:stretchMode="columnWidth"
-        android:verticalSpacing="8dp"
-        android:visibility="gone" />
+        android:verticalSpacing="6dp" />
 
     <TextView
         android:id="@+id/no_photos"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:clickable="false"
+        android:focusable="false"
+        android:focusableInTouchMode="false"
         android:fontFamily="sans-serif-medium"
         android:paddingLeft="16dp"
         android:paddingTop="16dp"
-        android:text="No Photos Available"
+        android:text="@string/no_photos"
         android:textColor="#383f46"
         android:textSize="16sp"
         android:visibility="gone" />

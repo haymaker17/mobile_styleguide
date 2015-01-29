@@ -92,6 +92,7 @@ public class HotelChoiceDetailsFragment extends PlatformFragmentV1 implements On
         // hotel = new HotelSearchResultListItem();
         hotelListItem = (HotelSearchResultListItem) bundle.getSerializable(Const.EXTRA_HOTELS_DETAILS);
 
+        // adding parallax view for the image header
         mListView = (ParallaxScollView) mRoot.findViewById(R.id.layout_listview);
         View header = LayoutInflater.from(getActivity()).inflate(R.layout.hotel_choice_header, null);
         mImageView = (ImageView) header.findViewById(R.id.travelCityscape);
@@ -275,8 +276,13 @@ public class HotelChoiceDetailsFragment extends PlatformFragmentV1 implements On
         switch (orientation) {
         case Configuration.ORIENTATION_PORTRAIT:
             mImageView.setVisibility(View.VISIBLE);
+            HotelImagePair image2 = null;
             if (mImageView != null && imagepairs != null && imagepairs.size() > 0) {
-                HotelImagePair image2 = imagepairs.get(1);
+                if (imagepairs.size() > 1) {
+                    image2 = imagepairs.get(1);
+                } else {
+                    image2 = imagepairs.get(0);
+                }
                 URI uri = URI.create(image2.image);
                 ImageCache imgCache = ImageCache.getInstance(getActivity());
                 Bitmap bitmap = imgCache.getBitmap(uri, null);
@@ -293,5 +299,4 @@ public class HotelChoiceDetailsFragment extends PlatformFragmentV1 implements On
             break;
         }
     }
-
 }
