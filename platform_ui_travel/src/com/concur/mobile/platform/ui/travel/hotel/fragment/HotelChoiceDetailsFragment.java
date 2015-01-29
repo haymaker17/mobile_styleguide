@@ -233,6 +233,8 @@ public class HotelChoiceDetailsFragment extends PlatformFragmentV1 implements On
 
         public void onMapsClicked(LatLng post);
 
+        public void setHeaderImageURL(String headerImageURL);
+
     }
 
     @Override
@@ -276,7 +278,11 @@ public class HotelChoiceDetailsFragment extends PlatformFragmentV1 implements On
         case Configuration.ORIENTATION_PORTRAIT:
             mImageView.setVisibility(View.VISIBLE);
             if (mImageView != null && imagepairs != null && imagepairs.size() > 0) {
-                HotelImagePair image2 = imagepairs.get(1);
+                HotelImagePair image2 = imagepairs.get(0);
+
+                // set the image uri in the activity associated with this fragment
+                callBackListener.setHeaderImageURL(image2.image);
+
                 URI uri = URI.create(image2.image);
                 ImageCache imgCache = ImageCache.getInstance(getActivity());
                 Bitmap bitmap = imgCache.getBitmap(uri, null);
@@ -293,5 +299,4 @@ public class HotelChoiceDetailsFragment extends PlatformFragmentV1 implements On
             break;
         }
     }
-
 }

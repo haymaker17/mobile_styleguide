@@ -1,7 +1,9 @@
 package com.concur.mobile.platform.ui.travel.hotel.activity;
 
+import java.net.URI;
 import java.util.List;
 
+import android.app.ActionBar;
 import android.app.Activity;
 import android.app.AlertDialog;
 import android.app.LoaderManager;
@@ -9,15 +11,17 @@ import android.content.DialogInterface;
 import android.content.DialogInterface.OnCancelListener;
 import android.content.Intent;
 import android.content.Loader;
+import android.graphics.Bitmap;
 import android.os.Bundle;
 import android.text.TextUtils;
 import android.util.Log;
+import android.view.LayoutInflater;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.ViewGroup;
-import android.view.ViewStub;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
+import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -28,8 +32,11 @@ import com.concur.mobile.platform.travel.search.hotel.HotelPreSellOption;
 import com.concur.mobile.platform.travel.search.hotel.HotelPreSellOptionLoader;
 import com.concur.mobile.platform.travel.search.hotel.HotelRate;
 import com.concur.mobile.platform.ui.common.util.FormatUtil;
+import com.concur.mobile.platform.ui.common.util.ImageCache;
 import com.concur.mobile.platform.ui.travel.R;
 import com.concur.mobile.platform.ui.travel.util.Const;
+import com.concur.mobile.platform.ui.travel.util.ParallaxScollView;
+import com.concur.mobile.platform.util.Format;
 
 /**
  * 
@@ -41,7 +48,6 @@ public class HotelBookingActivity extends Activity implements LoaderManager.Load
     protected static final String CLS_TAG = HotelBookingActivity.class.getSimpleName();
 
     private static final int HOTEL_PRE_SELL_OPTION_LOADER_ID = 0;
-    private static final int HOTEL_BOOKING_LOADER_ID = 1;
 
     private LoaderManager lm;
     private String roomDesc;
@@ -58,6 +64,11 @@ public class HotelBookingActivity extends Activity implements LoaderManager.Load
     protected SpinnerItem curCardChoice;
     // Contains the list of cards.
     protected SpinnerItem[] cardChoices;
+    private String location;
+    private String durationOfStayForDisplay;
+    private int numOfNights;
+    private String headerImageURL;
+    private String hotelName;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -69,6 +80,11 @@ public class HotelBookingActivity extends Activity implements LoaderManager.Load
         Intent intent = getIntent();
 
         hotelRate = (HotelRate) intent.getSerializableExtra("roomSelected");
+        location = intent.getStringExtra(Const.EXTRA_TRAVEL_HOTEL_SEARCH_LOCATION);
+        durationOfStayForDisplay = intent.getStringExtra(Const.EXTRA_TRAVEL_HOTEL_SEARCH_DURATION_OF_STAY);
+        numOfNights = intent.getIntExtra(Const.EXTRA_TRAVEL_HOTEL_SEARCH_DURATION_NUM_OF_NIGHTS, 0);
+        headerImageURL = intent.getStringExtra("headerImageURL");
+        hotelName = intent.getStringExtra("hotelName");
 
         if (hotelRate != null) {
 
@@ -113,14 +129,56 @@ public class HotelBookingActivity extends Activity implements LoaderManager.Load
     // }
 
     private void initView() {
+        // header title
+        ActionBar actionBar = getActionBar();
+        actionBar.setTitle(hotelName);
+
+        // header image
+        ParallaxScollView mListView = (ParallaxScollView) findViewById(R.id.hotel_room_image);
+        View header = LayoutInflater.from(this).inflate(R.layout.hotel_image_header, null);
+        ImageView imageview = (ImageView) header.findViewById(R.id.travelCityscape);
+        URI uri = URI.create(headerImageURL);
+        ImageCache imgCache = ImageCache.getInstance(this);
+        Bitmap bitmap = imgCache.getBitmap(uri, null);
+        if (bitmap != null) {
+            imageview.setImageBitmap(bitmap);
+        } else {
+            imageview.setImageResource(R.drawable.cityscape_placeholder);
+        }
+        mListView.setParallaxImageView(imageview);
+        mListView.addHeaderView(header);
+        ArrayAdapter<String> adapter = new ArrayAdapter<String>(this, android.R.layout.simple_expandable_list_item_1,
+                new String[] {});
+        mListView.setAdapter(adapter);
+
         // room desc
         TextView txtView = (TextView) findViewById(R.id.hotel_room_desc);
         txtView.setText(roomDesc);
+
+        // dates
+        txtView = (TextView) findViewById(R.id.date_span);
+        txtView.setText(durationOfStayForDisplay);
+
+        // number of nights
+        txtView = (TextView) findViewById(R.id.hotel_room_night);
+        txtView.setText(Format.localizeText(this.getApplicationContext(), R.string.hotel_reserve_num_of_nights,
+                numOfNights));
 
         // amount
         txtView = (TextView) findViewById(R.id.hotel_room_rate);
         txtView.setText(FormatUtil.formatAmountWithNoDecimals(amount, this.getResources().getConfiguration().locale,
                 currCode, true, false));
+
+        // rate info on click event
+        ImageView rateInfoImg = (ImageView) findViewById(R.id.checkout_icon_price_info);
+        rateInfoImg.setOnClickListener(new OnClickListener() {
+
+            @Override
+            public void onClick(View v) {
+                Toast.makeText(getApplicationContext(), "Rate breakdown here...not implemented", Toast.LENGTH_SHORT)
+                        .show();
+            }
+        });
 
         // cancellation policy on click event
         findViewById(R.id.hotel_policy).setOnClickListener(new OnClickListener() {
@@ -134,9 +192,6 @@ public class HotelBookingActivity extends Activity implements LoaderManager.Load
         // credit cards
         initCardChoiceView();
 
-        // violations
-        initViolations();
-
         // reserve UI
         Button reserveButton = (Button) findViewById(R.id.footer_button);
         reserveButton.setText(R.string.hotel_reserve_this_room);
@@ -147,16 +202,6 @@ public class HotelBookingActivity extends Activity implements LoaderManager.Load
                 doBooking();
             }
         });
-    }
-
-    private void initViolations() {
-        if (hotelRate != null && hotelRate.violationValueIds != null && hotelRate.violationValueIds.length > 0) {
-
-            // inflate the violations view stub
-            View violationsView = ((ViewStub) findViewById(R.id.violation_view)).inflate();
-
-            // initialize the view
-        }
     }
 
     /**

@@ -19,6 +19,8 @@ public class Const {
     public static final String EXTRA_TRAVEL_HOTEL_SEARCH_CHECK_OUT = "travel.hotel.search.check.out";
     public static final String EXTRA_TRAVEL_HOTEL_SEARCH_CHECK_OUT_CALENDAR = "travel.hotel.search.check.out.calendar";
     public static final String EXTRA_TRAVEL_HOTEL_SEARCH_LOCATION = "travel.hotel.search.location";
+    public static final String EXTRA_TRAVEL_HOTEL_SEARCH_DURATION_OF_STAY = "travel.hotel.search.duration.of.stay";
+    public static final String EXTRA_TRAVEL_HOTEL_SEARCH_DURATION_NUM_OF_NIGHTS = "travel.hotel.search.duration.number.of.nights";
     public static final String EXTRA_TRAVEL_HOTEL_SEARCH_NAMES_CONTAINING = "travel.hotel.search.names.containing";
     public static final String EXTRA_TRAVEL_HOTEL_SEARCH_DISTANCE_UNIT_ID = "travel.hotel.search.distance.unit";
     public static final String EXTRA_LOCATION_SEARCH_ALLOWED_MODES = "loc_search_modes_allowed";

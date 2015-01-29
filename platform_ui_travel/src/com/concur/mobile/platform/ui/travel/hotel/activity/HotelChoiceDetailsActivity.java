@@ -51,6 +51,10 @@ public class HotelChoiceDetailsActivity extends Activity implements HotelChoiceD
     private TabHost mTabHost;
     private int mCurrentTab;
     private HotelSearchResultListItem hotelListItem;
+    private String location;
+    private String durationOfStayForDisplay;
+    private int numOfNights;
+    private String headerImageURL;
 
     // private ParallaxScollListView mListView;
     // private ImageView mImageView;
@@ -121,6 +125,11 @@ public class HotelChoiceDetailsActivity extends Activity implements HotelChoiceD
         // ArrayAdapter<String> adapter = new ArrayAdapter<String>(this, android.R.layout.simple_expandable_list_item_1,
         // new String[] {});
         // mListView.setAdapter(adapter);
+
+        // will be passed on to booking activity
+        location = i.getStringExtra(Const.EXTRA_TRAVEL_HOTEL_SEARCH_LOCATION);
+        durationOfStayForDisplay = i.getStringExtra(Const.EXTRA_TRAVEL_HOTEL_SEARCH_DURATION_OF_STAY);
+        numOfNights = i.getIntExtra(Const.EXTRA_TRAVEL_HOTEL_SEARCH_DURATION_NUM_OF_NIGHTS, 0);
 
     }
 
@@ -198,10 +207,22 @@ public class HotelChoiceDetailsActivity extends Activity implements HotelChoiceD
     @Override
     public void roomItemClicked(HotelRoomListItem roomListItem) {
         Intent intent = new Intent(this, HotelBookingActivity.class);
+        // TODO - have a singleton class and set these objects there to share with other activities
         intent.putExtra("roomSelected", roomListItem.getHotelRoom());
+
+        intent.putExtra(Const.EXTRA_TRAVEL_HOTEL_SEARCH_LOCATION, location);
+        intent.putExtra(Const.EXTRA_TRAVEL_HOTEL_SEARCH_DURATION_OF_STAY, durationOfStayForDisplay);
+        intent.putExtra(Const.EXTRA_TRAVEL_HOTEL_SEARCH_DURATION_NUM_OF_NIGHTS, numOfNights);
+        intent.putExtra("headerImageURL", headerImageURL);
+        intent.putExtra("hotelName", hotelListItem.getHotel().name);
 
         startActivity(intent);
 
+    }
+
+    @Override
+    public void setHeaderImageURL(String headerImageURL) {
+        this.headerImageURL = headerImageURL;
     }
 
 }

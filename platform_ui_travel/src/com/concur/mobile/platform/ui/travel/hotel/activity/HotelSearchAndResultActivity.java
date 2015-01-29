@@ -87,6 +87,7 @@ public class HotelSearchAndResultActivity extends Activity implements OnMenuItem
     private boolean fromLocationSearch;
     private boolean searchCriteriaChanged;
     private String distanceUnit;
+    private int numberOfNights;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -134,6 +135,13 @@ public class HotelSearchAndResultActivity extends Activity implements OnMenuItem
                 + " - " + intent.getStringExtra(Const.EXTRA_TRAVEL_HOTEL_SEARCH_CHECK_OUT);
 
         listItemAdapater = new ListItemAdapter<HotelSearchResultListItem>(this, hotelListItems);
+
+        if (checkInDate.before(checkOutDate)) {
+            numberOfNights = (int) ((checkOutDate.getTimeInMillis() - checkInDate.getTimeInMillis()) / (24 * 60 * 60 * 1000));
+        } else {
+            // safe assume to 1 night
+            numberOfNights = 1;
+        }
 
     }
 
@@ -491,6 +499,10 @@ public class HotelSearchAndResultActivity extends Activity implements OnMenuItem
                     Intent i = new Intent(this, HotelChoiceDetailsActivity.class);
                     Bundle bundle = new Bundle();
                     bundle.putSerializable(Const.EXTRA_HOTELS_DETAILS, (Serializable) itemClicked);
+                    i.putExtra(Const.EXTRA_TRAVEL_HOTEL_SEARCH_LOCATION, hotelSearchRESTResultFrag.location);
+                    i.putExtra(Const.EXTRA_TRAVEL_HOTEL_SEARCH_DURATION_OF_STAY,
+                            hotelSearchRESTResultFrag.durationOfStayForDisplayInHeader);
+                    i.putExtra(Const.EXTRA_TRAVEL_HOTEL_SEARCH_DURATION_NUM_OF_NIGHTS, numberOfNights);
                     i.putExtras(bundle);
 
                     startActivity(i);
