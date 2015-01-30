@@ -34,8 +34,11 @@ public enum EventTracker {
      */
     INSTANCE;
 
+    private static final String USER_ID_TAG = "&uid";
+    private static final int CUSTOM_ID_INDEX = 4;
+
     private Context appContext;
-    private String userId;
+    private String analyticsId;
     @SuppressWarnings("unused")
     private String gaTrackingId; // Google Analytics Tracking ID
 
@@ -66,7 +69,7 @@ public enum EventTracker {
     public void init(Context context, String userId, String gaTrackingId) {
 
         this.appContext = context;
-        this.userId = userId;
+        this.analyticsId = userId;
 
         // Initialize Google Analytics.
         // Note that the Google Analytics
@@ -85,7 +88,7 @@ public enum EventTracker {
      *            an ID unique to this user client.
      */
     public void setUserId(String userId) {
-        this.userId = userId;
+        this.analyticsId = userId;
     }
 
     /**
@@ -142,7 +145,8 @@ public enum EventTracker {
      */
     public void track(String eventCategory, String eventAction, String eventLabel) {
         MapBuilder builder = MapBuilder.createEvent(eventCategory, eventAction, eventLabel, null);
-        builder.set(Fields.CLIENT_ID, userId);
+        builder.set(USER_ID_TAG, analyticsId);
+        builder.set(Fields.customDimension(CUSTOM_ID_INDEX), analyticsId);
         EasyTracker.getInstance(appContext).send(builder.build());
     }
 
@@ -158,7 +162,8 @@ public enum EventTracker {
      */
     public void track(String eventCategory, String eventAction, String eventLabel, Long value) {
         MapBuilder builder = MapBuilder.createEvent(eventCategory, eventAction, eventLabel, value);
-        builder.set(Fields.CLIENT_ID, userId);
+        builder.set(USER_ID_TAG, analyticsId);
+        builder.set(Fields.customDimension(CUSTOM_ID_INDEX), analyticsId);
         EasyTracker.getInstance(appContext).send(builder.build());
     }
 
@@ -180,13 +185,15 @@ public enum EventTracker {
             for (String paramKey : parameters.keySet()) {
                 MapBuilder builder = MapBuilder.createEvent(eventCategory, eventAction,
                         Flurry.formatFlurryEvent(paramKey, parameters.get(paramKey)), null);
-                builder.set(Fields.CLIENT_ID, userId);
+                builder.set(USER_ID_TAG, analyticsId);
+                builder.set(Fields.customDimension(CUSTOM_ID_INDEX), analyticsId);
                 EasyTracker.getInstance(appContext).send(builder.build());
             }
 
         } else {
             MapBuilder builder = MapBuilder.createEvent(eventCategory, eventAction, null, null);
-            builder.set(Fields.CLIENT_ID, userId);
+            builder.set(USER_ID_TAG, analyticsId);
+            builder.set(Fields.customDimension(CUSTOM_ID_INDEX), analyticsId);
             EasyTracker.getInstance(appContext).send(builder.build());
         }
     }

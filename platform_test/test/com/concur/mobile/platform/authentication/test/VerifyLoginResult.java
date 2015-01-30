@@ -12,6 +12,7 @@ import android.content.Context;
 import com.concur.mobile.platform.authentication.SessionInfo;
 import com.concur.mobile.platform.authentication.SiteSettingInfo;
 import com.concur.mobile.platform.authentication.UserInfo;
+import com.concur.mobile.platform.config.provider.ClientData;
 import com.concur.mobile.platform.config.provider.ConfigUtil;
 
 /**
@@ -58,6 +59,44 @@ public class VerifyLoginResult {
             // User ID
             Assert.assertEquals(MTAG + ": user ID", loginResult.userId, sessInfo.getUserId());
 
+        } else {
+            throw new Exception(CLS_TAG + "." + MTAG + ": session info is null!");
+        }
+
+    }
+
+    /**
+     * Will verify client data information in <code>loginResult</code> against client data stored in the config content provider
+     * 
+     * @param context
+     *            contains an application context.
+     * @param loginResult
+     *            contains the login result.
+     */
+    public void verifyClientInfo(Context context, LoginResult loginResult) throws Exception {
+
+        final String MTAG = CLS_TAG + ".verifyClientData";
+
+        // Verify Session Information.
+        ClientData clientData = new ClientData(context);
+        String userid = loginResult.userId;
+        if (!userid.isEmpty()) {
+            clientData.userId = userid;
+            clientData.key = LoginResult.TAG_ANALYTICS_ID;
+            if (clientData.load()) {
+                userid = clientData.text;
+            }
+        }
+        if (!userid.isEmpty()) {
+
+            // User Id.
+            Assert.assertEquals(MTAG + ": userid", loginResult.userId, clientData.userId);
+
+            // text.
+            Assert.assertEquals(MTAG + ": value/text", loginResult.analyticsId, clientData.text);
+
+            // blob.
+            Assert.assertNull(MTAG, clientData.blob);
         } else {
             throw new Exception(CLS_TAG + "." + MTAG + ": session info is null!");
         }
