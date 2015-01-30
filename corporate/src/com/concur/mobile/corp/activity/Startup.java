@@ -89,7 +89,7 @@ public class Startup extends BaseActivity {
         case CORPORATE:
             setContentView(R.layout.splash);
             // MOB-20174 - AppDynaics stuff.
-            Instrumentation.start("AD-AAB-AAA-FUF", getApplicationContext());
+            Instrumentation.start("AD-AAB-AAA-FUF", getApplicationContext(),true);
 
             new Handler().postDelayed(new Runnable() {
 
