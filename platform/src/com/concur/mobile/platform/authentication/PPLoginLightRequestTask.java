@@ -184,6 +184,8 @@ public class PPLoginLightRequestTask extends PlatformAsyncRequestTask {
                     if (responseStatus.isSuccess()) {
                         // Update the config content provider.
                         ConfigUtil.updateSessionInfo(getContext().getContentResolver(), loginResult, false);
+                        // update client data
+                        ConfigUtil.updateAnalyticsIdInClientData(getContext(), loginResult);
                         // Ensure the session ID is cleared out of from platform properties.
                         PlatformProperties.setSessionId(null);
                         // Update Platform properties.
