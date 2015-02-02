@@ -6,10 +6,9 @@
         android:icon="@drawable/icon_nav_map"
         android:showAsAction="ifRoom"
         android:title="@string/action_item_maps"/>
-
     <item
         android:id="@+id/voice"
-        android:icon="@drawable/icon_voice1"
+        android:icon="@drawable/icon_voice"
         android:showAsAction="ifRoom"
         android:title="@string/voice_search"/>
 
