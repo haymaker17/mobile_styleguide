@@ -1,7 +1,6 @@
 package com.concur.mobile.core.request.activity;
 
 import android.app.Activity;
-import android.content.Context;
 import android.content.Intent;
 import android.content.res.Resources;
 import android.graphics.Typeface;
@@ -25,6 +24,7 @@ import com.concur.mobile.core.request.service.RequestParser;
 import com.concur.mobile.core.request.task.RequestDetailsTask;
 import com.concur.mobile.core.request.task.RequestFormFieldsTask;
 import com.concur.mobile.core.request.task.RequestSubmitTask;
+import com.concur.mobile.core.request.util.ConnectHelper;
 import com.concur.mobile.core.request.util.DateUtil;
 import com.concur.mobile.core.util.Const;
 import com.concur.mobile.core.util.EventTracker;
@@ -47,13 +47,14 @@ public class RequestSummaryActivity extends BaseActivity {
     private static final int ID_DETAIL_VIEW = 1;
 
     public static final int HEADER_UPDATE_RESULT = 1;
+    private static final int ENTRY_UPDATE_RESULT = 2;
 
     public static final String REQUEST_IS_EDITABLE = "false";
 
     /**
      * A reference to the application instance representing the client.
      */
-    private ViewFlipper requestDetailVF;
+    private ViewFlipper requestSummaryVF;
     private ListView entryListView;
     private RelativeLayout segmentListViewLayout;
     private RelativeLayout submitButton;
@@ -65,12 +66,14 @@ public class RequestSummaryActivity extends BaseActivity {
 
     private ConnectFormFieldsCache formFieldsCache = null;
     private String formWaitingForRefresh = null;
+    private String entryWaitingForRefresh;
 
     protected Boolean showCodes;
     protected int category;
     protected int minSearchLength = 1;
 
     private RequestDTO tr = null;
+    private Locale locale = null;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -91,14 +94,20 @@ public class RequestSummaryActivity extends BaseActivity {
             // TODO : throw exception & display toast message ? @See with PM
             finish();
         }
+
+        this.locale = this.getResources().getConfiguration().locale != null ?
+                this.getResources().getConfiguration().locale :
+                Locale.US;
+
         configureUI();
     }
 
     private void configureUI() {
-        requestDetailVF = ((ViewFlipper) findViewById(R.id.requestDetailVF));
-        requestDetailVF.setDisplayedChild(ID_LOADING_VIEW);
+        requestSummaryVF = ((ViewFlipper) findViewById(R.id.requestDetailVF));
+        requestSummaryVF.setDisplayedChild(ID_LOADING_VIEW);
         entryListView = ((ListView) findViewById(R.id.segmentListView));
-        entryListView.setAdapter(new EntryListAdapter(this.getBaseContext(), null));
+        entryListView.setAdapter(new EntryListAdapter(this.getBaseContext(), null, locale));
+        entryListView.setOnItemClickListener(new EntryListAdapterRowClickListener());
         segmentListViewLayout = (RelativeLayout) findViewById(R.id.segmentListViewLayout);
 
         // Set the expense header navigation bar information.
@@ -129,12 +138,8 @@ public class RequestSummaryActivity extends BaseActivity {
         final TextView business_purpose = (TextView) findViewById(R.id.requestBusinessPurpose);
         final TextView requestComment = (TextView) findViewById(R.id.requestComment);
 
-        final Locale loc = this.getResources().getConfiguration().locale != null ?
-                this.getResources().getConfiguration().locale :
-                Locale.US;
-
         final String formattedAmount = FormatUtil
-                .formatAmount(request.getTotal(), loc, request.getCurrencyCode(), true, true);
+                .formatAmount(request.getTotal(), locale, request.getCurrencyCode(), true, true);
 
         name.setText(request.getName());
         amount.setText(formattedAmount);
@@ -142,14 +147,17 @@ public class RequestSummaryActivity extends BaseActivity {
         business_purpose.setText(request.getPurpose());
         requestComment.setText(request.getLastComment());
 
-        startDate.setText(DateUtil.getFormattedDateForLocale(DateUtil.DatePattern.SHORT, loc, request.getStartDate()));
+        startDate.setText(
+                DateUtil.getFormattedDateForLocale(DateUtil.DatePattern.SHORT, locale, request.getStartDate()));
 
         name.setTypeface(Typeface.DEFAULT_BOLD);
         amount.setTypeface(Typeface.DEFAULT_BOLD);
 
-        if (tr.getEntriesList() != null) {
-            ((EntryListAdapter) entryListView.getAdapter()).updateList(tr.getEntriesList());
-            if (tr.getEntriesList().size() <= 1) {
+        if (tr.getEntriesMap() != null) {
+            //TODO
+            ((EntryListAdapter) entryListView.getAdapter())
+                    .updateList(new ArrayList<RequestEntryDTO>(tr.getEntriesMap().values()));
+            if (tr.getEntriesMap().size() <= 1) {
                 final int height = (int) TypedValue
                         .applyDimension(TypedValue.COMPLEX_UNIT_DIP, 75, getResources().getDisplayMetrics());
                 segmentListViewLayout.getLayoutParams().height = height;
@@ -163,7 +171,7 @@ public class RequestSummaryActivity extends BaseActivity {
     private void refreshData(boolean refreshRequired) {
         if (ConcurCore.isConnected()) {
             if (tr != null) {
-                requestDetailVF.setDisplayedChild(ID_LOADING_VIEW);
+                requestSummaryVF.setDisplayedChild(ID_LOADING_VIEW);
                 Log.d(Const.LOG_TAG, CLS_TAG + " calling increment from refreshList");
 
                 // --- creates the listener
@@ -184,6 +192,7 @@ public class RequestSummaryActivity extends BaseActivity {
         if (ConcurCore.isConnected()) {
             // --- creates the listener
             asyncReceiverSubmit.setListener(new TRSubmitListener());
+            requestSummaryVF.setDisplayedChild(ID_LOADING_VIEW);
             // --- onRequestResult calls cleanup() on execution, so listener will be destroyed by processing
             new RequestSubmitTask(RequestSummaryActivity.this, 1, asyncReceiverSubmit, tr.getId()).execute();
         } else {
@@ -197,9 +206,9 @@ public class RequestSummaryActivity extends BaseActivity {
      * @return true if there were cached data available & display were successful (should always be successful)
      */
     private boolean showCacheData() {
-        if (tr.getEntriesList() != null) {
-            requestDetailVF.setDisplayedChild(ID_DETAIL_VIEW);
-            tr.setEntriesList(tr.getEntriesList());
+        if (tr.getEntriesMap() != null) {
+            requestSummaryVF.setDisplayedChild(ID_DETAIL_VIEW);
+            tr.setEntriesMap(tr.getEntriesMap());
             updateTRDetailsUI(tr);
             return true;
         }
@@ -217,17 +226,17 @@ public class RequestSummaryActivity extends BaseActivity {
 
         @Override
         public void onRequestSuccess(Bundle resultData) {
-            requestDetailVF.setDisplayedChild(ID_DETAIL_VIEW);
+            requestSummaryVF.setDisplayedChild(ID_DETAIL_VIEW);
             requestParser.parseTRDetailResponse(tr, resultData.getString(BaseAsyncRequestTask.HTTP_RESPONSE));
             updateTRDetailsUI(tr);
 
             // --- using an hashset to ensure uniqueness
             final Set<String> segmentFormIds = new HashSet<String>();
-            if (tr.getEntriesList() != null) {
+            if (tr.getEntriesMap() != null) {
                 /* All segments of an entry have the same form type so we just have to get the first one
                  * (cf Jad 27/01/2015 - 17h16 GMT+1)
                  */
-                for (RequestEntryDTO re : tr.getEntriesList()) {
+                for (RequestEntryDTO re : tr.getEntriesMap().values()) {
                     if (re.getListSegment() != null && re.getListSegment().size() > 0) {
                         segmentFormIds.add(re.getListSegment().iterator().next().getSegmentFormId());
                     }
@@ -252,15 +261,19 @@ public class RequestSummaryActivity extends BaseActivity {
 
         @Override
         public void onRequestFail(Bundle resultData) {
+            ConnectHelper.displayResponseMessage(getApplicationContext(), resultData,
+                    getResources().getString(R.string.tr_error_retrieving_detail));
             handleRefreshFail();
-            Log.d(Const.LOG_TAG, CLS_TAG + " calling decrement from onrequestfails");
+            Log.d(Const.LOG_TAG, CLS_TAG + " calling decrement from onRequestCancel");
             Log.d(Const.LOG_TAG, " onRequestFail in TRDetailsListener...");
         }
 
         @Override
         public void onRequestCancel(Bundle resultData) {
+            ConnectHelper
+                    .displayMessage(getApplicationContext(), getResources().getString(R.string.tr_operation_canceled));
             handleRefreshFail();
-            Log.d(Const.LOG_TAG, CLS_TAG + " calling decrement from onrequestcancel");
+            Log.d(Const.LOG_TAG, CLS_TAG + " calling decrement from onRequestCancel");
             Log.d(Const.LOG_TAG, " onRequestCancel in TRDetailsListener...");
         }
 
@@ -270,13 +283,84 @@ public class RequestSummaryActivity extends BaseActivity {
         }
     }
 
+    /**
+     * Handles tap upon an item on the request list
+     */
+    class EntryListAdapterRowClickListener implements AdapterView.OnItemClickListener {
+
+        @Override
+        public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+            final EntryListAdapter adapter = (EntryListAdapter) entryListView.getAdapter();
+            final RequestEntryDTO entry = adapter.getItem(position);
+            if (entry != null) {
+                final String reqId = entry.getId();
+                if (reqId != null) {
+                    if (entry.getListSegment() != null && entry.getListSegment().size() > 0) {
+                        final String segmentFormId = entry.getListSegment().iterator().next().getSegmentFormId();
+                        if (!formFieldsCache.isFormBeingRefreshed(segmentFormId)) {
+                            displayEntryDetail(reqId);
+                        } else {
+                            waitFormFieldsCacheRefresh(segmentFormId, entry.getId());
+                        }
+                    } else {
+                        //TODO What to do ? is this case possible ?
+                    }
+                } else {
+                    Log.e(Const.LOG_TAG, CLS_TAG + ".onItemClick: request id is null!");
+                }
+            }
+        }
+    }
+
+    private void waitFormFieldsCacheRefresh(String formId, String entryId) {
+        // set screen as loading and implement some handling on task success / fail / cancel actions
+        formWaitingForRefresh = formId;
+        entryWaitingForRefresh = entryId;
+
+        setView(ID_LOADING_VIEW);
+    }
+
+    /**
+     * Handles the view switch between empty view and list view
+     *
+     * @param viewID id of the view to display
+     */
+    private void setView(int viewID) {
+        requestSummaryVF.setDisplayedChild(viewID);
+    }
+
+    /**
+     * Generates RequestDetailsActivity intent
+     *
+     * @param entryId request object id
+     */
+    private void displayEntryDetail(String entryId) {
+        //final RequestDTO tr = requestListCache.getValue(reqId);
+        // --- we go to detail screen even if there is no connection if we have cached detail data
+        if (!ConcurCore.isConnected() && (tr == null || tr.getEntriesMap() == null)) {
+            new NoConnectivityDialogFragment().show(getSupportFragmentManager(), CLS_TAG);
+        } else {
+            final Intent i = new Intent(RequestSummaryActivity.this, RequestEntryActivity.class);
+            i.putExtra(RequestListActivity.REQUEST_ID, tr.getId());
+            i.putExtra(RequestEntryActivity.ENTRY_ID, entryId);
+
+            // --- Flurry tracking
+            i.putExtra(Flurry.PARAM_NAME_CAME_FROM, Flurry.PARAM_VALUE_TRAVEL_REQUEST_SUMMARY);
+            final Map<String, String> params = new HashMap<String, String>();
+            params.put(Flurry.PARAM_NAME_FROM, Flurry.PARAM_VALUE_TRAVEL_REQUEST_SUMMARY);
+            params.put(Flurry.PARAM_NAME_TO, Flurry.PARAM_VALUE_TRAVEL_REQUEST_ENTRY);
+            EventTracker.INSTANCE.track(Flurry.CATEGORY_TRAVEL_REQUEST, Flurry.EVENT_NAME_LAUNCH, params);
+
+            cleanupReceivers();
+            startActivityForResult(i, ENTRY_UPDATE_RESULT);
+        }
+    }
+
     public class TRSubmitListener implements AsyncReplyListener {
 
         @Override
         public void onRequestSuccess(Bundle resultData) {
-            Context context = getApplicationContext();
-            final Toast toast = Toast.makeText(context, "REQUEST SUBMITTED", Toast.LENGTH_LONG);
-            toast.show();
+            ConnectHelper.displayMessage(getApplicationContext(), "REQUEST SUBMITTED");
 
             // metrics
             final Map<String, String> params = new HashMap<String, String>();
@@ -295,18 +379,21 @@ public class RequestSummaryActivity extends BaseActivity {
 
         @Override
         public void onRequestFail(Bundle resultData) {
-            final CharSequence text = resultData.getString(BaseAsyncRequestTask.HTTP_STATUS_MESSAGE);
-            final Toast toast = Toast.makeText(getApplicationContext(), text, Toast.LENGTH_LONG);
-            toast.show();
+            ConnectHelper.displayResponseMessage(getApplicationContext(), resultData,
+                    getResources().getString(R.string.tr_error_submit));
 
             Log.d(Const.LOG_TAG, CLS_TAG + " calling decrement from onrequestfails");
             Log.d(Const.LOG_TAG, " onRequestFail in TRSubmitListener...");
+            requestSummaryVF.setDisplayedChild(ID_DETAIL_VIEW);
         }
 
         @Override
         public void onRequestCancel(Bundle resultData) {
+            ConnectHelper
+                    .displayMessage(getApplicationContext(), getResources().getString(R.string.tr_operation_canceled));
             Log.d(Const.LOG_TAG, CLS_TAG + " calling decrement from onrequestcancel");
             Log.d(Const.LOG_TAG, " onRequestCancel in TRSubmitListener...");
+            requestSummaryVF.setDisplayedChild(ID_DETAIL_VIEW);
         }
 
         @Override
@@ -367,20 +454,14 @@ public class RequestSummaryActivity extends BaseActivity {
     private void handleAwaitingRefresh(String formId, boolean isSuccess) {
         if (formWaitingForRefresh != null && formId.equals(formWaitingForRefresh)) {
             if (isSuccess) {
-                displaySegmentDetail(formWaitingForRefresh);
+                displayEntryDetail(entryWaitingForRefresh);
+            } else {
+                setView(ID_DETAIL_VIEW);
+                // TODO : display an error message ?
             }
             formWaitingForRefresh = null;
+            entryWaitingForRefresh = null;
         }
-    }
-
-    /**
-     * Generates *** intent
-     *
-     * @param formId form ID
-     */
-    private void displaySegmentDetail(String formId) {
-        //cleanupReceivers();
-        // --- TODO -- displays the corresponding segment ?
     }
 
     private void handleRefreshFail() {
@@ -421,7 +502,7 @@ public class RequestSummaryActivity extends BaseActivity {
     }
 
     private void cleanupReceivers() {
-        asyncReceiverFormFields.setListener(null);
+        //asyncReceiverFormFields.setListener(null);
     }
 
     @Override
@@ -482,6 +563,7 @@ public class RequestSummaryActivity extends BaseActivity {
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
         switch (requestCode) {
+        case (ENTRY_UPDATE_RESULT):
         case (HEADER_UPDATE_RESULT): {
             if (resultCode == Activity.RESULT_OK) {
                 final Boolean newText = data.getBooleanExtra(RequestHeaderActivity.DO_WS_REFRESH, false);

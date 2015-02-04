@@ -6,6 +6,7 @@ import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
 import android.text.InputType;
 import android.text.TextUtils;
+import android.util.Log;
 import android.util.TypedValue;
 import android.view.View;
 import android.view.ViewGroup;
@@ -18,7 +19,11 @@ import com.concur.mobile.core.request.util.DateUtil;
 import com.concur.mobile.platform.common.formfield.ConnectForm;
 import com.concur.mobile.platform.common.formfield.ConnectFormField;
 import com.concur.mobile.platform.common.formfield.IFormField;
+import com.concur.mobile.platform.request.dto.FormDTO;
 
+import java.text.DateFormat;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.*;
 
 /**
@@ -28,6 +33,8 @@ import java.util.*;
  * Extracted from RequestHeaderActivity.
  */
 public abstract class AbstractConnectFormFieldActivity extends BaseActivity {
+
+    private static final String CLS_TAG = "AbstractConnectFormFieldActivity";
 
     private static enum DisplayType {
         TEXTFIELD,        //RequestID, Name, Status
@@ -46,17 +53,13 @@ public abstract class AbstractConnectFormFieldActivity extends BaseActivity {
      */
     private int viewID = 100;
 
-    private LinearLayout titleLayout = null;
-    private LinearLayout fieldLayout = null;
-    private String fieldToTitle = null;
-
     protected boolean isEditable = false;
 
     /**
      * @param fieldName
      * @return the value contained in the Model object for the given field name as a String
      */
-    protected abstract String getModelValueByFieldName(String fieldName);
+    protected abstract String getModelValueByFieldName(FormDTO model, String fieldName);
 
     /**
      * Set the value into the Model object for the given field name
@@ -64,12 +67,7 @@ public abstract class AbstractConnectFormFieldActivity extends BaseActivity {
      * @param fieldName
      * @param value
      */
-    protected abstract void setModelValueByFieldName(String fieldName, String value);
-
-    /**
-     * @return the ConnectForm object associated to this view. This should be stored in the corresponding Cache.
-     */
-    protected abstract ConnectForm getForm();
+    protected abstract void setModelValueByFieldName(FormDTO model, String fieldName, String value);
 
     /**
      * @return the locale in use for values processing such as dates
@@ -88,15 +86,25 @@ public abstract class AbstractConnectFormFieldActivity extends BaseActivity {
     protected abstract String getLabelFromFieldName(String fieldName);
 
     /**
+     * Apply a policy to apply the save button display & handling if there is any
+     * This is made to be accessible from a fragment in case you'd have some and your button would be at
+     * the end of a scrollable view making it dependent of each view
+     * You may not use this at all if you have no use of it.
+     *
+     * @param saveButtonView
+     */
+    public abstract void applySaveButtonPolicy(View saveButtonView);
+
+    /**
      * This has to be overriden with a super call to execute your own remote saving.
      */
-    protected void save() {
-        if (getForm() != null) {
-            final List<ConnectFormField> formFields = getForm().getFormFields();
+    protected void save(ConnectForm form, FormDTO model) {
+        if (form != null) {
+            final List<ConnectFormField> formFields = form.getFormFields();
             Collections.sort(formFields);
 
             for (ConnectFormField ff : formFields) {
-                setModelValueByFieldName(ff.getName(), getValueByFieldName(ff.getName()));
+                setModelValueByFieldName(model, ff.getName(), getValueByFieldName(model, ff.getName()));
             }
         }
     }
@@ -105,14 +113,33 @@ public abstract class AbstractConnectFormFieldActivity extends BaseActivity {
      * @param fieldName
      * @return the value currently displayed & contained in the View object
      */
-    private String getValueByFieldName(String fieldName) {
+    private String getValueByFieldName(FormDTO model, String fieldName) {
         if (views.containsKey(fieldName)) {
-            final TextView tv = (TextView) findViewById(views.get(fieldName));
+            final TextView tv = (TextView) findViewById(views.get(getVIewId(model, fieldName)));
             if (tv != null && tv.getText() != null) {
                 return tv.getText().toString();
             }
         }
         return null;
+    }
+
+    private String getVIewId(FormDTO model, String fieldName) {
+        return model.getId() + "_" + fieldName;
+    }
+
+    public void setDisplayFields(FormDTO model, ConnectForm form, final LinearLayout fieldLayout) {
+        setDisplayFields(model, form, fieldLayout, null, null);
+    }
+
+    /**
+     * This one is used by fragments within activities. Must be overriden in the activity  which should then do a call
+     * to another setDisplayFields method with the rights arguments.
+     *
+     * @param fieldLayout
+     * @param fragmentId
+     */
+    public void setDisplayFields(final LinearLayout fieldLayout, int fragmentId) {
+        // --- Override on needs
     }
 
     /**
@@ -123,20 +150,17 @@ public abstract class AbstractConnectFormFieldActivity extends BaseActivity {
      * @param fieldLayout  layout of the content
      * @param fieldToTitle the ConnectFormField name to display within the titleLayout
      */
-    protected void setDisplayFields(final LinearLayout titleLayout, final LinearLayout fieldLayout,
-            final String fieldToTitle) {
-        this.titleLayout = titleLayout;
-        this.fieldLayout = fieldLayout;
-        this.fieldToTitle = fieldToTitle;
-        if (getForm() != null) {
-            final List<ConnectFormField> formfields = getForm().getFormFields();
-            Collections.sort(formfields);
+    protected void setDisplayFields(FormDTO model, ConnectForm form, final LinearLayout fieldLayout,
+            final LinearLayout titleLayout, final String fieldToTitle) {
+        if (form != null) {
+            final List<ConnectFormField> formfields = form.getFormFields();
+            applySpecificSort(formfields);
 
             LinearLayout.LayoutParams llp = null;
 
             for (ConnectFormField ff : formfields) {
 
-                final boolean isTitleField = ff.getName().equals(fieldToTitle);
+                final boolean isTitleField = fieldToTitle != null && ff.getName().equals(fieldToTitle);
                 final ViewGroup layout = isTitleField ? titleLayout : fieldLayout;
 
                 final IFormField.DataType dataType = ff.getDataType();
@@ -149,7 +173,10 @@ public abstract class AbstractConnectFormFieldActivity extends BaseActivity {
                 switch (dataType) {
                 case BOOLEAN:
                     break;
-                case CHAR:
+                case CHAR: // Time
+                    if (controlType == IFormField.ControlType.TIME) {
+                        displayType = DisplayType.TEXTFIELD;
+                    }
                     break;
                 case CONNECTED_LIST:
                     break;
@@ -157,7 +184,8 @@ public abstract class AbstractConnectFormFieldActivity extends BaseActivity {
                     break;
                 case EXPENSE_TYPE:
                     break;
-                case INTEGER:
+                case INTEGER: // List IDs
+                    displayType = DisplayType.TEXTFIELD;
                     break;
                 case LIST:
                     break;
@@ -190,7 +218,7 @@ public abstract class AbstractConnectFormFieldActivity extends BaseActivity {
                     break;
                 }
 
-                if (displayType != null) {
+                if (displayType != null && isFieldVisible(model, ff.getName())) {
                     switch (displayType) {
                     case TEXTFIELD:
 
@@ -200,7 +228,7 @@ public abstract class AbstractConnectFormFieldActivity extends BaseActivity {
                             component = new EditText(this);
                         }
 
-                        component.setText(getModelValueByFieldName(ff.getName()));
+                        component.setText(getModelValueByFieldName(model, ff.getName()));
                         component.setMaxLines(1);
                         component.setSingleLine(true);
                         component.setEllipsize(TextUtils.TruncateAt.END); //ellipses
@@ -218,7 +246,7 @@ public abstract class AbstractConnectFormFieldActivity extends BaseActivity {
                             component = new EditText(this);
                         }
 
-                        component.setText(getModelValueByFieldName(ff.getName()));
+                        component.setText(getModelValueByFieldName(model, ff.getName()));
                         component.setLines(5);
                         component.setMaxLines(5);
                         component.setTextSize(TypedValue.COMPLEX_UNIT_SP, 15);
@@ -231,7 +259,7 @@ public abstract class AbstractConnectFormFieldActivity extends BaseActivity {
 
                         component = new TextView(this);
 
-                        component.setText(getModelValueByFieldName(ff.getName()));
+                        component.setText(getModelValueByFieldName(model, ff.getName()));
                         component.setInputType(InputType.TYPE_NULL);
                         component.setTextSize(TypedValue.COMPLEX_UNIT_SP, 15);
                         component.requestFocus();
@@ -264,10 +292,12 @@ public abstract class AbstractConnectFormFieldActivity extends BaseActivity {
                         break;
 
                     case MONEYFIELD:
-
                         component = new TextView(this);
-                        component.setText(getModelValueByFieldName("CurrencyName") + " " + getModelValueByFieldName(
-                                ff.getName()));
+                        // TODO : rework this
+                        final String currencyName = getModelValueByFieldName(model, "CurrencyName");
+                        component.setText(
+                                (currencyName != null ? currencyName + " " : "") + getModelValueByFieldName(model,
+                                        ff.getName()));
                         component.setMaxLines(1);
                         component.setSingleLine(true);
                         component.setEllipsize(TextUtils.TruncateAt.END); //ellipses
@@ -289,7 +319,7 @@ public abstract class AbstractConnectFormFieldActivity extends BaseActivity {
                         viewID++;
 
                         // --- permits to apply specifics within the extending activity
-                        applySpecifics(component, llp, ff);
+                        applySpecificRender(component, llp, ff);
 
                         if (llp != null) {
                             if (!this.isEditable || accesType == IFormField.AccessType.RO) {
@@ -311,6 +341,25 @@ public abstract class AbstractConnectFormFieldActivity extends BaseActivity {
     }
 
     /**
+     * Override this to apply custom visibility on specific fields
+     *
+     * @param name
+     * @return
+     */
+    protected boolean isFieldVisible(FormDTO model, String name) {
+        return true;
+    }
+
+    /**
+     * Override this if you need a specific display order. You have to update the sequence number of each field for it.
+     *
+     * @param formfields
+     */
+    private void applySpecificSort(List<ConnectFormField> formfields) {
+        Collections.sort(formfields);
+    }
+
+    /**
      * Called on each formfield during the setDisplayFields() processing so that you can customize any component's
      * rendering
      *
@@ -318,7 +367,7 @@ public abstract class AbstractConnectFormFieldActivity extends BaseActivity {
      * @param llp       layout params
      * @param ff        ConnectFormField element
      */
-    protected abstract void applySpecifics(final TextView component, final LinearLayout.LayoutParams llp,
+    protected abstract void applySpecificRender(final TextView component, final LinearLayout.LayoutParams llp,
             final ConnectFormField ff);
 
     /**
@@ -339,6 +388,31 @@ public abstract class AbstractConnectFormFieldActivity extends BaseActivity {
      */
     protected Date parseDate(String dateString) {
         return DateUtil.parseFormattedDateForLocale(getPattern(), getLocale(), dateString);
+    }
+
+    protected void applyTimeString(Date d, String timeString) {
+        final DateFormat formatter = new SimpleDateFormat(DateUtil.TIME_PATTERN);
+        try {
+            final Date dt = formatter.parse(timeString);
+            final Calendar cal = Calendar.getInstance();
+            cal.setTime(dt);
+            final int hour = cal.get(Calendar.HOUR);
+            final int minute = cal.get(Calendar.MINUTE);
+            final int second = cal.get(Calendar.SECOND);
+            cal.setTime(d);
+            cal.set(Calendar.HOUR, hour);
+            cal.set(Calendar.MINUTE, minute);
+            cal.set(Calendar.SECOND, second);
+            d.setTime(cal.getTime().getTime());
+        } catch (ParseException e) {
+            e.printStackTrace();
+            Log.e(CLS_TAG, "Failed to apply time string : " + timeString);
+        }
+    }
+
+    protected String formatTime(Date d) {
+        final DateFormat formatter = new SimpleDateFormat(DateUtil.TIME_PATTERN);
+        return formatter.format(d);
     }
 
     private void addWhiteSpace(ViewGroup mainLayout) {

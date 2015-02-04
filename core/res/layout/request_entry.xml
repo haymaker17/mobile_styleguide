@@ -1,0 +1,120 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ViewFlipper xmlns:android="http://schemas.android.com/apk/res/android"
+             android:id="@+id/entryVF"
+             android:layout_width="match_parent"
+             android:layout_height="match_parent"
+             android:minWidth="300dp"
+             android:minHeight="420dp"
+             android:background="#F7FAFD">
+
+    <include
+        android:id="@+id/loading_data"
+        layout="@layout/loading_data"/>
+
+    <LinearLayout
+        android:orientation="vertical"
+        android:layout_height="match_parent"
+        android:layout_width="match_parent"
+        android:minWidth="300dp"
+        android:minHeight="420dp"
+        android:background="#FFFFFFFF"
+        android:id="@+id/formFieldsLayout"
+        >
+
+        <TextView
+            android:id="@+id/entryTitle"
+            android:layout_height="50dp"
+            android:layout_width="match_parent"
+            android:background="#0078c8"
+            android:textColor="@color/White"
+            android:textAppearance="@style/ListCellHeaderText"
+            android:textStyle="bold"
+            android:gravity="center"
+            android:textSize="18sp"/>
+
+        <ViewFlipper
+            android:id="@+id/entryTypeVF"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+            <include
+                layout="@layout/request_entry_fragment_layout"
+                android:id="@+id/noViewPagerLayout"/>
+
+            <android.support.v4.view.ViewPager
+                android:id="@+id/viewPagerLayout"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent">
+
+                <android.support.v4.view.PagerTabStrip
+                    android:id="@+id/pagerHeader"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="top"
+                    android:paddingBottom="4dp"
+                    android:paddingTop="4dp"/>
+
+                <!--<include
+                    layout="@layout/request_entry_fragment_layout"
+                    android:id="@+id/layoutOneWay"/>
+
+                <include
+                    layout="@layout/request_entry_fragment_layout"
+                    android:id="@+id/roundTrip"/>-->
+
+                <!--<ScrollView
+                    android:id="@+id/scrollViewOneWay"
+                    android:layout_height="wrap_content"
+                    android:layout_width="match_parent">
+
+                    <RelativeLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content">
+
+                        <LinearLayout
+                            android:id="@+id/entryFieldsOneWay"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_alignParentLeft="true"
+                            android:layout_alignParentTop="true"
+                            android:orientation="vertical">
+            </LinearLayout>
+
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="70dp"
+                android:background="@color/White"
+                android:layout_below="@id/entryFieldsOneWay"
+                android:gravity="center"
+                >
+
+                <RelativeLayout
+
+                    android:id="@+id/saveButtonOneWay"
+
+                    android:layout_width="290dp"
+                    android:layout_height="44dp"
+                    android:background="#0078C8"
+
+                    android:clickable="true"
+                    android:onClick="saveOneWayAction"
+                    >
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_centerInParent="true"
+                        android:text="@string/save"
+                        android:textSize="17sp"
+                        android:textColor="@color/White"
+                        />
+                </RelativeLayout>
+            </RelativeLayout>
+        </RelativeLayout>
+            </ScrollView>-->
+
+            </android.support.v4.view.ViewPager>
+        </ViewFlipper>
+    </LinearLayout>
+</ViewFlipper>

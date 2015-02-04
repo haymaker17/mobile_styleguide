@@ -1,22 +1,93 @@
 package com.concur.mobile.platform.request.dto;
 
+import com.concur.mobile.platform.request.ConnectExceptionMessage;
+import com.google.gson.annotations.Expose;
+import com.google.gson.annotations.SerializedName;
+
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
-public class RequestSegmentDTO {
+public class RequestSegmentDTO implements FormDTO {
 
+    @SerializedName("SegmentID")
+    private String id;
+    @SerializedName("SegmentType")
     private String segmentType;
-    private String foreignCurrencyName;
-    private String foreignCurrencyCode;
-    private Double foreignAmount;
+    @SerializedName("SegmentTypeCode")
+    private String segmentTypeCode;
+    @SerializedName("DepartureDate")
     private Date departureDate;
+    @SerializedName("ArrivalDate")
     private Date arrivalDate;
+    @SerializedName("FromLocationName")
     private String fromLocationName;
+    @SerializedName("ToLocationName")
     private String toLocationName;
+    //@SerializedName()
     private int exceptionCount;
+    @SerializedName("SegmentFormID")
     private String segmentFormId;
-    private List<String> exeptionList = new ArrayList<String>();
+    @SerializedName("ForeignAmount")
+    private Double foreignAmount;
+    @SerializedName("ForeignCurrencyCode")
+    private String foreignCurrencyCode;
+    @SerializedName("Exceptions")
+    private List<ConnectExceptionMessage> exeptionList = new ArrayList<ConnectExceptionMessage>();
+    @SerializedName("Comments")
+    private List<RequestCommentDTO> commentList = null;
+    @Expose @SerializedName("Comment")
+    private String lastComment;
+    private int displayOrder;
+
+    public int getDisplayOrder() {
+        return displayOrder;
+    }
+
+    public void setDisplayOrder(int displayOrder) {
+        this.displayOrder = displayOrder;
+    }
+
+    public String getLastComment() {
+        return lastComment;
+    }
+
+    public void setLastComment(String lastComment) {
+        this.lastComment = lastComment;
+    }
+
+    public List<RequestCommentDTO> getCommentList() {
+        return commentList;
+    }
+
+    public void setCommentList(List<RequestCommentDTO> commentList) {
+        this.commentList = commentList;
+    }
+
+    @Override
+    public String getId() {
+        return id;
+    }
+
+    public Double getForeignAmount() {
+        return foreignAmount;
+    }
+
+    public void setForeignAmount(Double foreignAmount) {
+        this.foreignAmount = foreignAmount;
+    }
+
+    public String getForeignCurrencyCode() {
+        return foreignCurrencyCode;
+    }
+
+    public void setForeignCurrencyCode(String foreignCurrencyCode) {
+        this.foreignCurrencyCode = foreignCurrencyCode;
+    }
+
+    public String getSegmentTypeCode() {
+        return segmentTypeCode;
+    }
 
     public String getSegmentFormId() {
         return segmentFormId;
@@ -32,14 +103,6 @@ public class RequestSegmentDTO {
 
     public void setSegmentType(String segmentType) {
         this.segmentType = segmentType;
-    }
-
-    public String getForeignCurrencyName() {
-        return foreignCurrencyName;
-    }
-
-    public void setForeignCurrencyName(String foreignCurrencyName) {
-        this.foreignCurrencyName = foreignCurrencyName;
     }
 
     public String getFromLocationName() {
@@ -58,14 +121,6 @@ public class RequestSegmentDTO {
         this.toLocationName = toLocationName;
     }
 
-    public Double getForeignAmount() {
-        return foreignAmount;
-    }
-
-    public void setForeignAmount(Double foreignAmount) {
-        this.foreignAmount = foreignAmount;
-    }
-
     public Date getDepartureDate() {
         return departureDate;
     }
@@ -82,14 +137,6 @@ public class RequestSegmentDTO {
         this.arrivalDate = arrivalDate;
     }
 
-    public String getForeignCurrencyCode() {
-        return foreignCurrencyCode;
-    }
-
-    public void setForeignCurrencyCode(String foreignCurrencyCode) {
-        this.foreignCurrencyCode = foreignCurrencyCode;
-    }
-
     public int getExceptionCount() {
         return exceptionCount;
     }
@@ -98,11 +145,11 @@ public class RequestSegmentDTO {
         this.exceptionCount = exceptionCount;
     }
 
-    public List<String> getExeptionList() {
+    public List<ConnectExceptionMessage> getExeptionList() {
         return exeptionList;
     }
 
-    public void setExeptionList(List<String> exeptionList) {
+    public void setExeptionList(List<ConnectExceptionMessage> exeptionList) {
         this.exeptionList = exeptionList;
     }
 }

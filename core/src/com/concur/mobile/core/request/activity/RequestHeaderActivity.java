@@ -18,6 +18,7 @@ import com.concur.mobile.core.ConcurCore;
 import com.concur.mobile.core.activity.AbstractConnectFormFieldActivity;
 import com.concur.mobile.core.request.service.RequestParser;
 import com.concur.mobile.core.request.task.RequestSaveTask;
+import com.concur.mobile.core.request.util.ConnectHelper;
 import com.concur.mobile.core.request.util.DateUtil;
 import com.concur.mobile.core.util.Const;
 import com.concur.mobile.core.util.EventTracker;
@@ -27,6 +28,7 @@ import com.concur.mobile.platform.common.formfield.ConnectFormField;
 import com.concur.mobile.platform.common.formfield.ConnectFormFieldsCache;
 import com.concur.mobile.platform.request.RequestGroupConfigurationCache;
 import com.concur.mobile.platform.request.RequestListCache;
+import com.concur.mobile.platform.request.dto.FormDTO;
 import com.concur.mobile.platform.request.dto.RequestDTO;
 import com.concur.mobile.platform.request.groupConfiguration.RequestGroupConfiguration;
 import com.concur.mobile.platform.ui.common.dialog.NoConnectivityDialogFragment;
@@ -37,6 +39,10 @@ import java.util.*;
 public class RequestHeaderActivity extends AbstractConnectFormFieldActivity implements OnClickListener {
 
     private static final String CLS_TAG = RequestListActivity.class.getSimpleName();
+
+    private static final int ID_LOADING_VIEW = 0;
+    private static final int ID_HEADER_VIEW = 1;
+
     private static final String FIELD_NAME = "Name";
     private static final String FIELD_START_DATE = "StartDate";
     private static final String FIELD_END_DATE = "EndDate";
@@ -55,8 +61,10 @@ public class RequestHeaderActivity extends AbstractConnectFormFieldActivity impl
     private ConnectFormFieldsCache formFieldsCache = null;
     private RequestGroupConfigurationCache groupConfigurationCache = null;
     private RequestDTO tr;
-    private RelativeLayout saveButton;
     private BaseAsyncResultReceiver asyncReceiverSave;
+
+    private ViewFlipper requestHeaderVF;
+    private RelativeLayout saveButton;
 
     /**
      * Bundle need to contain:
@@ -81,9 +89,7 @@ public class RequestHeaderActivity extends AbstractConnectFormFieldActivity impl
         final Bundle bundle = getIntent().getExtras();
         final String requestId = bundle.getString(RequestListActivity.REQUEST_ID);
 
-        this.isEditable = bundle.getString(RequestSummaryActivity.REQUEST_IS_EDITABLE).equals(Boolean.TRUE.toString()) ?
-                true :
-                false;
+        this.isEditable = bundle.getString(RequestSummaryActivity.REQUEST_IS_EDITABLE).equals(Boolean.TRUE.toString());
 
         locale = this.getResources().getConfiguration().locale != null ?
                 this.getResources().getConfiguration().locale :
@@ -111,11 +117,6 @@ public class RequestHeaderActivity extends AbstractConnectFormFieldActivity impl
     }
 
     @Override
-    protected ConnectForm getForm() {
-        return form;
-    }
-
-    @Override
     protected Locale getLocale() {
         return locale;
     }
@@ -126,29 +127,26 @@ public class RequestHeaderActivity extends AbstractConnectFormFieldActivity impl
     }
 
     private void configureUI() {
+        requestHeaderVF = ((ViewFlipper) findViewById(R.id.requestDetailVF));
+        requestHeaderVF.setDisplayedChild(ID_HEADER_VIEW);
         final LinearLayout requestTitleLayout = (LinearLayout) findViewById(R.id.requestTitleLayout);
         final LinearLayout requestHeaderFields = (LinearLayout) findViewById(R.id.requestHeaderFields);
         final String fieldToTitle = FIELD_NAME;
-        this.setDisplayFields(requestTitleLayout, requestHeaderFields, fieldToTitle);
+        this.setDisplayFields(tr, form, requestTitleLayout, requestHeaderFields, fieldToTitle);
 
         saveButton = (RelativeLayout) findViewById(R.id.saveButton);
-        saveButton.setOnClickListener(new View.OnClickListener() {
-
-            public void onClick(View v) {
-                // CALL SUMMIT METHOD
-                save();
-            }
-        });
+        applySaveButtonPolicy(saveButton);
     }
 
     @Override
-    protected void save() {
-        super.save();
+    protected void save(ConnectForm form, FormDTO tr) {
+        super.save(form, tr);
         if (ConcurCore.isConnected()) {
             // --- creates the listener
             asyncReceiverSave.setListener(new SaveListener());
+            requestHeaderVF.setDisplayedChild(ID_LOADING_VIEW);
             // --- onRequestResult calls cleanup() on execution, so listener will be destroyed by processing
-            new RequestSaveTask(RequestHeaderActivity.this, 1, asyncReceiverSave, tr).execute();
+            new RequestSaveTask(RequestHeaderActivity.this, 1, asyncReceiverSave, (RequestDTO) tr).execute();
         } else {
             new NoConnectivityDialogFragment().show(getSupportFragmentManager(), CLS_TAG);
         }
@@ -186,8 +184,19 @@ public class RequestHeaderActivity extends AbstractConnectFormFieldActivity impl
         }
     }
 
+    @Override public void applySaveButtonPolicy(View saveButtonView) {
+        saveButton.setOnClickListener(new View.OnClickListener() {
+
+            public void onClick(View v) {
+                // CALL SUMMIT METHOD
+                save(form, tr);
+            }
+        });
+    }
+
     @Override
-    public String getModelValueByFieldName(String fieldName) {
+    public String getModelValueByFieldName(FormDTO request, String fieldName) {
+        final RequestDTO tr = (RequestDTO) request;
 
         if (fieldName.equals(FIELD_NAME)) {
             if (tr.getName() == null) {
@@ -232,7 +241,8 @@ public class RequestHeaderActivity extends AbstractConnectFormFieldActivity impl
     }
 
     @Override
-    protected void setModelValueByFieldName(String fieldName, String value) {
+    protected void setModelValueByFieldName(FormDTO request, String fieldName, String value) {
+        final RequestDTO tr = (RequestDTO) request;
         if (fieldName.equals(FIELD_NAME)) {
             tr.setName(value);
         } else if (fieldName.equals(FIELD_START_DATE)) {
@@ -253,7 +263,7 @@ public class RequestHeaderActivity extends AbstractConnectFormFieldActivity impl
     }
 
     @Override
-    protected void applySpecifics(final TextView component, final LinearLayout.LayoutParams llp,
+    protected void applySpecificRender(final TextView component, final LinearLayout.LayoutParams llp,
             final ConnectFormField ff) {
         if (ff.getName().equals(FIELD_NAME)) {
             component.setTextAppearance(this, R.style.ListCellHeaderText);
@@ -272,8 +282,7 @@ public class RequestHeaderActivity extends AbstractConnectFormFieldActivity impl
         @Override
         public void onRequestSuccess(Bundle resultData) {
             final boolean isCreation = tr.getId() == null;
-            final Toast toast = Toast.makeText(getApplicationContext(), "REQUEST SAVED", Toast.LENGTH_LONG);
-            toast.show();
+            ConnectHelper.displayMessage(getApplicationContext(), "REQUEST SAVED");
 
             // metrics
             final Map<String, String> params = new HashMap<String, String>();
@@ -317,18 +326,21 @@ public class RequestHeaderActivity extends AbstractConnectFormFieldActivity impl
 
         @Override
         public void onRequestFail(Bundle resultData) {
-            final CharSequence text = resultData.getString(BaseAsyncRequestTask.HTTP_STATUS_MESSAGE);
-            final Toast toast = Toast.makeText(getApplicationContext(), text, Toast.LENGTH_LONG);
-            toast.show();
+            ConnectHelper.displayResponseMessage(getApplicationContext(), resultData,
+                    getResources().getString(R.string.tr_error_save));
 
-            Log.d(Const.LOG_TAG, CLS_TAG + " calling decrement from onrequestfails");
+            Log.d(Const.LOG_TAG, CLS_TAG + " calling decrement from onRequestFail");
             Log.d(Const.LOG_TAG, " onRequestFail in SaveListener...");
+            requestHeaderVF.setDisplayedChild(ID_HEADER_VIEW);
         }
 
         @Override
         public void onRequestCancel(Bundle resultData) {
-            Log.d(Const.LOG_TAG, CLS_TAG + " calling decrement from onrequestcancel");
+            ConnectHelper
+                    .displayMessage(getApplicationContext(), getResources().getString(R.string.tr_operation_canceled));
+            Log.d(Const.LOG_TAG, CLS_TAG + " calling decrement from onRequestCancel");
             Log.d(Const.LOG_TAG, " onRequestCancel in SaveListener...");
+            requestHeaderVF.setDisplayedChild(ID_HEADER_VIEW);
         }
 
         @Override

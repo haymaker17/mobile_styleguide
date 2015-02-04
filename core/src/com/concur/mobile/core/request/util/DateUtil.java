@@ -49,6 +49,9 @@ public class DateUtil {
         }
     }
 
+    // --- convert to an enum if there is more than one
+    public static final String TIME_PATTERN = "HH:mm";
+
     /**
      * Converts a date to a string with the given pattern for the given locale !
      * Use this method only for single uses - no multiple calls ! (store an SDF

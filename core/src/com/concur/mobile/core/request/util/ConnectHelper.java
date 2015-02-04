@@ -1,5 +1,9 @@
 package com.concur.mobile.core.request.util;
 
+import android.content.Context;
+import android.os.Bundle;
+import android.widget.Toast;
+import com.concur.mobile.base.service.BaseAsyncRequestTask;
 import com.concur.mobile.core.service.ServiceRequestException;
 
 import java.util.Map;
@@ -163,5 +167,21 @@ public class ConnectHelper {
             }
         }
         // --- POST is handled by the getPostBody() method of the task
+    }
+
+    // should be moved in another helper probably
+    public static void displayResponseMessage(Context context, Bundle resultData, String defaultMessage) {
+        CharSequence text = resultData.getString(BaseAsyncRequestTask.HTTP_STATUS_MESSAGE);
+        if (text == null || text.toString().trim().length() == 0) {
+            text = defaultMessage;
+        }
+        final Toast toast = Toast.makeText(context, text, Toast.LENGTH_LONG);
+        toast.show();
+    }
+
+    // should be moved in another helper probably
+    public static void displayMessage(Context context, String message) {
+        final Toast toast = Toast.makeText(context, message, Toast.LENGTH_LONG);
+        toast.show();
     }
 }

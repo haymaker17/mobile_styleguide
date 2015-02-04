@@ -1,7 +1,6 @@
 package com.concur.mobile.core.request.service;
 
 import android.util.Log;
-import com.concur.mobile.core.request.util.RequestParsingHelper;
 import com.concur.mobile.platform.common.formfield.ConnectForm;
 import com.concur.mobile.platform.common.formfield.IFormField;
 import com.concur.mobile.platform.request.dto.RequestCommentDTO;
@@ -18,10 +17,7 @@ import com.google.gson.reflect.TypeToken;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
-import java.util.ArrayList;
-import java.util.Date;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 /**
  * @author olivierb
@@ -33,48 +29,11 @@ public class RequestParser {
      * gson sees a number, it creates a Double Each time gson sees a [], it creates an ArrayList
      */
 
-    // REQUEST LIST
-    private static final String LIST_NAME_KEY = "Name";
-    private static final String LIST_ID_KEY = "RequestID";
-    private static final String LIST_TOTAL_KEY = "TotalApprovedAmount";
-    private static final String LIST_START_DATE_KEY = "StartDate";
-    private static final String LIST_END_DATE_KEY = "EndDate";
-
-    // REQUEST DETAIL
-    private static final String RES_DETAILS_CURRENCY_KEY = "CurrencyCode";
-    private static final String RES_DETAILS_ENTRIES_LIST = "Entries";
-    private static final String RES_DETAILS_LIST_KEY = "Segments";
-    private static final String RES_DETAILS_EXCEPTION_LIST = "Exceptions";// TODO @See exception story
-    private static final String RES_DETAILS_APPROVAL_STATUS_CODE = "ApprovalStatusCode";
-    private static final String RES_DETAILS_USER_PERMISSIONS = "UserPermissions";
-    private static final String RES_DETAILS_LINKS = "Links";
-    private static final String RES_DETAILS_ACTION = "Action";
-    private static final String RES_DETAILS_URL = "Url";
-
-    private static final String RES_DETAILS_COMMENTS = "Comments";
-    private static final String RES_DETAILS_COMMENT_VALUE = "Value";
-    private static final String RES_DETAILS_COMMENT_FIRSTNAME = "AuthorFirstName";
-    private static final String RES_DETAILS_COMMENT_LASTNAME = "AuthorLastName";
-    private static final String RES_DETAILS_COMMENT_DATE = "CommentDateTime"; //ex : "2015-01-12T09:57:49"
-    private static final String RES_DETAILS_COMMENT_ISLATEST = "IsLatest";
-
-    // ENTRY
-    private static final String RES_ENTRY_CURRENCY_CODE_KEY = "ForeignCurrencyCode";
-    private static final String RES_ENTRY_FOREIGN_AMOUNT_KEY = "ForeignAmount";
-
-    // SEGMENT
-    private static final String RES_SEGMENT_TYPE_KEY = "SegmentType";
-    private static final String RES_SEGMENT_CURRENCY_NAME_KEY = "ForeignCurrencyName";
-    private static final String RES_SEGMENT_CURRENCY_CODE_KEY = "ForeignCurrencyCode";
-    private static final String RES_SEGMENT_FOREIGN_AMOUNT_KEY = "ForeignAmount";
-    private static final String RES_SEGMENT_DEPARTURE_DATE_KEY = "DepartureDate";
-    private static final String RES_SEGMENT_ARRIVAL_DATE_KEY = "ArrivalDate";
-    private static final String RES_SEGMENT_FROM_LOCATION_NAME_KEY = "FromLocationName";
-    private static final String RES_SEGMENT_TO_LOCATION_NAME_KEY = "ToLocationName";
-    private static final String RES_SEGMENT_EXCEPTION_LIST = "Exceptions";
-    private static final String RES_SEGMENT_FORM_ID = "SegmentFormID";
-
-    public class ActionResponse {
+    /**
+     * Custom objects only used in parse processes
+     * *************************************************************
+     */
+    private class ActionResponse {
 
         @SerializedName("ID")
         private String id = null;
@@ -89,6 +48,58 @@ public class RequestParser {
             return uri;
         }
     }
+
+    private class UserPermission {
+
+        @SerializedName("Action")
+        private String action;
+        @SerializedName("Method")
+        private String method;
+
+        public String getAction() {
+            return action;
+        }
+
+        public String getMethod() {
+            return method;
+        }
+    }
+
+    private class Link {
+
+        @SerializedName("Links")
+        private List<UserPermission> permissions;
+
+        public List<UserPermission> getPermissions() {
+            return permissions;
+        }
+    }
+
+    private class TRDetailResponse {
+
+        @SerializedName("UserPermissions")
+        private Link link;
+        @SerializedName("Entries")
+        private List<RequestEntryDTO> entryList;
+        @SerializedName("Comments")
+        private List<RequestCommentDTO> commentList;
+
+        public Link getLink() {
+            return link;
+        }
+
+        public List<RequestEntryDTO> getEntryList() {
+            return entryList;
+        }
+
+        public List<RequestCommentDTO> getCommentList() {
+            return commentList;
+        }
+    }
+
+    /**
+     * ************************************************************
+     */
 
     private Date parseDate(String baseStr, SimpleDateFormat sdf) {
         if (baseStr != null) {
@@ -105,7 +116,7 @@ public class RequestParser {
     public List<RequestDTO> parseTRListResponse(String jsonRes) {
         final GsonBuilder builder = new GsonBuilder();
         builder.registerTypeAdapter(Double.class, new DoubleDeserializer());
-        builder.registerTypeAdapter(Date.class, new DateDeserializer());
+        builder.registerTypeAdapter(Date.class, new DateDeserializer(Parse.LONG_YEAR_MONTH_DAY));
         Log.d("RequestParser - parseTRListResponseV2", " starting parse");
         final Gson gson = builder.create();
         final GsonListContainer<RequestDTO> requestList = gson
@@ -113,111 +124,58 @@ public class RequestParser {
         return requestList.getList();
     }
 
-    @SuppressWarnings("rawtypes") @Deprecated
-    public void parseTRDetailsResponse(RequestDTO tr, String jsonRes) {
-        final SimpleDateFormat sdf = new SimpleDateFormat("yyyy-mm-dd");
-
-        final Map trList = new Gson().fromJson(jsonRes, Map.class);
-        tr.setId(RequestParsingHelper.stringSafeParse(trList, LIST_ID_KEY));
-        tr.setName(RequestParsingHelper.stringSafeParse(trList, LIST_NAME_KEY));
-        tr.setCurrencyCode(RequestParsingHelper.stringSafeParse(trList, RES_DETAILS_CURRENCY_KEY));
-        tr.setStartDate(parseDate(RequestParsingHelper.stringSafeParse(trList, LIST_START_DATE_KEY), sdf));
-        tr.setEndDate(parseDate(RequestParsingHelper.stringSafeParse(trList, LIST_END_DATE_KEY), sdf));
-        tr.setTotal(Parse.safeParseDouble(RequestParsingHelper.stringSafeParse(trList, LIST_TOTAL_KEY)));
-    }
-
     @SuppressWarnings("rawtypes")
     public void parseTRDetailResponse(RequestDTO tr, String jsonRes) {
+        final GsonBuilder builder = new GsonBuilder();
+        builder.registerTypeAdapter(Boolean.class, new BooleanDeserializer());
+        builder.registerTypeAdapter(Integer.class, new IntegerDeserializer());
+        builder.registerTypeAdapter(Date.class, new DateDeserializer(Parse.LONG_YEAR_MONTH_DAY));
 
-        // GENERAL
-        final Map requestDetail = new Gson().fromJson(jsonRes, Map.class);
-        // --- permitted Actions
-        tr.setListPermittedActions(new ArrayList<String>());
+        final Gson gson = builder.create();
+        Log.d("RequestParser", " starting parse : parseTRDetailsResponse");
+        final TRDetailResponse connectTR = gson.fromJson(jsonRes, TRDetailResponse.class);
 
-        final Map userPermissions = (Map) requestDetail.get(RES_DETAILS_USER_PERMISSIONS);
-        final List links = (List) userPermissions.get(RES_DETAILS_LINKS);
-        for (int i = 0; i < links.size(); i++) {
-            final Map jsonEntry = (Map) links.get(i);
-            tr.getListPermittedActions().add(RequestParsingHelper.stringSafeParse(jsonEntry, RES_DETAILS_ACTION));
+        // --- custom processing : permissions
+        final List<String> actionsList = new ArrayList<String>();
+        for (UserPermission up : connectTR.getLink().getPermissions()) {
+            actionsList.add(up.getAction());
         }
+        tr.setListPermittedActions(actionsList);
 
-        //COMMENTS
-        final List commentsList = (List) requestDetail.get(RES_DETAILS_COMMENTS);
-        for (int j = 0; j < commentsList.size(); j++) {
-            final Map jsonEntry = (Map) commentsList.get(j);
-            final RequestCommentDTO Comment = new RequestCommentDTO();
-
-            Comment.setValue(RequestParsingHelper.stringSafeParse(jsonEntry, RES_DETAILS_COMMENT_VALUE));
-            Comment.setAuthorFirstName(RequestParsingHelper.stringSafeParse(jsonEntry, RES_DETAILS_COMMENT_FIRSTNAME));
-            Comment.setAuthorLastName(RequestParsingHelper.stringSafeParse(jsonEntry, RES_DETAILS_COMMENT_LASTNAME));
-            Comment.setIsLatest(
-                    RequestParsingHelper.stringSafeParse(jsonEntry, RES_DETAILS_COMMENT_ISLATEST).equals("false") ?
-                            false :
-                            true);
-
-            if (Comment.getIsLatest()) {
-                tr.setLastComment(Comment.getValue());
+        // --- custom processing : last comment
+        for (RequestCommentDTO com : connectTR.getCommentList()) {
+            if (com.getIsLatest()) {
+                tr.setLastComment(com.getValue());
+                break;
             }
         }
 
-        // SEGMENTS
-        final SimpleDateFormat sdf = new SimpleDateFormat("yyyy-mm-dd");
-        final List<RequestEntryDTO> res = new ArrayList<RequestEntryDTO>();
-        final List trList = (List) requestDetail.get(RES_DETAILS_ENTRIES_LIST);
-        for (int j = 0; j < trList.size(); j++) {
-            // --- processing entries
-            final Map jsonEntry = (Map) trList.get(j);
-            final RequestEntryDTO entry = new RequestEntryDTO();
+        // --- generating map
+        final Map<String, RequestEntryDTO> entryMap = new HashMap<String, RequestEntryDTO>();
+        for (RequestEntryDTO entry : connectTR.getEntryList()) {
+            // --- retrieving segment type & form id
+            if (entry.getListSegment() != null && entry.getListSegment().size() > 0) {
+                boolean isFirst = true;
 
-            entry.setForeignCurrencyCode(RequestParsingHelper.stringSafeParse(jsonEntry, RES_ENTRY_CURRENCY_CODE_KEY));
-            entry.setForeignAmount(Parse.safeParseDouble(
-                    RequestParsingHelper.stringSafeParse(jsonEntry, RES_ENTRY_FOREIGN_AMOUNT_KEY)));
-            entry.setApprovalStatusCode(
-                    (RequestParsingHelper.stringSafeParse(jsonEntry, RES_DETAILS_APPROVAL_STATUS_CODE)));
-
-            // --- processing segments
-            final List segmentsList = (List) jsonEntry.get(RES_DETAILS_LIST_KEY);
-            final int slLength = segmentsList.size();
-            for (int i = 0; i < slLength; i++) {
-                // mapping to dto
-                final Map jsonSegment = (Map) segmentsList.get(i);
-                final RequestSegmentDTO trs = new RequestSegmentDTO();
-                trs.setSegmentType(RequestParsingHelper.stringSafeParse(jsonSegment, RES_SEGMENT_TYPE_KEY));
-                // TODO : move segmenttype within webservice on entry
-                if (i == 0) {
-                    entry.setSegmentType(trs.getSegmentType());
-                }
-                trs.setForeignCurrencyName(
-                        RequestParsingHelper.stringSafeParse(jsonSegment, RES_SEGMENT_CURRENCY_NAME_KEY));
-                trs.setForeignCurrencyCode(
-                        RequestParsingHelper.stringSafeParse(jsonSegment, RES_SEGMENT_CURRENCY_CODE_KEY));
-                trs.setForeignAmount(Parse.safeParseDouble(
-                        RequestParsingHelper.stringSafeParse(jsonSegment, RES_SEGMENT_FOREIGN_AMOUNT_KEY)));
-                trs.setSegmentFormId(RequestParsingHelper.stringSafeParse(jsonSegment, RES_SEGMENT_FORM_ID));
-                trs.setDepartureDate(
-                        parseDate(RequestParsingHelper.stringSafeParse(jsonSegment, RES_SEGMENT_DEPARTURE_DATE_KEY),
-                                sdf));
-                trs.setArrivalDate(
-                        parseDate(RequestParsingHelper.stringSafeParse(jsonSegment, RES_SEGMENT_ARRIVAL_DATE_KEY),
-                                sdf));
-                trs.setFromLocationName(
-                        RequestParsingHelper.stringSafeParse(jsonSegment, RES_SEGMENT_FROM_LOCATION_NAME_KEY));
-                trs.setToLocationName(
-                        RequestParsingHelper.stringSafeParse(jsonSegment, RES_SEGMENT_TO_LOCATION_NAME_KEY));
-                final List exeptionList = (List) jsonSegment.get(RES_SEGMENT_EXCEPTION_LIST);
-                if (exeptionList != null) {
-                    for (int k = 0; k < exeptionList.size(); k++) {
-                        trs.getExeptionList().add(String.valueOf(exeptionList.get(k)));
+                for (RequestSegmentDTO segment : entry.getListSegment()) {
+                    if (isFirst) {
+                        // --- note : those 2 values should be moved at entry level on ws response
+                        entry.setSegmentType(segment.getSegmentType());
+                        entry.setSegmentTypeCode(segment.getSegmentTypeCode());
+                        entry.setSegmentFormId(segment.getSegmentFormId());
+                        isFirst = false;
+                    }
+                    for (RequestCommentDTO com : segment.getCommentList()) {
+                        if (com.getIsLatest()) {
+                            segment.setLastComment(com.getValue());
+                            break;
+                        }
                     }
                 }
-
-                entry.getListSegment().add(trs);
             }
-
-            res.add(entry);
+            entryMap.put(entry.getId(), entry);
         }
-
-        tr.setEntriesList(res);
+        tr.setEntriesMap(entryMap);
     }
 
     /**

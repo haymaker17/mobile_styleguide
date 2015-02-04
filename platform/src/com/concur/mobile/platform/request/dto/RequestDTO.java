@@ -5,11 +5,30 @@ import com.google.gson.annotations.SerializedName;
 
 import java.util.Date;
 import java.util.List;
+import java.util.Map;
 
 /**
  * @author olivierb
  */
-public class RequestDTO {
+public class RequestDTO implements FormDTO {
+
+    public enum ApprovalStatus {
+        CREATION("Q_NOTF"),
+        PENDING_VALIDATION("Q_PEND"),
+        PENDING_EBOOKING("Q_PEBK"),
+        APPROVED("Q_APPR"),
+        RECALLED("Q_RESU");
+
+        private String code;
+
+        ApprovalStatus(String code) {
+            this.code = code;
+        }
+
+        public String getCode() {
+            return code;
+        }
+    }
 
     public static String SUBMIT = "submit";
     public static String SAVE = "save";
@@ -53,11 +72,11 @@ public class RequestDTO {
     @Expose @SerializedName(("PolicyID"))
     private String policyId;
 
-    //@SerializedName("Entries")
-    private List<RequestEntryDTO> entriesList;
+    private Map<String, RequestEntryDTO> entriesMap;
 
     private List<String> listPermittedActions;
 
+    @Override
     public String getId() {
         return id;
     }
@@ -194,12 +213,12 @@ public class RequestDTO {
         this.headerFormId = headerFormId;
     }
 
-    public List<RequestEntryDTO> getEntriesList() {
-        return entriesList;
+    public Map<String, RequestEntryDTO> getEntriesMap() {
+        return entriesMap;
     }
 
-    public void setEntriesList(List<RequestEntryDTO> entriesList) {
-        this.entriesList = entriesList;
+    public void setEntriesMap(Map<String, RequestEntryDTO> entriesMap) {
+        this.entriesMap = entriesMap;
     }
 
     public List<String> getListPermittedActions() {

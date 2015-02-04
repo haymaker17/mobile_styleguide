@@ -1,11 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_width="match_parent"
-    android:layout_height="75dp"
-    android:orientation="horizontal"
-    android:id="@+id/segmentRow" >
-    
-    <TextView 
+                android:layout_width="match_parent"
+                android:layout_height="75dp"
+                android:orientation="horizontal"
+                android:id="@+id/segmentRow">
+
+    <TextView
         android:id="@+id/segmentTypeRow"
         style="@style/FormFieldLabelText"
         android:layout_width="wrap_content"
@@ -16,7 +16,9 @@
         android:textSize="15sp"
         android:textColor="@color/Black"
         android:textAppearance="@style/ListCellHeaderText"
+        android:singleLine="true"
         />
+
     <TextView
         android:id="@+id/segmentRowId"
         style="@style/FormFieldLabelText"
@@ -26,6 +28,7 @@
         android:layout_toRightOf="@id/segmentTypeRow"
         android:layout_alignBaseline="@id/segmentTypeRow"
         />
+
     <TextView
         android:id="@+id/segmentRowAmount"
         style="@style/FormFieldLabelText"
@@ -51,6 +54,7 @@
         android:layout_marginLeft="15dp"
         android:textSize="15sp"
         android:textColor="@color/gray"
+        android:singleLine="true"
         />
 
     <TextView

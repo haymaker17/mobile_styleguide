@@ -7,6 +7,32 @@ import com.google.gson.annotations.SerializedName;
  */
 public class SegmentType {
 
+    public enum RequestSegmentType {
+        AIR("AIRFR"),
+        HOTEL("HOTEL"),
+        RAIL("RAILF"),
+        CAR("CARRT");
+
+        private String typeCode;
+
+        RequestSegmentType(String connectName) {
+            this.typeCode = connectName;
+        }
+
+        public static RequestSegmentType getByCode(String code) {
+            for (RequestSegmentType type : values()) {
+                if (type.getCode().equals(code)) {
+                    return type;
+                }
+            }
+            return null;
+        }
+
+        public String getCode() {
+            return typeCode;
+        }
+    }
+
     @SerializedName("ID")
     private String id;
     @SerializedName("Name")

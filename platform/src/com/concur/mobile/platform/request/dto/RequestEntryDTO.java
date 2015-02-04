@@ -1,14 +1,65 @@
 package com.concur.mobile.platform.request.dto;
 
+import com.google.gson.annotations.SerializedName;
+
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 public class RequestEntryDTO {
+
+    @SerializedName("ID")
+    private String id;
+    @SerializedName("Segments")
     private List<RequestSegmentDTO> listSegment = new ArrayList<RequestSegmentDTO>();
-    private String segmentType = null;
-    private String foreignCurrencyCode;
-    private Double foreignAmount;
+    @SerializedName("TransactionCurrencyCode")
+    private String transactionCurrencyCode;
+    @SerializedName("TransactionAmount")
+    private Double transactionAmount;
+    @SerializedName("ApprovalStatusCode")
     private String approvalStatusCode;
+    @SerializedName("Comments")
+    private List<RequestCommentDTO> comments;
+    @SerializedName("TransactionDate")
+    private Date transactionDate;
+    @SerializedName("ExpenseTypeName")
+    private String expenseTypeName;
+
+    private String segmentFormId;
+    private String segmentType = null;
+    private String segmentTypeCode = null;
+
+    public String getExpenseTypeName() {
+        return expenseTypeName;
+    }
+
+    public void setExpenseTypeName(String expenseTypeName) {
+        this.expenseTypeName = expenseTypeName;
+    }
+
+    public String getSegmentTypeCode() {
+        return segmentTypeCode;
+    }
+
+    public void setSegmentTypeCode(String segmentTypeCode) {
+        this.segmentTypeCode = segmentTypeCode;
+    }
+
+    public Date getTransactionDate() {
+        return transactionDate;
+    }
+
+    public String getSegmentFormId() {
+        return segmentFormId;
+    }
+
+    public void setSegmentFormId(String segmentFormId) {
+        this.segmentFormId = segmentFormId;
+    }
+
+    public String getId() {
+        return id;
+    }
 
     public List<RequestSegmentDTO> getListSegment() {
         return listSegment;
@@ -26,29 +77,35 @@ public class RequestEntryDTO {
         this.segmentType = segmentType;
     }
 
-    public String getForeignCurrencyCode() {
-        return foreignCurrencyCode;
+    public String getTransactionCurrencyCode() {
+        return transactionCurrencyCode;
     }
 
-    public void setForeignCurrencyCode(String foreignCurrencyCode) {
-        this.foreignCurrencyCode = foreignCurrencyCode;
+    public void setTransactionCurrencyCode(String transactionCurrencyCode) {
+        this.transactionCurrencyCode = transactionCurrencyCode;
     }
 
-    public Double getForeignAmount() {
-        return foreignAmount;
+    public Double getTransactionAmount() {
+        return transactionAmount;
     }
 
-    public void setForeignAmount(Double foreignAmount) {
-        this.foreignAmount = foreignAmount;
+    public void setTransactionAmount(Double transactionAmount) {
+        this.transactionAmount = transactionAmount;
     }
 
-	public String getApprovalStatusCode() {
-		return approvalStatusCode;
-	}
+    public String getApprovalStatusCode() {
+        return approvalStatusCode;
+    }
 
-	public void setApprovalStatusCode(String approvalStatusCode) {
-		this.approvalStatusCode = approvalStatusCode;
-	}
+    public void setApprovalStatusCode(String approvalStatusCode) {
+        this.approvalStatusCode = approvalStatusCode;
+    }
 
+    public List<RequestCommentDTO> getComments() {
+        return comments;
+    }
 
+    public void setComments(List<RequestCommentDTO> comments) {
+        this.comments = comments;
+    }
 }
