@@ -116,16 +116,6 @@ public class RequestHeaderActivity extends AbstractConnectFormFieldActivity impl
         configureUI();
     }
 
-    @Override
-    protected Locale getLocale() {
-        return locale;
-    }
-
-    @Override
-    protected DateUtil.DatePattern getPattern() {
-        return DateUtil.DatePattern.DB_INPUT;
-    }
-
     private void configureUI() {
         requestHeaderVF = ((ViewFlipper) findViewById(R.id.requestDetailVF));
         requestHeaderVF.setDisplayedChild(ID_HEADER_VIEW);
@@ -152,12 +142,26 @@ public class RequestHeaderActivity extends AbstractConnectFormFieldActivity impl
         }
     }
 
+    /*
+     * Form Fields display
+     * ********************************
+     */
+
+    @Override
+    protected Locale getLocale() {
+        return locale;
+    }
+
+    @Override
+    protected DateUtil.DatePattern getDatePattern() {
+        return DateUtil.DatePattern.DB_INPUT;
+    }
+
     @Override
     public void onClick(View view) {
-        for (int i = 0; i < getDateViews().size(); i++) {
-            if ((Integer) getDateViews().get(i) == view.getId()) {
-                ((DatePickerDialog) getDatePickerDialogs().get(i)).show();
-            }
+        final DatePickerDialog datePicker = getDateField(view.getId());
+        if (datePicker != null) {
+            datePicker.show();
         }
     }
 
@@ -195,7 +199,7 @@ public class RequestHeaderActivity extends AbstractConnectFormFieldActivity impl
     }
 
     @Override
-    public String getModelValueByFieldName(FormDTO request, String fieldName) {
+    public String getModelDisplayedValueByFieldName(FormDTO request, String fieldName) {
         final RequestDTO tr = (RequestDTO) request;
 
         if (fieldName.equals(FIELD_NAME)) {
@@ -263,8 +267,8 @@ public class RequestHeaderActivity extends AbstractConnectFormFieldActivity impl
     }
 
     @Override
-    protected void applySpecificRender(final TextView component, final LinearLayout.LayoutParams llp,
-            final ConnectFormField ff) {
+    protected void applySpecificRender(final FormDTO model, final TextView component,
+            final LinearLayout.LayoutParams llp, final ConnectFormField ff) {
         if (ff.getName().equals(FIELD_NAME)) {
             component.setTextAppearance(this, R.style.ListCellHeaderText);
             component.setTextColor(getResources().getColor(R.color.White));
@@ -272,7 +276,7 @@ public class RequestHeaderActivity extends AbstractConnectFormFieldActivity impl
             component.setTextSize(TypedValue.COMPLEX_UNIT_SP, 18);
             if (component instanceof EditText) {
                 component.setHint(getResources().getString(R.string.tr_name));
-                component.setHintTextColor(getResources().getColor(R.color.light_gray));
+                component.setHintTextColor(getResources().getColor(R.color.gray));
             }
         }
     }

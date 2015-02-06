@@ -1,7 +1,6 @@
 package com.concur.mobile.core.request.task;
 
 import android.content.Context;
-
 import com.concur.mobile.base.service.BaseAsyncResultReceiver;
 import com.concur.mobile.core.request.util.ConnectHelper;
 import com.concur.mobile.core.service.ServiceRequestException;
@@ -26,6 +25,7 @@ public class RequestGroupConfigurationsTask extends AbstractRequestWSCallTask {
      */
     protected String getServiceEndPoint() throws ServiceRequestException {
         final Map<String, Object> params = new HashMap<String, Object>();
-        return ConnectHelper.getServiceEndpointURI(ConnectHelper.Module.GROUP_CONFIGURATIONS, ConnectHelper.Action.LIST, params, true);
+        return ConnectHelper.getServiceEndpointURI(ConnectHelper.ConnectVersion.VERSION_3_1,
+                ConnectHelper.Module.GROUP_CONFIGURATIONS, ConnectHelper.Action.LIST, params, true);
     }
 }

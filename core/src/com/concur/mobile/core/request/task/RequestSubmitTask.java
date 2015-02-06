@@ -1,14 +1,13 @@
 package com.concur.mobile.core.request.task;
 
-import java.util.HashMap;
-
 import android.content.Context;
-
 import com.concur.mobile.base.service.BaseAsyncResultReceiver;
 import com.concur.mobile.core.request.util.ConnectHelper;
 import com.concur.mobile.core.request.util.ConnectHelper.Action;
 import com.concur.mobile.core.request.util.ConnectHelper.Module;
 import com.concur.mobile.core.service.ServiceRequestException;
+
+import java.util.HashMap;
 
 public class RequestSubmitTask extends AbstractRequestWSCallTask {
 
@@ -26,15 +25,16 @@ public class RequestSubmitTask extends AbstractRequestWSCallTask {
 
     /**
      * Gets the service end-point for this request.
-     * 
+     *
      * @return returns the service end-point for this request.
      * @throws ServiceRequestException
      */
     protected String getServiceEndPoint() throws ServiceRequestException {
-        return ConnectHelper.getServiceEndpointURI(Module.REQUEST, Action.SUBMIT, new HashMap<String, Object>(),
-                requestID, false);
+        return ConnectHelper
+                .getServiceEndpointURI(ConnectHelper.ConnectVersion.VERSION_3_1, Module.REQUEST, Action.SUBMIT,
+                        new HashMap<String, Object>(), requestID, false);
     }
-    
+
     @Override
     protected String getPostBody() {
         return "";

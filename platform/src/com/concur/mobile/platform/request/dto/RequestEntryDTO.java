@@ -16,8 +16,6 @@ public class RequestEntryDTO {
     private String transactionCurrencyCode;
     @SerializedName("TransactionAmount")
     private Double transactionAmount;
-    @SerializedName("ApprovalStatusCode")
-    private String approvalStatusCode;
     @SerializedName("Comments")
     private List<RequestCommentDTO> comments;
     @SerializedName("TransactionDate")
@@ -61,6 +59,10 @@ public class RequestEntryDTO {
         return id;
     }
 
+    public void setId(String id) {
+        this.id = id;
+    }
+
     public List<RequestSegmentDTO> getListSegment() {
         return listSegment;
     }
@@ -91,14 +93,6 @@ public class RequestEntryDTO {
 
     public void setTransactionAmount(Double transactionAmount) {
         this.transactionAmount = transactionAmount;
-    }
-
-    public String getApprovalStatusCode() {
-        return approvalStatusCode;
-    }
-
-    public void setApprovalStatusCode(String approvalStatusCode) {
-        this.approvalStatusCode = approvalStatusCode;
     }
 
     public List<RequestCommentDTO> getComments() {

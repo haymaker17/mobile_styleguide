@@ -1,22 +1,26 @@
 package com.concur.mobile.core.request.activity;
 
+import android.app.AlertDialog;
 import android.app.DatePickerDialog;
+import android.app.TimePickerDialog;
+import android.content.DialogInterface;
 import android.graphics.Typeface;
 import android.os.Bundle;
 import android.os.Handler;
 import android.support.v4.view.ViewPager;
+import android.text.Editable;
+import android.text.TextWatcher;
 import android.util.TypedValue;
 import android.view.View;
-import android.widget.LinearLayout;
-import android.widget.TextView;
-import android.widget.Toast;
-import android.widget.ViewFlipper;
+import android.widget.*;
 import com.apptentive.android.sdk.Log;
 import com.concur.core.R;
 import com.concur.mobile.base.service.BaseAsyncRequestTask;
 import com.concur.mobile.base.service.BaseAsyncResultReceiver;
 import com.concur.mobile.core.ConcurCore;
 import com.concur.mobile.core.activity.AbstractConnectFormFieldActivity;
+import com.concur.mobile.core.expense.charge.activity.CurrencySpinnerAdapter;
+import com.concur.mobile.core.expense.data.ListItem;
 import com.concur.mobile.core.request.RequestPagerAdapter;
 import com.concur.mobile.core.request.service.RequestParser;
 import com.concur.mobile.core.request.util.ConnectHelper;
@@ -36,6 +40,7 @@ import com.concur.mobile.platform.request.groupConfiguration.Policy;
 import com.concur.mobile.platform.request.groupConfiguration.RequestGroupConfiguration;
 import com.concur.mobile.platform.request.groupConfiguration.SegmentType;
 import com.concur.mobile.platform.ui.common.dialog.NoConnectivityDialogFragment;
+import com.concur.mobile.platform.ui.common.view.MoneyFormField;
 import com.concur.mobile.platform.util.Parse;
 
 import java.util.*;
@@ -99,8 +104,10 @@ public class RequestEntryActivity extends AbstractConnectFormFieldActivity imple
     private int originFragment = -1;
     private int fragmentOnInitialization = -1;
     private boolean createMode = false;
-    //private boolean isAir = false;
     private SegmentType.RequestSegmentType viewedType = null;
+
+    private CurrencySpinnerAdapter curTypeAdapter;
+    private ListItem selectedCurrencyType;
 
     static {
         final List<String> hotelLayout = new ArrayList<String>();  // HOTEL
@@ -117,6 +124,7 @@ public class RequestEntryActivity extends AbstractConnectFormFieldActivity imple
         airLayout.add(FIELD_FROM_ID);
         airLayout.addAll(hotelLayout);
         layoutVisibilities.put(SegmentType.RequestSegmentType.AIR, airLayout);
+        layoutVisibilities.put(SegmentType.RequestSegmentType.RAIL, airLayout);
         layoutVisibilities.put(SegmentType.RequestSegmentType.CAR, airLayout);
     }
 
@@ -186,7 +194,7 @@ public class RequestEntryActivity extends AbstractConnectFormFieldActivity imple
             viewedType = SegmentType.RequestSegmentType.CAR;
         }
         // --- Air segments have a specific display
-        if (viewedType == SegmentType.RequestSegmentType.AIR) {
+        if (hasCustomLayouts(viewedType)) {
             entryTypeVF.setDisplayedChild(ID_VIEWPAGER_VIEW);
         } else {
             entryTypeVF.setDisplayedChild(ID_NO_VIEWPAGER_VIEW);
@@ -195,7 +203,7 @@ public class RequestEntryActivity extends AbstractConnectFormFieldActivity imple
         requestTitle = (TextView) findViewById(R.id.entryTitle);
         requestTitle.setText(entry.getSegmentType());
         // --- we use fragments if it's air, which will launch display by themselves
-        if (viewedType != SegmentType.RequestSegmentType.AIR) {
+        if (!hasCustomLayouts(viewedType)) {
             // --- only one segment possible
             this.setDisplayFields(entry.getListSegment().iterator().next(), form, entryFields);
             applySaveButtonPolicy(findViewById(R.id.saveButton));
@@ -354,6 +362,12 @@ public class RequestEntryActivity extends AbstractConnectFormFieldActivity imple
         }
     }
 
+    /**
+     * Note : Move this to RequestGroupConfiguration in a static method if it's needed anywhere else
+     *
+     * @param segmentType
+     * @return
+     */
     private String extractSegmentDefaultFormId(SegmentType.RequestSegmentType segmentType) {
         final RequestGroupConfiguration rgc = getConcurCore().getRequestGroupConfigurationCache().getValue(getUserId());
         for (Policy p : rgc.getPolicies()) {
@@ -369,7 +383,7 @@ public class RequestEntryActivity extends AbstractConnectFormFieldActivity imple
     }
 
     @Override
-    protected String getModelValueByFieldName(FormDTO requestSegment, String fieldName) {
+    protected String getModelDisplayedValueByFieldName(FormDTO requestSegment, String fieldName) {
         final RequestSegmentDTO segment = (RequestSegmentDTO) requestSegment;
         //TODO
         if (fieldName.equals(FIELD_FROM_ID)) {
@@ -450,32 +464,36 @@ public class RequestEntryActivity extends AbstractConnectFormFieldActivity imple
 
     @Override
     protected String getLabelFromFieldName(String fieldName) {
-        //TODO
+        //TODO : labels depending on the segment type ?
         if (fieldName.equals(FIELD_FROM_ID)) {
-            return "From";
+            return getResources().getString(R.string.general_separator_from);
         } else if (fieldName.equals(FIELD_TO_ID)) {
-            return "To";
+            return getResources().getString(R.string.general_separator_to);
         } else if (fieldName.equals(FIELD_AMOUNT)) {
-            return "Amount";
+            return getResources().getString(R.string.amount);
         } else if (fieldName.equals(FIELD_START_DATE)) {
-            return "Departure";
+            return getResources().getString(R.string.general_departure);
         } else if (fieldName.equals(FIELD_START_TIME)) {
-            return "at";
+            return getResources().getString(R.string.tr_at);
         } else if (fieldName.equals(FIELD_END_DATE)) {
-            return "Arrival";
+            return getResources().getString(R.string.tr_arrival);
         } else if (fieldName.equals(FIELD_END_TIME)) {
-            return "at";
+            return getResources().getString(R.string.tr_at);
         } else if (fieldName.equals(FIELD_CURRENCY)) {
-            return "Currency";
+            return getResources().getString(R.string.currency);
         } else if (fieldName.equals(FIELD_COMMENT)) {
-            return "Comment";
+            return getResources().getString(R.string.comment);
         }
         return null;
     }
 
+    private boolean hasCustomLayouts(SegmentType.RequestSegmentType segmentType) {
+        return viewedType == SegmentType.RequestSegmentType.AIR || viewedType == SegmentType.RequestSegmentType.RAIL;
+    }
+
     @Override
     protected boolean isFieldVisible(FormDTO model, String fieldName) {
-        if (viewedType != SegmentType.RequestSegmentType.AIR || fragmentOnInitialization == TAB_ONE_WAY) {
+        if (!hasCustomLayouts(viewedType) || fragmentOnInitialization == TAB_ONE_WAY) {
             return layoutVisibilities.get(viewedType).contains(fieldName);
         } else {
             // --- segment number detection
@@ -506,13 +524,33 @@ public class RequestEntryActivity extends AbstractConnectFormFieldActivity imple
     }
 
     @Override
-    protected void applySpecificRender(TextView component, LinearLayout.LayoutParams llp, ConnectFormField ff) {
-        //TODO
+    protected void applySpecificRender(final FormDTO model, TextView component, LinearLayout.LayoutParams llp,
+            ConnectFormField ff) {
         if (ff.getName().equals(FIELD_SEGMENT_TYPE)) {
             component.setTextAppearance(this, R.style.ListCellHeaderText);
             component.setTextColor(getResources().getColor(R.color.White));
             component.setTypeface(Typeface.DEFAULT_BOLD);
             component.setTextSize(TypedValue.COMPLEX_UNIT_SP, 18);
+        } else if (ff.getName().equals(FIELD_CURRENCY)) {
+            component.addTextChangedListener(new TextWatcher() {
+
+                @Override public void beforeTextChanged(CharSequence charSequence, int i, int i2, int i3) {
+                    // --- ntd
+                }
+
+                @Override public void onTextChanged(CharSequence charSequence, int i, int i2, int i3) {
+                    // --- ntd
+                }
+
+                @Override public void afterTextChanged(Editable editable) {
+
+                    ((MoneyFormField) RequestEntryActivity.this.getComponent(model, FIELD_AMOUNT))
+                            .setCurrencyCode(((RequestSegmentDTO) model).getForeignCurrencyCode());
+                }
+            });
+        } else if (ff.getName().equals(FIELD_AMOUNT)) {
+            // --- currency initialization
+            ((MoneyFormField) component).setCurrencyCode(((RequestSegmentDTO) model).getForeignCurrencyCode());
         }
     }
 
@@ -520,9 +558,9 @@ public class RequestEntryActivity extends AbstractConnectFormFieldActivity imple
     public void applySaveButtonPolicy(View saveButtonView) {
         if (request.getApprovalStatusCode().equals(RequestDTO.ApprovalStatus.CREATION.getCode()) || request
                 .getApprovalStatusCode().equals(RequestDTO.ApprovalStatus.RECALLED.getCode())) {
-            saveButtonView.setVisibility(View.GONE);
-        } else {
             saveButtonView.setVisibility(View.VISIBLE);
+        } else {
+            saveButtonView.setVisibility(View.GONE);
         }
         saveButtonView.setOnClickListener(new View.OnClickListener() {
 
@@ -542,9 +580,102 @@ public class RequestEntryActivity extends AbstractConnectFormFieldActivity imple
                 for (RequestSegmentDTO segment : entry.getListSegment()) {
                     save(form, segment);
                 }
+                // TODO : CALL WS
             }
         });
     }
+
+    @Override
+    protected Locale getLocale() {
+        return locale;
+    }
+
+    @Override
+    protected DateUtil.DatePattern getDatePattern() {
+        return DateUtil.DatePattern.DB_INPUT;
+    }
+
+    @Override
+    public void onClick(final View view) {
+        final DatePickerDialog datePicker = getDateField(view.getId());
+        if (datePicker != null) {
+            datePicker.show();
+            return;
+        }
+        final TimePickerDialog timePicker = getTimeField(view.getId());
+        if (timePicker != null) {
+            timePicker.show();
+            return;
+        }
+        final PickListItem pickListItem = getPickListFieldNameByViewId(view.getId());
+        if (pickListItem != null && pickListItem.getFieldName() != null && pickListItem.getFieldName()
+                .equals(FIELD_CURRENCY)) {
+            // --- Currency Behavior
+            final AlertDialog.Builder builder = new AlertDialog.Builder(this);
+            builder.setTitle(R.string.currency_prompt);
+            curTypeAdapter = new CurrencySpinnerAdapter(this);
+            //configureCurrencySelection((RequestSegmentDTO) pickListItem.getModel());
+            builder.setSingleChoiceItems(curTypeAdapter, -1, new DialogInterface.OnClickListener() {
+
+                @Override
+                public void onClick(DialogInterface dialog, int which) {
+                    if (which != -1) {
+                        Object selCurObj = curTypeAdapter.getItem(which);
+                        if (selCurObj instanceof ListItem) {
+                            final ListItem li = (ListItem) selCurObj;
+                            ((RequestSegmentDTO) pickListItem.getModel()).setForeignCurrencyCode(li.code);
+                            ((TextView) view).setText(li.text);
+                            //setSelectedCurrencyType((ListItem) selCurObj);
+                        }
+                    }
+                    dialog.dismiss();
+                }
+            });
+            final AlertDialog alertDlg = builder.create();
+            final ListView listView = alertDlg.getListView();
+            listView.setTextFilterEnabled(true);
+            alertDlg.show();
+        }
+    }
+
+    /*
+     * Currency management
+     * ********************************
+     */
+
+    /**
+     * Configures support for currency selection.
+     */
+    private void configureCurrencySelection(RequestSegmentDTO segment) {
+        curTypeAdapter = new CurrencySpinnerAdapter(this);
+        if (segment != null) {
+            int curTypeInd = curTypeAdapter.getPositionForCurrency(segment.getForeignCurrencyCode());
+            if (curTypeInd != -1) {
+                Object curTypeObj = curTypeAdapter.getItem(curTypeInd);
+                if (curTypeObj instanceof ListItem) {
+                    setSelectedCurrencyType((ListItem) curTypeObj);
+                }
+            }
+        }
+    }
+
+    /**
+     * Will set the currently selected currency type and update the display.
+     *
+     * @param selCurType the expense type.
+     */
+    protected void setSelectedCurrencyType(ListItem selCurType) {
+        // Set the reference.
+        this.selectedCurrencyType = selCurType;
+        // Update the display.
+        if (this.selectedCurrencyType != null) {
+            //TODO ViewUtil.setTextViewText(this, R.id.expense_currency, R.id.field_value, selCurType.text, true);
+        } else {
+            //TODO ViewUtil.setTextViewText(this, R.id.expense_currency, R.id.field_value, "", true);
+        }
+    }
+
+    /* ******************************* */
 
     @Override
     protected void save(ConnectForm form, FormDTO model) {
@@ -631,25 +762,6 @@ public class RequestEntryActivity extends AbstractConnectFormFieldActivity imple
             asyncReceiverSave.setListener(null);
         }
 
-    }
-
-    @Override
-    protected Locale getLocale() {
-        return locale;
-    }
-
-    @Override
-    protected DateUtil.DatePattern getPattern() {
-        return DateUtil.DatePattern.DB_INPUT;
-    }
-
-    @Override
-    public void onClick(View view) {
-        for (int i = 0; i < getDateViews().size(); i++) {
-            if ((Integer) getDateViews().get(i) == view.getId()) {
-                ((DatePickerDialog) getDatePickerDialogs().get(i)).show();
-            }
-        }
     }
 
     private void cleanupReceivers() {

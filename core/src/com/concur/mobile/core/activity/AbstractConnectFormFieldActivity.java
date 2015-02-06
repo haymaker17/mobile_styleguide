@@ -2,6 +2,7 @@ package com.concur.mobile.core.activity;
 
 import android.app.ActionBar;
 import android.app.DatePickerDialog;
+import android.app.TimePickerDialog;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
 import android.text.InputType;
@@ -10,16 +11,14 @@ import android.util.Log;
 import android.util.TypedValue;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.DatePicker;
-import android.widget.EditText;
-import android.widget.LinearLayout;
-import android.widget.TextView;
+import android.widget.*;
 import com.concur.core.R;
 import com.concur.mobile.core.request.util.DateUtil;
 import com.concur.mobile.platform.common.formfield.ConnectForm;
 import com.concur.mobile.platform.common.formfield.ConnectFormField;
 import com.concur.mobile.platform.common.formfield.IFormField;
 import com.concur.mobile.platform.request.dto.FormDTO;
+import com.concur.mobile.platform.ui.common.view.MoneyFormField;
 
 import java.text.DateFormat;
 import java.text.ParseException;
@@ -36,17 +35,40 @@ public abstract class AbstractConnectFormFieldActivity extends BaseActivity {
 
     private static final String CLS_TAG = "AbstractConnectFormFieldActivity";
 
-    private static enum DisplayType {
-        TEXTFIELD,        //RequestID, Name, Status
+    protected static enum DisplayType {
+        TEXTFIELD,       //RequestID, Name, Status
         TEXTAREA,        //Purpose, Comment
-        DATEFIELD,        //startDate, endate
-        MONEYFIELD        //totalAmount&currency
+        DATEFIELD,       //startDate, endDate
+        MONEYFIELD,      //totalAmount + currency,
+        TIME,            //startTime, endTime
+        PICKLIST         //currency (selection)
+    }
+
+    protected class PickListItem {
+
+        private String fieldName;
+        private FormDTO model;
+
+        public PickListItem(String fieldName, FormDTO model) {
+            this.fieldName = fieldName;
+            this.model = model;
+        }
+
+        public String getFieldName() {
+            return fieldName;
+        }
+
+        public FormDTO getModel() {
+            return model;
+        }
     }
 
     private Map<String, Integer> views = new HashMap<String, Integer>(); // view ID, filed NAME
 
-    private List<Integer> dateViews = new ArrayList<Integer>();
-    private List<DatePickerDialog> datePickerDialogs = new ArrayList<DatePickerDialog>();
+    private Map<Integer, DatePickerDialog> dateFieldMapping = new HashMap<Integer, DatePickerDialog>();
+    private Map<Integer, TimePickerDialog> timeFieldMapping = new HashMap<Integer, TimePickerDialog>();
+    private Map<Integer, PickListItem> pickListMapping = new HashMap<Integer, PickListItem>();
+
     /* Arbitrarily set to 100 to avoid any possible conflict.
      * TODO : migrate to View.generateViewId() calls when we'll move to minSdk=17.
      * Cf http://stackoverflow.com/a/15442898
@@ -59,7 +81,7 @@ public abstract class AbstractConnectFormFieldActivity extends BaseActivity {
      * @param fieldName
      * @return the value contained in the Model object for the given field name as a String
      */
-    protected abstract String getModelValueByFieldName(FormDTO model, String fieldName);
+    protected abstract String getModelDisplayedValueByFieldName(FormDTO model, String fieldName);
 
     /**
      * Set the value into the Model object for the given field name
@@ -77,7 +99,7 @@ public abstract class AbstractConnectFormFieldActivity extends BaseActivity {
     /**
      * @return the pattern in use for date values processing
      */
-    protected abstract DateUtil.DatePattern getPattern();
+    protected abstract DateUtil.DatePattern getDatePattern();
 
     /**
      * @param fieldName
@@ -114,8 +136,9 @@ public abstract class AbstractConnectFormFieldActivity extends BaseActivity {
      * @return the value currently displayed & contained in the View object
      */
     private String getValueByFieldName(FormDTO model, String fieldName) {
-        if (views.containsKey(fieldName)) {
-            final TextView tv = (TextView) findViewById(views.get(getVIewId(model, fieldName)));
+        final String viewName = getViewName(model, fieldName);
+        if (views.containsKey(viewName)) {
+            final TextView tv = (TextView) findViewById(views.get(viewName));
             if (tv != null && tv.getText() != null) {
                 return tv.getText().toString();
             }
@@ -123,8 +146,8 @@ public abstract class AbstractConnectFormFieldActivity extends BaseActivity {
         return null;
     }
 
-    private String getVIewId(FormDTO model, String fieldName) {
-        return model.getId() + "_" + fieldName;
+    private String getViewName(FormDTO model, String fieldName) {
+        return model.getId() + "__" + fieldName;
     }
 
     public void setDisplayFields(FormDTO model, ConnectForm form, final LinearLayout fieldLayout) {
@@ -163,19 +186,36 @@ public abstract class AbstractConnectFormFieldActivity extends BaseActivity {
                 final boolean isTitleField = fieldToTitle != null && ff.getName().equals(fieldToTitle);
                 final ViewGroup layout = isTitleField ? titleLayout : fieldLayout;
 
-                final IFormField.DataType dataType = ff.getDataType();
-                final IFormField.ControlType controlType = ff.getControlType();
-                final IFormField.AccessType accesType = ff.getAccessType();
+                IFormField.DataType dataType = ff.getDataType();
+                IFormField.ControlType controlType = ff.getControlType();
+                IFormField.AccessType accesType = ff.getAccessType();
 
                 DisplayType displayType = null;
                 TextView component = null;
 
+                // --- WS OUTPUT FIX (Time fields)
+                // note : this is due to the fact that WS can't retrieve the correct value within midtier so it returns null
+                // TODO : set to RO as default when tests are done
+                if (dataType == IFormField.DataType.CHAR && controlType == IFormField.ControlType.TIME) {
+                    // time values
+                    accesType = IFormField.AccessType.RW;
+                } else if (dataType == IFormField.DataType.MONEY && controlType == IFormField.ControlType.EDIT) {
+                    // amount
+                    accesType = IFormField.AccessType.RW;
+                } else if (dataType == IFormField.DataType.VARCHAR && controlType == IFormField.ControlType.TEXT_AREA) {
+                    // comment
+                    accesType = IFormField.AccessType.RW;
+                } else if (dataType == IFormField.DataType.INTEGER && controlType == IFormField.ControlType.PICK_LIST) {
+                    // currency
+                    accesType = IFormField.AccessType.RW;
+                }
+
                 switch (dataType) {
                 case BOOLEAN:
                     break;
-                case CHAR: // Time
+                case CHAR:
                     if (controlType == IFormField.ControlType.TIME) {
-                        displayType = DisplayType.TEXTFIELD;
+                        displayType = DisplayType.TIME;
                     }
                     break;
                 case CONNECTED_LIST:
@@ -184,8 +224,12 @@ public abstract class AbstractConnectFormFieldActivity extends BaseActivity {
                     break;
                 case EXPENSE_TYPE:
                     break;
-                case INTEGER: // List IDs
-                    displayType = DisplayType.TEXTFIELD;
+                case INTEGER:
+                    if (controlType == IFormField.ControlType.EDIT) {
+                        displayType = DisplayType.TEXTFIELD;
+                    } else if (controlType == IFormField.ControlType.PICK_LIST) {
+                        displayType = DisplayType.PICKLIST;
+                    }
                     break;
                 case LIST:
                     break;
@@ -222,13 +266,13 @@ public abstract class AbstractConnectFormFieldActivity extends BaseActivity {
                     switch (displayType) {
                     case TEXTFIELD:
 
-                        if (!this.isEditable || accesType == IFormField.AccessType.RO) {
+                        if (accesType == IFormField.AccessType.RO) {
                             component = new TextView(this);
                         } else {
                             component = new EditText(this);
                         }
 
-                        component.setText(getModelValueByFieldName(model, ff.getName()));
+                        component.setText(getModelDisplayedValueByFieldName(model, ff.getName()));
                         component.setMaxLines(1);
                         component.setSingleLine(true);
                         component.setEllipsize(TextUtils.TruncateAt.END); //ellipses
@@ -240,13 +284,13 @@ public abstract class AbstractConnectFormFieldActivity extends BaseActivity {
 
                     case TEXTAREA:
 
-                        if (!this.isEditable || accesType == IFormField.AccessType.RO) {
+                        if (accesType == IFormField.AccessType.RO) {
                             component = new TextView(this);
                         } else {
                             component = new EditText(this);
                         }
 
-                        component.setText(getModelValueByFieldName(model, ff.getName()));
+                        component.setText(getModelDisplayedValueByFieldName(model, ff.getName()));
                         component.setLines(5);
                         component.setMaxLines(5);
                         component.setTextSize(TypedValue.COMPLEX_UNIT_SP, 15);
@@ -259,13 +303,13 @@ public abstract class AbstractConnectFormFieldActivity extends BaseActivity {
 
                         component = new TextView(this);
 
-                        component.setText(getModelValueByFieldName(model, ff.getName()));
+                        component.setText(getModelDisplayedValueByFieldName(model, ff.getName()));
                         component.setInputType(InputType.TYPE_NULL);
                         component.setTextSize(TypedValue.COMPLEX_UNIT_SP, 15);
                         component.requestFocus();
 
                         //ADD LISTENER for setting date
-                        if (!(!this.isEditable || accesType == IFormField.AccessType.RO)) {
+                        if (accesType != IFormField.AccessType.RO) {
                             component.setOnClickListener((View.OnClickListener) this);
                             Calendar newCalendar = Calendar.getInstance();
                             final TextView finalComp = component;
@@ -283,8 +327,42 @@ public abstract class AbstractConnectFormFieldActivity extends BaseActivity {
                                     newCalendar.get(Calendar.YEAR), newCalendar.get(Calendar.MONTH),
                                     newCalendar.get(Calendar.DAY_OF_MONTH));
 
-                            dateViews.add(viewID);
-                            datePickerDialogs.add(fromDatePickerDialog);
+                            dateFieldMapping.put(viewID, fromDatePickerDialog);
+                        }
+
+                        llp = new LinearLayout.LayoutParams(ActionBar.LayoutParams.MATCH_PARENT,
+                                ActionBar.LayoutParams.MATCH_PARENT);
+                        break;
+
+                    case TIME:
+                        component = new TextView(this);
+
+                        component.setText(getModelDisplayedValueByFieldName(model, ff.getName()));
+                        component.setInputType(InputType.TYPE_NULL);
+                        component.setTextSize(TypedValue.COMPLEX_UNIT_SP, 15);
+                        component.requestFocus();
+
+                        //ADD LISTENER to set time
+                        if (accesType != IFormField.AccessType.RO) {
+                            component.setOnClickListener((View.OnClickListener) this);
+                            Calendar newCalendar = Calendar.getInstance();
+                            final TextView finalComp = component;
+
+                            final TimePickerDialog.OnTimeSetListener inTimeListener = new TimePickerDialog.OnTimeSetListener() {
+
+                                @Override public void onTimeSet(TimePicker timePicker, int hours, int minutes) {
+                                    final Calendar newDate = Calendar.getInstance();
+                                    newDate.set(Calendar.HOUR, hours);
+                                    newDate.set(Calendar.MINUTE, minutes);
+                                    finalComp.setText(formatTime(newDate.getTime()));
+                                }
+                            };
+
+                            final TimePickerDialog fromTimePickerDialog = new TimePickerDialog(this, inTimeListener,
+                                    newCalendar.get(Calendar.HOUR), newCalendar.get(Calendar.MINUTE),
+                                    android.text.format.DateFormat.is24HourFormat(this));
+
+                            timeFieldMapping.put(viewID, fromTimePickerDialog);
                         }
 
                         llp = new LinearLayout.LayoutParams(ActionBar.LayoutParams.MATCH_PARENT,
@@ -292,16 +370,41 @@ public abstract class AbstractConnectFormFieldActivity extends BaseActivity {
                         break;
 
                     case MONEYFIELD:
-                        component = new TextView(this);
-                        // TODO : rework this
-                        final String currencyName = getModelValueByFieldName(model, "CurrencyName");
-                        component.setText(
-                                (currencyName != null ? currencyName + " " : "") + getModelValueByFieldName(model,
-                                        ff.getName()));
+                        // --- we do not display currency symbol if the field is editable (TODO TBC)
+                        if (accesType == IFormField.AccessType.RO) {
+                            component = new TextView(this);
+                            final String currencyName = getModelDisplayedValueByFieldName(model, "CurrencyName");
+                            component.setText((currencyName != null ? currencyName + " " : "")
+                                    + getModelDisplayedValueByFieldName(model, ff.getName()));
+                        } else {
+                            component = new MoneyFormField(this, getLocale(), null);
+                            component.setText(getModelDisplayedValueByFieldName(model, ff.getName()));
+                        }
+
                         component.setMaxLines(1);
                         component.setSingleLine(true);
                         component.setEllipsize(TextUtils.TruncateAt.END); //ellipses
                         component.setTextSize(TypedValue.COMPLEX_UNIT_SP, 15);
+                        break;
+
+                    case PICKLIST:
+
+                        component = new TextView(this);
+
+                        component.setText(getModelDisplayedValueByFieldName(model, ff.getName()));
+                        component.setInputType(InputType.TYPE_NULL);
+                        component.setTextSize(TypedValue.COMPLEX_UNIT_SP, 15);
+                        component.requestFocus();
+
+                        //ADD LISTENER for setting date
+                        if (accesType != IFormField.AccessType.RO) {
+                            component.setOnClickListener((View.OnClickListener) this);
+                        }
+
+                        // --- this is managed on activity side
+                        pickListMapping.put(viewID, new PickListItem(ff.getName(), model));
+                        llp = new LinearLayout.LayoutParams(ActionBar.LayoutParams.MATCH_PARENT,
+                                ActionBar.LayoutParams.MATCH_PARENT);
                         break;
 
                     default:
@@ -315,14 +418,14 @@ public abstract class AbstractConnectFormFieldActivity extends BaseActivity {
                         }
 
                         component.setId(viewID);
-                        views.put(ff.getName(), viewID);
+                        views.put(getViewName(model, ff.getName()), viewID);
                         viewID++;
 
                         // --- permits to apply specifics within the extending activity
-                        applySpecificRender(component, llp, ff);
+                        applySpecificRender(model, component, llp, ff);
 
                         if (llp != null) {
-                            if (!this.isEditable || accesType == IFormField.AccessType.RO) {
+                            if (accesType == IFormField.AccessType.RO) {
                                 llp.setMargins(30, 0, 0, 0); // llp.setMargins(left, top, right, bottom);
                             }
                             component.setLayoutParams(llp);
@@ -367,8 +470,8 @@ public abstract class AbstractConnectFormFieldActivity extends BaseActivity {
      * @param llp       layout params
      * @param ff        ConnectFormField element
      */
-    protected abstract void applySpecificRender(final TextView component, final LinearLayout.LayoutParams llp,
-            final ConnectFormField ff);
+    protected abstract void applySpecificRender(final FormDTO model, final TextView component,
+            final LinearLayout.LayoutParams llp, final ConnectFormField ff);
 
     /**
      * Format a date with the locale & pattern defined with overriden corresponding methods
@@ -377,7 +480,7 @@ public abstract class AbstractConnectFormFieldActivity extends BaseActivity {
      * @return the date string
      */
     protected String formatDate(Date date) {
-        return DateUtil.getFormattedDateForLocale(getPattern(), getLocale(), date);
+        return DateUtil.getFormattedDateForLocale(getDatePattern(), getLocale(), date);
     }
 
     /**
@@ -387,11 +490,11 @@ public abstract class AbstractConnectFormFieldActivity extends BaseActivity {
      * @return the date object
      */
     protected Date parseDate(String dateString) {
-        return DateUtil.parseFormattedDateForLocale(getPattern(), getLocale(), dateString);
+        return DateUtil.parseFormattedDateForLocale(getDatePattern(), getLocale(), dateString);
     }
 
     protected void applyTimeString(Date d, String timeString) {
-        final DateFormat formatter = new SimpleDateFormat(DateUtil.TIME_PATTERN);
+        final DateFormat formatter = new SimpleDateFormat(DateUtil.TIME_PATTERN_24H);
         try {
             final Date dt = formatter.parse(timeString);
             final Calendar cal = Calendar.getInstance();
@@ -411,7 +514,9 @@ public abstract class AbstractConnectFormFieldActivity extends BaseActivity {
     }
 
     protected String formatTime(Date d) {
-        final DateFormat formatter = new SimpleDateFormat(DateUtil.TIME_PATTERN);
+        final DateFormat formatter = new SimpleDateFormat(android.text.format.DateFormat.is24HourFormat(this) ?
+                DateUtil.TIME_PATTERN_24H :
+                DateUtil.TIME_PATTERN_12H);
         return formatter.format(d);
     }
 
@@ -453,20 +558,37 @@ public abstract class AbstractConnectFormFieldActivity extends BaseActivity {
     }
 
     /**
-     * TODO by ECO
+     * Return the date picker matching the given dateView id
      *
      * @return
      */
-    public List getDateViews() {
-        return dateViews;
+    protected DatePickerDialog getDateField(int viewId) {
+        return dateFieldMapping.get(viewId);
     }
 
     /**
-     * TODO by ECO
+     * Return the time picker matching the given timeView id
      *
      * @return
      */
-    public List getDatePickerDialogs() {
-        return datePickerDialogs;
+    protected TimePickerDialog getTimeField(int viewId) {
+        return timeFieldMapping.get(viewId);
+    }
+
+    /**
+     * Return the pickList field name matching the given viewId if there is any
+     *
+     * @return
+     */
+    protected PickListItem getPickListFieldNameByViewId(int viewId) {
+        return pickListMapping.get(viewId);
+    }
+
+    protected TextView getComponent(FormDTO model, String fieldName) {
+        final Integer compId = views.get(getViewName(model, fieldName));
+        if (compId != null) {
+            return (TextView) findViewById(compId);
+        }
+        return null;
     }
 }

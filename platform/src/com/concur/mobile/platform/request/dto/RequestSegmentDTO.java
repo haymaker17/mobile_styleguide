@@ -20,6 +20,10 @@ public class RequestSegmentDTO implements FormDTO {
     private Date departureDate;
     @SerializedName("ArrivalDate")
     private Date arrivalDate;
+    @SerializedName("FromLocationID")
+    private String fromLocationId;
+    @SerializedName("ToLocationID")
+    private String toLocationId;
     @SerializedName("FromLocationName")
     private String fromLocationName;
     @SerializedName("ToLocationName")
@@ -39,6 +43,22 @@ public class RequestSegmentDTO implements FormDTO {
     @Expose @SerializedName("Comment")
     private String lastComment;
     private int displayOrder;
+
+    public String getFromLocationId() {
+        return fromLocationId;
+    }
+
+    public void setFromLocationId(String fromLocationId) {
+        this.fromLocationId = fromLocationId;
+    }
+
+    public String getToLocationId() {
+        return toLocationId;
+    }
+
+    public void setToLocationId(String toLocationId) {
+        this.toLocationId = toLocationId;
+    }
 
     public int getDisplayOrder() {
         return displayOrder;

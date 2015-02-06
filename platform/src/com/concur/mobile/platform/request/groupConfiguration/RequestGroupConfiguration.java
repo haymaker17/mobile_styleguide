@@ -85,7 +85,8 @@ public class RequestGroupConfiguration {
     public String getFormId() {
         if (defaultFormId == null && defaultPolicyId != null) {
             for (Policy p : policies) {
-                if (p.getIsDefault()) {
+                // we can't use isDefault because this 'default' property doesn't have the same meaning as the other one...
+                if (p.getId().equals(defaultPolicyId)) {
                     defaultFormId = p.getHeaderFormId();
                     break;
                 }

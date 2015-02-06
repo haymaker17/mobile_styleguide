@@ -662,6 +662,8 @@
     <string name="tr_error_retrieving_detail">An error occured. Please try again.</string>
     <string name="tr_operation_canceled">Operation canceled</string>
     <string name="tr_flight_destination_label">%%0%% to %%1%%</string>
+    <string name="tr_at">At</string>
+    <string name="tr_arrival">Arrival</string>
     <string name="travel_segments">Segments</string>
     <string name="travel_segment_title">Segment</string>
     <string name="travel_request_expected_expenses">Expected Expenses</string>

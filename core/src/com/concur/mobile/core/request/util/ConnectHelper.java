@@ -14,8 +14,7 @@ import java.util.Map.Entry;
  */
 public class ConnectHelper {
 
-    private static final String ENDPOINT_URI = "/api/v3.0/";
-    public static final String REQUEST_ID = "id";
+    private static final String ENDPOINT_URI = "/api/";
 
     public static final String PARAM_LIMIT = "limit";
     private static final int DEFAULT_LIST_LIMIT_VALUE = 10;
@@ -51,6 +50,17 @@ public class ConnectHelper {
         }
     }
 
+    public enum ConnectVersion {
+        VERSION_3_0("v3.0"),
+        VERSION_3_1("v3.1");
+
+        public String versionNumber;
+
+        ConnectVersion(String versionNumber) {
+            this.versionNumber = versionNumber;
+        }
+    }
+
     /**
      * Generates the webservice endpoint url
      *
@@ -61,9 +71,9 @@ public class ConnectHelper {
      * @return the endpoint url
      * @throws ServiceRequestException exception which occurred
      */
-    public static String getServiceEndpointURI(Module module, Action action, Map<String, Object> queryStringParameters,
-            boolean isGet) throws ServiceRequestException {
-        return getServiceEndpointURI(module, action, queryStringParameters, null, isGet);
+    public static String getServiceEndpointURI(ConnectVersion connectVersion, Module module, Action action,
+            Map<String, Object> queryStringParameters, boolean isGet) throws ServiceRequestException {
+        return getServiceEndpointURI(connectVersion, module, action, queryStringParameters, null, isGet);
     }
 
     /**
@@ -77,10 +87,11 @@ public class ConnectHelper {
      * @return the endpoint url
      * @throws ServiceRequestException exception which occurred
      */
-    public static String getServiceEndpointURI(Module module, Action action, Map<String, Object> queryStringParameters,
-            String id, boolean isGet) throws ServiceRequestException {
+    public static String getServiceEndpointURI(ConnectVersion connectVersion, Module module, Action action,
+            Map<String, Object> queryStringParameters, String id, boolean isGet) throws ServiceRequestException {
         // --- "/api/v3.0/travelrequest"
-        final StringBuilder serviceUri = new StringBuilder(ENDPOINT_URI + module.moduleValue);
+        final StringBuilder serviceUri = new StringBuilder(
+                ENDPOINT_URI + connectVersion.versionNumber + "/" + module.moduleValue);
 
         switch (action) {
 

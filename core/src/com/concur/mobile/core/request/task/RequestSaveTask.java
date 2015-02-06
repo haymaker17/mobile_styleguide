@@ -29,9 +29,10 @@ public class RequestSaveTask extends AbstractRequestWSCallTask {
 
     @Override
     protected String getServiceEndPoint() throws ServiceRequestException {
-        return ConnectHelper.getServiceEndpointURI(ConnectHelper.Module.REQUEST,
-                (tr.getId() != null ? ConnectHelper.Action.UPDATE : ConnectHelper.Action.CREATE),
-                new HashMap<String, Object>(), tr.getId(), false);
+        return ConnectHelper
+                .getServiceEndpointURI(ConnectHelper.ConnectVersion.VERSION_3_1, ConnectHelper.Module.REQUEST,
+                        (tr.getId() != null ? ConnectHelper.Action.UPDATE : ConnectHelper.Action.CREATE),
+                        new HashMap<String, Object>(), tr.getId(), false);
     }
 
     @Override

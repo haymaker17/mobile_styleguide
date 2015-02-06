@@ -47,6 +47,8 @@ public class RequestListTask extends AbstractRequestWSCallTask {
         params.put(PARAM_STATUS, this.statusRequested);
         params.put(PARAM_WITH_SEGMENT_TYPES, Boolean.TRUE);
         params.put(ConnectHelper.PARAM_LIMIT, 100);
-        return ConnectHelper.getServiceEndpointURI(Module.REQUEST, Action.LIST, params, true);
+        return ConnectHelper
+                .getServiceEndpointURI(ConnectHelper.ConnectVersion.VERSION_3_1, Module.REQUEST, Action.LIST, params,
+                        true);
     }
 }

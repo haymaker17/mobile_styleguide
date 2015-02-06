@@ -50,7 +50,8 @@ public class DateUtil {
     }
 
     // --- convert to an enum if there is more than one
-    public static final String TIME_PATTERN = "HH:mm";
+    public static final String TIME_PATTERN_24H = "HH:mm";
+    public static final String TIME_PATTERN_12H = "hh:mm aaa";
 
     /**
      * Converts a date to a string with the given pattern for the given locale !
