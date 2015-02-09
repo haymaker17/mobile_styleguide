@@ -21,6 +21,7 @@
         android:layout_height="wrap_content"
         android:layout_below="@id/hotel_search_progress"
         android:layout_centerHorizontal="true"
+        android:background="#ffffff"
         android:text="@string/hotel_search_progress_message"
         android:textColor="@color/blueTabs" >
     </TextView>

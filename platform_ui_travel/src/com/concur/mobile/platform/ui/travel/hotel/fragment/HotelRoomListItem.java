@@ -25,6 +25,7 @@ public class HotelRoomListItem extends ListItem {
     private static final String CLS_TAG = HotelRoomListItem.class.getSimpleName();
 
     private HotelRate hotelRoom;
+    public String maxEnforcementLevelString;
 
     /**
      * Constructs an instance of <code>HotelRoomListItem</code> backed by a hotel room.
@@ -76,61 +77,15 @@ public class HotelRoomListItem extends ListItem {
                         .getConfiguration().locale, hotelRoom.currency, true, false));
                 // set the Travel Points
                 // LayoutUtil.initTravelPointsAtItemLevel(roomView, R.id.travel_points, hotelRoom.travelPoints);
-                switch (ViewUtil.getRuleEnforcementLevel(hotelRoom.maxEnforcementLevel)) {
-
-                case WARNING:
-                case ERROR: {
-                    // Drawable img = context.getResources().getDrawable(­R.drawable.ic_action_voilation );
+                maxEnforcementLevelString = ViewUtil.getRuleEnforcementLevelAsString(hotelRoom.maxEnforcementLevel);
+                if (maxEnforcementLevelString.equals("WARNING") || maxEnforcementLevelString.equals("ERROR")) {
                     txtView.setCompoundDrawablesWithIntrinsicBounds(0, R.drawable.ic_action_voilation, 0, 0);
                     txtView.setPadding(5, 0, 8, 0);
-                }
-
-                case HIDE: {
-                    // No-op.
-                    Log.e(Const.LOG_TAG, CLS_TAG + ".getView: rule enforcement level of hide!");
-                    break;
-                }
-                case INACTIVE:
-                    break;
-                case NONE:
-                    break;
-                default:
-                    break;
                 }
             }
         } else {
             Log.e(Const.LOG_TAG, CLS_TAG + ".getView: unable to locate hotel room rate text view!");
         }
-
-        // set appropriate rule violation icon
-        // ImageView violationIconView = (ImageView) roomView.findViewById(R.id.violation_icon);
-        // switch (ViewUtil.getRuleEnforcementLevel(hotelRoom.maxEnforcementLevel)) {
-        // case NONE: {
-        // if (violationIconView != null) {
-        // violationIconView.setVisibility(View.GONE);
-        // }
-        // break;
-        // }
-        // case WARNING:
-        // case ERROR: {
-        // if (violationIconView != null) {
-        // violationIconView.setVisibility(View.VISIBLE);
-        // violationIconView.setImageResource(R.drawable.ic_action_voilation);
-        // }
-        // break;
-        // }
-        // case INACTIVE: {
-        // if (violationIconView != null) {
-        // violationIconView.setVisibility(View.GONE);
-        // }
-        // break;
-        // }
-        // case HIDE: {
-        // // No-op.
-        // Log.e(Const.LOG_TAG, CLS_TAG + ".getView: rule enforcement level of hide!");
-        // break;
-        // }
-        // }
 
         // Set the summary information.
         txtView = (TextView) roomView.findViewById(R.id.hotel_room_summary);

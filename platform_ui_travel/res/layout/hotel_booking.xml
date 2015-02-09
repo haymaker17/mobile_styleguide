@@ -18,6 +18,7 @@
         android:layout_height="wrap_content"
         android:layout_below="@id/hotel_booking_screen_load"
         android:layout_centerHorizontal="true"
+        android:background="#ffffff"
         android:text="@string/hotel_sell_options_retrieving" >
     </TextView>
 

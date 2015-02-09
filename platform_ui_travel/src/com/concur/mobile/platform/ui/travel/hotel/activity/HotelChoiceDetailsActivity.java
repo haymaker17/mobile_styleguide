@@ -1,6 +1,7 @@
 package com.concur.mobile.platform.ui.travel.hotel.activity;
 
 import java.io.Serializable;
+import java.util.ArrayList;
 
 import android.app.Activity;
 import android.app.FragmentManager;
@@ -55,6 +56,7 @@ public class HotelChoiceDetailsActivity extends Activity implements HotelChoiceD
     private String durationOfStayForDisplay;
     private int numOfNights;
     private String headerImageURL;
+    private ArrayList<String[]> violationReasons;
 
     // private ParallaxScollListView mListView;
     // private ImageView mImageView;
@@ -130,6 +132,7 @@ public class HotelChoiceDetailsActivity extends Activity implements HotelChoiceD
         location = i.getStringExtra(Const.EXTRA_TRAVEL_HOTEL_SEARCH_LOCATION);
         durationOfStayForDisplay = i.getStringExtra(Const.EXTRA_TRAVEL_HOTEL_SEARCH_DURATION_OF_STAY);
         numOfNights = i.getIntExtra(Const.EXTRA_TRAVEL_HOTEL_SEARCH_DURATION_NUM_OF_NIGHTS, 0);
+        violationReasons = (ArrayList<String[]>) i.getSerializableExtra("violationReasons");
 
     }
 
@@ -207,7 +210,7 @@ public class HotelChoiceDetailsActivity extends Activity implements HotelChoiceD
     @Override
     public void roomItemClicked(HotelRoomListItem roomListItem) {
         Intent intent = new Intent(this, HotelBookingActivity.class);
-        // TODO - have a singleton class and set these objects there to share with other activities
+        // TODO - have a singleton class and set these objects there to share with other activities?
         intent.putExtra("roomSelected", roomListItem.getHotelRoom());
 
         intent.putExtra(Const.EXTRA_TRAVEL_HOTEL_SEARCH_LOCATION, location);
@@ -215,7 +218,8 @@ public class HotelChoiceDetailsActivity extends Activity implements HotelChoiceD
         intent.putExtra(Const.EXTRA_TRAVEL_HOTEL_SEARCH_DURATION_NUM_OF_NIGHTS, numOfNights);
         intent.putExtra("headerImageURL", headerImageURL);
         intent.putExtra("hotelName", hotelListItem.getHotel().name);
-
+        // intent.putExtra("maxEnforcementLevelString", roomListItem.maxEnforcementLevelString);
+        intent.putExtra("violationReasons", violationReasons);
         startActivity(intent);
 
     }
