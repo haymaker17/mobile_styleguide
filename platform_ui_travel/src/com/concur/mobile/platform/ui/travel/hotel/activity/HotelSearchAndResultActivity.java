@@ -88,6 +88,7 @@ public class HotelSearchAndResultActivity extends Activity implements OnMenuItem
     private boolean searchCriteriaChanged;
     private String distanceUnit;
     private int numberOfNights;
+    private ArrayList<String[]> violationReasons;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -97,6 +98,7 @@ public class HotelSearchAndResultActivity extends Activity implements OnMenuItem
         Intent intent = getIntent();
 
         location = intent.getStringExtra(Const.EXTRA_TRAVEL_HOTEL_SEARCH_LOCATION);
+        violationReasons = (ArrayList<String[]>) intent.getSerializableExtra("violationReasons");
 
         // searchCriteriaChanged will be false if it just came back from search criteria screen without any changes to the
         // previous searched criteria. in such
@@ -292,6 +294,7 @@ public class HotelSearchAndResultActivity extends Activity implements OnMenuItem
         // Populate list of hotels with availability error codes that need to be moved to the bottom of the list
         List<HotelSearchResultListItem> hotelListItemsToDisplayAtbottom = null;
 
+        // TODO - check is spare array canbe used instead of hashmap
         Map<Hotel, HotelSearchResultListItem> hotelSortMap = new HashMap<Hotel, HotelSearchResultListItem>();
         if (hotelListItemsToSort != null) {
             hotelListItemsToDisplayAtbottom = new ArrayList<HotelSearchResultListItem>();
@@ -503,6 +506,7 @@ public class HotelSearchAndResultActivity extends Activity implements OnMenuItem
                     i.putExtra(Const.EXTRA_TRAVEL_HOTEL_SEARCH_DURATION_OF_STAY,
                             hotelSearchRESTResultFrag.durationOfStayForDisplayInHeader);
                     i.putExtra(Const.EXTRA_TRAVEL_HOTEL_SEARCH_DURATION_NUM_OF_NIGHTS, numberOfNights);
+                    i.putExtra("violationReasons", violationReasons);
                     i.putExtras(bundle);
 
                     startActivity(i);
@@ -571,7 +575,7 @@ public class HotelSearchAndResultActivity extends Activity implements OnMenuItem
             Log.d(Const.LOG_TAG, " ***** creating search loader *****  ");
 
             // TODO - does this need to be fired in a separate thread?
-            // TravelUtilHotel.deleteAllHotelDetails(this);
+            TravelUtilHotel.deleteAllHotelDetails(this);
 
             hotelSearchAsyncTaskLoader = new HotelSearchResultLoader(this, checkInDate, checkOutDate, latitude,
                     longitude, 25, distanceUnit, 0, 10);
@@ -599,7 +603,7 @@ public class HotelSearchAndResultActivity extends Activity implements OnMenuItem
                 Toast.makeText(this, "Hotel Search Failed. Please try again.", Toast.LENGTH_SHORT).show();
             } else {
                 searchDone = hotelSearchResult.searchDone;
-                hotelSearchRESTResultFrag.getHotelListView().setAlpha(0.5f);
+                hotelSearchRESTResultFrag.getHotelListView().setAlpha(0.50f);
 
                 if (hotelSearchResult.hotels != null && hotelSearchResult.hotels.size() > 0) {
                     for (Hotel hotel : hotelSearchResult.hotels) {

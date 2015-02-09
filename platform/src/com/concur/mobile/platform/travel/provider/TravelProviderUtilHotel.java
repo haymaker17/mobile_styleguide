@@ -13,6 +13,19 @@ import com.concur.mobile.platform.provider.UriMatcherInfo;
 public class TravelProviderUtilHotel {
 
     /**
+     * Will initialize the Hotel Search Result projection map.
+     * 
+     * @return returns a <code>HashMap</code> projection map.
+     */
+    public static HashMap<String, String> initHotelSearchResultProjectionMap() {
+        HashMap<String, String> retVal = new HashMap<String, String>();
+
+        retVal.put(Travel.HotelSearchResultColumns._ID, Travel.HotelSearchResultColumns._ID);
+
+        return retVal;
+    }
+
+    /**
      * Will initialize the Hotel Detail projection map.
      * 
      * @return returns a <code>HashMap</code> projection map.
@@ -112,6 +125,40 @@ public class TravelProviderUtilHotel {
                 Travel.HotelRateDetailColumns.CAN_REDEEM_TP_AGAINST_VIOLATIONS);
 
         return retVal;
+    }
+
+    /**
+     * Will initialize the Hotel Violation projection map.
+     * 
+     * @return returns a <code>HashMap</code> projection map.
+     */
+    public static HashMap<String, String> initHotelViolationProjectionMap() {
+        HashMap<String, String> retVal = new HashMap<String, String>();
+
+        retVal.put(Travel.HotelViolationColumns._ID, Travel.HotelViolationColumns._ID);
+        retVal.put(Travel.HotelViolationColumns.MESSAGE, Travel.HotelViolationColumns.MESSAGE);
+
+        retVal.put(Travel.HotelViolationColumns.ENFORCEMENT_LEVEL, Travel.HotelViolationColumns.ENFORCEMENT_LEVEL);
+        retVal.put(Travel.HotelViolationColumns.VIOLATION_VALUE_ID, Travel.HotelViolationColumns.VIOLATION_VALUE_ID);
+
+        return retVal;
+    }
+
+    /**
+     * Will initialize a <code>UriMatcherInfo</code> object for a directory of <code>HotelSearchResult</code>.
+     */
+    public static UriMatcherInfo initHotelSearchResultUriMatcherInfo() {
+
+        UriMatcherInfo info = new UriMatcherInfo();
+        info.isIdSelection = false;
+        info.mimeType = Travel.HotelSearchResultColumns.CONTENT_TYPE;
+        info.tableName = Travel.HotelSearchResultColumns.TABLE_NAME;
+        info.contentIdUriBase = Travel.HotelSearchResultColumns.CONTENT_ID_URI_BASE;
+        info.defaultSortOrder = Travel.HotelSearchResultColumns.DEFAULT_SORT_ORDER;
+        info.projectionMap = TravelProvider.hotelSearchResultProjectionMap;
+
+        return info;
+
     }
 
     /**
@@ -222,4 +269,19 @@ public class TravelProviderUtilHotel {
 
     }
 
+    /**
+     * Will initialize a <code>UriMatcherInfo</code> object for a directory of <code>HotelViolation</code>.
+     */
+    public static UriMatcherInfo initHotelViolationUriMatcherInfo() {
+
+        UriMatcherInfo info = new UriMatcherInfo();
+        info.isIdSelection = false;
+        info.mimeType = Travel.HotelViolationColumns.CONTENT_TYPE;
+        info.tableName = Travel.HotelViolationColumns.TABLE_NAME;
+        info.contentIdUriBase = Travel.HotelViolationColumns.CONTENT_ID_URI_BASE;
+        info.projectionMap = TravelProvider.hotelViolaitonProjectionMap;
+
+        return info;
+
+    }
 }

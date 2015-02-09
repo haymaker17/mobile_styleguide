@@ -507,6 +507,19 @@
             <!-- TODO: define mime types here, etc. -->
         </provider>
 
+        <!-- Travel Information Provider -->
+        <provider
+            android:name="com.concur.mobile.platform.travel.provider.TravelProvider"
+            android:authorities="com.concur.mobile.platform.travel"
+            android:enabled="true"
+            android:exported="false"
+            android:initOrder="1"
+            android:label="@string/platform_travel_provider_name"
+            android:syncable="false" >
+
+            <!-- TODO: define mime types here, etc. -->
+        </provider>
+
         <!-- ================== -->
         <!-- Begin Apptentive -->
         <!-- ================== -->
