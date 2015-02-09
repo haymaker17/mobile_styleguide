@@ -20,6 +20,7 @@ import android.os.Bundle;
 import android.os.Handler;
 import android.text.TextUtils;
 import android.util.Log;
+import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.View.OnClickListener;
@@ -106,6 +107,7 @@ public class HotelBookingActivity extends Activity implements LoaderManager.Load
     private SpinnerItem[] violationReasonChoices;
     private ArrayList<String[]> violationReasons;
     protected SpinnerItem curViolationReason;
+    private HotelBookingAsyncRequestTask hotelBookingAsyncRequestTask;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -541,6 +543,7 @@ public class HotelBookingActivity extends Activity implements LoaderManager.Load
             TextView progressBarMsg = (TextView) findViewById(R.id.hotel_preselloptions_progress_msg);
             if (isBooking) {
                 progressBarMsg.setText(R.string.hotel_booking_retrieving);
+                // progressBarMsg.c
             }
             progressBarMsg.setVisibility(View.VISIBLE);
             progressBarMsg.bringToFront();
@@ -629,8 +632,8 @@ public class HotelBookingActivity extends Activity implements LoaderManager.Load
         hotelBookingReceiver.setListener(new HotelBookingReplyListener());
         String ccId = curCardChoice.id;
 
-        HotelBookingAsyncRequestTask hotelBookingAsyncRequestTask = new HotelBookingAsyncRequestTask(this,
-                HOTEL_BOOKING_ID, hotelBookingReceiver, ccId, null, null, null, false, preSellOption.bookingURL.href);
+        hotelBookingAsyncRequestTask = new HotelBookingAsyncRequestTask(this, HOTEL_BOOKING_ID, hotelBookingReceiver,
+                ccId, null, null, null, false, preSellOption.bookingURL.href);
 
         // new HotelBookingAsyncRequestTask(this,
         // HOTEL_BOOKING_ID, hotelBookingReceiver, curCardChoice.id, null, null, null, false,
@@ -734,6 +737,18 @@ public class HotelBookingActivity extends Activity implements LoaderManager.Load
             hotelBookingReceiver.setListener(null);
             hotelBookingReceiver = null;
         }
+    }
+
+    @Override
+    public boolean onKeyDown(int keyCode, KeyEvent event) {
+        // Check if the key event was the Back button and stop any outstanding
+        // request of async task
+        if (keyCode == KeyEvent.KEYCODE_BACK) {
+            if (hotelBookingAsyncRequestTask != null) {
+                hotelBookingAsyncRequestTask.cancel(false);
+            }
+        }
+        return super.onKeyDown(keyCode, event);
     }
 
 }

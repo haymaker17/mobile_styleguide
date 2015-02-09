@@ -55,6 +55,10 @@ public class HotelChoiceDetailsFragment extends PlatformFragmentV1 implements On
     public ParallaxScollView mListView;
     private ImageView mImageView;
 
+    public HotelChoiceDetailsFragment() {
+
+    }
+
     @Override
     public void onAttach(Activity activity) {
         super.onAttach(activity);
