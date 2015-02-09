@@ -1,6 +1,8 @@
 package com.concur.mobile.platform.ui.travel.hotel.activity;
 
 import java.net.URI;
+import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 import android.app.ActionBar;
@@ -22,8 +24,12 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.ViewGroup;
+import android.view.ViewGroup.LayoutParams;
+import android.view.ViewStub;
 import android.widget.ArrayAdapter;
 import android.widget.ImageView;
+import android.widget.TableLayout;
+import android.widget.TableRow;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -32,15 +38,21 @@ import com.concur.mobile.base.service.BaseAsyncResultReceiver;
 import com.concur.mobile.platform.common.SpinnerItem;
 import com.concur.mobile.platform.service.PlatformAsyncTaskLoader;
 import com.concur.mobile.platform.travel.booking.CreditCard;
+import com.concur.mobile.platform.travel.provider.TravelUtilHotel;
 import com.concur.mobile.platform.travel.search.hotel.HotelBookingAsyncRequestTask;
 import com.concur.mobile.platform.travel.search.hotel.HotelBookingRESTResult;
 import com.concur.mobile.platform.travel.search.hotel.HotelPreSellOption;
 import com.concur.mobile.platform.travel.search.hotel.HotelPreSellOptionLoader;
 import com.concur.mobile.platform.travel.search.hotel.HotelRate;
+import com.concur.mobile.platform.travel.search.hotel.HotelViolation;
+import com.concur.mobile.platform.travel.search.hotel.HotelViolationComparator;
+import com.concur.mobile.platform.ui.common.dialog.DialogFragmentFactoryV1;
 import com.concur.mobile.platform.ui.common.fragment.RetainerFragmentV1;
 import com.concur.mobile.platform.ui.common.util.FormatUtil;
 import com.concur.mobile.platform.ui.common.util.ImageCache;
 import com.concur.mobile.platform.ui.travel.R;
+import com.concur.mobile.platform.ui.travel.hotel.fragment.SpinnerDialogFragment;
+import com.concur.mobile.platform.ui.travel.hotel.fragment.SpinnerDialogFragment.SpinnerDialogFragmentCallbackListener;
 import com.concur.mobile.platform.ui.travel.util.Const;
 import com.concur.mobile.platform.ui.travel.util.ParallaxScollView;
 import com.concur.mobile.platform.ui.travel.util.SlideButton;
@@ -52,13 +64,16 @@ import com.concur.mobile.platform.util.Format;
  * @author RatanK
  * 
  */
-public class HotelBookingActivity extends Activity implements LoaderManager.LoaderCallbacks<HotelPreSellOption> {
+public class HotelBookingActivity extends Activity implements LoaderManager.LoaderCallbacks<HotelPreSellOption>,
+        SpinnerDialogFragmentCallbackListener {
 
     protected static final String CLS_TAG = HotelBookingActivity.class.getSimpleName();
     private static final String GET_HOTEL_BOOKING_RECEIVER = "hotel.booking.receiver";
     protected static final String RETAINER_TAG = "retainer.fragment";
 
     private static final int HOTEL_PRE_SELL_OPTION_LOADER_ID = 0;
+    private static final String VIOLATION_REASONS_SPINNER_FRAGMENT = "violations.reasons.spinner.fragment";
+    private static final String CREDIT_CARDS_SPINNER_FRAGMENT = "violations.reasons.spineer.fragment";
 
     private static final int HOTEL_BOOKING_ID = 1;
 
@@ -87,6 +102,10 @@ public class HotelBookingActivity extends Activity implements LoaderManager.Load
     private HotelBookingReplyListener hotelBookingReplyListener;
     // The one RetainerFragment used to hold objects between activity recreates
     public RetainerFragmentV1 retainer;
+    // private String maxEnforcementLevelString;
+    private SpinnerItem[] violationReasonChoices;
+    private ArrayList<String[]> violationReasons;
+    protected SpinnerItem curViolationReason;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -106,6 +125,8 @@ public class HotelBookingActivity extends Activity implements LoaderManager.Load
         numOfNights = intent.getIntExtra(Const.EXTRA_TRAVEL_HOTEL_SEARCH_DURATION_NUM_OF_NIGHTS, 0);
         headerImageURL = intent.getStringExtra("headerImageURL");
         hotelName = intent.getStringExtra("hotelName");
+        // maxEnforcementLevelString = intent.getStringExtra("maxEnforcementLevelString");
+        violationReasons = (ArrayList<String[]>) intent.getSerializableExtra("violationReasons");
 
         if (hotelRate != null) {
 
@@ -268,6 +289,9 @@ public class HotelBookingActivity extends Activity implements LoaderManager.Load
         // credit cards
         initCardChoiceView();
 
+        // violations
+        initViolations();
+
         // reserve UI
         reserveButton = (SlideButton) findViewById(R.id.slide_footer_button);
         // reserveButton.setText(R.string.hotel_reserve_this_room);
@@ -278,6 +302,150 @@ public class HotelBookingActivity extends Activity implements LoaderManager.Load
                 doBooking();
             }
         });
+    }
+
+    private void initViolations() {
+        if (hotelRate != null && hotelRate.violationValueIds != null && hotelRate.violationValueIds.length > 0) {
+
+            // inflate the violations view stub
+            View violationsView = ((ViewStub) findViewById(R.id.violation_view)).inflate();
+
+            // convert the int[] to String[]
+            String[] valueIds = new String[hotelRate.violationValueIds.length];
+            for (int i = 0; i < hotelRate.violationValueIds.length; i++) {
+                valueIds[i] = Integer.toString(hotelRate.violationValueIds[i]);
+            }
+
+            // Get the violations from the database and initialize the view
+            List<HotelViolation> violations = TravelUtilHotel.getHotelViolations(getApplicationContext(), valueIds);
+            Log.d(Const.LOG_TAG, CLS_TAG + ".initViolations: violations from db : " + violations);
+            if (violations != null && violations.size() > 0) {
+
+                TableLayout tableLayout = (TableLayout) violationsView.findViewById(R.id.violation_message_table);
+
+                TableRow firstRowView = (TableRow) tableLayout.findViewById(R.id.violation_message_table_row);
+                LayoutParams trViewLayoutParams = firstRowView.getLayoutParams();
+
+                TextView txtView = (TextView) tableLayout.findViewById(R.id.travel_violation_message);
+                LayoutParams txtViewLayoutParams = txtView.getLayoutParams();
+
+                ImageView imgView = (ImageView) tableLayout.findViewById(R.id.travel_violation_icon);
+                LayoutParams imgViewLayoutParams = imgView.getLayoutParams();
+
+                // sort the violations in descending enforcement level i.e. max enforcement level will be at top
+                Collections.sort(violations, new HotelViolationComparator());
+
+                boolean firstRow = true;
+                for (HotelViolation hotelViolation : violations) {
+
+                    if (firstRow) {
+                        txtView.setText(hotelViolation.message);
+                        if (hotelViolation.enforcementLevel.equalsIgnoreCase("RequiresApproval")) {
+                            imgView.setImageResource(R.drawable.icon_warning_red);
+                        } else {
+                            imgView.setImageResource(R.drawable.icon_warning_yellow);
+                        }
+                        firstRow = false;
+                    } else {
+                        // create a new table row and add to the table layout
+                        TableRow trView = new TableRow(this);
+                        trView.setLayoutParams(trViewLayoutParams);
+
+                        TextView newTxtView = new TextView(this);
+                        newTxtView.setLayoutParams(txtViewLayoutParams);
+                        newTxtView.setPadding(txtView.getPaddingLeft(), txtView.getPaddingTop(),
+                                txtView.getPaddingRight(), txtView.getPaddingBottom());
+                        newTxtView.setText(hotelViolation.message);
+
+                        ImageView newImgView = new ImageView(this);
+                        newImgView.setLayoutParams(imgViewLayoutParams);
+                        if (hotelViolation.enforcementLevel.equalsIgnoreCase("RequiresApproval")) {
+                            newImgView.setImageResource(R.drawable.icon_warning_red);
+                        } else {
+                            newImgView.setImageResource(R.drawable.icon_warning_yellow);
+                        }
+
+                        // now add the image and text views to the table row
+                        trView.addView(newImgView);
+                        trView.addView(newTxtView);
+
+                        tableLayout.addView(trView);
+
+                    }
+                }
+
+                // add the max enforcement level icon to the first row
+                if (hotelRate.maxEnforcementLevel >= 30) {
+                    ((ImageView) violationsView.findViewById(R.id.hotel_room_max_violation_icon))
+                            .setImageResource(R.drawable.icon_status_red);
+                } else {
+                    ((ImageView) violationsView.findViewById(R.id.hotel_room_max_violation_icon))
+                            .setImageResource(R.drawable.icon_status_yellow);
+                }
+
+            }
+
+            // initialize the reasons
+
+            // SessionInfo sessInfo = ConfigUtil.getSessionInfo(this);
+            // List<ReasonCodeDAO> reasonCodes = TravelUtilHotel.getHotelViolationReasons(getApplicationContext(),
+            // sessInfo.getUserId());
+            if (violationReasons != null && violationReasons.size() > 0) {
+                // Construct spinner objects which will be used to populate a dialog.
+                violationReasonChoices = new SpinnerItem[violationReasons.size()];
+                for (int i = 0; i < violationReasons.size(); ++i) {
+                    violationReasonChoices[i] = new SpinnerItem(violationReasons.get(i)[0], violationReasons.get(i)[1]);
+                }
+
+                initViolationReasonsView();
+            }
+
+            // initialize the justification
+            // TextView justificationView = (TextView)violationsView.findViewById(R.id.hotel_violation_justification);
+
+        }
+    }
+
+    // initialize the violation reasons text view
+    protected void initViolationReasonsView() {
+        TextView violationsView = updateViolationReasonsView();
+
+        // Set the click handler.
+        violationsView.setOnClickListener(new OnClickListener() {
+
+            public void onClick(View v) {
+                if (violationReasonChoices != null && violationReasonChoices.length > 0) {
+                    SpinnerDialogFragment dialogFragment = new SpinnerDialogFragment(R.string.general_select_reason,
+                            R.drawable.btn_check_on, violationReasonChoices);
+                    if (curViolationReason != null) {
+                        dialogFragment.curSpinnerItemId = curViolationReason.id;
+                    }
+                    dialogFragment.show(getFragmentManager(), VIOLATION_REASONS_SPINNER_FRAGMENT);
+                } else {
+                    // no violation reasons dialog
+                    DialogFragmentFactoryV1.getAlertOkayInstance(getString(R.string.general_reason),
+                            getString(R.string.hotel_violation_reasons_not_available)).show(getFragmentManager(), null);
+                }
+            }
+        });
+
+    }
+
+    // show selected violation reason or the general string
+    private TextView updateViolationReasonsView() {
+        TextView violationsView = (TextView) findViewById(R.id.hotel_violation_reason);
+        if (violationsView != null) {
+            if (curViolationReason != null) {
+                violationsView.setText(curViolationReason.name);
+            } else {
+                violationsView.setText(R.string.general_select_reason);
+            }
+
+        } else {
+            Log.e(Const.LOG_TAG, CLS_TAG
+                    + ".updateViolationReasonsView: unable to locate 'hotel_violation_reason' view!");
+        }
+        return violationsView;
     }
 
     /**
@@ -291,9 +459,16 @@ public class HotelBookingActivity extends Activity implements LoaderManager.Load
 
             public void onClick(View v) {
                 if (cardChoices != null && cardChoices.length > 0) {
-                    showCreditCardsDialog();
+                    SpinnerDialogFragment dialogFragment = new SpinnerDialogFragment(R.string.general_select_card,
+                            R.drawable.btn_check_on, cardChoices);
+                    if (curCardChoice != null) {
+                        dialogFragment.curSpinnerItemId = curCardChoice.id;
+                    }
+                    dialogFragment.show(getFragmentManager(), CREDIT_CARDS_SPINNER_FRAGMENT);
                 } else {
                     // no cards dialog
+                    DialogFragmentFactoryV1.getAlertOkayInstance(getString(R.string.general_credit_card),
+                            getString(R.string.general_credit_cards_not_available)).show(getFragmentManager(), null);
                 }
             }
         });
@@ -389,8 +564,8 @@ public class HotelBookingActivity extends Activity implements LoaderManager.Load
             statement = TextUtils.join("\n", cancellationPolicyStatements);
         }
 
-        Toast.makeText(this, statement, Toast.LENGTH_SHORT).show();
-        // DialogFragmentFactoryV1.getAlertOkayInstance("Cancellation Policy", statement).show(getFragmentManager(), "");
+        DialogFragmentFactoryV1.getAlertOkayInstance(getText(R.string.hotel_reserve_cancel_policy).toString(),
+                statement).show(getFragmentManager(), "");
     }
 
     private void setPreSellOptions(HotelPreSellOption preSellOption) {
@@ -471,9 +646,6 @@ public class HotelBookingActivity extends Activity implements LoaderManager.Load
         // request initial searchthis
         Log.d(Const.LOG_TAG, " ***** creating preselloption loader *****  ");
 
-        // TODO - does this need to be fired in a separate thread?
-        // TravelUtilHotel.deleteAllHotelDetails(this);
-
         PlatformAsyncTaskLoader<HotelPreSellOption> hotelPreSellOptionAsyncTaskLoader = new HotelPreSellOptionLoader(
                 this, sellOptionsURL);
 
@@ -488,8 +660,18 @@ public class HotelBookingActivity extends Activity implements LoaderManager.Load
 
     @Override
     public void onLoaderReset(Loader<HotelPreSellOption> loader) {
-        // TODO Auto-generated method stub
+        // nothing to do here
+    }
 
+    @Override
+    public void onSpinnerItemSelected(SpinnerItem selectedSpinnerItem, String fragmentTagName) {
+        if (fragmentTagName.equals(VIOLATION_REASONS_SPINNER_FRAGMENT)) {
+            curViolationReason = selectedSpinnerItem;
+            updateViolationReasonsView();
+        } else if (fragmentTagName.equals(CREDIT_CARDS_SPINNER_FRAGMENT)) {
+            curCardChoice = selectedSpinnerItem;
+            updateCardView();
+        }
     }
 
     private class HotelBookingReplyListener implements AsyncReplyListener {

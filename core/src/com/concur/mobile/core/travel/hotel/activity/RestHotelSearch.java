@@ -3,6 +3,7 @@
  */
 package com.concur.mobile.core.travel.hotel.activity;
 
+import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.TimeZone;
 
@@ -29,6 +30,7 @@ import android.widget.Toast;
 
 import com.concur.core.R;
 import com.concur.mobile.core.ConcurCore;
+import com.concur.mobile.core.data.SystemConfig;
 import com.concur.mobile.core.data.UserConfig;
 import com.concur.mobile.core.travel.activity.LocationSearchV1;
 import com.concur.mobile.core.travel.activity.TravelBaseActivity;
@@ -881,6 +883,18 @@ public class RestHotelSearch extends TravelBaseActivity {
 
         intent.putExtra(Const.EXTRA_TRAVEL_CLIQBOOK_TRIP_ID, cliqbookTripId);
 
+        // get the hotel violation reasons from the SystemConfig and pass it on to the activities.
+        // since the platform systemconfig request is not being invoked by the application, we cannot use the getHotelReasons from
+        // the platform. Hence passing in to the next activities.
+        SystemConfig sysConfig = ((ConcurCore) getApplication()).getSystemConfig();
+        ArrayList<com.concur.mobile.core.travel.data.ReasonCode> reasonCodesCore = sysConfig.getHotelReasons();
+        if (reasonCodesCore != null) {
+            ArrayList<String[]> violationReasons = new ArrayList<String[]>(reasonCodesCore.size());
+            for (com.concur.mobile.core.travel.data.ReasonCode reasonCode : reasonCodesCore) {
+                violationReasons.add(new String[] { reasonCode.id, reasonCode.description });
+            }
+            intent.putExtra("violationReasons", violationReasons);
+        }
         if (checkForSearchCriteraChanged) {
             intent.putExtra("searchCriteriaChanged", searchCriteriaChanged);
         }

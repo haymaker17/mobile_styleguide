@@ -80,6 +80,31 @@ public class ViewUtil {
     }
 
     /**
+     * Will determine the mapping from an integer-based enforcement level to a String
+     * 
+     * @param level
+     *            the enforcement level from a violation.
+     * @return
+     */
+    public static String getRuleEnforcementLevelAsString(Integer level) {
+        String ruleLevel = "NONE";
+        if (level != null) {
+            if (level < 10 || level == 100) {
+                ruleLevel = "NONE";
+            } else if (level == 10 || level == 20) {
+                ruleLevel = "WARNING";
+            } else if (level == 25 || level == 30) {
+                ruleLevel = "ERROR";
+            } else if (level == 40) {
+                ruleLevel = "INACTIVE";
+            } else if (level == 50) {
+                ruleLevel = "HIDE";
+            }
+        }
+        return ruleLevel;
+    }
+
+    /**
      * MOB-15911 - Show GDSName in travel search results - only for DEV & QA
      * 
      * @param context

@@ -116,6 +116,14 @@ public class TravelProvider extends PlatformContentProvider {
     private static final int HOTEL_RATE_DETAILS = 79;
     private static final int HOTEL_RATE_DETAIL_ID = 80;
 
+    // Hotel Search Result
+    private static final int HOTEL_SEARCH_RESULT = 81;
+    private static final int HOTEL_SEARCH_RESULT_ID = 82;
+
+    // Hotel Violation
+    private static final int HOTEL_VIOLATION = 83;
+    private static final int HOTEL_VIOLATION_ID = 84;
+
     // Contains the trip summary projection map.
     private static HashMap<String, String> tripSummaryProjectionMap;
 
@@ -236,6 +244,12 @@ public class TravelProvider extends PlatformContentProvider {
     // Contains the Hotel Rate Detail projection map.
     static HashMap<String, String> hotelRateDetailProjectionMap;
 
+    // Contains the Hotel Search Result projection map.
+    static HashMap<String, String> hotelSearchResultProjectionMap;
+
+    // Contains the Hotel Violation projection map.
+    static HashMap<String, String> hotelViolaitonProjectionMap;
+
     @Override
     public boolean onCreate() {
         boolean retVal = super.onCreate();
@@ -350,6 +364,14 @@ public class TravelProvider extends PlatformContentProvider {
         // Hotel Rate Detail support
         matcher.addURI(Travel.AUTHORITY, "hotel_rate_details", HOTEL_RATE_DETAILS);
         matcher.addURI(Travel.AUTHORITY, "hotel_rate_details/#", HOTEL_RATE_DETAIL_ID);
+
+        // Hotel Search Result support
+        matcher.addURI(Travel.AUTHORITY, "hotel_search_result", HOTEL_SEARCH_RESULT);
+        matcher.addURI(Travel.AUTHORITY, "hotel_search_result/#", HOTEL_SEARCH_RESULT_ID);
+
+        // Hotel Violation support
+        matcher.addURI(Travel.AUTHORITY, "hotel_violations", HOTEL_VIOLATION);
+        matcher.addURI(Travel.AUTHORITY, "hotel_violations/#", HOTEL_VIOLATION_ID);
 
         return matcher;
     }
@@ -753,6 +775,12 @@ public class TravelProvider extends PlatformContentProvider {
      */
     private void initHotelDetailProjectionMaps() {
 
+        // Creates and initializes the hotel search result projection map.
+        hotelSearchResultProjectionMap = TravelProviderUtilHotel.initHotelSearchResultProjectionMap();
+
+        // Creates and initializes the hotel violation projection map.
+        hotelViolaitonProjectionMap = TravelProviderUtilHotel.initHotelViolationProjectionMap();
+
         // Creates and initializes the hotel detail projection map.
         hotelDetailProjectionMap = TravelProviderUtilHotel.initHotelDetailProjectionMap();
 
@@ -770,6 +798,9 @@ public class TravelProvider extends PlatformContentProvider {
     private void initHotelDetailCodeUriMatcherInfoMap(SparseArray<UriMatcherInfo> map) {
 
         // TODO - bulkInserter ?
+        map.put(HOTEL_SEARCH_RESULT, TravelProviderUtilHotel.initHotelSearchResultUriMatcherInfo());
+        map.put(HOTEL_SEARCH_RESULT_ID, TravelProviderUtilHotel.initHotelSearchResultUriMatcherInfo());
+
         map.put(HOTEL_DETAILS, TravelProviderUtilHotel.initHotelDetailsUriMatcherInfo());
         map.put(HOTEL_DETAIL_ID, TravelProviderUtilHotel.initHotelDetailUriMatcherInfo());
 
@@ -778,6 +809,9 @@ public class TravelProvider extends PlatformContentProvider {
 
         map.put(HOTEL_RATE_DETAILS, TravelProviderUtilHotel.initHotelRateDetailsUriMatcherInfo());
         map.put(HOTEL_RATE_DETAIL_ID, TravelProviderUtilHotel.initHotelRateDetailUriMatcherInfo());
+
+        map.put(HOTEL_VIOLATION, TravelProviderUtilHotel.initHotelViolationUriMatcherInfo());
+        map.put(HOTEL_VIOLATION_ID, TravelProviderUtilHotel.initHotelViolationUriMatcherInfo());
 
     }
 

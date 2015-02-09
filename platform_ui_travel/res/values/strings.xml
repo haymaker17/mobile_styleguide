@@ -14,6 +14,7 @@
     <string name="general_sort">Sort</string>
     <string name="general_credit_card">Credit card</string>
     <string name="general_select_card">Select credit card</string>
+    <string name="general_credit_cards_not_available">Credit cards not available</string>
     <string name="general_summary">Summary</string>
     <string name="general_total">Total</string>
     <string name="general_policy">Policy</string>
@@ -23,6 +24,7 @@
     <string name="general_select_reason">Select a reason</string>
     <string name="general_justification">Justification</string>
     <string name="general_enter_justification">Enter a justification</string>
+    <string name="general_select_one_of_the_below">Select one of the below</string>
     <!-- end of general strings -->
 
     <string name="app_name">ConcurPlatformUITravel</string>
@@ -99,6 +101,7 @@
     <string name="hotel_reserve_total_with_tax">total with tax</string>
     <string name="hotel_reserve_cancel_policy">Cancellation policy and rate details</string>
     <string name="hotel_reserve_cancel_policy_not_available">Cancellation policy not available</string>
+    <string name="hotel_violation_reasons_not_available">Violation reasons not available</string>
     <!-- end of hotel reservation screen -->
     <dimen name="size_default_height">96dp</dimen>
 
