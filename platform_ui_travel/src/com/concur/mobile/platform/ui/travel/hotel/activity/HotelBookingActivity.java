@@ -339,7 +339,7 @@ public class HotelBookingActivity extends Activity implements LoaderManager.Load
             public void onClick(View v) {
                 if (violationReasonChoices != null && violationReasonChoices.length > 0) {
                     SpinnerDialogFragment dialogFragment = new SpinnerDialogFragment(R.string.general_select_reason,
-                            R.drawable.btn_check_on, violationReasonChoices);
+                            R.drawable.sort_check_mark, violationReasonChoices);
                     if (curViolationReason != null) {
                         dialogFragment.curSpinnerItemId = curViolationReason.id;
                     }
@@ -383,7 +383,7 @@ public class HotelBookingActivity extends Activity implements LoaderManager.Load
             public void onClick(View v) {
                 if (cardChoices != null && cardChoices.length > 0) {
                     SpinnerDialogFragment dialogFragment = new SpinnerDialogFragment(R.string.general_select_card,
-                            R.drawable.btn_check_on, cardChoices);
+                            R.drawable.sort_check_mark, cardChoices);
                     if (curCardChoice != null) {
                         dialogFragment.curSpinnerItemId = curCardChoice.id;
                     }
