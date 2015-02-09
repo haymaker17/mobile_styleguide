@@ -94,7 +94,7 @@
 
     <!-- start of hotel reservation screen -->
     <string name="hotel_sell_options_retrieving">Retrieving sell options</string>
-    <string name="hotel_reserve_this_room">Reserve This Room</string>
+    <string name="hotel_reserve_this_room">Slide to Reserve This Room</string>
     <string name="hotel_reserve_num_of_nights">%%0!number of nights%% night</string>
     <string name="hotel_reserve_total_with_tax">total with tax</string>
     <string name="hotel_reserve_cancel_policy">Cancellation policy and rate details</string>
@@ -104,5 +104,10 @@
 
     <string name="action_settings">Settings</string>
     <string name="no_photos">No Photos Available</string>
+    <string name="no_network_connection_toast">No Network Connection</string>
+    <string name="imageview_description">Image Thumbnail</string>
+    <string name="hotel_booking_failed">Room Confirm Failed</string>
+    <string name="hotel_booking_success">Your room has been successfully reserved.</string>
+    <string name="hotel_booking_retrieving">Reserving room...</string>
 
 </resources>

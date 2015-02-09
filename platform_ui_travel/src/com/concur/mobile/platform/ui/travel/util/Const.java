@@ -41,5 +41,7 @@ public class Const {
 
     public static final String EXTRA_IMAGE_URL = "image.url";
     public static final String EXTRA_IMAGE_TITLE = "image.title";
+    public static final String EXTRA_TRAVEL_ITINERARY_LOCATOR = "travel.itinerary.locator";
+    public static final String EXTRA_TRAVEL_RECORD_LOCATOR = "travel.record.locator";
 
 }

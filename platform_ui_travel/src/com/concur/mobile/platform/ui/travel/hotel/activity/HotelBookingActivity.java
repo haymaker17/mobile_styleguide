@@ -6,6 +6,8 @@ import java.util.List;
 import android.app.ActionBar;
 import android.app.Activity;
 import android.app.AlertDialog;
+import android.app.FragmentManager;
+import android.app.FragmentTransaction;
 import android.app.LoaderManager;
 import android.content.DialogInterface;
 import android.content.DialogInterface.OnCancelListener;
@@ -13,6 +15,7 @@ import android.content.Intent;
 import android.content.Loader;
 import android.graphics.Bitmap;
 import android.os.Bundle;
+import android.os.Handler;
 import android.text.TextUtils;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -20,22 +23,28 @@ import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
-import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.concur.mobile.base.service.BaseAsyncRequestTask.AsyncReplyListener;
+import com.concur.mobile.base.service.BaseAsyncResultReceiver;
 import com.concur.mobile.platform.common.SpinnerItem;
 import com.concur.mobile.platform.service.PlatformAsyncTaskLoader;
 import com.concur.mobile.platform.travel.booking.CreditCard;
+import com.concur.mobile.platform.travel.search.hotel.HotelBookingAsyncRequestTask;
+import com.concur.mobile.platform.travel.search.hotel.HotelBookingRESTResult;
 import com.concur.mobile.platform.travel.search.hotel.HotelPreSellOption;
 import com.concur.mobile.platform.travel.search.hotel.HotelPreSellOptionLoader;
 import com.concur.mobile.platform.travel.search.hotel.HotelRate;
+import com.concur.mobile.platform.ui.common.fragment.RetainerFragmentV1;
 import com.concur.mobile.platform.ui.common.util.FormatUtil;
 import com.concur.mobile.platform.ui.common.util.ImageCache;
 import com.concur.mobile.platform.ui.travel.R;
 import com.concur.mobile.platform.ui.travel.util.Const;
 import com.concur.mobile.platform.ui.travel.util.ParallaxScollView;
+import com.concur.mobile.platform.ui.travel.util.SlideButton;
+import com.concur.mobile.platform.ui.travel.util.SlideButton.SlideButtonListener;
 import com.concur.mobile.platform.util.Format;
 
 /**
@@ -46,8 +55,12 @@ import com.concur.mobile.platform.util.Format;
 public class HotelBookingActivity extends Activity implements LoaderManager.LoaderCallbacks<HotelPreSellOption> {
 
     protected static final String CLS_TAG = HotelBookingActivity.class.getSimpleName();
+    private static final String GET_HOTEL_BOOKING_RECEIVER = "hotel.booking.receiver";
+    protected static final String RETAINER_TAG = "retainer.fragment";
 
     private static final int HOTEL_PRE_SELL_OPTION_LOADER_ID = 0;
+
+    private static final int HOTEL_BOOKING_ID = 1;
 
     private LoaderManager lm;
     private String roomDesc;
@@ -56,6 +69,7 @@ public class HotelBookingActivity extends Activity implements LoaderManager.Load
     private String sellOptionsURL;
     private String[] cancellationPolicyStatements;
     private boolean progressbarVisible;
+    private SlideButton reserveButton;
 
     private HotelRate hotelRate;
     private HotelPreSellOption preSellOption;
@@ -69,13 +83,20 @@ public class HotelBookingActivity extends Activity implements LoaderManager.Load
     private int numOfNights;
     private String headerImageURL;
     private String hotelName;
+    private BaseAsyncResultReceiver hotelBookingReceiver;
+    private HotelBookingReplyListener hotelBookingReplyListener;
+    // The one RetainerFragment used to hold objects between activity recreates
+    public RetainerFragmentV1 retainer;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        initRetainerFragment();
+        // Restore any receivers.
+        restoreReceivers();
         setContentView(R.layout.hotel_booking);
 
-        showProgressBar();
+        showProgressBar(false);
 
         Intent intent = getIntent();
 
@@ -113,6 +134,26 @@ public class HotelBookingActivity extends Activity implements LoaderManager.Load
 
     }
 
+    private void restoreReceivers() {
+        if (retainer.contains(GET_HOTEL_BOOKING_RECEIVER)) {
+            hotelBookingReceiver = (BaseAsyncResultReceiver) retainer.get(GET_HOTEL_BOOKING_RECEIVER);
+            hotelBookingReceiver.setListener(new HotelBookingReplyListener());
+        }
+
+    }
+
+    protected void initRetainerFragment() {
+        FragmentManager fm = getFragmentManager();
+
+        retainer = (RetainerFragmentV1) fm.findFragmentByTag(RETAINER_TAG);
+        if (retainer == null) {
+            retainer = new RetainerFragmentV1();
+            FragmentTransaction ft = fm.beginTransaction();
+            ft.add(retainer, RETAINER_TAG);
+            ft.commit();
+        }
+    }
+
     /**
      * Initialize values.
      * 
@@ -127,6 +168,38 @@ public class HotelBookingActivity extends Activity implements LoaderManager.Load
     // initCancellationPolicyView();
     //
     // }
+    /*
+     * (non-Javadoc)
+     * 
+     * @see android.app.Activity#onPause()
+     */
+    @Override
+    public void onPause() {
+        super.onPause();
+        unregisterReceiver();
+    }
+
+    @Override
+    protected void onStop() {
+        super.onStop();
+        unregisterReceiver();
+
+    }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        unregisterReceiver();
+
+    }
+
+    private void unregisterReceiver() {
+        if (hotelBookingReceiver != null) {
+            hotelBookingReceiver.setListener(null);
+            retainer.put(GET_HOTEL_BOOKING_RECEIVER, hotelBookingReceiver);
+        }
+
+    }
 
     private void initView() {
         // header title
@@ -196,12 +269,12 @@ public class HotelBookingActivity extends Activity implements LoaderManager.Load
         initCardChoiceView();
 
         // reserve UI
-        Button reserveButton = (Button) findViewById(R.id.footer_button);
-        reserveButton.setText(R.string.hotel_reserve_this_room);
-        reserveButton.setOnClickListener(new View.OnClickListener() {
+        reserveButton = (SlideButton) findViewById(R.id.slide_footer_button);
+        // reserveButton.setText(R.string.hotel_reserve_this_room);
+        reserveButton.setSlideButtonListener(new SlideButtonListener() {
 
             @Override
-            public void onClick(View v) {
+            public void handleSlide() {
                 doBooking();
             }
         });
@@ -284,13 +357,16 @@ public class HotelBookingActivity extends Activity implements LoaderManager.Load
         dlgBldr.show();
     }
 
-    public void showProgressBar() {
+    public void showProgressBar(boolean isBooking) {
         if (!progressbarVisible) {
             View progressBar = findViewById(R.id.hotel_booking_screen_load);
             progressbarVisible = true;
             progressBar.setVisibility(View.VISIBLE);
             progressBar.bringToFront();
-            View progressBarMsg = findViewById(R.id.hotel_preselloptions_progress_msg);
+            TextView progressBarMsg = (TextView) findViewById(R.id.hotel_preselloptions_progress_msg);
+            if (isBooking) {
+                progressBarMsg.setText(R.string.hotel_booking_retrieving);
+            }
             progressBarMsg.setVisibility(View.VISIBLE);
             progressBarMsg.bringToFront();
         }
@@ -371,13 +447,28 @@ public class HotelBookingActivity extends Activity implements LoaderManager.Load
     }
 
     private void doBooking() {
-        // lm.initLoader(HOTEL_BOOKING_LOADER_ID, null, this);
+        reserveButton.setEnabled(false);
+        showProgressBar(true);
+        hotelBookingReceiver = new BaseAsyncResultReceiver(new Handler());
+
+        hotelBookingReceiver.setListener(new HotelBookingReplyListener());
+        String ccId = curCardChoice.id;
+
+        HotelBookingAsyncRequestTask hotelBookingAsyncRequestTask = new HotelBookingAsyncRequestTask(this,
+                HOTEL_BOOKING_ID, hotelBookingReceiver, ccId, null, null, null, false, preSellOption.bookingURL.href);
+
+        // new HotelBookingAsyncRequestTask(this,
+        // HOTEL_BOOKING_ID, hotelBookingReceiver, curCardChoice.id, null, null, null, false,
+        // preSellOption.bookingURL);
+        hotelBookingAsyncRequestTask.execute();
+        // new HotelBookingAsyncRequestTask(this, HOTEL_BOOKING_ID, receiver, curCardChoice.id, checkOutDate, includeBenchmarks,
+        // hotelChain, includeDepositRequired, lat, lon, perdiemRate, radius, radiusUnits, start, count)
     }
 
     @Override
     public Loader<HotelPreSellOption> onCreateLoader(int id, Bundle bundle) {
 
-        // request initial search
+        // request initial searchthis
         Log.d(Const.LOG_TAG, " ***** creating preselloption loader *****  ");
 
         // TODO - does this need to be fired in a separate thread?
@@ -400,4 +491,67 @@ public class HotelBookingActivity extends Activity implements LoaderManager.Load
         // TODO Auto-generated method stub
 
     }
+
+    private class HotelBookingReplyListener implements AsyncReplyListener {
+
+        /*
+         * (non-Javadoc)
+         * 
+         * @see com.concur.mobile.base.service.BaseAsyncRequestTask.AsyncReplyListener#onRequestSuccess(android.os.Bundle)
+         */
+        public void onRequestSuccess(Bundle resultData) {
+            if (resultData != null) {
+
+                hideProgressBar();
+                HotelBookingRESTResult bookingResult = (HotelBookingRESTResult) resultData
+                        .getSerializable("HotelBookingResult");
+                if (bookingResult != null) {
+
+                    Toast.makeText(getApplicationContext(), R.string.hotel_booking_success, Toast.LENGTH_LONG).show();
+                    Intent intent = new Intent();
+                    intent.putExtra(Const.EXTRA_TRAVEL_ITINERARY_LOCATOR, bookingResult.itineraryLocator);
+                    // resultData.putExtra(Const.EXTRA_TRAVEL_ITINERARY_LOCATOR, trip.itinLocator);EXTRA_TRAVEL_RECORD_LOCATOR
+                    intent.putExtra(Const.EXTRA_TRAVEL_RECORD_LOCATOR, bookingResult.recordLocator);
+                    setResult(Activity.RESULT_OK, intent);
+                }
+                // TODO add GA event for booking
+
+                finish();
+                // finishActivity(Const.REQUEST_CODE_BOOK_HOTEL);
+            }
+
+        }
+
+        /*
+         * (non-Javadoc)
+         * 
+         * @see com.concur.mobile.base.service.BaseAsyncRequestTask.AsyncReplyListener#onRequestFail(android.os.Bundle)
+         */
+        public void onRequestFail(Bundle resultData) {
+            Toast.makeText(getApplicationContext(), R.string.hotel_booking_failed, Toast.LENGTH_LONG).show();
+            reserveButton.setEnabled(false);
+            hideProgressBar();
+
+        }
+
+        /*
+         * (non-Javadoc)
+         * 
+         * @see com.concur.mobile.base.service.BaseAsyncRequestTask.AsyncReplyListener#onRequestCancel(android.os.Bundle)
+         */
+        public void onRequestCancel(Bundle resultData) {
+            cleanup();
+        }
+
+        /*
+         * (non-Javadoc)
+         * 
+         * @see com.concur.mobile.base.service.BaseAsyncRequestTask.AsyncReplyListener#cleanup()
+         */
+        public void cleanup() {
+            hotelBookingReceiver.setListener(null);
+            hotelBookingReceiver = null;
+        }
+    }
+
 }

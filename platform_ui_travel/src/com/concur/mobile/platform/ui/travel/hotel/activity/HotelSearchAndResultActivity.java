@@ -136,7 +136,7 @@ public class HotelSearchAndResultActivity extends Activity implements OnMenuItem
 
         listItemAdapater = new ListItemAdapter<HotelSearchResultListItem>(this, hotelListItems);
 
-        if (checkInDate.before(checkOutDate)) {
+        if (checkInDate != null && checkInDate.before(checkOutDate)) {
             numberOfNights = (int) ((checkOutDate.getTimeInMillis() - checkInDate.getTimeInMillis()) / (24 * 60 * 60 * 1000));
         } else {
             // safe assume to 1 night
@@ -504,14 +504,31 @@ public class HotelSearchAndResultActivity extends Activity implements OnMenuItem
                             hotelSearchRESTResultFrag.durationOfStayForDisplayInHeader);
                     i.putExtra(Const.EXTRA_TRAVEL_HOTEL_SEARCH_DURATION_NUM_OF_NIGHTS, numberOfNights);
                     i.putExtras(bundle);
-
-                    startActivity(i);
+                    // startActivity(i);
+                    startActivityForResult(i, Const.REQUEST_CODE_BOOK_HOTEL);
                 }
 
             }
         }
 
     }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+
+        switch (requestCode) {
+        case Const.REQUEST_CODE_BOOK_HOTEL: {
+            if (resultCode == RESULT_OK) {
+                setResult(resultCode, data);
+                finish();
+            }
+            break;
+        }
+        }
+
+        super.onActivityResult(requestCode, resultCode, data);
+
+    } // onActivityResult()
 
     // Will sort the results depending on the type of search and invoked the fragment to display the sorted results
     public void showResults() {

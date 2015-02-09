@@ -102,8 +102,12 @@ public class HotelChoiceDetailsFragment extends PlatformFragmentV1 implements On
 
         ((HotelSearchResultListItem) hotelListItem).buildView(getActivity(), hotelView, null);
         showHideHomeImage();
+        DisplayMetrics displaymetrics = new DisplayMetrics();
+        getActivity().getWindowManager().getDefaultDisplay().getMetrics(displaymetrics);
+        int screenHeight = displaymetrics.heightPixels;
 
         mListView.setParallaxImageView(mImageView);
+        header.setMinimumWidth(screenHeight / 4);
         mListView.addHeaderView(header);
 
         ArrayAdapter<String> adapter = new ArrayAdapter<String>(getActivity(),
@@ -226,7 +230,7 @@ public class HotelChoiceDetailsFragment extends PlatformFragmentV1 implements On
 
         public void updateTab(String tabId, int placeholder);
 
-        public void onImageClicked(ImageListItem imageListItem);
+        public void onImageClicked(View v, int id);
 
         public void onFindRoomsClicked();
 
