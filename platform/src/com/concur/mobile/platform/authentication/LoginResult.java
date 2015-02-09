@@ -36,6 +36,8 @@ public class LoginResult extends BaseParser {
     private static final String TAG_ROLES_MOBILE = "RolesMobile";
     private static final String TAG_USER_CURRENCY_CODE = "UserCrnCode";
     private static final String TAG_USER_ID = "UserId";
+    private static final String TAG_DISABLE_AUTOLOGIN = "DisableAutoLogin";
+    public static final String TAG_ANALYTICS_ID = "AnalyticsId";
 
     // Tag codes.
     private static final int TAG_AUTHENTICATION_TYPE_CODE = 0;
@@ -49,6 +51,8 @@ public class LoginResult extends BaseParser {
     private static final int TAG_ROLES_MOBILE_CODE = 8;
     private static final int TAG_USER_CURRENCY_CODE_CODE = 10;
     private static final int TAG_USER_ID_CODE = 11;
+    private static final int TAG_DISABLE_AUTOLOGIN_CODE = 12;
+    private static final int TAG_ANALYTICS_ID_CODE = 13;
 
     private static final Map<String, Integer> tagMap;
 
@@ -66,6 +70,8 @@ public class LoginResult extends BaseParser {
         tagMap.put(TAG_ROLES_MOBILE, TAG_ROLES_MOBILE_CODE);
         tagMap.put(TAG_USER_CURRENCY_CODE, TAG_USER_CURRENCY_CODE_CODE);
         tagMap.put(TAG_USER_ID, TAG_USER_ID_CODE);
+        tagMap.put(TAG_DISABLE_AUTOLOGIN, TAG_DISABLE_AUTOLOGIN_CODE);
+        tagMap.put(TAG_ANALYTICS_ID, TAG_ANALYTICS_ID_CODE);
     }
 
     /**
@@ -177,6 +183,16 @@ public class LoginResult extends BaseParser {
      * Contains the start tag for this parser.
      */
     private String startTag;
+
+    /**
+     * Contains the disable auto-login flag.
+     */
+    public Boolean disableAutoLogin;
+
+    /**
+     * Contains the analytics id for log tracking, used in EventTracker class
+     */
+    public String analyticsId;
 
     /**
      * Constructs an instance of <code>LoginResult</code> with a parser and start tag.
@@ -291,6 +307,18 @@ public class LoginResult extends BaseParser {
             case TAG_USER_ID_CODE: {
                 if (!TextUtils.isEmpty(text)) {
                     userId = text.trim();
+                }
+                break;
+            }
+            case TAG_DISABLE_AUTOLOGIN_CODE: {
+                if (!TextUtils.isEmpty(text)) {
+                    disableAutoLogin = Parse.safeParseBoolean(text.trim());
+                }
+                break;
+            }
+            case TAG_ANALYTICS_ID_CODE: {
+                if (!TextUtils.isEmpty(text)) {
+                    analyticsId = text.trim();
                 }
                 break;
             }
