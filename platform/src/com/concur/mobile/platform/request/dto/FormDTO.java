@@ -8,4 +8,6 @@ package com.concur.mobile.platform.request.dto;
 public interface FormDTO {
 
     String getId();
+
+    Integer getDisplayOrder();
 }

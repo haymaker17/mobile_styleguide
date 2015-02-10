@@ -10,19 +10,19 @@ import java.util.List;
 
 public class RequestSegmentDTO implements FormDTO {
 
-    @SerializedName("SegmentID")
+    @Expose @SerializedName("SegmentID")
     private String id;
     @SerializedName("SegmentType")
     private String segmentType;
     @SerializedName("SegmentTypeCode")
     private String segmentTypeCode;
-    @SerializedName("DepartureDate")
+    @Expose @SerializedName("DepartureDate")
     private Date departureDate;
-    @SerializedName("ArrivalDate")
+    @Expose @SerializedName("ArrivalDate")
     private Date arrivalDate;
-    @SerializedName("FromLocationID")
+    @Expose @SerializedName("FromLocationID")
     private String fromLocationId;
-    @SerializedName("ToLocationID")
+    @Expose @SerializedName("ToLocationID")
     private String toLocationId;
     @SerializedName("FromLocationName")
     private String fromLocationName;
@@ -42,7 +42,21 @@ public class RequestSegmentDTO implements FormDTO {
     private List<RequestCommentDTO> commentList = null;
     @Expose @SerializedName("Comment")
     private String lastComment;
-    private int displayOrder;
+    // --- useless but required by ws
+    @Expose @SerializedName("ArrivalTime")
+    private String arrivalTime;
+    @Expose @SerializedName("DepartureTime")
+    private String departureTime;
+
+    private Integer displayOrder;
+
+    public void setArrivalTime(String arrivalTime) {
+        this.arrivalTime = arrivalTime;
+    }
+
+    public void setDepartureTime(String departureTime) {
+        this.departureTime = departureTime;
+    }
 
     public String getFromLocationId() {
         return fromLocationId;
@@ -60,7 +74,8 @@ public class RequestSegmentDTO implements FormDTO {
         this.toLocationId = toLocationId;
     }
 
-    public int getDisplayOrder() {
+    @Override
+    public Integer getDisplayOrder() {
         return displayOrder;
     }
 

@@ -35,6 +35,21 @@ public abstract class AbstractConnectFormFieldActivity extends BaseActivity {
 
     private static final String CLS_TAG = "AbstractConnectFormFieldActivity";
 
+    private Map<String, Integer> views = new HashMap<String, Integer>(); // view ID, filed NAME
+
+    private Map<Integer, DatePickerDialog> dateFieldMapping = new HashMap<Integer, DatePickerDialog>();
+    private Map<Integer, TimePickerDialog> timeFieldMapping = new HashMap<Integer, TimePickerDialog>();
+    private Map<Integer, PickListItem> pickListMapping = new HashMap<Integer, PickListItem>();
+
+    /* Arbitrarily set to 100 to avoid any possible conflict.
+     * TODO : migrate to View.generateViewId() calls when we'll move to minSdk=17.
+     * Cf http://stackoverflow.com/a/15442898
+     */
+    private int viewID = 100;
+
+    private boolean canSave = true;
+    private String currentViewPrefix = null;
+
     protected static enum DisplayType {
         TEXTFIELD,       //RequestID, Name, Status
         TEXTAREA,        //Purpose, Comment
@@ -62,20 +77,6 @@ public abstract class AbstractConnectFormFieldActivity extends BaseActivity {
             return model;
         }
     }
-
-    private Map<String, Integer> views = new HashMap<String, Integer>(); // view ID, filed NAME
-
-    private Map<Integer, DatePickerDialog> dateFieldMapping = new HashMap<Integer, DatePickerDialog>();
-    private Map<Integer, TimePickerDialog> timeFieldMapping = new HashMap<Integer, TimePickerDialog>();
-    private Map<Integer, PickListItem> pickListMapping = new HashMap<Integer, PickListItem>();
-
-    /* Arbitrarily set to 100 to avoid any possible conflict.
-     * TODO : migrate to View.generateViewId() calls when we'll move to minSdk=17.
-     * Cf http://stackoverflow.com/a/15442898
-     */
-    private int viewID = 100;
-
-    protected boolean isEditable = false;
 
     /**
      * @param fieldName
@@ -115,12 +116,26 @@ public abstract class AbstractConnectFormFieldActivity extends BaseActivity {
      *
      * @param saveButtonView
      */
-    public abstract void applySaveButtonPolicy(View saveButtonView);
+    public abstract void applySaveButtonPolicy(final View saveButtonView);
+
+    /**
+     * Use this to handle tabbed views.
+     * !important! : this must be called each time you change tab AND for each tab definition call (aka setDisplayFields())
+     *
+     * @param tabId will be used as prefix for any field name definition.
+     */
+    public void setProcessedTab(int tabId) {
+        currentViewPrefix = String.valueOf(tabId);
+    }
 
     /**
      * This has to be overriden with a super call to execute your own remote saving.
+     * This will only call the save action on the given layout if it's found.
+     *
+     * @param form
+     * @param model
      */
-    protected void save(ConnectForm form, FormDTO model) {
+    protected void save(ConnectForm form, final FormDTO model) {
         if (form != null) {
             final List<ConnectFormField> formFields = form.getFormFields();
             Collections.sort(formFields);
@@ -136,7 +151,7 @@ public abstract class AbstractConnectFormFieldActivity extends BaseActivity {
      * @return the value currently displayed & contained in the View object
      */
     private String getValueByFieldName(FormDTO model, String fieldName) {
-        final String viewName = getViewName(model, fieldName);
+        final String viewName = getViewName(fieldName, model);
         if (views.containsKey(viewName)) {
             final TextView tv = (TextView) findViewById(views.get(viewName));
             if (tv != null && tv.getText() != null) {
@@ -146,8 +161,15 @@ public abstract class AbstractConnectFormFieldActivity extends BaseActivity {
         return null;
     }
 
-    private String getViewName(FormDTO model, String fieldName) {
-        return model.getId() + "__" + fieldName;
+    /**
+     * @param fieldName
+     * @param model     the mode in use
+     * @return
+     */
+    private String getViewName(String fieldName, FormDTO model) {
+        return (currentViewPrefix != null ? (currentViewPrefix + "__") : "") + (model.getDisplayOrder() != null ?
+                (model.getDisplayOrder().toString() + "__") :
+                "") + fieldName;
     }
 
     public void setDisplayFields(FormDTO model, ConnectForm form, final LinearLayout fieldLayout) {
@@ -175,6 +197,7 @@ public abstract class AbstractConnectFormFieldActivity extends BaseActivity {
      */
     protected void setDisplayFields(FormDTO model, ConnectForm form, final LinearLayout fieldLayout,
             final LinearLayout titleLayout, final String fieldToTitle) {
+        // --- creates a mapping of the given layouts to generate a unique id for each component
         if (form != null) {
             final List<ConnectFormField> formfields = form.getFormFields();
             applySpecificSort(formfields);
@@ -195,19 +218,18 @@ public abstract class AbstractConnectFormFieldActivity extends BaseActivity {
 
                 // --- WS OUTPUT FIX (Time fields)
                 // note : this is due to the fact that WS can't retrieve the correct value within midtier so it returns null
-                // TODO : set to RO as default when tests are done
                 if (dataType == IFormField.DataType.CHAR && controlType == IFormField.ControlType.TIME) {
                     // time values
-                    accesType = IFormField.AccessType.RW;
+                    accesType = canSave ? IFormField.AccessType.RW : IFormField.AccessType.RO;
                 } else if (dataType == IFormField.DataType.MONEY && controlType == IFormField.ControlType.EDIT) {
                     // amount
-                    accesType = IFormField.AccessType.RW;
+                    accesType = canSave ? IFormField.AccessType.RW : IFormField.AccessType.RO;
                 } else if (dataType == IFormField.DataType.VARCHAR && controlType == IFormField.ControlType.TEXT_AREA) {
                     // comment
-                    accesType = IFormField.AccessType.RW;
+                    accesType = canSave ? IFormField.AccessType.RW : IFormField.AccessType.RO;
                 } else if (dataType == IFormField.DataType.INTEGER && controlType == IFormField.ControlType.PICK_LIST) {
                     // currency
-                    accesType = IFormField.AccessType.RW;
+                    accesType = canSave ? IFormField.AccessType.RW : IFormField.AccessType.RO;
                 }
 
                 switch (dataType) {
@@ -263,10 +285,12 @@ public abstract class AbstractConnectFormFieldActivity extends BaseActivity {
                 }
 
                 if (displayType != null && isFieldVisible(model, ff.getName())) {
+                    final boolean isEditable = canSave && accesType != IFormField.AccessType.RO;
+
                     switch (displayType) {
                     case TEXTFIELD:
 
-                        if (accesType == IFormField.AccessType.RO) {
+                        if (!isEditable) {
                             component = new TextView(this);
                         } else {
                             component = new EditText(this);
@@ -284,7 +308,7 @@ public abstract class AbstractConnectFormFieldActivity extends BaseActivity {
 
                     case TEXTAREA:
 
-                        if (accesType == IFormField.AccessType.RO) {
+                        if (!isEditable) {
                             component = new TextView(this);
                         } else {
                             component = new EditText(this);
@@ -309,7 +333,7 @@ public abstract class AbstractConnectFormFieldActivity extends BaseActivity {
                         component.requestFocus();
 
                         //ADD LISTENER for setting date
-                        if (accesType != IFormField.AccessType.RO) {
+                        if (isEditable) {
                             component.setOnClickListener((View.OnClickListener) this);
                             Calendar newCalendar = Calendar.getInstance();
                             final TextView finalComp = component;
@@ -343,7 +367,7 @@ public abstract class AbstractConnectFormFieldActivity extends BaseActivity {
                         component.requestFocus();
 
                         //ADD LISTENER to set time
-                        if (accesType != IFormField.AccessType.RO) {
+                        if (isEditable) {
                             component.setOnClickListener((View.OnClickListener) this);
                             Calendar newCalendar = Calendar.getInstance();
                             final TextView finalComp = component;
@@ -371,7 +395,7 @@ public abstract class AbstractConnectFormFieldActivity extends BaseActivity {
 
                     case MONEYFIELD:
                         // --- we do not display currency symbol if the field is editable (TODO TBC)
-                        if (accesType == IFormField.AccessType.RO) {
+                        if (!isEditable) {
                             component = new TextView(this);
                             final String currencyName = getModelDisplayedValueByFieldName(model, "CurrencyName");
                             component.setText((currencyName != null ? currencyName + " " : "")
@@ -397,7 +421,7 @@ public abstract class AbstractConnectFormFieldActivity extends BaseActivity {
                         component.requestFocus();
 
                         //ADD LISTENER for setting date
-                        if (accesType != IFormField.AccessType.RO) {
+                        if (isEditable) {
                             component.setOnClickListener((View.OnClickListener) this);
                         }
 
@@ -418,14 +442,14 @@ public abstract class AbstractConnectFormFieldActivity extends BaseActivity {
                         }
 
                         component.setId(viewID);
-                        views.put(getViewName(model, ff.getName()), viewID);
+                        views.put(getViewName(ff.getName(), model), viewID);
                         viewID++;
 
                         // --- permits to apply specifics within the extending activity
                         applySpecificRender(model, component, llp, ff);
 
                         if (llp != null) {
-                            if (accesType == IFormField.AccessType.RO) {
+                            if (!isEditable) {
                                 llp.setMargins(30, 0, 0, 0); // llp.setMargins(left, top, right, bottom);
                             }
                             component.setLayoutParams(llp);
@@ -494,29 +518,33 @@ public abstract class AbstractConnectFormFieldActivity extends BaseActivity {
     }
 
     protected void applyTimeString(Date d, String timeString) {
-        final DateFormat formatter = new SimpleDateFormat(DateUtil.TIME_PATTERN_24H);
-        try {
-            final Date dt = formatter.parse(timeString);
-            final Calendar cal = Calendar.getInstance();
-            cal.setTime(dt);
-            final int hour = cal.get(Calendar.HOUR);
-            final int minute = cal.get(Calendar.MINUTE);
-            final int second = cal.get(Calendar.SECOND);
-            cal.setTime(d);
-            cal.set(Calendar.HOUR, hour);
-            cal.set(Calendar.MINUTE, minute);
-            cal.set(Calendar.SECOND, second);
-            d.setTime(cal.getTime().getTime());
-        } catch (ParseException e) {
-            e.printStackTrace();
-            Log.e(CLS_TAG, "Failed to apply time string : " + timeString);
+        if (timeString != null) {
+            final DateFormat formatter = new SimpleDateFormat(DateUtil.TIME_PATTERN_24H);
+            try {
+                final Date dt = formatter.parse(timeString);
+                final Calendar cal = Calendar.getInstance();
+                cal.setTime(dt);
+                final int hour = cal.get(Calendar.HOUR);
+                final int minute = cal.get(Calendar.MINUTE);
+                final int second = cal.get(Calendar.SECOND);
+                cal.setTime(d);
+                cal.set(Calendar.HOUR, hour);
+                cal.set(Calendar.MINUTE, minute);
+                cal.set(Calendar.SECOND, second);
+                d.setTime(cal.getTime().getTime());
+            } catch (ParseException e) {
+                e.printStackTrace();
+                Log.e(CLS_TAG, "Failed to apply time string : " + timeString);
+            }
         }
     }
 
     protected String formatTime(Date d) {
-        final DateFormat formatter = new SimpleDateFormat(android.text.format.DateFormat.is24HourFormat(this) ?
-                DateUtil.TIME_PATTERN_24H :
-                DateUtil.TIME_PATTERN_12H);
+        return formatTime(d, android.text.format.DateFormat.is24HourFormat(this));
+    }
+
+    protected String formatTime(Date d, boolean is24) {
+        final DateFormat formatter = new SimpleDateFormat(is24 ? DateUtil.TIME_PATTERN_24H : DateUtil.TIME_PATTERN_12H);
         return formatter.format(d);
     }
 
@@ -585,10 +613,14 @@ public abstract class AbstractConnectFormFieldActivity extends BaseActivity {
     }
 
     protected TextView getComponent(FormDTO model, String fieldName) {
-        final Integer compId = views.get(getViewName(model, fieldName));
+        final Integer compId = views.get(getViewName(fieldName, model));
         if (compId != null) {
             return (TextView) findViewById(compId);
         }
         return null;
+    }
+
+    public void setCanSave(boolean canSave) {
+        this.canSave = canSave;
     }
 }

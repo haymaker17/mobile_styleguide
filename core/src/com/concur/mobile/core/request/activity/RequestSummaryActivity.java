@@ -20,7 +20,6 @@ import com.concur.mobile.base.service.BaseAsyncResultReceiver;
 import com.concur.mobile.core.ConcurCore;
 import com.concur.mobile.core.activity.BaseActivity;
 import com.concur.mobile.core.request.adapter.EntryListAdapter;
-import com.concur.mobile.core.request.service.RequestParser;
 import com.concur.mobile.core.request.task.RequestDetailsTask;
 import com.concur.mobile.core.request.task.RequestFormFieldsTask;
 import com.concur.mobile.core.request.task.RequestSubmitTask;
@@ -34,6 +33,7 @@ import com.concur.mobile.platform.common.formfield.ConnectForm;
 import com.concur.mobile.platform.common.formfield.ConnectFormFieldsCache;
 import com.concur.mobile.platform.request.dto.RequestDTO;
 import com.concur.mobile.platform.request.dto.RequestEntryDTO;
+import com.concur.mobile.platform.request.util.RequestParser;
 import com.concur.mobile.platform.ui.common.dialog.NoConnectivityDialogFragment;
 
 import java.util.*;
@@ -211,6 +211,8 @@ public class RequestSummaryActivity extends BaseActivity {
             tr.setEntriesMap(tr.getEntriesMap());
             updateTRDetailsUI(tr);
             return true;
+        } else {
+            finish();
         }
         return false;
     }
@@ -251,7 +253,7 @@ public class RequestSummaryActivity extends BaseActivity {
 
             // Display submit button?
             submitButton = (RelativeLayout) findViewById(R.id.submitButton);
-            if (tr.isActionPermitted(RequestDTO.SUBMIT)) {
+            if (tr.isActionPermitted(RequestParser.PermittedAction.SUBMIT)) {
                 submitButton.setVisibility(View.VISIBLE);
             } else {
                 submitButton.setVisibility(View.GONE);
@@ -534,7 +536,7 @@ public class RequestSummaryActivity extends BaseActivity {
                 if (ConcurCore.isConnected()) {
                     final Intent intent = new Intent(RequestSummaryActivity.this, RequestHeaderActivity.class);
                     intent.putExtra(RequestListActivity.REQUEST_ID, tr.getId());
-                    if (tr.isActionPermitted(RequestDTO.SAVE)) {
+                    if (tr.isActionPermitted(RequestParser.PermittedAction.SAVE)) {
                         intent.putExtra(RequestSummaryActivity.REQUEST_IS_EDITABLE, Boolean.TRUE.toString());
                     } else {
                         intent.putExtra(RequestSummaryActivity.REQUEST_IS_EDITABLE, Boolean.FALSE.toString());

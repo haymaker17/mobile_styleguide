@@ -1,5 +1,6 @@
 package com.concur.mobile.platform.request.dto;
 
+import com.concur.mobile.platform.request.util.RequestParser;
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 
@@ -29,9 +30,6 @@ public class RequestDTO implements FormDTO {
             return code;
         }
     }
-
-    public static String SUBMIT = "submit";
-    public static String SAVE = "save";
 
     @Expose @SerializedName("RequestID")
     private String id;
@@ -75,6 +73,8 @@ public class RequestDTO implements FormDTO {
     private Map<String, RequestEntryDTO> entriesMap;
 
     private List<String> listPermittedActions;
+
+    private int displayOrder = 0;
 
     @Override
     public String getId() {
@@ -237,13 +237,17 @@ public class RequestDTO implements FormDTO {
         this.policyId = policyId;
     }
 
-    public boolean isActionPermitted(String action) {
-        for (String permittedAction : this.listPermittedActions) {
-            if (permittedAction.equals(action)) {
+    public boolean isActionPermitted(RequestParser.PermittedAction action) {
+        for (String permittedActionName : this.listPermittedActions) {
+            if (permittedActionName.equals(action.getAction())) {
                 return true;
             }
         }
         return false;
     }
 
+    @Override
+    public Integer getDisplayOrder() {
+        return displayOrder;
+    }
 }

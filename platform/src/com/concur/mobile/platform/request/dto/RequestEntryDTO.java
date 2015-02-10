@@ -1,5 +1,7 @@
 package com.concur.mobile.platform.request.dto;
 
+import com.concur.mobile.platform.common.formfield.IFormField;
+import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 
 import java.util.ArrayList;
@@ -8,13 +10,29 @@ import java.util.List;
 
 public class RequestEntryDTO {
 
-    @SerializedName("ID")
+    public static enum TripType implements IFormField.EnumField<IFormField.DataType> {
+        ONE_WAY("ONE_WAY"),
+        ROUND_TRIP("ROUND_TRIP"),
+        MULTI_SEGMENT("MULTI_STOP");
+
+        private String name;
+
+        @Override public String getName() {
+            return name;
+        }
+
+        TripType(String name) {
+            this.name = name;
+        }
+    }
+
+    @Expose @SerializedName("ID")
     private String id;
-    @SerializedName("Segments")
+    @Expose @SerializedName("Segments")
     private List<RequestSegmentDTO> listSegment = new ArrayList<RequestSegmentDTO>();
-    @SerializedName("TransactionCurrencyCode")
+    @Expose @SerializedName("TransactionCurrencyCode")
     private String transactionCurrencyCode;
-    @SerializedName("TransactionAmount")
+    @Expose @SerializedName("TransactionAmount")
     private Double transactionAmount;
     @SerializedName("Comments")
     private List<RequestCommentDTO> comments;
@@ -22,10 +40,22 @@ public class RequestEntryDTO {
     private Date transactionDate;
     @SerializedName("ExpenseTypeName")
     private String expenseTypeName;
+    @Expose @SerializedName("TripType")
+    private TripType tripType;
 
     private String segmentFormId;
     private String segmentType = null;
     private String segmentTypeCode = null;
+
+    private Integer displayOrder = 0;
+
+    public TripType getTripType() {
+        return tripType;
+    }
+
+    public void setTripType(TripType tripType) {
+        this.tripType = tripType;
+    }
 
     public String getExpenseTypeName() {
         return expenseTypeName;
@@ -101,5 +131,9 @@ public class RequestEntryDTO {
 
     public void setComments(List<RequestCommentDTO> comments) {
         this.comments = comments;
+    }
+
+    public Integer getDisplayOrder() {
+        return displayOrder;
     }
 }

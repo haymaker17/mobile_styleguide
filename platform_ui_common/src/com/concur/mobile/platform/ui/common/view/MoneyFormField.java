@@ -19,6 +19,7 @@ public class MoneyFormField extends EditText implements TextWatcher {
 
     private Locale locale;
     private Currency currency;
+    private Double amountValue;
 
     public MoneyFormField(Context context, Locale loc, String currencyCode) {
         super(context);
@@ -63,12 +64,12 @@ public class MoneyFormField extends EditText implements TextWatcher {
 
         // --- clean currency input
         String s = editable.toString().replaceAll(Matcher.quoteReplacement("[" + currency.getSymbol() + ",]"), "");
-        final Double input = Parse.safeParseDouble(s);
-        if (input == null) {
+        amountValue = Parse.safeParseDouble(s);
+        if (amountValue == null) {
             setError("error");
         } else {
             if (locale != null && currency != null) {
-                s = FormatUtil.formatAmount(input, locale, currency.getCurrencyCode(), true, true);
+                s = FormatUtil.formatAmount(amountValue, locale, currency.getCurrencyCode(), true, true);
             }
             setText(s);
             int lengthDif = s.length() - inputLength;
@@ -79,4 +80,7 @@ public class MoneyFormField extends EditText implements TextWatcher {
         addTextChangedListener(this);
     }
 
+    public Double getAmountValue() {
+        return amountValue;
+    }
 }

@@ -24,6 +24,7 @@ public class ConnectHelper {
 
     public enum Module {
         REQUEST("travelrequest/requests"),
+        REQUEST_ENTRY("travelrequest/segmentsentries"),
         GROUP_CONFIGURATIONS("travelrequest/requestgroupconfigurations"),
         FORM_FIELDS("expense/formfields");
 

@@ -21,7 +21,6 @@ import com.concur.mobile.base.service.BaseAsyncResultReceiver;
 import com.concur.mobile.core.ConcurCore;
 import com.concur.mobile.core.activity.BaseActivity;
 import com.concur.mobile.core.request.adapter.SplitRequestListAdapter;
-import com.concur.mobile.core.request.service.RequestParser;
 import com.concur.mobile.core.request.task.RequestFormFieldsTask;
 import com.concur.mobile.core.request.task.RequestGroupConfigurationsTask;
 import com.concur.mobile.core.request.task.RequestListTask;
@@ -35,6 +34,7 @@ import com.concur.mobile.platform.request.RequestGroupConfigurationCache;
 import com.concur.mobile.platform.request.RequestListCache;
 import com.concur.mobile.platform.request.dto.RequestDTO;
 import com.concur.mobile.platform.request.groupConfiguration.RequestGroupConfiguration;
+import com.concur.mobile.platform.request.util.RequestParser;
 import com.concur.mobile.platform.ui.common.dialog.NoConnectivityDialogFragment;
 
 import java.util.*;

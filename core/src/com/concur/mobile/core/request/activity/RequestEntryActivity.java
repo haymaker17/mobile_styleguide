@@ -1,9 +1,11 @@
 package com.concur.mobile.core.request.activity;
 
+import android.app.Activity;
 import android.app.AlertDialog;
 import android.app.DatePickerDialog;
 import android.app.TimePickerDialog;
 import android.content.DialogInterface;
+import android.content.Intent;
 import android.graphics.Typeface;
 import android.os.Bundle;
 import android.os.Handler;
@@ -12,7 +14,10 @@ import android.text.Editable;
 import android.text.TextWatcher;
 import android.util.TypedValue;
 import android.view.View;
-import android.widget.*;
+import android.widget.LinearLayout;
+import android.widget.ListView;
+import android.widget.TextView;
+import android.widget.ViewFlipper;
 import com.apptentive.android.sdk.Log;
 import com.concur.core.R;
 import com.concur.mobile.base.service.BaseAsyncRequestTask;
@@ -22,7 +27,7 @@ import com.concur.mobile.core.activity.AbstractConnectFormFieldActivity;
 import com.concur.mobile.core.expense.charge.activity.CurrencySpinnerAdapter;
 import com.concur.mobile.core.expense.data.ListItem;
 import com.concur.mobile.core.request.RequestPagerAdapter;
-import com.concur.mobile.core.request.service.RequestParser;
+import com.concur.mobile.core.request.task.RequestEntrySaveTask;
 import com.concur.mobile.core.request.util.ConnectHelper;
 import com.concur.mobile.core.request.util.DateUtil;
 import com.concur.mobile.core.util.Const;
@@ -39,9 +44,9 @@ import com.concur.mobile.platform.request.dto.RequestSegmentDTO;
 import com.concur.mobile.platform.request.groupConfiguration.Policy;
 import com.concur.mobile.platform.request.groupConfiguration.RequestGroupConfiguration;
 import com.concur.mobile.platform.request.groupConfiguration.SegmentType;
+import com.concur.mobile.platform.request.util.RequestParser;
 import com.concur.mobile.platform.ui.common.dialog.NoConnectivityDialogFragment;
 import com.concur.mobile.platform.ui.common.view.MoneyFormField;
-import com.concur.mobile.platform.util.Parse;
 
 import java.util.*;
 
@@ -95,6 +100,7 @@ public class RequestEntryActivity extends AbstractConnectFormFieldActivity imple
 
     private static Map<SegmentType.RequestSegmentType, List<String>> layoutVisibilities = new HashMap<SegmentType.RequestSegmentType, List<String>>();
 
+    private LinearLayout entryFields;
     private ViewFlipper entryVF;
     private ViewFlipper entryTypeVF;
     private TextView requestTitle;
@@ -104,6 +110,7 @@ public class RequestEntryActivity extends AbstractConnectFormFieldActivity imple
     private int originFragment = -1;
     private int fragmentOnInitialization = -1;
     private boolean createMode = false;
+    private boolean hasCustomLayouts = false;
     private SegmentType.RequestSegmentType viewedType = null;
 
     private CurrencySpinnerAdapter curTypeAdapter;
@@ -165,6 +172,7 @@ public class RequestEntryActivity extends AbstractConnectFormFieldActivity imple
             request = requestListCache.getValue(requestId);
             entry = request.getEntriesMap().get(entryId);
             form = formFieldsCache.getFormFields(entry.getSegmentFormId());
+            setCanSave(request.isActionPermitted(RequestParser.PermittedAction.SAVE));
         }
         // --- create mode
         else if (requestId != null) {
@@ -193,8 +201,12 @@ public class RequestEntryActivity extends AbstractConnectFormFieldActivity imple
         if (viewedType == null) {
             viewedType = SegmentType.RequestSegmentType.CAR;
         }
-        // --- Air segments have a specific display
-        if (hasCustomLayouts(viewedType)) {
+        // --- Air & Rail segments have a specific display with specific processing
+        hasCustomLayouts = (viewedType == SegmentType.RequestSegmentType.AIR
+                || viewedType == SegmentType.RequestSegmentType.RAIL);
+
+        if (hasCustomLayouts) {
+            // --- initializes the mapping between a tab id and the corresponding layout id
             entryTypeVF.setDisplayedChild(ID_VIEWPAGER_VIEW);
         } else {
             entryTypeVF.setDisplayedChild(ID_NO_VIEWPAGER_VIEW);
@@ -203,7 +215,7 @@ public class RequestEntryActivity extends AbstractConnectFormFieldActivity imple
         requestTitle = (TextView) findViewById(R.id.entryTitle);
         requestTitle.setText(entry.getSegmentType());
         // --- we use fragments if it's air, which will launch display by themselves
-        if (!hasCustomLayouts(viewedType)) {
+        if (!hasCustomLayouts) {
             // --- only one segment possible
             this.setDisplayFields(entry.getListSegment().iterator().next(), form, entryFields);
             applySaveButtonPolicy(findViewById(R.id.saveButton));
@@ -220,19 +232,19 @@ public class RequestEntryActivity extends AbstractConnectFormFieldActivity imple
                 @Override
                 public void onPageSelected(int position) {
                     viewedFragment = position;
-                    applyAirLayoutChange(position);
+                    setProcessedTab(position);
                 }
             });
             // --- set the current tab & apply the temporary in use leg list
-            if (createMode || entry.getListSegment().size() == 1) {
+            if (createMode || entry.getTripType() == RequestEntryDTO.TripType.ONE_WAY) {
                 viewedFragment = originFragment = TAB_ONE_WAY;
                 segmentOneWay = entry.getListSegment();
                 viewPager.setCurrentItem(TAB_ONE_WAY);
-            } else if (entry.getListSegment().size() == 2) {
+            } else if (entry.getTripType() == RequestEntryDTO.TripType.ROUND_TRIP) {
                 viewedFragment = originFragment = TAB_ROUND_TRIP;
                 segmentsRoundTrip = entry.getListSegment();
                 viewPager.setCurrentItem(TAB_ROUND_TRIP);
-            } else if (entry.getListSegment().size() > 2) {
+            } else if (entry.getTripType() == RequestEntryDTO.TripType.MULTI_SEGMENT) {
                 viewedFragment = originFragment = TAB_MULTI_LEG;
                 segmentsMultiLeg = entry.getListSegment();
                 //TODO multi-leg
@@ -240,21 +252,15 @@ public class RequestEntryActivity extends AbstractConnectFormFieldActivity imple
         }
     }
 
-    private void applyAirLayoutChange(int position) {
-        //TODO :: apply values tansformation
-        Toast.makeText(RequestEntryActivity.this, "Selected page position: " + position, Toast.LENGTH_SHORT).show();
-    }
-
-    //FIXME appliquer une methode genre applyCustomSortOnFormFields() pour gerer leur changement de décision a la con
-
     /**
-     * Called by fragments, manage the rendering depending on the tab selected
+     * Called once by each fragment on rendering, manage display depending on the tab selected
      *
      * @param fieldLayout
      * @param idFragment
      */
     @Override
     public void setDisplayFields(final LinearLayout fieldLayout, int idFragment) {
+        setProcessedTab(idFragment);
         fragmentOnInitialization = idFragment;
         final ConcurCore core = getConcurCore();
         boolean isOrigin = idFragment == originFragment;
@@ -275,10 +281,10 @@ public class RequestEntryActivity extends AbstractConnectFormFieldActivity imple
             inUseListSegment = segmentOneWay;
             // --- one segment only
             final RequestSegmentDTO oneWaySegment;
-            if (createMode) {
+            if (createMode && inUseListSegment.size() < 1) {
                 oneWaySegment = new RequestSegmentDTO();
                 inUseListSegment.add(oneWaySegment);
-                // --- TODO : set default form id
+                oneWaySegment.setSegmentFormId(extractSegmentDefaultFormId(viewedType));
             } else if (!isOrigin) {
                 // --- we only keep the first segment
                 oneWaySegment = entryListSegment.iterator().next();
@@ -286,6 +292,7 @@ public class RequestEntryActivity extends AbstractConnectFormFieldActivity imple
             } else {
                 oneWaySegment = inUseListSegment.iterator().next();
             }
+            oneWaySegment.setDisplayOrder(0);
             setDisplayFields(oneWaySegment, core.getRequestFormFieldsCache().getValue(oneWaySegment.getSegmentFormId()),
                     fieldLayout, null, null);
         } else if (idFragment == TAB_ROUND_TRIP) {
@@ -300,8 +307,8 @@ public class RequestEntryActivity extends AbstractConnectFormFieldActivity imple
                 }
             }
             inUseListSegment = segmentsRoundTrip;
-            if (createMode) {
-                final String segmentDefaultFormId = extractSegmentDefaultFormId(SegmentType.RequestSegmentType.AIR);
+            if (createMode && inUseListSegment.size() < 2) {
+                final String segmentDefaultFormId = extractSegmentDefaultFormId(viewedType);
 
                 final RequestSegmentDTO segmentD = new RequestSegmentDTO();
                 segmentD.setSegmentFormId(segmentDefaultFormId);
@@ -359,7 +366,17 @@ public class RequestEntryActivity extends AbstractConnectFormFieldActivity imple
             }
             inUseListSegment = segmentsMultiLeg;
             //TODO
+
+            int displayOrder = 0;
+            for (RequestSegmentDTO segment : inUseListSegment) {
+                segment.setDisplayOrder(displayOrder);
+                /*setDisplayFields(segment, core.getRequestFormFieldsCache().getValue(segment.getSegmentFormId()),
+                        fieldLayout, null, null);*/
+                displayOrder++;
+            }
         }
+        // --- Resets processed tab to the one viewed
+        setProcessedTab(viewedFragment);
     }
 
     /**
@@ -385,7 +402,6 @@ public class RequestEntryActivity extends AbstractConnectFormFieldActivity imple
     @Override
     protected String getModelDisplayedValueByFieldName(FormDTO requestSegment, String fieldName) {
         final RequestSegmentDTO segment = (RequestSegmentDTO) requestSegment;
-        //TODO
         if (fieldName.equals(FIELD_FROM_ID)) {
             if (segment.getFromLocationName() == null) {
                 return "";
@@ -425,8 +441,14 @@ public class RequestEntryActivity extends AbstractConnectFormFieldActivity imple
             if (segment.getForeignCurrencyCode() == null) {
                 return "";
             }
-            //TODO : find a solution to handle v < 19
-            return Currency.getInstance(segment.getForeignCurrencyCode()).getDisplayName();
+            if (curTypeAdapter == null) {
+                curTypeAdapter = new CurrencySpinnerAdapter(this);
+            }
+            final int pos = curTypeAdapter.getPositionForCurrency(segment.getForeignCurrencyCode());
+            if (pos >= 0) {
+                return ((ListItem) curTypeAdapter.getItem(pos)).text;
+            }
+            return "";
         } else if (fieldName.equals(FIELD_COMMENT)) {
             if (segment.getForeignCurrencyCode() == null) {
                 return "";
@@ -446,17 +468,29 @@ public class RequestEntryActivity extends AbstractConnectFormFieldActivity imple
             // --- TODO : get location name with that ID
             segment.setToLocationName(value);
         } else if (fieldName.equals(FIELD_AMOUNT)) {
-            segment.setForeignAmount(value != null ? Parse.safeParseDouble(value) : 0d);
+            final MoneyFormField field = (MoneyFormField) RequestEntryActivity.this.getComponent(model, FIELD_AMOUNT);
+            // --- field can be null if hidden
+            if (field != null) {
+                segment.setForeignAmount(field.getAmountValue());
+                entry.setTransactionAmount(segment.getForeignAmount());
+            }
         } else if (fieldName.equals(FIELD_START_DATE)) {
             segment.setDepartureDate(parseDate(value));
         } else if (fieldName.equals(FIELD_START_TIME)) {
             applyTimeString(segment.getDepartureDate(), value);
+            if (segment.getDepartureDate() != null) {
+                segment.setDepartureTime(formatTime(segment.getDepartureDate(), true));
+            }
         } else if (fieldName.equals(FIELD_END_DATE)) {
             segment.setArrivalDate(parseDate(value));
         } else if (fieldName.equals(FIELD_END_TIME)) {
             applyTimeString(segment.getArrivalDate(), value);
+            if (segment.getArrivalDate() != null) {
+                segment.setArrivalTime(formatTime(segment.getArrivalDate(), true));
+            }
         } else if (fieldName.equals(FIELD_CURRENCY)) {
-            //TODO segment.setForeignCurrencyCode(Currency.);
+            // --- ntd : this is already handled by the currency popup selection listener
+            entry.setTransactionCurrencyCode(segment.getForeignCurrencyCode());
         } else if (fieldName.equals(FIELD_COMMENT)) {
             segment.setLastComment(value);
         }
@@ -487,13 +521,9 @@ public class RequestEntryActivity extends AbstractConnectFormFieldActivity imple
         return null;
     }
 
-    private boolean hasCustomLayouts(SegmentType.RequestSegmentType segmentType) {
-        return viewedType == SegmentType.RequestSegmentType.AIR || viewedType == SegmentType.RequestSegmentType.RAIL;
-    }
-
     @Override
     protected boolean isFieldVisible(FormDTO model, String fieldName) {
-        if (!hasCustomLayouts(viewedType) || fragmentOnInitialization == TAB_ONE_WAY) {
+        if (!hasCustomLayouts || fragmentOnInitialization == TAB_ONE_WAY) {
             return layoutVisibilities.get(viewedType).contains(fieldName);
         } else {
             // --- segment number detection
@@ -543,9 +573,12 @@ public class RequestEntryActivity extends AbstractConnectFormFieldActivity imple
                 }
 
                 @Override public void afterTextChanged(Editable editable) {
-
-                    ((MoneyFormField) RequestEntryActivity.this.getComponent(model, FIELD_AMOUNT))
-                            .setCurrencyCode(((RequestSegmentDTO) model).getForeignCurrencyCode());
+                    final MoneyFormField field = (MoneyFormField) RequestEntryActivity.this
+                            .getComponent(model, FIELD_AMOUNT);
+                    // --- field can be null if hidden
+                    if (field != null) {
+                        field.setCurrencyCode(((RequestSegmentDTO) model).getForeignCurrencyCode());
+                    }
                 }
             });
         } else if (ff.getName().equals(FIELD_AMOUNT)) {
@@ -565,22 +598,58 @@ public class RequestEntryActivity extends AbstractConnectFormFieldActivity imple
         saveButtonView.setOnClickListener(new View.OnClickListener() {
 
             public void onClick(View v) {
-                // --- Applies temporary segment list to entry object
-                if (originFragment != viewedFragment) {
+                if (hasCustomLayouts) {
+                    // --- AIR & RAIL segment/entry types
+
+                    // --- processedTab won't be set if user stay on opened tab without changing it because segments
+                    //     are processed after activity
+                    setProcessedTab(viewedFragment);
+                    // --- Cleans & applies temporary segment list to entry object
                     if (viewedFragment == TAB_ONE_WAY) {
+                        entry.setTripType(RequestEntryDTO.TripType.ONE_WAY);
                         entry.setListSegment(segmentOneWay);
+                        if (entry.getListSegment().size() > 1) {
+                            // --- security lock : we can't have more than 1 on a round way => remove anything above
+                            segmentOneWay.clear();
+                            segmentOneWay.add(entry.getListSegment().iterator().next());
+                            entry.setListSegment(segmentOneWay);
+                        }
                     } else if (viewedFragment == TAB_ROUND_TRIP) {
+                        entry.setTripType(RequestEntryDTO.TripType.ROUND_TRIP);
                         entry.setListSegment(segmentsRoundTrip);
+                        if (entry.getListSegment().size() > 1) {
+                            // --- security lock : we can't have more than 1 on a round way => remove anything above
+                            segmentsRoundTrip.clear();
+                            for (int i = 0; i < 2; i++) {
+                                segmentsRoundTrip.add(entry.getListSegment().get(i));
+                            }
+                            entry.setListSegment(segmentsRoundTrip);
+                        }
                     } else if (viewedFragment == TAB_MULTI_LEG) {
+                        entry.setTripType(RequestEntryDTO.TripType.MULTI_SEGMENT);
                         entry.setListSegment(segmentsMultiLeg);
                     }
+                    final int length = entry.getListSegment().size();
+                    for (int i = 0; i < length; i++) {
+                        final RequestSegmentDTO segment = entry.getListSegment().get(i);
+                        // --- Applies a bulletproof display order
+                        segment.setDisplayOrder(i);
+                        save(form, segment);
+                    }
                     originFragment = viewedFragment;
+                } else {
+                    // --- !AIR & !RAIL segment/entry types
+                    save(form, entry.getListSegment().iterator().next());
                 }
-                // CALL SAVE METHOD
-                for (RequestSegmentDTO segment : entry.getListSegment()) {
-                    save(form, segment);
+                if (ConcurCore.isConnected()) {
+                    // --- creates the listener
+                    asyncReceiverSave.setListener(new SaveListener());
+                    entryVF.setDisplayedChild(ID_LOADING_VIEW);
+                    // --- onRequestResult calls cleanup() on execution, so listener will be destroyed by processing
+                    new RequestEntrySaveTask(RequestEntryActivity.this, 1, asyncReceiverSave, entry).execute();
+                } else {
+                    new NoConnectivityDialogFragment().show(getSupportFragmentManager(), CLS_TAG);
                 }
-                // TODO : CALL WS
             }
         });
     }
@@ -610,31 +679,7 @@ public class RequestEntryActivity extends AbstractConnectFormFieldActivity imple
         final PickListItem pickListItem = getPickListFieldNameByViewId(view.getId());
         if (pickListItem != null && pickListItem.getFieldName() != null && pickListItem.getFieldName()
                 .equals(FIELD_CURRENCY)) {
-            // --- Currency Behavior
-            final AlertDialog.Builder builder = new AlertDialog.Builder(this);
-            builder.setTitle(R.string.currency_prompt);
-            curTypeAdapter = new CurrencySpinnerAdapter(this);
-            //configureCurrencySelection((RequestSegmentDTO) pickListItem.getModel());
-            builder.setSingleChoiceItems(curTypeAdapter, -1, new DialogInterface.OnClickListener() {
-
-                @Override
-                public void onClick(DialogInterface dialog, int which) {
-                    if (which != -1) {
-                        Object selCurObj = curTypeAdapter.getItem(which);
-                        if (selCurObj instanceof ListItem) {
-                            final ListItem li = (ListItem) selCurObj;
-                            ((RequestSegmentDTO) pickListItem.getModel()).setForeignCurrencyCode(li.code);
-                            ((TextView) view).setText(li.text);
-                            //setSelectedCurrencyType((ListItem) selCurObj);
-                        }
-                    }
-                    dialog.dismiss();
-                }
-            });
-            final AlertDialog alertDlg = builder.create();
-            final ListView listView = alertDlg.getListView();
-            listView.setTextFilterEnabled(true);
-            alertDlg.show();
+            showCurrencyDialog(pickListItem, view);
         }
     }
 
@@ -643,52 +688,41 @@ public class RequestEntryActivity extends AbstractConnectFormFieldActivity imple
      * ********************************
      */
 
-    /**
-     * Configures support for currency selection.
-     */
-    private void configureCurrencySelection(RequestSegmentDTO segment) {
-        curTypeAdapter = new CurrencySpinnerAdapter(this);
-        if (segment != null) {
-            int curTypeInd = curTypeAdapter.getPositionForCurrency(segment.getForeignCurrencyCode());
-            if (curTypeInd != -1) {
-                Object curTypeObj = curTypeAdapter.getItem(curTypeInd);
-                if (curTypeObj instanceof ListItem) {
-                    setSelectedCurrencyType((ListItem) curTypeObj);
-                }
-            }
+    private AlertDialog showCurrencyDialog(final PickListItem pickListItem, final View view) {
+        final AlertDialog.Builder builder = new AlertDialog.Builder(this);
+        builder.setTitle(R.string.currency_prompt);
+        if (curTypeAdapter == null) {
+            curTypeAdapter = new CurrencySpinnerAdapter(this);
         }
-    }
+        //configureCurrencySelection((RequestSegmentDTO) pickListItem.getModel());
+        builder.setSingleChoiceItems(curTypeAdapter, -1, new DialogInterface.OnClickListener() {
 
-    /**
-     * Will set the currently selected currency type and update the display.
-     *
-     * @param selCurType the expense type.
-     */
-    protected void setSelectedCurrencyType(ListItem selCurType) {
-        // Set the reference.
-        this.selectedCurrencyType = selCurType;
-        // Update the display.
-        if (this.selectedCurrencyType != null) {
-            //TODO ViewUtil.setTextViewText(this, R.id.expense_currency, R.id.field_value, selCurType.text, true);
-        } else {
-            //TODO ViewUtil.setTextViewText(this, R.id.expense_currency, R.id.field_value, "", true);
-        }
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                if (which != -1) {
+                    Object selCurObj = curTypeAdapter.getItem(which);
+                    if (selCurObj instanceof ListItem) {
+                        final ListItem li = (ListItem) selCurObj;
+                        ((RequestSegmentDTO) pickListItem.getModel()).setForeignCurrencyCode(li.code);
+                        ((TextView) view).setText(li.text);
+                    }
+                }
+                dialog.dismiss();
+            }
+        });
+        final AlertDialog alertDlg = builder.create();
+        final ListView listView = alertDlg.getListView();
+        listView.setTextFilterEnabled(true);
+        alertDlg.show();
+
+        return alertDlg;
     }
 
     /* ******************************* */
 
     @Override
-    protected void save(ConnectForm form, FormDTO model) {
+    protected void save(ConnectForm form, final FormDTO model) {
         super.save(form, model);
-        if (ConcurCore.isConnected()) {
-            // --- creates the listener
-            asyncReceiverSave.setListener(new SaveListener());
-            entryVF.setDisplayedChild(ID_LOADING_VIEW);
-            // --- onRequestResult calls cleanup() on execution, so listener will be destroyed by processing
-            //TODO new RequestSaveTask(RequestEntryActivity.this, 1, asyncReceiverSave, tr).execute();
-        } else {
-            new NoConnectivityDialogFragment().show(getSupportFragmentManager(), CLS_TAG);
-        }
     }
 
     public class SaveListener implements BaseAsyncRequestTask.AsyncReplyListener {
@@ -708,15 +742,13 @@ public class RequestEntryActivity extends AbstractConnectFormFieldActivity imple
             // --- TODO Refresh values
 
             if (resultData != null) {
-
-                final String entryId = RequestParser
-                        .parseActionResponse(resultData.getString(BaseAsyncRequestTask.HTTP_RESPONSE));
-                //TODO
+                /*final String entryId = RequestParser
+                        .parseActionResponse(resultData.getString(BaseAsyncRequestTask.HTTP_RESPONSE));*/
                 // we go to the digest screen
-                /*if (isCreation) {
+                if (isCreation) {
 
                     final Intent i = new Intent(RequestEntryActivity.this, RequestSummaryActivity.class);
-                    i.putExtra(RequestListActivity.REQUEST_ID, requestId);
+                    //i.putExtra(RequestEntryActivity.ENTRY_ID, entryId);
 
                     // --- Flurry tracking
                     i.putExtra(Flurry.PARAM_NAME_CAME_FROM, Flurry.PARAM_VALUE_TRAVEL_REQUEST_ENTRY);
@@ -729,12 +761,11 @@ public class RequestEntryActivity extends AbstractConnectFormFieldActivity imple
                     finish();
                 } else {
                     final Intent resIntent = new Intent();
-                    resIntent.putExtra(DO_WS_REFRESH, true);
+                    resIntent.putExtra(RequestHeaderActivity.DO_WS_REFRESH, true);
                     setResult(Activity.RESULT_OK, resIntent);
 
                     finish();
-                }*/
-
+                }
             }
         }
 

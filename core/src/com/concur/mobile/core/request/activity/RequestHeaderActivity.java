@@ -16,7 +16,6 @@ import com.concur.mobile.base.service.BaseAsyncRequestTask;
 import com.concur.mobile.base.service.BaseAsyncResultReceiver;
 import com.concur.mobile.core.ConcurCore;
 import com.concur.mobile.core.activity.AbstractConnectFormFieldActivity;
-import com.concur.mobile.core.request.service.RequestParser;
 import com.concur.mobile.core.request.task.RequestSaveTask;
 import com.concur.mobile.core.request.util.ConnectHelper;
 import com.concur.mobile.core.request.util.DateUtil;
@@ -31,6 +30,7 @@ import com.concur.mobile.platform.request.RequestListCache;
 import com.concur.mobile.platform.request.dto.FormDTO;
 import com.concur.mobile.platform.request.dto.RequestDTO;
 import com.concur.mobile.platform.request.groupConfiguration.RequestGroupConfiguration;
+import com.concur.mobile.platform.request.util.RequestParser;
 import com.concur.mobile.platform.ui.common.dialog.NoConnectivityDialogFragment;
 import com.concur.mobile.platform.util.Parse;
 
@@ -89,7 +89,7 @@ public class RequestHeaderActivity extends AbstractConnectFormFieldActivity impl
         final Bundle bundle = getIntent().getExtras();
         final String requestId = bundle.getString(RequestListActivity.REQUEST_ID);
 
-        this.isEditable = bundle.getString(RequestSummaryActivity.REQUEST_IS_EDITABLE).equals(Boolean.TRUE.toString());
+        setCanSave(bundle.getString(RequestSummaryActivity.REQUEST_IS_EDITABLE).equals(Boolean.TRUE.toString()));
 
         locale = this.getResources().getConfiguration().locale != null ?
                 this.getResources().getConfiguration().locale :
@@ -192,7 +192,7 @@ public class RequestHeaderActivity extends AbstractConnectFormFieldActivity impl
         saveButton.setOnClickListener(new View.OnClickListener() {
 
             public void onClick(View v) {
-                // CALL SUMMIT METHOD
+                // --- CALL SAVE METHOD (only one object so idx = 0)
                 save(form, tr);
             }
         });
