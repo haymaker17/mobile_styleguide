@@ -59,12 +59,6 @@ public class EmailLookUpResponseParser extends BaseParser {
         Integer tagCode = tagMap.get(tag);
         if (tagCode != null) {
             switch (tagCode) {
-            case TAG_LOGIN_ID_CODE: {
-                if (!TextUtils.isEmpty(text)) {
-                    loginId = text.trim();
-                }
-                break;
-            }
             case TAG_SERVER_URL_CODE: {
                 if (!TextUtils.isEmpty(text)) {
                     serverUrl = text.trim();
@@ -82,11 +76,6 @@ public class EmailLookUpResponseParser extends BaseParser {
                     ssoUrl = text.trim();
                 }
                 break;
-            }
-            case TAG_EMAIL_CODE: {
-                if (!TextUtils.isEmpty(text)) {
-                    email = text.trim();
-                }
             }
             }
         } else {
