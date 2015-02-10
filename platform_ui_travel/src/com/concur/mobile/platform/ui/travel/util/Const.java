@@ -42,4 +42,10 @@ public class Const {
     public static final String EXTRA_IMAGE_URL = "image.url";
     public static final String EXTRA_IMAGE_TITLE = "image.title";
 
+    public static final String PREF_INSTALL_ID = "pref_install";
+    /**
+     * Contains the language to use when performing voice searches.
+     */
+    public static final String PREF_VOICE_SEARCH_LANGUAGE = "pref_voice_search_language";
+
 }

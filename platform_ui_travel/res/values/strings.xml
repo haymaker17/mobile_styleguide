@@ -25,6 +25,10 @@
     <string name="general_justification">Justification</string>
     <string name="general_enter_justification">Enter a justification</string>
     <string name="general_select_one_of_the_below">Select one of the below</string>
+    <string name="general_speak_now">Speak now</string>
+    <string name="voice_book_hint">Press the microphone to start</string>
+    <string name="voice_hotel_book_hint_primary">What hotel can I find for you?</string>
+    <string name="voice_hotel_book_hint_secondary">For example, say: \"Find a hotel near the Statue of Liberty for next week.\"</string>
     <!-- end of general strings -->
 
     <string name="app_name">ConcurPlatformUITravel</string>
@@ -42,6 +46,9 @@
     <!-- Hotel -->
     <string name="hotel_search_resutls_title">Hotels</string>
     <string name="hotel_search_resutls_size">%%0!number of results%% results</string>
+    <string name="hotel_search">Search Hotels</string>
+    <string name="hotel_voice_search_criteria">Searching for hotels near %%0%% from %%1%% to %%2%%.</string>
+    <string name="voice_search_canceled">Search canceled.</string>
 
     <!-- start of hotel company preference -->
     <string name="hotel_less_preferred">Less Preferred</string>
