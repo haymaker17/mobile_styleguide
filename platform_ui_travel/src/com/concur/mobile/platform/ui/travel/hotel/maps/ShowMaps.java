@@ -20,6 +20,7 @@ import com.concur.mobile.platform.ui.travel.util.Const;
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.MapFragment;
+import com.google.android.gms.maps.OnMapReadyCallback;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.Marker;
 import com.google.android.gms.maps.model.MarkerOptions;
@@ -31,9 +32,10 @@ import com.google.android.gms.maps.model.MarkerOptions;
  * 
  */
 
-public class ShowMaps extends Activity {
+public class ShowMaps extends Activity implements OnMapReadyCallback {
 
     private GoogleMap googleMap;
+    private MapFragment mapFragment;
     /*
      * Hashmap for all hotel markers and hotel list items
      */
@@ -48,26 +50,30 @@ public class ShowMaps extends Activity {
         // googleMap initialized
         setUpMap();
         if (googleMap != null) {
-
-            Intent i = this.getIntent();
-            final Bundle bundle = i.getExtras();
-            hotels = new ArrayList<HotelSearchResultListItem>();
-            hotels = ((ArrayList<HotelSearchResultListItem>) bundle.getSerializable(Const.EXTRA_HOTELS_LIST));
-
-            addHotelMarkers(hotels);
-            Hotel firstHotel = hotels.get(0).getHotel();
-            // TODO load custom icons
-            LatLng position = new LatLng(firstHotel.latitude, firstHotel.longitude);
-            googleMap.moveCamera(CameraUpdateFactory.newLatLngZoom(position, 13));
-            googleMap.setInfoWindowAdapter(new HotelInfoWindowAdapter());
+            addMarkers();
         }
 
     }
 
     private void setUpMap() {
         if (googleMap == null) {
-            googleMap = ((MapFragment) getFragmentManager().findFragmentById(R.id.map)).getMap();
+            mapFragment = ((MapFragment) getFragmentManager().findFragmentById(R.id.map));
+            mapFragment.getMapAsync(this);
         }
+    }
+
+    private void addMarkers() {
+        Intent i = this.getIntent();
+        final Bundle bundle = i.getExtras();
+        hotels = new ArrayList<HotelSearchResultListItem>();
+        hotels = ((ArrayList<HotelSearchResultListItem>) bundle.getSerializable(Const.EXTRA_HOTELS_LIST));
+
+        addHotelMarkers(hotels);
+        Hotel firstHotel = hotels.get(0).getHotel();
+        // TODO load custom icons
+        LatLng position = new LatLng(firstHotel.latitude, firstHotel.longitude);
+        googleMap.moveCamera(CameraUpdateFactory.newLatLngZoom(position, 13));
+        googleMap.setInfoWindowAdapter(new HotelInfoWindowAdapter());
     }
 
     private void addHotelMarkers(List<HotelSearchResultListItem> hotels) {
@@ -109,6 +115,12 @@ public class ShowMaps extends Activity {
             return null;
         }
 
+    }
+
+    @Override
+    public void onMapReady(GoogleMap map) {
+        googleMap = map;
+        addMarkers();
     }
 
 }

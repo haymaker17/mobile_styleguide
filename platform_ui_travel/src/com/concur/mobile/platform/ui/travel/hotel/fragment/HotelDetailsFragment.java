@@ -10,6 +10,7 @@ import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.FrameLayout;
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -21,7 +22,10 @@ import com.concur.mobile.platform.ui.common.view.ListItemAdapter;
 import com.concur.mobile.platform.ui.travel.R;
 import com.concur.mobile.platform.ui.travel.hotel.fragment.HotelChoiceDetailsFragment.HotelChoiceDetailsFragmentListener;
 import com.concur.mobile.platform.ui.travel.util.Const;
-import com.google.android.gms.maps.GoogleMap;
+import com.google.android.gms.maps.GoogleMapOptions;
+import com.google.android.gms.maps.MapFragment;
+import com.google.android.gms.maps.OnMapReadyCallback;
+import com.google.android.gms.maps.model.CameraPosition;
 import com.google.android.gms.maps.model.LatLng;
 
 /**
@@ -33,13 +37,14 @@ import com.google.android.gms.maps.model.LatLng;
 public class HotelDetailsFragment extends PlatformFragmentV1 implements OnClickListener {
 
     public static final String TAB_ROOMS = "ROOMS";
+    public static final String FRAGMENT_HOTEL_MAP = "FRAGMENT_HOTEL_MAP";
     private Hotel hotel;
-    private GoogleMap hotelMap;
-    private HotelMapFragment mapFragment;
+    private MapFragment mapFragment;
     private ListItemAdapter<HotelRoomListItem> listItemAdapater;
     private HotelChoiceDetailsFragmentListener callBackListener;
     private LatLng post;
     private ImageView mapView;
+    private MapFragment mapFrame;
     private Button findRooms;
 
     // private int paramsHeight;
@@ -62,18 +67,34 @@ public class HotelDetailsFragment extends PlatformFragmentV1 implements OnClickL
         // Bitmap map = ViewUtil.setUpStaticMap(hotel.latitude, hotel.longitude);
 
         // mapFragment.CaptureMapScreen();
-        // mapFrame = (FrameLayout) mainView.findViewById(R.id.map_view);
+        // mapView = (ImageView) mainView.findViewById(R.id.map_imageview);
+        // if (mapView != null) {
+        // mapFrame = (MapFragment) getFragmentManager().findFragmentById(R.id.map_view);
+        // mapFrame.getMapAsync((OnMapReadyCallback) getActivity());
+
+        FrameLayout frame = (FrameLayout) mainView.findViewById(R.id.map_view);
+
+        GoogleMapOptions options = new GoogleMapOptions().liteMode(true);
+        CameraPosition camera = new CameraPosition(post, 15, 0, 0);
+        options.camera(camera);
+        //
+
+        mapFragment = MapFragment.newInstance(options);
+        mapFragment.getMapAsync((OnMapReadyCallback) getActivity());
+        //
+        getFragmentManager().beginTransaction().replace(R.id.map_view, mapFragment).commit();
         // mapFrame.setOnClickListener(this);
-        // mapFrame.getLayoutParams().height = 168;
-        // getFragmentManager().beginTransaction().replace(R.id.map_view, new HotelMapFragment(post)).commit();
+        // mapFrame.getLayoutParams().height = 0;
+        // mapView.getParent().
+        // mapFrame.removeAllViews();
+        // mapFrame.addView(mapView);
 
-        ImageView mapView = (ImageView) mainView.findViewById(R.id.map_view);
-        if (mapView != null) {
-            mapFragment = new HotelMapFragment(post, mapView);
-            mapFragment.takeSnapshot();
-            // mapView.setImageBitmap(map);
-
-        }
+        // getFragmentManager().beginTransaction().replace(R.id.map_view, new HotelMapFragment(post, true)).commit();
+        // if (mapFrame != null) {
+        // mapFrame.setOnClickListener(this);
+        // }
+        //
+        // }
 
         Contact contact = hotel.contact;
         if (contact != null && contact.city != null) {
@@ -164,9 +185,10 @@ public class HotelDetailsFragment extends PlatformFragmentV1 implements OnClickL
 
     @Override
     public void onClick(View v) {
-        if (v == mapView) {
-            callBackListener.onMapsClicked(post);
-        } else if (v == findRooms) {
+        // if (v == mapFrame) {
+        // callBackListener.onMapsClicked(post);
+        // } else
+        if (v == findRooms) {
             callBackListener.onFindRoomsClicked();
         }
 
