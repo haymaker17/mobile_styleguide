@@ -85,17 +85,13 @@ import com.concur.mobile.core.util.Const;
 import com.concur.mobile.core.util.EventTracker;
 import com.concur.mobile.core.util.Flurry;
 import com.concur.mobile.core.util.FormatUtil;
-import com.concur.mobile.core.util.ReceiptDAOConverter;
 import com.concur.mobile.core.util.ViewUtil;
 import com.concur.mobile.core.util.net.ContentFetcher;
 import com.concur.mobile.core.view.AsyncImageView;
 import com.concur.mobile.core.view.HeaderListItem;
 import com.concur.mobile.core.view.ListItem;
 import com.concur.mobile.core.view.ListItemAdapter;
-import com.concur.mobile.platform.authentication.SessionInfo;
-import com.concur.mobile.platform.config.provider.ConfigUtil;
 import com.concur.mobile.platform.expense.receipt.list.Receipt;
-import com.concur.mobile.platform.expense.receipt.list.ReceiptListRequestTask;
 import com.concur.mobile.platform.expense.receipt.ocr.StartOCR;
 import com.concur.mobile.platform.expense.receipt.ocr.StartOCRRequestTask;
 import com.concur.mobile.platform.util.Format;
@@ -110,6 +106,8 @@ public class ReceiptStoreFragment extends BaseFragment {
      *
      */
     public interface ReceiptStoreFragmentCallback {
+
+        public void doGetReceiptList();
 
         public void onStartOcrSuccess();
 
@@ -140,9 +138,6 @@ public class ReceiptStoreFragment extends BaseFragment {
 
     // Contains the key used to store/retrieve the start OCR receiver.
     private static final String START_OCR_RECEIVER_KEY = "start.ocr.receiver";
-
-    // Contains the key used to store/retrieve the ReceiptList receiver.
-    private static final String GET_RECEIPT_LIST_RECEIVER_KEY = "get.receipt.list.receiver";
 
     // Contains the key used to store/retrieve the file path given to the camera
     // application.
@@ -185,8 +180,6 @@ public class ReceiptStoreFragment extends BaseFragment {
     private static final int REQUEST_SAVE_CAMERA_IMAGE = 2;
 
     private static final int REQUEST_START_OCR = 3;
-
-    private static final int REQUEST_GET_RECEIPT_LIST = 4;
 
     private static final int HEADER_VIEW_TYPE = 0;
 
@@ -311,7 +304,7 @@ public class ReceiptStoreFragment extends BaseFragment {
     /**
      * Contains whether or not the end-user kicked-off a refresh.
      */
-    protected boolean endUserRefresh;
+    public boolean endUserRefresh;
 
     /**
      * Contains the report key if a receipt is being picked to be added at the report level.
@@ -417,88 +410,9 @@ public class ReceiptStoreFragment extends BaseFragment {
     protected boolean startOcrOnUpload;
 
     /**
-     * Receiver for the ReceiptList call.
-     */
-    protected BaseAsyncResultReceiver getReceiptListReceiver;
-
-    /**
-     * The AsyncTask resulting from the the MWS call to ReceiptList.
-     */
-    protected AsyncTask<Void, Void, Integer> getReceiptListAsyncTask;
-
-    /**
      * 
      */
     private ReceiptStoreFragmentCallback receiptStoreCallback;
-
-    /**
-     * Listener for the reply of the ReceiptList MWS call.
-     */
-    protected AsyncReplyListener getReceiptListReplyListener = new BaseAsyncRequestTask.AsyncReplyListener() {
-
-        @Override
-        public void onRequestSuccess(Bundle resultData) {
-
-            Log.d(Const.LOG_TAG, CLS_TAG + ".GetReceiptListReplyListener - call to get receipt list succeeded!");
-
-            ConcurCore app = (ConcurCore) ConcurCore.getContext();
-
-            SessionInfo sessInfo = ConfigUtil.getSessionInfo(app);
-            if (sessInfo == null) {
-                // Really bad if session info is null here!
-                // OCR: Show connection error dialog
-                Log.e(Const.LOG_TAG,
-                        CLS_TAG
-                                + ".GetReceiptListReplyListener - SessionInfo is null! Cannot migrate ReceiptDAO to ReceiptInfo.");
-            } else {
-
-                // Get the new list of ReceiptDAO from the content provider and convert
-                // to the old/existing ReceiptInfo. Calling this method will save the
-                // new DAO to the old ReceiptStoreCache.
-                ReceiptDAOConverter.migrateReceiptListDAOToReceiptStoreCache(sessInfo.getUserId());
-
-                // Clear re-fetch report list.
-                ReceiptStoreCache receiptStoreCache = app.getReceiptStoreCache();
-                receiptStoreCache.clearShouldRefetchReceiptList();
-                ReceiptStoreFragment fragment = ReceiptStoreFragment.this;
-                fragment.endUserRefresh = false;
-                fragment.initView(fragment.getView());
-
-                // Set the flag that the list of expenses
-                // should be refreshed.
-                IExpenseEntryCache expEntCache = getConcurCore().getExpenseEntryCache();
-                expEntCache.setShouldFetchExpenseList();
-            }
-
-            // Call any listeners that we succeeded.
-            receiptStoreCallback.onGetReceiptListSuccess();
-        }
-
-        @Override
-        public void onRequestFail(Bundle resultData) {
-
-            Log.d(Const.LOG_TAG, CLS_TAG + ".GetReceiptListReplyListener - call to get receipt list failed!");
-
-            ReceiptStoreFragment fragment = ReceiptStoreFragment.this;
-            fragment.showRetrieveReceiptUrlsFailedDialog(fragment.actionStatusErrorMessage);
-            fragment.endUserRefresh = false;
-            fragment.initView(fragment.getView());
-
-            // Call any listeners that we failed.
-            receiptStoreCallback.onGetReceiptListFailed();
-        }
-
-        @Override
-        public void onRequestCancel(Bundle resultData) {
-            // no-op
-        }
-
-        @Override
-        public void cleanup() {
-            getReceiptListReceiver = null;
-        }
-
-    };
 
     /**
      * The listener for the StartOCR MWS result/failed response.
@@ -957,13 +871,6 @@ public class ReceiptStoreFragment extends BaseFragment {
             }
         }
 
-        // Save the ReceiptList receiver.
-        if (getReceiptListReceiver != null) {
-            getReceiptListReceiver.setListener(null);
-            if (activity.retainer != null) {
-                activity.retainer.put(GET_RECEIPT_LIST_RECEIVER_KEY, getReceiptListReceiver);
-            }
-        }
     }
 
     /*
@@ -984,7 +891,7 @@ public class ReceiptStoreFragment extends BaseFragment {
             if (ConcurCore.isConnected()) {
                 // OCR: Should probably just set flag to not refetch ReceiptList before starting this activity.
                 if (!startOcrOnUpload) {
-                    sendGetReceiptList(getView());
+                    receiptStoreCallback.doGetReceiptList();
                 }
             }
         }
@@ -1062,13 +969,6 @@ public class ReceiptStoreFragment extends BaseFragment {
                 }
             }
 
-            // Restore the ReceiptList receiver
-            if (activity.retainer.contains(GET_RECEIPT_LIST_RECEIVER_KEY)) {
-                getReceiptListReceiver = (BaseAsyncResultReceiver) activity.retainer.get(GET_RECEIPT_LIST_RECEIVER_KEY);
-                if (getReceiptListReceiver != null) {
-                    getReceiptListReceiver.setListener(getReceiptListReplyListener);
-                }
-            }
         }
     }
 
@@ -1088,7 +988,7 @@ public class ReceiptStoreFragment extends BaseFragment {
                     switch (rsSrvStatus) {
                     case FINISHED_UPLOAD: {
                         if (ConcurCore.isConnected()) {
-                            sendGetReceiptList(getView());
+                            receiptStoreCallback.doGetReceiptList();
                         }
                         break;
                     }
@@ -1111,7 +1011,7 @@ public class ReceiptStoreFragment extends BaseFragment {
     private void buildView(final View root) {
 
         // Initialize the view.
-        initView(root);
+        initView();
 
         // Check for an orientation change.
         if (!activity.orientationChange) {
@@ -1129,7 +1029,7 @@ public class ReceiptStoreFragment extends BaseFragment {
                         uploadReceiptAfterPhotoCaptured(false, false);
                     } else {
                         if (ConcurCore.isConnected()) {
-                            sendGetReceiptList(root);
+                            receiptStoreCallback.doGetReceiptList();
                         }
                     }
 
@@ -1163,7 +1063,7 @@ public class ReceiptStoreFragment extends BaseFragment {
     protected void setUploadTextMessage(final View root) {
 
         if (root == null) {
-            Log.e(Const.LOG_TAG, CLS_TAG + ".setUploadTextMessage: root View is null!");
+            Log.w(Const.LOG_TAG, CLS_TAG + ".setUploadTextMessage: root View is null!");
             return;
         }
 
@@ -1306,10 +1206,10 @@ public class ReceiptStoreFragment extends BaseFragment {
         }
     }
 
-    private void initView(final View root) {
+    public void initView() {
 
         // Set the upload text message.
-        setUploadTextMessage(root);
+        setUploadTextMessage(getView());
 
         List<ReceiptInfo> receiptInfos = getReceiptInfos();
         if (receiptInfos != null && receiptInfos.size() > 0) {
@@ -1697,7 +1597,7 @@ public class ReceiptStoreFragment extends BaseFragment {
                     // We shouldn't need to check because the result should only
                     // be OK if an upload happened.
                     if (ConcurCore.isConnected()) {
-                        sendGetReceiptList(getView());
+                        receiptStoreCallback.doGetReceiptList();
                     }
                 }
             } else if (requestCode == REQUEST_SAVE_CAMERA_IMAGE) {
@@ -1880,32 +1780,22 @@ public class ReceiptStoreFragment extends BaseFragment {
     }
 
     /**
-     * Invokes MWS to get the list of Receipts with OCR status.
+     * Switches the ReceiptStoreList view to the laoding view.
      */
-    public void sendGetReceiptList(View root) {
+    public void showLoadingView() {
 
         viewState = ViewState.LOCAL_DATA_REFRESH;
 
-        // This Fragment may not yet be attached to its parent Activity if we are
-        // calling this method from the Expenses Fragment.
+        // This Fragment may not yet be attached to its parent Activity.
         if (this.isAdded()) {
-            // Set the view state to indicate data being loaded.
-            ViewUtil.setTextViewText(root, R.id.loading_data, R.id.data_loading_text,
-                    getText(getDataLoadingTextResourceId()).toString(), true);
+
+            if (getView() != null) {
+                // Set the view state to indicate data being loaded.
+                ViewUtil.setTextViewText(getView(), R.id.loading_data, R.id.data_loading_text,
+                        getText(getDataLoadingTextResourceId()).toString(), true);
+            }
+
             flipViewForViewState();
-        }
-
-        if (getReceiptListReceiver == null) {
-            getReceiptListReceiver = new BaseAsyncResultReceiver(new Handler());
-            getReceiptListReceiver.setListener(getReceiptListReplyListener);
-        }
-
-        if (getReceiptListAsyncTask != null && getReceiptListAsyncTask.getStatus() != AsyncTask.Status.FINISHED) {
-            getReceiptListReceiver.setListener(getReceiptListReplyListener);
-        } else {
-            ReceiptListRequestTask receiptListTask = new ReceiptListRequestTask(ConcurCore.getContext(),
-                    REQUEST_GET_RECEIPT_LIST, getReceiptListReceiver);
-            getReceiptListAsyncTask = receiptListTask.execute();
         }
 
     }
@@ -2071,7 +1961,7 @@ public class ReceiptStoreFragment extends BaseFragment {
         } else if (itemId == R.id.refresh) {
             if (ConcurCore.isConnected()) {
                 endUserRefresh = true;
-                sendGetReceiptList(getView());
+                receiptStoreCallback.doGetReceiptList();
             } else {
                 activity.showDialog(Const.DIALOG_NO_CONNECTIVITY);
             }
@@ -3111,7 +3001,7 @@ public class ReceiptStoreFragment extends BaseFragment {
                             // The listener after calling StartOCR will invoke the list of new Receipts.
                             fragment.sendStartOcr(receiptImageId);
                         } else {
-                            fragment.sendGetReceiptList(fragment.getView());
+                            fragment.receiptStoreCallback.doGetReceiptList();
                         }
                     } else {
                         // OCR: If OCR but no connection, what to do?
@@ -3216,7 +3106,7 @@ public class ReceiptStoreFragment extends BaseFragment {
             // locally and
             // then refresh the display.
             if (ConcurCore.isConnected()) {
-                fragment.sendGetReceiptList(fragment.getView());
+                fragment.receiptStoreCallback.doGetReceiptList();
             }
         }
 

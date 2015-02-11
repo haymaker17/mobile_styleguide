@@ -148,7 +148,7 @@ public class AutoLoginRequestTask extends PlatformAsyncRequestTask {
             // Add the outcome of remote wipe to the response.
             Boolean remoteWipe = (loginResult.remoteWipe != null) ? loginResult.remoteWipe : Boolean.FALSE;
             resultData.putBoolean(LoginResponseKeys.REMOTE_WIPE_KEY, remoteWipe);
-
+            
             if (!remoteWipe) {
                 // Update the config content provider.
                 ConfigUtil.updateLoginInfo(getContext(), loginResult);
@@ -163,11 +163,6 @@ public class AutoLoginRequestTask extends PlatformAsyncRequestTask {
                 } else {
                     PlatformProperties.setSessionId(null);
                 }
-
-                // Add the outcome of remote wipe to the response.
-                Boolean disableAutologin = (loginResult.disableAutoLogin != null) ? loginResult.disableAutoLogin
-                        : Boolean.FALSE;
-                resultData.putBoolean(LoginResponseKeys.DISABLE_AUTO_LOGIN, disableAutologin);
             }
             result = RESULT_OK;
         } else {

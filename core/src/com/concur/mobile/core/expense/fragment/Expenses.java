@@ -20,9 +20,7 @@ import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.IntentFilter;
-import android.os.AsyncTask;
 import android.os.Bundle;
-import android.os.Handler;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentActivity;
 import android.util.Log;
@@ -43,8 +41,6 @@ import android.widget.ListView;
 import android.widget.ViewFlipper;
 
 import com.concur.core.R;
-import com.concur.mobile.base.service.BaseAsyncRequestTask.AsyncReplyListener;
-import com.concur.mobile.base.service.BaseAsyncResultReceiver;
 import com.concur.mobile.core.ConcurCore;
 import com.concur.mobile.core.activity.Preferences;
 import com.concur.mobile.core.dialog.AlertDialogFragment;
@@ -90,7 +86,6 @@ import com.concur.mobile.core.receiver.NetworkActivityReceiver;
 import com.concur.mobile.core.receiver.NetworkActivityReceiver.INetworkActivityListener;
 import com.concur.mobile.core.util.Const;
 import com.concur.mobile.core.util.EventTracker;
-import com.concur.mobile.core.util.ExpenseDAOConverter;
 import com.concur.mobile.core.util.FeedbackManager;
 import com.concur.mobile.core.util.Flurry;
 import com.concur.mobile.core.util.FormatUtil;
@@ -99,11 +94,8 @@ import com.concur.mobile.core.util.ViewUtil;
 import com.concur.mobile.core.view.HeaderListItem;
 import com.concur.mobile.core.view.ListItem;
 import com.concur.mobile.core.view.ListItemAdapter;
-import com.concur.mobile.platform.authentication.SessionInfo;
-import com.concur.mobile.platform.config.provider.ConfigUtil;
 import com.concur.mobile.platform.expense.receipt.list.ReceiptListUtil;
 import com.concur.mobile.platform.expense.receipt.list.dao.ReceiptDAO;
-import com.concur.mobile.platform.expense.smartexpense.SmartExpenseListRequestTask;
 import com.concur.mobile.platform.ocr.OcrStatusEnum;
 import com.concur.mobile.platform.ui.common.dialog.NoConnectivityDialogFragment;
 
@@ -124,7 +116,14 @@ public class Expenses extends BaseFragment implements INetworkActivityListener {
      */
     public interface ExpensesCallback {
 
+        public void doGetSmartExpenseList();
+
+        public void onGetSmartExpenseListSuccess();
+
+        public void onGetSmartExpenseListFailed();
+
         public void doGetReceiptList();
+
     }
 
     private static final int HEADER_VIEW_TYPE = 0;
@@ -141,6 +140,8 @@ public class Expenses extends BaseFragment implements INetworkActivityListener {
     private static final String FLURRY_HAS_CREDIT_CARD_KEY = "flurry.has.credit.card";
     private static final String FLURRY_HAS_RECEIPT_KEY = "flurry.has.receipt";
 
+    private static final String CURRENT_VIEW_STATE = "current.view.state";
+
     private static final String ACTIVE_REPORTS_LIST_TAG = "active.reports.list.tag";
 
     // Store any receivers we need to register and the fragment tag to send them.
@@ -149,8 +150,6 @@ public class Expenses extends BaseFragment implements INetworkActivityListener {
     // which added them if orientation is changed).
     private static final String SHOULD_REGISTER_MOBILE_DELETE_RECEIVER = "should.register.mobile.delete.receiver";
     private static final String FRAGMENT_TAG = "fragment.tag";
-
-    private static final String SMART_EXPENSE_LIST_RECEIVER = "smart.expense.list.request.receiver";
 
     /**
      * A reference to the intent filter used to receive broadcast messages of data updates.
@@ -175,21 +174,6 @@ public class Expenses extends BaseFragment implements INetworkActivityListener {
         NO_DATA
         // No data either locally or from the server.
     };
-
-    /**
-     * 
-     */
-    private BaseAsyncResultReceiver smartExpenseListReceiver;
-
-    /**
-     * Listener used to handle the response for getting the list of SmartExpenses.
-     */
-    private AsyncReplyListener smartExpenseListReplyListener;
-
-    /**
-     * 
-     */
-    private AsyncTask<Void, Void, Integer> smartExpenseAsyncTask;
 
     /**
      * Contains the current view state.
@@ -425,54 +409,6 @@ public class Expenses extends BaseFragment implements INetworkActivityListener {
         networkActivityStickyIntent = activity.registerReceiver(networkActivityReceiver, networkActivityFilter);
         networkActivityRegistered = true;
 
-        smartExpenseListReplyListener = new AsyncReplyListener() {
-
-            @Override
-            public void onRequestSuccess(Bundle resultData) {
-
-                Log.d(Const.LOG_TAG, CLS_TAG + ".SmartExpenseListReplyListener - Successfully retrieved SmartExpenses!");
-
-                ConcurCore concurCore = (ConcurCore) ConcurCore.getContext();
-
-                SessionInfo sessInfo = ConfigUtil.getSessionInfo(concurCore);
-                if (sessInfo == null) {
-                    // Really bad if session info is null here!
-                    // TODO E-DAO: Show connection error dialog
-                    return;
-                }
-
-                // Get the new list of SmartExpenseDAO from the content provider and convert
-                // to the old/exisiting Expense.
-                ExpenseDAOConverter.migrateSmartExpenseDAOToExpenseEntryCache(sessInfo.getUserId());
-
-                // Load the UI from the expense cache.
-                updateExpenseListUI();
-            }
-
-            @Override
-            public void onRequestFail(Bundle resultData) {
-
-                Log.e(Const.LOG_TAG, CLS_TAG + ".SmartExpenseListReplyListener - FAILED to retrieve SmartExpenses!");
-
-                // Load the UI from the expense cache.
-                updateExpenseListUI();
-
-                showExpensesRetrieveFailure();
-            }
-
-            @Override
-            public void onRequestCancel(Bundle resultData) {
-
-                // Load the UI from the expense cache.
-                updateExpenseListUI();
-            }
-
-            @Override
-            public void cleanup() {
-                smartExpenseListReceiver = null;
-            }
-        };
-
         receiptUpload = new ReceiptUploadReceiver();
         receiptUploadFilter = new IntentFilter(Const.ACTION_EXPENSE_RECEIPT_UPLOADED);
 
@@ -554,7 +490,7 @@ public class Expenses extends BaseFragment implements INetworkActivityListener {
 
     }
 
-    public View buildView(LayoutInflater inflater, Bundle savedInstanceState) {
+    private View buildView(LayoutInflater inflater, Bundle savedInstanceState) {
 
         // Inflate our view
         View root = inflater.inflate(R.layout.expenses, null);
@@ -765,15 +701,6 @@ public class Expenses extends BaseFragment implements INetworkActivityListener {
             }
         }
 
-        if (activity.retainer != null) {
-            smartExpenseListReceiver = (BaseAsyncResultReceiver) activity.retainer.get(SMART_EXPENSE_LIST_RECEIVER);
-            if (smartExpenseListReceiver != null) {
-                smartExpenseListReceiver.setListener(smartExpenseListReplyListener);
-
-                showLoadingView();
-            }
-        }
-
         if (shouldRegisterMobileEntryDeleteReceiver) {
             if (mobileEntryDeleteFilter == null) {
                 mobileEntryDeleteFilter = new IntentFilter(Const.ACTION_EXPENSE_MOBILE_ENTRIES_DELETED);
@@ -803,13 +730,6 @@ public class Expenses extends BaseFragment implements INetworkActivityListener {
             networkActivityRegistered = false;
         }
 
-        if (smartExpenseListReceiver != null) {
-            smartExpenseListReceiver.setListener(null);
-            if (activity.retainer != null) {
-                activity.retainer.put(SMART_EXPENSE_LIST_RECEIVER, smartExpenseListReceiver);
-            }
-        }
-
         if (mobileEntryDeleteReceiverRegistered) {
             activity.unregisterReceiver(mobileEntryDeleteReceiver);
             mobileEntryDeleteReceiverRegistered = false;
@@ -832,7 +752,11 @@ public class Expenses extends BaseFragment implements INetworkActivityListener {
         return true;
     }
 
-    protected void updateExpenseListUI() {
+    /**
+     * Updates the ExpneseList UI with the latest data.
+     */
+    public void updateExpenseListUI() {
+
         // If there is no local cached data, then flip to view indicating this.
         IExpenseEntryCache expEntCache = app.getExpenseEntryCache();
         ArrayList<Expense> cacheList = expEntCache.getExpenseEntries();
@@ -861,8 +785,10 @@ public class Expenses extends BaseFragment implements INetworkActivityListener {
                 }
             }
         }
+        
+        boolean hasOCRReceipts = ReceiptListUtil.getOcrReceiptList(app, activity.getUserId(), false).size() > 0;
 
-        if (filterHasItems && cacheList != null && cacheList.size() > 0) {
+        if ((filterHasItems && cacheList != null && cacheList.size() > 0) || hasOCRReceipts) {
             // Ensure the view containing the expense list is displayed.
             if (viewState != ViewState.LOCAL_DATA) {
                 viewState = ViewState.LOCAL_DATA;
@@ -897,11 +823,6 @@ public class Expenses extends BaseFragment implements INetworkActivityListener {
 
     protected void showExpenseDeleteFailure(String message) {
         DialogFragmentFactory.getAlertOkayInstance(R.string.dlg_expense_delete_failed_title, message).show(
-                getFragmentManager(), null);
-    }
-
-    protected void showExpensesRetrieveFailure() {
-        DialogFragmentFactory.getAlertOkayInstance(R.string.dlg_expenses_retrieve_failed_title).show(
                 getFragmentManager(), null);
     }
 
@@ -1020,17 +941,7 @@ public class Expenses extends BaseFragment implements INetworkActivityListener {
         unregisterReceivers();
     }
 
-    @Override
-    public void onDestroy() {
-        super.onDestroy();
-
-        if (smartExpenseAsyncTask != null) {
-            smartExpenseAsyncTask.cancel(true);
-            smartExpenseAsyncTask = null;
-        }
-    }
-
-    public void restoreView(Bundle inState) {
+    private void restoreView(Bundle inState) {
 
         if (inState != null) {
             if (!buildViewDelay) {
@@ -1107,6 +1018,17 @@ public class Expenses extends BaseFragment implements INetworkActivityListener {
             flurryHasCreditCard = inState.getBoolean(FLURRY_HAS_CREDIT_CARD_KEY);
             // Restore 'flurryHasReceipt'.
             flurryHasReceipt = inState.getBoolean(FLURRY_HAS_RECEIPT_KEY);
+
+            // Restore the view state.
+            if (inState != null && inState.containsKey(CURRENT_VIEW_STATE)) {
+                viewState = (ViewState) inState.getSerializable(CURRENT_VIEW_STATE);
+                if (viewState == ViewState.LOCAL_DATA_REFRESH) {
+                    // This also updates the text to "Updating Expenses...".
+                    showLoadingView();
+                } else {
+                    flipViewForViewState();
+                }
+            }
         }
     }
 
@@ -1166,6 +1088,8 @@ public class Expenses extends BaseFragment implements INetworkActivityListener {
         // Write out the 'flurryHasReceipt'.
         outState.putBoolean(FLURRY_HAS_RECEIPT_KEY, flurryHasReceipt);
 
+        // Save the current view state.
+        outState.putSerializable(CURRENT_VIEW_STATE, viewState);
     }
 
     /*
@@ -2533,7 +2457,8 @@ public class Expenses extends BaseFragment implements INetworkActivityListener {
         }
     }
 
-    private void showLoadingView() {
+    public void showLoadingView() {
+
         // TODO: getView() spits back null if we rotate with the alert dialog from onDelete()
         // displaying. If we try to say frag.getView() it comes back with a view, but doesn't
         // display "Updating Expenses" so as of now, if the alert dialog shows in onDelete() we
@@ -2901,9 +2826,12 @@ public class Expenses extends BaseFragment implements INetworkActivityListener {
         toggleButtonBar();
     }
 
-    public void getSmartExpenses(boolean refreshReceiptList) {
+    private void getSmartExpenses(boolean refreshReceiptList) {
 
-        // If OCR users, need to kick off latest receipts list.
+        // If OCR users, need to kick off latest receipts list MWS
+        // so we have the OCR status. If that MWS call returns
+        // successfully, the callback/listener will then call this
+        // method again to fetch the list of Smart Expenses.
         if (Preferences.isOCRUser() && refreshReceiptList) {
 
             showLoadingView();
@@ -2912,21 +2840,8 @@ public class Expenses extends BaseFragment implements INetworkActivityListener {
             return;
         }
 
-        if (smartExpenseListReceiver == null) {
-            smartExpenseListReceiver = new BaseAsyncResultReceiver(new Handler());
-            smartExpenseListReceiver.setListener(smartExpenseListReplyListener);
-        }
+        expensesCallback.doGetSmartExpenseList();
 
-        if (smartExpenseAsyncTask != null && smartExpenseAsyncTask.getStatus() != AsyncTask.Status.FINISHED) {
-            smartExpenseListReceiver.setListener(smartExpenseListReplyListener);
-        } else {
-
-            SmartExpenseListRequestTask smartExpReqTask = new SmartExpenseListRequestTask(getConcurCore()
-                    .getApplicationContext(), 0, smartExpenseListReceiver, true);
-            smartExpenseAsyncTask = smartExpReqTask.execute();
-
-            showLoadingView();
-        }
     }
 
     /**

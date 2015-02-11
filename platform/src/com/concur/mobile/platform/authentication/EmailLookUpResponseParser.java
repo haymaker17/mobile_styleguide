@@ -43,11 +43,15 @@ public class EmailLookUpResponseParser extends BaseParser {
         // tagMap.put(TAG_EMAIL, TAG_EMAIL_CODE);
     }
 
+    public String loginId;
+
     public String serverUrl;
 
     public String signInMethod;
 
     public String ssoUrl;
+
+    public String email;
 
     @Override
     public void handleText(String tag, String text) {

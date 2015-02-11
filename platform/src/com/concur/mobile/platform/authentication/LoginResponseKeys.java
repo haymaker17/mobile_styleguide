@@ -10,9 +10,4 @@ public interface LoginResponseKeys {
      */
     public static final String REMOTE_WIPE_KEY = "login.remote.wipe";
 
-    /**
-     * Contains a key to obtain a boolean value indicating whether the autologin is set.
-     */
-    public static final String DISABLE_AUTO_LOGIN = "login.disable.autlo.login";
-
 }
