@@ -19,6 +19,8 @@ import com.concur.mobile.base.loader.BaseAsyncTaskLoader;
 import com.concur.mobile.base.util.Const;
 import com.concur.mobile.platform.util.Format;
 import com.concur.platform.PlatformProperties;
+import com.squareup.okhttp.OkHttpClient;
+import com.squareup.okhttp.OkUrlFactory;
 
 /**
  * An extension of <code>BaseAsyncTaskLoader</code> for the purpose to perform platform level asynchronous task loads.
@@ -104,8 +106,16 @@ public abstract class PlatformAsyncTaskLoader<T> extends BaseAsyncTaskLoader<T> 
             try {
                 // Start the connection
                 try {
+                    // from KITKAT default impl is OkHttpUrlConnection
+                    if (Build.VERSION.SDK_INT < 19) {
+                        OkHttpClient client = new OkHttpClient();
+                        OkUrlFactory factory = new OkUrlFactory(client);
+                        connection = factory.open(url);
+                        Log.d(Const.LOG_TAG, getClass().getSimpleName() + " // SPDY is enabled // ");
 
-                    connection = (HttpURLConnection) url.openConnection();
+                    } else {
+                        connection = (HttpURLConnection) url.openConnection();
+                    }
                 } catch (IOException e) {
                     Log.e(Const.LOG_TAG, getClass().getSimpleName() + " // error opening connection // " + getURL(), e);
                     res = RESULT_ERROR;

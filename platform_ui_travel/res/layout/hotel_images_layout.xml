@@ -12,11 +12,11 @@
         android:focusable="true"
         android:focusableInTouchMode="true"
         android:gravity="center"
-        android:horizontalSpacing="6dp"
+        android:horizontalSpacing="@dimen/image_thumbnail_spacing"
         android:numColumns="2"
         android:padding="6dp"
         android:stretchMode="columnWidth"
-        android:verticalSpacing="6dp" />
+        android:verticalSpacing="@dimen/image_thumbnail_spacing" />
 
     <TextView
         android:id="@+id/no_photos"
@@ -33,12 +33,4 @@
         android:textSize="16sp"
         android:visibility="gone" />
 
-</LinearLayout><!--
-         <ImageView
-        android:id="@+id/hotel_image_id"
-        android:layout_width="162dp"
-        android:layout_height="100dp"
-        android:layout_marginLeft="6dp"
-        android:layout_marginTop="6dp" />
--->
-
+</LinearLayout>

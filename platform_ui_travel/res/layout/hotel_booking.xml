@@ -28,17 +28,30 @@
         android:layout_width="match_parent"
         android:layout_height="60dp"
         android:layout_alignParentBottom="true"
-        android:layout_gravity="bottom" >
+        android:layout_gravity="bottom"
+        android:background="@color/blueTabs"
+        android:paddingLeft="30dp" >
 
-        <Button
-            android:id="@+id/footer_button"
+        <com.concur.mobile.platform.ui.travel.util.SlideButton
+            android:id="@+id/slide_footer_button"
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:layout_alignParentTop="true"
-            android:layout_centerHorizontal="true"
-            android:background="#0078c8"
+            android:layout_height="wrap_content"
+            android:gravity="center_horizontal"
+            android:maxHeight="60dp"
+            android:maxWidth="70dp"
+            android:minHeight="60dp"
+            android:minWidth="10dp"
+            android:thumb="@drawable/icon_right_arrow" />
+
+        <TextView
+            android:id="@+id/slide_footer_text"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_alignBaseline="@+id/slide_footer_button"
+            android:layout_centerVertical="true"
             android:fontFamily="sans-serif-light"
-            android:gravity="center"
+            android:gravity="left"
+            android:paddingLeft="35dp"
             android:text="@string/hotel_reserve_this_room"
             android:textColor="@color/White"
             android:textSize="20sp" />
