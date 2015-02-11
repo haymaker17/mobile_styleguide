@@ -53,6 +53,11 @@ public class DateUtil {
     public static final String TIME_PATTERN_24H = "HH:mm";
     public static final String TIME_PATTERN_12H = "hh:mm aaa";
 
+    static {
+        formatByPattern.put(TIME_PATTERN_12H, new SimpleDateFormat(TIME_PATTERN_12H));
+        formatByPattern.put(TIME_PATTERN_24H, new SimpleDateFormat(TIME_PATTERN_24H));
+    }
+
     /**
      * Converts a date to a string with the given pattern for the given locale !
      * Use this method only for single uses - no multiple calls ! (store an SDF
@@ -67,6 +72,18 @@ public class DateUtil {
     public static String getFormattedDateForLocale(DatePattern pattern, Locale locale, Date date) {
         addPattern(pattern, locale);
         return date != null ? formatByPattern.get(pattern.getPattern(locale)).format(date) : "";
+    }
+
+    public static String getFormattedTimeForFormat(Date d, boolean is24) {
+        return formatByPattern.get(is24 ? TIME_PATTERN_24H : TIME_PATTERN_12H).format(d);
+    }
+
+    public static Date parseFormattedTimeForFormat(String timeStr, boolean is24) {
+        try {
+            return formatByPattern.get(is24 ? TIME_PATTERN_24H : TIME_PATTERN_12H).parse(timeStr);
+        } catch (ParseException pe) {
+            return null;
+        }
     }
 
     public static Date parseFormattedDateForLocale(DatePattern inputPattern, Locale locale, String dateStr) {

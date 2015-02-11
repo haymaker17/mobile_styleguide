@@ -34,13 +34,13 @@ public class RequestEntryFragment<T extends AbstractConnectFormFieldActivity> ex
         activity = (T) getActivity();
         // The last two arguments ensure LayoutParams are inflated
         // properly.
-        final View rootView = inflater.inflate(R.layout.request_entry_fragment_layout, container, false);
+        final View rootView = inflater.inflate(R.layout.request_form_layout, container, false);
         Bundle args = getArguments();
         if (args != null) {
             final int tabId = args.getInt(RequestPagerAdapter.KEY_TAB_ID);
-            final LinearLayout entryFields = (LinearLayout) rootView.findViewById(R.id.entryFields);
+            final LinearLayout entryFields = (LinearLayout) rootView.findViewById(R.id.formFieldsLayout);
             final RelativeLayout saveButton = (RelativeLayout) rootView.findViewById(R.id.saveButton);
-            activity.setDisplayFields(entryFields, tabId);
+            activity.initializeFragmentDisplay(entryFields, tabId);
             activity.applySaveButtonPolicy(saveButton);
         }
 

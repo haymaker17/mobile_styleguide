@@ -58,6 +58,14 @@ public class RequestSegmentDTO implements FormDTO {
         this.departureTime = departureTime;
     }
 
+    public String getArrivalTime() {
+        return arrivalTime;
+    }
+
+    public String getDepartureTime() {
+        return departureTime;
+    }
+
     public String getFromLocationId() {
         return fromLocationId;
     }

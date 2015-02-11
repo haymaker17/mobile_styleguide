@@ -2,13 +2,12 @@ package com.concur.mobile.core.request.activity;
 
 import android.app.Activity;
 import android.app.AlertDialog;
-import android.app.DatePickerDialog;
-import android.app.TimePickerDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.Typeface;
 import android.os.Bundle;
 import android.os.Handler;
+import android.support.v4.app.FragmentActivity;
 import android.support.v4.view.ViewPager;
 import android.text.Editable;
 import android.text.TextWatcher;
@@ -45,6 +44,8 @@ import com.concur.mobile.platform.request.groupConfiguration.Policy;
 import com.concur.mobile.platform.request.groupConfiguration.RequestGroupConfiguration;
 import com.concur.mobile.platform.request.groupConfiguration.SegmentType;
 import com.concur.mobile.platform.request.util.RequestParser;
+import com.concur.mobile.platform.ui.common.dialog.AlertDialogFragment;
+import com.concur.mobile.platform.ui.common.dialog.DialogFragmentFactory;
 import com.concur.mobile.platform.ui.common.dialog.NoConnectivityDialogFragment;
 import com.concur.mobile.platform.ui.common.view.MoneyFormField;
 
@@ -100,21 +101,20 @@ public class RequestEntryActivity extends AbstractConnectFormFieldActivity imple
 
     private static Map<SegmentType.RequestSegmentType, List<String>> layoutVisibilities = new HashMap<SegmentType.RequestSegmentType, List<String>>();
 
-    private LinearLayout entryFields;
+    private LinearLayout currentFieldsLayout;
     private ViewFlipper entryVF;
     private ViewFlipper entryTypeVF;
     private TextView requestTitle;
     private ViewPager viewPager;
+    private CurrencySpinnerAdapter curTypeAdapter;
 
+    private Map<Integer, LinearLayout> layoutPerTab;
     private int viewedFragment = -1;
     private int originFragment = -1;
     private int fragmentOnInitialization = -1;
     private boolean createMode = false;
     private boolean hasCustomLayouts = false;
     private SegmentType.RequestSegmentType viewedType = null;
-
-    private CurrencySpinnerAdapter curTypeAdapter;
-    private ListItem selectedCurrencyType;
 
     static {
         final List<String> hotelLayout = new ArrayList<String>();  // HOTEL
@@ -208,16 +208,18 @@ public class RequestEntryActivity extends AbstractConnectFormFieldActivity imple
         if (hasCustomLayouts) {
             // --- initializes the mapping between a tab id and the corresponding layout id
             entryTypeVF.setDisplayedChild(ID_VIEWPAGER_VIEW);
+
+            layoutPerTab = new HashMap<Integer, LinearLayout>();
         } else {
             entryTypeVF.setDisplayedChild(ID_NO_VIEWPAGER_VIEW);
         }
-        final LinearLayout entryFields = (LinearLayout) findViewById(R.id.entryFields);
+        currentFieldsLayout = (LinearLayout) findViewById(R.id.formFieldsLayout);
         requestTitle = (TextView) findViewById(R.id.entryTitle);
         requestTitle.setText(entry.getSegmentType());
         // --- we use fragments if it's air, which will launch display by themselves
         if (!hasCustomLayouts) {
             // --- only one segment possible
-            this.setDisplayFields(entry.getListSegment().iterator().next(), form, entryFields);
+            this.setDisplayFields(entry.getListSegment().iterator().next(), form, currentFieldsLayout);
             applySaveButtonPolicy(findViewById(R.id.saveButton));
         } else {
             final Map<Integer, String> tabTitles = new HashMap<Integer, String>();
@@ -232,7 +234,6 @@ public class RequestEntryActivity extends AbstractConnectFormFieldActivity imple
                 @Override
                 public void onPageSelected(int position) {
                     viewedFragment = position;
-                    setProcessedTab(position);
                 }
             });
             // --- set the current tab & apply the temporary in use leg list
@@ -259,8 +260,10 @@ public class RequestEntryActivity extends AbstractConnectFormFieldActivity imple
      * @param idFragment
      */
     @Override
-    public void setDisplayFields(final LinearLayout fieldLayout, int idFragment) {
-        setProcessedTab(idFragment);
+    public void initializeFragmentDisplay(final LinearLayout fieldLayout, int idFragment) {
+        // --- Map layout
+        layoutPerTab.put(idFragment, fieldLayout);
+
         fragmentOnInitialization = idFragment;
         final ConcurCore core = getConcurCore();
         boolean isOrigin = idFragment == originFragment;
@@ -351,8 +354,6 @@ public class RequestEntryActivity extends AbstractConnectFormFieldActivity imple
                         fieldLayout, null, null);
                 displayOrder++;
             }
-            //setDisplayFields(model, form, fieldLayout, null, null);
-            // --- TODO : handle specific rendering
         } else if (idFragment == TAB_MULTI_LEG) {
             // --- initialize / set the segment list in use
             if (isOrigin) {
@@ -370,13 +371,70 @@ public class RequestEntryActivity extends AbstractConnectFormFieldActivity imple
             int displayOrder = 0;
             for (RequestSegmentDTO segment : inUseListSegment) {
                 segment.setDisplayOrder(displayOrder);
-                /*setDisplayFields(segment, core.getRequestFormFieldsCache().getValue(segment.getSegmentFormId()),
-                        fieldLayout, null, null);*/
                 displayOrder++;
             }
         }
         // --- Resets processed tab to the one viewed
-        setProcessedTab(viewedFragment);
+    }
+
+    private boolean hasChange(List<RequestSegmentDTO> segmentList) {
+        boolean hasChange = false;
+
+        final List<ConnectFormField> formFields = form.getFormFields();
+        Collections.sort(formFields);
+
+        for (RequestSegmentDTO segment : segmentList) {
+            for (ConnectFormField ff : formFields) {
+                final TextView compView = getComponent(segment, ff.getName());
+                final String fieldName = ff.getName();
+                final String displayedValue = compView.getText().toString();
+                if (compView != null) {
+                    if (fieldName.equals(FIELD_FROM_ID)) {
+                        hasChange |= !segment.getFromLocationName().equals(displayedValue);
+                    } else if (fieldName.equals(FIELD_TO_ID)) {
+                        hasChange |= !segment.getToLocationName().equals(displayedValue);
+                    } else if (fieldName.equals(FIELD_AMOUNT)) {
+                        hasChange |= !segment.getForeignAmount().equals(((MoneyFormField) compView).getAmountValue());
+                    } else if (fieldName.equals(FIELD_START_DATE)) {
+                        if (segment.getDepartureDate() == null) {
+                            hasChange |= displayedValue != null && displayedValue.length() > 0;
+                        } else {
+                            hasChange |= !formatDate(segment.getDepartureDate()).equals(displayedValue);
+                        }
+                    } else if (fieldName.equals(FIELD_START_TIME)) {
+                        // --- value is stored on a 24h format
+                        String comparedValue = displayedValue;
+                        if (!android.text.format.DateFormat.is24HourFormat(this)) {
+                            comparedValue = convertTimeFormat(displayedValue, false, true);
+                        }
+                        hasChange |= !segment.getDepartureTime().equals(comparedValue);
+                    } else if (fieldName.equals(FIELD_END_DATE)) {
+                        if (segment.getArrivalDate() == null) {
+                            hasChange |= displayedValue != null && displayedValue.length() > 0;
+                        } else {
+                            hasChange |= !formatDate(segment.getArrivalDate()).equals(parseDate(displayedValue));
+                        }
+                    } else if (fieldName.equals(FIELD_END_TIME)) {
+                        // --- value is stored on a 24h format
+                        String comparedValue = displayedValue;
+                        if (!android.text.format.DateFormat.is24HourFormat(this)) {
+                            comparedValue = convertTimeFormat(displayedValue, false, true);
+                        }
+                        hasChange |= !segment.getArrivalTime().equals(comparedValue);
+                    } else if (fieldName.equals(FIELD_CURRENCY)) {
+                        // --- if hint is null, used never selected anything in the popup
+                        hasChange |= compView.getHint() != null && !segment.getForeignCurrencyCode()
+                                .equals(compView.getHint());
+                    } else if (fieldName.equals(FIELD_COMMENT)) {
+                        hasChange |= !segment.getLastComment().equals(displayedValue);
+                    }
+                }
+                if (hasChange) {
+                    return true;
+                }
+            }
+        }
+        return false;
     }
 
     /**
@@ -385,6 +443,7 @@ public class RequestEntryActivity extends AbstractConnectFormFieldActivity imple
      * @param segmentType
      * @return
      */
+
     private String extractSegmentDefaultFormId(SegmentType.RequestSegmentType segmentType) {
         final RequestGroupConfiguration rgc = getConcurCore().getRequestGroupConfigurationCache().getValue(getUserId());
         for (Policy p : rgc.getPolicies()) {
@@ -426,17 +485,19 @@ public class RequestEntryActivity extends AbstractConnectFormFieldActivity imple
             if (segment.getDepartureDate() == null) {
                 return "";
             }
-            return formatTime(segment.getDepartureDate());
+            return convertTimeFormat(segment.getDepartureTime(), true,
+                    android.text.format.DateFormat.is24HourFormat(this));
         } else if (fieldName.equals(FIELD_END_DATE)) {
             if (segment.getArrivalDate() == null) {
                 return "";
             }
             return formatDate(segment.getArrivalDate());
         } else if (fieldName.equals(FIELD_END_TIME)) {
-            if (segment.getArrivalDate() == null) {
+            if (segment.getArrivalTime() == null) {
                 return "";
             }
-            return formatTime(segment.getArrivalDate());
+            return convertTimeFormat(segment.getArrivalTime(), true,
+                    android.text.format.DateFormat.is24HourFormat(this));
         } else if (fieldName.equals(FIELD_CURRENCY)) {
             if (segment.getForeignCurrencyCode() == null) {
                 return "";
@@ -477,20 +538,23 @@ public class RequestEntryActivity extends AbstractConnectFormFieldActivity imple
         } else if (fieldName.equals(FIELD_START_DATE)) {
             segment.setDepartureDate(parseDate(value));
         } else if (fieldName.equals(FIELD_START_TIME)) {
-            applyTimeString(segment.getDepartureDate(), value);
             if (segment.getDepartureDate() != null) {
+                applyTimeString(segment.getDepartureDate(), value);
                 segment.setDepartureTime(formatTime(segment.getDepartureDate(), true));
             }
         } else if (fieldName.equals(FIELD_END_DATE)) {
             segment.setArrivalDate(parseDate(value));
         } else if (fieldName.equals(FIELD_END_TIME)) {
-            applyTimeString(segment.getArrivalDate(), value);
             if (segment.getArrivalDate() != null) {
+                applyTimeString(segment.getArrivalDate(), value);
                 segment.setArrivalTime(formatTime(segment.getArrivalDate(), true));
             }
         } else if (fieldName.equals(FIELD_CURRENCY)) {
-            // --- ntd : this is already handled by the currency popup selection listener
-            entry.setTransactionCurrencyCode(segment.getForeignCurrencyCode());
+            final CharSequence currencyCodeSequence = getComponent(model, fieldName).getHint();
+            final String code = currencyCodeSequence != null ? currencyCodeSequence.toString() : null;
+            // --- trick to get the code back
+            segment.setForeignCurrencyCode(code);
+            entry.setTransactionCurrencyCode(code);
         } else if (fieldName.equals(FIELD_COMMENT)) {
             segment.setLastComment(value);
         }
@@ -598,60 +662,61 @@ public class RequestEntryActivity extends AbstractConnectFormFieldActivity imple
         saveButtonView.setOnClickListener(new View.OnClickListener() {
 
             public void onClick(View v) {
-                if (hasCustomLayouts) {
-                    // --- AIR & RAIL segment/entry types
-
-                    // --- processedTab won't be set if user stay on opened tab without changing it because segments
-                    //     are processed after activity
-                    setProcessedTab(viewedFragment);
-                    // --- Cleans & applies temporary segment list to entry object
-                    if (viewedFragment == TAB_ONE_WAY) {
-                        entry.setTripType(RequestEntryDTO.TripType.ONE_WAY);
-                        entry.setListSegment(segmentOneWay);
-                        if (entry.getListSegment().size() > 1) {
-                            // --- security lock : we can't have more than 1 on a round way => remove anything above
-                            segmentOneWay.clear();
-                            segmentOneWay.add(entry.getListSegment().iterator().next());
-                            entry.setListSegment(segmentOneWay);
-                        }
-                    } else if (viewedFragment == TAB_ROUND_TRIP) {
-                        entry.setTripType(RequestEntryDTO.TripType.ROUND_TRIP);
-                        entry.setListSegment(segmentsRoundTrip);
-                        if (entry.getListSegment().size() > 1) {
-                            // --- security lock : we can't have more than 1 on a round way => remove anything above
-                            segmentsRoundTrip.clear();
-                            for (int i = 0; i < 2; i++) {
-                                segmentsRoundTrip.add(entry.getListSegment().get(i));
-                            }
-                            entry.setListSegment(segmentsRoundTrip);
-                        }
-                    } else if (viewedFragment == TAB_MULTI_LEG) {
-                        entry.setTripType(RequestEntryDTO.TripType.MULTI_SEGMENT);
-                        entry.setListSegment(segmentsMultiLeg);
-                    }
-                    final int length = entry.getListSegment().size();
-                    for (int i = 0; i < length; i++) {
-                        final RequestSegmentDTO segment = entry.getListSegment().get(i);
-                        // --- Applies a bulletproof display order
-                        segment.setDisplayOrder(i);
-                        save(form, segment);
-                    }
-                    originFragment = viewedFragment;
-                } else {
-                    // --- !AIR & !RAIL segment/entry types
-                    save(form, entry.getListSegment().iterator().next());
-                }
-                if (ConcurCore.isConnected()) {
-                    // --- creates the listener
-                    asyncReceiverSave.setListener(new SaveListener());
-                    entryVF.setDisplayedChild(ID_LOADING_VIEW);
-                    // --- onRequestResult calls cleanup() on execution, so listener will be destroyed by processing
-                    new RequestEntrySaveTask(RequestEntryActivity.this, 1, asyncReceiverSave, entry).execute();
-                } else {
-                    new NoConnectivityDialogFragment().show(getSupportFragmentManager(), CLS_TAG);
-                }
+                saveAction();
             }
         });
+    }
+
+    private void saveAction() {
+        if (hasCustomLayouts) {
+            // --- AIR & RAIL segment/entry types
+
+            // --- Cleans & applies temporary segment list to entry object
+            if (viewedFragment == TAB_ONE_WAY) {
+                entry.setTripType(RequestEntryDTO.TripType.ONE_WAY);
+                entry.setListSegment(segmentOneWay);
+                if (entry.getListSegment().size() > 1) {
+                    // --- security lock : we can't have more than 1 on a round way => remove anything above
+                    segmentOneWay.clear();
+                    segmentOneWay.add(entry.getListSegment().iterator().next());
+                    entry.setListSegment(segmentOneWay);
+                }
+            } else if (viewedFragment == TAB_ROUND_TRIP) {
+                entry.setTripType(RequestEntryDTO.TripType.ROUND_TRIP);
+                entry.setListSegment(segmentsRoundTrip);
+                if (entry.getListSegment().size() > 1) {
+                    // --- security lock : we can't have more than 1 on a round way => remove anything above
+                    segmentsRoundTrip.clear();
+                    for (int i = 0; i < 2; i++) {
+                        segmentsRoundTrip.add(entry.getListSegment().get(i));
+                    }
+                    entry.setListSegment(segmentsRoundTrip);
+                }
+            } else if (viewedFragment == TAB_MULTI_LEG) {
+                entry.setTripType(RequestEntryDTO.TripType.MULTI_SEGMENT);
+                entry.setListSegment(segmentsMultiLeg);
+            }
+            final int length = entry.getListSegment().size();
+            for (int i = 0; i < length; i++) {
+                final RequestSegmentDTO segment = entry.getListSegment().get(i);
+                // --- Applies a bulletproof display order
+                segment.setDisplayOrder(i);
+                save(form, segment);
+            }
+            originFragment = viewedFragment;
+        } else {
+            // --- !AIR & !RAIL segment/entry types
+            save(form, entry.getListSegment().iterator().next());
+        }
+        if (ConcurCore.isConnected()) {
+            // --- creates the listener
+            asyncReceiverSave.setListener(new SaveListener());
+            entryVF.setDisplayedChild(ID_LOADING_VIEW);
+            // --- onRequestResult calls cleanup() on execution, so listener will be destroyed by processing
+            new RequestEntrySaveTask(this, 1, asyncReceiverSave, entry).execute();
+        } else {
+            new NoConnectivityDialogFragment().show(getSupportFragmentManager(), CLS_TAG);
+        }
     }
 
     @Override
@@ -666,20 +731,20 @@ public class RequestEntryActivity extends AbstractConnectFormFieldActivity imple
 
     @Override
     public void onClick(final View view) {
-        final DatePickerDialog datePicker = getDateField(view.getId());
+        final CustomDatePickerDialog datePicker = getDateField((String) view.getTag());
         if (datePicker != null) {
+            datePicker.setClickedView(view);
             datePicker.show();
             return;
         }
-        final TimePickerDialog timePicker = getTimeField(view.getId());
+        final CustomTimePickerDialog timePicker = getTimeField((String) view.getTag());
         if (timePicker != null) {
+            timePicker.setClickedView(view);
             timePicker.show();
             return;
         }
-        final PickListItem pickListItem = getPickListFieldNameByViewId(view.getId());
-        if (pickListItem != null && pickListItem.getFieldName() != null && pickListItem.getFieldName()
-                .equals(FIELD_CURRENCY)) {
-            showCurrencyDialog(pickListItem, view);
+        if (view.getTag().equals(FIELD_CURRENCY)) {
+            showCurrencyDialog(view);
         }
     }
 
@@ -688,13 +753,12 @@ public class RequestEntryActivity extends AbstractConnectFormFieldActivity imple
      * ********************************
      */
 
-    private AlertDialog showCurrencyDialog(final PickListItem pickListItem, final View view) {
+    private AlertDialog showCurrencyDialog(final View view) {
         final AlertDialog.Builder builder = new AlertDialog.Builder(this);
         builder.setTitle(R.string.currency_prompt);
         if (curTypeAdapter == null) {
             curTypeAdapter = new CurrencySpinnerAdapter(this);
         }
-        //configureCurrencySelection((RequestSegmentDTO) pickListItem.getModel());
         builder.setSingleChoiceItems(curTypeAdapter, -1, new DialogInterface.OnClickListener() {
 
             @Override
@@ -703,8 +767,11 @@ public class RequestEntryActivity extends AbstractConnectFormFieldActivity imple
                     Object selCurObj = curTypeAdapter.getItem(which);
                     if (selCurObj instanceof ListItem) {
                         final ListItem li = (ListItem) selCurObj;
-                        ((RequestSegmentDTO) pickListItem.getModel()).setForeignCurrencyCode(li.code);
-                        ((TextView) view).setText(li.text);
+                        if (li != null) {
+                            final TextView tv = (TextView) view;
+                            tv.setText(li.text);
+                            tv.setHint(li.code);
+                        }
                     }
                 }
                 dialog.dismiss();
@@ -725,6 +792,10 @@ public class RequestEntryActivity extends AbstractConnectFormFieldActivity imple
         super.save(form, model);
     }
 
+    @Override protected LinearLayout getCurrentFieldsLayout() {
+        return hasCustomLayouts ? layoutPerTab.get(viewedFragment) : currentFieldsLayout;
+    }
+
     public class SaveListener implements BaseAsyncRequestTask.AsyncReplyListener {
 
         @Override
@@ -739,34 +810,10 @@ public class RequestEntryActivity extends AbstractConnectFormFieldActivity imple
             EventTracker.INSTANCE.track(Flurry.CATEGORY_TRAVEL_REQUEST,
                     (isCreation ? Flurry.EVENT_NAME_CREATE : Flurry.EVENT_NAME_SAVED), params);
 
-            // --- TODO Refresh values
-
-            if (resultData != null) {
-                /*final String entryId = RequestParser
-                        .parseActionResponse(resultData.getString(BaseAsyncRequestTask.HTTP_RESPONSE));*/
-                // we go to the digest screen
-                if (isCreation) {
-
-                    final Intent i = new Intent(RequestEntryActivity.this, RequestSummaryActivity.class);
-                    //i.putExtra(RequestEntryActivity.ENTRY_ID, entryId);
-
-                    // --- Flurry tracking
-                    i.putExtra(Flurry.PARAM_NAME_CAME_FROM, Flurry.PARAM_VALUE_TRAVEL_REQUEST_ENTRY);
-                    params.clear();
-                    params.put(Flurry.PARAM_NAME_FROM, Flurry.PARAM_VALUE_TRAVEL_REQUEST_ENTRY);
-                    params.put(Flurry.PARAM_NAME_TO, Flurry.PARAM_VALUE_TRAVEL_REQUEST_SUMMARY);
-                    EventTracker.INSTANCE.track(Flurry.CATEGORY_TRAVEL_REQUEST, Flurry.EVENT_NAME_LAUNCH, params);
-
-                    startActivity(i);
-                    finish();
-                } else {
-                    final Intent resIntent = new Intent();
-                    resIntent.putExtra(RequestHeaderActivity.DO_WS_REFRESH, true);
-                    setResult(Activity.RESULT_OK, resIntent);
-
-                    finish();
-                }
-            }
+            final Intent resIntent = new Intent();
+            resIntent.putExtra(RequestHeaderActivity.DO_WS_REFRESH, true);
+            setResult(Activity.RESULT_OK, resIntent);
+            finish();
         }
 
         @Override
@@ -818,7 +865,43 @@ public class RequestEntryActivity extends AbstractConnectFormFieldActivity imple
 
     @Override
     public void onBackPressed() {
-        super.onBackPressed();
-        cleanupReceivers();
+        List<RequestSegmentDTO> segmentList = entry.getListSegment();
+        if (hasCustomLayouts) {
+            segmentList = viewedFragment == TAB_ONE_WAY ?
+                    segmentOneWay :
+                    (viewedFragment == TAB_ROUND_TRIP ? segmentsRoundTrip : segmentsMultiLeg);
+        }
+        if (hasChange(segmentList)) {
+            final AlertDialogFragment.OnClickListener yesListener = new AlertDialogFragment.OnClickListener() {
+
+                @Override public void onClick(FragmentActivity activity, DialogInterface dialog, int which) {
+                    // --- save action + redirect
+                    saveAction();
+                }
+
+                @Override public void onCancel(FragmentActivity activity, DialogInterface dialog) {
+                    // --- can't happen
+                }
+            };
+            final AlertDialogFragment.OnClickListener noListener = new AlertDialogFragment.OnClickListener() {
+
+                @Override public void onClick(FragmentActivity activity, DialogInterface dialog, int which) {
+                    dialog.dismiss();
+                    // --- redirect without saving
+                    finish();
+                }
+
+                @Override public void onCancel(FragmentActivity activity, DialogInterface dialog) {
+                    // --- can't happen
+                }
+            };
+            DialogFragmentFactory.getAlertDialog(getResources().getString(R.string.confirm),
+                    getResources().getString(R.string.tr_message_save_changes), R.string.general_yes, -1,
+                    R.string.general_no, yesListener, null, noListener, noListener)
+                    .show(getSupportFragmentManager(), CLS_TAG);
+        } else {
+            super.onBackPressed();
+            cleanupReceivers();
+        }
     }
 }

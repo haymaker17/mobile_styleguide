@@ -3,6 +3,7 @@ package com.concur.mobile.core.activity;
 import android.app.ActionBar;
 import android.app.DatePickerDialog;
 import android.app.TimePickerDialog;
+import android.content.Context;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
 import android.text.InputType;
@@ -33,13 +34,58 @@ import java.util.*;
  */
 public abstract class AbstractConnectFormFieldActivity extends BaseActivity {
 
-    private static final String CLS_TAG = "AbstractConnectFormFieldActivity";
+    private static final String CLS_TAG = "AbstractConnectForm...";
 
-    private Map<String, Integer> views = new HashMap<String, Integer>(); // view ID, filed NAME
+    protected class CustomDatePickerDialog extends DatePickerDialog {
 
-    private Map<Integer, DatePickerDialog> dateFieldMapping = new HashMap<Integer, DatePickerDialog>();
-    private Map<Integer, TimePickerDialog> timeFieldMapping = new HashMap<Integer, TimePickerDialog>();
-    private Map<Integer, PickListItem> pickListMapping = new HashMap<Integer, PickListItem>();
+        private View v = null;
+
+        public CustomDatePickerDialog(Context context, OnDateSetListener callBack, int year, int monthOfYear,
+                int dayOfMonth) {
+            super(context, callBack, year, monthOfYear, dayOfMonth);
+        }
+
+        public CustomDatePickerDialog(Context context, int theme, OnDateSetListener callBack, int year, int monthOfYear,
+                int dayOfMonth) {
+            super(context, theme, callBack, year, monthOfYear, dayOfMonth);
+        }
+
+        public void setClickedView(View v) {
+            this.v = v;
+        }
+
+        public View getClickedView() {
+            return v;
+        }
+    }
+
+    protected class CustomTimePickerDialog extends TimePickerDialog {
+
+        private View v = null;
+
+        public CustomTimePickerDialog(Context context, OnTimeSetListener callBack, int hourOfDay, int minute,
+                boolean is24HourView) {
+            super(context, callBack, hourOfDay, minute, is24HourView);
+        }
+
+        public CustomTimePickerDialog(Context context, int theme, OnTimeSetListener callBack, int hourOfDay, int minute,
+                boolean is24HourView) {
+            super(context, theme, callBack, hourOfDay, minute, is24HourView);
+        }
+
+        public void setClickedView(View v) {
+            this.v = v;
+        }
+
+        public View getClickedView() {
+            return v;
+        }
+    }
+
+    private Map<String, CustomDatePickerDialog> dateFieldMapping = new HashMap<String, CustomDatePickerDialog>();
+    private Map<String, CustomTimePickerDialog> timeFieldMapping = new HashMap<String, CustomTimePickerDialog>();
+
+    private Map<String, LinearLayout> titleLayoutFieldsMapping = null;
 
     /* Arbitrarily set to 100 to avoid any possible conflict.
      * TODO : migrate to View.generateViewId() calls when we'll move to minSdk=17.
@@ -48,7 +94,6 @@ public abstract class AbstractConnectFormFieldActivity extends BaseActivity {
     private int viewID = 100;
 
     private boolean canSave = true;
-    private String currentViewPrefix = null;
 
     protected static enum DisplayType {
         TEXTFIELD,       //RequestID, Name, Status
@@ -57,25 +102,6 @@ public abstract class AbstractConnectFormFieldActivity extends BaseActivity {
         MONEYFIELD,      //totalAmount + currency,
         TIME,            //startTime, endTime
         PICKLIST         //currency (selection)
-    }
-
-    protected class PickListItem {
-
-        private String fieldName;
-        private FormDTO model;
-
-        public PickListItem(String fieldName, FormDTO model) {
-            this.fieldName = fieldName;
-            this.model = model;
-        }
-
-        public String getFieldName() {
-            return fieldName;
-        }
-
-        public FormDTO getModel() {
-            return model;
-        }
     }
 
     /**
@@ -119,16 +145,6 @@ public abstract class AbstractConnectFormFieldActivity extends BaseActivity {
     public abstract void applySaveButtonPolicy(final View saveButtonView);
 
     /**
-     * Use this to handle tabbed views.
-     * !important! : this must be called each time you change tab AND for each tab definition call (aka setDisplayFields())
-     *
-     * @param tabId will be used as prefix for any field name definition.
-     */
-    public void setProcessedTab(int tabId) {
-        currentViewPrefix = String.valueOf(tabId);
-    }
-
-    /**
      * This has to be overriden with a super call to execute your own remote saving.
      * This will only call the save action on the given layout if it's found.
      *
@@ -151,26 +167,19 @@ public abstract class AbstractConnectFormFieldActivity extends BaseActivity {
      * @return the value currently displayed & contained in the View object
      */
     private String getValueByFieldName(FormDTO model, String fieldName) {
-        final String viewName = getViewName(fieldName, model);
-        if (views.containsKey(viewName)) {
-            final TextView tv = (TextView) findViewById(views.get(viewName));
-            if (tv != null && tv.getText() != null) {
-                return tv.getText().toString();
-            }
+        final TextView tv = getComponent(model, fieldName);
+        if (tv != null && tv.getText() != null) {
+            return tv.getText().toString();
         }
         return null;
     }
 
     /**
-     * @param fieldName
-     * @param model     the mode in use
-     * @return
+     * Returned value should only change on multi-tabbed views (ex ViewPager with fragments)
+     *
+     * @return the layout currently displayed
      */
-    private String getViewName(String fieldName, FormDTO model) {
-        return (currentViewPrefix != null ? (currentViewPrefix + "__") : "") + (model.getDisplayOrder() != null ?
-                (model.getDisplayOrder().toString() + "__") :
-                "") + fieldName;
-    }
+    protected abstract LinearLayout getCurrentFieldsLayout();
 
     public void setDisplayFields(FormDTO model, ConnectForm form, final LinearLayout fieldLayout) {
         setDisplayFields(model, form, fieldLayout, null, null);
@@ -178,12 +187,12 @@ public abstract class AbstractConnectFormFieldActivity extends BaseActivity {
 
     /**
      * This one is used by fragments within activities. Must be overriden in the activity  which should then do a call
-     * to another setDisplayFields method with the rights arguments.
+     * to another initializeFragmentDisplay method with the rights arguments.
      *
      * @param fieldLayout
      * @param fragmentId
      */
-    public void setDisplayFields(final LinearLayout fieldLayout, int fragmentId) {
+    public void initializeFragmentDisplay(final LinearLayout fieldLayout, int fragmentId) {
         // --- Override on needs
     }
 
@@ -195,8 +204,12 @@ public abstract class AbstractConnectFormFieldActivity extends BaseActivity {
      * @param fieldLayout  layout of the content
      * @param fieldToTitle the ConnectFormField name to display within the titleLayout
      */
-    protected void setDisplayFields(FormDTO model, ConnectForm form, final LinearLayout fieldLayout,
+    protected void setDisplayFields(final FormDTO model, final ConnectForm form, final LinearLayout fieldLayout,
             final LinearLayout titleLayout, final String fieldToTitle) {
+        if (titleLayout != null && fieldToTitle != null) {
+            titleLayoutFieldsMapping = new HashMap<String, LinearLayout>();
+            titleLayoutFieldsMapping.put(fieldToTitle, titleLayout);
+        }
         // --- creates a mapping of the given layouts to generate a unique id for each component
         if (form != null) {
             final List<ConnectFormField> formfields = form.getFormFields();
@@ -204,10 +217,16 @@ public abstract class AbstractConnectFormFieldActivity extends BaseActivity {
 
             LinearLayout.LayoutParams llp = null;
 
-            for (ConnectFormField ff : formfields) {
+            final LinearLayout segmentLayout = new LinearLayout(this);
+            segmentLayout.setLayoutParams(new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT,
+                    LinearLayout.LayoutParams.WRAP_CONTENT));
+            segmentLayout.setOrientation(LinearLayout.VERTICAL);
+            fieldLayout.addView(segmentLayout);
+
+            for (final ConnectFormField ff : formfields) {
 
                 final boolean isTitleField = fieldToTitle != null && ff.getName().equals(fieldToTitle);
-                final ViewGroup layout = isTitleField ? titleLayout : fieldLayout;
+                final ViewGroup layout = isTitleField ? titleLayout : segmentLayout;
 
                 IFormField.DataType dataType = ff.getDataType();
                 IFormField.ControlType controlType = ff.getControlType();
@@ -287,6 +306,9 @@ public abstract class AbstractConnectFormFieldActivity extends BaseActivity {
                 if (displayType != null && isFieldVisible(model, ff.getName())) {
                     final boolean isEditable = canSave && accesType != IFormField.AccessType.RO;
 
+                    llp = new LinearLayout.LayoutParams(ActionBar.LayoutParams.WRAP_CONTENT,
+                            ActionBar.LayoutParams.MATCH_PARENT);
+
                     switch (displayType) {
                     case TEXTFIELD:
 
@@ -302,8 +324,6 @@ public abstract class AbstractConnectFormFieldActivity extends BaseActivity {
                         component.setEllipsize(TextUtils.TruncateAt.END); //ellipses
                         component.setTextSize(TypedValue.COMPLEX_UNIT_SP, 15);
 
-                        llp = new LinearLayout.LayoutParams(ActionBar.LayoutParams.MATCH_PARENT,
-                                ActionBar.LayoutParams.MATCH_PARENT);
                         break;
 
                     case TEXTAREA:
@@ -319,8 +339,6 @@ public abstract class AbstractConnectFormFieldActivity extends BaseActivity {
                         component.setMaxLines(5);
                         component.setTextSize(TypedValue.COMPLEX_UNIT_SP, 15);
 
-                        llp = new LinearLayout.LayoutParams(ActionBar.LayoutParams.MATCH_PARENT,
-                                ActionBar.LayoutParams.MATCH_PARENT);
                         break;
 
                     case DATEFIELD:
@@ -335,27 +353,29 @@ public abstract class AbstractConnectFormFieldActivity extends BaseActivity {
                         //ADD LISTENER for setting date
                         if (isEditable) {
                             component.setOnClickListener((View.OnClickListener) this);
-                            Calendar newCalendar = Calendar.getInstance();
-                            final TextView finalComp = component;
+                            final Calendar newCalendar = Calendar.getInstance();
 
-                            final DatePickerDialog.OnDateSetListener inDateListener = new DatePickerDialog.OnDateSetListener() {
+                            final CustomDatePickerDialog.OnDateSetListener inDateListener = new CustomDatePickerDialog.OnDateSetListener() {
 
-                                public void onDateSet(DatePicker view, int year, int monthOfYear, int dayOfMonth) {
+                                // --- we store the dialog's tag
+                                private String fieldName = ff.getName();
+
+                                public void onDateSet(DatePicker datePicker, int year, int monthOfYear,
+                                        int dayOfMonth) {
                                     Calendar newDate = Calendar.getInstance();
                                     newDate.set(year, monthOfYear, dayOfMonth);
-                                    finalComp.setText(formatDate(newDate.getTime()));
+                                    ((TextView) dateFieldMapping.get(fieldName).getClickedView())
+                                            .setText(formatDate(newDate.getTime()));
                                 }
                             };
 
-                            final DatePickerDialog fromDatePickerDialog = new DatePickerDialog(this, inDateListener,
-                                    newCalendar.get(Calendar.YEAR), newCalendar.get(Calendar.MONTH),
+                            final CustomDatePickerDialog fromDatePickerDialog = new CustomDatePickerDialog(this,
+                                    inDateListener, newCalendar.get(Calendar.YEAR), newCalendar.get(Calendar.MONTH),
                                     newCalendar.get(Calendar.DAY_OF_MONTH));
 
-                            dateFieldMapping.put(viewID, fromDatePickerDialog);
+                            dateFieldMapping.put(ff.getName(), fromDatePickerDialog);
                         }
 
-                        llp = new LinearLayout.LayoutParams(ActionBar.LayoutParams.MATCH_PARENT,
-                                ActionBar.LayoutParams.MATCH_PARENT);
                         break;
 
                     case TIME:
@@ -369,28 +389,29 @@ public abstract class AbstractConnectFormFieldActivity extends BaseActivity {
                         //ADD LISTENER to set time
                         if (isEditable) {
                             component.setOnClickListener((View.OnClickListener) this);
-                            Calendar newCalendar = Calendar.getInstance();
-                            final TextView finalComp = component;
+                            final Calendar newCalendar = Calendar.getInstance();
 
-                            final TimePickerDialog.OnTimeSetListener inTimeListener = new TimePickerDialog.OnTimeSetListener() {
+                            final CustomTimePickerDialog.OnTimeSetListener inTimeListener = new CustomTimePickerDialog.OnTimeSetListener() {
+
+                                // --- we store the dialog's tag
+                                private String fieldName = ff.getName();
 
                                 @Override public void onTimeSet(TimePicker timePicker, int hours, int minutes) {
                                     final Calendar newDate = Calendar.getInstance();
                                     newDate.set(Calendar.HOUR, hours);
                                     newDate.set(Calendar.MINUTE, minutes);
-                                    finalComp.setText(formatTime(newDate.getTime()));
+                                    ((TextView) timeFieldMapping.get(fieldName).getClickedView())
+                                            .setText(formatTime(newDate.getTime()));
                                 }
                             };
 
-                            final TimePickerDialog fromTimePickerDialog = new TimePickerDialog(this, inTimeListener,
-                                    newCalendar.get(Calendar.HOUR), newCalendar.get(Calendar.MINUTE),
+                            final CustomTimePickerDialog fromTimePickerDialog = new CustomTimePickerDialog(this,
+                                    inTimeListener, newCalendar.get(Calendar.HOUR), newCalendar.get(Calendar.MINUTE),
                                     android.text.format.DateFormat.is24HourFormat(this));
 
-                            timeFieldMapping.put(viewID, fromTimePickerDialog);
+                            timeFieldMapping.put(ff.getName(), fromTimePickerDialog);
                         }
 
-                        llp = new LinearLayout.LayoutParams(ActionBar.LayoutParams.MATCH_PARENT,
-                                ActionBar.LayoutParams.MATCH_PARENT);
                         break;
 
                     case MONEYFIELD:
@@ -425,14 +446,11 @@ public abstract class AbstractConnectFormFieldActivity extends BaseActivity {
                             component.setOnClickListener((View.OnClickListener) this);
                         }
 
-                        // --- this is managed on activity side
-                        pickListMapping.put(viewID, new PickListItem(ff.getName(), model));
-                        llp = new LinearLayout.LayoutParams(ActionBar.LayoutParams.MATCH_PARENT,
-                                ActionBar.LayoutParams.MATCH_PARENT);
                         break;
 
                     default:
                         //displayType = null;
+                        llp = null;
                         break;
                     }
 
@@ -441,9 +459,7 @@ public abstract class AbstractConnectFormFieldActivity extends BaseActivity {
                             layout.addView(getTextViewFieldName(getLabelFromFieldName(ff.getName())));
                         }
 
-                        component.setId(viewID);
-                        views.put(getViewName(ff.getName(), model), viewID);
-                        viewID++;
+                        component.setTag(ff.getName());
 
                         // --- permits to apply specifics within the extending activity
                         applySpecificRender(model, component, llp, ff);
@@ -487,7 +503,7 @@ public abstract class AbstractConnectFormFieldActivity extends BaseActivity {
     }
 
     /**
-     * Called on each formfield during the setDisplayFields() processing so that you can customize any component's
+     * Called on each formfield during the initializeFragmentDisplay() processing so that you can customize any component's
      * rendering
      *
      * @param component component
@@ -517,25 +533,46 @@ public abstract class AbstractConnectFormFieldActivity extends BaseActivity {
         return DateUtil.parseFormattedDateForLocale(getDatePattern(), getLocale(), dateString);
     }
 
+    protected String convertTimeFormat(String timeValue, boolean isInput24, boolean isOutput24) {
+        final Date d = DateUtil.parseFormattedTimeForFormat(timeValue, isInput24);
+        if (d != null) {
+            return DateUtil.getFormattedTimeForFormat(d, isOutput24);
+        }
+        return "";
+    }
+
     protected void applyTimeString(Date d, String timeString) {
-        if (timeString != null) {
-            final DateFormat formatter = new SimpleDateFormat(DateUtil.TIME_PATTERN_24H);
+        if (d != null && timeString != null) {
+            final boolean is24 = android.text.format.DateFormat.is24HourFormat(this);
+            final DateFormat formatter = new SimpleDateFormat(
+                    is24 ? DateUtil.TIME_PATTERN_24H : DateUtil.TIME_PATTERN_12H);
+            final Calendar cal = Calendar.getInstance();
             try {
                 final Date dt = formatter.parse(timeString);
-                final Calendar cal = Calendar.getInstance();
                 cal.setTime(dt);
                 final int hour = cal.get(Calendar.HOUR);
                 final int minute = cal.get(Calendar.MINUTE);
                 final int second = cal.get(Calendar.SECOND);
+                final int amPm = !is24 ? cal.get(Calendar.AM_PM) : -1;
                 cal.setTime(d);
                 cal.set(Calendar.HOUR, hour);
                 cal.set(Calendar.MINUTE, minute);
                 cal.set(Calendar.SECOND, second);
-                d.setTime(cal.getTime().getTime());
+                if (!is24) {
+                    cal.set(Calendar.AM_PM, amPm);
+                }
             } catch (ParseException e) {
-                e.printStackTrace();
                 Log.e(CLS_TAG, "Failed to apply time string : " + timeString);
+                // --- unparsable value for timeSring : we set 0 for each time field.
+                cal.setTime(d);
+                cal.set(Calendar.HOUR, 0);
+                cal.set(Calendar.MINUTE, 0);
+                cal.set(Calendar.SECOND, 0);
+                if (!is24) {
+                    cal.set(Calendar.AM_PM, 0);
+                }
             }
+            d.setTime(cal.getTime().getTime());
         }
     }
 
@@ -590,8 +627,8 @@ public abstract class AbstractConnectFormFieldActivity extends BaseActivity {
      *
      * @return
      */
-    protected DatePickerDialog getDateField(int viewId) {
-        return dateFieldMapping.get(viewId);
+    protected CustomDatePickerDialog getDateField(String viewTag) {
+        return dateFieldMapping.get(viewTag);
     }
 
     /**
@@ -599,23 +636,21 @@ public abstract class AbstractConnectFormFieldActivity extends BaseActivity {
      *
      * @return
      */
-    protected TimePickerDialog getTimeField(int viewId) {
-        return timeFieldMapping.get(viewId);
-    }
-
-    /**
-     * Return the pickList field name matching the given viewId if there is any
-     *
-     * @return
-     */
-    protected PickListItem getPickListFieldNameByViewId(int viewId) {
-        return pickListMapping.get(viewId);
+    protected CustomTimePickerDialog getTimeField(String viewTag) {
+        return timeFieldMapping.get(viewTag);
     }
 
     protected TextView getComponent(FormDTO model, String fieldName) {
-        final Integer compId = views.get(getViewName(fieldName, model));
-        if (compId != null) {
-            return (TextView) findViewById(compId);
+        // --- titleLayout's specific. As current version is, you CAN'T use both titleLayouts & multi-tabbed views
+        //     at the same time.
+        if (titleLayoutFieldsMapping != null && titleLayoutFieldsMapping.containsKey(fieldName)) {
+            return (TextView) titleLayoutFieldsMapping.get(fieldName).findViewWithTag(fieldName);
+        }
+        final int segmentLayoutIdx = model.getDisplayOrder() != null ? model.getDisplayOrder() : 0;
+        // --- get current segment layout
+        final LinearLayout segmentLayout = (LinearLayout) getCurrentFieldsLayout().getChildAt(segmentLayoutIdx);
+        if (segmentLayout != null) {
+            return (TextView) segmentLayout.findViewWithTag(fieldName);
         }
         return null;
     }

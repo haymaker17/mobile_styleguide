@@ -9,9 +9,9 @@
         android:layout_height="wrap_content">
 
         <LinearLayout
-            android:id="@+id/entryFields"
+            android:id="@+id/formFieldsLayout"
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            android:layout_height="match_parent"
             android:layout_alignParentLeft="true"
             android:layout_alignParentTop="true"
             android:orientation="vertical">
@@ -23,7 +23,7 @@
             android:layout_width="match_parent"
             android:layout_height="70dp"
             android:background="@color/White"
-            android:layout_below="@id/entryFields"
+            android:layout_below="@id/formFieldsLayout"
             android:gravity="center"
             >
 
@@ -36,7 +36,7 @@
                 android:background="#0078C8"
 
                 android:clickable="true"
-                android:onClick="saveEntryAction"
+                android:onClick="saveAction"
                 >
 
                 <TextView

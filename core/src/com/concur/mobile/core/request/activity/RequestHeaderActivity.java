@@ -1,11 +1,12 @@
 package com.concur.mobile.core.request.activity;
 
 import android.app.Activity;
-import android.app.DatePickerDialog;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.Typeface;
 import android.os.Bundle;
 import android.os.Handler;
+import android.support.v4.app.FragmentActivity;
 import android.util.TypedValue;
 import android.view.View;
 import android.view.View.OnClickListener;
@@ -31,6 +32,8 @@ import com.concur.mobile.platform.request.dto.FormDTO;
 import com.concur.mobile.platform.request.dto.RequestDTO;
 import com.concur.mobile.platform.request.groupConfiguration.RequestGroupConfiguration;
 import com.concur.mobile.platform.request.util.RequestParser;
+import com.concur.mobile.platform.ui.common.dialog.AlertDialogFragment;
+import com.concur.mobile.platform.ui.common.dialog.DialogFragmentFactory;
 import com.concur.mobile.platform.ui.common.dialog.NoConnectivityDialogFragment;
 import com.concur.mobile.platform.util.Parse;
 
@@ -63,8 +66,21 @@ public class RequestHeaderActivity extends AbstractConnectFormFieldActivity impl
     private RequestDTO tr;
     private BaseAsyncResultReceiver asyncReceiverSave;
 
+    private LinearLayout requestHeaderFields;
     private ViewFlipper requestHeaderVF;
     private RelativeLayout saveButton;
+    private static List<String> headerLayout = new ArrayList<String>();
+
+    static {
+        headerLayout.add(FIELD_NAME);
+        headerLayout.add(FIELD_START_DATE);
+        headerLayout.add(FIELD_END_DATE);
+        headerLayout.add(FIELD_PURPOSE);
+        headerLayout.add(FIELD_COMMENT);
+        //headerLayout.add(FIELD_EMP_NAME);
+        headerLayout.add(FIELD_CURRENCY_NAME);
+        headerLayout.add(FIELD_TOTAL_POSTED_AMOUNT);
+    }
 
     /**
      * Bundle need to contain:
@@ -120,9 +136,10 @@ public class RequestHeaderActivity extends AbstractConnectFormFieldActivity impl
         requestHeaderVF = ((ViewFlipper) findViewById(R.id.requestDetailVF));
         requestHeaderVF.setDisplayedChild(ID_HEADER_VIEW);
         final LinearLayout requestTitleLayout = (LinearLayout) findViewById(R.id.requestTitleLayout);
-        final LinearLayout requestHeaderFields = (LinearLayout) findViewById(R.id.requestHeaderFields);
+        final ScrollView sv = (ScrollView) findViewById(R.id.scrollView);
+        requestHeaderFields = (LinearLayout) sv.findViewById(R.id.formFieldsLayout);
         final String fieldToTitle = FIELD_NAME;
-        this.setDisplayFields(tr, form, requestTitleLayout, requestHeaderFields, fieldToTitle);
+        this.setDisplayFields(tr, form, requestHeaderFields, requestTitleLayout, fieldToTitle);
 
         saveButton = (RelativeLayout) findViewById(R.id.saveButton);
         applySaveButtonPolicy(saveButton);
@@ -147,6 +164,53 @@ public class RequestHeaderActivity extends AbstractConnectFormFieldActivity impl
      * ********************************
      */
 
+    private boolean hasChange() {
+        boolean hasChange = false;
+
+        final List<ConnectFormField> formFields = form.getFormFields();
+        Collections.sort(formFields);
+        for (ConnectFormField ff : formFields) {
+            if (isFieldVisible(tr, ff.getName())) {
+                final TextView compView = getComponent(tr, ff.getName());
+                final String fieldName = ff.getName();
+                if (compView != null) {
+                    final String displayedValue = compView.getText().toString();
+                    if (fieldName.equals(FIELD_NAME)) {
+                        hasChange |= !tr.getName().equals(displayedValue);
+                    } else if (fieldName.equals(FIELD_START_DATE)) {
+                        if (tr.getStartDate() == null) {
+                            hasChange |= displayedValue != null && displayedValue.length() > 0;
+                        } else {
+                            hasChange |= !formatDate(tr.getStartDate()).equals(displayedValue);
+                        }
+                    } else if (fieldName.equals(FIELD_END_DATE)) {
+                        if (tr.getEndDate() == null) {
+                            hasChange |= displayedValue != null && displayedValue.length() > 0;
+                        } else {
+                            hasChange |= !formatDate(tr.getEndDate()).equals(displayedValue);
+                        }
+                    } else if (fieldName.equals(FIELD_PURPOSE)) {
+                        hasChange |= !tr.getPurpose().equals(displayedValue);
+                    } else if (fieldName.equals(FIELD_EMP_NAME)) {
+                        hasChange |= !tr.getEmployeeName().equals(displayedValue);
+                        //} else if (fieldName.equals(FIELD_CURRENCY_NAME)) {
+                        //} else if (fieldName.equals(FIELD_TOTAL_POSTED_AMOUNT)) {
+                    } else if (fieldName.equals(FIELD_COMMENT)) {
+                        hasChange |= !tr.getLastComment().equals(displayedValue);
+                    }
+                }
+                if (hasChange) {
+                    return true;
+                }
+            }
+        }
+        return false;
+    }
+
+    @Override protected LinearLayout getCurrentFieldsLayout() {
+        return requestHeaderFields;
+    }
+
     @Override
     protected Locale getLocale() {
         return locale;
@@ -159,8 +223,9 @@ public class RequestHeaderActivity extends AbstractConnectFormFieldActivity impl
 
     @Override
     public void onClick(View view) {
-        final DatePickerDialog datePicker = getDateField(view.getId());
+        final CustomDatePickerDialog datePicker = getDateField((String) view.getTag());
         if (datePicker != null) {
+            datePicker.setClickedView(view);
             datePicker.show();
         }
     }
@@ -267,6 +332,11 @@ public class RequestHeaderActivity extends AbstractConnectFormFieldActivity impl
     }
 
     @Override
+    protected boolean isFieldVisible(FormDTO model, String fieldName) {
+        return headerLayout.contains(fieldName);
+    }
+
+    @Override
     protected void applySpecificRender(final FormDTO model, final TextView component,
             final LinearLayout.LayoutParams llp, final ConnectFormField ff) {
         if (ff.getName().equals(FIELD_NAME)) {
@@ -299,11 +369,10 @@ public class RequestHeaderActivity extends AbstractConnectFormFieldActivity impl
 
             if (resultData != null) {
 
-                final String requestId = RequestParser
-                        .parseActionResponse(resultData.getString(BaseAsyncRequestTask.HTTP_RESPONSE));
-
                 // we go to the digest screen
                 if (isCreation) {
+                    final String requestId = RequestParser
+                            .parseActionResponse(resultData.getString(BaseAsyncRequestTask.HTTP_RESPONSE));
 
                     final Intent i = new Intent(RequestHeaderActivity.this, RequestSummaryActivity.class);
                     i.putExtra(RequestListActivity.REQUEST_ID, requestId);
@@ -376,7 +445,37 @@ public class RequestHeaderActivity extends AbstractConnectFormFieldActivity impl
 
     @Override
     public void onBackPressed() {
-        super.onBackPressed();
-        cleanupReceivers();
+        if (hasChange()) {
+            final AlertDialogFragment.OnClickListener yesListener = new AlertDialogFragment.OnClickListener() {
+
+                @Override public void onClick(FragmentActivity activity, DialogInterface dialog, int which) {
+                    // --- save action + redirect
+                    save(form, tr);
+                }
+
+                @Override public void onCancel(FragmentActivity activity, DialogInterface dialog) {
+                    // --- can't happen
+                }
+            };
+            final AlertDialogFragment.OnClickListener noListener = new AlertDialogFragment.OnClickListener() {
+
+                @Override public void onClick(FragmentActivity activity, DialogInterface dialog, int which) {
+                    dialog.dismiss();
+                    // --- redirect without saving
+                    finish();
+                }
+
+                @Override public void onCancel(FragmentActivity activity, DialogInterface dialog) {
+                    // --- can't happen
+                }
+            };
+            DialogFragmentFactory.getAlertDialog(getResources().getString(R.string.confirm),
+                    getResources().getString(R.string.tr_message_save_changes), R.string.general_yes, -1,
+                    R.string.general_no, yesListener, null, noListener, noListener)
+                    .show(getSupportFragmentManager(), CLS_TAG);
+        } else {
+            super.onBackPressed();
+            cleanupReceivers();
+        }
     }
 }
