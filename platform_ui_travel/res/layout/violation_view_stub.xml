@@ -72,7 +72,7 @@
         android:layout_width="match_parent"
         android:layout_height="1dp"
         android:layout_marginTop="16dp"
-        android:background="#a7b6bf" />
+        android:background="@color/divider" />
 
     <TextView
         android:id="@+id/hotel_violation_reason_label"
@@ -97,7 +97,7 @@
         android:layout_width="match_parent"
         android:layout_height="1dp"
         android:layout_marginTop="16dp"
-        android:background="#a7b6bf" />
+        android:background="@color/divider" />
 
     <TextView
         android:id="@+id/hotel_violation_justification_label"

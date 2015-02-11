@@ -6,10 +6,11 @@
     android:orientation="horizontal" >
 
     <LinearLayout
-        android:layout_width="wrap_content"
+        android:layout_width="0dp"
         android:layout_height="wrap_content"
+        android:layout_gravity="left"
         android:layout_marginBottom="1dp"
-        android:layout_weight="1"
+        android:layout_weight="0.7"
         android:orientation="vertical"
         android:paddingBottom="16dp"
         android:paddingLeft="20dp"
@@ -20,8 +21,10 @@
             android:id="@+id/hotel_room_summary"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:ellipsize="end"
             android:fontFamily="sans-serif-medium"
-            android:text="Queen bed"
+            android:maxLines="3"
+            android:text="Queen bed wifi ellskdf sdfdfo9iwer sdl;ksdf; sdfsopdfip0sfwe sdfoipe9riwer weruy89uerwer ewr8uwerwerkjsdf sdf;i;0pierwerwr "
             android:textColor="#383f46"
             android:textSize="16sp" />
 
@@ -45,40 +48,42 @@
             android:visibility="gone" />
     </LinearLayout>
 
-    <LinearLayout
-        android:layout_width="wrap_content"
+    <RelativeLayout
+        android:layout_width="0dp"
         android:layout_height="wrap_content"
+        android:layout_gravity="right"
+        android:layout_weight="0.3"
         android:orientation="vertical" >
 
-        <!--
-             <ImageView
-            android:id="@+id/violation_icon"
-            android:layout_width="16dp"
-            android:layout_height="16dp"
-            android:layout_gravity="top|right"
-            android:src="@drawable/ic_action_voilation"
-            android:visibility="invisible" />
-        -->
+        <ImageView
+            android:id="@+id/hotel_room_max_violation_icon"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentRight="true"
+            android:layout_alignParentTop="true" />
 
         <TextView
             android:id="@+id/hotel_room_rate"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="right|center_vertical"
+            android:layout_toLeftOf="@id/hotel_room_max_violation_icon"
             android:fontFamily="sans-serif-medium"
             android:paddingLeft="5dp"
             android:paddingRight="@dimen/list_cell_padding_right"
             android:paddingTop="16dp"
-            android:text="$0.00"
+            android:text="$198.00"
             android:textColor="#0078c8"
-            android:textSize="16sp"
+            android:textSize="18sp"
             android:textStyle="bold" />
 
         <TextView
             android:id="@+id/hotel_room_rate_hint"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_below="@id/hotel_room_rate"
             android:layout_gravity="right|center_vertical"
+            android:layout_toLeftOf="@id/hotel_room_max_violation_icon"
             android:fontFamily="sans-serif-medium"
             android:paddingLeft="5dp"
             android:paddingRight="@dimen/list_cell_padding_right"
@@ -97,6 +102,6 @@
             android:textColor="#0078c8"
             android:textSize="18sp" />
         -->
-    </LinearLayout>
+    </RelativeLayout>
 
 </LinearLayout>

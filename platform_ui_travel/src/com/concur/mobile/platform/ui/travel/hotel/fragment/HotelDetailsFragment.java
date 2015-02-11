@@ -10,8 +10,6 @@ import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.ViewGroup;
 import android.widget.Button;
-import android.widget.FrameLayout;
-import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.concur.mobile.platform.travel.search.hotel.Contact;
@@ -43,8 +41,6 @@ public class HotelDetailsFragment extends PlatformFragmentV1 implements OnClickL
     private ListItemAdapter<HotelRoomListItem> listItemAdapater;
     private HotelChoiceDetailsFragmentListener callBackListener;
     private LatLng post;
-    private ImageView mapView;
-    private MapFragment mapFrame;
     private Button findRooms;
 
     // private int paramsHeight;
@@ -53,6 +49,11 @@ public class HotelDetailsFragment extends PlatformFragmentV1 implements OnClickL
 
     public HotelDetailsFragment(Hotel hotel) {
         this.hotel = hotel;
+    }
+
+    // empty constructor
+    public HotelDetailsFragment() {
+
     }
 
     @Override
@@ -64,20 +65,10 @@ public class HotelDetailsFragment extends PlatformFragmentV1 implements OnClickL
         View mainView = inflater.inflate(R.layout.hotel_details_layout, null, false);
 
         post = new LatLng(hotel.latitude, hotel.longitude);
-        // Bitmap map = ViewUtil.setUpStaticMap(hotel.latitude, hotel.longitude);
-
-        // mapFragment.CaptureMapScreen();
-        // mapView = (ImageView) mainView.findViewById(R.id.map_imageview);
-        // if (mapView != null) {
-        // mapFrame = (MapFragment) getFragmentManager().findFragmentById(R.id.map_view);
-        // mapFrame.getMapAsync((OnMapReadyCallback) getActivity());
-
-        FrameLayout frame = (FrameLayout) mainView.findViewById(R.id.map_view);
 
         GoogleMapOptions options = new GoogleMapOptions().liteMode(true);
         CameraPosition camera = new CameraPosition(post, 15, 0, 0);
         options.camera(camera);
-        //
 
         mapFragment = MapFragment.newInstance(options);
         mapFragment.getMapAsync((OnMapReadyCallback) getActivity());
@@ -124,7 +115,9 @@ public class HotelDetailsFragment extends PlatformFragmentV1 implements OnClickL
             // s.subSequence(6, 10));
             TextView tv = ((TextView) mainView.findViewById(R.id.hotel_phone));
             tv.setText(formattedNumber);
+
             Linkify.addLinks(tv, Linkify.PHONE_NUMBERS);
+            com.concur.mobile.platform.ui.travel.util.ViewUtil.stripUnderlines(tv);
         } else {
             ViewUtil.setVisibility(mainView, R.id.hotel_phone, View.GONE);
         }

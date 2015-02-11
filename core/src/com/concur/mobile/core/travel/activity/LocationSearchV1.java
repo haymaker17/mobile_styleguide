@@ -300,7 +300,7 @@ public class LocationSearchV1 extends Activity implements INetworkActivityListen
         searchResultsList.setVisibility(View.VISIBLE);
         searchOfficeLocations.setVisibility(View.GONE);
 
-        if (text.length() >= 2 && currentSearchMode == SEARCH_CUSTOM) {
+        if (text.length() >= minSearchLength && currentSearchMode == SEARCH_CUSTOM) {
             doSearch(text);
         } else if (text.length() == 0) {
             searchIcon.setLayoutParams(new LinearLayout.LayoutParams(LinearLayout.LayoutParams.WRAP_CONTENT,
