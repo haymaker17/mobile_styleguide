@@ -44,10 +44,6 @@ public class HotelRoomDetailFragment extends PlatformFragmentV1 {
         }
     }
 
-    public HotelRoomDetailFragment() {
-
-    }
-
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         super.onCreateView(inflater, container, savedInstanceState);

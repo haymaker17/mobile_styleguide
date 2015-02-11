@@ -1,24 +1,20 @@
 package com.concur.mobile.platform.ui.travel.hotel.fragment;
 
-import android.app.Activity;
 import android.graphics.Bitmap;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
-import android.widget.Toast;
 
 import com.concur.mobile.platform.ui.common.fragment.PlatformFragmentV1;
 import com.concur.mobile.platform.ui.travel.R;
 import com.google.android.gms.common.ConnectionResult;
 import com.google.android.gms.common.GooglePlayServicesUtil;
-import com.google.android.gms.maps.CameraUpdate;
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
-import com.google.android.gms.maps.GoogleMapOptions;
+import com.google.android.gms.maps.GoogleMap.SnapshotReadyCallback;
 import com.google.android.gms.maps.MapFragment;
-import com.google.android.gms.maps.OnMapReadyCallback;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.MarkerOptions;
 
@@ -28,22 +24,20 @@ import com.google.android.gms.maps.model.MarkerOptions;
  * @author tejoa
  * 
  */
-public class HotelMapFragment extends PlatformFragmentV1 implements OnMapReadyCallback {
+public class HotelMapFragment extends PlatformFragmentV1 { // implements View.OnClickListener
 
     private static GoogleMap googleMap;
     private LatLng position;
     private MapFragment mapFragment;
     private ImageView snapshotHolder;
-    private boolean liteMode;
 
-    public HotelMapFragment(LatLng position, boolean liteMode) {
+    public HotelMapFragment(LatLng position, ImageView snapshotHolder) {
         this.position = position;
-        this.liteMode = liteMode;
+        this.snapshotHolder = snapshotHolder;
     }
 
     public HotelMapFragment(LatLng position) {
         this.position = position;
-        this.liteMode = false;
     }
 
     @Override
@@ -102,31 +96,29 @@ public class HotelMapFragment extends PlatformFragmentV1 implements OnMapReadyCa
 
     private void setUpMap() {
         if (googleMap == null) {
-            Activity activity = getActivity();
-            int resultCode = GooglePlayServicesUtil.isGooglePlayServicesAvailable(activity);
+            int resultCode = GooglePlayServicesUtil.isGooglePlayServicesAvailable(getActivity());
             if (resultCode == ConnectionResult.SUCCESS) {
-                if (liteMode) {
-                    GoogleMapOptions options = new GoogleMapOptions().liteMode(true);
-                    mapFragment = MapFragment.newInstance(options);
-                } else {
-                    mapFragment = ((MapFragment) getFragmentManager().findFragmentById(R.id.map));
+                mapFragment = ((MapFragment) getFragmentManager().findFragmentById(R.id.map));
+                ViewGroup.LayoutParams params = mapFragment.getView().getLayoutParams();
 
-                }
-                mapFragment.getMapAsync(this);
+                // // paramsHeight = 96;
+                // // params.height = paramsHeight;
+                // // mapFragment.getView().setLayoutParams(params);
 
-            } else {
-                Toast.makeText(activity, "Map Unavailable", Toast.LENGTH_LONG).show();
+                // TODO customize ShowMaps to view single and multiple hotels
+                // Intent i = new Intent(this, ShowHotelMap.class);
+
+                googleMap = mapFragment.getMap();
+                addMarkers();
             }
 
         }
     }
 
     private void addMarkers() {
-        if (googleMap != null) {
-            MarkerOptions marker = new MarkerOptions().position(position);
-            googleMap.addMarker(marker);
-            googleMap.moveCamera(CameraUpdateFactory.newLatLngZoom(position, 15));
-        }
+        MarkerOptions marker = new MarkerOptions().position(position);
+        googleMap.addMarker(marker);
+        googleMap.moveCamera(CameraUpdateFactory.newLatLngZoom(position, 15));
     }
 
     @Override
@@ -272,38 +264,23 @@ public class HotelMapFragment extends PlatformFragmentV1 implements OnMapReadyCa
     public void takeSnapshot() {
 
         if (googleMap == null) {
-            setUpMap();
+            return;
         }
+        // snapshotHolder = (ImageView) findViewById(R.id.snapshot_holder);
 
-        CameraUpdate yourLocation = CameraUpdateFactory.newLatLngZoom(position, 4.0f);
-        googleMap.animateCamera(yourLocation);
+        SnapshotReadyCallback callback = new SnapshotReadyCallback() {
 
-        googleMap.setOnMapLoadedCallback(new GoogleMap.OnMapLoadedCallback() {
-
-            public void onMapLoaded() {
-                googleMap.snapshot(new GoogleMap.SnapshotReadyCallback() {
-
-                    @Override
-                    public void onSnapshotReady(Bitmap snapshot) {
-                        // Callback is called from the main thread, so we can modify the ImageView safely.
-                        if (snapshotHolder != null && snapshot != null) {
-                            // bitmap = snapshot;
-                            // FileOutputStream out;
-                            // try {
-                            // out = new FileOutputStream("/mnt/sdcard/Download/TeleSensors.png");
-                            // bitmap.compress(Bitmap.CompressFormat.PNG, 90, out);
-                            // } catch (FileNotFoundException e) {
-                            // // TODO Auto-generated catch block
-                            // e.printStackTrace();
-                            // }
-
-                            snapshotHolder.setImageBitmap(snapshot);
-                        }
-                    }
-                });
+            @Override
+            public void onSnapshotReady(Bitmap snapshot) {
+                // Callback is called from the main thread, so we can modify the ImageView safely.
+                if (snapshotHolder != null && snapshot != null) {
+                    snapshotHolder.setImageBitmap(snapshot);
+                }
             }
+        };
 
-        });
+        googleMap.snapshot(callback);
+
     }
 
     /**
@@ -312,15 +289,6 @@ public class HotelMapFragment extends PlatformFragmentV1 implements OnMapReadyCa
     public void onClearScreenshot(View view) {
         // ImageView snapshotHolder = (ImageView) findViewById(R.id.snapshot_holder);
         snapshotHolder.setImageDrawable(null);
-    }
-
-    @Override
-    public void onMapReady(GoogleMap map) {
-        googleMap = map;
-        if (!liteMode) {
-            addMarkers();
-        }
-
     }
 
 }

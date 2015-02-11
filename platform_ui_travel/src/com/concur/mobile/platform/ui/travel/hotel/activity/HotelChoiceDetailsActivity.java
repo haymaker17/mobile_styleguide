@@ -4,46 +4,41 @@ import java.io.Serializable;
 import java.util.ArrayList;
 
 import android.app.Activity;
-import android.app.ActivityOptions;
 import android.app.FragmentManager;
 import android.app.FragmentTransaction;
 import android.content.Intent;
-import android.os.Build;
-import android.os.Build.VERSION_CODES;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.TabHost;
 import android.widget.Toast;
 
 import com.concur.mobile.platform.travel.search.hotel.Hotel;
+import com.concur.mobile.platform.travel.search.hotel.HotelImagePair;
 import com.concur.mobile.platform.ui.travel.R;
 import com.concur.mobile.platform.ui.travel.hotel.fragment.HotelChoiceDetailsFragment;
 import com.concur.mobile.platform.ui.travel.hotel.fragment.HotelChoiceDetailsFragment.HotelChoiceDetailsFragmentListener;
 import com.concur.mobile.platform.ui.travel.hotel.fragment.HotelDetailsFragment;
-import com.concur.mobile.platform.ui.travel.hotel.fragment.HotelImagesFragment;
 import com.concur.mobile.platform.ui.travel.hotel.fragment.HotelMapFragment;
 import com.concur.mobile.platform.ui.travel.hotel.fragment.HotelRoomDetailFragment;
 import com.concur.mobile.platform.ui.travel.hotel.fragment.HotelRoomListItem;
 import com.concur.mobile.platform.ui.travel.hotel.fragment.HotelSearchResultListItem;
+import com.concur.mobile.platform.ui.travel.hotel.fragment.ImageListItem;
+import com.concur.mobile.platform.ui.travel.hotel.fragment.ShowImagesFragment;
 import com.concur.mobile.platform.ui.travel.util.Const;
 import com.concur.mobile.platform.ui.travel.util.ParallaxScollView;
 import com.google.android.gms.common.ConnectionResult;
 import com.google.android.gms.common.GooglePlayServicesUtil;
-import com.google.android.gms.maps.CameraUpdateFactory;
-import com.google.android.gms.maps.GoogleMap;
-import com.google.android.gms.maps.OnMapReadyCallback;
 import com.google.android.gms.maps.model.LatLng;
-import com.google.android.gms.maps.model.MarkerOptions;
 
 /**
  * 
  * @author tejoa
  * 
  */
-public class HotelChoiceDetailsActivity extends Activity implements HotelChoiceDetailsFragmentListener,
-        OnMapReadyCallback {
+public class HotelChoiceDetailsActivity extends Activity implements HotelChoiceDetailsFragmentListener {
 
     public static final String CLS_TAG = HotelChoiceDetailsActivity.class.getSimpleName();
     public static final String FRAGMENT_HOTEL_DETAILS = "FRAGMENT_HOTEL_DETAILS";
@@ -53,8 +48,10 @@ public class HotelChoiceDetailsActivity extends Activity implements HotelChoiceD
     public static final String TAB_IMAGES = "IMAGES";
 
     private HotelChoiceDetailsFragment hotelDetailsFrag;
+    private View mRoot;
+    private TabHost mTabHost;
+    private int mCurrentTab;
     private HotelSearchResultListItem hotelListItem;
-    private Hotel hotel;
     private String location;
     private String durationOfStayForDisplay;
     private int numOfNights;
@@ -84,13 +81,8 @@ public class HotelChoiceDetailsActivity extends Activity implements HotelChoiceD
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         if (item.getItemId() == R.id.map) {
-            // Toast.makeText(getApplicationContext(), "Not implemented", Toast.LENGTH_SHORT).show();
-            if (hotel != null) {
-                LatLng post = new LatLng(hotel.latitude, hotel.longitude);
-                onMapsClicked(post);
-            } else {
-                Toast.makeText(getApplicationContext(), "No Hotel Details", Toast.LENGTH_SHORT).show();
-            }
+            Toast.makeText(getApplicationContext(), "Not implemented", Toast.LENGTH_SHORT).show();
+            // onMapsClicked();
             return true;
         } else {
             return super.onOptionsItemSelected(item);
@@ -110,7 +102,6 @@ public class HotelChoiceDetailsActivity extends Activity implements HotelChoiceD
         final Bundle bundle = i.getExtras();
         // hotel = new HotelSearchResultListItem();
         hotelListItem = (HotelSearchResultListItem) bundle.getSerializable(Const.EXTRA_HOTELS_DETAILS);
-        hotel = hotelListItem.getHotel();
 
         hotelDetailsFrag = (HotelChoiceDetailsFragment) getFragmentManager().findFragmentByTag(FRAGMENT_HOTEL_DETAILS);
         if (hotelDetailsFrag == null) {
@@ -146,20 +137,18 @@ public class HotelChoiceDetailsActivity extends Activity implements HotelChoiceD
     }
 
     @Override
-    public void onImageClicked(View v, int id) {
-        final Intent i = new Intent(this, ImageDetailActivity.class);
-        i.putExtra(ImageDetailActivity.EXTRA_IMAGE, id);
-        Bundle bundle = new Bundle();
-        bundle.putSerializable(Const.EXTRA_HOTEL_IMAGES, (Serializable) hotel.imagePairs);
-        i.putExtras(bundle);
-        if (Build.VERSION.SDK_INT >= VERSION_CODES.JELLY_BEAN) {
-            // makeThumbnailScaleUpAnimation() looks kind of ugly here as the loading spinner may
-            // show plus the thumbnail image in GridView is cropped. so using
-            // makeScaleUpAnimation() instead.
-            ActivityOptions options = ActivityOptions.makeScaleUpAnimation(v, 0, 0, v.getWidth(), v.getHeight());
-            startActivity(i, options.toBundle());
-        } else {
-            startActivity(i);
+    public void onImageClicked(ImageListItem imageListItem) {
+        if (imageListItem != null) {
+            HotelImagePair hotelImage = imageListItem.getHotelImage();
+            if (hotelImage != null) {
+                Intent i = new Intent(this, ImageActivity.class);
+                Bundle bundle = new Bundle();
+                bundle.putSerializable(Const.EXTRA_HOTEL_IMAGES, (Serializable) hotelListItem.getHotel().imagePairs);
+                i.putExtras(bundle);
+
+                startActivity(i);
+            }
+
         }
     }
 
@@ -188,8 +177,7 @@ public class HotelChoiceDetailsActivity extends Activity implements HotelChoiceD
             if (hotelMapFragment == null) {
                 hotelMapFragment = new HotelMapFragment(post);
                 FragmentTransaction ft = getFragmentManager().beginTransaction();
-                ft.add(R.id.tabcontainer, hotelMapFragment, FRAGMENT_HOTEL_MAP);
-                ft.addToBackStack(null);
+                ft.add(R.id.container, hotelMapFragment, FRAGMENT_HOTEL_MAP);
                 ft.commit();
             }
 
@@ -206,6 +194,7 @@ public class HotelChoiceDetailsActivity extends Activity implements HotelChoiceD
     public void updateTab(String tabId, int placeholder) {
         FragmentManager fm = hotelDetailsFrag.getFragmentManager();
         if (fm.findFragmentByTag(tabId) == null) {
+            Hotel hotel = hotelListItem.getHotel();
             if (TAB_DETAILS.equals(tabId)) {
                 fm.beginTransaction().replace(placeholder, new HotelDetailsFragment(hotel), tabId).commit();
             }
@@ -213,7 +202,7 @@ public class HotelChoiceDetailsActivity extends Activity implements HotelChoiceD
                 fm.beginTransaction().replace(placeholder, new HotelRoomDetailFragment(hotel.rates), tabId).commit();
             }
             if (TAB_IMAGES.equals(tabId)) {
-                fm.beginTransaction().replace(placeholder, new HotelImagesFragment(hotel.imagePairs), tabId).commit();
+                fm.beginTransaction().replace(placeholder, new ShowImagesFragment(hotel.imagePairs), tabId).commit();
             }
         }
     }
@@ -229,11 +218,9 @@ public class HotelChoiceDetailsActivity extends Activity implements HotelChoiceD
         intent.putExtra(Const.EXTRA_TRAVEL_HOTEL_SEARCH_DURATION_NUM_OF_NIGHTS, numOfNights);
         intent.putExtra("headerImageURL", headerImageURL);
         intent.putExtra("hotelName", hotelListItem.getHotel().name);
-
-        // startActivityForResult(intent, Const.REQUEST_CODE_BOOK_HOTEL);
         // intent.putExtra("maxEnforcementLevelString", roomListItem.maxEnforcementLevelString);
         intent.putExtra("violationReasons", violationReasons);
-        startActivityForResult(intent, Const.REQUEST_CODE_BOOK_HOTEL);
+        startActivity(intent);
 
     }
 
@@ -242,31 +229,4 @@ public class HotelChoiceDetailsActivity extends Activity implements HotelChoiceD
         this.headerImageURL = headerImageURL;
     }
 
-    @Override
-    public void onMapReady(GoogleMap map) {
-        map.getUiSettings().setZoomControlsEnabled(false);
-        // map.
-        // map.setOnMapClickListener(//)
-        LatLng position = new LatLng(hotel.latitude, hotel.longitude);
-        MarkerOptions marker = new MarkerOptions().position(position);
-        map.addMarker(marker);
-        map.moveCamera(CameraUpdateFactory.newLatLngZoom(position, 15));
-    }
-
-    @Override
-    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
-
-        switch (requestCode) {
-        case Const.REQUEST_CODE_BOOK_HOTEL: {
-            if (resultCode == RESULT_OK) {
-                setResult(resultCode, data);
-                finish();
-            }
-            break;
-        }
-        }
-
-        super.onActivityResult(requestCode, resultCode, data);
-
-    } // onActivityResult()
 }

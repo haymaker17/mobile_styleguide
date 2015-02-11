@@ -33,11 +33,8 @@ import com.concur.mobile.core.ConcurCore;
 import com.concur.mobile.core.data.SystemConfig;
 import com.concur.mobile.core.data.UserConfig;
 import com.concur.mobile.core.travel.activity.LocationSearchV1;
-import com.concur.mobile.core.travel.activity.TravelBaseActivity;
 import com.concur.mobile.core.travel.data.CompanyLocation;
-import com.concur.mobile.core.travel.data.IItineraryCache;
 import com.concur.mobile.core.travel.data.LocationChoice;
-import com.concur.mobile.core.travel.data.Trip;
 import com.concur.mobile.core.util.BookingDateUtil;
 import com.concur.mobile.core.util.FormatUtil;
 import com.concur.mobile.platform.ui.common.view.SearchListFormFieldView;
@@ -53,7 +50,7 @@ import com.concur.mobile.platform.util.Format;
  * 
  * @author Tejoa
  */
-public class RestHotelSearch extends TravelBaseActivity {
+public class RestHotelSearch extends Activity {
 
     private static final String CLS_TAG = RestHotelSearch.class.getSimpleName();
     private static final String TAG_CALENDAR_DIALOG_FRAGMENT = HotelSearch.class.getSimpleName()
@@ -639,22 +636,8 @@ public class RestHotelSearch extends TravelBaseActivity {
         case Const.REQUEST_CODE_BOOK_HOTEL: {
             if (resultCode == RESULT_OK) {
                 // Hotel was booked, set the result code to okay.
-                itinLocator = data.getStringExtra(Const.EXTRA_TRAVEL_ITINERARY_LOCATOR);
-                bookingRecordLocator = data.getStringExtra(Const.EXTRA_TRAVEL_RECORD_LOCATOR);
-                if (cliqbookTripId != null) {
-                    IItineraryCache itinCache = this.getConcurCore().getItinCache();
-                    Trip trip = itinCache.getItinerarySummaryByCliqbookTripId(cliqbookTripId);
-                    if (trip != null) {
-                        data.putExtra(Const.EXTRA_TRAVEL_ITINERARY_LOCATOR, trip.itinLocator);
-                    } else {
-                        Log.e(Const.LOG_TAG, CLS_TAG + ".onReceive: unable to locate trip based on cliqbook trip id!");
-                    }
-                }
-
                 setResult(Activity.RESULT_OK, data);
-                onBookingSucceeded();
-                // finish();
-
+                finish();
             } else if (resultCode == RESULT_CANCELED) {
                 // Hotel Search cancelled or did not go further with the booking
                 checkForSearchCriteraChanged = true;
@@ -662,23 +645,6 @@ public class RestHotelSearch extends TravelBaseActivity {
             }
             break;
         }
-        }
-    }
-
-    @Override
-    protected void onBookingSucceeded() {
-        if (!launchedWithCliqbookTripId) {
-            // Set the flag that the trip list should be refetched.
-            IItineraryCache itinCache = getConcurCore().getItinCache();
-            if (itinCache != null) {
-                itinCache.setShouldRefetchSummaryList(true);
-            }
-            // Retrieve an updated trip summary list, then retrieve the detailed itinerary.
-            isShowRatingPrompt = true;
-            sendItinerarySummaryListRequest();
-        } else {
-            // Just finish the activity.
-            finish();
         }
     }
 

@@ -9,7 +9,6 @@ import java.io.UnsupportedEncodingException;
 import java.net.HttpURLConnection;
 import java.net.URLEncoder;
 import java.util.ArrayList;
-import java.util.List;
 
 import org.xmlpull.v1.XmlPullParser;
 import org.xmlpull.v1.XmlPullParserException;
@@ -23,7 +22,6 @@ import com.concur.mobile.base.service.BaseAsyncRequestTask;
 import com.concur.mobile.base.service.BaseAsyncResultReceiver;
 import com.concur.mobile.base.service.parser.CommonParser;
 import com.concur.mobile.platform.service.parser.ActionResponseParser;
-import com.concur.mobile.platform.service.parser.MWSResponse;
 import com.concur.mobile.platform.service.parser.MWSResponseStatus;
 import com.concur.mobile.platform.util.Const;
 import com.concur.mobile.platform.util.Format;
@@ -263,39 +261,6 @@ public abstract class PlatformAsyncRequestTask extends BaseAsyncRequestTask {
         if (responseStatus.getErrors() != null) {
             resultData.putSerializable(EXTRA_MWS_RESPONSE_STATUS_ERRORS_KEY, (Serializable) responseStatus.getErrors());
         }
-
-    }
-
-    /**
-     * Will set into the result data bundle (<code>resultData</code>) information from <code>mwsResponseStatus</code> in the
-     * following way:<br>
-     * <li>response message (TEXT) using the key <code>PlatformAsyncRequestTask.EXTRA_MWS_RESPONSE_STATUS_RESPONSE_MESSAGE_KEY</li>
-     * <li>success (BOOLEAN) using the key <code>PlatformAsyncRequestTask.EXTRA_MWS_RESPONSE_STATUS_SUCCESS_KEY</li> <li>errors
-     * (ArrayList<Error>) using the key <code>PlatformAsyncRequestTask.EXTRA_MWS_RESPONSE_STATUS_ERRORS_KEY</li>
-     * 
-     * @param <T>
-     * 
-     * @param responseStatus
-     *            contains a reference to an <code>MWSResponseStatus</code> object.
-     */
-    protected <T> void setMWSResponseStatusIntoResultBundle(MWSResponse<T> responseStatus) {
-
-        List<String> responseMessage = responseStatus.getInfo();
-        // Set any response message.
-        if (responseMessage != null && responseMessage.size() > 0
-                && !TextUtils.isEmpty((CharSequence) responseMessage.get(0))) {
-            resultData.putString(EXTRA_MWS_RESPONSE_STATUS_RESPONSE_MESSAGE_KEY, (String) responseMessage.get(0));
-        }
-
-        // Set the success boolean value.
-
-        // Set the error list.
-        if (responseStatus.getErrors() != null) {
-            resultData.putSerializable(EXTRA_MWS_RESPONSE_STATUS_ERRORS_KEY, (Serializable) responseStatus.getErrors());
-        }
-        // } else {
-        // resultData.putBoolean(EXTRA_MWS_RESPONSE_STATUS_SUCCESS_KEY, responseStatus.isSuccess());
-        // }
 
     }
 

@@ -1,6 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:map="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical" >
@@ -17,41 +16,29 @@
             android:orientation="vertical" >
 
             <!--
-                  <com.google.android.gms.maps.MapFragment
+                <fragment
                 android:id="@+id/map_view"
+                android:name="com.google.android.gms.maps.MapFragment"
                 android:layout_width="match_parent"
-                android:layout_height="168dp"
-                android:layout_marginTop="12dp"
-                map:cameraZoom="15"
-                map:liteMode="true"
-                map:mapType="normal" />
-            -->
-
-            <FrameLayout
-                android:id="@+id/map_view"
-                android:layout_width="match_parent"
-                android:layout_height="96dp"
+                android:layout_height="wrap_content"
+                 layout="@layout/map_layout"
                 android:layout_marginTop="12dp" />
-
-            <!--
+                
             <FrameLayout
                 android:id="@+id/map_view"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="12dp" />
-                 map:cameraZoom="13"
-                map:liteMode="true"
-                map:mapType="normal"
+                android:layout_marginTop="12dp"
+                android:clickable="true" >
             </FrameLayout>
-            layout="@layout/map_layout"
+            -->
 
             <ImageView
-                android:id="@+id/map_imageview"
+                android:id="@+id/map_view"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="12dp"
                 android:clickable="true" />
-            -->
 
             <TextView
                 android:id="@+id/hotel_address"
