@@ -19,7 +19,8 @@ public class TravelDBSchema {
 
     // DB History
     // Contains the current database version.
-    static final int DATABASE_VERSION = 1; // Initial version.
+    // static final int DATABASE_VERSION = 1; // Initial version.
+    static final int DATABASE_VERSION = 2; // added Jarvis Hotel tables.
 
     // Creates the trip summary table.
     protected static final String SCHEMA_CREATE_TRIP_SUMMARY_TABLE = "CREATE TABLE IF NOT EXISTS "
@@ -835,6 +836,85 @@ public class TravelDBSchema {
     protected static final String DROP_LOCATION_CHOICE_TABLE = "DROP TABLE IF EXISTS "
             + Travel.LocationChoiceColumns.TABLE_NAME + ";";
 
+    // Creates Hotel Search Result table.
+    protected static final String SCHEMA_CREATE_HOTEL_SEARCH_RESULT_TABLE = "CREATE TABLE IF NOT EXISTS "
+            + Travel.HotelSearchResultColumns.TABLE_NAME + " (" + Travel.HotelSearchResultColumns._ID
+            + " INTEGER PRIMARY KEY AUTOINCREMENT , " + Travel.HotelSearchResultColumns.DISTANCE_UNIT + " TEXT, "
+            + Travel.HotelSearchResultColumns.CURRENCY + " TEXT" + ")";
+
+    // Drop the Hotel Search Result table.
+    protected static final String DROP_HOTEL_SEARCH_RESULT_TABLE = "DROP TABLE IF EXISTS "
+            + Travel.HotelSearchResultColumns.TABLE_NAME + ";";
+
+    // Creates the Hotel Detail table - will have a foreign key reference to Hotel Search Result table
+    protected static final String SCHEMA_CREATE_HOTEL_DETAIL_TABLE = "CREATE TABLE IF NOT EXISTS "
+            + Travel.HotelDetailColumns.TABLE_NAME + " (" + Travel.HotelDetailColumns._ID
+            + " INTEGER PRIMARY KEY AUTOINCREMENT, " + Travel.HotelDetailColumns.NAME + " TEXT, "
+            + Travel.HotelDetailColumns.CHAIN_NAME + " TEXT, " + Travel.HotelDetailColumns.CHAIN_CODE + " TEXT, "
+            + Travel.HotelDetailColumns.STREET + " TEXT, " + Travel.HotelDetailColumns.ADDRESS_LINE_1 + " TEXT, "
+            + Travel.HotelDetailColumns.CITY + " TEXT, " + Travel.HotelDetailColumns.STATE + " TEXT, "
+            + Travel.HotelDetailColumns.COUNTRY + " TEXT, " + Travel.HotelDetailColumns.COUNTRY_CODE + " TEXT, "
+            + Travel.HotelDetailColumns.PHONE + " TEXT, " + Travel.HotelDetailColumns.TOLL_FREE_PHONE + " TEXT, "
+            + Travel.HotelDetailColumns.ZIP + " TEXT, " + Travel.HotelDetailColumns.DISTANCE + " REAL, "
+            + Travel.HotelDetailColumns.PRICE_TO_BEAT + " REAL, " + Travel.HotelDetailColumns.DISTANCE_UNIT + " TEXT, "
+            + Travel.HotelDetailColumns.LOWEST_RATE + " REAL, " + Travel.HotelDetailColumns.CURRENCY_CODE + " TEXT, "
+            + Travel.HotelDetailColumns.STAR_RATING + " TEXT, " + Travel.HotelDetailColumns.COMPANY_PREFERENCE
+            + " TEXT, " + Travel.HotelDetailColumns.SUGESTED_CATEGORY + " TEXT, " + Travel.HotelDetailColumns.LAT
+            + " REAL, " + Travel.HotelDetailColumns.LON + " REAL, " + Travel.HotelDetailColumns.LOWEST_ENF_LEVEL
+            + " INTEGER, " + Travel.HotelDetailColumns.RATES_URL + " TEXT, " + Travel.HotelDetailColumns.SUGESTED_SCORE
+            + " REAL, " + Travel.HotelDetailColumns.THUMBNAIL_URL + " TEXT, "
+            + Travel.HotelDetailColumns.AVAILABILITY_ERROR_CODE + " TEXT, "
+            + Travel.HotelDetailColumns.HOTEL_SEARCH_RESULT_ID + " INTEGER REFERENCES "
+            + Travel.HotelSearchResultColumns.TABLE_NAME + " ON DELETE CASCADE )";
+
+    // Drop the Hotel Detail table.
+    protected static final String DROP_HOTEL_DETAIL_TABLE = "DROP TABLE IF EXISTS "
+            + Travel.HotelDetailColumns.TABLE_NAME + ";";
+
+    // Creates the Hotel Image Pair table - will have a foreign key reference to Hotel Detail table
+    protected static final String SCHEMA_CREATE_HOTEL_IMAGE_PAIR_TABLE = "CREATE TABLE IF NOT EXISTS "
+            + Travel.HotelImagePairColumns.TABLE_NAME + " (" + Travel.HotelImagePairColumns._ID
+            + " INTEGER PRIMARY KEY AUTOINCREMENT, " + Travel.HotelImagePairColumns.IMAGE_URL + " TEXT, "
+            + Travel.HotelImagePairColumns.THUMBNAIL_URL + " TEXT, " + Travel.HotelImagePairColumns.HOTEL_DETAIL_ID
+            + " INTEGER REFERENCES " + Travel.HotelDetailColumns.TABLE_NAME + " ON DELETE CASCADE )";
+
+    // Drop the Hotel Image Pair table
+    protected static final String DROP_HOTEL_IMAGE_PAIR_TABLE = "DROP TABLE IF EXISTS "
+            + Travel.HotelImagePairColumns.TABLE_NAME + ";";
+
+    // Creates the Hotel Rate Detail table - will have a foreign key reference to Hotel Detail table
+    protected static final String SCHEMA_CREATE_HOTEL_RATE_DETAIL_TABLE = "CREATE TABLE IF NOT EXISTS "
+            + Travel.HotelRateDetailColumns.TABLE_NAME + " (" + Travel.HotelRateDetailColumns._ID
+            + " INTEGER PRIMARY KEY AUTOINCREMENT, " + Travel.HotelRateDetailColumns.RATE_ID + " TEXT,"
+            + Travel.HotelRateDetailColumns.AMOUNT + " REAL," + Travel.HotelRateDetailColumns.CURRENCY_CODE + " TEXT,"
+            + Travel.HotelRateDetailColumns.SOURCE + " TEXT," + Travel.HotelRateDetailColumns.ROOM_TYPE + " TEXT,"
+            + Travel.HotelRateDetailColumns.DESCRIPTION + " TEXT," + Travel.HotelRateDetailColumns.ESTIMATED_BED_TYPE
+            + " TEXT," + Travel.HotelRateDetailColumns.GUARANTEE_SURCHARGE + " REAL,"
+            + Travel.HotelRateDetailColumns.RATE_CHANGES_OVERSTAY + " INTEGER,"
+            + Travel.HotelRateDetailColumns.MAX_ENF_LEVEL + " INTEGER,"
+            + Travel.HotelRateDetailColumns.SELL_OPTIONS_URL + " TEXT,"
+            + Travel.HotelRateDetailColumns.VIOLATION_VALUE_IDS + " TEXT,"
+            + Travel.HotelRateDetailColumns.TRAVEL_POINTS + " REAL,"
+            + Travel.HotelRateDetailColumns.CAN_REDEEM_TP_AGAINST_VIOLATIONS + " INTEGER,"
+            + Travel.HotelRateDetailColumns.HOTEL_DETAIL_ID + " INTEGER REFERENCES "
+            + Travel.HotelDetailColumns.TABLE_NAME + " ON DELETE CASCADE )";
+
+    // Drop the Hotel Rate Detail table.
+    protected static final String DROP_HOTEL_RATE_DETAIL_TABLE = "DROP TABLE IF EXISTS "
+            + Travel.HotelRateDetailColumns.TABLE_NAME + ";";
+
+    // Creates the Hotel Violation table - will have a foreign key reference to Hotel Search Result table
+    protected static final String SCHEMA_CREATE_HOTEL_VIOLATION_TABLE = "CREATE TABLE IF NOT EXISTS "
+            + Travel.HotelViolationColumns.TABLE_NAME + " (" + Travel.HotelViolationColumns._ID
+            + " INTEGER PRIMARY KEY AUTOINCREMENT, " + Travel.HotelViolationColumns.ENFORCEMENT_LEVEL + " TEXT,"
+            + Travel.HotelViolationColumns.MESSAGE + " TEXT," + Travel.HotelViolationColumns.VIOLATION_VALUE_ID
+            + " TEXT," + Travel.HotelViolationColumns.HOTEL_SEARCH_RESULT_ID + " INTEGER REFERENCES "
+            + Travel.HotelSearchResultColumns.TABLE_NAME + " ON DELETE CASCADE )";
+
+    // Drop the Hotel Violation table.
+    protected static final String DROP_HOTEL_VIOLATION_TABLE = "DROP TABLE IF EXISTS "
+            + Travel.HotelViolationColumns.TABLE_NAME + ";";
+
     // Contains the config schema creation SQL. Must be in execution order
     protected static final String[] SCHEMA_CREATE_SQL = { //
     SCHEMA_CREATE_TRIP_SUMMARY_TABLE, //
@@ -920,7 +1000,12 @@ public class TravelDBSchema {
             SCHEMA_CREATE_PARKING_SEGMENT_INDEX, //
             SCHEMA_CREATE_RIDE_SEGMENT_TABLE, //
             SCHEMA_CREATE_RIDE_SEGMENT_INDEX, //
-            SCHEMA_CREATE_LOCATION_CHOICE_TABLE //
+            SCHEMA_CREATE_LOCATION_CHOICE_TABLE, //
+            SCHEMA_CREATE_HOTEL_SEARCH_RESULT_TABLE, //
+            SCHEMA_CREATE_HOTEL_DETAIL_TABLE, //
+            SCHEMA_CREATE_HOTEL_IMAGE_PAIR_TABLE, //
+            SCHEMA_CREATE_HOTEL_RATE_DETAIL_TABLE, //
+            SCHEMA_CREATE_HOTEL_VIOLATION_TABLE //
     };
 
     // Contains the config schema deletion SQL. Must be in execution order
@@ -961,6 +1046,11 @@ public class TravelDBSchema {
             DROP_PARKING_SEGMENT_TABLE, //
             DROP_RIDE_SEGMENT_TABLE, //
             DROP_LOCATION_CHOICE_TABLE, //
+            DROP_HOTEL_SEARCH_RESULT_TABLE, //
+            DROP_HOTEL_DETAIL_TABLE, //
+            DROP_HOTEL_IMAGE_PAIR_TABLE, //
+            DROP_HOTEL_RATE_DETAIL_TABLE, //
+            DROP_HOTEL_VIOLATION_TABLE //
     };
 
     /*

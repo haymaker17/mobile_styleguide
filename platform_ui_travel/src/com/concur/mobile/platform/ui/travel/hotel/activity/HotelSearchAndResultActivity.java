@@ -88,6 +88,7 @@ public class HotelSearchAndResultActivity extends Activity implements OnMenuItem
     private boolean searchCriteriaChanged;
     private String distanceUnit;
     private int numberOfNights;
+    private ArrayList<String[]> violationReasons;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -97,6 +98,7 @@ public class HotelSearchAndResultActivity extends Activity implements OnMenuItem
         Intent intent = getIntent();
 
         location = intent.getStringExtra(Const.EXTRA_TRAVEL_HOTEL_SEARCH_LOCATION);
+        violationReasons = (ArrayList<String[]>) intent.getSerializableExtra("violationReasons");
 
         // searchCriteriaChanged will be false if it just came back from search criteria screen without any changes to the
         // previous searched criteria. in such
@@ -503,6 +505,7 @@ public class HotelSearchAndResultActivity extends Activity implements OnMenuItem
                     i.putExtra(Const.EXTRA_TRAVEL_HOTEL_SEARCH_DURATION_OF_STAY,
                             hotelSearchRESTResultFrag.durationOfStayForDisplayInHeader);
                     i.putExtra(Const.EXTRA_TRAVEL_HOTEL_SEARCH_DURATION_NUM_OF_NIGHTS, numberOfNights);
+                    i.putExtra("violationReasons", violationReasons);
                     i.putExtras(bundle);
                     // startActivity(i);
                     startActivityForResult(i, Const.REQUEST_CODE_BOOK_HOTEL);
@@ -588,7 +591,7 @@ public class HotelSearchAndResultActivity extends Activity implements OnMenuItem
             Log.d(Const.LOG_TAG, " ***** creating search loader *****  ");
 
             // TODO - does this need to be fired in a separate thread?
-            // TravelUtilHotel.deleteAllHotelDetails(this);
+            TravelUtilHotel.deleteAllHotelDetails(this);
 
             hotelSearchAsyncTaskLoader = new HotelSearchResultLoader(this, checkInDate, checkOutDate, latitude,
                     longitude, 25, distanceUnit, 0, 10);

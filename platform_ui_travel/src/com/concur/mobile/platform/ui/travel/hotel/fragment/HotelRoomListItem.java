@@ -25,6 +25,7 @@ public class HotelRoomListItem extends ListItem {
     private static final String CLS_TAG = HotelRoomListItem.class.getSimpleName();
 
     private HotelRate hotelRoom;
+    public String maxEnforcementLevelString;
 
     /**
      * Constructs an instance of <code>HotelRoomListItem</code> backed by a hotel room.
@@ -76,26 +77,10 @@ public class HotelRoomListItem extends ListItem {
                         .getConfiguration().locale, hotelRoom.currency, true, false));
                 // set the Travel Points
                 // LayoutUtil.initTravelPointsAtItemLevel(roomView, R.id.travel_points, hotelRoom.travelPoints);
-                switch (ViewUtil.getRuleEnforcementLevel(hotelRoom.maxEnforcementLevel)) {
-
-                case WARNING:
-                case ERROR: {
-                    // Drawable img = context.getResources().getDrawable(­R.drawable.ic_action_voilation );
+                maxEnforcementLevelString = ViewUtil.getRuleEnforcementLevelAsString(hotelRoom.maxEnforcementLevel);
+                if (maxEnforcementLevelString.equals("WARNING") || maxEnforcementLevelString.equals("ERROR")) {
                     txtView.setCompoundDrawablesWithIntrinsicBounds(0, R.drawable.ic_action_voilation, 0, 0);
                     txtView.setPadding(5, 0, 8, 0);
-                }
-
-                case HIDE: {
-                    // No-op.
-                    Log.e(Const.LOG_TAG, CLS_TAG + ".getView: rule enforcement level of hide!");
-                    break;
-                }
-                case INACTIVE:
-                    break;
-                case NONE:
-                    break;
-                default:
-                    break;
                 }
             }
         } else {
