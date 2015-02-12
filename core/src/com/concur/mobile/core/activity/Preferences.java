@@ -27,7 +27,6 @@ import android.preference.PreferenceScreen;
 import android.provider.Settings;
 import android.text.TextUtils;
 import android.util.Log;
-import android.widget.Toast;
 
 import com.concur.core.R;
 import com.concur.mobile.core.ConcurCore;
@@ -73,7 +72,7 @@ public class Preferences extends PreferenceActivity implements OnSharedPreferenc
     public static final String OPEN_SOURCE_LIBRARY_CLASS = "open_source_library_class";
 
     // Switches for OCR, ***REMOVE FROM BRANCH*** begin
-    public static int timesClicked = 0;
+    // public static int timesClicked = 0;
     public static final String PREF_OCR_FLAG = "pref_ocr_flag";
     // Switches for OCR, ***REMOVE FROM BRANCH*** end
 
@@ -168,27 +167,27 @@ public class Preferences extends PreferenceActivity implements OnSharedPreferenc
         version.setSummary(versionString.toString());
 
         // Switches for OCR, ***REMOVE FROM BRANCH*** begin
-        version.setOnPreferenceClickListener(new OnPreferenceClickListener() {
-
-            @Override
-            public boolean onPreferenceClick(Preference preference) {
-                timesClicked++;
-
-                if (timesClicked >= 8) {
-                    timesClicked = 0;
-                    boolean showingNewOCR = Preferences.shouldUseNewOcrFeatures();
-                    setShouldUseNewOcrFeatures(!showingNewOCR);
-
-                    // Reverse logic since we just flipped the flag
-                    if (!showingNewOCR) {
-                        Toast.makeText(getBaseContext(), "New UI Enabled", Toast.LENGTH_SHORT).show();
-                    } else {
-                        Toast.makeText(getBaseContext(), "New UI Disabled", Toast.LENGTH_SHORT).show();
-                    }
-                }
-                return false;
-            }
-        });
+        // version.setOnPreferenceClickListener(new OnPreferenceClickListener() {
+        //
+        // @Override
+        // public boolean onPreferenceClick(Preference preference) {
+        // timesClicked++;
+        //
+        // if (timesClicked >= 8) {
+        // timesClicked = 0;
+        // boolean showingNewOCR = Preferences.shouldUseNewOcrFeatures();
+        // setShouldUseNewOcrFeatures(!showingNewOCR);
+        //
+        // // Reverse logic since we just flipped the flag
+        // if (!showingNewOCR) {
+        // Toast.makeText(getBaseContext(), "New UI Enabled", Toast.LENGTH_SHORT).show();
+        // } else {
+        // Toast.makeText(getBaseContext(), "New UI Disabled", Toast.LENGTH_SHORT).show();
+        // }
+        // }
+        // return false;
+        // }
+        // });
         // Switches for OCR, ***REMOVE FROM BRANCH*** end
 
         // Set the default Voice Search Language based on the device locale.
@@ -1036,8 +1035,9 @@ public class Preferences extends PreferenceActivity implements OnSharedPreferenc
 
     // Renaming isExpenseIt user to isOCRUser.
     public static boolean isOCRUser() {
-        SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(ConcurCore.getContext());
-        return prefs.getBoolean(Const.PREF_SHOW_EXPENSEIT_AD, true);
+        // SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(ConcurCore.getContext());
+        // return prefs.getBoolean(Const.PREF_SHOW_EXPENSEIT_AD, true);
+        return false;
     }
 
     public static boolean isCardAgreementAccepted() {
@@ -1514,8 +1514,9 @@ public class Preferences extends PreferenceActivity implements OnSharedPreferenc
     }
 
     public static boolean shouldUseNewOcrFeatures() {
-        SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(ConcurCore.getContext());
-        return prefs.getBoolean(PREF_OCR_FLAG, false);
+        // SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(ConcurCore.getContext());
+        // return prefs.getBoolean(PREF_OCR_FLAG, false);
+        return false;
     }
 
     public static void setShouldUseNewOcrFeatures(boolean ocrPref) {
