@@ -60,7 +60,7 @@ public class EmailLookUpRequestTask extends PlatformAsyncRequestTask {
     public static String EXTRA_EMAIL_KEY = "email.lookup.email";
 
     // Contains the service end-point for the <code>EmailLookup</code> MWS call.
-    private final String SERVICE_END_POINT = "/mobile/MobileSession/EmailLookup";
+    private final String SERVICE_END_POINT = "/mobile/MobileSession/EmailLookupV2";
 
     /**
      * Contains the email address.
@@ -221,15 +221,13 @@ public class EmailLookUpRequestTask extends PlatformAsyncRequestTask {
      */
     private void setEmailLookUpResponseDataInBundle() {
         // Set the login id.
-        resultData.putString(EXTRA_LOGIN_ID_KEY, emailLookUpResponse.loginId);
+        resultData.putString(EXTRA_LOGIN_ID_KEY, email);
         // Set the server url.
         resultData.putString(EXTRA_SERVER_URL_KEY, emailLookUpResponse.serverUrl);
         // Set the sign-in method.
         resultData.putString(EXTRA_SIGN_IN_METHOD_KEY, emailLookUpResponse.signInMethod);
         // Set the sso url.
         resultData.putString(EXTRA_SSO_URL_KEY, emailLookUpResponse.ssoUrl);
-        // Set the email.
-        resultData.putString(EXTRA_EMAIL_KEY, emailLookUpResponse.email);
     }
 
 }
