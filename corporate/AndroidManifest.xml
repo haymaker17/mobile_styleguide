@@ -197,6 +197,10 @@
             android:name="com.concur.mobile.core.travel.hotel.activity.HotelSearchResults"
             android:screenOrientation="portrait" />
         <activity
+            android:name="com.concur.mobile.platform.ui.travel.hotel.activity.HotelVoiceSearchActivity"
+            android:screenOrientation="portrait"
+            android:theme="@style/ConcurRestTheme.White.ActionBarTabs" />
+        <activity
             android:name="com.concur.mobile.platform.ui.travel.hotel.activity.HotelBookingActivity"
             android:screenOrientation="portrait"
             android:theme="@style/ConcurRestTheme.White.ActionBarTabs" />
