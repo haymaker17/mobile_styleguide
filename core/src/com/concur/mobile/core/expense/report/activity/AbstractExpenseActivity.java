@@ -31,6 +31,7 @@ import android.content.IntentFilter;
 import android.content.SharedPreferences;
 import android.content.res.Resources;
 import android.graphics.drawable.Drawable;
+import android.location.Location;
 import android.net.Uri;
 import android.os.Bundle;
 import android.os.Environment;
@@ -101,6 +102,7 @@ import com.concur.mobile.core.view.FormFieldView.ValidityCheck;
 import com.concur.mobile.core.view.FormFieldViewListener;
 import com.concur.mobile.core.view.SearchListFormFieldView;
 import com.concur.mobile.core.view.ViewOnClickHandler;
+import com.concur.mobile.platform.location.LastLocationTracker;
 import com.concur.mobile.platform.util.Format;
 
 /**
@@ -5950,6 +5952,19 @@ public abstract class AbstractExpenseActivity extends BaseActivity {
                                     if (receiptImageId != null && receiptImageId.length() > 0) {
                                         // Handle the post-action of saving a receipt to the cloud.
                                         activity.handlePostReceiptSave(receiptImageId);
+
+                                        // MOB-22375 - Google Analytics for Receipt Upload.
+                                        LastLocationTracker locTracker = activity.getConcurCore().getLocationTracker();
+                                        Location loc = locTracker.getCurrentLocaton();
+                                        String lat = "0";
+                                        String lon = "0";
+                                        if (loc != null) {
+                                            lat = Double.toString(loc.getLatitude());
+                                            lon = Double.toString(loc.getLongitude());
+                                        }
+                                        String eventLabel = receiptImageId + "|" + lat + "|" + lon;
+                                        EventTracker.INSTANCE.track("Receipts", "Receipt Capture Location", eventLabel);
+
                                     } else {
                                         Log.e(Const.LOG_TAG, CLS_TAG + ".onReceive: null receipt image id!");
 
@@ -6340,6 +6355,23 @@ public abstract class AbstractExpenseActivity extends BaseActivity {
                             if (httpStatusCode == HttpStatus.SC_OK) {
                                 if (intent.getStringExtra(Const.REPLY_STATUS).equalsIgnoreCase(
                                         Const.REPLY_STATUS_SUCCESS)) {
+
+                                    // MOB-22375 - Google Analytics for Receipt Upload.
+                                    if (request != null && request.receiptImageId != null
+                                            && request.receiptImageId.trim().length() > 0) {
+
+                                        ConcurCore concurCore = ((ConcurCore) activity.getApplication());
+                                        LastLocationTracker locTracker = concurCore.getLocationTracker();
+                                        Location loc = locTracker.getCurrentLocaton();
+                                        String lat = "0";
+                                        String lon = "0";
+                                        if (loc != null) {
+                                            lat = Double.toString(loc.getLatitude());
+                                            lon = Double.toString(loc.getLongitude());
+                                        }
+                                        String eventLabel = request.receiptImageId + "|" + lat + "|" + lon;
+                                        EventTracker.INSTANCE.track("Receipts", "Receipt Capture Location", eventLabel);
+                                    }
 
                                     // Flurry Notification
                                     if (activity.receiptSaveAction != null) {

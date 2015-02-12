@@ -18,6 +18,7 @@ import org.xml.sax.SAXException;
 import org.xml.sax.helpers.DefaultHandler;
 
 import android.content.Context;
+import android.location.Location;
 import android.text.TextUtils;
 import android.util.Log;
 
@@ -157,6 +158,11 @@ public class MobileEntry implements Cloneable {
      * Contains the smart expense id
      */
     public String smartExpenseId;
+
+    /**
+     * Contains the location of where this image was taken.
+     */
+    private Location locationTaken;
 
     public MobileEntry() {
 
@@ -841,6 +847,21 @@ public class MobileEntry implements Cloneable {
      */
     public void setStatus(MobileEntryStatus status) {
         this.status = status;
+    }
+
+    /**
+     * @return the locationTaken or <code>null</code> if unknown.
+     */
+    public Location getLocationTaken() {
+        return locationTaken;
+    }
+
+    /**
+     * @param locationTaken
+     *            the locationTaken to set
+     */
+    public void setLocationTaken(Location locationTaken) {
+        this.locationTaken = locationTaken;
     }
 
     /*
