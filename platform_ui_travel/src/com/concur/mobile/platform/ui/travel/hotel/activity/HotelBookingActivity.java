@@ -7,12 +7,9 @@ import java.util.List;
 
 import android.app.ActionBar;
 import android.app.Activity;
-import android.app.AlertDialog;
 import android.app.FragmentManager;
 import android.app.FragmentTransaction;
 import android.app.LoaderManager;
-import android.content.DialogInterface;
-import android.content.DialogInterface.OnCancelListener;
 import android.content.Intent;
 import android.content.Loader;
 import android.graphics.Bitmap;
@@ -24,7 +21,6 @@ import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.View.OnClickListener;
-import android.view.ViewGroup;
 import android.view.ViewGroup.LayoutParams;
 import android.view.ViewStub;
 import android.widget.ArrayAdapter;
@@ -456,7 +452,7 @@ public class HotelBookingActivity extends Activity implements LoaderManager.Load
             public void onClick(View v) {
                 if (violationReasonChoices != null && violationReasonChoices.length > 0) {
                     SpinnerDialogFragment dialogFragment = new SpinnerDialogFragment(R.string.general_select_reason,
-                            R.drawable.btn_check_on, violationReasonChoices);
+                            R.drawable.sort_check_mark, violationReasonChoices);
                     if (curViolationReason != null) {
                         dialogFragment.curSpinnerItemId = curViolationReason.id;
                     }
@@ -500,7 +496,7 @@ public class HotelBookingActivity extends Activity implements LoaderManager.Load
             public void onClick(View v) {
                 if (cardChoices != null && cardChoices.length > 0) {
                     SpinnerDialogFragment dialogFragment = new SpinnerDialogFragment(R.string.general_select_card,
-                            R.drawable.btn_check_on, cardChoices);
+                            R.drawable.sort_check_mark, cardChoices);
                     if (curCardChoice != null) {
                         dialogFragment.curSpinnerItemId = curCardChoice.id;
                     }
@@ -512,7 +508,6 @@ public class HotelBookingActivity extends Activity implements LoaderManager.Load
                 }
             }
         });
-
     }
 
     private TextView updateCardView() {
@@ -528,48 +523,6 @@ public class HotelBookingActivity extends Activity implements LoaderManager.Load
             Log.e(Const.LOG_TAG, CLS_TAG + ".initCardChoiceView: unable to locate 'card_selection' view!");
         }
         return cardSelectionView;
-    }
-
-    private void showCreditCardsDialog() {
-        AlertDialog.Builder dlgBldr = new AlertDialog.Builder(this);
-        dlgBldr.setTitle(R.string.general_select_card);
-        dlgBldr.setCancelable(true);
-        ArrayAdapter<SpinnerItem> listAdapter = new ArrayAdapter<SpinnerItem>(this,
-                android.R.layout.simple_spinner_item, cardChoices) {
-
-            @Override
-            public View getView(int position, View convertView, ViewGroup parent) {
-                return super.getDropDownView(position, convertView, parent);
-            }
-        };
-
-        listAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-
-        int selectedItem = -1;
-        if (curCardChoice != null) {
-            for (int i = 0; i < cardChoices.length; i++) {
-                if (curCardChoice.id.equals(cardChoices[i].id)) {
-                    selectedItem = i;
-                    break;
-                }
-            }
-        }
-        dlgBldr.setSingleChoiceItems(listAdapter, selectedItem, new DialogInterface.OnClickListener() {
-
-            public void onClick(DialogInterface dialog, int which) {
-                curCardChoice = cardChoices[which];
-                initCardChoiceView();
-                // removeDialog(DIALOG_SELECT_CARD);
-            }
-        });
-        dlgBldr.setOnCancelListener(new OnCancelListener() {
-
-            public void onCancel(DialogInterface dialog) {
-                // removeDialog(DIALOG_SELECT_CARD);
-            }
-        });
-        dlgBldr.create();
-        dlgBldr.show();
     }
 
     public void showProgressBar(boolean isBooking) {
@@ -703,7 +656,7 @@ public class HotelBookingActivity extends Activity implements LoaderManager.Load
 
     @Override
     public void onLoaderReset(Loader<HotelPreSellOption> loader) {
-        // nothing to do here
+        // TODO Auto-generated method stub
     }
 
     @Override

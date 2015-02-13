@@ -82,5 +82,10 @@
         <item name="android:textColor">@drawable/hotel_filter_button_text_custom</item>
         <item name="android:textSize">16sp</item>
     </style>
+	
+	<style name="VoiceTextboxPrimary" parent="PrimaryText">
+        <item name="android:textSize">18sp</item>
+        <item name="android:textColor">#FFFFFF</item>
+    </style>
 
 </resources>

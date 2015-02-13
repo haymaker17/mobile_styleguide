@@ -212,9 +212,7 @@ public class HotelChoiceDetailsActivity extends Activity implements HotelChoiceD
         intent.putExtra(Const.EXTRA_TRAVEL_HOTEL_SEARCH_DURATION_NUM_OF_NIGHTS, numOfNights);
         intent.putExtra("headerImageURL", headerImageURL);
         intent.putExtra("hotelName", hotelListItem.getHotel().name);
-
-        // startActivityForResult(intent, Const.REQUEST_CODE_BOOK_HOTEL);
-        // intent.putExtra("maxEnforcementLevelString", roomListItem.maxEnforcementLevelString);
+        // startActivity(intent);
         intent.putExtra("violationReasons", violationReasons);
         startActivityForResult(intent, Const.REQUEST_CODE_BOOK_HOTEL);
 

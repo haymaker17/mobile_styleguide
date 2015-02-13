@@ -44,4 +44,10 @@ public class Const {
     public static final String EXTRA_TRAVEL_ITINERARY_LOCATOR = "travel.itinerary.locator";
     public static final String EXTRA_TRAVEL_RECORD_LOCATOR = "travel.record.locator";
 
+    public static final String PREF_INSTALL_ID = "pref_install";
+    /**
+     * Contains the language to use when performing voice searches.
+     */
+    public static final String PREF_VOICE_SEARCH_LANGUAGE = "pref_voice_search_language";
+
 }

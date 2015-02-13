@@ -304,7 +304,19 @@ public class RestHotelSearch extends TravelBaseActivity {
             if (!ConcurCore.isConnected()) {
                 // showDialog(Const.DIALOG_NO_CONNECTIVITY);
             } else {
-                Intent i = new Intent(RestHotelSearch.this, VoiceHotelSearchActivity.class);
+                ConcurCore core = (ConcurCore) ConcurCore.getContext();
+                Intent i = new Intent(RestHotelSearch.this, HotelVoiceSearchActivity.class);
+                i.putExtra("currentLocation", core.getCurrentLocation());
+                i.putExtra("currentAddress", core.getCurrentAddress());
+                UserConfig userConfig = core.getUserConfig();
+                String distanceUnit = userConfig != null ? userConfig.distanceUnitPreference : null;
+                if (distanceUnit == null) {
+                    distanceUnit = "M";
+                } else {
+                    distanceUnit = (distanceUnit.equalsIgnoreCase("Miles") ? "M" : "K");
+                }
+                i.putExtra(Const.EXTRA_TRAVEL_HOTEL_SEARCH_DISTANCE_UNIT_ID, distanceUnit);
+
                 RestHotelSearch.this.startActivity(i);
             }
             return true;
@@ -907,7 +919,6 @@ public class RestHotelSearch extends TravelBaseActivity {
             intent.putExtra("searchCriteriaChanged", searchCriteriaChanged);
         }
 
-        Intent launchIntent = getIntent();
         startActivityForResult(intent, Const.REQUEST_CODE_BOOK_HOTEL);
     }
 

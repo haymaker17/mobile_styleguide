@@ -197,6 +197,10 @@
             android:name="com.concur.mobile.core.travel.hotel.activity.HotelSearchResults"
             android:screenOrientation="portrait" />
         <activity
+            android:name="com.concur.mobile.platform.ui.travel.hotel.activity.HotelVoiceSearchActivity"
+            android:screenOrientation="portrait"
+            android:theme="@style/ConcurRestTheme.White.ActionBarTabs" />
+        <activity
             android:name="com.concur.mobile.platform.ui.travel.hotel.activity.HotelBookingActivity"
             android:screenOrientation="portrait"
             android:theme="@style/ConcurRestTheme.White.ActionBarTabs" />
@@ -505,6 +509,18 @@
             android:exported="false"
             android:initOrder="1"
             android:label="@string/platform_expense_provider_name"
+            android:syncable="false" >
+
+            <!-- TODO: define mime types here, etc. -->
+        </provider>
+        <!-- Travel Information Provider -->
+        <provider
+            android:name="com.concur.mobile.platform.travel.provider.TravelProvider"
+            android:authorities="com.concur.mobile.platform.travel"
+            android:enabled="true"
+            android:exported="false"
+            android:initOrder="1"
+            android:label="@string/platform_travel_provider_name"
             android:syncable="false" >
 
             <!-- TODO: define mime types here, etc. -->
