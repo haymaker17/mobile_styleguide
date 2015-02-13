@@ -119,5 +119,6 @@
     <string name="hotel_booking_failed">Room Confirm Failed</string>
     <string name="hotel_booking_success">Your room has been successfully reserved.</string>
     <string name="hotel_booking_retrieving">Reserving room...</string>
+    <string name="hotel_overview">Overview</string>
 
 </resources>

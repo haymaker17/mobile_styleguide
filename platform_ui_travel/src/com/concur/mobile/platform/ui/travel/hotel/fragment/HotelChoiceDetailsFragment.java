@@ -55,6 +55,11 @@ public class HotelChoiceDetailsFragment extends PlatformFragmentV1 implements On
     public ParallaxScollView mListView;
     private ImageView mImageView;
 
+    // empty constructor
+    public HotelChoiceDetailsFragment() {
+
+    }
+
     @Override
     public void onAttach(Activity activity) {
         super.onAttach(activity);
@@ -122,7 +127,8 @@ public class HotelChoiceDetailsFragment extends PlatformFragmentV1 implements On
 
     private void setActionBar() {
         ActionBar actionBar = getActivity().getActionBar();
-        actionBar.setTitle(hotelListItem.getHotel().name);
+        // actionBar.setTitle(hotelListItem.getHotel().name);
+        actionBar.setTitle(R.string.hotel_overview);
 
     }
 
@@ -161,13 +167,10 @@ public class HotelChoiceDetailsFragment extends PlatformFragmentV1 implements On
         mTabHost = (TabHost) mRoot.findViewById(android.R.id.tabhost);
         mTabHost.setup(); // you must call this before adding your tabs!
         mTabHost.getTabWidget().setShowDividers(TabWidget.SHOW_DIVIDER_MIDDLE);
-        // mTabHost.getTabWidget().setDividerDrawable(R.drawable.tab_divider);
 
         mTabHost.addTab(newTab(TAB_DETAILS, R.string.hotel_tab_details, R.id.tab_details));
         mTabHost.addTab(newTab(TAB_ROOMS, R.string.hotel_tab_rooms, R.id.tab_rooms));
         mTabHost.addTab(newTab(TAB_IMAGES, R.string.hotel_tab_images, R.id.tab_images));
-        // manually start loading stuff in the first tab
-        // callBackListener.updateTab(TAB_ROOMS, R.id.tab_rooms);
     }
 
     private TabSpec newTab(String tag, int labelId, int tabContentId) {
@@ -187,43 +190,6 @@ public class HotelChoiceDetailsFragment extends PlatformFragmentV1 implements On
         tabSpec.setContent(tabContentId);
         return tabSpec;
     }
-
-    //
-    // @Override
-    // public void onTabChanged(String tabId) {
-    // Log.d(CLS_TAG, "onTabChanged(): tabId=" + tabId);
-    // if (TAB_DETAILS.equals(tabId)) {
-    // updateTab(tabId, R.id.tab_details);
-    // mCurrentTab = 0;
-    // return;
-    // }
-    // if (TAB_ROOMS.equals(tabId)) {
-    // updateTab(tabId, R.id.tab_rooms);
-    // mCurrentTab = 1;
-    // return;
-    // }
-    // if (TAB_IMAGES.equals(tabId)) {
-    // updateTab(tabId, R.id.tab_images);
-    // mCurrentTab = 2;
-    // return;
-    // }
-    // }
-    //
-    // private void updateTab(String tabId, int placeholder) {
-    // FragmentManager fm = getFragmentManager();
-    // if (fm.findFragmentByTag(tabId) == null) {
-    // Hotel hotel = hotelListItem.getHotel();
-    // if (TAB_DETAILS.equals(tabId)) {
-    // fm.beginTransaction().replace(placeholder, new HotelDetailsFragment(hotel), tabId).commit();
-    // }
-    // if (TAB_ROOMS.equals(tabId)) {
-    // fm.beginTransaction().replace(placeholder, new HotelRoomDetailFragment(hotel.rates), tabId).commit();
-    // }
-    // if (TAB_IMAGES.equals(tabId)) {
-    // fm.beginTransaction().replace(placeholder, new ShowImagesFragment(hotel.imagePairs), tabId).commit();
-    // }
-    // }
-    // }
 
     // Container Activity must implement this call back interface
     public interface HotelChoiceDetailsFragmentListener {

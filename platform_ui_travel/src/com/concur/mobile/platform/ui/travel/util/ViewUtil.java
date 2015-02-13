@@ -1,5 +1,9 @@
 package com.concur.mobile.platform.ui.travel.util;
 
+import android.text.Spannable;
+import android.text.style.URLSpan;
+import android.widget.TextView;
+
 import com.concur.mobile.platform.travel.search.hotel.HotelPreference;
 import com.concur.mobile.platform.travel.search.hotel.HotelRecommended;
 import com.concur.mobile.platform.travel.search.hotel.RuleEnforcementLevel;
@@ -124,5 +128,26 @@ public class ViewUtil {
     // }
 
     // }
+
+    /**
+     * method to strip the underline from Linkify text
+     */
+    public static void stripUnderlines(TextView tv) {
+
+        Spannable s = (Spannable) tv.getText();
+        URLSpan[] spans = s.getSpans(0, s.length(), URLSpan.class);
+
+        for (URLSpan span : spans) {
+            int start = s.getSpanStart(span);
+            int end = s.getSpanEnd(span);
+            s.removeSpan(span);
+            span = new URLSpanNoUnderline(span.getURL());
+            s.setSpan(span, start, end, 0);
+
+        }
+
+        tv.setText(s);
+
+    }
 
 }

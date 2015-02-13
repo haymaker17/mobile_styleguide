@@ -8,6 +8,7 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.concur.mobile.platform.travel.search.hotel.HotelRate;
@@ -15,7 +16,6 @@ import com.concur.mobile.platform.ui.common.util.FormatUtil;
 import com.concur.mobile.platform.ui.common.view.ListItem;
 import com.concur.mobile.platform.ui.travel.R;
 import com.concur.mobile.platform.ui.travel.util.Const;
-import com.concur.mobile.platform.ui.travel.util.ViewUtil;
 
 /**
  * An extension of <code>ListItem</code> for displaying a hotel room.
@@ -77,10 +77,15 @@ public class HotelRoomListItem extends ListItem {
                         .getConfiguration().locale, hotelRoom.currency, true, false));
                 // set the Travel Points
                 // LayoutUtil.initTravelPointsAtItemLevel(roomView, R.id.travel_points, hotelRoom.travelPoints);
-                maxEnforcementLevelString = ViewUtil.getRuleEnforcementLevelAsString(hotelRoom.maxEnforcementLevel);
-                if (maxEnforcementLevelString.equals("WARNING") || maxEnforcementLevelString.equals("ERROR")) {
-                    txtView.setCompoundDrawablesWithIntrinsicBounds(0, R.drawable.ic_action_voilation, 0, 0);
-                    txtView.setPadding(5, 0, 8, 0);
+
+                // add the max enforcement level icon to the first row
+
+                if (hotelRoom.maxEnforcementLevel >= 30) {
+                    ((ImageView) roomView.findViewById(R.id.hotel_room_max_violation_icon))
+                            .setImageResource(R.drawable.icon_status_red);
+                } else {
+                    ((ImageView) roomView.findViewById(R.id.hotel_room_max_violation_icon))
+                            .setImageResource(R.drawable.icon_status_yellow);
                 }
             }
         } else {

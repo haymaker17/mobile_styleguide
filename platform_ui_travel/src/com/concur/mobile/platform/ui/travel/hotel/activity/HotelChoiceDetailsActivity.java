@@ -120,23 +120,6 @@ public class HotelChoiceDetailsActivity extends Activity implements HotelChoiceD
             ft.commit();
         }
 
-        // mListView = (ParallaxScollListView) findViewById(R.id.layout_listview);
-        // View header = LayoutInflater.from(this).inflate(R.layout.hotel_choice_header, null);
-        // mImageView = (ImageView) header.findViewById(R.id.travelCityscape);
-        //
-        // View hotelView = header.findViewById(R.id.hotel_row);
-        // hotelListItem.getHotel().lowestRate = null;
-        //
-        // ((HotelSearchResultListItem) hotelListItem).buildView(this, hotelView, null);
-        // showHideHomeImage();
-        //
-        // mListView.setParallaxImageView(mImageView);
-        // mListView.addHeaderView(header);
-        //
-        // ArrayAdapter<String> adapter = new ArrayAdapter<String>(this, android.R.layout.simple_expandable_list_item_1,
-        // new String[] {});
-        // mListView.setAdapter(adapter);
-
         // will be passed on to booking activity
         location = i.getStringExtra(Const.EXTRA_TRAVEL_HOTEL_SEARCH_LOCATION);
         durationOfStayForDisplay = i.getStringExtra(Const.EXTRA_TRAVEL_HOTEL_SEARCH_DURATION_OF_STAY);

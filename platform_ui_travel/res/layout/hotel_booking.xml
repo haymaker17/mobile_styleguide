@@ -109,7 +109,7 @@
                 android:layout_below="@id/hotel_room_desc"
                 android:layout_marginLeft="12dp"
                 android:layout_marginTop="16dp"
-                android:background="#a7b6bf" />
+                android:background="@color/divider" />
 
             <TextView
                 android:id="@+id/hotel_room_summary_label"
@@ -234,7 +234,7 @@
                 android:layout_below="@id/hotel_room_total"
                 android:layout_marginLeft="12dp"
                 android:layout_marginTop="16dp"
-                android:background="#a7b6bf" />
+                android:background="@color/divider" />
 
             <TextView
                 android:id="@+id/hotel_credit_card_label"
@@ -266,7 +266,7 @@
                 android:layout_below="@id/hotel_credit_card"
                 android:layout_marginLeft="12dp"
                 android:layout_marginTop="16dp"
-                android:background="#a7b6bf" />
+                android:background="@color/divider" />
 
             <TextView
                 android:id="@+id/hotel_policy_label"
@@ -298,7 +298,7 @@
                 android:layout_below="@id/hotel_policy"
                 android:layout_marginLeft="12dp"
                 android:layout_marginTop="16dp"
-                android:background="#a7b6bf" />
+                android:background="@color/divider" />
 
             <!-- Violations ViewStub -->
 

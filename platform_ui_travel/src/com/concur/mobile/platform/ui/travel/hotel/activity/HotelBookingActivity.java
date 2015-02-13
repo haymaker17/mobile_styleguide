@@ -17,6 +17,7 @@ import android.os.Bundle;
 import android.os.Handler;
 import android.text.TextUtils;
 import android.util.Log;
+import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.View.OnClickListener;
@@ -24,6 +25,8 @@ import android.view.ViewGroup.LayoutParams;
 import android.view.ViewStub;
 import android.widget.ArrayAdapter;
 import android.widget.ImageView;
+import android.widget.SeekBar;
+import android.widget.SeekBar.OnSeekBarChangeListener;
 import android.widget.TableLayout;
 import android.widget.TableRow;
 import android.widget.TextView;
@@ -81,6 +84,7 @@ public class HotelBookingActivity extends Activity implements LoaderManager.Load
     private String[] cancellationPolicyStatements;
     private boolean progressbarVisible;
     private SlideButton reserveButton;
+    private TextView seekbar_text;
 
     private HotelRate hotelRate;
     private HotelPreSellOption preSellOption;
@@ -101,6 +105,7 @@ public class HotelBookingActivity extends Activity implements LoaderManager.Load
     private SpinnerItem[] violationReasonChoices;
     private ArrayList<String[]> violationReasons;
     protected SpinnerItem curViolationReason;
+    private HotelBookingAsyncRequestTask hotelBookingAsyncRequestTask;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -288,6 +293,8 @@ public class HotelBookingActivity extends Activity implements LoaderManager.Load
 
         // reserve UI
         reserveButton = (SlideButton) findViewById(R.id.slide_footer_button);
+        reserveButton.setEnabled(false);
+        seekbar_text = (TextView) findViewById(R.id.slide_footer_text);
         // reserveButton.setText(R.string.hotel_reserve_this_room);
         reserveButton.setSlideButtonListener(new SlideButtonListener() {
 
@@ -296,6 +303,39 @@ public class HotelBookingActivity extends Activity implements LoaderManager.Load
                 doBooking();
             }
         });
+        reserveButton.setOnSeekBarChangeListener(new OnSeekBarChangeListener() {
+
+            @Override
+            public void onStopTrackingTouch(SeekBar seekBar) {
+                // TODO Auto-generated method stub
+
+            }
+
+            @Override
+            public void onStartTrackingTouch(SeekBar seekBar) {
+                // TODO Auto-generated method stub
+
+            }
+
+            @Override
+            public void onProgressChanged(SeekBar seekBar, int progress, boolean fromUser) {
+                say_minutes_left(progress);
+
+            }
+        });
+    }
+
+    protected void say_minutes_left(int progress) {
+        // String what_to_say = String.valueOf(progress);
+        // seekbar_text.setText(what_to_say);
+        int seek_label_pos = (((reserveButton.getRight() - reserveButton.getLeft()) * reserveButton.getProgress()) / reserveButton
+                .getMax()) + reserveButton.getLeft();
+        if (progress <= 9) {
+            seekbar_text.setX(seek_label_pos - 6);
+        } else {
+            seekbar_text.setX(seek_label_pos - 11);
+        }
+
     }
 
     private void initViolations() {
@@ -372,6 +412,7 @@ public class HotelBookingActivity extends Activity implements LoaderManager.Load
                 if (hotelRate.maxEnforcementLevel >= 30) {
                     ((ImageView) violationsView.findViewById(R.id.hotel_room_max_violation_icon))
                             .setImageResource(R.drawable.icon_status_red);
+                    reserveButton.setEnabled(false);
                 } else {
                     ((ImageView) violationsView.findViewById(R.id.hotel_room_max_violation_icon))
                             .setImageResource(R.drawable.icon_status_yellow);
@@ -434,7 +475,7 @@ public class HotelBookingActivity extends Activity implements LoaderManager.Load
             } else {
                 violationsView.setText(R.string.general_select_reason);
             }
-
+            reserveButton.setEnabled(true);
         } else {
             Log.e(Const.LOG_TAG, CLS_TAG
                     + ".updateViolationReasonsView: unable to locate 'hotel_violation_reason' view!");
@@ -492,6 +533,7 @@ public class HotelBookingActivity extends Activity implements LoaderManager.Load
             TextView progressBarMsg = (TextView) findViewById(R.id.hotel_preselloptions_progress_msg);
             if (isBooking) {
                 progressBarMsg.setText(R.string.hotel_booking_retrieving);
+                // progressBarMsg.c
             }
             progressBarMsg.setVisibility(View.VISIBLE);
             progressBarMsg.bringToFront();
@@ -525,6 +567,8 @@ public class HotelBookingActivity extends Activity implements LoaderManager.Load
 
         if (preSellOption != null) {
             initPreSellOptions();
+            reserveButton.setEnabled(true);
+
         } else {
             Toast.makeText(this, "could not retrieve sell options", Toast.LENGTH_LONG).show();
         }
@@ -580,8 +624,8 @@ public class HotelBookingActivity extends Activity implements LoaderManager.Load
         hotelBookingReceiver.setListener(new HotelBookingReplyListener());
         String ccId = curCardChoice.id;
 
-        HotelBookingAsyncRequestTask hotelBookingAsyncRequestTask = new HotelBookingAsyncRequestTask(this,
-                HOTEL_BOOKING_ID, hotelBookingReceiver, ccId, null, null, null, false, preSellOption.bookingURL.href);
+        hotelBookingAsyncRequestTask = new HotelBookingAsyncRequestTask(this, HOTEL_BOOKING_ID, hotelBookingReceiver,
+                ccId, null, null, null, false, preSellOption.bookingURL.href);
 
         // new HotelBookingAsyncRequestTask(this,
         // HOTEL_BOOKING_ID, hotelBookingReceiver, curCardChoice.id, null, null, null, false,
@@ -688,6 +732,18 @@ public class HotelBookingActivity extends Activity implements LoaderManager.Load
             hotelBookingReceiver.setListener(null);
             hotelBookingReceiver = null;
         }
+    }
+
+    @Override
+    public boolean onKeyDown(int keyCode, KeyEvent event) {
+        // Check if the key event was the Back button and stop any outstanding
+        // request of async task
+        if (keyCode == KeyEvent.KEYCODE_BACK) {
+            if (hotelBookingAsyncRequestTask != null) {
+                hotelBookingAsyncRequestTask.cancel(false);
+            }
+        }
+        return super.onKeyDown(keyCode, event);
     }
 
 }

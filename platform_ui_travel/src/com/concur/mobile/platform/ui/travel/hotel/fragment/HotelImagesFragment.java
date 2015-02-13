@@ -185,6 +185,8 @@ public class HotelImagesFragment extends PlatformFragmentV1 implements AdapterVi
                 Bitmap bitmap = imgCache.getBitmap(uri, null);
                 if (bitmap != null) {
                     holder.image.setImageBitmap(bitmap);
+                } else {
+                    holder.image.setImageResource(R.drawable.hotel_results_default_image);
                 }
 
             }
