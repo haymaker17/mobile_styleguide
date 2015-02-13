@@ -39,7 +39,7 @@ public class PPLoginLightRequestTask extends PlatformAsyncRequestTask {
     private static final String CLS_TAG = "PPLoginLightRequestTask";
 
     // Contains the service end-point for the <code>PPLogin2Light</code> MWS call.
-    private final String SERVICE_END_POINT = "/mobile/MobileSession/PPLoginV3Light";
+    private final String SERVICE_END_POINT = "/mobile/MobileSession/PPLogin2Light";
 
     /**
      * Contains the locale.
@@ -170,10 +170,10 @@ public class PPLoginLightRequestTask extends PlatformAsyncRequestTask {
     public int onPostParse() {
 
         int result = super.onPostParse();
-
-        if (loginResult != null) {
-
-            // Add the outcome of remote wipe to the response.
+        
+        if(loginResult != null) {
+        
+            // Add the outcome of remote wipe to the response.                       
             Boolean remoteWipe = (loginResult.remoteWipe != null) ? loginResult.remoteWipe : Boolean.FALSE;
             resultData.putBoolean(LoginResponseKeys.REMOTE_WIPE_KEY, remoteWipe);
 
@@ -212,13 +212,13 @@ public class PPLoginLightRequestTask extends PlatformAsyncRequestTask {
                     result = RESULT_OK;
                 }
             }
-
+            
         } else {
-            Log.e(Const.LOG_TAG, CLS_TAG + ".onPostParse: MWS login result is null.");
+			Log.e(Const.LOG_TAG, CLS_TAG + ".onPostParse: MWS login result is null.");
             result = RESULT_ERROR;
         }
-
+        
         return result;
     }
-
+    
 }

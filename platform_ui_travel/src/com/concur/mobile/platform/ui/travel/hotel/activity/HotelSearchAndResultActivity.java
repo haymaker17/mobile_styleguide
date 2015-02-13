@@ -125,11 +125,14 @@ public class HotelSearchAndResultActivity extends Activity implements OnMenuItem
 
         if (hotelSearchRESTResultFrag == null) {
             hotelSearchRESTResultFrag = new HotelSearchResultFragment();
-
-            FragmentTransaction ft = getFragmentManager().beginTransaction();
-            ft.add(R.id.container, hotelSearchRESTResultFrag, FRAGMENT_SEARCH_RESULT);
-            ft.commit();
         }
+        if (distanceUnit.equalsIgnoreCase("K")) {
+            filterFrag.setDistanceUnitInKm(true);
+        }
+
+        FragmentTransaction ft = getFragmentManager().beginTransaction();
+        ft.add(R.id.container, hotelSearchRESTResultFrag, FRAGMENT_SEARCH_RESULT);
+        ft.commit();
 
         hotelSearchRESTResultFrag.location = location;
         hotelSearchRESTResultFrag.durationOfStayForDisplayInHeader = getIntent().getStringExtra(

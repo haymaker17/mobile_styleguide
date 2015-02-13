@@ -34,7 +34,7 @@ public abstract class BaseFragment extends Fragment {
     /**
      * Contains last error message returned from a service request.
      */
-    protected String actionStatusErrorMessage;
+    public String actionStatusErrorMessage;
 
     /**
      * Contains the last http error message returned from a service request.

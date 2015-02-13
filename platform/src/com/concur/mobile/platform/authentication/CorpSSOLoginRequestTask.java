@@ -177,10 +177,6 @@ public class CorpSSOLoginRequestTask extends PlatformAsyncRequestTask {
                 } else {
                     PlatformProperties.setSessionId(null);
                 }
-                // Add the outcome of remote wipe to the response.
-                Boolean disableAutologin = (loginResult.disableAutoLogin != null) ? loginResult.disableAutoLogin
-                        : Boolean.FALSE;
-                resultData.putBoolean(LoginResponseKeys.DISABLE_AUTO_LOGIN, disableAutologin);
             }
         }
         return result;

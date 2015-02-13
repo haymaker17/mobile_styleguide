@@ -230,7 +230,7 @@ public class LoginResult extends BaseParser {
 
         // Create and register the user contact parser.
         itemTag = "Permissions";
-        // parser parameter required to call the specific parsing constructor
+        // parser parameter required to call the specific parsing constructor 
         permissionsItemParser = new ItemParser<Permissions>(parser, itemTag, Permissions.class);
         parser.registerParser(permissionsItemParser, itemTag);
     }

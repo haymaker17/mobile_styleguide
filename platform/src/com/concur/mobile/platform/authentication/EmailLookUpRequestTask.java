@@ -36,8 +36,8 @@ public class EmailLookUpRequestTask extends PlatformAsyncRequestTask {
     /**
      * Extra bundle key used to pass the a login bundle (result date from EmailLookupRequest).
      */
-    public static final String EXTRA_LOGIN_BUNDLE = "extra_login_bundle";
-
+    public static final String EXTRA_LOGIN_BUNDLE = "extra_login_bundle";    
+    
     /**
      * Contains the bundle extra data key to look up the login id.
      */
@@ -60,7 +60,7 @@ public class EmailLookUpRequestTask extends PlatformAsyncRequestTask {
     public static String EXTRA_EMAIL_KEY = "email.lookup.email";
 
     // Contains the service end-point for the <code>EmailLookup</code> MWS call.
-    private final String SERVICE_END_POINT = "/mobile/MobileSession/EmailLookupV2";
+    private final String SERVICE_END_POINT = "/mobile/MobileSession/EmailLookup";
 
     /**
      * Contains the email address.
@@ -221,13 +221,15 @@ public class EmailLookUpRequestTask extends PlatformAsyncRequestTask {
      */
     private void setEmailLookUpResponseDataInBundle() {
         // Set the login id.
-        resultData.putString(EXTRA_LOGIN_ID_KEY, email);
+        resultData.putString(EXTRA_LOGIN_ID_KEY, emailLookUpResponse.loginId);
         // Set the server url.
         resultData.putString(EXTRA_SERVER_URL_KEY, emailLookUpResponse.serverUrl);
         // Set the sign-in method.
         resultData.putString(EXTRA_SIGN_IN_METHOD_KEY, emailLookUpResponse.signInMethod);
         // Set the sso url.
         resultData.putString(EXTRA_SSO_URL_KEY, emailLookUpResponse.ssoUrl);
+        // Set the email.
+        resultData.putString(EXTRA_EMAIL_KEY, emailLookUpResponse.email);
     }
 
 }
