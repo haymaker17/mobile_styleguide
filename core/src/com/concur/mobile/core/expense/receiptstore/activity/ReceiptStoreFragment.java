@@ -26,6 +26,7 @@ import android.content.DialogInterface.OnDismissListener;
 import android.content.Intent;
 import android.content.IntentFilter;
 import android.content.SharedPreferences;
+import android.location.Location;
 import android.net.Uri;
 import android.os.AsyncTask;
 import android.os.Bundle;
@@ -94,6 +95,7 @@ import com.concur.mobile.core.view.ListItemAdapter;
 import com.concur.mobile.platform.expense.receipt.list.Receipt;
 import com.concur.mobile.platform.expense.receipt.ocr.StartOCR;
 import com.concur.mobile.platform.expense.receipt.ocr.StartOCRRequestTask;
+import com.concur.mobile.platform.location.LastLocationTracker;
 import com.concur.mobile.platform.util.Format;
 
 public class ReceiptStoreFragment extends BaseFragment {
@@ -2962,6 +2964,19 @@ public class ReceiptStoreFragment extends BaseFragment {
                     // Flurry Notification.
                     boolean offlineCreate = intent.getBooleanExtra(Flurry.PARAM_NAME_OFFLINE_CREATE, false);
                     if (!offlineCreate) {
+
+                        // MOB-22375 - Google Analytics for Receipt Upload.
+                        LastLocationTracker locTracker = fragment.getConcurCore().getLocationTracker();
+                        Location loc = locTracker.getCurrentLocaton();
+                        String lat = "0";
+                        String lon = "0";
+                        if (loc != null) {
+                            lat = Double.toString(loc.getLatitude());
+                            lon = Double.toString(loc.getLongitude());
+                        }
+                        String eventLabel = receiptImageId + "|" + lat + "|" + lon;
+                        EventTracker.INSTANCE.track("Receipts", "Receipt Capture Location", eventLabel);
+
                         if (fragment.lastReceiptAction != null) {
                             Map<String, String> params = new HashMap<String, String>();
                             String paramValue = null;
