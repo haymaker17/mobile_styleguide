@@ -158,17 +158,15 @@ public class HotelSearchResultListItem extends ListItem implements Serializable 
         txtView = null;
         txtView = ((TextView) hotelView.findViewById(R.id.preference_text));
         if (txtView != null) {
-            // check if sold out or property not available
+            // check if property not available
             String availabilityErrorCode = hotel.availabilityErrorCode;
             if (availabilityErrorCode != null && availabilityErrorCode.trim().length() > 0) {
                 txtView.setVisibility(View.VISIBLE);
                 if (availabilityErrorCode.equalsIgnoreCase("PropertyNotAvailable")) {
-                    txtView.setText(R.string.general_not_available);
-                } else if (availabilityErrorCode.equalsIgnoreCase("SoldOut")) {
                     txtView.setText(R.string.general_sold_out);
                 } else {
                     // unknown error code
-                    txtView.setVisibility(View.GONE);
+                    txtView.setText(R.string.general_not_available);
                 }
                 if (txtView.getVisibility() == View.VISIBLE) {
                     txtView.setBackground(context.getResources().getDrawable(R.drawable.strong_red_rectangle));
