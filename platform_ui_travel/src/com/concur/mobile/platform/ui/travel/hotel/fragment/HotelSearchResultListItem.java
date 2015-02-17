@@ -10,9 +10,11 @@ import android.text.util.Linkify;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
+import android.view.View.OnClickListener;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.concur.mobile.platform.travel.search.hotel.Hotel;
 import com.concur.mobile.platform.ui.common.util.FormatUtil;
@@ -65,7 +67,7 @@ public class HotelSearchResultListItem extends ListItem implements Serializable 
     }
 
     @Override
-    public View buildView(Context context, View convertView, ViewGroup parent) {
+    public View buildView(final Context context, View convertView, ViewGroup parent) {
         View hotelView = null;
         LayoutInflater inflater = null;
 
@@ -163,21 +165,19 @@ public class HotelSearchResultListItem extends ListItem implements Serializable 
             if (availabilityErrorCode != null && availabilityErrorCode.trim().length() > 0) {
                 txtView.setVisibility(View.VISIBLE);
                 if (availabilityErrorCode.equalsIgnoreCase("PropertyNotAvailable")) {
-                    txtView.setText(R.string.general_not_available);
-                } else if (availabilityErrorCode.equalsIgnoreCase("SoldOut")) {
                     txtView.setText(R.string.general_sold_out);
                 } else {
                     // unknown error code
-                    txtView.setVisibility(View.GONE);
+                    txtView.setText(R.string.general_not_available);
                 }
-                if (txtView.getVisibility() == View.VISIBLE) {
-                    txtView.setBackground(context.getResources().getDrawable(R.drawable.strong_red_rectangle));
-                    txtView.setTextColor(Color.parseColor("#d25533"));
-                    hotelView.setAlpha(0.5f);// 50% transparent
-                }
+
+                txtView.setBackground(context.getResources().getDrawable(R.drawable.strong_red_rectangle));
+                txtView.setTextColor(Color.parseColor("#d25533"));
+                hotelView.setAlpha(0.5f);// 50% transparent
+
             } else {
                 // Set the company preference
-                int resourceId = com.concur.mobile.platform.ui.travel.util.ViewUtil
+                final int resourceId = com.concur.mobile.platform.ui.travel.util.ViewUtil
                         .getHotelCompanyPreferredTextId(hotel.preferences);
 
                 if (resourceId == -1) {
@@ -186,7 +186,14 @@ public class HotelSearchResultListItem extends ListItem implements Serializable 
                     txtView.setVisibility(View.VISIBLE);
                     txtView.setBackground(context.getResources().getDrawable(R.drawable.hotel_preferred_rectangle));
                     txtView.setTextColor(Color.parseColor("#ffffff"));
-                    txtView.setText(resourceId);
+                    txtView.setText(R.string.hotel_preferred);
+                    txtView.setOnClickListener(new OnClickListener() {
+
+                        @Override
+                        public void onClick(View v) {
+                            Toast.makeText(context, context.getString(resourceId), Toast.LENGTH_SHORT).show();
+                        }
+                    });
                 }
             }
         }

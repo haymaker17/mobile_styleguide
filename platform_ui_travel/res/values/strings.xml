@@ -51,9 +51,13 @@
     <string name="voice_search_canceled">Search canceled.</string>
 
     <!-- start of hotel company preference -->
-    <string name="hotel_less_preferred">Less Preferred</string>
     <string name="hotel_preferred">Preferred</string>
-    <string name="hotel_most_preferred">Most Preferred</string>
+    <string name="hotel_chain_less_preferred">Chain Less Preferred</string>
+    <string name="hotel_chain_preferred">Chain Preferred</string>
+    <string name="hotel_chain_most_preferred">Chain Most Preferred</string>
+    <string name="hotel_property_less_preferred">Property Less Preferred</string>
+    <string name="hotel_property_preferred">Property Preferred</string>
+    <string name="hotel_property_most_preferred">Property Most Preferred</string>
     <!-- end of hotel company preference -->
 
 

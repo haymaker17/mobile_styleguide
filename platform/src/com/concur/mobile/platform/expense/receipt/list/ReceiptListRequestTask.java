@@ -168,7 +168,14 @@ public class ReceiptListRequestTask extends PlatformAsyncRequestTask {
         int result = super.onPostParse();
 
         SessionInfo sessInfo = ConfigUtil.getSessionInfo(getContext());
+        if (sessInfo == null) {
+            return result;
+        }
+
         String userId = sessInfo.getUserId();
+        if (userId == null) {
+            return result;
+        }
 
         ReceiptList receiptList = mwsResp.getData();
 
