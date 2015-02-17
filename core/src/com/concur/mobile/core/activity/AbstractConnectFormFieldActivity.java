@@ -520,6 +520,9 @@ public abstract class AbstractConnectFormFieldActivity extends BaseActivity {
      * @return the date string
      */
     protected String formatDate(Date date) {
+        if (date == null) {
+            return "";
+        }
         return DateUtil.getFormattedDateForLocale(getDatePattern(), getLocale(), date);
     }
 
@@ -577,10 +580,16 @@ public abstract class AbstractConnectFormFieldActivity extends BaseActivity {
     }
 
     protected String formatTime(Date d) {
+        if (d == null) {
+            return "";
+        }
         return formatTime(d, android.text.format.DateFormat.is24HourFormat(this));
     }
 
     protected String formatTime(Date d, boolean is24) {
+        if (d == null) {
+            return "";
+        }
         final DateFormat formatter = new SimpleDateFormat(is24 ? DateUtil.TIME_PATTERN_24H : DateUtil.TIME_PATTERN_12H);
         return formatter.format(d);
     }

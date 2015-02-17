@@ -391,17 +391,26 @@ public class RequestEntryActivity extends AbstractConnectFormFieldActivity imple
             for (ConnectFormField ff : formFields) {
                 final TextView compView = getComponent(segment, ff.getName());
                 final String fieldName = ff.getName();
-                final String displayedValue = compView.getText().toString();
                 if (compView != null) {
+                    final String displayedValue = compView.getText().toString();
                     if (fieldName.equals(FIELD_FROM_ID)) {
-                        hasChange |= !segment.getFromLocationName().equals(displayedValue);
+                        if (segment.getFromLocationName() == null) {
+                            hasChange |= displayedValue.length() > 0;
+                        } else {
+                            hasChange |= !segment.getFromLocationName().equals(displayedValue);
+                        }
                     } else if (fieldName.equals(FIELD_TO_ID)) {
-                        hasChange |= !segment.getToLocationName().equals(displayedValue);
+                        hasChange |= (segment.getToLocationName() == null && displayedValue != null
+                                && displayedValue.length() > 0) || !segment.getToLocationName().equals(displayedValue);
                     } else if (fieldName.equals(FIELD_AMOUNT)) {
-                        hasChange |= !entry.getForeignAmount().equals(((MoneyFormField) compView).getAmountValue());
+                        if (entry.getForeignAmount() == null) {
+                            hasChange |= displayedValue.length() > 0;
+                        } else {
+                            hasChange |= !entry.getForeignAmount().equals(((MoneyFormField) compView).getAmountValue());
+                        }
                     } else if (fieldName.equals(FIELD_START_DATE)) {
                         if (segment.getDepartureDate() == null) {
-                            hasChange |= displayedValue != null && displayedValue.length() > 0;
+                            hasChange |= displayedValue.length() > 0;
                         } else {
                             hasChange |= !formatDate(segment.getDepartureDate()).equals(displayedValue);
                         }
@@ -419,7 +428,7 @@ public class RequestEntryActivity extends AbstractConnectFormFieldActivity imple
                         }
                     } else if (fieldName.equals(FIELD_END_DATE)) {
                         if (segment.getArrivalDate() == null) {
-                            hasChange |= displayedValue != null && displayedValue.length() > 0;
+                            hasChange |= displayedValue.length() > 0;
                         } else {
                             hasChange |= !formatDate(segment.getArrivalDate()).equals(parseDate(displayedValue));
                         }
@@ -440,7 +449,11 @@ public class RequestEntryActivity extends AbstractConnectFormFieldActivity imple
                         hasChange |= compView.getHint() != null && !entry.getForeignCurrencyCode()
                                 .equals(compView.getHint());
                     } else if (fieldName.equals(FIELD_COMMENT)) {
-                        hasChange |= !segment.getLastComment().equals(displayedValue);
+                        if (segment.getLastComment() == null) {
+                            hasChange |= displayedValue.length() > 0;
+                        } else {
+                            hasChange |= !segment.getLastComment().equals(displayedValue);
+                        }
                     }
                 }
                 if (hasChange) {
