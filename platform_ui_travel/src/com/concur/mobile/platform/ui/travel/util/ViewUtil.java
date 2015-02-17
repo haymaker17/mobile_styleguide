@@ -27,12 +27,18 @@ public class ViewUtil {
      */
     public static int getHotelCompanyPreferredTextId(HotelPreference hotelPreference) {
         if (hotelPreference != null && hotelPreference.companyPreference != null) {
-            if (hotelPreference.companyPreference.equalsIgnoreCase("LessPreferred")) {
-                return R.string.hotel_less_preferred;
-            } else if (hotelPreference.companyPreference.equalsIgnoreCase("Preferred")) {
-                return R.string.hotel_preferred;
-            } else if (hotelPreference.companyPreference.equalsIgnoreCase("MostPreferred")) {
-                return R.string.hotel_most_preferred;
+            if (hotelPreference.companyPreference.equalsIgnoreCase("ChainLessPreferred")) {
+                return R.string.hotel_chain_less_preferred;
+            } else if (hotelPreference.companyPreference.equalsIgnoreCase("ChainPreferred")) {
+                return R.string.hotel_chain_preferred;
+            } else if (hotelPreference.companyPreference.equalsIgnoreCase("ChainMostPreferred")) {
+                return R.string.hotel_chain_most_preferred;
+            } else if (hotelPreference.companyPreference.equalsIgnoreCase("PropertyLessPreferred")) {
+                return R.string.hotel_property_less_preferred;
+            } else if (hotelPreference.companyPreference.equalsIgnoreCase("PropertyPreferred")) {
+                return R.string.hotel_property_preferred;
+            } else if (hotelPreference.companyPreference.equalsIgnoreCase("PropertyMostPreferred")) {
+                return R.string.hotel_property_most_preferred;
             }
         }
         return -1;
