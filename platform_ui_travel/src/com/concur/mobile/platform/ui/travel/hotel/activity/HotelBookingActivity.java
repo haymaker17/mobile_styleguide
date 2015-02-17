@@ -286,6 +286,8 @@ public class HotelBookingActivity extends Activity implements LoaderManager.Load
             }
         });
 
+        reserveButton = (SlideButton) findViewById(R.id.slide_footer_button);
+
         // credit cards
         initCardChoiceView();
 
@@ -293,7 +295,6 @@ public class HotelBookingActivity extends Activity implements LoaderManager.Load
         initViolations();
 
         // reserve UI
-        reserveButton = (SlideButton) findViewById(R.id.slide_footer_button);
         reserveButton.setEnabled(false);
         seekbar_text = (TextView) findViewById(R.id.slide_footer_text);
         // reserveButton.setText(R.string.hotel_reserve_this_room);
