@@ -55,10 +55,9 @@ public class EntryListAdapter extends AbstractGenericAdapter<RequestEntryDTO> {
         final TextView segmentStartDate = (TextView) row.findViewById(R.id.segmentStartDate);
 
         final String formattedAmount = FormatUtil
-                .formatAmount(entry.getTransactionAmount() != null ? entry.getTransactionAmount() : 0,
+                .formatAmount(entry.getForeignAmount() != null ? entry.getForeignAmount() : 0,
                         getContext().getResources().getConfiguration().locale,
-                        entry.getTransactionCurrencyCode() != null ? entry.getTransactionCurrencyCode() : "", true,
-                        true);
+                        entry.getForeignCurrencyCode() != null ? entry.getForeignCurrencyCode() : "", true, true);
 
         type.setText(entry.getSegmentType());
         foreignAmount.setText(formattedAmount);
@@ -69,7 +68,7 @@ public class EntryListAdapter extends AbstractGenericAdapter<RequestEntryDTO> {
         segmentStartDate.setText(getEarliestDate(entry));
         if (entry.getListSegment() != null && entry.getListSegment().size() > 0) {
             RequestSegmentDTO segment = entry.getListSegment().iterator().next();
-            segmentTrip.setText(getEntryTripText(segment));
+            segmentTrip.setText(getEntryTripText(segment, entry.getSegmentTypeCode()));
         } else {
             // --- Expected expense
             type.setText(entry.getExpenseTypeName());
@@ -79,9 +78,9 @@ public class EntryListAdapter extends AbstractGenericAdapter<RequestEntryDTO> {
         return row;
     }
 
-    private String getEntryTripText(RequestSegmentDTO segment) {
-        if (segment.getSegmentTypeCode().equals(SegmentType.RequestSegmentType.AIR.getCode()) || segment
-                .getSegmentTypeCode().equals(SegmentType.RequestSegmentType.RAIL.getCode())) {
+    private String getEntryTripText(RequestSegmentDTO segment, String segmentTypeCode) {
+        if (segmentTypeCode.equals(SegmentType.RequestSegmentType.AIR.getCode()) || segmentTypeCode
+                .equals(SegmentType.RequestSegmentType.RAIL.getCode())) {
             // --- TODO this might not work as is for roundtrip / multileg entries - investigate
             return com.concur.mobile.base.util.Format
                     .localizeText(context, R.string.tr_flight_destination_label, segment.getFromLocationName(),
@@ -94,7 +93,8 @@ public class EntryListAdapter extends AbstractGenericAdapter<RequestEntryDTO> {
         if (entry.getListSegment() != null && entry.getListSegment().size() > 0) {
             Date earliest = null;
             for (RequestSegmentDTO segment : entry.getListSegment()) {
-                if (earliest == null || earliest.getTime() > segment.getDepartureDate().getTime()) {
+                if (earliest == null || segment.getDepartureDate() != null && earliest.getTime() > segment
+                        .getDepartureDate().getTime()) {
                     earliest = segment.getDepartureDate();
                 }
             }

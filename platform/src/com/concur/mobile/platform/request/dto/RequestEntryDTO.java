@@ -5,7 +5,6 @@ import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.List;
 
 public class RequestEntryDTO {
@@ -30,22 +29,23 @@ public class RequestEntryDTO {
     private String id;
     @Expose @SerializedName("Segments")
     private List<RequestSegmentDTO> listSegment = new ArrayList<RequestSegmentDTO>();
-    @Expose @SerializedName("TransactionCurrencyCode")
-    private String transactionCurrencyCode;
-    @Expose @SerializedName("TransactionAmount")
-    private Double transactionAmount;
+    @Expose @SerializedName("ForeignCurrencyCode")
+    private String foreignCurrencyCode;
+    @Expose @SerializedName("ForeignAmount")
+    private Double foreignAmount;
     @SerializedName("Comments")
     private List<RequestCommentDTO> comments;
-    @SerializedName("TransactionDate")
-    private Date transactionDate;
     @SerializedName("ExpenseTypeName")
     private String expenseTypeName;
     @Expose @SerializedName("TripType")
     private TripType tripType;
 
+    @SerializedName("SegmentFormID")
     private String segmentFormId;
-    private String segmentType = null;
-    private String segmentTypeCode = null;
+    @SerializedName("SegmentTypeName")
+    private String segmentType;
+    @SerializedName("SegmentTypeCode")
+    private String segmentTypeCode;
 
     private Integer displayOrder = 0;
 
@@ -71,10 +71,6 @@ public class RequestEntryDTO {
 
     public void setSegmentTypeCode(String segmentTypeCode) {
         this.segmentTypeCode = segmentTypeCode;
-    }
-
-    public Date getTransactionDate() {
-        return transactionDate;
     }
 
     public String getSegmentFormId() {
@@ -109,20 +105,20 @@ public class RequestEntryDTO {
         this.segmentType = segmentType;
     }
 
-    public String getTransactionCurrencyCode() {
-        return transactionCurrencyCode;
+    public String getForeignCurrencyCode() {
+        return foreignCurrencyCode;
     }
 
-    public void setTransactionCurrencyCode(String transactionCurrencyCode) {
-        this.transactionCurrencyCode = transactionCurrencyCode;
+    public void setForeignCurrencyCode(String foreignCurrencyCode) {
+        this.foreignCurrencyCode = foreignCurrencyCode;
     }
 
-    public Double getTransactionAmount() {
-        return transactionAmount;
+    public Double getForeignAmount() {
+        return foreignAmount;
     }
 
-    public void setTransactionAmount(Double transactionAmount) {
-        this.transactionAmount = transactionAmount;
+    public void setForeignAmount(Double foreignAmount) {
+        this.foreignAmount = foreignAmount;
     }
 
     public List<RequestCommentDTO> getComments() {

@@ -6,7 +6,6 @@ import com.concur.mobile.platform.common.formfield.IFormField;
 import com.concur.mobile.platform.request.dto.RequestCommentDTO;
 import com.concur.mobile.platform.request.dto.RequestDTO;
 import com.concur.mobile.platform.request.dto.RequestEntryDTO;
-import com.concur.mobile.platform.request.dto.RequestSegmentDTO;
 import com.concur.mobile.platform.request.groupConfiguration.RequestGroupConfiguration;
 import com.concur.mobile.platform.util.*;
 import com.google.gson.Gson;
@@ -106,7 +105,7 @@ public class RequestParser {
         // --- TR childs + permissions properties
         @SerializedName("UserPermissions")
         private Link link;
-        @SerializedName("Entries")
+        @SerializedName("SegmentsEntries")
         private List<RequestEntryDTO> entryList;
         @SerializedName("Comments")
         private List<RequestCommentDTO> commentList;
@@ -199,7 +198,7 @@ public class RequestParser {
         final Map<String, RequestEntryDTO> entryMap = new HashMap<String, RequestEntryDTO>();
         for (RequestEntryDTO entry : connectTR.getEntryList()) {
             // --- retrieving segment type & form id
-            if (entry.getListSegment() != null && entry.getListSegment().size() > 0) {
+            /*if (entry.getListSegment() != null && entry.getListSegment().size() > 0) {
                 boolean isFirst = true;
 
                 for (RequestSegmentDTO segment : entry.getListSegment()) {
@@ -217,7 +216,8 @@ public class RequestParser {
                         }
                     }
                 }
-            }
+            }*/
+            // MOVED ON ENTRY BY LAST WS MODIFICATION
             entryMap.put(entry.getId(), entry);
         }
         tr.setEntriesMap(entryMap);

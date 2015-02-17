@@ -287,7 +287,7 @@ public class RequestListActivity extends BaseActivity {
     // TODO : see with PM if we should display cache or an empty list
     private void handleRefreshFail() {
         if (requestListCache.hasCachedValues()) {
-            updateListUI((List<RequestDTO>) requestListCache.getValues());
+            updateListUI(new ArrayList<RequestDTO>(requestListCache.getValues()));
         } else {
             updateListUI(null);
         }

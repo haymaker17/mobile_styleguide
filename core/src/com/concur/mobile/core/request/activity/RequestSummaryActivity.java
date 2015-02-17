@@ -240,14 +240,12 @@ public class RequestSummaryActivity extends BaseActivity {
                  */
                 for (RequestEntryDTO re : tr.getEntriesMap().values()) {
                     if (re.getListSegment() != null && re.getListSegment().size() > 0) {
-                        segmentFormIds.add(re.getListSegment().iterator().next().getSegmentFormId());
+                        segmentFormIds.add(re.getSegmentFormId());
                     }
-                }
-                // --- iterating over unique ids to retrieve formfields
-                for (String segmentFormId : segmentFormIds) {
-                    formFieldsCache.setFormRefreshStatus(segmentFormId, true);
-                    new RequestFormFieldsTask(RequestSummaryActivity.this, 1, asyncReceiverFormFields, segmentFormId,
-                            false).execute();
+                    // --- iterating over unique ids to retrieve formfields
+                    formFieldsCache.setFormRefreshStatus(re.getSegmentFormId(), true);
+                    new RequestFormFieldsTask(RequestSummaryActivity.this, 1, asyncReceiverFormFields,
+                            re.getSegmentFormId(), false).execute();
                 }
             }
 
@@ -298,7 +296,7 @@ public class RequestSummaryActivity extends BaseActivity {
                 final String reqId = entry.getId();
                 if (reqId != null) {
                     if (entry.getListSegment() != null && entry.getListSegment().size() > 0) {
-                        final String segmentFormId = entry.getListSegment().iterator().next().getSegmentFormId();
+                        final String segmentFormId = entry.getSegmentFormId();
                         if (!formFieldsCache.isFormBeingRefreshed(segmentFormId)) {
                             displayEntryDetail(reqId);
                         } else {
@@ -504,7 +502,7 @@ public class RequestSummaryActivity extends BaseActivity {
     }
 
     private void cleanupReceivers() {
-        //asyncReceiverFormFields.setListener(null);
+        asyncReceiverFormFields.setListener(null);
     }
 
     @Override

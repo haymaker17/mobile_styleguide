@@ -53,14 +53,12 @@ public class RequestDTO implements FormDTO {
     private Date endDate;
     @Expose @SerializedName("CreationDate")
     private Date requestDate;
-    @Expose @SerializedName("LastComment")
+    @Expose @SerializedName("Comment")
     private String lastComment;
     @SerializedName("UserLoginID")
     private String userLoginId;
     @SerializedName("ApproverLoginID")
     private String approverLoginId;
-    @SerializedName("RequestDetailsUrl")
-    private String detailsUrl;
     @SerializedName("SegmentTypes")
     private String segmentListString;
     @Expose @SerializedName("HeaderFormID")
@@ -187,14 +185,6 @@ public class RequestDTO implements FormDTO {
 
     public void setApproverLoginId(String approverLoginId) {
         this.approverLoginId = approverLoginId;
-    }
-
-    public String getDetailsUrl() {
-        return detailsUrl;
-    }
-
-    public void setDetailsUrl(String detailsUrl) {
-        this.detailsUrl = detailsUrl;
     }
 
     public String getSegmentListString() {

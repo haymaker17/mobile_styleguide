@@ -10,12 +10,8 @@ import java.util.List;
 
 public class RequestSegmentDTO implements FormDTO {
 
-    @Expose @SerializedName("SegmentID")
+    @Expose @SerializedName("ID")
     private String id;
-    @SerializedName("SegmentType")
-    private String segmentType;
-    @SerializedName("SegmentTypeCode")
-    private String segmentTypeCode;
     @Expose @SerializedName("DepartureDate")
     private Date departureDate;
     @Expose @SerializedName("ArrivalDate")
@@ -30,41 +26,14 @@ public class RequestSegmentDTO implements FormDTO {
     private String toLocationName;
     //@SerializedName()
     private int exceptionCount;
-    @SerializedName("SegmentFormID")
-    private String segmentFormId;
-    @SerializedName("ForeignAmount")
-    private Double foreignAmount;
-    @SerializedName("ForeignCurrencyCode")
-    private String foreignCurrencyCode;
     @SerializedName("Exceptions")
     private List<ConnectExceptionMessage> exeptionList = new ArrayList<ConnectExceptionMessage>();
     @SerializedName("Comments")
     private List<RequestCommentDTO> commentList = null;
     @Expose @SerializedName("Comment")
     private String lastComment;
-    // --- useless but required by ws
-    @Expose @SerializedName("ArrivalTime")
-    private String arrivalTime;
-    @Expose @SerializedName("DepartureTime")
-    private String departureTime;
-
+    @SerializedName("Order")
     private Integer displayOrder;
-
-    public void setArrivalTime(String arrivalTime) {
-        this.arrivalTime = arrivalTime;
-    }
-
-    public void setDepartureTime(String departureTime) {
-        this.departureTime = departureTime;
-    }
-
-    public String getArrivalTime() {
-        return arrivalTime;
-    }
-
-    public String getDepartureTime() {
-        return departureTime;
-    }
 
     public String getFromLocationId() {
         return fromLocationId;
@@ -110,42 +79,6 @@ public class RequestSegmentDTO implements FormDTO {
     @Override
     public String getId() {
         return id;
-    }
-
-    public Double getForeignAmount() {
-        return foreignAmount;
-    }
-
-    public void setForeignAmount(Double foreignAmount) {
-        this.foreignAmount = foreignAmount;
-    }
-
-    public String getForeignCurrencyCode() {
-        return foreignCurrencyCode;
-    }
-
-    public void setForeignCurrencyCode(String foreignCurrencyCode) {
-        this.foreignCurrencyCode = foreignCurrencyCode;
-    }
-
-    public String getSegmentTypeCode() {
-        return segmentTypeCode;
-    }
-
-    public String getSegmentFormId() {
-        return segmentFormId;
-    }
-
-    public void setSegmentFormId(String segmentFormId) {
-        this.segmentFormId = segmentFormId;
-    }
-
-    public String getSegmentType() {
-        return segmentType;
-    }
-
-    public void setSegmentType(String segmentType) {
-        this.segmentType = segmentType;
     }
 
     public String getFromLocationName() {

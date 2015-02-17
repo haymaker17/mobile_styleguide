@@ -15,7 +15,7 @@ public class RequestGroupConfiguration {
     private String name;
     @SerializedName("DefaultPolicyID")
     private String defaultPolicyId;
-    @SerializedName("Agencies")
+    @SerializedName("AgencyOffices")
     private List<Agency> agencies;
     @SerializedName("Policies")
     private List<Policy> policies;
