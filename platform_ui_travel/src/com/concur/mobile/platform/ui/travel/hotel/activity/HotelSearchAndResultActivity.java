@@ -498,21 +498,23 @@ public class HotelSearchAndResultActivity extends Activity implements OnMenuItem
                 // cache, if so, then
                 // re-use them. A request to update will be made in the
                 // background.
-                if (hotelSelected.rates == null || hotelSelected.rates.size() == 0) {
-                    // no rooms
-                    Toast.makeText(this, "No Rooms Avilable", Toast.LENGTH_LONG).show();
-                } else {
-                    Intent i = new Intent(this, HotelChoiceDetailsActivity.class);
-                    Bundle bundle = new Bundle();
-                    bundle.putSerializable(Const.EXTRA_HOTELS_DETAILS, (Serializable) itemClicked);
-                    i.putExtra(Const.EXTRA_TRAVEL_HOTEL_SEARCH_LOCATION, hotelSearchRESTResultFrag.location);
-                    i.putExtra(Const.EXTRA_TRAVEL_HOTEL_SEARCH_DURATION_OF_STAY,
-                            hotelSearchRESTResultFrag.durationOfStayForDisplayInHeader);
-                    i.putExtra(Const.EXTRA_TRAVEL_HOTEL_SEARCH_DURATION_NUM_OF_NIGHTS, numberOfNights);
-                    i.putExtra("violationReasons", violationReasons);
-                    i.putExtras(bundle);
-                    // startActivity(i);
-                    startActivityForResult(i, Const.REQUEST_CODE_BOOK_HOTEL);
+                if (hotelSelected.availabilityErrorCode == null) {
+                    if (hotelSelected.rates == null || hotelSelected.rates.size() == 0) {
+                        // no rooms
+                        Toast.makeText(this, "No Rooms Avilable", Toast.LENGTH_LONG).show();
+                    } else {
+                        Intent i = new Intent(this, HotelChoiceDetailsActivity.class);
+                        Bundle bundle = new Bundle();
+                        bundle.putSerializable(Const.EXTRA_HOTELS_DETAILS, (Serializable) itemClicked);
+                        i.putExtra(Const.EXTRA_TRAVEL_HOTEL_SEARCH_LOCATION, hotelSearchRESTResultFrag.location);
+                        i.putExtra(Const.EXTRA_TRAVEL_HOTEL_SEARCH_DURATION_OF_STAY,
+                                hotelSearchRESTResultFrag.durationOfStayForDisplayInHeader);
+                        i.putExtra(Const.EXTRA_TRAVEL_HOTEL_SEARCH_DURATION_NUM_OF_NIGHTS, numberOfNights);
+                        i.putExtra("violationReasons", violationReasons);
+                        i.putExtras(bundle);
+                        // startActivity(i);
+                        startActivityForResult(i, Const.REQUEST_CODE_BOOK_HOTEL);
+                    }
                 }
 
             }
@@ -588,7 +590,7 @@ public class HotelSearchAndResultActivity extends Activity implements OnMenuItem
             fromPolling = true;
             Log.d(Const.LOG_TAG, " ***** creating poll search loader *****  ");
             hotelSearchAsyncTaskLoader = new HotelSearchPollResultLoader(this, checkInDate, checkOutDate, latitude,
-                    longitude, 25, distanceUnit, 0, 10, pollingURL);
+                    longitude, 25, distanceUnit, 0, 100, pollingURL);
         } else {
             fromPolling = false;
             // request initial search
@@ -598,7 +600,7 @@ public class HotelSearchAndResultActivity extends Activity implements OnMenuItem
             TravelUtilHotel.deleteAllHotelDetails(this);
 
             hotelSearchAsyncTaskLoader = new HotelSearchResultLoader(this, checkInDate, checkOutDate, latitude,
-                    longitude, 25, distanceUnit, 0, 10);
+                    longitude, 25, distanceUnit, 0, 100);
         }
         return hotelSearchAsyncTaskLoader;
     }
