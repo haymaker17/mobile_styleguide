@@ -10,6 +10,7 @@ import android.text.InputType;
 import android.text.TextUtils;
 import android.util.Log;
 import android.util.TypedValue;
+import android.view.Gravity;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.*;
@@ -232,7 +233,6 @@ public abstract class AbstractConnectFormFieldActivity extends BaseActivity {
                 IFormField.ControlType controlType = ff.getControlType();
                 IFormField.AccessType accesType = ff.getAccessType();
 
-                DisplayType displayType = null;
                 TextView component = null;
 
                 // --- WS OUTPUT FIX (Time fields)
@@ -251,62 +251,12 @@ public abstract class AbstractConnectFormFieldActivity extends BaseActivity {
                     accesType = canSave ? IFormField.AccessType.RW : IFormField.AccessType.RO;
                 }
 
-                switch (dataType) {
-                case BOOLEAN:
-                    break;
-                case CHAR:
-                    if (controlType == IFormField.ControlType.TIME) {
-                        displayType = DisplayType.TIME;
-                    }
-                    break;
-                case CONNECTED_LIST:
-                    break;
-                case CURRENCY:
-                    break;
-                case EXPENSE_TYPE:
-                    break;
-                case INTEGER:
-                    if (controlType == IFormField.ControlType.EDIT) {
-                        displayType = DisplayType.TEXTFIELD;
-                    } else if (controlType == IFormField.ControlType.PICK_LIST) {
-                        displayType = DisplayType.PICKLIST;
-                    }
-                    break;
-                case LIST:
-                    break;
-                case LOCATION:
-                    break;
-                case MONEY:
-                    displayType = DisplayType.MONEYFIELD;
-                    break;
-                case NUMERIC:
-                    break;
-                case TIMESTAMP:
-                    displayType = DisplayType.DATEFIELD;
-                    break;
-                case UNSPECIFED:
-                    break;
-                case VARCHAR:
-                    switch (controlType) {
-                    case EDIT:
-                        displayType = DisplayType.TEXTFIELD;
-                        break;
-                    case TEXT_AREA:
-                        displayType = DisplayType.TEXTAREA;
-                        break;
-                    default:
-                        break;
-                    }
-                    break;
-                default:
-                    displayType = null;
-                    break;
-                }
+                final DisplayType displayType = getDisplayType(ff);
 
                 if (displayType != null && isFieldVisible(model, ff.getName())) {
                     final boolean isEditable = canSave && accesType != IFormField.AccessType.RO;
 
-                    llp = new LinearLayout.LayoutParams(ActionBar.LayoutParams.WRAP_CONTENT,
+                    llp = new LinearLayout.LayoutParams(ActionBar.LayoutParams.MATCH_PARENT,
                             ActionBar.LayoutParams.MATCH_PARENT);
 
                     switch (displayType) {
@@ -348,7 +298,6 @@ public abstract class AbstractConnectFormFieldActivity extends BaseActivity {
                         component.setText(getModelDisplayedValueByFieldName(model, ff.getName()));
                         component.setInputType(InputType.TYPE_NULL);
                         component.setTextSize(TypedValue.COMPLEX_UNIT_SP, 15);
-                        component.requestFocus();
 
                         //ADD LISTENER for setting date
                         if (isEditable) {
@@ -384,7 +333,6 @@ public abstract class AbstractConnectFormFieldActivity extends BaseActivity {
                         component.setText(getModelDisplayedValueByFieldName(model, ff.getName()));
                         component.setInputType(InputType.TYPE_NULL);
                         component.setTextSize(TypedValue.COMPLEX_UNIT_SP, 15);
-                        component.requestFocus();
 
                         //ADD LISTENER to set time
                         if (isEditable) {
@@ -439,7 +387,6 @@ public abstract class AbstractConnectFormFieldActivity extends BaseActivity {
                         component.setText(getModelDisplayedValueByFieldName(model, ff.getName()));
                         component.setInputType(InputType.TYPE_NULL);
                         component.setTextSize(TypedValue.COMPLEX_UNIT_SP, 15);
-                        component.requestFocus();
 
                         //ADD LISTENER for setting date
                         if (isEditable) {
@@ -461,17 +408,24 @@ public abstract class AbstractConnectFormFieldActivity extends BaseActivity {
 
                         component.setTag(ff.getName());
 
-                        // --- permits to apply specifics within the extending activity
-                        applySpecificRender(model, component, llp, ff);
-
                         if (llp != null) {
                             if (!isEditable) {
                                 llp.setMargins(30, 0, 0, 0); // llp.setMargins(left, top, right, bottom);
                             }
+
+                            // --- permits to apply specifics within the extending activity
+                            applySpecificRender(model, component, llp, ff);
+
                             component.setLayoutParams(llp);
+                            component.setGravity(Gravity.CENTER_VERTICAL);
+                            //component.setBackgroundColor(getResources().getColor(R.color.FareGreen));
                         }
 
                         layout.addView(component);
+                        if (displayType == DisplayType.PICKLIST) {
+                            component.setCompoundDrawablesWithIntrinsicBounds(null, null,
+                                    getResources().getDrawable(R.drawable.field_popup), null);
+                        }
 
                         addWhiteSpace(layout);
                         if (ff.isLineSeparator()) {
@@ -481,6 +435,80 @@ public abstract class AbstractConnectFormFieldActivity extends BaseActivity {
                 }
             }
         }
+    }
+
+    /**
+     * @param ff formfield object
+     * @return the type of display our component should be of
+     */
+    protected DisplayType getDisplayType(ConnectFormField ff) {
+
+        DisplayType displayType = null;
+        final IFormField.DataType dataType = ff.getDataType();
+        final IFormField.ControlType controlType = ff.getControlType();
+
+        switch (dataType) {
+        case BOOLEAN:
+            break;
+        case CHAR:
+            if (controlType == IFormField.ControlType.TIME) {
+                displayType = DisplayType.TIME;
+            }
+            break;
+        case CONNECTED_LIST:
+            break;
+        case CURRENCY:
+            break;
+        case EXPENSE_TYPE:
+            break;
+        case INTEGER:
+            if (controlType == IFormField.ControlType.EDIT) {
+                displayType = DisplayType.TEXTFIELD;
+            } else if (controlType == IFormField.ControlType.PICK_LIST) {
+                displayType = DisplayType.PICKLIST;
+            }
+            break;
+        case LIST:
+            break;
+        case LOCATION:
+            break;
+        case MONEY:
+            displayType = DisplayType.MONEYFIELD;
+            break;
+        case NUMERIC:
+            break;
+        case TIMESTAMP:
+            displayType = DisplayType.DATEFIELD;
+            break;
+        case UNSPECIFED:
+            break;
+        case VARCHAR:
+            switch (controlType) {
+            case EDIT:
+                displayType = DisplayType.TEXTFIELD;
+                break;
+            case TEXT_AREA:
+                displayType = DisplayType.TEXTAREA;
+                break;
+            default:
+                break;
+            }
+            break;
+        default:
+            displayType = null;
+            break;
+        }
+        return displayType;
+    }
+
+    /**
+     * Override this to change the type of display whatever access right rules are for a specific fields
+     *
+     * @param name
+     * @return
+     */
+    protected boolean isFieldReadOnly(FormDTO model, String name) {
+        return false;
     }
 
     /**
@@ -625,7 +653,7 @@ public abstract class AbstractConnectFormFieldActivity extends BaseActivity {
 
         LinearLayout.LayoutParams llp = new LinearLayout.LayoutParams(ActionBar.LayoutParams.MATCH_PARENT,
                 ActionBar.LayoutParams.MATCH_PARENT);
-        llp.setMargins(30, 0, 0, 0); // llp.setMargins(left, top, right, bottom);
+        //llp.setMargins(30, 0, 0, 0); // llp.setMargins(left, top, right, bottom);
         textView.setLayoutParams(llp);
 
         return textView;

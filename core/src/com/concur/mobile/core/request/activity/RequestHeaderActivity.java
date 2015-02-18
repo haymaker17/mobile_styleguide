@@ -173,30 +173,30 @@ public class RequestHeaderActivity extends AbstractConnectFormFieldActivity impl
             if (isFieldVisible(tr, ff.getName())) {
                 final TextView compView = getComponent(tr, ff.getName());
                 final String fieldName = ff.getName();
-                if (compView != null) {
+                if (compView != null && compView.getText() != null) {
                     final String displayedValue = compView.getText().toString();
                     if (fieldName.equals(FIELD_NAME)) {
-                        hasChange |= !tr.getName().equals(displayedValue);
+                        hasChange |= !displayedValue.equals(tr.getName());
                     } else if (fieldName.equals(FIELD_START_DATE)) {
                         if (tr.getStartDate() == null) {
                             hasChange |= displayedValue != null && displayedValue.length() > 0;
                         } else {
-                            hasChange |= !formatDate(tr.getStartDate()).equals(displayedValue);
+                            hasChange |= !displayedValue.equals(formatDate(tr.getStartDate()));
                         }
                     } else if (fieldName.equals(FIELD_END_DATE)) {
                         if (tr.getEndDate() == null) {
                             hasChange |= displayedValue != null && displayedValue.length() > 0;
                         } else {
-                            hasChange |= !formatDate(tr.getEndDate()).equals(displayedValue);
+                            hasChange |= !displayedValue.equals(formatDate(tr.getEndDate()));
                         }
                     } else if (fieldName.equals(FIELD_PURPOSE)) {
-                        hasChange |= !tr.getPurpose().equals(displayedValue);
+                        hasChange |= !displayedValue.equals(tr.getPurpose());
                     } else if (fieldName.equals(FIELD_EMP_NAME)) {
-                        hasChange |= !tr.getEmployeeName().equals(displayedValue);
+                        hasChange |= !displayedValue.equals(tr.getEmployeeName());
                         //} else if (fieldName.equals(FIELD_CURRENCY_NAME)) {
                         //} else if (fieldName.equals(FIELD_TOTAL_POSTED_AMOUNT)) {
                     } else if (fieldName.equals(FIELD_COMMENT)) {
-                        hasChange |= !tr.getLastComment().equals(displayedValue);
+                        hasChange |= !displayedValue.equals(tr.getLastComment());
                     }
                 }
                 if (hasChange) {

@@ -29,7 +29,7 @@ public class RequestSegmentDTO implements FormDTO {
     @SerializedName("Exceptions")
     private List<ConnectExceptionMessage> exeptionList = new ArrayList<ConnectExceptionMessage>();
     @SerializedName("Comments")
-    private List<RequestCommentDTO> commentList = null;
+    private List<String> commentList = null;
     @Expose @SerializedName("Comment")
     private String lastComment;
     @SerializedName("Order")
@@ -68,11 +68,11 @@ public class RequestSegmentDTO implements FormDTO {
         this.lastComment = lastComment;
     }
 
-    public List<RequestCommentDTO> getCommentList() {
+    public List<String> getCommentList() {
         return commentList;
     }
 
-    public void setCommentList(List<RequestCommentDTO> commentList) {
+    public void setCommentList(List<String> commentList) {
         this.commentList = commentList;
     }
 

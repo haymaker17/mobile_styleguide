@@ -290,6 +290,7 @@ public class Flurry {
     public static final String PARAM_VALUE_TRAVEL_REQUEST_SUMMARY = "Travel Request Summary";
     public static final String PARAM_VALUE_TRAVEL_REQUEST_HEADER = "Travel Request Header";
     public static final String PARAM_VALUE_TRAVEL_REQUEST_ENTRY = "Travel Request Entry";
+    public static final String PARAM_VALUE_TRAVEL_REQUEST_LOCATION = "Travel Request Location";
     public static final String PARAM_VALUE_VIEW_EXPENSE_LIST = "View Expense List";
     public static final String PARAM_VALUE_VIEW_CURRENT_TRIP = "View Current Trip";
     public static final String PARAM_VALUE_VIEW_INVOICES = "View Invoices";

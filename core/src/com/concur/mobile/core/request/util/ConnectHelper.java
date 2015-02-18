@@ -23,6 +23,7 @@ public class ConnectHelper {
     // "/api/v3.0/travelrequest/requests?status=PENDING_EBOOKING&offset=0&limit=25";
 
     public enum Module {
+        LOCATION("common/locations"),
         REQUEST("travelrequest/requests"),
         REQUEST_ENTRY("travelrequest/segmentsentries"),
         GROUP_CONFIGURATIONS("travelrequest/requestgroupconfigurations"),

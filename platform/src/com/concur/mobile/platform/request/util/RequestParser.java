@@ -7,6 +7,7 @@ import com.concur.mobile.platform.request.dto.RequestCommentDTO;
 import com.concur.mobile.platform.request.dto.RequestDTO;
 import com.concur.mobile.platform.request.dto.RequestEntryDTO;
 import com.concur.mobile.platform.request.groupConfiguration.RequestGroupConfiguration;
+import com.concur.mobile.platform.request.location.Location;
 import com.concur.mobile.platform.util.*;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
@@ -197,26 +198,6 @@ public class RequestParser {
         // --- generating map
         final Map<String, RequestEntryDTO> entryMap = new HashMap<String, RequestEntryDTO>();
         for (RequestEntryDTO entry : connectTR.getEntryList()) {
-            // --- retrieving segment type & form id
-            /*if (entry.getListSegment() != null && entry.getListSegment().size() > 0) {
-                boolean isFirst = true;
-
-                for (RequestSegmentDTO segment : entry.getListSegment()) {
-                    if (isFirst) {
-                        // --- note : those 2 values should be moved at entry level on ws response
-                        entry.setSegmentType(segment.getSegmentType());
-                        entry.setSegmentTypeCode(segment.getSegmentTypeCode());
-                        entry.setSegmentFormId(segment.getSegmentFormId());
-                        isFirst = false;
-                    }
-                    for (RequestCommentDTO com : segment.getCommentList()) {
-                        if (com.getIsLatest()) {
-                            segment.setLastComment(com.getValue());
-                            break;
-                        }
-                    }
-                }
-            }*/
             // MOVED ON ENTRY BY LAST WS MODIFICATION
             entryMap.put(entry.getId(), entry);
         }
@@ -276,6 +257,35 @@ public class RequestParser {
         return clc.getList();
     }
 
+    /**
+     * Parse jsonRes content with Gson into a list of Location and return it
+     *
+     * @param jsonRes the json string
+     * @return related ID
+     */
+    public static List<Location> parseLocations(String jsonRes) {
+        final GsonBuilder builder = new GsonBuilder();
+        builder.registerTypeAdapter(Boolean.class, new BooleanDeserializer());
+        builder.registerTypeAdapter(Double.class, new DoubleDeserializer());
+        Log.d(CLS_TAG, "parseLocations :: starting parse");
+
+        final Gson gson = builder.create();
+        final GsonListContainer<Location> clc = gson
+                .fromJson(jsonRes, new TypeToken<GsonListContainer<Location>>() {}.getType());
+        return clc.getList();
+    }
+
+    public static Location parseLocation(String jsonRes) {
+        final GsonBuilder builder = new GsonBuilder();
+        builder.registerTypeAdapter(Boolean.class, new BooleanDeserializer());
+        builder.registerTypeAdapter(Double.class, new DoubleDeserializer());
+        Log.d(CLS_TAG, "parseLocation :: starting parse");
+
+        final Gson gson = builder.create();
+        final Location clc = gson.fromJson(jsonRes, new TypeToken<Location>() {}.getType());
+        return clc;
+    }
+
     /*********************
      * toJson methods
      ********************/
@@ -307,5 +317,19 @@ public class RequestParser {
         Log.d(CLS_TAG, "toJson[Entry] :: starting parse");
         final Gson gson = builder.excludeFieldsWithoutExposeAnnotation().create();
         return gson.toJson(requestEntryDTO);
+    }
+
+    /**
+     * @param location location object
+     * @return the json string representation
+     */
+    public static String toJson(Location location) {
+        final GsonBuilder builder = new GsonBuilder();
+        builder.registerTypeAdapter(Boolean.class, new BooleanDeserializer());
+        builder.registerTypeAdapter(Double.class, new DoubleDeserializer());
+        Log.d(CLS_TAG, "toJson[Location] :: starting parse");
+
+        final Gson gson = builder.create();
+        return gson.toJson(location);
     }
 }

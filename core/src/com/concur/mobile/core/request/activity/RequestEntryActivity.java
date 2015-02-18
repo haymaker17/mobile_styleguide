@@ -7,6 +7,7 @@ import android.content.Intent;
 import android.graphics.Typeface;
 import android.os.Bundle;
 import android.os.Handler;
+import android.os.IBinder;
 import android.support.v4.app.FragmentActivity;
 import android.support.v4.view.ViewPager;
 import android.text.Editable;
@@ -71,7 +72,7 @@ public class RequestEntryActivity extends AbstractConnectFormFieldActivity imple
     private static final String FIELD_END_DATE = "ArrivalDate";
     private static final String FIELD_END_TIME = "ArrivalTime";
     private static final String FIELD_COMMENT = "Comment";
-    private static final String FIELD_AMOUNT = "TransactionAmount";
+    private static final String FIELD_AMOUNT = "ForeignAmount";
     private static final String FIELD_CURRENCY = "CrnKey";
     // --- MISC
     // --- CARRT / TAXIF / LIMOF
@@ -90,6 +91,8 @@ public class RequestEntryActivity extends AbstractConnectFormFieldActivity imple
     private ConnectFormFieldsCache formFieldsCache = null;
     private BaseAsyncResultReceiver asyncReceiverSave;
 
+    private Intent locationIntent;
+
     private RequestDTO request;
     private RequestEntryDTO entry;
     private List<RequestSegmentDTO> segmentOneWay;
@@ -104,6 +107,7 @@ public class RequestEntryActivity extends AbstractConnectFormFieldActivity imple
     private TextView requestTitle;
     private ViewPager viewPager;
     private CurrencySpinnerAdapter curTypeAdapter;
+    private TextView locationTappedView = null;
 
     private Map<Integer, LinearLayout> layoutPerTab;
     private int viewedFragment = -1;
@@ -167,9 +171,15 @@ public class RequestEntryActivity extends AbstractConnectFormFieldActivity imple
         // --- update mode
         if (requestId != null && entryId != null) {
             request = requestListCache.getValue(requestId);
-            entry = request.getEntriesMap().get(entryId);
-            form = formFieldsCache.getFormFields(entry.getSegmentFormId());
-            setCanSave(request.isActionPermitted(RequestParser.PermittedAction.SAVE));
+            if (request == null) {
+                ConnectHelper.displayMessage(this, "Error : request object is null !!!");
+                finish();
+            } else {
+                entry = request.getEntriesMap().get(entryId);
+                form = formFieldsCache.getFormFields(entry.getSegmentFormId());
+                setCanSave(request.isActionPermitted(RequestParser.PermittedAction.SAVE));
+                viewedType = SegmentType.RequestSegmentType.getByCode(entry.getSegmentTypeCode());
+            }
         }
         // --- create mode
         else if (requestId != null) {
@@ -183,11 +193,15 @@ public class RequestEntryActivity extends AbstractConnectFormFieldActivity imple
             //entry.setSegmentType();
             //entry.setSegmentTypeCode();
             form = formFieldsCache.getFormFields(entry.getSegmentFormId());
+            viewedType = SegmentType.RequestSegmentType.getByCode(entry.getSegmentTypeCode());
         } else {
             // TODO this might be used later if we can create directly from a segment type selection screen
             // --- This is wrong, go back to previous screen and log error
             Log.e(CLS_TAG, "requestId is null !");
             finish();
+        }
+        if (viewedType == null) {
+            viewedType = SegmentType.RequestSegmentType.CAR;
         }
         if (form == null) {
             finish();
@@ -202,10 +216,6 @@ public class RequestEntryActivity extends AbstractConnectFormFieldActivity imple
         entryVF = (ViewFlipper) findViewById(R.id.entryVF);
         entryTypeVF = (ViewFlipper) findViewById(R.id.entryTypeVF);
         entryVF.setDisplayedChild(ID_ENTRY_VIEW);
-        viewedType = SegmentType.RequestSegmentType.getByCode(entry.getSegmentTypeCode());
-        if (viewedType == null) {
-            viewedType = SegmentType.RequestSegmentType.CAR;
-        }
         // --- Air & Rail segments have a specific display with specific processing
         hasCustomLayouts = (viewedType == SegmentType.RequestSegmentType.AIR
                 || viewedType == SegmentType.RequestSegmentType.RAIL);
@@ -219,8 +229,10 @@ public class RequestEntryActivity extends AbstractConnectFormFieldActivity imple
             entryTypeVF.setDisplayedChild(ID_NO_VIEWPAGER_VIEW);
         }
         currentFieldsLayout = (LinearLayout) findViewById(R.id.formFieldsLayout);
-        requestTitle = (TextView) findViewById(R.id.entryTitle);
-        requestTitle.setText(entry.getSegmentType());
+        if (entry != null) {
+            requestTitle = (TextView) findViewById(R.id.entryTitle);
+            requestTitle.setText(entry.getSegmentType());
+        }
         // --- we use fragments if it's air, which will launch display by themselves
         if (!hasCustomLayouts) {
             // --- only one segment possible
@@ -378,7 +390,6 @@ public class RequestEntryActivity extends AbstractConnectFormFieldActivity imple
                 displayOrder++;
             }
         }
-        // --- Resets processed tab to the one viewed
     }
 
     private boolean hasChange(List<RequestSegmentDTO> segmentList) {
@@ -421,16 +432,11 @@ public class RequestEntryActivity extends AbstractConnectFormFieldActivity imple
                             comparedValue = convertTimeFormat(displayedValue, false, true);
                         }
                         hasChange |= !formatTime(segment.getDepartureDate(), true).equals(comparedValue);
-                        if (hasChange) {
-                            System.out.println(
-                                    "test : segdate = " + formatTime(segment.getDepartureDate(), true) + " | disdate = "
-                                            + comparedValue);
-                        }
                     } else if (fieldName.equals(FIELD_END_DATE)) {
                         if (segment.getArrivalDate() == null) {
                             hasChange |= displayedValue.length() > 0;
                         } else {
-                            hasChange |= !formatDate(segment.getArrivalDate()).equals(parseDate(displayedValue));
+                            hasChange |= !formatDate(segment.getArrivalDate()).equals(displayedValue);
                         }
                     } else if (fieldName.equals(FIELD_END_TIME)) {
                         // --- value is stored on a 24h format
@@ -439,11 +445,6 @@ public class RequestEntryActivity extends AbstractConnectFormFieldActivity imple
                             comparedValue = convertTimeFormat(displayedValue, false, true);
                         }
                         hasChange |= !formatTime(segment.getArrivalDate(), true).equals(comparedValue);
-                        if (hasChange) {
-                            System.out.println(
-                                    "test : segdate = " + formatTime(segment.getArrivalDate(), true) + " | disdate = "
-                                            + comparedValue);
-                        }
                     } else if (fieldName.equals(FIELD_CURRENCY)) {
                         // --- if hint is null, used never selected anything in the popup
                         hasChange |= compView.getHint() != null && !entry.getForeignCurrencyCode()
@@ -548,11 +549,17 @@ public class RequestEntryActivity extends AbstractConnectFormFieldActivity imple
     protected void setModelValueByFieldName(FormDTO model, String fieldName, String value) {
         final RequestSegmentDTO segment = (RequestSegmentDTO) model;
         if (fieldName.equals(FIELD_FROM_ID)) {
-            // --- TODO : get location name with that ID
-            segment.setFromLocationName(value);
+            final TextView view = getComponent(model, fieldName);
+            if (view != null && view.getHint() != null) {
+                segment.setFromLocationId(view.getHint().toString());
+                segment.setFromLocationName(value);
+            }
         } else if (fieldName.equals(FIELD_TO_ID)) {
-            // --- TODO : get location name with that ID
-            segment.setToLocationName(value);
+            final TextView view = getComponent(model, fieldName);
+            if (view != null && view.getHint() != null) {
+                segment.setToLocationId(view.getHint().toString());
+                segment.setToLocationName(value);
+            }
         } else if (fieldName.equals(FIELD_AMOUNT)) {
             final MoneyFormField field = (MoneyFormField) RequestEntryActivity.this.getComponent(model, FIELD_AMOUNT);
             // --- field can be null if hidden
@@ -573,11 +580,13 @@ public class RequestEntryActivity extends AbstractConnectFormFieldActivity imple
                 applyTimeString(segment.getArrivalDate(), value);
             }
         } else if (fieldName.equals(FIELD_CURRENCY)) {
-            final CharSequence currencyCodeSequence = getComponent(model, fieldName).getHint();
-            final String code = currencyCodeSequence != null ? currencyCodeSequence.toString() : null;
-            // --- trick to get the code back
-            entry.setForeignCurrencyCode(code);
-            entry.setForeignCurrencyCode(code);
+            // --- component is null if value is never changed
+            if (getComponent(model, fieldName) != null) {
+                final CharSequence currencyCodeSequence = getComponent(model, fieldName).getHint();
+                final String code = currencyCodeSequence != null ? currencyCodeSequence.toString() : null;
+                // --- trick to get the code back
+                entry.setForeignCurrencyCode(code);
+            }
         } else if (fieldName.equals(FIELD_COMMENT)) {
             segment.setLastComment(value);
         }
@@ -606,6 +615,14 @@ public class RequestEntryActivity extends AbstractConnectFormFieldActivity imple
             return getResources().getString(R.string.comment);
         }
         return null;
+    }
+
+    @Override
+    protected DisplayType getDisplayType(ConnectFormField ff) {
+        if (ff.getName().equals(FIELD_FROM_ID) || ff.getName().equals(FIELD_TO_ID)) {
+            return DisplayType.PICKLIST;
+        }
+        return super.getDisplayType(ff);
     }
 
     @Override
@@ -641,8 +658,8 @@ public class RequestEntryActivity extends AbstractConnectFormFieldActivity imple
     }
 
     @Override
-    protected void applySpecificRender(final FormDTO model, TextView component, LinearLayout.LayoutParams llp,
-            ConnectFormField ff) {
+    protected void applySpecificRender(final FormDTO model, final TextView component,
+            final LinearLayout.LayoutParams llp, final ConnectFormField ff) {
         if (ff.getName().equals(FIELD_SEGMENT_TYPE)) {
             component.setTextAppearance(this, R.style.ListCellHeaderText);
             component.setTextColor(getResources().getColor(R.color.White));
@@ -670,7 +687,11 @@ public class RequestEntryActivity extends AbstractConnectFormFieldActivity imple
             });
         } else if (ff.getName().equals(FIELD_AMOUNT)) {
             // --- currency initialization
-            ((MoneyFormField) component).setCurrencyCode(entry.getForeignCurrencyCode());
+            try {
+                ((MoneyFormField) component).setCurrencyCode(entry.getForeignCurrencyCode());
+            } catch (ClassCastException cce) {
+                // --- readonly => nothing for now
+            }
         }
     }
 
@@ -700,7 +721,7 @@ public class RequestEntryActivity extends AbstractConnectFormFieldActivity imple
                 entry.setListSegment(segmentOneWay);
                 if (entry.getListSegment().size() > 1) {
                     // --- security lock : we can't have more than 1 on a round way => remove anything above
-                    segmentOneWay.clear();
+                    segmentOneWay = new ArrayList<RequestSegmentDTO>();
                     segmentOneWay.add(entry.getListSegment().iterator().next());
                     entry.setListSegment(segmentOneWay);
                 }
@@ -709,7 +730,7 @@ public class RequestEntryActivity extends AbstractConnectFormFieldActivity imple
                 entry.setListSegment(segmentsRoundTrip);
                 if (entry.getListSegment().size() > 1) {
                     // --- security lock : we can't have more than 1 on a round way => remove anything above
-                    segmentsRoundTrip.clear();
+                    segmentsRoundTrip = new ArrayList<RequestSegmentDTO>();
                     for (int i = 0; i < 2; i++) {
                         segmentsRoundTrip.add(entry.getListSegment().get(i));
                     }
@@ -768,6 +789,13 @@ public class RequestEntryActivity extends AbstractConnectFormFieldActivity imple
         }
         if (view.getTag().equals(FIELD_CURRENCY)) {
             showCurrencyDialog(view);
+        } else if (view.getTag().equals(FIELD_FROM_ID) || view.getTag().equals(FIELD_TO_ID)) {
+            if (locationIntent == null) {
+                locationIntent = new Intent(RequestEntryActivity.this, LocationSearchActivity.class);
+                locationIntent.putExtra(LocationSearchActivity.EXTRA_PARAM_IS_AIRPORT, true);
+            }
+            locationTappedView = (TextView) view;
+            startActivityForResult(locationIntent, Const.REQUEST_CODE_LOCATION);
         }
     }
 
@@ -869,6 +897,28 @@ public class RequestEntryActivity extends AbstractConnectFormFieldActivity imple
         // NTD
     }
 
+    /*
+     * (non-Javadoc)
+     *
+     * @see com.concur.mobile.activity.expense.ConcurView#onActivityResult(int, int, android.content.Intent)
+     */
+    @Override
+    public void onActivityResult(int requestCode, int resultCode, Intent data) {
+        if (resultCode == Activity.RESULT_OK) {
+            final String selectedListItemKey = data.getStringExtra(LocationSearchActivity.EXTRA_PARAM_LOCATION_ID);
+            final String selectedListItemText = data.getStringExtra(LocationSearchActivity.EXTRA_PARAM_LOCATION_NAME);
+            if (locationTappedView != null) {
+                if (selectedListItemKey != null) {
+                    locationTappedView.setText(selectedListItemText);
+                    locationTappedView.setHint(selectedListItemKey);
+                } else {
+                    locationTappedView.setText("");
+                    locationTappedView.setHint("");
+                }
+            }
+        }
+    }
+
     @Override
     protected void onResume() {
         super.onResume();
@@ -877,6 +927,11 @@ public class RequestEntryActivity extends AbstractConnectFormFieldActivity imple
         // activity creation
         if (asyncReceiverSave == null) {
             asyncReceiverSave = new BaseAsyncResultReceiver(new Handler());
+        }
+        /// --- hide keyboard
+        final IBinder windowToken = entryVF.getWindowToken();
+        if (windowToken != null) {
+            com.concur.mobile.platform.ui.common.util.ViewUtil.hideSoftKeyboard(this, windowToken);
         }
     }
 

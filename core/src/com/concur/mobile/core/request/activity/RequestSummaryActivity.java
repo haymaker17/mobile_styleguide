@@ -337,7 +337,7 @@ public class RequestSummaryActivity extends BaseActivity {
     private void displayEntryDetail(String entryId) {
         //final RequestDTO tr = requestListCache.getValue(reqId);
         // --- we go to detail screen even if there is no connection if we have cached detail data
-        if (!ConcurCore.isConnected() && (tr == null || tr.getEntriesMap() == null)) {
+        if (!ConcurCore.isConnected() || tr == null || tr.getEntriesMap() == null) {
             new NoConnectivityDialogFragment().show(getSupportFragmentManager(), CLS_TAG);
         } else {
             final Intent i = new Intent(RequestSummaryActivity.this, RequestEntryActivity.class);
