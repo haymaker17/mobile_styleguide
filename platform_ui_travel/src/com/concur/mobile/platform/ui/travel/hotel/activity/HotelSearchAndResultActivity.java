@@ -476,6 +476,8 @@ public class HotelSearchAndResultActivity extends Activity implements OnMenuItem
             Bundle bundle = new Bundle();
             bundle.putSerializable(Const.EXTRA_HOTELS_LIST, (Serializable) hotelList);
             i.putExtras(bundle);
+            i.putExtra(Const.EXTRA_TRAVEL_LATITUDE, latitude);
+            i.putExtra(Const.EXTRA_TRAVEL_LONGITUDE, longitude);
 
             startActivity(i);
 
