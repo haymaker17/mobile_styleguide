@@ -73,7 +73,7 @@ public class Preferences extends PreferenceActivity implements OnSharedPreferenc
 
     // Switches for OCR, ***REMOVE FROM BRANCH*** begin
     // public static int timesClicked = 0;
-    public static final String PREF_OCR_FLAG = "pref_ocr_flag";
+    // public static final String PREF_OCR_FLAG = "pref_ocr_flag";
     // Switches for OCR, ***REMOVE FROM BRANCH*** end
 
     static {
@@ -1518,12 +1518,13 @@ public class Preferences extends PreferenceActivity implements OnSharedPreferenc
         // return prefs.getBoolean(PREF_OCR_FLAG, false);
         return false;
     }
-
+    
+    /*
     public static void setShouldUseNewOcrFeatures(boolean ocrPref) {
         SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(ConcurCore.getContext());
         Editor e = prefs.edit();
         e.putBoolean(PREF_OCR_FLAG, ocrPref);
         e.commit();
     }
-
+	*/
 }
