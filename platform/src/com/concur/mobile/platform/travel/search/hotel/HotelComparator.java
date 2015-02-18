@@ -348,7 +348,7 @@ public class HotelComparator implements Comparator<Hotel> {
             // No recommendation for hotel2, have hotel 1 come before hotel 2.
             retVal = -1;
         } else if (hotel2.recommended != null && hotel2.recommended.totalScore != null) {
-            // No recommendation for hotel1, have hotel 1 come after hotel 2.
+            // No recommendation for hotel1, have hotel 2 come before hotel 1.
             retVal = 1;
         }
         return retVal;

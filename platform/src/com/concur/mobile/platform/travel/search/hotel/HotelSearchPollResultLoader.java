@@ -2,7 +2,6 @@ package com.concur.mobile.platform.travel.search.hotel;
 
 import java.util.Calendar;
 
-
 import android.content.Context;
 
 /**
@@ -18,9 +17,9 @@ public class HotelSearchPollResultLoader extends HotelSearchResultLoader {
     private static final String CLS_TAG = "HotelSearchPollRESTResultLoader";
 
     public HotelSearchPollResultLoader(Context context, Calendar checkInDate, Calendar checkOutDate, Double lat,
-            Double lon, Integer radius, String distanceUnit, Integer start, Integer count, String pollingURL) {
+            Double lon, Integer radius, String distanceUnit, String pollingURL) {
 
-        super(context, checkInDate, checkOutDate, lat, lon, radius, distanceUnit, start, count);
+        super(context, checkInDate, checkOutDate, lat, lon, radius, distanceUnit);
 
         this.pollingURL = pollingURL;
     }

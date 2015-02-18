@@ -76,16 +76,6 @@ public class HotelSearchResultLoader extends PlatformAsyncTaskLoader<HotelSearch
      */
     protected String distanceUnit;
 
-    /**
-     * Contains the index into the result set to start collecting <code>count</code> results.
-     */
-    protected Integer start;
-
-    /**
-     * Contains the count of hotel choices to return.
-     */
-    protected Integer count;
-
     protected String pollingURL;
 
     /**
@@ -96,7 +86,7 @@ public class HotelSearchResultLoader extends PlatformAsyncTaskLoader<HotelSearch
     protected Bundle resultData;
 
     public HotelSearchResultLoader(Context context, Calendar checkInDate, Calendar checkOutDate, Double lat,
-            Double lon, Integer radius, String distanceUnit, Integer start, Integer count) {
+            Double lon, Integer radius, String distanceUnit) {
 
         super(context);
 
@@ -106,8 +96,6 @@ public class HotelSearchResultLoader extends PlatformAsyncTaskLoader<HotelSearch
         this.lon = lon;
         this.radius = radius;
         this.distanceUnit = distanceUnit;
-        this.start = start;
-        this.count = count;
     }
 
     /**
@@ -194,10 +182,6 @@ public class HotelSearchResultLoader extends PlatformAsyncTaskLoader<HotelSearch
         endPointUrlBldr.append(Format.safeFormatCalendar(Parse.LONG_YEAR_MONTH_DAY, checkInDate));
         endPointUrlBldr.append("&checkout=");
         endPointUrlBldr.append(Format.safeFormatCalendar(Parse.LONG_YEAR_MONTH_DAY, checkOutDate));
-        endPointUrlBldr.append("&limit=");
-        endPointUrlBldr.append(count);
-        endPointUrlBldr.append("&offset=");
-        endPointUrlBldr.append(start);
 
         return endPointUrlBldr.toString();
     }
