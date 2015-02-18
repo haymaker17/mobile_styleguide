@@ -235,8 +235,7 @@ public class HotelSearchAndResultActivity extends Activity implements OnMenuItem
      */
     protected void sortByPreference(List<HotelSearchResultListItem> hotelListItemsToSort) {
         // Construct the primary/secondary sorts.
-        Comparator<Hotel> primarySort = new HotelComparator(HotelComparator.CompareField.PREFERENCE,
-                HotelComparator.CompareOrder.DESCENDING);
+        Comparator<Hotel> primarySort = new HotelComparator(HotelComparator.CompareField.PREFERENCE);
         HotelComparator secondarySort = new HotelComparator(HotelComparator.CompareField.CHEAPEST_ROOM,
                 HotelComparator.CompareOrder.ASCENDING);
         // Perform the actual sort.
