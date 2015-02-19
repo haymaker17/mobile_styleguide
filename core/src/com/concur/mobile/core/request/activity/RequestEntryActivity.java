@@ -414,10 +414,15 @@ public class RequestEntryActivity extends AbstractConnectFormFieldActivity imple
                         hasChange |= (segment.getToLocationName() == null && displayedValue != null
                                 && displayedValue.length() > 0) || !segment.getToLocationName().equals(displayedValue);
                     } else if (fieldName.equals(FIELD_AMOUNT)) {
-                        if (entry.getForeignAmount() == null) {
-                            hasChange |= displayedValue.length() > 0;
-                        } else {
-                            hasChange |= !entry.getForeignAmount().equals(((MoneyFormField) compView).getAmountValue());
+                        if (compView instanceof MoneyFormField) {
+                            // --- compView is a TextView if readonly, meaning it can't be modified so we don't care
+                            //     about it's value in this case
+                            if (entry.getForeignAmount() == null) {
+                                hasChange |= displayedValue.length() > 0;
+                            } else {
+                                hasChange |= !entry.getForeignAmount()
+                                        .equals(((MoneyFormField) compView).getAmountValue());
+                            }
                         }
                     } else if (fieldName.equals(FIELD_START_DATE)) {
                         if (segment.getDepartureDate() == null) {
@@ -561,10 +566,10 @@ public class RequestEntryActivity extends AbstractConnectFormFieldActivity imple
                 segment.setToLocationName(value);
             }
         } else if (fieldName.equals(FIELD_AMOUNT)) {
-            final MoneyFormField field = (MoneyFormField) RequestEntryActivity.this.getComponent(model, FIELD_AMOUNT);
+            final TextView field = RequestEntryActivity.this.getComponent(model, FIELD_AMOUNT);
             // --- field can be null if hidden
-            if (field != null) {
-                entry.setForeignAmount(field.getAmountValue());
+            if (field != null && field instanceof MoneyFormField) {
+                entry.setForeignAmount(((MoneyFormField) field).getAmountValue());
                 entry.setForeignAmount(entry.getForeignAmount());
             }
         } else if (fieldName.equals(FIELD_START_DATE)) {
@@ -677,20 +682,17 @@ public class RequestEntryActivity extends AbstractConnectFormFieldActivity imple
                 }
 
                 @Override public void afterTextChanged(Editable editable) {
-                    final MoneyFormField field = (MoneyFormField) RequestEntryActivity.this
-                            .getComponent(model, FIELD_AMOUNT);
+                    final TextView field = RequestEntryActivity.this.getComponent(model, FIELD_AMOUNT);
                     // --- field can be null if hidden
-                    if (field != null) {
-                        field.setCurrencyCode(entry.getForeignCurrencyCode());
+                    if (field != null && field instanceof MoneyFormField) {
+                        ((MoneyFormField) field).setCurrencyCode(entry.getForeignCurrencyCode());
                     }
                 }
             });
         } else if (ff.getName().equals(FIELD_AMOUNT)) {
             // --- currency initialization
-            try {
+            if (component instanceof MoneyFormField) {
                 ((MoneyFormField) component).setCurrencyCode(entry.getForeignCurrencyCode());
-            } catch (ClassCastException cce) {
-                // --- readonly => nothing for now
             }
         }
     }

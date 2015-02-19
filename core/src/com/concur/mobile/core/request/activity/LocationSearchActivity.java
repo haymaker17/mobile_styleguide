@@ -7,6 +7,8 @@ import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.IBinder;
+import android.text.Editable;
+import android.text.TextWatcher;
 import android.view.*;
 import android.view.inputmethod.EditorInfo;
 import android.widget.*;
@@ -31,6 +33,8 @@ public class LocationSearchActivity extends Activity {
 
     private static final String CLS_TAG = "LocationSearchActivity";
     private static final int MIN_SEARCH_LENGTH = 3;
+    private static final int TEXT_SEARCH_SHORT_DELAY = 300;
+    private static final int TEXT_SEARCH_LONG_DELAY = 750;
 
     public static final String EXTRA_PARAM_IS_AIRPORT = "isAirport";
     public static final String EXTRA_PARAM_LOCATION_ID = "locationId";
@@ -43,6 +47,7 @@ public class LocationSearchActivity extends Activity {
     protected EditText searchText;
     protected ListView searchResultsList;
     protected Spinner searchModeSpinner;
+    protected ProgressBar networkIndicator;
 
     protected int colorWhiteStripe;
     protected int colorBlueStripe;
@@ -56,6 +61,8 @@ public class LocationSearchActivity extends Activity {
 
         final Boolean isAirport = getIntent().getExtras().getBoolean(EXTRA_PARAM_IS_AIRPORT);
         this.isAirport = isAirport;
+
+        networkIndicator = (ProgressBar) findViewById(R.id.network_indicator);
 
         colorWhiteStripe = getResources().getColor(R.color.ListStripeWhite);
         colorBlueStripe = getResources().getColor(R.color.ListStripeBlue);
@@ -75,27 +82,39 @@ public class LocationSearchActivity extends Activity {
         }
     }
 
+    private void manageProgressBar(boolean isActive) {
+        final Drawable searchGlass = searchText.getCompoundDrawables()[2];
+        if (isActive) {
+            networkIndicator.setVisibility(View.VISIBLE);
+            // --- hides the compound drawable (setVisibility() only hides animations)
+            searchGlass.setAlpha(0);
+        } else {
+            networkIndicator.setVisibility(View.GONE);
+            // --- show back the compound drawable
+            searchGlass.setAlpha(255);
+        }
+    }
+
     protected void handleSearchAction() {
         if (searchText.getText().toString().length() >= MIN_SEARCH_LENGTH) {
-            // MOB-17636 - Hide the soft keyboard.
-            IBinder windowToken = searchText.getWindowToken();
+            final IBinder windowToken = searchText.getWindowToken();
             if (windowToken != null) {
                 com.concur.mobile.platform.ui.common.util.ViewUtil.hideSoftKeyboard(this, windowToken);
             }
 
-            doSearch(searchText.getText().toString());
+            doSearch(searchText.getText().toString(), TEXT_SEARCH_SHORT_DELAY);
         } else {
             searchDelayHandler.removeCallbacks(searchDelayRunnable);
-            SearchResultsAdapter adapter = (SearchResultsAdapter) searchResultsList.getAdapter();
+            final SearchResultsAdapter adapter = (SearchResultsAdapter) searchResultsList.getAdapter();
             adapter.clearListItems();
         }
     }
 
-    protected void doSearch(String search) {
+    protected void doSearch(String search, int delay) {
         final SearchResultsAdapter adapter = (SearchResultsAdapter) searchResultsList.getAdapter();
         adapter.clearListItems();
         searchDelayHandler.removeCallbacks(searchDelayRunnable);
-        searchDelayHandler.postDelayed(searchDelayRunnable, 300);
+        searchDelayHandler.postDelayed(searchDelayRunnable, delay);
     }
 
     protected void configureControls(Bundle savedInstanceState) {
@@ -151,6 +170,31 @@ public class LocationSearchActivity extends Activity {
 
         });
 
+        // Listen for typing in the search filter
+        searchText.addTextChangedListener(new TextWatcher() {
+
+            @Override
+            public void afterTextChanged(Editable s) {
+
+                if (s.length() >= MIN_SEARCH_LENGTH) {
+                    doSearch(s.toString(), TEXT_SEARCH_LONG_DELAY);
+                } else {
+                    searchDelayHandler.removeCallbacks(searchDelayRunnable);
+                    SearchResultsAdapter adapter = (SearchResultsAdapter) searchResultsList.getAdapter();
+                    adapter.clearListItems();
+                }
+            }
+
+            @Override
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+            }
+
+            @Override
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
+            }
+
+        });
+
         // Get the list ready
         searchResultsList.setAdapter(new SearchResultsAdapter(this, null));
         searchResultsList.setOnItemClickListener(new SearchResultClickListener());
@@ -198,23 +242,26 @@ public class LocationSearchActivity extends Activity {
     class DelayedSearch implements Runnable {
 
         public void run() {
-            SearchResultsAdapter adapter = (SearchResultsAdapter) searchResultsList.getAdapter();
-
+            manageProgressBar(true);
             asyncReceiverSearch.setListener(new SearchListener());
             new LocationListTask(getApplicationContext(), 1, asyncReceiverSearch, searchText.getText().toString(),
                     isAirport).execute();
         }
     }
 
+    // Listen for typing in the search filter
+    //searchText.addTextChangedListener(new SearchTextWatcher());
+
     public class SearchListener implements BaseAsyncRequestTask.AsyncReplyListener {
 
         @Override
         public void onRequestSuccess(Bundle resultData) {
+            manageProgressBar(false);
             ConnectHelper.displayMessage(getApplicationContext(), "SEARCH SUCCESSFULL");
             final List<Location> listLocation = RequestParser
                     .parseLocations(resultData.getString(BaseAsyncRequestTask.HTTP_RESPONSE));
             // metrics
-            final Map<String, String> params = new HashMap<>();
+            final Map<String, String> params = new HashMap<String, String>();
 
             params.put(Flurry.PARAM_NAME_TYPE, Flurry.PARAM_VALUE_TRAVEL_REQUEST_LOCATION);
             EventTracker.INSTANCE.track(Flurry.CATEGORY_TRAVEL_REQUEST, Flurry.EVENT_NAME_LIST, params);
@@ -224,6 +271,7 @@ public class LocationSearchActivity extends Activity {
 
         @Override
         public void onRequestFail(Bundle resultData) {
+            manageProgressBar(false);
             ConnectHelper.displayResponseMessage(getApplicationContext(), resultData,
                     getResources().getString(R.string.tr_error_save));
 
@@ -233,6 +281,7 @@ public class LocationSearchActivity extends Activity {
 
         @Override
         public void onRequestCancel(Bundle resultData) {
+            manageProgressBar(false);
             ConnectHelper
                     .displayMessage(getApplicationContext(), getResources().getString(R.string.tr_operation_canceled));
             Log.d(Const.LOG_TAG, CLS_TAG + " calling decrement from onRequestCancel");
