@@ -193,8 +193,6 @@ public class RequestHeaderActivity extends AbstractConnectFormFieldActivity impl
                         hasChange |= !displayedValue.equals(tr.getPurpose());
                     } else if (fieldName.equals(FIELD_EMP_NAME)) {
                         hasChange |= !displayedValue.equals(tr.getEmployeeName());
-                        //} else if (fieldName.equals(FIELD_CURRENCY_NAME)) {
-                        //} else if (fieldName.equals(FIELD_TOTAL_POSTED_AMOUNT)) {
                     } else if (fieldName.equals(FIELD_COMMENT)) {
                         hasChange |= !displayedValue.equals(tr.getLastComment());
                     }

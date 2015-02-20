@@ -418,11 +418,10 @@ public abstract class AbstractConnectFormFieldActivity extends BaseActivity {
 
                             component.setLayoutParams(llp);
                             component.setGravity(Gravity.CENTER_VERTICAL);
-                            //component.setBackgroundColor(getResources().getColor(R.color.FareGreen));
                         }
 
                         layout.addView(component);
-                        if (displayType == DisplayType.PICKLIST) {
+                        if (isEditable && displayType == DisplayType.PICKLIST) {
                             component.setCompoundDrawablesWithIntrinsicBounds(null, null,
                                     getResources().getDrawable(R.drawable.field_popup), null);
                         }
@@ -694,5 +693,9 @@ public abstract class AbstractConnectFormFieldActivity extends BaseActivity {
 
     public void setCanSave(boolean canSave) {
         this.canSave = canSave;
+    }
+
+    public boolean canSave() {
+        return canSave;
     }
 }

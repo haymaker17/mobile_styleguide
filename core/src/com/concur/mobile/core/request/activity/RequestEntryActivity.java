@@ -177,7 +177,9 @@ public class RequestEntryActivity extends AbstractConnectFormFieldActivity imple
             } else {
                 entry = request.getEntriesMap().get(entryId);
                 form = formFieldsCache.getFormFields(entry.getSegmentFormId());
-                setCanSave(request.isActionPermitted(RequestParser.PermittedAction.SAVE));
+                setCanSave(request.isActionPermitted(RequestParser.PermittedAction.SAVE) && (
+                        request.getApprovalStatusCode().equals(RequestDTO.ApprovalStatus.CREATION.getCode()) || request
+                                .getApprovalStatusCode().equals(RequestDTO.ApprovalStatus.RECALLED.getCode())));
                 viewedType = SegmentType.RequestSegmentType.getByCode(entry.getSegmentTypeCode());
             }
         }
@@ -699,8 +701,7 @@ public class RequestEntryActivity extends AbstractConnectFormFieldActivity imple
 
     @Override
     public void applySaveButtonPolicy(View saveButtonView) {
-        if (request.getApprovalStatusCode().equals(RequestDTO.ApprovalStatus.CREATION.getCode()) || request
-                .getApprovalStatusCode().equals(RequestDTO.ApprovalStatus.RECALLED.getCode())) {
+        if (request.isActionPermitted(RequestParser.PermittedAction.SAVE)) {
             saveButtonView.setVisibility(View.VISIBLE);
         } else {
             saveButtonView.setVisibility(View.GONE);
@@ -947,12 +948,13 @@ public class RequestEntryActivity extends AbstractConnectFormFieldActivity imple
     @Override
     public void onBackPressed() {
         List<RequestSegmentDTO> segmentList = entry.getListSegment();
-        if (hasCustomLayouts) {
+
+        if (canSave() && hasCustomLayouts) {
             segmentList = viewedFragment == TAB_ONE_WAY ?
                     segmentOneWay :
                     (viewedFragment == TAB_ROUND_TRIP ? segmentsRoundTrip : segmentsMultiLeg);
         }
-        if (hasChange(segmentList)) {
+        if (canSave() && hasChange(segmentList)) {
             final AlertDialogFragment.OnClickListener yesListener = new AlertDialogFragment.OnClickListener() {
 
                 @Override public void onClick(FragmentActivity activity, DialogInterface dialog, int which) {
