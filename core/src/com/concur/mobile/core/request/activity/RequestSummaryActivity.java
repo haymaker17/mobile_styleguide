@@ -181,30 +181,9 @@ public class RequestSummaryActivity extends BaseActivity {
 
     private void updateTRDetailsUI(RequestDTO request) {
 
-        boolean isSegmentAIR = false;
-        boolean isSegmentTRAIN = false;
-        boolean isSegmentHOTEL = false;
-        boolean isSegmentCAR = false;
+        RelativeLayout addItemButton = (RelativeLayout) findViewById(R.id.addItemButton);
+        addItemButton.setVisibility(View.GONE);
 
-        final RequestGroupConfiguration rgc = getConcurCore().getRequestGroupConfigurationCache().getValue(getUserId());
-        for (Policy p : rgc.getPolicies()) {
-            if (p.getIsDefault()) {
-                for (SegmentType st : p.getSegmentTypes()) {
-                    String iconCode = st.getIconCode();
-                    if (SegmentType.RequestSegmentType.AIR.getCode().equals(iconCode)) {
-                        isSegmentAIR = true;
-                    } else if (SegmentType.RequestSegmentType.RAIL.getCode().equals(iconCode)) {
-                        isSegmentTRAIN = true;
-                    } else if (SegmentType.RequestSegmentType.HOTEL.getCode().equals(iconCode)) {
-                        isSegmentHOTEL = true;
-                    } else if (SegmentType.RequestSegmentType.CAR.getCode().equals(iconCode)) {
-                        isSegmentCAR = true;
-                    }
-                }
-            }
-        }
-
-        //Show ADD SEGMENTS
         RelativeLayout layoutSegmentAIR = (RelativeLayout) findViewById(R.id.AirSegmentChoice);
         RelativeLayout layoutSegmentTRAIN = (RelativeLayout) findViewById(R.id.TrainSegmentChoice);
         RelativeLayout layoutSegmentHOTEL = (RelativeLayout) findViewById(R.id.HotelSegmentChoice);
@@ -216,20 +195,42 @@ public class RequestSummaryActivity extends BaseActivity {
         layoutSegmentHOTEL.setVisibility(View.GONE);
         layoutSegmentCAR.setVisibility(View.GONE);
         separator.setVisibility(View.GONE);
-        if (isSegmentsON) {
-            if (isSegmentAIR) {
-                layoutSegmentAIR.setVisibility(View.VISIBLE);
+
+        if (tr.isActionPermitted(RequestParser.PermittedAction.SUBMIT)) {
+            addItemButton.setVisibility(View.VISIBLE);
+
+            boolean isSegmentAIR = false;
+            boolean isSegmentTRAIN = false;
+            boolean isSegmentHOTEL = false;
+            boolean isSegmentCAR = false;
+
+            RequestGroupConfiguration rgc = getConcurCore().getRequestGroupConfigurationCache().getValue(getUserId());
+            for (Policy p : rgc.getPolicies()) {
+                if (p.getIsDefault()) {
+                    for (SegmentType st : p.getSegmentTypes()) {
+                        String iconCode = st.getIconCode();
+                        if (SegmentType.RequestSegmentType.AIR.getCode().equals(iconCode))
+                            isSegmentAIR = true;
+                        else if (SegmentType.RequestSegmentType.RAIL.getCode().equals(iconCode))
+                            isSegmentTRAIN = true;
+                        else if (SegmentType.RequestSegmentType.HOTEL.getCode().equals(iconCode))
+                            isSegmentHOTEL = true;
+                        else if (SegmentType.RequestSegmentType.CAR.getCode().equals(iconCode))
+                            isSegmentCAR = true;
+                    }
+                }
             }
-            if (isSegmentTRAIN) {
-                layoutSegmentTRAIN.setVisibility(View.VISIBLE);
+
+            //Show ADD SEGMENTS
+
+            if (isSegmentsON) {
+                if (isSegmentAIR) layoutSegmentAIR.setVisibility(View.VISIBLE);
+                if (isSegmentTRAIN) layoutSegmentTRAIN.setVisibility(View.VISIBLE);
+                if (isSegmentHOTEL) layoutSegmentHOTEL.setVisibility(View.VISIBLE);
+                if (isSegmentCAR) layoutSegmentCAR.setVisibility(View.VISIBLE);
+                separator.setVisibility(View.VISIBLE);
             }
-            if (isSegmentHOTEL) {
-                layoutSegmentHOTEL.setVisibility(View.VISIBLE);
-            }
-            if (isSegmentCAR) {
-                layoutSegmentCAR.setVisibility(View.VISIBLE);
-            }
-            separator.setVisibility(View.VISIBLE);
+
         }
 
         //SUMMARY
