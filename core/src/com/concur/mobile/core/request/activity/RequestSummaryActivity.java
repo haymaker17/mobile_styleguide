@@ -12,7 +12,12 @@ import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
-import android.widget.*;
+import android.widget.AdapterView;
+import android.widget.ListView;
+import android.widget.RelativeLayout;
+import android.widget.TextView;
+import android.widget.ViewFlipper;
+
 import com.concur.core.R;
 import com.concur.mobile.base.service.BaseAsyncRequestTask;
 import com.concur.mobile.base.service.BaseAsyncRequestTask.AsyncReplyListener;
@@ -34,10 +39,18 @@ import com.concur.mobile.platform.common.formfield.ConnectFormFieldsCache;
 import com.concur.mobile.platform.request.RequestListCache;
 import com.concur.mobile.platform.request.dto.RequestDTO;
 import com.concur.mobile.platform.request.dto.RequestEntryDTO;
+import com.concur.mobile.platform.request.groupConfiguration.Policy;
+import com.concur.mobile.platform.request.groupConfiguration.RequestGroupConfiguration;
+import com.concur.mobile.platform.request.groupConfiguration.SegmentType;
 import com.concur.mobile.platform.request.util.RequestParser;
 import com.concur.mobile.platform.ui.common.dialog.NoConnectivityDialogFragment;
 
-import java.util.*;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.HashSet;
+import java.util.Locale;
+import java.util.Map;
+import java.util.Set;
 
 public class RequestSummaryActivity extends BaseActivity {
 
@@ -68,6 +81,7 @@ public class RequestSummaryActivity extends BaseActivity {
     private ConnectFormFieldsCache formFieldsCache = null;
     private String formWaitingForRefresh = null;
     private String entryWaitingForRefresh;
+    private SegmentType.RequestSegmentType entryWaitingForRefreshType;
 
     protected Boolean showCodes;
     protected int category;
@@ -75,6 +89,8 @@ public class RequestSummaryActivity extends BaseActivity {
 
     private RequestDTO tr = null;
     private Locale locale = null;
+
+    boolean isSegmentsON = false;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -131,7 +147,98 @@ public class RequestSummaryActivity extends BaseActivity {
         });
     }
 
+    private void processEntryCreationByType(SegmentType.RequestSegmentType segmentType) {
+        final String formId = getConcurCore().getRequestGroupConfigurationCache().getValue(getUserId()).extractSegmentDefaultFormId(segmentType);
+        waitFormFieldsCacheRefresh(formId, null, segmentType);
+        formFieldsCache.setFormRefreshStatus(formId, true);
+        new RequestFormFieldsTask(RequestSummaryActivity.this, 1, asyncReceiverFormFields,
+                formId, false).execute();
+    }
+
+    public void onClickAir(View view) {
+        TextView tv = (TextView) view.findViewById(R.id.AirSummarySegmentText);
+        System.out.println(tv.getText());
+        processEntryCreationByType(SegmentType.RequestSegmentType.AIR);
+    }
+
+    public void onClickTrain(View view) {
+        TextView tv = (TextView) view.findViewById(R.id.TrainSummarySegmentText);
+        System.out.println(tv.getText());
+        processEntryCreationByType(SegmentType.RequestSegmentType.RAIL);
+    }
+
+    public void onClickHotel(View view) {
+        TextView tv = (TextView) view.findViewById(R.id.HotelSummarySegmentText);
+        System.out.println(tv.getText());
+        processEntryCreationByType(SegmentType.RequestSegmentType.HOTEL);
+    }
+
+    public void onClickCar(View view) {
+        TextView tv = (TextView) view.findViewById(R.id.CarSummarySegmentText);
+        System.out.println(tv.getText());
+        processEntryCreationByType(SegmentType.RequestSegmentType.CAR);
+    }
+
+    public void onClickAddItem(View view) {
+
+        TextView tv = (TextView) view.findViewById(R.id.addItemRequest);
+        if (isSegmentsON) {
+            isSegmentsON = false;
+            tv.setText(R.string.add_another_item_to_request);
+        } else {
+            isSegmentsON = true;
+            tv.setText(R.string.add_another_item_to_request_OFF);
+        }
+
+        showCacheData();
+    }
+
     private void updateTRDetailsUI(RequestDTO request) {
+
+        boolean isSegmentAIR = false;
+        boolean isSegmentTRAIN = false;
+        boolean isSegmentHOTEL = false;
+        boolean isSegmentCAR = false;
+
+        RequestGroupConfiguration rgc = getConcurCore().getRequestGroupConfigurationCache().getValue(getUserId());
+        for (Policy p : rgc.getPolicies()) {
+            if (p.getIsDefault()) {
+                for (SegmentType st : p.getSegmentTypes()) {
+                    String iconCode = st.getIconCode();
+                    if (SegmentType.RequestSegmentType.AIR.getCode().equals(iconCode))
+                        isSegmentAIR = true;
+                    else if (SegmentType.RequestSegmentType.RAIL.getCode().equals(iconCode))
+                        isSegmentTRAIN = true;
+                    else if (SegmentType.RequestSegmentType.HOTEL.getCode().equals(iconCode))
+                        isSegmentHOTEL = true;
+                    else if (SegmentType.RequestSegmentType.CAR.getCode().equals(iconCode))
+                        isSegmentCAR = true;
+                }
+            }
+        }
+
+        //Show ADD SEGMENTS
+        RelativeLayout layoutSegmentAIR = (RelativeLayout) findViewById(R.id.AirSegmentChoice);
+        RelativeLayout layoutSegmentTRAIN = (RelativeLayout) findViewById(R.id.TrainSegmentChoice);
+        RelativeLayout layoutSegmentHOTEL = (RelativeLayout) findViewById(R.id.HotelSegmentChoice);
+        RelativeLayout layoutSegmentCAR = (RelativeLayout) findViewById(R.id.CarSegmentChoice);
+        View separator = (View) findViewById(R.id.SegmentsSeparator);
+
+        layoutSegmentAIR.setVisibility(View.GONE);
+        layoutSegmentTRAIN.setVisibility(View.GONE);
+        layoutSegmentHOTEL.setVisibility(View.GONE);
+        layoutSegmentCAR.setVisibility(View.GONE);
+        separator.setVisibility(View.GONE);
+        if (isSegmentsON) {
+            if (isSegmentAIR) layoutSegmentAIR.setVisibility(View.VISIBLE);
+            if (isSegmentTRAIN) layoutSegmentTRAIN.setVisibility(View.VISIBLE);
+            if (isSegmentHOTEL) layoutSegmentHOTEL.setVisibility(View.VISIBLE);
+            if (isSegmentCAR) layoutSegmentCAR.setVisibility(View.VISIBLE);
+            separator.setVisibility(View.VISIBLE);
+        }
+
+
+        //SUMMARY
         final TextView name = (TextView) findViewById(R.id.requestDetailsName);
         final TextView amount = (TextView) findViewById(R.id.requestDetailsAmount);
         final TextView amountInButton = (TextView) findViewById(R.id.requestDetailsAmountInButton);
@@ -235,6 +342,7 @@ public class RequestSummaryActivity extends BaseActivity {
 
             // --- using an hashset to ensure uniqueness
             final Set<String> segmentFormIds = new HashSet<String>();
+            // --- process all forms contained in this request
             if (tr.getEntriesMap() != null) {
                 /* All segments of an entry have the same form type so we just have to get the first one
                  * (cf Jad 27/01/2015 - 17h16 GMT+1)
@@ -299,9 +407,9 @@ public class RequestSummaryActivity extends BaseActivity {
                     if (entry.getListSegment() != null && entry.getListSegment().size() > 0) {
                         final String segmentFormId = entry.getSegmentFormId();
                         if (!formFieldsCache.isFormBeingRefreshed(segmentFormId)) {
-                            displayEntryDetail(reqId);
+                            displayEntryDetail(reqId, null);
                         } else {
-                            waitFormFieldsCacheRefresh(segmentFormId, entry.getId());
+                            waitFormFieldsCacheRefresh(segmentFormId, entry.getId(), null);
                         }
                     } else {
                         //TODO What to do ? is this case possible ?
@@ -313,10 +421,11 @@ public class RequestSummaryActivity extends BaseActivity {
         }
     }
 
-    private void waitFormFieldsCacheRefresh(String formId, String entryId) {
+    private void waitFormFieldsCacheRefresh(String formId, String entryId, SegmentType.RequestSegmentType segmentType) {
         // set screen as loading and implement some handling on task success / fail / cancel actions
         formWaitingForRefresh = formId;
         entryWaitingForRefresh = entryId;
+        entryWaitingForRefreshType = segmentType;
 
         setView(ID_LOADING_VIEW);
     }
@@ -335,7 +444,8 @@ public class RequestSummaryActivity extends BaseActivity {
      *
      * @param entryId request object id
      */
-    private void displayEntryDetail(String entryId) {
+
+    private void displayEntryDetail(String entryId, String requestSegmentTypeCode) {
         //final RequestDTO tr = requestListCache.getValue(reqId);
         // --- we go to detail screen even if there is no connection if we have cached detail data
         if (!ConcurCore.isConnected() || tr == null || tr.getEntriesMap() == null) {
@@ -344,6 +454,8 @@ public class RequestSummaryActivity extends BaseActivity {
             final Intent i = new Intent(RequestSummaryActivity.this, RequestEntryActivity.class);
             i.putExtra(RequestListActivity.REQUEST_ID, tr.getId());
             i.putExtra(RequestEntryActivity.ENTRY_ID, entryId);
+            i.putExtra(RequestEntryActivity.REQUEST_SEGMENT_TYPE_CODE, requestSegmentTypeCode);
+
 
             // --- Flurry tracking
             i.putExtra(Flurry.PARAM_NAME_CAME_FROM, Flurry.PARAM_VALUE_TRAVEL_REQUEST_SUMMARY);
@@ -356,6 +468,7 @@ public class RequestSummaryActivity extends BaseActivity {
             startActivityForResult(i, ENTRY_UPDATE_RESULT);
         }
     }
+
 
     public class TRSubmitListener implements AsyncReplyListener {
 
@@ -456,7 +569,7 @@ public class RequestSummaryActivity extends BaseActivity {
     private void handleAwaitingRefresh(String formId, boolean isSuccess) {
         if (formWaitingForRefresh != null && formId.equals(formWaitingForRefresh)) {
             if (isSuccess) {
-                displayEntryDetail(entryWaitingForRefresh);
+                displayEntryDetail(entryWaitingForRefresh, (entryWaitingForRefreshType != null ? entryWaitingForRefreshType.getCode() : null));
             } else {
                 setView(ID_DETAIL_VIEW);
                 // TODO : display an error message ?
@@ -504,7 +617,7 @@ public class RequestSummaryActivity extends BaseActivity {
     }
 
     private void cleanupReceivers() {
-        asyncReceiverFormFields.setListener(null);
+        //asyncReceiverFormFields.setListener(null);
     }
 
     @Override
@@ -564,19 +677,21 @@ public class RequestSummaryActivity extends BaseActivity {
     @Override
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
+        // --- we force the view to go back to detail as it can be loading when we leave to create an entry
+        setView(ID_DETAIL_VIEW);
         switch (requestCode) {
-        case (ENTRY_UPDATE_RESULT):
-        case (HEADER_UPDATE_RESULT): {
-            if (resultCode == Activity.RESULT_OK) {
-                final Boolean newText = data.getBooleanExtra(RequestHeaderActivity.DO_WS_REFRESH, false);
-                if (newText) {
-                    refreshData(true);
-                } else {
-                    refreshData(false);
+            case (ENTRY_UPDATE_RESULT):
+            case (HEADER_UPDATE_RESULT): {
+                if (resultCode == Activity.RESULT_OK) {
+                    final Boolean newText = data.getBooleanExtra(RequestHeaderActivity.DO_WS_REFRESH, false);
+                    if (newText) {
+                        refreshData(true);
+                    } else {
+                        refreshData(false);
+                    }
                 }
+                break;
             }
-            break;
-        }
         }
     }
 }

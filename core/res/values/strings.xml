@@ -878,6 +878,7 @@
     <string name="rail_detail_book_success_message">Your train has been successfully reserved.</string>
     <string name="rail_detail_book_failure_title">Error occurred</string>
     <string name="add_another_item_to_request">+ Add Another Item to this request</string>
+    <string name="add_another_item_to_request_OFF">- Add Another Item to this request</string>
     <string name="submit_request">Submit Request</string>
     <string name="request_digest_total">Total:</string>
 

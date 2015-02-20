@@ -14,7 +14,12 @@ import android.text.Editable;
 import android.text.TextWatcher;
 import android.util.TypedValue;
 import android.view.View;
-import android.widget.*;
+import android.widget.LinearLayout;
+import android.widget.ListView;
+import android.widget.TextView;
+import android.widget.Toast;
+import android.widget.ViewFlipper;
+
 import com.apptentive.android.sdk.Log;
 import com.concur.core.R;
 import com.concur.mobile.base.service.BaseAsyncRequestTask;
@@ -38,8 +43,6 @@ import com.concur.mobile.platform.request.dto.FormDTO;
 import com.concur.mobile.platform.request.dto.RequestDTO;
 import com.concur.mobile.platform.request.dto.RequestEntryDTO;
 import com.concur.mobile.platform.request.dto.RequestSegmentDTO;
-import com.concur.mobile.platform.request.groupConfiguration.Policy;
-import com.concur.mobile.platform.request.groupConfiguration.RequestGroupConfiguration;
 import com.concur.mobile.platform.request.groupConfiguration.SegmentType;
 import com.concur.mobile.platform.request.util.RequestParser;
 import com.concur.mobile.platform.ui.common.dialog.AlertDialogFragment;
@@ -47,7 +50,14 @@ import com.concur.mobile.platform.ui.common.dialog.DialogFragmentFactory;
 import com.concur.mobile.platform.ui.common.dialog.NoConnectivityDialogFragment;
 import com.concur.mobile.platform.ui.common.view.MoneyFormField;
 
-import java.util.*;
+import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.Collections;
+import java.util.GregorianCalendar;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Locale;
+import java.util.Map;
 
 /**
  * Created by OlivierB on 28/01/2015.
@@ -56,6 +66,7 @@ public class RequestEntryActivity extends AbstractConnectFormFieldActivity imple
 
     private static final String CLS_TAG = RequestEntryActivity.class.getSimpleName();
     public static final String ENTRY_ID = "entryId";
+    public static final String REQUEST_SEGMENT_TYPE_CODE = "RequestSegmentTypeCode";
 
     private static final int ID_LOADING_VIEW = 0;
     private static final int ID_ENTRY_VIEW = 1;
@@ -190,10 +201,18 @@ public class RequestEntryActivity extends AbstractConnectFormFieldActivity imple
             entry = new RequestEntryDTO();
             // --- entry initialization
             entry.setListSegment(new ArrayList<RequestSegmentDTO>());
+            final RequestSegmentDTO segment = new RequestSegmentDTO();
+            segment.setDisplayOrder(0);
+            entry.getListSegment().add(segment);
+
             // --- TODO
-            //entry.setSegmentFormId();
-            //entry.setSegmentType();
-            //entry.setSegmentTypeCode();
+            String requestSegmentTypeCode = bundle.getString(RequestEntryActivity.REQUEST_SEGMENT_TYPE_CODE);
+
+            entry.setSegmentTypeCode(requestSegmentTypeCode);
+            SegmentType.RequestSegmentType requestSegmentType = SegmentType.RequestSegmentType.getByCode(entry.getSegmentTypeCode());
+            entry.setSegmentType(requestSegmentType.name()); //???
+            entry.setSegmentFormId(getConcurCore().getRequestGroupConfigurationCache().getValue(getUserId()).extractSegmentDefaultFormId(requestSegmentType));
+
             form = formFieldsCache.getFormFields(entry.getSegmentFormId());
             viewedType = SegmentType.RequestSegmentType.getByCode(entry.getSegmentTypeCode());
         } else {
@@ -303,11 +322,7 @@ public class RequestEntryActivity extends AbstractConnectFormFieldActivity imple
             inUseListSegment = segmentOneWay;
             // --- one segment only
             final RequestSegmentDTO oneWaySegment;
-            if (createMode && inUseListSegment.size() < 1) {
-                oneWaySegment = new RequestSegmentDTO();
-                inUseListSegment.add(oneWaySegment);
-                //oneWaySegment.setSegmentFormId(extractSegmentDefaultFormId(viewedType));
-            } else if (!isOrigin) {
+            if (!isOrigin) {
                 // --- we only keep the first segment
                 oneWaySegment = entryListSegment.iterator().next();
                 inUseListSegment.add(oneWaySegment);
@@ -330,14 +345,7 @@ public class RequestEntryActivity extends AbstractConnectFormFieldActivity imple
             }
             inUseListSegment = segmentsRoundTrip;
             if (createMode && inUseListSegment.size() < 2) {
-                final String segmentDefaultFormId = extractSegmentDefaultFormId(viewedType);
-
-                final RequestSegmentDTO segmentD = new RequestSegmentDTO();
-                //segmentD.setSegmentFormId(segmentDefaultFormId);
-                inUseListSegment.add(segmentD);
-
                 final RequestSegmentDTO segmentA = new RequestSegmentDTO();
-                //segmentA.setSegmentFormId(segmentDefaultFormId);
                 inUseListSegment.add(segmentA);
             } else if (!isOrigin) {
                 if (entryListSegment.size() == 1) {
@@ -345,10 +353,8 @@ public class RequestEntryActivity extends AbstractConnectFormFieldActivity imple
                     final RequestSegmentDTO segmentD = entryListSegment.iterator().next();
                     inUseListSegment.add(segmentD);
                     // --- conversion operation from one way to round trip
-                    final String segmentDefaultFormId = extractSegmentDefaultFormId(SegmentType.RequestSegmentType.AIR);
 
                     final RequestSegmentDTO segmentA = new RequestSegmentDTO();
-                    //segmentA.setSegmentFormId(segmentDefaultFormId);
                     segmentA.setFromLocationName(segmentD.getToLocationName());
                     segmentA.setToLocationName(segmentD.getFromLocationName());
                     if (segmentD.getArrivalDate() != null) {
@@ -413,8 +419,11 @@ public class RequestEntryActivity extends AbstractConnectFormFieldActivity imple
                             hasChange |= !segment.getFromLocationName().equals(displayedValue);
                         }
                     } else if (fieldName.equals(FIELD_TO_ID)) {
-                        hasChange |= (segment.getToLocationName() == null && displayedValue != null
-                                && displayedValue.length() > 0) || !segment.getToLocationName().equals(displayedValue);
+                        if (segment.getToLocationName() == null) {
+                            hasChange |= displayedValue.length() > 0;
+                        } else {
+                            hasChange |= !segment.getToLocationName().equals(displayedValue);
+                        }
                     } else if (fieldName.equals(FIELD_AMOUNT)) {
                         if (compView instanceof MoneyFormField) {
                             // --- compView is a TextView if readonly, meaning it can't be modified so we don't care
@@ -470,27 +479,6 @@ public class RequestEntryActivity extends AbstractConnectFormFieldActivity imple
             }
         }
         return false;
-    }
-
-    /**
-     * Note : Move this to RequestGroupConfiguration in a static method if it's needed anywhere else
-     *
-     * @param segmentType
-     * @return
-     */
-
-    private String extractSegmentDefaultFormId(SegmentType.RequestSegmentType segmentType) {
-        final RequestGroupConfiguration rgc = getConcurCore().getRequestGroupConfigurationCache().getValue(getUserId());
-        for (Policy p : rgc.getPolicies()) {
-            if (p.getIsDefault()) {
-                for (SegmentType st : p.getSegmentTypes()) {
-                    if (st.getIconCode().equals(segmentType.getCode())) {
-                        return st.getSegmentFormID();
-                    }
-                }
-            }
-        }
-        return null;
     }
 
     @Override
@@ -666,7 +654,7 @@ public class RequestEntryActivity extends AbstractConnectFormFieldActivity imple
 
     @Override
     protected void applySpecificRender(final FormDTO model, final TextView component,
-            final LinearLayout.LayoutParams llp, final ConnectFormField ff) {
+                                       final LinearLayout.LayoutParams llp, final ConnectFormField ff) {
         if (ff.getName().equals(FIELD_SEGMENT_TYPE)) {
             component.setTextAppearance(this, R.style.ListCellHeaderText);
             component.setTextColor(getResources().getColor(R.color.White));
@@ -675,15 +663,18 @@ public class RequestEntryActivity extends AbstractConnectFormFieldActivity imple
         } else if (ff.getName().equals(FIELD_CURRENCY)) {
             component.addTextChangedListener(new TextWatcher() {
 
-                @Override public void beforeTextChanged(CharSequence charSequence, int i, int i2, int i3) {
+                @Override
+                public void beforeTextChanged(CharSequence charSequence, int i, int i2, int i3) {
                     // --- ntd
                 }
 
-                @Override public void onTextChanged(CharSequence charSequence, int i, int i2, int i3) {
+                @Override
+                public void onTextChanged(CharSequence charSequence, int i, int i2, int i3) {
                     // --- ntd
                 }
 
-                @Override public void afterTextChanged(Editable editable) {
+                @Override
+                public void afterTextChanged(Editable editable) {
                     final TextView field = RequestEntryActivity.this.getComponent(model, FIELD_AMOUNT);
                     // --- field can be null if hidden
                     if (field != null && field instanceof MoneyFormField) {
@@ -846,7 +837,8 @@ public class RequestEntryActivity extends AbstractConnectFormFieldActivity imple
         super.save(form, model);
     }
 
-    @Override protected LinearLayout getCurrentFieldsLayout() {
+    @Override
+    protected LinearLayout getCurrentFieldsLayout() {
         return hasCustomLayouts ? layoutPerTab.get(viewedFragment) : currentFieldsLayout;
     }
 
@@ -947,6 +939,17 @@ public class RequestEntryActivity extends AbstractConnectFormFieldActivity imple
 
     @Override
     public void onBackPressed() {
+        // --- Apply the list of segments in use
+        if (viewedFragment == TAB_ONE_WAY) {
+            entry.setTripType(RequestEntryDTO.TripType.ONE_WAY);
+            entry.setListSegment(segmentOneWay);
+        } else if (viewedFragment == TAB_ROUND_TRIP) {
+            entry.setTripType(RequestEntryDTO.TripType.ROUND_TRIP);
+            entry.setListSegment(segmentsRoundTrip);
+        } else if (viewedFragment == TAB_MULTI_LEG) {
+            entry.setTripType(RequestEntryDTO.TripType.MULTI_SEGMENT);
+            entry.setListSegment(segmentsMultiLeg);
+        }
         List<RequestSegmentDTO> segmentList = entry.getListSegment();
 
         if (canSave() && hasCustomLayouts) {
@@ -957,24 +960,28 @@ public class RequestEntryActivity extends AbstractConnectFormFieldActivity imple
         if (canSave() && hasChange(segmentList)) {
             final AlertDialogFragment.OnClickListener yesListener = new AlertDialogFragment.OnClickListener() {
 
-                @Override public void onClick(FragmentActivity activity, DialogInterface dialog, int which) {
+                @Override
+                public void onClick(FragmentActivity activity, DialogInterface dialog, int which) {
                     // --- save action + redirect
                     saveAction();
                 }
 
-                @Override public void onCancel(FragmentActivity activity, DialogInterface dialog) {
+                @Override
+                public void onCancel(FragmentActivity activity, DialogInterface dialog) {
                     // --- can't happen
                 }
             };
             final AlertDialogFragment.OnClickListener noListener = new AlertDialogFragment.OnClickListener() {
 
-                @Override public void onClick(FragmentActivity activity, DialogInterface dialog, int which) {
+                @Override
+                public void onClick(FragmentActivity activity, DialogInterface dialog, int which) {
                     dialog.dismiss();
                     // --- redirect without saving
                     finish();
                 }
 
-                @Override public void onCancel(FragmentActivity activity, DialogInterface dialog) {
+                @Override
+                public void onCancel(FragmentActivity activity, DialogInterface dialog) {
                     // --- can't happen
                 }
             };
@@ -982,6 +989,10 @@ public class RequestEntryActivity extends AbstractConnectFormFieldActivity imple
                     getResources().getString(R.string.tr_message_save_changes), R.string.general_yes, -1,
                     R.string.general_no, yesListener, null, noListener, noListener)
                     .show(getSupportFragmentManager(), CLS_TAG);
+        } else if (createMode) {
+            request.getEntriesMap().clear();
+            super.onBackPressed();
+            cleanupReceivers();
         } else {
             super.onBackPressed();
             cleanupReceivers();
