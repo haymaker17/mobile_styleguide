@@ -235,8 +235,7 @@ public class HotelSearchAndResultActivity extends Activity implements OnMenuItem
      */
     protected void sortByPreference(List<HotelSearchResultListItem> hotelListItemsToSort) {
         // Construct the primary/secondary sorts.
-        Comparator<Hotel> primarySort = new HotelComparator(HotelComparator.CompareField.PREFERENCE,
-                HotelComparator.CompareOrder.DESCENDING);
+        Comparator<Hotel> primarySort = new HotelComparator(HotelComparator.CompareField.PREFERENCE);
         HotelComparator secondarySort = new HotelComparator(HotelComparator.CompareField.CHEAPEST_ROOM,
                 HotelComparator.CompareOrder.ASCENDING);
         // Perform the actual sort.
@@ -270,14 +269,14 @@ public class HotelSearchAndResultActivity extends Activity implements OnMenuItem
     }
 
     /**
-     * Sort the list of hotels primarily by star rating, secondarily by distance.
+     * Sort the list of hotels primarily by suggestion, secondarily by preference.
      */
     protected void sortBySuggestion(List<HotelSearchResultListItem> hotelListItemsToSort) {
         // Construct the primary/secondary sorts.
         Comparator<Hotel> primarySort = new HotelComparator(HotelComparator.CompareField.RECOMMENDATION,
                 HotelComparator.CompareOrder.DESCENDING);
         HotelComparator secondarySort = new HotelComparator(HotelComparator.CompareField.PREFERENCE,
-                HotelComparator.CompareOrder.ASCENDING);
+                HotelComparator.CompareOrder.DESCENDING);
         // Perform the actual sort.
         sortByComparator(primarySort, secondarySort, hotelListItemsToSort);
     }
@@ -543,14 +542,6 @@ public class HotelSearchAndResultActivity extends Activity implements OnMenuItem
 
     // Will sort the results depending on the type of search and invoked the fragment to display the sorted results
     public void showResults() {
-        String toastMessage = null;
-        if (fromLocationSearch) {
-            sortByDistance(hotelListItemsToSort);
-            toastMessage = getText(R.string.hotel_search_results_sorted_by_distance).toString();
-        } else {
-            sortBySuggestion(hotelListItemsToSort);
-            toastMessage = getText(R.string.hotel_search_results_sorted_by_suggestion).toString();
-        }
 
         if (hotelListItems == null) {
             hotelListItems = new ArrayList<HotelSearchResultListItem>(hotelListItemsToSort.size());
@@ -561,7 +552,7 @@ public class HotelSearchAndResultActivity extends Activity implements OnMenuItem
         hotelListItems.addAll(hotelListItemsToSort);
 
         // refresh the UI with the updated hotelListItems
-        updateResultsFragmentUI(hotelListItemsToSort, toastMessage);
+        updateResultsFragmentUI(hotelListItemsToSort, null);
 
         hotelSearchRESTResultFrag.getHotelListView().setAlpha(1);
         hotelSearchRESTResultFrag.showSortAndFilterIconsInFooter();
@@ -592,7 +583,7 @@ public class HotelSearchAndResultActivity extends Activity implements OnMenuItem
             fromPolling = true;
             Log.d(Const.LOG_TAG, " ***** creating poll search loader *****  ");
             hotelSearchAsyncTaskLoader = new HotelSearchPollResultLoader(this, checkInDate, checkOutDate, latitude,
-                    longitude, 25, distanceUnit, 0, 100, pollingURL);
+                    longitude, 25, distanceUnit, pollingURL);
         } else {
             fromPolling = false;
             // request initial search
@@ -602,7 +593,7 @@ public class HotelSearchAndResultActivity extends Activity implements OnMenuItem
             TravelUtilHotel.deleteAllHotelDetails(this);
 
             hotelSearchAsyncTaskLoader = new HotelSearchResultLoader(this, checkInDate, checkOutDate, latitude,
-                    longitude, 25, distanceUnit, 0, 100);
+                    longitude, 25, distanceUnit);
         }
         return hotelSearchAsyncTaskLoader;
     }
