@@ -10,4 +10,9 @@ public interface LoginResponseKeys {
      */
     public static final String REMOTE_WIPE_KEY = "login.remote.wipe";
 
+    /**
+     * Contains a key to obtain the GLS server URL.
+     */
+    public static final String SERVER_URL_KEY = "login.server.url";
+
 }

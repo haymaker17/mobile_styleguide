@@ -194,6 +194,13 @@ public class PPLoginLightRequestTask extends PlatformAsyncRequestTask {
                         } else {
                             PlatformProperties.setAccessToken(null);
                         }
+
+                        // Set up GLS server URL.
+                        if (loginResult.serverUrl != null) {
+                            resultData.putString(LoginResponseKeys.SERVER_URL_KEY, loginResult.serverUrl);
+                            PlatformProperties.setServerAddress(loginResult.serverUrl);
+                        }
+
                         result = RESULT_OK;
                     } else {
                         result = RESULT_ERROR;
