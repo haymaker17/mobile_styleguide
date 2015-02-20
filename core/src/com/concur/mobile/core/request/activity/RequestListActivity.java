@@ -377,8 +377,6 @@ public class RequestListActivity extends BaseActivity {
             }
         }
 
-        private final String CLS_TAG = RequestListActivity.CLS_TAG + ListAdapterRowClickListener.class.getSimpleName();
-
     }
 
     /**

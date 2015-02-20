@@ -167,61 +167,64 @@ public class RequestEntryActivity extends AbstractConnectFormFieldActivity imple
                 this.getResources().getConfiguration().locale :
                 Locale.US;
 
-        // --- update mode
-        if (requestId != null && entryId != null) {
+        if (requestId != null) {
             request = requestListCache.getValue(requestId);
             if (request == null) {
                 ConnectHelper.displayMessage(this, "Error : request object is null !!!");
                 finish();
             } else {
-                entry = request.getEntriesMap().get(entryId);
-                form = formFieldsCache.getFormFields(entry.getSegmentFormId());
+                // --- check rights to save (false = RO view + no save button)
                 setCanSave(request.isActionPermitted(RequestParser.PermittedAction.SAVE) && (
                         request.getApprovalStatusCode().equals(RequestDTO.ApprovalStatus.CREATION.getCode()) || request
                                 .getApprovalStatusCode().equals(RequestDTO.ApprovalStatus.RECALLED.getCode())));
-                viewedType = SegmentType.RequestSegmentType.getByCode(entry.getSegmentTypeCode());
+                // --- update mode
+                if (entryId != null) {
+                    entry = request.getEntriesMap().get(entryId);
+                    form = formFieldsCache.getFormFields(entry.getSegmentFormId());
+                    viewedType = SegmentType.RequestSegmentType.getByCode(entry.getSegmentTypeCode());
+                }
+                // --- create mode
+                else {
+                    createMode = true;
+                    request = requestListCache.getValue(requestId);
+                    entry = new RequestEntryDTO();
+                    // --- entry initialization
+                    entry.setRequestId(requestId);
+                    entry.setListSegment(new ArrayList<RequestSegmentDTO>());
+                    final RequestSegmentDTO segment = new RequestSegmentDTO();
+                    segment.setDisplayOrder(0);
+                    entry.getListSegment().add(segment);
+
+                    // --- TODO
+                    String requestSegmentTypeCode = bundle.getString(RequestEntryActivity.REQUEST_SEGMENT_TYPE_CODE);
+
+                    entry.setSegmentTypeCode(requestSegmentTypeCode);
+                    SegmentType.RequestSegmentType requestSegmentType = SegmentType.RequestSegmentType
+                            .getByCode(entry.getSegmentTypeCode());
+                    entry.setSegmentType(requestSegmentType.name()); //???
+                    entry.setSegmentFormId(getConcurCore().getRequestGroupConfigurationCache().getValue(getUserId())
+                            .extractSegmentDefaultFormId(requestSegmentType));
+
+                    form = formFieldsCache.getFormFields(entry.getSegmentFormId());
+                    viewedType = SegmentType.RequestSegmentType.getByCode(entry.getSegmentTypeCode());
+                }
+                if (viewedType == null) {
+                    viewedType = SegmentType.RequestSegmentType.CAR;
+                }
+                if (form == null) {
+                    finish();
+                    Log.e(CLS_TAG, "form is null. finish() activity");
+                    Toast.makeText(this, getResources().getString(R.string.general_error), Toast.LENGTH_LONG);
+                }
+
+                configureUI();
             }
-        }
-        // --- create mode
-        else if (requestId != null) {
-            createMode = true;
-            request = requestListCache.getValue(requestId);
-            entry = new RequestEntryDTO();
-            // --- entry initialization
-            entry.setRequestId(requestId);
-            entry.setListSegment(new ArrayList<RequestSegmentDTO>());
-            final RequestSegmentDTO segment = new RequestSegmentDTO();
-            segment.setDisplayOrder(0);
-            entry.getListSegment().add(segment);
-
-            // --- TODO
-            String requestSegmentTypeCode = bundle.getString(RequestEntryActivity.REQUEST_SEGMENT_TYPE_CODE);
-
-            entry.setSegmentTypeCode(requestSegmentTypeCode);
-            SegmentType.RequestSegmentType requestSegmentType = SegmentType.RequestSegmentType
-                    .getByCode(entry.getSegmentTypeCode());
-            entry.setSegmentType(requestSegmentType.name()); //???
-            entry.setSegmentFormId(getConcurCore().getRequestGroupConfigurationCache().getValue(getUserId())
-                    .extractSegmentDefaultFormId(requestSegmentType));
-
-            form = formFieldsCache.getFormFields(entry.getSegmentFormId());
-            viewedType = SegmentType.RequestSegmentType.getByCode(entry.getSegmentTypeCode());
         } else {
             // TODO this might be used later if we can create directly from a segment type selection screen
             // --- This is wrong, go back to previous screen and log error
             Log.e(CLS_TAG, "requestId is null !");
             finish();
         }
-        if (viewedType == null) {
-            viewedType = SegmentType.RequestSegmentType.CAR;
-        }
-        if (form == null) {
-            finish();
-            Log.e(CLS_TAG, "form is null. finish() activity");
-            Toast.makeText(this, getResources().getString(R.string.general_error), Toast.LENGTH_LONG);
-        }
-
-        configureUI();
     }
 
     private void configureUI() {
@@ -336,8 +339,10 @@ public class RequestEntryActivity extends AbstractConnectFormFieldActivity imple
             }
             inUseListSegment = segmentsRoundTrip;
             if (createMode && inUseListSegment.size() < 2) {
-                final RequestSegmentDTO segmentA = new RequestSegmentDTO();
-                inUseListSegment.add(segmentA);
+                while (inUseListSegment.size() < 2) {
+                    final RequestSegmentDTO segment = new RequestSegmentDTO();
+                    inUseListSegment.add(segment);
+                }
             } else if (!isOrigin) {
                 if (entryListSegment.size() == 1) {
                     // --- adds the first segment of the current existing entry (one way)
@@ -683,7 +688,7 @@ public class RequestEntryActivity extends AbstractConnectFormFieldActivity imple
 
     @Override
     public void applySaveButtonPolicy(View saveButtonView) {
-        if (request.isActionPermitted(RequestParser.PermittedAction.SAVE)) {
+        if (canSave() && request.isActionPermitted(RequestParser.PermittedAction.SAVE)) {
             saveButtonView.setVisibility(View.VISIBLE);
         } else {
             saveButtonView.setVisibility(View.GONE);
