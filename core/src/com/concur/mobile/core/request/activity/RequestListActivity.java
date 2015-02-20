@@ -313,6 +313,10 @@ public class RequestListActivity extends BaseActivity {
             // activity creation
             asyncTRListReceiver = new BaseAsyncResultReceiver(new Handler());
             refreshData();
+        } else if (requestListCache.isDirty()) {
+            // --- refresh view offline
+            updateListUI(new ArrayList<RequestDTO>(requestListCache.getValues()));
+            requestListCache.setDirty(false);
         }
     }
 

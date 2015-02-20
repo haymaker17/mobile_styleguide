@@ -82,7 +82,7 @@ public class LocationSearchActivity extends Activity {
         }
     }
 
-    private void manageProgressBar(boolean isActive) {
+    private void manageProgressBarVisibility(boolean isActive) {
         final Drawable searchGlass = searchText.getCompoundDrawables()[2];
         if (isActive) {
             networkIndicator.setVisibility(View.VISIBLE);
@@ -102,7 +102,7 @@ public class LocationSearchActivity extends Activity {
                 com.concur.mobile.platform.ui.common.util.ViewUtil.hideSoftKeyboard(this, windowToken);
             }
 
-            doSearch(searchText.getText().toString(), TEXT_SEARCH_SHORT_DELAY);
+            doSearch(TEXT_SEARCH_SHORT_DELAY);
         } else {
             searchDelayHandler.removeCallbacks(searchDelayRunnable);
             final SearchResultsAdapter adapter = (SearchResultsAdapter) searchResultsList.getAdapter();
@@ -110,7 +110,7 @@ public class LocationSearchActivity extends Activity {
         }
     }
 
-    protected void doSearch(String search, int delay) {
+    protected void doSearch(int delay) {
         final SearchResultsAdapter adapter = (SearchResultsAdapter) searchResultsList.getAdapter();
         adapter.clearListItems();
         searchDelayHandler.removeCallbacks(searchDelayRunnable);
@@ -177,7 +177,7 @@ public class LocationSearchActivity extends Activity {
             public void afterTextChanged(Editable s) {
 
                 if (s.length() >= MIN_SEARCH_LENGTH) {
-                    doSearch(s.toString(), TEXT_SEARCH_LONG_DELAY);
+                    doSearch(TEXT_SEARCH_LONG_DELAY);
                 } else {
                     searchDelayHandler.removeCallbacks(searchDelayRunnable);
                     SearchResultsAdapter adapter = (SearchResultsAdapter) searchResultsList.getAdapter();
@@ -242,7 +242,7 @@ public class LocationSearchActivity extends Activity {
     class DelayedSearch implements Runnable {
 
         public void run() {
-            manageProgressBar(true);
+            manageProgressBarVisibility(true);
             asyncReceiverSearch.setListener(new SearchListener());
             new LocationListTask(getApplicationContext(), 1, asyncReceiverSearch, searchText.getText().toString(),
                     isAirport).execute();
@@ -256,7 +256,7 @@ public class LocationSearchActivity extends Activity {
 
         @Override
         public void onRequestSuccess(Bundle resultData) {
-            manageProgressBar(false);
+            manageProgressBarVisibility(false);
             ConnectHelper.displayMessage(getApplicationContext(), "SEARCH SUCCESSFULL");
             final List<Location> listLocation = RequestParser
                     .parseLocations(resultData.getString(BaseAsyncRequestTask.HTTP_RESPONSE));
@@ -271,7 +271,7 @@ public class LocationSearchActivity extends Activity {
 
         @Override
         public void onRequestFail(Bundle resultData) {
-            manageProgressBar(false);
+            manageProgressBarVisibility(false);
             ConnectHelper.displayResponseMessage(getApplicationContext(), resultData,
                     getResources().getString(R.string.tr_error_save));
 
@@ -281,7 +281,7 @@ public class LocationSearchActivity extends Activity {
 
         @Override
         public void onRequestCancel(Bundle resultData) {
-            manageProgressBar(false);
+            manageProgressBarVisibility(false);
             ConnectHelper
                     .displayMessage(getApplicationContext(), getResources().getString(R.string.tr_operation_canceled));
             Log.d(Const.LOG_TAG, CLS_TAG + " calling decrement from onRequestCancel");

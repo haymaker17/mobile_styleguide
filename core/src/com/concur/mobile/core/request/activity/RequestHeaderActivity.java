@@ -357,6 +357,7 @@ public class RequestHeaderActivity extends AbstractConnectFormFieldActivity impl
         public void onRequestSuccess(Bundle resultData) {
             final boolean isCreation = tr.getId() == null;
             ConnectHelper.displayMessage(getApplicationContext(), "REQUEST SAVED");
+            requestListCache.setDirty(true);
 
             // metrics
             final Map<String, String> params = new HashMap<String, String>();

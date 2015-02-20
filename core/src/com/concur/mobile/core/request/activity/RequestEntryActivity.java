@@ -855,6 +855,7 @@ public class RequestEntryActivity extends AbstractConnectFormFieldActivity imple
         public void onRequestSuccess(Bundle resultData) {
             final boolean isCreation = entry.getId() == null;
             ConnectHelper.displayMessage(getApplicationContext(), "ENTRY SAVED");
+            requestListCache.setDirty(true);
 
             // metrics
             final Map<String, String> params = new HashMap<String, String>();

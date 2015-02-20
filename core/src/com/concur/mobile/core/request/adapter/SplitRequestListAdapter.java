@@ -17,10 +17,7 @@ import com.concur.mobile.core.util.Const;
 import com.concur.mobile.core.util.FormatUtil;
 import com.concur.mobile.platform.request.dto.RequestDTO;
 
-import java.util.ArrayList;
-import java.util.Iterator;
-import java.util.List;
-import java.util.Locale;
+import java.util.*;
 
 /**
  * @author olivierb Split a list of request by status (active/approved) and
@@ -36,6 +33,28 @@ public class SplitRequestListAdapter extends AbstractGenericAdapter<RequestDTO> 
     private SparseArray<String> sectionHeaders = new SparseArray<String>();
 
     private LayoutInflater mInflater;
+
+    private Comparator<RequestDTO> requestSortByDate = new Comparator<RequestDTO>() {
+
+        @Override public int compare(RequestDTO r1, RequestDTO r2) {
+            if (r1.getStartDate() != null) {
+                if (r2.getStartDate() != null) {
+                    return r1.getStartDate().getTime() > r2.getStartDate().getTime() ?
+                            -1 :
+                            (r1.getStartDate().getTime() == r2.getStartDate().getTime() ? 0 : 1);
+                    // --- r1 > r2
+                    // --- r1 == r2
+                    // --- r1 < r2
+                } else {
+                    return -1; // --- r1 not null, r2 null => r1 < r2
+                }
+            } else if (r2.getStartDate() != null) {
+                return 1;// --- r1 null, r2 not null => r1 < r2
+            } else {
+                return 1;// --- both objects are null => r1 < r2
+            }
+        }
+    };
 
     public SplitRequestListAdapter(Context context, List<RequestDTO> itemList) {
         super(context, null);
@@ -69,10 +88,12 @@ public class SplitRequestListAdapter extends AbstractGenericAdapter<RequestDTO> 
 
             if (activeRequests.size() > 0) {
                 getList().add(null);
+                Collections.sort(activeRequests, requestSortByDate);
                 getList().addAll(activeRequests);
             }
             if (approvedRequests.size() > 0) {
                 getList().add(null);
+                Collections.sort(approvedRequests, requestSortByDate);
                 getList().addAll(approvedRequests);
             }
 

@@ -31,6 +31,7 @@ import com.concur.mobile.core.util.Flurry;
 import com.concur.mobile.core.util.FormatUtil;
 import com.concur.mobile.platform.common.formfield.ConnectForm;
 import com.concur.mobile.platform.common.formfield.ConnectFormFieldsCache;
+import com.concur.mobile.platform.request.RequestListCache;
 import com.concur.mobile.platform.request.dto.RequestDTO;
 import com.concur.mobile.platform.request.dto.RequestEntryDTO;
 import com.concur.mobile.platform.request.util.RequestParser;
@@ -361,6 +362,7 @@ public class RequestSummaryActivity extends BaseActivity {
         @Override
         public void onRequestSuccess(Bundle resultData) {
             ConnectHelper.displayMessage(getApplicationContext(), "REQUEST SUBMITTED");
+            ((RequestListCache) getConcurCore().getRequestListCache()).setDirty(true);
 
             // metrics
             final Map<String, String> params = new HashMap<String, String>();
