@@ -14,12 +14,7 @@ import android.text.Editable;
 import android.text.TextWatcher;
 import android.util.TypedValue;
 import android.view.View;
-import android.widget.LinearLayout;
-import android.widget.ListView;
-import android.widget.TextView;
-import android.widget.Toast;
-import android.widget.ViewFlipper;
-
+import android.widget.*;
 import com.apptentive.android.sdk.Log;
 import com.concur.core.R;
 import com.concur.mobile.base.service.BaseAsyncRequestTask;
@@ -50,14 +45,7 @@ import com.concur.mobile.platform.ui.common.dialog.DialogFragmentFactory;
 import com.concur.mobile.platform.ui.common.dialog.NoConnectivityDialogFragment;
 import com.concur.mobile.platform.ui.common.view.MoneyFormField;
 
-import java.util.ArrayList;
-import java.util.Calendar;
-import java.util.Collections;
-import java.util.GregorianCalendar;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Locale;
-import java.util.Map;
+import java.util.*;
 
 /**
  * Created by OlivierB on 28/01/2015.
@@ -200,6 +188,7 @@ public class RequestEntryActivity extends AbstractConnectFormFieldActivity imple
             request = requestListCache.getValue(requestId);
             entry = new RequestEntryDTO();
             // --- entry initialization
+            entry.setRequestId(requestId);
             entry.setListSegment(new ArrayList<RequestSegmentDTO>());
             final RequestSegmentDTO segment = new RequestSegmentDTO();
             segment.setDisplayOrder(0);
@@ -209,9 +198,11 @@ public class RequestEntryActivity extends AbstractConnectFormFieldActivity imple
             String requestSegmentTypeCode = bundle.getString(RequestEntryActivity.REQUEST_SEGMENT_TYPE_CODE);
 
             entry.setSegmentTypeCode(requestSegmentTypeCode);
-            SegmentType.RequestSegmentType requestSegmentType = SegmentType.RequestSegmentType.getByCode(entry.getSegmentTypeCode());
+            SegmentType.RequestSegmentType requestSegmentType = SegmentType.RequestSegmentType
+                    .getByCode(entry.getSegmentTypeCode());
             entry.setSegmentType(requestSegmentType.name()); //???
-            entry.setSegmentFormId(getConcurCore().getRequestGroupConfigurationCache().getValue(getUserId()).extractSegmentDefaultFormId(requestSegmentType));
+            entry.setSegmentFormId(getConcurCore().getRequestGroupConfigurationCache().getValue(getUserId())
+                    .extractSegmentDefaultFormId(requestSegmentType));
 
             form = formFieldsCache.getFormFields(entry.getSegmentFormId());
             viewedType = SegmentType.RequestSegmentType.getByCode(entry.getSegmentTypeCode());
@@ -654,7 +645,7 @@ public class RequestEntryActivity extends AbstractConnectFormFieldActivity imple
 
     @Override
     protected void applySpecificRender(final FormDTO model, final TextView component,
-                                       final LinearLayout.LayoutParams llp, final ConnectFormField ff) {
+            final LinearLayout.LayoutParams llp, final ConnectFormField ff) {
         if (ff.getName().equals(FIELD_SEGMENT_TYPE)) {
             component.setTextAppearance(this, R.style.ListCellHeaderText);
             component.setTextColor(getResources().getColor(R.color.White));

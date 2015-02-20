@@ -12,12 +12,7 @@ import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
-import android.widget.AdapterView;
-import android.widget.ListView;
-import android.widget.RelativeLayout;
-import android.widget.TextView;
-import android.widget.ViewFlipper;
-
+import android.widget.*;
 import com.concur.core.R;
 import com.concur.mobile.base.service.BaseAsyncRequestTask;
 import com.concur.mobile.base.service.BaseAsyncRequestTask.AsyncReplyListener;
@@ -45,12 +40,7 @@ import com.concur.mobile.platform.request.groupConfiguration.SegmentType;
 import com.concur.mobile.platform.request.util.RequestParser;
 import com.concur.mobile.platform.ui.common.dialog.NoConnectivityDialogFragment;
 
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.HashSet;
-import java.util.Locale;
-import java.util.Map;
-import java.util.Set;
+import java.util.*;
 
 public class RequestSummaryActivity extends BaseActivity {
 
@@ -148,34 +138,30 @@ public class RequestSummaryActivity extends BaseActivity {
     }
 
     private void processEntryCreationByType(SegmentType.RequestSegmentType segmentType) {
-        final String formId = getConcurCore().getRequestGroupConfigurationCache().getValue(getUserId()).extractSegmentDefaultFormId(segmentType);
+        final String formId = getConcurCore().getRequestGroupConfigurationCache().getValue(getUserId())
+                .extractSegmentDefaultFormId(segmentType);
         waitFormFieldsCacheRefresh(formId, null, segmentType);
         formFieldsCache.setFormRefreshStatus(formId, true);
-        new RequestFormFieldsTask(RequestSummaryActivity.this, 1, asyncReceiverFormFields,
-                formId, false).execute();
+        new RequestFormFieldsTask(RequestSummaryActivity.this, 1, asyncReceiverFormFields, formId, false).execute();
     }
 
     public void onClickAir(View view) {
-        TextView tv = (TextView) view.findViewById(R.id.AirSummarySegmentText);
-        System.out.println(tv.getText());
+        //TextView tv = (TextView) view.findViewById(R.id.AirSummarySegmentText);
         processEntryCreationByType(SegmentType.RequestSegmentType.AIR);
     }
 
     public void onClickTrain(View view) {
-        TextView tv = (TextView) view.findViewById(R.id.TrainSummarySegmentText);
-        System.out.println(tv.getText());
+        //TextView tv = (TextView) view.findViewById(R.id.TrainSummarySegmentText);
         processEntryCreationByType(SegmentType.RequestSegmentType.RAIL);
     }
 
     public void onClickHotel(View view) {
-        TextView tv = (TextView) view.findViewById(R.id.HotelSummarySegmentText);
-        System.out.println(tv.getText());
+        //TextView tv = (TextView) view.findViewById(R.id.HotelSummarySegmentText);
         processEntryCreationByType(SegmentType.RequestSegmentType.HOTEL);
     }
 
     public void onClickCar(View view) {
-        TextView tv = (TextView) view.findViewById(R.id.CarSummarySegmentText);
-        System.out.println(tv.getText());
+        //TextView tv = (TextView) view.findViewById(R.id.CarSummarySegmentText);
         processEntryCreationByType(SegmentType.RequestSegmentType.CAR);
     }
 
@@ -200,19 +186,20 @@ public class RequestSummaryActivity extends BaseActivity {
         boolean isSegmentHOTEL = false;
         boolean isSegmentCAR = false;
 
-        RequestGroupConfiguration rgc = getConcurCore().getRequestGroupConfigurationCache().getValue(getUserId());
+        final RequestGroupConfiguration rgc = getConcurCore().getRequestGroupConfigurationCache().getValue(getUserId());
         for (Policy p : rgc.getPolicies()) {
             if (p.getIsDefault()) {
                 for (SegmentType st : p.getSegmentTypes()) {
                     String iconCode = st.getIconCode();
-                    if (SegmentType.RequestSegmentType.AIR.getCode().equals(iconCode))
+                    if (SegmentType.RequestSegmentType.AIR.getCode().equals(iconCode)) {
                         isSegmentAIR = true;
-                    else if (SegmentType.RequestSegmentType.RAIL.getCode().equals(iconCode))
+                    } else if (SegmentType.RequestSegmentType.RAIL.getCode().equals(iconCode)) {
                         isSegmentTRAIN = true;
-                    else if (SegmentType.RequestSegmentType.HOTEL.getCode().equals(iconCode))
+                    } else if (SegmentType.RequestSegmentType.HOTEL.getCode().equals(iconCode)) {
                         isSegmentHOTEL = true;
-                    else if (SegmentType.RequestSegmentType.CAR.getCode().equals(iconCode))
+                    } else if (SegmentType.RequestSegmentType.CAR.getCode().equals(iconCode)) {
                         isSegmentCAR = true;
+                    }
                 }
             }
         }
@@ -230,13 +217,20 @@ public class RequestSummaryActivity extends BaseActivity {
         layoutSegmentCAR.setVisibility(View.GONE);
         separator.setVisibility(View.GONE);
         if (isSegmentsON) {
-            if (isSegmentAIR) layoutSegmentAIR.setVisibility(View.VISIBLE);
-            if (isSegmentTRAIN) layoutSegmentTRAIN.setVisibility(View.VISIBLE);
-            if (isSegmentHOTEL) layoutSegmentHOTEL.setVisibility(View.VISIBLE);
-            if (isSegmentCAR) layoutSegmentCAR.setVisibility(View.VISIBLE);
+            if (isSegmentAIR) {
+                layoutSegmentAIR.setVisibility(View.VISIBLE);
+            }
+            if (isSegmentTRAIN) {
+                layoutSegmentTRAIN.setVisibility(View.VISIBLE);
+            }
+            if (isSegmentHOTEL) {
+                layoutSegmentHOTEL.setVisibility(View.VISIBLE);
+            }
+            if (isSegmentCAR) {
+                layoutSegmentCAR.setVisibility(View.VISIBLE);
+            }
             separator.setVisibility(View.VISIBLE);
         }
-
 
         //SUMMARY
         final TextView name = (TextView) findViewById(R.id.requestDetailsName);
@@ -456,7 +450,6 @@ public class RequestSummaryActivity extends BaseActivity {
             i.putExtra(RequestEntryActivity.ENTRY_ID, entryId);
             i.putExtra(RequestEntryActivity.REQUEST_SEGMENT_TYPE_CODE, requestSegmentTypeCode);
 
-
             // --- Flurry tracking
             i.putExtra(Flurry.PARAM_NAME_CAME_FROM, Flurry.PARAM_VALUE_TRAVEL_REQUEST_SUMMARY);
             final Map<String, String> params = new HashMap<String, String>();
@@ -468,7 +461,6 @@ public class RequestSummaryActivity extends BaseActivity {
             startActivityForResult(i, ENTRY_UPDATE_RESULT);
         }
     }
-
 
     public class TRSubmitListener implements AsyncReplyListener {
 
@@ -569,7 +561,8 @@ public class RequestSummaryActivity extends BaseActivity {
     private void handleAwaitingRefresh(String formId, boolean isSuccess) {
         if (formWaitingForRefresh != null && formId.equals(formWaitingForRefresh)) {
             if (isSuccess) {
-                displayEntryDetail(entryWaitingForRefresh, (entryWaitingForRefreshType != null ? entryWaitingForRefreshType.getCode() : null));
+                displayEntryDetail(entryWaitingForRefresh,
+                        (entryWaitingForRefreshType != null ? entryWaitingForRefreshType.getCode() : null));
             } else {
                 setView(ID_DETAIL_VIEW);
                 // TODO : display an error message ?
@@ -680,18 +673,18 @@ public class RequestSummaryActivity extends BaseActivity {
         // --- we force the view to go back to detail as it can be loading when we leave to create an entry
         setView(ID_DETAIL_VIEW);
         switch (requestCode) {
-            case (ENTRY_UPDATE_RESULT):
-            case (HEADER_UPDATE_RESULT): {
-                if (resultCode == Activity.RESULT_OK) {
-                    final Boolean newText = data.getBooleanExtra(RequestHeaderActivity.DO_WS_REFRESH, false);
-                    if (newText) {
-                        refreshData(true);
-                    } else {
-                        refreshData(false);
-                    }
+        case (ENTRY_UPDATE_RESULT):
+        case (HEADER_UPDATE_RESULT): {
+            if (resultCode == Activity.RESULT_OK) {
+                final Boolean newText = data.getBooleanExtra(RequestHeaderActivity.DO_WS_REFRESH, false);
+                if (newText) {
+                    refreshData(true);
+                } else {
+                    refreshData(false);
                 }
-                break;
             }
+            break;
+        }
         }
     }
 }

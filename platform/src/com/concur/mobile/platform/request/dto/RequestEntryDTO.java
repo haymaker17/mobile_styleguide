@@ -40,7 +40,7 @@ public class RequestEntryDTO {
     @Expose @SerializedName("TripType")
     private TripType tripType;
 
-    @SerializedName("SegmentFormID")
+    @Expose @SerializedName("SegmentFormID")
     private String segmentFormId;
     @SerializedName("SegmentTypeName")
     private String segmentType;
@@ -48,6 +48,14 @@ public class RequestEntryDTO {
     private String segmentTypeCode;
 
     private Integer displayOrder = 0;
+
+    // --- This is some horrible stuff required to post an entry...
+    @Expose @SerializedName("RequestID")
+    private String requestId;
+
+    public void setRequestId(String requestId) {
+        this.requestId = requestId;
+    }
 
     public TripType getTripType() {
         return tripType;
