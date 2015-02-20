@@ -95,6 +95,11 @@ public class HotelSearchResultLoader extends PlatformAsyncTaskLoader<HotelSearch
 
     protected Bundle resultData;
 
+    /**
+     * Contains search url
+     */
+    private String searchUrl;
+
     public HotelSearchResultLoader(Context context, Calendar checkInDate, Calendar checkOutDate, Double lat,
             Double lon, Integer radius, String distanceUnit, Integer start, Integer count) {
 
@@ -150,6 +155,7 @@ public class HotelSearchResultLoader extends PlatformAsyncTaskLoader<HotelSearch
                         Log.i(Const.LOG_TAG,
                                 "\n\n\n ****** going to insert into travel provider with searchResult.hotels.size() : "
                                         + searchResult.hotels.size());
+                        searchResult.searchUrl = searchUrl;
                         // TODO - does this need to be fired in a separate thread?
                         TravelUtilHotel.insertHotelDetails(getContext().getContentResolver(), searchResult);
                     } else {
@@ -199,7 +205,8 @@ public class HotelSearchResultLoader extends PlatformAsyncTaskLoader<HotelSearch
         endPointUrlBldr.append("&offset=");
         endPointUrlBldr.append(start);
 
-        return endPointUrlBldr.toString();
+        searchUrl = endPointUrlBldr.toString();
+        return searchUrl;
     }
 
 }
