@@ -52,6 +52,7 @@ public class RequestListActivity extends BaseActivity {
     private static final int ID_EMPTY_VIEW = 1;
     private static final int ID_LIST_VIEW = 2;
     private static final int SUMMARY_RESULT = 1;
+    private static final int HEADER_RESULT = 2;
     private static boolean HAS_CONFIGURATION = false;
 
     private final RequestParser requestParser = new RequestParser();
@@ -239,7 +240,7 @@ public class RequestListActivity extends BaseActivity {
             EventTracker.INSTANCE.track(Flurry.CATEGORY_TRAVEL_REQUEST, Flurry.EVENT_NAME_LAUNCH, params);
 
             cleanupReceivers();
-            startActivity(i);
+            startActivityForResult(i, HEADER_RESULT);
         }
     }
 
@@ -533,7 +534,8 @@ public class RequestListActivity extends BaseActivity {
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
         switch (requestCode) {
-        case (SUMMARY_RESULT): {
+        case (HEADER_RESULT):
+        case (SUMMARY_RESULT):
             if (resultCode == Activity.RESULT_OK) {
                 // --- no result means we came from a request creation, so we need a refresh
                 final Boolean doWSCall = data.getBooleanExtra(RequestHeaderActivity.DO_WS_REFRESH, true);
@@ -544,7 +546,6 @@ public class RequestListActivity extends BaseActivity {
                 }
             }
             break;
-        }
         }
     }
 }

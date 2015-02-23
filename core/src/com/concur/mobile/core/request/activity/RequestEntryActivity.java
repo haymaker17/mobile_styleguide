@@ -118,14 +118,15 @@ public class RequestEntryActivity extends AbstractConnectFormFieldActivity imple
 
     static {
         final List<String> hotelLayout = new ArrayList<String>();  // HOTEL
+        // --- insert order defines display order as well
         hotelLayout.add(FIELD_TO_ID);
         hotelLayout.add(FIELD_START_DATE);
         hotelLayout.add(FIELD_START_TIME);
         hotelLayout.add(FIELD_END_DATE);
         hotelLayout.add(FIELD_END_TIME);
+        hotelLayout.add(FIELD_COMMENT);
         hotelLayout.add(FIELD_CURRENCY);
         hotelLayout.add(FIELD_AMOUNT);
-        hotelLayout.add(FIELD_COMMENT);
         layoutVisibilities.put(SegmentType.RequestSegmentType.HOTEL, hotelLayout);
         final List<String> airLayout = new ArrayList<String>();
         airLayout.add(FIELD_FROM_ID);
@@ -203,7 +204,7 @@ public class RequestEntryActivity extends AbstractConnectFormFieldActivity imple
                             .getByCode(entry.getSegmentTypeCode());
                     entry.setSegmentType(requestSegmentType.name()); //???
                     entry.setSegmentFormId(getConcurCore().getRequestGroupConfigurationCache().getValue(getUserId())
-                            .extractSegmentDefaultFormId(requestSegmentType));
+                            .extractSegmentFormId(request.getPolicyId(), requestSegmentType));
 
                     form = formFieldsCache.getFormFields(entry.getSegmentFormId());
                     viewedType = SegmentType.RequestSegmentType.getByCode(entry.getSegmentTypeCode());
@@ -458,9 +459,13 @@ public class RequestEntryActivity extends AbstractConnectFormFieldActivity imple
                         }
                         hasChange |= !formatTime(segment.getArrivalDate(), true).equals(comparedValue);
                     } else if (fieldName.equals(FIELD_CURRENCY)) {
-                        // --- if hint is null, used never selected anything in the popup
-                        hasChange |= compView.getHint() != null && !entry.getForeignCurrencyCode()
-                                .equals(compView.getHint());
+                        if (entry.getForeignCurrencyCode() == null) {
+                            hasChange |= displayedValue.length() > 0;
+                        } else {
+                            // --- if hint is null, used never selected anything in the popup
+                            hasChange |= compView.getHint() != null && !entry.getForeignCurrencyCode()
+                                    .equals(compView.getHint());
+                        }
                     } else if (fieldName.equals(FIELD_COMMENT)) {
                         if (segment.getLastComment() == null) {
                             hasChange |= displayedValue.length() > 0;
@@ -556,7 +561,6 @@ public class RequestEntryActivity extends AbstractConnectFormFieldActivity imple
             // --- field can be null if hidden
             if (field != null && field instanceof MoneyFormField) {
                 entry.setForeignAmount(((MoneyFormField) field).getAmountValue());
-                entry.setForeignAmount(entry.getForeignAmount());
             }
         } else if (fieldName.equals(FIELD_START_DATE)) {
             segment.setDepartureDate(parseDate(value));
@@ -649,6 +653,28 @@ public class RequestEntryActivity extends AbstractConnectFormFieldActivity imple
     }
 
     @Override
+    protected void applySpecificSort(List<ConnectFormField> formfields) {
+        final List<String> listFields = layoutVisibilities
+                .get(SegmentType.RequestSegmentType.getByCode(entry.getSegmentTypeCode()));
+        final int listSize = listFields.size();
+        // --- Applying the right sequence
+        for (int i = 0; i < listSize; i++) {
+            for (ConnectFormField ff : formfields) {
+                if (ff.getName().equals(listFields.get(i))) {
+                    ff.setSequence(i);
+                }
+            }
+        }
+        // --- Sorting
+        Collections.sort(formfields, new Comparator<ConnectFormField>() {
+
+            @Override public int compare(ConnectFormField ff1, ConnectFormField ff2) {
+                return ff1.getSequence() > ff2.getSequence() ? 1 : -1;
+            }
+        });
+    }
+
+    @Override
     protected void applySpecificRender(final FormDTO model, final TextView component,
             final LinearLayout.LayoutParams llp, final ConnectFormField ff) {
         if (ff.getName().equals(FIELD_SEGMENT_TYPE)) {
@@ -671,10 +697,12 @@ public class RequestEntryActivity extends AbstractConnectFormFieldActivity imple
 
                 @Override
                 public void afterTextChanged(Editable editable) {
-                    final TextView field = RequestEntryActivity.this.getComponent(model, FIELD_AMOUNT);
+                    final TextView amountField = RequestEntryActivity.this.getComponent(model, FIELD_AMOUNT);
+                    final TextView currencyField = RequestEntryActivity.this.getComponent(model, FIELD_CURRENCY);
                     // --- field can be null if hidden
-                    if (field != null && field instanceof MoneyFormField) {
-                        ((MoneyFormField) field).setCurrencyCode(entry.getForeignCurrencyCode());
+                    if (amountField != null && amountField instanceof MoneyFormField && currencyField != null
+                            && currencyField.getHint() != null) {
+                        ((MoneyFormField) amountField).setCurrencyCode(currencyField.getHint().toString());
                     }
                 }
             });
@@ -810,8 +838,8 @@ public class RequestEntryActivity extends AbstractConnectFormFieldActivity imple
                         final ListItem li = (ListItem) selCurObj;
                         if (li != null) {
                             final TextView tv = (TextView) view;
-                            tv.setText(li.text);
                             tv.setHint(li.code);
+                            tv.setText(li.text);
                         }
                     }
                 }

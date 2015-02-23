@@ -46,6 +46,8 @@ public class RequestHeaderActivity extends AbstractConnectFormFieldActivity impl
     private static final int ID_LOADING_VIEW = 0;
     private static final int ID_HEADER_VIEW = 1;
 
+    private static final int SUMMARY_RESULT = 1;
+
     private static final String FIELD_NAME = "Name";
     private static final String FIELD_START_DATE = "StartDate";
     private static final String FIELD_END_DATE = "EndDate";
@@ -238,6 +240,27 @@ public class RequestHeaderActivity extends AbstractConnectFormFieldActivity impl
         return DateUtil.DatePattern.DB_INPUT;
     }
 
+    /*
+     * (non-Javadoc)
+     *
+     * @see com.concur.mobile.activity.expense.ConcurView#onActivityResult(int, int, android.content.Intent)
+     */
+    @Override
+    public void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        switch (requestCode) {
+        case (SUMMARY_RESULT):
+            // --- redirects from summary to list with refresh option if the user press back button from there
+            if (resultCode == Activity.RESULT_CANCELED) {
+                final Intent resIntent = new Intent();
+                resIntent.putExtra(RequestHeaderActivity.DO_WS_REFRESH, true);
+                setResult(Activity.RESULT_OK, resIntent);
+                finish();
+            }
+            break;
+        }
+    }
+
     @Override
     public void onClick(View view) {
         final CustomDatePickerDialog datePicker = getDateField((String) view.getTag());
@@ -396,6 +419,9 @@ public class RequestHeaderActivity extends AbstractConnectFormFieldActivity impl
                 if (isCreation) {
                     final String requestId = RequestParser
                             .parseActionResponse(resultData.getString(BaseAsyncRequestTask.HTTP_RESPONSE));
+                    tr.setId(requestId);
+                    // --- cache update
+                    requestListCache.addValue(requestId, tr);
 
                     final Intent i = new Intent(RequestHeaderActivity.this, RequestSummaryActivity.class);
                     i.putExtra(RequestListActivity.REQUEST_ID, requestId);
@@ -407,8 +433,8 @@ public class RequestHeaderActivity extends AbstractConnectFormFieldActivity impl
                     params.put(Flurry.PARAM_NAME_TO, Flurry.PARAM_VALUE_TRAVEL_REQUEST_SUMMARY);
                     EventTracker.INSTANCE.track(Flurry.CATEGORY_TRAVEL_REQUEST, Flurry.EVENT_NAME_LAUNCH, params);
 
-                    startActivity(i);
-                    finish();
+                    //finish();
+                    startActivityForResult(i, SUMMARY_RESULT);
                 } else {
                     final Intent resIntent = new Intent();
                     resIntent.putExtra(DO_WS_REFRESH, true);

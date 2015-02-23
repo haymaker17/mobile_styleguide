@@ -110,6 +110,9 @@ public class RequestParser {
         private List<RequestEntryDTO> entryList;
         @SerializedName("Comments")
         private List<RequestCommentDTO> commentList;
+        // --- required to post/put
+        @SerializedName(("PolicyID"))
+        private String policyId;
 
         public Link getLink() {
             return link;
@@ -133,6 +136,10 @@ public class RequestParser {
 
         public Double getTotal() {
             return total;
+        }
+
+        public String getPolicyId() {
+            return policyId;
         }
     }
 
@@ -179,6 +186,7 @@ public class RequestParser {
         tr.setTotal(connectTR.getTotal());
         tr.setApprovalStatusCode(connectTR.getApprovalStatusCode());
         tr.setApprovalStatus(connectTR.getApprovalStatus());
+        tr.setPolicyId(connectTR.getPolicyId());
 
         // --- custom processing : permissions
         final List<String> actionsList = new ArrayList<String>();
