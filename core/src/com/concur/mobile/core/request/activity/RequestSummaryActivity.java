@@ -142,8 +142,6 @@ public class RequestSummaryActivity extends BaseActivity {
     }
 
     private void processEntryCreationByType(SegmentType.RequestSegmentType segmentType) {
-        isSegmentsON = false;
-        updateNewButtonsViews();
         final String formId = getConcurCore().getRequestGroupConfigurationCache().getValue(getUserId())
                 .extractSegmentFormId(tr.getPolicyId(), segmentType);
         waitFormFieldsCacheRefresh(formId, null, segmentType);
