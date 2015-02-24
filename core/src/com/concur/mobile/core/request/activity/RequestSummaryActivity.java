@@ -151,26 +151,26 @@ public class RequestSummaryActivity extends BaseActivity {
 
     public void onClickAir(View view) {
         //TextView tv = (TextView) view.findViewById(R.id.AirSummarySegmentText);
-        processEntryCreationByType(SegmentType.RequestSegmentType.AIR);
         closeSegmentsChoice();
+        processEntryCreationByType(SegmentType.RequestSegmentType.AIR);
     }
 
     public void onClickTrain(View view) {
         //TextView tv = (TextView) view.findViewById(R.id.TrainSummarySegmentText);
-        processEntryCreationByType(SegmentType.RequestSegmentType.RAIL);
         closeSegmentsChoice();
+        processEntryCreationByType(SegmentType.RequestSegmentType.RAIL);
     }
 
     public void onClickHotel(View view) {
         //TextView tv = (TextView) view.findViewById(R.id.HotelSummarySegmentText);
-        processEntryCreationByType(SegmentType.RequestSegmentType.HOTEL);
         closeSegmentsChoice();
+        processEntryCreationByType(SegmentType.RequestSegmentType.HOTEL);
     }
 
     public void onClickCar(View view) {
         //TextView tv = (TextView) view.findViewById(R.id.CarSummarySegmentText);
-        processEntryCreationByType(SegmentType.RequestSegmentType.CAR);
         closeSegmentsChoice();
+        processEntryCreationByType(SegmentType.RequestSegmentType.CAR);
     }
 
     public void onClickAddItem(View view) {
@@ -205,6 +205,7 @@ public class RequestSummaryActivity extends BaseActivity {
 
         RelativeLayout addItemButton = (RelativeLayout) findViewById(R.id.addItemButton);
         addItemButton.setVisibility(View.GONE);
+        closeSegmentsChoice();
 
         if (tr.isActionPermitted(RequestParser.PermittedAction.SUBMIT)) {
             addItemButton.setVisibility(View.VISIBLE);
