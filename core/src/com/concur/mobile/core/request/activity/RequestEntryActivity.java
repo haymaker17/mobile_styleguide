@@ -131,9 +131,19 @@ public class RequestEntryActivity extends AbstractConnectFormFieldActivity imple
         final List<String> airLayout = new ArrayList<String>();
         airLayout.add(FIELD_FROM_ID);
         airLayout.addAll(hotelLayout);
+        final List<String> carLayout = new ArrayList<String>();
+        carLayout.add(FIELD_FROM_ID);
+        carLayout.add(FIELD_START_DATE);
+        carLayout.add(FIELD_START_TIME);
+        carLayout.add(FIELD_TO_ID);
+        carLayout.add(FIELD_END_DATE);
+        carLayout.add(FIELD_END_TIME);
+        carLayout.add(FIELD_COMMENT);
+        carLayout.add(FIELD_CURRENCY);
+        carLayout.add(FIELD_AMOUNT);
         layoutVisibilities.put(SegmentType.RequestSegmentType.AIR, airLayout);
         layoutVisibilities.put(SegmentType.RequestSegmentType.RAIL, airLayout);
-        layoutVisibilities.put(SegmentType.RequestSegmentType.CAR, airLayout);
+        layoutVisibilities.put(SegmentType.RequestSegmentType.CAR, carLayout);
     }
 
     /**
@@ -159,10 +169,6 @@ public class RequestEntryActivity extends AbstractConnectFormFieldActivity imple
         final Bundle bundle = getIntent().getExtras();
         final String requestId = bundle.getString(RequestListActivity.REQUEST_ID);
         final String entryId = bundle.getString(RequestEntryActivity.ENTRY_ID);
-
-        /*this.isEditable = bundle.getString(RequestSummaryActivity.REQUEST_IS_EDITABLE).equals(Boolean.TRUE.toString()) ?
-                true :
-                false;*/
 
         locale = this.getResources().getConfiguration().locale != null ?
                 this.getResources().getConfiguration().locale :
@@ -196,8 +202,8 @@ public class RequestEntryActivity extends AbstractConnectFormFieldActivity imple
                     segment.setDisplayOrder(0);
                     entry.getListSegment().add(segment);
 
-                    // --- TODO
-                    String requestSegmentTypeCode = bundle.getString(RequestEntryActivity.REQUEST_SEGMENT_TYPE_CODE);
+                    final String requestSegmentTypeCode = bundle
+                            .getString(RequestEntryActivity.REQUEST_SEGMENT_TYPE_CODE);
 
                     entry.setSegmentTypeCode(requestSegmentTypeCode);
                     SegmentType.RequestSegmentType requestSegmentType = SegmentType.RequestSegmentType
@@ -395,6 +401,7 @@ public class RequestEntryActivity extends AbstractConnectFormFieldActivity imple
                 displayOrder++;
             }
         }
+        fragmentOnInitialization = -1;
     }
 
     private boolean hasChange(List<RequestSegmentDTO> segmentList) {
@@ -409,19 +416,22 @@ public class RequestEntryActivity extends AbstractConnectFormFieldActivity imple
                 final String fieldName = ff.getName();
                 if (compView != null) {
                     final String displayedValue = compView.getText().toString();
-                    if (fieldName.equals(FIELD_FROM_ID)) {
+                    switch (fieldName) {
+                    case FIELD_FROM_ID:
                         if (segment.getFromLocationName() == null) {
                             hasChange |= displayedValue.length() > 0;
                         } else {
                             hasChange |= !segment.getFromLocationName().equals(displayedValue);
                         }
-                    } else if (fieldName.equals(FIELD_TO_ID)) {
+                        break;
+                    case FIELD_TO_ID:
                         if (segment.getToLocationName() == null) {
                             hasChange |= displayedValue.length() > 0;
                         } else {
                             hasChange |= !segment.getToLocationName().equals(displayedValue);
                         }
-                    } else if (fieldName.equals(FIELD_AMOUNT)) {
+                        break;
+                    case FIELD_AMOUNT:
                         if (compView instanceof MoneyFormField) {
                             // --- compView is a TextView if readonly, meaning it can't be modified so we don't care
                             //     about it's value in this case
@@ -432,33 +442,38 @@ public class RequestEntryActivity extends AbstractConnectFormFieldActivity imple
                                         .equals(((MoneyFormField) compView).getAmountValue());
                             }
                         }
-                    } else if (fieldName.equals(FIELD_START_DATE)) {
+                        break;
+                    case FIELD_START_DATE:
                         if (segment.getDepartureDate() == null) {
                             hasChange |= displayedValue.length() > 0;
                         } else {
                             hasChange |= !formatDate(segment.getDepartureDate()).equals(displayedValue);
                         }
-                    } else if (fieldName.equals(FIELD_START_TIME)) {
+                        break;
+                    case FIELD_START_TIME:
                         // --- value is stored on a 24h format
                         String comparedValue = displayedValue;
                         if (!android.text.format.DateFormat.is24HourFormat(this)) {
                             comparedValue = convertTimeFormat(displayedValue, false, true);
                         }
                         hasChange |= !formatTime(segment.getDepartureDate(), true).equals(comparedValue);
-                    } else if (fieldName.equals(FIELD_END_DATE)) {
+                        break;
+                    case FIELD_END_DATE:
                         if (segment.getArrivalDate() == null) {
                             hasChange |= displayedValue.length() > 0;
                         } else {
                             hasChange |= !formatDate(segment.getArrivalDate()).equals(displayedValue);
                         }
-                    } else if (fieldName.equals(FIELD_END_TIME)) {
+                        break;
+                    case FIELD_END_TIME:
                         // --- value is stored on a 24h format
-                        String comparedValue = displayedValue;
+                        comparedValue = displayedValue;
                         if (!android.text.format.DateFormat.is24HourFormat(this)) {
                             comparedValue = convertTimeFormat(displayedValue, false, true);
                         }
                         hasChange |= !formatTime(segment.getArrivalDate(), true).equals(comparedValue);
-                    } else if (fieldName.equals(FIELD_CURRENCY)) {
+                        break;
+                    case FIELD_CURRENCY:
                         if (entry.getForeignCurrencyCode() == null) {
                             hasChange |= displayedValue.length() > 0;
                         } else {
@@ -466,12 +481,14 @@ public class RequestEntryActivity extends AbstractConnectFormFieldActivity imple
                             hasChange |= compView.getHint() != null && !entry.getForeignCurrencyCode()
                                     .equals(compView.getHint());
                         }
-                    } else if (fieldName.equals(FIELD_COMMENT)) {
+                        break;
+                    case FIELD_COMMENT:
                         if (segment.getLastComment() == null) {
                             hasChange |= displayedValue.length() > 0;
                         } else {
                             hasChange |= !segment.getLastComment().equals(displayedValue);
                         }
+                        break;
                     }
                 }
                 if (hasChange) {
@@ -485,42 +502,43 @@ public class RequestEntryActivity extends AbstractConnectFormFieldActivity imple
     @Override
     protected String getModelDisplayedValueByFieldName(FormDTO requestSegment, String fieldName) {
         final RequestSegmentDTO segment = (RequestSegmentDTO) requestSegment;
-        if (fieldName.equals(FIELD_FROM_ID)) {
+        switch (fieldName) {
+        case FIELD_FROM_ID:
             if (segment.getFromLocationName() == null) {
                 return "";
             }
             return segment.getFromLocationName();
-        } else if (fieldName.equals(FIELD_TO_ID)) {
+        case FIELD_TO_ID:
             if (segment.getToLocationName() == null) {
                 return "";
             }
             return segment.getToLocationName();
-        } else if (fieldName.equals(FIELD_AMOUNT)) {
+        case FIELD_AMOUNT:
             if (entry.getForeignAmount() == null) {
                 return "";
             }
             return entry.getForeignAmount().toString();
-        } else if (fieldName.equals(FIELD_START_DATE)) {
+        case FIELD_START_DATE:
             if (segment.getDepartureDate() == null) {
                 return "";
             }
             return formatDate(segment.getDepartureDate());
-        } else if (fieldName.equals(FIELD_START_TIME)) {
+        case FIELD_START_TIME:
             if (segment.getDepartureDate() == null) {
                 return "";
             }
             return formatTime(segment.getDepartureDate(), android.text.format.DateFormat.is24HourFormat(this));
-        } else if (fieldName.equals(FIELD_END_DATE)) {
+        case FIELD_END_DATE:
             if (segment.getArrivalDate() == null) {
                 return "";
             }
             return formatDate(segment.getArrivalDate());
-        } else if (fieldName.equals(FIELD_END_TIME)) {
+        case FIELD_END_TIME:
             if (segment.getArrivalDate() == null) {
                 return "";
             }
             return formatTime(segment.getArrivalDate(), android.text.format.DateFormat.is24HourFormat(this));
-        } else if (fieldName.equals(FIELD_CURRENCY)) {
+        case FIELD_CURRENCY:
             if (entry.getForeignCurrencyCode() == null) {
                 return "";
             }
@@ -532,7 +550,7 @@ public class RequestEntryActivity extends AbstractConnectFormFieldActivity imple
                 return ((ListItem) curTypeAdapter.getItem(pos)).text;
             }
             return "";
-        } else if (fieldName.equals(FIELD_COMMENT)) {
+        case FIELD_COMMENT:
             if (segment.getLastComment() == null) {
                 return "";
             }
@@ -544,37 +562,45 @@ public class RequestEntryActivity extends AbstractConnectFormFieldActivity imple
     @Override
     protected void setModelValueByFieldName(FormDTO model, String fieldName, String value) {
         final RequestSegmentDTO segment = (RequestSegmentDTO) model;
-        if (fieldName.equals(FIELD_FROM_ID)) {
-            final TextView view = getComponent(model, fieldName);
+        switch (fieldName) {
+        case FIELD_FROM_ID:
+            TextView view = getComponent(model, fieldName);
             if (view != null && view.getHint() != null) {
                 segment.setFromLocationId(view.getHint().toString());
                 segment.setFromLocationName(value);
             }
-        } else if (fieldName.equals(FIELD_TO_ID)) {
-            final TextView view = getComponent(model, fieldName);
+            break;
+        case FIELD_TO_ID:
+            view = getComponent(model, fieldName);
             if (view != null && view.getHint() != null) {
                 segment.setToLocationId(view.getHint().toString());
                 segment.setToLocationName(value);
             }
-        } else if (fieldName.equals(FIELD_AMOUNT)) {
+            break;
+        case FIELD_AMOUNT:
             final TextView field = RequestEntryActivity.this.getComponent(model, FIELD_AMOUNT);
             // --- field can be null if hidden
             if (field != null && field instanceof MoneyFormField) {
                 entry.setForeignAmount(((MoneyFormField) field).getAmountValue());
             }
-        } else if (fieldName.equals(FIELD_START_DATE)) {
+            break;
+        case FIELD_START_DATE:
             segment.setDepartureDate(parseDate(value));
-        } else if (fieldName.equals(FIELD_START_TIME)) {
+            break;
+        case FIELD_START_TIME:
             if (segment.getDepartureDate() != null) {
                 applyTimeString(segment.getDepartureDate(), value);
             }
-        } else if (fieldName.equals(FIELD_END_DATE)) {
+            break;
+        case FIELD_END_DATE:
             segment.setArrivalDate(parseDate(value));
-        } else if (fieldName.equals(FIELD_END_TIME)) {
+            break;
+        case FIELD_END_TIME:
             if (segment.getArrivalDate() != null) {
                 applyTimeString(segment.getArrivalDate(), value);
             }
-        } else if (fieldName.equals(FIELD_CURRENCY)) {
+            break;
+        case FIELD_CURRENCY:
             // --- component is null if value is never changed
             if (getComponent(model, fieldName) != null) {
                 final CharSequence currencyCodeSequence = getComponent(model, fieldName).getHint();
@@ -582,31 +608,40 @@ public class RequestEntryActivity extends AbstractConnectFormFieldActivity imple
                 // --- trick to get the code back
                 entry.setForeignCurrencyCode(code);
             }
-        } else if (fieldName.equals(FIELD_COMMENT)) {
+            break;
+        case FIELD_COMMENT:
             segment.setLastComment(value);
         }
     }
 
     @Override
     protected String getLabelFromFieldName(String fieldName) {
-        //TODO : labels depending on the segment type ?
-        if (fieldName.equals(FIELD_FROM_ID)) {
-            return getResources().getString(R.string.general_separator_from);
-        } else if (fieldName.equals(FIELD_TO_ID)) {
-            return getResources().getString(R.string.general_separator_to);
-        } else if (fieldName.equals(FIELD_AMOUNT)) {
+        switch (fieldName) {
+        case FIELD_FROM_ID:
+            if (viewedType == SegmentType.RequestSegmentType.AIR || viewedType == SegmentType.RequestSegmentType.RAIL) {
+                return getResources().getString(R.string.rail_search_label_dep_loc);
+            } else {
+                return getResources().getString(R.string.segment_rail_label_city);
+            }
+        case FIELD_TO_ID:
+            if (viewedType == SegmentType.RequestSegmentType.AIR || viewedType == SegmentType.RequestSegmentType.RAIL) {
+                return getResources().getString(R.string.rail_search_label_arr_loc);
+            } else {
+                return getResources().getString(R.string.segment_rail_label_city);
+            }
+        case FIELD_AMOUNT:
             return getResources().getString(R.string.amount);
-        } else if (fieldName.equals(FIELD_START_DATE)) {
+        case FIELD_START_DATE:
             return getResources().getString(R.string.general_departure);
-        } else if (fieldName.equals(FIELD_START_TIME)) {
+        case FIELD_START_TIME:
             return getResources().getString(R.string.tr_at);
-        } else if (fieldName.equals(FIELD_END_DATE)) {
+        case FIELD_END_DATE:
             return getResources().getString(R.string.tr_arrival);
-        } else if (fieldName.equals(FIELD_END_TIME)) {
+        case FIELD_END_TIME:
             return getResources().getString(R.string.tr_at);
-        } else if (fieldName.equals(FIELD_CURRENCY)) {
+        case FIELD_CURRENCY:
             return getResources().getString(R.string.currency);
-        } else if (fieldName.equals(FIELD_COMMENT)) {
+        case FIELD_COMMENT:
             return getResources().getString(R.string.comment);
         }
         return null;
@@ -677,12 +712,48 @@ public class RequestEntryActivity extends AbstractConnectFormFieldActivity imple
     @Override
     protected void applySpecificRender(final FormDTO model, final TextView component,
             final LinearLayout.LayoutParams llp, final ConnectFormField ff) {
-        if (ff.getName().equals(FIELD_SEGMENT_TYPE)) {
+        if (ff.getName().equals(FIELD_FROM_ID)) {
+            // --- Header block
+            if (viewedType == SegmentType.RequestSegmentType.CAR) {
+                addBlockTitle(getResources().getString(R.string.tr_segment_block_pickup), model);
+            }
+        } else if (ff.getName().equals(FIELD_TO_ID)) {
+            // --- Header block
+            if (viewedType == SegmentType.RequestSegmentType.CAR) {
+                addBlockTitle(getResources().getString(R.string.tr_segment_block_dropoff), model);
+            } else if (viewedType == SegmentType.RequestSegmentType.HOTEL) {
+                addBlockTitle(getResources().getString(R.string.tr_segment_block_checkin), model);
+            }
+        } else if (ff.getName().equals(FIELD_START_DATE)) {
+            // --- Header block : round trip
+            if ((viewedType == SegmentType.RequestSegmentType.AIR || viewedType == SegmentType.RequestSegmentType.RAIL)
+                    && fragmentOnInitialization == TAB_ROUND_TRIP) {
+                final int segmentLayoutIdx = model.getDisplayOrder() != null ? model.getDisplayOrder() : 0;
+                addBlockTitle(getResources().getString(
+                        segmentLayoutIdx == 0 ? R.string.tr_segment_block_outbound : R.string.tr_segment_block_return),
+                        model);
+            }
+        } else if (ff.getName().equals(FIELD_END_DATE)) {
+            // --- Header block : round trip
+            if (viewedType == SegmentType.RequestSegmentType.HOTEL) {
+                addBlockTitle(getResources().getString(R.string.tr_segment_block_checkout), model);
+            }
+        } else if (ff.getName().equals(FIELD_SEGMENT_TYPE)) {
             component.setTextAppearance(this, R.style.ListCellHeaderText);
             component.setTextColor(getResources().getColor(R.color.White));
             component.setTypeface(Typeface.DEFAULT_BOLD);
             component.setTextSize(TypedValue.COMPLEX_UNIT_SP, 18);
         } else if (ff.getName().equals(FIELD_CURRENCY)) {
+            if (!((viewedType == SegmentType.RequestSegmentType.AIR
+                    || viewedType == SegmentType.RequestSegmentType.RAIL) && fragmentOnInitialization == TAB_ONE_WAY)) {
+                // --- end of block - everything except air/rail one way
+                addWhiteSpace(model);
+                addSeparator(model);
+                addWhiteSpace(model);
+            }
+            // --- space for all kind of segments
+            addWhiteSpace(model);
+            // --- listener to apply the change on any existing moneyField
             component.addTextChangedListener(new TextWatcher() {
 
                 @Override
@@ -863,7 +934,9 @@ public class RequestEntryActivity extends AbstractConnectFormFieldActivity imple
 
     @Override
     protected LinearLayout getCurrentFieldsLayout() {
-        return hasCustomLayouts ? layoutPerTab.get(viewedFragment) : currentFieldsLayout;
+        return hasCustomLayouts ?
+                layoutPerTab.get(fragmentOnInitialization >= 0 ? fragmentOnInitialization : viewedFragment) :
+                currentFieldsLayout;
     }
 
     public class SaveListener implements BaseAsyncRequestTask.AsyncReplyListener {

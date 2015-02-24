@@ -402,9 +402,6 @@ public abstract class AbstractConnectFormFieldActivity extends BaseActivity {
                     }
 
                     if (component != null) {
-                        if (!isTitleField) {
-                            layout.addView(getTextViewFieldName(getLabelFromFieldName(ff.getName())));
-                        }
 
                         component.setTag(ff.getName());
 
@@ -420,15 +417,18 @@ public abstract class AbstractConnectFormFieldActivity extends BaseActivity {
                             component.setGravity(Gravity.CENTER_VERTICAL);
                         }
 
+                        if (!isTitleField) {
+                            layout.addView(getTextViewFieldName(getLabelFromFieldName(ff.getName())));
+                        }
                         layout.addView(component);
                         if (isEditable && displayType == DisplayType.PICKLIST) {
                             component.setCompoundDrawablesWithIntrinsicBounds(null, null,
                                     getResources().getDrawable(R.drawable.field_popup), null);
                         }
 
-                        addWhiteSpace(layout);
+                        addWhiteSpace(model);
                         if (ff.isLineSeparator()) {
-                            addSeparator(layout);
+                            addSeparator(model);
                         }
                     }
                 }
@@ -621,26 +621,43 @@ public abstract class AbstractConnectFormFieldActivity extends BaseActivity {
         return formatter.format(d);
     }
 
-    private void addWhiteSpace(ViewGroup mainLayout) {
+    protected void addWhiteSpace(final FormDTO model) {
 
-        View view = new View(this);
-        ColorDrawable backgroundColor = new ColorDrawable(this.getResources().getColor(R.color.White));
+        final View view = new View(this);
+        final ColorDrawable backgroundColor = new ColorDrawable(this.getResources().getColor(R.color.White));
         view.setBackground(backgroundColor);
 
-        int viewWidth = ActionBar.LayoutParams.MATCH_PARENT; //FILL_PARENT = MATCH_PARENT
         int viewHeight = 50;
-        mainLayout.addView(view, viewWidth, viewHeight);
+        final int segmentLayoutIdx = model.getDisplayOrder() != null ? model.getDisplayOrder() : 0;
+        ((LinearLayout) getCurrentFieldsLayout().getChildAt(segmentLayoutIdx))
+                .addView(view, ActionBar.LayoutParams.MATCH_PARENT, viewHeight);
     }
 
-    private void addSeparator(ViewGroup mainLayout) {
+    protected void addSeparator(final FormDTO model) {
 
-        View view = new View(this);
-        ColorDrawable backgroundColor = new ColorDrawable(this.getResources().getColor(R.color.ListDivider));
+        final View view = new View(this);
+        final ColorDrawable backgroundColor = new ColorDrawable(this.getResources().getColor(R.color.ListDivider));
         view.setBackground(backgroundColor);
 
-        int viewWidth = ActionBar.LayoutParams.MATCH_PARENT; //FILL_PARENT = MATCH_PARENT
         int viewHeight = 15;
-        mainLayout.addView(view, viewWidth, viewHeight);
+        final int segmentLayoutIdx = model.getDisplayOrder() != null ? model.getDisplayOrder() : 0;
+        ((LinearLayout) getCurrentFieldsLayout().getChildAt(segmentLayoutIdx))
+                .addView(view, ActionBar.LayoutParams.MATCH_PARENT, viewHeight);
+    }
+
+    protected void addBlockTitle(final String title, final FormDTO model) {
+        final TextView view = new TextView(this);
+        //final ColorDrawable backgroundColor = new ColorDrawable(this.getResources().getColor(R.color.ListDivider));
+        //view.setBackground(backgroundColor);
+        view.setText(title);
+        view.setTextSize(TypedValue.COMPLEX_UNIT_SP, 16);
+        view.setTextColor(getResources().getColor(R.color.blue));
+
+        final int segmentLayoutIdx = model.getDisplayOrder() != null ? model.getDisplayOrder() : 0;
+        ((LinearLayout) getCurrentFieldsLayout().getChildAt(segmentLayoutIdx))
+                .addView(view, ActionBar.LayoutParams.MATCH_PARENT, ActionBar.LayoutParams.WRAP_CONTENT);
+        addSeparator(model);
+        addWhiteSpace(model);
     }
 
     private TextView getTextViewFieldName(String text) {

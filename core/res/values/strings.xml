@@ -665,6 +665,12 @@
     <string name="tr_at">At</string>
     <string name="tr_arrival">Arrival</string>
     <string name="tr_message_save_changes">Your changes may be lost if you proceed. Would you like to save these changes?</string>
+    <string name="tr_segment_block_outbound">Outbound</string>
+    <string name="tr_segment_block_return">Return</string>
+    <string name="tr_segment_block_pickup">Pick-Up</string>
+    <string name="tr_segment_block_dropoff">Drop-Off</string>
+    <string name="tr_segment_block_checkin">Check-In</string>
+    <string name="tr_segment_block_checkout">Check-Out</string>
     <string name="travel_segments">Segments</string>
     <string name="travel_segment_title">Segment</string>
     <string name="travel_request_expected_expenses">Expected Expenses</string>

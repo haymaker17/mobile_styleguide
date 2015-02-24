@@ -51,7 +51,7 @@ public class SplitRequestListAdapter extends AbstractGenericAdapter<RequestDTO> 
             } else if (r2.getStartDate() != null) {
                 return 1;// --- r1 null, r2 not null => r1 < r2
             } else {
-                return 1;// --- both objects are null => r1 < r2
+                return 0;// --- both objects are null => r1 < r2
             }
         }
     };
