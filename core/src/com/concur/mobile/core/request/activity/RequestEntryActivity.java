@@ -416,22 +416,19 @@ public class RequestEntryActivity extends AbstractConnectFormFieldActivity imple
                 final String fieldName = ff.getName();
                 if (compView != null) {
                     final String displayedValue = compView.getText().toString();
-                    switch (fieldName) {
-                    case FIELD_FROM_ID:
+                    if (fieldName.equals(FIELD_FROM_ID)) {
                         if (segment.getFromLocationName() == null) {
                             hasChange |= displayedValue.length() > 0;
                         } else {
                             hasChange |= !segment.getFromLocationName().equals(displayedValue);
                         }
-                        break;
-                    case FIELD_TO_ID:
+                    } else if (fieldName.equals(FIELD_TO_ID)) {
                         if (segment.getToLocationName() == null) {
                             hasChange |= displayedValue.length() > 0;
                         } else {
                             hasChange |= !segment.getToLocationName().equals(displayedValue);
                         }
-                        break;
-                    case FIELD_AMOUNT:
+                    } else if (fieldName.equals(FIELD_AMOUNT)) {
                         if (compView instanceof MoneyFormField) {
                             // --- compView is a TextView if readonly, meaning it can't be modified so we don't care
                             //     about it's value in this case
@@ -442,38 +439,33 @@ public class RequestEntryActivity extends AbstractConnectFormFieldActivity imple
                                         .equals(((MoneyFormField) compView).getAmountValue());
                             }
                         }
-                        break;
-                    case FIELD_START_DATE:
+                    } else if (fieldName.equals(FIELD_START_DATE)) {
                         if (segment.getDepartureDate() == null) {
                             hasChange |= displayedValue.length() > 0;
                         } else {
                             hasChange |= !formatDate(segment.getDepartureDate()).equals(displayedValue);
                         }
-                        break;
-                    case FIELD_START_TIME:
+                    } else if (fieldName.equals(FIELD_START_TIME)) {
                         // --- value is stored on a 24h format
                         String comparedValue = displayedValue;
                         if (!android.text.format.DateFormat.is24HourFormat(this)) {
                             comparedValue = convertTimeFormat(displayedValue, false, true);
                         }
                         hasChange |= !formatTime(segment.getDepartureDate(), true).equals(comparedValue);
-                        break;
-                    case FIELD_END_DATE:
+                    } else if (fieldName.equals(FIELD_END_DATE)) {
                         if (segment.getArrivalDate() == null) {
                             hasChange |= displayedValue.length() > 0;
                         } else {
                             hasChange |= !formatDate(segment.getArrivalDate()).equals(displayedValue);
                         }
-                        break;
-                    case FIELD_END_TIME:
+                    } else if (fieldName.equals(FIELD_END_TIME)) {
                         // --- value is stored on a 24h format
-                        comparedValue = displayedValue;
+                        String comparedValue = displayedValue;
                         if (!android.text.format.DateFormat.is24HourFormat(this)) {
                             comparedValue = convertTimeFormat(displayedValue, false, true);
                         }
                         hasChange |= !formatTime(segment.getArrivalDate(), true).equals(comparedValue);
-                        break;
-                    case FIELD_CURRENCY:
+                    } else if (fieldName.equals(FIELD_CURRENCY)) {
                         if (entry.getForeignCurrencyCode() == null) {
                             hasChange |= displayedValue.length() > 0;
                         } else {
@@ -481,14 +473,12 @@ public class RequestEntryActivity extends AbstractConnectFormFieldActivity imple
                             hasChange |= compView.getHint() != null && !entry.getForeignCurrencyCode()
                                     .equals(compView.getHint());
                         }
-                        break;
-                    case FIELD_COMMENT:
+                    } else if (fieldName.equals(FIELD_COMMENT)) {
                         if (segment.getLastComment() == null) {
                             hasChange |= displayedValue.length() > 0;
                         } else {
                             hasChange |= !segment.getLastComment().equals(displayedValue);
                         }
-                        break;
                     }
                 }
                 if (hasChange) {
@@ -502,43 +492,42 @@ public class RequestEntryActivity extends AbstractConnectFormFieldActivity imple
     @Override
     protected String getModelDisplayedValueByFieldName(FormDTO requestSegment, String fieldName) {
         final RequestSegmentDTO segment = (RequestSegmentDTO) requestSegment;
-        switch (fieldName) {
-        case FIELD_FROM_ID:
+        if (fieldName.equals(FIELD_FROM_ID)) {
             if (segment.getFromLocationName() == null) {
                 return "";
             }
             return segment.getFromLocationName();
-        case FIELD_TO_ID:
+        } else if (fieldName.equals(FIELD_TO_ID)) {
             if (segment.getToLocationName() == null) {
                 return "";
             }
             return segment.getToLocationName();
-        case FIELD_AMOUNT:
+        } else if (fieldName.equals(FIELD_AMOUNT)) {
             if (entry.getForeignAmount() == null) {
                 return "";
             }
             return entry.getForeignAmount().toString();
-        case FIELD_START_DATE:
+        } else if (fieldName.equals(FIELD_START_DATE)) {
             if (segment.getDepartureDate() == null) {
                 return "";
             }
             return formatDate(segment.getDepartureDate());
-        case FIELD_START_TIME:
+        } else if (fieldName.equals(FIELD_START_TIME)) {
             if (segment.getDepartureDate() == null) {
                 return "";
             }
             return formatTime(segment.getDepartureDate(), android.text.format.DateFormat.is24HourFormat(this));
-        case FIELD_END_DATE:
+        } else if (fieldName.equals(FIELD_END_DATE)) {
             if (segment.getArrivalDate() == null) {
                 return "";
             }
             return formatDate(segment.getArrivalDate());
-        case FIELD_END_TIME:
+        } else if (fieldName.equals(FIELD_END_TIME)) {
             if (segment.getArrivalDate() == null) {
                 return "";
             }
             return formatTime(segment.getArrivalDate(), android.text.format.DateFormat.is24HourFormat(this));
-        case FIELD_CURRENCY:
+        } else if (fieldName.equals(FIELD_CURRENCY)) {
             if (entry.getForeignCurrencyCode() == null) {
                 return "";
             }
@@ -550,7 +539,7 @@ public class RequestEntryActivity extends AbstractConnectFormFieldActivity imple
                 return ((ListItem) curTypeAdapter.getItem(pos)).text;
             }
             return "";
-        case FIELD_COMMENT:
+        } else if (fieldName.equals(FIELD_COMMENT)) {
             if (segment.getLastComment() == null) {
                 return "";
             }
@@ -562,45 +551,37 @@ public class RequestEntryActivity extends AbstractConnectFormFieldActivity imple
     @Override
     protected void setModelValueByFieldName(FormDTO model, String fieldName, String value) {
         final RequestSegmentDTO segment = (RequestSegmentDTO) model;
-        switch (fieldName) {
-        case FIELD_FROM_ID:
-            TextView view = getComponent(model, fieldName);
+        if (fieldName.equals(FIELD_FROM_ID)) {
+            final TextView view = getComponent(model, fieldName);
             if (view != null && view.getHint() != null) {
                 segment.setFromLocationId(view.getHint().toString());
                 segment.setFromLocationName(value);
             }
-            break;
-        case FIELD_TO_ID:
-            view = getComponent(model, fieldName);
+        } else if (fieldName.equals(FIELD_TO_ID)) {
+            final TextView view = getComponent(model, fieldName);
             if (view != null && view.getHint() != null) {
                 segment.setToLocationId(view.getHint().toString());
                 segment.setToLocationName(value);
             }
-            break;
-        case FIELD_AMOUNT:
+        } else if (fieldName.equals(FIELD_AMOUNT)) {
             final TextView field = RequestEntryActivity.this.getComponent(model, FIELD_AMOUNT);
             // --- field can be null if hidden
             if (field != null && field instanceof MoneyFormField) {
                 entry.setForeignAmount(((MoneyFormField) field).getAmountValue());
             }
-            break;
-        case FIELD_START_DATE:
+        } else if (fieldName.equals(FIELD_START_DATE)) {
             segment.setDepartureDate(parseDate(value));
-            break;
-        case FIELD_START_TIME:
+        } else if (fieldName.equals(FIELD_START_TIME)) {
             if (segment.getDepartureDate() != null) {
                 applyTimeString(segment.getDepartureDate(), value);
             }
-            break;
-        case FIELD_END_DATE:
+        } else if (fieldName.equals(FIELD_END_DATE)) {
             segment.setArrivalDate(parseDate(value));
-            break;
-        case FIELD_END_TIME:
+        } else if (fieldName.equals(FIELD_END_TIME)) {
             if (segment.getArrivalDate() != null) {
                 applyTimeString(segment.getArrivalDate(), value);
             }
-            break;
-        case FIELD_CURRENCY:
+        } else if (fieldName.equals(FIELD_CURRENCY)) {
             // --- component is null if value is never changed
             if (getComponent(model, fieldName) != null) {
                 final CharSequence currencyCodeSequence = getComponent(model, fieldName).getHint();
@@ -608,40 +589,38 @@ public class RequestEntryActivity extends AbstractConnectFormFieldActivity imple
                 // --- trick to get the code back
                 entry.setForeignCurrencyCode(code);
             }
-            break;
-        case FIELD_COMMENT:
+        } else if (fieldName.equals(FIELD_COMMENT)) {
             segment.setLastComment(value);
         }
     }
 
     @Override
     protected String getLabelFromFieldName(String fieldName) {
-        switch (fieldName) {
-        case FIELD_FROM_ID:
+        if (fieldName.equals(FIELD_FROM_ID)) {
             if (viewedType == SegmentType.RequestSegmentType.AIR || viewedType == SegmentType.RequestSegmentType.RAIL) {
                 return getResources().getString(R.string.rail_search_label_dep_loc);
             } else {
                 return getResources().getString(R.string.segment_rail_label_city);
             }
-        case FIELD_TO_ID:
+        } else if (fieldName.equals(FIELD_TO_ID)) {
             if (viewedType == SegmentType.RequestSegmentType.AIR || viewedType == SegmentType.RequestSegmentType.RAIL) {
                 return getResources().getString(R.string.rail_search_label_arr_loc);
             } else {
                 return getResources().getString(R.string.segment_rail_label_city);
             }
-        case FIELD_AMOUNT:
+        } else if (fieldName.equals(FIELD_AMOUNT)) {
             return getResources().getString(R.string.amount);
-        case FIELD_START_DATE:
+        } else if (fieldName.equals(FIELD_START_DATE)) {
             return getResources().getString(R.string.general_departure);
-        case FIELD_START_TIME:
+        } else if (fieldName.equals(FIELD_START_TIME)) {
             return getResources().getString(R.string.tr_at);
-        case FIELD_END_DATE:
+        } else if (fieldName.equals(FIELD_END_DATE)) {
             return getResources().getString(R.string.tr_arrival);
-        case FIELD_END_TIME:
+        } else if (fieldName.equals(FIELD_END_TIME)) {
             return getResources().getString(R.string.tr_at);
-        case FIELD_CURRENCY:
+        } else if (fieldName.equals(FIELD_CURRENCY)) {
             return getResources().getString(R.string.currency);
-        case FIELD_COMMENT:
+        } else if (fieldName.equals(FIELD_COMMENT)) {
             return getResources().getString(R.string.comment);
         }
         return null;
@@ -729,9 +708,9 @@ public class RequestEntryActivity extends AbstractConnectFormFieldActivity imple
             if ((viewedType == SegmentType.RequestSegmentType.AIR || viewedType == SegmentType.RequestSegmentType.RAIL)
                     && fragmentOnInitialization == TAB_ROUND_TRIP) {
                 final int segmentLayoutIdx = model.getDisplayOrder() != null ? model.getDisplayOrder() : 0;
-                addBlockTitle(getResources().getString(
-                        segmentLayoutIdx == 0 ? R.string.tr_segment_block_outbound : R.string.tr_segment_block_return),
-                        model);
+                addBlockTitle(getResources().getString(segmentLayoutIdx == 0 ?
+                                R.string.tr_segment_block_outbound :
+                                R.string.tr_segment_block_return), model);
             }
         } else if (ff.getName().equals(FIELD_END_DATE)) {
             // --- Header block : round trip
