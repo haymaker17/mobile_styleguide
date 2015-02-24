@@ -95,10 +95,9 @@ public class RequestGroupConfiguration {
         return defaultFormId;
     }
 
-
-    public String extractSegmentDefaultFormId(SegmentType.RequestSegmentType segmentType) {
+    public String extractSegmentFormId(final String policyId, final SegmentType.RequestSegmentType segmentType) {
         for (Policy p : getPolicies()) {
-            if (p.getIsDefault()) {
+            if (p.getId().equals(policyId)) {
                 for (SegmentType st : p.getSegmentTypes()) {
                     if (st.getIconCode().equals(segmentType.getCode())) {
                         return st.getSegmentFormID();

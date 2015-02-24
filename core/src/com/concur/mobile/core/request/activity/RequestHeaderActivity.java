@@ -46,6 +46,8 @@ public class RequestHeaderActivity extends AbstractConnectFormFieldActivity impl
     private static final int ID_LOADING_VIEW = 0;
     private static final int ID_HEADER_VIEW = 1;
 
+    private static final int SUMMARY_RESULT = 1;
+
     private static final String FIELD_NAME = "Name";
     private static final String FIELD_START_DATE = "StartDate";
     private static final String FIELD_END_DATE = "EndDate";
@@ -115,6 +117,8 @@ public class RequestHeaderActivity extends AbstractConnectFormFieldActivity impl
         if (requestId != null) {
             tr = requestListCache.getValue(requestId);
             form = formFieldsCache.getFormFields(tr.getHeaderFormId());
+            setCanSave(tr.getApprovalStatusCode().equals(RequestDTO.ApprovalStatus.CREATION.getCode()) || tr
+                    .getApprovalStatusCode().equals(RequestDTO.ApprovalStatus.RECALLED.getCode()));
         }
         // --- create mode
         else {
@@ -127,6 +131,7 @@ public class RequestHeaderActivity extends AbstractConnectFormFieldActivity impl
             // --- TODO : TBC
             tr.setCurrencyCode(Currency.getInstance(locale).getCurrencyCode());
             tr.setRequestDate(new Date());
+            setCanSave(true);
         }
 
         configureUI();
@@ -176,25 +181,41 @@ public class RequestHeaderActivity extends AbstractConnectFormFieldActivity impl
                 if (compView != null && compView.getText() != null) {
                     final String displayedValue = compView.getText().toString();
                     if (fieldName.equals(FIELD_NAME)) {
-                        hasChange |= !displayedValue.equals(tr.getName());
+                        if (tr.getName() == null) {
+                            hasChange |= displayedValue.length() > 0;
+                        } else {
+                            hasChange |= !displayedValue.equals(tr.getName());
+                        }
                     } else if (fieldName.equals(FIELD_START_DATE)) {
                         if (tr.getStartDate() == null) {
-                            hasChange |= displayedValue != null && displayedValue.length() > 0;
+                            hasChange |= displayedValue.length() > 0;
                         } else {
                             hasChange |= !displayedValue.equals(formatDate(tr.getStartDate()));
                         }
                     } else if (fieldName.equals(FIELD_END_DATE)) {
                         if (tr.getEndDate() == null) {
-                            hasChange |= displayedValue != null && displayedValue.length() > 0;
+                            hasChange |= displayedValue.length() > 0;
                         } else {
                             hasChange |= !displayedValue.equals(formatDate(tr.getEndDate()));
                         }
                     } else if (fieldName.equals(FIELD_PURPOSE)) {
-                        hasChange |= !displayedValue.equals(tr.getPurpose());
+                        if (tr.getPurpose() == null) {
+                            hasChange |= displayedValue.length() > 0;
+                        } else {
+                            hasChange |= !displayedValue.equals(tr.getPurpose());
+                        }
                     } else if (fieldName.equals(FIELD_EMP_NAME)) {
-                        hasChange |= !displayedValue.equals(tr.getEmployeeName());
+                        if (tr.getEmployeeName() == null) {
+                            hasChange |= displayedValue.length() > 0;
+                        } else {
+                            hasChange |= !displayedValue.equals(tr.getEmployeeName());
+                        }
                     } else if (fieldName.equals(FIELD_COMMENT)) {
-                        hasChange |= !displayedValue.equals(tr.getLastComment());
+                        if (tr.getLastComment() == null) {
+                            hasChange |= displayedValue.length() > 0;
+                        } else {
+                            hasChange |= !displayedValue.equals(tr.getLastComment());
+                        }
                     }
                 }
                 if (hasChange) {
@@ -217,6 +238,27 @@ public class RequestHeaderActivity extends AbstractConnectFormFieldActivity impl
     @Override
     protected DateUtil.DatePattern getDatePattern() {
         return DateUtil.DatePattern.DB_INPUT;
+    }
+
+    /*
+     * (non-Javadoc)
+     *
+     * @see com.concur.mobile.activity.expense.ConcurView#onActivityResult(int, int, android.content.Intent)
+     */
+    @Override
+    public void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        switch (requestCode) {
+        case (SUMMARY_RESULT):
+            // --- redirects from summary to list with refresh option if the user press back button from there
+            if (resultCode == Activity.RESULT_CANCELED) {
+                final Intent resIntent = new Intent();
+                resIntent.putExtra(RequestHeaderActivity.DO_WS_REFRESH, true);
+                setResult(Activity.RESULT_OK, resIntent);
+                finish();
+            }
+            break;
+        }
     }
 
     @Override
@@ -252,6 +294,11 @@ public class RequestHeaderActivity extends AbstractConnectFormFieldActivity impl
     }
 
     @Override public void applySaveButtonPolicy(View saveButtonView) {
+        if (canSave()) {
+            saveButtonView.setVisibility(View.VISIBLE);
+        } else {
+            saveButtonView.setVisibility(View.GONE);
+        }
         saveButton.setOnClickListener(new View.OnClickListener() {
 
             public void onClick(View v) {
@@ -372,6 +419,9 @@ public class RequestHeaderActivity extends AbstractConnectFormFieldActivity impl
                 if (isCreation) {
                     final String requestId = RequestParser
                             .parseActionResponse(resultData.getString(BaseAsyncRequestTask.HTTP_RESPONSE));
+                    tr.setId(requestId);
+                    // --- cache update
+                    requestListCache.addValue(requestId, tr);
 
                     final Intent i = new Intent(RequestHeaderActivity.this, RequestSummaryActivity.class);
                     i.putExtra(RequestListActivity.REQUEST_ID, requestId);
@@ -383,8 +433,8 @@ public class RequestHeaderActivity extends AbstractConnectFormFieldActivity impl
                     params.put(Flurry.PARAM_NAME_TO, Flurry.PARAM_VALUE_TRAVEL_REQUEST_SUMMARY);
                     EventTracker.INSTANCE.track(Flurry.CATEGORY_TRAVEL_REQUEST, Flurry.EVENT_NAME_LAUNCH, params);
 
-                    startActivity(i);
-                    finish();
+                    //finish();
+                    startActivityForResult(i, SUMMARY_RESULT);
                 } else {
                     final Intent resIntent = new Intent();
                     resIntent.putExtra(DO_WS_REFRESH, true);

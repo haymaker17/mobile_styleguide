@@ -28,6 +28,7 @@ public class MoneyFormField extends EditText implements TextWatcher {
         if (currencyCode != null) {
             currency = Currency.getInstance(currencyCode);
         }
+        addTextChangedListener(this);
     }
 
     public void setCurrencyCode(String currencyCode) {
@@ -41,6 +42,9 @@ public class MoneyFormField extends EditText implements TextWatcher {
                 currency = Currency.getInstance(currencyCode);
                 afterTextChanged(getText());
             }
+        } else if (currencyCode != null && currency == null) {
+            currency = Currency.getInstance(currencyCode);
+            afterTextChanged(getText());
         }
     }
 
@@ -63,9 +67,11 @@ public class MoneyFormField extends EditText implements TextWatcher {
         final int inputLength = editable.toString().length();
 
         // --- clean currency input
-        String s = editable.toString().replaceAll(Matcher.quoteReplacement("[" + currency.getSymbol() + ",]"), "");
+        String s = currency != null ?
+                editable.toString().replaceAll(Matcher.quoteReplacement("[" + currency.getSymbol() + ",]"), "") :
+                editable.toString();
         amountValue = Parse.safeParseDouble(s);
-        if (amountValue == null) {
+        if (amountValue == null && s.length() > 0) {
             setError("error");
         } else {
             if (locale != null && currency != null) {

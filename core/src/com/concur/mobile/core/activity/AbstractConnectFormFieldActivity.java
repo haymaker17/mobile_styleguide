@@ -525,7 +525,7 @@ public abstract class AbstractConnectFormFieldActivity extends BaseActivity {
      *
      * @param formfields
      */
-    private void applySpecificSort(List<ConnectFormField> formfields) {
+    protected void applySpecificSort(List<ConnectFormField> formfields) {
         Collections.sort(formfields);
     }
 
