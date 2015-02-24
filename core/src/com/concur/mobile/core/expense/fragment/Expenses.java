@@ -785,7 +785,7 @@ public class Expenses extends BaseFragment implements INetworkActivityListener {
                 }
             }
         }
-        
+
         boolean hasOCRReceipts = ReceiptListUtil.getOcrReceiptList(app, activity.getUserId(), false).size() > 0;
 
         if ((filterHasItems && cacheList != null && cacheList.size() > 0) || hasOCRReceipts) {
@@ -2423,6 +2423,10 @@ public class Expenses extends BaseFragment implements INetworkActivityListener {
         ArrayList<Expense> cacheList = expEntCache.getExpenseEntries();
         if (cacheList != null) {
             listItems = populateExpenseListItems(cacheList, pcaKeyFilter, showCorpCardTransOnly);
+        }
+        if (listItems == null || listItems.size() == 0) {
+            viewState = ViewState.NO_DATA;
+            flipViewForViewState();
         }
         return listItems;
     }
