@@ -149,23 +149,37 @@ public class RequestSummaryActivity extends BaseActivity {
         new RequestFormFieldsTask(RequestSummaryActivity.this, 1, asyncReceiverFormFields, formId, false).execute();
     }
 
+    public void setSegmentButtonClose() {
+        TextView tv = (TextView) findViewById(R.id.addItemRequest);
+        tv.setText(R.string.add_another_item_to_request);
+        isSegmentsON = false;
+    }
+
     public void onClickAir(View view) {
         //TextView tv = (TextView) view.findViewById(R.id.AirSummarySegmentText);
+        closeSegmentsChoice();
+        setSegmentButtonClose();
         processEntryCreationByType(SegmentType.RequestSegmentType.AIR);
     }
 
     public void onClickTrain(View view) {
         //TextView tv = (TextView) view.findViewById(R.id.TrainSummarySegmentText);
+        closeSegmentsChoice();
+        setSegmentButtonClose();
         processEntryCreationByType(SegmentType.RequestSegmentType.RAIL);
     }
 
     public void onClickHotel(View view) {
         //TextView tv = (TextView) view.findViewById(R.id.HotelSummarySegmentText);
+        closeSegmentsChoice();
+        setSegmentButtonClose();
         processEntryCreationByType(SegmentType.RequestSegmentType.HOTEL);
     }
 
     public void onClickCar(View view) {
         //TextView tv = (TextView) view.findViewById(R.id.CarSummarySegmentText);
+        closeSegmentsChoice();
+        setSegmentButtonClose();
         processEntryCreationByType(SegmentType.RequestSegmentType.CAR);
     }
 
@@ -183,10 +197,26 @@ public class RequestSummaryActivity extends BaseActivity {
         showCacheData();
     }
 
+    public void closeSegmentsChoice(){
+
+        RelativeLayout layoutSegmentAIR = (RelativeLayout) findViewById(R.id.AirSegmentChoice);
+        RelativeLayout layoutSegmentTRAIN = (RelativeLayout) findViewById(R.id.TrainSegmentChoice);
+        RelativeLayout layoutSegmentHOTEL = (RelativeLayout) findViewById(R.id.HotelSegmentChoice);
+        RelativeLayout layoutSegmentCAR = (RelativeLayout) findViewById(R.id.CarSegmentChoice);
+        View separator = (View) findViewById(R.id.SegmentsSeparator);
+
+        layoutSegmentAIR.setVisibility(View.GONE);
+        layoutSegmentTRAIN.setVisibility(View.GONE);
+        layoutSegmentHOTEL.setVisibility(View.GONE);
+        layoutSegmentCAR.setVisibility(View.GONE);
+        separator.setVisibility(View.GONE);
+    }
+
     private void updateTRDetailsUI(RequestDTO request) {
 
         RelativeLayout addItemButton = (RelativeLayout) findViewById(R.id.addItemButton);
         addItemButton.setVisibility(View.GONE);
+        closeSegmentsChoice();
 
         if (tr.isActionPermitted(RequestParser.PermittedAction.SUBMIT)) {
             addItemButton.setVisibility(View.VISIBLE);
@@ -258,6 +288,12 @@ public class RequestSummaryActivity extends BaseActivity {
         RelativeLayout layoutSegmentCAR = (RelativeLayout) findViewById(R.id.CarSegmentChoice);
         View separator = findViewById(R.id.SegmentsSeparator);
 
+        layoutSegmentAIR.setVisibility(View.GONE);
+        layoutSegmentTRAIN.setVisibility(View.GONE);
+        layoutSegmentHOTEL.setVisibility(View.GONE);
+        layoutSegmentCAR.setVisibility(View.GONE);
+        separator.setVisibility(View.GONE);
+
         if (isSegmentsON) {
             if (isSegmentAIR) {
                 layoutSegmentAIR.setVisibility(View.VISIBLE);
@@ -272,12 +308,6 @@ public class RequestSummaryActivity extends BaseActivity {
                 layoutSegmentCAR.setVisibility(View.VISIBLE);
             }
             separator.setVisibility(View.VISIBLE);
-        } else {
-            layoutSegmentAIR.setVisibility(View.GONE);
-            layoutSegmentTRAIN.setVisibility(View.GONE);
-            layoutSegmentHOTEL.setVisibility(View.GONE);
-            layoutSegmentCAR.setVisibility(View.GONE);
-            separator.setVisibility(View.GONE);
         }
     }
 
