@@ -276,6 +276,12 @@ public class RequestSummaryActivity extends BaseActivity {
         RelativeLayout layoutSegmentCAR = (RelativeLayout) findViewById(R.id.CarSegmentChoice);
         View separator = findViewById(R.id.SegmentsSeparator);
 
+        layoutSegmentAIR.setVisibility(View.GONE);
+        layoutSegmentTRAIN.setVisibility(View.GONE);
+        layoutSegmentHOTEL.setVisibility(View.GONE);
+        layoutSegmentCAR.setVisibility(View.GONE);
+        separator.setVisibility(View.GONE);
+
         if (isSegmentsON) {
             if (isSegmentAIR) {
                 layoutSegmentAIR.setVisibility(View.VISIBLE);
@@ -290,12 +296,6 @@ public class RequestSummaryActivity extends BaseActivity {
                 layoutSegmentCAR.setVisibility(View.VISIBLE);
             }
             separator.setVisibility(View.VISIBLE);
-        } else {
-            layoutSegmentAIR.setVisibility(View.GONE);
-            layoutSegmentTRAIN.setVisibility(View.GONE);
-            layoutSegmentHOTEL.setVisibility(View.GONE);
-            layoutSegmentCAR.setVisibility(View.GONE);
-            separator.setVisibility(View.GONE);
         }
     }
 
