@@ -159,24 +159,28 @@ public class RequestSummaryActivity extends BaseActivity {
         TextView tv = (TextView) view.findViewById(R.id.AirSummarySegmentText);
         System.out.println(tv.getText());
         processEntryCreationByType(SegmentType.RequestSegmentType.AIR);
+        closeSegmentsChoice();
     }
 
     public void onClickTrain(View view) {
         TextView tv = (TextView) view.findViewById(R.id.TrainSummarySegmentText);
         System.out.println(tv.getText());
         processEntryCreationByType(SegmentType.RequestSegmentType.RAIL);
+        closeSegmentsChoice();
     }
 
     public void onClickHotel(View view) {
         TextView tv = (TextView) view.findViewById(R.id.HotelSummarySegmentText);
         System.out.println(tv.getText());
         processEntryCreationByType(SegmentType.RequestSegmentType.HOTEL);
+        closeSegmentsChoice();
     }
 
     public void onClickCar(View view) {
         TextView tv = (TextView) view.findViewById(R.id.CarSummarySegmentText);
         System.out.println(tv.getText());
         processEntryCreationByType(SegmentType.RequestSegmentType.CAR);
+        closeSegmentsChoice();
     }
 
     public void onClickAddItem(View view) {
@@ -191,6 +195,20 @@ public class RequestSummaryActivity extends BaseActivity {
         }
 
         showCacheData();
+    }
+
+    public void closeSegmentsChoice(){
+        RelativeLayout layoutSegmentAIR = (RelativeLayout) findViewById(R.id.AirSegmentChoice);
+        RelativeLayout layoutSegmentTRAIN = (RelativeLayout) findViewById(R.id.TrainSegmentChoice);
+        RelativeLayout layoutSegmentHOTEL = (RelativeLayout) findViewById(R.id.HotelSegmentChoice);
+        RelativeLayout layoutSegmentCAR = (RelativeLayout) findViewById(R.id.CarSegmentChoice);
+        View separator = (View) findViewById(R.id.SegmentsSeparator);
+
+        layoutSegmentAIR.setVisibility(View.GONE);
+        layoutSegmentTRAIN.setVisibility(View.GONE);
+        layoutSegmentHOTEL.setVisibility(View.GONE);
+        layoutSegmentCAR.setVisibility(View.GONE);
+        separator.setVisibility(View.GONE);
     }
 
     private void updateTRDetailsUI(RequestDTO request) {
