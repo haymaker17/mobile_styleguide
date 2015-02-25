@@ -29,7 +29,6 @@ public class UserConfig {
     public TravelPointsConfig travelPointsConfig;
     public boolean showGDSNameInSearchResults;
     public CustomTravelText customTravelText;
-    public String distanceUnitPreference;
 
     /**
      * Contains the server computed hash code for the information contained in this user configuration object.

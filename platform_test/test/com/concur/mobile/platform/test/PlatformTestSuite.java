@@ -27,6 +27,7 @@ import com.concur.mobile.platform.expense.list.test.ExpenseListRequestTaskTest;
 import com.concur.mobile.platform.expense.list.test.SaveMobileEntryRequestTaskTest;
 import com.concur.mobile.platform.expense.provider.ExpenseProvider;
 import com.concur.mobile.platform.expense.receipt.ocr.test.StartOCRRequestTaskTest;
+import com.concur.mobile.platform.expense.receipt.ocr.test.StopOCRRequestTaskTest;
 import com.concur.mobile.platform.expense.smartexpense.list.test.SmartExpenseListRequestTaskTest;
 import com.concur.mobile.platform.password.reset.test.RequestPasswordResetRequestTaskTest;
 import com.concur.mobile.platform.password.reset.test.ResetUserPasswordRequestTaskTest;
@@ -547,6 +548,43 @@ public class PlatformTestSuite {
         // Run the StartOCRRequestTaskTest test on the receipt we just saved.
         startOcrTest.doTestSuccess();
         startOcrTest.doTestFailure();
+    }
+
+    /**
+     * Performs a StopOCR test.
+     * 
+     * NOTE: This only tests against the mock server. The reason being is testing against a real live server is difficult. First,
+     * we need to call StartOCR and IMMEDIATELY call StopOCR. The timing needs to be perfect in order for this call to succeed,
+     * otherwise, the we're trying to stop an OCR that has already succeeded.
+     * 
+     * @throws Exception
+     *             throws an exception if the test fails.
+     */
+    @Test
+    public void doStopOcr() throws Exception {
+
+        // Init the login request
+        doPinPasswordLogin();
+
+        StopOCRRequestTaskTest stopOcrTask = new StopOCRRequestTaskTest();
+        // Init mock server.
+        initMockServer();
+        // Set the mock server instance on the test.
+        stopOcrTask.setMockServer(mwsServer);
+
+        // First, get the list of Receipts so we can grab one of them to StartOCR on.
+        ReceiptListRequestTaskTest receiptListTest = new ReceiptListRequestTaskTest();
+        // Init mock server.
+        initMockServer();
+        // Set the mock server instance on the test.
+        receiptListTest.setMockServer(mwsServer);
+
+        // Run the ReceiptListRequestTask test.
+        receiptListTest.doTest();
+
+        // Run the StartOCRRequestTaskTest test on the receipt we just saved.
+        stopOcrTask.doTestSuccess();
+        stopOcrTask.doTestFailure();
     }
 
     /**

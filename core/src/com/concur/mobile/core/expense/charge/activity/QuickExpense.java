@@ -26,6 +26,7 @@ import android.content.DialogInterface;
 import android.content.DialogInterface.OnCancelListener;
 import android.content.Intent;
 import android.content.IntentFilter;
+import android.location.Location;
 import android.net.Uri;
 import android.os.Bundle;
 import android.os.Environment;
@@ -92,6 +93,7 @@ import com.concur.mobile.core.util.ViewUtil.LocationSelection;
 import com.concur.mobile.core.widget.CalendarPicker;
 import com.concur.mobile.core.widget.CalendarPickerDialog;
 import com.concur.mobile.core.widget.CalendarPickerDialog.OnDateSetListener;
+import com.concur.mobile.platform.location.LastLocationTracker;
 import com.concur.mobile.platform.util.Format;
 import com.concur.mobile.platform.util.Parse;
 
@@ -3114,8 +3116,26 @@ public class QuickExpense extends BaseActivity {
                 rsCache.setShouldFetchReceiptList();
             }
 
-            // Flurry Notification.
             if (activity.saveExpenseRequest != null) {
+
+                // MOB-22375 - Google Analytics for Receipt Upload.
+                if (activity.lastReceiptAction == ReceiptPictureSaveAction.CHOOSE_PICTURE_CLOUD
+                        && activity.receiptImageId != null && activity.receiptImageId.trim().length() > 0) {
+
+                    ConcurCore concurCore = ((ConcurCore) activity.getApplication());
+                    LastLocationTracker locTracker = concurCore.getLocationTracker();
+                    Location loc = locTracker.getCurrentLocaton();
+                    String lat = "0";
+                    String lon = "0";
+                    if (loc != null) {
+                        lat = Double.toString(loc.getLatitude());
+                        lon = Double.toString(loc.getLongitude());
+                    }
+                    String eventLabel = activity.receiptImageId + "|" + lat + "|" + lon;
+                    EventTracker.INSTANCE.track("Receipts", "Receipt Capture Location", eventLabel);
+                }
+
+                // Flurry Notification.
                 boolean offlineCreate = intent.getBooleanExtra(Flurry.PARAM_NAME_OFFLINE_CREATE, false);
                 if (!offlineCreate) {
                     Map<String, String> params = new HashMap<String, String>();
@@ -3370,6 +3390,24 @@ public class QuickExpense extends BaseActivity {
                 String receiptImageId = intent.getStringExtra(Const.EXTRA_EXPENSE_RECEIPT_IMAGE_ID_KEY);
                 if (receiptImageId != null) {
                     receiptImageId = receiptImageId.trim();
+
+                    // MOB-22375 - Google Analytics for Receipt Upload.
+                    // If we're online, track the location right away!
+                    // If we're offline, then location will be saved in the DB for later
+                    // reference in the Offline Queue.
+                    if (!SaveReceiptReply.OFFLINE_RECEIPT_ID.equals(receiptImageId)) {
+                        LastLocationTracker locTracker = activity.getConcurCore().getLocationTracker();
+                        Location loc = locTracker.getCurrentLocaton();
+                        String lat = "0";
+                        String lon = "0";
+                        if (loc != null) {
+                            lat = Double.toString(loc.getLatitude());
+                            lon = Double.toString(loc.getLongitude());
+                        }
+
+                        String eventLabel = receiptImageId + "|" + lat + "|" + lon;
+                        EventTracker.INSTANCE.track("Receipts", "Receipt Capture Location", eventLabel);
+                    }
                 }
                 if (activity.isPathAvailable) {
                     // Set the variable to 'false'.

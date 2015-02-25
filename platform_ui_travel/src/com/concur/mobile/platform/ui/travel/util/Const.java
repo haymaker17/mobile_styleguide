@@ -20,7 +20,6 @@ public class Const {
     public static final String EXTRA_TRAVEL_HOTEL_SEARCH_CHECK_OUT_CALENDAR = "travel.hotel.search.check.out.calendar";
     public static final String EXTRA_TRAVEL_HOTEL_SEARCH_LOCATION = "travel.hotel.search.location";
     public static final String EXTRA_TRAVEL_HOTEL_SEARCH_NAMES_CONTAINING = "travel.hotel.search.names.containing";
-    public static final String EXTRA_TRAVEL_HOTEL_SEARCH_DISTANCE_UNIT_ID = "travel.hotel.search.distance.unit";
     public static final String EXTRA_LOCATION_SEARCH_ALLOWED_MODES = "loc_search_modes_allowed";
     public static final String EXTRA_LOCATION_SEARCH_MODE_USED = "loc_search_mode_used";
     public static final String EXTRA_TRAVEL_LOCATION = "travel.location";

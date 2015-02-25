@@ -36,8 +36,8 @@ public class EmailLookUpRequestTask extends PlatformAsyncRequestTask {
     /**
      * Extra bundle key used to pass the a login bundle (result date from EmailLookupRequest).
      */
-    public static final String EXTRA_LOGIN_BUNDLE = "extra_login_bundle";
-
+    public static final String EXTRA_LOGIN_BUNDLE = "extra_login_bundle";    
+    
     /**
      * Contains the bundle extra data key to look up the login id.
      */

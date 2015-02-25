@@ -1,5 +1,5 @@
 /**
- * Copyright (c) 2014 Concur Technologies, Inc.
+ * Copyright (c) 2015 Concur Technologies, Inc.
  */
 package com.concur.mobile.platform.expense.receipt.ocr;
 
@@ -10,15 +10,16 @@ import com.concur.mobile.platform.service.parser.ActionStatus;
 import com.google.gson.annotations.SerializedName;
 
 /**
+ * Object representing the response returned back from the StopOCR endpoint.
+ * 
  * @author Chris N. Diaz
- *
  */
-public class StartOCR implements Serializable {
+public class StopOCR implements Serializable {
 
     /**
-     * Serializable ID
+     * Generated serial ID.
      */
-    private static final long serialVersionUID = 8359339103272512815L;
+    private static final long serialVersionUID = 4039630275482906317L;
 
     /**
      * Contains the action status object associated with retrieving the receipt list.
@@ -74,6 +75,24 @@ public class StartOCR implements Serializable {
     public String ocrStatus;
 
     /**
+     * <p>
+     * Contains the OCR reject code. The reject code can be one of the following:
+     * </p>
+     * <p>
+     * <ul>
+     * <li>PF - processing failure</li>
+     * <li>NR - not a receipt</li>
+     * <li>UR - unreadable receipt</li>
+     * <li>MR - multiple receipt</li>
+     * <li>AC - auto OCR cancelled</li>
+     * <li>MC - manual OCR cancelled</li>
+     * </ul>
+     * </p>
+     */
+    @SerializedName("rejectCode")
+    public String rejectCode;
+
+    /**
      * List of errors, if any.
      */
     @SerializedName("errors")
@@ -82,7 +101,7 @@ public class StartOCR implements Serializable {
     /**
      * Default constructor.
      */
-    StartOCR() {
+    StopOCR() {
 
     }
 

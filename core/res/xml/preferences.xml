@@ -50,7 +50,7 @@
     <PreferenceCategory android:title="@string/pref_cat_version" >
         <Preference
             android:key="pref_version_key"
-            android:selectable="true"
+            android:selectable="false"
             android:title="@string/corporate_name" />
     </PreferenceCategory>
 

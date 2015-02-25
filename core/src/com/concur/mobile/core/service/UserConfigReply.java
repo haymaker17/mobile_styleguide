@@ -80,7 +80,6 @@ public class UserConfigReply extends ServiceReply {
         private static final String AIR__RULES_VIOLATION_TEXT = "AirRulesViolationText";
         private static final String HOTEL_RULES_VIOLATION_TEXT = "HotelRulesViolationText";
         private static final String CAR_RULES_VIOLATION_TEXT = "CarRulesViolationText";
-        private static final String DISTANCE_UNIT_PREFERENCE = "DistanceUnitPreference";
 
         // Fields to help parsing
         private StringBuilder chars;
@@ -331,8 +330,6 @@ public class UserConfigReply extends ServiceReply {
                 } else if (localName.equalsIgnoreCase(CAR_RULES_VIOLATION_TEXT)) {
                     customTravelText.carRulesViolationText = cleanChars;
                 }
-            } else if (localName.equalsIgnoreCase(DISTANCE_UNIT_PREFERENCE)) {
-                reply.config.distanceUnitPreference = cleanChars;
             } else if (localName.equalsIgnoreCase(RESPONSE)) {
                 // No-op.
             } else {

@@ -11,8 +11,8 @@ public interface LoginResponseKeys {
     public static final String REMOTE_WIPE_KEY = "login.remote.wipe";
 
     /**
-     * Contains a key to obtain a boolean value indicating whether the autologin is set.
+     * Contains a key to obtain the GLS server URL.
      */
-    public static final String DISABLE_AUTO_LOGIN = "login.disable.autlo.login";
+    public static final String SERVER_URL_KEY = "login.server.url";
 
 }

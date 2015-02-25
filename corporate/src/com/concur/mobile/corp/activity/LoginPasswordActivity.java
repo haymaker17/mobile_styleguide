@@ -137,8 +137,7 @@ public class LoginPasswordActivity extends BaseActivity implements LoginPassword
                 if (extras != null && extras.containsKey(EmailLookUpRequestTask.EXTRA_LOGIN_BUNDLE)) {
                     emailLookupBundle = extras.getBundle(EmailLookUpRequestTask.EXTRA_LOGIN_BUNDLE);
                 }
-
-                UserAndSessionInfoUtil.updateUserAndSessionInfo(ConcurCore.getContext(), emailLookupBundle, resultData);
+                UserAndSessionInfoUtil.updateUserAndSessionInfo(ConcurCore.getContext(), emailLookupBundle);
 
                 // GA analytics
                 trackLoginOverall("Success");
@@ -177,6 +176,17 @@ public class LoginPasswordActivity extends BaseActivity implements LoginPassword
              * @see com.concur.mobile.base.service.BaseAsyncRequestTask.AsyncReplyListener#onRequestFail(android.os.Bundle)
              */
             public void onRequestFail(Bundle resultData) {
+
+                // close dialog
+                if (progressDialog != null) {
+                    progressDialog.dismiss();
+                }
+
+                // MOB-22674 - Show error dialog on failure.
+                DialogFragmentFactory.getAlertOkayInstance(getString(R.string.dlg_system_unavailable_title),
+                        getString(R.string.dlg_system_unavailable_message)).show(
+                        LoginPasswordActivity.this.getSupportFragmentManager(), null);
+
             }
 
             /*
@@ -264,6 +274,17 @@ public class LoginPasswordActivity extends BaseActivity implements LoginPassword
             remoteWipe();
 
         } else {
+
+            // GLS Server issue.
+            if (resultData != null) {
+                String serverUrl = resultData.getString(LoginResponseKeys.SERVER_URL_KEY);
+                if (serverUrl != null && serverUrl.trim().length() > 0) {
+                    UserAndSessionInfoUtil.setServerAddress(serverUrl);
+                } else {
+                    UserAndSessionInfoUtil.setServerAddress(PlatformProperties.getServerAddress());
+                }
+            }
+
             // Authentication was successful. Now perform an full AutoLoginRequest in order to get
             // all the user roles, site settings, car configs, etc. and all that other good stuff.
             autoLoginRequestTask = new AutoLoginRequestTask(ConcurCore.getContext(), 0, autoLoginReceiver,
