@@ -630,6 +630,7 @@ public class AirResultsList extends TravelBaseActivity {
                 arriveIATACode }));
 
         StringBuilder sb = new StringBuilder();
+        // MOB-22200 - choose local time zone
         sb.append(FormatUtil.SHORT_MONTH_DAY_FULL_YEAR_DISPLAY_LOCAL.format(departDateTime.getTime()));
         if (searchMode != SearchMode.OneWay) {
             sb.append(" - ")

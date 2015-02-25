@@ -1,0 +1,22 @@
+{
+   "data": {
+       "actionStatus": {
+           "status": "FAILURE"
+       },
+       "receiptImageId": "0DA0CE03B1DA39F0BCB6DA8A95D4D2EE"
+   },
+   "errors": [
+       {
+           "code": "UNEXPECTED_ERROR",
+           "systemMessage": "UW SUCKS!!!"
+       },
+       {
+           "code": "UNEXPECTED_ERROR",
+           "systemMessage": "ProtectedValue tampered with: 0DA0CE03B1DA39F0BCB6DA8A95D4D2EE\r\nParameter name: protectedValue"
+       },
+       {
+           "code": "9999",
+           "systemMessage": "Unexpected Exception Occurred"
+       }
+   ]
+}

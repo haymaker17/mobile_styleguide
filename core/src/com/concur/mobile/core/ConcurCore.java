@@ -97,11 +97,13 @@ import com.concur.mobile.core.util.FormatUtil;
 import com.concur.mobile.core.util.ViewUtil;
 import com.concur.mobile.core.util.net.SessionManager;
 import com.concur.mobile.core.widget.MultiViewDialog;
+import com.concur.mobile.platform.authentication.LoginResult;
 import com.concur.mobile.platform.authentication.SessionInfo;
 import com.concur.mobile.platform.base.VisibleActivityStateTracker;
 import com.concur.mobile.platform.common.Cache;
 import com.concur.mobile.platform.common.formfield.ConnectForm;
 import com.concur.mobile.platform.common.formfield.ConnectFormFieldsCache;
+import com.concur.mobile.platform.config.provider.ClientData;
 import com.concur.mobile.platform.config.provider.ConfigUtil;
 import com.concur.mobile.platform.expense.provider.ExpenseUtil;
 import com.concur.mobile.platform.location.LastLocationTracker;
@@ -820,9 +822,17 @@ public abstract class ConcurCore extends Application {
      * @return Returns the hashed User ID used for GA tracking.
      */
     public static String getTrackingUserId() {
-
         SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(appContext);
-        return prefs.getString(Const.PREF_USER_ID, "");
+        String userid = prefs.getString(Const.PREF_USER_ID, "");
+        ClientData clientData = new ClientData(appContext);
+        if (!userid.isEmpty()) {
+            clientData.userId = userid;
+            clientData.key = LoginResult.TAG_ANALYTICS_ID;
+            if (clientData.load()) {
+                userid = clientData.text;
+            }
+        }
+        return userid;
     }
 
     /**

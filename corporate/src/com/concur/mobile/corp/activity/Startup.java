@@ -89,7 +89,7 @@ public class Startup extends BaseActivity {
         case CORPORATE:
             setContentView(R.layout.splash);
             // MOB-20174 - AppDynaics stuff.
-            Instrumentation.start("AD-AAB-AAA-FUF", getApplicationContext());
+            Instrumentation.start("AD-AAB-AAA-FUF", getApplicationContext(),true);
 
             new Handler().postDelayed(new Runnable() {
 
@@ -487,7 +487,7 @@ public class Startup extends BaseActivity {
                         startLoginScreen();
                     } else {
                         // Save the login information.
-                        UserAndSessionInfoUtil.updateUserAndSessionInfo(Startup.this, emailLookupBundle, resultData);
+                        UserAndSessionInfoUtil.updateUserAndSessionInfo(Startup.this, emailLookupBundle);
 
                         // Statistics Notification
                         Map<String, String> params = new HashMap<String, String>();

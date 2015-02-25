@@ -1972,8 +1972,8 @@
 
     <!-- Start What's new -->
     <string-array name="whats_new">
-        <item>\u2022 Concur for Android version 9.17 will require Android OS 4.1 or higher</item>
-        <item>\u2022 Fix to Travel Request Approval menu option</item>
+        <item>\u2022 Fix for Mobile SSO (Single Sign On) and localizations</item>
+        <item>\u2022 Fix for Receipt image upload for some clients in EMEA</item>
     </string-array>
 
     <string name="min_sdk_upgrade_message_title">Important</string>

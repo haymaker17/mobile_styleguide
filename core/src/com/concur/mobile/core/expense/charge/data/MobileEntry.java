@@ -18,6 +18,7 @@ import org.xml.sax.SAXException;
 import org.xml.sax.helpers.DefaultHandler;
 
 import android.content.Context;
+import android.location.Location;
 import android.text.TextUtils;
 import android.util.Log;
 
@@ -158,6 +159,11 @@ public class MobileEntry implements Cloneable {
      */
     public String smartExpenseId;
 
+    /**
+     * Contains the location of where this image was taken.
+     */
+    private Location locationTaken;
+
     public MobileEntry() {
 
         transactionAmount = 0.0;
@@ -180,7 +186,7 @@ public class MobileEntry implements Cloneable {
         vendorName = smartExpense.getVendorDescription(); // vendorDescription for mobile entry
         if (TextUtils.isEmpty(vendorName))
             vendorName = smartExpense.getMerchantName(); // Fall back to MerchantName
-        
+
         meKey = smartExpense.getMeKey();
         pcaKey = smartExpense.getPcaKey();
         pctKey = smartExpense.getPctKey();
@@ -193,7 +199,7 @@ public class MobileEntry implements Cloneable {
         receiptImageId = smartExpense.getReceiptImageId();
         comment = smartExpense.getComment();
         smartExpenseId = smartExpense.getSmartExpenseId();
-        
+
         hasReceiptImage = true;
         if (!TextUtils.isEmpty(smartExpense.getMobileReceiptImageId())) {
             receiptImageId = smartExpense.getMobileReceiptImageId();
@@ -206,7 +212,7 @@ public class MobileEntry implements Cloneable {
         } else {
             hasReceiptImage = false;
         }
-        
+
         // E-DAO: localKey, receiptImageDataLocal, receiptImageDataLocalFilePath are all offline items
 
         if (!TextUtils.isEmpty(meKey)) {
@@ -256,7 +262,7 @@ public class MobileEntry implements Cloneable {
         } else {
             // Last resort, just set it to UNKOWN
             this.entryType = ExpenseEntryType.UNKNOWN_EXPENSE;
-            Log.e(Const.LOG_TAG, CLS_TAG + ".Expense() - could not determine the expense type!!!");
+            Log.w(Const.LOG_TAG, CLS_TAG + ".Expense() - could not determine the expense type!!!");
         }
 
         // Need to default certain emepty/null fields for certain types.
@@ -841,6 +847,21 @@ public class MobileEntry implements Cloneable {
      */
     public void setStatus(MobileEntryStatus status) {
         this.status = status;
+    }
+
+    /**
+     * @return the locationTaken or <code>null</code> if unknown.
+     */
+    public Location getLocationTaken() {
+        return locationTaken;
+    }
+
+    /**
+     * @param locationTaken
+     *            the locationTaken to set
+     */
+    public void setLocationTaken(Location locationTaken) {
+        this.locationTaken = locationTaken;
     }
 
     /*

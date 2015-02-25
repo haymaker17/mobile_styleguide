@@ -17,11 +17,11 @@ import android.util.Log;
 
 import com.concur.mobile.platform.authentication.LoginResult;
 import com.concur.mobile.platform.authentication.Permissions;
+import com.concur.mobile.platform.authentication.Permissions.PermissionName;
 import com.concur.mobile.platform.authentication.SessionInfo;
 import com.concur.mobile.platform.authentication.SiteSetting;
 import com.concur.mobile.platform.authentication.SiteSettingInfo;
 import com.concur.mobile.platform.authentication.UserInfo;
-import com.concur.mobile.platform.authentication.Permissions.PermissionName;
 import com.concur.mobile.platform.config.provider.Config.PermissionsColumns;
 import com.concur.mobile.platform.config.system.ExpenseType;
 import com.concur.mobile.platform.config.system.OfficeLocation;
@@ -418,7 +418,7 @@ public class ConfigUtil {
 
         return infos;
     }
-    
+
     /**
      * Will retrieve the current permissions information stored in the Config provider for a specific user id.
      * 
@@ -426,8 +426,7 @@ public class ConfigUtil {
      *            contains the application context.
      * @param userId
      *            contains the user id.
-     * @return returns the latest permissions information. If no user exists,
-     *         then <code>null</code> will be returned.
+     * @return returns the latest permissions information. If no user exists, then <code>null</code> will be returned.
      * @throws IllegalArgumentException
      *             if <code>userId</code> is null or empty.
      */
@@ -441,10 +440,7 @@ public class ConfigUtil {
         final ContentResolver resolver = context.getContentResolver();
         Cursor cursor = null;
         try {
-            final String[] permissionsColumns = { 
-            		Config.PermissionsColumns.NAME, 
-                    Config.PermissionsColumns.VALUE
-            };
+            final String[] permissionsColumns = { Config.PermissionsColumns.NAME, Config.PermissionsColumns.VALUE };
             final StringBuilder strBldr = new StringBuilder();
             strBldr.append(Config.PermissionsColumns.USER_ID);
             strBldr.append(" = ?");
@@ -454,9 +450,9 @@ public class ConfigUtil {
             cursor = resolver.query(Config.PermissionsColumns.CONTENT_URI, permissionsColumns, where, whereArgs,
                     Config.PermissionsColumns.DEFAULT_SORT_ORDER);
             if (cursor != null) {
-            	while (cursor.moveToNext()){
-            		setPermission(infos, cursor);
-            	}
+                while (cursor.moveToNext()) {
+                    setPermission(infos, cursor);
+                }
             }
         } finally {
             if (cursor != null) {
@@ -731,7 +727,7 @@ public class ConfigUtil {
             }
         }
     }
-    
+
     /**
      * Will insert permissions info table with information from login response.
      * 
@@ -750,8 +746,10 @@ public class ConfigUtil {
             }
 
             // Set IsRequestUser.
-            ContentUtils.putValue(values, Config.PermissionsColumns.NAME, Permissions.PermissionName.HAS_TRAVEL_REQUEST.name());
-            ContentUtils.putValue(values, Config.PermissionsColumns.VALUE, loginResponse.permissions.getAreasPermissions().hasTravelRequest);
+            ContentUtils.putValue(values, Config.PermissionsColumns.NAME,
+                    Permissions.PermissionName.HAS_TRAVEL_REQUEST.name());
+            ContentUtils.putValue(values, Config.PermissionsColumns.VALUE,
+                    loginResponse.permissions.getAreasPermissions().hasTravelRequest);
             ContentUtils.putValue(values, Config.PermissionsColumns.USER_ID, loginResponse.userId);
 
             Uri permissionsUri = resolver.insert(Config.PermissionsColumns.CONTENT_URI, values);
@@ -763,7 +761,8 @@ public class ConfigUtil {
 
             // Set IsRequestUser.
             ContentUtils.putValue(values, Config.PermissionsColumns.NAME, Permissions.PermissionName.TR_USER.name());
-            ContentUtils.putValue(values, Config.PermissionsColumns.VALUE, loginResponse.permissions.getTravelRequestPermissions().isRequestUser);
+            ContentUtils.putValue(values, Config.PermissionsColumns.VALUE,
+                    loginResponse.permissions.getTravelRequestPermissions().isRequestUser);
 
             permissionsUri = resolver.insert(Config.PermissionsColumns.CONTENT_URI, values);
 
@@ -773,16 +772,18 @@ public class ConfigUtil {
             }
 
             // Set IsRequestApprover.
-            ContentUtils.putValue(values, Config.PermissionsColumns.NAME, Permissions.PermissionName.TR_APPROVER.name());
-            ContentUtils.putValue(values, Config.PermissionsColumns.VALUE, loginResponse.permissions.getTravelRequestPermissions().isRequestApprover);
-            
+            ContentUtils
+                    .putValue(values, Config.PermissionsColumns.NAME, Permissions.PermissionName.TR_APPROVER.name());
+            ContentUtils.putValue(values, Config.PermissionsColumns.VALUE,
+                    loginResponse.permissions.getTravelRequestPermissions().isRequestApprover);
+
             permissionsUri = resolver.insert(Config.PermissionsColumns.CONTENT_URI, values);
 
             if (DEBUG) {
                 Log.d(Const.LOG_TAG, CLS_TAG + ".insertPermissionsInfo: new permissions uri '"
                         + ((permissionsUri != null) ? permissionsUri.toString() : "null") + "'");
             }
-            
+
             values.clear();
 
             if (TRACK_INSERTION_TIME) {
@@ -1499,6 +1500,26 @@ public class ConfigUtil {
     }
 
     /**
+     * Will update client data table with information from login response.
+     * 
+     * @param context
+     *            contains an application context.
+     * @param loginResponse
+     *            contains the login response.
+     * @throws IllegalArgumentException
+     *             if <code>loginResponse</code> is null.
+     */
+    public static void updateAnalyticsIdInClientData(Context context, LoginResult loginResult) {
+        ClientData clientData = new ClientData(context);
+        clientData.userId = loginResult.userId;
+        clientData.key = LoginResult.TAG_ANALYTICS_ID;
+        clientData.text = loginResult.analyticsId;
+        clientData.blob = null;
+        clientData.update();
+
+    }
+
+    /**
      * Will insert into the user configuration table information from <code>userConfig</code>.
      * 
      * @param resolver
@@ -2164,25 +2185,28 @@ public class ConfigUtil {
 
         }
     }
-    
+
     /**
-     * Set the corresponding permission on Permissions object 
-     * => Uses Permissions.PermissionName enum to map ws response to field
+     * Set the corresponding permission on Permissions object => Uses Permissions.PermissionName enum to map ws response to field
+     * 
      * @param permissions
      * @param cursor
      */
-    private static void setPermission(Permissions permissions, Cursor cursor){
-    	switch (PermissionName.valueOf(CursorUtil.getStringValue(cursor, Config.PermissionsColumns.NAME))) {
-			case HAS_TRAVEL_REQUEST:
-				permissions.getAreasPermissions().hasTravelRequest = CursorUtil.getBooleanValue(cursor, PermissionsColumns.VALUE);
-				break;
-			case TR_USER:
-				permissions.getTravelRequestPermissions().isRequestUser = CursorUtil.getBooleanValue(cursor, PermissionsColumns.VALUE);
-				break;
-			case TR_APPROVER:
-				permissions.getTravelRequestPermissions().isRequestApprover = CursorUtil.getBooleanValue(cursor, PermissionsColumns.VALUE);
-				break;
-		}
+    private static void setPermission(Permissions permissions, Cursor cursor) {
+        switch (PermissionName.valueOf(CursorUtil.getStringValue(cursor, Config.PermissionsColumns.NAME))) {
+        case HAS_TRAVEL_REQUEST:
+            permissions.getAreasPermissions().hasTravelRequest = CursorUtil.getBooleanValue(cursor,
+                    PermissionsColumns.VALUE);
+            break;
+        case TR_USER:
+            permissions.getTravelRequestPermissions().isRequestUser = CursorUtil.getBooleanValue(cursor,
+                    PermissionsColumns.VALUE);
+            break;
+        case TR_APPROVER:
+            permissions.getTravelRequestPermissions().isRequestApprover = CursorUtil.getBooleanValue(cursor,
+                    PermissionsColumns.VALUE);
+            break;
+        }
     }
 
     /**

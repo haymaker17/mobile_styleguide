@@ -8,29 +8,59 @@ import android.app.Dialog;
 import android.content.Intent;
 import android.os.AsyncTask;
 import android.os.Bundle;
+import android.os.Handler;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
 import android.support.v4.view.ViewPager;
+import android.util.Log;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.ViewGroup;
 
 import com.concur.core.R;
+import com.concur.mobile.base.service.BaseAsyncRequestTask;
+import com.concur.mobile.base.service.BaseAsyncRequestTask.AsyncReplyListener;
+import com.concur.mobile.base.service.BaseAsyncResultReceiver;
 import com.concur.mobile.base.ui.UIUtils;
 import com.concur.mobile.core.ConcurCore;
 import com.concur.mobile.core.activity.BaseActivity;
 import com.concur.mobile.core.activity.Preferences;
+import com.concur.mobile.core.dialog.DialogFragmentFactory;
+import com.concur.mobile.core.expense.data.IExpenseEntryCache;
 import com.concur.mobile.core.expense.fragment.Expenses;
 import com.concur.mobile.core.expense.fragment.Expenses.ExpensesCallback;
 import com.concur.mobile.core.expense.receiptstore.activity.ReceiptStoreFragment;
 import com.concur.mobile.core.expense.receiptstore.activity.ReceiptStoreFragment.ReceiptStoreFragmentCallback;
+import com.concur.mobile.core.expense.receiptstore.data.ReceiptStoreCache;
 import com.concur.mobile.core.fragment.BaseFragment;
 import com.concur.mobile.core.util.Const;
 import com.concur.mobile.core.util.EventTracker;
+import com.concur.mobile.core.util.ExpenseDAOConverter;
 import com.concur.mobile.core.util.Flurry;
+import com.concur.mobile.core.util.ReceiptDAOConverter;
+import com.concur.mobile.platform.authentication.SessionInfo;
+import com.concur.mobile.platform.config.provider.ConfigUtil;
+import com.concur.mobile.platform.expense.receipt.list.ReceiptListRequestTask;
+import com.concur.mobile.platform.expense.smartexpense.SmartExpenseListRequestTask;
 
 public class ExpensesAndReceipts extends BaseActivity implements ExpensesCallback, ReceiptStoreFragmentCallback {
+
+    public final static String CLS_TAG = ExpensesAndReceipts.class.getSimpleName();
+
+    private static final String SMART_EXPENSE_LIST_RECEIVER = "smart.expense.list.request.receiver";
+
+    // Contains the key used to store/retrieve the ReceiptList receiver.
+    private static final String GET_RECEIPT_LIST_RECEIVER_KEY = "get.receipt.list.receiver";
+
+    private static final int REQUEST_GET_EXPENSE_LIST = 1;
+
+    private static final int REQUEST_GET_RECEIPT_LIST = 2;
+
+    /**
+     * The AsyncTask resulting from the the MWS call to ReceiptList.
+     */
+    protected AsyncTask<Void, Void, Integer> getReceiptListAsyncTask;
 
     EandRPagerAdapter pageAdapter;
 
@@ -43,6 +73,132 @@ public class ExpensesAndReceipts extends BaseActivity implements ExpensesCallbac
     // Because the EandRPagerAdapter gets called many times, we need to show test drive tips only once.
     protected boolean shouldShowTestDriveReceiptTips = true;
     protected boolean shouldShowTestDriveExpensesTips = true;
+
+    /**
+     * 
+     */
+    protected BaseAsyncResultReceiver smartExpenseListReceiver;
+
+    /**
+     * Listener used to handle the response for getting the list of SmartExpenses.
+     */
+    protected AsyncReplyListener smartExpenseListReplyListener = new AsyncReplyListener() {
+
+        @Override
+        public void onRequestSuccess(Bundle resultData) {
+
+            Log.d(Const.LOG_TAG, CLS_TAG + ".SmartExpenseListReplyListener - Successfully retrieved SmartExpenses!");
+
+            ConcurCore concurCore = (ConcurCore) ConcurCore.getContext();
+
+            SessionInfo sessInfo = ConfigUtil.getSessionInfo(concurCore);
+            if (sessInfo == null) {
+                // Really bad if session info is null here!
+                // TODO E-DAO: Show connection error dialog
+                return;
+            }
+
+            // Get the new list of SmartExpenseDAO from the content provider and convert
+            // to the old/exisiting Expense.
+            ExpenseDAOConverter.migrateSmartExpenseDAOToExpenseEntryCache(sessInfo.getUserId());
+
+            onGetSmartExpenseListSuccess();
+        }
+
+        @Override
+        public void onRequestFail(Bundle resultData) {
+
+            Log.e(Const.LOG_TAG, CLS_TAG + ".SmartExpenseListReplyListener - FAILED to retrieve SmartExpenses!");
+
+            onGetSmartExpenseListFailed();
+        }
+
+        @Override
+        public void onRequestCancel(Bundle resultData) {
+
+            // Update the ExpenseList UI.
+            updateExpenseListUI();
+        }
+
+        @Override
+        public void cleanup() {
+            smartExpenseListReceiver = null;
+        }
+    };
+
+    /**
+     * 
+     */
+    protected AsyncTask<Void, Void, Integer> smartExpenseAsyncTask;
+
+    /**
+     * Receiver for the ReceiptList call.
+     */
+    protected BaseAsyncResultReceiver getReceiptListReceiver;
+
+    /**
+     * Listener for the reply of the ReceiptList MWS call.
+     */
+    protected AsyncReplyListener getReceiptListReplyListener = new BaseAsyncRequestTask.AsyncReplyListener() {
+
+        @Override
+        public void onRequestSuccess(Bundle resultData) {
+
+            Log.d(Const.LOG_TAG, CLS_TAG + ".GetReceiptListReplyListener - call to get receipt list succeeded!");
+
+            ConcurCore app = (ConcurCore) ConcurCore.getContext();
+
+            SessionInfo sessInfo = ConfigUtil.getSessionInfo(app);
+            if (sessInfo == null) {
+                // Really bad if session info is null here!
+                // OCR: Show connection error dialog
+                Log.e(Const.LOG_TAG,
+                        CLS_TAG
+                                + ".GetReceiptListReplyListener - SessionInfo is null! Cannot migrate ReceiptDAO to ReceiptInfo.");
+            } else {
+
+                // Get the new list of ReceiptDAO from the content provider and convert
+                // to the old/existing ReceiptInfo. Calling this method will save the
+                // new DAO to the old ReceiptStoreCache.
+                ReceiptDAOConverter.migrateReceiptListDAOToReceiptStoreCache(sessInfo.getUserId());
+
+                // Clear re-fetch report list.
+                ReceiptStoreCache receiptStoreCache = app.getReceiptStoreCache();
+                receiptStoreCache.clearShouldRefetchReceiptList();
+
+                // Set the flag that the list of expenses
+                // should be refreshed.
+                IExpenseEntryCache expEntCache = getConcurCore().getExpenseEntryCache();
+                expEntCache.setShouldFetchExpenseList();
+            }
+
+            // Call any listeners that we succeeded.
+            onGetReceiptListSuccess();
+        }
+
+        @Override
+        public void onRequestFail(Bundle resultData) {
+
+            Log.d(Const.LOG_TAG, CLS_TAG + ".GetReceiptListReplyListener - call to get receipt list failed!");
+
+            // Call any listeners that we failed.
+            onGetReceiptListFailed();
+        }
+
+        @Override
+        public void onRequestCancel(Bundle resultData) {
+
+            // Update the ExpenseList in case this ReceiptList update
+            // was requested by updating the ExpenseList.
+            updateExpenseListUI();
+        }
+
+        @Override
+        public void cleanup() {
+            getReceiptListReceiver = null;
+        }
+
+    };
 
     /**
      * Indicates if the tips overlay is currently showing.
@@ -186,6 +342,22 @@ public class ExpensesAndReceipts extends BaseActivity implements ExpensesCallbac
             // perhaps put the app in the background.
             upTime += (System.nanoTime() - startTime) / 1000000000L; // Convert to seconds.
         }
+
+        // Save the ExpenseList receiver.
+        if (smartExpenseListReceiver != null) {
+            smartExpenseListReceiver.setListener(null);
+            if (retainer != null) {
+                retainer.put(SMART_EXPENSE_LIST_RECEIVER, smartExpenseListReceiver);
+            }
+        }
+
+        // Save the ReceiptList receiver.
+        if (getReceiptListReceiver != null) {
+            getReceiptListReceiver.setListener(null);
+            if (retainer != null) {
+                retainer.put(GET_RECEIPT_LIST_RECEIVER_KEY, getReceiptListReceiver);
+            }
+        }
     }
 
     @Override
@@ -194,6 +366,27 @@ public class ExpensesAndReceipts extends BaseActivity implements ExpensesCallbac
 
         if (isTipsOverlayVisible) {
             startTime = System.nanoTime();
+        }
+
+        if (retainer != null) {
+
+            // Restore ExpenseList receiver.
+            if (retainer.contains(SMART_EXPENSE_LIST_RECEIVER)) {
+                smartExpenseListReceiver = (BaseAsyncResultReceiver) retainer.get(SMART_EXPENSE_LIST_RECEIVER);
+                if (smartExpenseListReceiver != null) {
+                    smartExpenseListReceiver.setListener(smartExpenseListReplyListener);
+                }
+            }
+
+            // Restore the ReceiptList receiver
+            if (retainer.contains(GET_RECEIPT_LIST_RECEIVER_KEY)) {
+                getReceiptListReceiver = (BaseAsyncResultReceiver) retainer.get(GET_RECEIPT_LIST_RECEIVER_KEY);
+                if (getReceiptListReceiver != null) {
+                    getReceiptListReceiver.setListener(getReceiptListReplyListener);
+
+                    showReceiptsListLoadingView();
+                }
+            }
         }
     }
 
@@ -208,6 +401,221 @@ public class ExpensesAndReceipts extends BaseActivity implements ExpensesCallbac
         }
     }
 
+    /*
+     * (non-Javadoc)
+     * 
+     * @see com.concur.mobile.core.expense.fragment.Expenses.ExpensesCallback#doGetSmartExpenseList()
+     */
+    @Override
+    public void doGetSmartExpenseList() {
+
+        // Show the loading view.
+        int count = pageAdapter.getCount();
+        for (int i = 0; i < count; i++) {
+
+            Fragment frag = pageAdapter.getPage(i);
+            if (frag != null && frag instanceof Expenses) {
+                ((Expenses) frag).showLoadingView();
+                break;
+            }
+        }
+
+        if (smartExpenseListReceiver == null) {
+            smartExpenseListReceiver = new BaseAsyncResultReceiver(new Handler());
+            smartExpenseListReceiver.setListener(smartExpenseListReplyListener);
+        }
+
+        if (smartExpenseAsyncTask != null && smartExpenseAsyncTask.getStatus() != AsyncTask.Status.FINISHED) {
+            smartExpenseListReceiver.setListener(smartExpenseListReplyListener);
+        } else {
+
+            SmartExpenseListRequestTask smartExpReqTask = new SmartExpenseListRequestTask(getConcurCore()
+                    .getApplicationContext(), 0, smartExpenseListReceiver, true);
+            smartExpenseAsyncTask = smartExpReqTask.execute();
+        }
+
+    }
+
+    /*
+     * (non-Javadoc)
+     * 
+     * @see com.concur.mobile.core.expense.fragment.Expenses.ExpensesCallback#onGetSmartExpenseListSuccess()
+     */
+    @Override
+    public void onGetSmartExpenseListSuccess() {
+        // Load the UI from the expense cache.
+        updateExpenseListUI();
+    }
+
+    /*
+     * (non-Javadoc)
+     * 
+     * @see com.concur.mobile.core.expense.fragment.Expenses.ExpensesCallback#onGetSmartExpenseListFailed()
+     */
+    @Override
+    public void onGetSmartExpenseListFailed() {
+        // Load the UI from the expense cache.
+        updateExpenseListUI();
+
+        DialogFragmentFactory.getAlertOkayInstance(R.string.dlg_expenses_retrieve_failed_title).show(
+                getSupportFragmentManager(), null);
+    }
+
+    private void updateExpenseListUI() {
+
+        // Update Expense List if necessary.
+        int count = pageAdapter.getCount();
+        for (int i = 0; i < count; i++) {
+
+            Fragment frag = pageAdapter.getPage(i);
+            if (frag != null && frag instanceof Expenses) {
+                ((Expenses) frag).updateExpenseListUI();
+                break;
+            }
+        }
+    }
+
+    /*
+     * (non-Javadoc)
+     * 
+     * @see
+     * com.concur.mobile.core.expense.receiptstore.activity.ReceiptStoreFragment.ReceiptStoreFragmentCallback#onStartOcrSuccess()
+     */
+    @Override
+    public void onStartOcrSuccess() {
+        // Update the Expense List if an OCR was started
+        // so that the list will show the new Processing item.
+        if (Preferences.isOCRUser()) {
+
+            int count = pageAdapter.getCount();
+            for (int i = 0; i < count; i++) {
+                Fragment frag = pageAdapter.getPage(i);
+                if (frag != null && frag instanceof Expenses) {
+                    if (isServiceAvailable()) {
+                        ((Expenses) frag).checkForRefreshData(false);
+                        return;
+                    }
+                }
+            }
+        }
+
+    }
+
+    /*
+     * (non-Javadoc)
+     * 
+     * @see
+     * com.concur.mobile.core.expense.receiptstore.activity.ReceiptStoreFragment.ReceiptStoreFragmentCallback#onStartOcrFailed()
+     */
+    @Override
+    public void onStartOcrFailed() {
+        if (Preferences.isOCRUser()) {
+            // OCR: What to do in this case?
+        }
+    }
+
+    /**
+     * Invokes the MWS to retrieve the list of Receipts with OCR status.
+     */
+    @Override
+    public void doGetReceiptList() {
+
+        showReceiptsListLoadingView();
+
+        if (getReceiptListReceiver == null) {
+            getReceiptListReceiver = new BaseAsyncResultReceiver(new Handler());
+            getReceiptListReceiver.setListener(getReceiptListReplyListener);
+        }
+
+        if (getReceiptListAsyncTask != null && getReceiptListAsyncTask.getStatus() != AsyncTask.Status.FINISHED) {
+            getReceiptListReceiver.setListener(getReceiptListReplyListener);
+        } else {
+            ReceiptListRequestTask receiptListTask = new ReceiptListRequestTask(ConcurCore.getContext(),
+                    REQUEST_GET_RECEIPT_LIST, getReceiptListReceiver);
+            getReceiptListAsyncTask = receiptListTask.execute();
+        }
+    }
+
+    private void showReceiptsListLoadingView() {
+        // Show the Laoding view on the ReceiptStore list.
+        int count = pageAdapter.getCount();
+        for (int i = 0; i < count; i++) {
+            Fragment frag = pageAdapter.getPage(i);
+            if (frag != null && frag instanceof ReceiptStoreFragment) {
+                ReceiptStoreFragment rsFrag = (ReceiptStoreFragment) frag;
+                rsFrag.showLoadingView();
+
+                break;
+            }
+        }
+    }
+
+    /*
+     * (non-Javadoc)
+     * 
+     * @see
+     * com.concur.mobile.core.expense.receiptstore.activity.ReceiptStoreFragment.ReceiptStoreFragmentCallback#onGetReceiptListSuccess
+     * ()
+     */
+    @Override
+    public void onGetReceiptListSuccess() {
+
+        // Update ReceiptStore List and Expense List if necessary.
+        int count = pageAdapter.getCount();
+        for (int i = 0; i < count; i++) {
+
+            Fragment frag = pageAdapter.getPage(i);
+            if (frag != null) {
+
+                if (frag instanceof ReceiptStoreFragment) {
+                    ReceiptStoreFragment rsFrag = (ReceiptStoreFragment) frag;
+                    rsFrag.endUserRefresh = false;
+                    rsFrag.initView();
+                } else if (frag instanceof Expenses && Preferences.isOCRUser()) {
+                    if (isServiceAvailable()) {
+                        ((Expenses) frag).checkForRefreshData(false);
+                    } else {
+                        // Need to update the ExpenseList UI so that
+                        // the loading view won't continuously show.
+                        updateExpenseListUI();
+                    }
+                }
+            }
+        }
+    }
+
+    /*
+     * (non-Javadoc)
+     * 
+     * @see
+     * com.concur.mobile.core.expense.receiptstore.activity.ReceiptStoreFragment.ReceiptStoreFragmentCallback#onGetReceiptListFailed
+     * ()
+     */
+    @Override
+    public void onGetReceiptListFailed() {
+
+        // Update ReceiptStoreList if GetReceiptList failed.
+        int count = pageAdapter.getCount();
+        for (int i = 0; i < count; i++) {
+            Fragment frag = pageAdapter.getPage(i);
+            if (frag != null && frag instanceof ReceiptStoreFragment) {
+                ReceiptStoreFragment rsFrag = (ReceiptStoreFragment) frag;
+                rsFrag.showRetrieveReceiptUrlsFailedDialog(rsFrag.actionStatusErrorMessage);
+                rsFrag.endUserRefresh = false;
+                rsFrag.initView();
+
+                break;
+            }
+        }
+
+        // Update the ExpenseList in case this ReceiptList update
+        // was requested by updating the ExpenseList.
+        updateExpenseListUI();
+    }
+
+    /**
+     * 
+     */
     public class EandRPagerAdapter extends FragmentPagerAdapter {
 
         private final ArrayList<Class<? extends BaseFragment>> pageClasses = new ArrayList<Class<? extends BaseFragment>>();
@@ -355,99 +763,6 @@ public class ExpensesAndReceipts extends BaseActivity implements ExpensesCallbac
             startTime = System.nanoTime();
             isTipsOverlayVisible = true;
         }
-    }
-
-    /*
-     * (non-Javadoc)
-     * 
-     * @see
-     * com.concur.mobile.core.expense.receiptstore.activity.ReceiptStoreFragment.ReceiptStoreFragmentCallback#onStartOcrSuccess()
-     */
-    @Override
-    public void onStartOcrSuccess() {
-        // Update the Expense List if an OCR was started
-        // so that the list will show the new Processing item.
-        if (Preferences.isOCRUser()) {
-
-            int count = pageAdapter.getCount();
-            for (int i = 0; i < count; i++) {
-                Fragment frag = pageAdapter.getPage(i);
-                if (frag != null && frag instanceof Expenses) {
-                    if (isServiceAvailable()) {
-                        ((Expenses) frag).checkForRefreshData(false);
-                        return;
-                    }
-                }
-            }
-        }
-
-    }
-
-    /*
-     * (non-Javadoc)
-     * 
-     * @see
-     * com.concur.mobile.core.expense.receiptstore.activity.ReceiptStoreFragment.ReceiptStoreFragmentCallback#onStartOcrFailed()
-     */
-    @Override
-    public void onStartOcrFailed() {
-        if (Preferences.isOCRUser()) {
-            // OCR: What to do in this case?
-        }
-    }
-
-    /*
-     * (non-Javadoc)
-     * 
-     * @see com.concur.mobile.core.expense.fragment.Expenses.ExpensesCallback#doGetReceiptList()
-     */
-    @Override
-    public void doGetReceiptList() {
-
-        int count = pageAdapter.getCount();
-        for (int i = 0; i < count; i++) {
-            Fragment frag = pageAdapter.getPage(i);
-            if (frag != null && frag instanceof ReceiptStoreFragment) {
-                if (isServiceAvailable()) {
-                    ((ReceiptStoreFragment) frag).sendGetReceiptList(frag.getView());
-                    return;
-                }
-            }
-        }
-
-    }
-
-    /*
-     * (non-Javadoc)
-     * 
-     * @see
-     * com.concur.mobile.core.expense.receiptstore.activity.ReceiptStoreFragment.ReceiptStoreFragmentCallback#onGetReceiptListSuccess
-     * ()
-     */
-    @Override
-    public void onGetReceiptListSuccess() {
-        if (Preferences.isOCRUser()) {
-            if (pageAdapter.getCount() > 0) {
-                Fragment frag = pageAdapter.getPage(0);
-                if (frag != null && frag instanceof Expenses) {
-                    if (isServiceAvailable()) {
-                        ((Expenses) frag).checkForRefreshData(false);
-                    }
-                }
-            }
-        }
-    }
-
-    /*
-     * (non-Javadoc)
-     * 
-     * @see
-     * com.concur.mobile.core.expense.receiptstore.activity.ReceiptStoreFragment.ReceiptStoreFragmentCallback#onGetReceiptListFailed
-     * ()
-     */
-    @Override
-    public void onGetReceiptListFailed() {
-        // OCR: What to do in case GetReceiptList failed?
     }
 
 }

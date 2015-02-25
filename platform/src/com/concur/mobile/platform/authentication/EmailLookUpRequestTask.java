@@ -28,7 +28,6 @@ import com.concur.mobile.platform.util.XmlUtil;
  * An extension of <code>PlatformAsyncRequestTask</code> to perform an email-based look-up of authentication information.
  * 
  * @author andrewk
- * 
  */
 public class EmailLookUpRequestTask extends PlatformAsyncRequestTask {
 
@@ -37,13 +36,12 @@ public class EmailLookUpRequestTask extends PlatformAsyncRequestTask {
     /**
      * Extra bundle key used to pass the a login bundle (result date from EmailLookupRequest).
      */
-    public static final String EXTRA_LOGIN_BUNDLE = "extra_login_bundle";
-
+    public static final String EXTRA_LOGIN_BUNDLE = "extra_login_bundle";    
+    
     /**
      * Contains the bundle extra data key to look up the login id.
      */
     public static String EXTRA_LOGIN_ID_KEY = "email.lookup.login.id";
-
     /**
      * Contains the bundle extra data key to look up the server url.
      */
@@ -56,6 +54,10 @@ public class EmailLookUpRequestTask extends PlatformAsyncRequestTask {
      * Contains the bundle extra data key to look up the SSO url.
      */
     public static String EXTRA_SSO_URL_KEY = "email.lookup.sso.url";
+    /**
+     * Contains the bundle extra data key to look up the email.
+     */
+    public static String EXTRA_EMAIL_KEY = "email.lookup.email";
 
     // Contains the service end-point for the <code>EmailLookup</code> MWS call.
     private final String SERVICE_END_POINT = "/mobile/MobileSession/EmailLookupV2";

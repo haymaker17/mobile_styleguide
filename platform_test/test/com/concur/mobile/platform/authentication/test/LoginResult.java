@@ -16,6 +16,7 @@ import org.simpleframework.xml.Root;
 @Root(name = "LoginResult")
 public class LoginResult {
 
+    public static final String TAG_ANALYTICS_ID = "AnalyticsId";
     /**
      * Contains the access token.
      */
@@ -106,5 +107,11 @@ public class LoginResult {
      */
     @Element(name = "UserId")
     public String userId;
+
+    /**
+     * Contains the user id.
+     */
+    @Element(name = "AnalyticsId")
+    public String analyticsId;
 
 }

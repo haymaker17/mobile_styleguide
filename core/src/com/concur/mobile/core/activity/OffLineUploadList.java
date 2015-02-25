@@ -30,6 +30,7 @@ import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.IntentFilter;
+import android.location.Location;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.os.Environment;
@@ -65,6 +66,7 @@ import com.concur.mobile.core.expense.receiptstore.data.ReceiptShareItem;
 import com.concur.mobile.core.expense.service.SaveReceiptRequest;
 import com.concur.mobile.core.service.ConcurService;
 import com.concur.mobile.core.util.Const;
+import com.concur.mobile.core.util.EventTracker;
 import com.concur.mobile.core.util.Flurry;
 import com.concur.mobile.core.util.ViewUtil;
 import com.concur.mobile.core.view.ListItem;
@@ -1318,6 +1320,23 @@ public class OffLineUploadList extends BaseActivity {
                     String receiptImageId = intent.getStringExtra(Const.EXTRA_EXPENSE_RECEIPT_IMAGE_ID_KEY);
                     if (receiptImageId != null) {
                         receiptImageId = receiptImageId.trim();
+
+                        // MOB-22375 - Google Analytics for Receipt Upload.
+                        Location loc = null;
+                        if (currentEntry != null) {
+                            loc = currentEntry.getLocationTaken();
+                        } else if (currentReceipt != null) {
+                            loc = currentReceipt.getLocationTake();
+                        }
+
+                        String lat = "0";
+                        String lon = "0";
+                        if (loc != null) {
+                            lat = Double.toString(loc.getLatitude());
+                            lon = Double.toString(loc.getLongitude());
+                        }
+                        String eventLabel = receiptImageId + "|" + lat + "|" + lon;
+                        EventTracker.INSTANCE.track("Receipts", "Receipt Capture Location", eventLabel);
                     }
                     if (currentEntry != null) {
                         // Set the Receipt Image ID on the local reference and

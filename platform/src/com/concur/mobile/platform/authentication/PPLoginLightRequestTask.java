@@ -5,6 +5,7 @@ package com.concur.mobile.platform.authentication;
 
 import java.io.IOException;
 import java.io.InputStream;
+import java.net.HttpURLConnection;
 import java.util.Locale;
 
 import org.xmlpull.v1.XmlPullParserException;
@@ -37,7 +38,7 @@ public class PPLoginLightRequestTask extends PlatformAsyncRequestTask {
 
     private static final String CLS_TAG = "PPLoginLightRequestTask";
 
-    // Contains the service end-point for the <code>PPLoginV3Light</code> MWS call.
+    // Contains the service end-point for the <code>PPLogin2Light</code> MWS call.
     private final String SERVICE_END_POINT = "/mobile/MobileSession/PPLoginV3Light";
 
     /**
@@ -103,6 +104,14 @@ public class PPLoginLightRequestTask extends PlatformAsyncRequestTask {
     @Override
     protected boolean requiresSessionId() {
         return false;
+    }
+
+    @Override
+    protected void configureConnection(HttpURLConnection connection) {
+        super.configureConnection(connection);
+        // Set timeout values
+        connection.setConnectTimeout(15000);
+        connection.setReadTimeout(45000);
     }
 
     @Override
@@ -175,6 +184,8 @@ public class PPLoginLightRequestTask extends PlatformAsyncRequestTask {
                     if (responseStatus.isSuccess()) {
                         // Update the config content provider.
                         ConfigUtil.updateSessionInfo(getContext().getContentResolver(), loginResult, false);
+                        // update client data
+                        ConfigUtil.updateAnalyticsIdInClientData(getContext(), loginResult);
                         // Ensure the session ID is cleared out of from platform properties.
                         PlatformProperties.setSessionId(null);
                         // Update Platform properties.
@@ -183,6 +194,13 @@ public class PPLoginLightRequestTask extends PlatformAsyncRequestTask {
                         } else {
                             PlatformProperties.setAccessToken(null);
                         }
+
+                        // Set up GLS server URL.
+                        if (loginResult.serverUrl != null) {
+                            resultData.putString(LoginResponseKeys.SERVER_URL_KEY, loginResult.serverUrl);
+                            PlatformProperties.setServerAddress(loginResult.serverUrl);
+                        }
+
                         result = RESULT_OK;
                     } else {
                         result = RESULT_ERROR;

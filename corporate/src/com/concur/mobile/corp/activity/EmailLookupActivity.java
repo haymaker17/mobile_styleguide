@@ -205,8 +205,6 @@ public class EmailLookupActivity extends BaseActivity implements IProgressBarLis
      * .os.Bundle)
      */
     public void onEmailLookupRequestSuccess(Bundle resultData) {
-        // Get the login id.
-        String loginId = resultData.getString(EmailLookUpRequestTask.EXTRA_LOGIN_ID_KEY);
         // Get the server url.
         String serverUrl = resultData.getString(EmailLookUpRequestTask.EXTRA_SERVER_URL_KEY);
         // Get the sign-in method. {Values: Password/MobilePassword/SSO}

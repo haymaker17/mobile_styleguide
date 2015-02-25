@@ -3,6 +3,7 @@
  */
 package com.concur.mobile.core.expense.receiptstore.data;
 
+import android.location.Location;
 import android.net.Uri;
 
 /**
@@ -102,5 +103,10 @@ public class ReceiptShareItem {
      * Contains the <code>Status</code> for the receipt share item.
      */
     public Status status = Status.PENDING;
+
+    /**
+     * Contains the location of where this image was taken.
+     */
+    public Location locationTaken;
 
 }
