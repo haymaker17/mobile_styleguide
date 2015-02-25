@@ -5,6 +5,7 @@ import android.text.Editable;
 import android.text.InputType;
 import android.text.TextWatcher;
 import android.widget.EditText;
+import com.concur.mobile.platform.ui.common.R;
 import com.concur.mobile.platform.ui.common.util.FormatUtil;
 import com.concur.mobile.platform.util.Parse;
 
@@ -72,8 +73,11 @@ public class MoneyFormField extends EditText implements TextWatcher {
                 editable.toString();
         amountValue = Parse.safeParseDouble(s);
         if (amountValue == null && s.length() > 0) {
-            setError("error");
+            setError(getResources().getString(R.string.general_field_value_invalid));
         } else {
+            if (amountValue == null) {
+                amountValue = 0d;
+            }
             if (locale != null && currency != null) {
                 s = FormatUtil.formatAmount(amountValue, locale, currency.getCurrencyCode(), true, true);
             }

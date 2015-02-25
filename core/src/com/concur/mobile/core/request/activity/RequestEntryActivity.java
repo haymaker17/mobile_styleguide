@@ -261,6 +261,18 @@ public class RequestEntryActivity extends AbstractConnectFormFieldActivity imple
             this.setDisplayFields(entry.getListSegment().iterator().next(), form, currentFieldsLayout);
             applySaveButtonPolicy(findViewById(R.id.saveButton));
         } else {
+            // --- defines the current tab & apply the temporary in use leg list
+            if (createMode || entry.getTripType() == RequestEntryDTO.TripType.ONE_WAY) {
+                viewedFragment = originFragment = TAB_ONE_WAY;
+                segmentOneWay = entry.getListSegment();
+            } else if (entry.getTripType() == RequestEntryDTO.TripType.ROUND_TRIP) {
+                viewedFragment = originFragment = TAB_ROUND_TRIP;
+                segmentsRoundTrip = entry.getListSegment();
+            } else if (entry.getTripType() == RequestEntryDTO.TripType.MULTI_SEGMENT) {
+                viewedFragment = originFragment = TAB_MULTI_LEG;
+                segmentsMultiLeg = entry.getListSegment();
+                //TODO multi-leg
+            }
             final Map<Integer, String> tabTitles = new HashMap<Integer, String>();
             tabTitles.put(TAB_ONE_WAY, getResources().getString(R.string.air_search_btn_oneway));
             tabTitles.put(TAB_ROUND_TRIP, getResources().getString(R.string.air_search_btn_roundtrip));
@@ -275,20 +287,8 @@ public class RequestEntryActivity extends AbstractConnectFormFieldActivity imple
                     viewedFragment = position;
                 }
             });
-            // --- set the current tab & apply the temporary in use leg list
-            if (createMode || entry.getTripType() == RequestEntryDTO.TripType.ONE_WAY) {
-                viewedFragment = originFragment = TAB_ONE_WAY;
-                segmentOneWay = entry.getListSegment();
-                viewPager.setCurrentItem(TAB_ONE_WAY);
-            } else if (entry.getTripType() == RequestEntryDTO.TripType.ROUND_TRIP) {
-                viewedFragment = originFragment = TAB_ROUND_TRIP;
-                segmentsRoundTrip = entry.getListSegment();
-                viewPager.setCurrentItem(TAB_ROUND_TRIP);
-            } else if (entry.getTripType() == RequestEntryDTO.TripType.MULTI_SEGMENT) {
-                viewedFragment = originFragment = TAB_MULTI_LEG;
-                segmentsMultiLeg = entry.getListSegment();
-                //TODO multi-leg
-            }
+            // --- set the current tab
+            viewPager.setCurrentItem(viewedFragment);
         }
     }
 
@@ -405,11 +405,14 @@ public class RequestEntryActivity extends AbstractConnectFormFieldActivity imple
     }
 
     private boolean hasChange(List<RequestSegmentDTO> segmentList) {
+
+        if (viewedFragment != originFragment) {
+            return true;
+        }
         boolean hasChange = false;
 
         final List<ConnectFormField> formFields = form.getFormFields();
         Collections.sort(formFields);
-
         for (RequestSegmentDTO segment : segmentList) {
             for (ConnectFormField ff : formFields) {
                 final TextView compView = getComponent(segment, ff.getName());
@@ -551,46 +554,44 @@ public class RequestEntryActivity extends AbstractConnectFormFieldActivity imple
     @Override
     protected void setModelValueByFieldName(FormDTO model, String fieldName, String value) {
         final RequestSegmentDTO segment = (RequestSegmentDTO) model;
-        if (fieldName.equals(FIELD_FROM_ID)) {
-            final TextView view = getComponent(model, fieldName);
-            if (view != null && view.getHint() != null) {
-                segment.setFromLocationId(view.getHint().toString());
-                segment.setFromLocationName(value);
-            }
-        } else if (fieldName.equals(FIELD_TO_ID)) {
-            final TextView view = getComponent(model, fieldName);
-            if (view != null && view.getHint() != null) {
-                segment.setToLocationId(view.getHint().toString());
-                segment.setToLocationName(value);
-            }
-        } else if (fieldName.equals(FIELD_AMOUNT)) {
-            final TextView field = RequestEntryActivity.this.getComponent(model, FIELD_AMOUNT);
-            // --- field can be null if hidden
-            if (field != null && field instanceof MoneyFormField) {
-                entry.setForeignAmount(((MoneyFormField) field).getAmountValue());
-            }
-        } else if (fieldName.equals(FIELD_START_DATE)) {
-            segment.setDepartureDate(parseDate(value));
-        } else if (fieldName.equals(FIELD_START_TIME)) {
-            if (segment.getDepartureDate() != null) {
-                applyTimeString(segment.getDepartureDate(), value);
-            }
-        } else if (fieldName.equals(FIELD_END_DATE)) {
-            segment.setArrivalDate(parseDate(value));
-        } else if (fieldName.equals(FIELD_END_TIME)) {
-            if (segment.getArrivalDate() != null) {
-                applyTimeString(segment.getArrivalDate(), value);
-            }
-        } else if (fieldName.equals(FIELD_CURRENCY)) {
-            // --- component is null if value is never changed
-            if (getComponent(model, fieldName) != null) {
+        final TextView view = getComponent(model, fieldName);
+        if (view != null) {
+            if (fieldName.equals(FIELD_FROM_ID)) {
+                if (view.getHint() != null) {
+                    segment.setFromLocationId(view.getHint().toString());
+                    segment.setFromLocationName(value);
+                }
+            } else if (fieldName.equals(FIELD_TO_ID)) {
+                if (view.getHint() != null) {
+                    segment.setToLocationId(view.getHint().toString());
+                    segment.setToLocationName(value);
+                }
+            } else if (fieldName.equals(FIELD_AMOUNT)) {
+                // --- field can be null if hidden
+                if (view instanceof MoneyFormField) {
+                    entry.setForeignAmount(((MoneyFormField) view).getAmountValue());
+                }
+            } else if (fieldName.equals(FIELD_START_DATE)) {
+                segment.setDepartureDate(parseDate(value));
+            } else if (fieldName.equals(FIELD_START_TIME)) {
+                if (segment.getDepartureDate() != null) {
+                    applyTimeString(segment.getDepartureDate(), value);
+                }
+            } else if (fieldName.equals(FIELD_END_DATE)) {
+                segment.setArrivalDate(parseDate(value));
+            } else if (fieldName.equals(FIELD_END_TIME)) {
+                if (segment.getArrivalDate() != null) {
+                    applyTimeString(segment.getArrivalDate(), value);
+                }
+            } else if (fieldName.equals(FIELD_CURRENCY)) {
+                // --- component is null if value is never changed
                 final CharSequence currencyCodeSequence = getComponent(model, fieldName).getHint();
                 final String code = currencyCodeSequence != null ? currencyCodeSequence.toString() : null;
                 // --- trick to get the code back
                 entry.setForeignCurrencyCode(code);
+            } else if (fieldName.equals(FIELD_COMMENT)) {
+                segment.setLastComment(value);
             }
-        } else if (fieldName.equals(FIELD_COMMENT)) {
-            segment.setLastComment(value);
         }
     }
 
@@ -695,6 +696,14 @@ public class RequestEntryActivity extends AbstractConnectFormFieldActivity imple
             // --- Header block
             if (viewedType == SegmentType.RequestSegmentType.CAR) {
                 addBlockTitle(getResources().getString(R.string.tr_segment_block_pickup), model);
+                // --- focus
+                component.requestFocus();
+            }
+            // --- focus
+            else if ((viewedType == SegmentType.RequestSegmentType.AIR
+                    || viewedType == SegmentType.RequestSegmentType.RAIL)
+                    && fragmentOnInitialization == originFragment) {
+                component.requestFocus();
             }
         } else if (ff.getName().equals(FIELD_TO_ID)) {
             // --- Header block
@@ -703,14 +712,18 @@ public class RequestEntryActivity extends AbstractConnectFormFieldActivity imple
             } else if (viewedType == SegmentType.RequestSegmentType.HOTEL) {
                 addBlockTitle(getResources().getString(R.string.tr_segment_block_checkin), model);
             }
+            // --- focus
+            if (viewedType == SegmentType.RequestSegmentType.HOTEL) {
+                component.requestFocus();
+            }
         } else if (ff.getName().equals(FIELD_START_DATE)) {
             // --- Header block : round trip
             if ((viewedType == SegmentType.RequestSegmentType.AIR || viewedType == SegmentType.RequestSegmentType.RAIL)
                     && fragmentOnInitialization == TAB_ROUND_TRIP) {
                 final int segmentLayoutIdx = model.getDisplayOrder() != null ? model.getDisplayOrder() : 0;
-                addBlockTitle(getResources().getString(segmentLayoutIdx == 0 ?
-                                R.string.tr_segment_block_outbound :
-                                R.string.tr_segment_block_return), model);
+                addBlockTitle(getResources().getString(
+                        segmentLayoutIdx == 0 ? R.string.tr_segment_block_outbound : R.string.tr_segment_block_return),
+                        model);
             }
         } else if (ff.getName().equals(FIELD_END_DATE)) {
             // --- Header block : round trip

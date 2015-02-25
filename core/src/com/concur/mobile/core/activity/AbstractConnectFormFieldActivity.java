@@ -267,6 +267,8 @@ public abstract class AbstractConnectFormFieldActivity extends BaseActivity {
                         } else {
                             component = new EditText(this);
                         }
+                        component.setFocusable(false);
+                        component.setFocusableInTouchMode(false);
 
                         component.setText(getModelDisplayedValueByFieldName(model, ff.getName()));
                         component.setMaxLines(1);
@@ -283,6 +285,8 @@ public abstract class AbstractConnectFormFieldActivity extends BaseActivity {
                         } else {
                             component = new EditText(this);
                         }
+                        component.setFocusable(false);
+                        component.setFocusableInTouchMode(false);
 
                         component.setText(getModelDisplayedValueByFieldName(model, ff.getName()));
                         component.setLines(5);
@@ -294,6 +298,8 @@ public abstract class AbstractConnectFormFieldActivity extends BaseActivity {
                     case DATEFIELD:
 
                         component = new TextView(this);
+                        component.setFocusable(false);
+                        component.setFocusableInTouchMode(false);
 
                         component.setText(getModelDisplayedValueByFieldName(model, ff.getName()));
                         component.setInputType(InputType.TYPE_NULL);
@@ -329,6 +335,8 @@ public abstract class AbstractConnectFormFieldActivity extends BaseActivity {
 
                     case TIME:
                         component = new TextView(this);
+                        component.setFocusable(false);
+                        component.setFocusableInTouchMode(false);
 
                         component.setText(getModelDisplayedValueByFieldName(model, ff.getName()));
                         component.setInputType(InputType.TYPE_NULL);
@@ -373,6 +381,8 @@ public abstract class AbstractConnectFormFieldActivity extends BaseActivity {
                             component = new MoneyFormField(this, getLocale(), null);
                             component.setText(getModelDisplayedValueByFieldName(model, ff.getName()));
                         }
+                        component.setFocusable(false);
+                        component.setFocusableInTouchMode(false);
 
                         component.setMaxLines(1);
                         component.setSingleLine(true);
@@ -383,6 +393,8 @@ public abstract class AbstractConnectFormFieldActivity extends BaseActivity {
                     case PICKLIST:
 
                         component = new TextView(this);
+                        component.setFocusable(false);
+                        component.setFocusableInTouchMode(false);
 
                         component.setText(getModelDisplayedValueByFieldName(model, ff.getName()));
                         component.setInputType(InputType.TYPE_NULL);
@@ -403,6 +415,8 @@ public abstract class AbstractConnectFormFieldActivity extends BaseActivity {
 
                     if (component != null) {
 
+                        component.setFocusable(true);
+                        component.setFocusableInTouchMode(true);
                         component.setTag(ff.getName());
 
                         if (llp != null) {
