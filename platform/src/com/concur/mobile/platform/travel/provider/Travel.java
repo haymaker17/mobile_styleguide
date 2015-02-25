@@ -5149,6 +5149,16 @@ public final class Travel {
          * Contains the default sort order.
          */
         public static final String DEFAULT_SORT_ORDER = BaseColumns._ID + " ASC";
+
+        /**
+         * Contains the search criteria (TEXT) column name.
+         */
+        public static final String SEARCH_CRITERIA_URL = "SEARCH_CRITERIA_URL";
+
+        /**
+         * Contains the expiry time (Integer) column name.
+         */
+        public static final String CREATED_AT_DATETIME = "CREATED_AT_DATETIME";
     }
 
     /**

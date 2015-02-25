@@ -908,7 +908,8 @@ public class RestHotelSearch extends TravelBaseActivity {
         // since the platform systemconfig request is not being invoked by the application, we cannot use the getHotelReasons from
         // the platform. Hence passing in to the next activities.
         SystemConfig sysConfig = ((ConcurCore) getApplication()).getSystemConfig();
-        ArrayList<com.concur.mobile.core.travel.data.ReasonCode> reasonCodesCore = sysConfig.getHotelReasons();
+        ArrayList<com.concur.mobile.core.travel.data.ReasonCode> reasonCodesCore = (sysConfig != null && sysConfig
+                .getHotelReasons() != null) ? sysConfig.getHotelReasons() : null;
         if (reasonCodesCore != null) {
             ArrayList<String[]> violationReasons = new ArrayList<String[]>(reasonCodesCore.size());
             for (com.concur.mobile.core.travel.data.ReasonCode reasonCode : reasonCodesCore) {

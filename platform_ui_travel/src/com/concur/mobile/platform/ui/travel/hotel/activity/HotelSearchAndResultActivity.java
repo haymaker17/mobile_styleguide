@@ -43,6 +43,7 @@ import com.concur.mobile.platform.ui.travel.hotel.fragment.HotelSearchResultFrag
 import com.concur.mobile.platform.ui.travel.hotel.fragment.HotelSearchResultListItem;
 import com.concur.mobile.platform.ui.travel.hotel.maps.ShowMaps;
 import com.concur.mobile.platform.ui.travel.util.Const;
+import com.concur.mobile.platform.util.PlatformUtil;
 import com.google.android.gms.common.ConnectionResult;
 import com.google.android.gms.common.GooglePlayServicesUtil;
 
@@ -61,6 +62,8 @@ public class HotelSearchAndResultActivity extends Activity implements OnMenuItem
 
     private static final int HOTEL_SEARCH_LIST_LOADER_ID = 0;
     private static final int HOTEL_POLL_LIST_LOADER_ID = 1;
+
+    private static final String SERVICE_END_POINT = "/mobile/travel/v1.0/Hotels";
 
     private HotelSearchResultFragment hotelSearchRESTResultFrag;
     private HotelSearchResultFilterFragment filterFrag;
@@ -89,6 +92,8 @@ public class HotelSearchAndResultActivity extends Activity implements OnMenuItem
     private String distanceUnit;
     private int numberOfNights;
     private ArrayList<String[]> violationReasons;
+    private String cacheKey;
+    private boolean retriveFromDB;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -105,20 +110,12 @@ public class HotelSearchAndResultActivity extends Activity implements OnMenuItem
         // case, we can get the results from db and show instead of doing the server call again
         searchCriteriaChanged = intent.getBooleanExtra("searchCriteriaChanged", true);
 
-        if (searchCriteriaChanged) {
-
-            checkInDate = (Calendar) intent.getSerializableExtra(Const.EXTRA_TRAVEL_HOTEL_SEARCH_CHECK_IN_CALENDAR);
-            checkOutDate = (Calendar) intent.getSerializableExtra(Const.EXTRA_TRAVEL_HOTEL_SEARCH_CHECK_OUT_CALENDAR);
-            latitude = Double.valueOf(intent.getStringExtra(Const.EXTRA_TRAVEL_LATITUDE));
-            longitude = Double.valueOf(intent.getStringExtra(Const.EXTRA_TRAVEL_LONGITUDE));
-            fromLocationSearch = intent.getBooleanExtra(Const.EXTRA_LOCATION_SEARCH_MODE_USED, false);
-            distanceUnit = intent.getStringExtra(Const.EXTRA_TRAVEL_HOTEL_SEARCH_DISTANCE_UNIT_ID);
-
-            // Initialize the loader.
-            lm = getLoaderManager();
-            searchWorkflowStartTime = System.currentTimeMillis();
-            lm.initLoader(HOTEL_SEARCH_LIST_LOADER_ID, null, this);
-        }
+        checkInDate = (Calendar) intent.getSerializableExtra(Const.EXTRA_TRAVEL_HOTEL_SEARCH_CHECK_IN_CALENDAR);
+        checkOutDate = (Calendar) intent.getSerializableExtra(Const.EXTRA_TRAVEL_HOTEL_SEARCH_CHECK_OUT_CALENDAR);
+        latitude = Double.valueOf(intent.getStringExtra(Const.EXTRA_TRAVEL_LATITUDE));
+        longitude = Double.valueOf(intent.getStringExtra(Const.EXTRA_TRAVEL_LONGITUDE));
+        fromLocationSearch = intent.getBooleanExtra(Const.EXTRA_LOCATION_SEARCH_MODE_USED, false);
+        distanceUnit = intent.getStringExtra(Const.EXTRA_TRAVEL_HOTEL_SEARCH_DISTANCE_UNIT_ID);
 
         hotelSearchRESTResultFrag = (HotelSearchResultFragment) getFragmentManager().findFragmentByTag(
                 FRAGMENT_SEARCH_RESULT);
@@ -126,7 +123,7 @@ public class HotelSearchAndResultActivity extends Activity implements OnMenuItem
         if (hotelSearchRESTResultFrag == null) {
             hotelSearchRESTResultFrag = new HotelSearchResultFragment();
         }
-        if (distanceUnit.equalsIgnoreCase("K")) {
+        if (distanceUnit != null && distanceUnit.equalsIgnoreCase("K")) {
             filterFrag.setDistanceUnitInKm(true);
         }
 
@@ -153,15 +150,18 @@ public class HotelSearchAndResultActivity extends Activity implements OnMenuItem
     @Override
     public void fragmentReady() {
         // signal from fragment that it is loaded
-        if (!searchCriteriaChanged) {
-            populateHotelListItemsFromDB();
-        }
+        cacheKey = PlatformUtil.getEndpointurl(SERVICE_END_POINT, latitude, longitude, distanceUnit, checkInDate,
+                checkOutDate);
+        populateHotelListItemsFromDB();
     }
 
     // get hotels from database and populate the list items
     private void populateHotelListItemsFromDB() {
         // get from db
-        List<Hotel> hotels = TravelUtilHotel.getHotels(this);
+        // TODO - does this need to be fired in a separate thread?
+        TravelUtilHotel.deleteAllHotelDetails(this);
+
+        List<Hotel> hotels = TravelUtilHotel.getHotels(this, cacheKey);
 
         Log.d(Const.LOG_TAG, " ***** retrieved hotels from TravelUtilHotel.getHotels *****  "
                 + (hotels == null ? null : hotels.size()));
@@ -169,6 +169,7 @@ public class HotelSearchAndResultActivity extends Activity implements OnMenuItem
         // populate list items
         if (hotels != null && hotels.size() > 0) {
             hotelListItemsToSort = new ArrayList<HotelSearchResultListItem>(hotels.size());
+            retriveFromDB = true;
             for (Hotel hotel : hotels) {
                 HotelSearchResultListItem item = new HotelSearchResultListItem(hotel);
                 hotelListItemsToSort.add(item);
@@ -177,7 +178,11 @@ public class HotelSearchAndResultActivity extends Activity implements OnMenuItem
             hotelSearchRESTResultFrag.hideProgressBar();
         } else {
             // hotelSearchRESTResultFrag.showNegativeView();
-            Toast.makeText(this, "Hotel Search Failed. Please try again.", Toast.LENGTH_SHORT).show();
+            // Toast.makeText(this, "Hotel Search Failed. Please try again.", Toast.LENGTH_SHORT).show();
+            // Initialize the loader.
+            lm = getLoaderManager();
+            searchWorkflowStartTime = System.currentTimeMillis();
+            lm.initLoader(HOTEL_SEARCH_LIST_LOADER_ID, null, this);
         }
 
     }
@@ -499,7 +504,19 @@ public class HotelSearchAndResultActivity extends Activity implements OnMenuItem
                 // cache, if so, then
                 // re-use them. A request to update will be made in the
                 // background.
+
                 if (hotelSelected.availabilityErrorCode == null) {
+                    if (retriveFromDB) {
+
+                        // DB call
+                        long id = hotelSelected._id;
+
+                        hotelSelected.rates = TravelUtilHotel.getHotelRateDetails(this, id);
+                        hotelSelected.imagePairs = TravelUtilHotel.getHotelImagePairs(this, id);
+                    } else if (hotelSelected.lowestRate == null) {
+                        // New call to loader
+
+                    }
                     if (hotelSelected.rates == null || hotelSelected.rates.size() == 0) {
                         // no rooms
                         Toast.makeText(this, "No Rooms Avilable", Toast.LENGTH_LONG).show();
@@ -588,9 +605,6 @@ public class HotelSearchAndResultActivity extends Activity implements OnMenuItem
             fromPolling = false;
             // request initial search
             Log.d(Const.LOG_TAG, " ***** creating search loader *****  ");
-
-            // TODO - does this need to be fired in a separate thread?
-            TravelUtilHotel.deleteAllHotelDetails(this);
 
             hotelSearchAsyncTaskLoader = new HotelSearchResultLoader(this, checkInDate, checkOutDate, latitude,
                     longitude, 25, distanceUnit);
