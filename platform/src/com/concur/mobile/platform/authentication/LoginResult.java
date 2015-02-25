@@ -38,6 +38,7 @@ public class LoginResult extends BaseParser {
     private static final String TAG_USER_ID = "UserId";
     private static final String TAG_DISABLE_AUTOLOGIN = "DisableAutoLogin";
     public static final String TAG_ANALYTICS_ID = "AnalyticsId";
+    public static final String TAG_SERVER_URL = "ServerUrl";
 
     // Tag codes.
     private static final int TAG_AUTHENTICATION_TYPE_CODE = 0;
@@ -49,6 +50,7 @@ public class LoginResult extends BaseParser {
     private static final int TAG_PROFILE_STATUS_CODE = 6;
     private static final int TAG_REMOTE_WIPE_CODE = 7;
     private static final int TAG_ROLES_MOBILE_CODE = 8;
+    private static final int TAG_SERVER_URL_CODE = 9;
     private static final int TAG_USER_CURRENCY_CODE_CODE = 10;
     private static final int TAG_USER_ID_CODE = 11;
     private static final int TAG_DISABLE_AUTOLOGIN_CODE = 12;
@@ -68,6 +70,7 @@ public class LoginResult extends BaseParser {
         tagMap.put(TAG_PROFILE_STATUS, TAG_PROFILE_STATUS_CODE);
         tagMap.put(TAG_REMOTE_WIPE, TAG_REMOTE_WIPE_CODE);
         tagMap.put(TAG_ROLES_MOBILE, TAG_ROLES_MOBILE_CODE);
+        tagMap.put(TAG_SERVER_URL, TAG_SERVER_URL_CODE);
         tagMap.put(TAG_USER_CURRENCY_CODE, TAG_USER_CURRENCY_CODE_CODE);
         tagMap.put(TAG_USER_ID, TAG_USER_ID_CODE);
         tagMap.put(TAG_DISABLE_AUTOLOGIN, TAG_DISABLE_AUTOLOGIN_CODE);
@@ -195,6 +198,11 @@ public class LoginResult extends BaseParser {
     public String analyticsId;
 
     /**
+     * Contains the server URL for GLS accounts, or null.
+     */
+    public String serverUrl;
+
+    /**
      * Constructs an instance of <code>LoginResult</code> with a parser and start tag.
      * 
      * @param parser
@@ -230,7 +238,7 @@ public class LoginResult extends BaseParser {
 
         // Create and register the user contact parser.
         itemTag = "Permissions";
-        // parser parameter required to call the specific parsing constructor 
+        // parser parameter required to call the specific parsing constructor
         permissionsItemParser = new ItemParser<Permissions>(parser, itemTag, Permissions.class);
         parser.registerParser(permissionsItemParser, itemTag);
     }
@@ -322,6 +330,13 @@ public class LoginResult extends BaseParser {
                 }
                 break;
             }
+            case TAG_SERVER_URL_CODE: {
+                if (!TextUtils.isEmpty(text)) {
+                    serverUrl = text.trim();
+                }
+                break;
+            }
+
             }
         } else {
             if (Const.DEBUG_PARSING) {
