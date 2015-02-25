@@ -23,7 +23,7 @@ public class SimpleWebViewActivity extends ActionBarActivity {
         
         getSupportActionBar().setTitle("Partner Apps");
         getSupportActionBar().setDisplayShowHomeEnabled(true);
-        getSupportActionBar().setHomeAsUpIndicator(R.drawable.nav_icon_back);
+        //getSupportActionBar().setHomeAsUpIndicator(R.drawable.nav_icon_back);
         
 		simpleWebview = (WebView) findViewById(R.id.simple_webview);
 		
