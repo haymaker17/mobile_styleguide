@@ -6,6 +6,7 @@ import java.util.Calendar;
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
+import java.util.Locale;
 import java.util.Map;
 import java.util.TimeZone;
 
@@ -185,6 +186,7 @@ public class Home extends BaseActivity implements View.OnClickListener, Navigati
     private static final int NAVIGATION_TRAVEL_POINTS = 17;
     private static final int NAVIGATION_APP_UBER = 18;
     private static final int NAVIGATION_PROFILE = 19;
+    private static final int NAVIGATION_APP_CENTER = 20;
 
     private static final int REQUEST_ID_LOGOUT = 1;
 
@@ -3130,57 +3132,7 @@ public class Home extends BaseActivity implements View.OnClickListener, Navigati
                     R.string.home_navigation_settings, false);
             navItems.add(setSegNavItem);
         }
-
-        // Add Expenseit item.
-        if (Preferences.isOCRUser()) {
-            navItem = new HomeScreenSimpleNavigationItem(NAVIGATION_APP_EXPENSE_IT, -1,
-                    R.string.home_navigation_expenseit, R.drawable.icon_menu_expenseit, View.VISIBLE, View.VISIBLE,
-                    new Runnable() {
-
-                        public void run() {
-                            Intent i = ViewUtil.getPackageLaunchIntent(Home.this, "com.expenseit");
-                            if (i == null) {
-                                String url = "market://details?id=com.expenseit";
-                                i = new Intent(Intent.ACTION_VIEW);
-                                i.setData(Uri.parse(url));
-                            }
-                            if (i != null) {
-                                startActivity(i);
-                                // Flurry Notification
-                                Map<String, String> params = new HashMap<String, String>();
-                                params.put(Flurry.PARAM_NAME_ACTION, Flurry.PARAM_VALUE_EXPENSE_IT);
-                                EventTracker.INSTANCE.track(Flurry.CATEGORY_EXTERNAL_APP, Flurry.EVENT_NAME_LAUNCH,
-                                        params);
-                            }
-                        }
-                    });
-            navItems.add(navItem);
-        }
-
-        // Add TravelText
-        navItem = new HomeScreenSimpleNavigationItem(NAVIGATION_APP_TRAVEL_TEXT, -1,
-                R.string.home_navigation_traveltext, R.drawable.icon_travel_text, View.VISIBLE, View.VISIBLE,
-                new Runnable() {
-
-                    public void run() {
-                        Intent i = null;
-                        String url = "http://www.traveltext.net/CMobile";
-                        i = new Intent(Intent.ACTION_VIEW);
-                        i.setData(Uri.parse(url));
-
-                        if (i != null) {
-                            startActivity(i);
-                            // Flurry Notification
-
-                            Map<String, String> params = new HashMap<String, String>();
-                            params.put(Flurry.PARAM_NAME_ACTION, Flurry.PARAM_VALUE_TRAVEL_TEXT);
-                            EventTracker.INSTANCE.track(Flurry.CATEGORY_EXTERNAL_APP, Flurry.EVENT_NAME_LAUNCH, params);
-
-                        }
-                    }
-                });
-        navItems.add(navItem);
-
+        
         // Add TripIt item.
         if (Preferences.shouldShowTripItAd()) {
             navItem = new HomeScreenSimpleNavigationItem(NAVIGATION_APP_TRIP_IT, -1, R.string.home_navigation_tripit,
@@ -3213,14 +3165,73 @@ public class Home extends BaseActivity implements View.OnClickListener, Navigati
             navItems.add(navItem);
         }
 
+        // Add ExpenseIt item.
+        if (Preferences.isOCRUser()) {
+            navItem = new HomeScreenSimpleNavigationItem(NAVIGATION_APP_EXPENSE_IT, -1,
+                    R.string.home_navigation_expenseit, R.drawable.icon_menu_expenseit, View.VISIBLE, View.VISIBLE,
+                    new Runnable() {
+
+                        public void run() {
+                            Intent i = ViewUtil.getPackageLaunchIntent(Home.this, "com.expenseit");
+                            if (i == null) {
+                                String url = "market://details?id=com.expenseit";
+                                i = new Intent(Intent.ACTION_VIEW);
+                                i.setData(Uri.parse(url));
+                            }
+                            if (i != null) {
+                                startActivity(i);
+                                // Flurry Notification
+                                Map<String, String> params = new HashMap<String, String>();
+                                params.put(Flurry.PARAM_NAME_ACTION, Flurry.PARAM_VALUE_EXPENSE_IT);
+                                EventTracker.INSTANCE.track(Flurry.CATEGORY_EXTERNAL_APP, Flurry.EVENT_NAME_LAUNCH,
+                                        params);
+                            }
+                        }
+                    });
+            navItems.add(navItem);
+        }
+
+        // Add TravelText
+        /* Removed per https://concur.aha.io/features/CM-252
+         *
+        navItem = new HomeScreenSimpleNavigationItem(NAVIGATION_APP_TRAVEL_TEXT, -1,
+                R.string.home_navigation_traveltext, R.drawable.icon_travel_text, View.VISIBLE, View.VISIBLE,
+                new Runnable() {
+
+                    public void run() {
+                        Intent i = null;
+                        String url = "http://www.traveltext.net/CMobile";
+                        i = new Intent(Intent.ACTION_VIEW);
+                        i.setData(Uri.parse(url));
+
+                        if (i != null) {
+                            startActivity(i);
+                            // Flurry Notification
+
+                            Map<String, String> params = new HashMap<String, String>();
+                            params.put(Flurry.PARAM_NAME_ACTION, Flurry.PARAM_VALUE_TRAVEL_TEXT);
+                            EventTracker.INSTANCE.track(Flurry.CATEGORY_EXTERNAL_APP, Flurry.EVENT_NAME_LAUNCH, params);
+
+                        }
+                    }
+                });
+        navItems.add(navItem);
+        */
+
+        /*
+         * Separator no longer wanted, per https://concur.aha.io/features/CM-252.
+         * 
         if (navItems.size() > 1) {
             // Add the apps navigation segment bar.
             DefaultTextNavigationItem segNavItem = new DefaultTextNavigationItem(NAVIGATION_HEADER,
                     R.layout.navigation_segment, R.string.home_navigation_apps, false);
             navItems.add(segNavItem);
         }
-
+         */
+        
         // Add Curb (Taxi Magic) item.
+        /* Removed per https://concur.aha.io/features/CM-252
+        *
         if (isTaxiUser()) {
             navItem = new HomeScreenSimpleNavigationItem(NAVIGATION_APP_TAXI_MAGIC, -1, R.string.home_navigation_curb,
                     R.drawable.icon_menu_curb, View.VISIBLE, View.VISIBLE, new Runnable() {
@@ -3244,8 +3255,11 @@ public class Home extends BaseActivity implements View.OnClickListener, Navigati
                     });
             navItems.add(navItem);
         }
+        */
 
         // Add Uber item - for now, we will show Uber for every user
+        /* Removed per https://concur.aha.io/features/CM-252
+        *
         navItem = new HomeScreenSimpleNavigationItem(NAVIGATION_APP_UBER, -1, R.string.home_navigation_uber,
                 R.drawable.icon_menu_uber, View.VISIBLE, View.VISIBLE, new Runnable() {
 
@@ -3263,6 +3277,25 @@ public class Home extends BaseActivity implements View.OnClickListener, Navigati
                             params.put(Flurry.PARAM_NAME_ACTION, Flurry.PARAM_VALUE_UBER);
                             EventTracker.INSTANCE.track(Flurry.CATEGORY_EXTERNAL_APP, Flurry.EVENT_NAME_LAUNCH, params);
                         }
+                    }
+                });
+        navItems.add(navItem);
+        */
+        
+        navItem = new HomeScreenSimpleNavigationItem(NAVIGATION_APP_CENTER, -1, R.string.home_navigation_app_center,
+                R.drawable.icon_menu_app_center, View.VISIBLE, View.VISIBLE, new Runnable() {
+
+                    public void run() {
+                    	String token = Preferences.getAccessToken();
+                    	Locale locale = Locale.getDefault();
+                    	Log.d("FOO", "locale = " + locale);
+                    	
+						Intent i = new Intent(Home.this, SimpleWebViewActivity.class);
+						i.putExtra("url", "http://appcenterdev.concursolutions.com?oauth=" + token + "&lang=" + locale);
+						
+						if (i != null) {
+                            startActivity(i);
+						}
                     }
                 });
         navItems.add(navItem);

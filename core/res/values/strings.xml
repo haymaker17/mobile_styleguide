@@ -196,6 +196,7 @@
     <string name="home_navigation_traveltext">TravelText</string>
     <string name="home_navigation_curb">Curb</string>
     <string name="home_navigation_uber">Uber</string>
+    <string name="home_navigation_app_center">Partner Apps</string>
     <string name="home_navigation_expenseit">ExpenseIt</string>
     <string name="home_navigation_settings">Settings</string>
     <string name="home_navigation_book_travel">Book Travel</string>
