@@ -262,7 +262,7 @@ public class SegmentList extends BaseActivity {
     protected final static int MENU_ITEM_CANCEL = 2;
 
     // Contains one of the segment type constants from the
-    // <code>Flurry.PARAM_VALUE_[<AIR>|<CAR>|<HOTEL>|<TRAIN>]</code>.
+    // <code>Flurry.PARAM_VALUE_[<AIRPORT>|<CAR>|<HOTEL>|<TRAIN>]</code>.
     private String lastCanceledFlurrySegmentParamValue;
 
     // flag to switch the screen contents for trip approver

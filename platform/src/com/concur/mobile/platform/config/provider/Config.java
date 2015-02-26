@@ -671,7 +671,7 @@ public final class Config {
         /**
          * Contains the "reason code type" air value.
          */
-        public static final String TYPE_AIR = "AIR";
+        public static final String TYPE_AIR = "AIRPORT";
 
         /**
          * Contains the "reason code type" hotel value.

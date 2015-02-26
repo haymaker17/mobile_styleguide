@@ -103,6 +103,10 @@ public class RequestSummaryActivity extends BaseActivity {
         } else {
             Log.e(Const.LOG_TAG, CLS_TAG + " onCreate() : problem on tr retrieved, going back to list activity.");
             // TODO : throw exception & display toast message ? @See with PM
+            // getting back to list screen
+            final Intent resIntent = new Intent();
+            resIntent.putExtra(RequestHeaderActivity.DO_WS_REFRESH, true);
+            setResult(Activity.RESULT_OK, resIntent);
             finish();
         }
 
@@ -197,7 +201,7 @@ public class RequestSummaryActivity extends BaseActivity {
         showCacheData();
     }
 
-    public void closeSegmentsChoice(){
+    public void closeSegmentsChoice() {
 
         RelativeLayout layoutSegmentAIR = (RelativeLayout) findViewById(R.id.AirSegmentChoice);
         RelativeLayout layoutSegmentTRAIN = (RelativeLayout) findViewById(R.id.TrainSegmentChoice);
@@ -331,6 +335,8 @@ public class RequestSummaryActivity extends BaseActivity {
             }
         } else if (refreshRequired || !showCacheData()) {
             new NoConnectivityDialogFragment().show(getSupportFragmentManager(), CLS_TAG);
+        } else {
+            setView(ID_DETAIL_VIEW);
         }
     }
 
@@ -501,7 +507,6 @@ public class RequestSummaryActivity extends BaseActivity {
             params.put(Flurry.PARAM_NAME_TO, Flurry.PARAM_VALUE_TRAVEL_REQUEST_ENTRY);
             EventTracker.INSTANCE.track(Flurry.CATEGORY_TRAVEL_REQUEST, Flurry.EVENT_NAME_LAUNCH, params);
 
-            cleanupReceivers();
             startActivityForResult(i, ENTRY_UPDATE_RESULT);
         }
     }
@@ -524,7 +529,6 @@ public class RequestSummaryActivity extends BaseActivity {
             resIntent.putExtra(RequestHeaderActivity.DO_WS_REFRESH, true);
             setResult(Activity.RESULT_OK, resIntent);
 
-            cleanupReceivers();
             finish();
         }
 
@@ -619,8 +623,7 @@ public class RequestSummaryActivity extends BaseActivity {
     private void handleRefreshFail() {
         if (!showCacheData()) {
             Log.d(Const.LOG_TAG, CLS_TAG + " onRequestCancel() : no cache data to display, going back to list.");
-            cleanupReceivers();
-            startActivity(new Intent(RequestSummaryActivity.this, RequestListActivity.class));
+            finish();
         }
     }
 
@@ -663,12 +666,6 @@ public class RequestSummaryActivity extends BaseActivity {
         cleanupReceivers();
     }
 
-    @Override
-    public void onBackPressed() {
-        super.onBackPressed();
-        cleanupReceivers();
-    }
-
     // OVERFLOW MENU
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
@@ -699,7 +696,6 @@ public class RequestSummaryActivity extends BaseActivity {
                     params.put(Flurry.PARAM_NAME_TO, Flurry.PARAM_VALUE_TRAVEL_REQUEST_HEADER);
                     EventTracker.INSTANCE.track(Flurry.CATEGORY_TRAVEL_REQUEST, Flurry.EVENT_NAME_LAUNCH, params);
 
-                    cleanupReceivers();
                     startActivityForResult(intent, HEADER_UPDATE_RESULT);
                 } else {
                     new NoConnectivityDialogFragment().show(getSupportFragmentManager(), CLS_TAG);
@@ -719,13 +715,15 @@ public class RequestSummaryActivity extends BaseActivity {
         switch (requestCode) {
         case (ENTRY_UPDATE_RESULT):
         case (HEADER_UPDATE_RESULT): {
-            if (resultCode == Activity.RESULT_OK) {
+            if (data != null) {
                 final Boolean newText = data.getBooleanExtra(RequestHeaderActivity.DO_WS_REFRESH, false);
                 if (newText) {
                     refreshData(true);
                 } else {
                     refreshData(false);
                 }
+            } else {
+                refreshData(false);
             }
             break;
         }

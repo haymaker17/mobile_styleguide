@@ -104,7 +104,7 @@ public class ExpenseReportFormField implements Serializable, Cloneable {
         /**
          * A location data type.
          */
-        LOCATION("LOCATION");
+        LOCATION("REQUEST_LOCATION");
 
         private String name;
 

@@ -50,7 +50,7 @@ public class CancelSegment extends CustomAsyncRequestTask {
 
     // An enumeration describing segment type cancellation.
     // public enum CancelSegmentType {
-    // AIR, HOTEL, CAR, RAIL
+    // AIRPORT, HOTEL, CAR, RAIL
     // }
 
     /**

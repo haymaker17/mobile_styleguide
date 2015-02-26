@@ -54,7 +54,7 @@ public class LocationCheckIn extends BaseActivity implements OnClickListener {
     private final static String LOCATION_CHECK_IN_KEY = "location.check.in.receiver";
 
     // Keys used to save/retrieve state during screen orientation change.
-    private final static String LOCATION = "LOCATION";
+    private final static String LOCATION = "REQUEST_LOCATION";
     private final static String DAYS_REMAINING = "DAYS_REMAINING";
     private final static String ASSISTANCE_REQ = "ASSISTANCE_REQ";
     private final static String COMMENT = "COMMENT";
