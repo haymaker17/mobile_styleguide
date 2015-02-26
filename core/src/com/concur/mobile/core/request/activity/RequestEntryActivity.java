@@ -722,9 +722,9 @@ public class RequestEntryActivity extends AbstractConnectFormFieldActivity imple
             if ((viewedType == SegmentType.RequestSegmentType.AIR || viewedType == SegmentType.RequestSegmentType.RAIL)
                     && fragmentOnInitialization == TAB_ROUND_TRIP) {
                 final int segmentLayoutIdx = model.getDisplayOrder() != null ? model.getDisplayOrder() : 0;
-                addBlockTitle(getResources().getString(
-                        segmentLayoutIdx == 0 ? R.string.tr_segment_block_outbound : R.string.tr_segment_block_return),
-                        model);
+                addBlockTitle(getResources().getString(segmentLayoutIdx == 0 ?
+                                R.string.tr_segment_block_outbound :
+                                R.string.tr_segment_block_return), model);
             }
         } else if (ff.getName().equals(FIELD_END_DATE)) {
             // --- Header block : round trip
@@ -795,7 +795,7 @@ public class RequestEntryActivity extends AbstractConnectFormFieldActivity imple
 
     private void saveAction() {
         if (hasCustomLayouts) {
-            // --- AIRPORT & RAIL segment/entry types
+            // --- AIR & RAIL segment/entry types
 
             // --- Cleans & applies temporary segment list to entry object
             if (viewedFragment == TAB_ONE_WAY) {
@@ -831,7 +831,7 @@ public class RequestEntryActivity extends AbstractConnectFormFieldActivity imple
             }
             originFragment = viewedFragment;
         } else {
-            // --- !AIRPORT & !RAIL segment/entry types
+            // --- !AIR & !RAIL segment/entry types
             save(form, entry.getListSegment().iterator().next());
         }
         if (ConcurCore.isConnected()) {
