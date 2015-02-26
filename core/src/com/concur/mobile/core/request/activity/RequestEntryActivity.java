@@ -39,6 +39,7 @@ import com.concur.mobile.platform.request.dto.RequestDTO;
 import com.concur.mobile.platform.request.dto.RequestEntryDTO;
 import com.concur.mobile.platform.request.dto.RequestSegmentDTO;
 import com.concur.mobile.platform.request.groupConfiguration.SegmentType;
+import com.concur.mobile.platform.request.location.Location;
 import com.concur.mobile.platform.request.util.RequestParser;
 import com.concur.mobile.platform.ui.common.dialog.AlertDialogFragment;
 import com.concur.mobile.platform.ui.common.dialog.DialogFragmentFactory;
@@ -794,7 +795,7 @@ public class RequestEntryActivity extends AbstractConnectFormFieldActivity imple
 
     private void saveAction() {
         if (hasCustomLayouts) {
-            // --- AIR & RAIL segment/entry types
+            // --- AIRPORT & RAIL segment/entry types
 
             // --- Cleans & applies temporary segment list to entry object
             if (viewedFragment == TAB_ONE_WAY) {
@@ -830,7 +831,7 @@ public class RequestEntryActivity extends AbstractConnectFormFieldActivity imple
             }
             originFragment = viewedFragment;
         } else {
-            // --- !AIR & !RAIL segment/entry types
+            // --- !AIRPORT & !RAIL segment/entry types
             save(form, entry.getListSegment().iterator().next());
         }
         if (ConcurCore.isConnected()) {
@@ -873,7 +874,10 @@ public class RequestEntryActivity extends AbstractConnectFormFieldActivity imple
         } else if (view.getTag().equals(FIELD_FROM_ID) || view.getTag().equals(FIELD_TO_ID)) {
             if (locationIntent == null) {
                 locationIntent = new Intent(RequestEntryActivity.this, LocationSearchActivity.class);
-                locationIntent.putExtra(LocationSearchActivity.EXTRA_PARAM_IS_AIRPORT, true);
+                locationIntent.putExtra(LocationSearchActivity.EXTRA_PARAM_LOCATION_TYPE,
+                        (viewedType == SegmentType.RequestSegmentType.AIR ?
+                                Location.LocationType.AIRPORT.name() :
+                                Location.LocationType.CITY.name()));
             }
             locationTappedView = (TextView) view;
             startActivityForResult(locationIntent, Const.REQUEST_CODE_LOCATION);
@@ -1078,13 +1082,11 @@ public class RequestEntryActivity extends AbstractConnectFormFieldActivity imple
                     getResources().getString(R.string.tr_message_save_changes), R.string.general_yes, -1,
                     R.string.general_no, yesListener, null, noListener, noListener)
                     .show(getSupportFragmentManager(), CLS_TAG);
-        } else if (createMode) {
-            request.getEntriesMap().clear();
-            super.onBackPressed();
-            cleanupReceivers();
         } else {
+            if (createMode) {
+                request.getEntriesMap().clear();
+            }
             super.onBackPressed();
-            cleanupReceivers();
         }
     }
 }

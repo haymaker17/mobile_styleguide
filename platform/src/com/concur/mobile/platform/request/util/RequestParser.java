@@ -273,8 +273,6 @@ public class RequestParser {
      */
     public static List<Location> parseLocations(String jsonRes) {
         final GsonBuilder builder = new GsonBuilder();
-        builder.registerTypeAdapter(Boolean.class, new BooleanDeserializer());
-        builder.registerTypeAdapter(Double.class, new DoubleDeserializer());
         Log.d(CLS_TAG, "parseLocations :: starting parse");
 
         final Gson gson = builder.create();
@@ -285,8 +283,6 @@ public class RequestParser {
 
     public static Location parseLocation(String jsonRes) {
         final GsonBuilder builder = new GsonBuilder();
-        builder.registerTypeAdapter(Boolean.class, new BooleanDeserializer());
-        builder.registerTypeAdapter(Double.class, new DoubleDeserializer());
         Log.d(CLS_TAG, "parseLocation :: starting parse");
 
         final Gson gson = builder.create();
@@ -333,8 +329,6 @@ public class RequestParser {
      */
     public static String toJson(Location location) {
         final GsonBuilder builder = new GsonBuilder();
-        builder.registerTypeAdapter(Boolean.class, new BooleanDeserializer());
-        builder.registerTypeAdapter(Double.class, new DoubleDeserializer());
         Log.d(CLS_TAG, "toJson[Location] :: starting parse");
 
         final Gson gson = builder.create();

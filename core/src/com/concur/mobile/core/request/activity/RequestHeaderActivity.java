@@ -524,7 +524,6 @@ public class RequestHeaderActivity extends AbstractConnectFormFieldActivity impl
                     .show(getSupportFragmentManager(), CLS_TAG);
         } else {
             super.onBackPressed();
-            cleanupReceivers();
         }
     }
 }
