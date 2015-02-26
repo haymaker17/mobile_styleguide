@@ -111,6 +111,7 @@ import com.concur.mobile.platform.request.RequestListCache;
 import com.concur.mobile.platform.request.dto.RequestDTO;
 import com.concur.mobile.platform.service.MWSPlatformManager;
 import com.concur.mobile.platform.service.parser.MWSResponseStatus;
+import com.concur.mobile.platform.travel.provider.TravelUtilHotel;
 import com.concur.mobile.platform.ui.common.util.PreferenceUtil;
 import com.concur.mobile.platform.util.Parse;
 import com.concur.platform.PlatformProperties;
@@ -1815,6 +1816,7 @@ public abstract class ConcurCore extends Application {
         SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(ConcurCore.this);
         String userId = prefs.getString(Const.PREF_USER_ID, null);
         ExpenseUtil.clearSmartExpenses(this, userId);
+        TravelUtilHotel.deleteAllHotelDetails(this);
     }
 
     /**

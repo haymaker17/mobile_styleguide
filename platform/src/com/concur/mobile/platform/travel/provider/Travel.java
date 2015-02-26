@@ -5158,7 +5158,7 @@ public final class Travel {
         /**
          * Contains the expiry time (Integer) column name.
          */
-        public static final String CREATED_AT_DATETIME = "CREATED_AT_DATETIME";
+        public static final String EXPIRY_DATETIME = "EXPIRY_DATETIME";
     }
 
     /**

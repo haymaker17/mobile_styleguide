@@ -89,6 +89,11 @@ public class HotelSearchResultLoader extends PlatformAsyncTaskLoader<HotelSearch
      */
     private static String searchUrl;
 
+    /**
+     * Contains results object
+     */
+    protected HotelSearchRESTResult searchResult;
+
     public HotelSearchResultLoader(Context context, Calendar checkInDate, Calendar checkOutDate, Double lat,
             Double lon, Integer radius, String distanceUnit) {
 
@@ -126,7 +131,6 @@ public class HotelSearchResultLoader extends PlatformAsyncTaskLoader<HotelSearch
 
     @Override
     protected HotelSearchRESTResult parseStream(InputStream is) {
-        HotelSearchRESTResult searchResult = null;
         try {
             // prepare the object Type expected in MWS response 'data' element
             Type type = new TypeToken<MWSResponse<HotelSearchRESTResult>>() {}.getType();
@@ -144,7 +148,13 @@ public class HotelSearchResultLoader extends PlatformAsyncTaskLoader<HotelSearch
                                         + searchResult.hotels.size());
                         searchResult.searchUrl = searchUrl;
                         // TODO - does this need to be fired in a separate thread?
-                        TravelUtilHotel.insertHotelDetails(getContext().getContentResolver(), searchResult);
+                        new Thread(new Runnable() {
+
+                            public void run() {
+                                TravelUtilHotel.insertHotelDetails(getContext().getContentResolver(), searchResult);
+                            }
+                        }).start();
+
                     } else {
                         Log.i(Const.LOG_TAG,
                                 "\n\n\n ****** searchResult is null or searchdone false or searchResult.hotels is null");

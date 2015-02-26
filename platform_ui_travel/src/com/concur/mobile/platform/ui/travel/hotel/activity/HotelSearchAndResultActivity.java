@@ -158,8 +158,6 @@ public class HotelSearchAndResultActivity extends Activity implements OnMenuItem
     // get hotels from database and populate the list items
     private void populateHotelListItemsFromDB() {
         // get from db
-        // TODO - does this need to be fired in a separate thread?
-        TravelUtilHotel.deleteAllHotelDetails(this);
 
         List<Hotel> hotels = TravelUtilHotel.getHotels(this, cacheKey);
 

@@ -842,7 +842,7 @@ public class TravelDBSchema {
             + " INTEGER PRIMARY KEY AUTOINCREMENT , " + Travel.HotelSearchResultColumns.DISTANCE_UNIT + " TEXT, "
             + Travel.HotelSearchResultColumns.CURRENCY + " TEXT, "
             + Travel.HotelSearchResultColumns.SEARCH_CRITERIA_URL + " TEXT NOT  NULL UNIQUE , "
-            + Travel.HotelSearchResultColumns.CREATED_AT_DATETIME + " DEFAULT CURRENT_TIMESTAMP" + ")";
+            + Travel.HotelSearchResultColumns.EXPIRY_DATETIME + " DEFAULT CURRENT_TIMESTAMP" + ")";
 
     // Drop the Hotel Search Result table.
     protected static final String DROP_HOTEL_SEARCH_RESULT_TABLE = "DROP TABLE IF EXISTS "

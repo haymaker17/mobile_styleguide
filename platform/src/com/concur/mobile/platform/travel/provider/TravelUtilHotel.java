@@ -52,7 +52,6 @@ public class TravelUtilHotel {
         // Log.d(Const.LOG_TAG, CLS_TAG + ".insertHotelDetails: deleted " + Integer.toString(rowsAffected)
         // + " Hotel Search Result rows.");
         // }
-
         boolean hasImagePairs = false;
 
         // Set up the content values object.
@@ -67,7 +66,8 @@ public class TravelUtilHotel {
             ContentUtils.putValue(values, Travel.HotelSearchResultColumns.SEARCH_CRITERIA_URL,
                     hotelSearchResult.searchUrl);
             SimpleDateFormat df = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
-            ContentUtils.putValue(values, Travel.HotelSearchResultColumns.CREATED_AT_DATETIME, df.format(new Date()));
+            ContentUtils.putValue(values, Travel.HotelSearchResultColumns.EXPIRY_DATETIME,
+                    df.format(new Date().getTime() + 5 * 60 * 1000)); // 5 mins expiry time.
 
             // insert hotel search result
             Uri hotelSearchResultInsertUri = resolver.insert(Travel.HotelSearchResultColumns.CONTENT_URI, values);
@@ -334,13 +334,32 @@ public class TravelUtilHotel {
         ContentResolver resolver = context.getContentResolver();
 
         String whereClause = " strftime('%M','now') - strftime('%M', "
-                + Travel.HotelSearchResultColumns.CREATED_AT_DATETIME + ") > 5";
+                + Travel.HotelSearchResultColumns.EXPIRY_DATETIME + ") > 5";
 
         // delete all records
         int numOfRecordsDeleted = resolver.delete(Travel.HotelSearchResultColumns.CONTENT_URI, whereClause, null);
 
         if (DEBUG) {
             Log.d(Const.LOG_TAG, CLS_TAG + ".deleteAllHotelDetails: number of hotels deleted '" + numOfRecordsDeleted);
+        }
+
+    }
+
+    /**
+     * Delete the hotels search result
+     * 
+     * @param context
+     */
+    public static void deleteHotelDetails(Context context) {
+        ContentResolver resolver = context.getContentResolver();
+
+        String whereClause = Travel.HotelSearchResultColumns.EXPIRY_DATETIME + "<  datetime('now') ;";
+
+        // delete all records
+        int numOfRecordsDeleted = resolver.delete(Travel.HotelSearchResultColumns.CONTENT_URI, whereClause, null);
+
+        if (DEBUG) {
+            Log.d(Const.LOG_TAG, CLS_TAG + ".deleteHotelDetails: number of hotels deleted '" + numOfRecordsDeleted);
         }
 
     }
@@ -387,6 +406,7 @@ public class TravelUtilHotel {
         List<Hotel> hotels = new ArrayList<Hotel>();
 
         String id = null;
+        deleteHotelDetails(context);
 
         ContentResolver resolver = context.getContentResolver();
         Cursor cursor = null;
