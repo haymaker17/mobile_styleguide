@@ -36,7 +36,7 @@ public class LocationSearchActivity extends Activity {
     private static final int TEXT_SEARCH_SHORT_DELAY = 300;
     private static final int TEXT_SEARCH_LONG_DELAY = 750;
 
-    public static final String EXTRA_PARAM_LOCATION_TYPE = "isAirport";
+    public static final String EXTRA_PARAM_IS_AIRPORT = "isAirport";
     public static final String EXTRA_PARAM_LOCATION_ID = "locationId";
     public static final String EXTRA_PARAM_LOCATION_NAME = "locationName";
 
@@ -52,17 +52,15 @@ public class LocationSearchActivity extends Activity {
     protected int colorWhiteStripe;
     protected int colorBlueStripe;
 
-    private Location.LocationType locationType = Location.LocationType.CITY;
+    private boolean isAirport = false;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.location_search);
 
-        final String locationType = getIntent().getExtras().getString(EXTRA_PARAM_LOCATION_TYPE);
-        if (locationType != null) {
-            this.locationType = Location.LocationType.valueOf(locationType);
-        }
+        final Boolean isAirport = getIntent().getExtras().getBoolean(EXTRA_PARAM_IS_AIRPORT);
+        this.isAirport = isAirport;
 
         networkIndicator = (ProgressBar) findViewById(R.id.network_indicator);
 
@@ -247,7 +245,7 @@ public class LocationSearchActivity extends Activity {
             manageProgressBarVisibility(true);
             asyncReceiverSearch.setListener(new SearchListener());
             new LocationListTask(getApplicationContext(), 1, asyncReceiverSearch, searchText.getText().toString(),
-                    locationType).execute();
+                    isAirport).execute();
         }
     }
 

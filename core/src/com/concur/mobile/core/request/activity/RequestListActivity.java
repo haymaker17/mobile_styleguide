@@ -1,5 +1,6 @@
 package com.concur.mobile.core.request.activity;
 
+import android.app.Activity;
 import android.content.Intent;
 import android.content.res.Resources;
 import android.os.Bundle;
@@ -174,7 +175,7 @@ public class RequestListActivity extends BaseActivity {
             if (isSuccess) {
                 if (reqWaitingForFormRefresh != null) {
                     // --- update
-                    displayTravelRequestDetail(reqWaitingForFormRefresh);
+                    displayTravelRequestDetail(formWaitingForRefresh);
                 } else {
                     // --- create
                     displayTravelRequestHeader();
@@ -218,6 +219,7 @@ public class RequestListActivity extends BaseActivity {
             params.put(Flurry.PARAM_NAME_TO, Flurry.PARAM_VALUE_TRAVEL_REQUEST_SUMMARY);
             EventTracker.INSTANCE.track(Flurry.CATEGORY_TRAVEL_REQUEST, Flurry.EVENT_NAME_LAUNCH, params);
 
+            cleanupReceivers();
             startActivityForResult(i, SUMMARY_RESULT);
         }
     }
@@ -237,6 +239,7 @@ public class RequestListActivity extends BaseActivity {
             params.put(Flurry.PARAM_NAME_TO, Flurry.PARAM_VALUE_TRAVEL_REQUEST_HEADER);
             EventTracker.INSTANCE.track(Flurry.CATEGORY_TRAVEL_REQUEST, Flurry.EVENT_NAME_LAUNCH, params);
 
+            cleanupReceivers();
             startActivityForResult(i, HEADER_RESULT);
         }
     }
@@ -253,7 +256,7 @@ public class RequestListActivity extends BaseActivity {
     /**
      * Call asynchronous task to retrieve data through connect
      */
-    private void refreshData(boolean refreshRequired) {
+    private void refreshData() {
         if (ConcurCore.isConnected()) {
             setView(ID_LOADING_VIEW);
             Log.d(Const.LOG_TAG, CLS_TAG + " calling increment from refreshList");
@@ -261,10 +264,8 @@ public class RequestListActivity extends BaseActivity {
             asyncTRListReceiver.setListener(new TRListListener());
             // --- onRequestResult calls cleanup() on execution, so listener will be destroyed by processing
             new RequestListTask(RequestListActivity.this, 1, asyncTRListReceiver, searchedStatus).execute();
-        } else if (refreshRequired) {
-            new NoConnectivityDialogFragment().show(getSupportFragmentManager(), CLS_TAG);
         } else {
-            setView(ID_LIST_VIEW);
+            new NoConnectivityDialogFragment().show(getSupportFragmentManager(), CLS_TAG);
         }
     }
 
@@ -312,7 +313,7 @@ public class RequestListActivity extends BaseActivity {
         if (asyncTRListReceiver == null) {
             // activity creation
             asyncTRListReceiver = new BaseAsyncResultReceiver(new Handler());
-            refreshData(false);
+            refreshData();
         } else if (requestListCache.isDirty()) {
             // --- refresh view offline
             updateListUI(new ArrayList<RequestDTO>(requestListCache.getValues()));
@@ -330,11 +331,19 @@ public class RequestListActivity extends BaseActivity {
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {
         case android.R.id.home:
+            asyncTRListReceiver.setListener(null);
+            asyncFormFieldsReceiver.setListener(null);
             NavUtils.navigateUpFromSameTask(this);
             return true;
         default:
             return super.onOptionsItemSelected(item);
         }
+    }
+
+    @Override
+    public void onBackPressed() {
+        super.onBackPressed();
+        cleanupReceivers();
     }
 
     private void cleanupReceivers() {
@@ -471,7 +480,7 @@ public class RequestListActivity extends BaseActivity {
 
         @Override
         public void cleanup() {
-            // --- ntd
+            //asyncFormFieldsReceiver.setListener(null);
         }
     }
 
@@ -527,16 +536,14 @@ public class RequestListActivity extends BaseActivity {
         switch (requestCode) {
         case (HEADER_RESULT):
         case (SUMMARY_RESULT):
-            if (data != null) {
+            if (resultCode == Activity.RESULT_OK) {
                 // --- no result means we came from a request creation, so we need a refresh
                 final Boolean doWSCall = data.getBooleanExtra(RequestHeaderActivity.DO_WS_REFRESH, true);
                 if (doWSCall) {
-                    refreshData(true);
+                    refreshData();
                 } else {
-                    refreshData(false);
+                    //TODO
                 }
-            } else {
-                refreshData(false);
             }
             break;
         }
