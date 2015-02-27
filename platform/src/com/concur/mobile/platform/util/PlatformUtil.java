@@ -36,6 +36,7 @@ public class PlatformUtil {
         endPointUrlBldr.append(Format.safeFormatCalendar(Parse.LONG_YEAR_MONTH_DAY, checkInDate));
         endPointUrlBldr.append("&checkout=");
         endPointUrlBldr.append(Format.safeFormatCalendar(Parse.LONG_YEAR_MONTH_DAY, checkOutDate));
+        endPointUrlBldr.append("&radius=25");
         return endPointUrlBldr.toString();
     }
 
