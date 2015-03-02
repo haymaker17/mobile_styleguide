@@ -186,9 +186,11 @@
             android:windowSoftInputMode="adjustResize" />
         <activity
             android:name="com.concur.mobile.platform.ui.travel.hotel.activity.HotelSearchAndResultActivity"
+            android:screenOrientation="portrait"
             android:theme="@style/ConcurRestTheme.White.ActionBarTabs" />
         <activity
             android:name="com.concur.mobile.platform.ui.travel.hotel.activity.HotelChoiceDetailsActivity"
+            android:screenOrientation="portrait"
             android:theme="@style/ConcurRestTheme.White.ActionBarTabs" />
         <activity
             android:name="com.concur.mobile.platform.ui.travel.hotel.activity.HotelVoiceSearchActivity"
