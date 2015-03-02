@@ -2038,7 +2038,9 @@ public class TravelBaseActivity extends BaseActivity {
                 }
                 txtView = (TextView) reasonsCodeView.findViewById(R.id.field_value);
                 if (txtView != null) {
-                    txtView.setText(R.string.travel_points_address_violations_label);
+                    // MOB-22752 - get the Travel Points to use for this booking and show the Use Travel Points message
+                    String violationReasonText = Format.localizeText(ConcurCore.getContext(),
+                            R.string.travel_points_being_used_for_booking, new Object[] { getTravelPointsToUse() });
                 }
 
                 reasonsCodeView.setOnClickListener(new ManageViolationsOnClickListener());
