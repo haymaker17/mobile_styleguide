@@ -275,7 +275,7 @@ public class RequestListActivity extends BaseActivity {
         if (HAS_CONFIGURATION) {
             final RequestGroupConfiguration rgc = getConcurCore().getRequestGroupConfigurationCache()
                     .getValue(getUserId());
-            if (rgc.getDefaultPolicyId() != null) {
+            if (rgc != null && rgc.getDefaultPolicyId() != null) {
                 return true;
             }
         }
