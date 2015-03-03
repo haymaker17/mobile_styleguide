@@ -242,7 +242,7 @@
     <string name="td_overlay_approve_report">Approve \nthe report</string>
 
     <!-- Message Center -->
-    <string name="msg_cntr_title">Message Center</string>
+    <string name="msg_cntitle">Message Center</string>
     <string name="msg_cntr_no_data">You have no messages</string>
     <string name="msg_cntr_new_upcoming_look">New look coming soon\n for Concur App!</string>
 
@@ -660,6 +660,8 @@
     <string name="tr_error_submit">An error occured on your request Submission. Please try again on the website for further informations.</string>
     <string name="tr_error_save">An error occured on your Save operation. Please try again on the website for further informations.</string>
     <string name="tr_error_retrieving_detail">An error occured. Please try again.</string>
+    <string name="tr_operation_successful">Operation success</string>
+    <string name="tr_operation_failed">Operation failed</string>
     <string name="tr_operation_canceled">Operation canceled</string>
     <string name="tr_flight_destination_label">%%0%% to %%1%%</string>
     <string name="tr_at">At</string>

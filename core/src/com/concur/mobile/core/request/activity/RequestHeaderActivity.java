@@ -128,7 +128,6 @@ public class RequestHeaderActivity extends AbstractConnectFormFieldActivity impl
             // --- TR initialization
             tr.setHeaderFormId(rgc.getFormId());
             tr.setPolicyId(rgc.getDefaultPolicyId());
-            // --- TODO : TBC
             tr.setCurrencyCode(Currency.getInstance(locale).getCurrencyCode());
             tr.setRequestDate(new Date());
             setCanSave(true);
@@ -401,7 +400,6 @@ public class RequestHeaderActivity extends AbstractConnectFormFieldActivity impl
         @Override
         public void onRequestSuccess(Bundle resultData) {
             final boolean isCreation = tr.getId() == null;
-            ConnectHelper.displayMessage(getApplicationContext(), "REQUEST SAVED");
             requestListCache.setDirty(true);
 
             // metrics
@@ -410,8 +408,6 @@ public class RequestHeaderActivity extends AbstractConnectFormFieldActivity impl
             params.put(Flurry.PARAM_NAME_TYPE, Flurry.PARAM_VALUE_TRAVEL_REQUEST_HEADER);
             EventTracker.INSTANCE.track(Flurry.CATEGORY_TRAVEL_REQUEST,
                     (isCreation ? Flurry.EVENT_NAME_CREATE : Flurry.EVENT_NAME_SAVED), params);
-
-            // --- TODO Refresh values
 
             if (resultData != null) {
 

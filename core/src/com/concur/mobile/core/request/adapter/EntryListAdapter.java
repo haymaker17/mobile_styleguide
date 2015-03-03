@@ -105,7 +105,7 @@ public class EntryListAdapter extends AbstractGenericAdapter<RequestEntryDTO> {
 
     @Override
     public boolean isEnabled(int position) {
-        // --- TODO we do not enable expected expense for now
+        // --- XXX we do not enable expected expense for now
         return getItem(position).getListSegment().size() > 0;
     }
 }

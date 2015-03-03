@@ -371,7 +371,7 @@ public abstract class AbstractConnectFormFieldActivity extends BaseActivity {
                         break;
 
                     case MONEYFIELD:
-                        // --- we do not display currency symbol if the field is editable (TODO TBC)
+                        // --- we do not display currency symbol if the field is editable
                         if (!isEditable) {
                             component = new TextView(this);
                             final String currencyName = getModelDisplayedValueByFieldName(model, "CurrencyName");

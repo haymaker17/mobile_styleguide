@@ -251,15 +251,11 @@ public class LocationSearchActivity extends Activity {
         }
     }
 
-    // Listen for typing in the search filter
-    //searchText.addTextChangedListener(new SearchTextWatcher());
-
     public class SearchListener implements BaseAsyncRequestTask.AsyncReplyListener {
 
         @Override
         public void onRequestSuccess(Bundle resultData) {
             manageProgressBarVisibility(false);
-            ConnectHelper.displayMessage(getApplicationContext(), "SEARCH SUCCESSFULL");
             final List<Location> listLocation = RequestParser
                     .parseLocations(resultData.getString(BaseAsyncRequestTask.HTTP_RESPONSE));
             // metrics

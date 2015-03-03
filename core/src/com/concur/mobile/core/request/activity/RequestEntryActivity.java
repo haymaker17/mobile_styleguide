@@ -74,11 +74,6 @@ public class RequestEntryActivity extends AbstractConnectFormFieldActivity imple
     private static final String FIELD_COMMENT = "Comment";
     private static final String FIELD_AMOUNT = "ForeignAmount";
     private static final String FIELD_CURRENCY = "CrnKey";
-    // --- MISC
-    // --- CARRT / TAXIF / LIMOF
-    // --- PARKG / HOTEL
-    // --- AIRFR / RAILF
-    // --- DININ / EVENT : nothing specific.
 
     public static final int TAB_ONE_WAY = 0;
     public static final int TAB_ROUND_TRIP = 1;
@@ -165,7 +160,6 @@ public class RequestEntryActivity extends AbstractConnectFormFieldActivity imple
 
         requestListCache = (RequestListCache) concurCore.getRequestListCache();
         formFieldsCache = (ConnectFormFieldsCache) concurCore.getRequestFormFieldsCache();
-        //groupConfigurationCache = (RequestGroupConfigurationCache) concurCore.getRequestGroupConfigurationCache();
 
         final Bundle bundle = getIntent().getExtras();
         final String requestId = bundle.getString(RequestListActivity.REQUEST_ID);
@@ -178,8 +172,9 @@ public class RequestEntryActivity extends AbstractConnectFormFieldActivity imple
         if (requestId != null) {
             request = requestListCache.getValue(requestId);
             if (request == null) {
-                ConnectHelper.displayMessage(this, "Error : request object is null !!!");
                 finish();
+                Log.e(CLS_TAG, "Request object is null. finish() activity");
+                Toast.makeText(this, getResources().getString(R.string.general_error), Toast.LENGTH_LONG);
             } else {
                 // --- check rights to save (false = RO view + no save button)
                 setCanSave(request.isActionPermitted(RequestParser.PermittedAction.SAVE) && (
@@ -228,7 +223,6 @@ public class RequestEntryActivity extends AbstractConnectFormFieldActivity imple
                 configureUI();
             }
         } else {
-            // TODO this might be used later if we can create directly from a segment type selection screen
             // --- This is wrong, go back to previous screen and log error
             Log.e(CLS_TAG, "requestId is null !");
             finish();
@@ -272,7 +266,7 @@ public class RequestEntryActivity extends AbstractConnectFormFieldActivity imple
             } else if (entry.getTripType() == RequestEntryDTO.TripType.MULTI_SEGMENT) {
                 viewedFragment = originFragment = TAB_MULTI_LEG;
                 segmentsMultiLeg = entry.getListSegment();
-                //TODO multi-leg
+                //XXX multi-leg
             }
             final Map<Integer, String> tabTitles = new HashMap<Integer, String>();
             tabTitles.put(TAB_ONE_WAY, getResources().getString(R.string.air_search_btn_oneway));
@@ -371,7 +365,7 @@ public class RequestEntryActivity extends AbstractConnectFormFieldActivity imple
                     // --- Adds Arrival segment to round trip
                     inUseListSegment.add(segmentA);
                 } else if (entryListSegment.size() > 2) {
-                    // --- TODO conversion operation from multi-leg to round trip
+                    // --- XXX conversion operation from multi-leg to round trip
                 }
             }
 
@@ -394,7 +388,7 @@ public class RequestEntryActivity extends AbstractConnectFormFieldActivity imple
                 }
             }
             inUseListSegment = segmentsMultiLeg;
-            //TODO
+            //XXX
 
             int displayOrder = 0;
             for (RequestSegmentDTO segment : inUseListSegment) {
@@ -940,7 +934,6 @@ public class RequestEntryActivity extends AbstractConnectFormFieldActivity imple
         @Override
         public void onRequestSuccess(Bundle resultData) {
             final boolean isCreation = entry.getId() == null;
-            ConnectHelper.displayMessage(getApplicationContext(), "ENTRY SAVED");
             requestListCache.setDirty(true);
 
             // metrics

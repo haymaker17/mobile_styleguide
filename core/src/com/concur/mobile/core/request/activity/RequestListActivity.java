@@ -9,10 +9,7 @@ import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.View.OnClickListener;
-import android.widget.AdapterView;
-import android.widget.Button;
-import android.widget.ListView;
-import android.widget.ViewFlipper;
+import android.widget.*;
 import com.concur.core.R;
 import com.concur.mobile.base.service.BaseAsyncRequestTask;
 import com.concur.mobile.base.service.BaseAsyncRequestTask.AsyncReplyListener;
@@ -189,7 +186,8 @@ public class RequestListActivity extends BaseActivity {
                 } else {
                     setView(ID_EMPTY_VIEW);
                 }
-                // TODO : display an error message ?
+                Log.e(CLS_TAG, "Form retrieving failed.");
+                Toast.makeText(this, getResources().getString(R.string.general_error), Toast.LENGTH_LONG);
             }
             formWaitingForRefresh = null;
             reqWaitingForFormRefresh = null;
@@ -284,7 +282,6 @@ public class RequestListActivity extends BaseActivity {
         return false;
     }
 
-    // TODO : see with PM if we should display cache or an empty list
     private void handleRefreshFail() {
         if (requestListCache.hasCachedValues()) {
             updateListUI(new ArrayList<RequestDTO>(requestListCache.getValues()));
@@ -339,11 +336,6 @@ public class RequestListActivity extends BaseActivity {
 
     private void cleanupReceivers() {
         asyncFormFieldsReceiver.setListener(null);
-    }
-
-    // TODO : move somewhere else / use something existing
-    public enum ListenerOutputType {
-        SUCCESS, ERROR, CANCEL
     }
 
     /**
@@ -447,7 +439,6 @@ public class RequestListActivity extends BaseActivity {
             {
                 formFieldsCache.addForm(formId, rForm);
             }
-            // TODO see if there can be a nextPage, and if it's the case handle it
             handleAwaitingRefresh(formId, true);
         }
 

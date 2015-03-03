@@ -102,7 +102,7 @@ public class RequestSummaryActivity extends BaseActivity {
             tr = getConcurCore().getRequestListCache().getValue(requestId);
         } else {
             Log.e(Const.LOG_TAG, CLS_TAG + " onCreate() : problem on tr retrieved, going back to list activity.");
-            // TODO : throw exception & display toast message ? @See with PM
+            Toast.makeText(this, getResources().getString(R.string.general_error), Toast.LENGTH_LONG);
             // getting back to list screen
             final Intent resIntent = new Intent();
             resIntent.putExtra(RequestHeaderActivity.DO_WS_REFRESH, true);
@@ -274,7 +274,6 @@ public class RequestSummaryActivity extends BaseActivity {
         amount.setTypeface(Typeface.DEFAULT_BOLD);
 
         if (tr.getEntriesMap() != null) {
-            //TODO
             ((EntryListAdapter) entryListView.getAdapter())
                     .updateList(new ArrayList<RequestEntryDTO>(tr.getEntriesMap().values()));
             if (tr.getEntriesMap().size() <= 1) {
@@ -455,8 +454,6 @@ public class RequestSummaryActivity extends BaseActivity {
                         } else {
                             waitFormFieldsCacheRefresh(segmentFormId, entry.getId(), null);
                         }
-                    } else {
-                        //TODO What to do ? is this case possible ?
                     }
                 } else {
                     Log.e(Const.LOG_TAG, CLS_TAG + ".onItemClick: request id is null!");
@@ -515,7 +512,6 @@ public class RequestSummaryActivity extends BaseActivity {
 
         @Override
         public void onRequestSuccess(Bundle resultData) {
-            ConnectHelper.displayMessage(getApplicationContext(), "REQUEST SUBMITTED");
             ((RequestListCache) getConcurCore().getRequestListCache()).setDirty(true);
 
             // metrics
@@ -577,9 +573,6 @@ public class RequestSummaryActivity extends BaseActivity {
             } else {
                 handleAwaitingRefresh(formId, false);
             }
-            // TODO see if there can be a nextPage, and if it's the case handle it
-            // => we should never have pagination, as we're supposed to maximise LIMIT to avoid that case
-            // (for now at least)
         }
 
         @Override
@@ -613,7 +606,8 @@ public class RequestSummaryActivity extends BaseActivity {
                         (entryWaitingForRefreshType != null ? entryWaitingForRefreshType.getCode() : null));
             } else {
                 setView(ID_DETAIL_VIEW);
-                // TODO : display an error message ?
+                Log.e(CLS_TAG, "Form refresh failed");
+                Toast.makeText(this, getResources().getString(R.string.general_error), Toast.LENGTH_LONG);
             }
             formWaitingForRefresh = null;
             entryWaitingForRefresh = null;
