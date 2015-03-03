@@ -1,20 +1,11 @@
 /**
- * 
+ *
  */
 package com.concur.mobile.core.request.task;
-
-import java.io.IOException;
-import java.io.InputStream;
-import java.io.InputStreamReader;
-import java.io.Reader;
-import java.io.UnsupportedEncodingException;
-import java.net.HttpURLConnection;
-import java.net.URLEncoder;
 
 import android.content.Context;
 import android.text.TextUtils;
 import android.util.Log;
-
 import com.concur.mobile.base.service.BaseAsyncRequestTask;
 import com.concur.mobile.base.service.BaseAsyncResultReceiver;
 import com.concur.mobile.core.service.ServiceRequestException;
@@ -23,9 +14,12 @@ import com.concur.mobile.platform.service.PlatformAsyncRequestTask;
 import com.concur.mobile.platform.util.Format;
 import com.concur.platform.PlatformProperties;
 
+import java.io.*;
+import java.net.HttpURLConnection;
+import java.net.URLEncoder;
+
 /**
  * @author OlivierB
- * 
  */
 public abstract class AbstractRequestWSCallTask extends BaseAsyncRequestTask {
 
@@ -42,7 +36,7 @@ public abstract class AbstractRequestWSCallTask extends BaseAsyncRequestTask {
 
     /**
      * Return the User-Agent header string for this request.
-     * 
+     *
      * @return A string containing the user agent for this request
      */
     @Override
@@ -52,7 +46,7 @@ public abstract class AbstractRequestWSCallTask extends BaseAsyncRequestTask {
 
     /**
      * Gets the URL for this request.
-     * 
+     *
      * @return the request URL.
      */
     @Override
@@ -76,8 +70,10 @@ public abstract class AbstractRequestWSCallTask extends BaseAsyncRequestTask {
                     resultCode = BaseAsyncRequestTask.RESULT_CANCEL;
                 }
             } catch (ServiceRequestException e) {
-                Log.e(Const.LOG_TAG, CLS_TAG + ".getURL: request cancelled. Following error met: "
-                        + (e.getMessage() != null ? e.getMessage() : "no message."));
+                Log.e(Const.LOG_TAG,
+                        CLS_TAG + ".getURL: request cancelled. Following error met: " + (e.getMessage() != null ?
+                                e.getMessage() :
+                                "no message."));
                 resultCode = BaseAsyncRequestTask.RESULT_CANCEL;
             }
         } else {
@@ -90,7 +86,7 @@ public abstract class AbstractRequestWSCallTask extends BaseAsyncRequestTask {
 
     /**
      * Gets the service end-point for this request.
-     * 
+     *
      * @return returns the service end-point for this request.
      * @throws ServiceRequestException
      */
@@ -98,9 +94,9 @@ public abstract class AbstractRequestWSCallTask extends BaseAsyncRequestTask {
 
     /**
      * Gets whether this request requires a session id.
-     * 
+     *
      * @return returns whether this request requires a session id. Defaults to
-     *         <code>true</code>.
+     * <code>true</code>.
      */
     protected boolean requiresSessionId() {
         return true;
@@ -108,7 +104,7 @@ public abstract class AbstractRequestWSCallTask extends BaseAsyncRequestTask {
 
     /**
      * Gets the message id for this request.
-     * 
+     *
      * @return returns the message id for this request.
      */
     protected String getMessageId() {
@@ -121,6 +117,7 @@ public abstract class AbstractRequestWSCallTask extends BaseAsyncRequestTask {
 
         // Set the accept header to JSON.
         connection.setRequestProperty(HEADER_ACCEPT, CONTENT_TYPE_JSON);
+        connection.setRequestProperty(HEADER_CONTENT_TYPE, CONTENT_TYPE_JSON);
 
         // Set the session id.
         if (requiresSessionId()) {

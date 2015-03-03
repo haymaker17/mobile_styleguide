@@ -1,36 +1,84 @@
 package com.concur.mobile.platform.request.dto;
 
+import com.concur.mobile.platform.request.ConnectExceptionMessage;
+import com.google.gson.annotations.Expose;
+import com.google.gson.annotations.SerializedName;
+
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
-public class RequestSegmentDTO {
+public class RequestSegmentDTO implements FormDTO {
 
-    private String segmentType;
-    private String foreignCurrencyName;
-    private String foreignCurrencyCode;
-    private Double foreignAmount;
+    @Expose @SerializedName("ID")
+    private String id;
+    @Expose @SerializedName("DepartureDate")
     private Date departureDate;
+    @Expose @SerializedName("ArrivalDate")
     private Date arrivalDate;
+    @Expose @SerializedName("FromLocationID")
+    private String fromLocationId;
+    @Expose @SerializedName("ToLocationID")
+    private String toLocationId;
+    @SerializedName("FromLocationName")
     private String fromLocationName;
+    @SerializedName("ToLocationName")
     private String toLocationName;
+    //@SerializedName()
     private int exceptionCount;
-    private List<String> exeptionList = new ArrayList<String>();
+    @SerializedName("Exceptions")
+    private List<ConnectExceptionMessage> exeptionList = new ArrayList<ConnectExceptionMessage>();
+    @SerializedName("Comments")
+    private List<String> commentList = null;
+    @Expose @SerializedName("Comment")
+    private String lastComment;
+    @SerializedName("Order")
+    private Integer displayOrder;
 
-    public String getSegmentType() {
-        return segmentType;
+    public String getFromLocationId() {
+        return fromLocationId;
     }
 
-    public void setSegmentType(String segmentType) {
-        this.segmentType = segmentType;
+    public void setFromLocationId(String fromLocationId) {
+        this.fromLocationId = fromLocationId;
     }
 
-    public String getForeignCurrencyName() {
-        return foreignCurrencyName;
+    public String getToLocationId() {
+        return toLocationId;
     }
 
-    public void setForeignCurrencyName(String foreignCurrencyName) {
-        this.foreignCurrencyName = foreignCurrencyName;
+    public void setToLocationId(String toLocationId) {
+        this.toLocationId = toLocationId;
+    }
+
+    @Override
+    public Integer getDisplayOrder() {
+        return displayOrder;
+    }
+
+    public void setDisplayOrder(int displayOrder) {
+        this.displayOrder = displayOrder;
+    }
+
+    public String getLastComment() {
+        return lastComment;
+    }
+
+    public void setLastComment(String lastComment) {
+        this.lastComment = lastComment;
+    }
+
+    public List<String> getCommentList() {
+        return commentList;
+    }
+
+    public void setCommentList(List<String> commentList) {
+        this.commentList = commentList;
+    }
+
+    @Override
+    public String getId() {
+        return id;
     }
 
     public String getFromLocationName() {
@@ -49,14 +97,6 @@ public class RequestSegmentDTO {
         this.toLocationName = toLocationName;
     }
 
-    public Double getForeignAmount() {
-        return foreignAmount;
-    }
-
-    public void setForeignAmount(Double foreignAmount) {
-        this.foreignAmount = foreignAmount;
-    }
-
     public Date getDepartureDate() {
         return departureDate;
     }
@@ -73,14 +113,6 @@ public class RequestSegmentDTO {
         this.arrivalDate = arrivalDate;
     }
 
-    public String getForeignCurrencyCode() {
-        return foreignCurrencyCode;
-    }
-
-    public void setForeignCurrencyCode(String foreignCurrencyCode) {
-        this.foreignCurrencyCode = foreignCurrencyCode;
-    }
-
     public int getExceptionCount() {
         return exceptionCount;
     }
@@ -89,11 +121,11 @@ public class RequestSegmentDTO {
         this.exceptionCount = exceptionCount;
     }
 
-    public List<String> getExeptionList() {
+    public List<ConnectExceptionMessage> getExeptionList() {
         return exeptionList;
     }
 
-    public void setExeptionList(List<String> exeptionList) {
+    public void setExeptionList(List<ConnectExceptionMessage> exeptionList) {
         this.exeptionList = exeptionList;
     }
 }

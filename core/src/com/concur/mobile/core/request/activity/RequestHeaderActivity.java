@@ -1,485 +1,525 @@
 package com.concur.mobile.core.request.activity;
 
-import java.text.ParseException;
-import java.text.SimpleDateFormat;
-import java.util.ArrayList;
-import java.util.Calendar;
-import java.util.Collections;
-import java.util.Comparator;
-import java.util.Date;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Locale;
-import java.util.Map;
-
-import android.app.ActionBar.LayoutParams;
-import android.app.DatePickerDialog;
-import android.app.DatePickerDialog.OnDateSetListener;
-import android.app.Dialog;
-import android.app.DialogFragment;
-import android.graphics.Color;
+import android.app.Activity;
+import android.content.DialogInterface;
+import android.content.Intent;
 import android.graphics.Typeface;
-import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
-import android.text.InputType;
-import android.text.TextUtils.TruncateAt;
-import android.util.Log;
+import android.os.Handler;
+import android.support.v4.app.FragmentActivity;
 import android.util.TypedValue;
 import android.view.View;
 import android.view.View.OnClickListener;
-import android.widget.Button;
-import android.widget.DatePicker;
-import android.widget.EditText;
-import android.widget.LinearLayout;
-import android.widget.ListView;
-import android.widget.RelativeLayout;
-import android.widget.TextView;
-
+import android.widget.*;
+import com.apptentive.android.sdk.Log;
 import com.concur.core.R;
+import com.concur.mobile.base.service.BaseAsyncRequestTask;
+import com.concur.mobile.base.service.BaseAsyncResultReceiver;
 import com.concur.mobile.core.ConcurCore;
-import com.concur.mobile.core.activity.BaseActivity;
-import com.concur.mobile.core.request.activity.RequestListActivity.ListAdapterRowClickListener;
+import com.concur.mobile.core.activity.AbstractConnectFormFieldActivity;
+import com.concur.mobile.core.request.task.RequestSaveTask;
+import com.concur.mobile.core.request.util.ConnectHelper;
+import com.concur.mobile.core.request.util.DateUtil;
 import com.concur.mobile.core.util.Const;
+import com.concur.mobile.core.util.EventTracker;
+import com.concur.mobile.core.util.Flurry;
 import com.concur.mobile.platform.common.formfield.ConnectForm;
 import com.concur.mobile.platform.common.formfield.ConnectFormField;
 import com.concur.mobile.platform.common.formfield.ConnectFormFieldsCache;
-import com.concur.mobile.platform.common.formfield.IFormField.AccessType;
-import com.concur.mobile.platform.common.formfield.IFormField.ControlType;
-import com.concur.mobile.platform.common.formfield.IFormField.DataType;
+import com.concur.mobile.platform.request.RequestGroupConfigurationCache;
 import com.concur.mobile.platform.request.RequestListCache;
+import com.concur.mobile.platform.request.dto.FormDTO;
 import com.concur.mobile.platform.request.dto.RequestDTO;
+import com.concur.mobile.platform.request.groupConfiguration.RequestGroupConfiguration;
+import com.concur.mobile.platform.request.util.RequestParser;
+import com.concur.mobile.platform.ui.common.dialog.AlertDialogFragment;
+import com.concur.mobile.platform.ui.common.dialog.DialogFragmentFactory;
+import com.concur.mobile.platform.ui.common.dialog.NoConnectivityDialogFragment;
 import com.concur.mobile.platform.util.Parse;
 
-public class RequestHeaderActivity extends BaseActivity implements OnClickListener  {
-
-	private RequestListCache requestListCache = null;
-	private ConnectFormFieldsCache formFieldsCache = null;
-
-	private RequestDTO tr;
-	private ConnectForm form;
-
-	private static final String CLS_TAG = RequestListActivity.class.getSimpleName();
-
-	private SimpleDateFormat dateFormatter;
-	private Locale loc;
-
-	private DatePickerDialog fromDatePickerDialog;
-
-	private Map<Integer, String> views = new HashMap(); // view ID, filed NAME
-	private int viewID = 0;
-
-	private List dateViews = new ArrayList<Integer>();
-	private List datePickerDialogs = new ArrayList<DatePickerDialog>();
-
-	private static enum DisplayType {
-		TEXTFIELD,		//RequestID, Name, Status
-		TEXTAREA,		//Purpose, Comment
-		DATEFIELD,		//startDate, endate
-		MONEYFIELD;		//totalAmount&currency
-	}
-
-	@Override
-	protected void onCreate(Bundle savedInstanceState) {
-		super.onCreate(savedInstanceState);
-
-		setContentView(R.layout.request_header);
-
-		final ConcurCore concurCore = (ConcurCore) getApplication();
-
-		requestListCache = (RequestListCache) concurCore.getRequestListCache();
-		formFieldsCache = (ConnectFormFieldsCache) concurCore.getRequestFormFieldsCache();
-
-		final Bundle bundle = getIntent().getExtras();
-		final String requestId = bundle.getString(RequestListActivity.REQUEST_ID);
-
-		if (requestId != null){
-			tr = requestListCache.getValue(requestId);
-			form = formFieldsCache.getFormFields(tr.getHeaderFormId());
-		}
-		else{
-			Log.e(Const.LOG_TAG, CLS_TAG + " onCreate() : problem on tr retrieved, going back to list activity.");
-			// TODO : throw exception & display toast message ? @See with PM
-			finish();
-		}
-
-		loc = this.getResources().getConfiguration().locale;
-		dateFormatter = new SimpleDateFormat("yyyy-mm-dd", loc);
-
-		this.setUI();
-
-	}
-
-	private void setUI(){
-
-		final TextView name = (TextView) findViewById(R.id.requestHeaderName);
-		name.setText(tr.getName());
-		name.setTypeface(Typeface.DEFAULT_BOLD);
-
-		final LinearLayout requestHeaderFields = (LinearLayout) findViewById(R.id.requestHeaderFields);
-		this.setDisplayFields(requestHeaderFields);
-	}
-
-
-	private void setDisplayFields(LinearLayout requestHeaderFields){
-
-		LinearLayout ffLayout = requestHeaderFields;
-
-		List<ConnectFormField> formfields = form.getFormFields();    	
-		Collections.sort(formfields);
-		
-		LinearLayout.LayoutParams llp;
-
-		for(ConnectFormField ff : formfields){
-
-			DataType dataType = ff.getDataType();
-			ControlType controlType = ff.getControlType();
-			AccessType accesType = ff.getAccessType();
-
-
-			DisplayType displayType = null;
-
-			switch(dataType){
-			case BOOLEAN:
-				break;
-			case CHAR:
-				break;
-			case CONNECTED_LIST:
-				break;
-			case CURRENCY:
-				break;
-			case EXPENSE_TYPE:
-				break;
-			case INTEGER:
-				break;
-			case LIST:
-				break;
-			case LOCATION:
-				break;
-			case MONEY:
-				displayType = DisplayType.MONEYFIELD;
-				break;
-			case NUMERIC:
-				break;
-			case TIMESTAMP:
-				displayType = DisplayType.DATEFIELD;
-				break;
-			case UNSPECIFED:
-				break;
-			case VARCHAR:
-				switch(controlType){
-				case EDIT:
-					displayType = DisplayType.TEXTFIELD;
-					break;
-				case TEXT_AREA:
-					displayType = DisplayType.TEXTAREA;
-					break;
-				default :
-					break;
-				}
-				break;
-			default:
-				displayType = null;
-				break;
-			}
-
-
-			if(displayType != null)
-
-				switch(displayType){
-				case TEXTFIELD:
-
-					TextView textField;
-					if(accesType == accesType.RO)
-						textField = new TextView(this);
-					else
-						textField = new EditText(this);
-
-					ffLayout.addView(getTextView_FielddName(getLabelFromFieldName(ff.getName())));
-					textField.setText(getValueFromFieldName(ff.getName()));
-					textField.setMaxLines(1);
-					textField.setSingleLine(true); textField.setEllipsize(TruncateAt.END); //ellipses
-					textField.setTextSize(TypedValue.COMPLEX_UNIT_SP, 15);
-					ffLayout.addView(textField);
-
-					llp = new LinearLayout.LayoutParams(LayoutParams.MATCH_PARENT, LayoutParams.MATCH_PARENT);
-					if(accesType == accesType.RO) llp.setMargins(30, 0, 0, 0); // llp.setMargins(left, top, right, bottom);
-					textField.setLayoutParams(llp);
-					
-					textField.setId(viewID);
-					views.put(viewID, ff.getName()); viewID++;
-
-					addWhiteSpace(ffLayout);
-					if(ff.isLineSeparator()) addSeparator(ffLayout);
-
-					break;
-
-				case TEXTAREA:
-
-					TextView textArea;
-					if(accesType == accesType.RO)
-						textArea = new TextView(this);
-					else
-						textArea = new EditText(this);
-
-					ffLayout.addView(getTextView_FielddName(getLabelFromFieldName(ff.getName())));
-
-					textArea.setText(getValueFromFieldName(ff.getName()));
-					textArea.setLines(5);
-					textArea.setMaxLines(5);
-					textArea.setTextSize(TypedValue.COMPLEX_UNIT_SP, 15);
-					ffLayout.addView(textArea);
-
-					llp = new LinearLayout.LayoutParams(LayoutParams.MATCH_PARENT, LayoutParams.MATCH_PARENT);
-					if(accesType == accesType.RO) llp.setMargins(30, 0, 0, 0); // llp.setMargins(left, top, right, bottom);
-					textArea.setLayoutParams(llp);
-					
-					textArea.setId(viewID);
-					views.put(viewID, ff.getName()); viewID++;
-
-					addWhiteSpace(ffLayout);
-					if(ff.isLineSeparator()) addSeparator(ffLayout);
-
-					break;
-
-				case DATEFIELD:
-
-					final TextView 
-					fromDateEtxt = new TextView(this);
-
-					ffLayout.addView(getTextView_FielddName(getLabelFromFieldName(ff.getName())));
-
-					fromDateEtxt.setText(getValueFromFieldName(ff.getName()));
-					fromDateEtxt.setInputType(InputType.TYPE_NULL);
-					fromDateEtxt.setTextSize(TypedValue.COMPLEX_UNIT_SP, 15);
-					fromDateEtxt.requestFocus();
-
-					//ADD LISTENER for setting date
-					if(!(accesType == accesType.RO)){
-						fromDateEtxt.setOnClickListener((OnClickListener) this);
-						Calendar newCalendar = Calendar.getInstance();
-
-						OnDateSetListener inDateListener = new OnDateSetListener(){
-
-							public void onDateSet(DatePicker view, int year, int monthOfYear, int dayOfMonth) {
-								Calendar newDate = Calendar.getInstance();
-								newDate.set(year, monthOfYear, dayOfMonth);
-								fromDateEtxt.setText(dateFormatter.format(newDate.getTime()));
-							}
-						};
-
-						DatePickerDialog fromDatePickerDialog = new DatePickerDialog(this, inDateListener, 
-								newCalendar.get(Calendar.YEAR), newCalendar.get(Calendar.MONTH), newCalendar.get(Calendar.DAY_OF_MONTH));
-
-						dateViews.add(viewID);
-						datePickerDialogs.add(fromDatePickerDialog);
-					}
-
-					fromDateEtxt.setId(viewID);
-					llp = new LinearLayout.LayoutParams(LayoutParams.MATCH_PARENT, LayoutParams.MATCH_PARENT);
-					llp.setMargins(30, 0, 0, 0); // llp.setMargins(left, top, right, bottom);
-					fromDateEtxt.setLayoutParams(llp);
-
-					views.put(viewID, ff.getName()); viewID++;
-
-					ffLayout.addView(fromDateEtxt);
-
-					addWhiteSpace(ffLayout);
-					if(ff.isLineSeparator()) addSeparator(ffLayout);
-
-					break;
-
-				case MONEYFIELD:
-
-					ffLayout.addView(getTextView_FielddName(getLabelFromFieldName(ff.getName())));
-
-					TextView moneyField = new TextView(this);
-					moneyField.setText(getValueFromFieldName("CurrencyName") + " " + getValueFromFieldName(ff.getName()));
-					moneyField.setMaxLines(1);
-					moneyField.setSingleLine(true); moneyField.setEllipsize(TruncateAt.END); //ellipses
-					moneyField.setTextSize(TypedValue.COMPLEX_UNIT_SP, 15);
-					ffLayout.addView(moneyField);
-
-					moneyField.setId(viewID);
-					views.put(viewID, ff.getName()); viewID++;
-					
-					llp = new LinearLayout.LayoutParams(LayoutParams.MATCH_PARENT, LayoutParams.MATCH_PARENT);
-					if(accesType == accesType.RO) llp.setMargins(30, 0, 0, 0); // llp.setMargins(left, top, right, bottom);
-					moneyField.setLayoutParams(llp);
-
-					addWhiteSpace(ffLayout);
-					if(ff.isLineSeparator()) addSeparator(ffLayout);
-
-					break;
-
-				default:
-					displayType = null;
-					break;
-				}
-		}
-	}
-
-
-	@Override
-	public void onClick(View view) {
-
-		for(int i=0; i<dateViews.size(); i++){
-			if((Integer)dateViews.get(i) == view.getId()){
-				((DatePickerDialog) datePickerDialogs.get(i)).show();
-			}
-		}
-
-
-	}
-
-	@Override
-	protected void onResume() {
-		super.onResume();
-	} 
-
-	@Override
-	protected void onPause() {
-		super.onPause();
-	}
-
-	@Override
-	public void onBackPressed() {
-		super.onBackPressed();
-
-	}
-
-	public String getLabelFromFieldName(String fieldName){
-
-		if(fieldName.equals("Name")){
-			return this.getResources().getString(R.string.tr_name);
-		}
-		else if(fieldName.equals("StartDate")){
-			return this.getResources().getString(R.string.tr_start_date);
-		}
-		else if(fieldName.equals("EndDate")){
-			return this.getResources().getString(R.string.tr_end_date);
-		}
-		else if(fieldName.equals("Purpose")){
-			return this.getResources().getString(R.string.business_purpose);
-		}
-		else if(fieldName.equals("Comment")){
-			return this.getResources().getString(R.string.comment);
-		}
-		else if(fieldName.equals("EmpName")){
-			return this.getResources().getString(R.string.tr_employee_name);
-		}
-		else if(fieldName.equals("CurrencyName")){
-			return this.getResources().getString(R.string.currency);
-		}
-		else if(fieldName.equals("TotalPostedAmount")){
-			return this.getResources().getString(R.string.amount);
-		}
-		else return "";
-	}
-
-	public String getValueFromFieldName(String fieldName){
-
-		if(fieldName.equals("Name")){
-			if(tr.getName() == null) return "";
-			return tr.getName();
-		}
-		else if(fieldName.equals("StartDate")){
-			if(tr.getStartDate() == null || tr.getStartDate().equals("")) return "";
-			return dateFormatter.format(tr.getStartDate());
-		}
-		else if(fieldName.equals("EndDate")){
-			if(tr.getStartDate() == null || tr.getEndDate().equals("")) return "";
-			return dateFormatter.format(tr.getEndDate());
-		}
-		else if(fieldName.equals("Purpose")){
-			if(tr.getPurpose() == null) return "";
-			return tr.getPurpose();
-		}
-		else if(fieldName.equals("Comment")){
-			if(tr.getLastComment() == null) return "";
-			return tr.getLastComment();
-		}
-		else if(fieldName.equals("EmpName")){
-			if(tr.getEmployeeName() == null) return "";
-			return tr.getEmployeeName();
-		}
-		else if(fieldName.equals("CurrencyName")){
-			if(tr.getCurrency() == null) return "";
-			return tr.getCurrency();
-		}
-		else if(fieldName.equals("TotalPostedAmount"))
-			return String.valueOf(tr.getTotal());
-		else return "";
-	}
-
-	public void setValueFromFieldName(String fieldName, String value){
-
-		if(fieldName.equals("Name"))
-			tr.setName(value);
-		else if(fieldName.equals("StartDate"))
-			tr.setStartDate(parseDate(value, dateFormatter));
-		else if(fieldName.equals("EndDate"))
-			tr.setEndDate(parseDate(value, dateFormatter));
-		else if(fieldName.equals("Purpose"))
-			tr.setPurpose(value);
-		else if(fieldName.equals("Comment"))
-			tr.setLastComment(value);
-		else if(fieldName.equals("EmpName"))
-			tr.setEmployeeName(value);
-		else if(fieldName.equals("CurrencyName"))
-			tr.setCurrency(value);
-		else if(fieldName.equals("TotalPostedAmount"))
-			tr.setTotal(Parse.safeParseDouble(value));
-	}
-
-	private Date parseDate(String baseStr, SimpleDateFormat sdf) {
-		if (baseStr != null) {
-			try {
-				return sdf.parse(baseStr);
-			} catch (ParseException e) {
-				// do nothing - either data is corrupted or format isn't
-				// recognized, which is quite the same.
-			}
-		}
-		return null;
-	}
-
-
-	private void addWhiteSpace(LinearLayout mainLayout){
-
-		View view = new View(this);
-		ColorDrawable backgroundColor = new ColorDrawable(this.getResources().getColor(R.color.White));
-		view.setBackground(backgroundColor);
-
-		int viewWidth = LayoutParams.MATCH_PARENT; //FILL_PARENT = MATCH_PARENT
-		int viewHeight = 50;
-		mainLayout.addView(view, viewWidth, viewHeight);
-	}
-	
-	private void addSeparator(LinearLayout mainLayout){
-
-		View view = new View(this);
-		ColorDrawable backgroundColor = new ColorDrawable(this.getResources().getColor(R.color.ListDivider));
-		view.setBackground(backgroundColor);
-
-		int viewWidth = LayoutParams.MATCH_PARENT; //FILL_PARENT = MATCH_PARENT
-		int viewHeight = 15;
-		mainLayout.addView(view, viewWidth, viewHeight);
-	}
-
-	private TextView getTextView_FielddName(String text){
-
-		TextView textView = new TextView(this);
-		textView.setText(text);
-		textView.setTextSize(TypedValue.COMPLEX_UNIT_SP, 13);
-		textView.setTextColor(Color.parseColor("#666666"));
-
-		LinearLayout.LayoutParams llp = new LinearLayout.LayoutParams(LayoutParams.MATCH_PARENT, LayoutParams.MATCH_PARENT);
-		llp.setMargins(30, 0, 0, 0); // llp.setMargins(left, top, right, bottom);
-		textView.setLayoutParams(llp);
-
-		return textView;
-	}
-
-
-
+import java.util.*;
+
+public class RequestHeaderActivity extends AbstractConnectFormFieldActivity implements OnClickListener {
+
+    private static final String CLS_TAG = RequestListActivity.class.getSimpleName();
+
+    private static final int ID_LOADING_VIEW = 0;
+    private static final int ID_HEADER_VIEW = 1;
+
+    private static final int SUMMARY_RESULT = 1;
+
+    private static final String FIELD_NAME = "Name";
+    private static final String FIELD_START_DATE = "StartDate";
+    private static final String FIELD_END_DATE = "EndDate";
+    private static final String FIELD_PURPOSE = "Purpose";
+    private static final String FIELD_COMMENT = "Comment";
+    private static final String FIELD_EMP_NAME = "EmpName";
+    private static final String FIELD_CURRENCY_NAME = "CurrencyName";
+    private static final String FIELD_TOTAL_POSTED_AMOUNT = "TotalPostedAmount";
+
+    public static final String DO_WS_REFRESH = "doWSRefresh";
+
+    protected ConnectForm form;
+    protected Locale locale;
+
+    private RequestListCache requestListCache = null;
+    private ConnectFormFieldsCache formFieldsCache = null;
+    private RequestGroupConfigurationCache groupConfigurationCache = null;
+    private RequestDTO tr;
+    private BaseAsyncResultReceiver asyncReceiverSave;
+
+    private LinearLayout requestHeaderFields;
+    private ViewFlipper requestHeaderVF;
+    private RelativeLayout saveButton;
+    private static List<String> headerLayout = new ArrayList<String>();
+
+    static {
+        headerLayout.add(FIELD_NAME);
+        headerLayout.add(FIELD_START_DATE);
+        headerLayout.add(FIELD_END_DATE);
+        headerLayout.add(FIELD_PURPOSE);
+        headerLayout.add(FIELD_COMMENT);
+        //headerLayout.add(FIELD_EMP_NAME);
+        headerLayout.add(FIELD_CURRENCY_NAME);
+        headerLayout.add(FIELD_TOTAL_POSTED_AMOUNT);
+    }
+
+    /**
+     * Bundle need to contain:
+     * - RequestSummaryActivity.REQUEST_IS_EDITABLE
+     * And for consultation / update:
+     * - RequestListActivity.REQUEST_ID
+     *
+     * @param savedInstanceState
+     */
+    @Override
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+
+        setContentView(R.layout.request_header);
+
+        final ConcurCore concurCore = (ConcurCore) getApplication();
+
+        requestListCache = (RequestListCache) concurCore.getRequestListCache();
+        formFieldsCache = (ConnectFormFieldsCache) concurCore.getRequestFormFieldsCache();
+        groupConfigurationCache = (RequestGroupConfigurationCache) concurCore.getRequestGroupConfigurationCache();
+
+        final Bundle bundle = getIntent().getExtras();
+        final String requestId = bundle.getString(RequestListActivity.REQUEST_ID);
+
+        setCanSave(bundle.getString(RequestSummaryActivity.REQUEST_IS_EDITABLE).equals(Boolean.TRUE.toString()));
+
+        locale = this.getResources().getConfiguration().locale != null ?
+                this.getResources().getConfiguration().locale :
+                Locale.US;
+
+        // --- update mode
+        if (requestId != null) {
+            tr = requestListCache.getValue(requestId);
+            form = formFieldsCache.getFormFields(tr.getHeaderFormId());
+            setCanSave(tr.getApprovalStatusCode().equals(RequestDTO.ApprovalStatus.CREATION.getCode()) || tr
+                    .getApprovalStatusCode().equals(RequestDTO.ApprovalStatus.RECALLED.getCode()));
+        }
+        // --- create mode
+        else {
+            tr = new RequestDTO();
+            final RequestGroupConfiguration rgc = groupConfigurationCache.getValue(getUserId());
+            form = formFieldsCache.getValue(rgc.getFormId());
+            // --- TR initialization
+            tr.setHeaderFormId(rgc.getFormId());
+            tr.setPolicyId(rgc.getDefaultPolicyId());
+            tr.setCurrencyCode(Currency.getInstance(locale).getCurrencyCode());
+            tr.setRequestDate(new Date());
+            setCanSave(true);
+        }
+
+        configureUI();
+    }
+
+    private void configureUI() {
+        requestHeaderVF = ((ViewFlipper) findViewById(R.id.requestDetailVF));
+        requestHeaderVF.setDisplayedChild(ID_HEADER_VIEW);
+        final LinearLayout requestTitleLayout = (LinearLayout) findViewById(R.id.requestTitleLayout);
+        final ScrollView sv = (ScrollView) findViewById(R.id.scrollView);
+        requestHeaderFields = (LinearLayout) sv.findViewById(R.id.formFieldsLayout);
+        final String fieldToTitle = FIELD_NAME;
+        this.setDisplayFields(tr, form, requestHeaderFields, requestTitleLayout, fieldToTitle);
+
+        saveButton = (RelativeLayout) findViewById(R.id.saveButton);
+        applySaveButtonPolicy(saveButton);
+    }
+
+    @Override
+    protected void save(ConnectForm form, FormDTO tr) {
+        super.save(form, tr);
+        if (ConcurCore.isConnected()) {
+            // --- creates the listener
+            asyncReceiverSave.setListener(new SaveListener());
+            requestHeaderVF.setDisplayedChild(ID_LOADING_VIEW);
+            // --- onRequestResult calls cleanup() on execution, so listener will be destroyed by processing
+            new RequestSaveTask(RequestHeaderActivity.this, 1, asyncReceiverSave, (RequestDTO) tr).execute();
+        } else {
+            new NoConnectivityDialogFragment().show(getSupportFragmentManager(), CLS_TAG);
+        }
+    }
+
+    /*
+     * Form Fields display
+     * ********************************
+     */
+
+    private boolean hasChange() {
+        boolean hasChange = false;
+
+        final List<ConnectFormField> formFields = form.getFormFields();
+        Collections.sort(formFields);
+        for (ConnectFormField ff : formFields) {
+            if (isFieldVisible(tr, ff.getName())) {
+                final TextView compView = getComponent(tr, ff.getName());
+                final String fieldName = ff.getName();
+                if (compView != null && compView.getText() != null) {
+                    final String displayedValue = compView.getText().toString();
+                    if (fieldName.equals(FIELD_NAME)) {
+                        if (tr.getName() == null) {
+                            hasChange |= displayedValue.length() > 0;
+                        } else {
+                            hasChange |= !displayedValue.equals(tr.getName());
+                        }
+                    } else if (fieldName.equals(FIELD_START_DATE)) {
+                        if (tr.getStartDate() == null) {
+                            hasChange |= displayedValue.length() > 0;
+                        } else {
+                            hasChange |= !displayedValue.equals(formatDate(tr.getStartDate()));
+                        }
+                    } else if (fieldName.equals(FIELD_END_DATE)) {
+                        if (tr.getEndDate() == null) {
+                            hasChange |= displayedValue.length() > 0;
+                        } else {
+                            hasChange |= !displayedValue.equals(formatDate(tr.getEndDate()));
+                        }
+                    } else if (fieldName.equals(FIELD_PURPOSE)) {
+                        if (tr.getPurpose() == null) {
+                            hasChange |= displayedValue.length() > 0;
+                        } else {
+                            hasChange |= !displayedValue.equals(tr.getPurpose());
+                        }
+                    } else if (fieldName.equals(FIELD_EMP_NAME)) {
+                        if (tr.getEmployeeName() == null) {
+                            hasChange |= displayedValue.length() > 0;
+                        } else {
+                            hasChange |= !displayedValue.equals(tr.getEmployeeName());
+                        }
+                    } else if (fieldName.equals(FIELD_COMMENT)) {
+                        if (tr.getLastComment() == null) {
+                            hasChange |= displayedValue.length() > 0;
+                        } else {
+                            hasChange |= !displayedValue.equals(tr.getLastComment());
+                        }
+                    }
+                }
+                if (hasChange) {
+                    return true;
+                }
+            }
+        }
+        return false;
+    }
+
+    @Override protected LinearLayout getCurrentFieldsLayout() {
+        return requestHeaderFields;
+    }
+
+    @Override
+    protected Locale getLocale() {
+        return locale;
+    }
+
+    @Override
+    protected DateUtil.DatePattern getDatePattern() {
+        return DateUtil.DatePattern.DB_INPUT;
+    }
+
+    /*
+     * (non-Javadoc)
+     *
+     * @see com.concur.mobile.activity.expense.ConcurView#onActivityResult(int, int, android.content.Intent)
+     */
+    @Override
+    public void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        switch (requestCode) {
+        case (SUMMARY_RESULT):
+            // --- redirects from summary to list with refresh option if the user press back button from there
+            if (resultCode == Activity.RESULT_CANCELED) {
+                final Intent resIntent = new Intent();
+                resIntent.putExtra(RequestHeaderActivity.DO_WS_REFRESH, true);
+                setResult(Activity.RESULT_OK, resIntent);
+                finish();
+            }
+            break;
+        }
+    }
+
+    @Override
+    public void onClick(View view) {
+        final CustomDatePickerDialog datePicker = getDateField((String) view.getTag());
+        if (datePicker != null) {
+            datePicker.setClickedView(view);
+            datePicker.show();
+        }
+    }
+
+    @Override
+    protected String getLabelFromFieldName(String fieldName) {
+        if (fieldName.equals(FIELD_NAME)) {
+            return this.getResources().getString(R.string.tr_name);
+        } else if (fieldName.equals(FIELD_START_DATE)) {
+            return this.getResources().getString(R.string.tr_start_date);
+        } else if (fieldName.equals(FIELD_END_DATE)) {
+            return this.getResources().getString(R.string.tr_end_date);
+        } else if (fieldName.equals(FIELD_PURPOSE)) {
+            return this.getResources().getString(R.string.business_purpose);
+        } else if (fieldName.equals(FIELD_COMMENT)) {
+            return this.getResources().getString(R.string.comment);
+        } else if (fieldName.equals(FIELD_EMP_NAME)) {
+            return this.getResources().getString(R.string.tr_employee_name);
+        } else if (fieldName.equals(FIELD_CURRENCY_NAME)) {
+            return this.getResources().getString(R.string.currency);
+        } else if (fieldName.equals(FIELD_TOTAL_POSTED_AMOUNT)) {
+            return this.getResources().getString(R.string.amount);
+        } else {
+            return "";
+        }
+    }
+
+    @Override public void applySaveButtonPolicy(View saveButtonView) {
+        if (canSave()) {
+            saveButtonView.setVisibility(View.VISIBLE);
+        } else {
+            saveButtonView.setVisibility(View.GONE);
+        }
+        saveButton.setOnClickListener(new View.OnClickListener() {
+
+            public void onClick(View v) {
+                // --- CALL SAVE METHOD (only one object so idx = 0)
+                save(form, tr);
+            }
+        });
+    }
+
+    @Override
+    public String getModelDisplayedValueByFieldName(FormDTO request, String fieldName) {
+        final RequestDTO tr = (RequestDTO) request;
+
+        if (fieldName.equals(FIELD_NAME)) {
+            if (tr.getName() == null) {
+                return "";
+            }
+            return tr.getName();
+        } else if (fieldName.equals(FIELD_START_DATE)) {
+            if (tr.getStartDate() == null) {
+                return "";
+            }
+            return formatDate(tr.getStartDate());
+        } else if (fieldName.equals(FIELD_END_DATE)) {
+            if (tr.getStartDate() == null) {
+                return "";
+            }
+            return formatDate(tr.getEndDate());
+        } else if (fieldName.equals(FIELD_PURPOSE)) {
+            if (tr.getPurpose() == null) {
+                return "";
+            }
+            return tr.getPurpose();
+        } else if (fieldName.equals(FIELD_COMMENT)) {
+            if (tr.getLastComment() == null) {
+                return "";
+            }
+            return tr.getLastComment();
+        } else if (fieldName.equals(FIELD_EMP_NAME)) {
+            if (tr.getEmployeeName() == null) {
+                return "";
+            }
+            return tr.getEmployeeName();
+        } else if (fieldName.equals(FIELD_CURRENCY_NAME)) {
+            if (tr.getCurrencyCode() == null) {
+                return "";
+            }
+            return tr.getCurrencyCode();
+        } else if (fieldName.equals(FIELD_TOTAL_POSTED_AMOUNT)) {
+            return String.valueOf(tr.getTotal());
+        } else {
+            return "";
+        }
+    }
+
+    @Override
+    protected void setModelValueByFieldName(FormDTO request, String fieldName, String value) {
+        final RequestDTO tr = (RequestDTO) request;
+        if (fieldName.equals(FIELD_NAME)) {
+            tr.setName(value);
+        } else if (fieldName.equals(FIELD_START_DATE)) {
+            tr.setStartDate(parseDate(value));
+        } else if (fieldName.equals(FIELD_END_DATE)) {
+            tr.setEndDate(parseDate(value));
+        } else if (fieldName.equals(FIELD_PURPOSE)) {
+            tr.setPurpose(value);
+        } else if (fieldName.equals(FIELD_COMMENT)) {
+            tr.setLastComment(value);
+        } else if (fieldName.equals(FIELD_EMP_NAME)) {
+            tr.setEmployeeName(value);
+        } else if (fieldName.equals(FIELD_CURRENCY_NAME)) {
+            tr.setCurrencyCode(value);
+        } else if (fieldName.equals(FIELD_TOTAL_POSTED_AMOUNT)) {
+            tr.setTotal(Parse.safeParseDouble(value));
+        }
+    }
+
+    @Override
+    protected boolean isFieldVisible(FormDTO model, String fieldName) {
+        return headerLayout.contains(fieldName);
+    }
+
+    @Override
+    protected void applySpecificRender(final FormDTO model, final TextView component,
+            final LinearLayout.LayoutParams llp, final ConnectFormField ff) {
+        if (ff.getName().equals(FIELD_NAME)) {
+            component.setTextAppearance(this, R.style.ListCellHeaderText);
+            component.setTextColor(getResources().getColor(R.color.White));
+            component.setTypeface(Typeface.DEFAULT_BOLD);
+            component.setTextSize(TypedValue.COMPLEX_UNIT_SP, 18);
+            if (component instanceof EditText) {
+                component.setHint(getResources().getString(R.string.tr_name));
+                component.setHintTextColor(getResources().getColor(R.color.gray));
+            }
+        }
+    }
+
+    public class SaveListener implements BaseAsyncRequestTask.AsyncReplyListener {
+
+        @Override
+        public void onRequestSuccess(Bundle resultData) {
+            final boolean isCreation = tr.getId() == null;
+            requestListCache.setDirty(true);
+
+            // metrics
+            final Map<String, String> params = new HashMap<String, String>();
+
+            params.put(Flurry.PARAM_NAME_TYPE, Flurry.PARAM_VALUE_TRAVEL_REQUEST_HEADER);
+            EventTracker.INSTANCE.track(Flurry.CATEGORY_TRAVEL_REQUEST,
+                    (isCreation ? Flurry.EVENT_NAME_CREATE : Flurry.EVENT_NAME_SAVED), params);
+
+            if (resultData != null) {
+
+                // we go to the digest screen
+                if (isCreation) {
+                    final String requestId = RequestParser
+                            .parseActionResponse(resultData.getString(BaseAsyncRequestTask.HTTP_RESPONSE));
+                    tr.setId(requestId);
+                    // --- cache update
+                    requestListCache.addValue(requestId, tr);
+
+                    final Intent i = new Intent(RequestHeaderActivity.this, RequestSummaryActivity.class);
+                    i.putExtra(RequestListActivity.REQUEST_ID, requestId);
+
+                    // --- Flurry tracking
+                    i.putExtra(Flurry.PARAM_NAME_CAME_FROM, Flurry.PARAM_VALUE_TRAVEL_REQUEST_HEADER);
+                    params.clear();
+                    params.put(Flurry.PARAM_NAME_FROM, Flurry.PARAM_VALUE_TRAVEL_REQUEST_HEADER);
+                    params.put(Flurry.PARAM_NAME_TO, Flurry.PARAM_VALUE_TRAVEL_REQUEST_SUMMARY);
+                    EventTracker.INSTANCE.track(Flurry.CATEGORY_TRAVEL_REQUEST, Flurry.EVENT_NAME_LAUNCH, params);
+
+                    //finish();
+                    startActivityForResult(i, SUMMARY_RESULT);
+                } else {
+                    final Intent resIntent = new Intent();
+                    resIntent.putExtra(DO_WS_REFRESH, true);
+                    setResult(Activity.RESULT_OK, resIntent);
+
+                    finish();
+                }
+
+            }
+        }
+
+        @Override
+        public void onRequestFail(Bundle resultData) {
+            ConnectHelper.displayResponseMessage(getApplicationContext(), resultData,
+                    getResources().getString(R.string.tr_error_save));
+
+            Log.d(Const.LOG_TAG, CLS_TAG + " calling decrement from onRequestFail");
+            Log.d(Const.LOG_TAG, " onRequestFail in SaveListener...");
+            requestHeaderVF.setDisplayedChild(ID_HEADER_VIEW);
+        }
+
+        @Override
+        public void onRequestCancel(Bundle resultData) {
+            ConnectHelper
+                    .displayMessage(getApplicationContext(), getResources().getString(R.string.tr_operation_canceled));
+            Log.d(Const.LOG_TAG, CLS_TAG + " calling decrement from onRequestCancel");
+            Log.d(Const.LOG_TAG, " onRequestCancel in SaveListener...");
+            requestHeaderVF.setDisplayedChild(ID_HEADER_VIEW);
+        }
+
+        @Override
+        public void cleanup() {
+            asyncReceiverSave.setListener(null);
+        }
+    }
+
+    private void cleanupReceivers() {
+        // NTD
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+
+        // SAVE
+        // activity creation
+        if (asyncReceiverSave == null) {
+            asyncReceiverSave = new BaseAsyncResultReceiver(new Handler());
+        }
+    }
+
+    @Override
+    protected void onPause() {
+        super.onPause();
+        cleanupReceivers();
+    }
+
+    @Override
+    public void onBackPressed() {
+        if (hasChange()) {
+            final AlertDialogFragment.OnClickListener yesListener = new AlertDialogFragment.OnClickListener() {
+
+                @Override public void onClick(FragmentActivity activity, DialogInterface dialog, int which) {
+                    // --- save action + redirect
+                    save(form, tr);
+                }
+
+                @Override public void onCancel(FragmentActivity activity, DialogInterface dialog) {
+                    // --- can't happen
+                }
+            };
+            final AlertDialogFragment.OnClickListener noListener = new AlertDialogFragment.OnClickListener() {
+
+                @Override public void onClick(FragmentActivity activity, DialogInterface dialog, int which) {
+                    dialog.dismiss();
+                    // --- redirect without saving
+                    finish();
+                }
+
+                @Override public void onCancel(FragmentActivity activity, DialogInterface dialog) {
+                    // --- can't happen
+                }
+            };
+            DialogFragmentFactory.getAlertDialog(getResources().getString(R.string.confirm),
+                    getResources().getString(R.string.tr_message_save_changes), R.string.general_yes, -1,
+                    R.string.general_no, yesListener, null, noListener, noListener)
+                    .show(getSupportFragmentManager(), CLS_TAG);
+        } else {
+            super.onBackPressed();
+        }
+    }
 }
