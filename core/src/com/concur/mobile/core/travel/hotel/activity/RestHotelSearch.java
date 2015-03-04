@@ -906,7 +906,7 @@ public class RestHotelSearch extends TravelBaseActivity {
 
         // get the hotel violation reasons from the SystemConfig and pass it on to the activities.
         // since the platform systemconfig request is not being invoked by the application, we cannot use the getHotelReasons from
-        // the platform. Hence passing in to the next activities.
+        // the platform. Hence passing in to the next activities. Same with the ruleViolationExplanationRequired
         SystemConfig sysConfig = ((ConcurCore) getApplication()).getSystemConfig();
         ArrayList<com.concur.mobile.core.travel.data.ReasonCode> reasonCodesCore = (sysConfig != null && sysConfig
                 .getHotelReasons() != null) ? sysConfig.getHotelReasons() : null;
@@ -917,9 +917,18 @@ public class RestHotelSearch extends TravelBaseActivity {
             }
             intent.putExtra("violationReasons", violationReasons);
         }
+        // Check whether SystemConfig stipulates that 'violation justification' is required.
+        if (sysConfig.getRuleViolationExplanationRequired() != null && sysConfig.getRuleViolationExplanationRequired()) {
+            intent.putExtra("ruleViolationExplanationRequired", true);
+        } else {
+            intent.putExtra("ruleViolationExplanationRequired", false);
+        }
+
         if (checkForSearchCriteraChanged) {
             intent.putExtra("searchCriteriaChanged", searchCriteriaChanged);
         }
+
+        intent.putExtra("currentTripId", cliqbookTripId);
 
         startActivityForResult(intent, Const.REQUEST_CODE_BOOK_HOTEL);
     }

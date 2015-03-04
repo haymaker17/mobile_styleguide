@@ -94,6 +94,8 @@ public class HotelSearchAndResultActivity extends Activity implements OnMenuItem
     private ArrayList<String[]> violationReasons;
     private String cacheKey;
     private boolean retriveFromDB;
+    private boolean ruleViolationExplanationRequired;
+    private String currentTripId;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -104,6 +106,8 @@ public class HotelSearchAndResultActivity extends Activity implements OnMenuItem
 
         location = intent.getStringExtra(Const.EXTRA_TRAVEL_HOTEL_SEARCH_LOCATION);
         violationReasons = (ArrayList<String[]>) intent.getSerializableExtra("violationReasons");
+        ruleViolationExplanationRequired = intent.getBooleanExtra("ruleViolationExplanationRequired", false);
+        currentTripId = intent.getStringExtra("currentTripId");
 
         // searchCriteriaChanged will be false if it just came back from search criteria screen without any changes to the
         // previous searched criteria. in such
@@ -527,6 +531,8 @@ public class HotelSearchAndResultActivity extends Activity implements OnMenuItem
                                 hotelSearchRESTResultFrag.durationOfStayForDisplayInHeader);
                         i.putExtra(Const.EXTRA_TRAVEL_HOTEL_SEARCH_DURATION_NUM_OF_NIGHTS, numberOfNights);
                         i.putExtra("violationReasons", violationReasons);
+                        i.putExtra("ruleViolationExplanationRequired", ruleViolationExplanationRequired);
+                        i.putExtra("currentTripId", currentTripId);
                         i.putExtras(bundle);
                         // startActivity(i);
                         startActivityForResult(i, Const.REQUEST_CODE_BOOK_HOTEL);
