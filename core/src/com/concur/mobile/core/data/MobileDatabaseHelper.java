@@ -680,21 +680,21 @@ public class MobileDatabaseHelper extends SQLiteOpenHelper {
     //
     // Description of DB migration history from an email thread
     //
-    // At the very beginning, we didn’t do any actual preservation/migration of data. The whole database, as a single statement I
+    // At the very beginning, we didn't do any actual preservation/migration of data. The whole database, as a single statement I
     // believe, was dropped. We then recreated everything using the individual create schema strings for each table
-    // (SCHEMA_CREATE_SQL[]). That happened way down in ‘case 2’.
+    // (SCHEMA_CREATE_SQL[]). That happened way down in 'case 2'.
     //
     // At some point, we had to move login/password hashes out of the prefs file and into the database (COM_COMPONENT table). At
     // that point we could no longer just drop the entire database because users would have to login again after every upgrade. We
     // created another set of SQL strings, SCHEMA_DELETE_SQL, to match up with the original create SQL. We then stopped doing the
     // atomic drop of the entire DB and just executed all the delete SQL statements for the tables (replacing the code in
-    // 'case 2'). There is no SCHEMA_DELETE_SQL[] for the COM_COMPONENT table so it is never dropped (see ‘case 12’). Any
-    // potentially not dropped table uses the ‘IF NOT EXISTS’ clause in its create SQL so that it is re-runnable.
+    // 'case 2'). There is no SCHEMA_DELETE_SQL[] for the COM_COMPONENT table so it is never dropped (see 'case 12'). Any
+    // potentially not dropped table uses the 'IF NOT EXISTS' clause in its create SQL so that it is re-runnable.
     //
     // So, at this point, we have a mechanism to selectively not drop tables. Once the decision is made to not drop a table it is
     // a permanent decision and we should never reverse it. The delete SQL for that table is removed and any manual (re-runnable)
     // migration code is created. This has been done for receipt sharing (ReceiptShareSchemaUpgradeAction). These schema upgrade
-    // classes need to make sure to handle upgrades from any DB version (but that is usually not a big deal since we don’t really
+    // classes need to make sure to handle upgrades from any DB version (but that is usually not a big deal since we don't really
     // have a history of migrated tables to worry about).
     //
     // //////////////////////////////////////////////////////////////////////////////////////
