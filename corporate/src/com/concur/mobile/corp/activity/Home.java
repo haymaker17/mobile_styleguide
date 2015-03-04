@@ -73,6 +73,7 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.ScrollView;
 import android.widget.TextView;
+import android.widget.Toast;
 import android.widget.ViewFlipper;
 
 import com.concur.breeze.R;
@@ -3653,11 +3654,19 @@ public class Home extends BaseActivity implements View.OnClickListener,
 
 		navItem = new HomeScreenSimpleNavigationItem(NAVIGATION_APP_CENTER, -1,
 				R.string.home_navigation_app_center,
-				R.drawable.icon_menu_app_center, View.VISIBLE, View.VISIBLE,
+				R.drawable.icon_menu_connect_to_apps, View.VISIBLE, View.VISIBLE,
 				new Runnable() {
 
 					public void run() {
 						String bareToken = Preferences.getAccessToken();
+						
+						if (bareToken == null) {
+							Toast.makeText(Home.this, 
+									"Unable to retrieve access token. Please log out and back in.", 
+									Toast.LENGTH_LONG).show();
+							return;
+						}
+						
 						Locale locale = Locale.getDefault();
 
 						String encodedToken = "";
@@ -3669,7 +3678,7 @@ public class Home extends BaseActivity implements View.OnClickListener,
 							Intent i = new Intent(Home.this,
 									SimpleWebViewActivity.class);
 							i.putExtra("url",
-									"http://appcenterdev.concursolutions.com?oauth="
+									"http://appcenterdev.concursolutions.com?accessToken="
 											+ encodedToken + "&lang=" + locale);
 
 							if (i != null) {
