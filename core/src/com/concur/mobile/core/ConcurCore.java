@@ -32,6 +32,7 @@ import android.os.Build;
 import android.os.IBinder;
 import android.preference.PreferenceManager;
 import android.provider.Settings;
+import android.support.multidex.MultiDexApplication;
 import android.text.TextUtils;
 import android.text.format.Time;
 import android.util.Log;
@@ -115,7 +116,7 @@ import com.concur.mobile.platform.ui.common.util.PreferenceUtil;
 import com.concur.mobile.platform.util.Parse;
 import com.concur.platform.PlatformProperties;
 
-public abstract class ConcurCore extends Application {
+public abstract class ConcurCore extends MultiDexApplication {
 
     // Security lock to make sure TR is disabled on production environment
     public static final boolean TR_DISABLED = true;
