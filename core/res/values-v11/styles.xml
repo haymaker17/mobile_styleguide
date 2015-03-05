@@ -44,15 +44,15 @@
         <item name="android:actionMenuTextColor">@color/universal_tour_ab_menu</item>
     </style>
 
-    <style name="ActionBarTabStyle.White" parent="@style/Widget.AppCompat.Base.ActionBar.TabView">
+    <style name="ActionBarTabStyle.White" parent="@style/Widget.AppCompat.ActionBar.TabView">
         <item name="android:background">@drawable/ab_tab_white_states</item>
     </style>
 
-    <style name="ActionBarTabTextStyle.Blue" parent="@style/Widget.AppCompat.Base.ActionBar.TabText">
+    <style name="ActionBarTabTextStyle.Blue" parent="@style/Widget.AppCompat.ActionBar.TabText">
         <item name="android:textColor">@color/universal_tour_ab_menu</item>
     </style>
 
-    <style name="ActionBarTabTextStyleV1.Blue" parent="@style/Widget.AppCompat.Base.ActionBar.TabText">
+    <style name="ActionBarTabTextStyleV1.Blue" parent="@style/Widget.AppCompat.ActionBar.TabText">
         <item name="android:textColor">@color/universal_tour_ab_menu_v1</item>
     </style>
     

@@ -3,7 +3,6 @@ apply plugin: 'android-library'
 dependencies {
     compile fileTree(dir: 'libs', include: '*.jar')
     compile project(':evature')
-    compile project(':google-play-services_lib')
     compile project(':apptentive-android:apptentive-android-sdk')
     compile project(':platform_ui_expense')
     compile project(':platform_ui_travel')

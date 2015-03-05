@@ -3,11 +3,16 @@ apply plugin: 'android'
 dependencies {
     compile fileTree(dir: 'libs', include: '*.jar')
     compile project(':core')
+    compile 'com.android.support:multidex:1.0.0'
 }
 
 android {
     compileSdkVersion 21
     buildToolsVersion "21.1.2"
+
+    defaultConfig{
+        multiDexEnabled true
+    }
 
     dexOptions {
         preDexLibraries = false
