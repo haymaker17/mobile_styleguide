@@ -354,16 +354,17 @@ public abstract class AbstractConnectFormFieldActivity extends BaseActivity {
 
                                 @Override public void onTimeSet(TimePicker timePicker, int hours, int minutes) {
                                     final Calendar newDate = Calendar.getInstance();
-                                    newDate.set(Calendar.HOUR, hours);
+                                    newDate.set(Calendar.HOUR_OF_DAY, hours);
                                     newDate.set(Calendar.MINUTE, minutes);
+                                    // --- hours always are 24h format
                                     ((TextView) timeFieldMapping.get(fieldName).getClickedView())
-                                            .setText(formatTime(newDate.getTime()));
+                                            .setText(formatTime(newDate.getTime(), true));
                                 }
                             };
-
+                            final boolean is24format = android.text.format.DateFormat.is24HourFormat(this);
                             final CustomTimePickerDialog fromTimePickerDialog = new CustomTimePickerDialog(this,
-                                    inTimeListener, newCalendar.get(Calendar.HOUR), newCalendar.get(Calendar.MINUTE),
-                                    android.text.format.DateFormat.is24HourFormat(this));
+                                    inTimeListener, newCalendar.get(is24format ? Calendar.HOUR_OF_DAY : Calendar.HOUR),
+                                    newCalendar.get(Calendar.MINUTE), is24format);
 
                             timeFieldMapping.put(ff.getName(), fromTimePickerDialog);
                         }
@@ -594,12 +595,12 @@ public abstract class AbstractConnectFormFieldActivity extends BaseActivity {
             try {
                 final Date dt = formatter.parse(timeString);
                 cal.setTime(dt);
-                final int hour = cal.get(Calendar.HOUR);
+                final int hour = cal.get(is24 ? Calendar.HOUR_OF_DAY : Calendar.HOUR);
                 final int minute = cal.get(Calendar.MINUTE);
                 final int second = cal.get(Calendar.SECOND);
                 final int amPm = !is24 ? cal.get(Calendar.AM_PM) : -1;
                 cal.setTime(d);
-                cal.set(Calendar.HOUR, hour);
+                cal.set(is24 ? Calendar.HOUR_OF_DAY : Calendar.HOUR, hour);
                 cal.set(Calendar.MINUTE, minute);
                 cal.set(Calendar.SECOND, second);
                 if (!is24) {
@@ -609,7 +610,7 @@ public abstract class AbstractConnectFormFieldActivity extends BaseActivity {
                 Log.e(CLS_TAG, "Failed to apply time string : " + timeString);
                 // --- unparsable value for timeSring : we set 0 for each time field.
                 cal.setTime(d);
-                cal.set(Calendar.HOUR, 0);
+                cal.set(is24 ? Calendar.HOUR_OF_DAY : Calendar.HOUR, 0);
                 cal.set(Calendar.MINUTE, 0);
                 cal.set(Calendar.SECOND, 0);
                 if (!is24) {
@@ -618,13 +619,6 @@ public abstract class AbstractConnectFormFieldActivity extends BaseActivity {
             }
             d.setTime(cal.getTime().getTime());
         }
-    }
-
-    protected String formatTime(Date d) {
-        if (d == null) {
-            return "";
-        }
-        return formatTime(d, android.text.format.DateFormat.is24HourFormat(this));
     }
 
     protected String formatTime(Date d, boolean is24) {

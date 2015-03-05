@@ -24,7 +24,7 @@ import com.concur.mobile.core.activity.AbstractConnectFormFieldActivity;
 import com.concur.mobile.core.expense.charge.activity.CurrencySpinnerAdapter;
 import com.concur.mobile.core.expense.data.ListItem;
 import com.concur.mobile.core.request.RequestPagerAdapter;
-import com.concur.mobile.core.request.task.RequestEntrySaveTask;
+import com.concur.mobile.core.request.task.RequestTask;
 import com.concur.mobile.core.request.util.ConnectHelper;
 import com.concur.mobile.core.request.util.DateUtil;
 import com.concur.mobile.core.util.Const;
@@ -569,13 +569,19 @@ public class RequestEntryActivity extends AbstractConnectFormFieldActivity imple
             } else if (fieldName.equals(FIELD_START_DATE)) {
                 segment.setDepartureDate(parseDate(value));
             } else if (fieldName.equals(FIELD_START_TIME)) {
-                if (segment.getDepartureDate() != null) {
+                if (value != null && value.length() > 0) {
+                    if (segment.getDepartureDate() == null) {
+                        segment.setDepartureDate(new Date());
+                    }
                     applyTimeString(segment.getDepartureDate(), value);
                 }
             } else if (fieldName.equals(FIELD_END_DATE)) {
                 segment.setArrivalDate(parseDate(value));
             } else if (fieldName.equals(FIELD_END_TIME)) {
-                if (segment.getArrivalDate() != null) {
+                if (value != null && value.length() > 0) {
+                    if (segment.getArrivalDate() == null) {
+                        segment.setArrivalDate(new Date());
+                    }
                     applyTimeString(segment.getArrivalDate(), value);
                 }
             } else if (fieldName.equals(FIELD_CURRENCY)) {
@@ -716,9 +722,9 @@ public class RequestEntryActivity extends AbstractConnectFormFieldActivity imple
             if ((viewedType == SegmentType.RequestSegmentType.AIR || viewedType == SegmentType.RequestSegmentType.RAIL)
                     && fragmentOnInitialization == TAB_ROUND_TRIP) {
                 final int segmentLayoutIdx = model.getDisplayOrder() != null ? model.getDisplayOrder() : 0;
-                addBlockTitle(getResources().getString(segmentLayoutIdx == 0 ?
-                                R.string.tr_segment_block_outbound :
-                                R.string.tr_segment_block_return), model);
+                addBlockTitle(getResources().getString(
+                        segmentLayoutIdx == 0 ? R.string.tr_segment_block_outbound : R.string.tr_segment_block_return),
+                        model);
             }
         } else if (ff.getName().equals(FIELD_END_DATE)) {
             // --- Header block : round trip
@@ -833,7 +839,15 @@ public class RequestEntryActivity extends AbstractConnectFormFieldActivity imple
             asyncReceiverSave.setListener(new SaveListener());
             entryVF.setDisplayedChild(ID_LOADING_VIEW);
             // --- onRequestResult calls cleanup() on execution, so listener will be destroyed by processing
-            new RequestEntrySaveTask(this, 1, asyncReceiverSave, entry).execute();
+            final RequestTask reqTask;
+            if (createMode) {
+                reqTask = new RequestTask(this, 1, asyncReceiverSave, ConnectHelper.Action.CREATE, null);
+            } else {
+                reqTask = new RequestTask(this, 1, asyncReceiverSave, ConnectHelper.Action.UPDATE, entry.getId());
+            }
+            reqTask.setModule(ConnectHelper.Module.REQUEST_ENTRY);
+            reqTask.setPostBody(RequestParser.toJson(entry));
+            reqTask.execute();
         } else {
             new NoConnectivityDialogFragment().show(getSupportFragmentManager(), CLS_TAG);
         }
@@ -1025,25 +1039,21 @@ public class RequestEntryActivity extends AbstractConnectFormFieldActivity imple
 
     @Override
     public void onBackPressed() {
-        // --- Apply the list of segments in use
-        if (viewedFragment == TAB_ONE_WAY) {
-            entry.setTripType(RequestEntryDTO.TripType.ONE_WAY);
-            entry.setListSegment(segmentOneWay);
-        } else if (viewedFragment == TAB_ROUND_TRIP) {
-            entry.setTripType(RequestEntryDTO.TripType.ROUND_TRIP);
-            entry.setListSegment(segmentsRoundTrip);
-        } else if (viewedFragment == TAB_MULTI_LEG) {
-            entry.setTripType(RequestEntryDTO.TripType.MULTI_SEGMENT);
-            entry.setListSegment(segmentsMultiLeg);
-        }
-        List<RequestSegmentDTO> segmentList = entry.getListSegment();
-
         if (canSave() && hasCustomLayouts) {
-            segmentList = viewedFragment == TAB_ONE_WAY ?
-                    segmentOneWay :
-                    (viewedFragment == TAB_ROUND_TRIP ? segmentsRoundTrip : segmentsMultiLeg);
+            // --- Apply the list of segments in use
+            if (viewedFragment == TAB_ONE_WAY) {
+                entry.setTripType(RequestEntryDTO.TripType.ONE_WAY);
+                entry.setListSegment(segmentOneWay);
+            } else if (viewedFragment == TAB_ROUND_TRIP) {
+                entry.setTripType(RequestEntryDTO.TripType.ROUND_TRIP);
+                entry.setListSegment(segmentsRoundTrip);
+            } else if (viewedFragment == TAB_MULTI_LEG) {
+                entry.setTripType(RequestEntryDTO.TripType.MULTI_SEGMENT);
+                entry.setListSegment(segmentsMultiLeg);
+            }
         }
-        if (canSave() && hasChange(segmentList)) {
+
+        if (canSave() && hasChange(entry.getListSegment())) {
             final AlertDialogFragment.OnClickListener yesListener = new AlertDialogFragment.OnClickListener() {
 
                 @Override

@@ -39,7 +39,7 @@ public class RequestTask extends AbstractRequestWSCallTask {
         PUT
     }
 
-    private String requestId;
+    private String entityId;
     private Map<String, Object> params;
     // --- Args that can be set after creation
     private ConnectHelper.ConnectVersion version = ConnectHelper.ConnectVersion.VERSION_3_1;
@@ -49,19 +49,42 @@ public class RequestTask extends AbstractRequestWSCallTask {
     private String postBody = "";
 
     /**
+     * Default TR constructor without url parameters
+     *
      * @param context
      * @param taskId
      * @param receiver
      * @param action
-     * @param requestId
-     * @param urlParams
+     * @param entityId
      */
     public RequestTask(Context context, int taskId, BaseAsyncResultReceiver receiver, ConnectHelper.Action action,
-            String requestId, Map<String, Object> urlParams) {
+            String entityId) {
         super(context, taskId, receiver);
-        this.action = action;
-        this.requestId = requestId;
-        this.params = urlParams != null ? urlParams : new HashMap<String, Object>();
+        this.entityId = entityId;
+        this.params = new HashMap<String, Object>();
+        setAction(action);
+    }
+
+    /**
+     * Full parameterized constructor
+     *
+     * @param context
+     * @param taskId
+     * @param receiver
+     * @param version
+     * @param module
+     * @param action
+     * @param entityId
+     */
+    public RequestTask(Context context, int taskId, BaseAsyncResultReceiver receiver,
+            ConnectHelper.ConnectVersion version, ConnectHelper.Module module, ConnectHelper.Action action,
+            String entityId) {
+        super(context, taskId, receiver);
+        this.version = version;
+        this.module = module;
+        this.entityId = entityId;
+        this.params = new HashMap<String, Object>();
+        setAction(action);
     }
 
     /**
@@ -73,7 +96,7 @@ public class RequestTask extends AbstractRequestWSCallTask {
     @Override
     protected String getServiceEndPoint() throws ServiceRequestException {
         return ConnectHelper
-                .getServiceEndpointURI(version, module, action, params, requestId, requestType == HttpRequestType.GET);
+                .getServiceEndpointURI(version, module, action, params, entityId, requestType == HttpRequestType.GET);
     }
 
     @Override
@@ -100,6 +123,10 @@ public class RequestTask extends AbstractRequestWSCallTask {
         }
     }
 
+    public void addUrlParameter(String key, String value) {
+        params.put(key, value);
+    }
+
     public void setPostBody(String postBody) {
         // --- null won't work as a value if it really is a POST, things are made to work with "" in this case.
         this.postBody = postBody != null ? postBody : (requestType == HttpRequestType.POST ? "" : null);
@@ -119,5 +146,10 @@ public class RequestTask extends AbstractRequestWSCallTask {
 
     public void setAction(ConnectHelper.Action action) {
         this.action = action;
+        if (action == ConnectHelper.Action.UPDATE) {
+            requestType = HttpRequestType.PUT;
+        } else if (action == ConnectHelper.Action.CREATE) {
+            requestType = HttpRequestType.POST;
+        }
     }
 }

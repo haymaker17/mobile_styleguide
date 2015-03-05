@@ -176,7 +176,7 @@ public class RequestParser {
         builder.registerTypeAdapter(Boolean.class, new BooleanDeserializer());
         builder.registerTypeAdapter(Integer.class, new IntegerDeserializer());
         builder.registerTypeAdapter(Double.class, new DoubleDeserializer());
-        builder.registerTypeAdapter(Date.class, new DateDeserializer(Parse.LONG_YEAR_MONTH_DAY));
+        builder.registerTypeAdapter(Date.class, new DateDeserializer(Parse.XML_DF));
 
         final Gson gson = builder.create();
         Log.d(CLS_TAG, "parseTRDetailResponse :: starting parse");
@@ -314,7 +314,7 @@ public class RequestParser {
     public static String toJson(RequestEntryDTO requestEntryDTO) {
         final GsonBuilder builder = new GsonBuilder();
         builder.registerTypeAdapter(Double.class, new DoubleDeserializer());
-        builder.registerTypeAdapter(Date.class, new DateDeserializer(Parse.LONG_YEAR_MONTH_DAY));
+        builder.registerTypeAdapter(Date.class, new DateDeserializer(Parse.XML_DF));
         builder.registerTypeAdapter(RequestEntryDTO.TripType.class,
                 new EnumDeserializer<RequestEntryDTO.TripType>(RequestEntryDTO.TripType.class,
                         EnumDeserializer.EnumParsingType.STRING_VALUE));
