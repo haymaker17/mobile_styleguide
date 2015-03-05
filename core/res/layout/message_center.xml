@@ -8,9 +8,18 @@
     android:minWidth="300dp"
     android:orientation="vertical" >
 
-    <include
-        android:id="@+id/ads"
-        layout="@layout/dfp_ads_footer" />
+ 
+        
+   <!--     <ListView
+        android:id="@+id/dfpAdsCenterList"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="0.15"
+        android:divider="@color/ListDivider"
+        android:dividerHeight="1dp"
+        android:gravity="top" >
+    </ListView> --> 
+        
 
     <ListView
         android:id="@+id/msgCenterList"
@@ -21,5 +30,10 @@
         android:dividerHeight="1dp"
         android:gravity="top" >
     </ListView>
+    
+ 
+<!--   <include
+             android:id="@+id/ads"
+        layout="@layout/dfp_ads_footer" />-->
 
 </LinearLayout>

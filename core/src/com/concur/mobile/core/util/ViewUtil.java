@@ -3055,51 +3055,51 @@ public class ViewUtil {
      *            ipm extras
      */
 
-    public static PublisherAdView showDFPAds(Activity activity, IpmMsg ipmMsg, int field_view_res_id) {
-        /** The view to show the ad. */
-        PublisherAdView adView = new PublisherAdView(activity);
-
-        if (ipmMsg != null && ipmMsg.adUnitId != null) {
-
-            adView.setAdUnitId(ipmMsg.adUnitId);
-            // adView.setAdUnitId("/19197427/Dev/DevMobileTextAd");
-            adView.setAdListener(new LoggingAdListener());
-            LinearLayout layout = (LinearLayout) activity.findViewById(field_view_res_id);
-            // Add the adView to it.
-            if (layout != null) {
-                layout.addView(adView, new LinearLayout.LayoutParams(LayoutParams.MATCH_PARENT,
-                        LayoutParams.WRAP_CONTENT));
-                PublisherAdRequest pr = null;
-                if (ipmMsg.params != null) {
-
-                    IpmParams extras = ipmMsg.params;
-                    Bundle bundle = new Bundle();
-                    bundle.putString("CteProduct", extras.toString(extras.cteProduct));
-                    bundle.putString("Lang", extras.getLang());
-                    PackageInfo pinfo = null;
-                    try {
-                        pinfo = activity.getPackageManager().getPackageInfo(activity.getPackageName(), 0);
-                    } catch (NameNotFoundException e) {
-                        e.printStackTrace();
-                    }
-                    if (pinfo != null) {
-                        String versionName = pinfo.versionName;
-                        bundle.putString("AppVersion", versionName);
-                    }
-
-                    pr = new PublisherAdRequest.Builder().addNetworkExtras(new AdMobExtras(bundle)).build();
-                } else {
-                    pr = new PublisherAdRequest.Builder().build();
-
-                }
-
-                adView.setAdSizes(AdSize.SMART_BANNER);
-                // adView.setAdSizes(new AdSize(50, 40), AdSize.BANNER);
-                // Initiate an request to load the AdView with an ad.
-                adView.loadAd(pr);
-
-            }
-        }
-        return adView;
-    }
+//    public static PublisherAdView showDFPAds(Activity activity, IpmMsg ipmMsg, int field_view_res_id) {
+//        /** The view to show the ad. */
+//        PublisherAdView adView = new PublisherAdView(activity);
+//
+//        if (ipmMsg != null && ipmMsg.adUnitId != null) {
+//
+//            adView.setAdUnitId(ipmMsg.adUnitId);
+//            // adView.setAdUnitId("/19197427/Dev/DevMobileTextAd");
+//            adView.setAdListener(new LoggingAdListener());
+//            LinearLayout layout = (LinearLayout) activity.findViewById(field_view_res_id);
+//            // Add the adView to it.
+//            if (layout != null) {
+//                layout.addView(adView, new LinearLayout.LayoutParams(LayoutParams.MATCH_PARENT,
+//                        LayoutParams.WRAP_CONTENT));
+//                PublisherAdRequest pr = null;
+//                if (ipmMsg.params != null) {
+//
+//                    IpmParams extras = ipmMsg.params;
+//                    Bundle bundle = new Bundle();
+//                    bundle.putString("CteProduct", extras.toString(extras.cteProduct));
+//                    bundle.putString("Lang", extras.getLang());
+//                    PackageInfo pinfo = null;
+//                    try {
+//                        pinfo = activity.getPackageManager().getPackageInfo(activity.getPackageName(), 0);
+//                    } catch (NameNotFoundException e) {
+//                        e.printStackTrace();
+//                    }
+//                    if (pinfo != null) {
+//                        String versionName = pinfo.versionName;
+//                        bundle.putString("AppVersion", versionName);
+//                    }
+//
+//                    pr = new PublisherAdRequest.Builder().addNetworkExtras(new AdMobExtras(bundle)).build();
+//                } else {
+//                    pr = new PublisherAdRequest.Builder().build();
+//
+//                }
+//
+//                adView.setAdSizes(AdSize.SMART_BANNER);
+//                // adView.setAdSizes(new AdSize(50, 40), AdSize.BANNER);
+//                // Initiate an request to load the AdView with an ad.
+//                adView.loadAd(pr);
+//
+//            }
+//        }
+//        return adView;
+//    }
 }
