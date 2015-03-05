@@ -43,7 +43,6 @@ import com.concur.mobile.platform.ui.travel.hotel.fragment.HotelSearchResultFrag
 import com.concur.mobile.platform.ui.travel.hotel.fragment.HotelSearchResultListItem;
 import com.concur.mobile.platform.ui.travel.hotel.maps.ShowMaps;
 import com.concur.mobile.platform.ui.travel.util.Const;
-import com.concur.mobile.platform.util.PlatformUtil;
 import com.google.android.gms.common.ConnectionResult;
 import com.google.android.gms.common.GooglePlayServicesUtil;
 
@@ -154,7 +153,7 @@ public class HotelSearchAndResultActivity extends Activity implements OnMenuItem
     @Override
     public void fragmentReady() {
         // signal from fragment that it is loaded
-        cacheKey = PlatformUtil.getEndpointurl(SERVICE_END_POINT, latitude, longitude, distanceUnit, checkInDate,
+        cacheKey = HotelSearchResultLoader.prepareEndPointUrl(latitude, longitude, distanceUnit, checkInDate,
                 checkOutDate);
         populateHotelListItemsFromDB();
     }
