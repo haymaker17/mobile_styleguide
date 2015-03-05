@@ -242,9 +242,10 @@
     <string name="td_overlay_approve_report">Approve \nthe report</string>
 
     <!-- Message Center -->
-    <string name="msg_cntitle">Message Center</string>
+    <string name="msg_cntr_title">Message Center</string>
     <string name="msg_cntr_no_data">You have no messages</string>
     <string name="msg_cntr_new_upcoming_look">New look coming soon\n for Concur App!</string>
+    
 
     <!-- approvals -->
     <plurals name="approval_row_report_msg">
