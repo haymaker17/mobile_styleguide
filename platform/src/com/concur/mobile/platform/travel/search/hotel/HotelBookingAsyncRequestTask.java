@@ -117,19 +117,19 @@ public class HotelBookingAsyncRequestTask extends PlatformAsyncRequestTask {
         JsonElement jsonElement = gson.toJsonTree(violationReasons);
         JsonObject requestBody = new JsonObject();
         if (ccId != null) {
-            requestBody.addProperty("creditCardId", ccId);
+            requestBody.addProperty("CreditCardId", ccId);
         }
         if (tripId != null) {
-            requestBody.addProperty("tripId", tripId);
+            requestBody.addProperty("TripId", tripId);
         }
         if (travelProgramId != null) {
-            requestBody.addProperty("travelProgramId", travelProgramId);
+            requestBody.addProperty("TravelProgramId", travelProgramId);
         }
         if (redeemTravelPoints) {
-            requestBody.addProperty("redeemPoints", redeemTravelPoints);
+            requestBody.addProperty("RedeemPoints", redeemTravelPoints);
         }
         if (jsonElement != null) {
-            requestBody.add("violations", jsonElement);
+            requestBody.add("Violations", jsonElement);
         }
 
         // TODO - custom fields
