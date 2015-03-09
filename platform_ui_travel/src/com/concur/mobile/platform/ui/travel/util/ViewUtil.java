@@ -140,20 +140,23 @@ public class ViewUtil {
      */
     public static void stripUnderlines(TextView tv) {
 
-        Spannable s = (Spannable) tv.getText();
-        URLSpan[] spans = s.getSpans(0, s.length(), URLSpan.class);
+        CharSequence text = tv.getText();
+        if (text != null && text.length() > 0) {
+            Spannable s = (Spannable) text;
+            URLSpan[] spans = s.getSpans(0, s.length(), URLSpan.class);
 
-        for (URLSpan span : spans) {
-            int start = s.getSpanStart(span);
-            int end = s.getSpanEnd(span);
-            s.removeSpan(span);
-            span = new URLSpanNoUnderline(span.getURL());
-            s.setSpan(span, start, end, 0);
+            for (URLSpan span : spans) {
+                int start = s.getSpanStart(span);
+                int end = s.getSpanEnd(span);
+                s.removeSpan(span);
+                span = new URLSpanNoUnderline(span.getURL());
+                s.setSpan(span, start, end, 0);
+
+            }
+
+            tv.setText(s);
 
         }
-
-        tv.setText(s);
-
     }
 
 }
