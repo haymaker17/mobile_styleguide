@@ -20,7 +20,10 @@
         <item name="actionOverflowButtonStyle">@style/ActionBarOverflowButton</item>
     </style>
 
-    <style name="ConcurBaseTheme.White.New" parent="ConcurBaseTheme.New">
+    <style name="ConcurBaseTheme.White.New" parent="Theme.AppCompat.Light">
+        <item name="actionBarStyle">@style/Widget.Styled.ActionBar.New</item>
+        <item name="actionMenuTextColor">@color/universal_tour_ab_menu</item>prim
+        <item name="homeAsUpIndicator">@drawable/icon_drawer</item>
         <item name="actionOverflowButtonStyle">@style/ActionBarOverflowButton.White</item>
     </style>
 
@@ -32,7 +35,6 @@
             backward-compatibility can go here.
         -->
         <item name="actionBarStyle">@style/Widget.Styled.ActionBar</item>
-        <item name="homeAsUpIndicator">@drawable/icon_drawer</item>
         <item name="actionOverflowButtonStyle">@style/ActionBarOverflowButton</item>
     </style>
 

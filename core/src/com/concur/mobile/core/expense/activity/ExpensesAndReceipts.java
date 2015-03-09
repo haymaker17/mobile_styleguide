@@ -224,6 +224,8 @@ public class ExpensesAndReceipts extends BaseActivity implements ExpensesCallbac
             upTime = savedInstanceState.getLong(Const.ACTIVITY_STATE_UPTIME, 0L);
         }
 
+        getSupportActionBar().setDisplayHomeAsUpEnabled(false);
+
         Bundle extras = getIntent().getExtras();
         final ConcurCore app = (ConcurCore) getApplication();
         if (extras != null) {
