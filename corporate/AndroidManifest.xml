@@ -317,7 +317,7 @@
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value="com.concur.mobile.corp.activity.Home" />
         </activity>
-        <activity android:name="com.concur.mobile.core.request.activity.RequestDigestActivity" >
+        <activity android:name="com.concur.mobile.core.request.activity.RequestSummaryActivity" >
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value="com.concur.mobile.core.request.activity.RequestListActivity" />
@@ -325,9 +325,19 @@
         <activity android:name="com.concur.mobile.core.request.activity.RequestHeaderActivity" >
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
-                android:value="com.concur.mobile.core.request.activity.RequestDigestActivity" />
+                android:value="com.concur.mobile.core.request.activity.RequestSummaryActivity" />
         </activity>
-        
+        <activity
+            android:name="com.concur.mobile.core.request.activity.RequestEntryActivity" >
+            <meta-data
+                android:name="
+            android.support.PARENT_ACTIVITY"
+                android:value="com.concur.mobile.core.request.activity.RequestSummaryActivity" />
+        </activity>
+        <activity
+            android:name="com.concur.mobile.core.request.activity.LocationSearchActivity" >
+        </activity>
+
 
         <!-- Invoice related activities. -->
         <activity
@@ -471,7 +481,7 @@
         </activity>
         <activity
             android:name="com.concur.mobile.platform.ui.travel.hotel.maps.ShowMaps"
-            android:label="ShowMaps" 
+            android:label="ShowMaps"
             android:theme="@style/ConcurRestTheme.White.ActionBarTabs">
             <intent-filter>
                 <action android:name="android.intent.action.VIEW" />

@@ -9,7 +9,6 @@ import java.util.Map;
  * @author OlivierB
  *
  */
-@Deprecated
 public class RequestParsingHelper {
 
     public static String stringSafeParse(Map<?, ?> o, String key) {

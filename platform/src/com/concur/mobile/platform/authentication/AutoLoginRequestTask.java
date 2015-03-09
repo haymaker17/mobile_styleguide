@@ -1,17 +1,7 @@
 package com.concur.mobile.platform.authentication;
 
-import java.io.IOException;
-import java.io.InputStream;
-import java.util.Locale;
-
-import junit.framework.Assert;
-import junit.framework.AssertionFailedError;
-
-import org.xmlpull.v1.XmlPullParserException;
-
 import android.content.Context;
 import android.util.Log;
-
 import com.concur.mobile.base.service.BaseAsyncRequestTask;
 import com.concur.mobile.base.service.BaseAsyncResultReceiver;
 import com.concur.mobile.base.service.parser.CommonParser;
@@ -19,10 +9,17 @@ import com.concur.mobile.platform.config.provider.ConfigUtil;
 import com.concur.mobile.platform.service.PlatformAsyncRequestTask;
 import com.concur.mobile.platform.util.Const;
 import com.concur.platform.PlatformProperties;
+import junit.framework.Assert;
+import junit.framework.AssertionFailedError;
+import org.xmlpull.v1.XmlPullParserException;
+
+import java.io.IOException;
+import java.io.InputStream;
+import java.util.Locale;
 
 /**
  * An extension of <code>PlatformAsyncRequestTask</code> for the purpose of calling the <code>AutoLogin</code> MWS end-point.
- * 
+ *
  * @author andrewk
  */
 public class AutoLoginRequestTask extends PlatformAsyncRequestTask {
@@ -44,15 +41,11 @@ public class AutoLoginRequestTask extends PlatformAsyncRequestTask {
 
     /**
      * Constructs an instance of <code>AutoLoginRequestTask</code>.
-     * 
-     * @param context
-     *            contains an application context.
-     * @param receiver
-     *            contains the result receiver.
-     * @param id
-     *            contains the request id.
-     * @param locale
-     *            contains the locale.
+     *
+     * @param context   contains an application context.
+     * @param requestId contains the request id.
+     * @param receiver  contains the result receiver.
+     * @param locale    contains the locale.
      */
     public AutoLoginRequestTask(Context context, int requestId, BaseAsyncResultReceiver receiver, Locale locale) {
         super(context, requestId, receiver);
@@ -135,9 +128,8 @@ public class AutoLoginRequestTask extends PlatformAsyncRequestTask {
 
     /**
      * Will handle the login result.
-     * 
-     * @param result
-     *            contains the passed in result.
+     *
+     * @param result contains the passed in result.
      * @return returns the result.
      */
     private int handleLoginResult(int result) {

@@ -108,8 +108,10 @@ import com.concur.mobile.platform.config.provider.ClientData;
 import com.concur.mobile.platform.config.provider.ConfigUtil;
 import com.concur.mobile.platform.expense.provider.ExpenseUtil;
 import com.concur.mobile.platform.location.LastLocationTracker;
+import com.concur.mobile.platform.request.RequestGroupConfigurationCache;
 import com.concur.mobile.platform.request.RequestListCache;
 import com.concur.mobile.platform.request.dto.RequestDTO;
+import com.concur.mobile.platform.request.groupConfiguration.RequestGroupConfiguration;
 import com.concur.mobile.platform.service.MWSPlatformManager;
 import com.concur.mobile.platform.service.parser.MWSResponseStatus;
 import com.concur.mobile.platform.ui.common.util.PreferenceUtil;
@@ -117,9 +119,6 @@ import com.concur.mobile.platform.util.Parse;
 import com.concur.platform.PlatformProperties;
 
 public abstract class ConcurCore extends MultiDexApplication {
-
-    // Security lock to make sure TR is disabled on production environment
-    public static final boolean TR_DISABLED = true;
 
     // Maps between an activity class name and the list of currently running
     // AsyncTasks that were spawned while it was active.
@@ -146,7 +145,7 @@ public abstract class ConcurCore extends MultiDexApplication {
             }
             return name;
         }
-    };
+    }
 
     protected Product product;
 
@@ -365,6 +364,11 @@ public abstract class ConcurCore extends MultiDexApplication {
      * Contains a reference to the travel request formfields cache.
      */
     protected Cache<String, ConnectForm> requestFormFieldsCache = new ConnectFormFieldsCache();
+
+    /**
+     * Contains a reference to the travel request group configuration cache.
+     */
+    protected Cache<String, RequestGroupConfiguration> requestGroupConfigurationCache = new RequestGroupConfigurationCache();
 
     /**
      * Local instance to handle service connection events and keep our service reference up-to-date
@@ -1760,6 +1764,15 @@ public abstract class ConcurCore extends MultiDexApplication {
     }
 
     /**
+     * Gets the instance of <code>RequestGroupConfigurationCache</code> for requests configurations that have been retrieved.
+     *
+     * @return an instance of <code>RequestGroupConfigurationCache</code>
+     */
+    public Cache<String, RequestGroupConfiguration> getRequestGroupConfigurationCache() {
+        return requestGroupConfigurationCache;
+    }
+
+    /**
      * Clears any in-memory caches of data specific to an end-user.
      */
     public void clearCaches() {
@@ -2644,7 +2657,7 @@ public abstract class ConcurCore extends MultiDexApplication {
      * Save a preference value into the default {@link SharedPreferences} used by the application.
      * 
      * @deprecated - use
-     *             {@link com.concur.platform.ui.common.util.PreferenceUtil#savePreference(Context ctx, String name, String value)}
+     *             {@link com.concur.mobile.platform.ui.common.util.PreferenceUtil#savePreference(Context ctx, String name, String value)}
      *             instead.
      * 
      * @param ctx
@@ -2664,7 +2677,7 @@ public abstract class ConcurCore extends MultiDexApplication {
      * Save a preference value into the default {@link SharedPreferences} used by the application.
      * 
      * @deprecated - use
-     *             {@link com.concur.platform.ui.common.util.PreferenceUtil#savePreference(Context ctx, String name, boolean value)}
+     *             {@link com.concur.mobile.platform.ui.common.util.PreferenceUtil#savePreference(Context ctx, String name, boolean value)}
      *             instead.
      * 
      * @param ctx
@@ -2684,7 +2697,7 @@ public abstract class ConcurCore extends MultiDexApplication {
      * Save a preference value into an existing {@link SharedPreferences}
      * 
      * @deprecated - use
-     *             {@link com.concur.platform.ui.common.util.PreferenceUtil#savePreference(SharedPreferences prefs, String name, String value)}
+     *             {@link com.concur.mobile.platform.ui.common.util.PreferenceUtil#savePreference(SharedPreferences prefs, String name, String value)}
      *             instead.
      * 
      * @param prefs
@@ -2705,7 +2718,7 @@ public abstract class ConcurCore extends MultiDexApplication {
      * Save a preference value into an existing {@link SharedPreferences}
      * 
      * @deprecated - use
-     *             {@link com.concur.platform.ui.common.util.PreferenceUtil#savePreference(SharedPreferences prefs, String name, Long value)}
+     *             {@link com.concur.mobile.platform.ui.common.util.PreferenceUtil#savePreference(SharedPreferences prefs, String name, Long value)}
      *             instead.
      * 
      * @param prefs
@@ -2726,7 +2739,7 @@ public abstract class ConcurCore extends MultiDexApplication {
      * Save a preference value into an existing {@link SharedPreferences}
      * 
      * @deprecated - use
-     *             {@link com.concur.platform.ui.common.util.PreferenceUtil#savePreference(SharedPreferences prefs, String name, Integer value)}
+     *             {@link com.concur.mobile.platform.ui.common.util.PreferenceUtil#savePreference(SharedPreferences prefs, String name, Integer value)}
      *             instead.
      * @param prefs
      *            A {@link SharedPreferences} to hold the preference.
@@ -2746,7 +2759,7 @@ public abstract class ConcurCore extends MultiDexApplication {
      * Save a preference value into an existing {@link SharedPreferences}
      * 
      * @deprecated - use
-     *             {@link com.concur.platform.ui.common.util.PreferenceUtil#savePreference(SharedPreferences prefs, String name, boolean value)}
+     *             {@link com.concur.mobile.platform.ui.common.util.PreferenceUtil#savePreference(SharedPreferences prefs, String name, boolean value)}
      *             instead.
      * @param prefs
      *            A {@link SharedPreferences} to hold the preference.
