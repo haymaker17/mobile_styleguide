@@ -14,7 +14,7 @@
 	    android:orientation="horizontal"
 	    android:background="@color/ButtonCellBackground"
 	    android:layout_gravity="left|center_vertical"
-	    android:paddingLeft="15dp"
+        android:paddingLeft="@dimen/activity_horizontal_margin"
 	    >
 	    <Button 
 	        android:id="@+id/newRequestButton"

@@ -60,6 +60,8 @@ public class HotelChoiceDetailsActivity extends Activity implements HotelChoiceD
     private int numOfNights;
     private String headerImageURL;
     private ArrayList<String[]> violationReasons;
+    private boolean ruleViolationExplanationRequired;
+    private String currentTripId;
 
     // private ParallaxScollListView mListView;
     // private ImageView mImageView;
@@ -125,6 +127,8 @@ public class HotelChoiceDetailsActivity extends Activity implements HotelChoiceD
         durationOfStayForDisplay = i.getStringExtra(Const.EXTRA_TRAVEL_HOTEL_SEARCH_DURATION_OF_STAY);
         numOfNights = i.getIntExtra(Const.EXTRA_TRAVEL_HOTEL_SEARCH_DURATION_NUM_OF_NIGHTS, 0);
         violationReasons = (ArrayList<String[]>) i.getSerializableExtra("violationReasons");
+        ruleViolationExplanationRequired = i.getBooleanExtra("ruleViolationExplanationRequired", false);
+        currentTripId = i.getStringExtra("currentTripId");
 
     }
 
@@ -214,6 +218,8 @@ public class HotelChoiceDetailsActivity extends Activity implements HotelChoiceD
         intent.putExtra("hotelName", hotelListItem.getHotel().name);
         // startActivity(intent);
         intent.putExtra("violationReasons", violationReasons);
+        intent.putExtra("ruleViolationExplanationRequired", ruleViolationExplanationRequired);
+        intent.putExtra("currentTripId", currentTripId);
         startActivityForResult(intent, Const.REQUEST_CODE_BOOK_HOTEL);
 
     }

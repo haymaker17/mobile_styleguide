@@ -29,6 +29,7 @@ import android.view.ViewGroup.LayoutParams;
 import android.view.ViewStub;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
+import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.TableLayout;
 import android.widget.TableRow;
@@ -48,6 +49,7 @@ import com.concur.mobile.platform.travel.search.hotel.HotelPreSellOptionLoader;
 import com.concur.mobile.platform.travel.search.hotel.HotelRate;
 import com.concur.mobile.platform.travel.search.hotel.HotelViolation;
 import com.concur.mobile.platform.travel.search.hotel.HotelViolationComparator;
+import com.concur.mobile.platform.travel.search.hotel.ViolationReason;
 import com.concur.mobile.platform.ui.common.dialog.DialogFragmentFactoryV1;
 import com.concur.mobile.platform.ui.common.fragment.RetainerFragmentV1;
 import com.concur.mobile.platform.ui.common.util.FormatUtil;
@@ -59,6 +61,7 @@ import com.concur.mobile.platform.ui.travel.hotel.fragment.SpinnerDialogFragment
 import com.concur.mobile.platform.ui.travel.hotel.fragment.SpinnerDialogFragment.SpinnerDialogFragmentCallbackListener;
 import com.concur.mobile.platform.ui.travel.util.Const;
 import com.concur.mobile.platform.ui.travel.util.ParallaxScollView;
+import com.concur.mobile.platform.ui.travel.util.ViewUtil;
 import com.concur.mobile.platform.util.Format;
 
 /**
@@ -105,11 +108,13 @@ public class HotelBookingActivity extends Activity implements LoaderManager.Load
     private BaseAsyncResultReceiver hotelBookingReceiver;
     // The one RetainerFragment used to hold objects between activity recreates
     public RetainerFragmentV1 retainer;
-    // private String maxEnforcementLevelString;
     private SpinnerItem[] violationReasonChoices;
     private ArrayList<String[]> violationReasons;
     protected SpinnerItem curViolationReason;
     private HotelBookingAsyncRequestTask hotelBookingAsyncRequestTask;
+    private String currViolationId;
+    private boolean ruleViolationExplanationRequired;
+    private String currentTripId;
 
     /**
      * BroadcastReceiver used to detect network connectivity and update the UI accordingly.
@@ -139,8 +144,9 @@ public class HotelBookingActivity extends Activity implements LoaderManager.Load
         numOfNights = intent.getIntExtra(Const.EXTRA_TRAVEL_HOTEL_SEARCH_DURATION_NUM_OF_NIGHTS, 0);
         headerImageURL = intent.getStringExtra("headerImageURL");
         hotelName = intent.getStringExtra("hotelName");
-        // maxEnforcementLevelString = intent.getStringExtra("maxEnforcementLevelString");
         violationReasons = (ArrayList<String[]>) intent.getSerializableExtra("violationReasons");
+        ruleViolationExplanationRequired = intent.getBooleanExtra("ruleViolationExplanationRequired", false);
+        currentTripId = intent.getStringExtra("currentTripId");
 
         if (hotelRate != null) {
 
@@ -151,18 +157,11 @@ public class HotelBookingActivity extends Activity implements LoaderManager.Load
 
         }
 
-        if (savedInstanceState != null) {
-            // retrieve the preselloption
-        }
-
         if (preSellOption == null) {
             // Initialize the loader.
             lm = getLoaderManager();
             lm.initLoader(HOTEL_PRE_SELL_OPTION_LOADER_ID, null, this);
         }
-
-        // restore the values if any
-        // initValues(savedInstanceState);
 
         // initialize the view
         initView();
@@ -223,20 +222,6 @@ public class HotelBookingActivity extends Activity implements LoaderManager.Load
         }
     }
 
-    /**
-     * Initialize values.
-     * 
-     * @param inState
-     *            a bundle containing saved state.
-     */
-    // protected void initValues(Bundle inState) {
-    //
-    // // Init the card choices.
-    // initCardChoices();
-    //
-    // initCancellationPolicyView();
-    //
-    // }
     /*
      * (non-Javadoc)
      * 
@@ -424,6 +409,7 @@ public class HotelBookingActivity extends Activity implements LoaderManager.Load
                         } else {
                             imgView.setImageResource(R.drawable.icon_warning_yellow);
                         }
+                        currViolationId = hotelViolation.violationValueId;
                         firstRow = false;
                     } else {
                         // create a new table row and add to the table layout
@@ -457,7 +443,7 @@ public class HotelBookingActivity extends Activity implements LoaderManager.Load
                 if (hotelRate.maxEnforcementLevel >= 30) {
                     ((ImageView) violationsView.findViewById(R.id.hotel_room_max_violation_icon))
                             .setImageResource(R.drawable.icon_status_red);
-                    reserveButton.setEnabled(false);
+                    // reserveButton.setEnabled(false);
                 } else {
                     ((ImageView) violationsView.findViewById(R.id.hotel_room_max_violation_icon))
                             .setImageResource(R.drawable.icon_status_yellow);
@@ -465,11 +451,6 @@ public class HotelBookingActivity extends Activity implements LoaderManager.Load
 
             }
 
-            // initialize the reasons
-
-            // SessionInfo sessInfo = ConfigUtil.getSessionInfo(this);
-            // List<ReasonCodeDAO> reasonCodes = TravelUtilHotel.getHotelViolationReasons(getApplicationContext(),
-            // sessInfo.getUserId());
             if (violationReasons != null && violationReasons.size() > 0) {
                 // Construct spinner objects which will be used to populate a dialog.
                 violationReasonChoices = new SpinnerItem[violationReasons.size()];
@@ -479,10 +460,6 @@ public class HotelBookingActivity extends Activity implements LoaderManager.Load
 
                 initViolationReasonsView();
             }
-
-            // initialize the justification
-            // TextView justificationView = (TextView)violationsView.findViewById(R.id.hotel_violation_justification);
-
         }
     }
 
@@ -520,7 +497,7 @@ public class HotelBookingActivity extends Activity implements LoaderManager.Load
             } else {
                 violationsView.setText(R.string.general_select_reason);
             }
-            reserveButton.setEnabled(true);
+            // reserveButton.setEnabled(true);
         } else {
             Log.e(Const.LOG_TAG, CLS_TAG
                     + ".updateViolationReasonsView: unable to locate 'hotel_violation_reason' view!");
@@ -667,19 +644,91 @@ public class HotelBookingActivity extends Activity implements LoaderManager.Load
         if (connected) {
 
             reserveButton.setEnabled(false);
-            // getApplicationContext().g
-            showProgressBar(true);
-            hotelBookingReceiver = new BaseAsyncResultReceiver(new Handler());
+            boolean hasAllRequiredFields = true;
+            StringBuffer requiredFieldsMsg = new StringBuffer();
 
-            hotelBookingReceiver.setListener(new HotelBookingReplyListener());
-            String ccId = curCardChoice.id;
+            reserveButton.setEnabled(false);
 
-            hotelBookingAsyncRequestTask = new HotelBookingAsyncRequestTask(this, HOTEL_BOOKING_ID,
-                    hotelBookingReceiver, ccId, null, null, null, false, preSellOption.bookingURL.href);
-            hotelBookingAsyncRequestTask.execute();
+            // get selected credit card
+            String selectedCreditCardId = null;
+            if (cardChoices != null) {
+                if (curCardChoice == null) {
+                    // show credit card required message
+                    requiredFieldsMsg.append("credt card required");
+                    hasAllRequiredFields = false;
+                } else {
+                    selectedCreditCardId = curCardChoice.id;
+                }
+            }
+
+            // get selected violation reason and justification
+            ArrayList<ViolationReason> selectedViolationReasons = null;
+            String ruleEnforcementLevel = ViewUtil.getRuleEnforcementLevelAsString(hotelRate.maxEnforcementLevel);
+            if (ruleEnforcementLevel.equals("ERROR") || ruleEnforcementLevel.equals("WARNING")) {
+                // violation reason need to be selected
+                if (violationReasons == null) {
+                    // show message that violations reason are not available
+                    requiredFieldsMsg.append("violation reason not available, please search again");
+                    hasAllRequiredFields = false;
+                } else {
+                    // check for selected violation reason
+                    if (curViolationReason == null) {
+                        // show violation reason required message
+                        requiredFieldsMsg.append("violation reason required");
+                        hasAllRequiredFields = false;
+                    }
+
+                    // check for provided justification text if needed as per system configuration
+                    String justificationText = null;
+                    View justificationView = findViewById(R.id.hotel_violation_justification);
+                    if (justificationView != null) {
+                        justificationText = ((EditText) justificationView).getText().toString();
+                        if (justificationText == null && ruleViolationExplanationRequired) {
+                            // show violation justification text required message
+                            requiredFieldsMsg.append("justification required");
+                            hasAllRequiredFields = false;
+                        }
+                    }
+
+                    // if all required fields available then populate the violation reasons list
+                    if (hasAllRequiredFields) {
+                        selectedViolationReasons = new ArrayList<ViolationReason>();
+                        ViolationReason selectedViolationReason = new ViolationReason();
+                        selectedViolationReason.ruleValueId = currViolationId;
+                        selectedViolationReason.violationReasonCode = curViolationReason.id;
+                        if (justificationText != null) {
+                            selectedViolationReason.justification = justificationText;
+                        }
+                        selectedViolationReasons.add(selectedViolationReason);
+                    }
+                }
+            }
+
+            // do the booking if all the required fields are available
+            if (hasAllRequiredFields) {
+                showProgressBar(true);
+                hotelBookingReceiver = new BaseAsyncResultReceiver(new Handler());
+
+                hotelBookingReceiver.setListener(new HotelBookingReplyListener());
+                // create and invoke the async task
+                hotelBookingAsyncRequestTask = new HotelBookingAsyncRequestTask(this, HOTEL_BOOKING_ID,
+                        hotelBookingReceiver, selectedCreditCardId, currentTripId, selectedViolationReasons, null,
+                        false, preSellOption.bookingURL.href);
+                hotelBookingAsyncRequestTask.execute();
+            } else {
+                // show the required fields messages
+                DialogFragmentFactoryV1.getAlertOkayInstance("Required fields", requiredFieldsMsg.toString()).show(
+                        getFragmentManager(), null);
+                reserveButton.setEnabled(true);
+            }
         } else {
             Toast.makeText(getApplicationContext(), "Service Unavailable", Toast.LENGTH_LONG).show();
         }
+
+        // TODO - travel custom fields
+
+        // TODO - travel program Id
+        // String travelProgramId
 
     }
 
@@ -688,7 +737,7 @@ public class HotelBookingActivity extends Activity implements LoaderManager.Load
     @Override
     public Loader<HotelPreSellOption> onCreateLoader(int id, Bundle bundle) {
 
-        // request initial searchthis
+        // request initial search
         Log.d(Const.LOG_TAG, " ***** creating preselloption loader *****  ");
 
         PlatformAsyncTaskLoader<HotelPreSellOption> hotelPreSellOptionAsyncTaskLoader = new HotelPreSellOptionLoader(
@@ -705,7 +754,7 @@ public class HotelBookingActivity extends Activity implements LoaderManager.Load
 
     @Override
     public void onLoaderReset(Loader<HotelPreSellOption> loader) {
-        // TODO Auto-generated method stub
+        // nothing to handle here
     }
 
     @Override

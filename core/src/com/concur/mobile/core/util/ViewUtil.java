@@ -428,8 +428,7 @@ public class ViewUtil {
      */
     public static boolean isTravelRequestUser(Context context) {
         final SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(context);
-        return !ConcurCore.TR_DISABLED && prefs.getBoolean(Const.PREF_HAS_TR, false)
-                && prefs.getBoolean(Const.PREF_CAN_TR, false);
+        return prefs.getBoolean(Const.PREF_HAS_TR, false) && prefs.getBoolean(Const.PREF_CAN_TR, false);
     }
 
     /**

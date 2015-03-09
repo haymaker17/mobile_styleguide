@@ -1,10 +1,6 @@
 package com.concur.mobile.core.request.task;
 
-import java.util.HashMap;
-import java.util.Map;
-
 import android.content.Context;
-
 import com.concur.mobile.base.service.BaseAsyncResultReceiver;
 import com.concur.mobile.core.request.util.ConnectHelper;
 import com.concur.mobile.core.request.util.ConnectHelper.Action;
@@ -12,9 +8,11 @@ import com.concur.mobile.core.request.util.ConnectHelper.Module;
 import com.concur.mobile.core.request.util.RequestStatus;
 import com.concur.mobile.core.service.ServiceRequestException;
 
+import java.util.HashMap;
+import java.util.Map;
+
 /**
  * @author olivierb
- * 
  */
 public class RequestListTask extends AbstractRequestWSCallTask {
 
@@ -28,7 +26,8 @@ public class RequestListTask extends AbstractRequestWSCallTask {
         super(context, requestId, receiver);
     }
 
-    public RequestListTask(Context context, int requestId, BaseAsyncResultReceiver receiver, RequestStatus statusRequested) {
+    public RequestListTask(Context context, int requestId, BaseAsyncResultReceiver receiver,
+            RequestStatus statusRequested) {
         this(context, requestId, receiver);
         this.statusRequested = statusRequested;
     }
@@ -39,7 +38,7 @@ public class RequestListTask extends AbstractRequestWSCallTask {
 
     /**
      * Gets the service end-point for this request.
-     * 
+     *
      * @return returns the service end-point for this request.
      * @throws ServiceRequestException
      */
@@ -47,6 +46,9 @@ public class RequestListTask extends AbstractRequestWSCallTask {
         final Map<String, Object> params = new HashMap<String, Object>();
         params.put(PARAM_STATUS, this.statusRequested);
         params.put(PARAM_WITH_SEGMENT_TYPES, Boolean.TRUE);
-        return ConnectHelper.getServiceEndpointURI(Module.TRAVEL_REQUEST, Action.LIST, params, true);
+        params.put(ConnectHelper.PARAM_LIMIT, 100);
+        return ConnectHelper
+                .getServiceEndpointURI(ConnectHelper.ConnectVersion.VERSION_3_1, Module.REQUEST, Action.LIST, params,
+                        true);
     }
 }

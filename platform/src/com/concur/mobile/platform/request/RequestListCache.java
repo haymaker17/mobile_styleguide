@@ -1,16 +1,16 @@
 package com.concur.mobile.platform.request;
 
+import com.concur.mobile.platform.common.Cache;
+import com.concur.mobile.platform.request.dto.RequestDTO;
+
 import java.util.Collection;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import com.concur.mobile.platform.common.Cache;
-import com.concur.mobile.platform.request.dto.RequestDTO;
-
 /**
  * The cache implementation to handle the list of requests fetched
- * 
+ *
  * @author OlivierB
  */
 public class RequestListCache implements Cache<String, RequestDTO> {
@@ -18,6 +18,7 @@ public class RequestListCache implements Cache<String, RequestDTO> {
     // --- Cache map
     private Map<String, RequestDTO> requestMap = new HashMap<String, RequestDTO>();
     private Boolean beingRefreshed = false;
+    private boolean isDirty = false;
 
     // --- Inherited methods
     @Override
@@ -67,5 +68,13 @@ public class RequestListCache implements Cache<String, RequestDTO> {
         for (RequestDTO tr : list) {
             requestMap.put(tr.getId(), tr);
         }
+    }
+
+    public boolean isDirty() {
+        return isDirty;
+    }
+
+    public void setDirty(boolean isDirty) {
+        this.isDirty = isDirty;
     }
 }

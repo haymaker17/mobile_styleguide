@@ -1179,8 +1179,6 @@ public final class Const {
     public static final List<String> FLAGGED_LOCALE_KEYBOARD_LAYOUT = Arrays.asList(new String[] { "SAMSUNG" });
 
     // Push related consts
-    public static final String PUSH_CONCUR_ACTION_CUSTOM = "com.xtify.sdk.CUSTOM_ACTION";
-
     public static final String PUSH_CONCUR_NOTIF_TYPE_FIELD = "type";
     public static final String PUSH_CONCUR_NOTIF_MESSAGE_FIELD = "message";
     public static final String PUSH_CONCUR_NOTIF_SUBJECT_FIELD = "subject";

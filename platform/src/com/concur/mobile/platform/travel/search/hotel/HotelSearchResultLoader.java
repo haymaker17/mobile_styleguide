@@ -17,7 +17,8 @@ import com.concur.mobile.platform.service.PlatformAsyncTaskLoader;
 import com.concur.mobile.platform.service.parser.MWSResponse;
 import com.concur.mobile.platform.travel.provider.TravelUtilHotel;
 import com.concur.mobile.platform.util.Const;
-import com.concur.mobile.platform.util.PlatformUtil;
+import com.concur.mobile.platform.util.Format;
+import com.concur.mobile.platform.util.Parse;
 import com.concur.platform.PlatformProperties;
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
@@ -87,7 +88,7 @@ public class HotelSearchResultLoader extends PlatformAsyncTaskLoader<HotelSearch
     /**
      * Contains search url
      */
-    private static String searchUrl;
+    public String searchUrl;
 
     /**
      * Contains results object
@@ -183,9 +184,37 @@ public class HotelSearchResultLoader extends PlatformAsyncTaskLoader<HotelSearch
 
     @Override
     protected String getServiceEndPoint() {
-
-        searchUrl = PlatformUtil.getEndpointurl(SERVICE_END_POINT, lat, lon, distanceUnit, checkInDate, checkOutDate);
+        searchUrl = prepareEndPointUrl(lat, lon, distanceUnit, checkInDate, checkOutDate);
         return searchUrl;
+    }
+
+    /**
+     * prepare end point url for Hotel search
+     * 
+     * @param end_point
+     * @param lat
+     * @param lon
+     * @param distanceUnit
+     * @param checkInDate
+     * @param checkOutDate
+     * @return
+     */
+    public static String prepareEndPointUrl(Double lat, Double lon, String distanceUnit, Calendar checkInDate,
+            Calendar checkOutDate) {
+
+        StringBuilder endPointUrlBldr = new StringBuilder(SERVICE_END_POINT);
+        endPointUrlBldr.append("?latitude=");
+        endPointUrlBldr.append(lat);
+        endPointUrlBldr.append("&longitude=");
+        endPointUrlBldr.append(lon);
+        endPointUrlBldr.append("&distanceUnit=");
+        endPointUrlBldr.append(distanceUnit);
+        endPointUrlBldr.append("&checkin=");
+        endPointUrlBldr.append(Format.safeFormatCalendar(Parse.LONG_YEAR_MONTH_DAY, checkInDate));
+        endPointUrlBldr.append("&checkout=");
+        endPointUrlBldr.append(Format.safeFormatCalendar(Parse.LONG_YEAR_MONTH_DAY, checkOutDate));
+        endPointUrlBldr.append("&radius=25");
+        return endPointUrlBldr.toString();
     }
 
 }
