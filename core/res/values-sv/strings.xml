@@ -37,6 +37,7 @@
   <string name="hotel_search_detail_title">Hotellinformation</string>
   <string name="trip_confirm_approve_msg">Vill du attestera den här resan?</string>
   <string name="hotel_details_no_rooms_available">Rum i denna fastighet är ej tillgängliga under vissa datum. Välj ett annat hotell.</string>
+  <string name="profile_add_credit_card">Lägg till ett nytt kort</string>
   <string name="general_month_dec">December</string>
   <string name="hotel_search_label_checkin">Incheckning</string>
   <string name="login_help_pin">Känner du inte till din PIN-kod?</string>
@@ -59,6 +60,7 @@
   <string name="dlg_expense_attendee_add_progress_message">Lägger till deltagare...</string>
   <string name="select_attendee_type">Välj en befintlig deltagartyp.</string>
   <string name="general_elapsed_hour_min_long">%%0%% tim, %%1%% min</string>
+  <string name="sdk_upgrade_message_important">Viktigt:</string>
   <string name="rail_search_btn_roundtrip">Tur och retur</string>
   <string name="car_search_label_near">Nära</string>
   <string name="cancel">Avbryt</string>
@@ -89,6 +91,7 @@
   <string name="trip_approval_success_msg">Resan har attesterats</string>
   <string name="air_price_to_beat_search_departure">Avgång:</string>
   <string name="general_approve">Attestera</string>
+  <string name="min_sdk_upgrade_message_title">Viktigt</string>
   <string name="travel_points_address_violations_label">Behandla policyöverträdelser*</string>
   <string name="test_drive_tour_welcome_pg2_subtitle">Nu sätter vi igång. Vi har i förväg laddat exempel på utläggsrapporter, kortdebiteringar och kvitton samt guidade överlägg så att du enkelt kan komma igång.</string>
   <string name="home_section_travel">Resa</string>
@@ -132,6 +135,7 @@
   <string name="voice_book_hint">Tryck på mikrofonen för att börja</string>
   <string name="hotel_room_rate">Rumpris</string>
   <string name="approval_row_invoice_title">Fakturor</string>
+  <string name="sdk_upgrade_message_body">Denna enhet kan inte ta emot uppdateringar för nyare versioner eftersom den kör en äldre version av Android.</string>
   <string name="rail_search_travel_header_city_span">%%0%% - %%1%%</string>
   <string name="general_preferred_vendor">Föredragna leverantörer</string>
   <string name="location_check_in_current_location">Aktuell plats *</string>
@@ -139,8 +143,10 @@
   <string name="dlg_appending_receipt">Lägger till kvitto...</string>
   <string name="air_reservation_confirmed_message">Flyget har bekräftats.</string>
   <string name="dlg_book_missing_field_violation_justification">Ange en motivering till överträdelse</string>
+  <string name="new_ocr_expense">Lägg till OCR-utlägg</string>
   <string name="trip_approval_failed_msg">Ett fel uppstod när resan skulle attesteras. Försök igen.</string>
   <string name="air_search_class_value_first">Första</string>
+  <string name="hotel_search_label_checkin_date">Incheckningsdatum</string>
   <string name="login_id_invalid">Användarnamnet ska bestå av ditt inloggningsnamn följt av tecknet @ och ditt företags domän.</string>
   <string name="home_navigation_car_mileage_not_allow_title">Funktionen har avaktiverats</string>
   <string name="segment_hotel_checkin">Incheckning:</string>
@@ -178,7 +184,7 @@
   <string name="dlg_clear_report_entry_receipt_progress_message">Rensar kvitto...</string>
   <string name="triplist_no_data">Inga resor</string>
   <string name="copyright">© Copyright 2013 Concur Technologies, Inc.\nMed ensamrätt.</string>
-  <string name="itin_expenses_and_adjustments">Utlägg &amp; Justeringar</string>
+  <string name="itin_expenses_and_adjustments">Utlägg & Justeringar</string>
   <string name="home_action_title">Välj en åtgärd</string>
   <string name="mobile_password_successfully_reset">Mobillösenordet (PIN-koden) har återställts.</string>
   <string name="tour_2_bottom">\u2022 Ta bilder av kvitton och ladda upp dem\n\u2022 Lägg till utlägg med deltagare\n\u2022 Fånga in data för milersättning</string>
@@ -225,7 +231,6 @@
   <string name="canceling_hotel">Avbokar hotell...</string>
   <string name="rail_search_label_arr_loc">Till</string>
   <string name="dlg_expense_report_no_entries_title">Inga utlägg</string>
-  <string name="smart_expense_action_split_expense">Dela smarta utlägg</string>
   <string name="limo_reservation_title">Limousinebokning</string>
   <string name="air_ticket_title">Flygbiljett</string>
   <string name="invoice_confirm_approve_msg">Vill du attestera den här fakturan?</string>
@@ -278,12 +283,13 @@
   <string name="air_confirm_flight">Bekräfta flyg</string>
   <string name="segment_air_fs_refresh">Uppdatera</string>
   <string name="dlg_travel_select_frequent_flyer_title">Välj bonusprogram</string>
-  <string name="dlg_expense_smart_expense_add_to_report_message">Smarta utlägg kommer att kombineras till en enda post i rapporten.</string>
+  <string name="select_from_device_pdf">Välj PDF</string>
   <string name="general_none">Ingen</string>
   <string name="add_attendee_from_search">Sök</string>
   <string name="car_search_label_smoking">Rökare</string>
   <string name="profile_check_1">Din reseprofil kräver ett värde för mellannamn, kön och födelsedatum.  Logga in på webbversionen av Concur Travel och välj Profil i menyn.\n\nLogga ut och logga sedan in igen, efter att du har angett informationen ovan.</string>
   <string name="hotel_search_near_me">Hotell nära mig</string>
+  <string name="hotel_search_label_checkout_date">Utcheckningsdatum</string>
   <string name="air_search_filter_sort_by_title">Sortera flyg efter</string>
   <string name="general_month_sep">September</string>
   <string name="login_more_help_title">Mer Hjälp</string>
@@ -315,6 +321,7 @@
   <string name="apptentive_intro_dialog_title_default">Tack för din feedback!</string>
   <string name="home_section_expense">Utlägg</string>
   <string name="receipt_delete_fail_dialog_title">Kvittoborttagningen misslyckades</string>
+  <string name="hotel_search_label_near_v1">för hotellen i</string>
   <string name="register_pin_entry">Ange en PIN-kod som består av minst 4 tecken i form av siffror eller bokstäver.  Ditt företag kan kräva fler tecken.</string>
   <string name="rail_search_label_depart_time">Avgångstid</string>
   <string name="general_fees">Avgifter</string>
@@ -336,6 +343,7 @@
   <string name="dlg_expense_no_external_storage_available_title">Ingen extern lagring är tillgänglig</string>
   <string name="receipt_action_title">Åtgärd för kvitto</string>
   <string name="no_allocations_msg">Inga fördelningar</string>
+  <string name="dlg_e_receipt_unavailable_title">Bild inte tillgänglig</string>
   <string name="segment_air_label_contact">Kontakt</string>
   <string name="location_check_in_days_remaining_month">Minst 1 månad</string>
   <string name="dlg_travel_flight_stat_retrieve">Hämtar flygresestatus...</string>
@@ -346,7 +354,7 @@
   <string name="car_detail_book_failure_title">Ett fel uppstod</string>
   <string name="general_fare">Biljettpris</string>
   <string name="tour_1_top">Sök efter och boka flygresor,\nhotell, bil m.m.</string>
-  <string name="quick_expenseit_title">Receipt Capture</string>
+  <string name="quick_expenseit_title">Kvittoregistrering</string>
   <string name="total_paid_by_company">Summa som företaget betalat</string>
   <string name="general_search_for_price_to_beat_failed">Vi kunde tyvärr inte hitta något pris att slå. Prova med en ny sökning.</string>
   <string name="dlg_expense_attendee_no_edit_message">Den här deltagaren kan inte redigeras.</string>
@@ -363,7 +371,6 @@
   <string name="hotel_price_to_beat_search_header">Bli en smartare reseköpare! Ange dina hotellsökuppgifter nedan för att hitta priset att slå när du bokar ditt rum.</string>
   <string name="gallery">Galleri</string>
   <string name="invoice_line_item">Radpost</string>
-  <string name="hide_corporate_card_transaction">Dölja utläggstransaktioner för företagskort...</string>
   <string name="location_check_in_title">Platsincheckning</string>
   <string name="travel_points_violations_desc_header">Poäng eller attestering</string>
   <string name="retrieve_hotel_details">Hämtar hotelldetaljer...</string>
@@ -380,12 +387,15 @@
   <string name="login_sso_no_company_code_msg">Ange ett värde på för företagskod.</string>
   <string name="itemize_incomplete">Summan av specificeringsbeloppen stämmer inte med utläggsbeloppet.</string>
   <string name="ocr_progress_status_failed">Bearbetningsfel</string>
+  <string name="loc_search_hint_v1">Sök destination</string>
   <string name="triplist_section_awaiting_approval">Inväntar attestering</string>
   <string name="general_not_preferred">Inte föredragna</string>
+  <string name="profile_city">Ort</string>
   <string name="sso_sign_in_company_code_error_title">Företagskod</string>
   <string name="dlg_append_receipt_confirmation_title">Lägg till bekräftelse</string>
   <string name="segment_air_label_meal">Måltid</string>
   <string name="hotel_search_suggestions">Hotellsökningsförslag</string>
+  <string name="profile_other">Annan</string>
   <string name="rail_search_travel_header_date_span">%%0%% - %%1%%</string>
   <string name="breeze_name">Concur Breeze</string>
   <string name="out_of_pocket">Kontantutlägg</string>
@@ -393,8 +403,8 @@
   <string name="travel_points_air_booking_workflow_points_header">Respoängbank: %%0!total travel points%% poäng</string>
   <string name="segment_air_label_terminal">Terminal:</string>
   <string name="view_expenses">Visa utgifter</string>
-  <string name="general_seats">Platser</string>
   <string name="general_preparing">Förbereder</string>
+  <string name="general_seats">Platser</string>
   <string name="segment_rail_label_train">Tåg</string>
   <string name="upload_mobile_entry_receipt_succeeded">Uppladdningen av utgiftskvittot lyckades!</string>
   <string name="dlg_expense_remove_confirmation_title">Ta bort bekräftelse</string>
@@ -474,6 +484,7 @@
   <string name="attendee_search_hint">Ange deltagarens namn</string>
   <string name="justification_reason">Motivering</string>
   <string name="hotel_search_room_details_title">Ruminformation</string>
+  <string name="rest_hotel_search_title">Sök</string>
   <string name="report_submit_error">Fel när rapporten skickades in</string>
   <string name="retrieving_receipts">Hämtar kvitton</string>
   <string name="car_search_car_type_E">Ekonomi</string>
@@ -515,6 +526,8 @@
   <string name="location_check_in_comment">Kommentar</string>
   <string name="msg_cntr_title">Meddelandecenter</string>
   <string name="date">Datum</string>
+  <string name="profile_fname">Förnamn</string>
+  <string name="home_navigation_curb">Curb</string>
   <string name="dlg_expense_attendee_version_mismatch_message">Deltagaren har ändrats sedan den senast användes för detta utlägg.\nAlla redigeringar måste göras i profilen på webben.</string>
   <string name="car_results_unlimited_miles">Fria mil</string>
   <string name="details">Information</string>
@@ -561,6 +574,7 @@
   <string name="report_add_expense">Lägg till ny utgift</string>
   <string name="approval_row_report_header">Rapportattester</string>
   <string name="hotel_search_label_near">Nära</string>
+  <string name="tr_segment_block_return">Tillbaka</string>
   <string name="air_search_stopgroup_plural">%%0!number%% stopp</string>
   <string name="general_field_value_too_large">Värdet \'%%0%%\' är för högt.</string>
   <string name="segment_rail_label_contact">Kontakt</string>
@@ -571,6 +585,7 @@
   <string name="login_disabled_message">Mobile har avaktiverats för ditt företag.</string>
   <string name="dlg_remove_report_expense_failed_title">Det gick inte att ta bort utlägget</string>
   <string name="amount_approved">Belopp attesterat</string>
+  <string name="profile_add_emergency_contact">Lägg till en kontaktperson i nödfall</string>
   <string name="attendee_advanced_search_swipe_right">Svep åt höger för att visa avancerade sökfält.</string>
   <string name="searching_for_locations">Söker efter platser...</string>
   <string name="air_price_to_beat_search_arrival">Ankomst:</string>
@@ -589,8 +604,9 @@
   <string name="pref_voice_language">Röstsökningsspråk</string>
   <string name="segment_air_fs_label_div_city">Diversion-sort</string>
   <string name="retrieve_mobile_entry_receipt">Laddar ner utgiftskvitto...</string>
-  <string name="event_title">Händelse</string>
+  <string name="profile_address">Adress</string>
   <string name="itin_proceed_to_expenses">Gå vidare till utlägg</string>
+  <string name="event_title">Händelse</string>
   <string name="segment_air_label_aircraft">Flygplan</string>
   <string name="dlg_travel_dynamic_custom_fields_title">Bokningspolicy</string>
   <string name="trip_approvals_approve">Attestera resa</string>
@@ -599,8 +615,8 @@
   <string name="dlg_expense_active_report_retrieve_failed_title">Det gick inte att hämta aktiva rapporter</string>
   <string name="general_enter_n_to_m_characters_hint">Ange mellan %%0!min%% till %%1!max%% tecken</string>
   <string name="hotel_wizard_checkin">Incheckningsdatum</string>
+  <string name="tr_header">Rubrik till begäran</string>
   <string name="segment_rail_label_arrival">Ankomst</string>
-  <string name="dlg_expense_split_expense_confirm_title">Bekräfta delning av smarta utlägg</string>
   <string name="segment_air_label_duration">Tidslängd</string>
   <string name="call_travel_agent">Ring till resebyrå</string>
   <string name="air_search_title">Boka flyg</string>
@@ -667,6 +683,7 @@
   <string name="approved_amount">Attesterat belopp</string>
   <string name="commit">Genomför</string>
   <string name="service_not_available">Concur-tjänsten för att hantera den här begäran är inte tillgänglig för tillfället.  Försök igen vid ett senare tillfälle.</string>
+  <string name="loc_search_office_hint">Sök efter en kontorsplats</string>
   <string name="ocr_progress_msg">Ditt utlägg analyseras</string>
   <string name="home_navigation_expenseit">ExpenseIt</string>
   <string name="dlg_expense_receipt_store_confirm_select_for_expense">Vill du markera för kvitto på utlägg \'%%0%%\' tillagt den \'%%1%%\'?</string>
@@ -718,6 +735,7 @@
   <string name="dlg_expense_report_send_back">Skickar tillbaka rapport</string>
   <string name="apptentive_thanks">Tack för din feedback!</string>
   <string name="air_results_title_multi_stop">%%0%% stopp</string>
+  <string name="field_hint_add_vendor">Lägg till leverantör (valfritt)</string>
   <string name="total_paid_by_employee">Summa som den anställde betalat</string>
   <string name="view_details">Visa detaljer</string>
   <string name="select_from_device">Välj från galleri</string>
@@ -727,11 +745,13 @@
   <string name="travel_violations_hotel_for_manager_approval_header">Innan du bokar det här rummet i strid mot företagspolicyn måste du ange en orsak.</string>
   <string name="sharing_receipt_wait_on_connectivity_detail">Kontrollera telefonens dataanslutning.</string>
   <string name="triplist_section_rejected">Avvisad</string>
+  <string name="search_destination_location">Destination</string>
   <string name="segment_dining_reservation">Bokning</string>
   <string name="receipt_retrieve_urls_fail_dialog_title">Det gick inte att hämta kvittoinformation</string>
   <string name="add_attendee_options">Lägg till deltagaralternativ</string>
   <string name="dlg_expense_missing_fields_soft_stop_message">Följande fält saknar värden och bör fyllas i. Vill du hoppa över att ange värden just nu, och fortsätta i stället?</string>
   <string name="location_check_in_failed_title">Incheckningen misslyckades</string>
+  <string name="hotel_search_label_for_v1">Vänta medan vi söker</string>
   <string name="login_pin_expired_title">PIN-koden har slutat att gälla</string>
   <string name="pref_cat_server">Server</string>
   <string name="adding_to_report">Lägger till utlägg i rapport...</string>
@@ -753,7 +773,6 @@
   <string name="report_id">Rapport-ID</string>
   <string name="air_search_stopgroup_all">Alla</string>
   <string name="dlg_hotel_cancel_succeeded_message">Hotellreservationen har avbokats.</string>
-  <string name="pref_smart_match_allow">Tillåt Smart matchning för utlägg</string>
   <string name="retrieve_all_entries">Hämtar utlägg...</string>
   <string name="receipt_action_delete_confirm_message">Vill du ta bort kvittot som lades till %%0%%?</string>
   <string name="test_drive_password_error">Ange ett giltigt lösenord.</string>
@@ -765,6 +784,7 @@
   <string name="itin_meal_PRO">Ingår (exkludera)</string>
   <string name="report_submit_dialog_message">Vill du skicka in den här utläggsrapporten?</string>
   <string name="approver_search_by_email">E-post</string>
+  <string name="sdk_upgrade_message_see_msg_center">Se meddelandecentret för mer information:</string>
   <string name="dlg_expense_delete">Tar bort utlägg</string>
   <string name="segmentlist_offer_enable_validity">Aktivera validitetskontroll</string>
   <string name="hotel_recommendation_not_available">Förslaget är inte tillgängligt</string>
@@ -775,6 +795,7 @@
   <string name="invoice_vendor">Faktureringsleverantör</string>
   <string name="receipt_source_cte">CTE</string>
   <string name="select_policy">Välj policy</string>
+  <string name="profile_emergency_contact">Kontakt vid nödfall</string>
   <string name="view_receipt">Visa kvitto</string>
   <string name="air_search_label_refundable_only">Endast återbetalningsbara biljetter</string>
   <string name="approval_workflow">Arbetsflöde för attestering</string>
@@ -820,6 +841,7 @@
   <string name="rail_results_title">Välj tåg</string>
   <string name="dlg_expense_save_report_receipt_succeeded_message">Kvittot har lagts till i rapporten.</string>
   <string name="no_receipt_thumbnail_available">Kvittominiatyr\nej tillgänglig.</string>
+  <string name="ocr_status_procesing_error">Bearbetningsfel</string>
   <string name="universal_tour_welcome_text">gör det enkelt att planera affärsresor, registrera utlägg och få återbetalningar.</string>
   <string name="travel_agency_info_title">Resebyråinfo</string>
   <string name="hotel_search_rooms_title">Välj rum</string>
@@ -846,6 +868,7 @@
   <string name="pin_create_submit">Ange mobil-PIN-koden</string>
   <string name="activity_canceled">Aktiviteten avbröts</string>
   <string name="receipt_document_type_pdf">PDF</string>
+  <string name="dlg_append_receipt_fail_title">Det går inte att bifoga ditt kvitto. Försök igen senare</string>
   <string name="add_report_receipt">Lägger till rapportkvitto...</string>
   <string name="rail_search_label_arrive_station">Ankomststation</string>
   <string name="test_drive_tour_skip">Hoppa över</string>
@@ -853,6 +876,7 @@
   <string name="report_approve_dialog_message">Vill du attestera den här rapporten?</string>
   <string name="itin_time">Tid</string>
   <string name="home_row_book_hotel_subheader">Checka in på det perfekta hotellet</string>
+  <string name="profile_phone">Telefon</string>
   <string name="home_tour_expense2_message">Skicka sedan in och få återbetalning. \nChefer kan attestera från valfri plats.</string>
   <string name="expense_type_prompt">Välj en utläggstyp</string>
   <string name="dlg_expense_no_mileage_form_title">Inget formulär är tillgängligt</string>
@@ -867,6 +891,7 @@
   <string name="segment_air_label_arrive">Ankommer</string>
   <string name="dlg_getting_current_location">Hämtar aktuell plats...</string>
   <string name="travel_agency_info_night_msg">Nattmeddelande</string>
+  <string name="request_digest_total">Summa:</string>
   <string name="hotel_search_label_with_availability_from">med tillgänglighet från</string>
   <string name="dlg_expense_report_detail_retrieve_failed_title">Det gick inte att hämta rapportdetaljer</string>
   <string name="approval_row_tr_header">Begäranden</string>
@@ -880,6 +905,7 @@
   <string name="test_drive_retry">Försök igen</string>
   <string name="hotel_price_to_beat_distance_mile_singular">%%0! one %% engelsk mil</string>
   <string name="dlg_registering">Registrerar...</string>
+  <string name="submit_request">Skicka in begäran</string>
   <string name="no_expected_expenses_msg">Inga förväntade utlägg</string>
   <string name="general_missing_violation_reason_message">Kontakta företagets administratör för konfiguration av regelöverträdelseorsaker för %%0%%.</string>
   <string name="general_destination">Destination</string>
@@ -900,9 +926,11 @@
   <string name="select_attendee_type_prompt">Välj en befintlig deltagartyp.</string>
   <string name="dlg_travel_retrieve_reason_code_progress_message">Hämtar anpassade orsakskoder för bokning...</string>
   <string name="pin_create_invalid_device_message">PIN-återställningen begärdes från en annan enhet. Använd samma enhet som du begärde din PIN-återställning från.</string>
+  <string name="tr_new_request_title">Starta en begäran</string>
   <string name="air_search_class_value_any">Alla</string>
   <string name="pin_create_title">Mobil-PIN</string>
   <string name="receipt_share_failed_retry">Misslyckades (försöker igen)</string>
+  <string name="dlg_e_receipt_unavailable">Det gick inte att ladda kvittobilden, men dina utläggsuppgifter har sparats. Gå till nätet om du vill visa denna kvittobild.</string>
   <string name="expense_type_category_mru">Senast använda</string>
   <string name="general_violation_justification">Motivering till överträdelse</string>
   <string name="home_tour_expense1_title">Ta foton på dina kvitton.</string>
@@ -941,6 +969,7 @@
   <string name="submitted">Inskickad</string>
   <string name="credit_card">Kreditkort</string>
   <string name="attendee_search_results_empty_message">Sökningen returnerade inga matchande deltagare.  Försök igen.</string>
+  <string name="add_another_item_to_request">+ Lägg till ett objekt i denna begäran</string>
   <string name="home_navigation_traveltext">TravelText</string>
   <string name="air_search_label_returndate">Returdatum</string>
   <string name="segment_rail_label_distance">Körsträcka</string>
@@ -991,12 +1020,15 @@
   <string name="attendee_create_from_contact_cancelled">Skapandet av deltagaren från kontakt avbröts.</string>
   <string name="hotel_fees">Hotellavgifter</string>
   <string name="segment_air_fs_label_arr_gate">Ankomstgate</string>
+  <string name="field_hint_add_amount">Lägg till belopp</string>
   <string name="canceling_rail">Avbokar tåg...</string>
   <string name="current_value">Aktuellt värde</string>
   <string name="retrieve_currency">Hämtar valuta...</string>
   <string name="dlg_expense_no_expense_type_currency_message">Eftersom du är offline går det inte att visa urvalsdata för utläggstyp och/eller valuta just nu.</string>
   <string name="expense_receipt_options">Välj en kvittoåtgärd</string>
   <string name="deleting_receipt">Tar bort kvitto...</string>
+  <string name="loc_search_office">Kontorsplatser</string>
+  <string name="tr_new_request">Starta din begäran</string>
   <string name="register_pin_tip_title">Tips om PIN-registrering</string>
   <string name="profile_check_32">Din reseprofil kräver ett värde för arbetsadress (gata, ort och land).  Logga in på webbversionen av Concur Travel och välj Profil i menyn.\n\nLogga ut och logga sedan in igen, efter att du har angett informationen ovan.</string>
   <string name="itin_stop_actions">Åtgärder för uppehåll i resplan</string>
@@ -1017,14 +1049,14 @@
   <string name="exceptions">Undantag</string>
   <string name="password_short_message">Lösenord måste bestå av minst %%0!length%% tecken.</string>
   <string name="car_search_travel_header_name">Bilar nära %%0%%</string>
-  <string name="long_press_smart_expense">(Tryck länge om du vill dela utlägg)</string>
-  <string name="hotel_search_for_rates_progress">Söker efter taxor</string>
   <string name="register_failure_msg">Försök igen. Om problemen att få åtkomst till systemet kvarstår kontaktar du supportavdelningen på ditt företag eller rese-/utläggsavdelningen.</string>
+  <string name="hotel_search_for_rates_progress">Söker efter taxor</string>
   <string name="login_company_sign_in">Företagsinloggning</string>
   <string name="segment_ride_pickup_instructions">Upphämtningsinstruktioner</string>
   <string name="receipt_download_notify">Det här utlägget har en kvittobild som kan laddas ner.  Välj en kameraikon nedan och sedan Ladda ner bild för att ladda ner och visa kvittot.</string>
   <string name="dlg_prompt_to_rate_yes">Klassificera det!</string>
   <string name="dlg_report_submit_confirmation_title">Skicka bekräftelse</string>
+  <string name="car_search_invalid_drop_off_time_title">Ogiltig avlämningstid</string>
   <string name="universal_tour_receipt_more">för ditt utläggskvitto.</string>
   <string name="multi_line_text_entry">Textpost med flera rader</string>
   <string name="register_pin_tip_text">Om du inte känner till dina autentiseringsuppgifter loggar du in på ditt Concur-webbkonto och går till Profil -> Mobilregistrering, eller till Mitt konto -> Mobil-PIN.  Ytterligare hjälp får du av företagets administratör.</string>
@@ -1087,6 +1119,7 @@
   <string name="loc_search_hint">Ange filtertext</string>
   <string name="attendee_create_cancelled">Skapandet av deltagarens avbröts.</string>
   <string name="choose_picture">Välj bild</string>
+  <string name="profile_country">Land</string>
   <string name="general_call">Samtal</string>
   <string name="dlg_report_approve_progress">Skicka för attestering</string>
   <string name="retrieve_reports_to_approve">Hämtar rapporter som ska attesteras...</string>
@@ -1102,6 +1135,7 @@
   <string name="dlg_book_missing_fields_title"> Bokningsfält</string>
   <string name="general_reservation_failed">Bokningen misslyckades</string>
   <string name="home_action_hotel_voice_search">Hotellröstsökning</string>
+  <string name="profile_add_banck_account">Lägg till ett nytt bankkonto</string>
   <string name="general_open">Öppen</string>
   <string name="home_row_invoice_sub_one">1 faktura</string>
   <string name="login_help_bad_email_dialog_title">Ogiltig e-postadress</string>
@@ -1191,6 +1225,7 @@
   <string name="dlg_expense_save">Sparar utlägg...</string>
   <string name="dlg_air_cancel_succeeded_message">Flygreservationen har avbokats.</string>
   <string name="test_drive_and">och</string>
+  <string name="car_search_invalid_drop_off_time">Avlämningstiden är före upphämtningstiden.</string>
   <string name="dlg_no_car_rates_for_date">Inga taxor definierades för det valda datumet. Kontakta din administratör.</string>
   <string name="segment_rail_label_duration">Restid:</string>
   <string name="login_help_submit">Skicka mina inloggningsuppgifter</string>
@@ -1208,6 +1243,7 @@
   <string name="currency">Valuta</string>
   <string name="offline_upload_dialog_header">Laddar upp. Vänta...</string>
   <string name="saving_report">Sparar rapport...</string>
+  <string name="tr_list_header_approved">ATTESTERADE BEGÄRANDEN</string>
   <string name="new_expense">Nytt utlägg</string>
   <string name="itinerary">Resplan</string>
   <string name="rail_search_label_passengers">Antal passagerare</string>
@@ -1224,6 +1260,7 @@
   <string name="cash_expense">Kontantutlägg</string>
   <string name="home_navigation_home">Hem</string>
   <string name="dlg_travel_itinerary_retrieve">Hämtar resedetaljer...</string>
+  <string name="profile_lname">Efternamn</string>
   <string name="amount_due_credit_card">Att betala till kreditkortet</string>
   <string name="retrieve_currency_types">Hämtar valutor...</string>
   <string name="dlg_no_air_permission_message">Ditt företag har inaktiverat flygbokning via mobil. Boka ditt flyg via webbversionen av Concur eller genom att ringa en resebyrå.</string>
@@ -1254,12 +1291,15 @@
   <string name="amount_in_currency">Belopp i %%0%%</string>
   <string name="location_check_in_failed_message">Det gick inte att checka in med den aktuella platsen. Försök igen.</string>
   <string name="rail_detail_return">Tillbaka</string>
+  <string name="tr_arrival">Ankomst</string>
   <string name="dlg_hotel_cancel_progress_message">Avbokar hotellbokning...</string>
   <string name="receipt_added_from">Tillagt från</string>
+  <string name="tr_new_request_desc">Få attestering för flyg, hotell och mer</string>
   <string name="segment_hotel_checkout">Checka ut:</string>
   <string name="segment_air_fs_label_dep_estim">Avresa beräknad</string>
   <string name="location_check_in_progress">Checkar in...</string>
   <string name="register_password_blank">Ange ditt lösenord.</string>
+  <string name="retrieve_tr">Hämtar resebegäranden ...</string>
   <string name="home_row_book_car_subheader">Hämta ett riktigt häftigt åk</string>
   <string name="test_drive_limited_text">har begränsade Concur-mobilfunktioner</string>
   <string name="itin_add_stop">Lägg till uppehåll i resplan</string>
@@ -1343,6 +1383,7 @@
   <string name="hotel_search_rating">Gradering</string>
   <string name="view_receipts">Visa kvitton</string>
   <string name="retrieve_trips_to_approve">Hämtar resor som ska attesteras...</string>
+  <string name="voice_search">Röstsökning</string>
   <string name="travel_request_expected_expense_title">Förväntat utlägg</string>
   <string name="login_sign_in_help">Lösenord</string>
   <string name="segment_air_fs_label_arr_sched">Ankomst schemalagd</string>
@@ -1377,14 +1418,13 @@
   <string name="home_tip_book_travel">Boka\nresa</string>
   <string name="home_row_trip_approvals_sub_none">Det finns inga resor att attestera</string>
   <string name="air_search_label_returntime">Returtid</string>
-  <string name="dlg_expense_split_expense_confirm_message">Vill du dela korttransaktionen som matats in från mobilen?</string>
   <string name="itin_meal_TAX">Skattepliktigt</string>
   <string name="summary">Sammanfattning</string>
   <string name="retrieve_conditional_field_action_failure">Det gick inte att hämta värden för villkorsstyrda fält. Försök igen.</string>
   <string name="general_air_booking">Flygbokning</string>
   <string name="unit_price">Enhetspris</string>
   <string name="attendee_edit_cancelled">Redigering av deltagare avbröts</string>
-  <string name="travel_request_title">Begäran</string>
+  <string name="travel_request_title">Begäranden</string>
   <string name="login_failure_help">Du kan skapa eller återställa mobil-PIN-koden genom att klicka på Behöver du ange din PIN-kod, eller genom att gå till Profil -> Mobilregistrering på Concur online.</string>
   <string name="receipt_store_import_from_camera">Importera från kamera</string>
   <string name="general_enter_at_least_n_characters_hint">Ange minst %%0!min%% tecken</string>
@@ -1405,6 +1445,7 @@
   <string name="dlg_expense_save_report_entry">Sparar utlägg...</string>
   <string name="pref_voice_language_summary">Välj vilket språk som ska användas när du utför röstsökningar.</string>
   <string name="device_cannot_make_phone_call">Din enhet kan inte ringa ett telefonsamtal.</string>
+  <string name="tr_list_header_active">AKTIVA BEGÄRANDEN</string>
   <string name="amount_claimed">Begärt belopp</string>
   <string name="air_results_title_all_non_stop">Alla direkt</string>
   <string name="updating_approvals">Uppdaterar attesteringar...</string>
@@ -1422,6 +1463,7 @@
   <string name="remove_from_itemization">Ta bort från specificering</string>
   <string name="hotel_search_travel_header">HOTELL NÄRA %%0%%</string>
   <string name="general_attention">Observera</string>
+  <string name="home_navigation_profile">Profil</string>
   <string name="receipt_document_type">Dokumenttyp</string>
   <string name="report_submit_missing_receipt">Det går att skicka in den här rapporten men den innehåller minst en utläggspost som saknar ett kvitto som krävs.  Bifoga kvittot via Concur på webben eller via mobilen, ta bort utlägget från rapporten, bifoga kvittot och lägg till det igen i rapporten.</string>
   <string name="test_drive_password_error_title">Ogiltigt lösenord</string>
@@ -1467,6 +1509,7 @@
   <string name="segment_hotel_cancelpolicy">Avbokningspolicy</string>
   <string name="general_missing_value">Saknat värde</string>
   <string name="offline_no_items">Inga poster att ladda upp</string>
+  <string name="home_navigation_uber">Uber</string>
   <string name="retrieve_mobile_entries">Hämtar utlägg...</string>
   <string name="no_expenses">Inga utlägg</string>
   <string name="cash_advance_utilized">Utnyttjat kassaförskott</string>
@@ -1554,6 +1597,7 @@
   <string name="general_return">Tillbaka</string>
   <string name="searching_for_hotels">Söker efter hotell...</string>
   <string name="general_no_rates">Inga taxor</string>
+  <string name="search_current_location">Aktuell plats</string>
   <string name="segment_air_label_baggageclaim">Bagageutlämning</string>
   <string name="segmentlist_rail_wagon">Vagn nr %%0%%</string>
   <string name="car_results_total_label">Summa:</string>
@@ -1607,6 +1651,7 @@
   <string name="login_help_email_hint">Concur-registrerad e-postadress</string>
   <string name="mobile_password_reset_link_sent_title">Länken för återställande av mobillösenord (PIN-kod) har skickats</string>
   <string name="pref_cat_general">Allmänt</string>
+  <string name="tr_segment_block_outbound">Utgående</string>
   <string name="attendee_search">Sök deltagare</string>
   <string name="receipt_share_status_starting_up">Startar...</string>
   <string name="dlg_receipt_share_remove_confirm_message">Vill du ta bort kvittot som ska delas?</string>
@@ -1647,6 +1692,7 @@
   <string name="general_missing_card_for_use_message">Besök webbplatsen för att lägga till ett eller flera kort som ska användas för %%0%%.</string>
   <string name="car_search_car_type_L">Lyx</string>
   <string name="subtotal">Delsumma</string>
+  <string name="profile_zipcode">Postnummer</string>
   <string name="rail_detail_ticket_delivery">Biljettleverans</string>
   <string name="voice_car_book_hint_secondary">Säg till exempel: ”Hitta en ekonomibil i San Antonio för Thanksgiving-helgen.”</string>
   <string name="pin_create_disabled_title">Mobil inaktiverad</string>
@@ -1662,29 +1708,30 @@
   <string name="canceling_air">Avbokar flyg...</string>
   <string name="car_search_car_type_I">Mellan</string>
   <string name="general_reserve">Boka</string>
+  <string name="travel_request_sub_title">Hantera dina behörigheter</string>
   <string name="select_cloud_report_receipt">Välj från kvittolager</string>
   <string name="search_smoking_no_pref">Ingen preferens</string>
   <string name="loading_mini_view">Läser in kvittovy.</string>
   <string name="expense_receipt">Utgiftskvitto</string>
   <string name="general_refundable">Återbetalbar</string>
   <string name="rail_detail_outbound">Utgående</string>
+  <string name="profile_state">Stat</string>
   <string name="pin_create_invalid_device_title">Ogiltig enhet</string>
   <string name="enter_comment">Ange kommentar</string>
   <string name="car_search_car_type_F">Stor</string>
   <string name="rail_search_progress_label">%%0!station code%% - %%1!date%%</string>
-  <string name="hide_personal_card_transaction">Dölja utläggstransaktioner för personligt kort...</string>
   <string name="dlg_no_car_rates_general">Inga taxor har definierats. Verifiera att transaktionsdatumet och fordons-ID:t är korrekt konfigurerat med biltaxor.</string>
   <string name="general_distance_miles">Amerikanska miles</string>
   <string name="dlg_no_current_location">Det gick inte att fastställa den aktuella platsen. Välj önskad plats.</string>
   <string name="travel_violations_air_for_manager_approval_header">Innan du bokar det här flyget i strid mot företagspolicyn måste du ange en orsak.</string>
   <string name="travel_agency_info_daytime_msg">Meddelande dagtid</string>
   <string name="dlg_expense_save_receipt_failed_title">Det gick inte att ladda upp kvittot</string>
-  <string name="password_dont_match_message">Det måste ha blivit ett stavfel. Skriv in lösenordet igen så att det är exakt likadant i båda fälten.</string>
+  <string name="dlg_retrieving_itin">Hämtar resplaner...</string>
   <string name="rail_detail_title">Tågbokningsdetaljer</string>
   <string name="loc_search_mode_company">Företagsplats</string>
   <string name="car_search_car_type_C">Kompakt</string>
   <string name="home_action_voice_book">Röstbokning</string>
-  <string name="dlg_retrieving_itin">Hämtar resplaner...</string>
+  <string name="password_dont_match_message">Det måste ha blivit ett stavfel. Skriv in lösenordet igen så att det är exakt likadant i båda fälten.</string>
   <string name="rail_search_label_dep_datetime">Avgår</string>
   <string name="dlg_expense_attendee_save_progress_message">Sparar deltagare...</string>
   <string name="segment_hotel_rate_total">Totalt pris</string>
@@ -1693,14 +1740,13 @@
   <string name="dlg_expense_upload_receipt_failed_message">Det gick inte att ladda upp en bild av utgiftskvittot just nu.  Försök igen senare eller kontakta företagets administratör om problemet kvarstår.</string>
   <string name="general_booking_not_allowed_message">Den här bokningen tillåts inte enligt ditt företags resepolicy.</string>
   <string name="location_check_in_button">Incheckning</string>
-  <string name="pref_smart_match">Smart matchning</string>
   <string name="itin_delete_stop">Radera uppehåll i resplan</string>
   <string name="dlg_expense_report_header_form_field_parse_error">Det gick inte att parsa rapportformulärfälten. Försök igen.</string>
   <string name="retrieve_itinerary_summaries">Hämtar resplansammanfattningar...</string>
   <string name="login_company_sign_on">Företagsinloggning</string>
   <string name="rail_general_duration_label">Restid:</string>
   <string name="no_itemization">Ingen specificering</string>
-  <string name="smart_expense_action_long_press_title">Åtgärd för smart utlägg</string>
+  <string name="profile_credit_card">Kreditkort</string>
   <string name="no_receipts">Inga kvitton</string>
   <string name="home_tour_welcome_to_concur">Välkommen till Concur</string>
   <string name="general_specify_reason">Ange en orsak</string>
@@ -1737,6 +1783,7 @@
   <string name="air_price_to_beat_search_departure_date">Avresedatum:</string>
   <string name="tour_3_bottom">Beroende på ditt företags konfiguration,\när det möjligt att vissa funktioner i Concur för mobilen\ninte är tillgängliga för dig</string>
   <string name="segment_rail_label_stops">Uppehåll:</string>
+  <string name="matched_expenses">Matchade utlägg</string>
   <string name="general_reject">Avvisa</string>
   <string name="next">Nästa ></string>
   <string name="trip_rule_violation_itinerary">Överträdelse av resplansregel</string>
@@ -1749,7 +1796,7 @@
   <string name="hotel_num_of_colleagues_stayed">%%0!number of colleagues%% av dina kolleger har bott här</string>
   <string name="home_action_air_price_to_beat">Pris att slå för flygresa</string>
   <string name="dlg_attendee_search_failed_title">Deltagarsökningen misslyckades</string>
-  <string name="hotel_wizard_nights">Antal nätter (&lt;= 90)</string>
+  <string name="hotel_wizard_nights">Antal nätter (<= 90)</string>
   <string name="policy">Policy</string>
   <string name="general_month_aug">Augusti</string>
   <string name="trip_selection">Resa</string>
