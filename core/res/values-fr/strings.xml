@@ -37,7 +37,6 @@
   <string name="hotel_search_detail_title">Détails sur l\'hôtel</string>
   <string name="trip_confirm_approve_msg">Voulez-vous vraiment approuver ce déplacement ?</string>
   <string name="hotel_details_no_rooms_available">Les chambres de cet établissement ne sont pas disponibles aux dates spécifiées. Veuillez sélectionner un autre hôtel.</string>
-  <string name="profile_add_credit_card">Ajouter une carte</string>
   <string name="general_month_dec">Décembre</string>
   <string name="hotel_search_label_checkin">Arrivée</string>
   <string name="login_help_pin">Vous ne connaissez pas votre code PIN ?</string>
@@ -60,7 +59,6 @@
   <string name="dlg_expense_attendee_add_progress_message">Ajout d\'un participant...</string>
   <string name="select_attendee_type">Veuillez sélectionner un type de participant.</string>
   <string name="general_elapsed_hour_min_long">%%0%% h, %%1%% min</string>
-  <string name="sdk_upgrade_message_important">Important :</string>
   <string name="rail_search_btn_roundtrip">Aller-retour</string>
   <string name="car_search_label_near">A proximité</string>
   <string name="cancel">Annuler</string>
@@ -91,7 +89,6 @@
   <string name="trip_approval_success_msg">Le voyage a été approuvé.</string>
   <string name="air_price_to_beat_search_departure">Départ :</string>
   <string name="general_approve">Approuver</string>
-  <string name="min_sdk_upgrade_message_title">Important</string>
   <string name="travel_points_address_violations_label">Veuillez traiter les violations au règlement *</string>
   <string name="test_drive_tour_welcome_pg2_subtitle">C\'est parti ! Nous avons préchargé des exemples de notes de frais, de transactions et de justificatifs de carte de crédit, ainsi que des conseils pour vous guider dans la procédure.</string>
   <string name="home_section_travel">Déplacement</string>
@@ -135,7 +132,6 @@
   <string name="voice_book_hint">Appuyez sur le micro pour commencer</string>
   <string name="hotel_room_rate">Prix de la chambre</string>
   <string name="approval_row_invoice_title">Factures</string>
-  <string name="sdk_upgrade_message_body">Cet appareil ne recevra aucune mise à jour à compter de cette édition car une version antérieure d\'Android est exécutée.</string>
   <string name="rail_search_travel_header_city_span">%%0%% - %%1%%</string>
   <string name="general_preferred_vendor">Fournisseurs privilégiés</string>
   <string name="location_check_in_current_location">Emplacement actuel*</string>
@@ -143,10 +139,8 @@
   <string name="dlg_appending_receipt">Ajout de justificatif...</string>
   <string name="air_reservation_confirmed_message">Le vol a été confirmé.</string>
   <string name="dlg_book_missing_field_violation_justification">Veuillez fournir un justificatif de violation.</string>
-  <string name="new_ocr_expense">Ajouter une dépense avec reconnaissance optique des caractères</string>
   <string name="trip_approval_failed_msg">Une erreur est survenue lors de l\'approbation du voyage. Veuillez réessayer.</string>
   <string name="air_search_class_value_first">Première</string>
-  <string name="hotel_search_label_checkin_date">Date d\'arrivée</string>
   <string name="login_id_invalid">Le nom d\'utilisateur doit être composé de votre nom de connexion, suivi du signe @ et du nom de domaine de votre société.</string>
   <string name="home_navigation_car_mileage_not_allow_title">Fonction désactivée</string>
   <string name="segment_hotel_checkin">Arrivée :</string>
@@ -187,7 +181,7 @@
   <string name="itin_expenses_and_adjustments">Dépenses et ajustements</string>
   <string name="home_action_title">Sélectionner une action</string>
   <string name="mobile_password_successfully_reset">Réinitialisation du mot de passe pour mobile (code PIN) réussie</string>
-  <string name="tour_2_bottom">\u2022 Photographiez vos justificatifs & téléchargez-les\n\u2022 Ajoutez des dépenses avec des participants\n\u2022 Photographiez le kilométrage du véhicule</string>
+  <string name="tour_2_bottom">\u2022 Photographiez vos justificatifs &amp; téléchargez-les\n\u2022 Ajoutez des dépenses avec des participants\n\u2022 Photographiez le kilométrage du véhicule</string>
   <string name="login_more_help_subheader">Nom d\'utilisateur et mot de passe</string>
   <string name="new_trip">Nouveau voyage</string>
   <string name="segment_air_label_arrival">Arrivée</string>
@@ -231,6 +225,7 @@
   <string name="canceling_hotel">Annulation de l\'hôtel...</string>
   <string name="rail_search_label_arr_loc">À</string>
   <string name="dlg_expense_report_no_entries_title">Aucune dépense</string>
+  <string name="smart_expense_action_split_expense">Diviser la note de frais intelligente</string>
   <string name="limo_reservation_title">Réservation de limousine</string>
   <string name="air_ticket_title">Billet d\'avion</string>
   <string name="invoice_confirm_approve_msg">Voulez-vous vraiment approuver cette facture ?</string>
@@ -283,13 +278,12 @@
   <string name="air_confirm_flight">Confirmer le vol</string>
   <string name="segment_air_fs_refresh">Actualiser</string>
   <string name="dlg_travel_select_frequent_flyer_title">Sélectionnez le programme d\'abonnement aérien</string>
-  <string name="select_from_device_pdf">Sélectionner le format PDF</string>
+  <string name="dlg_expense_smart_expense_add_to_report_message">Les notes de frais intelligentes seront combinées en une seule entrée sur la note.</string>
   <string name="general_none">Aucune</string>
   <string name="add_attendee_from_search">Rechercher</string>
   <string name="car_search_label_smoking">Fumeur</string>
   <string name="profile_check_1">Votre deuxième prénom, votre sexe et votre date de naissance doivent être spécifiés dans votre Profil voyageur.  Veuillez vous connecter à la version Web de Concur Travel et sélectionner Profil dans le menu.\n\nVeuillez vous déconnecter, puis vous reconnecter après avoir fourni les informations ci-dessus.</string>
   <string name="hotel_search_near_me">Hôtels à proximité de ma localisation</string>
-  <string name="hotel_search_label_checkout_date">Date de départ</string>
   <string name="air_search_filter_sort_by_title">Trier les vols par</string>
   <string name="general_month_sep">Septembre</string>
   <string name="login_more_help_title">Aide supplémentaire</string>
@@ -321,7 +315,6 @@
   <string name="apptentive_intro_dialog_title_default">Merci pour vos commentaires !</string>
   <string name="home_section_expense">Note de frais</string>
   <string name="receipt_delete_fail_dialog_title">Echec de la suppression du justificatif</string>
-  <string name="hotel_search_label_near_v1">pour les hôtels dans</string>
   <string name="register_pin_entry">Saisissez un code PIN d\'au moins 4 caractères à l\'aide de lettres et de chiffres.  Votre société peut exiger des caractères supplémentaires.</string>
   <string name="rail_search_label_depart_time">Heure de départ</string>
   <string name="general_fees">Frais</string>
@@ -343,7 +336,6 @@
   <string name="dlg_expense_no_external_storage_available_title">Stockage externe indisponible</string>
   <string name="receipt_action_title">Action du justificatif</string>
   <string name="no_allocations_msg">Aucune affectation</string>
-  <string name="dlg_e_receipt_unavailable_title">Image non disponible</string>
   <string name="segment_air_label_contact">Contact</string>
   <string name="location_check_in_days_remaining_month">Au moins 1 mois</string>
   <string name="dlg_travel_flight_stat_retrieve">Récupération du statut du vol...</string>
@@ -354,7 +346,7 @@
   <string name="car_detail_book_failure_title">Une erreur est survenue</string>
   <string name="general_fare">Tarif</string>
   <string name="tour_1_top">Rechercher et réserver des vols,\ndes hôtels, un véhicule et plus encore</string>
-  <string name="quick_expenseit_title">Photographie du justificatif</string>
+  <string name="quick_expenseit_title">Receipt Capture</string>
   <string name="total_paid_by_company">Total payé par la société</string>
   <string name="general_search_for_price_to_beat_failed">Désolé, aucun prix à battre n\'a été trouvé. Veuillez effectuer une nouvelle recherche.</string>
   <string name="dlg_expense_attendee_no_edit_message">Ce participant ne peut pas être modifié.</string>
@@ -371,6 +363,7 @@
   <string name="hotel_price_to_beat_search_header">Voyagez intelligemment et économiquement ! Saisissez ci-dessous les informations relatives à votre recherche d\'hôtel pour trouver le prix à battre lors de la réservation de votre chambre.</string>
   <string name="gallery">Galerie</string>
   <string name="invoice_line_item">Article</string>
+  <string name="hide_corporate_card_transaction">Masquage des transactions de dépense de carte de société...</string>
   <string name="location_check_in_title">Enregistrement du lieu</string>
   <string name="travel_points_violations_desc_header">Points ou approbation</string>
   <string name="retrieve_hotel_details">Récupération des détails sur l\'hôtel...</string>
@@ -387,15 +380,12 @@
   <string name="login_sso_no_company_code_msg">Veuillez indiquer une valeur pour le code société.</string>
   <string name="itemize_incomplete">Les montants de la ventilation ne s\'ajoutent pas au montant de la dépense.</string>
   <string name="ocr_progress_status_failed">Erreur lors du traitement</string>
-  <string name="loc_search_hint_v1">Rechercher une destination</string>
   <string name="triplist_section_awaiting_approval">En attente d\'approbation</string>
   <string name="general_not_preferred">Non privilégié</string>
-  <string name="profile_city">Ville</string>
   <string name="sso_sign_in_company_code_error_title">Code de société</string>
   <string name="dlg_append_receipt_confirmation_title">Ajouter une confirmation</string>
   <string name="segment_air_label_meal">Repas</string>
   <string name="hotel_search_suggestions">Suggestions de recherche d\'hôtel</string>
-  <string name="profile_other">Autre</string>
   <string name="rail_search_travel_header_date_span">%%0%% - %%1%%</string>
   <string name="breeze_name">Concur Breeze</string>
   <string name="out_of_pocket">En liquide</string>
@@ -403,8 +393,8 @@
   <string name="travel_points_air_booking_workflow_points_header">Banque de points de voyage : %%0!total travel points%% points</string>
   <string name="segment_air_label_terminal">Terminal :</string>
   <string name="view_expenses">Afficher les dépenses</string>
-  <string name="general_preparing">Préparation</string>
   <string name="general_seats">Sièges</string>
+  <string name="general_preparing">Préparation</string>
   <string name="segment_rail_label_train">Train</string>
   <string name="upload_mobile_entry_receipt_succeeded">Justificatif de dépense transféré avec succès !</string>
   <string name="dlg_expense_remove_confirmation_title">Supprimer la confirmation</string>
@@ -484,7 +474,6 @@
   <string name="attendee_search_hint">Saisissez le nom du participant</string>
   <string name="justification_reason">Justification</string>
   <string name="hotel_search_room_details_title">Détails de la chambre</string>
-  <string name="rest_hotel_search_title">Rechercher</string>
   <string name="report_submit_error">Erreur d\'envoi de note de frais</string>
   <string name="retrieving_receipts">Récupération des justificatifs</string>
   <string name="car_search_car_type_E">Économique</string>
@@ -526,8 +515,6 @@
   <string name="location_check_in_comment">Commentaire</string>
   <string name="msg_cntr_title">Centre de messagerie</string>
   <string name="date">Date</string>
-  <string name="profile_fname">Prénom</string>
-  <string name="home_navigation_curb">Restriction</string>
   <string name="dlg_expense_attendee_version_mismatch_message">Ce participant a été modifié depuis sa dernière utilisation pour cette dépense.\nToutes les modifications doivent être apportées dans Profil sur Internet.</string>
   <string name="car_results_unlimited_miles">Kilométrage illimité</string>
   <string name="details">Détails</string>
@@ -574,7 +561,6 @@
   <string name="report_add_expense">Ajouter une nouvelle dépense</string>
   <string name="approval_row_report_header">Approbations de notes de frais</string>
   <string name="hotel_search_label_near">A proximité</string>
-  <string name="tr_segment_block_return">Retour</string>
   <string name="air_search_stopgroup_plural">%%0!number%% arrêts</string>
   <string name="general_field_value_too_large">La valeur « %%0%% » est trop grande.</string>
   <string name="segment_rail_label_contact">Contact</string>
@@ -585,7 +571,6 @@
   <string name="login_disabled_message">Les fonctionnalités mobiles sont désactivées pour votre société.</string>
   <string name="dlg_remove_report_expense_failed_title">Échec de suppression de la dépense</string>
   <string name="amount_approved">Montant approuvé</string>
-  <string name="profile_add_emergency_contact">Ajouter un contact d\'urgence</string>
   <string name="attendee_advanced_search_swipe_right">Glissez vers la droite pour afficher les champs de recherche avancée.</string>
   <string name="searching_for_locations">Recherche d\'emplacements...</string>
   <string name="air_price_to_beat_search_arrival">Arrivée :</string>
@@ -604,9 +589,8 @@
   <string name="pref_voice_language">Langue de la recherche vocale</string>
   <string name="segment_air_fs_label_div_city">Ville de délestage</string>
   <string name="retrieve_mobile_entry_receipt">Téléchargement du justificatif de dépense...</string>
-  <string name="profile_address">Adresse</string>
-  <string name="itin_proceed_to_expenses">Accéder aux notes de frais</string>
   <string name="event_title">Evénement</string>
+  <string name="itin_proceed_to_expenses">Accéder aux notes de frais</string>
   <string name="segment_air_label_aircraft">Avion</string>
   <string name="dlg_travel_dynamic_custom_fields_title">Politique de réservation</string>
   <string name="trip_approvals_approve">Approuvez le voyage</string>
@@ -615,8 +599,8 @@
   <string name="dlg_expense_active_report_retrieve_failed_title">Échec de récupération des notes de frais actives</string>
   <string name="general_enter_n_to_m_characters_hint">Saisissez entre %%0!min%% et %%1!max%% caractères</string>
   <string name="hotel_wizard_checkin">Date d\'arrivée</string>
-  <string name="tr_header">En-tête de l\'ordre de mission</string>
   <string name="segment_rail_label_arrival">Arrivée</string>
+  <string name="dlg_expense_split_expense_confirm_title">Confirmer la division de note de frais intelligente</string>
   <string name="segment_air_label_duration">Durée</string>
   <string name="call_travel_agent">Appeler un voyagiste</string>
   <string name="air_search_title">Réserver un vol</string>
@@ -683,7 +667,6 @@
   <string name="approved_amount">Montant approuvé</string>
   <string name="commit">Valider</string>
   <string name="service_not_available">Le service Concur n\'est pas actuellement disponible pour traiter cette demande.  Veuillez réessayer ultérieurement.</string>
-  <string name="loc_search_office_hint">Rechercher une adresse de bureau</string>
   <string name="ocr_progress_msg">Votre note de frais est en cours d\'analyse.</string>
   <string name="home_navigation_expenseit">ExpenseIt</string>
   <string name="dlg_expense_receipt_store_confirm_select_for_expense">Sélectionner pour la note de frais \'%%0%%\' le justificatif ajouté le \'%%1%%\' ?</string>
@@ -735,7 +718,6 @@
   <string name="dlg_expense_report_send_back">Renvoi de la note de frais</string>
   <string name="apptentive_thanks">Merci pour vos commentaires !</string>
   <string name="air_results_title_multi_stop">%%0%% arrêts</string>
-  <string name="field_hint_add_vendor">Ajouter un fournisseur (facultatif)</string>
   <string name="total_paid_by_employee">Total payé par le collaborateur</string>
   <string name="view_details">Afficher les détails</string>
   <string name="select_from_device">Sélectionner dans la galerie</string>
@@ -745,13 +727,11 @@
   <string name="travel_violations_hotel_for_manager_approval_header">Avant de réserver cette chambre et d\'enfreindre la politique de la société, vous devez fournir un motif.</string>
   <string name="sharing_receipt_wait_on_connectivity_detail">Veuillez vérifier la connexion de données de votre téléphone.</string>
   <string name="triplist_section_rejected">Rejeté</string>
-  <string name="search_destination_location">Destination</string>
   <string name="segment_dining_reservation">Réservation</string>
   <string name="receipt_retrieve_urls_fail_dialog_title">Echec de la récupération des informations de justificatif</string>
   <string name="add_attendee_options">Ajouter des options pour le participant</string>
   <string name="dlg_expense_missing_fields_soft_stop_message">Les champs suivants sont incomplets et doivent être remplis. Ignorer la saisie des valeurs pour l\'instant et continuer ?</string>
   <string name="location_check_in_failed_title">Echec de l\'enregistrement</string>
-  <string name="hotel_search_label_for_v1">Veuillez patienter pendant que nous effectuons la recherche.</string>
   <string name="login_pin_expired_title">Le code PIN a expiré</string>
   <string name="pref_cat_server">Serveur</string>
   <string name="adding_to_report">Ajout de dépenses à la note de frais...</string>
@@ -773,6 +753,7 @@
   <string name="report_id">ID de la note de frais</string>
   <string name="air_search_stopgroup_all">Tout</string>
   <string name="dlg_hotel_cancel_succeeded_message">Annulation de la réservation d\'hôtel réussie.</string>
+  <string name="pref_smart_match_allow">Autoriser la correspondance intelligente des notes de frais</string>
   <string name="retrieve_all_entries">Récupération des dépenses...</string>
   <string name="receipt_action_delete_confirm_message">Supprimer le justificatif ajouté le %%0%% ?</string>
   <string name="test_drive_password_error">Veuillez saisir un mot de passe valide.</string>
@@ -784,7 +765,6 @@
   <string name="itin_meal_PRO">Fourni (exclure)</string>
   <string name="report_submit_dialog_message">Voulez-vous vraiment envoyer cette note de frais ?</string>
   <string name="approver_search_by_email">E-mail</string>
-  <string name="sdk_upgrade_message_see_msg_center">Consultez le Centre de messagerie pour plus d\'informations.</string>
   <string name="dlg_expense_delete">Suppression de dépense(s)</string>
   <string name="segmentlist_offer_enable_validity">Désactiver le contrôle de validité</string>
   <string name="hotel_recommendation_not_available">Suggestion non disponible</string>
@@ -795,7 +775,6 @@
   <string name="invoice_vendor">Fournisseur sur la facture</string>
   <string name="receipt_source_cte">CTE</string>
   <string name="select_policy">Sélectionner un règlement</string>
-  <string name="profile_emergency_contact">Contact d\'urgence</string>
   <string name="view_receipt">Afficher les justificatifs</string>
   <string name="air_search_label_refundable_only">Tarifs remboursables uniquement</string>
   <string name="approval_workflow">Workflow d\'approbation</string>
@@ -841,7 +820,6 @@
   <string name="rail_results_title">Sélectionner un train</string>
   <string name="dlg_expense_save_report_receipt_succeeded_message">Le justificatifs é été ajouté à la note de frais.</string>
   <string name="no_receipt_thumbnail_available">Miniature du justificatif\nnon disponible.</string>
-  <string name="ocr_status_procesing_error">Erreur lors du traitement</string>
   <string name="universal_tour_welcome_text">facilite la planification de vos déplacements professionnels, la saisie des notes de frais, ainsi que le remboursement des frais.</string>
   <string name="travel_agency_info_title">Info agence de voyages</string>
   <string name="hotel_search_rooms_title">Sélectionnez une chambre</string>
@@ -868,7 +846,6 @@
   <string name="pin_create_submit">Définir le code PIN Mobile</string>
   <string name="activity_canceled">Activité annulée</string>
   <string name="receipt_document_type_pdf">PDF</string>
-  <string name="dlg_append_receipt_fail_title">Impossible d\'ajouter votre justificatif. Veuillez réessayer ultérieurement.</string>
   <string name="add_report_receipt">Ajout de justificatif de note de frais en cours...</string>
   <string name="rail_search_label_arrive_station">Gare d\'arrivée</string>
   <string name="test_drive_tour_skip">Ignorer</string>
@@ -876,7 +853,6 @@
   <string name="report_approve_dialog_message">Voulez-vous vraiment approuver cette note de frais ?</string>
   <string name="itin_time">Heure</string>
   <string name="home_row_book_hotel_subheader">S\'installer dans l\'hôtel idéal</string>
-  <string name="profile_phone">Téléphone</string>
   <string name="home_tour_expense2_message">Ensuite, envoyez votre demande et obtenez un remboursement. \nLes responsables peuvent effectuer l\'approbation où qu\'ils soient.</string>
   <string name="expense_type_prompt">Sélectionnez un type de frais</string>
   <string name="dlg_expense_no_mileage_form_title">Aucun formulaire disponible</string>
@@ -891,7 +867,6 @@
   <string name="segment_air_label_arrive">Arrivée</string>
   <string name="dlg_getting_current_location">Recherche de l\'emplacement actuel...</string>
   <string name="travel_agency_info_night_msg">Message de nuit</string>
-  <string name="request_digest_total">Total :</string>
   <string name="hotel_search_label_with_availability_from">avec une disponibilité de</string>
   <string name="dlg_expense_report_detail_retrieve_failed_title">Échec de récupération des détails de note de frais</string>
   <string name="approval_row_tr_header">Ordres de mission</string>
@@ -905,7 +880,6 @@
   <string name="test_drive_retry">Réessayer</string>
   <string name="hotel_price_to_beat_distance_mile_singular">%%0! one %% mile</string>
   <string name="dlg_registering">Inscription...</string>
-  <string name="submit_request">Soumettre l\'ordre de mission</string>
   <string name="no_expected_expenses_msg">Aucuns frais prévus</string>
   <string name="general_missing_violation_reason_message">Veuillez contacter l\'administrateur de votre société pour configurer les motifs de violation pour l\'utilisation de %%0%%.</string>
   <string name="general_destination">Destination</string>
@@ -926,11 +900,9 @@
   <string name="select_attendee_type_prompt">Veuillez sélectionner un type de participant.</string>
   <string name="dlg_travel_retrieve_reason_code_progress_message">Récupération des codes de motifs de réservation personnalisée...</string>
   <string name="pin_create_invalid_device_message">La réinitialisation du code PIN a été demandée depuis un autre appareil. Veuillez utiliser le même appareil que celui ayant servi à demander la réinitialisation du code PIN.</string>
-  <string name="tr_new_request_title">Créer un ordre de mission</string>
   <string name="air_search_class_value_any">Tous</string>
   <string name="pin_create_title">Code PIN mobile</string>
   <string name="receipt_share_failed_retry">Echec (nouvel essai)</string>
-  <string name="dlg_e_receipt_unavailable">L\'image du justificatif n\'a pas pu être chargée, mais les détails de votre note de frais ont été enregistrés. Accédez à Internet si vous devez afficher cette image de justificatif.</string>
   <string name="expense_type_category_mru">Utilisé récemment</string>
   <string name="general_violation_justification">Justification de violation</string>
   <string name="home_tour_expense1_title">Photographiez vos justificatifs.</string>
@@ -969,7 +941,6 @@
   <string name="submitted">Soumis(e)</string>
   <string name="credit_card">Carte de crédit</string>
   <string name="attendee_search_results_empty_message">La recherche n\'a renvoyé aucun participant correspondant.  Veuillez réessayer.</string>
-  <string name="add_another_item_to_request">+ Ajouter un autre élément à cet ordre de mission</string>
   <string name="home_navigation_traveltext">TravelText</string>
   <string name="air_search_label_returndate">Date de retour</string>
   <string name="segment_rail_label_distance">Distance</string>
@@ -1020,15 +991,12 @@
   <string name="attendee_create_from_contact_cancelled">Création de participant à partir du contact annulée.</string>
   <string name="hotel_fees">Frais d\'hôtel</string>
   <string name="segment_air_fs_label_arr_gate">Porte d\'arrivée</string>
-  <string name="field_hint_add_amount">Ajouter un montant</string>
   <string name="canceling_rail">Annulation du train en cours...</string>
   <string name="current_value">Valeur actuelle</string>
   <string name="retrieve_currency">Récupération de la devise en cours...</string>
   <string name="dlg_expense_no_expense_type_currency_message">Les données de type de frais et de sélection de devise ne sont pas disponibles en mode hors ligne.</string>
   <string name="expense_receipt_options">Sélectionnez une action de justificatif</string>
   <string name="deleting_receipt">Suppression du justificatif...</string>
-  <string name="loc_search_office">Adresses de bureau</string>
-  <string name="tr_new_request">Créer un ordre de mission</string>
   <string name="register_pin_tip_title">Conseil sur l\'enregistrement du code PIN</string>
   <string name="profile_check_32">Une adresse professionnelle (rue, ville et pays) doit être spécifiée dans votre Profil voyageur.  Veuillez vous connecter à la version Web de Concur Travel et sélectionner Profil dans le menu.\n\nVeuillez vous déconnecter, puis vous reconnecter après avoir fourni les informations ci-dessus.</string>
   <string name="itin_stop_actions">Actions d\'arrêt d\'itinéraire</string>
@@ -1049,14 +1017,14 @@
   <string name="exceptions">Exceptions</string>
   <string name="password_short_message">Votre mot de passe doit comporter au moins %%0!length%% caractères.</string>
   <string name="car_search_travel_header_name">Véhicules vers %%0%%</string>
-  <string name="register_failure_msg">Veuillez réessayer. Si vous rencontrez d\'autres problèmes pour accéder au système, veuillez contacter le service d\'assistance ou de déplacements/dépenses de votre société.</string>
+  <string name="long_press_smart_expense">(Appui prolongé pour décomposer la dépense).</string>
   <string name="hotel_search_for_rates_progress">Recherche de tarifs</string>
+  <string name="register_failure_msg">Veuillez réessayer. Si vous rencontrez d\'autres problèmes pour accéder au système, veuillez contacter le service d\'assistance ou de déplacements/dépenses de votre société.</string>
   <string name="login_company_sign_in">Connexion société</string>
   <string name="segment_ride_pickup_instructions">Instructions de retrait</string>
   <string name="receipt_download_notify">Une image de justificatif pour cette dépense peut être téléchargée.  Sélectionnez l’icône d\'appareil photo ci-dessous et choisissez \« Télécharger une image\ » pour télécharger et afficher le justificatif.</string>
   <string name="dlg_prompt_to_rate_yes">Faites une évaluation !</string>
   <string name="dlg_report_submit_confirmation_title">Envoyer la confirmation</string>
-  <string name="car_search_invalid_drop_off_time_title">Heure de restitution incorrecte</string>
   <string name="universal_tour_receipt_more">de votre justificatif de dépense.</string>
   <string name="multi_line_text_entry">Saisie de texte sur plusieurs lignes</string>
   <string name="register_pin_tip_text">Si vous ne connaissez pas vos identifiants, connectez-vous à votre compte Web Concur et accédez à Profil > Inscription Mobile ou à Mon compte > Code PIN mobile.  Contactez l\'administrateur de votre société pour obtenir de l\'aide supplémentaire.</string>
@@ -1119,7 +1087,6 @@
   <string name="loc_search_hint">Entrer le texte de filtre</string>
   <string name="attendee_create_cancelled">Création de participant annulée.</string>
   <string name="choose_picture">Sélectionner l\'image</string>
-  <string name="profile_country">Pays</string>
   <string name="general_call">Appeler</string>
   <string name="dlg_report_approve_progress">Envoi pour approbation</string>
   <string name="retrieve_reports_to_approve">Récupération des notes de frais à approuver...</string>
@@ -1135,7 +1102,6 @@
   <string name="dlg_book_missing_fields_title"> Champs de réservation</string>
   <string name="general_reservation_failed">Echec de la réservation</string>
   <string name="home_action_hotel_voice_search">Recherche vocale d\'hôtel</string>
-  <string name="profile_add_banck_account">Ajouter un compte bancaire</string>
   <string name="general_open">Ouvrir</string>
   <string name="home_row_invoice_sub_one">1 facture</string>
   <string name="login_help_bad_email_dialog_title">Adresse électronique non valide</string>
@@ -1225,7 +1191,6 @@
   <string name="dlg_expense_save">Enregistrement de la dépense...</string>
   <string name="dlg_air_cancel_succeeded_message">Annulation de la réservation de compagnie aérienne réussie.</string>
   <string name="test_drive_and">et</string>
-  <string name="car_search_invalid_drop_off_time">La date de restitution est antérieure à la date de retrait.</string>
   <string name="dlg_no_car_rates_for_date">Aucun tarif n\'a été défini pour la date sélectionnée. Veuillez contacter votre administrateur.</string>
   <string name="segment_rail_label_duration">Durée :</string>
   <string name="login_help_submit">Envoyer mes informations de connexion</string>
@@ -1243,7 +1208,6 @@
   <string name="currency">Devise</string>
   <string name="offline_upload_dialog_header">Téléchargement, veuillez patienter...</string>
   <string name="saving_report">Note de frais en cours d\'enregistrement...</string>
-  <string name="tr_list_header_approved">ORDRES DE MISSION APPROUVES</string>
   <string name="new_expense">Nouvelle note de frais</string>
   <string name="itinerary">Itinéraire</string>
   <string name="rail_search_label_passengers">Nombre de passagers</string>
@@ -1260,7 +1224,6 @@
   <string name="cash_expense">Dépense en liquide</string>
   <string name="home_navigation_home">Accueil</string>
   <string name="dlg_travel_itinerary_retrieve">Récupération des détails du voyage...</string>
-  <string name="profile_lname">Nom</string>
   <string name="amount_due_credit_card">Montant dû à la carte de crédit</string>
   <string name="retrieve_currency_types">Récupération des devises...</string>
   <string name="dlg_no_air_permission_message">Votre société a désactivé la réservation de billets d\'avion sur mobile. Veuillez réserver votre vol en utilisant la version Web de Concur ou en appelant votre agence de voyage.</string>
@@ -1291,15 +1254,12 @@
   <string name="amount_in_currency">Montant en %%0%%</string>
   <string name="location_check_in_failed_message">L\'enregistrement est impossible avec votre emplacement actuel. Veuillez réessayer.</string>
   <string name="rail_detail_return">Retour</string>
-  <string name="tr_arrival">Arrivée</string>
   <string name="dlg_hotel_cancel_progress_message">Annulation de la réservation d\'hôtel en cours...</string>
   <string name="receipt_added_from">Ajouté à partir de</string>
-  <string name="tr_new_request_desc">Recevez une approbation pour un avion, un hôtel et bien plus encore</string>
   <string name="segment_hotel_checkout">Départ :</string>
   <string name="segment_air_fs_label_dep_estim">Départ estimé</string>
   <string name="location_check_in_progress">Enregistrement...</string>
   <string name="register_password_blank">Saisissez votre mot de passe.</string>
-  <string name="retrieve_tr">Récupération des ordres de mission...</string>
   <string name="home_row_book_car_subheader">Choisir de belles roues</string>
   <string name="test_drive_limited_text">possède des fonctionnalités Concur Mobile limitées.</string>
   <string name="itin_add_stop">Ajouter un arrêt d\'itinéraire</string>
@@ -1383,7 +1343,6 @@
   <string name="hotel_search_rating">Evaluation</string>
   <string name="view_receipts">Afficher les justificatifs</string>
   <string name="retrieve_trips_to_approve">Récupération des déplacements à approuver...</string>
-  <string name="voice_search">Recherche vocale</string>
   <string name="travel_request_expected_expense_title">Frais prévus</string>
   <string name="login_sign_in_help">Mot de passe</string>
   <string name="segment_air_fs_label_arr_sched">Arrivée prévue</string>
@@ -1418,13 +1377,14 @@
   <string name="home_tip_book_travel">Réserver un\nvoyage</string>
   <string name="home_row_trip_approvals_sub_none">Aucun voyage à approuver</string>
   <string name="air_search_label_returntime">Heure de retour</string>
+  <string name="dlg_expense_split_expense_confirm_message">Voulez-vous vraiment séparer la transaction de carte de l\'entrée mobile ?</string>
   <string name="itin_meal_TAX">Taxable</string>
   <string name="summary">Résumé</string>
   <string name="retrieve_conditional_field_action_failure">Les valeurs des champs conditionnels n\'ont pas pu être extraites. Veuillez réessayer.</string>
   <string name="general_air_booking">Réservation de billets d\'avion</string>
   <string name="unit_price">Prix unitaire</string>
   <string name="attendee_edit_cancelled">Modification du participant annulée</string>
-  <string name="travel_request_title">Ordres de mission</string>
+  <string name="travel_request_title">Ordre de mission</string>
   <string name="login_failure_help">Vous pouvez créer ou réinitialiser votre code PIN mobile en cliquant sur « Vous voulez définir votre code PIN ? » ou en accédant à « Profil -> Inscription mobile » sur le site de Concur en ligne.</string>
   <string name="receipt_store_import_from_camera">Importer à partir de l\'appareil photo</string>
   <string name="general_enter_at_least_n_characters_hint">Saisissez au moins %%0!min%% caractères</string>
@@ -1445,7 +1405,6 @@
   <string name="dlg_expense_save_report_entry">Enregistrement de la dépense...</string>
   <string name="pref_voice_language_summary">Sélectionnez la langue à utiliser lors des recherches vocales.</string>
   <string name="device_cannot_make_phone_call">Votre périphérique ne peut pas émettre d\'appel.</string>
-  <string name="tr_list_header_active">ORDRES DE MISSION ACTIFS</string>
   <string name="amount_claimed">Montant réclamé</string>
   <string name="air_results_title_all_non_stop">Direct</string>
   <string name="updating_approvals">Mise à jour des approbations...</string>
@@ -1463,7 +1422,6 @@
   <string name="remove_from_itemization">Supprimer de la ventilation</string>
   <string name="hotel_search_travel_header">HOTELS A PROXIMITE DE %%0%%</string>
   <string name="general_attention">Attention</string>
-  <string name="home_navigation_profile">Profil</string>
   <string name="receipt_document_type">Type de document</string>
   <string name="report_submit_missing_receipt">Cette note de frais peut être envoyée, mais elle contient au moins un élément de dépense non accompagnée d\'un justificatif obligatoire.  Joignez un justificatif à l\'aide de Concur sur le Web ou sur mobile, supprimez la dépense de la note de frais, joignez le justificatif et rajoutez la dépense à la note de frais.</string>
   <string name="test_drive_password_error_title">Mot de passe invalide</string>
@@ -1509,7 +1467,6 @@
   <string name="segment_hotel_cancelpolicy">Politique d\'annulation</string>
   <string name="general_missing_value">Valeur manquante</string>
   <string name="offline_no_items">Aucun objet à télécharger</string>
-  <string name="home_navigation_uber">Uber</string>
   <string name="retrieve_mobile_entries">Récupération des dépenses...</string>
   <string name="no_expenses">Aucune dépense</string>
   <string name="cash_advance_utilized">Avance sur frais utilisée</string>
@@ -1597,7 +1554,6 @@
   <string name="general_return">Retour</string>
   <string name="searching_for_hotels">Recherche d\'hôtels...</string>
   <string name="general_no_rates">Aucun tarif</string>
-  <string name="search_current_location">Emplacement actuel</string>
   <string name="segment_air_label_baggageclaim">Récupération des bagages</string>
   <string name="segmentlist_rail_wagon">Voiture n° %%0%%</string>
   <string name="car_results_total_label">Total :</string>
@@ -1651,7 +1607,6 @@
   <string name="login_help_email_hint">Adresse e-mail Concur enregistrée</string>
   <string name="mobile_password_reset_link_sent_title">Lien de réinitialisation du mot de passe pour mobile (code PIN) envoyé</string>
   <string name="pref_cat_general">Généralités</string>
-  <string name="tr_segment_block_outbound">Aller</string>
   <string name="attendee_search">Recherche de participants</string>
   <string name="receipt_share_status_starting_up">Démarrage...</string>
   <string name="dlg_receipt_share_remove_confirm_message">Voulez-vous vraiment supprimer le justificatif à partager ?</string>
@@ -1692,7 +1647,6 @@
   <string name="general_missing_card_for_use_message">Allez sur Internet pour approvisionner une carte de crédit ou plus pour une utilisation %%0%%.</string>
   <string name="car_search_car_type_L">Luxe</string>
   <string name="subtotal">Sous-total</string>
-  <string name="profile_zipcode">Code postal</string>
   <string name="rail_detail_ticket_delivery">Livraison de billet</string>
   <string name="voice_car_book_hint_secondary">Par exemple, dites : \« Rechercher un véhicule économique à San Antonio le week-end de Thanksgiving.\ »</string>
   <string name="pin_create_disabled_title">Mobile désactivé</string>
@@ -1708,30 +1662,29 @@
   <string name="canceling_air">Annulation de la compagnie aérienne...</string>
   <string name="car_search_car_type_I">Moyenne</string>
   <string name="general_reserve">Réserver</string>
-  <string name="travel_request_sub_title">Gérer les autorisations</string>
   <string name="select_cloud_report_receipt">Sélectionner dans la Bibliothèque des justificatifs</string>
   <string name="search_smoking_no_pref">Sans préférence</string>
   <string name="loading_mini_view">Chargement de l\'affichage du justificatif.</string>
   <string name="expense_receipt">Justificatif de dépense</string>
   <string name="general_refundable">Remboursable</string>
   <string name="rail_detail_outbound">Aller</string>
-  <string name="profile_state">Etat</string>
   <string name="pin_create_invalid_device_title">Appareil incorrect.</string>
   <string name="enter_comment">Entrer un commentaire</string>
   <string name="car_search_car_type_F">Grand modèle</string>
   <string name="rail_search_progress_label">%%0!station code%% - %%1!date%%</string>
+  <string name="hide_personal_card_transaction">Masquage des transactions de dépense de carte personnelle...</string>
   <string name="dlg_no_car_rates_general">Aucun tarif n\'a été défini. Veuillez vérifier que la date de transaction et l\'ID véhicule sont correctement configurés avec des barèmes de véhicule.</string>
   <string name="general_distance_miles">Miles</string>
   <string name="dlg_no_current_location">Impossible de déterminer votre emplacement actuel. Veuillez sélectionner l\'emplacement souhaité.</string>
   <string name="travel_violations_air_for_manager_approval_header">Avant de réserver ce vol et d\'enfreindre la politique de la société, vous devez fournir un motif.</string>
   <string name="travel_agency_info_daytime_msg">Message pendant la journée</string>
   <string name="dlg_expense_save_receipt_failed_title">Échec de chargement du justificatif.</string>
-  <string name="dlg_retrieving_itin">Récupération des itinéraires...</string>
+  <string name="password_dont_match_message">Il doit y avoir une erreur typographique. Veuillez saisir votre mot de passe à nouveau de manière à ce qu\'il soit strictement identique dans les deux champs.</string>
   <string name="rail_detail_title">Détails de la réservation de train</string>
   <string name="loc_search_mode_company">Emplacement de la société</string>
   <string name="car_search_car_type_C">Compacte</string>
   <string name="home_action_voice_book">Livre vocal</string>
-  <string name="password_dont_match_message">Il doit y avoir une erreur typographique. Veuillez saisir votre mot de passe à nouveau de manière à ce qu\'il soit strictement identique dans les deux champs.</string>
+  <string name="dlg_retrieving_itin">Récupération des itinéraires...</string>
   <string name="rail_search_label_dep_datetime">Départ</string>
   <string name="dlg_expense_attendee_save_progress_message">Enregistrement du participant...</string>
   <string name="segment_hotel_rate_total">Taux total</string>
@@ -1740,13 +1693,14 @@
   <string name="dlg_expense_upload_receipt_failed_message">Le transfert de l\'image du justificatif de dépense à échoué.  Veuillez réessayer plus tard, ou contactez votre administrateur si le problème continue.</string>
   <string name="general_booking_not_allowed_message">Le règlement sur les déplacements de votre société n\'autorisera pas cette réservation.</string>
   <string name="location_check_in_button">Arrivée</string>
+  <string name="pref_smart_match">Correspondance intelligente</string>
   <string name="itin_delete_stop">Supprimer l\'arrêt d\'itinéraire</string>
   <string name="dlg_expense_report_header_form_field_parse_error">Echec de l\'analyse des champs du formulaire des notes de frais. Veuillez réessayer.</string>
   <string name="retrieve_itinerary_summaries">Récupération des récapitulatifs d\'itinéraires...</string>
   <string name="login_company_sign_on">Connexion société</string>
   <string name="rail_general_duration_label">Durée :</string>
   <string name="no_itemization">Aucune ventilation</string>
-  <string name="profile_credit_card">Carte de crédit</string>
+  <string name="smart_expense_action_long_press_title">Action note de frais intelligente</string>
   <string name="no_receipts">Aucun justificatif</string>
   <string name="home_tour_welcome_to_concur">Bienvenue dans Concur</string>
   <string name="general_specify_reason">Veuillez préciser la raison</string>
@@ -1783,7 +1737,6 @@
   <string name="air_price_to_beat_search_departure_date">Date de départ :</string>
   <string name="tour_3_bottom">En fonction de la configuration de votre société\ncertaines fonctions de Concur pour Mobile\nrisquent de ne pas être disponibles pour vous.</string>
   <string name="segment_rail_label_stops">Arrêts :</string>
-  <string name="matched_expenses">Notes de frais correspondantes</string>
   <string name="general_reject">Rejeter</string>
   <string name="next">Suivant ></string>
   <string name="trip_rule_violation_itinerary">Non-respect des règles concernant les itinéraires</string>
@@ -1796,7 +1749,7 @@
   <string name="hotel_num_of_colleagues_stayed">%%0!number of colleagues%% de vos collègues ont séjourné ici.</string>
   <string name="home_action_air_price_to_beat">Prix à battre pour l\'avion</string>
   <string name="dlg_attendee_search_failed_title">Echec de recherche de participant</string>
-  <string name="hotel_wizard_nights">Nombre de nuits (<= 90)</string>
+  <string name="hotel_wizard_nights">Nombre de nuits (&lt;= 90)</string>
   <string name="policy">Règlement</string>
   <string name="general_month_aug">Août</string>
   <string name="trip_selection">Voyage</string>

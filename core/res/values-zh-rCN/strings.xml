@@ -37,7 +37,6 @@
   <string name="hotel_search_detail_title">宾馆详细信息</string>
   <string name="trip_confirm_approve_msg">是否确定要批准此旅行？</string>
   <string name="hotel_details_no_rooms_available">此属性的房间在特定日期内不可用。请选择其他宾馆。</string>
-  <string name="profile_add_credit_card">添加新卡</string>
   <string name="general_month_dec">十二月</string>
   <string name="hotel_search_label_checkin">入住</string>
   <string name="login_help_pin">不知道您的 PIN?</string>
@@ -60,7 +59,6 @@
   <string name="dlg_expense_attendee_add_progress_message">添加参加者...</string>
   <string name="select_attendee_type">请选择参加者类型。</string>
   <string name="general_elapsed_hour_min_long">%%0%% 小时 %%1%% 分钟</string>
-  <string name="sdk_upgrade_message_important">重要事项：</string>
   <string name="rail_search_btn_roundtrip">往返</string>
   <string name="car_search_label_near">靠近</string>
   <string name="cancel">取消</string>
@@ -91,7 +89,6 @@
   <string name="trip_approval_success_msg">旅程审批成功</string>
   <string name="air_price_to_beat_search_departure">出发:</string>
   <string name="general_approve">审批</string>
-  <string name="min_sdk_upgrade_message_title">重要事项</string>
   <string name="travel_points_address_violations_label">请处理策略违反*</string>
   <string name="test_drive_tour_welcome_pg2_subtitle">让我们开始。我们已预加载了样本费用报告、卡费用和发票以及引导式覆盖，帮助您开始操作。</string>
   <string name="home_section_travel">差旅</string>
@@ -135,7 +132,6 @@
   <string name="voice_book_hint">按麦克风开始</string>
   <string name="hotel_room_rate">房间费率</string>
   <string name="approval_row_invoice_title">发票</string>
-  <string name="sdk_upgrade_message_body">由于此设备正在运行较早的 Android 版本，因此不会接收此版本后的更新。</string>
   <string name="rail_search_travel_header_city_span">%%0%% - %%1%%</string>
   <string name="general_preferred_vendor">首选供应商</string>
   <string name="location_check_in_current_location">当前地点 *</string>
@@ -143,10 +139,8 @@
   <string name="dlg_appending_receipt">正在附加发票...</string>
   <string name="air_reservation_confirmed_message">已确认航班。</string>
   <string name="dlg_book_missing_field_violation_justification">请提供违反理由。</string>
-  <string name="new_ocr_expense">添加 OCR 费用</string>
   <string name="trip_approval_failed_msg">审批旅程时出错，请重试。</string>
   <string name="air_search_class_value_first">头等舱</string>
-  <string name="hotel_search_label_checkin_date">入住日期</string>
   <string name="login_id_invalid">用户名应该由登录名后跟 @ 符号及公司域组成。</string>
   <string name="home_navigation_car_mileage_not_allow_title">功能已禁用</string>
   <string name="segment_hotel_checkin">入住:</string>
@@ -231,6 +225,7 @@
   <string name="canceling_hotel">正在取消宾馆...</string>
   <string name="rail_search_label_arr_loc">到</string>
   <string name="dlg_expense_report_no_entries_title">无费用</string>
+  <string name="smart_expense_action_split_expense">拆分智能费用</string>
   <string name="limo_reservation_title">高级轿车预订</string>
   <string name="air_ticket_title">机票</string>
   <string name="invoice_confirm_approve_msg">是否确定要批准此发票?</string>
@@ -283,13 +278,12 @@
   <string name="air_confirm_flight">确认航班</string>
   <string name="segment_air_fs_refresh">刷新</string>
   <string name="dlg_travel_select_frequent_flyer_title">选择常旅客计划</string>
-  <string name="select_from_device_pdf">选择 PDF</string>
+  <string name="dlg_expense_smart_expense_add_to_report_message">智能费用将在费用报告中组合为单一条目。</string>
   <string name="general_none">无</string>
   <string name="add_attendee_from_search">搜索</string>
   <string name="car_search_label_smoking">吸烟</string>
   <string name="profile_check_1">您的差旅配置文件要求在“中间名称”、“性别”和“出生日期”中输入值。请登录到 Web 版 Concur Travel，并在菜单上选择“配置文件”。\n\n请注销，并在提供上述信息后返回登录。</string>
   <string name="hotel_search_near_me">我附近的宾馆</string>
-  <string name="hotel_search_label_checkout_date">退房日期</string>
   <string name="air_search_filter_sort_by_title">航班排序依据</string>
   <string name="general_month_sep">九月</string>
   <string name="login_more_help_title">更多帮助</string>
@@ -321,7 +315,6 @@
   <string name="apptentive_intro_dialog_title_default">感谢您的反馈！</string>
   <string name="home_section_expense">费用</string>
   <string name="receipt_delete_fail_dialog_title">发票删除失败</string>
-  <string name="hotel_search_label_near_v1">针对处于以下位置的宾馆</string>
   <string name="register_pin_entry">输入由至少 4 个字母和数字字符组成的 PIN。您公司可能要求更多字符。</string>
   <string name="rail_search_label_depart_time">出发时间</string>
   <string name="general_fees">费用</string>
@@ -343,7 +336,6 @@
   <string name="dlg_expense_no_external_storage_available_title">没有可用的外部存储</string>
   <string name="receipt_action_title">发票操作</string>
   <string name="no_allocations_msg">无分摊</string>
-  <string name="dlg_e_receipt_unavailable_title">图片不可用</string>
   <string name="segment_air_label_contact">联系人</string>
   <string name="location_check_in_days_remaining_month">至少 1 个月</string>
   <string name="dlg_travel_flight_stat_retrieve">正在检索航班状态...</string>
@@ -354,7 +346,7 @@
   <string name="car_detail_book_failure_title">出现错误</string>
   <string name="general_fare">票价</string>
   <string name="tour_1_top">搜索并预订机票、\n宾馆、汽车等等</string>
-  <string name="quick_expenseit_title">发票获取</string>
+ <string name="quick_expenseit_title">Receipt Capture</string>
   <string name="total_paid_by_company">由公司支付的总额</string>
   <string name="general_search_for_price_to_beat_failed">抱歉，我们没有找到起始价格。请再次尝试搜索。</string>
   <string name="dlg_expense_attendee_no_edit_message">无法编辑此参加者。</string>
@@ -371,6 +363,7 @@
   <string name="hotel_price_to_beat_search_header">成为更聪明的差旅买家！预订房间时，在下方输入宾馆搜索详细信息以查找起始价格。</string>
   <string name="gallery">图片库</string>
   <string name="invoice_line_item">单项</string>
+  <string name="hide_corporate_card_transaction">正在隐藏公司卡费用交易...</string>
   <string name="location_check_in_title">地点签到</string>
   <string name="travel_points_violations_desc_header">差旅点或审批</string>
   <string name="retrieve_hotel_details">正在检索宾馆详细信息...</string>
@@ -387,15 +380,12 @@
   <string name="login_sso_no_company_code_msg">请为“公司代码”提供一个值。</string>
   <string name="itemize_incomplete">明细金额的合计不等于费用金额。</string>
   <string name="ocr_progress_status_failed">处理错误</string>
-  <string name="loc_search_hint_v1">搜索目的地</string>
   <string name="triplist_section_awaiting_approval">等待审批</string>
   <string name="general_not_preferred">非首选</string>
-  <string name="profile_city">城市</string>
   <string name="sso_sign_in_company_code_error_title">公司代码</string>
   <string name="dlg_append_receipt_confirmation_title">附加确认</string>
   <string name="segment_air_label_meal">餐饮</string>
   <string name="hotel_search_suggestions">宾馆搜索建议</string>
-  <string name="profile_other">其它</string>
   <string name="rail_search_travel_header_date_span">%%0%% - %%1%%</string>
   <string name="breeze_name">Concur Breeze</string>
   <string name="out_of_pocket">现金支付</string>
@@ -403,8 +393,8 @@
   <string name="travel_points_air_booking_workflow_points_header">差旅点银行:%%0!total travel points%% 个点</string>
   <string name="segment_air_label_terminal">航站楼:</string>
   <string name="view_expenses">查看费用</string>
-  <string name="general_preparing">正在准备</string>
   <string name="general_seats">座位</string>
+  <string name="general_preparing">正在准备</string>
   <string name="segment_rail_label_train">火车</string>
   <string name="upload_mobile_entry_receipt_succeeded">已成功上传费用发票！</string>
   <string name="dlg_expense_remove_confirmation_title">删除确认</string>
@@ -484,7 +474,6 @@
   <string name="attendee_search_hint">键入参加者名称</string>
   <string name="justification_reason">理由</string>
   <string name="hotel_search_room_details_title">房间详情</string>
-  <string name="rest_hotel_search_title">搜索</string>
   <string name="report_submit_error">费用报告提交错误</string>
   <string name="retrieving_receipts">正在检索发票</string>
   <string name="car_search_car_type_E">经济舱</string>
@@ -526,8 +515,6 @@
   <string name="location_check_in_comment">备注</string>
   <string name="msg_cntr_title">消息中心</string>
   <string name="date">日期</string>
-  <string name="profile_fname">名字</string>
-  <string name="home_navigation_curb">Curb</string>
   <string name="dlg_expense_attendee_version_mismatch_message">此参加者自从上次在此费用中使用后已被修改。\n任何编辑都必须在 Web 上的“配置文件”中完成。</string>
   <string name="car_results_unlimited_miles">英里数无限</string>
   <string name="details">详细信息</string>
@@ -574,7 +561,6 @@
   <string name="report_add_expense">添加新的费用</string>
   <string name="approval_row_report_header">报告审批</string>
   <string name="hotel_search_label_near">靠近</string>
-  <string name="tr_segment_block_return">返程</string>
   <string name="air_search_stopgroup_plural">%%0!number%% 个经停站点</string>
   <string name="general_field_value_too_large">值 \'%%0%%\' 太大。</string>
   <string name="segment_rail_label_contact">联系人</string>
@@ -585,7 +571,6 @@
   <string name="login_disabled_message">移动版对贵公司不可用。</string>
   <string name="dlg_remove_report_expense_failed_title">费用删除失败</string>
   <string name="amount_approved">审批金额</string>
-  <string name="profile_add_emergency_contact">添加紧急联系人</string>
   <string name="attendee_advanced_search_swipe_right">向右移动查看高级搜索字段。</string>
   <string name="searching_for_locations">正在搜索地点...</string>
   <string name="air_price_to_beat_search_arrival">到达:</string>
@@ -604,9 +589,8 @@
   <string name="pref_voice_language">语音搜索语言</string>
   <string name="segment_air_fs_label_div_city">转移城市</string>
   <string name="retrieve_mobile_entry_receipt">正在下载费用发票...</string>
-  <string name="profile_address">地址</string>
-  <string name="itin_proceed_to_expenses">进入费用</string>
   <string name="event_title">事件</string>
+  <string name="itin_proceed_to_expenses">进入费用</string>
   <string name="segment_air_label_aircraft">飞机</string>
   <string name="dlg_travel_dynamic_custom_fields_title">预订策略</string>
   <string name="trip_approvals_approve">审批旅行</string>
@@ -615,8 +599,8 @@
   <string name="dlg_expense_active_report_retrieve_failed_title">活动费用报告检索失败</string>
   <string name="general_enter_n_to_m_characters_hint">输入 %%0!min%% 到 %%1!max%% 个字符</string>
   <string name="hotel_wizard_checkin">入住日期</string>
-  <string name="tr_header">申请标题</string>
   <string name="segment_rail_label_arrival">到达</string>
+  <string name="dlg_expense_split_expense_confirm_title">拆分智能费用确认</string>
   <string name="segment_air_label_duration">持续时间</string>
   <string name="call_travel_agent">呼叫旅行社</string>
   <string name="air_search_title">预订航班</string>
@@ -683,7 +667,6 @@
   <string name="approved_amount">审批金额</string>
   <string name="commit">提交</string>
   <string name="service_not_available">此时无法使用 Concur 服务来处理此申请。请稍后重试。</string>
-  <string name="loc_search_office_hint">搜索办公地点</string>
   <string name="ocr_progress_msg">您的费用正在接受分析</string>
   <string name="home_navigation_expenseit">ExpenseIt</string>
   <string name="dlg_expense_receipt_store_confirm_select_for_expense">是否选择 \'%%1%%\' 添加的费用 \'%%0%%\' 发票？</string>
@@ -735,7 +718,6 @@
   <string name="dlg_expense_report_send_back">正在发回费用报告</string>
   <string name="apptentive_thanks">谢谢您的反馈！</string>
   <string name="air_results_title_multi_stop">%%0%% 站</string>
-  <string name="field_hint_add_vendor">添加供应商（可选）</string>
   <string name="total_paid_by_employee">由员工支付的总额</string>
   <string name="view_details">查看详细信息</string>
   <string name="select_from_device">从库中选择</string>
@@ -745,13 +727,11 @@
   <string name="travel_violations_hotel_for_manager_approval_header">在违反公司策略预订此房间前，必须提供原因。</string>
   <string name="sharing_receipt_wait_on_connectivity_detail">请检查手机数据连接。</string>
   <string name="triplist_section_rejected">被否决</string>
-  <string name="search_destination_location">目的地</string>
   <string name="segment_dining_reservation">预订</string>
   <string name="receipt_retrieve_urls_fail_dialog_title">检索发票信息失败</string>
   <string name="add_attendee_options">添加参加者选项</string>
   <string name="dlg_expense_missing_fields_soft_stop_message">下列字段缺少值，应予以填写。此时跳过提供值并继续？</string>
   <string name="location_check_in_failed_title">入住失败</string>
-  <string name="hotel_search_label_for_v1">我们正在执行搜索，请稍候</string>
   <string name="login_pin_expired_title">PIN 已过期</string>
   <string name="pref_cat_server">服务器</string>
   <string name="adding_to_report">正在向费用报告添加费用...</string>
@@ -773,6 +753,7 @@
   <string name="report_id">费用报告 Id</string>
   <string name="air_search_stopgroup_all">全部</string>
   <string name="dlg_hotel_cancel_succeeded_message">已成功取消宾馆预订。</string>
+  <string name="pref_smart_match_allow">启用费用报告智能匹配</string>
   <string name="retrieve_all_entries">正在检索费用...</string>
   <string name="receipt_action_delete_confirm_message">是否确定要删除 %%0%% 添加的发票？</string>
   <string name="test_drive_password_error">请输入有效的密码。</string>
@@ -784,7 +765,6 @@
   <string name="itin_meal_PRO">已提供（排除）</string>
   <string name="report_submit_dialog_message">是否确定提交此费用报告？</string>
   <string name="approver_search_by_email">电子邮件</string>
-  <string name="sdk_upgrade_message_see_msg_center">有关更多信息，请参阅“消息中心”。</string>
   <string name="dlg_expense_delete">正在删除费用</string>
   <string name="segmentlist_offer_enable_validity">启用有效性检查</string>
   <string name="hotel_recommendation_not_available">建议不可用</string>
@@ -795,7 +775,6 @@
   <string name="invoice_vendor">发票供应商</string>
   <string name="receipt_source_cte">CTE</string>
   <string name="select_policy">选择策略</string>
-  <string name="profile_emergency_contact">紧急联系人信息</string>
   <string name="view_receipt">查看发票</string>
   <string name="air_search_label_refundable_only">仅可退还票价</string>
   <string name="approval_workflow">审批工作流程</string>
@@ -841,7 +820,6 @@
   <string name="rail_results_title">选择火车</string>
   <string name="dlg_expense_save_report_receipt_succeeded_message">已成功将发票添加到费用报告。</string>
   <string name="no_receipt_thumbnail_available">发票缩略图\n不可用。</string>
-  <string name="ocr_status_procesing_error">处理错误</string>
   <string name="universal_tour_welcome_text">让您轻松规划您的公务旅行、获取费用并报销费用。</string>
   <string name="travel_agency_info_title">旅行社信息</string>
   <string name="hotel_search_rooms_title">选择房间</string>
@@ -868,7 +846,6 @@
   <string name="pin_create_submit">设置 Mobile PIN</string>
   <string name="activity_canceled">已取消活动</string>
   <string name="receipt_document_type_pdf">PDF</string>
-  <string name="dlg_append_receipt_fail_title">无法附加您的发票。请稍后重试</string>
   <string name="add_report_receipt">正在添加费用报告发票...</string>
   <string name="rail_search_label_arrive_station">到达站点</string>
   <string name="test_drive_tour_skip">跳过</string>
@@ -876,7 +853,6 @@
   <string name="report_approve_dialog_message">是否确定批准此费用报告？</string>
   <string name="itin_time">时间</string>
   <string name="home_row_book_hotel_subheader">入住优质宾馆</string>
-  <string name="profile_phone">电话</string>
   <string name="home_tour_expense2_message">然后提交并报销。\n经理可以在任何地点进行审批。</string>
   <string name="expense_type_prompt">选择费用类型</string>
   <string name="dlg_expense_no_mileage_form_title">无可用的表单</string>
@@ -891,7 +867,6 @@
   <string name="segment_air_label_arrive">到达</string>
   <string name="dlg_getting_current_location">正在获取当前地点...</string>
   <string name="travel_agency_info_night_msg">过夜消息</string>
-  <string name="request_digest_total">总额:</string>
   <string name="hotel_search_label_with_availability_from">可用性起自</string>
   <string name="dlg_expense_report_detail_retrieve_failed_title">报告详细信息检索失败</string>
   <string name="approval_row_tr_header">申请</string>
@@ -905,7 +880,6 @@
   <string name="test_drive_retry">重试</string>
   <string name="hotel_price_to_beat_distance_mile_singular">%%0! one %% 英里</string>
   <string name="dlg_registering">正在注册...</string>
-  <string name="submit_request">提交申请</string>
   <string name="no_expected_expenses_msg">没有预期费用</string>
   <string name="general_missing_violation_reason_message">请联系公司管理员为 %%0%% 使用配置违反理由。</string>
   <string name="general_destination">目的地</string>
@@ -926,11 +900,9 @@
   <string name="select_attendee_type_prompt">请选择参加者类型。</string>
   <string name="dlg_travel_retrieve_reason_code_progress_message">正在检索自定义预订原因代码...</string>
   <string name="pin_create_invalid_device_message">另一部设备请求 PIN 重设。请使用您请求 PIN 重设的同一部设备。</string>
-  <string name="tr_new_request_title">开始申请</string>
   <string name="air_search_class_value_any">任何</string>
   <string name="pin_create_title">Mobile PIN</string>
   <string name="receipt_share_failed_retry">失败（将重试）</string>
-  <string name="dlg_e_receipt_unavailable">无法加载发票图片，但是可以保存您的费用明细。如果您需要查看此发票图片，请访问网页。</string>
   <string name="expense_type_category_mru">最近使用</string>
   <string name="general_violation_justification">违反理由</string>
   <string name="home_tour_expense1_title">给发票拍照。</string>
@@ -969,7 +941,6 @@
   <string name="submitted">已提交</string>
   <string name="credit_card">信用卡</string>
   <string name="attendee_search_results_empty_message">搜索返回没有匹配的参加者。请重试。</string>
-  <string name="add_another_item_to_request">+ 向此申请中添加其他项目</string>
   <string name="home_navigation_traveltext">TravelText</string>
   <string name="air_search_label_returndate">返程日期</string>
   <string name="segment_rail_label_distance">距离</string>
@@ -1020,15 +991,12 @@
   <string name="attendee_create_from_contact_cancelled">已取消从联系人创建参加者。</string>
   <string name="hotel_fees">宾馆费用</string>
   <string name="segment_air_fs_label_arr_gate">到达门口</string>
-  <string name="field_hint_add_amount">添加金额</string>
   <string name="canceling_rail">取消火车...</string>
   <string name="current_value">当前值</string>
   <string name="retrieve_currency">正在检索货币...</string>
   <string name="dlg_expense_no_expense_type_currency_message">由于处于脱机状态，费用类型和/或货币选择数据此时不可用。</string>
   <string name="expense_receipt_options">选择发票操作</string>
   <string name="deleting_receipt">正在删除发票...</string>
-  <string name="loc_search_office">办公地点</string>
-  <string name="tr_new_request">开始您的申请</string>
   <string name="register_pin_tip_title">注册 PIN 提示</string>
   <string name="profile_check_32">您的差旅配置文件要求提供工作地址（街道、城市和国家/地区）。请登录到 Web 版 Concur Travel，并在菜单上选择“配置文件”。\n\n请注销，并在提供上述信息后返回登录。</string>
   <string name="itin_stop_actions">路线站操作</string>
@@ -1049,14 +1017,14 @@
   <string name="exceptions">例外</string>
   <string name="password_short_message">您的密码必须至少为 %%0!length%% 个字符。</string>
   <string name="car_search_travel_header_name">靠近 %%0%% 的汽车</string>
-  <string name="register_failure_msg">请重试。如果在访问系统时继续遇到问题，请联系您公司的帮助中心或差旅/费用部门。</string>
+  <string name="long_press_smart_expense">（长按以拆分费用）</string>
   <string name="hotel_search_for_rates_progress">搜索费率</string>
+  <string name="register_failure_msg">请重试。如果在访问系统时继续遇到问题，请联系您公司的帮助中心或差旅/费用部门。</string>
   <string name="login_company_sign_in">公司登录</string>
   <string name="segment_ride_pickup_instructions">取车说明</string>
   <string name="receipt_download_notify">此费用具有发票图片可供下载。请选择以下相机图标，并选择 \'下载图片\' 下载和查看发票。</string>
   <string name="dlg_prompt_to_rate_yes">进行评级！</string>
   <string name="dlg_report_submit_confirmation_title">提交确认</string>
-  <string name="car_search_invalid_drop_off_time_title">还车时间无效</string>
   <string name="universal_tour_receipt_more">的新报告。</string>
   <string name="multi_line_text_entry">多行文本条目</string>
   <string name="register_pin_tip_text">如果您不知道自己的凭据，请登录 Concur Web 帐户并导航到“配置文件”>“移动注册”或“我的帐户”>“移动 PIN”。请与公司管理员联系以获得更多帮助。</string>
@@ -1119,7 +1087,6 @@
   <string name="loc_search_hint">输入筛选文本</string>
   <string name="attendee_create_cancelled">已取消参加者创建。</string>
   <string name="choose_picture">选择图片</string>
-  <string name="profile_country">国家/地区</string>
   <string name="general_call">致电</string>
   <string name="dlg_report_approve_progress">发送进行审批</string>
   <string name="retrieve_reports_to_approve">正在检索要审批的报告...</string>
@@ -1135,7 +1102,6 @@
   <string name="dlg_book_missing_fields_title"> 预订字段</string>
   <string name="general_reservation_failed">预订失败</string>
   <string name="home_action_hotel_voice_search">宾馆语音搜索</string>
-  <string name="profile_add_banck_account">添加新的银行帐户</string>
   <string name="general_open">开放</string>
   <string name="home_row_invoice_sub_one">1 张发票</string>
   <string name="login_help_bad_email_dialog_title">无效电子邮件</string>
@@ -1225,7 +1191,6 @@
   <string name="dlg_expense_save">正在保存费用...</string>
   <string name="dlg_air_cancel_succeeded_message">已成功取消机票预订。</string>
   <string name="test_drive_and">和</string>
-  <string name="car_search_invalid_drop_off_time">还车时间早于取车时间。</string>
   <string name="dlg_no_car_rates_for_date">对于所选的日期，没有定义费率。请与管理员联系。</string>
   <string name="segment_rail_label_duration">持续时间:</string>
   <string name="login_help_submit">发送我的登录详细信息</string>
@@ -1243,7 +1208,6 @@
   <string name="currency">货币</string>
   <string name="offline_upload_dialog_header">正在上载，请稍候...</string>
   <string name="saving_report">保存费用报告...</string>
-  <string name="tr_list_header_approved">审批的申请</string>
   <string name="new_expense">新建费用</string>
   <string name="itinerary">行程</string>
   <string name="rail_search_label_passengers">乘客人数</string>
@@ -1260,7 +1224,6 @@
   <string name="cash_expense">现金费用</string>
   <string name="home_navigation_home">主页</string>
   <string name="dlg_travel_itinerary_retrieve">正在检索旅行详细信息...</string>
-  <string name="profile_lname">姓氏</string>
   <string name="amount_due_credit_card">应付给信用卡的金额</string>
   <string name="retrieve_currency_types">正在检索货币...</string>
   <string name="dlg_no_air_permission_message">贵公司已禁用手机机票预订。请使用 Web 版 Concur 或通过致电旅行社来预订航班。</string>
@@ -1291,15 +1254,12 @@
   <string name="amount_in_currency">金额 (%%0%%)</string>
   <string name="location_check_in_failed_message">签入当前的地点失败。请重试。</string>
   <string name="rail_detail_return">返程</string>
-  <string name="tr_arrival">到达</string>
   <string name="dlg_hotel_cancel_progress_message">正在取消宾馆预订...</string>
   <string name="receipt_added_from">添加来自</string>
-  <string name="tr_new_request_desc">获得航班、宾馆等审批</string>
   <string name="segment_hotel_checkout">退房:</string>
   <string name="segment_air_fs_label_dep_estim">预计出发时间</string>
   <string name="location_check_in_progress">正在签入...</string>
   <string name="register_password_blank">请输入您的密码。</string>
-  <string name="retrieve_tr">正在检索差旅申请...</string>
   <string name="home_row_book_car_subheader">取用靓车</string>
   <string name="test_drive_limited_text">具有有限的 Concur Mobile 功能</string>
   <string name="itin_add_stop">添加路线站</string>
@@ -1383,7 +1343,6 @@
   <string name="hotel_search_rating">评级</string>
   <string name="view_receipts">查看发票</string>
   <string name="retrieve_trips_to_approve">正在检索要审批的旅行...</string>
-  <string name="voice_search">语音搜索</string>
   <string name="travel_request_expected_expense_title">预期费用</string>
   <string name="login_sign_in_help">密码</string>
   <string name="segment_air_fs_label_arr_sched">计划到达</string>
@@ -1418,6 +1377,7 @@
   <string name="home_tip_book_travel">预订\n差旅</string>
   <string name="home_row_trip_approvals_sub_none">没有要审批的旅行</string>
   <string name="air_search_label_returntime">返程时间</string>
+  <string name="dlg_expense_split_expense_confirm_message">是否确实要从移动条目中分拆卡消费？</string>
   <string name="itin_meal_TAX">应纳税</string>
   <string name="summary">摘要</string>
   <string name="retrieve_conditional_field_action_failure">无法检索条件字段值。请重试。</string>
@@ -1445,7 +1405,6 @@
   <string name="dlg_expense_save_report_entry">正在保存费用...</string>
   <string name="pref_voice_language_summary">执行发票搜索时，选择要使用的语言。</string>
   <string name="device_cannot_make_phone_call">您的设备无法拨打电话。</string>
-  <string name="tr_list_header_active">活动的申请</string>
   <string name="amount_claimed">要求报账的金额</string>
   <string name="air_results_title_all_non_stop">所有直达</string>
   <string name="updating_approvals">正在更新审批...</string>
@@ -1463,7 +1422,6 @@
   <string name="remove_from_itemization">从明细中删除</string>
   <string name="hotel_search_travel_header">靠近 %%0%% 的宾馆</string>
   <string name="general_attention">注意</string>
-  <string name="home_navigation_profile">配置文件</string>
   <string name="receipt_document_type">证件类型</string>
   <string name="report_submit_missing_receipt">可以提交此费用报告，但其中包含的至少一项费用条目缺少必要的发票。请使用 Concur Web 或通过移动设备附加发票，方法为从费用报告中删除该费用、附加发票并将其添加回费用报告中。</string>
   <string name="test_drive_password_error_title">密码无效</string>
@@ -1509,7 +1467,6 @@
   <string name="segment_hotel_cancelpolicy">取消策略</string>
   <string name="general_missing_value">缺少值</string>
   <string name="offline_no_items">没有要上载的项目</string>
-  <string name="home_navigation_uber">Uber</string>
   <string name="retrieve_mobile_entries">正在检索费用...</string>
   <string name="no_expenses">无费用</string>
   <string name="cash_advance_utilized">已使用的预支现金</string>
@@ -1597,7 +1554,6 @@
   <string name="general_return">返程</string>
   <string name="searching_for_hotels">正在搜索宾馆...</string>
   <string name="general_no_rates">无补助率</string>
-  <string name="search_current_location">当前地点</string>
   <string name="segment_air_label_baggageclaim">行李费报账</string>
   <string name="segmentlist_rail_wagon">旅行车编号 %%0%%</string>
   <string name="car_results_total_label">总额:</string>
@@ -1651,7 +1607,6 @@
   <string name="login_help_email_hint">Concur 注册电子邮件</string>
   <string name="mobile_password_reset_link_sent_title">移动密码 (PIN) 重设链接已发送</string>
   <string name="pref_cat_general">一般</string>
-  <string name="tr_segment_block_outbound">去程</string>
   <string name="attendee_search">参加者搜索</string>
   <string name="receipt_share_status_starting_up">正在启动...</string>
   <string name="dlg_receipt_share_remove_confirm_message">确定要删除共享的发票吗?</string>
@@ -1692,7 +1647,6 @@
   <string name="general_missing_card_for_use_message">请访问 Web 提供一张或多张信用卡以供 %%0%% 使用。</string>
   <string name="car_search_car_type_L">豪华型</string>
   <string name="subtotal">小计</string>
-  <string name="profile_zipcode">邮编</string>
   <string name="rail_detail_ticket_delivery">送票</string>
   <string name="voice_car_book_hint_secondary">例如:“查找圣安东尼奥在感恩节周末的经济型汽车。”</string>
   <string name="pin_create_disabled_title">已禁用移动版</string>
@@ -1708,30 +1662,29 @@
   <string name="canceling_air">正在取消机票...</string>
   <string name="car_search_car_type_I">中型</string>
   <string name="general_reserve">预订</string>
-  <string name="travel_request_sub_title">管理您的授权</string>
   <string name="select_cloud_report_receipt">从发票库中选择</string>
   <string name="search_smoking_no_pref">无首选项</string>
   <string name="loading_mini_view">正在加载发票视图。</string>
   <string name="expense_receipt">费用发票</string>
   <string name="general_refundable">可退款</string>
   <string name="rail_detail_outbound">去程</string>
-  <string name="profile_state">州/省</string>
   <string name="pin_create_invalid_device_title">无效设备</string>
   <string name="enter_comment">输入备注</string>
   <string name="car_search_car_type_F">全尺寸</string>
   <string name="rail_search_progress_label">%%0!station code%% - %%1!date%%</string>
+  <string name="hide_personal_card_transaction">正在隐藏个人卡费用交易...</string>
   <string name="dlg_no_car_rates_general">没有定义费率。请验证“交易日期”和“车辆 ID”配置的汽车补助率是否正确。</string>
   <string name="general_distance_miles">英里</string>
   <string name="dlg_no_current_location">无法确定当前地点。请选择所需地点。</string>
   <string name="travel_violations_air_for_manager_approval_header">在违反公司策略预订此航班前，必须提供原因。</string>
   <string name="travel_agency_info_daytime_msg">白天消息</string>
   <string name="dlg_expense_save_receipt_failed_title">发票上传失败</string>
-  <string name="dlg_retrieving_itin">正在检索行程...</string>
+  <string name="password_dont_match_message">必然有输入错误。请重新输入密码，使其在两个字段中完全相同。</string>
   <string name="rail_detail_title">预订火车票详情</string>
   <string name="loc_search_mode_company">公司地点</string>
   <string name="car_search_car_type_C">紧凑型</string>
   <string name="home_action_voice_book">语音预订</string>
-  <string name="password_dont_match_message">必然有输入错误。请重新输入密码，使其在两个字段中完全相同。</string>
+  <string name="dlg_retrieving_itin">正在检索行程...</string>
   <string name="rail_search_label_dep_datetime">出发</string>
   <string name="dlg_expense_attendee_save_progress_message">正在保存参加者...</string>
   <string name="segment_hotel_rate_total">总额</string>
@@ -1740,13 +1693,14 @@
   <string name="dlg_expense_upload_receipt_failed_message">此时上传费用发票图片失败。请稍后重试。如果仍然存在问题，请联系公司管理员。</string>
   <string name="general_booking_not_allowed_message">您公司的差旅策略不允许此预订。</string>
   <string name="location_check_in_button">入住</string>
+  <string name="pref_smart_match">智能匹配</string>
   <string name="itin_delete_stop">删除路线站</string>
   <string name="dlg_expense_report_header_form_field_parse_error">无法分析费用报告表单字段。请重试。</string>
   <string name="retrieve_itinerary_summaries">正在检索行程摘要...</string>
   <string name="login_company_sign_on">公司登录</string>
   <string name="rail_general_duration_label">持续时间:</string>
   <string name="no_itemization">无明细</string>
-  <string name="profile_credit_card">信用卡</string>
+  <string name="smart_expense_action_long_press_title">智能费用操作</string>
   <string name="no_receipts">没有发票</string>
   <string name="home_tour_welcome_to_concur">欢迎使用 Concur</string>
   <string name="general_specify_reason">请指定原因</string>
@@ -1783,7 +1737,6 @@
   <string name="air_price_to_beat_search_departure_date">出发日期:</string>
   <string name="tour_3_bottom">视您公司的配置而定，\n某些 Concur 移动版功能\n可能不可用</string>
   <string name="segment_rail_label_stops">经停:</string>
-  <string name="matched_expenses">匹配的费用</string>
   <string name="general_reject">拒绝</string>
   <string name="next">下一行 ></string>
   <string name="trip_rule_violation_itinerary">违反路线规则</string>
@@ -1796,7 +1749,7 @@
   <string name="hotel_num_of_colleagues_stayed">您的 %%0!number of colleagues%% 位同事曾在此处居住</string>
   <string name="home_action_air_price_to_beat">机票起始价格</string>
   <string name="dlg_attendee_search_failed_title">参加者搜索失败</string>
-  <string name="hotel_wizard_nights">住宿夜数 (<= 90)</string>
+  <string name="hotel_wizard_nights">住宿夜数 (&lt;= 90)</string>
   <string name="policy">策略</string>
   <string name="general_month_aug">八月</string>
   <string name="trip_selection">旅行</string>

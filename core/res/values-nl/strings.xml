@@ -37,7 +37,6 @@
   <string name="hotel_search_detail_title">Hotelgegevens</string>
   <string name="trip_confirm_approve_msg">Weet u zeker dat u deze reis wilt goedkeuren?</string>
   <string name="hotel_details_no_rooms_available">Dit hotel heeft op deze datums geen kamers beschikbaar. Kies een ander hotel.</string>
-  <string name="profile_add_credit_card">Nieuwe kaart toevoegen</string>
   <string name="general_month_dec">december</string>
   <string name="hotel_search_label_checkin">Inchecken</string>
   <string name="login_help_pin">Weet u uw pincode niet?</string>
@@ -60,7 +59,6 @@
   <string name="dlg_expense_attendee_add_progress_message">Deelnemer toevoegen...</string>
   <string name="select_attendee_type">Selecteer een deelnemertype.</string>
   <string name="general_elapsed_hour_min_long">%%0%% uur, %%1%% minuten</string>
-  <string name="sdk_upgrade_message_important">Belangrijk:</string>
   <string name="rail_search_btn_roundtrip">Retourreis</string>
   <string name="car_search_label_near">Nabij </string>
   <string name="cancel">Annuleren</string>
@@ -91,7 +89,6 @@
   <string name="trip_approval_success_msg">Reis is goedgekeurd</string>
   <string name="air_price_to_beat_search_departure">Vertrek:</string>
   <string name="general_approve">Goedkeuren</string>
-  <string name="min_sdk_upgrade_message_title">Belangrijk</string>
   <string name="travel_points_address_violations_label">Verhelp beleidsschendingen *</string>
   <string name="test_drive_tour_welcome_pg2_subtitle">Laten we aan de slag gaan: We hebben ingevulde voorbeelden van onkostennota\'s, kaartafschrijvingen en kwitanties en tevens begeleide overlays om u op weg te helpen.</string>
   <string name="home_section_travel">Reizen</string>
@@ -135,7 +132,6 @@
   <string name="voice_book_hint">Druk op de microfoon om te beginnen</string>
   <string name="hotel_room_rate">Kamertarief</string>
   <string name="approval_row_invoice_title">Facturen</string>
-  <string name="sdk_upgrade_message_body">Dit apparaat ontvangt geen updates na deze versie omdat het draait op een oudere versie van Android.</string>
   <string name="rail_search_travel_header_city_span">%%0%% - %%1%%</string>
   <string name="general_preferred_vendor">Voorkeursleveranciers</string>
   <string name="location_check_in_current_location">Huidige locatie *</string>
@@ -143,10 +139,8 @@
   <string name="dlg_appending_receipt">Kwitantie toevoegen...</string>
   <string name="air_reservation_confirmed_message">Vlucht is bevestigd.</string>
   <string name="dlg_book_missing_field_violation_justification">Geef een verantwoording voor de overtreding op.</string>
-  <string name="new_ocr_expense">OCR-onkosten toevoegen</string>
   <string name="trip_approval_failed_msg">Er is een fout opgetreden bij het goedkeuren van de reis. Probeer het opnieuw.</string>
   <string name="air_search_class_value_first">Eerste</string>
-  <string name="hotel_search_label_checkin_date">Incheckdatum</string>
   <string name="login_id_invalid">Gebruikersnaam moet bestaan uit uw aanmeldingsnaam, gevolgd door een @-symbool en het domein van uw bedrijf.</string>
   <string name="home_navigation_car_mileage_not_allow_title">Functie uitgeschakeld</string>
   <string name="segment_hotel_checkin">Inchecken:</string>
@@ -184,7 +178,7 @@
   <string name="dlg_clear_report_entry_receipt_progress_message">Kwitantie wissen...</string>
   <string name="triplist_no_data">Geen reizen</string>
   <string name="copyright">© Copyright 2013 Concur Technologies, Inc.\nAlle rechten voorbehouden.</string>
-  <string name="itin_expenses_and_adjustments">Onkosten & correcties</string>
+  <string name="itin_expenses_and_adjustments">Onkosten &amp; correcties</string>
   <string name="home_action_title">Een actie selecteren</string>
   <string name="mobile_password_successfully_reset">Mobiel wachtwoord (PIN) opnieuw ingesteld</string>
   <string name="tour_2_bottom">\u2022 Foto\'s van kwitanties maken en uploaden\n\u2022 Onkosten met deelnemers toevoegen\n\u2022 Reisafstand vastleggen</string>
@@ -231,6 +225,7 @@
   <string name="canceling_hotel">Hotel annuleren...</string>
   <string name="rail_search_label_arr_loc">Naar</string>
   <string name="dlg_expense_report_no_entries_title">Geen onkosten</string>
+  <string name="smart_expense_action_split_expense">Smart Expense splitsen</string>
   <string name="limo_reservation_title">Limousinereservering</string>
   <string name="air_ticket_title">Vliegticket</string>
   <string name="invoice_confirm_approve_msg">Weet u zeker dat u deze factuur wilt goedkeuren?</string>
@@ -283,13 +278,12 @@
   <string name="air_confirm_flight">Vlucht bevestigen</string>
   <string name="segment_air_fs_refresh">Vernieuwen</string>
   <string name="dlg_travel_select_frequent_flyer_title">Loyaliteitsprogramma selecteren</string>
-  <string name="select_from_device_pdf">PDF selecteren</string>
+  <string name="dlg_expense_smart_expense_add_to_report_message">Smart Expenses worden gecombineerd tot een enkel item op de nota.</string>
   <string name="general_none">Geen</string>
   <string name="add_attendee_from_search">Zoeken</string>
   <string name="car_search_label_smoking">Roken</string>
   <string name="profile_check_1">In uw reisprofiel is een waarde verplicht voor Tweede voornaam, Geslacht en Geboortedatum.  Meld u aan bij de webversie van Concur Travel en selecteer Profiel in het menu.\n\nMeld u af en meld u opnieuw aan nadat u bovenstaande informatie hebt opgegeven.</string>
   <string name="hotel_search_near_me">Hotels in de buurt</string>
-  <string name="hotel_search_label_checkout_date">Uitcheckdatum</string>
   <string name="air_search_filter_sort_by_title">Vluchten sorteren op</string>
   <string name="general_month_sep">september</string>
   <string name="login_more_help_title">Meer ondersteuning</string>
@@ -321,7 +315,6 @@
   <string name="apptentive_intro_dialog_title_default">Hartelijk dank voor uw feedback!</string>
   <string name="home_section_expense">Onkosten</string>
   <string name="receipt_delete_fail_dialog_title">Verwijderen van kwitantie is mislukt</string>
-  <string name="hotel_search_label_near_v1">voor de hotels in</string>
   <string name="register_pin_entry">Voer een pincode in van ten minste 4 tekens (gebruik letters of cijfers).  Voor uw bedrijf zijn mogelijk meer tekens vereist.</string>
   <string name="rail_search_label_depart_time">Vertrektijd</string>
   <string name="general_fees">Kosten</string>
@@ -343,7 +336,6 @@
   <string name="dlg_expense_no_external_storage_available_title">Geen externe opslag beschikbaar</string>
   <string name="receipt_action_title">Actie voor kwitantie</string>
   <string name="no_allocations_msg">Geen toewijzingen</string>
-  <string name="dlg_e_receipt_unavailable_title">Afbeelding niet beschikbaar</string>
   <string name="segment_air_label_contact">Contactpersoon</string>
   <string name="location_check_in_days_remaining_month">Ten minste 1 maand</string>
   <string name="dlg_travel_flight_stat_retrieve">Vluchtstatus ophalen...</string>
@@ -354,7 +346,7 @@
   <string name="car_detail_book_failure_title">Er is een fout opgetreden</string>
   <string name="general_fare">Tarief</string>
   <string name="tour_1_top">Vluchten, hotels, auto\'s\nen meer zoeken en boeken</string>
-  <string name="quick_expenseit_title">Kwitantie vastleggen</string>
+  <string name="quick_expenseit_title">Receipt Capture</string>
   <string name="total_paid_by_company">Totaal betaald door bedrijf</string>
   <string name="general_search_for_price_to_beat_failed">We hebben helaas geen Price to Beat gevonden. Probeer opnieuw te zoeken.</string>
   <string name="dlg_expense_attendee_no_edit_message">Deze deelnemer kan niet worden bewerkt.</string>
@@ -371,6 +363,7 @@
   <string name="hotel_price_to_beat_search_header">Boek uw reizen slimmer! Voer uw hotelzoekgegevens hieronder in om de Price-to-Beat tijdens het boeken van uw hotel te vinden.</string>
   <string name="gallery">Galerij</string>
   <string name="invoice_line_item">Regelitem</string>
+  <string name="hide_corporate_card_transaction">Onkostentransacties met bedrijfskaart verbergen...</string>
   <string name="location_check_in_title">Inchecken met locatie</string>
   <string name="travel_points_violations_desc_header">Punten of Goedkeuring</string>
   <string name="retrieve_hotel_details">Hoteldetails ophalen...</string>
@@ -387,15 +380,12 @@
   <string name="login_sso_no_company_code_msg">Geef een waarde op voor de bedrijfscode.</string>
   <string name="itemize_incomplete">De specificatiebedragen worden niet bij het onkostenbedrag opgeteld.</string>
   <string name="ocr_progress_status_failed">Verwerkingsfout</string>
-  <string name="loc_search_hint_v1">Bestemming zoeken</string>
   <string name="triplist_section_awaiting_approval">Wacht op goedkeuring</string>
   <string name="general_not_preferred">Geen voorkeur</string>
-  <string name="profile_city">Plaats</string>
   <string name="sso_sign_in_company_code_error_title">Bedrijfscode</string>
   <string name="dlg_append_receipt_confirmation_title">Bevestiging toevoegen</string>
   <string name="segment_air_label_meal">Maaltijd</string>
   <string name="hotel_search_suggestions">Suggesties voor zoeken naar hotel</string>
-  <string name="profile_other">Overige</string>
   <string name="rail_search_travel_header_date_span">%%0%% - %%1%%</string>
   <string name="breeze_name">Concur Breeze</string>
   <string name="out_of_pocket">Contant</string>
@@ -403,8 +393,8 @@
   <string name="travel_points_air_booking_workflow_points_header">Reispuntenaccount: %%0!total travel points%% punten</string>
   <string name="segment_air_label_terminal">Terminal:</string>
   <string name="view_expenses">Onkosten weergeven</string>
-  <string name="general_preparing">Voorbereiden</string>
   <string name="general_seats">Stoelen</string>
+  <string name="general_preparing">Voorbereiden</string>
   <string name="segment_rail_label_train">Trein</string>
   <string name="upload_mobile_entry_receipt_succeeded">Uploaden van onkostenkwitantie is geslaagd.</string>
   <string name="dlg_expense_remove_confirmation_title">Bevestiging verwijderen</string>
@@ -484,7 +474,6 @@
   <string name="attendee_search_hint">Typ de naam van de deelnemer</string>
   <string name="justification_reason">Verantwoording</string>
   <string name="hotel_search_room_details_title">Kamerdetails</string>
-  <string name="rest_hotel_search_title">Zoeken</string>
   <string name="report_submit_error">Fout bij indienen nota</string>
   <string name="retrieving_receipts">Kwitanties ophalen</string>
   <string name="car_search_car_type_E">Budget</string>
@@ -526,8 +515,6 @@
   <string name="location_check_in_comment">Opmerking</string>
   <string name="msg_cntr_title">Berichtencentrum</string>
   <string name="date">Datum</string>
-  <string name="profile_fname">Voornaam</string>
-  <string name="home_navigation_curb">Curb</string>
   <string name="dlg_expense_attendee_version_mismatch_message">Deze deelnemer is gewijzigd sinds deze voor het laatst voor deze onkosten is gebruikt.\nEventuele wijzigingen moeten worden ingevuld in het profiel op het web.</string>
   <string name="car_results_unlimited_miles">Onbeperkt aantal mijlen</string>
   <string name="details">Details</string>
@@ -574,7 +561,6 @@
   <string name="report_add_expense">Nieuwe onkosten toevoegen</string>
   <string name="approval_row_report_header">Notagoedkeuringen</string>
   <string name="hotel_search_label_near">Nabij </string>
-  <string name="tr_segment_block_return">Retour</string>
   <string name="air_search_stopgroup_plural">%%0!number%% tussenstops</string>
   <string name="general_field_value_too_large">Waarde \'%%0%%\' is te groot.</string>
   <string name="segment_rail_label_contact">Contactpersoon</string>
@@ -585,7 +571,6 @@
   <string name="login_disabled_message">Mobile is uitgeschakeld voor uw bedrijf.</string>
   <string name="dlg_remove_report_expense_failed_title">Verwijderen van onkosten is mislukt</string>
   <string name="amount_approved">Goedgekeurd bedrag</string>
-  <string name="profile_add_emergency_contact">Contactpersoon voor noodgevallen toevoegen</string>
   <string name="attendee_advanced_search_swipe_right">Veeg naar rechts om geavanceerde zoekvelden weer te geven.</string>
   <string name="searching_for_locations">Zoeken naar locaties...</string>
   <string name="air_price_to_beat_search_arrival">Aankomst:</string>
@@ -604,9 +589,8 @@
   <string name="pref_voice_language">Taal voor zoeken met spraak</string>
   <string name="segment_air_fs_label_div_city">Plaats omleiding</string>
   <string name="retrieve_mobile_entry_receipt">Onkostenkwitantie downloaden...</string>
-  <string name="profile_address">Adres</string>
-  <string name="itin_proceed_to_expenses">Verder naar onkosten</string>
   <string name="event_title">Gebeurtenis</string>
+  <string name="itin_proceed_to_expenses">Verder naar onkosten</string>
   <string name="segment_air_label_aircraft">Vliegtuig</string>
   <string name="dlg_travel_dynamic_custom_fields_title">Boekingsbeleid</string>
   <string name="trip_approvals_approve">Reis goedkeuren</string>
@@ -615,8 +599,8 @@
   <string name="dlg_expense_active_report_retrieve_failed_title">Ophalen van actieve nota\'s is mislukt</string>
   <string name="general_enter_n_to_m_characters_hint">Voer minimaal %%0!min%% en maximaal %%1!max%% tekens in</string>
   <string name="hotel_wizard_checkin">Incheckdatum</string>
-  <string name="tr_header">Koptekst voor aanvraag</string>
   <string name="segment_rail_label_arrival">Aankomst</string>
+  <string name="dlg_expense_split_expense_confirm_title">Splitsen Smart Expense bevestigen</string>
   <string name="segment_air_label_duration">Duur</string>
   <string name="call_travel_agent">Reisagent bellen</string>
   <string name="air_search_title">Vlucht boeken</string>
@@ -683,7 +667,6 @@
   <string name="approved_amount">Goedgekeurd bedrag</string>
   <string name="commit">Vastleggen</string>
   <string name="service_not_available">De Concur-service kan deze aanvraag momenteel niet verwerken.  Probeer het later opnieuw.</string>
-  <string name="loc_search_office_hint">Een kantoorlocatie zoeken</string>
   <string name="ocr_progress_msg">Uw onkosten worden geanalyseerd</string>
   <string name="home_navigation_expenseit">ExpenseIt</string>
   <string name="dlg_expense_receipt_store_confirm_select_for_expense">Selecteren voor kwitantie van onkosten \'%%0%%\' toegevoegd op \'%%1%%\'?</string>
@@ -735,7 +718,6 @@
   <string name="dlg_expense_report_send_back">Nota terugsturen</string>
   <string name="apptentive_thanks">Hartelijk dank voor uw feedback.</string>
   <string name="air_results_title_multi_stop">%%0%% tussenstops</string>
-  <string name="field_hint_add_vendor">Leverancier toevoegen (optioneel)</string>
   <string name="total_paid_by_employee">Totaal betaald door werknemer</string>
   <string name="view_details">Details weergeven</string>
   <string name="select_from_device">Selecteren in galerie</string>
@@ -745,13 +727,11 @@
   <string name="travel_violations_hotel_for_manager_approval_header">Voordat u het bedrijfsbeleid overtreedt door deze kamer te reserveren, moet u een reden opgeven.</string>
   <string name="sharing_receipt_wait_on_connectivity_detail">Controleer de gegevensverbinding van uw telefoon.</string>
   <string name="triplist_section_rejected">Afgekeurd</string>
-  <string name="search_destination_location">Bestemming</string>
   <string name="segment_dining_reservation">Reservering</string>
   <string name="receipt_retrieve_urls_fail_dialog_title">Ophalen kwitantiegegevens is mislukt</string>
   <string name="add_attendee_options">Opties voor deelnemer toevoegen</string>
   <string name="dlg_expense_missing_fields_soft_stop_message">De volgende velden zijn leeg en moeten worden ingevuld. Nu geen waarden invullen en doorgaan?</string>
   <string name="location_check_in_failed_title">Inchecken is mislukt</string>
-  <string name="hotel_search_label_for_v1">Een ogenblik geduld terwijl wordt gezocht</string>
   <string name="login_pin_expired_title">Pincode is verlopen</string>
   <string name="pref_cat_server">Server</string>
   <string name="adding_to_report">Onkosten toevoegen aan nota...</string>
@@ -773,6 +753,7 @@
   <string name="report_id">Nota-ID</string>
   <string name="air_search_stopgroup_all">Alle</string>
   <string name="dlg_hotel_cancel_succeeded_message">Hotelreservering is geannuleerd.</string>
+  <string name="pref_smart_match_allow">Smart Matching toestaan voor Expense</string>
   <string name="retrieve_all_entries">Onkosten ophalen...</string>
   <string name="receipt_action_delete_confirm_message">Op %%0%% toegevoegde kwitantie echt verwijderen?</string>
   <string name="test_drive_password_error">Voer een geldig wachtwoord in.</string>
@@ -784,7 +765,6 @@
   <string name="itin_meal_PRO">Verstrekt (uitsluiten)</string>
   <string name="report_submit_dialog_message">Weet u zeker dat u deze onkostennota wilt indienen?</string>
   <string name="approver_search_by_email">E-mail</string>
-  <string name="sdk_upgrade_message_see_msg_center">Bekijk het Berichtencentrum voor meer informatie.</string>
   <string name="dlg_expense_delete">Onkosten verwijderen</string>
   <string name="segmentlist_offer_enable_validity">Geldigheidscontrole inschakelen</string>
   <string name="hotel_recommendation_not_available">Suggestie niet beschikbaar</string>
@@ -795,7 +775,6 @@
   <string name="invoice_vendor">Leverancier van factuur</string>
   <string name="receipt_source_cte">CTE</string>
   <string name="select_policy">Beleid selecteren</string>
-  <string name="profile_emergency_contact">Contact voor noodgevallen</string>
   <string name="view_receipt">Kwitantie weergeven</string>
   <string name="air_search_label_refundable_only">Alleen tarieven met restitutiemogelijkheid</string>
   <string name="approval_workflow">Goedkeuringswerkstroom</string>
@@ -841,7 +820,6 @@
   <string name="rail_results_title">Trein selecteren</string>
   <string name="dlg_expense_save_report_receipt_succeeded_message">Kwitantie is toegevoegd aan nota.</string>
   <string name="no_receipt_thumbnail_available">Kwitantieminiatuur\nniet beschikbaar.</string>
-  <string name="ocr_status_procesing_error">Verwerkingsfout</string>
   <string name="universal_tour_welcome_text">maakt het eenvoudig om uw zakenreizen te boeken, onkosten te registreren en terugbetaald te worden.</string>
   <string name="travel_agency_info_title">Info over reisbureau</string>
   <string name="hotel_search_rooms_title">Kamer selecteren</string>
@@ -868,7 +846,6 @@
   <string name="pin_create_submit">Mobile-pincode instellen</string>
   <string name="activity_canceled">Activiteit geannuleerd</string>
   <string name="receipt_document_type_pdf">PDF</string>
-  <string name="dlg_append_receipt_fail_title">Kan uw kwitantie niet bijvoegen. Probeer het op een later tijdstip opnieuw.</string>
   <string name="add_report_receipt">Notakwitantie toevoegen...</string>
   <string name="rail_search_label_arrive_station">Aankomststation</string>
   <string name="test_drive_tour_skip">Overslaan</string>
@@ -876,7 +853,6 @@
   <string name="report_approve_dialog_message">Weet u zeker dat u deze nota wilt goedkeuren?</string>
   <string name="itin_time">Tijd</string>
   <string name="home_row_book_hotel_subheader">Check in in het perfecte hotel</string>
-  <string name="profile_phone">Telefoon</string>
   <string name="home_tour_expense2_message">Stuur het vervolgens in en wordt terugbetaald. \nManagers kunnen overal hun goedkeuring geven.</string>
   <string name="expense_type_prompt">Een onkostentype selecteren</string>
   <string name="dlg_expense_no_mileage_form_title">Geen formulier beschikbaar</string>
@@ -891,12 +867,11 @@
   <string name="segment_air_label_arrive">Aankomst</string>
   <string name="dlg_getting_current_location">Huidige locatie ophalen...</string>
   <string name="travel_agency_info_night_msg">Bericht nacht</string>
-  <string name="request_digest_total">Totaal:</string>
   <string name="hotel_search_label_with_availability_from">met beschikbaarheid vanaf</string>
   <string name="dlg_expense_report_detail_retrieve_failed_title">Ophalen notadetails is mislukt</string>
   <string name="approval_row_tr_header">Aanvragen</string>
   <string name="import_expenses">Onkosten importeren</string>
-  <string name="general_month_nov">November</string>
+  <string name="general_month_nov">november</string>
   <string name="report_total">Totaal van nota</string>
   <string name="hotel_company_preferred">uw bedrijf heeft een voorkeur voor de volgende</string>
   <string name="loc_search_mode_air">Luchthaven</string>
@@ -905,7 +880,6 @@
   <string name="test_drive_retry">Opnieuw proberen</string>
   <string name="hotel_price_to_beat_distance_mile_singular">%%0! one %% mijl</string>
   <string name="dlg_registering">Registreren...</string>
-  <string name="submit_request">Aanvraag indienen</string>
   <string name="no_expected_expenses_msg">Geen verwachte onkosten</string>
   <string name="general_missing_violation_reason_message">Neem contact op met de beheerder voor uw bedrijf om overtredingsredenen voor het gebruik van %%0%% te configureren.</string>
   <string name="general_destination">Bestemming</string>
@@ -926,11 +900,9 @@
   <string name="select_attendee_type_prompt">Selecteer een deelnemertype.</string>
   <string name="dlg_travel_retrieve_reason_code_progress_message">Aangepaste redencodes voor boeking ophalen...</string>
   <string name="pin_create_invalid_device_message">De aanvraag voor het opnieuw instellen van de pincode is vanaf een ander apparaat gedaan. Gebruik hetzelfde apparaat als het apparaat dat u gebruikt hebt voor de aanvraag voor het opnieuw instellen van de pincode.</string>
-  <string name="tr_new_request_title">Een aanvraag beginnen</string>
   <string name="air_search_class_value_any">Alle</string>
   <string name="pin_create_title">Mobile-pincode</string>
   <string name="receipt_share_failed_retry">Mislukt (wordt opnieuw geprobeerd)</string>
-  <string name="dlg_e_receipt_unavailable">Kwitantieafbeelding kan niet worden geladen, maar uw onkostengegevens zijn opgeslagen. Bezoek de website als u deze kwitantieafbeelding wilt zien.</string>
   <string name="expense_type_category_mru">Meest recent gebruikt</string>
   <string name="general_violation_justification">Verantwoording voor overtreding</string>
   <string name="home_tour_expense1_title">Maak foto\'s van uw kwitanties.</string>
@@ -969,7 +941,6 @@
   <string name="submitted">Ingediend</string>
   <string name="credit_card">Kredietkaart</string>
   <string name="attendee_search_results_empty_message">Zoekopdracht heeft geen deelnemers gevonden.  Probeer het opnieuw.</string>
-  <string name="add_another_item_to_request">+ Een ander item aan deze aanvraag toevoegen</string>
   <string name="home_navigation_traveltext">TravelText</string>
   <string name="air_search_label_returndate">Retourdatum</string>
   <string name="segment_rail_label_distance">Afstand</string>
@@ -1020,15 +991,12 @@
   <string name="attendee_create_from_contact_cancelled">Deelnemer maken van contactpersoon is geannuleerd.</string>
   <string name="hotel_fees">Hotelkosten</string>
   <string name="segment_air_fs_label_arr_gate">Aankomstgate</string>
-  <string name="field_hint_add_amount">Bedrag toevoegen</string>
   <string name="canceling_rail">Trein annuleren...</string>
   <string name="current_value">Huidige waarde</string>
   <string name="retrieve_currency">Valuta ophalen...</string>
   <string name="dlg_expense_no_expense_type_currency_message">Omdat u offline bent, zijn het onkostentype en/of gegevens van de geselecteerde valuta op dit moment niet beschikbaar.</string>
   <string name="expense_receipt_options">Selecteer een actie voor de kwitantie</string>
   <string name="deleting_receipt">Kwitantie verwijderen...</string>
-  <string name="loc_search_office">Kantoorlocaties</string>
-  <string name="tr_new_request">Uw aanvraag beginnen</string>
   <string name="register_pin_tip_title">Tip voor registreren van pincode</string>
   <string name="profile_check_32">In uw reisprofiel is een waarde verplicht voor uw werkadres (straat, plaats en land).  Meld u aan bij de webversie van Concur Travel en selecteer Profiel in het menu.\n\nMeld u af en meld u opnieuw aan nadat u bovenstaande informatie hebt opgegeven.</string>
   <string name="itin_stop_actions">Acties reisschema tussenstop</string>
@@ -1049,14 +1017,14 @@
   <string name="exceptions">Uitzonderingen</string>
   <string name="password_short_message">Uw wachtwoord moet uit minimaal %%0!length%% tekens bestaan.</string>
   <string name="car_search_travel_header_name">Auto\'s nabij %%0%%</string>
-  <string name="register_failure_msg">Probeer het opnieuw. Als de problemen met de toegang tot het systeem blijven optreden, moet u contact opnemen met de helpdesk van uw bedrijf of met de afdeling voor reizen/onkosten.</string>
+  <string name="long_press_smart_expense">(Druk lang om onkosten te splitsen)</string>
   <string name="hotel_search_for_rates_progress">Naar tarieven zoeken</string>
+  <string name="register_failure_msg">Probeer het opnieuw. Als de problemen met de toegang tot het systeem blijven optreden, moet u contact opnemen met de helpdesk van uw bedrijf of met de afdeling voor reizen/onkosten.</string>
   <string name="login_company_sign_in">Aanmelden via bedrijf</string>
   <string name="segment_ride_pickup_instructions">Afhaalinstructies</string>
   <string name="receipt_download_notify">Bij deze onkosten is een kwitantieafbeelding beschikbaar om te downloaden.  Selecteer het camerapictogram hieronder en kies \'Afbeelding downloaden\' om de kwitantie te downloaden en weer te geven.</string>
   <string name="dlg_prompt_to_rate_yes">Beoordelen</string>
   <string name="dlg_report_submit_confirmation_title">Bevestiging verzenden</string>
-  <string name="car_search_invalid_drop_off_time_title">Ongeldig retourtijdstip</string>
   <string name="universal_tour_receipt_more">van uw onkostenkwitantie.</string>
   <string name="multi_line_text_entry">Meerdere regels tekstinvoer</string>
   <string name="register_pin_tip_text">Als u uw referenties niet weet, meldt u zich aan bij uw Concur-webaccount en gaat u naar Profiel > Mobile-registratie of naar Mijn account > Mobile-pincode.  Neem voor meer hulp contact op met de beheerder voor uw bedrijf.</string>
@@ -1119,7 +1087,6 @@
   <string name="loc_search_hint">Tekst voor filter invoeren</string>
   <string name="attendee_create_cancelled">Deelnemer maken is mislukt.</string>
   <string name="choose_picture">Afbeelding selecteren</string>
-  <string name="profile_country">Land</string>
   <string name="general_call">Bellen</string>
   <string name="dlg_report_approve_progress">Verzenden voor goedkeuring</string>
   <string name="retrieve_reports_to_approve">Goed te keuren nota\'s ophalen...</string>
@@ -1135,7 +1102,6 @@
   <string name="dlg_book_missing_fields_title"> Boekingsvelden</string>
   <string name="general_reservation_failed">Reservering is mislukt</string>
   <string name="home_action_hotel_voice_search">Met spraak een hotel zoeken</string>
-  <string name="profile_add_banck_account">Nieuwe bankrekening toevoegen</string>
   <string name="general_open">Open</string>
   <string name="home_row_invoice_sub_one">1 factuur</string>
   <string name="login_help_bad_email_dialog_title">Ongeldige e-mail</string>
@@ -1225,7 +1191,6 @@
   <string name="dlg_expense_save">Onkosten opslaan...</string>
   <string name="dlg_air_cancel_succeeded_message">Vluchtreservering is geannuleerd.</string>
   <string name="test_drive_and">en</string>
-  <string name="car_search_invalid_drop_off_time">Retourtijd is vóór afhaaltijd.</string>
   <string name="dlg_no_car_rates_for_date">Er zijn geen tarieven gedefinieerd voor de geselecteerde datum. Neem contact op met uw beheerder.</string>
   <string name="segment_rail_label_duration">Duur:</string>
   <string name="login_help_submit">Mijn aanmeldgegevens versturen</string>
@@ -1243,7 +1208,6 @@
   <string name="currency">Valuta</string>
   <string name="offline_upload_dialog_header">Bezig met uploaden. Even geduld.</string>
   <string name="saving_report">Nota opslaan...</string>
-  <string name="tr_list_header_approved">GOEDGEKEURDE AANVRAGEN</string>
   <string name="new_expense">Nieuwe onkosten</string>
   <string name="itinerary">Reisschema</string>
   <string name="rail_search_label_passengers">Aantal passagiers</string>
@@ -1260,7 +1224,6 @@
   <string name="cash_expense">Contante onkosten</string>
   <string name="home_navigation_home">Start</string>
   <string name="dlg_travel_itinerary_retrieve">Reisdetails ophalen...</string>
-  <string name="profile_lname">Achternaam</string>
   <string name="amount_due_credit_card">Verschuldigd bedrag kredietkaart</string>
   <string name="retrieve_currency_types">Valuta\'s ophalen...</string>
   <string name="dlg_no_air_permission_message">Uw bedrijf heeft het boeken van vluchten met de mobiele toepassing uitgeschakeld. Boek uw vlucht met de webversie van Concur bel uw reisbureau.</string>
@@ -1291,15 +1254,12 @@
   <string name="amount_in_currency">Bedrag in %%0%%</string>
   <string name="location_check_in_failed_message">Inchecken met uw huidige locatie is mislukt. Probeer het opnieuw.</string>
   <string name="rail_detail_return">Retour</string>
-  <string name="tr_arrival">Aankomst</string>
   <string name="dlg_hotel_cancel_progress_message">Hotelreservering annuleren...</string>
   <string name="receipt_added_from">Toegevoegd uit</string>
-  <string name="tr_new_request_desc">Goedkeuring krijgen voor vluchten, hotels en meer</string>
   <string name="segment_hotel_checkout">Uitchecken:</string>
   <string name="segment_air_fs_label_dep_estim">Vertrek geschat</string>
   <string name="location_check_in_progress">Inchecken...</string>
   <string name="register_password_blank">Voer uw wachtwoord in.</string>
-  <string name="retrieve_tr">Reisschema\'s ophalen ...</string>
   <string name="home_row_book_car_subheader">Kies een coole auto</string>
   <string name="test_drive_limited_text">heeft beperkte Concur Mobile-functionaliteit</string>
   <string name="itin_add_stop">Tussenstop toevoegen</string>
@@ -1383,7 +1343,6 @@
   <string name="hotel_search_rating">Waardering</string>
   <string name="view_receipts">Kwitanties weergeven</string>
   <string name="retrieve_trips_to_approve">Goed te keuren reizen ophalen...</string>
-  <string name="voice_search">Met spraak zoeken</string>
   <string name="travel_request_expected_expense_title">Verwachte onkosten</string>
   <string name="login_sign_in_help">Wachtwoord</string>
   <string name="segment_air_fs_label_arr_sched">Aankomst gepland</string>
@@ -1418,13 +1377,14 @@
   <string name="home_tip_book_travel">Reis\nboeken</string>
   <string name="home_row_trip_approvals_sub_none">Geen reizen om goed te keuren</string>
   <string name="air_search_label_returntime">Retourtijd</string>
+  <string name="dlg_expense_split_expense_confirm_message">Weet u zeker dat u de kaartafschrijving en het mobiele item wilt splitsen?</string>
   <string name="itin_meal_TAX">Belastbaar</string>
   <string name="summary">Overzicht</string>
   <string name="retrieve_conditional_field_action_failure">Geen voorwaardelijke veldwaarden opgehaald. Probeer het opnieuw.</string>
   <string name="general_air_booking">Vlucht boeken</string>
   <string name="unit_price">Eenheidsprijs</string>
   <string name="attendee_edit_cancelled">Bewerken deelnemer is geannuleerd</string>
-  <string name="travel_request_title">Aanvragen</string>
+  <string name="travel_request_title">Aanvraag</string>
   <string name="login_failure_help">Als u een mobiele pincode wilt maken of opnieuw wilt instellen, klikt u op \'Wilt u een pincode instellen\' of gaat u naar \'Profiel -> Mobile-registratie\' bij Concur online.</string>
   <string name="receipt_store_import_from_camera">Importeren vanuit camera</string>
   <string name="general_enter_at_least_n_characters_hint">Voer ten minste %%0!min%% tekens in</string>
@@ -1445,7 +1405,6 @@
   <string name="dlg_expense_save_report_entry">Onkosten opslaan...</string>
   <string name="pref_voice_language_summary">Selecteer de taal voor spraakopdrachten om te zoeken.</string>
   <string name="device_cannot_make_phone_call">Uw apparaat kan geen oproep plaatsen.</string>
-  <string name="tr_list_header_active">ACTIEVE AANVRAGEN</string>
   <string name="amount_claimed">Declaratiebedrag</string>
   <string name="air_results_title_all_non_stop">Alle zonder tussenstops</string>
   <string name="updating_approvals">Goedkeuringen bijwerken...</string>
@@ -1463,7 +1422,6 @@
   <string name="remove_from_itemization">Uit specificatie verwijderen</string>
   <string name="hotel_search_travel_header">HOTELS IN DE BUURT VAN %%0%%</string>
   <string name="general_attention">Let op</string>
-  <string name="home_navigation_profile">Profiel</string>
   <string name="receipt_document_type">Documenttype</string>
   <string name="report_submit_missing_receipt">U kunt deze nota indienen, maar bij ten minste één onkostenitem ontbreekt een verplichte kwitantie.  Koppel een kwitantie via de webtoepassing van Concur of met de mobiele app, verwijder de onkosten uit de nota, koppel de kwitantie en voeg deze toe aan de nota.</string>
   <string name="test_drive_password_error_title">Ongeldig wachtwoord</string>
@@ -1509,7 +1467,6 @@
   <string name="segment_hotel_cancelpolicy">Annuleringsbeleid</string>
   <string name="general_missing_value">Ontbrekende waarde</string>
   <string name="offline_no_items">Geen items om te uploaden</string>
-  <string name="home_navigation_uber">Uber</string>
   <string name="retrieve_mobile_entries">Onkosten ophalen...</string>
   <string name="no_expenses">Geen onkosten</string>
   <string name="cash_advance_utilized">Gebruikt voorschot</string>
@@ -1597,7 +1554,6 @@
   <string name="general_return">Retour</string>
   <string name="searching_for_hotels">Zoeken naar hotels...</string>
   <string name="general_no_rates">Geen tarieven</string>
-  <string name="search_current_location">Huidige locatie</string>
   <string name="segment_air_label_baggageclaim">Bagage ophalen</string>
   <string name="segmentlist_rail_wagon">Wagonnr. %%0%%</string>
   <string name="car_results_total_label">Totaal:</string>
@@ -1651,7 +1607,6 @@
   <string name="login_help_email_hint">Geregistreerde e-mail van Concur</string>
   <string name="mobile_password_reset_link_sent_title">Link voor opnieuw instellen van mobiel wachtwoord (PIN) verzonden</string>
   <string name="pref_cat_general">Algemeen</string>
-  <string name="tr_segment_block_outbound">Heenreis</string>
   <string name="attendee_search">Deelnemer zoeken</string>
   <string name="receipt_share_status_starting_up">Opstarten...</string>
   <string name="dlg_receipt_share_remove_confirm_message">Te delen kwitantie echt verwijderen?</string>
@@ -1692,7 +1647,6 @@
   <string name="general_missing_card_for_use_message">Ga naar het web om een of meer kredietkaarten voor gebruik van %%0%% in te stellen.</string>
   <string name="car_search_car_type_L">Luxe</string>
   <string name="subtotal">Subtotaal</string>
-  <string name="profile_zipcode">Postcode</string>
   <string name="rail_detail_ticket_delivery">Ticketlevering</string>
   <string name="voice_car_book_hint_secondary">Zeg bijvoorbeeld: \"Zoek een budgetauto in San Antonio voor het weekend van Thanksgiving.\"</string>
   <string name="pin_create_disabled_title">Mobile is uitgeschakeld</string>
@@ -1708,30 +1662,29 @@
   <string name="canceling_air">Vlucht annuleren...</string>
   <string name="car_search_car_type_I">Middenklasse</string>
   <string name="general_reserve">Reserveren</string>
-  <string name="travel_request_sub_title">Uw autorisaties beheren</string>
   <string name="select_cloud_report_receipt">Selecteren in kwitantiearchief</string>
   <string name="search_smoking_no_pref">Geen voorkeur</string>
   <string name="loading_mini_view">Kwitantieweergave laden.</string>
   <string name="expense_receipt">Onkostenkwitantie</string>
   <string name="general_refundable">Restitueerbaar</string>
   <string name="rail_detail_outbound">Heenreis</string>
-  <string name="profile_state">Staat</string>
   <string name="pin_create_invalid_device_title">Ongeldig apparaat</string>
   <string name="enter_comment">Voer een opmerking in</string>
   <string name="car_search_car_type_F">Groot</string>
   <string name="rail_search_progress_label">%%0!station code%% - %%1!date%%</string>
+  <string name="hide_personal_card_transaction">Onkostentransacties met persoonlijke kaart verbergen...</string>
   <string name="dlg_no_car_rates_general">Er zijn geen tarieven gedefinieerd. Controleer of de transactiedatum en de voertuig-ID juist zijn geconfigureerd bij de autotarieven.</string>
   <string name="general_distance_miles">Mijlen</string>
   <string name="dlg_no_current_location">Huidige locatie kan niet worden vastgesteld. Selecteer de gewenste locatie.</string>
   <string name="travel_violations_air_for_manager_approval_header">Voordat u het bedrijfsbeleid overtreedt door deze vlucht te reserveren, moet u een reden opgeven.</string>
   <string name="travel_agency_info_daytime_msg">Bericht overdag</string>
   <string name="dlg_expense_save_receipt_failed_title">Uploaden van kwitantie is mislukt</string>
-  <string name="dlg_retrieving_itin">Reisschema\'s ophalen</string>
+  <string name="password_dont_match_message">Wellicht hebt u een fout getypt. Voer het wachtwoord opnieuw in zodat het in beide velden identiek is.</string>
   <string name="rail_detail_title">Treindetails boeken</string>
   <string name="loc_search_mode_company">Bedrijfslocatie</string>
   <string name="car_search_car_type_C">Compact</string>
   <string name="home_action_voice_book">Spraakboek</string>
-  <string name="password_dont_match_message">Wellicht hebt u een fout getypt. Voer het wachtwoord opnieuw in zodat het in beide velden identiek is.</string>
+  <string name="dlg_retrieving_itin">Reisschema\'s ophalen</string>
   <string name="rail_search_label_dep_datetime">Vertrek</string>
   <string name="dlg_expense_attendee_save_progress_message">Deelnemer opslaan...</string>
   <string name="segment_hotel_rate_total">Totaalprijs</string>
@@ -1740,13 +1693,14 @@
   <string name="dlg_expense_upload_receipt_failed_message">Het uploaden van de afbeelding van de onkostennota is mislukt.  Probeer het later opnieuw of neem contact op met de beheerder voor uw bedrijf als dit probleem blijft bestaan.</string>
   <string name="general_booking_not_allowed_message">Deze reservering is niet toegestaan volgens het reisbeleid van uw bedrijf.</string>
   <string name="location_check_in_button">Inchecken</string>
+  <string name="pref_smart_match">Smart Match</string>
   <string name="itin_delete_stop">Tussenstop verwijderen</string>
   <string name="dlg_expense_report_header_form_field_parse_error">Parseren van velden van notaformulier is mislukt. Probeer het opnieuw.</string>
   <string name="retrieve_itinerary_summaries">Reisschemasamenvattingen ophalen...</string>
   <string name="login_company_sign_on">Aanmelden via bedrijf</string>
   <string name="rail_general_duration_label">Duur:</string>
   <string name="no_itemization">Geen specificatie</string>
-  <string name="profile_credit_card">Kredietkaart</string>
+  <string name="smart_expense_action_long_press_title">Actie voor Smart Expense</string>
   <string name="no_receipts">Geen kwitanties</string>
   <string name="home_tour_welcome_to_concur">Welkom bij Concur</string>
   <string name="general_specify_reason">Geef een reden op</string>
@@ -1783,7 +1737,6 @@
   <string name="air_price_to_beat_search_departure_date">Vertrekdatum:</string>
   <string name="tour_3_bottom">Afhankelijk van de configuratie van uw bedrijf\nzijn sommige functies van Concur Mobile\nmogelijk niet beschikbaar</string>
   <string name="segment_rail_label_stops">Tussenstops:</string>
-  <string name="matched_expenses">Overeenkomende onkosten</string>
   <string name="general_reject">Afkeuren</string>
   <string name="next">Volgende ></string>
   <string name="trip_rule_violation_itinerary">Overtreding reisschemaregel</string>
@@ -1796,7 +1749,7 @@
   <string name="hotel_num_of_colleagues_stayed">%%0!number of colleagues%% van uw collega\'s verblijven hier</string>
   <string name="home_action_air_price_to_beat">Price-to-Beat voor vlucht</string>
   <string name="dlg_attendee_search_failed_title">Zoeken naar deelnemer is mislukt</string>
-  <string name="hotel_wizard_nights">Aantal nachten (<= 90)</string>
+  <string name="hotel_wizard_nights">Aantal nachten (&lt;= 90)</string>
   <string name="policy">Beleid</string>
   <string name="general_month_aug">augustus</string>
   <string name="trip_selection">Reis</string>
