@@ -256,6 +256,10 @@ public class RequestListActivity extends BaseActivity {
             setView(ID_LOADING_VIEW);
             Log.d(Const.LOG_TAG, CLS_TAG + " calling increment from refreshList");
             // --- creates the listener
+            if (asyncTRListReceiver == null) {
+                // activity creation
+                asyncTRListReceiver = new BaseAsyncResultReceiver(new Handler());
+            }
             asyncTRListReceiver.setListener(new TRListListener());
             // --- onRequestResult calls cleanup() on execution, so listener will be destroyed by processing
             new RequestListTask(RequestListActivity.this, 1, asyncTRListReceiver, searchedStatus).execute();
@@ -308,7 +312,6 @@ public class RequestListActivity extends BaseActivity {
         // --- List refresh
         if (asyncTRListReceiver == null) {
             // activity creation
-            asyncTRListReceiver = new BaseAsyncResultReceiver(new Handler());
             refreshData(false);
         } else if (requestListCache.isDirty()) {
             // --- refresh view offline

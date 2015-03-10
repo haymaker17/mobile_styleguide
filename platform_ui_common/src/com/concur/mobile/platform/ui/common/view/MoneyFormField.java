@@ -4,11 +4,15 @@ import android.content.Context;
 import android.text.Editable;
 import android.text.InputType;
 import android.text.TextWatcher;
+import android.text.method.DigitsKeyListener;
 import android.widget.EditText;
 import com.concur.mobile.platform.ui.common.R;
 import com.concur.mobile.platform.ui.common.util.FormatUtil;
 import com.concur.mobile.platform.util.Parse;
 
+import java.text.DecimalFormat;
+import java.text.DecimalFormatSymbols;
+import java.text.NumberFormat;
 import java.util.Currency;
 import java.util.Locale;
 import java.util.regex.Matcher;
@@ -21,32 +25,63 @@ public class MoneyFormField extends EditText implements TextWatcher {
     private Locale locale;
     private Currency currency;
     private Double amountValue;
+    private boolean isDecimal;
+    private char decimalSeparator;
+    private char groupingSeparator;
 
     public MoneyFormField(Context context, Locale loc, String currencyCode) {
         super(context);
-        this.setInputType(InputType.TYPE_CLASS_NUMBER);
         this.locale = loc;
+        addTextChangedListener(this);
+        applyCurrency(currencyCode);
+    }
+
+    @Override
+    public int getInputType() {
+        return isDecimal ?
+                (InputType.TYPE_CLASS_NUMBER | InputType.TYPE_NUMBER_FLAG_DECIMAL) :
+                InputType.TYPE_CLASS_NUMBER;
+    }
+
+    private void applyCurrency(String currencyCode) {
+        isDecimal = false;
+        decimalSeparator = groupingSeparator = ' ';
         if (currencyCode != null) {
             currency = Currency.getInstance(currencyCode);
+            if (currency != null) {
+                isDecimal = currency.getDefaultFractionDigits() > 0;
+                final DecimalFormatSymbols formatSymbols = ((DecimalFormat) NumberFormat.getCurrencyInstance(locale))
+                        .getDecimalFormatSymbols();
+                decimalSeparator = formatSymbols.getDecimalSeparator();
+                groupingSeparator = formatSymbols.getGroupingSeparator();
+            }
         }
-        addTextChangedListener(this);
+        // DigitsKeyListener.getInstance(false, isDecimal) seems KO as it does not work contrarily to what follows.
+        this.setKeyListener(isDecimal ?
+                DigitsKeyListener.getInstance("0123456789.,") :
+                DigitsKeyListener.getInstance("0123456789"));
     }
 
     public void setCurrencyCode(String currencyCode) {
         if (currencyCode != null && (currency == null || !currencyCode.equals(currency.getCurrencyCode()))) {
             // --- removes the previous currency symbol
             if (getText().length() > 0 && currency != null) {
-                final String s = getText().toString().replaceAll(Matcher.quoteReplacement(currency.getSymbol()), "");
-                currency = Currency.getInstance(currencyCode);
+                // --- remove old currency symbol first
+                final String s = cleanInput(getText().toString());
+                applyCurrency(currencyCode);
                 setText(s);
             } else {
-                currency = Currency.getInstance(currencyCode);
+                applyCurrency(currencyCode);
                 afterTextChanged(getText());
             }
         } else if (currencyCode != null && currency == null) {
-            currency = Currency.getInstance(currencyCode);
+            applyCurrency(currencyCode);
             afterTextChanged(getText());
         }
+    }
+
+    private String cleanInput(String input) {
+        return input.replaceAll(Matcher.quoteReplacement("[" + currency.getSymbol() + groupingSeparator + " ]"), "");
     }
 
     public void setLocale(Locale locale) {
@@ -62,15 +97,36 @@ public class MoneyFormField extends EditText implements TextWatcher {
     }
 
     @Override public void afterTextChanged(Editable editable) {
+        String inputString = editable.toString();
         // --- disable listener
         removeTextChangedListener(this);
         final int cursorPosition = getSelectionStart();
-        final int inputLength = editable.toString().length();
+        final String nextChar = cursorPosition < inputString.length() ?
+                inputString.substring(cursorPosition, cursorPosition + 1) :
+                null;
+        final String inputChar = cursorPosition > 0 ? inputString.substring(cursorPosition - 1, cursorPosition) : null;
+        final String sep = String.valueOf(decimalSeparator);
+        if (currency != null && sep != null && inputChar != null) {
+            if (inputChar.equals(sep)) {
+                // --- input = previousChar = decimalSeparator => we remove the first one
+                if (sep.equals(nextChar)) {
+                    // --- ###..### => we just remove the dot added
+                    inputString = inputString.substring(0, cursorPosition - 1) + inputString.substring(cursorPosition);
+                } else if (inputString.substring(cursorPosition).contains(sep)) {
+                    // --- ###.[???] => we remove the second dot on the right side
+                    final int secondSepPos = cursorPosition + inputString.substring(cursorPosition).indexOf(sep);
+                    inputString = inputString.substring(0, secondSepPos - 1) + inputString.substring(secondSepPos + 1);
+                } else if (inputString.substring(0, cursorPosition - 1).contains(sep)) {
+                    // --- [???].### => we just remove the dot added
+                    inputString = inputString.substring(0, cursorPosition - 1) + inputString.substring(cursorPosition);
+                }
+            }
+        }
+
+        final int inputLength = inputString.length();
 
         // --- clean currency input
-        String s = currency != null ?
-                editable.toString().replaceAll(Matcher.quoteReplacement("[" + currency.getSymbol() + ",]"), "") :
-                editable.toString();
+        String s = currency != null ? cleanInput(inputString) : inputString;
         amountValue = Parse.safeParseDouble(s);
         if (amountValue == null && s.length() > 0) {
             setError(getResources().getString(R.string.general_field_value_invalid));
@@ -78,16 +134,44 @@ public class MoneyFormField extends EditText implements TextWatcher {
             if (amountValue == null) {
                 amountValue = 0d;
             }
-            if (locale != null && currency != null) {
-                s = FormatUtil.formatAmount(amountValue, locale, currency.getCurrencyCode(), true, true);
+            if (inputLength > 0) {
+                if (locale != null && currency != null) {
+                    s = FormatUtil.formatAmount(amountValue, locale, currency.getCurrencyCode(), true, true);
+                }
+                final int originSeparatorPosition = getDecimalSeparatorPosition(inputString);
+                final int cleanedSeparatorPosition = getDecimalSeparatorPosition(s);
+
+                int lengthDif = s.length() - inputLength;
+
+                // --- was a decimal separator symbol added ?
+                if (cleanedSeparatorPosition > 0 && originSeparatorPosition < 0) {
+                    // --- we apply the decimal block to lengthDif to remove it from the cursorPosition idx
+                    // this will make the cursor keep his position right
+                    lengthDif -= (s.length() - cleanedSeparatorPosition);
+                } else if (cursorPosition > originSeparatorPosition) {
+                    lengthDif = 0;
+                } else if (lengthDif == 0 && nextChar != null && nextChar.equals(" ")) {
+                    // --- 0 = input at the left of a whitespace
+                    lengthDif++;
+                }
+                setText(s);
+                setSelection(Math.min(Math.max(cursorPosition + lengthDif, 0), inputLength - 1));
             }
-            setText(s);
-            int lengthDif = s.length() - inputLength;
-            setSelection(Math.max(cursorPosition + lengthDif, 0));
         }
 
         // --- enable listener
         addTextChangedListener(this);
+
+    }
+
+    private int getDecimalSeparatorPosition(String s) {
+        if (locale != null && s.length() > 0) {
+            final String sSeparator = String.valueOf(decimalSeparator);
+            if (s.contains(sSeparator)) {
+                return s.indexOf(sSeparator);
+            }
+        }
+        return -1;
     }
 
     public Double getAmountValue() {
