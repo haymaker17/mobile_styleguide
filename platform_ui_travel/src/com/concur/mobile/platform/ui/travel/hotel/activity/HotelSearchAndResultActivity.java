@@ -19,6 +19,7 @@ import android.content.Loader;
 import android.os.Bundle;
 import android.os.Handler;
 import android.util.Log;
+import android.view.KeyEvent;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
@@ -724,6 +725,16 @@ public class HotelSearchAndResultActivity extends Activity implements OnMenuItem
         if (listItemAdapater != null) {
             listItemAdapater.setItems(null);
         }
+    }
+
+    @Override
+    public boolean onKeyDown(int keyCode, KeyEvent event) {
+        // Check if the key event was the Back button and stop any outstanding
+        // request of async task
+        if (keyCode == KeyEvent.KEYCODE_BACK) {
+            finishActivity(Const.REQUEST_CODE_BACK_BUTTON_PRESSED);
+        }
+        return super.onKeyDown(keyCode, event);
     }
 
 }

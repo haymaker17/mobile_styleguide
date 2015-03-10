@@ -38,6 +38,7 @@ public class Const {
     // Activity result codes
     public static final int REQUEST_CODE_LOCATION = 1;
     public static final int REQUEST_CODE_BOOK_HOTEL = 2;
+    public static final int REQUEST_CODE_BACK_BUTTON_PRESSED = 3;
 
     public static final String EXTRA_IMAGE_URL = "image.url";
     public static final String EXTRA_IMAGE_TITLE = "image.title";
