@@ -3,6 +3,7 @@ package com.concur.mobile.platform.ui.travel.activity;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Locale;
 import java.util.UUID;
@@ -574,9 +575,9 @@ public abstract class VoiceSearchActivity extends AbstractTravelSearchProgress i
                 responseTextSwitcher.setText(msg);
 
                 if (tts != null) {
-                    Bundle params = new Bundle();
-                    params.putString(TextToSpeech.Engine.KEY_PARAM_UTTERANCE_ID, Double.toString(Math.random()));
-                    tts.speak(msg, TextToSpeech.QUEUE_FLUSH, params, null);
+                    HashMap<String, String> params = new HashMap<String, String>();
+                    params.put(TextToSpeech.Engine.KEY_PARAM_UTTERANCE_ID, Double.toString(Math.random()));
+                    tts.speak(msg, TextToSpeech.QUEUE_FLUSH, params);
                 }
             }
         });
