@@ -33,6 +33,7 @@
 
     <string name="app_name">ConcurPlatformUITravel</string>
     <string name="hotel_search_progress_message">Searching for hotels</string>
+    <string name="hotel_rates_progress_message">Searching for rates</string>
     <string name="hotel_search_progress_no_hotels">No Hotels Found</string>
     <string name="hotel_search_travel_header">HOTELS NEAR %%0%%</string>
     <string name="hotel_search_travel_header_location_you">YOU</string>
@@ -107,7 +108,9 @@
 
     <!-- start of hotel reservation screen -->
     <string name="hotel_sell_options_retrieving">Retrieving sell options</string>
-    <string name="hotel_reserve_this_room">Slide to Reserve This Room</string>
+    <string name="hotel_reserve_this_room">Reserve This Room</string>
+    <string name="hotel_confirm_reserve_ok">RESERVE</string>
+    <string name="hotel_confirm_reserve_cancel">CANCEL</string>
     <string name="hotel_reserve_num_of_nights">%%0!number of nights%% night</string>
     <string name="hotel_reserve_total_with_tax">total with tax</string>
     <string name="hotel_reserve_cancel_policy">Cancellation policy and rate details</string>
@@ -124,5 +127,7 @@
     <string name="hotel_booking_success">Your room has been successfully reserved.</string>
     <string name="hotel_booking_retrieving">Reserving room...</string>
     <string name="hotel_overview">Overview</string>
+    <string name="hotel_confirm_reserve_title">Confirm Reservation</string>
+    <string name="hotel_confirm_reserve_msg">Are you sure you want to book this room?</string>
 
 </resources>

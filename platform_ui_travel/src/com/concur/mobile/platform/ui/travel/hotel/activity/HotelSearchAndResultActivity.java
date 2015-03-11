@@ -28,10 +28,14 @@ import android.widget.PopupMenu;
 import android.widget.PopupMenu.OnMenuItemClickListener;
 import android.widget.Toast;
 
+import com.concur.mobile.base.service.BaseAsyncRequestTask.AsyncReplyListener;
+import com.concur.mobile.base.service.BaseAsyncResultReceiver;
 import com.concur.mobile.platform.service.PlatformAsyncTaskLoader;
 import com.concur.mobile.platform.travel.provider.TravelUtilHotel;
 import com.concur.mobile.platform.travel.search.hotel.Hotel;
 import com.concur.mobile.platform.travel.search.hotel.HotelComparator;
+import com.concur.mobile.platform.travel.search.hotel.HotelRatesAsyncRequestTask;
+import com.concur.mobile.platform.travel.search.hotel.HotelRatesRESTResult;
 import com.concur.mobile.platform.travel.search.hotel.HotelSearchPollResultLoader;
 import com.concur.mobile.platform.travel.search.hotel.HotelSearchRESTResult;
 import com.concur.mobile.platform.travel.search.hotel.HotelSearchResultLoader;
@@ -62,6 +66,7 @@ public class HotelSearchAndResultActivity extends Activity implements OnMenuItem
 
     private static final int HOTEL_SEARCH_LIST_LOADER_ID = 0;
     private static final int HOTEL_POLL_LIST_LOADER_ID = 1;
+    private static final int HOTEL_RATES_ASYN_TASK_ID = 2;
 
     private static final String SERVICE_END_POINT = "/mobile/travel/v1.0/Hotels";
 
@@ -94,8 +99,8 @@ public class HotelSearchAndResultActivity extends Activity implements OnMenuItem
     private ArrayList<String[]> violationReasons;
     private String cacheKey;
     private boolean retriveFromDB;
-    private boolean ruleViolationExplanationRequired;
-    private String currentTripId;
+    private BaseAsyncResultReceiver hotelRatesReceiver;
+    private HotelSearchResultListItem selectedHotelListItem;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -106,8 +111,6 @@ public class HotelSearchAndResultActivity extends Activity implements OnMenuItem
 
         location = intent.getStringExtra(Const.EXTRA_TRAVEL_HOTEL_SEARCH_LOCATION);
         violationReasons = (ArrayList<String[]>) intent.getSerializableExtra("violationReasons");
-        ruleViolationExplanationRequired = intent.getBooleanExtra("ruleViolationExplanationRequired", false);
-        currentTripId = intent.getStringExtra("currentTripId");
 
         // searchCriteriaChanged will be false if it just came back from search criteria screen without any changes to the
         // previous searched criteria. in such
@@ -154,8 +157,8 @@ public class HotelSearchAndResultActivity extends Activity implements OnMenuItem
     @Override
     public void fragmentReady() {
         // signal from fragment that it is loaded
-        cacheKey = HotelSearchResultLoader.prepareEndPointUrl(latitude, longitude, distanceUnit, checkInDate,
-                checkOutDate);
+        // cacheKey = PlatformUtil.getEndpointurl(SERVICE_END_POINT, latitude, longitude, distanceUnit, checkInDate,
+        // checkOutDate);
         populateHotelListItemsFromDB();
     }
 
@@ -500,8 +503,9 @@ public class HotelSearchAndResultActivity extends Activity implements OnMenuItem
     public void hotelListItemClicked(HotelSearchResultListItem itemClicked) {
 
         if (itemClicked != null) {
-            Hotel hotelSelected = itemClicked.getHotel();
-            if (hotelSelected != null) {
+            selectedHotelListItem = itemClicked;
+            Hotel hotelSelected = selectedHotelListItem.getHotel();
+            if (hotelSelected != null && hotelSelected.ratesURL != null) {
                 // Determine if the hotel details are already in our in-memory
                 // cache, if so, then
                 // re-use them. A request to update will be made in the
@@ -515,33 +519,41 @@ public class HotelSearchAndResultActivity extends Activity implements OnMenuItem
 
                         hotelSelected.rates = TravelUtilHotel.getHotelRateDetails(this, id);
                         hotelSelected.imagePairs = TravelUtilHotel.getHotelImagePairs(this, id);
-                    } else if (hotelSelected.lowestRate == null) {
-                        // New call to loader
+                    }
+                    if (hotelSelected.rates != null && hotelSelected.rates.size() > 0) {
+                        viewHotelChoiceDetails();
+                    } else if (hotelSelected.lowestRate == null && hotelSelected.ratesURL.href != null) {
+                        // New call to rates async task
+                        hotelRatesReceiver = new BaseAsyncResultReceiver(new Handler());
 
+                        hotelSearchRESTResultFrag.showProgressBar(true);
+                        hotelRatesReceiver.setListener(new HotelRatesReplyListener());
+                        HotelRatesAsyncRequestTask ratesAsynTask = new HotelRatesAsyncRequestTask(this,
+                                HOTEL_RATES_ASYN_TASK_ID, hotelRatesReceiver, hotelSelected.ratesURL.href,
+                                hotelSelected._id);
+                        ratesAsynTask.execute();
                     }
-                    if (hotelSelected.rates == null || hotelSelected.rates.size() == 0) {
-                        // no rooms
-                        Toast.makeText(this, "No Rooms Avilable", Toast.LENGTH_LONG).show();
-                    } else {
-                        Intent i = new Intent(this, HotelChoiceDetailsActivity.class);
-                        Bundle bundle = new Bundle();
-                        bundle.putSerializable(Const.EXTRA_HOTELS_DETAILS, (Serializable) itemClicked);
-                        i.putExtra(Const.EXTRA_TRAVEL_HOTEL_SEARCH_LOCATION, hotelSearchRESTResultFrag.location);
-                        i.putExtra(Const.EXTRA_TRAVEL_HOTEL_SEARCH_DURATION_OF_STAY,
-                                hotelSearchRESTResultFrag.durationOfStayForDisplayInHeader);
-                        i.putExtra(Const.EXTRA_TRAVEL_HOTEL_SEARCH_DURATION_NUM_OF_NIGHTS, numberOfNights);
-                        i.putExtra("violationReasons", violationReasons);
-                        i.putExtra("ruleViolationExplanationRequired", ruleViolationExplanationRequired);
-                        i.putExtra("currentTripId", currentTripId);
-                        i.putExtras(bundle);
-                        // startActivity(i);
-                        startActivityForResult(i, Const.REQUEST_CODE_BOOK_HOTEL);
-                    }
+                } else {
+                    Toast.makeText(getApplicationContext(), "No Rooms Avilable", Toast.LENGTH_LONG).show();
                 }
-
             }
         }
 
+    }
+
+    private void viewHotelChoiceDetails() {
+        Intent i = new Intent(this, HotelChoiceDetailsActivity.class);
+        Bundle bundle = new Bundle();
+        bundle.putSerializable(Const.EXTRA_HOTELS_DETAILS, (Serializable) selectedHotelListItem);
+        i.putExtra(Const.EXTRA_TRAVEL_HOTEL_SEARCH_LOCATION, hotelSearchRESTResultFrag.location);
+        i.putExtra(Const.EXTRA_TRAVEL_HOTEL_SEARCH_DURATION_OF_STAY,
+                hotelSearchRESTResultFrag.durationOfStayForDisplayInHeader);
+        i.putExtra(Const.EXTRA_TRAVEL_HOTEL_SEARCH_DURATION_NUM_OF_NIGHTS, numberOfNights);
+        i.putExtra("violationReasons", violationReasons);
+        i.putExtras(bundle);
+        // startActivity(i);
+        selectedHotelListItem = null;
+        startActivityForResult(i, Const.REQUEST_CODE_BOOK_HOTEL);
     }
 
     @Override
@@ -735,6 +747,68 @@ public class HotelSearchAndResultActivity extends Activity implements OnMenuItem
             finishActivity(Const.REQUEST_CODE_BACK_BUTTON_PRESSED);
         }
         return super.onKeyDown(keyCode, event);
+    }
+
+    private class HotelRatesReplyListener implements AsyncReplyListener {
+
+        /*
+         * (non-Javadoc)
+         * 
+         * @see com.concur.mobile.base.service.BaseAsyncRequestTask.AsyncReplyListener#onRequestSuccess(android.os.Bundle)
+         */
+        public void onRequestSuccess(Bundle resultData) {
+            if (resultData != null) {
+                hotelSearchRESTResultFrag.hideProgressBar();
+                // hideProgressBar();
+                HotelRatesRESTResult hotelRateResult = (HotelRatesRESTResult) resultData
+                        .getSerializable("HotelRatesResult");
+                Hotel hotel = hotelRateResult.hotel;
+                if (hotel != null && hotel.rates != null) {
+
+                    selectedHotelListItem.getHotel().rates = hotel.rates;
+                    // TODO update violations c
+
+                    viewHotelChoiceDetails();
+
+                } else {
+                    Toast.makeText(getApplicationContext(), "No Rooms Avilable", Toast.LENGTH_LONG).show();
+                }
+                // TODO add GA event for booking
+
+                finish();
+            }
+
+        }
+
+        /*
+         * (non-Javadoc)
+         * 
+         * @see com.concur.mobile.base.service.BaseAsyncRequestTask.AsyncReplyListener#onRequestFail(android.os.Bundle)
+         */
+        public void onRequestFail(Bundle resultData) {
+            Toast.makeText(getApplicationContext(), "No Rooms Avilable", Toast.LENGTH_LONG).show();
+            hotelSearchRESTResultFrag.hideProgressBar();
+
+        }
+
+        /*
+         * (non-Javadoc)
+         * 
+         * @see com.concur.mobile.base.service.BaseAsyncRequestTask.AsyncReplyListener#onRequestCancel(android.os.Bundle)
+         */
+        public void onRequestCancel(Bundle resultData) {
+            cleanup();
+        }
+
+        /*
+         * (non-Javadoc)
+         * 
+         * @see com.concur.mobile.base.service.BaseAsyncRequestTask.AsyncReplyListener#cleanup()
+         */
+        public void cleanup() {
+            hotelRatesReceiver.setListener(null);
+            hotelRatesReceiver = null;
+        }
     }
 
 }

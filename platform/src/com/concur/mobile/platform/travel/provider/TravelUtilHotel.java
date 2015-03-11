@@ -460,7 +460,7 @@ public class TravelUtilHotel {
      * Get persisted images of the specific hotel
      * 
      * @param context
-     * @param hotel
+     * @param hotelRateResult
      * @return
      */
     public static List<HotelImagePair> getHotelImagePairs(Context context, long id) {
