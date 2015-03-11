@@ -343,9 +343,6 @@ public class HotelBookingActivity extends Activity implements LoaderManager.Load
                 showCancellationPolicy();
             }
         });
-        // reserve UI
-        reserveButton = (Button) findViewById(R.id.footer_button);
-        reserveButton.setEnabled(false);
 
         // credit cards
         initCardChoiceView();
@@ -353,6 +350,9 @@ public class HotelBookingActivity extends Activity implements LoaderManager.Load
         // violations
         initViolations();
 
+        // reserve UI
+        reserveButton = (Button) findViewById(R.id.footer_button);
+        reserveButton.setEnabled(false);
         reserveButton.setText(R.string.hotel_reserve_this_room);
         reserveButton.setOnClickListener(new OnClickListener() {
 
@@ -640,15 +640,11 @@ public class HotelBookingActivity extends Activity implements LoaderManager.Load
 
     @SuppressLint("ShowToast")
     private void doBooking() {
-
         if (connected) {
 
             reserveButton.setEnabled(false);
             boolean hasAllRequiredFields = true;
             StringBuffer requiredFieldsMsg = new StringBuffer();
-
-            reserveButton.setEnabled(false);
-
             // get selected credit card
             String selectedCreditCardId = null;
             if (cardChoices != null) {
