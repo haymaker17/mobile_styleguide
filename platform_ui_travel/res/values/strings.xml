@@ -22,8 +22,11 @@
     <string name="general_violation_description">Violation Description</string>
     <string name="general_reason">Reason</string>
     <string name="general_select_reason">Select a reason</string>
+    <string name="general_violaiton_reasons_not_available">Violation reasons not available</string>
     <string name="general_justification">Justification</string>
     <string name="general_enter_justification">Enter a justification</string>
+    <string name="general_specify_justification">Please specify justification</string>
+    <string name="general_required_fields">Required fields</string>
     <string name="general_select_one_of_the_below">Select one of the below</string>
     <string name="general_speak_now">Speak now</string>
     <string name="voice_book_hint">Press the microphone to start</string>
@@ -130,5 +133,7 @@
     <string name="hotel_confirm_reserve_title">Confirm Reservation</string>
     <string name="hotel_confirm_reserve_msg">Are you sure you want to book this room?</string>
     <string name="hotel_booking_deposit_required">Deposit Required</string>
+    <string name="book_missing_field_card_selection">Please select a credit card.</string>
+    <string name="book_missing_field_violation_reason">Please select a violation reason.</string>
 
 </resources>
