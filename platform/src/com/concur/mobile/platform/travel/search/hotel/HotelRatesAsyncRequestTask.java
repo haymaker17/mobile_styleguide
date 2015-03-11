@@ -39,6 +39,8 @@ public class HotelRatesAsyncRequestTask extends PlatformAsyncRequestTask {
 
     public long hotelId;
 
+    public long hotelSearchId;
+
     public HotelRatesRESTResult hotelRateResult;
 
     public Hotel hotel;
@@ -49,12 +51,13 @@ public class HotelRatesAsyncRequestTask extends PlatformAsyncRequestTask {
     private MWSResponse<HotelRatesRESTResult> mwsResp;
 
     public HotelRatesAsyncRequestTask(Context context, int id, BaseAsyncResultReceiver receiver, String ratesURL,
-            long hotelId) {
+            long hotelId, long hotelSearchId) {
 
         super(context, id, receiver);
 
         this.ratesURL = ratesURL;
         this.hotelId = hotelId;
+        this.hotelSearchId = hotelSearchId;
     }
 
     @Override
@@ -102,8 +105,13 @@ public class HotelRatesAsyncRequestTask extends PlatformAsyncRequestTask {
 
                             public void run() {
                                 for (HotelRate rate : hotel.rates) {
+                                    // inserting rates with new list of violations
                                     TravelUtilHotel.insertHotelRateDetail(getContext().getContentResolver(),
                                             (int) hotelId, rate);
+
+                                    // insert violations
+                                    TravelUtilHotel.insertHotelViolations(getContext().getContentResolver(),
+                                            (int) hotelSearchId, hotelRateResult.violations, true);
                                 }
                             }
                         }).start();

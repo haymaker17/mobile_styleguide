@@ -764,6 +764,7 @@ public final class Const {
     public static final String EXTRA_TRAVEL_HOTEL_SEARCH_DISTANCE_ID = "travel.hotel.search.distance.id";
     public static final String EXTRA_TRAVEL_HOTEL_SEARCH_DISTANCE_UNIT_NAME = "travel.hotel.search.distance.unit.name";
     public static final String EXTRA_TRAVEL_HOTEL_SEARCH_DISTANCE_UNIT_ID = "travel.hotel.search.distance.unit.id";
+    public static final String EXTRA_TRAVEL_HOTEL_SEARCH_SHOW_GDS_NAME = "travel.hotel.search.show.gds.name";
     public static final String EXTRA_TRAVEL_HOTEL_SEARCH_NAMES_CONTAINING = "travel.hotel.search.names.containing";
     public static final String EXTRA_HOTEL_SEARCH_FILTER_LESS_THAN_AMOUNT = "travel.hotel.search.filter.less.than.amount";
     public static final String EXTRA_HOTEL_SEARCH_FILTER_LESS_THAN_AMOUNT_CURRENCY = "travel.hotel.search.filter.less.than.amount.currency";

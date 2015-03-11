@@ -70,6 +70,11 @@ public class Hotel implements Serializable, HotelDAO {
      */
     public transient long _id;
 
+    /**
+     * Contains search db id
+     */
+    public transient long search_id;
+
     // full column list of hotel detail.
     public static String[] fullColumnList = { Travel.HotelDetailColumns._ID, Travel.HotelDetailColumns.NAME,
             Travel.HotelDetailColumns.CHAIN_NAME, Travel.HotelDetailColumns.CHAIN_CODE,
@@ -147,6 +152,8 @@ public class Hotel implements Serializable, HotelDAO {
      *            contains the cursor used to initialize fields.
      */
     private void init(Cursor cursor) {
+
+        search_id = CursorUtil.getLongValue(cursor, Travel.HotelDetailColumns.HOTEL_SEARCH_RESULT_ID);
 
         _id = CursorUtil.getLongValue(cursor, Travel.HotelDetailColumns._ID);
 

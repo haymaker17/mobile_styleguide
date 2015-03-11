@@ -61,6 +61,7 @@ public class HotelChoiceDetailsActivity extends Activity implements HotelChoiceD
     private String headerImageURL;
     private ArrayList<String[]> violationReasons;
     private boolean ruleViolationExplanationRequired;
+    private boolean showGDSName;
     private String currentTripId;
 
     // private ParallaxScollListView mListView;
@@ -128,6 +129,7 @@ public class HotelChoiceDetailsActivity extends Activity implements HotelChoiceD
         numOfNights = i.getIntExtra(Const.EXTRA_TRAVEL_HOTEL_SEARCH_DURATION_NUM_OF_NIGHTS, 0);
         violationReasons = (ArrayList<String[]>) i.getSerializableExtra("violationReasons");
         ruleViolationExplanationRequired = i.getBooleanExtra("ruleViolationExplanationRequired", false);
+        showGDSName = i.getBooleanExtra(Const.EXTRA_TRAVEL_HOTEL_SEARCH_SHOW_GDS_NAME, false);
         currentTripId = i.getStringExtra("currentTripId");
 
     }
@@ -197,7 +199,8 @@ public class HotelChoiceDetailsActivity extends Activity implements HotelChoiceD
                 fm.beginTransaction().replace(placeholder, new HotelDetailsFragment(hotel), tabId).commit();
             }
             if (TAB_ROOMS.equals(tabId)) {
-                fm.beginTransaction().replace(placeholder, new HotelRoomDetailFragment(hotel.rates), tabId).commit();
+                fm.beginTransaction()
+                        .replace(placeholder, new HotelRoomDetailFragment(hotel.rates, showGDSName), tabId).commit();
             }
             if (TAB_IMAGES.equals(tabId)) {
                 fm.beginTransaction().replace(placeholder, new HotelImagesFragment(hotel.imagePairs), tabId).commit();

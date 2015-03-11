@@ -129,5 +129,6 @@
     <string name="hotel_overview">Overview</string>
     <string name="hotel_confirm_reserve_title">Confirm Reservation</string>
     <string name="hotel_confirm_reserve_msg">Are you sure you want to book this room?</string>
+    <string name="hotel_booking_deposit_required">Deposit Required</string>
 
 </resources>

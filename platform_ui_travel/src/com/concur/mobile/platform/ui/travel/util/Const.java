@@ -23,6 +23,7 @@ public class Const {
     public static final String EXTRA_TRAVEL_HOTEL_SEARCH_DURATION_NUM_OF_NIGHTS = "travel.hotel.search.duration.number.of.nights";
     public static final String EXTRA_TRAVEL_HOTEL_SEARCH_NAMES_CONTAINING = "travel.hotel.search.names.containing";
     public static final String EXTRA_TRAVEL_HOTEL_SEARCH_DISTANCE_UNIT_ID = "travel.hotel.search.distance.unit";
+    public static final String EXTRA_TRAVEL_HOTEL_SEARCH_SHOW_GDS_NAME = "travel.hotel.search.show.gds.name";
     public static final String EXTRA_LOCATION_SEARCH_ALLOWED_MODES = "loc_search_modes_allowed";
     public static final String EXTRA_LOCATION_SEARCH_MODE_USED = "loc_search_mode_used";
     public static final String EXTRA_TRAVEL_LOCATION = "travel.location";

@@ -212,26 +212,9 @@ public class TravelUtilHotel {
                     values.clear();
                 }
 
-                // insert hotel violations with hotel search result id as foreign key
-                if (hotelSearchResult.violations != null && hotelSearchResult.violations.size() > 0) {
-                    values.clear();
+                // insert violations
+                insertHotelViolations(resolver, hotelSearchResultId, hotelSearchResult.violations, false);
 
-                    for (HotelViolation hotelViolation : hotelSearchResult.violations) {
-                        // Set the foreign key
-                        ContentUtils.putValue(values, Travel.HotelViolationColumns.HOTEL_SEARCH_RESULT_ID,
-                                hotelSearchResultId);
-
-                        // Set the columns
-                        ContentUtils.putValue(values, Travel.HotelViolationColumns.ENFORCEMENT_LEVEL,
-                                hotelViolation.enforcementLevel);
-                        ContentUtils.putValue(values, Travel.HotelViolationColumns.MESSAGE, hotelViolation.message);
-                        ContentUtils.putValue(values, Travel.HotelViolationColumns.VIOLATION_VALUE_ID,
-                                hotelViolation.violationValueId);
-
-                        // insert
-                        resolver.insert(Travel.HotelViolationColumns.CONTENT_URI, values);
-                    }
-                }
             }
         }
 
@@ -285,14 +268,15 @@ public class TravelUtilHotel {
 
             // Set the rule violation ids - convert the int[] into a comma separated string
             if (rateDetail.violationValueIds != null && rateDetail.violationValueIds.length > 0) {
-                StringBuffer violationIds = new StringBuffer(rateDetail.violationValueIds[0]);
+                StringBuffer violationIds = new StringBuffer(rateDetail.violationValueIds.length);
+                violationIds.append(rateDetail.violationValueIds[0]);
                 for (int i = 1; i < rateDetail.violationValueIds.length; i++) {
                     violationIds.append("," + rateDetail.violationValueIds[i]);
                 }
                 ContentUtils.putValue(values, Travel.HotelRateDetailColumns.VIOLATION_VALUE_IDS,
                         violationIds.toString());
-            }
 
+            }
             ContentUtils.putValue(values, Travel.HotelRateDetailColumns.TRAVEL_POINTS, rateDetail.travelPoints);
             ContentUtils.putValue(values, Travel.HotelRateDetailColumns.CAN_REDEEM_TP_AGAINST_VIOLATIONS,
                     rateDetail.canRedeemTravelPointsAgainstViolations);
@@ -305,6 +289,57 @@ public class TravelUtilHotel {
                         + ((hotelRateDetailInsertUri != null) ? hotelRateDetailInsertUri.toString() : "null"));
             }
 
+        }
+    }
+
+    public static void insertHotelViolations(ContentResolver resolver, int hotelSearchResultId,
+            List<HotelViolation> violations, boolean queryFlag) {
+
+        // insert hotel violations with hotel search result id as foreign key
+        if (violations != null && violations.size() > 0) {
+            ContentValues values = new ContentValues();
+
+            for (HotelViolation hotelViolation : violations) {
+                // Set the foreign key
+                ContentUtils.putValue(values, Travel.HotelViolationColumns.HOTEL_SEARCH_RESULT_ID, hotelSearchResultId);
+
+                // Set the columns
+                ContentUtils.putValue(values, Travel.HotelViolationColumns.ENFORCEMENT_LEVEL,
+                        hotelViolation.enforcementLevel);
+                ContentUtils.putValue(values, Travel.HotelViolationColumns.MESSAGE, hotelViolation.message);
+                ContentUtils.putValue(values, Travel.HotelViolationColumns.VIOLATION_VALUE_ID,
+                        hotelViolation.violationValueId);
+
+                if (queryFlag) {
+                    // only insert if not exists
+                    Cursor cursor = null;
+                    try {
+                        StringBuilder strBldr = new StringBuilder();
+                        strBldr.append(Travel.HotelViolationColumns.VIOLATION_VALUE_ID);
+                        strBldr.append(" = " + hotelViolation.violationValueId + " and ");
+                        strBldr.append(Travel.HotelViolationColumns.HOTEL_SEARCH_RESULT_ID);
+                        strBldr.append(" = " + hotelSearchResultId);
+                        String where = strBldr.toString();
+
+                        cursor = resolver.query(Travel.HotelViolationColumns.CONTENT_URI,
+                                HotelViolation.fullColumnList, where, null, null);
+                        if (cursor == null || !cursor.moveToFirst()) {
+                            {
+                                resolver.insert(Travel.HotelViolationColumns.CONTENT_URI, values);
+                            }
+                        }
+                    } finally {
+                        if (cursor != null) {
+                            cursor.close();
+                        }
+                    }
+
+                } else {
+
+                    // insert
+                    resolver.insert(Travel.HotelViolationColumns.CONTENT_URI, values);
+                }
+            }
         }
     }
 

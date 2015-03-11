@@ -47,7 +47,6 @@ import com.concur.mobile.platform.ui.travel.hotel.fragment.HotelSearchResultFrag
 import com.concur.mobile.platform.ui.travel.hotel.fragment.HotelSearchResultListItem;
 import com.concur.mobile.platform.ui.travel.hotel.maps.ShowMaps;
 import com.concur.mobile.platform.ui.travel.util.Const;
-import com.concur.mobile.platform.util.PlatformUtil;
 import com.google.android.gms.common.ConnectionResult;
 import com.google.android.gms.common.GooglePlayServicesUtil;
 
@@ -101,6 +100,9 @@ public class HotelSearchAndResultActivity extends Activity implements OnMenuItem
     private boolean retriveFromDB;
     private BaseAsyncResultReceiver hotelRatesReceiver;
     private HotelSearchResultListItem selectedHotelListItem;
+    private boolean ruleViolationExplanationRequired;
+    private String currentTripId;
+    private boolean showGDSName;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -111,6 +113,8 @@ public class HotelSearchAndResultActivity extends Activity implements OnMenuItem
 
         location = intent.getStringExtra(Const.EXTRA_TRAVEL_HOTEL_SEARCH_LOCATION);
         violationReasons = (ArrayList<String[]>) intent.getSerializableExtra("violationReasons");
+        ruleViolationExplanationRequired = intent.getBooleanExtra("ruleViolationExplanationRequired", false);
+        currentTripId = intent.getStringExtra("currentTripId");
 
         // searchCriteriaChanged will be false if it just came back from search criteria screen without any changes to the
         // previous searched criteria. in such
@@ -123,6 +127,7 @@ public class HotelSearchAndResultActivity extends Activity implements OnMenuItem
         longitude = Double.valueOf(intent.getStringExtra(Const.EXTRA_TRAVEL_LONGITUDE));
         fromLocationSearch = intent.getBooleanExtra(Const.EXTRA_LOCATION_SEARCH_MODE_USED, false);
         distanceUnit = intent.getStringExtra(Const.EXTRA_TRAVEL_HOTEL_SEARCH_DISTANCE_UNIT_ID);
+        showGDSName = intent.getBooleanExtra(Const.EXTRA_TRAVEL_HOTEL_SEARCH_SHOW_GDS_NAME, false);
 
         hotelSearchRESTResultFrag = (HotelSearchResultFragment) getFragmentManager().findFragmentByTag(
                 FRAGMENT_SEARCH_RESULT);
@@ -157,7 +162,7 @@ public class HotelSearchAndResultActivity extends Activity implements OnMenuItem
     @Override
     public void fragmentReady() {
         // signal from fragment that it is loaded
-        cacheKey = PlatformUtil.getEndpointurl(SERVICE_END_POINT, latitude, longitude, distanceUnit, checkInDate,
+        cacheKey = HotelSearchResultLoader.prepareEndPointUrl(latitude, longitude, distanceUnit, checkInDate,
                 checkOutDate);
         populateHotelListItemsFromDB();
     }
@@ -530,7 +535,7 @@ public class HotelSearchAndResultActivity extends Activity implements OnMenuItem
                         hotelRatesReceiver.setListener(new HotelRatesReplyListener());
                         HotelRatesAsyncRequestTask ratesAsynTask = new HotelRatesAsyncRequestTask(this,
                                 HOTEL_RATES_ASYN_TASK_ID, hotelRatesReceiver, hotelSelected.ratesURL.href,
-                                hotelSelected._id);
+                                hotelSelected._id, hotelSelected.search_id);
                         ratesAsynTask.execute();
                     }
                 } else {
@@ -550,6 +555,9 @@ public class HotelSearchAndResultActivity extends Activity implements OnMenuItem
                 hotelSearchRESTResultFrag.durationOfStayForDisplayInHeader);
         i.putExtra(Const.EXTRA_TRAVEL_HOTEL_SEARCH_DURATION_NUM_OF_NIGHTS, numberOfNights);
         i.putExtra("violationReasons", violationReasons);
+        i.putExtra("ruleViolationExplanationRequired", ruleViolationExplanationRequired);
+        i.putExtra("currentTripId", currentTripId);
+        i.putExtra(Const.EXTRA_TRAVEL_HOTEL_SEARCH_SHOW_GDS_NAME, showGDSName);
         i.putExtras(bundle);
         // startActivity(i);
         selectedHotelListItem = null;
@@ -756,7 +764,6 @@ public class HotelSearchAndResultActivity extends Activity implements OnMenuItem
                 if (hotel != null && hotel.rates != null) {
 
                     selectedHotelListItem.getHotel().rates = hotel.rates;
-                    // TODO update violations c
 
                     viewHotelChoiceDetails();
 
@@ -776,6 +783,8 @@ public class HotelSearchAndResultActivity extends Activity implements OnMenuItem
          * @see com.concur.mobile.base.service.BaseAsyncRequestTask.AsyncReplyListener#onRequestFail(android.os.Bundle)
          */
         public void onRequestFail(Bundle resultData) {
+
+            hotelSearchRESTResultFrag.hideProgressBar();
             Toast.makeText(getApplicationContext(), "No Rooms Avilable", Toast.LENGTH_LONG).show();
             hotelSearchRESTResultFrag.hideProgressBar();
 

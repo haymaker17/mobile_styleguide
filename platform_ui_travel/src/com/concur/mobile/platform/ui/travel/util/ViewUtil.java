@@ -1,7 +1,9 @@
 package com.concur.mobile.platform.ui.travel.util;
 
+import android.content.Context;
 import android.text.Spannable;
 import android.text.style.URLSpan;
+import android.view.View;
 import android.widget.TextView;
 
 import com.concur.mobile.platform.travel.search.hotel.HotelPreference;
@@ -121,19 +123,17 @@ public class ViewUtil {
      * @param textView
      * @param gdsName
      */
-    // public static void showGDSName(Context context, TextView textView, String gdsName) {
-    // Activity activity = (Activity) context;
-    // // UserConfig uc = (activity.getApplication()).getUserConfig();
-    // if (uc.showGDSNameInSearchResults && gdsName != null) {
-    // StringBuilder sb = new StringBuilder();
-    // String name = sb.append("(").append(gdsName).append(")").toString();
-    // textView.setText(name);
-    // textView.setVisibility(View.VISIBLE);
-    // } else {
-    // textView.setVisibility(View.GONE);
-    // }
+    public static void showGDSName(Context context, TextView textView, String gdsName) {
+        if (gdsName != null) {
+            StringBuilder sb = new StringBuilder();
+            String name = sb.append("(").append(gdsName).append(")").toString();
+            textView.setText(name);
+            textView.setVisibility(View.VISIBLE);
+        } else {
+            textView.setVisibility(View.GONE);
+        }
 
-    // }
+    }
 
     /**
      * method to strip the underline from Linkify text

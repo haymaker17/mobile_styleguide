@@ -16,6 +16,7 @@ import com.concur.mobile.platform.ui.common.util.FormatUtil;
 import com.concur.mobile.platform.ui.common.view.ListItem;
 import com.concur.mobile.platform.ui.travel.R;
 import com.concur.mobile.platform.ui.travel.util.Const;
+import com.concur.mobile.platform.ui.travel.util.ViewUtil;
 
 /**
  * An extension of <code>ListItem</code> for displaying a hotel room.
@@ -26,6 +27,7 @@ public class HotelRoomListItem extends ListItem {
 
     private HotelRate hotelRoom;
     public String maxEnforcementLevelString;
+    private boolean showGDSName;
 
     /**
      * Constructs an instance of <code>HotelRoomListItem</code> backed by a hotel room.
@@ -33,8 +35,9 @@ public class HotelRoomListItem extends ListItem {
      * @param hotelRoom
      *            contains the hotel room.
      */
-    public HotelRoomListItem(HotelRate hotelRoom) {
+    public HotelRoomListItem(HotelRate hotelRoom, boolean showGDSName) {
         this.hotelRoom = hotelRoom;
+        this.showGDSName = showGDSName;
     }
 
     /**
@@ -106,19 +109,22 @@ public class HotelRoomListItem extends ListItem {
             Log.e(Const.LOG_TAG, CLS_TAG + ".getView: unable to locate hotel room summary text view!");
         }
 
-        // txtView = (TextView) roomView.findViewById(R.id.hotel_room_deposit_required);
-        // if (txtView != null) {
-        // if (hotelRoom.depositRequired) {
-        // txtView.setText(R.string.hotel_booking_deposit_required);
-        // txtView.setVisibility(View.VISIBLE);
-        // } else {
-        // txtView.setVisibility(View.GONE);
-        // }
-        // }
-        // txtView = (TextView) roomView.findViewById(R.id.hotel_room_gds_name);
-        // if (txtView != null && hotelRoom.source != null) {
-        // ViewUtil.showGDSName(context, txtView, hotelRoom.source);
-        // }
+        txtView = (TextView) roomView.findViewById(R.id.hotel_room_deposit_required);
+        if (txtView != null) {
+            if (hotelRoom.guaranteeSurcharge == "DepositRequired") {
+                txtView.setText(R.string.hotel_booking_deposit_required);
+                txtView.setVisibility(View.VISIBLE);
+            } else {
+                txtView.setVisibility(View.GONE);
+            }
+        }
+
+        if (showGDSName) {
+            txtView = (TextView) roomView.findViewById(R.id.hotel_room_gds_name);
+            if (txtView != null && hotelRoom.source != null) {
+                ViewUtil.showGDSName(context, txtView, hotelRoom.source);
+            }
+        }
 
         return roomView;
     }
