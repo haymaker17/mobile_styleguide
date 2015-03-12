@@ -4,6 +4,7 @@ import android.app.Activity;
 import android.content.Intent;
 import android.content.res.Resources;
 import android.graphics.Typeface;
+import android.media.Image;
 import android.os.Bundle;
 import android.os.Handler;
 import android.util.Log;
@@ -76,6 +77,8 @@ public class RequestSummaryActivity extends BaseActivity {
     protected Boolean showCodes;
     protected int category;
     protected int minSearchLength = 1;
+
+    protected Boolean activateOptionButton;
 
     private RequestDTO tr = null;
     private Locale locale = null;
@@ -273,6 +276,7 @@ public class RequestSummaryActivity extends BaseActivity {
         name.setTypeface(Typeface.DEFAULT_BOLD);
         amount.setTypeface(Typeface.DEFAULT_BOLD);
 
+
         if (tr.getEntriesMap() != null) {
             ((EntryListAdapter) entryListView.getAdapter())
                     .updateList(new ArrayList<RequestEntryDTO>(tr.getEntriesMap().values()));
@@ -281,7 +285,14 @@ public class RequestSummaryActivity extends BaseActivity {
                         .applyDimension(TypedValue.COMPLEX_UNIT_DIP, 75, getResources().getDisplayMetrics());
                 segmentListViewLayout.getLayoutParams().height = height;
             }
+            else if (tr.getEntriesMap().size() > 1) {
+                final int height = (int) TypedValue
+                        .applyDimension(TypedValue.COMPLEX_UNIT_DIP, 170, getResources().getDisplayMetrics());
+                segmentListViewLayout.getLayoutParams().height = height;
+            }
         }
+
+
     }
 
     private void updateNewButtonsViews() {
@@ -477,7 +488,15 @@ public class RequestSummaryActivity extends BaseActivity {
      * @param viewID id of the view to display
      */
     private void setView(int viewID) {
+
+        if (viewID == ID_LOADING_VIEW) {
+            activateOptionButton = false;
+        }else{
+            activateOptionButton = true;
+        }
+
         requestSummaryVF.setDisplayedChild(viewID);
+
     }
 
     /**
@@ -628,6 +647,8 @@ public class RequestSummaryActivity extends BaseActivity {
     protected void onResume() {
         super.onResume();
 
+        activateOptionButton = true;
+
         // DETAILS
         if (asyncReceiver == null) {
             // activity creation
@@ -648,6 +669,7 @@ public class RequestSummaryActivity extends BaseActivity {
         }
         // activity restoration
         asyncReceiverFormFields.setListener(new SegmentFormFieldsListener());
+
     }
 
     private void cleanupReceivers() {
@@ -671,34 +693,37 @@ public class RequestSummaryActivity extends BaseActivity {
     @Override
     public boolean onOptionsItemSelected(MenuItem menuItem) {
 
-        final int itemId = menuItem.getItemId();
-        if (itemId == R.id.request_header) {
-            if (isServiceAvailable()) {
-                if (ConcurCore.isConnected()) {
-                    final Intent intent = new Intent(RequestSummaryActivity.this, RequestHeaderActivity.class);
-                    intent.putExtra(RequestListActivity.REQUEST_ID, tr.getId());
-                    if (tr.isActionPermitted(RequestParser.PermittedAction.SAVE)) {
-                        intent.putExtra(RequestSummaryActivity.REQUEST_IS_EDITABLE, Boolean.TRUE.toString());
+        if(activateOptionButton){
+            final int itemId = menuItem.getItemId();
+            if (itemId == R.id.request_header) {
+                if (isServiceAvailable()) {
+                    if (ConcurCore.isConnected()) {
+                        final Intent intent = new Intent(RequestSummaryActivity.this, RequestHeaderActivity.class);
+                        intent.putExtra(RequestListActivity.REQUEST_ID, tr.getId());
+                        if (tr.isActionPermitted(RequestParser.PermittedAction.SAVE)) {
+                            intent.putExtra(RequestSummaryActivity.REQUEST_IS_EDITABLE, Boolean.TRUE.toString());
+                        } else {
+                            intent.putExtra(RequestSummaryActivity.REQUEST_IS_EDITABLE, Boolean.FALSE.toString());
+                        }
+
+                        // --- Flurry tracking
+                        intent.putExtra(Flurry.PARAM_NAME_CAME_FROM, Flurry.PARAM_VALUE_TRAVEL_REQUEST_SUMMARY);
+                        final Map<String, String> params = new HashMap<String, String>();
+                        params.put(Flurry.PARAM_NAME_FROM, Flurry.PARAM_VALUE_TRAVEL_REQUEST_SUMMARY);
+                        params.put(Flurry.PARAM_NAME_TO, Flurry.PARAM_VALUE_TRAVEL_REQUEST_HEADER);
+                        EventTracker.INSTANCE.track(Flurry.CATEGORY_TRAVEL_REQUEST, Flurry.EVENT_NAME_LAUNCH, params);
+
+                        startActivityForResult(intent, HEADER_UPDATE_RESULT);
                     } else {
-                        intent.putExtra(RequestSummaryActivity.REQUEST_IS_EDITABLE, Boolean.FALSE.toString());
+                        new NoConnectivityDialogFragment().show(getSupportFragmentManager(), CLS_TAG);
                     }
-
-                    // --- Flurry tracking
-                    intent.putExtra(Flurry.PARAM_NAME_CAME_FROM, Flurry.PARAM_VALUE_TRAVEL_REQUEST_SUMMARY);
-                    final Map<String, String> params = new HashMap<String, String>();
-                    params.put(Flurry.PARAM_NAME_FROM, Flurry.PARAM_VALUE_TRAVEL_REQUEST_SUMMARY);
-                    params.put(Flurry.PARAM_NAME_TO, Flurry.PARAM_VALUE_TRAVEL_REQUEST_HEADER);
-                    EventTracker.INSTANCE.track(Flurry.CATEGORY_TRAVEL_REQUEST, Flurry.EVENT_NAME_LAUNCH, params);
-
-                    startActivityForResult(intent, HEADER_UPDATE_RESULT);
-                } else {
-                    new NoConnectivityDialogFragment().show(getSupportFragmentManager(), CLS_TAG);
                 }
+                return true;
+            } else {
+                return super.onOptionsItemSelected(menuItem);
             }
-            return true;
-        } else {
-            return super.onOptionsItemSelected(menuItem);
         }
+        return super.onOptionsItemSelected(menuItem);
     }
 
     @Override
@@ -723,4 +748,7 @@ public class RequestSummaryActivity extends BaseActivity {
         }
         }
     }
+
+
+
 }
