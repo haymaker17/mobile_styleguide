@@ -657,7 +657,7 @@ public class HotelBookingActivity extends Activity implements LoaderManager.Load
             if (cardChoices != null) {
                 if (curCardChoice == null) {
                     // show credit card required message
-                    requiredFieldsMsg.append("credt card required");
+                    requiredFieldsMsg.append(getString(R.string.book_missing_field_card_selection));
                     hasAllRequiredFields = false;
                 } else {
                     selectedCreditCardId = curCardChoice.id;
@@ -671,13 +671,13 @@ public class HotelBookingActivity extends Activity implements LoaderManager.Load
                 // violation reason need to be selected
                 if (violationReasons == null) {
                     // show message that violations reason are not available
-                    requiredFieldsMsg.append("violation reason not available, please search again");
+                    requiredFieldsMsg.append(getString(R.string.general_violaiton_reasons_not_available));
                     hasAllRequiredFields = false;
                 } else {
                     // check for selected violation reason
                     if (curViolationReason == null) {
                         // show violation reason required message
-                        requiredFieldsMsg.append("violation reason required");
+                        requiredFieldsMsg.append(getString(R.string.book_missing_field_violation_reason));
                         hasAllRequiredFields = false;
                     }
 
@@ -688,7 +688,7 @@ public class HotelBookingActivity extends Activity implements LoaderManager.Load
                         justificationText = ((EditText) justificationView).getText().toString();
                         if (justificationText == null && ruleViolationExplanationRequired) {
                             // show violation justification text required message
-                            requiredFieldsMsg.append("justification required");
+                            requiredFieldsMsg.append(getString(R.string.general_specify_justification));
                             hasAllRequiredFields = false;
                         }
                     }
@@ -720,8 +720,8 @@ public class HotelBookingActivity extends Activity implements LoaderManager.Load
                 hotelBookingAsyncRequestTask.execute();
             } else {
                 // show the required fields messages
-                DialogFragmentFactoryV1.getAlertOkayInstance("Required fields", requiredFieldsMsg.toString()).show(
-                        getFragmentManager(), null);
+                DialogFragmentFactoryV1.getAlertOkayInstance(getString(R.string.general_required_fields),
+                        requiredFieldsMsg.toString()).show(getFragmentManager(), null);
                 reserveButton.setEnabled(true);
             }
         } else {

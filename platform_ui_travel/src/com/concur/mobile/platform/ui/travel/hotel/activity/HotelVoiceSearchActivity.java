@@ -83,7 +83,7 @@ public class HotelVoiceSearchActivity extends VoiceSearchActivity {
             // Set the chat text.
             showResponseText(s);
 
-            tts.speak(s, TextToSpeech.QUEUE_FLUSH, null, null);
+            tts.speak(s, TextToSpeech.QUEUE_FLUSH, null);
         } else {
             Log.e(Const.LOG_TAG, CLS_TAG + ".doHotelSearch: TTS is null!");
 
