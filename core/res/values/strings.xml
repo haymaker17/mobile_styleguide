@@ -246,6 +246,7 @@
     <string name="msg_cntr_title">Message Center</string>
     <string name="msg_cntr_no_data">You have no messages</string>
     <string name="msg_cntr_new_upcoming_look">New look coming soon\n for Concur App!</string>
+    
 
     <!-- approvals -->
     <plurals name="approval_row_report_msg">
@@ -452,8 +453,10 @@
     <string name="general_chain_most_preferred">Chain Most Preferred</string>
     <string name="general_not_preferred">Not Preferred</string>
     <string name="general_none">None</string>
-    <string name="general_call">Call</string> <!-- button in a dialog box, for initiating a phone call. -->
-    <string name="general_attention">Attention</string> <!-- title of a dialog box, showing message about changes to itinerary. -->
+    <string name="general_call">Call</string>
+    <!-- button in a dialog box, for initiating a phone call. -->
+    <string name="general_attention">Attention</string>
+    <!-- title of a dialog box, showing message about changes to itinerary. -->
     <string name="general_current_location">Current location</string>
     <string name="general_export">Export</string>
     <string name="general_month_jan">January</string>
@@ -656,6 +659,22 @@
     <string name="tr_new_request_desc">Get approved for Air, Hotel and more</string>
     <string name="tr_list_header_active">ACTIVE REQUESTS</string>
     <string name="tr_list_header_approved">APPROVED REQUESTS</string>
+    <string name="tr_error_submit">An error occured on your request Submission. Please try again on the website for further informations.</string>
+    <string name="tr_error_save">An error occured on your Save operation. Please try again on the website for further informations.</string>
+    <string name="tr_error_retrieving_detail">An error occured. Please try again.</string>
+    <string name="tr_operation_successful">Operation success</string>
+    <string name="tr_operation_failed">Operation failed</string>
+    <string name="tr_operation_canceled">Operation canceled</string>
+    <string name="tr_flight_destination_label">%%0%% to %%1%%</string>
+    <string name="tr_at">At</string>
+    <string name="tr_arrival">Arrival</string>
+    <string name="tr_message_save_changes">Your changes may be lost if you proceed. Would you like to save these changes?</string>
+    <string name="tr_segment_block_outbound">Outbound</string>
+    <string name="tr_segment_block_return">Return</string>
+    <string name="tr_segment_block_pickup">Pick-Up</string>
+    <string name="tr_segment_block_dropoff">Drop-Off</string>
+    <string name="tr_segment_block_checkin">Check-In</string>
+    <string name="tr_segment_block_checkout">Check-Out</string>
     <string name="travel_segments">Segments</string>
     <string name="travel_segment_title">Segment</string>
     <string name="travel_request_expected_expenses">Expected Expenses</string>
@@ -869,6 +888,7 @@
     <string name="rail_detail_book_success_message">Your train has been successfully reserved.</string>
     <string name="rail_detail_book_failure_title">Error occurred</string>
     <string name="add_another_item_to_request">+ Add Another Item to this request</string>
+    <string name="add_another_item_to_request_OFF">- Add Another Item to this request</string>
     <string name="submit_request">Submit Request</string>
     <string name="request_digest_total">Total:</string>
 
@@ -1266,7 +1286,7 @@
     <string name="dlg_expense_retrieve_report_entry_detail_failed_title">Expense Detail Retrieve Failed</string>
     <string name="dlg_append_receipt_fail_title">Unable to Append your receipt. Please try again later</string>
     <string name="dlg_recipts_start_ocr_failed_title">OCR Failed</string>
-    
+
     <plurals name="dlg_expense_remove_confirm_message">
         <item quantity="one">Are you sure you wish to delete the selected expense?</item>
         <item quantity="other">Are you sure you wish to delete the selected expenses?</item>
@@ -2041,9 +2061,9 @@
     <string name="field_label_expense_type">Type</string>
     <string name="skip">Skip</string>
     <string name="matched_expenses">Matched Expenses</string>
-	<string name="ocr_status_procesing">Processing\u2026</string>
+    <string name="ocr_status_procesing">Processing\u2026</string>
     <string name="ocr_status_procesing_error">Processing Error</string>
-	<string name="ocr_status_procesing_cancelled">Processing Cancelled</string>
+    <string name="ocr_status_procesing_cancelled">Processing Cancelled</string>
 
 
     <!-- Minimum Android SDK Support Upgrade Message -->

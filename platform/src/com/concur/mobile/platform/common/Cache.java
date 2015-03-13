@@ -4,7 +4,7 @@ import java.util.Collection;
 
 /**
  * A generic interface to store & manage a cache
- * 
+ *
  * @author OlivierB
  */
 public interface Cache<K, V> {
@@ -21,15 +21,15 @@ public interface Cache<K, V> {
 
     /**
      * add a value in cache
-     * 
-     * @param values
+     *
+     * @param value value
      */
     void addValue(K key, V value);
 
     /**
      * remove values for a specific key
-     * 
-     * @param key
+     *
+     * @param key key
      */
     void removeValue(K key);
 
@@ -39,7 +39,7 @@ public interface Cache<K, V> {
     boolean hasCachedValues();
 
     /**
-     * clear all existing cache
+     * clear all existing cached values
      */
     void clear();
 }

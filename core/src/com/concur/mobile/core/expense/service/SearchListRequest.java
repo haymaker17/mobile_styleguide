@@ -90,7 +90,7 @@ public class SearchListRequest extends PostServiceRequest {
         strBldr.append("<ListSearchCriteria>");
         addElement(strBldr, "FieldId", ((fieldId != null) ? fieldId : ""));
         addElement(strBldr, "FtCode", ((ftCode != null) ? ftCode : ""));
-        if ((!fieldId.equalsIgnoreCase(ListItem.DEFAULT_KEY_CURRENCY))) {
+        if (fieldId != null && (!fieldId.equalsIgnoreCase(ListItem.DEFAULT_KEY_CURRENCY))) {
             addElement(strBldr, "IsMru", ((isMRU) ? "Y" : "N"));
         }
         if (listKey != null) {

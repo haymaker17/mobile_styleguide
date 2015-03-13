@@ -117,5 +117,8 @@
     <dimen name="ocr_detail_receipt_field_right_offset">104dp</dimen>
     <dimen name="hint_text_view_padding_top">12dp</dimen>
     <dimen name="hint_text_view_padding_bottom">12dp</dimen>
+    <!-- Default screen margins, per the Android Design guidelines. -->
+    <dimen name="activity_horizontal_margin">16dp</dimen>
+    <dimen name="activity_vertical_margin">16dp</dimen>
 
 </resources>
