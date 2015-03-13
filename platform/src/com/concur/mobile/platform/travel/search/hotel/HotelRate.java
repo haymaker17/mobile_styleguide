@@ -31,6 +31,7 @@ public class HotelRate implements Serializable {
     public String guaranteeSurcharge;
     public boolean rateChangesOverStay;
     public int maxEnforcementLevel;
+    public String maxEnforceLevel;
     public URLInfo sellOptions;
     public int[] violationValueIds;
     public Double travelPoints;
@@ -44,6 +45,8 @@ public class HotelRate implements Serializable {
      * Contains the application context.
      */
     protected transient Context context;
+
+    public boolean greyFlag;
 
     // full column list of hotel rate detail.
     public static String[] fullColumnList = { Travel.HotelRateDetailColumns._ID, Travel.HotelRateDetailColumns.RATE_ID,

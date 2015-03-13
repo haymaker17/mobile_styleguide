@@ -111,7 +111,7 @@ public class HotelRoomListItem extends ListItem {
 
         txtView = (TextView) roomView.findViewById(R.id.hotel_room_deposit_required);
         if (txtView != null) {
-            if (hotelRoom.guaranteeSurcharge == "DepositRequired") {
+            if (hotelRoom.guaranteeSurcharge != null && hotelRoom.guaranteeSurcharge.equals("DepositRequired")) {
                 txtView.setText(R.string.hotel_booking_deposit_required);
                 txtView.setVisibility(View.VISIBLE);
             } else {
@@ -125,7 +125,16 @@ public class HotelRoomListItem extends ListItem {
                 ViewUtil.showGDSName(context, txtView, hotelRoom.source);
             }
         }
-
+        roomView.setAlpha(1);
+        TextView tv = (TextView) roomView.findViewById(R.id.hotel_room_out_of_policy);
+        if (hotelRoom.greyFlag) {
+            if (tv != null) {
+                tv.setVisibility(View.VISIBLE);
+            }
+            roomView.setAlpha(0.5f); // 50% transparent
+        } else {
+            tv.setVisibility(View.GONE);
+        }
         return roomView;
     }
 

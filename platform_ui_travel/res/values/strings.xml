@@ -130,5 +130,13 @@
     <string name="hotel_confirm_reserve_title">Confirm Reservation</string>
     <string name="hotel_confirm_reserve_msg">Are you sure you want to book this room?</string>
     <string name="hotel_booking_deposit_required">Deposit Required</string>
+    <string name="hotel_dialog_deposit_required_title">Reservation Not Allowed </string>
+    <string name="hotel_dialog_deposit_required_msg">Your travel policy does not allow booking this rate</string>
+    <string name="dialog_ok">OK</string>
+    <string name="dlg_travel_hotel_deposit_confirm_message">Are you sure you want to reserve this room?\nI understand that my credit card will be charged immediately and no cancellation will be possible later in the booking process. All or portions of the deposit will be forfeited upon cancellation.</string>
+    <!-- end of Hotel deposit -->
+
+    <string name="hotel_price_hint">per night</string>
+    <string name="hotel_out_of_policy">out of policy</string>
 
 </resources>

@@ -39,6 +39,7 @@ import com.concur.mobile.platform.travel.search.hotel.HotelRatesRESTResult;
 import com.concur.mobile.platform.travel.search.hotel.HotelSearchPollResultLoader;
 import com.concur.mobile.platform.travel.search.hotel.HotelSearchRESTResult;
 import com.concur.mobile.platform.travel.search.hotel.HotelSearchResultLoader;
+import com.concur.mobile.platform.travel.search.hotel.HotelViolation;
 import com.concur.mobile.platform.ui.common.view.ListItemAdapter;
 import com.concur.mobile.platform.ui.travel.R;
 import com.concur.mobile.platform.ui.travel.hotel.fragment.HotelSearchResultFilterFragment;
@@ -104,6 +105,8 @@ public class HotelSearchAndResultActivity extends Activity implements OnMenuItem
     private boolean ruleViolationExplanationRequired;
     private String currentTripId;
     private boolean showGDSName;
+    private List<HotelViolation> updatedVoilations;
+    private List<HotelViolation> voilations;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -525,18 +528,28 @@ public class HotelSearchAndResultActivity extends Activity implements OnMenuItem
 
                         hotelSelected.rates = TravelUtilHotel.getHotelRateDetails(this, id);
                         hotelSelected.imagePairs = TravelUtilHotel.getHotelImagePairs(this, id);
+                        voilations = TravelUtilHotel.getHotelViolations(getApplicationContext(), null,
+                                (int) hotelSelected.search_id);
                     }
                     if (hotelSelected.rates != null && hotelSelected.rates.size() > 0) {
                         viewHotelChoiceDetails();
                     } else if (hotelSelected.lowestRate == null && hotelSelected.ratesURL.href != null) {
+
+                        String rateUrl = hotelSelected.ratesURL.href;
+                        // get ids from db
+                        Hotel hotel = TravelUtilHotel.getHotelByRateUrl(this, rateUrl, cacheKey);
+                        if (hotel != null) {
+                            hotelSelected._id = hotel._id;
+                            hotelSelected.search_id = hotel.search_id;
+                        }
                         // New call to rates async task
                         hotelRatesReceiver = new BaseAsyncResultReceiver(new Handler());
 
                         hotelSearchRESTResultFrag.showProgressBar(true);
                         hotelRatesReceiver.setListener(new HotelRatesReplyListener());
                         HotelRatesAsyncRequestTask ratesAsynTask = new HotelRatesAsyncRequestTask(this,
-                                HOTEL_RATES_ASYN_TASK_ID, hotelRatesReceiver, hotelSelected.ratesURL.href,
-                                hotelSelected._id, hotelSelected.search_id);
+                                HOTEL_RATES_ASYN_TASK_ID, hotelRatesReceiver, rateUrl, hotelSelected._id,
+                                hotelSelected.search_id);
                         ratesAsynTask.execute();
                     }
                 } else {
@@ -548,6 +561,11 @@ public class HotelSearchAndResultActivity extends Activity implements OnMenuItem
     }
 
     private void viewHotelChoiceDetails() {
+        Hotel hotel = selectedHotelListItem.getHotel();
+        String searchId = TravelUtilHotel.getHotelSearchResultId(this, cacheKey);
+        if (searchId != null) {
+            hotel.search_id = Long.valueOf(searchId);
+        }
         Intent i = new Intent(this, HotelChoiceDetailsActivity.class);
         Bundle bundle = new Bundle();
         bundle.putSerializable(Const.EXTRA_HOTELS_DETAILS, (Serializable) selectedHotelListItem);
@@ -559,6 +577,11 @@ public class HotelSearchAndResultActivity extends Activity implements OnMenuItem
         i.putExtra("ruleViolationExplanationRequired", ruleViolationExplanationRequired);
         i.putExtra("currentTripId", currentTripId);
         i.putExtra(Const.EXTRA_TRAVEL_HOTEL_SEARCH_SHOW_GDS_NAME, showGDSName);
+        if (updatedVoilations != null && updatedVoilations.size() > 0) {
+            bundle.putSerializable("updatedVoilations", (Serializable) updatedVoilations);
+        }
+        bundle.putSerializable("voilations", (Serializable) voilations);
+        // i.putExtra("searchId", searchId);
         i.putExtras(bundle);
         // startActivity(i);
         selectedHotelListItem = null;
@@ -666,6 +689,8 @@ public class HotelSearchAndResultActivity extends Activity implements OnMenuItem
                         HotelSearchResultListItem item = new HotelSearchResultListItem(hotel);
                         hotelListItemsFromLoader.add(item);
                     }
+
+                    voilations = hotelSearchResult.violations;
                 }
 
                 Log.d(Const.LOG_TAG, " ***** hotelSearchResult.searchDone " + searchDone + ",  hotelListItems = "
@@ -775,7 +800,7 @@ public class HotelSearchAndResultActivity extends Activity implements OnMenuItem
                 if (hotel != null && hotel.rates != null) {
 
                     selectedHotelListItem.getHotel().rates = hotel.rates;
-
+                    updatedVoilations = hotelRateResult.violations;
                     viewHotelChoiceDetails();
 
                 } else {

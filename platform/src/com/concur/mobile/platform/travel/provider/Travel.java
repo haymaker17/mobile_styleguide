@@ -5156,6 +5156,11 @@ public final class Travel {
         public static final String SEARCH_CRITERIA_URL = "SEARCH_CRITERIA_URL";
 
         /**
+         * Contains the insert time (DATETIME) column name.
+         */
+        public static final String INSERT_DATETIME = "INSERT_DATETIME";
+
+        /**
          * Contains the expiry time (DATETIME) column name.
          */
         public static final String EXPIRY_DATETIME = "EXPIRY_DATETIME";

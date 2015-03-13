@@ -1,5 +1,7 @@
 package com.concur.mobile.platform.ui.travel.util;
 
+import java.util.List;
+
 import android.content.Context;
 import android.text.Spannable;
 import android.text.style.URLSpan;
@@ -8,6 +10,7 @@ import android.widget.TextView;
 
 import com.concur.mobile.platform.travel.search.hotel.HotelPreference;
 import com.concur.mobile.platform.travel.search.hotel.HotelRecommended;
+import com.concur.mobile.platform.travel.search.hotel.HotelViolation;
 import com.concur.mobile.platform.travel.search.hotel.RuleEnforcementLevel;
 import com.concur.mobile.platform.ui.travel.R;
 
@@ -157,6 +160,61 @@ public class ViewUtil {
             tv.setText(s);
 
         }
+    }
+
+    /**
+     * Gets the 'show but no booking' maxenforcement violation from the passed in maxenforcementlevel
+     */
+    public static HotelViolation getShowButNoBookingViolation(List<HotelViolation> violations,
+            String maxEnforcementLevel, int maxEnforcelimit) {
+        // TODO
+        HotelViolation maxEnforcementViolation = getMaxRuleEnforcementViolation(violations, "AutoFail");
+        if ((maxEnforcementViolation != null && getRuleEnforcementLevel(maxEnforcelimit) == RuleEnforcementLevel.INACTIVE)) {
+            return maxEnforcementViolation;
+        }
+        return null;
+    }
+
+    /**
+     * Gets the Violation with the enforcement level matched to the passed in MaxEnforcementLevel
+     */
+    public static HotelViolation getMaxRuleEnforcementViolation(List<HotelViolation> violations,
+            String maxEnforcementLevel) {
+        HotelViolation maxEnforcementViolation = null;
+        if (violations != null && maxEnforcementLevel != null) {
+            for (HotelViolation violation : violations) {
+                if (maxEnforcementLevel.equals(violation.enforcementLevel)) {
+                    maxEnforcementViolation = violation;
+                    break;
+                }
+            }
+        }
+        return maxEnforcementViolation;
+    }
+
+    /**
+     * Will determine the mapping from an integer-based enforcement level to an instance of <code>RuleEnforcementLevel</code>.
+     * 
+     * @param level
+     *            the enforcement level from a violation.
+     * @return an instance of <code>RuleEnforcementLevel</code>.
+     */
+    public static RuleEnforcementLevel getRuleEnforcementLevel(int level) {
+        RuleEnforcementLevel ruleLevel = RuleEnforcementLevel.NONE;
+        if (level != 0) {
+            if (level < 10 || level == 100) {
+                ruleLevel = RuleEnforcementLevel.NONE;
+            } else if (level == 10 || level == 20) {
+                ruleLevel = RuleEnforcementLevel.WARNING;
+            } else if (level == 25 || level == 30) {
+                ruleLevel = RuleEnforcementLevel.ERROR;
+            } else if (level == 40) {
+                ruleLevel = RuleEnforcementLevel.INACTIVE;
+            } else if (level == 50) {
+                ruleLevel = RuleEnforcementLevel.HIDE;
+            }
+        }
+        return ruleLevel;
     }
 
 }

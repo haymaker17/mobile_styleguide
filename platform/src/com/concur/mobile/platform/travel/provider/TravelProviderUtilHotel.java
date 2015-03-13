@@ -75,6 +75,7 @@ public class TravelProviderUtilHotel {
 
         // hotel availability
         retVal.put(Travel.HotelDetailColumns.AVAILABILITY_ERROR_CODE, Travel.HotelDetailColumns.AVAILABILITY_ERROR_CODE);
+        retVal.put(Travel.HotelDetailColumns.HOTEL_SEARCH_RESULT_ID, Travel.HotelDetailColumns.HOTEL_SEARCH_RESULT_ID);
 
         return retVal;
     }
@@ -123,6 +124,7 @@ public class TravelProviderUtilHotel {
         retVal.put(Travel.HotelRateDetailColumns.TRAVEL_POINTS, Travel.HotelRateDetailColumns.TRAVEL_POINTS);
         retVal.put(Travel.HotelRateDetailColumns.CAN_REDEEM_TP_AGAINST_VIOLATIONS,
                 Travel.HotelRateDetailColumns.CAN_REDEEM_TP_AGAINST_VIOLATIONS);
+        retVal.put(Travel.HotelRateDetailColumns.HOTEL_DETAIL_ID, Travel.HotelRateDetailColumns.HOTEL_DETAIL_ID);
 
         return retVal;
     }
@@ -140,6 +142,8 @@ public class TravelProviderUtilHotel {
 
         retVal.put(Travel.HotelViolationColumns.ENFORCEMENT_LEVEL, Travel.HotelViolationColumns.ENFORCEMENT_LEVEL);
         retVal.put(Travel.HotelViolationColumns.VIOLATION_VALUE_ID, Travel.HotelViolationColumns.VIOLATION_VALUE_ID);
+        retVal.put(Travel.HotelViolationColumns.HOTEL_SEARCH_RESULT_ID,
+                Travel.HotelViolationColumns.HOTEL_SEARCH_RESULT_ID);
 
         return retVal;
     }

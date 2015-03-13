@@ -1,5 +1,7 @@
 package com.concur.mobile.platform.travel.search.hotel;
 
+import java.io.Serializable;
+
 import android.content.ContentResolver;
 import android.content.Context;
 import android.database.Cursor;
@@ -13,8 +15,12 @@ import com.concur.mobile.platform.util.CursorUtil;
  * @author RatanK
  * 
  */
-public class HotelViolation {
+public class HotelViolation implements Serializable {
 
+    /**
+     * 
+     */
+    private static final long serialVersionUID = 1L;
     public String enforcementLevel;
     public String message;
     public String violationValueId;
@@ -32,7 +38,7 @@ public class HotelViolation {
     // full column list of hotel violation.
     public static String[] fullColumnList = { Travel.HotelViolationColumns._ID,
             Travel.HotelViolationColumns.ENFORCEMENT_LEVEL, Travel.HotelViolationColumns.MESSAGE,
-            Travel.HotelViolationColumns.VIOLATION_VALUE_ID };
+            Travel.HotelViolationColumns.VIOLATION_VALUE_ID, Travel.HotelViolationColumns.HOTEL_SEARCH_RESULT_ID };
 
     /**
      * Constructs a new instance of <code>HotelViolation</code>.

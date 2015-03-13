@@ -2,6 +2,7 @@ package com.concur.mobile.platform.ui.travel.hotel.activity;
 
 import java.io.Serializable;
 import java.util.ArrayList;
+import java.util.List;
 
 import android.app.Activity;
 import android.app.ActivityOptions;
@@ -18,6 +19,8 @@ import android.view.View;
 import android.widget.Toast;
 
 import com.concur.mobile.platform.travel.search.hotel.Hotel;
+import com.concur.mobile.platform.travel.search.hotel.HotelRate;
+import com.concur.mobile.platform.travel.search.hotel.HotelViolation;
 import com.concur.mobile.platform.ui.travel.R;
 import com.concur.mobile.platform.ui.travel.hotel.fragment.HotelChoiceDetailsFragment;
 import com.concur.mobile.platform.ui.travel.hotel.fragment.HotelChoiceDetailsFragment.HotelChoiceDetailsFragmentListener;
@@ -29,6 +32,7 @@ import com.concur.mobile.platform.ui.travel.hotel.fragment.HotelRoomListItem;
 import com.concur.mobile.platform.ui.travel.hotel.fragment.HotelSearchResultListItem;
 import com.concur.mobile.platform.ui.travel.util.Const;
 import com.concur.mobile.platform.ui.travel.util.ParallaxScollView;
+import com.concur.mobile.platform.ui.travel.util.ViewUtil;
 import com.google.android.gms.common.ConnectionResult;
 import com.google.android.gms.common.GooglePlayServicesUtil;
 import com.google.android.gms.maps.CameraUpdateFactory;
@@ -51,6 +55,7 @@ public class HotelChoiceDetailsActivity extends Activity implements HotelChoiceD
     public static final String TAB_DETAILS = "DETAILS";
     public static final String TAB_ROOMS = "ROOMS";
     public static final String TAB_IMAGES = "IMAGES";
+    public static final String DIALOG_DEPOSITE_REQUIRED = "DIALOG_DEPOSITE_REQUIRED";
 
     private HotelChoiceDetailsFragment hotelDetailsFrag;
     private HotelSearchResultListItem hotelListItem;
@@ -63,6 +68,7 @@ public class HotelChoiceDetailsActivity extends Activity implements HotelChoiceD
     private boolean ruleViolationExplanationRequired;
     private boolean showGDSName;
     private String currentTripId;
+    private List<HotelViolation> violations;
 
     // private ParallaxScollListView mListView;
     // private ImageView mImageView;
@@ -132,6 +138,24 @@ public class HotelChoiceDetailsActivity extends Activity implements HotelChoiceD
         showGDSName = i.getBooleanExtra(Const.EXTRA_TRAVEL_HOTEL_SEARCH_SHOW_GDS_NAME, false);
         currentTripId = i.getStringExtra("currentTripId");
 
+        List<HotelViolation> updatedViolations = ((List<HotelViolation>) bundle.getSerializable("updatedVoilations"));
+
+        if (updatedViolations != null && updatedViolations.size() > 0) {
+            violations = updatedViolations;
+        } else {
+            violations = ((List<HotelViolation>) bundle.getSerializable("voilations"));
+
+            // TravelUtilHotel.getHotelViolations(getApplicationContext(), null, Integer.valueOf(searchId));
+        }
+        for (HotelRate rate : hotel.rates) {
+            HotelViolation maxEnforcementViolation = ViewUtil.getShowButNoBookingViolation(violations,
+                    rate.maxEnforceLevel, rate.maxEnforcementLevel);
+            if (maxEnforcementViolation != null) {
+                rate.greyFlag = true;
+            }
+
+        }
+
     }
 
     @Override
@@ -199,6 +223,7 @@ public class HotelChoiceDetailsActivity extends Activity implements HotelChoiceD
                 fm.beginTransaction().replace(placeholder, new HotelDetailsFragment(hotel), tabId).commit();
             }
             if (TAB_ROOMS.equals(tabId)) {
+
                 fm.beginTransaction()
                         .replace(placeholder, new HotelRoomDetailFragment(hotel.rates, showGDSName), tabId).commit();
             }
@@ -210,20 +235,27 @@ public class HotelChoiceDetailsActivity extends Activity implements HotelChoiceD
 
     @Override
     public void roomItemClicked(HotelRoomListItem roomListItem) {
-        Intent intent = new Intent(this, HotelBookingActivity.class);
-        // TODO - have a singleton class and set these objects there to share with other activities?
-        intent.putExtra("roomSelected", roomListItem.getHotelRoom());
+        if (roomListItem.getHotelRoom().greyFlag) {
+            Toast.makeText(getApplicationContext(), R.string.hotel_dialog_deposit_required_msg, Toast.LENGTH_LONG)
+                    .show();
+        } else {
+            Intent intent = new Intent(this, HotelBookingActivity.class);
+            // TODO - have a singleton class and set these objects there to share with other activities?
+            intent.putExtra("roomSelected", roomListItem.getHotelRoom());
 
-        intent.putExtra(Const.EXTRA_TRAVEL_HOTEL_SEARCH_LOCATION, location);
-        intent.putExtra(Const.EXTRA_TRAVEL_HOTEL_SEARCH_DURATION_OF_STAY, durationOfStayForDisplay);
-        intent.putExtra(Const.EXTRA_TRAVEL_HOTEL_SEARCH_DURATION_NUM_OF_NIGHTS, numOfNights);
-        intent.putExtra("headerImageURL", headerImageURL);
-        intent.putExtra("hotelName", hotelListItem.getHotel().name);
-        // startActivity(intent);
-        intent.putExtra("violationReasons", violationReasons);
-        intent.putExtra("ruleViolationExplanationRequired", ruleViolationExplanationRequired);
-        intent.putExtra("currentTripId", currentTripId);
-        startActivityForResult(intent, Const.REQUEST_CODE_BOOK_HOTEL);
+            intent.putExtra(Const.EXTRA_TRAVEL_HOTEL_SEARCH_LOCATION, location);
+            intent.putExtra(Const.EXTRA_TRAVEL_HOTEL_SEARCH_DURATION_OF_STAY, durationOfStayForDisplay);
+            intent.putExtra(Const.EXTRA_TRAVEL_HOTEL_SEARCH_DURATION_NUM_OF_NIGHTS, numOfNights);
+            intent.putExtra("headerImageURL", headerImageURL);
+            intent.putExtra("hotelName", hotelListItem.getHotel().name);
+            // startActivity(intent);
+            intent.putExtra("violationReasons", violationReasons);
+            intent.putExtra("ruleViolationExplanationRequired", ruleViolationExplanationRequired);
+            intent.putExtra("currentTripId", currentTripId);
+            intent.putExtra("hotelSearchId", hotel.search_id);
+            intent.putExtra("violations", (Serializable) violations);
+            startActivityForResult(intent, Const.REQUEST_CODE_BOOK_HOTEL);
+        }
 
     }
 

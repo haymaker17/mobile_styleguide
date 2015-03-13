@@ -20,8 +20,8 @@ import com.concur.mobile.platform.ui.travel.R;
  */
 public class CustomDialogFragment extends DialogFragment {
 
-    public int titleResourceId = R.string.hotel_confirm_reserve_title;
-    public int msgResourceId = R.string.hotel_confirm_reserve_msg;
+    public int titleResourceId;
+    public int msgResourceId;
     public int okButtonId;
     public int cancelButtonId;
     private CustomDialogFragmentCallbackListener callBackListener;

@@ -41,7 +41,6 @@ import com.concur.mobile.base.service.BaseAsyncResultReceiver;
 import com.concur.mobile.platform.common.SpinnerItem;
 import com.concur.mobile.platform.service.PlatformAsyncTaskLoader;
 import com.concur.mobile.platform.travel.booking.CreditCard;
-import com.concur.mobile.platform.travel.provider.TravelUtilHotel;
 import com.concur.mobile.platform.travel.search.hotel.HotelBookingAsyncRequestTask;
 import com.concur.mobile.platform.travel.search.hotel.HotelBookingRESTResult;
 import com.concur.mobile.platform.travel.search.hotel.HotelPreSellOption;
@@ -115,6 +114,7 @@ public class HotelBookingActivity extends Activity implements LoaderManager.Load
     private String currViolationId;
     private boolean ruleViolationExplanationRequired;
     private String currentTripId;
+    private List<HotelViolation> violations;
 
     /**
      * BroadcastReceiver used to detect network connectivity and update the UI accordingly.
@@ -125,6 +125,7 @@ public class HotelBookingActivity extends Activity implements LoaderManager.Load
 
     private boolean connectivityReceiverRegistered;
     private boolean connected;
+    private int msgResourse;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -147,6 +148,7 @@ public class HotelBookingActivity extends Activity implements LoaderManager.Load
         violationReasons = (ArrayList<String[]>) intent.getSerializableExtra("violationReasons");
         ruleViolationExplanationRequired = intent.getBooleanExtra("ruleViolationExplanationRequired", false);
         currentTripId = intent.getStringExtra("currentTripId");
+        violations = (List<HotelViolation>) intent.getSerializableExtra("violations");
 
         if (hotelRate != null) {
 
@@ -354,14 +356,18 @@ public class HotelBookingActivity extends Activity implements LoaderManager.Load
         reserveButton = (Button) findViewById(R.id.footer_button);
         reserveButton.setEnabled(false);
         reserveButton.setText(R.string.hotel_reserve_this_room);
+        if (hotelRate.guaranteeSurcharge != null && hotelRate.guaranteeSurcharge.equals("DepositRequired")) {
+            msgResourse = R.string.dlg_travel_hotel_deposit_confirm_message;
+        } else {
+            msgResourse = R.string.hotel_confirm_reserve_msg;
+        }
         reserveButton.setOnClickListener(new OnClickListener() {
 
             @Override
             public void onClick(View v) {
 
                 CustomDialogFragment dialog = new CustomDialogFragment(R.string.hotel_confirm_reserve_title,
-                        R.string.hotel_confirm_reserve_msg, R.string.hotel_confirm_reserve_ok,
-                        R.string.hotel_confirm_reserve_cancel);
+                        msgResourse, R.string.hotel_confirm_reserve_ok, R.string.hotel_confirm_reserve_cancel);
                 dialog.show(getFragmentManager(), DIALOG_FRAGMENT_ID);
 
             }
@@ -381,7 +387,8 @@ public class HotelBookingActivity extends Activity implements LoaderManager.Load
             }
 
             // Get the violations from the database and initialize the view
-            List<HotelViolation> violations = TravelUtilHotel.getHotelViolations(getApplicationContext(), valueIds);
+            // TravelUtilHotel.getHotelViolations(getApplicationContext(), valueIds,
+            // (int) search_id);
             Log.d(Const.LOG_TAG, CLS_TAG + ".initViolations: violations from db : " + violations);
             if (violations != null && violations.size() > 0) {
 

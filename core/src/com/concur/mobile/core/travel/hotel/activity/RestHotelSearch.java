@@ -317,8 +317,6 @@ public class RestHotelSearch extends TravelBaseActivity {
                     distanceUnit = (distanceUnit.equalsIgnoreCase("Miles") ? "M" : "K");
                 }
                 i.putExtra(Const.EXTRA_TRAVEL_HOTEL_SEARCH_DISTANCE_UNIT_ID, distanceUnit);
-                Boolean showGDSName = userConfig != null ? userConfig.showGDSNameInSearchResults : false;
-                i.putExtra(Const.EXTRA_TRAVEL_HOTEL_SEARCH_SHOW_GDS_NAME, showGDSName);
 
                 RestHotelSearch.this.startActivity(i);
             }
@@ -931,6 +929,8 @@ public class RestHotelSearch extends TravelBaseActivity {
         }
 
         intent.putExtra("currentTripId", cliqbookTripId);
+        Boolean showGDSName = userConfig != null ? userConfig.showGDSNameInSearchResults : false;
+        intent.putExtra(Const.EXTRA_TRAVEL_HOTEL_SEARCH_SHOW_GDS_NAME, showGDSName);
 
         startActivityForResult(intent, Const.REQUEST_CODE_BOOK_HOTEL);
     }

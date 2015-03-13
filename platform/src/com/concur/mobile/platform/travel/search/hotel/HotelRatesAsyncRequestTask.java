@@ -100,23 +100,26 @@ public class HotelRatesAsyncRequestTask extends PlatformAsyncRequestTask {
                                 "\n\n\n ******Get Hotel Rates successfull with count : " + hotel.rates.size());
                         resultData.putSerializable(HotelRatesAsyncRequestTask.HOTEL_RATES_RESULT_EXTRA_KEY,
                                 (Serializable) hotelRateResult);
-                        // log the error message
-                        new Thread(new Runnable() {
+                        if (hotelId != 0 && hotelSearchId != 0) {
 
-                            public void run() {
-                                for (HotelRate rate : hotel.rates) {
-                                    // inserting rates with new list of violations
-                                    TravelUtilHotel.insertHotelRateDetail(getContext().getContentResolver(),
-                                            (int) hotelId, rate);
+                            new Thread(new Runnable() {
 
-                                    // insert violations
-                                    TravelUtilHotel.insertHotelViolations(getContext().getContentResolver(),
-                                            (int) hotelSearchId, hotelRateResult.violations, true);
+                                public void run() {
+                                    for (HotelRate rate : hotel.rates) {
+                                        // inserting rates with new list of violations
+                                        TravelUtilHotel.insertHotelRateDetail(getContext().getContentResolver(),
+                                                (int) hotelId, rate);
+
+                                        // insert violations
+                                        TravelUtilHotel.insertHotelViolations(getContext().getContentResolver(),
+                                                (int) hotelSearchId, hotelRateResult.violations, true);
+                                    }
                                 }
-                            }
-                        }).start();
+                            }).start();
+                        }
 
                     } else {
+                        // log the error message
                         Log.i(Const.LOG_TAG, "\n\n\n ****** Hotel Booking successfull but no data with rates");
                     }
                 } else {
