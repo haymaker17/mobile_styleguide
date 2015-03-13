@@ -7,6 +7,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 
 import com.concur.mobile.core.ConcurCore;
+import com.concur.mobile.core.config.RuntimeConfig;
 import com.concur.mobile.core.service.ConcurService;
 import com.concur.mobile.core.util.ViewUtil;
 import com.concur.mobile.corp.activity.Home;
@@ -26,6 +27,8 @@ public class ConcurMobile extends ConcurCore {
     @Override
     public void onCreate() {
         super.onCreate();
+        
+        RuntimeConfig.with(this).load();
     }
 
     @Override

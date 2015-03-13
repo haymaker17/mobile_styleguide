@@ -44,6 +44,7 @@ import android.widget.TextView;
 import com.concur.core.R;
 import com.concur.mobile.base.util.Format;
 import com.concur.mobile.core.activity.Preferences;
+import com.concur.mobile.core.config.RuntimeConfig;
 import com.concur.mobile.core.data.MobileDatabase;
 import com.concur.mobile.core.data.SystemConfig;
 import com.concur.mobile.core.data.UserConfig;

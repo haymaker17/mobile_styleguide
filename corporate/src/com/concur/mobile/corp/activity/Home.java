@@ -85,6 +85,7 @@ import com.concur.mobile.core.activity.MessageCenter;
 import com.concur.mobile.core.activity.Preferences;
 import com.concur.mobile.core.activity.Tour;
 import com.concur.mobile.core.activity.ViewImage;
+import com.concur.mobile.core.config.RuntimeConfig;
 import com.concur.mobile.core.dialog.AlertDialogFragment;
 import com.concur.mobile.core.dialog.DialogFragmentFactory;
 import com.concur.mobile.core.dialog.ReceiptChoiceDialogFragment;
@@ -3652,45 +3653,55 @@ public class Home extends BaseActivity implements View.OnClickListener,
 		 * Flurry.EVENT_NAME_LAUNCH, params); } } }); navItems.add(navItem);
 		 */
 
-		navItem = new HomeScreenSimpleNavigationItem(NAVIGATION_APP_CENTER, -1,
-				R.string.home_navigation_app_center,
-				R.drawable.icon_menu_connect_to_apps, View.VISIBLE, View.VISIBLE,
-				new Runnable() {
+		if (RuntimeConfig.with(this).canUseAppCenter()) {
+			navItem = new HomeScreenSimpleNavigationItem(NAVIGATION_APP_CENTER,
+					-1, R.string.home_navigation_app_center,
+					R.drawable.icon_menu_connect_to_apps, View.VISIBLE,
+					View.VISIBLE, new Runnable() {
 
-					public void run() {
-						String bareToken = Preferences.getAccessToken();
-						
-						if (bareToken == null) {
-							Toast.makeText(Home.this, 
-									"Unable to retrieve access token. Please log out and back in.", 
-									Toast.LENGTH_LONG).show();
-							return;
-						}
-						
-						Locale locale = Locale.getDefault();
+						public void run() {
+							String bareToken = Preferences.getAccessToken();
 
-						String encodedToken = "";
-
-						try {
-							encodedToken = URLEncoder
-									.encode(bareToken, "UTF-8");
-							
-							Intent i = new Intent(Home.this,
-									SimpleWebViewActivity.class);
-							i.putExtra("url",
-									"http://appcenterdev.concursolutions.com?accessToken="
-											+ encodedToken + "&lang=" + locale);
-
-							if (i != null) {
-								startActivity(i);
+							if (bareToken == null) {
+								Toast.makeText(
+										Home.this,
+										"Unable to retrieve access token. Please log out and back in.",
+										Toast.LENGTH_LONG).show();
+								return;
 							}
-						} catch (UnsupportedEncodingException e) {
-							Log.i(CLS_TAG, "Unable to URL-encode token: '"
-									+ bareToken + "'");
+
+							Locale locale = Locale.getDefault();
+
+							String encodedToken = "";
+
+							try {
+								encodedToken = URLEncoder.encode(bareToken,
+										"UTF-8");
+
+								String urlString = "http://appcenterdev.concursolutions.com/#/?accessToken="
+										+ encodedToken
+										+ "&lang="
+										+ locale;
+								
+								//String urlString = "http://www.google.com/";
+
+								Intent i = new Intent(Home.this,
+										SimpleWebViewActivity.class);
+								i.putExtra("url", urlString);
+
+								//Log.d(CLS_TAG, "URL = " + urlString);
+
+								if (i != null) {
+									startActivity(i);
+								}
+							} catch (Exception e) {
+								Log.i(CLS_TAG, "Unable to URL-encode token: '"
+										+ bareToken + "'");
+							}
 						}
-					}
-				});
-		navItems.add(navItem);
+					});
+			navItems.add(navItem);
+		}
 
 		// MOB-15458 : it required to remove ad from more menu. so adnav item is
 		// null.

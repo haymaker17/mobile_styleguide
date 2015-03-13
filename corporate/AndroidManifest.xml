@@ -67,7 +67,7 @@
         android:theme="@style/ConcurTheme" >
         <activity
             android:name="com.concur.mobile.corp.activity.SimpleWebViewActivity"
-            android:configChanges="orientation"
+            android:screenOrientation="portrait"
             android:theme="@style/ConcurBaseTheme.White.New" 
             android:parentActivityName="com.concur.mobile.corp.activity.Home" >
             <meta-data

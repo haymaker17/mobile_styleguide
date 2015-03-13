@@ -1,4 +1,6 @@
 bin/
 build/
 gen/
-
+*.iml
+.gradle/
+.idea/
