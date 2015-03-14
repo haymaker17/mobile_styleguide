@@ -1231,7 +1231,7 @@
         <item quantity="other">According to company policy, you must provide receipts for the expenses listed below.</item>
     </plurals>
 
-    <string name="report_submit_original_receipt_required">You may attach scanned images to individual expenses or to the report, but original paper receipts must also be submitted. If you have already provided receipts, you can submit your report now.</string>
+    <string name="report_submit_original_receipt_required">Original paper receipts must be submitted. If you have already provided receipts, you can submit your report now.</string>
     <string name="auto_report_name">Mobile Expense Report</string>
     <string name="dlg_report_submit_confirmation_title">Submit Confirmation</string>
     <string name="dlg_delete_receipt_confirmation_title">Delete Confirmation</string>
