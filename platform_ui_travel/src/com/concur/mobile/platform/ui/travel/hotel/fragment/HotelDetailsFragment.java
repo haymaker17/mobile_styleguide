@@ -62,7 +62,7 @@ public class HotelDetailsFragment extends PlatformFragmentV1 implements OnClickL
         super.onCreateView(inflater, container, savedInstanceState);
 
         // inflate the details fragment
-        View mainView = inflater.inflate(R.layout.hotel_details_layout, null, false);
+        View mainView = inflater.inflate(R.layout.hotel_details_layout, container, false);
 
         post = new LatLng(hotel.latitude, hotel.longitude);
 
@@ -123,7 +123,7 @@ public class HotelDetailsFragment extends PlatformFragmentV1 implements OnClickL
         }
 
         if (hotel.rates != null && hotel.rates.size() > 0) {
-            findRooms = (Button) mainView.findViewById(R.id.footer_button);
+            findRooms = (Button) mainView.findViewById(R.id.full_button);
             if (findRooms != null) {
                 findRooms.setText(getText(R.string.find_rooms_button));
             }

@@ -110,15 +110,18 @@ public class ParallaxScollView extends ListView implements OnScrollListener {
     }
 
     public void setViewsBounds(double zoomRatio) {
-        if (mImageViewHeight == -1) {
+        if (mImageViewHeight == -1 && mImageView != null && mImageView.getVisibility() == View.VISIBLE) {
             mImageViewHeight = mImageView.getHeight();
             if (mImageViewHeight <= 0) {
                 mImageViewHeight = mDefaultImageViewHeight;
             }
-            double ratio = ((double) mImageView.getDrawable().getIntrinsicWidth()) / ((double) mImageView.getWidth());
+            if (mImageView != null && mImageView.getVisibility() == View.VISIBLE) {
+                double ratio = ((double) mImageView.getDrawable().getIntrinsicWidth())
+                        / ((double) mImageView.getWidth());
 
-            mDrawableMaxHeight = (int) ((mImageView.getDrawable().getIntrinsicHeight() / ratio) * (zoomRatio > 1 ? zoomRatio
-                    : 1));
+                mDrawableMaxHeight = (int) ((mImageView.getDrawable().getIntrinsicHeight() / ratio) * (zoomRatio > 1 ? zoomRatio
+                        : 1));
+            }
         }
     }
 

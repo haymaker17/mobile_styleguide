@@ -101,6 +101,7 @@ public class HotelChoiceDetailsFragment extends PlatformFragmentV1 implements On
         mListView = (ParallaxScollView) mRoot.findViewById(R.id.layout_listview);
         View header = LayoutInflater.from(getActivity()).inflate(R.layout.hotel_choice_header, null);
         mImageView = (ImageView) header.findViewById(R.id.travelCityscape);
+        mImageView.setVisibility(View.GONE);
 
         View hotelView = header.findViewById(R.id.hotel_row);
         hotelListItem.getHotel().lowestRate = null;
@@ -111,13 +112,15 @@ public class HotelChoiceDetailsFragment extends PlatformFragmentV1 implements On
         getActivity().getWindowManager().getDefaultDisplay().getMetrics(displaymetrics);
         int screenHeight = displaymetrics.heightPixels;
 
-        mListView.setParallaxImageView(mImageView);
-        header.setMinimumWidth(screenHeight / 4);
-        mListView.addHeaderView(header);
+        if (mImageView.getVisibility() == View.VISIBLE) {
+            mListView.setParallaxImageView(mImageView);
+            header.setMinimumWidth(screenHeight / 4);
+            mListView.addHeaderView(header);
 
-        ArrayAdapter<String> adapter = new ArrayAdapter<String>(getActivity(),
-                android.R.layout.simple_expandable_list_item_1, new String[] {});
-        mListView.setAdapter(adapter);
+            ArrayAdapter<String> adapter = new ArrayAdapter<String>(getActivity(),
+                    android.R.layout.simple_expandable_list_item_1, new String[] {});
+            mListView.setAdapter(adapter);
+        }
 
         setActionBar();
         setupTabs();
@@ -241,7 +244,7 @@ public class HotelChoiceDetailsFragment extends PlatformFragmentV1 implements On
         int orientation = getResources().getConfiguration().orientation;
         switch (orientation) {
         case Configuration.ORIENTATION_PORTRAIT:
-            mImageView.setVisibility(View.VISIBLE);
+
             HotelImagePair image2 = null;
             if (mImageView != null && imagepairs != null && imagepairs.size() > 0) {
 
@@ -258,9 +261,10 @@ public class HotelChoiceDetailsFragment extends PlatformFragmentV1 implements On
                     mImageView.setImageBitmap(bitmap);
                     // set the image uri in the activity associated with this fragment
                     callBackListener.setHeaderImageURL(image2.image);
+                    mImageView.setVisibility(View.VISIBLE);
                 }
             } else {
-                mImageView.setImageResource(R.drawable.cityscape_placeholder);
+                mImageView.setVisibility(View.GONE);
             }
 
             break;

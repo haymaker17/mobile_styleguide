@@ -9,7 +9,7 @@
         android:layout_width="match_parent"
         android:layout_height="@dimen/size_default_height"
         android:scaleType="centerCrop"
-        android:src="@drawable/cityscape_placeholder" />
+        android:visibility="gone" />
 
     <View
         android:id="@+id/viewSpacer"

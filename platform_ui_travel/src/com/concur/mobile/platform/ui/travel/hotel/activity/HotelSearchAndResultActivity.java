@@ -796,7 +796,7 @@ public class HotelSearchAndResultActivity extends Activity implements OnMenuItem
                 // hideProgressBar();
                 HotelRatesRESTResult hotelRateResult = (HotelRatesRESTResult) resultData
                         .getSerializable("HotelRatesResult");
-                Hotel hotel = hotelRateResult.hotel;
+                Hotel hotel = hotelRateResult != null ? hotelRateResult.hotel : null;
                 if (hotel != null && hotel.rates != null) {
 
                     selectedHotelListItem.getHotel().rates = hotel.rates;
