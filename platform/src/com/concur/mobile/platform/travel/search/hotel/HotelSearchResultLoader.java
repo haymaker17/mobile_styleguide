@@ -88,7 +88,7 @@ public class HotelSearchResultLoader extends PlatformAsyncTaskLoader<HotelSearch
     /**
      * Contains search url
      */
-    public String searchUrl;
+    public static String searchUrl;
 
     /**
      * Contains results object
@@ -213,7 +213,7 @@ public class HotelSearchResultLoader extends PlatformAsyncTaskLoader<HotelSearch
         endPointUrlBldr.append(Format.safeFormatCalendar(Parse.LONG_YEAR_MONTH_DAY, checkInDate));
         endPointUrlBldr.append("&checkout=");
         endPointUrlBldr.append(Format.safeFormatCalendar(Parse.LONG_YEAR_MONTH_DAY, checkOutDate));
-        endPointUrlBldr.append("&radius=25");
+        // endPointUrlBldr.append("&radius=25");
         return endPointUrlBldr.toString();
     }
 
