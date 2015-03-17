@@ -5,6 +5,7 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
+import android.animation.ObjectAnimator;
 import android.annotation.SuppressLint;
 import android.app.ActionBar;
 import android.app.Activity;
@@ -126,6 +127,19 @@ public class HotelBookingActivity extends Activity implements LoaderManager.Load
     private boolean connectivityReceiverRegistered;
     private boolean connected;
     private int msgResourse;
+    private boolean isExpanded;
+    private ParallaxScollView mListView;
+    private TextView roomDescView;
+
+    @Override
+    public void onWindowFocusChanged(boolean hasFocus) {
+        super.onWindowFocusChanged(hasFocus);
+
+        if (hasFocus && mListView != null) {
+
+            mListView.setViewsBounds(ParallaxScollView.ZOOM_X2);
+        }
+    }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -294,7 +308,7 @@ public class HotelBookingActivity extends Activity implements LoaderManager.Load
             Bitmap bitmap = imgCache.getBitmap(uri, null);
 
             if (bitmap != null) {
-                ParallaxScollView mListView = (ParallaxScollView) findViewById(R.id.hotel_room_image);
+                mListView = (ParallaxScollView) findViewById(R.id.hotel_room_image);
                 View header = LayoutInflater.from(this).inflate(R.layout.hotel_image_header, null);
                 ImageView imageview = (ImageView) header.findViewById(R.id.travelCityscape);
                 imageview.setImageBitmap(bitmap);
@@ -307,13 +321,11 @@ public class HotelBookingActivity extends Activity implements LoaderManager.Load
                 mListView.setAdapter(adapter);
             }
         }
-
         // room desc
-        TextView txtView = (TextView) findViewById(R.id.hotel_room_desc);
-        txtView.setText(roomDesc);
+        updateRoomDescription();
 
         // dates
-        txtView = (TextView) findViewById(R.id.date_span);
+        TextView txtView = (TextView) findViewById(R.id.date_span);
         txtView.setText(durationOfStayForDisplay);
 
         // number of nights
@@ -372,6 +384,50 @@ public class HotelBookingActivity extends Activity implements LoaderManager.Load
 
             }
         });
+    }
+
+    private void updateRoomDescription() {
+        roomDescView = (TextView) findViewById(R.id.hotel_room_desc);
+        roomDescView.setText(roomDesc);
+
+        roomDescView.post(new Runnable() {
+
+            @Override
+            public void run() {
+                int lineCount = roomDescView.getLineCount();
+                // animate txtView more than 3 lines
+                if (lineCount > 3) {
+                    roomDescView.setMaxLines(3);
+                    roomDescView.setEllipsize(TextUtils.TruncateAt.END);
+                    roomDescView.setCompoundDrawablesWithIntrinsicBounds(0, 0, 0, R.drawable.icon_expand_more);
+
+                    roomDescView.setOnClickListener(new OnClickListener() {
+
+                        ObjectAnimator animation = null;
+
+                        @Override
+                        public void onClick(View v) {
+                            if (isExpanded) {
+                                animation = ObjectAnimator.ofInt(v, "maxLines", 3);
+                                roomDescView.setCompoundDrawablesWithIntrinsicBounds(0, 0, 0,
+                                        R.drawable.icon_expand_more);
+
+                            } else {
+                                animation = ObjectAnimator.ofInt(v, "maxLines", 1000);
+                                roomDescView.setCompoundDrawablesWithIntrinsicBounds(0, 0, 0,
+                                        R.drawable.icon_expand_less);
+                            }
+                            isExpanded = !isExpanded;
+                            animation.setDuration(10);
+                            animation.start();
+
+                        }
+                    });
+                }
+
+            }
+        });
+
     }
 
     private void initViolations() {
