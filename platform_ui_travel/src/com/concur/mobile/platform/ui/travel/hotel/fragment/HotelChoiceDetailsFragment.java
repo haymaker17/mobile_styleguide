@@ -115,12 +115,12 @@ public class HotelChoiceDetailsFragment extends PlatformFragmentV1 implements On
         if (mImageView.getVisibility() == View.VISIBLE) {
             mListView.setParallaxImageView(mImageView);
             header.setMinimumWidth(screenHeight / 4);
-            mListView.addHeaderView(header);
-
-            ArrayAdapter<String> adapter = new ArrayAdapter<String>(getActivity(),
-                    android.R.layout.simple_expandable_list_item_1, new String[] {});
-            mListView.setAdapter(adapter);
         }
+        mListView.addHeaderView(header);
+
+        ArrayAdapter<String> adapter = new ArrayAdapter<String>(getActivity(),
+                android.R.layout.simple_expandable_list_item_1, new String[] {});
+        mListView.setAdapter(adapter);
 
         setActionBar();
         setupTabs();

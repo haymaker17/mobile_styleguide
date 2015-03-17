@@ -123,7 +123,7 @@ public class HotelDetailsFragment extends PlatformFragmentV1 implements OnClickL
         }
 
         if (hotel.rates != null && hotel.rates.size() > 0) {
-            findRooms = (Button) mainView.findViewById(R.id.full_button);
+            findRooms = (Button) mainView.findViewById(R.id.footer_button);
             if (findRooms != null) {
                 findRooms.setText(getText(R.string.find_rooms_button));
             }

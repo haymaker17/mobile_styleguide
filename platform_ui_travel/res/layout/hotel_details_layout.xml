@@ -1,14 +1,37 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:map="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical" >
 
-    <ScrollView
+    <RelativeLayout
+        android:id="@+id/footer"
         android:layout_width="match_parent"
-        android:layout_height="0dp"
-        android:layout_weight="1" >
+        android:layout_height="60dp"
+        android:layout_alignParentBottom="true"
+        android:layout_gravity="bottom"
+        android:background="@color/blueTabs" >
+
+        <Button
+            android:id="@+id/footer_button"
+            android:layout_width="match_parent"
+            android:layout_height="60dp"
+            android:layout_centerHorizontal="true"
+            android:background="@color/blueTabs"
+            android:fontFamily="sans-serif-light"
+            android:gravity="center"
+            android:text="@string/find_rooms_button"
+            android:textColor="@color/White"
+            android:textSize="20sp" />
+    </RelativeLayout>
+
+    <ScrollView
+        android:id="@+id/scrollView"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_above="@id/footer"
+        android:fillViewport="true" >
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -16,42 +39,11 @@
             android:gravity="center"
             android:orientation="vertical" >
 
-            <!--
-                  <com.google.android.gms.maps.MapFragment
-                android:id="@+id/map_view"
-                android:layout_width="match_parent"
-                android:layout_height="168dp"
-                android:layout_marginTop="12dp"
-                map:cameraZoom="15"
-                map:liteMode="true"
-                map:mapType="normal" />
-            -->
-
             <FrameLayout
                 android:id="@+id/map_view"
                 android:layout_width="match_parent"
                 android:layout_height="96dp"
                 android:layout_marginTop="12dp" />
-
-            <!--
-            <FrameLayout
-                android:id="@+id/map_view"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="12dp" />
-                 map:cameraZoom="13"
-                map:liteMode="true"
-                map:mapType="normal"
-            </FrameLayout>
-            layout="@layout/map_layout"
-
-            <ImageView
-                android:id="@+id/map_imageview"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="12dp"
-                android:clickable="true" />
-            -->
 
             <TextView
                 android:id="@+id/hotel_address"
@@ -108,8 +100,4 @@
         </LinearLayout>
     </ScrollView>
 
-    <include
-        android:id="@+id/footer"
-        layout="@layout/footer_navigation_button_full" />
-
-</LinearLayout>
+</RelativeLayout>
