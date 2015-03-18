@@ -51,6 +51,41 @@ android {
     }
 
     lintOptions {
-        abortOnError false
+        abortOnError true
+    }
+
+    splits {
+        abi {
+            enable true
+            reset()
+            include 'x86', 'armeabi'
+            universalApk false
+        }
+    }
+
+    packagingOptions {
+        exclude 'lib/armeabi/libdatabase_sqlcipher.so'
+        exclude 'lib/armeabi/libsqlcipher_android.so'
+        exclude 'lib/armeabi/libstlport_shared.so'
+        exclude 'lib/x86/libdatabase_sqlcipher.so'
+        exclude 'lib/x86/libsqlcipher_android.so'
+        exclude 'lib/x86/libstlport_shared.so'
+    }
+}
+
+
+
+// map for the version code
+//Ensures architecture specific APKs have a higher version code
+//(otherwise an x86 build would end up using the arm build, which x86 devices can run)
+ext.versionCodes = [armeabi:1, x86:3]
+
+import com.android.build.OutputFile
+
+android.applicationVariants.all { variant ->
+    // assign different version code for each output
+    variant.outputs.each { output ->
+        int abiVersionCode = project.ext.versionCodes.get(output.getFilter(OutputFile.ABI)) ?: 1
+        output.versionCodeOverride = (abiVersionCode * 1000) + (android.defaultConfig.versionCode ?: 1)
     }
 }
