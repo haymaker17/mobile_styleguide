@@ -62,7 +62,7 @@ public class HotelDetailsFragment extends PlatformFragmentV1 implements OnClickL
         super.onCreateView(inflater, container, savedInstanceState);
 
         // inflate the details fragment
-        View mainView = inflater.inflate(R.layout.hotel_details_layout, null, false);
+        View mainView = inflater.inflate(R.layout.hotel_details_layout, container, false);
 
         post = new LatLng(hotel.latitude, hotel.longitude);
 
@@ -109,7 +109,7 @@ public class HotelDetailsFragment extends PlatformFragmentV1 implements OnClickL
         }
 
         String s = contact.phone.trim();
-        if (s != null && s.length() > 0) {
+        if (!s.isEmpty()) {
             String formattedNumber = PhoneNumberUtils.formatNumber(contact.phone);
             // String formattedNumber = String.format("(%s) %s %s", s.subSequence(0, 3), s.subSequence(3, 6),
             // s.subSequence(6, 10));

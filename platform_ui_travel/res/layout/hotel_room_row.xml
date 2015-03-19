@@ -24,7 +24,6 @@
             android:ellipsize="end"
             android:fontFamily="sans-serif-medium"
             android:maxLines="3"
-            android:text="Queen bed wifi ellskdf sdfdfo9iwer sdl;ksdf; sdfsopdfip0sfwe sdfoipe9riwer weruy89uerwer ewr8uwerwerkjsdf sdf;i;0pierwerwr "
             android:textColor="#383f46"
             android:textSize="16sp" />
 
@@ -33,6 +32,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:fontFamily="sans-serif-medium"
+            android:text="@string/hotel_booking_deposit_required"
             android:textColor="#383f46"
             android:textSize="16sp"
             android:textStyle="bold"
@@ -87,9 +87,24 @@
             android:fontFamily="sans-serif-medium"
             android:paddingLeft="5dp"
             android:paddingRight="@dimen/list_cell_padding_right"
-            android:text="per night"
+            android:text="@string/hotel_price_hint"
             android:textColor="#687278"
             android:textSize="12sp" />
+
+        <TextView
+            android:id="@+id/hotel_room_out_of_policy"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/hotel_room_rate_hint"
+            android:layout_gravity="right|center_vertical"
+            android:layout_toLeftOf="@id/hotel_room_max_violation_icon"
+            android:fontFamily="sans-serif-medium"
+            android:paddingLeft="5dp"
+            android:paddingRight="@dimen/list_cell_padding_right"
+            android:text="@string/hotel_out_of_policy"
+            android:textColor="@color/FareRed"
+            android:textSize="12sp"
+            android:visibility="gone" />
 
         <!--
              <TextView

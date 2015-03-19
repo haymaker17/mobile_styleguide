@@ -33,20 +33,42 @@ public class StartOCR implements Serializable {
     public String receiptImageId;
 
     /**
+     * <p>
      * Contains the image origin (e.g.MOB).
+     * </p>
+     * <p>
+     * <ul>
+     * <li>MOB - mobile</li>
+     * <li>APP - ExpenseIt</li>
+     * <li>CTE - Concur T&E</li>
+     * <li>EML - email</li>
+     * <li>INV - invoice</li>
+     * </ul>
+     * </p>
      */
     @SerializedName("imageOrigin")
     public String imageOrigin;
 
     /**
+     * <p>
      * Contains the OCR status, one of the following:
      * 
-     * The ocrStatus field can contain the following values: OCR_NOT_COMPANY_ENABLED - OCR is not enabled for the end-users
-     * company. OCR_NOT_AVAILABLE - OCR service could not be reached. OCR_STAT_UNKNOWN - OCR does not have any knowledge of the
-     * receipt (not OCR Enqueued). A_PEND - pending auto OCR - "auto" OCR pending. A_DONE - completed auto OCR - "auto" OCR
-     * completed. A_CNCL - cancelled auto OCR - "auto" OCR cancelled. A_FAIL - failure auto OCR - "auto" OCR failed. M_PEND -
-     * pending manual OCR - "manual" OCR pending. M_DONE - completed manual OCR - "manual" OCR completed. M_CNCL - cancelled
-     * manual OCR - "manual" OCR cancelled.
+     * The ocrStatus field can contain the following values:
+     * </p>
+     * <p>
+     * <ul>
+     * <li>OCR_NOT_COMPANY_ENABLED - OCR is not enabled for the end-users company.</li>
+     * <li>OCR_NOT_AVAILABLE - OCR service could not be reached.</li>
+     * <li>OCR_STAT_UNKNOWN - OCR does not have any knowledge of the receipt (not OCR Enqueued).</li>
+     * <li>A_PEND - pending auto OCR - "auto" OCR pending.</li>
+     * <li>A_DONE - completed auto OCR - "auto" OCR completed.</li>
+     * <li>A_CNCL - cancelled auto OCR - "auto" OCR cancelled.</li>
+     * <li>A_FAIL - failure auto OCR - "auto" OCR failed.</li>
+     * <li>M_PEND - pending manual OCR - "manual" OCR pending.</li>
+     * <li>M_DONE - completed manual OCR - "manual" OCR completed.</li>
+     * <li>M_CNCL - cancelled manual OCR - "manual" OCR cancelled.</li>
+     * </ul>
+     * </p>
      */
     @SerializedName("ocrStatus")
     public String ocrStatus;

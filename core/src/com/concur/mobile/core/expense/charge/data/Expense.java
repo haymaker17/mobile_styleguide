@@ -204,7 +204,7 @@ public class Expense {
         } else {
             // Last resort, just set it to UNKOWN
             type = ExpenseEntryType.UNKNOWN_EXPENSE;
-            Log.e(Const.LOG_TAG, CLS_TAG + ".Expense() - could not determine the expense type!!!");
+            Log.w(Const.LOG_TAG, CLS_TAG + ".Expense() - could not determine the expense type!!!");
         }
 
     }

@@ -169,12 +169,13 @@ public class HotelSearchResultListItem extends ListItem implements Serializable 
                 } else {
                     // unknown error code
                     txtView.setText(R.string.general_not_available);
+
                 }
-                if (txtView.getVisibility() == View.VISIBLE) {
-                    txtView.setBackground(context.getResources().getDrawable(R.drawable.strong_red_rectangle));
-                    txtView.setTextColor(Color.parseColor("#d25533"));
-                    hotelView.setAlpha(0.5f);// 50% transparent
-                }
+
+                txtView.setBackground(context.getResources().getDrawable(R.drawable.strong_red_rectangle));
+                txtView.setTextColor(Color.parseColor("#d25533"));
+                hotelView.setAlpha(0.5f);// 50% transparent
+
             } else {
                 // Set the company preference
                 final int resourceId = com.concur.mobile.platform.ui.travel.util.ViewUtil

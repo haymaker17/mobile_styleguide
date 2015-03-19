@@ -19,6 +19,7 @@ import android.content.Loader;
 import android.os.Bundle;
 import android.os.Handler;
 import android.util.Log;
+import android.view.KeyEvent;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
@@ -27,13 +28,18 @@ import android.widget.PopupMenu;
 import android.widget.PopupMenu.OnMenuItemClickListener;
 import android.widget.Toast;
 
+import com.concur.mobile.base.service.BaseAsyncRequestTask.AsyncReplyListener;
+import com.concur.mobile.base.service.BaseAsyncResultReceiver;
 import com.concur.mobile.platform.service.PlatformAsyncTaskLoader;
 import com.concur.mobile.platform.travel.provider.TravelUtilHotel;
 import com.concur.mobile.platform.travel.search.hotel.Hotel;
 import com.concur.mobile.platform.travel.search.hotel.HotelComparator;
+import com.concur.mobile.platform.travel.search.hotel.HotelRatesAsyncRequestTask;
+import com.concur.mobile.platform.travel.search.hotel.HotelRatesRESTResult;
 import com.concur.mobile.platform.travel.search.hotel.HotelSearchPollResultLoader;
 import com.concur.mobile.platform.travel.search.hotel.HotelSearchRESTResult;
 import com.concur.mobile.platform.travel.search.hotel.HotelSearchResultLoader;
+import com.concur.mobile.platform.travel.search.hotel.HotelViolation;
 import com.concur.mobile.platform.ui.common.view.ListItemAdapter;
 import com.concur.mobile.platform.ui.travel.R;
 import com.concur.mobile.platform.ui.travel.hotel.fragment.HotelSearchResultFilterFragment;
@@ -61,6 +67,9 @@ public class HotelSearchAndResultActivity extends Activity implements OnMenuItem
 
     private static final int HOTEL_SEARCH_LIST_LOADER_ID = 0;
     private static final int HOTEL_POLL_LIST_LOADER_ID = 1;
+    private static final int HOTEL_RATES_ASYN_TASK_ID = 2;
+
+    private static final String SERVICE_END_POINT = "/mobile/travel/v1.0/Hotels";
 
     private HotelSearchResultFragment hotelSearchRESTResultFrag;
     private HotelSearchResultFilterFragment filterFrag;
@@ -89,6 +98,15 @@ public class HotelSearchAndResultActivity extends Activity implements OnMenuItem
     private String distanceUnit;
     private int numberOfNights;
     private ArrayList<String[]> violationReasons;
+    private String cacheKey;
+    private boolean retriveFromDB;
+    private BaseAsyncResultReceiver hotelRatesReceiver;
+    private HotelSearchResultListItem selectedHotelListItem;
+    private boolean ruleViolationExplanationRequired;
+    private String currentTripId;
+    private boolean showGDSName;
+    private List<HotelViolation> updatedVoilations;
+    private List<HotelViolation> voilations;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -99,37 +117,35 @@ public class HotelSearchAndResultActivity extends Activity implements OnMenuItem
 
         location = intent.getStringExtra(Const.EXTRA_TRAVEL_HOTEL_SEARCH_LOCATION);
         violationReasons = (ArrayList<String[]>) intent.getSerializableExtra("violationReasons");
+        ruleViolationExplanationRequired = intent.getBooleanExtra("ruleViolationExplanationRequired", false);
+        currentTripId = intent.getStringExtra("currentTripId");
 
         // searchCriteriaChanged will be false if it just came back from search criteria screen without any changes to the
         // previous searched criteria. in such
         // case, we can get the results from db and show instead of doing the server call again
         searchCriteriaChanged = intent.getBooleanExtra("searchCriteriaChanged", true);
 
-        if (searchCriteriaChanged) {
-
-            checkInDate = (Calendar) intent.getSerializableExtra(Const.EXTRA_TRAVEL_HOTEL_SEARCH_CHECK_IN_CALENDAR);
-            checkOutDate = (Calendar) intent.getSerializableExtra(Const.EXTRA_TRAVEL_HOTEL_SEARCH_CHECK_OUT_CALENDAR);
-            latitude = Double.valueOf(intent.getStringExtra(Const.EXTRA_TRAVEL_LATITUDE));
-            longitude = Double.valueOf(intent.getStringExtra(Const.EXTRA_TRAVEL_LONGITUDE));
-            fromLocationSearch = intent.getBooleanExtra(Const.EXTRA_LOCATION_SEARCH_MODE_USED, false);
-            distanceUnit = intent.getStringExtra(Const.EXTRA_TRAVEL_HOTEL_SEARCH_DISTANCE_UNIT_ID);
-
-            // Initialize the loader.
-            lm = getLoaderManager();
-            searchWorkflowStartTime = System.currentTimeMillis();
-            lm.initLoader(HOTEL_SEARCH_LIST_LOADER_ID, null, this);
-        }
+        checkInDate = (Calendar) intent.getSerializableExtra(Const.EXTRA_TRAVEL_HOTEL_SEARCH_CHECK_IN_CALENDAR);
+        checkOutDate = (Calendar) intent.getSerializableExtra(Const.EXTRA_TRAVEL_HOTEL_SEARCH_CHECK_OUT_CALENDAR);
+        latitude = Double.valueOf(intent.getStringExtra(Const.EXTRA_TRAVEL_LATITUDE));
+        longitude = Double.valueOf(intent.getStringExtra(Const.EXTRA_TRAVEL_LONGITUDE));
+        fromLocationSearch = intent.getBooleanExtra(Const.EXTRA_LOCATION_SEARCH_MODE_USED, false);
+        distanceUnit = intent.getStringExtra(Const.EXTRA_TRAVEL_HOTEL_SEARCH_DISTANCE_UNIT_ID);
+        showGDSName = intent.getBooleanExtra(Const.EXTRA_TRAVEL_HOTEL_SEARCH_SHOW_GDS_NAME, false);
 
         hotelSearchRESTResultFrag = (HotelSearchResultFragment) getFragmentManager().findFragmentByTag(
                 FRAGMENT_SEARCH_RESULT);
 
         if (hotelSearchRESTResultFrag == null) {
             hotelSearchRESTResultFrag = new HotelSearchResultFragment();
-
-            FragmentTransaction ft = getFragmentManager().beginTransaction();
-            ft.add(R.id.container, hotelSearchRESTResultFrag, FRAGMENT_SEARCH_RESULT);
-            ft.commit();
         }
+        if (distanceUnit != null && distanceUnit.equalsIgnoreCase("K")) {
+            filterFrag.setDistanceUnitInKm(true);
+        }
+
+        FragmentTransaction ft = getFragmentManager().beginTransaction();
+        ft.add(R.id.container, hotelSearchRESTResultFrag, FRAGMENT_SEARCH_RESULT);
+        ft.commit();
 
         hotelSearchRESTResultFrag.location = location;
         hotelSearchRESTResultFrag.durationOfStayForDisplayInHeader = getIntent().getStringExtra(
@@ -150,15 +166,16 @@ public class HotelSearchAndResultActivity extends Activity implements OnMenuItem
     @Override
     public void fragmentReady() {
         // signal from fragment that it is loaded
-        if (!searchCriteriaChanged) {
-            populateHotelListItemsFromDB();
-        }
+        cacheKey = HotelSearchResultLoader.prepareEndPointUrl(latitude, longitude, distanceUnit, checkInDate,
+                checkOutDate);
+        populateHotelListItemsFromDB();
     }
 
     // get hotels from database and populate the list items
     private void populateHotelListItemsFromDB() {
         // get from db
-        List<Hotel> hotels = TravelUtilHotel.getHotels(this);
+
+        List<Hotel> hotels = TravelUtilHotel.getHotels(this, cacheKey);
 
         Log.d(Const.LOG_TAG, " ***** retrieved hotels from TravelUtilHotel.getHotels *****  "
                 + (hotels == null ? null : hotels.size()));
@@ -166,6 +183,7 @@ public class HotelSearchAndResultActivity extends Activity implements OnMenuItem
         // populate list items
         if (hotels != null && hotels.size() > 0) {
             hotelListItemsToSort = new ArrayList<HotelSearchResultListItem>(hotels.size());
+            retriveFromDB = true;
             for (Hotel hotel : hotels) {
                 HotelSearchResultListItem item = new HotelSearchResultListItem(hotel);
                 hotelListItemsToSort.add(item);
@@ -174,7 +192,11 @@ public class HotelSearchAndResultActivity extends Activity implements OnMenuItem
             hotelSearchRESTResultFrag.hideProgressBar();
         } else {
             // hotelSearchRESTResultFrag.showNegativeView();
-            Toast.makeText(this, "Hotel Search Failed. Please try again.", Toast.LENGTH_SHORT).show();
+            // Toast.makeText(this, "Hotel Search Failed. Please try again.", Toast.LENGTH_SHORT).show();
+            // Initialize the loader.
+            lm = getLoaderManager();
+            searchWorkflowStartTime = System.currentTimeMillis();
+            lm.initLoader(HOTEL_SEARCH_LIST_LOADER_ID, null, this);
         }
 
     }
@@ -232,8 +254,7 @@ public class HotelSearchAndResultActivity extends Activity implements OnMenuItem
      */
     protected void sortByPreference(List<HotelSearchResultListItem> hotelListItemsToSort) {
         // Construct the primary/secondary sorts.
-        Comparator<Hotel> primarySort = new HotelComparator(HotelComparator.CompareField.PREFERENCE,
-                HotelComparator.CompareOrder.DESCENDING);
+        Comparator<Hotel> primarySort = new HotelComparator(HotelComparator.CompareField.PREFERENCE);
         HotelComparator secondarySort = new HotelComparator(HotelComparator.CompareField.CHEAPEST_ROOM,
                 HotelComparator.CompareOrder.ASCENDING);
         // Perform the actual sort.
@@ -267,14 +288,14 @@ public class HotelSearchAndResultActivity extends Activity implements OnMenuItem
     }
 
     /**
-     * Sort the list of hotels primarily by star rating, secondarily by distance.
+     * Sort the list of hotels primarily by suggestion, secondarily by preference.
      */
     protected void sortBySuggestion(List<HotelSearchResultListItem> hotelListItemsToSort) {
         // Construct the primary/secondary sorts.
         Comparator<Hotel> primarySort = new HotelComparator(HotelComparator.CompareField.RECOMMENDATION,
                 HotelComparator.CompareOrder.DESCENDING);
         HotelComparator secondarySort = new HotelComparator(HotelComparator.CompareField.PREFERENCE,
-                HotelComparator.CompareOrder.ASCENDING);
+                HotelComparator.CompareOrder.DESCENDING);
         // Perform the actual sort.
         sortByComparator(primarySort, secondarySort, hotelListItemsToSort);
     }
@@ -294,6 +315,7 @@ public class HotelSearchAndResultActivity extends Activity implements OnMenuItem
         // Populate list of hotels with availability error codes that need to be moved to the bottom of the list
         List<HotelSearchResultListItem> hotelListItemsToDisplayAtbottom = null;
 
+        // TODO - check is spare array canbe used instead of hashmap
         Map<Hotel, HotelSearchResultListItem> hotelSortMap = new HashMap<Hotel, HotelSearchResultListItem>();
         if (hotelListItemsToSort != null) {
             hotelListItemsToDisplayAtbottom = new ArrayList<HotelSearchResultListItem>();
@@ -472,6 +494,8 @@ public class HotelSearchAndResultActivity extends Activity implements OnMenuItem
             Bundle bundle = new Bundle();
             bundle.putSerializable(Const.EXTRA_HOTELS_LIST, (Serializable) hotelList);
             i.putExtras(bundle);
+            i.putExtra(Const.EXTRA_TRAVEL_LATITUDE, latitude);
+            i.putExtra(Const.EXTRA_TRAVEL_LONGITUDE, longitude);
 
             startActivity(i);
 
@@ -488,34 +512,82 @@ public class HotelSearchAndResultActivity extends Activity implements OnMenuItem
     public void hotelListItemClicked(HotelSearchResultListItem itemClicked) {
 
         if (itemClicked != null) {
-            Hotel hotelSelected = itemClicked.getHotel();
-            if (hotelSelected != null) {
+            selectedHotelListItem = itemClicked;
+            Hotel hotelSelected = selectedHotelListItem.getHotel();
+            if (hotelSelected != null && hotelSelected.ratesURL != null) {
                 // Determine if the hotel details are already in our in-memory
                 // cache, if so, then
                 // re-use them. A request to update will be made in the
                 // background.
-                if (hotelSelected.availabilityErrorCode == null) {
-                    if (hotelSelected.rates == null || hotelSelected.rates.size() == 0) {
-                        // no rooms
-                        Toast.makeText(this, "No Rooms Avilable", Toast.LENGTH_LONG).show();
-                    } else {
-                        Intent i = new Intent(this, HotelChoiceDetailsActivity.class);
-                        Bundle bundle = new Bundle();
-                        bundle.putSerializable(Const.EXTRA_HOTELS_DETAILS, (Serializable) itemClicked);
-                        i.putExtra(Const.EXTRA_TRAVEL_HOTEL_SEARCH_LOCATION, hotelSearchRESTResultFrag.location);
-                        i.putExtra(Const.EXTRA_TRAVEL_HOTEL_SEARCH_DURATION_OF_STAY,
-                                hotelSearchRESTResultFrag.durationOfStayForDisplayInHeader);
-                        i.putExtra(Const.EXTRA_TRAVEL_HOTEL_SEARCH_DURATION_NUM_OF_NIGHTS, numberOfNights);
-                        i.putExtra("violationReasons", violationReasons);
-                        i.putExtras(bundle);
-                        // startActivity(i);
-                        startActivityForResult(i, Const.REQUEST_CODE_BOOK_HOTEL);
-                    }
-                }
 
+
+                if (hotelSelected.availabilityErrorCode == null) {
+                    if (retriveFromDB) {
+
+                        // DB call
+                        long id = hotelSelected._id;
+
+                        hotelSelected.rates = TravelUtilHotel.getHotelRateDetails(this, id);
+                        hotelSelected.imagePairs = TravelUtilHotel.getHotelImagePairs(this, id);
+                        voilations = TravelUtilHotel.getHotelViolations(getApplicationContext(), null,
+                                (int) hotelSelected.search_id);
+                    }
+                    if (hotelSelected.rates != null && hotelSelected.rates.size() > 0) {
+                        viewHotelChoiceDetails();
+                    } else if (hotelSelected.lowestRate == null && hotelSelected.ratesURL.href != null) {
+
+                        String rateUrl = hotelSelected.ratesURL.href;
+                        // get ids from db
+                        Hotel hotel = TravelUtilHotel.getHotelByRateUrl(this, rateUrl, cacheKey);
+                        if (hotel != null) {
+                            hotelSelected._id = hotel._id;
+                            hotelSelected.search_id = hotel.search_id;
+                        }
+                        // New call to rates async task
+                        hotelRatesReceiver = new BaseAsyncResultReceiver(new Handler());
+
+                        hotelSearchRESTResultFrag.showProgressBar(true);
+                        hotelRatesReceiver.setListener(new HotelRatesReplyListener());
+                        HotelRatesAsyncRequestTask ratesAsynTask = new HotelRatesAsyncRequestTask(this,
+                                HOTEL_RATES_ASYN_TASK_ID, hotelRatesReceiver, rateUrl, hotelSelected._id,
+                                hotelSelected.search_id);
+                        ratesAsynTask.execute();
+                    }
+                } else {
+                    Toast.makeText(getApplicationContext(), "No Rooms Avilable", Toast.LENGTH_LONG).show();
+
+                }
             }
         }
 
+    }
+
+    private void viewHotelChoiceDetails() {
+        Hotel hotel = selectedHotelListItem.getHotel();
+        String searchId = TravelUtilHotel.getHotelSearchResultId(this, cacheKey);
+        if (searchId != null) {
+            hotel.search_id = Long.valueOf(searchId);
+        }
+        Intent i = new Intent(this, HotelChoiceDetailsActivity.class);
+        Bundle bundle = new Bundle();
+        bundle.putSerializable(Const.EXTRA_HOTELS_DETAILS, (Serializable) selectedHotelListItem);
+        i.putExtra(Const.EXTRA_TRAVEL_HOTEL_SEARCH_LOCATION, hotelSearchRESTResultFrag.location);
+        i.putExtra(Const.EXTRA_TRAVEL_HOTEL_SEARCH_DURATION_OF_STAY,
+                hotelSearchRESTResultFrag.durationOfStayForDisplayInHeader);
+        i.putExtra(Const.EXTRA_TRAVEL_HOTEL_SEARCH_DURATION_NUM_OF_NIGHTS, numberOfNights);
+        i.putExtra("violationReasons", violationReasons);
+        i.putExtra("ruleViolationExplanationRequired", ruleViolationExplanationRequired);
+        i.putExtra("currentTripId", currentTripId);
+        i.putExtra(Const.EXTRA_TRAVEL_HOTEL_SEARCH_SHOW_GDS_NAME, showGDSName);
+        if (updatedVoilations != null && updatedVoilations.size() > 0) {
+            bundle.putSerializable("updatedVoilations", (Serializable) updatedVoilations);
+        }
+        bundle.putSerializable("voilations", (Serializable) voilations);
+        // i.putExtra("searchId", searchId);
+        i.putExtras(bundle);
+        // startActivity(i);
+        selectedHotelListItem = null;
+        startActivityForResult(i, Const.REQUEST_CODE_BOOK_HOTEL);
     }
 
     @Override
@@ -537,14 +609,6 @@ public class HotelSearchAndResultActivity extends Activity implements OnMenuItem
 
     // Will sort the results depending on the type of search and invoked the fragment to display the sorted results
     public void showResults() {
-        String toastMessage = null;
-        if (fromLocationSearch) {
-            sortByDistance(hotelListItemsToSort);
-            toastMessage = getText(R.string.hotel_search_results_sorted_by_distance).toString();
-        } else {
-            sortBySuggestion(hotelListItemsToSort);
-            toastMessage = getText(R.string.hotel_search_results_sorted_by_suggestion).toString();
-        }
 
         if (hotelListItems == null) {
             hotelListItems = new ArrayList<HotelSearchResultListItem>(hotelListItemsToSort.size());
@@ -555,7 +619,7 @@ public class HotelSearchAndResultActivity extends Activity implements OnMenuItem
         hotelListItems.addAll(hotelListItemsToSort);
 
         // refresh the UI with the updated hotelListItems
-        updateResultsFragmentUI(hotelListItemsToSort, toastMessage);
+        updateResultsFragmentUI(hotelListItemsToSort, null);
 
         hotelSearchRESTResultFrag.getHotelListView().setAlpha(1);
         hotelSearchRESTResultFrag.showSortAndFilterIconsInFooter();
@@ -586,17 +650,16 @@ public class HotelSearchAndResultActivity extends Activity implements OnMenuItem
             fromPolling = true;
             Log.d(Const.LOG_TAG, " ***** creating poll search loader *****  ");
             hotelSearchAsyncTaskLoader = new HotelSearchPollResultLoader(this, checkInDate, checkOutDate, latitude,
-                    longitude, 25, distanceUnit, 0, 30, pollingURL);
+                    longitude, 25, distanceUnit, pollingURL);
+
         } else {
             fromPolling = false;
             // request initial search
             Log.d(Const.LOG_TAG, " ***** creating search loader *****  ");
 
-            // TODO - does this need to be fired in a separate thread?
-            TravelUtilHotel.deleteAllHotelDetails(this);
-
             hotelSearchAsyncTaskLoader = new HotelSearchResultLoader(this, checkInDate, checkOutDate, latitude,
-                    longitude, 25, distanceUnit, 0, 30);
+                    longitude, 25, distanceUnit);
+
         }
         return hotelSearchAsyncTaskLoader;
     }
@@ -621,7 +684,7 @@ public class HotelSearchAndResultActivity extends Activity implements OnMenuItem
                 Toast.makeText(this, "Hotel Search Failed. Please try again.", Toast.LENGTH_SHORT).show();
             } else {
                 searchDone = hotelSearchResult.searchDone;
-                hotelSearchRESTResultFrag.getHotelListView().setAlpha(0.5f);
+                hotelSearchRESTResultFrag.getHotelListView().setAlpha(0.50f);
 
                 if (hotelSearchResult.hotels != null && hotelSearchResult.hotels.size() > 0) {
                     for (Hotel hotel : hotelSearchResult.hotels) {
@@ -630,6 +693,8 @@ public class HotelSearchAndResultActivity extends Activity implements OnMenuItem
                         HotelSearchResultListItem item = new HotelSearchResultListItem(hotel);
                         hotelListItemsFromLoader.add(item);
                     }
+
+                    voilations = hotelSearchResult.violations;
                 }
 
                 Log.d(Const.LOG_TAG, " ***** hotelSearchResult.searchDone " + searchDone + ",  hotelListItems = "
@@ -709,6 +774,79 @@ public class HotelSearchAndResultActivity extends Activity implements OnMenuItem
         Log.d(Const.LOG_TAG, " ***** loader reset *****  ");
         if (listItemAdapater != null) {
             listItemAdapater.setItems(null);
+        }
+    }
+
+    @Override
+    public boolean onKeyDown(int keyCode, KeyEvent event) {
+        // Check if the key event was the Back button and stop any outstanding
+        // request of async task
+        if (keyCode == KeyEvent.KEYCODE_BACK) {
+            finishActivity(Const.REQUEST_CODE_BACK_BUTTON_PRESSED);
+        }
+        return super.onKeyDown(keyCode, event);
+    }
+
+    private class HotelRatesReplyListener implements AsyncReplyListener {
+
+        /*
+         * (non-Javadoc)
+         * 
+         * @see com.concur.mobile.base.service.BaseAsyncRequestTask.AsyncReplyListener#onRequestSuccess(android.os.Bundle)
+         */
+        public void onRequestSuccess(Bundle resultData) {
+            if (resultData != null) {
+                hotelSearchRESTResultFrag.hideProgressBar();
+                // hideProgressBar();
+                HotelRatesRESTResult hotelRateResult = (HotelRatesRESTResult) resultData
+                        .getSerializable("HotelRatesResult");
+                Hotel hotel = hotelRateResult != null ? hotelRateResult.hotel : null;
+                if (hotel != null && hotel.rates != null) {
+
+                    selectedHotelListItem.getHotel().rates = hotel.rates;
+                    updatedVoilations = hotelRateResult.violations;
+                    viewHotelChoiceDetails();
+
+                } else {
+                    Toast.makeText(getApplicationContext(), "No Rooms Avilable", Toast.LENGTH_LONG).show();
+                }
+                // TODO add GA event for booking
+
+                finish();
+            }
+
+        }
+
+        /*
+         * (non-Javadoc)
+         * 
+         * @see com.concur.mobile.base.service.BaseAsyncRequestTask.AsyncReplyListener#onRequestFail(android.os.Bundle)
+         */
+        public void onRequestFail(Bundle resultData) {
+
+            hotelSearchRESTResultFrag.hideProgressBar();
+            Toast.makeText(getApplicationContext(), "No Rooms Avilable", Toast.LENGTH_LONG).show();
+            hotelSearchRESTResultFrag.hideProgressBar();
+
+        }
+
+        /*
+         * (non-Javadoc)
+         * 
+         * @see com.concur.mobile.base.service.BaseAsyncRequestTask.AsyncReplyListener#onRequestCancel(android.os.Bundle)
+         */
+        public void onRequestCancel(Bundle resultData) {
+            cleanup();
+        }
+
+        /*
+         * (non-Javadoc)
+         * 
+         * @see com.concur.mobile.base.service.BaseAsyncRequestTask.AsyncReplyListener#cleanup()
+         */
+        public void cleanup() {
+            hotelRatesReceiver.setListener(null);
+            hotelRatesReceiver = null;
         }
     }
 

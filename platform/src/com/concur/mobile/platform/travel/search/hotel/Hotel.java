@@ -52,6 +52,10 @@ public class Hotel implements Serializable, HotelDAO {
     public String currencyCode;
 
     /**
+     * Contains search url
+     */
+    public URLInfo searchURL;
+    /**
      * Contains the content Uri.
      */
     private Uri contentUri;
@@ -61,19 +65,34 @@ public class Hotel implements Serializable, HotelDAO {
      */
     protected transient Context context;
 
+    /**
+     * Contains db id
+     */
+    public transient long _id;
+
+    /**
+     * Contains search db id
+     */
+    public transient long search_id;
+
     // full column list of hotel detail.
     public static String[] fullColumnList = { Travel.HotelDetailColumns._ID, Travel.HotelDetailColumns.NAME,
-            Travel.HotelDetailColumns.CITY, Travel.HotelDetailColumns.DISTANCE,
-            Travel.HotelDetailColumns.DISTANCE_UNIT, Travel.HotelDetailColumns.LOWEST_RATE,
+            Travel.HotelDetailColumns.CHAIN_NAME, Travel.HotelDetailColumns.CHAIN_CODE,
+            Travel.HotelDetailColumns.STREET, Travel.HotelDetailColumns.ADDRESS_LINE_1,
+            Travel.HotelDetailColumns.STATE, Travel.HotelDetailColumns.COUNTRY, Travel.HotelDetailColumns.CITY,
+            Travel.HotelDetailColumns.DISTANCE, Travel.HotelDetailColumns.PHONE,
+            Travel.HotelDetailColumns.TOLL_FREE_PHONE, Travel.HotelDetailColumns.DISTANCE_UNIT,
+            Travel.HotelDetailColumns.ZIP, Travel.HotelDetailColumns.LOWEST_RATE,
             Travel.HotelDetailColumns.CURRENCY_CODE, Travel.HotelDetailColumns.COMPANY_PREFERENCE,
             Travel.HotelDetailColumns.SUGESTED_CATEGORY, Travel.HotelDetailColumns.SUGESTED_SCORE,
             Travel.HotelDetailColumns.STAR_RATING, Travel.HotelDetailColumns.THUMBNAIL_URL,
             Travel.HotelDetailColumns.AVAILABILITY_ERROR_CODE, Travel.HotelDetailColumns.LAT,
-            Travel.HotelDetailColumns.LON, Travel.HotelDetailColumns.RATES_URL };
+            Travel.HotelDetailColumns.LON, Travel.HotelDetailColumns.RATES_URL,
+            Travel.HotelDetailColumns.HOTEL_SEARCH_RESULT_ID };
 
     // ,
     // Travel.HotelImagePairColumns.THUMBNAIL_URL, Travel.HotelImagePairColumns.IMAGE_URL,
-    // Travel.HotelRateDetailColumns.RATE_ID, Travel.HotelRateDetailColumns.AMOUNT };
+    // Travel.HotelRateDetailColumns.RATE_ID, Travel.HotelRateDetailColumns.AMOUNT };Travel.HotelDetailColumns.LOWEST_ENF_LEVEL,
 
     /**
      * Constructs a new instance of <code>Hotel</code>.
@@ -135,16 +154,34 @@ public class Hotel implements Serializable, HotelDAO {
      */
     private void init(Cursor cursor) {
 
+        search_id = CursorUtil.getLongValue(cursor, Travel.HotelDetailColumns.HOTEL_SEARCH_RESULT_ID);
+
+        _id = CursorUtil.getLongValue(cursor, Travel.HotelDetailColumns._ID);
+
         name = CursorUtil.getStringValue(cursor, Travel.HotelDetailColumns.NAME);
+
+        chainName = CursorUtil.getStringValue(cursor, Travel.HotelDetailColumns.CHAIN_NAME);
+        chainCode = CursorUtil.getStringValue(cursor, Travel.HotelDetailColumns.CHAIN_CODE);
 
         contact = new Contact();
         contact.city = CursorUtil.getStringValue(cursor, Travel.HotelDetailColumns.CITY);
+        contact.addressLine1 = CursorUtil.getStringValue(cursor, Travel.HotelDetailColumns.ADDRESS_LINE_1);
+        contact.street = CursorUtil.getStringValue(cursor, Travel.HotelDetailColumns.STREET);
+        contact.state = CursorUtil.getStringValue(cursor, Travel.HotelDetailColumns.STATE);
+        contact.country = CursorUtil.getStringValue(cursor, Travel.HotelDetailColumns.COUNTRY);
+
+        contact.phone = CursorUtil.getStringValue(cursor, Travel.HotelDetailColumns.PHONE);
+        contact.tollFree = CursorUtil.getStringValue(cursor, Travel.HotelDetailColumns.TOLL_FREE_PHONE);
+        contact.zip = CursorUtil.getStringValue(cursor, Travel.HotelDetailColumns.ZIP);
 
         distance = CursorUtil.getDoubleValue(cursor, Travel.HotelDetailColumns.DISTANCE);
         distanceUnit = CursorUtil.getStringValue(cursor, Travel.HotelDetailColumns.DISTANCE_UNIT);
 
         lowestRate = CursorUtil.getDoubleValue(cursor, Travel.HotelDetailColumns.LOWEST_RATE);
         currencyCode = CursorUtil.getStringValue(cursor, Travel.HotelDetailColumns.CURRENCY_CODE);
+
+        latitude = CursorUtil.getDoubleValue(cursor, Travel.HotelDetailColumns.LAT);
+        longitude = CursorUtil.getDoubleValue(cursor, Travel.HotelDetailColumns.LON);
 
         // TODO - can we check if suggestion exists then create the object
         recommended = new HotelRecommended();
@@ -168,6 +205,10 @@ public class Hotel implements Serializable, HotelDAO {
         HotelImagePair imagePair = new HotelImagePair();
         imagePair.thumbnail = CursorUtil.getStringValue(cursor, Travel.HotelDetailColumns.THUMBNAIL_URL);
         imagePairs.add(imagePair);
+
+        // lowestEnforcementLevel = CursorUtil.getIntValue(cursor, Travel.HotelDetailColumns.LOWEST_ENF_LEVEL);
+        ratesURL = new URLInfo();
+        ratesURL.href = CursorUtil.getStringValue(cursor, Travel.HotelDetailColumns.RATES_URL);
 
     }
 

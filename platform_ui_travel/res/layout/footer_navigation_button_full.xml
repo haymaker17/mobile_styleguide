@@ -4,7 +4,8 @@
     android:layout_width="match_parent"
     android:layout_height="60dp"
     android:layout_alignParentBottom="true"
-    android:layout_gravity="bottom" >
+    android:layout_gravity="bottom"
+    android:background="@color/blueTabs" >
 
     <Button
         android:id="@+id/footer_button"
@@ -12,10 +13,10 @@
         android:layout_height="match_parent"
         android:layout_alignParentTop="true"
         android:layout_centerHorizontal="true"
-        android:background="#0078c8"
+        android:background="@color/blueTabs"
         android:fontFamily="sans-serif-light"
         android:gravity="center"
-        android:text="@string/hotel_reserve_this_room"
+        android:text="@string/find_rooms_button"
         android:textColor="@color/White"
         android:textSize="20sp" />
 

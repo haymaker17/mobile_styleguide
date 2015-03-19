@@ -2,10 +2,11 @@
 <!-- The version lines below need to remain on separate lines for CM build purposes. -->
 
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
     package="com.concur.breeze"
     android:installLocation="internalOnly"
     android:versionCode="2999"
-    android:versionName="9.18.0" >
+    android:versionName="9.19.0" >
 
     <uses-sdk
         android:minSdkVersion="16"
@@ -64,7 +65,8 @@
         android:icon="@drawable/launch"
         android:label="@string/corporate_name"
         android:logo="@drawable/concur_logo"
-        android:theme="@style/ConcurTheme" >
+        android:theme="@style/ConcurTheme"
+        tools:replace="theme, allowBackup, icon, label" >
         <activity
             android:name="com.concur.mobile.corp.activity.Startup"
             android:icon="@drawable/launch"
@@ -151,6 +153,7 @@
         <activity
             android:name="com.concur.mobile.core.travel.activity.LocationSearchV1"
             android:parentActivityName="com.concur.mobile.core.travel.hotel.activity.RestHotelSearch"
+            android:screenOrientation="portrait"
             android:theme="@style/ConcurRestTheme.White.ActionBarTabs"
             android:windowSoftInputMode="stateVisible" >
             <intent-filter>
@@ -186,9 +189,15 @@
             android:windowSoftInputMode="adjustResize" />
         <activity
             android:name="com.concur.mobile.platform.ui.travel.hotel.activity.HotelSearchAndResultActivity"
+            android:screenOrientation="portrait"
             android:theme="@style/ConcurRestTheme.White.ActionBarTabs" />
         <activity
             android:name="com.concur.mobile.platform.ui.travel.hotel.activity.HotelChoiceDetailsActivity"
+            android:screenOrientation="portrait"
+            android:theme="@style/ConcurRestTheme.White.ActionBarTabs" />
+        <activity
+            android:name="com.concur.mobile.platform.ui.travel.hotel.activity.HotelVoiceSearchActivity"
+            android:screenOrientation="portrait"
             android:theme="@style/ConcurRestTheme.White.ActionBarTabs" />
         <activity
             android:name="com.concur.mobile.platform.ui.travel.hotel.activity.ImageDetailActivity"
@@ -196,10 +205,6 @@
         <activity
             android:name="com.concur.mobile.core.travel.hotel.activity.HotelSearchResults"
             android:screenOrientation="portrait" />
-        <activity
-            android:name="com.concur.mobile.platform.ui.travel.hotel.activity.HotelVoiceSearchActivity"
-            android:screenOrientation="portrait"
-            android:theme="@style/ConcurRestTheme.White.ActionBarTabs" />
         <activity
             android:name="com.concur.mobile.platform.ui.travel.hotel.activity.HotelBookingActivity"
             android:screenOrientation="portrait"
@@ -326,7 +331,7 @@
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value="com.concur.mobile.corp.activity.Home" />
         </activity>
-        <activity android:name="com.concur.mobile.core.request.activity.RequestDigestActivity" >
+        <activity android:name="com.concur.mobile.core.request.activity.RequestSummaryActivity" >
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value="com.concur.mobile.core.request.activity.RequestListActivity" />
@@ -334,7 +339,15 @@
         <activity android:name="com.concur.mobile.core.request.activity.RequestHeaderActivity" >
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
-                android:value="com.concur.mobile.core.request.activity.RequestDigestActivity" />
+                android:value="com.concur.mobile.core.request.activity.RequestSummaryActivity" />
+        </activity>
+        <activity android:name="com.concur.mobile.core.request.activity.RequestEntryActivity" >
+            <meta-data
+                android:name="
+            android.support.PARENT_ACTIVITY"
+                android:value="com.concur.mobile.core.request.activity.RequestSummaryActivity" />
+        </activity>
+        <activity android:name="com.concur.mobile.core.request.activity.LocationSearchActivity" >
         </activity>
 
         <!-- Invoice related activities. -->

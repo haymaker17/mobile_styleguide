@@ -8,7 +8,7 @@
         android:title="@string/action_item_maps"/>
     <item
         android:id="@+id/voice"
-        android:icon="@drawable/icon_voice"
+        android:icon="@drawable/ic_action_voice"
         android:showAsAction="ifRoom"
         android:title="@string/voice_search"/>
 

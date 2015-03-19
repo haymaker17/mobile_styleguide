@@ -407,7 +407,7 @@ public class LocationSearchV1 extends Activity implements INetworkActivityListen
         SearchResultsAdapter adapter = (SearchResultsAdapter) searchResultsList.getAdapter();
         adapter.clearLocations();
         searchDelayHandler.removeCallbacks(searchDelayRunnable);
-        searchDelayHandler.postDelayed(searchDelayRunnable, 300);
+        searchDelayHandler.postDelayed(searchDelayRunnable, 800);
     }
 
     protected ArrayList<? extends LocationChoice> filterCompanyLocations(String search) {

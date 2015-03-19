@@ -25,8 +25,8 @@
             android:layout_height="wrap_content"
             android:layout_alignParentLeft="true"
             android:layout_marginLeft="4.5dp"
-            android:layout_marginTop="15dp"
-            android:src="@drawable/arrow_left"
+            android:layout_marginTop="19dp"
+            android:src="@drawable/speech_bubble_tri_left"
             android:visibility="visible" />
 
         <ImageView
@@ -35,8 +35,8 @@
             android:layout_height="wrap_content"
             android:layout_alignParentRight="true"
             android:layout_marginRight="4.5dp"
-            android:layout_marginTop="15dp"
-            android:src="@drawable/arrow_right"
+            android:layout_marginTop="19dp"
+            android:src="@drawable/speech_bubble_tri_right"
             android:visibility="visible" />
     </RelativeLayout>
 
@@ -63,8 +63,8 @@
             android:layout_height="wrap_content"
             android:layout_alignParentLeft="true"
             android:layout_marginLeft="4.5dp"
-            android:layout_marginTop="10dp"
-            android:src="@drawable/arrow_left" />
+            android:layout_marginTop="6dp"
+            android:src="@drawable/speech_bubble_tri_left" />
     </RelativeLayout>
 
     <ImageButton
@@ -103,7 +103,7 @@
             android:layout_centerInParent="true"
             android:background="@android:color/transparent"
             android:contentDescription="@string/hotel_search"
-            android:src="@drawable/voice_button_blank" />
+            android:src="@drawable/mic_voice_button_blank" />
 
         <ProgressBar
             android:id="@+id/searchProgress"

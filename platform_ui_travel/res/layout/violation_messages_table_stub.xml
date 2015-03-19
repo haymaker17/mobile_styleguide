@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="utf-8"?>
+<TableLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/violation_message_table"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:stretchColumns="1" >
+
+    <TableRow>
+
+        <ImageView
+            android:id="@+id/travel_violation_icon"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src="@drawable/icon_warning_red" />
+
+        <TextView
+            android:id="@+id/travel_violation_message"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:fontFamily="sans-serif"
+            android:gravity="center_vertical"
+            android:paddingLeft="10dp"
+            android:paddingRight="10dp"
+            android:text="first violation"
+            android:textColor="#383f46"
+            android:textSize="14sp" />
+    </TableRow>
+
+</TableLayout>

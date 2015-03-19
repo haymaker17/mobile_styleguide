@@ -22,7 +22,7 @@ import android.os.Handler;
 import android.preference.PreferenceManager;
 import android.speech.RecognizerIntent;
 import android.speech.tts.TextToSpeech;
-import android.speech.tts.TextToSpeech.OnUtteranceCompletedListener;
+import android.speech.tts.UtteranceProgressListener;
 import android.text.Spanned;
 import android.util.Log;
 import android.util.TypedValue;
@@ -46,6 +46,13 @@ import com.concur.mobile.eva.service.EvaHotelReply;
 import com.concur.mobile.platform.ui.travel.R;
 import com.concur.mobile.platform.ui.travel.util.Const;
 
+/**
+ * Main activity for searching Air, Hotel, Rail, etc. via Voice and Evature API. A copy of
+ * com.concur.mobile.core.eva.activity.VoiceSearchActivity
+ * 
+ * @author ratank
+ * 
+ */
 public abstract class VoiceSearchActivity extends AbstractTravelSearchProgress implements TextToSpeech.OnInitListener,
         EvaApiRequestListener {
 
@@ -76,7 +83,6 @@ public abstract class VoiceSearchActivity extends AbstractTravelSearchProgress i
     protected Animation rightInAnim;
     protected EvaApiRequest currentEvaRequest;
 
-    private boolean performedSearch;
     protected volatile boolean isDestroyed = false;
     private String recognizerLanguage;
     protected String sessionId = "1"; // Passed to Eva for the new "Flow"
@@ -108,6 +114,7 @@ public abstract class VoiceSearchActivity extends AbstractTravelSearchProgress i
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
         setContentView(R.layout.travel_voice_book);
 
         // Set the header.
@@ -154,7 +161,8 @@ public abstract class VoiceSearchActivity extends AbstractTravelSearchProgress i
             @Override
             public View makeView() {
 
-                TextView t = new TextView(VoiceSearchActivity.this);
+                TextView t = new TextView(VoiceSearchActivity.this);// new ContextThemeWrapper(VoiceSearchActivity.this,
+                                                                    // R.style.VoiceTextSpeechBubble));
 
                 // Convert 10dp to pixels
                 Resources r = getResources();
@@ -186,7 +194,8 @@ public abstract class VoiceSearchActivity extends AbstractTravelSearchProgress i
             @Override
             public View makeView() {
 
-                TextView t = new TextView(VoiceSearchActivity.this);
+                TextView t = new TextView(VoiceSearchActivity.this);// new
+                                                                    // ContextThemeWrapper(VoiceSearchActivity.this,R.style.VoiceTextSpeechBubble));
 
                 // Convert 10dp to pixels
                 Resources r = getResources();
@@ -208,7 +217,6 @@ public abstract class VoiceSearchActivity extends AbstractTravelSearchProgress i
 
             @Override
             public void onClick(View v) {
-                // sessionId = "1"; // Always reset the Session ID when doing a manual search.
                 startVoiceCapture();
             }
         });
@@ -250,9 +258,7 @@ public abstract class VoiceSearchActivity extends AbstractTravelSearchProgress i
         } else {
             Log.e("TTS", "Initilization Failed!");
 
-            // Toast t = Toast.makeText(getApplicationContext(), R.string.voice_book_speech_to_text_unsupported,
-            // Toast.LENGTH_LONG);
-            Toast t = Toast.makeText(getApplicationContext(), "R.string.voice_book_speech_to_text_unsupported",
+            Toast t = Toast.makeText(getApplicationContext(), R.string.voice_book_speech_to_text_unsupported,
                     Toast.LENGTH_LONG);
             t.show();
         }
@@ -281,15 +287,6 @@ public abstract class VoiceSearchActivity extends AbstractTravelSearchProgress i
         if (mPlayer != null) {
             mPlayer.release();
         }
-
-        // Log Flurry event that the user launched Voice Search
-        // but didn't actually search for anything.
-        // if (!performedSearch) {
-        // Map<String, String> params = new HashMap<String, String>();
-        // BookingSelection bookType = getBookType();
-        // params.put(Flurry.PARAM_NAME_TYPE, bookType.getName());
-        // EventTracker.INSTANCE.track(Flurry.CATEGORY_VOICE_BOOK, Flurry.EVENT_NAME_USAGE_CANCELLED, params);
-        // }
 
         super.onDestroy();
     }
@@ -330,17 +327,9 @@ public abstract class VoiceSearchActivity extends AbstractTravelSearchProgress i
      * 
      */
     protected boolean isSearching() {
-
         if (currentEvaRequest != null && currentEvaRequest.inProgress()) {
-
             return true;
         }
-
-        // if (getSearchRequest() != null && getSearchRequest().isProcessing) {
-        //
-        // return true;
-        // }
-
         return false;
     }
 
@@ -382,6 +371,7 @@ public abstract class VoiceSearchActivity extends AbstractTravelSearchProgress i
                     String firstUtterance = text.get(0);
                     setText(firstUtterance, true);
 
+                    // TODO - after the other jira regarding the off line is done for travel project
                     // Check for connectivity, if none, then display dialog and return.
                     // if (!ConcurCore.isConnected()) {
                     // showDialog(Const.DIALOG_NO_CONNECTIVITY);
@@ -404,9 +394,6 @@ public abstract class VoiceSearchActivity extends AbstractTravelSearchProgress i
                     currentEvaRequest.execute(recognizerLanguage);
 
                 } else {
-                    // logFailedUsageFlurryEvent();
-                    // logErrorFlurryEvent(Flurry.PARAM_VALUE_SPEECH_RECOGNIZER);
-
                     showErrorMessage();
                 }
 
@@ -438,12 +425,11 @@ public abstract class VoiceSearchActivity extends AbstractTravelSearchProgress i
 
             // Perform Concur MWS Hotel search.
             searchType = "Hotel";
-            // Log.d(Const.LOG_TAG, CLS_TAG + ".onPostExecute: Running Hotel Search...");
             doHotelSearch(new EvaHotelReply(this, currentLocation, currentAddress, apiReply));
 
         } catch (IllegalArgumentException e) {
 
-            // Log.e(Const.LOG_TAG, CLS_TAG + ".doSearch() - error performing search.", e);
+            Log.e(Const.LOG_TAG, CLS_TAG + ".doSearch() - error performing search.", e);
 
             String msg = e.getMessage();
             if (msg != null && msg.length() > 0) {
@@ -455,14 +441,12 @@ public abstract class VoiceSearchActivity extends AbstractTravelSearchProgress i
             }
 
         } catch (NoSuchMethodError e) {
-            // Log.e(Const.LOG_TAG, CLS_TAG + ".doSearch() - trying to search for " + searchType + " while in " + CLS_TAG);
+            Log.e(Const.LOG_TAG, CLS_TAG + ".doSearch() - trying to search for " + searchType + " while in " + CLS_TAG);
             showErrorMessage();
 
         } catch (Exception e) {
-            // Log.e(Const.LOG_TAG, CLS_TAG + ".doSearch() - error performing search.", e);
+            Log.e(Const.LOG_TAG, CLS_TAG + ".doSearch() - error performing search.", e);
             showErrorMessage();
-
-            // logErrorFlurryEvent(Flurry.PARAM_VALUE_OTHER);
         }
 
     }
@@ -498,12 +482,6 @@ public abstract class VoiceSearchActivity extends AbstractTravelSearchProgress i
         resetUI(false);
 
     }
-
-    // @Override
-    // public void logErrorFlurryEvent(String arg0) {
-    // // TODO Auto-generated method stub
-    //
-    // }
 
     @Override
     public void resetUI(final boolean resetText) {
@@ -608,18 +586,27 @@ public abstract class VoiceSearchActivity extends AbstractTravelSearchProgress i
 
     @Override
     public void startVoiceCaptureOnUtteranceCompleted() {
-        tts.setOnUtteranceCompletedListener(new OnUtteranceCompletedListener() {
+        tts.setOnUtteranceProgressListener(new UtteranceProgressListener() {
 
             @Override
-            public void onUtteranceCompleted(String utteranceId) {
+            public void onStart(String utteranceId) {
+            }
+
+            @Override
+            public void onDone(String utteranceId) {
                 if (!isDestroyed) {
                     startVoiceCapture();
                 }
 
                 // After starting the Voice Capture, be sure to remove it!
                 if (tts != null) {
-                    tts.setOnUtteranceCompletedListener(null);
+                    tts.setOnUtteranceProgressListener(null);
                 }
+            }
+
+            @Override
+            @Deprecated
+            public void onError(String utteranceId) {
             }
         });
 
@@ -733,10 +720,6 @@ public abstract class VoiceSearchActivity extends AbstractTravelSearchProgress i
             return;
         }
 
-        // Flurry flag for checking if user actually performed a search,
-        // or at least attempted to.
-        performedSearch = true;
-
         try {
 
             // Stop the TTS if it's saying something.
@@ -766,11 +749,9 @@ public abstract class VoiceSearchActivity extends AbstractTravelSearchProgress i
 
         } catch (ActivityNotFoundException a) {
 
-            // logFailedUsageFlurryEvent();
-
             // If Android device/OS doesn't support Speech-to-Text,
             // then show error toast.
-            Toast t = Toast.makeText(getApplicationContext(), "R.string.voice_book_speech_to_text_unsupported",
+            Toast t = Toast.makeText(getApplicationContext(), R.string.voice_book_speech_to_text_unsupported,
                     Toast.LENGTH_LONG);
             t.show();
         }
@@ -815,7 +796,7 @@ public abstract class VoiceSearchActivity extends AbstractTravelSearchProgress i
         resetUI(true);
 
         if (showErrorToast) {
-            // Show toast that the search was canceled.
+            // Show toast that the search was cancelled.
             Toast t = Toast.makeText(getApplicationContext(), R.string.voice_search_canceled, Toast.LENGTH_SHORT);
             t.show();
         }

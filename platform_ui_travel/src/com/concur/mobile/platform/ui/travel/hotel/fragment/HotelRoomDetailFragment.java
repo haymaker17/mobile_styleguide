@@ -36,14 +36,15 @@ public class HotelRoomDetailFragment extends PlatformFragmentV1 {
     private HotelChoiceDetailsFragmentListener callBackListener;
     private View mainView;
 
-    public HotelRoomDetailFragment(List<HotelRate> rooms) {
+    public HotelRoomDetailFragment(List<HotelRate> rooms, boolean showGDSName) {
         hotelRooms = new ArrayList<HotelRoomListItem>();
         for (HotelRate r : rooms) {
-            room = new HotelRoomListItem(r);
+            room = new HotelRoomListItem(r, showGDSName);
             hotelRooms.add(room);
         }
     }
 
+    // empty constructor
     public HotelRoomDetailFragment() {
 
     }

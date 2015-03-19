@@ -22,6 +22,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
 import android.content.SharedPreferences;
+import android.location.Location;
 import android.os.Binder;
 import android.os.IBinder;
 import android.preference.PreferenceManager;
@@ -46,6 +47,7 @@ import com.concur.mobile.core.util.Flurry;
 import com.concur.mobile.core.util.FormatUtil;
 import com.concur.mobile.core.util.ViewUtil;
 import com.concur.mobile.core.util.net.SessionManager;
+import com.concur.mobile.platform.location.LastLocationTracker;
 
 /**
  * An extension of <code>Service</code> for performing background receipt "share" with the Receipt Store.
@@ -1043,6 +1045,13 @@ public class ReceiptShareService extends Service {
                                 String now = FormatUtil.XML_DF_LOCAL.format(Calendar.getInstance().getTime());
                                 ReceiptShareItem rsi = new ReceiptShareItem(null, null, uploadFile, now,
                                         com.concur.mobile.core.expense.receiptstore.data.ReceiptShareItem.Status.HOLD);
+
+                                // MOB-22375 MOB-22520 - Google Analytics for Receipt Upload.
+                                // Save the location of where this Receipt Image was initially uploaded
+                                // so we can reference it in the Offline Queue when actually saved to the ReceiptStore.
+                                LastLocationTracker locTracker = ((ConcurCore) getApplication()).getLocationTracker();
+                                rsi.locationTaken = locTracker.getCurrentLocaton();
+
                                 ArrayList<ReceiptShareItem> rsList = new ArrayList<ReceiptShareItem>(1);
                                 rsList.add(rsi);
                                 mdb.insertReceiptShareItems(rsList);
@@ -1248,6 +1257,20 @@ public class ReceiptShareService extends Service {
                     if (reply.httpStatusCode == HttpStatus.SC_OK) {
                         if (reply.mwsStatus.equalsIgnoreCase(Const.REPLY_STATUS_SUCCESS)) {
                             retVal = true;
+
+                            // MOB-22375 - Google Analytics for Receipt Upload.
+                            if (reply.receiptImageId != null) {
+                                LastLocationTracker locTracker = ((ConcurCore) getApplication()).getLocationTracker();
+                                Location loc = locTracker.getCurrentLocaton();
+                                String lat = "0";
+                                String lon = "0";
+                                if (loc != null) {
+                                    lat = Double.toString(loc.getLatitude());
+                                    lon = Double.toString(loc.getLongitude());
+                                }
+                                String eventLabel = reply.receiptImageId + "|" + lat + "|" + lon;
+                                EventTracker.INSTANCE.track("Receipts", "Receipt Capture Location", eventLabel);
+                            }
                         } else {
                             Log.e(Const.LOG_TAG, CLS_TAG + ".uploadFile: MWS status(" + reply.mwsStatus + ") - "
                                     + reply.mwsErrorMessage + ".");

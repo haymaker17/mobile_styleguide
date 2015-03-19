@@ -1,0 +1,60 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ViewFlipper xmlns:android="http://schemas.android.com/apk/res/android"
+             android:id="@+id/entryVF"
+             android:layout_width="match_parent"
+             android:layout_height="match_parent"
+             android:minWidth="300dp"
+             android:minHeight="420dp"
+             android:background="#F7FAFD">
+
+    <include
+        android:id="@+id/loading_data"
+        layout="@layout/loading_data"/>
+
+    <LinearLayout
+        android:orientation="vertical"
+        android:layout_height="match_parent"
+        android:layout_width="match_parent"
+        android:minWidth="300dp"
+        android:minHeight="420dp"
+        android:background="#FFFFFFFF"
+        >
+
+        <TextView
+            android:id="@+id/entryTitle"
+            android:layout_height="50dp"
+            android:layout_width="match_parent"
+            android:background="#0078c8"
+            android:textColor="@color/White"
+            android:textAppearance="@style/ListCellHeaderText"
+            android:textStyle="bold"
+            android:gravity="center"
+            android:textSize="18sp"/>
+
+        <ViewFlipper
+            android:id="@+id/entryTypeVF"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+            <include
+                layout="@layout/request_form_layout"
+                android:id="@+id/noViewPagerLayout"/>
+
+            <android.support.v4.view.ViewPager
+                android:id="@+id/viewPagerLayout"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent">
+
+                <android.support.v4.view.PagerTabStrip
+                    android:id="@+id/pagerHeader"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="top"
+                    android:paddingBottom="4dp"
+                    android:paddingTop="4dp"/>
+
+
+            </android.support.v4.view.ViewPager>
+        </ViewFlipper>
+    </LinearLayout>
+</ViewFlipper>

@@ -16,6 +16,7 @@ import com.concur.mobile.platform.ui.common.util.FormatUtil;
 import com.concur.mobile.platform.ui.common.view.ListItem;
 import com.concur.mobile.platform.ui.travel.R;
 import com.concur.mobile.platform.ui.travel.util.Const;
+import com.concur.mobile.platform.ui.travel.util.ViewUtil;
 
 /**
  * An extension of <code>ListItem</code> for displaying a hotel room.
@@ -26,6 +27,7 @@ public class HotelRoomListItem extends ListItem {
 
     private HotelRate hotelRoom;
     public String maxEnforcementLevelString;
+    private boolean showGDSName;
 
     /**
      * Constructs an instance of <code>HotelRoomListItem</code> backed by a hotel room.
@@ -33,8 +35,9 @@ public class HotelRoomListItem extends ListItem {
      * @param hotelRoom
      *            contains the hotel room.
      */
-    public HotelRoomListItem(HotelRate hotelRoom) {
+    public HotelRoomListItem(HotelRate hotelRoom, boolean showGDSName) {
         this.hotelRoom = hotelRoom;
+        this.showGDSName = showGDSName;
     }
 
     /**
@@ -92,36 +95,6 @@ public class HotelRoomListItem extends ListItem {
             Log.e(Const.LOG_TAG, CLS_TAG + ".getView: unable to locate hotel room rate text view!");
         }
 
-        // set appropriate rule violation icon
-        // ImageView violationIconView = (ImageView) roomView.findViewById(R.id.violation_icon);
-        // switch (ViewUtil.getRuleEnforcementLevel(hotelRoom.maxEnforcementLevel)) {
-        // case NONE: {
-        // if (violationIconView != null) {
-        // violationIconView.setVisibility(View.GONE);
-        // }
-        // break;
-        // }
-        // case WARNING:
-        // case ERROR: {
-        // if (violationIconView != null) {
-        // violationIconView.setVisibility(View.VISIBLE);
-        // violationIconView.setImageResource(R.drawable.ic_action_voilation);
-        // }
-        // break;
-        // }
-        // case INACTIVE: {
-        // if (violationIconView != null) {
-        // violationIconView.setVisibility(View.GONE);
-        // }
-        // break;
-        // }
-        // case HIDE: {
-        // // No-op.
-        // Log.e(Const.LOG_TAG, CLS_TAG + ".getView: rule enforcement level of hide!");
-        // break;
-        // }
-        // }
-
         // Set the summary information.
         txtView = (TextView) roomView.findViewById(R.id.hotel_room_summary);
         if (txtView != null) {
@@ -136,20 +109,32 @@ public class HotelRoomListItem extends ListItem {
             Log.e(Const.LOG_TAG, CLS_TAG + ".getView: unable to locate hotel room summary text view!");
         }
 
-        // txtView = (TextView) roomView.findViewById(R.id.hotel_room_deposit_required);
-        // if (txtView != null) {
-        // if (hotelRoom.depositRequired) {
-        // txtView.setText(R.string.hotel_booking_deposit_required);
-        // txtView.setVisibility(View.VISIBLE);
-        // } else {
-        // txtView.setVisibility(View.GONE);
-        // }
-        // }
-        // txtView = (TextView) roomView.findViewById(R.id.hotel_room_gds_name);
-        // if (txtView != null && hotelRoom.source != null) {
-        // ViewUtil.showGDSName(context, txtView, hotelRoom.source);
-        // }
+        txtView = (TextView) roomView.findViewById(R.id.hotel_room_deposit_required);
+        if (txtView != null) {
+            if (hotelRoom.guaranteeSurcharge != null && hotelRoom.guaranteeSurcharge.equals("DepositRequired")) {
+                txtView.setText(R.string.hotel_booking_deposit_required);
+                txtView.setVisibility(View.VISIBLE);
+            } else {
+                txtView.setVisibility(View.GONE);
+            }
+        }
 
+        if (showGDSName) {
+            txtView = (TextView) roomView.findViewById(R.id.hotel_room_gds_name);
+            if (txtView != null && hotelRoom.source != null) {
+                ViewUtil.showGDSName(context, txtView, hotelRoom.source);
+            }
+        }
+        roomView.setAlpha(1);
+        TextView tv = (TextView) roomView.findViewById(R.id.hotel_room_out_of_policy);
+        if (hotelRoom.greyFlag) {
+            if (tv != null) {
+                tv.setVisibility(View.VISIBLE);
+            }
+            roomView.setAlpha(0.5f); // 50% transparent
+        } else {
+            tv.setVisibility(View.GONE);
+        }
         return roomView;
     }
 

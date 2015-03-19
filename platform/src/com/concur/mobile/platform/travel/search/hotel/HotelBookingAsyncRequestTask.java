@@ -62,7 +62,7 @@ public class HotelBookingAsyncRequestTask extends PlatformAsyncRequestTask {
 
     public boolean redeemTravelPoints;
 
-    public List<Violation> violations;
+    public List<ViolationReason> violationReasons;
 
     public String bookingURL;
 
@@ -72,7 +72,7 @@ public class HotelBookingAsyncRequestTask extends PlatformAsyncRequestTask {
     private MWSResponse<HotelBookingRESTResult> mwsResp;
 
     public HotelBookingAsyncRequestTask(Context context, int id, BaseAsyncResultReceiver receiver, String ccId,
-            String tripId, List<Violation> violations, String travelProgramId, boolean redeemTravelPoints,
+            String tripId, List<ViolationReason> violationReasons, String travelProgramId, boolean redeemTravelPoints,
             String bookingURL) {
 
         super(context, id, receiver);
@@ -81,7 +81,7 @@ public class HotelBookingAsyncRequestTask extends PlatformAsyncRequestTask {
         this.travelProgramId = travelProgramId;
         this.tripId = tripId;
         this.redeemTravelPoints = redeemTravelPoints;
-        this.violations = violations;
+        this.violationReasons = violationReasons;
 
         this.bookingURL = bookingURL;
     }
@@ -100,7 +100,6 @@ public class HotelBookingAsyncRequestTask extends PlatformAsyncRequestTask {
         try {
             connection.setRequestMethod(PlatformAsyncRequestTask.REQUEST_METHOD_POST);
         } catch (ProtocolException e) {
-            // TODO Auto-generated catch block
             e.printStackTrace();
         }
 
@@ -115,23 +114,25 @@ public class HotelBookingAsyncRequestTask extends PlatformAsyncRequestTask {
     protected String getPostBody() {
         String postBody = null;
         Gson gson = new Gson();
-        JsonElement jsonElement = gson.toJsonTree(violations);
-        // JsonElement jsonElement1 = gson.toJsonTree(customFields);
-
+        JsonElement jsonElement = gson.toJsonTree(violationReasons);
         JsonObject requestBody = new JsonObject();
-        // JsonArray currentViolations = new JsonArray();
-        requestBody.addProperty("CreditCardId", ccId);
+        if (ccId != null) {
+            requestBody.addProperty("CreditCardId", ccId);
+        }
         if (tripId != null) {
             requestBody.addProperty("TripId", tripId);
         }
-        if (tripId != travelProgramId) {
+        if (travelProgramId != null) {
             requestBody.addProperty("TravelProgramId", travelProgramId);
         }
-
-        requestBody.addProperty("RedeemPoints", redeemTravelPoints);
+        if (redeemTravelPoints) {
+            requestBody.addProperty("RedeemPoints", redeemTravelPoints);
+        }
         if (jsonElement != null) {
             requestBody.add("Violations", jsonElement);
         }
+
+        // TODO - custom fields
 
         postBody = requestBody.toString();
 

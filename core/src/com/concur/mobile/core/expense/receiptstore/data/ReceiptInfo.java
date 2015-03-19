@@ -12,6 +12,7 @@ import java.util.Calendar;
 
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
+import android.location.Location;
 import android.util.Log;
 
 import com.concur.mobile.core.util.Const;
@@ -62,6 +63,7 @@ public class ReceiptInfo {
         }
 
         this.imageCalendar = this.updateTime = imageCal;
+        this.locationTaken = rsi.locationTaken;
     }
 
     /**
@@ -118,6 +120,11 @@ public class ReceiptInfo {
      * Contains the last update time for this receipt info.
      */
     private Calendar updateTime;
+
+    /**
+     * Contains the location of where this image was taken.
+     */
+    private Location locationTaken;
 
     /**
      * @param receiptDAO
@@ -375,4 +382,10 @@ public class ReceiptInfo {
         return updateTime;
     }
 
+    /**
+     * Returns the location of where this image was taken, or <code>null</code> if unknown.
+     */
+    public Location getLocationTake() {
+        return locationTaken;
+    }
 }

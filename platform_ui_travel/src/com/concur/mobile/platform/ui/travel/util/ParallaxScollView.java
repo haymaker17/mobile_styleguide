@@ -110,15 +110,18 @@ public class ParallaxScollView extends ListView implements OnScrollListener {
     }
 
     public void setViewsBounds(double zoomRatio) {
-        if (mImageViewHeight == -1) {
+        if (mImageViewHeight == -1 && mImageView != null && mImageView.getVisibility() == View.VISIBLE) {
             mImageViewHeight = mImageView.getHeight();
             if (mImageViewHeight <= 0) {
                 mImageViewHeight = mDefaultImageViewHeight;
             }
-            double ratio = ((double) mImageView.getDrawable().getIntrinsicWidth()) / ((double) mImageView.getWidth());
+            if (mImageView != null && mImageView.getVisibility() == View.VISIBLE) {
+                double ratio = ((double) mImageView.getDrawable().getIntrinsicWidth())
+                        / ((double) mImageView.getWidth());
 
-            mDrawableMaxHeight = (int) ((mImageView.getDrawable().getIntrinsicHeight() / ratio) * (zoomRatio > 1 ? zoomRatio
-                    : 1));
+                mDrawableMaxHeight = (int) ((mImageView.getDrawable().getIntrinsicHeight() / ratio) * (zoomRatio > 1 ? zoomRatio
+                        : 1));
+            }
         }
     }
 
@@ -127,7 +130,7 @@ public class ParallaxScollView extends ListView implements OnScrollListener {
         @Override
         public boolean overScrollBy(int deltaX, int deltaY, int scrollX, int scrollY, int scrollRangeX,
                 int scrollRangeY, int maxOverScrollX, int maxOverScrollY, boolean isTouchEvent) {
-            if (mImageView.getHeight() <= mDrawableMaxHeight && isTouchEvent) {
+            if (mImageView != null && mImageView.getHeight() <= mDrawableMaxHeight && isTouchEvent) {
                 if (deltaY < 0) {
                     if (mImageView.getHeight() - deltaY / 2 >= mImageViewHeight) {
                         mImageView.getLayoutParams().height = mImageView.getHeight() - deltaY / 2 < mDrawableMaxHeight ? mImageView
@@ -153,7 +156,7 @@ public class ParallaxScollView extends ListView implements OnScrollListener {
 
         @Override
         public void onTouchEvent(MotionEvent ev) {
-            if (ev.getAction() == MotionEvent.ACTION_UP) {
+            if (ev.getAction() == MotionEvent.ACTION_UP && mImageView != null) {
                 if (mImageViewHeight - 1 < mImageView.getHeight()) {
                     ResetAnimimation animation = new ResetAnimimation(mImageView, mImageViewHeight);
                     animation.setDuration(300);

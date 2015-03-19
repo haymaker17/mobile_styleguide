@@ -1655,6 +1655,7 @@ public class ExpenseEntry extends AbstractExpenseActivity {
         boolean retVal = false;
 
         LocationSelection locSel = ViewUtil.getLocationSelection(this);
+        String crnCode = ViewUtil.getLastUsedCrnCode(this);
         if (locSel != null && frmFldViewListener != null) {
             FormFieldView ffView = frmFldViewListener.findFormFieldViewById(ExpenseReportFormField.LOCATION_NAME);
             if (ffView instanceof SearchListFormFieldView
@@ -1662,7 +1663,9 @@ public class ExpenseEntry extends AbstractExpenseActivity {
                 SearchListFormFieldView srchLstFFView = (SearchListFormFieldView) ffView;
                 if (!TextUtils.isEmpty(locSel.liKey)) {
                     srchLstFFView.listItemSelected(locSel.liCode, locSel.liKey, locSel.value);
+                    srchLstFFView.setLiCrnCode(crnCode);
                     srchLstFFView.updateView();
+                    frmFldViewListener.valueChanged(srchLstFFView);
                     retVal = true;
                 }
             }
