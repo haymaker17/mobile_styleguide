@@ -9,10 +9,10 @@ import java.util.Locale;
 
 import android.app.Activity;
 import android.app.Dialog;
+import android.app.FragmentManager;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
-import android.support.v4.app.FragmentManager;
 import android.text.InputFilter;
 import android.text.InputType;
 import android.text.SpannableStringBuilder;
@@ -53,6 +53,12 @@ public abstract class FormFieldView {
         deviceLocaleNumericFormatter.setMaximumFractionDigits(340);
         serverLocaleNumbericFormatter = DecimalFormat.getInstance(Locale.US);
     }
+
+    // default layout
+    public int layoutResourceId;
+
+    // static text default layout
+    public int staticTextLayoutResourceId = R.layout.static_text_form_field;
 
     protected static final ValidityCheck SUCCESS = new ValidityCheck(true);
 
@@ -727,7 +733,7 @@ public abstract class FormFieldView {
      */
     protected View buildStaticTextView(LayoutInflater inflater) {
         View retVal = null;
-        retVal = inflater.inflate(R.layout.static_text_form_field, null);
+        retVal = inflater.inflate(staticTextLayoutResourceId, null);
         if (retVal != null) {
             CharSequence txtVal = "";
             if (frmFld.getLabel() != null) {
