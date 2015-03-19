@@ -79,6 +79,8 @@ public abstract class PlatformAsyncTaskLoader<T> extends BaseAsyncTaskLoader<T> 
      */
     protected ByteArrayInputStream response;
 
+    protected int result;
+
     public PlatformAsyncTaskLoader(Context context) {
         super(context);
     }
@@ -149,6 +151,9 @@ public abstract class PlatformAsyncTaskLoader<T> extends BaseAsyncTaskLoader<T> 
                                 res = RESULT_ERROR;
                             }
 
+                            // make the result code available to concrete classes
+                            result = res;
+
                             if (res == RESULT_OK) {
                                 // do the json parsing here...
                                 t = parseStream(connection, in);
@@ -168,6 +173,9 @@ public abstract class PlatformAsyncTaskLoader<T> extends BaseAsyncTaskLoader<T> 
                 }
             }
         }
+
+        // make the result code available to concrete classes
+        result = res;
 
         return t;
     }
