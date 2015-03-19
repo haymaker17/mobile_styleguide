@@ -31,7 +31,7 @@ public class HotelRate implements Serializable {
     public String guaranteeSurcharge;
     public boolean rateChangesOverStay;
     public int maxEnforcementLevel;
-    public String maxEnforceLevel;
+    public String maxEnforcementLevelDesc;
     public URLInfo sellOptions;
     public int[] violationValueIds;
     public Double travelPoints;

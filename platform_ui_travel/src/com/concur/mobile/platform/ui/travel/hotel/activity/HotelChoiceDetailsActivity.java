@@ -149,7 +149,7 @@ public class HotelChoiceDetailsActivity extends Activity implements HotelChoiceD
         }
         for (HotelRate rate : hotel.rates) {
             HotelViolation maxEnforcementViolation = ViewUtil.getShowButNoBookingViolation(violations,
-                    rate.maxEnforceLevel, rate.maxEnforcementLevel);
+                    rate.maxEnforcementLevelDesc, rate.maxEnforcementLevel);
             if (maxEnforcementViolation != null) {
                 rate.greyFlag = true;
             }

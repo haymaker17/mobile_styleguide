@@ -166,9 +166,9 @@ public class ViewUtil {
      * Gets the 'show but no booking' maxenforcement violation from the passed in maxenforcementlevel
      */
     public static HotelViolation getShowButNoBookingViolation(List<HotelViolation> violations,
-            String maxEnforcementLevel, int maxEnforcelimit) {
+            String maxEnforcementLevelDesc, int maxEnforcelimit) {
         // TODO
-        HotelViolation maxEnforcementViolation = getMaxRuleEnforcementViolation(violations, "AutoFail");
+        HotelViolation maxEnforcementViolation = getMaxRuleEnforcementViolation(violations, maxEnforcementLevelDesc); // "AutoFail"
         if ((maxEnforcementViolation != null && getRuleEnforcementLevel(maxEnforcelimit) == RuleEnforcementLevel.INACTIVE)) {
             return maxEnforcementViolation;
         }
@@ -179,11 +179,11 @@ public class ViewUtil {
      * Gets the Violation with the enforcement level matched to the passed in MaxEnforcementLevel
      */
     public static HotelViolation getMaxRuleEnforcementViolation(List<HotelViolation> violations,
-            String maxEnforcementLevel) {
+            String maxEnforcementLevelDesc) {
         HotelViolation maxEnforcementViolation = null;
-        if (violations != null && maxEnforcementLevel != null) {
+        if (violations != null && maxEnforcementLevelDesc != null) {
             for (HotelViolation violation : violations) {
-                if (maxEnforcementLevel.equals(violation.enforcementLevel)) {
+                if (maxEnforcementLevelDesc.equals(violation.enforcementLevel)) {
                     maxEnforcementViolation = violation;
                     break;
                 }

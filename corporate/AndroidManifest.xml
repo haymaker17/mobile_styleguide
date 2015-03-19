@@ -201,6 +201,7 @@
         <activity
             android:name="com.concur.mobile.platform.ui.travel.hotel.activity.ImageDetailActivity"
             android:theme="@style/ConcurRestTheme.White.ActionBarTabs" />
+        <activity android:name="com.concur.mobile.core.travel.hotel.activity.ShowHotelItinerary" />
         <activity
             android:name="com.concur.mobile.core.travel.hotel.activity.HotelSearchResults"
             android:screenOrientation="portrait" />
