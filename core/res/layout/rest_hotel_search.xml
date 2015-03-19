@@ -92,27 +92,32 @@
                             layout="@layout/v1_image_calendar_field" />
                     </LinearLayout>
                 </LinearLayout>
+            </LinearLayout>
 
-                <include layout="@layout/group_separator_v1" />
+            <include layout="@layout/group_separator_v1" />
 
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:orientation="vertical"
-                    android:padding="1dp" >
+            <ProgressBar
+                android:id="@+id/custom_field_search_progress"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center" />
 
-                    <!--
-                         <include
-                        android:id="@+id/hotel_distance"
-                        android:layout_width="match_parent"
-                        android:layout_height="0dp"
-                        android:layout_weight=".105"
-                        layout="@layout/v1_image_list_field" />
-                
+            <TextView
+                android:id="@+id/custom_travel_fields_search_progress_msg"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:background="#ffffff"
+                android:textColor="@color/blueTabs" >
+            </TextView>
 
-                    <include layout="@layout/group_separator_v1" />
-                    -->
-                </LinearLayout>
+            <!-- Custom Fields View Group -->
+
+            <LinearLayout
+                android:id="@+id/hotel_booking_custom_fields"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical" >
             </LinearLayout>
         </LinearLayout>
     </ScrollView>

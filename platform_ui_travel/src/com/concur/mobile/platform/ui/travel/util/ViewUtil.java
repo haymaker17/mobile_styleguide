@@ -5,7 +5,9 @@ import java.util.List;
 import android.content.Context;
 import android.text.Spannable;
 import android.text.style.URLSpan;
+import android.view.LayoutInflater;
 import android.view.View;
+import android.view.ViewGroup;
 import android.widget.TextView;
 
 import com.concur.mobile.platform.travel.search.hotel.HotelPreference;
@@ -215,6 +217,19 @@ public class ViewUtil {
             }
         }
         return ruleLevel;
+    }
+
+    /**
+     * Will add a separator view to a view group.
+     * 
+     * @param context
+     *            the context used to inflate the separator view.
+     * @param root
+     *            the parent of the inflated view.
+     */
+    public static void addSeparatorView(Context context, ViewGroup root) {
+        LayoutInflater inflater = LayoutInflater.from(context);
+        inflater.inflate(R.layout.group_separator_v1, root);
     }
 
 }

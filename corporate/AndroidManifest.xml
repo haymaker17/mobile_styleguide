@@ -61,12 +61,12 @@
 
     <application
         android:name="com.concur.mobile.corp.ConcurMobile"
-        tools:replace="theme, allowBackup, icon, label"
         android:allowBackup="false"
         android:icon="@drawable/launch"
         android:label="@string/corporate_name"
         android:logo="@drawable/concur_logo"
-        android:theme="@style/ConcurTheme" >
+        android:theme="@style/ConcurTheme"
+        tools:replace="theme, allowBackup, icon, label" >
         <activity
             android:name="com.concur.mobile.corp.activity.Startup"
             android:icon="@drawable/launch"
@@ -153,6 +153,7 @@
         <activity
             android:name="com.concur.mobile.core.travel.activity.LocationSearchV1"
             android:parentActivityName="com.concur.mobile.core.travel.hotel.activity.RestHotelSearch"
+            android:screenOrientation="portrait"
             android:theme="@style/ConcurRestTheme.White.ActionBarTabs"
             android:windowSoftInputMode="stateVisible" >
             <intent-filter>
@@ -186,7 +187,7 @@
             android:name="com.concur.mobile.core.travel.hotel.activity.RestHotelSearch"
             android:theme="@style/ConcurRestTheme.White.ActionBarTabs"
             android:windowSoftInputMode="adjustResize" />
-         <activity
+        <activity
             android:name="com.concur.mobile.platform.ui.travel.hotel.activity.HotelSearchAndResultActivity"
             android:screenOrientation="portrait"
             android:theme="@style/ConcurRestTheme.White.ActionBarTabs" />
@@ -340,17 +341,14 @@
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value="com.concur.mobile.core.request.activity.RequestSummaryActivity" />
         </activity>
-        <activity
-            android:name="com.concur.mobile.core.request.activity.RequestEntryActivity" >
+        <activity android:name="com.concur.mobile.core.request.activity.RequestEntryActivity" >
             <meta-data
                 android:name="
             android.support.PARENT_ACTIVITY"
                 android:value="com.concur.mobile.core.request.activity.RequestSummaryActivity" />
         </activity>
-        <activity
-            android:name="com.concur.mobile.core.request.activity.LocationSearchActivity" >
+        <activity android:name="com.concur.mobile.core.request.activity.LocationSearchActivity" >
         </activity>
-
 
         <!-- Invoice related activities. -->
         <activity
@@ -488,16 +486,17 @@
             android:name="com.concur.mobile.corp.activity.OpenSourceLicenseDisplay"
             android:theme="@style/ConcurBaseTheme" >
         </activity>
-         <activity
+        <activity
             android:name="com.concur.mobile.corp.activity.ProfileInfo"
             android:theme="@style/ConcurBaseTheme.New" >
         </activity>
         <activity
             android:name="com.concur.mobile.platform.ui.travel.hotel.maps.ShowMaps"
             android:label="ShowMaps"
-            android:theme="@style/ConcurRestTheme.White.ActionBarTabs">
+            android:theme="@style/ConcurRestTheme.White.ActionBarTabs" >
             <intent-filter>
                 <action android:name="android.intent.action.VIEW" />
+
                 <category android:name="android.intent.category.DEFAULT" />
             </intent-filter>
         </activity>
@@ -527,7 +526,7 @@
 
             <!-- TODO: define mime types here, etc. -->
         </provider>
-		<!-- Travel Information Provider -->
+        <!-- Travel Information Provider -->
         <provider
             android:name="com.concur.mobile.platform.travel.provider.TravelProvider"
             android:authorities="com.concur.mobile.platform.travel"
