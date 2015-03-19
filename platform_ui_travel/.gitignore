@@ -1,4 +1,7 @@
 /gen/
 /bin/
 /local.properties
+/build/intermediates
+/build/generated
+
 

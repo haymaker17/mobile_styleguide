@@ -1,4 +1,11 @@
 /gen/
 /bin/
 /local.properties
+/build/intermediates
+/build/generated
+/build/outputs
+/build/tmp
+/*.iml
+
+
 

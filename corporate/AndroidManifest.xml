@@ -61,12 +61,12 @@
 
     <application
         android:name="com.concur.mobile.corp.ConcurMobile"
+        tools:replace="theme, allowBackup, icon, label"
         android:allowBackup="false"
         android:icon="@drawable/launch"
         android:label="@string/corporate_name"
         android:logo="@drawable/concur_logo"
-        android:theme="@style/ConcurTheme"
-        tools:replace="theme, allowBackup, icon, label" >
+        android:theme="@style/ConcurTheme" >
         <activity
             android:name="com.concur.mobile.corp.activity.Startup"
             android:icon="@drawable/launch"

@@ -1,7 +1,5 @@
-include ':google-play-services_lib'
 include ':apptentive-android:apptentive-android-sdk'
 include ':evature'
-include ':appcompat'
 include ':base'
 include ':platform'
 include ':platform_ui_common'

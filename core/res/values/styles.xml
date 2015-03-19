@@ -88,11 +88,11 @@
     =================================================
     -->
 
-    <style name="ActionBarTabStyle.White" parent="@style/Widget.AppCompat.Base.ActionBar.TabView">
+    <style name="ActionBarTabStyle.White" parent="@style/Widget.AppCompat.ActionBar.TabView">
         <item name="android:background">@drawable/ab_tab_white_states</item>
     </style>
 
-    <style name="ActionBarTabTextStyle.Blue" parent="@style/Widget.AppCompat.Base.ActionBar.TabText">
+    <style name="ActionBarTabTextStyle.Blue" parent="@style/Widget.AppCompat.ActionBar.TabText">
         <item name="android:textColor">@color/universal_tour_ab_menu</item>
     </style>
 
@@ -155,11 +155,11 @@
     </style>
 
     <!-- MOB-14596 - work around to fix in 2.x devices -->
-    <style name="ConcurTheme.Sherlock.Dialog.Light" parent="Theme.AppCompat.CompactMenu.Dialog">
+    <style name="ConcurTheme.Sherlock.Dialog.Light" parent="Theme.AppCompat.Dialog">
         <item name="android:windowNoTitle">true</item>
     </style>
 
-    <style name="ConcurTheme.Dialog.WhatsNew" parent="@android:Theme.Dialog">
+    <style name="ConcurTheme.Dialog.WhatsNew" parent="@android:style/Theme.Dialog">
         <item name="android:layout_width">wrap_content</item>
         <item name="android:layout_height">wrap_content</item>
         <item name="android:gravity">center</item>

@@ -117,8 +117,9 @@ import com.concur.mobile.platform.travel.provider.TravelUtilHotel;
 import com.concur.mobile.platform.ui.common.util.PreferenceUtil;
 import com.concur.mobile.platform.util.Parse;
 import com.concur.platform.PlatformProperties;
+import android.support.multidex.MultiDexApplication;
 
-public abstract class ConcurCore extends Application {
+public abstract class ConcurCore extends MultiDexApplication {
 
     // Maps between an activity class name and the list of currently running
     // AsyncTasks that were spawned while it was active.
