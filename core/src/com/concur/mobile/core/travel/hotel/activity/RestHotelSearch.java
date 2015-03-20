@@ -3,16 +3,7 @@
  */
 package com.concur.mobile.core.travel.hotel.activity;
 
-import java.util.ArrayList;
-import java.util.Calendar;
-import java.util.List;
-import java.util.TimeZone;
-
-import android.app.ActionBar;
-import android.app.Dialog;
-import android.app.FragmentManager;
-import android.app.FragmentTransaction;
-import android.app.LoaderManager;
+import android.app.*;
 import android.content.Intent;
 import android.content.IntentFilter;
 import android.content.Loader;
@@ -25,16 +16,11 @@ import android.text.Spannable;
 import android.text.SpannableString;
 import android.text.style.StyleSpan;
 import android.util.Log;
-import android.view.Menu;
-import android.view.MenuInflater;
-import android.view.MenuItem;
-import android.view.View;
-import android.view.WindowManager;
+import android.view.*;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
-
 import com.concur.core.R;
 import com.concur.mobile.core.ConcurCore;
 import com.concur.mobile.core.data.SystemConfig;
@@ -60,6 +46,11 @@ import com.concur.mobile.platform.ui.travel.hotel.activity.HotelSearchAndResultA
 import com.concur.mobile.platform.ui.travel.hotel.activity.HotelVoiceSearchActivity;
 import com.concur.mobile.platform.ui.travel.util.Const;
 import com.concur.mobile.platform.util.Format;
+
+import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.List;
+import java.util.TimeZone;
 
 /**
  * An extension of <code>ConcurActivity</code> for the purposes of providing Rest API hotel search services.
@@ -662,32 +653,24 @@ public class RestHotelSearch extends BaseActivity implements LoaderManager.Loade
             }
             break;
         }
-        // case Const.REQUEST_CODE_BOOK_HOTEL: {
-        // if (resultCode == RESULT_OK) {
-        // // Hotel was booked, set the result code to okay.
-        // itinLocator = data.getStringExtra(Const.EXTRA_TRAVEL_ITINERARY_LOCATOR);
-        // bookingRecordLocator = data.getStringExtra(Const.EXTRA_TRAVEL_RECORD_LOCATOR);
-        // if (cliqbookTripId != null) {
-        // IItineraryCache itinCache = this.getConcurCore().getItinCache();
-        // Trip trip = itinCache.getItinerarySummaryByCliqbookTripId(cliqbookTripId);
-        // if (trip != null) {
-        // data.putExtra(Const.EXTRA_TRAVEL_ITINERARY_LOCATOR, trip.itinLocator);
-        // } else {
-        // Log.e(Const.LOG_TAG, CLS_TAG + ".onReceive: unable to locate trip based on cliqbook trip id!");
-        // }
-        // }
-        //
-        // setResult(Activity.RESULT_OK, data);
-        // onBookingSucceeded();
-        // // finish();
-        //
-        // } else if (resultCode == RESULT_CANCELED) {
-        // // Hotel Search cancelled or did not go further with the booking
-        // checkForSearchCriteraChanged = true;
-        // searchCriteriaChanged = false;
-        // }
-        // break;
-        // }
+        case Const.REQUEST_CODE_BOOK_HOTEL: {
+            if (resultCode == RESULT_OK) {
+                // Hotel was booked, set the result code to okay.
+                String itinLocator = data.getStringExtra(Const.EXTRA_TRAVEL_ITINERARY_LOCATOR);
+                String bookingRecordLocator = data.getStringExtra(Const.EXTRA_TRAVEL_RECORD_LOCATOR);
+                Intent i = new Intent(RestHotelSearch.this, ShowHotelItinerary.class);
+                i.putExtra(Const.EXTRA_TRAVEL_ITINERARY_LOCATOR, itinLocator);
+                i.putExtra(Const.EXTRA_TRAVEL_RECORD_LOCATOR, bookingRecordLocator);
+                RestHotelSearch.this.startActivity(i);
+
+            } else if (resultCode == RESULT_CANCELED) {
+                // Hotel Search cancelled or did not go further with the booking
+                checkForSearchCriteraChanged = true;
+                searchCriteriaChanged = false;
+            }
+            break;
+        }
+
         }
     }
 
