@@ -56,7 +56,7 @@
 
     <!-- White ActionBar with ActionBar tabs with blue text/bar -->
 
-    <style name="ConcurRestTheme.White.ActionBarTabs" parent="Theme.AppCompat.Light">
+    <style name="ConcurRestTheme.White.ActionBarTabs" parent="android:Theme.Holo.Light">
         <item name="android:actionBarTabStyle">@style/ActionBarTabStyle.ConcurRestTheme</item>
         <item name="android:actionBarStyle">@style/ActionBar.Solid.ConcurRestTheme</item>
         <item name="android:actionMenuTextColor">@color/universal_tour_ab_menu_v1</item>
