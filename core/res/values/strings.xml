@@ -1976,18 +1976,7 @@
 
     <!-- Start What's new -->
     <string-array name="whats_new">
-        <item>\u2022 Fix for Mobile SSO (Single Sign On) and localizations</item>
-        <item>\u2022 Fix for Receipt image upload for some clients in EMEA</item>
-    </string-array>
-
-    <string name="min_sdk_upgrade_message_title">Important</string>
-
-    <string-array name="min_sdk_upgrade_message">
-        <item>After the November 2014 release, Concur Mobile will provide updates only for Android devices using 4.1 (Jelly Bean) or newer.</item>
-        <item></item>
-        <item>What does this mean for you?</item>
-        <item></item>
-        <item>If your Android operating system is older than 4.1, you can still use Concur for Mobile on your current device with all existing functionality. However, be aware that future releases of Concur for Mobile, including new features and content, will not be available.</item>
+        <item>\u2022 Ability to view partner services/apps and connect them with your Concur profile</item>
     </string-array>
     <!-- End What's new -->
 
