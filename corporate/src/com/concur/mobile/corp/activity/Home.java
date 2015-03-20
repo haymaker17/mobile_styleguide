@@ -3675,13 +3675,28 @@ public class Home extends BaseActivity implements View.OnClickListener,
 							String encodedToken = "";
 
 							try {
+								String appCenterUrl;
+								String serverAddress = Preferences.getServerAddress();
+								
+								if (serverAddress.equals("www.concursolutions.com")) {
+									appCenterUrl = "https://appcenter.concursolutions.com";
+								} else {
+									appCenterUrl = "http://appcenterdev.concursolutions.com";
+								}
+								
 								encodedToken = URLEncoder.encode(bareToken,
 										"UTF-8");
 
-								String urlString = "http://appcenterdev.concursolutions.com/#/?accessToken="
+								String urlString = appCenterUrl
+										+ "/#/?accessToken="
 										+ encodedToken
 										+ "&lang="
 										+ locale;
+								
+//								String urlString = "http://10.2.44.7:8000/#/?accessToken="
+//										+ encodedToken
+//										+ "&lang="
+//										+ locale;
 								
 								//String urlString = "http://www.google.com/";
 
