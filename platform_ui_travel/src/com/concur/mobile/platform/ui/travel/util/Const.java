@@ -52,4 +52,51 @@ public class Const {
      */
     public static final String PREF_VOICE_SEARCH_LANGUAGE = "pref_voice_search_language";
 
+    // Sticky broadcast intent action indicating service has been bound.
+    // This is used for when the application is re-entered after the system has
+    // shut it down.
+    public static final String ACTION_CONCUR_SERVICE_BOUND = "com.concur.mobile.action.service.bound";
+    public static final String ACTION_CONCUR_SERVICE_UNBOUND = "com.concur.mobile.action.service.unbound";
+
+    /**
+     * Sticky broadcast intent action indicating the (server) system is unavailable for some reason.
+     */
+    public static final String ACTION_NETWORK_SYSTEM_UNAVAILABLE = "com.concur.mobile.action.network.system.unavailable";
+
+    // offline
+    public static final String EXTRA_ENABLE_OFFLINE_MODE_NOTIFICATION = "enable_offline_mode_notification";
+    public static final String EXTRA_QUEUE_ITEMS_AVAIL_NOTIFICATION = "offline_queue_items_available";
+    public static final String ACTION_QUEUE_ITEMS_AVAILABLE = "com.concur.mobile.action.data.offline.items.available";
+    public static final String ACTION_QUEUE_ITEMS_UNAVAILABLE = "com.concur.mobile.action.data.offline.items.unavailable";
+
+    // Broadcast action/extra related to on-going network activity.
+    public static final String ACTION_NETWORK_ACTIVITY_START = "com.concur.mobile.action.network.activity.start";
+    public static final String ACTION_NETWORK_ACTIVITY_STOP = "com.concur.mobile.action.network.activity.stop";
+    public static final String ACTION_NETWORK_ACTIVITY_TYPE = "com.concur.mobile.action.network.activity.type";
+    public static final String ACTION_NETWORK_ACTIVITY_TEXT = "com.concur.mobile.action.network.activity.text";
+
+    // Extra Intent Values Affecting List Search
+    public static final String EXTRA_LIST_SEARCH_IS_MRU = "list.search.is.mru";
+    public static final String EXTRA_LIST_SEARCH_FIELD_ID = "list.search.field.id";
+    public static final String EXTRA_LIST_SEARCH_FT_CODE = "list.search.ft.code";
+    public static final String EXTRA_LIST_SEARCH_LIST_KEY = "list.search.list.key";
+    public static final String EXTRA_LIST_SEARCH_PARENT_LI_KEY = "list.search.parent.li.key";
+    public static final String EXTRA_LIST_SEARCH_REPORT_KEY = "list.search.report.key";
+    public static final String EXTRA_LIST_SELECTED_LIST_ITEM_KEY = "list.search.selected.list.item.key";
+    public static final String EXTRA_LIST_SELECTED_LIST_ITEM_CODE = "list.search.selected.list.item.code";
+    public static final String EXTRA_LIST_SELECTED_LIST_ITEM_TEXT = "list.search.selected.list.item.text";
+    public static final String EXTRA_LIST_SELECTED_LIST_ITEM_CRN_CODE = "list.search.selected.list.item.crn.code";
+    public static final String EXTRA_LIST_SELECTED_LIST_ITEM_CRN_KEY = "list.search.selected.list.item.crn.key";
+    public static final String EXTRA_LIST_SEARCH_TITLE = "list.search.title";
+    public static final String EXTRA_LIST_SEARCH_EXCLUDE_KEYS = "list.search.exclude.keys";
+    public static final String EXTRA_LIST_SHOW_CODES = "list.search.show.codes";
+    public static final String EXTRA_LIST_SEARCH_STATIC_LIST = "list.search.static.list";
+    public static final String EXTRA_SEARCH_SELECTED_ITEM = "search.selected.item";
+    public static final String EXTRA_COMBO_BOX_ACTION = "combo_box_action";
+    public static final String EXTRA_COMBO_BOX_INLINE_TEXT = "combo_box_inline_text";
+    public static final String ACTION_SEARCH_LIST_UPDATED = "com.concur.mobile.action.SEARCH_LIST_UPDATED";
+    public static final int COMBO_BOX_INLINE_TEXT = 0;
+    public static final int COMBO_BOX_LIST_SELECTION = 1;
+    public static final int MSG_SEARCH_LIST_REQUEST = 45;
+
 }

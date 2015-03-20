@@ -55,6 +55,7 @@ public class MultiLineTextFormFieldView extends FormFieldView {
     public MultiLineTextFormFieldView(IFormField frmFld, IFormFieldViewListener listener) {
         super(frmFld, listener);
         value = frmFld.getValue();
+        layoutResourceId = R.layout.image_form_field;
     }
 
     /**
@@ -76,7 +77,7 @@ public class MultiLineTextFormFieldView extends FormFieldView {
             case RW: {
                 switch (frmFld.getInputType()) {
                 case USER: {
-                    view = inflater.inflate(R.layout.image_form_field, null);
+                    view = inflater.inflate(layoutResourceId, null);
                     if (view != null) {
                         // Set the field label.
                         setTextViewText(view, R.id.field_name, buildLabel());

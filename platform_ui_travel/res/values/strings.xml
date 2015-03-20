@@ -144,4 +144,14 @@
     <string name="book_missing_field_card_selection">Please select a credit card.</string>
     <string name="book_missing_field_violation_reason">Please select a violation reason.</string>
 
+    <!-- start of custom fields -->
+    <string name="loc_search_hint">Enter filter text</string>
+    <string name="dlg_travel_retrieve_custom_fields_progress_message">Retrieving booking information fields...</string>
+    <string name="dlg_travel_booking_info_title">Booking Info</string>
+    <string name="dlg_travel_booking_info_message">The following booking fields have missing or invalid values.  Please review and provide the appropriate values.</string>
+    <string name="travel_booking_info_unavailable_message">An error has occurred retrieving booking information fields.  Searches cannot be performed at this time.</string>
+    <string name="dlg_list_search_selection_progress_message">Completing selection...</string>
+
+    <!-- end of custom fields -->
+
 </resources>

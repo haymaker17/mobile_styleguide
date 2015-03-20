@@ -58,7 +58,7 @@ public class StaticPickListFormFieldView extends FormFieldView {
      */
     public StaticPickListFormFieldView(IFormField frmFld, IFormFieldViewListener listener, SpinnerItem[] items) {
         super(frmFld, listener);
-
+        layoutResourceId = R.layout.image_form_field;
         setItems(items);
     }
 
@@ -126,7 +126,7 @@ public class StaticPickListFormFieldView extends FormFieldView {
             case RW: {
                 switch (frmFld.getInputType()) {
                 case USER: {
-                    view = inflater.inflate(R.layout.image_form_field, null);
+                    view = inflater.inflate(layoutResourceId, null);
                     if (view != null) {
                         // Set the field label.
                         setTextViewText(view, R.id.field_name, buildLabel());

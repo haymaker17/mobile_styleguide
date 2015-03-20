@@ -24,6 +24,9 @@ public class ComboListFormFieldView extends FormFieldView {
 
     private static final String COMBO_LIST_BUNDLE_KEY = "combo.list";
 
+    // default layout
+    public int layoutResourceId = R.layout.combo_box_form_field;
+
     /**
      * Contains a reference to the inline text field form field view.
      */
@@ -79,6 +82,7 @@ public class ComboListFormFieldView extends FormFieldView {
         this.srchLstFrmFldView = srchLstFrmFldView;
         this.editHandler = eh;
         valSrc = ValueSource.NONE;
+        layoutResourceId = R.layout.combo_box_form_field;
     }
 
     /**
@@ -174,7 +178,7 @@ public class ComboListFormFieldView extends FormFieldView {
             // 'inTxtFrmFldView' is editable.
             LayoutInflater inflater = LayoutInflater.from(context);
             if (isInlineTextFormFieldViewEditable()) {
-                view = inflater.inflate(R.layout.combo_box_form_field, null);
+                view = inflater.inflate(layoutResourceId, null);
                 if (view != null) {
                     // Set up the click handler for the list search icon.
                     View imgView = view.findViewById(R.id.field_search);
