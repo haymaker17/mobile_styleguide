@@ -1,27 +1,25 @@
 package com.concur.mobile.platform.travel.loader;
 
-import java.io.ByteArrayInputStream;
-import java.io.IOException;
-import java.io.Serializable;
-import java.util.ArrayList;
-import java.util.List;
-
-import javax.xml.parsers.ParserConfigurationException;
-import javax.xml.parsers.SAXParser;
-import javax.xml.parsers.SAXParserFactory;
-
-import org.xml.sax.Attributes;
-import org.xml.sax.SAXException;
-import org.xml.sax.helpers.DefaultHandler;
-
 import android.util.Log;
-
+import com.concur.mobile.platform.common.FieldValueSpinnerItem;
 import com.concur.mobile.platform.common.SpinnerItem;
 import com.concur.mobile.platform.common.formfield.FormField;
 import com.concur.mobile.platform.util.Const;
 import com.concur.mobile.platform.util.Format;
 import com.concur.mobile.platform.util.Parse;
 import com.concur.mobile.platform.util.XmlUtil;
+import org.xml.sax.Attributes;
+import org.xml.sax.SAXException;
+import org.xml.sax.helpers.DefaultHandler;
+
+import javax.xml.parsers.ParserConfigurationException;
+import javax.xml.parsers.SAXParser;
+import javax.xml.parsers.SAXParserFactory;
+import java.io.ByteArrayInputStream;
+import java.io.IOException;
+import java.io.Serializable;
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * 
@@ -51,7 +49,7 @@ public class TravelCustomField extends FormField implements Serializable {
     /**
      * Contains the list of possible values for this field.
      */
-    protected List<TravelCustomFieldValueSpinnerItem> fieldValues;
+    protected List<FieldValueSpinnerItem> fieldValues;
 
     /**
      * Models saved field information.
@@ -73,11 +71,11 @@ public class TravelCustomField extends FormField implements Serializable {
      * 
      * @return return the list of associated field values.
      */
-    public List<TravelCustomFieldValueSpinnerItem> getFieldValues() {
+    public List<FieldValueSpinnerItem> getFieldValues() {
         return fieldValues;
     }
 
-    public void setFieldValues(List<TravelCustomFieldValueSpinnerItem> fieldValuesList) {
+    public void setFieldValues(List<FieldValueSpinnerItem> fieldValuesList) {
         fieldValues = fieldValuesList;
     }
 
@@ -175,7 +173,7 @@ public class TravelCustomField extends FormField implements Serializable {
                         // The StaticPickListFormField will store the ValueId in 'LiKey', but the OptionText in
                         // 'Value'. So, we need to look-up the 'Value' based on a match of 'ValueId'.
                         String tcfValue = null;
-                        for (TravelCustomFieldValueSpinnerItem tcfsi : tcf.fieldValues) {
+                        for (FieldValueSpinnerItem tcfsi : tcf.fieldValues) {
                             if (tcf.getLiKey() != null && tcfsi.id != null && tcf.getLiKey().equalsIgnoreCase(tcfsi.id)) {
                                 tcfValue = Format.escapeForXML(tcfsi.value);
                                 break;
@@ -345,7 +343,7 @@ public class TravelCustomField extends FormField implements Serializable {
         /**
          * Contains the current form field value being parsed.
          */
-        protected TravelCustomFieldValueSpinnerItem curFldValue;
+        protected FieldValueSpinnerItem curFldValue;
 
         /**
          * Contains whether or not this parser has handled an element tag.
@@ -396,14 +394,14 @@ public class TravelCustomField extends FormField implements Serializable {
                 elementHandled = true;
             } else if (localName.equalsIgnoreCase(VALUES)) {
                 if (curFld != null) {
-                    curFld.fieldValues = new ArrayList<TravelCustomFieldValueSpinnerItem>();
+                    curFld.fieldValues = new ArrayList<FieldValueSpinnerItem>();
                 } else {
                     Log.e(Const.LOG_TAG, CLS_TAG + ".startElement: curFld is null!");
                 }
                 elementHandled = true;
             } else if (localName.equalsIgnoreCase(ATTRIBUTE_VALUE)) {
                 if (curFld != null) {
-                    curFldValue = new TravelCustomFieldValueSpinnerItem("", "");
+                    curFldValue = new FieldValueSpinnerItem("", "");
                 } else {
                     Log.e(Const.LOG_TAG, CLS_TAG + ".startElement: curFld is null!");
                 }
@@ -442,7 +440,7 @@ public class TravelCustomField extends FormField implements Serializable {
                     if (localName.equalsIgnoreCase(VALUES)) {
                         // Ensure 'OptionText' is set.
                         if (curFld.fieldValues != null && curFld.fieldValues.size() > 0) {
-                            for (TravelCustomFieldValueSpinnerItem tcfsi : curFld.fieldValues) {
+                            for (FieldValueSpinnerItem tcfsi : curFld.fieldValues) {
                                 if (tcfsi.optionText == null || tcfsi.optionText.length() == 0) {
                                     if (tcfsi.value != null && tcfsi.value.length() > 0) {
                                         tcfsi.optionText = tcfsi.value;
@@ -452,7 +450,7 @@ public class TravelCustomField extends FormField implements Serializable {
                             }
                         }
                         curFld.setStaticList((SpinnerItem[]) curFld.fieldValues
-                                .toArray(new TravelCustomFieldValueSpinnerItem[0]));
+                                .toArray(new FieldValueSpinnerItem[0]));
                         elementHandled = true;
                     } else if (localName.equalsIgnoreCase(FIELD)) {
                         if (fields == null) {
@@ -466,7 +464,7 @@ public class TravelCustomField extends FormField implements Serializable {
                             curFld.setControlType(ControlType.PICK_LIST);
                             // Set the 'LiKey' on 'curFld' if it has a value.
                             if (curFld.getValue() != null) {
-                                for (TravelCustomFieldValueSpinnerItem tcfsi : curFld.fieldValues) {
+                                for (FieldValueSpinnerItem tcfsi : curFld.fieldValues) {
                                     if (tcfsi.value != null && tcfsi.value.equalsIgnoreCase(curFld.getValue())) {
                                         curFld.setLiKey(tcfsi.id);
                                     }

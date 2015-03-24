@@ -25,6 +25,7 @@ import com.concur.mobile.platform.util.XmlUtil;
 public class SearchTravelCustomFieldValues extends PlatformAsyncRequestTask {
 
     private static final String CLS_TAG = "SearchTravelCustomFieldValues";
+    public static final String TRAVEL_CUSTOM_FIELD = "travelCustomField";
 
     private String attributeId;
     private String searchPattern;
@@ -102,7 +103,7 @@ public class SearchTravelCustomFieldValues extends PlatformAsyncRequestTask {
             // ConcurCore core = (ConcurCore) ConcurCore.getContext();
             // core.setTravelCustomField(custFieldsParser.custField);
             // core.setTravelCustomFieldLastRetrieved(Calendar.getInstance(TimeZone.getTimeZone("UTC")));
-            resultData.putSerializable("custField", custFieldsParser.custField);
+            resultData.putSerializable(TRAVEL_CUSTOM_FIELD, custFieldsParser.custField);
 
         } else {
             // log the error message

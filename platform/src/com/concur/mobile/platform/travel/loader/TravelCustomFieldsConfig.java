@@ -1,22 +1,20 @@
 package com.concur.mobile.platform.travel.loader;
 
-import java.io.IOException;
-import java.io.InputStream;
-import java.util.List;
-
-import javax.xml.parsers.ParserConfigurationException;
-import javax.xml.parsers.SAXParser;
-import javax.xml.parsers.SAXParserFactory;
-
+import android.util.Log;
+import com.concur.mobile.platform.travel.loader.TravelCustomField.TravelCustomFieldSAXHandler;
+import com.concur.mobile.platform.util.Const;
+import com.concur.mobile.platform.util.Parse;
 import org.xml.sax.Attributes;
 import org.xml.sax.SAXException;
 import org.xml.sax.helpers.DefaultHandler;
 
-import android.util.Log;
-
-import com.concur.mobile.platform.travel.loader.TravelCustomField.TravelCustomFieldSAXHandler;
-import com.concur.mobile.platform.util.Const;
-import com.concur.mobile.platform.util.Parse;
+import javax.xml.parsers.ParserConfigurationException;
+import javax.xml.parsers.SAXParser;
+import javax.xml.parsers.SAXParserFactory;
+import java.io.IOException;
+import java.io.InputStream;
+import java.io.Serializable;
+import java.util.List;
 
 /**
  * Models travel custom fields configuration.
@@ -24,7 +22,7 @@ import com.concur.mobile.platform.util.Parse;
  * @author RatanK
  * 
  */
-public class TravelCustomFieldsConfig {
+public class TravelCustomFieldsConfig implements Serializable {
 
     private static final String CLS_TAG = TravelCustomFieldsConfig.class.getSimpleName();
 

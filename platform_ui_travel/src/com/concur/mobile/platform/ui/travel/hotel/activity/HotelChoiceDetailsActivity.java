@@ -1,10 +1,5 @@
 package com.concur.mobile.platform.ui.travel.hotel.activity;
 
-import java.io.Serializable;
-import java.util.ArrayList;
-import java.util.List;
-
-import android.app.Activity;
 import android.app.ActivityOptions;
 import android.app.FragmentManager;
 import android.app.FragmentTransaction;
@@ -17,19 +12,14 @@ import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Toast;
-
+import com.concur.mobile.platform.travel.loader.TravelCustomFieldsConfig;
 import com.concur.mobile.platform.travel.search.hotel.Hotel;
 import com.concur.mobile.platform.travel.search.hotel.HotelRate;
 import com.concur.mobile.platform.travel.search.hotel.HotelViolation;
 import com.concur.mobile.platform.ui.travel.R;
-import com.concur.mobile.platform.ui.travel.hotel.fragment.HotelChoiceDetailsFragment;
+import com.concur.mobile.platform.ui.travel.activity.TravelBaseActivity;
+import com.concur.mobile.platform.ui.travel.hotel.fragment.*;
 import com.concur.mobile.platform.ui.travel.hotel.fragment.HotelChoiceDetailsFragment.HotelChoiceDetailsFragmentListener;
-import com.concur.mobile.platform.ui.travel.hotel.fragment.HotelDetailsFragment;
-import com.concur.mobile.platform.ui.travel.hotel.fragment.HotelImagesFragment;
-import com.concur.mobile.platform.ui.travel.hotel.fragment.HotelMapFragment;
-import com.concur.mobile.platform.ui.travel.hotel.fragment.HotelRoomDetailFragment;
-import com.concur.mobile.platform.ui.travel.hotel.fragment.HotelRoomListItem;
-import com.concur.mobile.platform.ui.travel.hotel.fragment.HotelSearchResultListItem;
 import com.concur.mobile.platform.ui.travel.util.Const;
 import com.concur.mobile.platform.ui.travel.util.ParallaxScollView;
 import com.concur.mobile.platform.ui.travel.util.ViewUtil;
@@ -41,12 +31,16 @@ import com.google.android.gms.maps.OnMapReadyCallback;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.MarkerOptions;
 
+import java.io.Serializable;
+import java.util.ArrayList;
+import java.util.List;
+
 /**
  * 
  * @author tejoa
  * 
  */
-public class HotelChoiceDetailsActivity extends Activity implements HotelChoiceDetailsFragmentListener,
+public class HotelChoiceDetailsActivity extends TravelBaseActivity implements HotelChoiceDetailsFragmentListener,
         OnMapReadyCallback {
 
     public static final String CLS_TAG = HotelChoiceDetailsActivity.class.getSimpleName();
@@ -156,6 +150,10 @@ public class HotelChoiceDetailsActivity extends Activity implements HotelChoiceD
 
         }
 
+        if(i.hasExtra("travelCustomFieldsConfig")) {
+            travelCustomFieldsConfig = (TravelCustomFieldsConfig)i.getSerializableExtra("travelCustomFieldsConfig");
+        }
+
     }
 
     @Override
@@ -254,6 +252,10 @@ public class HotelChoiceDetailsActivity extends Activity implements HotelChoiceD
             intent.putExtra("currentTripId", currentTripId);
             intent.putExtra("hotelSearchId", hotel.search_id);
             intent.putExtra("violations", (Serializable) violations);
+            if(travelCustomFieldsConfig != null) {
+                intent.putExtra("travelCustomFieldsConfig", travelCustomFieldsConfig);
+            }
+
             startActivityForResult(intent, Const.REQUEST_CODE_BOOK_HOTEL);
         }
 
