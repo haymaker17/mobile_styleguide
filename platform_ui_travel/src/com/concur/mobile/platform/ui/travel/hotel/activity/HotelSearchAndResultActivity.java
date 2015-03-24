@@ -486,21 +486,26 @@ public class HotelSearchAndResultActivity extends Activity implements OnMenuItem
 
     @Override
     public void onMapsClicked() {
-        int resultCode = GooglePlayServicesUtil.isGooglePlayServicesAvailable(this);
-
-        Intent i = new Intent(this, ShowMaps.class);
-        if (resultCode == ConnectionResult.SUCCESS && listItemAdapater != null && listItemAdapater.getItems() != null) {
-            List<HotelSearchResultListItem> hotelList = listItemAdapater.getItems();
-            Bundle bundle = new Bundle();
-            bundle.putSerializable(Const.EXTRA_HOTELS_LIST, (Serializable) hotelList);
-            i.putExtras(bundle);
-            i.putExtra(Const.EXTRA_TRAVEL_LATITUDE, latitude);
-            i.putExtra(Const.EXTRA_TRAVEL_LONGITUDE, longitude);
-
-            startActivity(i);
-
+        if (isOffline) {
+            showOfflineDialog();
         } else {
-            Toast.makeText(this, "Map Unavailable", Toast.LENGTH_LONG).show();
+            int resultCode = GooglePlayServicesUtil.isGooglePlayServicesAvailable(this);
+
+            Intent i = new Intent(this, ShowMaps.class);
+            if (resultCode == ConnectionResult.SUCCESS && listItemAdapater != null
+                    && listItemAdapater.getItems() != null) {
+                List<HotelSearchResultListItem> hotelList = listItemAdapater.getItems();
+                Bundle bundle = new Bundle();
+                bundle.putSerializable(Const.EXTRA_HOTELS_LIST, (Serializable) hotelList);
+                i.putExtras(bundle);
+                i.putExtra(Const.EXTRA_TRAVEL_LATITUDE, latitude);
+                i.putExtra(Const.EXTRA_TRAVEL_LONGITUDE, longitude);
+
+                startActivity(i);
+
+            } else {
+                Toast.makeText(this, "Map Unavailable", Toast.LENGTH_LONG).show();
+            }
         }
     }
 
@@ -511,55 +516,57 @@ public class HotelSearchAndResultActivity extends Activity implements OnMenuItem
 
     public void hotelListItemClicked(HotelSearchResultListItem itemClicked) {
 
-        if (itemClicked != null) {
-            selectedHotelListItem = itemClicked;
-            Hotel hotelSelected = selectedHotelListItem.getHotel();
-            if (hotelSelected != null && hotelSelected.ratesURL != null) {
-                // Determine if the hotel details are already in our in-memory
-                // cache, if so, then
-                // re-use them. A request to update will be made in the
-                // background.
+        if (isOffline) {
+            showOfflineDialog();
+        } else {
+            if (itemClicked != null) {
+                selectedHotelListItem = itemClicked;
+                Hotel hotelSelected = selectedHotelListItem.getHotel();
+                if (hotelSelected != null && hotelSelected.ratesURL != null) {
+                    // Determine if the hotel details are already in our in-memory
+                    // cache, if so, then
+                    // re-use them. A request to update will be made in the
+                    // background.
 
+                    if (hotelSelected.availabilityErrorCode == null) {
+                        if (retriveFromDB) {
 
-                if (hotelSelected.availabilityErrorCode == null) {
-                    if (retriveFromDB) {
+                            // DB call
+                            long id = hotelSelected._id;
 
-                        // DB call
-                        long id = hotelSelected._id;
-
-                        hotelSelected.rates = TravelUtilHotel.getHotelRateDetails(this, id);
-                        hotelSelected.imagePairs = TravelUtilHotel.getHotelImagePairs(this, id);
-                        voilations = TravelUtilHotel.getHotelViolations(getApplicationContext(), null,
-                                (int) hotelSelected.search_id);
-                    }
-                    if (hotelSelected.rates != null && hotelSelected.rates.size() > 0) {
-                        viewHotelChoiceDetails();
-                    } else if (hotelSelected.lowestRate == null && hotelSelected.ratesURL.href != null) {
-
-                        String rateUrl = hotelSelected.ratesURL.href;
-                        // get ids from db
-                        Hotel hotel = TravelUtilHotel.getHotelByRateUrl(this, rateUrl, cacheKey);
-                        if (hotel != null) {
-                            hotelSelected._id = hotel._id;
-                            hotelSelected.search_id = hotel.search_id;
+                            hotelSelected.rates = TravelUtilHotel.getHotelRateDetails(this, id);
+                            hotelSelected.imagePairs = TravelUtilHotel.getHotelImagePairs(this, id);
+                            voilations = TravelUtilHotel
+                                    .getHotelViolations(getApplicationContext(), null, (int) hotelSelected.search_id);
                         }
-                        // New call to rates async task
-                        hotelRatesReceiver = new BaseAsyncResultReceiver(new Handler());
+                        if (hotelSelected.rates != null && hotelSelected.rates.size() > 0) {
+                            viewHotelChoiceDetails();
+                        } else if (hotelSelected.lowestRate == null && hotelSelected.ratesURL.href != null) {
 
-                        hotelSearchRESTResultFrag.showProgressBar(true);
-                        hotelRatesReceiver.setListener(new HotelRatesReplyListener());
-                        HotelRatesAsyncRequestTask ratesAsynTask = new HotelRatesAsyncRequestTask(this,
-                                HOTEL_RATES_ASYN_TASK_ID, hotelRatesReceiver, rateUrl, hotelSelected._id,
-                                hotelSelected.search_id);
-                        ratesAsynTask.execute();
+                            String rateUrl = hotelSelected.ratesURL.href;
+                            // get ids from db
+                            Hotel hotel = TravelUtilHotel.getHotelByRateUrl(this, rateUrl, cacheKey);
+                            if (hotel != null) {
+                                hotelSelected._id = hotel._id;
+                                hotelSelected.search_id = hotel.search_id;
+                            }
+                            // New call to rates async task
+                            hotelRatesReceiver = new BaseAsyncResultReceiver(new Handler());
+
+                            hotelSearchRESTResultFrag.showProgressBar(true);
+                            hotelRatesReceiver.setListener(new HotelRatesReplyListener());
+                            HotelRatesAsyncRequestTask ratesAsynTask = new HotelRatesAsyncRequestTask(this,
+                                    HOTEL_RATES_ASYN_TASK_ID, hotelRatesReceiver, rateUrl, hotelSelected._id,
+                                    hotelSelected.search_id);
+                            ratesAsynTask.execute();
+                        }
+                    } else {
+                        Toast.makeText(getApplicationContext(), "No Rooms Avilable", Toast.LENGTH_LONG).show();
+
                     }
-                } else {
-                    Toast.makeText(getApplicationContext(), "No Rooms Avilable", Toast.LENGTH_LONG).show();
-
                 }
             }
         }
-
     }
 
     private void viewHotelChoiceDetails() {

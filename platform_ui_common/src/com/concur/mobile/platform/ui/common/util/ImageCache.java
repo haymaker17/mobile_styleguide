@@ -1,27 +1,24 @@
 package com.concur.mobile.platform.ui.common.util;
 
-import java.io.BufferedInputStream;
-import java.io.BufferedOutputStream;
-import java.io.File;
-import java.io.FileInputStream;
-import java.io.FileNotFoundException;
-import java.io.FileOutputStream;
-import java.io.IOException;
-import java.net.HttpURLConnection;
-import java.net.MalformedURLException;
-import java.net.URI;
-import java.util.HashMap;
-import java.util.Iterator;
-import java.util.Map;
-
-import org.apache.http.HttpStatus;
-import org.apache.http.client.ClientProtocolException;
-
 import android.content.Context;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
+import android.os.Build;
 import android.util.Log;
+import com.squareup.okhttp.OkHttpClient;
+import com.squareup.okhttp.OkUrlFactory;
+import org.apache.http.HttpStatus;
+import org.apache.http.client.ClientProtocolException;
+
+import java.io.*;
+import java.net.HttpURLConnection;
+import java.net.MalformedURLException;
+import java.net.URI;
+import java.net.URL;
+import java.util.HashMap;
+import java.util.Iterator;
+import java.util.Map;
 
 /**
  * A singleton that manages image downloading and caching.
@@ -241,11 +238,28 @@ public class ImageCache {
         public void run() {
 
             boolean result = false;
+
             HttpURLConnection connection = null;
 
             try {
-                // Create and open the connection
-                connection = (HttpURLConnection) uri.toURL().openConnection();
+               URL url = uri.toURL();
+                // Start the connection
+                try {
+                    // from KITKAT default impl is OkHttpUrlConnection
+                    if (Build.VERSION.SDK_INT < 19) {
+                        OkHttpClient client = new OkHttpClient();
+                        OkUrlFactory factory = new OkUrlFactory(client);
+                        connection = factory.open(url);
+                        Log.d(com.concur.mobile.base.util.Const.LOG_TAG, getClass().getSimpleName() + " // SPDY is enabled // ");
+
+                    } else {
+                        connection = (HttpURLConnection) url.openConnection();
+                    }
+                } catch (IOException e) {
+                    Log.e(com.concur.mobile.base.util.Const.LOG_TAG, getClass().getSimpleName() + " // error opening connection // " + url, e);
+
+                }
+
                 connection.setConnectTimeout(5000);
                 connection.setReadTimeout(30000);
 

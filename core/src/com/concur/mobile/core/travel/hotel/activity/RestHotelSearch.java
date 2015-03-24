@@ -1,5 +1,5 @@
 /**
- * 
+ *
  */
 package com.concur.mobile.core.travel.hotel.activity;
 
@@ -322,7 +322,7 @@ public class RestHotelSearch extends BaseActivity implements LoaderManager.Loade
     public boolean onOptionsItemSelected(MenuItem item) {
         if (item.getItemId() == R.id.menuVoice) {
             if (!ConcurCore.isConnected()) {
-                // showDialog(Const.DIALOG_NO_CONNECTIVITY);
+                showOfflineDialog();
             } else {
                 ConcurCore core = (ConcurCore) ConcurCore.getContext();
                 Intent i = new Intent(RestHotelSearch.this, HotelVoiceSearchActivity.class);
@@ -373,7 +373,7 @@ public class RestHotelSearch extends BaseActivity implements LoaderManager.Loade
                 // Check for connectivity, if none, then display dialog and
                 // return.
                 if (!ConcurCore.isConnected()) {
-                    // showDialog(Const.DIALOG_NO_CONNECTIVITY);
+                    showOfflineDialog();
                     return;
                 }
                 // ValidateTravelCustomFields will display a dialog and return
@@ -590,7 +590,8 @@ public class RestHotelSearch extends BaseActivity implements LoaderManager.Loade
             @Override
             public void onClick(View v) {
                 if (!ConcurCore.isConnected()) {
-                    // showDialog(Const.DIALOG_NO_CONNECTIVITY);
+                    showOfflineDialog();
+
                 } else {
                     // Determine if there are any company locations, if so, then
                     // pass that flag into

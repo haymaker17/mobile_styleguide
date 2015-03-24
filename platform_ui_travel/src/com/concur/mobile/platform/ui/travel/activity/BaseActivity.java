@@ -10,20 +10,21 @@ import android.content.Intent;
 import android.content.IntentFilter;
 import android.os.Bundle;
 import android.util.Log;
-import android.widget.Toast;
-
+import android.view.View;
 import com.concur.mobile.platform.ui.common.fragment.RetainerFragmentV1;
+import com.concur.mobile.platform.ui.travel.R;
+import com.concur.mobile.platform.ui.travel.hotel.fragment.CustomDialogFragment;
 import com.concur.mobile.platform.ui.travel.receiver.NetworkActivityReceiver;
 import com.concur.mobile.platform.ui.travel.receiver.NetworkActivityReceiver.INetworkActivityListener;
 import com.concur.mobile.platform.ui.travel.util.Const;
+import android.net.ConnectivityManager;
+import android.net.NetworkInfo;
 
 /**
  * Activity that can be used to keep track of service availability state. This is a copy of <code>BaseActivity</code> from core
- * 
- * @see com.concur.mobile.core.activity.BaseActivity
- * 
+ *
  * @author RatanK
- * 
+ * @see BaseActivity
  */
 public class BaseActivity extends Activity implements INetworkActivityListener {
 
@@ -115,6 +116,11 @@ public class BaseActivity extends Activity implements INetworkActivityListener {
      */
     protected Dialog currProgressDialog;
 
+    /**
+     * A reference to travel Ui for offline mode.
+     */
+    protected boolean isOffline;
+
     @Override
     public boolean isNetworkRequestInteresting(int networkMsgType) {
         // TODO Auto-generated method stub
@@ -137,15 +143,6 @@ public class BaseActivity extends Activity implements INetworkActivityListener {
     public String getNetworkActivityText(int networkMsgType, String defaultText) {
         // TODO Auto-generated method stub
         return null;
-    }
-
-    /**
-     * Gets the instance of <code>RetainerFragmentV1</code> used to store data.
-     * 
-     * @return returns the instance of <code>RetainerFragment</code> used to store data.
-     */
-    public RetainerFragmentV1 getRetainer() {
-        return retainer;
     }
 
     @Override
@@ -188,8 +185,7 @@ public class BaseActivity extends Activity implements INetworkActivityListener {
         offlineNotificationEnabled = getIntent().getBooleanExtra(Const.EXTRA_ENABLE_OFFLINE_MODE_NOTIFICATION, true);
         registerOfflineConnectivityReceiver();
 
-        // TODO - how to get this offline check from core ????
-        // updateOfflineHeaderBar(ConcurCore.isConnected());
+        updateConnectedFlags();
 
     }
 
@@ -202,6 +198,83 @@ public class BaseActivity extends Activity implements INetworkActivityListener {
             FragmentTransaction ft = fm.beginTransaction();
             ft.add(retainer, RETAINER_TAG);
             ft.commit();
+        }
+    }
+
+    /**
+     * Gets the instance of <code>RetainerFragment</code> used to store data.
+     *
+     * @return returns the instance of <code>RetainerFragment</code> used to store data.
+     */
+    public RetainerFragmentV1 getRetainer() {
+        return retainer;
+    }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+
+        // If being destroyed due to a non-configuration change, then
+        // unregister the image cache receiver.
+        if (getChangingConfigurations() == 0) {
+            // unregisterImageCacheReceiver();
+        }
+
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+
+        if (!receiverRegistered) {
+            // Register the receiver.
+            Intent stickyIntent = registerReceiver(serviceBoundReceiver, serviceBoundFilter);
+            if (stickyIntent != null) {
+                serviceBound = stickyIntent.getAction().equalsIgnoreCase(Const.ACTION_CONCUR_SERVICE_BOUND);
+            }
+            receiverRegistered = true;
+        }
+
+        // Registger the network activity receiver.
+        registerNetworkActivityReceiver();
+
+        registerSystemUnavailableReceiver();
+
+        registerOfflineConnectivityReceiver();
+    }
+
+    @Override
+    protected void onPause() {
+        super.onPause();
+        if (receiverRegistered) {
+            unregisterReceiver(serviceBoundReceiver);
+            receiverRegistered = false;
+        }
+
+        // Unregister the network activity receiver.
+        unregisterNetworkActivityReceiver();
+
+        unregisterSystemUnavailableReceiver();
+
+        unregisterOfflineConnectivityReceiver();
+
+    }
+
+    @Override
+    protected void onSaveInstanceState(Bundle outState) {
+        super.onSaveInstanceState(outState);
+
+        // Save the configuration reason for the stopping. Non-zero means some
+        // kind of config change.
+        outState.putInt(CONFIG_CHANGE_RESTART_KEY, getChangingConfigurations());
+
+        // Save any error message information.
+        if (actionStatusErrorMessage != null) {
+            outState.putString(ACTION_STATUS_ERROR_MESSAGE_KEY, actionStatusErrorMessage);
+        }
+        // Save last http error message.
+        if (lastHttpErrorMessage != null) {
+            outState.putString(LAST_HTTP_ERROR_MESSAGE, lastHttpErrorMessage);
         }
     }
 
@@ -232,6 +305,7 @@ public class BaseActivity extends Activity implements INetworkActivityListener {
     /**
      * Will register a receiver to handle when the (server) system is unavailable.
      */
+
     protected void registerSystemUnavailableReceiver() {
         if (systemUnavailableReceiver == null || !systemUnavailableReceiverRegistered) {
 
@@ -239,13 +313,9 @@ public class BaseActivity extends Activity implements INetworkActivityListener {
 
                 @Override
                 public void onReceive(Context context, Intent intent) {
-                    if (currProgressDialog != null && currProgressDialog.isShowing()) {
-                        currProgressDialog.dismiss();
-                        currProgressDialog = null;
-                    }
-                    // TODO - toast is temporary, remove it and show dialog
-                    Toast.makeText(getApplicationContext(), "system unavialable", Toast.LENGTH_SHORT);
-                    // BaseActivity.this.showDialog(Const.DIALOG_SYSTEM_UNAVAILABLE);
+
+                    showOfflineDialog();
+
                 }
             };
 
@@ -304,22 +374,50 @@ public class BaseActivity extends Activity implements INetworkActivityListener {
 
     /**
      * Called whenever the network data connectivity changes online or offline.
-     * 
-     * @param available
-     *            <code>true</code> if network data connectivity is available, otherwise <code>false</code>
+     *
+     * @param available <code>true</code> if network data connectivity is available, otherwise <code>false</code>
      */
     protected void updateOfflineHeaderBar(boolean available) {
         if (offlineNotificationEnabled) {
-            // TODO - toast is temporary, remove it ans show theoff line header
-            Toast.makeText(this, "offline", Toast.LENGTH_SHORT);
-            // View offlineHeader = findViewById(R.id.offline_header);
-            // if (offlineHeader != null) {
-            // if (available && offlineHeader.getVisibility() == View.VISIBLE) {
-            // offlineHeader.setVisibility(View.GONE);
-            // } else if (!available && offlineHeader.getVisibility() == View.GONE) {
-            // offlineHeader.setVisibility(View.VISIBLE);
-            // }
-            // }
+
+            View offlineHeader = findViewById(R.id.offline_header);
+            if (offlineHeader != null) {
+                if (available && offlineHeader.getVisibility() == View.VISIBLE) {
+                    offlineHeader.setVisibility(View.GONE);
+                } else if (!available && offlineHeader.getVisibility() == View.GONE) {
+                    offlineHeader.setVisibility(View.VISIBLE);
+                    isOffline = true;
+                }
+            }
+
+        }
+    }
+
+    protected void showOfflineDialog() {
+        if (currProgressDialog != null && currProgressDialog.isShowing()) {
+            currProgressDialog.dismiss();
+            currProgressDialog = null;
+        }
+
+        // BaseActivity.this.showDialog(Const.DIALOG_SYSTEM_UNAVAILABLE);
+        CustomDialogFragment dialog = new CustomDialogFragment() ;
+        dialog.setTitle(R.string.dlg_no_connectivity_title);
+        dialog.setMessage(R.string.dlg_no_connectivity_message);
+        dialog.setPositiveButtonText(R.string.dialog_ok);
+
+        dialog.show(getFragmentManager(), "DIALOG_NO_CONNECTIVITY");
+
+    }
+
+    public void updateConnectedFlags() {
+        ConnectivityManager connMgr;
+        connMgr = (ConnectivityManager) getSystemService(Context.CONNECTIVITY_SERVICE);
+
+        NetworkInfo activeInfo = connMgr.getActiveNetworkInfo();
+        if (activeInfo != null && activeInfo.isConnected()) {
+
+        } else {
+            updateOfflineHeaderBar(true);
         }
     }
 
@@ -333,11 +431,12 @@ public class BaseActivity extends Activity implements INetworkActivityListener {
      * Called when the concur service component has become unavailable.
      */
     protected void onServiceUnavailable() {
+        showOfflineDialog();
     }
 
     /**
      * An extension of <code>BroadcastReceiver</code> to handle receiving notifications of when our service is bound/unbound.
-     * 
+     *
      * @author RatanK
      */
     class ServiceBoundReceiver extends BroadcastReceiver {

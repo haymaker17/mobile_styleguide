@@ -112,7 +112,7 @@ public class AlertDialogFragmentV1 extends DialogFragment {
     /**
      * Sets the text resource ID of the dialog message.
      * 
-     * @param title
+     * @param message
      *            contains the resource ID of the dialog message.
      */
     public void setMessage(int message) {
