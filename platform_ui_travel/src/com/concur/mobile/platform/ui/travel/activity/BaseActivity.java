@@ -10,20 +10,21 @@ import android.content.Intent;
 import android.content.IntentFilter;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.View;
 import android.widget.Toast;
 
 import com.concur.mobile.platform.ui.common.fragment.RetainerFragmentV1;
+import com.concur.mobile.platform.ui.travel.R;
+import com.concur.mobile.platform.ui.travel.hotel.fragment.CustomDialogFragment;
 import com.concur.mobile.platform.ui.travel.receiver.NetworkActivityReceiver;
 import com.concur.mobile.platform.ui.travel.receiver.NetworkActivityReceiver.INetworkActivityListener;
 import com.concur.mobile.platform.ui.travel.util.Const;
 
 /**
  * Activity that can be used to keep track of service availability state. This is a copy of <code>BaseActivity</code> from core
- * 
- * @see com.concur.mobile.core.activity.BaseActivity
- * 
+ *
+ *
  * @author RatanK
- * 
  */
 public class BaseActivity extends Activity implements INetworkActivityListener {
 
@@ -139,15 +140,6 @@ public class BaseActivity extends Activity implements INetworkActivityListener {
         return null;
     }
 
-    /**
-     * Gets the instance of <code>RetainerFragmentV1</code> used to store data.
-     * 
-     * @return returns the instance of <code>RetainerFragment</code> used to store data.
-     */
-    public RetainerFragmentV1 getRetainer() {
-        return retainer;
-    }
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -189,7 +181,7 @@ public class BaseActivity extends Activity implements INetworkActivityListener {
         registerOfflineConnectivityReceiver();
 
         // TODO - how to get this offline check from core ????
-        // updateOfflineHeaderBar(ConcurCore.isConnected());
+        //updateOfflineHeaderBar(ConcurCore.isConnected());
 
     }
 
@@ -202,6 +194,83 @@ public class BaseActivity extends Activity implements INetworkActivityListener {
             FragmentTransaction ft = fm.beginTransaction();
             ft.add(retainer, RETAINER_TAG);
             ft.commit();
+        }
+    }
+
+    /**
+     * Gets the instance of <code>RetainerFragment</code> used to store data.
+     *
+     * @return returns the instance of <code>RetainerFragment</code> used to store data.
+     */
+    public RetainerFragmentV1 getRetainer() {
+        return retainer;
+    }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+
+        // If being destroyed due to a non-configuration change, then
+        // unregister the image cache receiver.
+        if (getChangingConfigurations() == 0) {
+            // unregisterImageCacheReceiver();
+        }
+
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+
+        if (!receiverRegistered) {
+            // Register the receiver.
+            Intent stickyIntent = registerReceiver(serviceBoundReceiver, serviceBoundFilter);
+            if (stickyIntent != null) {
+                serviceBound = stickyIntent.getAction().equalsIgnoreCase(Const.ACTION_CONCUR_SERVICE_BOUND);
+            }
+            receiverRegistered = true;
+        }
+
+        // Registger the network activity receiver.
+        registerNetworkActivityReceiver();
+
+        registerSystemUnavailableReceiver();
+
+        registerOfflineConnectivityReceiver();
+    }
+
+    @Override
+    protected void onPause() {
+        super.onPause();
+        if (receiverRegistered) {
+            unregisterReceiver(serviceBoundReceiver);
+            receiverRegistered = false;
+        }
+
+        // Unregister the network activity receiver.
+        unregisterNetworkActivityReceiver();
+
+        unregisterSystemUnavailableReceiver();
+
+        unregisterOfflineConnectivityReceiver();
+
+    }
+
+    @Override
+    protected void onSaveInstanceState(Bundle outState) {
+        super.onSaveInstanceState(outState);
+
+        // Save the configuration reason for the stopping. Non-zero means some
+        // kind of config change.
+        outState.putInt(CONFIG_CHANGE_RESTART_KEY, getChangingConfigurations());
+
+        // Save any error message information.
+        if (actionStatusErrorMessage != null) {
+            outState.putString(ACTION_STATUS_ERROR_MESSAGE_KEY, actionStatusErrorMessage);
+        }
+        // Save last http error message.
+        if (lastHttpErrorMessage != null) {
+            outState.putString(LAST_HTTP_ERROR_MESSAGE, lastHttpErrorMessage);
         }
     }
 
@@ -243,124 +312,124 @@ public class BaseActivity extends Activity implements INetworkActivityListener {
                         currProgressDialog.dismiss();
                         currProgressDialog = null;
                     }
-                    // TODO - toast is temporary, remove it and show dialog
-                    Toast.makeText(getApplicationContext(), "system unavialable", Toast.LENGTH_SHORT);
+
                     // BaseActivity.this.showDialog(Const.DIALOG_SYSTEM_UNAVAILABLE);
-                }
-            };
+                    //                    CustomDialogFragment dialog = new CustomDialogFragment(R.string.dlg_system_unavailable_title,
+                    //                            R.string.dlg_system_unavailable_message, R.string.dialog_ok, 0);
+                    //                    dialog.show(getFragmentManager(), "DIALOG_SYSTEM_UNAVAILABLE");
+                                    }
+                                };
 
-            getApplicationContext().registerReceiver(systemUnavailableReceiver,
-                    new IntentFilter(Const.ACTION_NETWORK_SYSTEM_UNAVAILABLE));
-            systemUnavailableReceiverRegistered = true;
+                    getApplicationContext().registerReceiver(systemUnavailableReceiver,
+                            new IntentFilter(Const.ACTION_NETWORK_SYSTEM_UNAVAILABLE));
+                    systemUnavailableReceiverRegistered = true;
+
+            }
         }
-    }
 
-    /**
-     * Will unregister a receiver to handle when the (server) system is unavailable.
-     */
-    protected void unregisterSystemUnavailableReceiver() {
-        if (systemUnavailableReceiver != null && systemUnavailableReceiverRegistered) {
-            getApplicationContext().unregisterReceiver(systemUnavailableReceiver);
-            systemUnavailableReceiverRegistered = false;
+            /**
+             * Will unregister a receiver to handle when the (server) system is unavailable.
+             */ protected void unregisterSystemUnavailableReceiver () {
+            if (systemUnavailableReceiver != null && systemUnavailableReceiverRegistered) {
+                getApplicationContext().unregisterReceiver(systemUnavailableReceiver);
+                systemUnavailableReceiverRegistered = false;
+            }
         }
-    }
 
-    /**
-     * Will register a receiver to handle data connectivity changes.
-     */
-    protected void registerOfflineConnectivityReceiver() {
-        if (offlineConnectivityReceiver == null && offlineNotificationEnabled) {
+        /**
+         * Will register a receiver to handle data connectivity changes.
+         */
+        protected void registerOfflineConnectivityReceiver () {
+            if (offlineConnectivityReceiver == null && offlineNotificationEnabled) {
 
-            // Inner anonymous class to trigger offline/online mode.
-            offlineConnectivityReceiver = new BroadcastReceiver() {
+                // Inner anonymous class to trigger offline/online mode.
+                offlineConnectivityReceiver = new BroadcastReceiver() {
 
-                @Override
-                public void onReceive(Context context, Intent intent) {
-                    if (intent.getAction() != null) {
-                        updateOfflineHeaderBar(intent.getAction().equalsIgnoreCase(
-                                com.concur.mobile.platform.ui.common.util.Const.ACTION_DATA_CONNECTIVITY_AVAILABLE));
+                    @Override
+                    public void onReceive(Context context, Intent intent) {
+                        if (intent.getAction() != null) {
+                            updateOfflineHeaderBar(intent.getAction().equalsIgnoreCase(
+                                    com.concur.mobile.platform.ui.common.util.Const.ACTION_DATA_CONNECTIVITY_AVAILABLE));
+                        }
+                    }
+                };
+
+                IntentFilter connectivityFilter = new IntentFilter(
+                        com.concur.mobile.platform.ui.common.util.Const.ACTION_DATA_CONNECTIVITY_AVAILABLE);
+                connectivityFilter.addAction(
+                        com.concur.mobile.platform.ui.common.util.Const.ACTION_DATA_CONNECTIVITY_UNAVAILABLE);
+
+                registerReceiver(offlineConnectivityReceiver, connectivityFilter);
+            }
+        }
+
+        /**
+         * Will unregister a receiver to handle data connectivity changes.
+         */
+        protected void unregisterOfflineConnectivityReceiver () {
+            if (offlineConnectivityReceiver != null && offlineNotificationEnabled) {
+                unregisterReceiver(offlineConnectivityReceiver);
+                offlineConnectivityReceiver = null;
+            }
+        }
+
+        /**
+         * Called whenever the network data connectivity changes online or offline.
+         *
+         * @param available <code>true</code> if network data connectivity is available, otherwise <code>false</code>
+         */
+        protected void updateOfflineHeaderBar ( boolean available){
+            if (offlineNotificationEnabled) {
+
+                View offlineHeader = findViewById(R.id.offline_header);
+                if (offlineHeader != null) {
+                    if (available && offlineHeader.getVisibility() == View.VISIBLE) {
+                        offlineHeader.setVisibility(View.GONE);
+                    } else if (!available && offlineHeader.getVisibility() == View.GONE) {
+                        offlineHeader.setVisibility(View.VISIBLE);
                     }
                 }
-            };
-
-            IntentFilter connectivityFilter = new IntentFilter(
-                    com.concur.mobile.platform.ui.common.util.Const.ACTION_DATA_CONNECTIVITY_AVAILABLE);
-            connectivityFilter
-                    .addAction(com.concur.mobile.platform.ui.common.util.Const.ACTION_DATA_CONNECTIVITY_UNAVAILABLE);
-
-            registerReceiver(offlineConnectivityReceiver, connectivityFilter);
+            }
         }
-    }
 
-    /**
-     * Will unregister a receiver to handle data connectivity changes.
-     */
-    protected void unregisterOfflineConnectivityReceiver() {
-        if (offlineConnectivityReceiver != null && offlineNotificationEnabled) {
-            unregisterReceiver(offlineConnectivityReceiver);
-            offlineConnectivityReceiver = null;
-        }
-    }
-
-    /**
-     * Called whenever the network data connectivity changes online or offline.
-     * 
-     * @param available
-     *            <code>true</code> if network data connectivity is available, otherwise <code>false</code>
-     */
-    protected void updateOfflineHeaderBar(boolean available) {
-        if (offlineNotificationEnabled) {
-            // TODO - toast is temporary, remove it ans show theoff line header
-            Toast.makeText(this, "offline", Toast.LENGTH_SHORT);
-            // View offlineHeader = findViewById(R.id.offline_header);
-            // if (offlineHeader != null) {
-            // if (available && offlineHeader.getVisibility() == View.VISIBLE) {
-            // offlineHeader.setVisibility(View.GONE);
-            // } else if (!available && offlineHeader.getVisibility() == View.GONE) {
-            // offlineHeader.setVisibility(View.VISIBLE);
-            // }
-            // }
-        }
-    }
-
-    /**
-     * Called when the concur service component has become available.
-     */
-    protected void onServiceAvailable() {
-    }
-
-    /**
-     * Called when the concur service component has become unavailable.
-     */
-    protected void onServiceUnavailable() {
-    }
-
-    /**
-     * An extension of <code>BroadcastReceiver</code> to handle receiving notifications of when our service is bound/unbound.
-     * 
-     * @author RatanK
-     */
-    class ServiceBoundReceiver extends BroadcastReceiver {
-
-        private final String CLS_TAG = BaseActivity.CLS_TAG + "." + ServiceBoundReceiver.class.getSimpleName();
-
-        /*
-         * (non-Javadoc)
-         * 
-         * @see android.content.BroadcastReceiver#onReceive(android.content.Context, android.content.Intent)
+        /**
+         * Called when the concur service component has become available.
          */
-        @Override
-        public void onReceive(Context context, Intent intent) {
-            if (intent.getAction().equalsIgnoreCase(Const.ACTION_CONCUR_SERVICE_BOUND)) {
-                serviceBound = true;
-                onServiceAvailable();
-            } else if (intent.getAction().equalsIgnoreCase(Const.ACTION_CONCUR_SERVICE_UNBOUND)) {
-                serviceBound = false;
-                onServiceUnavailable();
-            } else {
-                Log.e(Const.LOG_TAG, CLS_TAG + ".onReceive: unhandled action '" + intent.getAction() + ".");
+        protected void onServiceAvailable () {
+        }
+
+        /**
+         * Called when the concur service component has become unavailable.
+         */
+        protected void onServiceUnavailable () {
+        }
+
+        /**
+         * An extension of <code>BroadcastReceiver</code> to handle receiving notifications of when our service is bound/unbound.
+         *
+         * @author RatanK
+         */
+        class ServiceBoundReceiver extends BroadcastReceiver {
+
+            private final String CLS_TAG = BaseActivity.CLS_TAG + "." + ServiceBoundReceiver.class.getSimpleName();
+
+            /*
+             * (non-Javadoc)
+             *
+             * @see android.content.BroadcastReceiver#onReceive(android.content.Context, android.content.Intent)
+             */
+            @Override
+            public void onReceive(Context context, Intent intent) {
+                if (intent.getAction().equalsIgnoreCase(Const.ACTION_CONCUR_SERVICE_BOUND)) {
+                    serviceBound = true;
+                    onServiceAvailable();
+                } else if (intent.getAction().equalsIgnoreCase(Const.ACTION_CONCUR_SERVICE_UNBOUND)) {
+                    serviceBound = false;
+                    onServiceUnavailable();
+                } else {
+                    Log.e(Const.LOG_TAG, CLS_TAG + ".onReceive: unhandled action '" + intent.getAction() + ".");
+                }
             }
         }
     }
 
-}

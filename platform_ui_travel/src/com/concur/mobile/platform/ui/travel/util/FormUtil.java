@@ -1,33 +1,22 @@
 package com.concur.mobile.platform.ui.travel.util;
 
-import java.util.ArrayList;
-import java.util.List;
-import java.util.ListIterator;
-
 import android.content.Context;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.ViewGroup;
-
 import com.concur.mobile.base.util.Format;
 import com.concur.mobile.platform.common.SpinnerItem;
 import com.concur.mobile.platform.common.formfield.IFormField;
 import com.concur.mobile.platform.common.formfield.IFormField.ControlType;
-import com.concur.mobile.platform.travel.loader.TravelCustomField;
 import com.concur.mobile.platform.ui.common.util.Const;
-import com.concur.mobile.platform.ui.common.view.BooleanFormFieldView;
-import com.concur.mobile.platform.ui.common.view.ConnectedListFormFieldView;
-import com.concur.mobile.platform.ui.common.view.DatePickerFormFieldView;
-import com.concur.mobile.platform.ui.common.view.FormFieldView;
+import com.concur.mobile.platform.ui.common.view.*;
 import com.concur.mobile.platform.ui.common.view.FormFieldView.IFormFieldViewListener;
-import com.concur.mobile.platform.ui.common.view.IFormFieldViewEditHandler;
-import com.concur.mobile.platform.ui.common.view.InlineTextFormFieldView;
-import com.concur.mobile.platform.ui.common.view.MultiLineTextFormFieldView;
-import com.concur.mobile.platform.ui.common.view.SearchListFormFieldView;
-import com.concur.mobile.platform.ui.common.view.StaticPickListFormFieldView;
-import com.concur.mobile.platform.ui.common.view.StaticTextFormFieldView;
-import com.concur.mobile.platform.ui.common.view.YesNoPickListFormFieldView;
 import com.concur.mobile.platform.ui.travel.R;
+import com.concur.mobile.platform.ui.travel.loader.TravelCustomField;
+
+import java.util.ArrayList;
+import java.util.List;
+import java.util.ListIterator;
 
 public class FormUtil {
 
@@ -39,16 +28,12 @@ public class FormUtil {
     /**
      * Will populate <code>view</code> with form editing views and will return back a list of <code>FormFieldView</code> objects
      * that manage the created views.
-     * 
-     * @param viewGroup
-     *            the view group to contain the created form fields.
-     * @param frmFlds
-     *            the list of form fields used to create views.
-     * @param ignoreFldIds
-     *            the list of form field ids that should be ignored.
-     * @param locale
-     *            locale from context, e.g. ConcurCore.getContext() .getResources().getConfiguration().locale. Used for parsing
-     *            amount, etc.
+     *
+     * @param viewGroup    the view group to contain the created form fields.
+     * @param frmFlds      the list of form fields used to create views.
+     * @param ignoreFldIds the list of form field ids that should be ignored.
+     * @param locale       locale from context, e.g. ConcurCore.getContext() .getResources().getConfiguration().locale. Used for parsing
+     *                     amount, etc.
      * @return a list of <code>FormFieldView</code> objects that manage the created form field views.
      */
     public static List<FormFieldView> populateViewWithFormFields(Context context, ViewGroup viewGroup,
@@ -97,11 +82,9 @@ public class FormUtil {
 
     /**
      * Builds an instance of <code>FormFieldView</code> based on <code>formField</code>.
-     * 
-     * @param formField
-     *            the form field.
-     * @param listener
-     *            an instance of <code>IFormFieldViewListener</code>.
+     *
+     * @param formField the form field.
+     * @param listener  an instance of <code>IFormFieldViewListener</code>.
      * @return an instance of <code>FormFieldView</code> responsible for managing the view.
      */
     public static FormFieldView buildFormFieldView(TravelCustomField formField, IFormFieldViewListener listener,
@@ -179,8 +162,8 @@ public class FormUtil {
                                 listener.getCurrentLocaleInContext());
                         frmFldView.layoutResourceId = R.layout.travel_edit_text_form_field;
                     } else {
-                        Log.e(Const.LOG_TAG, ViewUtil.CLS_TAG
-                                + ".buildFormViewView: DataType == INTEGER but ControlType != EDIT!");
+                        Log.e(Const.LOG_TAG,
+                                ViewUtil.CLS_TAG + ".buildFormViewView: DataType == INTEGER but ControlType != EDIT!");
                     }
                     break;
                 }
@@ -230,14 +213,11 @@ public class FormUtil {
 
     /**
      * Will store into an instance of <code>Bundle</code> form field state.
-     * 
-     * @param frmFldViewListener
-     *            an instance of <code>IFormFieldViewListener</code> containing form field view state.
-     * @param outState
-     *            an instance of <code>Bundle</code> in which to store form field view state.
-     * @param ignoreValueChanged
-     *            a boolean value indicating whether the form field view state information should be saved regardless of whether
-     *            there is a change from the underlying form field object.
+     *
+     * @param frmFldViewListener an instance of <code>IFormFieldViewListener</code> containing form field view state.
+     * @param outState           an instance of <code>Bundle</code> in which to store form field view state.
+     * @param ignoreValueChanged a boolean value indicating whether the form field view state information should be saved regardless of whether
+     *                           there is a change from the underlying form field object.
      */
     public static void storeFormFieldState(IFormFieldViewListener frmFldViewListener, Bundle outState,
             boolean ignoreValueChanged) {
@@ -254,8 +234,8 @@ public class FormUtil {
 
         // Save out any current form field view.
         if (frmFldViewListener != null && frmFldViewListener.isCurrentFormFieldViewSet()) {
-            outState.putString(CURRENT_FORM_FIELD_VIEW_KEY, frmFldViewListener.getCurrentFormFieldView().getFormField()
-                    .getId());
+            outState.putString(CURRENT_FORM_FIELD_VIEW_KEY,
+                    frmFldViewListener.getCurrentFormFieldView().getFormField().getId());
         }
     }
 
@@ -265,13 +245,10 @@ public class FormUtil {
      * <b>NOTE:<br>
      * This method will restore form field view state from both a <code>Bundle</code> object and a <code>RetainerFragment</code>
      * object.</b> <br>
-     * 
-     * @param frmFldViewListener
-     *            references a form field view listener pre-populated with the form field views to be restored.
-     * @param inState
-     *            a reference to a <code>Bundle</code> in which form field view state has been written.
-     * @param retainer
-     *            an instance of a <code>RetainerFragment</code> in which non-configuration data has been stored.
+     *
+     * @param frmFldViewListener references a form field view listener pre-populated with the form field views to be restored.
+     * @param inState            a reference to a <code>Bundle</code> in which form field view state has been written.
+     * @param retainer           an instance of a <code>RetainerFragment</code> in which non-configuration data has been stored.
      */
     public static void restoreFormFieldState(IFormFieldViewListener frmFldViewListener, Bundle inState) {
 
@@ -300,15 +277,14 @@ public class FormUtil {
 
     /**
      * Gets the hint text for a form field.
-     * 
-     * @param frmFld
-     *            an instance of <code>ExpenseReportFormField</code>.
+     *
+     * @param frmFld an instance of <code>ExpenseReportFormField</code>.
      * @return the form field hint text.
      */
     public static String getHintText(IFormField frmFld, Context ctx) {
         String hintText = null;
-        if (frmFld != null && frmFld.getControlType() != null
-                && (frmFld.getControlType() == ControlType.EDIT || frmFld.getControlType() == ControlType.TEXT_AREA)) {
+        if (frmFld != null && frmFld.getControlType() != null && (frmFld.getControlType() == ControlType.EDIT
+                || frmFld.getControlType() == ControlType.TEXT_AREA)) {
             if (frmFld.getMinLength() != -1 && frmFld.getMaxLength() != -1) {
                 // Set "from min to max" hint text.
                 int strResId = -1;

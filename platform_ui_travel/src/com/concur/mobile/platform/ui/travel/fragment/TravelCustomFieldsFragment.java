@@ -1,18 +1,13 @@
 package com.concur.mobile.platform.ui.travel.fragment;
 
-import java.util.ArrayList;
-import java.util.List;
-
 import android.app.Activity;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-
 import com.concur.mobile.platform.common.formfield.IFormField;
 import com.concur.mobile.platform.common.formfield.IFormField.AccessType;
-import com.concur.mobile.platform.travel.loader.TravelCustomField;
 import com.concur.mobile.platform.ui.common.fragment.PlatformFragmentV1;
 import com.concur.mobile.platform.ui.common.util.Const;
 import com.concur.mobile.platform.ui.common.view.FormFieldView;
@@ -20,23 +15,36 @@ import com.concur.mobile.platform.ui.common.view.InlineTextFormFieldView;
 import com.concur.mobile.platform.ui.common.view.MultiLineTextFormFieldView;
 import com.concur.mobile.platform.ui.travel.R;
 import com.concur.mobile.platform.ui.travel.activity.BaseActivity;
+import com.concur.mobile.platform.ui.travel.loader.TravelCustomField;
 import com.concur.mobile.platform.ui.travel.util.FormUtil;
 import com.concur.mobile.platform.ui.travel.view.FormFieldViewEditHandler;
 import com.concur.mobile.platform.ui.travel.view.FormFieldViewListener;
 
+import java.util.ArrayList;
+import java.util.List;
+
 /**
  * Fragment to show the travel custom fields
- * 
+ *
  * @author RatanK
- * 
  */
 public class TravelCustomFieldsFragment extends PlatformFragmentV1 {
 
-    private static final String CLS_TAG = TravelCustomFieldsFragment.class.getSimpleName();
-
     public static final String READ_ONLY = "read.only";
     public static final String DISPLAY_AT_START = "display.at.start";
-
+    private static final String CLS_TAG = TravelCustomFieldsFragment.class.getSimpleName();
+    /**
+     * Contains whether the view should be a read-only view.
+     */
+    public boolean readOnly;
+    /**
+     * Contains whether the view should only display travel custom fields that match on <code>displayAtStart</code>.
+     */
+    public Boolean displayAtStart;
+    /**
+     * contains the travel custom fields
+     */
+    public List<TravelCustomField> customFields;
     /**
      * Contains a reference to the containing <code>BaseActivity</code>.
      */
@@ -45,50 +53,28 @@ public class TravelCustomFieldsFragment extends PlatformFragmentV1 {
      * Contains a reference to a form field view listener.
      */
     protected TravelCustomFieldsViewListener frmFldViewListener;
-
-    /**
-     * Contains whether the view should be a read-only view.
-     */
-    public boolean readOnly;
-
-    /**
-     * Contains whether the view should only display travel custom fields that match on <code>displayAtStart</code>.
-     */
-    public Boolean displayAtStart;
-
-    /**
-     * contains the travel custom fields
-     */
-    public List<TravelCustomField> customFields;
-
     private TravelCustomFieldsFragmentCallBackListener callBackListener;
-
-    /**
-     * Models travel custom field hint information.
-     */
-    public static class TravelCustomFieldHint {
-
-        /**
-         * Contains the field name.
-         */
-        public String fieldName;
-
-        /**
-         * Contains the hint text.
-         */
-        public String hintText;
-
-    }
-
-    public interface TravelCustomFieldsFragmentCallBackListener {
-
-        public void sendTravelCustomFieldsUpdateRequest(List<TravelCustomField> fields);
-    }
 
     /**
      * Constructs an instance of <code>TravelCustomFieldsFragment</code> with editable fields.
      */
     public TravelCustomFieldsFragment() {
+    }
+
+    // TODO - copied from FormUtil...need to move there
+    public static List<TravelCustomField> cloneFields(List<TravelCustomField> flds) {
+        List<TravelCustomField> retVal = null;
+        if (flds != null) {
+            retVal = new ArrayList<TravelCustomField>(flds.size());
+            for (IFormField tcf : flds) {
+                try {
+                    retVal.add((TravelCustomField) tcf.clone());
+                } catch (CloneNotSupportedException cnsExc) {
+                    Log.e(Const.LOG_TAG, CLS_TAG + ".cloneFields: ", cnsExc);
+                }
+            }
+        }
+        return retVal;
     }
 
     @Override
@@ -160,7 +146,7 @@ public class TravelCustomFieldsFragment extends PlatformFragmentV1 {
 
     /**
      * Gets any current form field view listener object associated with this travel custom fields viewer.
-     * 
+     *
      * @return the travel custom fields viewer.
      */
     public FormFieldViewListener getFormFieldViewListener() {
@@ -181,12 +167,12 @@ public class TravelCustomFieldsFragment extends PlatformFragmentV1 {
                     // Mark the appropriate fields as hidden based on 'displayAtStart'.
                     if (displayAtStart) {
                         // Only show fields displayed at start.
-                        if (!tcf.displayAtStart()) {
-                            // Hide the field.
-                            tcf.setAccessType(IFormField.AccessType.HD);
-                        } else {
+                        if (tcf.displayAtStart()) {
                             // Show the field.
                             tcf.setAccessType(IFormField.AccessType.RW);
+                        } else {
+                            // Hide the field.
+                            tcf.setAccessType(IFormField.AccessType.HD);
                         }
                     } else {
                         // Only show fields not displayed at start.
@@ -200,8 +186,9 @@ public class TravelCustomFieldsFragment extends PlatformFragmentV1 {
                     }
                 }
             }
-            List<FormFieldView> frmFldViews = FormUtil.populateViewWithFormFields(baseActivity, viewGroup, tcfs, null,
-                    frmFldViewListener, new FormFieldViewEditHandler());
+            List<FormFieldView> frmFldViews = FormUtil
+                    .populateViewWithFormFields(baseActivity, viewGroup, tcfs, null, frmFldViewListener,
+                            new FormFieldViewEditHandler());
             frmFldViewListener.setFormFieldViews(frmFldViews);
             if (inState != null) {
                 FormUtil.restoreFormFieldState(frmFldViewListener, inState);
@@ -214,10 +201,8 @@ public class TravelCustomFieldsFragment extends PlatformFragmentV1 {
 
     /**
      * Will clone a list of passed in travel custom field objects and set their access types to read-only.
-     * 
-     * @param flds
-     *            the list of fields to clone.
-     * 
+     *
+     * @param flds the list of fields to clone.
      * @return returns the list of cloned fields.
      */
     protected List<TravelCustomField> cloneFieldsReadOnly(List<TravelCustomField> flds) {
@@ -230,26 +215,10 @@ public class TravelCustomFieldsFragment extends PlatformFragmentV1 {
         return retVal;
     }
 
-    // TODO - copied from FormUtil...need to move there
-    public static List<TravelCustomField> cloneFields(List<TravelCustomField> flds) {
-        List<TravelCustomField> retVal = null;
-        if (flds != null) {
-            retVal = new ArrayList<TravelCustomField>(flds.size());
-            for (IFormField tcf : flds) {
-                try {
-                    retVal.add((TravelCustomField) tcf.clone());
-                } catch (CloneNotSupportedException cnsExc) {
-                    Log.e(Const.LOG_TAG, CLS_TAG + ".cloneFields: ", cnsExc);
-                }
-            }
-        }
-        return retVal;
-    }
-
     /**
      * Will return whether based on the value of <code>displayAtStart</code> whether there are any travel custom fields that will
      * be displayed.
-     * 
+     *
      * @return whether there are any fields that should be displayed at based on the value of <code>displayAtStart</code>.
      */
     protected boolean hasDisplayCustomFields() {
@@ -292,7 +261,7 @@ public class TravelCustomFieldsFragment extends PlatformFragmentV1 {
 
     /**
      * Gets the list of currently edited <code>TravelCustomField</code> objects.
-     * 
+     *
      * @return returns the list of currently edited <code>TravelCustomField</code> objects.
      */
     protected List<TravelCustomField> getTravelCustomFields() {
@@ -313,9 +282,8 @@ public class TravelCustomFieldsFragment extends PlatformFragmentV1 {
 
     /**
      * Gets the hint text for a form field.
-     * 
-     * @param frmFld
-     *            an instance of <code>IFormField</code>.
+     *
+     * @param frmFld an instance of <code>IFormField</code>.
      * @return the form field hint text.
      */
     protected String getHintText(IFormField frmFld) {
@@ -323,16 +291,123 @@ public class TravelCustomFieldsFragment extends PlatformFragmentV1 {
     }
 
     /**
+     * Will find all field values that are: <li>Required, but missing a field value</li> <li>Having a value with an invalid
+     * length.
+     *
+     * @return returns a list of <code>TravelCustomFieldHint</code> objects describing the invalid fields.
+     */
+    public List<TravelCustomFieldHint> findInvalidFieldValues() {
+        List<TravelCustomFieldHint> retVal = new ArrayList<TravelCustomFieldHint>();
+
+        if (frmFldViewListener != null) {
+            List<FormFieldView> ffvs = frmFldViewListener.getFormFieldViews();
+            if (ffvs != null) {
+                for (FormFieldView ffv : ffvs) {
+                    try {
+                        TravelCustomField tcf = (TravelCustomField) ffv.getFormField();
+                        // Only perform validity checks on fields that have a matching value on 'TravelCustomField.displayAtStart'
+                        // with 'this.displayAtStart'.
+                        // NOTE: The 'AccessType' attribute on the TravelCustomField object is manipulated in order
+                        // hide/show fields based on their 'displayAtStart' values. So, fields with an access type
+                        // value of 'AccessType.RW' for 'displayAtStart' values of 'true' will get set to 'AccessType.HD'
+                        // on the booking screens.
+                        if (Boolean.valueOf(tcf.displayAtStart()).equals(displayAtStart)) {
+                            if (ffv.hasValue()) {
+                                // Only check edit or text areas.
+                                if (tcf.getControlType() == IFormField.ControlType.EDIT
+                                        || tcf.getControlType() == IFormField.ControlType.TEXT_AREA) {
+                                    String value = ffv.getCurrentValue();
+                                    if (tcf.getMaxLength() != -1 && tcf.getMinLength() != -1) {
+                                        // Check range.
+                                        if (!(value.length() >= tcf.getMinLength() && value.length() <= tcf
+                                                .getMaxLength())) {
+                                            TravelCustomFieldHint tcfh = new TravelCustomFieldHint();
+                                            tcfh.fieldName = tcf.getLabel();
+                                            tcfh.hintText = getHintText(tcf);
+                                            retVal.add(tcfh);
+                                        }
+                                    } else if (tcf.getMaxLength() != -1) {
+                                        // Check <= max.
+                                        if (!(value.length() <= tcf.getMaxLength())) {
+                                            TravelCustomFieldHint tcfh = new TravelCustomFieldHint();
+                                            tcfh.fieldName = tcf.getLabel();
+                                            tcfh.hintText = getHintText(tcf);
+                                            retVal.add(tcfh);
+                                        }
+                                    } else {
+                                        // Check >= min.
+                                        if (!(value.length() >= tcf.getMinLength())) {
+                                            TravelCustomFieldHint tcfh = new TravelCustomFieldHint();
+                                            tcfh.fieldName = tcf.getLabel();
+                                            tcfh.hintText = getHintText(tcf);
+                                            retVal.add(tcfh);
+                                        }
+                                    }
+                                }
+                            } else if (tcf.isRequired()) {
+                                switch (tcf.getControlType()) {
+                                case TEXT_AREA:
+                                case EDIT: {
+                                    TravelCustomFieldHint tcfh = new TravelCustomFieldHint();
+                                    tcfh.fieldName = tcf.getLabel();
+                                    tcfh.hintText = getHintText(tcf);
+                                    retVal.add(tcfh);
+                                    break;
+                                }
+                                case PICK_LIST: {
+                                    TravelCustomFieldHint tcfh = new TravelCustomFieldHint();
+                                    tcfh.fieldName = tcf.getLabel();
+                                    tcfh.hintText = getActivity().getText(R.string.general_requires_selection)
+                                            .toString();
+                                    retVal.add(tcfh);
+                                    break;
+                                }
+                                }
+                            }
+                        }
+                    } catch (ClassCastException ccExc) {
+                        Log.e(Const.LOG_TAG, CLS_TAG + ".findInvalidFieldValues: expected type TravelCustomField.",
+                                ccExc);
+                    }
+                }
+            }
+        }
+        return retVal;
+    }
+
+    public interface TravelCustomFieldsFragmentCallBackListener {
+
+        public void sendTravelCustomFieldsUpdateRequest(List<TravelCustomField> fields);
+    }
+
+    /**
+     * Models travel custom field hint information.
+     */
+    public static class TravelCustomFieldHint {
+
+        /**
+         * Contains the field name.
+         */
+        public String fieldName;
+
+        /**
+         * Contains the hint text.
+         */
+        public String hintText;
+
+    }
+
+    /**
      * An extension of <code>FormFieldViewListener</code>
      */
     protected class TravelCustomFieldsViewListener extends FormFieldViewListener {
 
-        private final String CLS_TAG = TravelCustomFieldsFragment.CLS_TAG + "."
-                + TravelCustomFieldsViewListener.class.getSimpleName();
-
         public TravelCustomFieldsViewListener(BaseActivity activity) {
             super(activity);
         }
+
+        private final String CLS_TAG =
+                TravelCustomFieldsFragment.CLS_TAG + "." + TravelCustomFieldsViewListener.class.getSimpleName();
 
         @Override
         public void initFields() {
@@ -350,8 +425,9 @@ public class TravelCustomFieldsFragment extends PlatformFragmentV1 {
                         } else if (ffv instanceof MultiLineTextFormFieldView) {
                             ((MultiLineTextFormFieldView) ffv).setHintText(hintText);
                         } else {
-                            Log.e(Const.LOG_TAG, CLS_TAG + ".initFields: unexpected FormFieldView type -- '"
-                                    + ffv.getClass().getSimpleName() + "'");
+                            Log.e(Const.LOG_TAG,
+                                    CLS_TAG + ".initFields: unexpected FormFieldView type -- '" + ffv.getClass()
+                                            .getSimpleName() + "'");
                         }
                     }
                 }
@@ -372,8 +448,9 @@ public class TravelCustomFieldsFragment extends PlatformFragmentV1 {
                         callBackListener.sendTravelCustomFieldsUpdateRequest(getTravelCustomFields());
                     }
                 } else {
-                    Log.e(Const.LOG_TAG, CLS_TAG + ".valueChanged: unexpected form field type -- '"
-                            + frmFldView.getFormField().getClass().getSimpleName() + "'");
+                    Log.e(Const.LOG_TAG,
+                            CLS_TAG + ".valueChanged: unexpected form field type -- '" + frmFldView.getFormField()
+                                    .getClass().getSimpleName() + "'");
                 }
             } else {
                 Log.e(Const.LOG_TAG, CLS_TAG + ".valueChanged: form field is null!");

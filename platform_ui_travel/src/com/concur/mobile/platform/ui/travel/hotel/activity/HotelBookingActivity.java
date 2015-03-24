@@ -1,25 +1,13 @@
 package com.concur.mobile.platform.ui.travel.hotel.activity;
 
-import java.net.URI;
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.List;
-
 import android.animation.ObjectAnimator;
 import android.annotation.SuppressLint;
-import android.app.ActionBar;
-import android.app.Activity;
-import android.app.FragmentManager;
-import android.app.FragmentTransaction;
-import android.app.LoaderManager;
-import android.content.BroadcastReceiver;
-import android.content.Context;
-import android.content.Intent;
-import android.content.IntentFilter;
-import android.content.Loader;
+import android.app.*;
+import android.content.*;
 import android.graphics.Bitmap;
 import android.os.Bundle;
 import android.os.Handler;
+import android.os.Message;
 import android.text.TextUtils;
 import android.util.Log;
 import android.view.KeyEvent;
@@ -28,102 +16,178 @@ import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.ViewGroup.LayoutParams;
 import android.view.ViewStub;
-import android.widget.ArrayAdapter;
-import android.widget.Button;
-import android.widget.EditText;
-import android.widget.ImageView;
-import android.widget.TableLayout;
-import android.widget.TableRow;
-import android.widget.TextView;
-import android.widget.Toast;
-
+import android.widget.*;
 import com.concur.mobile.base.service.BaseAsyncRequestTask.AsyncReplyListener;
 import com.concur.mobile.base.service.BaseAsyncResultReceiver;
 import com.concur.mobile.platform.common.SpinnerItem;
+import com.concur.mobile.platform.common.formfield.FormField;
 import com.concur.mobile.platform.service.PlatformAsyncTaskLoader;
 import com.concur.mobile.platform.travel.booking.CreditCard;
-import com.concur.mobile.platform.travel.search.hotel.HotelBookingAsyncRequestTask;
-import com.concur.mobile.platform.travel.search.hotel.HotelBookingRESTResult;
-import com.concur.mobile.platform.travel.search.hotel.HotelPreSellOption;
-import com.concur.mobile.platform.travel.search.hotel.HotelPreSellOptionLoader;
-import com.concur.mobile.platform.travel.search.hotel.HotelRate;
-import com.concur.mobile.platform.travel.search.hotel.HotelViolation;
-import com.concur.mobile.platform.travel.search.hotel.HotelViolationComparator;
-import com.concur.mobile.platform.travel.search.hotel.ViolationReason;
+import com.concur.mobile.platform.travel.search.hotel.*;
 import com.concur.mobile.platform.ui.common.dialog.DialogFragmentFactoryV1;
 import com.concur.mobile.platform.ui.common.fragment.RetainerFragmentV1;
 import com.concur.mobile.platform.ui.common.util.FormatUtil;
 import com.concur.mobile.platform.ui.common.util.ImageCache;
 import com.concur.mobile.platform.ui.travel.R;
+import com.concur.mobile.platform.ui.travel.activity.TravelBaseActivity;
+import com.concur.mobile.platform.ui.travel.fragment.TravelCustomFieldsFragment;
 import com.concur.mobile.platform.ui.travel.hotel.fragment.CustomDialogFragment;
 import com.concur.mobile.platform.ui.travel.hotel.fragment.CustomDialogFragment.CustomDialogFragmentCallbackListener;
 import com.concur.mobile.platform.ui.travel.hotel.fragment.SpinnerDialogFragment;
 import com.concur.mobile.platform.ui.travel.hotel.fragment.SpinnerDialogFragment.SpinnerDialogFragmentCallbackListener;
+import com.concur.mobile.platform.ui.travel.loader.TravelCustomField;
+import com.concur.mobile.platform.ui.travel.loader.TravelCustomFieldsConfig;
+import com.concur.mobile.platform.ui.travel.loader.TravelCustomFieldsLoader;
+import com.concur.mobile.platform.ui.travel.loader.TravelCustomFieldsUpdateLoader;
 import com.concur.mobile.platform.ui.travel.util.Const;
 import com.concur.mobile.platform.ui.travel.util.ParallaxScollView;
 import com.concur.mobile.platform.ui.travel.util.ViewUtil;
 import com.concur.mobile.platform.util.Format;
 
+import java.net.URI;
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.List;
+
 /**
- * 
  * @author RatanK
- * 
  */
-public class HotelBookingActivity extends Activity implements LoaderManager.LoaderCallbacks<HotelPreSellOption>,
-        SpinnerDialogFragmentCallbackListener, CustomDialogFragmentCallbackListener {
+public class HotelBookingActivity extends TravelBaseActivity
+        implements SpinnerDialogFragmentCallbackListener, CustomDialogFragmentCallbackListener,
+        TravelCustomFieldsFragment.TravelCustomFieldsFragmentCallBackListener {
 
     protected static final String CLS_TAG = HotelBookingActivity.class.getSimpleName();
-    private static final String GET_HOTEL_BOOKING_RECEIVER = "hotel.booking.receiver";
-    protected static final String RETAINER_TAG = "retainer.fragment";
+    // custom fields loader callback implementation
+    private LoaderManager.LoaderCallbacks<TravelCustomFieldsConfig> customFieldsLoaderListener = new LoaderManager.LoaderCallbacks<TravelCustomFieldsConfig>() {
 
-    private static final int HOTEL_PRE_SELL_OPTION_LOADER_ID = 0;
+        @Override
+        public Loader<TravelCustomFieldsConfig> onCreateLoader(int id, Bundle bundle) {
+            PlatformAsyncTaskLoader<TravelCustomFieldsConfig> asyncLoader = null;
+            if (update) {
+                showProgressBar(R.string.dlg_travel_retrieve_custom_fields_update_progress_message);
+                asyncLoader = new TravelCustomFieldsUpdateLoader(getApplicationContext(), formFields);
+            } else {
+                showProgressBar(R.string.dlg_travel_retrieve_custom_fields_progress_message);
+                asyncLoader = new TravelCustomFieldsLoader(getApplicationContext());
+            }
+            return asyncLoader;
+        }
+
+        @Override
+        public void onLoadFinished(Loader<TravelCustomFieldsConfig> loader,
+                TravelCustomFieldsConfig travelCustomFieldsConfig) {
+
+            hideProgressBar();
+
+            if (travelCustomFieldsConfig == null) {
+                // no custom fields
+            } else if (travelCustomFieldsConfig != null) {
+
+                if (travelCustomFieldsConfig.errorOccuredWhileRetrieving) {
+                    showToast("Could not retrieve custom fields.");
+                } else {
+
+                    travelCustomFieldsConfig = travelCustomFieldsConfig;
+                    formFields = travelCustomFieldsConfig.formFields;
+                    // to overcome the 'cannot perform this action inside of the onLoadFinished'
+                    final int WHAT = 1;
+                    Handler handler = new Handler() {
+
+                        @Override
+                        public void handleMessage(Message msg) {
+                            if (msg.what == WHAT) {
+                                initTravelCustomFieldsView();
+                            }
+                        }
+                    };
+                    handler.sendEmptyMessage(WHAT);
+                }
+            }
+
+            if (travelCustomFieldsConfig != null && travelCustomFieldsConfig.formFields != null) {
+                Log.d(Const.LOG_TAG,
+                        CLS_TAG + ".onLoadFinished ********************* : travelCustomFieldsConfig size : " + (
+                                travelCustomFieldsConfig != null ?
+                                        travelCustomFieldsConfig.formFields.size() :
+                                        null));
+            }
+
+        }
+
+        @Override
+        public void onLoaderReset(Loader<TravelCustomFieldsConfig> data) {
+            Log.d(Const.LOG_TAG, " ***** loader reset *****  ");
+        }
+    };
+    protected static final String RETAINER_TAG = "retainer.fragment";
+    private static final String GET_HOTEL_BOOKING_RECEIVER = "hotel.booking.receiver";
     private static final String VIOLATION_REASONS_SPINNER_FRAGMENT = "violations.reasons.spinner.fragment";
     private static final String CREDIT_CARDS_SPINNER_FRAGMENT = "violations.reasons.spineer.fragment";
-
     private static final int HOTEL_BOOKING_ID = 1;
-
     private static final String DIALOG_FRAGMENT_ID = "HotelBookingConfirm";
-
+    private static final int PRE_SELL_OPTIONS_LOADER_ID = 1;
+    private static final int CUSTOM_FIELDS_LOADER_ID = 2;
+    // The one RetainerFragment used to hold objects between activity recreates
+    public RetainerFragmentV1 retainer;
+    // Contains the currently selected card.
+    protected SpinnerItem curCardChoice;
+    // Contains the list of cards.
+    protected SpinnerItem[] cardChoices;
+    protected SpinnerItem curViolationReason;
     private LoaderManager lm;
     private String roomDesc;
     private Double amount;
     private String currCode;
     private String sellOptionsURL;
+    // pre sell options loader callback implementation
+    private LoaderManager.LoaderCallbacks<HotelPreSellOption> preSellOptionsLoaderListener = new LoaderManager.LoaderCallbacks<HotelPreSellOption>() {
+
+        @Override
+        public Loader<HotelPreSellOption> onCreateLoader(int id, Bundle bundle) {
+
+            // request initial search
+            Log.d(Const.LOG_TAG, " ***** creating preselloption loader *****  ");
+
+            PlatformAsyncTaskLoader<HotelPreSellOption> hotelPreSellOptionAsyncTaskLoader = new HotelPreSellOptionLoader(
+                    getApplicationContext(), sellOptionsURL);
+
+            return hotelPreSellOptionAsyncTaskLoader;
+        }
+
+        @Override
+        public void onLoadFinished(Loader<HotelPreSellOption> loader, HotelPreSellOption hotelPreSellOption) {
+            setPreSellOptions(hotelPreSellOption);
+
+        }
+
+        @Override
+        public void onLoaderReset(Loader<HotelPreSellOption> loader) {
+            // nothing to handle here
+        }
+    };
     private String[] cancellationPolicyStatements;
     private boolean progressbarVisible;
     private Button reserveButton;
-
     private HotelRate hotelRate;
     private HotelPreSellOption preSellOption;
-
-    // Contains the currently selected card.
-    protected SpinnerItem curCardChoice;
-    // Contains the list of cards.
-    protected SpinnerItem[] cardChoices;
     private String location;
     private String durationOfStayForDisplay;
     private int numOfNights;
     private String headerImageURL;
     private String hotelName;
     private BaseAsyncResultReceiver hotelBookingReceiver;
-    // The one RetainerFragment used to hold objects between activity recreates
-    public RetainerFragmentV1 retainer;
     private SpinnerItem[] violationReasonChoices;
     private ArrayList<String[]> violationReasons;
-    protected SpinnerItem curViolationReason;
     private HotelBookingAsyncRequestTask hotelBookingAsyncRequestTask;
     private String currViolationId;
     private boolean ruleViolationExplanationRequired;
     private String currentTripId;
     private List<HotelViolation> violations;
-
     /**
      * BroadcastReceiver used to detect network connectivity and update the UI accordingly.
      */
     private BroadcastReceiver connectivityReceiver;
-
     private IntentFilter connectivityFilter;
-
     private boolean connectivityReceiverRegistered;
     private boolean connected;
     private int msgResourse;
@@ -149,7 +213,7 @@ public class HotelBookingActivity extends Activity implements LoaderManager.Load
         restoreReceivers();
         setContentView(R.layout.hotel_booking);
 
-        showProgressBar(false);
+        showProgressBar(R.string.hotel_sell_options_retrieving);
 
         Intent intent = getIntent();
 
@@ -164,6 +228,15 @@ public class HotelBookingActivity extends Activity implements LoaderManager.Load
         currentTripId = intent.getStringExtra("currentTripId");
         violations = (List<HotelViolation>) intent.getSerializableExtra("violations");
 
+        if (intent.hasExtra("travelCustomFieldsConfig")) {
+            travelCustomFieldsConfig = (TravelCustomFieldsConfig) intent
+                    .getSerializableExtra("travelCustomFieldsConfig");
+            if (travelCustomFieldsConfig != null && travelCustomFieldsConfig.formFields != null
+                    && travelCustomFieldsConfig.formFields.size() > 0) {
+                formFields = travelCustomFieldsConfig.formFields;
+            }
+        }
+
         if (hotelRate != null) {
 
             sellOptionsURL = hotelRate.sellOptions.href;
@@ -176,7 +249,7 @@ public class HotelBookingActivity extends Activity implements LoaderManager.Load
         if (preSellOption == null) {
             // Initialize the loader.
             lm = getLoaderManager();
-            lm.initLoader(HOTEL_PRE_SELL_OPTION_LOADER_ID, null, this);
+            lm.initLoader(PRE_SELL_OPTIONS_LOADER_ID, null, preSellOptionsLoaderListener);
         }
 
         // initialize the view
@@ -206,11 +279,11 @@ public class HotelBookingActivity extends Activity implements LoaderManager.Load
 
     private void updateUIForConnectivity(String action) {
         if (action != null) {
-            if (action
-                    .equalsIgnoreCase(com.concur.mobile.platform.ui.common.util.Const.ACTION_DATA_CONNECTIVITY_AVAILABLE)) {
+            if (action.equalsIgnoreCase(
+                    com.concur.mobile.platform.ui.common.util.Const.ACTION_DATA_CONNECTIVITY_AVAILABLE)) {
                 connected = true;
-            } else if (action
-                    .equalsIgnoreCase(com.concur.mobile.platform.ui.common.util.Const.ACTION_DATA_CONNECTIVITY_UNAVAILABLE)) {
+            } else if (action.equalsIgnoreCase(
+                    com.concur.mobile.platform.ui.common.util.Const.ACTION_DATA_CONNECTIVITY_UNAVAILABLE)) {
                 connected = false;
             }
 
@@ -240,7 +313,7 @@ public class HotelBookingActivity extends Activity implements LoaderManager.Load
 
     /*
      * (non-Javadoc)
-     * 
+     *
      * @see android.app.Activity#onPause()
      */
     @Override
@@ -266,7 +339,7 @@ public class HotelBookingActivity extends Activity implements LoaderManager.Load
 
     /*
      * (non-Javadoc)
-     * 
+     *
      * @see android.support.v4.app.Fragment#onResume()
      */
     @Override
@@ -317,7 +390,7 @@ public class HotelBookingActivity extends Activity implements LoaderManager.Load
                 mListView.addHeaderView(header);
 
                 ArrayAdapter<String> adapter = new ArrayAdapter<String>(this,
-                        android.R.layout.simple_expandable_list_item_1, new String[] {});
+                        android.R.layout.simple_expandable_list_item_1, new String[] { });
                 mListView.setAdapter(adapter);
             }
         }
@@ -330,13 +403,14 @@ public class HotelBookingActivity extends Activity implements LoaderManager.Load
 
         // number of nights
         txtView = (TextView) findViewById(R.id.hotel_room_night);
-        txtView.setText(Format.localizeText(this.getApplicationContext(), R.string.hotel_reserve_num_of_nights,
-                numOfNights));
+        txtView.setText(
+                Format.localizeText(this.getApplicationContext(), R.string.hotel_reserve_num_of_nights, numOfNights));
 
         // amount
         txtView = (TextView) findViewById(R.id.hotel_room_rate);
-        txtView.setText(FormatUtil.formatAmountWithNoDecimals(amount, this.getResources().getConfiguration().locale,
-                currCode, true, false));
+        txtView.setText(FormatUtil
+                .formatAmountWithNoDecimals(amount, this.getResources().getConfiguration().locale, currCode, true,
+                        false));
 
         // rate info on click event
         ImageView rateInfoImg = (ImageView) findViewById(R.id.checkout_icon_price_info);
@@ -363,6 +437,9 @@ public class HotelBookingActivity extends Activity implements LoaderManager.Load
 
         // violations
         initViolations();
+
+        // custom fields
+        initTravelCustomFieldsView();
 
         // reserve UI
         reserveButton = (Button) findViewById(R.id.footer_button);
@@ -409,13 +486,13 @@ public class HotelBookingActivity extends Activity implements LoaderManager.Load
                         public void onClick(View v) {
                             if (isExpanded) {
                                 animation = ObjectAnimator.ofInt(v, "maxLines", 3);
-                                roomDescView.setCompoundDrawablesWithIntrinsicBounds(0, 0, 0,
-                                        R.drawable.icon_expand_more);
+                                roomDescView
+                                        .setCompoundDrawablesWithIntrinsicBounds(0, 0, 0, R.drawable.icon_expand_more);
 
                             } else {
                                 animation = ObjectAnimator.ofInt(v, "maxLines", 1000);
-                                roomDescView.setCompoundDrawablesWithIntrinsicBounds(0, 0, 0,
-                                        R.drawable.icon_expand_less);
+                                roomDescView
+                                        .setCompoundDrawablesWithIntrinsicBounds(0, 0, 0, R.drawable.icon_expand_less);
                             }
                             isExpanded = !isExpanded;
                             animation.setDuration(10);
@@ -562,8 +639,8 @@ public class HotelBookingActivity extends Activity implements LoaderManager.Load
             }
             // reserveButton.setEnabled(true);
         } else {
-            Log.e(Const.LOG_TAG, CLS_TAG
-                    + ".updateViolationReasonsView: unable to locate 'hotel_violation_reason' view!");
+            Log.e(Const.LOG_TAG,
+                    CLS_TAG + ".updateViolationReasonsView: unable to locate 'hotel_violation_reason' view!");
         }
         return violationsView;
     }
@@ -609,22 +686,21 @@ public class HotelBookingActivity extends Activity implements LoaderManager.Load
         return cardSelectionView;
     }
 
-    public void showProgressBar(boolean isBooking) {
+    // same view used for pre sell options retrieval and booking
+    public void showProgressBar(int messageResourceId) {
         if (!progressbarVisible) {
             View progressBar = findViewById(R.id.hotel_booking_screen_load);
             progressbarVisible = true;
             progressBar.setVisibility(View.VISIBLE);
             progressBar.bringToFront();
             TextView progressBarMsg = (TextView) findViewById(R.id.hotel_preselloptions_progress_msg);
-            if (isBooking) {
-                progressBarMsg.setText(R.string.hotel_booking_retrieving);
-                // progressBarMsg.c
-            }
+            progressBarMsg.setText(messageResourceId);
             progressBarMsg.setVisibility(View.VISIBLE);
             progressBarMsg.bringToFront();
         }
     }
 
+    // same view used for pre sell options retrieval and booking
     public void hideProgressBar() {
         if (progressbarVisible) {
             View progressBar = findViewById(R.id.hotel_booking_screen_load);
@@ -642,8 +718,9 @@ public class HotelBookingActivity extends Activity implements LoaderManager.Load
             statement = TextUtils.join("\n", cancellationPolicyStatements);
         }
 
-        DialogFragmentFactoryV1.getAlertOkayInstance(getText(R.string.hotel_reserve_cancel_policy).toString(),
-                statement).show(getFragmentManager(), "");
+        DialogFragmentFactoryV1
+                .getAlertOkayInstance(getText(R.string.hotel_reserve_cancel_policy).toString(), statement)
+                .show(getFragmentManager(), "");
     }
 
     private void setPreSellOptions(HotelPreSellOption preSellOption) {
@@ -698,6 +775,52 @@ public class HotelBookingActivity extends Activity implements LoaderManager.Load
             }
 
             updateCardView();
+        }
+    }
+
+    /**
+     * Will initialize the travel custom fields view.
+     */
+    public void initTravelCustomFieldsView() {
+        // Check for whether 'custom_fields' view group exists!
+        if (formFields != null && formFields.size() > 0) {
+            if (findViewById(R.id.hotel_booking_custom_fields) != null) {
+                if (findViewById(R.id.hotel_room_violation_view) != null) {
+                    findViewById(R.id.view_separator5).setVisibility(View.VISIBLE);
+                }
+                addTravelCustomFieldsView(false, false);
+            }
+        }
+    }
+
+    /**
+     * Will add the travel custom fields view to the existing activity view.
+     *
+     * @param readOnly       contains whether the fields should be read-only.
+     * @param displayAtStart if <code>true</code> will result in the fields designated to be displayed at the start of the booking process
+     *                       will be displayed; otherwise, fields at the end of the booking process will be displayed.
+     */
+    protected void addTravelCustomFieldsView(boolean readOnly, boolean displayAtStart) {
+        // Company has static custom fields, so display them via our nifty fragment!
+        FragmentManager fragmentManager = getFragmentManager();
+        FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
+        travelCustomFieldsFragment = new TravelCustomFieldsFragment();
+        travelCustomFieldsFragment.readOnly = readOnly;
+        travelCustomFieldsFragment.displayAtStart = displayAtStart;
+        travelCustomFieldsFragment.customFields = formFields;
+        fragmentTransaction
+                .add(R.id.hotel_booking_custom_fields, travelCustomFieldsFragment, TRAVEL_CUSTOM_VIEW_FRAGMENT_TAG);
+        fragmentTransaction.commit();
+    }
+
+    // }
+
+    /**
+     * Will commit any travel custom field values to the underlying object model and persistence.
+     */
+    protected void commitTravelCustomFields() {
+        if (travelCustomFieldsFragment != null) {
+            travelCustomFieldsFragment.saveFieldValues();
         }
     }
 
@@ -763,57 +886,58 @@ public class HotelBookingActivity extends Activity implements LoaderManager.Load
                 }
             }
 
+            // custom fields
+            if (formFields != null) {
+                if (validateTravelCustomFields()) {
+                    commitTravelCustomFields();
+                } else {
+                    hasAllRequiredFields = false;
+                    requiredFieldsMsg.append("required custom fields missing");
+                }
+            }
+
             // do the booking if all the required fields are available
             if (hasAllRequiredFields) {
-                showProgressBar(true);
+                showProgressBar(R.string.hotel_booking_retrieving);
                 hotelBookingReceiver = new BaseAsyncResultReceiver(new Handler());
 
                 hotelBookingReceiver.setListener(new HotelBookingReplyListener());
+
+                // populate custField objects from formFields
+                List<FormField> custFields = null;
+                if (formFields != null && formFields.size() > 0) {
+                    custFields = new ArrayList<FormField>();
+                    for (TravelCustomField tcf : formFields) {
+                        // only if a value is selected for the custom field
+                        if (tcf.getValue() != null && tcf.getValue().trim() != null) {
+                            FormField f = new FormField();
+                            f.setId(tcf.getId());
+                            f.setValue(tcf.getValue());
+                            custFields.add(f);
+                        }
+                    }
+                }
+
                 // create and invoke the async task
                 hotelBookingAsyncRequestTask = new HotelBookingAsyncRequestTask(this, HOTEL_BOOKING_ID,
-                        hotelBookingReceiver, selectedCreditCardId, currentTripId, selectedViolationReasons, null,
-                        false, preSellOption.bookingURL.href);
+                        hotelBookingReceiver, selectedCreditCardId, currentTripId, selectedViolationReasons, custFields,
+                        null, false, preSellOption.bookingURL.href);
+
                 hotelBookingAsyncRequestTask.execute();
             } else {
                 // show the required fields messages
-                DialogFragmentFactoryV1.getAlertOkayInstance(getString(R.string.general_required_fields),
-                        requiredFieldsMsg.toString()).show(getFragmentManager(), null);
+                DialogFragmentFactoryV1
+                        .getAlertOkayInstance(getString(R.string.general_required_fields), requiredFieldsMsg.toString())
+                        .show(getFragmentManager(), null);
                 reserveButton.setEnabled(true);
             }
         } else {
             Toast.makeText(getApplicationContext(), "Service Unavailable", Toast.LENGTH_LONG).show();
         }
 
-        // TODO - travel custom fields
-
         // TODO - travel program Id
         // String travelProgramId
 
-    }
-
-    // }
-
-    @Override
-    public Loader<HotelPreSellOption> onCreateLoader(int id, Bundle bundle) {
-
-        // request initial search
-        Log.d(Const.LOG_TAG, " ***** creating preselloption loader *****  ");
-
-        PlatformAsyncTaskLoader<HotelPreSellOption> hotelPreSellOptionAsyncTaskLoader = new HotelPreSellOptionLoader(
-                this, sellOptionsURL);
-
-        return hotelPreSellOptionAsyncTaskLoader;
-    }
-
-    @Override
-    public void onLoadFinished(Loader<HotelPreSellOption> loader, HotelPreSellOption hotelPreSellOption) {
-        setPreSellOptions(hotelPreSellOption);
-
-    }
-
-    @Override
-    public void onLoaderReset(Loader<HotelPreSellOption> loader) {
-        // nothing to handle here
     }
 
     @Override
@@ -827,11 +951,41 @@ public class HotelBookingActivity extends Activity implements LoaderManager.Load
         }
     }
 
+    @Override
+    public boolean onKeyDown(int keyCode, KeyEvent event) {
+        // Check if the key event was the Back button and stop any outstanding
+        // request of async task
+        if (keyCode == KeyEvent.KEYCODE_BACK) {
+            if (hotelBookingAsyncRequestTask != null) {
+                hotelBookingAsyncRequestTask.cancel(false);
+            }
+        }
+        return super.onKeyDown(keyCode, event);
+    }
+
+    @Override
+    public void onCustomAction() {
+        doBooking();
+
+    }
+
+    public void showToast(String message) {
+        Toast.makeText(this, message, Toast.LENGTH_SHORT).show();
+    }
+
+    @Override
+    public void sendTravelCustomFieldsUpdateRequest(List<TravelCustomField> fields) {
+        update = true;
+        formFields = fields;
+        // Initialize the loader.
+        lm.initLoader(CUSTOM_FIELDS_LOADER_ID, null, customFieldsLoaderListener);
+    }
+
     private class HotelBookingReplyListener implements AsyncReplyListener {
 
         /*
          * (non-Javadoc)
-         * 
+         *
          * @see com.concur.mobile.base.service.BaseAsyncRequestTask.AsyncReplyListener#onRequestSuccess(android.os.Bundle)
          */
         public void onRequestSuccess(Bundle resultData) {
@@ -859,7 +1013,7 @@ public class HotelBookingActivity extends Activity implements LoaderManager.Load
 
         /*
          * (non-Javadoc)
-         * 
+         *
          * @see com.concur.mobile.base.service.BaseAsyncRequestTask.AsyncReplyListener#onRequestFail(android.os.Bundle)
          */
         public void onRequestFail(Bundle resultData) {
@@ -871,7 +1025,7 @@ public class HotelBookingActivity extends Activity implements LoaderManager.Load
 
         /*
          * (non-Javadoc)
-         * 
+         *
          * @see com.concur.mobile.base.service.BaseAsyncRequestTask.AsyncReplyListener#onRequestCancel(android.os.Bundle)
          */
         public void onRequestCancel(Bundle resultData) {
@@ -880,7 +1034,7 @@ public class HotelBookingActivity extends Activity implements LoaderManager.Load
 
         /*
          * (non-Javadoc)
-         * 
+         *
          * @see com.concur.mobile.base.service.BaseAsyncRequestTask.AsyncReplyListener#cleanup()
          */
         public void cleanup() {
@@ -888,23 +1042,4 @@ public class HotelBookingActivity extends Activity implements LoaderManager.Load
             hotelBookingReceiver = null;
         }
     }
-
-    @Override
-    public boolean onKeyDown(int keyCode, KeyEvent event) {
-        // Check if the key event was the Back button and stop any outstanding
-        // request of async task
-        if (keyCode == KeyEvent.KEYCODE_BACK) {
-            if (hotelBookingAsyncRequestTask != null) {
-                hotelBookingAsyncRequestTask.cancel(false);
-            }
-        }
-        return super.onKeyDown(keyCode, event);
-    }
-
-    @Override
-    public void onCustomAction() {
-        doBooking();
-
-    }
-
 }

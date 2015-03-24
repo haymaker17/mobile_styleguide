@@ -1,9 +1,12 @@
 /**
- * 
+ *
  */
 package com.concur.mobile.core.travel.hotel.activity;
 
-import android.app.*;
+import android.app.ActionBar;
+import android.app.FragmentManager;
+import android.app.FragmentTransaction;
+import android.app.LoaderManager;
 import android.content.Intent;
 import android.content.IntentFilter;
 import android.content.Loader;
@@ -31,19 +34,17 @@ import com.concur.mobile.core.travel.data.LocationChoice;
 import com.concur.mobile.core.util.BookingDateUtil;
 import com.concur.mobile.core.util.FormatUtil;
 import com.concur.mobile.platform.service.PlatformAsyncTaskLoader;
-import com.concur.mobile.platform.travel.loader.TravelCustomField;
-import com.concur.mobile.platform.travel.loader.TravelCustomFieldsConfig;
-import com.concur.mobile.platform.travel.loader.TravelCustomFieldsLoader;
-import com.concur.mobile.platform.travel.loader.TravelCustomFieldsUpdateLoader;
-import com.concur.mobile.platform.ui.common.view.FormFieldView;
 import com.concur.mobile.platform.ui.common.view.SearchListFormFieldView;
 import com.concur.mobile.platform.ui.common.widget.CalendarPicker;
 import com.concur.mobile.platform.ui.common.widget.CalendarPickerDialogV1;
-import com.concur.mobile.platform.ui.travel.activity.BaseActivity;
+import com.concur.mobile.platform.ui.travel.activity.TravelBaseActivity;
 import com.concur.mobile.platform.ui.travel.fragment.TravelCustomFieldsFragment;
-import com.concur.mobile.platform.ui.travel.fragment.TravelCustomFieldsFragment.TravelCustomFieldsFragmentCallBackListener;
 import com.concur.mobile.platform.ui.travel.hotel.activity.HotelSearchAndResultActivity;
 import com.concur.mobile.platform.ui.travel.hotel.activity.HotelVoiceSearchActivity;
+import com.concur.mobile.platform.ui.travel.loader.TravelCustomField;
+import com.concur.mobile.platform.ui.travel.loader.TravelCustomFieldsConfig;
+import com.concur.mobile.platform.ui.travel.loader.TravelCustomFieldsLoader;
+import com.concur.mobile.platform.ui.travel.loader.TravelCustomFieldsUpdateLoader;
 import com.concur.mobile.platform.ui.travel.util.Const;
 import com.concur.mobile.platform.util.Format;
 
@@ -54,21 +55,14 @@ import java.util.TimeZone;
 
 /**
  * An extension of <code>ConcurActivity</code> for the purposes of providing Rest API hotel search services.
- * 
+ *
  * @author Tejoa
  */
-public class RestHotelSearch extends BaseActivity implements LoaderManager.LoaderCallbacks<TravelCustomFieldsConfig>,
-        TravelCustomFieldsFragmentCallBackListener {
-
-    private static final String CLS_TAG = RestHotelSearch.class.getSimpleName();
-    private static final String TAG_CALENDAR_DIALOG_FRAGMENT = HotelSearch.class.getSimpleName()
-            + ".calendar.dialog.fragment";
-    protected static final String TRAVEL_CUSTOM_VIEW_FRAGMENT_TAG = "travel.custom.view";
-
-    private CalendarPickerDialogV1 calendarDialog;
+public class RestHotelSearch extends TravelBaseActivity
+        implements LoaderManager.LoaderCallbacks<TravelCustomFieldsConfig>,
+        TravelCustomFieldsFragment.TravelCustomFieldsFragmentCallBackListener {
 
     protected static final int LOCATION_ACTIVITY_CODE = 0;
-
     protected static final String LOCATION_TYPE = "location_type";
     protected static final String LOCATION = "location";
     protected static final String CHECK_IN_DATE = "check_in_date";
@@ -78,14 +72,16 @@ public class RestHotelSearch extends BaseActivity implements LoaderManager.Loade
     protected static final String NAMES_CONTAINING = "names_containing";
     protected static final String FROM_LOCATION_SEARCH_INTENT = "from_location_search_intent";
     protected static final String BOOK_NEAR_ME = "book_near_me";
-    private static final String KEY_DIALOG_ID = "key.dialog.id";
-    private static final String KEY_IS_CHECKIN = "key.is.checkin";
-
     protected static final int CHECK_IN_DATE_DIALOG = 0;
     protected static final int CHECK_OUT_DATE_DIALOG = 1;
+    private static final String CLS_TAG = RestHotelSearch.class.getSimpleName();
+    private static final String TAG_CALENDAR_DIALOG_FRAGMENT =
+            HotelSearch.class.getSimpleName() + ".calendar.dialog.fragment";
+    private static final String KEY_DIALOG_ID = "key.dialog.id";
+    private static final String KEY_IS_CHECKIN = "key.is.checkin";
+    protected final IntentFilter hotelResultsFilter = new IntentFilter(Const.ACTION_HOTEL_SEARCH_RESULTS);
     // protected static final int DISTANCE_DIALOG = DIALOG_ID_BASE + 2;
     // protected static final int DISTANCE_UNIT_DIALOG = DIALOG_ID_BASE + 3;
-
     protected View location;
 
     protected View checkInDateView;
@@ -97,11 +93,6 @@ public class RestHotelSearch extends BaseActivity implements LoaderManager.Loade
     protected Calendar checkInDate;
     protected Calendar checkOutDate;
 
-    // Contains the Cliqbook trip id if a hotel search is being performed in the
-    // context
-    // of a trip.
-    protected String cliqbookTripId;
-
     protected Button searchButton;
 
     protected LocationChoice currentLocation;
@@ -111,32 +102,17 @@ public class RestHotelSearch extends BaseActivity implements LoaderManager.Loade
     // company configuration information.
 
     protected EditText withNamesContaining;
-
-    protected final IntentFilter hotelResultsFilter = new IntentFilter(Const.ACTION_HOTEL_SEARCH_RESULTS);
-
     protected String actionStatusErrorMessage;
-
     protected String lastHttpErrorMessage;
     protected boolean fromLocationSearchIntent;
     protected boolean searchNearMe;
-
+    protected boolean progressbarVisible;
+    private CalendarPickerDialogV1 calendarDialog;
     private int DialogId = -1;
     private boolean isCheckin = false;
     private boolean checkForSearchCriteraChanged;
     private boolean searchCriteriaChanged;
-
     private LoaderManager lm;
-
-    /**
-     * Contains the list of travel custom fields.
-     */
-    public List<TravelCustomField> formFields;
-
-    protected TravelCustomFieldsFragment hotelCustomFieldsFragment;
-
-    private boolean update = false;
-
-    private boolean progressbarVisible;
 
     // /////////////////////////////////////////////////////////////////
 
@@ -176,8 +152,8 @@ public class RestHotelSearch extends BaseActivity implements LoaderManager.Loade
 
                 checkInDate = Calendar.getInstance(TimeZone.getTimeZone("UTC"));
                 checkInDate.clear();
-                checkInDate.set(now.get(Calendar.YEAR), now.get(Calendar.MONTH), now.get(Calendar.DAY_OF_MONTH), 0, 0,
-                        0);
+                checkInDate
+                        .set(now.get(Calendar.YEAR), now.get(Calendar.MONTH), now.get(Calendar.DAY_OF_MONTH), 0, 0, 0);
             }
             // Check for check-out date.
             if (intent.hasExtra(Const.EXTRA_TRAVEL_HOTEL_SEARCH_CHECK_OUT)) {
@@ -379,8 +355,11 @@ public class RestHotelSearch extends BaseActivity implements LoaderManager.Loade
                 // ValidateTravelCustomFields will display a dialog and return
                 // 'false' if any displayed
                 // fields have missing or invalid values.
+                if (validateTravelCustomFields()) {
+                    commitTravelCustomFields();
 
-                doSearch();
+                    doSearch();
+                }
 
             }
         });
@@ -393,19 +372,7 @@ public class RestHotelSearch extends BaseActivity implements LoaderManager.Loade
         // change
         // and no passed in trip
         // if (!orientationChange) {
-        if (cliqbookTripId == null) {
-            // Init or request the travel custom fields.
-            // if (!hasTravelCustomFieldsView()) {
-            if (ConcurCore.isConnected()) {
 
-                // Initialize the loader.
-                lm = getLoaderManager();
-                lm.initLoader(1, null, this);
-            } else {
-                // TODO: Let end-user that connectivity is required for
-                // search.
-            }
-        }
         // }
         // }
 
@@ -415,6 +382,20 @@ public class RestHotelSearch extends BaseActivity implements LoaderManager.Loade
                 calendarDialog.setOnDateSetListener(new HotelDateSetListener(savedInstanceState.getInt(KEY_DIALOG_ID),
                         savedInstanceState.getBoolean(KEY_IS_CHECKIN)));
             }
+        }
+
+        if (cliqbookTripId == null) {
+            // Init or request the travel custom fields.
+            // if (!hasTravelCustomFieldsView()) {
+            //            if (ConcurCore.isConnected()) {
+
+            // Initialize the loader.
+            lm = getLoaderManager();
+            lm.initLoader(1, null, this);
+            //            } else {
+            //                // TODO: Let end-user that connectivity is required for
+            //                // search.
+            //            }
         }
     }
 
@@ -518,13 +499,13 @@ public class RestHotelSearch extends BaseActivity implements LoaderManager.Loade
             strBldr.append(", ");
             strBldr.append(currAdd.getCountryCode());
             currentLocation.setName(strBldr.toString());// used
-                                                        // for
-                                                        // displaying
-                                                        // in
-                                                        // the
-                                                        // search
-                                                        // progress
-                                                        // screen
+            // for
+            // displaying
+            // in
+            // the
+            // search
+            // progress
+            // screen
             currentLocation.latitude = Double.toString(currAdd.getLatitude());
             currentLocation.longitude = Double.toString(currAdd.getLongitude());
         }
@@ -700,6 +681,326 @@ public class RestHotelSearch extends BaseActivity implements LoaderManager.Loade
     // ///////////////////////////////////////////////////////////////////////////
 
     /**
+     * Update the buttons with the most recent values
+     */
+    protected void updateDateTimeButtons() {
+        // Set the check-in date.
+        TextView txtView = (TextView) checkInDateView.findViewById(R.id.field_value);
+        if (txtView != null) {
+            txtView.setText(
+                    Format.safeFormatCalendar(FormatUtil.SHORT_WEEKDAY_MONTH_DAY_FULL_YEAR_DISPLAY, checkInDate));
+        } else {
+            Log.e(Const.LOG_TAG, CLS_TAG + ".updateDateTimeButtons: unable to locate check-in field value!");
+        }
+        // Set the check-out date.
+        txtView = (TextView) checkOutDateView.findViewById(R.id.field_value);
+        if (txtView != null) {
+            txtView.setText(
+                    Format.safeFormatCalendar(FormatUtil.SHORT_WEEKDAY_MONTH_DAY_FULL_YEAR_DISPLAY, checkOutDate));
+        } else {
+            Log.e(Const.LOG_TAG, CLS_TAG + ".updateDateTimeButtons: unable to locate check-out field value!");
+        }
+    }
+
+    /**
+     * Handle the initial setup of the date and time buttons
+     */
+    protected void configureDateButtons() {
+
+        // Check-in controls.
+        checkInDateView = findViewById(R.id.hotel_search_label_checkin);
+        if (checkInDateView != null) {
+            // Set the field name.
+            TextView txtView = (TextView) checkInDateView.findViewById(R.id.field_name);
+            if (txtView != null) {
+                txtView.setText(R.string.hotel_search_label_checkin_date);
+            } else {
+                Log.e(Const.LOG_TAG, CLS_TAG + ".configureDateButtons: unable to locate check_in field_name!");
+            }
+        } else {
+            Log.e(Const.LOG_TAG, CLS_TAG + ".configureDateButtons: unable to locate hotel_search_check_in!");
+        }
+        // Check-out controls.
+        checkOutDateView = findViewById(R.id.hotel_search_check_out);
+        if (checkOutDateView != null) {
+            // Set the field name.
+            TextView txtView = (TextView) checkOutDateView.findViewById(R.id.field_name);
+            if (txtView != null) {
+                txtView.setText(R.string.hotel_search_label_checkout_date);
+            } else {
+                Log.e(Const.LOG_TAG, CLS_TAG + ".configureDateButtons: unable to locate check_out field_name!");
+            }
+        } else {
+            Log.e(Const.LOG_TAG, CLS_TAG + ".configureDateButtons: unable to locate hotel_search_check_out!");
+        }
+
+        // Initialize their display
+        updateDateTimeButtons();
+
+        // Hook up the handlers
+        checkInDateView.setOnClickListener(new View.OnClickListener() {
+
+            @Override
+            public void onClick(View v) {
+                showCalendarDialog(CHECK_IN_DATE_DIALOG);
+            }
+        });
+        checkOutDateView.setOnClickListener(new View.OnClickListener() {
+
+            @Override
+            public void onClick(View v) {
+                showCalendarDialog(CHECK_OUT_DATE_DIALOG);
+            }
+        });
+
+    }
+
+    protected void doSearch() {
+        // Get the values
+        String latitude = currentLocation.latitude;
+        String longitude = currentLocation.longitude;
+
+        // String distanceUnit = currentDistanceUnit.id;
+        // String distanceValue = currentDistanceAmount.id;
+        String namesContaining = null;
+
+        ConcurCore core = (ConcurCore) ConcurCore.getContext();
+        core.setViewedPriceToBeatList(false);
+
+        if (withNamesContaining != null) {
+            namesContaining = withNamesContaining.getText().toString().trim().toLowerCase();
+        }
+
+        Intent intent = new Intent(this, HotelSearchAndResultActivity.class);
+
+        if (currentLocation instanceof CompanyLocation) {
+            String formattedName = null;
+            if (currentLocation.state == null || currentLocation.state.length() == 0) {
+                formattedName = Format.localizeText(ConcurCore.getContext(), R.string.general_citycountry,
+                        new Object[] { currentLocation.city, ((CompanyLocation) currentLocation).country });
+            } else {
+                formattedName = Format.localizeText(ConcurCore.getContext(), R.string.general_citystatecountry,
+                        new Object[] { currentLocation.city, currentLocation.state,
+                                ((CompanyLocation) currentLocation).country });
+            }
+            intent.putExtra(Const.EXTRA_TRAVEL_HOTEL_SEARCH_LOCATION, formattedName);
+        } else {
+            intent.putExtra(Const.EXTRA_TRAVEL_HOTEL_SEARCH_LOCATION, currentLocation.getName());
+        }
+
+        intent.putExtra(Const.EXTRA_LOCATION_SEARCH_MODE_USED, fromLocationSearchIntent);
+
+        // intent.putExtra(Const.EXTRA_TRAVEL_HOTEL_SEARCH_DISTANCE_AMOUNT, currentDistanceAmount.name);
+        // intent.putExtra(Const.EXTRA_TRAVEL_HOTEL_SEARCH_DISTANCE_ID, distanceValue);
+        // intent.putExtra(Const.EXTRA_TRAVEL_HOTEL_SEARCH_DISTANCE_UNIT_NAME, currentDistanceUnit.name);
+        UserConfig userConfig = core.getUserConfig();
+        String distanceUnit = userConfig != null ? userConfig.distanceUnitPreference : null;
+        if (distanceUnit == null) {
+            distanceUnit = "M";
+        } else {
+            distanceUnit = (distanceUnit.equalsIgnoreCase("Miles") ? "M" : "K");
+        }
+        intent.putExtra(Const.EXTRA_TRAVEL_HOTEL_SEARCH_DISTANCE_UNIT_ID, distanceUnit);
+
+        intent.putExtra(Const.EXTRA_TRAVEL_LATITUDE, latitude);
+        intent.putExtra(Const.EXTRA_TRAVEL_LONGITUDE, longitude);
+
+        intent.putExtra(Const.EXTRA_TRAVEL_HOTEL_SEARCH_NAMES_CONTAINING, namesContaining);
+
+        intent.putExtra(Const.EXTRA_TRAVEL_HOTEL_SEARCH_CHECK_IN,
+                Format.safeFormatCalendar(FormatUtil.SHORT_DAY_DISPLAY, checkInDate));
+        intent.putExtra(Const.EXTRA_TRAVEL_HOTEL_SEARCH_CHECK_IN_CALENDAR, checkInDate);
+        intent.putExtra(Const.EXTRA_TRAVEL_HOTEL_SEARCH_CHECK_OUT,
+                Format.safeFormatCalendar(FormatUtil.SHORT_DAY_DISPLAY, checkOutDate));
+        intent.putExtra(Const.EXTRA_TRAVEL_HOTEL_SEARCH_CHECK_OUT_CALENDAR, checkOutDate);
+
+        intent.putExtra(Const.EXTRA_TRAVEL_CLIQBOOK_TRIP_ID, cliqbookTripId);
+
+        // get the hotel violation reasons from the SystemConfig and pass it on to the activities.
+        // since the platform systemconfig request is not being invoked by the application, we cannot use the getHotelReasons from
+        // the platform. Hence passing in to the next activities. Same with the ruleViolationExplanationRequired
+        SystemConfig sysConfig = ((ConcurCore) getApplication()).getSystemConfig();
+        ArrayList<com.concur.mobile.core.travel.data.ReasonCode> reasonCodesCore = (sysConfig != null
+                && sysConfig.getHotelReasons() != null) ? sysConfig.getHotelReasons() : null;
+        if (reasonCodesCore != null) {
+            ArrayList<String[]> violationReasons = new ArrayList<String[]>(reasonCodesCore.size());
+            for (com.concur.mobile.core.travel.data.ReasonCode reasonCode : reasonCodesCore) {
+                violationReasons.add(new String[] { reasonCode.id, reasonCode.description });
+            }
+            intent.putExtra("violationReasons", violationReasons);
+        }
+        // Check whether SystemConfig stipulates that 'violation justification' is required.
+        if (sysConfig.getRuleViolationExplanationRequired() != null && sysConfig
+                .getRuleViolationExplanationRequired()) {
+            intent.putExtra("ruleViolationExplanationRequired", true);
+        } else {
+            intent.putExtra("ruleViolationExplanationRequired", false);
+        }
+
+        if (checkForSearchCriteraChanged) {
+            intent.putExtra("searchCriteriaChanged", searchCriteriaChanged);
+        }
+
+        intent.putExtra("currentTripId", cliqbookTripId);
+        Boolean showGDSName = userConfig != null ? userConfig.showGDSNameInSearchResults : false;
+        intent.putExtra(Const.EXTRA_TRAVEL_HOTEL_SEARCH_SHOW_GDS_NAME, showGDSName);
+
+        intent.putExtra("travelCustomFieldsConfig", travelCustomFieldsConfig);
+
+        startActivityForResult(intent, Const.REQUEST_CODE_BOOK_HOTEL);
+    }
+
+    // ///////////////////////////////////////////////////////////////////////////
+    // Check in/out field methods - end
+    // ///////////////////////////////////////////////////////////////////////////
+
+    /**
+     * Will check fields and enable/disable the search button.
+     */
+    protected void checkSearchButton() {
+        if (currentLocation != null) {
+            searchButton.setEnabled(true);
+        } else {
+            searchButton.setEnabled(false);
+        }
+    }
+
+    /**
+     * Will initialize the travel custom fields view.
+     */
+    public void initTravelCustomFieldsView() {
+        // Check for whether 'custom_fields' view group exists!
+        if (findViewById(R.id.hotel_booking_custom_fields) != null) {
+            if (formFields != null && formFields.size() > 0) {
+                addTravelCustomFieldsView(false, true);
+            }
+        }
+    }
+
+    /**
+     * Will add the travel custom fields view to the existing activity view.
+     *
+     * @param readOnly       contains whether the fields should be read-only.
+     * @param displayAtStart if <code>true</code> will result in the fields designated to be displayed at the start of the booking process
+     *                       will be displayed; otherwise, fields at the end of the booking process will be displayed.
+     */
+    protected void addTravelCustomFieldsView(boolean readOnly, boolean displayAtStart) {
+        // Company has static custom fields, so display them via our nifty fragment!
+        FragmentManager fragmentManager = getFragmentManager();
+        FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
+        travelCustomFieldsFragment = new TravelCustomFieldsFragment();
+        travelCustomFieldsFragment.readOnly = readOnly;
+        travelCustomFieldsFragment.displayAtStart = displayAtStart;
+        travelCustomFieldsFragment.customFields = formFields;
+        fragmentTransaction
+                .add(R.id.hotel_booking_custom_fields, travelCustomFieldsFragment, TRAVEL_CUSTOM_VIEW_FRAGMENT_TAG);
+        fragmentTransaction.commit();
+    }
+
+    public void showProgressBar(String progressMsgResource) {
+        if (!progressbarVisible) {
+            progressbarVisible = true;
+            View progressBar = findViewById(R.id.rest_custom_field_search_progress);
+            progressBar.setVisibility(View.VISIBLE);
+            progressBar.bringToFront();
+
+            TextView progressBarMsg = (TextView) findViewById(R.id.rest_custom_travel_fields_search_progress_msg);
+            progressBarMsg.setText(progressMsgResource);
+            progressBarMsg.setVisibility(View.VISIBLE);
+            progressBarMsg.bringToFront();
+        }
+    }
+
+    public void hideProgressBar() {
+        if (progressbarVisible) {
+            progressbarVisible = false;
+            findViewById(R.id.rest_custom_field_search_progress).setVisibility(View.GONE);
+            findViewById(R.id.rest_custom_travel_fields_search_progress_msg).setVisibility(View.GONE);
+        }
+    }
+
+    /**
+     * Will commit any travel custom field values to the underlying object model and persistence.
+     */
+    protected void commitTravelCustomFields() {
+        if (travelCustomFieldsFragment != null) {
+            travelCustomFieldsFragment.saveFieldValues();
+        }
+    }
+
+    public void showToast(String message) {
+        Toast.makeText(this, message, Toast.LENGTH_SHORT).show();
+    }
+
+    @Override
+    public Loader<TravelCustomFieldsConfig> onCreateLoader(int id, Bundle bundle) {
+        PlatformAsyncTaskLoader<TravelCustomFieldsConfig> asyncLoader = null;
+        if (update) {
+            showProgressBar(getString(R.string.dlg_travel_retrieve_custom_fields_update_progress_message));
+            asyncLoader = new TravelCustomFieldsUpdateLoader(this, formFields);
+        } else {
+            showProgressBar(getString(R.string.dlg_travel_retrieve_custom_fields_progress_message));
+            asyncLoader = new TravelCustomFieldsLoader(this);
+        }
+        return asyncLoader;
+    }
+
+    @Override
+    public void onLoadFinished(Loader<TravelCustomFieldsConfig> loader,
+            TravelCustomFieldsConfig travelCustomFieldsConfig) {
+
+        hideProgressBar();
+
+        if (travelCustomFieldsConfig == null) {
+            // no custom fields
+        } else if (travelCustomFieldsConfig != null) {
+
+            if (travelCustomFieldsConfig.errorOccuredWhileRetrieving) {
+                showToast("Could not retrieve custom fields.");
+            } else {
+
+                this.travelCustomFieldsConfig = travelCustomFieldsConfig;
+                formFields = travelCustomFieldsConfig.formFields;
+                // to overcome the 'cannot perform this action inside of the onLoadFinished'
+                final int WHAT = 1;
+                Handler handler = new Handler() {
+
+                    @Override
+                    public void handleMessage(Message msg) {
+                        if (msg.what == WHAT) {
+                            initTravelCustomFieldsView();
+                        }
+                    }
+                };
+                handler.sendEmptyMessage(WHAT);
+            }
+        }
+
+        if (travelCustomFieldsConfig != null && travelCustomFieldsConfig.formFields != null) {
+            Log.d(Const.LOG_TAG,
+                    CLS_TAG + ".onLoadFinished ********************* : travelCustomFieldsConfig size : " + (
+                            travelCustomFieldsConfig != null ?
+                                    travelCustomFieldsConfig.formFields.size() :
+                                    null));
+        }
+
+    }
+
+    @Override
+    public void onLoaderReset(Loader<TravelCustomFieldsConfig> data) {
+        Log.d(Const.LOG_TAG, " ***** loader reset *****  ");
+    }
+
+    @Override
+    public void sendTravelCustomFieldsUpdateRequest(List<TravelCustomField> fields) {
+        update = true;
+        formFields = fields;
+        travelCustomFieldsConfig.formFields = formFields;
+        // Initialize the loader.
+        lm.restartLoader(2, null, this);
+    }
+
+    /**
      * Handle the date selection event Adjust the check in/out time as necessary to prevent invalid ordering.
      */
     class HotelDateSetListener implements CalendarPickerDialogV1.OnDateSetListener {
@@ -773,320 +1074,4 @@ public class RestHotelSearch extends BaseActivity implements LoaderManager.Loade
 
     }
 
-    /**
-     * Update the buttons with the most recent values
-     */
-    protected void updateDateTimeButtons() {
-        // Set the check-in date.
-        TextView txtView = (TextView) checkInDateView.findViewById(R.id.field_value);
-        if (txtView != null) {
-            txtView.setText(Format
-                    .safeFormatCalendar(FormatUtil.SHORT_WEEKDAY_MONTH_DAY_FULL_YEAR_DISPLAY, checkInDate));
-        } else {
-            Log.e(Const.LOG_TAG, CLS_TAG + ".updateDateTimeButtons: unable to locate check-in field value!");
-        }
-        // Set the check-out date.
-        txtView = (TextView) checkOutDateView.findViewById(R.id.field_value);
-        if (txtView != null) {
-            txtView.setText(Format.safeFormatCalendar(FormatUtil.SHORT_WEEKDAY_MONTH_DAY_FULL_YEAR_DISPLAY,
-                    checkOutDate));
-        } else {
-            Log.e(Const.LOG_TAG, CLS_TAG + ".updateDateTimeButtons: unable to locate check-out field value!");
-        }
-    }
-
-    /**
-     * Handle the initial setup of the date and time buttons
-     */
-    protected void configureDateButtons() {
-
-        // Check-in controls.
-        checkInDateView = findViewById(R.id.hotel_search_label_checkin);
-        if (checkInDateView != null) {
-            // Set the field name.
-            TextView txtView = (TextView) checkInDateView.findViewById(R.id.field_name);
-            if (txtView != null) {
-                txtView.setText(R.string.hotel_search_label_checkin_date);
-            } else {
-                Log.e(Const.LOG_TAG, CLS_TAG + ".configureDateButtons: unable to locate check_in field_name!");
-            }
-        } else {
-            Log.e(Const.LOG_TAG, CLS_TAG + ".configureDateButtons: unable to locate hotel_search_check_in!");
-        }
-        // Check-out controls.
-        checkOutDateView = findViewById(R.id.hotel_search_check_out);
-        if (checkOutDateView != null) {
-            // Set the field name.
-            TextView txtView = (TextView) checkOutDateView.findViewById(R.id.field_name);
-            if (txtView != null) {
-                txtView.setText(R.string.hotel_search_label_checkout_date);
-            } else {
-                Log.e(Const.LOG_TAG, CLS_TAG + ".configureDateButtons: unable to locate check_out field_name!");
-            }
-        } else {
-            Log.e(Const.LOG_TAG, CLS_TAG + ".configureDateButtons: unable to locate hotel_search_check_out!");
-        }
-
-        // Initialize their display
-        updateDateTimeButtons();
-
-        // Hook up the handlers
-        checkInDateView.setOnClickListener(new View.OnClickListener() {
-
-            @Override
-            public void onClick(View v) {
-                showCalendarDialog(CHECK_IN_DATE_DIALOG);
-            }
-        });
-        checkOutDateView.setOnClickListener(new View.OnClickListener() {
-
-            @Override
-            public void onClick(View v) {
-                showCalendarDialog(CHECK_OUT_DATE_DIALOG);
-            }
-        });
-
-    }
-
-    // ///////////////////////////////////////////////////////////////////////////
-    // Check in/out field methods - end
-    // ///////////////////////////////////////////////////////////////////////////
-
-    protected void doSearch() {
-        // Get the values
-        String latitude = currentLocation.latitude;
-        String longitude = currentLocation.longitude;
-
-        // String distanceUnit = currentDistanceUnit.id;
-        // String distanceValue = currentDistanceAmount.id;
-        String namesContaining = null;
-
-        ConcurCore core = (ConcurCore) ConcurCore.getContext();
-        core.setViewedPriceToBeatList(false);
-
-        if (withNamesContaining != null) {
-            namesContaining = withNamesContaining.getText().toString().trim().toLowerCase();
-        }
-
-        Intent intent = new Intent(this, HotelSearchAndResultActivity.class);
-
-        if (currentLocation instanceof CompanyLocation) {
-            String formattedName = null;
-            if (currentLocation.state == null || currentLocation.state.length() == 0) {
-                formattedName = Format.localizeText(ConcurCore.getContext(), R.string.general_citycountry,
-                        new Object[] { currentLocation.city, ((CompanyLocation) currentLocation).country });
-            } else {
-                formattedName = Format.localizeText(ConcurCore.getContext(), R.string.general_citystatecountry,
-                        new Object[] { currentLocation.city, currentLocation.state,
-                                ((CompanyLocation) currentLocation).country });
-            }
-            intent.putExtra(Const.EXTRA_TRAVEL_HOTEL_SEARCH_LOCATION, formattedName);
-        } else {
-            intent.putExtra(Const.EXTRA_TRAVEL_HOTEL_SEARCH_LOCATION, currentLocation.getName());
-        }
-
-        intent.putExtra(Const.EXTRA_LOCATION_SEARCH_MODE_USED, fromLocationSearchIntent);
-
-        // intent.putExtra(Const.EXTRA_TRAVEL_HOTEL_SEARCH_DISTANCE_AMOUNT, currentDistanceAmount.name);
-        // intent.putExtra(Const.EXTRA_TRAVEL_HOTEL_SEARCH_DISTANCE_ID, distanceValue);
-        // intent.putExtra(Const.EXTRA_TRAVEL_HOTEL_SEARCH_DISTANCE_UNIT_NAME, currentDistanceUnit.name);
-        UserConfig userConfig = core.getUserConfig();
-        String distanceUnit = userConfig != null ? userConfig.distanceUnitPreference : null;
-        if (distanceUnit == null) {
-            distanceUnit = "M";
-        } else {
-            distanceUnit = (distanceUnit.equalsIgnoreCase("Miles") ? "M" : "K");
-        }
-        intent.putExtra(Const.EXTRA_TRAVEL_HOTEL_SEARCH_DISTANCE_UNIT_ID, distanceUnit);
-
-        intent.putExtra(Const.EXTRA_TRAVEL_LATITUDE, latitude);
-        intent.putExtra(Const.EXTRA_TRAVEL_LONGITUDE, longitude);
-
-        intent.putExtra(Const.EXTRA_TRAVEL_HOTEL_SEARCH_NAMES_CONTAINING, namesContaining);
-
-        intent.putExtra(Const.EXTRA_TRAVEL_HOTEL_SEARCH_CHECK_IN,
-                Format.safeFormatCalendar(FormatUtil.SHORT_DAY_DISPLAY, checkInDate));
-        intent.putExtra(Const.EXTRA_TRAVEL_HOTEL_SEARCH_CHECK_IN_CALENDAR, checkInDate);
-        intent.putExtra(Const.EXTRA_TRAVEL_HOTEL_SEARCH_CHECK_OUT,
-                Format.safeFormatCalendar(FormatUtil.SHORT_DAY_DISPLAY, checkOutDate));
-        intent.putExtra(Const.EXTRA_TRAVEL_HOTEL_SEARCH_CHECK_OUT_CALENDAR, checkOutDate);
-
-        intent.putExtra(Const.EXTRA_TRAVEL_CLIQBOOK_TRIP_ID, cliqbookTripId);
-
-        // get the hotel violation reasons from the SystemConfig and pass it on to the activities.
-        // since the platform systemconfig request is not being invoked by the application, we cannot use the getHotelReasons from
-        // the platform. Hence passing in to the next activities. Same with the ruleViolationExplanationRequired
-        SystemConfig sysConfig = ((ConcurCore) getApplication()).getSystemConfig();
-        ArrayList<com.concur.mobile.core.travel.data.ReasonCode> reasonCodesCore = (sysConfig != null && sysConfig
-                .getHotelReasons() != null) ? sysConfig.getHotelReasons() : null;
-        if (reasonCodesCore != null) {
-            ArrayList<String[]> violationReasons = new ArrayList<String[]>(reasonCodesCore.size());
-            for (com.concur.mobile.core.travel.data.ReasonCode reasonCode : reasonCodesCore) {
-                violationReasons.add(new String[] { reasonCode.id, reasonCode.description });
-            }
-            intent.putExtra("violationReasons", violationReasons);
-        }
-        // Check whether SystemConfig stipulates that 'violation justification' is required.
-        if (sysConfig.getRuleViolationExplanationRequired() != null && sysConfig.getRuleViolationExplanationRequired()) {
-            intent.putExtra("ruleViolationExplanationRequired", true);
-        } else {
-            intent.putExtra("ruleViolationExplanationRequired", false);
-        }
-
-        if (checkForSearchCriteraChanged) {
-            intent.putExtra("searchCriteriaChanged", searchCriteriaChanged);
-        }
-
-        intent.putExtra("currentTripId", cliqbookTripId);
-        Boolean showGDSName = userConfig != null ? userConfig.showGDSNameInSearchResults : false;
-        intent.putExtra(Const.EXTRA_TRAVEL_HOTEL_SEARCH_SHOW_GDS_NAME, showGDSName);
-
-        startActivityForResult(intent, Const.REQUEST_CODE_BOOK_HOTEL);
-    }
-
-    /**
-     * Will check fields and enable/disable the search button.
-     */
-    protected void checkSearchButton() {
-        if (currentLocation != null) {
-            searchButton.setEnabled(true);
-        } else {
-            searchButton.setEnabled(false);
-        }
-    }
-
-    @Override
-    protected Dialog onCreateDialog(int id) {
-
-        Dialog dlg = null;
-        // Check whether there a form field view should handle the dialog creation.
-        if (hotelCustomFieldsFragment != null && hotelCustomFieldsFragment.getFormFieldViewListener() != null
-                && hotelCustomFieldsFragment.getFormFieldViewListener().isCurrentFormFieldViewSet()
-                && id >= FormFieldView.DIALOG_ID_BASE) {
-            dlg = hotelCustomFieldsFragment.getFormFieldViewListener().getCurrentFormFieldView().onCreateDialog(id);
-        } else {
-            super.onCreateDialog(id);
-        }
-        return dlg;
-    }
-
-    public void showProgressBar(int progressMsgResourceId) {
-        if (!progressbarVisible) {
-            progressbarVisible = true;
-            View progressBar = findViewById(R.id.custom_field_search_progress);
-            progressBar.setVisibility(View.VISIBLE);
-            progressBar.bringToFront();
-
-            TextView progressBarMsg = (TextView) findViewById(R.id.custom_travel_fields_search_progress_msg);
-            progressBarMsg.setText(progressMsgResourceId);
-            progressBarMsg.setVisibility(View.VISIBLE);
-            progressBarMsg.bringToFront();
-        }
-    }
-
-    public void hideProgressBar() {
-        if (progressbarVisible) {
-            progressbarVisible = false;
-            findViewById(R.id.custom_field_search_progress).setVisibility(View.GONE);
-            findViewById(R.id.custom_travel_fields_search_progress_msg).setVisibility(View.GONE);
-        }
-    }
-
-    public void showToast(String message) {
-        Toast.makeText(this, message, Toast.LENGTH_SHORT).show();
-    }
-
-    @Override
-    public Loader<TravelCustomFieldsConfig> onCreateLoader(int id, Bundle bundle) {
-        PlatformAsyncTaskLoader<TravelCustomFieldsConfig> asyncLoader = null;
-        if (update) {
-            showProgressBar(R.string.dlg_travel_retrieve_custom_fields_update_progress_message);
-            asyncLoader = new TravelCustomFieldsUpdateLoader(this, formFields);
-        } else {
-            showProgressBar(R.string.dlg_travel_retrieve_custom_fields_progress_message);
-            asyncLoader = new TravelCustomFieldsLoader(this);
-        }
-        return asyncLoader;
-    }
-
-    @Override
-    public void onLoadFinished(Loader<TravelCustomFieldsConfig> loader,
-            TravelCustomFieldsConfig travelCustomFieldsConfig) {
-
-        hideProgressBar();
-
-        if (travelCustomFieldsConfig == null) {
-            // no custom fields
-        } else if (travelCustomFieldsConfig != null) {
-
-            if (travelCustomFieldsConfig.errorOccuredWhileRetrieving) {
-                showToast("Could not retrieve custom fields.");
-            } else {
-
-                formFields = travelCustomFieldsConfig.formFields;
-                // to overcome the 'cannot perform this action inside of the onLoadFinished'
-                final int WHAT = 1;
-                Handler handler = new Handler() {
-
-                    @Override
-                    public void handleMessage(Message msg) {
-                        if (msg.what == WHAT)
-                            initTravelCustomFieldsView();
-                    }
-                };
-                handler.sendEmptyMessage(WHAT);
-            }
-        }
-
-        Log.d(Const.LOG_TAG, CLS_TAG + ".onLoadFinished ********************* : travelCustomFieldsConfig size : "
-                + (travelCustomFieldsConfig != null ? travelCustomFieldsConfig.formFields.size() : null));
-
-    }
-
-    @Override
-    public void onLoaderReset(Loader<TravelCustomFieldsConfig> data) {
-        Log.d(Const.LOG_TAG, " ***** loader reset *****  ");
-    }
-
-    /**
-     * Will initialize the travel custom fields view.
-     */
-    public void initTravelCustomFieldsView() {
-        // Check for whether 'custom_fields' view group exists!
-        if (findViewById(R.id.hotel_booking_custom_fields) != null) {
-            if (formFields != null && formFields.size() > 0) {
-                addTravelCustomFieldsView(false, true);
-            }
-        }
-    }
-
-    /**
-     * Will add the travel custom fields view to the existing activity view.
-     * 
-     * @param readOnly
-     *            contains whether the fields should be read-only.
-     * @param displayAtStart
-     *            if <code>true</code> will result in the fields designated to be displayed at the start of the booking process
-     *            will be displayed; otherwise, fields at the end of the booking process will be displayed.
-     */
-    protected void addTravelCustomFieldsView(boolean readOnly, boolean displayAtStart) {
-        // Company has static custom fields, so display them via our nifty fragment!
-        FragmentManager fragmentManager = getFragmentManager();
-        FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
-        hotelCustomFieldsFragment = new TravelCustomFieldsFragment();
-        hotelCustomFieldsFragment.readOnly = readOnly;
-        hotelCustomFieldsFragment.displayAtStart = displayAtStart;
-        hotelCustomFieldsFragment.customFields = formFields;
-        fragmentTransaction.add(R.id.hotel_booking_custom_fields, hotelCustomFieldsFragment,
-                TRAVEL_CUSTOM_VIEW_FRAGMENT_TAG);
-        fragmentTransaction.commit();
-    }
-
-    @Override
-    public void sendTravelCustomFieldsUpdateRequest(List<TravelCustomField> fields) {
-        update = true;
-        formFields = fields;
-        // Initialize the loader.
-        lm.restartLoader(2, null, this);
-    }
 }

@@ -1,19 +1,14 @@
 package com.concur.mobile.platform.ui.travel.view;
 
-import java.util.ArrayList;
-
 import android.content.Intent;
-
 import com.concur.mobile.platform.common.SpinnerItem;
 import com.concur.mobile.platform.common.formfield.IFormField;
-import com.concur.mobile.platform.ui.common.view.ComboListFormFieldView;
-import com.concur.mobile.platform.ui.common.view.FieldValueSpinnerItem;
-import com.concur.mobile.platform.ui.common.view.FormFieldView;
+import com.concur.mobile.platform.ui.common.view.*;
 import com.concur.mobile.platform.ui.common.view.FormFieldView.IFormFieldViewListener;
-import com.concur.mobile.platform.ui.common.view.IFormFieldViewEditHandler;
-import com.concur.mobile.platform.ui.common.view.SearchListFormFieldView;
 import com.concur.mobile.platform.ui.travel.activity.TravelCustomFieldSearch;
 import com.concur.mobile.platform.ui.travel.util.Const;
+
+import java.util.ArrayList;
 
 public class FormFieldViewEditHandler implements IFormFieldViewEditHandler {
 
@@ -47,9 +42,9 @@ public class FormFieldViewEditHandler implements IFormFieldViewEditHandler {
     /**
      * Will return an <code>Intent</code> object that can be used to launch a static list with search option based on the
      * <code>ExpenseReportFormField</code> backing this view.
-     * 
+     *
      * @return returns an <code>Intent</code> object that can be used to launch a static list with search option based on the
-     *         <code>ExpenseReportFormField</code> backing this view.
+     * <code>ExpenseReportFormField</code> backing this view.
      */
     protected Intent getStaticAndDynamicListSearchLaunchIntent(IFormFieldViewListener listener, IFormField frmFld,
             FieldValueSpinnerItem selectedListItem) {
@@ -79,9 +74,8 @@ public class FormFieldViewEditHandler implements IFormFieldViewEditHandler {
 
     /**
      * Adds the parent list item key.
-     * 
-     * @param intent
-     *            the intent to add the parent list item key.
+     *
+     * @param intent the intent to add the parent list item key.
      */
     /*
      * MOB-14509

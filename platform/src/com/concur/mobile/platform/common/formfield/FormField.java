@@ -1,16 +1,17 @@
 package com.concur.mobile.platform.common.formfield;
 
-import java.util.ArrayList;
-
 import com.concur.mobile.platform.common.IListFieldItem;
 import com.concur.mobile.platform.common.SpinnerItem;
+
+import java.io.Serializable;
+import java.util.ArrayList;
 
 /**
  * 
  * @author RatanK
  * 
  */
-public class FormField implements IFormField {
+public class FormField implements IFormField, Serializable, Cloneable {
 
     private static final String CLS_TAG = FormField.class.getSimpleName();
 

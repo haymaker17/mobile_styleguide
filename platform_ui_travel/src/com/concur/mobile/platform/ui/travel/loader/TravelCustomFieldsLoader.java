@@ -1,47 +1,33 @@
-package com.concur.mobile.platform.travel.loader;
-
-import java.io.IOException;
-import java.io.InputStream;
-import java.net.HttpURLConnection;
-import java.util.List;
+package com.concur.mobile.platform.ui.travel.loader;
 
 import android.content.Context;
 import android.util.Log;
-
 import com.concur.mobile.platform.service.PlatformAsyncTaskLoader;
 import com.concur.mobile.platform.util.Const;
 import com.concur.platform.PlatformProperties;
 
+import java.io.IOException;
+import java.io.InputStream;
+import java.net.HttpURLConnection;
+
 /**
- * Loader for posting a set of travel custom fields in order to retrieve an updated set of fields
- * 
  * @author RatanK
- * 
  */
-public class TravelCustomFieldsUpdateLoader extends PlatformAsyncTaskLoader<TravelCustomFieldsConfig> {
+public class TravelCustomFieldsLoader extends PlatformAsyncTaskLoader<TravelCustomFieldsConfig> {
 
-    private static final String CLS_TAG = TravelCustomFieldsUpdateLoader.class.getSimpleName();
-
-    public static final String SERVICE_END_POINT = "/Mobile/Config/UpdateTravelCustomFields";
-
-    /**
-     * Contains the list of <code>TravelCustomField</code> objects containing the values to be sent for update.
-     */
-    public List<TravelCustomField> fields;
-
+    public static final String SERVICE_END_POINT = "/Mobile/Config/TravelCustomFields";
+    private static final String CLS_TAG = "TravelCustomFieldsLoader";
     protected TravelCustomFieldsConfig travelCustomFieldsConfig;
 
-    public TravelCustomFieldsUpdateLoader(Context context, List<TravelCustomField> fields) {
+    public TravelCustomFieldsLoader(Context context) {
         super(context);
-        this.fields = fields;
     }
 
     /**
      * Configure connection properties. The default implementation sets the user agent, content type to type/xml, connect timeout
      * to 10 seconds, and read timeout to 30 seconds.
-     * 
-     * @param connection
-     *            The open but not yet connected {@link HttpURLConnection} to the server
+     *
+     * @param connection The open but not yet connected {@link HttpURLConnection} to the server
      */
     @Override
     protected void configureConnection(HttpURLConnection connection) {
@@ -50,11 +36,18 @@ public class TravelCustomFieldsUpdateLoader extends PlatformAsyncTaskLoader<Trav
     }
 
     @Override
+    public TravelCustomFieldsConfig loadInBackground() {
+        travelCustomFieldsConfig = super.loadInBackground();
+        if (result == RESULT_ERROR) {
+            travelCustomFieldsConfig.errorOccuredWhileRetrieving = true;
+        }
+        return travelCustomFieldsConfig;
+    }
+
+    @Override
     protected TravelCustomFieldsConfig parseStream(InputStream is) {
 
         try {
-
-            // TODO - handle the error scenarios
 
             travelCustomFieldsConfig = TravelCustomFieldsConfig.parseTravelCustomFieldsConfig(is);
 
@@ -93,15 +86,6 @@ public class TravelCustomFieldsUpdateLoader extends PlatformAsyncTaskLoader<Trav
     @Override
     protected String getServiceEndPoint() {
         return SERVICE_END_POINT;
-    }
-
-    @Override
-    protected String getPostBody() {
-        StringBuilder strBldr = new StringBuilder();
-        if (fields != null) {
-            TravelCustomField.serializeToXMLForWire(strBldr, fields, false);
-        }
-        return strBldr.toString();
     }
 
 }

@@ -288,7 +288,9 @@
                 android:layout_marginTop="16dp"
                 android:background="@color/divider" />
 
-            <!-- Violations ViewStub -->
+            <!-- Violations ViewStub
+            the inflateId need to be same as id for the following views to display properly
+            -->
 
             <ViewStub
                 android:id="@+id/violation_view"
@@ -296,8 +298,33 @@
                 android:layout_height="wrap_content"
                 android:layout_alignLeft="@id/hotel_policy"
                 android:layout_below="@id/view_separator4"
-                android:inflatedId="@+id/inflatedViolationView"
-                android:layout="@layout/violation_view_stub" />
+                android:inflatedId="@+id/violation_view"
+                android:layout="@layout/violation_view_stub"
+                />
+
+            <!-- Custom Fields View Group -->
+            <View
+                android:id="@+id/view_separator5"
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:layout_below="@id/violation_view"
+                android:layout_marginLeft="12dp"
+                android:layout_marginTop="16dp"
+                android:background="@color/divider"
+                android:visibility="gone"
+                />
+
+            <LinearLayout
+                android:id="@+id/hotel_booking_custom_fields"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:layout_marginLeft="12dp"
+                android:layout_marginTop="16dp"
+                android:layout_below="@id/view_separator5"
+               >
+            </LinearLayout>
+
         </RelativeLayout>
     </ScrollView>
 

@@ -1,21 +1,26 @@
-package com.concur.mobile.platform.travel.loader;
+package com.concur.mobile.platform.ui.travel.loader;
+
+import com.concur.mobile.base.service.parser.Parser;
+import com.concur.mobile.platform.ui.common.view.FieldValueSpinnerItem;
+import com.concur.mobile.platform.util.Parse;
 
 import java.util.ArrayList;
 import java.util.List;
 
-import com.concur.mobile.base.service.parser.Parser;
-import com.concur.mobile.platform.util.Parse;
 
 /**
  * 
  * @author RatanK
  * 
  */
+
+// This class was initially created in the Platform but did not have the visibility of FieldValueSpinnerItem.
+// Hence moved to Platform Travel UI.
 public class TravelCustomFieldsParser implements Parser {
 
     public TravelCustomField custField;
-    private List<TravelCustomFieldValueSpinnerItem> fieldValues;
-    private TravelCustomFieldValueSpinnerItem fieldValue;
+    private List<FieldValueSpinnerItem> fieldValues;
+    private FieldValueSpinnerItem fieldValue;
 
     @Override
     public void startTag(String tag) {
@@ -23,9 +28,9 @@ public class TravelCustomFieldsParser implements Parser {
         if (tag.equals("TravelCustomFieldSearch")) {
             custField = new TravelCustomField();
         } else if (tag.equals("Values")) {
-            fieldValues = new ArrayList<TravelCustomFieldValueSpinnerItem>();
+            fieldValues = new ArrayList<FieldValueSpinnerItem>();
         } else if (tag.equals("AttributeValue")) {
-            fieldValue = new TravelCustomFieldValueSpinnerItem("", "");
+            fieldValue = new FieldValueSpinnerItem("", "");
         }
     }
 

@@ -1,10 +1,5 @@
 package com.concur.mobile.platform.ui.travel.hotel.activity;
 
-import java.io.Serializable;
-import java.util.ArrayList;
-import java.util.List;
-
-import android.app.Activity;
 import android.app.ActivityOptions;
 import android.app.FragmentManager;
 import android.app.FragmentTransaction;
@@ -17,19 +12,14 @@ import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Toast;
-
 import com.concur.mobile.platform.travel.search.hotel.Hotel;
 import com.concur.mobile.platform.travel.search.hotel.HotelRate;
 import com.concur.mobile.platform.travel.search.hotel.HotelViolation;
 import com.concur.mobile.platform.ui.travel.R;
-import com.concur.mobile.platform.ui.travel.hotel.fragment.HotelChoiceDetailsFragment;
+import com.concur.mobile.platform.ui.travel.activity.TravelBaseActivity;
+import com.concur.mobile.platform.ui.travel.hotel.fragment.*;
 import com.concur.mobile.platform.ui.travel.hotel.fragment.HotelChoiceDetailsFragment.HotelChoiceDetailsFragmentListener;
-import com.concur.mobile.platform.ui.travel.hotel.fragment.HotelDetailsFragment;
-import com.concur.mobile.platform.ui.travel.hotel.fragment.HotelImagesFragment;
-import com.concur.mobile.platform.ui.travel.hotel.fragment.HotelMapFragment;
-import com.concur.mobile.platform.ui.travel.hotel.fragment.HotelRoomDetailFragment;
-import com.concur.mobile.platform.ui.travel.hotel.fragment.HotelRoomListItem;
-import com.concur.mobile.platform.ui.travel.hotel.fragment.HotelSearchResultListItem;
+import com.concur.mobile.platform.ui.travel.loader.TravelCustomFieldsConfig;
 import com.concur.mobile.platform.ui.travel.util.Const;
 import com.concur.mobile.platform.ui.travel.util.ParallaxScollView;
 import com.concur.mobile.platform.ui.travel.util.ViewUtil;
@@ -41,13 +31,15 @@ import com.google.android.gms.maps.OnMapReadyCallback;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.MarkerOptions;
 
+import java.io.Serializable;
+import java.util.ArrayList;
+import java.util.List;
+
 /**
- * 
  * @author tejoa
- * 
  */
-public class HotelChoiceDetailsActivity extends Activity implements HotelChoiceDetailsFragmentListener,
-        OnMapReadyCallback {
+public class HotelChoiceDetailsActivity extends TravelBaseActivity
+        implements HotelChoiceDetailsFragmentListener, OnMapReadyCallback {
 
     public static final String CLS_TAG = HotelChoiceDetailsActivity.class.getSimpleName();
     public static final String FRAGMENT_HOTEL_DETAILS = "FRAGMENT_HOTEL_DETAILS";
@@ -148,12 +140,16 @@ public class HotelChoiceDetailsActivity extends Activity implements HotelChoiceD
             // TravelUtilHotel.getHotelViolations(getApplicationContext(), null, Integer.valueOf(searchId));
         }
         for (HotelRate rate : hotel.rates) {
-            HotelViolation maxEnforcementViolation = ViewUtil.getShowButNoBookingViolation(violations,
-                    rate.maxEnforceLevel, rate.maxEnforcementLevel);
+            HotelViolation maxEnforcementViolation = ViewUtil
+                    .getShowButNoBookingViolation(violations, rate.maxEnforceLevel, rate.maxEnforcementLevel);
             if (maxEnforcementViolation != null) {
                 rate.greyFlag = true;
             }
 
+        }
+
+        if (i.hasExtra("travelCustomFieldsConfig")) {
+            travelCustomFieldsConfig = (TravelCustomFieldsConfig) i.getSerializableExtra("travelCustomFieldsConfig");
         }
 
     }
@@ -196,8 +192,8 @@ public class HotelChoiceDetailsActivity extends Activity implements HotelChoiceD
             // startActivity(i);
             // Intent i = this.getIntent();
             // i.putExtra(Const.EXTRA_HOTEL_LOCATION, post);
-            HotelMapFragment hotelMapFragment = (HotelMapFragment) getFragmentManager().findFragmentByTag(
-                    FRAGMENT_HOTEL_MAP);
+            HotelMapFragment hotelMapFragment = (HotelMapFragment) getFragmentManager()
+                    .findFragmentByTag(FRAGMENT_HOTEL_MAP);
             if (hotelMapFragment == null) {
                 hotelMapFragment = new HotelMapFragment(post);
                 FragmentTransaction ft = getFragmentManager().beginTransaction();
@@ -224,8 +220,8 @@ public class HotelChoiceDetailsActivity extends Activity implements HotelChoiceD
             }
             if (TAB_ROOMS.equals(tabId)) {
 
-                fm.beginTransaction()
-                        .replace(placeholder, new HotelRoomDetailFragment(hotel.rates, showGDSName), tabId).commit();
+                fm.beginTransaction().replace(placeholder, new HotelRoomDetailFragment(hotel.rates, showGDSName), tabId)
+                        .commit();
             }
             if (TAB_IMAGES.equals(tabId)) {
                 fm.beginTransaction().replace(placeholder, new HotelImagesFragment(hotel.imagePairs), tabId).commit();
@@ -254,6 +250,10 @@ public class HotelChoiceDetailsActivity extends Activity implements HotelChoiceD
             intent.putExtra("currentTripId", currentTripId);
             intent.putExtra("hotelSearchId", hotel.search_id);
             intent.putExtra("violations", (Serializable) violations);
+            if (travelCustomFieldsConfig != null) {
+                intent.putExtra("travelCustomFieldsConfig", travelCustomFieldsConfig);
+            }
+
             startActivityForResult(intent, Const.REQUEST_CODE_BOOK_HOTEL);
         }
 

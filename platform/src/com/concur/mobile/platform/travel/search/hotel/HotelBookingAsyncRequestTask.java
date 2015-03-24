@@ -1,43 +1,37 @@
 package com.concur.mobile.platform.travel.search.hotel;
 
-import java.io.BufferedInputStream;
-import java.io.IOException;
-import java.io.InputStream;
-import java.io.InputStreamReader;
-import java.io.Serializable;
+import android.content.Context;
+import android.util.Log;
+import com.concur.mobile.base.service.BaseAsyncRequestTask;
+import com.concur.mobile.base.service.BaseAsyncResultReceiver;
+import com.concur.mobile.platform.common.formfield.FormField;
+import com.concur.mobile.platform.service.PlatformAsyncRequestTask;
+import com.concur.mobile.platform.service.parser.MWSResponse;
+import com.concur.mobile.platform.util.Const;
+import com.google.gson.Gson;
+import com.google.gson.JsonArray;
+import com.google.gson.JsonElement;
+import com.google.gson.JsonObject;
+import com.google.gson.reflect.TypeToken;
+
+import java.io.*;
 import java.lang.reflect.Type;
 import java.net.HttpURLConnection;
 import java.net.ProtocolException;
 import java.util.List;
 
-import android.content.Context;
-import android.util.Log;
-
-import com.concur.mobile.base.service.BaseAsyncRequestTask;
-import com.concur.mobile.base.service.BaseAsyncResultReceiver;
-import com.concur.mobile.platform.service.PlatformAsyncRequestTask;
-import com.concur.mobile.platform.service.parser.MWSResponse;
-import com.concur.mobile.platform.util.Const;
-import com.google.gson.Gson;
-import com.google.gson.JsonElement;
-import com.google.gson.JsonObject;
-import com.google.gson.reflect.TypeToken;
-
 /**
  * An extension of <code>PlatformAsyncRequestTask</code> for the purpose of performing a hotel search. <br>
  * <br>
  * Performs Hotel Booking task
- * 
  */
 public class HotelBookingAsyncRequestTask extends PlatformAsyncRequestTask {
-
-    private static final String CLS_TAG = "HotelBookingAsyncRequestTask";
 
     /**
      * Contains the key to retrieve the current result set from the data bundle.
      */
     public static final String HOTEL_BOOKING_RESULT_EXTRA_KEY = "HotelBookingResult";
-
+    private static final String CLS_TAG = "HotelBookingAsyncRequestTask";
     public String bicCode;
 
     public String ccId;
@@ -58,13 +52,13 @@ public class HotelBookingAsyncRequestTask extends PlatformAsyncRequestTask {
 
     public String hotelReasonCode;
 
-    // public List<TravelCustomField> fields;
-
     public boolean redeemTravelPoints;
 
     public List<ViolationReason> violationReasons;
 
     public String bookingURL;
+
+    public List<FormField> customFields;
 
     /**
      * Contains the parsed MWS response
@@ -72,8 +66,8 @@ public class HotelBookingAsyncRequestTask extends PlatformAsyncRequestTask {
     private MWSResponse<HotelBookingRESTResult> mwsResp;
 
     public HotelBookingAsyncRequestTask(Context context, int id, BaseAsyncResultReceiver receiver, String ccId,
-            String tripId, List<ViolationReason> violationReasons, String travelProgramId, boolean redeemTravelPoints,
-            String bookingURL) {
+            String tripId, List<ViolationReason> violationReasons, List<FormField> customFields, String travelProgramId,
+            boolean redeemTravelPoints, String bookingURL) {
 
         super(context, id, receiver);
 
@@ -82,6 +76,7 @@ public class HotelBookingAsyncRequestTask extends PlatformAsyncRequestTask {
         this.tripId = tripId;
         this.redeemTravelPoints = redeemTravelPoints;
         this.violationReasons = violationReasons;
+        this.customFields = customFields;
 
         this.bookingURL = bookingURL;
     }
@@ -132,7 +127,21 @@ public class HotelBookingAsyncRequestTask extends PlatformAsyncRequestTask {
             requestBody.add("Violations", jsonElement);
         }
 
-        // TODO - custom fields
+        if (customFields != null && customFields.size() > 0) {
+            {
+                JsonArray fieldsArray = new JsonArray();
+                for (FormField tcf : customFields) {
+                    JsonObject obj = new JsonObject();
+                    obj.addProperty("Id", tcf.getId());
+                    obj.addProperty("Value", tcf.getValue());
+                    fieldsArray.add(obj);
+                }
+                if (fieldsArray.size() > 0) {
+                    requestBody.add("CustomFields", gson.toJsonTree(fieldsArray));
+                }
+            }
+
+        }
 
         postBody = requestBody.toString();
 
@@ -150,7 +159,9 @@ public class HotelBookingAsyncRequestTask extends PlatformAsyncRequestTask {
         HotelBookingRESTResult bookingResult = null;
         try {
             // prepare the object Type expected in MWS response 'data' element
-            Type type = new TypeToken<MWSResponse<HotelBookingRESTResult>>() {}.getType();
+            Type type = new TypeToken<MWSResponse<HotelBookingRESTResult>>() {
+
+            }.getType();
 
             mwsResp = new Gson().fromJson(new InputStreamReader(new BufferedInputStream(is), "UTF-8"), type);
 

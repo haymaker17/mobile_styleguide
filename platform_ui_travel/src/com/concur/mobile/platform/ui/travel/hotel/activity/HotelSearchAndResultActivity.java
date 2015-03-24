@@ -1,17 +1,5 @@
 package com.concur.mobile.platform.ui.travel.hotel.activity;
 
-import java.io.Serializable;
-import java.util.ArrayList;
-import java.util.Calendar;
-import java.util.Collections;
-import java.util.Comparator;
-import java.util.HashMap;
-import java.util.Iterator;
-import java.util.List;
-import java.util.Map;
-import java.util.TreeMap;
-
-import android.app.Activity;
 import android.app.FragmentTransaction;
 import android.app.LoaderManager;
 import android.content.Intent;
@@ -27,39 +15,35 @@ import android.widget.AdapterView.OnItemClickListener;
 import android.widget.PopupMenu;
 import android.widget.PopupMenu.OnMenuItemClickListener;
 import android.widget.Toast;
-
 import com.concur.mobile.base.service.BaseAsyncRequestTask.AsyncReplyListener;
 import com.concur.mobile.base.service.BaseAsyncResultReceiver;
 import com.concur.mobile.platform.service.PlatformAsyncTaskLoader;
 import com.concur.mobile.platform.travel.provider.TravelUtilHotel;
-import com.concur.mobile.platform.travel.search.hotel.Hotel;
-import com.concur.mobile.platform.travel.search.hotel.HotelComparator;
-import com.concur.mobile.platform.travel.search.hotel.HotelRatesAsyncRequestTask;
-import com.concur.mobile.platform.travel.search.hotel.HotelRatesRESTResult;
-import com.concur.mobile.platform.travel.search.hotel.HotelSearchPollResultLoader;
-import com.concur.mobile.platform.travel.search.hotel.HotelSearchRESTResult;
-import com.concur.mobile.platform.travel.search.hotel.HotelSearchResultLoader;
-import com.concur.mobile.platform.travel.search.hotel.HotelViolation;
+import com.concur.mobile.platform.travel.search.hotel.*;
 import com.concur.mobile.platform.ui.common.view.ListItemAdapter;
 import com.concur.mobile.platform.ui.travel.R;
+import com.concur.mobile.platform.ui.travel.activity.TravelBaseActivity;
 import com.concur.mobile.platform.ui.travel.hotel.fragment.HotelSearchResultFilterFragment;
 import com.concur.mobile.platform.ui.travel.hotel.fragment.HotelSearchResultFilterFragment.HotelSearchResultsFilterListener;
 import com.concur.mobile.platform.ui.travel.hotel.fragment.HotelSearchResultFragment;
 import com.concur.mobile.platform.ui.travel.hotel.fragment.HotelSearchResultFragment.HotelSearchResultsFragmentListener;
 import com.concur.mobile.platform.ui.travel.hotel.fragment.HotelSearchResultListItem;
 import com.concur.mobile.platform.ui.travel.hotel.maps.ShowMaps;
+import com.concur.mobile.platform.ui.travel.loader.TravelCustomFieldsConfig;
 import com.concur.mobile.platform.ui.travel.util.Const;
 import com.google.android.gms.common.ConnectionResult;
 import com.google.android.gms.common.GooglePlayServicesUtil;
 
+import java.io.Serializable;
+import java.util.*;
+
 /**
  * Activity to launch the Jarvis Hotel Search
- * 
+ *
  * @author RatanK
- * 
  */
-public class HotelSearchAndResultActivity extends Activity implements OnMenuItemClickListener,
-        HotelSearchResultsFilterListener, HotelSearchResultsFragmentListener,
+public class HotelSearchAndResultActivity extends TravelBaseActivity
+        implements OnMenuItemClickListener, HotelSearchResultsFilterListener, HotelSearchResultsFragmentListener,
         LoaderManager.LoaderCallbacks<HotelSearchRESTResult> {
 
     public static final String FRAGMENT_SEARCH_RESULT = "FRAGMENT_SEARCH_RESULT";
@@ -133,14 +117,16 @@ public class HotelSearchAndResultActivity extends Activity implements OnMenuItem
         distanceUnit = intent.getStringExtra(Const.EXTRA_TRAVEL_HOTEL_SEARCH_DISTANCE_UNIT_ID);
         showGDSName = intent.getBooleanExtra(Const.EXTRA_TRAVEL_HOTEL_SEARCH_SHOW_GDS_NAME, false);
 
-        hotelSearchRESTResultFrag = (HotelSearchResultFragment) getFragmentManager().findFragmentByTag(
-                FRAGMENT_SEARCH_RESULT);
+        if (intent.hasExtra("travelCustomFieldsConfig")) {
+            travelCustomFieldsConfig = (TravelCustomFieldsConfig) intent
+                    .getSerializableExtra("travelCustomFieldsConfig");
+        }
+
+        hotelSearchRESTResultFrag = (HotelSearchResultFragment) getFragmentManager()
+                .findFragmentByTag(FRAGMENT_SEARCH_RESULT);
 
         if (hotelSearchRESTResultFrag == null) {
             hotelSearchRESTResultFrag = new HotelSearchResultFragment();
-        }
-        if (distanceUnit != null && distanceUnit.equalsIgnoreCase("K")) {
-            filterFrag.setDistanceUnitInKm(true);
         }
 
         FragmentTransaction ft = getFragmentManager().beginTransaction();
@@ -148,14 +134,15 @@ public class HotelSearchAndResultActivity extends Activity implements OnMenuItem
         ft.commit();
 
         hotelSearchRESTResultFrag.location = location;
-        hotelSearchRESTResultFrag.durationOfStayForDisplayInHeader = getIntent().getStringExtra(
-                Const.EXTRA_TRAVEL_HOTEL_SEARCH_CHECK_IN)
-                + " - " + intent.getStringExtra(Const.EXTRA_TRAVEL_HOTEL_SEARCH_CHECK_OUT);
+        hotelSearchRESTResultFrag.durationOfStayForDisplayInHeader =
+                getIntent().getStringExtra(Const.EXTRA_TRAVEL_HOTEL_SEARCH_CHECK_IN) + " - " + intent
+                        .getStringExtra(Const.EXTRA_TRAVEL_HOTEL_SEARCH_CHECK_OUT);
 
         listItemAdapater = new ListItemAdapter<HotelSearchResultListItem>(this, hotelListItems);
 
         if (checkInDate != null && checkInDate.before(checkOutDate)) {
-            numberOfNights = (int) ((checkOutDate.getTimeInMillis() - checkInDate.getTimeInMillis()) / (24 * 60 * 60 * 1000));
+            numberOfNights = (int) ((checkOutDate.getTimeInMillis() - checkInDate.getTimeInMillis()) / (24 * 60 * 60
+                    * 1000));
         } else {
             // safe assume to 1 night
             numberOfNights = 1;
@@ -166,8 +153,8 @@ public class HotelSearchAndResultActivity extends Activity implements OnMenuItem
     @Override
     public void fragmentReady() {
         // signal from fragment that it is loaded
-        cacheKey = HotelSearchResultLoader.prepareEndPointUrl(latitude, longitude, distanceUnit, checkInDate,
-                checkOutDate);
+        cacheKey = HotelSearchResultLoader
+                .prepareEndPointUrl(latitude, longitude, distanceUnit, checkInDate, checkOutDate);
         populateHotelListItemsFromDB();
     }
 
@@ -177,8 +164,9 @@ public class HotelSearchAndResultActivity extends Activity implements OnMenuItem
 
         List<Hotel> hotels = TravelUtilHotel.getHotels(this, cacheKey);
 
-        Log.d(Const.LOG_TAG, " ***** retrieved hotels from TravelUtilHotel.getHotels *****  "
-                + (hotels == null ? null : hotels.size()));
+        Log.d(Const.LOG_TAG, " ***** retrieved hotels from TravelUtilHotel.getHotels *****  " + (hotels == null ?
+                null :
+                hotels.size()));
 
         // populate list items
         if (hotels != null && hotels.size() > 0) {
@@ -302,11 +290,9 @@ public class HotelSearchAndResultActivity extends Activity implements OnMenuItem
 
     /**
      * Will perform first a primary sort, then secondary sort over the current hotel list.
-     * 
-     * @param primarySort
-     *            the primary sort.
-     * @param secondarySort
-     *            the secondary sort.
+     *
+     * @param primarySort   the primary sort.
+     * @param secondarySort the secondary sort.
      */
     protected void sortByComparator(Comparator<Hotel> primarySort, Comparator<Hotel> secondarySort,
             List<HotelSearchResultListItem> hotelListItemsToSort) {
@@ -384,8 +370,8 @@ public class HotelSearchAndResultActivity extends Activity implements OnMenuItem
     @Override
     public void filterResults(String starRating, Double distance, String nameContaining) {
         Log.d(Const.LOG_TAG, "**** HotelSearchAndResultActivity.filterResults ****** starRating : " + starRating
-                + " **** distance : " + distance + " **** nameContaining : " + nameContaining
-                + " *** hotelListItems : " + hotelListItems);
+                + " **** distance : " + distance + " **** nameContaining : " + nameContaining + " *** hotelListItems : "
+                + hotelListItems);
 
         boolean starRatingFilterEnabled = (starRating == null ? false : true); // assuming ALL is null
         boolean distanceFilterEnabled = (distance == null ? false : true); // assuming ALL is null
@@ -406,8 +392,8 @@ public class HotelSearchAndResultActivity extends Activity implements OnMenuItem
 
                 // star rating
                 if (starRatingFilterEnabled) {
-                    if (listItem.getHotel().preferences != null
-                            && !starRating.equals(listItem.getHotel().preferences.starRating)) {
+                    if (listItem.getHotel().preferences != null && !starRating
+                            .equals(listItem.getHotel().preferences.starRating)) {
                         itemsToBeRemoved.add(listItem);
                         continue;
                     }
@@ -420,9 +406,8 @@ public class HotelSearchAndResultActivity extends Activity implements OnMenuItem
                 }
 
                 // name containing
-                if (nameContainingFilterEnabled
-                        && (listItem.getHotel().name == null || !listItem.getHotel().name.toLowerCase().contains(
-                                nameContaining.toLowerCase()))) {
+                if (nameContainingFilterEnabled && (listItem.getHotel().name == null || !listItem.getHotel().name
+                        .toLowerCase().contains(nameContaining.toLowerCase()))) {
                     itemsToBeRemoved.add(listItem);
                     continue;
                 }
@@ -467,8 +452,8 @@ public class HotelSearchAndResultActivity extends Activity implements OnMenuItem
     @Override
     public void onFilterClicked() {
         // show the filter options fragment
-        filterFrag = (HotelSearchResultFilterFragment) getFragmentManager().findFragmentByTag(
-                FRAGMENT_SEARCH_RESULT_FILTER);
+        filterFrag = (HotelSearchResultFilterFragment) getFragmentManager()
+                .findFragmentByTag(FRAGMENT_SEARCH_RESULT_FILTER);
         if (filterFrag == null) {
             filterFrag = new HotelSearchResultFilterFragment();
         }
@@ -520,7 +505,6 @@ public class HotelSearchAndResultActivity extends Activity implements OnMenuItem
                 // re-use them. A request to update will be made in the
                 // background.
 
-
                 if (hotelSelected.availabilityErrorCode == null) {
                     if (retriveFromDB) {
 
@@ -529,8 +513,8 @@ public class HotelSearchAndResultActivity extends Activity implements OnMenuItem
 
                         hotelSelected.rates = TravelUtilHotel.getHotelRateDetails(this, id);
                         hotelSelected.imagePairs = TravelUtilHotel.getHotelImagePairs(this, id);
-                        voilations = TravelUtilHotel.getHotelViolations(getApplicationContext(), null,
-                                (int) hotelSelected.search_id);
+                        voilations = TravelUtilHotel
+                                .getHotelViolations(getApplicationContext(), null, (int) hotelSelected.search_id);
                     }
                     if (hotelSelected.rates != null && hotelSelected.rates.size() > 0) {
                         viewHotelChoiceDetails();
@@ -579,6 +563,9 @@ public class HotelSearchAndResultActivity extends Activity implements OnMenuItem
         i.putExtra("ruleViolationExplanationRequired", ruleViolationExplanationRequired);
         i.putExtra("currentTripId", currentTripId);
         i.putExtra(Const.EXTRA_TRAVEL_HOTEL_SEARCH_SHOW_GDS_NAME, showGDSName);
+        if (travelCustomFieldsConfig != null) {
+            i.putExtra("travelCustomFieldsConfig", travelCustomFieldsConfig);
+        }
         if (updatedVoilations != null && updatedVoilations.size() > 0) {
             bundle.putSerializable("updatedVoilations", (Serializable) updatedVoilations);
         }
@@ -673,8 +660,9 @@ public class HotelSearchAndResultActivity extends Activity implements OnMenuItem
 
         if (searchDone) {
             // skip everything as this could be due to on orientation change or pop back from stack
-            Log.d(Const.LOG_TAG, " ***** searchDone true,  hotelListItems = "
-                    + (hotelListItems != null ? hotelListItems.size() : 0));
+            Log.d(Const.LOG_TAG, " ***** searchDone true,  hotelListItems = " + (hotelListItems != null ?
+                    hotelListItems.size() :
+                    0));
             hotelSearchRESTResultFrag.hideProgressBar();
         } else {
             if (hotelSearchResult == null) {
@@ -697,9 +685,12 @@ public class HotelSearchAndResultActivity extends Activity implements OnMenuItem
                     voilations = hotelSearchResult.violations;
                 }
 
-                Log.d(Const.LOG_TAG, " ***** hotelSearchResult.searchDone " + searchDone + ",  hotelListItems = "
-                        + (hotelListItems != null ? hotelListItems.size() : 0) + ",  hotelListItemsFromLoader = "
-                        + (hotelListItemsFromLoader != null ? hotelListItemsFromLoader.size() : 0));
+                Log.d(Const.LOG_TAG, " ***** hotelSearchResult.searchDone " + searchDone + ",  hotelListItems = " + (
+                        hotelListItems != null ?
+                                hotelListItems.size() :
+                                0) + ",  hotelListItemsFromLoader = " + (hotelListItemsFromLoader != null ?
+                        hotelListItemsFromLoader.size() :
+                        0));
 
                 if (searchDone) {
                     if (hotelListItems == null) {

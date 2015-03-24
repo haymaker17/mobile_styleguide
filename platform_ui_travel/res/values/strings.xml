@@ -151,7 +151,9 @@
     <string name="dlg_travel_booking_info_message">The following booking fields have missing or invalid values.  Please review and provide the appropriate values.</string>
     <string name="travel_booking_info_unavailable_message">An error has occurred retrieving booking information fields.  Searches cannot be performed at this time.</string>
     <string name="dlg_list_search_selection_progress_message">Completing selection...</string>
-
+    <string name="dlg_travel_retrieve_custom_fields_update_progress_message">Updating booking information fields...</string>
+    <string name="field_name">Field Name</string>
+    <string name="field_hint">Field Hint</string>
     <!-- end of custom fields -->
 
 </resources>
