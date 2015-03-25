@@ -396,19 +396,21 @@ public class BaseActivity extends Activity implements INetworkActivityListener {
     }
 
     protected void showOfflineDialog() {
-        if (currProgressDialog != null && currProgressDialog.isShowing()) {
-            currProgressDialog.dismiss();
-            currProgressDialog = null;
+        if (isOffline) {
+            if (currProgressDialog != null && currProgressDialog.isShowing()) {
+                currProgressDialog.dismiss();
+                currProgressDialog = null;
+            }
+
+            // BaseActivity.this.showDialog(Const.DIALOG_SYSTEM_UNAVAILABLE);
+            CustomDialogFragment dialog = new CustomDialogFragment();
+            dialog.setTitle(R.string.dlg_no_connectivity_title);
+            dialog.setMessage(R.string.dlg_no_connectivity_message);
+            dialog.setPositiveButtonText(R.string.dialog_ok);
+
+            dialog.show(getFragmentManager(), "DIALOG_NO_CONNECTIVITY");
+
         }
-
-        // BaseActivity.this.showDialog(Const.DIALOG_SYSTEM_UNAVAILABLE);
-        CustomDialogFragment dialog = new CustomDialogFragment();
-        dialog.setTitle(R.string.dlg_no_connectivity_title);
-        dialog.setMessage(R.string.dlg_no_connectivity_message);
-        dialog.setPositiveButtonText(R.string.dialog_ok);
-
-        dialog.show(getFragmentManager(), "DIALOG_NO_CONNECTIVITY");
-
     }
 
     public void updateConnectedFlags() {
@@ -417,7 +419,7 @@ public class BaseActivity extends Activity implements INetworkActivityListener {
 
         NetworkInfo activeInfo = connMgr.getActiveNetworkInfo();
         if (activeInfo != null && activeInfo.isConnected()) {
-             isOffline = false;
+            isOffline = false;
         } else {
             updateOfflineHeaderBar(true);
 

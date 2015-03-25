@@ -1,10 +1,5 @@
 package com.concur.mobile.platform.ui.travel.hotel.maps;
 
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-
 import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
@@ -12,7 +7,7 @@ import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.LinearLayout;
-
+import com.concur.mobile.platform.travel.search.hotel.Hotel;
 import com.concur.mobile.platform.ui.travel.R;
 import com.concur.mobile.platform.ui.travel.hotel.fragment.HotelSearchResultListItem;
 import com.concur.mobile.platform.ui.travel.util.Const;
@@ -24,11 +19,15 @@ import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.Marker;
 import com.google.android.gms.maps.model.MarkerOptions;
 
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+
 /**
  * Activity to show all hotels in Google Maps
- * 
+ *
  * @author tejoa
- * 
  */
 
 public class ShowMaps extends Activity implements OnMapReadyCallback {
@@ -41,8 +40,7 @@ public class ShowMaps extends Activity implements OnMapReadyCallback {
     private Map<Marker, HotelSearchResultListItem> markerMap = new HashMap<Marker, HotelSearchResultListItem>();
     private List<HotelSearchResultListItem> hotels;
 
-    @SuppressWarnings("unchecked")
-    @Override
+    @SuppressWarnings("unchecked") @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.map_layout);
@@ -66,12 +64,16 @@ public class ShowMaps extends Activity implements OnMapReadyCallback {
         final Bundle bundle = i.getExtras();
         hotels = new ArrayList<HotelSearchResultListItem>();
         hotels = ((ArrayList<HotelSearchResultListItem>) bundle.getSerializable(Const.EXTRA_HOTELS_LIST));
-        double latitude = Double.valueOf(i.getStringExtra(Const.EXTRA_TRAVEL_LATITUDE));
-        double longitude = Double.valueOf(i.getStringExtra(Const.EXTRA_TRAVEL_LONGITUDE));
+        //        double latitude = Double.valueOf(i.getStringExtra(Const.EXTRA_TRAVEL_LATITUDE));
+        //        double longitude = Double.valueOf(i.getStringExtra(Const.EXTRA_TRAVEL_LONGITUDE));
 
         addHotelMarkers(hotels);
+        Hotel firstHotel = hotels.get(0).getHotel();
+
         // TODO load custom icons
-        LatLng position = new LatLng(latitude, longitude);
+        LatLng position = new LatLng(firstHotel.latitude, firstHotel.longitude);
+
+        // LatLng position = new LatLng(latitude, longitude);
         googleMap.moveCamera(CameraUpdateFactory.newLatLngZoom(position, 13));
         googleMap.setInfoWindowAdapter(new HotelInfoWindowAdapter());
     }

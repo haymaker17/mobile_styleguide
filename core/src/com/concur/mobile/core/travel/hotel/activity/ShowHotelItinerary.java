@@ -1,10 +1,8 @@
 package com.concur.mobile.core.travel.hotel.activity;
 
-import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
-
 import com.concur.mobile.core.travel.activity.TravelBaseActivity;
 import com.concur.mobile.core.travel.data.IItineraryCache;
 import com.concur.mobile.core.travel.data.Trip;
@@ -37,7 +35,7 @@ public class ShowHotelItinerary extends TravelBaseActivity {
             }
         }
 
-        setResult(Activity.RESULT_OK, data);
+       // setResult(Activity.RESULT_OK, data);
         onBookingSucceeded();
 
     }
