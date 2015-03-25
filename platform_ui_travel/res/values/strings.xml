@@ -154,4 +154,11 @@
 
     <!-- end of custom fields -->
 
+    <string name="offline_header_text">Offline</string>
+    <string name="dlg_system_unavailable_title">System Unavailable</string>
+    <string name="dlg_system_unavailable_message">The service is unable to complete the operation at this time.  Please try again later, or contact your company administrator if this continues.</string>
+    <!-- Network Connectivity stuff. -->
+    <string name="dlg_no_connectivity_title">Client Is Offline</string>
+    <string name="dlg_no_connectivity_message">This operation is not supported in offline mode.  Please try again when data connectivity is available.</string>
+
 </resources>

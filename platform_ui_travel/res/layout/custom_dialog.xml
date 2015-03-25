@@ -6,7 +6,7 @@
     android:background="@drawable/ab_tab_white_bg"
     android:orientation="vertical"
     android:paddingLeft="20dp"
-    android:paddingRight="30dp" >
+    android:paddingRight="20dp" >
 
     <TextView
         android:id="@+id/title"
@@ -14,7 +14,6 @@
         android:layout_height="wrap_content"
         android:layout_marginBottom="15dp"
         android:layout_marginTop="15dp"
-        android:text="@string/hotel_confirm_reserve_title"
         android:textColor="#383f46"
         android:textSize="20sp"
         android:textStyle="bold" />
@@ -25,7 +24,6 @@
         android:layout_height="wrap_content"
         android:layout_below="@+id/title"
         android:layout_marginBottom="15dp"
-        android:text="@string/hotel_confirm_reserve_msg"
         android:textColor="#757575"
         android:textSize="14sp" />
 
@@ -35,9 +33,10 @@
         android:layout_height="wrap_content"
         android:layout_alignParentRight="true"
         android:layout_alignTop="@+id/dialogButtonCancel"
+        android:layout_below="@+id/msg"
         android:background="#FFFFFF"
         android:gravity="right"
-        android:text="@string/hotel_confirm_reserve_ok"
+        android:text="@string/dialog_ok"
         android:textColor="@color/blueTabs"
         android:textSize="14sp"
         android:textStyle="bold" />
@@ -54,6 +53,7 @@
         android:text="@string/hotel_confirm_reserve_cancel"
         android:textColor="@color/blueTabs"
         android:textSize="14sp"
-        android:textStyle="bold" />
+        android:textStyle="bold"
+        android:visibility="gone" />
 
 </RelativeLayout>

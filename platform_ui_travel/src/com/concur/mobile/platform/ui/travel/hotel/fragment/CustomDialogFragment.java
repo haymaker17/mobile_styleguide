@@ -16,38 +16,108 @@ import com.concur.mobile.platform.ui.travel.R;
  * Custom layout Dialog fragment
  * 
  * @author tejoa
- * 
  */
 public class CustomDialogFragment extends DialogFragment {
+
+    // Title resource text/resource ID argument keys.
+    // protected static final String TITLE_TEXT = "title.text";
+    protected static final String TITLE_RESOURCE_ID = "title.id";
+
+    // Message text/resource ID argument keys.
+    protected static final String MESSAGE_RESOURCE_ID = "msg.id";
+    // protected static final String MESSAGE_TEXT = "msg.text";
+
+    // Positive button text/resource ID argument keys.
+    // protected static final String POSITIVE_BUTTON_TEXT = "positive.button.text";
+    protected static final String POSITIVE_BUTTON_RESOURCE_ID = "positive.button.resource.id";
+
+    // Negative button text/resource ID argument keys.
+    // protected static final String NEGATIVE_BUTTON_TEXT = "negative.button.text";
+    protected static final String NEGATIVE_BUTTON_RESOURCE_ID = "negative.button.resource.id";
 
     public int titleResourceId;
     public int msgResourceId;
     public int okButtonId;
     public int cancelButtonId;
     private CustomDialogFragmentCallbackListener callBackListener;
+    public AlertDialog dialog;
+    public Bundle args;
 
     public CustomDialogFragment() {
+        setRetainInstance(true);
     }
 
     /**
+     * Sets the text resource ID of the dialog title.
      * 
-     * @param titleResourceId
-     * @param msgResourceId
+     * @param title
+     *            contains the resource ID of the dialog title.
      */
-    public CustomDialogFragment(int titleResourceId, int msgResourceId, int okButtonId, int cancelButtonId) {
-        this.titleResourceId = titleResourceId;
-        this.msgResourceId = msgResourceId;
-        this.okButtonId = okButtonId;
-        this.cancelButtonId = cancelButtonId;
+    public void setTitle(int title) {
+        Bundle args = getArguments();
+        if (args == null) {
+            args = new Bundle();
+        }
+        args.putInt(TITLE_RESOURCE_ID, title);
+        setArguments(args);
+    }
 
+    /**
+     * Sets the text resource ID of the dialog message.
+     * 
+     * @param message
+     *            contains the resource ID of the dialog message.
+     */
+    public void setMessage(int message) {
+        Bundle args = getArguments();
+        if (args == null) {
+            args = new Bundle();
+        }
+        args.putInt(MESSAGE_RESOURCE_ID, message);
+        setArguments(args);
+    }
+
+    /**
+     * Sets the resource ID of the positive button text.
+     * 
+     * @param text
+     *            contains the resource ID of the positive button text.
+     */
+    public void setPositiveButtonText(int text) {
+        Bundle args = getArguments();
+        if (args == null) {
+            args = new Bundle();
+        }
+        args.putInt(POSITIVE_BUTTON_RESOURCE_ID, text);
+        setArguments(args);
+    }
+
+    /**
+     * Sets the resource ID of the negative button text.
+     * 
+     * @param text
+     *            contains the resource ID of the negative button text.
+     */
+    public void setNegativeButtonText(int text) {
+        Bundle args = getArguments();
+        if (args == null) {
+            args = new Bundle();
+        }
+        args.putInt(NEGATIVE_BUTTON_RESOURCE_ID, text);
+        setArguments(args);
     }
 
     @Override
     public Dialog onCreateDialog(Bundle savedInstanceState) {
 
         AlertDialog.Builder dlgBldr = new AlertDialog.Builder(getActivity());
+        // Construct or reference the current arguments.
+        args = getArguments();
+        if (args == null) {
+            args = new Bundle();
+        }
 
-        final AlertDialog dialog = dlgBldr.create();
+        dialog = dlgBldr.create();
 
         dialog.setOnShowListener(new DialogInterface.OnShowListener() {
 
@@ -55,25 +125,38 @@ public class CustomDialogFragment extends DialogFragment {
             public void onShow(DialogInterface ad) {
 
                 dialog.setContentView(R.layout.custom_dialog);
-                dialog.setTitle(titleResourceId);
+                // dialog.setTitle(titleResourceId);
+                TextView title = (TextView) dialog.findViewById(R.id.title);
+                // title.setText(titleResourceId);
+                if (args.containsKey(TITLE_RESOURCE_ID)) {
+                    title.setText(args.getInt(TITLE_RESOURCE_ID));
+                }
                 TextView msg = (TextView) dialog.findViewById(R.id.msg);
-                msg.setText(msgResourceId);
-                if (okButtonId > 0) {
+                // msg.setText(msgResourceId);
+                if (args.containsKey(MESSAGE_RESOURCE_ID)) {
+                    msg.setText(args.getInt(MESSAGE_RESOURCE_ID));
+                }
+
+                if (args.containsKey(POSITIVE_BUTTON_RESOURCE_ID)) {
+
                     Button b = (Button) dialog.findViewById(R.id.dialogButtonOk);
-                    b.setText(okButtonId);
+                    b.setText(args.getInt(POSITIVE_BUTTON_RESOURCE_ID));
                     b.setOnClickListener(new View.OnClickListener() {
 
                         @Override
                         public void onClick(View view) {
                             dialog.dismiss();
-                            callBackListener.onCustomAction();
+                            if (callBackListener != null) {
+                                callBackListener.onCustomAction();
+                            }
 
                         }
                     });
                 }
-                if (cancelButtonId > 0) {
-                    Button c = (Button) dialog.findViewById(R.id.dialogButtonCancel);
-                    c.setText(cancelButtonId);
+                Button c = (Button) dialog.findViewById(R.id.dialogButtonCancel);
+                if (args.containsKey(NEGATIVE_BUTTON_RESOURCE_ID)) {
+                    c.setText(args.getInt(NEGATIVE_BUTTON_RESOURCE_ID));
+                    c.setVisibility(View.VISIBLE);
 
                     c.setOnClickListener(new View.OnClickListener() {
 
@@ -83,16 +166,45 @@ public class CustomDialogFragment extends DialogFragment {
                         }
                     });
 
+                } else {
+                    c.setVisibility(View.GONE);
                 }
             };
 
         });
-
-        // set the title
-        dlgBldr.setTitle(titleResourceId);
-        dlgBldr.setMessage(msgResourceId);
-
         return dialog;
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+    }
+
+    @Override
+    public void onPause() {
+        super.onPause();
+    }
+
+    @Override
+    public void onDestroy() {
+
+        // NOTE: This code below will permit the dialog to be reshown after a device orientation change
+        // if 'onRetainInstance' is set to 'true'.
+        if (dialog != null && getRetainInstance()) {
+            // getDialog().setOnDismissListener(null);
+            dialog.setDismissMessage(null);
+        }
+        super.onDestroyView();
+
+    }
+
+    @Override
+    public void onCancel(DialogInterface dialog) {
+        super.onCancel(dialog);
+
+        if (dialog != null) {
+            dialog.dismiss();
+        }
     }
 
     @Override
@@ -104,10 +216,27 @@ public class CustomDialogFragment extends DialogFragment {
         try {
             callBackListener = (CustomDialogFragmentCallbackListener) activity;
         } catch (ClassCastException e) {
-            throw new ClassCastException(activity.toString() + " must implement CustomDialogFragmentCallbackListener");
+            // throw new ClassCastException(activity.toString() + " must implement CustomDialogFragmentCallbackListener");
         }
 
     }
+
+    // @Override
+    // public void onSaveInstanceState(Bundle savedInstanceState) {
+    // super.onSaveInstanceState(savedInstanceState);
+    // savedInstanceState.putInt("titleResourceId", titleResourceId);
+    // savedInstanceState.putInt("msgResourceId", msgResourceId);
+    // savedInstanceState.putInt("okButtonId", okButtonId);
+    // savedInstanceState.putInt("cancelButtonId", cancelButtonId);
+    //
+    // }
+    //
+    // public void onRestoreInstanceState(Bundle savedInstanceState) {
+    // titleResourceId = savedInstanceState.getInt("titleResourceId");
+    // msgResourceId = savedInstanceState.getInt("msgResourceId");
+    // okButtonId = savedInstanceState.getInt("okButtonId");
+    // cancelButtonId = savedInstanceState.getInt("cancelButtonId");
+    // }
 
     // call back interface to be implemented by the activities
     public interface CustomDialogFragmentCallbackListener {

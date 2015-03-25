@@ -12,10 +12,7 @@ import android.app.Activity;
 import android.app.FragmentManager;
 import android.app.FragmentTransaction;
 import android.app.LoaderManager;
-import android.content.BroadcastReceiver;
-import android.content.Context;
 import android.content.Intent;
-import android.content.IntentFilter;
 import android.content.Loader;
 import android.graphics.Bitmap;
 import android.os.Bundle;
@@ -42,6 +39,7 @@ import com.concur.mobile.base.service.BaseAsyncResultReceiver;
 import com.concur.mobile.platform.common.SpinnerItem;
 import com.concur.mobile.platform.service.PlatformAsyncTaskLoader;
 import com.concur.mobile.platform.travel.booking.CreditCard;
+import com.concur.mobile.platform.travel.loader.TravelCustomFieldsConfig;
 import com.concur.mobile.platform.travel.search.hotel.HotelBookingAsyncRequestTask;
 import com.concur.mobile.platform.travel.search.hotel.HotelBookingRESTResult;
 import com.concur.mobile.platform.travel.search.hotel.HotelPreSellOption;
@@ -69,8 +67,9 @@ import com.concur.mobile.platform.util.Format;
  * @author RatanK
  * 
  */
-public class HotelBookingActivity extends Activity implements LoaderManager.LoaderCallbacks<HotelPreSellOption>,
-        SpinnerDialogFragmentCallbackListener, CustomDialogFragmentCallbackListener {
+public class HotelBookingActivity extends TravelBaseActivity implements
+        LoaderManager.LoaderCallbacks<HotelPreSellOption>, SpinnerDialogFragmentCallbackListener,
+        CustomDialogFragmentCallbackListener {
 
     protected static final String CLS_TAG = HotelBookingActivity.class.getSimpleName();
     private static final String GET_HOTEL_BOOKING_RECEIVER = "hotel.booking.receiver";
@@ -117,15 +116,6 @@ public class HotelBookingActivity extends Activity implements LoaderManager.Load
     private String currentTripId;
     private List<HotelViolation> violations;
 
-    /**
-     * BroadcastReceiver used to detect network connectivity and update the UI accordingly.
-     */
-    private BroadcastReceiver connectivityReceiver;
-
-    private IntentFilter connectivityFilter;
-
-    private boolean connectivityReceiverRegistered;
-    private boolean connected;
     private int msgResourse;
     private boolean isExpanded;
     private ParallaxScollView mListView;
@@ -164,6 +154,11 @@ public class HotelBookingActivity extends Activity implements LoaderManager.Load
         currentTripId = intent.getStringExtra("currentTripId");
         violations = (List<HotelViolation>) intent.getSerializableExtra("violations");
 
+        if (intent.hasExtra("travelCustomFieldsConfig")) {
+            travelCustomFieldsConfig = (TravelCustomFieldsConfig) intent
+                    .getSerializableExtra("travelCustomFieldsConfig");
+        }
+
         if (hotelRate != null) {
 
             sellOptionsURL = hotelRate.sellOptions.href;
@@ -181,40 +176,6 @@ public class HotelBookingActivity extends Activity implements LoaderManager.Load
 
         // initialize the view
         initView();
-
-        connectivityReceiver = new BroadcastReceiver() {
-
-            @Override
-            public void onReceive(Context context, Intent intent) {
-                updateUIForConnectivity(intent.getAction());
-            }
-        };
-        connectivityFilter = new IntentFilter(
-                com.concur.mobile.platform.ui.common.util.Const.ACTION_DATA_CONNECTIVITY_AVAILABLE);
-        connectivityFilter
-                .addAction(com.concur.mobile.platform.ui.common.util.Const.ACTION_DATA_CONNECTIVITY_UNAVAILABLE);
-        // Register the data connectivity receiver.
-        Intent stickyIntent = registerReceiver(connectivityReceiver, connectivityFilter);
-        if (stickyIntent != null) {
-            updateUIForConnectivity(stickyIntent.getAction());
-        } else {
-            updateUIForConnectivity(null);
-        }
-        connectivityReceiverRegistered = true;
-
-    }
-
-    private void updateUIForConnectivity(String action) {
-        if (action != null) {
-            if (action
-                    .equalsIgnoreCase(com.concur.mobile.platform.ui.common.util.Const.ACTION_DATA_CONNECTIVITY_AVAILABLE)) {
-                connected = true;
-            } else if (action
-                    .equalsIgnoreCase(com.concur.mobile.platform.ui.common.util.Const.ACTION_DATA_CONNECTIVITY_UNAVAILABLE)) {
-                connected = false;
-            }
-
-        }
 
     }
 
@@ -273,15 +234,6 @@ public class HotelBookingActivity extends Activity implements LoaderManager.Load
     public void onResume() {
         super.onResume();
 
-        // Re-register connectivity receiver.
-        if (!connectivityReceiverRegistered) {
-            // Register the receiver.
-            Intent stickyIntent = registerReceiver(connectivityReceiver, connectivityFilter);
-            if (stickyIntent != null) {
-                updateUIForConnectivity(stickyIntent.getAction());
-            }
-            connectivityReceiverRegistered = true;
-        }
     }
 
     private void unregisterReceiver() {
@@ -289,14 +241,11 @@ public class HotelBookingActivity extends Activity implements LoaderManager.Load
             hotelBookingReceiver.setListener(null);
             retainer.put(GET_HOTEL_BOOKING_RECEIVER, hotelBookingReceiver);
         }
-        if (connectivityReceiverRegistered) {
-            unregisterReceiver(connectivityReceiver);
-            connectivityReceiverRegistered = false;
-        }
 
     }
 
     private void initView() {
+
         // header title
         ActionBar actionBar = getActionBar();
         actionBar.setTitle(hotelName);
@@ -378,8 +327,13 @@ public class HotelBookingActivity extends Activity implements LoaderManager.Load
             @Override
             public void onClick(View v) {
 
-                CustomDialogFragment dialog = new CustomDialogFragment(R.string.hotel_confirm_reserve_title,
-                        msgResourse, R.string.hotel_confirm_reserve_ok, R.string.hotel_confirm_reserve_cancel);
+                CustomDialogFragment dialog = new CustomDialogFragment();
+
+                dialog.setTitle(R.string.hotel_confirm_reserve_title);
+                dialog.setMessage(R.string.dlg_no_connectivity_message);
+                dialog.setPositiveButtonText(R.string.hotel_confirm_reserve_ok);
+                dialog.setNegativeButtonText(R.string.hotel_confirm_reserve_cancel);
+
                 dialog.show(getFragmentManager(), DIALOG_FRAGMENT_ID);
 
             }
@@ -578,17 +532,22 @@ public class HotelBookingActivity extends Activity implements LoaderManager.Load
         cardSelectionView.setOnClickListener(new OnClickListener() {
 
             public void onClick(View v) {
-                if (cardChoices != null && cardChoices.length > 0) {
-                    SpinnerDialogFragment dialogFragment = new SpinnerDialogFragment(R.string.general_select_card,
-                            R.drawable.sort_check_mark, cardChoices);
-                    if (curCardChoice != null) {
-                        dialogFragment.curSpinnerItemId = curCardChoice.id;
-                    }
-                    dialogFragment.show(getFragmentManager(), CREDIT_CARDS_SPINNER_FRAGMENT);
+                if (isOffline) {
+                    showOfflineDialog();
                 } else {
-                    // no cards dialog
-                    DialogFragmentFactoryV1.getAlertOkayInstance(getString(R.string.general_credit_card),
-                            getString(R.string.general_credit_cards_not_available)).show(getFragmentManager(), null);
+                    if (cardChoices != null && cardChoices.length > 0) {
+                        SpinnerDialogFragment dialogFragment = new SpinnerDialogFragment(R.string.general_select_card,
+                                R.drawable.sort_check_mark, cardChoices);
+                        if (curCardChoice != null) {
+                            dialogFragment.curSpinnerItemId = curCardChoice.id;
+                        }
+                        dialogFragment.show(getFragmentManager(), CREDIT_CARDS_SPINNER_FRAGMENT);
+                    } else {
+                        // no cards dialog
+                        DialogFragmentFactoryV1.getAlertOkayInstance(getString(R.string.general_credit_card),
+                                getString(R.string.general_credit_cards_not_available))
+                                .show(getFragmentManager(), null);
+                    }
                 }
             }
         });
@@ -703,7 +662,7 @@ public class HotelBookingActivity extends Activity implements LoaderManager.Load
 
     @SuppressLint("ShowToast")
     private void doBooking() {
-        if (connected) {
+        if (!isOffline) {
 
             reserveButton.setEnabled(false);
             boolean hasAllRequiredFields = true;
@@ -771,8 +730,9 @@ public class HotelBookingActivity extends Activity implements LoaderManager.Load
                 hotelBookingReceiver.setListener(new HotelBookingReplyListener());
                 // create and invoke the async task
                 hotelBookingAsyncRequestTask = new HotelBookingAsyncRequestTask(this, HOTEL_BOOKING_ID,
-                        hotelBookingReceiver, selectedCreditCardId, currentTripId, selectedViolationReasons, null,
-                        false, preSellOption.bookingURL.href);
+                        hotelBookingReceiver, selectedCreditCardId, currentTripId, selectedViolationReasons,
+                        travelCustomFieldsConfig, null, false, preSellOption.bookingURL.href);
+
                 hotelBookingAsyncRequestTask.execute();
             } else {
                 // show the required fields messages

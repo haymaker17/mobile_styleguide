@@ -1,15 +1,14 @@
 package com.concur.mobile.platform.travel.loader;
 
-import java.io.IOException;
-import java.io.InputStream;
-import java.net.HttpURLConnection;
-
 import android.content.Context;
 import android.util.Log;
-
 import com.concur.mobile.platform.service.PlatformAsyncTaskLoader;
 import com.concur.mobile.platform.util.Const;
 import com.concur.platform.PlatformProperties;
+
+import java.io.IOException;
+import java.io.InputStream;
+import java.net.HttpURLConnection;
 
 /**
  * 
@@ -44,7 +43,7 @@ public class TravelCustomFieldsLoader extends PlatformAsyncTaskLoader<TravelCust
     @Override
     public TravelCustomFieldsConfig loadInBackground() {
         travelCustomFieldsConfig = super.loadInBackground();
-        if (result == RESULT_ERROR) {
+        if (result == RESULT_ERROR && travelCustomFieldsConfig != null) {
             travelCustomFieldsConfig.errorOccuredWhileRetrieving = true;
         }
         return travelCustomFieldsConfig;
