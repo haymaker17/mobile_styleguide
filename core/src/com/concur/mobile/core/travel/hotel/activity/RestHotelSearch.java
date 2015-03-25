@@ -921,7 +921,7 @@ public class RestHotelSearch extends TravelBaseActivity implements LoaderManager
             intent.putExtra("violationReasons", violationReasons);
         }
         // Check whether SystemConfig stipulates that 'violation justification' is required.
-        if (sysConfig.getRuleViolationExplanationRequired() != null && sysConfig
+        if (sysConfig != null && sysConfig.getRuleViolationExplanationRequired() != null && sysConfig
                 .getRuleViolationExplanationRequired()) {
             intent.putExtra("ruleViolationExplanationRequired", true);
         } else {

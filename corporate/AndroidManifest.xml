@@ -185,6 +185,7 @@
             android:windowSoftInputMode="adjustResize" />
         <activity
             android:name="com.concur.mobile.core.travel.hotel.activity.RestHotelSearch"
+            android:screenOrientation="portrait"
             android:theme="@style/ConcurRestTheme.White.ActionBarTabs"
             android:windowSoftInputMode="adjustResize" />
         <activity

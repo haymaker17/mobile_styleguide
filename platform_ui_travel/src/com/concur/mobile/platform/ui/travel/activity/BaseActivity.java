@@ -385,6 +385,7 @@ public class BaseActivity extends Activity implements INetworkActivityListener {
             if (offlineHeader != null) {
                 if (available && offlineHeader.getVisibility() == View.VISIBLE) {
                     offlineHeader.setVisibility(View.GONE);
+                    isOffline = false;
                 } else if (!available && offlineHeader.getVisibility() == View.GONE) {
                     offlineHeader.setVisibility(View.VISIBLE);
                     isOffline = true;
@@ -416,7 +417,7 @@ public class BaseActivity extends Activity implements INetworkActivityListener {
 
         NetworkInfo activeInfo = connMgr.getActiveNetworkInfo();
         if (activeInfo != null && activeInfo.isConnected()) {
-
+             isOffline = false;
         } else {
             updateOfflineHeaderBar(true);
 

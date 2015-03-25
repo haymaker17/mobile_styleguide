@@ -6,6 +6,7 @@
                 android:background="@drawable/ab_tab_white_bg"
                 android:orientation="vertical">
 
+    <include layout="@layout/offline_header_bar"/>
 
     <ProgressBar
         android:id="@+id/hotel_booking_screen_load"
@@ -53,6 +54,8 @@
         android:layout_above="@id/footer"
         android:background="@color/HotelListDivider"/>
 
+
+
     <ScrollView
         android:id="@+id/hotel_booking_scroll_view"
         android:layout_width="match_parent"
@@ -61,13 +64,15 @@
         android:layout_weight="1"
         android:fillViewport="true">
 
+
+
         <RelativeLayout
             android:id="@+id/hotel_booking_view"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="vertical">
 
-            <include layout="@layout/offline_header_bar"/>
+
 
             <com.concur.mobile.platform.ui.travel.util.ParallaxScollView
                 android:id="@+id/hotel_room_image"
