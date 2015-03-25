@@ -1,17 +1,5 @@
 package com.concur.mobile.platform.ui.travel.hotel.activity;
 
-import java.io.Serializable;
-import java.util.ArrayList;
-import java.util.Calendar;
-import java.util.Collections;
-import java.util.Comparator;
-import java.util.HashMap;
-import java.util.Iterator;
-import java.util.List;
-import java.util.Map;
-import java.util.TreeMap;
-
-import android.app.Activity;
 import android.app.FragmentTransaction;
 import android.app.LoaderManager;
 import android.content.Intent;
@@ -27,21 +15,15 @@ import android.widget.AdapterView.OnItemClickListener;
 import android.widget.PopupMenu;
 import android.widget.PopupMenu.OnMenuItemClickListener;
 import android.widget.Toast;
-
 import com.concur.mobile.base.service.BaseAsyncRequestTask.AsyncReplyListener;
 import com.concur.mobile.base.service.BaseAsyncResultReceiver;
 import com.concur.mobile.platform.service.PlatformAsyncTaskLoader;
+import com.concur.mobile.platform.travel.loader.TravelCustomFieldsConfig;
 import com.concur.mobile.platform.travel.provider.TravelUtilHotel;
-import com.concur.mobile.platform.travel.search.hotel.Hotel;
-import com.concur.mobile.platform.travel.search.hotel.HotelComparator;
-import com.concur.mobile.platform.travel.search.hotel.HotelRatesAsyncRequestTask;
-import com.concur.mobile.platform.travel.search.hotel.HotelRatesRESTResult;
-import com.concur.mobile.platform.travel.search.hotel.HotelSearchPollResultLoader;
-import com.concur.mobile.platform.travel.search.hotel.HotelSearchRESTResult;
-import com.concur.mobile.platform.travel.search.hotel.HotelSearchResultLoader;
-import com.concur.mobile.platform.travel.search.hotel.HotelViolation;
+import com.concur.mobile.platform.travel.search.hotel.*;
 import com.concur.mobile.platform.ui.common.view.ListItemAdapter;
 import com.concur.mobile.platform.ui.travel.R;
+import com.concur.mobile.platform.ui.travel.activity.TravelBaseActivity;
 import com.concur.mobile.platform.ui.travel.hotel.fragment.HotelSearchResultFilterFragment;
 import com.concur.mobile.platform.ui.travel.hotel.fragment.HotelSearchResultFilterFragment.HotelSearchResultsFilterListener;
 import com.concur.mobile.platform.ui.travel.hotel.fragment.HotelSearchResultFragment;
@@ -52,13 +34,16 @@ import com.concur.mobile.platform.ui.travel.util.Const;
 import com.google.android.gms.common.ConnectionResult;
 import com.google.android.gms.common.GooglePlayServicesUtil;
 
+import java.io.Serializable;
+import java.util.*;
+
 /**
  * Activity to launch the Jarvis Hotel Search
  * 
  * @author RatanK
  * 
  */
-public class HotelSearchAndResultActivity extends Activity implements OnMenuItemClickListener,
+public class HotelSearchAndResultActivity extends TravelBaseActivity implements OnMenuItemClickListener,
         HotelSearchResultsFilterListener, HotelSearchResultsFragmentListener,
         LoaderManager.LoaderCallbacks<HotelSearchRESTResult> {
 
@@ -133,14 +118,15 @@ public class HotelSearchAndResultActivity extends Activity implements OnMenuItem
         distanceUnit = intent.getStringExtra(Const.EXTRA_TRAVEL_HOTEL_SEARCH_DISTANCE_UNIT_ID);
         showGDSName = intent.getBooleanExtra(Const.EXTRA_TRAVEL_HOTEL_SEARCH_SHOW_GDS_NAME, false);
 
+        if(intent.hasExtra("travelCustomFieldsConfig")) {
+            travelCustomFieldsConfig = (TravelCustomFieldsConfig)intent.getSerializableExtra("travelCustomFieldsConfig");
+        }
+
         hotelSearchRESTResultFrag = (HotelSearchResultFragment) getFragmentManager().findFragmentByTag(
                 FRAGMENT_SEARCH_RESULT);
 
         if (hotelSearchRESTResultFrag == null) {
             hotelSearchRESTResultFrag = new HotelSearchResultFragment();
-        }
-        if (distanceUnit != null && distanceUnit.equalsIgnoreCase("K")) {
-            filterFrag.setDistanceUnitInKm(true);
         }
 
         FragmentTransaction ft = getFragmentManager().beginTransaction();
@@ -586,6 +572,9 @@ public class HotelSearchAndResultActivity extends Activity implements OnMenuItem
         i.putExtra("ruleViolationExplanationRequired", ruleViolationExplanationRequired);
         i.putExtra("currentTripId", currentTripId);
         i.putExtra(Const.EXTRA_TRAVEL_HOTEL_SEARCH_SHOW_GDS_NAME, showGDSName);
+        if(travelCustomFieldsConfig != null) {
+           i.putExtra("travelCustomFieldsConfig", travelCustomFieldsConfig);
+        }
         if (updatedVoilations != null && updatedVoilations.size() > 0) {
             bundle.putSerializable("updatedVoilations", (Serializable) updatedVoilations);
         }

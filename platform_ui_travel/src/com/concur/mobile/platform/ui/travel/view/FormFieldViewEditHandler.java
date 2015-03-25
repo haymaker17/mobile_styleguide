@@ -7,7 +7,7 @@ import android.content.Intent;
 import com.concur.mobile.platform.common.SpinnerItem;
 import com.concur.mobile.platform.common.formfield.IFormField;
 import com.concur.mobile.platform.ui.common.view.ComboListFormFieldView;
-import com.concur.mobile.platform.ui.common.view.FieldValueSpinnerItem;
+import com.concur.mobile.platform.common.FieldValueSpinnerItem;
 import com.concur.mobile.platform.ui.common.view.FormFieldView;
 import com.concur.mobile.platform.ui.common.view.FormFieldView.IFormFieldViewListener;
 import com.concur.mobile.platform.ui.common.view.IFormFieldViewEditHandler;

@@ -8,6 +8,8 @@ import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
+import android.net.ConnectivityManager;
+import android.net.NetworkInfo;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
@@ -17,8 +19,6 @@ import com.concur.mobile.platform.ui.travel.hotel.fragment.CustomDialogFragment;
 import com.concur.mobile.platform.ui.travel.receiver.NetworkActivityReceiver;
 import com.concur.mobile.platform.ui.travel.receiver.NetworkActivityReceiver.INetworkActivityListener;
 import com.concur.mobile.platform.ui.travel.util.Const;
-import android.net.ConnectivityManager;
-import android.net.NetworkInfo;
 
 /**
  * Activity that can be used to keep track of service availability state. This is a copy of <code>BaseActivity</code> from core
@@ -322,6 +322,7 @@ public class BaseActivity extends Activity implements INetworkActivityListener {
             getApplicationContext().registerReceiver(systemUnavailableReceiver,
                     new IntentFilter(Const.ACTION_NETWORK_SYSTEM_UNAVAILABLE));
             systemUnavailableReceiverRegistered = true;
+
         }
     }
 
@@ -400,7 +401,7 @@ public class BaseActivity extends Activity implements INetworkActivityListener {
         }
 
         // BaseActivity.this.showDialog(Const.DIALOG_SYSTEM_UNAVAILABLE);
-        CustomDialogFragment dialog = new CustomDialogFragment() ;
+        CustomDialogFragment dialog = new CustomDialogFragment();
         dialog.setTitle(R.string.dlg_no_connectivity_title);
         dialog.setMessage(R.string.dlg_no_connectivity_message);
         dialog.setPositiveButtonText(R.string.dialog_ok);
@@ -418,13 +419,8 @@ public class BaseActivity extends Activity implements INetworkActivityListener {
 
         } else {
             updateOfflineHeaderBar(true);
-        }
-    }
 
-    /**
-     * Called when the concur service component has become available.
-     */
-    protected void onServiceAvailable() {
+        }
     }
 
     /**
@@ -432,6 +428,12 @@ public class BaseActivity extends Activity implements INetworkActivityListener {
      */
     protected void onServiceUnavailable() {
         showOfflineDialog();
+    }
+
+    /**
+     * Called when the concur service component has become unavailable.
+     */
+    protected void onServiceAvailable() {
     }
 
     /**
@@ -445,7 +447,7 @@ public class BaseActivity extends Activity implements INetworkActivityListener {
 
         /*
          * (non-Javadoc)
-         * 
+         *
          * @see android.content.BroadcastReceiver#onReceive(android.content.Context, android.content.Intent)
          */
         @Override
@@ -461,5 +463,5 @@ public class BaseActivity extends Activity implements INetworkActivityListener {
             }
         }
     }
-
 }
+

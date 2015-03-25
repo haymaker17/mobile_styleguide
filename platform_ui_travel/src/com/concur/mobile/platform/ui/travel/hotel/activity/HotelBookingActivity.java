@@ -1,22 +1,9 @@
 package com.concur.mobile.platform.ui.travel.hotel.activity;
 
-import java.net.URI;
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.List;
-
 import android.animation.ObjectAnimator;
 import android.annotation.SuppressLint;
-import android.app.ActionBar;
-import android.app.Activity;
-import android.app.FragmentManager;
-import android.app.FragmentTransaction;
-import android.app.LoaderManager;
-import android.content.BroadcastReceiver;
-import android.content.Context;
-import android.content.Intent;
-import android.content.IntentFilter;
-import android.content.Loader;
+import android.app.*;
+import android.content.*;
 import android.graphics.Bitmap;
 import android.os.Bundle;
 import android.os.Handler;
@@ -28,33 +15,20 @@ import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.ViewGroup.LayoutParams;
 import android.view.ViewStub;
-import android.widget.ArrayAdapter;
-import android.widget.Button;
-import android.widget.EditText;
-import android.widget.ImageView;
-import android.widget.TableLayout;
-import android.widget.TableRow;
-import android.widget.TextView;
-import android.widget.Toast;
-
+import android.widget.*;
 import com.concur.mobile.base.service.BaseAsyncRequestTask.AsyncReplyListener;
 import com.concur.mobile.base.service.BaseAsyncResultReceiver;
 import com.concur.mobile.platform.common.SpinnerItem;
 import com.concur.mobile.platform.service.PlatformAsyncTaskLoader;
 import com.concur.mobile.platform.travel.booking.CreditCard;
-import com.concur.mobile.platform.travel.search.hotel.HotelBookingAsyncRequestTask;
-import com.concur.mobile.platform.travel.search.hotel.HotelBookingRESTResult;
-import com.concur.mobile.platform.travel.search.hotel.HotelPreSellOption;
-import com.concur.mobile.platform.travel.search.hotel.HotelPreSellOptionLoader;
-import com.concur.mobile.platform.travel.search.hotel.HotelRate;
-import com.concur.mobile.platform.travel.search.hotel.HotelViolation;
-import com.concur.mobile.platform.travel.search.hotel.HotelViolationComparator;
-import com.concur.mobile.platform.travel.search.hotel.ViolationReason;
+import com.concur.mobile.platform.travel.loader.TravelCustomFieldsConfig;
+import com.concur.mobile.platform.travel.search.hotel.*;
 import com.concur.mobile.platform.ui.common.dialog.DialogFragmentFactoryV1;
 import com.concur.mobile.platform.ui.common.fragment.RetainerFragmentV1;
 import com.concur.mobile.platform.ui.common.util.FormatUtil;
 import com.concur.mobile.platform.ui.common.util.ImageCache;
 import com.concur.mobile.platform.ui.travel.R;
+import com.concur.mobile.platform.ui.travel.activity.TravelBaseActivity;
 import com.concur.mobile.platform.ui.travel.hotel.fragment.CustomDialogFragment;
 import com.concur.mobile.platform.ui.travel.hotel.fragment.CustomDialogFragment.CustomDialogFragmentCallbackListener;
 import com.concur.mobile.platform.ui.travel.hotel.fragment.SpinnerDialogFragment;
@@ -64,12 +38,17 @@ import com.concur.mobile.platform.ui.travel.util.ParallaxScollView;
 import com.concur.mobile.platform.ui.travel.util.ViewUtil;
 import com.concur.mobile.platform.util.Format;
 
+import java.net.URI;
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.List;
+
 /**
  * 
  * @author RatanK
  * 
  */
-public class HotelBookingActivity extends Activity implements LoaderManager.LoaderCallbacks<HotelPreSellOption>,
+public class HotelBookingActivity extends TravelBaseActivity implements LoaderManager.LoaderCallbacks<HotelPreSellOption>,
         SpinnerDialogFragmentCallbackListener, CustomDialogFragmentCallbackListener {
 
     protected static final String CLS_TAG = HotelBookingActivity.class.getSimpleName();
@@ -154,6 +133,10 @@ public class HotelBookingActivity extends Activity implements LoaderManager.Load
         ruleViolationExplanationRequired = intent.getBooleanExtra("ruleViolationExplanationRequired", false);
         currentTripId = intent.getStringExtra("currentTripId");
         violations = (List<HotelViolation>) intent.getSerializableExtra("violations");
+
+        if(intent.hasExtra("travelCustomFieldsConfig")) {
+            travelCustomFieldsConfig = (TravelCustomFieldsConfig)intent.getSerializableExtra("travelCustomFieldsConfig");
+        }
 
         if (hotelRate != null) {
 
@@ -726,8 +709,9 @@ public class HotelBookingActivity extends Activity implements LoaderManager.Load
                 hotelBookingReceiver.setListener(new HotelBookingReplyListener());
                 // create and invoke the async task
                 hotelBookingAsyncRequestTask = new HotelBookingAsyncRequestTask(this, HOTEL_BOOKING_ID,
-                        hotelBookingReceiver, selectedCreditCardId, currentTripId, selectedViolationReasons, null,
+                        hotelBookingReceiver, selectedCreditCardId, currentTripId, selectedViolationReasons, travelCustomFieldsConfig, null,
                         false, preSellOption.bookingURL.href);
+
                 hotelBookingAsyncRequestTask.execute();
             } else {
                 // show the required fields messages

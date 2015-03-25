@@ -1,13 +1,5 @@
 package com.concur.mobile.platform.ui.travel.activity;
 
-import java.util.ArrayList;
-import java.util.List;
-
-import android.app.AlertDialog;
-import android.app.Dialog;
-import android.app.ProgressDialog;
-import android.content.DialogInterface;
-import android.content.DialogInterface.OnCancelListener;
 import android.content.Intent;
 import android.graphics.drawable.Drawable;
 import android.os.Bundle;
@@ -25,35 +17,37 @@ import android.widget.AdapterView.OnItemClickListener;
 import android.widget.EditText;
 import android.widget.ListView;
 import android.widget.TextView;
-
 import com.concur.mobile.base.service.BaseAsyncRequestTask.AsyncReplyListener;
 import com.concur.mobile.base.service.BaseAsyncResultReceiver;
 import com.concur.mobile.platform.common.SpinnerItem;
 import com.concur.mobile.platform.travel.loader.SearchTravelCustomFieldValues;
 import com.concur.mobile.platform.travel.loader.TravelCustomField;
-import com.concur.mobile.platform.travel.loader.TravelCustomFieldValueSpinnerItem;
+
+import com.concur.mobile.platform.common.FieldValueSpinnerItem;
 import com.concur.mobile.platform.ui.common.view.ListItem;
 import com.concur.mobile.platform.ui.common.view.ListItemAdapter;
 import com.concur.mobile.platform.ui.travel.R;
 import com.concur.mobile.platform.ui.travel.util.Const;
 
+import java.util.ArrayList;
+import java.util.List;
+
 /**
- * 
  * @author RatanK
- * 
  */
-public class TravelCustomFieldSearch extends BaseActivity {
+public class TravelCustomFieldSearch extends TravelBaseActivity {
 
     public static final String CLS_TAG = TravelCustomFieldSearch.class.getSimpleName();
 
-    /** list item type */
+    /**
+     * list item type
+     */
     private static final int CUSTOM_FIELD_LIST_ITEM_VIEW_TYPE = 0;
     private static final String EXTRA_SEARCH_RESULTS_LIST = "searchResultsList";
     private static final String EXTRA_STATIC_LIST_CACHE = "staticListCache";
     private static final String EXTRA_SEARCH_RESULTS_RECEIVER = "searchResultsReceiver";
-    private static final int TRAVEL_CUSTOM_FIELDS_PROGRESS_DIALOG = 100001;// TravelBaseActivity.DIALOG_ID_BASE + 1;
-    private static final int TRAVEL_CUSTOM_FIELDS_FAILURE_DIALOG = 100002;// TravelBaseActivity.DIALOG_ID_BASE + 2;
 
+    private boolean progressbarVisible;
     private boolean getFromIntent;
     protected String currentSearchText;
     protected String attributeId;
@@ -62,14 +56,15 @@ public class TravelCustomFieldSearch extends BaseActivity {
     private List<ListItem> staticList;
     private List<ListItem> staticListCache;
     private List<ListItem> resultsList;
-    private TravelCustomFieldValueSpinnerItem prvSelectedItem;
+    private FieldValueSpinnerItem prvSelectedItem;
+    private TravelCustomField travelCustomField;
 
     BaseAsyncResultReceiver searchResultsReceiver;
     ListItemAdapter<ListItem> listItemAdapter;
 
-    @SuppressWarnings("unchecked")
-    @Override
+    @SuppressWarnings("unchecked") @Override
     protected void onCreate(Bundle savedInstanceState) {
+
         super.onCreate(savedInstanceState);
 
         getFromIntent = true;
@@ -89,7 +84,7 @@ public class TravelCustomFieldSearch extends BaseActivity {
                 resultsList = (List<ListItem>) retainer.get(EXTRA_SEARCH_RESULTS_LIST);
             }
             if (retainer.contains(Const.EXTRA_SEARCH_SELECTED_ITEM)) {
-                prvSelectedItem = (TravelCustomFieldValueSpinnerItem) retainer.get(Const.EXTRA_SEARCH_SELECTED_ITEM);
+                prvSelectedItem = (FieldValueSpinnerItem) retainer.get(Const.EXTRA_SEARCH_SELECTED_ITEM);
             }
             if (retainer.contains(Const.EXTRA_LIST_SEARCH_STATIC_LIST)) {
                 getFromIntent = false;
@@ -173,43 +168,6 @@ public class TravelCustomFieldSearch extends BaseActivity {
         searchResultsReceiver = null;
     }
 
-    @Override
-    protected Dialog onCreateDialog(int id) {
-
-        Dialog dlg = null;
-        switch (id) {
-        case TRAVEL_CUSTOM_FIELDS_PROGRESS_DIALOG: {
-            ProgressDialog progDlg = new ProgressDialog(this);
-            progDlg.setMessage(this.getText(R.string.dlg_travel_retrieve_custom_fields_progress_message));
-            progDlg.setIndeterminate(true);
-            progDlg.setCancelable(true);
-            dlg = progDlg;
-            dlg.setOnCancelListener(new OnCancelListener() {
-
-                public void onCancel(DialogInterface dialog) {
-                    unRegisterReceivers();
-                }
-            });
-            break;
-        }
-        case TRAVEL_CUSTOM_FIELDS_FAILURE_DIALOG: {
-            AlertDialog.Builder dlgBldr = new AlertDialog.Builder(this);
-            dlgBldr.setTitle(R.string.dlg_travel_booking_info_title);
-            dlgBldr.setMessage(R.string.travel_booking_info_unavailable_message);
-            dlgBldr.setPositiveButton(getText(R.string.general_ok), new DialogInterface.OnClickListener() {
-
-                public void onClick(DialogInterface dialog, int which) {
-                    dialog.dismiss();
-                    unRegisterReceivers();
-                }
-            });
-            dlg = dlgBldr.create();
-            break;
-        }
-        }
-        return dlg;
-    }
-
     protected void buildView() {
         if (getFromIntent) {
             Intent intent = getIntent();
@@ -221,7 +179,7 @@ public class TravelCustomFieldSearch extends BaseActivity {
                         .getSerializableExtra(Const.EXTRA_LIST_SEARCH_STATIC_LIST);
                 if (sItemList != null && sItemList.size() > 0) {
                     if (intent.hasExtra(Const.EXTRA_SEARCH_SELECTED_ITEM)) {
-                        prvSelectedItem = (TravelCustomFieldValueSpinnerItem) intent
+                        prvSelectedItem = (FieldValueSpinnerItem) intent
                                 .getSerializableExtra(Const.EXTRA_SEARCH_SELECTED_ITEM);
                     }
                     staticList = convertSpinnerItemArrayToList(sItemList);
@@ -267,8 +225,9 @@ public class TravelCustomFieldSearch extends BaseActivity {
 
             @Override
             public boolean onEditorAction(TextView v, int actionId, KeyEvent event) {
-                if (actionId == EditorInfo.IME_ACTION_SEARCH
-                        || ((event != null) && ((event.getAction() == KeyEvent.ACTION_DOWN) && (event.getKeyCode() == KeyEvent.KEYCODE_ENTER)))) {
+                if (actionId == EditorInfo.IME_ACTION_SEARCH || ((event != null) && (
+                        (event.getAction() == KeyEvent.ACTION_DOWN) && (event.getKeyCode()
+                                == KeyEvent.KEYCODE_ENTER)))) {
 
                     doSearch();
                     return true;
@@ -292,8 +251,8 @@ public class TravelCustomFieldSearch extends BaseActivity {
                 if (event.getAction() != MotionEvent.ACTION_UP)
                     return false;
                 // Detect whether the touch event
-                if (event.getX() > searchText.getWidth() - searchText.getPaddingRight()
-                        - searchGlass.getIntrinsicWidth()) {
+                if (event.getX() > searchText.getWidth() - searchText.getPaddingRight() - searchGlass
+                        .getIntrinsicWidth()) {
                     // Kick-off the search.
                     doSearch();
                     return true;
@@ -313,49 +272,15 @@ public class TravelCustomFieldSearch extends BaseActivity {
                 searchResultsReceiver.setListener(new TravelCustomFieldSearchListener());
             }
 
+            showProgressBar(R.string.dlg_travel_retrieve_custom_fields_progress_message);
+
             new SearchTravelCustomFieldValues(this, 1, searchResultsReceiver, attributeId, currentSearchText).execute();
 
-            showDialog(TRAVEL_CUSTOM_FIELDS_PROGRESS_DIALOG);
-            // SearchProgressDialogHandler.show(this);
         } else {
             // showDialog(Const.DIALOG_NO_CONNECTIVITY);
             // }
         }
     }
-
-    // /**
-    // * An extension of <code>DialogFragmentHandler</code> to handle showing/dismissing the search dialog fragment.
-    // */
-    // static class SearchProgressDialogHandler extends DialogFragmentHandler {
-    //
-    // private static final String DIALOG_FRAGMENT_ID = "SearchProgress";
-    //
-    // // Contains the fragment tag for the fragment passed into the <code>show</code> method.
-    // // This tag value is used to look-up the fragment below when this callback handler needs
-    // // to refer to the current fragment.
-    // private String fragTag;
-    //
-    // public static void show(Fragment frag) {
-    // // Construct the callback handler.
-    // SearchProgressDialogHandler dlgHndlr = new SearchProgressDialogHandler();
-    // // Construct and show the dialog fragment.
-    // String message = frag.getText(R.string.dlg_travel_retrieve_custom_fields_progress_message).toString();
-    // ProgressDialogFragment dlgFrag = DialogFragmentFactory.getProgressDialog(message, true, true, dlgHndlr);
-    // dlgFrag.show(frag.getActivity().getSupportFragmentManager(), DIALOG_FRAGMENT_ID);
-    // // Hang onto the tag of <code>frag</code>.
-    // dlgHndlr.fragTag = frag.getTag();
-    // }
-    //
-    // public static void dismiss(Fragment frag) {
-    // dismiss(frag.getActivity().getSupportFragmentManager(), DIALOG_FRAGMENT_ID);
-    // }
-    //
-    // public void onCancel(AsyncReplyListener listener) {
-    // if (listener != null) {
-    // listener.cleanup();
-    // }
-    // }
-    // }
 
     protected void clearListItems() {
         listItemAdapter.getItems().clear();
@@ -366,14 +291,13 @@ public class TravelCustomFieldSearch extends BaseActivity {
      * Will update the list UI with list of items
      */
     protected void updateListUI() {
-        TravelCustomField customField = getTravelCustomField();
-        if (customField == null || customField.getFieldValues().size() == 0) {
+        if (travelCustomField == null || travelCustomField.getFieldValues().size() == 0) {
             clearListItems();
         } else {
-            List<TravelCustomFieldValueSpinnerItem> fldValues = customField.getFieldValues();
+            List<FieldValueSpinnerItem> fldValues = travelCustomField.getFieldValues();
             if (fldValues != null && fldValues.size() > 0) {
                 resultsList = new ArrayList<ListItem>(fldValues.size());
-                for (TravelCustomFieldValueSpinnerItem spItem : fldValues) {
+                for (FieldValueSpinnerItem spItem : fldValues) {
                     resultsList.add(new TravelCustomFieldListItem(spItem, CUSTOM_FIELD_LIST_ITEM_VIEW_TYPE));
                 }
                 configureListItems(resultsList);
@@ -425,22 +349,17 @@ public class TravelCustomFieldSearch extends BaseActivity {
         }
     }
 
-    protected TravelCustomField getTravelCustomField() {
-        // ConcurCore core = (ConcurCore) ConcurCore.getContext();
-        // return core.getTravelCustomField();
-        return null;
-    }
-
     private List<ListItem> convertSpinnerItemArrayToList(List<SpinnerItem> sItemList) {
         List<ListItem> listItems = new ArrayList<ListItem>();
         for (SpinnerItem item : sItemList) {
-            TravelCustomFieldValueSpinnerItem spItem = (TravelCustomFieldValueSpinnerItem) item;
+            FieldValueSpinnerItem spItem = (FieldValueSpinnerItem) item;
             listItems.add(new TravelCustomFieldListItem(spItem, CUSTOM_FIELD_LIST_ITEM_VIEW_TYPE));
         }
         return listItems;
     }
 
-    private void moveSelectedItemToTopOfList(TravelCustomFieldValueSpinnerItem prvSelectedItem, List<ListItem> listItems) {
+    private void moveSelectedItemToTopOfList(FieldValueSpinnerItem prvSelectedItem,
+            List<ListItem> listItems) {
         if (prvSelectedItem != null) {
             TravelCustomFieldListItem prvSelectedListItem = new TravelCustomFieldListItem(prvSelectedItem,
                     CUSTOM_FIELD_LIST_ITEM_VIEW_TYPE);
@@ -457,7 +376,7 @@ public class TravelCustomFieldSearch extends BaseActivity {
 
     /**
      * provide colour strips to the list items
-     * 
+     *
      * @param listItems
      */
     private void configureColourStripes(List<ListItem> listItems) {
@@ -471,6 +390,28 @@ public class TravelCustomFieldSearch extends BaseActivity {
             }
             ((TravelCustomFieldListItem) item).setColourId(colourId);
             count++;
+        }
+    }
+
+    public void showProgressBar(int progressMsgResourceId) {
+        if (!progressbarVisible) {
+            progressbarVisible = true;
+            View progressBar = findViewById(R.id.custom_field_search_progress);
+            progressBar.setVisibility(View.VISIBLE);
+            progressBar.bringToFront();
+
+            TextView progressBarMsg = (TextView) findViewById(R.id.custom_travel_fields_search_progress_msg);
+            progressBarMsg.setText(progressMsgResourceId);
+            progressBarMsg.setVisibility(View.VISIBLE);
+            progressBarMsg.bringToFront();
+        }
+    }
+
+    public void hideProgressBar() {
+        if (progressbarVisible) {
+            progressbarVisible = false;
+            findViewById(R.id.custom_field_search_progress).setVisibility(View.GONE);
+            findViewById(R.id.custom_travel_fields_search_progress_msg).setVisibility(View.GONE);
         }
     }
 
@@ -503,24 +444,23 @@ public class TravelCustomFieldSearch extends BaseActivity {
 
         @Override
         public void onRequestSuccess(Bundle resultData) {
-            // Log.d(Const.LOG_TAG, " onRequestSuccess in TravelCustomFieldSearchListener...");
-            dismissDialog(TRAVEL_CUSTOM_FIELDS_PROGRESS_DIALOG);
-            // SearchProgressDialogHandler.dismiss(activity.getSupportFragmentManager().findFragmentByTag(
-            // SearchProgressDialogHandler.DIALOG_FRAGMENT_ID));
+            hideProgressBar();
+            if (resultData.containsKey(SearchTravelCustomFieldValues.TRAVEL_CUSTOM_FIELD)) {
+                travelCustomField = (TravelCustomField) resultData
+                        .getSerializable(SearchTravelCustomFieldValues.TRAVEL_CUSTOM_FIELD);
+            }
             updateListUI();
         }
 
         @Override
         public void onRequestFail(Bundle resultData) {
-            // Log.d(Const.LOG_TAG, " onRequestFail in TravelCustomFieldSearchListener...");
-            dismissDialog(TRAVEL_CUSTOM_FIELDS_PROGRESS_DIALOG);
-            showDialog(TRAVEL_CUSTOM_FIELDS_FAILURE_DIALOG);
+            hideProgressBar();
+            showProgressBar(R.string.travel_booking_info_unavailable_message);
         }
 
         @Override
         public void onRequestCancel(Bundle resultData) {
-            // Log.d(Const.LOG_TAG, " onRequestCancel in TravelCustomFieldSearchListener...");
-            dismissDialog(TRAVEL_CUSTOM_FIELDS_PROGRESS_DIALOG);
+            hideProgressBar();
         }
 
         @Override
