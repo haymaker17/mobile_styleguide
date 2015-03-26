@@ -1,12 +1,12 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_width="wrap_content"
-    android:layout_height="wrap_content"
-    android:layout_gravity="center_horizontal"
-    android:background="@drawable/ab_tab_white_bg"
-    android:orientation="vertical"
-    android:paddingLeft="20dp"
-    android:paddingRight="30dp" >
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_horizontal"
+                android:background="@drawable/ab_tab_white_bg"
+                android:orientation="vertical"
+                android:paddingLeft="20dp"
+                android:paddingRight="20dp">
 
     <TextView
         android:id="@+id/title"
@@ -14,20 +14,18 @@
         android:layout_height="wrap_content"
         android:layout_marginBottom="15dp"
         android:layout_marginTop="15dp"
-        android:text="@string/hotel_confirm_reserve_title"
         android:textColor="#383f46"
         android:textSize="20sp"
-        android:textStyle="bold" />
+        android:textStyle="bold"/>
 
     <TextView
         android:id="@+id/msg"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_below="@+id/title"
         android:layout_marginBottom="15dp"
-        android:text="@string/hotel_confirm_reserve_msg"
+        android:layout_below="@+id/title"
         android:textColor="#757575"
-        android:textSize="14sp" />
+        android:textSize="14sp"/>
 
     <Button
         android:id="@+id/dialogButtonOk"
@@ -37,10 +35,11 @@
         android:layout_alignTop="@+id/dialogButtonCancel"
         android:background="#FFFFFF"
         android:gravity="right"
-        android:text="@string/hotel_confirm_reserve_ok"
+        android:text="@string/dialog_ok"
+        android:layout_below="@+id/msg"
         android:textColor="@color/blueTabs"
         android:textSize="14sp"
-        android:textStyle="bold" />
+        android:textStyle="bold"/>
 
     <Button
         android:id="@+id/dialogButtonCancel"
@@ -54,6 +53,7 @@
         android:text="@string/hotel_confirm_reserve_cancel"
         android:textColor="@color/blueTabs"
         android:textSize="14sp"
-        android:textStyle="bold" />
+        android:textStyle="bold"
+        android:visibility="gone"/>
 
 </RelativeLayout>

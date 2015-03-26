@@ -1,7 +1,6 @@
-package com.concur.mobile.platform.ui.common.view;
+package com.concur.mobile.platform.common;
 
 import android.util.Log;
-import com.concur.mobile.platform.common.SpinnerItem;
 import com.concur.mobile.platform.util.Const;
 
 /**

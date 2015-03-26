@@ -38,7 +38,7 @@ public class TravelCustomFieldsLoader extends PlatformAsyncTaskLoader<TravelCust
     @Override
     public TravelCustomFieldsConfig loadInBackground() {
         travelCustomFieldsConfig = super.loadInBackground();
-        if (result == RESULT_ERROR) {
+        if (result == RESULT_ERROR && travelCustomFieldsConfig != null) {
             travelCustomFieldsConfig.errorOccuredWhileRetrieving = true;
         }
         return travelCustomFieldsConfig;

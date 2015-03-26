@@ -26,19 +26,21 @@ public class TravelBaseActivity extends BaseActivity {
     protected static final String CLS_TAG = TravelBaseActivity.class.getSimpleName();
 
     protected static final String TRAVEL_CUSTOM_VIEW_FRAGMENT_TAG = "travel.custom.view";
-    //Contains the list of travel custom fields.
-    public List<TravelCustomField> formFields;
     // Contains the Cliqbook trip id if a hotel search is being performed in the
     // context of a trip.
     protected String cliqbookTripId;
-    // Contains a reference to a fragment used to display travel custom fields.
-    protected TravelCustomFieldsFragment travelCustomFieldsFragment;
 
     protected TravelCustomFieldsConfig travelCustomFieldsConfig;
 
+    // Contains a reference to a fragment used to display travel custom fields.
+    protected TravelCustomFieldsFragment travelCustomFieldsFragment;
+
     protected boolean update = false;
+
     // Contains the last list of invalid fields.
     protected List<TravelCustomFieldsFragment.TravelCustomFieldHint> invalidFields;
+
+    protected List<TravelCustomField> formFields;
 
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {

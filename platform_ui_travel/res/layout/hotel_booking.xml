@@ -1,16 +1,18 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:layout_gravity="right"
-    android:background="@drawable/ab_tab_white_bg"
-    android:orientation="vertical" >
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_gravity="right"
+                android:background="@drawable/ab_tab_white_bg"
+                android:orientation="vertical">
+
+    <include layout="@layout/offline_header_bar"/>
 
     <ProgressBar
         android:id="@+id/hotel_booking_screen_load"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_centerInParent="true" />
+        android:layout_centerInParent="true"/>
 
     <TextView
         android:id="@+id/hotel_preselloptions_progress_msg"
@@ -20,7 +22,7 @@
         android:layout_centerHorizontal="true"
         android:background="#ffffff"
         android:text="@string/hotel_sell_options_retrieving"
-        android:textColor="@color/blueTabs" >
+        android:textColor="@color/blueTabs">
     </TextView>
 
     <RelativeLayout
@@ -29,7 +31,7 @@
         android:layout_height="60dp"
         android:layout_alignParentBottom="true"
         android:layout_gravity="bottom"
-        android:background="@color/blueTabs" >
+        android:background="@color/blueTabs">
 
         <Button
             android:id="@+id/footer_button"
@@ -42,7 +44,7 @@
             android:gravity="center"
             android:text="@string/hotel_reserve_this_room"
             android:textColor="@color/White"
-            android:textSize="20sp" />
+            android:textSize="20sp"/>
     </RelativeLayout>
 
     <View
@@ -50,7 +52,9 @@
         android:layout_width="fill_parent"
         android:layout_height="1dp"
         android:layout_above="@id/footer"
-        android:background="@color/HotelListDivider" />
+        android:background="@color/HotelListDivider"/>
+
+
 
     <ScrollView
         android:id="@+id/hotel_booking_scroll_view"
@@ -58,13 +62,17 @@
         android:layout_height="match_parent"
         android:layout_above="@id/footerDivider"
         android:layout_weight="1"
-        android:fillViewport="true" >
+        android:fillViewport="true">
+
+
 
         <RelativeLayout
             android:id="@+id/hotel_booking_view"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:orientation="vertical" >
+            android:orientation="vertical">
+
+
 
             <com.concur.mobile.platform.ui.travel.util.ParallaxScollView
                 android:id="@+id/hotel_room_image"
@@ -76,7 +84,7 @@
                 android:headerDividersEnabled="false"
                 android:overScrollMode="never"
                 android:scrollbars="none"
-                android:scrollingCache="false" />
+                android:scrollingCache="false"/>
 
             <TextView
                 android:id="@+id/hotel_room_desc"
@@ -88,7 +96,7 @@
                 android:paddingTop="16dp"
                 android:text="Room description here "
                 android:textColor="#383f46"
-                android:textSize="16sp" />
+                android:textSize="16sp"/>
 
             <View
                 android:id="@+id/view_separator1"
@@ -97,7 +105,7 @@
                 android:layout_below="@id/hotel_room_desc"
                 android:layout_marginLeft="12dp"
                 android:layout_marginTop="16dp"
-                android:background="@color/divider" />
+                android:background="@color/divider"/>
 
             <TextView
                 android:id="@+id/hotel_room_summary_label"
@@ -110,7 +118,7 @@
                 android:paddingTop="12dp"
                 android:text="@string/general_summary"
                 android:textColor="#8b8b8b"
-                android:textSize="14sp" />
+                android:textSize="14sp"/>
 
             <ImageView
                 android:id="@+id/hotel_cal_image"
@@ -121,7 +129,7 @@
                 android:baselineAlignBottom="true"
                 android:contentDescription="Image banner"
                 android:paddingTop="3dp"
-                android:src="@drawable/icon_calendar" />
+                android:src="@drawable/icon_calendar"/>
 
             <LinearLayout
                 android:id="@+id/hotel_summary_layout"
@@ -133,7 +141,7 @@
                 android:layout_marginRight="20dp"
                 android:layout_toRightOf="@id/hotel_cal_image"
                 android:orientation="horizontal"
-                android:weightSum="1.0" >
+                android:weightSum="1.0">
 
                 <TextView
                     android:id="@+id/date_span"
@@ -143,7 +151,7 @@
                     android:fontFamily="sans-serif"
                     android:text="Dates here"
                     android:textColor="#383f46"
-                    android:textSize="16sp" />
+                    android:textSize="16sp"/>
 
                 <TextView
                     android:id="@+id/hotel_room_night"
@@ -156,7 +164,7 @@
                     android:padding="5dp"
                     android:text="@string/hotel_reserve_num_of_nights"
                     android:textColor="#0078c8"
-                    android:textSize="12sp" />
+                    android:textSize="12sp"/>
             </LinearLayout>
 
             <TextView
@@ -171,7 +179,7 @@
                 android:text="@string/general_total"
                 android:textColor="#383f46"
                 android:textSize="14sp"
-                android:textStyle="bold" />
+                android:textStyle="bold"/>
 
             <RelativeLayout
                 android:id="@+id/hotel_room_total"
@@ -181,7 +189,7 @@
                 android:layout_below="@id/hotel_summary_layout"
                 android:layout_marginLeft="10dp"
                 android:layout_marginRight="20dp"
-                android:layout_toRightOf="@id/hotel_room_total_label" >
+                android:layout_toRightOf="@id/hotel_room_total_label">
 
                 <ImageView
                     android:id="@+id/checkout_icon_price_info"
@@ -191,7 +199,7 @@
                     android:contentDescription="Image banner"
                     android:paddingLeft="5dp"
                     android:paddingTop="4dp"
-                    android:src="@drawable/checkout_icon_price_info" />
+                    android:src="@drawable/checkout_icon_price_info"/>
 
                 <TextView
                     android:id="@+id/hotel_room_rate"
@@ -201,7 +209,7 @@
                     android:fontFamily="sans-serif-medium"
                     android:text="rate here"
                     android:textColor="#0078c8"
-                    android:textSize="18sp" />
+                    android:textSize="18sp"/>
 
                 <TextView
                     android:id="@+id/total_with_tax_label"
@@ -212,7 +220,7 @@
                     android:fontFamily="sans-serif"
                     android:text="@string/hotel_reserve_total_with_tax"
                     android:textColor="#a7b6bf"
-                    android:textSize="12sp" />
+                    android:textSize="12sp"/>
             </RelativeLayout>
 
             <View
@@ -222,7 +230,7 @@
                 android:layout_below="@id/hotel_room_total"
                 android:layout_marginLeft="12dp"
                 android:layout_marginTop="16dp"
-                android:background="@color/divider" />
+                android:background="@color/divider"/>
 
             <TextView
                 android:id="@+id/hotel_credit_card_label"
@@ -234,7 +242,7 @@
                 android:fontFamily="sans-serif"
                 android:text="@string/general_credit_card"
                 android:textColor="#383f46"
-                android:textSize="16sp" />
+                android:textSize="16sp"/>
 
             <TextView
                 android:id="@+id/hotel_credit_card"
@@ -245,7 +253,7 @@
                 android:fontFamily="sans-serif"
                 android:text="credit card number here"
                 android:textColor="#0078c8"
-                android:textSize="14sp" />
+                android:textSize="14sp"/>
 
             <View
                 android:id="@+id/view_separator3"
@@ -254,7 +262,7 @@
                 android:layout_below="@id/hotel_credit_card"
                 android:layout_marginLeft="12dp"
                 android:layout_marginTop="16dp"
-                android:background="@color/divider" />
+                android:background="@color/divider"/>
 
             <TextView
                 android:id="@+id/hotel_policy_label"
@@ -266,7 +274,7 @@
                 android:fontFamily="sans-serif"
                 android:text="@string/general_policy"
                 android:textColor="#383f46"
-                android:textSize="16sp" />
+                android:textSize="16sp"/>
 
             <TextView
                 android:id="@+id/hotel_policy"
@@ -277,7 +285,7 @@
                 android:fontFamily="sans-serif"
                 android:text="@string/hotel_reserve_cancel_policy"
                 android:textColor="#757575"
-                android:textSize="14sp" />
+                android:textSize="14sp"/>
 
             <View
                 android:id="@+id/view_separator4"
@@ -286,7 +294,7 @@
                 android:layout_below="@id/hotel_policy"
                 android:layout_marginLeft="12dp"
                 android:layout_marginTop="16dp"
-                android:background="@color/divider" />
+                android:background="@color/divider"/>
 
             <!-- Violations ViewStub
             the inflateId need to be same as id for the following views to display properly
@@ -324,7 +332,6 @@
                 android:layout_below="@id/view_separator5"
                >
             </LinearLayout>
-
         </RelativeLayout>
     </ScrollView>
 

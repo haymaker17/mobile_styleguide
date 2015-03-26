@@ -6,7 +6,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
-import com.concur.mobile.platform.ui.common.view.FieldValueSpinnerItem;
+import com.concur.mobile.platform.common.FieldValueSpinnerItem;
 import com.concur.mobile.platform.ui.common.view.ListItem;
 import com.concur.mobile.platform.ui.travel.R;
 

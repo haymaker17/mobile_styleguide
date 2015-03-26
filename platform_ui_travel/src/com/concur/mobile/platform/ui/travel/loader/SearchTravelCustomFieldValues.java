@@ -94,11 +94,6 @@ public class SearchTravelCustomFieldValues extends PlatformAsyncRequestTask {
         int resultcode = RESULT_OK;
 
         if (custFieldsParser != null && custFieldsParser.custField != null) {
-            // add in the app object
-            // ConcurCore core = (ConcurCore) ConcurCore.getContext();
-            // core.setTravelCustomField(custFieldsParser.custField);
-            // core.setTravelCustomFieldLastRetrieved(Calendar.getInstance(TimeZone.getTimeZone("UTC")));
-
             resultData.putSerializable(TRAVEL_CUSTOM_FIELD, custFieldsParser.custField);
 
         } else {

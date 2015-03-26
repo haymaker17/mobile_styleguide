@@ -77,7 +77,6 @@ public class HotelBookingAsyncRequestTask extends PlatformAsyncRequestTask {
         this.redeemTravelPoints = redeemTravelPoints;
         this.violationReasons = violationReasons;
         this.customFields = customFields;
-
         this.bookingURL = bookingURL;
     }
 

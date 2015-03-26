@@ -4,6 +4,8 @@
     android:layout_height="fill_parent"
     android:background="@drawable/ab_tab_white_bg" >
 
+    <include layout="@layout/offline_header_bar" />
+
     <!-- The Voice-to-Text conversation -->
 
     <RelativeLayout

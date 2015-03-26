@@ -19,8 +19,8 @@ import android.widget.ListView;
 import android.widget.TextView;
 import com.concur.mobile.base.service.BaseAsyncRequestTask.AsyncReplyListener;
 import com.concur.mobile.base.service.BaseAsyncResultReceiver;
+import com.concur.mobile.platform.common.FieldValueSpinnerItem;
 import com.concur.mobile.platform.common.SpinnerItem;
-import com.concur.mobile.platform.ui.common.view.FieldValueSpinnerItem;
 import com.concur.mobile.platform.ui.common.view.ListItem;
 import com.concur.mobile.platform.ui.common.view.ListItemAdapter;
 import com.concur.mobile.platform.ui.travel.R;
@@ -357,7 +357,8 @@ public class TravelCustomFieldSearch extends TravelBaseActivity {
         return listItems;
     }
 
-    private void moveSelectedItemToTopOfList(FieldValueSpinnerItem prvSelectedItem, List<ListItem> listItems) {
+    private void moveSelectedItemToTopOfList(FieldValueSpinnerItem prvSelectedItem,
+            List<ListItem> listItems) {
         if (prvSelectedItem != null) {
             TravelCustomFieldListItem prvSelectedListItem = new TravelCustomFieldListItem(prvSelectedItem,
                     CUSTOM_FIELD_LIST_ITEM_VIEW_TYPE);

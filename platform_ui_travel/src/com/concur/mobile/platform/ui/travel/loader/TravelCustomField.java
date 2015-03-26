@@ -1,9 +1,9 @@
 package com.concur.mobile.platform.ui.travel.loader;
 
 import android.util.Log;
+import com.concur.mobile.platform.common.FieldValueSpinnerItem;
 import com.concur.mobile.platform.common.SpinnerItem;
 import com.concur.mobile.platform.common.formfield.FormField;
-import com.concur.mobile.platform.ui.common.view.FieldValueSpinnerItem;
 import com.concur.mobile.platform.util.Const;
 import com.concur.mobile.platform.util.Format;
 import com.concur.mobile.platform.util.Parse;
@@ -201,9 +201,9 @@ public class TravelCustomField extends FormField implements Serializable {
     public static class TravelCustomFieldSaveSAXHandler extends DefaultHandler {
 
         private static final String CUSTOM_FIELDS = "CustomFields";
+        private static final String FIELD = "Field";
         private static final String CLS_TAG =
                 TravelCustomField.CLS_TAG + "." + TravelCustomFieldSaveSAXHandler.class.getSimpleName();
-        private static final String FIELD = "Field";
         private static final String VALUE = "Value";
         private static final String VALUE_ID = "ValueId";
         private static final String ID = "Id";
@@ -301,9 +301,9 @@ public class TravelCustomField extends FormField implements Serializable {
     public static class TravelCustomFieldSAXHandler extends DefaultHandler {
 
         private static final String FIELD = "Field";
+        private static final String VALUES = "Values";
         private static final String CLS_TAG =
                 TravelCustomField.CLS_TAG + "." + TravelCustomFieldSAXHandler.class.getSimpleName();
-        private static final String VALUES = "Values";
         private static final String ATTRIBUTE_VALUE = "AttributeValue";
         private static final String ATTRIBUTE_ID = "AttributeId";
         private static final String ATTRIBUTE_TITLE = "AttributeTitle";

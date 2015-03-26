@@ -156,57 +156,70 @@ public class HotelChoiceDetailsActivity extends TravelBaseActivity
 
     @Override
     public void onImageClicked(View v, int id) {
-        final Intent i = new Intent(this, ImageDetailActivity.class);
-        i.putExtra(ImageDetailActivity.EXTRA_IMAGE, id);
-        Bundle bundle = new Bundle();
-        bundle.putSerializable(Const.EXTRA_HOTEL_IMAGES, (Serializable) hotel.imagePairs);
-        i.putExtras(bundle);
-        if (Build.VERSION.SDK_INT >= VERSION_CODES.JELLY_BEAN) {
-            // makeThumbnailScaleUpAnimation() looks kind of ugly here as the loading spinner may
-            // show plus the thumbnail image in GridView is cropped. so using
-            // makeScaleUpAnimation() instead.
-            ActivityOptions options = ActivityOptions.makeScaleUpAnimation(v, 0, 0, v.getWidth(), v.getHeight());
-            startActivity(i, options.toBundle());
+        if (isOffline) {
+            showOfflineDialog();
         } else {
-            startActivity(i);
+            final Intent i = new Intent(this, ImageDetailActivity.class);
+            i.putExtra(ImageDetailActivity.EXTRA_IMAGE, id);
+            Bundle bundle = new Bundle();
+            bundle.putSerializable(Const.EXTRA_HOTEL_IMAGES, (Serializable) hotel.imagePairs);
+            i.putExtras(bundle);
+            if (Build.VERSION.SDK_INT >= VERSION_CODES.JELLY_BEAN) {
+                // makeThumbnailScaleUpAnimation() looks kind of ugly here as the loading spinner may
+                // show plus the thumbnail image in GridView is cropped. so using
+                // makeScaleUpAnimation() instead.
+                ActivityOptions options = ActivityOptions.makeScaleUpAnimation(v, 0, 0, v.getWidth(), v.getHeight());
+                startActivity(i, options.toBundle());
+            } else {
+                startActivity(i);
+            }
         }
     }
 
     @Override
     public void onFindRoomsClicked() {
-        FragmentManager fm = hotelDetailsFrag.getFragmentManager();
-        if (fm.findFragmentByTag(TAB_ROOMS) != null) {
-            hotelDetailsFrag.mTabHost.setCurrentTab(1);
+        if (isOffline) {
+            showOfflineDialog();
+        } else {
+            FragmentManager fm = hotelDetailsFrag.getFragmentManager();
+            if (fm.findFragmentByTag(TAB_ROOMS) != null) {
+                hotelDetailsFrag.mTabHost.setCurrentTab(1);
+            }
         }
 
     }
 
     @Override
     public void onMapsClicked(LatLng post) {
-        int resultCode = GooglePlayServicesUtil.isGooglePlayServicesAvailable(this);
-
-        // TODO customize ShowMaps to view single and multiple hotels
-        // Intent i = new Intent(this, ShowHotelMap.class);
-        if (resultCode == ConnectionResult.SUCCESS && post != null) {
-            // i.putExtra(Const.EXTRA_HOTEL_LOCATION, post);
-            // startActivity(i);
-            // Intent i = this.getIntent();
-            // i.putExtra(Const.EXTRA_HOTEL_LOCATION, post);
-            HotelMapFragment hotelMapFragment = (HotelMapFragment) getFragmentManager()
-                    .findFragmentByTag(FRAGMENT_HOTEL_MAP);
-            if (hotelMapFragment == null) {
-                hotelMapFragment = new HotelMapFragment(post);
-                FragmentTransaction ft = getFragmentManager().beginTransaction();
-                ft.add(R.id.tabcontainer, hotelMapFragment, FRAGMENT_HOTEL_MAP);
-                ft.addToBackStack(null);
-                ft.commit();
-            }
-
-            // hotel = new HotelSearchResultListItem();
-            // hotelListItem = (HotelSearchResultListItem) bundle.getSerializable(Const.EXTRA_HOTELS_DETAILS);
+        if (isOffline) {
+            showOfflineDialog();
 
         } else {
-            Toast.makeText(this, "Map Unavailable", Toast.LENGTH_LONG).show();
+            int resultCode = GooglePlayServicesUtil.isGooglePlayServicesAvailable(this);
+
+            // TODO customize ShowMaps to view single and multiple hotels
+            // Intent i = new Intent(this, ShowHotelMap.class);
+            if (resultCode == ConnectionResult.SUCCESS && post != null) {
+                // i.putExtra(Const.EXTRA_HOTEL_LOCATION, post);
+                // startActivity(i);
+                // Intent i = this.getIntent();
+                // i.putExtra(Const.EXTRA_HOTEL_LOCATION, post);
+                HotelMapFragment hotelMapFragment = (HotelMapFragment) getFragmentManager()
+                        .findFragmentByTag(FRAGMENT_HOTEL_MAP);
+                if (hotelMapFragment == null) {
+                    hotelMapFragment = new HotelMapFragment(post);
+                    FragmentTransaction ft = getFragmentManager().beginTransaction();
+                    ft.add(R.id.tabcontainer, hotelMapFragment, FRAGMENT_HOTEL_MAP);
+                    ft.addToBackStack(null);
+                    ft.commit();
+                }
+
+                // hotel = new HotelSearchResultListItem();
+                // hotelListItem = (HotelSearchResultListItem) bundle.getSerializable(Const.EXTRA_HOTELS_DETAILS);
+
+            } else {
+                Toast.makeText(this, "Map Unavailable", Toast.LENGTH_LONG).show();
+            }
         }
 
     }
@@ -231,30 +244,33 @@ public class HotelChoiceDetailsActivity extends TravelBaseActivity
 
     @Override
     public void roomItemClicked(HotelRoomListItem roomListItem) {
-        if (roomListItem.getHotelRoom().greyFlag) {
-            Toast.makeText(getApplicationContext(), R.string.hotel_dialog_deposit_required_msg, Toast.LENGTH_LONG)
-                    .show();
-        } else {
-            Intent intent = new Intent(this, HotelBookingActivity.class);
-            // TODO - have a singleton class and set these objects there to share with other activities?
-            intent.putExtra("roomSelected", roomListItem.getHotelRoom());
 
-            intent.putExtra(Const.EXTRA_TRAVEL_HOTEL_SEARCH_LOCATION, location);
-            intent.putExtra(Const.EXTRA_TRAVEL_HOTEL_SEARCH_DURATION_OF_STAY, durationOfStayForDisplay);
-            intent.putExtra(Const.EXTRA_TRAVEL_HOTEL_SEARCH_DURATION_NUM_OF_NIGHTS, numOfNights);
-            intent.putExtra("headerImageURL", headerImageURL);
-            intent.putExtra("hotelName", hotelListItem.getHotel().name);
-            // startActivity(intent);
-            intent.putExtra("violationReasons", violationReasons);
-            intent.putExtra("ruleViolationExplanationRequired", ruleViolationExplanationRequired);
-            intent.putExtra("currentTripId", currentTripId);
-            intent.putExtra("hotelSearchId", hotel.search_id);
-            intent.putExtra("violations", (Serializable) violations);
-            if (travelCustomFieldsConfig != null) {
-                intent.putExtra("travelCustomFieldsConfig", travelCustomFieldsConfig);
+        if (isOffline) {
+            showOfflineDialog();
+        } else {
+
+            if (roomListItem.getHotelRoom().greyFlag) {
+                Toast.makeText(getApplicationContext(), R.string.hotel_dialog_deposit_required_msg, Toast.LENGTH_LONG)
+                        .show();
+            } else {
+                Intent intent = new Intent(this, HotelBookingActivity.class);
+                // TODO - have a singleton class and set these objects there to share with other activities?
+                intent.putExtra("roomSelected", roomListItem.getHotelRoom());
+
+                intent.putExtra(Const.EXTRA_TRAVEL_HOTEL_SEARCH_LOCATION, location);
+                intent.putExtra(Const.EXTRA_TRAVEL_HOTEL_SEARCH_DURATION_OF_STAY, durationOfStayForDisplay);
+                intent.putExtra(Const.EXTRA_TRAVEL_HOTEL_SEARCH_DURATION_NUM_OF_NIGHTS, numOfNights);
+                intent.putExtra("headerImageURL", headerImageURL);
+                intent.putExtra("hotelName", hotelListItem.getHotel().name);
+                // startActivity(intent);
+                intent.putExtra("violationReasons", violationReasons);
+                intent.putExtra("ruleViolationExplanationRequired", ruleViolationExplanationRequired);
+                intent.putExtra("currentTripId", currentTripId);
+                intent.putExtra("hotelSearchId", hotel.search_id);
+                intent.putExtra("violations", (Serializable) violations);
+                startActivityForResult(intent, Const.REQUEST_CODE_BOOK_HOTEL);
             }
 
-            startActivityForResult(intent, Const.REQUEST_CODE_BOOK_HOTEL);
         }
 
     }

@@ -80,8 +80,6 @@ public class RestHotelSearch extends TravelBaseActivity
     private static final String KEY_DIALOG_ID = "key.dialog.id";
     private static final String KEY_IS_CHECKIN = "key.is.checkin";
     protected final IntentFilter hotelResultsFilter = new IntentFilter(Const.ACTION_HOTEL_SEARCH_RESULTS);
-    // protected static final int DISTANCE_DIALOG = DIALOG_ID_BASE + 2;
-    // protected static final int DISTANCE_UNIT_DIALOG = DIALOG_ID_BASE + 3;
     protected View location;
 
     protected View checkInDateView;
@@ -113,6 +111,7 @@ public class RestHotelSearch extends TravelBaseActivity
     private boolean checkForSearchCriteraChanged;
     private boolean searchCriteriaChanged;
     private LoaderManager lm;
+    private boolean update = false;
 
     // /////////////////////////////////////////////////////////////////
 
@@ -298,7 +297,7 @@ public class RestHotelSearch extends TravelBaseActivity
     public boolean onOptionsItemSelected(MenuItem item) {
         if (item.getItemId() == R.id.menuVoice) {
             if (!ConcurCore.isConnected()) {
-                // showDialog(Const.DIALOG_NO_CONNECTIVITY);
+                showOfflineDialog();
             } else {
                 ConcurCore core = (ConcurCore) ConcurCore.getContext();
                 Intent i = new Intent(RestHotelSearch.this, HotelVoiceSearchActivity.class);
@@ -349,7 +348,7 @@ public class RestHotelSearch extends TravelBaseActivity
                 // Check for connectivity, if none, then display dialog and
                 // return.
                 if (!ConcurCore.isConnected()) {
-                    // showDialog(Const.DIALOG_NO_CONNECTIVITY);
+                    showOfflineDialog();
                     return;
                 }
                 // ValidateTravelCustomFields will display a dialog and return
@@ -407,28 +406,6 @@ public class RestHotelSearch extends TravelBaseActivity
         actionBar.setTitle(R.string.general_search);
 
     }
-
-    /*
-     * (non-Javadoc)
-     * 
-     * @see android.app.Activity#onPrepareDialog(int, android.app.Dialog)
-     */
-    // @Override
-    // protected void onPrepareDialog(int id, Dialog dialog) {
-    // super.onPrepareDialog(id, dialog);
-    // switch (id) {
-    // case Const.DIALOG_TRAVEL_SEARCH_HOTEL_FAILED: {
-    // AlertDialog alertDlg = (AlertDialog) dialog;
-    // alertDlg.setMessage(actionStatusErrorMessage);
-    // break;
-    // }
-    // }
-    // }
-
-    // @Override
-    // protected boolean getDisplayAtStart() {
-    // return true;
-    // }
 
     // ///////////////////////////////////////////////////////////////////////////
     // Location methods - start
@@ -571,7 +548,8 @@ public class RestHotelSearch extends TravelBaseActivity
             @Override
             public void onClick(View v) {
                 if (!ConcurCore.isConnected()) {
-                    // showDialog(Const.DIALOG_NO_CONNECTIVITY);
+                    showOfflineDialog();
+
                 } else {
                     // Determine if there are any company locations, if so, then
                     // pass that flag into
@@ -654,23 +632,6 @@ public class RestHotelSearch extends TravelBaseActivity
 
         }
     }
-
-    // @Override
-    // protected void onBookingSucceeded() {
-    // if (!launchedWithCliqbookTripId) {
-    // // Set the flag that the trip list should be refetched.
-    // IItineraryCache itinCache = getConcurCore().getItinCache();
-    // if (itinCache != null) {
-    // itinCache.setShouldRefetchSummaryList(true);
-    // }
-    // // Retrieve an updated trip summary list, then retrieve the detailed itinerary.
-    // isShowRatingPrompt = true;
-    // sendItinerarySummaryListRequest();
-    // } else {
-    // // Just finish the activity.
-    // finish();
-    // }
-    // }
 
     // ///////////////////////////////////////////////////////////////////////////
     // Location methods - end
@@ -830,7 +791,7 @@ public class RestHotelSearch extends TravelBaseActivity
             intent.putExtra("violationReasons", violationReasons);
         }
         // Check whether SystemConfig stipulates that 'violation justification' is required.
-        if (sysConfig.getRuleViolationExplanationRequired() != null && sysConfig
+        if (sysConfig != null && sysConfig.getRuleViolationExplanationRequired() != null && sysConfig
                 .getRuleViolationExplanationRequired()) {
             intent.putExtra("ruleViolationExplanationRequired", true);
         } else {
@@ -976,14 +937,6 @@ public class RestHotelSearch extends TravelBaseActivity
             }
         }
 
-        if (travelCustomFieldsConfig != null && travelCustomFieldsConfig.formFields != null) {
-            Log.d(Const.LOG_TAG,
-                    CLS_TAG + ".onLoadFinished ********************* : travelCustomFieldsConfig size : " + (
-                            travelCustomFieldsConfig != null ?
-                                    travelCustomFieldsConfig.formFields.size() :
-                                    null));
-        }
-
     }
 
     @Override
@@ -1073,5 +1026,4 @@ public class RestHotelSearch extends TravelBaseActivity
         }
 
     }
-
 }

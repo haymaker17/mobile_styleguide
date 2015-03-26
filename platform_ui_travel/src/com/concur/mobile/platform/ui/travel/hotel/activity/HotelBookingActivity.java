@@ -53,8 +53,7 @@ import java.util.List;
  * @author RatanK
  */
 public class HotelBookingActivity extends TravelBaseActivity
-        implements SpinnerDialogFragmentCallbackListener, CustomDialogFragmentCallbackListener,
-        TravelCustomFieldsFragment.TravelCustomFieldsFragmentCallBackListener {
+        implements SpinnerDialogFragmentCallbackListener, CustomDialogFragmentCallbackListener {
 
     protected static final String CLS_TAG = HotelBookingActivity.class.getSimpleName();
     // custom fields loader callback implementation
@@ -346,15 +345,6 @@ public class HotelBookingActivity extends TravelBaseActivity
     public void onResume() {
         super.onResume();
 
-        // Re-register connectivity receiver.
-        if (!connectivityReceiverRegistered) {
-            // Register the receiver.
-            Intent stickyIntent = registerReceiver(connectivityReceiver, connectivityFilter);
-            if (stickyIntent != null) {
-                updateUIForConnectivity(stickyIntent.getAction());
-            }
-            connectivityReceiverRegistered = true;
-        }
     }
 
     private void unregisterReceiver() {
@@ -362,14 +352,11 @@ public class HotelBookingActivity extends TravelBaseActivity
             hotelBookingReceiver.setListener(null);
             retainer.put(GET_HOTEL_BOOKING_RECEIVER, hotelBookingReceiver);
         }
-        if (connectivityReceiverRegistered) {
-            unregisterReceiver(connectivityReceiver);
-            connectivityReceiverRegistered = false;
-        }
 
     }
 
     private void initView() {
+
         // header title
         ActionBar actionBar = getActionBar();
         actionBar.setTitle(hotelName);
@@ -455,8 +442,13 @@ public class HotelBookingActivity extends TravelBaseActivity
             @Override
             public void onClick(View v) {
 
-                CustomDialogFragment dialog = new CustomDialogFragment(R.string.hotel_confirm_reserve_title,
-                        msgResourse, R.string.hotel_confirm_reserve_ok, R.string.hotel_confirm_reserve_cancel);
+                CustomDialogFragment dialog = new CustomDialogFragment();
+
+                dialog.setTitle(R.string.hotel_confirm_reserve_title);
+                dialog.setMessage(R.string.dlg_no_connectivity_message);
+                dialog.setPositiveButtonText(R.string.hotel_confirm_reserve_ok);
+                dialog.setNegativeButtonText(R.string.hotel_confirm_reserve_cancel);
+
                 dialog.show(getFragmentManager(), DIALOG_FRAGMENT_ID);
 
             }
@@ -655,17 +647,22 @@ public class HotelBookingActivity extends TravelBaseActivity
         cardSelectionView.setOnClickListener(new OnClickListener() {
 
             public void onClick(View v) {
-                if (cardChoices != null && cardChoices.length > 0) {
-                    SpinnerDialogFragment dialogFragment = new SpinnerDialogFragment(R.string.general_select_card,
-                            R.drawable.sort_check_mark, cardChoices);
-                    if (curCardChoice != null) {
-                        dialogFragment.curSpinnerItemId = curCardChoice.id;
-                    }
-                    dialogFragment.show(getFragmentManager(), CREDIT_CARDS_SPINNER_FRAGMENT);
+                if (isOffline) {
+                    showOfflineDialog();
                 } else {
-                    // no cards dialog
-                    DialogFragmentFactoryV1.getAlertOkayInstance(getString(R.string.general_credit_card),
-                            getString(R.string.general_credit_cards_not_available)).show(getFragmentManager(), null);
+                    if (cardChoices != null && cardChoices.length > 0) {
+                        SpinnerDialogFragment dialogFragment = new SpinnerDialogFragment(R.string.general_select_card,
+                                R.drawable.sort_check_mark, cardChoices);
+                        if (curCardChoice != null) {
+                            dialogFragment.curSpinnerItemId = curCardChoice.id;
+                        }
+                        dialogFragment.show(getFragmentManager(), CREDIT_CARDS_SPINNER_FRAGMENT);
+                    } else {
+                        // no cards dialog
+                        DialogFragmentFactoryV1.getAlertOkayInstance(getString(R.string.general_credit_card),
+                                getString(R.string.general_credit_cards_not_available))
+                                .show(getFragmentManager(), null);
+                    }
                 }
             }
         });
@@ -826,7 +823,7 @@ public class HotelBookingActivity extends TravelBaseActivity
 
     @SuppressLint("ShowToast")
     private void doBooking() {
-        if (connected) {
+        if (!isOffline) {
 
             reserveButton.setEnabled(false);
             boolean hasAllRequiredFields = true;
@@ -973,7 +970,6 @@ public class HotelBookingActivity extends TravelBaseActivity
         Toast.makeText(this, message, Toast.LENGTH_SHORT).show();
     }
 
-    @Override
     public void sendTravelCustomFieldsUpdateRequest(List<TravelCustomField> fields) {
         update = true;
         formFields = fields;

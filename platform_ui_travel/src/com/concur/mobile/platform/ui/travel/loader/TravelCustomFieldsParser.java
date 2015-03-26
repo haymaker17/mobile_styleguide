@@ -1,7 +1,7 @@
 package com.concur.mobile.platform.ui.travel.loader;
 
 import com.concur.mobile.base.service.parser.Parser;
-import com.concur.mobile.platform.ui.common.view.FieldValueSpinnerItem;
+import com.concur.mobile.platform.common.FieldValueSpinnerItem;
 import com.concur.mobile.platform.util.Parse;
 
 import java.util.ArrayList;

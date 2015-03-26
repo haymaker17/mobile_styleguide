@@ -1,10 +1,14 @@
 package com.concur.mobile.platform.ui.travel.view;
 
 import android.content.Intent;
+import com.concur.mobile.platform.common.FieldValueSpinnerItem;
 import com.concur.mobile.platform.common.SpinnerItem;
 import com.concur.mobile.platform.common.formfield.IFormField;
-import com.concur.mobile.platform.ui.common.view.*;
+import com.concur.mobile.platform.ui.common.view.ComboListFormFieldView;
+import com.concur.mobile.platform.ui.common.view.FormFieldView;
 import com.concur.mobile.platform.ui.common.view.FormFieldView.IFormFieldViewListener;
+import com.concur.mobile.platform.ui.common.view.IFormFieldViewEditHandler;
+import com.concur.mobile.platform.ui.common.view.SearchListFormFieldView;
 import com.concur.mobile.platform.ui.travel.activity.TravelCustomFieldSearch;
 import com.concur.mobile.platform.ui.travel.util.Const;
 
@@ -107,40 +111,4 @@ public class FormFieldViewEditHandler implements IFormFieldViewEditHandler {
             }
         }
     }
-
-    // /**
-    // * Will return an <code>Intent</code> object that can be used to launch a list search based on the
-    // * <code>ExpenseReportFormField</code> backing this view.
-    // *
-    // * @return returns an <code>Intent</code> object that can be used to launch a list search based on the
-    // * <code>ExpenseReportFormField</code> backing this view.
-    // */
-    // protected Intent getListSearchLaunchIntent(IFormFieldViewListener listener, IFormField frmFld) {
-    // Intent intent = new Intent(listener.getActivity(), ListSearch.class);
-    // if (frmFld.getId() != null) {
-    // intent.putExtra(Const.EXTRA_LIST_SEARCH_FIELD_ID, frmFld.getId());
-    // }
-    // if (frmFld.getFtCode() != null) {
-    // intent.putExtra(Const.EXTRA_LIST_SEARCH_FT_CODE, frmFld.getFtCode());
-    // }
-    // if (frmFld.getListKey() != null) {
-    // intent.putExtra(Const.EXTRA_LIST_SEARCH_LIST_KEY, frmFld.getListKey());
-    // }
-    // if (frmFld.getLabel() != null) {
-    // intent.putExtra(Const.EXTRA_LIST_SEARCH_TITLE, frmFld.getLabel());
-    // }
-    // ArrayList<IListFieldItem> ssl = frmFld.getSearchableStaticList();
-    // if (ssl != null) {
-    // intent.putExtra(Const.EXTRA_LIST_SEARCH_STATIC_LIST, ssl);
-    // }
-    //
-    // // Add any parent list item key if this is a connected list.
-    // addParentLiKey(intent, listener, frmFld);
-    //
-    // // Add any MRU intent extra.
-    // intent.putExtra(Const.EXTRA_LIST_SEARCH_IS_MRU, Boolean.TRUE);
-    //
-    // return intent;
-    // }
-
 }

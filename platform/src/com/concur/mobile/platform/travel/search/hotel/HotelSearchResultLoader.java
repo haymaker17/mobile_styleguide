@@ -24,11 +24,9 @@ import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
 
 /**
- * 
  * Async task loader class for the hotel search
- * 
+ *
  * @author RatanK
- * 
  */
 public class HotelSearchResultLoader extends PlatformAsyncTaskLoader<HotelSearchRESTResult> {
 
@@ -95,8 +93,8 @@ public class HotelSearchResultLoader extends PlatformAsyncTaskLoader<HotelSearch
      */
     protected HotelSearchRESTResult searchResult;
 
-    public HotelSearchResultLoader(Context context, Calendar checkInDate, Calendar checkOutDate, Double lat,
-            Double lon, Integer radius, String distanceUnit) {
+    public HotelSearchResultLoader(Context context, Calendar checkInDate, Calendar checkOutDate, Double lat, Double lon,
+            Integer radius, String distanceUnit) {
 
         super(context);
 
@@ -111,9 +109,8 @@ public class HotelSearchResultLoader extends PlatformAsyncTaskLoader<HotelSearch
     /**
      * Configure connection properties. The default implementation sets the user agent, content type to type/xml, connect timeout
      * to 10 seconds, and read timeout to 30 seconds.
-     * 
-     * @param connection
-     *            The open but not yet connected {@link HttpURLConnection} to the server
+     *
+     * @param connection The open but not yet connected {@link HttpURLConnection} to the server
      */
     @Override
     protected void configureConnection(HttpURLConnection connection) {
@@ -134,7 +131,9 @@ public class HotelSearchResultLoader extends PlatformAsyncTaskLoader<HotelSearch
     protected HotelSearchRESTResult parseStream(InputStream is) {
         try {
             // prepare the object Type expected in MWS response 'data' element
-            Type type = new TypeToken<MWSResponse<HotelSearchRESTResult>>() {}.getType();
+            Type type = new TypeToken<MWSResponse<HotelSearchRESTResult>>() {
+
+            }.getType();
 
             mwsResp = new Gson().fromJson(new InputStreamReader(new BufferedInputStream(is), "UTF-8"), type);
 
@@ -190,7 +189,7 @@ public class HotelSearchResultLoader extends PlatformAsyncTaskLoader<HotelSearch
 
     /**
      * prepare end point url for Hotel search
-     * 
+     *
      * @param end_point
      * @param lat
      * @param lon
