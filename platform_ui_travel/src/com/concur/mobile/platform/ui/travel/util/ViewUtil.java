@@ -3,6 +3,7 @@ package com.concur.mobile.platform.ui.travel.util;
 import android.content.Context;
 import android.text.Spannable;
 import android.text.style.URLSpan;
+import android.text.util.Linkify;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -143,26 +144,33 @@ public class ViewUtil {
 
         CharSequence text = tv.getText();
         if (text != null && text.length() > 0) {
-            Spannable s = (Spannable) text;
-            URLSpan[] spans = s.getSpans(0, s.length(), URLSpan.class);
+            try {
+                Spannable s = (Spannable) text;
+                URLSpan[] spans = s.getSpans(0, s.length(), URLSpan.class);
 
-            for (URLSpan span : spans) {
-                int start = s.getSpanStart(span);
-                int end = s.getSpanEnd(span);
-                s.removeSpan(span);
-                span = new URLSpanNoUnderline(span.getURL());
-                s.setSpan(span, start, end, 0);
+                for (URLSpan span : spans) {
+                    int start = s.getSpanStart(span);
+                    int end = s.getSpanEnd(span);
+                    s.removeSpan(span);
+                    span = new URLSpanNoUnderline(span.getURL());
+                    s.setSpan(span, start, end, 0);
+
+                }
+
+                tv.setText(s);
+
+            } catch (java.lang.ClassCastException e) {
+                e.printStackTrace();
+                Linkify.addLinks(tv, Linkify.PHONE_NUMBERS);
 
             }
-
-            tv.setText(s);
-
         }
     }
 
     /**
      * Gets the 'show but no booking' maxenforcement violation from the passed in maxenforcementlevel
      */
+
     public static HotelViolation getShowButNoBookingViolation(List<HotelViolation> violations,
             String maxEnforcementLevel, int maxEnforcelimit) {
         // TODO

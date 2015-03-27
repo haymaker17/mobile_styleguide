@@ -86,12 +86,12 @@ public class HotelChoiceDetailsActivity extends TravelBaseActivity
     public boolean onOptionsItemSelected(MenuItem item) {
         if (item.getItemId() == R.id.map) {
             // Toast.makeText(getApplicationContext(), "Not implemented", Toast.LENGTH_SHORT).show();
-            if (hotel != null) {
-                LatLng post = new LatLng(hotel.latitude, hotel.longitude);
-                onMapsClicked(post);
-            } else {
-                Toast.makeText(getApplicationContext(), "No Hotel Details", Toast.LENGTH_SHORT).show();
-            }
+            //            if (hotel != null) {
+            //                LatLng post = new LatLng(hotel.latitude, hotel.longitude);
+            //                onMapsClicked(post);
+            //            } else {
+            Toast.makeText(getApplicationContext(), "Maps unavailable", Toast.LENGTH_SHORT).show();
+            // }
             return true;
         } else {
             return super.onOptionsItemSelected(item);
@@ -268,7 +268,7 @@ public class HotelChoiceDetailsActivity extends TravelBaseActivity
                 intent.putExtra("currentTripId", currentTripId);
                 intent.putExtra("hotelSearchId", hotel.search_id);
                 intent.putExtra("violations", (Serializable) violations);
-                if(travelCustomFieldsConfig != null) {
+                if (travelCustomFieldsConfig != null) {
                     intent.putExtra("travelCustomFieldsConfig", travelCustomFieldsConfig);
                 }
                 startActivityForResult(intent, Const.REQUEST_CODE_BOOK_HOTEL);

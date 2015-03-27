@@ -10,14 +10,12 @@ import android.widget.AbsListView;
 import android.widget.AbsListView.OnScrollListener;
 import android.widget.ImageView;
 import android.widget.ListView;
-
 import com.concur.mobile.platform.ui.travel.R;
 
 /**
  * view util to show parallax scroll view on image for Hotel Choice details page
- * 
+ *
  * @author tejoa
- * 
  */
 
 public class ParallaxScollView extends ListView implements OnScrollListener {
@@ -65,15 +63,18 @@ public class ParallaxScollView extends ListView implements OnScrollListener {
     }
 
     @Override
-    protected boolean overScrollBy(int deltaX, int deltaY, int scrollX, int scrollY, int scrollRangeX,
-            int scrollRangeY, int maxOverScrollX, int maxOverScrollY, boolean isTouchEvent) {
+    protected boolean overScrollBy(int deltaX, int deltaY, int scrollX, int scrollY, int scrollRangeX, int scrollRangeY,
+            int maxOverScrollX, int maxOverScrollY, boolean isTouchEvent) {
         boolean isCollapseAnimation = false;
 
-        isCollapseAnimation = scrollByListener.overScrollBy(deltaX, deltaY, scrollX, scrollY, scrollRangeX,
-                scrollRangeY, maxOverScrollX, maxOverScrollY, isTouchEvent) || isCollapseAnimation;
+        isCollapseAnimation = scrollByListener
+                .overScrollBy(deltaX, deltaY, scrollX, scrollY, scrollRangeX, scrollRangeY, maxOverScrollX,
+                        maxOverScrollY, isTouchEvent) || isCollapseAnimation;
 
-        return isCollapseAnimation ? true : super.overScrollBy(deltaX, deltaY, scrollX, scrollY, scrollRangeX,
-                scrollRangeY, maxOverScrollX, maxOverScrollY, isTouchEvent);
+        return isCollapseAnimation ?
+                true :
+                super.overScrollBy(deltaX, deltaY, scrollX, scrollY, scrollRangeX, scrollRangeY, maxOverScrollX,
+                        maxOverScrollY, isTouchEvent);
     }
 
     @Override
@@ -88,8 +89,8 @@ public class ParallaxScollView extends ListView implements OnScrollListener {
             // firstView.getTop < getPaddingTop means mImageView will be covered by top padding,
             // so we can layout it to make it shorter
             if (firstView.getTop() < getPaddingTop() && mImageView.getHeight() > mImageViewHeight) {
-                mImageView.getLayoutParams().height = Math.max(
-                        mImageView.getHeight() - (getPaddingTop() - firstView.getTop()), mImageViewHeight);
+                mImageView.getLayoutParams().height = Math
+                        .max(mImageView.getHeight() - (getPaddingTop() - firstView.getTop()), mImageViewHeight);
                 // to set the firstView.mTop to 0,
                 // maybe use View.setTop() is more easy, but it just support from Android 3.0 (API 11)
                 firstView.layout(firstView.getLeft(), 0, firstView.getRight(), firstView.getHeight());
@@ -115,12 +116,13 @@ public class ParallaxScollView extends ListView implements OnScrollListener {
             if (mImageViewHeight <= 0) {
                 mImageViewHeight = mDefaultImageViewHeight;
             }
-            if (mImageView != null && mImageView.getVisibility() == View.VISIBLE) {
-                double ratio = ((double) mImageView.getDrawable().getIntrinsicWidth())
-                        / ((double) mImageView.getWidth());
+            if (mImageView != null && mImageView.getVisibility() == View.VISIBLE && mImageView.getDrawable() != null) {
+                double ratio =
+                        ((double) mImageView.getDrawable().getIntrinsicWidth()) / ((double) mImageView.getWidth());
 
-                mDrawableMaxHeight = (int) ((mImageView.getDrawable().getIntrinsicHeight() / ratio) * (zoomRatio > 1 ? zoomRatio
-                        : 1));
+                mDrawableMaxHeight = (int) ((mImageView.getDrawable().getIntrinsicHeight() / ratio) * (zoomRatio > 1 ?
+                        zoomRatio :
+                        1));
             }
         }
     }
@@ -133,16 +135,16 @@ public class ParallaxScollView extends ListView implements OnScrollListener {
             if (mImageView != null && mImageView.getHeight() <= mDrawableMaxHeight && isTouchEvent) {
                 if (deltaY < 0) {
                     if (mImageView.getHeight() - deltaY / 2 >= mImageViewHeight) {
-                        mImageView.getLayoutParams().height = mImageView.getHeight() - deltaY / 2 < mDrawableMaxHeight ? mImageView
-                                .getHeight() - deltaY / 2
-                                : mDrawableMaxHeight;
+                        mImageView.getLayoutParams().height = mImageView.getHeight() - deltaY / 2 < mDrawableMaxHeight ?
+                                mImageView.getHeight() - deltaY / 2 :
+                                mDrawableMaxHeight;
                         mImageView.requestLayout();
                     }
                 } else {
                     if (mImageView.getHeight() > mImageViewHeight) {
-                        mImageView.getLayoutParams().height = mImageView.getHeight() - deltaY > mImageViewHeight ? mImageView
-                                .getHeight() - deltaY
-                                : mImageViewHeight;
+                        mImageView.getLayoutParams().height = mImageView.getHeight() - deltaY > mImageViewHeight ?
+                                mImageView.getHeight() - deltaY :
+                                mImageViewHeight;
                         mImageView.requestLayout();
                         return true;
                     }

@@ -176,7 +176,7 @@ public class ImageCache {
             } catch (IOException e) {
                 Log.w(Const.LOG_TAG, "Error reading image cache file: " + file.getName(), e);
             } catch (java.lang.OutOfMemoryError e) {
-                retVal.recycle();
+                //retVal.recycle();
                 Log.w(Const.LOG_TAG, "Java.lang.OutOfMemoryError: " + file.getName(), e);
             }
         }

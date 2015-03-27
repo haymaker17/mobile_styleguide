@@ -3,7 +3,10 @@ package com.concur.mobile.platform.ui.travel.hotel.activity;
 import android.animation.ObjectAnimator;
 import android.annotation.SuppressLint;
 import android.app.*;
-import android.content.*;
+import android.content.BroadcastReceiver;
+import android.content.Intent;
+import android.content.IntentFilter;
+import android.content.Loader;
 import android.graphics.Bitmap;
 import android.os.Bundle;
 import android.os.Handler;
@@ -254,40 +257,6 @@ public class HotelBookingActivity extends TravelBaseActivity
 
         // initialize the view
         initView();
-
-        connectivityReceiver = new BroadcastReceiver() {
-
-            @Override
-            public void onReceive(Context context, Intent intent) {
-                updateUIForConnectivity(intent.getAction());
-            }
-        };
-        connectivityFilter = new IntentFilter(
-                com.concur.mobile.platform.ui.common.util.Const.ACTION_DATA_CONNECTIVITY_AVAILABLE);
-        connectivityFilter
-                .addAction(com.concur.mobile.platform.ui.common.util.Const.ACTION_DATA_CONNECTIVITY_UNAVAILABLE);
-        // Register the data connectivity receiver.
-        Intent stickyIntent = registerReceiver(connectivityReceiver, connectivityFilter);
-        if (stickyIntent != null) {
-            updateUIForConnectivity(stickyIntent.getAction());
-        } else {
-            updateUIForConnectivity(null);
-        }
-        connectivityReceiverRegistered = true;
-
-    }
-
-    private void updateUIForConnectivity(String action) {
-        if (action != null) {
-            if (action.equalsIgnoreCase(
-                    com.concur.mobile.platform.ui.common.util.Const.ACTION_DATA_CONNECTIVITY_AVAILABLE)) {
-                connected = true;
-            } else if (action.equalsIgnoreCase(
-                    com.concur.mobile.platform.ui.common.util.Const.ACTION_DATA_CONNECTIVITY_UNAVAILABLE)) {
-                connected = false;
-            }
-
-        }
 
     }
 
