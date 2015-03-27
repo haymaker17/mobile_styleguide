@@ -3,10 +3,7 @@
  */
 package com.concur.mobile.core.travel.hotel.activity;
 
-import android.app.ActionBar;
-import android.app.FragmentManager;
-import android.app.FragmentTransaction;
-import android.app.LoaderManager;
+import android.app.*;
 import android.content.Intent;
 import android.content.IntentFilter;
 import android.content.Loader;
@@ -833,7 +830,7 @@ public class RestHotelSearch extends TravelBaseActivity
         // Check for whether 'custom_fields' view group exists!
         if (findViewById(R.id.hotel_booking_custom_fields) != null) {
             if (formFields != null && formFields.size() > 0) {
-                addTravelCustomFieldsView(false, true);
+                addTravelCustomFieldsView(false, true, update);
             }
         }
     }
@@ -845,9 +842,17 @@ public class RestHotelSearch extends TravelBaseActivity
      * @param displayAtStart if <code>true</code> will result in the fields designated to be displayed at the start of the booking process
      *                       will be displayed; otherwise, fields at the end of the booking process will be displayed.
      */
-    protected void addTravelCustomFieldsView(boolean readOnly, boolean displayAtStart) {
+    protected void addTravelCustomFieldsView(boolean readOnly, boolean displayAtStart, boolean updateReq) {
         // Company has static custom fields, so display them via our nifty fragment!
         FragmentManager fragmentManager = getFragmentManager();
+
+        if (updateReq) {
+            Fragment fragment = getFragmentManager().findFragmentByTag(TRAVEL_CUSTOM_VIEW_FRAGMENT_TAG);
+            if (fragment != null) {
+                // remove the existing custom controls
+                getFragmentManager().beginTransaction().remove(fragment).commit();
+            }
+        }
         FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
         travelCustomFieldsFragment = new TravelCustomFieldsFragment();
         travelCustomFieldsFragment.readOnly = readOnly;
@@ -856,6 +861,7 @@ public class RestHotelSearch extends TravelBaseActivity
         fragmentTransaction
                 .add(R.id.hotel_booking_custom_fields, travelCustomFieldsFragment, TRAVEL_CUSTOM_VIEW_FRAGMENT_TAG);
         fragmentTransaction.commit();
+
     }
 
     public void showProgressBar(String progressMsgResource) {
@@ -898,7 +904,7 @@ public class RestHotelSearch extends TravelBaseActivity
         PlatformAsyncTaskLoader<TravelCustomFieldsConfig> asyncLoader = null;
         if (update) {
             showProgressBar(getString(R.string.dlg_travel_retrieve_custom_fields_update_progress_message));
-            asyncLoader = new TravelCustomFieldsUpdateLoader(this, formFields);
+            asyncLoader = new TravelCustomFieldsUpdateLoader(this, travelCustomFieldsConfig.formFields);
         } else {
             showProgressBar(getString(R.string.dlg_travel_retrieve_custom_fields_progress_message));
             asyncLoader = new TravelCustomFieldsLoader(this);

@@ -6,6 +6,7 @@
     android:layout_marginLeft="6dp"
     android:layout_marginRight="6dp"
     android:layout_marginTop="18dp"
+    android:layout_marginBottom="18dp"
     android:clickable="true"
     android:focusable="true"
     android:orientation="vertical" >
@@ -14,6 +15,7 @@
         android:id="@+id/field_name"
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
+        android:layout_marginBottom="6dp"
         android:text="Field Name"
         android:textAppearance="@style/CustomFormFieldLabel" />
 
@@ -22,7 +24,7 @@
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
         android:layout_gravity="center_vertical"
-        android:layout_marginTop="6dp"
+        android:layout_marginBottom="6dp"
         android:ellipsize="end"
         android:gravity="center_vertical"
         android:lines="1"
@@ -36,7 +38,7 @@
         android:id="@+id/field_note"
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="6dp"
+        android:layout_marginBottom="6dp"
         android:text="Field Note"
         android:textAppearance="@style/CustomFormFieldNote"
         android:visibility="gone" />

@@ -53,7 +53,8 @@ import java.util.List;
  * @author RatanK
  */
 public class HotelBookingActivity extends TravelBaseActivity
-        implements SpinnerDialogFragmentCallbackListener, CustomDialogFragmentCallbackListener {
+        implements SpinnerDialogFragmentCallbackListener, CustomDialogFragmentCallbackListener,
+        TravelCustomFieldsFragment.TravelCustomFieldsFragmentCallBackListener {
 
     protected static final String CLS_TAG = HotelBookingActivity.class.getSimpleName();
     // custom fields loader callback implementation
@@ -970,9 +971,11 @@ public class HotelBookingActivity extends TravelBaseActivity
         Toast.makeText(this, message, Toast.LENGTH_SHORT).show();
     }
 
+    @Override
     public void sendTravelCustomFieldsUpdateRequest(List<TravelCustomField> fields) {
         update = true;
         formFields = fields;
+        travelCustomFieldsConfig.formFields = formFields;
         // Initialize the loader.
         lm.initLoader(CUSTOM_FIELDS_LOADER_ID, null, customFieldsLoaderListener);
     }

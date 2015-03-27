@@ -120,7 +120,7 @@ public class TravelCustomFieldsFragment extends PlatformFragmentV1 {
         try {
             callBackListener = (TravelCustomFieldsFragmentCallBackListener) activity;
         } catch (ClassCastException e) {
-            throw new ClassCastException(activity.toString() + " must implement HotelSearchResultsFragmentListener");
+            throw new ClassCastException(activity.toString() + " must implement TravelCustomFieldsFragmentCallBackListener");
         }
 
     }

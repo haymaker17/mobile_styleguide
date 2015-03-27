@@ -268,6 +268,9 @@ public class HotelChoiceDetailsActivity extends TravelBaseActivity
                 intent.putExtra("currentTripId", currentTripId);
                 intent.putExtra("hotelSearchId", hotel.search_id);
                 intent.putExtra("violations", (Serializable) violations);
+                if(travelCustomFieldsConfig != null) {
+                    intent.putExtra("travelCustomFieldsConfig", travelCustomFieldsConfig);
+                }
                 startActivityForResult(intent, Const.REQUEST_CODE_BOOK_HOTEL);
             }
 

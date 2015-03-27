@@ -73,6 +73,10 @@ public class FormUtil {
                         }
                     }
                 }
+                if (addedFormFieldView) {
+                    // Add a separator at the end
+                    ViewUtil.addSeparatorView(context, viewGroup);
+                }
             }
         } else {
             Log.e(Const.LOG_TAG, CLS_TAG + ".populateViewWithFields: null view to populate!");
@@ -248,7 +252,6 @@ public class FormUtil {
      *
      * @param frmFldViewListener references a form field view listener pre-populated with the form field views to be restored.
      * @param inState            a reference to a <code>Bundle</code> in which form field view state has been written.
-     * @param retainer           an instance of a <code>RetainerFragment</code> in which non-configuration data has been stored.
      */
     public static void restoreFormFieldState(IFormFieldViewListener frmFldViewListener, Bundle inState) {
 

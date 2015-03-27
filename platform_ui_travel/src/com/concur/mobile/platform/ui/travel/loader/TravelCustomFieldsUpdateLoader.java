@@ -45,6 +45,15 @@ public class TravelCustomFieldsUpdateLoader extends PlatformAsyncTaskLoader<Trav
     }
 
     @Override
+    public TravelCustomFieldsConfig loadInBackground() {
+        travelCustomFieldsConfig = super.loadInBackground();
+        if (result == RESULT_ERROR && travelCustomFieldsConfig != null) {
+            travelCustomFieldsConfig.errorOccuredWhileRetrieving = true;
+        }
+        return travelCustomFieldsConfig;
+    }
+
+    @Override
     protected TravelCustomFieldsConfig parseStream(InputStream is) {
 
         try {
