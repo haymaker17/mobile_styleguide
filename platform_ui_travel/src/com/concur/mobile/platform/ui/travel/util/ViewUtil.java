@@ -1,7 +1,5 @@
 package com.concur.mobile.platform.ui.travel.util;
 
-import java.util.List;
-
 import android.content.Context;
 import android.text.Spannable;
 import android.text.style.URLSpan;
@@ -9,18 +7,18 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
-
 import com.concur.mobile.platform.travel.search.hotel.HotelPreference;
 import com.concur.mobile.platform.travel.search.hotel.HotelRecommended;
 import com.concur.mobile.platform.travel.search.hotel.HotelViolation;
 import com.concur.mobile.platform.travel.search.hotel.RuleEnforcementLevel;
 import com.concur.mobile.platform.ui.travel.R;
 
+import java.util.List;
+
 /**
  * Utility class for the travel related views
- * 
+ *
  * @author RatanK
- * 
  */
 public class ViewUtil {
 
@@ -28,7 +26,7 @@ public class ViewUtil {
 
     /**
      * Get the hotel company preferred localized string id
-     * 
+     *
      * @param hotelPreference
      * @return
      */
@@ -53,7 +51,7 @@ public class ViewUtil {
 
     /**
      * Get the hotel suggestion localized string id
-     * 
+     *
      * @param hotelRecommended
      * @return
      */
@@ -73,9 +71,8 @@ public class ViewUtil {
 
     /**
      * Will determine the mapping from an integer-based enforcement level to an instance of <code>RuleEnforcementLevel</code>.
-     * 
-     * @param level
-     *            the enforcement level from a violation.
+     *
+     * @param level the enforcement level from a violation.
      * @return an instance of <code>RuleEnforcementLevel</code>.
      */
     public static RuleEnforcementLevel getRuleEnforcementLevel(Integer level) {
@@ -98,9 +95,8 @@ public class ViewUtil {
 
     /**
      * Will determine the mapping from an integer-based enforcement level to a String
-     * 
-     * @param level
-     *            the enforcement level from a violation.
+     *
+     * @param level the enforcement level from a violation.
      * @return
      */
     public static String getRuleEnforcementLevelAsString(Integer level) {
@@ -123,7 +119,7 @@ public class ViewUtil {
 
     /**
      * MOB-15911 - Show GDSName in travel search results - only for DEV & QA
-     * 
+     *
      * @param context
      * @param textView
      * @param gdsName
@@ -171,7 +167,8 @@ public class ViewUtil {
             String maxEnforcementLevel, int maxEnforcelimit) {
         // TODO
         HotelViolation maxEnforcementViolation = getMaxRuleEnforcementViolation(violations, "AutoFail");
-        if ((maxEnforcementViolation != null && getRuleEnforcementLevel(maxEnforcelimit) == RuleEnforcementLevel.INACTIVE)) {
+        if ((maxEnforcementViolation != null
+                && getRuleEnforcementLevel(maxEnforcelimit) == RuleEnforcementLevel.INACTIVE)) {
             return maxEnforcementViolation;
         }
         return null;
@@ -196,9 +193,8 @@ public class ViewUtil {
 
     /**
      * Will determine the mapping from an integer-based enforcement level to an instance of <code>RuleEnforcementLevel</code>.
-     * 
-     * @param level
-     *            the enforcement level from a violation.
+     *
+     * @param level the enforcement level from a violation.
      * @return an instance of <code>RuleEnforcementLevel</code>.
      */
     public static RuleEnforcementLevel getRuleEnforcementLevel(int level) {
@@ -221,11 +217,9 @@ public class ViewUtil {
 
     /**
      * Will add a separator view to a view group.
-     * 
-     * @param context
-     *            the context used to inflate the separator view.
-     * @param root
-     *            the parent of the inflated view.
+     *
+     * @param context the context used to inflate the separator view.
+     * @param root    the parent of the inflated view.
      */
     public static void addSeparatorView(Context context, ViewGroup root) {
         LayoutInflater inflater = LayoutInflater.from(context);

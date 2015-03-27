@@ -220,7 +220,7 @@
     </style>
 
     <style name="HomeRowHeader" parent="PrimaryText">
-        <item name="android:textSize">28sp</item>
+        <item name="android:textSize">22sp</item>
     </style>
 
     <style name="HomeRowSubHeader" parent="SecondaryText">

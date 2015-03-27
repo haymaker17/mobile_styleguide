@@ -74,7 +74,7 @@ public class ShowMaps extends Activity implements OnMapReadyCallback {
         LatLng position = new LatLng(firstHotel.latitude, firstHotel.longitude);
 
         // LatLng position = new LatLng(latitude, longitude);
-        googleMap.moveCamera(CameraUpdateFactory.newLatLngZoom(position, 13));
+        googleMap.moveCamera(CameraUpdateFactory.newLatLngZoom(position, 10));
         googleMap.setInfoWindowAdapter(new HotelInfoWindowAdapter());
     }
 
@@ -92,6 +92,7 @@ public class ShowMaps extends Activity implements OnMapReadyCallback {
 
         @Override
         public View getInfoContents(Marker marker) {
+
             HotelSearchResultListItem item = markerMap.get(marker);
 
             View hotelView = null;
@@ -112,8 +113,8 @@ public class ShowMaps extends Activity implements OnMapReadyCallback {
         }
 
         @Override
-        public View getInfoWindow(Marker arg0) {
-            // TODO Auto-generated method stub
+        public View getInfoWindow(Marker marker) {
+
             return null;
         }
 
