@@ -446,7 +446,7 @@ public class HotelBookingActivity extends TravelBaseActivity
                 CustomDialogFragment dialog = new CustomDialogFragment();
 
                 dialog.setTitle(R.string.hotel_confirm_reserve_title);
-                dialog.setMessage(R.string.dlg_no_connectivity_message);
+                dialog.setMessage(R.string.hotel_confirm_reserve_msg);
                 dialog.setPositiveButtonText(R.string.hotel_confirm_reserve_ok);
                 dialog.setNegativeButtonText(R.string.hotel_confirm_reserve_cancel);
 
