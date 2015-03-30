@@ -79,7 +79,7 @@ public class LoaderImageView extends LinearLayout {
         }
 
         mSpinner = new ProgressBar(mContext);
-        mSpinner.setLayoutParams(new LayoutParams(LayoutParams.WRAP_CONTENT, LayoutParams.WRAP_CONTENT));
+        mSpinner.setLayoutParams(new LayoutParams(LayoutParams.WRAP_CONTENT, LayoutParams.MATCH_PARENT));
 
         mSpinner.setIndeterminate(true);
 

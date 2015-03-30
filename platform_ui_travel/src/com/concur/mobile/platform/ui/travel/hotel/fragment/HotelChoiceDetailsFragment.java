@@ -103,7 +103,7 @@ public class HotelChoiceDetailsFragment extends PlatformFragmentV1 implements On
         hotelListItem.getHotel().lowestRate = null;
 
         ((HotelSearchResultListItem) hotelListItem).buildView(getActivity(), hotelView, null);
-        progressBar = mRoot.findViewById(R.id.hotel_choice_screen_load);
+
         try {
             showHideHomeImage();
         } catch (InterruptedException e) {
@@ -116,6 +116,7 @@ public class HotelChoiceDetailsFragment extends PlatformFragmentV1 implements On
         if (mImageView.getVisibility() == View.VISIBLE) {
             mListView.setParallaxImageView(mImageView);
             header.setMinimumWidth(screenHeight / 4);
+            mListView.setViewsBounds(ParallaxScollView.ZOOM_X2);
         }
         mListView.addHeaderView(header);
 
@@ -267,7 +268,7 @@ public class HotelChoiceDetailsFragment extends PlatformFragmentV1 implements On
                 //                    mImageView.setVisibility(View.VISIBLE);
                 //
                 //                }
-               
+
             } else {
                 mImageView.setVisibility(View.GONE);
 

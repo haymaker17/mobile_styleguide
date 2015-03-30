@@ -349,6 +349,7 @@ public class HotelBookingActivity extends TravelBaseActivity
                 ArrayAdapter<String> adapter = new ArrayAdapter<String>(this,
                         android.R.layout.simple_expandable_list_item_1, new String[] { });
                 mListView.setAdapter(adapter);
+                mListView.setViewsBounds(ParallaxScollView.ZOOM_X2);
             }
         }
         // room desc
