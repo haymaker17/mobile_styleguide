@@ -17,12 +17,14 @@ import android.widget.TabHost.TabSpec;
 import com.concur.mobile.platform.travel.search.hotel.Hotel;
 import com.concur.mobile.platform.travel.search.hotel.HotelImagePair;
 import com.concur.mobile.platform.ui.common.fragment.PlatformFragmentV1;
+import com.concur.mobile.platform.ui.common.util.ImageCache;
 import com.concur.mobile.platform.ui.travel.R;
 import com.concur.mobile.platform.ui.travel.util.Const;
 import com.concur.mobile.platform.ui.travel.util.LoaderImageView;
 import com.concur.mobile.platform.ui.travel.util.ParallaxScollView;
 import com.google.android.gms.maps.model.LatLng;
 
+import java.net.URI;
 import java.util.List;
 
 /**
@@ -116,7 +118,7 @@ public class HotelChoiceDetailsFragment extends PlatformFragmentV1 implements On
         if (mImageView.getVisibility() == View.VISIBLE) {
             mListView.setParallaxImageView(mImageView);
             header.setMinimumWidth(screenHeight / 4);
-            mListView.setViewsBounds(ParallaxScollView.ZOOM_X2);
+
         }
         mListView.addHeaderView(header);
 
@@ -255,19 +257,19 @@ public class HotelChoiceDetailsFragment extends PlatformFragmentV1 implements On
                     image2 = imagePairs.get(0);
                 }
                 String Url = image2.image;
-                // URI uri = URI.create(image2.image);
-                //  ImageCache imgCache = ImageCache.getInstance(getActivity());
+                URI uri = URI.create(image2.image);
+                ImageCache imgCache = ImageCache.getInstance(getActivity());
 
                 // set the image uri in the activity associated with this fragment
                 callBackListener.setHeaderImageURL(Url);
-                final LoaderImageView image = new LoaderImageView(getActivity(), Url, mImageView);
-                mImageView.setVisibility(View.VISIBLE);
+                bitmap = imgCache.getBitmapFromCache(uri);
+                if (bitmap == null) {
+                    new LoaderImageView(getActivity(), Url, mImageView, uri);
 
-                //                if (bitmap != null) {
-                //                    mImageView.setImageBitmap(bitmap);
-                //                    mImageView.setVisibility(View.VISIBLE);
-                //
-                //                }
+                } else {
+                    mImageView.setImageBitmap(bitmap);
+                    mImageView.setVisibility(View.VISIBLE);
+                }
 
             } else {
                 mImageView.setVisibility(View.GONE);

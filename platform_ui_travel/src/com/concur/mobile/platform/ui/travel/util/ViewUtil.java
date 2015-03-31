@@ -173,8 +173,8 @@ public class ViewUtil {
 
     public static HotelViolation getShowButNoBookingViolation(List<HotelViolation> violations,
             String maxEnforcementLevel, int maxEnforcelimit) {
-        // TODO
-        HotelViolation maxEnforcementViolation = getMaxRuleEnforcementViolation(violations, "AutoFail");
+
+        HotelViolation maxEnforcementViolation = getMaxRuleEnforcementViolation(violations, maxEnforcementLevel);
         if ((maxEnforcementViolation != null
                 && getRuleEnforcementLevel(maxEnforcelimit) == RuleEnforcementLevel.INACTIVE)) {
             return maxEnforcementViolation;
