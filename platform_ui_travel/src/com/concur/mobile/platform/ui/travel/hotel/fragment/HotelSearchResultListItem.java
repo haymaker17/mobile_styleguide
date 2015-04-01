@@ -1,8 +1,5 @@
 package com.concur.mobile.platform.ui.travel.hotel.fragment;
 
-import java.io.Serializable;
-import java.net.URI;
-
 import android.content.Context;
 import android.graphics.Bitmap;
 import android.graphics.Color;
@@ -15,8 +12,8 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
-
 import com.concur.mobile.platform.travel.search.hotel.Hotel;
+import com.concur.mobile.platform.travel.search.hotel.HotelRate;
 import com.concur.mobile.platform.ui.common.util.FormatUtil;
 import com.concur.mobile.platform.ui.common.util.ImageCache;
 import com.concur.mobile.platform.ui.common.util.ViewUtil;
@@ -24,6 +21,9 @@ import com.concur.mobile.platform.ui.common.view.ListItem;
 import com.concur.mobile.platform.ui.travel.R;
 import com.concur.mobile.platform.ui.travel.util.Const;
 import com.concur.mobile.platform.util.Format;
+
+import java.io.Serializable;
+import java.net.URI;
 
 /**
  * 
@@ -153,6 +153,25 @@ public class HotelSearchResultListItem extends ListItem implements Serializable 
             }
         } else {
             Log.e(Const.LOG_TAG, CLS_TAG + ".getView: unable to locate hotel distance text view!");
+        }
+
+        // set the travel points
+        if(hotel.priceToBeat != null && hotel.lowestRate != null) {
+            // TODO - MWS need to send the travel points along side the hotel lowest rate
+            txtView = ((TextView) hotelView.findViewById(R.id.travel_points_text));
+            for (HotelRate rate : hotel.rates) {
+                if(rate.travelPoints != 0.0 && rate.amount.equals(hotel.lowestRate)) {
+                    // get the travel points for this cheapest room
+                    if(rate.travelPoints < 0.0) {
+                        txtView.setText(Format.localizeText(context, R.string.travel_points_can_be_redeemed, new Object[] { rate.travelPoints }));
+                    } else {
+                        txtView.setText(Format.localizeText(context, R.string.travel_points_can_be_earned, new Object[] { rate.travelPoints }));
+                    }
+                    break;
+                } else {
+                    txtView.setText("");
+                }
+            }
         }
 
         // Set the recommendation.

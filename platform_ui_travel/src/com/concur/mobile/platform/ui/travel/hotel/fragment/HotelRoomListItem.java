@@ -17,6 +17,7 @@ import com.concur.mobile.platform.ui.common.view.ListItem;
 import com.concur.mobile.platform.ui.travel.R;
 import com.concur.mobile.platform.ui.travel.util.Const;
 import com.concur.mobile.platform.ui.travel.util.ViewUtil;
+import com.concur.mobile.platform.util.Format;
 
 /**
  * An extension of <code>ListItem</code> for displaying a hotel room.
@@ -108,6 +109,18 @@ public class HotelRoomListItem extends ListItem {
         } else {
             Log.e(Const.LOG_TAG, CLS_TAG + ".getView: unable to locate hotel room summary text view!");
         }
+
+        // travel points
+        if(hotelRoom.travelPoints != null && hotelRoom.travelPoints != 0.0) {
+            txtView = (TextView) roomView.findViewById(R.id.travel_points_text);
+            txtView.setVisibility(View.VISIBLE);
+            if(hotelRoom.travelPoints < 0.0) {
+                txtView.setText(Format.localizeText(context, R.string.travel_points_can_be_redeemed, new Object[] { hotelRoom.travelPoints }));
+            } else {
+                txtView.setText(Format.localizeText(context, R.string.travel_points_can_be_earned, new Object[] { hotelRoom.travelPoints }));
+            }
+        }
+
 
         txtView = (TextView) roomView.findViewById(R.id.hotel_room_deposit_required);
         if (txtView != null) {
