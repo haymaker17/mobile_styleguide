@@ -365,7 +365,7 @@ public class HotelBookingActivity extends TravelBaseActivity
                 Format.localizeText(this.getApplicationContext(), R.string.hotel_reserve_num_of_nights, numOfNights));
 
         // travel points earned
-        if(hotelRate.travelPoints > 0.0) {
+        if(hotelRate.travelPoints != null && hotelRate.travelPoints > 0.0) {
             findViewById(R.id.travel_points_earned_layout).setVisibility(View.VISIBLE);
             txtView = (TextView) findViewById(R.id.points_earned);
             txtView.setText(Format.localizeText(this, R.string.travel_points_can_be_earned_points, new Object[] {  FormatUtil
