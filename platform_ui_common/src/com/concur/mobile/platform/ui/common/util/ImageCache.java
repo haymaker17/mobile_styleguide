@@ -128,6 +128,50 @@ public class ImageCache {
     }
 
     /**
+     * Gets an instance of <code>Bitmap</code> for a URI.
+     *
+     * @param uri contains the URI to be retrieved.
+     * @return returns an instance of <code>Bitmap</code> if the content at <code>uri</code> has already been downloaded;
+     * otherwise <code>null</code> is returned. If <code>null</code> is returned, then the class will perform an
+     * asychronous download of the content and send a broadcast message with the action <code>IMAGE_DOWNLOAD_ACTION</code>
+     * detailing the result.
+     */
+    public Bitmap getBitmapFromCache(URI uri) {
+        Bitmap retVal = null;
+
+        // First, check the in-memory cache.
+        if (bitmapCache.containsKey(uri)) {
+            retVal = bitmapCache.get(uri);
+        }
+        // Second, check whether cache directory contains uri.
+        if (retVal == null) {
+            String cacheFileName = getCacheFileName(uri);
+            File cacheFile = new File(cacheDirectory, cacheFileName);
+            if (cacheFile.exists()) {
+                retVal = loadBitmap(cacheFile);
+                // Populate the in-memory cache if successfully loaded.
+                if (retVal != null) {
+                    bitmapCache.put(uri, retVal);
+                }
+            }
+        }
+        return retVal;
+    }
+
+    /**
+     * will cache the bitmap
+     *
+     * @param uri
+     * @param bitmap
+     */
+
+    public void setBitmapCache(URI uri, Bitmap bitmap) {
+        if (bitmap != null && uri != null) {
+            bitmapCache.put(uri, bitmap);
+        }
+    }
+
+    /**
      * Will punt from in-memory and on-disk a bitmap referenced by <code>uri</code>.
      *
      * @param uri contains the uri of the image to be deleted.

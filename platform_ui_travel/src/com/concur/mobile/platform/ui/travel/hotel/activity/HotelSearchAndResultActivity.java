@@ -42,8 +42,8 @@ import java.util.*;
  *
  * @author RatanK
  */
-public class HotelSearchAndResultActivity extends TravelBaseActivity implements OnMenuItemClickListener,
-        HotelSearchResultsFilterListener, HotelSearchResultsFragmentListener,
+public class HotelSearchAndResultActivity extends TravelBaseActivity
+        implements OnMenuItemClickListener, HotelSearchResultsFilterListener, HotelSearchResultsFragmentListener,
         LoaderManager.LoaderCallbacks<HotelSearchRESTResult> {
 
     public static final String FRAGMENT_SEARCH_RESULT = "FRAGMENT_SEARCH_RESULT";
@@ -571,13 +571,13 @@ public class HotelSearchAndResultActivity extends TravelBaseActivity implements 
         i.putExtra("ruleViolationExplanationRequired", ruleViolationExplanationRequired);
         i.putExtra("currentTripId", currentTripId);
         i.putExtra(Const.EXTRA_TRAVEL_HOTEL_SEARCH_SHOW_GDS_NAME, showGDSName);
-        if(travelCustomFieldsConfig != null) {
-           i.putExtra("travelCustomFieldsConfig", travelCustomFieldsConfig);
+        if (travelCustomFieldsConfig != null) {
+            i.putExtra("travelCustomFieldsConfig", travelCustomFieldsConfig);
         }
         if (updatedVoilations != null && updatedVoilations.size() > 0) {
-            bundle.putSerializable("updatedVoilations", (Serializable) updatedVoilations);
+            bundle.putSerializable("updatedViolations", (Serializable) updatedVoilations);
         }
-        bundle.putSerializable("voilations", (Serializable) voilations);
+        bundle.putSerializable("violations", (Serializable) voilations);
         // i.putExtra("searchId", searchId);
         i.putExtras(bundle);
         // startActivity(i);

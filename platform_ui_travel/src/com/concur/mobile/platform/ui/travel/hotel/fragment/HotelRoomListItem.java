@@ -1,5 +1,5 @@
 /**
- * 
+ *
  */
 package com.concur.mobile.platform.ui.travel.hotel.fragment;
 
@@ -10,7 +10,6 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
-
 import com.concur.mobile.platform.travel.search.hotel.HotelRate;
 import com.concur.mobile.platform.ui.common.util.FormatUtil;
 import com.concur.mobile.platform.ui.common.view.ListItem;
@@ -32,9 +31,8 @@ public class HotelRoomListItem extends ListItem {
 
     /**
      * Constructs an instance of <code>HotelRoomListItem</code> backed by a hotel room.
-     * 
-     * @param hotelRoom
-     *            contains the hotel room.
+     *
+     * @param hotelRoom contains the hotel room.
      */
     public HotelRoomListItem(HotelRate hotelRoom, boolean showGDSName) {
         this.hotelRoom = hotelRoom;
@@ -43,7 +41,7 @@ public class HotelRoomListItem extends ListItem {
 
     /**
      * Gets the <code>HotelRoom</code> object backing this list item.
-     * 
+     *
      * @return returns the <code>HotelRoom</code> object backing this list item.
      */
     public HotelRate getHotelRoom() {
@@ -77,17 +75,18 @@ public class HotelRoomListItem extends ListItem {
                 // String formattedAmtStr = FormatUtil.formatAmount(roomRate,
                 // context.getResources().getConfiguration().locale, hotelRoom.currency, true, true);
                 // txtView.setText(formattedAmtStr);
-                txtView.setText(FormatUtil.formatAmountWithNoDecimals(roomRate, context.getResources()
-                        .getConfiguration().locale, hotelRoom.currency, true, false));
+                txtView.setText(FormatUtil
+                        .formatAmountWithNoDecimals(roomRate, context.getResources().getConfiguration().locale,
+                                hotelRoom.currency, true, false));
                 // set the Travel Points
                 // LayoutUtil.initTravelPointsAtItemLevel(roomView, R.id.travel_points, hotelRoom.travelPoints);
 
                 // add the max enforcement level icon to the first row
-
-                if (hotelRoom.maxEnforcementLevel >= 30) {
+                int enforcementLevel = hotelRoom.maxEnforcementLevel;
+                if (enforcementLevel >= 25 && enforcementLevel <= 30) {
                     ((ImageView) roomView.findViewById(R.id.hotel_room_max_violation_icon))
                             .setImageResource(R.drawable.icon_status_red);
-                } else {
+                } else if (enforcementLevel >= 10 && enforcementLevel <= 20) {
                     ((ImageView) roomView.findViewById(R.id.hotel_room_max_violation_icon))
                             .setImageResource(R.drawable.icon_status_yellow);
                 }
