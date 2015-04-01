@@ -130,12 +130,12 @@ public class HotelChoiceDetailsActivity extends TravelBaseActivity
         showGDSName = i.getBooleanExtra(Const.EXTRA_TRAVEL_HOTEL_SEARCH_SHOW_GDS_NAME, false);
         currentTripId = i.getStringExtra("currentTripId");
 
-        List<HotelViolation> updatedViolations = ((List<HotelViolation>) bundle.getSerializable("updatedVoilations"));
+        List<HotelViolation> updatedViolations = ((List<HotelViolation>) bundle.getSerializable("updatedViolations"));
 
         if (updatedViolations != null && updatedViolations.size() > 0) {
             violations = updatedViolations;
         } else {
-            violations = ((List<HotelViolation>) bundle.getSerializable("voilations"));
+            violations = ((List<HotelViolation>) bundle.getSerializable("violations"));
 
             // TravelUtilHotel.getHotelViolations(getApplicationContext(), null, Integer.valueOf(searchId));
         }
@@ -233,7 +233,7 @@ public class HotelChoiceDetailsActivity extends TravelBaseActivity
             }
             if (TAB_ROOMS.equals(tabId)) {
                 HotelRoomDetailFragment detailFrag = new HotelRoomDetailFragment(hotel.rates, showGDSName);
-                detailFrag.priceToBeat = hotel.priceToBeat;
+                //detailFrag.priceToBeat = hotel.priceToBeat;
                 fm.beginTransaction().replace(placeholder, detailFrag, tabId)
                         .commit();
             }

@@ -1,6 +1,7 @@
 package com.concur.mobile.platform.ui.travel.util;
 
 import android.content.Context;
+import android.graphics.drawable.BitmapDrawable;
 import android.graphics.drawable.Drawable;
 import android.os.Handler;
 import android.os.Handler.Callback;
@@ -10,9 +11,11 @@ import android.view.View;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.ProgressBar;
+import com.concur.mobile.platform.ui.common.util.ImageCache;
 
 import java.io.IOException;
 import java.net.MalformedURLException;
+import java.net.URI;
 
 /**
  * Free for anyone to use, just say thanks and share
@@ -28,6 +31,7 @@ public class LoaderImageView extends LinearLayout {
     private Drawable mDrawable;
     private ProgressBar mSpinner;
     private ImageView mImage;
+    private URI uri;
 
     /**
      * This is used when creating the view in XML
@@ -43,9 +47,9 @@ public class LoaderImageView extends LinearLayout {
         super(context, attrSet);
         final String url = attrSet.getAttributeValue(null, "image");
         if (url != null) {
-            instantiate(context, url, mImage);
+            instantiate(context, url, mImage, uri);
         } else {
-            instantiate(context, null, null);
+            instantiate(context, null, null, null);
         }
     }
 
@@ -57,9 +61,9 @@ public class LoaderImageView extends LinearLayout {
      * @param context  the Activity context
      * @param imageUrl the Image URL you wish to load
      */
-    public LoaderImageView(final Context context, final String imageUrl, ImageView image) {
+    public LoaderImageView(final Context context, final String imageUrl, ImageView image, URI uri) {
         super(context);
-        instantiate(context, imageUrl, image);
+        instantiate(context, imageUrl, image, uri);
     }
 
     /**
@@ -67,7 +71,7 @@ public class LoaderImageView extends LinearLayout {
      * Sets up the LayoutParams of the view, you can change these to
      * get the required effects you want
      */
-    private void instantiate(final Context context, final String imageUrl, ImageView image) {
+    private void instantiate(final Context context, final String imageUrl, ImageView image, URI uri) {
         mContext = context;
 
         if (image != null) {
@@ -77,14 +81,13 @@ public class LoaderImageView extends LinearLayout {
             mImage.setLayoutParams(new LayoutParams(LayoutParams.WRAP_CONTENT, LayoutParams.MATCH_PARENT));
             mImage.setMaxHeight(120);
         }
-
+        this.uri = uri;
         mSpinner = new ProgressBar(mContext);
         mSpinner.setLayoutParams(new LayoutParams(LayoutParams.WRAP_CONTENT, LayoutParams.MATCH_PARENT));
 
         mSpinner.setIndeterminate(true);
 
         addView(mSpinner);
-        //  addView(mImage);
 
         if (imageUrl != null) {
             setImageDrawable(imageUrl);
@@ -106,6 +109,10 @@ public class LoaderImageView extends LinearLayout {
             public void run() {
                 try {
                     mDrawable = getDrawableFromUrl(imageUrl);
+                    ImageCache imageCache = ImageCache.getInstance(mContext);
+                    if (mDrawable != null) {
+                        imageCache.setBitmapCache(uri, ((BitmapDrawable) mDrawable).getBitmap());
+                    }
                     imageLoadedHandler.sendEmptyMessage(COMPLETE);
                 } catch (MalformedURLException e) {
                     imageLoadedHandler.sendEmptyMessage(FAILED);
@@ -121,7 +128,7 @@ public class LoaderImageView extends LinearLayout {
     /**
      * Callback that is received once the image has been downloaded
      */
-    private final Handler imageLoadedHandler = new Handler(new Callback() {
+    public final Handler imageLoadedHandler = new Handler(new Callback() {
 
         @Override
         public boolean handleMessage(Message msg) {
@@ -130,6 +137,7 @@ public class LoaderImageView extends LinearLayout {
                 mImage.setImageDrawable(mDrawable);
                 mImage.setVisibility(View.VISIBLE);
                 mSpinner.setVisibility(View.GONE);
+
                 break;
             case FAILED:
             default:
