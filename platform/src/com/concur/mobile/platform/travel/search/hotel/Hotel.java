@@ -1,9 +1,5 @@
 package com.concur.mobile.platform.travel.search.hotel;
 
-import java.io.Serializable;
-import java.util.ArrayList;
-import java.util.List;
-
 import android.content.ContentResolver;
 import android.content.ContentValues;
 import android.content.Context;
@@ -11,12 +7,15 @@ import android.database.Cursor;
 import android.net.Uri;
 import android.text.TextUtils;
 import android.util.Log;
-
 import com.concur.mobile.platform.travel.provider.Travel;
 import com.concur.mobile.platform.travel.search.hotel.dao.HotelDAO;
 import com.concur.mobile.platform.util.Const;
 import com.concur.mobile.platform.util.ContentUtils;
 import com.concur.mobile.platform.util.CursorUtil;
+
+import java.io.Serializable;
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * 
@@ -39,6 +38,7 @@ public class Hotel implements Serializable, HotelDAO {
     public String distanceUnit;
     public Double priceToBeat;
     public Double lowestRate;
+    public Double travelPointsForLowestRate;
     public int lowestEnforcementLevel;
     public String chainCode;
     public String chainName;
@@ -88,7 +88,7 @@ public class Hotel implements Serializable, HotelDAO {
             Travel.HotelDetailColumns.STAR_RATING, Travel.HotelDetailColumns.THUMBNAIL_URL,
             Travel.HotelDetailColumns.AVAILABILITY_ERROR_CODE, Travel.HotelDetailColumns.LAT,
             Travel.HotelDetailColumns.LON, Travel.HotelDetailColumns.RATES_URL,
-            Travel.HotelDetailColumns.HOTEL_SEARCH_RESULT_ID };
+            Travel.HotelDetailColumns.HOTEL_SEARCH_RESULT_ID, Travel.HotelDetailColumns.TRAVEL_POINTS_FOR_LOWEST_RATE };
 
     // ,
     // Travel.HotelImagePairColumns.THUMBNAIL_URL, Travel.HotelImagePairColumns.IMAGE_URL,
@@ -178,6 +178,7 @@ public class Hotel implements Serializable, HotelDAO {
         distanceUnit = CursorUtil.getStringValue(cursor, Travel.HotelDetailColumns.DISTANCE_UNIT);
 
         lowestRate = CursorUtil.getDoubleValue(cursor, Travel.HotelDetailColumns.LOWEST_RATE);
+        travelPointsForLowestRate = CursorUtil.getDoubleValue(cursor, Travel.HotelDetailColumns.TRAVEL_POINTS_FOR_LOWEST_RATE);
         currencyCode = CursorUtil.getStringValue(cursor, Travel.HotelDetailColumns.CURRENCY_CODE);
 
         latitude = CursorUtil.getDoubleValue(cursor, Travel.HotelDetailColumns.LAT);

@@ -13,7 +13,6 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 import com.concur.mobile.platform.travel.search.hotel.Hotel;
-import com.concur.mobile.platform.travel.search.hotel.HotelRate;
 import com.concur.mobile.platform.ui.common.util.FormatUtil;
 import com.concur.mobile.platform.ui.common.util.ImageCache;
 import com.concur.mobile.platform.ui.common.util.ViewUtil;
@@ -156,21 +155,12 @@ public class HotelSearchResultListItem extends ListItem implements Serializable 
         }
 
         // set the travel points
-        if(hotel.priceToBeat != null && hotel.lowestRate != null) {
-            // TODO - MWS need to send the travel points along side the hotel lowest rate
+        if(hotel.travelPointsForLowestRate != null && hotel.travelPointsForLowestRate != 0.0) {
             txtView = ((TextView) hotelView.findViewById(R.id.travel_points_text));
-            for (HotelRate rate : hotel.rates) {
-                if(rate.travelPoints != 0.0 && rate.amount.equals(hotel.lowestRate)) {
-                    // get the travel points for this cheapest room
-                    if(rate.travelPoints < 0.0) {
-                        txtView.setText(Format.localizeText(context, R.string.travel_points_can_be_redeemed, new Object[] { rate.travelPoints }));
-                    } else {
-                        txtView.setText(Format.localizeText(context, R.string.travel_points_can_be_earned, new Object[] { rate.travelPoints }));
-                    }
-                    break;
-                } else {
-                    txtView.setText("");
-                }
+            if(hotel.travelPointsForLowestRate < 0.0) {
+                txtView.setText(Format.localizeText(context, R.string.travel_points_can_be_redeemed, new Object[] { hotel.travelPointsForLowestRate }));
+            } else {
+                txtView.setText(Format.localizeText(context, R.string.travel_points_can_be_earned, new Object[] { hotel.travelPointsForLowestRate }));
             }
         }
 

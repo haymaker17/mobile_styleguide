@@ -4762,6 +4762,11 @@ public final class Travel {
         public static final String LOWEST_RATE = "LOWEST_RATE";
 
         /**
+         * Contain the lowest rate (REAL) column name.
+         */
+        public static final String TRAVEL_POINTS_FOR_LOWEST_RATE = "TRAVEL_POINTS_FOR_LOWEST_RATE";
+
+        /**
          * Contain the lowest enforcement level (INTEGER) column name.
          */
         public static final String LOWEST_ENF_LEVEL = "LOWEST_ENF_LEVEL";

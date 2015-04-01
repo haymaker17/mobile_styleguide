@@ -131,6 +131,8 @@ public class TravelUtilHotel {
                     ContentUtils.putValue(values, Travel.HotelDetailColumns.CURRENCY_CODE, hotelSearchResult.currency);
                     // Set the price to beat.
                     ContentUtils.putValue(values, Travel.HotelDetailColumns.PRICE_TO_BEAT, hotel.priceToBeat);
+                    // Set the travel points for the lowest rate.
+                    ContentUtils.putValue(values, Travel.HotelDetailColumns.TRAVEL_POINTS_FOR_LOWEST_RATE, hotel.travelPointsForLowestRate);
 
                     // Set the suggestion.
                     if (hotel.recommended != null) {
