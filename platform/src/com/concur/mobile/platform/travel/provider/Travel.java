@@ -4762,6 +4762,11 @@ public final class Travel {
         public static final String LOWEST_RATE = "LOWEST_RATE";
 
         /**
+         * Contain the travel points for the lowest rate (INTEGER) column name.
+         */
+        public static final String TRAVEL_POINTS_FOR_LOWEST_RATE = "TRAVEL_POINTS_FOR_LOWEST_RATE";
+
+        /**
          * Contain the lowest enforcement level (INTEGER) column name.
          */
         public static final String LOWEST_ENF_LEVEL = "LOWEST_ENF_LEVEL";
@@ -5055,7 +5060,7 @@ public final class Travel {
         public static final String VIOLATION_VALUE_IDS = "VIOLATION_VALUE_IDS";
 
         /**
-         * Contains the max enforcement level (REAL) column name.
+         * Contains the max enforcement level (INTEGER) column name.
          */
         public static final String TRAVEL_POINTS = "TRAVEL_POINTS";
 

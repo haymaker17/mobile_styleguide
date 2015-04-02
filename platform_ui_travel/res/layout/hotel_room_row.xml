@@ -25,7 +25,18 @@
             android:fontFamily="sans-serif-medium"
             android:maxLines="3"
             android:textColor="#383f46"
-            android:textSize="16sp" />
+            android:textSize="16sp"/>
+
+        <TextView
+            android:id="@+id/travel_points_text"
+            android:layout_width="86dp"
+            android:layout_height="wrap_content"
+            android:fontFamily="sans-serif-light"
+            android:textColor="#0078c8"
+            android:text=""
+            android:textSize="12sp"
+            android:visibility="gone"/>
+
 
         <TextView
             android:id="@+id/hotel_room_deposit_required"
@@ -36,7 +47,9 @@
             android:textColor="#383f46"
             android:textSize="16sp"
             android:textStyle="bold"
-            android:visibility="gone" />
+            android:visibility="gone"
+             />
+
 
         <TextView
             android:id="@+id/hotel_room_gds_name"
@@ -45,7 +58,9 @@
             android:fontFamily="sans-serif-light"
             android:textColor="#687278"
             android:textSize="16sp"
-            android:visibility="gone" />
+            android:visibility="gone"
+             />
+
     </LinearLayout>
 
     <RelativeLayout
@@ -104,7 +119,8 @@
             android:text="@string/hotel_out_of_policy"
             android:textColor="@color/FareRed"
             android:textSize="12sp"
-            android:visibility="gone" />
+            android:visibility="gone"
+             />
 
         <!--
              <TextView

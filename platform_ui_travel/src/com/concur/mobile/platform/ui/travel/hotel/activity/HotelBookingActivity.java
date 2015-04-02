@@ -360,6 +360,15 @@ public class HotelBookingActivity extends TravelBaseActivity implements SpinnerD
         txtView.setText(
                 Format.localizeText(this.getApplicationContext(), R.string.hotel_reserve_num_of_nights, numOfNights));
 
+        // travel points earned
+        if(hotelRate.travelPoints != null && hotelRate.travelPoints > 0) {
+            findViewById(R.id.travel_points_earned_layout).setVisibility(View.VISIBLE);
+            txtView = (TextView) findViewById(R.id.points_earned);
+            txtView.setText(Format.localizeText(this, R.string.travel_points_can_be_earned_points, new Object[] {  FormatUtil
+                    .formatAmountWithNoDecimals(hotelRate.travelPoints*numOfNights, this.getResources().getConfiguration().locale, currCode,
+                            false, false) }));
+        }
+
         // amount
         txtView = (TextView) findViewById(R.id.hotel_room_rate);
         txtView.setText(FormatUtil

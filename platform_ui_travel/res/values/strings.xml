@@ -164,4 +164,12 @@
     <string name="dlg_no_connectivity_title">Client Is Offline</string>
     <string name="dlg_no_connectivity_message">This operation is not supported in offline mode.  Please try again when data connectivity is available.</string>
 
+    <!-- start of Travel Points -->
+    <string name="price_to_beat_label">PRICE-TO-BEAT</string>
+    <string name="price_to_beat_range">%%0!minimum value of price to beat%% - %%1!maximum value of price to beat%%</string>
+    <string name="travel_points_can_be_earned">+%%0!number of points can be earned for this booking%% pts</string>
+    <string name="travel_points_can_be_earned_points">+%%0!number of points can be earned for this booking%% points</string>
+    <string name="travel_points_can_be_redeemed">-%%0!number of points can be redeemed for this booking%% pts</string>
+    <!-- start of Travel Points -->
+
 </resources>

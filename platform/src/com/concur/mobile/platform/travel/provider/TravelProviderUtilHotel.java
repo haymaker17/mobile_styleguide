@@ -1,8 +1,8 @@
 package com.concur.mobile.platform.travel.provider;
 
-import java.util.HashMap;
-
 import com.concur.mobile.platform.provider.UriMatcherInfo;
+
+import java.util.HashMap;
 
 /**
  * This class provides utility methods used by the Travel Provider class specific to Hotel.
@@ -66,6 +66,7 @@ public class TravelProviderUtilHotel {
         retVal.put(Travel.HotelDetailColumns.LOWEST_RATE, Travel.HotelDetailColumns.LOWEST_RATE);
         retVal.put(Travel.HotelDetailColumns.CURRENCY_CODE, Travel.HotelDetailColumns.CURRENCY_CODE);
         retVal.put(Travel.HotelDetailColumns.PRICE_TO_BEAT, Travel.HotelDetailColumns.PRICE_TO_BEAT);
+        retVal.put(Travel.HotelDetailColumns.TRAVEL_POINTS_FOR_LOWEST_RATE, Travel.HotelDetailColumns.TRAVEL_POINTS_FOR_LOWEST_RATE);
 
         // hotel preference and suggestion
         retVal.put(Travel.HotelDetailColumns.SUGESTED_CATEGORY, Travel.HotelDetailColumns.SUGESTED_CATEGORY);
