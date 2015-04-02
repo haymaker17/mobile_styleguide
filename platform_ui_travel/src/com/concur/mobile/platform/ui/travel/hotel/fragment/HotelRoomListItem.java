@@ -83,12 +83,15 @@ public class HotelRoomListItem extends ListItem {
 
                 // add the max enforcement level icon to the first row
                 int enforcementLevel = hotelRoom.maxEnforcementLevel;
+                ImageView violationIcon = ((ImageView) roomView.findViewById(R.id.hotel_room_max_violation_icon));
                 if (enforcementLevel >= 25 && enforcementLevel <= 30) {
-                    ((ImageView) roomView.findViewById(R.id.hotel_room_max_violation_icon))
-                            .setImageResource(R.drawable.icon_status_red);
+                    violationIcon.setImageResource(R.drawable.icon_status_red);
                 } else if (enforcementLevel >= 10 && enforcementLevel <= 20) {
-                    ((ImageView) roomView.findViewById(R.id.hotel_room_max_violation_icon))
-                            .setImageResource(R.drawable.icon_status_yellow);
+                    violationIcon.setImageResource(R.drawable.icon_status_yellow);
+                } else if (enforcementLevel >= 40) {
+                    hotelRoom.greyFlag = true;
+                } else {
+                    violationIcon.setImageBitmap(null);
                 }
             }
         } else {

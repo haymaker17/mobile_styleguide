@@ -4,23 +4,19 @@ import android.app.Activity;
 import android.app.AlertDialog;
 import android.app.Dialog;
 import android.app.DialogFragment;
-import android.content.DialogInterface;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
-import android.widget.ImageView;
-import android.widget.TextView;
-
+import android.widget.RadioButton;
 import com.concur.mobile.platform.common.SpinnerItem;
 import com.concur.mobile.platform.ui.travel.R;
 
 /**
  * Dialog fragment to show a text and an image at right
- * 
+ *
  * @author RatanK
- * 
  */
 public class SpinnerDialogFragment extends DialogFragment {
 
@@ -29,7 +25,6 @@ public class SpinnerDialogFragment extends DialogFragment {
     public SpinnerItem[] spinnerItems;
     public String curSpinnerItemId;
     public int titleResourceId = R.string.general_select_one_of_the_below;
-    public int imageResourceId = R.drawable.sort_check_mark;
     private SpinnerDialogFragmentCallbackListener callBackListener;
     private int selectedSpinnerItemPosition = -1;
 
@@ -38,25 +33,17 @@ public class SpinnerDialogFragment extends DialogFragment {
 
     /**
      * Create an instance of SpinnerDialogFragment with the given details.
-     * 
-     * @param titleResourceId
-     *            - if <=0, defaults to R.string.general_select_one_of_the_below
-     * @param imageResourceId
-     *            - if <=0, defaults to R.drawable.btn_check_on
+     *
+     * @param titleResourceId - if <=0, defaults to R.string.general_select_one_of_the_below
      * @param spinnerItems
      */
-    public SpinnerDialogFragment(int titleResourceId, int imageResourceId, SpinnerItem[] spinnerItems) {
+    public SpinnerDialogFragment(int titleResourceId, SpinnerItem[] spinnerItems) {
         if (titleResourceId <= 0) {
             this.titleResourceId = R.string.general_select_one_of_the_below;
         } else {
             this.titleResourceId = titleResourceId;
         }
         this.spinnerItems = spinnerItems;
-        if (imageResourceId <= 0) {
-            this.imageResourceId = R.drawable.sort_check_mark;
-        } else {
-            this.imageResourceId = imageResourceId;
-        }
     }
 
     @Override
@@ -71,39 +58,37 @@ public class SpinnerDialogFragment extends DialogFragment {
         // set the spinner items
         if (spinnerItems != null) {
             ArrayAdapter<SpinnerItem> listAdapter = new ArrayAdapter<SpinnerItem>(getActivity(),
-                    android.R.layout.simple_spinner_item, spinnerItems) {
+                    android.R.layout.simple_list_item_single_choice, spinnerItems) {
 
                 @Override
-                public View getView(int position, View convertView, ViewGroup parent) {
+                public View getView(final int position, View convertView, ViewGroup parent) {
                     LayoutInflater inflater = LayoutInflater.from(getActivity());
                     View view = inflater.inflate(R.layout.text_with_image_to_right, null);
-                    ((TextView) view.findViewById(R.id.hotel_violaiton_reason)).setText(spinnerItems[position].name);
+                    RadioButton radioButton = (RadioButton) view.findViewById(R.id.hotel_violations_radio_button);
+                    radioButton.setText(spinnerItems[position].name);
                     if (curSpinnerItemId != null && curSpinnerItemId == spinnerItems[position].id) {
-                        ((ImageView) view.findViewById(R.id.hotel_violaiton_reason_selected_icon))
-                                .setImageResource(imageResourceId);
                         selectedSpinnerItemPosition = position;
+                        radioButton.setChecked(true);
+                    } else {
+                        radioButton.setChecked(false);
                     }
+                    radioButton.setOnClickListener(new View.OnClickListener() {
 
+                        @Override public void onClick(View v) {
+                            callBackListener.onSpinnerItemSelected(spinnerItems[position], thisFragmentTagName);
+                            getDialog().dismiss();
+                        }
+                    });
                     return view;
                 }
             };
             listAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-
-            dlgBldr.setSingleChoiceItems(listAdapter, selectedSpinnerItemPosition,
-                    new DialogInterface.OnClickListener() {
-
-                        public void onClick(DialogInterface dialog, int which) {
-                            callBackListener.onSpinnerItemSelected(spinnerItems[which], thisFragmentTagName);
-                            dialog.dismiss();
-                        }
-                    });
+            dlgBldr.setAdapter(listAdapter, null);
         }
-
         return dlgBldr.create();
     }
 
-    @Override
-    public void onAttach(Activity activity) {
+    @Override public void onAttach(Activity activity) {
         super.onAttach(activity);
 
         // This makes sure that the container activity has implemented
@@ -120,11 +105,8 @@ public class SpinnerDialogFragment extends DialogFragment {
     public interface SpinnerDialogFragmentCallbackListener {
 
         /**
-         * 
-         * @param selectedSpinnerItem
-         *            - selected item
-         * @param fragmentTagName
-         *            - fragment tag name if available
+         * @param selectedSpinnerItem - selected item
+         * @param fragmentTagName     - fragment tag name if available
          */
         public void onSpinnerItemSelected(SpinnerItem selectedSpinnerItem, String fragmentTagName);
     }
