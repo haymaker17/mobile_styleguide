@@ -429,7 +429,7 @@ public class HotelBookingActivity extends TravelBaseActivity implements SpinnerD
                 };
                 AlertDialogFragmentV1 dialog = new AlertDialogFragmentV1();
                 dialog.setTitle(R.string.hotel_confirm_reserve_title);
-                dialog.setMessage(R.string.hotel_confirm_reserve_msg);
+                dialog.setMessage(msgResourse);
                 dialog.setPositiveButtonText(R.string.hotel_confirm_reserve_ok);
                 dialog.setNegativeButtonText(R.string.hotel_confirm_reserve_cancel);
                 dialog.setPositiveButtonListener(okayListener);

@@ -86,12 +86,15 @@ public class HotelRoomListItem extends ListItem {
                 ImageView violationIcon = ((ImageView) roomView.findViewById(R.id.hotel_room_max_violation_icon));
                 if (enforcementLevel >= 25 && enforcementLevel <= 30) {
                     violationIcon.setImageResource(R.drawable.icon_status_red);
+                    violationIcon.setVisibility(View.VISIBLE);
                 } else if (enforcementLevel >= 10 && enforcementLevel <= 20) {
                     violationIcon.setImageResource(R.drawable.icon_status_yellow);
+                    violationIcon.setVisibility(View.VISIBLE);
                 } else if (enforcementLevel >= 40) {
                     hotelRoom.greyFlag = true;
+                    violationIcon.setVisibility(View.VISIBLE);
                 } else {
-                    violationIcon.setImageBitmap(null);
+                    violationIcon.setVisibility(View.INVISIBLE);
                 }
             }
         } else {
@@ -113,21 +116,20 @@ public class HotelRoomListItem extends ListItem {
         }
 
         // travel points
-        if(hotelRoom.travelPoints != null && hotelRoom.travelPoints != 0) {
+        if (hotelRoom.travelPoints != null && hotelRoom.travelPoints != 0) {
             txtView = (TextView) roomView.findViewById(R.id.travel_points_text);
             txtView.setVisibility(View.VISIBLE);
 
-            if(hotelRoom.travelPoints < 0) {
-                txtView.setText(Format.localizeText(context, R.string.travel_points_can_be_redeemed, new Object[] { FormatUtil
-                        .formatAmountWithNoDecimals( hotelRoom.travelPoints, context.getResources().getConfiguration().locale, hotelRoom.currency,
-                                false, false) }));
+            if (hotelRoom.travelPoints < 0) {
+                txtView.setText(Format.localizeText(context, R.string.travel_points_can_be_redeemed, new Object[] {
+                        FormatUtil.formatAmountWithNoDecimals(hotelRoom.travelPoints,
+                                context.getResources().getConfiguration().locale, hotelRoom.currency, false, false) }));
             } else {
-                txtView.setText(Format.localizeText(context, R.string.travel_points_can_be_earned, new Object[] { FormatUtil
-                        .formatAmountWithNoDecimals( hotelRoom.travelPoints, context.getResources().getConfiguration().locale, hotelRoom.currency,
-                                false, false) }));
+                txtView.setText(Format.localizeText(context, R.string.travel_points_can_be_earned, new Object[] {
+                        FormatUtil.formatAmountWithNoDecimals(hotelRoom.travelPoints,
+                                context.getResources().getConfiguration().locale, hotelRoom.currency, false, false) }));
             }
         }
-
 
         txtView = (TextView) roomView.findViewById(R.id.hotel_room_deposit_required);
         if (txtView != null) {
