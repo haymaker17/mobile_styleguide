@@ -3,10 +3,7 @@ package com.concur.mobile.platform.ui.travel.hotel.activity;
 import android.animation.ObjectAnimator;
 import android.annotation.SuppressLint;
 import android.app.*;
-import android.content.BroadcastReceiver;
-import android.content.Intent;
-import android.content.IntentFilter;
-import android.content.Loader;
+import android.content.*;
 import android.graphics.Bitmap;
 import android.os.Bundle;
 import android.os.Handler;
@@ -27,6 +24,7 @@ import com.concur.mobile.platform.common.formfield.FormField;
 import com.concur.mobile.platform.service.PlatformAsyncTaskLoader;
 import com.concur.mobile.platform.travel.booking.CreditCard;
 import com.concur.mobile.platform.travel.search.hotel.*;
+import com.concur.mobile.platform.ui.common.dialog.AlertDialogFragmentV1;
 import com.concur.mobile.platform.ui.common.dialog.DialogFragmentFactoryV1;
 import com.concur.mobile.platform.ui.common.fragment.RetainerFragmentV1;
 import com.concur.mobile.platform.ui.common.util.FormatUtil;
@@ -34,8 +32,6 @@ import com.concur.mobile.platform.ui.common.util.ImageCache;
 import com.concur.mobile.platform.ui.travel.R;
 import com.concur.mobile.platform.ui.travel.activity.TravelBaseActivity;
 import com.concur.mobile.platform.ui.travel.fragment.TravelCustomFieldsFragment;
-import com.concur.mobile.platform.ui.travel.hotel.fragment.CustomDialogFragment;
-import com.concur.mobile.platform.ui.travel.hotel.fragment.CustomDialogFragment.CustomDialogFragmentCallbackListener;
 import com.concur.mobile.platform.ui.travel.hotel.fragment.SpinnerDialogFragment;
 import com.concur.mobile.platform.ui.travel.hotel.fragment.SpinnerDialogFragment.SpinnerDialogFragmentCallbackListener;
 import com.concur.mobile.platform.ui.travel.loader.TravelCustomField;
@@ -55,8 +51,7 @@ import java.util.List;
 /**
  * @author RatanK
  */
-public class HotelBookingActivity extends TravelBaseActivity
-        implements SpinnerDialogFragmentCallbackListener, CustomDialogFragmentCallbackListener,
+public class HotelBookingActivity extends TravelBaseActivity implements SpinnerDialogFragmentCallbackListener,
         TravelCustomFieldsFragment.TravelCustomFieldsFragmentCallBackListener {
 
     protected static final String CLS_TAG = HotelBookingActivity.class.getSimpleName();
@@ -142,6 +137,7 @@ public class HotelBookingActivity extends TravelBaseActivity
     private Double amount;
     private String currCode;
     private String sellOptionsURL;
+
     // pre sell options loader callback implementation
     private LoaderManager.LoaderCallbacks<HotelPreSellOption> preSellOptionsLoaderListener = new LoaderManager.LoaderCallbacks<HotelPreSellOption>() {
 
@@ -412,15 +408,32 @@ public class HotelBookingActivity extends TravelBaseActivity
 
             @Override
             public void onClick(View v) {
+                AlertDialogFragmentV1.OnClickListener okayListener = new AlertDialogFragmentV1.OnClickListener() {
 
-                CustomDialogFragment dialog = new CustomDialogFragment();
+                    @Override public void onClick(Activity activity, DialogInterface dialog, int which) {
+                        doBooking();
+                    }
 
+                    @Override public void onCancel(Activity activity, DialogInterface dialog) {
+                        dialog.dismiss();
+                    }
+                };
+                AlertDialogFragmentV1 dialog = new AlertDialogFragmentV1();
                 dialog.setTitle(R.string.hotel_confirm_reserve_title);
                 dialog.setMessage(R.string.hotel_confirm_reserve_msg);
                 dialog.setPositiveButtonText(R.string.hotel_confirm_reserve_ok);
                 dialog.setNegativeButtonText(R.string.hotel_confirm_reserve_cancel);
-
+                dialog.setPositiveButtonListener(okayListener);
                 dialog.show(getFragmentManager(), DIALOG_FRAGMENT_ID);
+
+                //                CustomDialogFragment dialog = new CustomDialogFragment();
+                //
+                //                dialog.setTitle(R.string.hotel_confirm_reserve_title);
+                //                dialog.setMessage(R.string.hotel_confirm_reserve_msg);
+                //                dialog.setPositiveButtonText(R.string.hotel_confirm_reserve_ok);
+                //                dialog.setNegativeButtonText(R.string.hotel_confirm_reserve_cancel);
+                //
+                //                dialog.show(getFragmentManager(), DIALOG_FRAGMENT_ID);
 
             }
         });
@@ -576,7 +589,7 @@ public class HotelBookingActivity extends TravelBaseActivity
             public void onClick(View v) {
                 if (violationReasonChoices != null && violationReasonChoices.length > 0) {
                     SpinnerDialogFragment dialogFragment = new SpinnerDialogFragment(R.string.general_select_reason,
-                            R.drawable.sort_check_mark, violationReasonChoices);
+                            violationReasonChoices);
                     if (curViolationReason != null) {
                         dialogFragment.curSpinnerItemId = curViolationReason.id;
                     }
@@ -623,7 +636,7 @@ public class HotelBookingActivity extends TravelBaseActivity
                 } else {
                     if (cardChoices != null && cardChoices.length > 0) {
                         SpinnerDialogFragment dialogFragment = new SpinnerDialogFragment(R.string.general_select_card,
-                                R.drawable.sort_check_mark, cardChoices);
+                                cardChoices);
                         if (curCardChoice != null) {
                             dialogFragment.curSpinnerItemId = curCardChoice.id;
                         }
@@ -792,8 +805,7 @@ public class HotelBookingActivity extends TravelBaseActivity
         }
     }
 
-    @SuppressLint("ShowToast")
-    private void doBooking() {
+    @SuppressLint("ShowToast") private void doBooking() {
         if (!isOffline) {
 
             reserveButton.setEnabled(false);
@@ -908,8 +920,7 @@ public class HotelBookingActivity extends TravelBaseActivity
 
     }
 
-    @Override
-    public void onSpinnerItemSelected(SpinnerItem selectedSpinnerItem, String fragmentTagName) {
+    @Override public void onSpinnerItemSelected(SpinnerItem selectedSpinnerItem, String fragmentTagName) {
         if (fragmentTagName.equals(VIOLATION_REASONS_SPINNER_FRAGMENT)) {
             curViolationReason = selectedSpinnerItem;
             updateViolationReasonsView();
@@ -919,8 +930,7 @@ public class HotelBookingActivity extends TravelBaseActivity
         }
     }
 
-    @Override
-    public boolean onKeyDown(int keyCode, KeyEvent event) {
+    @Override public boolean onKeyDown(int keyCode, KeyEvent event) {
         // Check if the key event was the Back button and stop any outstanding
         // request of async task
         if (keyCode == KeyEvent.KEYCODE_BACK) {
@@ -931,18 +941,17 @@ public class HotelBookingActivity extends TravelBaseActivity
         return super.onKeyDown(keyCode, event);
     }
 
-    @Override
-    public void onCustomAction() {
-        doBooking();
-
-    }
+    //    @Override
+    //    public void onCustomAction() {
+    //        doBooking();
+    //
+    //    }
 
     public void showToast(String message) {
         Toast.makeText(this, message, Toast.LENGTH_SHORT).show();
     }
 
-    @Override
-    public void sendTravelCustomFieldsUpdateRequest(List<TravelCustomField> fields) {
+    @Override public void sendTravelCustomFieldsUpdateRequest(List<TravelCustomField> fields) {
         update = true;
         formFields = fields;
         travelCustomFieldsConfig.formFields = formFields;

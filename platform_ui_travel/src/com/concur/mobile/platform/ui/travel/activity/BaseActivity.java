@@ -13,9 +13,9 @@ import android.net.NetworkInfo;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
+import com.concur.mobile.platform.ui.common.dialog.DialogFragmentFactoryV1;
 import com.concur.mobile.platform.ui.common.fragment.RetainerFragmentV1;
 import com.concur.mobile.platform.ui.travel.R;
-import com.concur.mobile.platform.ui.travel.hotel.fragment.CustomDialogFragment;
 import com.concur.mobile.platform.ui.travel.receiver.NetworkActivityReceiver;
 import com.concur.mobile.platform.ui.travel.receiver.NetworkActivityReceiver.INetworkActivityListener;
 import com.concur.mobile.platform.ui.travel.util.Const;
@@ -390,13 +390,17 @@ public class BaseActivity extends Activity implements INetworkActivityListener {
                 currProgressDialog = null;
             }
 
+            DialogFragmentFactoryV1.getAlertOkayInstance(getString(R.string.dlg_no_connectivity_title),
+                    getString(R.string.dlg_no_connectivity_message))
+                    .show(getFragmentManager(), "DIALOG_NO_CONNECTIVITY");
             // BaseActivity.this.showDialog(Const.DIALOG_SYSTEM_UNAVAILABLE);
-            CustomDialogFragment dialog = new CustomDialogFragment();
-            dialog.setTitle(R.string.dlg_no_connectivity_title);
-            dialog.setMessage(R.string.dlg_no_connectivity_message);
-            dialog.setPositiveButtonText(R.string.dialog_ok);
+            
+            // CustomDialogFragment dialog = new CustomDialogFragment();
+            //            dialog.setTitle(R.string.dlg_no_connectivity_title);
+            //            dialog.setMessage(R.string.dlg_no_connectivity_message);
+            //            dialog.setPositiveButtonText(R.string.dialog_ok);
 
-            dialog.show(getFragmentManager(), "DIALOG_NO_CONNECTIVITY");
+            //            dialog.show(getFragmentManager(), "DIALOG_NO_CONNECTIVITY");
 
         }
     }
