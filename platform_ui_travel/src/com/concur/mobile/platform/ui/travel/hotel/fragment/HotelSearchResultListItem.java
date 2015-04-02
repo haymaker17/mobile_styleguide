@@ -155,12 +155,16 @@ public class HotelSearchResultListItem extends ListItem implements Serializable 
         }
 
         // set the travel points
-        if(hotel.travelPointsForLowestRate != null && hotel.travelPointsForLowestRate != 0.0) {
+        if(hotel.travelPointsForLowestRate != null && hotel.travelPointsForLowestRate != 0) {
             txtView = ((TextView) hotelView.findViewById(R.id.travel_points_text));
-            if(hotel.travelPointsForLowestRate < 0.0) {
-                txtView.setText(Format.localizeText(context, R.string.travel_points_can_be_redeemed, new Object[] { hotel.travelPointsForLowestRate }));
+            if(hotel.travelPointsForLowestRate < 0) {
+                txtView.setText(Format.localizeText(context, R.string.travel_points_can_be_redeemed, new Object[] { FormatUtil
+                        .formatAmountWithNoDecimals( hotel.travelPointsForLowestRate, context.getResources().getConfiguration().locale, hotel.currencyCode,
+                                false, false) }));
             } else {
-                txtView.setText(Format.localizeText(context, R.string.travel_points_can_be_earned, new Object[] { hotel.travelPointsForLowestRate }));
+                txtView.setText(Format.localizeText(context, R.string.travel_points_can_be_earned, new Object[] { FormatUtil
+                        .formatAmountWithNoDecimals( hotel.travelPointsForLowestRate, context.getResources().getConfiguration().locale, hotel.currencyCode,
+                                false, false) }));
             }
         }
 

@@ -168,7 +168,8 @@
                 android:orientation="horizontal"
                 android:gravity="center_vertical"
                 android:weightSum="1.0"
-                android:visibility="gone">
+                android:visibility="gone"
+                >
 
                 <ImageView
                     android:id="@+id/points_earned_image_view"
@@ -182,7 +183,7 @@
                     android:id="@+id/points_earned_label"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
-                    android:layout_weight="0.8"
+                    android:layout_weight="0.7"
                     android:layout_marginLeft="10dp"
                     android:layout_alignTop="@id/points_earned_image_view"
                     android:fontFamily="sans-serif"
@@ -194,7 +195,7 @@
                     android:id="@+id/points_earned"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
-                    android:layout_weight="0.2"
+                    android:layout_weight="0.3"
                     android:fontFamily="sans-serif"
                     android:gravity="right"
                     android:text="+1,265 points"
@@ -202,12 +203,22 @@
                     android:textSize="12sp"/>
             </LinearLayout>
 
+            <View
+                android:id="@+id/view_separator_small"
+                android:layout_width="match_parent"
+                android:layout_height="0.9dp"
+                android:layout_below="@id/travel_points_earned_layout"
+                android:layout_alignLeft="@id/hotel_summary_layout"
+                android:layout_marginTop="16dp"
+                android:layout_marginBottom="16dp"
+                android:background="@color/divider"/>
+
             <TextView
                 android:id="@+id/hotel_room_total_label"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_alignLeft="@id/hotel_summary_layout"
-                android:layout_below="@id/travel_points_earned_layout"
+                android:layout_below="@id/view_separator_small"
                 android:layout_marginTop="10dp"
                 android:layout_toRightOf="@id/hotel_cal_image"
                 android:fontFamily="sans-serif"

@@ -742,7 +742,7 @@ public class TravelDBSchema {
             + " REAL, " + Travel.HotelDetailColumns.LON + " REAL, " + Travel.HotelDetailColumns.LOWEST_ENF_LEVEL
             + " INTEGER, " + Travel.HotelDetailColumns.RATES_URL + " TEXT, " + Travel.HotelDetailColumns.SUGESTED_SCORE
             + " REAL, " + Travel.HotelDetailColumns.THUMBNAIL_URL + " TEXT, "
-            + Travel.HotelDetailColumns.AVAILABILITY_ERROR_CODE + " TEXT, " + Travel.HotelDetailColumns.TRAVEL_POINTS_FOR_LOWEST_RATE + " REAL, "
+            + Travel.HotelDetailColumns.AVAILABILITY_ERROR_CODE + " TEXT, " + Travel.HotelDetailColumns.TRAVEL_POINTS_FOR_LOWEST_RATE + " INTEGER, "
             + Travel.HotelDetailColumns.HOTEL_SEARCH_RESULT_ID + " INTEGER REFERENCES "
             + Travel.HotelSearchResultColumns.TABLE_NAME + " ON DELETE CASCADE )";
     // Drop the Hotel Detail table.
@@ -769,7 +769,7 @@ public class TravelDBSchema {
             + Travel.HotelRateDetailColumns.MAX_ENF_LEVEL + " INTEGER,"
             + Travel.HotelRateDetailColumns.SELL_OPTIONS_URL + " TEXT,"
             + Travel.HotelRateDetailColumns.VIOLATION_VALUE_IDS + " TEXT,"
-            + Travel.HotelRateDetailColumns.TRAVEL_POINTS + " REAL,"
+            + Travel.HotelRateDetailColumns.TRAVEL_POINTS + " INTEGER,"
             + Travel.HotelRateDetailColumns.CAN_REDEEM_TP_AGAINST_VIOLATIONS + " INTEGER,"
             + Travel.HotelRateDetailColumns.HOTEL_DETAIL_ID + " INTEGER REFERENCES "
             + Travel.HotelDetailColumns.TABLE_NAME + " ON DELETE CASCADE )";

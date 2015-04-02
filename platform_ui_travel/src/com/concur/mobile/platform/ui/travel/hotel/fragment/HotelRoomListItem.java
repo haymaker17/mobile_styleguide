@@ -110,13 +110,18 @@ public class HotelRoomListItem extends ListItem {
         }
 
         // travel points
-        if(hotelRoom.travelPoints != null && hotelRoom.travelPoints != 0.0) {
+        if(hotelRoom.travelPoints != null && hotelRoom.travelPoints != 0) {
             txtView = (TextView) roomView.findViewById(R.id.travel_points_text);
             txtView.setVisibility(View.VISIBLE);
-            if(hotelRoom.travelPoints < 0.0) {
-                txtView.setText(Format.localizeText(context, R.string.travel_points_can_be_redeemed, new Object[] { hotelRoom.travelPoints }));
+
+            if(hotelRoom.travelPoints < 0) {
+                txtView.setText(Format.localizeText(context, R.string.travel_points_can_be_redeemed, new Object[] { FormatUtil
+                        .formatAmountWithNoDecimals( hotelRoom.travelPoints, context.getResources().getConfiguration().locale, hotelRoom.currency,
+                                false, false) }));
             } else {
-                txtView.setText(Format.localizeText(context, R.string.travel_points_can_be_earned, new Object[] { hotelRoom.travelPoints }));
+                txtView.setText(Format.localizeText(context, R.string.travel_points_can_be_earned, new Object[] { FormatUtil
+                        .formatAmountWithNoDecimals( hotelRoom.travelPoints, context.getResources().getConfiguration().locale, hotelRoom.currency,
+                                false, false) }));
             }
         }
 

@@ -38,7 +38,7 @@ public class Hotel implements Serializable, HotelDAO {
     public String distanceUnit;
     public Double priceToBeat;
     public Double lowestRate;
-    public Double travelPointsForLowestRate;
+    public Integer travelPointsForLowestRate;
     public int lowestEnforcementLevel;
     public String chainCode;
     public String chainName;
@@ -178,7 +178,7 @@ public class Hotel implements Serializable, HotelDAO {
         distanceUnit = CursorUtil.getStringValue(cursor, Travel.HotelDetailColumns.DISTANCE_UNIT);
 
         lowestRate = CursorUtil.getDoubleValue(cursor, Travel.HotelDetailColumns.LOWEST_RATE);
-        travelPointsForLowestRate = CursorUtil.getDoubleValue(cursor, Travel.HotelDetailColumns.TRAVEL_POINTS_FOR_LOWEST_RATE);
+        travelPointsForLowestRate = CursorUtil.getIntValue(cursor, Travel.HotelDetailColumns.TRAVEL_POINTS_FOR_LOWEST_RATE);
         currencyCode = CursorUtil.getStringValue(cursor, Travel.HotelDetailColumns.CURRENCY_CODE);
 
         latitude = CursorUtil.getDoubleValue(cursor, Travel.HotelDetailColumns.LAT);
