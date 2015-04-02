@@ -361,12 +361,12 @@ public class HotelBookingActivity extends TravelBaseActivity implements SpinnerD
                 Format.localizeText(this.getApplicationContext(), R.string.hotel_reserve_num_of_nights, numOfNights));
 
         // travel points earned
-        if(hotelRate.travelPoints != null && hotelRate.travelPoints > 0) {
+        if (hotelRate.travelPoints != null && hotelRate.travelPoints > 0) {
             findViewById(R.id.travel_points_earned_layout).setVisibility(View.VISIBLE);
             txtView = (TextView) findViewById(R.id.points_earned);
-            txtView.setText(Format.localizeText(this, R.string.travel_points_can_be_earned_points, new Object[] {  FormatUtil
-                    .formatAmountWithNoDecimals(hotelRate.travelPoints*numOfNights, this.getResources().getConfiguration().locale, currCode,
-                            false, false) }));
+            txtView.setText(Format.localizeText(this, R.string.travel_points_can_be_earned_points, new Object[] {
+                    FormatUtil.formatAmountWithNoDecimals(hotelRate.travelPoints * numOfNights,
+                            this.getResources().getConfiguration().locale, currCode, false, false) }));
         }
 
         // amount
@@ -493,7 +493,8 @@ public class HotelBookingActivity extends TravelBaseActivity implements SpinnerD
     }
 
     private void initViolations() {
-        if (hotelRate != null && hotelRate.violationValueIds != null && hotelRate.violationValueIds.length > 0) {
+        if (hotelRate != null && hotelRate.violationValueIds != null && hotelRate.violationValueIds.length > 0 &&
+                hotelRate.maxEnforcementLevel >= 10) {
 
             // inflate the violations view stub
             View violationsView = ((ViewStub) findViewById(R.id.violation_view)).inflate();
