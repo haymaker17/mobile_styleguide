@@ -396,18 +396,10 @@ public class Home extends BaseActivity implements View.OnClickListener, Navigati
                 decrInProgressRef();
                 if (ViewUtil.isShowMileageExpenseOnHomeScreenEnabled(Home.this) && showPersonalCarMileage()) {
                     showMileageFooterButton();
-                    if (!navItems.isEmpty()) {
-                        for (NavigationItem i : navItems) {
-                            if (i.getId() == NAVIGATION_PERSONAL_CAR_MILEAGE) {
-                                // layout visibility
-                                LinearLayout ll = (LinearLayout) findViewById(R.id.drawer_item_container);
-                                View v = ll.findViewById(i.getId());
-                                v.setVisibility(View.VISIBLE);
-                            }
-                        }
-                    }
+                    showMileageDrawerButton(View.VISIBLE);
                 } else {
                     hideMileageFooterButton();
+                    showMileageDrawerButton(View.GONE);
                 }
             } else if (Const.ACTION_DATABASE_RESET.equals(action)) {
 
@@ -2491,6 +2483,19 @@ public class Home extends BaseActivity implements View.OnClickListener, Navigati
     private void showMileageFooterButton() {
         showFooter();
         setViewVisible(R.id.homeMileage);
+    }
+
+    private void showMileageDrawerButton(int visibility) {
+        if (!navItems.isEmpty()) {
+            for (NavigationItem i : navItems) {
+                if (i.getId() == NAVIGATION_PERSONAL_CAR_MILEAGE) {
+                    // layout visibility
+                    LinearLayout ll = (LinearLayout) findViewById(R.id.drawer_item_container);
+                    View v = ll.findViewById(i.getId());
+                    v.setVisibility(visibility);
+                }
+            }
+        }
     }
 
     private void hideMileageFooterButton() {
