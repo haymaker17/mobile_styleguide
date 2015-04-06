@@ -594,6 +594,7 @@ public class Home extends BaseActivity implements View.OnClickListener, Navigati
             }
             if (ViewUtil.isShowMileageExpenseOnHomeScreenEnabled(Home.this) && showPersonalCarMileage()) {
                 showMileageFooterButton();
+                showMileageDrawerButton(View.VISIBLE);
             }
         } else {
             // Hide the expense section.
@@ -2240,7 +2241,9 @@ public class Home extends BaseActivity implements View.OnClickListener, Navigati
         ConcurMobile concurMobile = (ConcurMobile) getApplication();
         ArrayList<CarConfig> carConfigList = concurMobile.getCarConfigs();
         // UserConfig userConfig = concurMobile.getUserConfig();
-
+        if (carConfigList == null) {
+            carConfigList = concurMobile.getService().getCarConfigs();
+        }
         SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(this);
         String userCurrencyCode = prefs.getString(Const.PREF_USER_CRN_CODE, null);
 
