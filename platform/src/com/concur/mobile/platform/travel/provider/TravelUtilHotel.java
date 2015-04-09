@@ -28,7 +28,6 @@ public class TravelUtilHotel {
     private static final String CLS_TAG = "TravelUtilHotel";
 
     private static final Boolean DEBUG = Boolean.TRUE;
-    private static final Boolean TRACK_INSERTION_TIME = Boolean.TRUE;
 
     /**
      * Will insert hotel detail information into the <code>Travel.HotelDetailColumns.TABLE_NAME</code> table.
@@ -52,10 +51,6 @@ public class TravelUtilHotel {
 
         List<Hotel> hotels = hotelSearchResult != null ? hotelSearchResult.hotels : null;
         if (hotels != null && hotels.size() > 0) {
-            long startTimeMillis = 0L;
-            if (TRACK_INSERTION_TIME) {
-                startTimeMillis = System.currentTimeMillis();
-            }
 
             ContentUtils
                     .putValue(values, Travel.HotelSearchResultColumns.DISTANCE_UNIT, hotelSearchResult.distanceUnit);
@@ -204,40 +199,12 @@ public class TravelUtilHotel {
 
                     values.clear();
                 }
-
-            }
-
-            if (TRACK_INSERTION_TIME) {
-                long endTimeMillis = System.currentTimeMillis();
-                Log.d(Const.LOG_TAG, CLS_TAG + ".insertHotelDetails: took " + (endTimeMillis - startTimeMillis)
-                        + " ms to insert " + hotels.size() + " items *************************************");
             }
         }
 
     }
 
-    public static void insertHotelImagePair(ContentResolver resolver, int hotelDetailId, HotelImagePair imagePair) {
-        if (imagePair != null) {
-            // Set up the content values object.
-            ContentValues values = new ContentValues();
-
-            ContentUtils.putValue(values, Travel.HotelImagePairColumns.HOTEL_DETAIL_ID, hotelDetailId);
-            ContentUtils.putValue(values, Travel.HotelImagePairColumns.THUMBNAIL_URL, imagePair.thumbnail);
-            ContentUtils.putValue(values, Travel.HotelImagePairColumns.IMAGE_URL, imagePair.image);
-
-            // now, insert the values
-
-            Uri hotelImagePairInsertUri = resolver.insert(Travel.HotelImagePairColumns.CONTENT_URI, values);
-
-            // if (DEBUG) {
-            // Log.d(Const.LOG_TAG, CLS_TAG + ".insertHotelImagePair: new hotel image pair uri '"
-            // + ((hotelImagePairInsertUri != null) ? hotelImagePairInsertUri.toString() : "null"));
-            // }
-
-        }
-    }
-
-    /**
+     /**
      * Bulk insert image pairs for the given hotelDetailId
      *
      * @param resolver
@@ -270,57 +237,7 @@ public class TravelUtilHotel {
         }
     }
 
-    public static void insertHotelRateDetail(ContentResolver resolver, int hotelDetailId, HotelRate rateDetail) {
-        if (rateDetail != null) {
-            // Set up the content values object.
-            ContentValues values = new ContentValues();
 
-            ContentUtils.putValue(values, Travel.HotelRateDetailColumns.HOTEL_DETAIL_ID, hotelDetailId);
-            ContentUtils.putValue(values, Travel.HotelRateDetailColumns.RATE_ID, rateDetail.rateId);
-            ContentUtils.putValue(values, Travel.HotelRateDetailColumns.AMOUNT, rateDetail.amount);
-            ContentUtils.putValue(values, Travel.HotelRateDetailColumns.CURRENCY_CODE, rateDetail.currency);
-            ContentUtils.putValue(values, Travel.HotelRateDetailColumns.SOURCE, rateDetail.source);
-            ContentUtils.putValue(values, Travel.HotelRateDetailColumns.ROOM_TYPE, rateDetail.roomType);
-            ContentUtils.putValue(values, Travel.HotelRateDetailColumns.DESCRIPTION, rateDetail.description);
-            ContentUtils
-                    .putValue(values, Travel.HotelRateDetailColumns.ESTIMATED_BED_TYPE, rateDetail.estimatedBedType);
-            ContentUtils
-                    .putValue(values, Travel.HotelRateDetailColumns.GUARANTEE_SURCHARGE, rateDetail.guaranteeSurcharge);
-            ContentUtils.putValue(values, Travel.HotelRateDetailColumns.RATE_CHANGES_OVERSTAY,
-                    rateDetail.rateChangesOverStay);
-            ContentUtils.putValue(values, Travel.HotelRateDetailColumns.MAX_ENF_LEVEL, rateDetail.maxEnforcementLevel);
-
-            if (rateDetail.sellOptions != null) {
-                ContentUtils
-                        .putValue(values, Travel.HotelRateDetailColumns.SELL_OPTIONS_URL, rateDetail.sellOptions.href);
-            }
-
-            // Set the rule violation ids - convert the int[] into a comma separated string
-            if (rateDetail.violationValueIds != null && rateDetail.violationValueIds.length > 0) {
-                StringBuffer violationIds = new StringBuffer(rateDetail.violationValueIds.length);
-                violationIds.append(rateDetail.violationValueIds[0]);
-                for (int i = 1; i < rateDetail.violationValueIds.length; i++) {
-                    violationIds.append("," + rateDetail.violationValueIds[i]);
-                }
-                ContentUtils
-                        .putValue(values, Travel.HotelRateDetailColumns.VIOLATION_VALUE_IDS, violationIds.toString());
-
-            }
-            ContentUtils.putValue(values, Travel.HotelRateDetailColumns.TRAVEL_POINTS, rateDetail.travelPoints);
-            ContentUtils.putValue(values, Travel.HotelRateDetailColumns.CAN_REDEEM_TP_AGAINST_VIOLATIONS,
-                    rateDetail.canRedeemTravelPointsAgainstViolations);
-
-            // now, insert the values
-            Uri hotelRateDetailInsertUri = resolver.insert(Travel.HotelRateDetailColumns.CONTENT_URI, values);
-
-            if (DEBUG) {
-                Log.d(Const.LOG_TAG,
-                        CLS_TAG + ".insertHotelImagePair: new hotel image pair uri '" + ((hotelRateDetailInsertUri
-                                != null) ? hotelRateDetailInsertUri.toString() : "null"));
-            }
-
-        }
-    }
 
     /**
      * Bulk insert hotel rates for the given hotelDetailId
@@ -482,22 +399,6 @@ public class TravelUtilHotel {
         }
     }
 
-    /**
-     * Will update a hotel detail within the travel provider.
-     *
-     * @param context
-     *            contains an application context.
-     * @param hotel
-     *            hotel detail to be updated
-     */
-    // public static void updateHotelDetail(Context context, Hotel hotel) {
-    // // Punt any existing hotel detail object based on 'property id'.
-    // ContentResolver resolver = context.getContentResolver();
-    //
-    // // delete the existing hotel detail row where ratesURL == hotel.ratesURL.href
-    //
-    // // insert the hotel detail row by calling the existing insert method
-    // }
 
     /**
      * Delete the hotels search result
@@ -540,36 +441,7 @@ public class TravelUtilHotel {
 
     }
 
-    /**
-     * Get persisted hotels search result list
-     *
-     * @param context
-     * @return
-     */
-    public static List<Hotel> getHotels(Context context) {
 
-        List<Hotel> hotels = new ArrayList<Hotel>();
-
-        ContentResolver resolver = context.getContentResolver();
-        Cursor cursor = null;
-        try {
-            cursor = resolver.query(Travel.HotelDetailColumns.CONTENT_URI, Hotel.fullColumnList, null, null,
-                    Travel.HotelDetailColumns.DEFAULT_SORT_ORDER);
-            if (cursor != null) {
-                if (cursor.moveToFirst()) {
-                    do {
-                        hotels.add(new Hotel(cursor));
-                    } while (cursor.moveToNext());
-                }
-            }
-        } finally {
-            if (cursor != null) {
-                cursor.close();
-            }
-        }
-
-        return hotels;
-    }
 
     /**
      * Get persisted hotels search result list by cache key
@@ -761,20 +633,7 @@ public class TravelUtilHotel {
         return hotelViolations;
     }
 
-    /**
-     * Gets the list of <code>ReasonCode</code> objects specific to the end user's hotel rental company information.
-     *
-     * @param context
-     * @param userId
-     * @return
-     */
-    public static List<ReasonCodeDAO> getHotelViolationReasons(Context context, String userId) {
 
-        SystemConfigDAO systemConfig = new SystemConfigDAO(context, userId);
-        List<ReasonCodeDAO> reasonCodes = systemConfig.getHotelReasons();
-
-        return reasonCodes;
-    }
 
     /**
      * Gets the list of <code>HotelRate</code> objects specific to the Hotel.
