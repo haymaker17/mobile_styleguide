@@ -49,6 +49,7 @@ public class Flurry {
     public static final String CATEGORY_PRICE_TO_BEAT = "Price-to-Beat";
     public static final String CATEGORY_RECEIPT_CHOICE = "Receipt choice";
     public static final String CATEGORY_ALL_MOBILE_EXPENSES = "All Mobile Expenses";
+    public static final String CATEGORY_MAIN_MENU = "Main Menu";
 
     // ################### NEW GOOGLE ANALTYICS LABELS ################# //
 
@@ -66,6 +67,7 @@ public class Flurry {
     public static final String ACTION_EXPENSE_LIST = "Expense List";
     public static final String ACTION_RECEIPT_DETAILS = "View Receipt details";
     public static final String ACTION_E_RECEIPT_IMAGE_ERROR = "E-Receipt Image Error";
+    public static final String ACTION_APP_CENTER = "App Center";
 
     // ####################### END GA ACTIONS ###################### //
 

@@ -315,18 +315,27 @@ public class LoginPasswordActivity extends BaseActivity implements LoginPassword
         if (resultData != null && resultData.getBoolean(LoginResponseKeys.REMOTE_WIPE_KEY)) {
             remoteWipe();
         } else {
-            loginPasswordFragment.showInvalidPasswordError(new StringBuilder(
-                    getText(R.string.login_password_or_pin_invalid)));
-        }
-
-        // Check the HTTP response for tracking
-        Integer httpStatus = (Integer) resultData.get(BaseAsyncRequestTask.HTTP_STATUS_CODE);
-        if (httpStatus != null && httpStatus == HttpStatus.SC_FORBIDDEN) {
-            trackLoginStatus(false, Flurry.EVENT_FORBIDDEN);
-        } else if (httpStatus != null && httpStatus == HttpStatus.SC_INTERNAL_SERVER_ERROR) {
-            trackLoginStatus(false, Flurry.EVENT_SERVER_ERROR);
-        } else {
-            trackLoginStatus(false, Flurry.EVENT_BAD_CREDENTIALS);
+            // Check the HTTP response for tracking
+            Integer httpStatus = (Integer) resultData.get(BaseAsyncRequestTask.HTTP_STATUS_CODE);
+            if (httpStatus != null && httpStatus == HttpStatus.SC_FORBIDDEN) {
+                StringBuilder title = new StringBuilder(getText(R.string.login_403_error_title));
+                StringBuilder message = new StringBuilder(getText(R.string.login_403_error_message));
+                loginPasswordFragment.show403PasswordError(title, message);
+                trackLoginStatus(false, Flurry.EVENT_FORBIDDEN);
+            } else if (httpStatus != null && httpStatus == HttpStatus.SC_INTERNAL_SERVER_ERROR) {
+                StringBuilder title = new StringBuilder(getText(R.string.login_500_error_title));
+                StringBuilder message = new StringBuilder(getText(R.string.login_500_error_message));
+                loginPasswordFragment.show500PasswordError(title, message);
+                trackLoginStatus(false, Flurry.EVENT_SERVER_ERROR);
+            } else if (httpStatus != null && httpStatus == HttpStatus.SC_UNAUTHORIZED) {
+                loginPasswordFragment.showInvalidPasswordError(new StringBuilder(
+                        getText(R.string.login_password_or_pin_invalid)));
+                trackLoginStatus(false, Flurry.EVENT_SERVER_ERROR);
+            } else {
+                loginPasswordFragment.showInvalidPasswordError(new StringBuilder(
+                        getText(R.string.login_password_or_pin_invalid)));
+                trackLoginStatus(false, Flurry.EVENT_BAD_CREDENTIALS);
+            }
         }
     }
 
