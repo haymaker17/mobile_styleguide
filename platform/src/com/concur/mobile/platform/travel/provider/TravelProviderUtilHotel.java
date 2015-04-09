@@ -285,6 +285,7 @@ public class TravelProviderUtilHotel {
         info.tableName = Travel.HotelViolationColumns.TABLE_NAME;
         info.contentIdUriBase = Travel.HotelViolationColumns.CONTENT_ID_URI_BASE;
         info.projectionMap = TravelProvider.hotelViolaitonProjectionMap;
+        info.bulkInserter = new HotelViolationBulkInserter();
 
         return info;
 
