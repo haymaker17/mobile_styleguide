@@ -246,7 +246,6 @@
     <string name="msg_cntr_title">Message Center</string>
     <string name="msg_cntr_no_data">You have no messages</string>
     <string name="msg_cntr_new_upcoming_look">New look coming soon\n for Concur App!</string>
-    
 
     <!-- approvals -->
     <plurals name="approval_row_report_msg">
@@ -1976,7 +1975,9 @@
 
     <!-- Start What's new -->
     <string-array name="whats_new">
-        <item>\u2022 Ability to view partner services/apps and connect them with your Concur profile</item>
+        <item>\u2022 Improved message to first time user if they login incorrectly</item>
+        <item>\u2022 Improved Salesforce Opportunities searching</item>
+        <item>\u2022 Fix for defaulting currency based on city location</item>
     </string-array>
     <!-- End What's new -->
 
@@ -2053,7 +2054,6 @@
     <string name="ocr_status_procesing">Processing\u2026</string>
     <string name="ocr_status_procesing_error">Processing Error</string>
     <string name="ocr_status_procesing_cancelled">Processing Cancelled</string>
-
 
     <!-- Minimum Android SDK Support Upgrade Message -->
     <string name="sdk_upgrade_message_important">Important:</string>
