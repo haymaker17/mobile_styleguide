@@ -1,18 +1,17 @@
 package com.concur.mobile.platform.travel.provider;
 
-import net.sqlcipher.SQLException;
 import android.content.ContentValues;
 import android.util.Log;
-
 import com.concur.mobile.platform.provider.BulkInserter;
 import com.concur.mobile.platform.provider.PlatformSQLiteDatabase;
 import com.concur.mobile.platform.provider.PlatformSQLiteStatement;
 import com.concur.mobile.platform.util.Const;
 import com.concur.mobile.platform.util.ContentUtils;
+import net.sqlcipher.SQLException;
 
 /**
  * An implementation of <code>BulkInserter</code> for the purposes of performing bulk insertion for hotel image pairs.
- *
+ * <p/>
  * Created by RatanK
  */
 public class HotelImagePairBulkInserter implements BulkInserter {
@@ -55,9 +54,12 @@ public class HotelImagePairBulkInserter implements BulkInserter {
         if (sqlStmt != null) {
             if (values != null) {
 
-                ContentUtils.bindSqlStatementValues(sqlStmt, ContentUtils.StatementBindTypeEnum.LONG, 1, values, Travel.HotelImagePairColumns.HOTEL_DETAIL_ID);
-                ContentUtils.bindSqlStatementValues(sqlStmt, ContentUtils.StatementBindTypeEnum.STRING, 2, values, Travel.HotelImagePairColumns.THUMBNAIL_URL);
-                ContentUtils.bindSqlStatementValues(sqlStmt, ContentUtils.StatementBindTypeEnum.STRING, 3, values, Travel.HotelImagePairColumns.IMAGE_URL);
+                ContentUtils.bindSqlStatementValues(sqlStmt, ContentUtils.StatementBindTypeEnum.LONG, 1, values,
+                        Travel.HotelImagePairColumns.HOTEL_DETAIL_ID);
+                ContentUtils.bindSqlStatementValues(sqlStmt, ContentUtils.StatementBindTypeEnum.STRING, 2, values,
+                        Travel.HotelImagePairColumns.THUMBNAIL_URL);
+                ContentUtils.bindSqlStatementValues(sqlStmt, ContentUtils.StatementBindTypeEnum.STRING, 3, values,
+                        Travel.HotelImagePairColumns.IMAGE_URL);
 
             } else {
                 Log.d(Const.LOG_TAG, CLS_TAG + ".bindSQLiteStatementValues: values is null.");

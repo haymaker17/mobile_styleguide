@@ -1,16 +1,7 @@
 package com.concur.mobile.platform.travel.search.hotel;
 
-import java.io.BufferedInputStream;
-import java.io.IOException;
-import java.io.InputStream;
-import java.io.InputStreamReader;
-import java.io.Serializable;
-import java.lang.reflect.Type;
-import java.net.HttpURLConnection;
-
 import android.content.Context;
 import android.util.Log;
-
 import com.concur.mobile.base.service.BaseAsyncRequestTask;
 import com.concur.mobile.base.service.BaseAsyncResultReceiver;
 import com.concur.mobile.platform.service.PlatformAsyncRequestTask;
@@ -20,21 +11,22 @@ import com.concur.mobile.platform.util.Const;
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
 
+import java.io.*;
+import java.lang.reflect.Type;
+import java.net.HttpURLConnection;
+
 /**
  * Performs Get Hotel Rates task
- * 
+ *
  * @author tejoa
- * 
  */
 public class HotelRatesAsyncRequestTask extends PlatformAsyncRequestTask {
-
-    private static final String CLS_TAG = "HotelRatesAsyncRequestTask";
 
     /**
      * Contains the key to retrieve the current result set from the data bundle.
      */
     public static final String HOTEL_RATES_RESULT_EXTRA_KEY = "HotelRatesResult";
-
+    private static final String CLS_TAG = "HotelRatesAsyncRequestTask";
     public String ratesURL;
 
     public long hotelId;
@@ -85,7 +77,9 @@ public class HotelRatesAsyncRequestTask extends PlatformAsyncRequestTask {
         hotelRateResult = null;
         try {
             // prepare the object Type expected in MWS response 'data' element
-            Type type = new TypeToken<MWSResponse<HotelRatesRESTResult>>() {}.getType();
+            Type type = new TypeToken<MWSResponse<HotelRatesRESTResult>>() {
+
+            }.getType();
 
             mwsResp = new Gson().fromJson(new InputStreamReader(new BufferedInputStream(is), "UTF-8"), type);
 
@@ -102,20 +96,15 @@ public class HotelRatesAsyncRequestTask extends PlatformAsyncRequestTask {
                                 (Serializable) hotelRateResult);
                         if (hotelId != 0 && hotelSearchId != 0) {
 
-                            new Thread(new Runnable() {
+                            // insert violations
+                            TravelUtilHotel
+                                    .insertHotelViolations(getContext().getContentResolver(), (int) hotelSearchId,
+                                            hotelRateResult.violations, true);
 
-                                public void run() {
-                                    for (HotelRate rate : hotel.rates) {
-                                        // inserting rates with new list of violations
-                                        TravelUtilHotel.insertHotelRateDetail(getContext().getContentResolver(),
-                                                (int) hotelId, rate);
+                            // insert rates
+                            TravelUtilHotel.bulkInsertHotelRateDetail(getContext().getContentResolver(), (int) hotelId,
+                                    hotel.rates);
 
-                                        // insert violations
-                                        TravelUtilHotel.insertHotelViolations(getContext().getContentResolver(),
-                                                (int) hotelSearchId, hotelRateResult.violations, true);
-                                    }
-                                }
-                            }).start();
                         }
 
                     } else {

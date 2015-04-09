@@ -1,10 +1,5 @@
 package com.concur.mobile.platform.travel.provider;
 
-import java.text.SimpleDateFormat;
-import java.util.ArrayList;
-import java.util.Date;
-import java.util.List;
-
 import android.annotation.SuppressLint;
 import android.content.ContentResolver;
 import android.content.ContentValues;
@@ -12,36 +7,34 @@ import android.content.Context;
 import android.database.Cursor;
 import android.net.Uri;
 import android.util.Log;
-
 import com.concur.mobile.platform.config.system.dao.ReasonCodeDAO;
 import com.concur.mobile.platform.config.system.dao.SystemConfigDAO;
-import com.concur.mobile.platform.travel.search.hotel.Hotel;
-import com.concur.mobile.platform.travel.search.hotel.HotelImagePair;
-import com.concur.mobile.platform.travel.search.hotel.HotelRate;
-import com.concur.mobile.platform.travel.search.hotel.HotelSearchRESTResult;
-import com.concur.mobile.platform.travel.search.hotel.HotelViolation;
+import com.concur.mobile.platform.travel.search.hotel.*;
 import com.concur.mobile.platform.util.Const;
 import com.concur.mobile.platform.util.ContentUtils;
 
+import java.text.SimpleDateFormat;
+import java.util.ArrayList;
+import java.util.Date;
+import java.util.List;
+
 /**
  * Provides a set of travel provider utility methods specific to Hotel.
- * 
+ *
  * @author RatanK
- * 
  */
 public class TravelUtilHotel {
 
     private static final String CLS_TAG = "TravelUtilHotel";
 
     private static final Boolean DEBUG = Boolean.TRUE;
+    private static final Boolean TRACK_INSERTION_TIME = Boolean.TRUE;
 
     /**
      * Will insert hotel detail information into the <code>Travel.HotelDetailColumns.TABLE_NAME</code> table.
-     * 
-     * @param resolver
-     *            contains a reference to a content resolver.
-     * @param hotels
-     *            contains a list of <code>Hotel</code> objects.
+     *
+     * @param resolver          contains a reference to a content resolver.
+     * @param hotelSearchResult contains a list of <code>HotelSearchRESTResult</code> objects.
      */
     @SuppressLint("SimpleDateFormat")
     public static void insertHotelDetails(ContentResolver resolver, HotelSearchRESTResult hotelSearchResult) {
@@ -59,12 +52,16 @@ public class TravelUtilHotel {
 
         List<Hotel> hotels = hotelSearchResult != null ? hotelSearchResult.hotels : null;
         if (hotels != null && hotels.size() > 0) {
+            long startTimeMillis = 0L;
+            if (TRACK_INSERTION_TIME) {
+                startTimeMillis = System.currentTimeMillis();
+            }
 
             ContentUtils
                     .putValue(values, Travel.HotelSearchResultColumns.DISTANCE_UNIT, hotelSearchResult.distanceUnit);
             ContentUtils.putValue(values, Travel.HotelSearchResultColumns.CURRENCY, hotelSearchResult.currency);
-            ContentUtils.putValue(values, Travel.HotelSearchResultColumns.SEARCH_CRITERIA_URL,
-                    hotelSearchResult.searchUrl);
+            ContentUtils
+                    .putValue(values, Travel.HotelSearchResultColumns.SEARCH_CRITERIA_URL, hotelSearchResult.searchUrl);
             SimpleDateFormat df = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
             ContentUtils.putValue(values, Travel.HotelSearchResultColumns.EXPIRY_DATETIME,
                     df.format(new Date().getTime() + 5 * 60 * 1000)); // 5 mins expiry time.
@@ -77,8 +74,11 @@ public class TravelUtilHotel {
             if (hotelSearchResultInsertUri != null) {
 
                 // get the hotel search result unique key
-                int hotelSearchResultId = Integer.parseInt(hotelSearchResultInsertUri.getPathSegments().get(
-                        Travel.HotelSearchResultColumns.HOTEL_SEARCH_RESULT_ID_PATH_POSITION));
+                int hotelSearchResultId = Integer.parseInt(hotelSearchResultInsertUri.getPathSegments()
+                        .get(Travel.HotelSearchResultColumns.HOTEL_SEARCH_RESULT_ID_PATH_POSITION));
+
+                // insert violations - TODO - can we span this in a new thread
+                bulkInsertHotelViolations(resolver, hotelSearchResultId, hotelSearchResult.violations);
 
                 for (Hotel hotel : hotels) {
 
@@ -96,8 +96,8 @@ public class TravelUtilHotel {
                         // Set the street.
                         ContentUtils.putValue(values, Travel.HotelDetailColumns.STREET, hotel.contact.street);
                         // Set the address line 1.
-                        ContentUtils.putValue(values, Travel.HotelDetailColumns.ADDRESS_LINE_1,
-                                hotel.contact.addressLine1);
+                        ContentUtils
+                                .putValue(values, Travel.HotelDetailColumns.ADDRESS_LINE_1, hotel.contact.addressLine1);
                         // Set the city.
                         ContentUtils.putValue(values, Travel.HotelDetailColumns.CITY, hotel.contact.city);
                         // Set the state.
@@ -123,8 +123,8 @@ public class TravelUtilHotel {
                     // Set the distance.
                     ContentUtils.putValue(values, Travel.HotelDetailColumns.DISTANCE, hotel.distance);
                     // Set the distance.
-                    ContentUtils.putValue(values, Travel.HotelDetailColumns.DISTANCE_UNIT,
-                            hotelSearchResult.distanceUnit);
+                    ContentUtils
+                            .putValue(values, Travel.HotelDetailColumns.DISTANCE_UNIT, hotelSearchResult.distanceUnit);
                     // Set the lowest rate.
                     ContentUtils.putValue(values, Travel.HotelDetailColumns.LOWEST_RATE, hotel.lowestRate);
                     // Set the currency code.
@@ -132,7 +132,8 @@ public class TravelUtilHotel {
                     // Set the price to beat.
                     ContentUtils.putValue(values, Travel.HotelDetailColumns.PRICE_TO_BEAT, hotel.priceToBeat);
                     // Set the travel points for the lowest rate.
-                    ContentUtils.putValue(values, Travel.HotelDetailColumns.TRAVEL_POINTS_FOR_LOWEST_RATE, hotel.travelPointsForLowestRate);
+                    ContentUtils.putValue(values, Travel.HotelDetailColumns.TRAVEL_POINTS_FOR_LOWEST_RATE,
+                            hotel.travelPointsForLowestRate);
 
                     // Set the suggestion.
                     if (hotel.recommended != null) {
@@ -143,8 +144,8 @@ public class TravelUtilHotel {
                     }
                     // Set the company preference.
                     if (hotel.preferences != null) {
-                        ContentUtils.putValue(values, Travel.HotelDetailColumns.STAR_RATING,
-                                hotel.preferences.starRating);
+                        ContentUtils
+                                .putValue(values, Travel.HotelDetailColumns.STAR_RATING, hotel.preferences.starRating);
                         ContentUtils.putValue(values, Travel.HotelDetailColumns.COMPANY_PREFERENCE,
                                 hotel.preferences.companyPreference);
                     }
@@ -172,34 +173,24 @@ public class TravelUtilHotel {
                     Uri hotelDetailInsertUri = resolver.insert(Travel.HotelDetailColumns.CONTENT_URI, values);
 
                     if (DEBUG) {
-                        Log.d(Const.LOG_TAG, CLS_TAG + ".insertHotelDetails: new hotel detail uri '"
-                                + ((hotelDetailInsertUri != null) ? hotelDetailInsertUri.toString() : "null"));
+                        Log.d(Const.LOG_TAG,
+                                CLS_TAG + ".insertHotelDetails: new hotel detail uri '" + ((hotelDetailInsertUri
+                                        != null) ? hotelDetailInsertUri.toString() : "null"));
                     }
 
                     if (hotelDetailInsertUri != null) {
 
                         try {
-                            int hotelDetailId = Integer.parseInt(hotelDetailInsertUri.getPathSegments().get(
-                                    Travel.HotelDetailColumns.HOTEL_DETAIL_ID_PATH_POSITION));
+                            int hotelDetailId = Integer.parseInt(hotelDetailInsertUri.getPathSegments()
+                                    .get(Travel.HotelDetailColumns.HOTEL_DETAIL_ID_PATH_POSITION));
 
-                            // retVal = insertId;
+                            // Insert the HotelRate - TODO - can we span this in a new thread
+                            bulkInsertHotelRateDetail(resolver, hotelDetailId, hotel.rates);
 
-                            // Insert HotelImagePair
-                            if (hasImagePairs) {
-                                // TODO - use batch insert?
-                                for (HotelImagePair imagePair : hotel.imagePairs) {
-                                    insertHotelImagePair(resolver, hotelDetailId, imagePair);
-                                }
+                            // Insert HotelImagePairs
+                            if (hasImagePairs) { // TODO - can we span this in a new thread
+                                bulkInsertHotelImagePairs(resolver, hotelDetailId, hotel.imagePairs);
                             }
-
-                            // Insert the HotelRate
-                            if (hotel.rates != null && hotel.rates.size() > 0) {
-                                // TODO - use batch insert?
-                                for (HotelRate rateDetail : hotel.rates) {
-                                    insertHotelRateDetail(resolver, hotelDetailId, rateDetail);
-                                }
-                            }
-
                         } catch (NumberFormatException nfe) {
                             Log.e(Const.LOG_TAG, CLS_TAG + ".insertHotelDetails: content id is not an integer!", nfe);
                         } catch (IndexOutOfBoundsException iobe) {
@@ -214,9 +205,12 @@ public class TravelUtilHotel {
                     values.clear();
                 }
 
-                // insert violations
-                insertHotelViolations(resolver, hotelSearchResultId, hotelSearchResult.violations, false);
+            }
 
+            if (TRACK_INSERTION_TIME) {
+                long endTimeMillis = System.currentTimeMillis();
+                Log.d(Const.LOG_TAG, CLS_TAG + ".insertHotelDetails: took " + (endTimeMillis - startTimeMillis)
+                        + " ms to insert " + hotels.size() + " items *************************************");
             }
         }
 
@@ -243,6 +237,39 @@ public class TravelUtilHotel {
         }
     }
 
+    /**
+     * Bulk insert image pairs for the given hotelDetailId
+     *
+     * @param resolver
+     * @param hotelDetailId
+     * @param imagePairs
+     */
+    public static void bulkInsertHotelImagePairs(ContentResolver resolver, int hotelDetailId,
+            List<HotelImagePair> imagePairs) {
+
+        if (imagePairs != null && imagePairs.size() > 0) {
+            ContentValues[] valuesInfo = new ContentValues[imagePairs.size()];
+            int valInd = 0;
+
+            for (HotelImagePair imagePair : imagePairs) {
+                valuesInfo[valInd] = new ContentValues();
+
+                ContentUtils.putValue(valuesInfo[valInd], Travel.HotelImagePairColumns.HOTEL_DETAIL_ID, hotelDetailId);
+                ContentUtils
+                        .putValue(valuesInfo[valInd], Travel.HotelImagePairColumns.THUMBNAIL_URL, imagePair.thumbnail);
+                ContentUtils.putValue(valuesInfo[valInd], Travel.HotelImagePairColumns.IMAGE_URL, imagePair.image);
+
+                ++valInd;
+            }
+
+            int numInserted = resolver.bulkInsert(Travel.HotelImagePairColumns.CONTENT_URI, valuesInfo);
+            if (DEBUG) {
+                Log.d(Const.LOG_TAG,
+                        CLS_TAG + ".bulkInsertHotelImagePairs : number of image items inserted :  " + numInserted);
+            }
+        }
+    }
+
     public static void insertHotelRateDetail(ContentResolver resolver, int hotelDetailId, HotelRate rateDetail) {
         if (rateDetail != null) {
             // Set up the content values object.
@@ -257,15 +284,15 @@ public class TravelUtilHotel {
             ContentUtils.putValue(values, Travel.HotelRateDetailColumns.DESCRIPTION, rateDetail.description);
             ContentUtils
                     .putValue(values, Travel.HotelRateDetailColumns.ESTIMATED_BED_TYPE, rateDetail.estimatedBedType);
-            ContentUtils.putValue(values, Travel.HotelRateDetailColumns.GUARANTEE_SURCHARGE,
-                    rateDetail.guaranteeSurcharge);
+            ContentUtils
+                    .putValue(values, Travel.HotelRateDetailColumns.GUARANTEE_SURCHARGE, rateDetail.guaranteeSurcharge);
             ContentUtils.putValue(values, Travel.HotelRateDetailColumns.RATE_CHANGES_OVERSTAY,
                     rateDetail.rateChangesOverStay);
             ContentUtils.putValue(values, Travel.HotelRateDetailColumns.MAX_ENF_LEVEL, rateDetail.maxEnforcementLevel);
 
             if (rateDetail.sellOptions != null) {
-                ContentUtils.putValue(values, Travel.HotelRateDetailColumns.SELL_OPTIONS_URL,
-                        rateDetail.sellOptions.href);
+                ContentUtils
+                        .putValue(values, Travel.HotelRateDetailColumns.SELL_OPTIONS_URL, rateDetail.sellOptions.href);
             }
 
             // Set the rule violation ids - convert the int[] into a comma separated string
@@ -275,8 +302,8 @@ public class TravelUtilHotel {
                 for (int i = 1; i < rateDetail.violationValueIds.length; i++) {
                     violationIds.append("," + rateDetail.violationValueIds[i]);
                 }
-                ContentUtils.putValue(values, Travel.HotelRateDetailColumns.VIOLATION_VALUE_IDS,
-                        violationIds.toString());
+                ContentUtils
+                        .putValue(values, Travel.HotelRateDetailColumns.VIOLATION_VALUE_IDS, violationIds.toString());
 
             }
             ContentUtils.putValue(values, Travel.HotelRateDetailColumns.TRAVEL_POINTS, rateDetail.travelPoints);
@@ -287,10 +314,81 @@ public class TravelUtilHotel {
             Uri hotelRateDetailInsertUri = resolver.insert(Travel.HotelRateDetailColumns.CONTENT_URI, values);
 
             if (DEBUG) {
-                Log.d(Const.LOG_TAG, CLS_TAG + ".insertHotelImagePair: new hotel image pair uri '"
-                        + ((hotelRateDetailInsertUri != null) ? hotelRateDetailInsertUri.toString() : "null"));
+                Log.d(Const.LOG_TAG,
+                        CLS_TAG + ".insertHotelImagePair: new hotel image pair uri '" + ((hotelRateDetailInsertUri
+                                != null) ? hotelRateDetailInsertUri.toString() : "null"));
             }
 
+        }
+    }
+
+    /**
+     * Bulk insert hotel rates for the given hotelDetailId
+     *
+     * @param resolver
+     * @param hotelDetailId
+     * @param rates
+     */
+    public static void bulkInsertHotelRateDetail(ContentResolver resolver, int hotelDetailId, List<HotelRate> rates) {
+        if (rates != null && rates.size() > 0) {
+            ContentValues[] valuesInfo = new ContentValues[rates.size()];
+            int valInd = 0;
+
+            for (HotelRate rateDetail : rates) {
+
+                valuesInfo[valInd] = new ContentValues();
+
+                ContentUtils.putValue(valuesInfo[valInd], Travel.HotelRateDetailColumns.HOTEL_DETAIL_ID, hotelDetailId);
+                ContentUtils.putValue(valuesInfo[valInd], Travel.HotelRateDetailColumns.RATE_ID, rateDetail.rateId);
+                ContentUtils.putValue(valuesInfo[valInd], Travel.HotelRateDetailColumns.AMOUNT, rateDetail.amount);
+                ContentUtils
+                        .putValue(valuesInfo[valInd], Travel.HotelRateDetailColumns.CURRENCY_CODE, rateDetail.currency);
+                ContentUtils.putValue(valuesInfo[valInd], Travel.HotelRateDetailColumns.SOURCE, rateDetail.source);
+                ContentUtils.putValue(valuesInfo[valInd], Travel.HotelRateDetailColumns.ROOM_TYPE, rateDetail.roomType);
+                ContentUtils.putValue(valuesInfo[valInd], Travel.HotelRateDetailColumns.DESCRIPTION,
+                        rateDetail.description);
+                ContentUtils.putValue(valuesInfo[valInd], Travel.HotelRateDetailColumns.ESTIMATED_BED_TYPE,
+                        rateDetail.estimatedBedType);
+                ContentUtils.putValue(valuesInfo[valInd], Travel.HotelRateDetailColumns.GUARANTEE_SURCHARGE,
+                        rateDetail.guaranteeSurcharge);
+                ContentUtils.putValue(valuesInfo[valInd], Travel.HotelRateDetailColumns.RATE_CHANGES_OVERSTAY,
+                        rateDetail.rateChangesOverStay);
+                ContentUtils.putValue(valuesInfo[valInd], Travel.HotelRateDetailColumns.MAX_ENF_LEVEL,
+                        rateDetail.maxEnforcementLevel);
+
+                if (rateDetail.sellOptions != null) {
+                    ContentUtils.putValue(valuesInfo[valInd], Travel.HotelRateDetailColumns.SELL_OPTIONS_URL,
+                            rateDetail.sellOptions.href);
+                }
+
+                // Set the rule violation ids - convert the int[] into a comma separated string
+                if (rateDetail.violationValueIds != null && rateDetail.violationValueIds.length > 0) {
+                    StringBuffer violationIds = new StringBuffer(rateDetail.violationValueIds.length);
+                    violationIds.append(rateDetail.violationValueIds[0]);
+                    for (int i = 1; i < rateDetail.violationValueIds.length; i++) {
+                        violationIds.append("," + rateDetail.violationValueIds[i]);
+                    }
+                    ContentUtils.putValue(valuesInfo[valInd], Travel.HotelRateDetailColumns.VIOLATION_VALUE_IDS,
+                            violationIds.toString());
+
+                }
+                ContentUtils.putValue(valuesInfo[valInd], Travel.HotelRateDetailColumns.TRAVEL_POINTS,
+                        rateDetail.travelPoints);
+                ContentUtils
+                        .putValue(valuesInfo[valInd], Travel.HotelRateDetailColumns.CAN_REDEEM_TP_AGAINST_VIOLATIONS,
+                                rateDetail.canRedeemTravelPointsAgainstViolations);
+
+                ++valInd;
+            }
+            // now, insert the values
+
+            int numInserted = resolver.bulkInsert(Travel.HotelRateDetailColumns.CONTENT_URI, valuesInfo);
+
+            if (DEBUG) {
+
+                Log.d(Const.LOG_TAG,
+                        CLS_TAG + ".bulkInsertHotelRateDetail : number of rate items inserted :  " + numInserted);
+            }
         }
     }
 
@@ -323,8 +421,9 @@ public class TravelUtilHotel {
                         strBldr.append(" = " + hotelSearchResultId);
                         String where = strBldr.toString();
 
-                        cursor = resolver.query(Travel.HotelViolationColumns.CONTENT_URI,
-                                HotelViolation.fullColumnList, where, null, null);
+                        cursor = resolver
+                                .query(Travel.HotelViolationColumns.CONTENT_URI, HotelViolation.fullColumnList, where,
+                                        null, null);
                         if (cursor == null || !cursor.moveToFirst()) {
                             {
                                 resolver.insert(Travel.HotelViolationColumns.CONTENT_URI, values);
@@ -346,8 +445,46 @@ public class TravelUtilHotel {
     }
 
     /**
+     * Bulk insert violations for the given hotelSearchResultId
+     *
+     * @param resolver
+     * @param hotelSearchResultId
+     * @param violations
+     */
+    public static void bulkInsertHotelViolations(ContentResolver resolver, int hotelSearchResultId,
+            List<HotelViolation> violations) {
+        // insert hotel violations with hotel search result id as foreign key
+        if (violations != null && violations.size() > 0) {
+            ContentValues[] valuesInfo = new ContentValues[violations.size()];
+            int valInd = 0;
+            for (HotelViolation hotelViolation : violations) {
+
+                valuesInfo[valInd] = new ContentValues();
+
+                // Set the foreign key
+                ContentUtils.putValue(valuesInfo[valInd], Travel.HotelViolationColumns.HOTEL_SEARCH_RESULT_ID,
+                        hotelSearchResultId);
+
+                // Set the columns
+                ContentUtils.putValue(valuesInfo[valInd], Travel.HotelViolationColumns.ENFORCEMENT_LEVEL,
+                        hotelViolation.enforcementLevel);
+                ContentUtils.putValue(valuesInfo[valInd], Travel.HotelViolationColumns.MESSAGE, hotelViolation.message);
+                ContentUtils.putValue(valuesInfo[valInd], Travel.HotelViolationColumns.VIOLATION_VALUE_ID,
+                        hotelViolation.violationValueId);
+            }
+            // insert
+            int numInserted = resolver.bulkInsert(Travel.HotelViolationColumns.CONTENT_URI, valuesInfo);
+
+            if (DEBUG) {
+                Log.d(Const.LOG_TAG, CLS_TAG + ".bulkInsertHotelViolations : number of violation items inserted :  "
+                        + numInserted);
+            }
+        }
+    }
+
+    /**
      * Will update a hotel detail within the travel provider.
-     * 
+     *
      * @param context
      *            contains an application context.
      * @param hotel
@@ -364,7 +501,7 @@ public class TravelUtilHotel {
 
     /**
      * Delete the hotels search result
-     * 
+     *
      * @param context
      */
     public static void deleteAllHotelDetails(Context context) {
@@ -381,7 +518,7 @@ public class TravelUtilHotel {
 
     /**
      * Delete the hotels search result
-     * 
+     *
      * @param context
      */
     public static void deleteHotelDetails(Context context) {
@@ -405,7 +542,7 @@ public class TravelUtilHotel {
 
     /**
      * Get persisted hotels search result list
-     * 
+     *
      * @param context
      * @return
      */
@@ -436,7 +573,7 @@ public class TravelUtilHotel {
 
     /**
      * Get persisted hotels search result list by cache key
-     * 
+     *
      * @param context
      * @return
      */
@@ -475,7 +612,6 @@ public class TravelUtilHotel {
     }
 
     /**
-     * 
      * @param context
      * @param searchUrl
      * @return
@@ -490,8 +626,9 @@ public class TravelUtilHotel {
             strBldr.append(" = ?");
             String where = strBldr.toString();
             String[] whereArgs = { searchUrl };
-            cursor = resolver.query(Travel.HotelSearchResultColumns.CONTENT_URI, HotelSearchRESTResult.fullColumnList,
-                    where, whereArgs, null);
+            cursor = resolver
+                    .query(Travel.HotelSearchResultColumns.CONTENT_URI, HotelSearchRESTResult.fullColumnList, where,
+                            whereArgs, null);
             if (cursor != null) {
                 if (cursor.moveToFirst()) {
                     id = cursor.getString(0);
@@ -508,7 +645,7 @@ public class TravelUtilHotel {
 
     /**
      * Get persisted hotels search result list
-     * 
+     *
      * @param context
      * @return
      */
@@ -546,9 +683,9 @@ public class TravelUtilHotel {
 
     /**
      * Get persisted images of the specific hotel
-     * 
+     *
      * @param context
-     * @param hotelRateResult
+     * @param id
      * @return
      */
     public static List<HotelImagePair> getHotelImagePairs(Context context, long id) {
@@ -562,8 +699,8 @@ public class TravelUtilHotel {
             strBldr.append(Travel.HotelImagePairColumns.HOTEL_DETAIL_ID);
             strBldr.append(" = " + id);
             String where = strBldr.toString();
-            cursor = resolver.query(Travel.HotelImagePairColumns.CONTENT_URI, HotelImagePair.fullColumnList, where,
-                    null, null);
+            cursor = resolver
+                    .query(Travel.HotelImagePairColumns.CONTENT_URI, HotelImagePair.fullColumnList, where, null, null);
 
             if (cursor != null) {
                 if (cursor.moveToFirst()) {
@@ -583,7 +720,7 @@ public class TravelUtilHotel {
 
     /**
      * Get hotel violations for the passed in violation ids and hotel search id
-     * 
+     *
      * @param context
      * @param violationValueIds
      * @return
@@ -605,8 +742,9 @@ public class TravelUtilHotel {
 
             String[] whereArgs = violationValueIds;
 
-            cursor = resolver.query(Travel.HotelViolationColumns.CONTENT_URI, HotelViolation.fullColumnList, where,
-                    whereArgs, null);
+            cursor = resolver
+                    .query(Travel.HotelViolationColumns.CONTENT_URI, HotelViolation.fullColumnList, where, whereArgs,
+                            null);
             if (cursor != null) {
                 if (cursor.moveToFirst()) {
                     do {
@@ -625,7 +763,7 @@ public class TravelUtilHotel {
 
     /**
      * Gets the list of <code>ReasonCode</code> objects specific to the end user's hotel rental company information.
-     * 
+     *
      * @param context
      * @param userId
      * @return
@@ -640,10 +778,9 @@ public class TravelUtilHotel {
 
     /**
      * Gets the list of <code>HotelRate</code> objects specific to the Hotel.
-     * 
+     *
      * @param context
-     * @param hotelDetailId
-     *            - unique database id of the parent table Hotel
+     * @param hotelDetailId - unique database id of the parent table Hotel
      * @return
      */
     public static List<HotelRate> getHotelRateDetails(Context context, long hotelDetailId) {
@@ -657,8 +794,8 @@ public class TravelUtilHotel {
             strBldr.append(" = " + hotelDetailId);
             String where = strBldr.toString();
 
-            cursor = resolver.query(Travel.HotelRateDetailColumns.CONTENT_URI, HotelRate.fullColumnList, where, null,
-                    null);
+            cursor = resolver
+                    .query(Travel.HotelRateDetailColumns.CONTENT_URI, HotelRate.fullColumnList, where, null, null);
             if (cursor != null) {
                 if (cursor.moveToFirst()) {
                     do {

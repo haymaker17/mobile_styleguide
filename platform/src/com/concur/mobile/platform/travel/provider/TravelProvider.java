@@ -1,35 +1,30 @@
 /**
- * 
+ *
  */
 package com.concur.mobile.platform.travel.provider;
-
-import java.util.HashMap;
 
 import android.content.Context;
 import android.content.UriMatcher;
 import android.util.SparseArray;
-
 import com.concur.mobile.platform.provider.EncryptedSQLiteOpenHelper;
 import com.concur.mobile.platform.provider.PlatformContentProvider;
 import com.concur.mobile.platform.provider.PlatformSQLiteOpenHelper;
 import com.concur.mobile.platform.provider.UriMatcherInfo;
 
+import java.util.HashMap;
+
 /**
  * An extension of <code>PlatformContentProvider</code> providing travel content.
- * 
+ *
  * @author andrewk
  */
 public class TravelProvider extends PlatformContentProvider {
-
-    // Contains a static reference to the last instantiated <code>TravelProvider</code>.
-    private static TravelProvider provider;
 
     // Trip Summary List.
     private static final int TRIP_SUMMARIES = 0;
     private static final int TRIP_SUMMARY_ID = 1;
     private static final int TRIP_SUMMARY_MESSAGES = 3;
     private static final int TRIP_SUMMARY_MESSAGE_ID = 4;
-
     // Trip Detail.
     private static final int TRIPS = 5;
     private static final int TRIP_ID = 6;
@@ -99,156 +94,119 @@ public class TravelProvider extends PlatformContentProvider {
     private static final int PARKING_SEGMENT_ID = 70;
     private static final int RIDE_SEGMENTS = 71;
     private static final int RIDE_SEGMENT_ID = 72;
-
     // Location Choice
     private static final int LOCATION_CHOICES = 73;
     private static final int LOCATION_CHOICE_ID = 74;
-
     // Hotel Detail
     private static final int HOTEL_DETAILS = 75;
     private static final int HOTEL_DETAIL_ID = 76;
-
     // Hotel Image Pair
     private static final int HOTEL_IMAGE_PAIRS = 77;
     private static final int HOTEL_IMAGE_PAIR_ID = 78;
-
     // Hotel Rate Detail
     private static final int HOTEL_RATE_DETAILS = 79;
     private static final int HOTEL_RATE_DETAIL_ID = 80;
-
     // Hotel Search Result
     private static final int HOTEL_SEARCH_RESULT = 81;
     private static final int HOTEL_SEARCH_RESULT_ID = 82;
-
     // Hotel Violation
     private static final int HOTEL_VIOLATION = 83;
     private static final int HOTEL_VIOLATION_ID = 84;
-
+    // Contains the Trip projection map.
+    static HashMap<String, String> tripProjectionMap;
+    // Contains the Enhancement Day projection map.
+    static HashMap<String, String> enhancementDayProjectionMap;
+    // Contains the Sortable Segment projection map.
+    static HashMap<String, String> sortableSegmentProjectionMap;
+    // Contains the Enhancement Offer projection map.
+    static HashMap<String, String> enhancementOfferProjectionMap;
+    // Contains the Offer Link projection map.
+    static HashMap<String, String> offerLinkProjectionMap;
+    // Contains the Offer Content projection map.
+    static HashMap<String, String> offerContentProjectionMap;
+    // Contains the Content Link projection map.
+    static HashMap<String, String> contentLinkProjectionMap;
+    // Contains the Map Display projection map.
+    static HashMap<String, String> mapDisplayProjectionMap;
+    // Contains the Display Overlay projection map.
+    static HashMap<String, String> displayOverlayProjectionMap;
+    // Contains the Validity Location projection map.
+    static HashMap<String, String> validityLocationProjectionMap;
+    // Contains the Validity Time Range projection map.
+    static HashMap<String, String> validityTimeRangeProjectionMap;
+    // Contains the Trip Rule Violation projection map.
+    static HashMap<String, String> tripRuleViolationProjectionMap;
+    // Contains the Car Rule Violation projection map.
+    static HashMap<String, String> carRuleViolationProjectionMap;
+    // Contains the Hotel Rule Violation projection map.
+    static HashMap<String, String> hotelRuleViolationProjectionMap;
+    // Contains the Flight Rule Violation projection map.
+    static HashMap<String, String> flightRuleViolationProjectionMap;
+    // Contains the Rail Rule Violation projection map.
+    static HashMap<String, String> railRuleViolationProjectionMap;
+    // Contains the Rule projection map.
+    static HashMap<String, String> ruleProjectionMap;
+    // Contains the Rule Violation Reason projection map.
+    static HashMap<String, String> ruleViolationReasonProjectionMap;
+    // Contains the Travel Point projection map.
+    static HashMap<String, String> travelPointProjectionMap;
+    // Contains the Booking projection map.
+    static HashMap<String, String> bookingProjectionMap;
+    // Contains the Airline Ticket projection map.
+    static HashMap<String, String> airlineTicketProjectionMap;
+    // Contains the Passenger projection map.
+    static HashMap<String, String> passengerProjectionMap;
+    // Contains the Frequent Traveler Program projection map.
+    static HashMap<String, String> frequentTravelerProgramProjectionMap;
+    // Contains the Segment projection map.
+    static HashMap<String, String> segmentProjectionMap;
+    // Contains the Air Segment projection map.
+    static HashMap<String, String> airSegmentProjectionMap;
+    // Contains the Flight Status projection map.
+    static HashMap<String, String> flightStatusProjectionMap;
+    // Contains the Seat projection map.
+    static HashMap<String, String> seatProjectionMap;
+    // Contains the Hotel Segment projection map.
+    static HashMap<String, String> hotelSegmentProjectionMap;
+    // Contains the Car Segment projection map.
+    static HashMap<String, String> carSegmentProjectionMap;
+    // Contains the Rail Segment projection map.
+    static HashMap<String, String> railSegmentProjectionMap;
+    // Contains the Dining Segment projection map.
+    static HashMap<String, String> diningSegmentProjectionMap;
+    // Contains the Event Segment projection map.
+    static HashMap<String, String> eventSegmentProjectionMap;
+    // Contains the Parking Segment projection map.
+    static HashMap<String, String> parkingSegmentProjectionMap;
+    // Contains the Ride Segment projection map.
+    static HashMap<String, String> rideSegmentProjectionMap;
+    // Contains the Location Choice projection map.
+    static HashMap<String, String> locationChoiceProjectionMap;
+    // Contains the Hotel Detail projection map.
+    static HashMap<String, String> hotelDetailProjectionMap;
+    // Contains the Hotel Image Pair projection map.
+    static HashMap<String, String> hotelImagePairProjectionMap;
+    // Contains the Hotel Rate Detail projection map.
+    static HashMap<String, String> hotelRateDetailProjectionMap;
+    // Contains the Hotel Search Result projection map.
+    static HashMap<String, String> hotelSearchResultProjectionMap;
+    // Contains the Hotel Violation projection map.
+    static HashMap<String, String> hotelViolationProjectionMap;
+    // Contains a static reference to the last instantiated <code>TravelProvider</code>.
+    private static TravelProvider provider;
     // Contains the trip summary projection map.
     private static HashMap<String, String> tripSummaryProjectionMap;
-
     // Contains the trip summary message projection map.
     private static HashMap<String, String> tripSummaryMessageProjectionMap;
 
-    // Contains the Trip projection map.
-    static HashMap<String, String> tripProjectionMap;
-
-    // Contains the Enhancement Day projection map.
-    static HashMap<String, String> enhancementDayProjectionMap;
-
-    // Contains the Sortable Segment projection map.
-    static HashMap<String, String> sortableSegmentProjectionMap;
-
-    // Contains the Enhancement Offer projection map.
-    static HashMap<String, String> enhancementOfferProjectionMap;
-
-    // Contains the Offer Link projection map.
-    static HashMap<String, String> offerLinkProjectionMap;
-
-    // Contains the Offer Content projection map.
-    static HashMap<String, String> offerContentProjectionMap;
-
-    // Contains the Content Link projection map.
-    static HashMap<String, String> contentLinkProjectionMap;
-
-    // Contains the Map Display projection map.
-    static HashMap<String, String> mapDisplayProjectionMap;
-
-    // Contains the Display Overlay projection map.
-    static HashMap<String, String> displayOverlayProjectionMap;
-
-    // Contains the Validity Location projection map.
-    static HashMap<String, String> validityLocationProjectionMap;
-
-    // Contains the Validity Time Range projection map.
-    static HashMap<String, String> validityTimeRangeProjectionMap;
-
-    // Contains the Trip Rule Violation projection map.
-    static HashMap<String, String> tripRuleViolationProjectionMap;
-
-    // Contains the Car Rule Violation projection map.
-    static HashMap<String, String> carRuleViolationProjectionMap;
-
-    // Contains the Hotel Rule Violation projection map.
-    static HashMap<String, String> hotelRuleViolationProjectionMap;
-
-    // Contains the Flight Rule Violation projection map.
-    static HashMap<String, String> flightRuleViolationProjectionMap;
-
-    // Contains the Rail Rule Violation projection map.
-    static HashMap<String, String> railRuleViolationProjectionMap;
-
-    // Contains the Rule projection map.
-    static HashMap<String, String> ruleProjectionMap;
-
-    // Contains the Rule Violation Reason projection map.
-    static HashMap<String, String> ruleViolationReasonProjectionMap;
-
-    // Contains the Travel Point projection map.
-    static HashMap<String, String> travelPointProjectionMap;
-
-    // Contains the Booking projection map.
-    static HashMap<String, String> bookingProjectionMap;
-
-    // Contains the Airline Ticket projection map.
-    static HashMap<String, String> airlineTicketProjectionMap;
-
-    // Contains the Passenger projection map.
-    static HashMap<String, String> passengerProjectionMap;
-
-    // Contains the Frequent Traveler Program projection map.
-    static HashMap<String, String> frequentTravelerProgramProjectionMap;
-
-    // Contains the Segment projection map.
-    static HashMap<String, String> segmentProjectionMap;
-
-    // Contains the Air Segment projection map.
-    static HashMap<String, String> airSegmentProjectionMap;
-
-    // Contains the Flight Status projection map.
-    static HashMap<String, String> flightStatusProjectionMap;
-
-    // Contains the Seat projection map.
-    static HashMap<String, String> seatProjectionMap;
-
-    // Contains the Hotel Segment projection map.
-    static HashMap<String, String> hotelSegmentProjectionMap;
-
-    // Contains the Car Segment projection map.
-    static HashMap<String, String> carSegmentProjectionMap;
-
-    // Contains the Rail Segment projection map.
-    static HashMap<String, String> railSegmentProjectionMap;
-
-    // Contains the Dining Segment projection map.
-    static HashMap<String, String> diningSegmentProjectionMap;
-
-    // Contains the Event Segment projection map.
-    static HashMap<String, String> eventSegmentProjectionMap;
-
-    // Contains the Parking Segment projection map.
-    static HashMap<String, String> parkingSegmentProjectionMap;
-
-    // Contains the Ride Segment projection map.
-    static HashMap<String, String> rideSegmentProjectionMap;
-
-    // Contains the Location Choice projection map.
-    static HashMap<String, String> locationChoiceProjectionMap;
-
-    // Contains the Hotel Detail projection map.
-    static HashMap<String, String> hotelDetailProjectionMap;
-
-    // Contains the Hotel Image Pair projection map.
-    static HashMap<String, String> hotelImagePairProjectionMap;
-
-    // Contains the Hotel Rate Detail projection map.
-    static HashMap<String, String> hotelRateDetailProjectionMap;
-
-    // Contains the Hotel Search Result projection map.
-    static HashMap<String, String> hotelSearchResultProjectionMap;
-
-    // Contains the Hotel Violation projection map.
-    static HashMap<String, String> hotelViolaitonProjectionMap;
+    /**
+     * Gets the current instance of <code>TravelProvider</code>.
+     *
+     * @return returns the current instance of
+     */
+    public static TravelProvider getTravelProvider() {
+        return provider;
+    }
 
     @Override
     public boolean onCreate() {
@@ -258,15 +216,6 @@ public class TravelProvider extends PlatformContentProvider {
         provider = this;
 
         return retVal;
-    }
-
-    /**
-     * Gets the current instance of <code>TravelProvider</code>.
-     * 
-     * @return returns the current instance of
-     */
-    public static TravelProvider getTravelProvider() {
-        return provider;
     }
 
     @Override
@@ -384,19 +333,19 @@ public class TravelProvider extends PlatformContentProvider {
         tripSummaryProjectionMap.put(Travel.TripSummaryColumns._ID, Travel.TripSummaryColumns._ID);
         tripSummaryProjectionMap.put(Travel.TripSummaryColumns._COUNT, Travel.TripSummaryColumns._COUNT);
 
-        tripSummaryProjectionMap.put(Travel.TripSummaryColumns.APPROVAL_STATUS,
-                Travel.TripSummaryColumns.APPROVAL_STATUS);
+        tripSummaryProjectionMap
+                .put(Travel.TripSummaryColumns.APPROVAL_STATUS, Travel.TripSummaryColumns.APPROVAL_STATUS);
         tripSummaryProjectionMap.put(Travel.TripSummaryColumns.APPROVER_ID, Travel.TripSummaryColumns.APPROVER_ID);
         tripSummaryProjectionMap.put(Travel.TripSummaryColumns.APPROVER_NAME, Travel.TripSummaryColumns.APPROVER_NAME);
-        tripSummaryProjectionMap.put(Travel.TripSummaryColumns.AUTHORIZATION_NUMBER,
-                Travel.TripSummaryColumns.AUTHORIZATION_NUMBER);
+        tripSummaryProjectionMap
+                .put(Travel.TripSummaryColumns.AUTHORIZATION_NUMBER, Travel.TripSummaryColumns.AUTHORIZATION_NUMBER);
         tripSummaryProjectionMap.put(Travel.TripSummaryColumns.BOOKED_VIA, Travel.TripSummaryColumns.BOOKED_VIA);
         tripSummaryProjectionMap
                 .put(Travel.TripSummaryColumns.BOOKING_SOURCE, Travel.TripSummaryColumns.BOOKING_SOURCE);
-        tripSummaryProjectionMap.put(Travel.TripSummaryColumns.CAN_BE_EXPENSED,
-                Travel.TripSummaryColumns.CAN_BE_EXPENSED);
-        tripSummaryProjectionMap.put(Travel.TripSummaryColumns.CLIQ_BOOK_STATE,
-                Travel.TripSummaryColumns.CLIQ_BOOK_STATE);
+        tripSummaryProjectionMap
+                .put(Travel.TripSummaryColumns.CAN_BE_EXPENSED, Travel.TripSummaryColumns.CAN_BE_EXPENSED);
+        tripSummaryProjectionMap
+                .put(Travel.TripSummaryColumns.CLIQ_BOOK_STATE, Travel.TripSummaryColumns.CLIQ_BOOK_STATE);
         tripSummaryProjectionMap
                 .put(Travel.TripSummaryColumns.END_DATE_LOCAL, Travel.TripSummaryColumns.END_DATE_LOCAL);
         tripSummaryProjectionMap.put(Travel.TripSummaryColumns.END_DATE_UTC, Travel.TripSummaryColumns.END_DATE_UTC);
@@ -410,13 +359,13 @@ public class TravelProvider extends PlatformContentProvider {
         tripSummaryProjectionMap.put(Travel.TripSummaryColumns.IS_PUBLIC, Travel.TripSummaryColumns.IS_PUBLIC);
         tripSummaryProjectionMap.put(Travel.TripSummaryColumns.ITIN_ID, Travel.TripSummaryColumns.ITIN_ID);
         tripSummaryProjectionMap.put(Travel.TripSummaryColumns.ITIN_LOCATOR, Travel.TripSummaryColumns.ITIN_LOCATOR);
-        tripSummaryProjectionMap.put(Travel.TripSummaryColumns.ITIN_SOURCE_LIST,
-                Travel.TripSummaryColumns.ITIN_SOURCE_LIST);
+        tripSummaryProjectionMap
+                .put(Travel.TripSummaryColumns.ITIN_SOURCE_LIST, Travel.TripSummaryColumns.ITIN_SOURCE_LIST);
         tripSummaryProjectionMap
                 .put(Travel.TripSummaryColumns.RECORD_LOCATOR, Travel.TripSummaryColumns.RECORD_LOCATOR);
         tripSummaryProjectionMap.put(Travel.TripSummaryColumns.SEGMENT_TYPES, Travel.TripSummaryColumns.SEGMENT_TYPES);
-        tripSummaryProjectionMap.put(Travel.TripSummaryColumns.START_DATE_LOCAL,
-                Travel.TripSummaryColumns.START_DATE_LOCAL);
+        tripSummaryProjectionMap
+                .put(Travel.TripSummaryColumns.START_DATE_LOCAL, Travel.TripSummaryColumns.START_DATE_LOCAL);
         tripSummaryProjectionMap
                 .put(Travel.TripSummaryColumns.START_DATE_UTC, Travel.TripSummaryColumns.START_DATE_UTC);
         tripSummaryProjectionMap.put(Travel.TripSummaryColumns.TRIP_ID, Travel.TripSummaryColumns.TRIP_ID);
@@ -428,15 +377,15 @@ public class TravelProvider extends PlatformContentProvider {
         // Creates and initializes the trip summary message map.
         tripSummaryMessageProjectionMap = new HashMap<String, String>();
         tripSummaryMessageProjectionMap.put(Travel.TripSummaryMessageColumns._ID, Travel.TripSummaryMessageColumns._ID);
-        tripSummaryMessageProjectionMap.put(Travel.TripSummaryMessageColumns._COUNT,
-                Travel.TripSummaryMessageColumns._COUNT);
+        tripSummaryMessageProjectionMap
+                .put(Travel.TripSummaryMessageColumns._COUNT, Travel.TripSummaryMessageColumns._COUNT);
 
-        tripSummaryMessageProjectionMap.put(Travel.TripSummaryMessageColumns.MESSAGE,
-                Travel.TripSummaryMessageColumns.MESSAGE);
-        tripSummaryMessageProjectionMap.put(Travel.TripSummaryMessageColumns.TRIP_ID,
-                Travel.TripSummaryMessageColumns.TRIP_ID);
-        tripSummaryMessageProjectionMap.put(Travel.TripSummaryMessageColumns.USER_ID,
-                Travel.TripSummaryMessageColumns.USER_ID);
+        tripSummaryMessageProjectionMap
+                .put(Travel.TripSummaryMessageColumns.MESSAGE, Travel.TripSummaryMessageColumns.MESSAGE);
+        tripSummaryMessageProjectionMap
+                .put(Travel.TripSummaryMessageColumns.TRIP_ID, Travel.TripSummaryMessageColumns.TRIP_ID);
+        tripSummaryMessageProjectionMap
+                .put(Travel.TripSummaryMessageColumns.USER_ID, Travel.TripSummaryMessageColumns.USER_ID);
 
         // Create and intialize the various trip projection maps.
         initTripDetailProjectionMaps();
@@ -779,7 +728,7 @@ public class TravelProvider extends PlatformContentProvider {
         hotelSearchResultProjectionMap = TravelProviderUtilHotel.initHotelSearchResultProjectionMap();
 
         // Creates and initializes the hotel violation projection map.
-        hotelViolaitonProjectionMap = TravelProviderUtilHotel.initHotelViolationProjectionMap();
+        hotelViolationProjectionMap = TravelProviderUtilHotel.initHotelViolationProjectionMap();
 
         // Creates and initializes the hotel detail projection map.
         hotelDetailProjectionMap = TravelProviderUtilHotel.initHotelDetailProjectionMap();
@@ -797,7 +746,6 @@ public class TravelProvider extends PlatformContentProvider {
      */
     private void initHotelDetailCodeUriMatcherInfoMap(SparseArray<UriMatcherInfo> map) {
 
-        // TODO - bulkInserter ?
         map.put(HOTEL_SEARCH_RESULT, TravelProviderUtilHotel.initHotelSearchResultUriMatcherInfo());
         map.put(HOTEL_SEARCH_RESULT_ID, TravelProviderUtilHotel.initHotelSearchResultUriMatcherInfo());
 
@@ -810,7 +758,7 @@ public class TravelProvider extends PlatformContentProvider {
         map.put(HOTEL_RATE_DETAILS, TravelProviderUtilHotel.initHotelRateDetailsUriMatcherInfo());
         map.put(HOTEL_RATE_DETAIL_ID, TravelProviderUtilHotel.initHotelRateDetailUriMatcherInfo());
 
-        map.put(HOTEL_VIOLATION, TravelProviderUtilHotel.initHotelViolationUriMatcherInfo());
+        map.put(HOTEL_VIOLATION, TravelProviderUtilHotel.initHotelViolationsUriMatcherInfo());
         map.put(HOTEL_VIOLATION_ID, TravelProviderUtilHotel.initHotelViolationUriMatcherInfo());
 
     }

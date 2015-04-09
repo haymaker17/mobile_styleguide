@@ -214,6 +214,7 @@ public class TravelProviderUtilHotel {
         info.contentIdUriBase = Travel.HotelImagePairColumns.CONTENT_ID_URI_BASE;
         info.defaultSortOrder = Travel.HotelImagePairColumns.DEFAULT_SORT_ORDER;
         info.projectionMap = TravelProvider.hotelImagePairProjectionMap;
+        info.bulkInserter = new HotelImagePairBulkInserter();
 
         return info;
 
@@ -233,6 +234,7 @@ public class TravelProviderUtilHotel {
         info.projectionMap = TravelProvider.hotelImagePairProjectionMap;
         info.defaultSortOrder = Travel.HotelImagePairColumns.DEFAULT_SORT_ORDER;
         info.idPathPosition = Travel.HotelImagePairColumns.HOTEL_IMAGE_PAIR_ID_PATH_POSITION;
+        info.bulkInserter = new HotelImagePairBulkInserter();
 
         return info;
 
@@ -250,6 +252,7 @@ public class TravelProviderUtilHotel {
         info.contentIdUriBase = Travel.HotelRateDetailColumns.CONTENT_ID_URI_BASE;
         info.defaultSortOrder = Travel.HotelRateDetailColumns.DEFAULT_SORT_ORDER;
         info.projectionMap = TravelProvider.hotelRateDetailProjectionMap;
+        info.bulkInserter = new HotelRateBulkInserter();
 
         return info;
 
@@ -269,6 +272,7 @@ public class TravelProviderUtilHotel {
         info.projectionMap = TravelProvider.hotelRateDetailProjectionMap;
         info.defaultSortOrder = Travel.HotelRateDetailColumns.DEFAULT_SORT_ORDER;
         info.idPathPosition = Travel.HotelRateDetailColumns.HOTEL_RATE_DETAIL_ID_PATH_POSITION;
+        info.bulkInserter = new HotelRateBulkInserter();
 
         return info;
 
@@ -277,16 +281,34 @@ public class TravelProviderUtilHotel {
     /**
      * Will initialize a <code>UriMatcherInfo</code> object for a directory of <code>HotelViolation</code>.
      */
-    public static UriMatcherInfo initHotelViolationUriMatcherInfo() {
+    public static UriMatcherInfo initHotelViolationsUriMatcherInfo() {
 
         UriMatcherInfo info = new UriMatcherInfo();
         info.isIdSelection = false;
         info.mimeType = Travel.HotelViolationColumns.CONTENT_TYPE;
         info.tableName = Travel.HotelViolationColumns.TABLE_NAME;
         info.contentIdUriBase = Travel.HotelViolationColumns.CONTENT_ID_URI_BASE;
-        info.projectionMap = TravelProvider.hotelViolaitonProjectionMap;
+        info.projectionMap = TravelProvider.hotelViolationProjectionMap;
+        info.bulkInserter = new HotelViolationBulkInserter();
 
         return info;
+    }
 
+    /**
+     * Will initialize a <code>UriMatcherInfo</code> object for one item of type <code>HotelViolation</code>.
+     */
+    public static UriMatcherInfo initHotelViolationUriMatcherInfo() {
+
+        UriMatcherInfo info = new UriMatcherInfo();
+        info.isIdSelection = true;
+        info.mimeType = Travel.HotelViolationColumns.CONTENT_ITEM_TYPE;
+        info.tableName = Travel.HotelViolationColumns.TABLE_NAME;
+        info.contentIdUriBase = Travel.HotelViolationColumns.CONTENT_ID_URI_BASE;
+        info.idColumnName = Travel.HotelViolationColumns._ID;
+        info.projectionMap = TravelProvider.hotelViolationProjectionMap;
+        info.idPathPosition = Travel.HotelViolationColumns.HOTEL_VIOLATION_ID_PATH_POSITION;
+        info.bulkInserter = new HotelViolationBulkInserter();
+
+        return info;
     }
 }
