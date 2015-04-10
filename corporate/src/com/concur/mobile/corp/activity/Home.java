@@ -397,9 +397,6 @@ public class Home extends BaseActivity implements View.OnClickListener, Navigati
                 if (ViewUtil.isShowMileageExpenseOnHomeScreenEnabled(Home.this) && showPersonalCarMileage()) {
                     showMileageFooterButton();
                     showMileageDrawerButton(View.VISIBLE);
-                } else {
-                    hideMileageFooterButton();
-                    showMileageDrawerButton(View.GONE);
                 }
             } else if (Const.ACTION_DATABASE_RESET.equals(action)) {
 
@@ -2237,10 +2234,13 @@ public class Home extends BaseActivity implements View.OnClickListener, Navigati
         if (Preferences.isTestDriveUser()) {
             return false;
         }
+        // MOB-20183 requires that if offline and showCarMileage preference is true then show the car mileage to bottom bar.
+        if ((!ConcurMobile.isConnected()) && (ViewUtil.isShowMileageExpenseOnHomeScreenEnabled(Home.this))) {
+            return true;
+        }
 
         ConcurMobile concurMobile = (ConcurMobile) getApplication();
         ArrayList<CarConfig> carConfigList = concurMobile.getCarConfigs();
-        // UserConfig userConfig = concurMobile.getUserConfig();
         if (carConfigList == null) {
             carConfigList = concurMobile.getService().getCarConfigs();
         }
@@ -3317,64 +3317,54 @@ public class Home extends BaseActivity implements View.OnClickListener, Navigati
          * navItems.add(navItem);
          */
 
-		if (RuntimeConfig.with(this).canUseAppCenter()) {
-			navItem = new HomeScreenSimpleNavigationItem(NAVIGATION_APP_CENTER,
-					-1, R.string.home_navigation_app_center,
-					R.drawable.icon_menu_connect_to_apps, View.VISIBLE,
-					View.VISIBLE, new Runnable() {
+        if (RuntimeConfig.with(this).canUseAppCenter()) {
+            navItem = new HomeScreenSimpleNavigationItem(NAVIGATION_APP_CENTER, -1,
+                    R.string.home_navigation_app_center, R.drawable.icon_menu_connect_to_apps, View.VISIBLE,
+                    View.VISIBLE, new Runnable() {
 
-						public void run() {
-							String bareToken = Preferences.getAccessToken();
+                        public void run() {
+                            String bareToken = Preferences.getAccessToken();
 
-							if (bareToken == null) {
-								Toast.makeText(
-										Home.this,
-										"Unable to retrieve access token. Please log out and back in.",
-										Toast.LENGTH_LONG).show();
-								return;
-							}
+                            if (bareToken == null) {
+                                Toast.makeText(Home.this,
+                                        "Unable to retrieve access token. Please log out and back in.",
+                                        Toast.LENGTH_LONG).show();
+                                return;
+                            }
 
-							Locale locale = Locale.getDefault();
+                            Locale locale = Locale.getDefault();
 
-							String encodedToken = "";
+                            String encodedToken = "";
 
-							try {
-								String appCenterUrl;
-								String serverAddress = Preferences.getServerAddress();
-								
-								if (serverAddress.toLowerCase(locale).contains("rqa3-cb.concurtech.net")) {
-									appCenterUrl = "http://appcenterdev.concursolutions.com";
-								} else {
-									appCenterUrl = "https://appcenter.concursolutions.com";
-								}
-								
-								encodedToken = URLEncoder.encode(bareToken,
-										"UTF-8");
+                            try {
+                                String appCenterUrl;
+                                String serverAddress = Preferences.getServerAddress();
 
-								String urlString = appCenterUrl
-										+ "/#/?accessToken="
-										+ encodedToken
-										+ "&lang="
-										+ locale;
-								
-								Intent i = new Intent(Home.this,
-										SimpleWebViewActivity.class);
-								i.putExtra("url", urlString);
+                                if (serverAddress.toLowerCase(locale).contains("rqa3-cb.concurtech.net")) {
+                                    appCenterUrl = "http://appcenterdev.concursolutions.com";
+                                } else {
+                                    appCenterUrl = "https://appcenter.concursolutions.com";
+                                }
 
-								if (i != null) {
-									EventTracker.INSTANCE.track(Flurry.CATEGORY_MAIN_MENU, 
-											Flurry.ACTION_APP_CENTER);
-									
-									startActivity(i);
-								}
-							} catch (Exception e) {
-								Log.i(CLS_TAG, "Unable to URL-encode token: '"
-										+ bareToken + "'");
-							}
-						}
-					});
-			navItems.add(navItem);
-		}
+                                encodedToken = URLEncoder.encode(bareToken, "UTF-8");
+
+                                String urlString = appCenterUrl + "/#/?accessToken=" + encodedToken + "&lang=" + locale;
+
+                                Intent i = new Intent(Home.this, SimpleWebViewActivity.class);
+                                i.putExtra("url", urlString);
+
+                                if (i != null) {
+                                    EventTracker.INSTANCE.track(Flurry.CATEGORY_MAIN_MENU, Flurry.ACTION_APP_CENTER);
+
+                                    startActivity(i);
+                                }
+                            } catch (Exception e) {
+                                Log.i(CLS_TAG, "Unable to URL-encode token: '" + bareToken + "'");
+                            }
+                        }
+                    });
+            navItems.add(navItem);
+        }
 
         // MOB-15458 : it required to remove ad from more menu. so adnav item is
         // null.
