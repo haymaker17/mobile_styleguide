@@ -138,9 +138,9 @@ public class SessionManager {
         // a new session id.
         if (isSessionExpire(concurMobile)) {
             // Flurry Notification
-            Map<String, String> params = new HashMap<String, String>();
-            params.put(Flurry.PARAM_NAME_TYPE, Flurry.PARAM_VALUE_SESSION_EXPIRED);
-            EventTracker.INSTANCE.track(Flurry.CATEGORY_SIGN_IN, Flurry.EVENT_NAME_AUTHENTICATION, params);
+            // Map<String, String> params = new HashMap<String, String>();
+            // params.put(Flurry.PARAM_NAME_TYPE, Flurry.PARAM_VALUE_SESSION_EXPIRED);
+            // EventTracker.INSTANCE.track(Flurry.CATEGORY_SIGN_IN, Flurry.EVENT_NAME_AUTHENTICATION, params);
 
             if (ConcurCore.isConnected()) {
                 Log.d(Const.LOG_TAG, CLS_TAG

@@ -565,6 +565,7 @@ public class LoginPasswordActivity extends BaseActivity implements LoginPassword
 
         Map<String, String> params = new HashMap<String, String>();
         params.put("Final", finalState);
+        params.put(Flurry.EVENT_NAME_TYPE, Flurry.PARAM_VALUE_AUTO_LOGIN);
 
         EventTracker.INSTANCE.track(Flurry.CATEGORY_SIGN_IN, Flurry.EVENT_NAME_OVERALL, params);
 
