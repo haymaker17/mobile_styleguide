@@ -200,21 +200,29 @@ public class HotelBookingActivity extends TravelBaseActivity implements SpinnerD
         public void onLoadFinished(Loader<HotelBookingRESTResult> loader, HotelBookingRESTResult bookingResult) {
 
             hideProgressBar();
-            if (bookingResult != null) {
+            if (bookingResult != null && bookingResult.error == null) {
 
-                Toast.makeText(getApplicationContext(), R.string.hotel_booking_success, Toast.LENGTH_LONG).show();
                 Intent intent = new Intent();
                 intent.putExtra(Const.EXTRA_TRAVEL_ITINERARY_LOCATOR,
                         bookingResult.itineraryLocator != null ? bookingResult.itineraryLocator : null);
                 intent.putExtra(Const.EXTRA_TRAVEL_RECORD_LOCATOR,
                         bookingResult.recordLocator != null ? bookingResult.recordLocator : null);
-                setResult(Activity.RESULT_OK, intent);
+
+                setResult(RESULT_OK, intent);
+                Toast.makeText(getApplicationContext(), R.string.hotel_booking_success, Toast.LENGTH_LONG).show();
 
                 // TODO add GA event for booking
                 finish();
             } else {
+                String errorMsg = " ";
+                if (bookingResult.error != null) {
+
+                    errorMsg =
+                            bookingResult.error.getUserMessage() != null ? bookingResult.error.getUserMessage() : null;
+                }
+
                 DialogFragmentFactoryV1.getAlertOkayInstance(getString(R.string.hotel_booking_failed_title),
-                        getString(R.string.hotel_booking_failed)).show(getFragmentManager(), null);
+                        getString(R.string.hotel_booking_failed) + errorMsg).show(getFragmentManager(), null);
                 // Toast.makeText(getApplicationContext(), R.string.hotel_booking_failed, Toast.LENGTH_LONG).show();
             }
             isBookingInProgress = false;

@@ -234,8 +234,7 @@ public class HotelChoiceDetailsActivity extends TravelBaseActivity
             if (TAB_ROOMS.equals(tabId)) {
                 HotelRoomDetailFragment detailFrag = new HotelRoomDetailFragment(hotel.rates, showGDSName);
                 //detailFrag.priceToBeat = hotel.priceToBeat;
-                fm.beginTransaction().replace(placeholder, detailFrag, tabId)
-                        .commit();
+                fm.beginTransaction().replace(placeholder, detailFrag, tabId).commit();
             }
             if (TAB_IMAGES.equals(tabId)) {
                 fm.beginTransaction().replace(placeholder, new HotelImagesFragment(hotel.imagePairs), tabId).commit();
@@ -301,7 +300,7 @@ public class HotelChoiceDetailsActivity extends TravelBaseActivity
         switch (requestCode) {
         case Const.REQUEST_CODE_BOOK_HOTEL: {
             if (resultCode == RESULT_OK) {
-                setResult(resultCode, data);
+                setResult(RESULT_OK, data);
                 finish();
             }
             break;

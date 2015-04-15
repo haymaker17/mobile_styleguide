@@ -82,14 +82,14 @@ public class HotelSearchAndResultActivity extends TravelBaseActivity
     private int numberOfNights;
     private ArrayList<String[]> violationReasons;
     private String cacheKey;
-    private boolean retriveFromDB;
+    private boolean retrieveFromDB;
     private BaseAsyncResultReceiver hotelRatesReceiver;
     private HotelSearchResultListItem selectedHotelListItem;
     private boolean ruleViolationExplanationRequired;
     private String currentTripId;
     private boolean showGDSName;
-    private List<HotelViolation> updatedVoilations;
-    private List<HotelViolation> voilations;
+    private List<HotelViolation> updatedViolations;
+    private List<HotelViolation> violations;
 
     // HotelSearchResults loader callback implementation
     private LoaderManager.LoaderCallbacks<HotelSearchRESTResult> hotelSearchRESTResultLoaderCallbacks = new LoaderManager.LoaderCallbacks<HotelSearchRESTResult>() {
@@ -159,7 +159,7 @@ public class HotelSearchAndResultActivity extends TravelBaseActivity
                             hotelListItemsFromLoader.add(item);
                         }
 
-                        voilations = hotelSearchResult.violations;
+                        violations = hotelSearchResult.violations;
                     }
 
                     Log.d(Const.LOG_TAG,
@@ -264,7 +264,7 @@ public class HotelSearchAndResultActivity extends TravelBaseActivity
             if (hotel != null && hotel.rates != null) {
 
                 selectedHotelListItem.getHotel().rates = hotel.rates;
-                updatedVoilations = hotelRateResult.violations;
+                updatedViolations = hotelRateResult.violations;
                 viewHotelChoiceDetails();
 
             } else {
@@ -358,7 +358,7 @@ public class HotelSearchAndResultActivity extends TravelBaseActivity
         // populate list items
         if (hotels != null && hotels.size() > 0) {
             hotelListItemsToSort = new ArrayList<HotelSearchResultListItem>(hotels.size());
-            retriveFromDB = true;
+            retrieveFromDB = true;
             for (Hotel hotel : hotels) {
                 HotelSearchResultListItem item = new HotelSearchResultListItem(hotel);
                 hotelListItemsToSort.add(item);
@@ -701,14 +701,14 @@ public class HotelSearchAndResultActivity extends TravelBaseActivity
                     // background.
 
                     if (hotelSelected.availabilityErrorCode == null) {
-                        if (retriveFromDB) {
+                        if (retrieveFromDB) {
 
                             // DB call
                             long id = hotelSelected._id;
 
                             hotelSelected.rates = TravelUtilHotel.getHotelRateDetails(this, id);
                             hotelSelected.imagePairs = TravelUtilHotel.getHotelImagePairs(this, id);
-                            voilations = TravelUtilHotel
+                            violations = TravelUtilHotel
                                     .getHotelViolations(getApplicationContext(), null, (int) hotelSelected.search_id);
                         }
                         if (hotelSelected.rates != null && hotelSelected.rates.size() > 0) {
@@ -716,6 +716,7 @@ public class HotelSearchAndResultActivity extends TravelBaseActivity
                         } else if (hotelSelected.lowestRate == null && hotelSelected.ratesURL.href != null) {
 
                             hotelSearchRESTResultFrag.showProgressBar(true);
+                            lm = getLoaderManager();
                             lm.initLoader(HOTEL_RATES_LOADER_ID, null, hotelRatesRESTResultLoaderCallbacks);
                         }
                     } else {
@@ -747,10 +748,10 @@ public class HotelSearchAndResultActivity extends TravelBaseActivity
         if (travelCustomFieldsConfig != null) {
             i.putExtra("travelCustomFieldsConfig", travelCustomFieldsConfig);
         }
-        if (updatedVoilations != null && updatedVoilations.size() > 0) {
-            bundle.putSerializable("updatedViolations", (Serializable) updatedVoilations);
+        if (updatedViolations != null && updatedViolations.size() > 0) {
+            bundle.putSerializable("updatedViolations", (Serializable) updatedViolations);
         }
-        bundle.putSerializable("violations", (Serializable) voilations);
+        bundle.putSerializable("violations", (Serializable) violations);
         // i.putExtra("searchId", searchId);
         i.putExtras(bundle);
         // startActivity(i);
@@ -764,7 +765,7 @@ public class HotelSearchAndResultActivity extends TravelBaseActivity
         switch (requestCode) {
         case Const.REQUEST_CODE_BOOK_HOTEL: {
             if (resultCode == RESULT_OK) {
-                setResult(resultCode, data);
+                setResult(RESULT_OK, data);
                 finish();
             }
             break;
