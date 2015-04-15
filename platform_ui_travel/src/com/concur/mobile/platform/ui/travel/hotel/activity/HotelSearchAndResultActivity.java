@@ -2,6 +2,7 @@ package com.concur.mobile.platform.ui.travel.hotel.activity;
 
 import android.app.FragmentTransaction;
 import android.app.LoaderManager;
+import android.content.Context;
 import android.content.Intent;
 import android.content.Loader;
 import android.os.Bundle;
@@ -15,7 +16,6 @@ import android.widget.AdapterView.OnItemClickListener;
 import android.widget.PopupMenu;
 import android.widget.PopupMenu.OnMenuItemClickListener;
 import android.widget.Toast;
-import com.concur.mobile.base.service.BaseAsyncRequestTask.AsyncReplyListener;
 import com.concur.mobile.base.service.BaseAsyncResultReceiver;
 import com.concur.mobile.platform.service.PlatformAsyncTaskLoader;
 import com.concur.mobile.platform.travel.provider.TravelUtilHotel;
@@ -43,15 +43,14 @@ import java.util.*;
  * @author RatanK
  */
 public class HotelSearchAndResultActivity extends TravelBaseActivity
-        implements OnMenuItemClickListener, HotelSearchResultsFilterListener, HotelSearchResultsFragmentListener,
-        LoaderManager.LoaderCallbacks<HotelSearchRESTResult> {
+        implements OnMenuItemClickListener, HotelSearchResultsFilterListener, HotelSearchResultsFragmentListener {
 
     public static final String FRAGMENT_SEARCH_RESULT = "FRAGMENT_SEARCH_RESULT";
     private static final String FRAGMENT_SEARCH_RESULT_FILTER = "FRAGMENT_SEARCH_RESULT_FILTER";
 
     private static final int HOTEL_SEARCH_LIST_LOADER_ID = 0;
     private static final int HOTEL_POLL_LIST_LOADER_ID = 1;
-    private static final int HOTEL_RATES_ASYN_TASK_ID = 2;
+    private static final int HOTEL_RATES_LOADER_ID = 2;
 
     private static final String SERVICE_END_POINT = "/mobile/travel/v1.0/Hotels";
 
@@ -91,6 +90,194 @@ public class HotelSearchAndResultActivity extends TravelBaseActivity
     private boolean showGDSName;
     private List<HotelViolation> updatedVoilations;
     private List<HotelViolation> voilations;
+
+    // HotelSearchResults loader callback implementation
+    private LoaderManager.LoaderCallbacks<HotelSearchRESTResult> hotelSearchRESTResultLoaderCallbacks = new LoaderManager.LoaderCallbacks<HotelSearchRESTResult>() {
+
+        @Override
+        public Loader<HotelSearchRESTResult> onCreateLoader(int id, Bundle bundle) {
+            PlatformAsyncTaskLoader<HotelSearchRESTResult> hotelSearchAsyncTaskLoader;
+            Context context = getApplicationContext();
+            if (!searchDone && pollingURL != null) {
+                // request polling
+                fromPolling = true;
+                Log.d(Const.LOG_TAG, " ***** creating poll search loader *****  ");
+                hotelSearchAsyncTaskLoader = new HotelSearchPollResultLoader(context, checkInDate, checkOutDate,
+                        latitude, longitude, 25, distanceUnit, pollingURL);
+
+            } else {
+                fromPolling = false;
+                // request initial search
+                Log.d(Const.LOG_TAG, " ***** creating search loader *****  ");
+
+                hotelSearchAsyncTaskLoader = new HotelSearchResultLoader(context, checkInDate, checkOutDate, latitude,
+                        longitude, 25, distanceUnit);
+
+            }
+            return hotelSearchAsyncTaskLoader;
+
+        }
+
+        @Override
+        public void onLoaderReset(Loader<HotelSearchRESTResult> loader) {
+            Log.d(Const.LOG_TAG, " ***** loader reset *****  ");
+            if (listItemAdapater != null) {
+                listItemAdapater.setItems(null);
+            }
+
+        }
+
+        @Override
+        public void onLoadFinished(Loader<HotelSearchRESTResult> loader, HotelSearchRESTResult hotelSearchResult) {
+
+            List<HotelSearchResultListItem> hotelListItemsFromLoader = new ArrayList<HotelSearchResultListItem>();
+
+            Log.d(Const.LOG_TAG, " ***** searchdone *****  " + searchDone);
+
+            if (searchDone) {
+                // skip everything as this could be due to on orientation change or pop back from stack
+                Log.d(Const.LOG_TAG, " ***** searchDone true,  hotelListItems = " + (hotelListItems != null ?
+                        hotelListItems.size() :
+                        0));
+                hotelSearchRESTResultFrag.hideProgressBar();
+            } else {
+                if (hotelSearchResult == null) {
+                    hotelSearchRESTResultFrag.hideProgressBar();
+                    // hotelSearchRESTResultFrag.showNegativeView();
+                    // TODO handle the search errors
+                    Toast.makeText(getApplicationContext(), "Hotel Search Failed. Please try again.",
+                            Toast.LENGTH_SHORT).show();
+                } else {
+                    searchDone = hotelSearchResult.searchDone;
+                    hotelSearchRESTResultFrag.getHotelListView().setAlpha(0.50f);
+
+                    if (hotelSearchResult.hotels != null && hotelSearchResult.hotels.size() > 0) {
+                        for (Hotel hotel : hotelSearchResult.hotels) {
+                            hotel.distanceUnit = hotelSearchResult.distanceUnit;
+                            hotel.currencyCode = hotelSearchResult.currency;
+                            HotelSearchResultListItem item = new HotelSearchResultListItem(hotel);
+                            hotelListItemsFromLoader.add(item);
+                        }
+
+                        voilations = hotelSearchResult.violations;
+                    }
+
+                    Log.d(Const.LOG_TAG,
+                            " ***** hotelSearchResult.searchDone " + searchDone + ",  hotelListItems = " + (
+                                    hotelListItems != null ?
+                                            hotelListItems.size() :
+                                            0) + ",  hotelListItemsFromLoader = " + (hotelListItemsFromLoader != null ?
+                                    hotelListItemsFromLoader.size() :
+                                    0));
+
+                    if (searchDone) {
+                        if (hotelListItems == null) {
+                            hotelListItems = new ArrayList<HotelSearchResultListItem>();
+                        }
+                        hotelListItems = hotelListItemsFromLoader;
+                        if (hotelListItems != null && hotelListItems.size() > 0) {
+
+                            // set hotel list items that can be sorted
+                            hotelListItemsToSort = new ArrayList<HotelSearchResultListItem>();
+                            hotelListItemsToSort.addAll(hotelListItems);
+
+                            showResults();
+                        }
+
+                        hotelSearchRESTResultFrag.hideProgressBar();
+
+                    } else {
+
+                        if (fromPolling) {
+                            if (listItemAdapater == null) {
+                                Log.e(Const.LOG_TAG, " cannot call refreshUIListItem: listItemAdapater is null!");
+                            } else {
+                                hotelSearchRESTResultFrag
+                                        .refreshUIListItems(hotelListItemsFromLoader, listItemAdapater);
+                            }
+                        } else {
+                            hotelListItems = hotelListItemsFromLoader;
+                            updateResultsFragmentUI(hotelListItemsFromLoader, null);
+                        }
+
+                        if (hotelSearchResult.polling != null) {
+                            pollingURL = hotelSearchResult.polling.href;
+                        }
+
+                        // create a delayed handler for the aysnc task
+                        Handler asyncHandler = new Handler();
+                        asyncHandler.postDelayed(new Runnable() {
+
+                            public void run() {
+                                // if the time taken for the search workflow (i.e. start of search to end of pricing) > 90 seconds
+                                // then
+                                // stop
+                                // the
+                                // functionality
+                                long timeNow = (System.currentTimeMillis() - searchWorkflowStartTime) / 1000;
+
+                                Log.d(Const.LOG_TAG,
+                                        " in retrieveHotelPricing, time now from start of search " + timeNow
+                                                + " seconds. If this is < 90 then will invoke GetHotelsPricing again.");
+                                if (timeNow < 90) {
+                                    // call the hotel polling loader that invokes the polling end point
+                                    callPollLoader();
+                                } else {
+
+                                    hotelSearchRESTResultFrag.hideProgressBar();
+
+                                }
+                            }
+
+                        }, 2000);
+                    }
+                }
+            }
+        }
+    };
+
+    // HotelRates loader callback implementation
+    private LoaderManager.LoaderCallbacks<HotelRatesRESTResult> hotelRatesRESTResultLoaderCallbacks = new LoaderManager.LoaderCallbacks<HotelRatesRESTResult>() {
+
+        @Override public Loader<HotelRatesRESTResult> onCreateLoader(int id, Bundle args) {
+            PlatformAsyncTaskLoader<HotelRatesRESTResult> hotelRatesAsyncTaskLoader;
+            Context context = getApplicationContext();
+            Hotel hotelSelected = selectedHotelListItem.getHotel();
+            String rateUrl = hotelSelected.ratesURL.href;
+            // get ids from db
+            Hotel hotel = TravelUtilHotel.getHotelByRateUrl(context, rateUrl, cacheKey);
+            if (hotel != null) {
+                hotelSelected._id = hotel._id;
+                hotelSelected.search_id = hotel.search_id;
+            }
+
+            hotelRatesAsyncTaskLoader = new HotelRatesLoader(context, rateUrl, hotelSelected._id,
+                    hotelSelected.search_id);
+            return hotelRatesAsyncTaskLoader;
+        }
+
+        @Override public void onLoadFinished(Loader<HotelRatesRESTResult> loader,
+                HotelRatesRESTResult hotelRateResult) {
+
+            hotelSearchRESTResultFrag.hideProgressBar();
+            Hotel hotel = hotelRateResult != null ? hotelRateResult.hotel : null;
+            if (hotel != null && hotel.rates != null) {
+
+                selectedHotelListItem.getHotel().rates = hotel.rates;
+                updatedVoilations = hotelRateResult.violations;
+                viewHotelChoiceDetails();
+
+            } else {
+                Toast.makeText(getApplicationContext(), "No Rooms Available", Toast.LENGTH_LONG).show();
+            }
+            // TODO add GA event for booking
+            finish();
+        }
+
+        @Override public void onLoaderReset(Loader<HotelRatesRESTResult> loader) {
+            Log.d(Const.LOG_TAG, " ***** loader reset *****  ");
+        }
+    };
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -184,7 +371,7 @@ public class HotelSearchAndResultActivity extends TravelBaseActivity
             // Initialize the loader.
             lm = getLoaderManager();
             searchWorkflowStartTime = System.currentTimeMillis();
-            lm.initLoader(HOTEL_SEARCH_LIST_LOADER_ID, null, this);
+            lm.initLoader(HOTEL_SEARCH_LIST_LOADER_ID, null, hotelSearchRESTResultLoaderCallbacks);
         }
 
     }
@@ -528,25 +715,11 @@ public class HotelSearchAndResultActivity extends TravelBaseActivity
                             viewHotelChoiceDetails();
                         } else if (hotelSelected.lowestRate == null && hotelSelected.ratesURL.href != null) {
 
-                            String rateUrl = hotelSelected.ratesURL.href;
-                            // get ids from db
-                            Hotel hotel = TravelUtilHotel.getHotelByRateUrl(this, rateUrl, cacheKey);
-                            if (hotel != null) {
-                                hotelSelected._id = hotel._id;
-                                hotelSelected.search_id = hotel.search_id;
-                            }
-                            // New call to rates async task
-                            hotelRatesReceiver = new BaseAsyncResultReceiver(new Handler());
-
                             hotelSearchRESTResultFrag.showProgressBar(true);
-                            hotelRatesReceiver.setListener(new HotelRatesReplyListener());
-                            HotelRatesAsyncRequestTask ratesAsynTask = new HotelRatesAsyncRequestTask(this,
-                                    HOTEL_RATES_ASYN_TASK_ID, hotelRatesReceiver, rateUrl, hotelSelected._id,
-                                    hotelSelected.search_id);
-                            ratesAsynTask.execute();
+                            lm.initLoader(HOTEL_RATES_LOADER_ID, null, hotelRatesRESTResultLoaderCallbacks);
                         }
                     } else {
-                        Toast.makeText(getApplicationContext(), "No Rooms Avilable", Toast.LENGTH_LONG).show();
+                        Toast.makeText(getApplicationContext(), "No Rooms Available", Toast.LENGTH_LONG).show();
 
                     }
                 }
@@ -637,143 +810,9 @@ public class HotelSearchAndResultActivity extends TravelBaseActivity
         hotelSearchRESTResultFrag.updateUI(listItemAdapater, hotelListItemsToUpdate.size(), toastMessage);
     }
 
-    @Override
-    public Loader<HotelSearchRESTResult> onCreateLoader(int id, Bundle bundle) {
-        PlatformAsyncTaskLoader<HotelSearchRESTResult> hotelSearchAsyncTaskLoader;
-        if (!searchDone && pollingURL != null) {
-            // request polling
-            fromPolling = true;
-            Log.d(Const.LOG_TAG, " ***** creating poll search loader *****  ");
-            hotelSearchAsyncTaskLoader = new HotelSearchPollResultLoader(this, checkInDate, checkOutDate, latitude,
-                    longitude, 25, distanceUnit, pollingURL);
-
-        } else {
-            fromPolling = false;
-            // request initial search
-            Log.d(Const.LOG_TAG, " ***** creating search loader *****  ");
-
-            hotelSearchAsyncTaskLoader = new HotelSearchResultLoader(this, checkInDate, checkOutDate, latitude,
-                    longitude, 25, distanceUnit);
-
-        }
-        return hotelSearchAsyncTaskLoader;
-    }
-
-    @Override
-    public void onLoadFinished(Loader<HotelSearchRESTResult> loader, HotelSearchRESTResult hotelSearchResult) {
-
-        List<HotelSearchResultListItem> hotelListItemsFromLoader = new ArrayList<HotelSearchResultListItem>();
-
-        Log.d(Const.LOG_TAG, " ***** searchdone *****  " + searchDone);
-
-        if (searchDone) {
-            // skip everything as this could be due to on orientation change or pop back from stack
-            Log.d(Const.LOG_TAG, " ***** searchDone true,  hotelListItems = " + (hotelListItems != null ?
-                    hotelListItems.size() :
-                    0));
-            hotelSearchRESTResultFrag.hideProgressBar();
-        } else {
-            if (hotelSearchResult == null) {
-                hotelSearchRESTResultFrag.hideProgressBar();
-                // hotelSearchRESTResultFrag.showNegativeView();
-                // TODO handle the search errors
-                Toast.makeText(this, "Hotel Search Failed. Please try again.", Toast.LENGTH_SHORT).show();
-            } else {
-                searchDone = hotelSearchResult.searchDone;
-                hotelSearchRESTResultFrag.getHotelListView().setAlpha(0.50f);
-
-                if (hotelSearchResult.hotels != null && hotelSearchResult.hotels.size() > 0) {
-                    for (Hotel hotel : hotelSearchResult.hotels) {
-                        hotel.distanceUnit = hotelSearchResult.distanceUnit;
-                        hotel.currencyCode = hotelSearchResult.currency;
-                        HotelSearchResultListItem item = new HotelSearchResultListItem(hotel);
-                        hotelListItemsFromLoader.add(item);
-                    }
-
-                    voilations = hotelSearchResult.violations;
-                }
-
-                Log.d(Const.LOG_TAG, " ***** hotelSearchResult.searchDone " + searchDone + ",  hotelListItems = " + (
-                        hotelListItems != null ?
-                                hotelListItems.size() :
-                                0) + ",  hotelListItemsFromLoader = " + (hotelListItemsFromLoader != null ?
-                        hotelListItemsFromLoader.size() :
-                        0));
-
-                if (searchDone) {
-                    if (hotelListItems == null) {
-                        hotelListItems = new ArrayList<HotelSearchResultListItem>();
-                    }
-                    hotelListItems = hotelListItemsFromLoader;
-                    if (hotelListItems != null && hotelListItems.size() > 0) {
-
-                        // set hotel list items that can be sorted
-                        hotelListItemsToSort = new ArrayList<HotelSearchResultListItem>();
-                        hotelListItemsToSort.addAll(hotelListItems);
-
-                        showResults();
-                    }
-
-                    hotelSearchRESTResultFrag.hideProgressBar();
-
-                } else {
-
-                    if (fromPolling) {
-                        if (listItemAdapater == null) {
-                            Log.e(Const.LOG_TAG, " cannot call refreshUIListItem: listItemAdapater is null!");
-                        } else {
-                            hotelSearchRESTResultFrag.refreshUIListItems(hotelListItemsFromLoader, listItemAdapater);
-                        }
-                    } else {
-                        hotelListItems = hotelListItemsFromLoader;
-                        updateResultsFragmentUI(hotelListItemsFromLoader, null);
-                    }
-
-                    if (hotelSearchResult.polling != null) {
-                        pollingURL = hotelSearchResult.polling.href;
-                    }
-
-                    // create a delayed handler for the aysnc task
-                    Handler asyncHandler = new Handler();
-                    asyncHandler.postDelayed(new Runnable() {
-
-                        public void run() {
-                            // if the time taken for the search workflow (i.e. start of search to end of pricing) > 90 seconds
-                            // then
-                            // stop
-                            // the
-                            // functionality
-                            long timeNow = (System.currentTimeMillis() - searchWorkflowStartTime) / 1000;
-
-                            Log.d(Const.LOG_TAG, " in retrieveHotelPricing, time now from start of search " + timeNow
-                                    + " seconds. If this is < 90 then will invoke GetHotelsPricing again.");
-                            if (timeNow < 90) {
-                                // call the hotel polling loader that invokes the polling end point
-                                callPollLoader();
-                            } else {
-
-                                hotelSearchRESTResultFrag.hideProgressBar();
-
-                            }
-                        }
-
-                    }, 2000);
-                }
-            }
-        }
-    }
-
     private void callPollLoader() {
-        // will invoke the createloader
-        lm.restartLoader(HOTEL_POLL_LIST_LOADER_ID, null, this);
-    }
-
-    @Override
-    public void onLoaderReset(Loader<HotelSearchRESTResult> data) {
-        Log.d(Const.LOG_TAG, " ***** loader reset *****  ");
-        if (listItemAdapater != null) {
-            listItemAdapater.setItems(null);
-        }
+        // will invoke the create loader
+        lm.restartLoader(HOTEL_POLL_LIST_LOADER_ID, null, hotelSearchRESTResultLoaderCallbacks);
     }
 
     @Override
@@ -784,69 +823,6 @@ public class HotelSearchAndResultActivity extends TravelBaseActivity
             finishActivity(Const.REQUEST_CODE_BACK_BUTTON_PRESSED);
         }
         return super.onKeyDown(keyCode, event);
-    }
-
-    private class HotelRatesReplyListener implements AsyncReplyListener {
-
-        /*
-         * (non-Javadoc)
-         * 
-         * @see com.concur.mobile.base.service.BaseAsyncRequestTask.AsyncReplyListener#onRequestSuccess(android.os.Bundle)
-         */
-        public void onRequestSuccess(Bundle resultData) {
-            if (resultData != null) {
-                hotelSearchRESTResultFrag.hideProgressBar();
-                // hideProgressBar();
-                HotelRatesRESTResult hotelRateResult = (HotelRatesRESTResult) resultData
-                        .getSerializable("HotelRatesResult");
-                Hotel hotel = hotelRateResult != null ? hotelRateResult.hotel : null;
-                if (hotel != null && hotel.rates != null) {
-
-                    selectedHotelListItem.getHotel().rates = hotel.rates;
-                    updatedVoilations = hotelRateResult.violations;
-                    viewHotelChoiceDetails();
-
-                } else {
-                    Toast.makeText(getApplicationContext(), "No Rooms Avilable", Toast.LENGTH_LONG).show();
-                }
-                // TODO add GA event for booking
-
-                finish();
-            }
-
-        }
-
-        /*
-         * (non-Javadoc)
-         * 
-         * @see com.concur.mobile.base.service.BaseAsyncRequestTask.AsyncReplyListener#onRequestFail(android.os.Bundle)
-         */
-        public void onRequestFail(Bundle resultData) {
-
-            hotelSearchRESTResultFrag.hideProgressBar();
-            Toast.makeText(getApplicationContext(), "No Rooms Avilable", Toast.LENGTH_LONG).show();
-            hotelSearchRESTResultFrag.hideProgressBar();
-
-        }
-
-        /*
-         * (non-Javadoc)
-         * 
-         * @see com.concur.mobile.base.service.BaseAsyncRequestTask.AsyncReplyListener#onRequestCancel(android.os.Bundle)
-         */
-        public void onRequestCancel(Bundle resultData) {
-            cleanup();
-        }
-
-        /*
-         * (non-Javadoc)
-         * 
-         * @see com.concur.mobile.base.service.BaseAsyncRequestTask.AsyncReplyListener#cleanup()
-         */
-        public void cleanup() {
-            hotelRatesReceiver.setListener(null);
-            hotelRatesReceiver = null;
-        }
     }
 
 }
