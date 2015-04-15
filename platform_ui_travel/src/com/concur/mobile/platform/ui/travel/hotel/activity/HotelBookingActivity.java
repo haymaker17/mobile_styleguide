@@ -859,7 +859,8 @@ public class HotelBookingActivity extends TravelBaseActivity implements SpinnerD
                     View justificationView = findViewById(R.id.hotel_violation_justification);
                     if (justificationView != null) {
                         justificationText = ((EditText) justificationView).getText().toString();
-                        if (justificationText == null && ruleViolationExplanationRequired) {
+                        if (ruleViolationExplanationRequired && (justificationText == null || justificationText.trim()
+                                .isEmpty())) {
                             // show violation justification text required message
                             requiredFieldsMsg.append(getString(R.string.general_specify_justification));
                             hasAllRequiredFields = false;
@@ -906,6 +907,7 @@ public class HotelBookingActivity extends TravelBaseActivity implements SpinnerD
                     }
 
                     @Override public void onCancel(Activity activity, DialogInterface dialog) {
+                        reserveButton.setEnabled(true);
                         dialog.dismiss();
                     }
                 };
