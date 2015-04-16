@@ -944,7 +944,9 @@ public class HotelBookingActivity extends TravelBaseActivity implements SpinnerD
                 dialog.setNegativeButtonText(R.string.hotel_confirm_reserve_cancel);
                 dialog.setPositiveButtonListener(okayListener);
                 dialog.setNegativeButtonListener(cancelListener);
+                dialog.setCancelListener(cancelListener);
                 dialog.show(getFragmentManager(), DIALOG_FRAGMENT_ID);
+
                 //                CustomDialogFragment dialog = new CustomDialogFragment();
                 //
                 //                dialog.setTitle(R.string.hotel_confirm_reserve_title);
