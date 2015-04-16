@@ -185,6 +185,8 @@ public class HotelSearchAndResultActivity extends TravelBaseActivity
                             hotelListItemsToSort = new ArrayList<HotelSearchResultListItem>();
                             hotelListItemsToSort.addAll(hotelListItems);
 
+                            benchmarksCollection = hotelSearchResult.benchmarksCollection;
+
                             showResults();
                         }
 
@@ -837,13 +839,13 @@ public class HotelSearchAndResultActivity extends TravelBaseActivity
                 String formattedMinBenchmarkPrice = null;
                 View priceToBeatView = findViewById(R.id.priceToBeatView);
                 priceToBeatView.setVisibility(View.VISIBLE);
+                final String priceToBeatRangeText;
                 if (priceToBeatValue == maxPriceToBeatValue) {
                     // no price range
                     formattedMinBenchmarkPrice = FormatUtil
                             .formatAmountWithNoDecimals(priceToBeatValue, this.getResources().getConfiguration().locale,
                                     currencyCode, true, true);
-
-                    showPriceToBeatHeader(R.id.priceToBeatText, formattedMinBenchmarkPrice);
+                    priceToBeatRangeText = formattedMinBenchmarkPrice;
                 } else {
                     // price range available
                     formattedMinBenchmarkPrice = FormatUtil
@@ -852,47 +854,48 @@ public class HotelSearchAndResultActivity extends TravelBaseActivity
                     String formattedMaxBenchmarkPrice = FormatUtil.formatAmountWithNoDecimals(maxPriceToBeatValue,
                             this.getResources().getConfiguration().locale, currencyCode, true, true);
 
-                    showPriceToBeatHeader(R.id.priceToBeatText, Format.localizeText(this, R.string.price_to_beat_range,
-                            new Object[] { formattedMinBenchmarkPrice, formattedMaxBenchmarkPrice }));
+                    priceToBeatRangeText = Format.localizeText(this, R.string.price_to_beat_range,
+                            new Object[] { formattedMinBenchmarkPrice, formattedMaxBenchmarkPrice });
                 }
-
+                showPriceToBeatHeader(R.id.priceToBeatText, priceToBeatRangeText);
                 // init the onclick event
-//                priceToBeatView.setOnClickListener(new View.OnClickListener() {
-//
-//                    @Override
-//                    public void onClick(View v) {
-//                        showPriceToBeatFragment();
-//                    }
-//                });
+                priceToBeatView.setOnClickListener(new View.OnClickListener() {
+
+                    @Override
+                    public void onClick(View v) {
+                        showPriceToBeatFragment(priceToBeatRangeText);
+                    }
+                });
             }
         }
     } //end of price to beat
 
-//    private void showPriceToBeatFragment() {
-//        List<HotelBenchmark> benchmarks = benchmarksCollection.benchmarks;
-//        if (benchmarks != null && benchmarks.size() > 0) {
-//            List<HotelBenchmarkListItem> benchmarkListItems = new ArrayList<HotelBenchmarkListItem>(benchmarks.size());
-//            for (HotelBenchmark bm : benchmarks) {
-//                benchmarkListItems.add(new HotelBenchmarkListItem(bm));
-//            }
-//
-//            // prepare the adapter
-//            ListItemAdapter<HotelBenchmarkListItem> listItemAdapater = new ListItemAdapter<HotelBenchmarkListItem>(this,
-//                    benchmarkListItems);
-//
-//            // initiate the fragment and show
-//            FragmentManager fm = getFragmentManager();
-//            HotelBenchmarksFragment detailsFragment = (HotelBenchmarksFragment) fm
-//                    .findFragmentByTag(PRICE_TO_BEAT_DETAILS_FRAGMENT);
-//            if (detailsFragment == null) {
-//                detailsFragment = new HotelBenchmarksFragment();
-//                FragmentTransaction ft = fm.beginTransaction();
-//                ft.commit();
-//            }
-//            detailsFragment.listItemAdapter = listItemAdapater;
-//            detailsFragment.show(fm, PRICE_TO_BEAT_DETAILS_FRAGMENT);
-//        }
-//    }
+    private void showPriceToBeatFragment(String priceToBeatRangeText) {
+        List<HotelBenchmark> benchmarks = benchmarksCollection.benchmarks;
+        if (benchmarks != null && benchmarks.size() > 0) {
+            List<HotelBenchmarkListItem> benchmarkListItems = new ArrayList<HotelBenchmarkListItem>(benchmarks.size());
+            for (HotelBenchmark bm : benchmarks) {
+                benchmarkListItems.add(new HotelBenchmarkListItem(bm));
+            }
+
+            // prepare the adapter
+            ListItemAdapter<HotelBenchmarkListItem> listItemAdapater = new ListItemAdapter<HotelBenchmarkListItem>(this,
+                    benchmarkListItems);
+
+            // initiate the fragment and show
+            FragmentManager fm = getFragmentManager();
+            HotelBenchmarksFragment detailsFragment = (HotelBenchmarksFragment) fm
+                    .findFragmentByTag(PRICE_TO_BEAT_DETAILS_FRAGMENT);
+            if (detailsFragment == null) {
+                detailsFragment = new HotelBenchmarksFragment();
+                FragmentTransaction ft = fm.beginTransaction();
+                ft.commit();
+            }
+            detailsFragment.priceToBeatRangeText = priceToBeatRangeText;
+            detailsFragment.listItemAdapter = listItemAdapater;
+            detailsFragment.show(fm, PRICE_TO_BEAT_DETAILS_FRAGMENT);
+        }
+    }
 
     // invokes the updateUI call on the fragment
     private void updateResultsFragmentUI(List<HotelSearchResultListItem> hotelListItemsToUpdate, String toastMessage) {

@@ -28,6 +28,7 @@ public class HotelBenchmark implements Serializable {
     public String locationName;
     @SerializedName("price")
     public Double price;
+    @SerializedName("subdivCode")
     public String subDivCode;
     /**
      * Contains the application context.
