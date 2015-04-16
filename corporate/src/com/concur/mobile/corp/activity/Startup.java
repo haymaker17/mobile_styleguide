@@ -255,8 +255,21 @@ public class Startup extends BaseActivity {
     }
 
     protected void doLoginFinish() {
+        if (startTimeMillis > 0L) {
+            // Google Analytics
+            stopTimeMillis = System.currentTimeMillis();
+            totalTime = stopTimeMillis - startTimeMillis;
+            Log.d(Const.LOG_TAG, CLS_TAG + ".process: request(" + "AutoLogin" + ") took " + (totalTime) + " ms.");
+            logTotleTimeForAutoLogin(totalTime);
+        }
         isLoginDone = true;
         doFinish();
+    }
+
+    private void logTotleTimeForAutoLogin(long totalWaitTime) {
+        // Statistics Notification
+        EventTracker.INSTANCE.track(Flurry.CATEGORY_WAIT_TIME, Flurry.ACTION_AUTO_LOGIN_WAIT, Flurry.LABEL_WAIT_TIME,
+                totalWaitTime);
     }
 
     protected void doFinish() {
@@ -423,6 +436,9 @@ public class Startup extends BaseActivity {
         }
 
         if (ConcurMobile.isConnected()) {
+            // TODO MOB-23154: Right now only time tracking required for Autologin, in future if we want it for each request
+            // this implementation will be in the class PlatFormAsyncTaskRequest/BaseAsyncRequestTask.
+            startTimeMillis = System.currentTimeMillis();
 
             // Animate in the message about authentication happening.
             TextView txtView = (TextView) findViewById(R.id.splash_message);
@@ -453,9 +469,6 @@ public class Startup extends BaseActivity {
                     }
                 };
                 autoLoginRequestTask.execute();
-                // TODO MOB-23154: Right now only time tracking required for Autologin, in future if we want it for each request
-                // this implementation will be in the class PlatFormAsyncTaskRequest/BaseAsyncRequestTask.
-                startTimeMillis = System.currentTimeMillis();
             } else {
                 Locale locale = Locale.getDefault();
                 PPLoginLightRequestTask ppLoginLightRequestTask = new PPLoginLightRequestTask(
@@ -483,12 +496,6 @@ public class Startup extends BaseActivity {
 
             switch (requestID) {
             case AUTO_LOGIN_REQUEST_ID: {
-                // Google Analytics
-                stopTimeMillis = System.currentTimeMillis();
-                totalTime = stopTimeMillis - startTimeMillis;
-                Log.d(Const.LOG_TAG, CLS_TAG + ".process: request(" + "AutoLogin" + ") took " + (totalTime) + " ms.");
-                logTotleTimeForAutoLogin(Flurry.EVENT_NAME_SUCCESS, totalTime);
-
                 // MOB-18782 Check remote wipe.
                 if (resultData.getBoolean(LoginResponseKeys.REMOTE_WIPE_KEY, false)) {
                     showRemoteWipeDialog();
@@ -520,7 +527,6 @@ public class Startup extends BaseActivity {
                 AutoLoginRequestTask autoLoginRequestTask = new AutoLoginRequestTask(getApplication()
                         .getApplicationContext(), AUTO_LOGIN_REQUEST_ID, loginReceiver, Locale.getDefault());
                 autoLoginRequestTask.execute();
-                startTimeMillis = System.currentTimeMillis();
 
                 break;
             }
@@ -559,13 +565,6 @@ public class Startup extends BaseActivity {
         }
 
         private void displayUnableToLoginDialog(final String debugMessage) {
-            // Google Analytics
-            if (startTimeMillis > 0L) {
-                stopTimeMillis = System.currentTimeMillis();
-                totalTime = stopTimeMillis - startTimeMillis;
-                Log.d(Const.LOG_TAG, CLS_TAG + ".process: request(" + "AutoLogin" + ") took " + (totalTime) + " ms.");
-                logTotleTimeForAutoLogin(Flurry.EVENT_NAME_FAILURE, totalTime);
-            }
 
             // If login fails for some reason, then go to the EmailLookup screen.
             AlertDialogFragment dialog = DialogFragmentFactory.getPositiveDialogFragment(
@@ -585,12 +584,6 @@ public class Startup extends BaseActivity {
                     });
             dialog.setCancelable(false);
             dialog.show(getSupportFragmentManager(), null);
-        }
-
-        private void logTotleTimeForAutoLogin(String finalString, long totalWaitTime) {
-            // Statistics Notification
-            EventTracker.INSTANCE.track(Flurry.CATEGORY_WAIT_TIME, Flurry.ACTION_AUTO_LOGIN_WAIT + " " + finalString,
-                    Flurry.LABEL_WAIT_TIME, totalWaitTime);
         }
 
         private void showRemoteWipeDialog() {
