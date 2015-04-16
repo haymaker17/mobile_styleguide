@@ -857,43 +857,42 @@ public class HotelSearchAndResultActivity extends TravelBaseActivity
                 }
 
                 // init the onclick event
-                //                priceToBeatView.setOnClickListener(new View.OnClickListener() {
-                //
-                //                    @Override
-                //                    public void onClick(View v) {
-                //                        showPriceToBeatFragment();
-                //                    }
-                //                });
+//                priceToBeatView.setOnClickListener(new View.OnClickListener() {
+//
+//                    @Override
+//                    public void onClick(View v) {
+//                        showPriceToBeatFragment();
+//                    }
+//                });
             }
         }
     } //end of price to beat
 
-    private void showPriceToBeatFragment() {
-        List<HotelBenchmark> benchmarks = benchmarksCollection.benchmarks;
-        if (benchmarks != null && benchmarks.size() > 0) {
-            List<HotelBenchmarkListItem> benchmarkListItems = new ArrayList<HotelBenchmarkListItem>(benchmarks.size());
-            for (HotelBenchmark bm : benchmarks) {
-                benchmarkListItems.add(new HotelBenchmarkListItem(bm));
-            }
-
-            // prepare the adapter
-            ListItemAdapter<HotelBenchmarkListItem> listItemAdapater = new ListItemAdapter<HotelBenchmarkListItem>(this,
-                    benchmarkListItems);
-
-            // initiate the fragment and show
-            FragmentManager fm = getFragmentManager();
-            HotelBenchmarksFragment detailsFragment = (HotelBenchmarksFragment) fm
-                    .findFragmentByTag(PRICE_TO_BEAT_DETAILS_FRAGMENT);
-            if (detailsFragment == null) {
-                detailsFragment = new HotelBenchmarksFragment();
-                FragmentTransaction ft = fm.beginTransaction();
-                //ft.replace(R.id.hotelPriceToBeatContainer, detailsFragment, PRICE_TO_BEAT_DETAILS_FRAGMENT);
-                ft.commit();
-            }
-            detailsFragment.listItemAdapter = listItemAdapater;
-            detailsFragment.show(fm, PRICE_TO_BEAT_DETAILS_FRAGMENT);
-        }
-    }
+//    private void showPriceToBeatFragment() {
+//        List<HotelBenchmark> benchmarks = benchmarksCollection.benchmarks;
+//        if (benchmarks != null && benchmarks.size() > 0) {
+//            List<HotelBenchmarkListItem> benchmarkListItems = new ArrayList<HotelBenchmarkListItem>(benchmarks.size());
+//            for (HotelBenchmark bm : benchmarks) {
+//                benchmarkListItems.add(new HotelBenchmarkListItem(bm));
+//            }
+//
+//            // prepare the adapter
+//            ListItemAdapter<HotelBenchmarkListItem> listItemAdapater = new ListItemAdapter<HotelBenchmarkListItem>(this,
+//                    benchmarkListItems);
+//
+//            // initiate the fragment and show
+//            FragmentManager fm = getFragmentManager();
+//            HotelBenchmarksFragment detailsFragment = (HotelBenchmarksFragment) fm
+//                    .findFragmentByTag(PRICE_TO_BEAT_DETAILS_FRAGMENT);
+//            if (detailsFragment == null) {
+//                detailsFragment = new HotelBenchmarksFragment();
+//                FragmentTransaction ft = fm.beginTransaction();
+//                ft.commit();
+//            }
+//            detailsFragment.listItemAdapter = listItemAdapater;
+//            detailsFragment.show(fm, PRICE_TO_BEAT_DETAILS_FRAGMENT);
+//        }
+//    }
 
     // invokes the updateUI call on the fragment
     private void updateResultsFragmentUI(List<HotelSearchResultListItem> hotelListItemsToUpdate, String toastMessage) {
