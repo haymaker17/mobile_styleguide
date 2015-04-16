@@ -1,38 +1,38 @@
 package com.concur.mobile.platform.travel.search.hotel;
 
 import android.content.Context;
+import android.text.TextUtils;
 import android.util.Log;
 import com.concur.mobile.base.service.BaseAsyncRequestTask;
-import com.concur.mobile.base.service.BaseAsyncResultReceiver;
 import com.concur.mobile.platform.common.formfield.FormField;
-import com.concur.mobile.platform.service.PlatformAsyncRequestTask;
+import com.concur.mobile.platform.service.PlatformAsyncTaskLoader;
 import com.concur.mobile.platform.service.parser.MWSResponse;
 import com.concur.mobile.platform.util.Const;
+import com.concur.platform.PlatformProperties;
 import com.google.gson.Gson;
 import com.google.gson.JsonArray;
 import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
 import com.google.gson.reflect.TypeToken;
 
-import java.io.*;
+import java.io.BufferedInputStream;
+import java.io.IOException;
+import java.io.InputStream;
+import java.io.InputStreamReader;
 import java.lang.reflect.Type;
 import java.net.HttpURLConnection;
 import java.net.ProtocolException;
 import java.util.List;
 
 /**
- * An extension of <code>PlatformAsyncRequestTask</code> for the purpose of performing a hotel search. <br>
+ * An extension of <code>PlatformAsyncTaskLoader</code> for the purpose of performing a hotel booking. <br>
  * <br>
  * Performs Hotel Booking task
  */
-public class HotelBookingAsyncRequestTask extends PlatformAsyncRequestTask {
+public class HotelBookingLoader extends PlatformAsyncTaskLoader<HotelBookingRESTResult> {
 
-    /**
-     * Contains the key to retrieve the current result set from the data bundle.
-     */
-    public static final String HOTEL_BOOKING_RESULT_EXTRA_KEY = "HotelBookingResult";
-    private static final String CLS_TAG = "HotelBookingAsyncRequestTask";
-    public String bicCode;
+    private static final String CLS_TAG = "HotelBookingLoader";
+    //  public String bicCode;
 
     public String ccId;
 
@@ -40,17 +40,17 @@ public class HotelBookingAsyncRequestTask extends PlatformAsyncRequestTask {
 
     public String propertyId;
 
-    public String propertyName;
+    //   public String propertyName;
 
-    public String sellSource;
+    //   public String sellSource;
 
     public String tripId;
 
     public String travelProgramId;
 
-    public String hotelReason;
+    // public String hotelReason;
 
-    public String hotelReasonCode;
+    //public String hotelReasonCode;
 
     public boolean redeemTravelPoints;
 
@@ -60,16 +60,17 @@ public class HotelBookingAsyncRequestTask extends PlatformAsyncRequestTask {
 
     public List<FormField> customFields;
 
+    protected HotelBookingRESTResult bookingResult;
+
     /**
      * Contains the parsed MWS response
      */
     private MWSResponse<HotelBookingRESTResult> mwsResp;
 
-    public HotelBookingAsyncRequestTask(Context context, int id, BaseAsyncResultReceiver receiver, String ccId,
-            String tripId, List<ViolationReason> violationReasons, List<FormField> customFields, String travelProgramId,
-            boolean redeemTravelPoints, String bookingURL) {
+    public HotelBookingLoader(Context context, String ccId, String tripId, List<ViolationReason> violationReasons,
+            List<FormField> customFields, String travelProgramId, boolean redeemTravelPoints, String bookingURL) {
 
-        super(context, id, receiver);
+        super(context);
 
         this.ccId = ccId;
         this.travelProgramId = travelProgramId;
@@ -89,10 +90,15 @@ public class HotelBookingAsyncRequestTask extends PlatformAsyncRequestTask {
     protected void configureConnection(HttpURLConnection connection) {
         super.configureConnection(connection);
         connection.setReadTimeout(90000);
-        connection.setRequestProperty(PlatformAsyncRequestTask.HEADER_CONTENT_TYPE,
-                PlatformAsyncRequestTask.CONTENT_TYPE_JSON);
+        // Set the access token.
+        String accessToken = PlatformProperties.getAccessToken();
+        if (!TextUtils.isEmpty(accessToken)) {
+            connection.addRequestProperty(PlatformAsyncTaskLoader.HTTP_HEADER_AUTHORIZATION, "OAuth " + accessToken);
+        }
+        connection.setRequestProperty(HEADER_CONTENT_TYPE, CONTENT_TYPE_JSON);
+
         try {
-            connection.setRequestMethod(PlatformAsyncRequestTask.REQUEST_METHOD_POST);
+            connection.setRequestMethod(REQUEST_METHOD_POST);
         } catch (ProtocolException e) {
             e.printStackTrace();
         }
@@ -153,9 +159,9 @@ public class HotelBookingAsyncRequestTask extends PlatformAsyncRequestTask {
      * @see com.concur.mobile.base.service.BaseAsyncRequestTask#parseStream(java.io.InputStream)
      */
     @Override
-    protected int parseStream(InputStream is) {
+    protected HotelBookingRESTResult parseStream(InputStream is) {
         int result = BaseAsyncRequestTask.RESULT_OK;
-        HotelBookingRESTResult bookingResult = null;
+        bookingResult = null;
         try {
             // prepare the object Type expected in MWS response 'data' element
             Type type = new TypeToken<MWSResponse<HotelBookingRESTResult>>() {
@@ -170,21 +176,17 @@ public class HotelBookingAsyncRequestTask extends PlatformAsyncRequestTask {
 
                     if (bookingResult != null && bookingResult.recordLocator != null
                             && bookingResult.itineraryLocator != null) {
-                        Log.i(Const.LOG_TAG, "\n\n\n ******Hotel Booking successfull with recordLocator : "
+                        Log.i(Const.LOG_TAG, "\n\n\n ****** Hotel Booking successful with recordLocator : "
                                 + bookingResult.recordLocator);
-                        resultData.putSerializable(HotelBookingAsyncRequestTask.HOTEL_BOOKING_RESULT_EXTRA_KEY,
-                                (Serializable) bookingResult);
+
                         // log the error message
 
                     } else {
-                        Log.i(Const.LOG_TAG, "\n\n\n ****** Hotel Booking successfull but no data");
+                        Log.i(Const.LOG_TAG, "\n\n\n ****** Hotel Booking successful but no data");
                     }
                 } else {
                     Log.i(Const.LOG_TAG, "\n\n\n ****** Info " + mwsResp.getInfo());
                     Log.i(Const.LOG_TAG, "\n\n\n ****** Errors " + mwsResp.getErrors());
-                    String errorMessage = mwsResp.getErrors().get(0).getSystemMessage();
-                    Log.e(Const.LOG_TAG, errorMessage);
-                    resultData.putString("mwsErrorMessage", errorMessage);
                 }
             }
 
@@ -200,18 +202,7 @@ public class HotelBookingAsyncRequestTask extends PlatformAsyncRequestTask {
                 }
             }
         }
-        return result;
-    }
-
-    @Override
-    protected int onPostParse() {
-        int resultcode = RESULT_ERROR;
-        setMWSResponseStatusIntoResultBundle(mwsResp);
-        if (mwsResp.getData() != null) {
-            resultcode = RESULT_OK;
-
-        }
-        return resultcode;
+        return bookingResult;
     }
 
 }

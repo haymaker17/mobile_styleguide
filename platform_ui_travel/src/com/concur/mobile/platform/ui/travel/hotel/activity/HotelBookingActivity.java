@@ -3,7 +3,9 @@ package com.concur.mobile.platform.ui.travel.hotel.activity;
 import android.animation.ObjectAnimator;
 import android.annotation.SuppressLint;
 import android.app.*;
-import android.content.*;
+import android.content.DialogInterface;
+import android.content.Intent;
+import android.content.Loader;
 import android.graphics.Bitmap;
 import android.os.Bundle;
 import android.os.Handler;
@@ -17,8 +19,6 @@ import android.view.View.OnClickListener;
 import android.view.ViewGroup.LayoutParams;
 import android.view.ViewStub;
 import android.widget.*;
-import com.concur.mobile.base.service.BaseAsyncRequestTask.AsyncReplyListener;
-import com.concur.mobile.base.service.BaseAsyncResultReceiver;
 import com.concur.mobile.platform.common.SpinnerItem;
 import com.concur.mobile.platform.common.formfield.FormField;
 import com.concur.mobile.platform.service.PlatformAsyncTaskLoader;
@@ -117,14 +117,15 @@ public class HotelBookingActivity extends TravelBaseActivity implements SpinnerD
             Log.d(Const.LOG_TAG, " ***** loader reset *****  ");
         }
     };
+
     protected static final String RETAINER_TAG = "retainer.fragment";
     private static final String GET_HOTEL_BOOKING_RECEIVER = "hotel.booking.receiver";
     private static final String VIOLATION_REASONS_SPINNER_FRAGMENT = "violations.reasons.spinner.fragment";
     private static final String CREDIT_CARDS_SPINNER_FRAGMENT = "violations.reasons.spineer.fragment";
-    private static final int HOTEL_BOOKING_ID = 1;
     private static final String DIALOG_FRAGMENT_ID = "HotelBookingConfirm";
     private static final int PRE_SELL_OPTIONS_LOADER_ID = 1;
     private static final int CUSTOM_FIELDS_LOADER_ID = 2;
+    private static final int HOTEL_BOOKING_LOADER_ID = 3;
     // The one RetainerFragment used to hold objects between activity recreates
     public RetainerFragmentV1 retainer;
     // Contains the currently selected card.
@@ -137,7 +138,7 @@ public class HotelBookingActivity extends TravelBaseActivity implements SpinnerD
     private Double amount;
     private String currCode;
     private String sellOptionsURL;
-
+    private ArrayList<ViolationReason> selectedViolationReasons;
     // pre sell options loader callback implementation
     private LoaderManager.LoaderCallbacks<HotelPreSellOption> preSellOptionsLoaderListener = new LoaderManager.LoaderCallbacks<HotelPreSellOption>() {
 
@@ -145,7 +146,7 @@ public class HotelBookingActivity extends TravelBaseActivity implements SpinnerD
         public Loader<HotelPreSellOption> onCreateLoader(int id, Bundle bundle) {
 
             // request initial search
-            Log.d(Const.LOG_TAG, " ***** creating preselloption loader *****  ");
+            Log.d(Const.LOG_TAG, " ***** creating preSellOption loader *****  ");
 
             PlatformAsyncTaskLoader<HotelPreSellOption> hotelPreSellOptionAsyncTaskLoader = new HotelPreSellOptionLoader(
                     getApplicationContext(), sellOptionsURL);
@@ -164,6 +165,67 @@ public class HotelBookingActivity extends TravelBaseActivity implements SpinnerD
             // nothing to handle here
         }
     };
+    // HotelBooking loader callback implementation
+    private LoaderManager.LoaderCallbacks<HotelBookingRESTResult> bookingLoaderListener = new LoaderManager.LoaderCallbacks<HotelBookingRESTResult>() {
+
+        @Override
+        public Loader<HotelBookingRESTResult> onCreateLoader(int id, Bundle bundle) {
+            PlatformAsyncTaskLoader<HotelBookingRESTResult> hotelBookingAsyncRequestTask = null;
+
+            showProgressBar(R.string.hotel_booking_retrieving);
+            // populate custField objects from formFields
+            List<FormField> custFields = null;
+            if (formFields != null && formFields.size() > 0) {
+                custFields = new ArrayList<FormField>();
+                for (TravelCustomField tcf : formFields) {
+                    // only if a value is selected for the custom field
+                    if (tcf.getValue() != null && tcf.getValue().trim() != null) {
+                        FormField f = new FormField();
+                        f.setId(tcf.getId());
+                        f.setValue(tcf.getValue());
+                        custFields.add(f);
+                    }
+                }
+            }
+
+            // create and invoke the async task
+            hotelBookingAsyncRequestTask = new HotelBookingLoader(getApplicationContext(), curCardChoice.id,
+                    currentTripId, selectedViolationReasons, custFields, null, false, preSellOption.bookingURL.href);
+
+            return hotelBookingAsyncRequestTask;
+
+        }
+
+        @Override
+        public void onLoadFinished(Loader<HotelBookingRESTResult> loader, HotelBookingRESTResult bookingResult) {
+
+            hideProgressBar();
+            if (bookingResult != null) {
+
+                Toast.makeText(getApplicationContext(), R.string.hotel_booking_success, Toast.LENGTH_LONG).show();
+                Intent intent = new Intent();
+                intent.putExtra(Const.EXTRA_TRAVEL_ITINERARY_LOCATOR,
+                        bookingResult.itineraryLocator != null ? bookingResult.itineraryLocator : null);
+                intent.putExtra(Const.EXTRA_TRAVEL_RECORD_LOCATOR,
+                        bookingResult.recordLocator != null ? bookingResult.recordLocator : null);
+                setResult(Activity.RESULT_OK, intent);
+
+                // TODO add GA event for booking
+                finish();
+            } else {
+                DialogFragmentFactoryV1.getAlertOkayInstance(getString(R.string.hotel_booking_failed_title),
+                        getString(R.string.hotel_booking_failed)).show(getFragmentManager(), null);
+                // Toast.makeText(getApplicationContext(), R.string.hotel_booking_failed, Toast.LENGTH_LONG).show();
+            }
+            isBookingInProgress = false;
+        }
+
+        @Override
+        public void onLoaderReset(Loader<HotelBookingRESTResult> data) {
+            Log.d(Const.LOG_TAG, " ***** loader reset *****  ");
+        }
+    };
+
     private String[] cancellationPolicyStatements;
     private boolean progressbarVisible;
     private Button reserveButton;
@@ -174,25 +236,17 @@ public class HotelBookingActivity extends TravelBaseActivity implements SpinnerD
     private int numOfNights;
     private String headerImageURL;
     private String hotelName;
-    private BaseAsyncResultReceiver hotelBookingReceiver;
     private SpinnerItem[] violationReasonChoices;
     private ArrayList<String[]> violationReasons;
-    private HotelBookingAsyncRequestTask hotelBookingAsyncRequestTask;
     private String currViolationId;
     private boolean ruleViolationExplanationRequired;
     private String currentTripId;
     private List<HotelViolation> violations;
-    /**
-     * BroadcastReceiver used to detect network connectivity and update the UI accordingly.
-     */
-    private BroadcastReceiver connectivityReceiver;
-    private IntentFilter connectivityFilter;
-    private boolean connectivityReceiverRegistered;
-    private boolean connected;
     private int msgResourse;
     private boolean isExpanded;
     private ParallaxScollView mListView;
     private TextView roomDescView;
+    private boolean isBookingInProgress;
 
     @Override
     public void onWindowFocusChanged(boolean hasFocus) {
@@ -208,8 +262,6 @@ public class HotelBookingActivity extends TravelBaseActivity implements SpinnerD
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         initRetainerFragment();
-        // Restore any receivers.
-        restoreReceivers();
         setContentView(R.layout.hotel_booking);
 
         showProgressBar(R.string.hotel_sell_options_retrieving);
@@ -256,14 +308,6 @@ public class HotelBookingActivity extends TravelBaseActivity implements SpinnerD
 
     }
 
-    private void restoreReceivers() {
-        if (retainer.contains(GET_HOTEL_BOOKING_RECEIVER)) {
-            hotelBookingReceiver = (BaseAsyncResultReceiver) retainer.get(GET_HOTEL_BOOKING_RECEIVER);
-            hotelBookingReceiver.setListener(new HotelBookingReplyListener());
-        }
-
-    }
-
     protected void initRetainerFragment() {
         FragmentManager fm = getFragmentManager();
 
@@ -284,21 +328,18 @@ public class HotelBookingActivity extends TravelBaseActivity implements SpinnerD
     @Override
     public void onPause() {
         super.onPause();
-        unregisterReceiver();
 
     }
 
     @Override
     protected void onStop() {
         super.onStop();
-        unregisterReceiver();
 
     }
 
     @Override
     protected void onDestroy() {
         super.onDestroy();
-        unregisterReceiver();
 
     }
 
@@ -310,14 +351,6 @@ public class HotelBookingActivity extends TravelBaseActivity implements SpinnerD
     @Override
     public void onResume() {
         super.onResume();
-
-    }
-
-    private void unregisterReceiver() {
-        if (hotelBookingReceiver != null) {
-            hotelBookingReceiver.setListener(null);
-            retainer.put(GET_HOTEL_BOOKING_RECEIVER, hotelBookingReceiver);
-        }
 
     }
 
@@ -377,7 +410,7 @@ public class HotelBookingActivity extends TravelBaseActivity implements SpinnerD
 
         // rate info on click event
         ImageView rateInfoImg = (ImageView) findViewById(R.id.checkout_icon_price_info);
-        rateInfoImg.setOnClickListener(new OnClickListener() {
+        rateInfoImg.setOnClickListener(new View.OnClickListener() {
 
             @Override
             public void onClick(View v) {
@@ -387,7 +420,7 @@ public class HotelBookingActivity extends TravelBaseActivity implements SpinnerD
         });
 
         // cancellation policy on click event
-        findViewById(R.id.hotel_policy).setOnClickListener(new OnClickListener() {
+        findViewById(R.id.hotel_policy).setOnClickListener(new View.OnClickListener() {
 
             @Override
             public void onClick(View v) {
@@ -408,41 +441,12 @@ public class HotelBookingActivity extends TravelBaseActivity implements SpinnerD
         reserveButton = (Button) findViewById(R.id.footer_button);
         reserveButton.setEnabled(false);
         reserveButton.setText(R.string.hotel_reserve_this_room);
-        if (hotelRate.guaranteeSurcharge != null && hotelRate.guaranteeSurcharge.equals("DepositRequired")) {
-            msgResourse = R.string.dlg_travel_hotel_deposit_confirm_message;
-        } else {
-            msgResourse = R.string.hotel_confirm_reserve_msg;
-        }
-        reserveButton.setOnClickListener(new OnClickListener() {
+
+        reserveButton.setOnClickListener(new View.OnClickListener() {
 
             @Override
             public void onClick(View v) {
-                AlertDialogFragmentV1.OnClickListener okayListener = new AlertDialogFragmentV1.OnClickListener() {
-
-                    @Override public void onClick(Activity activity, DialogInterface dialog, int which) {
-                        doBooking();
-                    }
-
-                    @Override public void onCancel(Activity activity, DialogInterface dialog) {
-                        dialog.dismiss();
-                    }
-                };
-                AlertDialogFragmentV1 dialog = new AlertDialogFragmentV1();
-                dialog.setTitle(R.string.hotel_confirm_reserve_title);
-                dialog.setMessage(msgResourse);
-                dialog.setPositiveButtonText(R.string.hotel_confirm_reserve_ok);
-                dialog.setNegativeButtonText(R.string.hotel_confirm_reserve_cancel);
-                dialog.setPositiveButtonListener(okayListener);
-                dialog.show(getFragmentManager(), DIALOG_FRAGMENT_ID);
-
-                //                CustomDialogFragment dialog = new CustomDialogFragment();
-                //
-                //                dialog.setTitle(R.string.hotel_confirm_reserve_title);
-                //                dialog.setMessage(R.string.hotel_confirm_reserve_msg);
-                //                dialog.setPositiveButtonText(R.string.hotel_confirm_reserve_ok);
-                //                dialog.setNegativeButtonText(R.string.hotel_confirm_reserve_cancel);
-                //
-                //                dialog.show(getFragmentManager(), DIALOG_FRAGMENT_ID);
+                doBooking();
 
             }
         });
@@ -463,7 +467,7 @@ public class HotelBookingActivity extends TravelBaseActivity implements SpinnerD
                     roomDescView.setEllipsize(TextUtils.TruncateAt.END);
                     roomDescView.setCompoundDrawablesWithIntrinsicBounds(0, 0, 0, R.drawable.icon_expand_more);
 
-                    roomDescView.setOnClickListener(new OnClickListener() {
+                    roomDescView.setOnClickListener(new View.OnClickListener() {
 
                         ObjectAnimator animation = null;
 
@@ -834,7 +838,7 @@ public class HotelBookingActivity extends TravelBaseActivity implements SpinnerD
             }
 
             // get selected violation reason and justification
-            ArrayList<ViolationReason> selectedViolationReasons = null;
+            selectedViolationReasons = null;
             String ruleEnforcementLevel = ViewUtil.getRuleEnforcementLevelAsString(hotelRate.maxEnforcementLevel);
             if (ruleEnforcementLevel.equals("ERROR") || ruleEnforcementLevel.equals("WARNING")) {
                 // violation reason need to be selected
@@ -855,7 +859,8 @@ public class HotelBookingActivity extends TravelBaseActivity implements SpinnerD
                     View justificationView = findViewById(R.id.hotel_violation_justification);
                     if (justificationView != null) {
                         justificationText = ((EditText) justificationView).getText().toString();
-                        if (justificationText == null && ruleViolationExplanationRequired) {
+                        if (ruleViolationExplanationRequired && (justificationText == null || justificationText.trim()
+                                .isEmpty())) {
                             // show violation justification text required message
                             requiredFieldsMsg.append(getString(R.string.general_specify_justification));
                             hasAllRequiredFields = false;
@@ -888,32 +893,45 @@ public class HotelBookingActivity extends TravelBaseActivity implements SpinnerD
 
             // do the booking if all the required fields are available
             if (hasAllRequiredFields) {
-                showProgressBar(R.string.hotel_booking_retrieving);
-                hotelBookingReceiver = new BaseAsyncResultReceiver(new Handler());
-
-                hotelBookingReceiver.setListener(new HotelBookingReplyListener());
-
-                // populate custField objects from formFields
-                List<FormField> custFields = null;
-                if (formFields != null && formFields.size() > 0) {
-                    custFields = new ArrayList<FormField>();
-                    for (TravelCustomField tcf : formFields) {
-                        // only if a value is selected for the custom field
-                        if (tcf.getValue() != null && tcf.getValue().trim() != null) {
-                            FormField f = new FormField();
-                            f.setId(tcf.getId());
-                            f.setValue(tcf.getValue());
-                            custFields.add(f);
-                        }
-                    }
+                if (hotelRate.guaranteeSurcharge != null && hotelRate.guaranteeSurcharge.equals("DepositRequired")) {
+                    msgResourse = R.string.dlg_travel_hotel_deposit_confirm_message;
+                } else {
+                    msgResourse = R.string.hotel_confirm_reserve_msg;
                 }
 
-                // create and invoke the async task
-                hotelBookingAsyncRequestTask = new HotelBookingAsyncRequestTask(this, HOTEL_BOOKING_ID,
-                        hotelBookingReceiver, selectedCreditCardId, currentTripId, selectedViolationReasons, custFields,
-                        null, false, preSellOption.bookingURL.href);
+                AlertDialogFragmentV1.OnClickListener okayListener = new AlertDialogFragmentV1.OnClickListener() {
 
-                hotelBookingAsyncRequestTask.execute();
+                    @Override public void onClick(Activity activity, DialogInterface dialog, int which) {
+                        lm.initLoader(HOTEL_BOOKING_LOADER_ID, null, bookingLoaderListener);
+                        isBookingInProgress = true;
+                    }
+
+                    @Override public void onCancel(Activity activity, DialogInterface dialog) {
+                        reserveButton.setEnabled(true);
+                        dialog.dismiss();
+                    }
+                };
+                //                AlertDialogFragmentV1 dialog = DialogFragmentFactoryV1
+                //                        .getAlertDialog(getString(R.string.hotel_confirm_reserve_title), getString(msgResourse),
+                //                                R.string.hotel_confirm_reserve_ok, R.string.hotel_confirm_reserve_cancel, 0,
+                //                                okayListener, null, null, null);
+
+                AlertDialogFragmentV1 dialog = new AlertDialogFragmentV1();
+                dialog.setTitle(R.string.hotel_confirm_reserve_title);
+                dialog.setMessage(msgResourse);
+                dialog.setPositiveButtonText(R.string.hotel_confirm_reserve_ok);
+                dialog.setNegativeButtonText(R.string.hotel_confirm_reserve_cancel);
+                dialog.setPositiveButtonListener(okayListener);
+                dialog.show(getFragmentManager(), DIALOG_FRAGMENT_ID);
+                //                CustomDialogFragment dialog = new CustomDialogFragment();
+                //
+                //                dialog.setTitle(R.string.hotel_confirm_reserve_title);
+                //                dialog.setMessage(R.string.hotel_confirm_reserve_msg);
+                //                dialog.setPositiveButtonText(R.string.hotel_confirm_reserve_ok);
+                //                dialog.setNegativeButtonText(R.string.hotel_confirm_reserve_cancel);
+                //
+                //                dialog.show(getFragmentManager(), DIALOG_FRAGMENT_ID);
+
             } else {
                 // show the required fields messages
                 DialogFragmentFactoryV1
@@ -944,8 +962,10 @@ public class HotelBookingActivity extends TravelBaseActivity implements SpinnerD
         // Check if the key event was the Back button and stop any outstanding
         // request of async task
         if (keyCode == KeyEvent.KEYCODE_BACK) {
-            if (hotelBookingAsyncRequestTask != null) {
-                hotelBookingAsyncRequestTask.cancel(false);
+            if (isBookingInProgress) {
+                return false;
+            } else {
+                finishActivity(Const.REQUEST_CODE_BACK_BUTTON_PRESSED);
             }
         }
         return super.onKeyDown(keyCode, event);
@@ -969,65 +989,4 @@ public class HotelBookingActivity extends TravelBaseActivity implements SpinnerD
         lm.initLoader(CUSTOM_FIELDS_LOADER_ID, null, customFieldsLoaderListener);
     }
 
-    private class HotelBookingReplyListener implements AsyncReplyListener {
-
-        /*
-         * (non-Javadoc)
-         *
-         * @see com.concur.mobile.base.service.BaseAsyncRequestTask.AsyncReplyListener#onRequestSuccess(android.os.Bundle)
-         */
-        public void onRequestSuccess(Bundle resultData) {
-            if (resultData != null) {
-
-                hideProgressBar();
-                HotelBookingRESTResult bookingResult = (HotelBookingRESTResult) resultData
-                        .getSerializable("HotelBookingResult");
-                if (bookingResult != null) {
-
-                    Toast.makeText(getApplicationContext(), R.string.hotel_booking_success, Toast.LENGTH_LONG).show();
-                    Intent intent = new Intent();
-                    intent.putExtra(Const.EXTRA_TRAVEL_ITINERARY_LOCATOR, bookingResult.itineraryLocator);
-                    // resultData.putExtra(Const.EXTRA_TRAVEL_ITINERARY_LOCATOR, trip.itinLocator);EXTRA_TRAVEL_RECORD_LOCATOR
-                    intent.putExtra(Const.EXTRA_TRAVEL_RECORD_LOCATOR, bookingResult.recordLocator);
-                    setResult(Activity.RESULT_OK, intent);
-                }
-                // TODO add GA event for booking
-
-                finish();
-                // finishActivity(Const.REQUEST_CODE_BOOK_HOTEL);
-            }
-
-        }
-
-        /*
-         * (non-Javadoc)
-         *
-         * @see com.concur.mobile.base.service.BaseAsyncRequestTask.AsyncReplyListener#onRequestFail(android.os.Bundle)
-         */
-        public void onRequestFail(Bundle resultData) {
-            Toast.makeText(getApplicationContext(), R.string.hotel_booking_failed, Toast.LENGTH_LONG).show();
-            reserveButton.setEnabled(false);
-            hideProgressBar();
-
-        }
-
-        /*
-         * (non-Javadoc)
-         *
-         * @see com.concur.mobile.base.service.BaseAsyncRequestTask.AsyncReplyListener#onRequestCancel(android.os.Bundle)
-         */
-        public void onRequestCancel(Bundle resultData) {
-            cleanup();
-        }
-
-        /*
-         * (non-Javadoc)
-         *
-         * @see com.concur.mobile.base.service.BaseAsyncRequestTask.AsyncReplyListener#cleanup()
-         */
-        public void cleanup() {
-            hotelBookingReceiver.setListener(null);
-            hotelBookingReceiver = null;
-        }
-    }
 }
