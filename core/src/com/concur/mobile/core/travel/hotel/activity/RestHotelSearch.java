@@ -610,6 +610,9 @@ public class RestHotelSearch extends TravelBaseActivity
             break;
         }
         case Const.REQUEST_CODE_BOOK_HOTEL: {
+            Log.i(com.concur.mobile.platform.util.Const.LOG_TAG,
+                    "\n\n\n ****** RestHotelSearch onActivityResult with REQUEST_CODE_BOOK_HOTEL result code : "
+                            + resultCode);
             if (resultCode == RESULT_OK) {
                 // Hotel was booked, set the result code to okay.
                 String itinLocator = data.getStringExtra(Const.EXTRA_TRAVEL_ITINERARY_LOCATOR);
@@ -617,6 +620,7 @@ public class RestHotelSearch extends TravelBaseActivity
                 Intent i = new Intent(RestHotelSearch.this, ShowHotelItinerary.class);
                 i.putExtra(Const.EXTRA_TRAVEL_ITINERARY_LOCATOR, itinLocator);
                 i.putExtra(Const.EXTRA_TRAVEL_RECORD_LOCATOR, bookingRecordLocator);
+                Log.i(Const.LOG_TAG, CLS_TAG + ".RestHotelSearch start activity to retrieve itinerary");
                 RestHotelSearch.this.startActivity(i);
 
             } else if (resultCode == RESULT_CANCELED) {

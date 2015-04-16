@@ -12,7 +12,6 @@ import com.concur.mobile.platform.ui.travel.util.Const;
  * activity to show Itinerary
  *
  * @author tejoa
- *
  */
 public class ShowHotelItinerary extends TravelBaseActivity {
 
@@ -22,6 +21,7 @@ public class ShowHotelItinerary extends TravelBaseActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         // Hotel was booked, set the result code to okay.
+        Log.i(Const.LOG_TAG, CLS_TAG + ".Hotel was booked, set the result code to okay!");
         Intent data = getIntent();
         itinLocator = data.getStringExtra(Const.EXTRA_TRAVEL_ITINERARY_LOCATOR);
         bookingRecordLocator = data.getStringExtra(Const.EXTRA_TRAVEL_RECORD_LOCATOR);
@@ -35,7 +35,7 @@ public class ShowHotelItinerary extends TravelBaseActivity {
             }
         }
 
-       // setResult(Activity.RESULT_OK, data);
+        // setResult(Activity.RESULT_OK, data);
         onBookingSucceeded();
 
     }
