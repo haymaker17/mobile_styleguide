@@ -201,6 +201,7 @@ public class HotelBookingActivity extends TravelBaseActivity implements SpinnerD
 
             hideProgressBar();
             if (bookingResult != null && bookingResult.error == null) {
+                Toast.makeText(getApplicationContext(), R.string.hotel_booking_success, Toast.LENGTH_LONG).show();
 
                 Intent intent = new Intent();
                 intent.putExtra(Const.EXTRA_TRAVEL_ITINERARY_LOCATOR,
@@ -209,13 +210,12 @@ public class HotelBookingActivity extends TravelBaseActivity implements SpinnerD
                         bookingResult.recordLocator != null ? bookingResult.recordLocator : null);
 
                 setResult(RESULT_OK, intent);
-                Toast.makeText(getApplicationContext(), R.string.hotel_booking_success, Toast.LENGTH_LONG).show();
 
                 // TODO add GA event for booking
                 finish();
             } else {
                 String errorMsg = " ";
-                if (bookingResult.error != null) {
+                if (bookingResult != null && bookingResult.error != null) {
 
                     errorMsg =
                             bookingResult.error.getUserMessage() != null ? bookingResult.error.getUserMessage() : null;
@@ -919,6 +919,19 @@ public class HotelBookingActivity extends TravelBaseActivity implements SpinnerD
                         dialog.dismiss();
                     }
                 };
+
+                AlertDialogFragmentV1.OnClickListener cancelListener = new AlertDialogFragmentV1.OnClickListener() {
+
+                    @Override public void onClick(Activity activity, DialogInterface dialog, int which) {
+                        reserveButton.setEnabled(true);
+                        dialog.dismiss();
+                    }
+
+                    @Override public void onCancel(Activity activity, DialogInterface dialog) {
+                        reserveButton.setEnabled(true);
+                        dialog.dismiss();
+                    }
+                };
                 //                AlertDialogFragmentV1 dialog = DialogFragmentFactoryV1
                 //                        .getAlertDialog(getString(R.string.hotel_confirm_reserve_title), getString(msgResourse),
                 //                                R.string.hotel_confirm_reserve_ok, R.string.hotel_confirm_reserve_cancel, 0,
@@ -930,6 +943,7 @@ public class HotelBookingActivity extends TravelBaseActivity implements SpinnerD
                 dialog.setPositiveButtonText(R.string.hotel_confirm_reserve_ok);
                 dialog.setNegativeButtonText(R.string.hotel_confirm_reserve_cancel);
                 dialog.setPositiveButtonListener(okayListener);
+                dialog.setNegativeButtonListener(cancelListener);
                 dialog.show(getFragmentManager(), DIALOG_FRAGMENT_ID);
                 //                CustomDialogFragment dialog = new CustomDialogFragment();
                 //
@@ -973,8 +987,11 @@ public class HotelBookingActivity extends TravelBaseActivity implements SpinnerD
             if (isBookingInProgress) {
                 return false;
             } else {
+                reserveButton.setEnabled(true);
                 finishActivity(Const.REQUEST_CODE_BACK_BUTTON_PRESSED);
+
             }
+
         }
         return super.onKeyDown(keyCode, event);
     }

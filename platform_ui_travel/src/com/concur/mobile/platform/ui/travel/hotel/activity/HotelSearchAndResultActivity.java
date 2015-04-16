@@ -271,7 +271,6 @@ public class HotelSearchAndResultActivity extends TravelBaseActivity
                 Toast.makeText(getApplicationContext(), "No Rooms Available", Toast.LENGTH_LONG).show();
             }
             // TODO add GA event for booking
-            finish();
         }
 
         @Override public void onLoaderReset(Loader<HotelRatesRESTResult> loader) {
@@ -766,6 +765,8 @@ public class HotelSearchAndResultActivity extends TravelBaseActivity
         case Const.REQUEST_CODE_BOOK_HOTEL: {
             if (resultCode == RESULT_OK) {
                 setResult(RESULT_OK, data);
+                Log.i(com.concur.mobile.platform.util.Const.LOG_TAG,
+                        "\n\n\n ****** HotelSearchAndResultActivity onActivityResult with result code : " + resultCode);
                 finish();
             }
             break;
