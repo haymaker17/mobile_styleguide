@@ -234,7 +234,7 @@ public class HotelChoiceDetailsActivity extends TravelBaseActivity
             }
             if (TAB_ROOMS.equals(tabId)) {
                 HotelRoomDetailFragment detailFrag = new HotelRoomDetailFragment(hotel.rates, showGDSName);
-                //detailFrag.priceToBeat = hotel.priceToBeat;
+                detailFrag.priceToBeat = hotel.priceToBeat;
                 fm.beginTransaction().replace(placeholder, detailFrag, tabId).commit();
             }
             if (TAB_IMAGES.equals(tabId)) {

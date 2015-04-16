@@ -150,6 +150,26 @@ public class TravelProviderUtilHotel {
     }
 
     /**
+     * Will initialize the Hotel Benchmark projection map.
+     *
+     * @return returns a <code>HashMap</code> projection map.
+     */
+    public static HashMap<String, String> initHotelBenchmarkProjectionMap() {
+        HashMap<String, String> retVal = new HashMap<String, String>();
+
+        retVal.put(Travel.HotelBenchmarkColumns._ID, Travel.HotelBenchmarkColumns._ID);
+        retVal.put(Travel.HotelBenchmarkColumns.LOCATION_NAME, Travel.HotelBenchmarkColumns.LOCATION_NAME);
+
+        retVal.put(Travel.HotelBenchmarkColumns.CRN_CODE, Travel.HotelBenchmarkColumns.CRN_CODE);
+        retVal.put(Travel.HotelBenchmarkColumns.PRICE, Travel.HotelBenchmarkColumns.PRICE);
+        retVal.put(Travel.HotelBenchmarkColumns.SUB_DIV_CODE, Travel.HotelBenchmarkColumns.SUB_DIV_CODE);
+        retVal.put(Travel.HotelBenchmarkColumns.HOTEL_SEARCH_RESULT_ID,
+                Travel.HotelBenchmarkColumns.HOTEL_SEARCH_RESULT_ID);
+
+        return retVal;
+    }
+
+    /**
      * Will initialize a <code>UriMatcherInfo</code> object for a directory of <code>HotelSearchResult</code>.
      */
     public static UriMatcherInfo initHotelSearchResultUriMatcherInfo() {
@@ -308,6 +328,40 @@ public class TravelProviderUtilHotel {
         info.projectionMap = TravelProvider.hotelViolationProjectionMap;
         info.idPathPosition = Travel.HotelViolationColumns.HOTEL_VIOLATION_ID_PATH_POSITION;
         info.bulkInserter = new HotelViolationBulkInserter();
+
+        return info;
+    }
+
+    /**
+     * Will initialize a <code>UriMatcherInfo</code> object for a directory of <code>HotelBenchmark</code>.
+     */
+    public static UriMatcherInfo initHotelBenchmarksUriMatcherInfo() {
+
+        UriMatcherInfo info = new UriMatcherInfo();
+        info.isIdSelection = false;
+        info.mimeType = Travel.HotelBenchmarkColumns.CONTENT_TYPE;
+        info.tableName = Travel.HotelBenchmarkColumns.TABLE_NAME;
+        info.contentIdUriBase = Travel.HotelBenchmarkColumns.CONTENT_ID_URI_BASE;
+        info.projectionMap = TravelProvider.hotelBenchmarkProjectionMap;
+        info.bulkInserter = new HotelBenchmarkBulkInserter();
+
+        return info;
+    }
+
+    /**
+     * Will initialize a <code>UriMatcherInfo</code> object for one item of type <code>HotelBenchmark</code>.
+     */
+    public static UriMatcherInfo initHotelBenchmarkUriMatcherInfo() {
+
+        UriMatcherInfo info = new UriMatcherInfo();
+        info.isIdSelection = true;
+        info.mimeType = Travel.HotelBenchmarkColumns.CONTENT_ITEM_TYPE;
+        info.tableName = Travel.HotelBenchmarkColumns.TABLE_NAME;
+        info.contentIdUriBase = Travel.HotelBenchmarkColumns.CONTENT_ID_URI_BASE;
+        info.idColumnName = Travel.HotelBenchmarkColumns._ID;
+        info.projectionMap = TravelProvider.hotelBenchmarkProjectionMap;
+        info.idPathPosition = Travel.HotelBenchmarkColumns.HOTEL_BENCHMARK_ID_PATH_POSITION;
+        info.bulkInserter = new HotelBenchmarkBulkInserter();
 
         return info;
     }

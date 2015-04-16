@@ -112,6 +112,10 @@ public class TravelProvider extends PlatformContentProvider {
     // Hotel Violation
     private static final int HOTEL_VIOLATION = 83;
     private static final int HOTEL_VIOLATION_ID = 84;
+    // Hotel Violation
+    private static final int HOTEL_BENCHMARK = 85;
+    private static final int HOTEL_BENCHMARK_ID = 86;
+
     // Contains the Trip projection map.
     static HashMap<String, String> tripProjectionMap;
     // Contains the Enhancement Day projection map.
@@ -192,6 +196,9 @@ public class TravelProvider extends PlatformContentProvider {
     static HashMap<String, String> hotelSearchResultProjectionMap;
     // Contains the Hotel Violation projection map.
     static HashMap<String, String> hotelViolationProjectionMap;
+    // Contains the Hotel Benchmark projection map.
+    static HashMap<String, String> hotelBenchmarkProjectionMap;
+
     // Contains a static reference to the last instantiated <code>TravelProvider</code>.
     private static TravelProvider provider;
     // Contains the trip summary projection map.
@@ -321,6 +328,10 @@ public class TravelProvider extends PlatformContentProvider {
         // Hotel Violation support
         matcher.addURI(Travel.AUTHORITY, "hotel_violations", HOTEL_VIOLATION);
         matcher.addURI(Travel.AUTHORITY, "hotel_violations/#", HOTEL_VIOLATION_ID);
+
+        // Hotel Benchmark support
+        matcher.addURI(Travel.AUTHORITY, "hotel_benchmarks", HOTEL_BENCHMARK);
+        matcher.addURI(Travel.AUTHORITY, "hotel_benchmarks/#", HOTEL_BENCHMARK_ID);
 
         return matcher;
     }
@@ -730,6 +741,9 @@ public class TravelProvider extends PlatformContentProvider {
         // Creates and initializes the hotel violation projection map.
         hotelViolationProjectionMap = TravelProviderUtilHotel.initHotelViolationProjectionMap();
 
+        // Creates and initializes the hotel benchmark projection map.
+        hotelBenchmarkProjectionMap = TravelProviderUtilHotel.initHotelBenchmarkProjectionMap();
+
         // Creates and initializes the hotel detail projection map.
         hotelDetailProjectionMap = TravelProviderUtilHotel.initHotelDetailProjectionMap();
 
@@ -760,6 +774,9 @@ public class TravelProvider extends PlatformContentProvider {
 
         map.put(HOTEL_VIOLATION, TravelProviderUtilHotel.initHotelViolationsUriMatcherInfo());
         map.put(HOTEL_VIOLATION_ID, TravelProviderUtilHotel.initHotelViolationUriMatcherInfo());
+
+        map.put(HOTEL_BENCHMARK, TravelProviderUtilHotel.initHotelBenchmarksUriMatcherInfo());
+        map.put(HOTEL_BENCHMARK_ID, TravelProviderUtilHotel.initHotelBenchmarkUriMatcherInfo());
 
     }
 

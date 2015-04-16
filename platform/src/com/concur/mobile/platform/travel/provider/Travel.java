@@ -5263,4 +5263,101 @@ public final class Travel {
 
     }
 
+    /**
+     * Models Hotel Benchmarks information. Has a foreign key reference to Hotel Search Result table
+     */
+    public static final class HotelBenchmarkColumns implements BaseColumns {
+
+        // Prevent instantiation.
+        private HotelBenchmarkColumns() {
+        }
+
+        /**
+         * Contains the Hotel Benchmark table name.
+         */
+        public static final String TABLE_NAME = "HOTEL_BENCHMARK";
+
+        // URI definitions
+
+        /**
+         * The scheme part for this provider's URI
+         */
+        private static final String SCHEME = "content://";
+
+        // Path parts for the URIs
+
+        /**
+         * Path part for the Hotel Benchmark URI
+         */
+        private static final String PATH_HOTEL_BENCHMARK = "/hotel_benchmarks";
+
+        /**
+         * Path part for the Hotel Benchmark ID URI
+         */
+        private static final String PATH_HOTEL_BENCHMARK_ID = "/hotel_benchmarks/";
+
+        /**
+         * 0-relative position of a Hotel Violation ID segment in the path part of a Hotel Violation ID URI
+         */
+        public static final int HOTEL_BENCHMARK_ID_PATH_POSITION = 1;
+
+        /**
+         * The content:// style URL for this table
+         */
+        public static final Uri CONTENT_URI = Uri.parse(SCHEME + AUTHORITY + PATH_HOTEL_BENCHMARK);
+
+        /**
+         * The content URI base for a Hotel Benchmark. Callers must append a numeric Hotel Benchmark id to this Uri to retrieve a
+         * Hotel Benchmark
+         *
+         */
+        public static final Uri CONTENT_ID_URI_BASE = Uri.parse(SCHEME + AUTHORITY + PATH_HOTEL_BENCHMARK_ID);
+
+        /**
+         * The content URI match pattern for a single Hotel Benchmark, specified by its ID. Use this to match incoming URIs or to
+         * construct an Intent.
+         */
+        public static final Uri CONTENT_ID_URI_PATTERN = Uri.parse(SCHEME + AUTHORITY + PATH_HOTEL_BENCHMARK_ID + "/#");
+
+        // MIME type definitions
+
+        /**
+         * The MIME type of {@link #CONTENT_URI} providing a directory of Hotel Benchmark.
+         */
+        public static final String CONTENT_TYPE = "vnd.android.cursor.dir/vnd.com.concur.mobile.platform.travel.hotel_benchmarks";
+
+        /**
+         * The MIME type of a {@link #CONTENT_URI} subdirectory of a single Hotel Benchmark.
+         */
+        public static final String CONTENT_ITEM_TYPE = "vnd.android.cursor.item/vnd.com.concur.mobile.platform.travel.hotel_benchmark";
+
+        // Column definitions
+
+        /**
+         * Contains the Hotel Search Result ID (INTEGER REFERENCES HOTEL_SEARCH_RESULT._ID) column name.
+         */
+        public static final String HOTEL_SEARCH_RESULT_ID = "HOTEL_SEARCH_RESULT_ID";
+
+        /**
+         * Contains the location name (TEXT) column name.
+         */
+        public static final String LOCATION_NAME = "LOCATION_NAME";
+
+        /**
+         * Contains the currency code (TEXT) column name.
+         */
+        public static final String CRN_CODE = "CRN_CODE";
+
+        /**
+         * Contains the currency code (REAL) column name.
+         */
+        public static final String PRICE = "PRICE";
+
+        /**
+         * Contains the subDivCode (TEXT) column name.
+         */
+        public static final String SUB_DIV_CODE = "SUB_DIV_CODE";
+
+    }
+
 }

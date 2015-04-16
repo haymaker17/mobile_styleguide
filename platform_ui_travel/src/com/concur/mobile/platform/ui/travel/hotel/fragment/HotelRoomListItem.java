@@ -78,8 +78,6 @@ public class HotelRoomListItem extends ListItem {
                 txtView.setText(FormatUtil
                         .formatAmountWithNoDecimals(roomRate, context.getResources().getConfiguration().locale,
                                 hotelRoom.currency, true, false));
-                // set the Travel Points
-                // LayoutUtil.initTravelPointsAtItemLevel(roomView, R.id.travel_points, hotelRoom.travelPoints);
 
                 // add the max enforcement level icon to the first row
                 int enforcementLevel = hotelRoom.maxEnforcementLevel;
@@ -121,10 +119,12 @@ public class HotelRoomListItem extends ListItem {
             txtView.setVisibility(View.VISIBLE);
 
             if (hotelRoom.travelPoints < 0) {
+                txtView.setTextAppearance(context, R.style.TravelPointsNegativeText);
                 txtView.setText(Format.localizeText(context, R.string.travel_points_can_be_redeemed, new Object[] {
                         FormatUtil.formatAmountWithNoDecimals(hotelRoom.travelPoints,
                                 context.getResources().getConfiguration().locale, hotelRoom.currency, false, false) }));
             } else {
+                txtView.setTextAppearance(context, R.style.TravelPointsPositiveText);
                 txtView.setText(Format.localizeText(context, R.string.travel_points_can_be_earned, new Object[] {
                         FormatUtil.formatAmountWithNoDecimals(hotelRoom.travelPoints,
                                 context.getResources().getConfiguration().locale, hotelRoom.currency, false, false) }));
