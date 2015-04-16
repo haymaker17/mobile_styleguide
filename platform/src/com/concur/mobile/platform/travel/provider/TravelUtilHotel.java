@@ -72,7 +72,10 @@ public class TravelUtilHotel {
                 int hotelSearchResultId = Integer.parseInt(hotelSearchResultInsertUri.getPathSegments()
                         .get(Travel.HotelSearchResultColumns.HOTEL_SEARCH_RESULT_ID_PATH_POSITION));
 
-                // insert violations - TODO - can we span this in a new thread
+                // insert benchmarks
+                bulkInsertHotelBenchmarks(resolver, hotelSearchResultId, hotelSearchResult.benchmarksCollection);
+
+                // insert violations
                 bulkInsertHotelViolations(resolver, hotelSearchResultId, hotelSearchResult.violations);
 
                 for (Hotel hotel : hotels) {
@@ -401,6 +404,46 @@ public class TravelUtilHotel {
 
 
     /**
+     * Bulk insert hotel benchmarks for the given hotelSearchResultId
+     *
+     * @param resolver
+     * @param hotelSearchResultId
+     * @param benchmarksCollection
+     */
+    public static void bulkInsertHotelBenchmarks(ContentResolver resolver, int hotelSearchResultId,
+            BenchmarksCollection benchmarksCollection) {
+        // insert hotel benchmarks with hotel search result id as foreign key
+        if (benchmarksCollection != null) {
+            List<HotelBenchmark> benchmarks = benchmarksCollection.benchmarks;
+            if(benchmarks != null && benchmarks.size() > 0) {
+                ContentValues[] valuesInfo = new ContentValues[benchmarks.size()];
+                int valInd = 0;
+                for (HotelBenchmark benchmark : benchmarks) {
+
+                    valuesInfo[valInd] = new ContentValues();
+
+                    // Set the foreign key
+                    ContentUtils.putValue(valuesInfo[valInd], Travel.HotelBenchmarkColumns.HOTEL_SEARCH_RESULT_ID,
+                            hotelSearchResultId);
+
+                    // Set the columns
+                    ContentUtils.putValue(valuesInfo[valInd], Travel.HotelBenchmarkColumns.LOCATION_NAME, benchmark.locationName);
+                    ContentUtils.putValue(valuesInfo[valInd], Travel.HotelBenchmarkColumns.CRN_CODE, benchmark.crnCode);
+                    ContentUtils.putValue(valuesInfo[valInd], Travel.HotelBenchmarkColumns.PRICE, benchmark.price);
+                    ContentUtils.putValue(valuesInfo[valInd], Travel.HotelBenchmarkColumns.SUB_DIV_CODE, benchmark.subDivCode);
+                }
+                // insert
+                int numInserted = resolver.bulkInsert(Travel.HotelBenchmarkColumns.CONTENT_URI, valuesInfo);
+
+                if (DEBUG) {
+                    Log.d(Const.LOG_TAG,
+                            CLS_TAG + ".bulkInsertHotelBenchmarks : number of benchmarks items inserted :  " + numInserted);
+                }
+            }
+        }
+    }
+
+    /**
      * Delete the hotels search result
      *
      * @param context
@@ -465,6 +508,47 @@ public class TravelUtilHotel {
                 strBldr.append(Travel.HotelDetailColumns.HOTEL_SEARCH_RESULT_ID + " =? ");
                 String where = strBldr.toString();
                 String[] whereArgs = { id };
+                cursor = resolver.query(Travel.HotelDetailColumns.CONTENT_URI, Hotel.fullColumnList, where, whereArgs,
+                        Travel.HotelDetailColumns.DEFAULT_SORT_ORDER);
+                if (cursor != null) {
+                    if (cursor.moveToFirst()) {
+                        do {
+                            hotels.add(new Hotel(cursor));
+                        } while (cursor.moveToNext());
+                    }
+                }
+            } finally {
+                if (cursor != null) {
+                    cursor.close();
+                }
+            }
+        }
+        return hotels;
+    }
+
+    /**
+     * Get persisted hotels search result list by cache key
+     *
+     * @param context
+     * @param hotelSearchResultId
+     * @return
+     */
+    public static List<Hotel> getHotelsForSearchResultId(Context context, String hotelSearchResultId) {
+
+        // delete hotels with expiry timestamp
+        deleteHotelDetails(context);
+
+        List<Hotel> hotels = new ArrayList<Hotel>();
+
+        ContentResolver resolver = context.getContentResolver();
+        Cursor cursor = null;
+
+        if (hotelSearchResultId != null) {
+            try {
+                StringBuilder strBldr = new StringBuilder();
+                strBldr.append(Travel.HotelDetailColumns.HOTEL_SEARCH_RESULT_ID + " =? ");
+                String where = strBldr.toString();
+                String[] whereArgs = { hotelSearchResultId };
                 cursor = resolver.query(Travel.HotelDetailColumns.CONTENT_URI, Hotel.fullColumnList, where, whereArgs,
                         Travel.HotelDetailColumns.DEFAULT_SORT_ORDER);
                 if (cursor != null) {
@@ -669,5 +753,59 @@ public class TravelUtilHotel {
         }
 
         return hotelRates;
+    }
+
+    /**
+     * Get hotel search rest result for the hotel search URL
+     *
+     * @param context
+     * @return hotelSearchRestResult - hotels, benchmarkCollection
+     */
+    public static HotelSearchRESTResult getHotelSearchRESTResult(Context context, String searchUrl) {
+        HotelSearchRESTResult hotelSearchRestResult = new HotelSearchRESTResult();
+
+        // get hotels
+        String hotelSearchResultId = getHotelSearchResultId(context, searchUrl);
+        hotelSearchRestResult.hotels = getHotelsForSearchResultId(context, hotelSearchResultId);
+
+        // get hotel benchmarks
+        hotelSearchRestResult.benchmarksCollection = getBenchmarksCollection(context, hotelSearchResultId);
+
+        return hotelSearchRestResult;
+    }
+
+    /**
+     * Get hotel benchmarks for the hotel search id
+     *
+     * @param context
+     * @param hotelSearchResultId
+     * @return benchmarksCollection
+     */
+    public static BenchmarksCollection getBenchmarksCollection(Context context, String hotelSearchResultId) {
+        BenchmarksCollection benchmarksCollection = new  BenchmarksCollection();
+        List<HotelBenchmark> hotelBenchmarks = new ArrayList<HotelBenchmark>();
+        ContentResolver resolver = context.getContentResolver();
+        Cursor cursor = null;
+        try {
+            StringBuilder strBldr = new StringBuilder();
+            strBldr.append(Travel.HotelBenchmarkColumns.HOTEL_SEARCH_RESULT_ID + " =? ");
+            String where = strBldr.toString();
+            String[] whereArgs = { hotelSearchResultId };
+            cursor = resolver.query(Travel.HotelBenchmarkColumns.CONTENT_URI, HotelBenchmark.fullColumnList, where, whereArgs, null);
+            if (cursor != null) {
+                if (cursor.moveToFirst()) {
+                    do {
+                        hotelBenchmarks.add(new HotelBenchmark(cursor));
+                    } while (cursor.moveToNext());
+                }
+            }
+        } finally {
+            if (cursor != null) {
+                cursor.close();
+            }
+        }
+        benchmarksCollection.benchmarks = hotelBenchmarks;
+
+        return benchmarksCollection;
     }
 }

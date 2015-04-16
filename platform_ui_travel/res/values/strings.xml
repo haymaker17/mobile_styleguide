@@ -172,4 +172,9 @@
     <string name="travel_points_can_be_redeemed">-%%0!number of points can be redeemed for this booking%% pts</string>
     <!-- start of Travel Points -->
 
+    <!-- start of Price-to-Beat -->
+    <string name="price_to_beat_ranges_header">Selecting rooms that cost less than the Price-to-Beat earns you Travel Points that can be used toward future benefits.</string>
+    <string name="price_to_beat_price_unavailable">Unavailable</string>
+    <!--  end of Price-to-Beat -->
+
 </resources>

@@ -1,5 +1,6 @@
 package com.concur.mobile.platform.ui.travel.hotel.activity;
 
+import android.app.FragmentManager;
 import android.app.FragmentTransaction;
 import android.app.LoaderManager;
 import android.content.Intent;
@@ -20,17 +21,17 @@ import com.concur.mobile.base.service.BaseAsyncResultReceiver;
 import com.concur.mobile.platform.service.PlatformAsyncTaskLoader;
 import com.concur.mobile.platform.travel.provider.TravelUtilHotel;
 import com.concur.mobile.platform.travel.search.hotel.*;
+import com.concur.mobile.platform.ui.common.util.FormatUtil;
 import com.concur.mobile.platform.ui.common.view.ListItemAdapter;
 import com.concur.mobile.platform.ui.travel.R;
 import com.concur.mobile.platform.ui.travel.activity.TravelBaseActivity;
-import com.concur.mobile.platform.ui.travel.hotel.fragment.HotelSearchResultFilterFragment;
+import com.concur.mobile.platform.ui.travel.hotel.fragment.*;
 import com.concur.mobile.platform.ui.travel.hotel.fragment.HotelSearchResultFilterFragment.HotelSearchResultsFilterListener;
-import com.concur.mobile.platform.ui.travel.hotel.fragment.HotelSearchResultFragment;
 import com.concur.mobile.platform.ui.travel.hotel.fragment.HotelSearchResultFragment.HotelSearchResultsFragmentListener;
-import com.concur.mobile.platform.ui.travel.hotel.fragment.HotelSearchResultListItem;
 import com.concur.mobile.platform.ui.travel.hotel.maps.ShowMaps;
 import com.concur.mobile.platform.ui.travel.loader.TravelCustomFieldsConfig;
 import com.concur.mobile.platform.ui.travel.util.Const;
+import com.concur.mobile.platform.util.Format;
 import com.google.android.gms.common.ConnectionResult;
 import com.google.android.gms.common.GooglePlayServicesUtil;
 
@@ -54,6 +55,8 @@ public class HotelSearchAndResultActivity extends TravelBaseActivity
     private static final int HOTEL_RATES_ASYN_TASK_ID = 2;
 
     private static final String SERVICE_END_POINT = "/mobile/travel/v1.0/Hotels";
+
+    private static final String PRICE_TO_BEAT_DETAILS_FRAGMENT = "price.to.beat.details.fragment";
 
     private HotelSearchResultFragment hotelSearchRESTResultFrag;
     private HotelSearchResultFilterFragment filterFrag;
@@ -91,6 +94,7 @@ public class HotelSearchAndResultActivity extends TravelBaseActivity
     private boolean showGDSName;
     private List<HotelViolation> updatedVoilations;
     private List<HotelViolation> voilations;
+    private BenchmarksCollection benchmarksCollection;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -162,7 +166,9 @@ public class HotelSearchAndResultActivity extends TravelBaseActivity
     private void populateHotelListItemsFromDB() {
         // get from db
 
-        List<Hotel> hotels = TravelUtilHotel.getHotels(this, cacheKey);
+        //List<Hotel> hotels = TravelUtilHotel.getHotels(this, cacheKey);
+        HotelSearchRESTResult hotelSearchRESTResult = TravelUtilHotel.getHotelSearchRESTResult(this, cacheKey);
+        List<Hotel> hotels = hotelSearchRESTResult.hotels;
 
         Log.d(Const.LOG_TAG, " ***** retrieved hotels from TravelUtilHotel.getHotels *****  " + (hotels == null ?
                 null :
@@ -170,6 +176,10 @@ public class HotelSearchAndResultActivity extends TravelBaseActivity
 
         // populate list items
         if (hotels != null && hotels.size() > 0) {
+
+            // get the benchmarks from database
+            benchmarksCollection = hotelSearchRESTResult.benchmarksCollection;
+
             hotelListItemsToSort = new ArrayList<HotelSearchResultListItem>(hotels.size());
             retriveFromDB = true;
             for (Hotel hotel : hotels) {
@@ -613,6 +623,9 @@ public class HotelSearchAndResultActivity extends TravelBaseActivity
 
         hotelListItems.addAll(hotelListItemsToSort);
 
+        // init and show the price to beat
+        initPriceToBeat();
+
         // refresh the UI with the updated hotelListItems
         updateResultsFragmentUI(hotelListItemsToSort, null);
 
@@ -629,6 +642,84 @@ public class HotelSearchAndResultActivity extends TravelBaseActivity
             });
         }
 
+    }
+
+    private void initPriceToBeat() {
+        if (benchmarksCollection != null && benchmarksCollection.benchmarks != null) {
+            ArrayList<Double> priceToBeatValues = new ArrayList<Double>(benchmarksCollection.benchmarks.size());
+            Double priceToBeatValue = null;
+            for (HotelBenchmark hotelBenchmark : benchmarksCollection.benchmarks) {
+                priceToBeatValue = hotelBenchmark.price;
+                if (priceToBeatValue != null) {
+                    priceToBeatValues.add(priceToBeatValue);
+                }
+            }
+            if (priceToBeatValues.size() > 0) {
+                String currencyCode = benchmarksCollection.benchmarks.get(0).crnCode;
+                if (currencyCode == null) {
+                    currencyCode = hotelListItems.get(0).getHotel().currencyCode;
+                }
+                Double maxPriceToBeatValue = Collections.max(priceToBeatValues);
+                priceToBeatValue = Collections.min(priceToBeatValues);
+                String formattedMinBenchmarkPrice = null;
+                View priceToBeatView = findViewById(R.id.priceToBeatView);
+                priceToBeatView.setVisibility(View.VISIBLE);
+                if (priceToBeatValue == maxPriceToBeatValue) {
+                    // no price range
+                    formattedMinBenchmarkPrice = FormatUtil
+                            .formatAmountWithNoDecimals(priceToBeatValue, this.getResources().getConfiguration().locale,
+                                    currencyCode, true, true);
+
+                    showPriceToBeatHeader(R.id.priceToBeatText, formattedMinBenchmarkPrice);
+                } else {
+                    // price range available
+                    formattedMinBenchmarkPrice = FormatUtil
+                            .formatAmountWithNoDecimals(priceToBeatValue, this.getResources().getConfiguration().locale,
+                                    currencyCode, true, true);
+                    String formattedMaxBenchmarkPrice = FormatUtil.formatAmountWithNoDecimals(maxPriceToBeatValue,
+                            this.getResources().getConfiguration().locale, currencyCode, true, true);
+
+                    showPriceToBeatHeader(R.id.priceToBeatText, Format.localizeText(this, R.string.price_to_beat_range,
+                            new Object[] { formattedMinBenchmarkPrice, formattedMaxBenchmarkPrice }));
+                }
+
+                // init the onclick event
+                //                priceToBeatView.setOnClickListener(new View.OnClickListener() {
+                //
+                //                    @Override
+                //                    public void onClick(View v) {
+                //                        showPriceToBeatFragment();
+                //                    }
+                //                });
+            }
+        }
+    } //end of price to beat
+
+    private void showPriceToBeatFragment() {
+        List<HotelBenchmark> benchmarks = benchmarksCollection.benchmarks;
+        if (benchmarks != null && benchmarks.size() > 0) {
+            List<HotelBenchmarkListItem> benchmarkListItems = new ArrayList<HotelBenchmarkListItem>(benchmarks.size());
+            for (HotelBenchmark bm : benchmarks) {
+                benchmarkListItems.add(new HotelBenchmarkListItem(bm));
+            }
+
+            // prepare the adapter
+            ListItemAdapter<HotelBenchmarkListItem> listItemAdapater = new ListItemAdapter<HotelBenchmarkListItem>(this,
+                    benchmarkListItems);
+
+            // initiate the fragment and show
+            FragmentManager fm = getFragmentManager();
+            HotelBenchmarksFragment detailsFragment = (HotelBenchmarksFragment) fm
+                    .findFragmentByTag(PRICE_TO_BEAT_DETAILS_FRAGMENT);
+            if (detailsFragment == null) {
+                detailsFragment = new HotelBenchmarksFragment();
+                FragmentTransaction ft = fm.beginTransaction();
+                //ft.replace(R.id.hotelPriceToBeatContainer, detailsFragment, PRICE_TO_BEAT_DETAILS_FRAGMENT);
+                ft.commit();
+            }
+            detailsFragment.listItemAdapter = listItemAdapater;
+            detailsFragment.show(fm, PRICE_TO_BEAT_DETAILS_FRAGMENT);
+        }
     }
 
     // invokes the updateUI call on the fragment
@@ -711,6 +802,7 @@ public class HotelSearchAndResultActivity extends TravelBaseActivity
                         hotelListItemsToSort = new ArrayList<HotelSearchResultListItem>();
                         hotelListItemsToSort.addAll(hotelListItems);
 
+                        benchmarksCollection = hotelSearchResult.benchmarksCollection;
                         showResults();
                     }
 

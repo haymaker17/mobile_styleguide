@@ -158,10 +158,12 @@ public class HotelSearchResultListItem extends ListItem implements Serializable 
         if(hotel.travelPointsForLowestRate != null && hotel.travelPointsForLowestRate != 0) {
             txtView = ((TextView) hotelView.findViewById(R.id.travel_points_text));
             if(hotel.travelPointsForLowestRate < 0) {
+                txtView.setTextAppearance(context, R.style.TravelPointsNegativeText);
                 txtView.setText(Format.localizeText(context, R.string.travel_points_can_be_redeemed, new Object[] { FormatUtil
                         .formatAmountWithNoDecimals( hotel.travelPointsForLowestRate, context.getResources().getConfiguration().locale, hotel.currencyCode,
                                 false, false) }));
             } else {
+                txtView.setTextAppearance(context, R.style.TravelPointsPositiveText);
                 txtView.setText(Format.localizeText(context, R.string.travel_points_can_be_earned, new Object[] { FormatUtil
                         .formatAmountWithNoDecimals( hotel.travelPointsForLowestRate, context.getResources().getConfiguration().locale, hotel.currencyCode,
                                 false, false) }));

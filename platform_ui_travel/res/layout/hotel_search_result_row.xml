@@ -85,12 +85,8 @@
                 android:id="@+id/travel_points_text"
                 android:layout_width="86dp"
                 android:layout_height="wrap_content"
-                android:fontFamily="sans-serif-light"
                 android:gravity="center"
-                android:padding="6dp"
-                android:textColor="#0078c8"
-                android:text=""
-                android:textSize="12sp"/>
+                android:padding="6dp"/>
 
             <ImageView
                 android:id="@+id/recom_stars"
