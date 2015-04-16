@@ -127,13 +127,14 @@
     <string name="no_network_connection_toast">No Network Connection</string>
     <string name="imageview_description">Image Thumbnail</string>
     <string name="hotel_booking_failed">Room Confirm Failed</string>
+    <string name="hotel_booking_failed_title">Hotel Booking</string>
     <string name="hotel_booking_success">Your room has been successfully reserved.</string>
     <string name="hotel_booking_retrieving">Reserving room...</string>
     <string name="hotel_overview">Overview</string>
     <string name="hotel_confirm_reserve_title">Confirm Reservation</string>
     <string name="hotel_confirm_reserve_msg">Are you sure you want to book this room?</string>
     <string name="hotel_booking_deposit_required">Deposit Required</string>
-    <string name="hotel_dialog_deposit_required_title">Reservation Not Allowed </string>
+    <string name="hotel_dialog_deposit_required_title">Reservation Not Allowed</string>
     <string name="hotel_dialog_deposit_required_msg">Your travel policy does not allow booking this rate</string>
     <string name="dialog_ok">OK</string>
     <string name="dlg_travel_hotel_deposit_confirm_message">Are you sure you want to reserve this room?\nI understand that my credit card will be charged immediately and no cancellation will be possible later in the booking process. All or portions of the deposit will be forfeited upon cancellation.</string>
