@@ -255,6 +255,7 @@ public class HotelBookingActivity extends TravelBaseActivity implements SpinnerD
     private ParallaxScollView mListView;
     private TextView roomDescView;
     private boolean isBookingInProgress;
+    private String customTravelText;
 
     @Override
     public void onWindowFocusChanged(boolean hasFocus) {
@@ -294,6 +295,10 @@ public class HotelBookingActivity extends TravelBaseActivity implements SpinnerD
                     && travelCustomFieldsConfig.formFields.size() > 0) {
                 formFields = travelCustomFieldsConfig.formFields;
             }
+        }
+
+        if (intent.hasExtra("customTravelText")) {
+            customTravelText = intent.getStringExtra("customTravelText");
         }
 
         if (hotelRate != null) {
@@ -596,7 +601,13 @@ public class HotelBookingActivity extends TravelBaseActivity implements SpinnerD
                     violationReasonChoices[i] = new SpinnerItem(violationReasons.get(i)[0], violationReasons.get(i)[1]);
                 }
 
+                EditText justificationView = (EditText) findViewById(R.id.hotel_violation_justification);
+                if (customTravelText != null && !customTravelText.isEmpty()) {
+                    justificationView.setHint(customTravelText);
+                }
+
                 initViolationReasonsView();
+
             }
         }
     }

@@ -62,6 +62,7 @@ public class HotelChoiceDetailsActivity extends TravelBaseActivity
     private boolean showGDSName;
     private String currentTripId;
     private List<HotelViolation> violations;
+    private String customTravelText;
 
     // private ParallaxScollListView mListView;
     // private ImageView mImageView;
@@ -152,7 +153,9 @@ public class HotelChoiceDetailsActivity extends TravelBaseActivity
         if (i.hasExtra("travelCustomFieldsConfig")) {
             travelCustomFieldsConfig = (TravelCustomFieldsConfig) i.getSerializableExtra("travelCustomFieldsConfig");
         }
-
+        if (i.hasExtra("customTravelText")) {
+            customTravelText = i.getStringExtra("customTravelText");
+        }
     }
 
     @Override
@@ -271,6 +274,9 @@ public class HotelChoiceDetailsActivity extends TravelBaseActivity
                 intent.putExtra("violations", (Serializable) violations);
                 if (travelCustomFieldsConfig != null) {
                     intent.putExtra("travelCustomFieldsConfig", travelCustomFieldsConfig);
+                }
+                if (customTravelText != null) {
+                    intent.putExtra("customTravelText", customTravelText);
                 }
                 startActivityForResult(intent, Const.REQUEST_CODE_BOOK_HOTEL);
             }

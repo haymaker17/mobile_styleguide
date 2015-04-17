@@ -91,6 +91,7 @@ public class HotelSearchAndResultActivity extends TravelBaseActivity
     private boolean ruleViolationExplanationRequired;
     private String currentTripId;
     private boolean showGDSName;
+    private String customTravelText;
     private List<HotelViolation> updatedViolations;
     private List<HotelViolation> violations;
     private BenchmarksCollection benchmarksCollection;
@@ -314,6 +315,9 @@ public class HotelSearchAndResultActivity extends TravelBaseActivity
                     .getSerializableExtra("travelCustomFieldsConfig");
         }
 
+        if (intent.hasExtra("customTravelText")) {
+            customTravelText = intent.getStringExtra("customTravelText");
+        }
         hotelSearchRESTResultFrag = (HotelSearchResultFragment) getFragmentManager()
                 .findFragmentByTag(FRAGMENT_SEARCH_RESULT);
 
@@ -758,6 +762,9 @@ public class HotelSearchAndResultActivity extends TravelBaseActivity
         i.putExtra(Const.EXTRA_TRAVEL_HOTEL_SEARCH_SHOW_GDS_NAME, showGDSName);
         if (travelCustomFieldsConfig != null) {
             i.putExtra("travelCustomFieldsConfig", travelCustomFieldsConfig);
+        }
+        if (customTravelText != null) {
+            i.putExtra("customTravelText", customTravelText);
         }
         if (updatedViolations != null && updatedViolations.size() > 0) {
             bundle.putSerializable("updatedViolations", (Serializable) updatedViolations);

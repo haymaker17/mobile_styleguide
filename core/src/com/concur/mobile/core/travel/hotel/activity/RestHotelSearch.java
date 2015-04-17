@@ -757,6 +757,9 @@ public class RestHotelSearch extends TravelBaseActivity
         // intent.putExtra(Const.EXTRA_TRAVEL_HOTEL_SEARCH_DISTANCE_UNIT_NAME, currentDistanceUnit.name);
         UserConfig userConfig = core.getUserConfig();
         String distanceUnit = userConfig != null ? userConfig.distanceUnitPreference : null;
+        String customTravelText = (userConfig != null && userConfig.customTravelText != null) ?
+                userConfig.customTravelText.hotelRulesViolationText :
+                null;
         if (distanceUnit == null) {
             distanceUnit = "M";
         } else {
@@ -808,6 +811,10 @@ public class RestHotelSearch extends TravelBaseActivity
         intent.putExtra(Const.EXTRA_TRAVEL_HOTEL_SEARCH_SHOW_GDS_NAME, showGDSName);
 
         intent.putExtra("travelCustomFieldsConfig", travelCustomFieldsConfig);
+
+        if (customTravelText != null && !customTravelText.isEmpty()) {
+            intent.putExtra("customTravelText", customTravelText);
+        }
 
         startActivityForResult(intent, Const.REQUEST_CODE_BOOK_HOTEL);
     }
