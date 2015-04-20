@@ -91,7 +91,7 @@ public class HotelRatesLoader extends PlatformAsyncTaskLoader<HotelRatesRESTResu
                     hotel = hotelRateResult.hotel;
 
                     if (hotel != null && hotel.rates != null && hotel.rates.size() > 0) {
-                        Log.i(Const.LOG_TAG,
+                        Log.d(Const.LOG_TAG,
                                 "\n\n\n ******Get Hotel Rates successfull with count : " + hotel.rates.size());
                         if (hotelId != 0 && hotelSearchId != 0) {
 
@@ -105,12 +105,12 @@ public class HotelRatesLoader extends PlatformAsyncTaskLoader<HotelRatesRESTResu
                                     hotel.rates);
 
                         } else {
-                            Log.i(Const.LOG_TAG, "\n\n\n ****** hotelRateResult is null");
+                            Log.d(Const.LOG_TAG, "\n\n\n ****** hotelRateResult is null");
                         }
                     }
                 } else {
-                    Log.i(Const.LOG_TAG, "\n\n\n ****** Info " + mwsResp.getInfo());
-                    Log.i(Const.LOG_TAG, "\n\n\n ****** Errors " + mwsResp.getErrors());
+                    Log.d(Const.LOG_TAG, "\n\n\n ****** Info " + mwsResp.getInfo());
+                    Log.d(Const.LOG_TAG, "\n\n\n ****** Errors " + mwsResp.getErrors());
                 }
             }
 

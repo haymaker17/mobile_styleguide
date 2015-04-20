@@ -620,7 +620,7 @@ public class RestHotelSearch extends TravelBaseActivity
                 Intent i = new Intent(RestHotelSearch.this, ShowHotelItinerary.class);
                 i.putExtra(Const.EXTRA_TRAVEL_ITINERARY_LOCATOR, itinLocator);
                 i.putExtra(Const.EXTRA_TRAVEL_RECORD_LOCATOR, bookingRecordLocator);
-                Log.i(Const.LOG_TAG, CLS_TAG + ".RestHotelSearch start activity to retrieve itinerary");
+                Log.d(Const.LOG_TAG, CLS_TAG + ".RestHotelSearch start activity to retrieve itinerary");
                 RestHotelSearch.this.startActivity(i);
 
             } else if (resultCode == RESULT_CANCELED) {

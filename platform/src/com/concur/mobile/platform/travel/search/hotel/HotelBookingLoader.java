@@ -176,18 +176,18 @@ public class HotelBookingLoader extends PlatformAsyncTaskLoader<HotelBookingREST
 
                     if (bookingResult != null && bookingResult.recordLocator != null
                             && bookingResult.itineraryLocator != null) {
-                        Log.i(Const.LOG_TAG, "\n\n\n ****** Hotel Booking successful with recordLocator : "
+                        Log.d(Const.LOG_TAG, "\n\n\n ****** Hotel Booking successful with recordLocator : "
                                 + bookingResult.recordLocator + " and with itineraryLocator : "
                                 + bookingResult.itineraryLocator);
 
                         // log the error message
 
                     } else {
-                        Log.i(Const.LOG_TAG, "\n\n\n ****** Hotel Booking successful but no data");
+                        Log.d(Const.LOG_TAG, "\n\n\n ****** Hotel Booking successful but no data");
                     }
                 } else {
-                    Log.i(Const.LOG_TAG, "\n\n\n ****** Info " + mwsResp.getInfo());
-                    Log.i(Const.LOG_TAG, "\n\n\n ****** Errors " + mwsResp.getErrors());
+                    Log.d(Const.LOG_TAG, "\n\n\n ****** Info " + mwsResp.getInfo());
+                    Log.d(Const.LOG_TAG, "\n\n\n ****** Errors " + mwsResp.getErrors());
                     bookingResult.error = mwsResp.getErrors().size() > 0 ? mwsResp.getErrors().get(0) : null;
                 }
             }

@@ -784,7 +784,7 @@ public class HotelSearchAndResultActivity extends TravelBaseActivity
         case Const.REQUEST_CODE_BOOK_HOTEL: {
             if (resultCode == RESULT_OK) {
                 setResult(RESULT_OK, data);
-                Log.i(com.concur.mobile.platform.util.Const.LOG_TAG,
+                Log.d(com.concur.mobile.platform.util.Const.LOG_TAG,
                         "\n\n\n ****** HotelSearchAndResultActivity onActivityResult with result code : " + resultCode);
                 finish();
             }
