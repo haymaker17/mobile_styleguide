@@ -268,8 +268,8 @@ public class Startup extends BaseActivity {
 
     private void logTotleTimeForAutoLogin(long totalWaitTime) {
         // Statistics Notification
-        EventTracker.INSTANCE.track(Flurry.CATEGORY_WAIT_TIME, Flurry.ACTION_AUTO_LOGIN_WAIT, Flurry.LABEL_WAIT_TIME,
-                totalWaitTime);
+        EventTracker.INSTANCE.trackTimings(Flurry.CATEGORY_WAIT_TIME, Flurry.ACTION_AUTO_LOGIN_WAIT,
+                Flurry.LABEL_WAIT_TIME, totalWaitTime);
     }
 
     protected void doFinish() {
