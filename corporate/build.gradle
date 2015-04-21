@@ -11,6 +11,10 @@ android {
     buildToolsVersion "21.1.2"
 
     defaultConfig{
+        minSdkVersion 16
+        targetSdkVersion 21
+        versionCode System.getenv("VERSION_CODE") as Integer ?: 2999
+        versionName "9.19.0"
         multiDexEnabled true
     }
 
