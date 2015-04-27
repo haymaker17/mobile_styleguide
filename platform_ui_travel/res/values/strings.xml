@@ -155,6 +155,7 @@
     <string name="dlg_travel_retrieve_custom_fields_update_progress_message">Updating booking information fields...</string>
     <string name="field_name">Field Name</string>
     <string name="field_hint">Field Hint</string>
+    <string name="book_missing_custom_fields">Please select required custom fields</string>
     <!-- end of custom fields -->
 
     <string name="offline_header_text">Offline</string>

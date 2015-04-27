@@ -863,12 +863,18 @@ public class HotelBookingActivity extends TravelBaseActivity implements SpinnerD
                 // violation reason need to be selected
                 if (violationReasons == null) {
                     // show message that violations reason are not available
+                    if(requiredFieldsMsg.length() > 0) {
+                        requiredFieldsMsg.append("\n");
+                    }
                     requiredFieldsMsg.append(getString(R.string.general_violaiton_reasons_not_available));
                     hasAllRequiredFields = false;
                 } else {
                     // check for selected violation reason
                     if (curViolationReason == null) {
                         // show violation reason required message
+                        if(requiredFieldsMsg.length() > 0) {
+                            requiredFieldsMsg.append("\n");
+                        }
                         requiredFieldsMsg.append(getString(R.string.book_missing_field_violation_reason));
                         hasAllRequiredFields = false;
                     }
@@ -881,6 +887,9 @@ public class HotelBookingActivity extends TravelBaseActivity implements SpinnerD
                         if (ruleViolationExplanationRequired && (justificationText == null || justificationText.trim()
                                 .isEmpty())) {
                             // show violation justification text required message
+                            if(requiredFieldsMsg.length() > 0) {
+                                requiredFieldsMsg.append("\n");
+                            }
                             requiredFieldsMsg.append(getString(R.string.general_specify_justification));
                             hasAllRequiredFields = false;
                         }
@@ -906,7 +915,10 @@ public class HotelBookingActivity extends TravelBaseActivity implements SpinnerD
                     commitTravelCustomFields();
                 } else {
                     hasAllRequiredFields = false;
-                    requiredFieldsMsg.append("required custom fields missing");
+                    if(requiredFieldsMsg.length() > 0) {
+                        requiredFieldsMsg.append("\n");
+                    }
+                    requiredFieldsMsg.append(getString(R.string.book_missing_custom_fields));
                 }
             }
 
