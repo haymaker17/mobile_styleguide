@@ -2077,4 +2077,17 @@
     <string name="profile_add_credit_card">Add New Card</string>
     <string name="profile_add_banck_account">Add New Banck Account</string>
 
+    <!-- Menu Items -->
+    <string name="menu_sort_expenses">Sort Expenses</string>
+    <string name="dialog_sort_expenses_by">Sort Expenses By</string>
+    <string name="sort_expenses_by_date_newest">Date (newest)</string>
+    <string name="sort_expenses_by_date_oldest">Date (oldest)</string>
+    <string name="sort_expenses_by_amount_lowest">Amount (lowest)</string>
+    <string name="sort_expenses_by_amount_highest">Amount (highest)</string>
+    <string name="sort_expenses_by_expense">Expense Type</string>
+    <string name="sort_expenses_by_vendor">Vendor</string>
+
+
+
+
 </resources>

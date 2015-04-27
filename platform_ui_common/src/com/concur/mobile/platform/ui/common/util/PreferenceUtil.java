@@ -110,4 +110,18 @@ public class PreferenceUtil {
         e.commit();
     }
 
+    /**
+     * Returns the saved String preference specified by the <code>name</code>.
+     * If the preference doesn't exist, then the <code>dflt</code> value is returned.
+     *
+     * @param ctx The {@link Context}. Typically a calling {@link Activity}
+     * @param name The name of the shared preference.
+     * @param dflt The default String value to return if the named preference doesn't exist.
+     * @return the saved String preference specified by the <code>name</code>.
+     */
+    public static String getStringPreference(Context ctx, String name, String dflt) {
+        SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(ctx);
+        return prefs.getString(name, dflt);
+    }
+
 }
