@@ -70,8 +70,8 @@ import android.widget.LinearLayout;
 import android.widget.ScrollView;
 import android.widget.TextView;
 import android.widget.ViewFlipper;
-
-import com.concur.breeze.R;
+// TODO - MOB-23434 - mulitbuild jira - do not check in the change in package name into develop
+import com.concur.breeze.jarvis.R;
 import com.concur.mobile.base.service.BaseAsyncResultReceiver;
 import com.concur.mobile.base.ui.UIUtils;
 import com.concur.mobile.core.ConcurCore;

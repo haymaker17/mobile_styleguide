@@ -17,8 +17,8 @@ import android.view.View.OnClickListener;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.EditText;
 import android.widget.TextView;
-
-import com.concur.breeze.R;
+// TODO - MOB-23434 - mulitbuild jira - do not check in the change in package name into develop
+import com.concur.breeze.jarvis.R;
 import com.concur.mobile.base.service.BaseAsyncRequestTask.AsyncReplyListener;
 import com.concur.mobile.base.service.BaseAsyncResultReceiver;
 import com.concur.mobile.core.activity.BaseActivity;
