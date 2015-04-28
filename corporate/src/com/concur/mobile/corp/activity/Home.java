@@ -1,11 +1,13 @@
 package com.concur.mobile.corp.activity;
 
 import java.io.File;
+import java.net.URLEncoder;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
+import java.util.Locale;
 import java.util.Map;
 import java.util.TimeZone;
 
@@ -69,6 +71,7 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.ScrollView;
 import android.widget.TextView;
+import android.widget.Toast;
 import android.widget.ViewFlipper;
 
 import com.concur.breeze.R;
@@ -80,6 +83,7 @@ import com.concur.mobile.core.activity.MessageCenter;
 import com.concur.mobile.core.activity.Preferences;
 import com.concur.mobile.core.activity.Tour;
 import com.concur.mobile.core.activity.ViewImage;
+import com.concur.mobile.core.config.RuntimeConfig;
 import com.concur.mobile.core.dialog.AlertDialogFragment;
 import com.concur.mobile.core.dialog.DialogFragmentFactory;
 import com.concur.mobile.core.dialog.ReceiptChoiceDialogFragment;
@@ -185,6 +189,7 @@ public class Home extends BaseActivity implements View.OnClickListener, Navigati
     private static final int NAVIGATION_TRAVEL_POINTS = 17;
     private static final int NAVIGATION_APP_UBER = 18;
     private static final int NAVIGATION_PROFILE = 19;
+    private static final int NAVIGATION_APP_CENTER = 20;
 
     private static final int REQUEST_ID_LOGOUT = 1;
 
@@ -258,6 +263,8 @@ public class Home extends BaseActivity implements View.OnClickListener, Navigati
     protected ActionBarDrawerToggle mDrawerToggle;
 
     private AlertDialogFragment confirmationDialog;
+
+    private List<NavigationItem> navItems = new ArrayList<NavigationItem>();
 
     /**
      * A custom handler to catch a message about the login session expiring.
@@ -389,8 +396,7 @@ public class Home extends BaseActivity implements View.OnClickListener, Navigati
                 decrInProgressRef();
                 if (ViewUtil.isShowMileageExpenseOnHomeScreenEnabled(Home.this) && showPersonalCarMileage()) {
                     showMileageFooterButton();
-                } else {
-                    hideMileageFooterButton();
+                    showMileageDrawerButton(View.VISIBLE);
                 }
             } else if (Const.ACTION_DATABASE_RESET.equals(action)) {
 
@@ -448,7 +454,8 @@ public class Home extends BaseActivity implements View.OnClickListener, Navigati
         // Set the drawer toggle as the DrawerListener
         mDrawerLayout.setDrawerListener(mDrawerToggle);
 
-        // If this is a test drive user, show them the tips overlay and skip the usual home tips overlay
+        // If this is a test drive user, show them the tips overlay and skip the
+        // usual home tips overlay
         // Note: Do NOT Prompt for notifications for Test Drive users.
         if (RolesUtil.isTestDriveUser() && Preferences.shouldShowTestDriveTips(Const.PREF_TD_SHOW_OVERLAY_HOME)) {
             showTestDriveTips();
@@ -459,7 +466,8 @@ public class Home extends BaseActivity implements View.OnClickListener, Navigati
             }
         }
 
-        // If it's the first time running, and it's not a test drive user, show tour. Set not first time running either way.
+        // If it's the first time running, and it's not a test drive user, show
+        // tour. Set not first time running either way.
         SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(this);
         if (Preferences.isFirstTimeRunning(prefs)) {
             if (!RolesUtil.isTestDriveUser() && (RolesUtil.isExpenser(Home.this) || RolesUtil.isTraveler(Home.this))) {
@@ -494,8 +502,10 @@ public class Home extends BaseActivity implements View.OnClickListener, Navigati
         }
 
         // MOB-17239
-        // If the current device date is greater than the Test Drive account expiration date, log them out.
-        // Note that this is temporary pending a more permanent design from UX/PM. At that point this will need to be removed.
+        // If the current device date is greater than the Test Drive account
+        // expiration date, log them out.
+        // Note that this is temporary pending a more permanent design from
+        // UX/PM. At that point this will need to be removed.
         if (Preferences.isTestDriveAccountExpired()) {
             showTestDriveAccountExpiredDialog();
         }
@@ -565,11 +575,14 @@ public class Home extends BaseActivity implements View.OnClickListener, Navigati
         // Hide the expense section, if need be.
         if (RolesUtil.isExpenser(Home.this)) {
             // OCR: Disable backdoor Easter egg.
-            if (!Preferences.isOCRUser()/* || !Preferences.shouldUseNewOcrFeatures() */) {
+            if (!Preferences.isOCRUser()/*
+                                         * || !Preferences.shouldUseNewOcrFeatures ()
+                                         */) {
                 showQuickExpenseFooterButton();
                 showReceiptFooterButton();
             } else {
-                // With the new OCR design, we use camera icon with Expense label, so hide the QE btn and show the Camera btn with
+                // With the new OCR design, we use camera icon with Expense
+                // label, so hide the QE btn and show the Camera btn with
                 // updated text
                 hideQuickExpenseFooterButton();
                 showReceiptFooterButton();
@@ -578,6 +591,7 @@ public class Home extends BaseActivity implements View.OnClickListener, Navigati
             }
             if (ViewUtil.isShowMileageExpenseOnHomeScreenEnabled(Home.this) && showPersonalCarMileage()) {
                 showMileageFooterButton();
+                showMileageDrawerButton(View.VISIBLE);
             }
         } else {
             // Hide the expense section.
@@ -683,7 +697,8 @@ public class Home extends BaseActivity implements View.OnClickListener, Navigati
             startService(serviceIntent);
         }
 
-        // In some locales, having 4 buttons causes long text to wrap in footer buttons.
+        // In some locales, having 4 buttons causes long text to wrap in footer
+        // buttons.
         if (numberOfVisibleFooterButtons() >= 4) {
             setSmallFooterButtonText();
         }
@@ -718,7 +733,8 @@ public class Home extends BaseActivity implements View.OnClickListener, Navigati
 
         // Also, clear any A/B Test information.
         Preferences.clearABTestInfo(prefs);
-        // NOTE: Still need to call old Preference.clearSession() because it removes
+        // NOTE: Still need to call old Preference.clearSession() because it
+        // removes
         // some of the expiration flags used at Startup.java.
         Preferences.clearSession(prefs);
 
@@ -792,8 +808,10 @@ public class Home extends BaseActivity implements View.OnClickListener, Navigati
      */
     private void showTestDriveAccountExpiredDialog() {
 
-        // Note that Linkify, for whatever reason, will not read special characters (IE '&#8211;', the '-' symbol) so the phone
-        // number had to be hard written here and not in strings.xml. This is the only place we use it anyways.
+        // Note that Linkify, for whatever reason, will not read special
+        // characters (IE '&#8211;', the '-' symbol) so the phone
+        // number had to be hard written here and not in strings.xml. This is
+        // the only place we use it anyways.
         final SpannableString dialogBodyText = new SpannableString(getString(R.string.test_drive_expiration_message)
                 + Const.TEST_DRIVE_CONTACT_CONCUR_NUMBER);
 
@@ -802,11 +820,17 @@ public class Home extends BaseActivity implements View.OnClickListener, Navigati
                 .setPositiveButton(R.string.test_drive_expiration_close, new DialogInterface.OnClickListener() {
 
                     public void onClick(DialogInterface dialog, int id) {
-                        // Clear the session upon clicking because the login expiration checks get called in onCreate() and
-                        // onResume() so if we clear the session outside of the dialog, the onResume() call will crash us.
+                        // Clear the session upon clicking because the
+                        // login expiration checks get called in
+                        // onCreate() and
+                        // onResume() so if we clear the session outside
+                        // of the dialog, the onResume() call will crash
+                        // us.
                         // ConfigUtil.removeLoginInfo(Home.this);
-                        // NOTE: Still need to call old Preference.clearSession() because it removes
-                        // some of the expiration flags used at Startup.java.
+                        // NOTE: Still need to call old
+                        // Preference.clearSession() because it removes
+                        // some of the expiration flags used at
+                        // Startup.java.
                         Preferences.clearSession(PreferenceManager.getDefaultSharedPreferences(Home.this));
 
                         PlatformProperties.setAccessToken(null);
@@ -823,7 +847,8 @@ public class Home extends BaseActivity implements View.OnClickListener, Navigati
 
         Linkify.addLinks(dialogBodyText, Linkify.PHONE_NUMBERS);
 
-        // Grab the AlertDialog message as a TextView to actually set the Linkify link.
+        // Grab the AlertDialog message as a TextView to actually set the
+        // Linkify link.
         TextView bodyTextView = ((TextView) expirationAlertDialog.findViewById(android.R.id.message));
         bodyTextView.setAutoLinkMask(RESULT_OK);
         bodyTextView.setMovementMethod(LinkMovementMethod.getInstance());
@@ -933,9 +958,11 @@ public class Home extends BaseActivity implements View.OnClickListener, Navigati
         ViewFlipper homeTourFlipper = (ViewFlipper) findViewById(R.id.home_tour_view_flipper);
         View homeTourDots = homeTourView.findViewById(R.id.home_tour_dots);
 
-        // This is the bulk of the logic to determine what to show and how to show it based on user
+        // This is the bulk of the logic to determine what to show and how to
+        // show it based on user
         if (RolesUtil.isExpenser(Home.this)) {
-            // If Expenser, we will have multiple tour images, so we need the dots list.
+            // If Expenser, we will have multiple tour images, so we need the
+            // dots list.
             ArrayList<View> homeTourDotsList = new ArrayList<View>();
             homeTourDotsList.add(homeTourDots.findViewById(R.id.homeTourDot1));
             homeTourDotsList.add(homeTourDots.findViewById(R.id.homeTourDot2));
@@ -947,13 +974,15 @@ public class Home extends BaseActivity implements View.OnClickListener, Navigati
             } else {
                 // Is Expense only
 
-                // If we're not not a traveler, remove traveler image and dot for it.
+                // If we're not not a traveler, remove traveler image and dot
+                // for it.
                 homeTourDots.findViewById(R.id.homeTourDot3).setVisibility(View.GONE);
                 homeTourFlipper.removeView(homeTourFlipper.findViewById(R.id.homeTourTravel1));
 
             }
 
-            // Note: Only make this for expense users because Travel Only has only one view.
+            // Note: Only make this for expense users because Travel Only has
+            // only one view.
             final GestureDetector gestureDetector = new GestureDetector(this, new HomeTourGestureDetector(
                     homeTourFlipper, homeTourDotsList));
 
@@ -1082,7 +1111,8 @@ public class Home extends BaseActivity implements View.OnClickListener, Navigati
 
         showHideHomeImage();
 
-        // If we're showing the ActiveReportsListDialogFragment, we want to update its click and cancel listener because
+        // If we're showing the ActiveReportsListDialogFragment, we want to
+        // update its click and cancel listener because
         // the fragment does not retain instance state.
         Fragment reportListDialogFrag = getSupportFragmentManager().findFragmentByTag(ACTIVE_REPORTS_LIST_TAG);
         if (reportListDialogFrag instanceof ActiveReportsListDialogFragment) {
@@ -1120,7 +1150,8 @@ public class Home extends BaseActivity implements View.OnClickListener, Navigati
          * MOB-16309 : Talked to Loc about this JIRA and we have decided to remove image if the phone is in landscape mode. In
          * future it may change.
          */
-        // Setup the cityscape image switcher and put the placeholder image in place
+        // Setup the cityscape image switcher and put the placeholder image in
+        // place
         ImageView cityscape = (ImageView) findViewById(R.id.travelCityscape);
         int orientation = getResources().getConfiguration().orientation;
         switch (orientation) {
@@ -1224,7 +1255,9 @@ public class Home extends BaseActivity implements View.OnClickListener, Navigati
         if (isTipsOverlayVisible) {
             // Save the time the user spent on this screen, but
             // perhaps put the app in the background.
-            upTime += (System.nanoTime() - startTime) / 1000000000L; // Convert to seconds.
+            upTime += (System.nanoTime() - startTime) / 1000000000L; // Convert
+                                                                     // to
+                                                                     // seconds.
         }
 
         if (confirmationDialog != null) {
@@ -1276,7 +1309,8 @@ public class Home extends BaseActivity implements View.OnClickListener, Navigati
         }
 
         if (isTipsOverlayVisible) {
-            // Save the uptime so we know how long the user has been on this screen,
+            // Save the uptime so we know how long the user has been on this
+            // screen,
             // even if it has been destroyed.
             outState.putLong(Const.ACTIVITY_STATE_UPTIME, upTime);
         }
@@ -1389,21 +1423,26 @@ public class Home extends BaseActivity implements View.OnClickListener, Navigati
 
         if (ConcurMobile.isConnected()) {
 
-            // When logging out, we clear the Session Id, but if we're updating home (IE clearing offline data, refreshing, etc.)
-            // then other Messages will still be in the queue and will try to verify the session we just killed. If we're logging
+            // When logging out, we clear the Session Id, but if we're updating
+            // home (IE clearing offline data, refreshing, etc.)
+            // then other Messages will still be in the queue and will try to
+            // verify the session we just killed. If we're logging
             // out, we want to clear that message queue.
             getConcurService().clearHandlerMessages();
 
             // Connected, so send a logout request.
-            // Note: No need to make a custom Receiver and Listener when this Request Task
-            // completes since we always punch out to the Login screen regardless.
+            // Note: No need to make a custom Receiver and Listener when this
+            // Request Task
+            // completes since we always punch out to the Login screen
+            // regardless.
             LogoutRequestTask logoutRequestTask = new LogoutRequestTask(getApplicationContext(), REQUEST_ID_LOGOUT,
                     new BaseAsyncResultReceiver(new Handler()));
             logoutRequestTask.execute();
 
         }
 
-        // Note 2: Clearing out old session and access token in the event something happens
+        // Note 2: Clearing out old session and access token in the event
+        // something happens
         // in LogoutRequestTask and it doesn't clear out the cache.
         ConfigUtil.removeLoginInfo(this);
 
@@ -1414,7 +1453,8 @@ public class Home extends BaseActivity implements View.OnClickListener, Navigati
         // Clear any A/B Test information.
         SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(this);
         Preferences.clearABTestInfo(prefs);
-        // NOTE: Still need to call old Preference.clearSession() because it removes
+        // NOTE: Still need to call old Preference.clearSession() because it
+        // removes
         // some of the expiration flags used at Startup.java.
         Preferences.clearSession(prefs);
 
@@ -1427,15 +1467,22 @@ public class Home extends BaseActivity implements View.OnClickListener, Navigati
         if (ssoQueryReply != null && ssoQueryReply.ssoEnabled && ssoQueryReply.ssoUrl != null) {
             i.putExtra(EmailLookupActivity.EXTRA_ADVANCE_TO_COMPANY_SIGN_ON, true);
 
-            // MOB-18839 Clear cookies so SSO user isn't auto-logged back in when
+            // MOB-18839 Clear cookies so SSO user isn't auto-logged back in
+            // when
             // redirected to the Company Sign On screen.
-            // NOTE: Commenting out the runnable thread added by fix for MOB-18541
-            // because this caused a syncing issue. The cookies might not be cleared
-            // by the time the Company Sign On Screen launches. This will cause within
-            // the screen to auto-login the user since the session isn't cleared.
+            // NOTE: Commenting out the runnable thread added by fix for
+            // MOB-18541
+            // because this caused a syncing issue. The cookies might not be
+            // cleared
+            // by the time the Company Sign On Screen launches. This will cause
+            // within
+            // the screen to auto-login the user since the session isn't
+            // cleared.
 
-            // MOB-18541 Clear SSO web cookies. The new Runnable in the new Thread is necessary because the method call sleeps the
-            // thread for 1000ms, and if that isn't done in a new Runnable, it sleeps the main thread so we can't finish().
+            // MOB-18541 Clear SSO web cookies. The new Runnable in the new
+            // Thread is necessary because the method call sleeps the
+            // thread for 1000ms, and if that isn't done in a new Runnable, it
+            // sleeps the main thread so we can't finish().
             // new Thread(new Runnable() {
             //
             // public void run() {
@@ -1662,7 +1709,9 @@ public class Home extends BaseActivity implements View.OnClickListener, Navigati
         }
         case R.id.homeCamera: {
             // OCR
-            if (Preferences.isOCRUser() && /* Preferences.shouldUseNewOcrFeatures() && */!RolesUtil.isTestDriveUser()) {
+            if (Preferences.isOCRUser() && /*
+                                            * Preferences.shouldUseNewOcrFeatures () &&
+                                            */!RolesUtil.isTestDriveUser()) {
                 // Create the fragment and show it as a dialog.
                 DialogFragment newFragment = new ReceiptChoiceDialogFragment();
                 newFragment.show(this.getSupportFragmentManager(), ReceiptChoiceDialogFragment.DIALOG_FRAGMENT_ID);
@@ -2185,11 +2234,16 @@ public class Home extends BaseActivity implements View.OnClickListener, Navigati
         if (Preferences.isTestDriveUser()) {
             return false;
         }
+        // MOB-20183 requires that if offline and showCarMileage preference is true then show the car mileage to bottom bar.
+        if ((!ConcurMobile.isConnected()) && (ViewUtil.isShowMileageExpenseOnHomeScreenEnabled(Home.this))) {
+            return true;
+        }
 
         ConcurMobile concurMobile = (ConcurMobile) getApplication();
         ArrayList<CarConfig> carConfigList = concurMobile.getCarConfigs();
-        // UserConfig userConfig = concurMobile.getUserConfig();
-
+        if (carConfigList == null) {
+            carConfigList = concurMobile.getService().getCarConfigs();
+        }
         SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(this);
         String userCurrencyCode = prefs.getString(Const.PREF_USER_CRN_CODE, null);
 
@@ -2434,6 +2488,19 @@ public class Home extends BaseActivity implements View.OnClickListener, Navigati
         setViewVisible(R.id.homeMileage);
     }
 
+    private void showMileageDrawerButton(int visibility) {
+        if (!navItems.isEmpty()) {
+            for (NavigationItem i : navItems) {
+                if (i.getId() == NAVIGATION_PERSONAL_CAR_MILEAGE) {
+                    // layout visibility
+                    LinearLayout ll = (LinearLayout) findViewById(R.id.drawer_item_container);
+                    View v = ll.findViewById(i.getId());
+                    v.setVisibility(visibility);
+                }
+            }
+        }
+    }
+
     private void hideMileageFooterButton() {
         setViewGone(R.id.homeMileage);
     }
@@ -2644,9 +2711,11 @@ public class Home extends BaseActivity implements View.OnClickListener, Navigati
                     ConcurCore ConcurCore = (ConcurCore) getApplication();
                     IExpenseReportCache expRepCache = ConcurCore.getExpenseApprovalCache();
                     if (!expRepCache.hasReportDetail(report.reportKey)) {
-                        // Fire off a request to get the detailed report. This is
+                        // Fire off a request to get the detailed report. This
+                        // is
                         // necessary because after
-                        // saving the mileage entry we go directly to the entry list
+                        // saving the mileage entry we go directly to the entry
+                        // list
                         // and that requires a detail.
                         // Just get it now.
                         ConcurService concurService = ConcurCore.getService();
@@ -2657,7 +2726,8 @@ public class Home extends BaseActivity implements View.OnClickListener, Navigati
                     getMileageEntryForm(report.reportKey);
 
                 } else {
-                    // Invoke the ExpenseReportHeader class and specify that source
+                    // Invoke the ExpenseReportHeader class and specify that
+                    // source
                     // as
                     // "New".
                     Intent intent = new Intent(Home.this, ExpenseReportHeader.class);
@@ -2746,7 +2816,8 @@ public class Home extends BaseActivity implements View.OnClickListener, Navigati
      */
     private void stopLocationUpdates() {
         // Unregister location requestor, if this activity is to be destroyed
-        // if the one time location request has been fulfilled, the requestor will be automatically unregistered.
+        // if the one time location request has been fulfilled, the requestor
+        // will be automatically unregistered.
         LastLocationTracker locTracker = ((ConcurCore) getApplication()).getLocationTracker();
         locTracker.stopLocationTrace(CLS_TAG);
     }
@@ -2962,7 +3033,6 @@ public class Home extends BaseActivity implements View.OnClickListener, Navigati
      */
     private void initNavigationMenu() {
 
-        List<NavigationItem> navItems = new ArrayList<NavigationItem>();
         HomeScreenSimpleNavigationItem navItem = null;
         DefaultTextNavigationItem setSegNavItem = null;
         if (!isProfileDisable) {
@@ -3063,7 +3133,8 @@ public class Home extends BaseActivity implements View.OnClickListener, Navigati
 
         // Access to Personal Car Mileage
         if (RolesUtil.isExpenser(Home.this) && ViewUtil.isShowMileageExpenseOnHomeScreenEnabled(Home.this)) {
-            // Check whether or not we need to show the mileage icon in the navigation drawer.
+            // Check whether or not we need to show the mileage icon in the
+            // navigation drawer.
             int navMileageVisibility = (showPersonalCarMileage()) ? View.VISIBLE : View.GONE;
             navItem = new HomeScreenSimpleNavigationItem(NAVIGATION_PERSONAL_CAR_MILEAGE, -1,
                     R.string.home_navigation_car_mileage, R.drawable.icon_menu_mileage, View.VISIBLE,
@@ -3097,7 +3168,7 @@ public class Home extends BaseActivity implements View.OnClickListener, Navigati
                             }
                         }
                     });
-            navItems.add(navItem);
+            // navItems.add(navItem);
         }
 
         // Add the "Learn More" tour here.
@@ -3131,56 +3202,6 @@ public class Home extends BaseActivity implements View.OnClickListener, Navigati
             navItems.add(setSegNavItem);
         }
 
-        // Add Expenseit item.
-        if (Preferences.isOCRUser()) {
-            navItem = new HomeScreenSimpleNavigationItem(NAVIGATION_APP_EXPENSE_IT, -1,
-                    R.string.home_navigation_expenseit, R.drawable.icon_menu_expenseit, View.VISIBLE, View.VISIBLE,
-                    new Runnable() {
-
-                        public void run() {
-                            Intent i = ViewUtil.getPackageLaunchIntent(Home.this, "com.expenseit");
-                            if (i == null) {
-                                String url = "market://details?id=com.expenseit";
-                                i = new Intent(Intent.ACTION_VIEW);
-                                i.setData(Uri.parse(url));
-                            }
-                            if (i != null) {
-                                startActivity(i);
-                                // Flurry Notification
-                                Map<String, String> params = new HashMap<String, String>();
-                                params.put(Flurry.PARAM_NAME_ACTION, Flurry.PARAM_VALUE_EXPENSE_IT);
-                                EventTracker.INSTANCE.track(Flurry.CATEGORY_EXTERNAL_APP, Flurry.EVENT_NAME_LAUNCH,
-                                        params);
-                            }
-                        }
-                    });
-            navItems.add(navItem);
-        }
-
-        // Add TravelText
-        navItem = new HomeScreenSimpleNavigationItem(NAVIGATION_APP_TRAVEL_TEXT, -1,
-                R.string.home_navigation_traveltext, R.drawable.icon_travel_text, View.VISIBLE, View.VISIBLE,
-                new Runnable() {
-
-                    public void run() {
-                        Intent i = null;
-                        String url = "http://www.traveltext.net/CMobile";
-                        i = new Intent(Intent.ACTION_VIEW);
-                        i.setData(Uri.parse(url));
-
-                        if (i != null) {
-                            startActivity(i);
-                            // Flurry Notification
-
-                            Map<String, String> params = new HashMap<String, String>();
-                            params.put(Flurry.PARAM_NAME_ACTION, Flurry.PARAM_VALUE_TRAVEL_TEXT);
-                            EventTracker.INSTANCE.track(Flurry.CATEGORY_EXTERNAL_APP, Flurry.EVENT_NAME_LAUNCH, params);
-
-                        }
-                    }
-                });
-        navItems.add(navItem);
-
         // Add TripIt item.
         if (Preferences.shouldShowTripItAd()) {
             navItem = new HomeScreenSimpleNavigationItem(NAVIGATION_APP_TRIP_IT, -1, R.string.home_navigation_tripit,
@@ -3213,22 +3234,16 @@ public class Home extends BaseActivity implements View.OnClickListener, Navigati
             navItems.add(navItem);
         }
 
-        if (navItems.size() > 1) {
-            // Add the apps navigation segment bar.
-            DefaultTextNavigationItem segNavItem = new DefaultTextNavigationItem(NAVIGATION_HEADER,
-                    R.layout.navigation_segment, R.string.home_navigation_apps, false);
-            navItems.add(segNavItem);
-        }
-
-        // Add Curb (Taxi Magic) item.
-        if (isTaxiUser()) {
-            navItem = new HomeScreenSimpleNavigationItem(NAVIGATION_APP_TAXI_MAGIC, -1, R.string.home_navigation_curb,
-                    R.drawable.icon_menu_curb, View.VISIBLE, View.VISIBLE, new Runnable() {
+        // Add ExpenseIt item.
+        if (Preferences.isOCRUser()) {
+            navItem = new HomeScreenSimpleNavigationItem(NAVIGATION_APP_EXPENSE_IT, -1,
+                    R.string.home_navigation_expenseit, R.drawable.icon_menu_expenseit, View.VISIBLE, View.VISIBLE,
+                    new Runnable() {
 
                         public void run() {
-                            Intent i = ViewUtil.getTaxiMagicIntent(Home.this);
+                            Intent i = ViewUtil.getPackageLaunchIntent(Home.this, "com.expenseit");
                             if (i == null) {
-                                String url = "http://taximagic.com";
+                                String url = "market://details?id=com.expenseit";
                                 i = new Intent(Intent.ACTION_VIEW);
                                 i.setData(Uri.parse(url));
                             }
@@ -3236,7 +3251,7 @@ public class Home extends BaseActivity implements View.OnClickListener, Navigati
                                 startActivity(i);
                                 // Flurry Notification
                                 Map<String, String> params = new HashMap<String, String>();
-                                params.put(Flurry.PARAM_NAME_ACTION, Flurry.PARAM_VALUE_CURB);
+                                params.put(Flurry.PARAM_NAME_ACTION, Flurry.PARAM_VALUE_EXPENSE_IT);
                                 EventTracker.INSTANCE.track(Flurry.CATEGORY_EXTERNAL_APP, Flurry.EVENT_NAME_LAUNCH,
                                         params);
                             }
@@ -3245,29 +3260,114 @@ public class Home extends BaseActivity implements View.OnClickListener, Navigati
             navItems.add(navItem);
         }
 
+        // Add TravelText
+        /*
+         * Removed per https://concur.aha.io/features/CM-252
+         * 
+         * navItem = new HomeScreenSimpleNavigationItem(NAVIGATION_APP_TRAVEL_TEXT, -1, R.string.home_navigation_traveltext,
+         * R.drawable.icon_travel_text, View.VISIBLE, View.VISIBLE, new Runnable() {
+         * 
+         * public void run() { Intent i = null; String url = "http://www.traveltext.net/CMobile"; i = new
+         * Intent(Intent.ACTION_VIEW); i.setData(Uri.parse(url));
+         * 
+         * if (i != null) { startActivity(i); // Flurry Notification
+         * 
+         * Map<String, String> params = new HashMap<String, String>(); params.put(Flurry.PARAM_NAME_ACTION,
+         * Flurry.PARAM_VALUE_TRAVEL_TEXT); EventTracker.INSTANCE.track(Flurry.CATEGORY_EXTERNAL_APP, Flurry.EVENT_NAME_LAUNCH,
+         * params);
+         * 
+         * } } }); navItems.add(navItem);
+         */
+
+        /*
+         * Separator no longer wanted, per https://concur.aha.io/features/CM-252.
+         * 
+         * if (navItems.size() > 1) { // Add the apps navigation segment bar. DefaultTextNavigationItem segNavItem = new
+         * DefaultTextNavigationItem(NAVIGATION_HEADER, R.layout.navigation_segment, R.string.home_navigation_apps, false);
+         * navItems.add(segNavItem); }
+         */
+
+        // Add Curb (Taxi Magic) item.
+        /*
+         * Removed per https://concur.aha.io/features/CM-252
+         * 
+         * if (isTaxiUser()) { navItem = new HomeScreenSimpleNavigationItem(NAVIGATION_APP_TAXI_MAGIC, -1,
+         * R.string.home_navigation_curb, R.drawable.icon_menu_curb, View.VISIBLE, View.VISIBLE, new Runnable() {
+         * 
+         * public void run() { Intent i = ViewUtil.getTaxiMagicIntent(Home.this); if (i == null) { String url =
+         * "http://taximagic.com"; i = new Intent(Intent.ACTION_VIEW); i.setData(Uri.parse(url)); } if (i != null) {
+         * startActivity(i); // Flurry Notification Map<String, String> params = new HashMap<String, String>();
+         * params.put(Flurry.PARAM_NAME_ACTION, Flurry.PARAM_VALUE_CURB);
+         * EventTracker.INSTANCE.track(Flurry.CATEGORY_EXTERNAL_APP, Flurry.EVENT_NAME_LAUNCH, params); } } });
+         * navItems.add(navItem); }
+         */
+
         // Add Uber item - for now, we will show Uber for every user
-        navItem = new HomeScreenSimpleNavigationItem(NAVIGATION_APP_UBER, -1, R.string.home_navigation_uber,
-                R.drawable.icon_menu_uber, View.VISIBLE, View.VISIBLE, new Runnable() {
+        /*
+         * Removed per https://concur.aha.io/features/CM-252
+         * 
+         * navItem = new HomeScreenSimpleNavigationItem(NAVIGATION_APP_UBER, -1, R.string.home_navigation_uber,
+         * R.drawable.icon_menu_uber, View.VISIBLE, View.VISIBLE, new Runnable() {
+         * 
+         * public void run() { Intent i = ViewUtil.getPackageLaunchIntent(Home.this, "com.ubercab"); if (i == null) { // app not
+         * available hence launch the mobile web site i = new Intent(Intent.ACTION_VIEW);
+         * i.setData(Uri.parse("https://m.uber.com")); } if (i != null) { startActivity(i); // Flurry Notification Map<String,
+         * String> params = new HashMap<String, String>(); params.put(Flurry.PARAM_NAME_ACTION, Flurry.PARAM_VALUE_UBER);
+         * EventTracker.INSTANCE.track(Flurry.CATEGORY_EXTERNAL_APP, Flurry.EVENT_NAME_LAUNCH, params); } } });
+         * navItems.add(navItem);
+         */
 
-                    public void run() {
-                        Intent i = ViewUtil.getPackageLaunchIntent(Home.this, "com.ubercab");
-                        if (i == null) {
-                            // app not available hence launch the mobile web site
-                            i = new Intent(Intent.ACTION_VIEW);
-                            i.setData(Uri.parse("https://m.uber.com"));
-                        }
-                        if (i != null) {
-                            startActivity(i);
-                            // Flurry Notification
-                            Map<String, String> params = new HashMap<String, String>();
-                            params.put(Flurry.PARAM_NAME_ACTION, Flurry.PARAM_VALUE_UBER);
-                            EventTracker.INSTANCE.track(Flurry.CATEGORY_EXTERNAL_APP, Flurry.EVENT_NAME_LAUNCH, params);
-                        }
-                    }
-                });
-        navItems.add(navItem);
+        if (RuntimeConfig.with(this).canUseAppCenter()) {
+            navItem = new HomeScreenSimpleNavigationItem(NAVIGATION_APP_CENTER, -1,
+                    R.string.home_navigation_app_center, R.drawable.icon_menu_connect_to_apps, View.VISIBLE,
+                    View.VISIBLE, new Runnable() {
 
-        // MOB-15458 : it required to remove ad from more menu. so adnav item is null.
+                        public void run() {
+                            String bareToken = Preferences.getAccessToken();
+
+                            if (bareToken == null) {
+                                Toast.makeText(Home.this,
+                                        "Unable to retrieve access token. Please log out and back in.",
+                                        Toast.LENGTH_LONG).show();
+                                return;
+                            }
+
+                            Locale locale = Locale.getDefault();
+
+                            String encodedToken = "";
+
+                            try {
+                                String appCenterUrl;
+                                String serverAddress = Preferences.getServerAddress();
+
+                                if (serverAddress.toLowerCase(locale).contains("rqa3-cb.concurtech.net")) {
+                                    appCenterUrl = "http://appcenterdev.concursolutions.com";
+                                } else {
+                                    appCenterUrl = "https://appcenter.concursolutions.com";
+                                }
+
+                                encodedToken = URLEncoder.encode(bareToken, "UTF-8");
+
+                                String urlString = appCenterUrl + "/#/?accessToken=" + encodedToken + "&lang=" + locale;
+
+                                Intent i = new Intent(Home.this, SimpleWebViewActivity.class);
+                                i.putExtra("url", urlString);
+
+                                if (i != null) {
+                                    EventTracker.INSTANCE.track(Flurry.CATEGORY_MAIN_MENU, Flurry.ACTION_APP_CENTER);
+
+                                    startActivity(i);
+                                }
+                            } catch (Exception e) {
+                                Log.i(CLS_TAG, "Unable to URL-encode token: '" + bareToken + "'");
+                            }
+                        }
+                    });
+            navItems.add(navItem);
+        }
+
+        // MOB-15458 : it required to remove ad from more menu. so adnav item is
+        // null.
         NavigationItem adNavItem = null;
 
         LayoutInflater inflater = getLayoutInflater();
@@ -3366,8 +3466,10 @@ public class Home extends BaseActivity implements View.OnClickListener, Navigati
                             try {
                                 navView.findViewById(R.id.navigation_item_separator).setVisibility(View.INVISIBLE);
                             } catch (Exception ex) {
-                                // TODO Figure out why this crashes when user is Approver Only
-                                // TODO Update... I know why it crashes... Nav menu is empty.. gotta think about this one...
+                                // TODO Figure out why this crashes when user is
+                                // Approver Only
+                                // TODO Update... I know why it crashes... Nav
+                                // menu is empty.. gotta think about this one...
                             }
                         }
 
@@ -3410,7 +3512,8 @@ public class Home extends BaseActivity implements View.OnClickListener, Navigati
                         ViewUtil.setVisibility(navView, R.id.icon, View.GONE);
                     }
                     navView.setTag(navItem);
-                    itemContainer.addView(navView); // PARENT IS JUST ITEMCONTAINER
+                    itemContainer.addView(navView); // PARENT IS JUST
+                                                    // ITEMCONTAINER
                     // Is the item selectable?
                     if (navItem.isSelectable()) {
                         navView.setOnClickListener(new NavigationItemOnClickListener());
@@ -3547,12 +3650,14 @@ public class Home extends BaseActivity implements View.OnClickListener, Navigati
     /*
      * (non-Javadoc)
      * 
-     * @see com.concur.mobile.core.dialog.ReceiptChoiceDialogFragment.ReceiptChoiceListener#onCameraSuccess(java.lang.String)
+     * @see com.concur.mobile.core.dialog.ReceiptChoiceDialogFragment. ReceiptChoiceListener#onCameraSuccess(java.lang.String)
      */
     public void onCameraSuccess(String filePath) {
 
-        // OCR - After capturing the image, launching the ExpenseAndReceipts class
-        // to upload/save the image to the R.S. and refresh the Receipts List UI.
+        // OCR - After capturing the image, launching the ExpenseAndReceipts
+        // class
+        // to upload/save the image to the R.S. and refresh the Receipts List
+        // UI.
         Intent newIt = new Intent(Home.this, ExpensesAndReceipts.class);
         newIt.putExtra(Const.EXTRA_RECEIPT_ONLY_FRAGMENT, false);
         newIt.putExtra(ReceiptStoreFragment.EXTRA_START_OCR_ON_UPLOAD, true);
@@ -3565,7 +3670,7 @@ public class Home extends BaseActivity implements View.OnClickListener, Navigati
     /*
      * (non-Javadoc)
      * 
-     * @see com.concur.mobile.core.dialog.ReceiptChoiceDialogFragment.ReceiptChoiceListener#onCameraFailure(java.lang.String)
+     * @see com.concur.mobile.core.dialog.ReceiptChoiceDialogFragment. ReceiptChoiceListener#onCameraFailure(java.lang.String)
      */
     public void onCameraFailure(String filePath) {
         DialogFragmentFactory.getAlertOkayInstance(
@@ -3576,13 +3681,15 @@ public class Home extends BaseActivity implements View.OnClickListener, Navigati
     /*
      * (non-Javadoc)
      * 
-     * @see com.concur.mobile.core.dialog.ReceiptChoiceDialogFragment.ReceiptChoiceListener#onGallerySuccess(java.lang.String)
+     * @see com.concur.mobile.core.dialog.ReceiptChoiceDialogFragment. ReceiptChoiceListener#onGallerySuccess(java.lang.String)
      */
     public void onGallerySuccess(String filePath) {
 
         // OCR - Launch the ViewImage activity so the user can preview the image
-        // and choose to save or cancel. If they select save, the ExpenseAndReceipts
-        // class will be launched to upload/save the image to the R.S. and refresh
+        // and choose to save or cancel. If they select save, the
+        // ExpenseAndReceipts
+        // class will be launched to upload/save the image to the R.S. and
+        // refresh
         // the Receipts List UI.
         Intent it = new Intent(this, ViewImage.class);
         StringBuilder strBldr = new StringBuilder("file://");
@@ -3604,7 +3711,7 @@ public class Home extends BaseActivity implements View.OnClickListener, Navigati
     /*
      * (non-Javadoc)
      * 
-     * @see com.concur.mobile.core.dialog.ReceiptChoiceDialogFragment.ReceiptChoiceListener#onGalleryFailure(java.lang.String)
+     * @see com.concur.mobile.core.dialog.ReceiptChoiceDialogFragment. ReceiptChoiceListener#onGalleryFailure(java.lang.String)
      */
     public void onGalleryFailure(String filePath) {
         DialogFragmentFactory.getAlertOkayInstance(
@@ -3616,8 +3723,8 @@ public class Home extends BaseActivity implements View.OnClickListener, Navigati
     /*
      * (non-Javadoc)
      * 
-     * @see
-     * com.concur.mobile.core.dialog.ReceiptChoiceDialogFragment.ReceiptChoiceListener#onStorageMountFailure(java.lang.String)
+     * @see com.concur.mobile.core.dialog.ReceiptChoiceDialogFragment.
+     * ReceiptChoiceListener#onStorageMountFailure(java.lang.String)
      */
     public void onStorageMountFailure(String filePath) {
         DialogFragmentFactory.getAlertOkayInstance(

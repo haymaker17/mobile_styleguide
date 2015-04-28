@@ -104,7 +104,7 @@ public class RequestTask extends AbstractRequestWSCallTask {
         return postBody;
     }
 
-    /*
+    /**
      * (non-Javadoc)
      *
      * @see com.concur.mobile.platform.service.PlatformAsyncRequestTask#configureConnection(java.net.HttpURLConnection)

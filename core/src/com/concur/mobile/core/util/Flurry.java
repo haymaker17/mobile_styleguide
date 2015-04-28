@@ -49,6 +49,7 @@ public class Flurry {
     public static final String CATEGORY_PRICE_TO_BEAT = "Price-to-Beat";
     public static final String CATEGORY_RECEIPT_CHOICE = "Receipt choice";
     public static final String CATEGORY_ALL_MOBILE_EXPENSES = "All Mobile Expenses";
+    public static final String CATEGORY_MAIN_MENU = "Main Menu";
 
     // ################### NEW GOOGLE ANALTYICS LABELS ################# //
 
@@ -66,6 +67,7 @@ public class Flurry {
     public static final String ACTION_EXPENSE_LIST = "Expense List";
     public static final String ACTION_RECEIPT_DETAILS = "View Receipt details";
     public static final String ACTION_E_RECEIPT_IMAGE_ERROR = "E-Receipt Image Error";
+    public static final String ACTION_APP_CENTER = "App Center";
 
     // ####################### END GA ACTIONS ###################### //
 
@@ -131,7 +133,7 @@ public class Flurry {
     public static final String EVENT_NAME_ITEMIZED_ENTRY_LIST = "Itemized Entry List";
     public static final String EVENT_NAME_APPROVE_REPORT = "Approve Report";
     public static final String EVENT_NAME_SUBMIT = "Submit";
-    public static final String EVENT_NAME_AUTHENTICATION = "Authentication Type";
+    public static final String EVENT_NAME_AUTHENTICATION = "Credential Type";
     public static final String EVENT_NAME_AUTHENTICATION_STATISTICS = "Authentication Statistics";
     public static final String EVENT_NAME_RESET_PASSWORD = "Reset Password";
     public static final String EVENT_NAME_APPROVE_TRIP = "Approve Trip";
@@ -343,7 +345,6 @@ public class Flurry {
     public static final String PARAM_VALUE_SSO = "SSO";
     public static final String PARAM_VALUE_PASSWORD = "Password";
     public static final String PARAM_VALUE_PIN = "Pin";
-    public static final String PARAM_VALUE_SESSION_EXPIRED = "Session Expired";
     public static final String PARAM_VALUE_PIN_OR_PASSWORD = "Pin or Password";
     public static final String PARAM_VALUE_LOGIN_USING_PASSWORD = "Password";
     public static final String PARAM_VALUE_LOGIN_USING_MOBILE_PASSWORD = "Mobile Password";
@@ -395,11 +396,17 @@ public class Flurry {
     public static final String PARAM_VALUE_MANAGER_APPROVAL = "Manager Approval";
     public static final String PARAM_VALUE_UBER = "Uber";
 
+    public static final String CATEGORY_WAIT_TIME = "Wait Time";
+    public static final String LABEL_WAIT_TIME = "measurement in milliseconds";
+    public static final String ACTION_AUTO_LOGIN_WAIT = "Authenticating View";
+
     /**
      * Formats a Flurry event name based on a category and name.
      *
-     * @param categoryName contains the Flurry event category name.
-     * @param eventName    contains the Flurry event name.
+     * @param categoryName
+     *            contains the Flurry event category name.
+     * @param eventName
+     *            contains the Flurry event name.
      * @return returns the formatted Flurry event name.
      */
     public static String formatFlurryEvent(String categoryName, String eventName) {
@@ -415,7 +422,8 @@ public class Flurry {
     /**
      * Returns the duration time as a range between <code>0-3</code>, <code>3-10</code>, and <code>10+</code>.
      *
-     * @param seconds the duration time in seconds
+     * @param seconds
+     *            the duration time in seconds
      * @return A string representing a time range.
      */
     public static String formatDurationEventParam(long seconds) {

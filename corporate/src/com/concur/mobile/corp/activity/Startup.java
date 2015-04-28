@@ -57,6 +57,8 @@ import com.concur.platform.PlatformProperties;
 public class Startup extends BaseActivity {
 
     public static final String CLS_TAG = Startup.class.getSimpleName();
+    public static final String START_TIME = "start time";
+    public static final String END_TIME = "end time";
 
     protected final int SPLASH_DELAY = 2500;
     protected boolean isSplashDone = false;
@@ -80,6 +82,9 @@ public class Startup extends BaseActivity {
     // List of languages the Eva API currently supports.
     private static final List<String> TESTDRIVE_USER_COUNTRIES = Arrays.asList(new String[] { "US", "GB", "AU", "CA" });
 
+    // long miliseconds
+    private long startTimeMillis, stopTimeMillis, totalTime;
+
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -89,7 +94,7 @@ public class Startup extends BaseActivity {
         case CORPORATE:
             setContentView(R.layout.splash);
             // MOB-20174 - AppDynaics stuff.
-            Instrumentation.start("AD-AAB-AAA-FUF", getApplicationContext(),true);
+            Instrumentation.start("AD-AAB-AAA-FUF", getApplicationContext(), true);
 
             new Handler().postDelayed(new Runnable() {
 
@@ -250,8 +255,21 @@ public class Startup extends BaseActivity {
     }
 
     protected void doLoginFinish() {
+        if (startTimeMillis > 0L) {
+            // Google Analytics
+            stopTimeMillis = System.currentTimeMillis();
+            totalTime = stopTimeMillis - startTimeMillis;
+            Log.d(Const.LOG_TAG, CLS_TAG + ".process: request(" + "AutoLogin" + ") took " + (totalTime) + " ms.");
+            logTotleTimeForAutoLogin(totalTime);
+        }
         isLoginDone = true;
         doFinish();
+    }
+
+    private void logTotleTimeForAutoLogin(long totalWaitTime) {
+        // Statistics Notification
+        EventTracker.INSTANCE.trackTimings(Flurry.CATEGORY_WAIT_TIME, Flurry.ACTION_AUTO_LOGIN_WAIT,
+                Flurry.LABEL_WAIT_TIME, totalWaitTime);
     }
 
     protected void doFinish() {
@@ -386,10 +404,10 @@ public class Startup extends BaseActivity {
 
         // Statistics Notification if expiration exists but is older than "now".
         if (expire > 0 && expire <= now) {
-            Map<String, String> params = new HashMap<String, String>();
-            params.put(Flurry.PARAM_NAME_TYPE, Flurry.PARAM_VALUE_SESSION_EXPIRED);
+            // Map<String, String> params = new HashMap<String, String>();
+            // params.put(Flurry.PARAM_NAME_TYPE, Flurry.PARAM_VALUE_SESSION_EXPIRED);
 
-            EventTracker.INSTANCE.track(Flurry.CATEGORY_SIGN_IN, Flurry.EVENT_NAME_AUTHENTICATION, params);
+            // EventTracker.INSTANCE.track(Flurry.CATEGORY_SIGN_IN, Flurry.EVENT_NAME_AUTHENTICATION, params);
         }
     }
 
@@ -418,6 +436,9 @@ public class Startup extends BaseActivity {
         }
 
         if (ConcurMobile.isConnected()) {
+            // TODO MOB-23154: Right now only time tracking required for Autologin, in future if we want it for each request
+            // this implementation will be in the class PlatFormAsyncTaskRequest/BaseAsyncRequestTask.
+            startTimeMillis = System.currentTimeMillis();
 
             // Animate in the message about authentication happening.
             TextView txtView = (TextView) findViewById(R.id.splash_message);
@@ -544,6 +565,7 @@ public class Startup extends BaseActivity {
         }
 
         private void displayUnableToLoginDialog(final String debugMessage) {
+
             // If login fails for some reason, then go to the EmailLookup screen.
             AlertDialogFragment dialog = DialogFragmentFactory.getPositiveDialogFragment(
                     getText(R.string.general_error).toString(), getText(R.string.login_failure).toString(),
@@ -585,4 +607,19 @@ public class Startup extends BaseActivity {
         }
 
     }
+
+    @Override
+    public void onSaveInstanceState(Bundle savedInstanceState) {
+        savedInstanceState.putLong(START_TIME, startTimeMillis);
+        savedInstanceState.putLong(END_TIME, stopTimeMillis);
+        super.onSaveInstanceState(savedInstanceState);
+    }
+
+    @Override
+    public void onRestoreInstanceState(Bundle savedInstanceState) {
+        super.onRestoreInstanceState(savedInstanceState);
+        this.startTimeMillis = savedInstanceState.getLong(START_TIME);
+        this.stopTimeMillis = savedInstanceState.getLong(END_TIME);
+    }
+
 }

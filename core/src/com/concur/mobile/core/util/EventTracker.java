@@ -223,6 +223,25 @@ public enum EventTracker {
     }
 
     /**
+     * Tracks the given event to Google Analytics after a list of high scores finishes loading
+     * 
+     * @param eventCategory
+     *            Event Category
+     * @param eventTimingName
+     *            Timing Event Name
+     * @param eventTimingLabel
+     *            Timing Event Lable
+     * @param timingValue
+     *            Timing Event Value
+     */
+    public void trackTimings(String eventCategory, String eventTimingName, String eventTimingLabel, Long timingValue) {
+        MapBuilder builder = MapBuilder.createTiming(eventCategory, timingValue, eventTimingName, eventTimingLabel);
+        builder.set(USER_ID_TAG, analyticsId);
+        builder.set(Fields.customDimension(CUSTOM_ID_INDEX), analyticsId);
+        EasyTracker.getInstance(appContext).send(builder.build());
+    }
+
+    /**
      * Used to indicate an <code>Activity</code> has stopped.
      * 
      * @param activity

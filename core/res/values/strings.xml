@@ -196,6 +196,7 @@
     <string name="home_navigation_traveltext">TravelText</string>
     <string name="home_navigation_curb">Curb</string>
     <string name="home_navigation_uber">Uber</string>
+    <string name="home_navigation_app_center">Connect to Apps</string>
     <string name="home_navigation_expenseit">ExpenseIt</string>
     <string name="home_navigation_settings">Settings</string>
     <string name="home_navigation_book_travel">Book Travel</string>
@@ -245,7 +246,6 @@
     <string name="msg_cntr_title">Message Center</string>
     <string name="msg_cntr_no_data">You have no messages</string>
     <string name="msg_cntr_new_upcoming_look">New look coming soon\n for Concur App!</string>
-    
 
     <!-- approvals -->
     <plurals name="approval_row_report_msg">
@@ -1230,7 +1230,7 @@
         <item quantity="other">According to company policy, you must provide receipts for the expenses listed below.</item>
     </plurals>
 
-    <string name="report_submit_original_receipt_required">You may attach scanned images to individual expenses or to the report, but original paper receipts must also be submitted. If you have already provided receipts, you can submit your report now.</string>
+    <string name="report_submit_original_receipt_required">Original paper receipts must be submitted. If you have already provided receipts, you can submit your report now.</string>
     <string name="auto_report_name">Mobile Expense Report</string>
     <string name="dlg_report_submit_confirmation_title">Submit Confirmation</string>
     <string name="dlg_delete_receipt_confirmation_title">Delete Confirmation</string>
@@ -1975,18 +1975,9 @@
 
     <!-- Start What's new -->
     <string-array name="whats_new">
-        <item>\u2022 Fix for Mobile SSO (Single Sign On) and localizations</item>
-        <item>\u2022 Fix for Receipt image upload for some clients in EMEA</item>
-    </string-array>
-
-    <string name="min_sdk_upgrade_message_title">Important</string>
-
-    <string-array name="min_sdk_upgrade_message">
-        <item>After the November 2014 release, Concur Mobile will provide updates only for Android devices using 4.1 (Jelly Bean) or newer.</item>
-        <item></item>
-        <item>What does this mean for you?</item>
-        <item></item>
-        <item>If your Android operating system is older than 4.1, you can still use Concur for Mobile on your current device with all existing functionality. However, be aware that future releases of Concur for Mobile, including new features and content, will not be available.</item>
+        <item>\u2022 Improved message to first time user if they login incorrectly</item>
+        <item>\u2022 Improved Salesforce Opportunities searching</item>
+        <item>\u2022 Fix for defaulting currency based on city location</item>
     </string-array>
     <!-- End What's new -->
 
@@ -2063,7 +2054,6 @@
     <string name="ocr_status_procesing">Processing\u2026</string>
     <string name="ocr_status_procesing_error">Processing Error</string>
     <string name="ocr_status_procesing_cancelled">Processing Cancelled</string>
-
 
     <!-- Minimum Android SDK Support Upgrade Message -->
     <string name="sdk_upgrade_message_important">Important:</string>

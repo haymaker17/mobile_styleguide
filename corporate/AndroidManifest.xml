@@ -62,6 +62,15 @@
         android:logo="@drawable/concur_logo"
         android:theme="@style/ConcurTheme" >
         <activity
+            android:name="com.concur.mobile.corp.activity.SimpleWebViewActivity"
+            android:screenOrientation="portrait"
+            android:theme="@style/ConcurBaseTheme.White.New" 
+            android:parentActivityName="com.concur.mobile.corp.activity.Home" >
+            <meta-data
+            android:name="android.support.PARENT_ACTIVITY"
+            android:value="com.concur.mobile.corp.activity.Home" />
+        </activity>
+        <activity
             android:name="com.concur.mobile.corp.activity.Startup"
             android:icon="@drawable/launch"
             android:label="@string/corporate_name"
