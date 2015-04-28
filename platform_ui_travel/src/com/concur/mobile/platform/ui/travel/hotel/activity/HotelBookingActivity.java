@@ -550,12 +550,12 @@ public class HotelBookingActivity extends TravelBaseActivity implements SpinnerD
                 for (String id : valueIds) {
                     for (HotelViolation hotelViolation : violations) {
                         if (hotelViolation.violationValueId.equals(id)) {
-                            String enforcementLevelValue = hotelViolation.enforcementLevel;
+                            //  String enforcementLevelValue = hotelViolation.enforcementLevel;
                             if (firstRow) {
                                 txtView.setText(hotelViolation.message);
-                                if (ViewUtil.isRedViolation(enforcementLevelValue)) {
+                                if (isRedViolation(hotelViolation.enforcementLevel)) {
                                     imgView.setImageResource(R.drawable.icon_warning_red);
-                                } else if (ViewUtil.isYellowViolation(enforcementLevelValue)) {
+                                } else if (isYellowViolation(hotelViolation.enforcementLevel)) {
                                     imgView.setImageResource(R.drawable.icon_warning_yellow);
                                 }
                                 currViolationId = hotelViolation.violationValueId;
@@ -573,9 +573,9 @@ public class HotelBookingActivity extends TravelBaseActivity implements SpinnerD
 
                                 ImageView newImgView = new ImageView(this);
                                 newImgView.setLayoutParams(imgViewLayoutParams);
-                                if (ViewUtil.isRedViolation(enforcementLevelValue)) {
+                                if (isRedViolation(hotelViolation.enforcementLevel)) {
                                     newImgView.setImageResource(R.drawable.icon_warning_red);
-                                } else if (ViewUtil.isYellowViolation(enforcementLevelValue)) {
+                                } else if (isYellowViolation(hotelViolation.enforcementLevel)) {
                                     newImgView.setImageResource(R.drawable.icon_warning_yellow);
                                 }
 
@@ -1050,6 +1050,34 @@ public class HotelBookingActivity extends TravelBaseActivity implements SpinnerD
     private void showFailurePopUp() {
         DialogFragmentFactoryV1.getAlertOkayInstance(getString(R.string.hotel_booking_failed_title),
                 getString(R.string.hotel_booking_failed) + UserErrorMsg).show(getFragmentManager(), "BookingFailure");
+    }
+
+    /**
+     * @param enforcementLevelValue
+     * @return
+     */
+    public boolean isRedViolation(String enforcementLevelValue) {
+        boolean isRedIcon = false;
+        if (enforcementLevelValue.equals(Const.ENFORCEMENT_REQUIRED_APPROVAL) || enforcementLevelValue
+                .equals(Const.ENFORCEMENT_REQUIRED_PASSIVE_APPROVAL)) {
+            isRedIcon = true;
+        }
+        return isRedIcon;
+
+    }
+
+    /**
+     * @param enforcementLevelValue
+     * @return
+     */
+    public boolean isYellowViolation(String enforcementLevelValue) {
+        boolean isYellowIcon = false;
+        if (enforcementLevelValue.equals(Const.ENFORCEMENT_NOTIFY_MANAGER) || enforcementLevelValue
+                .equals(Const.ENFORCEMENT_LOG_FOR_REPORTS)) {
+            isYellowIcon = true;
+        }
+        return isYellowIcon;
+
     }
 
 }
