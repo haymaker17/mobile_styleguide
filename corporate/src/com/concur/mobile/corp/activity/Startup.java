@@ -26,7 +26,8 @@ import android.view.animation.AnimationUtils;
 import android.widget.TextView;
 
 import com.appdynamics.eumagent.runtime.Instrumentation;
-import com.concur.breeze.R;
+// TODO - MOB-23434 - mulitbuild jira - do not check in the change in package name into develop
+import com.concur.breeze.jarvis.R;
 import com.concur.mobile.base.service.BaseAsyncRequestTask;
 import com.concur.mobile.base.service.BaseAsyncRequestTask.AsyncReplyListener;
 import com.concur.mobile.base.service.BaseAsyncResultReceiver;

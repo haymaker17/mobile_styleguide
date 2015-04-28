@@ -18,7 +18,9 @@ public final class Travel {
     /**
      * The authority for the Travel provider.
      */
-    public static final String AUTHORITY = "com.concur.mobile.platform.travel";
+    // TODO - MOB-23434 - mulitbuild jira - do not check in the change in package name into develop
+    //public static final String AUTHORITY = "com.concur.mobile.platform.travel";
+    public static final String AUTHORITY = "com.concur.mobile.platform.jarvis.travel";
 
     /**
      * A content:// style uri to the authority for the config provider

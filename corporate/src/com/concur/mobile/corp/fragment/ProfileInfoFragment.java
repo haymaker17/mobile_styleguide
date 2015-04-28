@@ -47,14 +47,16 @@ public class ProfileInfoFragment extends BaseFragment {
     @Override
     public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
         super.onCreateOptionsMenu(menu, inflater);
-        inflater.inflate(com.concur.breeze.R.menu.profile, menu);
+        // TODO - MOB-23434 - mulitbuild jira - do not check in the change in package name into develop
+        inflater.inflate(com.concur.breeze.jarvis.R.menu.profile, menu);
     }
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         int id = item.getItemId();
         switch (id) {
-        case com.concur.breeze.R.id.menuSaveProfile:
+        // TODO - MOB-23434 - mulitbuild jira - do not check in the change in package name into develop
+        case com.concur.breeze.jarvis.R.id.menuSaveProfile:
             // do nothing
             break;
 
