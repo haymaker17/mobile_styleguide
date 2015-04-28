@@ -55,6 +55,7 @@ public class HotelBookingActivity extends TravelBaseActivity implements SpinnerD
         TravelCustomFieldsFragment.TravelCustomFieldsFragmentCallBackListener {
 
     protected static final String CLS_TAG = HotelBookingActivity.class.getSimpleName();
+
     // custom fields loader callback implementation
     private LoaderManager.LoaderCallbacks<TravelCustomFieldsConfig> customFieldsLoaderListener = new LoaderManager.LoaderCallbacks<TravelCustomFieldsConfig>() {
 
@@ -545,14 +546,16 @@ public class HotelBookingActivity extends TravelBaseActivity implements SpinnerD
 
                 boolean firstRow = true;
                 int enforcementLevel = hotelRate.maxEnforcementLevel;
+
                 for (String id : valueIds) {
                     for (HotelViolation hotelViolation : violations) {
                         if (hotelViolation.violationValueId.equals(id)) {
+                            String enforcementLevelValue = hotelViolation.enforcementLevel;
                             if (firstRow) {
                                 txtView.setText(hotelViolation.message);
-                                if (enforcementLevel >= 25 && enforcementLevel <= 30) {
+                                if (ViewUtil.isRedViolation(enforcementLevelValue)) {
                                     imgView.setImageResource(R.drawable.icon_warning_red);
-                                } else {
+                                } else if (ViewUtil.isYellowViolation(enforcementLevelValue)) {
                                     imgView.setImageResource(R.drawable.icon_warning_yellow);
                                 }
                                 currViolationId = hotelViolation.violationValueId;
@@ -570,9 +573,9 @@ public class HotelBookingActivity extends TravelBaseActivity implements SpinnerD
 
                                 ImageView newImgView = new ImageView(this);
                                 newImgView.setLayoutParams(imgViewLayoutParams);
-                                if (enforcementLevel >= 25 && enforcementLevel <= 30) {
+                                if (ViewUtil.isRedViolation(enforcementLevelValue)) {
                                     newImgView.setImageResource(R.drawable.icon_warning_red);
-                                } else {
+                                } else if (ViewUtil.isYellowViolation(enforcementLevelValue)) {
                                     newImgView.setImageResource(R.drawable.icon_warning_yellow);
                                 }
 

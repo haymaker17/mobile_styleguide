@@ -234,4 +234,31 @@ public class ViewUtil {
         inflater.inflate(R.layout.group_separator_v1, root);
     }
 
+    /**
+     * @param enforcementLevelValue
+     * @return
+     */
+    public static boolean isRedViolation(String enforcementLevelValue) {
+        boolean isRedIcon = false;
+        if (enforcementLevelValue.equals(Const.ENFORCEMENT_REQUIRED_APPROVAL) || enforcementLevelValue
+                .equals(Const.ENFORCEMENT_REQUIRED_PASSIVE_APPROVAL)) {
+            isRedIcon = true;
+        }
+        return isRedIcon;
+
+    }
+
+    /**
+     * @param enforcementLevelValue
+     * @return
+     */
+    public static boolean isYellowViolation(String enforcementLevelValue) {
+        boolean isYellowIcon = false;
+        if (enforcementLevelValue.equals(Const.ENFORCEMENT_NOTIFY_MANAGER) || enforcementLevelValue
+                .equals(Const.ENFORCEMENT_LOG_FOR_REPORTS)) {
+            isYellowIcon = true;
+        }
+        return isYellowIcon;
+
+    }
 }
