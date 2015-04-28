@@ -7,8 +7,6 @@ import android.content.Context;
 import android.database.Cursor;
 import android.net.Uri;
 import android.util.Log;
-import com.concur.mobile.platform.config.system.dao.ReasonCodeDAO;
-import com.concur.mobile.platform.config.system.dao.SystemConfigDAO;
 import com.concur.mobile.platform.travel.search.hotel.*;
 import com.concur.mobile.platform.util.Const;
 import com.concur.mobile.platform.util.ContentUtils;
@@ -207,7 +205,7 @@ public class TravelUtilHotel {
 
     }
 
-     /**
+    /**
      * Bulk insert image pairs for the given hotelDetailId
      *
      * @param resolver
@@ -239,8 +237,6 @@ public class TravelUtilHotel {
             }
         }
     }
-
-
 
     /**
      * Bulk insert hotel rates for the given hotelDetailId
@@ -391,17 +387,17 @@ public class TravelUtilHotel {
                 ContentUtils.putValue(valuesInfo[valInd], Travel.HotelViolationColumns.MESSAGE, hotelViolation.message);
                 ContentUtils.putValue(valuesInfo[valInd], Travel.HotelViolationColumns.VIOLATION_VALUE_ID,
                         hotelViolation.violationValueId);
+                ++valInd;
             }
             // insert
             int numInserted = resolver.bulkInsert(Travel.HotelViolationColumns.CONTENT_URI, valuesInfo);
 
             if (DEBUG) {
-                Log.d(Const.LOG_TAG, CLS_TAG + ".bulkInsertHotelViolations : number of violation items inserted :  "
-                        + numInserted);
+                Log.d(Const.LOG_TAG,
+                        CLS_TAG + ".bulkInsertHotelViolations : number of violation items inserted :  " + numInserted);
             }
         }
     }
-
 
     /**
      * Bulk insert hotel benchmarks for the given hotelSearchResultId
@@ -415,7 +411,7 @@ public class TravelUtilHotel {
         // insert hotel benchmarks with hotel search result id as foreign key
         if (benchmarksCollection != null) {
             List<HotelBenchmark> benchmarks = benchmarksCollection.benchmarks;
-            if(benchmarks != null && benchmarks.size() > 0) {
+            if (benchmarks != null && benchmarks.size() > 0) {
                 ContentValues[] valuesInfo = new ContentValues[benchmarks.size()];
                 int valInd = 0;
                 for (HotelBenchmark benchmark : benchmarks) {
@@ -427,17 +423,21 @@ public class TravelUtilHotel {
                             hotelSearchResultId);
 
                     // Set the columns
-                    ContentUtils.putValue(valuesInfo[valInd], Travel.HotelBenchmarkColumns.LOCATION_NAME, benchmark.locationName);
+                    ContentUtils.putValue(valuesInfo[valInd], Travel.HotelBenchmarkColumns.LOCATION_NAME,
+                            benchmark.locationName);
                     ContentUtils.putValue(valuesInfo[valInd], Travel.HotelBenchmarkColumns.CRN_CODE, benchmark.crnCode);
                     ContentUtils.putValue(valuesInfo[valInd], Travel.HotelBenchmarkColumns.PRICE, benchmark.price);
-                    ContentUtils.putValue(valuesInfo[valInd], Travel.HotelBenchmarkColumns.SUB_DIV_CODE, benchmark.subDivCode);
+                    ContentUtils.putValue(valuesInfo[valInd], Travel.HotelBenchmarkColumns.SUB_DIV_CODE,
+                            benchmark.subDivCode);
+                    ++valInd;
                 }
                 // insert
                 int numInserted = resolver.bulkInsert(Travel.HotelBenchmarkColumns.CONTENT_URI, valuesInfo);
 
                 if (DEBUG) {
                     Log.d(Const.LOG_TAG,
-                            CLS_TAG + ".bulkInsertHotelBenchmarks : number of benchmarks items inserted :  " + numInserted);
+                            CLS_TAG + ".bulkInsertHotelBenchmarks : number of benchmarks items inserted :  "
+                                    + numInserted);
                 }
             }
         }
@@ -483,8 +483,6 @@ public class TravelUtilHotel {
         }
 
     }
-
-
 
     /**
      * Get persisted hotels search result list by cache key
@@ -717,8 +715,6 @@ public class TravelUtilHotel {
         return hotelViolations;
     }
 
-
-
     /**
      * Gets the list of <code>HotelRate</code> objects specific to the Hotel.
      *
@@ -782,7 +778,7 @@ public class TravelUtilHotel {
      * @return benchmarksCollection
      */
     public static BenchmarksCollection getBenchmarksCollection(Context context, String hotelSearchResultId) {
-        BenchmarksCollection benchmarksCollection = new  BenchmarksCollection();
+        BenchmarksCollection benchmarksCollection = new BenchmarksCollection();
         List<HotelBenchmark> hotelBenchmarks = new ArrayList<HotelBenchmark>();
         ContentResolver resolver = context.getContentResolver();
         Cursor cursor = null;
@@ -791,7 +787,9 @@ public class TravelUtilHotel {
             strBldr.append(Travel.HotelBenchmarkColumns.HOTEL_SEARCH_RESULT_ID + " =? ");
             String where = strBldr.toString();
             String[] whereArgs = { hotelSearchResultId };
-            cursor = resolver.query(Travel.HotelBenchmarkColumns.CONTENT_URI, HotelBenchmark.fullColumnList, where, whereArgs, null);
+            cursor = resolver
+                    .query(Travel.HotelBenchmarkColumns.CONTENT_URI, HotelBenchmark.fullColumnList, where, whereArgs,
+                            null);
             if (cursor != null) {
                 if (cursor.moveToFirst()) {
                     do {

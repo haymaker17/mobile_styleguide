@@ -326,8 +326,10 @@ public class HotelSearchAndResultActivity extends TravelBaseActivity
         }
 
         FragmentTransaction ft = getFragmentManager().beginTransaction();
-        ft.add(R.id.container, hotelSearchRESTResultFrag, FRAGMENT_SEARCH_RESULT);
-        ft.commit();
+        if (hotelSearchRESTResultFrag != null && !hotelSearchRESTResultFrag.isAdded()) {
+            ft.add(R.id.container, hotelSearchRESTResultFrag, FRAGMENT_SEARCH_RESULT);
+            ft.commit();
+        }
 
         hotelSearchRESTResultFrag.location = location;
         hotelSearchRESTResultFrag.durationOfStayForDisplayInHeader =

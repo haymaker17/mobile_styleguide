@@ -127,7 +127,7 @@
     <string name="no_network_connection_toast">No Network Connection</string>
     <string name="imageview_description">Image Thumbnail</string>
     <string name="hotel_booking_failed">Room Confirm Failed.</string>
-    <string name="hotel_booking_failed_title">Hotel Booking</string>
+    <string name="hotel_booking_failed_title">Hotel Booking Failed</string>
     <string name="hotel_booking_success">Your room has been successfully reserved.</string>
     <string name="hotel_booking_retrieving">Reserving room...</string>
     <string name="hotel_overview">Overview</string>

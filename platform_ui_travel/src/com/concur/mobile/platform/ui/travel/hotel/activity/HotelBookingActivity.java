@@ -139,6 +139,7 @@ public class HotelBookingActivity extends TravelBaseActivity implements SpinnerD
     private String currCode;
     private String sellOptionsURL;
     private ArrayList<ViolationReason> selectedViolationReasons;
+    private String UserErrorMsg;
     // pre sell options loader callback implementation
     private LoaderManager.LoaderCallbacks<HotelPreSellOption> preSellOptionsLoaderListener = new LoaderManager.LoaderCallbacks<HotelPreSellOption>() {
 
@@ -214,15 +215,13 @@ public class HotelBookingActivity extends TravelBaseActivity implements SpinnerD
                 // TODO add GA event for booking
                 finish();
             } else {
-                String errorMsg = " ";
                 if (bookingResult != null && bookingResult.error != null) {
 
-                    errorMsg =
+                    UserErrorMsg =
                             bookingResult.error.getUserMessage() != null ? bookingResult.error.getUserMessage() : null;
                 }
+                showFailurePopUp();
 
-                DialogFragmentFactoryV1.getAlertOkayInstance(getString(R.string.hotel_booking_failed_title),
-                        getString(R.string.hotel_booking_failed) + errorMsg).show(getFragmentManager(), null);
                 // Toast.makeText(getApplicationContext(), R.string.hotel_booking_failed, Toast.LENGTH_LONG).show();
             }
             isBookingInProgress = false;
@@ -241,6 +240,7 @@ public class HotelBookingActivity extends TravelBaseActivity implements SpinnerD
     private HotelPreSellOption preSellOption;
     private String location;
     private String durationOfStayForDisplay;
+
     private int numOfNights;
     private String headerImageURL;
     private String hotelName;
@@ -520,13 +520,14 @@ public class HotelBookingActivity extends TravelBaseActivity implements SpinnerD
             String[] valueIds = new String[hotelRate.violationValueIds.length];
             for (int i = 0; i < hotelRate.violationValueIds.length; i++) {
                 valueIds[i] = Integer.toString(hotelRate.violationValueIds[i]);
+
             }
 
             // Get the violations from the database and initialize the view
             // TravelUtilHotel.getHotelViolations(getApplicationContext(), valueIds,
             // (int) search_id);
             Log.d(Const.LOG_TAG, CLS_TAG + ".initViolations: violations from db : " + violations);
-            if (violations != null && violations.size() > 0) {
+            if (violations != null && violations.size() > 0 && valueIds.length > 0) {
 
                 TableLayout tableLayout = (TableLayout) violationsView.findViewById(R.id.violation_message_table);
 
@@ -543,47 +544,51 @@ public class HotelBookingActivity extends TravelBaseActivity implements SpinnerD
                 Collections.sort(violations, new HotelViolationComparator());
 
                 boolean firstRow = true;
-                for (HotelViolation hotelViolation : violations) {
+                int enforcementLevel = hotelRate.maxEnforcementLevel;
+                for (String id : valueIds) {
+                    for (HotelViolation hotelViolation : violations) {
+                        if (hotelViolation.violationValueId.equals(id)) {
+                            if (firstRow) {
+                                txtView.setText(hotelViolation.message);
+                                if (enforcementLevel >= 25 && enforcementLevel <= 30) {
+                                    imgView.setImageResource(R.drawable.icon_warning_red);
+                                } else {
+                                    imgView.setImageResource(R.drawable.icon_warning_yellow);
+                                }
+                                currViolationId = hotelViolation.violationValueId;
+                                firstRow = false;
+                            } else {
+                                // create a new table row and add to the table layout
+                                TableRow trView = new TableRow(this);
+                                trView.setLayoutParams(trViewLayoutParams);
 
-                    if (firstRow) {
-                        txtView.setText(hotelViolation.message);
-                        if (hotelViolation.enforcementLevel.equalsIgnoreCase("RequiresApproval")) {
-                            imgView.setImageResource(R.drawable.icon_warning_red);
-                        } else {
-                            imgView.setImageResource(R.drawable.icon_warning_yellow);
+                                TextView newTxtView = new TextView(this);
+                                newTxtView.setLayoutParams(txtViewLayoutParams);
+                                newTxtView.setPadding(txtView.getPaddingLeft(), txtView.getPaddingTop(),
+                                        txtView.getPaddingRight(), txtView.getPaddingBottom());
+                                newTxtView.setText(hotelViolation.message);
+
+                                ImageView newImgView = new ImageView(this);
+                                newImgView.setLayoutParams(imgViewLayoutParams);
+                                if (enforcementLevel >= 25 && enforcementLevel <= 30) {
+                                    newImgView.setImageResource(R.drawable.icon_warning_red);
+                                } else {
+                                    newImgView.setImageResource(R.drawable.icon_warning_yellow);
+                                }
+
+                                // now add the image and text views to the table row
+                                trView.addView(newImgView);
+                                trView.addView(newTxtView);
+
+                                tableLayout.addView(trView);
+
+                            }
                         }
-                        currViolationId = hotelViolation.violationValueId;
-                        firstRow = false;
-                    } else {
-                        // create a new table row and add to the table layout
-                        TableRow trView = new TableRow(this);
-                        trView.setLayoutParams(trViewLayoutParams);
-
-                        TextView newTxtView = new TextView(this);
-                        newTxtView.setLayoutParams(txtViewLayoutParams);
-                        newTxtView.setPadding(txtView.getPaddingLeft(), txtView.getPaddingTop(),
-                                txtView.getPaddingRight(), txtView.getPaddingBottom());
-                        newTxtView.setText(hotelViolation.message);
-
-                        ImageView newImgView = new ImageView(this);
-                        newImgView.setLayoutParams(imgViewLayoutParams);
-                        if (hotelViolation.enforcementLevel.equalsIgnoreCase("RequiresApproval")) {
-                            newImgView.setImageResource(R.drawable.icon_warning_red);
-                        } else {
-                            newImgView.setImageResource(R.drawable.icon_warning_yellow);
-                        }
-
-                        // now add the image and text views to the table row
-                        trView.addView(newImgView);
-                        trView.addView(newTxtView);
-
-                        tableLayout.addView(trView);
-
                     }
                 }
 
                 // add the max enforcement level icon to the first row
-                if (hotelRate.maxEnforcementLevel >= 30) {
+                if (enforcementLevel >= 25 && enforcementLevel <= 30) {
                     ((ImageView) violationsView.findViewById(R.id.hotel_room_max_violation_icon))
                             .setImageResource(R.drawable.icon_status_red);
                     // reserveButton.setEnabled(false);
@@ -863,7 +868,7 @@ public class HotelBookingActivity extends TravelBaseActivity implements SpinnerD
                 // violation reason need to be selected
                 if (violationReasons == null) {
                     // show message that violations reason are not available
-                    if(requiredFieldsMsg.length() > 0) {
+                    if (requiredFieldsMsg.length() > 0) {
                         requiredFieldsMsg.append("\n");
                     }
                     requiredFieldsMsg.append(getString(R.string.general_violaiton_reasons_not_available));
@@ -872,7 +877,7 @@ public class HotelBookingActivity extends TravelBaseActivity implements SpinnerD
                     // check for selected violation reason
                     if (curViolationReason == null) {
                         // show violation reason required message
-                        if(requiredFieldsMsg.length() > 0) {
+                        if (requiredFieldsMsg.length() > 0) {
                             requiredFieldsMsg.append("\n");
                         }
                         requiredFieldsMsg.append(getString(R.string.book_missing_field_violation_reason));
@@ -887,7 +892,7 @@ public class HotelBookingActivity extends TravelBaseActivity implements SpinnerD
                         if (ruleViolationExplanationRequired && (justificationText == null || justificationText.trim()
                                 .isEmpty())) {
                             // show violation justification text required message
-                            if(requiredFieldsMsg.length() > 0) {
+                            if (requiredFieldsMsg.length() > 0) {
                                 requiredFieldsMsg.append("\n");
                             }
                             requiredFieldsMsg.append(getString(R.string.general_specify_justification));
@@ -915,7 +920,7 @@ public class HotelBookingActivity extends TravelBaseActivity implements SpinnerD
                     commitTravelCustomFields();
                 } else {
                     hasAllRequiredFields = false;
-                    if(requiredFieldsMsg.length() > 0) {
+                    if (requiredFieldsMsg.length() > 0) {
                         requiredFieldsMsg.append("\n");
                     }
                     requiredFieldsMsg.append(getString(R.string.book_missing_custom_fields));
@@ -1037,6 +1042,11 @@ public class HotelBookingActivity extends TravelBaseActivity implements SpinnerD
         travelCustomFieldsConfig.formFields = formFields;
         // Initialize the loader.
         lm.initLoader(CUSTOM_FIELDS_LOADER_ID, null, customFieldsLoaderListener);
+    }
+
+    private void showFailurePopUp() {
+        DialogFragmentFactoryV1.getAlertOkayInstance(getString(R.string.hotel_booking_failed_title),
+                getString(R.string.hotel_booking_failed) + UserErrorMsg).show(getFragmentManager(), "BookingFailure");
     }
 
 }
