@@ -99,10 +99,12 @@ public class Const {
     public static final int COMBO_BOX_LIST_SELECTION = 1;
     public static final int MSG_SEARCH_LIST_REQUEST = 45;
 
-    public static final String ENFORCEMENT_REQUIRED_APPROVAL = "Require Approval";
-    public static final String ENFORCEMENT_REQUIRED_PASSIVE_APPROVAL = "Require Passive Approval";
-    public static final String ENFORCEMENT_NOTIFY_MANAGER = "Notify Manager";
-    public static final String ENFORCEMENT_LOG_FOR_REPORTS = "Log for Reports";
+    public static final String ENFORCEMENT_REQUIRED_APPROVAL = "RequiresApproval";
+    public static final String ENFORCEMENT_REQUIRED_PASSIVE_APPROVAL = "RequiresPassiveApproval";
+    public static final String ENFORCEMENT_NOTIFY_MANAGER = "NotifyManager";
+    public static final String ENFORCEMENT_LOG_FOR_REPORTS = "LogForReportsOnly";
     public static final String ENFORCEMENT_MESSAGE_ONLY = "Message Only";
+    public static final String ENFORCEMENT_AUTO_FAIL = "AutoFail";
+    public static final String ENFORCEMENT_AUTO_SUCCEED = "AutoSucceed";
 
 }
