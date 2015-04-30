@@ -139,8 +139,7 @@ public class HotelBookingActivity extends TravelBaseActivity implements SpinnerD
     private Double amount;
     private String currCode;
     private String sellOptionsURL;
-    private ArrayList<ViolationReason> selectedViolationReasons;
-    private String userErrorMsg;
+
     // pre sell options loader callback implementation
     private LoaderManager.LoaderCallbacks<HotelPreSellOption> preSellOptionsLoaderListener = new LoaderManager.LoaderCallbacks<HotelPreSellOption>() {
 
@@ -167,6 +166,29 @@ public class HotelBookingActivity extends TravelBaseActivity implements SpinnerD
             // nothing to handle here
         }
     };
+    private ArrayList<ViolationReason> selectedViolationReasons;
+    private String userErrorMsg;
+    private String[] cancellationPolicyStatements;
+    private boolean progressbarVisible;
+    private Button reserveButton;
+    private HotelRate hotelRate;
+    private HotelPreSellOption preSellOption;
+    private String location;
+    private String durationOfStayForDisplay;
+    private int numOfNights;
+    private String headerImageURL;
+    private String hotelName;
+    private SpinnerItem[] violationReasonChoices;
+    private ArrayList<String[]> violationReasons;
+    private String currViolationId;
+    private boolean ruleViolationExplanationRequired;
+    private String currentTripId;
+    private List<HotelViolation> violations;
+    private int msgResourse;
+    private boolean isExpanded;
+    private ParallaxScollView mListView;
+    private TextView roomDescView;
+    private boolean isBookingInProgress;
     // HotelBooking loader callback implementation
     private LoaderManager.LoaderCallbacks<HotelBookingRESTResult> bookingLoaderListener = new LoaderManager.LoaderCallbacks<HotelBookingRESTResult>() {
 
@@ -240,29 +262,6 @@ public class HotelBookingActivity extends TravelBaseActivity implements SpinnerD
             Log.d(Const.LOG_TAG, " ***** loader reset *****  ");
         }
     };
-
-    private String[] cancellationPolicyStatements;
-    private boolean progressbarVisible;
-    private Button reserveButton;
-    private HotelRate hotelRate;
-    private HotelPreSellOption preSellOption;
-    private String location;
-    private String durationOfStayForDisplay;
-
-    private int numOfNights;
-    private String headerImageURL;
-    private String hotelName;
-    private SpinnerItem[] violationReasonChoices;
-    private ArrayList<String[]> violationReasons;
-    private String currViolationId;
-    private boolean ruleViolationExplanationRequired;
-    private String currentTripId;
-    private List<HotelViolation> violations;
-    private int msgResourse;
-    private boolean isExpanded;
-    private ParallaxScollView mListView;
-    private TextView roomDescView;
-    private boolean isBookingInProgress;
     private String customTravelText;
 
     @Override
@@ -518,8 +517,7 @@ public class HotelBookingActivity extends TravelBaseActivity implements SpinnerD
     }
 
     private void initViolations() {
-        if (hotelRate != null && hotelRate.violationValueIds != null && hotelRate.violationValueIds.length > 0 &&
-                hotelRate.maxEnforcementLevel >= 10) {
+        if (hotelRate != null && hotelRate.violationValueIds != null && hotelRate.violationValueIds.length > 0) {
 
             // inflate the violations view stub
             View violationsView = ((ViewStub) findViewById(R.id.violation_view)).inflate();
@@ -534,7 +532,7 @@ public class HotelBookingActivity extends TravelBaseActivity implements SpinnerD
             // Get the violations from the database and initialize the view
             // TravelUtilHotel.getHotelViolations(getApplicationContext(), valueIds,
             // (int) search_id);
-            Log.d(Const.LOG_TAG, CLS_TAG + ".initViolations: violations from db : " + violations);
+            //Log.d(Const.LOG_TAG, CLS_TAG + ".initViolations: violations from db : " + violations);
             if (violations != null && violations.size() > 0 && valueIds.length > 0) {
 
                 TableLayout tableLayout = (TableLayout) violationsView.findViewById(R.id.violation_message_table);
@@ -549,64 +547,75 @@ public class HotelBookingActivity extends TravelBaseActivity implements SpinnerD
                 LayoutParams imgViewLayoutParams = imgView.getLayoutParams();
 
                 // sort the violations in descending enforcement level i.e. max enforcement level will be at top
-                Collections.sort(violations, new HotelViolationComparator());
+                ArrayList<HotelViolation> violationsToDisplay = new ArrayList<HotelViolation>();
+                for (String id : valueIds) {
+                    for (HotelViolation violation : violations) {
+                        if (violation.violationValueId.equals(id)) {
+                            if (violation.enforcementLevel.equals(Const.ENFORCEMENT_REQUIRED_APPROVAL)
+                                    || violation.enforcementLevel.equals(Const.ENFORCEMENT_REQUIRED_PASSIVE_APPROVAL)) {
+                                violation.displayOrder = 3;
+                            } else if (violation.enforcementLevel.equals(Const.ENFORCEMENT_NOTIFY_MANAGER)
+                                    || violation.enforcementLevel.equals(Const.ENFORCEMENT_LOG_FOR_REPORTS)) {
+                                violation.displayOrder = 2;
+                            } else {
+                                violation.displayOrder = 1;
+                            }
+                            violationsToDisplay.add(violation);
+                            break;
+                        }
+                    }
+                }
+                Collections.sort(violationsToDisplay, new HotelViolationComparator());
 
                 boolean firstRow = true;
                 int enforcementLevel = hotelRate.maxEnforcementLevel;
 
-                for (String id : valueIds) {
-                    for (HotelViolation hotelViolation : violations) {
-                        if (hotelViolation.violationValueId.equals(id)) {
-                            //  String enforcementLevelValue = hotelViolation.enforcementLevel;
-                            if (firstRow) {
-                                txtView.setText(hotelViolation.message);
-                                if (isRedViolation(hotelViolation.enforcementLevel)) {
-                                    imgView.setImageResource(R.drawable.icon_warning_red);
-                                } else if (isYellowViolation(hotelViolation.enforcementLevel)) {
-                                    imgView.setImageResource(R.drawable.icon_warning_yellow);
-                                }
-                                currViolationId = hotelViolation.violationValueId;
-                                firstRow = false;
-                            } else {
-                                // create a new table row and add to the table layout
-                                TableRow trView = new TableRow(this);
-                                trView.setLayoutParams(trViewLayoutParams);
-
-                                TextView newTxtView = new TextView(this);
-                                newTxtView.setLayoutParams(txtViewLayoutParams);
-                                newTxtView.setPadding(txtView.getPaddingLeft(), txtView.getPaddingTop(),
-                                        txtView.getPaddingRight(), txtView.getPaddingBottom());
-                                newTxtView.setText(hotelViolation.message);
-
-                                ImageView newImgView = new ImageView(this);
-                                newImgView.setLayoutParams(imgViewLayoutParams);
-                                if (isRedViolation(hotelViolation.enforcementLevel)) {
-                                    newImgView.setImageResource(R.drawable.icon_warning_red);
-                                } else if (isYellowViolation(hotelViolation.enforcementLevel)) {
-                                    newImgView.setImageResource(R.drawable.icon_warning_yellow);
-                                }
-
-                                // now add the image and text views to the table row
-                                trView.addView(newImgView);
-                                trView.addView(newTxtView);
-
-                                tableLayout.addView(trView);
-
-                            }
+                for (HotelViolation hotelViolation : violationsToDisplay) {
+                    if (firstRow) {
+                        txtView.setText(hotelViolation.message);
+                        if (hotelViolation.displayOrder == 3) {
+                            imgView.setImageResource(R.drawable.icon_warning_red);
+                        } else if (hotelViolation.displayOrder == 2) {
+                            imgView.setImageResource(R.drawable.icon_warning_yellow);
                         }
+                        currViolationId = hotelViolation.violationValueId;
+                        firstRow = false;
+                    } else {
+                        // create a new table row and add to the table layout
+                        TableRow trView = new TableRow(this);
+                        trView.setLayoutParams(trViewLayoutParams);
+
+                        TextView newTxtView = new TextView(this);
+                        newTxtView.setLayoutParams(txtViewLayoutParams);
+                        newTxtView.setPadding(txtView.getPaddingLeft(), txtView.getPaddingTop(),
+                                txtView.getPaddingRight(), txtView.getPaddingBottom());
+                        newTxtView.setText(hotelViolation.message);
+
+                        ImageView newImgView = new ImageView(this);
+                        newImgView.setLayoutParams(imgViewLayoutParams);
+                        if (hotelViolation.displayOrder == 3) {
+                            newImgView.setImageResource(R.drawable.icon_warning_red);
+                        } else if (hotelViolation.displayOrder == 2) {
+                            newImgView.setImageResource(R.drawable.icon_warning_yellow);
+                        }
+
+                        // now add the image and text views to the table row
+                        trView.addView(newImgView);
+                        trView.addView(newTxtView);
+
+                        tableLayout.addView(trView);
                     }
                 }
 
                 // add the max enforcement level icon to the first row
-                if (enforcementLevel >= 25 && enforcementLevel <= 30) {
-                    ((ImageView) violationsView.findViewById(R.id.hotel_room_max_violation_icon))
-                            .setImageResource(R.drawable.icon_status_red);
-                    // reserveButton.setEnabled(false);
+                // TODO - change this code to use the maxEnforcementLevelDesc element
+                int imgResId = getViolationIconResIdForMaxEnforcementLevel(enforcementLevel);
+                if (imgResId == -1) {
+                    violationsView.findViewById(R.id.hotel_room_max_violation_icon).setVisibility(View.GONE);
                 } else {
                     ((ImageView) violationsView.findViewById(R.id.hotel_room_max_violation_icon))
-                            .setImageResource(R.drawable.icon_status_yellow);
+                            .setImageResource(imgResId);
                 }
-
             }
 
             if (violationReasons != null && violationReasons.size() > 0) {
@@ -1063,32 +1072,17 @@ public class HotelBookingActivity extends TravelBaseActivity implements SpinnerD
                 .show(getFragmentManager(), "BookingFailure");
     }
 
-    /**
-     * @param enforcementLevelValue
-     * @return
-     */
-    public boolean isRedViolation(String enforcementLevelValue) {
-        boolean isRedIcon = false;
-        if (enforcementLevelValue.equals(Const.ENFORCEMENT_REQUIRED_APPROVAL) || enforcementLevelValue
-                .equals(Const.ENFORCEMENT_REQUIRED_PASSIVE_APPROVAL)) {
-            isRedIcon = true;
+    private int getViolationIconResIdForMaxEnforcementLevel(int enforcementLevel) {
+        // TODO - change this code to use the maxEnforcementLevelDesc string element
+        if (enforcementLevel >= 25 && enforcementLevel <= 30) {
+            return R.drawable.icon_status_red;
+        } else if (enforcementLevel == 0 || enforcementLevel == 100) {
+            //Message Only = 0, Allow = 100
+            // do not show any icon
+        } else {
+            return R.drawable.icon_status_yellow;
         }
-        return isRedIcon;
-
-    }
-
-    /**
-     * @param enforcementLevelValue
-     * @return
-     */
-    public boolean isYellowViolation(String enforcementLevelValue) {
-        boolean isYellowIcon = false;
-        if (enforcementLevelValue.equals(Const.ENFORCEMENT_NOTIFY_MANAGER) || enforcementLevelValue
-                .equals(Const.ENFORCEMENT_LOG_FOR_REPORTS)) {
-            isYellowIcon = true;
-        }
-        return isYellowIcon;
-
+        return -1;
     }
 
 }
