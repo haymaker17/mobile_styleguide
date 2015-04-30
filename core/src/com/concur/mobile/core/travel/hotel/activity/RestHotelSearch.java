@@ -622,6 +622,7 @@ public class RestHotelSearch extends TravelBaseActivity
                 i.putExtra(Const.EXTRA_TRAVEL_RECORD_LOCATOR, bookingRecordLocator);
                 Log.d(Const.LOG_TAG, CLS_TAG + ".RestHotelSearch start activity to retrieve itinerary");
                 RestHotelSearch.this.startActivity(i);
+                finish();
 
             } else if (resultCode == RESULT_CANCELED) {
                 // Hotel Search cancelled or did not go further with the booking

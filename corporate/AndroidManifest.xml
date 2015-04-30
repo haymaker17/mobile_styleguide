@@ -128,7 +128,7 @@
 
         <!-- Message Center -->
         <activity android:name="com.concur.mobile.core.activity.MessageCenter" />
-        <activity android:name="com.concur.mobile.core.activity.AbstractIpmMsgProgress" />
+        <activity android:name="com.concur.mobile.core.activity.ipm.AbstractIpmMsgProgress" />
 
         <!-- Travel activities -->
         <activity android:name="com.concur.mobile.core.travel.activity.TripList" />

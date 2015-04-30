@@ -35,7 +35,6 @@ public class ShowHotelItinerary extends TravelBaseActivity {
             }
         }
 
-        // setResult(Activity.RESULT_OK, data);
         onBookingSucceeded();
 
     }

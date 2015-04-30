@@ -140,7 +140,7 @@ public class HotelBookingActivity extends TravelBaseActivity implements SpinnerD
     private String currCode;
     private String sellOptionsURL;
     private ArrayList<ViolationReason> selectedViolationReasons;
-    private String UserErrorMsg;
+    private String userErrorMsg;
     // pre sell options loader callback implementation
     private LoaderManager.LoaderCallbacks<HotelPreSellOption> preSellOptionsLoaderListener = new LoaderManager.LoaderCallbacks<HotelPreSellOption>() {
 
@@ -218,10 +218,17 @@ public class HotelBookingActivity extends TravelBaseActivity implements SpinnerD
             } else {
                 if (bookingResult != null && bookingResult.error != null) {
 
-                    UserErrorMsg =
+                    userErrorMsg =
                             bookingResult.error.getUserMessage() != null ? bookingResult.error.getUserMessage() : null;
                 }
-                showFailurePopUp();
+
+                new Handler().post(new Runnable() {
+
+                    @Override
+                    public void run() {
+                        showFailurePopUp();
+                    }
+                });
 
                 // Toast.makeText(getApplicationContext(), R.string.hotel_booking_failed, Toast.LENGTH_LONG).show();
             }
@@ -1048,8 +1055,12 @@ public class HotelBookingActivity extends TravelBaseActivity implements SpinnerD
     }
 
     private void showFailurePopUp() {
-        DialogFragmentFactoryV1.getAlertOkayInstance(getString(R.string.hotel_booking_failed_title),
-                getString(R.string.hotel_booking_failed) + UserErrorMsg).show(getFragmentManager(), "BookingFailure");
+        String message = getString(R.string.hotel_booking_failed);
+        if (userErrorMsg != null && !userErrorMsg.isEmpty()) {
+            message = message + " " + userErrorMsg;
+        }
+        DialogFragmentFactoryV1.getAlertOkayInstance(getString(R.string.hotel_booking_failed_title), message)
+                .show(getFragmentManager(), "BookingFailure");
     }
 
     /**
