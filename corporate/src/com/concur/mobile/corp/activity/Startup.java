@@ -1,12 +1,5 @@
 package com.concur.mobile.corp.activity;
 
-import java.util.Arrays;
-import java.util.Calendar;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Locale;
-import java.util.Map;
-
 import android.app.Dialog;
 import android.content.DialogInterface;
 import android.content.Intent;
@@ -52,6 +45,13 @@ import com.concur.mobile.platform.authentication.PPLoginLightRequestTask;
 import com.concur.mobile.platform.authentication.SessionInfo;
 import com.concur.mobile.platform.config.provider.ConfigUtil;
 import com.concur.platform.PlatformProperties;
+
+import java.util.Arrays;
+import java.util.Calendar;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Locale;
+import java.util.Map;
 
 @EventTracker.EventTrackerClassName(getClassName = "Startup")
 public class Startup extends BaseActivity {
@@ -206,7 +206,10 @@ public class Startup extends BaseActivity {
 
                     boolean needLogin = true;
                     if (autoLogin) {
-                        needLogin = !doLogin();
+                        // TODO if autologin turn on dont do anything just go to homescreen
+                        needLogin = false;
+                        startHomeScreen();
+                        doLoginFinish();
                     }
 
                     if (needLogin) {
@@ -312,12 +315,6 @@ public class Startup extends BaseActivity {
     }
 
     private void startHomeScreen() {
-
-        // Prior to the starting the home screen, initialize the system/user configuration
-        // information.
-        ((ConcurMobile) getApplication()).initSystemConfig();
-        ((ConcurMobile) getApplication()).initUserConfig();
-
         startIntent = new Intent(this, Home.class);
 
         boolean launchExpList = getIntent().getBooleanExtra(Home.LAUNCH_EXPENSE_LIST, false);
@@ -395,7 +392,8 @@ public class Startup extends BaseActivity {
         // Check the expiration on the session and clear it if needed
         Long expire = prefs.getLong(Const.PREF_SESSION_EXPIRATION, 0);
         long now = Calendar.getInstance().getTimeInMillis();
-        if (!ConcurMobile.isConnected() || (expire <= now)) {
+        //if (!ConcurMobile.isConnected() || (expire <= now)) {
+        if (true) {
             Editor e = prefs.edit();
             e.remove(Const.PREF_SESSION_DURATION);
             e.remove(Const.PREF_SESSION_EXPIRATION);
