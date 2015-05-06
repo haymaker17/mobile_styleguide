@@ -32,6 +32,8 @@ public class RequestTask extends AbstractRequestWSCallTask {
     // --- Request List
     public static final String P_REQUESTS_WITH_SEG_TYPES = "withSegmentTypes";
     public static final String P_REQUESTS_STATUS = "status";
+    // --- Request creation
+    public static final String P_REQUEST_ID = "RequestID";
 
     public enum HttpRequestType {
         GET,
@@ -93,14 +95,12 @@ public class RequestTask extends AbstractRequestWSCallTask {
      * @return returns the service end-point for this request.
      * @throws com.concur.mobile.core.service.ServiceRequestException
      */
-    @Override
-    protected String getServiceEndPoint() throws ServiceRequestException {
+    @Override protected String getServiceEndPoint() throws ServiceRequestException {
         return ConnectHelper
                 .getServiceEndpointURI(version, module, action, params, entityId, requestType == HttpRequestType.GET);
     }
 
-    @Override
-    protected String getPostBody() {
+    @Override protected String getPostBody() {
         return postBody;
     }
 
@@ -109,8 +109,7 @@ public class RequestTask extends AbstractRequestWSCallTask {
      *
      * @see com.concur.mobile.platform.service.PlatformAsyncRequestTask#configureConnection(java.net.HttpURLConnection)
      */
-    @Override
-    protected void configureConnection(HttpURLConnection connection) {
+    @Override protected void configureConnection(HttpURLConnection connection) {
         super.configureConnection(connection);
 
         if (requestType == HttpRequestType.PUT) {

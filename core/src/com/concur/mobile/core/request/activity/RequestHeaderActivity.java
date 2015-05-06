@@ -92,8 +92,7 @@ public class RequestHeaderActivity extends AbstractConnectFormFieldActivity impl
      *
      * @param savedInstanceState
      */
-    @Override
-    protected void onCreate(Bundle savedInstanceState) {
+    @Override protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
         setContentView(R.layout.request_header);
@@ -149,8 +148,7 @@ public class RequestHeaderActivity extends AbstractConnectFormFieldActivity impl
         applySaveButtonPolicy(saveButton);
     }
 
-    @Override
-    protected void save(ConnectForm form, FormDTO tr) {
+    @Override protected void save(ConnectForm form, FormDTO tr) {
         super.save(form, tr);
         if (ConcurCore.isConnected()) {
             // --- creates the listener
@@ -229,13 +227,11 @@ public class RequestHeaderActivity extends AbstractConnectFormFieldActivity impl
         return requestHeaderFields;
     }
 
-    @Override
-    protected Locale getLocale() {
+    @Override protected Locale getLocale() {
         return locale;
     }
 
-    @Override
-    protected DateUtil.DatePattern getDatePattern() {
+    @Override protected DateUtil.DatePattern getDatePattern() {
         return DateUtil.DatePattern.DB_INPUT;
     }
 
@@ -244,8 +240,7 @@ public class RequestHeaderActivity extends AbstractConnectFormFieldActivity impl
      *
      * @see com.concur.mobile.activity.expense.ConcurView#onActivityResult(int, int, android.content.Intent)
      */
-    @Override
-    public void onActivityResult(int requestCode, int resultCode, Intent data) {
+    @Override public void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
         switch (requestCode) {
         case (SUMMARY_RESULT):
@@ -260,8 +255,7 @@ public class RequestHeaderActivity extends AbstractConnectFormFieldActivity impl
         }
     }
 
-    @Override
-    public void onClick(View view) {
+    @Override public void onClick(View view) {
         final CustomDatePickerDialog datePicker = getDateField((String) view.getTag());
         if (datePicker != null) {
             datePicker.setClickedView(view);
@@ -269,8 +263,7 @@ public class RequestHeaderActivity extends AbstractConnectFormFieldActivity impl
         }
     }
 
-    @Override
-    protected String getLabelFromFieldName(String fieldName) {
+    @Override protected String getLabelFromFieldName(String fieldName) {
         if (fieldName.equals(FIELD_NAME)) {
             return this.getResources().getString(R.string.tr_name);
         } else if (fieldName.equals(FIELD_START_DATE)) {
@@ -307,8 +300,7 @@ public class RequestHeaderActivity extends AbstractConnectFormFieldActivity impl
         });
     }
 
-    @Override
-    public String getModelDisplayedValueByFieldName(FormDTO request, String fieldName) {
+    @Override public String getModelDisplayedValueByFieldName(FormDTO request, String fieldName) {
         final RequestDTO tr = (RequestDTO) request;
 
         if (fieldName.equals(FIELD_NAME)) {
@@ -353,8 +345,7 @@ public class RequestHeaderActivity extends AbstractConnectFormFieldActivity impl
         }
     }
 
-    @Override
-    protected void setModelValueByFieldName(FormDTO request, String fieldName, String value) {
+    @Override protected void setModelValueByFieldName(FormDTO request, String fieldName, String value) {
         final RequestDTO tr = (RequestDTO) request;
         if (fieldName.equals(FIELD_NAME)) {
             tr.setName(value);
@@ -375,13 +366,11 @@ public class RequestHeaderActivity extends AbstractConnectFormFieldActivity impl
         }
     }
 
-    @Override
-    protected boolean isFieldVisible(FormDTO model, String fieldName) {
+    @Override protected boolean isFieldVisible(FormDTO model, String fieldName) {
         return headerLayout.contains(fieldName);
     }
 
-    @Override
-    protected void applySpecificRender(final FormDTO model, final TextView component,
+    @Override protected void applySpecificRender(final FormDTO model, final TextView component,
             final LinearLayout.LayoutParams llp, final ConnectFormField ff) {
         if (ff.getName().equals(FIELD_NAME)) {
             component.setTextAppearance(this, R.style.ListCellHeaderText);
@@ -397,8 +386,7 @@ public class RequestHeaderActivity extends AbstractConnectFormFieldActivity impl
 
     public class SaveListener implements BaseAsyncRequestTask.AsyncReplyListener {
 
-        @Override
-        public void onRequestSuccess(Bundle resultData) {
+        @Override public void onRequestSuccess(Bundle resultData) {
             final boolean isCreation = tr.getId() == null;
             requestListCache.setDirty(true);
 
@@ -442,8 +430,7 @@ public class RequestHeaderActivity extends AbstractConnectFormFieldActivity impl
             }
         }
 
-        @Override
-        public void onRequestFail(Bundle resultData) {
+        @Override public void onRequestFail(Bundle resultData) {
             ConnectHelper.displayResponseMessage(getApplicationContext(), resultData,
                     getResources().getString(R.string.tr_error_save));
 
@@ -452,8 +439,7 @@ public class RequestHeaderActivity extends AbstractConnectFormFieldActivity impl
             requestHeaderVF.setDisplayedChild(ID_HEADER_VIEW);
         }
 
-        @Override
-        public void onRequestCancel(Bundle resultData) {
+        @Override public void onRequestCancel(Bundle resultData) {
             ConnectHelper
                     .displayMessage(getApplicationContext(), getResources().getString(R.string.tr_operation_canceled));
             Log.d(Const.LOG_TAG, CLS_TAG + " calling decrement from onRequestCancel");
@@ -461,8 +447,7 @@ public class RequestHeaderActivity extends AbstractConnectFormFieldActivity impl
             requestHeaderVF.setDisplayedChild(ID_HEADER_VIEW);
         }
 
-        @Override
-        public void cleanup() {
+        @Override public void cleanup() {
             asyncReceiverSave.setListener(null);
         }
     }
@@ -471,8 +456,7 @@ public class RequestHeaderActivity extends AbstractConnectFormFieldActivity impl
         // NTD
     }
 
-    @Override
-    protected void onResume() {
+    @Override protected void onResume() {
         super.onResume();
 
         // SAVE
@@ -482,14 +466,12 @@ public class RequestHeaderActivity extends AbstractConnectFormFieldActivity impl
         }
     }
 
-    @Override
-    protected void onPause() {
+    @Override protected void onPause() {
         super.onPause();
         cleanupReceivers();
     }
 
-    @Override
-    public void onBackPressed() {
+    @Override public void onBackPressed() {
         if (hasChange()) {
             final AlertDialogFragment.OnClickListener yesListener = new AlertDialogFragment.OnClickListener() {
 

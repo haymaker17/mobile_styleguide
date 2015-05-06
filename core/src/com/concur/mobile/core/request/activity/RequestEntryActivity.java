@@ -150,8 +150,7 @@ public class RequestEntryActivity extends AbstractConnectFormFieldActivity imple
      *
      * @param savedInstanceState
      */
-    @Override
-    protected void onCreate(Bundle savedInstanceState) {
+    @Override protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
         setContentView(R.layout.request_entry);
@@ -207,6 +206,8 @@ public class RequestEntryActivity extends AbstractConnectFormFieldActivity imple
                     entry.setSegmentType(requestSegmentType.name()); //???
                     entry.setSegmentFormId(getConcurCore().getRequestGroupConfigurationCache().getValue(getUserId())
                             .extractSegmentFormId(request.getPolicyId(), requestSegmentType));
+                    entry.setSegmentTypeId(getConcurCore().getRequestGroupConfigurationCache().getValue(getUserId())
+                            .extractSegmentTypeId(request.getPolicyId(), requestSegmentType));
 
                     form = formFieldsCache.getFormFields(entry.getSegmentFormId());
                     viewedType = SegmentType.RequestSegmentType.getByCode(entry.getSegmentTypeCode());
@@ -277,8 +278,7 @@ public class RequestEntryActivity extends AbstractConnectFormFieldActivity imple
             viewPager.setAdapter(adapter);
             viewPager.setOnPageChangeListener(new ViewPager.SimpleOnPageChangeListener() {
 
-                @Override
-                public void onPageSelected(int position) {
+                @Override public void onPageSelected(int position) {
                     viewedFragment = position;
                 }
             });
@@ -293,8 +293,7 @@ public class RequestEntryActivity extends AbstractConnectFormFieldActivity imple
      * @param fieldLayout
      * @param idFragment
      */
-    @Override
-    public void initializeFragmentDisplay(final LinearLayout fieldLayout, int idFragment) {
+    @Override public void initializeFragmentDisplay(final LinearLayout fieldLayout, int idFragment) {
         // --- Map layout
         layoutPerTab.put(idFragment, fieldLayout);
 
@@ -487,8 +486,7 @@ public class RequestEntryActivity extends AbstractConnectFormFieldActivity imple
         return false;
     }
 
-    @Override
-    protected String getModelDisplayedValueByFieldName(FormDTO requestSegment, String fieldName) {
+    @Override protected String getModelDisplayedValueByFieldName(FormDTO requestSegment, String fieldName) {
         final RequestSegmentDTO segment = (RequestSegmentDTO) requestSegment;
         if (fieldName.equals(FIELD_FROM_ID)) {
             if (segment.getFromLocationName() == null) {
@@ -546,8 +544,7 @@ public class RequestEntryActivity extends AbstractConnectFormFieldActivity imple
         return null;
     }
 
-    @Override
-    protected void setModelValueByFieldName(FormDTO model, String fieldName, String value) {
+    @Override protected void setModelValueByFieldName(FormDTO model, String fieldName, String value) {
         final RequestSegmentDTO segment = (RequestSegmentDTO) model;
         final TextView view = getComponent(model, fieldName);
         if (view != null) {
@@ -596,8 +593,7 @@ public class RequestEntryActivity extends AbstractConnectFormFieldActivity imple
         }
     }
 
-    @Override
-    protected String getLabelFromFieldName(String fieldName) {
+    @Override protected String getLabelFromFieldName(String fieldName) {
         if (fieldName.equals(FIELD_FROM_ID)) {
             if (viewedType == SegmentType.RequestSegmentType.AIR || viewedType == SegmentType.RequestSegmentType.RAIL) {
                 return getResources().getString(R.string.rail_search_label_dep_loc);
@@ -628,16 +624,14 @@ public class RequestEntryActivity extends AbstractConnectFormFieldActivity imple
         return null;
     }
 
-    @Override
-    protected DisplayType getDisplayType(ConnectFormField ff) {
+    @Override protected DisplayType getDisplayType(ConnectFormField ff) {
         if (ff.getName().equals(FIELD_FROM_ID) || ff.getName().equals(FIELD_TO_ID)) {
             return DisplayType.PICKLIST;
         }
         return super.getDisplayType(ff);
     }
 
-    @Override
-    protected boolean isFieldVisible(FormDTO model, String fieldName) {
+    @Override protected boolean isFieldVisible(FormDTO model, String fieldName) {
         if (!hasCustomLayouts || fragmentOnInitialization == TAB_ONE_WAY) {
             return layoutVisibilities.get(viewedType).contains(fieldName);
         } else {
@@ -668,8 +662,7 @@ public class RequestEntryActivity extends AbstractConnectFormFieldActivity imple
         return false;
     }
 
-    @Override
-    protected void applySpecificSort(List<ConnectFormField> formfields) {
+    @Override protected void applySpecificSort(List<ConnectFormField> formfields) {
         final List<String> listFields = layoutVisibilities
                 .get(SegmentType.RequestSegmentType.getByCode(entry.getSegmentTypeCode()));
         final int listSize = listFields.size();
@@ -690,8 +683,7 @@ public class RequestEntryActivity extends AbstractConnectFormFieldActivity imple
         });
     }
 
-    @Override
-    protected void applySpecificRender(final FormDTO model, final TextView component,
+    @Override protected void applySpecificRender(final FormDTO model, final TextView component,
             final LinearLayout.LayoutParams llp, final ConnectFormField ff) {
         if (ff.getName().equals(FIELD_FROM_ID)) {
             // --- Header block
@@ -722,9 +714,9 @@ public class RequestEntryActivity extends AbstractConnectFormFieldActivity imple
             if ((viewedType == SegmentType.RequestSegmentType.AIR || viewedType == SegmentType.RequestSegmentType.RAIL)
                     && fragmentOnInitialization == TAB_ROUND_TRIP) {
                 final int segmentLayoutIdx = model.getDisplayOrder() != null ? model.getDisplayOrder() : 0;
-                addBlockTitle(getResources().getString(
-                        segmentLayoutIdx == 0 ? R.string.tr_segment_block_outbound : R.string.tr_segment_block_return),
-                        model);
+                addBlockTitle(getResources().getString(segmentLayoutIdx == 0 ?
+                                R.string.tr_segment_block_outbound :
+                                R.string.tr_segment_block_return), model);
             }
         } else if (ff.getName().equals(FIELD_END_DATE)) {
             // --- Header block : round trip
@@ -749,18 +741,15 @@ public class RequestEntryActivity extends AbstractConnectFormFieldActivity imple
             // --- listener to apply the change on any existing moneyField
             component.addTextChangedListener(new TextWatcher() {
 
-                @Override
-                public void beforeTextChanged(CharSequence charSequence, int i, int i2, int i3) {
+                @Override public void beforeTextChanged(CharSequence charSequence, int i, int i2, int i3) {
                     // --- ntd
                 }
 
-                @Override
-                public void onTextChanged(CharSequence charSequence, int i, int i2, int i3) {
+                @Override public void onTextChanged(CharSequence charSequence, int i, int i2, int i3) {
                     // --- ntd
                 }
 
-                @Override
-                public void afterTextChanged(Editable editable) {
+                @Override public void afterTextChanged(Editable editable) {
                     final TextView amountField = RequestEntryActivity.this.getComponent(model, FIELD_AMOUNT);
                     final TextView currencyField = RequestEntryActivity.this.getComponent(model, FIELD_CURRENCY);
                     // --- field can be null if hidden
@@ -778,8 +767,7 @@ public class RequestEntryActivity extends AbstractConnectFormFieldActivity imple
         }
     }
 
-    @Override
-    public void applySaveButtonPolicy(View saveButtonView) {
+    @Override public void applySaveButtonPolicy(View saveButtonView) {
         if (canSave() && request.isActionPermitted(RequestParser.PermittedAction.SAVE)) {
             saveButtonView.setVisibility(View.VISIBLE);
         } else {
@@ -842,6 +830,7 @@ public class RequestEntryActivity extends AbstractConnectFormFieldActivity imple
             final RequestTask reqTask;
             if (createMode) {
                 reqTask = new RequestTask(this, 1, asyncReceiverSave, ConnectHelper.Action.CREATE, null);
+                reqTask.addUrlParameter(RequestTask.P_REQUEST_ID, request.getId());
             } else {
                 reqTask = new RequestTask(this, 1, asyncReceiverSave, ConnectHelper.Action.UPDATE, entry.getId());
             }
@@ -853,18 +842,15 @@ public class RequestEntryActivity extends AbstractConnectFormFieldActivity imple
         }
     }
 
-    @Override
-    protected Locale getLocale() {
+    @Override protected Locale getLocale() {
         return locale;
     }
 
-    @Override
-    protected DateUtil.DatePattern getDatePattern() {
+    @Override protected DateUtil.DatePattern getDatePattern() {
         return DateUtil.DatePattern.DB_INPUT;
     }
 
-    @Override
-    public void onClick(final View view) {
+    @Override public void onClick(final View view) {
         final CustomDatePickerDialog datePicker = getDateField((String) view.getTag());
         if (datePicker != null) {
             datePicker.setClickedView(view);
@@ -905,8 +891,7 @@ public class RequestEntryActivity extends AbstractConnectFormFieldActivity imple
         }
         builder.setSingleChoiceItems(curTypeAdapter, -1, new DialogInterface.OnClickListener() {
 
-            @Override
-            public void onClick(DialogInterface dialog, int which) {
+            @Override public void onClick(DialogInterface dialog, int which) {
                 if (which != -1) {
                     Object selCurObj = curTypeAdapter.getItem(which);
                     if (selCurObj instanceof ListItem) {
@@ -931,13 +916,11 @@ public class RequestEntryActivity extends AbstractConnectFormFieldActivity imple
 
     /* ******************************* */
 
-    @Override
-    protected void save(ConnectForm form, final FormDTO model) {
+    @Override protected void save(ConnectForm form, final FormDTO model) {
         super.save(form, model);
     }
 
-    @Override
-    protected LinearLayout getCurrentFieldsLayout() {
+    @Override protected LinearLayout getCurrentFieldsLayout() {
         return hasCustomLayouts ?
                 layoutPerTab.get(fragmentOnInitialization >= 0 ? fragmentOnInitialization : viewedFragment) :
                 currentFieldsLayout;
@@ -945,8 +928,7 @@ public class RequestEntryActivity extends AbstractConnectFormFieldActivity imple
 
     public class SaveListener implements BaseAsyncRequestTask.AsyncReplyListener {
 
-        @Override
-        public void onRequestSuccess(Bundle resultData) {
+        @Override public void onRequestSuccess(Bundle resultData) {
             final boolean isCreation = entry.getId() == null;
             requestListCache.setDirty(true);
 
@@ -963,8 +945,7 @@ public class RequestEntryActivity extends AbstractConnectFormFieldActivity imple
             finish();
         }
 
-        @Override
-        public void onRequestFail(Bundle resultData) {
+        @Override public void onRequestFail(Bundle resultData) {
             ConnectHelper.displayResponseMessage(getApplicationContext(), resultData,
                     getResources().getString(R.string.tr_error_save));
 
@@ -973,8 +954,7 @@ public class RequestEntryActivity extends AbstractConnectFormFieldActivity imple
             entryVF.setDisplayedChild(ID_ENTRY_VIEW);
         }
 
-        @Override
-        public void onRequestCancel(Bundle resultData) {
+        @Override public void onRequestCancel(Bundle resultData) {
             ConnectHelper
                     .displayMessage(getApplicationContext(), getResources().getString(R.string.tr_operation_canceled));
             Log.d(Const.LOG_TAG, CLS_TAG + " calling decrement from onRequestCancel");
@@ -982,8 +962,7 @@ public class RequestEntryActivity extends AbstractConnectFormFieldActivity imple
             entryVF.setDisplayedChild(ID_ENTRY_VIEW);
         }
 
-        @Override
-        public void cleanup() {
+        @Override public void cleanup() {
             asyncReceiverSave.setListener(null);
         }
 
@@ -998,8 +977,7 @@ public class RequestEntryActivity extends AbstractConnectFormFieldActivity imple
      *
      * @see com.concur.mobile.activity.expense.ConcurView#onActivityResult(int, int, android.content.Intent)
      */
-    @Override
-    public void onActivityResult(int requestCode, int resultCode, Intent data) {
+    @Override public void onActivityResult(int requestCode, int resultCode, Intent data) {
         if (resultCode == Activity.RESULT_OK) {
             final String selectedListItemKey = data.getStringExtra(LocationSearchActivity.EXTRA_PARAM_LOCATION_ID);
             final String selectedListItemText = data.getStringExtra(LocationSearchActivity.EXTRA_PARAM_LOCATION_NAME);
@@ -1015,8 +993,7 @@ public class RequestEntryActivity extends AbstractConnectFormFieldActivity imple
         }
     }
 
-    @Override
-    protected void onResume() {
+    @Override protected void onResume() {
         super.onResume();
 
         // SAVE
@@ -1031,14 +1008,12 @@ public class RequestEntryActivity extends AbstractConnectFormFieldActivity imple
         }
     }
 
-    @Override
-    protected void onPause() {
+    @Override protected void onPause() {
         super.onPause();
         cleanupReceivers();
     }
 
-    @Override
-    public void onBackPressed() {
+    @Override public void onBackPressed() {
         if (canSave() && hasCustomLayouts) {
             // --- Apply the list of segments in use
             if (viewedFragment == TAB_ONE_WAY) {
@@ -1056,28 +1031,24 @@ public class RequestEntryActivity extends AbstractConnectFormFieldActivity imple
         if (canSave() && hasChange(entry.getListSegment())) {
             final AlertDialogFragment.OnClickListener yesListener = new AlertDialogFragment.OnClickListener() {
 
-                @Override
-                public void onClick(FragmentActivity activity, DialogInterface dialog, int which) {
+                @Override public void onClick(FragmentActivity activity, DialogInterface dialog, int which) {
                     // --- save action + redirect
                     saveAction();
                 }
 
-                @Override
-                public void onCancel(FragmentActivity activity, DialogInterface dialog) {
+                @Override public void onCancel(FragmentActivity activity, DialogInterface dialog) {
                     // --- can't happen
                 }
             };
             final AlertDialogFragment.OnClickListener noListener = new AlertDialogFragment.OnClickListener() {
 
-                @Override
-                public void onClick(FragmentActivity activity, DialogInterface dialog, int which) {
+                @Override public void onClick(FragmentActivity activity, DialogInterface dialog, int which) {
                     dialog.dismiss();
                     // --- redirect without saving
                     finish();
                 }
 
-                @Override
-                public void onCancel(FragmentActivity activity, DialogInterface dialog) {
+                @Override public void onCancel(FragmentActivity activity, DialogInterface dialog) {
                     // --- can't happen
                 }
             };

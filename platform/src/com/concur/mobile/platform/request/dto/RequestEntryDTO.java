@@ -25,33 +25,32 @@ public class RequestEntryDTO {
         }
     }
 
-    @Expose @SerializedName("ID")
-    private String id;
+    @Expose @SerializedName("ID") private String id;
     @Expose @SerializedName("Segments")
     private List<RequestSegmentDTO> listSegment = new ArrayList<RequestSegmentDTO>();
-    @Expose @SerializedName("ForeignCurrencyCode")
-    private String foreignCurrencyCode;
-    @Expose @SerializedName("ForeignAmount")
-    private Double foreignAmount;
-    @SerializedName("Comments")
-    private List<RequestCommentDTO> comments;
-    @SerializedName("ExpenseTypeName")
-    private String expenseTypeName;
-    @Expose @SerializedName("TripType")
-    private TripType tripType;
+    @Expose @SerializedName("ForeignCurrencyCode") private String foreignCurrencyCode;
+    @Expose @SerializedName("ForeignAmount") private Double foreignAmount;
+    @SerializedName("Comments") private List<RequestCommentDTO> comments;
+    @SerializedName("ExpenseTypeName") private String expenseTypeName;
+    @Expose @SerializedName("TripType") private TripType tripType;
 
-    @Expose @SerializedName("SegmentFormID")
-    private String segmentFormId;
-    @SerializedName("SegmentTypeName")
-    private String segmentType;
-    @SerializedName("SegmentTypeCode")
-    private String segmentTypeCode;
+    @Expose @SerializedName("SegmentFormID") private String segmentFormId;
+    @SerializedName("SegmentTypeName") private String segmentType;
+    @SerializedName("SegmentTypeCode") private String segmentTypeCode;
+    @Expose @SerializedName("SegmentTypeID") private String segmentTypeId;
 
     private Integer displayOrder = 0;
 
     // --- This is some horrible stuff required to post an entry...
-    @Expose @SerializedName("RequestID")
-    private String requestId;
+    @Expose @SerializedName("RequestID") private String requestId;
+
+    public String getSegmentTypeId() {
+        return segmentTypeId;
+    }
+
+    public void setSegmentTypeId(String segmentTypeId) {
+        this.segmentTypeId = segmentTypeId;
+    }
 
     public void setRequestId(String requestId) {
         this.requestId = requestId;
