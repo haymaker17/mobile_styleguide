@@ -1,10 +1,5 @@
 package com.concur.mobile.platform.authentication;
 
-import java.util.Calendar;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-
 import android.text.TextUtils;
 import android.util.Log;
 
@@ -14,6 +9,11 @@ import com.concur.mobile.base.service.parser.ItemParser;
 import com.concur.mobile.base.service.parser.ListParser;
 import com.concur.mobile.platform.util.Const;
 import com.concur.mobile.platform.util.Parse;
+
+import java.util.Calendar;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 
 /**
  * Provides a model of login response information.
@@ -220,6 +220,21 @@ public class LoginResult extends BaseParser {
         String itemTag = "AccessToken";
         accessTokenItemParser = new ItemParser<AccessToken>(itemTag, AccessToken.class);
         parser.registerParser(accessTokenItemParser, itemTag);
+
+        // MOB-23219 Create an empty parser for SalesForceToken. Don't need it, so just ignore it.
+        // If we don't register a parser here with the unique prefix and namespace, then the
+        // AccessToken item parser register above will be used to parse the SalesForceToken,
+        // which is NOT what we want.
+        //
+        // Sample XML that we want to ignore.
+        //    <SalesForceToken xmlns:a="http://schemas.datacontract.org/2004/07/Snowbird">
+        //        <a:AccessToken>
+        //            asldkjfasdjflas3838asldfalkjs
+        //        </a:AccessToken>
+        //        <a:InstanceUrl>https://na9.salesforce.com</a:InstanceUrl>
+        //    </SalesForceToken>
+        //
+        parser.registerParser(new BaseParser(), "AccessToken", "a", "http://schemas.datacontract.org/2004/07/Snowbird");
 
         // Create and register the session parser.
         itemTag = "Session";
