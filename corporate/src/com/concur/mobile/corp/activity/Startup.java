@@ -392,20 +392,11 @@ public class Startup extends BaseActivity {
         // Check the expiration on the session and clear it if needed
         Long expire = prefs.getLong(Const.PREF_SESSION_EXPIRATION, 0);
         long now = Calendar.getInstance().getTimeInMillis();
-        //if (!ConcurMobile.isConnected() || (expire <= now)) {
-        if (true) {
+        if (!ConcurMobile.isConnected() || (expire <= now)) {
             Editor e = prefs.edit();
             e.remove(Const.PREF_SESSION_DURATION);
             e.remove(Const.PREF_SESSION_EXPIRATION);
             e.commit();
-        }
-
-        // Statistics Notification if expiration exists but is older than "now".
-        if (expire > 0 && expire <= now) {
-            // Map<String, String> params = new HashMap<String, String>();
-            // params.put(Flurry.PARAM_NAME_TYPE, Flurry.PARAM_VALUE_SESSION_EXPIRED);
-
-            // EventTracker.INSTANCE.track(Flurry.CATEGORY_SIGN_IN, Flurry.EVENT_NAME_AUTHENTICATION, params);
         }
     }
 

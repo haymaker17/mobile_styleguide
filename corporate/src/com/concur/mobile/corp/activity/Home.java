@@ -1,18 +1,5 @@
 package com.concur.mobile.corp.activity;
 
-import java.io.File;
-import java.net.URLEncoder;
-import java.util.ArrayList;
-import java.util.Calendar;
-import java.util.HashMap;
-import java.util.Iterator;
-import java.util.List;
-import java.util.Locale;
-import java.util.Map;
-import java.util.TimeZone;
-
-import org.apache.http.HttpStatus;
-
 import android.app.Activity;
 import android.app.AlertDialog;
 import android.app.Dialog;
@@ -149,6 +136,19 @@ import com.concur.mobile.platform.location.LastLocationTracker;
 import com.concur.mobile.platform.ui.common.dialog.NoConnectivityDialogFragment;
 import com.concur.mobile.platform.ui.common.util.ImageUtil;
 import com.concur.platform.PlatformProperties;
+
+import org.apache.http.HttpStatus;
+
+import java.io.File;
+import java.net.URLEncoder;
+import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.HashMap;
+import java.util.Iterator;
+import java.util.List;
+import java.util.Locale;
+import java.util.Map;
+import java.util.TimeZone;
 
 @EventTracker.EventTrackerClassName(getClassName = "Home")
 public class Home extends BaseActivity implements View.OnClickListener, NavigationListener, ReceiptChoiceListener {
@@ -1519,6 +1519,7 @@ public class Home extends BaseActivity implements View.OnClickListener, Navigati
                     } else {
                         i.putExtra(Flurry.PARAM_NAME_BOOKED_FROM, Flurry.PARAM_VALUE_HOME);
                     }
+                    ConcurMobile.userClickTime = System.currentTimeMillis();
                     startActivity(i);
                 } else {
                     showDialog(Const.DIALOG_TRAVEL_PROFILE_INCOMPLETE);
@@ -1536,6 +1537,7 @@ public class Home extends BaseActivity implements View.OnClickListener, Navigati
             } else {
                 i.putExtra(Flurry.PARAM_NAME_BOOKED_FROM, Flurry.PARAM_VALUE_HOME);
             }
+            ConcurMobile.userClickTime = System.currentTimeMillis();
             startActivity(i);
             break;
         case R.id.menuHomeBookHotel:
@@ -1547,6 +1549,7 @@ public class Home extends BaseActivity implements View.OnClickListener, Navigati
             } else {
                 i.putExtra(Flurry.PARAM_NAME_BOOKED_FROM, Flurry.PARAM_VALUE_HOME);
             }
+            ConcurMobile.userClickTime = System.currentTimeMillis();
             startActivityForResult(i, Const.REQUEST_CODE_BOOK_HOTEL);
             break;
         case R.id.menuHomeBookRail:
@@ -1558,6 +1561,7 @@ public class Home extends BaseActivity implements View.OnClickListener, Navigati
             } else {
                 i.putExtra(Flurry.PARAM_NAME_BOOKED_FROM, Flurry.PARAM_VALUE_HOME);
             }
+            ConcurMobile.userClickTime = System.currentTimeMillis();
             startActivity(i);
             break;
         }
@@ -1733,6 +1737,7 @@ public class Home extends BaseActivity implements View.OnClickListener, Navigati
         }
 
         if (i != null) {
+            ConcurMobile.userClickTime = System.currentTimeMillis();
             if (requestCode == null) {
                 startActivity(i);
             } else {
