@@ -749,7 +749,7 @@ public class HotelSearchAndResultActivity extends TravelBaseActivity
 
                             hotelSearchRESTResultFrag.showProgressBar(true);
                             lm = getLoaderManager();
-                            lm.initLoader(HOTEL_RATES_LOADER_ID, null, hotelRatesRESTResultLoaderCallbacks);
+                            lm.restartLoader(HOTEL_RATES_LOADER_ID, null, hotelRatesRESTResultLoaderCallbacks);
                         }
                     } else {
                         Toast.makeText(getApplicationContext(), "No Rooms Available", Toast.LENGTH_LONG).show();

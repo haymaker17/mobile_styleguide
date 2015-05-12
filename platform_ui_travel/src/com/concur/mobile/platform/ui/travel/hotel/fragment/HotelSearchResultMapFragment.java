@@ -163,6 +163,7 @@ public class HotelSearchResultMapFragment extends PlatformFragmentV1 implements 
             @Override public boolean onMarkerClick(Marker marker) {
                 itemClicked = markerMap.get(marker);
                 marker.showInfoWindow();
+                marker.setVisible(true);
                 itemClicked.buildView(getActivity(), hotelInfoView, null);
                 if (previousMarker != null) {
                     previousMarker.setIcon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_BLUE));
