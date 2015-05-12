@@ -283,9 +283,19 @@ public class RestHotelSearch extends TravelBaseActivity
     public boolean onCreateOptionsMenu(Menu menu) {
         // MOB-11596 MOB-13636
         // if (Preferences.shouldAllowVoiceBooking()) {
+
         MenuInflater inflater = getMenuInflater();
         inflater.inflate(R.menu.option_voice_v1, menu);
         // }
+        return true;
+    }
+
+    @Override
+    public boolean onPrepareOptionsMenu(Menu menu) {
+        if(formFields != null && formFields.size() > 0) {
+            // disable the menu completely if custom fields available
+            return false;
+        }
         return true;
     }
 
@@ -852,6 +862,9 @@ public class RestHotelSearch extends TravelBaseActivity
         // Check for whether 'custom_fields' view group exists!
         if (findViewById(R.id.hotel_booking_custom_fields) != null) {
             if (formFields != null && formFields.size() > 0) {
+                // recreate the option menu, will invoke the onPrepareOptionsMenu
+                invalidateOptionsMenu();
+
                 addTravelCustomFieldsView(false, true, update);
             }
         }
