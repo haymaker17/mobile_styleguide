@@ -1,15 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
-<menu xmlns:android="http://schemas.android.com/apk/res/android" >
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
 
     <item
         android:id="@+id/map"
         android:icon="@drawable/icon_nav_map"
         android:showAsAction="ifRoom"
         android:title="@string/action_item_maps"/>
-    <item
-        android:id="@+id/voice"
-        android:icon="@drawable/ic_action_voice"
-        android:showAsAction="ifRoom"
-        android:title="@string/voice_search"/>
+  
 
 </menu>

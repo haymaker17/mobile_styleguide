@@ -28,6 +28,7 @@ public class Const {
     public static final String EXTRA_LOCATION_SEARCH_MODE_USED = "loc_search_mode_used";
     public static final String EXTRA_TRAVEL_LOCATION = "travel.location";
     public static final String EXTRA_TRAVEL_CLIQBOOK_TRIP_ID = "travel.cliqbook.trip.id";
+    public static final String EXTRA_TRAVEL_SEARCH_NEAR_ME = "searchNearMe";
 
     public static final String ACTION_HOTEL_SEARCH_RESULTS = "com.concur.mobile.action.HOTELS_FOUND";
     public static final String EXTRA_HOTELS_LIST = "hotel.list";
