@@ -64,13 +64,13 @@ public class HotelSearchResultMapFragment extends PlatformFragmentV1 implements 
         }
 
         hotelInfoView = (View) mainView.findViewById(R.id.info_window);
-        hotelInfoView.setOnClickListener(new View.OnClickListener() {
+        //        hotelInfoView.setOnClickListener(new View.OnClickListener() {
+        //
+        //            @Override public void onClick(View v) {
+        //                callBackListener.hotelListItemClicked(itemClicked);
+        //            }
+        //        });
 
-            @Override public void onClick(View v) {
-                callBackListener.hotelListItemClicked(itemClicked);
-            }
-        });
-        googleMap.setInfoWindowAdapter(new HotelInfoWindowAdapter());
         return mainView;
     }
 
@@ -156,6 +156,7 @@ public class HotelSearchResultMapFragment extends PlatformFragmentV1 implements 
         // CameraUpdate cu = CameraUpdateFactory.newLatLngZoom(position, 14);
 
         googleMap.animateCamera(cu);
+        googleMap.setInfoWindowAdapter(new HotelInfoWindowAdapter());
 
         googleMap.setOnMarkerClickListener(new GoogleMap.OnMarkerClickListener() {
 
@@ -186,8 +187,7 @@ public class HotelSearchResultMapFragment extends PlatformFragmentV1 implements 
             builder.include(position);
             markerMap.put(hotelMarker, item);
             if (firstMarker) {
-                // hotelMarket.showInfoWindow();
-                hotelMarker.hideInfoWindow();
+                hotelMarker.showInfoWindow();
                 View v = item.buildView(getActivity(), hotelInfoView, null);
                 hotelMarker.setIcon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_RED));
                 firstMarker = false;
