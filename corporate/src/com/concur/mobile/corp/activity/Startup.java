@@ -213,7 +213,10 @@ public class Startup extends BaseActivity {
 
                     boolean needLogin = true;
                     if (autoLogin) {
-                        needLogin = !doLogin();
+                        // TODO if autologin turn on dont do anything just go to homescreen
+                        needLogin = false;
+                        startHomeScreen();
+                        doLoginFinish();
                     }
 
                     if (needLogin) {
@@ -319,12 +322,6 @@ public class Startup extends BaseActivity {
     }
 
     private void startHomeScreen() {
-
-        // Prior to the starting the home screen, initialize the system/user configuration
-        // information.
-        ((ConcurMobile) getApplication()).initSystemConfig();
-        ((ConcurMobile) getApplication()).initUserConfig();
-
         startIntent = new Intent(this, Home.class);
 
         boolean launchExpList = getIntent().getBooleanExtra(Home.LAUNCH_EXPENSE_LIST, false);
@@ -407,14 +404,6 @@ public class Startup extends BaseActivity {
             e.remove(Const.PREF_SESSION_DURATION);
             e.remove(Const.PREF_SESSION_EXPIRATION);
             e.commit();
-        }
-
-        // Statistics Notification if expiration exists but is older than "now".
-        if (expire > 0 && expire <= now) {
-            // Map<String, String> params = new HashMap<String, String>();
-            // params.put(Flurry.PARAM_NAME_TYPE, Flurry.PARAM_VALUE_SESSION_EXPIRED);
-
-            // EventTracker.INSTANCE.track(Flurry.CATEGORY_SIGN_IN, Flurry.EVENT_NAME_AUTHENTICATION, params);
         }
     }
 
