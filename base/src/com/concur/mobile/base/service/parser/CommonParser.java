@@ -1,5 +1,7 @@
 package com.concur.mobile.base.service.parser;
 
+import android.text.TextUtils;
+
 import java.io.IOException;
 import java.util.HashMap;
 import java.util.Stack;
@@ -51,6 +53,25 @@ public class CommonParser implements Parser {
     }
 
     /**
+     * Registers a class that implements the Parser interface. Once registered, this parser will be responsible for parsing the
+     * specified node and all of its children. Only secondary parsers can be registered. Attempts to register the common parser
+     * will be ignored.
+     *
+     * @param parser  A {@link Parser} implementation that will handle specific nodes.
+     * @param nodeName The name of the desired node to parse.
+     * @param prefix The prefix of the node.
+     * @param namespace The namespace of the node.
+     */
+    public final void registerParser(Parser parser, String nodeName, String prefix, String namespace) {
+        if (parser != this) {
+            // Only register non-base parsers
+            registeredParsers.put((!TextUtils.isEmpty(prefix) ? (prefix + ":") : "")
+                    + (!TextUtils.isEmpty(namespace) ? (namespace + ":") : "")
+                    + nodeName, parser);
+        }
+    }
+
+    /**
      * Will unregister a class that implements the Parser interface.
      * 
      * @param parser
@@ -62,6 +83,25 @@ public class CommonParser implements Parser {
         if (parser != this) {
             // Only unregister non-base parsers.
             registeredParsers.remove(nodeName);
+        }
+    }
+
+    /***
+     *
+     * Will unregister a class that implements the Parser interface.
+     *
+     * @param parser  A {@link Parser} implementation that will handle specific nodes.
+     * @param nodeName The name of the desired node to parse.
+     * @param prefix The prefix of the node.
+     * @param namespace The namespace of the node.
+     */
+    public final void unregisterParser(Parser parser, String nodeName, String prefix, String namespace) {
+        if (parser != this) {
+            // Only unregister non-base parsers.
+            registeredParsers.remove(
+                    (!TextUtils.isEmpty(prefix) ? (prefix + ":") : "")
+                            + (!TextUtils.isEmpty(namespace) ? (namespace + ":") : "")
+                            + nodeName);
         }
     }
 
@@ -88,6 +128,32 @@ public class CommonParser implements Parser {
     }
 
     /**
+     * Return the {@link Parser} that is registered to handle a specific node or the main {@link CommonParser}.
+     *
+     * @param nodeName The name of the node being looked for.
+     * @param prefix The prefix of the node.
+     * @param namespace The namespace of the node.
+     * @return A {@link Parser} implementation. If the requested node is registered, the registered secondary {@link Parser} will
+     *         be returned. If there is no registration for the request node then the running {@link CommonParser} will be
+     *         returned.
+     */
+    public final Parser findParser(String nodeName, String prefix, String namespace) {
+        Parser parser = null;
+        if (registeredParsers != null) {
+            parser = registeredParsers.get((!TextUtils.isEmpty(prefix) ? (prefix + ":") : "")
+                    + (!TextUtils.isEmpty(namespace) ? (namespace + ":") : "")
+                    + nodeName);
+        }
+
+        if (parser == null) {
+            // MOB-23219 Calling the old method to ensure we don't break old/existing functionality.
+            return findParser(nodeName);
+        }
+
+        return parser;
+    }
+
+    /**
      * Iterate the provided {@link XmlPullParser} and handle elements as found. If a secondary {@link Parser} is registered for a
      * node then it will be used to handle the node and all descendants.
      * 
@@ -100,6 +166,8 @@ public class CommonParser implements Parser {
 
         // A holder variable to track the name of the node being processed
         String tag = "";
+        String prefix = "";
+        String namespace = "";
 
         // The parser currently handling events. Starts with this
         // CommonParser.
@@ -109,6 +177,10 @@ public class CommonParser implements Parser {
 
         // Iterate the entire XML document
         while (eventType != XmlPullParser.END_DOCUMENT) {
+
+            prefix = xpp.getPrefix();
+            namespace = xpp.getNamespace();
+
             switch (eventType) {
 
             case XmlPullParser.START_TAG:
@@ -117,9 +189,9 @@ public class CommonParser implements Parser {
 
                 if (currentParser == this) {
                     // Give other parsers a chance to jump in
-                    currentParser = findParser(tag);
+                    currentParser = findParser(tag, prefix, namespace);
                 } else {
-                    Parser nextParser = findParser(tag);
+                    Parser nextParser = findParser(tag, prefix, namespace);
                     if (nextParser != this && currentParser != nextParser) {
                         // This is a registered node and it is not us.
                         // Switch but save the current parser for
@@ -148,7 +220,7 @@ public class CommonParser implements Parser {
                 // Hand off the event to the appropriate parser
                 currentParser.endTag(tag);
 
-                if (currentParser != this && findParser(tag) == currentParser) {
+                if (currentParser != this && findParser(tag, prefix, namespace) == currentParser) {
                     // Reset the parser if we have reached the end of
                     // the registered tag
                     if (!activeParsers.isEmpty()) {

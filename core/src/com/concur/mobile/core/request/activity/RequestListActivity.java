@@ -74,8 +74,7 @@ public class RequestListActivity extends BaseActivity {
     private String formWaitingForRefresh = null;
     private String reqWaitingForFormRefresh = null;
 
-    @Override
-    protected void onCreate(Bundle savedInstanceState) {
+    @Override protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         final ConcurCore concurCore = (ConcurCore) getApplication();
         setContentView(R.layout.request_list);
@@ -109,7 +108,7 @@ public class RequestListActivity extends BaseActivity {
     }
 
     private void configureUI() {
-        getActionBar().setDisplayHomeAsUpEnabled(true);
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         // Get components references
         requestListView = ((ListView) findViewById(R.id.requestListView));
         requestListVF = ((ViewFlipper) findViewById(R.id.requestListVF));
@@ -131,8 +130,7 @@ public class RequestListActivity extends BaseActivity {
 
         newRequestButton.setOnClickListener(new OnClickListener() {
 
-            @Override
-            public void onClick(View v) {
+            @Override public void onClick(View v) {
                 // --- reminder: button is displayed only if a configuration with a default policy exists
                 final String formId = groupConfigurationCache.getValue(getUserId()).getFormId();
                 if (formFieldsCache.getValue(formId) != null) {
@@ -294,8 +292,7 @@ public class RequestListActivity extends BaseActivity {
         }
     }
 
-    @Override
-    protected void onResume() {
+    @Override protected void onResume() {
         super.onResume();
         // --- Request Group Configuration
         if (asyncGroupConfigurationReceiver == null) {
@@ -320,14 +317,12 @@ public class RequestListActivity extends BaseActivity {
         }
     }
 
-    @Override
-    protected void onPause() {
+    @Override protected void onPause() {
         super.onPause();
         cleanupReceivers();
     }
 
-    @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
+    @Override public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {
         case android.R.id.home:
             NavUtils.navigateUpFromSameTask(this);
@@ -346,8 +341,7 @@ public class RequestListActivity extends BaseActivity {
      */
     class ListAdapterRowClickListener implements AdapterView.OnItemClickListener {
 
-        @Override
-        public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+        @Override public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
             final SplitRequestListAdapter adapter = (SplitRequestListAdapter) requestListView.getAdapter();
             final RequestDTO request = adapter.getItem(position);
             if (request != null) {
@@ -371,8 +365,7 @@ public class RequestListActivity extends BaseActivity {
      */
     private class TRListListener implements AsyncReplyListener {
 
-        @Override
-        public void onRequestSuccess(Bundle resultData) {
+        @Override public void onRequestSuccess(Bundle resultData) {
             // converts the result string to a list of TravelRequestDTO
             final List<RequestDTO> listRequests = requestParser
                     .parseTRListResponse(resultData.getString(BaseAsyncRequestTask.HTTP_RESPONSE));
@@ -401,8 +394,7 @@ public class RequestListActivity extends BaseActivity {
             updateListUI(listRequests);
         }
 
-        @Override
-        public void onRequestFail(Bundle resultData) {
+        @Override public void onRequestFail(Bundle resultData) {
             if (requestListView.getAdapter().isEmpty()) {
                 handleRefreshFail();
             }
@@ -410,8 +402,7 @@ public class RequestListActivity extends BaseActivity {
             Log.d(Const.LOG_TAG, " onRequestFail in TRListListener...");
         }
 
-        @Override
-        public void onRequestCancel(Bundle resultData) {
+        @Override public void onRequestCancel(Bundle resultData) {
             if (requestListView.getAdapter().isEmpty()) {
                 handleRefreshFail();
             }
@@ -419,8 +410,7 @@ public class RequestListActivity extends BaseActivity {
             Log.d(Const.LOG_TAG, " onRequestCancel in TRListListener...");
         }
 
-        @Override
-        public void cleanup() {
+        @Override public void cleanup() {
             asyncTRListReceiver.setListener(null);
         }
     }
@@ -430,8 +420,7 @@ public class RequestListActivity extends BaseActivity {
      */
     private class FormFieldsListener implements AsyncReplyListener {
 
-        @Override
-        public void onRequestSuccess(Bundle resultData) {
+        @Override public void onRequestSuccess(Bundle resultData) {
             final String formId = resultData.getString(RequestFormFieldsTask.PARAM_FORM_ID);
             formFieldsCache.setFormRefreshStatus(formId, false);
             // --- parse the form received
@@ -445,8 +434,7 @@ public class RequestListActivity extends BaseActivity {
             handleAwaitingRefresh(formId, true);
         }
 
-        @Override
-        public void onRequestFail(Bundle resultData) {
+        @Override public void onRequestFail(Bundle resultData) {
             final String formId = resultData.getString(RequestFormFieldsTask.PARAM_FORM_ID);
             formFieldsCache.setFormRefreshStatus(formId, false);
             Log.d(Const.LOG_TAG, CLS_TAG + " calling decrement from onrequestfails");
@@ -454,8 +442,7 @@ public class RequestListActivity extends BaseActivity {
             handleAwaitingRefresh(formId, false);
         }
 
-        @Override
-        public void onRequestCancel(Bundle resultData) {
+        @Override public void onRequestCancel(Bundle resultData) {
             final String formId = resultData.getString(RequestFormFieldsTask.PARAM_FORM_ID);
             formFieldsCache.setFormRefreshStatus(formId, false);
             Log.d(Const.LOG_TAG, CLS_TAG + " calling decrement from onrequestcancel");
@@ -463,8 +450,7 @@ public class RequestListActivity extends BaseActivity {
             handleAwaitingRefresh(formId, false);
         }
 
-        @Override
-        public void cleanup() {
+        @Override public void cleanup() {
             // --- ntd
         }
     }
@@ -474,8 +460,7 @@ public class RequestListActivity extends BaseActivity {
      */
     private class GroupConfigurationListener implements AsyncReplyListener {
 
-        @Override
-        public void onRequestSuccess(Bundle resultData) {
+        @Override public void onRequestSuccess(Bundle resultData) {
             // --- parse the configurations received
             final List<RequestGroupConfiguration> rgcc = requestParser
                     .parseRequestGroupConfigurationsResponse(resultData.getString(BaseAsyncRequestTask.HTTP_RESPONSE));
@@ -497,26 +482,22 @@ public class RequestListActivity extends BaseActivity {
             }
         }
 
-        @Override
-        public void onRequestFail(Bundle resultData) {
+        @Override public void onRequestFail(Bundle resultData) {
             Log.d(Const.LOG_TAG, CLS_TAG + " calling decrement from onrequestfails");
             Log.d(Const.LOG_TAG, " onRequestFail in GroupConfigurationListener...");
         }
 
-        @Override
-        public void onRequestCancel(Bundle resultData) {
+        @Override public void onRequestCancel(Bundle resultData) {
             Log.d(Const.LOG_TAG, CLS_TAG + " calling decrement from onrequestcancel");
             Log.d(Const.LOG_TAG, " onRequestCancel in GroupConfigurationListener...");
         }
 
-        @Override
-        public void cleanup() {
+        @Override public void cleanup() {
             asyncGroupConfigurationReceiver.setListener(null);
         }
     }
 
-    @Override
-    public void onActivityResult(int requestCode, int resultCode, Intent data) {
+    @Override public void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
         switch (requestCode) {
         case (HEADER_RESULT):
