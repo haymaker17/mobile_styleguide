@@ -1,12 +1,5 @@
 package com.concur.mobile.corp.activity;
 
-import java.util.Arrays;
-import java.util.Calendar;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Locale;
-import java.util.Map;
-
 import android.app.Dialog;
 import android.content.DialogInterface;
 import android.content.Intent;
@@ -52,6 +45,13 @@ import com.concur.mobile.platform.authentication.PPLoginLightRequestTask;
 import com.concur.mobile.platform.authentication.SessionInfo;
 import com.concur.mobile.platform.config.provider.ConfigUtil;
 import com.concur.platform.PlatformProperties;
+
+import java.util.Arrays;
+import java.util.Calendar;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Locale;
+import java.util.Map;
 
 @EventTracker.EventTrackerClassName(getClassName = "Startup")
 public class Startup extends BaseActivity {
@@ -188,6 +188,13 @@ public class Startup extends BaseActivity {
                     || (sessionInfo != null && (!TextUtils.isEmpty(sessionInfo.getSSOUrl())))) {
                 // Perform a company sign-on based login.
                 emailLookupBundle = getEmailLookUpBundleFromSessionInfo(sessionInfo);
+                // set server url
+                String serverUrl = ssoReply.serverUrl;
+                if(sessionInfo!=null){
+                    sessionInfo.setServerUrl(serverUrl);
+                }
+                //set platformproperties
+                PlatformProperties.setServerAddress(serverUrl);
                 startCompanySignOn();
                 doLoginFinish();
             } else {

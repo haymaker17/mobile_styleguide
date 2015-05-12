@@ -3,8 +3,6 @@
  */
 package com.concur.mobile.corp.activity;
 
-import java.util.Locale;
-
 import android.app.Activity;
 import android.app.AlertDialog;
 import android.app.Dialog;
@@ -48,6 +46,8 @@ import com.concur.mobile.platform.authentication.CorpSSOLoginRequestTask;
 import com.concur.mobile.platform.authentication.EmailLookUpRequestTask;
 import com.concur.mobile.platform.util.Format;
 import com.concur.platform.PlatformProperties;
+
+import java.util.Locale;
 
 /**
  * An extension of <code>BaseActivity</code> for the purposes of displaying a web-view containing company sign-on pages.
@@ -114,6 +114,7 @@ public class CompanySignOnActivity extends BaseActivity {
             if (reply.ssoEnabled) {
                 if (reply.ssoUrl != null) {
                     ssoUrl = reply.ssoUrl;
+                    serverUrl=reply.serverUrl;
                 }
             }
         }

@@ -376,6 +376,9 @@ public class Preferences extends PreferenceActivity implements OnSharedPreferenc
                 if (ssoQueryReply != null && ssoQueryReply.ssoEnabled && (!TextUtils.isEmpty(ssoQueryReply.ssoUrl))) {
                     signInMethod = com.concur.mobile.platform.ui.common.util.Const.LOGIN_METHOD_SSO;
                     ssoUrl = ssoQueryReply.ssoUrl;
+                    // set server url
+                    serverUrl = ssoQueryReply.serverUrl;
+                    sessionInfo.setServerUrl(serverUrl);
                 }
             }
             if (TextUtils.isEmpty(pinOrPassword)) {
