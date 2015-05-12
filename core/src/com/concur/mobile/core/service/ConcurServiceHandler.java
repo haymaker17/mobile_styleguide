@@ -224,12 +224,6 @@ public class ConcurServiceHandler extends Handler {
 
         if (msg.obj instanceof ServiceRequest) {
             ServiceRequest request = (ServiceRequest) msg.obj;
-            Log.e("verifySession" +
-                    "" +
-                    "" +
-                    "" +
-                    "" +
-                    " : ","REQUEST ID : " + msg.what+ " REQUEST : " + request.toString());
             // Only check for session validity when online.
             if (request.isSessionRequired() && ConcurCore.isConnected()) {
                 // Validate the current session id.
