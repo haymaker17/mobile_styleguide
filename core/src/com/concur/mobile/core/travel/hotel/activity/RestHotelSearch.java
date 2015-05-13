@@ -68,7 +68,7 @@ public class RestHotelSearch extends TravelBaseActivity
     protected static final String DISTANCE_VALUE = "distance_value";
     protected static final String NAMES_CONTAINING = "names_containing";
     protected static final String FROM_LOCATION_SEARCH_INTENT = "from_location_search_intent";
-    protected static final String BOOK_NEAR_ME = "book_near_me";
+    public static final String BOOK_NEAR_ME = "book_near_me";
     protected static final int CHECK_IN_DATE_DIALOG = 0;
     protected static final int CHECK_OUT_DATE_DIALOG = 1;
     private static final String CLS_TAG = RestHotelSearch.class.getSimpleName();
@@ -174,6 +174,11 @@ public class RestHotelSearch extends TravelBaseActivity
                     currentLocation = new LocationChoice(locBundle);
                     break;
                 }
+                case LocationSearchV1.SEARCH_CURRENT_LOCATION: {
+                    currentLocation = null;
+                    searchNearMe = true;
+                    break;
+                }
                 default: {
                     Log.e(Const.LOG_TAG, CLS_TAG + ".initializeFieldState: invalid search mode of '" + searchMode
                             + "' on result intent.");
@@ -209,8 +214,7 @@ public class RestHotelSearch extends TravelBaseActivity
         }
     }
 
-    @Override
-    protected void onSaveInstanceState(Bundle outState) {
+    @Override protected void onSaveInstanceState(Bundle outState) {
         super.onSaveInstanceState(outState);
 
         // Save the location
@@ -272,16 +276,14 @@ public class RestHotelSearch extends TravelBaseActivity
      * 
      * @see android.app.Activity#onRestoreInstanceState(android.os.Bundle)
      */
-    @Override
-    protected void onRestoreInstanceState(Bundle savedInstanceState) {
+    @Override protected void onRestoreInstanceState(Bundle savedInstanceState) {
         // No-op. In the 'onCreate' method below the values for the fields
         // are being reset. The default implementation appears to restore the
         // UI values to blank values so this no-op override blocks our reset
         // values from being trounced.
     }
 
-    @Override
-    public boolean onCreateOptionsMenu(Menu menu) {
+    @Override public boolean onCreateOptionsMenu(Menu menu) {
         // MOB-11596 MOB-13636
         // if (Preferences.shouldAllowVoiceBooking()) {
 
@@ -291,17 +293,15 @@ public class RestHotelSearch extends TravelBaseActivity
         return true;
     }
 
-    @Override
-    public boolean onPrepareOptionsMenu(Menu menu) {
-        if(formFields != null && formFields.size() > 0) {
+    @Override public boolean onPrepareOptionsMenu(Menu menu) {
+        if (formFields != null && formFields.size() > 0) {
             // disable the menu completely if custom fields available
             return false;
         }
         return true;
     }
 
-    @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
+    @Override public boolean onOptionsItemSelected(MenuItem item) {
         if (item.getItemId() == R.id.menuVoice) {
             if (!ConcurCore.isConnected()) {
                 showOfflineDialog();
@@ -326,8 +326,7 @@ public class RestHotelSearch extends TravelBaseActivity
         return super.onOptionsItemSelected(item);
     }
 
-    @Override
-    protected void onCreate(Bundle savedInstanceState) {
+    @Override protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
         // Instruct the window manager to only show the soft keyboard when the
@@ -350,8 +349,7 @@ public class RestHotelSearch extends TravelBaseActivity
 
         searchButton.setOnClickListener(new View.OnClickListener() {
 
-            @Override
-            public void onClick(View v) {
+            @Override public void onClick(View v) {
                 // Check for connectivity, if none, then display dialog and
                 // return.
                 if (!ConcurCore.isConnected()) {
@@ -430,7 +428,6 @@ public class RestHotelSearch extends TravelBaseActivity
             if (txtView != null) {
                 if (cliqbookTripId == null) {
                     // a new itinerary, hence default to current location
-                    searchNearMe = getIntent().getBooleanExtra(BOOK_NEAR_ME, false);
                     if (searchNearMe) {
 
                         getCurrentLocation();
@@ -547,13 +544,13 @@ public class RestHotelSearch extends TravelBaseActivity
         }
 
         // Initialize the display
+        searchNearMe = getIntent().getBooleanExtra(BOOK_NEAR_ME, false);
         updateLocationButton();
 
         // Hook up the handler
         location.setOnClickListener(new View.OnClickListener() {
 
-            @Override
-            public void onClick(View v) {
+            @Override public void onClick(View v) {
                 if (!ConcurCore.isConnected()) {
                     showOfflineDialog();
 
@@ -573,6 +570,10 @@ public class RestHotelSearch extends TravelBaseActivity
                     }
                     Intent intent = new Intent(RestHotelSearch.this, LocationSearchV1.class);
                     intent.putExtra(Const.EXTRA_LOCATION_SEARCH_ALLOWED_MODES, locationSearchMode);
+                    if(currentLocation != null) {
+                        //for displaying in the search field
+                        intent.putExtra(Const.EXTRA_TRAVEL_HOTEL_SEARCH_LOCATION, currentLocation.getName());
+                    }
                     startActivityForResult(intent, Const.REQUEST_CODE_LOCATION);
                 }
             }
@@ -580,8 +581,7 @@ public class RestHotelSearch extends TravelBaseActivity
 
     }
 
-    @Override
-    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+    @Override protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         switch (requestCode) {
         case SearchListFormFieldView.SEARCH_LIST_REQUEST_CODE: {
             // MOB-14331
@@ -601,6 +601,11 @@ public class RestHotelSearch extends TravelBaseActivity
                     }
                     case LocationSearchV1.SEARCH_CUSTOM: {
                         currentLocation = new LocationChoice(locBundle);
+                        break;
+                    }
+                    case LocationSearchV1.SEARCH_CURRENT_LOCATION: {
+                        currentLocation = null;
+                        searchNearMe = true;
                         break;
                     }
                     default: {
@@ -713,15 +718,13 @@ public class RestHotelSearch extends TravelBaseActivity
         // Hook up the handlers
         checkInDateView.setOnClickListener(new View.OnClickListener() {
 
-            @Override
-            public void onClick(View v) {
+            @Override public void onClick(View v) {
                 showCalendarDialog(CHECK_IN_DATE_DIALOG);
             }
         });
         checkOutDateView.setOnClickListener(new View.OnClickListener() {
 
-            @Override
-            public void onClick(View v) {
+            @Override public void onClick(View v) {
                 showCalendarDialog(CHECK_OUT_DATE_DIALOG);
             }
         });
@@ -924,8 +927,7 @@ public class RestHotelSearch extends TravelBaseActivity
         Toast.makeText(this, message, Toast.LENGTH_SHORT).show();
     }
 
-    @Override
-    public Loader<TravelCustomFieldsConfig> onCreateLoader(int id, Bundle bundle) {
+    @Override public Loader<TravelCustomFieldsConfig> onCreateLoader(int id, Bundle bundle) {
         PlatformAsyncTaskLoader<TravelCustomFieldsConfig> asyncLoader = null;
         if (update) {
             showProgressBar(getString(R.string.dlg_travel_retrieve_custom_fields_update_progress_message));
@@ -937,8 +939,7 @@ public class RestHotelSearch extends TravelBaseActivity
         return asyncLoader;
     }
 
-    @Override
-    public void onLoadFinished(Loader<TravelCustomFieldsConfig> loader,
+    @Override public void onLoadFinished(Loader<TravelCustomFieldsConfig> loader,
             TravelCustomFieldsConfig travelCustomFieldsConfig) {
 
         hideProgressBar();
@@ -957,8 +958,7 @@ public class RestHotelSearch extends TravelBaseActivity
                 final int WHAT = 1;
                 Handler handler = new Handler() {
 
-                    @Override
-                    public void handleMessage(Message msg) {
+                    @Override public void handleMessage(Message msg) {
                         if (msg.what == WHAT) {
                             initTravelCustomFieldsView();
                         }
@@ -970,13 +970,11 @@ public class RestHotelSearch extends TravelBaseActivity
 
     }
 
-    @Override
-    public void onLoaderReset(Loader<TravelCustomFieldsConfig> data) {
+    @Override public void onLoaderReset(Loader<TravelCustomFieldsConfig> data) {
         Log.d(Const.LOG_TAG, " ***** loader reset *****  ");
     }
 
-    @Override
-    public void sendTravelCustomFieldsUpdateRequest(List<TravelCustomField> fields) {
+    @Override public void sendTravelCustomFieldsUpdateRequest(List<TravelCustomField> fields) {
         update = true;
         formFields = fields;
         travelCustomFieldsConfig.formFields = formFields;
@@ -1001,8 +999,7 @@ public class RestHotelSearch extends TravelBaseActivity
             this.isCheckIn = isCheckIn;
         }
 
-        @Override
-        public void onDateSet(CalendarPicker view, int year, int monthOfYear, int dayOfMonth) {
+        @Override public void onDateSet(CalendarPicker view, int year, int monthOfYear, int dayOfMonth) {
             BookingDateUtil dateUtil = new BookingDateUtil();
             if (isCheckIn) {
                 if (checkForSearchCriteraChanged) {
