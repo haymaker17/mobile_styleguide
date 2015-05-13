@@ -22,6 +22,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 import com.concur.core.R;
 import com.concur.mobile.core.ConcurCore;
+import com.concur.mobile.core.activity.Preferences;
 import com.concur.mobile.core.data.SystemConfig;
 import com.concur.mobile.core.data.UserConfig;
 import com.concur.mobile.core.travel.activity.LocationSearchV1;
@@ -293,8 +294,12 @@ public class RestHotelSearch extends TravelBaseActivity
     }
 
     @Override public boolean onPrepareOptionsMenu(Menu menu) {
-        if (formFields != null && formFields.size() > 0) {
-            // disable the menu completely if custom fields available
+        if(Preferences.shouldAllowVoiceBooking()) {
+            if (progressbarVisible || (formFields != null && formFields.size() > 0)) {
+                // disable the menu completely if custom fields available
+                return false;
+            }
+        } else {
             return false;
         }
         return true;
