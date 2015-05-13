@@ -28,7 +28,6 @@ import com.concur.mobile.platform.ui.travel.activity.TravelBaseActivity;
 import com.concur.mobile.platform.ui.travel.hotel.fragment.*;
 import com.concur.mobile.platform.ui.travel.hotel.fragment.HotelSearchResultFilterFragment.HotelSearchResultsFilterListener;
 import com.concur.mobile.platform.ui.travel.hotel.fragment.HotelSearchResultFragment.HotelSearchResultsFragmentListener;
-import com.concur.mobile.platform.ui.travel.hotel.maps.ShowMaps;
 import com.concur.mobile.platform.ui.travel.loader.TravelCustomFieldsConfig;
 import com.concur.mobile.platform.ui.travel.util.Const;
 import com.concur.mobile.platform.util.Format;
@@ -44,11 +43,12 @@ import java.util.*;
  * @author RatanK
  */
 public class HotelSearchAndResultActivity extends TravelBaseActivity
-        implements OnMenuItemClickListener, HotelSearchResultsFilterListener, HotelSearchResultsFragmentListener {
+        implements OnMenuItemClickListener, HotelSearchResultsFilterListener, HotelSearchResultsFragmentListener,
+        HotelSearchResultMapFragment.HotelSearchMapsFragmentListener {
 
     public static final String FRAGMENT_SEARCH_RESULT = "FRAGMENT_SEARCH_RESULT";
     private static final String FRAGMENT_SEARCH_RESULT_FILTER = "FRAGMENT_SEARCH_RESULT_FILTER";
-
+    public static final String FRAGMENT_SEARCH_RESULT_MAP = "FRAGMENT_SEARCH_RESULT_MAP";
     private static final int HOTEL_SEARCH_LIST_LOADER_ID = 0;
     private static final int HOTEL_POLL_LIST_LOADER_ID = 1;
     private static final int HOTEL_RATES_LOADER_ID = 2;
@@ -95,6 +95,7 @@ public class HotelSearchAndResultActivity extends TravelBaseActivity
     private List<HotelViolation> updatedViolations;
     private List<HotelViolation> violations;
     private BenchmarksCollection benchmarksCollection;
+    private boolean searchNearMe;
 
     // HotelSearchResults loader callback implementation
     private LoaderManager.LoaderCallbacks<HotelSearchRESTResult> hotelSearchRESTResultLoaderCallbacks = new LoaderManager.LoaderCallbacks<HotelSearchRESTResult>() {
@@ -270,9 +271,11 @@ public class HotelSearchAndResultActivity extends TravelBaseActivity
             Hotel hotel = hotelRateResult != null ? hotelRateResult.hotel : null;
             if (hotel != null && hotel.rates != null) {
 
+                //  if(selectedHotelListItem != null && selectedHotelListItem.getHotel() != null) {
                 selectedHotelListItem.getHotel().rates = hotel.rates;
                 updatedViolations = hotelRateResult.violations;
                 viewHotelChoiceDetails();
+                //   }
 
             } else {
                 Toast.makeText(getApplicationContext(), "No Rooms Available", Toast.LENGTH_LONG).show();
@@ -309,6 +312,7 @@ public class HotelSearchAndResultActivity extends TravelBaseActivity
         fromLocationSearch = intent.getBooleanExtra(Const.EXTRA_LOCATION_SEARCH_MODE_USED, false);
         distanceUnit = intent.getStringExtra(Const.EXTRA_TRAVEL_HOTEL_SEARCH_DISTANCE_UNIT_ID);
         showGDSName = intent.getBooleanExtra(Const.EXTRA_TRAVEL_HOTEL_SEARCH_SHOW_GDS_NAME, false);
+        searchNearMe = intent.getBooleanExtra(Const.EXTRA_TRAVEL_SEARCH_NEAR_ME, false);
 
         if (intent.hasExtra("travelCustomFieldsConfig")) {
             travelCustomFieldsConfig = (TravelCustomFieldsConfig) intent
@@ -679,18 +683,30 @@ public class HotelSearchAndResultActivity extends TravelBaseActivity
             showOfflineDialog();
         } else {
             int resultCode = GooglePlayServicesUtil.isGooglePlayServicesAvailable(this);
-
-            Intent i = new Intent(this, ShowMaps.class);
+            HotelSearchResultMapFragment mapFragment = (HotelSearchResultMapFragment) getFragmentManager()
+                    .findFragmentByTag(FRAGMENT_SEARCH_RESULT_MAP);
             if (resultCode == ConnectionResult.SUCCESS && listItemAdapater != null
                     && listItemAdapater.getItems() != null) {
                 List<HotelSearchResultListItem> hotelList = listItemAdapater.getItems();
-                Bundle bundle = new Bundle();
-                bundle.putSerializable(Const.EXTRA_HOTELS_LIST, (Serializable) hotelList);
-                i.putExtras(bundle);
-                i.putExtra(Const.EXTRA_TRAVEL_LATITUDE, latitude);
-                i.putExtra(Const.EXTRA_TRAVEL_LONGITUDE, longitude);
 
-                startActivity(i);
+                if (mapFragment == null) {
+                    mapFragment = new HotelSearchResultMapFragment();
+                }
+                Bundle args = new Bundle();
+                args.putSerializable(Const.EXTRA_HOTELS_LIST, (Serializable) hotelList);
+                args.putString(Const.EXTRA_TRAVEL_LATITUDE, latitude.toString());
+                args.putString(Const.EXTRA_TRAVEL_LONGITUDE, longitude.toString());
+                args.putBoolean(Const.EXTRA_TRAVEL_SEARCH_NEAR_ME, searchNearMe);
+                mapFragment.setArguments(args);
+
+                FragmentTransaction ft = getFragmentManager().beginTransaction();
+                ft.hide(hotelSearchRESTResultFrag);
+
+                // if (mapFragment != null && !mapFragment.isAdded()) {
+                ft.add(R.id.container, mapFragment, FRAGMENT_SEARCH_RESULT_MAP);
+                ft.addToBackStack(null);
+                ft.commit();
+                //   }
 
             } else {
                 Toast.makeText(this, "Map Unavailable", Toast.LENGTH_LONG).show();
@@ -698,12 +714,11 @@ public class HotelSearchAndResultActivity extends TravelBaseActivity
         }
     }
 
-    @Override
-    public void onHeaderClicked() {
+    @Override public void onHeaderClicked() {
         finish();
     }
 
-    public void hotelListItemClicked(HotelSearchResultListItem itemClicked) {
+    @Override public void hotelListItemClicked(HotelSearchResultListItem itemClicked) {
 
         if (isOffline) {
             showOfflineDialog();
@@ -734,7 +749,7 @@ public class HotelSearchAndResultActivity extends TravelBaseActivity
 
                             hotelSearchRESTResultFrag.showProgressBar(true);
                             lm = getLoaderManager();
-                            lm.initLoader(HOTEL_RATES_LOADER_ID, null, hotelRatesRESTResultLoaderCallbacks);
+                            lm.restartLoader(HOTEL_RATES_LOADER_ID, null, hotelRatesRESTResultLoaderCallbacks);
                         }
                     } else {
                         Toast.makeText(getApplicationContext(), "No Rooms Available", Toast.LENGTH_LONG).show();

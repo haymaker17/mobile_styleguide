@@ -5,7 +5,6 @@ package com.concur.mobile.core.travel.hotel.activity;
 
 import android.app.*;
 import android.content.Intent;
-import android.content.IntentFilter;
 import android.content.Loader;
 import android.graphics.Color;
 import android.location.Address;
@@ -64,8 +63,8 @@ public class RestHotelSearch extends TravelBaseActivity
     protected static final String LOCATION = "location";
     protected static final String CHECK_IN_DATE = "check_in_date";
     protected static final String CHECK_OUT_DATE = "check_out_date";
-    protected static final String DISTANCE_UNIT = "distance_unit";
-    protected static final String DISTANCE_VALUE = "distance_value";
+    // protected static final String DISTANCE_UNIT = "distance_unit";
+    // protected static final String DISTANCE_VALUE = "distance_value";
     protected static final String NAMES_CONTAINING = "names_containing";
     protected static final String FROM_LOCATION_SEARCH_INTENT = "from_location_search_intent";
     public static final String BOOK_NEAR_ME = "book_near_me";
@@ -76,14 +75,14 @@ public class RestHotelSearch extends TravelBaseActivity
             HotelSearch.class.getSimpleName() + ".calendar.dialog.fragment";
     private static final String KEY_DIALOG_ID = "key.dialog.id";
     private static final String KEY_IS_CHECKIN = "key.is.checkin";
-    protected final IntentFilter hotelResultsFilter = new IntentFilter(Const.ACTION_HOTEL_SEARCH_RESULTS);
+    //   protected final IntentFilter hotelResultsFilter = new IntentFilter(Const.ACTION_HOTEL_SEARCH_RESULTS);
     protected View location;
 
     protected View checkInDateView;
     protected View checkOutDateView;
 
     protected View distance;
-    protected View distanceUnit;
+    // protected View distanceUnit;
 
     protected Calendar checkInDate;
     protected Calendar checkOutDate;
@@ -736,6 +735,16 @@ public class RestHotelSearch extends TravelBaseActivity
         String latitude = currentLocation.latitude;
         String longitude = currentLocation.longitude;
 
+        //To send searchNearMe flag for maps
+        TextView txtView = (TextView) location.findViewById(R.id.field_value);
+        if (txtView != null) {
+            if (txtView.getText().equals(getString(R.string.general_current_location))) {
+                searchNearMe = true;
+            } else {
+                searchNearMe = false;
+            }
+
+        }
         // String distanceUnit = currentDistanceUnit.id;
         // String distanceValue = currentDistanceAmount.id;
         String namesContaining = null;
@@ -829,6 +838,7 @@ public class RestHotelSearch extends TravelBaseActivity
         if (customTravelText != null && !customTravelText.isEmpty()) {
             intent.putExtra("customTravelText", customTravelText);
         }
+        intent.putExtra("searchNearMe", searchNearMe);
 
         startActivityForResult(intent, Const.REQUEST_CODE_BOOK_HOTEL);
     }

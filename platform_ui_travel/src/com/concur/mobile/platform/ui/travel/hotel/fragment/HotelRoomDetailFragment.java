@@ -23,9 +23,8 @@ import java.util.List;
 
 /**
  * Fragment for Hotel Room Details tab
- * 
+ *
  * @author tejoa
- * 
  */
 // @SuppressLint("ResourceAsColor")
 public class HotelRoomDetailFragment extends PlatformFragmentV1 {
@@ -58,7 +57,7 @@ public class HotelRoomDetailFragment extends PlatformFragmentV1 {
         mainView = inflater.inflate(R.layout.hotel_rooms_layout1, container, false);
 
         // show the price to beat header
-        if(hotelRooms != null && priceToBeat != null) {
+        if (hotelRooms != null && priceToBeat != null) {
             mainView.findViewById(R.id.priceToBeatView).setVisibility(View.VISIBLE);
             TextView priceToBeatView = (TextView) mainView.findViewById(R.id.priceToBeatText);
             priceToBeatView.setVisibility(View.VISIBLE);
@@ -73,7 +72,8 @@ public class HotelRoomDetailFragment extends PlatformFragmentV1 {
         tv.setVisibility(View.GONE);
         // Configuration config = getResources().getConfiguration();
         if (hotelRooms != null && hotelRooms.size() > 0) {
-            listItemAdapater = new ListItemAdapter<HotelRoomListItem>(getActivity().getApplicationContext(), hotelRooms);
+            listItemAdapater = new ListItemAdapter<HotelRoomListItem>(getActivity().getApplicationContext(),
+                    hotelRooms);
             listView.setAdapter(listItemAdapater);
             listView.setVisibility(View.VISIBLE);
 
@@ -100,7 +100,7 @@ public class HotelRoomDetailFragment extends PlatformFragmentV1 {
         try {
             callBackListener = (HotelChoiceDetailsFragmentListener) activity;
         } catch (ClassCastException e) {
-            throw new ClassCastException(activity.toString() + " must implement HotelSearchResultsFragmentListener");
+            throw new ClassCastException(activity.toString() + " must implement HotelChoiceDetailsFragmentListener");
         }
     }
 
