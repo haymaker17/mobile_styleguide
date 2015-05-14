@@ -23,6 +23,7 @@ import android.content.IntentFilter;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentActivity;
+import android.support.v4.app.FragmentManager;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.Menu;
@@ -89,7 +90,6 @@ import com.concur.mobile.core.util.EventTracker;
 import com.concur.mobile.core.util.FeedbackManager;
 import com.concur.mobile.core.util.Flurry;
 import com.concur.mobile.core.util.FormatUtil;
-import com.concur.mobile.core.util.SortOrder;
 import com.concur.mobile.core.util.ViewUtil;
 import com.concur.mobile.core.view.HeaderListItem;
 import com.concur.mobile.core.view.ListItem;
@@ -98,6 +98,19 @@ import com.concur.mobile.platform.expense.receipt.list.ReceiptListUtil;
 import com.concur.mobile.platform.expense.receipt.list.dao.ReceiptDAO;
 import com.concur.mobile.platform.ocr.OcrStatusEnum;
 import com.concur.mobile.platform.ui.common.dialog.NoConnectivityDialogFragment;
+import com.concur.mobile.platform.ui.common.util.PreferenceUtil;
+
+import org.apache.http.HttpStatus;
+
+import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.Collections;
+import java.util.Comparator;
+import java.util.HashMap;
+import java.util.HashSet;
+import java.util.Iterator;
+import java.util.List;
+import java.util.Map;
 
 /**
  * An extension of <code>ConcurView</code> used to render a combined list of cash and card expenses.
@@ -125,6 +138,12 @@ public class Expenses extends BaseFragment implements INetworkActivityListener {
         public void doGetReceiptList();
 
     }
+
+    /**
+     * Preference key used to save the user's selected Expense List sort order.
+     */
+    public final static String PREF_EXPENSE_LIST_SORT_ORDER = "PREF_EXPENSE_LIST_SORT_ORDER";
+
 
     private static final int HEADER_VIEW_TYPE = 0;
 
@@ -1265,7 +1284,15 @@ public class Expenses extends BaseFragment implements INetworkActivityListener {
             } else {
                 new NoConnectivityDialogFragment().show(getFragmentManager(), null);
             }
+        } else if (itemId == R.id.delete) {
+
+        } else if (itemId == R.id.sort_by) {
+            String sortOrder = PreferenceUtil.getStringPreference(getBaseActivity(), PREF_EXPENSE_LIST_SORT_ORDER,
+                    com.concur.mobile.platform.expense.provider.Expense.SmartExpenseColumns.DATE_NEWEST_SORT_ORDER);
+            SortExpensesDialogFragment dialog = SortExpensesDialogFragment.newInstance(sortOrder);
+            dialog.show(getBaseActivity().getFragmentManager(), "sort_expense_dialog_fragment");
         }
+
         return retVal;
     }
 
@@ -2421,6 +2448,7 @@ public class Expenses extends BaseFragment implements INetworkActivityListener {
         List<ListItem> listItems = null;
         IExpenseEntryCache expEntCache = app.getExpenseEntryCache();
         ArrayList<Expense> cacheList = expEntCache.getExpenseEntries();
+
         if (cacheList != null) {
             listItems = populateExpenseListItems(cacheList, pcaKeyFilter, showCorpCardTransOnly);
         }
@@ -2523,7 +2551,9 @@ public class Expenses extends BaseFragment implements INetworkActivityListener {
         // With some of the ExpenseIt items, ExpenseComparator seems to be violating the Comparison contract. This will be fixed
         // in 9.8 but the try/catch prevents a crash in the meantime.
         try {
-            Collections.sort(expenses, new ExpenseComparator(SortOrder.DESCENDING));
+            String sortOrder = PreferenceUtil.getStringPreference(getBaseActivity(), PREF_EXPENSE_LIST_SORT_ORDER,
+                    com.concur.mobile.platform.expense.provider.Expense.SmartExpenseColumns.DATE_NEWEST_SORT_ORDER);
+            Collections.sort(expenses, new ExpenseComparator(sortOrder));
         } catch (IllegalArgumentException e) {
             Log.e(Const.LOG_TAG, CLS_TAG
                     + "populateExpenseListItems Collections.sort violates Comparison general contract");

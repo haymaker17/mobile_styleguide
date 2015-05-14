@@ -8,7 +8,10 @@ import android.view.ViewGroup;
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
 
+import com.apptentive.android.sdk.Log;
 import com.concur.core.R;
+import com.concur.mobile.core.util.Const;
+import com.concur.mobile.core.util.EventTracker;
 import com.concur.mobile.platform.expense.provider.Expense;
 
 /**
@@ -111,7 +114,14 @@ public class SortExpensesDialogFragment extends DialogFragment implements RadioG
         }
 
         SortExpenseDialogListener listener = (SortExpenseDialogListener) getActivity();
-        listener.onSortCriteriaSelected(sortOrder);
+        if(listener != null) {
+            listener.onSortCriteriaSelected(sortOrder);
+        } else {
+            Log.e(Const.LOG_TAG, CLS_TAG + ".onCheckedChanged() - SortExpenseDialogListener is null!");
+        }
+
+        // GA tracking, to measure how much value this adds to the user.
+        EventTracker.INSTANCE.track("Expense List", "Sort Expense List", sortOrder);
 
         this.dismiss();
     }
