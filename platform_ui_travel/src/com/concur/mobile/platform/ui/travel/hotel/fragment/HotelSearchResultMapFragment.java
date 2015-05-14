@@ -1,9 +1,9 @@
 package com.concur.mobile.platform.ui.travel.hotel.fragment;
 
 import android.app.Activity;
-import android.app.Fragment;
-import android.app.FragmentTransaction;
+import android.app.FragmentManager;
 import android.content.Intent;
+import android.os.Build;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -48,8 +48,7 @@ public class HotelSearchResultMapFragment extends PlatformFragmentV1 implements 
         setRetainInstance(true);
     }
 
-    @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
+    @Override public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         super.onCreateView(inflater, container, savedInstanceState);
         args = getArguments();
         // inflate the details fragment
@@ -74,8 +73,7 @@ public class HotelSearchResultMapFragment extends PlatformFragmentV1 implements 
         return mainView;
     }
 
-    @Override
-    public void onAttach(Activity activity) {
+    @Override public void onAttach(Activity activity) {
         super.onAttach(activity);
 
         // This makes sure that the container activity has implemented
@@ -85,19 +83,16 @@ public class HotelSearchResultMapFragment extends PlatformFragmentV1 implements 
         } catch (ClassCastException e) {
             throw new ClassCastException(activity.toString() + " must implement HotelSearchMapsFragmentListener");
         }
-
     }
 
-    @Override
-    public void onSaveInstanceState(Bundle outState) {
+    @Override public void onSaveInstanceState(Bundle outState) {
         // TODO Auto-generated method stub
         super.onSaveInstanceState(outState);
 
         Log.d(Const.LOG_TAG, " ***** HotelSearchResultMapFragment, in onSaveInstanceState *****  ");
     }
 
-    @Override
-    public void onPause() {
+    @Override public void onPause() {
         // TODO Auto-generated method stub
         super.onPause();
 
@@ -105,20 +100,15 @@ public class HotelSearchResultMapFragment extends PlatformFragmentV1 implements 
 
     }
 
-    @Override
-    public void onResume() {
+    @Override public void onResume() {
         // TODO Auto-generated method stub
         super.onResume();
 
     }
 
-    @Override
-    public void onDestroyView() {
+    @Override public void onDestroyView() {
         super.onDestroyView();
-        Fragment fragment = (getFragmentManager().findFragmentById(R.id.map));
-        FragmentTransaction ft = getActivity().getFragmentManager().beginTransaction();
-        ft.remove(fragment);
-        ft.commit();
+        googleMap = null;
     }
 
     /**
@@ -126,7 +116,13 @@ public class HotelSearchResultMapFragment extends PlatformFragmentV1 implements 
      */
     private void setUpMap() {
         if (googleMap == null) {
-            mapFragment = ((MapFragment) getFragmentManager().findFragmentById(R.id.map));
+            FragmentManager fm = null;
+            if (Build.VERSION.SDK_INT < Build.VERSION_CODES.LOLLIPOP) {
+                fm = getFragmentManager();
+            } else {
+                fm = getChildFragmentManager();
+            }
+            mapFragment = (MapFragment) fm.findFragmentById(R.id.map);
             mapFragment.getMapAsync(this);
         }
     }
@@ -199,8 +195,7 @@ public class HotelSearchResultMapFragment extends PlatformFragmentV1 implements 
         }
     }
 
-    @Override
-    public void onMapReady(GoogleMap map) {
+    @Override public void onMapReady(GoogleMap map) {
         googleMap = map;
         addMarkers();
 
@@ -208,8 +203,7 @@ public class HotelSearchResultMapFragment extends PlatformFragmentV1 implements 
 
     private class HotelInfoWindowAdapter implements GoogleMap.InfoWindowAdapter {
 
-        @Override
-        public View getInfoContents(Marker marker) {
+        @Override public View getInfoContents(Marker marker) {
 
             LayoutInflater inflater = null;
 
@@ -221,8 +215,7 @@ public class HotelSearchResultMapFragment extends PlatformFragmentV1 implements 
 
         }
 
-        @Override
-        public View getInfoWindow(Marker marker) {
+        @Override public View getInfoWindow(Marker marker) {
 
             return null;
         }
