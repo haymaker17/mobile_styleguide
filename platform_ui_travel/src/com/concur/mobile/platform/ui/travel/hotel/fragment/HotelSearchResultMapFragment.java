@@ -64,12 +64,12 @@ public class HotelSearchResultMapFragment extends PlatformFragmentV1 implements 
         }
 
         hotelInfoView = (View) mainView.findViewById(R.id.info_window);
-        //        hotelInfoView.setOnClickListener(new View.OnClickListener() {
-        //
-        //            @Override public void onClick(View v) {
-        //                callBackListener.hotelListItemClicked(itemClicked);
-        //            }
-        //        });
+        hotelInfoView.setOnClickListener(new View.OnClickListener() {
+
+            @Override public void onClick(View v) {
+                callBackListener.hotelListItemClicked(itemClicked);
+            }
+        });
 
         return mainView;
     }
