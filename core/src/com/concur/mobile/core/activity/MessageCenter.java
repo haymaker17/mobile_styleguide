@@ -7,27 +7,21 @@ import java.util.Map;
 
 import android.content.res.Resources;
 import android.os.Bundle;
-import android.os.Handler;
 import android.widget.ListView;
 
 import com.concur.core.R;
-import com.concur.mobile.base.service.BaseAsyncRequestTask.AsyncReplyListener;
-import com.concur.mobile.base.service.BaseAsyncResultReceiver;
-import com.concur.mobile.core.ConcurCore;
-import com.concur.mobile.core.ipm.activity.AbstractIpmMsgProgress;
-import com.concur.mobile.core.ipm.service.IpmRequest;
 import com.concur.mobile.core.util.EventTracker;
 import com.concur.mobile.core.util.Flurry;
 import com.concur.mobile.core.view.ListItemAdapter;
 
-public class MessageCenter extends AbstractIpmMsgProgress {
+public class MessageCenter extends  BaseActivity { //AbstractIpmMsgProgress
 
     public static final String CLS_TAG = MessageCenter.class.getSimpleName();
-    public static final String MESSAGE_CENTER = "mobileMessageCentre";
+//    public static final String MESSAGE_CENTER = "mobileMessageCentre";
 
-    private BaseAsyncResultReceiver ipmMsgResultsReceiver;
-    private AsyncReplyListener ipmResultsListener;
-    private IpmRequest ipmAsyncTask;
+//    private BaseAsyncResultReceiver ipmMsgResultsReceiver;
+//    private AsyncReplyListener ipmResultsListener;
+//    private IpmRequest ipmAsyncTask;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -35,7 +29,7 @@ public class MessageCenter extends AbstractIpmMsgProgress {
         setContentView(R.layout.message_center);
         initScreenHeader();
         // IPM ads request
-        createIPMrequest();
+      //  createIPMrequest();
         initScreenSubHeader();
 
         // Flurry Notification
@@ -96,20 +90,25 @@ public class MessageCenter extends AbstractIpmMsgProgress {
         return retValue.toString();
     }
 
-    private void createIPMrequest() {
-
-        if (ConcurCore.isConnected()) {
-            // Clear out any current results.
-            getConcurCore().setIpmMsgResults(null);
-
-            ipmMsgResultsReceiver = new BaseAsyncResultReceiver(new Handler());
-            ipmResultsListener = new IpmResultsListener();
-            ((IpmResultsListener) ipmResultsListener).setActivity(this);
-            ipmMsgResultsReceiver.setListener(ipmResultsListener);
-            ipmAsyncTask = new IpmRequest(getApplicationContext(), 1, ipmMsgResultsReceiver, MESSAGE_CENTER);
-            ipmAsyncTask.execute();
-        }
-    }
+    /*
+     * IPM Call
+     * (non-Javadoc)
+     * @see com.concur.mobile.core.ipm.activity.AbstractIpmMsgProgress#onResume()
+     */
+//    private void createIPMrequest() {
+//
+//        if (ConcurCore.isConnected()) {
+//            // Clear out any current results.
+//            getConcurCore().setIpmMsgResults(null);
+//
+//            ipmMsgResultsReceiver = new BaseAsyncResultReceiver(new Handler());
+//            ipmResultsListener = new IpmResultsListener();
+//            ((IpmResultsListener) ipmResultsListener).setActivity(this);
+//            ipmMsgResultsReceiver.setListener(ipmResultsListener);
+//            ipmAsyncTask = new IpmRequest(getApplicationContext(), 1, ipmMsgResultsReceiver, MESSAGE_CENTER);
+//            ipmAsyncTask.execute();
+//        }
+//    }
 
     @Override
     protected void onResume() {

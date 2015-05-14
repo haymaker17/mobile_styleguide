@@ -1,24 +1,5 @@
 package com.concur.mobile.core.service;
 
-import java.io.BufferedInputStream;
-import java.io.File;
-import java.io.IOException;
-import java.io.InputStream;
-import java.io.InputStreamReader;
-import java.io.Reader;
-import java.io.UnsupportedEncodingException;
-import java.net.HttpURLConnection;
-import java.net.MalformedURLException;
-import java.net.URL;
-import java.util.ArrayList;
-import java.util.Calendar;
-import java.util.List;
-import java.util.TimeZone;
-
-import javax.xml.parsers.FactoryConfigurationError;
-
-import org.apache.http.HttpStatus;
-
 import android.content.Intent;
 import android.os.Build;
 import android.os.Bundle;
@@ -190,6 +171,25 @@ import com.concur.mobile.platform.util.Format;
 import com.squareup.okhttp.OkHttpClient;
 import com.squareup.okhttp.OkUrlFactory;
 
+import org.apache.http.HttpStatus;
+
+import java.io.BufferedInputStream;
+import java.io.File;
+import java.io.IOException;
+import java.io.InputStream;
+import java.io.InputStreamReader;
+import java.io.Reader;
+import java.io.UnsupportedEncodingException;
+import java.net.HttpURLConnection;
+import java.net.MalformedURLException;
+import java.net.URL;
+import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.List;
+import java.util.TimeZone;
+
+import javax.xml.parsers.FactoryConfigurationError;
+
 public class ConcurServiceHandler extends Handler {
 
     private static final String CLS_TAG = ConcurServiceHandler.class.getSimpleName();
@@ -220,14 +220,14 @@ public class ConcurServiceHandler extends Handler {
         concurService.removeStickyBroadcast(new Intent(Const.ACTION_NETWORK_ACTIVITY_START));
     }
 
-    protected boolean verifySession(Message msg) {
+    protected synchronized boolean verifySession(Message msg) {
 
         if (msg.obj instanceof ServiceRequest) {
             ServiceRequest request = (ServiceRequest) msg.obj;
             // Only check for session validity when online.
             if (request.isSessionRequired() && ConcurCore.isConnected()) {
                 // Validate the current session id.
-                String sessionId = SessionManager.validateSessionId((ConcurCore) concurService.getApplication(),
+                String sessionId = SessionManager.validateSessionId((ConcurCore) concurService.getApplication(), msg,
                         new SessionManager.AutoLoginListener() {
 
                             @Override

@@ -25,6 +25,7 @@ import com.concur.mobile.base.service.BaseAsyncRequestTask.AsyncReplyListener;
 import com.concur.mobile.base.service.BaseAsyncResultReceiver;
 import com.concur.mobile.core.ConcurCore;
 import com.concur.mobile.core.activity.Preferences;
+import com.concur.mobile.core.service.ServiceRequest;
 import com.concur.mobile.core.util.Const;
 import com.concur.mobile.core.util.EventTracker;
 import com.concur.mobile.core.util.Flurry;
@@ -105,7 +106,7 @@ public class SessionManager {
      */
     @SuppressLint("NewApi")
     public synchronized static String validateSessionId(ConcurCore concurMobile) {
-        return SessionManager.validateSessionId(concurMobile, null);
+        return SessionManager.validateSessionId(concurMobile, null,null);
     }
 
     /**
@@ -122,7 +123,7 @@ public class SessionManager {
      * @return the current valid session id upon success; <code>null</code> upon failure.
      */
     @SuppressLint("NewApi")
-    public synchronized static String validateSessionId(ConcurCore concurMobile, final AutoLoginListener replyListener) {
+    public synchronized static String validateSessionId(ConcurCore concurMobile, android.os.Message msg, final AutoLoginListener replyListener) {
 
         SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(concurMobile.getApplicationContext());
         String sessionId = PlatformProperties.getSessionId();
@@ -132,15 +133,13 @@ public class SessionManager {
             // This can happen if the user has logged out (which calls ConfigUtil.removeLoginInfo()).
             Log.i(CLS_TAG, CLS_TAG
                     + ".validateSessionId(): SessionInfo is null!  This may be caused by the user logging out.");
+            //reset userclick time and autologin time
+            ConcurCore.resetAutloLoginTimes();
             return null;
         }
         // If session expire time is not set, has expired or is within 5 minutes of expiring, then create
         // a new session id.
         if (isSessionExpire(concurMobile)) {
-            // Flurry Notification
-            Map<String, String> params = new HashMap<String, String>();
-            params.put(Flurry.PARAM_NAME_TYPE, Flurry.PARAM_VALUE_SESSION_EXPIRED);
-            EventTracker.INSTANCE.track(Flurry.CATEGORY_SIGN_IN, Flurry.EVENT_NAME_AUTHENTICATION, params);
 
             if (ConcurCore.isConnected()) {
                 Log.d(Const.LOG_TAG, CLS_TAG
@@ -171,6 +170,8 @@ public class SessionManager {
 
                     // Make sure that we have a login and pin. This prevents multi-method recursion
                     // if we are here because of the message sent to clear the local data.
+                    ServiceRequest request = (ServiceRequest) msg.obj;
+                    Log.e("validateSessionId : ","REQUEST ID : " + msg.what+ " REQUEST : " + request.toString());
                     if (loginId != null) {
 
                         // First check if the user has an existing oAuth token.
@@ -197,6 +198,8 @@ public class SessionManager {
                                     sessionAutoLoginReceiver, locale);
                             // Check for HoneyComb or later to execute login request on separate thread pool. Otherwise,
                             // this thread will be blocked by 'loginResult.await' call below.
+                            long startTimeMillis = System.currentTimeMillis();
+                            concurMobile.startAutologinTime = startTimeMillis;
                             if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.HONEYCOMB) {
                                 autoLoginRequestTask.executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
                             } else {
@@ -206,6 +209,10 @@ public class SessionManager {
                             try {
                                 // Wait for the latch to be decremented.
                                 loginResult.await();
+                                long stopTimeMillis = System.currentTimeMillis();
+                                concurMobile.stopAutoLoginTime = stopTimeMillis;
+                                logUserWaitingTime();
+
                                 // Set the result code in the return value and in the bundle.
                                 sessionId = loginResult.sessionId;
                             } catch (InterruptedException intExc) {
@@ -217,61 +224,10 @@ public class SessionManager {
                                 if (replyListener != null) {
                                     replyListener.onSuccess(null);
                                 }
+                                //reset user click and autologin times
+                                ConcurCore.resetAutloLoginTimes();
                             }
-                        } else if (!TextUtils.isEmpty(pinOrPassword)) {
-                            // If the user doesn't have an oAuth token but has an
-                            // existing PIN, it means the user has upgraded from the
-                            // old PIN-based login to new PIN/Password based login.
-                            // So perform a regular Login using the MobileSession/PPLogin
-                            // endpoint, which will then return an oAuth token.
-
-                            // Init the login result.
-                            loginResult = sessionManager.new SessionAutoLoginResult();
-                            loginResult.sessionId = null;
-
-                            // Init the handler thread with associated looper as this thread will be
-                            // blocked in the 'loginResult.await' call below.
-                            handlerThread = new HandlerThread("PPLoginLightRequestTask");
-                            handlerThread.start();
-
-                            Locale locale = Locale.getDefault();
-                            sessionAutoLoginReceiver = new BaseAsyncResultReceiver(new Handler(
-                                    handlerThread.getLooper()));
-                            sessionAutoLoginReceiver.setListener(sessionManager.new SessionAutoLoginListener(
-                                    concurMobile.getApplicationContext(), replyListener));
-
-                            UserAndSessionInfoUtil.setServerAddress(sessionInfo.getServerUrl());
-
-                            PPLoginLightRequestTask loginLightRequestTask = new PPLoginLightRequestTask(
-                                    concurMobile.getApplicationContext(), sessionAutoLoginReceiver,
-                                    VALIDATE_PASSWORD_REQUEST_ID, locale, loginId, pinOrPassword);
-
-                            // Check for HoneyComb or later to execute login request on separate thread pool. Otherwise,
-                            // this thread will be blocked by 'loginResult.await' call below.
-                            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.HONEYCOMB) {
-                                loginLightRequestTask.executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
-                            } else {
-                                loginLightRequestTask.execute();
-                            }
-                            // Acquire the login result if ready.
-                            try {
-                                // Wait for the latch to be decremented.
-                                loginResult.await();
-                                // Set the result code in the return value and in the bundle.
-                                sessionId = loginResult.sessionId;
-                            } catch (InterruptedException intExc) {
-                                Log.e(Const.LOG_TAG, CLS_TAG
-                                        + ".renewPPLoginSession: interrupted while acquiring result", intExc);
-
-                                sessionId = null;
-                                // MOB-19366 - Invoke the listener. It is the implementation's responsibility
-                                // to handle null Session IDs (e.g. show expire dialog and log out).
-                                if (replyListener != null) {
-                                    replyListener.onSuccess(null);
-                                }
-                            }
-
-                        } else {
+                        }  else {
                             Log.d(Const.LOG_TAG, CLS_TAG
                                     + ".validateSessionId: no credentials available to re-establish session");
                             sessionId = null;
@@ -280,6 +236,8 @@ public class SessionManager {
                             if (replyListener != null) {
                                 replyListener.onSuccess(null);
                             }
+                            //reset user click and autologin times
+                            ConcurCore.resetAutloLoginTimes();
                         }
 
                     } else {
@@ -291,6 +249,8 @@ public class SessionManager {
                         if (replyListener != null) {
                             replyListener.onSuccess(null);
                         }
+                        //reset user click and autologin times
+                        ConcurCore.resetAutloLoginTimes();
                     }
                 } else {
                     Log.d(Const.LOG_TAG, CLS_TAG
@@ -301,6 +261,8 @@ public class SessionManager {
                     if (replyListener != null) {
                         replyListener.onSuccess(null);
                     }
+                    //reset user click and autologin times
+                    ConcurCore.resetAutloLoginTimes();
                 }
 
             } else {
@@ -313,6 +275,8 @@ public class SessionManager {
                 if (replyListener != null) {
                     replyListener.onSuccess(null);
                 }
+                //reset user click and autologin times
+                ConcurCore.resetAutloLoginTimes();
             }
         } else {
             // Otherwise, just bump the session expiration
@@ -322,15 +286,29 @@ public class SessionManager {
             if (sessionDuration >= 0) {
                 Preferences.extendSesssionExpiration(prefs, sessionDuration);
             }
+            //reset user click and autologin times
+            ConcurCore.resetAutloLoginTimes();
         }
         return sessionId;
     }
 
+    private static void logUserWaitingTime() {
+        long totalWaitTime = 0L;
+        if(ConcurCore.userClickTime>0){
+            totalWaitTime = ConcurCore.stopAutoLoginTime -ConcurCore.userClickTime;
+            Log.e("logUserWaitingTime : ", " user click time is > 0");
+        }
+        if(totalWaitTime<=0){
+            totalWaitTime=0;
+            Log.e("logUserWaitingTime : ", " total wait time is = 0");
+        }
+        // Statistics Notification
+        EventTracker.INSTANCE.trackTimings(Flurry.CATEGORY_WAIT_TIME, Flurry.ACTION_AUTO_LOGIN_WAIT,
+                Flurry.LABEL_WAIT_TIME, totalWaitTime);
+        ConcurCore.resetAutloLoginTimes();
+    }
     /**
      * Will verify the current session id expiration by checking
-     * 
-     * @param context
-     *            an application context.
      * 
      * @return true : the current valid session id expiration and false : upon failure.
      */

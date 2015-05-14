@@ -1,16 +1,7 @@
 package com.concur.mobile.core;
 
-import java.util.ArrayList;
-import java.util.Calendar;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-import java.util.Map.Entry;
-import java.util.TimeZone;
-
 import android.app.Activity;
 import android.app.AlertDialog;
-import android.app.Application;
 import android.app.Dialog;
 import android.app.ProgressDialog;
 import android.content.BroadcastReceiver;
@@ -32,6 +23,7 @@ import android.os.Build;
 import android.os.IBinder;
 import android.preference.PreferenceManager;
 import android.provider.Settings;
+import android.support.multidex.MultiDexApplication;
 import android.text.TextUtils;
 import android.text.format.Time;
 import android.util.Log;
@@ -118,7 +110,15 @@ import com.concur.mobile.platform.ui.common.util.PreferenceUtil;
 import com.concur.mobile.platform.util.Parse;
 import com.concur.platform.PlatformProperties;
 
-public abstract class ConcurCore extends Application {
+import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+import java.util.Map.Entry;
+import java.util.TimeZone;
+
+public abstract class ConcurCore extends MultiDexApplication {
 
     // Maps between an activity class name and the list of currently running
     // AsyncTasks that were spawned while it was active.
@@ -161,6 +161,9 @@ public abstract class ConcurCore extends Application {
 
     // We need context in some deep places. Keep a static copy here.
     protected static Context appContext;
+
+    // Store autologin starttime, endtime and user click time.
+    public static long startAutologinTime, stopAutoLoginTime, userClickTime;
 
     // Location - retrieve current location/address form LastLocationTracker
     protected LastLocationTracker lastLocationTracker;
@@ -763,6 +766,11 @@ public abstract class ConcurCore extends Application {
 
     }
 
+    public static void resetAutloLoginTimes(){
+        startAutologinTime =0L;
+        stopAutoLoginTime =0L;
+        userClickTime =0L;
+    }
     // Initialize the platform properties.
     private void initPlatformProperties() {
 

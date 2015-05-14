@@ -192,10 +192,20 @@ public class ConnectedListFormFieldView extends SearchListFormFieldView {
                         }
                     }
                     // Update 'liKey', 'liCode' and 'value' with the first element in key, code and text lists.
+                    Boolean valueChanged = false;
                     if (nodeKeys != null && nodeKeys.size() > 0) {
-                        liKey = nodeKeys.get(0);
-                        liCode = nodeCodes.get(0);
-                        value = nodeTexts.get(0);
+                        setLiKey(nodeKeys.get(nodeKeys.size() -1));
+                        valueChanged = true;
+                    }
+                    if (nodeCodes != null && nodeCodes.size() > 0) {
+                        setLiCode(nodeCodes.get(nodeCodes.size() -1));
+                        valueChanged = true;
+                    }
+                    if (nodeTexts != null && nodeTexts.size() > 0) {
+                        setValue(nodeTexts.get(nodeTexts.size() -1));
+                        valueChanged = true;
+                    }
+                    if (valueChanged) {
                         updateView();
                         if (listener != null) {
                             listener.valueChanged(this);
@@ -223,6 +233,7 @@ public class ConnectedListFormFieldView extends SearchListFormFieldView {
         List<String> retVal = new ArrayList<String>();
         if (value.indexOf(delimiter) != -1) {
             TextUtils.SimpleStringSplitter splitter = new TextUtils.SimpleStringSplitter(delimiter);
+            splitter.setString(value);
             Iterator<String> splitIter = splitter.iterator();
             while (splitIter.hasNext()) {
                 retVal.add(splitIter.next());

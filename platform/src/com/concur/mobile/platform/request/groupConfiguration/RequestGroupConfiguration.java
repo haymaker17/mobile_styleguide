@@ -9,20 +9,13 @@ import java.util.List;
  */
 public class RequestGroupConfiguration {
 
-    @SerializedName("ID")
-    private String id;
-    @SerializedName("Name")
-    private String name;
-    @SerializedName("DefaultPolicyID")
-    private String defaultPolicyId;
-    @SerializedName("AgencyOffices")
-    private List<Agency> agencies;
-    @SerializedName("Policies")
-    private List<Policy> policies;
-    @SerializedName("RequestTypes")
-    private List<RequestType> requestTypes;
-    @SerializedName("URI")
-    private String uri;
+    @SerializedName("ID") private String id;
+    @SerializedName("Name") private String name;
+    @SerializedName("DefaultPolicyID") private String defaultPolicyId;
+    @SerializedName("AgencyOffices") private List<Agency> agencies;
+    @SerializedName("Policies") private List<Policy> policies;
+    @SerializedName("RequestTypes") private List<RequestType> requestTypes;
+    @SerializedName("URI") private String uri;
 
     private String defaultFormId = null;
 
@@ -101,6 +94,19 @@ public class RequestGroupConfiguration {
                 for (SegmentType st : p.getSegmentTypes()) {
                     if (st.getIconCode().equals(segmentType.getCode())) {
                         return st.getSegmentFormID();
+                    }
+                }
+            }
+        }
+        return null;
+    }
+
+    public String extractSegmentTypeId(final String policyId, final SegmentType.RequestSegmentType segmentType) {
+        for (Policy p : getPolicies()) {
+            if (p.getId().equals(policyId)) {
+                for (SegmentType st : p.getSegmentTypes()) {
+                    if (st.getIconCode().equals(segmentType.getCode())) {
+                        return st.getId();
                     }
                 }
             }

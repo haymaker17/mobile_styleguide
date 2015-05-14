@@ -160,26 +160,22 @@ public class ConnectHelper {
      * @param serviceUri string representation of the uri to call
      */
     private static void addParameters(Map<String, Object> parameters, final StringBuilder serviceUri, boolean isGet) {
-        if (isGet) {
-            // --- GET behavior
-            boolean first = true;
-            if (parameters != null) {
-                for (Entry<String, Object> param : parameters.entrySet()) {
-                    if (param.getValue() != null) {
-                        if (first) {
-                            serviceUri.append("?");
-                            first = false;
-                        } else {
-                            serviceUri.append("&");
-                        }
-                        serviceUri.append(param.getKey() + "=" + (param.getValue() instanceof String ?
-                                param.getValue() :
-                                param.getValue().toString()));
+        boolean first = true;
+        if (parameters != null) {
+            for (Entry<String, Object> param : parameters.entrySet()) {
+                if (param.getValue() != null) {
+                    if (first) {
+                        serviceUri.append("?");
+                        first = false;
+                    } else {
+                        serviceUri.append("&");
                     }
+                    serviceUri.append(param.getKey() + "=" + (param.getValue() instanceof String ?
+                            param.getValue() :
+                            param.getValue().toString()));
                 }
             }
         }
-        // --- POST is handled by the getPostBody() method of the task
     }
 
     // should be moved in another helper probably

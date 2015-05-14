@@ -1,0 +1,93 @@
+apply plugin: 'android'
+
+dependencies {
+    compile fileTree(dir: 'libs', include: '*.jar')
+    compile project(':core')
+    compile 'com.android.support:multidex:1.0.0'
+}
+
+android {
+    compileSdkVersion 21
+    buildToolsVersion "21.1.2"
+
+    defaultConfig{
+        minSdkVersion 16
+        targetSdkVersion 21
+        versionCode System.getenv("VERSION_CODE") as Integer ?: 2999
+        versionName "9.21.0"
+        multiDexEnabled true
+    }
+
+    dexOptions {
+        preDexLibraries = false
+        incremental true // increases build speed
+        javaMaxHeapSize "4g"
+        jumboMode = true
+    }
+
+    sourceSets {
+
+        main {
+            manifest.srcFile 'AndroidManifest.xml'
+            java.srcDirs = ['src']
+            resources.srcDirs = ['src']
+            aidl.srcDirs = ['src']
+            renderscript.srcDirs = ['src']
+            res.srcDirs = ['res']
+            assets.srcDirs = ['assets']
+        }
+
+        // Move the tests to tests/java, tests/res, etc...
+        instrumentTest.setRoot('tests')
+
+        // Move the build types to build-types/<type>
+        // For instance, build-types/debug/java, build-types/debug/AndroidManifest.xml, ...
+        // This moves them out of them default location under src/<type>/... which would
+        // conflict with src/ being used by the main source set.
+        // Adding new build types or product flavors should be accompanied
+        // by a similar customization.
+        debug.setRoot('build-types/debug')
+        release.setRoot('build-types/release')
+    }
+
+    lintOptions {
+        abortOnError false
+    }
+
+    splits {
+        abi {
+            enable true
+            reset()
+            include 'x86', 'armeabi'
+            universalApk true
+        }
+    }
+
+    packagingOptions {
+        exclude 'lib/armeabi/libdatabase_sqlcipher.so'
+        exclude 'lib/armeabi/libsqlcipher_android.so'
+        exclude 'lib/armeabi/libstlport_shared.so'
+        exclude 'lib/x86/libdatabase_sqlcipher.so'
+        exclude 'lib/x86/libsqlcipher_android.so'
+        exclude 'lib/x86/libstlport_shared.so'
+    }
+}
+
+
+
+// map for the version code
+//Ensures architecture specific APKs have a higher version code
+//(otherwise an x86 build would end up using the arm build, which x86 devices can run)
+ext.versionCodes = [armeabi:1, x86:3]
+
+import com.android.build.OutputFile
+int versionIndex = 1; // This is used so each version code is unique.
+
+android.applicationVariants.all { variant ->
+    // assign different version code for each output
+    variant.outputs.each { output ->
+        int abiVersionCode = project.ext.versionCodes.get(output.getFilter(OutputFile.ABI)) ?: versionIndex
+        output.versionCodeOverride = (abiVersionCode * 1000000) + (android.defaultConfig.versionCode ?: versionIndex)
+        versionIndex++
+    }
+}
