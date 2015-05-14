@@ -96,6 +96,7 @@ public class HotelSearchAndResultActivity extends TravelBaseActivity
     private List<HotelViolation> violations;
     private BenchmarksCollection benchmarksCollection;
     private boolean searchNearMe;
+    private HotelSearchResultMapFragment mapFragment;
 
     // HotelSearchResults loader callback implementation
     private LoaderManager.LoaderCallbacks<HotelSearchRESTResult> hotelSearchRESTResultLoaderCallbacks = new LoaderManager.LoaderCallbacks<HotelSearchRESTResult>() {
@@ -659,31 +660,33 @@ public class HotelSearchAndResultActivity extends TravelBaseActivity
 
     @Override
     public void onFilterClicked() {
-        // show the filter options fragment
-        filterFrag = (HotelSearchResultFilterFragment) getFragmentManager()
-                .findFragmentByTag(FRAGMENT_SEARCH_RESULT_FILTER);
-        if (filterFrag == null) {
-            filterFrag = new HotelSearchResultFilterFragment();
-        }
+        if (!hotelSearchRESTResultFrag.progressbarVisible) {
+            // show the filter options fragment
+            filterFrag = (HotelSearchResultFilterFragment) getFragmentManager()
+                    .findFragmentByTag(FRAGMENT_SEARCH_RESULT_FILTER);
+            if (filterFrag == null) {
+                filterFrag = new HotelSearchResultFilterFragment();
+            }
 
-        if (distanceUnit.equalsIgnoreCase("K")) {
-            filterFrag.setDistanceUnitInKm(true);
-        }
+            if (distanceUnit.equalsIgnoreCase("K")) {
+                filterFrag.setDistanceUnitInKm(true);
+            }
 
-        FragmentTransaction ft = getFragmentManager().beginTransaction();
-        ft.hide(hotelSearchRESTResultFrag);
-        ft.add(R.id.container, filterFrag, FRAGMENT_SEARCH_RESULT_FILTER);
-        ft.addToBackStack(null);
-        ft.commit();
+            FragmentTransaction ft = getFragmentManager().beginTransaction();
+            ft.hide(hotelSearchRESTResultFrag);
+            ft.add(R.id.container, filterFrag, FRAGMENT_SEARCH_RESULT_FILTER);
+            ft.addToBackStack(null);
+            ft.commit();
+        }
     }
 
     @Override
     public void onMapsClicked() {
         if (isOffline) {
             showOfflineDialog();
-        } else {
+        } else if (!hotelSearchRESTResultFrag.progressbarVisible) {
             int resultCode = GooglePlayServicesUtil.isGooglePlayServicesAvailable(this);
-            HotelSearchResultMapFragment mapFragment = (HotelSearchResultMapFragment) getFragmentManager()
+            mapFragment = (HotelSearchResultMapFragment) getFragmentManager()
                     .findFragmentByTag(FRAGMENT_SEARCH_RESULT_MAP);
             if (resultCode == ConnectionResult.SUCCESS && listItemAdapater != null
                     && listItemAdapater.getItems() != null) {
@@ -709,8 +712,10 @@ public class HotelSearchAndResultActivity extends TravelBaseActivity
                 //   }
 
             } else {
-                Toast.makeText(this, "Map Unavailable", Toast.LENGTH_LONG).show();
+                Toast.makeText(this, R.string.map_unavailable, Toast.LENGTH_LONG).show();
             }
+        } else {
+            Toast.makeText(this, R.string.map_loading, Toast.LENGTH_LONG).show();
         }
     }
 
@@ -755,6 +760,9 @@ public class HotelSearchAndResultActivity extends TravelBaseActivity
                         Toast.makeText(getApplicationContext(), "No Rooms Available", Toast.LENGTH_LONG).show();
 
                     }
+                }
+                if (mapFragment != null) {
+                    mapFragment.hideProgressBar();
                 }
             }
         }

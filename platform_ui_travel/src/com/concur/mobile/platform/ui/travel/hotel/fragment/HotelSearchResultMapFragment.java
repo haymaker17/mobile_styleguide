@@ -2,6 +2,7 @@ package com.concur.mobile.platform.ui.travel.hotel.fragment;
 
 import android.app.Activity;
 import android.app.FragmentManager;
+import android.app.FragmentTransaction;
 import android.content.Intent;
 import android.os.Build;
 import android.os.Bundle;
@@ -35,6 +36,8 @@ public class HotelSearchResultMapFragment extends PlatformFragmentV1 implements 
     private Marker previousMarker;
     private HotelSearchMapsFragmentListener callBackListener;
     private HotelSearchResultListItem itemClicked;
+    private boolean progressbarVisible;
+    private View mainView;
     /*
      * Hashmap for all hotel markers and hotel list items
      */
@@ -52,7 +55,7 @@ public class HotelSearchResultMapFragment extends PlatformFragmentV1 implements 
         super.onCreateView(inflater, container, savedInstanceState);
         args = getArguments();
         // inflate the details fragment
-        View mainView = inflater.inflate(R.layout.map_layout, container, false);
+        mainView = inflater.inflate(R.layout.map_layout, container, false);
         Intent intent = getActivity().getIntent();
         latitude = Double.valueOf(intent.getStringExtra(Const.EXTRA_TRAVEL_LATITUDE));
         longitude = Double.valueOf(intent.getStringExtra(Const.EXTRA_TRAVEL_LONGITUDE));
@@ -61,14 +64,14 @@ public class HotelSearchResultMapFragment extends PlatformFragmentV1 implements 
         if (googleMap != null) {
             addMarkers();
         }
-
         hotelInfoView = (View) mainView.findViewById(R.id.info_window);
-        hotelInfoView.setOnClickListener(new View.OnClickListener() {
-
-            @Override public void onClick(View v) {
-                callBackListener.hotelListItemClicked(itemClicked);
-            }
-        });
+//        hotelInfoView.setOnClickListener(new View.OnClickListener() {
+        //
+        //            @Override public void onClick(View v) {
+        //                showProgressBar();
+        //                callBackListener.hotelListItemClicked(itemClicked);
+        //            }
+        //        });
 
         return mainView;
     }
@@ -108,6 +111,12 @@ public class HotelSearchResultMapFragment extends PlatformFragmentV1 implements 
 
     @Override public void onDestroyView() {
         super.onDestroyView();
+        if (mapFragment != null) {
+            FragmentTransaction ft = getActivity().getFragmentManager().beginTransaction();
+            ft.remove(mapFragment);
+            ft.commit();
+        }
+
         googleMap = null;
     }
 
@@ -116,6 +125,7 @@ public class HotelSearchResultMapFragment extends PlatformFragmentV1 implements 
      */
     private void setUpMap() {
         if (googleMap == null) {
+            mapFragment = null;
             FragmentManager fm = null;
             if (Build.VERSION.SDK_INT < Build.VERSION_CODES.LOLLIPOP) {
                 fm = getFragmentManager();
@@ -125,6 +135,7 @@ public class HotelSearchResultMapFragment extends PlatformFragmentV1 implements 
             mapFragment = (MapFragment) fm.findFragmentById(R.id.map);
             mapFragment.getMapAsync(this);
         }
+        hideProgressBar();
     }
 
     /**
@@ -226,6 +237,28 @@ public class HotelSearchResultMapFragment extends PlatformFragmentV1 implements 
     public interface HotelSearchMapsFragmentListener {
 
         public void hotelListItemClicked(HotelSearchResultListItem itemClicked);
+    }
+
+    public void showProgressBar() {
+        if (!progressbarVisible) {
+            View progressBar = mainView.findViewById(R.id.hotel_search_progress);
+            progressbarVisible = true;
+            progressBar.setVisibility(View.VISIBLE);
+            progressBar.bringToFront();
+            View progressBarMsg = mainView.findViewById(R.id.hotel_search_progress_msg);
+            progressBarMsg.setVisibility(View.VISIBLE);
+            progressBarMsg.bringToFront();
+        }
+    }
+
+    public void hideProgressBar() {
+        if (progressbarVisible) {
+            View progressBar = mainView.findViewById(R.id.hotel_search_progress);
+            progressbarVisible = false;
+            progressBar.setVisibility(View.GONE);
+            View progressBarMsg = mainView.findViewById(R.id.hotel_search_progress_msg);
+            progressBarMsg.setVisibility(View.GONE);
+        }
     }
 
 }

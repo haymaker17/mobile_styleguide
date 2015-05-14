@@ -28,7 +28,7 @@ public class HotelSearchResultFragment extends PlatformFragmentV1 {
     public String location;
     public String durationOfStayForDisplayInHeader;
 
-    private boolean progressbarVisible;
+    public boolean progressbarVisible;
     private ListView hotelListView;
     private View mainView;
 
@@ -239,7 +239,7 @@ public class HotelSearchResultFragment extends PlatformFragmentV1 {
     /**
      * Will refresh each visible view contained in a list view that match on <code>HotelChoice.propertyId</code>.
      *
-     * @param propertyId contains the propertyId that should be refreshed.
+     * @param updatedHotelListItem contains the propertyId that should be refreshed.
      */
     public void refreshView(HotelSearchResultListItem updatedHotelListItem,
             ListItemAdapter<HotelSearchResultListItem> listItemAdapater) {

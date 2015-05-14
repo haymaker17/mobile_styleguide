@@ -36,6 +36,7 @@
 
     <string name="app_name">ConcurPlatformUITravel</string>
     <string name="hotel_search_progress_message">Searching for hotels</string>
+    <string name="hotel_details_progress_message">Retrieving hotel details</string>
     <string name="hotel_rates_progress_message">Searching for rates</string>
     <string name="hotel_search_progress_no_hotels">No Hotels Found</string>
     <string name="hotel_search_travel_header">HOTELS NEAR %%0%%</string>
@@ -46,6 +47,9 @@
     <string name="search">Search</string>
     <string name="action_item_maps">Maps</string>
     <string name="voice_search">Voice Search</string>
+    <string name="map_unavailable">Map Unavailable</string>
+    <string name="map_loading">Loading hotel search results</string>
+
 
     <!-- Hotel -->
     <string name="hotel_search_resutls_title">Hotels</string>

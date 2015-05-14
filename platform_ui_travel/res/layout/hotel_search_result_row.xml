@@ -31,7 +31,6 @@
             android:layout_height="wrap_content"
             android:layout_alignParentRight="true"
             android:fontFamily="sans-serif-medium"
-            android:text="$169"
             android:textColor="#0078c8"
             android:textSize="18sp"/>
 
@@ -44,7 +43,6 @@
             android:layout_toLeftOf="@id/hotel_price"
             android:layout_toRightOf="@id/hotel_image_id"
             android:fontFamily="sans-serif"
-            android:text="Hotel Name Here"
             android:textColor="#383f46"
             android:textSize="16sp"/>
 
@@ -56,7 +54,6 @@
             android:layout_marginBottom="4dp"
             android:layout_toRightOf="@id/hotel_image_id"
             android:fontFamily="sans-serif-light"
-            android:text="Hotel Address Here"
             android:textColor="#687278"
             android:textSize="12sp"/>
 
@@ -70,7 +67,6 @@
             android:drawableLeft="@drawable/icon_cell_locator"
             android:drawablePadding="@dimen/standard_button_padding"
             android:fontFamily="sans-serif"
-            android:text="0.16 miles"
             android:textColor="#383f46"
             android:textSize="12sp"/>
 
@@ -102,7 +98,6 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:fontFamily="sans-serif-light"
-                android:text="Preferred"
                 android:padding="4dp"
                 android:textSize="12sp"
                 android:layout_alignParentTop="true"
@@ -118,7 +113,6 @@
             android:layout_marginTop="4dp"
             android:layout_toRightOf="@id/hotel_image_id"
             android:fontFamily="sans-serif-light"
-            android:text="Suggested based on past stay dgdfgdf dfg dfg dsfg dfg dsfg dfg sd dg dfg dsfg dsfg dfgs "
             android:textColor="#0078c8"
             android:textSize="12sp"/>
     </RelativeLayout>
