@@ -1,8 +1,4 @@
-<<<<<<< HEAD:platform/src/com/concur/mobile/platform/travel/loader/TravelCustomFieldsLoader.java
-package com.concur.mobile.platform.travel.loader;
-=======
 package com.concur.mobile.platform.ui.travel.loader;
->>>>>>> JarvisAndroidBranch:platform_ui_travel/src/com/concur/mobile/platform/ui/travel/loader/TravelCustomFieldsLoader.java
 
 import android.content.Context;
 import android.util.Log;

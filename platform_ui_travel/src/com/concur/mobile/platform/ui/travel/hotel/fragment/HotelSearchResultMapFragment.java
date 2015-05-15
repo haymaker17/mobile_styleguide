@@ -69,6 +69,7 @@ public class HotelSearchResultMapFragment extends PlatformFragmentV1 implements 
         //
         //            @Override public void onClick(View v) {
         //                showProgressBar();
+        //
         //                callBackListener.hotelListItemClicked(itemClicked);
         //            }
         //        });
@@ -173,9 +174,9 @@ public class HotelSearchResultMapFragment extends PlatformFragmentV1 implements 
                 marker.setVisible(true);
                 itemClicked.buildView(getActivity(), hotelInfoView, null);
                 if (previousMarker != null) {
-                    previousMarker.setIcon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_BLUE));
+                    previousMarker.setIcon(BitmapDescriptorFactory.fromResource(R.drawable.map_pin_blue));
                 }
-                marker.setIcon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_RED));
+                marker.setIcon(BitmapDescriptorFactory.fromResource(R.drawable.map_pin_red));
                 marker.setVisible(true);
                 previousMarker = marker;
                 return true;
@@ -189,7 +190,7 @@ public class HotelSearchResultMapFragment extends PlatformFragmentV1 implements 
         for (HotelSearchResultListItem item : hotels) {
             LatLng position = new LatLng(item.getHotel().latitude, item.getHotel().longitude);
             MarkerOptions marker = new MarkerOptions().position(position);
-            marker.icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_BLUE));
+            marker.icon(BitmapDescriptorFactory.fromResource(R.drawable.map_pin_blue));
 
             Marker hotelMarker = googleMap.addMarker(marker);
             builder.include(position);
@@ -197,7 +198,7 @@ public class HotelSearchResultMapFragment extends PlatformFragmentV1 implements 
             if (firstMarker) {
                 hotelMarker.showInfoWindow();
                 View v = item.buildView(getActivity(), hotelInfoView, null);
-                hotelMarker.setIcon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_RED));
+                hotelMarker.setIcon(BitmapDescriptorFactory.fromResource(R.drawable.map_pin_red));
                 firstMarker = false;
                 previousMarker = hotelMarker;
                 itemClicked = item;
@@ -241,11 +242,11 @@ public class HotelSearchResultMapFragment extends PlatformFragmentV1 implements 
 
     public void showProgressBar() {
         if (!progressbarVisible) {
-            View progressBar = mainView.findViewById(R.id.hotel_search_progress);
+            View progressBar = mainView.findViewById(R.id.hotel_map_progress);
             progressbarVisible = true;
             progressBar.setVisibility(View.VISIBLE);
             progressBar.bringToFront();
-            View progressBarMsg = mainView.findViewById(R.id.hotel_search_progress_msg);
+            View progressBarMsg = mainView.findViewById(R.id.hotel_map_progress_msg);
             progressBarMsg.setVisibility(View.VISIBLE);
             progressBarMsg.bringToFront();
         }
@@ -253,10 +254,10 @@ public class HotelSearchResultMapFragment extends PlatformFragmentV1 implements 
 
     public void hideProgressBar() {
         if (progressbarVisible) {
-            View progressBar = mainView.findViewById(R.id.hotel_search_progress);
+            View progressBar = mainView.findViewById(R.id.hotel_map_progress);
             progressbarVisible = false;
             progressBar.setVisibility(View.GONE);
-            View progressBarMsg = mainView.findViewById(R.id.hotel_search_progress_msg);
+            View progressBarMsg = mainView.findViewById(R.id.hotel_map_progress_msg);
             progressBarMsg.setVisibility(View.GONE);
         }
     }
