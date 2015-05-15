@@ -1,5 +1,5 @@
 /**
- * 
+ *
  */
 package com.concur.mobile.platform.ui.travel.hotel.fragment;
 
@@ -10,13 +10,13 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
-
 import com.concur.mobile.platform.travel.search.hotel.HotelRate;
 import com.concur.mobile.platform.ui.common.util.FormatUtil;
 import com.concur.mobile.platform.ui.common.view.ListItem;
 import com.concur.mobile.platform.ui.travel.R;
 import com.concur.mobile.platform.ui.travel.util.Const;
 import com.concur.mobile.platform.ui.travel.util.ViewUtil;
+import com.concur.mobile.platform.util.Format;
 
 /**
  * An extension of <code>ListItem</code> for displaying a hotel room.
@@ -31,9 +31,8 @@ public class HotelRoomListItem extends ListItem {
 
     /**
      * Constructs an instance of <code>HotelRoomListItem</code> backed by a hotel room.
-     * 
-     * @param hotelRoom
-     *            contains the hotel room.
+     *
+     * @param hotelRoom contains the hotel room.
      */
     public HotelRoomListItem(HotelRate hotelRoom, boolean showGDSName) {
         this.hotelRoom = hotelRoom;
@@ -42,7 +41,7 @@ public class HotelRoomListItem extends ListItem {
 
     /**
      * Gets the <code>HotelRoom</code> object backing this list item.
-     * 
+     *
      * @return returns the <code>HotelRoom</code> object backing this list item.
      */
     public HotelRate getHotelRoom() {
@@ -76,19 +75,24 @@ public class HotelRoomListItem extends ListItem {
                 // String formattedAmtStr = FormatUtil.formatAmount(roomRate,
                 // context.getResources().getConfiguration().locale, hotelRoom.currency, true, true);
                 // txtView.setText(formattedAmtStr);
-                txtView.setText(FormatUtil.formatAmountWithNoDecimals(roomRate, context.getResources()
-                        .getConfiguration().locale, hotelRoom.currency, true, false));
-                // set the Travel Points
-                // LayoutUtil.initTravelPointsAtItemLevel(roomView, R.id.travel_points, hotelRoom.travelPoints);
+                txtView.setText(FormatUtil
+                        .formatAmountWithNoDecimals(roomRate, context.getResources().getConfiguration().locale,
+                                hotelRoom.currency, true, false));
 
                 // add the max enforcement level icon to the first row
-
-                if (hotelRoom.maxEnforcementLevel >= 30) {
-                    ((ImageView) roomView.findViewById(R.id.hotel_room_max_violation_icon))
-                            .setImageResource(R.drawable.icon_status_red);
+                int enforcementLevel = hotelRoom.maxEnforcementLevel;
+                ImageView violationIcon = ((ImageView) roomView.findViewById(R.id.hotel_room_max_violation_icon));
+                if (enforcementLevel >= 25 && enforcementLevel <= 30) {
+                    violationIcon.setImageResource(R.drawable.icon_status_red);
+                    violationIcon.setVisibility(View.VISIBLE);
+                } else if (enforcementLevel >= 10 && enforcementLevel <= 20) {
+                    violationIcon.setImageResource(R.drawable.icon_status_yellow);
+                    violationIcon.setVisibility(View.VISIBLE);
+                } else if (enforcementLevel >= 40) {
+                    hotelRoom.greyFlag = true;
+                    violationIcon.setVisibility(View.VISIBLE);
                 } else {
-                    ((ImageView) roomView.findViewById(R.id.hotel_room_max_violation_icon))
-                            .setImageResource(R.drawable.icon_status_yellow);
+                    violationIcon.setVisibility(View.INVISIBLE);
                 }
             }
         } else {
@@ -107,6 +111,24 @@ public class HotelRoomListItem extends ListItem {
 
         } else {
             Log.e(Const.LOG_TAG, CLS_TAG + ".getView: unable to locate hotel room summary text view!");
+        }
+
+        // travel points
+        if (hotelRoom.travelPoints != null && hotelRoom.travelPoints != 0) {
+            txtView = (TextView) roomView.findViewById(R.id.travel_points_text);
+            txtView.setVisibility(View.VISIBLE);
+
+            if (hotelRoom.travelPoints < 0) {
+                txtView.setTextAppearance(context, R.style.TravelPointsNegativeText);
+                txtView.setText(Format.localizeText(context, R.string.travel_points_can_be_redeemed, new Object[] {
+                        FormatUtil.formatAmountWithNoDecimals(hotelRoom.travelPoints,
+                                context.getResources().getConfiguration().locale, hotelRoom.currency, false, false) }));
+            } else {
+                txtView.setTextAppearance(context, R.style.TravelPointsPositiveText);
+                txtView.setText(Format.localizeText(context, R.string.travel_points_can_be_earned, new Object[] {
+                        FormatUtil.formatAmountWithNoDecimals(hotelRoom.travelPoints,
+                                context.getResources().getConfiguration().locale, hotelRoom.currency, false, false) }));
+            }
         }
 
         txtView = (TextView) roomView.findViewById(R.id.hotel_room_deposit_required);

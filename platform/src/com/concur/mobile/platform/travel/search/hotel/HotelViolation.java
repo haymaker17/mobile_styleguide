@@ -25,6 +25,9 @@ public class HotelViolation implements Serializable {
     public String message;
     public String violationValueId;
 
+    public transient int displayOrder;
+
+
     /**
      * Contains the content Uri.
      */

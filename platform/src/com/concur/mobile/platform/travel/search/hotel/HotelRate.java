@@ -1,14 +1,13 @@
 package com.concur.mobile.platform.travel.search.hotel;
 
-import java.io.Serializable;
-
 import android.content.ContentResolver;
 import android.content.Context;
 import android.database.Cursor;
 import android.net.Uri;
-
 import com.concur.mobile.platform.travel.provider.Travel;
 import com.concur.mobile.platform.util.CursorUtil;
+
+import java.io.Serializable;
 
 /**
  * 
@@ -34,7 +33,7 @@ public class HotelRate implements Serializable {
     public String maxEnforcementLevelDesc;
     public URLInfo sellOptions;
     public int[] violationValueIds;
-    public Double travelPoints;
+    public Integer travelPoints;
     public boolean canRedeemTravelPointsAgainstViolations;
     /**
      * Contains the content Uri.
@@ -127,7 +126,7 @@ public class HotelRate implements Serializable {
         guaranteeSurcharge = CursorUtil.getStringValue(cursor, Travel.HotelRateDetailColumns.GUARANTEE_SURCHARGE);
         rateChangesOverStay = CursorUtil.getBooleanValue(cursor, Travel.HotelRateDetailColumns.RATE_CHANGES_OVERSTAY);
         maxEnforcementLevel = CursorUtil.getIntValue(cursor, Travel.HotelRateDetailColumns.MAX_ENF_LEVEL);
-        travelPoints = CursorUtil.getDoubleValue(cursor, Travel.HotelRateDetailColumns.TRAVEL_POINTS);
+        travelPoints = CursorUtil.getIntValue(cursor, Travel.HotelRateDetailColumns.TRAVEL_POINTS);
         canRedeemTravelPointsAgainstViolations = CursorUtil.getBooleanValue(cursor,
                 Travel.HotelRateDetailColumns.CAN_REDEEM_TP_AGAINST_VIOLATIONS);
 

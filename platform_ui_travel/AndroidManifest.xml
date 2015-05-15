@@ -12,6 +12,11 @@
         android:icon="@drawable/ic_launcher"
         android:label="@string/app_name"
         android:theme="@style/AppTheme" >
+
+        <activity
+            android:name="com.concur.mobile.platform.ui.travel.activity.TravelCustomFieldSearch"
+            android:screenOrientation="portrait"
+            android:theme="@style/ConcurRestTheme.White.ActionBarTabs" />
     </application>
 
 </manifest>

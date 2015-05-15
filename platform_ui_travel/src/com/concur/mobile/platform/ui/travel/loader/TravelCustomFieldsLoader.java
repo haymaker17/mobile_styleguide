@@ -1,4 +1,8 @@
+<<<<<<< HEAD:platform/src/com/concur/mobile/platform/travel/loader/TravelCustomFieldsLoader.java
 package com.concur.mobile.platform.travel.loader;
+=======
+package com.concur.mobile.platform.ui.travel.loader;
+>>>>>>> JarvisAndroidBranch:platform_ui_travel/src/com/concur/mobile/platform/ui/travel/loader/TravelCustomFieldsLoader.java
 
 import android.content.Context;
 import android.util.Log;
@@ -11,16 +15,12 @@ import java.io.InputStream;
 import java.net.HttpURLConnection;
 
 /**
- * 
  * @author RatanK
- * 
  */
 public class TravelCustomFieldsLoader extends PlatformAsyncTaskLoader<TravelCustomFieldsConfig> {
 
-    private static final String CLS_TAG = "TravelCustomFieldsLoader";
-
     public static final String SERVICE_END_POINT = "/Mobile/Config/TravelCustomFields";
-
+    private static final String CLS_TAG = "TravelCustomFieldsLoader";
     protected TravelCustomFieldsConfig travelCustomFieldsConfig;
 
     public TravelCustomFieldsLoader(Context context) {
@@ -30,9 +30,8 @@ public class TravelCustomFieldsLoader extends PlatformAsyncTaskLoader<TravelCust
     /**
      * Configure connection properties. The default implementation sets the user agent, content type to type/xml, connect timeout
      * to 10 seconds, and read timeout to 30 seconds.
-     * 
-     * @param connection
-     *            The open but not yet connected {@link HttpURLConnection} to the server
+     *
+     * @param connection The open but not yet connected {@link HttpURLConnection} to the server
      */
     @Override
     protected void configureConnection(HttpURLConnection connection) {

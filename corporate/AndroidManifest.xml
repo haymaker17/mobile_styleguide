@@ -2,65 +2,77 @@
 <!-- The version lines below need to remain on separate lines for CM build purposes. -->
 
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools"
-    package="com.concur.breeze"
-    android:installLocation="internalOnly" >
+          xmlns:tools="http://schemas.android.com/tools"
+          package="com.concur.breeze.jarvis"
+          android:installLocation="internalOnly"
+          android:versionCode="2999"
+          android:versionName="9.19.0">
+
+    <!-- TODO - MOB-23434 - mulitbuild jira - do not check in the change in package name into develop -->
+
+    <uses-sdk
+        android:minSdkVersion="16"
+        android:targetSdkVersion="21"/>
+
 
     <supports-screens
         android:largeScreens="true"
         android:normalScreens="true"
         android:smallScreens="true"
-        android:xlargeScreens="true" />
+        android:xlargeScreens="true"/>
 
     <uses-feature
         android:name="android.hardware.touchscreen"
-        android:required="false" />
+        android:required="false"/>
     <uses-feature
         android:name="android.hardware.location"
-        android:required="false" />
+        android:required="false"/>
     <uses-feature
         android:name="android.hardware.location.network"
-        android:required="false" />
+        android:required="false"/>
     <uses-feature
         android:name="android.hardware.location.gps"
-        android:required="false" />
+        android:required="false"/>
     <uses-feature
         android:name="android.hardware.camera"
-        android:required="false" />
+        android:required="false"/>
     <uses-feature
         android:name="android.hardware.camera.autofocus"
-        android:required="false" />
+        android:required="false"/>
     <uses-feature
         android:glEsVersion="0x00020000"
-        android:required="true" />
+        android:required="true"/>
 
-    <uses-permission android:name="com.concur.breeze.permission.C2D_MESSAGE" />
-    <uses-permission android:name="com.google.android.c2dm.permission.RECEIVE" />
-    <uses-permission android:name="android.permission.INTERNET" />
-    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
-    <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
-    <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
-    <uses-permission android:name="android.permission.BROADCAST_STICKY" />
-    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
-    <uses-permission android:name="android.permission.READ_CONTACTS" />
-    <uses-permission android:name="android.permission.WAKE_LOCK" />
-    <uses-permission android:name="android.permission.RECEIVE_BOOT_COMPLETED" />
-    <uses-permission android:name="android.permission.VIBRATE" />
+    <!-- TODO - MOB-23434 - mulitbuild jira - do not check in the change in below permission name into develop -->
+    <uses-permission android:name="com.concur.breeze.jarvis.permission.C2D_MESSAGE"/>
+
+    <uses-permission android:name="com.google.android.c2dm.permission.RECEIVE"/>
+    <uses-permission android:name="android.permission.INTERNET"/>
+    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE"/>
+    <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION"/>
+    <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION"/>
+    <uses-permission android:name="android.permission.BROADCAST_STICKY"/>
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE"/>
+    <uses-permission android:name="android.permission.READ_CONTACTS"/>
+    <uses-permission android:name="android.permission.WAKE_LOCK"/>
+    <uses-permission android:name="android.permission.RECEIVE_BOOT_COMPLETED"/>
+    <uses-permission android:name="android.permission.VIBRATE"/>
     <!-- <uses-permission android:name="android.permission.READ_LOGS"/> -->
-    <uses-permission android:name="android.permission.GET_ACCOUNTS" />
+    <uses-permission android:name="android.permission.GET_ACCOUNTS"/>
 
+    <!-- TODO - MOB-23434 - mulitbuild jira - do not check in the change in package name into develop -->
     <permission
-        android:name="com.concur.breeze.permission.C2D_MESSAGE"
-        android:protectionLevel="signature" />
+        android:name="com.concur.breeze.jarvis.permission.C2D_MESSAGE"
+        android:protectionLevel="signature"/>
 
     <application
         android:name="com.concur.mobile.corp.ConcurMobile"
+        tools:replace="theme, allowBackup, icon, label"
         android:allowBackup="false"
         android:icon="@drawable/launch"
         android:label="@string/corporate_name"
         android:logo="@drawable/concur_logo"
-        android:theme="@style/ConcurTheme"
-        tools:replace="theme, allowBackup, icon, label" >
+        android:theme="@style/ConcurTheme">
         <activity
             android:name="com.concur.mobile.corp.activity.SimpleWebViewActivity"
             android:screenOrientation="portrait"
@@ -74,367 +86,370 @@
             android:name="com.concur.mobile.corp.activity.Startup"
             android:icon="@drawable/launch"
             android:label="@string/corporate_name"
-            android:theme="@style/ConcurTheme.Translucent.NoActionBar" >
+            android:theme="@style/ConcurTheme.Translucent.NoActionBar">
             <intent-filter>
-                <action android:name="android.intent.action.MAIN" />
+                <action android:name="android.intent.action.MAIN"/>
 
-                <category android:name="android.intent.category.LAUNCHER" />
-                <category android:name="android.intent.category.DEFAULT" />
+                <category android:name="android.intent.category.LAUNCHER"/>
+                <category android:name="android.intent.category.DEFAULT"/>
             </intent-filter>
         </activity>
         <activity
             android:name="com.concur.mobile.corp.activity.Login"
-            android:theme="@style/ConcurBaseTheme.White.New" />
+            android:theme="@style/ConcurBaseTheme.White.New"/>
         <activity
             android:name="com.concur.mobile.corp.activity.LoginPasswordActivity"
-            android:theme="@style/ConcurBaseTheme.White.New" />
+            android:theme="@style/ConcurBaseTheme.White.New"/>
         <activity
             android:name="com.concur.mobile.corp.activity.CompanyCodeLoginActivity"
             android:theme="@style/ConcurBaseTheme.New"
-            android:windowSoftInputMode="adjustResize" />
+            android:windowSoftInputMode="adjustResize"/>
         <activity
             android:name="com.concur.mobile.corp.activity.CompanySignOnActivity"
-            android:theme="@style/ConcurBaseTheme.New" />
-        <activity android:name="com.concur.mobile.corp.activity.Register" />
+            android:theme="@style/ConcurBaseTheme.New"/>
+        <activity android:name="com.concur.mobile.corp.activity.Register"/>
         <activity
             android:name="com.concur.mobile.corp.activity.LoginHelp"
-            android:theme="@style/ConcurBaseTheme.New" />
+            android:theme="@style/ConcurBaseTheme.New"/>
         <activity
             android:name="com.concur.mobile.corp.activity.LoginHelpTopic"
-            android:theme="@style/ConcurBaseTheme.New" />
+            android:theme="@style/ConcurBaseTheme.New"/>
         <activity
             android:name="com.concur.mobile.corp.activity.MobilePasswordSet"
-            android:theme="@style/ConcurBaseTheme.New" />
+            android:theme="@style/ConcurBaseTheme.New"/>
         <activity
             android:name="com.concur.mobile.corp.activity.PasswordSet"
-            android:theme="@style/ConcurBaseTheme.New" />
+            android:theme="@style/ConcurBaseTheme.New"/>
         <activity
             android:name="com.concur.mobile.corp.activity.Home"
             android:configChanges="orientation"
-            android:theme="@style/ConcurBaseTheme.White.New" >
+            android:theme="@style/ConcurBaseTheme.White.New">
         </activity>
         <activity
             android:name="com.concur.mobile.core.activity.Tour"
-            android:configChanges="orientation" />
+            android:configChanges="orientation"/>
         <activity
             android:name="com.concur.mobile.core.widget.FileSearchActivity"
-            android:theme="@style/ConcurBaseTheme.White.New" />
+            android:theme="@style/ConcurBaseTheme.White.New"/>
 
         <!-- <activity android:name="com.concur.mobile.activity.LogView"/> -->
 
-        <activity android:name="com.concur.mobile.core.activity.Preferences" />
+        <activity android:name="com.concur.mobile.core.activity.Preferences"/>
 
         <!-- Message Center -->
-        <activity android:name="com.concur.mobile.core.activity.MessageCenter" />
-        <activity android:name="com.concur.mobile.core.activity.AbstractIpmMsgProgress" />
+        <activity android:name="com.concur.mobile.core.activity.MessageCenter"/>
+        <activity android:name="com.concur.mobile.core.activity.ipm.AbstractIpmMsgProgress"/>
 
         <!-- Travel activities -->
-        <activity android:name="com.concur.mobile.core.travel.activity.TripList" />
-        <activity android:name="com.concur.mobile.core.travel.activity.SegmentList" />
-        <activity android:name="com.concur.mobile.core.travel.activity.OfferList" />
+        <activity android:name="com.concur.mobile.core.travel.activity.TripList"/>
+        <activity android:name="com.concur.mobile.core.travel.activity.SegmentList"/>
+        <activity android:name="com.concur.mobile.core.travel.activity.OfferList"/>
         <activity
             android:name="com.concur.mobile.core.travel.activity.OfferWebView"
-            android:configChanges="orientation" />
-        <activity android:name="com.concur.mobile.core.travel.activity.SegmentDetail" />
-        <activity android:name="com.concur.mobile.core.travel.air.activity.AirSegmentDetail" />
-        <activity android:name="com.concur.mobile.core.travel.air.activity.AirSegmentFlightStatDetail" />
-        <activity android:name="com.concur.mobile.core.travel.car.activity.CarSegmentDetail" />
-        <activity android:name="com.concur.mobile.core.travel.activity.DiningSegmentDetail" />
-        <activity android:name="com.concur.mobile.core.travel.activity.EventSegmentDetail" />
-        <activity android:name="com.concur.mobile.core.travel.hotel.activity.HotelSegmentDetail" />
-        <activity android:name="com.concur.mobile.core.travel.activity.ParkingSegmentDetail" />
-        <activity android:name="com.concur.mobile.core.travel.rail.activity.RailSegmentDetail" />
-        <activity android:name="com.concur.mobile.core.travel.activity.RideSegmentDetail" />
+            android:configChanges="orientation"/>
+        <activity android:name="com.concur.mobile.core.travel.activity.SegmentDetail"/>
+        <activity android:name="com.concur.mobile.core.travel.air.activity.AirSegmentDetail"/>
+        <activity android:name="com.concur.mobile.core.travel.air.activity.AirSegmentFlightStatDetail"/>
+        <activity android:name="com.concur.mobile.core.travel.car.activity.CarSegmentDetail"/>
+        <activity android:name="com.concur.mobile.core.travel.activity.DiningSegmentDetail"/>
+        <activity android:name="com.concur.mobile.core.travel.activity.EventSegmentDetail"/>
+        <activity android:name="com.concur.mobile.core.travel.hotel.activity.HotelSegmentDetail"/>
+        <activity android:name="com.concur.mobile.core.travel.activity.ParkingSegmentDetail"/>
+        <activity android:name="com.concur.mobile.core.travel.rail.activity.RailSegmentDetail"/>
+        <activity android:name="com.concur.mobile.core.travel.activity.RideSegmentDetail"/>
         <activity
             android:name="com.concur.mobile.core.travel.request.activity.TravelRequestApprovalsWebView"
             android:configChanges="orientation"
-            android:theme="@style/ConcurTheme.Translucent.NoActionBar" />
+            android:theme="@style/ConcurTheme.Translucent.NoActionBar"/>
         <activity
             android:name="com.concur.mobile.core.travel.activity.LocationSearch"
             android:theme="@style/ConcurTheme.Dialog"
-            android:windowSoftInputMode="stateVisible" />
+            android:windowSoftInputMode="stateVisible"/>
         <activity
             android:name="com.concur.mobile.core.travel.activity.LocationSearchV1"
             android:parentActivityName="com.concur.mobile.core.travel.hotel.activity.RestHotelSearch"
             android:screenOrientation="portrait"
             android:theme="@style/ConcurRestTheme.White.ActionBarTabs"
-            android:windowSoftInputMode="stateVisible" >
+            android:windowSoftInputMode="stateVisible">
             <intent-filter>
-                <action android:name="android.intent.action.SEARCH" />
+                <action android:name="android.intent.action.SEARCH"/>
             </intent-filter>
 
             <meta-data
                 android:name="android.app.searchable"
-                android:resource="@xml/searchable" />
+                android:resource="@xml/searchable"/>
         </activity>
-        <activity android:name="com.concur.mobile.core.travel.air.activity.AirSearch" />
-        <activity android:name="com.concur.mobile.core.travel.air.activity.AirSearchProgress" />
-        <activity android:name="com.concur.mobile.core.travel.air.activity.AirSearchNoResults" />
-        <activity android:name="com.concur.mobile.core.travel.air.activity.AirSearchResultsSummary" />
-        <activity android:name="com.concur.mobile.core.travel.air.activity.AirResultsList" />
-        <activity android:name="com.concur.mobile.core.travel.air.activity.AirFlightDetail" />
+        <activity android:name="com.concur.mobile.core.travel.air.activity.AirSearch"/>
+        <activity android:name="com.concur.mobile.core.travel.air.activity.AirSearchProgress"/>
+        <activity android:name="com.concur.mobile.core.travel.air.activity.AirSearchNoResults"/>
+        <activity android:name="com.concur.mobile.core.travel.air.activity.AirSearchResultsSummary"/>
+        <activity android:name="com.concur.mobile.core.travel.air.activity.AirResultsList"/>
+        <activity android:name="com.concur.mobile.core.travel.air.activity.AirFlightDetail"/>
         <activity
             android:name="com.concur.mobile.core.travel.activity.AgencyInformation"
             android:configChanges="orientation"
-            android:theme="@style/ConcurTheme.Translucent.NoActionBar" />
-        <activity android:name="com.concur.mobile.core.travel.air.activity.AlternativeAirScheduleList" />
-        <activity android:name="com.concur.mobile.core.travel.car.activity.CarSearch" />
-        <activity android:name="com.concur.mobile.core.travel.car.activity.CarSearchProgress" />
-        <activity android:name="com.concur.mobile.core.travel.car.activity.CarSearchNoResults" />
-        <activity android:name="com.concur.mobile.core.travel.car.activity.CarSearchResults" />
-        <activity android:name="com.concur.mobile.core.travel.car.activity.CarSearchDetail" />
+            android:theme="@style/ConcurTheme.Translucent.NoActionBar"/>
+        <activity android:name="com.concur.mobile.core.travel.air.activity.AlternativeAirScheduleList"/>
+        <activity android:name="com.concur.mobile.core.travel.car.activity.CarSearch"/>
+        <activity android:name="com.concur.mobile.core.travel.car.activity.CarSearchProgress"/>
+        <activity android:name="com.concur.mobile.core.travel.car.activity.CarSearchNoResults"/>
+        <activity android:name="com.concur.mobile.core.travel.car.activity.CarSearchResults"/>
+        <activity android:name="com.concur.mobile.core.travel.car.activity.CarSearchDetail"/>
         <activity
             android:name="com.concur.mobile.core.travel.hotel.activity.HotelSearch"
-            android:windowSoftInputMode="adjustResize" />
+            android:windowSoftInputMode="adjustResize"/>
         <activity
             android:name="com.concur.mobile.core.travel.hotel.activity.RestHotelSearch"
+            android:screenOrientation="portrait"
             android:theme="@style/ConcurRestTheme.White.ActionBarTabs"
-            android:windowSoftInputMode="adjustResize" />
+            android:windowSoftInputMode="adjustResize"/>
         <activity
             android:name="com.concur.mobile.platform.ui.travel.hotel.activity.HotelSearchAndResultActivity"
             android:screenOrientation="portrait"
-            android:theme="@style/ConcurRestTheme.White.ActionBarTabs" />
+            android:theme="@style/ConcurRestTheme.White.ActionBarTabs"/>
         <activity
             android:name="com.concur.mobile.platform.ui.travel.hotel.activity.HotelChoiceDetailsActivity"
             android:screenOrientation="portrait"
-            android:theme="@style/ConcurRestTheme.White.ActionBarTabs" />
+            android:theme="@style/ConcurRestTheme.White.ActionBarTabs"/>
         <activity
             android:name="com.concur.mobile.platform.ui.travel.hotel.activity.HotelVoiceSearchActivity"
             android:screenOrientation="portrait"
-            android:theme="@style/ConcurRestTheme.White.ActionBarTabs" />
+            android:theme="@style/ConcurRestTheme.White.ActionBarTabs"/>
         <activity
             android:name="com.concur.mobile.platform.ui.travel.hotel.activity.ImageDetailActivity"
             android:theme="@style/ConcurRestTheme.White.ActionBarTabs" />
-        <activity android:name="com.concur.mobile.core.travel.hotel.activity.ShowHotelItinerary" />
+        <activity android:name="com.concur.mobile.core.travel.hotel.activity.ShowHotelItinerary"
+                  android:theme="@style/ConcurRestTheme.White.ActionBarTabs"/>
         <activity
             android:name="com.concur.mobile.core.travel.hotel.activity.HotelSearchResults"
-            android:screenOrientation="portrait" />
+            android:screenOrientation="portrait"/>
         <activity
             android:name="com.concur.mobile.platform.ui.travel.hotel.activity.HotelBookingActivity"
             android:screenOrientation="portrait"
-            android:theme="@style/ConcurRestTheme.White.ActionBarTabs" />
-        <activity android:name="com.concur.mobile.core.travel.hotel.activity.HotelSearchRooms" />
-        <activity android:name="com.concur.mobile.core.travel.hotel.activity.HotelSearchRoomDetails" />
+            android:theme="@style/ConcurRestTheme.White.ActionBarTabs"/>
+        <activity android:name="com.concur.mobile.core.travel.hotel.activity.ShowHotelItinerary"/>
+        <activity android:name="com.concur.mobile.core.travel.hotel.activity.HotelSearchRooms"/>
+        <activity android:name="com.concur.mobile.core.travel.hotel.activity.HotelSearchRoomDetails"/>
         <activity
             android:name="com.concur.mobile.core.travel.hotel.activity.HotelSearchProgress"
-            android:screenOrientation="portrait" />
-        <activity android:name="com.concur.mobile.core.travel.hotel.activity.HotelSearchNoResults" />
-        <activity android:name="com.concur.mobile.core.travel.activity.ImageActivity" />
-        <activity android:name="com.concur.mobile.core.travel.hotel.activity.HotelReserveRoom" />
-        <activity android:name="com.concur.mobile.core.travel.rail.activity.RailSearch" />
-        <activity android:name="com.concur.mobile.core.travel.rail.activity.RailSearchProgress" />
-        <activity android:name="com.concur.mobile.core.travel.rail.activity.RailSearchNoResults" />
-        <activity android:name="com.concur.mobile.core.travel.rail.activity.RailSearchResults" />
-        <activity android:name="com.concur.mobile.core.travel.rail.activity.RailSearchResultsFares" />
-        <activity android:name="com.concur.mobile.core.travel.rail.activity.RailSearchDetail" />
+            android:screenOrientation="portrait"/>
+        <activity android:name="com.concur.mobile.core.travel.hotel.activity.HotelSearchNoResults"/>
+        <activity android:name="com.concur.mobile.core.travel.activity.ImageActivity"/>
+        <activity android:name="com.concur.mobile.core.travel.hotel.activity.HotelReserveRoom"/>
+        <activity android:name="com.concur.mobile.core.travel.rail.activity.RailSearch"/>
+        <activity android:name="com.concur.mobile.core.travel.rail.activity.RailSearchProgress"/>
+        <activity android:name="com.concur.mobile.core.travel.rail.activity.RailSearchNoResults"/>
+        <activity android:name="com.concur.mobile.core.travel.rail.activity.RailSearchResults"/>
+        <activity android:name="com.concur.mobile.core.travel.rail.activity.RailSearchResultsFares"/>
+        <activity android:name="com.concur.mobile.core.travel.rail.activity.RailSearchDetail"/>
         <activity
             android:name="com.concur.mobile.core.travel.hotel.activity.VoiceHotelSearchActivity"
-            android:screenOrientation="portrait" />
+            android:screenOrientation="portrait"/>
         <activity
             android:name="com.concur.mobile.core.travel.air.activity.VoiceAirSearchActivity"
-            android:screenOrientation="portrait" />
+            android:screenOrientation="portrait"/>
         <activity
             android:name="com.concur.mobile.core.travel.car.activity.VoiceCarSearchActivity"
-            android:screenOrientation="portrait" />
-        <activity android:name="com.concur.mobile.core.travel.approval.activity.RuleViolationSummary" />
+            android:screenOrientation="portrait"/>
+        <activity android:name="com.concur.mobile.core.travel.approval.activity.RuleViolationSummary"/>
         <activity
             android:name="com.concur.mobile.core.travel.activity.TravelCustomFieldSearch"
-            android:theme="@style/ConcurTheme" />
+            android:theme="@style/ConcurTheme"/>
 
         <!-- Expense related activities. -->
-        <activity android:name="com.concur.mobile.core.activity.ViewImage" />
+        <activity android:name="com.concur.mobile.core.activity.ViewImage"/>
         <activity
             android:name="com.concur.mobile.core.expense.report.activity.ExpenseReportHeader"
-            android:windowSoftInputMode="adjustResize" />
+            android:windowSoftInputMode="adjustResize"/>
         <activity
             android:name="com.concur.mobile.core.expense.activity.ListSearch"
-            android:theme="@style/ConcurTheme" />
-        <activity android:name="com.concur.mobile.core.expense.report.approval.activity.ExpenseApproval" />
-        <activity android:name="com.concur.mobile.core.expense.report.approval.activity.Approval" >
+            android:theme="@style/ConcurTheme"/>
+        <activity android:name="com.concur.mobile.core.expense.report.approval.activity.ExpenseApproval"/>
+        <activity android:name="com.concur.mobile.core.expense.report.approval.activity.Approval">
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
-                android:value="com.concur.mobile.corp.activity.Home" />
+                android:value="com.concur.mobile.corp.activity.Home"/>
         </activity>
-        <activity android:name="com.concur.mobile.core.expense.report.activity.ExpenseEntries" />
+        <activity android:name="com.concur.mobile.core.expense.report.activity.ExpenseEntries"/>
         <activity
             android:name="com.concur.mobile.core.expense.report.activity.ExpenseEntry"
-            android:windowSoftInputMode="adjustResize" />
+            android:windowSoftInputMode="adjustResize"/>
         <activity
             android:name="com.concur.mobile.core.expense.report.activity.ExpenseEntryMileage"
-            android:windowSoftInputMode="adjustResize" />
+            android:windowSoftInputMode="adjustResize"/>
         <activity
             android:name="com.concur.mobile.core.expense.report.activity.ExpenseEntryCompanyMileage"
-            android:windowSoftInputMode="adjustResize" />
+            android:windowSoftInputMode="adjustResize"/>
         <activity
             android:name="com.concur.mobile.core.expense.report.activity.ExpenseEntryAttendee"
-            android:windowSoftInputMode="stateHidden" />
+            android:windowSoftInputMode="stateHidden"/>
         <activity
             android:name="com.concur.mobile.core.expense.report.activity.ExpenseAttendeeEdit"
-            android:windowSoftInputMode="adjustResize" />
-        <activity android:name="com.concur.mobile.core.expense.report.activity.ExpenseEntryItemization" />
-        <activity android:name="com.concur.mobile.core.expense.report.activity.ExpenseDuplicateAttendee" />
-        <activity android:name="com.concur.mobile.core.expense.report.activity.ExpenseReceipt" />
+            android:windowSoftInputMode="adjustResize"/>
+        <activity android:name="com.concur.mobile.core.expense.report.activity.ExpenseEntryItemization"/>
+        <activity android:name="com.concur.mobile.core.expense.report.activity.ExpenseDuplicateAttendee"/>
+        <activity android:name="com.concur.mobile.core.expense.report.activity.ExpenseReceipt"/>
         <activity
             android:name="com.concur.mobile.core.expense.report.activity.ExpenseSendBack"
-            android:windowSoftInputMode="adjustResize" />
-        <activity android:name="com.concur.mobile.core.expense.report.activity.ExpenseActiveReports" />
+            android:windowSoftInputMode="adjustResize"/>
+        <activity android:name="com.concur.mobile.core.expense.report.activity.ExpenseActiveReports"/>
         <activity
             android:name="com.concur.mobile.core.expense.report.activity.ExpenseHotelWizard"
-            android:windowSoftInputMode="adjustResize" />
+            android:windowSoftInputMode="adjustResize"/>
         <activity
             android:name="com.concur.mobile.core.expense.report.activity.AttendeeSearch"
-            android:windowSoftInputMode="adjustResize" />
+            android:windowSoftInputMode="adjustResize"/>
         <activity
             android:name="com.concur.mobile.core.expense.report.activity.ExpenseAttendeePreview"
-            android:windowSoftInputMode="adjustResize" />
+            android:windowSoftInputMode="adjustResize"/>
         <activity
             android:name="com.concur.mobile.core.expense.charge.activity.QuickExpense"
-            android:windowSoftInputMode="adjustResize" />
-        <activity android:name="com.concur.mobile.core.expense.activity.ExpensesAndReceipts" >
+            android:windowSoftInputMode="adjustResize"/>
+        <activity android:name="com.concur.mobile.core.expense.activity.ExpensesAndReceipts">
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
-                android:value="com.concur.mobile.corp.activity.Home" />
+                android:value="com.concur.mobile.corp.activity.Home"/>
         </activity>
         <activity
             android:name="com.concur.mobile.core.expense.activity.ExpensesAndReceiptsActivity"
-            android:theme="@style/ConcurBaseTheme.White.ActionBarTabs" >
+            android:theme="@style/ConcurBaseTheme.White.ActionBarTabs">
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
-                android:value="com.concur.mobile.corp.activity.Home" />
+                android:value="com.concur.mobile.corp.activity.Home"/>
         </activity>
-        <activity android:name="com.concur.mobile.core.expense.activity.TAItineraryActivity" >
+        <activity android:name="com.concur.mobile.core.expense.activity.TAItineraryActivity">
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
-                android:value="com.concur.mobile.core.expense.report.activity.ExpenseEntries" />
+                android:value="com.concur.mobile.core.expense.report.activity.ExpenseEntries"/>
         </activity>
-        <activity android:name="com.concur.mobile.core.expense.activity.TAStopActivity" >
+        <activity android:name="com.concur.mobile.core.expense.activity.TAStopActivity">
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
-                android:value="com.concur.mobile.core.expense.activity.TAItineraryActivity" />
+                android:value="com.concur.mobile.core.expense.activity.TAItineraryActivity"/>
         </activity>
-        <activity android:name="com.concur.mobile.core.expense.activity.TAExpensesActivity" >
+        <activity android:name="com.concur.mobile.core.expense.activity.TAExpensesActivity">
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
-                android:value="com.concur.mobile.core.expense.activity.TAItineraryActivity" />
+                android:value="com.concur.mobile.core.expense.activity.TAItineraryActivity"/>
         </activity>
-        <activity android:name="com.concur.mobile.core.travel.air.activity.AirPriceToBeatSearch" />
-        <activity android:name="com.concur.mobile.core.travel.air.activity.AirPriceToBeatSearchResults" />
-        <activity android:name="com.concur.mobile.core.travel.hotel.activity.HotelPriceToBeatSearch" />
-        <activity android:name="com.concur.mobile.core.travel.hotel.activity.HotelPriceToBeatSearchResults" />
-        <activity android:name="com.concur.mobile.core.travel.activity.TravelPointsExplanation" />
-        <activity android:name="com.concur.mobile.core.travel.activity.TravelViolationsApprovalChoice" />
-        <activity android:name="com.concur.mobile.core.travel.activity.TravelViolationsForManagerApproval" />
+        <activity android:name="com.concur.mobile.core.travel.air.activity.AirPriceToBeatSearch"/>
+        <activity android:name="com.concur.mobile.core.travel.air.activity.AirPriceToBeatSearchResults"/>
+        <activity android:name="com.concur.mobile.core.travel.hotel.activity.HotelPriceToBeatSearch"/>
+        <activity android:name="com.concur.mobile.core.travel.hotel.activity.HotelPriceToBeatSearchResults"/>
+        <activity android:name="com.concur.mobile.core.travel.activity.TravelPointsExplanation"/>
+        <activity android:name="com.concur.mobile.core.travel.activity.TravelViolationsApprovalChoice"/>
+        <activity android:name="com.concur.mobile.core.travel.activity.TravelViolationsForManagerApproval"/>
         <activity
             android:name="com.concur.mobile.core.expense.activity.ExpenseDetail"
             android:theme="@style/ConcurBaseTheme.White.New"
-            android:windowSoftInputMode="adjustResize" />
+            android:windowSoftInputMode="adjustResize"/>
 
         <!-- Travel Request related activities. -->
-        <activity android:name="com.concur.mobile.core.request.activity.RequestListActivity" >
+        <activity android:name="com.concur.mobile.core.request.activity.RequestListActivity">
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
-                android:value="com.concur.mobile.corp.activity.Home" />
+                android:value="com.concur.mobile.corp.activity.Home"/>
         </activity>
-        <activity android:name="com.concur.mobile.core.request.activity.RequestSummaryActivity" >
+        <activity android:name="com.concur.mobile.core.request.activity.RequestSummaryActivity">
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
-                android:value="com.concur.mobile.core.request.activity.RequestListActivity" />
+                android:value="com.concur.mobile.core.request.activity.RequestListActivity"/>
         </activity>
-        <activity android:name="com.concur.mobile.core.request.activity.RequestHeaderActivity" >
+        <activity android:name="com.concur.mobile.core.request.activity.RequestHeaderActivity">
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
-                android:value="com.concur.mobile.core.request.activity.RequestSummaryActivity" />
+                android:value="com.concur.mobile.core.request.activity.RequestSummaryActivity"/>
         </activity>
-        <activity android:name="com.concur.mobile.core.request.activity.RequestEntryActivity" >
+        <activity android:name="com.concur.mobile.core.request.activity.RequestEntryActivity">
             <meta-data
                 android:name="
             android.support.PARENT_ACTIVITY"
-                android:value="com.concur.mobile.core.request.activity.RequestSummaryActivity" />
+                android:value="com.concur.mobile.core.request.activity.RequestSummaryActivity"/>
         </activity>
-        <activity android:name="com.concur.mobile.core.request.activity.LocationSearchActivity" >
+        <activity android:name="com.concur.mobile.core.request.activity.LocationSearchActivity">
         </activity>
 
         <!-- Invoice related activities. -->
         <activity
             android:name="com.concur.mobile.core.invoice.activity.InvoicesWebView"
             android:configChanges="orientation"
-            android:theme="@style/ConcurTheme.Translucent.NoActionBar" />
+            android:theme="@style/ConcurTheme.Translucent.NoActionBar"/>
         <activity
             android:name="com.concur.mobile.core.invoice.activity.PurchaseRequestsWebView"
-            android:configChanges="orientation" />
-        <activity android:name="com.concur.mobile.core.expense.receiptstore.activity.ReceiptShare" >
+            android:configChanges="orientation"/>
+        <activity android:name="com.concur.mobile.core.expense.receiptstore.activity.ReceiptShare">
             <intent-filter>
-                <action android:name="android.intent.action.SEND" />
-                <action android:name="android.intent.action.SEND_MULTIPLE" />
+                <action android:name="android.intent.action.SEND"/>
+                <action android:name="android.intent.action.SEND_MULTIPLE"/>
 
-                <category android:name="android.intent.category.DEFAULT" />
+                <category android:name="android.intent.category.DEFAULT"/>
 
-                <data android:mimeType="image/*" />
+                <data android:mimeType="image/*"/>
             </intent-filter>
             <intent-filter>
-                <action android:name="android.intent.action.CHOOSER" />
+                <action android:name="android.intent.action.CHOOSER"/>
 
-                <category android:name="android.intent.category.DEFAULT" />
+                <category android:name="android.intent.category.DEFAULT"/>
 
-                <data android:mimeType="image/*" />
+                <data android:mimeType="image/*"/>
             </intent-filter>
             <intent-filter>
-                <action android:name="android.intent.action.SEND" />
-                <action android:name="android.intent.action.SEND_MULTIPLE" />
+                <action android:name="android.intent.action.SEND"/>
+                <action android:name="android.intent.action.SEND_MULTIPLE"/>
 
-                <category android:name="android.intent.category.DEFAULT" />
+                <category android:name="android.intent.category.DEFAULT"/>
 
-                <data android:mimeType="application/pdf" />
+                <data android:mimeType="application/pdf"/>
             </intent-filter>
             <intent-filter>
-                <action android:name="android.intent.action.CHOOSER" />
+                <action android:name="android.intent.action.CHOOSER"/>
 
-                <category android:name="android.intent.category.DEFAULT" />
+                <category android:name="android.intent.category.DEFAULT"/>
 
-                <data android:mimeType="application/pdf" />
+                <data android:mimeType="application/pdf"/>
             </intent-filter>
         </activity>
-        <activity android:name="com.concur.mobile.core.expense.receiptstore.activity.ReceiptShareStatus" />
+        <activity android:name="com.concur.mobile.core.expense.receiptstore.activity.ReceiptShareStatus"/>
         <activity
             android:name="com.concur.mobile.core.expense.receiptstore.activity.ReceiptShareStatusNotification"
-            android:taskAffinity="" />
+            android:taskAffinity=""/>
         <activity
             android:name="com.concur.mobile.core.expense.report.activity.ApproverSearch"
-            android:theme="@style/ConcurTheme.Dialog.Light" />
-        <activity android:name="com.concur.mobile.corp.activity.LocationCheckIn" />
+            android:theme="@style/ConcurTheme.Dialog.Light"/>
+        <activity android:name="com.concur.mobile.corp.activity.LocationCheckIn"/>
 
         <!-- Offline activities -->
-        <activity android:name="com.concur.mobile.core.activity.OffLineUploadList" />
+        <activity android:name="com.concur.mobile.core.activity.OffLineUploadList"/>
 
-        <service android:name="com.concur.mobile.core.service.ConcurService" />
+        <service android:name="com.concur.mobile.core.service.ConcurService"/>
         <service
             android:name="com.concur.mobile.core.expense.receiptstore.service.ReceiptShareService"
-            android:exported="false" />
+            android:exported="false"/>
 
         <!-- Extension of BroadcastReceiver for handling geo-location updates. -->
-        <receiver android:name="com.concur.mobile.core.util.loc.LocationChangedReceiver" />
+        <receiver android:name="com.concur.mobile.core.util.loc.LocationChangedReceiver"/>
 
         <!-- Extension of BroadcastReceiver for detecting boot complete and starting up ReceiptShare service. -->
-        <receiver android:name="com.concur.mobile.core.receiver.BootCompleteReceiver" >
+        <receiver android:name="com.concur.mobile.core.receiver.BootCompleteReceiver">
             <intent-filter>
-                <action android:name="android.intent.action.BOOT_COMPLETED" />
+                <action android:name="android.intent.action.BOOT_COMPLETED"/>
                 <!-- For certain HTC devices we need this action because certain HTC device ignore completely action BOOT_COMPLETED -->
-                <action android:name="android.intent.action.QUICKBOOT_POWERON" />
+                <action android:name="android.intent.action.QUICKBOOT_POWERON"/>
 
-                <category android:name="android.intent.category.HOME" />
+                <category android:name="android.intent.category.HOME"/>
             </intent-filter>
         </receiver>
 
         <activity
             android:name="com.concur.mobile.corp.activity.ForegroundApp"
-            android:label="@string/corporate_name" >
+            android:label="@string/corporate_name">
             <intent-filter>
-                <action android:name="android.intent.action.VIEW" />
+                <action android:name="android.intent.action.VIEW"/>
 
-                <category android:name="android.intent.category.DEFAULT" />
-                <category android:name="android.intent.category.BROWSABLE" />
+                <category android:name="android.intent.category.DEFAULT"/>
+                <category android:name="android.intent.category.BROWSABLE"/>
 
-                <data android:scheme="concurmobile" />
+                <data android:scheme="concurmobile"/>
             </intent-filter>
         </activity>
 
@@ -443,11 +458,11 @@
         <!-- ============ -->
         <service
             android:name="com.concur.mobile.core.service.PushNotificationRegService"
-            android:label="PushNotificationRegService" >
+            android:label="PushNotificationRegService">
             <intent-filter>
-                <action android:name="com.concur.mobile.core.receiver.AWSPushNotificationReceiver" />
-
-                <category android:name="com.concur.breeze" />
+                <action android:name="com.concur.mobile.core.receiver.AWSPushNotificationReceiver"/>
+                <!-- TODO - MOB-23434 - mulitbuild jira - do not check in the change in below permission name into develop -->
+                <category android:name="com.concur.breeze.jarvis"/>
             </intent-filter>
         </service>
 
@@ -459,86 +474,79 @@
         <!-- Test Drive -->
         <activity
             android:name="com.concur.mobile.corp.activity.UniversalTour"
-            android:theme="@style/ConcurBaseTheme.New" >
+            android:theme="@style/ConcurBaseTheme.New">
         </activity>
         <activity
             android:name="com.concur.mobile.corp.activity.TestDriveRegistrationInfo"
-            android:theme="@style/ConcurBaseTheme.New" >
+            android:theme="@style/ConcurBaseTheme.New">
         </activity>
         <activity
             android:name="com.concur.mobile.corp.activity.PreLogin"
-            android:theme="@style/ConcurTheme.NoActionBar" >
+            android:theme="@style/ConcurTheme.NoActionBar">
         </activity>
         <activity
             android:name="com.concur.mobile.corp.activity.TestDriveRegistration"
             android:configChanges="orientation"
-            android:theme="@style/ConcurBaseTheme.New" >
+            android:theme="@style/ConcurBaseTheme.New">
         </activity>
         <activity
             android:name="com.concur.mobile.corp.activity.TestDriveTour"
-            android:theme="@style/ConcurBaseTheme.New" >
+            android:theme="@style/ConcurBaseTheme.New">
         </activity>
         <activity
             android:name="com.concur.mobile.corp.activity.EmailLookupActivity"
-            android:theme="@style/ConcurBaseTheme.White.New" >
+            android:theme="@style/ConcurBaseTheme.White.New">
         </activity>
         <activity
             android:name="com.concur.mobile.corp.activity.OpenSourceLicenseInfo"
-            android:theme="@style/ConcurBaseTheme" >
+            android:theme="@style/ConcurBaseTheme">
         </activity>
         <activity
             android:name="com.concur.mobile.corp.activity.OpenSourceLicenseDisplay"
-            android:theme="@style/ConcurBaseTheme" >
+            android:theme="@style/ConcurBaseTheme">
         </activity>
         <activity
             android:name="com.concur.mobile.corp.activity.ProfileInfo"
-            android:theme="@style/ConcurBaseTheme.New" >
-        </activity>
-        <activity
-            android:name="com.concur.mobile.platform.ui.travel.hotel.maps.ShowMaps"
-            android:label="ShowMaps"
-            android:theme="@style/ConcurRestTheme.White.ActionBarTabs" >
-            <intent-filter>
-                <action android:name="android.intent.action.VIEW" />
-
-                <category android:name="android.intent.category.DEFAULT" />
-            </intent-filter>
+            android:theme="@style/ConcurBaseTheme.New">
         </activity>
 
         <!-- Providers -->
         <!-- Configuration Information Provider -->
+        <!-- TODO - do not check in the change in package name into develop -->
         <provider
             android:name="com.concur.mobile.platform.config.provider.ConfigProvider"
-            android:authorities="com.concur.mobile.platform.config"
+            android:authorities="com.concur.mobile.platform.jarvis.config"
             android:enabled="true"
             android:exported="false"
             android:initOrder="1"
             android:label="@string/platform_config_provider_name"
-            android:syncable="false" >
+            android:syncable="false">
 
             <!-- TODO: define mime types here, etc. -->
         </provider>
         <!-- Expense Information Provider -->
+        <!-- TODO - do not check in the change in package name into develop -->
         <provider
             android:name="com.concur.mobile.platform.expense.provider.ExpenseProvider"
-            android:authorities="com.concur.mobile.platform.expense"
+            android:authorities="com.concur.mobile.platform.jarvis.expense"
             android:enabled="true"
             android:exported="false"
             android:initOrder="1"
             android:label="@string/platform_expense_provider_name"
-            android:syncable="false" >
+            android:syncable="false">
 
             <!-- TODO: define mime types here, etc. -->
         </provider>
         <!-- Travel Information Provider -->
+        <!-- TODO - do not check in the change in package name into develop -->
         <provider
             android:name="com.concur.mobile.platform.travel.provider.TravelProvider"
-            android:authorities="com.concur.mobile.platform.travel"
+            android:authorities="com.concur.mobile.platform.jarvis.travel"
             android:enabled="true"
             android:exported="false"
             android:initOrder="1"
             android:label="@string/platform_travel_provider_name"
-            android:syncable="false" >
+            android:syncable="false">
 
             <!-- TODO: define mime types here, etc. -->
         </provider>
@@ -551,15 +559,15 @@
         <!-- Apptentive API key from "settings" page on www.apptentive.com -->
         <meta-data
             android:name="apptentive_api_key"
-            android:value="2a4d9d876b481b64c9481db061e4028f716ea74ac57cab35e8a48a2cee9ba7a2" />
+            android:value="2a4d9d876b481b64c9481db061e4028f716ea74ac57cab35e8a48a2cee9ba7a2"/>
 
         <activity
             android:name="com.apptentive.android.sdk.ViewActivity"
-            android:theme="@style/Apptentive.Theme.Transparent" />
+            android:theme="@style/Apptentive.Theme.Transparent"/>
 
-        <receiver android:name="com.apptentive.android.sdk.comm.NetworkStateReceiver" >
+        <receiver android:name="com.apptentive.android.sdk.comm.NetworkStateReceiver">
             <intent-filter>
-                <action android:name="android.net.conn.CONNECTIVITY_CHANGE" />
+                <action android:name="android.net.conn.CONNECTIVITY_CHANGE"/>
             </intent-filter>
         </receiver>
 
@@ -569,19 +577,19 @@
         <!-- Google Maps V2 -->
         <meta-data
             android:name="com.google.android.maps.v2.API_KEY"
-            android:value="AIzaSyAyYSgq0kUZCoHbyu41wsP23nnn-K063aM" />
+            android:value="AIzaSyAyYSgq0kUZCoHbyu41wsP23nnn-K063aM"/>
 
         <!-- ================== -->
         <!-- Begin Google DFP -->
         <!-- ================== -->
         <meta-data
             android:name="com.google.android.gms.version"
-            android:value="@integer/google_play_services_version" />
+            android:value="@integer/google_play_services_version"/>
 
         <activity
             android:name="com.google.android.gms.ads.AdActivity"
             android:configChanges="keyboard|keyboardHidden|orientation|screenLayout|uiMode|screenSize|smallestScreenSize"
-            android:theme="@android:style/Theme.Translucent" />
+            android:theme="@android:style/Theme.Translucent"/>
 
         <!-- ================== -->
         <!-- End Google DFP -->

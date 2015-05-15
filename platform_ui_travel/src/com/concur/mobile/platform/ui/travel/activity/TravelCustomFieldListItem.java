@@ -6,17 +6,16 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
-
-import com.concur.mobile.platform.travel.loader.TravelCustomFieldValueSpinnerItem;
+import com.concur.mobile.platform.common.FieldValueSpinnerItem;
 import com.concur.mobile.platform.ui.common.view.ListItem;
 import com.concur.mobile.platform.ui.travel.R;
 
 public class TravelCustomFieldListItem extends ListItem {
 
-    private TravelCustomFieldValueSpinnerItem spItem;
+    private FieldValueSpinnerItem spItem;
     private int colourId;
 
-    public TravelCustomFieldListItem(TravelCustomFieldValueSpinnerItem spItem, int listItemViewType) {
+    public TravelCustomFieldListItem(FieldValueSpinnerItem spItem, int listItemViewType) {
         this.spItem = spItem;
         this.listItemViewType = listItemViewType;
     }
@@ -45,7 +44,7 @@ public class TravelCustomFieldListItem extends ListItem {
         return row;
     }
 
-    public TravelCustomFieldValueSpinnerItem getSelectedItem() {
+    public FieldValueSpinnerItem getSelectedItem() {
         return spItem;
     }
 

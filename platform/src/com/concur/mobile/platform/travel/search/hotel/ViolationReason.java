@@ -10,12 +10,11 @@ import com.google.gson.annotations.SerializedName;
  */
 public class ViolationReason {
 
-    @SerializedName("RuleValueId")
     public String ruleValueId;
 
-    @SerializedName("Code")
+    @SerializedName("code")
     public String violationReasonCode;
 
-    @SerializedName("Justification")
+    @SerializedName("justification")
     public String justification;
 }

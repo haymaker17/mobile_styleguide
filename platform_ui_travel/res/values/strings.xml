@@ -1,5 +1,5 @@
 <resources>
-
+    
     <!-- start of general strings -->
     <string name="general_view_rates">View Rates</string>
     <string name="general_no_rates">No Rates</string>
@@ -33,9 +33,10 @@
     <string name="voice_hotel_book_hint_primary">What hotel can I find for you?</string>
     <string name="voice_hotel_book_hint_secondary">For example, say: \"Find a hotel near the Statue of Liberty for next week.\"</string>
     <!-- end of general strings -->
-
+    
     <string name="app_name">ConcurPlatformUITravel</string>
     <string name="hotel_search_progress_message">Searching for hotels</string>
+    <string name="hotel_details_progress_message">Retrieving hotel details</string>
     <string name="hotel_rates_progress_message">Searching for rates</string>
     <string name="hotel_search_progress_no_hotels">No Hotels Found</string>
     <string name="hotel_search_travel_header">HOTELS NEAR %%0%%</string>
@@ -46,14 +47,17 @@
     <string name="search">Search</string>
     <string name="action_item_maps">Maps</string>
     <string name="voice_search">Voice Search</string>
-
+    <string name="map_unavailable">Map Unavailable</string>
+    <string name="map_loading">Could not show maps now, Please try again.</string>
+    
+    
     <!-- Hotel -->
     <string name="hotel_search_resutls_title">Hotels</string>
     <string name="hotel_search_resutls_size">%%0!number of results%% results</string>
     <string name="hotel_search">Search Hotels</string>
     <string name="hotel_voice_search_criteria">Searching for hotels near %%0%% from %%1%% to %%2%%.</string>
     <string name="voice_search_canceled">Search canceled.</string>
-
+    
     <!-- start of hotel company preference -->
     <string name="hotel_preferred">Preferred</string>
     <string name="hotel_chain_less_preferred">Chain Less Preferred</string>
@@ -63,15 +67,15 @@
     <string name="hotel_property_preferred">Property Preferred</string>
     <string name="hotel_property_most_preferred">Property Most Preferred</string>
     <!-- end of hotel company preference -->
-
-
+    
+    
     <!-- start of hotel suggestions -->
     <string name="hotel_suggestion_personal_history">Suggested based on past stay</string>
     <string name="hotel_suggestion_company_favorite">Suggested based on co-worker</string>
     <string name="hotel_suggestion_algorithm">Suggested based on popularity</string>
     <!-- end of hotel suggestions -->
-
-
+    
+    
     <!-- start of hotel search results sort menu items -->
     <string name="hotel_search_results_sort_option_distance">Distance</string>
     <string name="hotel_search_results_sort_option_preferred">Preferred</string>
@@ -83,10 +87,10 @@
     <string name="hotel_search_results_sorted_by_price">results sorted by price</string>
     <string name="hotel_search_results_sorted_by_rating">results sorted by rating</string>
     <string name="hotel_search_results_sorted_by_suggestion">results sorted by suggestion</string>
-
+    
     <!-- end of hotel search results sort menu items -->
-
-
+    
+    
     <!-- start of hotel search results filter screen -->
     <string name="hotel_search_results_filter_star_rating_label">STAR RATING</string>
     <string name="hotel_search_results_filter_all">ALL</string>
@@ -103,12 +107,12 @@
     <string name="hotel_search_results_filter_name_containing_label">WITH NAME CONTAINING</string>
     <string name="hotel_search_results_filter_name_containing_hint">Search by hotel name i.e. Westin</string>
     <!-- end of hotel search results filter screen -->
-
+    
     <string name="hotel_tab_details">DETAILS</string>
     <string name="hotel_tab_rooms">ROOMS</string>
     <string name="hotel_tab_images">PHOTOS</string>
     <string name="find_rooms_button">Find Rooms</string>
-
+    
     <!-- start of hotel reservation screen -->
     <string name="hotel_sell_options_retrieving">Retrieving sell options</string>
     <string name="hotel_reserve_this_room">Reserve This Room</string>
@@ -121,29 +125,30 @@
     <string name="hotel_violation_reasons_not_available">Violation reasons not available</string>
     <!-- end of hotel reservation screen -->
     <dimen name="size_default_height">96dp</dimen>
-
+    
     <string name="action_settings">Settings</string>
     <string name="no_photos">No Photos Available</string>
     <string name="no_network_connection_toast">No Network Connection</string>
     <string name="imageview_description">Image Thumbnail</string>
-    <string name="hotel_booking_failed">Room Confirm Failed</string>
+    <string name="hotel_booking_failed">Room Confirm Failed.</string>
+    <string name="hotel_booking_failed_title">Hotel Booking Failed</string>
     <string name="hotel_booking_success">Your room has been successfully reserved.</string>
     <string name="hotel_booking_retrieving">Reserving room...</string>
     <string name="hotel_overview">Overview</string>
     <string name="hotel_confirm_reserve_title">Confirm Reservation</string>
     <string name="hotel_confirm_reserve_msg">Are you sure you want to book this room?</string>
     <string name="hotel_booking_deposit_required">Deposit Required</string>
-    <string name="hotel_dialog_deposit_required_title">Reservation Not Allowed </string>
+    <string name="hotel_dialog_deposit_required_title">Reservation Not Allowed</string>
     <string name="hotel_dialog_deposit_required_msg">Your travel policy does not allow booking this rate</string>
     <string name="dialog_ok">OK</string>
     <string name="dlg_travel_hotel_deposit_confirm_message">Are you sure you want to reserve this room?\nI understand that my credit card will be charged immediately and no cancellation will be possible later in the booking process. All or portions of the deposit will be forfeited upon cancellation.</string>
     <!-- end of Hotel deposit -->
-
+    
     <string name="hotel_price_hint">per night</string>
     <string name="hotel_out_of_policy">out of policy</string>
     <string name="book_missing_field_card_selection">Please select a credit card.</string>
     <string name="book_missing_field_violation_reason">Please select a violation reason.</string>
-
+    
     <!-- start of custom fields -->
     <string name="loc_search_hint">Enter filter text</string>
     <string name="dlg_travel_retrieve_custom_fields_progress_message">Retrieving booking information fields...</string>
@@ -151,14 +156,31 @@
     <string name="dlg_travel_booking_info_message">The following booking fields have missing or invalid values.  Please review and provide the appropriate values.</string>
     <string name="travel_booking_info_unavailable_message">An error has occurred retrieving booking information fields.  Searches cannot be performed at this time.</string>
     <string name="dlg_list_search_selection_progress_message">Completing selection...</string>
-
+    <string name="dlg_travel_retrieve_custom_fields_update_progress_message">Updating booking information fields...</string>
+    <string name="field_name">Field Name</string>
+    <string name="field_hint">Field Hint</string>
+    <string name="book_missing_custom_fields">Please select required custom fields.</string>
     <!-- end of custom fields -->
-
+    
     <string name="offline_header_text">Offline</string>
     <string name="dlg_system_unavailable_title">System Unavailable</string>
     <string name="dlg_system_unavailable_message">The service is unable to complete the operation at this time.  Please try again later, or contact your company administrator if this continues.</string>
+    
     <!-- Network Connectivity stuff. -->
     <string name="dlg_no_connectivity_title">Client Is Offline</string>
     <string name="dlg_no_connectivity_message">This operation is not supported in offline mode.  Please try again when data connectivity is available.</string>
-
+    
+    <!-- start of Travel Points -->
+    <string name="price_to_beat_label">PRICE-TO-BEAT</string>
+    <string name="price_to_beat_range">%%0!minimum value of price to beat%% - %%1!maximum value of price to beat%%</string>
+    <string name="travel_points_can_be_earned">+%%0!number of points can be earned for this booking%% pts</string>
+    <string name="travel_points_can_be_earned_points">+%%0!number of points can be earned for this booking%% points</string>
+    <string name="travel_points_can_be_redeemed">\-%%0!number of points can be redeemed for this booking%% pts</string>
+    <!-- start of Travel Points -->
+    
+    <!-- start of Price-to-Beat -->
+    <string name="price_to_beat_ranges_header">Selecting rooms that cost less than the Price-to-Beat earns you Travel Points that can be used toward future benefits.</string>
+    <string name="price_to_beat_price_unavailable">Unavailable</string>
+    <!--  end of Price-to-Beat -->
+    
 </resources>

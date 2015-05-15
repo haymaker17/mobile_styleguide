@@ -13,6 +13,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 
 import com.concur.mobile.base.util.Format;
+import com.concur.mobile.platform.common.FieldValueSpinnerItem;
 import com.concur.mobile.platform.common.IListFieldItem;
 import com.concur.mobile.platform.common.formfield.IFormField;
 import com.concur.mobile.platform.ui.common.R;

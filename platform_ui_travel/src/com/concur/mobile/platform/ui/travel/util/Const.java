@@ -28,6 +28,7 @@ public class Const {
     public static final String EXTRA_LOCATION_SEARCH_MODE_USED = "loc_search_mode_used";
     public static final String EXTRA_TRAVEL_LOCATION = "travel.location";
     public static final String EXTRA_TRAVEL_CLIQBOOK_TRIP_ID = "travel.cliqbook.trip.id";
+    public static final String EXTRA_TRAVEL_SEARCH_NEAR_ME = "searchNearMe";
 
     public static final String ACTION_HOTEL_SEARCH_RESULTS = "com.concur.mobile.action.HOTELS_FOUND";
     public static final String EXTRA_HOTELS_LIST = "hotel.list";
@@ -98,5 +99,13 @@ public class Const {
     public static final int COMBO_BOX_INLINE_TEXT = 0;
     public static final int COMBO_BOX_LIST_SELECTION = 1;
     public static final int MSG_SEARCH_LIST_REQUEST = 45;
+
+    public static final String ENFORCEMENT_REQUIRED_APPROVAL = "RequiresApproval";
+    public static final String ENFORCEMENT_REQUIRED_PASSIVE_APPROVAL = "RequiresPassiveApproval";
+    public static final String ENFORCEMENT_NOTIFY_MANAGER = "NotifyManager";
+    public static final String ENFORCEMENT_LOG_FOR_REPORTS = "LogForReportsOnly";
+    public static final String ENFORCEMENT_MESSAGE_ONLY = "Message Only";
+    public static final String ENFORCEMENT_AUTO_FAIL = "AutoFail";
+    public static final String ENFORCEMENT_AUTO_SUCCEED = "AutoSucceed";
 
 }

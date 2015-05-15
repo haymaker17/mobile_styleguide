@@ -86,8 +86,8 @@ int versionIndex = 1; // This is used so each version code is unique.
 android.applicationVariants.all { variant ->
     // assign different version code for each output
     variant.outputs.each { output ->
-        int abiVersionCode = project.ext.versionCodes.get(output.getFilter(OutputFile.ABI)) ?: versionIndex
-        output.versionCodeOverride = (abiVersionCode * 1000000) + (android.defaultConfig.versionCode ?: versionIndex)
-        versionIndex++
+    int abiVersionCode = project.ext.versionCodes.get(output.getFilter(OutputFile.ABI)) ?: versionIndex
+    output.versionCodeOverride = (abiVersionCode * 1000000) + (android.defaultConfig.versionCode ?: versionIndex)
+    versionIndex++
     }
 }

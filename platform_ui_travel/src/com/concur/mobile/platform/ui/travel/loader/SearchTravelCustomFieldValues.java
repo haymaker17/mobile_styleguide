@@ -1,31 +1,27 @@
-package com.concur.mobile.platform.travel.loader;
-
-import java.io.IOException;
-import java.io.InputStream;
-
-import org.xmlpull.v1.XmlPullParserException;
+package com.concur.mobile.platform.ui.travel.loader;
 
 import android.content.Context;
 import android.util.Log;
-
 import com.concur.mobile.base.service.BaseAsyncRequestTask;
 import com.concur.mobile.base.service.BaseAsyncResultReceiver;
 import com.concur.mobile.base.service.parser.CommonParser;
 import com.concur.mobile.platform.service.PlatformAsyncRequestTask;
 import com.concur.mobile.platform.util.Const;
 import com.concur.mobile.platform.util.XmlUtil;
+import org.xmlpull.v1.XmlPullParserException;
+
+import java.io.IOException;
+import java.io.InputStream;
 
 /**
- * 
  * @author RatanK
- * 
  */
-
+// moved from Platform as there is dependency on the Platform UI classes
 // TODO - change to loader
 public class SearchTravelCustomFieldValues extends PlatformAsyncRequestTask {
 
+    public static final String TRAVEL_CUSTOM_FIELD = "travelCustomField";
     private static final String CLS_TAG = "SearchTravelCustomFieldValues";
-
     private String attributeId;
     private String searchPattern;
     private TravelCustomFieldsParser custFieldsParser;
@@ -97,12 +93,8 @@ public class SearchTravelCustomFieldValues extends PlatformAsyncRequestTask {
     protected int onPostParse() {
         int resultcode = RESULT_OK;
 
-        if (custFieldsParser.custField != null) {
-            // add in the app object
-            // ConcurCore core = (ConcurCore) ConcurCore.getContext();
-            // core.setTravelCustomField(custFieldsParser.custField);
-            // core.setTravelCustomFieldLastRetrieved(Calendar.getInstance(TimeZone.getTimeZone("UTC")));
-            resultData.putSerializable("custField", custFieldsParser.custField);
+        if (custFieldsParser != null && custFieldsParser.custField != null) {
+            resultData.putSerializable(TRAVEL_CUSTOM_FIELD, custFieldsParser.custField);
 
         } else {
             // log the error message
@@ -112,5 +104,4 @@ public class SearchTravelCustomFieldValues extends PlatformAsyncRequestTask {
 
         return resultcode;
     }
-
 }

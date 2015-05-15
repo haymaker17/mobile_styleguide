@@ -1,29 +1,25 @@
-package com.concur.mobile.platform.travel.loader;
+package com.concur.mobile.platform.ui.travel.loader;
+
+import android.content.Context;
+import android.util.Log;
+import com.concur.mobile.platform.service.PlatformAsyncTaskLoader;
+import com.concur.mobile.platform.util.Const;
+import com.concur.platform.PlatformProperties;
 
 import java.io.IOException;
 import java.io.InputStream;
 import java.net.HttpURLConnection;
 import java.util.List;
 
-import android.content.Context;
-import android.util.Log;
-
-import com.concur.mobile.platform.service.PlatformAsyncTaskLoader;
-import com.concur.mobile.platform.util.Const;
-import com.concur.platform.PlatformProperties;
-
 /**
  * Loader for posting a set of travel custom fields in order to retrieve an updated set of fields
- * 
+ *
  * @author RatanK
- * 
  */
 public class TravelCustomFieldsUpdateLoader extends PlatformAsyncTaskLoader<TravelCustomFieldsConfig> {
 
-    private static final String CLS_TAG = TravelCustomFieldsUpdateLoader.class.getSimpleName();
-
     public static final String SERVICE_END_POINT = "/Mobile/Config/UpdateTravelCustomFields";
-
+    private static final String CLS_TAG = TravelCustomFieldsUpdateLoader.class.getSimpleName();
     /**
      * Contains the list of <code>TravelCustomField</code> objects containing the values to be sent for update.
      */
@@ -39,14 +35,22 @@ public class TravelCustomFieldsUpdateLoader extends PlatformAsyncTaskLoader<Trav
     /**
      * Configure connection properties. The default implementation sets the user agent, content type to type/xml, connect timeout
      * to 10 seconds, and read timeout to 30 seconds.
-     * 
-     * @param connection
-     *            The open but not yet connected {@link HttpURLConnection} to the server
+     *
+     * @param connection The open but not yet connected {@link HttpURLConnection} to the server
      */
     @Override
     protected void configureConnection(HttpURLConnection connection) {
         super.configureConnection(connection);
         connection.addRequestProperty(HTTP_HEADER_XSESSION_ID, PlatformProperties.getSessionId());
+    }
+
+    @Override
+    public TravelCustomFieldsConfig loadInBackground() {
+        travelCustomFieldsConfig = super.loadInBackground();
+        if (result == RESULT_ERROR && travelCustomFieldsConfig != null) {
+            travelCustomFieldsConfig.errorOccuredWhileRetrieving = true;
+        }
+        return travelCustomFieldsConfig;
     }
 
     @Override

@@ -1,30 +1,26 @@
-package com.concur.mobile.platform.travel.loader;
+package com.concur.mobile.platform.ui.travel.loader;
 
-import java.io.IOException;
-import java.io.InputStream;
-import java.util.List;
-
-import javax.xml.parsers.ParserConfigurationException;
-import javax.xml.parsers.SAXParser;
-import javax.xml.parsers.SAXParserFactory;
-
+import android.util.Log;
+import com.concur.mobile.platform.util.Const;
+import com.concur.mobile.platform.util.Parse;
 import org.xml.sax.Attributes;
 import org.xml.sax.SAXException;
 import org.xml.sax.helpers.DefaultHandler;
 
-import android.util.Log;
-
-import com.concur.mobile.platform.travel.loader.TravelCustomField.TravelCustomFieldSAXHandler;
-import com.concur.mobile.platform.util.Const;
-import com.concur.mobile.platform.util.Parse;
+import javax.xml.parsers.ParserConfigurationException;
+import javax.xml.parsers.SAXParser;
+import javax.xml.parsers.SAXParserFactory;
+import java.io.IOException;
+import java.io.InputStream;
+import java.io.Serializable;
+import java.util.List;
 
 /**
  * Models travel custom fields configuration.
- * 
+ *
  * @author RatanK
- * 
  */
-public class TravelCustomFieldsConfig {
+public class TravelCustomFieldsConfig implements Serializable {
 
     private static final String CLS_TAG = TravelCustomFieldsConfig.class.getSimpleName();
 
@@ -85,11 +81,11 @@ public class TravelCustomFieldsConfig {
         /**
          * Contains a reference to the form field parser.
          */
-        private TravelCustomFieldSAXHandler formFieldHandler;
+        private TravelCustomField.TravelCustomFieldSAXHandler formFieldHandler;
 
         /**
          * Gets the parsed travel custom field configuration.
-         * 
+         *
          * @return returns the parsed travel custom field configuration.
          */
         public TravelCustomFieldsConfig getConfig() {
@@ -119,7 +115,8 @@ public class TravelCustomFieldsConfig {
          * org.xml.sax.Attributes)
          */
         @Override
-        public void startElement(String uri, String localName, String qName, Attributes attributes) throws SAXException {
+        public void startElement(String uri, String localName, String qName, Attributes attributes)
+                throws SAXException {
 
             if (formFieldHandler != null) {
                 formFieldHandler.startElement(uri, localName, qName, attributes);
@@ -170,8 +167,9 @@ public class TravelCustomFieldsConfig {
                             // No-op.
                             elementHandled = true;
                         } else if (!elementHandled && this.getClass().equals(TravelCustomFieldsSAXHandler.class)) {
-                            Log.w(Const.LOG_TAG, CLS_TAG + ".endElement: unhandled element name '" + localName
-                                    + "' and value '" + chars.toString().trim() + "'.");
+                            Log.w(Const.LOG_TAG,
+                                    CLS_TAG + ".endElement: unhandled element name '" + localName + "' and value '"
+                                            + chars.toString().trim() + "'.");
                         }
                     }
                 }

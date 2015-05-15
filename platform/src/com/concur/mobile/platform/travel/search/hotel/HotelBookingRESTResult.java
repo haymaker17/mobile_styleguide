@@ -1,12 +1,13 @@
 package com.concur.mobile.platform.travel.search.hotel;
 
+import com.concur.mobile.platform.service.parser.Error;
+
 import java.io.Serializable;
 
 /**
  * object to hold hotel booking response
- * 
+ *
  * @author tejoa
- * 
  */
 public class HotelBookingRESTResult implements Serializable {
 
@@ -18,5 +19,6 @@ public class HotelBookingRESTResult implements Serializable {
     public String recordLocator;
     public String ConfirmationNumber;
     public String itineraryLocator;
+    public Error error;
 
 }

@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="utf-8"?>
+<TableRow
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    >
+    <TextView
+        android:id="@+id/field_row_name"
+        android:lines="1"
+        android:scrollHorizontally="true"
+        android:ellipsize="end"
+        android:layout_gravity="left"
+        android:textAppearance="@style/CustomFormFieldValue"
+        />
+    <TextView
+        android:id="@+id/field_row_hint"
+        android:layout_gravity="right"
+        android:textAppearance="@style/CustomFormFieldValue"
+        />
+</TableRow>

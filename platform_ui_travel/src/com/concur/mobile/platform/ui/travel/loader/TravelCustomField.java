@@ -1,32 +1,28 @@
-package com.concur.mobile.platform.travel.loader;
-
-import java.io.ByteArrayInputStream;
-import java.io.IOException;
-import java.io.Serializable;
-import java.util.ArrayList;
-import java.util.List;
-
-import javax.xml.parsers.ParserConfigurationException;
-import javax.xml.parsers.SAXParser;
-import javax.xml.parsers.SAXParserFactory;
-
-import org.xml.sax.Attributes;
-import org.xml.sax.SAXException;
-import org.xml.sax.helpers.DefaultHandler;
+package com.concur.mobile.platform.ui.travel.loader;
 
 import android.util.Log;
-
+import com.concur.mobile.platform.common.FieldValueSpinnerItem;
 import com.concur.mobile.platform.common.SpinnerItem;
 import com.concur.mobile.platform.common.formfield.FormField;
 import com.concur.mobile.platform.util.Const;
 import com.concur.mobile.platform.util.Format;
 import com.concur.mobile.platform.util.Parse;
 import com.concur.mobile.platform.util.XmlUtil;
+import org.xml.sax.Attributes;
+import org.xml.sax.SAXException;
+import org.xml.sax.helpers.DefaultHandler;
+
+import javax.xml.parsers.ParserConfigurationException;
+import javax.xml.parsers.SAXParser;
+import javax.xml.parsers.SAXParserFactory;
+import java.io.ByteArrayInputStream;
+import java.io.IOException;
+import java.io.Serializable;
+import java.util.ArrayList;
+import java.util.List;
 
 /**
- * 
  * @author RatanK
- * 
  */
 public class TravelCustomField extends FormField implements Serializable {
 
@@ -51,61 +47,13 @@ public class TravelCustomField extends FormField implements Serializable {
     /**
      * Contains the list of possible values for this field.
      */
-    protected List<TravelCustomFieldValueSpinnerItem> fieldValues;
-
-    /**
-     * Models saved field information.
-     * 
-     * @author andy
-     */
-    public static class SavedFieldInfo {
-
-        public String fieldId;
-
-        public String value;
-
-        public String valueId;
-
-    };
-
-    /**
-     * Gets the list of field values associated with this field.
-     * 
-     * @return return the list of associated field values.
-     */
-    public List<TravelCustomFieldValueSpinnerItem> getFieldValues() {
-        return fieldValues;
-    }
-
-    public void setFieldValues(List<TravelCustomFieldValueSpinnerItem> fieldValuesList) {
-        fieldValues = fieldValuesList;
-    }
-
-    /**
-     * Gets whether other form field values are dependent upon the value of this field.
-     * 
-     * @return returns whether other form field values are dependent upon the value of this field.
-     */
-    public boolean hasDependency() {
-        return ((hasDependency != null) ? hasDependency : false);
-    }
-
-    /**
-     * Gets whether or not this form field should be displayed at the start of a booking search.
-     * 
-     * @return return <code>true</code> if the field should be displayed at the start of the booking process; <code>false</code>
-     *         if the field should be display at the end of booking process.
-     */
-    public boolean displayAtStart() {
-        return ((displayAtStart != null) ? displayAtStart : false);
-    }
+    protected List<FieldValueSpinnerItem> fieldValues;
 
     /**
      * Will deserialize saved travel custom field information that was serialized with a call to
      * <code>serializeToXMLForWire</code>.
-     * 
-     * @param savedFieldInfo
-     *            the XML serialized string.
+     *
+     * @param savedFieldInfo the XML serialized string.
      * @return returns a list of <code>TravelCustomField.SaveFieldInfo</code> objects that can be used to fill in field values.
      */
     public static List<SavedFieldInfo> deserializeSavedFieldInfo(String savedFieldInfo) {
@@ -126,15 +74,14 @@ public class TravelCustomField extends FormField implements Serializable {
         return retVal;
     }
 
+    ;
+
     /**
      * Will serialize to XML a list of form fields suitable to be sent in an booking request.
-     * 
-     * @param strBldr
-     *            an instance of <code>StringBuilder</code> into which the XML serialization should be written.
-     * @param flds
-     *            the list of travel custom fields to be serialized.
-     * @param includeValueIds
-     *            whether to include the value id's for pick-list controls.
+     *
+     * @param strBldr         an instance of <code>StringBuilder</code> into which the XML serialization should be written.
+     * @param flds            the list of travel custom fields to be serialized.
+     * @param includeValueIds whether to include the value id's for pick-list controls.
      */
     public static void serializeToXMLForWire(StringBuilder strBldr, List<TravelCustomField> flds,
             boolean includeValueIds) {
@@ -175,8 +122,9 @@ public class TravelCustomField extends FormField implements Serializable {
                         // The StaticPickListFormField will store the ValueId in 'LiKey', but the OptionText in
                         // 'Value'. So, we need to look-up the 'Value' based on a match of 'ValueId'.
                         String tcfValue = null;
-                        for (TravelCustomFieldValueSpinnerItem tcfsi : tcf.fieldValues) {
-                            if (tcf.getLiKey() != null && tcfsi.id != null && tcf.getLiKey().equalsIgnoreCase(tcfsi.id)) {
+                        for (FieldValueSpinnerItem tcfsi : tcf.fieldValues) {
+                            if (tcf.getLiKey() != null && tcfsi.id != null && tcf.getLiKey()
+                                    .equalsIgnoreCase(tcfsi.id)) {
                                 tcfValue = Format.escapeForXML(tcfsi.value);
                                 break;
                             }
@@ -201,29 +149,72 @@ public class TravelCustomField extends FormField implements Serializable {
     }
 
     /**
+     * Gets the list of field values associated with this field.
+     *
+     * @return return the list of associated field values.
+     */
+    public List<FieldValueSpinnerItem> getFieldValues() {
+        return fieldValues;
+    }
+
+    public void setFieldValues(List<FieldValueSpinnerItem> fieldValuesList) {
+        fieldValues = fieldValuesList;
+    }
+
+    /**
+     * Gets whether other form field values are dependent upon the value of this field.
+     *
+     * @return returns whether other form field values are dependent upon the value of this field.
+     */
+    public boolean hasDependency() {
+        return ((hasDependency != null) ? hasDependency : false);
+    }
+
+    /**
+     * Gets whether or not this form field should be displayed at the start of a booking search.
+     *
+     * @return return <code>true</code> if the field should be displayed at the start of the booking process; <code>false</code>
+     * if the field should be display at the end of booking process.
+     */
+    public boolean displayAtStart() {
+        return ((displayAtStart != null) ? displayAtStart : false);
+    }
+
+    /**
+     * Models saved field information.
+     *
+     * @author andy
+     */
+    public static class SavedFieldInfo {
+
+        public String fieldId;
+
+        public String value;
+
+        public String valueId;
+
+    }
+
+    /**
      * An extension of <code>DefaultHandler</code> for parsing persisted travel custom fields.
      */
     public static class TravelCustomFieldSaveSAXHandler extends DefaultHandler {
 
-        private static final String CLS_TAG = TravelCustomField.CLS_TAG + "."
-                + TravelCustomFieldSaveSAXHandler.class.getSimpleName();
-
         private static final String CUSTOM_FIELDS = "CustomFields";
         private static final String FIELD = "Field";
+        private static final String CLS_TAG =
+                TravelCustomField.CLS_TAG + "." + TravelCustomFieldSaveSAXHandler.class.getSimpleName();
         private static final String VALUE = "Value";
         private static final String VALUE_ID = "ValueId";
         private static final String ID = "Id";
-
         /**
          * Contains the list of parsed saved fields.
          */
         protected List<SavedFieldInfo> savedFields;
-
         /**
          * Contains the currently saved field.
          */
         protected SavedFieldInfo savedField;
-
         /**
          * Contained parsed field data.
          */
@@ -231,7 +222,7 @@ public class TravelCustomField extends FormField implements Serializable {
 
         /**
          * Gets the list of parsed form fields.
-         * 
+         *
          * @return returns the list of parsed form fields.
          */
         public List<SavedFieldInfo> getFields() {
@@ -240,7 +231,7 @@ public class TravelCustomField extends FormField implements Serializable {
 
         /*
          * (non-Javadoc)
-         * 
+         *
          * @see org.xml.sax.helpers.DefaultHandler#characters(char[], int, int)
          */
         @Override
@@ -250,7 +241,8 @@ public class TravelCustomField extends FormField implements Serializable {
         }
 
         @Override
-        public void startElement(String uri, String localName, String qName, Attributes attributes) throws SAXException {
+        public void startElement(String uri, String localName, String qName, Attributes attributes)
+                throws SAXException {
             super.startElement(uri, localName, qName, attributes);
 
             if (localName.equalsIgnoreCase(CUSTOM_FIELDS)) {
@@ -308,13 +300,11 @@ public class TravelCustomField extends FormField implements Serializable {
      */
     public static class TravelCustomFieldSAXHandler extends DefaultHandler {
 
-        private static final String CLS_TAG = TravelCustomField.CLS_TAG + "."
-                + TravelCustomFieldSAXHandler.class.getSimpleName();
-
         private static final String FIELD = "Field";
         private static final String VALUES = "Values";
+        private static final String CLS_TAG =
+                TravelCustomField.CLS_TAG + "." + TravelCustomFieldSAXHandler.class.getSimpleName();
         private static final String ATTRIBUTE_VALUE = "AttributeValue";
-
         private static final String ATTRIBUTE_ID = "AttributeId";
         private static final String ATTRIBUTE_TITLE = "AttributeTitle";
         private static final String CURRENT_VALUE = "CurrentValue";
@@ -326,32 +316,26 @@ public class TravelCustomField extends FormField implements Serializable {
         private static final String REQUIRED = "Required";
         private static final String DISPLAY_AT_START = "DisplayAtStart";
         private static final String LARGE_VALUE_COUNT = "LargeValueCount";
-
         private static final String DATA_TYPE_STRING = "string";
         private static final String DATA_TYPE_TEXT = "text";
         private static final String DATA_TYPE_NUMBER = "number";
         private static final String DATA_TYPE_BOOLEAN = "boolean";
-
         /**
          * Contains a reference to the parsed list of form fields.
          */
         protected List<TravelCustomField> fields;
-
         /**
          * Contains the current form field being parsed.
          */
         protected TravelCustomField curFld;
-
         /**
          * Contains the current form field value being parsed.
          */
-        protected TravelCustomFieldValueSpinnerItem curFldValue;
-
+        protected FieldValueSpinnerItem curFldValue;
         /**
          * Contains whether or not this parser has handled an element tag.
          */
         protected boolean elementHandled;
-
         /**
          * Contained parsed field data.
          */
@@ -359,7 +343,7 @@ public class TravelCustomField extends FormField implements Serializable {
 
         /**
          * Gets the list of parsed form fields.
-         * 
+         *
          * @return returns the list of parsed form fields.
          */
         public List<TravelCustomField> getFields() {
@@ -368,7 +352,7 @@ public class TravelCustomField extends FormField implements Serializable {
 
         /*
          * (non-Javadoc)
-         * 
+         *
          * @see org.xml.sax.helpers.DefaultHandler#characters(char[], int, int)
          */
         @Override
@@ -379,12 +363,13 @@ public class TravelCustomField extends FormField implements Serializable {
 
         /*
          * (non-Javadoc)
-         * 
+         *
          * @see org.xml.sax.helpers.DefaultHandler#startElement(java.lang.String, java.lang.String, java.lang.String,
          * org.xml.sax.Attributes)
          */
         @Override
-        public void startElement(String uri, String localName, String qName, Attributes attributes) throws SAXException {
+        public void startElement(String uri, String localName, String qName, Attributes attributes)
+                throws SAXException {
 
             elementHandled = false;
 
@@ -396,14 +381,14 @@ public class TravelCustomField extends FormField implements Serializable {
                 elementHandled = true;
             } else if (localName.equalsIgnoreCase(VALUES)) {
                 if (curFld != null) {
-                    curFld.fieldValues = new ArrayList<TravelCustomFieldValueSpinnerItem>();
+                    curFld.fieldValues = new ArrayList<FieldValueSpinnerItem>();
                 } else {
                     Log.e(Const.LOG_TAG, CLS_TAG + ".startElement: curFld is null!");
                 }
                 elementHandled = true;
             } else if (localName.equalsIgnoreCase(ATTRIBUTE_VALUE)) {
                 if (curFld != null) {
-                    curFldValue = new TravelCustomFieldValueSpinnerItem("", "");
+                    curFldValue = new FieldValueSpinnerItem("", "");
                 } else {
                     Log.e(Const.LOG_TAG, CLS_TAG + ".startElement: curFld is null!");
                 }
@@ -416,7 +401,7 @@ public class TravelCustomField extends FormField implements Serializable {
 
         /*
          * (non-Javadoc)
-         * 
+         *
          * @see org.xml.sax.helpers.DefaultHandler#endElement(java.lang.String, java.lang.String, java.lang.String)
          */
         @Override
@@ -442,7 +427,7 @@ public class TravelCustomField extends FormField implements Serializable {
                     if (localName.equalsIgnoreCase(VALUES)) {
                         // Ensure 'OptionText' is set.
                         if (curFld.fieldValues != null && curFld.fieldValues.size() > 0) {
-                            for (TravelCustomFieldValueSpinnerItem tcfsi : curFld.fieldValues) {
+                            for (FieldValueSpinnerItem tcfsi : curFld.fieldValues) {
                                 if (tcfsi.optionText == null || tcfsi.optionText.length() == 0) {
                                     if (tcfsi.value != null && tcfsi.value.length() > 0) {
                                         tcfsi.optionText = tcfsi.value;
@@ -451,8 +436,7 @@ public class TravelCustomField extends FormField implements Serializable {
                                 }
                             }
                         }
-                        curFld.setStaticList((SpinnerItem[]) curFld.fieldValues
-                                .toArray(new TravelCustomFieldValueSpinnerItem[0]));
+                        curFld.setStaticList((SpinnerItem[]) curFld.fieldValues.toArray(new FieldValueSpinnerItem[0]));
                         elementHandled = true;
                     } else if (localName.equalsIgnoreCase(FIELD)) {
                         if (fields == null) {
@@ -466,7 +450,7 @@ public class TravelCustomField extends FormField implements Serializable {
                             curFld.setControlType(ControlType.PICK_LIST);
                             // Set the 'LiKey' on 'curFld' if it has a value.
                             if (curFld.getValue() != null) {
-                                for (TravelCustomFieldValueSpinnerItem tcfsi : curFld.fieldValues) {
+                                for (FieldValueSpinnerItem tcfsi : curFld.fieldValues) {
                                     if (tcfsi.value != null && tcfsi.value.equalsIgnoreCase(curFld.getValue())) {
                                         curFld.setLiKey(tcfsi.id);
                                     }
@@ -476,10 +460,9 @@ public class TravelCustomField extends FormField implements Serializable {
                         // Disable the field length values if:
                         // 1. min > max
                         // 2. min and max == 0.
-                        if (curFld.getMinLength() != -1
-                                && curFld.getMaxLength() != -1
-                                && ((curFld.getMinLength() > curFld.getMaxLength()) || ((curFld.getMinLength() == 0 && curFld
-                                        .getMaxLength() == 0)))) {
+                        if (curFld.getMinLength() != -1 && curFld.getMaxLength() != -1 && (
+                                (curFld.getMinLength() > curFld.getMaxLength()) || ((curFld.getMinLength() == 0
+                                        && curFld.getMaxLength() == 0)))) {
                             curFld.setMinLength(-1);
                             curFld.setMaxLength(-1);
                         }
@@ -551,8 +534,9 @@ public class TravelCustomField extends FormField implements Serializable {
                         curFld.largeValueCount = Parse.safeParseBoolean(cleanChars);
                         elementHandled = true;
                     } else if (!elementHandled && this.getClass().equals(TravelCustomFieldSAXHandler.class)) {
-                        Log.w(Const.LOG_TAG, CLS_TAG + ".endElement: unhandled element name '" + localName
-                                + "' and value '" + cleanChars + "'.");
+                        Log.w(Const.LOG_TAG,
+                                CLS_TAG + ".endElement: unhandled element name '" + localName + "' and value '"
+                                        + cleanChars + "'.");
                         // Ensure the element is marked as handled if 'this' isn't a sub-class to ensure
                         // 'chars' is cleared out.
                         elementHandled = true;

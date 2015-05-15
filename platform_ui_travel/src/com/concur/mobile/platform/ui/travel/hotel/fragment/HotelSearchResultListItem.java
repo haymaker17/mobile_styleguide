@@ -1,8 +1,5 @@
 package com.concur.mobile.platform.ui.travel.hotel.fragment;
 
-import java.io.Serializable;
-import java.net.URI;
-
 import android.content.Context;
 import android.graphics.Bitmap;
 import android.graphics.Color;
@@ -15,7 +12,6 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
-
 import com.concur.mobile.platform.travel.search.hotel.Hotel;
 import com.concur.mobile.platform.ui.common.util.FormatUtil;
 import com.concur.mobile.platform.ui.common.util.ImageCache;
@@ -24,6 +20,9 @@ import com.concur.mobile.platform.ui.common.view.ListItem;
 import com.concur.mobile.platform.ui.travel.R;
 import com.concur.mobile.platform.ui.travel.util.Const;
 import com.concur.mobile.platform.util.Format;
+
+import java.io.Serializable;
+import java.net.URI;
 
 /**
  * 
@@ -155,12 +154,28 @@ public class HotelSearchResultListItem extends ListItem implements Serializable 
             Log.e(Const.LOG_TAG, CLS_TAG + ".getView: unable to locate hotel distance text view!");
         }
 
+        // set the travel points
+        if(hotel.travelPointsForLowestRate != null && hotel.travelPointsForLowestRate != 0) {
+            txtView = ((TextView) hotelView.findViewById(R.id.travel_points_text));
+            if(hotel.travelPointsForLowestRate < 0) {
+                txtView.setTextAppearance(context, R.style.TravelPointsNegativeText);
+                txtView.setText(Format.localizeText(context, R.string.travel_points_can_be_redeemed, new Object[] { FormatUtil
+                        .formatAmountWithNoDecimals( hotel.travelPointsForLowestRate, context.getResources().getConfiguration().locale, hotel.currencyCode,
+                                false, false) }));
+            } else {
+                txtView.setTextAppearance(context, R.style.TravelPointsPositiveText);
+                txtView.setText(Format.localizeText(context, R.string.travel_points_can_be_earned, new Object[] { FormatUtil
+                        .formatAmountWithNoDecimals( hotel.travelPointsForLowestRate, context.getResources().getConfiguration().locale, hotel.currencyCode,
+                                false, false) }));
+            }
+        }
+
         // Set the recommendation.
         hotelView.setAlpha(1);
         txtView = null;
         txtView = ((TextView) hotelView.findViewById(R.id.preference_text));
         if (txtView != null) {
-            // check if sold out or property not available
+            // check if property not available
             String availabilityErrorCode = hotel.availabilityErrorCode;
             if (availabilityErrorCode != null && availabilityErrorCode.trim().length() > 0) {
                 txtView.setVisibility(View.VISIBLE);
@@ -169,6 +184,7 @@ public class HotelSearchResultListItem extends ListItem implements Serializable 
                 } else {
                     // unknown error code
                     txtView.setText(R.string.general_not_available);
+
                 }
 
                 txtView.setBackground(context.getResources().getDrawable(R.drawable.strong_red_rectangle));

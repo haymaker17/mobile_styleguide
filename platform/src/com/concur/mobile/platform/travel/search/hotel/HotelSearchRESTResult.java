@@ -23,4 +23,5 @@ public class HotelSearchRESTResult {
     public List<Hotel> hotels;
     public List<HotelViolation> violations;
     public String searchUrl;
+    public BenchmarksCollection benchmarksCollection;
 }

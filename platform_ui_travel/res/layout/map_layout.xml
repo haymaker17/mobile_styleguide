@@ -1,12 +1,40 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent" >
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                style="@style/ConcurBaseTheme.White.New"
+                android:orientation="vertical">
+
+    <ProgressBar
+        android:id="@+id/hotel_search_progress"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerInParent="true"/>
+
+    <TextView
+        android:id="@+id/hotel_search_progress_msg"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/hotel_search_progress"
+        android:layout_centerHorizontal="true"
+        android:background="#ffffff"
+        android:text="@string/hotel_details_progress_message"
+        android:textColor="@color/blueTabs">
+    </TextView>
 
     <fragment
         android:id="@+id/map"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        class="com.google.android.gms.maps.MapFragment" />
+        android:layout_height="wrap_content"
+        android:layout_weight="1"
+        class="com.google.android.gms.maps.MapFragment"/>
 
-</LinearLayout>
+
+    <include
+        android:id="@+id/info_window"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        layout="@layout/hotel_search_result_row"/>
+
+</RelativeLayout>

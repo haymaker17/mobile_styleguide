@@ -1,21 +1,21 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:background="@color/white_background"
-    android:orientation="horizontal" >
+              android:layout_width="match_parent"
+              android:layout_height="match_parent"
+              android:background="@color/white_background"
+              android:orientation="horizontal">
 
     <LinearLayout
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_gravity="left"
         android:layout_marginBottom="1dp"
-        android:layout_weight="0.7"
+        android:layout_weight="0.70"
         android:orientation="vertical"
         android:paddingBottom="16dp"
         android:paddingLeft="20dp"
         android:paddingRight="@dimen/list_cell_padding_right"
-        android:paddingTop="16dp" >
+        android:paddingTop="16dp">
 
         <TextView
             android:id="@+id/hotel_room_summary"
@@ -25,7 +25,14 @@
             android:fontFamily="sans-serif-medium"
             android:maxLines="3"
             android:textColor="#383f46"
-            android:textSize="16sp" />
+            android:textSize="16sp"/>
+
+        <TextView
+            android:id="@+id/travel_points_text"
+            android:layout_width="86dp"
+            android:layout_height="wrap_content"
+            android:visibility="gone"/>
+
 
         <TextView
             android:id="@+id/hotel_room_deposit_required"
@@ -36,7 +43,9 @@
             android:textColor="#383f46"
             android:textSize="16sp"
             android:textStyle="bold"
-            android:visibility="gone" />
+            android:visibility="gone"
+            />
+
 
         <TextView
             android:id="@+id/hotel_room_gds_name"
@@ -45,22 +54,26 @@
             android:fontFamily="sans-serif-light"
             android:textColor="#687278"
             android:textSize="16sp"
-            android:visibility="gone" />
+            android:visibility="gone"
+            />
+
     </LinearLayout>
 
     <RelativeLayout
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_gravity="right"
-        android:layout_weight="0.3"
-        android:orientation="vertical" >
+        android:layout_weight="0.30"
+        android:orientation="vertical">
 
         <ImageView
             android:id="@+id/hotel_room_max_violation_icon"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_alignParentRight="true"
-            android:layout_alignParentTop="true" />
+            android:layout_alignParentTop="true"
+            android:src="@drawable/icon_status_red"
+            />
 
         <TextView
             android:id="@+id/hotel_room_rate"
@@ -69,13 +82,14 @@
             android:layout_gravity="right|center_vertical"
             android:layout_toLeftOf="@id/hotel_room_max_violation_icon"
             android:fontFamily="sans-serif-medium"
+            android:layout_alignParentRight="true"
             android:paddingLeft="5dp"
-            android:paddingRight="@dimen/list_cell_padding_right"
+            android:paddingRight="10dp"
             android:paddingTop="16dp"
             android:text="$198.00"
             android:textColor="#0078c8"
             android:textSize="18sp"
-            android:textStyle="bold" />
+            android:textStyle="bold"/>
 
         <TextView
             android:id="@+id/hotel_room_rate_hint"
@@ -84,12 +98,13 @@
             android:layout_below="@id/hotel_room_rate"
             android:layout_gravity="right|center_vertical"
             android:layout_toLeftOf="@id/hotel_room_max_violation_icon"
+            android:layout_alignParentRight="true"
             android:fontFamily="sans-serif-medium"
             android:paddingLeft="5dp"
-            android:paddingRight="@dimen/list_cell_padding_right"
+            android:paddingRight="10dp"
             android:text="@string/hotel_price_hint"
             android:textColor="#687278"
-            android:textSize="12sp" />
+            android:textSize="12sp"/>
 
         <TextView
             android:id="@+id/hotel_room_out_of_policy"
@@ -98,13 +113,16 @@
             android:layout_below="@id/hotel_room_rate_hint"
             android:layout_gravity="right|center_vertical"
             android:layout_toLeftOf="@id/hotel_room_max_violation_icon"
+            android:layout_alignParentRight="true"
             android:fontFamily="sans-serif-medium"
             android:paddingLeft="5dp"
-            android:paddingRight="@dimen/list_cell_padding_right"
+            android:paddingRight="10dp"
             android:text="@string/hotel_out_of_policy"
             android:textColor="@color/FareRed"
             android:textSize="12sp"
-            android:visibility="gone" />
+
+            />
+
 
         <!--
              <TextView

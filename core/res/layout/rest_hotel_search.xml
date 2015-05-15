@@ -97,13 +97,13 @@
             <include layout="@layout/group_separator_v1" />
 
             <ProgressBar
-                android:id="@+id/custom_field_search_progress"
+                android:id="@+id/rest_custom_field_search_progress"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center" />
 
             <TextView
-                android:id="@+id/custom_travel_fields_search_progress_msg"
+                android:id="@+id/rest_custom_travel_fields_search_progress_msg"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
@@ -119,6 +119,7 @@
                 android:layout_height="wrap_content"
                 android:orientation="vertical" >
             </LinearLayout>
+
         </LinearLayout>
     </ScrollView>
 
