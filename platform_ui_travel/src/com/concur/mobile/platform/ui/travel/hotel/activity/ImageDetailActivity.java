@@ -1,8 +1,5 @@
 package com.concur.mobile.platform.ui.travel.hotel.activity;
 
-import java.util.ArrayList;
-import java.util.List;
-
 import android.annotation.TargetApi;
 import android.app.Activity;
 import android.app.Fragment;
@@ -13,12 +10,14 @@ import android.support.v4.view.ViewPager;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.WindowManager.LayoutParams;
-
 import com.concur.mobile.platform.travel.search.hotel.HotelImagePair;
 import com.concur.mobile.platform.ui.travel.BuildConfig;
 import com.concur.mobile.platform.ui.travel.R;
 import com.concur.mobile.platform.ui.travel.hotel.fragment.ImageDetailFragment;
 import com.concur.mobile.platform.ui.travel.util.Const;
+
+import java.util.ArrayList;
+import java.util.List;
 
 public class ImageDetailActivity extends Activity implements OnClickListener {
 
@@ -29,8 +28,7 @@ public class ImageDetailActivity extends Activity implements OnClickListener {
     private ViewPager mPager;
     private List<HotelImagePair> images;
 
-    @TargetApi(VERSION_CODES.HONEYCOMB)
-    @Override
+    @TargetApi(VERSION_CODES.HONEYCOMB) @Override
     public void onCreate(Bundle savedInstanceState) {
         if (BuildConfig.DEBUG) {
             // Utils.enableStrictMode();
@@ -102,8 +100,7 @@ public class ImageDetailActivity extends Activity implements OnClickListener {
     /**
      * Set on the ImageView in the ViewPager children fragments, to enable/disable low profile mode when the ImageView is touched.
      */
-    @TargetApi(VERSION_CODES.HONEYCOMB)
-    @Override
+    @TargetApi(VERSION_CODES.HONEYCOMB) @Override
     public void onClick(View v) {
         final int vis = mPager.getSystemUiVisibility();
         if ((vis & View.SYSTEM_UI_FLAG_LOW_PROFILE) != 0) {

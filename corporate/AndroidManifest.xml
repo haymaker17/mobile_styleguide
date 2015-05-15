@@ -76,11 +76,11 @@
         <activity
             android:name="com.concur.mobile.corp.activity.SimpleWebViewActivity"
             android:screenOrientation="portrait"
-            android:theme="@style/ConcurBaseTheme.White.New" 
-            android:parentActivityName="com.concur.mobile.corp.activity.Home" >
+            android:theme="@style/ConcurBaseTheme.White.New"
+            android:parentActivityName="com.concur.mobile.corp.activity.Home">
             <meta-data
-            android:name="android.support.PARENT_ACTIVITY"
-            android:value="com.concur.mobile.corp.activity.Home" />
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value="com.concur.mobile.corp.activity.Home"/>
         </activity>
         <activity
             android:name="com.concur.mobile.corp.activity.Startup"
@@ -217,9 +217,10 @@
             android:theme="@style/ConcurRestTheme.White.ActionBarTabs"/>
         <activity
             android:name="com.concur.mobile.platform.ui.travel.hotel.activity.ImageDetailActivity"
-            android:theme="@style/ConcurRestTheme.White.ActionBarTabs" />
-        <activity android:name="com.concur.mobile.core.travel.hotel.activity.ShowHotelItinerary"
-                  android:theme="@style/ConcurRestTheme.White.ActionBarTabs"/>
+            android:theme="@style/ConcurRestTheme.White.ActionBarTabs"/>
+        <activity
+            android:name="com.concur.mobile.core.travel.hotel.activity.ShowHotelItinerary"
+            android:theme="@style/ConcurRestTheme.White.ActionBarTabs"/>
         <activity
             android:name="com.concur.mobile.core.travel.hotel.activity.HotelSearchResults"
             android:screenOrientation="portrait"/>
@@ -227,7 +228,6 @@
             android:name="com.concur.mobile.platform.ui.travel.hotel.activity.HotelBookingActivity"
             android:screenOrientation="portrait"
             android:theme="@style/ConcurRestTheme.White.ActionBarTabs"/>
-        <activity android:name="com.concur.mobile.core.travel.hotel.activity.ShowHotelItinerary"/>
         <activity android:name="com.concur.mobile.core.travel.hotel.activity.HotelSearchRooms"/>
         <activity android:name="com.concur.mobile.core.travel.hotel.activity.HotelSearchRoomDetails"/>
         <activity

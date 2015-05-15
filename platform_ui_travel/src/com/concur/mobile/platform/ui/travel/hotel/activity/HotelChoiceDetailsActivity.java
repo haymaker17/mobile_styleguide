@@ -40,8 +40,8 @@ import java.util.List;
  * @author tejoa
  */
 public class HotelChoiceDetailsActivity extends TravelBaseActivity
-implements HotelChoiceDetailsFragmentListener, OnMapReadyCallback {
-    
+        implements HotelChoiceDetailsFragmentListener, OnMapReadyCallback {
+
     public static final String CLS_TAG = HotelChoiceDetailsActivity.class.getSimpleName();
     public static final String FRAGMENT_HOTEL_DETAILS = "FRAGMENT_HOTEL_DETAILS";
     public static final String FRAGMENT_HOTEL_MAP = "FRAGMENT_HOTEL_MAP";
@@ -49,7 +49,7 @@ implements HotelChoiceDetailsFragmentListener, OnMapReadyCallback {
     public static final String TAB_ROOMS = "ROOMS";
     public static final String TAB_IMAGES = "IMAGES";
     public static final String DIALOG_DEPOSITE_REQUIRED = "DIALOG_DEPOSITE_REQUIRED";
-    
+
     private HotelChoiceDetailsFragment hotelDetailsFrag;
     private HotelSearchResultListItem hotelListItem;
     private Hotel hotel;
@@ -63,27 +63,27 @@ implements HotelChoiceDetailsFragmentListener, OnMapReadyCallback {
     private String currentTripId;
     private List<HotelViolation> violations;
     private String customTravelText;
-    
+
     // private ParallaxScollListView mListView;
     // private ImageView mImageView;
     // private HotelSearchResultListItem hotel;
-    
+
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         MenuInflater inflater = getMenuInflater();
         inflater.inflate(R.menu.option_maps, menu);
         return true;
     }
-    
+
     @Override
     public void onWindowFocusChanged(boolean hasFocus) {
         super.onWindowFocusChanged(hasFocus);
-        
+
         if (hasFocus) {
             hotelDetailsFrag.mListView.setViewsBounds(ParallaxScollView.ZOOM_X2);
         }
     }
-    
+
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         if (item.getItemId() == R.id.map) {
@@ -99,12 +99,12 @@ implements HotelChoiceDetailsFragmentListener, OnMapReadyCallback {
             return super.onOptionsItemSelected(item);
         }
     }
-    
+
     // private void onMapsClicked() {
     // // TODO Auto-generated method stub
     //
     // }
-    
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -114,7 +114,7 @@ implements HotelChoiceDetailsFragmentListener, OnMapReadyCallback {
         // hotel = new HotelSearchResultListItem();
         hotelListItem = (HotelSearchResultListItem) bundle.getSerializable(Const.EXTRA_HOTELS_DETAILS);
         hotel = hotelListItem.getHotel();
-        
+
         hotelDetailsFrag = (HotelChoiceDetailsFragment) getFragmentManager().findFragmentByTag(FRAGMENT_HOTEL_DETAILS);
         if (hotelDetailsFrag == null) {
             hotelDetailsFrag = new HotelChoiceDetailsFragment();
@@ -122,7 +122,7 @@ implements HotelChoiceDetailsFragmentListener, OnMapReadyCallback {
             ft.add(R.id.tabcontainer, hotelDetailsFrag, FRAGMENT_HOTEL_DETAILS);
             ft.commit();
         }
-        
+
         // will be passed on to booking activity
         location = i.getStringExtra(Const.EXTRA_TRAVEL_HOTEL_SEARCH_LOCATION);
         durationOfStayForDisplay = i.getStringExtra(Const.EXTRA_TRAVEL_HOTEL_SEARCH_DURATION_OF_STAY);
@@ -131,25 +131,25 @@ implements HotelChoiceDetailsFragmentListener, OnMapReadyCallback {
         ruleViolationExplanationRequired = i.getBooleanExtra("ruleViolationExplanationRequired", false);
         showGDSName = i.getBooleanExtra(Const.EXTRA_TRAVEL_HOTEL_SEARCH_SHOW_GDS_NAME, false);
         currentTripId = i.getStringExtra("currentTripId");
-        
+
         List<HotelViolation> updatedViolations = ((List<HotelViolation>) bundle.getSerializable("updatedViolations"));
-        
+
         if (updatedViolations != null && updatedViolations.size() > 0) {
             violations = updatedViolations;
         } else {
             violations = ((List<HotelViolation>) bundle.getSerializable("violations"));
-            
+
             // TravelUtilHotel.getHotelViolations(getApplicationContext(), null, Integer.valueOf(searchId));
         }
         for (HotelRate rate : hotel.rates) {
             HotelViolation maxEnforcementViolation = ViewUtil
-            .getShowButNoBookingViolation(violations, rate.maxEnforceLevel, rate.maxEnforcementLevel);
+                    .getShowButNoBookingViolation(violations, rate.maxEnforceLevel, rate.maxEnforcementLevel);
             if (maxEnforcementViolation != null) {
                 rate.greyFlag = true;
             }
-            
+
         }
-        
+
         if (i.hasExtra("travelCustomFieldsConfig")) {
             travelCustomFieldsConfig = (TravelCustomFieldsConfig) i.getSerializableExtra("travelCustomFieldsConfig");
         }
@@ -157,7 +157,7 @@ implements HotelChoiceDetailsFragmentListener, OnMapReadyCallback {
             customTravelText = i.getStringExtra("customTravelText");
         }
     }
-    
+
     @Override
     public void onImageClicked(View v, int id) {
         if (isOffline) {
@@ -179,7 +179,7 @@ implements HotelChoiceDetailsFragmentListener, OnMapReadyCallback {
             }
         }
     }
-    
+
     @Override
     public void onFindRoomsClicked() {
         if (isOffline) {
@@ -190,17 +190,17 @@ implements HotelChoiceDetailsFragmentListener, OnMapReadyCallback {
                 hotelDetailsFrag.mTabHost.setCurrentTab(1);
             }
         }
-        
+
     }
-    
+
     @Override
     public void onMapsClicked(LatLng post) {
         if (isOffline) {
             showOfflineDialog();
-            
+
         } else {
             int resultCode = GooglePlayServicesUtil.isGooglePlayServicesAvailable(this);
-            
+
             // TODO customize ShowMaps to view single and multiple hotels
             // Intent i = new Intent(this, ShowHotelMap.class);
             if (resultCode == ConnectionResult.SUCCESS && post != null) {
@@ -209,7 +209,7 @@ implements HotelChoiceDetailsFragmentListener, OnMapReadyCallback {
                 // Intent i = this.getIntent();
                 // i.putExtra(Const.EXTRA_HOTEL_LOCATION, post);
                 HotelMapFragment hotelMapFragment = (HotelMapFragment) getFragmentManager()
-                .findFragmentByTag(FRAGMENT_HOTEL_MAP);
+                        .findFragmentByTag(FRAGMENT_HOTEL_MAP);
                 if (hotelMapFragment == null) {
                     hotelMapFragment = new HotelMapFragment(post);
                     FragmentTransaction ft = getFragmentManager().beginTransaction();
@@ -217,17 +217,17 @@ implements HotelChoiceDetailsFragmentListener, OnMapReadyCallback {
                     ft.addToBackStack(null);
                     ft.commit();
                 }
-                
+
                 // hotel = new HotelSearchResultListItem();
                 // hotelListItem = (HotelSearchResultListItem) bundle.getSerializable(Const.EXTRA_HOTELS_DETAILS);
-                
+
             } else {
                 Toast.makeText(this, "Map Unavailable", Toast.LENGTH_LONG).show();
             }
         }
-        
+
     }
-    
+
     @Override
     public void updateTab(String tabId, int placeholder) {
         FragmentManager fm = hotelDetailsFrag.getFragmentManager();
@@ -245,22 +245,22 @@ implements HotelChoiceDetailsFragmentListener, OnMapReadyCallback {
             }
         }
     }
-    
+
     @Override
     public void roomItemClicked(HotelRoomListItem roomListItem) {
-        
+
         if (isOffline) {
             showOfflineDialog();
         } else {
-            
+
             if (roomListItem.getHotelRoom().greyFlag) {
                 Toast.makeText(getApplicationContext(), R.string.hotel_dialog_deposit_required_msg, Toast.LENGTH_LONG)
-                .show();
+                        .show();
             } else {
                 Intent intent = new Intent(this, HotelBookingActivity.class);
                 // TODO - have a singleton class and set these objects there to share with other activities?
                 intent.putExtra("roomSelected", roomListItem.getHotelRoom());
-                
+
                 intent.putExtra(Const.EXTRA_TRAVEL_HOTEL_SEARCH_LOCATION, location);
                 intent.putExtra(Const.EXTRA_TRAVEL_HOTEL_SEARCH_DURATION_OF_STAY, durationOfStayForDisplay);
                 intent.putExtra(Const.EXTRA_TRAVEL_HOTEL_SEARCH_DURATION_NUM_OF_NIGHTS, numOfNights);
@@ -280,16 +280,16 @@ implements HotelChoiceDetailsFragmentListener, OnMapReadyCallback {
                 }
                 startActivityForResult(intent, Const.REQUEST_CODE_BOOK_HOTEL);
             }
-            
+
         }
-        
+
     }
-    
+
     @Override
     public void setHeaderImageURL(String headerImageURL) {
         this.headerImageURL = headerImageURL;
     }
-    
+
     @Override
     public void onMapReady(GoogleMap map) {
         map.getUiSettings().setZoomControlsEnabled(false);
@@ -300,23 +300,23 @@ implements HotelChoiceDetailsFragmentListener, OnMapReadyCallback {
         map.addMarker(marker);
         map.moveCamera(CameraUpdateFactory.newLatLngZoom(position, 15));
     }
-    
+
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
-        
+
         switch (requestCode) {
-            case Const.REQUEST_CODE_BOOK_HOTEL: {
-                if (resultCode == RESULT_OK) {
-                    setResult(RESULT_OK, data);
-                    Log.d(com.concur.mobile.platform.util.Const.LOG_TAG,
-                          "\n\n\n ****** HotelChoiceDetailsActivity onActivityResult with result code : " + resultCode);
-                    finish();
-                }
-                break;
+        case Const.REQUEST_CODE_BOOK_HOTEL: {
+            if (resultCode == RESULT_OK) {
+                setResult(RESULT_OK, data);
+                Log.d(com.concur.mobile.platform.util.Const.LOG_TAG,
+                        "\n\n\n ****** HotelChoiceDetailsActivity onActivityResult with result code : " + resultCode);
+                finish();
             }
+            break;
         }
-        
+        }
+
         super.onActivityResult(requestCode, resultCode, data);
-        
+
     } // onActivityResult()
 }

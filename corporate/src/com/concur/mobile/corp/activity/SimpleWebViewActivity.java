@@ -13,80 +13,78 @@ import android.webkit.WebSettings;
 import android.webkit.WebView;
 import android.webkit.WebViewClient;
 import android.widget.Toast;
-
-import com.concur.breeze.R;
+import com.concur.breeze.jarvis.R;
 
 public class SimpleWebViewActivity extends ActionBarActivity {
 
-	private WebView simpleWebview;
-	
-	@SuppressLint("SetJavaScriptEnabled")
-	@Override
-	protected void onCreate(Bundle savedInstanceState) {
-		super.onCreate(savedInstanceState);
+    private WebView simpleWebview;
 
-		setContentView(R.layout.simple_webview);
+    @SuppressLint("SetJavaScriptEnabled") @Override
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
 
-		getSupportActionBar().setTitle(R.string.home_navigation_app_center);
-		getSupportActionBar().setDisplayShowHomeEnabled(true);
-		// getSupportActionBar().setHomeAsUpIndicator(R.drawable.nav_icon_back);
+        setContentView(R.layout.simple_webview);
 
-		enableDebugMode();
+        getSupportActionBar().setTitle(R.string.home_navigation_app_center);
+        getSupportActionBar().setDisplayShowHomeEnabled(true);
+        // getSupportActionBar().setHomeAsUpIndicator(R.drawable.nav_icon_back);
 
-		simpleWebview = (WebView) findViewById(R.id.simple_webview);
+        enableDebugMode();
 
-		if (simpleWebview == null) {
-			Toast.makeText(this, "Unable to load web", Toast.LENGTH_SHORT)
-					.show();
-		} else {
-			simpleWebview.setWebViewClient(new WebViewClient() {
-				@Override
-				public boolean shouldOverrideUrlLoading(WebView view, String url) {
-					if (url.startsWith("market://")) {
-						Intent intent = new Intent(Intent.ACTION_VIEW);
-						intent.setData(Uri.parse(url));
-						startActivity(intent);
-						
-						return true;
-					}
+        simpleWebview = (WebView) findViewById(R.id.simple_webview);
 
-					return false;
-				}
-				
-				@Override
-			    public void onReceivedSslError(WebView view, SslErrorHandler handler, SslError error) {
-			        handler.proceed();
-			    }
-			});
+        if (simpleWebview == null) {
+            Toast.makeText(this, "Unable to load web", Toast.LENGTH_SHORT).show();
+        } else {
+            simpleWebview.setWebViewClient(new WebViewClient() {
 
-			WebSettings settings = simpleWebview.getSettings();
+                @Override
+                public boolean shouldOverrideUrlLoading(WebView view, String url) {
+                    if (url.startsWith("market://")) {
+                        Intent intent = new Intent(Intent.ACTION_VIEW);
+                        intent.setData(Uri.parse(url));
+                        startActivity(intent);
 
-			// This is needed for App Center.
-			//
-			settings.setJavaScriptEnabled(true);
-			settings.setDomStorageEnabled(true);
+                        return true;
+                    }
 
-			String url = getIntent().getStringExtra("url");
+                    return false;
+                }
 
-			simpleWebview.setVerticalScrollBarEnabled(false);
-			simpleWebview.loadUrl(url);
-		}
-	}
+                @Override
+                public void onReceivedSslError(WebView view, SslErrorHandler handler, SslError error) {
+                    handler.proceed();
+                }
+            });
 
-	@Override
-	public void onBackPressed() {
-		if (simpleWebview.canGoBack()) {
-			simpleWebview.goBack();
-		} else {
-			super.onBackPressed();
-		}
-	}
+            WebSettings settings = simpleWebview.getSettings();
 
-	@TargetApi(Build.VERSION_CODES.KITKAT)
-	private void enableDebugMode() {
-		if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT) {
-			WebView.setWebContentsDebuggingEnabled(true);
-		}
-	}
+            // This is needed for App Center.
+            //
+            settings.setJavaScriptEnabled(true);
+            settings.setDomStorageEnabled(true);
+
+            String url = getIntent().getStringExtra("url");
+
+            simpleWebview.setVerticalScrollBarEnabled(false);
+            simpleWebview.loadUrl(url);
+        }
+    }
+
+    @Override
+    public void onBackPressed() {
+        if (simpleWebview.canGoBack()) {
+            simpleWebview.goBack();
+        } else {
+            super.onBackPressed();
+        }
+    }
+
+    @TargetApi(Build.VERSION_CODES.KITKAT)
+    private void enableDebugMode() {
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT) {
+            WebView.setWebContentsDebuggingEnabled(true);
+        }
+    }
 
 }

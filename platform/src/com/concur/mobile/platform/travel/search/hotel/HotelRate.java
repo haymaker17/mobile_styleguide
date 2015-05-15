@@ -10,9 +10,7 @@ import com.concur.mobile.platform.util.CursorUtil;
 import java.io.Serializable;
 
 /**
- * 
  * @author RatanK
- * 
  */
 public class HotelRate implements Serializable {
 
@@ -30,7 +28,7 @@ public class HotelRate implements Serializable {
     public String guaranteeSurcharge;
     public boolean rateChangesOverStay;
     public int maxEnforcementLevel;
-    public String maxEnforcementLevelDesc;
+    public String maxEnforceLevel;
     public URLInfo sellOptions;
     public int[] violationValueIds;
     public Integer travelPoints;
@@ -65,9 +63,8 @@ public class HotelRate implements Serializable {
 
     /**
      * Will construct an instance of <code>HotelRate</code> with an application context.
-     * 
-     * @param context
-     *            contains a reference to an application context.
+     *
+     * @param context contains a reference to an application context.
      */
     public HotelRate(Context context) {
         this.context = context;
@@ -75,9 +72,8 @@ public class HotelRate implements Serializable {
 
     /**
      * Constructs an instance of <code>HotelRate</code> based on reading values from a <code>Cursor</code> object.
-     * 
-     * @param cursor
-     *            contains the cursor.
+     *
+     * @param cursor contains the cursor.
      */
     public HotelRate(Cursor cursor) {
         init(cursor);
@@ -85,18 +81,16 @@ public class HotelRate implements Serializable {
 
     /**
      * Constructs an instance of <code>HotelRate</code> based on reading values from a <code>Uri</code> object.
-     * 
-     * @param context
-     *            contains an application context.
-     * @param contentUri
-     *            contains the content Uri.
+     *
+     * @param context    contains an application context.
+     * @param contentUri contains the content Uri.
      */
     public HotelRate(Context context, Uri contentUri) {
         ContentResolver resolver = context.getContentResolver();
         Cursor cursor = null;
         try {
-            cursor = resolver.query(contentUri, fullColumnList, null, null,
-                    Travel.HotelRateDetailColumns.DEFAULT_SORT_ORDER);
+            cursor = resolver
+                    .query(contentUri, fullColumnList, null, null, Travel.HotelRateDetailColumns.DEFAULT_SORT_ORDER);
             if (cursor != null) {
                 if (cursor.moveToFirst()) {
                     init(cursor);
@@ -111,9 +105,8 @@ public class HotelRate implements Serializable {
 
     /**
      * Will initialize the hotel rate detail from a cursor object.
-     * 
-     * @param cursor
-     *            contains the cursor used to initialize fields.
+     *
+     * @param cursor contains the cursor used to initialize fields.
      */
     private void init(Cursor cursor) {
         rateId = CursorUtil.getStringValue(cursor, Travel.HotelRateDetailColumns.RATE_ID);
@@ -127,14 +120,14 @@ public class HotelRate implements Serializable {
         rateChangesOverStay = CursorUtil.getBooleanValue(cursor, Travel.HotelRateDetailColumns.RATE_CHANGES_OVERSTAY);
         maxEnforcementLevel = CursorUtil.getIntValue(cursor, Travel.HotelRateDetailColumns.MAX_ENF_LEVEL);
         travelPoints = CursorUtil.getIntValue(cursor, Travel.HotelRateDetailColumns.TRAVEL_POINTS);
-        canRedeemTravelPointsAgainstViolations = CursorUtil.getBooleanValue(cursor,
-                Travel.HotelRateDetailColumns.CAN_REDEEM_TP_AGAINST_VIOLATIONS);
+        canRedeemTravelPointsAgainstViolations = CursorUtil
+                .getBooleanValue(cursor, Travel.HotelRateDetailColumns.CAN_REDEEM_TP_AGAINST_VIOLATIONS);
 
         sellOptions = new URLInfo();
         sellOptions.href = CursorUtil.getStringValue(cursor, Travel.HotelRateDetailColumns.SELL_OPTIONS_URL);
 
-        String violationValueIdString = CursorUtil.getStringValue(cursor,
-                Travel.HotelRateDetailColumns.VIOLATION_VALUE_IDS);
+        String violationValueIdString = CursorUtil
+                .getStringValue(cursor, Travel.HotelRateDetailColumns.VIOLATION_VALUE_IDS);
         if (violationValueIdString != null && violationValueIdString.length() > 0) {
             String str[] = violationValueIdString.split(",");
             violationValueIds = new int[str.length];
