@@ -7,6 +7,7 @@ import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
 
 import com.concur.core.R;
+import com.concur.mobile.core.ConcurCore;
 import com.concur.mobile.core.activity.BaseActivity;
 import com.concur.mobile.core.fragment.BaseFragment;
 import com.concur.mobile.corp.fragment.PreLoginFragment;
@@ -38,7 +39,9 @@ public class PreLogin extends BaseActivity {
                 // This scenario happens if user tries to create a new TestDrive account
                 // which already exists.
                 Intent i = new Intent(this, EmailLookupActivity.class);
-                i.putExtras(data.getExtras());                    
+                i.putExtras(data.getExtras());
+                //reset user app start and login successful timer for google analytics
+                ConcurCore.resetUserTimers();
                 startActivityForResult(i, PreLoginFragment.EMAIL_LOOKUP_REQ_CODE);
                 
             } else if (requestCode == PreLoginFragment.EMAIL_LOOKUP_REQ_CODE
