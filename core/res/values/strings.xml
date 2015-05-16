@@ -1975,9 +1975,10 @@
 
     <!-- Start What's new -->
     <string-array name="whats_new">
-        <item>\u2022 Improved message to first time user if they login incorrectly</item>
-        <item>\u2022 Improved Salesforce Opportunities searching</item>
-        <item>\u2022 Fix for defaulting currency based on city location</item>
+        <item>\u2022 Visibility of policy violation and lowest logical fare for Request approvers</item>
+        <item>\u2022 Improved display of total costs when approving a trip</item>
+        <item>\u2022 Improved display of Travel Agency information</item>
+        <item>\u2022 Ability to sort expense list by different criteria</item>
     </string-array>
     <!-- End What's new -->
 
@@ -2076,5 +2077,18 @@
     <string name="profile_add_emergency_contact">Add Emergency Contact</string>
     <string name="profile_add_credit_card">Add New Card</string>
     <string name="profile_add_banck_account">Add New Banck Account</string>
+
+    <!-- Menu Items -->
+    <string name="menu_sort_expenses">Sort Expenses</string>
+    <string name="dialog_sort_expenses_by">Sort Expenses By</string>
+    <string name="sort_expenses_by_date_newest">Date (newest)</string>
+    <string name="sort_expenses_by_date_oldest">Date (oldest)</string>
+    <string name="sort_expenses_by_amount_lowest">Amount (lowest)</string>
+    <string name="sort_expenses_by_amount_highest">Amount (highest)</string>
+    <string name="sort_expenses_by_expense">Expense Type</string>
+    <string name="sort_expenses_by_vendor">Vendor</string>
+
+
+
 
 </resources>

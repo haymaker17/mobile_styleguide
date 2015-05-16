@@ -102,12 +102,16 @@ import com.concur.mobile.core.view.ListItem;
 import com.concur.mobile.core.view.ListItemAdapter;
 import com.concur.mobile.core.view.ViewOnClickHandler;
 import com.concur.mobile.platform.ui.common.dialog.NoConnectivityDialogFragment;
+import com.concur.mobile.platform.ui.common.util.PreferenceUtil;
 
 /**
+ * @deprecated Use <code>com.concur.mobile.platform.ui.expense.fragment.ExpenseListFragment</code>
+ *
  * An extension of <code>ConcurView</code> used to render a combined list of cash and card expenses.
  * 
  * @author AndrewK
  */
+@Deprecated
 public class ExpensesFragment extends BaseFragment implements INetworkActivityListener {
 
     private static final String CLS_TAG = ExpensesFragment.class.getSimpleName();
@@ -2630,7 +2634,7 @@ public class ExpensesFragment extends BaseFragment implements INetworkActivityLi
         // With some of the ExpenseIt items, ExpenseComparator seems to be violating the Comparison contract. This will be fixed
         // in 9.8 but the try/catch prevents a crash in the meantime.
         try {
-            Collections.sort(expenses, new ExpenseComparator(SortOrder.DESCENDING));
+            Collections.sort(expenses, new ExpenseComparator(com.concur.mobile.platform.expense.provider.Expense.SmartExpenseColumns.DATE_NEWEST_SORT_ORDER));
         } catch (IllegalArgumentException e) {
             Log.e(Const.LOG_TAG, CLS_TAG
                     + "populateExpenseListItems Collections.sort violates Comparison general contract");

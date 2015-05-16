@@ -1,9 +1,5 @@
 package com.concur.mobile.core.expense.activity;
 
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.Map;
-
 import android.app.Dialog;
 import android.content.Intent;
 import android.os.AsyncTask;
@@ -30,6 +26,7 @@ import com.concur.mobile.core.dialog.DialogFragmentFactory;
 import com.concur.mobile.core.expense.data.IExpenseEntryCache;
 import com.concur.mobile.core.expense.fragment.Expenses;
 import com.concur.mobile.core.expense.fragment.Expenses.ExpensesCallback;
+import com.concur.mobile.core.expense.fragment.SortExpensesDialogFragment;
 import com.concur.mobile.core.expense.receiptstore.activity.ReceiptStoreFragment;
 import com.concur.mobile.core.expense.receiptstore.activity.ReceiptStoreFragment.ReceiptStoreFragmentCallback;
 import com.concur.mobile.core.expense.receiptstore.data.ReceiptStoreCache;
@@ -43,8 +40,13 @@ import com.concur.mobile.platform.authentication.SessionInfo;
 import com.concur.mobile.platform.config.provider.ConfigUtil;
 import com.concur.mobile.platform.expense.receipt.list.ReceiptListRequestTask;
 import com.concur.mobile.platform.expense.smartexpense.SmartExpenseListRequestTask;
+import com.concur.mobile.platform.ui.common.util.PreferenceUtil;
 
-public class ExpensesAndReceipts extends BaseActivity implements ExpensesCallback, ReceiptStoreFragmentCallback {
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Map;
+
+public class ExpensesAndReceipts extends BaseActivity implements ExpensesCallback, ReceiptStoreFragmentCallback, SortExpensesDialogFragment.SortExpenseDialogListener {
 
     public final static String CLS_TAG = ExpensesAndReceipts.class.getSimpleName();
 
@@ -614,6 +616,17 @@ public class ExpensesAndReceipts extends BaseActivity implements ExpensesCallbac
         // was requested by updating the ExpenseList.
         updateExpenseListUI();
     }
+
+
+    @Override
+    public void onSortCriteriaSelected(String sortOrder) {
+
+        // Save the selected sort order.
+        PreferenceUtil.savePreference(this, Expenses.PREF_EXPENSE_LIST_SORT_ORDER, sortOrder);
+
+        updateExpenseListUI();
+    }
+
 
     /**
      * 
