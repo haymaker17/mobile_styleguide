@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <RadioGroup
+        android:id="@+id/sort_expenses_radio_group"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:padding="20dp">
+
+        <RadioButton
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/sort_expenses_by_date_newest"
+            android:id="@+id/radio_date_newest"
+            android:padding="15dp"/>
+
+        <RadioButton
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/sort_expenses_by_date_oldest"
+            android:id="@+id/radio_date_oldest"
+            android:padding="15dp" />
+
+        <RadioButton
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/sort_expenses_by_amount_lowest"
+            android:id="@+id/radio_amount_lowest"
+            android:padding="15dp" />
+
+        <RadioButton
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/sort_expenses_by_amount_highest"
+            android:id="@+id/radio_amount_highest"
+            android:padding="15dp" />
+
+        <RadioButton
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/sort_expenses_by_expense"
+            android:id="@+id/radio_expense"
+            android:padding="15dp" />
+
+        <RadioButton
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/sort_expenses_by_vendor"
+            android:id="@+id/radio_vendor"
+            android:padding="15dp" />
+
+    </RadioGroup>
+
+</ScrollView>
