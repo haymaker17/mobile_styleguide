@@ -7,7 +7,6 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
 import android.graphics.Color;
-import android.location.Location;
 import android.os.Bundle;
 import android.os.Handler;
 import android.view.LayoutInflater;
@@ -230,7 +229,7 @@ public class LocationSearchV1 extends Activity implements INetworkActivityListen
         searchView = (SearchView) findViewById(R.id.searchView);
         searchView.setIconifiedByDefault(false);
         searchView.setSearchableInfo(searchManager.getSearchableInfo(getComponentName()));
-        if(currentLocationName != null) {
+        if (currentLocationName != null) {
             searchView.setQueryHint(currentLocationName);
         } else {
             searchView.setQueryHint(getText(R.string.loc_search_hint_v1));

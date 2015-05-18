@@ -14,9 +14,9 @@ import com.concur.mobile.platform.ui.travel.util.Const;
  * @author tejoa
  */
 public class ShowHotelItinerary extends TravelBaseActivity {
-    
+
     private static final String CLS_TAG = ShowHotelItinerary.class.getSimpleName();
-    
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -34,11 +34,11 @@ public class ShowHotelItinerary extends TravelBaseActivity {
                 Log.e(Const.LOG_TAG, CLS_TAG + ".onReceive: unable to locate trip based on cliqbook trip id!");
             }
         }
-        
+
         onBookingSucceeded();
-        
+
     }
-    
+
     @Override
     protected void onBookingSucceeded() {
         if (!launchedWithCliqbookTripId) {

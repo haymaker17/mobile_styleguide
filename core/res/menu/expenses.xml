@@ -8,6 +8,10 @@
         yourapp:showAsAction="ifRoom"
         android:title="@string/new_cash_expense"/>
     <item
+        android:id="@+id/sort_by"
+        android:icon="@android:drawable/ic_menu_sort_by_size"
+        android:title="@string/menu_sort_expenses"/>
+    <item
         android:id="@+id/select_all"
         android:icon="@android:drawable/ic_menu_agenda"
         android:title="@string/select_all"/>
