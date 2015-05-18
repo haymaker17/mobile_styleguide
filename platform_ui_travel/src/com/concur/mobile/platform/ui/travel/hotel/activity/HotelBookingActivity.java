@@ -945,8 +945,10 @@ public class HotelBookingActivity extends TravelBaseActivity implements SpinnerD
                     hasAllRequiredFields = false;
                     if (requiredFieldsMsg.length() > 0) {
                         requiredFieldsMsg.append("\n");
+                        requiredFieldsMsg.append(getString(R.string.book_missing_custom_fields));
+                    } else {
+                        showInvalidCustomFieldsDialog();
                     }
-                    requiredFieldsMsg.append(getString(R.string.book_missing_custom_fields));
                 }
             }
 
@@ -1009,9 +1011,10 @@ public class HotelBookingActivity extends TravelBaseActivity implements SpinnerD
 
             } else {
                 // show the required fields messages
-                DialogFragmentFactoryV1
-                        .getAlertOkayInstance(getString(R.string.general_required_fields), requiredFieldsMsg.toString())
-                        .show(getFragmentManager(), null);
+                if (requiredFieldsMsg.length() > 0) {
+                    DialogFragmentFactoryV1.getAlertOkayInstance(getString(R.string.general_required_fields),
+                            requiredFieldsMsg.toString()).show(getFragmentManager(), null);
+                }
                 reserveButton.setEnabled(true);
             }
         } else {

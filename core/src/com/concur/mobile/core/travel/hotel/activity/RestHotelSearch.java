@@ -367,6 +367,8 @@ TravelCustomFieldsFragment.TravelCustomFieldsFragmentCallBackListener {
                     commitTravelCustomFields();
                     
                     doSearch();
+                } else {
+                    showInvalidCustomFieldsDialog();
                 }
                 
             }
