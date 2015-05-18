@@ -7,7 +7,6 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.Toast;
-
 import com.concur.mobile.platform.ui.common.fragment.PlatformFragmentV1;
 import com.concur.mobile.platform.ui.travel.R;
 import com.google.android.gms.common.ConnectionResult;
@@ -21,9 +20,8 @@ import com.google.android.gms.maps.model.MarkerOptions;
 
 /**
  * Fragment to show Hotel Map
- * 
+ *
  * @author tejoa
- * 
  */
 public class HotelMapFragment extends PlatformFragmentV1 implements OnMapReadyCallback {
 
@@ -99,10 +97,12 @@ public class HotelMapFragment extends PlatformFragmentV1 implements OnMapReadyCa
     //
     // }
 
-    /****
+    /**
+     * *
      * The mapfragment's id must be removed from the FragmentManager or else if the same it is passed on the next time then app
      * will crash
-     ****/
+     * **
+     */
     @Override
     public void onDestroyView() {
         super.onDestroyView();

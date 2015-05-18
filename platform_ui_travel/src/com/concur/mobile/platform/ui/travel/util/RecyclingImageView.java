@@ -50,7 +50,7 @@ public class RecyclingImageView extends ImageView {
 
     /**
      * Notifies the drawable that it's displayed state has changed.
-     * 
+     *
      * @param drawable
      * @param isDisplayed
      */

@@ -3,7 +3,6 @@ package com.concur.mobile.platform.ui.travel.hotel.maps;
 import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
-
 import com.concur.mobile.platform.ui.travel.R;
 import com.concur.mobile.platform.ui.travel.util.Const;
 import com.google.android.gms.maps.CameraUpdateFactory;
@@ -15,9 +14,8 @@ import com.google.android.gms.maps.model.MarkerOptions;
 
 /**
  * Activity to show all hotels in Google Maps
- * 
+ *
  * @author tejoa
- * 
  */
 
 public class ShowHotelMap extends Activity implements OnMapReadyCallback {

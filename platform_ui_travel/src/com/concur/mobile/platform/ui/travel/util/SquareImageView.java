@@ -6,9 +6,8 @@ import android.widget.ImageView;
 
 /**
  * view util to stretch all images to same size
- * 
+ *
  * @author tejoa
- * 
  */
 public class SquareImageView extends ImageView {
 

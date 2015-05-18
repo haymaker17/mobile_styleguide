@@ -1,7 +1,5 @@
 package com.concur.mobile.platform.ui.travel.hotel.fragment;
 
-import java.net.URI;
-
 import android.app.Fragment;
 import android.graphics.Bitmap;
 import android.os.Bundle;
@@ -9,10 +7,11 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
-
 import com.concur.mobile.platform.ui.common.util.ImageCache;
 import com.concur.mobile.platform.ui.travel.R;
 import com.concur.mobile.platform.ui.travel.hotel.activity.ImageDetailActivity;
+
+import java.net.URI;
 
 /**
  * This fragment will populate the children of the ViewPager from {@link ImageDetailActivity}.
@@ -27,9 +26,8 @@ public class ImageDetailFragment extends Fragment {
 
     /**
      * Factory method to generate a new instance of the fragment given an image number.
-     * 
-     * @param imageUrl
-     *            The image url to load
+     *
+     * @param imageUrl The image url to load
      * @return A new instance of ImageDetailFragment with imageNum extras
      */
     public static ImageDetailFragment newInstance(String imageUrl) {

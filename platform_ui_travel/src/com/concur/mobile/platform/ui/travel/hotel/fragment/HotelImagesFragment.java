@@ -1,8 +1,5 @@
 package com.concur.mobile.platform.ui.travel.hotel.fragment;
 
-import java.net.URI;
-import java.util.List;
-
 import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
@@ -12,12 +9,7 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.AdapterView;
-import android.widget.BaseAdapter;
-import android.widget.GridView;
-import android.widget.ImageView;
-import android.widget.TextView;
-
+import android.widget.*;
 import com.concur.mobile.platform.travel.search.hotel.HotelImagePair;
 import com.concur.mobile.platform.ui.common.fragment.PlatformFragmentV1;
 import com.concur.mobile.platform.ui.common.util.ImageCache;
@@ -25,6 +17,9 @@ import com.concur.mobile.platform.ui.travel.R;
 import com.concur.mobile.platform.ui.travel.hotel.activity.ImageDetailActivity;
 import com.concur.mobile.platform.ui.travel.hotel.fragment.HotelChoiceDetailsFragment.HotelChoiceDetailsFragmentListener;
 import com.concur.mobile.platform.ui.travel.util.Const;
+
+import java.net.URI;
+import java.util.List;
 
 public class HotelImagesFragment extends PlatformFragmentV1 implements AdapterView.OnItemClickListener {
 
@@ -127,7 +122,6 @@ public class HotelImagesFragment extends PlatformFragmentV1 implements AdapterVi
     // }
 
     /**
-     * 
      * @return an adapter for the grid view
      */
     public BaseAdapter getAdapter(Context ctx) {

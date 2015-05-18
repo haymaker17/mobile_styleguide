@@ -1,13 +1,10 @@
 package com.concur.mobile.platform.ui.travel.hotel.activity;
 
-import java.util.Calendar;
-
 import android.content.Intent;
 import android.speech.tts.TextToSpeech;
 import android.text.Html;
 import android.text.Spanned;
 import android.util.Log;
-
 import com.concur.mobile.eva.data.EvaTime;
 import com.concur.mobile.eva.service.EvaApiRequest.BookingSelection;
 import com.concur.mobile.eva.service.EvaHotelReply;
@@ -17,11 +14,12 @@ import com.concur.mobile.platform.ui.travel.activity.VoiceSearchActivity;
 import com.concur.mobile.platform.ui.travel.util.Const;
 import com.concur.mobile.platform.util.Format;
 
+import java.util.Calendar;
+
 /**
  * Implementation of the Voice Searching for Hotels.
- * 
+ *
  * @author ratank
- * 
  */
 public class HotelVoiceSearchActivity extends VoiceSearchActivity {
 
@@ -30,7 +28,6 @@ public class HotelVoiceSearchActivity extends VoiceSearchActivity {
     public final static String RESET_UI_ON_RESUME = "RESET_UI_ON_RESUME";
 
     /**
-     * 
      * @param hotelSearch
      */
     @Override
@@ -77,8 +74,9 @@ public class HotelVoiceSearchActivity extends VoiceSearchActivity {
             // Text to Speech...
             String shortCheckInDate = toVoiceDateFormat(hotelSearch.checkInDate);
             String shortCheckOutDate = toVoiceDateFormat(hotelSearch.checkOutDate);
-            String s = Format.localizeText(this, R.string.hotel_voice_search_criteria, locationNameShort,
-                    shortCheckInDate, shortCheckOutDate);
+            String s = Format
+                    .localizeText(this, R.string.hotel_voice_search_criteria, locationNameShort, shortCheckInDate,
+                            shortCheckOutDate);
 
             // Set the chat text.
             showResponseText(s);
@@ -123,8 +121,8 @@ public class HotelVoiceSearchActivity extends VoiceSearchActivity {
      */
     @Override
     protected Spanned getGreetingText() {
-        return Html.fromHtml(getString(R.string.voice_hotel_book_hint_primary) + "<br /><small><i>"
-                + getString(R.string.voice_hotel_book_hint_secondary) + "</i></small>");
+        return Html.fromHtml(getString(R.string.voice_hotel_book_hint_primary) + "<br /><small><i>" + getString(
+                R.string.voice_hotel_book_hint_secondary) + "</i></small>");
 
     } // getGreetingText()
 

@@ -1,7 +1,5 @@
 package com.concur.mobile.platform.ui.travel.hotel.activity;
 
-import java.util.ArrayList;
-
 import android.app.Fragment;
 import android.app.FragmentManager;
 import android.app.FragmentTransaction;
@@ -13,23 +11,24 @@ import android.util.Log;
 import android.view.View;
 import android.view.ViewGroup;
 
+import java.util.ArrayList;
+
 /**
  * Implementation of {@link android.support.v4.view.PagerAdapter} that uses a {@link Fragment} to manage each page. This class
  * also handles saving and restoring of fragment's state.
- * 
+ * <p/>
  * <p>
  * This version of the pager is more useful when there are a large number of pages, working more like a list view. When pages are
  * not visible to the user, their entire fragment may be destroyed, only keeping the saved state of that fragment. This allows the
  * pager to hold on to much less memory associated with each visited page as compared to {@link FragmentPagerAdapter} at the cost
  * of potentially more overhead when switching between pages.
- * 
+ * <p/>
  * <p>
  * When using FragmentPagerAdapter the host ViewPager must have a valid ID set.
  * </p>
- * 
- * <p>
+ * <p/>
+ * <p/>
  * Subclasses only need to implement {@link #getItem(int)} and {@link #getCount()} to have a working adapter.
- * 
  */
 
 public abstract class ImageFragmentPageAdapter extends PagerAdapter {
@@ -76,7 +75,7 @@ public abstract class ImageFragmentPageAdapter extends PagerAdapter {
 
         Fragment fragment = getItem(position);
         if (DEBUG)
-            Log.v(TAG, "Adding item #" + position + ": f=" + fragment);
+            Log.i(TAG, "Adding item #" + position + ": f=" + fragment);
         if (mSavedState.size() > position) {
             Fragment.SavedState fss = mSavedState.get(position);
             if (fss != null) {
@@ -102,7 +101,7 @@ public abstract class ImageFragmentPageAdapter extends PagerAdapter {
             mCurTransaction = mFragmentManager.beginTransaction();
         }
         if (DEBUG)
-            Log.v(TAG, "Removing item #" + position + ": f=" + object + " v=" + ((Fragment) object).getView());
+            Log.i(TAG, "Removing item #" + position + ": f=" + object + " v=" + ((Fragment) object).getView());
         while (mSavedState.size() <= position) {
             mSavedState.add(null);
         }
@@ -189,7 +188,7 @@ public abstract class ImageFragmentPageAdapter extends PagerAdapter {
                         f.setMenuVisibility(false);
                         mFragments.set(index, f);
                     } else {
-                        Log.w(TAG, "Bad fragment at key " + key);
+                        Log.i(TAG, "Bad fragment at key " + key);
                     }
                 }
             }

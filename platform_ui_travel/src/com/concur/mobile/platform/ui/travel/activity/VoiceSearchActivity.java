@@ -1,13 +1,5 @@
 package com.concur.mobile.platform.ui.travel.activity;
 
-import java.text.SimpleDateFormat;
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Locale;
-import java.util.UUID;
-
 import android.content.ActivityNotFoundException;
 import android.content.Intent;
 import android.content.SharedPreferences;
@@ -31,12 +23,7 @@ import android.view.View;
 import android.view.Window;
 import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
-import android.widget.ImageButton;
-import android.widget.TextSwitcher;
-import android.widget.TextView;
-import android.widget.Toast;
-import android.widget.ViewSwitcher;
-
+import android.widget.*;
 import com.concur.mobile.eva.data.EvaTime;
 import com.concur.mobile.eva.service.EvaApiReply;
 import com.concur.mobile.eva.service.EvaApiRequest;
@@ -46,15 +33,17 @@ import com.concur.mobile.eva.service.EvaHotelReply;
 import com.concur.mobile.platform.ui.travel.R;
 import com.concur.mobile.platform.ui.travel.util.Const;
 
+import java.text.SimpleDateFormat;
+import java.util.*;
+
 /**
  * Main activity for searching Air, Hotel, Rail, etc. via Voice and Evature API. A copy of
  * com.concur.mobile.core.eva.activity.VoiceSearchActivity
- * 
+ *
  * @author ratank
- * 
  */
-public abstract class VoiceSearchActivity extends AbstractTravelSearchProgress implements TextToSpeech.OnInitListener,
-        EvaApiRequestListener {
+public abstract class VoiceSearchActivity extends AbstractTravelSearchProgress
+        implements TextToSpeech.OnInitListener, EvaApiRequestListener {
 
     public final static String CLS_TAG = VoiceSearchActivity.class.getSimpleName();
 
@@ -94,7 +83,7 @@ public abstract class VoiceSearchActivity extends AbstractTravelSearchProgress i
 
     /**
      * Gets the default greeting "chat" message text.
-     * 
+     *
      * @return the default greeting "chat" message text.
      */
     protected abstract Spanned getGreetingText();
@@ -106,7 +95,7 @@ public abstract class VoiceSearchActivity extends AbstractTravelSearchProgress i
 
     /**
      * This book type, e.g. Hotel, Air, Car, or Rail.
-     * 
+     *
      * @return this book type, e.g. Hotel, Air, Car, or Rail.
      */
     protected abstract BookingSelection getBookType();
@@ -162,7 +151,7 @@ public abstract class VoiceSearchActivity extends AbstractTravelSearchProgress i
             public View makeView() {
 
                 TextView t = new TextView(VoiceSearchActivity.this);// new ContextThemeWrapper(VoiceSearchActivity.this,
-                                                                    // R.style.VoiceTextSpeechBubble));
+                // R.style.VoiceTextSpeechBubble));
 
                 // Convert 10dp to pixels
                 Resources r = getResources();
@@ -195,7 +184,7 @@ public abstract class VoiceSearchActivity extends AbstractTravelSearchProgress i
             public View makeView() {
 
                 TextView t = new TextView(VoiceSearchActivity.this);// new
-                                                                    // ContextThemeWrapper(VoiceSearchActivity.this,R.style.VoiceTextSpeechBubble));
+                // ContextThemeWrapper(VoiceSearchActivity.this,R.style.VoiceTextSpeechBubble));
 
                 // Convert 10dp to pixels
                 Resources r = getResources();
@@ -322,9 +311,7 @@ public abstract class VoiceSearchActivity extends AbstractTravelSearchProgress i
     }
 
     /**
-     * 
      * @return <code>true</code> if we're in the middle of an EVA request or MWS request.
-     * 
      */
     protected boolean isSearching() {
         if (currentEvaRequest != null && currentEvaRequest.inProgress()) {
@@ -335,9 +322,8 @@ public abstract class VoiceSearchActivity extends AbstractTravelSearchProgress i
 
     /**
      * Parses the location to get the short name for passing to TTS.
-     * 
-     * @param location
-     *            a location name, e.g. Portland, Oregon, US
+     *
+     * @param location a location name, e.g. Portland, Oregon, US
      * @return
      */
     protected String getShortLocationName(String location) {
@@ -467,7 +453,6 @@ public abstract class VoiceSearchActivity extends AbstractTravelSearchProgress i
     }
 
     /**
-     * 
      * @return the current Eva session Id.
      */
     @Override
@@ -524,7 +509,7 @@ public abstract class VoiceSearchActivity extends AbstractTravelSearchProgress i
 
     /**
      * Sets a new Eva session Id.
-     * 
+     *
      * @param sessionId
      */
     @Override
@@ -542,9 +527,8 @@ public abstract class VoiceSearchActivity extends AbstractTravelSearchProgress i
 
     /**
      * Show's (and speaks) the given errorMessage.
-     * 
-     * @param errorMessage
-     *            the error message to show/speak.
+     *
+     * @param errorMessage the error message to show/speak.
      */
     public void showErrorMessage(String errorMessage) {
         // Reset the speak button, but not the chat text.
@@ -555,9 +539,8 @@ public abstract class VoiceSearchActivity extends AbstractTravelSearchProgress i
 
     /**
      * Shows (and speaks) the given <code>msg</code>.
-     * 
-     * @param msg
-     *            the message to show and speak
+     *
+     * @param msg the message to show and speak
      */
     @Override
     public void showResponseText(final String msg) {
@@ -604,8 +587,7 @@ public abstract class VoiceSearchActivity extends AbstractTravelSearchProgress i
                 }
             }
 
-            @Override
-            @Deprecated
+            @Override @Deprecated
             public void onError(String utteranceId) {
             }
         });
@@ -614,7 +596,7 @@ public abstract class VoiceSearchActivity extends AbstractTravelSearchProgress i
 
     /**
      * Returns <code>true</code> if we want to use the new Eva "Flow" engine.
-     * 
+     *
      * @return <code>true</code> if we want to use the new Eva "Flow" engine.
      */
     @Override
@@ -625,7 +607,7 @@ public abstract class VoiceSearchActivity extends AbstractTravelSearchProgress i
     /**
      * Gets the voice search language saved in the Preference store. If none is set, then this defaults to the device locale. If
      * the device locale is not supported by <code>SUPPORTED_LANGUAGES</code> then <code>en_US</code> is returned.
-     * 
+     *
      * @return the locale code, e.g. <code>en_US</code>
      */
     private String getVoiceLocale() {
@@ -650,10 +632,9 @@ public abstract class VoiceSearchActivity extends AbstractTravelSearchProgress i
 
     /**
      * Convenience method to show the "chat" text message arrow on the left or right.
-     * 
-     * @param showRightArrow
-     *            - if <code>true</code> will show the arrow on the right side and hide the left arrow. If <code>false</code>, the
-     *            left arrow will be displayed while the right arrow is hidden.
+     *
+     * @param showRightArrow - if <code>true</code> will show the arrow on the right side and hide the left arrow. If <code>false</code>, the
+     *                       left arrow will be displayed while the right arrow is hidden.
      */
     private void switchTextViewArrow(boolean showRightArrow) {
 
@@ -668,9 +649,8 @@ public abstract class VoiceSearchActivity extends AbstractTravelSearchProgress i
 
     /**
      * Convenience method to show the either the speak button or the animated searching button.
-     * 
-     * @param showSearchingButton
-     *            - if <code>true</code>, will show the animated searching button. Otherwise, will show the default speak button.
+     *
+     * @param showSearchingButton - if <code>true</code>, will show the animated searching button. Otherwise, will show the default speak button.
      */
     private void switchSpeakButton(boolean showSearchingButton) {
 
@@ -685,12 +665,10 @@ public abstract class VoiceSearchActivity extends AbstractTravelSearchProgress i
 
     /**
      * Sets the current "chat" message text.
-     * 
-     * @param text
-     *            the text message to set.
-     * @param isUserText
-     *            if <code>true</code>, shows the message text arrow on the right, as if the user were saying the message.
-     *            Otherwise, the message text arrow will be on the left, indicating the app is saying the message.
+     *
+     * @param text       the text message to set.
+     * @param isUserText if <code>true</code>, shows the message text arrow on the right, as if the user were saying the message.
+     *                   Otherwise, the message text arrow will be on the left, indicating the app is saying the message.
      */
     public void setText(CharSequence text, boolean isUserText) {
 
@@ -760,10 +738,8 @@ public abstract class VoiceSearchActivity extends AbstractTravelSearchProgress i
 
     /**
      * Parses the eva date into the shortened format, MMMM d, that should be used in the TTS.
-     * 
-     * @param evaDate
-     *            the eva date in MM/DD/YYYY
-     * 
+     *
+     * @param evaDate the eva date in MM/DD/YYYY
      * @return the shortened date format, MMMM d, that should be used in the TTS.
      */
     protected String toVoiceDateFormat(String evaDate) {
@@ -807,10 +783,9 @@ public abstract class VoiceSearchActivity extends AbstractTravelSearchProgress i
 
     /**
      * Subclasses should override this to handle searching for hotels.
-     * 
+     *
      * @param hotelSearch
-     * @throws NoSuchMethodError
-     *             - thrown if the sub-classes has not overridden this method and it is invoked.
+     * @throws NoSuchMethodError - thrown if the sub-classes has not overridden this method and it is invoked.
      */
     protected void doHotelSearch(EvaHotelReply hotelSearch) throws NoSuchMethodError {
         throw new NoSuchMethodError("Voice Hotel Search Not Implemented.");

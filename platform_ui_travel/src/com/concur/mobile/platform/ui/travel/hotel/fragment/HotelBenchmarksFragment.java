@@ -4,10 +4,7 @@ import android.app.AlertDialog;
 import android.app.Dialog;
 import android.app.DialogFragment;
 import android.os.Bundle;
-import android.view.LayoutInflater;
 import android.view.View;
-import android.view.ViewGroup;
-import android.view.Window;
 import android.widget.ListView;
 import android.widget.TextView;
 import com.concur.mobile.platform.ui.common.view.ListItemAdapter;
@@ -31,7 +28,8 @@ public class HotelBenchmarksFragment extends DialogFragment {
         View mainView = getActivity().getLayoutInflater().inflate(R.layout.hotel_price_to_beat_details_fragment, null);
 
         // set the price to beat range
-        ((TextView)mainView.findViewById(R.id.priceToBeatText)).setText(getText(R.string.price_to_beat_label) + " : " + priceToBeatRangeText);
+        ((TextView) mainView.findViewById(R.id.priceToBeatText))
+                .setText(getText(R.string.price_to_beat_label) + " : " + priceToBeatRangeText);
 
         // set the list item adapter
         ListView benchmarksList = (ListView) mainView.findViewById(R.id.price_to_beat_list_view);

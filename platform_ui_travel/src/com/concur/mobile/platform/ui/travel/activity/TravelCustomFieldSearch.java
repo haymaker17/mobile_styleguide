@@ -357,8 +357,7 @@ public class TravelCustomFieldSearch extends TravelBaseActivity {
         return listItems;
     }
 
-    private void moveSelectedItemToTopOfList(FieldValueSpinnerItem prvSelectedItem,
-            List<ListItem> listItems) {
+    private void moveSelectedItemToTopOfList(FieldValueSpinnerItem prvSelectedItem, List<ListItem> listItems) {
         if (prvSelectedItem != null) {
             TravelCustomFieldListItem prvSelectedListItem = new TravelCustomFieldListItem(prvSelectedItem,
                     CUSTOM_FIELD_LIST_ITEM_VIEW_TYPE);

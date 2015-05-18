@@ -7,11 +7,8 @@ import com.concur.mobile.platform.util.Parse;
 import java.util.ArrayList;
 import java.util.List;
 
-
 /**
- * 
  * @author RatanK
- * 
  */
 
 // This class was initially created in the Platform but did not have the visibility of FieldValueSpinnerItem.

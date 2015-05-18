@@ -65,7 +65,7 @@ public class HotelSearchResultMapFragment extends PlatformFragmentV1 implements 
             addMarkers();
         }
         hotelInfoView = (View) mainView.findViewById(R.id.info_window);
-//        hotelInfoView.setOnClickListener(new View.OnClickListener() {
+        //        hotelInfoView.setOnClickListener(new View.OnClickListener() {
         //
         //            @Override public void onClick(View v) {
         //                showProgressBar();

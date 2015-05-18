@@ -5,9 +5,8 @@ import android.text.style.URLSpan;
 
 /**
  * util to strip the underline from Linkify text
- * 
+ *
  * @author tejoa
- * 
  */
 public class URLSpanNoUnderline extends URLSpan {
 

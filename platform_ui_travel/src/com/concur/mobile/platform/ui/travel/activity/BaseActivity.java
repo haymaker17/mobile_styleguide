@@ -27,7 +27,7 @@ import com.concur.mobile.platform.ui.travel.util.Const;
  * @see BaseActivity
  */
 public class BaseActivity extends Activity implements INetworkActivityListener {
-    
+
     protected static final String RETAINER_TAG = "retainer.fragment";
     protected static final String ACTION_STATUS_ERROR_MESSAGE_KEY = "action.status.error.message";
     protected static final String LAST_HTTP_ERROR_MESSAGE = "http.error.message";
@@ -101,37 +101,37 @@ public class BaseActivity extends Activity implements INetworkActivityListener {
      * Contains whether or not the system unavailable receiver has been registered.
      */
     private boolean systemUnavailableReceiverRegistered;
-    
+
     @Override
     public boolean isNetworkRequestInteresting(int networkMsgType) {
         // TODO Auto-generated method stub
         return false;
     }
-    
+
     @Override
     public void networkActivityStarted(int networkMsgType) {
         // TODO Auto-generated method stub
-        
+
     }
-    
+
     @Override
     public void networkActivityStopped(int networkMsgType) {
         // TODO Auto-generated method stub
-        
+
     }
-    
+
     @Override
     public String getNetworkActivityText(int networkMsgType, String defaultText) {
         // TODO Auto-generated method stub
         return null;
     }
-    
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        
+
         initRetainerFragment();
-        
+
         serviceBoundFilter = new IntentFilter(Const.ACTION_CONCUR_SERVICE_BOUND);
         serviceBoundFilter.addAction(Const.ACTION_CONCUR_SERVICE_UNBOUND);
         serviceBoundReceiver = new ServiceBoundReceiver();
@@ -141,7 +141,7 @@ public class BaseActivity extends Activity implements INetworkActivityListener {
             appRestarted = !serviceBound;
         }
         receiverRegistered = true;
-        
+
         if (savedInstanceState != null) {
             // Restore the orientationChange flag.
             int configChanges = savedInstanceState.getInt(CONFIG_CHANGE_RESTART_KEY);
@@ -155,24 +155,24 @@ public class BaseActivity extends Activity implements INetworkActivityListener {
                 lastHttpErrorMessage = savedInstanceState.getString(LAST_HTTP_ERROR_MESSAGE);
             }
         }
-        
+
         // Register the network activity receiver.
         registerNetworkActivityReceiver();
-        
+
         registerSystemUnavailableReceiver();
-        
+
         // Check Intent options if we should register offline notification.
         // We're defaulting to show the offline notification on all screens.
         offlineNotificationEnabled = getIntent().getBooleanExtra(Const.EXTRA_ENABLE_OFFLINE_MODE_NOTIFICATION, true);
         registerOfflineConnectivityReceiver();
-        
+
         updateConnectedFlags();
-        
+
     }
-    
+
     protected void initRetainerFragment() {
         FragmentManager fm = getFragmentManager();
-        
+
         retainer = (RetainerFragmentV1) fm.findFragmentByTag(RETAINER_TAG);
         if (retainer == null) {
             retainer = new RetainerFragmentV1();
@@ -181,7 +181,7 @@ public class BaseActivity extends Activity implements INetworkActivityListener {
             ft.commit();
         }
     }
-    
+
     /**
      * Gets the instance of <code>RetainerFragment</code> used to store data.
      *
@@ -190,23 +190,23 @@ public class BaseActivity extends Activity implements INetworkActivityListener {
     public RetainerFragmentV1 getRetainer() {
         return retainer;
     }
-    
+
     @Override
     protected void onDestroy() {
         super.onDestroy();
-        
+
         // If being destroyed due to a non-configuration change, then
         // unregister the image cache receiver.
         if (getChangingConfigurations() == 0) {
             // unregisterImageCacheReceiver();
         }
-        
+
     }
-    
+
     @Override
     protected void onResume() {
         super.onResume();
-        
+
         if (!receiverRegistered) {
             // Register the receiver.
             Intent stickyIntent = registerReceiver(serviceBoundReceiver, serviceBoundFilter);
@@ -215,15 +215,15 @@ public class BaseActivity extends Activity implements INetworkActivityListener {
             }
             receiverRegistered = true;
         }
-        
+
         // Registger the network activity receiver.
         registerNetworkActivityReceiver();
-        
+
         registerSystemUnavailableReceiver();
-        
+
         registerOfflineConnectivityReceiver();
     }
-    
+
     @Override
     protected void onPause() {
         super.onPause();
@@ -231,24 +231,24 @@ public class BaseActivity extends Activity implements INetworkActivityListener {
             unregisterReceiver(serviceBoundReceiver);
             receiverRegistered = false;
         }
-        
+
         // Unregister the network activity receiver.
         unregisterNetworkActivityReceiver();
-        
+
         unregisterSystemUnavailableReceiver();
-        
+
         unregisterOfflineConnectivityReceiver();
-        
+
     }
-    
+
     @Override
     protected void onSaveInstanceState(Bundle outState) {
         super.onSaveInstanceState(outState);
-        
+
         // Save the configuration reason for the stopping. Non-zero means some
         // kind of config change.
         outState.putInt(CONFIG_CHANGE_RESTART_KEY, getChangingConfigurations());
-        
+
         // Save any error message information.
         if (actionStatusErrorMessage != null) {
             outState.putString(ACTION_STATUS_ERROR_MESSAGE_KEY, actionStatusErrorMessage);
@@ -258,7 +258,7 @@ public class BaseActivity extends Activity implements INetworkActivityListener {
             outState.putString(LAST_HTTP_ERROR_MESSAGE, lastHttpErrorMessage);
         }
     }
-    
+
     /**
      * Will register the network activity receiver.
      */
@@ -272,7 +272,7 @@ public class BaseActivity extends Activity implements INetworkActivityListener {
             registerReceiver(networkActivityReceiver, networkActivityFilter);
         }
     }
-    
+
     /**
      * Will unregister the network activity receiver.
      */
@@ -282,38 +282,38 @@ public class BaseActivity extends Activity implements INetworkActivityListener {
             networkActivityReceiver = null;
         }
     }
-    
+
     /**
      * Will register a receiver to handle when the (server) system is unavailable.
      */
-    
+
     protected void registerSystemUnavailableReceiver() {
         if (systemUnavailableReceiver == null || !systemUnavailableReceiverRegistered) {
-            
+
             systemUnavailableReceiver = new BroadcastReceiver() {
-                
+
                 @Override
                 public void onReceive(Context context, Intent intent) {
                     if (currProgressDialog != null && currProgressDialog.isShowing()) {
                         currProgressDialog.dismiss();
                         currProgressDialog = null;
                     }
-                    
+
                     // BaseActivity.this.showDialog(Const.DIALOG_SYSTEM_UNAVAILABLE);
                     //                    CustomDialogFragment dialog = new CustomDialogFragment(R.string.dlg_system_unavailable_title,
                     //                            R.string.dlg_system_unavailable_message, R.string.dialog_ok, 0);
                     //                    dialog.show(getFragmentManager(), "DIALOG_SYSTEM_UNAVAILABLE");
                 }
             };
-            
+
             getApplicationContext().registerReceiver(systemUnavailableReceiver,
-                                                     new IntentFilter(Const.ACTION_NETWORK_SYSTEM_UNAVAILABLE));
+                    new IntentFilter(Const.ACTION_NETWORK_SYSTEM_UNAVAILABLE));
             systemUnavailableReceiverRegistered = true;
             showOfflineDialog();
-            
+
         }
     }
-    
+
     /**
      * Will unregister a receiver to handle when the (server) system is unavailable.
      */
@@ -323,34 +323,34 @@ public class BaseActivity extends Activity implements INetworkActivityListener {
             systemUnavailableReceiverRegistered = false;
         }
     }
-    
+
     /**
      * Will register a receiver to handle data connectivity changes.
      */
     protected void registerOfflineConnectivityReceiver() {
         if (offlineConnectivityReceiver == null && offlineNotificationEnabled) {
-            
+
             // Inner anonymous class to trigger offline/online mode.
             offlineConnectivityReceiver = new BroadcastReceiver() {
-                
+
                 @Override
                 public void onReceive(Context context, Intent intent) {
                     if (intent.getAction() != null) {
                         updateOfflineHeaderBar(intent.getAction().equalsIgnoreCase(
-                                                                                   com.concur.mobile.platform.ui.common.util.Const.ACTION_DATA_CONNECTIVITY_AVAILABLE));
+                                com.concur.mobile.platform.ui.common.util.Const.ACTION_DATA_CONNECTIVITY_AVAILABLE));
                     }
                 }
             };
-            
+
             IntentFilter connectivityFilter = new IntentFilter(
-                                                               com.concur.mobile.platform.ui.common.util.Const.ACTION_DATA_CONNECTIVITY_AVAILABLE);
+                    com.concur.mobile.platform.ui.common.util.Const.ACTION_DATA_CONNECTIVITY_AVAILABLE);
             connectivityFilter
-            .addAction(com.concur.mobile.platform.ui.common.util.Const.ACTION_DATA_CONNECTIVITY_UNAVAILABLE);
-            
+                    .addAction(com.concur.mobile.platform.ui.common.util.Const.ACTION_DATA_CONNECTIVITY_UNAVAILABLE);
+
             registerReceiver(offlineConnectivityReceiver, connectivityFilter);
         }
     }
-    
+
     /**
      * Will unregister a receiver to handle data connectivity changes.
      */
@@ -360,7 +360,7 @@ public class BaseActivity extends Activity implements INetworkActivityListener {
             offlineConnectivityReceiver = null;
         }
     }
-    
+
     /**
      * Called whenever the network data connectivity changes online or offline.
      *
@@ -368,7 +368,7 @@ public class BaseActivity extends Activity implements INetworkActivityListener {
      */
     protected void updateOfflineHeaderBar(boolean available) {
         if (offlineNotificationEnabled) {
-            
+
             View offlineHeader = findViewById(R.id.offline_header);
             if (offlineHeader != null) {
                 if (available && offlineHeader.getVisibility() == View.VISIBLE) {
@@ -379,58 +379,58 @@ public class BaseActivity extends Activity implements INetworkActivityListener {
                     isOffline = true;
                 }
             }
-            
+
         }
     }
-    
+
     protected void showOfflineDialog() {
         if (isOffline) {
             if (currProgressDialog != null && currProgressDialog.isShowing()) {
                 currProgressDialog.dismiss();
                 currProgressDialog = null;
             }
-            
+
             DialogFragmentFactoryV1.getAlertOkayInstance(getString(R.string.dlg_no_connectivity_title),
-                                                         getString(R.string.dlg_no_connectivity_message))
-            .show(getFragmentManager(), "DIALOG_NO_CONNECTIVITY");
+                    getString(R.string.dlg_no_connectivity_message))
+                    .show(getFragmentManager(), "DIALOG_NO_CONNECTIVITY");
             // BaseActivity.this.showDialog(Const.DIALOG_SYSTEM_UNAVAILABLE);
-            
+
             // CustomDialogFragment dialog = new CustomDialogFragment();
             //            dialog.setTitle(R.string.dlg_no_connectivity_title);
             //            dialog.setMessage(R.string.dlg_no_connectivity_message);
             //            dialog.setPositiveButtonText(R.string.dialog_ok);
-            
+
             //            dialog.show(getFragmentManager(), "DIALOG_NO_CONNECTIVITY");
-            
+
         }
     }
-    
+
     public void updateConnectedFlags() {
         ConnectivityManager connMgr;
         connMgr = (ConnectivityManager) getSystemService(Context.CONNECTIVITY_SERVICE);
-        
+
         NetworkInfo activeInfo = connMgr.getActiveNetworkInfo();
         if (activeInfo != null && activeInfo.isConnected()) {
             isOffline = false;
         } else {
             updateOfflineHeaderBar(true);
-            
+
         }
     }
-    
+
     /**
      * Called when the concur service component has become unavailable.
      */
     protected void onServiceUnavailable() {
         showOfflineDialog();
     }
-    
+
     /**
      * Called when the concur service component has become unavailable.
      */
     protected void onServiceAvailable() {
     }
-    
+
     /**
      * An extension of <code>BroadcastReceiver</code> to handle receiving notifications of when our service is bound/unbound.
      *
@@ -440,7 +440,7 @@ public class BaseActivity extends Activity implements INetworkActivityListener {
      * @see android.content.BroadcastReceiver#onReceive(android.content.Context, android.content.Intent)
      */
     class ServiceBoundReceiver extends BroadcastReceiver {
-        
+
         /*
          * (non-Javadoc)
          *
@@ -458,9 +458,9 @@ public class BaseActivity extends Activity implements INetworkActivityListener {
                 Log.e(Const.LOG_TAG, CLS_TAG + ".onReceive: unhandled action '" + intent.getAction() + ".");
             }
         }
-        
+
         private final String CLS_TAG = BaseActivity.CLS_TAG + "." + ServiceBoundReceiver.class.getSimpleName();
-        
+
     }
 }
 

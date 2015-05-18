@@ -1,23 +1,21 @@
 package com.concur.mobile.platform.ui.travel.view;
 
-import java.util.List;
-import java.util.Locale;
-
 import android.app.Activity;
 import android.app.Dialog;
 import android.app.FragmentManager;
 import android.content.Intent;
-
 import com.concur.mobile.platform.ui.common.view.FormFieldView;
 import com.concur.mobile.platform.ui.common.view.FormFieldView.IFormFieldViewListener;
 import com.concur.mobile.platform.ui.travel.activity.BaseActivity;
 
+import java.util.List;
+import java.util.Locale;
+
 /**
  * An implementation of <code>IFormFieldViewListener</code> for listening to form field view requests. Similar to core
  * FormFieldViewListener
- * 
+ *
  * @author RatanK
- * 
  */
 public class FormFieldViewListener implements IFormFieldViewListener {
 
@@ -35,9 +33,8 @@ public class FormFieldViewListener implements IFormFieldViewListener {
 
     /**
      * Constructs an instance of <code>FormFieldViewListener</code> with an associated activity.
-     * 
-     * @param activity
-     *            the associated activity.
+     *
+     * @param activity the associated activity.
      */
     public FormFieldViewListener(BaseActivity activity) {
         this.activity = activity;
@@ -152,9 +149,8 @@ public class FormFieldViewListener implements IFormFieldViewListener {
 
     /**
      * Sets the list of <code>FormFieldView</code> objects associated with this listener.
-     * 
-     * @param frmFldViews
-     *            the list of form <code>FormFieldView</code> objects.
+     *
+     * @param frmFldViews the list of form <code>FormFieldView</code> objects.
      */
     public void setFormFieldViews(List<FormFieldView> frmFldViews) {
         this.frmFldViews = frmFldViews;

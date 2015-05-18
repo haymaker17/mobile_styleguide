@@ -11,7 +11,6 @@ import android.view.View.OnClickListener;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.TextView;
-
 import com.concur.mobile.platform.travel.search.hotel.Contact;
 import com.concur.mobile.platform.travel.search.hotel.Hotel;
 import com.concur.mobile.platform.ui.common.fragment.PlatformFragmentV1;
@@ -28,9 +27,8 @@ import com.google.android.gms.maps.model.LatLng;
 
 /**
  * Fragment for Hotel Details tab
- * 
+ *
  * @author tejoa
- * 
  */
 public class HotelDetailsFragment extends PlatformFragmentV1 implements OnClickListener {
 
@@ -97,9 +95,9 @@ public class HotelDetailsFragment extends PlatformFragmentV1 implements OnClickL
             if (!contact.addressLine1.isEmpty()) {
                 stb.append(contact.addressLine1).append(", ");
             }
-            stb.append(com.concur.mobile.base.util.Format.localizeText(getActivity(),
-                    R.string.general_citystatecountry, contact.street, contact.city, contact.state, contact.country,
-                    contact.zip));
+            stb.append(com.concur.mobile.base.util.Format
+                    .localizeText(getActivity(), R.string.general_citystatecountry, contact.street, contact.city,
+                            contact.state, contact.country, contact.zip));
             TextView tv = ((TextView) mainView.findViewById(R.id.hotel_address));
             tv.setText(stb.toString());
             tv.setTextIsSelectable(true);

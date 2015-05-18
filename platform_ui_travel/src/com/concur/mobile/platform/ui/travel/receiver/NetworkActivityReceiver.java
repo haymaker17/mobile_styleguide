@@ -8,17 +8,16 @@ import android.content.Intent;
 /**
  * An extension of <code>BroadcastReceiver</code> for hiding/showing the network activity progress indicator. This class is a copy
  * form core NetworkActivityReceiver
- * 
- * @see com.concur.mobile.core.receiver.NetworkActivityReceiver
- * 
+ *
  * @author RatanK
+ * @see com.concur.mobile.core.receiver.NetworkActivityReceiver
  */
 public class NetworkActivityReceiver extends BroadcastReceiver {
 
     /**
      * An interface for providing feedback to an instance of <code>NetworkActivityReceiver</code> as to whether particular network
      * activity is of interest to an activity.
-     * 
+     *
      * @author AndrewK
      */
     public static interface INetworkActivityListener {
@@ -26,39 +25,33 @@ public class NetworkActivityReceiver extends BroadcastReceiver {
         /**
          * Whether or not network activity of a certain type should cause any progress indicator contained within the associated
          * activity to become visibile.
-         * 
-         * @param networkMsgType
-         *            the network activity type, i.e., <code>Const.MSG_*</code>.
+         *
+         * @param networkMsgType the network activity type, i.e., <code>Const.MSG_*</code>.
          * @return whether a progress indicator contained within the associated activity should be displayed.
          */
         boolean isNetworkRequestInteresting(int networkMsgType);
 
         /**
          * Notifies the listener that network activity of a certain type has started.
-         * 
-         * @param networkMsgType
-         *            the network activity type, i.e., <code>Const.MSG_*</code>.
+         *
+         * @param networkMsgType the network activity type, i.e., <code>Const.MSG_*</code>.
          */
         void networkActivityStarted(int networkMsgType);
 
         /**
          * Notifies the listener that network activity of a certain type has stopped.
-         * 
-         * @param networkMsgType
-         *            the network activity type, i.e., <code>Const.MSG_*</code>.
+         *
+         * @param networkMsgType the network activity type, i.e., <code>Const.MSG_*</code>.
          */
         void networkActivityStopped(int networkMsgType);
 
         /**
          * Gets the text that should be displayed under the progress bar.
-         * 
-         * @param networkMsgType
-         *            the network msg type.
-         * @param defaultText
-         *            the default text that will be displayed.
-         * 
+         *
+         * @param networkMsgType the network msg type.
+         * @param defaultText    the default text that will be displayed.
          * @return the text that should be displayed under the progress bar. If <code>null</code> is returned, then no text will
-         *         be displayed.
+         * be displayed.
          */
         String getNetworkActivityText(int networkMsgType, String defaultText);
 

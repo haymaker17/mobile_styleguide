@@ -25,11 +25,9 @@ import java.io.Serializable;
 import java.net.URI;
 
 /**
- * 
  * List item for a hotel
- * 
+ *
  * @author RatanK
- * 
  */
 public class HotelSearchResultListItem extends ListItem implements Serializable {
 
@@ -48,7 +46,7 @@ public class HotelSearchResultListItem extends ListItem implements Serializable 
 
     /**
      * Gets the <code>Hotel</code> object backing this list item.
-     * 
+     *
      * @return returns the <code>Hotel</code> object backing this list item.
      */
     public Hotel getHotel() {
@@ -105,8 +103,9 @@ public class HotelSearchResultListItem extends ListItem implements Serializable 
         if (txtView != null) {
             if (hotel.lowestRate != null) {
                 txtView.setVisibility(View.VISIBLE);
-                txtView.setText(FormatUtil.formatAmountWithNoDecimals(hotel.lowestRate, context.getResources()
-                        .getConfiguration().locale, hotel.currencyCode, true, false));
+                txtView.setText(FormatUtil
+                        .formatAmountWithNoDecimals(hotel.lowestRate, context.getResources().getConfiguration().locale,
+                                hotel.currencyCode, true, false));
             } else {
                 txtView.setVisibility(View.INVISIBLE);
             }
@@ -155,18 +154,18 @@ public class HotelSearchResultListItem extends ListItem implements Serializable 
         }
 
         // set the travel points
-        if(hotel.travelPointsForLowestRate != null && hotel.travelPointsForLowestRate != 0) {
+        if (hotel.travelPointsForLowestRate != null && hotel.travelPointsForLowestRate != 0) {
             txtView = ((TextView) hotelView.findViewById(R.id.travel_points_text));
-            if(hotel.travelPointsForLowestRate < 0) {
+            if (hotel.travelPointsForLowestRate < 0) {
                 txtView.setTextAppearance(context, R.style.TravelPointsNegativeText);
-                txtView.setText(Format.localizeText(context, R.string.travel_points_can_be_redeemed, new Object[] { FormatUtil
-                        .formatAmountWithNoDecimals( hotel.travelPointsForLowestRate, context.getResources().getConfiguration().locale, hotel.currencyCode,
-                                false, false) }));
+                txtView.setText(Format.localizeText(context, R.string.travel_points_can_be_redeemed, new Object[] {
+                        FormatUtil.formatAmountWithNoDecimals(hotel.travelPointsForLowestRate,
+                                context.getResources().getConfiguration().locale, hotel.currencyCode, false, false) }));
             } else {
                 txtView.setTextAppearance(context, R.style.TravelPointsPositiveText);
-                txtView.setText(Format.localizeText(context, R.string.travel_points_can_be_earned, new Object[] { FormatUtil
-                        .formatAmountWithNoDecimals( hotel.travelPointsForLowestRate, context.getResources().getConfiguration().locale, hotel.currencyCode,
-                                false, false) }));
+                txtView.setText(Format.localizeText(context, R.string.travel_points_can_be_earned, new Object[] {
+                        FormatUtil.formatAmountWithNoDecimals(hotel.travelPointsForLowestRate,
+                                context.getResources().getConfiguration().locale, hotel.currencyCode, false, false) }));
             }
         }
 
@@ -238,8 +237,8 @@ public class HotelSearchResultListItem extends ListItem implements Serializable 
                     starsImg.setImageResource(starImgResId);
                     starsImg.setVisibility(View.VISIBLE);
                 } else {
-                    Log.e(Const.LOG_TAG, CLS_TAG + ".getView: invalid star rating of '" + starRating
-                            + "...hiding stars.");
+                    Log.e(Const.LOG_TAG,
+                            CLS_TAG + ".getView: invalid star rating of '" + starRating + "...hiding stars.");
                     starsImg.setVisibility(View.GONE);
                 }
             }

@@ -105,7 +105,7 @@ public class HotelChoiceDetailsFragment extends PlatformFragmentV1 implements On
         hotelListItem.getHotel().lowestRate = null;
         ((HotelSearchResultListItem) hotelListItem).buildView(getActivity(), hotelView, null);
         // not necessary to show travel points - cannot make visibility GONE as it will change the alignment by pushing the star rating view to left
-        ((TextView)hotelView.findViewById(R.id.travel_points_text)).setText("");
+        ((TextView) hotelView.findViewById(R.id.travel_points_text)).setText("");
 
         try {
             showHideHomeImage();
