@@ -284,25 +284,13 @@ public class RestHotelSearch extends TravelBaseActivity
     }
 
     @Override public boolean onCreateOptionsMenu(Menu menu) {
-        // MOB-11596 MOB-13636
-        // if (Preferences.shouldAllowVoiceBooking()) {
-
         MenuInflater inflater = getMenuInflater();
         inflater.inflate(R.menu.option_voice_v1, menu);
-        // }
         return true;
     }
 
     @Override public boolean onPrepareOptionsMenu(Menu menu) {
-        if(Preferences.shouldAllowVoiceBooking()) {
-            if (progressbarVisible || (formFields != null && formFields.size() > 0)) {
-                // disable the menu completely if custom fields available
-                return false;
-            }
-        } else {
-            return false;
-        }
-        return true;
+        return Preferences.shouldAllowVoiceBooking();
     }
 
     @Override public boolean onOptionsItemSelected(MenuItem item) {
