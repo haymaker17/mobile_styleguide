@@ -25,7 +25,7 @@
     <string name="general_violaiton_reasons_not_available">Violation reasons not available</string>
     <string name="general_justification">Justification</string>
     <string name="general_enter_justification">Enter a justification</string>
-    <string name="general_specify_justification">Please specify justification</string>
+    <string name="general_specify_justification">Please specify justification.</string>
     <string name="general_required_fields">Required fields</string>
     <string name="general_select_one_of_the_below">Select one of the below</string>
     <string name="general_speak_now">Speak now</string>
