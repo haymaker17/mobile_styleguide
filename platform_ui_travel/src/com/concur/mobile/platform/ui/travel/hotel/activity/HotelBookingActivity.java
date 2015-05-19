@@ -918,7 +918,7 @@ public class HotelBookingActivity extends TravelBaseActivity implements SpinnerD
                             if (requiredFieldsMsg.length() > 0) {
                                 requiredFieldsMsg.append("\n");
                             }
-                            requiredFieldsMsg.append(getString(R.string.general_specify_justification));
+                            requiredFieldsMsg.append(getString(R.string.book_missing_field_justification));
                             hasAllRequiredFields = false;
                         }
                     }
