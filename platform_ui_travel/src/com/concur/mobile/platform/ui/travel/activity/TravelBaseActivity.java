@@ -87,7 +87,6 @@ public class TravelBaseActivity extends BaseActivity {
             if (invalidFields != null && invalidFields.size() > 0) {
                 // Set the field reference.
                 this.invalidFields = invalidFields;
-                showInvalidCustomFieldsDialog();
                 retVal = false;
             }
         }
