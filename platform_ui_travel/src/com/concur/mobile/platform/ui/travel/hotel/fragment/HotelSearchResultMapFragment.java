@@ -172,12 +172,14 @@ public class HotelSearchResultMapFragment extends PlatformFragmentV1 implements 
                 itemClicked = markerMap.get(marker);
                 marker.showInfoWindow();
                 marker.setVisible(true);
-                itemClicked.buildView(getActivity(), hotelInfoView, null);
+                View view = itemClicked.buildView(getActivity(), hotelInfoView, null);
+                view.setAlpha(1);
                 if (previousMarker != null) {
                     previousMarker.setIcon(BitmapDescriptorFactory.fromResource(R.drawable.map_pin_blue));
                 }
                 marker.setIcon(BitmapDescriptorFactory.fromResource(R.drawable.map_pin_red));
                 marker.setVisible(true);
+                marker.showInfoWindow();
                 previousMarker = marker;
                 return true;
             }
@@ -199,6 +201,8 @@ public class HotelSearchResultMapFragment extends PlatformFragmentV1 implements 
                 hotelMarker.showInfoWindow();
                 View v = item.buildView(getActivity(), hotelInfoView, null);
                 hotelMarker.setIcon(BitmapDescriptorFactory.fromResource(R.drawable.map_pin_red));
+                hotelMarker.setVisible(true);
+                hotelMarker.showInfoWindow();
                 firstMarker = false;
                 previousMarker = hotelMarker;
                 itemClicked = item;
@@ -215,20 +219,17 @@ public class HotelSearchResultMapFragment extends PlatformFragmentV1 implements 
 
     private class HotelInfoWindowAdapter implements GoogleMap.InfoWindowAdapter {
 
-        @Override public View getInfoContents(Marker marker) {
+        @Override public View getInfoWindow(Marker marker) {
 
             LayoutInflater inflater = null;
 
             inflater = LayoutInflater.from(getActivity());
 
             View v = inflater.inflate(R.layout.empty_info_window, null);
-
             return v;
-
         }
 
-        @Override public View getInfoWindow(Marker marker) {
-
+        @Override public View getInfoContents(Marker marker) {
             return null;
         }
 
