@@ -38,6 +38,8 @@ public class HotelSearchResultMapFragment extends PlatformFragmentV1 implements 
     private HotelSearchResultListItem itemClicked;
     private boolean progressbarVisible;
     private View mainView;
+    private View progressBar;
+    private View progressBarMsg;
     /*
      * Hashmap for all hotel markers and hotel list items
      */
@@ -65,15 +67,24 @@ public class HotelSearchResultMapFragment extends PlatformFragmentV1 implements 
             addMarkers();
         }
         hotelInfoView = (View) mainView.findViewById(R.id.info_window);
-        //        hotelInfoView.setOnClickListener(new View.OnClickListener() {
-        //
-        //            @Override public void onClick(View v) {
-        //                showProgressBar();
-        //
-        //                callBackListener.hotelListItemClicked(itemClicked);
-        //            }
-        //        });
+        progressBar = mainView.findViewById(R.id.hotel_map_progress);
+        progressBarMsg = mainView.findViewById(R.id.hotel_map_progress_msg);
+        hotelInfoView.setOnClickListener(new View.OnClickListener() {
 
+            @Override public void onClick(View v) {
+                //  Handler mHandler = new Handler();
+                // ProgressBar pb = new ProgressBar(getActivity(), null, android.R.attr.progressBarStyleHorizontal);
+                //                new Thread(new Runnable() {
+                //
+                //                    public void run() {
+                //                        showProgressBar();
+                //                    }
+                //                }).start();
+                //   showProgressBar();
+                callBackListener.mapsHotelListItemClicked(itemClicked);
+            }
+        });
+        hideProgressBar();
         return mainView;
     }
 
@@ -136,7 +147,6 @@ public class HotelSearchResultMapFragment extends PlatformFragmentV1 implements 
             mapFragment = (MapFragment) fm.findFragmentById(R.id.map);
             mapFragment.getMapAsync(this);
         }
-        hideProgressBar();
     }
 
     /**
@@ -144,6 +154,7 @@ public class HotelSearchResultMapFragment extends PlatformFragmentV1 implements 
      */
     private void addMarkers() {
         hotels = new ArrayList<HotelSearchResultListItem>();
+        googleMap.setInfoWindowAdapter(new HotelInfoWindowAdapter());
         hotels = ((ArrayList<HotelSearchResultListItem>) args.getSerializable(Const.EXTRA_HOTELS_LIST));
         if (hotels != null && hotels.size() > 0) {
             addHotelMarkers(hotels);
@@ -161,10 +172,7 @@ public class HotelSearchResultMapFragment extends PlatformFragmentV1 implements 
         int padding = 10; // offset from edges of the map in pixels
         CameraUpdate cu = CameraUpdateFactory.newLatLngBounds(bounds, 400, 400, padding);
         googleMap.moveCamera(cu);
-        // CameraUpdate cu = CameraUpdateFactory.newLatLngZoom(position, 14);
-
         googleMap.animateCamera(cu);
-        googleMap.setInfoWindowAdapter(new HotelInfoWindowAdapter());
 
         googleMap.setOnMarkerClickListener(new GoogleMap.OnMarkerClickListener() {
 
@@ -178,12 +186,11 @@ public class HotelSearchResultMapFragment extends PlatformFragmentV1 implements 
                     previousMarker.setIcon(BitmapDescriptorFactory.fromResource(R.drawable.map_pin_blue));
                 }
                 marker.setIcon(BitmapDescriptorFactory.fromResource(R.drawable.map_pin_red));
-                marker.setVisible(true);
-                marker.showInfoWindow();
                 previousMarker = marker;
                 return true;
             }
         });
+        hideProgressBar();
     }
 
     private void addHotelMarkers(List<HotelSearchResultListItem> hotels) {
@@ -209,11 +216,13 @@ public class HotelSearchResultMapFragment extends PlatformFragmentV1 implements 
 
             }
         }
+        hideProgressBar();
     }
 
     @Override public void onMapReady(GoogleMap map) {
         googleMap = map;
         addMarkers();
+        hideProgressBar();
 
     }
 
@@ -238,28 +247,30 @@ public class HotelSearchResultMapFragment extends PlatformFragmentV1 implements 
     // Container Activity must implement this call back interface
     public interface HotelSearchMapsFragmentListener {
 
-        public void hotelListItemClicked(HotelSearchResultListItem itemClicked);
+        public void mapsHotelListItemClicked(HotelSearchResultListItem itemClicked);
     }
 
     public void showProgressBar() {
         if (!progressbarVisible) {
-            View progressBar = mainView.findViewById(R.id.hotel_map_progress);
+            //  View progressBar = mainView.findViewById(R.id.hotel_map_progress);
             progressbarVisible = true;
             progressBar.setVisibility(View.VISIBLE);
             progressBar.bringToFront();
-            View progressBarMsg = mainView.findViewById(R.id.hotel_map_progress_msg);
+            //  View progressBarMsg = mainView.findViewById(R.id.hotel_map_progress_msg);
             progressBarMsg.setVisibility(View.VISIBLE);
             progressBarMsg.bringToFront();
+            mainView.invalidate();
         }
     }
 
     public void hideProgressBar() {
         if (progressbarVisible) {
-            View progressBar = mainView.findViewById(R.id.hotel_map_progress);
+            //View progressBar = mainView.findViewById(R.id.hotel_map_progress);
             progressbarVisible = false;
             progressBar.setVisibility(View.GONE);
-            View progressBarMsg = mainView.findViewById(R.id.hotel_map_progress_msg);
+            //  View progressBarMsg = mainView.findViewById(R.id.hotel_map_progress_msg);
             progressBarMsg.setVisibility(View.GONE);
+            mainView.requestLayout();
         }
     }
 

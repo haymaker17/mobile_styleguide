@@ -97,6 +97,7 @@ public class HotelSearchAndResultActivity extends TravelBaseActivity
     private BenchmarksCollection benchmarksCollection;
     private boolean searchNearMe;
     private HotelSearchResultMapFragment mapFragment;
+    //  private ProgressBar bar;
 
     // HotelSearchResults loader callback implementation
     private LoaderManager.LoaderCallbacks<HotelSearchRESTResult> hotelSearchRESTResultLoaderCallbacks = new LoaderManager.LoaderCallbacks<HotelSearchRESTResult>() {
@@ -269,6 +270,7 @@ public class HotelSearchAndResultActivity extends TravelBaseActivity
                 HotelRatesRESTResult hotelRateResult) {
 
             hotelSearchRESTResultFrag.hideProgressBar();
+            // bar.setVisibility(View.GONE);
             Hotel hotel = hotelRateResult != null ? hotelRateResult.hotel : null;
             if (hotel != null && hotel.rates != null) {
 
@@ -724,7 +726,20 @@ public class HotelSearchAndResultActivity extends TravelBaseActivity
         finish();
     }
 
-    @Override public void hotelListItemClicked(HotelSearchResultListItem itemClicked) {
+    @Override
+    public void mapsHotelListItemClicked(HotelSearchResultListItem itemClicked) {
+
+        //  setContentView(R.layout.progress_bar);
+
+        //        LayoutInflater inflater = getLayoutInflater();
+        //        LinearLayout layout = (LinearLayout) inflater.inflate(R.layout.progress_bar, null);
+        //        bar = (ProgressBar) findViewById(R.id.hotel_map_progress);
+        //        bar.setVisibility(View.VISIBLE);
+        hotelListItemClicked(itemClicked);
+
+    }
+
+    public void hotelListItemClicked(HotelSearchResultListItem itemClicked) {
 
         if (isOffline) {
             showOfflineDialog();
@@ -753,7 +768,9 @@ public class HotelSearchAndResultActivity extends TravelBaseActivity
                             viewHotelChoiceDetails();
                         } else if (hotelSelected.lowestRate == null && hotelSelected.ratesURL.href != null) {
 
+                            //       if (bar != null && !bar.isShown()) {
                             hotelSearchRESTResultFrag.showProgressBar(true);
+                            //       }
                             lm = getLoaderManager();
                             lm.restartLoader(HOTEL_RATES_LOADER_ID, null, hotelRatesRESTResultLoaderCallbacks);
                         }
@@ -761,6 +778,7 @@ public class HotelSearchAndResultActivity extends TravelBaseActivity
                         Toast.makeText(getApplicationContext(), "No Rooms Available", Toast.LENGTH_LONG).show();
 
                     }
+
                 }
                 if (mapFragment != null) {
                     mapFragment.hideProgressBar();
