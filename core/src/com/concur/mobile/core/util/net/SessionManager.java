@@ -135,7 +135,6 @@ public class SessionManager {
                     + ".validateSessionId(): SessionInfo is null!  This may be caused by the user logging out.");
             //reset userclick time and autologin time
             ConcurCore.resetAutloLoginTimes();
-            Log.e("validateSessionId : ", "resetAutloLoginTimes called while sessionifo null");
             return null;
         }
         // If session expire time is not set, has expired or is within 5 minutes of expiring, then create
@@ -225,7 +224,6 @@ public class SessionManager {
                                 if (replyListener != null) {
                                     replyListener.onSuccess(null);
                                 }
-                                Log.e("validateSessionId : ", "resetAutloLoginTimes called while exception happens during autologin");
                                 //reset user click and autologin times
                                 ConcurCore.resetAutloLoginTimes();
                             }
@@ -238,7 +236,6 @@ public class SessionManager {
                             if (replyListener != null) {
                                 replyListener.onSuccess(null);
                             }
-                            Log.e("validateSessionId : ", "resetAutloLoginTimes called while accesstoken is null");
                             //reset user click and autologin times
                             ConcurCore.resetAutloLoginTimes();
                         }
@@ -252,7 +249,6 @@ public class SessionManager {
                         if (replyListener != null) {
                             replyListener.onSuccess(null);
                         }
-                        Log.e("validateSessionId : ", "resetAutloLoginTimes called while login id is null");
                         //reset user click and autologin times
                         ConcurCore.resetAutloLoginTimes();
                     }
@@ -265,7 +261,6 @@ public class SessionManager {
                     if (replyListener != null) {
                         replyListener.onSuccess(null);
                     }
-                    Log.e("validateSessionId : ", "resetAutloLoginTimes called while exception happens during autologin = false");
                     //reset user click and autologin times
                     ConcurCore.resetAutloLoginTimes();
                 }
@@ -281,7 +276,6 @@ public class SessionManager {
                     replyListener.onSuccess(null);
                 }
                 //reset user click and autologin times
-                Log.e("validateSessionId : ", "resetAutloLoginTimes called while there is no connectivity");
                 ConcurCore.resetAutloLoginTimes();
             }
         } else {
@@ -293,7 +287,6 @@ public class SessionManager {
                 Preferences.extendSesssionExpiration(prefs, sessionDuration);
             }
             //reset user click and autologin times
-            Log.e("validateSessionId : ", "resetAutloLoginTimes called while session is not expired");
             ConcurCore.resetAutloLoginTimes();
         }
         return sessionId;
@@ -312,7 +305,6 @@ public class SessionManager {
         // Statistics Notification
         EventTracker.INSTANCE.trackTimings(Flurry.CATEGORY_WAIT_TIME, Flurry.ACTION_AUTO_LOGIN_WAIT,
                 Flurry.LABEL_WAIT_TIME, totalWaitTime);
-        Log.e("logUserWaitingTime : ", "resetAutloLoginTimes called after tracking to google analytics");
         ConcurCore.resetAutloLoginTimes();
     }
     /**

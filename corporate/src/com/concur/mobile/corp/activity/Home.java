@@ -3173,7 +3173,7 @@ public class Home extends BaseActivity implements View.OnClickListener, Navigati
                             }
                         }
                     });
-            // navItems.add(navItem);
+            navItems.add(navItem);
         }
 
         // Add the "Learn More" tour here.

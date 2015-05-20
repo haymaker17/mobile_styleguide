@@ -1893,6 +1893,64 @@ public class Expense {
          * Contains the user id column name.
          */
         public static final String USER_ID = UserColumns.USER_ID;
+
+
+        // ##### CUSTOM COLUMNS (i.e. not included in actual server response) ###### //
+
+        /**
+         * Contains the local file path (TEXT) of the SmartExpense receipt image.
+         * This is usually used for creating an offline SmartExpense.
+         */
+        public static final String RECEIPT_IMAGE_LOCAL_PATH = "RECEIPT_IMAGE_LOCAL_PATH";
+
+        /**
+         * Contains the timestamp (INTEGER - UTC milliseconds) of the last time
+         * this SmartExpense was edited locally.
+         */
+        public static final String LAST_EDIT_TIME = "LAST_EDIT_TIME";
+
+        /**
+         * Contains the timestamp (INTEGER - UTC milliseconds) of the last
+         * time this SmartExpense was synced with the server.
+         */
+        public static final String LAST_SYNC_TIME = "LAST_SYNC_TIME";
+
+
+        // ######### ADDITIONAL SORT ORDER ######### //
+
+        /**
+         * Sort by most current transactions.
+         */
+        public static final String DATE_NEWEST_SORT_ORDER = TRANSACTION_DATE + " DESC";
+
+        /**
+         * Sort by oldest transaction date.
+         */
+        public static final String DATE_OLDEST_SORT_ORDER = TRANSACTION_DATE + " ASC";
+
+        /**
+         * Sort by lowest amount.
+         */
+        public static final String AMOUNT_LOWEST_SORT_ORDER = TRANSACTION_AMOUNT + " ASC";
+
+        /**
+         * Sort by highest amount.
+         */
+        public static final String AMOUNT_HIGHEST_SORT_ORDER = TRANSACTION_AMOUNT + " DESC";
+
+        /**
+         * Sort by expense name (ascending).
+         */
+        public static final String EXPENSE_TYPE_SORT_ORDER = EXP_NAME + " ASC";
+
+        /**
+         * Sort by vendor description (ascending) with null values at the end.
+         */
+        public static final String VENDOR_SORT_ORDER = VENDOR_DESCRIPTION + " ASC";
+//                "WHEN " + VENDOR_DESCRIPTION + " IS NULL THEN 1 ELSE 0 END, " + VENDOR_DESCRIPTION;
+//                VENDOR_DESCRIPTION + " ASC, " + DOING_BUSINESS_AS + " ASC, " + MERCHANT_NAME + " ASC"; // TODO fix this order to handle null/empty
+
+        // ######## END ADDITIONAL SORT ORDER ##### //
     }
 
 }
