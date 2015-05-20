@@ -193,8 +193,10 @@ public class Startup extends BaseActivity {
                 if(sessionInfo!=null){
                     sessionInfo.setServerUrl(serverUrl);
                 }
-                //set platformproperties
-                PlatformProperties.setServerAddress(serverUrl);
+                if(!serverUrl.isEmpty()){
+                    //set platformproperties
+                    PlatformProperties.setServerAddress(serverUrl);
+                }
                 startCompanySignOn();
                 doLoginFinish();
             } else {

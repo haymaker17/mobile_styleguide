@@ -114,7 +114,9 @@ public class CompanySignOnActivity extends BaseActivity {
             if (reply.ssoEnabled) {
                 if (reply.ssoUrl != null) {
                     ssoUrl = reply.ssoUrl;
-                    serverUrl=reply.serverUrl;
+                    if(!reply.serverUrl.isEmpty()) {
+                        serverUrl = reply.serverUrl;
+                    }
                 }
             }
         }
