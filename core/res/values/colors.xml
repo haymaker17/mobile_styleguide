@@ -47,6 +47,7 @@
     <color name="tourPageMarkerActive">#ffffffff</color>
     <color name="tourPageMarkerInactive">#66ffffff</color>
     <color name="divider_gray">#cccccc</color>
+    <color name="locationSearchDivider">#F9F9F9</color>
 
     <!-- Splash screen gradient; also used in the tour -->
     <color name="SplashGradientTop">#85bef8</color>
@@ -115,14 +116,14 @@
     <color name="TipsTransparentBlack">#C8000000</color>
     <color name="TipTextColor">#F9F9F9</color>
     <color name="TipDismissShadow">#40000000</color>
-    <color name="CustomDialogTextColor">#F9F9F9</color>
+    <color name="CustomDialogTextColor">#000000</color>
 
-    <!-- Spalsh Screen -->
+    <!-- Splash Screen -->
     <color name="SplashScreenColor">#0078C9</color>
 
     <!-- Test drive background; used in drawable/gradient_blue_background -->
     <color name="TDBlueBackground">#0079C8</color>
-    <color name="universal_dot_saparator">#5FA9D7</color>
+    <color name="universalDotSeparator">#5FA9D7</color>
 
     <!-- Tour colors -->
     <color name="tourDropShadowEdges">#30000000</color>
