@@ -17,7 +17,6 @@ public class SwipeableRowView<C extends ViewGroup, B extends ViewGroup> extends 
     private B buttonView;
     // --- Used to avoid infinite loop on dispatch
     private MotionEvent dispatchHistory;
-    private boolean slideToLeft;
 
     public enum SwipeState {
         OPEN_LEFT,
@@ -38,7 +37,6 @@ public class SwipeableRowView<C extends ViewGroup, B extends ViewGroup> extends 
     }
 
     private void init(Context context, C contentView, B buttonView, boolean slideToLeft) {
-        this.slideToLeft = slideToLeft;
         setLayoutParams(new AbsListView.LayoutParams(LayoutParams.WRAP_CONTENT, LayoutParams.MATCH_PARENT));
         this.contentView = contentView;
         this.buttonView = buttonView;
@@ -65,7 +63,12 @@ public class SwipeableRowView<C extends ViewGroup, B extends ViewGroup> extends 
         return buttonView;
     }
 
-    public void applyMargin(int x) {
+    /**
+     * Moves child views of this layout to x position
+     *
+     * @param x
+     */
+    public void applyPosition(int x) {
         contentView.layout(x, contentView.getTop(), contentView.getWidth() + x, getMeasuredHeight());
         buttonView.layout(x, buttonView.getTop(), buttonView.getWidth() + x, buttonView.getBottom());
         if (x != 0) {
@@ -79,10 +82,16 @@ public class SwipeableRowView<C extends ViewGroup, B extends ViewGroup> extends 
         return contentView.getX() != 0;
     }
 
+    /**
+     * @return current x position set
+     */
     public float getXPos() {
         return contentView.getX();
     }
 
+    /**
+     * @return max swipeable range
+     */
     public int getMaxRange() {
         return buttonView.getMeasuredWidth();
     }
@@ -90,16 +99,16 @@ public class SwipeableRowView<C extends ViewGroup, B extends ViewGroup> extends 
     /**
      * Enables RowSwipeGestureListener to interact with the button's view (to handle both swipe & tap on it)
      *
-     * @param ev
-     * @return
+     * @param event
+     * @return whether event was handled or not
      */
-    @Override public boolean onInterceptTouchEvent(MotionEvent ev) {
-        if (state != SwipeState.CLOSE && (dispatchHistory == null || !dispatchHistory.equals(ev))) {
+    @Override public boolean onInterceptTouchEvent(MotionEvent event) {
+        if (state != SwipeState.CLOSE && (dispatchHistory == null || !dispatchHistory.equals(event))) {
             // --- we only intercept & dispatch tap on button view
-            if (state == SwipeState.OPEN_RIGHT && ev.getRawX() > buttonView.getX()
-                    || state == SwipeState.OPEN_LEFT && ev.getRawX() < buttonView.getX()) {
-                dispatchHistory = ev;
-                return ((ListView) this.getParent()).dispatchTouchEvent(ev);
+            if (state == SwipeState.OPEN_RIGHT && event.getRawX() > buttonView.getX()
+                    || state == SwipeState.OPEN_LEFT && event.getRawX() < buttonView.getX()) {
+                dispatchHistory = event;
+                return ((ListView) this.getParent()).dispatchTouchEvent(event);
             }
         } else {
             // --- dispatch ongoing: clean history and do nothing

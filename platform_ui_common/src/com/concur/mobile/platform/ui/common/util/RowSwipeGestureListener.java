@@ -46,6 +46,7 @@ public abstract class RowSwipeGestureListener<T> extends GestureDetector.SimpleO
      * Handles tap on content layout
      *
      * @param item tapped row data
+     * @return whether event was handled or not
      */
     public abstract boolean onRowTap(T item);
 
@@ -54,6 +55,7 @@ public abstract class RowSwipeGestureListener<T> extends GestureDetector.SimpleO
      *
      * @param item tapped row data
      * @param view tapped view
+     * @return whether event was handled or not
      */
     public abstract boolean onButtonTap(T item, View view);
 
@@ -98,8 +100,7 @@ public abstract class RowSwipeGestureListener<T> extends GestureDetector.SimpleO
         boolean hasXSwipe = false;
         if (e1 != null && e2 != null) {
             /** absolute position of the element taped in the list */
-            final int position = getAbsoluteRowPosition(
-                    listView.pointToPosition(Math.round(e1.getX()), Math.round(e1.getY())));
+            final int position = getDataIndex(listView.pointToPosition(Math.round(e1.getX()), Math.round(e1.getY())));
             /** taped element's view */
             final SwipeableRowView rowView = (SwipeableRowView) getChildAt(listView, position);
             /** taped element's data */
@@ -145,32 +146,32 @@ public abstract class RowSwipeGestureListener<T> extends GestureDetector.SimpleO
     /**
      * Translate a relative row position (display) to an absolute position (data)
      *
-     * @param relativePosition
-     * @return
+     * @param viewIndex
+     * @return dataIndex
      */
-    private int getAbsoluteRowPosition(int relativePosition) {
+    private int getDataIndex(int viewIndex) {
         /** id of the first row displayed */
         final int firstPosition = listView.getFirstVisiblePosition() - listView.getHeaderViewsCount();
         // --- translated value of the position we want
-        return relativePosition - firstPosition;
+        return viewIndex - firstPosition;
     }
 
     /**
-     * Returns the listView item corresponding to position in the current display state
+     * Returns the listView item corresponding to dataIndex in the current display state
      *
      * @param listView
-     * @param absolutePosition
-     * @return
+     * @param dataIndex
+     * @return listView row
      */
-    private View getChildAt(ListView listView, int absolutePosition) {
+    private View getChildAt(ListView listView, int dataIndex) {
         // Say, first visible position is 8, you want position 10, wantedChild will now be 2
         // So that means your view is child #2 in the ViewGroup:
-        if (absolutePosition < 0 || absolutePosition >= listView.getChildCount()) {
+        if (dataIndex < 0 || dataIndex >= listView.getChildCount()) {
             Log.d(CLS_TAG, "Unable to get view for desired position, because it's not being displayed on screen.");
             return null;
         }
         // Could also check if wantedPosition is between listView.getFirstVisiblePosition() and listView.getLastVisiblePosition() instead.
-        return listView.getChildAt(absolutePosition);
+        return listView.getChildAt(dataIndex);
     }
 
     /**
@@ -179,7 +180,7 @@ public abstract class RowSwipeGestureListener<T> extends GestureDetector.SimpleO
      *
      * @param buttonView
      * @param x
-     * @return
+     * @return child in buttonView
      */
     private View getChildByPos(ViewGroup buttonView, float x) {
         final SwipeableRowView srv = (SwipeableRowView) buttonView.getParent();
@@ -211,7 +212,7 @@ public abstract class RowSwipeGestureListener<T> extends GestureDetector.SimpleO
                 @Override public void onAnimationUpdate(ValueAnimator valueAnimator) {
                     final Integer x = (Integer) valueAnimator.getAnimatedValue();
                     if (rowView instanceof SwipeableRowView) {
-                        ((SwipeableRowView) rowView).applyMargin(x);
+                        ((SwipeableRowView) rowView).applyPosition(x);
                     }
                 }
             });
