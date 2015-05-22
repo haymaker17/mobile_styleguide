@@ -166,7 +166,7 @@ public class RequestListActivity extends BaseActivity {
                      * @see RowSwipeGestureListener#isRowSwipeable(Object)
                      */
                     @Override public boolean isRowSwipeable(RequestDTO tr) {
-                        return /*tr != null && tr.isActionPermitted(RequestParser.PermittedAction.RECALL)*/true;
+                        return tr != null && tr.isActionPermitted(RequestParser.PermittedAction.RECALL);
                     }
                 });
         // --- Apply it on the ListView
@@ -340,6 +340,7 @@ public class RequestListActivity extends BaseActivity {
             new RequestTask(RequestListActivity.this, 1, asyncTRListReceiver, ConnectHelper.Action.LIST, null)
                     .addUrlParameter(RequestTask.P_REQUESTS_STATUS, searchedStatus.toString())
                     .addUrlParameter(RequestTask.P_REQUESTS_WITH_SEG_TYPES, Boolean.TRUE.toString())
+                    .addUrlParameter(RequestTask.P_REQUESTS_WITH_USER_PERMISSIONS, Boolean.TRUE.toString())
                     .addUrlParameter(ConnectHelper.PARAM_LIMIT, "100").execute();
         } else if (refreshRequired) {
             new NoConnectivityDialogFragment().show(getSupportFragmentManager(), CLS_TAG);

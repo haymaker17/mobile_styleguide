@@ -16,7 +16,6 @@ import java.util.Map;
  * Created by OlivierB on 04/03/2015.
  * This class execute a request through Connect with given args.
  * => Should be used for any ws call within Travel Request using Connect API
- * TODO : migrate all other tasks to this one
  */
 public class RequestTask extends AbstractRequestWSCallTask {
 
@@ -32,6 +31,7 @@ public class RequestTask extends AbstractRequestWSCallTask {
     // --- Request List
     public static final String P_REQUESTS_WITH_SEG_TYPES = "withSegmentTypes";
     public static final String P_REQUESTS_STATUS = "status";
+    public static final String P_REQUESTS_WITH_USER_PERMISSIONS = "withUserPermissions";
     // --- Request creation
     public static final String P_REQUEST_ID = "RequestID";
 
@@ -51,23 +51,6 @@ public class RequestTask extends AbstractRequestWSCallTask {
     private String postBody = "";
 
     /**
-     * Default TR constructor without url parameters
-     *
-     * @param context
-     * @param taskId
-     * @param receiver
-     * @param action
-     * @param entityId
-     */
-    public RequestTask(Context context, int taskId, BaseAsyncResultReceiver receiver, ConnectHelper.Action action,
-            String entityId) {
-        super(context, taskId, receiver);
-        this.entityId = entityId;
-        this.params = new HashMap<String, Object>();
-        setAction(action);
-    }
-
-    /**
      * Full parameterized constructor
      *
      * @param context
@@ -84,6 +67,23 @@ public class RequestTask extends AbstractRequestWSCallTask {
         super(context, taskId, receiver);
         this.version = version;
         this.module = module;
+        this.entityId = entityId;
+        this.params = new HashMap<String, Object>();
+        setAction(action);
+    }
+
+    /**
+     * Default TR constructor without url parameters
+     *
+     * @param context
+     * @param taskId
+     * @param receiver
+     * @param action
+     * @param entityId
+     */
+    public RequestTask(Context context, int taskId, BaseAsyncResultReceiver receiver, ConnectHelper.Action action,
+            String entityId) {
+        super(context, taskId, receiver);
         this.entityId = entityId;
         this.params = new HashMap<String, Object>();
         setAction(action);

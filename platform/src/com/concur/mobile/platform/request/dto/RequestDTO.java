@@ -1,5 +1,7 @@
 package com.concur.mobile.platform.request.dto;
 
+import com.concur.mobile.platform.request.permission.Link;
+import com.concur.mobile.platform.request.permission.UserPermission;
 import com.concur.mobile.platform.request.util.RequestParser;
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
@@ -54,7 +56,7 @@ public class RequestDTO implements FormDTO {
 
     private Map<String, RequestEntryDTO> entriesMap;
 
-    private List<String> listPermittedActions;
+    @SerializedName("UserPermissions") private Link permissionsLink;
 
     private int displayOrder = 0;
 
@@ -186,20 +188,16 @@ public class RequestDTO implements FormDTO {
         this.headerFormId = headerFormId;
     }
 
+    public void setPermissionsLink(Link permissionsLink) {
+        this.permissionsLink = permissionsLink;
+    }
+
     public Map<String, RequestEntryDTO> getEntriesMap() {
         return entriesMap;
     }
 
     public void setEntriesMap(Map<String, RequestEntryDTO> entriesMap) {
         this.entriesMap = entriesMap;
-    }
-
-    public List<String> getListPermittedActions() {
-        return listPermittedActions;
-    }
-
-    public void setListPermittedActions(List<String> listPermittedActions) {
-        this.listPermittedActions = listPermittedActions;
     }
 
     public String getPolicyId() {
@@ -211,9 +209,10 @@ public class RequestDTO implements FormDTO {
     }
 
     public boolean isActionPermitted(RequestParser.PermittedAction action) {
-        if (listPermittedActions != null) {
-            for (String permittedActionName : this.listPermittedActions) {
-                if (permittedActionName.equals(action.getAction())) {
+        if (this.permissionsLink != null && this.permissionsLink.getPermissions() != null) {
+            final List<UserPermission> userPermissions = this.permissionsLink.getPermissions();
+            for (UserPermission permission : userPermissions) {
+                if (permission.getAction().equals(action.getAction())) {
                     return true;
                 }
             }

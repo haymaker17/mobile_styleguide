@@ -8,6 +8,7 @@ import com.concur.mobile.platform.request.dto.RequestDTO;
 import com.concur.mobile.platform.request.dto.RequestEntryDTO;
 import com.concur.mobile.platform.request.groupConfiguration.RequestGroupConfiguration;
 import com.concur.mobile.platform.request.location.Location;
+import com.concur.mobile.platform.request.permission.Link;
 import com.concur.mobile.platform.util.*;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
@@ -16,7 +17,10 @@ import com.google.gson.reflect.TypeToken;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
-import java.util.*;
+import java.util.Date;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 
 /**
  * @author olivierb
@@ -54,10 +58,8 @@ public class RequestParser {
      */
     private class ActionResponse {
 
-        @SerializedName("ID")
-        private String id = null;
-        @SerializedName("URI")
-        private String uri = null;
+        @SerializedName("ID") private String id = null;
+        @SerializedName("URI") private String uri = null;
 
         public String getId() {
             return id;
@@ -68,51 +70,18 @@ public class RequestParser {
         }
     }
 
-    private class UserPermission {
-
-        @SerializedName("Action")
-        private String action;
-        @SerializedName("Method")
-        private String method;
-
-        public String getAction() {
-            return action;
-        }
-
-        public String getMethod() {
-            return method;
-        }
-    }
-
-    private class Link {
-
-        @SerializedName("Links")
-        private List<UserPermission> permissions;
-
-        public List<UserPermission> getPermissions() {
-            return permissions;
-        }
-    }
-
     private class TRDetailResponse {
 
         // --- TR object properties
-        @SerializedName("ApprovalStatusName")
-        private String approvalStatus;
-        @SerializedName("ApprovalStatusCode")
-        private String approvalStatusCode;
-        @SerializedName("TotalApprovedAmount")
-        private Double total;
+        @SerializedName("ApprovalStatusName") private String approvalStatus;
+        @SerializedName("ApprovalStatusCode") private String approvalStatusCode;
+        @SerializedName("TotalApprovedAmount") private Double total;
         // --- TR childs + permissions properties
-        @SerializedName("UserPermissions")
-        private Link link;
-        @SerializedName("SegmentsEntries")
-        private List<RequestEntryDTO> entryList;
-        @SerializedName("Comments")
-        private List<RequestCommentDTO> commentList;
+        @SerializedName("UserPermissions") private Link link;
+        @SerializedName("SegmentsEntries") private List<RequestEntryDTO> entryList;
+        @SerializedName("Comments") private List<RequestCommentDTO> commentList;
         // --- required to post/put
-        @SerializedName(("PolicyID"))
-        private String policyId;
+        @SerializedName(("PolicyID")) private String policyId;
 
         public Link getLink() {
             return link;
@@ -170,8 +139,7 @@ public class RequestParser {
         return requestList.getList();
     }
 
-    @SuppressWarnings("rawtypes")
-    public void parseTRDetailResponse(RequestDTO tr, String jsonRes) {
+    @SuppressWarnings("rawtypes") public void parseTRDetailResponse(RequestDTO tr, String jsonRes) {
         final GsonBuilder builder = new GsonBuilder();
         builder.registerTypeAdapter(Boolean.class, new BooleanDeserializer());
         builder.registerTypeAdapter(Integer.class, new IntegerDeserializer());
@@ -189,11 +157,12 @@ public class RequestParser {
         tr.setPolicyId(connectTR.getPolicyId());
 
         // --- custom processing : permissions
-        final List<String> actionsList = new ArrayList<String>();
+        /*final List<String> actionsList = new ArrayList<String>();
         for (UserPermission up : connectTR.getLink().getPermissions()) {
             actionsList.add(up.getAction());
         }
-        tr.setListPermittedActions(actionsList);
+        tr.setListPermittedActions(actionsList);*/
+        tr.setPermissionsLink(connectTR.getLink());
 
         // --- custom processing : last comment
         for (RequestCommentDTO com : connectTR.getCommentList()) {
