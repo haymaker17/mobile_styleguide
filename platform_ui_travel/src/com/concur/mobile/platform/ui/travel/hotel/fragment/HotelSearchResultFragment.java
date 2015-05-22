@@ -150,26 +150,19 @@ public class HotelSearchResultFragment extends PlatformFragmentV1 {
 
     public void showProgressBar(boolean isRates) {
         if (!progressbarVisible) {
-            View progressBar = mainView.findViewById(R.id.hotel_search_progress);
+            mainView.findViewById(R.id.progressView).setVisibility(View.VISIBLE);
             progressbarVisible = true;
-            progressBar.setVisibility(View.VISIBLE);
-            progressBar.bringToFront();
             View progressBarMsg = mainView.findViewById(R.id.hotel_search_progress_msg);
             if (isRates) {
                 ((TextView) progressBarMsg).setText(R.string.hotel_rates_progress_message);
             }
-            progressBarMsg.setVisibility(View.VISIBLE);
-            progressBarMsg.bringToFront();
         }
     }
 
     public void hideProgressBar() {
         if (progressbarVisible) {
-            View progressBar = mainView.findViewById(R.id.hotel_search_progress);
             progressbarVisible = false;
-            progressBar.setVisibility(View.GONE);
-            View progressBarMsg = mainView.findViewById(R.id.hotel_search_progress_msg);
-            progressBarMsg.setVisibility(View.GONE);
+            mainView.findViewById(R.id.progressView).setVisibility(View.GONE);
         }
     }
 
