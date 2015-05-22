@@ -70,7 +70,7 @@
         android:id="@+id/locSearchResults"
         android:layout_width="wrap_content"
         android:layout_height="match_parent"
-        android:background="@color/CustomDialogTextColor"
+        android:background="@color/locationSearchDivider"
         android:divider="@color/cellDivider"
         android:dividerHeight="1dp"
         android:minHeight="54dp"
