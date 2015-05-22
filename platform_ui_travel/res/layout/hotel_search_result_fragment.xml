@@ -46,23 +46,6 @@
             android:background="@color/empty_view_separator_line_background"/>
     </LinearLayout>
 
-    <ProgressBar
-        android:id="@+id/hotel_search_progress"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_centerInParent="true"/>
-
-    <TextView
-        android:id="@+id/hotel_search_progress_msg"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_below="@id/hotel_search_progress"
-        android:layout_centerHorizontal="true"
-        android:background="#ffffff"
-        android:text="@string/hotel_search_progress_message"
-        android:textColor="@color/blueTabs">
-    </TextView>
-
     <RelativeLayout
         android:id="@+id/results_footer"
         android:layout_width="match_parent"
@@ -114,7 +97,7 @@
     <View
         android:id="@+id/footerDivider"
         android:layout_width="fill_parent"
-        android:layout_height="2dp"
+        android:layout_height="1dp"
         android:layout_above="@id/results_footer"
         android:background="@color/HotelListDivider"/>
 
@@ -127,5 +110,28 @@
         android:background="#FFFFFF"
         android:divider="@color/ListDivider"
         android:dividerHeight="1dp"/>
+
+
+    <LinearLayout
+        android:id="@+id/progressView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:layout_centerInParent="true"
+        android:padding="5dp"
+        android:background="#ffffff">
+
+        <ProgressBar
+            android:id="@+id/hotel_search_progress"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"/>
+
+        <TextView
+            android:id="@+id/hotel_search_progress_msg"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/hotel_search_progress_message"
+            android:textColor="@color/blueTabs"/>
+    </LinearLayout>
 
 </RelativeLayout>
