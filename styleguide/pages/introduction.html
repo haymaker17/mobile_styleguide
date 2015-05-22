@@ -180,12 +180,17 @@
 
 <section class="changelist">
 	<h2>Change Log</h2>
+	<a href="">Show Change Log</a>
 	<div class="changelist_body">
 </section>
 
 <script>
 $(function() { 
-	getGithubCommits();
+	$(".changelist").on("click","a", function(ev){
+		ev.preventDefault();
+		getGithubCommits();
+	})
+	
 });
 </script>
 

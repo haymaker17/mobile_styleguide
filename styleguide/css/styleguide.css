@@ -291,6 +291,14 @@ figure.phone p {
 	background: #1aa3ff;
 }
 
+.light_blue {
+	background: #eaf7ff;
+}
+
+.light_blue span {
+	color: #2d6a95;
+}
+
 
 .black {
 	background-color: #383f46;
@@ -304,11 +312,11 @@ figure.phone p {
 	background: #7f8f97;
 }
 
-.light_grey {
+.medium_grey {
 	background: #a7b6bf;
 }
 
-.line_grey {
+.light_grey {
 	background: #dbe1e6;
 }
 
@@ -316,7 +324,7 @@ figure.phone p {
 	background: #f7fafd;
 }
 
-.off_white span, .white span, .line_grey span {
+.off_white span, .white span, .light_grey span {
 	color: #5e6c75;
 }
 
