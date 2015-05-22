@@ -378,7 +378,7 @@ public class Preferences extends PreferenceActivity implements OnSharedPreferenc
                     ssoUrl = ssoQueryReply.ssoUrl;
                     // set server url
                     serverUrl = ssoQueryReply.serverUrl;
-                    if(!serverUrl.isEmpty()){
+                    if(serverUrl!=null && !serverUrl.isEmpty()){
                         //set platformproperties
                         sessionInfo.setServerUrl(serverUrl);
                     }
