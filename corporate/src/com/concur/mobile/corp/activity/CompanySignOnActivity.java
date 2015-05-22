@@ -435,6 +435,18 @@ public class CompanySignOnActivity extends BaseActivity {
             if (!fromNotification) {
                 Intent i = null;
                 i = new Intent(this, Home.class);
+                if(ConcurCore.userEntryAppTimer>0){
+                    ConcurCore.userSuccessfulLoginTimer = System.currentTimeMillis();
+                    long totalWaitTime = ConcurCore.userSuccessfulLoginTimer - ConcurCore.userEntryAppTimer;
+                    String signInMethod = com.concur.mobile.platform.ui.common.util.Const.LOGIN_METHOD_SSO;
+                    // Log to Google Analytics
+                    if(totalWaitTime<=0){
+                        totalWaitTime=0;
+                    }
+                    EventTracker.INSTANCE.trackTimings(Flurry.CATEGORY_SIGN_IN, signInMethod,
+                            Flurry.LABEL_WAIT_TIME, totalWaitTime);
+                    ConcurCore.resetUserTimers();
+                }
                 startActivity(i);
             }
 

@@ -314,10 +314,14 @@ public class Startup extends BaseActivity {
             if (TESTDRIVE_USER_COUNTRIES.contains(cntryCode)) {
                 startIntent = new Intent(this, PreLogin.class);
             } else {
+                //reset user timers
+                ConcurCore.resetUserTimers();
                 startIntent = new Intent(this, EmailLookupActivity.class);
             }
             // in home we are already setting this Preferences.setNotFirstTimeRunning(prefs);
         } else {
+            //reset user timers
+            ConcurCore.resetUserTimers();
             // go to login
             startIntent = new Intent(this, EmailLookupActivity.class);
         }

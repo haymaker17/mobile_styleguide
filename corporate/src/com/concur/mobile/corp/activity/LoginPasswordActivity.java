@@ -1,11 +1,5 @@
 package com.concur.mobile.corp.activity;
 
-import java.util.HashMap;
-import java.util.Locale;
-import java.util.Map;
-
-import org.apache.http.HttpStatus;
-
 import android.app.Activity;
 import android.content.Context;
 import android.content.DialogInterface;
@@ -46,6 +40,12 @@ import com.concur.mobile.platform.ui.common.login.LoginPasswordFragment;
 import com.concur.mobile.platform.ui.common.login.LoginPasswordFragment.LoginPasswordCallbacks;
 import com.concur.mobile.platform.ui.common.util.ViewUtil;
 import com.concur.platform.PlatformProperties;
+
+import org.apache.http.HttpStatus;
+
+import java.util.HashMap;
+import java.util.Locale;
+import java.util.Map;
 
 @EventTracker.EventTrackerClassName(getClassName = "Enter Mobile/Concur Password")
 public class LoginPasswordActivity extends BaseActivity implements LoginPasswordCallbacks {
@@ -162,7 +162,7 @@ public class LoginPasswordActivity extends BaseActivity implements LoginPassword
                 }
 
                 // Go to homescreen ...
-                startHomeScreen();
+                startHomeScreen(emailLookupBundle);
 
                 // Set this back to 0 so we don't record this attempt
                 // if the user goes back to try and register. We only
@@ -480,7 +480,7 @@ public class LoginPasswordActivity extends BaseActivity implements LoginPassword
         trackLoginStatus(false, Flurry.EVENT_REMOTE_WIPE);
     }
 
-    private void startHomeScreen() {
+    private void startHomeScreen(Bundle emailLookup) {
         if (RolesUtil.isGovUser(this)) {
             DialogFragmentFactory.getPositiveDialogFragment(getText(R.string.login_failure).toString(),
                     getText(R.string.login_unathorized).toString(), getText(R.string.okay).toString(),
@@ -502,14 +502,26 @@ public class LoginPasswordActivity extends BaseActivity implements LoginPassword
             ((ConcurMobile) this.getApplication()).initUserConfig();
             this.setResult(Activity.RESULT_OK);
             if (!fromNotification) {
-                gotoHome();
+                gotoHome(emailLookup);
             }
         }
     }
 
-    private void gotoHome() {
+    private void gotoHome(Bundle emailLookup) {
         Intent i = null;
         i = new Intent(this, Home.class);
+        if(ConcurCore.userEntryAppTimer>0 && emailLookup!=null){
+            ConcurCore.userSuccessfulLoginTimer = System.currentTimeMillis();
+            long totalWaitTime = ConcurCore.userSuccessfulLoginTimer - ConcurCore.userEntryAppTimer;
+            String signInMethod = emailLookup.getString(EmailLookUpRequestTask.EXTRA_SIGN_IN_METHOD_KEY);
+            // Log to Google Analytics
+            if(totalWaitTime<=0){
+                totalWaitTime=0;
+            }
+            EventTracker.INSTANCE.trackTimings(Flurry.CATEGORY_SIGN_IN, signInMethod,
+                    Flurry.LABEL_WAIT_TIME, totalWaitTime);
+            ConcurCore.resetUserTimers();
+        }
         startActivity(i);
         this.setResult(Activity.RESULT_OK);
         this.finish();

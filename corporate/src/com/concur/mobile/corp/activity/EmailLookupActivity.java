@@ -1,9 +1,5 @@
 package com.concur.mobile.corp.activity;
 
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-
 import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
@@ -13,6 +9,7 @@ import android.preference.PreferenceManager;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
 import android.text.TextUtils;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
@@ -38,6 +35,10 @@ import com.concur.mobile.platform.ui.common.login.EmailLookupFragment;
 import com.concur.mobile.platform.ui.common.login.EmailLookupFragment.EmailLookupCallbacks;
 import com.concur.platform.PlatformProperties;
 
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+
 @EventTracker.EventTrackerClassName(getClassName = "Email Lookup")
 public class EmailLookupActivity extends BaseActivity implements IProgressBarListener, EmailLookupCallbacks {
 
@@ -61,6 +62,11 @@ public class EmailLookupActivity extends BaseActivity implements IProgressBarLis
         super.onCreate(savedInstanceState);
         setContentView(R.layout.test_drive_main);
 
+        if(ConcurCore.userEntryAppTimer>0L){
+            ConcurCore.userEntryAppTimer+=System.currentTimeMillis();
+        }else{
+            ConcurCore.userEntryAppTimer=System.currentTimeMillis();
+        }
         // Enable the progress mask if needed
         if (savedInstanceState != null) {
             progressbarVisible = savedInstanceState.getBoolean(PROGRESSBAR_VISIBLE, false);
@@ -160,6 +166,14 @@ public class EmailLookupActivity extends BaseActivity implements IProgressBarLis
             } else if (requestCode == Const.REQUEST_CODE_SSO_LOGIN) {
                 setResult(Activity.RESULT_OK);
                 finish();
+            }
+        }else {
+            if(ConcurCore.userEntryAppTimer>0L){
+                ConcurCore.userEntryAppTimer+=System.currentTimeMillis();
+                Log.d(">>>>>>>> " + Const.LOG_TAG + " >>>>>> ", " Total Time EmailLookup time = " + ConcurCore.userEntryAppTimer);
+            }else{
+                ConcurCore.userEntryAppTimer=System.currentTimeMillis();
+                Log.d(">>>>>>>> "+Const.LOG_TAG + " >>>>>> ", " Total Time EmailLookup  time = " + ConcurCore.userEntryAppTimer);
             }
         }
 

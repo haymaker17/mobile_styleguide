@@ -162,7 +162,7 @@ public abstract class ConcurCore extends MultiDexApplication {
     protected static Context appContext;
 
     // Store autologin starttime, endtime and user click time.
-    public static long startAutologinTime, stopAutoLoginTime, userClickTime;
+    public static long startAutologinTime, stopAutoLoginTime, userClickTime,userEntryAppTimer, userSuccessfulLoginTimer;
 
     // Location - retrieve current location/address form LastLocationTracker
     protected LastLocationTracker lastLocationTracker;
@@ -765,10 +765,21 @@ public abstract class ConcurCore extends MultiDexApplication {
 
     }
 
+    /**
+     * Reset Auto Login Timers.
+     * */
     public static void resetAutloLoginTimes(){
         startAutologinTime =0L;
         stopAutoLoginTime =0L;
         userClickTime =0L;
+    }
+
+    /**
+     * Reset User Entry and Successful Login timer.
+     * */
+    public static void resetUserTimers(){
+        userEntryAppTimer=0;
+        userSuccessfulLoginTimer=0;
     }
     // Initialize the platform properties.
     private void initPlatformProperties() {
