@@ -90,11 +90,11 @@
             android:theme="@style/ConcurBaseTheme.White.New" />
         <activity
             android:name="com.concur.mobile.corp.activity.CompanyCodeLoginActivity"
-            android:theme="@style/ConcurBaseTheme.New"
+            android:theme="@style/ConcurBaseTheme.White.New"
             android:windowSoftInputMode="adjustResize" />
         <activity
             android:name="com.concur.mobile.corp.activity.CompanySignOnActivity"
-            android:theme="@style/ConcurBaseTheme.New" />
+            android:theme="@style/ConcurBaseTheme.White.New" />
         <activity android:name="com.concur.mobile.corp.activity.Register" />
         <activity
             android:name="com.concur.mobile.corp.activity.LoginHelp"

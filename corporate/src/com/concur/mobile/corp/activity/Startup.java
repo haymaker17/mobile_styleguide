@@ -188,6 +188,15 @@ public class Startup extends BaseActivity {
                     || (sessionInfo != null && (!TextUtils.isEmpty(sessionInfo.getSSOUrl())))) {
                 // Perform a company sign-on based login.
                 emailLookupBundle = getEmailLookUpBundleFromSessionInfo(sessionInfo);
+                // set server url
+                String serverUrl = ssoReply.serverUrl;
+                if(sessionInfo!=null){
+                    sessionInfo.setServerUrl(serverUrl);
+                }
+                if(serverUrl!=null && !serverUrl.isEmpty()){
+                    //set platformproperties
+                    PlatformProperties.setServerAddress(serverUrl);
+                }
                 startCompanySignOn();
                 doLoginFinish();
             } else {
