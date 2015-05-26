@@ -111,6 +111,7 @@
     <string name="hotel_tab_rooms">ROOMS</string>
     <string name="hotel_tab_images">PHOTOS</string>
     <string name="find_rooms_button">Find Rooms</string>
+    <string name="hotel_citystatecountry">%%0!city%%, %%1!state%%, %%2!country%%, %%3!postcode%%</string>
     
     <!-- start of hotel reservation screen -->
     <string name="hotel_sell_options_retrieving">Retrieving sell options</string>

@@ -54,8 +54,7 @@ public class HotelDetailsFragment extends PlatformFragmentV1 implements OnClickL
 
     }
 
-    @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
+    @Override public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
 
         super.onCreateView(inflater, container, savedInstanceState);
 
@@ -85,6 +84,9 @@ public class HotelDetailsFragment extends PlatformFragmentV1 implements OnClickL
         //
         // }
 
+        //add hotel name
+        ((TextView) mainView.findViewById(R.id.hotel_name)).setText(com.concur.mobile.base.util.Format.localizeText(getActivity(), hotel.name));
+
         Contact contact = hotel.contact;
         if (contact != null && contact.city != null) {
             // if (ViewUtil.isMappingAvailable(context)) {
@@ -95,9 +97,10 @@ public class HotelDetailsFragment extends PlatformFragmentV1 implements OnClickL
             if (!contact.addressLine1.isEmpty()) {
                 stb.append(contact.addressLine1).append(", ");
             }
+            stb.append(com.concur.mobile.base.util.Format.localizeText(getActivity(), contact.street) + ", \n");
             stb.append(com.concur.mobile.base.util.Format
-                    .localizeText(getActivity(), R.string.general_citystatecountry, contact.street, contact.city,
-                            contact.state, contact.country, contact.zip));
+                    .localizeText(getActivity(), R.string.hotel_citystatecountry, contact.city, contact.state,
+                            contact.country, contact.zip));
             TextView tv = ((TextView) mainView.findViewById(R.id.hotel_address));
             tv.setText(stb.toString());
             tv.setTextIsSelectable(true);
@@ -131,8 +134,7 @@ public class HotelDetailsFragment extends PlatformFragmentV1 implements OnClickL
         return mainView;
     }
 
-    @Override
-    public void onAttach(Activity activity) {
+    @Override public void onAttach(Activity activity) {
         super.onAttach(activity);
         // This makes sure that the container activity has implemented
         // the callback interface. If not, it throws an exception
@@ -143,16 +145,14 @@ public class HotelDetailsFragment extends PlatformFragmentV1 implements OnClickL
         }
     }
 
-    @Override
-    public void onSaveInstanceState(Bundle outState) {
+    @Override public void onSaveInstanceState(Bundle outState) {
         // TODO Auto-generated method stub
         super.onSaveInstanceState(outState);
 
         Log.d(Const.LOG_TAG, " ***** HotelChoiceDetailsFragment, in onSaveInstanceState *****  ");
     }
 
-    @Override
-    public void onPause() {
+    @Override public void onPause() {
         // TODO Auto-generated method stub
         super.onPause();
 
@@ -161,8 +161,7 @@ public class HotelDetailsFragment extends PlatformFragmentV1 implements OnClickL
         // retainer.put(STATE_HOTEL_LIST_ITEMS_KEY, hotelListItems);
     }
 
-    @Override
-    public void onResume() {
+    @Override public void onResume() {
         // TODO Auto-generated method stub
         super.onResume();
 
@@ -174,8 +173,7 @@ public class HotelDetailsFragment extends PlatformFragmentV1 implements OnClickL
         // + (hotelListItems != null ? hotelListItems.size() : 0));
     }
 
-    @Override
-    public void onClick(View v) {
+    @Override public void onClick(View v) {
         // if (v == mapFrame) {
         // callBackListener.onMapsClicked(post);
         // } else

@@ -57,7 +57,7 @@ public class HotelRoomDetailFragment extends PlatformFragmentV1 {
         mainView = inflater.inflate(R.layout.hotel_rooms_layout1, container, false);
 
         // show the price to beat header
-        if (hotelRooms != null && priceToBeat != null) {
+        if (hotelRooms != null && hotelRooms.size() > 0 && priceToBeat != null) {
             mainView.findViewById(R.id.priceToBeatView).setVisibility(View.VISIBLE);
             TextView priceToBeatView = (TextView) mainView.findViewById(R.id.priceToBeatText);
             priceToBeatView.setVisibility(View.VISIBLE);

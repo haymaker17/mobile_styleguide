@@ -22,7 +22,7 @@
         android:layout_centerHorizontal="true"
         android:background="#ffffff"
         android:text="@string/hotel_sell_options_retrieving"
-        android:textColor="@color/blueTabs">
+        android:textColor="@color/ConcurBlue">
     </TextView>
     
     <RelativeLayout
@@ -31,7 +31,7 @@
         android:layout_height="60dp"
         android:layout_alignParentBottom="true"
         android:layout_gravity="bottom"
-        android:background="@color/blueTabs">
+        android:background="@color/ConcurBlue">
         
         <Button
         android:id="@+id/footer_button"
@@ -39,7 +39,7 @@
         android:layout_height="match_parent"
         android:layout_alignParentTop="true"
         android:layout_centerHorizontal="true"
-        android:background="@color/blueTabs"
+        android:background="@color/ConcurBlue"
         android:fontFamily="sans-serif-light"
         android:gravity="center"
         android:text="@string/hotel_reserve_this_room"

@@ -108,7 +108,7 @@
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
                 android:background="#ffffff"
-                android:textColor="@color/blueTabs" >
+                android:textColor="@color/ConcurBlue" >
             </TextView>
 
             <!-- Custom Fields View Group -->

@@ -11,14 +11,14 @@
         android:layout_height="60dp"
         android:layout_alignParentBottom="true"
         android:layout_gravity="bottom"
-        android:background="@color/blueTabs" >
+        android:background="@color/ConcurBlue" >
 
         <Button
             android:id="@+id/footer_button"
             android:layout_width="match_parent"
             android:layout_height="60dp"
             android:layout_centerHorizontal="true"
-            android:background="@color/blueTabs"
+            android:background="@color/ConcurBlue"
             android:fontFamily="sans-serif-light"
             android:gravity="center"
             android:text="@string/find_rooms_button"
@@ -45,33 +45,39 @@
                 android:layout_height="96dp"
                 android:layout_marginTop="12dp" />
 
+            <RelativeLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="8dp"
+                android:layout_margin="24dp">
+                <ImageView
+                    android:id="@+id/hotel_icon"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:src="@drawable/icon_hotel_grey"
+                    android:paddingTop="5dp"
+                    android:paddingRight="24dp"
+                    />
+                <TextView
+                    android:id="@+id/hotel_name"
+                    android:layout_toRightOf="@id/hotel_icon"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:fontFamily="sans-serif"
+                    android:text="Hyatt Regency dfgsd fsgf gsdf sf gsd df z"
+                    android:textColor="#383f46"
+                    android:textSize="16sp" />
             <TextView
                 android:id="@+id/hotel_address"
+                android:layout_toRightOf="@id/hotel_icon"
+                android:layout_below="@id/hotel_name"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_gravity="left"
-                android:layout_marginBottom="8dp"
-                android:layout_marginLeft="24dp"
-                android:layout_marginRight="24dp"
-                android:layout_marginTop="24dp"
-                android:drawableLeft="@drawable/room_icon_address"
-                android:drawablePadding="24dp"
                 android:fontFamily="sans-serif"
                 android:text="501 Pine St, Seattle,erwerwerwerwerwer WA, 98212"
-                android:textColor="#383f46"
+                android:textColor="#7f8f97"
                 android:textSize="16sp" />
-
-            <TextView
-                android:id="@+id/hotel_address_hint"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_gravity="left"
-                android:layout_marginBottom="20dp"
-                android:layout_marginLeft="63dp"
-                android:fontFamily="sans-serif"
-                android:text="Address"
-                android:textColor="#737373"
-                android:textSize="12sp" />
+            </RelativeLayout>
 
             <include
                 android:layout_width="match_parent"
@@ -85,11 +91,11 @@
                 android:layout_height="wrap_content"
                 android:layout_gravity="left"
                 android:layout_margin="24dp"
-                android:drawableLeft="@drawable/room_icon_phone"
+                android:drawableLeft="@drawable/room_icon_phone_blue"
                 android:drawablePadding="24dp"
                 android:fontFamily="sans-serif"
                 android:text="(203) 8547852"
-                android:textColor="#383f46"
+                android:textColor="@color/ConcurBlue"
                 android:textSize="16sp" />
 
             <include
