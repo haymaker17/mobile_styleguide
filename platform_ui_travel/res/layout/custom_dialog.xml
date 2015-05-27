@@ -37,7 +37,7 @@
     android:gravity="right"
     android:text="@string/dialog_ok"
     android:layout_below="@+id/msg"
-    android:textColor="@color/blueTabs"
+    android:textColor="@color/ConcurBlue"
     android:textSize="14sp"
     android:textStyle="bold"/>
     
@@ -51,7 +51,7 @@
     android:background="#FFFFFF"
     android:gravity="right"
     android:text="@string/hotel_confirm_reserve_cancel"
-    android:textColor="@color/blueTabs"
+    android:textColor="@color/ConcurBlue"
     android:textSize="14sp"
     android:textStyle="bold"
     android:visibility="gone"/>

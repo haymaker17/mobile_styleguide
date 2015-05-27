@@ -131,7 +131,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="@string/hotel_search_progress_message"
-            android:textColor="@color/blueTabs"/>
+            android:textColor="@color/ConcurBlue"/>
     </LinearLayout>
 
 </RelativeLayout>

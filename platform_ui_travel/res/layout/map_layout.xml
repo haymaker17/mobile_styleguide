@@ -37,7 +37,7 @@
         android:layout_centerHorizontal="true"
         android:background="#ffffff"
         android:text="@string/hotel_details_progress_message"
-        android:textColor="@color/blueTabs"
+        android:textColor="@color/ConcurBlue"
         android:visibility="gone">
 
     </TextView>
