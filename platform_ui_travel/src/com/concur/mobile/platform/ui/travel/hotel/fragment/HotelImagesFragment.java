@@ -178,8 +178,10 @@ public class HotelImagesFragment extends PlatformFragmentV1 implements AdapterVi
                 ImageCache imgCache = ImageCache.getInstance(mContext);
                 Bitmap bitmap = imgCache.getBitmap(uri, null);
                 if (bitmap != null) {
+                    holder.image.setScaleType(ImageView.ScaleType.FIT_XY);
                     holder.image.setImageBitmap(bitmap);
                 } else {
+                    holder.image.setScaleType(ImageView.ScaleType.CENTER_CROP);
                     holder.image.setImageResource(R.drawable.hotel_results_default_image);
                 }
 
