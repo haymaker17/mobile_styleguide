@@ -7,7 +7,7 @@
 
 
     <ProgressBar
-        android:id="@+id/hotel_map_progressqwq"
+        android:id="@+id/hotel_map_progress"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_gravity="center"
@@ -15,14 +15,14 @@
         android:indeterminate="true"/>
 
     <TextView
-        android:id="@+id/hotel_map_progress_msgqw"
+        android:id="@+id/hotel_map_progress_msg"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_below="@id/hotel_map_progress"
         android:layout_centerHorizontal="true"
         android:background="#ffffff"
         android:text="@string/hotel_details_progress_message"
-        android:textColor="@color/blueTabs">
+        android:textColor="@color/ConcurBlue">
     </TextView>
 
 
