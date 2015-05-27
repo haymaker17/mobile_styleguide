@@ -487,7 +487,7 @@
         <!-- Configuration Information Provider -->
         <provider
             android:name="com.concur.mobile.platform.config.provider.ConfigProvider"
-            android:authorities="com.concur.mobile.platform.config"
+            android:authorities="com.concur.mobile.platform.jarvis.config"
             android:enabled="true"
             android:exported="false"
             android:initOrder="1"
@@ -499,7 +499,7 @@
         <!-- Expense Information Provider -->
         <provider
             android:name="com.concur.mobile.platform.expense.provider.ExpenseProvider"
-            android:authorities="com.concur.mobile.platform.expense"
+            android:authorities="com.concur.mobile.platform.jarvis.expense"
             android:enabled="true"
             android:exported="false"
             android:initOrder="1"
@@ -508,6 +508,18 @@
 
             <!-- TODO: define mime types here, etc. -->
         </provider>
+        <!-- Travel Information Provider -->
+        <!--TODO - do not check in the change in package name into develop -->
+        <provider
+            android:name="com.concur.mobile.platform.travel.provider.TravelProvider"
+            android:authorities="com.concur.mobile.platform.jarvis.travel"
+            android:enabled="true"
+            android:exported="false"
+            android:initOrder="1"
+            android:label="@string/platform_travel_provider_name"
+            android:syncable="false">
+        </provider>
+
 
         <!-- ================== -->
         <!-- Begin Apptentive -->
