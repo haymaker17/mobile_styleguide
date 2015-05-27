@@ -84,18 +84,33 @@ public class HotelDetailsFragment extends PlatformFragmentV1 implements OnClickL
 
         Contact contact = hotel.contact;
         if (contact != null && contact.city != null) {
-            // if (ViewUtil.isMappingAvailable(context)) {
-            // ViewUtil.setText(mainView, R.id.hotel_address, hotel.contact.city, Linkify.MAP_ADDRESSES);
-            // ViewUtil.setVisibility(mainView, R.id.hotel_address, View.VISIBLE);
-            // } else {
+        
             StringBuilder stb = new StringBuilder();
             if (!contact.addressLine1.isEmpty()) {
                 stb.append(contact.addressLine1).append(", ");
             }
-            stb.append(com.concur.mobile.base.util.Format.localizeText(getActivity(), contact.street) + ", \n");
-            stb.append(com.concur.mobile.base.util.Format
-                    .localizeText(getActivity(), R.string.hotel_citystatecountry, contact.city, contact.state,
-                            contact.country, contact.zip));
+            if (!contact.street.isEmpty()) {
+                stb.append(com.concur.mobile.base.util.Format.localizeText(getActivity(), contact.street) + ", \n");
+            }
+            if (!contact.city.isEmpty()) {
+                stb.append(com.concur.mobile.base.util.Format.localizeText(getActivity(), contact.city)).append((", "));
+            }
+            if (!contact.state.isEmpty()) {
+                stb.append(com.concur.mobile.base.util.Format.localizeText(getActivity(), contact.state))
+                        .append((", "));
+            }
+            if (!contact.country.isEmpty()) {
+                stb.append(com.concur.mobile.base.util.Format.localizeText(getActivity(), contact.country))
+                        .append((", "));
+            }
+            if (!contact.zip.isEmpty()) {
+                stb.append(com.concur.mobile.base.util.Format.localizeText(getActivity(), contact.zip));
+            }
+
+            //            stb.append(com.concur.mobile.base.util.Format.localizeText(getActivity(), contact.street) + ", \n");
+            //            stb.append(com.concur.mobile.base.util.Format
+            //                    .localizeText(getActivity(), R.string.hotel_citystatecountry, contact.city, contact.state,
+            //                            contact.country, contact.zip));
             TextView tv = ((TextView) mainView.findViewById(R.id.hotel_address));
             tv.setText(stb.toString());
             tv.setTextIsSelectable(true);
