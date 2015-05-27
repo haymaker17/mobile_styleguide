@@ -1,17 +1,17 @@
 package com.concur.mobile.core.service;
 
-import java.io.ByteArrayInputStream;
-
-import javax.xml.parsers.SAXParser;
-import javax.xml.parsers.SAXParserFactory;
-
-import org.xml.sax.Attributes;
-import org.xml.sax.SAXException;
-
 import android.util.Log;
 
 import com.concur.mobile.core.util.Const;
 import com.concur.mobile.platform.util.Parse;
+
+import org.xml.sax.Attributes;
+import org.xml.sax.SAXException;
+
+import java.io.ByteArrayInputStream;
+
+import javax.xml.parsers.SAXParser;
+import javax.xml.parsers.SAXParserFactory;
 
 /**
  * An extension of <code>ActionStatusServiceReply</code> for handling the response to a CorpSsoQuery request.
@@ -31,6 +31,11 @@ public class CorpSsoQueryReply extends ActionStatusServiceReply {
      * Contains the company sso URL, if <code>ssoEnabled</code> is <code>true</code>.
      */
     public String ssoUrl;
+
+    /**
+     * Contains the server URL.
+     */
+    public String serverUrl;
 
     public static CorpSsoQueryReply parseXMLReply(String responseXml) {
 
@@ -53,6 +58,7 @@ public class CorpSsoQueryReply extends ActionStatusServiceReply {
         private static final String SSO_RESPONSE = "SsoResponse";
         private static final String SSO_ENABLED = "SsoEnabled";
         private static final String SSO_URL = "SsoUrl";
+        private static final String SSO_SERVER_URL = "ServerUrl";
 
         @Override
         protected ActionStatusServiceReply createReply() {
@@ -91,6 +97,13 @@ public class CorpSsoQueryReply extends ActionStatusServiceReply {
                     } else if (localName.equalsIgnoreCase(SSO_URL)) {
                         if (reply instanceof CorpSsoQueryReply) {
                             ((CorpSsoQueryReply) reply).ssoUrl = chars.toString().trim();
+                            elementHandled = true;
+                        } else {
+                            Log.e(Const.LOG_TAG, CLS_TAG + ".endElement: reply is not instance of CorpSsoQueryReply!");
+                        }
+                    } else if (localName.equalsIgnoreCase(SSO_SERVER_URL)) {
+                        if (reply instanceof CorpSsoQueryReply) {
+                            ((CorpSsoQueryReply) reply).serverUrl = chars.toString().trim();
                             elementHandled = true;
                         } else {
                             Log.e(Const.LOG_TAG, CLS_TAG + ".endElement: reply is not instance of CorpSsoQueryReply!");

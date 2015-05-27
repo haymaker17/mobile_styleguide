@@ -189,6 +189,15 @@ public class Startup extends BaseActivity {
                     || (sessionInfo != null && (!TextUtils.isEmpty(sessionInfo.getSSOUrl())))) {
                 // Perform a company sign-on based login.
                 emailLookupBundle = getEmailLookUpBundleFromSessionInfo(sessionInfo);
+                // set server url
+                String serverUrl = ssoReply.serverUrl;
+                if(sessionInfo!=null){
+                    sessionInfo.setServerUrl(serverUrl);
+                }
+                if(serverUrl!=null && !serverUrl.isEmpty()){
+                    //set platformproperties
+                    PlatformProperties.setServerAddress(serverUrl);
+                }
                 startCompanySignOn();
                 doLoginFinish();
             } else {
@@ -306,10 +315,14 @@ public class Startup extends BaseActivity {
             if (TESTDRIVE_USER_COUNTRIES.contains(cntryCode)) {
                 startIntent = new Intent(this, PreLogin.class);
             } else {
+                //reset user timers
+                ConcurCore.resetUserTimers();
                 startIntent = new Intent(this, EmailLookupActivity.class);
             }
             // in home we are already setting this Preferences.setNotFirstTimeRunning(prefs);
         } else {
+            //reset user timers
+            ConcurCore.resetUserTimers();
             // go to login
             startIntent = new Intent(this, EmailLookupActivity.class);
         }

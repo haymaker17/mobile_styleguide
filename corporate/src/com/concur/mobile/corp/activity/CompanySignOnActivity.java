@@ -3,8 +3,6 @@
  */
 package com.concur.mobile.corp.activity;
 
-import java.util.Locale;
-
 import android.app.Activity;
 import android.app.AlertDialog;
 import android.app.Dialog;
@@ -48,6 +46,8 @@ import com.concur.mobile.platform.authentication.CorpSSOLoginRequestTask;
 import com.concur.mobile.platform.authentication.EmailLookUpRequestTask;
 import com.concur.mobile.platform.util.Format;
 import com.concur.platform.PlatformProperties;
+
+import java.util.Locale;
 
 /**
  * An extension of <code>BaseActivity</code> for the purposes of displaying a web-view containing company sign-on pages.
@@ -114,6 +114,10 @@ public class CompanySignOnActivity extends BaseActivity {
             if (reply.ssoEnabled) {
                 if (reply.ssoUrl != null) {
                     ssoUrl = reply.ssoUrl;
+                    String serverUrlFromReply = reply.serverUrl;
+                    if(serverUrlFromReply!=null && !serverUrl.isEmpty()) {
+                        serverUrl = serverUrlFromReply;
+                    }
                 }
             }
         }
@@ -431,6 +435,18 @@ public class CompanySignOnActivity extends BaseActivity {
             if (!fromNotification) {
                 Intent i = null;
                 i = new Intent(this, Home.class);
+                if(ConcurCore.userEntryAppTimer>0){
+                    ConcurCore.userSuccessfulLoginTimer = System.currentTimeMillis();
+                    long totalWaitTime = ConcurCore.userSuccessfulLoginTimer - ConcurCore.userEntryAppTimer;
+                    String signInMethod = com.concur.mobile.platform.ui.common.util.Const.LOGIN_METHOD_SSO;
+                    // Log to Google Analytics
+                    if(totalWaitTime<=0){
+                        totalWaitTime=0;
+                    }
+                    EventTracker.INSTANCE.trackTimings(Flurry.CATEGORY_SIGN_IN, signInMethod,
+                            Flurry.LABEL_WAIT_TIME, totalWaitTime);
+                    ConcurCore.resetUserTimers();
+                }
                 startActivity(i);
             }
 

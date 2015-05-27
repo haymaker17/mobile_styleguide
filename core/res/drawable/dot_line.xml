@@ -1,6 +1,6 @@
 <shape xmlns:android="http://schemas.android.com/apk/res/android" android:shape="line">
     <stroke
-       android:color="@color/universal_dot_saparator"
+       android:color="@color/universalDotSeparator"
        android:dashWidth="5dp"
        android:dashGap="5dp" />
 </shape>
