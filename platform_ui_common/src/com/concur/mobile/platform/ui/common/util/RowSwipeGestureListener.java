@@ -74,7 +74,7 @@ public abstract class RowSwipeGestureListener<T> extends GestureDetector.SimpleO
 
     @Override public boolean onSingleTapUp(MotionEvent e) {
         /** absolute position of the element taped in the list */
-        final int position = listView.pointToPosition(Math.round(e.getX()), Math.round(e.getY()));
+        final int position = getDataIndex(listView.pointToPosition(Math.round(e.getX()), Math.round(e.getY())));
         /** taped element's view */
         final SwipeableRowView rowView = (SwipeableRowView) getChildAt(listView, position);
 
