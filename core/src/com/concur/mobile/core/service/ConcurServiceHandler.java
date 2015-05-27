@@ -227,7 +227,7 @@ public class ConcurServiceHandler extends Handler {
             // Only check for session validity when online.
             if (request.isSessionRequired() && ConcurCore.isConnected()) {
                 // Validate the current session id.
-                String sessionId = SessionManager.validateSessionId((ConcurCore) concurService.getApplication(), msg,
+                String sessionId = SessionManager.validateSessionId((ConcurCore) concurService.getApplication(),
                         new SessionManager.AutoLoginListener() {
 
                             @Override
