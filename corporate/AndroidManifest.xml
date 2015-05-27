@@ -482,7 +482,7 @@
             android:name="com.concur.mobile.corp.activity.ProfileInfo"
             android:theme="@style/ConcurBaseTheme.New">
         </activity>
-       
+
         <!-- Providers -->
         <!-- Configuration Information Provider -->
         <provider
