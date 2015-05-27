@@ -18,9 +18,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 /**
- * 
  * @author RatanK
- * 
  */
 public class Hotel implements Serializable, HotelDAO {
 
@@ -50,6 +48,7 @@ public class Hotel implements Serializable, HotelDAO {
     public List<HotelRate> rates;
     public String availabilityErrorCode;
     public String currencyCode;
+    public boolean showNearMe;
 
     /**
      * Contains search url
@@ -78,16 +77,15 @@ public class Hotel implements Serializable, HotelDAO {
     // full column list of hotel detail.
     public static String[] fullColumnList = { Travel.HotelDetailColumns._ID, Travel.HotelDetailColumns.NAME,
             Travel.HotelDetailColumns.CHAIN_NAME, Travel.HotelDetailColumns.CHAIN_CODE,
-            Travel.HotelDetailColumns.STREET, Travel.HotelDetailColumns.ADDRESS_LINE_1,
-            Travel.HotelDetailColumns.STATE, Travel.HotelDetailColumns.COUNTRY, Travel.HotelDetailColumns.CITY,
-            Travel.HotelDetailColumns.DISTANCE, Travel.HotelDetailColumns.PHONE,
-            Travel.HotelDetailColumns.TOLL_FREE_PHONE, Travel.HotelDetailColumns.DISTANCE_UNIT,
-            Travel.HotelDetailColumns.ZIP, Travel.HotelDetailColumns.LOWEST_RATE,
-            Travel.HotelDetailColumns.CURRENCY_CODE, Travel.HotelDetailColumns.COMPANY_PREFERENCE,
-            Travel.HotelDetailColumns.SUGESTED_CATEGORY, Travel.HotelDetailColumns.SUGESTED_SCORE,
-            Travel.HotelDetailColumns.STAR_RATING, Travel.HotelDetailColumns.THUMBNAIL_URL,
-            Travel.HotelDetailColumns.AVAILABILITY_ERROR_CODE, Travel.HotelDetailColumns.LAT,
-            Travel.HotelDetailColumns.LON, Travel.HotelDetailColumns.RATES_URL,
+            Travel.HotelDetailColumns.STREET, Travel.HotelDetailColumns.ADDRESS_LINE_1, Travel.HotelDetailColumns.STATE,
+            Travel.HotelDetailColumns.COUNTRY, Travel.HotelDetailColumns.CITY, Travel.HotelDetailColumns.DISTANCE,
+            Travel.HotelDetailColumns.PHONE, Travel.HotelDetailColumns.TOLL_FREE_PHONE,
+            Travel.HotelDetailColumns.DISTANCE_UNIT, Travel.HotelDetailColumns.ZIP,
+            Travel.HotelDetailColumns.LOWEST_RATE, Travel.HotelDetailColumns.CURRENCY_CODE,
+            Travel.HotelDetailColumns.COMPANY_PREFERENCE, Travel.HotelDetailColumns.SUGESTED_CATEGORY,
+            Travel.HotelDetailColumns.SUGESTED_SCORE, Travel.HotelDetailColumns.STAR_RATING,
+            Travel.HotelDetailColumns.THUMBNAIL_URL, Travel.HotelDetailColumns.AVAILABILITY_ERROR_CODE,
+            Travel.HotelDetailColumns.LAT, Travel.HotelDetailColumns.LON, Travel.HotelDetailColumns.RATES_URL,
             Travel.HotelDetailColumns.HOTEL_SEARCH_RESULT_ID, Travel.HotelDetailColumns.TRAVEL_POINTS_FOR_LOWEST_RATE };
 
     // ,
@@ -102,9 +100,8 @@ public class Hotel implements Serializable, HotelDAO {
 
     /**
      * Will construct an instance of <code>Hotel</code> with an application context.
-     * 
-     * @param context
-     *            contains a reference to an application context.
+     *
+     * @param context contains a reference to an application context.
      */
     public Hotel(Context context) {
         this.context = context;
@@ -112,9 +109,8 @@ public class Hotel implements Serializable, HotelDAO {
 
     /**
      * Constructs an instance of <code>Hotel</code> based on reading values from a <code>Cursor</code> object.
-     * 
-     * @param cursor
-     *            contains the cursor.
+     *
+     * @param cursor contains the cursor.
      */
     public Hotel(Cursor cursor) {
         init(cursor);
@@ -122,18 +118,16 @@ public class Hotel implements Serializable, HotelDAO {
 
     /**
      * Constructs an instance of <code>Hotel</code> based on reading values from a <code>Uri</code> object.
-     * 
-     * @param context
-     *            contains an application context.
-     * @param contentUri
-     *            contains the content Uri.
+     *
+     * @param context    contains an application context.
+     * @param contentUri contains the content Uri.
      */
     public Hotel(Context context, Uri contentUri) {
         ContentResolver resolver = context.getContentResolver();
         Cursor cursor = null;
         try {
-            cursor = resolver.query(contentUri, fullColumnList, null, null,
-                    Travel.HotelDetailColumns.DEFAULT_SORT_ORDER);
+            cursor = resolver
+                    .query(contentUri, fullColumnList, null, null, Travel.HotelDetailColumns.DEFAULT_SORT_ORDER);
             if (cursor != null) {
                 if (cursor.moveToFirst()) {
                     init(cursor);
@@ -148,9 +142,8 @@ public class Hotel implements Serializable, HotelDAO {
 
     /**
      * Will initialize the hotel from a cursor object.
-     * 
-     * @param cursor
-     *            contains the cursor used to initialize fields.
+     *
+     * @param cursor contains the cursor used to initialize fields.
      */
     private void init(Cursor cursor) {
 
@@ -178,7 +171,8 @@ public class Hotel implements Serializable, HotelDAO {
         distanceUnit = CursorUtil.getStringValue(cursor, Travel.HotelDetailColumns.DISTANCE_UNIT);
 
         lowestRate = CursorUtil.getDoubleValue(cursor, Travel.HotelDetailColumns.LOWEST_RATE);
-        travelPointsForLowestRate = CursorUtil.getIntValue(cursor, Travel.HotelDetailColumns.TRAVEL_POINTS_FOR_LOWEST_RATE);
+        travelPointsForLowestRate = CursorUtil
+                .getIntValue(cursor, Travel.HotelDetailColumns.TRAVEL_POINTS_FOR_LOWEST_RATE);
         currencyCode = CursorUtil.getStringValue(cursor, Travel.HotelDetailColumns.CURRENCY_CODE);
 
         latitude = CursorUtil.getDoubleValue(cursor, Travel.HotelDetailColumns.LAT);
@@ -230,8 +224,8 @@ public class Hotel implements Serializable, HotelDAO {
         if (ratesURL != null && (!TextUtils.isEmpty(ratesURL.href))) {
             String[] columnNames = { Travel.HotelDetailColumns.RATES_URL };
             String[] columnValues = { ratesURL.href };
-            contentUri = ContentUtils.getContentUri(context, Travel.HotelDetailColumns.CONTENT_URI, columnNames,
-                    columnValues);
+            contentUri = ContentUtils
+                    .getContentUri(context, Travel.HotelDetailColumns.CONTENT_URI, columnNames, columnValues);
 
         }
         return contentUri;
@@ -261,8 +255,8 @@ public class Hotel implements Serializable, HotelDAO {
             } else {
                 retVal = true;
                 if (rowsUpdated > 1) {
-                    Log.w(Const.LOG_TAG, CLS_TAG + ".update: more than 1 row updated for Uri '" + contentUri.toString()
-                            + "'.");
+                    Log.w(Const.LOG_TAG,
+                            CLS_TAG + ".update: more than 1 row updated for Uri '" + contentUri.toString() + "'.");
                 }
             }
             retVal = (rowsUpdated == 1);

@@ -748,6 +748,7 @@ public class HotelSearchAndResultActivity extends TravelBaseActivity
                 selectedHotelListItem = itemClicked;
                 Hotel hotelSelected = selectedHotelListItem.getHotel();
                 if (hotelSelected != null && hotelSelected.ratesURL != null) {
+                    hotelSelected.showNearMe = searchNearMe;
                     // Determine if the hotel details are already in our in-memory
                     // cache, if so, then
                     // re-use them. A request to update will be made in the
@@ -780,9 +781,9 @@ public class HotelSearchAndResultActivity extends TravelBaseActivity
                     }
 
                 }
-                if (mapFragment != null) {
-                    mapFragment.hideProgressBar();
-                }
+//                if (mapFragment != null) {
+                //                    mapFragment.hideProgressBar();
+                //                }
             }
         }
     }

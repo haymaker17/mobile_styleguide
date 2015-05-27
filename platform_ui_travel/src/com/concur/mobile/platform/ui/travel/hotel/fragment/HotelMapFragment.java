@@ -1,20 +1,21 @@
 package com.concur.mobile.platform.ui.travel.hotel.fragment;
 
-import android.app.Activity;
+import android.app.FragmentManager;
+import android.app.FragmentTransaction;
+import android.os.Build;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
-import android.widget.Toast;
 import com.concur.mobile.platform.ui.common.fragment.PlatformFragmentV1;
 import com.concur.mobile.platform.ui.travel.R;
-import com.google.android.gms.common.ConnectionResult;
-import com.google.android.gms.common.GooglePlayServicesUtil;
+import com.concur.mobile.platform.ui.travel.util.Const;
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.MapFragment;
 import com.google.android.gms.maps.OnMapReadyCallback;
+import com.google.android.gms.maps.model.BitmapDescriptorFactory;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.MarkerOptions;
 
@@ -27,23 +28,25 @@ public class HotelMapFragment extends PlatformFragmentV1 implements OnMapReadyCa
 
     private static GoogleMap googleMap;
     private LatLng position;
-    private MapFragment mapFragment;
+    private MapFragment hotelmapFragment;
     private ImageView snapshotHolder;
-
-    public HotelMapFragment(LatLng position) {
-        this.position = position;
-    }
+    public Bundle args;
+    private double latitude;
+    private double longitude;
+    private boolean searchNearMe;
 
     // empty constructor
     public HotelMapFragment() {
+        setRetainInstance(true);
     }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         super.onCreateView(inflater, container, savedInstanceState);
+        args = getArguments();
 
         // inflate the details fragment
-        View mainView = inflater.inflate(R.layout.map_layout, container, false);
+        View mainView = inflater.inflate(R.layout.hotel_map_layout, container, false);
 
         setUpMap();
         if (googleMap != null) {
@@ -58,25 +61,31 @@ public class HotelMapFragment extends PlatformFragmentV1 implements OnMapReadyCa
 
     private void setUpMap() {
         if (googleMap == null) {
-            Activity activity = getActivity();
-            int resultCode = GooglePlayServicesUtil.isGooglePlayServicesAvailable(activity);
-            if (resultCode == ConnectionResult.SUCCESS) {
-                mapFragment = ((MapFragment) getFragmentManager().findFragmentById(R.id.map));
-
-                mapFragment.getMapAsync(this);
-
+            hotelmapFragment = null;
+            FragmentManager fm = null;
+            if (Build.VERSION.SDK_INT < Build.VERSION_CODES.LOLLIPOP) {
+                fm = getFragmentManager();
             } else {
-                Toast.makeText(activity, "Map Unavailable", Toast.LENGTH_LONG).show();
+                fm = getChildFragmentManager();
             }
-
+            hotelmapFragment = (MapFragment) fm.findFragmentById(R.id.hotel_map);
+            hotelmapFragment.getMapAsync(this);
         }
     }
 
     private void addMarkers() {
         if (googleMap != null) {
+            latitude = Double.valueOf(args.getString(Const.EXTRA_TRAVEL_LATITUDE));
+            longitude = Double.valueOf(args.getString(Const.EXTRA_TRAVEL_LONGITUDE));
+            searchNearMe = args.getBoolean(Const.EXTRA_TRAVEL_SEARCH_NEAR_ME, false);
+            position = new LatLng(latitude, longitude);
             MarkerOptions marker = new MarkerOptions().position(position);
+            marker.icon(BitmapDescriptorFactory.fromResource(R.drawable.map_pin_red));
             googleMap.addMarker(marker);
-            googleMap.moveCamera(CameraUpdateFactory.newLatLngZoom(position, 15));
+            if (searchNearMe) {
+                googleMap.setMyLocationEnabled(true);
+            }
+            googleMap.moveCamera(CameraUpdateFactory.newLatLngZoom(position, 17));
         }
     }
 
@@ -106,11 +115,13 @@ public class HotelMapFragment extends PlatformFragmentV1 implements OnMapReadyCa
     @Override
     public void onDestroyView() {
         super.onDestroyView();
-        // if (googleMap != null) {
-        // getFragmentManager().beginTransaction().remove(getFragmentManager().findFragmentById(R.layout.map_layout))
-        // .commit();
+        if (hotelmapFragment != null) {
+            FragmentTransaction ft = getActivity().getFragmentManager().beginTransaction();
+            ft.remove(hotelmapFragment);
+            ft.commit();
+        }
+
         googleMap = null;
-        // }
 
     }
 

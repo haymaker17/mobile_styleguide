@@ -22,7 +22,6 @@ import com.concur.mobile.platform.ui.travel.R;
 import com.concur.mobile.platform.ui.travel.util.Const;
 import com.concur.mobile.platform.ui.travel.util.LoaderImageView;
 import com.concur.mobile.platform.ui.travel.util.ParallaxScollView;
-import com.google.android.gms.maps.model.LatLng;
 
 import java.net.URI;
 import java.util.List;
@@ -210,7 +209,7 @@ public class HotelChoiceDetailsFragment extends PlatformFragmentV1 implements On
 
         public void roomItemClicked(HotelRoomListItem roomListItem);
 
-        public void onMapsClicked(LatLng post);
+        public void onMapsClicked();//LatLng post
 
         public void setHeaderImageURL(String headerImageURL);
 

@@ -3,7 +3,6 @@ package com.concur.mobile.platform.ui.travel.hotel.fragment;
 import android.app.Activity;
 import android.app.FragmentManager;
 import android.app.FragmentTransaction;
-import android.content.Intent;
 import android.os.Build;
 import android.os.Bundle;
 import android.util.Log;
@@ -58,10 +57,10 @@ public class HotelSearchResultMapFragment extends PlatformFragmentV1 implements 
         args = getArguments();
         // inflate the details fragment
         mainView = inflater.inflate(R.layout.map_layout, container, false);
-        Intent intent = getActivity().getIntent();
-        latitude = Double.valueOf(intent.getStringExtra(Const.EXTRA_TRAVEL_LATITUDE));
-        longitude = Double.valueOf(intent.getStringExtra(Const.EXTRA_TRAVEL_LONGITUDE));
-        searchNearMe = intent.getBooleanExtra(Const.EXTRA_TRAVEL_SEARCH_NEAR_ME, false);
+        //        Intent intent = getActivity().getIntent();
+        //        latitude = Double.valueOf(intent.getStringExtra(Const.EXTRA_TRAVEL_LATITUDE));
+        //        longitude = Double.valueOf(intent.getStringExtra(Const.EXTRA_TRAVEL_LONGITUDE));
+        //        searchNearMe = intent.getBooleanExtra(Const.EXTRA_TRAVEL_SEARCH_NEAR_ME, false);
         setUpMap();
         if (googleMap != null) {
             addMarkers();
@@ -84,7 +83,6 @@ public class HotelSearchResultMapFragment extends PlatformFragmentV1 implements 
                 callBackListener.mapsHotelListItemClicked(itemClicked);
             }
         });
-        hideProgressBar();
         return mainView;
     }
 
@@ -154,12 +152,15 @@ public class HotelSearchResultMapFragment extends PlatformFragmentV1 implements 
      */
     private void addMarkers() {
         hotels = new ArrayList<HotelSearchResultListItem>();
-        googleMap.setInfoWindowAdapter(new HotelInfoWindowAdapter());
+
         hotels = ((ArrayList<HotelSearchResultListItem>) args.getSerializable(Const.EXTRA_HOTELS_LIST));
         if (hotels != null && hotels.size() > 0) {
             addHotelMarkers(hotels);
             // Hotel firstHotel = hotels.get(0).getHotel();
         }
+        latitude = Double.valueOf(args.getString(Const.EXTRA_TRAVEL_LATITUDE));
+        longitude = Double.valueOf(args.getString(Const.EXTRA_TRAVEL_LONGITUDE));
+        searchNearMe = args.getBoolean(Const.EXTRA_TRAVEL_SEARCH_NEAR_ME, false);
         // TODO load custom icons
         //  LatLng position1 = new LatLng(firstHotel.latitude, firstHotel.longitude);
         LatLng position = new LatLng(latitude, longitude);
@@ -173,13 +174,11 @@ public class HotelSearchResultMapFragment extends PlatformFragmentV1 implements 
         CameraUpdate cu = CameraUpdateFactory.newLatLngBounds(bounds, 400, 400, padding);
         googleMap.moveCamera(cu);
         googleMap.animateCamera(cu);
-
         googleMap.setOnMarkerClickListener(new GoogleMap.OnMarkerClickListener() {
 
             @Override public boolean onMarkerClick(Marker marker) {
                 itemClicked = markerMap.get(marker);
                 marker.showInfoWindow();
-                marker.setVisible(true);
                 View view = itemClicked.buildView(getActivity(), hotelInfoView, null);
                 view.setAlpha(1);
                 if (previousMarker != null) {
@@ -190,7 +189,7 @@ public class HotelSearchResultMapFragment extends PlatformFragmentV1 implements 
                 return true;
             }
         });
-        hideProgressBar();
+        //        hideProgressBar();
     }
 
     private void addHotelMarkers(List<HotelSearchResultListItem> hotels) {
@@ -205,24 +204,23 @@ public class HotelSearchResultMapFragment extends PlatformFragmentV1 implements 
             builder.include(position);
             markerMap.put(hotelMarker, item);
             if (firstMarker) {
+                googleMap.setInfoWindowAdapter(new HotelInfoWindowAdapter());
                 hotelMarker.showInfoWindow();
-                View v = item.buildView(getActivity(), hotelInfoView, null);
+                item.buildView(getActivity(), hotelInfoView, null);
                 hotelMarker.setIcon(BitmapDescriptorFactory.fromResource(R.drawable.map_pin_red));
-                hotelMarker.setVisible(true);
-                hotelMarker.showInfoWindow();
                 firstMarker = false;
                 previousMarker = hotelMarker;
                 itemClicked = item;
 
             }
         }
-        hideProgressBar();
+        //        hideProgressBar();
     }
 
     @Override public void onMapReady(GoogleMap map) {
         googleMap = map;
         addMarkers();
-        hideProgressBar();
+        // hideProgressBar();
 
     }
 
@@ -230,16 +228,17 @@ public class HotelSearchResultMapFragment extends PlatformFragmentV1 implements 
 
         @Override public View getInfoWindow(Marker marker) {
 
+            return null;
+        }
+
+        @Override public View getInfoContents(Marker marker) {
+
             LayoutInflater inflater = null;
 
             inflater = LayoutInflater.from(getActivity());
 
             View v = inflater.inflate(R.layout.empty_info_window, null);
             return v;
-        }
-
-        @Override public View getInfoContents(Marker marker) {
-            return null;
         }
 
     }
@@ -250,28 +249,28 @@ public class HotelSearchResultMapFragment extends PlatformFragmentV1 implements 
         public void mapsHotelListItemClicked(HotelSearchResultListItem itemClicked);
     }
 
-    public void showProgressBar() {
-        if (!progressbarVisible) {
-            //  View progressBar = mainView.findViewById(R.id.hotel_map_progress);
-            progressbarVisible = true;
-            progressBar.setVisibility(View.VISIBLE);
-            progressBar.bringToFront();
-            //  View progressBarMsg = mainView.findViewById(R.id.hotel_map_progress_msg);
-            progressBarMsg.setVisibility(View.VISIBLE);
-            progressBarMsg.bringToFront();
-            mainView.invalidate();
-        }
-    }
+    //    public void showProgressBar() {
+    //        if (!progressbarVisible) {
+    //            //  View progressBar = mainView.findViewById(R.id.hotel_map_progress);
+    //            progressbarVisible = true;
+    //            progressBar.setVisibility(View.VISIBLE);
+    //            progressBar.bringToFront();
+    //            //  View progressBarMsg = mainView.findViewById(R.id.hotel_map_progress_msg);
+    //            progressBarMsg.setVisibility(View.VISIBLE);
+    //            progressBarMsg.bringToFront();
+    //            mainView.invalidate();
+    //        }
+    //    }
 
-    public void hideProgressBar() {
-        if (progressbarVisible) {
-            //View progressBar = mainView.findViewById(R.id.hotel_map_progress);
-            progressbarVisible = false;
-            progressBar.setVisibility(View.GONE);
-            //  View progressBarMsg = mainView.findViewById(R.id.hotel_map_progress_msg);
-            progressBarMsg.setVisibility(View.GONE);
-            mainView.requestLayout();
-        }
-    }
+    //    public void hideProgressBar() {
+    //        if (progressbarVisible) {
+    //            //View progressBar = mainView.findViewById(R.id.hotel_map_progress);
+    //            progressbarVisible = false;
+    //            progressBar.setVisibility(View.GONE);
+    //            //  View progressBarMsg = mainView.findViewById(R.id.hotel_map_progress_msg);
+    //            progressBarMsg.setVisibility(View.GONE);
+    //            mainView.requestLayout();
+    //        }
+    //    }
 
 }

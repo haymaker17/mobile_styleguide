@@ -63,6 +63,7 @@ public class HotelChoiceDetailsActivity extends TravelBaseActivity
     private String currentTripId;
     private List<HotelViolation> violations;
     private String customTravelText;
+    private HotelMapFragment hotelMapFragment;
 
     // private ParallaxScollListView mListView;
     // private ImageView mImageView;
@@ -88,12 +89,12 @@ public class HotelChoiceDetailsActivity extends TravelBaseActivity
     public boolean onOptionsItemSelected(MenuItem item) {
         if (item.getItemId() == R.id.map) {
             // Toast.makeText(getApplicationContext(), "Not implemented", Toast.LENGTH_SHORT).show();
-            //            if (hotel != null) {
-            //                LatLng post = new LatLng(hotel.latitude, hotel.longitude);
-            //                onMapsClicked(post);
-            //            } else {
-            Toast.makeText(getApplicationContext(), "Maps unavailable", Toast.LENGTH_SHORT).show();
-            // }
+            if (hotel != null) {
+
+                onMapsClicked();
+            } else {
+                Toast.makeText(getApplicationContext(), "Maps unavailable", Toast.LENGTH_SHORT).show();
+            }
             return true;
         } else {
             return super.onOptionsItemSelected(item);
@@ -194,7 +195,7 @@ public class HotelChoiceDetailsActivity extends TravelBaseActivity
     }
 
     @Override
-    public void onMapsClicked(LatLng post) {
+    public void onMapsClicked() { //LatLng post
         if (isOffline) {
             showOfflineDialog();
 
@@ -203,23 +204,36 @@ public class HotelChoiceDetailsActivity extends TravelBaseActivity
 
             // TODO customize ShowMaps to view single and multiple hotels
             // Intent i = new Intent(this, ShowHotelMap.class);
-            if (resultCode == ConnectionResult.SUCCESS && post != null) {
+            if (resultCode == ConnectionResult.SUCCESS && hotel != null) {
                 // i.putExtra(Const.EXTRA_HOTEL_LOCATION, post);
                 // startActivity(i);
                 // Intent i = this.getIntent();
                 // i.putExtra(Const.EXTRA_HOTEL_LOCATION, post);
-                HotelMapFragment hotelMapFragment = (HotelMapFragment) getFragmentManager()
-                        .findFragmentByTag(FRAGMENT_HOTEL_MAP);
+                hotelMapFragment = (HotelMapFragment) getFragmentManager().findFragmentByTag(FRAGMENT_HOTEL_MAP);
+                //  LatLng post = new LatLng(hotel.latitude, hotel.longitude);
                 if (hotelMapFragment == null) {
-                    hotelMapFragment = new HotelMapFragment(post);
-                    FragmentTransaction ft = getFragmentManager().beginTransaction();
+                    hotelMapFragment = new HotelMapFragment();
+
+                }
+                FragmentTransaction ft = getFragmentManager().beginTransaction();
+                if (!hotelMapFragment.isVisible()) {
+                    Bundle args = new Bundle();
+                    //  args.putSerializable(Const.EXTRA_HOTELS_LIST, (Serializable) hotelList);
+                    args.putString(Const.EXTRA_TRAVEL_LATITUDE, hotel.latitude.toString());
+                    args.putString(Const.EXTRA_TRAVEL_LONGITUDE, hotel.longitude.toString());
+                    args.putBoolean(Const.EXTRA_TRAVEL_SEARCH_NEAR_ME, hotel.showNearMe);
+                    hotelMapFragment.setArguments(args);
+
+                    ft.hide(hotelDetailsFrag);
+
+                    // if (mapFragment != null && !mapFragment.isAdded()) {
                     ft.add(R.id.tabcontainer, hotelMapFragment, FRAGMENT_HOTEL_MAP);
                     ft.addToBackStack(null);
                     ft.commit();
+                } else {
+                    ft.hide(hotelMapFragment);
+                    getFragmentManager().popBackStackImmediate();
                 }
-
-                // hotel = new HotelSearchResultListItem();
-                // hotelListItem = (HotelSearchResultListItem) bundle.getSerializable(Const.EXTRA_HOTELS_DETAILS);
 
             } else {
                 Toast.makeText(this, "Map Unavailable", Toast.LENGTH_LONG).show();

@@ -2,6 +2,28 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
               android:orientation="vertical"
               android:layout_width="match_parent"
-              android:layout_height="match_parent">
+              android:layout_height="match_parent"
+              android:minWidth="@dimen/abc_action_button_min_width_material">
+
+
+    <ProgressBar
+        android:id="@+id/hotel_map_progressqwq"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_gravity="center"
+        style="?android:attr/progressBarStyleSmall"
+        android:indeterminate="true"/>
+
+    <TextView
+        android:id="@+id/hotel_map_progress_msgqw"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/hotel_map_progress"
+        android:layout_centerHorizontal="true"
+        android:background="#ffffff"
+        android:text="@string/hotel_details_progress_message"
+        android:textColor="@color/blueTabs">
+    </TextView>
+
 
 </LinearLayout>

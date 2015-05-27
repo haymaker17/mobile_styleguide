@@ -19,27 +19,29 @@ import com.concur.mobile.platform.ui.common.view.ListItemAdapter;
 import com.concur.mobile.platform.ui.travel.R;
 import com.concur.mobile.platform.ui.travel.hotel.fragment.HotelChoiceDetailsFragment.HotelChoiceDetailsFragmentListener;
 import com.concur.mobile.platform.ui.travel.util.Const;
+import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.GoogleMapOptions;
 import com.google.android.gms.maps.MapFragment;
 import com.google.android.gms.maps.OnMapReadyCallback;
-import com.google.android.gms.maps.model.CameraPosition;
-import com.google.android.gms.maps.model.LatLng;
+import com.google.android.gms.maps.model.*;
 
 /**
  * Fragment for Hotel Details tab
  *
  * @author tejoa
  */
-public class HotelDetailsFragment extends PlatformFragmentV1 implements OnClickListener {
+public class HotelDetailsFragment extends PlatformFragmentV1 implements OnClickListener, OnMapReadyCallback {
 
     public static final String TAB_ROOMS = "ROOMS";
     public static final String FRAGMENT_HOTEL_MAP = "FRAGMENT_HOTEL_MAP";
     private Hotel hotel;
     private MapFragment mapFragment;
+    private static GoogleMap googleMap;
     private ListItemAdapter<HotelRoomListItem> listItemAdapater;
     private HotelChoiceDetailsFragmentListener callBackListener;
     private LatLng post;
     private Button findRooms;
+    private View mapView;
 
     // private int paramsHeight;
     // private MapFragment mapFragment;
@@ -65,25 +67,15 @@ public class HotelDetailsFragment extends PlatformFragmentV1 implements OnClickL
         post = new LatLng(hotel.latitude, hotel.longitude);
 
         GoogleMapOptions options = new GoogleMapOptions().liteMode(true);
+        options.mapToolbarEnabled(false);
         CameraPosition camera = new CameraPosition(post, 15, 0, 0);
         options.camera(camera);
 
+        mapView = mainView.findViewById(R.id.map_view);
         mapFragment = MapFragment.newInstance(options);
-        mapFragment.getMapAsync((OnMapReadyCallback) getActivity());
+        mapFragment.getMapAsync(this);
         //
         getFragmentManager().beginTransaction().replace(R.id.map_view, mapFragment).commit();
-        // mapFrame.setOnClickListener(this);
-        // mapFrame.getLayoutParams().height = 0;
-        // mapView.getParent().
-        // mapFrame.removeAllViews();
-        // mapFrame.addView(mapView);
-
-        // getFragmentManager().beginTransaction().replace(R.id.map_view, new HotelMapFragment(post, true)).commit();
-        // if (mapFrame != null) {
-        // mapFrame.setOnClickListener(this);
-        // }
-        //
-        // }
 
         Contact contact = hotel.contact;
         if (contact != null && contact.city != null) {
@@ -165,36 +157,37 @@ public class HotelDetailsFragment extends PlatformFragmentV1 implements OnClickL
     public void onResume() {
         // TODO Auto-generated method stub
         super.onResume();
-
-        // if (retainer.contains(STATE_HOTEL_LIST_ITEMS_KEY)) {
-        // hotelListItems = (List<HotelSearchResultListItem>) retainer.get(STATE_HOTEL_LIST_ITEMS_KEY);
-        // }
-
-        // Log.d(Const.LOG_TAG, " ***** HotelSearchResultFragment, in onResume *****  hotelListItems = "
-        // + (hotelListItems != null ? hotelListItems.size() : 0));
     }
 
     @Override
     public void onClick(View v) {
-        // if (v == mapFrame) {
-        // callBackListener.onMapsClicked(post);
-        // } else
         if (v == findRooms) {
             callBackListener.onFindRoomsClicked();
         }
 
     }
 
-    // public void showFullMap(View view) {
-    // callBackListener.onMapsClicked(post);
-    // }
+    @Override
+    public void onMapReady(GoogleMap map) {
+        googleMap = map;
+        MarkerOptions marker = new MarkerOptions().position(post);
+        marker.icon(BitmapDescriptorFactory.fromResource(R.drawable.map_pin_red));
+        googleMap.addMarker(marker);
+        googleMap.setOnMarkerClickListener(new GoogleMap.OnMarkerClickListener() {
 
-    // @Override
-    // public void onDestroyView() {
-    // super.onDestroyView();
-    // getFragmentManager().beginTransaction().remove(getFragmentManager().findFragmentById(R.layout.map_view))
-    // .commit();
-    // }
-    // }
+            @Override public boolean onMarkerClick(Marker marker) {
+                callBackListener.onMapsClicked();
+                return true;
+            }
+        });
+
+        googleMap.setOnMapClickListener(new GoogleMap.OnMapClickListener() {
+
+            @Override public void onMapClick(LatLng latLng) {
+                callBackListener.onMapsClicked();
+            }
+
+        });
+    }
 
 }
