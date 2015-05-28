@@ -146,7 +146,7 @@ public class HotelImagesFragment extends PlatformFragmentV1 implements AdapterVi
         }
 
         public int getCount() {
-            return images.size();
+            return images != null ? images.size() : 0;
         }
 
         public Object getItem(int position) {

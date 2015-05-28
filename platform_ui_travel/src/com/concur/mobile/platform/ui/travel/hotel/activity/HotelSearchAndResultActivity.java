@@ -275,15 +275,18 @@ public class HotelSearchAndResultActivity extends TravelBaseActivity
         public void onLoadFinished(Loader<HotelRatesRESTResult> loader, HotelRatesRESTResult hotelRateResult) {
 
             hotelSearchRESTResultFrag.hideProgressBar();
+            if (mapFragment != null) {
+                mapFragment.hideProgressBar();
+            }
             // bar.setVisibility(View.GONE);
             Hotel hotel = hotelRateResult != null ? hotelRateResult.hotel : null;
             if (hotel != null && hotel.rates != null) {
 
-                //  if(selectedHotelListItem != null && selectedHotelListItem.getHotel() != null) {
-                selectedHotelListItem.getHotel().rates = hotel.rates;
-                updatedViolations = hotelRateResult.violations;
-                viewHotelChoiceDetails();
-                //   }
+                if (selectedHotelListItem != null && selectedHotelListItem.getHotel() != null) {
+                    selectedHotelListItem.getHotel().rates = hotel.rates;
+                    updatedViolations = hotelRateResult.violations;
+                    viewHotelChoiceDetails();
+                }
 
             } else {
                 Toast.makeText(getApplicationContext(), "No Rooms Available", Toast.LENGTH_LONG).show();
@@ -467,13 +470,13 @@ public class HotelSearchAndResultActivity extends TravelBaseActivity
         updateResultsFragmentUI(hotelListItemsToSort, toastMessage);
     }
 
-
     // MOB-24049 - Retrieve the 'default' server sort order that was saved in the cache
     protected void defaultSort() {
         // apply the filter on the items if filter option already exists
-        List<HotelSearchResultListItem> hotelListItemsTemp = filter(starRating, distance, nameContaining, serverSortedHotelListItemsCache);
+        List<HotelSearchResultListItem> hotelListItemsTemp = filter(starRating, distance, nameContaining,
+                serverSortedHotelListItemsCache);
 
-        if(hotelListItemsTemp == null) {
+        if (hotelListItemsTemp == null) {
             // no filter available, hence set to the cached list
             hotelListItemsTemp = serverSortedHotelListItemsCache;
         }
@@ -638,9 +641,10 @@ public class HotelSearchAndResultActivity extends TravelBaseActivity
         this.distance = distance;
         this.nameContaining = nameContaining;
 
-        List<HotelSearchResultListItem> hotelListItemsTemp = filter(starRating, distance, nameContaining, hotelListItems);
+        List<HotelSearchResultListItem> hotelListItemsTemp = filter(starRating, distance, nameContaining,
+                hotelListItems);
 
-        if(hotelListItemsTemp != null) {
+        if (hotelListItemsTemp != null) {
             if (hotelListItemsTemp.size() == 0) {
                 Toast.makeText(this, "No hotels found", Toast.LENGTH_SHORT).show();
             } else {
@@ -673,7 +677,8 @@ public class HotelSearchAndResultActivity extends TravelBaseActivity
 
     }
 
-    private List<HotelSearchResultListItem> filter(String starRating, Double distance, String nameContaining, List<HotelSearchResultListItem> itemsToSort) {
+    private List<HotelSearchResultListItem> filter(String starRating, Double distance, String nameContaining,
+            List<HotelSearchResultListItem> itemsToSort) {
         boolean starRatingFilterEnabled = (starRating == null ? false : true); // assuming ALL is null
         boolean distanceFilterEnabled = (distance == null ? false : true); // assuming ALL is null
         boolean nameContainingFilterEnabled = (nameContaining == null ? false : true);
@@ -720,7 +725,6 @@ public class HotelSearchAndResultActivity extends TravelBaseActivity
         }
         return hotelListItemsTemp;
     }
-
 
     @Override public void onFilterClicked() {
         if (!hotelSearchRESTResultFrag.progressbarVisible) {
@@ -786,68 +790,54 @@ public class HotelSearchAndResultActivity extends TravelBaseActivity
         finish();
     }
 
-    @Override public void mapsHotelListItemClicked(HotelSearchResultListItem itemClicked) {
-
-        //  setContentView(R.layout.progress_bar);
-
-        //        LayoutInflater inflater = getLayoutInflater();
-        //        LinearLayout layout = (LinearLayout) inflater.inflate(R.layout.progress_bar, null);
-        //        bar = (ProgressBar) findViewById(R.id.hotel_map_progress);
-        //        bar.setVisibility(View.VISIBLE);
-        hotelListItemClicked(itemClicked);
-
-    }
+    @Override
 
     public void hotelListItemClicked(HotelSearchResultListItem itemClicked) {
 
         if (isOffline) {
             showOfflineDialog();
-        } else {
-            if (itemClicked != null) {
-                selectedHotelListItem = itemClicked;
-                Hotel hotelSelected = selectedHotelListItem.getHotel();
-                if (hotelSelected != null && hotelSelected.ratesURL != null) {
-                    hotelSelected.showNearMe = searchNearMe;
-                    // Determine if the hotel details are already in our in-memory
-                    // cache, if so, then
-                    // re-use them. A request to update will be made in the
-                    // background.
+        } else if (itemClicked != null) {
+            selectedHotelListItem = itemClicked;
+            Hotel hotelSelected = selectedHotelListItem.getHotel();
+            if (hotelSelected != null && hotelSelected.ratesURL != null) {
+                hotelSelected.showNearMe = searchNearMe;
+                // Determine if the hotel details are already in our in-memory
+                // cache, if so, then
+                // re-use them. A request to update will be made in the
+                // background.
 
-                    if (hotelSelected.availabilityErrorCode == null) {
-                        if (retrieveFromDB) {
+                if (hotelSelected.availabilityErrorCode == null) {
+                    if (retrieveFromDB) {
 
-                            // DB call
-                            long id = hotelSelected._id;
+                        // DB call
+                        long id = hotelSelected._id;
 
-                            hotelSelected.rates = TravelUtilHotel.getHotelRateDetails(this, id);
-                            hotelSelected.imagePairs = TravelUtilHotel.getHotelImagePairs(this, id);
-                            violations = TravelUtilHotel
-                                    .getHotelViolations(getApplicationContext(), null, (int) hotelSelected.search_id);
-                        }
-                        if (hotelSelected.rates != null && hotelSelected.rates.size() > 0) {
-                            viewHotelChoiceDetails();
-                        } else if (hotelSelected.lowestRate == null && hotelSelected.ratesURL.href != null) {
-
-                            //       if (bar != null && !bar.isShown()) {
-                            hotelSearchRESTResultFrag.showProgressBar(true);
-                            //       }
-                            lm = getLoaderManager();
-                            lm.restartLoader(HOTEL_RATES_LOADER_ID, null, hotelRatesRESTResultLoaderCallbacks);
-                        }
-                    } else {
-                        Toast.makeText(getApplicationContext(), "No Rooms Available", Toast.LENGTH_LONG).show();
-
+                        hotelSelected.rates = TravelUtilHotel.getHotelRateDetails(this, id);
+                        hotelSelected.imagePairs = TravelUtilHotel.getHotelImagePairs(this, id);
+                        violations = TravelUtilHotel
+                                .getHotelViolations(getApplicationContext(), null, (int) hotelSelected.search_id);
                     }
+                    if (hotelSelected.rates != null && hotelSelected.rates.size() > 0) {
+                        viewHotelChoiceDetails();
+                    } else if (hotelSelected.lowestRate == null && hotelSelected.ratesURL.href != null) {
+
+                        hotelSearchRESTResultFrag.showProgressBar(true);
+                        lm = getLoaderManager();
+                        lm.restartLoader(HOTEL_RATES_LOADER_ID, null, hotelRatesRESTResultLoaderCallbacks);
+                    }
+                } else {
+                    Toast.makeText(getApplicationContext(), R.string.no_rooms, Toast.LENGTH_LONG).show();
 
                 }
-                //                if (mapFragment != null) {
-                //                    mapFragment.hideProgressBar();
-                //                }
+
             }
+
         }
+
     }
 
     private void viewHotelChoiceDetails() {
+
         Hotel hotel = selectedHotelListItem.getHotel();
         String searchId = TravelUtilHotel.getHotelSearchResultId(this, cacheKey);
         if (searchId != null) {
@@ -878,6 +868,9 @@ public class HotelSearchAndResultActivity extends TravelBaseActivity
         i.putExtras(bundle);
         // startActivity(i);
         selectedHotelListItem = null;
+        if (mapFragment != null) {
+            mapFragment.hideProgressBar();
+        }
         startActivityForResult(i, Const.REQUEST_CODE_BOOK_HOTEL);
     }
 

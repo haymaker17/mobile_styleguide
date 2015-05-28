@@ -42,7 +42,7 @@ public abstract class PlatformFragmentV1 extends Fragment {
 
     /**
      * Gets the instance of <code>RetainerFragment</code> used to store data.
-     * 
+     *
      * @return returns the instance of <code>RetainerFragment</code> used to store data.
      */
     public RetainerFragmentV1 getRetainer() {
@@ -51,7 +51,7 @@ public abstract class PlatformFragmentV1 extends Fragment {
 
     /**
      * Return a resource ID of the title that will be used for this fragment where needed (e.g. page title bars).
-     * 
+     *
      * @return An Integer holding the title resource ID or null if there should be no title
      */
     public Integer getTitleResource() {
@@ -69,4 +69,9 @@ public abstract class PlatformFragmentV1 extends Fragment {
      */
     public void onServiceUnavailable() {
     }
+
+    public void onBackPressed() {
+    }
+
 }
+
