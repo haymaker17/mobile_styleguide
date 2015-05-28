@@ -179,9 +179,11 @@ public class HotelImagesFragment extends PlatformFragmentV1 implements AdapterVi
                 Bitmap bitmap = imgCache.getBitmap(uri, null);
                 if (bitmap != null) {
                     holder.image.setScaleType(ImageView.ScaleType.FIT_XY);
+                    holder.image.setBackgroundColor(getResources().getColor(R.color.white_background));
                     holder.image.setImageBitmap(bitmap);
                 } else {
-                    holder.image.setScaleType(ImageView.ScaleType.CENTER_CROP);
+                    holder.image.setScaleType(ImageView.ScaleType.FIT_CENTER);
+                    holder.image.setBackgroundColor(getResources().getColor(R.color.grey_view_background));
                     holder.image.setImageResource(R.drawable.hotel_results_default_image);
                 }
 
