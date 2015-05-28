@@ -29,12 +29,4 @@ public class SquareImageView extends ImageView {
         setMeasuredDimension(getMeasuredWidth(), (int) (getMeasuredWidth() * 0.6));
     }
 
-    // public void previewPhoto(View view) {
-    // ((ImageView) view).setScaleType(ScaleType.FIT_XY);
-    // Intent intent = new Intent(view.getContext(), ImageActivity.class);
-    // intent.putExtra(Const.EXTRA_IMAGE_URL, hotelImage.image);
-    // view.getContext().startActivity(intent);
-    //
-    // // return view;
-    // }
 }

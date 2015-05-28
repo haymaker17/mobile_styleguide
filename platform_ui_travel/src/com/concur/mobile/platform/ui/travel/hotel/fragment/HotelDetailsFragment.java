@@ -77,19 +77,40 @@ public class HotelDetailsFragment extends PlatformFragmentV1 implements OnClickL
         //
         getFragmentManager().beginTransaction().replace(R.id.map_view, mapFragment).commit();
 
+        //add hotel name
+        TextView name = ((TextView) mainView.findViewById(R.id.hotel_name));
+        name.setText(com.concur.mobile.base.util.Format.localizeText(getActivity(), hotel.name));
+        name.setTextIsSelectable(true);
+
         Contact contact = hotel.contact;
         if (contact != null && contact.city != null) {
-            // if (ViewUtil.isMappingAvailable(context)) {
-            // ViewUtil.setText(mainView, R.id.hotel_address, hotel.contact.city, Linkify.MAP_ADDRESSES);
-            // ViewUtil.setVisibility(mainView, R.id.hotel_address, View.VISIBLE);
-            // } else {
+        
             StringBuilder stb = new StringBuilder();
             if (!contact.addressLine1.isEmpty()) {
                 stb.append(contact.addressLine1).append(", ");
             }
-            stb.append(com.concur.mobile.base.util.Format
-                    .localizeText(getActivity(), R.string.general_citystatecountry, contact.street, contact.city,
-                            contact.state, contact.country, contact.zip));
+            if (!contact.street.isEmpty()) {
+                stb.append(com.concur.mobile.base.util.Format.localizeText(getActivity(), contact.street) + ", \n");
+            }
+            if (!contact.city.isEmpty()) {
+                stb.append(com.concur.mobile.base.util.Format.localizeText(getActivity(), contact.city)).append((", "));
+            }
+            if (!contact.state.isEmpty()) {
+                stb.append(com.concur.mobile.base.util.Format.localizeText(getActivity(), contact.state))
+                        .append((", "));
+            }
+            if (!contact.country.isEmpty()) {
+                stb.append(com.concur.mobile.base.util.Format.localizeText(getActivity(), contact.country))
+                        .append((", "));
+            }
+            if (!contact.zip.isEmpty()) {
+                stb.append(com.concur.mobile.base.util.Format.localizeText(getActivity(), contact.zip));
+            }
+
+            //            stb.append(com.concur.mobile.base.util.Format.localizeText(getActivity(), contact.street) + ", \n");
+            //            stb.append(com.concur.mobile.base.util.Format
+            //                    .localizeText(getActivity(), R.string.hotel_citystatecountry, contact.city, contact.state,
+            //                            contact.country, contact.zip));
             TextView tv = ((TextView) mainView.findViewById(R.id.hotel_address));
             tv.setText(stb.toString());
             tv.setTextIsSelectable(true);
@@ -100,7 +121,7 @@ public class HotelDetailsFragment extends PlatformFragmentV1 implements OnClickL
 
         String s = contact.phone.trim();
         if (!s.isEmpty()) {
-            String formattedNumber = PhoneNumberUtils.formatNumber(contact.phone);
+            String formattedNumber = PhoneNumberUtils.formatNumber(s);
             // String formattedNumber = String.format("(%s) %s %s", s.subSequence(0, 3), s.subSequence(3, 6),
             // s.subSequence(6, 10));
             TextView tv = ((TextView) mainView.findViewById(R.id.hotel_phone));
