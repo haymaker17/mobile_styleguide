@@ -196,6 +196,9 @@
             android:name="com.concur.mobile.platform.ui.travel.hotel.activity.HotelChoiceDetailsActivity"
             android:theme="@style/ConcurRestTheme.White.ActionBarTabs"/>
         <activity
+            android:name="com.concur.mobile.platform.ui.travel.hotel.activity.HotelBookingActivity"
+            android:theme="@style/ConcurRestTheme.White.ActionBarTabs"/>
+        <activity
             android:name="com.concur.mobile.platform.ui.travel.hotel.activity.ImageDetailActivity"
             android:theme="@style/ConcurRestTheme.White.ActionBarTabs"/>
         <activity
@@ -389,9 +392,7 @@
         <activity
             android:name="com.concur.mobile.core.expense.receiptstore.activity.ReceiptShareStatusNotification"
             android:taskAffinity=""/>
-        <activity
-            android:name="com.concur.mobile.core.expense.report.activity.ApproverSearch"
-            android:theme="@style/ConcurTheme.Dialog.Light"/>
+
         <activity android:name="com.concur.mobile.corp.activity.LocationCheckIn"/>
 
         <!-- Offline activities -->
@@ -401,9 +402,6 @@
         <service
             android:name="com.concur.mobile.core.expense.receiptstore.service.ReceiptShareService"
             android:exported="false"/>
-
-        <!-- Extension of BroadcastReceiver for handling geo-location updates. -->
-        <receiver android:name="com.concur.mobile.core.util.loc.LocationChangedReceiver"/>
 
         <!-- Extension of BroadcastReceiver for detecting boot complete and starting up ReceiptShare service. -->
         <receiver android:name="com.concur.mobile.core.receiver.BootCompleteReceiver">
@@ -450,10 +448,6 @@
         <!-- Test Drive -->
         <activity
             android:name="com.concur.mobile.corp.activity.UniversalTour"
-            android:theme="@style/ConcurBaseTheme.New">
-        </activity>
-        <activity
-            android:name="com.concur.mobile.corp.activity.TestDriveRegistrationInfo"
             android:theme="@style/ConcurBaseTheme.New">
         </activity>
         <activity
