@@ -81,6 +81,8 @@ public class HotelComparator implements Comparator<Hotel> {
             case PREFERENCE:
                 retVal = comparePreference(hotel1, hotel2);
                 break;
+            case RECOMMENDATION:
+                retVal = compareRecommendation(hotel1, hotel2);
             }
         } else {
             retVal = 0;
