@@ -144,7 +144,7 @@ public class HotelSearchResultFragment extends PlatformFragmentV1 {
             showNumberOfResultsInFooter(nuomOfHotels);
         }
         if (toastMessage != null) {
-            Toast.makeText(getActivity().getApplicationContext(), toastMessage, Toast.LENGTH_LONG).show();
+            Toast.makeText(getActivity().getApplicationContext(), toastMessage, Toast.LENGTH_SHORT).show();
         }
     }
 

@@ -59,13 +59,10 @@ public class RestHotelSearch extends TravelBaseActivity
         implements LoaderManager.LoaderCallbacks<TravelCustomFieldsConfig>,
         TravelCustomFieldsFragment.TravelCustomFieldsFragmentCallBackListener {
 
-    protected static final int LOCATION_ACTIVITY_CODE = 0;
     protected static final String LOCATION_TYPE = "location_type";
     protected static final String LOCATION = "location";
     protected static final String CHECK_IN_DATE = "check_in_date";
     protected static final String CHECK_OUT_DATE = "check_out_date";
-    // protected static final String DISTANCE_UNIT = "distance_unit";
-    // protected static final String DISTANCE_VALUE = "distance_value";
     protected static final String NAMES_CONTAINING = "names_containing";
     protected static final String FROM_LOCATION_SEARCH_INTENT = "from_location_search_intent";
     public static final String BOOK_NEAR_ME = "book_near_me";
@@ -76,14 +73,12 @@ public class RestHotelSearch extends TravelBaseActivity
             HotelSearch.class.getSimpleName() + ".calendar.dialog.fragment";
     private static final String KEY_DIALOG_ID = "key.dialog.id";
     private static final String KEY_IS_CHECKIN = "key.is.checkin";
-    //   protected final IntentFilter hotelResultsFilter = new IntentFilter(Const.ACTION_HOTEL_SEARCH_RESULTS);
     protected View location;
 
     protected View checkInDateView;
     protected View checkOutDateView;
 
     protected View distance;
-    // protected View distanceUnit;
 
     protected Calendar checkInDate;
     protected Calendar checkOutDate;
@@ -105,8 +100,6 @@ public class RestHotelSearch extends TravelBaseActivity
     private CalendarPickerDialogV1 calendarDialog;
     private int DialogId = -1;
     private boolean isCheckin = false;
-    private boolean checkForSearchCriteraChanged;
-    private boolean searchCriteriaChanged;
     private LoaderManager lm;
     private boolean update = false;
 
@@ -192,10 +185,6 @@ public class RestHotelSearch extends TravelBaseActivity
             checkOutDate = (Calendar) savedInstanceState.getSerializable(CHECK_OUT_DATE);
             // Restore Cliqbook trip id.
             cliqbookTripId = savedInstanceState.getString(Const.EXTRA_TRAVEL_CLIQBOOK_TRIP_ID);
-            // Restore distance unit.
-            // currentDistanceUnit = SpinnerItem.findById(distanceUnits, savedInstanceState.getString(DISTANCE_UNIT));
-            // Restore distance value.
-            // currentDistanceAmount = SpinnerItem.findById(distanceItems, savedInstanceState.getString(DISTANCE_VALUE));
 
             // Restore with names containing field.
             if (withNamesContaining != null) {
@@ -207,10 +196,6 @@ public class RestHotelSearch extends TravelBaseActivity
 
             // book near me
             searchNearMe = savedInstanceState.getBoolean(BOOK_NEAR_ME);
-
-            if (checkForSearchCriteraChanged) {
-                searchCriteriaChanged = savedInstanceState.getBoolean("searchCriteriaChanged");
-            }
         }
     }
 
@@ -266,9 +251,6 @@ public class RestHotelSearch extends TravelBaseActivity
 
         outState.putBoolean(KEY_IS_CHECKIN, isCheckin);
         outState.putInt(KEY_DIALOG_ID, DialogId);
-        if (checkForSearchCriteraChanged) {
-            outState.putBoolean("searchCriteriaChanged", searchCriteriaChanged);
-        }
     }
 
     /*
@@ -559,9 +541,6 @@ public class RestHotelSearch extends TravelBaseActivity
                             && sysConfig.getCompanyLocations().size() > 0) {
                         locationSearchMode |= LocationSearchV1.SEARCH_COMPANY_LOCATIONS;
                     }
-                    if (checkForSearchCriteraChanged) {
-                        searchCriteriaChanged = true;
-                    }
                     Intent intent = new Intent(RestHotelSearch.this, LocationSearchV1.class);
                     intent.putExtra(Const.EXTRA_LOCATION_SEARCH_ALLOWED_MODES, locationSearchMode);
                     if(currentLocation != null) {
@@ -635,8 +614,6 @@ public class RestHotelSearch extends TravelBaseActivity
 
             } else if (resultCode == RESULT_CANCELED) {
                 // Hotel Search cancelled or did not go further with the booking
-                checkForSearchCriteraChanged = true;
-                searchCriteriaChanged = false;
             }
             break;
         }
@@ -764,6 +741,7 @@ public class RestHotelSearch extends TravelBaseActivity
                                 ((CompanyLocation) currentLocation).country });
             }
             intent.putExtra(Const.EXTRA_TRAVEL_HOTEL_SEARCH_LOCATION, formattedName);
+            intent.putExtra("searchNearCompanyLocation", true);
         } else {
             intent.putExtra(Const.EXTRA_TRAVEL_HOTEL_SEARCH_LOCATION, currentLocation.getName());
         }
@@ -818,10 +796,6 @@ public class RestHotelSearch extends TravelBaseActivity
             intent.putExtra("ruleViolationExplanationRequired", true);
         } else {
             intent.putExtra("ruleViolationExplanationRequired", false);
-        }
-
-        if (checkForSearchCriteraChanged) {
-            intent.putExtra("searchCriteriaChanged", searchCriteriaChanged);
         }
 
         intent.putExtra("currentTripId", cliqbookTripId);
@@ -1007,9 +981,6 @@ public class RestHotelSearch extends TravelBaseActivity
         @Override public void onDateSet(CalendarPicker view, int year, int monthOfYear, int dayOfMonth) {
             BookingDateUtil dateUtil = new BookingDateUtil();
             if (isCheckIn) {
-                if (checkForSearchCriteraChanged) {
-                    searchCriteriaChanged = true;
-                }
 
                 checkInDate.set(year, monthOfYear, dayOfMonth);
 
@@ -1029,9 +1000,6 @@ public class RestHotelSearch extends TravelBaseActivity
                 }
 
             } else {
-                if (checkForSearchCriteraChanged) {
-                    searchCriteriaChanged = true;
-                }
 
                 checkOutDate.set(year, monthOfYear, dayOfMonth);
 
