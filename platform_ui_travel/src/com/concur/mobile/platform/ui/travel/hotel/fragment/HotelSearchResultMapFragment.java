@@ -178,13 +178,15 @@ public class HotelSearchResultMapFragment extends PlatformFragmentV1
             @Override public boolean onMarkerClick(Marker marker) {
                 if (!progressbarVisible) {
                     itemClicked = markerMap.get(marker);
-                    marker.showInfoWindow();
+
                     View view = itemClicked.buildView(getActivity(), hotelInfoView, null);
                     view.setAlpha(1);
                     if (previousMarker != null) {
                         previousMarker.setIcon(BitmapDescriptorFactory.fromResource(R.drawable.map_pin_blue));
                     }
                     marker.setIcon(BitmapDescriptorFactory.fromResource(R.drawable.map_pin_red));
+                    marker.setVisible(true);
+                    marker.showInfoWindow();
                     previousMarker = marker;
                     return true;
                 } else {
@@ -206,9 +208,10 @@ public class HotelSearchResultMapFragment extends PlatformFragmentV1
             builder.include(position);
             markerMap.put(hotelMarker, item);
             if (firstMarker) {
-                hotelMarker.showInfoWindow();
                 item.buildView(getActivity(), hotelInfoView, null);
                 hotelMarker.setIcon(BitmapDescriptorFactory.fromResource(R.drawable.map_pin_red));
+                hotelMarker.setVisible(true);
+                hotelMarker.showInfoWindow();
                 firstMarker = false;
                 previousMarker = hotelMarker;
                 itemClicked = item;
@@ -226,10 +229,10 @@ public class HotelSearchResultMapFragment extends PlatformFragmentV1
 
     @Override public View getInfoWindow(Marker marker) {
         LayoutInflater inflater = null;
-        marker.setVisible(true);
         inflater = LayoutInflater.from(getActivity());
         View v = inflater.inflate(R.layout.empty_info_window, null);
         return v;
+
     }
 
     @Override public View getInfoContents(Marker marker) {

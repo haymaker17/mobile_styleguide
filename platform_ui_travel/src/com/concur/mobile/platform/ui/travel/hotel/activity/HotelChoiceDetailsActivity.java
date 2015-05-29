@@ -8,10 +8,7 @@ import android.os.Build;
 import android.os.Build.VERSION_CODES;
 import android.os.Bundle;
 import android.util.Log;
-import android.view.Menu;
-import android.view.MenuInflater;
-import android.view.MenuItem;
-import android.view.View;
+import android.view.*;
 import android.widget.Toast;
 import com.concur.mobile.platform.travel.search.hotel.Hotel;
 import com.concur.mobile.platform.travel.search.hotel.HotelRate;
@@ -80,7 +77,15 @@ public class HotelChoiceDetailsActivity extends TravelBaseActivity
     public void onWindowFocusChanged(boolean hasFocus) {
         super.onWindowFocusChanged(hasFocus);
 
-        if (hasFocus) {
+        if (hotelDetailsFrag != null && hotelDetailsFrag.mListView != null) {
+            hotelDetailsFrag.mListView.setViewsBounds(ParallaxScollView.ZOOM_X2);
+        }
+    }
+
+    @Override
+    public void onWindowAttributesChanged(WindowManager.LayoutParams attrs) {
+        super.onWindowAttributesChanged(attrs);
+        if (hotelDetailsFrag != null && hotelDetailsFrag.mListView != null) {
             hotelDetailsFrag.mListView.setViewsBounds(ParallaxScollView.ZOOM_X2);
         }
     }
@@ -88,23 +93,17 @@ public class HotelChoiceDetailsActivity extends TravelBaseActivity
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         if (item.getItemId() == R.id.map) {
-            // Toast.makeText(getApplicationContext(), "Not implemented", Toast.LENGTH_SHORT).show();
             if (hotel != null) {
 
                 onMapsClicked();
             } else {
-                Toast.makeText(getApplicationContext(), "Maps unavailable", Toast.LENGTH_SHORT).show();
+                Toast.makeText(getApplicationContext(), R.string.map_unavailable, Toast.LENGTH_SHORT).show();
             }
             return true;
         } else {
             return super.onOptionsItemSelected(item);
         }
     }
-
-    // private void onMapsClicked() {
-    // // TODO Auto-generated method stub
-    //
-    // }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -236,7 +235,7 @@ public class HotelChoiceDetailsActivity extends TravelBaseActivity
                 }
 
             } else {
-                Toast.makeText(this, "Map Unavailable", Toast.LENGTH_LONG).show();
+                Toast.makeText(this, R.string.map_unavailable, Toast.LENGTH_LONG).show();
             }
         }
 

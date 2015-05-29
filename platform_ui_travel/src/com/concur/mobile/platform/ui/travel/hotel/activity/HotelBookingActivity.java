@@ -12,12 +12,9 @@ import android.os.Handler;
 import android.os.Message;
 import android.text.TextUtils;
 import android.util.Log;
-import android.view.KeyEvent;
-import android.view.LayoutInflater;
-import android.view.View;
+import android.view.*;
 import android.view.View.OnClickListener;
 import android.view.ViewGroup.LayoutParams;
-import android.view.ViewStub;
 import android.widget.*;
 import com.concur.mobile.platform.common.SpinnerItem;
 import com.concur.mobile.platform.common.formfield.FormField;
@@ -268,8 +265,15 @@ public class HotelBookingActivity extends TravelBaseActivity implements SpinnerD
     public void onWindowFocusChanged(boolean hasFocus) {
         super.onWindowFocusChanged(hasFocus);
 
-        if (hasFocus && mListView != null) {
+        if (mListView != null) {
+            mListView.setViewsBounds(ParallaxScollView.ZOOM_X2);
+        }
+    }
 
+    @Override
+    public void onWindowAttributesChanged(WindowManager.LayoutParams attrs) {
+        super.onWindowAttributesChanged(attrs);
+        if (mListView != null) {
             mListView.setViewsBounds(ParallaxScollView.ZOOM_X2);
         }
     }

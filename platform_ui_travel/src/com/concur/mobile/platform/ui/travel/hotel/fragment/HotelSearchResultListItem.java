@@ -76,26 +76,28 @@ public class HotelSearchResultListItem extends ListItem implements Serializable 
         }
 
         // Set the vendor image, or hide it and set the vendor name.
+        ImageView thumbNailImg = (ImageView) hotelView.findViewById(R.id.hotel_image_id);
+        if (thumbNailImg != null) {
+            thumbNailImg.setVisibility(View.VISIBLE);
+        } else {
+            Log.e(Const.LOG_TAG, CLS_TAG + ".getView: can't locate image view!");
+        }
         if (hotel.imagePairs != null && hotel.imagePairs.size() > 0 && hotel.imagePairs.get(0).thumbnail != null) {
 
-            ImageView thumbNailImg = (ImageView) hotelView.findViewById(R.id.hotel_image_id);
-            if (thumbNailImg != null) {
-                thumbNailImg.setVisibility(View.VISIBLE);
-                // Set the list item tag to the uri, this tag value is used in 'ListItemAdapter.refreshView'
-                // to refresh the appropriate view items once images have been loaded.
-                URI uri = URI.create(hotel.imagePairs.get(0).thumbnail);
-                listItemTag = uri;
-                // Attempt to load the image from the image cache, if not there, then the
-                // ImageCache will load it asynchronously and this view will be updated via
-                // the ImageCache broadcast receiver available in BaseActivity.
-                ImageCache imgCache = ImageCache.getInstance(context);
-                Bitmap bitmap = imgCache.getBitmap(uri, null);
-                if (bitmap != null) {
-                    thumbNailImg.setImageBitmap(bitmap);
-                }
-            } else {
-                Log.e(Const.LOG_TAG, CLS_TAG + ".getView: can't locate image view!");
+            // Set the list item tag to the uri, this tag value is used in 'ListItemAdapter.refreshView'
+            // to refresh the appropriate view items once images have been loaded.
+            URI uri = URI.create(hotel.imagePairs.get(0).thumbnail);
+            listItemTag = uri;
+            // Attempt to load the image from the image cache, if not there, then the
+            // ImageCache will load it asynchronously and this view will be updated via
+            // the ImageCache broadcast receiver available in BaseActivity.
+            ImageCache imgCache = ImageCache.getInstance(context);
+            Bitmap bitmap = imgCache.getBitmap(uri, null);
+            if (bitmap != null) {
+                thumbNailImg.setImageBitmap(bitmap);
             }
+        } else {
+            thumbNailImg.setImageResource(R.drawable.hotel_results_default_image);
         }
 
         // Set the price with currency symbol
