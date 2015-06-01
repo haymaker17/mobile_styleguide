@@ -89,7 +89,7 @@ android.applicationVariants.all { variant ->
     // assign different version code for each output
     variant.outputs.each { output ->
 
-        if("Release" == System.getenv("VERSION_CODE")) {
+        if("Release" == System.getenv("art_package_type")) {
             println(">> Skipping versionCodeOverride: " + output);
         } else {
             int abiVersionCode = project.ext.versionCodes.get(output.getFilter(OutputFile.ABI)) ?: versionIndex
