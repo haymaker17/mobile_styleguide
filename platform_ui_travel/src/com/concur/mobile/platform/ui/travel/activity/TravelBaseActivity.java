@@ -155,10 +155,4 @@ public class TravelBaseActivity extends BaseActivity {
         });
         dlg.show();
     }
-
-    protected void showPriceToBeatHeader(int priceToBeatViewId, String priceToBeatToDisplay) {
-        TextView priceToBeatView = (TextView) findViewById(priceToBeatViewId);
-        priceToBeatView.setText(getText(R.string.price_to_beat_label) + " : " + priceToBeatToDisplay);
-    }
-
 }

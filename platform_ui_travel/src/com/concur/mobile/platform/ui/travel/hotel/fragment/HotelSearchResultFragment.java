@@ -30,7 +30,7 @@ public class HotelSearchResultFragment extends PlatformFragmentV1 {
 
     public boolean progressbarVisible;
     private ListView hotelListView;
-    private View mainView;
+    public View mainView;
 
     public ListView getHotelListView() {
         return hotelListView;

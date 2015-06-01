@@ -33,8 +33,8 @@ public class TravelUtilHotel {
      * @param resolver          contains a reference to a content resolver.
      * @param hotelSearchResult contains a list of <code>HotelSearchRESTResult</code> objects.
      */
-    @SuppressLint("SimpleDateFormat")
-    public static void insertHotelDetails(ContentResolver resolver, HotelSearchRESTResult hotelSearchResult) {
+    @SuppressLint("SimpleDateFormat") public static void insertHotelDetails(ContentResolver resolver,
+            HotelSearchRESTResult hotelSearchResult) {
 
         // Punt all Hotel Search Result information.
         // int rowsAffected = resolver.delete(Travel.HotelSearchResultColumns.CONTENT_URI, null, null);
@@ -805,5 +805,45 @@ public class TravelUtilHotel {
         benchmarksCollection.benchmarks = hotelBenchmarks;
 
         return benchmarksCollection;
+    }
+
+    /**
+     * Updates the Hotel Detail
+     *
+     * @param resolver
+     * @param hotelSearchResultId
+     * @param hotel
+     * @return
+     */
+    public static int updateHotelDetails(ContentResolver resolver, String hotelSearchResultId, String hotelDetailId, Hotel hotel) {
+        ContentValues values = new ContentValues();
+
+        StringBuilder strBldr = new StringBuilder();
+        strBldr.append(Travel.HotelDetailColumns.HOTEL_SEARCH_RESULT_ID + " =? and ");
+        strBldr.append(Travel.HotelDetailColumns._ID + " =?");
+        String where = strBldr.toString();
+
+        String[] whereArgs = { hotelSearchResultId, hotelDetailId };
+
+        ContentUtils.putValue(values, Travel.HotelDetailColumns.LOWEST_RATE, hotel.lowestRate);
+        if (hotel.priceToBeat != null) {
+            ContentUtils.putValue(values, Travel.HotelDetailColumns.PRICE_TO_BEAT, hotel.priceToBeat);
+        }
+        if (hotel.travelPointsForLowestRate != null) {
+            ContentUtils.putValue(values, Travel.HotelDetailColumns.TRAVEL_POINTS_FOR_LOWEST_RATE,
+                    hotel.travelPointsForLowestRate);
+        }
+        if (hotel.availabilityErrorCode != null) {
+            ContentUtils
+                    .putValue(values, Travel.HotelDetailColumns.AVAILABILITY_ERROR_CODE, hotel.availabilityErrorCode);
+        }
+        if (hotel.recommended != null) {
+            ContentUtils.putValue(values, Travel.HotelDetailColumns.SUGESTED_CATEGORY,
+                    hotel.recommended.getSuggestedCategory());
+            ContentUtils.putValue(values, Travel.HotelDetailColumns.SUGESTED_SCORE, hotel.recommended.totalScore);
+        }
+
+        return resolver.update(Travel.HotelDetailColumns.CONTENT_URI, values, where, whereArgs);
+
     }
 }

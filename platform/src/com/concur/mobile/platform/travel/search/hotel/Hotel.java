@@ -86,7 +86,7 @@ public class Hotel implements Serializable, HotelDAO {
             Travel.HotelDetailColumns.SUGESTED_SCORE, Travel.HotelDetailColumns.STAR_RATING,
             Travel.HotelDetailColumns.THUMBNAIL_URL, Travel.HotelDetailColumns.AVAILABILITY_ERROR_CODE,
             Travel.HotelDetailColumns.LAT, Travel.HotelDetailColumns.LON, Travel.HotelDetailColumns.RATES_URL,
-            Travel.HotelDetailColumns.HOTEL_SEARCH_RESULT_ID, Travel.HotelDetailColumns.TRAVEL_POINTS_FOR_LOWEST_RATE };
+            Travel.HotelDetailColumns.HOTEL_SEARCH_RESULT_ID, Travel.HotelDetailColumns.TRAVEL_POINTS_FOR_LOWEST_RATE, Travel.HotelDetailColumns.PRICE_TO_BEAT };
 
     // ,
     // Travel.HotelImagePairColumns.THUMBNAIL_URL, Travel.HotelImagePairColumns.IMAGE_URL,
@@ -171,6 +171,7 @@ public class Hotel implements Serializable, HotelDAO {
         distanceUnit = CursorUtil.getStringValue(cursor, Travel.HotelDetailColumns.DISTANCE_UNIT);
 
         lowestRate = CursorUtil.getDoubleValue(cursor, Travel.HotelDetailColumns.LOWEST_RATE);
+        priceToBeat = CursorUtil.getDoubleValue(cursor, Travel.HotelDetailColumns.PRICE_TO_BEAT);
         travelPointsForLowestRate = CursorUtil
                 .getIntValue(cursor, Travel.HotelDetailColumns.TRAVEL_POINTS_FOR_LOWEST_RATE);
         currencyCode = CursorUtil.getStringValue(cursor, Travel.HotelDetailColumns.CURRENCY_CODE);

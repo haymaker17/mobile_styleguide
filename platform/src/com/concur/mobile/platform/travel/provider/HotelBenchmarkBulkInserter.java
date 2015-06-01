@@ -64,7 +64,7 @@ public class HotelBenchmarkBulkInserter implements BulkInserter {
                         Travel.HotelBenchmarkColumns.LOCATION_NAME);
                 ContentUtils.bindSqlStatementValues(sqlStmt, ContentUtils.StatementBindTypeEnum.STRING, 3, values,
                         Travel.HotelBenchmarkColumns.CRN_CODE);
-                ContentUtils.bindSqlStatementValues(sqlStmt, ContentUtils.StatementBindTypeEnum.DOUBLE, 3, values,
+                ContentUtils.bindSqlStatementValues(sqlStmt, ContentUtils.StatementBindTypeEnum.DOUBLE, 4, values,
                         Travel.HotelBenchmarkColumns.PRICE);
                 ContentUtils.bindSqlStatementValues(sqlStmt, ContentUtils.StatementBindTypeEnum.STRING, 5, values,
                         Travel.HotelBenchmarkColumns.SUB_DIV_CODE);

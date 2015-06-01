@@ -50,13 +50,11 @@ public class HotelRatesLoader extends PlatformAsyncTaskLoader<HotelRatesRESTResu
         this.hotelSearchId = hotelSearchId;
     }
 
-    @Override
-    protected String getServiceEndPoint() {
+    @Override protected String getServiceEndPoint() {
         return ratesURL;
     }
 
-    @Override
-    protected void configureConnection(HttpURLConnection connection) {
+    @Override protected void configureConnection(HttpURLConnection connection) {
 
         super.configureConnection(connection);
         // Set the access token.
@@ -72,8 +70,7 @@ public class HotelRatesLoader extends PlatformAsyncTaskLoader<HotelRatesRESTResu
      * parse inputStream
      * 
      */
-    @Override
-    protected HotelRatesRESTResult parseStream(InputStream is) {
+    @Override protected HotelRatesRESTResult parseStream(InputStream is) {
         int result = BaseAsyncRequestTask.RESULT_OK;
         hotelRateResult = null;
         try {
@@ -103,6 +100,11 @@ public class HotelRatesLoader extends PlatformAsyncTaskLoader<HotelRatesRESTResu
                             // insert rates
                             TravelUtilHotel.bulkInsertHotelRateDetail(getContext().getContentResolver(), (int) hotelId,
                                     hotel.rates);
+
+                            // Update hotel detail with data such as lowestRate, priceToBeat, availabilityErrorCode, travelPointsForLowestRate
+                            TravelUtilHotel
+                                    .updateHotelDetails(getContext().getContentResolver(), Long.toString(hotelSearchId),
+                                            Long.toString(hotelId), hotel);
 
                         } else {
                             Log.d(Const.LOG_TAG, "\n\n\n ****** hotelRateResult is null");

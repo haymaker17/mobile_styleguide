@@ -13,6 +13,7 @@ import android.view.KeyEvent;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemClickListener;
+import android.widget.TextView;
 import android.widget.Toast;
 import com.concur.mobile.platform.common.SpinnerItem;
 import com.concur.mobile.platform.service.PlatformAsyncTaskLoader;
@@ -105,6 +106,8 @@ public class HotelSearchAndResultActivity extends TravelBaseActivity
     private String starRating;
     private Double distance;
     private String nameContaining;
+    private boolean callFromDB;
+    private int listItemSelectedPosition = -1;
 
     // HotelSearchResults loader callback implementation
     private LoaderManager.LoaderCallbacks<HotelSearchRESTResult> hotelSearchRESTResultLoaderCallbacks = new LoaderManager.LoaderCallbacks<HotelSearchRESTResult>() {
@@ -284,11 +287,17 @@ public class HotelSearchAndResultActivity extends TravelBaseActivity
 
                 if (selectedHotelListItem != null && selectedHotelListItem.getHotel() != null) {
                     selectedHotelListItem.getHotel().rates = hotel.rates;
+                    selectedHotelListItem.getHotel().lowestRate = hotel.lowestRate;
+                    selectedHotelListItem.getHotel().priceToBeat = hotel.priceToBeat;
+                    selectedHotelListItem.getHotel().availabilityErrorCode = hotel.availabilityErrorCode;
+                    selectedHotelListItem.getHotel().travelPointsForLowestRate = hotel.travelPointsForLowestRate;
                     updatedViolations = hotelRateResult.violations;
+                    callFromDB = true;
                     viewHotelChoiceDetails();
                 }
 
             } else {
+                callFromDB = false;
                 Toast.makeText(getApplicationContext(), "No Rooms Available", Toast.LENGTH_LONG).show();
             }
             // TODO add GA event for booking
@@ -358,6 +367,14 @@ public class HotelSearchAndResultActivity extends TravelBaseActivity
         searchNearCompanyLocation = intent.getBooleanExtra("searchNearCompanyLocation", false);
         initSortOptions();
 
+    }
+
+    @Override public void onResume() {
+        super.onResume();
+        if (callFromDB) {
+            hotelSearchRESTResultFrag.showProgressBar(false);
+            populateHotelListItemsFromDB();
+        }
     }
 
     @Override public void fragmentReady() {
@@ -918,12 +935,18 @@ public class HotelSearchAndResultActivity extends TravelBaseActivity
         updateResultsFragmentUI(hotelListItemsToSort, null);
 
         hotelSearchRESTResultFrag.getHotelListView().setAlpha(1);
+        if(callFromDB && listItemSelectedPosition != -1) {
+            // show the list item at the center of the list view
+            int h1 = hotelSearchRESTResultFrag.getHotelListView().getHeight();
+            hotelSearchRESTResultFrag.getHotelListView().setSelectionFromTop(listItemSelectedPosition, h1/2);// - h2/2);
+        }
         hotelSearchRESTResultFrag.showSortAndFilterIconsInFooter();
 
         if (hotelSearchRESTResultFrag.getHotelListView() != null) {
             hotelSearchRESTResultFrag.getHotelListView().setOnItemClickListener(new OnItemClickListener() {
 
                 @Override public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                    listItemSelectedPosition = position;
                     hotelListItemClicked((HotelSearchResultListItem) parent.getItemAtPosition(position));
                 }
             });
@@ -949,7 +972,7 @@ public class HotelSearchAndResultActivity extends TravelBaseActivity
                 Double maxPriceToBeatValue = Collections.max(priceToBeatValues);
                 priceToBeatValue = Collections.min(priceToBeatValues);
                 String formattedMinBenchmarkPrice = null;
-                View priceToBeatView = findViewById(R.id.priceToBeatView);
+                View priceToBeatView = hotelSearchRESTResultFrag.mainView.findViewById(R.id.priceToBeatView);
                 priceToBeatView.setVisibility(View.VISIBLE);
                 final String priceToBeatRangeText;
                 if (priceToBeatValue == maxPriceToBeatValue) {
@@ -969,7 +992,8 @@ public class HotelSearchAndResultActivity extends TravelBaseActivity
                     priceToBeatRangeText = Format.localizeText(this, R.string.price_to_beat_range,
                             new Object[] { formattedMinBenchmarkPrice, formattedMaxBenchmarkPrice });
                 }
-                showPriceToBeatHeader(R.id.priceToBeatText, priceToBeatRangeText);
+                ((TextView) (priceToBeatView.findViewById(R.id.priceToBeatText)))
+                        .setText(getText(R.string.price_to_beat_label) + " : " + priceToBeatRangeText);
                 // init the onclick event
                 priceToBeatView.setOnClickListener(new View.OnClickListener() {
 
