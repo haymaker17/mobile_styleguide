@@ -44,7 +44,7 @@
                 android:background="@drawable/square_no_border"
                 android:hint="@string/sso_sign_in_hint_text"
                 android:imeOptions="actionGo"
-                android:inputType="textEmailAddress"
+                android:inputType="textEmailAddress|textAutoComplete|textAutoCorrect|textNoSuggestions|textFilter|textVisiblePassword"
                 android:maxLines="1"
                 android:padding="10dp"
                 android:textAppearance="@style/PrimaryText" />
