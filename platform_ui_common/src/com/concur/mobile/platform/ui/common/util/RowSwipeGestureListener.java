@@ -74,13 +74,14 @@ public abstract class RowSwipeGestureListener<T> extends GestureDetector.SimpleO
 
     @Override public boolean onSingleTapUp(MotionEvent e) {
         /** absolute position of the element taped in the list */
-        final int position = getDataIndex(listView.pointToPosition(Math.round(e.getX()), Math.round(e.getY())));
+        final int dataPosition = listView.pointToPosition(Math.round(e.getX()), Math.round(e.getY()));
+        final int viewPosition = getViewIndex(dataPosition);
         /** taped element's view */
-        final SwipeableRowView rowView = (SwipeableRowView) getChildAt(listView, position);
+        final SwipeableRowView rowView = (SwipeableRowView) getChildAt(listView, viewPosition);
 
         if (rowView != null) {
             /** taped element's data */
-            final T row = (T) listView.getItemAtPosition(position);
+            final T row = (T) listView.getItemAtPosition(dataPosition);
             final int swipeMaxRange = rowView.getMaxRange();
             if (rowView.getXPos() != 0 && (!slideToLeft && e.getRawX() < swipeMaxRange || slideToLeft && e.getRawX() > (
                     rowView.getWidth() - swipeMaxRange))) {
@@ -99,18 +100,20 @@ public abstract class RowSwipeGestureListener<T> extends GestureDetector.SimpleO
         Log.d(CLS_TAG, "Gesture action: FLING");
         boolean hasXSwipe = false;
         if (e1 != null && e2 != null) {
-            /** absolute position of the element taped in the list
-             * we use e2 as the vertical swipe event from the listview already happened */
-            final int positionDown = getDataIndex(
-                    listView.pointToPosition(Math.round(e1.getX()), Math.round(e1.getY())));
-            final int positionUp = getDataIndex(listView.pointToPosition(Math.round(e2.getX()), Math.round(e2.getY())));
-            // --- Those are the positions before render while onFling is thrown after, so we have to translate
-            final int position = positionDown - (positionDown - positionUp);
+            /** Positions before swipe event */
+            final int dataPositionDown = listView.pointToPosition(Math.round(e1.getX()), Math.round(e1.getY()));
+            final int viewPositionDown = getViewIndex(dataPositionDown);
+            final int viewPositionUp = getViewIndex(
+                    listView.pointToPosition(Math.round(e2.getX()), Math.round(e2.getY())));
+
+            /** Positions after swipe event (onFling is thrown after) */
+            final int viewPosition = viewPositionDown - (viewPositionDown - viewPositionUp);
+            final int dataPosition = dataPositionDown - (viewPositionDown - viewPositionUp);
 
             /** taped element's view */
-            final SwipeableRowView rowView = (SwipeableRowView) getChildAt(listView, position);
+            final SwipeableRowView rowView = (SwipeableRowView) getChildAt(listView, viewPosition);
             /** taped element's data */
-            final T row = (T) listView.getItemAtPosition(position);
+            final T row = (T) listView.getItemAtPosition(dataPosition);
             if (rowView != null && isRowSwipeable(row)) {
                 /** position of the row on device's screen in pixels */
                 final int xPos = ((Float) rowView.getXPos()).intValue();
@@ -150,16 +153,16 @@ public abstract class RowSwipeGestureListener<T> extends GestureDetector.SimpleO
     }
 
     /**
-     * Translate a relative row position (display) to an absolute position (data)
+     * Translate an absolute position (data) to a relative position (view)
      *
-     * @param viewIndex
-     * @return dataIndex
+     * @param dataIndex
+     * @return viewIndex
      */
-    private int getDataIndex(int viewIndex) {
+    private int getViewIndex(int dataIndex) {
         /** id of the first row displayed */
         final int firstPosition = listView.getFirstVisiblePosition() - listView.getHeaderViewsCount();
         // --- translated value of the position we want
-        return viewIndex - firstPosition;
+        return dataIndex - firstPosition;
     }
 
     /**
