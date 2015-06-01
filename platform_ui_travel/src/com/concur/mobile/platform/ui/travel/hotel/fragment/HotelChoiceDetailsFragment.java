@@ -161,6 +161,7 @@ public class HotelChoiceDetailsFragment extends PlatformFragmentV1 implements On
     public void onResume() {
         // TODO Auto-generated method stub
         super.onResume();
+        mListView.requestFocus();
 
         // if (retainer.contains(STATE_HOTEL_LIST_ITEMS_KEY)) {
         // hotelListItems = (List<HotelSearchResultListItem>) retainer.get(STATE_HOTEL_LIST_ITEMS_KEY);
@@ -265,6 +266,7 @@ public class HotelChoiceDetailsFragment extends PlatformFragmentV1 implements On
                 bitmap = imgCache.getBitmapFromCache(uri);
                 if (bitmap == null) {
                     new LoaderImageView(getActivity(), Url, mImageView, uri);
+                    mListView.requestFocus();
 
                 } else {
                     mImageView.setImageBitmap(bitmap);

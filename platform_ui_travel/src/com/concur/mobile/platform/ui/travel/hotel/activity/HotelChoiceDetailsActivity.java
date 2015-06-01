@@ -8,7 +8,10 @@ import android.os.Build;
 import android.os.Build.VERSION_CODES;
 import android.os.Bundle;
 import android.util.Log;
-import android.view.*;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
+import android.view.View;
 import android.widget.Toast;
 import com.concur.mobile.platform.travel.search.hotel.Hotel;
 import com.concur.mobile.platform.travel.search.hotel.HotelRate;
@@ -77,15 +80,7 @@ public class HotelChoiceDetailsActivity extends TravelBaseActivity
     public void onWindowFocusChanged(boolean hasFocus) {
         super.onWindowFocusChanged(hasFocus);
 
-        if (hotelDetailsFrag != null && hotelDetailsFrag.mListView != null) {
-            hotelDetailsFrag.mListView.setViewsBounds(ParallaxScollView.ZOOM_X2);
-        }
-    }
-
-    @Override
-    public void onWindowAttributesChanged(WindowManager.LayoutParams attrs) {
-        super.onWindowAttributesChanged(attrs);
-        if (hotelDetailsFrag != null && hotelDetailsFrag.mListView != null) {
+        if (hasFocus && hotelDetailsFrag != null && hotelDetailsFrag.mListView != null) {
             hotelDetailsFrag.mListView.setViewsBounds(ParallaxScollView.ZOOM_X2);
         }
     }

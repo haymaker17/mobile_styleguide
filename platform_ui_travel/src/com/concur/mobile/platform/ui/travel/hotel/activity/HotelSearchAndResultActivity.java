@@ -827,6 +827,9 @@ public class HotelSearchAndResultActivity extends TravelBaseActivity
                     }
                 } else {
                     Toast.makeText(getApplicationContext(), R.string.no_rooms, Toast.LENGTH_LONG).show();
+                    if (mapFragment != null) {
+                        mapFragment.hideProgressBar();
+                    }
 
                 }
 
