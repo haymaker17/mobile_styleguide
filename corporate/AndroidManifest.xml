@@ -188,21 +188,26 @@
         <activity
             android:name="com.concur.mobile.core.travel.hotel.activity.RestHotelSearch"
             android:theme="@style/ConcurRestTheme.White.ActionBarTabs"
+            android:screenOrientation="portrait"
             android:windowSoftInputMode="adjustResize"/>
         <activity
             android:name="com.concur.mobile.platform.ui.travel.hotel.activity.HotelSearchAndResultActivity"
+            android:screenOrientation="portrait"
             android:theme="@style/ConcurRestTheme.White.ActionBarTabs"/>
         <activity
             android:name="com.concur.mobile.platform.ui.travel.hotel.activity.HotelChoiceDetailsActivity"
+            android:screenOrientation="portrait"
             android:theme="@style/ConcurRestTheme.White.ActionBarTabs"/>
         <activity
             android:name="com.concur.mobile.platform.ui.travel.hotel.activity.HotelBookingActivity"
+            android:screenOrientation="portrait"
             android:theme="@style/ConcurRestTheme.White.ActionBarTabs"/>
         <activity
             android:name="com.concur.mobile.platform.ui.travel.hotel.activity.ImageDetailActivity"
             android:theme="@style/ConcurRestTheme.White.ActionBarTabs"/>
         <activity
             android:name="com.concur.mobile.platform.ui.travel.hotel.activity.HotelVoiceSearchActivity"
+            android:screenOrientation="portrait"
             android:theme="@style/ConcurRestTheme.White.ActionBarTabs"/>
         <activity
             android:name="com.concur.mobile.core.travel.hotel.activity.HotelSearchResults"
