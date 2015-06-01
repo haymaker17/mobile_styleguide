@@ -99,8 +99,14 @@ public abstract class RowSwipeGestureListener<T> extends GestureDetector.SimpleO
         Log.d(CLS_TAG, "Gesture action: FLING");
         boolean hasXSwipe = false;
         if (e1 != null && e2 != null) {
-            /** absolute position of the element taped in the list */
-            final int position = getDataIndex(listView.pointToPosition(Math.round(e1.getX()), Math.round(e1.getY())));
+            /** absolute position of the element taped in the list
+             * we use e2 as the vertical swipe event from the listview already happened */
+            final int positionDown = getDataIndex(
+                    listView.pointToPosition(Math.round(e1.getX()), Math.round(e1.getY())));
+            final int positionUp = getDataIndex(listView.pointToPosition(Math.round(e2.getX()), Math.round(e2.getY())));
+            // --- Those are the positions before render while onFling is thrown after, so we have to translate
+            final int position = positionDown - (positionDown - positionUp);
+
             /** taped element's view */
             final SwipeableRowView rowView = (SwipeableRowView) getChildAt(listView, position);
             /** taped element's data */

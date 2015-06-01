@@ -5,6 +5,7 @@ import android.content.res.Resources;
 import android.os.Bundle;
 import android.os.Handler;
 import android.support.v4.app.NavUtils;
+import android.support.v4.widget.SwipeRefreshLayout;
 import android.util.Log;
 import android.view.GestureDetector;
 import android.view.MenuItem;
@@ -34,14 +35,14 @@ import com.concur.mobile.platform.request.groupConfiguration.RequestGroupConfigu
 import com.concur.mobile.platform.request.util.RequestParser;
 import com.concur.mobile.platform.ui.common.dialog.NoConnectivityDialogFragment;
 import com.concur.mobile.platform.ui.common.util.RowSwipeGestureListener;
-import com.melnykov.fab.FloatingActionButton;
+import com.getbase.floatingactionbutton.AddFloatingActionButton;
 
 import java.util.*;
 
 /**
  * @author olivierb
  */
-public class RequestListActivity extends BaseActivity {
+public class RequestListActivity extends BaseActivity implements SwipeRefreshLayout.OnRefreshListener {
 
     public static final String KEY_SEARCHED_STATUS = "searchedStatus";
     public static final String REQUEST_ID = "requestId";
@@ -56,18 +57,16 @@ public class RequestListActivity extends BaseActivity {
     private static final int HEADER_RESULT = 2;
     private static boolean HAS_CONFIGURATION = false;
 
-    private final RequestParser requestParser = new RequestParser();
-
-    protected Boolean showCodes;
     protected int category;
-    protected int minSearchLength = 1;
 
+    private final RequestParser requestParser = new RequestParser();
     private RequestStatus searchedStatus = RequestStatus.PENDING_EBOOKING;
 
     private ListView requestListView;
-    private FloatingActionButton newRequestButton;
+    private AddFloatingActionButton newRequestButton;
     private ViewFlipper requestListVF;
     private TextView newRequestText;
+    private SwipeRefreshLayout swipeLayout;
 
     private BaseAsyncResultReceiver asyncTRListReceiver;
     private BaseAsyncResultReceiver asyncFormFieldsReceiver;
@@ -120,13 +119,13 @@ public class RequestListActivity extends BaseActivity {
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         // Get components references
         requestListView = ((ListView) findViewById(R.id.requestListView));
+        swipeLayout = (SwipeRefreshLayout) findViewById(R.id.swipe_refresh_layout);
         requestListVF = ((ViewFlipper) findViewById(R.id.requestListVF));
-        newRequestButton = ((FloatingActionButton) findViewById(R.id.newRequestButton));
+        newRequestButton = ((AddFloatingActionButton) findViewById(R.id.newRequestButton));
         newRequestText = ((TextView) findViewById(R.id.textNewRequest));
         setView(ID_EMPTY_VIEW);
 
-        /** Adapter + Swipe implementation */
-
+        /** Horizontal Swipe implementation */
         // --- Create a gesture detector
         final GestureDetector gestureDetector = new GestureDetector(this,
                 new RowSwipeGestureListener<RequestDTO>(requestListView, REQUEST_LIST_SWIPE_TO_LEFT) {
@@ -181,6 +180,10 @@ public class RequestListActivity extends BaseActivity {
 
         // --- Apply an adapter using SwipeableRowView(s)
         requestListView.setAdapter(new SortedRequestListAdapter(this.getBaseContext(), null));
+
+        // Set up the swipe to refresh.
+        swipeLayout.setOnRefreshListener(this);
+        //swipeLayout.setColorSchemeResources(R.color.MaterialConcurBlue);
 
         // Set the expense header navigation bar information.
         try {
@@ -321,6 +324,7 @@ public class RequestListActivity extends BaseActivity {
             setView(ID_LIST_VIEW);
             ((SortedRequestListAdapter) requestListView.getAdapter()).updateList(listRequests);
         }
+        swipeLayout.setRefreshing(false);
     }
 
     /**
@@ -434,6 +438,16 @@ public class RequestListActivity extends BaseActivity {
 
     private void cleanupReceivers() {
         asyncFormFieldsReceiver.setListener(null);
+    }
+
+    @Override public void onRefresh() {
+        // If we are offline, show a toast and dismiss the refresh spinner.
+        if (!ConcurCore.isConnected()) {
+            swipeLayout.setRefreshing(false);
+            new NoConnectivityDialogFragment().show(getSupportFragmentManager(), CLS_TAG);
+        } else {
+            refreshData(true);
+        }
     }
 
     /**
