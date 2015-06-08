@@ -48,7 +48,7 @@ public class RequestTask extends AbstractRequestWSCallTask {
     private ConnectHelper.Module module = ConnectHelper.Module.REQUEST;
     private ConnectHelper.Action action;
     private HttpRequestType requestType = HttpRequestType.GET;
-    private String postBody = "";
+    private String postBody = null;
 
     /**
      * Full parameterized constructor
@@ -122,33 +122,44 @@ public class RequestTask extends AbstractRequestWSCallTask {
         }
     }
 
-    public void addUrlParameter(String key, String value) {
+    public RequestTask addUrlParameter(String key, String value) {
         params.put(key, value);
+        return this;
     }
 
-    public void setPostBody(String postBody) {
+    public RequestTask setPostBody(String postBody) {
         // --- null won't work as a value if it really is a POST, things are made to work with "" in this case.
         this.postBody = postBody != null ? postBody : (requestType == HttpRequestType.POST ? "" : null);
+        return this;
     }
 
-    public void setHttpRequestType(HttpRequestType requestType) {
-        this.requestType = requestType;
-    }
-
-    public void setVersion(ConnectHelper.ConnectVersion version) {
-        this.version = version;
-    }
-
-    public void setModule(ConnectHelper.Module module) {
-        this.module = module;
-    }
-
-    public void setAction(ConnectHelper.Action action) {
+    public RequestTask setAction(ConnectHelper.Action action) {
         this.action = action;
-        if (action == ConnectHelper.Action.UPDATE) {
+        switch (action) {
+
+        case LIST:
+        case DETAIL:
+            postBody = null;
+            requestType = HttpRequestType.GET;
+            break;
+
+        case UPDATE:
+            postBody = "";
             requestType = HttpRequestType.PUT;
-        } else if (action == ConnectHelper.Action.CREATE) {
+            break;
+
+        case CREATE:
+        default:
+            // --- any custom action not specifically defined will be considered as a POST action
+            postBody = "";
             requestType = HttpRequestType.POST;
+            break;
         }
+        return this;
+    }
+
+    public RequestTask addResultData(String name, String value) {
+        resultData.putString(name, value);
+        return this;
     }
 }

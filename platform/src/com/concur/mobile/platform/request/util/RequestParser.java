@@ -39,7 +39,8 @@ public class RequestParser {
      */
     public enum PermittedAction {
         SAVE("save"),
-        SUBMIT("submit");
+        SUBMIT("submit"),
+        RECALL("recall");
 
         private String action;
 

@@ -39,9 +39,8 @@ public class ConnectHelper {
     public enum Action {
         LIST(null),
         DETAIL(null),
-        FORM_FIELDS_HEADER(null),
-        FORM_FIELDS_SEGMENT(null),
         SUBMIT("submit"),
+        RECALL("recall"),
         CREATE(null),
         UPDATE(null);
 

@@ -208,6 +208,14 @@ public class RequestDTO implements FormDTO {
         this.policyId = policyId;
     }
 
+    public String getHighestExceptionLevel() {
+        return highestExceptionLevel;
+    }
+
+    public void setHighestExceptionLevel(String highestExceptionLevel) {
+        this.highestExceptionLevel = highestExceptionLevel;
+    }
+
     public boolean isActionPermitted(RequestParser.PermittedAction action) {
         if (this.permissionsLink != null && this.permissionsLink.getPermissions() != null) {
             final List<UserPermission> userPermissions = this.permissionsLink.getPermissions();
