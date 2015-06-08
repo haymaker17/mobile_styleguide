@@ -684,6 +684,7 @@
     <string name="travel_request_confirm_approve_msg">Are you sure you want to approve this Request?</string>
     <string name="no_expected_expenses_msg">No Expected Expenses</string>
     <string name="travel_request_title">Requests</string>
+    <string name="travel_request_header_title">New Request</string>
     <string name="travel_request_sub_title">Manage your authorizations</string>
     <string name="travel_request_approvals_title">Request Approvals</string>
     <string name="home_row_tr_approvals_sub_some">%%0!number%% requests to approve</string>
