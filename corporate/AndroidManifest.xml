@@ -210,6 +210,10 @@
             android:screenOrientation="portrait"
             android:theme="@style/ConcurRestTheme.White.ActionBarTabs"/>
         <activity
+            android:name="com.concur.mobile.core.travel.hotel.activity.ShowHotelItinerary"
+            android:theme="@style/ConcurRestTheme.White.ActionBarTabs"/>
+
+        <activity
             android:name="com.concur.mobile.core.travel.hotel.activity.HotelSearchResults"
             android:screenOrientation="portrait"/>
         <activity android:name="com.concur.mobile.core.travel.hotel.activity.HotelSearchRooms"/>
@@ -552,7 +556,7 @@
         <!-- Google Maps V2 -->
         <meta-data
             android:name="com.google.android.maps.v2.API_KEY"
-            android:value="AIzaSyAyYSgq0kUZCoHbyu41wsP23nnn-K063aM"/>
+            android:value="AIzaSyAWtEGpvM50-W7Oho_IsFmS-vmL0skZGek"/>
 
         <!-- ================== -->
         <!-- Begin Google DFP -->
