@@ -100,12 +100,12 @@
     <string name="hotel_search_results_filter_star_rating_4">4+</string>
     <string name="hotel_search_results_filter_star_rating_5">5</string>
     <string name="hotel_search_results_filter_distance_label">DISTANCE</string>
-    <string name="hotel_search_results_filter_distance_5miles">5 miles</string>
-    <string name="hotel_search_results_filter_distance_15miles">15 miles</string>
-    <string name="hotel_search_results_filter_distance_25miles">25 miles</string>
-    <string name="hotel_search_results_filter_distance_5km">5 km</string>
-    <string name="hotel_search_results_filter_distance_15km">15 km</string>
-    <string name="hotel_search_results_filter_distance_25km">25 km</string>
+    <string name="hotel_search_results_filter_distance_5miles">5\nmiles</string>
+    <string name="hotel_search_results_filter_distance_15miles">15\nmiles</string>
+    <string name="hotel_search_results_filter_distance_25miles">25\nmiles</string>
+    <string name="hotel_search_results_filter_distance_5km">5\nkm</string>
+    <string name="hotel_search_results_filter_distance_15km">15\nkm</string>
+    <string name="hotel_search_results_filter_distance_25km">25\nkm</string>
     <string name="hotel_search_results_filter_name_containing_label">WITH NAME CONTAINING</string>
     <string name="hotel_search_results_filter_name_containing_hint">Search by hotel name i.e. Westin</string>
     <!-- end of hotel search results filter screen -->
