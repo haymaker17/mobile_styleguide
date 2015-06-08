@@ -63,18 +63,15 @@ public class SplitRequestListAdapter extends AbstractGenericAdapter<RequestDTO> 
         updateList(itemList);
     }
 
-    @Override
-    public int getItemViewType(int position) {
+    @Override public int getItemViewType(int position) {
         return (sectionHeaders.get(position) != null) ? TYPE_HEADER : TYPE_ITEM;
     }
 
-    @Override
-    public int getViewTypeCount() {
+    @Override public int getViewTypeCount() {
         return 2;
     }
 
-    @Override
-    public void updateList(List<RequestDTO> objList) {
+    @Override public void updateList(List<RequestDTO> objList) {
         clearListItems();
         final List<RequestDTO> approvedRequests = objList;
         final List<RequestDTO> activeRequests = new ArrayList<RequestDTO>();
@@ -128,8 +125,7 @@ public class SplitRequestListAdapter extends AbstractGenericAdapter<RequestDTO> 
         }
     }
 
-    @SuppressLint("InflateParams") @Override
-    public View getView(int position, View convertView, ViewGroup parent) {
+    @SuppressLint("InflateParams") @Override public View getView(int position, View convertView, ViewGroup parent) {
         ViewGroup row = (ViewGroup) convertView;
         final boolean isHeader = getItemViewType(position) == TYPE_HEADER;
 
@@ -149,14 +145,14 @@ public class SplitRequestListAdapter extends AbstractGenericAdapter<RequestDTO> 
 
             final TextView id = (TextView) row.findViewById(R.id.requestRowId);
             final TextView name = (TextView) row.findViewById(R.id.requestRowName);
-            final TextView segmentTypes = (TextView) row.findViewById(R.id.requestSegmentTypes);
+            //final TextView segmentTypes = (TextView) row.findViewById(R.id.requestSegmentTypes);
             final TextView amount = (TextView) row.findViewById(R.id.requestRowAmount);
             final TextView status = (TextView) row.findViewById(R.id.requestStatus);
             final TextView startDate = (TextView) row.findViewById(R.id.requestStartDate);
 
             id.setText(request.getId());
             name.setText(request.getName());
-            segmentTypes.setText(request.getSegmentListString());
+            //segmentTypes.setText(request.getSegmentListString());
 
             final String formattedAmount = FormatUtil
                     .formatAmount((request.getTotal() != null ? request.getTotal() : 0d),
