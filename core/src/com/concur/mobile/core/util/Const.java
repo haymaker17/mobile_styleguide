@@ -322,6 +322,9 @@ public final class Const {
     // Show Price-to-Beat generator flag
     public static final String MOBILE_SHOW_P2B_GENERATOR = "ShowP2BGenerator";
 
+    // Show Jarvis Hotel UI
+    public static final String SHOW_JARVIS_HOTEL_UI = "ShowHotelJarvisUIOnAndroid";
+
     // The default ip/port for the MWS.
     public static final String BREEZE_WEB_ADDRESS = "https://www.concurbreeze.com/login";
     // public static final String DEFAULT_MWS_ADDRESS = "www.concursolutions.com";
@@ -706,6 +709,7 @@ public final class Const {
     public static final String LR_PERMISSIONS_TR = "permissions.tr";
     public static final String LR_PERMISSIONS_TR_USER = "permissions.tr.user";
     public static final String LR_PERMISSIONS_TR_APPROVER = "permissions.tr.approver";
+    public static final String LR_SITE_SETTINGS_SHOW_JARVIS_HOTEL_UI = "site.settings.showhoteljarvisui";
 
     // Register response map constants
     public static final String RR_STATUS = "status";

@@ -10,6 +10,7 @@ import java.util.TimeZone;
 import java.util.TreeMap;
 import java.util.TreeSet;
 
+import com.concur.mobile.core.travel.hotel.activity.RestHotelSearch;
 import org.apache.http.HttpStatus;
 
 import android.app.AlertDialog;
@@ -2596,7 +2597,14 @@ public class SegmentList extends BaseActivity {
      *            the suggestion selected by the end-user.
      */
     protected void searchHotel(SearchSuggestion suggestion) {
-        Intent intent = new Intent(this, HotelSearch.class);
+        Intent intent = null;
+
+        if (Preferences.shouldShowHotelJarvisUI()) {
+            intent = new Intent(this, RestHotelSearch.class);
+        } else {
+            intent = new Intent(this, HotelSearch.class);
+        }
+
         intent.putExtra(Flurry.PARAM_NAME_BOOKED_FROM, Flurry.PARAM_VALUE_TRIPS);
         // Add the Cliqbook trip id.
         intent.putExtra(Const.EXTRA_TRAVEL_CLIQBOOK_TRIP_ID, trip.cliqbookTripId);

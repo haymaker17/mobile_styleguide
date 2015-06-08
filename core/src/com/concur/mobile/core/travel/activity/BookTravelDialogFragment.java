@@ -46,11 +46,6 @@ public class BookTravelDialogFragment extends DialogFragment {
     private static final String CLS_TAG = BookTravelDialogFragment.class.getSimpleName();
 
     /**
-     * Flag to switch on or off new hotel booking screens
-     */
-    protected static final Boolean USE_NEW_HOTEL_SCREENS = true; // default to false
-
-    /**
      * An enumeration describing an booking action.
      * 
      * @author Chris N. Diaz
@@ -376,9 +371,7 @@ public class BookTravelDialogFragment extends DialogFragment {
      * returns hotel search intent
      * */
     public Intent getHotelSearchIntent(Activity act) {
-        if (USE_NEW_HOTEL_SCREENS)
-            // return new Intent(act, HotelSearchAndResult.class);
-
+        if (Preferences.shouldShowHotelJarvisUI())
             return new Intent(act, RestHotelSearch.class);
         else
             return new Intent(act, HotelSearch.class);
