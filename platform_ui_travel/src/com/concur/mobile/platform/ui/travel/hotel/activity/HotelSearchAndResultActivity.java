@@ -816,38 +816,36 @@ public class HotelSearchAndResultActivity extends TravelBaseActivity
         } else if (itemClicked != null) {
             selectedHotelListItem = itemClicked;
             Hotel hotelSelected = selectedHotelListItem.getHotel();
-            if (hotelSelected != null && hotelSelected.ratesURL != null) {
+            if (hotelSelected != null && hotelSelected.ratesURL != null
+                    && hotelSelected.availabilityErrorCode == null) {
                 hotelSelected.showNearMe = searchNearMe;
                 // Determine if the hotel details are already in our in-memory
                 // cache, if so, then
                 // re-use them. A request to update will be made in the
                 // background.
 
-                if (hotelSelected.availabilityErrorCode == null) {
-                    if (retrieveFromDB) {
+                if (retrieveFromDB) {
 
-                        // DB call
-                        long id = hotelSelected._id;
+                    // DB call
+                    long id = hotelSelected._id;
 
-                        hotelSelected.rates = TravelUtilHotel.getHotelRateDetails(this, id);
-                        hotelSelected.imagePairs = TravelUtilHotel.getHotelImagePairs(this, id);
-                        violations = TravelUtilHotel
-                                .getHotelViolations(getApplicationContext(), null, (int) hotelSelected.search_id);
-                    }
-                    if (hotelSelected.rates != null && hotelSelected.rates.size() > 0) {
-                        viewHotelChoiceDetails();
-                    } else if (hotelSelected.lowestRate == null && hotelSelected.ratesURL.href != null) {
+                    hotelSelected.rates = TravelUtilHotel.getHotelRateDetails(this, id);
+                    hotelSelected.imagePairs = TravelUtilHotel.getHotelImagePairs(this, id);
+                    violations = TravelUtilHotel
+                            .getHotelViolations(getApplicationContext(), null, (int) hotelSelected.search_id);
+                }
+                if (hotelSelected.rates != null && hotelSelected.rates.size() > 0) {
+                    viewHotelChoiceDetails();
+                } else if (hotelSelected.lowestRate == null && hotelSelected.ratesURL.href != null) {
 
-                        hotelSearchRESTResultFrag.showProgressBar(true);
-                        lm = getLoaderManager();
-                        lm.restartLoader(HOTEL_RATES_LOADER_ID, null, hotelRatesRESTResultLoaderCallbacks);
-                    }
-                } else {
-                    Toast.makeText(getApplicationContext(), R.string.no_rooms, Toast.LENGTH_LONG).show();
-                    if (mapFragment != null) {
-                        mapFragment.hideProgressBar();
-                    }
-
+                    hotelSearchRESTResultFrag.showProgressBar(true);
+                    lm = getLoaderManager();
+                    lm.restartLoader(HOTEL_RATES_LOADER_ID, null, hotelRatesRESTResultLoaderCallbacks);
+                }
+            } else {
+                Toast.makeText(getApplicationContext(), R.string.no_rooms, Toast.LENGTH_SHORT).show();
+                if (mapFragment != null) {
+                    mapFragment.hideProgressBar();
                 }
 
             }
@@ -938,10 +936,11 @@ public class HotelSearchAndResultActivity extends TravelBaseActivity
         updateResultsFragmentUI(hotelListItemsToSort, null);
 
         hotelSearchRESTResultFrag.getHotelListView().setAlpha(1);
-        if(callFromDB && listItemSelectedPosition != -1) {
+        if (callFromDB && listItemSelectedPosition != -1) {
             // show the list item at the center of the list view
             int h1 = hotelSearchRESTResultFrag.getHotelListView().getHeight();
-            hotelSearchRESTResultFrag.getHotelListView().setSelectionFromTop(listItemSelectedPosition, h1/2);// - h2/2);
+            hotelSearchRESTResultFrag.getHotelListView()
+                    .setSelectionFromTop(listItemSelectedPosition, h1 / 2);// - h2/2);
         }
         hotelSearchRESTResultFrag.showSortAndFilterIconsInFooter();
 
