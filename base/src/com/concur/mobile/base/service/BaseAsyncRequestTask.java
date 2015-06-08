@@ -548,6 +548,10 @@ public abstract class BaseAsyncRequestTask extends AsyncTask<Void, Void, Integer
     protected void onPostExecute(Integer result) {
         super.onPostExecute(result);
 
+        if (connectivityListener != null) {
+            DataConnectivityManager.removeListener(getContext(), connectivityListener);
+        }
+
         resultCode = result;
 
         BaseAsyncResultReceiver receiver = getReceiver();
@@ -556,8 +560,6 @@ public abstract class BaseAsyncRequestTask extends AsyncTask<Void, Void, Integer
         } else {
             Log.w(Const.LOG_TAG, getClass().getSimpleName() + " // no receiver, dropping result");
         }
-        if (connectivityListener != null)
-            DataConnectivityManager.removeListener(getContext(), connectivityListener);
     }
 
     @SuppressWarnings("resource")
