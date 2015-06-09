@@ -106,7 +106,7 @@ public class SessionManager {
      */
     @SuppressLint("NewApi")
     public synchronized static String validateSessionId(ConcurCore concurMobile) {
-        return SessionManager.validateSessionId(concurMobile, null,null);
+        return SessionManager.validateSessionId(concurMobile,null);
     }
 
     /**
@@ -123,7 +123,7 @@ public class SessionManager {
      * @return the current valid session id upon success; <code>null</code> upon failure.
      */
     @SuppressLint("NewApi")
-    public synchronized static String validateSessionId(ConcurCore concurMobile, android.os.Message msg, final AutoLoginListener replyListener) {
+    public synchronized static String validateSessionId(ConcurCore concurMobile, final AutoLoginListener replyListener) {
 
         SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(concurMobile.getApplicationContext());
         String sessionId = PlatformProperties.getSessionId();
@@ -170,8 +170,6 @@ public class SessionManager {
 
                     // Make sure that we have a login and pin. This prevents multi-method recursion
                     // if we are here because of the message sent to clear the local data.
-                    ServiceRequest request = (ServiceRequest) msg.obj;
-                    Log.e("validateSessionId : ","REQUEST ID : " + msg.what+ " REQUEST : " + request.toString());
                     if (loginId != null) {
 
                         // First check if the user has an existing oAuth token.
