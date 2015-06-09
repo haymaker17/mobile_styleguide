@@ -1,4 +1,4 @@
-package com.concur.mobile.core.expense.ta.service;
+package com.concur.mobile.core.expense.travelallowance;
 
 import com.concur.mobile.core.util.FormatUtil;
 

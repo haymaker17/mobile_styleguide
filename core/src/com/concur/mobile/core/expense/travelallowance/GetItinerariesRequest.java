@@ -1,4 +1,4 @@
-package com.concur.mobile.core.expense.ta.service;
+package com.concur.mobile.core.expense.travelallowance;
 
 import java.io.IOException;
 
@@ -8,29 +8,24 @@ import android.content.Context;
 
 import com.concur.mobile.base.service.BaseAsyncResultReceiver;
 import com.concur.mobile.base.service.parser.CommonParser;
+import com.concur.mobile.core.ConcurCore;
 import com.concur.mobile.core.service.CoreAsyncRequestTask;
 
-public class DeleteItineraryRowRequest extends CoreAsyncRequestTask {
+public class GetItinerariesRequest extends CoreAsyncRequestTask {
 
     public static final String LOG_TAG = GetItinerariesRequest.class.getSimpleName();
-    public static final String STATUS = "STATUS";
-    public static final String STATUS_TEXT = "STATUSTEXT";
-    public static final String SUCCESS = "SUCCESS";
-    private String itinKey;
-    private String irKey;
+    private String rptKey;
 
-    private DeleteItineraryRowResultParser myParser;
+    private GetTAItinerariesResultParser itinParser;
 
-    public DeleteItineraryRowRequest(Context context, int id, BaseAsyncResultReceiver receiver, String itinKey,
-            String irKey) {
+    public GetItinerariesRequest(Context context, int id, BaseAsyncResultReceiver receiver, String rptKey) {
         super(context, id, receiver);
-        this.itinKey = itinKey;
-        this.irKey = irKey;
+        this.rptKey = rptKey;
     }
 
     @Override
     protected String getServiceEndpoint() {
-        return "/Mobile/TravelAllowance/DeleteItineraryRow/" + itinKey + "/" + irKey;
+        return "/Mobile/TravelAllowance/GetTAItineraries/" + rptKey;
     }
 
     @Override
@@ -38,8 +33,8 @@ public class DeleteItineraryRowRequest extends CoreAsyncRequestTask {
         int result = RESULT_OK;
 
         // register the parser of interest
-        myParser = new DeleteItineraryRowResultParser();
-        parser.registerParser(myParser, "Body");
+        itinParser = new GetTAItinerariesResultParser();
+        parser.registerParser(itinParser, "Itinerary");
 
         try {
             parser.parse();
@@ -56,9 +51,10 @@ public class DeleteItineraryRowRequest extends CoreAsyncRequestTask {
     @Override
     protected int onPostParse() {
         resultData.putBoolean(IS_SUCCESS, true);
-        resultData.putString(STATUS, myParser.status);
-        resultData.putString(STATUS_TEXT, myParser.statusText);
+        ConcurCore core = (ConcurCore) ConcurCore.getContext();
+        core.setTAItinerary(itinParser.getItinerary());
 
         return RESULT_OK;
     }
+
 }
