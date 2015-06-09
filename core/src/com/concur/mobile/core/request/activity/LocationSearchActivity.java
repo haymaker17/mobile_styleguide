@@ -17,7 +17,7 @@ import com.concur.core.R;
 import com.concur.mobile.base.service.BaseAsyncRequestTask;
 import com.concur.mobile.base.service.BaseAsyncResultReceiver;
 import com.concur.mobile.core.request.adapter.AbstractGenericAdapter;
-import com.concur.mobile.core.request.task.LocationListTask;
+import com.concur.mobile.core.request.task.RequestTask;
 import com.concur.mobile.core.request.util.ConnectHelper;
 import com.concur.mobile.core.util.Const;
 import com.concur.mobile.core.util.EventTracker;
@@ -25,6 +25,7 @@ import com.concur.mobile.core.util.Flurry;
 import com.concur.mobile.platform.request.location.Location;
 import com.concur.mobile.platform.request.util.RequestParser;
 
+import java.net.URLEncoder;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -246,8 +247,13 @@ public class LocationSearchActivity extends Activity {
         public void run() {
             manageProgressBarVisibility(true);
             asyncReceiverSearch.setListener(new SearchListener());
-            new LocationListTask(getApplicationContext(), 1, asyncReceiverSearch, searchText.getText().toString(),
-                    locationType).execute();
+
+            new RequestTask(getApplicationContext(), 2, asyncReceiverSearch, ConnectHelper.ConnectVersion.VERSION_3_1,
+                    ConnectHelper.Module.REQUEST_LOCATION, ConnectHelper.Action.LIST, null)
+                    .addUrlParameter(RequestTask.P_LOCATION_SEARCH_TEXT,
+                            URLEncoder.encode(searchText.getText().toString()))
+                    .addUrlParameter(RequestTask.P_LOCATION_TYPE, locationType.name())
+                    .addUrlParameter(ConnectHelper.PARAM_LIMIT, "15").execute();
         }
     }
 

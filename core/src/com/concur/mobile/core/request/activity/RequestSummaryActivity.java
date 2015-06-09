@@ -680,7 +680,7 @@ public class RequestSummaryActivity extends BaseActivity {
     }
 
     private void cleanupReceivers() {
-        //asyncReceiverFormFields.setListener(null);
+        asyncReceiverFormFields.setListener(null);
     }
 
     @Override protected void onPause() {
