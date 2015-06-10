@@ -110,7 +110,7 @@ int versionIndex = 1; // This is used so each version code is unique.
 android.applicationVariants.all { variant ->
     variant.outputs.each { output ->
         // assign different version code for each output
-        if (variant.buildType.name.equals("release") && variant.productFlavors[0].name.equals("prod")) {
+        if (variant.productFlavors[0].name.equals("prod")) {
             def alignedOutputFile = output.outputFile
             def unalignedOutputFile = output.packageApplication.outputFile
             // Customise APK filenames (to include build version)
