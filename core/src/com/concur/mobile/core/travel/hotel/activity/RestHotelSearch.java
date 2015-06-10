@@ -543,7 +543,7 @@ public class RestHotelSearch extends TravelBaseActivity
                     }
                     Intent intent = new Intent(RestHotelSearch.this, LocationSearchV1.class);
                     intent.putExtra(Const.EXTRA_LOCATION_SEARCH_ALLOWED_MODES, locationSearchMode);
-                    if(currentLocation != null) {
+                    if (currentLocation != null) {
                         //for displaying in the search field
                         intent.putExtra(Const.EXTRA_TRAVEL_HOTEL_SEARCH_LOCATION, currentLocation.getName());
                     }
@@ -714,6 +714,7 @@ public class RestHotelSearch extends TravelBaseActivity
                 searchNearMe = true;
             } else {
                 searchNearMe = false;
+                showToast(String.valueOf(R.string.dlg_no_current_location));
             }
 
         }
@@ -928,7 +929,7 @@ public class RestHotelSearch extends TravelBaseActivity
         } else if (travelCustomFieldsConfig != null) {
 
             if (travelCustomFieldsConfig.errorOccuredWhileRetrieving) {
-                showToast("Could not retrieve custom fields.");
+                showToast(String.valueOf(R.string.custom_fields_not_found));
             } else {
 
                 this.travelCustomFieldsConfig = travelCustomFieldsConfig;
@@ -991,7 +992,7 @@ public class RestHotelSearch extends TravelBaseActivity
                     checkOutDate.add(Calendar.DAY_OF_MONTH, 1);
                 }
 
-                if (dateUtil.isDateInValid(checkInDate, null, true)) {
+                if (dateUtil.isDateInValidForDefaultTimeZone(checkInDate, null, true)) {
                     checkInDate = dateUtil.setDepartToCurrent(checkInDate, checkOutDate, dateUtil.getCurrentTime());
                     // Adjust the return time if needed
                     if (checkInDate.after(checkOutDate)) {

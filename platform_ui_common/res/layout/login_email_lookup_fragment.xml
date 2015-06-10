@@ -50,7 +50,7 @@
                     android:layout_gravity="center"
                     android:background="@drawable/square_no_border"
                     android:hint="@string/email_lookup_hint"
-                    android:inputType="textEmailAddress"
+                    android:inputType="textEmailAddress|textAutoComplete|textAutoCorrect|textNoSuggestions|textFilter|textVisiblePassword"
                     android:maxLines="1"
                     android:padding="10dp"
                     android:textAppearance="@style/PrimaryText" />
