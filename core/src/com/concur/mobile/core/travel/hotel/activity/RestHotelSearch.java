@@ -712,9 +712,12 @@ public class RestHotelSearch extends TravelBaseActivity
         if (txtView != null) {
             if (txtView.getText().equals(getString(R.string.general_current_location))) {
                 searchNearMe = true;
+                if (currentLocation == null) {
+                    showToast(R.string.dlg_no_current_location);
+                }
             } else {
                 searchNearMe = false;
-                showToast(String.valueOf(R.string.dlg_no_current_location));
+
             }
 
         }
@@ -903,8 +906,8 @@ public class RestHotelSearch extends TravelBaseActivity
         }
     }
 
-    public void showToast(String message) {
-        Toast.makeText(this, message, Toast.LENGTH_SHORT).show();
+    public void showToast(int resId) {
+        Toast.makeText(this, resId, Toast.LENGTH_SHORT).show();
     }
 
     @Override public Loader<TravelCustomFieldsConfig> onCreateLoader(int id, Bundle bundle) {
@@ -929,7 +932,7 @@ public class RestHotelSearch extends TravelBaseActivity
         } else if (travelCustomFieldsConfig != null) {
 
             if (travelCustomFieldsConfig.errorOccuredWhileRetrieving) {
-                showToast(String.valueOf(R.string.custom_fields_not_found));
+                showToast(R.string.custom_fields_not_found);
             } else {
 
                 this.travelCustomFieldsConfig = travelCustomFieldsConfig;
