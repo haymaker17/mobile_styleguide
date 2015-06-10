@@ -12,4 +12,5 @@
     <color name="empty_view_separator_line_background">#a7b6bf</color>
     <color name="empty_view_background">#f7fafd</color>
     <color name="grey_view_background">#EEEEEE</color>
+    <color name="orange">#ef812d</color>
 </resources>

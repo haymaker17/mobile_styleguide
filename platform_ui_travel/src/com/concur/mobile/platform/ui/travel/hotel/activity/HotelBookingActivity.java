@@ -423,20 +423,11 @@ public class HotelBookingActivity extends TravelBaseActivity implements SpinnerD
 
         // amount
         txtView = (TextView) findViewById(R.id.hotel_room_rate);
-        txtView.setText(FormatUtil
-                .formatAmountWithNoDecimals(amount, this.getResources().getConfiguration().locale, currCode, true,
-                        false));
-
-        // rate info on click event
-        ImageView rateInfoImg = (ImageView) findViewById(R.id.checkout_icon_price_info);
-        rateInfoImg.setOnClickListener(new View.OnClickListener() {
-
-            @Override
-            public void onClick(View v) {
-                Toast.makeText(getApplicationContext(), "Rate breakdown here...not implemented", Toast.LENGTH_SHORT)
-                        .show();
-            }
-        });
+        String formattedAmount = FormatUtil.formatAmountWithNoDecimals(amount, this.getResources().getConfiguration().locale, currCode, true,
+                        false);
+        txtView.setText(formattedAmount);
+        txtView = (TextView) findViewById(R.id.footer_amount);
+        txtView.setText(formattedAmount);
 
         // cancellation policy on click event
         findViewById(R.id.hotel_policy).setOnClickListener(new View.OnClickListener() {

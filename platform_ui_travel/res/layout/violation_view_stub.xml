@@ -113,6 +113,7 @@
         android:id="@+id/hotel_violation_justification"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:layout_marginRight="12dp"
         android:fontFamily="sans-serif"
         android:hint="@string/general_enter_justification"
         android:textColor="#757575"
