@@ -8,26 +8,7 @@
               android:minHeight="420dp"
               android:background="#FFFFFFFF"
     >
-    <!--<LinearLayout
-        android:id="@+id/newRequestButtonLayout"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="horizontal"
-        android:background="@color/White"
-        android:layout_gravity="left|center_vertical"
-        android:paddingLeft="@dimen/activity_horizontal_margin"
-        >
-        <Button
-            android:id="@+id/newRequestButton"
-            android:layout_width="wrap_content"
-            android:layout_height="50dp"
-            android:drawableLeft="@drawable/action_bar_icon_plus"
-            android:drawablePadding="5dp"
-            android:background="@color/White"
-            android:layout_gravity="right"
-            android:visibility="gone"
-            />
-    </LinearLayout>-->
+
     <FrameLayout
         android:layout_width="fill_parent"
         android:layout_height="match_parent"
@@ -52,15 +33,7 @@
                 android:orientation="vertical"
                 android:gravity="center"
                 >
-                <!--
-                <ImageView
-                    android:layout_gravity="left"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:src="@drawable/img_start_arrow"
-                    android:layout_marginLeft="5dp"
-                    />
-                    -->
+
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
@@ -80,19 +53,6 @@
                     android:text="@string/tr_new_request_desc"
                     android:textSize="12pt"
                     android:textColor="#6F6F6F"
-                    />
-
-                <Button
-                    android:id="@+id/newRequestButton2"
-                    android:layout_width="150dp"
-                    android:layout_height="50dp"
-                    android:background="@color/ButtonCellBackground"
-                    android:text="@string/tr_new_request_title"
-                    android:textSize="10pt"
-                    android:textColor="@color/offline_header"
-                    android:textStyle="bold"
-                    android:layout_gravity="center"
-                    android:gravity="center"
                     />
 
             </LinearLayout>
