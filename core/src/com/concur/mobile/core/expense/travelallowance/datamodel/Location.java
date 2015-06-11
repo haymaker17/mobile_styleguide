@@ -7,7 +7,7 @@ import java.io.Serializable;
  *
  * @author Michael Becherer
  */
-public class Location implements Serializable, Comparable<Adjustment>, Cloneable {
+public class Location implements Serializable, Comparable<FixedTravelAllowance>, Cloneable {
 
     private String locationId;
 
@@ -40,7 +40,7 @@ public class Location implements Serializable, Comparable<Adjustment>, Cloneable
     }
 
     @Override
-    public int compareTo(Adjustment another) {
+    public int compareTo(FixedTravelAllowance another) {
         return 0;
     }
 
