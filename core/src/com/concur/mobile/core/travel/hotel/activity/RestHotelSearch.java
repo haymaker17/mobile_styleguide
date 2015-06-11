@@ -598,7 +598,7 @@ public class RestHotelSearch extends TravelBaseActivity
             break;
         }
         case Const.REQUEST_CODE_BOOK_HOTEL: {
-            Log.i(com.concur.mobile.platform.util.Const.LOG_TAG,
+            Log.d(com.concur.mobile.platform.util.Const.LOG_TAG,
                     "\n\n\n ****** RestHotelSearch onActivityResult with REQUEST_CODE_BOOK_HOTEL result code : "
                             + resultCode);
             if (resultCode == RESULT_OK) {
