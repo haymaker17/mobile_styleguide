@@ -58,13 +58,11 @@ public class HotelSearchResultListItem extends ListItem implements Serializable 
         this.hotel = hotel;
     }
 
-    @Override
-    public boolean isEnabled() {
+    @Override public boolean isEnabled() {
         return true;
     }
 
-    @Override
-    public View buildView(final Context context, View convertView, ViewGroup parent) {
+    @Override public View buildView(final Context context, View convertView, ViewGroup parent) {
         View hotelView = null;
         LayoutInflater inflater = null;
 
@@ -95,6 +93,8 @@ public class HotelSearchResultListItem extends ListItem implements Serializable 
             Bitmap bitmap = imgCache.getBitmap(uri, null);
             if (bitmap != null) {
                 thumbNailImg.setImageBitmap(bitmap);
+            } else {
+                thumbNailImg.setImageResource(R.drawable.hotel_results_default_image);
             }
         } else {
             thumbNailImg.setImageResource(R.drawable.hotel_results_default_image);
@@ -206,8 +206,7 @@ public class HotelSearchResultListItem extends ListItem implements Serializable 
                     txtView.setText(R.string.hotel_preferred);
                     txtView.setOnClickListener(new OnClickListener() {
 
-                        @Override
-                        public void onClick(View v) {
+                        @Override public void onClick(View v) {
                             Toast.makeText(context, context.getString(resourceId), Toast.LENGTH_SHORT).show();
                         }
                     });
