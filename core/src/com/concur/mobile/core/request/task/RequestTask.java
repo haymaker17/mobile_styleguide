@@ -16,7 +16,6 @@ import java.util.Map;
  * Created by OlivierB on 04/03/2015.
  * This class execute a request through Connect with given args.
  * => Should be used for any ws call within Travel Request using Connect API
- * TODO : migrate all other tasks to this one
  */
 public class RequestTask extends AbstractRequestWSCallTask {
 
@@ -32,6 +31,7 @@ public class RequestTask extends AbstractRequestWSCallTask {
     // --- Request List
     public static final String P_REQUESTS_WITH_SEG_TYPES = "withSegmentTypes";
     public static final String P_REQUESTS_STATUS = "status";
+    public static final String P_REQUESTS_WITH_USER_PERMISSIONS = "withUserPermissions";
     // --- Request creation
     public static final String P_REQUEST_ID = "RequestID";
 
@@ -48,24 +48,7 @@ public class RequestTask extends AbstractRequestWSCallTask {
     private ConnectHelper.Module module = ConnectHelper.Module.REQUEST;
     private ConnectHelper.Action action;
     private HttpRequestType requestType = HttpRequestType.GET;
-    private String postBody = "";
-
-    /**
-     * Default TR constructor without url parameters
-     *
-     * @param context
-     * @param taskId
-     * @param receiver
-     * @param action
-     * @param entityId
-     */
-    public RequestTask(Context context, int taskId, BaseAsyncResultReceiver receiver, ConnectHelper.Action action,
-            String entityId) {
-        super(context, taskId, receiver);
-        this.entityId = entityId;
-        this.params = new HashMap<String, Object>();
-        setAction(action);
-    }
+    private String postBody = null;
 
     /**
      * Full parameterized constructor
@@ -84,6 +67,23 @@ public class RequestTask extends AbstractRequestWSCallTask {
         super(context, taskId, receiver);
         this.version = version;
         this.module = module;
+        this.entityId = entityId;
+        this.params = new HashMap<String, Object>();
+        setAction(action);
+    }
+
+    /**
+     * Default TR constructor without url parameters
+     *
+     * @param context
+     * @param taskId
+     * @param receiver
+     * @param action
+     * @param entityId
+     */
+    public RequestTask(Context context, int taskId, BaseAsyncResultReceiver receiver, ConnectHelper.Action action,
+            String entityId) {
+        super(context, taskId, receiver);
         this.entityId = entityId;
         this.params = new HashMap<String, Object>();
         setAction(action);
@@ -122,33 +122,44 @@ public class RequestTask extends AbstractRequestWSCallTask {
         }
     }
 
-    public void addUrlParameter(String key, String value) {
+    public RequestTask addUrlParameter(String key, String value) {
         params.put(key, value);
+        return this;
     }
 
-    public void setPostBody(String postBody) {
+    public RequestTask setPostBody(String postBody) {
         // --- null won't work as a value if it really is a POST, things are made to work with "" in this case.
         this.postBody = postBody != null ? postBody : (requestType == HttpRequestType.POST ? "" : null);
+        return this;
     }
 
-    public void setHttpRequestType(HttpRequestType requestType) {
-        this.requestType = requestType;
-    }
-
-    public void setVersion(ConnectHelper.ConnectVersion version) {
-        this.version = version;
-    }
-
-    public void setModule(ConnectHelper.Module module) {
-        this.module = module;
-    }
-
-    public void setAction(ConnectHelper.Action action) {
+    public RequestTask setAction(ConnectHelper.Action action) {
         this.action = action;
-        if (action == ConnectHelper.Action.UPDATE) {
+        switch (action) {
+
+        case LIST:
+        case DETAIL:
+            postBody = null;
+            requestType = HttpRequestType.GET;
+            break;
+
+        case UPDATE:
+            postBody = "";
             requestType = HttpRequestType.PUT;
-        } else if (action == ConnectHelper.Action.CREATE) {
+            break;
+
+        case CREATE:
+        default:
+            // --- any custom action not specifically defined will be considered as a POST action
+            postBody = "";
             requestType = HttpRequestType.POST;
+            break;
         }
+        return this;
+    }
+
+    public RequestTask addResultData(String name, String value) {
+        resultData.putString(name, value);
+        return this;
     }
 }

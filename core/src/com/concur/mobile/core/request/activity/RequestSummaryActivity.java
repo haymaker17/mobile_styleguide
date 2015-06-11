@@ -4,7 +4,6 @@ import android.app.Activity;
 import android.content.Intent;
 import android.content.res.Resources;
 import android.graphics.Typeface;
-import android.media.Image;
 import android.os.Bundle;
 import android.os.Handler;
 import android.util.Log;
@@ -21,9 +20,7 @@ import com.concur.mobile.base.service.BaseAsyncResultReceiver;
 import com.concur.mobile.core.ConcurCore;
 import com.concur.mobile.core.activity.BaseActivity;
 import com.concur.mobile.core.request.adapter.EntryListAdapter;
-import com.concur.mobile.core.request.task.RequestDetailsTask;
-import com.concur.mobile.core.request.task.RequestFormFieldsTask;
-import com.concur.mobile.core.request.task.RequestSubmitTask;
+import com.concur.mobile.core.request.task.RequestTask;
 import com.concur.mobile.core.request.util.ConnectHelper;
 import com.concur.mobile.core.request.util.DateUtil;
 import com.concur.mobile.core.util.Const;
@@ -62,11 +59,11 @@ public class RequestSummaryActivity extends BaseActivity {
     private ViewFlipper requestSummaryVF;
     private ListView entryListView;
     private RelativeLayout segmentListViewLayout;
-    private RelativeLayout submitButton;
+    private RelativeLayout actionButton;
     // for Details
     private BaseAsyncResultReceiver asyncReceiver;
-    // for Submit
-    private BaseAsyncResultReceiver asyncReceiverSubmit;
+    // for Submit & Recall
+    private BaseAsyncResultReceiver asyncReceiverRequestAction;
     private BaseAsyncResultReceiver asyncReceiverFormFields;
 
     private ConnectFormFieldsCache formFieldsCache = null;
@@ -89,8 +86,10 @@ public class RequestSummaryActivity extends BaseActivity {
     private boolean isSegmentHOTEL = false;
     private boolean isSegmentCAR = false;
 
-    @Override
-    protected void onCreate(Bundle savedInstanceState) {
+    // --- true if user can submit this request
+    private boolean isSubmitable = true;
+
+    @Override protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.request_summary);
         category = getResources().getColor(R.color.SectionHeaderBackground);
@@ -138,12 +137,12 @@ public class RequestSummaryActivity extends BaseActivity {
                     resNotFndExc);
         }
 
-        submitButton = (RelativeLayout) findViewById(R.id.submitButton);
-        submitButton.setOnClickListener(new View.OnClickListener() {
+        actionButton = (RelativeLayout) findViewById(R.id.actionButton);
+        actionButton.setOnClickListener(new View.OnClickListener() {
 
             public void onClick(View v) {
-                // CALL SUMMIT METHOD
-                submitRequest();
+                // CALL SUMMIT/RECALL METHOD
+                callRequestAction();
             }
         });
     }
@@ -153,7 +152,11 @@ public class RequestSummaryActivity extends BaseActivity {
                 .extractSegmentFormId(tr.getPolicyId(), segmentType);
         waitFormFieldsCacheRefresh(formId, null, segmentType);
         formFieldsCache.setFormRefreshStatus(formId, true);
-        new RequestFormFieldsTask(RequestSummaryActivity.this, 1, asyncReceiverFormFields, formId, false).execute();
+
+        new RequestTask(RequestSummaryActivity.this, 2, asyncReceiverFormFields,
+                ConnectHelper.ConnectVersion.VERSION_3_0, ConnectHelper.Module.FORM_FIELDS, ConnectHelper.Action.LIST,
+                formId).addUrlParameter(RequestTask.P_FORM_ID, formId).addResultData(RequestTask.P_FORM_ID, formId)
+                .execute();
     }
 
     public void setSegmentButtonClose() {
@@ -210,7 +213,7 @@ public class RequestSummaryActivity extends BaseActivity {
         RelativeLayout layoutSegmentTRAIN = (RelativeLayout) findViewById(R.id.TrainSegmentChoice);
         RelativeLayout layoutSegmentHOTEL = (RelativeLayout) findViewById(R.id.HotelSegmentChoice);
         RelativeLayout layoutSegmentCAR = (RelativeLayout) findViewById(R.id.CarSegmentChoice);
-        View separator = (View) findViewById(R.id.SegmentsSeparator);
+        View separator = findViewById(R.id.SegmentsSeparator);
 
         layoutSegmentAIR.setVisibility(View.GONE);
         layoutSegmentTRAIN.setVisibility(View.GONE);
@@ -230,18 +233,20 @@ public class RequestSummaryActivity extends BaseActivity {
 
             final RequestGroupConfiguration rgc = getConcurCore().getRequestGroupConfigurationCache()
                     .getValue(getUserId());
-            for (Policy p : rgc.getPolicies()) {
-                if (tr.getPolicyId().equals(p.getId())) {
-                    for (SegmentType st : p.getSegmentTypes()) {
-                        String iconCode = st.getIconCode();
-                        if (SegmentType.RequestSegmentType.AIR.getCode().equals(iconCode)) {
-                            isSegmentAIR = true;
-                        } else if (SegmentType.RequestSegmentType.RAIL.getCode().equals(iconCode)) {
-                            isSegmentTRAIN = true;
-                        } else if (SegmentType.RequestSegmentType.HOTEL.getCode().equals(iconCode)) {
-                            isSegmentHOTEL = true;
-                        } else if (SegmentType.RequestSegmentType.CAR.getCode().equals(iconCode)) {
-                            isSegmentCAR = true;
+            if (rgc != null) {
+                for (Policy p : rgc.getPolicies()) {
+                    if (tr.getPolicyId().equals(p.getId())) {
+                        for (SegmentType st : p.getSegmentTypes()) {
+                            String code = st.getCode();
+                            if (SegmentType.RequestSegmentType.AIR.getCode().equals(code)) {
+                                isSegmentAIR = true;
+                            } else if (SegmentType.RequestSegmentType.RAIL.getCode().equals(code)) {
+                                isSegmentTRAIN = true;
+                            } else if (SegmentType.RequestSegmentType.HOTEL.getCode().equals(code)) {
+                                isSegmentHOTEL = true;
+                            } else if (SegmentType.RequestSegmentType.CAR.getCode().equals(code)) {
+                                isSegmentCAR = true;
+                            }
                         }
                     }
                 }
@@ -276,7 +281,6 @@ public class RequestSummaryActivity extends BaseActivity {
         name.setTypeface(Typeface.DEFAULT_BOLD);
         amount.setTypeface(Typeface.DEFAULT_BOLD);
 
-
         if (tr.getEntriesMap() != null) {
             ((EntryListAdapter) entryListView.getAdapter())
                     .updateList(new ArrayList<RequestEntryDTO>(tr.getEntriesMap().values()));
@@ -284,15 +288,16 @@ public class RequestSummaryActivity extends BaseActivity {
                 final int height = (int) TypedValue
                         .applyDimension(TypedValue.COMPLEX_UNIT_DIP, 75, getResources().getDisplayMetrics());
                 segmentListViewLayout.getLayoutParams().height = height;
-            }
-            else if (tr.getEntriesMap().size() > 1) {
+            } else if (tr.getEntriesMap().size() > 1) {
+                final int height = (int) TypedValue
+                        .applyDimension(TypedValue.COMPLEX_UNIT_DIP, 170, getResources().getDisplayMetrics());
+                segmentListViewLayout.getLayoutParams().height = height;
+            } else if (tr.getEntriesMap().size() > 1) {
                 final int height = (int) TypedValue
                         .applyDimension(TypedValue.COMPLEX_UNIT_DIP, 170, getResources().getDisplayMetrics());
                 segmentListViewLayout.getLayoutParams().height = height;
             }
         }
-
-
     }
 
     private void updateNewButtonsViews() {
@@ -337,7 +342,8 @@ public class RequestSummaryActivity extends BaseActivity {
                 // --- creates the listener
                 asyncReceiver.setListener(new TRDetailsListener());
                 // --- onRequestResult calls cleanup() on execution, so listener will be destroyed by processing
-                new RequestDetailsTask(RequestSummaryActivity.this, 1, asyncReceiver, tr.getId()).execute();
+                new RequestTask(RequestSummaryActivity.this, 1, asyncReceiver, ConnectHelper.Action.DETAIL, tr.getId())
+                        .execute();
             } else {
                 // --- we lost the request object. Should not happen, yet if it does just go back to the list & log it
                 Log.e(Const.LOG_TAG, CLS_TAG + " refreshData() : request object lost, going back to list activity.");
@@ -350,13 +356,16 @@ public class RequestSummaryActivity extends BaseActivity {
         }
     }
 
-    private void submitRequest() {
+    private void callRequestAction() {
         if (ConcurCore.isConnected()) {
-            // --- creates the listener
-            asyncReceiverSubmit.setListener(new TRSubmitListener());
             requestSummaryVF.setDisplayedChild(ID_LOADING_VIEW);
+            // --- creates the listener
+            asyncReceiverRequestAction.setListener(new TRActionListener());
             // --- onRequestResult calls cleanup() on execution, so listener will be destroyed by processing
-            new RequestSubmitTask(RequestSummaryActivity.this, 1, asyncReceiverSubmit, tr.getId()).execute();
+            // --- if (isSubmitable) => user taped on a submit button, else he obviously could only tap
+            //     on a recall one.
+            new RequestTask(RequestSummaryActivity.this, 1, asyncReceiverRequestAction,
+                    isSubmitable ? ConnectHelper.Action.SUBMIT : ConnectHelper.Action.RECALL, tr.getId()).execute();
         } else {
             new NoConnectivityDialogFragment().show(getSupportFragmentManager(), CLS_TAG);
         }
@@ -388,8 +397,7 @@ public class RequestSummaryActivity extends BaseActivity {
      */
     public class TRDetailsListener implements AsyncReplyListener {
 
-        @Override
-        public void onRequestSuccess(Bundle resultData) {
+        @Override public void onRequestSuccess(Bundle resultData) {
             requestSummaryVF.setDisplayedChild(ID_DETAIL_VIEW);
             requestParser.parseTRDetailResponse(tr, resultData.getString(BaseAsyncRequestTask.HTTP_RESPONSE));
             updateTRDetailsUI(tr);
@@ -407,23 +415,34 @@ public class RequestSummaryActivity extends BaseActivity {
                     }
                     // --- iterating over unique ids to retrieve formfields
                     formFieldsCache.setFormRefreshStatus(re.getSegmentFormId(), true);
-                    new RequestFormFieldsTask(RequestSummaryActivity.this, 1, asyncReceiverFormFields,
-                            re.getSegmentFormId(), false).execute();
+
+                    new RequestTask(RequestSummaryActivity.this, 2, asyncReceiverFormFields,
+                            ConnectHelper.ConnectVersion.VERSION_3_0, ConnectHelper.Module.FORM_FIELDS,
+                            ConnectHelper.Action.LIST, re.getSegmentFormId())
+                            .addUrlParameter(RequestTask.P_FORM_ID, re.getSegmentFormId())
+                            .addResultData(RequestTask.P_FORM_ID, re.getSegmentFormId()).execute();
                 }
             }
 
-            // Display submit button?
-            submitButton = (RelativeLayout) findViewById(R.id.submitButton);
+            // Display submit/recall button?
+            actionButton = (RelativeLayout) findViewById(R.id.actionButton);
             if (tr.isActionPermitted(RequestParser.PermittedAction.SUBMIT)) {
-                submitButton.setVisibility(View.VISIBLE);
+                actionButton.setVisibility(View.VISIBLE);
+                ((TextView) actionButton.findViewById(R.id.actionButtonText))
+                        .setText(getResources().getString(R.string.tr_submit));
+                isSubmitable = true;
+            } else if (tr.isActionPermitted(RequestParser.PermittedAction.RECALL)) {
+                actionButton.setVisibility(View.VISIBLE);
+                ((TextView) actionButton.findViewById(R.id.actionButtonText))
+                        .setText(getResources().getString(R.string.tr_recall));
+                isSubmitable = false;
             } else {
-                submitButton.setVisibility(View.GONE);
+                actionButton.setVisibility(View.GONE);
             }
 
         }
 
-        @Override
-        public void onRequestFail(Bundle resultData) {
+        @Override public void onRequestFail(Bundle resultData) {
             ConnectHelper.displayResponseMessage(getApplicationContext(), resultData,
                     getResources().getString(R.string.tr_error_retrieving_detail));
             handleRefreshFail();
@@ -431,8 +450,7 @@ public class RequestSummaryActivity extends BaseActivity {
             Log.d(Const.LOG_TAG, " onRequestFail in TRDetailsListener...");
         }
 
-        @Override
-        public void onRequestCancel(Bundle resultData) {
+        @Override public void onRequestCancel(Bundle resultData) {
             ConnectHelper
                     .displayMessage(getApplicationContext(), getResources().getString(R.string.tr_operation_canceled));
             handleRefreshFail();
@@ -440,8 +458,7 @@ public class RequestSummaryActivity extends BaseActivity {
             Log.d(Const.LOG_TAG, " onRequestCancel in TRDetailsListener...");
         }
 
-        @Override
-        public void cleanup() {
+        @Override public void cleanup() {
             asyncReceiver.setListener(null);
         }
     }
@@ -451,8 +468,7 @@ public class RequestSummaryActivity extends BaseActivity {
      */
     class EntryListAdapterRowClickListener implements AdapterView.OnItemClickListener {
 
-        @Override
-        public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+        @Override public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
             final EntryListAdapter adapter = (EntryListAdapter) entryListView.getAdapter();
             final RequestEntryDTO entry = adapter.getItem(position);
             if (entry != null) {
@@ -491,7 +507,7 @@ public class RequestSummaryActivity extends BaseActivity {
 
         if (viewID == ID_LOADING_VIEW) {
             activateOptionButton = false;
-        }else{
+        } else {
             activateOptionButton = true;
         }
 
@@ -527,15 +543,14 @@ public class RequestSummaryActivity extends BaseActivity {
         }
     }
 
-    public class TRSubmitListener implements AsyncReplyListener {
+    public class TRActionListener implements AsyncReplyListener {
 
-        @Override
-        public void onRequestSuccess(Bundle resultData) {
+        @Override public void onRequestSuccess(Bundle resultData) {
             ((RequestListCache) getConcurCore().getRequestListCache()).setDirty(true);
 
             // metrics
             final Map<String, String> params = new HashMap<String, String>();
-            params.put(Flurry.EVENT_NAME_SUBMIT, tr.getId());
+            params.put(isSubmitable ? Flurry.EVENT_NAME_SUBMIT : "Request Recall", tr.getId());
             EventTracker.INSTANCE
                     .track(Flurry.CATEGORY_TRAVEL_REQUEST, Flurry.PARAM_VALUE_TRAVEL_REQUEST_SUMMARY, params);
 
@@ -547,28 +562,25 @@ public class RequestSummaryActivity extends BaseActivity {
             finish();
         }
 
-        @Override
-        public void onRequestFail(Bundle resultData) {
+        @Override public void onRequestFail(Bundle resultData) {
             ConnectHelper.displayResponseMessage(getApplicationContext(), resultData,
-                    getResources().getString(R.string.tr_error_submit));
+                    getResources().getString(isSubmitable ? R.string.tr_error_submit : R.string.tr_error_recall));
 
             Log.d(Const.LOG_TAG, CLS_TAG + " calling decrement from onrequestfails");
-            Log.d(Const.LOG_TAG, " onRequestFail in TRSubmitListener...");
+            Log.d(Const.LOG_TAG, " onRequestFail in TRActionListener...");
             requestSummaryVF.setDisplayedChild(ID_DETAIL_VIEW);
         }
 
-        @Override
-        public void onRequestCancel(Bundle resultData) {
+        @Override public void onRequestCancel(Bundle resultData) {
             ConnectHelper
                     .displayMessage(getApplicationContext(), getResources().getString(R.string.tr_operation_canceled));
-            Log.d(Const.LOG_TAG, CLS_TAG + " calling decrement from onrequestcancel");
-            Log.d(Const.LOG_TAG, " onRequestCancel in TRSubmitListener...");
+            Log.d(Const.LOG_TAG, CLS_TAG + " calling decrement from onRequestCancel");
+            Log.d(Const.LOG_TAG, " onRequestCancel in TRActionListener...");
             requestSummaryVF.setDisplayedChild(ID_DETAIL_VIEW);
         }
 
-        @Override
-        public void cleanup() {
-            asyncReceiverSubmit.setListener(null);
+        @Override public void cleanup() {
+            asyncReceiverRequestAction.setListener(null);
         }
     }
 
@@ -577,9 +589,8 @@ public class RequestSummaryActivity extends BaseActivity {
      */
     private class SegmentFormFieldsListener implements AsyncReplyListener {
 
-        @Override
-        public void onRequestSuccess(Bundle resultData) {
-            final String formId = resultData.getString(RequestFormFieldsTask.PARAM_FORM_ID);
+        @Override public void onRequestSuccess(Bundle resultData) {
+            final String formId = resultData.getString(RequestTask.P_FORM_ID);
             formFieldsCache.setFormRefreshStatus(formId, false);
             // --- parse the form received
             final ConnectForm rForm = requestParser
@@ -594,26 +605,23 @@ public class RequestSummaryActivity extends BaseActivity {
             }
         }
 
-        @Override
-        public void onRequestFail(Bundle resultData) {
-            final String formId = resultData.getString(RequestFormFieldsTask.PARAM_FORM_ID);
+        @Override public void onRequestFail(Bundle resultData) {
+            final String formId = resultData.getString(RequestTask.P_FORM_ID);
             formFieldsCache.setFormRefreshStatus(formId, false);
             Log.d(Const.LOG_TAG, CLS_TAG + " calling decrement from onrequestfails");
             Log.d(Const.LOG_TAG, " onRequestFail in SegmentFormFieldsListener...");
             handleAwaitingRefresh(formId, false);
         }
 
-        @Override
-        public void onRequestCancel(Bundle resultData) {
-            final String formId = resultData.getString(RequestFormFieldsTask.PARAM_FORM_ID);
+        @Override public void onRequestCancel(Bundle resultData) {
+            final String formId = resultData.getString(RequestTask.P_FORM_ID);
             formFieldsCache.setFormRefreshStatus(formId, false);
             Log.d(Const.LOG_TAG, CLS_TAG + " calling decrement from onrequestcancel");
             Log.d(Const.LOG_TAG, " onRequestCancel in SegmentFormFieldsListener...");
             handleAwaitingRefresh(formId, false);
         }
 
-        @Override
-        public void cleanup() {
+        @Override public void cleanup() {
             //asyncReceiverFormFields.setListener(null);
         }
     }
@@ -643,8 +651,7 @@ public class RequestSummaryActivity extends BaseActivity {
     // //////////
     // STATES //
     // //////////
-    @Override
-    protected void onResume() {
+    @Override protected void onResume() {
         super.onResume();
 
         activateOptionButton = true;
@@ -656,10 +663,10 @@ public class RequestSummaryActivity extends BaseActivity {
             refreshData(false);
         }
 
-        // SUBMIT
+        // SUBMIT / RECALL
         // activity creation
-        if (asyncReceiverSubmit == null) {
-            asyncReceiverSubmit = new BaseAsyncResultReceiver(new Handler());
+        if (asyncReceiverRequestAction == null) {
+            asyncReceiverRequestAction = new BaseAsyncResultReceiver(new Handler());
         }
 
         // F & F
@@ -673,27 +680,24 @@ public class RequestSummaryActivity extends BaseActivity {
     }
 
     private void cleanupReceivers() {
-        //asyncReceiverFormFields.setListener(null);
+        asyncReceiverFormFields.setListener(null);
     }
 
-    @Override
-    protected void onPause() {
+    @Override protected void onPause() {
         super.onPause();
         cleanupReceivers();
     }
 
     // OVERFLOW MENU
-    @Override
-    public boolean onCreateOptionsMenu(Menu menu) {
+    @Override public boolean onCreateOptionsMenu(Menu menu) {
         MenuInflater inflater = getMenuInflater();
         inflater.inflate(R.menu.request_digest, menu);
         return true;
     }
 
-    @Override
-    public boolean onOptionsItemSelected(MenuItem menuItem) {
+    @Override public boolean onOptionsItemSelected(MenuItem menuItem) {
 
-        if(activateOptionButton){
+        if (activateOptionButton) {
             final int itemId = menuItem.getItemId();
             if (itemId == R.id.request_header) {
                 if (isServiceAvailable()) {
@@ -726,8 +730,7 @@ public class RequestSummaryActivity extends BaseActivity {
         return super.onOptionsItemSelected(menuItem);
     }
 
-    @Override
-    public void onActivityResult(int requestCode, int resultCode, Intent data) {
+    @Override public void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
         // --- we force the view to go back to detail as it can be loading when we leave to create an entry
         setView(ID_DETAIL_VIEW);
@@ -748,7 +751,4 @@ public class RequestSummaryActivity extends BaseActivity {
         }
         }
     }
-
-
-
 }

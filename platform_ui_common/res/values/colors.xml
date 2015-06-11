@@ -4,11 +4,11 @@
     <!-- Default Colors. -->
     <color name="StandardBlueBackground">#1A84C6</color>
     <color name="StandardBlueButton">#4fbbff</color>
-    
+
     <!-- Tour screens. -->
     <color name="universal_tour_text">#A9DEFF</color>
     <color name="universal_tour_ab_menu">#2077BD</color>
-    
+
     <color name="PrimaryText">#373d48</color>
     <color name="exception">#FF0000</color>
     <color name="gray">#444444</color>
@@ -42,8 +42,11 @@
     <color name="GradientHomeFooterTop">#e8e9eb</color>
     <color name="GradientHomeFooterBottom">#d7d8d9</color>
     <color name="StrokeHomeFooter">#8e8e8e</color>
-    
+
+    <!-- Request list screen - material design -->
+    <color name="materialRed">#bf6767</color>
+
     <!-- Offline header -->
-    <color name="offline_header">#0078c8</color>    
-    
+    <color name="offline_header">#0078c8</color>
+
 </resources>

@@ -827,16 +827,14 @@ public class RequestEntryActivity extends AbstractConnectFormFieldActivity imple
             asyncReceiverSave.setListener(new SaveListener());
             entryVF.setDisplayedChild(ID_LOADING_VIEW);
             // --- onRequestResult calls cleanup() on execution, so listener will be destroyed by processing
-            final RequestTask reqTask;
+            final RequestTask task = new RequestTask(this, 1, asyncReceiverSave,
+                    ConnectHelper.ConnectVersion.VERSION_3_1, ConnectHelper.Module.REQUEST_ENTRY,
+                    createMode ? ConnectHelper.Action.CREATE : ConnectHelper.Action.UPDATE,
+                    createMode ? null : entry.getId()).setPostBody(RequestParser.toJson(entry));
             if (createMode) {
-                reqTask = new RequestTask(this, 1, asyncReceiverSave, ConnectHelper.Action.CREATE, null);
-                reqTask.addUrlParameter(RequestTask.P_REQUEST_ID, request.getId());
-            } else {
-                reqTask = new RequestTask(this, 1, asyncReceiverSave, ConnectHelper.Action.UPDATE, entry.getId());
+                task.addUrlParameter(RequestTask.P_REQUEST_ID, request.getId());
             }
-            reqTask.setModule(ConnectHelper.Module.REQUEST_ENTRY);
-            reqTask.setPostBody(RequestParser.toJson(entry));
-            reqTask.execute();
+            task.execute();
         } else {
             new NoConnectivityDialogFragment().show(getSupportFragmentManager(), CLS_TAG);
         }
