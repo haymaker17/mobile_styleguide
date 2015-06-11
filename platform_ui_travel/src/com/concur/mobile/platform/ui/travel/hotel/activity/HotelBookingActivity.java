@@ -170,7 +170,6 @@ public class HotelBookingActivity extends TravelBaseActivity implements SpinnerD
     private String userErrorMsg;
     private String[] cancellationPolicyStatements;
     private boolean progressbarVisible;
-    private Button reserveButton;
     private HotelRate hotelRate;
     private HotelPreSellOption preSellOption;
     private String location;
@@ -189,6 +188,7 @@ public class HotelBookingActivity extends TravelBaseActivity implements SpinnerD
     private ParallaxScollView mListView;
     private TextView roomDescView;
     private boolean isBookingInProgress;
+    private LinearLayout reserveLayout;
     // HotelBooking loader callback implementation
     private LoaderManager.LoaderCallbacks<HotelBookingRESTResult> bookingLoaderListener = new LoaderManager.LoaderCallbacks<HotelBookingRESTResult>() {
 
@@ -432,8 +432,7 @@ public class HotelBookingActivity extends TravelBaseActivity implements SpinnerD
         // cancellation policy on click event
         findViewById(R.id.hotel_policy).setOnClickListener(new View.OnClickListener() {
 
-            @Override
-            public void onClick(View v) {
+            @Override public void onClick(View v) {
                 showCancellationPolicy();
             }
         });
@@ -448,16 +447,15 @@ public class HotelBookingActivity extends TravelBaseActivity implements SpinnerD
         initTravelCustomFieldsView();
 
         // reserve UI
-        reserveButton = (Button) findViewById(R.id.footer_button);
-        reserveButton.setEnabled(false);
-        reserveButton.setText(R.string.hotel_reserve_this_room);
-
-        reserveButton.setOnClickListener(new View.OnClickListener() {
+        reserveLayout = ((LinearLayout)findViewById(R.id.footer));
+        enableReserveLayout(false);
+        reserveLayout.setOnClickListener(new View.OnClickListener() {
 
             @Override
             public void onClick(View v) {
-                doBooking();
-
+                if(!progressbarVisible) {
+                    doBooking();
+                }
             }
         });
     }
@@ -761,7 +759,7 @@ public class HotelBookingActivity extends TravelBaseActivity implements SpinnerD
 
         if (preSellOption != null) {
             initPreSellOptions();
-            reserveButton.setEnabled(true);
+            enableReserveLayout(true);
 
         } else {
             Toast.makeText(this, "could not retrieve sell options", Toast.LENGTH_LONG).show();
@@ -859,7 +857,7 @@ public class HotelBookingActivity extends TravelBaseActivity implements SpinnerD
     @SuppressLint("ShowToast") private void doBooking() {
         if (!isOffline) {
 
-            reserveButton.setEnabled(false);
+            enableReserveLayout(false);
             boolean hasAllRequiredFields = true;
             StringBuffer requiredFieldsMsg = new StringBuffer();
             // get selected credit card
@@ -958,7 +956,7 @@ public class HotelBookingActivity extends TravelBaseActivity implements SpinnerD
                     }
 
                     @Override public void onCancel(Activity activity, DialogInterface dialog) {
-                        reserveButton.setEnabled(true);
+                        enableReserveLayout(true);
                         dialog.dismiss();
                     }
                 };
@@ -966,12 +964,12 @@ public class HotelBookingActivity extends TravelBaseActivity implements SpinnerD
                 AlertDialogFragmentV1.OnClickListener cancelListener = new AlertDialogFragmentV1.OnClickListener() {
 
                     @Override public void onClick(Activity activity, DialogInterface dialog, int which) {
-                        reserveButton.setEnabled(true);
+                        enableReserveLayout(true);
                         dialog.dismiss();
                     }
 
                     @Override public void onCancel(Activity activity, DialogInterface dialog) {
-                        reserveButton.setEnabled(true);
+                        enableReserveLayout(true);
                         dialog.dismiss();
                     }
                 };
@@ -1005,7 +1003,7 @@ public class HotelBookingActivity extends TravelBaseActivity implements SpinnerD
                     DialogFragmentFactoryV1.getAlertOkayInstance(getString(R.string.general_required_fields),
                             requiredFieldsMsg.toString()).show(getFragmentManager(), null);
                 }
-                reserveButton.setEnabled(true);
+                enableReserveLayout(true);
             }
         } else {
             Toast.makeText(getApplicationContext(), "Service Unavailable", Toast.LENGTH_LONG).show();
@@ -1033,7 +1031,7 @@ public class HotelBookingActivity extends TravelBaseActivity implements SpinnerD
             if (isBookingInProgress) {
                 return false;
             } else {
-                reserveButton.setEnabled(true);
+                enableReserveLayout(true);
                 finishActivity(Const.REQUEST_CODE_BACK_BUTTON_PRESSED);
 
             }
@@ -1080,6 +1078,15 @@ public class HotelBookingActivity extends TravelBaseActivity implements SpinnerD
             return R.drawable.icon_status_yellow;
         }
         return -1;
+    }
+
+    // enable or disbale the reserve linearlayout and its child items i.e. Reserve Room button and the amount Text field
+    private void enableReserveLayout(boolean enable){
+        reserveLayout.setClickable(enable);
+        for ( int i = 0; i < reserveLayout.getChildCount();  i++ ){
+            View view = reserveLayout.getChildAt(i);
+            view.setEnabled(enable);
+        }
     }
 
 }
