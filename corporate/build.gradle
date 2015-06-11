@@ -8,6 +8,16 @@ dependencies {
 
 
 android {
+
+    defaultConfig {
+        minSdkVersion lowestSdkSupportVersion
+        targetSdkVersion latestSdkVersion
+        versionCode System.getenv("VERSION_CODE") as Integer ?: 2999
+        versionName "9.22.0"
+        multiDexEnabled true
+        testInstrumentationRunner "com.android.test.runner.MultiDexTestRunner"
+    }
+
     dexOptions {
         preDexLibraries true // increases build speed (2-4s)
         incremental true // increases build speed
@@ -19,72 +29,13 @@ android {
         abortOnError false
     }
 
-    productFlavors {
-        // Define separate dev and prod product flavors.
-        phoneDev {
-            // dev utilizes minSDKVersion = 21 to allow the Android gradle plugin
-            // to pre-dex each module and produce an APK that can be tested on
-            // Android Lollipop without time consuming dex merging processes.
-            defaultConfig {
-                minSdkVersion latestSdkVersion
-                targetSdkVersion latestSdkVersion
-                versionCode System.getenv("VERSION_CODE") as Integer ?: 2999
-                versionName "9.22.0"
-                multiDexEnabled true
-                testInstrumentationRunner "com.android.test.runner.MultiDexTestRunner"
-            }
 
-            splits {
-                abi {
-                    enable true
-                    reset()
-                    include 'armeabi'
-                    universalApk false
-                }
-            }
-        }
-        simulatorDev {
-            // dev utilizes minSDKVersion = 21 to allow the Android gradle plugin
-            // to pre-dex each module and produce an APK that can be tested on
-            // Android Lollipop without time consuming dex merging processes.
-            defaultConfig {
-                minSdkVersion latestSdkVersion
-                targetSdkVersion latestSdkVersion
-                versionCode System.getenv("VERSION_CODE") as Integer ?: 2999
-                versionName "9.22.0"
-                multiDexEnabled true
-                testInstrumentationRunner "com.android.test.runner.MultiDexTestRunner"
-            }
-
-
-            splits {
-                abi {
-                    enable true
-                    reset()
-                    include 'x86'
-                    universalApk false
-                }
-            }
-        }
-        prod {
-            // The actual minSdkVersion for the application.
-            defaultConfig {
-                minSdkVersion lowestSdkSupportVersion
-                targetSdkVersion latestSdkVersion
-                versionCode System.getenv("VERSION_CODE") as Integer ?: 2999
-                versionName "9.22.0"
-                multiDexEnabled true
-                testInstrumentationRunner "com.android.test.runner.MultiDexTestRunner"
-            }
-
-            splits {
-                abi {
-                    enable true
-                    reset()
-                    include 'armeabi', 'x86'
-                    universalApk true
-                }
-            }
+    splits {
+        abi {
+            enable true
+            reset()
+            include 'armeabi', 'x86'
+            universalApk true
         }
     }
 
@@ -109,19 +60,6 @@ int versionIndex = 1; // This is used so each version code is unique.
 
 android.applicationVariants.all { variant ->
     variant.outputs.each { output ->
-        // assign different version code for each output
-        if (variant.productFlavors[0].name.equals("prod")) {
-            def alignedOutputFile = output.outputFile
-            def unalignedOutputFile = output.packageApplication.outputFile
-            // Customise APK filenames (to include build version)
-            if (variant.buildType.zipAlignEnabled) {
-                // normal APK
-                output.outputFile = new File(alignedOutputFile.parent, alignedOutputFile.name.replace("-prod", ""))
-            }
-            // 'unaligned' APK
-            output.packageApplication.outputFile = new File(unalignedOutputFile.parent, unalignedOutputFile.name.replace(
-                    "-prod", ""))
-        }
         // apply custom version code
         int abiVersionCode = versionCodes.get(output.getFilter(OutputFile.ABI)) ?: versionIndex
         output.versionCodeOverride = (abiVersionCode * 1000000) + (android.defaultConfig.versionCode ?: versionIndex)
