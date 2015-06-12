@@ -1,6 +1,10 @@
 package com.concur.mobile.core.expense.travelallowance.datamodel;
 
+import com.concur.mobile.core.expense.travelallowance.util.DateUtils;
+
 import java.io.Serializable;
+import java.util.Calendar;
+import java.util.Comparator;
 import java.util.Date;
 
 /**
@@ -8,7 +12,9 @@ import java.util.Date;
  *
  * @author Michael Becherer
  */
-public class FixedTravelAllowance implements Serializable, Comparable<FixedTravelAllowance>, Cloneable {
+public class FixedTravelAllowance implements Serializable, Comparable<FixedTravelAllowance> {
+
+    private static final long serialVersionUID = 1L;
 
     /**
      * The identifier of the FixedTravelAllowance
@@ -40,52 +46,171 @@ public class FixedTravelAllowance implements Serializable, Comparable<FixedTrave
      */
     private Location location;
 
+    /**
+     * Denotes, how the breakfast is provisioned
+     */
+    private MealProvision breakfastProvision;
+
+    /**
+     * Denotes, how the lunch is provisioned
+     */
+    private MealProvision lunchProvision;
+
+    /**
+     * Denotes, how the dinner is provisioned
+     */
+    private MealProvision dinnerProvision;
+
+    /**
+     * Creates an instance of a FixedTravelAllowance
+     * @param id The identifier of this FixedTravelAllowance
+     */
+    public FixedTravelAllowance(String id) {
+        this.id = id;
+    }
+
+    /**
+     * Getter method
+     * @return The identifier of this FixedTravelAllowance
+     */
     public String getId() {
         return id;
     }
 
+    /**
+     * Setter method
+     * @param id The identifier of this FixedTravelAllowance
+     */
     public void setId(String id) {
         this.id = id;
     }
 
+    /**
+     * Getter method
+     * @return The date related to the FixedTravelAllowance
+     */
     public Date getDate() {
         return date;
     }
 
+    /**
+     * Setter method
+     * @param date The date related to the FixedTravelAllowance
+     */
     public void setDate(Date date) {
         this.date = date;
     }
 
+    /**
+     * Getter method
+     * @return The resulting amount calculated in the backend (Per Diem minus deductions)
+     */
     public Double getAmount() {
         return amount;
     }
 
+    /**
+     * Setter method
+     * @param amount The resulting amount calculated in the backend (Per Diem minus deductions)
+     */
     public void setAmount(Double amount) {
         this.amount = amount;
     }
 
+    /**
+     * Getter method
+     * @return The currency code related to the amount
+     */
     public String getCurrencyCode() {
         return currencyCode;
     }
 
+    /**
+     * Setter method
+     * @param currencyCode The currency code related to the amount
+     */
     public void setCurrencyCode(String currencyCode) {
         this.currencyCode = currencyCode;
     }
 
+    /**
+     * Getter method
+     * @return true, if allowance has been excluded
+     */
     public boolean isExcludedIndicator() {
         return excludedIndicator;
     }
 
+    /**
+     * Setter method
+     * @param excludedIndicator true, if the allowance has been excluded
+     */
     public void setExcludedIndicator(boolean excludedIndicator) {
         this.excludedIndicator = excludedIndicator;
     }
 
+    /**
+     * Getter method
+     * @return The location related to the FixedTravelAllowance
+     */
     public Location getLocation() {
         return location;
     }
 
+    /**
+     * Setter method
+     * @param location The location related to the FixedTravelAllowance
+     */
     public void setLocation(Location location) {
         this.location = location;
+    }
+
+    /**
+     * Getter method
+     * @return Denotes, how the breakfast is provisioned
+     */
+    public MealProvision getBreakfastProvision() {
+        return breakfastProvision;
+    }
+
+    /**
+     * Setter method Sets breakfast provision
+     * @param breakfastProvision
+     */
+    public void setBreakfastProvision(MealProvision breakfastProvision) {
+        this.breakfastProvision = breakfastProvision;
+    }
+
+    /**
+     * Getter method
+     * @return Denotes, how the lunch is provisioned
+     */
+    public MealProvision getLunchProvision() {
+        return lunchProvision;
+    }
+
+    /**
+     * Setter method Sets lunch provision
+     * @param lunchProvision
+     */
+    public void setLunchProvision(MealProvision lunchProvision) {
+        this.lunchProvision = lunchProvision;
+    }
+
+    /**
+     * Getter method
+     * @return Denotes, how the dinner is provisioned
+     */
+    public MealProvision getDinnerProvision() {
+        return dinnerProvision;
+    }
+
+    /**
+     * Setter method Sets dinner provision
+     * @param dinnerProvision
+     */
+    public void setDinnerProvision(MealProvision dinnerProvision) {
+        this.dinnerProvision = dinnerProvision;
     }
 
     @Override
@@ -93,7 +218,6 @@ public class FixedTravelAllowance implements Serializable, Comparable<FixedTrave
         if (this == o) {
             return true;
         }
-
         if (!(o instanceof FixedTravelAllowance)) {
             return false;
         }
@@ -103,24 +227,28 @@ public class FixedTravelAllowance implements Serializable, Comparable<FixedTrave
         if (excludedIndicator != that.excludedIndicator) {
             return false;
         }
-
-        if (!amount.equals(that.amount)) {
+        if (amount != null ? !amount.equals(that.amount) : that.amount != null) {
             return false;
         }
-
-        if (!currencyCode.equals(that.currencyCode)) {
+        if (breakfastProvision != null ? !breakfastProvision.equals(that.breakfastProvision) : that.breakfastProvision != null) {
             return false;
         }
-
-        if (!date.equals(that.date)) {
+        if (currencyCode != null ? !currencyCode.equals(that.currencyCode) : that.currencyCode != null) {
             return false;
         }
-
-        if (!id.equals(that.id)) {
+        if (date != null ? !date.equals(that.date) : that.date != null) {
             return false;
         }
-
-        if (!location.equals(that.location)) {
+        if (dinnerProvision != null ? !dinnerProvision.equals(that.dinnerProvision) : that.dinnerProvision != null) {
+            return false;
+        }
+        if (id != null ? !id.equals(that.id) : that.id != null) {
+            return false;
+        }
+        if (location != null ? !location.equals(that.location) : that.location != null) {
+            return false;
+        }
+        if (lunchProvision != null ? !lunchProvision.equals(that.lunchProvision) : that.lunchProvision != null) {
             return false;
         }
 
@@ -129,17 +257,47 @@ public class FixedTravelAllowance implements Serializable, Comparable<FixedTrave
 
     @Override
     public int hashCode() {
-        int result = id.hashCode();
-        result = 31 * result + date.hashCode();
-        result = 31 * result + amount.hashCode();
-        result = 31 * result + currencyCode.hashCode();
+        int result = id != null ? id.hashCode() : 0;
+        result = 31 * result + (date != null ? date.hashCode() : 0);
+        result = 31 * result + (amount != null ? amount.hashCode() : 0);
+        result = 31 * result + (currencyCode != null ? currencyCode.hashCode() : 0);
         result = 31 * result + (excludedIndicator ? 1 : 0);
-        result = 31 * result + location.hashCode();
+        result = 31 * result + (location != null ? location.hashCode() : 0);
+        result = 31 * result + (breakfastProvision != null ? breakfastProvision.hashCode() : 0);
+        result = 31 * result + (lunchProvision != null ? lunchProvision.hashCode() : 0);
+        result = 31 * result + (dinnerProvision != null ? dinnerProvision.hashCode() : 0);
         return result;
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public int compareTo(FixedTravelAllowance another) {
+        if (another == null) {
+            return -1;
+        }
+
+        if (getDate() != null && another.getDate() != null) {
+			/* Both dates initialized hence compare the dates. */
+            Calendar cal1 = Calendar.getInstance();
+            cal1.setTime(getDate());
+
+            Calendar cal2 = Calendar.getInstance();
+            cal2.setTime(another.getDate());
+
+            Comparator<Calendar> comp = DateUtils
+                    .getCalendarIgnoringTimeComparator();
+
+            return comp.compare(cal2, cal1);
+        } else if (getDate() != null && another.getDate() == null) {
+			/* This date is non null hence consider this object as greater. */
+            return 1;
+        } else if (getDate() == null && another.getDate() != null) {
+			/* This date is null hence consider this object as less. */
+            return -1;
+        }
+
         return 0;
     }
 }
