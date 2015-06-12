@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+              android:orientation="vertical"
+              android:layout_width="84dp"
+              android:layout_height="match_parent"
+              android:background="@color/materialRed">
+
+    <LinearLayout
+        android:layout_width="84dp"
+        android:layout_height="match_parent"
+        android:orientation="vertical"
+        style="@android:style/Widget.Button"
+        android:background="@color/materialRed"
+        android:id="@+id/recallButton"
+        android:paddingTop="13dp"
+        android:paddingBottom="13dp">
+
+        <ImageView
+            android:id="@+id/recallButtonImg"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:src="@drawable/icon_recall"
+            android:paddingBottom="2dp"/>
+
+        <TextView
+            android:id="@+id/recallButtonText"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/tr_recall"
+            android:textColor="@color/White"
+            android:textSize="12sp"
+            android:gravity="center"
+            />
+    </LinearLayout>
+    <!--<Button
+        android:layout_width="84dp"
+        android:layout_height="match_parent"
+        android:id="@+id/recallButton"
+        android:text="Recall"
+        android:textSize="12sp"
+        android:background="@color/materialRed"
+        android:textColor="@color/White"
+        android:drawableTop="@drawable/icon_recall"
+        />-->
+</LinearLayout>

@@ -3,6 +3,7 @@ package com.concur.mobile.core.request.activity;
 import android.app.Activity;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.res.Resources;
 import android.graphics.Typeface;
 import android.os.Bundle;
 import android.os.Handler;
@@ -17,7 +18,7 @@ import com.concur.mobile.base.service.BaseAsyncRequestTask;
 import com.concur.mobile.base.service.BaseAsyncResultReceiver;
 import com.concur.mobile.core.ConcurCore;
 import com.concur.mobile.core.activity.AbstractConnectFormFieldActivity;
-import com.concur.mobile.core.request.task.RequestSaveTask;
+import com.concur.mobile.core.request.task.RequestTask;
 import com.concur.mobile.core.request.util.ConnectHelper;
 import com.concur.mobile.core.request.util.DateUtil;
 import com.concur.mobile.core.util.Const;
@@ -146,6 +147,16 @@ public class RequestHeaderActivity extends AbstractConnectFormFieldActivity impl
 
         saveButton = (RelativeLayout) findViewById(R.id.saveButton);
         applySaveButtonPolicy(saveButton);
+
+        // Set the expense header navigation bar information.
+        try {
+            final String headerNavBarTitle = getResources().getString(R.string.travel_request_header_title);
+            getSupportActionBar().setTitle(headerNavBarTitle);
+        } catch (Resources.NotFoundException resNotFndExc) {
+            android.util.Log.e(Const.LOG_TAG,
+                    CLS_TAG + ".populateExpenseHeaderNavBarInfo: missing navigation bar title text resource!",
+                    resNotFndExc);
+        }
     }
 
     @Override protected void save(ConnectForm form, FormDTO tr) {
@@ -155,7 +166,9 @@ public class RequestHeaderActivity extends AbstractConnectFormFieldActivity impl
             asyncReceiverSave.setListener(new SaveListener());
             requestHeaderVF.setDisplayedChild(ID_LOADING_VIEW);
             // --- onRequestResult calls cleanup() on execution, so listener will be destroyed by processing
-            new RequestSaveTask(RequestHeaderActivity.this, 1, asyncReceiverSave, (RequestDTO) tr).execute();
+            new RequestTask(this, 1, asyncReceiverSave, ConnectHelper.ConnectVersion.VERSION_3_1,
+                    ConnectHelper.Module.REQUEST, ConnectHelper.Action.CREATE, tr.getId() != null ? tr.getId() : null)
+                    .setPostBody(RequestParser.toJson((RequestDTO) tr)).execute();
         } else {
             new NoConnectivityDialogFragment().show(getSupportFragmentManager(), CLS_TAG);
         }

@@ -1,4 +1,3 @@
-
 apply plugin: "java"
 
 // extend the runtime
@@ -9,22 +8,22 @@ configurations {
 
 // add to repositories
 repositories {
-	mavenCentral()
+    mavenCentral()
 }
- 
+
 // add to dependancies
 dependencies {
-	unitTestCompile "junit:junit:4.11"
-	unitTestCompile files("../mobile_test_lib/lib/robolectric/android-all-4.4_r1-robolectric-0.jar")
-	unitTestCompile files("../mobile_test_lib/lib/robolectric/robolectric-2.2-jar-with-dependencies.jar")
-	
-	// Project dependencies	
-	unitTestCompile fileTree(dir: "../appcompat/libs", include: "*.jar")
-	unitTestCompile files("../base/bin/classes")
-	unitTestCompile files("../base/bin/res")	
-		
+    unitTestCompile "junit:junit:4.11"
+    unitTestCompile files("../mobile_test_lib/lib/robolectric/android-all-4.4_r1-robolectric-0.jar")
+    unitTestCompile files("../mobile_test_lib/lib/robolectric/robolectric-2.2-jar-with-dependencies.jar")
+
+    // Project dependencies
+    unitTestCompile fileTree(dir: "../appcompat/libs", include: "*.jar")
+    unitTestCompile files("../base/bin/classes")
+    unitTestCompile files("../base/bin/res")
+
 }
- 
+
 // add a new unitTest sourceSet
 sourceSets {
     unitTest {
@@ -38,14 +37,14 @@ sourceSets {
 
 // build dependency projects
 task buildDependencies << {
-	println ">>> Building ConcurBase project..."
-	"ant debug".execute(null, new File("../base"))
+    println ">>> Building ConcurBase project..."
+    "ant debug".execute(null, new File("../base"))
 }
 // bind to compileJava to build dependencies before running tests
 compileJava.dependsOn(buildDependencies)
- 
+
 // add the unitTest task
-task unitTest(type:Test, dependsOn: assemble) {
+task unitTest(type: Test, dependsOn: assemble) {
     description = "run unit tests"
     testClassesDir = project.sourceSets.unitTest.output.classesDir
     classpath = project.sourceSets.unitTest.runtimeClasspath

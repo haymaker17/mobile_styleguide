@@ -247,6 +247,7 @@
     <string name="msg_cntr_no_data">You have no messages</string>
     <string name="msg_cntr_new_upcoming_look">New look coming soon\n for Concur App!</string>
 
+
     <!-- approvals -->
     <plurals name="approval_row_report_msg">
         <item quantity="zero">No reports to approve</item>
@@ -653,11 +654,13 @@
     <string name="tr_name">Request Name</string>
     <string name="tr_employee_name">Employee Name</string>
     <string name="tr_header">Request Header</string>
-    <string name="tr_new_request_title">Start a Request</string>
-    <string name="tr_new_request">Start Your Request</string>
-    <string name="tr_new_request_desc">Get approved for Air, Hotel and more</string>
+    <string name="tr_new_request_title">Add Request</string>
+    <string name="tr_new_request">No Requests</string>
+    <string name="tr_new_request_desc">When you add a request, you will see it here</string>
+    <string name="tr_new_request_desc_no_create">You can add requests using your Web Concur account</string>
     <string name="tr_list_header_active">ACTIVE REQUESTS</string>
     <string name="tr_list_header_approved">APPROVED REQUESTS</string>
+    <string name="tr_error_recall">An error occured on your request Recall. Please try again on the website for further informations.</string>
     <string name="tr_error_submit">An error occured on your request Submission. Please try again on the website for further informations.</string>
     <string name="tr_error_save">An error occured on your Save operation. Please try again on the website for further informations.</string>
     <string name="tr_error_retrieving_detail">An error occured. Please try again.</string>
@@ -681,6 +684,7 @@
     <string name="travel_request_confirm_approve_msg">Are you sure you want to approve this Request?</string>
     <string name="no_expected_expenses_msg">No Expected Expenses</string>
     <string name="travel_request_title">Requests</string>
+    <string name="travel_request_header_title">New Request</string>
     <string name="travel_request_sub_title">Manage your authorizations</string>
     <string name="travel_request_approvals_title">Request Approvals</string>
     <string name="home_row_tr_approvals_sub_some">%%0!number%% requests to approve</string>
@@ -888,7 +892,8 @@
     <string name="rail_detail_book_failure_title">Error occurred</string>
     <string name="add_another_item_to_request">+ Add Another Item to this request</string>
     <string name="add_another_item_to_request_OFF">- Add Another Item to this request</string>
-    <string name="submit_request">Submit Request</string>
+    <string name="tr_submit">Submit</string>
+    <string name="tr_recall">Recall</string>
     <string name="request_digest_total">Total:</string>
 
     <!-- Cancel Amtrack -->
@@ -1975,12 +1980,11 @@
 
 
     <!-- Start What's new -->
-<string-array name="whats_new">
-<item>\u2022 Visibility of policy violation and lowest logical fare for Request approvers</item>
-<item>\u2022 Improved display of total costs when approving a trip</item>
-<item>\u2022 Improved display of Travel Agency information</item>
-<item>\u2022 Ability to sort expense list by different criteria</item>
-</string-array>
+    <string-array name="whats_new">
+        <item>\u2022 Improved message to first time user if they login incorrectly</item>
+        <item>\u2022 Improved Salesforce Opportunities searching</item>
+        <item>\u2022 Fix for defaulting currency based on city location</item>
+    </string-array>
     <!-- End What's new -->
 
 

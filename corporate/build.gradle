@@ -1,64 +1,40 @@
-apply plugin: 'android'
+apply plugin: 'com.android.application'
 
 dependencies {
-    compile fileTree(dir: 'libs', include: '*.jar')
+    compile fileTree(include: '*.jar', dir: 'libs')
     compile project(':core')
     compile 'com.android.support:multidex:1.0.0'
 }
 
+
 android {
-    compileSdkVersion 21
-    buildToolsVersion "21.1.2"
 
     defaultConfig {
-        minSdkVersion 16
-        targetSdkVersion 21
+        minSdkVersion lowestSdkSupportVersion
+        targetSdkVersion latestSdkVersion
         versionCode System.getenv("VERSION_CODE") as Integer ?: 2999
         versionName "9.22.0"
         multiDexEnabled true
+        testInstrumentationRunner "com.android.test.runner.MultiDexTestRunner"
     }
 
     dexOptions {
-        preDexLibraries = false
+        preDexLibraries true // increases build speed (2-4s)
         incremental true // increases build speed
         javaMaxHeapSize "4g"
-        jumboMode = true
-    }
-
-    sourceSets {
-
-        main {
-            manifest.srcFile 'AndroidManifest.xml'
-            java.srcDirs = ['src']
-            resources.srcDirs = ['src']
-            aidl.srcDirs = ['src']
-            renderscript.srcDirs = ['src']
-            res.srcDirs = ['res']
-            assets.srcDirs = ['assets']
-        }
-
-        // Move the tests to tests/java, tests/res, etc...
-        instrumentTest.setRoot('tests')
-
-        // Move the build types to build-types/<type>
-        // For instance, build-types/debug/java, build-types/debug/AndroidManifest.xml, ...
-        // This moves them out of them default location under src/<type>/... which would
-        // conflict with src/ being used by the main source set.
-        // Adding new build types or product flavors should be accompanied
-        // by a similar customization.
-        debug.setRoot('build-types/debug')
-        release.setRoot('build-types/release')
+        //jumboMode true
     }
 
     lintOptions {
         abortOnError false
     }
 
+
     splits {
         abi {
             enable true
             reset()
-            include 'x86', 'armeabi'
+            include 'armeabi', 'x86'
             universalApk true
         }
     }
@@ -70,30 +46,23 @@ android {
         exclude 'lib/x86/libdatabase_sqlcipher.so'
         exclude 'lib/x86/libsqlcipher_android.so'
         exclude 'lib/x86/libstlport_shared.so'
+        exclude 'lib/sources'
     }
-
-
 }
 
 // map for the version code
 //Ensures architecture specific APKs have a higher version code
-//(otherwise an x86 build would end up using the arm build, which x86 devices can run)
-ext.versionCodes = [armeabi: 1, x86: 3]
-
+//(otherwise an x86 build would end up using the arm build, which x86 devices can runext.
 import com.android.build.OutputFile
 
+def versionCodes = [armeabi: 1, x86: 3]
 int versionIndex = 1; // This is used so each version code is unique.
 
 android.applicationVariants.all { variant ->
-    // assign different version code for each output
     variant.outputs.each { output ->
-
-        if("Release" == System.getenv("art_package_type")) {
-            println(">> Skipping versionCodeOverride: " + output);
-        } else {
-            int abiVersionCode = project.ext.versionCodes.get(output.getFilter(OutputFile.ABI)) ?: versionIndex
-            output.versionCodeOverride = (abiVersionCode * 1000000) + (android.defaultConfig.versionCode ?: versionIndex)
-            versionIndex++
-        }
+        // apply custom version code
+        int abiVersionCode = versionCodes.get(output.getFilter(OutputFile.ABI)) ?: versionIndex
+        output.versionCodeOverride = (abiVersionCode * 1000000) + (android.defaultConfig.versionCode ?: versionIndex)
+        versionIndex++
     }
 }

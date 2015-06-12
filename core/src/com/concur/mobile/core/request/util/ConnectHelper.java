@@ -39,9 +39,8 @@ public class ConnectHelper {
     public enum Action {
         LIST(null),
         DETAIL(null),
-        FORM_FIELDS_HEADER(null),
-        FORM_FIELDS_SEGMENT(null),
         SUBMIT("submit"),
+        RECALL("recall"),
         CREATE(null),
         UPDATE(null);
 
@@ -117,6 +116,7 @@ public class ConnectHelper {
             break;
 
         //post output status (example) "/api/v3.0/travelrequest/requests/{id}/submit"
+        case RECALL:
         case SUBMIT:
             if (id != null && id.length() > 0) {
                 serviceUri.append("/" + id);

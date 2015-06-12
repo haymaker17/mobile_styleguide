@@ -318,6 +318,28 @@
         <item name="android:textColor">@color/ListCellSubText</item>
     </style>
 
+    <!-- Request new design -->
+    <style name="RequestListItemMainText">
+        <item name="android:textSize">16sp</item>
+        <item name="android:textStyle">normal</item>
+        <item name="android:textColor">@color/listItemMainText</item>
+        <item name="android:fontFamily">sans-serif</item>
+    </style>
+
+    <style name="RequestListItemDetailText">
+        <item name="android:textSize">12sp</item>
+        <item name="android:textStyle">normal</item>
+        <item name="android:textColor">@color/listItemDetails</item>
+        <item name="android:fontFamily">sans-serif-light</item>
+    </style>
+
+    <style name="RequestListItemAmountText">
+        <item name="android:textSize">16sp</item>
+        <item name="android:textStyle">normal</item>
+        <item name="android:textColor">@color/listItemAmount</item>
+        <item name="android:fontFamily">sans-serif-medium</item>
+    </style>
+
     <!--
     ================================================= 
                    STYLES - PRE 9.0

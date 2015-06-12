@@ -152,4 +152,13 @@
     <color name="ListItemDivider">#F3F3F3</color>
     <color name="ExpenseListHeaderText">#323232</color>
 
+    <!-- New List screen redlines -->
+    <color name="fab">#0078c8</color>
+    <color name="fabPressed">#ef812d</color>
+    <color name="fabRipple">#bf6767</color>
+    <color name="LollipopListDivider">#dbe1e6</color>
+    <color name="listItemMainText">#383f46</color>
+    <color name="listItemDetails">#a7b6bf</color>
+    <color name="listItemAmount">#0078c8</color>
+
 </resources>
