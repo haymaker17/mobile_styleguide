@@ -41,8 +41,7 @@ public class ConcurMobile extends ConcurCore {
     }
 
     public String getStringResourcePackageName() {
-        // TODO - MOB-23434 - mulitbuild jira - do not check in the change in package name into develop
-        return "com.concur.breeze.jarvis";
+        return "com.concur.breeze";
     }
 
     /*
@@ -50,8 +49,7 @@ public class ConcurMobile extends ConcurCore {
      */
 	@Override
 	public String getGATrackingId() {
-        // TODO - MOB-23434 - mulitbuild jira - do not check in the change in package name into develop
-		return getString(com.concur.breeze.jarvis.R.string.ga_trackingId);
+		return getString(com.concur.breeze.R.string.ga_trackingId);
 	}    
 
     /*

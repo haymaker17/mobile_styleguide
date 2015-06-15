@@ -33,8 +33,7 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.TextView.OnEditorActionListener;
-// TODO - MOB-23434 - mulitbuild jira - do not check in the change in package name into develop
-import com.concur.breeze.jarvis.R;
+import com.concur.breeze.R;
 import com.concur.mobile.core.ConcurCore;
 import com.concur.mobile.core.activity.Preferences;
 import com.concur.mobile.core.util.Const;

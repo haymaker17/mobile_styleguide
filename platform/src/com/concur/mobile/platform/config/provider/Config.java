@@ -16,9 +16,7 @@ public final class Config {
     /**
      * The authority for the config provider.
      */
-    // TODO - MOB-23434 - multibuild jira - do not check in the change in package name into develop
-    //public static final String AUTHORITY = "com.concur.mobile.platform.config";
-    public static final String AUTHORITY = "com.concur.mobile.platform.jarvis.config";
+    public static final String AUTHORITY = "com.concur.mobile.platform.config";
 
     /**
      * A content:// style uri to the authority for the config provider

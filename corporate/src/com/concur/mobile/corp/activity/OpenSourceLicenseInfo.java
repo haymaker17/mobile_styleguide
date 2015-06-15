@@ -8,8 +8,7 @@ import android.support.v4.app.FragmentActivity;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ListView;
-// TODO - MOB-23434 - mulitbuild jira - do not check in the change in package name into develop
-import com.concur.breeze.jarvis.R;
+import com.concur.breeze.R;
 import com.concur.mobile.platform.base.OpenSourceLicenseAdapter;
 import com.concur.mobile.platform.base.OpenSourceLicenseListItem;
 import com.concur.mobile.platform.base.OpenSourceLicenseUtils;

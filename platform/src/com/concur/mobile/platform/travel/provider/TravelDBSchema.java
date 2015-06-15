@@ -852,13 +852,13 @@ public class TravelDBSchema {
                     + Travel.HotelViolationColumns.HOTEL_SEARCH_RESULT_ID + " INTEGER REFERENCES "
                     + Travel.HotelSearchResultColumns.TABLE_NAME + " ON DELETE CASCADE )";
 
-
     // Creates the Hotel Benchmark table - will have a foreign key reference to Hotel Search Result table
     protected static final String SCHEMA_CREATE_HOTEL_BENCHMARK_TABLE =
             "CREATE TABLE IF NOT EXISTS " + Travel.HotelBenchmarkColumns.TABLE_NAME + " ("
                     + Travel.HotelBenchmarkColumns._ID + " INTEGER PRIMARY KEY AUTOINCREMENT, "
                     + Travel.HotelBenchmarkColumns.LOCATION_NAME + " TEXT," + Travel.HotelBenchmarkColumns.CRN_CODE
-                    + " TEXT," + Travel.HotelBenchmarkColumns.PRICE + " REAL," + Travel.HotelBenchmarkColumns.SUB_DIV_CODE + " TEXT,"
+                    + " TEXT," + Travel.HotelBenchmarkColumns.PRICE + " REAL,"
+                    + Travel.HotelBenchmarkColumns.SUB_DIV_CODE + " TEXT,"
                     + Travel.HotelBenchmarkColumns.HOTEL_SEARCH_RESULT_ID + " INTEGER REFERENCES "
                     + Travel.HotelSearchResultColumns.TABLE_NAME + " ON DELETE CASCADE )";
 

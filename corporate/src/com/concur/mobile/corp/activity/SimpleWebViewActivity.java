@@ -13,7 +13,7 @@ import android.webkit.WebSettings;
 import android.webkit.WebView;
 import android.webkit.WebViewClient;
 import android.widget.Toast;
-import com.concur.breeze.jarvis.R;
+import com.concur.breeze.R;
 
 public class SimpleWebViewActivity extends ActionBarActivity {
 

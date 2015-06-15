@@ -5,8 +5,7 @@ import android.support.v7.app.ActionBarActivity;
 import android.text.Html;
 import android.util.Log;
 import android.widget.TextView;
-// TODO - MOB-23434 - mulitbuild jira - do not check in the change in package name into develop
-import com.concur.breeze.jarvis.R;
+import com.concur.breeze.R;
 import com.concur.mobile.core.util.Const;
 
 public class LoginHelpTopic extends ActionBarActivity {
