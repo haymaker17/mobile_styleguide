@@ -63,8 +63,7 @@ public class PushNotificationRegService extends Service {
                         pushNotificationFilter.addAction("com.google.android.c2dm.intent.RECEIVE");
                         pushNotificationFilter.addAction("com.google.android.c2dm.intent.REGISTRATION");
                         pushNotificationFilter.addAction("com.google.android.c2dm.intent.REGISTER");
-                        // TODO - MOB-23434 - mulitbuild jira - do not check in the change in package name into develop
-                        pushNotificationFilter.addCategory("com.concur.breeze.jarvis");
+                        pushNotificationFilter.addCategory("com.concur.breeze");
                     }
                     ctx.registerReceiver(pushNotificationReceiver, pushNotificationFilter,
                             "com.google.android.c2dm.permission.SEND", null);

@@ -29,8 +29,7 @@ import android.widget.Button;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.ViewFlipper;
-// TODO - MOB-23434 - mulitbuild jira - do not check in the change in package name into develop
-import com.concur.breeze.jarvis.R;
+import com.concur.breeze.R;
 import com.concur.mobile.core.activity.BaseActivity;
 import com.concur.mobile.core.util.Const;
 import com.concur.mobile.core.util.EventTracker;
