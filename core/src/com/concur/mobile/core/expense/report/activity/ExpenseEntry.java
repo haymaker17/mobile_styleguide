@@ -1375,6 +1375,9 @@ public class ExpenseEntry extends AbstractExpenseActivity {
                 // Lockdown read-only fields.
                 lockDownReadOnlyFields();
 
+                // Set the travel allowance fields
+                populateAllowance();
+
                 // Set the expense details.
                 populateFormFields();
 
@@ -1830,6 +1833,35 @@ public class ExpenseEntry extends AbstractExpenseActivity {
         } else {
             Log.e(Const.LOG_TAG, CLS_TAG
                     + ".populateExpenseEntryTitleHeader: unable to locate expense entry title header view!");
+        }
+    }
+
+    /**
+     * To populate the travel allowance fields of a daily allowance expense.
+     */
+    protected void populateAllowance() {
+        ViewGroup viewGroup = (ViewGroup) findViewById(R.id.travel_allowance_field_list);
+
+        if (viewGroup != null) {
+            if (!expRepEntDet.expKey.equals("FXMLS")) {
+                // Intention is to show the travel allowances only for daily allowance expenses.
+                // TODO: check whether this if is correct. I'm not sure regarding the expKey.
+                View allowanceFields = findViewById(R.id.allowance_fields);
+                if (allowanceFields != null) {
+                    allowanceFields.setVisibility(View.GONE);
+                }
+                return;
+            }
+            List<FormFieldView> frmFldViews = populateAllowancesDetailViewGroup(viewGroup, getExpRepEntDet());
+            if (frmFldViews != null && frmFldViews.size() > 0) {
+                if (frmFldViewListener != null) {
+                    frmFldViewListener.setFormFieldViews(frmFldViews);
+                } else {
+                    Log.e(Const.LOG_TAG, CLS_TAG + ".populateAllowance: frmFldViewListener is null!");
+                }
+            }
+        } else {
+            Log.e(Const.LOG_TAG, CLS_TAG + ".populateAllowance: expense entry form field group not found!");
         }
     }
 
