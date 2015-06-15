@@ -76,6 +76,48 @@ public class ExpenseReportEntryDetail extends ExpenseReportEntry {
     private List<ExpenseReportAttendee> attendees;
 
     /**
+     * Contains the {@code ExpenseReportFormField}s for travel allowance.
+     */
+    private List<ExpenseReportFormField> travelAllowanceFields;
+
+
+    /**
+     *
+     * @return A list for {@code ExpenseReportFormField}s needed for travel allowance.
+     * In case there are no travel allowance fields this method returns an empty list.
+     */
+    public List<ExpenseReportFormField> getTravelAllowanceFields() {
+        // TODO: In the final version this should be deleted. See also comments in createTAMockData()
+        createTAMockData();
+
+        if (travelAllowanceFields == null) {
+            travelAllowanceFields = new ArrayList<ExpenseReportFormField>();
+        }
+        return travelAllowanceFields;
+    }
+
+    /**
+     * This method creates some mock data for travel allowance.
+     */
+    //TODO: This method should be deleted as soon as the backend connectivity is done.
+    private void createTAMockData() {
+        ExpenseReportFormField field1 = new ExpenseReportFormField("1", "Breakfast", "Not Provided", AccessType.RO,
+                ExpenseReportFormField.ControlType.EDIT, ExpenseReportFormField.DataType.LOCATION, true);
+
+        ExpenseReportFormField field2 = new ExpenseReportFormField("2", "Lunch", "Provided", AccessType.RO,
+                ExpenseReportFormField.ControlType.EDIT, ExpenseReportFormField.DataType.LOCATION, true);
+
+        ExpenseReportFormField field3 = new ExpenseReportFormField("3", "Dinner", "Not Provided", AccessType.RO,
+                ExpenseReportFormField.ControlType.EDIT, ExpenseReportFormField.DataType.LOCATION, true);
+
+        travelAllowanceFields = new ArrayList<ExpenseReportFormField>();
+
+        travelAllowanceFields.add(field1);
+        travelAllowanceFields.add(field2);
+        travelAllowanceFields.add(field3);
+    }
+
+    /**
      * Gets whether this is a detail report entry.
      * 
      * @return whether this is a detailed report entry.
