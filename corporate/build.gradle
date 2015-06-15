@@ -60,9 +60,12 @@ int versionIndex = 1; // This is used so each version code is unique.
 
 android.applicationVariants.all { variant ->
     variant.outputs.each { output ->
-        // apply custom version code
-        int abiVersionCode = versionCodes.get(output.getFilter(OutputFile.ABI)) ?: versionIndex
-        output.versionCodeOverride = (abiVersionCode * 1000000) + (android.defaultConfig.versionCode ?: versionIndex)
-        versionIndex++
+        if ("Release" == System.getenv("art_package_type")) {
+            println(">> Skipping versionCodeOverride: " + output);
+        } else {
+            int abiVersionCode = versionCodes.get(output.getFilter(OutputFile.ABI)) ?: versionIndex
+            output.versionCodeOverride = (abiVersionCode * 1000000) + (android.defaultConfig.versionCode ?: versionIndex)
+            versionIndex++
+        }
     }
 }
