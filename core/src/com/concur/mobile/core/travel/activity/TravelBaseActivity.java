@@ -1829,8 +1829,7 @@ public class TravelBaseActivity extends BaseActivity {
         RuleEnforcementLevel ruleEnfLevel = ViewUtil.getRuleEnforcementLevel(enforcementLevel);
         if (ruleEnfLevel == RuleEnforcementLevel.ERROR || ruleEnfLevel == RuleEnforcementLevel.WARNING) {
             // if Use Travel Points selected?
-            // MOB-22752 - if Use Travel Points selected
-            if (canRedeemTravelPointsAgainstViolations() && useTravelPoints && showingManageViolations) {
+            if (canRedeemTravelPointsAgainstViolations() && useTravelPoints) {
                 retVal = false;
             } else {
 

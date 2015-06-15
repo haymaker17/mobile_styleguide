@@ -20,6 +20,7 @@ public final class Travel {
      */
     public static final String AUTHORITY = "com.concur.mobile.platform.travel";
 
+
     /**
      * A content:// style uri to the authority for the config provider
      */
@@ -4613,7 +4614,7 @@ public final class Travel {
     }
 
     /**
-     * Models Hotel Detail information.
+     * Models Hotel Detail information. Has a foreign key reference to Hotel Search Result table
      */
     public static final class HotelDetailColumns implements BaseColumns {
 
@@ -4680,6 +4681,11 @@ public final class Travel {
         public static final String CONTENT_ITEM_TYPE = "vnd.android.cursor.item/vnd.com.concur.mobile.platform.travel.hotel_detail";
 
         // Column definitions
+
+        /**
+         * Contains the Hotel Search Result ID (INTEGER REFERENCES HOTEL_SEARCH_RESULT._ID) column name.
+         */
+        public static final String HOTEL_SEARCH_RESULT_ID = "HOTEL_SEARCH_RESULT_ID";
 
         /**
          * Contains the hotel name (TEXT) column name.
@@ -4755,6 +4761,11 @@ public final class Travel {
          * Contain the lowest rate (REAL) column name.
          */
         public static final String LOWEST_RATE = "LOWEST_RATE";
+
+        /**
+         * Contain the travel points for the lowest rate (INTEGER) column name.
+         */
+        public static final String TRAVEL_POINTS_FOR_LOWEST_RATE = "TRAVEL_POINTS_FOR_LOWEST_RATE";
 
         /**
          * Contain the lowest enforcement level (INTEGER) column name.
@@ -5050,7 +5061,7 @@ public final class Travel {
         public static final String VIOLATION_VALUE_IDS = "VIOLATION_VALUE_IDS";
 
         /**
-         * Contains the max enforcement level (REAL) column name.
+         * Contains the max enforcement level (INTEGER) column name.
          */
         public static final String TRAVEL_POINTS = "TRAVEL_POINTS";
 
@@ -5063,6 +5074,291 @@ public final class Travel {
          * Contains the default sort order.
          */
         public static final String DEFAULT_SORT_ORDER = BaseColumns._ID + " ASC";
+    }
+
+    /**
+     * Models Hotel Search Result information
+     */
+    public static final class HotelSearchResultColumns implements BaseColumns {
+
+        // Prevent instantiation.
+        private HotelSearchResultColumns() {
+        }
+
+        /**
+         * Contains the Hotel Rate Detail table name.
+         */
+        public static final String TABLE_NAME = "HOTEL_SEARCH_RESULT";
+
+        // URI definitions
+
+        /**
+         * The scheme part for this provider's URI
+         */
+        private static final String SCHEME = "content://";
+
+        // Path parts for the URIs
+
+        /**
+         * Path part for the Hotel Search Result URI
+         */
+        private static final String PATH_HOTEL_SEARCH_RESULT = "/hotel_search_result";
+
+        /**
+         * Path part for the Hotel Search Result ID URI
+         */
+        private static final String PATH_HOTEL_SEARCH_RESULT_ID = "/hotel_search_result/";
+
+        /**
+         * 0-relative position of a Hotel Search Result ID segment in the path part of a Hotel Search Result ID URI
+         */
+        public static final int HOTEL_SEARCH_RESULT_ID_PATH_POSITION = 1;
+
+        /**
+         * The content:// style URL for this table
+         */
+        public static final Uri CONTENT_URI = Uri.parse(SCHEME + AUTHORITY + PATH_HOTEL_SEARCH_RESULT);
+
+        /**
+         * The content URI base for a Hotel Search Result. Callers must append a numeric Hotel Search Result id to this Uri to
+         * retrieve a Hotel Search Result.
+         */
+        public static final Uri CONTENT_ID_URI_BASE = Uri.parse(SCHEME + AUTHORITY + PATH_HOTEL_SEARCH_RESULT_ID);
+
+        /**
+         * The content URI match pattern for a single Hotel Search Result, specified by its ID. Use this to match incoming URIs or
+         * to construct an Intent.
+         */
+        public static final Uri CONTENT_ID_URI_PATTERN = Uri.parse(SCHEME + AUTHORITY + PATH_HOTEL_SEARCH_RESULT_ID
+                + "/#");
+
+        // MIME type definitions
+
+        /**
+         * The MIME type of {@link #CONTENT_URI} providing a directory of Hotel Search Result.
+         */
+        public static final String CONTENT_TYPE = "vnd.android.cursor.dir/vnd.com.concur.mobile.platform.travel.hotel_search_result";
+
+        // Column definitions
+
+        /**
+         * Contains the currency (TEXT) column name.
+         */
+        public static final String CURRENCY = "CURRENCY";
+
+        /**
+         * Contains the distanceUnit (TEXT) column name.
+         */
+        public static final String DISTANCE_UNIT = "DISTANCE_UNIT";
+
+        /**
+         * Contains the default sort order.
+         */
+        public static final String DEFAULT_SORT_ORDER = BaseColumns._ID + " ASC";
+
+        /**
+         * Contains the search criteria (TEXT) column name.
+         */
+        public static final String SEARCH_CRITERIA_URL = "SEARCH_CRITERIA_URL";
+
+        /**
+         * Contains the insert time (DATETIME) column name.
+         */
+        public static final String INSERT_DATETIME = "INSERT_DATETIME";
+
+        /**
+         * Contains the expiry time (DATETIME) column name.
+         */
+        public static final String EXPIRY_DATETIME = "EXPIRY_DATETIME";
+    }
+
+    /**
+     * Models Hotel Violation information. Has a foreign key reference to Hotel Search Result table
+     */
+    public static final class HotelViolationColumns implements BaseColumns {
+
+        // Prevent instantiation.
+        private HotelViolationColumns() {
+        }
+
+        /**
+         * Contains the Hotel Violation table name.
+         */
+        public static final String TABLE_NAME = "HOTEL_VIOLATION";
+
+        // URI definitions
+
+        /**
+         * The scheme part for this provider's URI
+         */
+        private static final String SCHEME = "content://";
+
+        // Path parts for the URIs
+
+        /**
+         * Path part for the Hotel Violation URI
+         */
+        private static final String PATH_HOTEL_VIOLATION = "/hotel_violations";
+
+        /**
+         * Path part for the Hotel Violation ID URI
+         */
+        private static final String PATH_HOTEL_VIOLATION_ID = "/hotel_violations/";
+
+        /**
+         * 0-relative position of a Hotel Violation ID segment in the path part of a Hotel Violation ID URI
+         */
+        public static final int HOTEL_VIOLATION_ID_PATH_POSITION = 1;
+
+        /**
+         * The content:// style URL for this table
+         */
+        public static final Uri CONTENT_URI = Uri.parse(SCHEME + AUTHORITY + PATH_HOTEL_VIOLATION);
+
+        /**
+         * The content URI base for a Hotel Violation. Callers must append a numeric Hotel Violation id to this Uri to retrieve a
+         * Hotel Violation
+         * 
+         */
+        public static final Uri CONTENT_ID_URI_BASE = Uri.parse(SCHEME + AUTHORITY + PATH_HOTEL_VIOLATION_ID);
+
+        /**
+         * The content URI match pattern for a single Hotel Violation, specified by its ID. Use this to match incoming URIs or to
+         * construct an Intent.
+         */
+        public static final Uri CONTENT_ID_URI_PATTERN = Uri.parse(SCHEME + AUTHORITY + PATH_HOTEL_VIOLATION_ID + "/#");
+
+        // MIME type definitions
+
+        /**
+         * The MIME type of {@link #CONTENT_URI} providing a directory of Hotel Violation.
+         */
+        public static final String CONTENT_TYPE = "vnd.android.cursor.dir/vnd.com.concur.mobile.platform.travel.hotel_violations";
+
+        /**
+         * The MIME type of a {@link #CONTENT_URI} subdirectory of a single Hotel Violation.
+         */
+        public static final String CONTENT_ITEM_TYPE = "vnd.android.cursor.item/vnd.com.concur.mobile.platform.travel.hotel_violation";
+
+        // Column definitions
+
+        /**
+         * Contains the Hotel Search Result ID (INTEGER REFERENCES HOTEL_SEARCH_RESULT._ID) column name.
+         */
+        public static final String HOTEL_SEARCH_RESULT_ID = "HOTEL_SEARCH_RESULT_ID";
+
+        /**
+         * Contains the enforcementLevel (TEXT) column name.
+         */
+        public static final String ENFORCEMENT_LEVEL = "ENFORCEMENT_LEVEL";
+
+        /**
+         * Contains the message (TEXT) column name.
+         */
+        public static final String MESSAGE = "MESSAGE";
+
+        /**
+         * Contains the violationValueId (TEXT) column name.
+         */
+        public static final String VIOLATION_VALUE_ID = "VIOLATION_VALUE_ID";
+
+    }
+
+    /**
+     * Models Hotel Benchmarks information. Has a foreign key reference to Hotel Search Result table
+     */
+    public static final class HotelBenchmarkColumns implements BaseColumns {
+
+        // Prevent instantiation.
+        private HotelBenchmarkColumns() {
+        }
+
+        /**
+         * Contains the Hotel Benchmark table name.
+         */
+        public static final String TABLE_NAME = "HOTEL_BENCHMARK";
+
+        // URI definitions
+
+        /**
+         * The scheme part for this provider's URI
+         */
+        private static final String SCHEME = "content://";
+
+        // Path parts for the URIs
+
+        /**
+         * Path part for the Hotel Benchmark URI
+         */
+        private static final String PATH_HOTEL_BENCHMARK = "/hotel_benchmarks";
+
+        /**
+         * Path part for the Hotel Benchmark ID URI
+         */
+        private static final String PATH_HOTEL_BENCHMARK_ID = "/hotel_benchmarks/";
+
+        /**
+         * 0-relative position of a Hotel Violation ID segment in the path part of a Hotel Violation ID URI
+         */
+        public static final int HOTEL_BENCHMARK_ID_PATH_POSITION = 1;
+
+        /**
+         * The content:// style URL for this table
+         */
+        public static final Uri CONTENT_URI = Uri.parse(SCHEME + AUTHORITY + PATH_HOTEL_BENCHMARK);
+
+        /**
+         * The content URI base for a Hotel Benchmark. Callers must append a numeric Hotel Benchmark id to this Uri to retrieve a
+         * Hotel Benchmark
+         *
+         */
+        public static final Uri CONTENT_ID_URI_BASE = Uri.parse(SCHEME + AUTHORITY + PATH_HOTEL_BENCHMARK_ID);
+
+        /**
+         * The content URI match pattern for a single Hotel Benchmark, specified by its ID. Use this to match incoming URIs or to
+         * construct an Intent.
+         */
+        public static final Uri CONTENT_ID_URI_PATTERN = Uri.parse(SCHEME + AUTHORITY + PATH_HOTEL_BENCHMARK_ID + "/#");
+
+        // MIME type definitions
+
+        /**
+         * The MIME type of {@link #CONTENT_URI} providing a directory of Hotel Benchmark.
+         */
+        public static final String CONTENT_TYPE = "vnd.android.cursor.dir/vnd.com.concur.mobile.platform.travel.hotel_benchmarks";
+
+        /**
+         * The MIME type of a {@link #CONTENT_URI} subdirectory of a single Hotel Benchmark.
+         */
+        public static final String CONTENT_ITEM_TYPE = "vnd.android.cursor.item/vnd.com.concur.mobile.platform.travel.hotel_benchmark";
+
+        // Column definitions
+
+        /**
+         * Contains the Hotel Search Result ID (INTEGER REFERENCES HOTEL_SEARCH_RESULT._ID) column name.
+         */
+        public static final String HOTEL_SEARCH_RESULT_ID = "HOTEL_SEARCH_RESULT_ID";
+
+        /**
+         * Contains the location name (TEXT) column name.
+         */
+        public static final String LOCATION_NAME = "LOCATION_NAME";
+
+        /**
+         * Contains the currency code (TEXT) column name.
+         */
+        public static final String CRN_CODE = "CRN_CODE";
+
+        /**
+         * Contains the currency code (REAL) column name.
+         */
+        public static final String PRICE = "PRICE";
+
+        /**
+         * Contains the subDivCode (TEXT) column name.
+         */
+        public static final String SUB_DIV_CODE = "SUB_DIV_CODE";
+
     }
 
 }

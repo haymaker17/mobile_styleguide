@@ -4,6 +4,13 @@
     <!-- Hotel List divider color -->
     <color name="HotelListDivider">#c1cbd2</color>
     <color name="transparent">#00000000</color>
-    <color name="blueTabs">#0078c8</color>
-
+    <color name="ConcurBlue">#0078c8</color>
+    <color name="white_background">#FFFFFF</color>
+    <color name="divider">#d9d9d9</color>
+    <color name="ListStripeWhite">#FFFFFFFF</color>
+    <color name="ListStripeBlue">#220088FF</color>
+    <color name="empty_view_separator_line_background">#a7b6bf</color>
+    <color name="empty_view_background">#f7fafd</color>
+    <color name="grey_view_background">#EEEEEE</color>
+    <color name="orange">#ef812d</color>
 </resources>

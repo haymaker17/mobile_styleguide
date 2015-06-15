@@ -31,7 +31,7 @@ public final class SiteSettings {
                 "MobileViewPicklistCodes"), ALLOW_APPROVALS("AllowApprovals"), ALLOW_REPORTS("AllowReports"), ALLOW_TRAVEL_BOOKING(
                 "AllowTravelBooking"), ENABLE_VOICE_BOOKING("VoiceBookingEnabled"), ENABLE_HOTEL_SEARCH_STREAM(
                 "StreamHotelSearchResults"), HAS_FIXED_TA("HasFixedTA"), ENABLE_CONDITIONAL_FIELD_EVALUATION(
-                "ENABLE_DYNAMIC_FIELD_EVALUATION"), ENABLE_SPDY("EnableSpdy");
+                "ENABLE_DYNAMIC_FIELD_EVALUATION"), ENABLE_SPDY("EnableSpdy"), SHOW_JARVIS_HOTEL_UI("ShowHotelJarvisUIOnAndroid");
 
         // ****** enum fields and methods ****** //
 
@@ -305,6 +305,15 @@ public final class SiteSettings {
      */
     public boolean isSpdyEnabled() {
         return checkSiteSetting(SiteSetting.ENABLE_SPDY, "otmodule", "y");
+    }
+
+    /**
+     * Gets whether ShowHotelJarvisUIOnAndroid flag is enabled.
+     *
+     * @return <code>true</code> to allow make conditional fields calls
+     */
+    public boolean shouldShowHotelJarvisUI() {
+        return checkSiteSetting(SiteSetting.SHOW_JARVIS_HOTEL_UI, "otmodule", "y");
     }
 
 }

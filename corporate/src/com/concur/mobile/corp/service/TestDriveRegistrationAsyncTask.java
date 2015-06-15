@@ -388,6 +388,7 @@ public class TestDriveRegistrationAsyncTask extends CoreAsyncRequestTask {
         parseMap.put(Const.LR_SITE_SETTINGS_ENABLE_CONDITIONAL_FIELD_EVALUATION,
                 ssInstance.isConditionalFieldEvaluationEnabled());
         parseMap.put(Const.LR_SITE_SETTINGS_ENABLE_SPDY, ssInstance.isSpdyEnabled());
+        parseMap.put(Const.LR_SITE_SETTINGS_SHOW_JARVIS_HOTEL_UI, ssInstance.shouldShowHotelJarvisUI());
 
         // add user currency code to map
         if (userCrnCode != null) {

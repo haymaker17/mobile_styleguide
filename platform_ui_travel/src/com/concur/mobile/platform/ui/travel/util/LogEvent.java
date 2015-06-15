@@ -2,9 +2,8 @@ package com.concur.mobile.platform.ui.travel.util;
 
 /**
  * A class providing public constants for use with a event reporting system.
- * 
+ *
  * @author yiwenw
- * 
  */
 public class LogEvent {
 

@@ -1,8 +1,5 @@
 package com.concur.mobile.core.travel.activity;
 
-import java.io.Serializable;
-import java.util.ArrayList;
-
 import android.app.Activity;
 import android.app.SearchManager;
 import android.content.BroadcastReceiver;
@@ -10,7 +7,6 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
 import android.graphics.Color;
-import android.location.Location;
 import android.os.Bundle;
 import android.os.Handler;
 import android.view.LayoutInflater;
@@ -18,17 +14,8 @@ import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.ViewGroup;
 import android.view.Window;
-import android.widget.AdapterView;
-import android.widget.BaseAdapter;
-import android.widget.Button;
-import android.widget.ImageView;
-import android.widget.LinearLayout;
-import android.widget.ListView;
-import android.widget.RelativeLayout;
-import android.widget.SearchView;
+import android.widget.*;
 import android.widget.SearchView.OnQueryTextListener;
-import android.widget.TextView;
-
 import com.concur.core.R;
 import com.concur.mobile.core.ConcurCore;
 import com.concur.mobile.core.receiver.NetworkActivityReceiver;
@@ -39,10 +26,11 @@ import com.concur.mobile.core.travel.rail.data.RailStation;
 import com.concur.mobile.core.travel.service.LocationSearchReply;
 import com.concur.mobile.core.util.Const;
 
+import java.io.Serializable;
+import java.util.ArrayList;
+
 /**
- * 
  * @author tejoa Location Search with Search View widget.
- * 
  */
 public class LocationSearchV1 extends Activity implements INetworkActivityListener, SearchView.OnQueryTextListener {
 
@@ -50,16 +38,15 @@ public class LocationSearchV1 extends Activity implements INetworkActivityListen
     public static final int SEARCH_COMPANY_LOCATIONS = SEARCH_CUSTOM << 1;
     public static final int SEARCH_RAIL_STATIONS = SEARCH_CUSTOM << 2;
     public static final int SEARCH_AIRPORTS = SEARCH_CUSTOM << 3;
+    public static final int SEARCH_CURRENT_LOCATION = SEARCH_CUSTOM << 4;
     protected static final String RESULT_LIST = "result_list";
 
     protected ListView searchResultsList;
     protected Button searchOfficeLocations;
-    protected Location mcurrentLocation;
+    protected Button currentLocationBtn;
 
     protected int allowedSearchModes;
     protected int currentSearchMode;
-    protected int previousSearchMode;
-    protected String preSearchText;
 
     protected String currentSearchText;
 
@@ -76,8 +63,9 @@ public class LocationSearchV1 extends Activity implements INetworkActivityListen
     protected Handler searchDelayHandler;
     protected Runnable searchDelayRunnable;
 
-    @Override
-    protected void onCreate(Bundle savedInstanceState) {
+    private String currentLocationName;
+
+    @Override protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         // Remove title bar
         this.requestWindowFeature(Window.FEATURE_NO_TITLE);
@@ -85,6 +73,7 @@ public class LocationSearchV1 extends Activity implements INetworkActivityListen
         setContentView(R.layout.location_search_v1);
 
         allowedSearchModes = getIntent().getIntExtra(Const.EXTRA_LOCATION_SEARCH_ALLOWED_MODES, SEARCH_CUSTOM);
+        currentLocationName = getIntent().getStringExtra(Const.EXTRA_TRAVEL_HOTEL_SEARCH_LOCATION);
 
         configureControls(savedInstanceState);
 
@@ -92,8 +81,7 @@ public class LocationSearchV1 extends Activity implements INetworkActivityListen
         searchDelayRunnable = new DelayedSearch();
     }
 
-    @SuppressWarnings("unchecked")
-    private ArrayList<? extends LocationChoice> extracted(Serializable locBundle) {
+    @SuppressWarnings("unchecked") private ArrayList<? extends LocationChoice> extracted(Serializable locBundle) {
         return (ArrayList<? extends LocationChoice>) locBundle;
     }
 
@@ -102,8 +90,7 @@ public class LocationSearchV1 extends Activity implements INetworkActivityListen
      * 
      * @see android.app.Activity#onSaveInstanceState(android.os.Bundle)
      */
-    @Override
-    protected void onSaveInstanceState(Bundle outState) {
+    @Override protected void onSaveInstanceState(Bundle outState) {
         super.onSaveInstanceState(outState);
 
         SearchResultsAdapter adapter = (SearchResultsAdapter) searchResultsList.getAdapter();
@@ -117,8 +104,7 @@ public class LocationSearchV1 extends Activity implements INetworkActivityListen
 
     }
 
-    @Override
-    protected void onStart() {
+    @Override protected void onStart() {
         super.onStart();
 
         registerReceiver(networkActivityReceiver, networkActivityFilter);
@@ -126,8 +112,7 @@ public class LocationSearchV1 extends Activity implements INetworkActivityListen
         registerReceiver(locationReceiver, filterLocationsUpdated);
     }
 
-    @Override
-    protected void onStop() {
+    @Override protected void onStop() {
         super.onStop();
 
         unregisterReceiver(networkActivityReceiver);
@@ -145,6 +130,9 @@ public class LocationSearchV1 extends Activity implements INetworkActivityListen
         searchResultsList = (ListView) findViewById(R.id.locSearchResults);
         searchOfficeLocations = (Button) findViewById(R.id.officeLocation);
         searchOfficeLocations.setVisibility(View.VISIBLE);
+
+        currentLocationBtn = (Button) findViewById(R.id.currentLocation);
+
         backButton = (ImageView) findViewById(R.id.search_back_button);
         searchIcon = (ImageView) findViewById(R.id.search_icon);
         searchIcon.setVisibility(View.VISIBLE);
@@ -154,8 +142,7 @@ public class LocationSearchV1 extends Activity implements INetworkActivityListen
 
         backButton.setOnClickListener(new OnClickListener() {
 
-            @Override
-            public void onClick(View arg0) {
+            @Override public void onClick(View arg0) {
                 onBackPressed();
             }
         });
@@ -174,8 +161,7 @@ public class LocationSearchV1 extends Activity implements INetworkActivityListen
 
         searchOfficeLocations.setOnClickListener(new View.OnClickListener() {
 
-            @Override
-            public void onClick(View v) {
+            @Override public void onClick(View v) {
                 // Check for connectivity, if none, then display dialog and
                 // return.
                 if (!ConcurCore.isConnected()) {
@@ -200,8 +186,9 @@ public class LocationSearchV1 extends Activity implements INetworkActivityListen
                 ConcurCore app = (ConcurCore) getApplication();
                 ArrayList<CompanyLocation> full = app.getSystemConfig().getCompanyLocations();
                 adapter.clearLocations();
-                searchView.setQueryHint("Search for an Office Location");
+                searchView.setQueryHint(getText(R.string.loc_search_office_hint));
                 searchOfficeLocations.setVisibility(View.GONE);
+                currentLocationBtn.setVisibility(View.GONE);
                 searchResultsList.setVisibility(View.VISIBLE);
                 adapter.updateLocations(full);
                 // } else {
@@ -219,11 +206,21 @@ public class LocationSearchV1 extends Activity implements INetworkActivityListen
 
         });
 
+        currentLocationBtn.setOnClickListener(new View.OnClickListener() {
+
+            @Override public void onClick(View v) {
+                Intent i = new Intent();
+                i.putExtra(Const.EXTRA_LOCATION_SEARCH_MODE_USED, SEARCH_CURRENT_LOCATION);
+                setResult(RESULT_OK, i);
+                finish();
+            }
+        });
+
     }
 
     /**
      * set the Search Manager
-     * 
+     *
      * @return
      */
     private SearchView setupSearchView() {
@@ -232,7 +229,11 @@ public class LocationSearchV1 extends Activity implements INetworkActivityListen
         searchView = (SearchView) findViewById(R.id.searchView);
         searchView.setIconifiedByDefault(false);
         searchView.setSearchableInfo(searchManager.getSearchableInfo(getComponentName()));
-        searchView.setQueryHint("Search Destination");
+        if (currentLocationName != null) {
+            searchView.setQueryHint(currentLocationName);
+        } else {
+            searchView.setQueryHint(getText(R.string.loc_search_hint_v1));
+        }
         searchView.setOnQueryTextListener((OnQueryTextListener) this);
         setSearchIcons();
         setSearchTextColour();
@@ -241,7 +242,7 @@ public class LocationSearchV1 extends Activity implements INetworkActivityListen
 
     /**
      * custom icons for search widget
-     * 
+     *
      * @param searchView
      */
     private void setSearchIcons() {
@@ -258,7 +259,7 @@ public class LocationSearchV1 extends Activity implements INetworkActivityListen
 
     /**
      * custom colors to search Widget
-     * 
+     *
      * @param searchView
      */
     private void setSearchTextColour() {
@@ -280,8 +281,7 @@ public class LocationSearchV1 extends Activity implements INetworkActivityListen
     /**
      * on textChange listener
      */
-    @Override
-    public boolean onQueryTextChange(String newText) {
+    @Override public boolean onQueryTextChange(String newText) {
         handleSearch(newText);
         return false;
     }
@@ -289,8 +289,7 @@ public class LocationSearchV1 extends Activity implements INetworkActivityListen
     /**
      * on text submit listener
      */
-    @Override
-    public boolean onQueryTextSubmit(String query) {
+    @Override public boolean onQueryTextSubmit(String query) {
         searchView.clearFocus();
         return true;
     }
@@ -299,12 +298,17 @@ public class LocationSearchV1 extends Activity implements INetworkActivityListen
         searchIcon.setLayoutParams(new LinearLayout.LayoutParams(0, 0));
         searchResultsList.setVisibility(View.VISIBLE);
         searchOfficeLocations.setVisibility(View.GONE);
+        currentLocationBtn.setVisibility(View.GONE);
 
-        if (text.length() >= 2 && currentSearchMode == SEARCH_CUSTOM) {
+        if (text.length() >= minSearchLength && currentSearchMode == SEARCH_CUSTOM) {
             doSearch(text);
         } else if (text.length() == 0) {
             searchIcon.setLayoutParams(new LinearLayout.LayoutParams(LinearLayout.LayoutParams.WRAP_CONTENT,
                     LinearLayout.LayoutParams.MATCH_PARENT));
+            // hide the list view and show the buttons again
+            searchResultsList.setVisibility(View.GONE);
+            searchOfficeLocations.setVisibility(View.VISIBLE);
+            currentLocationBtn.setVisibility(View.VISIBLE);
         } else if (text.length() >= 1 && currentSearchMode != SEARCH_CUSTOM) {
             doSearch(text);
         }
@@ -407,7 +411,7 @@ public class LocationSearchV1 extends Activity implements INetworkActivityListen
         SearchResultsAdapter adapter = (SearchResultsAdapter) searchResultsList.getAdapter();
         adapter.clearLocations();
         searchDelayHandler.removeCallbacks(searchDelayRunnable);
-        searchDelayHandler.postDelayed(searchDelayRunnable, 300);
+        searchDelayHandler.postDelayed(searchDelayRunnable, 800);
     }
 
     protected ArrayList<? extends LocationChoice> filterCompanyLocations(String search) {

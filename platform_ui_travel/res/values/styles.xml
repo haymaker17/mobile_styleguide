@@ -3,12 +3,28 @@
     <!--
         Base application theme, dependent on API level. This theme is replaced
         by AppBaseTheme from res/values-vXX/styles.xml on newer devices.
+
+
+
+
+
+
+
+
     -->
     <style name="AppBaseTheme" parent="android:Theme.Light">
         <!--
             Theme customizations available in newer API levels can go in
             res/values-vXX/styles.xml, while customizations related to
             backward-compatibility can go here.
+
+
+
+
+
+
+
+
         -->
     </style>
 
@@ -43,6 +59,14 @@
     <style name="HotelListRowSoldOutText">
         <item name="android:textColor">#d25533</item>
     </style
+
+
+
+
+
+
+
+
     -->
 
     <style name="FormFieldLabelTexHeaderV1" parent="PrimaryText">
@@ -69,7 +93,7 @@
     </style>
 
     <!-- Rest API White ActionBar with ActionBar tabs with blue text/bar -->
-    <style name="ConcurRestTheme.White.ActionBarTabs" parent="Theme.AppCompat.Light">
+    <style name="ConcurRestTheme.White.ActionBarTabs" parent="android:Theme.Holo.Light">
         <item name="actionBarStyle">@style/Concur.ActionBar.Tabs</item>
         <item name="actionMenuTextColor">@color/universal_tour_ab_menu</item>
         <item name="actionOverflowButtonStyle">@style/ActionBarOverflowButton</item>
@@ -82,5 +106,70 @@
         <item name="android:textColor">@drawable/hotel_filter_button_text_custom</item>
         <item name="android:textSize">16sp</item>
     </style>
+
+    <style name="VoiceTextboxPrimary" parent="PrimaryText">
+        <item name="android:textSize">18sp</item>
+        <item name="android:textColor">#FFFFFF</item>
+    </style>
+
+    <style name="CustomFormFieldLabel">
+        <item name="android:textSize">16sp</item>
+        <item name="android:fontFamily">sans-serif</item>
+        <item name="android:textColor">#666666</item>
+        <item name="android:textStyle">normal</item>
+    </style>
+
+    <style name="CustomFormFieldValue">
+        <item name="android:textSize">14sp</item>
+        <item name="android:fontFamily">sans-serif-light</item>
+        <item name="android:textColor">#666666</item>
+        <item name="android:textStyle">normal</item>
+    </style>
+
+    <style name="CustomFormFieldNote">
+        <item name="android:textSize">10sp</item>
+        <item name="android:fontFamily">sans-serif=light</item>
+        <item name="android:textColor">#666666</item>
+        <item name="android:textStyle">normal</item>
+    </style>
+
+    <!-- Offline Header Styles -->
+
+    <style name="OfflineHeaderText" parent="PrimaryText">
+        <item name="android:textSize">22sp</item>
+        <item name="android:textStyle">normal</item>
+        <item name="android:textColor">@color/white_background</item>
+    </style>
+
+    <!-- END Offline Header Styles -->
+
+    <!-- start of Travel Points -->
+    <style name="TravelPointsNegativeText" parent="PrimaryText">
+        <item name="android:textSize">12sp</item>
+        <item name="android:fontFamily">sans-serif-light</item>
+        <item name="android:textColor">@color/FareRed</item>
+    </style>
+
+    <style name="TravelPointsPositiveText" parent="PrimaryText">
+        <item name="android:textSize">12sp</item>
+        <item name="android:fontFamily">sans-serif-light</item>
+        <item name="android:textColor">#0078c8</item>
+    </style>
+    <!-- end of Travel Points -->
+
+    <!-- start of Price-to-Beat -->
+    <style name="ListCellPriceText" parent="PrimaryText">
+        <item name="android:textSize">14sp</item>
+        <item name="android:fontFamily">sans-serif</item>
+        <item name="android:textColor">#0078c8</item>
+    </style>
+
+    <style name="ListCellUnavailableText" parent="PrimaryText">
+        <item name="android:textSize">12sp</item>
+        <item name="android:fontFamily">sans-serif</item>
+        <item name="android:textColor">#848b93</item>
+    </style>
+    <!-- end of Price-to-Beat -->
+
 
 </resources>

@@ -1,13 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     style="@style/ConcurRestTheme.White.ActionBarTabs"
     android:layout_width="wrap_content"
     android:layout_height="wrap_content"
     android:background="@drawable/tab_indicator_ab_restv1"
     android:gravity="center"
     android:paddingBottom="10dp"
-    android:paddingLeft="36dp"
-    android:paddingRight="36dp"
     android:paddingTop="10dp" >
 
     <TextView
@@ -15,9 +13,21 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:background="#FFFFFF"
-        android:text="Details"
+        android:text="@string/hotel_tab_details"
         android:textColor="@drawable/tab_text_selector"
         android:textSize="14sp"
         android:textStyle="normal" />
 
-</LinearLayout>
+</RelativeLayout><!--
+       android:paddingLeft="30dp"
+    android:paddingRight="30dp"
+    @drawable/tab_indicator_ab_restv1
+    
+    <View
+        android:id="@+id/group_view_separator"
+        android:layout_width="wrap_content"
+        android:layout_height="1dp"
+        android:layout_alignRight="@+id/text"
+        android:layout_below="@+id/text"
+        android:background="@drawable/tab_text_selector" />
+-->

@@ -31,6 +31,7 @@ public class BooleanFormFieldView extends FormFieldView {
      */
     public BooleanFormFieldView(IFormField frmFld, IFormFieldViewListener listener) {
         super(frmFld, listener);
+        layoutResourceId = R.layout.checkbox_form_field;
     }
 
     @Override
@@ -41,7 +42,7 @@ public class BooleanFormFieldView extends FormFieldView {
             case RW: {
                 switch (frmFld.getInputType()) {
                 case USER: {
-                    view = inflater.inflate(R.layout.checkbox_form_field, null);
+                    view = inflater.inflate(layoutResourceId, null);
                     if (view != null) {
                         setTextViewText(view, R.id.field_name, frmFld.getLabel());
                         // Set the state of the checked text view.
@@ -300,5 +301,4 @@ public class BooleanFormFieldView extends FormFieldView {
             frmFld.setLiKey(curValStr);
         }
     }
-
 }

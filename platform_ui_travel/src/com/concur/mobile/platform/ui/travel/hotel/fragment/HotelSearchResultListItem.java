@@ -1,8 +1,5 @@
 package com.concur.mobile.platform.ui.travel.hotel.fragment;
 
-import java.io.Serializable;
-import java.net.URI;
-
 import android.content.Context;
 import android.graphics.Bitmap;
 import android.graphics.Color;
@@ -10,10 +7,11 @@ import android.text.util.Linkify;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
+import android.view.View.OnClickListener;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
-
+import android.widget.Toast;
 import com.concur.mobile.platform.travel.search.hotel.Hotel;
 import com.concur.mobile.platform.ui.common.util.FormatUtil;
 import com.concur.mobile.platform.ui.common.util.ImageCache;
@@ -23,12 +21,13 @@ import com.concur.mobile.platform.ui.travel.R;
 import com.concur.mobile.platform.ui.travel.util.Const;
 import com.concur.mobile.platform.util.Format;
 
+import java.io.Serializable;
+import java.net.URI;
+
 /**
- * 
  * List item for a hotel
- * 
+ *
  * @author RatanK
- * 
  */
 public class HotelSearchResultListItem extends ListItem implements Serializable {
 
@@ -47,7 +46,7 @@ public class HotelSearchResultListItem extends ListItem implements Serializable 
 
     /**
      * Gets the <code>Hotel</code> object backing this list item.
-     * 
+     *
      * @return returns the <code>Hotel</code> object backing this list item.
      */
     public Hotel getHotel() {
@@ -59,13 +58,11 @@ public class HotelSearchResultListItem extends ListItem implements Serializable 
         this.hotel = hotel;
     }
 
-    @Override
-    public boolean isEnabled() {
+    @Override public boolean isEnabled() {
         return true;
     }
 
-    @Override
-    public View buildView(Context context, View convertView, ViewGroup parent) {
+    @Override public View buildView(final Context context, View convertView, ViewGroup parent) {
         View hotelView = null;
         LayoutInflater inflater = null;
 
@@ -77,26 +74,30 @@ public class HotelSearchResultListItem extends ListItem implements Serializable 
         }
 
         // Set the vendor image, or hide it and set the vendor name.
+        ImageView thumbNailImg = (ImageView) hotelView.findViewById(R.id.hotel_image_id);
+        if (thumbNailImg != null) {
+            thumbNailImg.setVisibility(View.VISIBLE);
+        } else {
+            Log.e(Const.LOG_TAG, CLS_TAG + ".getView: can't locate image view!");
+        }
         if (hotel.imagePairs != null && hotel.imagePairs.size() > 0 && hotel.imagePairs.get(0).thumbnail != null) {
 
-            ImageView thumbNailImg = (ImageView) hotelView.findViewById(R.id.hotel_image_id);
-            if (thumbNailImg != null) {
-                thumbNailImg.setVisibility(View.VISIBLE);
-                // Set the list item tag to the uri, this tag value is used in 'ListItemAdapter.refreshView'
-                // to refresh the appropriate view items once images have been loaded.
-                URI uri = URI.create(hotel.imagePairs.get(0).thumbnail);
-                listItemTag = uri;
-                // Attempt to load the image from the image cache, if not there, then the
-                // ImageCache will load it asynchronously and this view will be updated via
-                // the ImageCache broadcast receiver available in BaseActivity.
-                ImageCache imgCache = ImageCache.getInstance(context);
-                Bitmap bitmap = imgCache.getBitmap(uri, null);
-                if (bitmap != null) {
-                    thumbNailImg.setImageBitmap(bitmap);
-                }
+            // Set the list item tag to the uri, this tag value is used in 'ListItemAdapter.refreshView'
+            // to refresh the appropriate view items once images have been loaded.
+            URI uri = URI.create(hotel.imagePairs.get(0).thumbnail);
+            listItemTag = uri;
+            // Attempt to load the image from the image cache, if not there, then the
+            // ImageCache will load it asynchronously and this view will be updated via
+            // the ImageCache broadcast receiver available in BaseActivity.
+            ImageCache imgCache = ImageCache.getInstance(context);
+            Bitmap bitmap = imgCache.getBitmap(uri, null);
+            if (bitmap != null) {
+                thumbNailImg.setImageBitmap(bitmap);
             } else {
-                Log.e(Const.LOG_TAG, CLS_TAG + ".getView: can't locate image view!");
+                thumbNailImg.setImageResource(R.drawable.hotel_results_default_image);
             }
+        } else {
+            thumbNailImg.setImageResource(R.drawable.hotel_results_default_image);
         }
 
         // Set the price with currency symbol
@@ -104,8 +105,9 @@ public class HotelSearchResultListItem extends ListItem implements Serializable 
         if (txtView != null) {
             if (hotel.lowestRate != null) {
                 txtView.setVisibility(View.VISIBLE);
-                txtView.setText(FormatUtil.formatAmountWithNoDecimals(hotel.lowestRate, context.getResources()
-                        .getConfiguration().locale, hotel.currencyCode, true, false));
+                txtView.setText(FormatUtil
+                        .formatAmountWithNoDecimals(hotel.lowestRate, context.getResources().getConfiguration().locale,
+                                hotel.currencyCode, true, false));
             } else {
                 txtView.setVisibility(View.INVISIBLE);
             }
@@ -153,31 +155,46 @@ public class HotelSearchResultListItem extends ListItem implements Serializable 
             Log.e(Const.LOG_TAG, CLS_TAG + ".getView: unable to locate hotel distance text view!");
         }
 
+        // set the travel points
+        if (hotel.travelPointsForLowestRate != null && hotel.travelPointsForLowestRate != 0) {
+            txtView = ((TextView) hotelView.findViewById(R.id.travel_points_text));
+            if (hotel.travelPointsForLowestRate < 0) {
+                txtView.setTextAppearance(context, R.style.TravelPointsNegativeText);
+                txtView.setText(Format.localizeText(context, R.string.travel_points_can_be_redeemed, new Object[] {
+                        FormatUtil.formatAmountWithNoDecimals(hotel.travelPointsForLowestRate,
+                                context.getResources().getConfiguration().locale, hotel.currencyCode, false, false) }));
+            } else {
+                txtView.setTextAppearance(context, R.style.TravelPointsPositiveText);
+                txtView.setText(Format.localizeText(context, R.string.travel_points_can_be_earned, new Object[] {
+                        FormatUtil.formatAmountWithNoDecimals(hotel.travelPointsForLowestRate,
+                                context.getResources().getConfiguration().locale, hotel.currencyCode, false, false) }));
+            }
+        }
+
         // Set the recommendation.
         hotelView.setAlpha(1);
         txtView = null;
         txtView = ((TextView) hotelView.findViewById(R.id.preference_text));
         if (txtView != null) {
-            // check if sold out or property not available
+            // check if property not available
             String availabilityErrorCode = hotel.availabilityErrorCode;
             if (availabilityErrorCode != null && availabilityErrorCode.trim().length() > 0) {
                 txtView.setVisibility(View.VISIBLE);
                 if (availabilityErrorCode.equalsIgnoreCase("PropertyNotAvailable")) {
-                    txtView.setText(R.string.general_not_available);
-                } else if (availabilityErrorCode.equalsIgnoreCase("SoldOut")) {
                     txtView.setText(R.string.general_sold_out);
                 } else {
                     // unknown error code
-                    txtView.setVisibility(View.GONE);
+                    txtView.setText(R.string.general_not_available);
+
                 }
-                if (txtView.getVisibility() == View.VISIBLE) {
-                    txtView.setBackground(context.getResources().getDrawable(R.drawable.strong_red_rectangle));
-                    txtView.setTextColor(Color.parseColor("#d25533"));
-                    hotelView.setAlpha(0.5f);// 50% transparent
-                }
+
+                txtView.setBackground(context.getResources().getDrawable(R.drawable.strong_red_rectangle));
+                txtView.setTextColor(Color.parseColor("#d25533"));
+                hotelView.setAlpha(0.5f);// 50% transparent
+
             } else {
                 // Set the company preference
-                int resourceId = com.concur.mobile.platform.ui.travel.util.ViewUtil
+                final int resourceId = com.concur.mobile.platform.ui.travel.util.ViewUtil
                         .getHotelCompanyPreferredTextId(hotel.preferences);
 
                 if (resourceId == -1) {
@@ -186,7 +203,13 @@ public class HotelSearchResultListItem extends ListItem implements Serializable 
                     txtView.setVisibility(View.VISIBLE);
                     txtView.setBackground(context.getResources().getDrawable(R.drawable.hotel_preferred_rectangle));
                     txtView.setTextColor(Color.parseColor("#ffffff"));
-                    txtView.setText(resourceId);
+                    txtView.setText(R.string.hotel_preferred);
+                    txtView.setOnClickListener(new OnClickListener() {
+
+                        @Override public void onClick(View v) {
+                            Toast.makeText(context, context.getString(resourceId), Toast.LENGTH_SHORT).show();
+                        }
+                    });
                 }
             }
         }
@@ -215,8 +238,8 @@ public class HotelSearchResultListItem extends ListItem implements Serializable 
                     starsImg.setImageResource(starImgResId);
                     starsImg.setVisibility(View.VISIBLE);
                 } else {
-                    Log.e(Const.LOG_TAG, CLS_TAG + ".getView: invalid star rating of '" + starRating
-                            + "...hiding stars.");
+                    Log.e(Const.LOG_TAG,
+                            CLS_TAG + ".getView: invalid star rating of '" + starRating + "...hiding stars.");
                     starsImg.setVisibility(View.GONE);
                 }
             }

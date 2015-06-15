@@ -37,16 +37,13 @@ public class AlertDialogFragmentV1 extends DialogFragment {
 
         /**
          * Provides a notification of a dialog button being clicked.
-         * 
-         * @param activity
-         *            contains a reference to the current <code>Activity</code> associated with the dialog fragment. <b>NOTE:</b>
-         *            this value may change due to device orientation. Clients should use this instance to invoke methods in
-         *            response to a dialog button being pressed.
-         * @param dialog
-         *            contains a reference to the <code>DialogInterface</code> object.
-         * @param which
-         *            contains which button was pressed, see <code>DialogInterface.BUTTON_POSITIVE</code>,
-         *            <code>DialogInterface.BUTTON_NEUTRAL</code> or <code>DialogInterface.BUTTON_NEGATIVE</code>.
+         *
+         * @param activity contains a reference to the current <code>Activity</code> associated with the dialog fragment. <b>NOTE:</b>
+         *                 this value may change due to device orientation. Clients should use this instance to invoke methods in
+         *                 response to a dialog button being pressed.
+         * @param dialog   contains a reference to the <code>DialogInterface</code> object.
+         * @param which    contains which button was pressed, see <code>DialogInterface.BUTTON_POSITIVE</code>,
+         *                 <code>DialogInterface.BUTTON_NEUTRAL</code> or <code>DialogInterface.BUTTON_NEGATIVE</code>.
          */
         public void onClick(Activity activity, DialogInterface dialog, int which);
     }
@@ -66,9 +63,8 @@ public class AlertDialogFragmentV1 extends DialogFragment {
 
     /**
      * Sets the text of the dialog title.
-     * 
-     * @param title
-     *            contains the text of the dialog title.
+     *
+     * @param title contains the text of the dialog title.
      */
     public void setTitle(String title) {
         Bundle args = getArguments();
@@ -81,9 +77,8 @@ public class AlertDialogFragmentV1 extends DialogFragment {
 
     /**
      * Sets the text resource ID of the dialog title.
-     * 
-     * @param title
-     *            contains the resource ID of the dialog title.
+     *
+     * @param title contains the resource ID of the dialog title.
      */
     public void setTitle(int title) {
         Bundle args = getArguments();
@@ -96,9 +91,8 @@ public class AlertDialogFragmentV1 extends DialogFragment {
 
     /**
      * Sets the text of the dialog message.
-     * 
-     * @param message
-     *            contains the text of the dialog message.
+     *
+     * @param message contains the text of the dialog message.
      */
     public void setMessage(String message) {
         Bundle args = getArguments();
@@ -111,9 +105,14 @@ public class AlertDialogFragmentV1 extends DialogFragment {
 
     /**
      * Sets the text resource ID of the dialog message.
+<<<<<<< HEAD
      * 
-     * @param title
+     * @param message
      *            contains the resource ID of the dialog message.
+=======
+     *
+     * @param message contains the resource ID of the dialog message.
+>>>>>>> JarvisAndroidBranch
      */
     public void setMessage(int message) {
         Bundle args = getArguments();
@@ -126,9 +125,8 @@ public class AlertDialogFragmentV1 extends DialogFragment {
 
     /**
      * Sets the positive button text.
-     * 
-     * @param text
-     *            contains the positive button text.
+     *
+     * @param text contains the positive button text.
      */
     public void setPositiveButtonText(String text) {
         Bundle args = getArguments();
@@ -141,9 +139,8 @@ public class AlertDialogFragmentV1 extends DialogFragment {
 
     /**
      * Sets the resource ID of the positive button text.
-     * 
-     * @param text
-     *            contains the resource ID of the positive button text.
+     *
+     * @param text contains the resource ID of the positive button text.
      */
     public void setPositiveButtonText(int text) {
         Bundle args = getArguments();
@@ -156,18 +153,17 @@ public class AlertDialogFragmentV1 extends DialogFragment {
 
     /**
      * Sets the positive button listener for the dialog.
-     * 
-     * @param listener
-     *            contains a reference to an instance of <code>AlertDialogFragmentV1.OnClickListener</code> to handle the positive
-     *            button click.
+     *
+     * @param positiveButtonListener contains a reference to an instance of <code>AlertDialogFragmentV1.OnClickListener</code> to handle the positive
+     *                               button click.
      */
-    public void setPositiveButtonListener(final AlertDialogFragmentV1.OnClickListener listener) {
+    public void setPositiveButtonListener(final AlertDialogFragmentV1.OnClickListener positiveButtonListener) {
         this.mPositiveListener = new DialogInterface.OnClickListener() {
 
             @Override
             public void onClick(DialogInterface dialog, int which) {
-                if (listener != null) {
-                    listener.onClick(getActivity(), dialog, which);
+                if (positiveButtonListener != null) {
+                    positiveButtonListener.onClick(getActivity(), dialog, which);
                 }
             }
         };
@@ -175,9 +171,8 @@ public class AlertDialogFragmentV1 extends DialogFragment {
 
     /**
      * Sets the neutral button text.
-     * 
-     * @param text
-     *            contains the neutral button text.
+     *
+     * @param text contains the neutral button text.
      */
     public void setNeutralButtonText(String text) {
         Bundle args = getArguments();
@@ -190,9 +185,8 @@ public class AlertDialogFragmentV1 extends DialogFragment {
 
     /**
      * Sets the resource ID of the neutral button text.
-     * 
-     * @param text
-     *            contains the resource ID of the neutral button text.
+     *
+     * @param text contains the resource ID of the neutral button text.
      */
     public void setNeutralButtonText(int text) {
         Bundle args = getArguments();
@@ -205,18 +199,17 @@ public class AlertDialogFragmentV1 extends DialogFragment {
 
     /**
      * Sets the neutral button listener for the dialog.
-     * 
-     * @param listener
-     *            contains a reference to an instance of <code>AlertDialogFragmentV1.OnClickListener</code> to handle the neutral
-     *            button click.
+     *
+     * @param neutralButtonListener contains a reference to an instance of <code>AlertDialogFragmentV1.OnClickListener</code> to handle the neutral
+     *                              button click.
      */
-    public void setNeutralButtonListener(final AlertDialogFragmentV1.OnClickListener listener) {
+    public void setNeutralButtonListener(final AlertDialogFragmentV1.OnClickListener neutralButtonListener) {
         this.mNeutralListener = new DialogInterface.OnClickListener() {
 
             @Override
             public void onClick(DialogInterface dialog, int which) {
-                if (listener != null) {
-                    listener.onClick(getActivity(), dialog, which);
+                if (neutralButtonListener != null) {
+                    neutralButtonListener.onClick(getActivity(), dialog, which);
                 }
             }
         };
@@ -224,9 +217,8 @@ public class AlertDialogFragmentV1 extends DialogFragment {
 
     /**
      * Sets the negative button text.
-     * 
-     * @param text
-     *            contains the negative button text.
+     *
+     * @param text contains the negative button text.
      */
     public void setNegativeButtonText(String text) {
         Bundle args = getArguments();
@@ -239,9 +231,8 @@ public class AlertDialogFragmentV1 extends DialogFragment {
 
     /**
      * Sets the resource ID of the negative button text.
-     * 
-     * @param text
-     *            contains the resource ID of the negative button text.
+     *
+     * @param text contains the resource ID of the negative button text.
      */
     public void setNegativeButtonText(int text) {
         Bundle args = getArguments();
@@ -254,18 +245,17 @@ public class AlertDialogFragmentV1 extends DialogFragment {
 
     /**
      * Sets the negative button listener for the dialog.
-     * 
-     * @param listener
-     *            contains a reference to an instance of <code>AlertDialogFragmentV1.OnClickListener</code> to handle the negative
-     *            button click.
+     *
+     * @param negativeButtonListener contains a reference to an instance of <code>AlertDialogFragmentV1.OnClickListener</code> to handle the negative
+     *                               button click.
      */
-    public void setNegativeButtonListener(final AlertDialogFragmentV1.OnClickListener listener) {
+    public void setNegativeButtonListener(final AlertDialogFragmentV1.OnClickListener negativeButtonListener) {
         this.mNegativeListener = new DialogInterface.OnClickListener() {
 
             @Override
             public void onClick(DialogInterface dialog, int which) {
-                if (listener != null) {
-                    listener.onClick(getActivity(), dialog, which);
+                if (negativeButtonListener != null) {
+                    negativeButtonListener.onClick(getActivity(), dialog, which);
                 }
             }
         };
@@ -273,10 +263,9 @@ public class AlertDialogFragmentV1 extends DialogFragment {
 
     /**
      * Sets the cancel listener for the dialog.
-     * 
-     * @param listener
-     *            contains a reference to an instance of <code>AlertDialogFragmentV1.OnClickListener</code> to handle the dialog
-     *            cancel event.
+     *
+     * @param listener contains a reference to an instance of <code>AlertDialogFragmentV1.OnClickListener</code> to handle the dialog
+     *                 cancel event.
      */
     public void setCancelListener(AlertDialogFragmentV1.OnClickListener listener) {
         mCancelListener = listener;
@@ -301,12 +290,9 @@ public class AlertDialogFragmentV1 extends DialogFragment {
 
     /**
      * Will configure a title within the dialog builder.
-     * 
-     * @param dlgBldr
-     *            contains an instance of <code>AlertDialog.Builder</code> used to configure the title.
-     * 
-     * @param args
-     *            contains an instance of <code>Bundle</code> containing the dialog arguments.
+     *
+     * @param dlgBldr contains an instance of <code>AlertDialog.Builder</code> used to configure the title.
+     * @param args    contains an instance of <code>Bundle</code> containing the dialog arguments.
      */
     protected void configureTitle(AlertDialog.Builder dlgBldr, Bundle args) {
         // Set the title using the resource ID or the text
@@ -319,12 +305,9 @@ public class AlertDialogFragmentV1 extends DialogFragment {
 
     /**
      * Will configure a message within the dialog builder.
-     * 
-     * @param dlgBldr
-     *            contains an instance of <code>AlertDialog.Builder</code> used to configure the message.
-     * 
-     * @param args
-     *            contains an instance of <code>Bundle</code> containing the dialog arguments.
+     *
+     * @param dlgBldr contains an instance of <code>AlertDialog.Builder</code> used to configure the message.
+     * @param args    contains an instance of <code>Bundle</code> containing the dialog arguments.
      */
     protected void configureMessage(AlertDialog.Builder dlgBldr, Bundle args) {
         // Set the message using the resource ID or the text.
@@ -337,11 +320,9 @@ public class AlertDialogFragmentV1 extends DialogFragment {
 
     /**
      * Will configure any dialog buttons within the dialog builder.
-     * 
-     * @param dlgBldr
-     *            contains an instance of <code>AlertDialog.Builder</code> used to configure buttons.
-     * @param args
-     *            contains an instance of <code>Bundle</code> containing the dialog arguments.
+     *
+     * @param dlgBldr contains an instance of <code>AlertDialog.Builder</code> used to configure buttons.
+     * @param args    contains an instance of <code>Bundle</code> containing the dialog arguments.
      */
     protected void configureButtons(AlertDialog.Builder dlgBldr, Bundle args) {
 

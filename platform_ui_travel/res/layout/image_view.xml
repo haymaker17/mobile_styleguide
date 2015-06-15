@@ -3,16 +3,20 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent" >
 
-    <com.concur.mobile.platform.ui.travel.hotel.fragment.SquareImageView
+    <com.concur.mobile.platform.ui.travel.util.SquareImageView
         android:id="@+id/picture"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:scaleType="centerCrop" >
+        android:layout_height="wrap_content"
+       />
 
-        <!--
+    <!--
       android:onClick="previewPhoto" 
+          android:onClick="previewPhoto"
+       android:scaleType="centerCrop"
+        android:focusable="false"
+        android:focusableInTouchMode="false"
         android:scaleType="centerCrop" />
-        -->
-    </com.concur.mobile.platform.ui.travel.hotel.fragment.SquareImageView>
+        android:onClick="previewPhoto"
+    -->
 
 </FrameLayout>

@@ -1,0 +1,66 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/white_background"
+    android:minHeight="300dp"
+    android:orientation="vertical" >
+
+    <LinearLayout
+        android:id="@+id/priceToBeatView"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:visibility="gone"
+        >
+
+        <TextView
+            android:id="@+id/priceToBeatText"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="12dp"
+            android:layout_marginBottom="12dp"
+            android:drawableLeft="@drawable/icon_price_to_beat"
+            android:drawablePadding="14dp"
+            android:textColor="#0078C8"
+            android:text="PRICE-TO-BEAT : $xxx"
+            android:layout_gravity="center"
+            android:textSize="16sp"
+            />
+
+        <View
+            android:layout_width="fill_parent"
+            android:layout_height="0.5dp"
+            android:background="@color/empty_view_separator_line_background"/>
+        <View
+            android:layout_width="fill_parent"
+            android:layout_height="8dp"
+            android:background="@color/empty_view_background"/>
+        <View
+            android:layout_width="fill_parent"
+            android:layout_height="0.5dp"
+            android:background="@color/empty_view_separator_line_background"/>
+    </LinearLayout>
+
+    <ListView
+        android:id="@+id/hotel_rooms_list_view"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@color/white_background"
+        android:divider="@color/ListDivider"
+        android:dividerHeight="1dp"
+        android:padding="12dp" />
+
+    <TextView
+        android:id="@+id/no_rooms"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:fontFamily="sans-serif-medium"
+        android:paddingLeft="16dp"
+        android:paddingTop="16dp"
+        android:text="No Rooms Available"
+        android:textColor="#383f46"
+        android:textSize="16sp"
+        android:visibility="gone" />
+
+</LinearLayout>

@@ -5,8 +5,11 @@ import android.content.res.Resources;
 import android.os.Bundle;
 import android.os.Handler;
 import android.support.v4.app.NavUtils;
+import android.support.v4.widget.SwipeRefreshLayout;
 import android.util.Log;
+import android.view.GestureDetector;
 import android.view.MenuItem;
+import android.view.MotionEvent;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.*;
@@ -16,10 +19,9 @@ import com.concur.mobile.base.service.BaseAsyncRequestTask.AsyncReplyListener;
 import com.concur.mobile.base.service.BaseAsyncResultReceiver;
 import com.concur.mobile.core.ConcurCore;
 import com.concur.mobile.core.activity.BaseActivity;
-import com.concur.mobile.core.request.adapter.SplitRequestListAdapter;
-import com.concur.mobile.core.request.task.RequestFormFieldsTask;
-import com.concur.mobile.core.request.task.RequestGroupConfigurationsTask;
-import com.concur.mobile.core.request.task.RequestListTask;
+import com.concur.mobile.core.request.adapter.SortedRequestListAdapter;
+import com.concur.mobile.core.request.task.RequestTask;
+import com.concur.mobile.core.request.util.ConnectHelper;
 import com.concur.mobile.core.request.util.RequestStatus;
 import com.concur.mobile.core.util.Const;
 import com.concur.mobile.core.util.EventTracker;
@@ -32,16 +34,20 @@ import com.concur.mobile.platform.request.dto.RequestDTO;
 import com.concur.mobile.platform.request.groupConfiguration.RequestGroupConfiguration;
 import com.concur.mobile.platform.request.util.RequestParser;
 import com.concur.mobile.platform.ui.common.dialog.NoConnectivityDialogFragment;
+import com.concur.mobile.platform.ui.common.util.RowSwipeGestureListener;
+import com.getbase.floatingactionbutton.AddFloatingActionButton;
 
 import java.util.*;
 
 /**
  * @author olivierb
  */
-public class RequestListActivity extends BaseActivity {
+public class RequestListActivity extends BaseActivity implements SwipeRefreshLayout.OnRefreshListener {
 
     public static final String KEY_SEARCHED_STATUS = "searchedStatus";
     public static final String REQUEST_ID = "requestId";
+
+    public static final boolean REQUEST_LIST_SWIPE_TO_LEFT = true;
 
     private static final String CLS_TAG = RequestListActivity.class.getSimpleName();
     private static final int ID_LOADING_VIEW = 0;
@@ -51,21 +57,21 @@ public class RequestListActivity extends BaseActivity {
     private static final int HEADER_RESULT = 2;
     private static boolean HAS_CONFIGURATION = false;
 
-    private final RequestParser requestParser = new RequestParser();
-
-    protected Boolean showCodes;
     protected int category;
-    protected int minSearchLength = 1;
 
+    private final RequestParser requestParser = new RequestParser();
     private RequestStatus searchedStatus = RequestStatus.PENDING_EBOOKING;
 
     private ListView requestListView;
-    private Button newRequestButton;
+    private AddFloatingActionButton newRequestButton;
     private ViewFlipper requestListVF;
+    private TextView newRequestText;
+    private SwipeRefreshLayout swipeLayout;
 
     private BaseAsyncResultReceiver asyncTRListReceiver;
     private BaseAsyncResultReceiver asyncFormFieldsReceiver;
     private BaseAsyncResultReceiver asyncGroupConfigurationReceiver;
+    private BaseAsyncResultReceiver asyncRequestActionReceiver;
 
     private RequestGroupConfigurationCache groupConfigurationCache = null;
     private RequestListCache requestListCache = null;
@@ -84,7 +90,9 @@ public class RequestListActivity extends BaseActivity {
         if (!concurCore.getRequestGroupConfigurationCache().hasCachedValues()) {
             HAS_CONFIGURATION = false;
             asyncGroupConfigurationReceiver.setListener(new GroupConfigurationListener());
-            new RequestGroupConfigurationsTask(RequestListActivity.this, 1, asyncGroupConfigurationReceiver).execute();
+            new RequestTask(RequestListActivity.this, 1, asyncGroupConfigurationReceiver,
+                    ConnectHelper.ConnectVersion.VERSION_3_1, ConnectHelper.Module.GROUP_CONFIGURATIONS,
+                    ConnectHelper.Action.LIST, null).execute();
         } else {
             HAS_CONFIGURATION = true;
         }
@@ -111,12 +119,71 @@ public class RequestListActivity extends BaseActivity {
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         // Get components references
         requestListView = ((ListView) findViewById(R.id.requestListView));
+        swipeLayout = (SwipeRefreshLayout) findViewById(R.id.swipe_refresh_layout);
         requestListVF = ((ViewFlipper) findViewById(R.id.requestListVF));
-        newRequestButton = ((Button) findViewById(R.id.newRequestButton));
+        newRequestButton = ((AddFloatingActionButton) findViewById(R.id.newRequestButton));
+        newRequestText = ((TextView) findViewById(R.id.textNewRequest));
         setView(ID_EMPTY_VIEW);
 
-        requestListView.setAdapter(new SplitRequestListAdapter(this.getBaseContext(), null));
-        requestListView.setOnItemClickListener(new ListAdapterRowClickListener());
+        /** Horizontal Swipe implementation */
+        // --- Create a gesture detector
+        final GestureDetector gestureDetector = new GestureDetector(this,
+                new RowSwipeGestureListener<RequestDTO>(requestListView, REQUEST_LIST_SWIPE_TO_LEFT) {
+
+                    /**
+                     * @see RowSwipeGestureListener#onRowTap(Object)
+                     */
+                    @Override public boolean onRowTap(RequestDTO request) {
+                        if (request != null) {
+                            final String reqId = request.getId();
+                            if (reqId != null) {
+                                if (!formFieldsCache.isFormBeingRefreshed(request.getHeaderFormId())) {
+                                    displayTravelRequestDetail(reqId);
+                                } else {
+                                    waitFormFieldsCacheRefresh(request.getHeaderFormId(), request.getId());
+                                }
+                            } else {
+                                Log.e(Const.LOG_TAG, CLS_TAG + ".onItemClick: request id is null!");
+                            }
+                        }
+                        return false;
+                    }
+
+                    /**
+                     * @see RowSwipeGestureListener#onButtonTap(Object, View)
+                     */
+                    @Override public boolean onButtonTap(RequestDTO request, View view) {
+                        if (view != null && view.getId() == R.id.recallButton) {
+                            // --- execute recall action
+                            Log.d(CLS_TAG, "--- Request RECALL action (list)");
+                            recallRequestAction(request);
+                        }
+                        return true;
+                    }
+
+                    /**
+                     * @see RowSwipeGestureListener#isRowSwipeable(Object)
+                     */
+                    @Override public boolean isRowSwipeable(RequestDTO tr) {
+                        return tr != null && tr.isActionPermitted(RequestParser.PermittedAction.RECALL);
+                    }
+                });
+        // --- Apply it on the ListView
+        requestListView.setOnTouchListener(new View.OnTouchListener() {
+
+            public boolean onTouch(View v, MotionEvent event) {
+                return gestureDetector.onTouchEvent(event);
+            }
+        });
+
+        /************************************************/
+
+        // --- Apply an adapter using SwipeableRowView(s)
+        requestListView.setAdapter(new SortedRequestListAdapter(this.getBaseContext(), null));
+
+        // Set up the swipe to refresh.
+        swipeLayout.setOnRefreshListener(this);
+        //swipeLayout.setColorSchemeResources(R.color.MaterialConcurBlue);
 
         // Set the expense header navigation bar information.
         try {
@@ -148,8 +215,21 @@ public class RequestListActivity extends BaseActivity {
      * @param viewID id of the view to display
      */
     private void setView(int viewID) {
+
+        boolean isCreateTRAvailable = isCreateRequestAvailable();
         requestListVF.setDisplayedChild(viewID);
-        if (viewID == ID_LOADING_VIEW || !isCreateRequestAvailable()) {
+
+        if (viewID == ID_EMPTY_VIEW) {
+            if (isCreateTRAvailable) {
+                newRequestText.setText(getResources().getString(R.string.tr_new_request_desc));
+                newRequestButton.setVisibility(View.VISIBLE);
+            } else {
+                newRequestText.setText(getResources().getString(R.string.tr_new_request_desc_no_create));
+                newRequestButton.setVisibility(View.GONE);
+            }
+        }
+
+        if (viewID == ID_LOADING_VIEW || !isCreateTRAvailable) {
             newRequestButton.setVisibility(View.GONE);
         } else {
             newRequestButton.setVisibility(View.VISIBLE);
@@ -242,8 +322,9 @@ public class RequestListActivity extends BaseActivity {
             setView(ID_EMPTY_VIEW);
         } else {
             setView(ID_LIST_VIEW);
-            ((SplitRequestListAdapter) requestListView.getAdapter()).updateList(listRequests);
+            ((SortedRequestListAdapter) requestListView.getAdapter()).updateList(listRequests);
         }
+        swipeLayout.setRefreshing(false);
     }
 
     /**
@@ -260,11 +341,28 @@ public class RequestListActivity extends BaseActivity {
             }
             asyncTRListReceiver.setListener(new TRListListener());
             // --- onRequestResult calls cleanup() on execution, so listener will be destroyed by processing
-            new RequestListTask(RequestListActivity.this, 1, asyncTRListReceiver, searchedStatus).execute();
+            new RequestTask(RequestListActivity.this, 1, asyncTRListReceiver, ConnectHelper.Action.LIST, null)
+                    .addUrlParameter(RequestTask.P_REQUESTS_STATUS, searchedStatus.toString())
+                    .addUrlParameter(RequestTask.P_REQUESTS_WITH_SEG_TYPES, Boolean.TRUE.toString())
+                    .addUrlParameter(RequestTask.P_REQUESTS_WITH_USER_PERMISSIONS, Boolean.TRUE.toString())
+                    .addUrlParameter(ConnectHelper.PARAM_LIMIT, "100").execute();
         } else if (refreshRequired) {
             new NoConnectivityDialogFragment().show(getSupportFragmentManager(), CLS_TAG);
         } else {
             setView(ID_LIST_VIEW);
+        }
+    }
+
+    private void recallRequestAction(RequestDTO tr) {
+        if (ConcurCore.isConnected()) {
+            setView(ID_LOADING_VIEW);
+            // --- creates the listener
+            asyncRequestActionReceiver.setListener(new TRActionListener());
+            // --- onRequestResult calls cleanup() on execution, so listener will be destroyed by processing
+            new RequestTask(RequestListActivity.this, 1, asyncRequestActionReceiver, ConnectHelper.Action.RECALL,
+                    tr.getId()).addResultData(RequestTask.P_REQUEST_ID, tr.getId()).execute();
+        } else {
+            new NoConnectivityDialogFragment().show(getSupportFragmentManager(), CLS_TAG);
         }
     }
 
@@ -315,6 +413,12 @@ public class RequestListActivity extends BaseActivity {
             updateListUI(new ArrayList<RequestDTO>(requestListCache.getValues()));
             requestListCache.setDirty(false);
         }
+
+        // RECALL
+        // activity creation
+        if (asyncRequestActionReceiver == null) {
+            asyncRequestActionReceiver = new BaseAsyncResultReceiver(new Handler());
+        }
     }
 
     @Override protected void onPause() {
@@ -336,13 +440,23 @@ public class RequestListActivity extends BaseActivity {
         asyncFormFieldsReceiver.setListener(null);
     }
 
+    @Override public void onRefresh() {
+        // If we are offline, show a toast and dismiss the refresh spinner.
+        if (!ConcurCore.isConnected()) {
+            swipeLayout.setRefreshing(false);
+            new NoConnectivityDialogFragment().show(getSupportFragmentManager(), CLS_TAG);
+        } else {
+            refreshData(true);
+        }
+    }
+
     /**
      * Handles tap upon an item on the request list
      */
     class ListAdapterRowClickListener implements AdapterView.OnItemClickListener {
 
         @Override public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-            final SplitRequestListAdapter adapter = (SplitRequestListAdapter) requestListView.getAdapter();
+            final SortedRequestListAdapter adapter = (SortedRequestListAdapter) requestListView.getAdapter();
             final RequestDTO request = adapter.getItem(position);
             if (request != null) {
                 final String reqId = request.getId();
@@ -387,7 +501,11 @@ public class RequestListActivity extends BaseActivity {
              */
             for (String formId : headerFormIds) {
                 formFieldsCache.setFormRefreshStatus(formId, true);
-                new RequestFormFieldsTask(RequestListActivity.this, 2, asyncFormFieldsReceiver, formId, true).execute();
+
+                new RequestTask(RequestListActivity.this, 2, asyncFormFieldsReceiver,
+                        ConnectHelper.ConnectVersion.VERSION_3_0, ConnectHelper.Module.FORM_FIELDS,
+                        ConnectHelper.Action.LIST, formId).addUrlParameter(RequestTask.P_FORM_ID, formId)
+                        .addResultData(RequestTask.P_FORM_ID, formId).execute();
             }
 
             // update the approvals list with the trips needing approval
@@ -421,7 +539,7 @@ public class RequestListActivity extends BaseActivity {
     private class FormFieldsListener implements AsyncReplyListener {
 
         @Override public void onRequestSuccess(Bundle resultData) {
-            final String formId = resultData.getString(RequestFormFieldsTask.PARAM_FORM_ID);
+            final String formId = resultData.getString(RequestTask.P_FORM_ID);
             formFieldsCache.setFormRefreshStatus(formId, false);
             // --- parse the form received
             final ConnectForm rForm = requestParser
@@ -435,7 +553,7 @@ public class RequestListActivity extends BaseActivity {
         }
 
         @Override public void onRequestFail(Bundle resultData) {
-            final String formId = resultData.getString(RequestFormFieldsTask.PARAM_FORM_ID);
+            final String formId = resultData.getString(RequestTask.P_FORM_ID);
             formFieldsCache.setFormRefreshStatus(formId, false);
             Log.d(Const.LOG_TAG, CLS_TAG + " calling decrement from onrequestfails");
             Log.d(Const.LOG_TAG, " onRequestFail in FormFieldsListener...");
@@ -443,7 +561,7 @@ public class RequestListActivity extends BaseActivity {
         }
 
         @Override public void onRequestCancel(Bundle resultData) {
-            final String formId = resultData.getString(RequestFormFieldsTask.PARAM_FORM_ID);
+            final String formId = resultData.getString(RequestTask.P_FORM_ID);
             formFieldsCache.setFormRefreshStatus(formId, false);
             Log.d(Const.LOG_TAG, CLS_TAG + " calling decrement from onrequestcancel");
             Log.d(Const.LOG_TAG, " onRequestCancel in FormFieldsListener...");
@@ -475,8 +593,12 @@ public class RequestListActivity extends BaseActivity {
                 if (isCreateRequestAvailable()) {
                     final String formId = groupConfigurationCache.getValue(getUserId()).getFormId();
                     formFieldsCache.setFormRefreshStatus(formId, true);
-                    new RequestFormFieldsTask(RequestListActivity.this, 2, asyncFormFieldsReceiver, formId, true)
-                            .execute();
+
+                    new RequestTask(RequestListActivity.this, 2, asyncFormFieldsReceiver,
+                            ConnectHelper.ConnectVersion.VERSION_3_0, ConnectHelper.Module.FORM_FIELDS,
+                            ConnectHelper.Action.LIST, formId).addUrlParameter(RequestTask.P_FORM_ID, formId)
+                            .addResultData(RequestTask.P_FORM_ID, formId).execute();
+
                     newRequestButton.setVisibility(View.VISIBLE);
                 }
             }
@@ -514,6 +636,45 @@ public class RequestListActivity extends BaseActivity {
                 refreshData(false);
             }
             break;
+        }
+    }
+
+    public class TRActionListener implements AsyncReplyListener {
+
+        @Override public void onRequestSuccess(Bundle resultData) {
+            ((RequestListCache) getConcurCore().getRequestListCache()).setDirty(true);
+
+            final String trId = resultData.getString(RequestTask.P_REQUEST_ID);
+
+            // metrics
+            final Map<String, String> params = new HashMap<String, String>();
+            params.put("Request Recall", trId);
+            EventTracker.INSTANCE
+                    .track(Flurry.CATEGORY_TRAVEL_REQUEST, Flurry.PARAM_VALUE_TRAVEL_REQUEST_SUMMARY, params);
+
+            // refreshing view
+            refreshData(true);
+        }
+
+        @Override public void onRequestFail(Bundle resultData) {
+            ConnectHelper.displayResponseMessage(getApplicationContext(), resultData,
+                    getResources().getString(R.string.tr_error_recall));
+
+            Log.d(Const.LOG_TAG, CLS_TAG + " calling decrement from onrequestfails");
+            Log.d(Const.LOG_TAG, " onRequestFail in TRActionListener...");
+            setView(ID_LIST_VIEW);
+        }
+
+        @Override public void onRequestCancel(Bundle resultData) {
+            ConnectHelper
+                    .displayMessage(getApplicationContext(), getResources().getString(R.string.tr_operation_canceled));
+            Log.d(Const.LOG_TAG, CLS_TAG + " calling decrement from onRequestCancel");
+            Log.d(Const.LOG_TAG, " onRequestCancel in TRActionListener...");
+            setView(ID_LIST_VIEW);
+        }
+
+        @Override public void cleanup() {
+            asyncRequestActionReceiver.setListener(null);
         }
     }
 }

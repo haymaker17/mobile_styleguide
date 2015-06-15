@@ -10,6 +10,7 @@ import java.util.TimeZone;
 import java.util.TreeMap;
 import java.util.TreeSet;
 
+import com.concur.mobile.core.travel.hotel.activity.RestHotelSearch;
 import org.apache.http.HttpStatus;
 
 import android.app.AlertDialog;
@@ -567,8 +568,7 @@ public class SegmentList extends BaseActivity {
             violationSummaryView.setVisibility(View.VISIBLE);
             violationSummaryView.setOnClickListener(new View.OnClickListener() {
 
-                @Override
-                public void onClick(View v) {
+                @Override public void onClick(View v) {
                     if (ConcurCore.isConnected()) {
                         // show the list of trip rule violations
                         Intent i = new Intent(SegmentList.this, RuleViolationSummary.class);
@@ -637,8 +637,7 @@ public class SegmentList extends BaseActivity {
             approveButton.setVisibility(View.VISIBLE);
             approveButton.setOnClickListener(new View.OnClickListener() {
 
-                @Override
-                public void onClick(View v) {
+                @Override public void onClick(View v) {
                     if (ConcurCore.isConnected()) {
                         showDialog(DIALOG_PROMPT_TO_APPROVE_TRIP);
                     } else {
@@ -2596,23 +2595,31 @@ public class SegmentList extends BaseActivity {
      *            the suggestion selected by the end-user.
      */
     protected void searchHotel(SearchSuggestion suggestion) {
-        Intent intent = new Intent(this, HotelSearch.class);
-        intent.putExtra(Flurry.PARAM_NAME_BOOKED_FROM, Flurry.PARAM_VALUE_TRIPS);
-        // Add the Cliqbook trip id.
-        intent.putExtra(Const.EXTRA_TRAVEL_CLIQBOOK_TRIP_ID, trip.cliqbookTripId);
-        // Add the suggestion location.
-        LocationChoice locChoice = suggestion.getStartLocationChoice(getApplicationContext());
-        if (locChoice != null) {
-            intent.putExtra(Const.EXTRA_TRAVEL_LOCATION, locChoice.getBundle());
+        Intent intent = null;
+
+        if (Preferences.shouldShowHotelJarvisUI()) {
+            // suggestion will be null in this case
+            intent = new Intent(this, RestHotelSearch.class);
+        } else {
+            intent = new Intent(this, HotelSearch.class);
+            intent.putExtra(Flurry.PARAM_NAME_BOOKED_FROM, Flurry.PARAM_VALUE_TRIPS);
+            // Add the Cliqbook trip id.
+            intent.putExtra(Const.EXTRA_TRAVEL_CLIQBOOK_TRIP_ID, trip.cliqbookTripId);
+            // Add the suggestion location.
+            LocationChoice locChoice = suggestion.getStartLocationChoice(getApplicationContext());
+            if (locChoice != null) {
+                intent.putExtra(Const.EXTRA_TRAVEL_LOCATION, locChoice.getBundle());
+            }
+            // Add the suggestion pick-up date.
+            if (suggestion.getStartDate() != null) {
+                intent.putExtra(Const.EXTRA_TRAVEL_HOTEL_SEARCH_CHECK_IN, suggestion.getStartDate());
+            }
+            // Add the suggestion drop-off date.
+            if (suggestion.getStopDate() != null) {
+                intent.putExtra(Const.EXTRA_TRAVEL_HOTEL_SEARCH_CHECK_OUT, suggestion.getStopDate());
+            }
         }
-        // Add the suggestion pick-up date.
-        if (suggestion.getStartDate() != null) {
-            intent.putExtra(Const.EXTRA_TRAVEL_HOTEL_SEARCH_CHECK_IN, suggestion.getStartDate());
-        }
-        // Add the suggestion drop-off date.
-        if (suggestion.getStopDate() != null) {
-            intent.putExtra(Const.EXTRA_TRAVEL_HOTEL_SEARCH_CHECK_OUT, suggestion.getStopDate());
-        }
+
         intent.putExtra(Flurry.PARAM_NAME_BOOKED_FROM, Flurry.PARAM_VALUE_TRIP);
         startActivityForResult(intent, Const.REQUEST_CODE_BOOK_HOTEL);
     }
@@ -2695,57 +2702,61 @@ public class SegmentList extends BaseActivity {
     }
 
     protected void addHotel() {
-        ITripAnalyzer tripAnalyzer = Trip.getTripAnalyzer();
-
-        // MOB-13546 - Add hotel to my flight - check for defaults if Hotel is
-        // being added to an existing trip with Flight
-        // segments and do not show the suggestions pop up
-        // TODO - need to fine tune this function when 'Add Hotel' to other
-        // segments is addressed similar to MOB-13546
-        LodgeSearchSuggestion hotelSearchSuggestionForFlight = tripAnalyzer.findHotelSearchSuggestionForFlight(trip);
-        if (hotelSearchSuggestionForFlight != null) {
+        if (Preferences.shouldShowHotelJarvisUI()) {
             // show the search UI with out suggestions pop up
-            searchHotel(hotelSearchSuggestionForFlight);
+            searchHotel(null);
         } else {
 
-            List<SearchSuggestion> searchSuggestions = new ArrayList<SearchSuggestion>();
+            ITripAnalyzer tripAnalyzer = Trip.getTripAnalyzer();
 
-            // Obtain an initial list of suggestions based on an analysis of the
-            // itinerary segments.
-            // ITripAnalyzer tripAnalyzer = Trip.getTripAnalyzer();
-            List<LodgeSearchSuggestion> lodgeSearchSuggestions = tripAnalyzer.findHotelSuggestions(trip);
-            if (lodgeSearchSuggestions != null && lodgeSearchSuggestions.size() > 0) {
-                CategorySearchSuggestion cityDateSearchSuggestionCategory = new CategorySearchSuggestion(getText(
-                        R.string.city_date_suggestions).toString());
-                hotelSuggestionAdapter.setCityDateCategorySuggestion(cityDateSearchSuggestionCategory);
-                searchSuggestions.add(cityDateSearchSuggestionCategory);
-                searchSuggestions.addAll(lodgeSearchSuggestions);
+            // MOB-13546 - Add hotel to my flight - check for defaults if Hotel is
+            // being added to an existing trip with Flight
+            // segments and do not show the suggestions pop up
+            // TODO - need to fine tune this function when 'Add Hotel' to other
+            // segments is addressed similar to MOB-13546
+            LodgeSearchSuggestion hotelSearchSuggestionForFlight = tripAnalyzer.findHotelSearchSuggestionForFlight(trip);
+            if (hotelSearchSuggestionForFlight != null) {
+                // show the search UI with out suggestions pop up
+                searchHotel(hotelSearchSuggestionForFlight);
             } else {
-                hotelSuggestionAdapter.setCityDateCategorySuggestion(null);
+
+                List<SearchSuggestion> searchSuggestions = new ArrayList<SearchSuggestion>();
+
+                // Obtain an initial list of suggestions based on an analysis of the
+                // itinerary segments.
+                // ITripAnalyzer tripAnalyzer = Trip.getTripAnalyzer();
+                List<LodgeSearchSuggestion> lodgeSearchSuggestions = tripAnalyzer.findHotelSuggestions(trip);
+                if (lodgeSearchSuggestions != null && lodgeSearchSuggestions.size() > 0) {
+                    CategorySearchSuggestion cityDateSearchSuggestionCategory = new CategorySearchSuggestion(getText(R.string.city_date_suggestions).toString());
+                    hotelSuggestionAdapter.setCityDateCategorySuggestion(cityDateSearchSuggestionCategory);
+                    searchSuggestions.add(cityDateSearchSuggestionCategory);
+                    searchSuggestions.addAll(lodgeSearchSuggestions);
+                } else {
+                    hotelSuggestionAdapter.setCityDateCategorySuggestion(null);
+                }
+
+                // Obtain the list of cities with non-specific dates.
+                List<CitySearchSuggestion> citySearchSuggestions = tripAnalyzer.findTripCities(trip, false);
+                if (citySearchSuggestions != null && citySearchSuggestions.size() > 0) {
+                    CategorySearchSuggestion citySearchSuggestionCategory = new CategorySearchSuggestion(getText(R.string.city_suggestions).toString());
+                    hotelSuggestionAdapter.setCityCategorySuggestion(citySearchSuggestionCategory);
+                    searchSuggestions.add(citySearchSuggestionCategory);
+                    searchSuggestions.addAll(citySearchSuggestions);
+                } else {
+                    hotelSuggestionAdapter.setCityCategorySuggestion(null);
+                }
+
+                // Add a custom option not based on any analysis of the itinerary.
+                searchSuggestions.add(new CategorySearchSuggestion(getText(R.string.general).toString()));
+                searchSuggestions.add(new CustomSearchSuggestion(getText(R.string.custom_hotel_search).toString()));
+
+                // Set the new list on the adapter and notify of change.
+                hotelSuggestionAdapter.setSuggestions(searchSuggestions);
+                hotelSuggestionAdapter.notifyDataSetChanged();
+
+                // Complete the handling of the suggestions.
+                handleSearchSuggestions(DIALOG_ADD_HOTEL, searchSuggestions);
             }
-
-            // Obtain the list of cities with non-specific dates.
-            List<CitySearchSuggestion> citySearchSuggestions = tripAnalyzer.findTripCities(trip, false);
-            if (citySearchSuggestions != null && citySearchSuggestions.size() > 0) {
-                CategorySearchSuggestion citySearchSuggestionCategory = new CategorySearchSuggestion(getText(
-                        R.string.city_suggestions).toString());
-                hotelSuggestionAdapter.setCityCategorySuggestion(citySearchSuggestionCategory);
-                searchSuggestions.add(citySearchSuggestionCategory);
-                searchSuggestions.addAll(citySearchSuggestions);
-            } else {
-                hotelSuggestionAdapter.setCityCategorySuggestion(null);
-            }
-
-            // Add a custom option not based on any analysis of the itinerary.
-            searchSuggestions.add(new CategorySearchSuggestion(getText(R.string.general).toString()));
-            searchSuggestions.add(new CustomSearchSuggestion(getText(R.string.custom_hotel_search).toString()));
-
-            // Set the new list on the adapter and notify of change.
-            hotelSuggestionAdapter.setSuggestions(searchSuggestions);
-            hotelSuggestionAdapter.notifyDataSetChanged();
-
-            // Complete the handling of the suggestions.
-            handleSearchSuggestions(DIALOG_ADD_HOTEL, searchSuggestions);
         }
     }
 

@@ -1,5 +1,7 @@
 package com.concur.mobile.platform.request.dto;
 
+import com.concur.mobile.platform.request.permission.Link;
+import com.concur.mobile.platform.request.permission.UserPermission;
 import com.concur.mobile.platform.request.util.RequestParser;
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
@@ -31,51 +33,34 @@ public class RequestDTO implements FormDTO {
         }
     }
 
-    @Expose @SerializedName("RequestID")
-    private String id;
-    @Expose @SerializedName("Name")
-    private String name;
-    @Expose @SerializedName("Purpose")
-    private String purpose;
-    @Expose @SerializedName("CurrencyCode")
-    private String currencyCode;
-    @SerializedName("EmployeeName")
-    private String employeeName;
-    @SerializedName("ApprovalStatusName")
-    private String approvalStatus;
-    @Expose @SerializedName("ApprovalStatusCode")
-    private String approvalStatusCode;
-    @SerializedName("TotalApprovedAmount")
-    private Double total;
-    @Expose @SerializedName("StartDate")
-    private Date startDate;
-    @Expose @SerializedName("EndDate")
-    private Date endDate;
-    @Expose @SerializedName("CreationDate")
-    private Date requestDate;
-    @Expose @SerializedName("Comment")
-    private String lastComment;
-    @SerializedName("UserLoginID")
-    private String userLoginId;
-    @SerializedName("ApproverLoginID")
-    private String approverLoginId;
-    @SerializedName("SegmentTypes")
-    private String segmentListString;
-    @Expose @SerializedName("HeaderFormID")
-    private String headerFormId;
+    @Expose @SerializedName("RequestID") private String id;
+    @Expose @SerializedName("Name") private String name;
+    @Expose @SerializedName("Purpose") private String purpose;
+    @Expose @SerializedName("CurrencyCode") private String currencyCode;
+    @SerializedName("EmployeeName") private String employeeName;
+    @SerializedName("ApprovalStatusName") private String approvalStatus;
+    @Expose @SerializedName("ApprovalStatusCode") private String approvalStatusCode;
+    @SerializedName("TotalApprovedAmount") private Double total;
+    @Expose @SerializedName("StartDate") private Date startDate;
+    @Expose @SerializedName("EndDate") private Date endDate;
+    @Expose @SerializedName("CreationDate") private Date requestDate;
+    @Expose @SerializedName("Comment") private String lastComment;
+    @SerializedName("UserLoginID") private String userLoginId;
+    @SerializedName("ApproverLoginID") private String approverLoginId;
+    @SerializedName("SegmentTypes") private String segmentListString;
+    @SerializedName("HighestExceptionLevel") private String highestExceptionLevel;
+    @Expose @SerializedName("HeaderFormID") private String headerFormId;
 
     // --- required to post/put
-    @Expose @SerializedName(("PolicyID"))
-    private String policyId;
+    @Expose @SerializedName(("PolicyID")) private String policyId;
 
     private Map<String, RequestEntryDTO> entriesMap;
 
-    private List<String> listPermittedActions;
+    @SerializedName("UserPermissions") private Link permissionsLink;
 
     private int displayOrder = 0;
 
-    @Override
-    public String getId() {
+    @Override public String getId() {
         return id;
     }
 
@@ -203,20 +188,16 @@ public class RequestDTO implements FormDTO {
         this.headerFormId = headerFormId;
     }
 
+    public void setPermissionsLink(Link permissionsLink) {
+        this.permissionsLink = permissionsLink;
+    }
+
     public Map<String, RequestEntryDTO> getEntriesMap() {
         return entriesMap;
     }
 
     public void setEntriesMap(Map<String, RequestEntryDTO> entriesMap) {
         this.entriesMap = entriesMap;
-    }
-
-    public List<String> getListPermittedActions() {
-        return listPermittedActions;
-    }
-
-    public void setListPermittedActions(List<String> listPermittedActions) {
-        this.listPermittedActions = listPermittedActions;
     }
 
     public String getPolicyId() {
@@ -227,17 +208,27 @@ public class RequestDTO implements FormDTO {
         this.policyId = policyId;
     }
 
+    public String getHighestExceptionLevel() {
+        return highestExceptionLevel;
+    }
+
+    public void setHighestExceptionLevel(String highestExceptionLevel) {
+        this.highestExceptionLevel = highestExceptionLevel;
+    }
+
     public boolean isActionPermitted(RequestParser.PermittedAction action) {
-        for (String permittedActionName : this.listPermittedActions) {
-            if (permittedActionName.equals(action.getAction())) {
-                return true;
+        if (this.permissionsLink != null && this.permissionsLink.getPermissions() != null) {
+            final List<UserPermission> userPermissions = this.permissionsLink.getPermissions();
+            for (UserPermission permission : userPermissions) {
+                if (permission.getAction().equals(action.getAction())) {
+                    return true;
+                }
             }
         }
         return false;
     }
 
-    @Override
-    public Integer getDisplayOrder() {
+    @Override public Integer getDisplayOrder() {
         return displayOrder;
     }
 }

@@ -1,28 +1,50 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    style="@style/ConcurBaseTheme.White.New"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:orientation="vertical" >
+                style="@style/ConcurBaseTheme.White.New"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:orientation="vertical">
 
     <include
         android:id="@+id/result_header"
-        layout="@layout/hotel_search_results_header" />
+        layout="@layout/hotel_search_results_header"/>
 
-    <ProgressBar
-        android:id="@+id/hotel_search_progress"
-        android:layout_width="wrap_content"
+    <LinearLayout
+        android:id="@+id/priceToBeatView"
+        android:layout_width="fill_parent"
         android:layout_height="wrap_content"
-        android:layout_centerInParent="true" />
+        android:orientation="vertical"
+        android:layout_below="@id/result_header"
+        android:visibility="gone">
 
-    <TextView
-        android:id="@+id/hotel_search_progress_msg"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_below="@id/hotel_search_progress"
-        android:layout_centerHorizontal="true"
-        android:text="@string/hotel_search_progress_message" >
-    </TextView>
+        <TextView
+            android:id="@+id/priceToBeatText"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="24dp"
+            android:layout_marginTop="12dp"
+            android:layout_marginBottom="12dp"
+            android:drawableLeft="@drawable/icon_price_to_beat"
+            android:drawablePadding="14dp"
+            android:textColor="#0078C8"
+            android:text="PRICE-TO-BEAT : $xxx - $xxx"
+            />
+
+        <View
+            android:layout_width="fill_parent"
+            android:layout_height="0.5dp"
+            android:background="@color/empty_view_separator_line_background"/>
+
+        <View
+            android:layout_width="fill_parent"
+            android:layout_height="8dp"
+            android:background="@color/empty_view_background"/>
+
+        <View
+            android:layout_width="fill_parent"
+            android:layout_height="0.5dp"
+            android:background="@color/empty_view_separator_line_background"/>
+    </LinearLayout>
 
     <RelativeLayout
         android:id="@+id/results_footer"
@@ -32,7 +54,7 @@
         android:layout_gravity="bottom"
         android:paddingLeft="20dp"
         android:paddingRight="20dp"
-        android:visibility="gone" >
+        android:visibility="gone">
 
         <ImageButton
             android:id="@+id/sort"
@@ -45,7 +67,7 @@
             android:gravity="right"
             android:onClick="showSortOptions"
             android:src="@drawable/icon_action_bar_sort"
-            android:visibility="gone" />
+            android:visibility="gone"/>
 
         <TextView
             android:id="@+id/results_size"
@@ -57,7 +79,7 @@
             android:gravity="center"
             android:text="30 results"
             android:textColor="#000000"
-            android:textSize="12sp" />
+            android:textSize="12sp"/>
 
         <ImageButton
             android:id="@+id/filter"
@@ -69,24 +91,47 @@
             android:contentDescription="filter"
             android:gravity="left"
             android:src="@drawable/icon_action_bar_filter"
-            android:visibility="gone" />
+            android:visibility="gone"/>
     </RelativeLayout>
 
     <View
         android:id="@+id/footerDivider"
         android:layout_width="fill_parent"
-        android:layout_height="2dp"
+        android:layout_height="1dp"
         android:layout_above="@id/results_footer"
-        android:background="@color/HotelListDivider" />
+        android:background="@color/HotelListDivider"/>
 
     <ListView
         android:id="@+id/search_result_list_view"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_above="@id/footerDivider"
-        android:layout_below="@id/result_header"
+        android:layout_below="@id/priceToBeatView"
         android:background="#FFFFFF"
         android:divider="@color/ListDivider"
-        android:dividerHeight="1dp" />
+        android:dividerHeight="1dp"/>
+
+
+    <LinearLayout
+        android:id="@+id/progressView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:layout_centerInParent="true"
+        android:padding="5dp"
+        android:background="#ffffff">
+
+        <ProgressBar
+            android:id="@+id/hotel_search_progress"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"/>
+
+        <TextView
+            android:id="@+id/hotel_search_progress_msg"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/hotel_search_progress_message"
+            android:textColor="@color/ConcurBlue"/>
+    </LinearLayout>
 
 </RelativeLayout>

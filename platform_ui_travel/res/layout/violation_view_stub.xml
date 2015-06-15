@@ -1,0 +1,123 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+              android:id="@+id/hotel_room_violation_view"
+              android:layout_width="match_parent"
+              android:layout_height="wrap_content"
+              android:layout_below="@id/view_separator4"
+              android:layout_marginLeft="12dp"
+              android:orientation="vertical">
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:paddingBottom="20dp">
+
+        <ImageView
+            android:id="@+id/hotel_room_max_violation_icon"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentRight="true"
+            android:layout_alignParentTop="true"
+            />
+
+        <TextView
+            android:id="@+id/hotel_room_violation_label"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentLeft="true"
+            android:layout_toLeftOf="@id/hotel_room_max_violation_icon"
+            android:fontFamily="sans-serif-medium"
+            android:paddingTop="12dp"
+            android:text="@string/general_violation"
+            android:textColor="#8b8b8b"
+            android:textSize="14sp"/>
+    </RelativeLayout>
+
+    <!-- Violaitons table - rows will be added programatically -->
+
+    <TableLayout
+        android:id="@+id/violation_message_table"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content">
+
+        <TableRow
+            android:id="@+id/violation_message_table_row"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="10dp">
+
+            <ImageView
+                android:id="@+id/travel_violation_icon"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"/>
+
+            <TextView
+                android:id="@+id/travel_violation_message"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="top"
+                android:layout_weight="1"
+                android:fontFamily="sans-serif"
+                android:gravity="top"
+                android:paddingLeft="10dp"
+                android:paddingRight="10dp"
+                android:textColor="#383f46"
+                android:textSize="14sp"
+                />
+        </TableRow>
+    </TableLayout>
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:layout_marginTop="16dp"
+        android:background="@color/divider"/>
+
+    <TextView
+        android:id="@+id/hotel_violation_reason_label"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="16dp"
+        android:fontFamily="sans-serif"
+        android:text="@string/general_reason"
+        android:textColor="#383f46"
+        android:textSize="16sp"/>
+
+    <TextView
+        android:id="@+id/hotel_violation_reason"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:fontFamily="sans-serif"
+        android:text="@string/general_select_reason"
+        android:textColor="#0078c8"
+        android:textSize="14sp"/>
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:layout_marginTop="16dp"
+        android:background="@color/divider"/>
+
+    <TextView
+        android:id="@+id/hotel_violation_justification_label"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="16dp"
+        android:fontFamily="sans-serif"
+        android:text="@string/general_justification"
+        android:textColor="#383f46"
+        android:textSize="16sp"/>
+
+    <EditText
+        android:id="@+id/hotel_violation_justification"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginRight="12dp"
+        android:fontFamily="sans-serif"
+        android:hint="@string/general_enter_justification"
+        android:textColor="#757575"
+        android:textColorHint="#a7b6bf"
+        android:textSize="14sp"/>
+
+</LinearLayout>

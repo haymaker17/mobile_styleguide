@@ -13,7 +13,6 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.LinearLayout;
 import android.widget.TextView;
-
 import com.concur.breeze.R;
 import com.concur.mobile.core.activity.Preferences;
 import com.concur.mobile.core.util.Const;

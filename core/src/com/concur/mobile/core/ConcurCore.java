@@ -3086,6 +3086,12 @@ public abstract class ConcurCore extends MultiDexApplication {
         boolean showP2BGenerator = roles.contains(Const.MOBILE_SHOW_P2B_GENERATOR);
         PreferenceUtil.savePreference(prefs, Const.PREF_SHOW_PRICE_TO_BEAT_MENU, showP2BGenerator);
 
+        // MOB-24198 - show Jarvis Hotel UI
+        Boolean showHotelJarvisUI = (Boolean) responses.get(Const.LR_SITE_SETTINGS_SHOW_JARVIS_HOTEL_UI);
+        if (showHotelJarvisUI == null)
+            showHotelJarvisUI = Boolean.FALSE;
+        PreferenceUtil.savePreference(prefs, Const.SHOW_JARVIS_HOTEL_UI, showHotelJarvisUI);
+
     }
 
     /**

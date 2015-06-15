@@ -868,8 +868,8 @@ public class ExpensesFragment extends BaseFragment implements INetworkActivityLi
         @Override
         public Dialog onCreateDialog(Bundle savedInstanceState) {
             AlertDialog.Builder builder = new AlertDialog.Builder(activity);
-            builder.setTitle(R.string.dlg_expense_split_expense_confirm_title);
-            builder.setMessage(R.string.dlg_expense_split_expense_confirm_message);
+            builder.setTitle("");
+            builder.setMessage("");
             builder.setCancelable(true);
             builder.setPositiveButton(getText(R.string.okay), new DialogInterface.OnClickListener() {
 
@@ -1250,8 +1250,8 @@ public class ExpensesFragment extends BaseFragment implements INetworkActivityLi
             if (listItemAdapter.getItem(((AdapterContextMenuInfo) menuInfo).position) instanceof ExpenseListItem) {
                 final Expense exp = ((ExpenseListItem) listItemAdapter
                         .getItem(((AdapterContextMenuInfo) menuInfo).position)).expense;
-                menu.setHeaderTitle(R.string.smart_expense_action_long_press_title);
-                android.view.MenuItem menuItem = menu.add(0, Menu.NONE, 0, R.string.smart_expense_action_split_expense);
+                menu.setHeaderTitle("");
+                android.view.MenuItem menuItem = menu.add(0, Menu.NONE, 0, "");
                 menuItem.setOnMenuItemClickListener(new android.view.MenuItem.OnMenuItemClickListener() {
 
                     /*

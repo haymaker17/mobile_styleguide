@@ -30,7 +30,12 @@ public class DateUtil {
     public enum DatePattern {
         SHORT("EEE, dd/MM", "EEE, MM/dd"),
         TIME("hh:mm aa", "hh:mm aa"),
-        DB_INPUT("yyyy-MM-dd", "yyyy-MM-dd");
+        DB_INPUT("yyyy-MM-dd", "yyyy-MM-dd"),
+        MVP("MMM dd, yyyy", "MMM dd, yyyy");
+        /*
+         * TODO : MVP format is awkward for most places other that the US (http://en.wikipedia.org/wiki/Date_format_by_country)
+         * => Ongoing subject related to globalization project
+         */
 
         private String pattern = null;
         private String patternUS = null;

@@ -41,7 +41,6 @@
         <item name="popupMenuStyle">@style/ActionBarOverflowPopupWindow</item>
     </style>
 
-
     <style name="Concur.ActionBar.Tabs" parent="@style/Widget.AppCompat.ActionBar.Solid">
         <item name="android:background">@drawable/ab_tab_white_bg</item>
         <item name="backgroundStacked">@drawable/ab_tab_white_stacked_bg</item>
@@ -60,7 +59,7 @@
 
     <!-- White ActionBar with ActionBar tabs with blue text/bar -->
 
-    <style name="ConcurRestTheme.White.ActionBarTabs" parent="@android:style/Theme.Holo.Light">
+    <style name="ConcurRestTheme.White.ActionBarTabs" parent="android:Theme.Holo.Light">
         <item name="android:actionBarTabStyle">@style/ActionBarTabStyle.ConcurRestTheme</item>
         <item name="android:actionBarStyle">@style/ActionBar.Solid.ConcurRestTheme</item>
         <item name="android:actionMenuTextColor">@color/universal_tour_ab_menu_v1</item>
@@ -317,6 +316,28 @@
         <item name="android:textSize">14sp</item>
         <item name="android:textStyle">normal</item>
         <item name="android:textColor">@color/ListCellSubText</item>
+    </style>
+
+    <!-- Request new design -->
+    <style name="RequestListItemMainText">
+        <item name="android:textSize">16sp</item>
+        <item name="android:textStyle">normal</item>
+        <item name="android:textColor">@color/listItemMainText</item>
+        <item name="android:fontFamily">sans-serif</item>
+    </style>
+
+    <style name="RequestListItemDetailText">
+        <item name="android:textSize">12sp</item>
+        <item name="android:textStyle">normal</item>
+        <item name="android:textColor">@color/listItemDetails</item>
+        <item name="android:fontFamily">sans-serif-light</item>
+    </style>
+
+    <style name="RequestListItemAmountText">
+        <item name="android:textSize">16sp</item>
+        <item name="android:textStyle">normal</item>
+        <item name="android:textColor">@color/listItemAmount</item>
+        <item name="android:fontFamily">sans-serif-medium</item>
     </style>
 
     <!--

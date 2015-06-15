@@ -8,7 +8,6 @@ import android.support.v4.app.FragmentActivity;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ListView;
-
 import com.concur.breeze.R;
 import com.concur.mobile.platform.base.OpenSourceLicenseAdapter;
 import com.concur.mobile.platform.base.OpenSourceLicenseListItem;
