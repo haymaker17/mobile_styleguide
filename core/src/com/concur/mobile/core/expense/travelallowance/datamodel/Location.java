@@ -9,6 +9,8 @@ import java.io.Serializable;
  */
 public class Location implements Serializable, Comparable<FixedTravelAllowance>, Cloneable {
 
+    private static final long serialVersionUID = -4867542158593138834L;
+
     private String locationId;
 
     private String countryName;

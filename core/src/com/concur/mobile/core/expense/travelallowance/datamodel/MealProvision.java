@@ -9,8 +9,7 @@ import java.io.Serializable;
  */
 public class MealProvision implements Comparable<MealProvision>, Serializable {
 
-
-    private static final long serialVersionUID = 1L;
+    private static final long serialVersionUID = -3355549333702766315L;
 
     /**
      * The coded representation of a provision e.g. "PRO"

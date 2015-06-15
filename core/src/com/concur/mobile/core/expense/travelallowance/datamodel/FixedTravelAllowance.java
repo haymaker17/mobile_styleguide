@@ -14,7 +14,7 @@ import java.util.Date;
  */
 public class FixedTravelAllowance implements Serializable, Comparable<FixedTravelAllowance> {
 
-    private static final long serialVersionUID = 1L;
+    private static final long serialVersionUID = -7015146162877548013L;
 
     /**
      * The identifier of the FixedTravelAllowance
