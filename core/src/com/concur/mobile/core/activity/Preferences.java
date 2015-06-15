@@ -1219,6 +1219,16 @@ public class Preferences extends PreferenceActivity implements OnSharedPreferenc
         return prefs.getBoolean(Const.PREF_ENABLE_SPDY, false);
     }
 
+    /**
+     * Gets whether or not ShowHotelJarvisUIOnAndroid is enabled.
+     *
+     * @return returns whether or not ShowHotelJarvisUIOnAndroid is enabled..
+     */
+    public static boolean shouldShowHotelJarvisUI() {
+        SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(ConcurCore.getContext());
+        return prefs.getBoolean(Const.SHOW_JARVIS_HOTEL_UI, false);
+    }
+
     /*
      * (non-Javadoc)
      * 

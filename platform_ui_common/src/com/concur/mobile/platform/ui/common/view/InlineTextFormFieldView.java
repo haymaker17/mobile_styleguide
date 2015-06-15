@@ -54,6 +54,7 @@ public class InlineTextFormFieldView extends FormFieldView {
         notificationDelayHandler = new Handler();
         notificationDelayRunnable = new ChangeNotify();
         this.locale = locale;
+        layoutResourceId = R.layout.edit_text_form_field;
     }
 
     /**
@@ -131,7 +132,7 @@ public class InlineTextFormFieldView extends FormFieldView {
             case RW: {
                 switch (frmFld.getInputType()) {
                 case USER: {
-                    view = inflater.inflate(R.layout.edit_text_form_field, null);
+                    view = inflater.inflate(layoutResourceId, null);
                     if (view != null) {
                         initEditableInlineTextView(view);
                     } else {

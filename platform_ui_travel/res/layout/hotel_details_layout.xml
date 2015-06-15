@@ -1,110 +1,113 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:orientation="vertical" >
-
-    <!--
-    android:name="com.google.android.gms.maps.SupportMapFragment" 
-
-    <com.google.android.gms.maps.MapView
-
-    <fragment
-        android:id="@+id/map_view"
-        android:name="com.google.android.gms.maps.MapFragment"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content" />
-   -->
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:orientation="vertical">
 
     <RelativeLayout
-        android:id="@+id/address"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_below="@+id/map_view"
-        android:gravity="center_vertical"
-        android:minHeight="72dp" >
-
-        <ImageView
-            android:id="@+id/hotel_location_icon"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginLeft="24dp"
-            android:layout_marginRight="24dp"
-            android:layout_marginTop="16dp"
-            android:gravity="center_vertical|left"
-            android:src="@drawable/room_icon_address" />
-
-        <TextView
-            android:id="@+id/hotel_address"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="16dp"
-            android:layout_toRightOf="@+id/hotel_location_icon"
-            android:fontFamily="sans-serif"
-            android:text="501 Pine St, Seattle, WA, 98212"
-            android:textColor="#383f46"
-            android:textSize="16sp" />
-
-        <TextView
-            android:id="@+id/hotel_address_hint"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_alignLeft="@+id/hotel_address"
-            android:layout_below="@+id/hotel_address"
-            android:layout_marginBottom="20dp"
-            android:layout_marginTop="16dp"
-            android:fontFamily="sans-serif"
-            android:text="Address"
-            android:textColor="#737373"
-            android:textSize="16sp" />
-    </RelativeLayout>
-
-    <include
-        android:layout_width="match_parent"
-        android:layout_height="1dp"
-        android:layout_below="@+id/address"
-        layout="@layout/group_separator_v1" />
-
-    <RelativeLayout
-        android:id="@+id/phone"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_below="@+id/address"
-        android:gravity="center_vertical"
-        android:minHeight="72dp" >
-
-        <ImageView
-            android:id="@+id/hotel_phone_icon"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_alignParentLeft="true"
-            android:layout_marginLeft="24dp"
-            android:layout_marginRight="24dp"
-            android:layout_marginTop="16dp"
-            android:contentDescription="TODO"
-            android:src="@drawable/room_icon_phone" />
-
-        <TextView
-            android:id="@+id/hotel_phone"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginBottom="16dp"
-            android:layout_marginTop="16dp"
-            android:layout_toRightOf="@+id/hotel_phone_icon"
-            android:fontFamily="sans-serif"
-            android:text="(203) 8547852"
-            android:textColor="#383f46"
-            android:textSize="16sp" />
-    </RelativeLayout>
-
-    <include
-        android:layout_width="match_parent"
-        android:layout_height="1dp"
-        android:layout_below="@+id/phone"
-        layout="@layout/group_separator_v1" />
-
-    <include
         android:id="@+id/footer"
-        layout="@layout/footer_navigation_button_full" />
+        android:layout_width="match_parent"
+        android:layout_height="60dp"
+        android:layout_alignParentBottom="true"
+        android:layout_gravity="bottom"
+        android:background="@color/ConcurBlue">
 
-</LinearLayout>
+        <Button
+            android:id="@+id/footer_button"
+            android:layout_width="match_parent"
+            android:layout_height="60dp"
+            android:layout_centerHorizontal="true"
+            android:background="@color/ConcurBlue"
+            android:fontFamily="sans-serif-light"
+            android:gravity="center"
+            android:text="@string/find_rooms_button"
+            android:textColor="@color/White"
+            android:textSize="20sp"/>
+    </RelativeLayout>
+
+    <ScrollView
+        android:id="@+id/scrollView"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_above="@id/footer"
+        android:fillViewport="true">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:orientation="vertical">
+
+            <FrameLayout
+                android:id="@+id/map_view"
+                android:layout_width="match_parent"
+                android:layout_height="96dp"
+                android:layout_marginTop="12dp"/>
+
+            <RelativeLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="8dp"
+                android:layout_gravity="left"
+                android:layout_margin="24dp">
+
+                <ImageView
+                    android:id="@+id/hotel_icon"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:src="@drawable/icon_hotel_grey"
+                    android:paddingTop="5dp"
+                    android:paddingRight="24dp"
+                    />
+
+                <TextView
+                    android:id="@+id/hotel_name"
+                    android:layout_toRightOf="@id/hotel_icon"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:fontFamily="sans-serif"
+                    android:text="Hyatt Regency"
+                    android:textColor="#383f46"
+                    android:textSize="16sp"/>
+
+                <TextView
+                    android:id="@+id/hotel_address"
+                    android:layout_toRightOf="@id/hotel_icon"
+                    android:layout_below="@id/hotel_name"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+
+                    android:fontFamily="sans-serif"
+                    android:text="501 Pine St, Seattle,erwerwerwerwerwer WA, 98212"
+                    android:textColor="#7f8f97"
+                    android:textSize="16sp"/>
+            </RelativeLayout>
+
+            <include
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:layout_below="@+id/address"
+                layout="@layout/group_separator_v1"/>
+
+            <TextView
+                android:id="@+id/hotel_phone"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="left"
+                android:layout_margin="24dp"
+                android:drawableLeft="@drawable/room_icon_phone_blue"
+                android:drawablePadding="24dp"
+                android:fontFamily="sans-serif"
+                android:text="(203) 8547852"
+                android:textColor="@color/ConcurBlue"
+                android:textSize="16sp"/>
+
+            <include
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:layout_below="@+id/phone"
+                layout="@layout/group_separator_v1"/>
+        </LinearLayout>
+    </ScrollView>
+
+</RelativeLayout>

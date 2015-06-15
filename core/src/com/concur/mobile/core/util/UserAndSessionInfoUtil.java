@@ -102,6 +102,9 @@ public class UserAndSessionInfoUtil {
         if (userCompanyName != null) {
             parseMap.put(Const.LR_CONTACT_COMPANY_NAME, userCompanyName);
         }
+
+        parseMap.put(Const.LR_SITE_SETTINGS_SHOW_JARVIS_HOTEL_UI, ssInstance.shouldShowHotelJarvisUI());
+
         if (emailLookUpBundle != null) {
             // Get the login id.
             String loginId = emailLookUpBundle.getString(EmailLookUpRequestTask.EXTRA_LOGIN_ID_KEY);

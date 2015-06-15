@@ -4,10 +4,10 @@ import java.util.Calendar;
 import java.util.TimeZone;
 
 import android.app.Dialog;
+import android.app.FragmentTransaction;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.os.Bundle;
-import android.support.v4.app.FragmentTransaction;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -17,8 +17,8 @@ import com.concur.mobile.platform.ui.common.R;
 import com.concur.mobile.platform.ui.common.util.Const;
 import com.concur.mobile.platform.ui.common.util.FormatUtil;
 import com.concur.mobile.platform.ui.common.widget.CalendarPicker;
-import com.concur.mobile.platform.ui.common.widget.CalendarPickerDialog;
-import com.concur.mobile.platform.ui.common.widget.CalendarPickerDialog.OnDateSetListener;
+import com.concur.mobile.platform.ui.common.widget.CalendarPickerDialogV1;
+import com.concur.mobile.platform.ui.common.widget.CalendarPickerDialogV1.OnDateSetListener;
 import com.concur.mobile.platform.util.Format;
 import com.concur.mobile.platform.util.Parse;
 
@@ -47,6 +47,7 @@ public class DatePickerFormFieldView extends FormFieldView {
      */
     public DatePickerFormFieldView(IFormField frmFld, IFormFieldViewListener listener) {
         super(frmFld, listener);
+        layoutResourceId = R.layout.image_form_field;
     }
 
     @Override
@@ -57,7 +58,7 @@ public class DatePickerFormFieldView extends FormFieldView {
             case RW: {
                 switch (frmFld.getInputType()) {
                 case USER: {
-                    view = inflater.inflate(R.layout.image_form_field, null);
+                    view = inflater.inflate(layoutResourceId, null);
                     if (view != null) {
                         // Set the field label.
                         setTextViewText(view, R.id.field_name, buildLabel());
@@ -305,10 +306,10 @@ public class DatePickerFormFieldView extends FormFieldView {
     }
 
     private void hideCalendarDialog() {
-        CalendarPickerDialog dialog;
+        CalendarPickerDialogV1 dialog;
         FragmentTransaction transaction;
 
-        dialog = (CalendarPickerDialog) listener.getFragmentManager().findFragmentByTag(TAG_CALENDAR_DIALOG_FRAGMENT);
+        dialog = (CalendarPickerDialogV1) listener.getFragmentManager().findFragmentByTag(TAG_CALENDAR_DIALOG_FRAGMENT);
         if (dialog != null) {
             dialog.dismiss();
 
@@ -323,7 +324,7 @@ public class DatePickerFormFieldView extends FormFieldView {
 
     private void showCalendarDialog() {
         Bundle bundle;
-        CalendarPickerDialog datePickerDlg;
+        CalendarPickerDialogV1 datePickerDlg;
         // If there is no currently set date, then initialize one.
         Calendar startEditingDate = calendar;
         if (startEditingDate == null) {
@@ -334,12 +335,12 @@ public class DatePickerFormFieldView extends FormFieldView {
         }
 
         bundle = new Bundle();
-        datePickerDlg = new CalendarPickerDialog();
+        datePickerDlg = new CalendarPickerDialogV1();
 
-        bundle.putInt(CalendarPickerDialog.KEY_INITIAL_YEAR, startEditingDate.get(Calendar.YEAR));
-        bundle.putInt(CalendarPickerDialog.KEY_INITIAL_MONTH, startEditingDate.get(Calendar.MONTH));
-        bundle.putInt(CalendarPickerDialog.KEY_INITIAL_DAY, startEditingDate.get(Calendar.DAY_OF_MONTH));
-        bundle.putInt(CalendarPickerDialog.KEY_TEXT_COLOR, 0xFF000000);
+        bundle.putInt(CalendarPickerDialogV1.KEY_INITIAL_YEAR, startEditingDate.get(Calendar.YEAR));
+        bundle.putInt(CalendarPickerDialogV1.KEY_INITIAL_MONTH, startEditingDate.get(Calendar.MONTH));
+        bundle.putInt(CalendarPickerDialogV1.KEY_INITIAL_DAY, startEditingDate.get(Calendar.DAY_OF_MONTH));
+        bundle.putInt(CalendarPickerDialogV1.KEY_TEXT_COLOR, 0xFF000000);
 
         datePickerDlg.setOnDateSetListener(new DatePickerDialogListener());
         datePickerDlg.setArguments(bundle);

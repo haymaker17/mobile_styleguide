@@ -5,7 +5,6 @@ import android.support.v7.app.ActionBarActivity;
 import android.text.Html;
 import android.util.Log;
 import android.widget.TextView;
-
 import com.concur.breeze.R;
 import com.concur.mobile.core.util.Const;
 

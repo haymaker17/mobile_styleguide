@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="fill_parent"
+    android:layout_height="wrap_content"
+    android:layout_marginLeft="6dp"
+    android:layout_marginRight="6dp"
+    android:layout_marginTop="16dp"
+    android:clickable="true"
+    android:focusable="true"
+    android:orientation="horizontal" >
+
+    <CheckedTextView
+        android:id="@+id/field_name"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_vertical"
+        android:checkMark="@drawable/btn_check"
+        android:checked="false"
+        android:gravity="center_vertical"
+        android:maxLines="2"
+        android:minLines="1"
+        android:text="Field Name"
+        android:textAppearance="@style/CustomFormFieldLabel" />
+
+</LinearLayout>

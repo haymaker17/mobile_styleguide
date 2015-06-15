@@ -13,6 +13,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 
 import com.concur.mobile.base.util.Format;
+import com.concur.mobile.platform.common.FieldValueSpinnerItem;
 import com.concur.mobile.platform.common.IListFieldItem;
 import com.concur.mobile.platform.common.formfield.IFormField;
 import com.concur.mobile.platform.ui.common.R;
@@ -50,7 +51,7 @@ public class SearchListFormFieldView extends FormFieldView {
     // A list of item keys to exclude
     protected String[] excludeKeys;
 
-    protected FieldValueSpinnerItem selectedListItem;
+    public FieldValueSpinnerItem selectedListItem;
 
     /**
      * handle dedicated editing for the given form field
@@ -69,6 +70,7 @@ public class SearchListFormFieldView extends FormFieldView {
         liCode = frmFld.getLiCode();
         value = frmFld.getValue();
         editHandler = eh;
+        layoutResourceId = R.layout.image_form_field;
     }
 
     /**
@@ -205,7 +207,7 @@ public class SearchListFormFieldView extends FormFieldView {
             case RW: {
                 switch (frmFld.getInputType()) {
                 case USER: {
-                    view = inflater.inflate(R.layout.image_form_field, null);
+                    view = inflater.inflate(layoutResourceId, null);
                     if (view != null) {
                         // Set the field label.
                         setTextViewText(view, R.id.field_name, buildLabel());

@@ -60,7 +60,6 @@ import android.widget.ScrollView;
 import android.widget.TextView;
 import android.widget.Toast;
 import android.widget.ViewFlipper;
-
 import com.concur.breeze.R;
 import com.concur.mobile.base.service.BaseAsyncResultReceiver;
 import com.concur.mobile.base.ui.UIUtils;
@@ -119,6 +118,7 @@ import com.concur.mobile.core.travel.car.activity.CarSearch;
 import com.concur.mobile.core.travel.data.IItineraryCache;
 import com.concur.mobile.core.travel.data.Trip;
 import com.concur.mobile.core.travel.hotel.activity.HotelSearch;
+import com.concur.mobile.core.travel.hotel.activity.RestHotelSearch;
 import com.concur.mobile.core.travel.rail.activity.RailSearch;
 import com.concur.mobile.core.travel.service.ItineraryRequest;
 import com.concur.mobile.core.travel.service.ItinerarySummaryListRequest;
@@ -1542,7 +1542,11 @@ public class Home extends BaseActivity implements View.OnClickListener, Navigati
             break;
         case R.id.menuHomeBookHotel:
         case R.id.homeRowBookHotel:
-            i = new Intent(this, HotelSearch.class);
+            if (Preferences.shouldShowHotelJarvisUI()) {
+                i = new Intent(this, RestHotelSearch.class);
+            } else {
+                i = new Intent(this, HotelSearch.class);
+            }
             if (isFromMoreMenu) {
                 i.putExtra(Flurry.PARAM_NAME_BOOKED_FROM, Flurry.PARAM_VALUE_HOME_MORE);
                 isFromMoreMenu = false;

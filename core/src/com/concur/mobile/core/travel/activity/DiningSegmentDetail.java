@@ -2,7 +2,6 @@ package com.concur.mobile.core.travel.activity;
 
 import android.os.Bundle;
 import android.text.util.Linkify;
-
 import com.concur.core.R;
 import com.concur.mobile.core.travel.data.DiningSegment;
 import com.concur.mobile.core.util.FormatUtil;
@@ -32,14 +31,15 @@ public class DiningSegmentDetail extends SegmentDetail {
 
         setText(R.id.diningPhone, seg.phoneNumber, Linkify.PHONE_NUMBERS);
 
-        StringBuilder addr = new StringBuilder(seg.startAddress);
-        addr.append('\n').append(
-                com.concur.mobile.base.util.Format.localizeText(this, R.string.general_address2, seg.startCity,
-                        seg.startState, seg.startPostCode));
-        if (ViewUtil.isMappingAvailable(this)) {
-            setText(R.id.diningDirections, addr.toString(), Linkify.MAP_ADDRESSES);
-        } else {
-            setText(R.id.diningDirections, addr.toString());
+        if (seg.startAddress != null) {
+            StringBuilder addr = new StringBuilder(seg.startAddress);
+            addr.append('\n').append(com.concur.mobile.base.util.Format
+                    .localizeText(this, R.string.general_address2, seg.startCity, seg.startState, seg.startPostCode));
+            if (ViewUtil.isMappingAvailable(this)) {
+                setText(R.id.diningDirections, addr.toString(), Linkify.MAP_ADDRESSES);
+            } else {
+                setText(R.id.diningDirections, addr.toString());
+            }
         }
 
         setText(R.id.diningReservation,

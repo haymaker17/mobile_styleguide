@@ -8,7 +8,6 @@ import android.view.View.OnClickListener;
 import android.view.ViewGroup;
 import android.widget.EditText;
 import android.widget.RadioButton;
-
 import com.concur.mobile.platform.ui.common.fragment.PlatformFragmentV1;
 import com.concur.mobile.platform.ui.travel.R;
 
@@ -19,6 +18,11 @@ public class HotelSearchResultFilterFragment extends PlatformFragmentV1 {
     private String nameToFilter;
     private String starRatingtoFilter;
     private Double distanceToFilter;
+    private boolean distanceUnitInKm;
+
+    public void setDistanceUnitInKm(boolean distanceUnitInKm) {
+        this.distanceUnitInKm = distanceUnitInKm;
+    }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -68,6 +72,9 @@ public class HotelSearchResultFilterFragment extends PlatformFragmentV1 {
             }
         });
         button = (RadioButton) mainView.findViewById(R.id.filter_distance_5_button);
+        if (distanceUnitInKm) {
+            button.setText(R.string.hotel_search_results_filter_distance_5km);
+        }
         button.setOnClickListener(new View.OnClickListener() {
 
             public void onClick(View v) {
@@ -75,6 +82,9 @@ public class HotelSearchResultFilterFragment extends PlatformFragmentV1 {
             }
         });
         button = (RadioButton) mainView.findViewById(R.id.filter_distance_15_button);
+        if (distanceUnitInKm) {
+            button.setText(R.string.hotel_search_results_filter_distance_15km);
+        }
         button.setOnClickListener(new View.OnClickListener() {
 
             public void onClick(View v) {
@@ -82,6 +92,9 @@ public class HotelSearchResultFilterFragment extends PlatformFragmentV1 {
             }
         });
         button = (RadioButton) mainView.findViewById(R.id.filter_distance_25_button);
+        if (distanceUnitInKm) {
+            button.setText(R.string.hotel_search_results_filter_distance_25km);
+        }
         button.setOnClickListener(new View.OnClickListener() {
 
             public void onClick(View v) {

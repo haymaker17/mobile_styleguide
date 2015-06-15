@@ -50,6 +50,8 @@ public class ViewUtil {
     }
 
     public static final String CLS_TAG = ViewUtil.class.getSimpleName();
+    public static final String MAP_URI = "http://maps.google.com/maps/api/staticmap?center=";
+    public static final String MAP_PREFERRENCES = "&zoom=15&size=360x168&sensor=false";
 
     /**
      * Will add a separator view to a view group.
@@ -546,4 +548,5 @@ public class ViewUtil {
             immMthdMngr.hideSoftInputFromWindow(windowToken, 0);
         }
     }
+
 }

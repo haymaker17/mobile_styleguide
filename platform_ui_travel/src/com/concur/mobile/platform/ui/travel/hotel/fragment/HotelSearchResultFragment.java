@@ -1,22 +1,14 @@
 package com.concur.mobile.platform.ui.travel.hotel.fragment;
 
-import java.util.List;
-
 import android.app.ActionBar;
 import android.app.Activity;
 import android.os.Bundle;
 import android.util.Log;
-import android.view.LayoutInflater;
-import android.view.Menu;
-import android.view.MenuInflater;
-import android.view.MenuItem;
-import android.view.View;
+import android.view.*;
 import android.view.View.OnClickListener;
-import android.view.ViewGroup;
 import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
-
 import com.concur.mobile.platform.travel.search.hotel.HotelPropertyId;
 import com.concur.mobile.platform.ui.common.fragment.PlatformFragmentV1;
 import com.concur.mobile.platform.ui.common.view.ListItemAdapter;
@@ -24,11 +16,10 @@ import com.concur.mobile.platform.ui.travel.R;
 import com.concur.mobile.platform.ui.travel.util.Const;
 import com.concur.mobile.platform.util.Format;
 
+import java.util.List;
+
 /**
- * 
- * 
  * @author RatanK
- * 
  */
 public class HotelSearchResultFragment extends PlatformFragmentV1 {
 
@@ -37,9 +28,9 @@ public class HotelSearchResultFragment extends PlatformFragmentV1 {
     public String location;
     public String durationOfStayForDisplayInHeader;
 
-    private boolean progressbarVisible;
+    public boolean progressbarVisible;
     private ListView hotelListView;
-    private View mainView;
+    public View mainView;
 
     public ListView getHotelListView() {
         return hotelListView;
@@ -57,9 +48,6 @@ public class HotelSearchResultFragment extends PlatformFragmentV1 {
         // handle item selection
         if (item.getItemId() == R.id.map) {
             callBackListener.onMapsClicked();
-            return true;
-        } else if (item.getItemId() == R.id.voice) {
-            Toast.makeText(getActivity().getApplicationContext(), "Not implemented", Toast.LENGTH_SHORT).show();
             return true;
         } else {
             return super.onOptionsItemSelected(item);
@@ -89,7 +77,7 @@ public class HotelSearchResultFragment extends PlatformFragmentV1 {
             }
         });
 
-        showProgressBar();
+        showProgressBar(false);
 
         setActionBar();
 
@@ -156,29 +144,25 @@ public class HotelSearchResultFragment extends PlatformFragmentV1 {
             showNumberOfResultsInFooter(nuomOfHotels);
         }
         if (toastMessage != null) {
-            Toast.makeText(getActivity().getApplicationContext(), toastMessage, Toast.LENGTH_LONG).show();
+            Toast.makeText(getActivity().getApplicationContext(), toastMessage, Toast.LENGTH_SHORT).show();
         }
     }
 
-    public void showProgressBar() {
+    public void showProgressBar(boolean isRates) {
         if (!progressbarVisible) {
-            View progressBar = mainView.findViewById(R.id.hotel_search_progress);
+            mainView.findViewById(R.id.progressView).setVisibility(View.VISIBLE);
             progressbarVisible = true;
-            progressBar.setVisibility(View.VISIBLE);
-            progressBar.bringToFront();
             View progressBarMsg = mainView.findViewById(R.id.hotel_search_progress_msg);
-            progressBarMsg.setVisibility(View.VISIBLE);
-            progressBarMsg.bringToFront();
+            if (isRates) {
+                ((TextView) progressBarMsg).setText(R.string.hotel_rates_progress_message);
+            }
         }
     }
 
     public void hideProgressBar() {
         if (progressbarVisible) {
-            View progressBar = mainView.findViewById(R.id.hotel_search_progress);
             progressbarVisible = false;
-            progressBar.setVisibility(View.GONE);
-            View progressBarMsg = mainView.findViewById(R.id.hotel_search_progress_msg);
-            progressBarMsg.setVisibility(View.GONE);
+            mainView.findViewById(R.id.progressView).setVisibility(View.GONE);
         }
     }
 
@@ -197,8 +181,9 @@ public class HotelSearchResultFragment extends PlatformFragmentV1 {
     private void showNumberOfResultsInFooter(int resultsSize) {
         View footerView = mainView.findViewById(R.id.results_footer);
         if (footerView != null) {
-            ((TextView) footerView.findViewById(R.id.results_size)).setText(Format.localizeText(getActivity()
-                    .getApplicationContext(), R.string.hotel_search_resutls_size, resultsSize));
+            ((TextView) footerView.findViewById(R.id.results_size)).setText(
+                    Format.localizeText(getActivity().getApplicationContext(), R.string.hotel_search_resutls_size,
+                            resultsSize));
             footerView.setVisibility(View.VISIBLE);
         }
     }
@@ -246,9 +231,8 @@ public class HotelSearchResultFragment extends PlatformFragmentV1 {
 
     /**
      * Will refresh each visible view contained in a list view that match on <code>HotelChoice.propertyId</code>.
-     * 
-     * @param propertyId
-     *            contains the propertyId that should be refreshed.
+     *
+     * @param updatedHotelListItem contains the propertyId that should be refreshed.
      */
     public void refreshView(HotelSearchResultListItem updatedHotelListItem,
             ListItemAdapter<HotelSearchResultListItem> listItemAdapater) {

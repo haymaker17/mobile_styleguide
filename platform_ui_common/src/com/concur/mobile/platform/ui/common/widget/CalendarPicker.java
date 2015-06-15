@@ -42,7 +42,7 @@ public class CalendarPicker extends View {
 
     public final static int DEFAULT_BACKGROUND_COLOR = 0xFFFFFFFF;
     public final static int DEFAULT_TEXT_COLOR = 0xFF444444;
-    public final static int DEFAULT_GRID_COLOR = 0xFFDDDDDD;
+    public final static int DEFAULT_GRID_COLOR = 0xFFFFFFFF;
     public final static int DEFAULT_HILITE_COLOR = 0xAA1E67D4;
     public final static int DEFAULT_ARROW_COLOR = 0xAA1E67D4;
     private final static float DEFAULT_STROKE_WIDTH = 1.0f;

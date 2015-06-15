@@ -6,17 +6,13 @@
     android:background="@drawable/ab_tab_white_bg"
     android:orientation="vertical" >
 
-    <!--
-         include
-        android:id="@+id/header"
-        layout="@layout/standard_header" /
-    -->
-
     <LinearLayout
         android:id="@+id/container"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:orientation="vertical" >
+
+        <include layout="@layout/offline_header_bar" />
     </LinearLayout>
 
 </LinearLayout>

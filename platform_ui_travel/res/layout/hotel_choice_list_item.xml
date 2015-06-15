@@ -5,43 +5,54 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent" >
 
-    <ImageView
-        android:id="@+id/travelCityscape"
+    <!--
+          <ScrollView
         android:layout_width="match_parent"
-        android:layout_height="80dp"
-        android:contentDescription="Image banner"
-        android:scaleType="fitXY"
-        android:src="@drawable/cityscape_placeholder" />
+        android:layout_height="wrap_content" >
+         android:scaleType="fitXY"
 
-    <View
-        android:id="@+id/viewSpacer"
-        android:layout_width="match_parent"
-        android:layout_height="0dp" />
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content" >
+    -->
 
-    <include
-        android:id="@+id/hotel_row"
+    <com.concur.mobile.platform.ui.travel.util.ParallaxScollView
+        android:id="@+id/layout_listview"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_below="@+id/travelCityscape"
-        layout="@layout/hotel_search_result_row" />
+        android:cacheColorHint="@null"
+        android:duplicateParentState="true"
+        android:footerDividersEnabled="false"
+        android:headerDividersEnabled="false"
+        android:overScrollMode="never"
+        android:scrollbars="none"
+        android:scrollingCache="false" />
 
     <TabHost
         android:id="@android:id/tabhost"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_alignParentBottom="true"
-        android:layout_below="@+id/hotel_row" >
+        android:layout_below="@+id/layout_listview" >
 
         <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
+            android:layout_height="wrap_content"
             android:orientation="vertical" >
 
             <TabWidget
                 android:id="@android:id/tabs"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content" >
+                android:layout_height="wrap_content"
+                android:fitsSystemWindows="true"
+                android:gravity="fill"
+                android:showDividers="middle" >
             </TabWidget>
+
+            <include
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                layout="@layout/group_separator_v1" />
 
             <FrameLayout
                 android:id="@android:id/tabcontent"
@@ -66,4 +77,9 @@
         </LinearLayout>
     </TabHost>
 
-</RelativeLayout>
+</RelativeLayout><!--
+    </RelativeLayout>
+    </ScrollView>
+    android:src="@drawable/cityscape_placeholder"
+-->
+

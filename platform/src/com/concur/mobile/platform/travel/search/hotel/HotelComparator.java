@@ -81,6 +81,8 @@ public class HotelComparator implements Comparator<Hotel> {
             case PREFERENCE:
                 retVal = comparePreference(hotel1, hotel2);
                 break;
+            case RECOMMENDATION:
+                retVal = compareRecommendation(hotel1, hotel2);
             }
         } else {
             retVal = 0;
@@ -270,56 +272,35 @@ public class HotelComparator implements Comparator<Hotel> {
     public int comparePreference(Hotel hotel1, Hotel hotel2) {
         int retVal = 0;
 
-        // Obtain hotel1's preference string for comparison.
-        String hotel1PreferredStr = null;
+        // Obtain hotel1's preference rank for comparison.
+        Integer hotel1PrefRank = null;
         if (hotel1.preferences != null && hotel1.preferences.companyPreference != null) {
-            hotel1PreferredStr = hotel1.preferences.companyPreference;
+            hotel1PrefRank = hotel1.preferences.getPreferenceTypeOrder();
         }
 
-        // Obtain hotel2's preference string for comparison.
-        String hotel2PreferredStr = null;
+        // Obtain hotel2's preference rank for comparison.
+        Integer hotel2PrefRank = null;
         if (hotel2.preferences != null && hotel2.preferences.companyPreference != null) {
-            hotel2PreferredStr = hotel2.preferences.companyPreference;
+            hotel2PrefRank = hotel2.preferences.getPreferenceTypeOrder();
         }
 
-        switch (compOrder) {
-        case ASCENDING:
-            if (hotel1PreferredStr != null && hotel2PreferredStr != null
-                    && hotel2.preferences.companyPreference != null) {
-                if (hotel1PreferredStr.equals("Preferred")) {
-                    retVal = 1;
-                } else if (hotel1PreferredStr == hotel2PreferredStr) {
-                    retVal = 0;
-                } else if (hotel2PreferredStr.equals("Preferred")) {
-                    retVal = -1;
-                }
-            } else if (hotel1PreferredStr != null) {
-                // No preference for hotel2, have hotel 1 come before hotel 2.
-                retVal = -1;
-            } else if (hotel2PreferredStr != null) {
-                // No preference for hotel1, have hotel 1 come after hotel 2.
+        if (hotel1PrefRank != null && hotel2PrefRank != null) {
+            // hotel with high preference rank comes first
+            if (hotel1PrefRank < hotel2PrefRank) {
                 retVal = 1;
-            }
-            break;
-        case DESCENDING:
-            if (hotel1PreferredStr != null && hotel2PreferredStr != null
-                    && hotel2.preferences.companyPreference != null) {
-                if (hotel1PreferredStr.equals("Preferred")) {
-                    retVal = -1;
-                } else if (hotel1PreferredStr == hotel2PreferredStr) {
-                    retVal = 0;
-                } else if (hotel2PreferredStr.equals("Preferred")) {
-                    retVal = 1;
-                }
-            } else if (hotel1PreferredStr != null) {
-                // No preference for hotel2, have hotel 1 come before hotel 2.
+            } else if (hotel1PrefRank == hotel2PrefRank) {
+                retVal = 0;
+            } else if (hotel1PrefRank > hotel2PrefRank) {
                 retVal = -1;
-            } else if (hotel2PreferredStr != null) {
-                // No preference for hotel1, have hotel 1 come after hotel 2.
-                retVal = 1;
             }
-            break;
+        } else if (hotel1PrefRank != null) {
+            // No preference rank for hotel2, have hotel 1 come before hotel 2.
+            retVal = -1;
+        } else if (hotel2PrefRank != null) {
+            // No preference rank for hotel1, have hotel 2 come before hotel 1.
+            retVal = 1;
         }
+
         return retVal;
     }
 
@@ -348,7 +329,7 @@ public class HotelComparator implements Comparator<Hotel> {
             // No recommendation for hotel2, have hotel 1 come before hotel 2.
             retVal = -1;
         } else if (hotel2.recommended != null && hotel2.recommended.totalScore != null) {
-            // No recommendation for hotel1, have hotel 1 come after hotel 2.
+            // No recommendation for hotel1, have hotel 2 come before hotel 1.
             retVal = 1;
         }
         return retVal;

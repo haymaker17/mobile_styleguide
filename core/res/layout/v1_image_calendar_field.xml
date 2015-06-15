@@ -51,13 +51,9 @@
             android:layout_marginBottom="8dp"
             android:layout_marginLeft="36dp"
             android:layout_marginRight="6dp"
-            android:ellipsize="end"
             android:gravity="center_vertical"
-            android:lines="1"
-            android:maxLines="1"
-            android:minLines="1"
             android:scrollHorizontally="true"
-            android:text="11/19/2015"
+            android:text="web, Jan 20, 2015"
             android:textAppearance="@style/FormFieldValueTextV1" />
 
         <TextView

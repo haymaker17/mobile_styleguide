@@ -29,7 +29,6 @@ import android.widget.Button;
 import android.widget.CheckedTextView;
 import android.widget.EditText;
 import android.widget.TextView;
-
 import com.concur.breeze.R;
 import com.concur.mobile.core.activity.BaseActivity;
 import com.concur.mobile.core.service.ConcurService;

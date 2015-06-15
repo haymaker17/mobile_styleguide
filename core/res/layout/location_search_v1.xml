@@ -51,7 +51,6 @@
         android:id="@+id/officeLocation"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="20dp"
         android:background="@color/White"
         android:drawableLeft="@drawable/search_icon_office_location"
         android:drawablePadding="20dp"
@@ -62,8 +61,24 @@
         android:paddingRight="20dp"
         android:text="@string/loc_search_office"
         android:textColor="@color/Black"
-        android:textSize="16sp"
-        android:visibility="gone" >
+        android:textSize="16sp">
+    </Button>
+    <Button
+        android:id="@+id/currentLocation"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="5dp"
+        android:background="@color/White"
+        android:drawableLeft="@drawable/search_icon_current_location"
+        android:drawablePadding="20dp"
+        android:fontFamily="sans-serif-light"
+        android:gravity="center_vertical|center_horizontal|left"
+        android:minHeight="56dp"
+        android:paddingLeft="20dp"
+        android:paddingRight="20dp"
+        android:text="@string/search_current_location"
+        android:textColor="@color/Black"
+        android:textSize="16sp">
     </Button>
 
     <ListView
