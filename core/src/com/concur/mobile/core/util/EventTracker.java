@@ -179,25 +179,6 @@ public enum EventTracker {
         }
     }
 
-    /**
-     * Used to indicate an <code>Activity</code> is about to start.
-     *
-     * @param activity The <code>Activity</code> to start tracking.
-     */
-    public void activityStart(Activity activity) {
-        String className = activity.getClass().getName();
-
-        className = getAnnotation(activity, className);
-        EasyTracker.getInstance(appContext).set(Fields.SCREEN_NAME, className);
-
-        //assigned user id for user id view.
-        if (this.analyticsId != null) {
-            EasyTracker.getInstance(appContext).set(USER_ID_TAG, analyticsId);
-        }
-
-        EasyTracker.getInstance(appContext).activityStart(activity);
-    }
-
     private String getAnnotation(Activity activity, String className) {
         Annotation annotation = activity.getClass().getAnnotation(EventTrackerClassName.class);
         if (annotation != null) {
@@ -226,6 +207,25 @@ public enum EventTracker {
         EasyTracker.getInstance(appContext).send(builder.build());
     }
 
+    /**
+     * Used to indicate an <code>Activity</code> is about to start.
+     *
+     * @param activity The <code>Activity</code> to start tracking.
+     */
+    public void activityStart(Activity activity) {
+        String className = activity.getClass().getName();
+
+        className = getAnnotation(activity, className);
+        EasyTracker.getInstance(appContext).set(Fields.SCREEN_NAME, className);
+
+        //assigned user id for user id view.
+        if (this.analyticsId != null) {
+            EasyTracker.getInstance(appContext).set(USER_ID_TAG, analyticsId);
+        }
+
+        EasyTracker.getInstance(appContext).activityStart(activity);
+    }
+    
     /**
      * Used to indicate an <code>Activity</code> has stopped.
      *
