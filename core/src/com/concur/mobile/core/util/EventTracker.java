@@ -3,14 +3,6 @@
  */
 package com.concur.mobile.core.util;
 
-import java.lang.annotation.Annotation;
-import java.lang.annotation.ElementType;
-import java.lang.annotation.Retention;
-import java.lang.annotation.RetentionPolicy;
-import java.lang.annotation.Target;
-import java.util.HashMap;
-import java.util.Map;
-
 import android.app.Activity;
 import android.content.Context;
 import android.text.TextUtils;
@@ -20,13 +12,20 @@ import com.google.analytics.tracking.android.Fields;
 import com.google.analytics.tracking.android.GoogleAnalytics;
 import com.google.analytics.tracking.android.MapBuilder;
 
+import java.lang.annotation.Annotation;
+import java.lang.annotation.ElementType;
+import java.lang.annotation.Retention;
+import java.lang.annotation.RetentionPolicy;
+import java.lang.annotation.Target;
+import java.util.HashMap;
+import java.util.Map;
+
 /**
  * Thin layer for making logging events to Flurry and Google Analytics.
- * 
+ * <p/>
  * Note that this singleton was implemented as an <code>Enum</code> to guarantee a thread-safe single instance.
- * 
+ *
  * @author Chris N. Diaz
- * 
  */
 public enum EventTracker {
     /**
@@ -39,11 +38,12 @@ public enum EventTracker {
 
     private Context appContext;
     private String analyticsId;
+
     @SuppressWarnings("unused")
     private String gaTrackingId; // Google Analytics Tracking ID
 
     @Retention(value = RetentionPolicy.RUNTIME)
-    @Target({ ElementType.TYPE })
+    @Target({ElementType.TYPE})
     public @interface EventTrackerClassName {
 
         String getClassName();
@@ -58,13 +58,10 @@ public enum EventTracker {
 
     /**
      * Initializes the <code>Flurry</code> and <code>Google Analytics</code> utilities.
-     * 
-     * @param context
-     *            the application context required for invoking GA tracking.
-     * @param a
-     *            unique user identifier used for tracking.
-     * @param googleTrackingId
-     *            the Google Analytics tracking ID
+     *
+     * @param context      the application context required for invoking GA tracking.
+     * @param userId       unique user identifier used for tracking.
+     * @param gaTrackingId the Google Analytics tracking ID
      */
     public void init(Context context, String userId, String gaTrackingId) {
 
@@ -83,9 +80,8 @@ public enum EventTracker {
 
     /**
      * Sets the unique ID of this client used to track user/sessions.
-     * 
-     * @param userId
-     *            an ID unique to this user client.
+     *
+     * @param userId an ID unique to this user client.
      */
     public void setUserId(String userId) {
         this.analyticsId = userId;
@@ -93,15 +89,11 @@ public enum EventTracker {
 
     /**
      * Tracks the given event to Flurry and Google Analytics.
-     * 
-     * @param eventCategory
-     *            the event category to track
-     * @param eventAction
-     *            the event action to track
-     * @param paramKeys
-     *            array of parameter keys (must be same length as <code>paramValues</code>).
-     * @param paramValues
-     *            array of parameter values with indicies matching the <code>paramKeys</code>.
+     *
+     * @param eventCategory the event category to track
+     * @param eventAction   the event action to track
+     * @param paramKeys     array of parameter keys (must be same length as <code>paramValues</code>).
+     * @param paramValues   array of parameter values with indicies matching the <code>paramKeys</code>.
      */
     public void track(String eventCategory, String eventAction, String[] paramKeys, String[] paramValues) {
 
@@ -123,11 +115,9 @@ public enum EventTracker {
 
     /**
      * Tracks the given event to Flurry and Google Analytics.
-     * 
-     * @param eventCategory
-     *            the event category to track
-     * @param eventAction
-     *            the event action to track
+     *
+     * @param eventCategory the event category to track
+     * @param eventAction   the event action to track
      */
     public void track(String eventCategory, String eventAction) {
         track(eventCategory, eventAction, (Map<String, String>) null);
@@ -135,13 +125,10 @@ public enum EventTracker {
 
     /**
      * Tracks the given event to Google Analytics.
-     * 
-     * @param eventCategory
-     *            the event category to track
-     * @param eventAction
-     *            the event action to track
-     * @param eventLabel
-     *            the event label to track
+     *
+     * @param eventCategory the event category to track
+     * @param eventAction   the event action to track
+     * @param eventLabel    the event label to track
      */
     public void track(String eventCategory, String eventAction, String eventLabel) {
         MapBuilder builder = MapBuilder.createEvent(eventCategory, eventAction, eventLabel, null);
@@ -152,13 +139,10 @@ public enum EventTracker {
 
     /**
      * Tracks the given event to Google Analytics.
-     * 
-     * @param eventCategory
-     *            the event category to track
-     * @param eventAction
-     *            the event action to track
-     * @param value
-     *            the event value
+     *
+     * @param eventCategory the event category to track
+     * @param eventAction   the event action to track
+     * @param value         the event value
      */
     public void track(String eventCategory, String eventAction, String eventLabel, Long value) {
         MapBuilder builder = MapBuilder.createEvent(eventCategory, eventAction, eventLabel, value);
@@ -169,13 +153,10 @@ public enum EventTracker {
 
     /**
      * Tracks the given event to Flurry and Google Analytics.
-     * 
-     * @param eventCategory
-     *            the event category to track
-     * @param eventAction
-     *            the event action to track
-     * @param parameters
-     *            <code>Map</code> of parameters to track.
+     *
+     * @param eventCategory the event category to track
+     * @param eventAction   the event action to track
+     * @param parameters    <code>Map</code> of parameters to track.
      */
     public void track(String eventCategory, String eventAction, Map<String, String> parameters) {
 
@@ -200,15 +181,20 @@ public enum EventTracker {
 
     /**
      * Used to indicate an <code>Activity</code> is about to start.
-     * 
-     * @param activity
-     *            The <code>Activity</code> to start tracking.
+     *
+     * @param activity The <code>Activity</code> to start tracking.
      */
     public void activityStart(Activity activity) {
         String className = activity.getClass().getName();
-        className = getAnnotation(activity, className);
 
+        className = getAnnotation(activity, className);
         EasyTracker.getInstance(appContext).set(Fields.SCREEN_NAME, className);
+
+        //assigned user id for user id view.
+        if (this.analyticsId != null) {
+            EasyTracker.getInstance(appContext).set(USER_ID_TAG, analyticsId);
+        }
+
         EasyTracker.getInstance(appContext).activityStart(activity);
     }
 
@@ -224,28 +210,26 @@ public enum EventTracker {
 
     /**
      * Tracks the given event to Google Analytics after a list of high scores finishes loading
-     * 
-     * @param eventCategory
-     *            Event Category
-     * @param eventTimingName
-     *            Timing Event Name
-     * @param eventTimingLabel
-     *            Timing Event Lable
-     * @param timingValue
-     *            Timing Event Value
+     *
+     * @param eventCategory    Event Category
+     * @param eventTimingName  Timing Event Name
+     * @param eventTimingLabel Timing Event Lable
+     * @param timingValue      Timing Event Value
      */
     public void trackTimings(String eventCategory, String eventTimingName, String eventTimingLabel, Long timingValue) {
         MapBuilder builder = MapBuilder.createTiming(eventCategory, timingValue, eventTimingName, eventTimingLabel);
         builder.set(USER_ID_TAG, analyticsId);
         builder.set(Fields.customDimension(CUSTOM_ID_INDEX), analyticsId);
+        if (this.analyticsId != null) {
+            EasyTracker.getInstance(appContext).set(USER_ID_TAG, analyticsId);
+        }
         EasyTracker.getInstance(appContext).send(builder.build());
     }
 
     /**
      * Used to indicate an <code>Activity</code> has stopped.
-     * 
-     * @param activity
-     *            The <code>Activity</code> to stop tracking.
+     *
+     * @param activity The <code>Activity</code> to stop tracking.
      */
     public void activityStop(Activity activity) {
 
@@ -253,6 +237,11 @@ public enum EventTracker {
         className = getAnnotation(activity, className);
 
         EasyTracker.getInstance(appContext).set(Fields.SCREEN_NAME, className);
+
+        //assigned user id for user id view.
+        if (this.analyticsId != null) {
+            EasyTracker.getInstance(appContext).set(USER_ID_TAG, analyticsId);
+        }
         EasyTracker.getInstance(appContext).activityStop(activity);
     }
 }
