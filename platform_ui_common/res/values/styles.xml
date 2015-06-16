@@ -269,5 +269,29 @@
     </style>    
     
     <!-- END Offline Header Styles -->
+
+    <!-- Default style for generic table row layout -->
+    <style name="DefaultTitle">
+        <item name="android:textSize">18sp</item>
+        <item name="android:textStyle">normal</item>
+        <item name="android:textColor">#383f46</item>
+        <item name="android:fontFamily">sans-serif</item>
+    </style>
+
+    <style name="DefaultSubTitle">
+        <item name="android:textSize">14sp</item>
+        <item name="android:textStyle">normal</item>
+        <item name="android:textColor">#383f46</item>
+        <item name="android:fontFamily">sans-serif</item>
+    </style>
+
+    <style name="DefaultValue">
+        <item name="android:textSize">18sp</item>
+        <item name="android:textStyle">normal</item>
+        <item name="android:textColor">#0078C8</item>
+        <item name="android:fontFamily">sans-serif</item>
+    </style>
+
+    <!-- END Default style for generic table row layout -->
     
 </resources>
