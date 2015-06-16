@@ -849,6 +849,8 @@ public abstract class ConcurCore extends MultiDexApplication {
             clientData.key = LoginResult.TAG_ANALYTICS_ID;
             if (clientData.load()) {
                 userid = clientData.text;
+            }else{
+                userid="";
             }
         }
         return userid;
