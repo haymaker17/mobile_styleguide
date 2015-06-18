@@ -1,20 +1,19 @@
 package com.concur.mobile.core.expense.travelallowance.fragment;
 
 import android.content.Context;
-import android.database.DataSetObserver;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ListAdapter;
+import android.widget.ArrayAdapter;
 import android.widget.TextView;
 
 import com.concur.core.R;
 import com.concur.mobile.core.expense.travelallowance.datamodel.FixedTravelAllowance;
 import com.concur.mobile.core.expense.travelallowance.datamodel.FixedTravelAllowanceTestData;
 
-import com.concur.mobile.core.expense.travelallowance.util.DateUtils;
 import com.concur.mobile.core.expense.travelallowance.util.DefaultDateFormat;
+import com.concur.mobile.core.expense.travelallowance.util.IDateFormat;
 import com.concur.mobile.core.expense.travelallowance.util.StringUtilities;
 import com.concur.mobile.core.util.Const;
 import com.concur.mobile.core.util.FormatUtil;
@@ -29,15 +28,7 @@ import java.util.Map;
 /**
  * Created by D049515 on 15.06.2015.
  */
-public class FixedTravelAllowanceListAdapter implements ListAdapter {
-
-    private static final String CLS_TAG = FixedTravelAllowanceListAdapter.class.getSimpleName();
-
-    private Context context;
-    private boolean hasMultipleGroups;
-    private static final int HEADER_ROW = 1;
-    private static final int ENTRY_ROW = 2;
-    private List<Object> locationAndTAList;
+public class FixedTravelAllowanceListAdapter extends ArrayAdapter<Object> {
 
     /**
      * Holds all UI controls needed for rendering
@@ -51,26 +42,41 @@ public class FixedTravelAllowanceListAdapter implements ListAdapter {
         private View vDividerBottom;
     }
 
+
+    private static final String CLS_TAG = FixedTravelAllowanceListAdapter.class.getSimpleName();
+
+    private static final int LAYOUT_ID = R.layout.generic_table_row_layout;
+
+    private Context context;
+    private boolean hasMultipleGroups;
+    private static final int HEADER_ROW = 0;
+    private static final int ENTRY_ROW = 1;
+    private IDateFormat dateFormatter;
+
+
     /**
-     * Creates an instance of this list adapter
+     * Creates an instance of this list adapter.
      * @param context
      * @param fixedTravelAllowanceList
      */
     public FixedTravelAllowanceListAdapter(final Context context, List<FixedTravelAllowance> fixedTravelAllowanceList) {
+        super(context, LAYOUT_ID);
         this.context = context;
         if (fixedTravelAllowanceList == null) {
             FixedTravelAllowanceTestData mockData = new FixedTravelAllowanceTestData();
             fixedTravelAllowanceList = mockData.getAllowances();
         }
+        this.dateFormatter = new DefaultDateFormat(context);
         initializeGroups(fixedTravelAllowanceList);
     }
 
     private void initializeGroups(List<FixedTravelAllowance> fixedTravelAllowanceList) {
+        Log.d(Const.LOG_TAG, CLS_TAG + ".initializeGroups: fixed TA list size: " + fixedTravelAllowanceList.size());
         List<String> sortedLocations = new ArrayList<String>();
         List<FixedTravelAllowance> fixedTAList = new ArrayList<FixedTravelAllowance>(fixedTravelAllowanceList);
         Collections.sort(fixedTravelAllowanceList, Collections.reverseOrder());
         Map<String, List<FixedTravelAllowance>> fixedTAGroups = new HashMap<String, List<FixedTravelAllowance>>();
-        locationAndTAList = new ArrayList<Object>();
+        List<Object> locationAndTAList = new ArrayList<Object>();
 
         for (FixedTravelAllowance allowance : fixedTAList) {
             List<FixedTravelAllowance> taList;
@@ -98,88 +104,27 @@ public class FixedTravelAllowanceListAdapter implements ListAdapter {
             locationAndTAList.addAll(fixedTAList);
         }
 
+        addAll(locationAndTAList);
+        Log.d(Const.LOG_TAG, CLS_TAG + ".initializeGroups: Header and TA list size " + locationAndTAList.size());
     }
 
-    /**
-     * {@inheritDoc}
-     */
-    @Override
-    public boolean areAllItemsEnabled() {
-        return false;
-    }
-
-    /**
-     * {@inheritDoc}
-     */
-    @Override
-    public boolean isEnabled(int i) {
-        return false;
-    }
-
-    /**
-     * {@inheritDoc}
-     */
-    @Override
-    public void registerDataSetObserver(DataSetObserver dataSetObserver) {
-
-    }
-
-    /**
-     * {@inheritDoc}
-     */
-    @Override
-    public void unregisterDataSetObserver(DataSetObserver dataSetObserver) {
-
-    }
-
-    /**
-     * {@inheritDoc}
-     */
-    @Override
-    public int getCount() {
-        return locationAndTAList.size();
-    }
-
-    /**
-     * {@inheritDoc}
-     */
-    @Override
-    public Object getItem(int i) {
-        if (i < locationAndTAList.size()) {
-            return locationAndTAList.get(i);
-        } else {
-            return null;
-        }
-    }
-
-    /**
-     * {@inheritDoc}
-     */
-    @Override
-    public long getItemId(int i) {
-        return i;
-    }
-
-    /**
-     * {@inheritDoc}
-     */
-    @Override
-    public boolean hasStableIds() {
-        return false;
-    }
 
     /**
      * {@inheritDoc}
      */
     @Override
     public View getView(int i, View convertView, ViewGroup viewGroup) {
+        Log.d(Const.LOG_TAG, CLS_TAG + ".getView: Render view index: " + i);
+        if (i > getCount()) {
+            Log.e(Const.LOG_TAG, CLS_TAG + ".getView: Index is out of bounds. Index: " + i);
+        }
 
         View resultView = null;
         ViewHolder holder = null;
 
         if (convertView == null) {
             LayoutInflater inflater = (LayoutInflater) this.context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-            resultView = inflater.inflate(R.layout.generic_table_row_layout, viewGroup, false);
+            resultView = inflater.inflate(LAYOUT_ID, viewGroup, false);
             holder = createViewHolder(resultView);
             resultView.setTag(holder);
         } else {
@@ -194,7 +139,11 @@ public class FixedTravelAllowanceListAdapter implements ListAdapter {
 
         if (getItemViewType(i) == ENTRY_ROW ) {
             FixedTravelAllowance allowance = (FixedTravelAllowance) getItem(i);
-            renderEntryRow(holder, allowance);
+            boolean withRowDevider = false;
+            if (i + 1 < getCount() && getItemViewType(i+1) == ENTRY_ROW) {
+                withRowDevider = true;
+            }
+            renderEntryRow(holder, allowance, withRowDevider);
         }
 
         return resultView;
@@ -213,7 +162,8 @@ public class FixedTravelAllowanceListAdapter implements ListAdapter {
             return ENTRY_ROW;
         }
 
-        return 0;
+        Log.e(Const.LOG_TAG, CLS_TAG + ".getItemViewType: Cannot identify view type for index: " + i);
+        return IGNORE_ITEM_VIEW_TYPE;
     }
 
     /**
@@ -222,18 +172,6 @@ public class FixedTravelAllowanceListAdapter implements ListAdapter {
     @Override
     public int getViewTypeCount() {
         return 2;
-    }
-
-    /**
-     * {@inheritDoc}
-     */
-    @Override
-    public boolean isEmpty() {
-        if (getCount() == 0) {
-            return true;
-        } else {
-            return false;
-        }
     }
 
     /**
@@ -264,6 +202,7 @@ public class FixedTravelAllowanceListAdapter implements ListAdapter {
         holder.tvValue.setVisibility(View.GONE);
         holder.tvSubtitle1.setVisibility(View.GONE);
         holder.tvSubtitle2.setVisibility(View.GONE);
+        holder.vDividerBottom.setVisibility(View.VISIBLE);
     }
 
     /**
@@ -271,17 +210,21 @@ public class FixedTravelAllowanceListAdapter implements ListAdapter {
      * @param holder the view holder
      * @param allowance the allowance to be rendered
      */
-    private void renderEntryRow(ViewHolder holder, FixedTravelAllowance allowance) {
+    private void renderEntryRow(ViewHolder holder, FixedTravelAllowance allowance, boolean withRowDevider) {
         if (this.hasMultipleGroups) {
             holder.vDividerTop.setVisibility(View.GONE);
         } else {
             holder.vDividerTop.setVisibility(View.VISIBLE);
         }
 
-        DefaultDateFormat dateFormat = new DefaultDateFormat(context);
+        if (withRowDevider) {
+            holder.vDividerBottom.setVisibility(View.VISIBLE);
+        } else {
+            holder.vDividerBottom.setVisibility(View.GONE);
+        }
 
         holder.tvTitle.setTextAppearance(this.context, R.style.DefaultTitle);
-        holder.tvTitle.setText(DateUtils.startEndDateToString(allowance.getDate(), null, dateFormat, false));
+        holder.tvTitle.setText(dateFormatter.format(allowance.getDate(), false, true));
 
         holder.tvValue.setVisibility(View.VISIBLE);
 

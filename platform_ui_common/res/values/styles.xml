@@ -303,8 +303,15 @@
         <item name="android:fontFamily">sans-serif</item>
     </style>
 
-    <style name="DefaultDivider">
+    <style name="GroupDivider">
         <item name="android:background">#f7fafd</item>
+        <item name="android:layout_height">9dp</item>
+    </style>
+
+    <style name="ListRowDivider">
+        <item name="android:background">#dbe1e6</item>
+        <item name="android:layout_height">1dp</item>
+        <item name="android:layout_marginLeft">16dp</item>
     </style>
 
     <!-- END Default style for generic table row layout -->

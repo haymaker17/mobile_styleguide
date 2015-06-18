@@ -34,22 +34,36 @@ public class DefaultDateFormat implements IDateFormat {
      * {@inheritDoc}
      */
     @Override
-    public String format(final Date date, final boolean includeTime) {
+    public String format(final Date date, final boolean includeTime, final boolean includeDayOfWeek) {
         if (date == null) {
             return "";
         }
 
-        DateFormat timeFormat = android.text.format.DateFormat.getTimeFormat(ctx);
-
         SimpleDateFormat dateFormat = new SimpleDateFormat(createDatePattern(), Locale.getDefault());
         String formattedDate = dateFormat.format(date);
 
-        if (includeTime) {
-            String formattedTime = timeFormat.format(date);
-            return formattedDate + ", " + formattedTime;
-        } else {
-            return formattedDate;
+        String dayOfWeek = null;
+        if (includeDayOfWeek) {
+            dateFormat =  new SimpleDateFormat("E", Locale.getDefault());
+            dayOfWeek = dateFormat.format(date);
         }
+
+        String formattedTime = null;
+        if (includeTime) {
+            DateFormat timeFormat = android.text.format.DateFormat.getTimeFormat(ctx);
+            formattedTime = timeFormat.format(date);
+        }
+
+        String result = formattedDate;
+        if (formattedTime != null) {
+            result = result + ", " + formattedTime;
+        }
+
+        if (dayOfWeek != null) {
+            result = dayOfWeek + ", " + result;
+        }
+
+        return result;
     }
 
     /**
