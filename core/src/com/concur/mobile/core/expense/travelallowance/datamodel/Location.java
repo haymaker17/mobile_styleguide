@@ -17,6 +17,12 @@ public class Location implements Serializable, Comparable<FixedTravelAllowance>,
 
     private String cityName;
 
+    public Location(String locationId, String countryName, String cityName) {
+        this.locationId = locationId;
+        this.countryName = countryName;
+        this.cityName = cityName;
+    }
+
     public String getLocationId() {
         return locationId;
     }

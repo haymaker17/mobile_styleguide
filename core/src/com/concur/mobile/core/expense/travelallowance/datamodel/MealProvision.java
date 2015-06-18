@@ -1,5 +1,7 @@
 package com.concur.mobile.core.expense.travelallowance.datamodel;
 
+import com.concur.mobile.core.expense.travelallowance.util.StringUtilities;
+
 import java.io.Serializable;
 
 /**
@@ -19,16 +21,16 @@ public class MealProvision implements Comparable<MealProvision>, Serializable {
     /**
      * The human readable value associated with the code e.g. "Provided"
      */
-    private String description;
+    private String codeDescription;
 
     /**
      * Creates a new MealProvision instance
      * @param code The coded representation of a provision e.g. "PRO"
-     * @param description The human readable value associated with the code e.g. "Provided"
+     * @param codeDescription The human readable value associated with the code e.g. "Provided"
      */
-    public MealProvision(String code, String description) {
+    public MealProvision(String code, String codeDescription) {
         this.code = code;
-        this.description = description;
+        this.codeDescription = codeDescription;
     }
 
     /**
@@ -45,8 +47,8 @@ public class MealProvision implements Comparable<MealProvision>, Serializable {
      *
      * @return The human readable value associated with the code e.g. "Provided"
      */
-    public String getDescription() {
-        return description;
+    public String getCodeDescription() {
+        return codeDescription;
     }
 
     /**
@@ -66,7 +68,7 @@ public class MealProvision implements Comparable<MealProvision>, Serializable {
         if (code != null ? !code.equals(that.code) : that.code != null) {
             return false;
         }
-        if (description != null ? !description.equals(that.description) : that.description != null) {
+        if (codeDescription != null ? !codeDescription.equals(that.codeDescription) : that.codeDescription != null) {
             return false;
         }
 
@@ -79,7 +81,7 @@ public class MealProvision implements Comparable<MealProvision>, Serializable {
     @Override
     public int hashCode() {
         int result = code != null ? code.hashCode() : 0;
-        result = 31 * result + (description != null ? description.hashCode() : 0);
+        result = 31 * result + (codeDescription != null ? codeDescription.hashCode() : 0);
         return result;
     }
 
@@ -105,5 +107,17 @@ public class MealProvision implements Comparable<MealProvision>, Serializable {
         }
 
         return 0;
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public String toString() {
+        if (StringUtilities.isNullOrEmpty(codeDescription)) {
+            return code;
+        } else {
+            return codeDescription;
+        }
     }
 }

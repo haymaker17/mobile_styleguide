@@ -15,64 +15,54 @@ import java.util.List;
  */
 public class FixedTravelAllowanceTestData {
 
-    /**
-     * The expense report holding the travel allowances
-     */
-    private ExpenseReport expenseReport;
-
-    /**
-     * An usual expense
-     */
-    private ExpenseReportEntry expenseReportEntry;
-
-    /**
-     * An expense with transaction data 5th of may 2015 and expKey "FXMLS".
-     * This one should match the matchable allowance of the report
-     */
-    private ExpenseReportEntryDetail expenseReportEntryDetail;
+    private List<FixedTravelAllowance> allowances;
 
     public FixedTravelAllowanceTestData() {
 
-        List<FixedTravelAllowance> allowances = new ArrayList<FixedTravelAllowance>(2);
+        allowances = new ArrayList<FixedTravelAllowance>();
         Calendar cal = Calendar.getInstance();
-        this.expenseReport = new ExpenseReport("ER1");
 
-        FixedTravelAllowance matchingAllowance = new FixedTravelAllowance("FA1");
-        FixedTravelAllowance nonMatchingAllowance = new FixedTravelAllowance("FA2");
+        for (int i = 1; i <= 10; i++){
+            FixedTravelAllowance allowance = new FixedTravelAllowance("FTA" + i);
+            cal.set(2015, 5, i);
+            allowance.setDate(new Date(cal.getTimeInMillis()));
+            allowance.setAmount(new Double(i));
+            allowance.setCurrencyCode("USD");
+            allowance.setBreakfastProvision(new MealProvision("NPR", "Not Provided"));
+            allowance.setLunchProvision(new MealProvision("NPR", "Not Provided"));
+            allowance.setDinnerProvision(new MealProvision("NPR", "Not Provided"));
+            allowance.setLocationName("Chicago, IL");
+            allowances.add(allowance);
+        }
 
-        cal.set(2015, 5, 5);
-        matchingAllowance.setAmount(5.0);
-        matchingAllowance.setDate(new Date(cal.getTimeInMillis()));
-        matchingAllowance.setCurrencyCode("USD");
-        matchingAllowance.setBreakfastProvision(new MealProvision("PRO", "Provided"));
-        matchingAllowance.setLunchProvision(new MealProvision("NPR", "Not Provided"));
-        matchingAllowance.setDinnerProvision(new MealProvision("NPR", "Not Provided"));
-        allowances.add(matchingAllowance);
-
-        cal.set(2015, 5, 6);
-        nonMatchingAllowance.setAmount(6.0);
-        nonMatchingAllowance.setDate(new Date(cal.getTimeInMillis()));
-        nonMatchingAllowance.setCurrencyCode("USD");
-        nonMatchingAllowance.setBreakfastProvision(new MealProvision("NPR", "Provided"));
-        nonMatchingAllowance.setLunchProvision(new MealProvision("NPR", "Not Provided"));
-        nonMatchingAllowance.setDinnerProvision(new MealProvision("NPR", "Not Provided"));
-        allowances.add(nonMatchingAllowance);
-
-        this.expenseReport.setAllowances(allowances);
-
-        //TODO: Setup Expense Report Entries...
+        allowances.get(1).setBreakfastProvision(new MealProvision("PRO", "Provided"));
+        allowances.get(2).setLunchProvision(new MealProvision("PRO", "Provided"));
+        allowances.get(3).setBreakfastProvision(new MealProvision("PRO", "Provided"));
+        allowances.get(3).setLunchProvision(new MealProvision("PRO", "Provided"));
+        allowances.get(4).setDinnerProvision(new MealProvision("PRO", "Provided"));
+        allowances.get(5).setBreakfastProvision(new MealProvision("PRO", "Provided"));
+        allowances.get(5).setDinnerProvision(new MealProvision("PRO", "Provided"));
+        allowances.get(5).setLocationName("San Francisco, CA");
+        allowances.get(6).setLunchProvision(new MealProvision("PRO", "Provided"));
+        allowances.get(6).setDinnerProvision(new MealProvision("PRO", "Provided"));
+        allowances.get(6).setLocationName("San Francisco, CA");
+        allowances.get(7).setBreakfastProvision(new MealProvision("PRO", "Provided"));
+        allowances.get(7).setLunchProvision(new MealProvision("PRO", "Provided"));
+        allowances.get(7).setDinnerProvision(new MealProvision("PRO", "Provided"));
+        allowances.get(7).setLocationName("San Francisco, CA");
+        allowances.get(8).setExcludedIndicator(true);
+        allowances.get(8).setLocationName("San Francisco, CA");
+        allowances.get(9).setBreakfastProvision(new MealProvision("PRO", "Provided"));
+        allowances.get(9).setExcludedIndicator(true);
+        allowances.get(9).setLocationName("San Francisco, CA");
 
     }
 
-    public ExpenseReport getExpenseReport() {
-        return expenseReport;
-    }
-
-    public ExpenseReportEntry getExpenseReportEntry() {
-        return expenseReportEntry;
-    }
-
-    public ExpenseReportEntryDetail getExpenseReportEntryDetail() {
-        return expenseReportEntryDetail;
+    /**
+     * Gets the mock data for fixed travel allowances
+     * @return List of allowances
+     */
+    public List<FixedTravelAllowance> getAllowances(){
+        return allowances;
     }
 }

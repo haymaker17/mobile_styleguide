@@ -1914,6 +1914,8 @@
 <string name="itin_updating_fixed">Updating Fixed Allowances</string>
 <string name="itin_fetching_allowances">Fetching Allowances</string>
 <string name="itin_updating_amounts">Updating Amounts</string>
+
+<string name="itin_excluded">excluded</string>
     <!-- end of travel allowance -->
 
 
