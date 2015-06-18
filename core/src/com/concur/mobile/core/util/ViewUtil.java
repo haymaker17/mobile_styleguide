@@ -455,8 +455,10 @@ public class ViewUtil {
     }
 
     public static boolean hasFixedTA(Context context) {
-        SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(context);
-        return prefs.getBoolean(Const.PREF_HAS_FIXED_TA, false);
+//TODO: Evaluate configuration
+        return true;
+        //SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(context);
+        //return prefs.getBoolean(Const.PREF_HAS_FIXED_TA, false);
     }
 
     public static boolean isConditionalFieldEvaluationEnabled(Context context) {

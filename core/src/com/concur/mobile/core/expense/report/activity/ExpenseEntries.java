@@ -63,6 +63,7 @@ import com.concur.mobile.core.expense.report.service.ReportDeleteRequest;
 import com.concur.mobile.core.expense.report.service.ReportEntryDetailRequest;
 import com.concur.mobile.core.expense.report.service.ReportEntryFormRequest;
 import com.concur.mobile.core.expense.service.GetExpenseTypesRequest;
+import com.concur.mobile.core.expense.travelallowance.activity.TravelAllowanceActivity;
 import com.concur.mobile.core.service.ConcurService;
 import com.concur.mobile.core.util.Const;
 import com.concur.mobile.core.util.EventTracker;
@@ -1550,7 +1551,8 @@ public class ExpenseEntries extends AbstractExpenseActivity {
 
                 @Override
                 public void onClick(View v) {
-                    Intent intent = new Intent(ExpenseEntries.this, TAItineraryActivity.class);
+                    //Intent intent = new Intent(ExpenseEntries.this, TAItineraryActivity.class);
+                    Intent intent = new Intent(ExpenseEntries.this, TravelAllowanceActivity.class);
                     intent.putExtra(Const.EXTRA_EXPENSE_REPORT_KEY, expRep.reportKey);
                     intent.putExtra(Const.EXTRA_EXPENSE_REPORT_NAME, expRep.reportName);
                     startActivityForResult(intent, REQUEST_VIEW_TA_ITINERARY);
