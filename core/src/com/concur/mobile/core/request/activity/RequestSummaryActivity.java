@@ -99,7 +99,8 @@ public class RequestSummaryActivity extends BaseActivity {
         asyncReceiverFormFields.setListener(new SegmentFormFieldsListener());
 
         final Bundle bundle = getIntent().getExtras();
-        final String requestId = bundle.getString(RequestListActivity.REQUEST_ID);
+        final String requestId = bundle != null ? bundle.getString(RequestListActivity.REQUEST_ID) : null;
+
         if (requestId != null) {
             tr = getConcurCore().getRequestListCache().getValue(requestId);
         } else {
