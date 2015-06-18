@@ -9,6 +9,7 @@ import android.os.Bundle;
 import android.os.Handler;
 import android.support.v4.app.FragmentActivity;
 import android.util.TypedValue;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.*;
@@ -515,6 +516,16 @@ public class RequestHeaderActivity extends AbstractConnectFormFieldActivity impl
                     .show(getSupportFragmentManager(), CLS_TAG);
         } else {
             super.onBackPressed();
+        }
+    }
+
+    @Override public boolean onOptionsItemSelected(MenuItem menuItem) {
+        final int itemId = menuItem.getItemId();
+        if (itemId == android.R.id.home) {
+            onBackPressed();
+            return true;
+        } else {
+            return super.onOptionsItemSelected(menuItem);
         }
     }
 }
