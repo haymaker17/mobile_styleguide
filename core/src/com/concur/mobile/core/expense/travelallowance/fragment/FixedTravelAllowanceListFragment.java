@@ -13,11 +13,17 @@ import com.concur.core.R;
  */
 public class FixedTravelAllowanceListFragment extends ListFragment {
 
+    @Override
+    public void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+
+        setListAdapter(new FixedTravelAllowanceListAdapter(this.getActivity(), null));
+    }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        setListAdapter(new FixedTravelAllowanceListAdapter(this.getActivity(), null));
-        return inflater.inflate(R.layout.fixed_travel_allowance_list, container, false);
+        return super.onCreateView(inflater, container, savedInstanceState);
+       // return inflater.inflate(R.layout.fixed_travel_allowance_list, container, false);
     }
 
 
