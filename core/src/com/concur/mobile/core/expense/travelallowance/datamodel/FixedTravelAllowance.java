@@ -369,7 +369,9 @@ public class FixedTravelAllowance implements Serializable, Comparable<FixedTrave
             }
         }
 
+        int j = 0;
         for (MealProvision key: sortedProvisions) {
+            j++;
             int i = 0;
             resultString = resultString + key + ": ";
             for (String value: provisionMap.get(key)){
@@ -378,6 +380,9 @@ public class FixedTravelAllowance implements Serializable, Comparable<FixedTrave
                 if (i < provisionMap.get(key).size()) {
                     resultString = resultString + ", ";
                 }
+            }
+            if (j < sortedProvisions.size()) {
+                resultString = resultString + " ";
             }
         }
 

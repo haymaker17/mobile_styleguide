@@ -62,10 +62,6 @@ public class FixedTravelAllowanceListAdapter extends ArrayAdapter<Object> {
     public FixedTravelAllowanceListAdapter(final Context context, List<FixedTravelAllowance> fixedTravelAllowanceList) {
         super(context, LAYOUT_ID);
         this.context = context;
-        if (fixedTravelAllowanceList == null) {
-            FixedTravelAllowanceTestData mockData = new FixedTravelAllowanceTestData();
-            fixedTravelAllowanceList = mockData.getAllowances();
-        }
         this.dateFormatter = new DefaultDateFormat(context);
         initializeGroups(fixedTravelAllowanceList);
     }

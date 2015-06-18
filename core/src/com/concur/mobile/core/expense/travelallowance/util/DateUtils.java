@@ -163,9 +163,10 @@ public final class DateUtils {
      * and date are null the string date which is not null will be
      * returned.
      */
-    /*public static String startEndDateToString(final Date startDate,
+    public static String startEndDateToString(final Date startDate,
                                               final Date endDate, final IDateFormat dateTimeFormatter,
-                                              final boolean includeTime) {
+                                              final boolean includeTime,
+                                              final boolean includeWeekDay) {
 
         String formattedStartEndDate = EMPTY_STRING;
 
@@ -182,24 +183,24 @@ public final class DateUtils {
 
         if (startDate != null && endDate != null) {
             formattedStartDate = dateTimeFormatter
-                    .format(startDate, includeTime);
+                    .format(startDate, includeTime, includeWeekDay);
             formattedEndDate = dateTimeFormatter
-                    .format(endDate, includeTime);
+                    .format(endDate, includeTime, includeWeekDay);
             formattedStartEndDate = formattedStartDate + " - "
                     + formattedEndDate;
         } else if (startDate != null && endDate == null) {
             formattedStartDate = dateTimeFormatter
-                    .format(startDate, includeTime);
+                    .format(startDate, includeTime, includeWeekDay);
             formattedStartEndDate = formattedStartDate;
         } else if (startDate == null && endDate != null) {
 
             formattedEndDate = dateTimeFormatter
-                    .format(endDate, includeTime);
+                    .format(endDate, includeTime, includeWeekDay);
 
             formattedStartEndDate = formattedEndDate;
         }
         return formattedStartEndDate;
-    }*/
+    }
 
     /**
      * Returns a formatted String containing full length of month and year
