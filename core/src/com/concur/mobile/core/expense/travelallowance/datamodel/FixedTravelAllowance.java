@@ -327,12 +327,12 @@ public class FixedTravelAllowance implements Serializable, Comparable<FixedTrave
     public String mealsProvisionToText(Context context) {
 
         if (context == null) {
-            return "";
+            return StringUtilities.EMPTY_STRING;
         }
 
         String resultString = StringUtilities.EMPTY_STRING;
-        String provisionText = StringUtilities.EMPTY_STRING;
         List<String> mealsList;
+        List<MealProvision> sortedProvisions = new ArrayList<MealProvision>();
         Map<MealProvision, List<String>> provisionMap = new HashMap<MealProvision, List<String>>();
 
         if (!StringUtilities.isNullOrEmpty(breakfastProvision.getCode())
@@ -340,6 +340,7 @@ public class FixedTravelAllowance implements Serializable, Comparable<FixedTrave
             mealsList = new ArrayList<String>();
             mealsList.add(context.getString(R.string.itin_breakfast));
             provisionMap.put(breakfastProvision, mealsList);
+            sortedProvisions.add(breakfastProvision);
         }
 
         if (!StringUtilities.isNullOrEmpty(lunchProvision.getCode())
@@ -351,6 +352,7 @@ public class FixedTravelAllowance implements Serializable, Comparable<FixedTrave
                 mealsList = new ArrayList<String>();
                 mealsList.add(context.getString(R.string.itin_lunch));
                 provisionMap.put(lunchProvision, mealsList);
+                sortedProvisions.add(lunchProvision);
             }
         }
 
@@ -363,10 +365,11 @@ public class FixedTravelAllowance implements Serializable, Comparable<FixedTrave
                 mealsList = new ArrayList<String>();
                 mealsList.add(context.getString(R.string.itin_dinner));
                 provisionMap.put(dinnerProvision, mealsList);
+                sortedProvisions.add(dinnerProvision);
             }
         }
 
-        for (MealProvision key: provisionMap.keySet()) {
+        for (MealProvision key: sortedProvisions) {
             int i = 0;
             resultString = resultString + key + ": ";
             for (String value: provisionMap.get(key)){
@@ -377,6 +380,7 @@ public class FixedTravelAllowance implements Serializable, Comparable<FixedTrave
                 }
             }
         }
+
         return resultString;
     }
 }
