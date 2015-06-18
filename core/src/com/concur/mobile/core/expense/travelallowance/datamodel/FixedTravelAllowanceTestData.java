@@ -40,6 +40,7 @@ public class FixedTravelAllowanceTestData {
         allowances.get(3).setBreakfastProvision(new MealProvision("PRO", "Provided"));
         allowances.get(3).setLunchProvision(new MealProvision("PRO", "Provided"));
         allowances.get(4).setDinnerProvision(new MealProvision("PRO", "Provided"));
+
         allowances.get(5).setBreakfastProvision(new MealProvision("PRO", "Provided"));
         allowances.get(5).setDinnerProvision(new MealProvision("PRO", "Provided"));
         allowances.get(5).setLocationName("San Francisco, CA");

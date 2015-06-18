@@ -66,13 +66,14 @@ public class FixedTravelAllowanceListAdapter implements ListAdapter {
     }
 
     private void initializeGroups(List<FixedTravelAllowance> fixedTravelAllowanceList) {
+        List<String> sortedLocations = new ArrayList<String>();
         List<FixedTravelAllowance> fixedTAList = new ArrayList<FixedTravelAllowance>(fixedTravelAllowanceList);
-        Collections.sort(fixedTravelAllowanceList);
+        Collections.sort(fixedTravelAllowanceList, Collections.reverseOrder());
         Map<String, List<FixedTravelAllowance>> fixedTAGroups = new HashMap<String, List<FixedTravelAllowance>>();
         locationAndTAList = new ArrayList<Object>();
 
-       for(FixedTravelAllowance allowance: fixedTAList) {
-           List<FixedTravelAllowance> taList;
+        for (FixedTravelAllowance allowance : fixedTAList) {
+            List<FixedTravelAllowance> taList;
             if (fixedTAGroups.containsKey(allowance.getLocationName())) {
                 taList = fixedTAGroups.get(allowance.getLocationName());
                 taList.add(allowance);
@@ -80,14 +81,15 @@ public class FixedTravelAllowanceListAdapter implements ListAdapter {
                 taList = new ArrayList<FixedTravelAllowance>();
                 taList.add(allowance);
                 fixedTAGroups.put(allowance.getLocationName(), taList);
+                sortedLocations.add(allowance.getLocationName());
             }
-       }
+        }
 
         if (fixedTAGroups.keySet().size() > 1) {
             this.hasMultipleGroups = true;
-            for(String key: fixedTAGroups.keySet()) {
+            for(String key: sortedLocations) {
                 locationAndTAList.add(key);
-                for(FixedTravelAllowance value: fixedTAGroups.get(key)) {
+                for (FixedTravelAllowance value: fixedTAGroups.get(key)) {
                     locationAndTAList.add(value);
                 }
             }
