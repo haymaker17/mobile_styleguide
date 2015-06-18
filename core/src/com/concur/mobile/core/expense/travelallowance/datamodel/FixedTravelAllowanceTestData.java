@@ -22,7 +22,7 @@ public class FixedTravelAllowanceTestData {
         allowances = new ArrayList<FixedTravelAllowance>();
         Calendar cal = Calendar.getInstance();
 
-        for (int i = 1; i <= 10; i++){
+        for (int i = 1; i <= 12; i++){
             FixedTravelAllowance allowance = new FixedTravelAllowance("FTA" + i);
             cal.set(2015, 5, i);
             allowance.setDate(new Date(cal.getTimeInMillis()));
@@ -51,11 +51,19 @@ public class FixedTravelAllowanceTestData {
         allowances.get(7).setLunchProvision(new MealProvision("PRO", "Provided"));
         allowances.get(7).setDinnerProvision(new MealProvision("PRO", "Provided"));
         allowances.get(7).setLocationName("San Francisco, CA");
+
         allowances.get(8).setExcludedIndicator(true);
-        allowances.get(8).setLocationName("San Francisco, CA");
+        allowances.get(8).setLocationName("Los Angeles, CA");
         allowances.get(9).setBreakfastProvision(new MealProvision("PRO", "Provided"));
         allowances.get(9).setExcludedIndicator(true);
-        allowances.get(9).setLocationName("San Francisco, CA");
+        allowances.get(9).setLocationName("Los Angeles, CA");
+
+        allowances.get(10).setBreakfastProvision(new MealProvision("PRO", "Provided"));
+        allowances.get(10).setDinnerProvision(new MealProvision("BSE", "Business Meal"));
+        allowances.get(10).setLocationName("Seattle, WA");
+        allowances.get(11).setBreakfastProvision(new MealProvision("BSE", "Business Meal"));
+        allowances.get(11).setDinnerProvision(new MealProvision("PRO", "Provided"));
+        allowances.get(11).setLocationName("Seattle, WA");
 
     }
 
