@@ -20,50 +20,56 @@ public class FixedTravelAllowanceTestData {
     public FixedTravelAllowanceTestData() {
 
         allowances = new ArrayList<FixedTravelAllowance>();
+        MealProvision notProvided = new MealProvision("NPR", "Not Provided");
+        MealProvision provided =  new MealProvision("PRO", "Provided");
+        MealProvision business = new MealProvision("BSE", "Business Meal");
         Calendar cal = Calendar.getInstance();
-
-        for (int i = 1; i <= 12; i++){
+        
+        for (int i = 1; i <= 13; i++){
             FixedTravelAllowance allowance = new FixedTravelAllowance("FTA" + i);
             cal.set(2015, 5, i);
             allowance.setDate(new Date(cal.getTimeInMillis()));
             allowance.setAmount(new Double(i));
             allowance.setCurrencyCode("USD");
-            allowance.setBreakfastProvision(new MealProvision("NPR", "Not Provided"));
-            allowance.setLunchProvision(new MealProvision("NPR", "Not Provided"));
-            allowance.setDinnerProvision(new MealProvision("NPR", "Not Provided"));
+            allowance.setBreakfastProvision(notProvided);
+            allowance.setLunchProvision(notProvided);
+            allowance.setDinnerProvision(notProvided);
             allowance.setLocationName("Chicago, IL");
             allowances.add(allowance);
         }
 
-        allowances.get(1).setBreakfastProvision(new MealProvision("PRO", "Provided"));
-        allowances.get(2).setLunchProvision(new MealProvision("PRO", "Provided"));
-        allowances.get(3).setBreakfastProvision(new MealProvision("PRO", "Provided"));
-        allowances.get(3).setLunchProvision(new MealProvision("PRO", "Provided"));
-        allowances.get(4).setDinnerProvision(new MealProvision("PRO", "Provided"));
+        allowances.get(1).setBreakfastProvision(provided);
+        allowances.get(2).setLunchProvision(provided);
+        allowances.get(3).setBreakfastProvision(provided);
+        allowances.get(3).setLunchProvision(provided);
+        allowances.get(4).setDinnerProvision(provided);
 
-        allowances.get(5).setBreakfastProvision(new MealProvision("PRO", "Provided"));
-        allowances.get(5).setDinnerProvision(new MealProvision("PRO", "Provided"));
+        allowances.get(5).setBreakfastProvision(provided);
+        allowances.get(5).setDinnerProvision(provided);
         allowances.get(5).setLocationName("San Francisco, CA");
-        allowances.get(6).setLunchProvision(new MealProvision("PRO", "Provided"));
-        allowances.get(6).setDinnerProvision(new MealProvision("PRO", "Provided"));
+        allowances.get(6).setLunchProvision(provided);
+        allowances.get(6).setDinnerProvision(provided);
         allowances.get(6).setLocationName("San Francisco, CA");
-        allowances.get(7).setBreakfastProvision(new MealProvision("PRO", "Provided"));
-        allowances.get(7).setLunchProvision(new MealProvision("PRO", "Provided"));
-        allowances.get(7).setDinnerProvision(new MealProvision("PRO", "Provided"));
+        allowances.get(7).setBreakfastProvision(provided);
+        allowances.get(7).setLunchProvision(provided);
+        allowances.get(7).setDinnerProvision(provided);
         allowances.get(7).setLocationName("San Francisco, CA");
 
         allowances.get(8).setExcludedIndicator(true);
         allowances.get(8).setLocationName("Los Angeles, CA");
-        allowances.get(9).setBreakfastProvision(new MealProvision("PRO", "Provided"));
+        allowances.get(9).setBreakfastProvision(provided);
         allowances.get(9).setExcludedIndicator(true);
         allowances.get(9).setLocationName("Los Angeles, CA");
 
-        allowances.get(10).setBreakfastProvision(new MealProvision("PRO", "Provided"));
-        allowances.get(10).setDinnerProvision(new MealProvision("BSE", "Business Meal"));
+        allowances.get(10).setBreakfastProvision(provided);
+        allowances.get(10).setDinnerProvision(business);
         allowances.get(10).setLocationName("Seattle, WA");
-        allowances.get(11).setBreakfastProvision(new MealProvision("BSE", "Business Meal"));
-        allowances.get(11).setDinnerProvision(new MealProvision("PRO", "Provided"));
+        allowances.get(11).setBreakfastProvision(business);
+        allowances.get(11).setDinnerProvision(provided);
         allowances.get(11).setLocationName("Seattle, WA");
+        allowances.get(12).setLunchProvision(provided);
+        allowances.get(12).setDinnerProvision(business);
+        allowances.get(12).setLocationName("Seattle, WA");
 
     }
 
