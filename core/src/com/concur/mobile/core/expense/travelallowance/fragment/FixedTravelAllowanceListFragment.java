@@ -73,7 +73,7 @@ public class FixedTravelAllowanceListFragment extends ListFragment {
 
     private void renderSummary() {
 
-        if (fixedTravelAllowances == null || fixedTravelAllowances.size() == 0) {
+        if (fixedTravelAllowances == null || fixedTravelAllowances.size() == 0 || getActivity() == null) {
             return;
         }
 
@@ -84,6 +84,9 @@ public class FixedTravelAllowanceListFragment extends ListFragment {
         TextView tvValue = (TextView) getActivity().findViewById(R.id.tv_value);
         TextView tvSubtitle1 = (TextView) getActivity().findViewById(R.id.tv_subtitle_1);
         TextView tvSubtitle2 = (TextView) getActivity().findViewById(R.id.tv_subtitle_2);
+        View vDividerBottom  =  getActivity().findViewById(R.id.v_divider_bottom_bold);
+
+        vDividerBottom.setVisibility(View.VISIBLE);
 
         if (tvTitle != null) {
             tvTitle.setText(R.string.itin_total_allowance);

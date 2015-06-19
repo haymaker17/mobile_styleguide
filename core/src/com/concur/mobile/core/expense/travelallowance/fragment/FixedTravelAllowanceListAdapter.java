@@ -130,7 +130,11 @@ public class FixedTravelAllowanceListAdapter extends ArrayAdapter<Object> {
 
         if (getItemViewType(i) == HEADER_ROW ) {
             String locationName = (String) getItem(i);
-            renderHeaderRow(holder, locationName);
+            boolean isFirstHeader = false;
+            if (i == 0){
+                isFirstHeader = true;
+            }
+            renderHeaderRow(holder, locationName, isFirstHeader);
         }
 
         if (getItemViewType(i) == ENTRY_ROW ) {
@@ -191,9 +195,14 @@ public class FixedTravelAllowanceListAdapter extends ArrayAdapter<Object> {
      * @param holder the view holder
      * @param location the location to be rendered
      */
-    private void renderHeaderRow(ViewHolder holder, String location) {
+    private void renderHeaderRow(ViewHolder holder, String location, boolean isFirstHeader) {
         if (holder.vDividerTop != null) {
-            holder.vDividerTop.setVisibility(View.VISIBLE);
+            if (!isFirstHeader) {
+                holder.vDividerTop.setVisibility(View.VISIBLE);
+            }
+            else {
+                holder.vDividerTop.setVisibility(View.GONE);
+            }
         }
         if (holder.tvTitle != null) {
             holder.tvTitle.setText(location);

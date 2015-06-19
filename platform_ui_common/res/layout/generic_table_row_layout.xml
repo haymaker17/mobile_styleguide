@@ -60,4 +60,12 @@
         android:layout_width="wrap_content"
         android:layout_below="@+id/list_field_container"
         android:visibility="gone"/>
+
+    <View
+        android:id="@+id/v_divider_bottom_bold"
+        style="@style/GroupDivider"
+        android:layout_width="wrap_content"
+        android:layout_below="@+id/list_field_container"
+        android:visibility="gone"/>
+
 </RelativeLayout>
