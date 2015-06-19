@@ -1,64 +1,22 @@
 package com.concur.mobile.core.expense.travelallowance.activity;
 
-import android.app.Activity;
 import android.os.Bundle;
+import android.support.design.widget.TabLayout;
 import android.support.v4.app.Fragment;
-import android.support.v4.app.FragmentManager;
-import android.support.v4.app.FragmentTransaction;
-import android.support.v7.app.ActionBar;
+import android.support.v4.app.FragmentPagerAdapter;
+import android.support.v4.view.ViewPager;
+import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.Toolbar;
 
 import com.concur.core.R;
 import com.concur.mobile.core.activity.BaseActivity;
 import com.concur.mobile.core.expense.travelallowance.fragment.FixedTravelAllowanceListFragment;
+import com.concur.mobile.core.expense.travelallowance.fragment.TravelAllowanceItinerary;
 
 /**
  * Created by D049515 on 15.06.2015.
  */
-public class TravelAllowanceActivity extends BaseActivity {
-
-    public static class TabListener<T extends Fragment> implements ActionBar.TabListener {
-        private Fragment mFragment;
-        private final Activity mActivity;
-        private final String mTag;
-        private final Class<T> mClass;
-
-        /** Constructor used each time a new tab is created.
-         * @param activity  The host Activity, used to instantiate the fragment
-         * @param tag  The identifier tag for the fragment
-         * @param clz  The fragment's Class, used to instantiate the fragment
-         */
-        public TabListener(Activity activity, String tag, Class<T> clz) {
-            mActivity = activity;
-            mTag = tag;
-            mClass = clz;
-        }
-
-    /* The following are each of the ActionBar.TabListener callbacks */
-
-        public void onTabSelected(ActionBar.Tab tab, FragmentTransaction ft) {
-            // Check if the fragment is already initialized
-            if (mFragment == null) {
-                // If not, instantiate and add it to the activity
-                mFragment = Fragment.instantiate(mActivity, mClass.getName());
-                ft.add(android.R.id.content, mFragment, mTag);
-            } else {
-                // If it exists, simply attach it in order to show it
-                ft.attach(mFragment);
-            }
-        }
-
-        public void onTabUnselected(ActionBar.Tab tab, FragmentTransaction ft) {
-            if (mFragment != null) {
-                // Detach the fragment, because another one is being attached
-                ft.detach(mFragment);
-            }
-        }
-
-        public void onTabReselected(ActionBar.Tab tab, FragmentTransaction ft) {
-            // User selected the already selected tab. Usually do nothing.
-        }
-    }
-
+public class TravelAllowanceActivity extends AppCompatActivity {
 
     private static final String ADJUSTMENTS_FRAGMENT_TAG = "adjustments";
 
@@ -67,14 +25,61 @@ public class TravelAllowanceActivity extends BaseActivity {
         super.onCreate(savedInstanceState);
         this.setContentView(R.layout.travel_allowance_activity);
 
-        FragmentManager fragmentManager = getSupportFragmentManager();
-        if (fragmentManager != null && fragmentManager.findFragmentByTag(ADJUSTMENTS_FRAGMENT_TAG) == null) {
-            FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
-            transaction.add(R.id.adjustment_fragment_container, new FixedTravelAllowanceListFragment(),
-                    ADJUSTMENTS_FRAGMENT_TAG);
-            transaction.commit();
-            // getSupportFragmentManager().executePendingTransactions();
+        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
+        if (toolbar != null) {
+            setSupportActionBar(toolbar);
         }
+
+        toolbar.setTitle("Travel Allowances");
+
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+
+        ViewPager pager = (ViewPager) findViewById(R.id.view_pager);
+        FragmentPagerAdapter pagerAdapter = new FragmentPagerAdapter(getSupportFragmentManager()) {
+
+            @Override
+            public Fragment getItem(int position) {
+                switch (position) {
+                case 0:
+                    return new FixedTravelAllowanceListFragment();
+                case 1:
+                    return new TravelAllowanceItinerary();
+                }
+                return null;
+            }
+
+            @Override
+            public int getCount() {
+                return 2;
+            }
+
+            @Override
+            public CharSequence getPageTitle(int position) {
+
+                switch (position) {
+                    case 0:
+                        return "Adjustments";
+                    case 1:
+                        return "Itineraries";
+                }
+
+                return super.getPageTitle(position);
+            }
+        };
+
+        pager.setAdapter(pagerAdapter);
+
+        TabLayout tabLayout = (TabLayout) findViewById(R.id.tab_layout);
+        tabLayout.setupWithViewPager(pager);
+
+//        FragmentManager fragmentManager = getSupportFragmentManager();
+//        if (fragmentManager != null && fragmentManager.findFragmentByTag(ADJUSTMENTS_FRAGMENT_TAG) == null) {
+//            FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
+//            transaction.add(R.id.adjustment_fragment_container, new FixedTravelAllowanceListFragment(),
+//                    ADJUSTMENTS_FRAGMENT_TAG);
+//            transaction.commit();
+//            // getSupportFragmentManager().executePendingTransactions();
+//        }
         
     }
 }

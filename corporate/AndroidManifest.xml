@@ -318,7 +318,8 @@
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value="com.concur.mobile.core.expense.activity.TAItineraryActivity"/>
         </activity>
-        <activity android:name="com.concur.mobile.core.expense.travelallowance.activity.TravelAllowanceActivity"/>
+        <activity android:name="com.concur.mobile.core.expense.travelallowance.activity.TravelAllowanceActivity"
+                  android:theme="@style/ConcurBaseTheme.NoActionBar"/>
         <activity android:name="com.concur.mobile.core.travel.air.activity.AirPriceToBeatSearch"/>
         <activity android:name="com.concur.mobile.core.travel.air.activity.AirPriceToBeatSearchResults"/>
         <activity android:name="com.concur.mobile.core.travel.hotel.activity.HotelPriceToBeatSearch"/>
