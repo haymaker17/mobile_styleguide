@@ -238,7 +238,7 @@ public class FixedTravelAllowanceListAdapter extends ArrayAdapter<Object> {
 
         if (holder.tvTitle != null) {
             holder.tvTitle.setTextAppearance(this.context, R.style.DefaultTitle);
-            holder.tvTitle.setText(dateFormatter.format(allowance.getDate(), false, true));
+            holder.tvTitle.setText(dateFormatter.format(allowance.getDate(), false, true, false));
         }
 
         if (holder.tvSubtitle2 != null) {

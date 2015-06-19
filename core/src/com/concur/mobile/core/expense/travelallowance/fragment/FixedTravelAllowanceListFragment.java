@@ -104,7 +104,7 @@ public class FixedTravelAllowanceListFragment extends ListFragment {
         startDate = fixedTravelAllowances.get(0).getDate();
         endDate = fixedTravelAllowances.get(fixedTravelAllowances.size() - 1).getDate();
         if (tvSubtitle1 != null) {
-            tvSubtitle1.setText(DateUtils.startEndDateToString(startDate, endDate, dateFormatter, false, true));
+            tvSubtitle1.setText(DateUtils.startEndDateToString(startDate, endDate, dateFormatter, false, true, true));
         }
 
         renderAmount(tvValue, sum,  fixedTravelAllowances.get(0).getCurrencyCode());

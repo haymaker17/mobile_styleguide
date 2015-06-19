@@ -34,12 +34,13 @@ public class DefaultDateFormat implements IDateFormat {
      * {@inheritDoc}
      */
     @Override
-    public String format(final Date date, final boolean includeTime, final boolean includeDayOfWeek) {
+    public String format(final Date date, final boolean includeTime, final boolean includeDayOfWeek,
+                         final boolean includeYear) {
         if (date == null) {
             return "";
         }
 
-        SimpleDateFormat dateFormat = new SimpleDateFormat(createDatePattern(), Locale.getDefault());
+        SimpleDateFormat dateFormat = new SimpleDateFormat(createDatePattern(includeYear), Locale.getDefault());
         String formattedDate = dateFormat.format(date);
 
         String dayOfWeek = null;
@@ -77,27 +78,37 @@ public class DefaultDateFormat implements IDateFormat {
      *
      * @return the default date pattern for a {@code SimpleDateFormat}
      */
-    private String createDatePattern() {
+    private String createDatePattern(final boolean includeYear) {
         char[] order = android.text.format.DateFormat.getDateFormatOrder(ctx);
         StringBuffer pattern = new StringBuffer();
         int i = 0;
         for (char c : order) {
+            i++;
             switch (c) {
                 case 'd':
+                    if (i == 2) {
+                        pattern.append(" ");
+                    }
                     pattern.append("d");
                     break;
                 case 'M':
+                    if (i == 2) {
+                        pattern.append(" ");
+                    }
                     pattern.append("MMMM");
+                    break;
+                case 'y':
+                    if (includeYear) {
+                        if (i == 1) {
+                            pattern.append("yyyy, ");
+                        } else if (i == order.length) {
+                            pattern.append(", yyyy");
+                        }
+                    }
                     break;
                 default:
                     break;
             }
-
-            if (i == 0) {
-                pattern.append(" ");
-            }
-
-            i++;
         }
 
         return pattern.toString();

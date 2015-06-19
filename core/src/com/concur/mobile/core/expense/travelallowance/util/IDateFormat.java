@@ -8,6 +8,7 @@ import java.util.Date;
  */
 public interface IDateFormat {
 
-    String format(final Date date, final boolean includeTime, final boolean includeDayOfWeek);
+    String format(final Date date, final boolean includeTime, final boolean includeDayOfWeek,
+                  final boolean includeYear);
 
 }

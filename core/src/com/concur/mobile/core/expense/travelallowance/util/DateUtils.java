@@ -166,7 +166,8 @@ public final class DateUtils {
     public static String startEndDateToString(final Date startDate,
                                               final Date endDate, final IDateFormat dateTimeFormatter,
                                               final boolean includeTime,
-                                              final boolean includeWeekDay) {
+                                              final boolean includeWeekDay,
+                                              final boolean includeYear) {
 
         String formattedStartEndDate = EMPTY_STRING;
 
@@ -183,19 +184,19 @@ public final class DateUtils {
 
         if (startDate != null && endDate != null) {
             formattedStartDate = dateTimeFormatter
-                    .format(startDate, includeTime, includeWeekDay);
+                    .format(startDate, includeTime, includeWeekDay, includeYear);
             formattedEndDate = dateTimeFormatter
-                    .format(endDate, includeTime, includeWeekDay);
+                    .format(endDate, includeTime, includeWeekDay, includeYear);
             formattedStartEndDate = formattedStartDate + " - "
                     + formattedEndDate;
         } else if (startDate != null && endDate == null) {
             formattedStartDate = dateTimeFormatter
-                    .format(startDate, includeTime, includeWeekDay);
+                    .format(startDate, includeTime, includeWeekDay, includeYear);
             formattedStartEndDate = formattedStartDate;
         } else if (startDate == null && endDate != null) {
 
             formattedEndDate = dateTimeFormatter
-                    .format(endDate, includeTime, includeWeekDay);
+                    .format(endDate, includeTime, includeWeekDay, includeYear);
 
             formattedStartEndDate = formattedEndDate;
         }
