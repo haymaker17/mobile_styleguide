@@ -47,7 +47,7 @@ public class FixedTravelAllowanceListFragment extends ListFragment {
 
         //TODO: Remove mock data
         FixedTravelAllowanceTestData mockData = new FixedTravelAllowanceTestData();
-        fixedTravelAllowances = mockData.getAllowances();
+        fixedTravelAllowances = mockData.getAllowances(true);
 
         this.context = this.getActivity();
         this.dateFormatter = new DefaultDateFormat(context);
@@ -85,21 +85,30 @@ public class FixedTravelAllowanceListFragment extends ListFragment {
         TextView tvSubtitle1 = (TextView) getActivity().findViewById(R.id.tv_subtitle_1);
         TextView tvSubtitle2 = (TextView) getActivity().findViewById(R.id.tv_subtitle_2);
 
-        if (tvSubtitle2 != null) {
-            tvSubtitle2.setVisibility(View.GONE);
-        }
-
         if (tvTitle != null) {
             tvTitle.setText(R.string.itin_total_allowance);
         }
 
+        boolean multiLocations = false;
         for (FixedTravelAllowance allowance: fixedTravelAllowances) {
+            if (!multiLocations && !allowance.getLocationName().equals(fixedTravelAllowances.get(0).getLocationName())) {
+                multiLocations = true;
+            }
             if (!allowance.getExcludedIndicator()) {
                 sum += allowance.getAmount();
             }
         }
         Collections.sort(fixedTravelAllowances, Collections.reverseOrder());
         renderAmount(tvValue, sum, fixedTravelAllowances.get(0).getCurrencyCode());
+
+        if (tvSubtitle2 != null) {
+            if (multiLocations) {
+                tvSubtitle2.setVisibility(View.GONE);
+            } else {
+                tvSubtitle2.setText(fixedTravelAllowances.get(0).getLocationName());
+            }
+
+        }
 
         startDate = fixedTravelAllowances.get(0).getDate();
         endDate = fixedTravelAllowances.get(fixedTravelAllowances.size() - 1).getDate();
