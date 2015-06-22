@@ -100,7 +100,8 @@
                 android:id="@+id/rest_custom_field_search_progress"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_gravity="center" />
+                android:layout_gravity="center"
+                android:visibility="gone"/>
 
             <TextView
                 android:id="@+id/rest_custom_travel_fields_search_progress_msg"
@@ -108,7 +109,8 @@
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
                 android:background="#ffffff"
-                android:textColor="@color/ConcurBlue" >
+                android:textColor="@color/ConcurBlue"
+                android:visibility="gone">
             </TextView>
 
             <!-- Custom Fields View Group -->
