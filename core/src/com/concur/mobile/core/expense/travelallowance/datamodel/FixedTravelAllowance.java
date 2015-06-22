@@ -319,14 +319,25 @@ public class FixedTravelAllowance implements Serializable, Comparable<FixedTrave
     }
 
     /**
-     * Builds a string based on the meals provisions (breakfast, lunch and dinner)
+     * Builds a string based on the meals provisions (breakfast, lunch and dinner), such
+     * as "Provided: Breakfast, Lunch Business Meal: Dinner" Therefore the provision characteristics
+     * of breakfast, lunch and dinner (e.g. "Provided") are used for grouping. The order within
+     * this result is given by the rule: breakfast before lunch before dinner.
+     * With parameter maxGroups the maximum number of groups can be specified.
+     *
+     * @param context The context in order to retrieve the language dependent resources
+     * @param maxGroups The maximum level of string concatenation. Supports values greater 0.
      *
      * @return The textual representation of the meal provisions. Empty String, if
      * there is nothing.
      */
-    public String mealsProvisionToText(Context context) {
+    public String mealsProvisionToText(Context context, int maxGroups) {
 
         if (context == null) {
+            return StringUtilities.EMPTY_STRING;
+        }
+
+        if (maxGroups < 1) {
             return StringUtilities.EMPTY_STRING;
         }
 
@@ -372,6 +383,9 @@ public class FixedTravelAllowance implements Serializable, Comparable<FixedTrave
         int j = 0;
         for (MealProvision key: sortedProvisions) {
             j++;
+            if (j > maxGroups) {
+                break;
+            }
             int i = 0;
             resultString = resultString + key + ": ";
             for (String value: provisionMap.get(key)){
@@ -385,7 +399,6 @@ public class FixedTravelAllowance implements Serializable, Comparable<FixedTrave
                 resultString = resultString + " ";
             }
         }
-
         return resultString;
     }
 }

@@ -265,7 +265,7 @@ public class FixedTravelAllowanceListAdapter extends ArrayAdapter<Object> {
         } else {
             if (holder.tvSubtitle1 != null) {
                 holder.tvSubtitle1.setVisibility(View.VISIBLE);
-                holder.tvSubtitle1.setText(allowance.mealsProvisionToText(context));
+                holder.tvSubtitle1.setText(allowance.mealsProvisionToText(context, 1));
             }
             renderAmount(holder.tvValue, allowance.getAmount(), allowance.getCurrencyCode());
         }

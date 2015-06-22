@@ -47,7 +47,7 @@ public class FixedTravelAllowanceListFragment extends ListFragment {
 
         //TODO: Remove mock data
         FixedTravelAllowanceTestData mockData = new FixedTravelAllowanceTestData();
-        fixedTravelAllowances = mockData.getAllowances(true);
+        fixedTravelAllowances = mockData.getAllowances(false);
 
         this.context = this.getActivity();
         this.dateFormatter = new DefaultDateFormat(context);
