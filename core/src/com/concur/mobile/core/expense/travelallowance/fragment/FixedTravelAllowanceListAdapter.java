@@ -1,10 +1,12 @@
 package com.concur.mobile.core.expense.travelallowance.fragment;
 
 import android.content.Context;
+import android.text.Layout;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.ViewTreeObserver;
 import android.widget.ArrayAdapter;
 import android.widget.TextView;
 
@@ -290,14 +292,39 @@ public class FixedTravelAllowanceListAdapter extends ArrayAdapter<Object> {
                 holder.tvValue.setText(this.context.getString(R.string.itin_excluded));
             }
         } else {
-            if (holder.vgSubtitleEllipsized != null) {
-                holder.vgSubtitleEllipsized.setVisibility(View.VISIBLE);
-                if (holder.tvSubtitleEllipsized != null) {
-                    holder.tvSubtitleEllipsized.setText(allowance.mealsProvisionToText(context, 1));
-                }
-            }
+            renderSubtitle(holder, allowance);
             renderAmount(holder.tvValue, allowance.getAmount(), allowance.getCurrencyCode());
         }
+    }
+
+    private void renderSubtitle(final ViewHolder holder, final FixedTravelAllowance allowance) {
+        if (holder.vgSubtitleEllipsized == null || holder.tvSubtitleEllipsized == null
+                || holder.tvSubtitleMore == null) {
+            return;
+        }
+        holder.vgSubtitleEllipsized.setVisibility(View.VISIBLE);
+        holder.tvSubtitleEllipsized.setText(allowance.mealsProvisionToText(context, 1));
+        holder.tvSubtitleMore.setVisibility(View.VISIBLE);
+
+        ViewTreeObserver viewTreeObserver = holder.tvSubtitleEllipsized.getViewTreeObserver();
+        viewTreeObserver.addOnGlobalLayoutListener(new ViewTreeObserver.OnGlobalLayoutListener() {
+
+            @Override
+            public void onGlobalLayout() {
+                holder.tvSubtitleMore.setVisibility(View.INVISIBLE);
+                Layout layout = holder.tvSubtitleEllipsized.getLayout();
+                if (layout == null) {
+                    return;
+                }
+                if (layout.getEllipsisCount(0) > 0) {
+                    holder.tvSubtitleMore.setVisibility(View.VISIBLE);
+                } else {
+                    if (allowance.mealsProvisionToText(context, 3).length() > allowance.mealsProvisionToText(context, 1).length()) {
+                        holder.tvSubtitleMore.setVisibility(View.VISIBLE);
+                    }
+                }
+            }
+        });
     }
 
     private void renderAmount(TextView tvAmount, Double amount, String crnCode) {

@@ -62,12 +62,13 @@
 
         <TextView
             android:id="@+id/tv_subtitle_ellipsized"
+            android:singleLine="true"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_alignParentLeft="true"
             android:ellipsize="end"
             android:text="Small Text"
-            android:layout_weight="0.25"
+            android:layout_weight="0.4"
             android:textAppearance="@style/DefaultSubTitle" />
 
         <TextView
@@ -75,7 +76,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_alignParentLeft="true"
-            android:layout_weight="0.75"
+            android:layout_weight="0.6"
             android:textAppearance="@style/DefaultSubTitleMoreLabel"
             android:text="@string/general_more" />
         </LinearLayout>

@@ -131,6 +131,7 @@ public class FixedTravelAllowanceListFragment extends ListFragment {
         }
     }
 
+
     /**
      * Renders the summary w.r.t fixed travel allowances
      */
