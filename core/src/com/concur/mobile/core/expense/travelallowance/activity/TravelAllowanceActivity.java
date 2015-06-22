@@ -10,10 +10,9 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 
 import com.concur.core.R;
-import com.concur.mobile.core.activity.BaseActivity;
 import com.concur.mobile.core.expense.travelallowance.datamodel.FixedTravelAllowance;
 import com.concur.mobile.core.expense.travelallowance.fragment.FixedTravelAllowanceListFragment;
-import com.concur.mobile.core.expense.travelallowance.fragment.TravelAllowanceItinerary;
+import com.concur.mobile.core.expense.travelallowance.fragment.TravelAllowanceItineraryListFragment;
 
 /**
  * Created by D049515 on 15.06.2015.
@@ -49,9 +48,8 @@ public class TravelAllowanceActivity extends AppCompatActivity
             setSupportActionBar(toolbar);
         }
 
-        toolbar.setTitle("Travel Allowances");
-
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        getSupportActionBar().setTitle("Travel Allowances");
 
         ViewPager pager = (ViewPager) findViewById(R.id.view_pager);
         FragmentPagerAdapter pagerAdapter = new FragmentPagerAdapter(getSupportFragmentManager()) {
@@ -62,7 +60,7 @@ public class TravelAllowanceActivity extends AppCompatActivity
                 case 0:
                     return new FixedTravelAllowanceListFragment();
                 case 1:
-                    return new TravelAllowanceItinerary();
+                    return new TravelAllowanceItineraryListFragment();
                 }
                 return null;
             }
