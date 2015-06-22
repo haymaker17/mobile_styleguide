@@ -12,7 +12,10 @@ import android.view.ViewGroup;
 import com.concur.mobile.platform.ui.common.fragment.PlatformFragmentV1;
 import com.concur.mobile.platform.ui.travel.R;
 import com.concur.mobile.platform.ui.travel.util.Const;
-import com.google.android.gms.maps.*;
+import com.google.android.gms.maps.CameraUpdateFactory;
+import com.google.android.gms.maps.GoogleMap;
+import com.google.android.gms.maps.MapFragment;
+import com.google.android.gms.maps.OnMapReadyCallback;
 import com.google.android.gms.maps.model.*;
 
 import java.util.ArrayList;
@@ -166,13 +169,16 @@ public class HotelSearchResultMapFragment extends PlatformFragmentV1
             googleMap.setMyLocationEnabled(true);
             builder.include(position);
         }
+        googleMap.setOnCameraChangeListener(new GoogleMap.OnCameraChangeListener() {
 
-        LatLngBounds bounds = builder.build();
-        int padding = 10; // offset from edges of the map in pixels
-        CameraUpdate cu = CameraUpdateFactory.newLatLngBounds(bounds, 400, 400, padding);
-
-        googleMap.moveCamera(cu);
-        googleMap.animateCamera(cu);
+            @Override
+            public void onCameraChange(CameraPosition arg0) {
+                // Move camera.
+                googleMap.moveCamera(CameraUpdateFactory.newLatLngBounds(builder.build(), 100));
+                // Remove listener to prevent position reset on camera move.
+                googleMap.setOnCameraChangeListener(null);
+            }
+        });
         googleMap.setOnMarkerClickListener(new GoogleMap.OnMarkerClickListener() {
 
             @Override public boolean onMarkerClick(Marker marker) {

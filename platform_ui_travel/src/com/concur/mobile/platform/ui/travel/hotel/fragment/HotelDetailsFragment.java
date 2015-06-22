@@ -84,7 +84,7 @@ public class HotelDetailsFragment extends PlatformFragmentV1 implements OnClickL
 
         Contact contact = hotel.contact;
         if (contact != null && contact.city != null) {
-        
+
             StringBuilder stb = new StringBuilder();
             if (!contact.addressLine1.isEmpty()) {
                 stb.append(contact.addressLine1).append(", ");
@@ -184,6 +184,8 @@ public class HotelDetailsFragment extends PlatformFragmentV1 implements OnClickL
     public void onClick(View v) {
         if (v == findRooms) {
             callBackListener.onFindRoomsClicked();
+        } else if (v == mapView) {
+            callBackListener.onMapsClicked();
         }
 
     }
