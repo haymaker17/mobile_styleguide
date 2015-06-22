@@ -108,6 +108,21 @@ public class FixedTravelAllowanceListAdapter extends ArrayAdapter<Object> {
         Log.d(Const.LOG_TAG, CLS_TAG + ".initializeGroups: Header and TA list size " + locationAndTAList.size());
     }
 
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public boolean areAllItemsEnabled() {
+        return false;
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public boolean isEnabled(int position) {
+        return (getItemViewType(position) == ENTRY_ROW ? true : false);
+    }
 
     /**
      * {@inheritDoc}
@@ -177,6 +192,7 @@ public class FixedTravelAllowanceListAdapter extends ArrayAdapter<Object> {
     public int getViewTypeCount() {
         return 2;
     }
+
 
     /**
      * Creates an view holder
