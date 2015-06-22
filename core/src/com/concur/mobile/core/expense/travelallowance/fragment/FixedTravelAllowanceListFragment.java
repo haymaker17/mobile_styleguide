@@ -1,5 +1,6 @@
 package com.concur.mobile.core.expense.travelallowance.fragment;
 
+import android.app.Activity;
 import android.content.Context;
 import android.os.Bundle;
 import android.support.v4.app.ListFragment;
@@ -7,6 +8,7 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ListView;
 import android.widget.TextView;
 
 import com.concur.core.R;
@@ -36,11 +38,36 @@ public class FixedTravelAllowanceListFragment extends ListFragment {
      */
     private List<FixedTravelAllowance> fixedTravelAllowances;
 
+    /**
+     * The activity context
+     */
     private Context context;
+
+    /**
+     * The date formatter
+     */
     private IDateFormat dateFormatter;
+
+    /**
+     * The listener to be notified, whenever a fixed travel allowance is selected
+     */
+    private IFixedTravelAllowanceSelectedListener fixedTASelectedListener;
+
+    /**
+     * Container Activity to implement this interface in order to be notified
+     * in case any fixed travel allowance was selected from the list
+     */
+    public interface IFixedTravelAllowanceSelectedListener {
+        /**
+         * Handles a travel allowance being selected
+         * @param allowance The fixed travel allowance selected
+         */
+        public void onFixedTravelAllowanceSelected(FixedTravelAllowance allowance);
+    }
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
+
         super.onCreate(savedInstanceState);
 
         //TODO: Get expense report ID from instance state and read the allowances associated
@@ -54,6 +81,9 @@ public class FixedTravelAllowanceListFragment extends ListFragment {
         setListAdapter(new FixedTravelAllowanceListAdapter(this.getActivity(), fixedTravelAllowances));
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
 //        return super.onCreateView(inflater, container, savedInstanceState);
@@ -68,9 +98,42 @@ public class FixedTravelAllowanceListFragment extends ListFragment {
 
         super.onActivityCreated(savedInstanceState);
         renderSummary();
-
     }
 
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public void onAttach(Activity activity) {
+
+        super.onAttach(activity);
+        try {
+            this.fixedTASelectedListener = (IFixedTravelAllowanceSelectedListener) activity;
+        } catch (ClassCastException exception) {
+            Log.e(Const.LOG_TAG, CLS_TAG + ".onAttach: Container Activity must implement "
+                    + IFixedTravelAllowanceSelectedListener.class.getSimpleName());
+        }
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public void onListItemClick(ListView listView, View view, int position, long id) {
+        if (listView != null) {
+            FixedTravelAllowanceListAdapter listAdapter = (FixedTravelAllowanceListAdapter) listView.getAdapter();
+            if (listAdapter.getItemViewType(position) == FixedTravelAllowanceListAdapter.ENTRY_ROW) {
+                FixedTravelAllowance allowance = (FixedTravelAllowance) listAdapter.getItem(position);
+                if (fixedTASelectedListener != null) {
+                    fixedTASelectedListener.onFixedTravelAllowanceSelected(allowance);
+                }
+            }
+        }
+    }
+
+    /**
+     * Renders the summary w.r.t fixed travel allowances
+     */
     private void renderSummary() {
 
         if (fixedTravelAllowances == null || fixedTravelAllowances.size() == 0 || getActivity() == null) {
@@ -120,9 +183,14 @@ public class FixedTravelAllowanceListFragment extends ListFragment {
         }
 
         renderAmount(tvValue, sum,  fixedTravelAllowances.get(0).getCurrencyCode());
-
     }
 
+    /**
+     * Renders the amount text view
+     * @param tvAmount The reference to the text view
+     * @param amount The amount to be rendered
+     * @param crnCode The currency code associated with the amount
+     */
     private void renderAmount(TextView tvAmount, Double amount, String crnCode) {
 
         if (tvAmount == null){
@@ -136,4 +204,5 @@ public class FixedTravelAllowanceListFragment extends ListFragment {
             tvAmount.setText(StringUtilities.EMPTY_STRING);
         }
     }
+
 }

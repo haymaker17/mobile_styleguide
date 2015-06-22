@@ -1,5 +1,6 @@
 package com.concur.mobile.core.expense.travelallowance.activity;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.design.widget.TabLayout;
 import android.support.v4.app.Fragment;
@@ -10,16 +11,34 @@ import android.support.v7.widget.Toolbar;
 
 import com.concur.core.R;
 import com.concur.mobile.core.activity.BaseActivity;
+import com.concur.mobile.core.expense.travelallowance.datamodel.FixedTravelAllowance;
 import com.concur.mobile.core.expense.travelallowance.fragment.FixedTravelAllowanceListFragment;
 import com.concur.mobile.core.expense.travelallowance.fragment.TravelAllowanceItinerary;
 
 /**
  * Created by D049515 on 15.06.2015.
  */
-public class TravelAllowanceActivity extends AppCompatActivity {
+public class TravelAllowanceActivity extends AppCompatActivity
+        implements FixedTravelAllowanceListFragment.IFixedTravelAllowanceSelectedListener {
 
+    private static final int REQUEST_CODE_FIXED_TRAVEL_ALLOWANCE_DETAILS = 0x01;
     private static final String ADJUSTMENTS_FRAGMENT_TAG = "adjustments";
 
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public void onFixedTravelAllowanceSelected(FixedTravelAllowance allowance) {
+        Intent intent = new Intent(this, FixedTravelAllowanceDetailsActivity.class);
+        if (allowance != null) {
+            intent.putExtra(FixedTravelAllowanceDetailsActivity.INTENT_EXTRA_KEY_FIXED_TRAVEL_ALLOWANCE, allowance);
+            startActivityForResult(intent, REQUEST_CODE_FIXED_TRAVEL_ALLOWANCE_DETAILS);
+        }
+    }
+
+    /**
+     * {@inheritDoc}
+     */
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);

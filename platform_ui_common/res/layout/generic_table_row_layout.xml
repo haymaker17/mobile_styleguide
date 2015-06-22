@@ -52,6 +52,34 @@
             android:text="Small Text"
             android:textAppearance="@style/DefaultSubTitle"/>
 
+        <LinearLayout
+            android:id="@+id/vg_subtitle_ellipsized"
+            android:visibility="gone"
+            android:orientation="horizontal"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/tv_subtitle_2" >
+
+        <TextView
+            android:id="@+id/tv_subtitle_ellipsized"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_alignParentLeft="true"
+            android:ellipsize="end"
+            android:text="Small Text"
+            android:layout_weight="0.25"
+            android:textAppearance="@style/DefaultSubTitle" />
+
+        <TextView
+            android:id="@+id/tv_subtitle_more"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_alignParentLeft="true"
+            android:layout_weight="0.75"
+            android:textAppearance="@style/DefaultSubTitleMoreLabel"
+            android:text="@string/general_more" />
+        </LinearLayout>
+
     </RelativeLayout>
 
     <View

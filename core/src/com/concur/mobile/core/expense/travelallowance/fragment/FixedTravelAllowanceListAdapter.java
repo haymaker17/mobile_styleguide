@@ -40,6 +40,9 @@ public class FixedTravelAllowanceListAdapter extends ArrayAdapter<Object> {
         private TextView tvSubtitle1;
         private TextView tvSubtitle2;
         private View vDividerBottom;
+        private ViewGroup vgSubtitleEllipsized;
+        private TextView tvSubtitleEllipsized;
+        private TextView tvSubtitleMore;
     }
 
 
@@ -49,10 +52,11 @@ public class FixedTravelAllowanceListAdapter extends ArrayAdapter<Object> {
 
     private Context context;
     private boolean hasMultipleGroups;
-    private static final int HEADER_ROW = 0;
-    private static final int ENTRY_ROW = 1;
     private IDateFormat dateFormatter;
 
+
+    public static final int HEADER_ROW = 0;
+    public static final int ENTRY_ROW = 1;
 
     /**
      * Creates an instance of this list adapter.
@@ -187,6 +191,9 @@ public class FixedTravelAllowanceListAdapter extends ArrayAdapter<Object> {
         holder.tvValue = (TextView) view.findViewById(R.id.tv_value);
         holder.tvSubtitle1 = (TextView) view.findViewById(R.id.tv_subtitle_1);
         holder.tvSubtitle2 = (TextView) view.findViewById(R.id.tv_subtitle_2);
+        holder.vgSubtitleEllipsized = (ViewGroup) view.findViewById(R.id.vg_subtitle_ellipsized);
+        holder.tvSubtitleEllipsized = (TextView) view.findViewById(R.id.tv_subtitle_ellipsized);
+        holder.tvSubtitleMore = (TextView) view.findViewById(R.id.tv_subtitle_more);
         return holder;
     }
 
@@ -250,22 +257,28 @@ public class FixedTravelAllowanceListAdapter extends ArrayAdapter<Object> {
             holder.tvTitle.setText(dateFormatter.format(allowance.getDate(), false, true, false));
         }
 
+        if (holder.tvSubtitle1 != null) {
+            holder.tvSubtitle1.setVisibility(View.GONE);
+        }
+
         if (holder.tvSubtitle2 != null) {
             holder.tvSubtitle2.setVisibility(View.GONE);
         }
 
         if (allowance.getExcludedIndicator()){
-            if (holder.tvSubtitle1 != null) {
-                holder.tvSubtitle1.setVisibility(View.GONE);
+            if (holder.vgSubtitleEllipsized != null) {
+                holder.vgSubtitleEllipsized.setVisibility(View.GONE);
             }
             if (holder.tvValue != null) {
                 holder.tvValue.setVisibility(View.VISIBLE);
                 holder.tvValue.setText(this.context.getString(R.string.itin_excluded));
             }
         } else {
-            if (holder.tvSubtitle1 != null) {
-                holder.tvSubtitle1.setVisibility(View.VISIBLE);
-                holder.tvSubtitle1.setText(allowance.mealsProvisionToText(context, 1));
+            if (holder.vgSubtitleEllipsized != null) {
+                holder.vgSubtitleEllipsized.setVisibility(View.VISIBLE);
+                if (holder.tvSubtitleEllipsized != null) {
+                    holder.tvSubtitleEllipsized.setText(allowance.mealsProvisionToText(context, 1));
+                }
             }
             renderAmount(holder.tvValue, allowance.getAmount(), allowance.getCurrencyCode());
         }

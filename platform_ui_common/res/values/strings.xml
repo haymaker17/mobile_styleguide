@@ -48,6 +48,7 @@
     <string name="dlg_dependent_field_value_title">Dependent Field Value</string>
     <string name="dlg_dependent_field_value_message">Please fill in parent field \'%%0%%\' first.</string>
     <string name="swipe_for_more">Swipe for more</string>
+    <string name="general_more">More</string>
 
     <!-- Network Connectivity stuff. -->
     <string name="dlg_no_connectivity_title">Client Is Offline</string>
