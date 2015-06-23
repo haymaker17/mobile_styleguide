@@ -168,8 +168,10 @@ public class RequestHeaderActivity extends AbstractConnectFormFieldActivity impl
             requestHeaderVF.setDisplayedChild(ID_LOADING_VIEW);
             // --- onRequestResult calls cleanup() on execution, so listener will be destroyed by processing
             new RequestTask(this, 1, asyncReceiverSave, ConnectHelper.ConnectVersion.VERSION_3_1,
-                    ConnectHelper.Module.REQUEST, ConnectHelper.Action.CREATE, tr.getId() != null ? tr.getId() : null)
-                    .setPostBody(RequestParser.toJson((RequestDTO) tr)).execute();
+                    ConnectHelper.Module.REQUEST,
+                    tr.getId() != null ? ConnectHelper.Action.UPDATE : ConnectHelper.Action.CREATE,
+                    tr.getId() != null ? tr.getId() : null).setPostBody(RequestParser.toJson((RequestDTO) tr))
+                    .execute();
         } else {
             new NoConnectivityDialogFragment().show(getSupportFragmentManager(), CLS_TAG);
         }
