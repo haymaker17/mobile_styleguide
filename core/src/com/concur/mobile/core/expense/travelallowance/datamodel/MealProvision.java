@@ -13,6 +13,7 @@ public class MealProvision implements Comparable<MealProvision>, Serializable {
 
     private static final long serialVersionUID = -3355549333702766315L;
 
+    public static final String NOT_PROVIDED_CODE = "NPR";
     /**
      * The coded representation of a provision e.g. "PRO"
      */

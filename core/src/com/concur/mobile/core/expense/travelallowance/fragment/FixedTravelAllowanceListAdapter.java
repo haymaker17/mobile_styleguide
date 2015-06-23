@@ -11,6 +11,7 @@ import android.widget.ArrayAdapter;
 import android.widget.TextView;
 
 import com.concur.core.R;
+import com.concur.mobile.core.expense.travelallowance.controller.FixedTravelAllowanceController;
 import com.concur.mobile.core.expense.travelallowance.datamodel.FixedTravelAllowance;
 import com.concur.mobile.core.expense.travelallowance.datamodel.FixedTravelAllowanceTestData;
 
@@ -302,8 +303,10 @@ public class FixedTravelAllowanceListAdapter extends ArrayAdapter<Object> {
                 || holder.tvSubtitleMore == null) {
             return;
         }
+        final FixedTravelAllowanceController allowanceController = new FixedTravelAllowanceController();
+        final String provisionText = allowanceController.mealsProvisionToText(allowance, context, 1);
+        holder.tvSubtitleEllipsized.setText(provisionText);
         holder.vgSubtitleEllipsized.setVisibility(View.VISIBLE);
-        holder.tvSubtitleEllipsized.setText(allowance.mealsProvisionToText(context, 1));
         holder.tvSubtitleMore.setVisibility(View.VISIBLE);
 
         ViewTreeObserver viewTreeObserver = holder.tvSubtitleEllipsized.getViewTreeObserver();
@@ -319,7 +322,8 @@ public class FixedTravelAllowanceListAdapter extends ArrayAdapter<Object> {
                 if (layout.getEllipsisCount(0) > 0) {
                     holder.tvSubtitleMore.setVisibility(View.VISIBLE);
                 } else {
-                    if (allowance.mealsProvisionToText(context, 3).length() > allowance.mealsProvisionToText(context, 1).length()) {
+                    if (allowanceController.mealsProvisionToText(allowance, context, 3).length() >
+                            provisionText.length()) {
                         holder.tvSubtitleMore.setVisibility(View.VISIBLE);
                     }
                 }
