@@ -521,7 +521,7 @@ public class Home extends BaseActivity implements View.OnClickListener, Navigati
         hideBookFooterButton();
         hideMileageFooterButton();
         // OCR: Disable backdoor Easter egg.
-        if (!Preferences.isOCRUser()/* || !Preferences.shouldUseNewOcrFeatures() */) {
+        if (!Preferences.isExpenseItUser()/* || !Preferences.shouldUseNewOcrFeatures() */) {
             hideQuickExpenseFooterButton();
         }
         hideReceiptFooterButton();
@@ -575,19 +575,13 @@ public class Home extends BaseActivity implements View.OnClickListener, Navigati
         // Hide the expense section, if need be.
         if (RolesUtil.isExpenser(Home.this)) {
             // OCR: Disable backdoor Easter egg.
-            if (!Preferences.isOCRUser()/*
-                                         * || !Preferences.shouldUseNewOcrFeatures ()
-                                         */) {
+            if (!Preferences.isExpenseItUser()) {
                 showQuickExpenseFooterButton();
                 showReceiptFooterButton();
             } else {
-                // With the new OCR design, we use camera icon with Expense
-                // label, so hide the QE btn and show the Camera btn with
-                // updated text
                 hideQuickExpenseFooterButton();
-                showReceiptFooterButton();
-                TextView view = (TextView) findViewById(R.id.homeCameraText);
-                view.setText(R.string.home_footer_button_expense);
+                hideReceiptFooterButton();
+                showExpenseItFooterButton();
             }
             if (ViewUtil.isShowMileageExpenseOnHomeScreenEnabled(Home.this) && showPersonalCarMileage()) {
                 showMileageFooterButton();
@@ -1715,19 +1709,16 @@ public class Home extends BaseActivity implements View.OnClickListener, Navigati
             EventTracker.INSTANCE.track(Flurry.CATEGORY_HOME, Flurry.EVENT_NAME_ACTION, params);
             break;
         }
-        case R.id.homeCamera: {
-            // OCR
-            if (Preferences.isOCRUser() && /*
-                                            * Preferences.shouldUseNewOcrFeatures () &&
-                                            */!RolesUtil.isTestDriveUser()) {
-                // Create the fragment and show it as a dialog.
-                DialogFragment newFragment = new ReceiptChoiceDialogFragment();
-                newFragment.show(this.getSupportFragmentManager(), ReceiptChoiceDialogFragment.DIALOG_FRAGMENT_ID);
-            } else {
-                cancelAllDataRequests();
-                captureReceipt();
-            }
 
+        case R.id.homeExpenseIt: {
+            DialogFragment newFragment = new ReceiptChoiceDialogFragment();
+            newFragment.show(this.getSupportFragmentManager(), ReceiptChoiceDialogFragment.DIALOG_FRAGMENT_ID);
+            break;
+        }
+
+        case R.id.homeCamera: {
+            cancelAllDataRequests();
+            captureReceipt();
             break;
         }
         case R.id.homeRowBookCar:
@@ -2483,6 +2474,15 @@ public class Home extends BaseActivity implements View.OnClickListener, Navigati
         setViewGone(R.id.homeQuickExpense);
     }
 
+    private void showExpenseItFooterButton() {
+        showFooter();
+        setViewVisible(R.id.homeExpenseIt);
+    }
+
+    private void hideExpenseItFooterButton() {
+        setViewGone(R.id.homeExpenseIt);
+    }
+
     private void showTravelRequestRow() {
         showFooter();
         setViewVisible(R.id.homeRowTR);
@@ -2653,6 +2653,10 @@ public class Home extends BaseActivity implements View.OnClickListener, Navigati
             numVisible++;
         }
 
+        if (findViewById(R.id.homeExpenseIt).getVisibility() == View.VISIBLE) {
+            numVisible++;
+        }
+
         if (findViewById(R.id.homeMileage).getVisibility() == View.VISIBLE) {
             numVisible++;
         }
@@ -2671,6 +2675,9 @@ public class Home extends BaseActivity implements View.OnClickListener, Navigati
         buttonText.setTextSize(TypedValue.COMPLEX_UNIT_PX, textSize);
 
         buttonText = (TextView) findViewById(R.id.homeCameraText);
+        buttonText.setTextSize(TypedValue.COMPLEX_UNIT_PX, textSize);
+
+        buttonText = (TextView) findViewById(R.id.homeExpenseItText);
         buttonText.setTextSize(TypedValue.COMPLEX_UNIT_PX, textSize);
 
         buttonText = (TextView) findViewById(R.id.homeMileageText);
@@ -3244,7 +3251,7 @@ public class Home extends BaseActivity implements View.OnClickListener, Navigati
         }
 
         // Add ExpenseIt item.
-        if (Preferences.isOCRUser()) {
+        if (Preferences.isExpenseItUser()) {
             navItem = new HomeScreenSimpleNavigationItem(NAVIGATION_APP_EXPENSE_IT, -1,
                     R.string.home_navigation_expenseit, R.drawable.icon_menu_expenseit, View.VISIBLE, View.VISIBLE,
                     new Runnable() {

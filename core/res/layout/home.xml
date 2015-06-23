@@ -887,11 +887,6 @@
 
                     </RelativeLayout>
 
-                    <View
-                        android:layout_width="1px"
-                        android:layout_height="match_parent"
-                        android:background="@color/StrokeHomeFooter" />
-
                     <RelativeLayout
                         android:id="@+id/homeCamera"
                         android:layout_width="0dp"
@@ -923,10 +918,37 @@
 
                     </RelativeLayout>
 
-                    <View
-                        android:layout_width="1px"
-                        android:layout_height="match_parent"
-                        android:background="@color/StrokeHomeFooter" />
+                    <RelativeLayout
+                        android:id="@+id/homeExpenseIt"
+                        android:layout_width="0dp"
+                        android:layout_height="fill_parent"
+                        android:layout_gravity="center"
+                        android:layout_marginRight="1px"
+                        android:layout_weight="1"
+                        android:background="@color/HomeButtonBackground"
+                        android:clickable="true"
+                        android:gravity="center"
+                        android:onClick="onClick"
+                        android:visibility="gone" >
+
+                        <ImageView
+                            android:id="@+id/homeExpenseItIcon"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_centerHorizontal="true"
+                            android:src="@drawable/icon_camera" />
+
+                        <TextView
+                            android:id="@+id/homeExpenseItText"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_below="@id/homeExpenseItIcon"
+                            android:layout_centerHorizontal="true"
+                            android:text="@string/home_footer_button_expenseit"
+                            android:textAppearance="?android:attr/textAppearanceSmall"
+                            android:textColor="@color/HomeFooterButtonText" />
+
+                    </RelativeLayout>
 
                     <RelativeLayout
                         android:id="@+id/homeQuickExpense"

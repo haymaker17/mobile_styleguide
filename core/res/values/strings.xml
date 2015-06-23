@@ -214,6 +214,7 @@
     <string name="home_footer_button_receipt">Receipt</string>
     <string name="home_footer_button_expense">Expense</string>
     <string name="home_footer_button_mileage">Mileage</string>
+    <string name="home_footer_button_expenseit">ExpenseIt</string>
     <string name="prompt_notifications_allow_title">Notifications</string>
     <string name="prompt_notifications_allow_text">Concur Mobile can send notifications to your device when items such as approvals or card charges are ready for you.  Do you wish to allow these notifications?</string>
 

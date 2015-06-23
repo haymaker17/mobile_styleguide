@@ -1736,7 +1736,7 @@ public class ReceiptStoreFragment extends BaseFragment {
     protected void sendStartOcr(String receiptImageId) {
 
         // If this is an OCR user, then start OCR!!!
-        if (startOcrOnUpload && Preferences.isOCRUser()) {
+        if (startOcrOnUpload && Preferences.isExpenseItUser()) {
 
             if (!TextUtils.isEmpty(receiptImageId)) {
 
@@ -3004,7 +3004,7 @@ public class ReceiptStoreFragment extends BaseFragment {
                     // then refresh the display.
                     fragment.isPathAvailable = false;
                     if (ConcurCore.isConnected()) {
-                        if (fragment.startOcrOnUpload && Preferences.isOCRUser()) {
+                        if (fragment.startOcrOnUpload && Preferences.isExpenseItUser()) {
 
                             // OCR: Set the view state to indicate data being loaded.
                             // ViewUtil.setTextViewText(fragment.getView(), R.id.loading_data, R.id.data_loading_text,

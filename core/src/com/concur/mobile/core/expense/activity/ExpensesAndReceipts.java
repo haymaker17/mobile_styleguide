@@ -489,7 +489,7 @@ public class ExpensesAndReceipts extends BaseActivity implements ExpensesCallbac
     public void onStartOcrSuccess() {
         // Update the Expense List if an OCR was started
         // so that the list will show the new Processing item.
-        if (Preferences.isOCRUser()) {
+        if (Preferences.isExpenseItUser()) {
 
             int count = pageAdapter.getCount();
             for (int i = 0; i < count; i++) {
@@ -513,7 +513,7 @@ public class ExpensesAndReceipts extends BaseActivity implements ExpensesCallbac
      */
     @Override
     public void onStartOcrFailed() {
-        if (Preferences.isOCRUser()) {
+        if (Preferences.isExpenseItUser()) {
             // OCR: What to do in this case?
         }
     }
@@ -575,7 +575,7 @@ public class ExpensesAndReceipts extends BaseActivity implements ExpensesCallbac
                     ReceiptStoreFragment rsFrag = (ReceiptStoreFragment) frag;
                     rsFrag.endUserRefresh = false;
                     rsFrag.initView();
-                } else if (frag instanceof Expenses && Preferences.isOCRUser()) {
+                } else if (frag instanceof Expenses && Preferences.isExpenseItUser()) {
                     if (isServiceAvailable()) {
                         ((Expenses) frag).checkForRefreshData(false);
                     } else {

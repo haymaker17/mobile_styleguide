@@ -23,7 +23,6 @@ import android.content.IntentFilter;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentActivity;
-import android.support.v4.app.FragmentManager;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.Menu;
@@ -99,18 +98,6 @@ import com.concur.mobile.platform.expense.receipt.list.dao.ReceiptDAO;
 import com.concur.mobile.platform.ocr.OcrStatusEnum;
 import com.concur.mobile.platform.ui.common.dialog.NoConnectivityDialogFragment;
 import com.concur.mobile.platform.ui.common.util.PreferenceUtil;
-
-import org.apache.http.HttpStatus;
-
-import java.util.ArrayList;
-import java.util.Calendar;
-import java.util.Collections;
-import java.util.Comparator;
-import java.util.HashMap;
-import java.util.HashSet;
-import java.util.Iterator;
-import java.util.List;
-import java.util.Map;
 
 /**
  * An extension of <code>ConcurView</code> used to render a combined list of cash and card expenses.
@@ -661,7 +648,7 @@ public class Expenses extends BaseFragment implements INetworkActivityListener {
                     // If the RS is empty, the refetch it so the OCR items show
                     // in the Expense List!
                     boolean refreshReceiptList = false;
-                    if (Preferences.isOCRUser()) {
+                    if (Preferences.isExpenseItUser()) {
                         ReceiptStoreCache rsCache = app.getReceiptStoreCache();
                         if (rsCache == null || rsCache.shouldRefetchReceiptList() || !rsCache.hasLastReceiptList()
                                 || rsCache.getReceiptInfoList() == null
@@ -2467,7 +2454,7 @@ public class Expenses extends BaseFragment implements INetworkActivityListener {
      */
     private void mergeOcrItems(List<Expense> expense) {
 
-        if (Preferences.isOCRUser()) {
+        if (Preferences.isExpenseItUser()) {
 
             // Don't include Receipts with OCR status of A_DONE or M_DONE.
             // These Receipts should have been converted to an Expense entry returned back by GSEL.
@@ -2866,7 +2853,7 @@ public class Expenses extends BaseFragment implements INetworkActivityListener {
         // so we have the OCR status. If that MWS call returns
         // successfully, the callback/listener will then call this
         // method again to fetch the list of Smart Expenses.
-        if (Preferences.isOCRUser() && refreshReceiptList) {
+        if (Preferences.isExpenseItUser() && refreshReceiptList) {
 
             showLoadingView();
             expensesCallback.doGetReceiptList();
