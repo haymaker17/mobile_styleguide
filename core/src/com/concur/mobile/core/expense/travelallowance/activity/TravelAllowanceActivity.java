@@ -49,7 +49,7 @@ public class TravelAllowanceActivity extends AppCompatActivity
         }
 
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-        getSupportActionBar().setTitle("Travel Allowances");
+        getSupportActionBar().setTitle(R.string.itin_travel_allowances);
 
         ViewPager pager = (ViewPager) findViewById(R.id.view_pager);
         FragmentPagerAdapter pagerAdapter = new FragmentPagerAdapter(getSupportFragmentManager()) {
@@ -75,9 +75,9 @@ public class TravelAllowanceActivity extends AppCompatActivity
 
                 switch (position) {
                     case 0:
-                        return "Adjustments";
+                        return getString(R.string.itin_adjustments);
                     case 1:
-                        return "Itineraries";
+                        return getString(R.string.itin_itineraries);
                 }
 
                 return super.getPageTitle(position);
@@ -89,14 +89,5 @@ public class TravelAllowanceActivity extends AppCompatActivity
         TabLayout tabLayout = (TabLayout) findViewById(R.id.tab_layout);
         tabLayout.setupWithViewPager(pager);
 
-//        FragmentManager fragmentManager = getSupportFragmentManager();
-//        if (fragmentManager != null && fragmentManager.findFragmentByTag(ADJUSTMENTS_FRAGMENT_TAG) == null) {
-//            FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
-//            transaction.add(R.id.adjustment_fragment_container, new FixedTravelAllowanceListFragment(),
-//                    ADJUSTMENTS_FRAGMENT_TAG);
-//            transaction.commit();
-//            // getSupportFragmentManager().executePendingTransactions();
-//        }
-        
     }
 }
