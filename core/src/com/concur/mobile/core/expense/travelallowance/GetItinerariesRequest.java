@@ -6,6 +6,7 @@ import org.xmlpull.v1.XmlPullParserException;
 
 import android.content.Context;
 
+import com.apptentive.android.sdk.Log;
 import com.concur.mobile.base.service.BaseAsyncResultReceiver;
 import com.concur.mobile.base.service.parser.CommonParser;
 import com.concur.mobile.core.ConcurCore;
@@ -25,7 +26,7 @@ public class GetItinerariesRequest extends CoreAsyncRequestTask {
 
     @Override
     protected String getServiceEndpoint() {
-        return "/Mobile/TravelAllowance/GetTAItineraries/" + rptKey;
+        return "/Mobile/TravelAllowance/GetTAItineraries/" + rptKey + "/MANAGER";
     }
 
     @Override
@@ -37,6 +38,7 @@ public class GetItinerariesRequest extends CoreAsyncRequestTask {
         parser.registerParser(itinParser, "Itinerary");
 
         try {
+            Log.d(LOG_TAG, "Start parsing itineraries...");
             parser.parse();
         } catch (XmlPullParserException e) {
             result = RESULT_ERROR;
@@ -50,6 +52,7 @@ public class GetItinerariesRequest extends CoreAsyncRequestTask {
 
     @Override
     protected int onPostParse() {
+        Log.d(LOG_TAG, "Post parse execution...");
         resultData.putBoolean(IS_SUCCESS, true);
         ConcurCore core = (ConcurCore) ConcurCore.getContext();
         core.setTAItinerary(itinParser.getItinerary());
