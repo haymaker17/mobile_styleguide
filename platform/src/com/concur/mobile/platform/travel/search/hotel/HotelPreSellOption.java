@@ -12,5 +12,6 @@ public class HotelPreSellOption extends PreSellOption {
 
     public String[] hotelCancellationPolicy;
     public String[] hotelRateChangesOverStay;
+    public TotalPrice totalPrice;
 
 }
