@@ -169,6 +169,7 @@ public class HotelBookingActivity extends TravelBaseActivity implements SpinnerD
     private ArrayList<ViolationReason> selectedViolationReasons;
     private String userErrorMsg;
     private String[] cancellationPolicyStatements;
+    private String[] hotelRateChangesOverStay;
     private boolean progressbarVisible;
     private HotelRate hotelRate;
     private HotelPreSellOption preSellOption;
@@ -422,12 +423,7 @@ public class HotelBookingActivity extends TravelBaseActivity implements SpinnerD
         }
 
         // amount
-        txtView = (TextView) findViewById(R.id.hotel_room_rate);
-        String formattedAmount = FormatUtil.formatAmountWithNoDecimals(amount, this.getResources().getConfiguration().locale, currCode, true,
-                        false);
-        txtView.setText(formattedAmount);
-        txtView = (TextView) findViewById(R.id.footer_amount);
-        txtView.setText(formattedAmount);
+        updateTotalRate();
 
         // cancellation policy on click event
         findViewById(R.id.hotel_policy).setOnClickListener(new View.OnClickListener() {
@@ -742,20 +738,33 @@ public class HotelBookingActivity extends TravelBaseActivity implements SpinnerD
     }
 
     private void showCancellationPolicy() {
-        String statement = (String) getText(R.string.hotel_reserve_cancel_policy_not_available);
+        StringBuilder statement = new StringBuilder();
+        if(hotelRateChangesOverStay != null) {
+            // format the statements
+            statement.append(TextUtils.join("\n", hotelRateChangesOverStay));
+        }
         if (cancellationPolicyStatements != null) {
             // format the statements
-            statement = TextUtils.join("\n", cancellationPolicyStatements);
+            if(statement.length() > 0) {
+                statement.append("\n\n");
+            }
+            statement.append(TextUtils.join("\n", cancellationPolicyStatements));
+        }
+        if(statement.length() == 0) {
+            statement.append(getText(R.string.hotel_reserve_cancel_policy_not_available));
         }
 
         DialogFragmentFactoryV1
-                .getAlertOkayInstance(getText(R.string.hotel_reserve_cancel_policy).toString(), statement)
+                .getAlertOkayInstance(getText(R.string.hotel_reserve_cancel_policy).toString(), statement.toString())
                 .show(getFragmentManager(), "");
     }
 
     private void setPreSellOptions(HotelPreSellOption preSellOption) {
         this.preSellOption = preSellOption;
         hideProgressBar();
+
+        // total rate
+        updateTotalRate();
 
         if (preSellOption != null) {
             initPreSellOptions();
@@ -770,6 +779,7 @@ public class HotelBookingActivity extends TravelBaseActivity implements SpinnerD
         if (preSellOption != null) {
             // hotel cancellation policy
             cancellationPolicyStatements = preSellOption.hotelCancellationPolicy;
+            hotelRateChangesOverStay = preSellOption.hotelRateChangesOverStay;
 
             // credit cards
             initCardChoices();
@@ -1087,6 +1097,25 @@ public class HotelBookingActivity extends TravelBaseActivity implements SpinnerD
             View view = reserveLayout.getChildAt(i);
             view.setEnabled(enable);
         }
+    }
+
+    private void updateTotalRate() {
+        if(preSellOption != null && preSellOption.totalPrice != null) {
+            if(preSellOption.totalPrice.amount != null) {
+                amount = preSellOption.totalPrice.amount;
+            }
+            if(preSellOption.totalPrice.crnCode != null) {
+                currCode = preSellOption.totalPrice.crnCode;
+            }
+        } else {
+            amount = amount * numOfNights;
+        }
+        TextView txtView = (TextView) findViewById(R.id.hotel_room_rate);
+        String formattedAmount = FormatUtil.formatAmountWithNoDecimals(amount, this.getResources().getConfiguration().locale, currCode, true,
+                false);
+        txtView.setText(formattedAmount);
+        txtView = (TextView) findViewById(R.id.footer_amount);
+        txtView.setText(formattedAmount);
     }
 
 }
