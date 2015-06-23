@@ -1829,4 +1829,23 @@
   <string name="segment_phone">電話</string>
   <string name="hotel_search_criteria">検索基準:%%3%% 中の %%1%% %%2%% 以内</string>
   <string name="td_overlay_capture_new_receipt">新しい領収書\nを取り込む</string>
+
+  <!--new texts -->
+  <string name="itin_adjustments">"調整"</string>
+  <string name="itin_allowances">"手当"</string>
+  <string name="itin_border_crossing">"国境通過"</string>
+  <string name="itin_crossed_border">"通過済国境"</string>
+  <string name="itin_daily_allowance">"1 日あたりの手当"</string>
+  <string name="itin_departed">"出発済"</string>
+  <string name="itin_excluded">"除外済"</string>
+  <string name="itin_expense_details">"経費詳細"</string>
+  <string name="itin_itineraries">"旅程"</string>
+  <string name="itin_lodging">"宿泊"</string>
+  <string name="itin_meals">"食事"</string>
+  <string name="itin_more_information">"追加"</string>
+  <string name="itin_meal_not_provided">"提供されなかった"</string>
+  <string name="itin_overnight">"宿泊"</string>
+  <string name="itin_total_allowance">"合計手当"</string>
+  <string name="itin_travel_allowances">"出張手当"</string>
+
 </resources>

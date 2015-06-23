@@ -1829,4 +1829,23 @@
   <string name="segment_phone">Telefone</string>
   <string name="hotel_search_criteria">Critério de busca: a uma distância de %%1%% %%2%% de %%3%%</string>
   <string name="td_overlay_capture_new_receipt">Capturar um \nnovo recibo</string>
+
+  <!--new texts -->
+  <string name="itin_adjustments">"Ajustes"</string>
+  <string name="itin_allowances">"Deduções"</string>
+  <string name="itin_border_crossing">"Travessia de fronteira"</string>
+  <string name="itin_crossed_border">"Travessia de fronteira"</string>
+  <string name="itin_daily_allowance">"Deduções diárias"</string>
+  <string name="itin_departed">"Partida  "</string>
+  <string name="itin_excluded">"Excluído"</string>
+  <string name="itin_expense_details">"Detalhes de despesas"</string>
+  <string name="itin_itineraries">"Itinerários"</string>
+  <string name="itin_lodging">"Diárias"</string>
+  <string name="itin_meals">"Refeições"</string>
+  <string name="itin_more_information">"Mais"</string>
+  <string name="itin_meal_not_provided">"Não fornecido"</string>
+  <string name="itin_overnight">"Pernoite"</string>
+  <string name="itin_total_allowance">"Dedução total"</string>
+  <string name="itin_travel_allowances">"Deduções de viagem"</string>
+
 </resources>

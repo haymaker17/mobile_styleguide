@@ -1915,8 +1915,23 @@
 <string name="itin_fetching_allowances">Fetching Allowances</string>
 <string name="itin_updating_amounts">Updating Amounts</string>
 
-<string name="itin_excluded">excluded</string>
-<string name="itin_total_allowance">Total Allowance</string>
+ <!--new texts -->
+<string name="itin_adjustments">"Adjustments"</string>
+<string name="itin_allowances">"Allowances"</string>
+<string name="itin_border_crossing">"Border Crossing"</string>
+<string name="itin_crossed_border">"Crossed Border"</string>
+<string name="itin_daily_allowance">"Daily Allowance"</string>
+<string name="itin_departed">"Departed"</string> 
+<string name="itin_excluded">"Excluded"</string>
+<string name="itin_expense_details">"Expense Details"</string>
+<string name="itin_itineraries">"Itineraries"</string>
+<string name="itin_lodging">"Lodging"</string>
+<string name="itin_meals">"Meals"</string>
+<string name="itin_more_information">"More"</string>
+<string name="itin_meal_not_provided">"Not Provided"</string>
+<string name="itin_overnight">"Overnight"</string>
+<string name="itin_total_allowance">"Total Allowance"</string>
+<string name="itin_travel_allowances">"Travel Allowances"</string>
     <!-- end of travel allowance -->
 
 
