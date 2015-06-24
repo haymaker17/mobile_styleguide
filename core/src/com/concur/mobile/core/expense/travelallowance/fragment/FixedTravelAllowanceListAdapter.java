@@ -13,20 +13,14 @@ import android.widget.TextView;
 import com.concur.core.R;
 import com.concur.mobile.core.expense.travelallowance.controller.FixedTravelAllowanceController;
 import com.concur.mobile.core.expense.travelallowance.datamodel.FixedTravelAllowance;
-import com.concur.mobile.core.expense.travelallowance.datamodel.FixedTravelAllowanceTestData;
-
 import com.concur.mobile.core.expense.travelallowance.util.DefaultDateFormat;
 import com.concur.mobile.core.expense.travelallowance.util.IDateFormat;
 import com.concur.mobile.core.expense.travelallowance.util.StringUtilities;
 import com.concur.mobile.core.util.Const;
 import com.concur.mobile.core.util.FormatUtil;
 
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.HashMap;
 import java.util.List;
 import java.util.Locale;
-import java.util.Map;
 
 /**
  * Created by D049515 on 15.06.2015.
@@ -54,7 +48,8 @@ public class FixedTravelAllowanceListAdapter extends ArrayAdapter<Object> {
     private static final int LAYOUT_ID = R.layout.generic_table_row_layout;
 
     private Context context;
-    private boolean hasMultipleGroups;
+    private FixedTravelAllowanceController allowanceController;
+    //private boolean hasMultipleGroups;
     private IDateFormat dateFormatter;
 
 
@@ -70,46 +65,48 @@ public class FixedTravelAllowanceListAdapter extends ArrayAdapter<Object> {
         super(context, LAYOUT_ID);
         this.context = context;
         this.dateFormatter = new DefaultDateFormat(context);
-        initializeGroups(fixedTravelAllowanceList);
+        this.allowanceController = new FixedTravelAllowanceController();
+        addAll(allowanceController.getLocationsAndAllowances());
+        //initializeGroups(fixedTravelAllowanceList);
     }
 
-    private void initializeGroups(List<FixedTravelAllowance> fixedTravelAllowanceList) {
-        Log.d(Const.LOG_TAG, CLS_TAG + ".initializeGroups: fixed TA list size: " + fixedTravelAllowanceList.size());
-        List<String> sortedLocations = new ArrayList<String>();
-        List<FixedTravelAllowance> fixedTAList = new ArrayList<FixedTravelAllowance>(fixedTravelAllowanceList);
-        Collections.sort(fixedTravelAllowanceList, Collections.reverseOrder());
-        Map<String, List<FixedTravelAllowance>> fixedTAGroups = new HashMap<String, List<FixedTravelAllowance>>();
-        List<Object> locationAndTAList = new ArrayList<Object>();
-
-        for (FixedTravelAllowance allowance : fixedTAList) {
-            List<FixedTravelAllowance> taList;
-            if (fixedTAGroups.containsKey(allowance.getLocationName())) {
-                taList = fixedTAGroups.get(allowance.getLocationName());
-                taList.add(allowance);
-            } else {
-                taList = new ArrayList<FixedTravelAllowance>();
-                taList.add(allowance);
-                fixedTAGroups.put(allowance.getLocationName(), taList);
-                sortedLocations.add(allowance.getLocationName());
-            }
-        }
-
-        if (fixedTAGroups.keySet().size() > 1) {
-            this.hasMultipleGroups = true;
-            for(String key: sortedLocations) {
-                locationAndTAList.add(key);
-                for (FixedTravelAllowance value: fixedTAGroups.get(key)) {
-                    locationAndTAList.add(value);
-                }
-            }
-        } else {
-            this.hasMultipleGroups = false;
-            locationAndTAList.addAll(fixedTAList);
-        }
-
-        addAll(locationAndTAList);
-        Log.d(Const.LOG_TAG, CLS_TAG + ".initializeGroups: Header and TA list size " + locationAndTAList.size());
-    }
+//    private void initializeGroups(List<FixedTravelAllowance> fixedTravelAllowanceList) {
+//        Log.d(Const.LOG_TAG, CLS_TAG + ".initializeGroups: fixed TA list size: " + fixedTravelAllowanceList.size());
+//        List<String> sortedLocations = new ArrayList<String>();
+//        List<FixedTravelAllowance> fixedTAList = new ArrayList<FixedTravelAllowance>(fixedTravelAllowanceList);
+//        Collections.sort(fixedTravelAllowanceList, Collections.reverseOrder());
+//        Map<String, List<FixedTravelAllowance>> fixedTAGroups = new HashMap<String, List<FixedTravelAllowance>>();
+//        List<Object> locationAndTAList = new ArrayList<Object>();
+//
+//        for (FixedTravelAllowance allowance : fixedTAList) {
+//            List<FixedTravelAllowance> taList;
+//            if (fixedTAGroups.containsKey(allowance.getLocationName())) {
+//                taList = fixedTAGroups.get(allowance.getLocationName());
+//                taList.add(allowance);
+//            } else {
+//                taList = new ArrayList<FixedTravelAllowance>();
+//                taList.add(allowance);
+//                fixedTAGroups.put(allowance.getLocationName(), taList);
+//                sortedLocations.add(allowance.getLocationName());
+//            }
+//        }
+//
+//        if (fixedTAGroups.keySet().size() > 1) {
+//            this.hasMultipleGroups = true;
+//            for(String key: sortedLocations) {
+//                locationAndTAList.add(key);
+//                for (FixedTravelAllowance value: fixedTAGroups.get(key)) {
+//                    locationAndTAList.add(value);
+//                }
+//            }
+//        } else {
+//            this.hasMultipleGroups = false;
+//            locationAndTAList.addAll(fixedTAList);
+//        }
+//
+//        addAll(locationAndTAList);
+//        Log.d(Const.LOG_TAG, CLS_TAG + ".initializeGroups: Header and TA list size " + locationAndTAList.size());
+//    }
 
     /**
      * {@inheritDoc}
@@ -256,7 +253,7 @@ public class FixedTravelAllowanceListAdapter extends ArrayAdapter<Object> {
     private void renderEntryRow(ViewHolder holder, FixedTravelAllowance allowance, boolean withRowDevider) {
 
         if (holder.vDividerTop != null) {
-            if (this.hasMultipleGroups) {
+            if (allowanceController.hasMultipleGroups()) {
                 holder.vDividerTop.setVisibility(View.GONE);
             } else {
                 holder.vDividerTop.setVisibility(View.VISIBLE);
@@ -303,7 +300,6 @@ public class FixedTravelAllowanceListAdapter extends ArrayAdapter<Object> {
                 || holder.tvSubtitleMore == null) {
             return;
         }
-        final FixedTravelAllowanceController allowanceController = new FixedTravelAllowanceController();
         final String provisionText = allowanceController.mealsProvisionToText(allowance, context, 1);
         holder.tvSubtitleEllipsized.setText(provisionText);
         holder.vgSubtitleEllipsized.setVisibility(View.VISIBLE);
