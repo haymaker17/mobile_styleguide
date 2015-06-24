@@ -1,9 +1,11 @@
 package com.concur.mobile.core.expense.travelallowance.adapter;
 
+import android.content.Context;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
 
+import com.concur.core.R;
 import com.concur.mobile.core.expense.travelallowance.fragment.FixedTravelAllowanceListFragment;
 import com.concur.mobile.core.expense.travelallowance.fragment.TravelAllowanceItineraryListFragment;
 
@@ -17,10 +19,12 @@ public class ViewPagerAdapter extends FragmentPagerAdapter {
 
     private final static int COUNT = 2;
     private FragmentManager fm;
+    private Context context;
 
-    public ViewPagerAdapter(FragmentManager fm) {
+    public ViewPagerAdapter(FragmentManager fm, Context ctx) {
         super(fm);
         this.fm = fm;
+        this.context = ctx;
     }
 
 
@@ -33,6 +37,17 @@ public class ViewPagerAdapter extends FragmentPagerAdapter {
             case 1:
                 TravelAllowanceItineraryListFragment itinFragment = new TravelAllowanceItineraryListFragment();
                 return itinFragment;
+        }
+        return null;
+    }
+
+    @Override
+    public CharSequence getPageTitle(int position) {
+        switch (position) {
+            case 0:
+                return context.getString(R.string.itin_adjustments);
+            case 1:
+                return context.getString(R.string.itin_itineraries);
         }
         return null;
     }

@@ -74,7 +74,7 @@ public class TravelAllowanceActivity extends AppCompatActivity
         getSupportActionBar().setTitle(R.string.itin_travel_allowances);
 
         ViewPager pager = (ViewPager) findViewById(R.id.view_pager);
-        viewPagerAdapter = new ViewPagerAdapter(getSupportFragmentManager());
+        viewPagerAdapter = new ViewPagerAdapter(getSupportFragmentManager(), getApplicationContext());
 
         pager.setAdapter(viewPagerAdapter);
 
