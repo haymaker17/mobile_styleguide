@@ -60,6 +60,7 @@ import com.concur.mobile.core.expense.travelallowance.FixedAllowances;
 import com.concur.mobile.core.expense.travelallowance.Itinerary;
 import com.concur.mobile.core.expense.travelallowance.ItineraryRow;
 import com.concur.mobile.core.expense.travelallowance.TaConfig;
+import com.concur.mobile.core.expense.travelallowance.controller.TravelAllowanceItineraryController;
 import com.concur.mobile.core.ipm.service.IpmReply;
 import com.concur.mobile.core.service.ConcurService;
 import com.concur.mobile.core.service.CorpSsoQueryReply;
@@ -288,6 +289,8 @@ public abstract class ConcurCore extends MultiDexApplication {
     protected Itinerary taItinerary;
     protected ItineraryRow taItineraryRow;
     protected TaConfig taConfig;
+
+    private TravelAllowanceItineraryController taItineraryController;
 
     // Trips for Approval
     protected List<TripToApprove> tripsToApprove;
@@ -1298,6 +1301,14 @@ public abstract class ConcurCore extends MultiDexApplication {
 
     public void setRailStationListLastRetrieved(Calendar stationsLastRetrieved) {
         this.railStationsLastRetrieved = stationsLastRetrieved;
+    }
+
+
+    public TravelAllowanceItineraryController getTaItineraryController() {
+        if (taItineraryController == null) {
+            taItineraryController = new TravelAllowanceItineraryController(this);
+        }
+        return taItineraryController;
     }
 
     public TaConfig getTAConfig() {

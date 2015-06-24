@@ -3,18 +3,18 @@ package com.concur.mobile.core.expense.travelallowance.activity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.design.widget.TabLayout;
-import android.support.v4.app.Fragment;
-import android.support.v4.app.FragmentPagerAdapter;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 
 import com.concur.core.R;
+import com.concur.mobile.core.ConcurCore;
 import com.concur.mobile.core.expense.travelallowance.adapter.ViewPagerAdapter;
+import com.concur.mobile.core.expense.travelallowance.controller.IServiceRequestListener;
 import com.concur.mobile.core.expense.travelallowance.datamodel.FixedTravelAllowance;
 import com.concur.mobile.core.expense.travelallowance.fragment.FixedTravelAllowanceListFragment;
 import com.concur.mobile.core.expense.travelallowance.fragment.IFragmentCallback;
-import com.concur.mobile.core.expense.travelallowance.fragment.TravelAllowanceControllerFragment;
+import com.concur.mobile.core.expense.travelallowance.controller.TravelAllowanceItineraryController;
 import com.concur.mobile.core.expense.travelallowance.fragment.TravelAllowanceItineraryListFragment;
 import com.concur.mobile.core.util.Const;
 
@@ -22,7 +22,7 @@ import com.concur.mobile.core.util.Const;
  * Created by D049515 on 15.06.2015.
  */
 public class TravelAllowanceActivity extends AppCompatActivity
-        implements FixedTravelAllowanceListFragment.IFixedTravelAllowanceSelectedListener, TravelAllowanceControllerFragment.IRequestCallback, IFragmentCallback{
+        implements FixedTravelAllowanceListFragment.IFixedTravelAllowanceSelectedListener, IServiceRequestListener, IFragmentCallback{
 
     private static final int REQUEST_CODE_FIXED_TRAVEL_ALLOWANCE_DETAILS = 0x01;
     
@@ -30,7 +30,7 @@ public class TravelAllowanceActivity extends AppCompatActivity
 
     private String expenseReportKey;
 
-    private TravelAllowanceControllerFragment controller;
+    private TravelAllowanceItineraryController controller;
 
     private ViewPagerAdapter viewPagerAdapter;
 
@@ -54,13 +54,10 @@ public class TravelAllowanceActivity extends AppCompatActivity
         super.onCreate(savedInstanceState);
         this.setContentView(R.layout.travel_allowance_activity);
 
-        controller = (TravelAllowanceControllerFragment) getSupportFragmentManager().findFragmentByTag(
-                CONTROLLER_FRAGMENT_TAG);
+        ConcurCore app = (ConcurCore) getApplication();
+        controller = app.getTaItineraryController();
+        controller.registerListener(this);
 
-        if (controller == null) {
-            controller = new TravelAllowanceControllerFragment();
-            getSupportFragmentManager().beginTransaction().add(controller, CONTROLLER_FRAGMENT_TAG).commit();
-        }
 
         if (getIntent().hasExtra(Const.EXTRA_EXPENSE_REPORT_KEY)) {
             expenseReportKey = getIntent().getStringExtra(Const.EXTRA_EXPENSE_REPORT_KEY);
@@ -86,27 +83,32 @@ public class TravelAllowanceActivity extends AppCompatActivity
 
     }
 
-
     @Override
-    public void onRequestSuccess(Bundle resultData) {
-        TravelAllowanceItineraryListFragment itinListFrag = viewPagerAdapter.getTravelAllowanceItineraryFragment();
-        if (itinListFrag != null) {
-            itinListFrag.onRefreshFinished();
-        }
-    }
-
-    @Override
-    public void onRequestFail(Bundle resultData) {
-        TravelAllowanceItineraryListFragment itinListFrag = viewPagerAdapter.getTravelAllowanceItineraryFragment();
-        if (itinListFrag != null) {
-            itinListFrag.onRefreshFinished();
-        }
+    protected void onDestroy() {
+        super.onDestroy();
+        controller.unregisterListener(this);
     }
 
     @Override
     public void sendMessage(String message) {
         if (message.equals(TravelAllowanceItineraryListFragment.ON_REFRESH_MSG)) {
             controller.refreshItineraries(expenseReportKey, true);
+        }
+    }
+
+    @Override
+    public void onRequestSuccess() {
+        TravelAllowanceItineraryListFragment itinListFrag = viewPagerAdapter.getTravelAllowanceItineraryFragment();
+        if (itinListFrag != null) {
+            itinListFrag.onRefreshFinished();
+        }
+    }
+
+    @Override
+    public void onRequestFail() {
+        TravelAllowanceItineraryListFragment itinListFrag = viewPagerAdapter.getTravelAllowanceItineraryFragment();
+        if (itinListFrag != null) {
+            itinListFrag.onRefreshFinished();
         }
     }
 }
