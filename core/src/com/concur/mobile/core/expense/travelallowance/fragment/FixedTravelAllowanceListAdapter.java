@@ -2,6 +2,7 @@ package com.concur.mobile.core.expense.travelallowance.fragment;
 
 import android.content.Context;
 import android.text.Layout;
+import android.text.TextPaint;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -42,6 +43,7 @@ public class FixedTravelAllowanceListAdapter extends ArrayAdapter<Object> {
         private TextView tvSubtitleMore;
     }
 
+    private FixedTravelAllowance currentAllowance;
 
     private static final String CLS_TAG = FixedTravelAllowanceListAdapter.class.getSimpleName();
 
@@ -52,6 +54,8 @@ public class FixedTravelAllowanceListAdapter extends ArrayAdapter<Object> {
     //private boolean hasMultipleGroups;
     private IDateFormat dateFormatter;
 
+    private ViewHolder holder;
+    private View.OnLayoutChangeListener layoutChangeListener;
 
     public static final int HEADER_ROW = 0;
     public static final int ENTRY_ROW = 1;
@@ -67,6 +71,38 @@ public class FixedTravelAllowanceListAdapter extends ArrayAdapter<Object> {
         this.dateFormatter = new DefaultDateFormat(context);
         this.allowanceController = new FixedTravelAllowanceController();
         addAll(allowanceController.getLocationsAndAllowances());
+
+        layoutChangeListener = new View.OnLayoutChangeListener() {
+            /**
+             * {@inheritDoc}
+             */
+            @Override
+            public void onLayoutChange(View view, int left, int top, int right, int bottom, int oldLeft,
+                                       int oldTop, int oldRight, int oldBottom) {
+
+                if (currentAllowance == null || holder == null) {
+                    return;
+                }
+
+                String provisionText = holder.tvSubtitleEllipsized.getText().toString();
+                TextPaint paint = holder.tvSubtitleEllipsized.getPaint();
+                float textWidth = paint.measureText(provisionText);
+                int textViewSize = holder.tvSubtitleEllipsized.getRight() - holder.tvSubtitleEllipsized.getLeft()
+                        - holder.tvSubtitleEllipsized.getPaddingRight() - holder.tvSubtitleEllipsized.getPaddingLeft();
+
+                holder.tvSubtitleMore.setVisibility(View.INVISIBLE);
+
+                if (textViewSize - textWidth < 0) {
+                    holder.tvSubtitleMore.setVisibility(View.VISIBLE);
+                } else {
+                    if (allowanceController.mealsProvisionToText(currentAllowance, context, 3).length() >
+                            provisionText.length()) {
+                        holder.tvSubtitleMore.setVisibility(View.VISIBLE);
+                    }
+                }
+
+            }
+        };
         //initializeGroups(fixedTravelAllowanceList);
     }
 
@@ -135,19 +171,22 @@ public class FixedTravelAllowanceListAdapter extends ArrayAdapter<Object> {
         }
 
         View resultView = null;
-        ViewHolder holder = null;
 
         if (convertView == null) {
             LayoutInflater inflater = (LayoutInflater) this.context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
             resultView = inflater.inflate(LAYOUT_ID, viewGroup, false);
-            holder = createViewHolder(resultView);
+            createViewHolder(resultView);
             resultView.setTag(holder);
+            if (getItemViewType(i) == ENTRY_ROW ) {
+                resultView.addOnLayoutChangeListener(this.layoutChangeListener);
+            }
         } else {
             resultView = convertView;
             holder = (ViewHolder) resultView.getTag();
         }
 
         if (getItemViewType(i) == HEADER_ROW ) {
+            currentAllowance = null;
             String locationName = (String) getItem(i);
             boolean isFirstHeader = false;
             if (i == 0){
@@ -157,12 +196,12 @@ public class FixedTravelAllowanceListAdapter extends ArrayAdapter<Object> {
         }
 
         if (getItemViewType(i) == ENTRY_ROW ) {
-            FixedTravelAllowance allowance = (FixedTravelAllowance) getItem(i);
+            currentAllowance = (FixedTravelAllowance) getItem(i);
             boolean withRowDevider = false;
             if (i + 1 < getCount() && getItemViewType(i+1) == ENTRY_ROW) {
                 withRowDevider = true;
             }
-            renderEntryRow(holder, allowance, withRowDevider);
+            renderEntryRow(holder, currentAllowance, withRowDevider);
         }
 
         return resultView;
@@ -195,12 +234,11 @@ public class FixedTravelAllowanceListAdapter extends ArrayAdapter<Object> {
 
 
     /**
-     * Creates an view holder
+     * Creates the member view holder
      * @param view The inflated view to grab the IDs from
-     * @return the view holder
      */
-    private ViewHolder createViewHolder(final View view) {
-        ViewHolder holder = new ViewHolder();
+    private void createViewHolder(final View view) {
+        holder = new ViewHolder();
         holder.vDividerTop = view.findViewById(R.id.v_divider_top);
         holder.vDividerBottom = view.findViewById(R.id.v_divider_bottom);
         holder.tvTitle = (TextView) view.findViewById(R.id.tv_title);
@@ -210,7 +248,6 @@ public class FixedTravelAllowanceListAdapter extends ArrayAdapter<Object> {
         holder.vgSubtitleEllipsized = (ViewGroup) view.findViewById(R.id.vg_subtitle_ellipsized);
         holder.tvSubtitleEllipsized = (TextView) view.findViewById(R.id.tv_subtitle_ellipsized);
         holder.tvSubtitleMore = (TextView) view.findViewById(R.id.tv_subtitle_more);
-        return holder;
     }
 
     /**
@@ -300,31 +337,25 @@ public class FixedTravelAllowanceListAdapter extends ArrayAdapter<Object> {
                 || holder.tvSubtitleMore == null) {
             return;
         }
-        final String provisionText = allowanceController.mealsProvisionToText(allowance, context, 1);
+        String provisionText = allowanceController.mealsProvisionToText(allowance, context, 1);
+        TextPaint paint = holder.tvSubtitleEllipsized.getPaint();
+        float textWidth = paint.measureText(provisionText);
+
         holder.tvSubtitleEllipsized.setText(provisionText);
         holder.vgSubtitleEllipsized.setVisibility(View.VISIBLE);
-        holder.tvSubtitleMore.setVisibility(View.VISIBLE);
+        holder.tvSubtitleMore.setVisibility(View.INVISIBLE);
 
-        ViewTreeObserver viewTreeObserver = holder.tvSubtitleEllipsized.getViewTreeObserver();
-        viewTreeObserver.addOnGlobalLayoutListener(new ViewTreeObserver.OnGlobalLayoutListener() {
-
-            @Override
-            public void onGlobalLayout() {
-                holder.tvSubtitleMore.setVisibility(View.INVISIBLE);
-                Layout layout = holder.tvSubtitleEllipsized.getLayout();
-                if (layout == null) {
-                    return;
-                }
-                if (layout.getEllipsisCount(0) > 0) {
-                    holder.tvSubtitleMore.setVisibility(View.VISIBLE);
-                } else {
-                    if (allowanceController.mealsProvisionToText(allowance, context, 3).length() >
-                            provisionText.length()) {
-                        holder.tvSubtitleMore.setVisibility(View.VISIBLE);
-                    }
-                }
-            }
-        });
+//        int textViewSize = holder.tvSubtitleEllipsized.getRight() - holder.tvSubtitleEllipsized.getLeft()
+//                - holder.tvSubtitleEllipsized.getPaddingLeft() - holder.tvSubtitleEllipsized.getPaddingRight();
+//
+//        if (textViewSize - textWidth < 0) {
+//            holder.tvSubtitleMore.setVisibility(View.VISIBLE);
+//        } else {
+//            if (allowanceController.mealsProvisionToText(allowance, context, 3).length() >
+//                    provisionText.length()) {
+//                holder.tvSubtitleMore.setVisibility(View.VISIBLE);
+//            }
+//        }
     }
 
     private void renderAmount(TextView tvAmount, Double amount, String crnCode) {
