@@ -51,7 +51,6 @@ public class FixedTravelAllowanceListAdapter extends ArrayAdapter<Object> {
 
     private Context context;
     private FixedTravelAllowanceController allowanceController;
-    //private boolean hasMultipleGroups;
     private IDateFormat dateFormatter;
 
     private ViewHolder holder;
@@ -69,7 +68,7 @@ public class FixedTravelAllowanceListAdapter extends ArrayAdapter<Object> {
         super(context, LAYOUT_ID);
         this.context = context;
         this.dateFormatter = new DefaultDateFormat(context);
-        this.allowanceController = new FixedTravelAllowanceController();
+        this.allowanceController = new FixedTravelAllowanceController(context);
         addAll(allowanceController.getLocationsAndAllowances());
 
         layoutChangeListener = new View.OnLayoutChangeListener() {
@@ -95,7 +94,7 @@ public class FixedTravelAllowanceListAdapter extends ArrayAdapter<Object> {
                 if (textViewSize - textWidth < 0) {
                     holder.tvSubtitleMore.setVisibility(View.VISIBLE);
                 } else {
-                    if (allowanceController.mealsProvisionToText(currentAllowance, context, 3).length() >
+                    if (allowanceController.mealsProvisionToText(currentAllowance, 3).length() >
                             provisionText.length()) {
                         holder.tvSubtitleMore.setVisibility(View.VISIBLE);
                     }
@@ -103,46 +102,7 @@ public class FixedTravelAllowanceListAdapter extends ArrayAdapter<Object> {
 
             }
         };
-        //initializeGroups(fixedTravelAllowanceList);
     }
-
-//    private void initializeGroups(List<FixedTravelAllowance> fixedTravelAllowanceList) {
-//        Log.d(Const.LOG_TAG, CLS_TAG + ".initializeGroups: fixed TA list size: " + fixedTravelAllowanceList.size());
-//        List<String> sortedLocations = new ArrayList<String>();
-//        List<FixedTravelAllowance> fixedTAList = new ArrayList<FixedTravelAllowance>(fixedTravelAllowanceList);
-//        Collections.sort(fixedTravelAllowanceList, Collections.reverseOrder());
-//        Map<String, List<FixedTravelAllowance>> fixedTAGroups = new HashMap<String, List<FixedTravelAllowance>>();
-//        List<Object> locationAndTAList = new ArrayList<Object>();
-//
-//        for (FixedTravelAllowance allowance : fixedTAList) {
-//            List<FixedTravelAllowance> taList;
-//            if (fixedTAGroups.containsKey(allowance.getLocationName())) {
-//                taList = fixedTAGroups.get(allowance.getLocationName());
-//                taList.add(allowance);
-//            } else {
-//                taList = new ArrayList<FixedTravelAllowance>();
-//                taList.add(allowance);
-//                fixedTAGroups.put(allowance.getLocationName(), taList);
-//                sortedLocations.add(allowance.getLocationName());
-//            }
-//        }
-//
-//        if (fixedTAGroups.keySet().size() > 1) {
-//            this.hasMultipleGroups = true;
-//            for(String key: sortedLocations) {
-//                locationAndTAList.add(key);
-//                for (FixedTravelAllowance value: fixedTAGroups.get(key)) {
-//                    locationAndTAList.add(value);
-//                }
-//            }
-//        } else {
-//            this.hasMultipleGroups = false;
-//            locationAndTAList.addAll(fixedTAList);
-//        }
-//
-//        addAll(locationAndTAList);
-//        Log.d(Const.LOG_TAG, CLS_TAG + ".initializeGroups: Header and TA list size " + locationAndTAList.size());
-//    }
 
     /**
      * {@inheritDoc}
@@ -188,20 +148,21 @@ public class FixedTravelAllowanceListAdapter extends ArrayAdapter<Object> {
         if (getItemViewType(i) == HEADER_ROW ) {
             currentAllowance = null;
             String locationName = (String) getItem(i);
-            boolean isFirstHeader = false;
-            if (i == 0){
-                isFirstHeader = true;
-            }
-            renderHeaderRow(holder, locationName, isFirstHeader);
+            renderHeaderRow(locationName);
         }
 
         if (getItemViewType(i) == ENTRY_ROW ) {
             currentAllowance = (FixedTravelAllowance) getItem(i);
-            boolean withRowDevider = false;
-            if (i + 1 < getCount() && getItemViewType(i+1) == ENTRY_ROW) {
-                withRowDevider = true;
+            boolean withBottomDivider = false;
+            if (i + 1 < getCount() && getItemViewType(i + 1) == HEADER_ROW) {
+                withBottomDivider = true;
             }
-            renderEntryRow(holder, currentAllowance, withRowDevider);
+            boolean withTopDivider = false;
+            if (i != 0) {
+                withTopDivider = true;
+            }
+
+            renderEntryRow(currentAllowance, withTopDivider, withBottomDivider);
         }
 
         return resultView;
@@ -252,18 +213,18 @@ public class FixedTravelAllowanceListAdapter extends ArrayAdapter<Object> {
 
     /**
      * Renders the header row containing the textual representation of a location
-     * @param holder the view holder
      * @param location the location to be rendered
      */
-    private void renderHeaderRow(ViewHolder holder, String location, boolean isFirstHeader) {
+    private void renderHeaderRow(String location) {
+
         if (holder.vDividerTop != null) {
-            if (!isFirstHeader) {
-                holder.vDividerTop.setVisibility(View.VISIBLE);
-            }
-            else {
-                holder.vDividerTop.setVisibility(View.GONE);
-            }
+            holder.vDividerTop.setVisibility(View.GONE);
         }
+
+        if (holder.vDividerBottom != null) {
+            holder.vDividerBottom.setVisibility(View.GONE);
+        }
+
         if (holder.tvTitle != null) {
             holder.tvTitle.setText(location);
             holder.tvTitle.setTextAppearance(this.context, R.style.DefaultSoloTitle);
@@ -277,28 +238,25 @@ public class FixedTravelAllowanceListAdapter extends ArrayAdapter<Object> {
         if (holder.tvSubtitle2 != null) {
             holder.tvSubtitle2.setVisibility(View.GONE);
         }
-        if (holder.vDividerBottom != null) {
-            holder.vDividerBottom.setVisibility(View.VISIBLE);
-        }
+
     }
 
     /**
      * Renders the fixed travel allowance in an entry row
-     * @param holder the view holder
      * @param allowance the allowance to be rendered
      */
-    private void renderEntryRow(ViewHolder holder, FixedTravelAllowance allowance, boolean withRowDevider) {
+    private void renderEntryRow(FixedTravelAllowance allowance, boolean withTopDivider, boolean withBottomDivider) {
 
         if (holder.vDividerTop != null) {
-            if (allowanceController.hasMultipleGroups()) {
-                holder.vDividerTop.setVisibility(View.GONE);
-            } else {
+            if (withTopDivider) {
                 holder.vDividerTop.setVisibility(View.VISIBLE);
+            } else {
+                holder.vDividerTop.setVisibility(View.GONE);
             }
         }
 
         if (holder.vDividerBottom != null) {
-            if (withRowDevider) {
+            if (withBottomDivider) {
                 holder.vDividerBottom.setVisibility(View.VISIBLE);
             } else {
                 holder.vDividerBottom.setVisibility(View.GONE);
@@ -327,36 +285,34 @@ public class FixedTravelAllowanceListAdapter extends ArrayAdapter<Object> {
                 holder.tvValue.setText(this.context.getString(R.string.itin_excluded));
             }
         } else {
-            renderSubtitle(holder, allowance);
+            renderSubtitle(allowance);
             renderAmount(holder.tvValue, allowance.getAmount(), allowance.getCurrencyCode());
         }
     }
 
-    private void renderSubtitle(final ViewHolder holder, final FixedTravelAllowance allowance) {
+    /**
+     * Renders the subtitle of the given fixed travel allowance. Note: The visibility of the
+     * more view is handled by the layout listener. This is necessary as we first need to
+     * render the layout in order to retrieve the measure information.
+     * @param allowance The travel allowance to derive the subtitle information from
+     */
+    private void renderSubtitle(final FixedTravelAllowance allowance) {
         if (holder.vgSubtitleEllipsized == null || holder.tvSubtitleEllipsized == null
                 || holder.tvSubtitleMore == null) {
             return;
         }
-        String provisionText = allowanceController.mealsProvisionToText(allowance, context, 1);
-        TextPaint paint = holder.tvSubtitleEllipsized.getPaint();
-        float textWidth = paint.measureText(provisionText);
-
+        String provisionText = allowanceController.mealsProvisionToText(allowance, 1);
         holder.tvSubtitleEllipsized.setText(provisionText);
         holder.vgSubtitleEllipsized.setVisibility(View.VISIBLE);
         holder.tvSubtitleMore.setVisibility(View.INVISIBLE);
-
-//        int textViewSize = holder.tvSubtitleEllipsized.getRight() - holder.tvSubtitleEllipsized.getLeft()
-//                - holder.tvSubtitleEllipsized.getPaddingLeft() - holder.tvSubtitleEllipsized.getPaddingRight();
-//
-//        if (textViewSize - textWidth < 0) {
-//            holder.tvSubtitleMore.setVisibility(View.VISIBLE);
-//        } else {
-//            if (allowanceController.mealsProvisionToText(allowance, context, 3).length() >
-//                    provisionText.length()) {
-//                holder.tvSubtitleMore.setVisibility(View.VISIBLE);
-//            }
-//        }
     }
+
+    /**
+     * Renders the given amount currency pair into the given text view
+     * @param tvAmount The text view
+     * @param amount The amount to be rendered
+     * @param crnCode the currency code to be rendered
+     */
 
     private void renderAmount(TextView tvAmount, Double amount, String crnCode) {
 

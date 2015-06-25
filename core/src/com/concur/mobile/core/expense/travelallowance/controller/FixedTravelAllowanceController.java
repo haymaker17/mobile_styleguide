@@ -20,10 +20,23 @@ import java.util.Map;
  */
 public class FixedTravelAllowanceController {
 
+    private static final String CLASS_TAG = FixedTravelAllowanceController.class.getSimpleName();
+
+    /**
+     * The list of registered listeners being notified from this controller as soon as data
+     * requests have been answered.
+     */
+    private List<IServiceRequestListener> listeners;
+
     /**
      * Use mocked data
      */
     private boolean useMockData = true;
+
+    /**
+     * The context needed in order to access resources
+     */
+    private Context context;
 
     /**
      * The list of travel allowances this controller is dealing with
@@ -38,9 +51,11 @@ public class FixedTravelAllowanceController {
     /**
      * Creates an instance and initializes the object
      */
-    public FixedTravelAllowanceController() {
-        fixedTravelAllowances = new ArrayList<FixedTravelAllowance>();
-        isDataAvailable = false;
+    public FixedTravelAllowanceController(Context context) {
+        this.fixedTravelAllowances = new ArrayList<FixedTravelAllowance>();
+        this.isDataAvailable = false;
+        this.context = context;
+        this.listeners = new ArrayList<IServiceRequestListener>();
     }
 
     /**
@@ -126,14 +141,13 @@ public class FixedTravelAllowanceController {
      * With parameter maxGroups the maximum number of groups can be specified.
      *
      * @param allowance The allowance holding the data
-     * @param context   The activity context in order to retrieve the language dependent resources
      * @param maxGroups The maximum level of string concatenation. Supports values greater 0.
      * @return The textual representation of the meal provisions. Empty String, if
      * there is nothing.
      */
-    public String mealsProvisionToText(FixedTravelAllowance allowance, Context context, int maxGroups) {
+    public String mealsProvisionToText(FixedTravelAllowance allowance, int maxGroups) {
 
-        if (context == null) {
+        if (this.context == null) {
             return StringUtilities.EMPTY_STRING;
         }
 

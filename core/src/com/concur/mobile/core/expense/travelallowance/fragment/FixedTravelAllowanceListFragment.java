@@ -148,7 +148,7 @@ public class FixedTravelAllowanceListFragment extends ListFragment {
         TextView tvValue = (TextView) getActivity().findViewById(R.id.tv_value);
         TextView tvSubtitle1 = (TextView) getActivity().findViewById(R.id.tv_subtitle_1);
         TextView tvSubtitle2 = (TextView) getActivity().findViewById(R.id.tv_subtitle_2);
-        View vDividerBottom  =  getActivity().findViewById(R.id.v_divider_bottom_bold);
+        View vDividerBottom  =  getActivity().findViewById(R.id.v_divider_bottom);
 
         vDividerBottom.setVisibility(View.VISIBLE);
 

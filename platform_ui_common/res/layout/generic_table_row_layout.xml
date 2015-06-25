@@ -5,7 +5,7 @@
 
     <View
         android:id="@+id/v_divider_top"
-        style="@style/GroupDivider"
+        style="@style/ListRowDivider"
         android:layout_width="wrap_content"
         android:visibility="gone"/>
 
@@ -83,18 +83,12 @@
 
     </RelativeLayout>
 
-    <View
+    <include
+        android:layout_width="wrap_content"
         android:id="@+id/v_divider_bottom"
-        style="@style/ListRowDivider"
-        android:layout_width="wrap_content"
-        android:layout_below="@+id/list_field_container"
-        android:visibility="gone"/>
-
-    <View
-        android:id="@+id/v_divider_bottom_bold"
-        style="@style/GroupDivider"
-        android:layout_width="wrap_content"
-        android:layout_below="@+id/list_field_container"
-        android:visibility="gone"/>
+        android:layout_height="wrap_content"
+        layout="@layout/generic_divider_bold"
+        android:visibility="gone"
+        android:layout_below="@+id/list_field_container" />
 
 </RelativeLayout>
