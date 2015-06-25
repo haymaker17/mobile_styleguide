@@ -73,6 +73,16 @@ public class FixedTravelAllowance implements Serializable, Comparable<FixedTrave
     private MealProvision dinnerProvision;
 
     /**
+     * Indicates, whether overnight stay can be reimbursed or not
+     */
+    private boolean overnightIndicator;
+
+    /**
+     * Denotes the lodging type
+     */
+    private LodgingType lodgingType;
+
+    /**
      * Creates an instance of a FixedTravelAllowance
      *
      * @param fixedTravelAllowanceId The identifier of this FixedTravelAllowance
@@ -244,6 +254,42 @@ public class FixedTravelAllowance implements Serializable, Comparable<FixedTrave
     }
 
     /**
+     * Getter method
+     *
+     * @return the overnight indicator
+     */
+    public boolean getOvernightIndicator() {
+        return overnightIndicator;
+    }
+
+    /**
+     * Setter method sets the overnight indicator
+     *
+     * @param overnightIndicator
+     */
+    public void setOvernightIndicator(boolean overnightIndicator) {
+        this.overnightIndicator = overnightIndicator;
+    }
+
+    /**
+     * Getter method
+     *
+     * @return the lodging type
+     */
+    public LodgingType getLodgingType() {
+        return lodgingType;
+    }
+
+    /**
+     * Setter method sets the lodging type
+     *
+     * @param lodgingType
+     */
+    public void setLodgingType(LodgingType lodgingType) {
+        this.lodgingType = lodgingType;
+    }
+
+    /**
      * {@inheritDoc}
      */
     @Override
@@ -254,6 +300,7 @@ public class FixedTravelAllowance implements Serializable, Comparable<FixedTrave
         FixedTravelAllowance that = (FixedTravelAllowance) o;
 
         if (excludedIndicator != that.excludedIndicator) return false;
+        if (overnightIndicator != that.overnightIndicator) return false;
         if (fixedTravelAllowanceId != null ? !fixedTravelAllowanceId.equals(that.fixedTravelAllowanceId) : that.fixedTravelAllowanceId != null)
             return false;
         if (date != null ? !date.equals(that.date) : that.date != null) return false;
@@ -266,7 +313,9 @@ public class FixedTravelAllowance implements Serializable, Comparable<FixedTrave
             return false;
         if (lunchProvision != null ? !lunchProvision.equals(that.lunchProvision) : that.lunchProvision != null)
             return false;
-        return !(dinnerProvision != null ? !dinnerProvision.equals(that.dinnerProvision) : that.dinnerProvision != null);
+        if (dinnerProvision != null ? !dinnerProvision.equals(that.dinnerProvision) : that.dinnerProvision != null)
+            return false;
+        return !(lodgingType != null ? !lodgingType.equals(that.lodgingType) : that.lodgingType != null);
 
     }
 
@@ -284,6 +333,8 @@ public class FixedTravelAllowance implements Serializable, Comparable<FixedTrave
         result = 31 * result + (breakfastProvision != null ? breakfastProvision.hashCode() : 0);
         result = 31 * result + (lunchProvision != null ? lunchProvision.hashCode() : 0);
         result = 31 * result + (dinnerProvision != null ? dinnerProvision.hashCode() : 0);
+        result = 31 * result + (overnightIndicator ? 1 : 0);
+        result = 31 * result + (lodgingType != null ? lodgingType.hashCode() : 0);
         return result;
     }
 

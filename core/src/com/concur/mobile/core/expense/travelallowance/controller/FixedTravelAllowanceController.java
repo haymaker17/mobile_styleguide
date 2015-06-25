@@ -61,8 +61,7 @@ public class FixedTravelAllowanceController {
 
         List<String> sortedLocations = new ArrayList<String>();
         List<FixedTravelAllowance> fixedTAList = new ArrayList<FixedTravelAllowance>(this.fixedTravelAllowances);
-        //TODO: Remove reverse sorting order
-        Collections.sort(fixedTAList, Collections.reverseOrder()); //Temporary for testing: reverse
+        Collections.sort(fixedTAList);
         Map<String, List<FixedTravelAllowance>> fixedTAGroups = new HashMap<String, List<FixedTravelAllowance>>();
         List<Object> locationAndTAList = new ArrayList<Object>();
 

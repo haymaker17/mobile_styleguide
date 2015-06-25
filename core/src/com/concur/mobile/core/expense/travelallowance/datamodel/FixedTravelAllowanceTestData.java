@@ -11,7 +11,7 @@ import java.util.List;
 /**
  * Test data representing an expense report
  *
- * NTauthor Michael Becherer
+ * @author Michael Becherer
  */
 public class FixedTravelAllowanceTestData {
 
@@ -23,9 +23,11 @@ public class FixedTravelAllowanceTestData {
         MealProvision notProvided = new MealProvision("NPR", "@Not Provided@");
         MealProvision provided =  new MealProvision("PRO", "@Provided@");
         MealProvision business = new MealProvision("BSE", "@Business Meal@");
+        LodgingType hotel = new LodgingType("HOTEL", "@Hotel@");
+        LodgingType motel = new LodgingType("MOTEL", "@Motel@");
         Calendar cal = Calendar.getInstance();
         
-        for (int i = 1; i <= 13; i++){
+        for (int i = 1; i <= 15; i++){
             FixedTravelAllowance allowance = new FixedTravelAllowance("FTA" + i);
             cal.set(2015, 5, i);
             allowance.setDate(new Date(cal.getTimeInMillis()));
@@ -70,6 +72,13 @@ public class FixedTravelAllowanceTestData {
         allowances.get(12).setLunchProvision(provided);
         allowances.get(12).setDinnerProvision(business);
         allowances.get(12).setLocationName("@Seattle, WA@");
+
+        allowances.get(13).setOvernightIndicator(true);
+        allowances.get(13).setLodgingType(hotel);
+        allowances.get(13).setLocationName("@New York@");
+        allowances.get(14).setOvernightIndicator(true);
+        allowances.get(14).setLodgingType(motel);
+        allowances.get(14).setLocationName("@New York@");
 
     }
 
