@@ -978,7 +978,7 @@ public class ConfigUtil {
      */
     private static int deleteSessionConfigInfo(ContentResolver resolver) {
 
-        String whereClause = Config.SessionColumns.SESSION_ID + " != ?";
+        String whereClause = Config.SessionColumns.SESSION_ID + " != ? OR " + Config.SessionColumns.SESSION_ID + " IS NULL";
         String[] whereArgs = { EXPENSE_IT_SESSION_ID };
 
         // Punt all concur session information.
