@@ -2,17 +2,168 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:orientation="vertical"
-    android:background="@color/ListStripeWhite" >
+    android:background="@color/ListStripeWhite"
+    android:orientation="vertical">
 
     <include
+        android:id="@+id/vg_details_header"
+        layout="@layout/generic_table_row_layout"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        layout="@layout/generic_table_row_layout"
         android:layout_alignParentLeft="true"
-        android:layout_marginLeft="0dp"
         android:layout_alignParentTop="true"
-        android:layout_marginTop="0dp"
-        android:id="@+id/ta_details_header" />
+        android:layout_marginLeft="0dp"
+        android:layout_marginTop="0dp" />
+
+    <LinearLayout
+        android:id="@+id/vg_breakfast"
+        style="@style/DefaultRow"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
+
+        <TextView
+            android:id="@+id/tv_breakfast_label"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentLeft="true"
+            android:text="@string/itin_breakfast"
+            android:textAppearance="@style/DefaultSubTitle" />
+
+        <TextView
+            android:id="@+id/tv_breakfast_provision"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentLeft="true"
+            android:layout_alignParentStart="true"
+            android:text="Large Text"
+            android:textAppearance="@style/DefaultTitle" />
+    </LinearLayout>
+
+    <View
+        android:id="@+id/v_divider_breakfast"
+        style="@style/ListRowDivider"
+        android:layout_width="wrap_content" />
+
+    <LinearLayout
+        android:id="@+id/vg_lunch"
+        style="@style/DefaultRow"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
+
+        <TextView
+            android:id="@+id/tv_lunch_label"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentLeft="true"
+            android:text="@string/itin_lunch"
+            android:textAppearance="@style/DefaultSubTitle" />
+
+        <TextView
+            android:id="@+id/tv_lunch_provision"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentLeft="true"
+            android:layout_alignParentStart="true"
+            android:text="Large Text"
+            android:textAppearance="@style/DefaultTitle" />
+    </LinearLayout>
+
+    <View
+        android:id="@+id/v_divider_lunch"
+        style="@style/ListRowDivider"
+        android:layout_width="wrap_content" />
+
+    <LinearLayout
+        android:id="@+id/vg_dinner"
+        style="@style/DefaultRow"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
+
+        <TextView
+            android:id="@+id/tv_dinner_label"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentLeft="true"
+            android:text="@string/itin_lunch"
+            android:textAppearance="@style/DefaultSubTitle" />
+
+        <TextView
+            android:id="@+id/tv_dinner_provision"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentLeft="true"
+            android:layout_alignParentStart="true"
+            android:text="Large Text"
+            android:textAppearance="@style/DefaultTitle" />
+    </LinearLayout>
+
+    <View
+        android:id="@+id/v_divider_dinner"
+        style="@style/ListRowDivider"
+        android:layout_width="wrap_content" />
+
+    <LinearLayout
+        android:id="@+id/vg_lodging"
+        style="@style/DefaultRow"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:visibility="gone"
+        android:orientation="vertical">
+
+        <TextView
+            android:id="@+id/tv_lodging_label"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentLeft="true"
+            android:text="@string/itin_lodging"
+            android:textAppearance="@style/DefaultSubTitle" />
+
+        <TextView
+            android:id="@+id/tv_lodging_value"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentLeft="true"
+            android:layout_alignParentStart="true"
+            android:text="Large Text"
+            android:textAppearance="@style/DefaultTitle" />
+    </LinearLayout>
+
+    <RelativeLayout
+        android:id="@+id/vg_overnight"
+        style="@style/DefaultRow"
+        android:visibility="gone"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content" >
+
+        <TextView
+            android:id="@+id/tv_overnight_label"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentLeft="true"
+            android:text="@string/itin_overnight"
+            android:textAppearance="@style/DefaultSubTitle" />
+
+        <TextView
+            android:id="@+id/tv_overnight_help"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentLeft="true"
+            android:layout_alignParentStart="true"
+            android:layout_below="@+id/tv_overnight_label"
+            android:text="\@Hilfetext\@"
+            android:textAppearance="@style/DefaultTitle" />
+
+        <Switch
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/sw_overnight"
+            android:layout_alignTop="@+id/tv_overnight_label"
+            android:layout_alignParentRight="true"
+            android:enabled="false"
+            android:layout_alignParentEnd="true" />
+    </RelativeLayout>
 
 </LinearLayout>

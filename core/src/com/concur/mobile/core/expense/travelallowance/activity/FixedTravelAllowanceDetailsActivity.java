@@ -4,6 +4,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
+import android.widget.Switch;
 import android.widget.TextView;
 
 import com.concur.core.R;
@@ -49,6 +50,76 @@ public class FixedTravelAllowanceDetailsActivity extends BaseActivity {
         }
         this.dateFormatter = new DefaultDateFormat(this);
         renderHeader(allowance);
+        renderBreakfast(allowance);
+        renderLunch(allowance);
+        renderDinner(allowance);
+        renderLodging(allowance);
+        renderOvernight(allowance);
+    }
+
+    private void renderBreakfast(FixedTravelAllowance allowance){
+        if (allowance == null) {
+            return;
+        }
+        TextView tvProvision = (TextView) this.findViewById(R.id.tv_breakfast_provision);
+        if (tvProvision != null) {
+            tvProvision.setText(allowance.getBreakfastProvision().toString());
+        }
+    }
+    private void renderLunch(FixedTravelAllowance allowance) {
+        if (allowance == null) {
+            return;
+        }
+        TextView tvProvision = (TextView) this.findViewById(R.id.tv_lunch_provision);
+        if (tvProvision != null) {
+            tvProvision.setText(allowance.getLunchProvision().toString());
+        }
+    }
+
+    private void renderDinner(FixedTravelAllowance allowance) {
+        if (allowance == null) {
+            return;
+        }
+        TextView tvProvision = (TextView) this.findViewById(R.id.tv_dinner_provision);
+        if (tvProvision != null) {
+            tvProvision.setText(allowance.getDinnerProvision().toString());
+        }
+    }
+
+    private void renderLodging(FixedTravelAllowance allowance) {
+        if (allowance == null) {
+            return;
+        }
+        if (allowance.getLodgingType() == null || allowance.getOvernightIndicator()) {
+            return;
+        }
+        View vgLodging = this.findViewById(R.id.vg_lodging);
+        if (vgLodging == null) {
+            return;
+        }
+        vgLodging.setVisibility(View.VISIBLE);
+        TextView tvValue = (TextView) this.findViewById(R.id.tv_lodging_value);
+        if (tvValue != null) {
+            tvValue.setText(allowance.getLodgingType().toString());
+        }
+    }
+
+    private void renderOvernight(FixedTravelAllowance allowance) {
+        if (allowance == null) {
+            return;
+        }
+        if (!allowance.getOvernightIndicator()) {
+            return;
+        }
+        View vgOvernight = this.findViewById(R.id.vg_overnight);
+        if (vgOvernight == null) {
+            return;
+        }
+        vgOvernight.setVisibility(View.VISIBLE);
+        Switch swOvernight = (Switch) this.findViewById(R.id.sw_overnight);
+        if (swOvernight != null) {
+            swOvernight.setChecked(true);
+        }
     }
 
     /**
