@@ -325,6 +325,9 @@ public final class Const {
     // Show Jarvis Hotel UI
     public static final String SHOW_JARVIS_HOTEL_UI = "ShowHotelJarvisUIOnAndroid";
 
+    // User is loggedIn to ExpenseIt
+    public static final String PREF_USER_LOGGED_IN_EXPENSE_IT = "pref_user_logged_in_expense_it";
+
     // The default ip/port for the MWS.
     public static final String BREEZE_WEB_ADDRESS = "https://www.concurbreeze.com/login";
     // public static final String DEFAULT_MWS_ADDRESS = "www.concursolutions.com";

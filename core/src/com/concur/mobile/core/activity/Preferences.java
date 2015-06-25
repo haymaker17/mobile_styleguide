@@ -1541,4 +1541,16 @@ public class Preferences extends PreferenceActivity implements OnSharedPreferenc
         e.commit();
     }
 	*/
+
+    public static void setUserLoggedOnToExpenseIt(boolean isLoggedIn) {
+        SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(ConcurCore.getContext());
+        Editor e = prefs.edit();
+        e.putBoolean(Const.PREF_USER_LOGGED_IN_EXPENSE_IT, isLoggedIn);
+        e.commit();
+    }
+
+    public static boolean isUserLoggedInExpenseIt() {
+        SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(ConcurCore.getContext());
+        return prefs.getBoolean(Const.PREF_USER_LOGGED_IN_EXPENSE_IT, false);
+    }
 }

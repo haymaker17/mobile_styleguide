@@ -20,6 +20,8 @@ import android.location.Location;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 import android.os.Build;
+import android.os.Bundle;
+import android.os.Handler;
 import android.os.IBinder;
 import android.preference.PreferenceManager;
 import android.provider.Settings;
@@ -27,6 +29,7 @@ import android.support.multidex.MultiDexApplication;
 import android.text.TextUtils;
 import android.text.format.Time;
 import android.util.Log;
+import android.util.Pair;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.TableLayout;
@@ -34,6 +37,8 @@ import android.widget.TableRow;
 import android.widget.TextView;
 
 import com.concur.core.R;
+import com.concur.mobile.base.service.BaseAsyncRequestTask;
+import com.concur.mobile.base.service.BaseAsyncResultReceiver;
 import com.concur.mobile.base.util.Format;
 import com.concur.mobile.core.activity.Preferences;
 import com.concur.mobile.core.data.MobileDatabase;
@@ -91,6 +96,7 @@ import com.concur.mobile.core.util.net.SessionManager;
 import com.concur.mobile.core.widget.MultiViewDialog;
 import com.concur.mobile.platform.authentication.LoginResult;
 import com.concur.mobile.platform.authentication.SessionInfo;
+import com.concur.mobile.platform.authentication.ValidateExpenseItAsyncTask;
 import com.concur.mobile.platform.base.VisibleActivityStateTracker;
 import com.concur.mobile.platform.common.Cache;
 import com.concur.mobile.platform.common.formfield.ConnectForm;
@@ -107,6 +113,7 @@ import com.concur.mobile.platform.service.MWSPlatformManager;
 import com.concur.mobile.platform.service.parser.MWSResponseStatus;
 import com.concur.mobile.platform.ui.common.util.PreferenceUtil;
 import com.concur.mobile.platform.util.Parse;
+import com.concur.platform.ExpenseItProperties;
 import com.concur.platform.PlatformProperties;
 
 import java.util.ArrayList;
@@ -371,6 +378,10 @@ public abstract class ConcurCore extends MultiDexApplication {
      * Contains a reference to the travel request group configuration cache.
      */
     protected Cache<String, RequestGroupConfiguration> requestGroupConfigurationCache = new RequestGroupConfigurationCache();
+
+    BaseAsyncResultReceiver validateReceiver;
+
+    ValidateExpenseItAsyncTask validateExpenseItAsyncTask;
 
     /**
      * Local instance to handle service connection events and keep our service reference up-to-date
@@ -762,6 +773,7 @@ public abstract class ConcurCore extends MultiDexApplication {
         // Set the itinerary cache.
         itinCache = new ItineraryCache(this);
         initPlatformProperties();
+        initExpenseItProperties();
 
     }
 
@@ -808,6 +820,66 @@ public abstract class ConcurCore extends MultiDexApplication {
             if (!mwsPlatMngr.isSessionExpired(sessionInfo)) {
                 PlatformProperties.setSessionId(sessionInfo.getSessionId());
             }
+        }
+    }
+
+    /**
+     * Initialize the ExpenseIt properties used to authenticate ExpenseIt services
+     */
+    private void initExpenseItProperties() {
+
+        //get Concur server address to match it with ExpenseIt
+        String serverAddress = Preferences.getServerAddress();
+
+        Pair<String, String> expenseItServerAddress = ExpenseItServerUtil.getMatchingConcurExpenseItServer(serverAddress);
+
+        ExpenseItProperties.setServerAddress(expenseItServerAddress.first);
+
+        // set user agent
+        ExpenseItProperties.setUserAgent(Const.HTTP_HEADER_USER_AGENT_VALUE);
+
+        // set consumer Key
+        ExpenseItProperties.setConsumerKey(ExpenseItServerUtil.ConsumerKey);
+
+        ExpenseItProperties.setAppId(ExpenseItServerUtil.getAppId(appContext));
+
+        // Validate ExpenseIt provisioned when we already have an OAuth token in session
+        final SessionInfo expenseItSessionInfo = ConfigUtil.getExpenseItSessionInfo(getApplicationContext());
+        if (expenseItSessionInfo != null && !TextUtils.isEmpty(expenseItSessionInfo.getAccessToken())) {
+            validateReceiver = new BaseAsyncResultReceiver(new Handler());
+            validateReceiver.setListener(new BaseAsyncRequestTask.AsyncReplyListener() {
+                @Override
+                public void onRequestSuccess(Bundle resultData) {
+                    Log.d(Const.LOG_TAG, CLS_TAG + ".ValidateExpenseItAsyncTask.onRequestSuccess is called");
+                    if (resultData.getBoolean(ValidateExpenseItAsyncTask.RESULT_IS_PROVISIONED)) {
+                        ExpenseItProperties.setAccessToken(expenseItSessionInfo.getAccessToken());
+                        Preferences.setUserLoggedOnToExpenseIt(true);
+                    } else {
+                        ExpenseItProperties.setAccessToken(null);
+                        Preferences.setUserLoggedOnToExpenseIt(false);
+                    }
+                }
+
+                @Override
+                public void onRequestFail(Bundle resultData) {
+                    Log.d(Const.LOG_TAG, CLS_TAG + ".ValidateExpenseItAsyncTask.onRequestFail is called");
+                    ExpenseItProperties.setAccessToken(null);
+                    Preferences.setUserLoggedOnToExpenseIt(false);
+                }
+
+                @Override
+                public void onRequestCancel(Bundle resultData) {
+                    Log.d(Const.LOG_TAG, CLS_TAG + ".ValidateExpenseItAsyncTask.onRequestCancel is called");
+                }
+
+                @Override
+                public void cleanup() {
+                }
+            });
+            ExpenseItProperties.setAccessToken(expenseItSessionInfo.getAccessToken());
+            validateExpenseItAsyncTask = new ValidateExpenseItAsyncTask(getApplicationContext(),
+                0, validateReceiver);
+            validateExpenseItAsyncTask.execute();
         }
     }
 
