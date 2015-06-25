@@ -135,6 +135,7 @@ import com.concur.mobile.platform.config.provider.ConfigUtil;
 import com.concur.mobile.platform.location.LastLocationTracker;
 import com.concur.mobile.platform.ui.common.dialog.NoConnectivityDialogFragment;
 import com.concur.mobile.platform.ui.common.util.ImageUtil;
+import com.concur.platform.ExpenseItProperties;
 import com.concur.platform.PlatformProperties;
 
 import org.apache.http.HttpStatus;
@@ -1451,6 +1452,13 @@ public class Home extends BaseActivity implements View.OnClickListener, Navigati
         // removes
         // some of the expiration flags used at Startup.java.
         Preferences.clearSession(prefs);
+
+        //Clear ExpenseIt Login Info
+        ExpenseItProperties.setAccessToken(null);
+        Preferences.setUserLoggedOnToExpenseIt(false);
+
+        // Update the config content provider.
+        ConfigUtil.removeExpenseItLoginInfo(this);
 
         // Go back to the EmailLookup screen.
         Intent i = new Intent(this, EmailLookupActivity.class);

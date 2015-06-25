@@ -20,7 +20,6 @@ import android.location.Location;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 import android.os.Build;
-import android.os.Bundle;
 import android.os.Handler;
 import android.os.IBinder;
 import android.preference.PreferenceManager;
@@ -37,7 +36,6 @@ import android.widget.TableRow;
 import android.widget.TextView;
 
 import com.concur.core.R;
-import com.concur.mobile.base.service.BaseAsyncRequestTask;
 import com.concur.mobile.base.service.BaseAsyncResultReceiver;
 import com.concur.mobile.base.util.Format;
 import com.concur.mobile.core.activity.Preferences;
@@ -92,6 +90,7 @@ import com.concur.mobile.core.util.EventTracker;
 import com.concur.mobile.core.util.FeedbackManager;
 import com.concur.mobile.core.util.FormatUtil;
 import com.concur.mobile.core.util.ViewUtil;
+import com.concur.mobile.core.util.net.ProvisionExpenseItListener;
 import com.concur.mobile.core.util.net.SessionManager;
 import com.concur.mobile.core.widget.MultiViewDialog;
 import com.concur.mobile.platform.authentication.LoginResult;
@@ -844,38 +843,10 @@ public abstract class ConcurCore extends MultiDexApplication {
         ExpenseItProperties.setAppId(ExpenseItServerUtil.getAppId(appContext));
 
         // Validate ExpenseIt provisioned when we already have an OAuth token in session
-        final SessionInfo expenseItSessionInfo = ConfigUtil.getExpenseItSessionInfo(getApplicationContext());
+        SessionInfo expenseItSessionInfo = ConfigUtil.getExpenseItSessionInfo(getApplicationContext());
         if (expenseItSessionInfo != null && !TextUtils.isEmpty(expenseItSessionInfo.getAccessToken())) {
             validateReceiver = new BaseAsyncResultReceiver(new Handler());
-            validateReceiver.setListener(new BaseAsyncRequestTask.AsyncReplyListener() {
-                @Override
-                public void onRequestSuccess(Bundle resultData) {
-                    Log.d(Const.LOG_TAG, CLS_TAG + ".ValidateExpenseItAsyncTask.onRequestSuccess is called");
-                    if (resultData.getBoolean(ValidateExpenseItAsyncTask.RESULT_IS_PROVISIONED)) {
-                        ExpenseItProperties.setAccessToken(expenseItSessionInfo.getAccessToken());
-                        Preferences.setUserLoggedOnToExpenseIt(true);
-                    } else {
-                        ExpenseItProperties.setAccessToken(null);
-                        Preferences.setUserLoggedOnToExpenseIt(false);
-                    }
-                }
-
-                @Override
-                public void onRequestFail(Bundle resultData) {
-                    Log.d(Const.LOG_TAG, CLS_TAG + ".ValidateExpenseItAsyncTask.onRequestFail is called");
-                    ExpenseItProperties.setAccessToken(null);
-                    Preferences.setUserLoggedOnToExpenseIt(false);
-                }
-
-                @Override
-                public void onRequestCancel(Bundle resultData) {
-                    Log.d(Const.LOG_TAG, CLS_TAG + ".ValidateExpenseItAsyncTask.onRequestCancel is called");
-                }
-
-                @Override
-                public void cleanup() {
-                }
-            });
+            validateReceiver.setListener(new ProvisionExpenseItListener(getApplicationContext()));
             ExpenseItProperties.setAccessToken(expenseItSessionInfo.getAccessToken());
             validateExpenseItAsyncTask = new ValidateExpenseItAsyncTask(getApplicationContext(),
                 0, validateReceiver);

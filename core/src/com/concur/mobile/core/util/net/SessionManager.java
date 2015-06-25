@@ -1,12 +1,7 @@
-/**
- * 
- */
+/*
+* Copyright (c) 2015 Concur Technologies, Inc.
+*/
 package com.concur.mobile.core.util.net;
-
-import java.util.HashMap;
-import java.util.Locale;
-import java.util.Map;
-import java.util.concurrent.CountDownLatch;
 
 import android.annotation.SuppressLint;
 import android.content.Context;
@@ -25,7 +20,6 @@ import com.concur.mobile.base.service.BaseAsyncRequestTask.AsyncReplyListener;
 import com.concur.mobile.base.service.BaseAsyncResultReceiver;
 import com.concur.mobile.core.ConcurCore;
 import com.concur.mobile.core.activity.Preferences;
-import com.concur.mobile.core.service.ServiceRequest;
 import com.concur.mobile.core.util.Const;
 import com.concur.mobile.core.util.EventTracker;
 import com.concur.mobile.core.util.Flurry;
@@ -33,10 +27,16 @@ import com.concur.mobile.core.util.UserAndSessionInfoUtil;
 import com.concur.mobile.platform.authentication.AutoLoginRequestTask;
 import com.concur.mobile.platform.authentication.EmailLookUpRequestTask;
 import com.concur.mobile.platform.authentication.LoginResponseKeys;
-import com.concur.mobile.platform.authentication.PPLoginLightRequestTask;
 import com.concur.mobile.platform.authentication.SessionInfo;
+import com.concur.mobile.platform.authentication.ValidateExpenseItAsyncTask;
 import com.concur.mobile.platform.config.provider.ConfigUtil;
+import com.concur.platform.ExpenseItProperties;
 import com.concur.platform.PlatformProperties;
+
+import java.util.HashMap;
+import java.util.Locale;
+import java.util.Map;
+import java.util.concurrent.CountDownLatch;
 
 /**
  * A component supporting session management actions, i.e., validating session id, etc.
@@ -90,9 +90,15 @@ public class SessionManager {
     private static SessionAutoLoginResult loginResult;
 
     private static HandlerThread handlerThread;
+
+    protected BaseAsyncResultReceiver validateReceiver;
+
+    protected ValidateExpenseItAsyncTask validateExpenseItAsyncTask;
+
     static {
         sessionManager = new SessionManager();
     }
+
 
     /**
      * Will validate the current session id by checking whether one exists or has expired. If a new session needs to be
@@ -402,6 +408,19 @@ public class SessionManager {
                 if (handlerThread != null) {
                     handlerThread.quit();
                     handlerThread = null;
+                }
+
+                //Move the expenseIt check here to allow the Latch to countDown not withholding the user from checking in
+                //All login and validation to ExpenseIt is done in the background
+                if (!isRemoteWipe) {
+                    SessionInfo expenseItSessionInfo = ConfigUtil.getExpenseItSessionInfo(context);
+                    if (expenseItSessionInfo != null && !TextUtils.isEmpty(expenseItSessionInfo.getAccessToken())) {
+                        validateReceiver = new BaseAsyncResultReceiver(new Handler());
+                        validateReceiver.setListener(new ProvisionExpenseItListener(context));
+                        ExpenseItProperties.setAccessToken(expenseItSessionInfo.getAccessToken());
+                        validateExpenseItAsyncTask = new ValidateExpenseItAsyncTask(context, 0, validateReceiver);
+                        validateExpenseItAsyncTask.execute();
+                    }
                 }
 
                 // Invoke any other listeners.
