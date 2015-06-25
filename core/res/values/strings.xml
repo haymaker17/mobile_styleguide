@@ -1980,9 +1980,8 @@
 
     <!-- Start What's new -->
     <string-array name="whats_new">
-        <item>\u2022 Improved message to first time user if they login incorrectly</item>
-        <item>\u2022 Improved Salesforce Opportunities searching</item>
-        <item>\u2022 Fix for defaulting currency based on city location</item>
+        <item>\u2022 Mobile SSO for EMEA clients fix</item>
+        <item>\u2022 Security improvements for logging in</item>
     </string-array>
     <!-- End What's new -->
 
