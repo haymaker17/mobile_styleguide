@@ -95,7 +95,7 @@ public class DefaultDateFormat implements IDateFormat {
                     if (i == 2) {
                         pattern.append(" ");
                     }
-                    pattern.append("MMMM");
+                    pattern.append("MMM");
                     break;
                 case 'y':
                     if (includeYear) {

@@ -1554,7 +1554,7 @@ public class ExpenseEntries extends AbstractExpenseActivity {
                     //Intent intent = new Intent(ExpenseEntries.this, TAItineraryActivity.class);
                     Intent intent = new Intent(ExpenseEntries.this, TravelAllowanceActivity.class);
                     intent.putExtra(Const.EXTRA_EXPENSE_REPORT_KEY, expRep.reportKey);
-                    intent.putExtra(Const.EXTRA_EXPENSE_REPORT_NAME, expRep.reportName);
+                    //intent.putExtra(Const.EXTRA_EXPENSE_REPORT_NAME, expRep.reportName);
                     startActivityForResult(intent, REQUEST_VIEW_TA_ITINERARY);
                 }
             });

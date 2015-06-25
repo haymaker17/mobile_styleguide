@@ -12,6 +12,7 @@ import android.widget.ListView;
 import android.widget.TextView;
 
 import com.concur.core.R;
+import com.concur.mobile.core.expense.travelallowance.controller.FixedTravelAllowanceController;
 import com.concur.mobile.core.expense.travelallowance.datamodel.FixedTravelAllowance;
 import com.concur.mobile.core.expense.travelallowance.datamodel.FixedTravelAllowanceTestData;
 import com.concur.mobile.core.expense.travelallowance.util.DateUtils;
@@ -70,14 +71,13 @@ public class FixedTravelAllowanceListFragment extends ListFragment {
 
         super.onCreate(savedInstanceState);
 
-        //TODO: Get expense report ID from instance state and read the allowances associated
-
-        //TODO: Remove mock data
-        FixedTravelAllowanceTestData mockData = new FixedTravelAllowanceTestData();
-        fixedTravelAllowances = mockData.getAllowances(false);
-
         this.context = this.getActivity();
         this.dateFormatter = new DefaultDateFormat(context);
+
+        //TODO: Get expense report ID from instance state and read the allowances associated
+        FixedTravelAllowanceController allowanceController = new FixedTravelAllowanceController(context);
+        fixedTravelAllowances = allowanceController.getFixedTravelAllowances();
+
         setListAdapter(new FixedTravelAllowanceListAdapter(this.getActivity(), fixedTravelAllowances));
     }
 

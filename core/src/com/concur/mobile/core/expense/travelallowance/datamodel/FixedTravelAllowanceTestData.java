@@ -40,44 +40,55 @@ public class FixedTravelAllowanceTestData {
             allowances.add(allowance);
         }
 
+        allowances.get(0).setLodgingType(hotel);
         allowances.get(1).setBreakfastProvision(provided);
+        allowances.get(1).setLodgingType(hotel);
         allowances.get(2).setLunchProvision(provided);
+        allowances.get(2).setLodgingType(hotel);
         allowances.get(3).setBreakfastProvision(provided);
+        allowances.get(3).setLodgingType(hotel);
         allowances.get(3).setLunchProvision(provided);
         allowances.get(4).setDinnerProvision(provided);
+        allowances.get(4).setLodgingType(hotel);
 
         allowances.get(5).setBreakfastProvision(provided);
         allowances.get(5).setDinnerProvision(provided);
+        allowances.get(5).setLodgingType(hotel);
         allowances.get(5).setLocationName("@San Francisco, CA@");
         allowances.get(6).setLunchProvision(provided);
         allowances.get(6).setDinnerProvision(provided);
+        allowances.get(6).setLodgingType(hotel);
         allowances.get(6).setLocationName("@San Francisco, CA@");
         allowances.get(7).setBreakfastProvision(provided);
         allowances.get(7).setLunchProvision(provided);
         allowances.get(7).setDinnerProvision(provided);
+        allowances.get(7).setLodgingType(hotel);
         allowances.get(7).setLocationName("@San Francisco, CA@");
 
         allowances.get(8).setExcludedIndicator(true);
+        allowances.get(8).setLodgingType(motel);
         allowances.get(8).setLocationName("@Los Angeles, CA@");
+        allowances.get(9).setLodgingType(motel);
         allowances.get(9).setBreakfastProvision(provided);
         allowances.get(9).setExcludedIndicator(true);
         allowances.get(9).setLocationName("@Los Angeles, CA@");
 
         allowances.get(10).setBreakfastProvision(provided);
         allowances.get(10).setDinnerProvision(business);
+        allowances.get(10).setLodgingType(hotel);
         allowances.get(10).setLocationName("@Seattle, WA@");
         allowances.get(11).setBreakfastProvision(business);
+        allowances.get(11).setLodgingType(motel);
         allowances.get(11).setDinnerProvision(provided);
         allowances.get(11).setLocationName("@Seattle, WA@");
         allowances.get(12).setLunchProvision(provided);
+        allowances.get(12).setLodgingType(hotel);
         allowances.get(12).setDinnerProvision(business);
         allowances.get(12).setLocationName("@Seattle, WA@");
 
         allowances.get(13).setOvernightIndicator(true);
-        allowances.get(13).setLodgingType(hotel);
         allowances.get(13).setLocationName("@New York@");
         allowances.get(14).setOvernightIndicator(true);
-        allowances.get(14).setLodgingType(motel);
         allowances.get(14).setLocationName("@New York@");
 
     }

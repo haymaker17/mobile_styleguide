@@ -117,7 +117,14 @@ public class FixedTravelAllowanceListAdapter extends ArrayAdapter<Object> {
      */
     @Override
     public boolean isEnabled(int position) {
-        return (getItemViewType(position) == ENTRY_ROW ? true : false);
+        if (getItemViewType(position) == HEADER_ROW) {
+            return false;
+        }
+        FixedTravelAllowance allowance = (FixedTravelAllowance) getItem(position);
+        if (allowance.getExcludedIndicator()) {
+            return false;
+        }
+        return true;
     }
 
     /**
@@ -247,6 +254,10 @@ public class FixedTravelAllowanceListAdapter extends ArrayAdapter<Object> {
      */
     private void renderEntryRow(FixedTravelAllowance allowance, boolean withTopDivider, boolean withBottomDivider) {
 
+        if (allowance == null) {
+            return;
+        }
+
         if (holder.vDividerTop != null) {
             if (withTopDivider) {
                 holder.vDividerTop.setVisibility(View.VISIBLE);
@@ -276,6 +287,10 @@ public class FixedTravelAllowanceListAdapter extends ArrayAdapter<Object> {
             holder.tvSubtitle2.setVisibility(View.GONE);
         }
 
+        if (holder.tvValue != null) {
+            holder.tvValue.setVisibility(View.GONE);
+        }
+
         if (allowance.getExcludedIndicator()){
             if (holder.vgSubtitleEllipsized != null) {
                 holder.vgSubtitleEllipsized.setVisibility(View.GONE);
@@ -285,8 +300,28 @@ public class FixedTravelAllowanceListAdapter extends ArrayAdapter<Object> {
                 holder.tvValue.setText(this.context.getString(R.string.itin_excluded));
             }
         } else {
-            renderSubtitle(allowance);
-            renderAmount(holder.tvValue, allowance.getAmount(), allowance.getCurrencyCode());
+            if (allowance.getOvernightIndicator()) {
+                renderOvernight(allowance);
+            } else {
+                renderSubtitleEllipsized(allowance);
+                renderAmount(holder.tvValue, allowance.getAmount(), allowance.getCurrencyCode());
+            }
+        }
+    }
+
+    /**
+     * Renders the overnight indication
+     * @param allowance The fixed travel allowance holding the information
+     */
+    private void renderOvernight(FixedTravelAllowance allowance) {
+        if (allowance == null || holder.tvSubtitle1 == null) {
+            return;
+        }
+        if (allowance.getOvernightIndicator()) {
+            holder.tvSubtitle1.setVisibility(View.VISIBLE);
+            holder.tvSubtitle1.setText(R.string.itin_overnight);
+        } else {
+            holder.tvSubtitle1.setVisibility(View.GONE);
         }
     }
 
@@ -296,7 +331,12 @@ public class FixedTravelAllowanceListAdapter extends ArrayAdapter<Object> {
      * render the layout in order to retrieve the measure information.
      * @param allowance The travel allowance to derive the subtitle information from
      */
-    private void renderSubtitle(final FixedTravelAllowance allowance) {
+    private void renderSubtitleEllipsized(final FixedTravelAllowance allowance) {
+
+        if (allowance == null) {
+            return;
+        }
+
         if (holder.vgSubtitleEllipsized == null || holder.tvSubtitleEllipsized == null
                 || holder.tvSubtitleMore == null) {
             return;

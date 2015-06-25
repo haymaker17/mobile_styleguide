@@ -59,6 +59,17 @@ public class FixedTravelAllowanceController {
     }
 
     /**
+     * Get the list of fixed travel allowances
+     * @return Fixed Travel Allowance list.
+     */
+    public List<FixedTravelAllowance> getFixedTravelAllowances() {
+        if (!isDataAvailable) {
+            getData();
+        }
+        return this.fixedTravelAllowances;
+    }
+
+    /**
      * Groups fixed travel allowances according to their natural sorting order from where a
      * list is derived, which contains two kind of objects: locations and allowances.
      * The list will be lead by the first location found in the sorted list followed by its
@@ -210,7 +221,7 @@ public class FixedTravelAllowanceController {
                 }
             }
             if (j < sortedProvisions.size()) {
-                resultString = resultString + " ";
+                resultString = resultString + "; ";
             }
         }
         return resultString;
