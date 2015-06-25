@@ -1,6 +1,7 @@
 package com.concur.mobile.core.expense.travelallowance.datamodel;
 
 import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -43,6 +44,9 @@ public class Itinerary implements Serializable{
     }
 
     public List<ItinerarySegment> getSegmentList() {
+        if (segmentList == null) {
+            segmentList = new ArrayList<ItinerarySegment>();
+        }
         return segmentList;
     }
 

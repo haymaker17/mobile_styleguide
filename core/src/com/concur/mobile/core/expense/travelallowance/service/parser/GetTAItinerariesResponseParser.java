@@ -3,7 +3,9 @@ package com.concur.mobile.core.expense.travelallowance.service.parser;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import com.concur.mobile.base.service.parser.BaseParser;
 import com.concur.mobile.core.expense.travelallowance.datamodel.Itinerary;
@@ -18,18 +20,18 @@ public class GetTAItinerariesResponseParser extends BaseParser {
 
     private List<Itinerary> itineraries;
 
-    private Itinerary itinerary;
+    private Itinerary currentItinerary;
 
-    private List<ItinerarySegment> segments;
-    private ItinerarySegment itinSegment;
-    private ItineraryLocation departureLocation;
-    private ItineraryLocation arrivalLocation;
+    private Map<String, String> currentItineraryRow;
 
+    private String currentStartTag;
 
+    SimpleDateFormat dateFormat;
 
 
     public GetTAItinerariesResponseParser() {
         this.itineraries = new ArrayList<Itinerary>();
+        this.dateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm");
     }
 
     /**
@@ -46,12 +48,12 @@ public class GetTAItinerariesResponseParser extends BaseParser {
     public void startTag(String tag) {
         super.startTag(tag);
         if (ITINERARY_TAG.equals(tag)) {
-            itinerary = new Itinerary();
+            currentStartTag = ITINERARY_TAG;
+            currentItinerary = new Itinerary();
         }
         if (ITINERARY_SEGMENT_TAG.equals(tag)) {
-            itinSegment = new ItinerarySegment();
-            departureLocation = new ItineraryLocation();
-            arrivalLocation = new ItineraryLocation();
+            currentStartTag = ITINERARY_SEGMENT_TAG;
+            currentItineraryRow = new HashMap<String, String>();
         }
     }
 
@@ -62,18 +64,10 @@ public class GetTAItinerariesResponseParser extends BaseParser {
     public void endTag(String tag) {
         super.endTag(tag);
         if (ITINERARY_TAG.equals(tag)) {
-           itinerary.setSegmentList(segments);
-           segments = null;
-            itinSegment = null;
-           itineraries.add(itinerary);
+           itineraries.add(currentItinerary);
         }
         if (ITINERARY_SEGMENT_TAG.equals(tag)) {
-            if (segments == null) {
-                segments = new ArrayList<ItinerarySegment>();
-            }
-            itinSegment.setArrivalLocation(arrivalLocation);
-            itinSegment.setDepartureLocation(departureLocation);
-            segments.add(itinSegment);
+            currentItinerary.getSegmentList().add(createItinerarySegment());
         }
     }
 
@@ -81,42 +75,56 @@ public class GetTAItinerariesResponseParser extends BaseParser {
      * {@inheritDoc}
      */
     @Override
-    public void handleText(String tag, String text) {
-        SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd HH:mm");
-        try {
-            if (itinSegment == null) {
-                if ("ItinKey".equals(tag)) {
-                    itinerary.setItineraryID(text);
-                }
-                if ("Name".equals(tag)) {
-                    itinerary.setName(text);
-                }
+	public void handleText(String tag, String text) {
 
-            } else {
-                if ("IrKey".equals(tag)) {
-                    itinSegment.setId(text);
-                }
-                if ("DepartDateTime".equals(tag)) {
-                    itinSegment.setDepartureDateTime(format.parse(text));
-                }
-                if ("ArrivalDateTime".equals(tag)) {
-                    itinSegment.setArrivalDateTime(format.parse(text));
-                }
-                if("BorderCrossDateTime".equals(tag)) {
-                    itinSegment.setBorderCrossDateTime(format.parse(text));
-                }
+        // Handle Itinerary
+        if (ITINERARY_TAG.equals(currentStartTag)) {
+			if ("ItinKey".equals(tag)) {
+				currentItinerary.setItineraryID(text);
+			}
+			if ("Name".equals(tag)) {
+				currentItinerary.setName(text);
+			}
+		}
 
-                if ("ArrivalLocation".equals(tag)) {
-                    arrivalLocation.setName(text);
-                }
-                if ("DepartLocation".equals(tag)) {
-                    departureLocation.setName(text);
-                }
+        // Handle Itinerary Segment
+		if (ITINERARY_SEGMENT_TAG.equals(currentStartTag)) {
+			currentItineraryRow.put(tag, text);
+		}
+	}
 
-            }
-        } catch (ParseException e) {
-            e.printStackTrace();
-        }
-    }
+	private ItinerarySegment createItinerarySegment() {
+
+		ItinerarySegment seg = new ItinerarySegment();
+
+		try {
+            // Departure
+			seg.setId(currentItineraryRow.get("IrKey"));
+			seg.setDepartureDateTime(dateFormat.parse(currentItineraryRow
+                    .get("DepartDateTime")));
+            ItineraryLocation depLoc = new ItineraryLocation();
+            depLoc.setName(currentItineraryRow.get("DepartLocation"));
+            // TODO PK: set additional field for the location.
+            seg.setDepartureLocation(depLoc);
+
+            // Arrival
+            seg.setArrivalDateTime(dateFormat.parse(currentItineraryRow
+                    .get("ArrivalDateTime")));
+            ItineraryLocation arrLoc = new ItineraryLocation();
+            arrLoc.setName(currentItineraryRow.get("ArrivalLocation"));
+            // TODO PK: set additional field for the location.
+            seg.setArrivalLocation(arrLoc);
+
+            // Border Crossing
+            seg.setBorderCrossDateTime(dateFormat.parse(currentItineraryRow
+                    .get("BorderCrossDateTime")));
+
+
+		} catch (ParseException e) {
+			e.printStackTrace();
+		}
+
+		return seg;
+	}
 
 }
