@@ -8,11 +8,12 @@ import android.content.Context;
 
 import com.concur.mobile.base.service.BaseAsyncResultReceiver;
 import com.concur.mobile.base.service.parser.CommonParser;
+import com.concur.mobile.core.expense.travelallowance.service.GetTAItinerariesRequest;
 import com.concur.mobile.core.service.CoreAsyncRequestTask;
 
 public class DeleteItineraryRowRequest extends CoreAsyncRequestTask {
 
-    public static final String LOG_TAG = GetItinerariesRequest.class.getSimpleName();
+    public static final String LOG_TAG = GetTAItinerariesRequest.class.getSimpleName();
     public static final String STATUS = "STATUS";
     public static final String STATUS_TEXT = "STATUSTEXT";
     public static final String SUCCESS = "SUCCESS";

@@ -4,6 +4,10 @@ import java.util.ArrayList;
 import java.util.List;
 
 import com.concur.core.R;
+import com.concur.mobile.core.expense.travelallowance.datamodel.Itinerary;
+import com.concur.mobile.core.expense.travelallowance.datamodel.ItinerarySegment;
+import com.concur.mobile.core.expense.travelallowance.util.DateUtils;
+import com.concur.mobile.core.expense.travelallowance.util.DefaultDateFormat;
 
 import android.content.Context;
 import android.view.LayoutInflater;
@@ -52,7 +56,8 @@ public class TravelAllowanceItineraryListAdapter extends ArrayAdapter<Object> {
 
 
 
-	private View getViewHeader(View convertView) {
+	private View getViewHeader(int position, View convertView) {
+		Itinerary itin = (Itinerary) getItem(position);
 		View view = convertView;
 		ViewHolderHeaderRow holder;
 
@@ -72,7 +77,7 @@ public class TravelAllowanceItineraryListAdapter extends ArrayAdapter<Object> {
 
 		holder = (ViewHolderHeaderRow) view.getTag();
 
-		holder.itineraryName.setText("Trip to Berlin");
+		holder.itineraryName.setText(itin.getName());
 		holder.itineraryName.setTextAppearance(ctx, R.style.DefaultTitle_Big);
 		holder.headerDivider.setVisibility(View.VISIBLE);
 		holder.subtitle1.setVisibility(View.GONE);
@@ -83,6 +88,7 @@ public class TravelAllowanceItineraryListAdapter extends ArrayAdapter<Object> {
 	}
 
 	private View getViewEntry(int position, View convertView) {
+		ItinerarySegment segement = (ItinerarySegment) getItem(position);
 		View view = convertView;
 		ViewHolderEntryRow holder;
 		if (view == null || view.getTag() == null || !(view.getTag() instanceof ViewHolderEntryRow)) {
@@ -102,10 +108,10 @@ public class TravelAllowanceItineraryListAdapter extends ArrayAdapter<Object> {
 
 		holder = (ViewHolderEntryRow) view.getTag();
 
-		holder.location.setText("Mannheim");
-		holder.fromDateTime.setText("Apr 2 - 11:00 AM");
-		holder.toDateTime.setText("Apr 2 - 5:00 PM");
-		holder.borderCrossingDateTime.setText("Apr 2 - 3:00 PM");
+		holder.location.setText(segement.getDepartureLocation().getName());
+		holder.fromDateTime.setText(DateUtils.startEndDateToString(segement.getDepartureDateTime(),null, new DefaultDateFormat(this.ctx), true, false, false));
+		holder.toDateTime.setText("");
+		holder.borderCrossingDateTime.setText(DateUtils.startEndDateToString(segement.getBorderCrossDateTime(),null, new DefaultDateFormat(this.ctx), true, false, false));
 
 		if(position + 1 == getCount()) {
 			// In case of last element at all.
@@ -129,7 +135,7 @@ public class TravelAllowanceItineraryListAdapter extends ArrayAdapter<Object> {
 	public View getView(int position, View convertView, ViewGroup parent) {
 
 		if (getItemViewType(position) == HEADER_ROW) {
-			return getViewHeader(convertView);
+			return getViewHeader(position, convertView);
 		}
 		if (getItemViewType(position) == ENTRY_ROW) {
 			return getViewEntry(position, convertView);
@@ -140,7 +146,7 @@ public class TravelAllowanceItineraryListAdapter extends ArrayAdapter<Object> {
 
 	@Override
 	public int getItemViewType(int position) {
-		if (getItem(position) instanceof String) {
+		if (getItem(position) instanceof Itinerary) {
 			return HEADER_ROW;
 		} else {
 			return ENTRY_ROW;

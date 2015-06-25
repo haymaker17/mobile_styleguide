@@ -5,19 +5,18 @@ import java.util.List;
 
 import android.app.Activity;
 import android.os.Bundle;
-import android.os.Handler;
 import android.support.v4.app.ListFragment;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ListAdapter;
-import android.widget.Toast;
 
 import com.concur.core.R;
-import com.concur.mobile.base.service.BaseAsyncRequestTask;
-import com.concur.mobile.base.service.BaseAsyncResultReceiver;
-import com.concur.mobile.core.expense.travelallowance.GetItinerariesRequest;
+import com.concur.mobile.core.ConcurCore;
+import com.concur.mobile.core.expense.travelallowance.controller.TravelAllowanceItineraryController;
+import com.concur.mobile.core.expense.travelallowance.datamodel.Itinerary;
+import com.concur.mobile.core.expense.travelallowance.datamodel.ItinerarySegment;
 import com.concur.mobile.core.util.Const;
 
 public class TravelAllowanceItineraryListFragment extends ListFragment implements SwipeRefreshLayout.OnRefreshListener{
@@ -31,6 +30,8 @@ public class TravelAllowanceItineraryListFragment extends ListFragment implement
 
 	private IFragmentCallback callback;
 
+	ListAdapter adapter;
+
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
@@ -40,17 +41,29 @@ public class TravelAllowanceItineraryListFragment extends ListFragment implement
 			expenseReportKey = bundle.getString(Const.EXTRA_EXPENSE_REPORT_KEY);
 		}
 
+		ConcurCore app = (ConcurCore) getActivity().getApplication();
+		TravelAllowanceItineraryController controller = app.getTaItineraryController();
 
-		List<Object> dummyList = new ArrayList<Object>();
-		dummyList.add(new String(""));
-		dummyList.add(new Object());
-		dummyList.add(new Object());
-		dummyList.add(new Object());
-		dummyList.add(new String(""));
-		dummyList.add(new Object());
-		dummyList.add(new Object());
+		List<Itinerary> itinList = controller.getItineraryList();
+		List<Object> newList = new ArrayList<Object>();
 
-		ListAdapter adapter = new TravelAllowanceItineraryListAdapter(getActivity(), dummyList);
+		for(Itinerary itin : itinList) {
+			newList.add(itin);
+			for (ItinerarySegment segement : itin.getSegmentList()) {
+				newList.add(segement);
+			}
+		}
+
+//		List<Object> dummyList = new ArrayList<Object>();
+//		dummyList.add(new String(""));
+//		dummyList.add(new Object());
+//		dummyList.add(new Object());
+//		dummyList.add(new Object());
+//		dummyList.add(new String(""));
+//		dummyList.add(new Object());
+//		dummyList.add(new Object());
+
+		adapter = new TravelAllowanceItineraryListAdapter(getActivity(), newList);
 
 		setListAdapter(adapter);
 	}
@@ -95,6 +108,25 @@ public class TravelAllowanceItineraryListFragment extends ListFragment implement
 	public void onRefreshFinished() {
 		if (swipeRefreshLayout != null) {
 			swipeRefreshLayout.setRefreshing(false);
+			refreshAdapter();
 		}
+	}
+
+	private void refreshAdapter() {
+		ConcurCore app = (ConcurCore) getActivity().getApplication();
+		TravelAllowanceItineraryController controller = app.getTaItineraryController();
+
+		List<Itinerary> itinList = controller.getItineraryList();
+		List<Object> newList = new ArrayList<Object>();
+
+		for(Itinerary itin : itinList) {
+			newList.add(itin);
+			for (ItinerarySegment segement : itin.getSegmentList()) {
+				newList.add(segement);
+			}
+		}
+
+		adapter =  new TravelAllowanceItineraryListAdapter(getActivity(), newList);
+		setListAdapter(adapter);
 	}
 }

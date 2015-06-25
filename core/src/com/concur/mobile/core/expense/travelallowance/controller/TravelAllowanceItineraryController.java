@@ -9,7 +9,8 @@ import android.util.Log;
 
 import com.concur.mobile.base.service.BaseAsyncRequestTask;
 import com.concur.mobile.base.service.BaseAsyncResultReceiver;
-import com.concur.mobile.core.expense.travelallowance.GetItinerariesRequest;
+import com.concur.mobile.core.expense.travelallowance.datamodel.Itinerary;
+import com.concur.mobile.core.expense.travelallowance.service.GetTAItinerariesRequest;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -23,9 +24,11 @@ public class TravelAllowanceItineraryController {
 
     private List<IServiceRequestListener> listeners;
 
-    private GetItinerariesRequest getItinerariesRequest;
+    private GetTAItinerariesRequest getItinerariesRequest;
 
     private Context context;
+
+    private List<Itinerary> itineraryList;
 
     public TravelAllowanceItineraryController(Context context) {
         this.listeners = new ArrayList<IServiceRequestListener>();
@@ -45,6 +48,7 @@ public class TravelAllowanceItineraryController {
         receiver.setListener(new BaseAsyncRequestTask.AsyncReplyListener() {
             @Override
             public void onRequestSuccess(Bundle resultData) {
+                itineraryList = getItinerariesRequest.getItineraryList();
                 notifyListener(false);
                 Log.d(CLASS_TAG, "Request success.");
             }
@@ -68,8 +72,8 @@ public class TravelAllowanceItineraryController {
             }
         });
 
-        getItinerariesRequest = new GetItinerariesRequest(context, 1, receiver,
-                expenseReportKey);
+        getItinerariesRequest = new GetTAItinerariesRequest(context, receiver,
+                expenseReportKey, true);
 
         getItinerariesRequest.execute();
     }
@@ -77,9 +81,9 @@ public class TravelAllowanceItineraryController {
     private synchronized void notifyListener(boolean isFailed) {
         for(IServiceRequestListener listener : listeners) {
             if (isFailed) {
-                listener.onRequestSuccess();
-            } else {
                 listener.onRequestFail();
+            } else {
+                listener.onRequestSuccess();
             }
         }
     }
@@ -90,5 +94,12 @@ public class TravelAllowanceItineraryController {
 
     public synchronized void unregisterListener(IServiceRequestListener listener) {
         listeners.remove(listener);
+    }
+
+    public List<Itinerary> getItineraryList() {
+        if (itineraryList == null) {
+            return new ArrayList<Itinerary>();
+        }
+        return itineraryList;
     }
 }

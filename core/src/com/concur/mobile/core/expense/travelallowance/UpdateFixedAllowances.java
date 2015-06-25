@@ -8,13 +8,14 @@ import android.content.Context;
 
 import com.concur.mobile.base.service.BaseAsyncResultReceiver;
 import com.concur.mobile.base.service.parser.CommonParser;
+import com.concur.mobile.core.expense.travelallowance.service.GetTAItinerariesRequest;
 import com.concur.mobile.core.service.CoreAsyncRequestTask;
 import com.concur.mobile.core.util.FormatUtil;
 import com.concur.mobile.platform.service.parser.ActionResponseParser;
 
 public class UpdateFixedAllowances extends CoreAsyncRequestTask {
 
-    public static final String LOG_TAG = GetItinerariesRequest.class.getSimpleName();
+    public static final String LOG_TAG = GetTAItinerariesRequest.class.getSimpleName();
 
     private ResultsParser resultsParser;
     private FixedAllowances fixedAllowances;

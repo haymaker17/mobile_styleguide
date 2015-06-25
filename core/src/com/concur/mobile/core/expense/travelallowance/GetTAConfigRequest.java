@@ -11,12 +11,13 @@ import android.util.Log;
 import com.concur.mobile.base.service.BaseAsyncResultReceiver;
 import com.concur.mobile.base.service.parser.CommonParser;
 import com.concur.mobile.core.ConcurCore;
+import com.concur.mobile.core.expense.travelallowance.service.GetTAItinerariesRequest;
 import com.concur.mobile.core.service.CoreAsyncRequestTask;
 import com.concur.mobile.core.util.Const;
 
 public class GetTAConfigRequest extends CoreAsyncRequestTask {
 
-    public static final String LOG_TAG = GetItinerariesRequest.class.getSimpleName();
+    public static final String LOG_TAG = GetTAItinerariesRequest.class.getSimpleName();
 
     private GetTAConfigRequestResultsParser resultsParser;
 

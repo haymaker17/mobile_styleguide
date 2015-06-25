@@ -10,14 +10,16 @@ import android.content.Context;
 import com.concur.mobile.base.service.BaseAsyncResultReceiver;
 import com.concur.mobile.base.service.parser.CommonParser;
 import com.concur.mobile.core.ConcurCore;
+import com.concur.mobile.core.expense.travelallowance.service.GetTAItinerariesRequest;
+import com.concur.mobile.core.expense.travelallowance.service.parser.GetTAItinerariesResponseParser;
 import com.concur.mobile.core.service.CoreAsyncRequestTask;
 import com.concur.mobile.core.util.FormatUtil;
 
 public class SaveItineraryRequest extends CoreAsyncRequestTask {
 
-    public static final String LOG_TAG = GetItinerariesRequest.class.getSimpleName();
+    public static final String LOG_TAG = GetTAItinerariesRequest.class.getSimpleName();
 
-    private GetTAItinerariesResultParser itinParser;
+    private GetTAItinerariesResponseParser itinParser;
     private Itinerary itinerary;
     private ItineraryRow itineraryRow;
 
@@ -74,7 +76,7 @@ public class SaveItineraryRequest extends CoreAsyncRequestTask {
         int result = RESULT_OK;
 
         // register the parser of interest
-        itinParser = new GetTAItinerariesResultParser();
+        itinParser = new GetTAItinerariesResponseParser();
         parser.registerParser(itinParser, "Itinerary");
 
         try {
@@ -93,7 +95,7 @@ public class SaveItineraryRequest extends CoreAsyncRequestTask {
     protected int onPostParse() {
         resultData.putBoolean(IS_SUCCESS, true);
         ConcurCore core = (ConcurCore) ConcurCore.getContext();
-        core.setTAItinerary(itinParser.getItinerary());
+       // core.setTAItinerary(itinParser.getItinerary());
 
         return RESULT_OK;
     }

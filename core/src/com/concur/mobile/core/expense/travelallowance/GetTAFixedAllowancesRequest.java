@@ -68,7 +68,7 @@ public class GetTAFixedAllowancesRequest extends CoreAsyncRequestTask {
         private static HashMap<String, PropType> rowProps;
 
         static {
-            controlProps = new HashMap<String, GetTAItinerariesResultParser.PropType>();
+           // controlProps = new HashMap<String, GetTAItinerariesResponseParser.PropType>();
             controlProps.put("ShowUserEntryOfBreakfastAmount", PropType.BOOLEAN);
             controlProps.put("ShowUserEntryOfMealsAmount", PropType.BOOLEAN);
             controlProps.put("ShowBreakfastProvidedCheckBox", PropType.BOOLEAN);
@@ -97,7 +97,7 @@ public class GetTAFixedAllowancesRequest extends CoreAsyncRequestTask {
             controlProps.put("LunchProvidedLabel", PropType.STRING);
             controlProps.put("DinnerProvidedLabel", PropType.STRING);
             
-            rowProps = new HashMap<String, GetTAItinerariesResultParser.PropType>();
+           // rowProps = new HashMap<String, GetTAItinerariesResponseParser.PropType>();
             rowProps.put("IsFirstDay", PropType.BOOLEAN);
             rowProps.put("IsLastDay", PropType.BOOLEAN);
             rowProps.put("IsLocked", PropType.BOOLEAN);
