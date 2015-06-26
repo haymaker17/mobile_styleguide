@@ -240,6 +240,11 @@ public class ExpenseEntries extends AbstractExpenseActivity {
         if (retainer.contains(SELECTED_EXPENSE_TYPE)) {
             selectedExpenseType = (ExpenseType) retainer.get(SELECTED_EXPENSE_TYPE);
         }
+
+        if (expRep != null) {
+            ConcurCore app = (ConcurCore) getApplication();
+            app.getTaItineraryController().refreshItineraries(expRep.reportKey, true);
+        }
     }
 
     @Override

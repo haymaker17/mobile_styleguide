@@ -17,6 +17,7 @@ import com.concur.mobile.core.ConcurCore;
 import com.concur.mobile.core.expense.travelallowance.controller.TravelAllowanceItineraryController;
 import com.concur.mobile.core.expense.travelallowance.datamodel.Itinerary;
 import com.concur.mobile.core.expense.travelallowance.datamodel.ItinerarySegment;
+import com.concur.mobile.core.expense.travelallowance.ui.model.CompactItinerary;
 import com.concur.mobile.core.util.Const;
 
 public class TravelAllowanceItineraryListFragment extends ListFragment implements SwipeRefreshLayout.OnRefreshListener{
@@ -44,26 +45,9 @@ public class TravelAllowanceItineraryListFragment extends ListFragment implement
 		ConcurCore app = (ConcurCore) getActivity().getApplication();
 		TravelAllowanceItineraryController controller = app.getTaItineraryController();
 
-		List<Itinerary> itinList = controller.getItineraryList();
-		List<Object> newList = new ArrayList<Object>();
+		List<CompactItinerary> compactItinList = controller.getCompactItineraryList();
 
-		for(Itinerary itin : itinList) {
-			newList.add(itin);
-			for (ItinerarySegment segement : itin.getSegmentList()) {
-				newList.add(segement);
-			}
-		}
-
-//		List<Object> dummyList = new ArrayList<Object>();
-//		dummyList.add(new String(""));
-//		dummyList.add(new Object());
-//		dummyList.add(new Object());
-//		dummyList.add(new Object());
-//		dummyList.add(new String(""));
-//		dummyList.add(new Object());
-//		dummyList.add(new Object());
-
-		adapter = new TravelAllowanceItineraryListAdapter(getActivity(), newList);
+		adapter = new TravelAllowanceItineraryListAdapter(getActivity(), compactItinList);
 
 		setListAdapter(adapter);
 	}
@@ -116,17 +100,7 @@ public class TravelAllowanceItineraryListFragment extends ListFragment implement
 		ConcurCore app = (ConcurCore) getActivity().getApplication();
 		TravelAllowanceItineraryController controller = app.getTaItineraryController();
 
-		List<Itinerary> itinList = controller.getItineraryList();
-		List<Object> newList = new ArrayList<Object>();
-
-		for(Itinerary itin : itinList) {
-			newList.add(itin);
-			for (ItinerarySegment segement : itin.getSegmentList()) {
-				newList.add(segement);
-			}
-		}
-
-		adapter =  new TravelAllowanceItineraryListAdapter(getActivity(), newList);
+		adapter =  new TravelAllowanceItineraryListAdapter(getActivity(), controller.getCompactItineraryList());
 		setListAdapter(adapter);
 	}
 }

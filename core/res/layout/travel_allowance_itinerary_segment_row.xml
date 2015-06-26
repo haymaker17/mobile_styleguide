@@ -2,109 +2,121 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent">
+    
+    <RelativeLayout 
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
 
-    <RelativeLayout
-        android:layout_width="match_parent"
-        android:layout_height="match_parent">
+    <ImageView
+        android:id="@+id/iv_row_icon"
+        android:layout_width="11dp"
+        android:layout_height="11dp"
+        android:layout_marginLeft="32dp"
+        android:layout_marginTop="20dp"
+        android:src="@drawable/blue_oval" />
 
         <ImageView
-            android:id="@+id/tv_stop_counter"
-            android:layout_width="15dp"
-            android:layout_height="15dp"
+            android:id="@+id/iv_row_icon_location"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
             android:layout_marginLeft="32dp"
             android:layout_marginTop="20dp"
-            android:background="@drawable/blue_oval" />
+            android:src="@drawable/icon_location_blue" />
+
+    <LinearLayout
+        android:id="@+id/segment_location"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true"
+        android:layout_marginLeft="72dp"
+        android:layout_marginRight="16dp"
+        android:layout_marginTop="16dp">
+
+
+         <TextView
+             android:id="@+id/tv_location"
+             android:layout_width="wrap_content"
+             android:layout_height="wrap_content"
+             android:fontFamily="sans-serif"
+             android:text="Seattle, WA"
+            android:textAppearance="@style/DefaultTitle" />
 
         <LinearLayout
-            android:id="@+id/segment_location"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_alignParentLeft="true"
-            android:layout_alignParentStart="true"
-            android:layout_marginLeft="72dp"
-            android:layout_marginRight="16dp"
-            android:layout_marginTop="16dp"
-            android:orientation="vertical">
-
+            android:orientation="horizontal">
 
             <TextView
-                android:id="@+id/tv_location"
+                android:id="@+id/tv_from_date_time"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:fontFamily="sans-serif"
-                android:text="Seattle, WA"
-                android:textAppearance="@style/DefaultTitle" />
-
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:orientation="horizontal">
-
-                <TextView
-                    android:id="@+id/tv_from_date_time"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="1"
-                    android:text="March 23 - 2:00 PM"
-                    android:textAppearance="@style/DefaultSubTitle" />
-
-                <View
-                    android:id="@+id/date_separator_line"
-                    android:layout_width="1dp"
-                    android:layout_height="15dp"
-                    android:background="#dbe1e6" />
-
-                <TextView
-                    android:id="@+id/tv_to_date_time"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="1"
-                    android:gravity="right"
-                    android:text="March 23 - 2:00 PM"
-                    android:textAppearance="@style/DefaultSubTitle" />
-
-            </LinearLayout>
+                android:text="March 23 - 2:00 PM"
+                android:textAppearance="@style/DefaultSubTitle"
+                android:layout_weight="0.8"/>
 
             <View
+                android:id="@+id/date_separator_line"
                 android:layout_width="1dp"
-                android:layout_height="24dp" />
+                android:layout_height="15dp"
+                android:background="#dbe1e6"
+                />
 
-            <LinearLayout
-                android:layout_width="match_parent"
+            <TextView
+                android:id="@+id/tv_to_date_time"
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:orientation="horizontal">
-
-                <TextView
-                    android:id="@+id/tv_border_crossing_label"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:paddingRight="5dp"
-                    android:text="@string/itin_crossed_border"
-                    android:textAppearance="@style/DefaultSubTitle" />
-
-                <TextView
-                    android:id="@+id/tv_border_crossing_date_time"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="March 23 - 2:00 PM"
-                    android:textAppearance="@style/DefaultSubTitle" />
-
-            </LinearLayout>
-
+                android:text="March 23 - 2:00 PM"
+                android:textAppearance="@style/DefaultSubTitle"
+                android:layout_weight="1"
+                android:paddingLeft="16dp"
+                android:gravity="left"/>
 
         </LinearLayout>
 
         <View
-            android:id="@+id/segment_separator_line"
-            android:layout_width="fill_parent"
-            android:layout_height="1dp"
-            android:layout_below="@id/segment_location"
-            android:layout_marginLeft="72dp"
-            android:layout_marginTop="16dp"
-            android:background="#dbe1e6" />
+            android:layout_width="1dp"
+            android:layout_height="24dp"
+            />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+
+            <TextView
+                android:id="@+id/tv_border_crossing_label"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/itin_crossed_border"
+                android:textAppearance="@style/DefaultSubTitle"
+                android:paddingRight="5dp"/>
+
+            <TextView
+                android:id="@+id/tv_border_crossing_date_time"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="March 23 - 2:00 PM"
+                android:textAppearance="@style/DefaultSubTitle" />
+
+        </LinearLayout>
 
 
-        <include
+
+    </LinearLayout>
+
+   <View
+       android:id="@+id/segment_separator_line"
+       android:layout_width="fill_parent"
+       android:layout_height="1dp"
+       android:layout_below="@id/segment_location"
+       android:layout_marginTop="16dp"
+       android:layout_marginLeft="72dp"
+       android:background="#dbe1e6" />
+    
+
+   <include
             android:id="@+id/itinerary_separator_line"
             layout="@layout/generic_divider_bold"
             android:layout_width="match_parent"
@@ -113,7 +125,7 @@
             android:layout_marginBottom="24dp"
             android:layout_marginTop="16dp" />
 
-
-    </RelativeLayout>
+     
+     </RelativeLayout>
 
 </RelativeLayout>

@@ -4,8 +4,8 @@ import java.util.ArrayList;
 import java.util.List;
 
 import com.concur.core.R;
-import com.concur.mobile.core.expense.travelallowance.datamodel.Itinerary;
-import com.concur.mobile.core.expense.travelallowance.datamodel.ItinerarySegment;
+import com.concur.mobile.core.expense.travelallowance.ui.model.CompactItinerary;
+import com.concur.mobile.core.expense.travelallowance.ui.model.CompactItinerarySegment;
 import com.concur.mobile.core.expense.travelallowance.util.DateUtils;
 import com.concur.mobile.core.expense.travelallowance.util.DefaultDateFormat;
 
@@ -14,7 +14,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
-import android.widget.BaseAdapter;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 public class TravelAllowanceItineraryListAdapter extends ArrayAdapter<Object> {
@@ -34,6 +34,9 @@ public class TravelAllowanceItineraryListAdapter extends ArrayAdapter<Object> {
 		public TextView borderCrossingDateTime;
 		public View segmentDivider;
 		public View itineraryDivider;
+		public View dateDivider;
+		public ImageView rowIcon;
+		public ImageView rowIconLocation;
 	}
 
 	private static final int LAYOUT_ID_SEGMENT = R.layout.travel_allowance_itinerary_segment_row;
@@ -48,16 +51,28 @@ public class TravelAllowanceItineraryListAdapter extends ArrayAdapter<Object> {
 
 
 	
-	public TravelAllowanceItineraryListAdapter(Context ctx, List<Object> stopList) {
+	public TravelAllowanceItineraryListAdapter(Context ctx, List<CompactItinerary> stopList) {
 		super(ctx, 0);
 		this.ctx = ctx;
-		addAll(stopList);
+		addAll(createFlatList(stopList));
+	}
+
+	private List<Object> createFlatList(List<CompactItinerary> stopList) {
+		List<Object> newList = new ArrayList<Object>();
+
+		for(CompactItinerary itin : stopList) {
+			newList.add(itin);
+			for (CompactItinerarySegment segement : itin.getSegmentList()) {
+				newList.add(segement);
+			}
+		}
+
+		return newList;
 	}
 
 
-
 	private View getViewHeader(int position, View convertView) {
-		Itinerary itin = (Itinerary) getItem(position);
+		CompactItinerary itin = (CompactItinerary) getItem(position);
 		View view = convertView;
 		ViewHolderHeaderRow holder;
 
@@ -88,7 +103,7 @@ public class TravelAllowanceItineraryListAdapter extends ArrayAdapter<Object> {
 	}
 
 	private View getViewEntry(int position, View convertView) {
-		ItinerarySegment segement = (ItinerarySegment) getItem(position);
+		CompactItinerarySegment segment = (CompactItinerarySegment) getItem(position);
 		View view = convertView;
 		ViewHolderEntryRow holder;
 		if (view == null || view.getTag() == null || !(view.getTag() instanceof ViewHolderEntryRow)) {
@@ -103,22 +118,37 @@ public class TravelAllowanceItineraryListAdapter extends ArrayAdapter<Object> {
 			holder.borderCrossingDateTime = (TextView) view.findViewById(R.id.tv_border_crossing_date_time);
 			holder.segmentDivider = view.findViewById(R.id.segment_separator_line);
 			holder.itineraryDivider = view.findViewById(R.id.itinerary_separator_line);
+			holder.dateDivider = view.findViewById(R.id.date_separator_line);
+			holder.rowIcon = (ImageView) view.findViewById(R.id.iv_row_icon);
+			holder.rowIconLocation = (ImageView) view.findViewById(R.id.iv_row_icon_location);
 			view.setTag(holder);
 		}
 
 		holder = (ViewHolderEntryRow) view.getTag();
 
-		holder.location.setText(segement.getDepartureLocation().getName());
-		holder.fromDateTime.setText(DateUtils.startEndDateToString(segement.getDepartureDateTime(),null, new DefaultDateFormat(this.ctx), true, false, false));
-		holder.toDateTime.setText("");
-		holder.borderCrossingDateTime.setText(DateUtils.startEndDateToString(segement.getBorderCrossDateTime(),null, new DefaultDateFormat(this.ctx), true, false, false));
+		holder.location.setText(segment.getLocation().getName());
+		holder.fromDateTime.setText(DateUtils.startEndDateToString(segment.getDepartureDateTime(), null, new DefaultDateFormat(this.ctx), true, false, false));
+		if (segment.getArrivalDateTime() != null) {
+			holder.toDateTime.setText(DateUtils.startEndDateToString(segment.getArrivalDateTime(), null, new DefaultDateFormat(this.ctx), true, false, false));
+			holder.toDateTime.setVisibility(View.VISIBLE);
+			holder.dateDivider.setVisibility(View.VISIBLE);
+			holder.rowIconLocation.setVisibility(View.VISIBLE);
+			holder.rowIcon.setVisibility(View.GONE);
+		} else {
+			holder.toDateTime.setVisibility(View.GONE);
+			holder.dateDivider.setVisibility(View.GONE);
+			holder.rowIconLocation.setVisibility(View.GONE);
+			holder.rowIcon.setVisibility(View.VISIBLE);
+		}
+
+		holder.borderCrossingDateTime.setText(DateUtils.startEndDateToString(segment.getBorderCrossingDateTime(), null, new DefaultDateFormat(this.ctx), true, false, false));
 
 		if(position + 1 == getCount()) {
 			// In case of last element at all.
 			holder.segmentDivider.setVisibility(View.GONE);
 			holder.itineraryDivider.setVisibility(View.GONE);
 		}
-		if (position + 1 < getCount() && getItem(position+1) instanceof String) {
+		if (position + 1 < getCount() && getItem(position+1) instanceof CompactItinerary) {
 			// Case last element in an itinerary.
 			holder.segmentDivider.setVisibility(View.GONE);
 			holder.itineraryDivider.setVisibility(View.VISIBLE);
@@ -146,7 +176,7 @@ public class TravelAllowanceItineraryListAdapter extends ArrayAdapter<Object> {
 
 	@Override
 	public int getItemViewType(int position) {
-		if (getItem(position) instanceof Itinerary) {
+		if (getItem(position) instanceof CompactItinerary) {
 			return HEADER_ROW;
 		} else {
 			return ENTRY_ROW;

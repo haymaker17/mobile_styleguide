@@ -10,7 +10,10 @@ import android.util.Log;
 import com.concur.mobile.base.service.BaseAsyncRequestTask;
 import com.concur.mobile.base.service.BaseAsyncResultReceiver;
 import com.concur.mobile.core.expense.travelallowance.datamodel.Itinerary;
+import com.concur.mobile.core.expense.travelallowance.datamodel.ItinerarySegment;
 import com.concur.mobile.core.expense.travelallowance.service.GetTAItinerariesRequest;
+import com.concur.mobile.core.expense.travelallowance.ui.model.CompactItinerary;
+import com.concur.mobile.core.expense.travelallowance.ui.model.CompactItinerarySegment;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -101,5 +104,53 @@ public class TravelAllowanceItineraryController {
             return new ArrayList<Itinerary>();
         }
         return itineraryList;
+    }
+
+    public List<CompactItinerary> getCompactItineraryList() {
+        List<CompactItinerary> result = new ArrayList<CompactItinerary>();
+
+        for (Itinerary itinerary : getItineraryList()) {
+            CompactItinerary compactItinerary = new CompactItinerary();
+            compactItinerary.setName(itinerary.getName());
+
+            int position = 0;
+            for (ItinerarySegment segment : itinerary.getSegmentList()) {
+                CompactItinerarySegment compactSegment = new CompactItinerarySegment();
+                if (position == 0) {
+                    CompactItinerarySegment firstCompactSegment = new CompactItinerarySegment();
+                    firstCompactSegment.setLocation(segment.getDepartureLocation());
+                    firstCompactSegment.setDepartureDateTime(segment.getDepartureDateTime());
+                    firstCompactSegment.setBorderCrossingDateTime(segment.getBorderCrossDateTime());
+                    compactItinerary.getSegmentList().add(firstCompactSegment);
+                }
+
+                ItinerarySegment nextSegment = null;
+                if (position + 1 < itinerary.getSegmentList().size()) {
+                    nextSegment = itinerary.getSegmentList().get(position + 1);
+                }
+
+                if (nextSegment != null) {
+                    compactSegment.setLocation(segment.getArrivalLocation());
+                    compactSegment.setDepartureDateTime(segment.getArrivalDateTime());
+                    compactSegment.setArrivalDateTime(nextSegment.getDepartureDateTime());
+                    compactSegment.setBorderCrossingDateTime(segment.getBorderCrossDateTime());
+                }
+
+                if (nextSegment == null) {
+                    // Last segment
+                    compactSegment.setDepartureDateTime(segment.getArrivalDateTime());
+                    compactSegment.setLocation(segment.getArrivalLocation());
+                    compactSegment.setBorderCrossingDateTime(segment.getBorderCrossDateTime());
+                }
+
+                compactItinerary.getSegmentList().add(compactSegment);
+
+                position++;
+            }
+
+            result.add(compactItinerary);
+        }
+
+        return result;
     }
 }
