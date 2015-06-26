@@ -34,7 +34,7 @@
             android:layout_height="wrap_content"
             android:layout_alignParentLeft="true"
             android:text="@string/itin_breakfast"
-            android:textAppearance="@style/DefaultSubTitle" />
+            android:textAppearance="@style/DailyAllowanceLabel" />
 
         <TextView
             android:id="@+id/tv_breakfast_provision"
@@ -43,7 +43,7 @@
             android:layout_alignParentLeft="true"
             android:layout_alignParentStart="true"
             android:text="Large Text"
-            android:textAppearance="@style/DefaultTitle" />
+            android:textAppearance="@style/DailyAllowanceContent" />
     </LinearLayout>
 
     <View
@@ -64,7 +64,7 @@
             android:layout_height="wrap_content"
             android:layout_alignParentLeft="true"
             android:text="@string/itin_lunch"
-            android:textAppearance="@style/DefaultSubTitle" />
+            android:textAppearance="@style/DailyAllowanceLabel" />
 
         <TextView
             android:id="@+id/tv_lunch_provision"
@@ -73,7 +73,7 @@
             android:layout_alignParentLeft="true"
             android:layout_alignParentStart="true"
             android:text="Large Text"
-            android:textAppearance="@style/DefaultTitle" />
+            android:textAppearance="@style/DailyAllowanceContent" />
     </LinearLayout>
 
     <View
@@ -94,7 +94,7 @@
             android:layout_height="wrap_content"
             android:layout_alignParentLeft="true"
             android:text="@string/itin_dinner"
-            android:textAppearance="@style/DefaultSubTitle" />
+            android:textAppearance="@style/DailyAllowanceLabel" />
 
         <TextView
             android:id="@+id/tv_dinner_provision"
@@ -103,7 +103,7 @@
             android:layout_alignParentLeft="true"
             android:layout_alignParentStart="true"
             android:text="Large Text"
-            android:textAppearance="@style/DefaultTitle" />
+            android:textAppearance="@style/DailyAllowanceContent" />
     </LinearLayout>
 
     <View
@@ -125,7 +125,7 @@
             android:layout_height="wrap_content"
             android:layout_alignParentLeft="true"
             android:text="@string/itin_lodging"
-            android:textAppearance="@style/DefaultSubTitle" />
+            android:textAppearance="@style/DailyAllowanceLabel" />
 
         <TextView
             android:id="@+id/tv_lodging_value"
@@ -134,7 +134,7 @@
             android:layout_alignParentLeft="true"
             android:layout_alignParentStart="true"
             android:text="Large Text"
-            android:textAppearance="@style/DefaultTitle" />
+            android:textAppearance="@style/DailyAllowanceContent" />
     </LinearLayout>
 
     <RelativeLayout
@@ -150,7 +150,7 @@
             android:layout_height="wrap_content"
             android:layout_alignParentLeft="true"
             android:text="@string/itin_overnight"
-            android:textAppearance="@style/DefaultSubTitle" />
+            android:textAppearance="@style/DailyAllowanceLabel" />
 
         <TextView
             android:id="@+id/tv_overnight_help"
@@ -160,7 +160,7 @@
             android:layout_alignParentStart="true"
             android:layout_below="@+id/tv_overnight_label"
             android:text="\@Hilfetext\@"
-            android:textAppearance="@style/DefaultTitle" />
+            android:textAppearance="@style/DailyAllowanceContent" />
 
         <Switch
             android:layout_width="wrap_content"
