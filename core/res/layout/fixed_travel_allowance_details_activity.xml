@@ -5,6 +5,12 @@
     android:background="@color/ListStripeWhite"
     android:orientation="vertical">
 
+    <android.support.v7.widget.Toolbar
+        android:id="@+id/toolbar_daily_allowance"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="#0078c8"/>
+
     <include
         android:id="@+id/vg_details_header"
         layout="@layout/generic_table_row_layout"
@@ -87,7 +93,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_alignParentLeft="true"
-            android:text="@string/itin_lunch"
+            android:text="@string/itin_dinner"
             android:textAppearance="@style/DefaultSubTitle" />
 
         <TextView

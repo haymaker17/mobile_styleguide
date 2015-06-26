@@ -2,6 +2,7 @@ package com.concur.mobile.core.expense.travelallowance.activity;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.View;
 import android.widget.Switch;
@@ -42,6 +43,16 @@ public class FixedTravelAllowanceDetailsActivity extends BaseActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.fixed_travel_allowance_details_activity);
+
+        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar_daily_allowance);
+        if (toolbar != null) {
+            setSupportActionBar(toolbar);
+        }
+
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        getSupportActionBar().setTitle(R.string.itin_daily_allowance);
+
+
         Intent callerIntent = this.getIntent();
         FixedTravelAllowance allowance = null;
         if (callerIntent != null) {
