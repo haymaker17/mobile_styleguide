@@ -1,15 +1,15 @@
 package com.concur.mobile.core.expense.travelallowance.fragment;
 
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 import com.concur.core.R;
 import com.concur.mobile.core.expense.travelallowance.ui.model.CompactItinerary;
 import com.concur.mobile.core.expense.travelallowance.ui.model.CompactItinerarySegment;
-import com.concur.mobile.core.expense.travelallowance.util.DateUtils;
-import com.concur.mobile.core.expense.travelallowance.util.DefaultDateFormat;
 
 import android.content.Context;
+import android.text.format.DateUtils;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -45,12 +45,9 @@ public class TravelAllowanceItineraryListAdapter extends ArrayAdapter<Object> {
 	private static final int HEADER_ROW = 0;
 	private static final int ENTRY_ROW = 1;
 
-	//private List<Stop> stopList = new ArrayList<Stop>();
 	private Context ctx;
-	//private IDateFormat dateTimeConverter;
 
 
-	
 	public TravelAllowanceItineraryListAdapter(Context ctx, List<CompactItinerary> stopList) {
 		super(ctx, 0);
 		this.ctx = ctx;
@@ -102,64 +99,69 @@ public class TravelAllowanceItineraryListAdapter extends ArrayAdapter<Object> {
 		return view;
 	}
 
-	private View getViewEntry(int position, View convertView) {
-		CompactItinerarySegment segment = (CompactItinerarySegment) getItem(position);
-		View view = convertView;
-		ViewHolderEntryRow holder;
-		if (view == null || view.getTag() == null || !(view.getTag() instanceof ViewHolderEntryRow)) {
-			final LayoutInflater inflater =
-					(LayoutInflater) this.ctx
-							.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-			view = inflater.inflate(LAYOUT_ID_SEGMENT, null);
-			holder = new ViewHolderEntryRow();
-			holder.location = (TextView) view.findViewById(R.id.tv_location);
-			holder.fromDateTime = (TextView) view.findViewById(R.id.tv_from_date_time);
-			holder.toDateTime = (TextView) view.findViewById(R.id.tv_to_date_time);
-			holder.borderCrossingDateTime = (TextView) view.findViewById(R.id.tv_border_crossing_date_time);
-			holder.segmentDivider = view.findViewById(R.id.segment_separator_line);
-			holder.itineraryDivider = view.findViewById(R.id.itinerary_separator_line);
-			holder.dateDivider = view.findViewById(R.id.date_separator_line);
-			holder.rowIcon = (ImageView) view.findViewById(R.id.iv_row_icon);
-			holder.rowIconLocation = (ImageView) view.findViewById(R.id.iv_row_icon_location);
-			view.setTag(holder);
-		}
+    private View getViewEntry(int position, View convertView) {
+        CompactItinerarySegment segment = (CompactItinerarySegment) getItem(position);
+        View view = convertView;
+        ViewHolderEntryRow holder;
+        if (view == null || view.getTag() == null || !(view.getTag() instanceof ViewHolderEntryRow)) {
+            final LayoutInflater inflater = (LayoutInflater) this.ctx.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+            view = inflater.inflate(LAYOUT_ID_SEGMENT, null);
+            holder = new ViewHolderEntryRow();
+            holder.location = (TextView) view.findViewById(R.id.tv_location);
+            holder.fromDateTime = (TextView) view.findViewById(R.id.tv_from_date_time);
+            holder.toDateTime = (TextView) view.findViewById(R.id.tv_to_date_time);
+            holder.borderCrossingDateTime = (TextView) view.findViewById(R.id.tv_border_crossing_date_time);
+            holder.segmentDivider = view.findViewById(R.id.segment_separator_line);
+            holder.itineraryDivider = view.findViewById(R.id.itinerary_separator_line);
+            holder.dateDivider = view.findViewById(R.id.date_separator_line);
+            holder.rowIcon = (ImageView) view.findViewById(R.id.iv_row_icon);
+            holder.rowIconLocation = (ImageView) view.findViewById(R.id.iv_row_icon_location);
+            view.setTag(holder);
+        }
 
-		holder = (ViewHolderEntryRow) view.getTag();
+        holder = (ViewHolderEntryRow) view.getTag();
 
-		holder.location.setText(segment.getLocation().getName());
-		holder.fromDateTime.setText(DateUtils.startEndDateToString(segment.getDepartureDateTime(), null, new DefaultDateFormat(this.ctx), true, false, false));
-		if (segment.getArrivalDateTime() != null) {
-			holder.toDateTime.setText(DateUtils.startEndDateToString(segment.getArrivalDateTime(), null, new DefaultDateFormat(this.ctx), true, false, false));
-			holder.toDateTime.setVisibility(View.VISIBLE);
-			holder.dateDivider.setVisibility(View.VISIBLE);
-			holder.rowIconLocation.setVisibility(View.VISIBLE);
-			holder.rowIcon.setVisibility(View.GONE);
-		} else {
-			holder.toDateTime.setVisibility(View.GONE);
-			holder.dateDivider.setVisibility(View.GONE);
-			holder.rowIconLocation.setVisibility(View.GONE);
-			holder.rowIcon.setVisibility(View.VISIBLE);
-		}
+        holder.location.setText(segment.getLocation().getName());
 
-		holder.borderCrossingDateTime.setText(DateUtils.startEndDateToString(segment.getBorderCrossingDateTime(), null, new DefaultDateFormat(this.ctx), true, false, false));
+        if (segment.getArrivalDateTime() != null) {
+			holder.fromDateTime.setText(formatDate(segment.getDepartureDateTime(), false));
+			holder.toDateTime.setText(formatDate(segment.getArrivalDateTime(), false));
+            holder.toDateTime.setVisibility(View.VISIBLE);
+            holder.dateDivider.setVisibility(View.VISIBLE);
+            holder.rowIconLocation.setVisibility(View.VISIBLE);
+            holder.rowIcon.setVisibility(View.GONE);
+        } else {
+			holder.fromDateTime.setText(formatDate(segment.getDepartureDateTime(), true));
+            holder.toDateTime.setVisibility(View.GONE);
+            holder.dateDivider.setVisibility(View.GONE);
+            holder.rowIconLocation.setVisibility(View.GONE);
+            holder.rowIcon.setVisibility(View.VISIBLE);
+        }
 
-		if(position + 1 == getCount()) {
-			// In case of last element at all.
-			holder.segmentDivider.setVisibility(View.GONE);
-			holder.itineraryDivider.setVisibility(View.GONE);
-		}
-		if (position + 1 < getCount() && getItem(position+1) instanceof CompactItinerary) {
-			// Case last element in an itinerary.
-			holder.segmentDivider.setVisibility(View.GONE);
-			holder.itineraryDivider.setVisibility(View.VISIBLE);
-		} else if (position + 1 < getCount()) {
-			// Case not last element in an itinerary.
-			holder.segmentDivider.setVisibility(View.VISIBLE);
-			holder.itineraryDivider.setVisibility(View.GONE);
-		}
+        if (segment.getBorderCrossingDateTime() != null) {
+            holder.borderCrossingDateTime.setVisibility(View.VISIBLE);
+			holder.borderCrossingDateTime.setText(formatDate(segment.getBorderCrossingDateTime(), false));
+        } else {
+            holder.borderCrossingDateTime.setVisibility(View.GONE);
+        }
 
-		return view;
-	}
+        if (position + 1 == getCount()) {
+            // In case of last element at all.
+            holder.segmentDivider.setVisibility(View.GONE);
+            holder.itineraryDivider.setVisibility(View.GONE);
+        }
+        if (position + 1 < getCount() && getItem(position + 1) instanceof CompactItinerary) {
+            // Case last element in an itinerary.
+            holder.segmentDivider.setVisibility(View.GONE);
+            holder.itineraryDivider.setVisibility(View.VISIBLE);
+        } else if (position + 1 < getCount()) {
+            // Case not last element in an itinerary.
+            holder.segmentDivider.setVisibility(View.VISIBLE);
+            holder.itineraryDivider.setVisibility(View.GONE);
+        }
+
+        return view;
+    }
 
 	@Override
 	public View getView(int position, View convertView, ViewGroup parent) {
@@ -182,4 +184,15 @@ public class TravelAllowanceItineraryListAdapter extends ArrayAdapter<Object> {
 			return ENTRY_ROW;
 		}
 	}
+
+    private String formatDate(Date date, boolean withYear) {
+        if (withYear) {
+            return DateUtils.formatDateTime(ctx, date.getTime(), DateUtils.FORMAT_SHOW_DATE
+                    | DateUtils.FORMAT_ABBREV_MONTH | DateUtils.FORMAT_SHOW_YEAR| DateUtils.FORMAT_SHOW_TIME);
+        } else {
+            return DateUtils.formatDateTime(ctx, date.getTime(), DateUtils.FORMAT_SHOW_DATE
+                    | DateUtils.FORMAT_ABBREV_MONTH | DateUtils.FORMAT_SHOW_TIME | DateUtils.FORMAT_NO_YEAR);
+        }
+
+    }
 }
