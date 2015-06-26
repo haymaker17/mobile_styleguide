@@ -61,6 +61,7 @@ public class FixedTravelAllowanceListAdapter extends ArrayAdapter<Object> {
 
     /**
      * Creates an instance of this list adapter.
+     *
      * @param context
      * @param fixedTravelAllowanceList
      */
@@ -144,7 +145,7 @@ public class FixedTravelAllowanceListAdapter extends ArrayAdapter<Object> {
             resultView = inflater.inflate(LAYOUT_ID, viewGroup, false);
             createViewHolder(resultView);
             resultView.setTag(holder);
-            if (getItemViewType(i) == ENTRY_ROW ) {
+            if (getItemViewType(i) == ENTRY_ROW) {
                 resultView.addOnLayoutChangeListener(this.layoutChangeListener);
             }
         } else {
@@ -152,13 +153,13 @@ public class FixedTravelAllowanceListAdapter extends ArrayAdapter<Object> {
             holder = (ViewHolder) resultView.getTag();
         }
 
-        if (getItemViewType(i) == HEADER_ROW ) {
+        if (getItemViewType(i) == HEADER_ROW) {
             currentAllowance = null;
             String locationName = (String) getItem(i);
             renderHeaderRow(locationName);
         }
 
-        if (getItemViewType(i) == ENTRY_ROW ) {
+        if (getItemViewType(i) == ENTRY_ROW) {
             currentAllowance = (FixedTravelAllowance) getItem(i);
             boolean withBottomDivider = false;
             if (i + 1 < getCount() && getItemViewType(i + 1) == HEADER_ROW) {
@@ -203,6 +204,7 @@ public class FixedTravelAllowanceListAdapter extends ArrayAdapter<Object> {
 
     /**
      * Creates the member view holder
+     *
      * @param view The inflated view to grab the IDs from
      */
     private void createViewHolder(final View view) {
@@ -220,6 +222,7 @@ public class FixedTravelAllowanceListAdapter extends ArrayAdapter<Object> {
 
     /**
      * Renders the header row containing the textual representation of a location
+     *
      * @param location the location to be rendered
      */
     private void renderHeaderRow(String location) {
@@ -250,6 +253,7 @@ public class FixedTravelAllowanceListAdapter extends ArrayAdapter<Object> {
 
     /**
      * Renders the fixed travel allowance in an entry row
+     *
      * @param allowance the allowance to be rendered
      */
     private void renderEntryRow(FixedTravelAllowance allowance, boolean withTopDivider, boolean withBottomDivider) {
@@ -291,10 +295,11 @@ public class FixedTravelAllowanceListAdapter extends ArrayAdapter<Object> {
             holder.tvValue.setVisibility(View.GONE);
         }
 
-        if (allowance.getExcludedIndicator()){
-            if (holder.vgSubtitleEllipsized != null) {
-                holder.vgSubtitleEllipsized.setVisibility(View.GONE);
-            }
+        if (holder.vgSubtitleEllipsized != null) {
+            holder.vgSubtitleEllipsized.setVisibility(View.GONE);
+        }
+
+        if (allowance.getExcludedIndicator()) {
             if (holder.tvValue != null) {
                 holder.tvValue.setVisibility(View.VISIBLE);
                 holder.tvValue.setText(this.context.getString(R.string.itin_excluded));
@@ -304,13 +309,14 @@ public class FixedTravelAllowanceListAdapter extends ArrayAdapter<Object> {
                 renderOvernight(allowance);
             } else {
                 renderSubtitleEllipsized(allowance);
-                renderAmount(holder.tvValue, allowance.getAmount(), allowance.getCurrencyCode());
             }
+            renderAmount(holder.tvValue, allowance.getAmount(), allowance.getCurrencyCode());
         }
     }
 
     /**
      * Renders the overnight indication
+     *
      * @param allowance The fixed travel allowance holding the information
      */
     private void renderOvernight(FixedTravelAllowance allowance) {
@@ -329,6 +335,7 @@ public class FixedTravelAllowanceListAdapter extends ArrayAdapter<Object> {
      * Renders the subtitle of the given fixed travel allowance. Note: The visibility of the
      * more view is handled by the layout listener. This is necessary as we first need to
      * render the layout in order to retrieve the measure information.
+     *
      * @param allowance The travel allowance to derive the subtitle information from
      */
     private void renderSubtitleEllipsized(final FixedTravelAllowance allowance) {
@@ -349,14 +356,15 @@ public class FixedTravelAllowanceListAdapter extends ArrayAdapter<Object> {
 
     /**
      * Renders the given amount currency pair into the given text view
+     *
      * @param tvAmount The text view
-     * @param amount The amount to be rendered
-     * @param crnCode the currency code to be rendered
+     * @param amount   The amount to be rendered
+     * @param crnCode  the currency code to be rendered
      */
 
     private void renderAmount(TextView tvAmount, Double amount, String crnCode) {
 
-        if (tvAmount == null){
+        if (tvAmount == null) {
             Log.e(Const.LOG_TAG, CLS_TAG + ".renderAmount: TextView null reference!");
             return;
         }

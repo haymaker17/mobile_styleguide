@@ -205,24 +205,28 @@ public class FixedTravelAllowanceController {
             }
         }
 
-        int j = 0;
+        int groupCount = 0;
         for (MealProvision key : sortedProvisions) {
-            j++;
-            if (j > maxGroups) {
-                break;
-            }
-            int i = 0;
+
+            groupCount++;
             resultString = resultString + key + ": ";
+
+            int memberCount = 0;
             for (String value : provisionMap.get(key)) {
-                i++;
+                memberCount++;
                 resultString = resultString + value;
-                if (i < provisionMap.get(key).size()) {
+                if (memberCount < provisionMap.get(key).size()) {
                     resultString = resultString + ", ";
                 }
             }
-            if (j < sortedProvisions.size()) {
+            if (groupCount + 1 > maxGroups) {
+                break;
+            }
+
+            if (groupCount + 1 <= sortedProvisions.size()) {
                 resultString = resultString + "; ";
             }
+
         }
         return resultString;
     }

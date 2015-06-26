@@ -87,8 +87,13 @@ public class FixedTravelAllowanceTestData {
         allowances.get(12).setLocationName("@Seattle, WA@");
 
         allowances.get(13).setOvernightIndicator(true);
+        allowances.get(13).setBreakfastProvision(provided);
+        allowances.get(13).setLunchProvision(business);
         allowances.get(13).setLocationName("@New York@");
         allowances.get(14).setOvernightIndicator(true);
+        allowances.get(14).setBreakfastProvision(business);
+        allowances.get(14).setLunchProvision(business);
+        allowances.get(14).setDinnerProvision(business);
         allowances.get(14).setLocationName("@New York@");
 
     }
