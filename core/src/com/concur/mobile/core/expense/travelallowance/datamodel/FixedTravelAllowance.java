@@ -84,6 +84,12 @@ public class FixedTravelAllowance implements Serializable, Comparable<FixedTrave
 
     /**
      * Creates an instance of a FixedTravelAllowance
+     */
+    public FixedTravelAllowance() {
+
+    }
+    /**
+     * Creates an instance of a FixedTravelAllowance
      *
      * @param fixedTravelAllowanceId The identifier of this FixedTravelAllowance
      */

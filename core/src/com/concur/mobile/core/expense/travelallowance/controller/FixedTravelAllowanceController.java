@@ -1,11 +1,18 @@
 package com.concur.mobile.core.expense.travelallowance.controller;
 
 import android.content.Context;
+import android.os.AsyncTask;
+import android.os.Bundle;
+import android.os.Handler;
+import android.util.Log;
 
 import com.concur.core.R;
+import com.concur.mobile.base.service.BaseAsyncRequestTask;
+import com.concur.mobile.base.service.BaseAsyncResultReceiver;
 import com.concur.mobile.core.expense.travelallowance.datamodel.FixedTravelAllowance;
 import com.concur.mobile.core.expense.travelallowance.datamodel.FixedTravelAllowanceTestData;
 import com.concur.mobile.core.expense.travelallowance.datamodel.MealProvision;
+import com.concur.mobile.core.expense.travelallowance.service.GetTAFixedAllowancesRequest;
 import com.concur.mobile.core.expense.travelallowance.util.StringUtilities;
 
 import java.util.ArrayList;
@@ -27,6 +34,8 @@ public class FixedTravelAllowanceController {
      * requests have been answered.
      */
     private List<IServiceRequestListener> listeners;
+
+    private GetTAFixedAllowancesRequest getFixedAllowancesRequest;
 
     /**
      * Use mocked data
@@ -56,6 +65,70 @@ public class FixedTravelAllowanceController {
         this.isDataAvailable = false;
         this.context = context;
         this.listeners = new ArrayList<IServiceRequestListener>();
+    }
+
+    public void refreshFixedTravelAllowances(String expenseReportKey) {
+
+        if (useMockData) {
+            FixedTravelAllowanceTestData testData = new FixedTravelAllowanceTestData();
+            fixedTravelAllowances = testData.getAllowances(false);
+            isDataAvailable = true;
+            return;
+        }
+        if (getFixedAllowancesRequest != null && getFixedAllowancesRequest.getStatus() != AsyncTask.Status.FINISHED) {
+            // There is already an async task which is not finished yet. Return silently and let the task finish his work first.
+            return;
+        }
+        BaseAsyncResultReceiver receiver = new BaseAsyncResultReceiver(
+                new Handler());
+
+        receiver.setListener(new BaseAsyncRequestTask.AsyncReplyListener() {
+            @Override
+            public void onRequestSuccess(Bundle resultData) {
+                fixedTravelAllowances = getFixedAllowancesRequest.getFixedTravelAllowances();
+                notifyListener(false);
+                Log.d(CLASS_TAG, "Request success.");
+            }
+
+            @Override
+            public void onRequestFail(Bundle resultData) {
+                notifyListener(true);
+                Log.d(CLASS_TAG, "Request failed.");
+            }
+
+            @Override
+            public void onRequestCancel(Bundle resultData) {
+                // Not needed yet.
+                return;
+            }
+
+            @Override
+            public void cleanup() {
+                // Not needed yet.
+                return;
+            }
+        });
+
+        getFixedAllowancesRequest = new GetTAFixedAllowancesRequest(context, receiver, expenseReportKey);
+        getFixedAllowancesRequest.execute();
+    }
+
+    private synchronized void notifyListener(boolean isFailed) {
+        for(IServiceRequestListener listener : listeners) {
+            if (isFailed) {
+                listener.onRequestFail();
+            } else {
+                listener.onRequestSuccess();
+            }
+        }
+    }
+
+    public synchronized void registerListener(IServiceRequestListener listener) {
+        listeners.add(listener);
+    }
+
+    public synchronized void unregisterListener(IServiceRequestListener listener) {
+        listeners.remove(listener);
     }
 
     /**

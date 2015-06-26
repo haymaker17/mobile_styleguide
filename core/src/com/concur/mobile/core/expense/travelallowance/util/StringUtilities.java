@@ -21,4 +21,16 @@ public final class StringUtilities {
     public static boolean isNullOrEmpty(final String string) {
         return string == null || string.length() == 0;
     }
+
+    /**
+     * Converts the given character representation into its corresponding boolean
+     * @param text The text to be converted
+     * @return true, if the text is of "Y" or "y". Otherwise false.
+     */
+    public static boolean toBoolean (String text) {
+        if (text != null && text.equalsIgnoreCase("Y")) {
+            return true;
+        }
+        return false;
+    }
 }

@@ -25,6 +25,12 @@ public class LodgingType implements Comparable<LodgingType>, Serializable {
 
     /**
      * Creates a new LodgingType instance
+     */
+    public LodgingType() {
+
+    }
+    /**
+     * Creates a new LodgingType instance
      * @param code The coded representation of a lodging type e.g. "HOTEL"
      * @param codeDescription The human readable value associated with the code e.g. "Hotel"
      */
@@ -43,12 +49,30 @@ public class LodgingType implements Comparable<LodgingType>, Serializable {
     }
 
     /**
+     * Setter method
+     *
+     * @param code The code to be set
+     */
+    public void setCode(String code) {
+        this.code = code;
+    }
+
+    /**
      * Getter method
      *
      * @return The human readable value associated with the code e.g. "Hotel"
      */
     public String getCodeDescription() {
         return codeDescription;
+    }
+
+    /**
+     * Setter method
+     *
+     * @param codeDescription The description to be set
+     */
+    public void setCodeDescription(String codeDescription) {
+        this.codeDescription = codeDescription;
     }
 
     /**

@@ -14,6 +14,9 @@ public class MealProvision implements Comparable<MealProvision>, Serializable {
     private static final long serialVersionUID = -3355549333702766315L;
 
     public static final String NOT_PROVIDED_CODE = "NPR";
+
+    public static final String PROVIDED_CODE = "PRO";
+
     /**
      * The coded representation of a provision e.g. "PRO"
      */
@@ -24,6 +27,12 @@ public class MealProvision implements Comparable<MealProvision>, Serializable {
      */
     private String codeDescription;
 
+    /**
+     * Create a new MealProvision instance
+     */
+    public MealProvision() {
+
+    }
     /**
      * Creates a new MealProvision instance
      * @param code The coded representation of a provision e.g. "PRO"
@@ -44,12 +53,28 @@ public class MealProvision implements Comparable<MealProvision>, Serializable {
     }
 
     /**
+     * Setter method
+     * @param code The code to be set
+     */
+    public void setCode(String code) {
+        this.code = code;
+    }
+
+    /**
      * Getter method
      *
      * @return The human readable value associated with the code e.g. "Provided"
      */
     public String getCodeDescription() {
         return codeDescription;
+    }
+
+    /**
+     * Setter method
+     * @param codeDescription The description to be set
+     */
+    public void setCodeDescription(String codeDescription) {
+        this.codeDescription = codeDescription;
     }
 
     /**
