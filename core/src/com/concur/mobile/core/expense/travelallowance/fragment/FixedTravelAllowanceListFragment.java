@@ -4,17 +4,19 @@ import android.app.Activity;
 import android.content.Context;
 import android.os.Bundle;
 import android.support.v4.app.ListFragment;
+import android.support.v4.widget.SwipeRefreshLayout;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ListAdapter;
 import android.widget.ListView;
 import android.widget.TextView;
 
 import com.concur.core.R;
+import com.concur.mobile.core.ConcurCore;
 import com.concur.mobile.core.expense.travelallowance.controller.FixedTravelAllowanceController;
 import com.concur.mobile.core.expense.travelallowance.datamodel.FixedTravelAllowance;
-import com.concur.mobile.core.expense.travelallowance.datamodel.FixedTravelAllowanceTestData;
 import com.concur.mobile.core.expense.travelallowance.util.DateUtils;
 import com.concur.mobile.core.expense.travelallowance.util.DefaultDateFormat;
 import com.concur.mobile.core.expense.travelallowance.util.IDateFormat;
@@ -30,9 +32,11 @@ import java.util.Locale;
 /**
  * Created by D049515 on 15.06.2015.
  */
-public class FixedTravelAllowanceListFragment extends ListFragment {
+public class FixedTravelAllowanceListFragment extends ListFragment implements SwipeRefreshLayout.OnRefreshListener {
 
-    private static final String CLS_TAG = FixedTravelAllowanceListFragment.class.getSimpleName();
+    public static final String ON_REFRESH_MSG = "refreshAllowances";
+
+    private static final String CLASS_TAG = FixedTravelAllowanceListFragment.class.getSimpleName();
 
     /**
      * The list of fixed travel allowances associated with the expense report
@@ -44,15 +48,21 @@ public class FixedTravelAllowanceListFragment extends ListFragment {
      */
     private Context context;
 
+    private IFragmentCallback callback;
+
     /**
      * The date formatter
      */
     private IDateFormat dateFormatter;
 
+    private ListAdapter adapter;
+
     /**
      * The listener to be notified, whenever a fixed travel allowance is selected
      */
     private IFixedTravelAllowanceSelectedListener fixedTASelectedListener;
+
+    private SwipeRefreshLayout swipeRefreshLayout;
 
     /**
      * Container Activity to implement this interface in order to be notified
@@ -74,11 +84,13 @@ public class FixedTravelAllowanceListFragment extends ListFragment {
         this.context = this.getActivity();
         this.dateFormatter = new DefaultDateFormat(context);
 
-        //TODO: Get expense report ID from instance state and read the allowances associated
-        FixedTravelAllowanceController allowanceController = new FixedTravelAllowanceController(context);
+        ConcurCore app = (ConcurCore) context.getApplicationContext();
+        FixedTravelAllowanceController allowanceController = app.getFixedTravelAllowanceController();
+
         fixedTravelAllowances = allowanceController.getFixedTravelAllowances();
 
-        setListAdapter(new FixedTravelAllowanceListAdapter(this.getActivity(), fixedTravelAllowances));
+        this.adapter = new FixedTravelAllowanceListAdapter(this.getActivity(), fixedTravelAllowances);
+        setListAdapter(adapter);
     }
 
     /**
@@ -87,7 +99,13 @@ public class FixedTravelAllowanceListFragment extends ListFragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
 //        return super.onCreateView(inflater, container, savedInstanceState);
-        return inflater.inflate(R.layout.fixed_travel_allowance_list, container, false);
+
+        View view = inflater.inflate(R.layout.fixed_travel_allowance_list, container, false);
+
+        swipeRefreshLayout = (SwipeRefreshLayout) view.findViewById(R.id.swipe_refresh_layout);
+        swipeRefreshLayout.setOnRefreshListener(this);
+
+        return view;
     }
 
     /**
@@ -107,12 +125,27 @@ public class FixedTravelAllowanceListFragment extends ListFragment {
     public void onAttach(Activity activity) {
 
         super.onAttach(activity);
+
+        try {
+            this.callback = (IFragmentCallback) activity;
+        } catch (ClassCastException e) {
+            throw new ClassCastException(activity.toString()
+                    + " must implement IFragmentCallback") ;
+        }
+
         try {
             this.fixedTASelectedListener = (IFixedTravelAllowanceSelectedListener) activity;
         } catch (ClassCastException exception) {
-            Log.e(Const.LOG_TAG, CLS_TAG + ".onAttach: Container Activity must implement "
+            Log.e(Const.LOG_TAG, CLASS_TAG + ".onAttach: Container Activity must implement "
                     + IFixedTravelAllowanceSelectedListener.class.getSimpleName());
         }
+    }
+
+    @Override
+    public void onDetach() {
+        super.onDetach();
+        this.callback = null;
+        this.fixedTASelectedListener = null;
     }
 
     /**
@@ -131,6 +164,30 @@ public class FixedTravelAllowanceListFragment extends ListFragment {
         }
     }
 
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public void onRefresh() {
+        if (this.callback != null) {
+            this.callback.sendMessage(ON_REFRESH_MSG);
+        } else {
+            onRefreshFinished();
+        }
+    }
+
+    public void onRefreshFinished() {
+        if (swipeRefreshLayout != null) {
+            swipeRefreshLayout.setRefreshing(false);
+
+            ConcurCore app = (ConcurCore) getActivity().getApplication();
+            FixedTravelAllowanceController controller = app.getFixedTravelAllowanceController();
+            this.fixedTravelAllowances = controller.getFixedTravelAllowances();
+            adapter =  new FixedTravelAllowanceListAdapter(getActivity(),this.fixedTravelAllowances);
+            setListAdapter(adapter);
+            renderSummary();
+        }
+    }
 
     /**
      * Renders the summary w.r.t fixed travel allowances
@@ -195,7 +252,7 @@ public class FixedTravelAllowanceListFragment extends ListFragment {
     private void renderAmount(TextView tvAmount, Double amount, String crnCode) {
 
         if (tvAmount == null){
-            Log.e(Const.LOG_TAG, CLS_TAG + ".renderAmount: TextView null reference!");
+            Log.e(Const.LOG_TAG, CLASS_TAG + ".renderAmount: TextView null reference!");
             return;
         }
         if (amount != null) {

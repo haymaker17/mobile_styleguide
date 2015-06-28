@@ -60,10 +60,10 @@ public class GetTAFixedAllowancesRequest extends CoreAsyncRequestTask {
 
         // register the parser of interest
         this.parser = new GetTAFixedAllowancesResponseParser(context);
-        parser.registerParser(this.parser, "Itinerary");
+        parser.registerParser(this.parser, "FixedAllowances");
 
         try {
-            Log.d(LOG_TAG, "Start parsing itineraries...");
+            Log.d(LOG_TAG, "Start parsing fixed travel allowances...");
             parser.parse();
         } catch (XmlPullParserException e) {
             result = RESULT_ERROR;

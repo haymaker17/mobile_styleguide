@@ -27,6 +27,8 @@ import java.util.Map;
  */
 public class FixedTravelAllowanceController {
 
+    public static final String CONTROLLER_TAG = FixedTravelAllowanceController.class.getName();
+
     private static final String CLASS_TAG = FixedTravelAllowanceController.class.getSimpleName();
 
     /**
@@ -69,12 +71,12 @@ public class FixedTravelAllowanceController {
 
     public void refreshFixedTravelAllowances(String expenseReportKey) {
 
-        if (useMockData) {
-            FixedTravelAllowanceTestData testData = new FixedTravelAllowanceTestData();
-            fixedTravelAllowances = testData.getAllowances(false);
-            isDataAvailable = true;
-            return;
-        }
+//        if (useMockData) {
+//            FixedTravelAllowanceTestData testData = new FixedTravelAllowanceTestData();
+//            fixedTravelAllowances = testData.getAllowances(false);
+//            isDataAvailable = true;
+//            return;
+//        }
         if (getFixedAllowancesRequest != null && getFixedAllowancesRequest.getStatus() != AsyncTask.Status.FINISHED) {
             // There is already an async task which is not finished yet. Return silently and let the task finish his work first.
             return;
@@ -87,7 +89,11 @@ public class FixedTravelAllowanceController {
             public void onRequestSuccess(Bundle resultData) {
                 fixedTravelAllowances = getFixedAllowancesRequest.getFixedTravelAllowances();
                 notifyListener(false);
-                Log.d(CLASS_TAG, "Request success.");
+                int size = 0;
+                if (fixedTravelAllowances != null) {
+                    size = fixedTravelAllowances.size();
+                }
+                Log.d(CLASS_TAG, "Request success: Size = " + size);
             }
 
             @Override
@@ -116,9 +122,9 @@ public class FixedTravelAllowanceController {
     private synchronized void notifyListener(boolean isFailed) {
         for(IServiceRequestListener listener : listeners) {
             if (isFailed) {
-                listener.onRequestFail();
+                listener.onRequestFail(CONTROLLER_TAG);
             } else {
-                listener.onRequestSuccess();
+                listener.onRequestSuccess(CONTROLLER_TAG);
             }
         }
     }
@@ -239,12 +245,16 @@ public class FixedTravelAllowanceController {
             return StringUtilities.EMPTY_STRING;
         }
 
+        if (allowance == null) {
+            return StringUtilities.EMPTY_STRING;
+        }
+
         String resultString = StringUtilities.EMPTY_STRING;
         List<String> mealsList;
         List<MealProvision> sortedProvisions = new ArrayList<MealProvision>();
         Map<MealProvision, List<String>> provisionMap = new HashMap<MealProvision, List<String>>();
 
-        if (!StringUtilities.isNullOrEmpty(allowance.getBreakfastProvision().getCode())
+        if (allowance.getBreakfastProvision() != null && !StringUtilities.isNullOrEmpty(allowance.getBreakfastProvision().getCode())
                 && !allowance.getBreakfastProvision().getCode().equals(MealProvision.NOT_PROVIDED_CODE)) {
             mealsList = new ArrayList<String>();
             mealsList.add(context.getString(R.string.itin_breakfast));
@@ -252,7 +262,7 @@ public class FixedTravelAllowanceController {
             sortedProvisions.add(allowance.getBreakfastProvision());
         }
 
-        if (!StringUtilities.isNullOrEmpty(allowance.getLunchProvision().getCode())
+        if (allowance.getLunchProvision() != null && !StringUtilities.isNullOrEmpty(allowance.getLunchProvision().getCode())
                 && !allowance.getLunchProvision().getCode().equals(MealProvision.NOT_PROVIDED_CODE)) {
             if (provisionMap.containsKey(allowance.getLunchProvision())) {
                 mealsList = provisionMap.get(allowance.getLunchProvision());
@@ -265,7 +275,7 @@ public class FixedTravelAllowanceController {
             }
         }
 
-        if (!StringUtilities.isNullOrEmpty(allowance.getDinnerProvision().getCode())
+        if (allowance.getDinnerProvision() != null && !StringUtilities.isNullOrEmpty(allowance.getDinnerProvision().getCode())
                 && !allowance.getDinnerProvision().getCode().equals(MealProvision.NOT_PROVIDED_CODE)) {
             if (provisionMap.containsKey(allowance.getDinnerProvision())) {
                 mealsList = provisionMap.get(allowance.getDinnerProvision());

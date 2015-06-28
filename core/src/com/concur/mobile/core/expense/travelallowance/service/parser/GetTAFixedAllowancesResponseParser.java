@@ -43,6 +43,7 @@ public class GetTAFixedAllowancesResponseParser extends BaseParser {
      * @return  Returns the parsed {@link FixedTravelAllowance} list.
      */
     public List<FixedTravelAllowance> getFixedTravelAllowances() {
+
         return this.fixedTravelAllowances;
     }
 
@@ -74,19 +75,19 @@ public class GetTAFixedAllowancesResponseParser extends BaseParser {
     public void handleText(String tag, String text) {
 
         if (LODGING_TYPE_VALUES.equals(currentStartTag)) {
-            if (tag.equals("Code")) {
+            if (tag.equals("Code") && lodgingTypeCodes != null) {
                 lodgingTypeCodes.setCode(text);
             }
-            if (tag.equals("Value")) {
+            if (tag.equals("Value") && lodgingTypeCodes != null) {
                 lodgingTypeCodes.setValue(text);
             }
         }
 
         if (PROVIDED_MEAL_VALUES.equals(currentStartTag)) {
-            if (tag.equals("Code")) {
+            if (tag.equals("Code") && mealCodes != null) {
                 mealCodes.setCode(text);
             }
-            if (tag.equals("Value")) {
+            if (tag.equals("Value") && mealCodes != null) {
                 mealCodes.setValue(text);
             }
         }
@@ -115,21 +116,21 @@ public class GetTAFixedAllowancesResponseParser extends BaseParser {
                 currentAllowance.setLocationName(text);
             }
             if (tag.equals("BreakfastProvided")) {
-                if (mealCodes.containsKey(text)) {
+                if (mealCodes != null && mealCodes.containsKey(text)) {
                     currentAllowance.setBreakfastProvision(mealCodes.get(text));
                 } else {
                     currentAllowance.setBreakfastProvision(MealProvisionEnum.fromCode(text, context));
                 }
             }
             if (tag.equals("LunchProvided")) {
-                if (mealCodes.containsKey(text)) {
+                if (mealCodes != null && mealCodes.containsKey(text)) {
                     currentAllowance.setLunchProvision(mealCodes.get(text));
                 } else {
                     currentAllowance.setLunchProvision(MealProvisionEnum.fromCode(text, context));
                 }
             }
             if (tag.equals("DinnerProvided")) {
-                if (mealCodes.containsKey(text)) {
+                if (mealCodes != null && mealCodes.containsKey(text)) {
                     currentAllowance.setDinnerProvision(mealCodes.get(text));
                 } else {
                     currentAllowance.setDinnerProvision(MealProvisionEnum.fromCode(text, context));
@@ -139,7 +140,7 @@ public class GetTAFixedAllowancesResponseParser extends BaseParser {
                 currentAllowance.setOvernightIndicator(StringUtilities.toBoolean(text));
             }
             if (tag.equals("LodgingType")) {
-                if (lodgingTypeCodes.containsKey(text)) {
+                if (lodgingTypeCodes != null && lodgingTypeCodes.containsKey(text)) {
                     currentAllowance.setLodgingType(lodgingTypeCodes.get(text));
                 } else {
                     currentAllowance.setLodgingType(new LodgingType(text, StringUtilities.EMPTY_STRING));
@@ -158,10 +159,10 @@ public class GetTAFixedAllowancesResponseParser extends BaseParser {
         if (FIXED_ALLOWANCE_ROW.equals(tag)) {
             fixedTravelAllowances.add(currentAllowance);
         }
-        if (PROVIDED_MEAL.equals(tag)) {
+        if (PROVIDED_MEAL.equals(tag) && mealCodes != null) {
             mealCodes.put(new MealProvision(mealCodes.getCode(), mealCodes.getValue()));
         }
-        if (LODGING_TYPE.equals(tag)) {
+        if (LODGING_TYPE.equals(tag) && lodgingTypeCodes != null) {
             lodgingTypeCodes.put(new LodgingType(lodgingTypeCodes.getCode(), lodgingTypeCodes.getValue()));
         }
     }

@@ -60,6 +60,7 @@ import com.concur.mobile.core.expense.travelallowance.FixedAllowances;
 import com.concur.mobile.core.expense.travelallowance.Itinerary;
 import com.concur.mobile.core.expense.travelallowance.ItineraryRow;
 import com.concur.mobile.core.expense.travelallowance.TaConfig;
+import com.concur.mobile.core.expense.travelallowance.controller.FixedTravelAllowanceController;
 import com.concur.mobile.core.expense.travelallowance.controller.TravelAllowanceItineraryController;
 import com.concur.mobile.core.ipm.service.IpmReply;
 import com.concur.mobile.core.service.ConcurService;
@@ -290,7 +291,9 @@ public abstract class ConcurCore extends MultiDexApplication {
     protected ItineraryRow taItineraryRow;
     protected TaConfig taConfig;
 
+    // Controllers for Allowance and Itinerary handling
     private TravelAllowanceItineraryController taItineraryController;
+    private FixedTravelAllowanceController fixedTravelAllowanceController;
 
     // Trips for Approval
     protected List<TripToApprove> tripsToApprove;
@@ -1303,12 +1306,22 @@ public abstract class ConcurCore extends MultiDexApplication {
         this.railStationsLastRetrieved = stationsLastRetrieved;
     }
 
-
     public TravelAllowanceItineraryController getTaItineraryController() {
         if (taItineraryController == null) {
             taItineraryController = new TravelAllowanceItineraryController(this);
         }
         return taItineraryController;
+    }
+
+    /**
+     * Creates an instance of a {@link FixedTravelAllowanceController}
+     * @return The controller
+     */
+    public FixedTravelAllowanceController getFixedTravelAllowanceController() {
+        if (this.fixedTravelAllowanceController == null) {
+            this.fixedTravelAllowanceController = new FixedTravelAllowanceController(this);
+        }
+        return this.fixedTravelAllowanceController;
     }
 
     public TaConfig getTAConfig() {

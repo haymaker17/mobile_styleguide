@@ -59,7 +59,7 @@ public class TravelAllowanceItineraryListFragment extends ListFragment implement
 			callback = (IFragmentCallback) activity;
 		} catch (ClassCastException e) {
 			throw new ClassCastException(activity.toString()
-					+ " must implement IFragementCallback") ;
+					+ " must implement IFragmentCallback") ;
 		}
 	}
 

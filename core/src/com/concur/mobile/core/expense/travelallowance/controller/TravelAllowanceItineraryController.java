@@ -23,6 +23,8 @@ import java.util.List;
  */
 public class TravelAllowanceItineraryController {
 
+    public static final String CONTROLLER_TAG = TravelAllowanceItineraryController.class.getName();
+
     private static final String CLASS_TAG = TravelAllowanceItineraryController.class.getSimpleName();
 
     private List<IServiceRequestListener> listeners;
@@ -84,9 +86,9 @@ public class TravelAllowanceItineraryController {
     private synchronized void notifyListener(boolean isFailed) {
         for(IServiceRequestListener listener : listeners) {
             if (isFailed) {
-                listener.onRequestFail();
+                listener.onRequestFail(CONTROLLER_TAG);
             } else {
-                listener.onRequestSuccess();
+                listener.onRequestSuccess(CONTROLLER_TAG);
             }
         }
     }

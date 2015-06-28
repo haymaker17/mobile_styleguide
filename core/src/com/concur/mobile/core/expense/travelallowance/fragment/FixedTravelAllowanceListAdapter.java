@@ -12,6 +12,7 @@ import android.widget.ArrayAdapter;
 import android.widget.TextView;
 
 import com.concur.core.R;
+import com.concur.mobile.core.ConcurCore;
 import com.concur.mobile.core.expense.travelallowance.controller.FixedTravelAllowanceController;
 import com.concur.mobile.core.expense.travelallowance.datamodel.FixedTravelAllowance;
 import com.concur.mobile.core.expense.travelallowance.util.DefaultDateFormat;
@@ -68,8 +69,12 @@ public class FixedTravelAllowanceListAdapter extends ArrayAdapter<Object> {
     public FixedTravelAllowanceListAdapter(final Context context, List<FixedTravelAllowance> fixedTravelAllowanceList) {
         super(context, LAYOUT_ID);
         this.context = context;
+
+        ConcurCore app = (ConcurCore) context.getApplicationContext();
+        this.allowanceController = app.getFixedTravelAllowanceController();
+
         this.dateFormatter = new DefaultDateFormat(context);
-        this.allowanceController = new FixedTravelAllowanceController(context);
+        //this.allowanceController = new FixedTravelAllowanceController(context);
         addAll(allowanceController.getLocationsAndAllowances());
 
         layoutChangeListener = new View.OnLayoutChangeListener() {

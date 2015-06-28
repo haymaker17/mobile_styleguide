@@ -5,8 +5,8 @@ package com.concur.mobile.core.expense.travelallowance.controller;
  */
 public interface IServiceRequestListener {
 
-    void onRequestSuccess();
+    void onRequestSuccess(final String controllerTag);
 
-    void onRequestFail();
+    void onRequestFail(final String controllerTag);
 
 }
