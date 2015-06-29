@@ -64,6 +64,8 @@ import com.concur.mobile.core.expense.report.service.ReportEntryDetailRequest;
 import com.concur.mobile.core.expense.report.service.ReportEntryFormRequest;
 import com.concur.mobile.core.expense.service.GetExpenseTypesRequest;
 import com.concur.mobile.core.expense.travelallowance.activity.TravelAllowanceActivity;
+import com.concur.mobile.core.expense.travelallowance.controller.IServiceRequestListener;
+import com.concur.mobile.core.expense.travelallowance.controller.TravelAllowanceItineraryController;
 import com.concur.mobile.core.service.ConcurService;
 import com.concur.mobile.core.util.Const;
 import com.concur.mobile.core.util.EventTracker;
@@ -77,7 +79,8 @@ import com.concur.mobile.core.util.ViewUtil;
  * 
  * @author AndrewK
  */
-public class ExpenseEntries extends AbstractExpenseActivity {
+public class ExpenseEntries extends AbstractExpenseActivity
+                            implements IServiceRequestListener {
 
     private static final String CLS_TAG = ExpenseEntries.class.getSimpleName();
 
@@ -96,6 +99,21 @@ public class ExpenseEntries extends AbstractExpenseActivity {
     private static final String EXPENSE_TYPES = "expense.types";
 
     private static final String SELECTED_EXPENSE_TYPE = "selected.expense.type";
+
+    private TravelAllowanceItineraryController itineraryController;
+
+    @Override
+    public void onRequestSuccess(String controllerTag) {
+        ConcurCore app = (ConcurCore) getApplication();
+        if (app.getTaItineraryController() != null && app.getTaItineraryController().getItineraryList().size() > 0){
+            showTravelAllowanceButton();
+        }
+    }
+
+    @Override
+    public void onRequestFail(String controllerTag) {
+
+    }
 
     private enum ExpenseEntryOption {
         ViewDetails, ViewReceipt, RemoveFromReport, AttachSelectedGalleryReceipt, AttachSelectedCloudReceipt, AttachCapturedReceipt
@@ -245,6 +263,29 @@ public class ExpenseEntries extends AbstractExpenseActivity {
             ConcurCore app = (ConcurCore) getApplication();
             app.getTaItineraryController().refreshItineraries(expRep.reportKey, true);
             app.getFixedTravelAllowanceController().refreshFixedTravelAllowances(expRep.reportKey);
+
+//          Register Listener for Itinerary data and make button visible
+            this.itineraryController = app.getTaItineraryController();
+            this.itineraryController.registerListener(this);
+
+//          Make button visible if itinerary table isn't empty.
+            if (app.getTaItineraryController() != null  && app.getTaItineraryController().getItineraryList().size() > 0){
+                showTravelAllowanceButton();
+            }
+
+        }
+    }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        this.itineraryController.unregisterListener(this);
+    }
+
+    private void showTravelAllowanceButton(){
+        View vHeaderItinerary = this.findViewById(R.id.header_itinerary);
+        if (vHeaderItinerary != null){
+            vHeaderItinerary.setVisibility(View.VISIBLE);
         }
     }
 
