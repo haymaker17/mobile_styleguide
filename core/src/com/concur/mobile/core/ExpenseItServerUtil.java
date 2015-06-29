@@ -25,8 +25,6 @@ public class ExpenseItServerUtil {
 
     private static String installId;
 
-    public static String ConsumerKey = "7EF834BB33A779AC3A3A3AD61A4CC858";
-
     private static final String FILE_INSTALLATION_ID = "installationID";
 
     public enum Server {

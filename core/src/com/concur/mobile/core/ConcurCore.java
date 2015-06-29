@@ -838,7 +838,7 @@ public abstract class ConcurCore extends MultiDexApplication {
         ExpenseItProperties.setUserAgent(Const.HTTP_HEADER_USER_AGENT_VALUE);
 
         // set consumer Key
-        ExpenseItProperties.setConsumerKey(ExpenseItServerUtil.ConsumerKey);
+        ExpenseItProperties.setConsumerKey(expenseItServerAddress.second);
 
         ExpenseItProperties.setAppId(ExpenseItServerUtil.getAppId(appContext));
 
