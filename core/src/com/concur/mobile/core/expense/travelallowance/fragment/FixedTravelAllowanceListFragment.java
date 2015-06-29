@@ -214,6 +214,7 @@ public class FixedTravelAllowanceListFragment extends ListFragment implements Sw
         }
 
         boolean multiLocations = false;
+        //TODO: Use Controller logic
         for (FixedTravelAllowance allowance: fixedTravelAllowances) {
             if (!multiLocations && !allowance.getLocationName().equals(fixedTravelAllowances.get(0).getLocationName())) {
                 multiLocations = true;

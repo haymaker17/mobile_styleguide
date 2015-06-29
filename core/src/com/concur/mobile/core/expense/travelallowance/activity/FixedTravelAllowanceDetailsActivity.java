@@ -81,12 +81,12 @@ public class FixedTravelAllowanceDetailsActivity extends BaseActivity {
         }
     }
 
-    private void renderBreakfast(FixedTravelAllowance allowance){
+    private void renderBreakfast(FixedTravelAllowance allowance) {
         if (allowance == null) {
             return;
         }
         TextView tvProvision = (TextView) this.findViewById(R.id.tv_breakfast_provision);
-        if (tvProvision != null) {
+        if (tvProvision != null && allowance.getBreakfastProvision() != null) {
             tvProvision.setText(allowance.getBreakfastProvision().toString());
         }
     }
@@ -95,7 +95,7 @@ public class FixedTravelAllowanceDetailsActivity extends BaseActivity {
             return;
         }
         TextView tvProvision = (TextView) this.findViewById(R.id.tv_lunch_provision);
-        if (tvProvision != null) {
+        if (tvProvision != null && allowance.getLunchProvision() != null) {
             tvProvision.setText(allowance.getLunchProvision().toString());
         }
     }
@@ -105,7 +105,7 @@ public class FixedTravelAllowanceDetailsActivity extends BaseActivity {
             return;
         }
         TextView tvProvision = (TextView) this.findViewById(R.id.tv_dinner_provision);
-        if (tvProvision != null) {
+        if (tvProvision != null && allowance.getDinnerProvision() != null) {
             tvProvision.setText(allowance.getDinnerProvision().toString());
         }
     }
