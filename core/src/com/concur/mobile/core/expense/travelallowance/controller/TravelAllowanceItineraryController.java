@@ -40,6 +40,8 @@ public class TravelAllowanceItineraryController {
 
     private static final String CLASS_TAG = TravelAllowanceItineraryController.class.getSimpleName();
 
+    private BaseAsyncResultReceiver receiver;
+
     private List<IServiceRequestListener> listeners;
 
     private GetTAItinerariesRequest getItinerariesRequest;
@@ -61,8 +63,8 @@ public class TravelAllowanceItineraryController {
             return;
         }
 
-        BaseAsyncResultReceiver receiver = new BaseAsyncResultReceiver(
-                new Handler());
+        receiver = new BaseAsyncResultReceiver(new Handler());
+
         receiver.setListener(new BaseAsyncRequestTask.AsyncReplyListener() {
             @Override
             public void onRequestSuccess(Bundle resultData) {

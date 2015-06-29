@@ -10,7 +10,6 @@ import com.concur.core.R;
 import com.concur.mobile.base.service.BaseAsyncRequestTask;
 import com.concur.mobile.base.service.BaseAsyncResultReceiver;
 import com.concur.mobile.core.expense.travelallowance.datamodel.FixedTravelAllowance;
-import com.concur.mobile.core.expense.travelallowance.datamodel.FixedTravelAllowanceTestData;
 import com.concur.mobile.core.expense.travelallowance.datamodel.MealProvision;
 import com.concur.mobile.core.expense.travelallowance.service.GetTAFixedAllowancesRequest;
 import com.concur.mobile.core.expense.travelallowance.util.StringUtilities;
@@ -30,6 +29,8 @@ public class FixedTravelAllowanceController {
     public static final String CONTROLLER_TAG = FixedTravelAllowanceController.class.getName();
 
     private static final String CLASS_TAG = FixedTravelAllowanceController.class.getSimpleName();
+
+    private BaseAsyncResultReceiver receiver;
 
     /**
      * The list of registered listeners being notified from this controller as soon as data
@@ -55,34 +56,21 @@ public class FixedTravelAllowanceController {
     private List<FixedTravelAllowance> fixedTravelAllowances;
 
     /**
-     * Denotes, whether valid fixed travel allowance data is available with this object
-     */
-    private boolean isDataAvailable;
-
-    /**
      * Creates an instance and initializes the object
      */
     public FixedTravelAllowanceController(Context context) {
         this.fixedTravelAllowances = new ArrayList<FixedTravelAllowance>();
-        this.isDataAvailable = false;
         this.context = context;
         this.listeners = new ArrayList<IServiceRequestListener>();
     }
 
     public void refreshFixedTravelAllowances(String expenseReportKey) {
 
-//        if (useMockData) {
-//            FixedTravelAllowanceTestData testData = new FixedTravelAllowanceTestData();
-//            fixedTravelAllowances = testData.getAllowances(false);
-//            isDataAvailable = true;
-//            return;
-//        }
         if (getFixedAllowancesRequest != null && getFixedAllowancesRequest.getStatus() != AsyncTask.Status.FINISHED) {
             // There is already an async task which is not finished yet. Return silently and let the task finish his work first.
             return;
         }
-        BaseAsyncResultReceiver receiver = new BaseAsyncResultReceiver(
-                new Handler());
+        receiver = new BaseAsyncResultReceiver(new Handler());
 
         receiver.setListener(new BaseAsyncRequestTask.AsyncReplyListener() {
             @Override
@@ -142,9 +130,6 @@ public class FixedTravelAllowanceController {
      * @return Fixed Travel Allowance list.
      */
     public List<FixedTravelAllowance> getFixedTravelAllowances() {
-        if (!isDataAvailable) {
-            getData();
-        }
         return this.fixedTravelAllowances;
     }
 
@@ -159,10 +144,6 @@ public class FixedTravelAllowanceController {
      * data the method will return an empty list.
      */
     public List<Object> getLocationsAndAllowances() {
-
-        if (!isDataAvailable) {
-            getData();
-        }
 
         List<String> sortedLocations = new ArrayList<String>();
         List<FixedTravelAllowance> fixedTAList = new ArrayList<FixedTravelAllowance>(this.fixedTravelAllowances);
@@ -206,10 +187,6 @@ public class FixedTravelAllowanceController {
      */
     public boolean hasMultipleGroups() {
 
-        if (!isDataAvailable) {
-            getData();
-        }
-
         boolean multipleGroups = false;
         Iterator<FixedTravelAllowance> it = fixedTravelAllowances.iterator();
         while (multipleGroups == false && it.hasNext()) {
@@ -220,6 +197,20 @@ public class FixedTravelAllowanceController {
         }
 
         return multipleGroups;
+    }
+
+    /**
+     * Sums up relevant travel allowances
+     * @return The sum
+     */
+    public double getSum() {
+        double sum = 0.0;
+        for (FixedTravelAllowance allowance: fixedTravelAllowances) {
+            if (!allowance.getExcludedIndicator()) {
+                sum += allowance.getAmount();
+            }
+        }
+        return sum;
     }
 
     /**
@@ -312,16 +303,5 @@ public class FixedTravelAllowanceController {
 
         }
         return resultString;
-    }
-
-    /**
-     * Retrieves the data for fixed travel allowances
-     */
-    private void getData() {
-        if (useMockData) {
-            FixedTravelAllowanceTestData testData = new FixedTravelAllowanceTestData();
-            fixedTravelAllowances = testData.getAllowances(false);
-            isDataAvailable = true;
-        }
     }
 }

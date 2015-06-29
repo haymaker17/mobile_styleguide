@@ -244,6 +244,7 @@ public class ExpenseEntries extends AbstractExpenseActivity {
         if (expRep != null) {
             ConcurCore app = (ConcurCore) getApplication();
             app.getTaItineraryController().refreshItineraries(expRep.reportKey, true);
+            app.getFixedTravelAllowanceController().refreshFixedTravelAllowances(expRep.reportKey);
         }
     }
 

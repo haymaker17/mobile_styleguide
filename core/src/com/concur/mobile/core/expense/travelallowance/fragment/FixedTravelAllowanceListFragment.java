@@ -198,7 +198,6 @@ public class FixedTravelAllowanceListFragment extends ListFragment implements Sw
             return;
         }
 
-        double sum = 0.0;
         Date startDate;
         Date endDate;
         TextView tvTitle = (TextView) getActivity().findViewById(R.id.tv_title);
@@ -213,16 +212,11 @@ public class FixedTravelAllowanceListFragment extends ListFragment implements Sw
             tvTitle.setText(R.string.itin_total_allowance);
         }
 
-        boolean multiLocations = false;
-        //TODO: Use Controller logic
-        for (FixedTravelAllowance allowance: fixedTravelAllowances) {
-            if (!multiLocations && !allowance.getLocationName().equals(fixedTravelAllowances.get(0).getLocationName())) {
-                multiLocations = true;
-            }
-            if (!allowance.getExcludedIndicator()) {
-                sum += allowance.getAmount();
-            }
-        }
+        ConcurCore app = (ConcurCore) context.getApplicationContext();
+        FixedTravelAllowanceController allowanceController = app.getFixedTravelAllowanceController();
+        Double sum = allowanceController.getSum();
+        boolean multiLocations = allowanceController.hasMultipleGroups();
+
         Collections.sort(fixedTravelAllowances, Collections.reverseOrder());
         renderAmount(tvValue, sum, fixedTravelAllowances.get(0).getCurrencyCode());
 
