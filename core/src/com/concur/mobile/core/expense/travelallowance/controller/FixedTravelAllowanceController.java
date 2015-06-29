@@ -191,11 +191,11 @@ public class FixedTravelAllowanceController {
         Iterator<FixedTravelAllowance> it = fixedTravelAllowances.iterator();
         while (multipleGroups == false && it.hasNext()) {
             FixedTravelAllowance allowance = it.next();
-            if (allowance.getLocationName() != fixedTravelAllowances.get(0).getLocationName()) {
+            if (allowance.getLocationName() != null
+                    && !allowance.getLocationName().equals(fixedTravelAllowances.get(0).getLocationName())) {
                 multipleGroups = true;
             }
         }
-
         return multipleGroups;
     }
 
