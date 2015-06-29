@@ -96,4 +96,15 @@ public class ViewPagerAdapter extends FragmentPagerAdapter {
         }
         return null;
     }
+
+
+    public FixedTravelAllowanceListFragment getFixedTravelAllowanceFragment() {
+        List<Fragment> fragments = fm.getFragments();
+        for(Fragment fragment: fragments) {
+            if (fragment instanceof FixedTravelAllowanceListFragment) {
+                return (FixedTravelAllowanceListFragment) fragment;
+            }
+        }
+        return null;
+    }
 }
