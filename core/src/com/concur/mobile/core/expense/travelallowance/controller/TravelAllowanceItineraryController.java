@@ -19,7 +19,20 @@ import java.util.ArrayList;
 import java.util.List;
 
 /**
+ * This controller is the glue between the backend service layer and the travel allowance itinerary UI.
+ * 
+ * This controller is instantiated in {@code ConcurCore}. The instance can be referenced via getTaItineraryController().
+ * 
+ * The #refreshItineraries method start the backend service request task to refresh the itinerary list which is also managed by
+ * this controller.
+ * 
+ * Consumers can register an {@code IServiceRequestListener} to this controller. As soon as the backend service request has done
+ * his job all registered listener will be notified. The consumer can afterwards get the refreshed itinerary list via
+ * #getItineraryList.
  *
+ * The itinerary list UI needs an own UI model. The method #getCompactItineraryList transforms the data model into the UI model.
+ * 
+ * @author Patricius Komarnicki
  */
 public class TravelAllowanceItineraryController {
 
@@ -78,7 +91,7 @@ public class TravelAllowanceItineraryController {
         });
 
         getItinerariesRequest = new GetTAItinerariesRequest(context, receiver,
-                expenseReportKey, true);
+                expenseReportKey, isManager);
 
         getItinerariesRequest.execute();
     }

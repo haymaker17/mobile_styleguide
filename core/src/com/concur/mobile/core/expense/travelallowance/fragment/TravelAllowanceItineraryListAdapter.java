@@ -17,16 +17,39 @@ import android.widget.ArrayAdapter;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+/**
+ * This is the list adapter for the travel allowance itinerary list. The itinerary list is not created directly out from the
+ * travel allowance data model coming from the backend. Before the itinerary list can be build the data model needs to be
+ * transformed into a ui data model. This is done in the {@code TravelAllowanceItineraryController}. The resulting ui model is the
+ * {@code CompactItinerary}.
+ * 
+ * The adapter provides two different types of list items which have different row layouts.
+ * {@see LAYOUT_ID_HEADER}
+ * {@see LAYOUT_ID_SEGMENT}
+ * 
+ * The #HEADER_ROW represents the itinerary itself and the row shows only the itinerary name. The row layout is reused from the
+ * row layout of the fixed travel allowance list. Not needed view are set to GONE.
+ * {@see #getViewHeader}
+ * 
+ * The #ENTRY_ROW represents the itinerary segments which belongs to a specific itinerary. The corresponding row is more complex
+ * and shows information like location, dates, and icons.
+ * {@see getViewEntry}
+ * 
+ * @author Patricius Komarnicki
+ */
 public class TravelAllowanceItineraryListAdapter extends ArrayAdapter<Object> {
-	
+
+    /**
+     * The view holder for the header row which represents the itinerary.
+     */
 	private static class ViewHolderHeaderRow {
 		public TextView itineraryName;
 		public View headerDivider;
-		public View subtitle1;
-		public View subtitle2;
-		public View value;
 	}
 
+	/**
+	 * The view holder for the entry row which represents an itinerary segment.
+	 */
 	private static class ViewHolderEntryRow {
 		public TextView location;
 		public TextView fromDateTime;
@@ -39,35 +62,78 @@ public class TravelAllowanceItineraryListAdapter extends ArrayAdapter<Object> {
 		public ImageView rowIconLocation;
 	}
 
+	/**
+	 * The layout ID for the entry row (itinerary segment).
+	 */
 	private static final int LAYOUT_ID_SEGMENT = R.layout.travel_allowance_itinerary_segment_row;
+
+	/**
+	 * The layout ID for the header row (itinerary).
+	 */
 	private static final int LAYOUT_ID_HEADER = R.layout.generic_table_row_layout;
 
+	/**
+	 * Item view type ID for the header row.
+	 * {@see getItemViewType}
+	 */
 	private static final int HEADER_ROW = 0;
+
+	/**
+	 * Item view type ID for the entry row.
+	 * {@see getItemViewType}
+	 */
 	private static final int ENTRY_ROW = 1;
 
 	private Context ctx;
 
 
-	public TravelAllowanceItineraryListAdapter(Context ctx, List<CompactItinerary> stopList) {
+    /**
+     * Creates a list adapter for the travel allowance itinerary list.
+     * 
+     * @param ctx
+     *            The application context.
+     * @param itineraryList
+     *            The list of {@code CompactItinerary}s which results from a transformation of the data model. {@see
+     *            TravelAllowanceItineraryController}
+     */
+	public TravelAllowanceItineraryListAdapter(Context ctx, List<CompactItinerary> itineraryList) {
 		super(ctx, 0);
 		this.ctx = ctx;
-		addAll(createFlatList(stopList));
+		addAll(createFlatList(itineraryList));
 	}
 
-	private List<Object> createFlatList(List<CompactItinerary> stopList) {
+    /**
+     * Each itinerary has a list of segments. In order to map this to the {@code ListView} the mapping list needs to be flat. So
+     * the flat list will have two types of items. The header and the entry.
+     *
+     * {@see getItemViewType}
+     * 
+     * @param itineraryList
+     *            The itinerary list which will be flattened.
+     * @return The flat list
+     */
+	private List<Object> createFlatList(List<CompactItinerary> itineraryList) {
 		List<Object> newList = new ArrayList<Object>();
 
-		for(CompactItinerary itin : stopList) {
+		for(CompactItinerary itin : itineraryList) {
 			newList.add(itin);
-			for (CompactItinerarySegment segement : itin.getSegmentList()) {
-				newList.add(segement);
+			for (CompactItinerarySegment segment : itin.getSegmentList()) {
+				newList.add(segment);
 			}
 		}
 
 		return newList;
 	}
 
-
+    /**
+	 * Map the header fields to the corresponding views.
+	 *
+	 * @param position
+	 *            The list position
+	 * @param convertView
+	 *            The convert view needed for reuse
+	 * @return The header view for the specific header on the passed position
+     */
 	private View getViewHeader(int position, View convertView) {
 		CompactItinerary itin = (CompactItinerary) getItem(position);
 		View view = convertView;
@@ -81,10 +147,13 @@ public class TravelAllowanceItineraryListAdapter extends ArrayAdapter<Object> {
 			holder = new ViewHolderHeaderRow();
 			holder.itineraryName = (TextView) view.findViewById(R.id.tv_title);
 			holder.headerDivider = view.findViewById(R.id.v_divider_bottom);
-			holder.subtitle1 = view.findViewById(R.id.tv_subtitle_1);
-			holder.subtitle2 = view.findViewById(R.id.tv_subtitle_2);
-			holder.value = view.findViewById(R.id.tv_value);
 			view.setTag(holder);
+
+            // Make not needed views GONE
+            // Needed because the layout is a reuse and these fields are useless for this case.
+            view.findViewById(R.id.tv_subtitle_1).setVisibility(View.GONE);
+            view.findViewById(R.id.tv_subtitle_2).setVisibility(View.GONE);
+            view.findViewById(R.id.tv_value).setVisibility(View.GONE);
 		}
 
 		holder = (ViewHolderHeaderRow) view.getTag();
@@ -92,13 +161,19 @@ public class TravelAllowanceItineraryListAdapter extends ArrayAdapter<Object> {
 		holder.itineraryName.setText(itin.getName());
 		holder.itineraryName.setTextAppearance(ctx, R.style.DefaultTitle_Big);
 		holder.headerDivider.setVisibility(View.VISIBLE);
-		holder.subtitle1.setVisibility(View.GONE);
-		holder.subtitle2.setVisibility(View.GONE);
-		holder.value.setVisibility(View.GONE);
 
 		return view;
 	}
 
+	/**
+	 * Map the segment fields to the corresponding views.
+	 *
+	 * @param position
+	 *            The list position
+	 * @param convertView
+	 *            The convert view needed for reuse
+	 * @return The entry view for the specific segment on the passed position
+	 */
     private View getViewEntry(int position, View convertView) {
         CompactItinerarySegment segment = (CompactItinerarySegment) getItem(position);
         View view = convertView;
@@ -163,6 +238,10 @@ public class TravelAllowanceItineraryListAdapter extends ArrayAdapter<Object> {
         return view;
     }
 
+	/**
+	 * {@inheritDoc}
+	 *
+	 */
 	@Override
 	public View getView(int position, View convertView, ViewGroup parent) {
 
@@ -176,6 +255,10 @@ public class TravelAllowanceItineraryListAdapter extends ArrayAdapter<Object> {
 		return null;
 	}
 
+	/**
+	 * {@inheritDoc}
+	 *
+	 */
 	@Override
 	public int getItemViewType(int position) {
 		if (getItem(position) instanceof CompactItinerary) {
@@ -184,6 +267,7 @@ public class TravelAllowanceItineraryListAdapter extends ArrayAdapter<Object> {
 			return ENTRY_ROW;
 		}
 	}
+
 
     private String formatDate(Date date, boolean withYear) {
         if (withYear) {

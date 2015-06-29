@@ -1,5 +1,4 @@
 /**
- * Provides UI related classes such as activities, fragments, adapter, and views for travel
- * allowance.
+ * Provides Activity classes related to travel allowances.
  */
 package com.concur.mobile.core.expense.travelallowance.activity;
