@@ -1829,4 +1829,23 @@
   <string name="segment_phone">Telefoon</string>
   <string name="hotel_search_criteria">Zoekcriteria: binnen %%1%% %%2%% van %%3%%</string>
   <string name="td_overlay_capture_new_receipt">Een nieuwe \nnota vastleggen</string>
+
+  <!--new texts -->
+  <string name="itin_adjustments">"Correcties"</string>
+  <string name="itin_allowances">"Vergoedingen"</string>
+  <string name="itin_border_crossing">"Grensoverschrijding"</string>
+  <string name="itin_crossed_border">"Overschreden grens"</string>
+  <string name="itin_daily_allowance">"Dagelijkse vergoeding"</string>
+  <string name="itin_departed">"Vertrokken   "</string>
+  <string name="itin_excluded">"Uitgesloten"</string>
+  <string name="itin_expense_details">"Onkostendetails"</string>
+  <string name="itin_itineraries">"Reisschema’s"</string>
+  <string name="itin_lodging">"Accomodatie"</string>
+  <string name="itin_meals">"Maaltijden"</string>
+  <string name="itin_more_information">"Meer"</string>
+  <string name="itin_meal_not_provided">"Niet inbegrepen"</string>
+  <string name="itin_overnight">"Overnachting"</string>
+  <string name="itin_total_allowance">"Totale vergoeding"</string>
+  <string name="itin_travel_allowances">"Reiskostenvergoedingen"</string>
+
 </resources>
