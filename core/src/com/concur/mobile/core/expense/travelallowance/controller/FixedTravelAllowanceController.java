@@ -69,6 +69,8 @@ public class FixedTravelAllowanceController {
 
     public void refreshFixedTravelAllowances(String expenseReportKey) {
 
+        this.fixedTravelAllowances = new ArrayList<FixedTravelAllowance>();
+
         if (getFixedAllowancesRequest != null && getFixedAllowancesRequest.getStatus() != AsyncTask.Status.FINISHED) {
             // There is already an async task which is not finished yet. Return silently and let the task finish his work first.
             return;

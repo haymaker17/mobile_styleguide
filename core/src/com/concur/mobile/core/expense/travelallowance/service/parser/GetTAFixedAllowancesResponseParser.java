@@ -142,8 +142,6 @@ public class GetTAFixedAllowancesResponseParser extends BaseParser {
             if (tag.equals("LodgingType")) {
                 if (lodgingTypeCodes != null && lodgingTypeCodes.containsKey(text)) {
                     currentAllowance.setLodgingType(lodgingTypeCodes.get(text));
-                } else {
-                    currentAllowance.setLodgingType(new LodgingType(text, StringUtilities.EMPTY_STRING));
                 }
             }
         }
