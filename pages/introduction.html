@@ -9,14 +9,15 @@
 <p>The Concur Mobile styleguide is broken up by platforms. Each platform has their own requirments for design and are unique to their eco-system. As more platforms are added to Concur we (the Mobile Design team) will add them to the style guide.</p>
 <p>
 <ul class="img_block large no_hover">
-<li class="fadeinElement"><img src="img/logos/logo_apple.svg" height="50" width="50" /></li>
-<li class="fadeinElement"><img src="img/logos/logo_android.svg" height="50" width="50" /></li>
-<li class="fadeinElement"><img src="img/logos/logo_windows.svg" height="50" width="50" /></li>
+<li class="fadeinElement"><a href='#pages/ios/introduction.html?&cat=concur&parent=concur&title=Introduction'><img src="img/logos/logo_apple.svg" height="50" width="50" alt="Apple" /></a></li>
+<li class="fadeinElement"><a href='#pages/android/introduction.html?&cat=android&parent=android&title=Introduction'><img src="img/logos/logo_android.svg" height="50" width="50" alt="Android" /></a></li>
+<li class="fadeinElement"><a href='#pages/windows/introduction.html?&cat=windows&parent=windows&title=Introduction'><img src="img/logos/logo_windows.svg" height="50" width="50" alt="Windows" /></a></li>
 </ul>
 </p>
 <p>Each platform section consists of style, typography, color, icons, animation, layyout, and components. As seen in the navigation to the left.</p>
 </section>
 
+<!--
 <section>
 <h2>Platform Categories</h2>
 <p>
@@ -32,7 +33,9 @@
 </p>
 <p>Each platform section consists of style, typography, color, icons, animation, layyout, and components. As seen in the navigation to the left.</p>
 </section>
+-->
 
+<!--
 <section>
 <h2>Device Sizes</h2>
 <p><img class="img_centered" src="img/devices.png" height="324" width="453" alt="devices" /></p>
@@ -176,15 +179,38 @@
 </p>
 
 </section>
+-->
 
+
+<!--
+<section class="changelist">
+	<h4>Change Log</h4>
+	<p>
+		<div class="responsivetable">
+			<table class="changelist_body">
+			</table>
+		</div>
+	</p>
+</section>
+-->
 
 <section class="changelist">
 	<h2>Change Log</h2>
-	<a href="">Show Change Log</a>
-	<div class="changelist_body">
+		<!-- <a href="">Show Change Log</a><div class="changelist_body"> -->
+	<p>
+		<div class="responsivetable">
+			<table class="changelist_body">
+			</table>
+		</div>
+	</p>
 </section>
 
 <script>
+$(document).ready(function(){
+	getGithubCommits();
+});
+
+/*
 $(function() { 
 	$(".changelist").on("click","a", function(ev){
 		ev.preventDefault();
@@ -192,9 +218,8 @@ $(function() {
 	})
 	
 });
+*/
 </script>
-
-
 
 </div>
 

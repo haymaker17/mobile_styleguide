@@ -187,19 +187,25 @@ function setHeader(inTitle,inCategory,topCategory) {
       category = topCategory;
    }
    else {
-      category = topCategory + "  <span>&gt;</span>  " + inCategory;
+      category = topCategory + "  <span><svg class='breadcrumb_arrow_position' version='1.1' xmlns='http://www.w3.org/2000/svg' xmlns:xlink='http://www.w3.org/1999/xlink' x='0px' y='0px' width='25px' height='25px' viewBox='0 0 30 30' style='enable-background:new 0 0 30 30;' xml:space='preserve'><polygon fill='#FFFFFF' class='breadcrumb_arrow' points='7.5,0 22.5,15 7.5,30 15.6,15'/></svg></span>  " + inCategory;
    }
 
-   title = category + "  <span>&gt;</span>  " + inTitle;
+
+   title = category + "  <span><svg class='breadcrumb_arrow_position' version='1.1' xmlns='http://www.w3.org/2000/svg' xmlns:xlink='http://www.w3.org/1999/xlink' x='0px' y='0px' width='25px' height='25px' viewBox='0 0 30 30' style='enable-background:new 0 0 30 30;' xml:space='preserve'><polygon fill='#FFFFFF' class='breadcrumb_arrow' points='7.5,0 22.5,15 7.5,30 15.6,15'/></svg></span>  " + inTitle;
+
+   //title = category + "  <span><img id='breadcrumb_arrow' src='img/icons_web/breadcrumb_arrow.svg' height='30' width='30'></span>  " + inTitle;
+   // title = category + "  <span>&rsaquo;</span>  " + inTitle;
 
    $("#header_title").html(title);
+   $("#breadcrumb_header_title").html(title);
    $("#body").removeClass().addClass(topCategory);
 }  
 
 
 // get the commit notes from github so there's a changelist on the site
 function getGithubCommits() {
-  var html = "<ul>";
+  var html = "<thead><tr><th>Date</th><th>Description</th></tr></thead><tbody>";
+  //  var html = "<ul>";
   $.getJSON("https://api.github.com/repos/haymaker17/mobile_labs/commits", function(data){
     $.each(data, function(key, val){
       var item = data[key];
@@ -215,11 +221,12 @@ function getGithubCommits() {
       var date = (m + "." + d + "." + y);
 
 
-
-      html+= "<li>" + date + "<br><span>" + message + "</span></li>";
+	  html+= "<tr><td>" + date + "</td><td>" + message + "</td></tr>";
+      // html+= "<li>" + date + "<br><span>" + message + "</span></li>";
     });
 
-    html += "</ul>"
+    html += "</tbody>"
+    // html += "</ul>"
 
     $(".changelist_body").html(html);
   });
