@@ -12,10 +12,13 @@ import com.concur.mobile.base.service.BaseAsyncResultReceiver;
 import com.concur.mobile.core.expense.travelallowance.datamodel.FixedTravelAllowance;
 import com.concur.mobile.core.expense.travelallowance.datamodel.MealProvision;
 import com.concur.mobile.core.expense.travelallowance.service.GetTAFixedAllowancesRequest;
+import com.concur.mobile.core.expense.travelallowance.util.DateUtils;
+import com.concur.mobile.core.expense.travelallowance.util.IDateFormat;
 import com.concur.mobile.core.expense.travelallowance.util.StringUtilities;
 
 import java.util.ArrayList;
 import java.util.Collections;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
@@ -211,6 +214,24 @@ public class FixedTravelAllowanceController {
             }
         }
         return sum;
+    }
+
+    /**
+     * Returns a string representing the allowance period
+     * @param dateFormatter To format the dates
+     * @return
+     */
+    public String getPeriod(IDateFormat dateFormatter) {
+
+        List<FixedTravelAllowance> sortedList = new ArrayList<FixedTravelAllowance>(this.fixedTravelAllowances);
+        Date startDate;
+        Date endDate;
+
+        Collections.sort(sortedList, Collections.reverseOrder());
+        startDate = sortedList.get(0).getDate();
+        endDate = sortedList.get(sortedList.size() - 1).getDate();
+
+        return DateUtils.startEndDateToString(startDate, endDate, dateFormatter, false, true, true);
     }
 
     /**

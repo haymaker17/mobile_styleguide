@@ -17,31 +17,23 @@ import com.concur.core.R;
 import com.concur.mobile.core.ConcurCore;
 import com.concur.mobile.core.expense.travelallowance.controller.FixedTravelAllowanceController;
 import com.concur.mobile.core.expense.travelallowance.datamodel.FixedTravelAllowance;
-import com.concur.mobile.core.expense.travelallowance.util.DateUtils;
 import com.concur.mobile.core.expense.travelallowance.util.DefaultDateFormat;
 import com.concur.mobile.core.expense.travelallowance.util.IDateFormat;
 import com.concur.mobile.core.expense.travelallowance.util.StringUtilities;
 import com.concur.mobile.core.util.Const;
 import com.concur.mobile.core.util.FormatUtil;
 
-import java.util.Collections;
-import java.util.Date;
 import java.util.List;
 import java.util.Locale;
 
 /**
- * Created by D049515 on 15.06.2015.
+ * Created by Patricius Komarnicki on 15.06.2015.
  */
 public class FixedTravelAllowanceListFragment extends ListFragment implements SwipeRefreshLayout.OnRefreshListener {
 
     public static final String ON_REFRESH_MSG = "refreshAllowances";
 
     private static final String CLASS_TAG = FixedTravelAllowanceListFragment.class.getSimpleName();
-
-    /**
-     * The list of fixed travel allowances associated with the expense report
-     */
-    private List<FixedTravelAllowance> fixedTravelAllowances;
 
     /**
      * The activity context
@@ -87,9 +79,7 @@ public class FixedTravelAllowanceListFragment extends ListFragment implements Sw
         ConcurCore app = (ConcurCore) context.getApplicationContext();
         FixedTravelAllowanceController allowanceController = app.getFixedTravelAllowanceController();
 
-        fixedTravelAllowances = allowanceController.getFixedTravelAllowances();
-
-        this.adapter = new FixedTravelAllowanceListAdapter(this.getActivity(), fixedTravelAllowances);
+        this.adapter = new FixedTravelAllowanceListAdapter(this.getActivity(), allowanceController.getFixedTravelAllowances());
         setListAdapter(adapter);
     }
 
@@ -182,8 +172,7 @@ public class FixedTravelAllowanceListFragment extends ListFragment implements Sw
 
             ConcurCore app = (ConcurCore) getActivity().getApplication();
             FixedTravelAllowanceController controller = app.getFixedTravelAllowanceController();
-            this.fixedTravelAllowances = controller.getFixedTravelAllowances();
-            adapter =  new FixedTravelAllowanceListAdapter(getActivity(),this.fixedTravelAllowances);
+            adapter =  new FixedTravelAllowanceListAdapter(getActivity(), controller.getFixedTravelAllowances());
             setListAdapter(adapter);
             renderSummary();
         }
@@ -194,12 +183,17 @@ public class FixedTravelAllowanceListFragment extends ListFragment implements Sw
      */
     private void renderSummary() {
 
-        if (fixedTravelAllowances == null || fixedTravelAllowances.size() == 0 || getActivity() == null) {
+        if ( getActivity() == null) {
             return;
         }
 
-        Date startDate;
-        Date endDate;
+        ConcurCore app = (ConcurCore) context.getApplicationContext();
+        FixedTravelAllowanceController allowanceController = app.getFixedTravelAllowanceController();
+        List<FixedTravelAllowance> allowances = allowanceController.getFixedTravelAllowances();
+        if (allowances == null || allowances.size() == 0) {
+            return;
+        }
+
         TextView tvTitle = (TextView) getActivity().findViewById(R.id.tv_title);
         TextView tvValue = (TextView) getActivity().findViewById(R.id.tv_value);
         TextView tvSubtitle1 = (TextView) getActivity().findViewById(R.id.tv_subtitle_1);
@@ -212,30 +206,23 @@ public class FixedTravelAllowanceListFragment extends ListFragment implements Sw
             tvTitle.setText(R.string.itin_total_allowance);
         }
 
-        ConcurCore app = (ConcurCore) context.getApplicationContext();
-        FixedTravelAllowanceController allowanceController = app.getFixedTravelAllowanceController();
         Double sum = allowanceController.getSum();
         boolean multiLocations = allowanceController.hasMultipleGroups();
-
-        Collections.sort(fixedTravelAllowances, Collections.reverseOrder());
-        renderAmount(tvValue, sum, fixedTravelAllowances.get(0).getCurrencyCode());
+        renderAmount(tvValue, sum, allowances.get(0).getCurrencyCode());
 
         if (tvSubtitle2 != null) {
             if (multiLocations) {
                 tvSubtitle2.setVisibility(View.GONE);
             } else {
-                tvSubtitle2.setText(fixedTravelAllowances.get(0).getLocationName());
+                tvSubtitle2.setText(allowances.get(0).getLocationName());
             }
-
         }
 
-        startDate = fixedTravelAllowances.get(0).getDate();
-        endDate = fixedTravelAllowances.get(fixedTravelAllowances.size() - 1).getDate();
         if (tvSubtitle1 != null) {
-            tvSubtitle1.setText(DateUtils.startEndDateToString(startDate, endDate, dateFormatter, false, true, true));
+            tvSubtitle1.setText(allowanceController.getPeriod(dateFormatter));
         }
 
-        renderAmount(tvValue, sum,  fixedTravelAllowances.get(0).getCurrencyCode());
+        renderAmount(tvValue, sum, allowances.get(0).getCurrencyCode());
     }
 
     /**
