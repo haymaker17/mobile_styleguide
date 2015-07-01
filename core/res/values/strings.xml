@@ -113,9 +113,9 @@
     <string name="pin_create_invalid_device_message">The PIN reset was requested from another device. Please use the same device from which you requested PIN reset.</string>
     <string name="account_locked">Account Locked</string>
     <string name="account_locked_message">We are unable to sign you in at this time.  Please contact your company\'s help desk or travel/expense department.</string>
-    <string name="sso_sign_in_title">Sign in with company code (SSO)</string>
-    <string name="sso_sign_in_sub_title">If your company has issued a company code, enter it here.</string>
-    <string name="sso_sign_in_hint_text">Company Code</string>
+    <string name="sso_sign_in_title">Sign in with SSO</string>
+    <string name="sso_sign_in_sub_title">Use SSO if your company has issued an SSO a company code.</string>
+    <string name="sso_sign_in_hint_text">Enter SSO Company Code</string>
     <string name="sso_sign_in_footer_text">If you don\'t know if you need a company code, check with your company administrator.</string>
     <string name="sso_sign_in_company_code_error_message">Wrong company code: Please enter your company code.</string>
     <string name="sso_sign_in_company_code_error_title">Company Code</string>
@@ -1928,7 +1928,7 @@
 <string name="universal_tour_expense">Submit your expenses</string>
 <string name="universal_tour_expense_more">and get reimbursed.</string>
 <string name="universal_tour_feature_text">Features depend on your company configuration.</string>
-<string name="test_drive_registration">Test Drive</string>
+<string name="test_drive_registration">Not a member yet? Try Test Drive</string>
 <string name="test_drive_help">Learn more about Concur</string>
 <string name="test_drive">&lt;big>Test Drive&lt;/big></string>
 <string name="test_drive_limited_text">has limited Concur Mobile functionality</string>

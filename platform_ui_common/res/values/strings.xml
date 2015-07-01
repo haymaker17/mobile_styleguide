@@ -48,6 +48,7 @@
     <string name="dlg_dependent_field_value_title">Dependent Field Value</string>
     <string name="dlg_dependent_field_value_message">Please fill in parent field \'%%0%%\' first.</string>
     <string name="swipe_for_more">Swipe for more</string>
+    <string name="or">OR</string>
 
     <!-- Network Connectivity stuff. -->
     <string name="dlg_no_connectivity_title">Client Is Offline</string>
@@ -62,6 +63,7 @@
     <string name="email_lookup_unable_to_login_msg">We are unable to sign you in with this information.</string>
     <string name="email_lookup_wrong_email_format_title">Invalid Email or Username</string>
     <string name="email_lookup_wrong_email_username_format_msg">Your entry does not appear to be a valid email or Concur username.</string>
+    <string name="email_lookup_label">Sign in to Concur</string>
 
     <!-- PIN/Password Login Strings -->
     <string name="login_enter_password_pin">Mobile Password (PIN)</string>

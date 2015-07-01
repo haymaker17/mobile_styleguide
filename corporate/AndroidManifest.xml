@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <!-- The version lines below need to remain on separate lines for CM build purposes. -->
 
-<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+<manifest package="com.concur.breeze"
+          xmlns:android="http://schemas.android.com/apk/res/android"
           xmlns:tools="http://schemas.android.com/tools"
-          package="com.concur.breeze"
           android:installLocation="internalOnly">
 
     <supports-screens
@@ -55,17 +55,17 @@
 
     <application
         android:name="com.concur.mobile.corp.ConcurMobile"
-        tools:replace="theme, allowBackup, icon, label"
         android:allowBackup="false"
         android:icon="@drawable/launch"
         android:label="@string/corporate_name"
         android:logo="@drawable/concur_logo"
-        android:theme="@style/ConcurTheme">
+        android:theme="@style/ConcurTheme"
+        tools:replace="theme, allowBackup, icon, label">
         <activity
             android:name="com.concur.mobile.corp.activity.SimpleWebViewActivity"
+            android:parentActivityName="com.concur.mobile.corp.activity.Home"
             android:screenOrientation="portrait"
-            android:theme="@style/ConcurBaseTheme.White.New"
-            android:parentActivityName="com.concur.mobile.corp.activity.Home">
+            android:theme="@style/ConcurBaseTheme.White.New">
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value="com.concur.mobile.corp.activity.Home"/>
@@ -74,7 +74,7 @@
             android:name="com.concur.mobile.corp.activity.Startup"
             android:icon="@drawable/launch"
             android:label="@string/corporate_name"
-            android:theme="@style/ConcurTheme.Translucent.NoActionBar">
+            android:theme="@style/ConcurTheme.Translucent.NoActionBar.Material">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN"/>
 
@@ -90,7 +90,7 @@
             android:theme="@style/ConcurBaseTheme.White.New"/>
         <activity
             android:name="com.concur.mobile.corp.activity.CompanyCodeLoginActivity"
-            android:theme="@style/ConcurBaseTheme.White.New"
+            android:theme="@style/ConcurTheme.NoActionBar"
             android:windowSoftInputMode="adjustResize"/>
         <activity
             android:name="com.concur.mobile.corp.activity.CompanySignOnActivity"
@@ -98,10 +98,10 @@
         <activity android:name="com.concur.mobile.corp.activity.Register"/>
         <activity
             android:name="com.concur.mobile.corp.activity.LoginHelp"
-            android:theme="@style/ConcurBaseTheme.New"/>
+            android:theme="@style/ConcurTheme.NoActionBar"/>
         <activity
             android:name="com.concur.mobile.corp.activity.LoginHelpTopic"
-            android:theme="@style/ConcurBaseTheme.New"/>
+            android:theme="@style/ConcurTheme.NoActionBar"/>
         <activity
             android:name="com.concur.mobile.corp.activity.MobilePasswordSet"
             android:theme="@style/ConcurBaseTheme.New"/>
@@ -187,8 +187,8 @@
             android:windowSoftInputMode="adjustResize"/>
         <activity
             android:name="com.concur.mobile.core.travel.hotel.activity.RestHotelSearch"
-            android:theme="@style/ConcurRestTheme.White.ActionBarTabs"
             android:screenOrientation="portrait"
+            android:theme="@style/ConcurRestTheme.White.ActionBarTabs"
             android:windowSoftInputMode="adjustResize"/>
         <activity
             android:name="com.concur.mobile.platform.ui.travel.hotel.activity.HotelSearchAndResultActivity"
@@ -460,14 +460,14 @@
             android:name="com.concur.mobile.corp.activity.UniversalTour"
             android:theme="@style/ConcurBaseTheme.New">
         </activity>
-        <activity
-            android:name="com.concur.mobile.corp.activity.PreLogin"
-            android:theme="@style/ConcurTheme.NoActionBar">
-        </activity>
+        <!--<activity-->
+            <!--android:name="com.concur.mobile.corp.activity.PreLogin"-->
+            <!--android:theme="@style/ConcurTheme.NoActionBar">-->
+        <!--</activity>-->
         <activity
             android:name="com.concur.mobile.corp.activity.TestDriveRegistration"
             android:configChanges="orientation"
-            android:theme="@style/ConcurBaseTheme.New">
+            android:theme="@style/ConcurTheme.NoActionBar">
         </activity>
         <activity
             android:name="com.concur.mobile.corp.activity.TestDriveTour"
@@ -478,19 +478,23 @@
             android:theme="@style/ConcurBaseTheme.White.New">
         </activity>
         <activity
-            android:name="com.concur.mobile.corp.activity.OpenSourceLicenseInfo"
-            android:theme="@style/ConcurBaseTheme">
-        </activity>
-        <activity
-            android:name="com.concur.mobile.corp.activity.OpenSourceLicenseDisplay"
-            android:theme="@style/ConcurBaseTheme">
-        </activity>
-        <activity
-            android:name="com.concur.mobile.corp.activity.ProfileInfo"
-            android:theme="@style/ConcurBaseTheme.New">
-        </activity>
+            android:name="com.concur.mobile.corp.activity.EmailPasswordActivity"
+            android:theme="@style/ConcurTheme.NoActionBar">
+    </activity>
+    <activity
+        android:name="com.concur.mobile.corp.activity.OpenSourceLicenseInfo"
+        android:theme="@style/ConcurBaseTheme">
+    </activity>
+    <activity
+        android:name="com.concur.mobile.corp.activity.OpenSourceLicenseDisplay"
+        android:theme="@style/ConcurBaseTheme">
+    </activity>
+    <activity
+        android:name="com.concur.mobile.corp.activity.ProfileInfo"
+        android:theme="@style/ConcurBaseTheme.New">
+    </activity>
 
-        <!-- Providers -->
+    <!-- Providers -->
         <!-- Configuration Information Provider -->
         <provider
             android:name="com.concur.mobile.platform.config.provider.ConfigProvider"

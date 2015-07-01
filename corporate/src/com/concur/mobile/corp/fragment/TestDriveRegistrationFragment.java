@@ -1,9 +1,5 @@
 package com.concur.mobile.corp.fragment;
 
-import java.util.HashMap;
-import java.util.Locale;
-import java.util.Map;
-
 import android.app.Activity;
 import android.content.Context;
 import android.content.DialogInterface;
@@ -12,7 +8,6 @@ import android.graphics.Typeface;
 import android.os.Bundle;
 import android.os.Handler;
 import android.support.v4.app.FragmentActivity;
-import android.support.v7.app.ActionBar;
 import android.text.Html;
 import android.text.TextUtils;
 import android.text.method.LinkMovementMethod;
@@ -42,12 +37,16 @@ import com.concur.mobile.core.util.Flurry;
 import com.concur.mobile.core.util.FormUtil;
 import com.concur.mobile.core.util.ViewUtil;
 import com.concur.mobile.corp.ConcurMobile;
-import com.concur.mobile.corp.activity.EmailLookupActivity;
+import com.concur.mobile.corp.activity.EmailPasswordActivity;
 import com.concur.mobile.corp.activity.TestDriveTour;
 import com.concur.mobile.corp.service.TestDriveRegistrationAsyncTask;
 import com.concur.mobile.platform.ui.common.IProgressBarListener;
 import com.concur.mobile.platform.ui.common.dialog.NoConnectivityDialogFragment;
 import com.concur.mobile.platform.ui.common.login.EmailLookupFragment;
+
+import java.util.HashMap;
+import java.util.Locale;
+import java.util.Map;
 
 public class TestDriveRegistrationFragment extends BaseFragment implements OnClickListener {
 
@@ -71,13 +70,6 @@ public class TestDriveRegistrationFragment extends BaseFragment implements OnCli
         super.onCreateView(inflater, container, savedInstanceState);
 
         View root = inflater.inflate(R.layout.test_drive_registration, null);
-
-        // Tweak the action bar
-        final ActionBar actionBar = getBaseActivity().getSupportActionBar();
-        actionBar.setBackgroundDrawable(getResources().getDrawable(R.drawable.actionbar_white_background));
-        actionBar.setDisplayOptions(ActionBar.DISPLAY_SHOW_HOME | ActionBar.DISPLAY_USE_LOGO,
-                ActionBar.DISPLAY_SHOW_HOME | ActionBar.DISPLAY_USE_LOGO | ActionBar.DISPLAY_SHOW_TITLE);
-        actionBar.setLogo(R.drawable.concurlogo);
 
         // set email and password
         emailView = (EditText) root.findViewById(R.id.test_drive_email);
@@ -142,14 +134,14 @@ public class TestDriveRegistrationFragment extends BaseFragment implements OnCli
         strbldr.append(' ');
 
         // append terms
-        strbldr.append("<font color=#A9DEFF> <a href=").append(TERMS_LINK).append(">").append(terms)
+        strbldr.append("<font color=#0078C8> <a href=").append(TERMS_LINK).append(">").append(terms)
                 .append("</a> </font>");
 
         // append and
         strbldr.append(' ').append("<br/>").append(and);
 
         // append policy
-        strbldr.append("<font color=#A9DEFF> <a href=").append(POLICY_LINK).append(">").append(policy)
+        strbldr.append("<font color=#0078C8> <a href=").append(POLICY_LINK).append(">").append(policy)
                 .append("</a> </font>.");
 
         tacView.setMovementMethod(LinkMovementMethod.getInstance());
@@ -392,7 +384,7 @@ public class TestDriveRegistrationFragment extends BaseFragment implements OnCli
             }
 
             public void onClick(FragmentActivity activity, DialogInterface dialog, int which) {
-                Intent it = new Intent(activity, EmailLookupActivity.class);
+                Intent it = new Intent(activity,  EmailPasswordActivity.class);
                 it.putExtra(Const.EXTRA_LOGIN_LAUNCHED_FROM_TEST_DRIVE_REGISTRATION, true);
 
                 TestDriveRegistrationFragment.this.activity.setResult(Activity.RESULT_OK);

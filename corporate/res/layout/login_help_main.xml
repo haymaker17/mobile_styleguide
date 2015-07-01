@@ -2,7 +2,7 @@
 <ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="fill_parent"
     android:layout_height="match_parent"
-    android:background="@drawable/blue_background"
+    android:background="@color/MaterialWhite"
     android:fadingEdgeLength="20dp"
     android:paddingBottom="@dimen/navigation_item_padding_bottom"
     android:paddingLeft="@dimen/navigation_item_padding_left"
@@ -23,7 +23,7 @@
             android:gravity="center_horizontal"
             android:text="@string/login_help_email_prompt"
             android:textAppearance="@style/TourSmallSecondaryText"
-            android:textColor="@color/White" />
+            android:textColor="@color/MaterialDarkGray" />
 
         <EditText
             android:id="@+id/email"
@@ -31,19 +31,20 @@
             android:layout_height="wrap_content"
             android:layout_gravity="center"
             android:layout_marginTop="12dp"
-            android:background="@drawable/square_no_border"
+            android:textColor="@color/MaterialConcurBlue"
+            android:textSize="14dp"
             android:hint="@string/login_help_email_hint"
+            android:backgroundTint="@color/MaterialConcurBlue"
             android:imeOptions="actionGo"
-            android:inputType="textEmailAddress"
             android:padding="10dp"
-            android:textAppearance="@style/PrimaryText" />
+            android:inputType="textEmailAddress|textAutoComplete|textAutoCorrect|textNoSuggestions|textFilter|textVisiblePassword" />
 
         <View
             android:layout_width="fill_parent"
             android:layout_height="3dp"
             android:layout_marginLeft="1dp"
             android:layout_marginRight="1dp"
-            android:background="@drawable/square_border_shadow" />
+           />
 
         <Button
             android:id="@+id/submitButton"

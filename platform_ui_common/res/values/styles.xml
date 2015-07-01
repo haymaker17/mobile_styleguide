@@ -212,22 +212,22 @@
         <item name="android:textColor">@color/White</item>
         <item name="android:height">@dimen/standard_button_height</item>
     </style>
-    
-	<style name="TransparantButton">
+
+    <style name="TransparantButton">
         <item name="android:textSize">16sp</item>
         <item name="android:minWidth">@dimen/standard_button_min_width</item>
         <item name="android:background">@drawable/btn_transparent_standard</item>
         <item name="android:height">@dimen/standard_button_height</item>
         <item name="android:textColor">@color/btn_transparent_text</item>
-    </style>    
-    
-	<!-- Universal tour and new  login -->
+    </style>
+
+    <!-- Universal tour and new  login -->
     <style name="TourPrimaryText" parent="PrimaryText">
         <item name="android:textColor">@color/White</item>
         <item name="android:textSize">20sp</item>
     </style>
-    	
-	<style name="TourSmallPrimaryText" parent="TourPrimaryText">
+
+    <style name="TourSmallPrimaryText" parent="TourPrimaryText">
         <item name="android:textSize">16sp</item>
     </style>
 
@@ -258,16 +258,70 @@
         <item name="android:textStyle">normal</item>
     </style>
     <!-- End Tour Styles. -->
-    
-    
+
+
     <!-- Offline Header Styles -->
-    
+
     <style name="OfflineHeaderText" parent="PrimaryText">
         <item name="android:textSize">22sp</item>
         <item name="android:textStyle">normal</item>
         <item name="android:textColor">@color/White</item>
-    </style>    
-    
+    </style>
+
     <!-- END Offline Header Styles -->
-    
+
+    <style name="MaterialDesignTheme_Login" parent="Theme.AppCompat.Light.DarkActionBar">
+        <item name="colorPrimaryDark">@color/MaterialDarkBlue</item>
+        <item name="colorPrimary">@color/MaterialConcurBlue</item>
+        <item name="colorAccent">@color/MaterialConcurBlue</item>
+    </style>
+
+    <style name="ConcurBaseTheme.NoActionBar.Material" parent="ConcurBaseTheme.NoActionBar">
+        <item name="android:windowBackground">@color/MaterialWhite</item>
+        <item name="colorAccent">@color/MaterialConcurBlue</item>
+    </style>
+
+    <style name="ConcurTheme.Translucent.NoActionBar.Material" parent="ConcurBaseTheme.Translucent.NoActionBar">
+        <item name="android:windowBackground">@color/MaterialWhite</item>
+        <item name="colorAccent">@color/MaterialConcurBlue</item>
+    </style>
+
+    <style name="TestRegPrimary_Material">
+        <item name="android:textSize">18sp</item>
+        <item name="android:textColor">@color/MaterialConcurBlue</item>
+    </style>
+
+    <style name="TestRegSecondary_Material">
+        <item name="android:textSize">14sp</item>
+        <item name="android:textColor">@color/MaterialDarkGray</item>
+    </style>
+
+    <style name="TourSubHeaderBold_Material">
+        <item name="android:textSize">14sp</item>
+        <item name="android:textStyle">bold</item>
+        <item name="android:textColor">@color/MaterialConcurBlue</item>
+    </style>
+
+    <style name="TourSubHeaderTextNormal_Material">
+        <item name="android:textSize">14sp</item>
+        <item name="android:textStyle">normal</item>
+        <item name="android:textColor">@color/MaterialConcurBlue</item>
+    </style>
+
+    <style name="TransparantButton_Material">
+        <item name="android:textSize">16sp</item>
+        <item name="android:minWidth">@dimen/standard_button_min_width</item>
+        <item name="android:background">@drawable/btn_transparent_standard_material</item>
+        <item name="android:height">@dimen/standard_button_height</item>
+        <item name="android:textColor">@color/btn_transparent_text</item>
+    </style>
+
+    <style name="StandardBlueButton_Material">
+        <item name="android:textSize">18sp</item>
+        <item name="android:minWidth">@dimen/standard_button_min_width</item>
+        <item name="android:background">@drawable/btn_blue_standard_material</item>
+        <item name="android:textColor">@color/MaterialWhite</item>
+        <item name="android:height">@dimen/standard_button_height</item>
+    </style>
+
 </resources>

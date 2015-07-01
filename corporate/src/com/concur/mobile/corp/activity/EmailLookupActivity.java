@@ -9,7 +9,6 @@ import android.preference.PreferenceManager;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
 import android.text.TextUtils;
-import android.util.Log;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
@@ -27,16 +26,13 @@ import com.concur.mobile.core.util.UserAndSessionInfoUtil;
 import com.concur.mobile.platform.authentication.EmailLookUpRequestTask;
 import com.concur.mobile.platform.authentication.SessionInfo;
 import com.concur.mobile.platform.config.provider.ConfigUtil;
-import com.concur.mobile.platform.service.PlatformAsyncRequestTask;
 import com.concur.mobile.platform.ui.common.IProgressBarListener;
-import com.concur.mobile.platform.ui.common.dialog.DialogFragmentFactory;
 import com.concur.mobile.platform.ui.common.fragment.PlatformFragment;
 import com.concur.mobile.platform.ui.common.login.EmailLookupFragment;
 import com.concur.mobile.platform.ui.common.login.EmailLookupFragment.EmailLookupCallbacks;
 import com.concur.platform.PlatformProperties;
 
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
 
 @EventTracker.EventTrackerClassName(getClassName = "Email Lookup")
@@ -62,10 +58,10 @@ public class EmailLookupActivity extends BaseActivity implements IProgressBarLis
         super.onCreate(savedInstanceState);
         setContentView(R.layout.test_drive_main);
 
-        if(ConcurCore.userEntryAppTimer>0L){
-            ConcurCore.userEntryAppTimer+=System.currentTimeMillis();
-        }else{
-            ConcurCore.userEntryAppTimer=System.currentTimeMillis();
+        if (ConcurCore.userEntryAppTimer > 0L) {
+            ConcurCore.userEntryAppTimer += System.currentTimeMillis();
+        } else {
+            ConcurCore.userEntryAppTimer = System.currentTimeMillis();
         }
         // Enable the progress mask if needed
         if (savedInstanceState != null) {
@@ -167,13 +163,11 @@ public class EmailLookupActivity extends BaseActivity implements IProgressBarLis
                 setResult(Activity.RESULT_OK);
                 finish();
             }
-        }else {
-            if(ConcurCore.userEntryAppTimer>0L){
-                ConcurCore.userEntryAppTimer+=System.currentTimeMillis();
-                Log.d(">>>>>>>> " + Const.LOG_TAG + " >>>>>> ", " Total Time EmailLookup time = " + ConcurCore.userEntryAppTimer);
-            }else{
-                ConcurCore.userEntryAppTimer=System.currentTimeMillis();
-                Log.d(">>>>>>>> "+Const.LOG_TAG + " >>>>>> ", " Total Time EmailLookup  time = " + ConcurCore.userEntryAppTimer);
+        } else {
+            if (ConcurCore.userEntryAppTimer > 0L) {
+                ConcurCore.userEntryAppTimer += System.currentTimeMillis();
+            } else {
+                ConcurCore.userEntryAppTimer = System.currentTimeMillis();
             }
         }
 
@@ -200,11 +194,11 @@ public class EmailLookupActivity extends BaseActivity implements IProgressBarLis
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {
-        case R.id.menuSettings:
-            Intent i = new Intent(this, Preferences.class);
-            i.putExtra(Preferences.OPEN_SOURCE_LIBRARY_CLASS, OpenSourceLicenseInfo.class);
-            startActivity(i);
-            break;
+            case R.id.menuSettings:
+                Intent i = new Intent(this, Preferences.class);
+                i.putExtra(Preferences.OPEN_SOURCE_LIBRARY_CLASS, OpenSourceLicenseInfo.class);
+                startActivity(i);
+                break;
         }
         return super.onOptionsItemSelected(item);
     }
@@ -235,10 +229,10 @@ public class EmailLookupActivity extends BaseActivity implements IProgressBarLis
         Bundle loginBundle = resultData;
         if (signInMethod.equalsIgnoreCase(com.concur.mobile.platform.ui.common.util.Const.LOGIN_METHOD_PASSWORD)
                 || (signInMethod
-                        .equalsIgnoreCase(com.concur.mobile.platform.ui.common.util.Const.LOGIN_METHOD_MOBILE_PASSWORD))) {
-            Intent it = new Intent(this, LoginPasswordActivity.class);
-            it.putExtra(EmailLookUpRequestTask.EXTRA_LOGIN_BUNDLE, loginBundle);
-            startActivityForResult(it, LOGIN_PASSWORD_REQ_CODE);
+                .equalsIgnoreCase(com.concur.mobile.platform.ui.common.util.Const.LOGIN_METHOD_MOBILE_PASSWORD))) {
+            //Intent it = new Intent(this, LoginPasswordActivity.class);
+            //it.putExtra(EmailLookUpRequestTask.EXTRA_LOGIN_BUNDLE, loginBundle);
+            //startActivityForResult(it, LOGIN_PASSWORD_REQ_CODE);
         } else if (signInMethod.equalsIgnoreCase(com.concur.mobile.platform.ui.common.util.Const.LOGIN_METHOD_SSO)
                 && !TextUtils.isEmpty(ssoUrl)) {
             // Launch the company sign-on activity.
@@ -251,48 +245,16 @@ public class EmailLookupActivity extends BaseActivity implements IProgressBarLis
 
     }
 
-    /*
-     * (non-Javadoc)
-     * 
-     * @see
-     * com.concur.mobile.platform.ui.common.login.EmailLookupFragment.EmailLookupCallbacks#onEmailLookupRequestFail(android.os
-     * .Bundle)
-     */
-    @SuppressWarnings("unchecked")
+    @Override
     public void onEmailLookupRequestFail(Bundle resultData) {
-        boolean dialogShown = false;
-
-        // MOB-15531 - show error message from MWS (only in the case of Akamai related error) and
-        // in other cases, show the general email lookup error message
-        if (resultData != null && resultData.containsKey(PlatformAsyncRequestTask.EXTRA_MWS_RESPONSE_STATUS_ERRORS_KEY)) {
-            List<com.concur.mobile.platform.service.parser.Error> errors = (List<com.concur.mobile.platform.service.parser.Error>) resultData
-                    .getSerializable(PlatformAsyncRequestTask.EXTRA_MWS_RESPONSE_STATUS_ERRORS_KEY);
-            if (errors != null && errors.size() > 0) {
-                if (errors.get(0) != null && errors.get(0).getCode() != null
-                        && errors.get(0).getCode().equals("RATE_LIMIT_1")) {
-
-                    // show error message from MWS
-                    DialogFragmentFactory.getAlertOkayInstance(getText(R.string.general_network_error).toString(),
-                            errors.get(0).getUserMessage()).show(getSupportFragmentManager(), null);
-
-                    dialogShown = true;
-                }
-            }
-        }
-
-        if (!dialogShown) {
-            // show the general email lookup error message
-            DialogFragmentFactory.getAlertOkayInstance(getText(R.string.email_lookup_unable_to_login_title).toString(),
-                    R.string.email_lookup_unable_to_login_msg).show(getSupportFragmentManager(), null);
-            trackEmailLookupFailure(Flurry.EVENT_OTHER_ERROR);
-        }
+        // TODO do not do anything
     }
 
     /*
-     * (non-Javadoc)
-     * 
-     * @see com.concur.mobile.platform.ui.common.login.EmailLookupFragment.OnCompanyCodePressedListener#onButtonPressed()
-     */
+         * (non-Javadoc)
+         *
+         * @see com.concur.mobile.platform.ui.common.login.EmailLookupFragment.OnCompanyCodePressedListener#onButtonPressed()
+         */
     public void onCompanyCodeButtonPressed() {
         Intent i = new Intent(this, CompanyCodeLoginActivity.class);
         startActivityForResult(i, Const.REQUEST_CODE_SSO_LOGIN);

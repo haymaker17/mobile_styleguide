@@ -20,11 +20,6 @@ public class LoginHelpTopic extends ActionBarActivity {
         Bundle args = getIntent().getExtras();
 
         if (args != null) {
-            // Set the title.
-            if (args.containsKey(Const.EXTRA_LOGIN_HELP_TOPIC_TITLE)) {
-                getSupportActionBar().setTitle((args.getString(Const.EXTRA_LOGIN_HELP_TOPIC_TITLE)));
-            }
-
             // Set the sub-header.
             if (args.containsKey(Const.EXTRA_LOGIN_HELP_TOPIC_SUBHEADER)) {
                 TextView tv = (TextView) findViewById(R.id.help_topic_subheader);

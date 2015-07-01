@@ -144,10 +144,6 @@
         <item name="android:textAppearanceSmall">@style/PrimaryText</item>
     </style>
 
-    <style name="ConcurTheme.NoActionBar" parent="ConcurBaseTheme.NoActionBar"></style>
-
-    <style name="ConcurTheme.Translucent.NoActionBar" parent="ConcurBaseTheme.Translucent.NoActionBar"></style>
-
     <style name="ConcurTheme.Dialog" parent="android:Theme.Dialog">
         <item name="android:windowNoTitle">true</item>
     </style>

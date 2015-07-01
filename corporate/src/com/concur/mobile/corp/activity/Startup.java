@@ -311,19 +311,23 @@ public class Startup extends BaseActivity {
         SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(this);
         if (Preferences.isFirstTimeRunning(prefs)) {
             String cntryCode = ViewUtil.getUserCountryCode(this);
-            if (TESTDRIVE_USER_COUNTRIES.contains(cntryCode)) {
-                startIntent = new Intent(this, PreLogin.class);
-            } else {
-                //reset user timers
-                ConcurCore.resetUserTimers();
-                startIntent = new Intent(this, EmailLookupActivity.class);
-            }
+//            if (TESTDRIVE_USER_COUNTRIES.contains(cntryCode)) {
+//                startIntent = new Intent(this, PreLogin.class);
+//            } else {
+//                //reset user timers
+//                ConcurCore.resetUserTimers();
+//                startIntent = new Intent(this, EmailPasswordActivity.class);
+//            }
+
+            //reset user timers
+            ConcurCore.resetUserTimers();
+            startIntent = new Intent(this, EmailPasswordActivity.class);
             // in home we are already setting this Preferences.setNotFirstTimeRunning(prefs);
         } else {
             //reset user timers
             ConcurCore.resetUserTimers();
             // go to login
-            startIntent = new Intent(this, EmailLookupActivity.class);
+            startIntent = new Intent(this, EmailPasswordActivity.class);
         }
     }
 

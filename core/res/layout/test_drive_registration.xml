@@ -2,7 +2,7 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@drawable/blue_background" >
+    android:background="@color/MaterialWhite" >
 
     <LinearLayout
         android:id="@+id/mainlayout"
@@ -20,7 +20,7 @@
             android:paddingBottom="18dp"
             android:gravity="left"
             android:text="@string/test_drive_welcome_text"
-            android:textAppearance="@style/TestRegPrimary" >
+            android:textAppearance="@style/TestRegPrimary_Material" >
         </TextView>
 
         <EditText
@@ -28,12 +28,13 @@
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"
             android:layout_gravity="center"
-            android:background="@drawable/square_no_border"
+            android:textColor="@color/MaterialConcurBlue"
+            android:textSize="14dp"
             android:hint="@string/test_drive_username_hint"
             android:imeOptions="actionNext"
-            android:inputType="textEmailAddress"
-            android:padding="10dp"
-            android:textAppearance="@style/PrimaryText" >
+            android:backgroundTint="@color/MaterialConcurBlue"
+            android:inputType="textEmailAddress|textAutoComplete|textAutoCorrect|textNoSuggestions|textFilter|textVisiblePassword"
+            android:padding="10dp">
         </EditText>
 
         <View
@@ -45,12 +46,13 @@
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"
             android:layout_gravity="center"
-            android:background="@drawable/square_no_border"
+            android:textColor="@color/MaterialConcurBlue"
+            android:textSize="14dp"
             android:hint="@string/test_drive_password_hint"
             android:imeOptions="actionGo"
             android:inputType="textPassword"
-            android:padding="10dp"
-            android:textAppearance="@style/PrimaryText" >
+            android:backgroundTint="@color/MaterialConcurBlue"
+            android:padding="10dp">
         </EditText>
 
         <View
@@ -74,7 +76,7 @@
             android:layout_marginTop="16dp"
             android:gravity="center"
             android:text="@string/test_drive_terms_and_condition"
-            android:textAppearance="@style/TestRegSecondary" >
+            android:textAppearance="@style/TestRegSecondary_Material" >
         </TextView>
     </LinearLayout>
 

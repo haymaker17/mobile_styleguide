@@ -14,7 +14,7 @@ import com.concur.mobile.core.ConcurCore;
 import com.concur.mobile.core.fragment.BaseFragment;
 import com.concur.mobile.core.util.EventTracker;
 import com.concur.mobile.core.util.Flurry;
-import com.concur.mobile.corp.activity.EmailLookupActivity;
+import com.concur.mobile.corp.activity.EmailPasswordActivity;
 import com.concur.mobile.corp.activity.TestDriveRegistration;
 import com.concur.mobile.corp.activity.UniversalTour;
 
@@ -82,7 +82,7 @@ public class PreLoginFragment extends BaseFragment implements OnClickListener {
         case R.id.prelogin_login:
             EventTracker.INSTANCE.track(Flurry.CATEGORY_START_UP, "Sign In Click");
 
-            it = new Intent(activity, EmailLookupActivity.class);
+            it = new Intent(activity, EmailPasswordActivity.class);
             //reset user app start and login successful timer for google analytics
             ConcurCore.resetUserTimers();
             getBaseActivity().startActivityForResult(it, EMAIL_LOOKUP_REQ_CODE);

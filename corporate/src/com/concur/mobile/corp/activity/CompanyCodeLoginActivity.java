@@ -16,9 +16,6 @@ import android.os.Bundle;
 import android.text.Editable;
 import android.util.Log;
 import android.view.KeyEvent;
-import android.view.Menu;
-import android.view.MenuInflater;
-import android.view.MenuItem;
 import android.view.View;
 import android.view.WindowManager;
 import android.view.inputmethod.EditorInfo;
@@ -26,10 +23,10 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.TextView.OnEditorActionListener;
+
 import com.concur.breeze.R;
 import com.concur.mobile.core.ConcurCore;
 import com.concur.mobile.core.activity.BaseActivity;
-import com.concur.mobile.core.activity.Preferences;
 import com.concur.mobile.core.service.ConcurService;
 import com.concur.mobile.core.service.CorpSsoQueryReply;
 import com.concur.mobile.core.service.CorpSsoQueryRequest;
@@ -128,9 +125,7 @@ public class CompanyCodeLoginActivity extends BaseActivity {
         // end-user clicks on it.
         getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_ALWAYS_HIDDEN);
 
-        setContentView(R.layout.company_login);
-
-        getSupportActionBar().setTitle(R.string.sso_sign_in);
+        setContentView(R.layout.company_sso_login);
 
         loginButton = (Button) findViewById(R.id.loginButton);
         if (loginButton == null) {
@@ -266,29 +261,6 @@ public class CompanyCodeLoginActivity extends BaseActivity {
         }
         }
         return dlg;
-    }
-
-    public boolean onCreateOptionsMenu(Menu menu) {
-        MenuInflater inflater = getMenuInflater();
-        inflater.inflate(R.menu.login, menu);
-        return true;
-    }
-
-    @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
-
-        switch (item.getItemId()) {
-        case R.id.menuSettings:
-            Intent i = new Intent(this, Preferences.class);
-            startActivity(i);
-            break;
-        // case R.id.menuViewLog:
-        // i = new Intent(this, LogView.class);
-        // startActivity(i);
-        // break;
-        }
-
-        return super.onOptionsItemSelected(item);
     }
 
     /*

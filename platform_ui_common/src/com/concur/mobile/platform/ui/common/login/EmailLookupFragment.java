@@ -1,7 +1,5 @@
 package com.concur.mobile.platform.ui.common.login;
 
-import java.util.Locale;
-
 import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.content.Context;
@@ -28,6 +26,8 @@ import com.concur.mobile.platform.ui.common.dialog.NoConnectivityDialogFragment;
 import com.concur.mobile.platform.ui.common.fragment.PlatformFragment;
 import com.concur.mobile.platform.ui.common.util.Const;
 import com.concur.mobile.platform.ui.common.util.FormUtil;
+
+import java.util.Locale;
 
 public class EmailLookupFragment extends PlatformFragment implements OnClickListener {
 
@@ -282,7 +282,6 @@ public class EmailLookupFragment extends PlatformFragment implements OnClickList
             if (!emailLookupCallbacks.isNetworkConnected()){
                 new NoConnectivityDialogFragment().show(getFragmentManager(), null);
                 emailLookupCallbacks.trackEmailLookupFailure(EmailLookupCallbacks.FAILURE_REASON_OFFLINE);
-                
                 return;
             } else  { 
                 String emailOrUsername = emailView.getText().toString().trim();
