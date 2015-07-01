@@ -4,6 +4,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.support.design.widget.TabLayout;
 import android.support.v4.view.ViewPager;
+import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
@@ -31,6 +32,12 @@ public class TravelAllowanceActivity extends AppCompatActivity
 
     private static final int REQUEST_CODE_FIXED_TRAVEL_ALLOWANCE_DETAILS = 0x01;
 
+    /**
+     * Contains the key identifying the source of this report key. Should be one of
+     * <code>Const.EXPENSE_REPORT_SOURCE_ACTIVE</code>, <code>Const.EXPENSE_REPORT_SOURCE_APPROVAL</code> or
+     * <code>Const.EXPENSE_REPORT_SOURCE_NEW</code>
+     */
+    private int expenseReportKeySource;
     private String expenseReportKey;
 
     private TravelAllowanceItineraryController itineraryController;
@@ -56,7 +63,20 @@ public class TravelAllowanceActivity extends AppCompatActivity
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        this.setContentView(R.layout.travel_allowance_activity);
+
+        if (getIntent().hasExtra(Const.EXTRA_EXPENSE_REPORT_KEY)) {
+            expenseReportKey = getIntent().getStringExtra(Const.EXTRA_EXPENSE_REPORT_KEY);
+        }
+
+        if (getIntent().hasExtra(Const.EXTRA_EXPENSE_REPORT_SOURCE)) {
+            expenseReportKeySource = getIntent().getIntExtra(Const.EXTRA_EXPENSE_REPORT_SOURCE, -1);
+        }
+
+        if (expenseReportKeySource == Const.EXTRA_EXPENSE_REPORT_SOURCE_APPROVAL) {
+            this.setContentView(R.layout.travel_allowance_activity);
+        } else {
+            this.setContentView(R.layout.ta_itinerary_create);
+        }
 
         ConcurCore app = (ConcurCore) getApplication();
 
@@ -66,27 +86,28 @@ public class TravelAllowanceActivity extends AppCompatActivity
         this.allowanceController = app.getFixedTravelAllowanceController();
         this.allowanceController.registerListener(this);
 
-        if (getIntent().hasExtra(Const.EXTRA_EXPENSE_REPORT_KEY)) {
-            expenseReportKey = getIntent().getStringExtra(Const.EXTRA_EXPENSE_REPORT_KEY);
-        }
-
 
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         if (toolbar != null) {
             setSupportActionBar(toolbar);
-
         }
 
-        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-        getSupportActionBar().setTitle(R.string.itin_travel_allowances);
+        ActionBar actionBar = getSupportActionBar();
+        if (actionBar != null) {
+            actionBar.setDisplayHomeAsUpEnabled(true);
+            actionBar.setTitle(R.string.itin_travel_allowances);
+        }
 
         ViewPager pager = (ViewPager) findViewById(R.id.view_pager);
-        viewPagerAdapter = new ViewPagerAdapter(getSupportFragmentManager(), getApplicationContext());
-
-        pager.setAdapter(viewPagerAdapter);
+        if (pager != null) {
+            viewPagerAdapter = new ViewPagerAdapter(getSupportFragmentManager(), getApplicationContext());
+            pager.setAdapter(viewPagerAdapter);
+        }
 
         TabLayout tabLayout = (TabLayout) findViewById(R.id.tab_layout);
-        tabLayout.setupWithViewPager(pager);
+        if (tabLayout != null) {
+            tabLayout.setupWithViewPager(pager);
+        }
 
     }
 
