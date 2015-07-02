@@ -144,6 +144,7 @@ public abstract class AbstractExpenseActivity extends BaseActivity {
     protected static final int REQUEST_VIEW_ATTENDEES = 6;
 
     protected static final int REQUEST_VIEW_TA_ITINERARY = 7;
+    protected static final int REQUEST_VIEW_TA_ITIN_CREATE = 8;
 
     private static final int NO_IMG_OR_REC_REQ = 0;
     private static final int IMG_REQ = 1;

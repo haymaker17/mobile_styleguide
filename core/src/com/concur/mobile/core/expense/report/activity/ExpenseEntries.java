@@ -63,6 +63,7 @@ import com.concur.mobile.core.expense.report.service.ReportDeleteRequest;
 import com.concur.mobile.core.expense.report.service.ReportEntryDetailRequest;
 import com.concur.mobile.core.expense.report.service.ReportEntryFormRequest;
 import com.concur.mobile.core.expense.service.GetExpenseTypesRequest;
+import com.concur.mobile.core.expense.travelallowance.activity.CreateItineraryActivity;
 import com.concur.mobile.core.expense.travelallowance.activity.TravelAllowanceActivity;
 import com.concur.mobile.core.expense.travelallowance.controller.IServiceRequestListener;
 import com.concur.mobile.core.expense.travelallowance.controller.TravelAllowanceItineraryController;
@@ -1601,12 +1602,22 @@ public class ExpenseEntries extends AbstractExpenseActivity
 
                 @Override
                 public void onClick(View v) {
-                    //Intent intent = new Intent(ExpenseEntries.this, TAItineraryActivity.class);
-                    Intent intent = new Intent(ExpenseEntries.this, TravelAllowanceActivity.class);
-                    intent.putExtra(Const.EXTRA_EXPENSE_REPORT_KEY, expRep.reportKey);
-                    intent.putExtra(Const.EXTRA_EXPENSE_REPORT_SOURCE, reportKeySource);
-                    //intent.putExtra(Const.EXTRA_EXPENSE_REPORT_NAME, expRep.reportName);
-                    startActivityForResult(intent, REQUEST_VIEW_TA_ITINERARY);
+                    Intent intent;
+                    if (reportKeySource == Const.EXTRA_EXPENSE_REPORT_SOURCE_APPROVAL) {
+                        intent = new Intent(ExpenseEntries.this, TravelAllowanceActivity.class);
+                        intent.putExtra(Const.EXTRA_EXPENSE_REPORT_KEY, expRep.reportKey);
+                        startActivityForResult(intent, REQUEST_VIEW_TA_ITINERARY);
+                    } else {
+                        ConcurCore app = (ConcurCore) getApplication();
+                        if (app.getTaItineraryController() != null) {
+                            if (app.getTaItineraryController().getItineraryList() == null
+                                    || app.getTaItineraryController().getItineraryList().size() == 0) {
+                                intent = new Intent(ExpenseEntries.this, CreateItineraryActivity.class);
+                                intent.putExtra(Const.EXTRA_EXPENSE_REPORT_KEY, expRep.reportKey);
+                                startActivityForResult(intent, REQUEST_VIEW_TA_ITIN_CREATE);
+                            }
+                        }
+                    }
                 }
             });
         } else {
