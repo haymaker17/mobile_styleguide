@@ -76,6 +76,8 @@ public class TestDriveRegistrationFragment extends BaseFragment implements OnCli
         passwordView = (EditText) root.findViewById(R.id.test_drive_password);
         // set default type face so user can see login and password editview hint in same font style.
         passwordView.setTypeface(Typeface.DEFAULT);
+        com.concur.mobile.platform.ui.common.util.ViewUtil.setClearIconToEditText(emailView);
+        com.concur.mobile.platform.ui.common.util.ViewUtil.setClearIconToEditText(passwordView);
         // retrieve reciever if needed
         if (activity.retainer != null) {
             testRegReceiver = (BaseAsyncResultReceiver) activity.retainer.get(TEST_DRIVE_REGISTRATION_REQUEST_RECEIVER);

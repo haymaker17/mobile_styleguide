@@ -78,6 +78,7 @@
     <string name="try_again">Try Again</string>
     <string name="i_forgot">I Forgot</string>
     <string name="dlg_logging_in">Signing in&#8230;</string>
+    <string name="dlg_retrieve">Retrieving information&#8230;</string>
     <string name="login_500_error_title">The server encountered an error.</string>
     <string name="login_500_error_message"> If you continue to experience problems, please contact your Company Administrator.</string>
     <string name="login_403_error_title">Unable to Sign In</string>

@@ -1,5 +1,5 @@
 /**
- * 
+ *
  */
 package com.concur.mobile.corp.activity;
 
@@ -21,17 +21,20 @@ import android.view.WindowManager;
 import android.view.inputmethod.EditorInfo;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.TextView.OnEditorActionListener;
 
 import com.concur.breeze.R;
 import com.concur.mobile.core.ConcurCore;
 import com.concur.mobile.core.activity.BaseActivity;
+import com.concur.mobile.core.activity.Preferences;
 import com.concur.mobile.core.service.ConcurService;
 import com.concur.mobile.core.service.CorpSsoQueryReply;
 import com.concur.mobile.core.service.CorpSsoQueryRequest;
 import com.concur.mobile.core.util.Const;
 import com.concur.mobile.corp.ConcurMobile;
+import com.concur.mobile.platform.ui.common.util.ViewUtil;
 
 /**
  * An extension of <code>BaseActivity</code> supporting SSO-based corporate login.
@@ -132,8 +135,20 @@ public class CompanyCodeLoginActivity extends BaseActivity {
             Log.e(Const.LOG_TAG, CLS_TAG + ".onCreate: unable to locate 'loginButton'!");
         }
 
+        ImageView concurlogo = (ImageView) findViewById(R.id.concurlogo);
+
+        concurlogo.setOnLongClickListener(new View.OnLongClickListener() {
+
+            @Override
+            public boolean onLongClick(View v) {
+                openSettings();
+                return true;
+            }
+        });
+
         companyCodeView = (EditText) findViewById(R.id.companyCode);
         if (companyCodeView != null) {
+            ViewUtil.setClearIconToEditText(companyCodeView);
             // Set the default action for the pin view to do the submit
             companyCodeView.setOnEditorActionListener(new OnEditorActionListener() {
 
@@ -174,6 +189,11 @@ public class CompanyCodeLoginActivity extends BaseActivity {
         restoreReceivers();
     }
 
+    public void openSettings() {
+        Intent i = new Intent(this, Preferences.class);
+        i.putExtra(Preferences.OPEN_SOURCE_LIBRARY_CLASS, OpenSourceLicenseInfo.class);
+        startActivity(i);
+    }
     /*
      * (non-Javadoc)
      * 
@@ -183,82 +203,82 @@ public class CompanyCodeLoginActivity extends BaseActivity {
     protected Dialog onCreateDialog(int id) {
         Dialog dlg = null;
         switch (id) {
-        case DIALOG_SSO_QUERY_PROGRESS: {
-            ProgressDialog dialog = new ProgressDialog(this);
-            dialog.setMessage(this.getText(R.string.login_sso_query));
-            dialog.setIndeterminate(true);
-            dialog.setCancelable(true);
-            dialog.setOnCancelListener(new OnCancelListener() {
+            case DIALOG_SSO_QUERY_PROGRESS: {
+                ProgressDialog dialog = new ProgressDialog(this);
+                dialog.setMessage(this.getText(R.string.login_sso_query));
+                dialog.setIndeterminate(true);
+                dialog.setCancelable(true);
+                dialog.setOnCancelListener(new OnCancelListener() {
 
-                public void onCancel(DialogInterface dialog) {
-                    if (corpSsoQueryRequest != null) {
-                        corpSsoQueryRequest.cancel();
-                    } else {
-                        Log.e(Const.LOG_TAG, CLS_TAG + ".onCreateDialog: corpSsoQueryRequest is null!");
+                    public void onCancel(DialogInterface dialog) {
+                        if (corpSsoQueryRequest != null) {
+                            corpSsoQueryRequest.cancel();
+                        } else {
+                            Log.e(Const.LOG_TAG, CLS_TAG + ".onCreateDialog: corpSsoQueryRequest is null!");
+                        }
                     }
-                }
-            });
-            dlg = dialog;
-            break;
-        }
-        case DIALOG_SSO_QUERY_DISABLED: {
-            AlertDialog.Builder dlgBldr = new AlertDialog.Builder(this);
-            dlgBldr.setTitle(R.string.login_sso_disabled_title);
-            dlgBldr.setMessage(getText(R.string.login_sso_disabled_msg));
-            dlgBldr.setPositiveButton(getText(R.string.okay), new DialogInterface.OnClickListener() {
+                });
+                dlg = dialog;
+                break;
+            }
+            case DIALOG_SSO_QUERY_DISABLED: {
+                AlertDialog.Builder dlgBldr = new AlertDialog.Builder(this);
+                dlgBldr.setTitle(R.string.login_sso_disabled_title);
+                dlgBldr.setMessage(getText(R.string.login_sso_disabled_msg));
+                dlgBldr.setPositiveButton(getText(R.string.okay), new DialogInterface.OnClickListener() {
 
-                public void onClick(DialogInterface dialog, int which) {
-                    dialog.dismiss();
-                    // Finish the activity.
-                    finish();
-                }
-            });
-            dlg = dlgBldr.create();
-            break;
-        }
-        case DIALOG_SSO_QUERY_NOT_FOUND: {
-            AlertDialog.Builder dlgBldr = new AlertDialog.Builder(this);
-            dlgBldr.setTitle(R.string.general_not_found);
-            dlgBldr.setMessage(getText(R.string.login_sso_company_code_not_found_msg));
-            dlgBldr.setPositiveButton(getText(R.string.okay), new DialogInterface.OnClickListener() {
+                    public void onClick(DialogInterface dialog, int which) {
+                        dialog.dismiss();
+                        // Finish the activity.
+                        finish();
+                    }
+                });
+                dlg = dlgBldr.create();
+                break;
+            }
+            case DIALOG_SSO_QUERY_NOT_FOUND: {
+                AlertDialog.Builder dlgBldr = new AlertDialog.Builder(this);
+                dlgBldr.setTitle(R.string.general_not_found);
+                dlgBldr.setMessage(getText(R.string.login_sso_company_code_not_found_msg));
+                dlgBldr.setPositiveButton(getText(R.string.okay), new DialogInterface.OnClickListener() {
 
-                public void onClick(DialogInterface dialog, int which) {
-                    dialog.dismiss();
-                }
-            });
-            dlg = dlgBldr.create();
-            break;
-        }
-        case DIALOG_NO_COMPANY_CODE: {
-            AlertDialog.Builder dlgBldr = new AlertDialog.Builder(this);
-            dlgBldr.setTitle(R.string.general_missing_value);
-            dlgBldr.setMessage(getText(R.string.login_sso_no_company_code_msg));
-            dlgBldr.setPositiveButton(getText(R.string.okay), new DialogInterface.OnClickListener() {
+                    public void onClick(DialogInterface dialog, int which) {
+                        dialog.dismiss();
+                    }
+                });
+                dlg = dlgBldr.create();
+                break;
+            }
+            case DIALOG_NO_COMPANY_CODE: {
+                AlertDialog.Builder dlgBldr = new AlertDialog.Builder(this);
+                dlgBldr.setTitle(R.string.general_missing_value);
+                dlgBldr.setMessage(getText(R.string.login_sso_no_company_code_msg));
+                dlgBldr.setPositiveButton(getText(R.string.okay), new DialogInterface.OnClickListener() {
 
-                public void onClick(DialogInterface dialog, int which) {
-                    dialog.dismiss();
-                }
-            });
-            dlg = dlgBldr.create();
-            break;
-        }
-        case DIALOG_SSO_QUERY_FAILED: {
-            AlertDialog.Builder dlgBldr = new AlertDialog.Builder(this);
-            dlgBldr.setTitle(R.string.login_sso_query_failed_title);
-            dlgBldr.setMessage("");
-            dlgBldr.setPositiveButton(getText(R.string.okay), new DialogInterface.OnClickListener() {
+                    public void onClick(DialogInterface dialog, int which) {
+                        dialog.dismiss();
+                    }
+                });
+                dlg = dlgBldr.create();
+                break;
+            }
+            case DIALOG_SSO_QUERY_FAILED: {
+                AlertDialog.Builder dlgBldr = new AlertDialog.Builder(this);
+                dlgBldr.setTitle(R.string.login_sso_query_failed_title);
+                dlgBldr.setMessage("");
+                dlgBldr.setPositiveButton(getText(R.string.okay), new DialogInterface.OnClickListener() {
 
-                public void onClick(DialogInterface dialog, int which) {
-                    dialog.dismiss();
-                }
-            });
-            dlg = dlgBldr.create();
-            break;
-        }
-        default: {
-            super.onCreateDialog(id);
-            break;
-        }
+                    public void onClick(DialogInterface dialog, int which) {
+                        dialog.dismiss();
+                    }
+                });
+                dlg = dlgBldr.create();
+                break;
+            }
+            default: {
+                super.onCreateDialog(id);
+                break;
+            }
         }
         return dlg;
     }
@@ -271,15 +291,15 @@ public class CompanyCodeLoginActivity extends BaseActivity {
     @Override
     protected void onPrepareDialog(int id, Dialog dialog) {
         switch (id) {
-        case DIALOG_SSO_QUERY_FAILED: {
-            AlertDialog alertDlg = (AlertDialog) dialog;
-            alertDlg.setMessage(actionStatusErrorMessage);
-            break;
-        }
-        default: {
-            super.onPrepareDialog(id, dialog);
-            break;
-        }
+            case DIALOG_SSO_QUERY_FAILED: {
+                AlertDialog alertDlg = (AlertDialog) dialog;
+                alertDlg.setMessage(actionStatusErrorMessage);
+                break;
+            }
+            default: {
+                super.onPrepareDialog(id, dialog);
+                break;
+            }
         }
     }
 
@@ -300,18 +320,21 @@ public class CompanyCodeLoginActivity extends BaseActivity {
 
     public void onClick(View view) {
         switch (view.getId()) {
-        case R.id.loginButton: {
-            if (companyCodeView.getText() != null) {
-                Editable ccEditable = companyCodeView.getText();
-                if (ccEditable != null) {
-                    String companyCode = null;
-                    if ((companyCode = ccEditable.toString()) != null) {
-                        companyCode = companyCode.trim();
-                        if (companyCode.length() > 0) {
-                            if (ConcurMobile.isConnected()) {
-                                sendCorpSsoQueryRequest(companyCode);
+            case R.id.loginButton: {
+                if (companyCodeView.getText() != null) {
+                    Editable ccEditable = companyCodeView.getText();
+                    if (ccEditable != null) {
+                        String companyCode = null;
+                        if ((companyCode = ccEditable.toString()) != null) {
+                            companyCode = companyCode.trim();
+                            if (companyCode.length() > 0) {
+                                if (ConcurMobile.isConnected()) {
+                                    sendCorpSsoQueryRequest(companyCode);
+                                } else {
+                                    showDialog(Const.DIALOG_NO_CONNECTIVITY);
+                                }
                             } else {
-                                showDialog(Const.DIALOG_NO_CONNECTIVITY);
+                                showDialog(DIALOG_NO_COMPANY_CODE);
                             }
                         } else {
                             showDialog(DIALOG_NO_COMPANY_CODE);
@@ -319,12 +342,9 @@ public class CompanyCodeLoginActivity extends BaseActivity {
                     } else {
                         showDialog(DIALOG_NO_COMPANY_CODE);
                     }
-                } else {
-                    showDialog(DIALOG_NO_COMPANY_CODE);
                 }
+                break;
             }
-            break;
-        }
         }
     }
 
@@ -429,9 +449,8 @@ public class CompanyCodeLoginActivity extends BaseActivity {
 
         /**
          * Constructs an instance of <code>CorpSsoQueryReceiver</code>.
-         * 
-         * @param activity
-         *            the activity.
+         *
+         * @param activity the activity.
          */
         CorpSsoQueryReceiver(CompanyCodeLoginActivity activity) {
             super(activity);

@@ -13,19 +13,25 @@ import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
 import android.content.pm.ResolveInfo;
 import android.content.res.Configuration;
+import android.graphics.Rect;
+import android.graphics.drawable.Drawable;
 import android.net.Uri;
 import android.os.IBinder;
 import android.preference.PreferenceManager;
 import android.provider.Browser;
+import android.text.Editable;
 import android.text.Spannable;
 import android.text.SpannableString;
+import android.text.TextWatcher;
 import android.text.method.LinkMovementMethod;
 import android.text.util.Linkify;
 import android.util.Log;
 import android.view.LayoutInflater;
+import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.inputmethod.InputMethodManager;
+import android.widget.EditText;
 import android.widget.TextView;
 
 import com.concur.mobile.platform.ui.common.R;
@@ -549,4 +555,53 @@ public class ViewUtil {
         }
     }
 
+    public static void setClearIconToEditText(final EditText editText){
+        editText.setCompoundDrawablesWithIntrinsicBounds(0, 0, 0, 0);
+
+        editText.setOnTouchListener(new View.OnTouchListener() {
+            @Override
+            public boolean onTouch(View v, MotionEvent event) {
+                final int DRAWABLE_LEFT = 0;
+                final int DRAWABLE_TOP = 1;
+                final int DRAWABLE_RIGHT = 2;
+                final int DRAWABLE_BOTTOM = 3;
+                if (event.getAction() == MotionEvent.ACTION_UP) {
+                    float rawX = event.getRawX();
+                    int right = editText.getRight();
+                    Drawable array = editText.getCompoundDrawables()[DRAWABLE_RIGHT];
+                    if (array != null) {
+                        Rect bound = array.getBounds();
+                        if (bound != null) {
+                            if (rawX >= (right - bound.width())) {
+                                editText.setText("");
+                                return true;
+                            }
+                        }
+                    }
+                }
+                return false;
+            }
+        });
+
+        editText.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+
+            }
+
+            @Override
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
+
+            }
+
+            @Override
+            public void afterTextChanged(Editable s) {
+                if (s.length() > 0) {
+                    editText.setCompoundDrawablesWithIntrinsicBounds(0, 0, R.drawable.sign_in_clear_icon, 0);
+                } else {
+                    editText.setCompoundDrawablesWithIntrinsicBounds(0, 0, 0, 0);
+                }
+            }
+        });
+    }
 }

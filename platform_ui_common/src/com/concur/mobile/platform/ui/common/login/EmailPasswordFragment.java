@@ -3,27 +3,25 @@ package com.concur.mobile.platform.ui.common.login;
 import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.content.Context;
-import android.graphics.Rect;
-import android.graphics.drawable.Drawable;
+import android.content.DialogInterface;
 import android.os.Bundle;
 import android.os.Handler;
-import android.text.Editable;
+import android.support.v4.app.FragmentActivity;
 import android.text.InputType;
 import android.text.TextUtils;
-import android.text.TextWatcher;
 import android.util.Log;
 import android.view.LayoutInflater;
-import android.view.MotionEvent;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.ViewGroup;
+import android.view.animation.Animation;
+import android.view.animation.AnimationUtils;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.concur.mobile.base.service.BaseAsyncRequestTask.AsyncReplyListener;
 import com.concur.mobile.base.service.BaseAsyncResultReceiver;
@@ -37,10 +35,11 @@ import com.concur.mobile.platform.ui.common.dialog.ProgressDialogFragment;
 import com.concur.mobile.platform.ui.common.fragment.PlatformFragment;
 import com.concur.mobile.platform.ui.common.util.Const;
 import com.concur.mobile.platform.ui.common.util.FormUtil;
+import com.concur.mobile.platform.ui.common.util.ViewUtil;
 
 import java.util.Locale;
 
-public class EmailPasswordFragment extends PlatformFragment implements OnClickListener {
+public class EmailPasswordFragment extends PlatformFragment implements OnClickListener{
 
     /**
      * Class name used for logging.
@@ -162,6 +161,10 @@ public class EmailPasswordFragment extends PlatformFragment implements OnClickLi
          * @return the parent Activity's <code>ProgressDialogFragment</code>, or <code>null</code. if none was set.
          */
         public void setProgressDialogCancelListener(ProgressDialogFragment.OnCancelListener cancelListener);
+
+        public void setProgressDialogMessage(String progressDialogString);
+
+        public void openSettings();
     }
 
 
@@ -192,6 +195,8 @@ public class EmailPasswordFragment extends PlatformFragment implements OnClickLi
     protected EmailPasswordCallBacks emailPasswordCallBacks;
 
     private PPLoginLightRequestTask ppLoginLightRequestTask;
+
+    private EmailLookUpRequestTask emailLookupTask;
 
     private LinearLayout or_sso_layout;
 
@@ -224,11 +229,12 @@ public class EmailPasswordFragment extends PlatformFragment implements OnClickLi
                     String text = "";
                     String button = getActivity().getString(R.string.login_button);
                     if (!isEnterPassword) {
+                        hideProgressBar();
                         emailPasswordCallBacks.onEmailLookupRequestSuccess(resultData);
-                        setEditTextAndLabel(View.VISIBLE, true, passwordHint, emailOrUsername, text, button);
+                        setEditTextAndLabel(true, passwordHint, emailOrUsername, text, button);
                     } else {
                         emailPasswordCallBacks.onLoginRequestSuccess(resultData);
-                        setEditTextAndLabel(View.VISIBLE, true, passwordHint, emailOrUsername, text, button);
+                        //setEditTextAndLabel(true, passwordHint, emailOrUsername, text, button);
                     }
                 }
 
@@ -241,9 +247,10 @@ public class EmailPasswordFragment extends PlatformFragment implements OnClickLi
                     String passwordHint = getActivity().getString(R.string.login_password);
                     String text = "";
                     String button = getActivity().getString(R.string.login_button);
+                    hideProgressBar();
                     if (!isEnterPassword) {
                         emailPasswordCallBacks.onEmailLookupRequestFail(resultData);
-                        setEditTextAndLabel(View.VISIBLE, true, passwordHint, emailOrUsername, text, button);
+                        setEditTextAndLabel(true, passwordHint, emailOrUsername, text, button);
                     } else {
                         emailPasswordCallBacks.onLoginRequestFail(resultData);
                         setComponentToEmailLookup();
@@ -265,7 +272,6 @@ public class EmailPasswordFragment extends PlatformFragment implements OnClickLi
                  */
                 @Override
                 public void cleanup() {
-                    hideProgressBar();
                     if (ppLoginLightRequestTask != null) {
                         ppLoginLightRequestTask.cancel(true);
                     }
@@ -306,77 +312,10 @@ public class EmailPasswordFragment extends PlatformFragment implements OnClickLi
         super.onCreateView(inflater, container, savedInstanceState);
         View root = inflater.inflate(R.layout.email_password_fragment, null);
 
-        //set email id label
-        emailIdLabel = (TextView) root.findViewById(R.id.emailIdLabel);
-        emailIdLabel.setVisibility(View.VISIBLE);
-        emailIdLabel.setText(getString(R.string.email_lookup_label));
-        // set email and password
-        emailView = (EditText) root.findViewById(R.id.emailId);
+        or_sso_layout = (LinearLayout) root.findViewById(R.id.or_sso_layout);
 
-        emailView.setCompoundDrawablesWithIntrinsicBounds(0, 0, 0, 0);
-
-        emailView.setOnTouchListener(new View.OnTouchListener() {
-            @Override
-            public boolean onTouch(View v, MotionEvent event) {
-                final int DRAWABLE_LEFT = 0;
-                final int DRAWABLE_TOP = 1;
-                final int DRAWABLE_RIGHT = 2;
-                final int DRAWABLE_BOTTOM = 3;
-                if (event.getAction() == MotionEvent.ACTION_UP) {
-                    float rawX = event.getRawX();
-                    int right = emailView.getRight();
-                    Drawable array = emailView.getCompoundDrawables()[DRAWABLE_RIGHT];
-                    if (array != null) {
-                        Rect bound = array.getBounds();
-                        if (bound != null) {
-                            if (rawX >= (right - bound.width())) {
-                                emailView.setText("");
-                                return true;
-                            }
-                        }
-                    }
-                }
-                return false;
-            }
-        });
-
-        emailView.addTextChangedListener(new TextWatcher() {
-            @Override
-            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
-
-            }
-
-            @Override
-            public void onTextChanged(CharSequence s, int start, int before, int count) {
-
-            }
-
-            @Override
-            public void afterTextChanged(Editable s) {
-                if (s.length() > 0) {
-                    emailView.setCompoundDrawablesWithIntrinsicBounds(0, 0, R.drawable.sign_in_clear_icon, 0);
-                } else {
-                    emailView.setCompoundDrawablesWithIntrinsicBounds(0, 0, 0, 0);
-                }
-            }
-        });
-
-        ImageView concurlogo = (ImageView) root.findViewById(R.id.concurlogo);
-
-        concurlogo.setOnTouchListener(new View.OnTouchListener() {
-            @Override
-            public boolean onTouch(View v, MotionEvent event) {
-                int action = event.getAction();
-
-                switch (action & MotionEvent.ACTION_MASK) {
-                    case MotionEvent.ACTION_POINTER_DOWN:
-                        Toast.makeText(getActivity(), " Two Fingers Tapped Once. Yeeeyy :)", Toast.LENGTH_LONG).show();
-                        break;
-                }
-                return false;
-            }
-        });
-
+        setEmailLableAndEditText(root);
+        setDoubleFingerTap(root);
         // retrieve receiver if needed
         if (retainer != null) {
             emailLookupReceiver = (BaseAsyncResultReceiver) retainer.get(EMAIL_LOOK_UP_RECEIVER);
@@ -400,36 +339,11 @@ public class EmailPasswordFragment extends PlatformFragment implements OnClickLi
             contdButton.setOnClickListener(this);
         }
 
-        // footer layout
-        TextView ssoLoginView = (TextView) root.findViewById(R.id.company_sso_login);
-        if (ssoLoginView != null) {
-            ssoLoginView.setOnClickListener(new OnClickListener() {
+        setSSOLogin(root);
 
-                public void onClick(View v) {
-                    emailPasswordCallBacks.onCompanyCodeButtonPressed();
-                }
-            });
-        }
-
-        // footer layout
-        TextView forgotPassword = (TextView) root.findViewById(R.id.login_forgot_password);
-        if (forgotPassword != null) {
-            forgotPassword.setOnClickListener(new OnClickListener() {
-
-                public void onClick(View v) {
-                    String method;
-                    if (signInMethod != null) {
-                        method = signInMethod;
-                    } else {
-                        method = Const.LOGIN_METHOD_PASSWORD;
-                    }
-                    emailPasswordCallBacks.onLoginHelpButtonPressed(method);
-                }
-            });
-        }
-
-        or_sso_layout = (LinearLayout) root.findViewById(R.id.or_sso_layout);
-
+        setForgorPassword(root);
+        // Set the ProgressDialog cancelled listener (if set).
+        emailPasswordCallBacks.setProgressDialogCancelListener(progressDlgCancelListner);
         return root;
     }
 
@@ -466,6 +380,80 @@ public class EmailPasswordFragment extends PlatformFragment implements OnClickLi
         }
     }
 
+    private void setEmailLableAndEditText(View root){
+        //set email id label
+        emailIdLabel = (TextView) root.findViewById(R.id.emailIdLabel);
+        emailIdLabel.setVisibility(View.VISIBLE);
+        emailIdLabel.setText(getString(R.string.email_lookup_label));
+        // set email and password
+        emailView = (EditText) root.findViewById(R.id.emailId);
+        ViewUtil.setClearIconToEditText(emailView);
+    }
+
+    private void setDoubleFingerTap(View root){
+        ImageView concurlogo = (ImageView) root.findViewById(com.concur.mobile.platform.ui.common.R.id.concurlogo);
+
+        concurlogo.setOnLongClickListener(new View.OnLongClickListener() {
+
+            @Override
+            public boolean onLongClick(View v) {
+                emailPasswordCallBacks.openSettings();
+                return true;
+            }
+        });
+
+//        concurlogo.setOnTouchListener(new View.OnTouchListener() {
+//            @Override
+//            public boolean onTouch(View v, MotionEvent event) {
+//                int action = event.getAction() & MotionEvent.ACTION_MASK;
+//
+//                switch (action) {
+//                    case MotionEvent.ACTION_POINTER_DOWN:
+//                        // multitouch!! - touch down
+//                        int count = event.getPointerCount(); // Number of 'fingers' in this time
+//                        Toast.makeText(getActivity(), " Two Fingers Tapped Once. Yeeeyy :)" + count, Toast.LENGTH_LONG).show();
+//                        break;
+//                }
+//                return false;
+//            }
+//        });
+    }
+
+    private void setSSOLogin(View root){
+        // footer layout
+        TextView ssoLoginView = (TextView) root.findViewById(R.id.company_sso_login);
+        if (ssoLoginView != null) {
+            ssoLoginView.setOnClickListener(new OnClickListener() {
+
+                public void onClick(View v) {
+                    emailPasswordCallBacks.onCompanyCodeButtonPressed();
+                }
+            });
+        }
+    }
+
+
+    private void setForgorPassword(View root){
+        // footer layout
+        TextView forgotPassword = (TextView) root.findViewById(R.id.login_forgot_password);
+        if (forgotPassword != null) {
+            forgotPassword.setOnClickListener(new OnClickListener() {
+
+                public void onClick(View v) {
+                    String method;
+                    if (signInMethod != null) {
+                        method = signInMethod;
+                    } else {
+                        method = Const.LOGIN_METHOD_PASSWORD;
+                    }
+                    emailPasswordCallBacks.onLoginHelpButtonPressed(method);
+                }
+            });
+        }
+
+    }
+
+
     /*
      * (non-Javadoc)
      * @see android.view.View.OnClickListener#onClick(android.view.View)
@@ -479,6 +467,7 @@ public class EmailPasswordFragment extends PlatformFragment implements OnClickLi
             String signin = getString(R.string.login_button).toString();
             String text = contdButton.getText().toString();
             if (text.equalsIgnoreCase(signin)) {
+                emailPasswordCallBacks.setProgressDialogMessage(getActivity().getString(R.string.dlg_logging_in).toString());
                 if (!emailPasswordCallBacks.isNetworkConnected()) {
                     new NoConnectivityDialogFragment().show(getFragmentManager(), null);
                     emailPasswordCallBacks.trackEmailLookupFailure(EmailPasswordCallBacks.FAILURE_REASON_OFFLINE);
@@ -516,6 +505,7 @@ public class EmailPasswordFragment extends PlatformFragment implements OnClickLi
                     imm.hideSoftInputFromWindow(emailView.getWindowToken(), 0);
                 }
             } else if (text.equalsIgnoreCase(cont)) {
+                emailPasswordCallBacks.setProgressDialogMessage(getActivity().getString(R.string.dlg_retrieve).toString());
                 if (!emailPasswordCallBacks.isNetworkConnected()) {
                     new NoConnectivityDialogFragment().show(getFragmentManager(), null);
                     emailPasswordCallBacks.trackEmailLookupFailure(EmailPasswordCallBacks.FAILURE_REASON_OFFLINE);
@@ -532,7 +522,7 @@ public class EmailPasswordFragment extends PlatformFragment implements OnClickLi
 
                         // Invoke web service to lookup the email/username.
                         Locale locale = getResources().getConfiguration().locale;
-                        EmailLookUpRequestTask emailLookupTask = new EmailLookUpRequestTask(
+                        emailLookupTask= new EmailLookUpRequestTask(
                                 getActivity().getApplicationContext(), 0, emailLookupReceiver, locale, emailOrUsername);
                         emailLookupTask.execute();
                     } else {
@@ -560,16 +550,18 @@ public class EmailPasswordFragment extends PlatformFragment implements OnClickLi
             String hint = getActivity().getString(R.string.email_lookup_hint);
             String text = getString(R.string.email_lookup_label);
             String button = getActivity().getString(R.string.email_lookup_continue);
-            setEditTextAndLabel(View.GONE, false, hint, text, emailIdLabel.getText().toString(), button);
+            setEditTextAndLabel(false, hint, text, emailIdLabel.getText().toString(), button);
         }
     }
 
-    private void setEditTextAndLabel(int visibility, boolean isPassword, String hint, String labelText, String editText, String buttonText) {
+    private void setEditTextAndLabel(boolean isPassword, String hint, String labelText, String editText, String buttonText) {
         emailIdLabel.setText(labelText);
-        //emailIdLabel.setVisibility(visibility);
         emailIdLabel.setOnClickListener(this);
         isEnterPassword = isPassword;
         emailView.setHint(hint);
+        Animation fadeInAnim = AnimationUtils.loadAnimation(getActivity(), R.anim.transition);
+        fadeInAnim.setDuration(3000L);
+        fadeInAnim.setFillAfter(false);
         emailView.setText(editText);
 
         if (isEnterPassword) {
@@ -607,5 +599,20 @@ public class EmailPasswordFragment extends PlatformFragment implements OnClickLi
         }
     }
 
+    /**
+     * Listener called when an attached Progress Dialog is canceled. This listener cancels any pending
+     * <code>PPLoginRequestTask</code>.
+     */
+    private final ProgressDialogFragment.OnCancelListener progressDlgCancelListner = new ProgressDialogFragment.OnCancelListener() {
 
+        public void onCancel(FragmentActivity activity, DialogInterface dialog) {
+            if (ppLoginLightRequestTask != null) {
+                ppLoginLightRequestTask.cancel(true);
+            }
+
+            if(emailLookupTask !=null){
+                emailLookupTask.cancel(true);
+            }
+        }
+    };
 }

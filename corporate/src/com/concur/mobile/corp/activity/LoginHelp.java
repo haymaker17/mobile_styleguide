@@ -1,8 +1,5 @@
 package com.concur.mobile.corp.activity;
 
-import java.util.HashMap;
-import java.util.Map;
-
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
@@ -17,6 +14,7 @@ import android.view.View.OnClickListener;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.EditText;
 import android.widget.TextView;
+
 import com.concur.breeze.R;
 import com.concur.mobile.base.service.BaseAsyncRequestTask.AsyncReplyListener;
 import com.concur.mobile.base.service.BaseAsyncResultReceiver;
@@ -33,6 +31,10 @@ import com.concur.mobile.core.util.EventTracker;
 import com.concur.mobile.core.util.Flurry;
 import com.concur.mobile.corp.fragment.LoginHelpMain;
 import com.concur.mobile.platform.authentication.EmailLookUpRequestTask;
+import com.concur.mobile.platform.ui.common.util.ViewUtil;
+
+import java.util.HashMap;
+import java.util.Map;
 
 public class LoginHelp extends BaseActivity implements OnClickListener {
 
@@ -137,7 +139,7 @@ public class LoginHelp extends BaseActivity implements OnClickListener {
     public void onClick(View v) {
 
         EditText emailView = (EditText) findViewById(R.id.email);
-
+        ViewUtil.setClearIconToEditText(emailView);
         resetEmail = emailView.getText().toString();
 
         if (resetEmail.trim().length() > 0) {

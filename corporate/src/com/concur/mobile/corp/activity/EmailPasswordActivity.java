@@ -15,7 +15,6 @@ import android.text.TextUtils;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.ImageView;
-import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.concur.core.R;
@@ -67,8 +66,12 @@ public class EmailPasswordActivity extends BaseActivity implements IProgressBarL
     private static final int LOGIN_SSO_REQ_CODE = 2;
 
     private static final String FRAGMENT_EMAIL_LOOKUP = "FRAGMENT_EMAIL_LOOKUP";
+
     private boolean progressbarVisible;
+    private String progressDlgMessage;
+
     private static final String PROGRESSBAR_VISIBLE = "PROGRESSBAR_VISIBLE";
+    private static final String PROGRESSBAR_MESSAGE = "PROGRESSBAR_MESSAGE";
 
     private BaseAsyncResultReceiver autoLoginReceiver;
 
@@ -81,6 +84,10 @@ public class EmailPasswordActivity extends BaseActivity implements IProgressBarL
     private String signInMethod = "";
 
     private boolean fromNotification;
+
+    private ProgressDialogFragment progressDialog;
+
+    private ProgressDialogFragment.OnCancelListener loginPasswordFragCancelListener;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -97,12 +104,14 @@ public class EmailPasswordActivity extends BaseActivity implements IProgressBarL
         } else {
             ConcurCore.userEntryAppTimer = System.currentTimeMillis();
         }
+
         // Enable the progress mask if needed
         if (savedInstanceState != null) {
             progressbarVisible = savedInstanceState.getBoolean(PROGRESSBAR_VISIBLE, false);
             if (progressbarVisible) {
                 showProgressBar();
             }
+            progressDlgMessage = savedInstanceState.getString(PROGRESSBAR_MESSAGE, "");
         }
 
         ImageView imag = (ImageView)findViewById(R.id.helpimg);
@@ -118,8 +127,6 @@ public class EmailPasswordActivity extends BaseActivity implements IProgressBarL
                 startActivityForResult(it, TEST_DRIVE_REQ_CODE);
             }
         });
-        // set title
-        //getSupportActionBar().setTitle(R.string.login_title);
 
         // Determine whether this activity should immediately forward to the Company SignIn activity.
         boolean advanceToCompanyLogon = getIntent().getBooleanExtra(EXTRA_ADVANCE_TO_COMPANY_SIGN_ON, false);
@@ -174,17 +181,47 @@ public class EmailPasswordActivity extends BaseActivity implements IProgressBarL
     }
 
     public void showProgressBar() {
-        View v = findViewById(R.id.progress_mask);
-        RelativeLayout progressBar = (RelativeLayout) v;
+        if(progressDlgMessage ==null || progressDlgMessage.isEmpty()){
+            progressDlgMessage = getString(R.string.dlg_logging_in).toString();
+        }
+        if(progressDialog==null){
+            // Initialize the progress dialog.
+            progressDialog = DialogFragmentFactory.getProgressDialog(progressDlgMessage, true,
+                    true, null);
+        }
+
+        if (progressDialog != null && !progressDialog.isVisible()) {
+
+            progressDialog.setMessage(progressDlgMessage);
+            progressDialog.setCancelListener(new ProgressDialogFragment.OnCancelListener() {
+
+                public void onCancel(FragmentActivity activity, DialogInterface dialog) {
+                    if (loginPasswordFragCancelListener != null) {
+                        loginPasswordFragCancelListener.onCancel(activity, dialog);
+                    }
+
+                    if (autoLoginRequestTask != null) {
+                        autoLoginRequestTask.cancel(true);
+                    }
+                }
+            });
+        }
+        progressDialog.show(getSupportFragmentManager(), TAG_LOGIN_WAIT_DIALOG);
         progressbarVisible = true;
-        progressBar.setVisibility(View.VISIBLE);
+        //View v = findViewById(R.id.progress_mask);
+        //RelativeLayout progressBar = (RelativeLayout) v;
+       // progressBar.setVisibility(View.VISIBLE);
     }
 
     public void hideProgressBar() {
-        View v = findViewById(R.id.progress_mask);
-        RelativeLayout progressBar = (RelativeLayout) v;
+        //View v = findViewById(R.id.progress_mask);
+        //RelativeLayout progressBar = (RelativeLayout) v;
+        if(progressDialog!=null){
+            progressDialog.dismiss();
+            progressDialog=null;
+        }
         progressbarVisible = false;
-        progressBar.setVisibility(View.INVISIBLE);
+        //progressBar.setVisibility(View.INVISIBLE);
     }
 
     public boolean isProgressBarShown() {
@@ -195,6 +232,7 @@ public class EmailPasswordActivity extends BaseActivity implements IProgressBarL
     public void onSaveInstanceState(Bundle outState) {
         super.onSaveInstanceState(outState);
         outState.putBoolean(PROGRESSBAR_VISIBLE, progressbarVisible);
+        outState.putString(PROGRESSBAR_MESSAGE, progressDlgMessage);
     }
 
     @Override
@@ -272,11 +310,23 @@ public class EmailPasswordActivity extends BaseActivity implements IProgressBarL
 
     }
 
+    @Override
+    public void setProgressDialogMessage(String message) {
+        this.progressDlgMessage = message;
+    }
+
+    @Override
+    public void openSettings() {
+        Intent i = new Intent(this, Preferences.class);
+        i.putExtra(Preferences.OPEN_SOURCE_LIBRARY_CLASS, OpenSourceLicenseInfo.class);
+        startActivity(i);
+    }
+
     /*
-         * (non-Javadoc)
-         *
-         * @see com.concur.mobile.platform.ui.common.login.EmailLookupFragment.OnCompanyCodePressedListener#onButtonPressed()
-         */
+                 * (non-Javadoc)
+                 *
+                 * @see com.concur.mobile.platform.ui.common.login.EmailLookupFragment.OnCompanyCodePressedListener#onButtonPressed()
+                 */
     public void onCompanyCodeButtonPressed() {
         Intent i = new Intent(this, CompanyCodeLoginActivity.class);
         startActivityForResult(i, Const.REQUEST_CODE_SSO_LOGIN);
@@ -338,7 +388,7 @@ public class EmailPasswordActivity extends BaseActivity implements IProgressBarL
 
     @Override
     public void setProgressDialogCancelListener(ProgressDialogFragment.OnCancelListener cancelListener) {
-
+        this.loginPasswordFragCancelListener = cancelListener;
     }
 
     @Override
