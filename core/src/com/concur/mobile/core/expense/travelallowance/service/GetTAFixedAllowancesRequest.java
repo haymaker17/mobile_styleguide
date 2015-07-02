@@ -12,7 +12,9 @@ import com.concur.mobile.core.service.CoreAsyncRequestTask;
 import org.xmlpull.v1.XmlPullParserException;
 
 import java.io.IOException;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 /**
  * Created by Michael Becherer on 26-Jun-15.
@@ -91,5 +93,12 @@ public class GetTAFixedAllowancesRequest extends CoreAsyncRequestTask {
 
     public List<FixedTravelAllowance> getFixedTravelAllowances() {
         return fixedTravelAllowances;
+    }
+
+    public Map<String, String> getMealsProvisionLabelMap() {
+        if (parser == null) {
+            return new HashMap<String, String>();
+        }
+        return parser.getMealProvisionLabels();
     }
 }

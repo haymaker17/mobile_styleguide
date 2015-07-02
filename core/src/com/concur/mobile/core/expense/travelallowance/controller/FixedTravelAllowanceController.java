@@ -59,15 +59,26 @@ public class FixedTravelAllowanceController {
     private List<FixedTravelAllowance> fixedTravelAllowances;
 
     /**
+     * This map contains the same FixedTravelAllowance objects. Map is used for efficient access to specific FixedTravelAllowance
+     * objects.
+     */
+    private Map<String, FixedTravelAllowance> fixedTAIdMap;
+
+    private Map<String, String> mealsProvisionLabels;
+
+    /**
      * Creates an instance and initializes the object
      */
     public FixedTravelAllowanceController(Context context) {
         this.fixedTravelAllowances = new ArrayList<FixedTravelAllowance>();
+        this.fixedTAIdMap = new HashMap<String, FixedTravelAllowance>();
         this.context = context;
         this.listeners = new ArrayList<IServiceRequestListener>();
     }
 
     public void refreshFixedTravelAllowances(String expenseReportKey) {
+
+        this.fixedTravelAllowances = new ArrayList<FixedTravelAllowance>();
 
         if (getFixedAllowancesRequest != null && getFixedAllowancesRequest.getStatus() != AsyncTask.Status.FINISHED) {
             // There is already an async task which is not finished yet. Return silently and let the task finish his work first.
@@ -79,6 +90,8 @@ public class FixedTravelAllowanceController {
             @Override
             public void onRequestSuccess(Bundle resultData) {
                 fixedTravelAllowances = getFixedAllowancesRequest.getFixedTravelAllowances();
+                mealsProvisionLabels = getFixedAllowancesRequest.getMealsProvisionLabelMap();
+                fillTAMap();
                 notifyListener(false);
                 int size = 0;
                 if (fixedTravelAllowances != null) {
@@ -108,6 +121,16 @@ public class FixedTravelAllowanceController {
 
         getFixedAllowancesRequest = new GetTAFixedAllowancesRequest(context, receiver, expenseReportKey);
         getFixedAllowancesRequest.execute();
+    }
+
+    private void fillTAMap() {
+        for (FixedTravelAllowance ta : fixedTravelAllowances) {
+            fixedTAIdMap.put(ta.getFixedTravelAllowanceId(), ta);
+        }
+    }
+
+    public FixedTravelAllowance getFixedTA(String fixedTAId) {
+        return fixedTAIdMap.get(fixedTAId);
     }
 
     private synchronized void notifyListener(boolean isFailed) {
@@ -325,4 +348,47 @@ public class FixedTravelAllowanceController {
         }
         return resultString;
     }
+
+    public String getBreakfastLabel() {
+        final String BREAKFAST_PROVIDED_LABEL = "BreakfastProvidedLabel";
+        String label = null;
+        if (mealsProvisionLabels != null) {
+            label = mealsProvisionLabels.get(BREAKFAST_PROVIDED_LABEL);
+        }
+
+        if (label == null) {
+            label = context.getString(R.string.itin_breakfast);
+        }
+
+        return label;
+    }
+
+    public String getDinnerLabel() {
+        final String DINNER_PROVIDED_LABEL = "DinnerProvidedLabel";
+        String label = null;
+        if (mealsProvisionLabels != null) {
+            label = mealsProvisionLabels.get(DINNER_PROVIDED_LABEL);
+        }
+
+        if (label == null) {
+            label = context.getString(R.string.itin_dinner);
+        }
+
+        return label;
+    }
+
+    public String getLunchLabel() {
+        final String LUNCH_PROVIDED_LABEL = "LunchProvidedLabel";
+        String label = null;
+        if (mealsProvisionLabels != null) {
+            label = mealsProvisionLabels.get(LUNCH_PROVIDED_LABEL);
+        }
+
+        if (label == null) {
+            label = context.getString(R.string.itin_lunch);
+        }
+
+        return label;
+    }
+
 }

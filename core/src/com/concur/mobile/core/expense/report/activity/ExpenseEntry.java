@@ -1845,7 +1845,6 @@ public class ExpenseEntry extends AbstractExpenseActivity {
         if (viewGroup != null) {
             if (!expRepEntDet.expKey.equals("FXMLS")) {
                 // Intention is to show the travel allowances only for daily allowance expenses.
-                // TODO: check whether this if is correct. I'm not sure regarding the expKey.
                 View allowanceFields = findViewById(R.id.allowance_fields);
                 if (allowanceFields != null) {
                     allowanceFields.setVisibility(View.GONE);

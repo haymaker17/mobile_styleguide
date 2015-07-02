@@ -12,7 +12,9 @@ import com.concur.mobile.core.expense.travelallowance.util.StringUtilities;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 /**
  * Created by Michael Becherer on 26-Jun-15.
@@ -24,6 +26,10 @@ public class GetTAFixedAllowancesResponseParser extends BaseParser {
     private static final String PROVIDED_MEAL_VALUES = "ProvidedMealValues";
     private static final String LODGING_TYPE_VALUES = "LodgingTypeValues";
     private static final String LODGING_TYPE = "LodgingType";
+    private static final String LUNCH_PROVIDED_LABEL = "LunchProvidedLabel";
+    private static final String DINNER_PROVIDED_LABEL = "DinnerProvidedLabel";
+    private static final String BREAKFAST_PROVIDED_LABEL = "BreakfastProvidedLabel";
+
 
     private List<FixedTravelAllowance> fixedTravelAllowances;
     private FixedTravelAllowance currentAllowance;
@@ -33,18 +39,27 @@ public class GetTAFixedAllowancesResponseParser extends BaseParser {
     private CodeList<MealProvision> mealCodes;
     private CodeList<LodgingType> lodgingTypeCodes;
 
+    private Map<String, String> mealProvisionLabels;
+
     public GetTAFixedAllowancesResponseParser(Context context) {
         this.context = context;
         this.fixedTravelAllowances = new ArrayList<FixedTravelAllowance>();
         this.dateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm");
+        this.mealProvisionLabels = new HashMap<String, String>();
     }
 
     /**
      * @return  Returns the parsed {@link FixedTravelAllowance} list.
      */
     public List<FixedTravelAllowance> getFixedTravelAllowances() {
-
         return this.fixedTravelAllowances;
+    }
+
+    public Map<String, String> getMealProvisionLabels() {
+        if (mealProvisionLabels == null) {
+            mealProvisionLabels = new HashMap<String, String>();
+        }
+        return mealProvisionLabels;
     }
 
     /**
@@ -74,6 +89,11 @@ public class GetTAFixedAllowancesResponseParser extends BaseParser {
     @Override
     public void handleText(String tag, String text) {
 
+        if (BREAKFAST_PROVIDED_LABEL.equals(tag) || LUNCH_PROVIDED_LABEL.equals(tag)
+                || DINNER_PROVIDED_LABEL.equals(tag)) {
+            mealProvisionLabels.put(tag, text);
+        }
+
         if (LODGING_TYPE_VALUES.equals(currentStartTag)) {
             if (tag.equals("Code") && lodgingTypeCodes != null) {
                 lodgingTypeCodes.setCode(text);
@@ -93,7 +113,7 @@ public class GetTAFixedAllowancesResponseParser extends BaseParser {
         }
 
         if (FIXED_ALLOWANCE_ROW.equals(currentStartTag)) {
-            if (tag.equals("TaDaKey")) {
+            if (tag.equals("TaDayKey")) {
                 currentAllowance.setFixedTravelAllowanceId(text);
             }
             if (tag.equals("AllowanceDate")) {
@@ -142,8 +162,6 @@ public class GetTAFixedAllowancesResponseParser extends BaseParser {
             if (tag.equals("LodgingType")) {
                 if (lodgingTypeCodes != null && lodgingTypeCodes.containsKey(text)) {
                     currentAllowance.setLodgingType(lodgingTypeCodes.get(text));
-                } else {
-                    currentAllowance.setLodgingType(new LodgingType(text, StringUtilities.EMPTY_STRING));
                 }
             }
         }

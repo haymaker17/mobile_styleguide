@@ -63,6 +63,7 @@ import com.concur.mobile.core.expense.report.service.ReportDeleteRequest;
 import com.concur.mobile.core.expense.report.service.ReportEntryDetailRequest;
 import com.concur.mobile.core.expense.report.service.ReportEntryFormRequest;
 import com.concur.mobile.core.expense.service.GetExpenseTypesRequest;
+import com.concur.mobile.core.expense.travelallowance.controller.IServiceRequestListener;
 import com.concur.mobile.core.service.ConcurService;
 import com.concur.mobile.core.util.Const;
 import com.concur.mobile.core.util.EventTracker;
@@ -76,7 +77,7 @@ import com.concur.mobile.core.util.ViewUtil;
  * 
  * @author AndrewK
  */
-public class ExpenseEntries extends AbstractExpenseActivity {
+public class ExpenseEntries extends AbstractExpenseActivity implements IServiceRequestListener {
 
     private static final String CLS_TAG = ExpenseEntries.class.getSimpleName();
 
@@ -199,6 +200,18 @@ public class ExpenseEntries extends AbstractExpenseActivity {
      */
     protected long upTime = 0L;
 
+
+    @Override
+    public void onRequestSuccess(String controllerTag){
+
+    }
+
+    @Override
+    public void onRequestFail(String controllerTag){
+
+
+    }
+
     /*
      * (non-Javadoc)
      * 
@@ -239,6 +252,12 @@ public class ExpenseEntries extends AbstractExpenseActivity {
         if (retainer.contains(SELECTED_EXPENSE_TYPE)) {
             selectedExpenseType = (ExpenseType) retainer.get(SELECTED_EXPENSE_TYPE);
         }
+
+        if(expRep != null){
+            ConcurCore app=(ConcurCore)getApplication();
+            app.getFixedTravelAllowanceController().refreshFixedTravelAllowances(expRep.reportKey);
+        }
+
     }
 
     @Override

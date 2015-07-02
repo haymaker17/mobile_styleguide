@@ -23,7 +23,9 @@ public final class StringUtilities {
     }
 
     /**
-     * Converts the given character representation into its corresponding boolean
+     * Converts the given character representation into its corresponding boolean.
+     * Supports input strings "Y" and "y" to be converted into boolean true. All others
+     * are converted intto boolean false.
      * @param text The text to be converted
      * @return true, if the text is of "Y" or "y". Otherwise false.
      */
