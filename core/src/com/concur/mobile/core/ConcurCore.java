@@ -849,7 +849,25 @@ public abstract class ConcurCore extends MultiDexApplication {
             validateReceiver.setListener(new ProvisionExpenseItListener(getApplicationContext()));
             ExpenseItProperties.setAccessToken(expenseItSessionInfo.getAccessToken());
             validateExpenseItAsyncTask = new ValidateExpenseItAsyncTask(getApplicationContext(),
-                0, validateReceiver);
+                0, validateReceiver){
+
+                private long startTime;
+
+                @Override
+                protected void onPreExecute() {
+                    startTime = System.nanoTime();
+
+                    super.onPreExecute();
+                }
+
+                @Override
+                protected void onPostExecute(Integer result) {
+                    long timeElapsed = System.nanoTime() - startTime;
+                    // TODO: WESW - Log time elapsed
+
+                    super.onPostExecute(result);
+                }
+            };
             validateExpenseItAsyncTask.execute();
         }
     }

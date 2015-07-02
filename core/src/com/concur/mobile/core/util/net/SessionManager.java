@@ -418,7 +418,25 @@ public class SessionManager {
                         validateReceiver = new BaseAsyncResultReceiver(new Handler());
                         validateReceiver.setListener(new ProvisionExpenseItListener(context));
                         ExpenseItProperties.setAccessToken(expenseItSessionInfo.getAccessToken());
-                        validateExpenseItAsyncTask = new ValidateExpenseItAsyncTask(context, 0, validateReceiver);
+                        validateExpenseItAsyncTask = new ValidateExpenseItAsyncTask(context, 0, validateReceiver){
+
+                            private long startTime;
+
+                            @Override
+                            protected void onPreExecute() {
+                                startTime = System.nanoTime();
+
+                                super.onPreExecute();
+                            }
+
+                            @Override
+                            protected void onPostExecute(Integer result) {
+                                long timeElapsed = System.nanoTime() - startTime;
+                                // TODO: WESW - Log time elapsed
+
+                                super.onPostExecute(result);
+                            }
+                        };
                         validateExpenseItAsyncTask.execute();
                     }
                 }

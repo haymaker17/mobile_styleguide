@@ -39,9 +39,11 @@ public class ProvisionExpenseItListener implements BaseAsyncRequestTask.AsyncRep
             final SessionInfo expenseItSessionInfo = ConfigUtil.getExpenseItSessionInfo(context);
             ExpenseItProperties.setAccessToken(expenseItSessionInfo.getAccessToken());
             Preferences.setUserLoggedOnToExpenseIt(true);
+            // TODO: WESW - Track Login Success
         } else {
             ExpenseItProperties.setAccessToken(null);
             Preferences.setUserLoggedOnToExpenseIt(false);
+            // TODO: WESW - Track Login Failure
         }
     }
 
@@ -50,6 +52,7 @@ public class ProvisionExpenseItListener implements BaseAsyncRequestTask.AsyncRep
         Log.d(Const.LOG_TAG, CLS_TAG + ".ValidateExpenseItAsyncTask.onRequestFail is called");
         ExpenseItProperties.setAccessToken(null);
         Preferences.setUserLoggedOnToExpenseIt(false);
+        // TODO: WESW - Track Login Failure
     }
 
     @Override
