@@ -3,6 +3,7 @@ package com.concur.mobile.core.expense.travelallowance.service.parser;
 import android.content.Context;
 
 import com.concur.mobile.base.service.parser.BaseParser;
+import com.concur.mobile.core.expense.travelallowance.controller.FixedTravelAllowanceControlData;
 import com.concur.mobile.core.expense.travelallowance.datamodel.FixedTravelAllowance;
 import com.concur.mobile.core.expense.travelallowance.datamodel.LodgingType;
 import com.concur.mobile.core.expense.travelallowance.datamodel.MealProvision;
@@ -30,6 +31,8 @@ public class GetTAFixedAllowancesResponseParser extends BaseParser {
     private static final String DINNER_PROVIDED_LABEL = "DinnerProvidedLabel";
     private static final String BREAKFAST_PROVIDED_LABEL = "BreakfastProvidedLabel";
 
+    private static final String CONTROL = "Control";
+
 
     private List<FixedTravelAllowance> fixedTravelAllowances;
     private FixedTravelAllowance currentAllowance;
@@ -39,7 +42,18 @@ public class GetTAFixedAllowancesResponseParser extends BaseParser {
     private CodeList<MealProvision> mealCodes;
     private CodeList<LodgingType> lodgingTypeCodes;
 
+    private FixedTravelAllowanceControlData controlData;
+
     private Map<String, String> mealProvisionLabels;
+
+    private List<Map<String, String>> providedMealsValuesRaw;
+    private Map<String, String> providedMealRaw;
+
+    private List<Map<String, String>> lodgingTypeValuesRaw;
+    private Map<String, String> lodgingTypeRaw;
+
+    private boolean readingProvidedMealValues = false;
+    private boolean readingLodgingTypeValues = false;
 
     public GetTAFixedAllowancesResponseParser(Context context) {
         this.context = context;
@@ -73,13 +87,37 @@ public class GetTAFixedAllowancesResponseParser extends BaseParser {
             this.currentStartTag = tag;
             currentAllowance = new FixedTravelAllowance();
         }
-        if (PROVIDED_MEAL_VALUES.equals(tag)) {
-            this.mealCodes = new CodeList<MealProvision>(tag);
-            this.currentStartTag = tag;
-        }
+//        if (PROVIDED_MEAL_VALUES.equals(tag)) {
+//            this.mealCodes = new CodeList<MealProvision>(tag);
+//            this.currentStartTag = tag;
+//        }
         if (LODGING_TYPE_VALUES.equals(tag)) {
             this.lodgingTypeCodes = new CodeList<LodgingType>(tag);
             this.currentStartTag = tag;
+        }
+
+        if (CONTROL.equals(tag)) {
+            this.currentStartTag = tag;
+        }
+
+        // Handle provided meals values
+        if (PROVIDED_MEAL_VALUES.equals(tag)) {
+            readingProvidedMealValues = true;
+            providedMealsValuesRaw = new ArrayList<Map<String, String>>();
+        }
+
+        if (PROVIDED_MEAL.equals(tag)) {
+            providedMealRaw = new HashMap<String, String>();
+        }
+
+        // Handle lodging type values
+        if (LODGING_TYPE_VALUES.equals(tag)) {
+            readingProvidedMealValues = true;
+            providedMealsValuesRaw = new ArrayList<Map<String, String>>();
+        }
+
+        if (PROVIDED_MEAL.equals(tag)) {
+            providedMealRaw = new HashMap<String, String>();
         }
     }
 
@@ -88,6 +126,14 @@ public class GetTAFixedAllowancesResponseParser extends BaseParser {
      */
     @Override
     public void handleText(String tag, String text) {
+
+        if (CONTROL.equals(currentStartTag)) {
+            if (readingProvidedMealValues) {
+                providedMealRaw.put(tag, text);
+            } else {
+                controlData.putControlData(tag, text);
+            }
+        }
 
         if (BREAKFAST_PROVIDED_LABEL.equals(tag) || LUNCH_PROVIDED_LABEL.equals(tag)
                 || DINNER_PROVIDED_LABEL.equals(tag)) {
@@ -183,6 +229,17 @@ public class GetTAFixedAllowancesResponseParser extends BaseParser {
         if (LODGING_TYPE.equals(tag) && lodgingTypeCodes != null) {
             lodgingTypeCodes.put(new LodgingType(lodgingTypeCodes.getCode(), lodgingTypeCodes.getValue()));
         }
+
+        if (PROVIDED_MEAL_VALUES.equals(tag)) {
+            readingProvidedMealValues = false;
+        }
+
+        if (PROVIDED_MEAL.equals(tag)) {
+            providedMealsValuesRaw.add(providedMealRaw);
+        }
     }
 
+    public void setControlData(FixedTravelAllowanceControlData controlData) {
+        this.controlData = controlData;
+    }
 }

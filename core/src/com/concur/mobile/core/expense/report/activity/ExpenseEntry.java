@@ -1843,7 +1843,16 @@ public class ExpenseEntry extends AbstractExpenseActivity {
         ViewGroup viewGroup = (ViewGroup) findViewById(R.id.travel_allowance_field_list);
 
         if (viewGroup != null) {
-            if (!expRepEntDet.expKey.equals("FXMLS")) {
+            if (expRepEntDet.expKey.equals("FXMLS")) {
+                List<FormFieldView> frmFldViews = populateAllowancesDetailViewGroup(viewGroup, getExpRepEntDet());
+                if (frmFldViews != null && frmFldViews.size() > 0) {
+                    if (frmFldViewListener != null) {
+                        frmFldViewListener.setFormFieldViews(frmFldViews);
+                    } else {
+                        Log.e(Const.LOG_TAG, CLS_TAG + ".populateAllowance: frmFldViewListener is null!");
+                    }
+                }
+            } else {
                 // Intention is to show the travel allowances only for daily allowance expenses.
                 View allowanceFields = findViewById(R.id.allowance_fields);
                 if (allowanceFields != null) {
@@ -1851,14 +1860,7 @@ public class ExpenseEntry extends AbstractExpenseActivity {
                 }
                 return;
             }
-            List<FormFieldView> frmFldViews = populateAllowancesDetailViewGroup(viewGroup, getExpRepEntDet());
-            if (frmFldViews != null && frmFldViews.size() > 0) {
-                if (frmFldViewListener != null) {
-                    frmFldViewListener.setFormFieldViews(frmFldViews);
-                } else {
-                    Log.e(Const.LOG_TAG, CLS_TAG + ".populateAllowance: frmFldViewListener is null!");
-                }
-            }
+
         } else {
             Log.e(Const.LOG_TAG, CLS_TAG + ".populateAllowance: expense entry form field group not found!");
         }

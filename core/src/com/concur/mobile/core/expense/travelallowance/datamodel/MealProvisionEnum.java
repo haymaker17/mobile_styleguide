@@ -9,8 +9,8 @@ import com.concur.core.R;
  */
 public enum MealProvisionEnum {
 
-    PROVIDED("PRO", R.string.itin_meal_PRO),
-    NOT_PROVIDED("NPR", R.string.itin_meal_not_provided);
+    PROVIDED("PRO", R.string.general_yes),
+    NOT_PROVIDED("NPR", R.string.general_no);
 
     MealProvisionEnum(String code, int resourceId) {
         this.code = code;

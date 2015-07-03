@@ -1,5 +1,16 @@
 package com.concur.mobile.core.expense.travelallowance.service;
 
+import java.io.IOException;
+import java.io.InputStream;
+import java.util.List;
+
+import javax.xml.parsers.DocumentBuilder;
+import javax.xml.parsers.DocumentBuilderFactory;
+import javax.xml.parsers.ParserConfigurationException;
+
+import org.w3c.dom.Document;
+import org.xml.sax.SAXException;
+
 import android.content.Context;
 import android.util.Log;
 
@@ -7,37 +18,20 @@ import com.concur.mobile.base.service.BaseAsyncResultReceiver;
 import com.concur.mobile.base.service.parser.CommonParser;
 import com.concur.mobile.core.expense.travelallowance.controller.FixedTravelAllowanceControlData;
 import com.concur.mobile.core.expense.travelallowance.datamodel.FixedTravelAllowance;
-import com.concur.mobile.core.expense.travelallowance.service.parser.GetTAFixedAllowancesResponseParser;
+import com.concur.mobile.core.expense.travelallowance.service.parser.GetTAFixedAllowancesResponseDOMParser;
 import com.concur.mobile.core.service.CoreAsyncRequestTask;
-
-import org.w3c.dom.Document;
-import org.w3c.dom.Element;
-import org.w3c.dom.Node;
-import org.w3c.dom.NodeList;
-import org.xml.sax.SAXException;
-import org.xmlpull.v1.XmlPullParserException;
-
-import java.io.IOException;
-import java.io.InputStream;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-
-import javax.xml.parsers.DocumentBuilder;
-import javax.xml.parsers.DocumentBuilderFactory;
-import javax.xml.parsers.ParserConfigurationException;
 
 /**
  * Created by Michael Becherer on 26-Jun-15.
  */
-public class GetTAFixedAllowancesRequest extends CoreAsyncRequestTask {
+public class GetTAFixedAllowancesRequest2 extends CoreAsyncRequestTask {
 
-    public static final String LOG_TAG = GetTAFixedAllowancesRequest.class
+    public static final String LOG_TAG = GetTAFixedAllowancesRequest2.class
             .getSimpleName();
 
     private String rptKey;
 
-    private GetTAFixedAllowancesResponseParser parser;
+    private GetTAFixedAllowancesResponseDOMParser parser;
 
     private List<FixedTravelAllowance> fixedTravelAllowances;
 
@@ -49,8 +43,8 @@ public class GetTAFixedAllowancesRequest extends CoreAsyncRequestTask {
 
     private FixedTravelAllowanceControlData controlData;
 
-    public GetTAFixedAllowancesRequest(Context context,
-                                   BaseAsyncResultReceiver receiver, String rptKey) {
+    public GetTAFixedAllowancesRequest2(Context context,
+                                        BaseAsyncResultReceiver receiver, String rptKey) {
         super(context, 0, receiver);
         this.context = context;
         this.rptKey = rptKey;
@@ -68,28 +62,6 @@ public class GetTAFixedAllowancesRequest extends CoreAsyncRequestTask {
         return "/Mobile/TravelAllowance/GetTaFixedAllowances/" + rptKey;
     }
 
-    @Override
-    protected int parse(CommonParser parser) {
-        parserStartMillis = System.currentTimeMillis();
-        int result = RESULT_OK;
-
-        // register the parser of interest
-        this.parser = new GetTAFixedAllowancesResponseParser(context);
-        this.parser.setControlData(controlData);
-        parser.registerParser(this.parser, "Body");
-
-        try {
-            Log.d(LOG_TAG, "Start parsing fixed travel allowances...");
-            parser.parse();
-        } catch (XmlPullParserException e) {
-            result = RESULT_ERROR;
-            e.printStackTrace();
-        } catch (IOException e) {
-            result = RESULT_ERROR;
-            e.printStackTrace();
-        }
-        return result;
-    }
 
     @Override
     protected int onPostParse() {
@@ -109,17 +81,36 @@ public class GetTAFixedAllowancesRequest extends CoreAsyncRequestTask {
         return fixedTravelAllowances;
     }
 
-    public Map<String, String> getMealsProvisionLabelMap() {
-        if (parser == null) {
-            return new HashMap<String, String>();
-        }
-        return parser.getMealProvisionLabels();
-    }
 
     public void setControlData(FixedTravelAllowanceControlData controlData) {
         this.controlData = controlData;
     }
 
 
+    @Override
+    protected int parseStream(InputStream is) {
+        parser = new GetTAFixedAllowancesResponseDOMParser(context);
+        parser.setControlData(controlData);
+        try {
+            parserStartMillis = System.currentTimeMillis();
+            DocumentBuilderFactory factory = DocumentBuilderFactory.newInstance();
+            DocumentBuilder builder = factory.newDocumentBuilder();
+            Document dom = builder.parse(is);
+            parser.parse(dom);
+        } catch (ParserConfigurationException e) {
+            e.printStackTrace();
+        } catch (SAXException e) {
+            e.printStackTrace();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
 
+        return 0;
+    }
+
+    @Override
+    protected int parse(CommonParser parser) {
+        // parse method not needed. The parsing happens directly in the parseStream method.
+        return 0;
+    }
 }
