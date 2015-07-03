@@ -33,11 +33,25 @@ public class TravelAllowanceConfiguration implements Serializable{
     private String deductForProvidedDinner;
 
     /**
+     * Indicates that the Breakfast-Provided should be defaulted with 'Provided'
+     */
+    private String defaultBreakfastToProvided;
+
+    /**
+     * Indicates that the Lunch-Provided should be defaulted with 'Provided'
+     */
+    private String defaultLunchToProvided;
+
+    /**
+     * Indicates that the Dinner-Provided should be defaulted with 'Provided'
+     */
+    private String defaultDinnerToProvided;
+
+    /**
      * If this String is filled the meals provision isn't only a Yes/No decision,
      * but a 'picking' from a code list, which is identified by the content of String
      */
     private String mealDeductionList;
-
 
 
     public String getDeductForProvidedBreakfast() {
@@ -74,6 +88,30 @@ public class TravelAllowanceConfiguration implements Serializable{
 
     public void setMealDeductionList(String mealDeductionList) {
         this.mealDeductionList = mealDeductionList;
+    }
+
+    public String getDefaultBreakfastToProvided() {
+        return defaultBreakfastToProvided;
+    }
+
+    public void setDefaultBreakfastToProvided(String defaultBreakfastToProvided) {
+        this.defaultBreakfastToProvided = defaultBreakfastToProvided;
+    }
+
+    public String getDefaultLunchToProvided() {
+        return defaultLunchToProvided;
+    }
+
+    public void setDefaultLunchToProvided(String defaultLunchToProvided) {
+        this.defaultLunchToProvided = defaultLunchToProvided;
+    }
+
+    public String getDefaultDinnerToProvided() {
+        return defaultDinnerToProvided;
+    }
+
+    public void setDefaultDinnerToProvided(String defaultDinnerToProvided) {
+        this.defaultDinnerToProvided = defaultDinnerToProvided;
     }
 
     public void setUseBorderCrossTime(boolean useBorderCrossTime){ this.useBorderCrossTime = useBorderCrossTime; };

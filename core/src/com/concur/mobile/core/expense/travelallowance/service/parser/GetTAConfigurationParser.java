@@ -29,7 +29,9 @@ public class GetTAConfigurationParser extends BaseParser {
         TAConfig.setDeductForProvidedBreakfast("Y");
         TAConfig.setDeductForProvidedLunch("Y");
         TAConfig.setDeductForProvidedDinner("Y");
-//        TAConfig.setD
+        TAConfig.setDefaultBreakfastToProvided("Y");
+        TAConfig.setDefaultLunchToProvided("Y");
+        TAConfig.setDefaultDinnerToProvided("Y");
         TAConfig.setUseBorderCrossTime(true);
         TAConfig.setMealDeductionList("DE");
 
