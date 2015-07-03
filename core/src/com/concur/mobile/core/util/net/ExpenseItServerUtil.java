@@ -1,7 +1,7 @@
 /*
 * Copyright (c) 2015 Concur Technologies, Inc.
 */
-package com.concur.mobile.core;
+package com.concur.mobile.core.util.net;
 
 import android.content.Context;
 import android.provider.Settings;

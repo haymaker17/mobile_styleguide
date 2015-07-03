@@ -3685,6 +3685,8 @@ public class Home extends BaseActivity implements View.OnClickListener, Navigati
         Intent newIt = new Intent(Home.this, ExpensesAndReceipts.class);
         newIt.putExtra(Const.EXTRA_RECEIPT_ONLY_FRAGMENT, false);
         newIt.putExtra(ReceiptStoreFragment.EXTRA_START_OCR_ON_UPLOAD, true);
+        //We may need to check for more conditions here such as if we're connected successfully to expenseit.
+        newIt.putExtra(ReceiptStoreFragment.EXTRA_USE_EXPENSEIT, Preferences.isExpenseItUser());
         newIt.putExtra(Const.EXTRA_EXPENSE_IMAGE_FILE_PATH, filePath);
         newIt.putExtra(Flurry.PARAM_NAME_FROM, Flurry.PARAM_VALUE_CAMERA);
         newIt.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
@@ -3721,6 +3723,8 @@ public class Home extends BaseActivity implements View.OnClickListener, Navigati
         it.putExtra(Const.EXTRA_EXPENSE_RECEIPT_URL_KEY, strBldr.toString());
         it.putExtra(Const.EXTRA_RECEIPT_ONLY_FRAGMENT, false);
         it.putExtra(ReceiptStoreFragment.EXTRA_START_OCR_ON_UPLOAD, true);
+        //We may need to check for more conditions here such as if we're connected successfully to expenseit.
+        it.putExtra(ReceiptStoreFragment.EXTRA_USE_EXPENSEIT, Preferences.isExpenseItUser());
         it.putExtra(Const.EXTRA_SHOW_MENU, true);
         it.putExtra(Const.EXTRA_EXPENSE_IMAGE_FILE_PATH, filePath);
         it.putExtra(Flurry.PARAM_NAME_FROM, Flurry.PARAM_VALUE_CAMERA);

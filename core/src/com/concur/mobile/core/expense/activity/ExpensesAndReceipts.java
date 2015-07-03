@@ -2,6 +2,8 @@ package com.concur.mobile.core.expense.activity;
 
 import android.app.Dialog;
 import android.content.Intent;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.os.Handler;
@@ -13,6 +15,7 @@ import android.util.Log;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.ViewGroup;
+import android.widget.Toast;
 
 import com.concur.core.R;
 import com.concur.mobile.base.service.BaseAsyncRequestTask;
@@ -36,12 +39,20 @@ import com.concur.mobile.core.util.EventTracker;
 import com.concur.mobile.core.util.ExpenseDAOConverter;
 import com.concur.mobile.core.util.Flurry;
 import com.concur.mobile.core.util.ReceiptDAOConverter;
+import com.concur.mobile.core.util.ViewUtil;
 import com.concur.mobile.platform.authentication.SessionInfo;
 import com.concur.mobile.platform.config.provider.ConfigUtil;
 import com.concur.mobile.platform.expense.receipt.list.ReceiptListRequestTask;
 import com.concur.mobile.platform.expense.smartexpense.SmartExpenseListRequestTask;
+import com.concur.mobile.platform.expenseit.ErrorResponse;
+import com.concur.mobile.platform.expenseit.ExpenseItImage;
+import com.concur.mobile.platform.expenseit.ExpenseItPostReceipt;
+import com.concur.mobile.platform.expenseit.ExpenseItPostReceiptResponse;
+import com.concur.mobile.platform.expenseit.PostExpenseItReceiptAsyncTask;
 import com.concur.mobile.platform.ui.common.util.PreferenceUtil;
 
+import java.io.ByteArrayOutputStream;
+import java.io.File;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
@@ -77,7 +88,7 @@ public class ExpensesAndReceipts extends BaseActivity implements ExpensesCallbac
     protected boolean shouldShowTestDriveExpensesTips = true;
 
     /**
-     * 
+     *
      */
     protected BaseAsyncResultReceiver smartExpenseListReceiver;
 
@@ -129,7 +140,7 @@ public class ExpensesAndReceipts extends BaseActivity implements ExpensesCallbac
     };
 
     /**
-     * 
+     *
      */
     protected AsyncTask<Void, Void, Integer> smartExpenseAsyncTask;
 
@@ -155,8 +166,8 @@ public class ExpensesAndReceipts extends BaseActivity implements ExpensesCallbac
                 // Really bad if session info is null here!
                 // OCR: Show connection error dialog
                 Log.e(Const.LOG_TAG,
-                        CLS_TAG
-                                + ".GetReceiptListReplyListener - SessionInfo is null! Cannot migrate ReceiptDAO to ReceiptInfo.");
+                    CLS_TAG
+                        + ".GetReceiptListReplyListener - SessionInfo is null! Cannot migrate ReceiptDAO to ReceiptInfo.");
             } else {
 
                 // Get the new list of ReceiptDAO from the content provider and convert
@@ -217,6 +228,9 @@ public class ExpensesAndReceipts extends BaseActivity implements ExpensesCallbac
      */
     protected long upTime = 0L;
 
+
+    protected BaseAsyncResultReceiver uploadImageReceiver;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -238,7 +252,7 @@ public class ExpensesAndReceipts extends BaseActivity implements ExpensesCallbac
             }
 
             if (extras.containsKey(Const.EXTRA_RECEIPT_ONLY_FRAGMENT)
-                    && extras.getBoolean(Const.EXTRA_RECEIPT_ONLY_FRAGMENT, false)) {
+                && extras.getBoolean(Const.EXTRA_RECEIPT_ONLY_FRAGMENT, false)) {
                 allowReceipts = true;
                 allowExpenses = false;
             }
@@ -267,7 +281,9 @@ public class ExpensesAndReceipts extends BaseActivity implements ExpensesCallbac
                 @Override
                 protected void onPreExecute() {
 
-                };
+                }
+
+                ;
 
                 @Override
                 protected Boolean doInBackground(Void... params) {
@@ -278,7 +294,9 @@ public class ExpensesAndReceipts extends BaseActivity implements ExpensesCallbac
                 @Override
                 protected void onPostExecute(Boolean result) {
                     onHandleSuccess(result, app);
-                };
+                }
+
+                ;
 
             }.execute();
         } else {
@@ -434,7 +452,7 @@ public class ExpensesAndReceipts extends BaseActivity implements ExpensesCallbac
         } else {
 
             SmartExpenseListRequestTask smartExpReqTask = new SmartExpenseListRequestTask(getConcurCore()
-                    .getApplicationContext(), 0, smartExpenseListReceiver, true);
+                .getApplicationContext(), 0, smartExpenseListReceiver, true);
             smartExpenseAsyncTask = smartExpReqTask.execute();
         }
 
@@ -462,7 +480,7 @@ public class ExpensesAndReceipts extends BaseActivity implements ExpensesCallbac
         updateExpenseListUI();
 
         DialogFragmentFactory.getAlertOkayInstance(R.string.dlg_expenses_retrieve_failed_title).show(
-                getSupportFragmentManager(), null);
+            getSupportFragmentManager(), null);
     }
 
     private void updateExpenseListUI() {
@@ -535,7 +553,7 @@ public class ExpensesAndReceipts extends BaseActivity implements ExpensesCallbac
             getReceiptListReceiver.setListener(getReceiptListReplyListener);
         } else {
             ReceiptListRequestTask receiptListTask = new ReceiptListRequestTask(ConcurCore.getContext(),
-                    REQUEST_GET_RECEIPT_LIST, getReceiptListReceiver);
+                REQUEST_GET_RECEIPT_LIST, getReceiptListReceiver);
             getReceiptListAsyncTask = receiptListTask.execute();
         }
     }
@@ -588,6 +606,62 @@ public class ExpensesAndReceipts extends BaseActivity implements ExpensesCallbac
         }
     }
 
+    @Override
+    public void uploadReceiptToExpenseIt(String filePath) {
+        //Setup the image information
+        ExpenseItImage image = new ExpenseItImage();
+        String contentType = null;
+        if (filePath != null) {
+            File receiptFile = new File(filePath);
+            try {
+                if (receiptFile.exists()) {
+                    switch (ViewUtil.getDocumentType(receiptFile)) {
+                        case PNG:
+                            contentType = "image/png";
+                            break;
+                        case JPG:
+                            contentType = "image/jpeg";
+                            break;
+                        case PDF:
+                            contentType = "application/pdf";
+                            break;
+                        case UNKNOWN:
+                            Log.d(Const.LOG_TAG, CLS_TAG + ".uploadReceiptToExpenseIt: non jpg/png receipt image type.");
+                            throw new IllegalArgumentException("Receipt image file of non jpg/png type!");
+                    }
+
+                } else {
+                    Log.e(Const.LOG_TAG, CLS_TAG + ".uploadReceiptToExpenseIt: receipt image file '" + filePath
+                        + "' does not exist!");
+                    throw new IllegalArgumentException("Receipt image file '" + filePath + "' does not exist!");
+                }
+            } catch (SecurityException secExc) {
+                Log.e(Const.LOG_TAG, CLS_TAG + ".uploadReceiptToExpenseIt: can't access receipt file '" + filePath + ".", secExc);
+                throw new IllegalArgumentException("Receipt image file '" + filePath + "' is not accessible.");
+            }
+        } else {
+            Log.e(Const.LOG_TAG, CLS_TAG + ".uploadReceiptToExpenseIt: receipt image file is null!");
+        }
+
+        //Compress the bitmap
+        Bitmap bm = BitmapFactory.decodeFile(filePath);
+        ByteArrayOutputStream baos = new ByteArrayOutputStream();
+        bm.compress(Bitmap.CompressFormat.JPEG, 50 /*quality 0--100%*/, baos); //bm is the bitmap object
+        image.setData(baos.toByteArray(), contentType);
+
+        //Setup the image receiver
+        if (uploadImageReceiver == null) {
+            uploadImageReceiver = new BaseAsyncResultReceiver(new Handler());
+            uploadImageReceiver.setListener(new UploadImageAsyncReplyListener());
+        }
+
+        //Make the call
+        PostExpenseItReceiptAsyncTask postExpenseItReceiptAsyncTask = new PostExpenseItReceiptAsyncTask(ConcurCore.getContext(),
+            0, uploadImageReceiver, image);
+
+        postExpenseItReceiptAsyncTask.execute();
+    }
+
     /*
      * (non-Javadoc)
      * 
@@ -629,7 +703,7 @@ public class ExpensesAndReceipts extends BaseActivity implements ExpensesCallbac
 
 
     /**
-     * 
+     *
      */
     public class EandRPagerAdapter extends FragmentPagerAdapter {
 
@@ -712,11 +786,11 @@ public class ExpensesAndReceipts extends BaseActivity implements ExpensesCallbac
 
                 // If we're a Test Drive User, check if we're expenses or receipts and show tips accordingly.
                 if (isExpenses && Preferences.shouldShowTestDriveTips(Const.PREF_TD_SHOW_OVERLAY_EXPENSES)
-                        && shouldShowTestDriveExpensesTips) {
+                    && shouldShowTestDriveExpensesTips) {
                     showTestDriveTips(isExpenses);
                     shouldShowTestDriveExpensesTips = false;
                 } else if (!isExpenses && Preferences.shouldShowTestDriveTips(Const.PREF_TD_SHOW_OVERLAY_RECEIPT_STORE)
-                        && shouldShowTestDriveReceiptTips) {
+                    && shouldShowTestDriveReceiptTips) {
                     showTestDriveTips(isExpenses);
                     shouldShowTestDriveReceiptTips = false;
                 }
@@ -727,9 +801,8 @@ public class ExpensesAndReceipts extends BaseActivity implements ExpensesCallbac
          * Because Expenses and Receipt Store share the Pager as an access point, this method figures out what we're dealing with,
          * where it was accessed from (IE Receipt Store from a Quick Expense, or in the EandRPager, etc.) and calls the UIUtils
          * overlay method and sets up the overlay accordingly.
-         * 
-         * @param isExpenses
-         *            Whether we're looking at Expenses or not (if not, we're looking at ReceiptStore).
+         *
+         * @param isExpenses Whether we're looking at Expenses or not (if not, we're looking at ReceiptStore).
          */
         protected void showTestDriveTips(final boolean isExpenses) {
 
@@ -749,14 +822,14 @@ public class ExpensesAndReceipts extends BaseActivity implements ExpensesCallbac
                     upTime = ((System.nanoTime() - startTime) / 1000000000L) + upTime; // Convert nanoseconds to seconds.
                     flurryParams.put(Flurry.PARAM_NAME_SECONDS_ON_OVERLAY, Flurry.formatDurationEventParam(upTime));
                     EventTracker.INSTANCE.track(Flurry.CATEGORY_OVERLAYS, (isExpenses ? "Expense Screen"
-                            : "Receipts Screen"), flurryParams);
+                        : "Receipts Screen"), flurryParams);
 
                 }
             };
 
             int overlayResId = isExpenses ? R.layout.td_overlay_expenses : R.layout.td_overlay_receipt_store;
             View overlay = UIUtils.setupOverlay((ViewGroup) getWindow().getDecorView(), overlayResId, dismissListener,
-                    R.id.td_icon_cancel_button, ExpensesAndReceipts.this, R.anim.fade_out, 300L);
+                R.id.td_icon_cancel_button, ExpensesAndReceipts.this, R.anim.fade_out, 300L);
 
             // Possible cases for changing the overlay are checked here and the overlay hides arrows accordingly.
             if (overlay != null) {
@@ -767,8 +840,8 @@ public class ExpensesAndReceipts extends BaseActivity implements ExpensesCallbac
                     Intent intent = ExpensesAndReceipts.this.getIntent();
                     // If Receipt store was navigated to from a Quick Expense or Report, there's no "add receipt" option.
                     if (intent.getBooleanExtra(Const.EXTRA_EXPENSE_SELECT_REPORT_RECEIPT_KEY, false)
-                            || intent.getBooleanExtra(Const.EXTRA_EXPENSE_SELECT_ENTRY_RECEIPT_KEY, false)
-                            || intent.getBooleanExtra(Const.EXTRA_EXPENSE_SELECT_QUICK_EXPENSE_RECEIPT_KEY, false)) {
+                        || intent.getBooleanExtra(Const.EXTRA_EXPENSE_SELECT_ENTRY_RECEIPT_KEY, false)
+                        || intent.getBooleanExtra(Const.EXTRA_EXPENSE_SELECT_QUICK_EXPENSE_RECEIPT_KEY, false)) {
                         overlay.findViewById(R.id.td_rs_capture_new_receipt).setVisibility(View.INVISIBLE);
                     }
                 }
@@ -780,4 +853,53 @@ public class ExpensesAndReceipts extends BaseActivity implements ExpensesCallbac
         }
     }
 
+    private class UploadImageAsyncReplyListener implements AsyncReplyListener {
+
+        protected String CLS_TAG = UploadImageAsyncReplyListener.class.getSimpleName();
+
+        @Override
+        public void onRequestSuccess(Bundle resultData) {
+            if (resultData != null && resultData.containsKey(PostExpenseItReceiptAsyncTask.POST_EXPENSEIT_OCR_RESULT_KEY)) {
+                ExpenseItPostReceiptResponse receiptResponse = (ExpenseItPostReceiptResponse) resultData.get(PostExpenseItReceiptAsyncTask.POST_EXPENSEIT_OCR_RESULT_KEY);
+                if (receiptResponse != null) {
+                    ErrorResponse error = receiptResponse.getExpenses()[0].getExpenseError();
+                    if (error != null) {
+                        Toast.makeText(getBaseContext(), String.format(
+                            "Failed processing image with the following error %s (%s)",
+                            error.getErrorMessage(), error.getErrorCode()), Toast.LENGTH_LONG).show();
+                        return;
+                    } else {
+                        long id = receiptResponse.getExpenses()[0].getId();
+                        int totalSecs = receiptResponse.getExpenses()[0].getEta();
+
+                        int hours = totalSecs / 3600;
+                        int minutes = (totalSecs % 3600) / 60;
+                        int seconds = totalSecs % 60;
+
+                        Toast.makeText(getBaseContext(), String.format(
+                            "Successfully uploaded image with id=%d and estimate finish= %02d:%02d:%02d",
+                            id, hours, minutes, seconds), Toast.LENGTH_LONG).show();
+                        return;
+                    }
+                }
+            }
+            Toast.makeText(getBaseContext(),"An error occurred while uploading Image", Toast.LENGTH_LONG).show();
+        }
+
+        @Override
+        public void onRequestFail(Bundle resultData) {
+            Log.e(Const.LOG_TAG, CLS_TAG + ".OnRequestFail is called");
+            Toast.makeText(getBaseContext(),"An error occurred uploading Image", Toast.LENGTH_LONG).show();
+        }
+
+        @Override
+        public void onRequestCancel(Bundle resultData) {
+            Log.e(Const.LOG_TAG, CLS_TAG + ".OnRequestCancel is called");
+        }
+
+        @Override
+        public void cleanup() {
+
+        }
+    }
 }

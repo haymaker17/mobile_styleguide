@@ -57,6 +57,8 @@ public abstract class ExpenseItAsyncRequestTask extends BaseAsyncRequestTask {
     public static final String HTTP_HEADER_AUTHORIZATION = "X-Authorization";
     public static final String HTTP_HEADER_APP_ID = "X-AppID";
     public static final String HTTP_HEADER_CONSUMER_KEY = "X-ConsumerKey";
+    protected static final String HTTP_HEADER_CONTENT_TYPE = "Content-Type";
+    protected static final String HTTP_HEADER_CONNECTION = "Connection";
     private static final String CLS_TAG = ExpenseItAsyncRequestTask.class.getSimpleName();
 
     /**
@@ -157,7 +159,7 @@ public abstract class ExpenseItAsyncRequestTask extends BaseAsyncRequestTask {
         }
 
         //Setup Connection
-        connection.setRequestProperty("Connection", "Keep-Alive");
+        connection.setRequestProperty(HTTP_HEADER_CONNECTION, "Keep-Alive");
     }
 
     @Override
