@@ -322,7 +322,7 @@
                   android:theme="@style/ConcurBaseTheme.NoActionBar"/>
         <activity android:name="com.concur.mobile.core.expense.travelallowance.activity.FixedTravelAllowanceDetailsActivity"
             android:theme="@style/ConcurBaseTheme.NoActionBar"/>
-        <activity android:name="com.concur.mobile.core.expense.travelallowance.activity.CreateItineraryActivity"
+        <activity android:name="com.concur.mobile.core.expense.travelallowance.activity.ItineraryUpdateActivity"
             android:theme="@style/ConcurBaseTheme.NoActionBar"/>
         <activity android:name="com.concur.mobile.core.travel.air.activity.AirPriceToBeatSearch"/>
         <activity android:name="com.concur.mobile.core.travel.air.activity.AirPriceToBeatSearchResults"/>

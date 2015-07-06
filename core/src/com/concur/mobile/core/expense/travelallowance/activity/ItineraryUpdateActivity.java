@@ -1,43 +1,36 @@
 package com.concur.mobile.core.expense.travelallowance.activity;
 
-import android.content.Intent;
 import android.graphics.Color;
 import android.os.Bundle;
-import android.support.design.widget.TabLayout;
-import android.support.v4.view.ViewPager;
 import android.support.v7.app.ActionBar;
 import android.support.v7.widget.Toolbar;
-import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
-import android.widget.Switch;
+import android.widget.EditText;
+import android.widget.ListView;
 import android.widget.TextView;
 
 import com.concur.core.R;
 import com.concur.mobile.core.ConcurCore;
 import com.concur.mobile.core.activity.BaseActivity;
-import com.concur.mobile.core.expense.travelallowance.adapter.ViewPagerAdapter;
-import com.concur.mobile.core.expense.travelallowance.datamodel.FixedTravelAllowance;
-import com.concur.mobile.core.expense.travelallowance.util.DefaultDateFormat;
-import com.concur.mobile.core.expense.travelallowance.util.IDateFormat;
-import com.concur.mobile.core.expense.travelallowance.util.StringUtilities;
+import com.concur.mobile.core.expense.travelallowance.adapter.ItineraryUpdateListAdapter;
+import com.concur.mobile.core.expense.travelallowance.controller.ItineraryUpdateController;
 import com.concur.mobile.core.travel.hotel.activity.HotelSearch;
 import com.concur.mobile.core.util.Const;
-import com.concur.mobile.core.util.FormatUtil;
 import com.concur.mobile.platform.ui.common.widget.CalendarPickerDialogV1;
 
 import java.util.Calendar;
-import java.util.Locale;
 
-public class CreateItineraryActivity extends BaseActivity {
+public class ItineraryUpdateActivity extends BaseActivity {
 
     /**
      * The name of this {@code Class} for logging purpose.
      */
-    private static final String CLS_TAG = CreateItineraryActivity.class
+    private static final String CLASS_TAG = ItineraryUpdateActivity.class
             .getSimpleName();
 
     private String expenseReportKey;
+    private ItineraryUpdateController itineraryUpdateController;
 
     private static final int CHECK_IN_DATE_DIALOG = 0;
     private static final int CHECK_OUT_DATE_DIALOG = 1;
@@ -51,12 +44,27 @@ public class CreateItineraryActivity extends BaseActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        ConcurCore app = (ConcurCore) getApplication();
+        this.itineraryUpdateController = app.getItineraryUpdateController();
 
         if (getIntent().hasExtra(Const.EXTRA_EXPENSE_REPORT_KEY)) {
             expenseReportKey = getIntent().getStringExtra(Const.EXTRA_EXPENSE_REPORT_KEY);
         }
 
-        this.setContentView(R.layout.ta_itinerary_create);
+        if (getIntent().hasExtra(Const.EXTRA_EXPENSE_REPORT_NAME)) {
+            String expenseReportName = getIntent().getStringExtra(Const.EXTRA_EXPENSE_REPORT_NAME);
+            this.setContentView(R.layout.itin_update_activity);
+            itineraryUpdateController.refreshCompactItinerary(expenseReportName);
+
+            ListView listView = (ListView) findViewById(R.id.list_view);
+            if (listView != null) {
+                listView.setAdapter(new ItineraryUpdateListAdapter(this));
+            }
+            renderDefaultValues();
+        } else {//Temporary
+            this.setContentView(R.layout.ta_itinerary_create);
+            renderItineraryNameV1();
+        }
 
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         if (toolbar != null) {
@@ -71,24 +79,50 @@ public class CreateItineraryActivity extends BaseActivity {
         }
 
 
-        View checkOutDateView = findViewById(R.id.hotel_search_check_out);
-        View checkInDateView = findViewById(R.id.hotel_search_label_checkin);
+        View vDepartureDate = findViewById(R.id.departure_date);
+        View vArrivalDate = findViewById(R.id.arrival_date);
 
         // Hook up the handlers
-        checkInDateView.setOnClickListener(new View.OnClickListener() {
+        if (vArrivalDate != null) {
+            vArrivalDate.setOnClickListener(new View.OnClickListener() {
 
-            @Override
-            public void onClick(View v) {
-                showCalendarDialog(CHECK_IN_DATE_DIALOG);
-            }
-        });
-        checkOutDateView.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    showCalendarDialog(CHECK_IN_DATE_DIALOG);
+                }
+            });
+        }
+        if (vDepartureDate != null) {
+            vDepartureDate.setOnClickListener(new View.OnClickListener() {
 
-            @Override
-            public void onClick(View v) {
-                showCalendarDialog(CHECK_OUT_DATE_DIALOG);
+                @Override
+                public void onClick(View v) {
+                    showCalendarDialog(CHECK_OUT_DATE_DIALOG);
+                }
+            });
+        }
+    }
+
+    private void renderDefaultValues() {
+        EditText etItinerary = (EditText) findViewById(R.id.et_itinerary);
+        if (etItinerary != null) {
+            etItinerary.setText(itineraryUpdateController.getCompactItinerary().getName());
+        }
+
+    }
+
+    private void renderItineraryNameV1() {
+        View vItineraryName = this.findViewById(R.id.itinerary_name);
+        if (vItineraryName != null) {
+            TextView tvLabel = (TextView) vItineraryName.findViewById(R.id.field_name);
+            if (tvLabel != null) {
+                tvLabel.setText("@Itinerary Name@");
             }
-        });
+            EditText etName = (EditText) vItineraryName.findViewById(R.id.field_value);
+            if (etName != null) {
+                etName.setText("@Expense Report Default@");
+            }
+        }
     }
 
     private void showCalendarDialog(int id) {

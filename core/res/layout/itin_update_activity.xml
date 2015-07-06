@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="#ffffff"
+    android:orientation="vertical">
+
+    <android.support.v7.widget.Toolbar
+        android:id="@+id/toolbar"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="#0078c8" />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="16dp"
+        android:layout_marginRight="16dp"
+        android:orientation="vertical"
+        android:paddingBottom="@dimen/form_cell_padding_bottom"
+        android:paddingTop="@dimen/form_cell_padding_top">
+
+        <TextView
+            android:id="@+id/tv_itinerary_label"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="\@Itineary Name\@"
+            android:textAppearance="@style/DailyAllowanceLabel" />
+
+        <EditText
+            android:id="@+id/et_itinerary"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:maxLines="1"
+            android:minLines="1"
+            android:singleLine="true"
+            android:text="\@Itineary\@"
+            style="@style/DefaultValue" />
+
+    </LinearLayout>
+
+    <include layout="@layout/group_separator_v1" />
+
+    <ListView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/list_view" />
+
+</LinearLayout>
