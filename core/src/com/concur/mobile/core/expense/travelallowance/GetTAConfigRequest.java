@@ -17,7 +17,6 @@ import com.concur.mobile.core.util.Const;
 
 public class GetTAConfigRequest extends CoreAsyncRequestTask {
 
-    public static final String LOG_TAG = GetTAItinerariesRequest.class.getSimpleName();
 
     private GetTAConfigRequestResultsParser resultsParser;
 

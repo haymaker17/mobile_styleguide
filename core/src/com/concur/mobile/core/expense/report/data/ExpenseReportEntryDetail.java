@@ -8,6 +8,7 @@ import java.io.InputStream;
 import java.io.Reader;
 import java.math.BigDecimal;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.Currency;
 import java.util.Iterator;
 import java.util.List;
@@ -19,12 +20,17 @@ import org.xml.sax.Attributes;
 import org.xml.sax.InputSource;
 import org.xml.sax.SAXException;
 
+import android.content.Context;
 import android.util.Log;
 
+import com.concur.mobile.core.ConcurCore;
 import com.concur.mobile.core.expense.data.ExpenseType;
 import com.concur.mobile.core.expense.report.data.ExpenseReportFormField.AccessType;
 import com.concur.mobile.core.expense.report.service.GetTaxFormReply;
 import com.concur.mobile.core.expense.report.service.TaxForm;
+import com.concur.mobile.core.expense.travelallowance.controller.FixedTravelAllowanceControlData;
+import com.concur.mobile.core.expense.travelallowance.datamodel.FixedTravelAllowance;
+import com.concur.mobile.core.expense.travelallowance.datamodel.MealProvision;
 import com.concur.mobile.core.util.Const;
 import com.concur.mobile.core.util.FormatUtil;
 import com.concur.mobile.core.util.ViewUtil;
@@ -76,46 +82,55 @@ public class ExpenseReportEntryDetail extends ExpenseReportEntry {
     private List<ExpenseReportAttendee> attendees;
 
     /**
-     * Contains the {@code ExpenseReportFormField}s for travel allowance.
-     */
-    private List<ExpenseReportFormField> travelAllowanceFields;
-
-
-    /**
      *
      * @return A list for {@code ExpenseReportFormField}s needed for travel allowance.
      * In case there are no travel allowance fields this method returns an empty list.
      */
-    public List<ExpenseReportFormField> getTravelAllowanceFields() {
-        // TODO: In the final version this should be deleted. See also comments in createTAMockData()
-        createTAMockData();
+    public List<ExpenseReportFormField> getTravelAllowanceFields(Context context) {
+        ConcurCore app = (ConcurCore) context.getApplicationContext();
+        FixedTravelAllowance ta = app.getFixedTravelAllowanceController().getFixedTA(taDayKey);
+        List<ExpenseReportFormField> travelAllowanceFields = new ArrayList<ExpenseReportFormField>();
 
-        if (travelAllowanceFields == null) {
-            travelAllowanceFields = new ArrayList<ExpenseReportFormField>();
+        if (ta == null) {
+            travelAllowanceFields.add(new ExpenseReportFormField("1", null, "@No adjustment available@", AccessType.RO,
+                    ExpenseReportFormField.ControlType.EDIT, ExpenseReportFormField.DataType.VARCHAR, true));
+            return travelAllowanceFields;
         }
+
+        String breakfastLabel = app.getFixedTravelAllowanceController().getControlData()
+                .getLabel(FixedTravelAllowanceControlData.BREAKFAST_PROVIDED_LABEL);
+        String lunchLabel = app.getFixedTravelAllowanceController().getControlData()
+                .getLabel(FixedTravelAllowanceControlData.LUNCH_PROVIDED_LABEL);
+        String dinnerLabel = app.getFixedTravelAllowanceController().getControlData()
+                .getLabel(FixedTravelAllowanceControlData.DINNER_PROVIDED_LABEL);
+
+        MealProvision breakfast = ta.getBreakfastProvision();
+        if (breakfast != null) {
+            ExpenseReportFormField field1 = new ExpenseReportFormField("1", breakfastLabel,
+                    breakfast.getCodeDescription(), AccessType.RO, ExpenseReportFormField.ControlType.EDIT,
+                    ExpenseReportFormField.DataType.VARCHAR, true);
+            travelAllowanceFields.add(field1);
+        }
+
+        MealProvision lunch = ta.getLunchProvision();
+        if (lunch != null) {
+            ExpenseReportFormField field2 = new ExpenseReportFormField("2", lunchLabel, lunch.getCodeDescription(),
+                    AccessType.RO, ExpenseReportFormField.ControlType.EDIT, ExpenseReportFormField.DataType.VARCHAR,
+                    true);
+            travelAllowanceFields.add(field2);
+        }
+
+        MealProvision dinner = ta.getDinnerProvision();
+        if (dinner != null) {
+            ExpenseReportFormField field3 = new ExpenseReportFormField("3", dinnerLabel, dinner.getCodeDescription(),
+                    AccessType.RO, ExpenseReportFormField.ControlType.EDIT, ExpenseReportFormField.DataType.VARCHAR,
+                    true);
+            travelAllowanceFields.add(field3);
+        }
+
         return travelAllowanceFields;
     }
 
-    /**
-     * This method creates some mock data for travel allowance.
-     */
-    //TODO: This method should be deleted as soon as the backend connectivity is done.
-    private void createTAMockData() {
-        ExpenseReportFormField field1 = new ExpenseReportFormField("1", "Breakfast", "Not Provided", AccessType.RO,
-                ExpenseReportFormField.ControlType.EDIT, ExpenseReportFormField.DataType.LOCATION, true);
-
-        ExpenseReportFormField field2 = new ExpenseReportFormField("2", "Lunch", "Provided", AccessType.RO,
-                ExpenseReportFormField.ControlType.EDIT, ExpenseReportFormField.DataType.LOCATION, true);
-
-        ExpenseReportFormField field3 = new ExpenseReportFormField("3", "Dinner", "Not Provided", AccessType.RO,
-                ExpenseReportFormField.ControlType.EDIT, ExpenseReportFormField.DataType.LOCATION, true);
-
-        travelAllowanceFields = new ArrayList<ExpenseReportFormField>();
-
-        travelAllowanceFields.add(field1);
-        travelAllowanceFields.add(field2);
-        travelAllowanceFields.add(field3);
-    }
 
     /**
      * Gets whether this is a detail report entry.
