@@ -31,7 +31,7 @@
         android:layout_height="60dp"
         android:layout_alignParentBottom="true"
         android:orientation="horizontal"
-        android:background="@color/orange"
+        android:background="@color/ConcurBlue"
         android:weightSum="1.0"
         android:clickable="false">
 
@@ -46,7 +46,7 @@
             android:gravity="left|center_vertical"
             android:text="@string/hotel_reserve_this_room"
             android:textColor="@color/White"
-            android:background="@color/orange"
+            android:background="@color/ConcurBlue"
             android:textSize="20sp"
             android:layout_gravity="center"/>
 
