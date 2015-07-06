@@ -1,5 +1,10 @@
 package com.concur.mobile.core.expense.travelallowance.service;
 
+import java.io.IOException;
+import java.util.List;
+
+import org.xmlpull.v1.XmlPullParserException;
+
 import android.content.Context;
 import android.util.Log;
 
@@ -9,13 +14,9 @@ import com.concur.mobile.core.expense.travelallowance.datamodel.TravelAllowanceC
 import com.concur.mobile.core.expense.travelallowance.service.parser.GetTAConfigurationParser;
 import com.concur.mobile.core.service.CoreAsyncRequestTask;
 
-import org.xmlpull.v1.XmlPullParserException;
-
-import java.io.IOException;
-import java.util.List;
 
 /**
- * Created by D023077 on 02.07.2015.
+ * Created by Holger Rose on 02.07.2015.
  */
 public class GetTAConfigurationRequest extends CoreAsyncRequestTask {
 
@@ -25,12 +26,12 @@ public class GetTAConfigurationRequest extends CoreAsyncRequestTask {
 
     private GetTAConfigurationParser parser;
 
-    private List<TravelAllowanceConfiguration> configurationList;
+    private TravelAllowanceConfiguration configuration;
 
 //    private boolean isManager;
 
 
-    public GetTAConfigurationRequest(Context context, int id, BaseAsyncResultReceiver receiver) {
+    public GetTAConfigurationRequest(Context context, BaseAsyncResultReceiver receiver) {
         super(context, 0, receiver);
     }
 
@@ -74,7 +75,7 @@ public class GetTAConfigurationRequest extends CoreAsyncRequestTask {
 //        Log.i(LOG_TAG, "Parsing time: " + (currentMillisParser - parserStartMillis) + "ms");
 //
         resultData.putBoolean(IS_SUCCESS, true);
-        this.configurationList = parser.getConfigurationList();
+        this.configuration = parser.getConfigurationList();
 
 //        long currentMillis = System.currentTimeMillis();
 //        Log.i(LOG_TAG, "Request total: " + (currentMillis - startMillis) + "ms");
@@ -83,9 +84,8 @@ public class GetTAConfigurationRequest extends CoreAsyncRequestTask {
     }
 
 
-    public List<TravelAllowanceConfiguration> getTravelAllowanceConfigurationList(){
-        return configurationList;
+    public TravelAllowanceConfiguration getTravelAllowanceConfiguration(){
+        return configuration;
     }
-
 
 }

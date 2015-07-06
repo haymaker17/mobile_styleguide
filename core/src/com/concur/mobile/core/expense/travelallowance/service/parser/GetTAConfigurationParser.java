@@ -1,28 +1,28 @@
 package com.concur.mobile.core.expense.travelallowance.service.parser;
 
-import com.concur.mobile.base.service.parser.BaseParser;
-import com.concur.mobile.core.expense.travelallowance.datamodel.TravelAllowanceConfiguration;
-
-import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.List;
 
+import com.concur.mobile.base.service.parser.BaseParser;
+import com.concur.mobile.core.expense.travelallowance.datamodel.TravelAllowanceConfiguration;
+
 /**
- * Created by D023077 on 02.07.2015.
+ * Created by Holger Rose on 02.07.2015.
  */
 public class GetTAConfigurationParser extends BaseParser {
 
+    private static final String TACONFIG_TAG = "TaConfig";
 
-    SimpleDateFormat dateFormat;
+//    SimpleDateFormat dateFormat;
 
-    private List<TravelAllowanceConfiguration> configurations;
+    private TravelAllowanceConfiguration configuration;
 
     public GetTAConfigurationParser() {
-        this.configurations  = new ArrayList<TravelAllowanceConfiguration>();
-        this.dateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm");
+        this.configuration = new TravelAllowanceConfiguration();
+//        this.dateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm");
     }
 
-    public List<TravelAllowanceConfiguration> getConfigurationList() {
+    public TravelAllowanceConfiguration getConfigurationList() {
 
         // Start: Hard-code some test data
         TravelAllowanceConfiguration TAConfig = new TravelAllowanceConfiguration();
@@ -35,16 +35,19 @@ public class GetTAConfigurationParser extends BaseParser {
         TAConfig.setUseBorderCrossTime(true);
         TAConfig.setMealDeductionList("DE");
 
-        configurations.add(TAConfig);
+        configuration = (TAConfig);
         // End: Hard-code some test data
 
-        return configurations;
+        return configuration;
     }
 
     @Override
     public void startTag(String tag) {
         super.startTag(tag);
         int i = 1;
+        if (TACONFIG_TAG.equals(tag)) {
+            int j = 1;
+        }
     }
 
     @Override
