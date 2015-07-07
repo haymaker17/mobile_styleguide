@@ -1,13 +1,11 @@
 package com.concur.mobile.core.expense.travelallowance.fragment;
 
 import android.content.Context;
-import android.text.Layout;
 import android.text.TextPaint;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.view.ViewTreeObserver;
 import android.widget.ArrayAdapter;
 import android.widget.TextView;
 
@@ -21,7 +19,6 @@ import com.concur.mobile.core.expense.travelallowance.util.StringUtilities;
 import com.concur.mobile.core.util.Const;
 import com.concur.mobile.core.util.FormatUtil;
 
-import java.util.List;
 import java.util.Locale;
 
 /**
@@ -64,9 +61,8 @@ public class FixedTravelAllowanceListAdapter extends ArrayAdapter<Object> {
      * Creates an instance of this list adapter.
      *
      * @param context
-     * @param fixedTravelAllowanceList
      */
-    public FixedTravelAllowanceListAdapter(final Context context, List<FixedTravelAllowance> fixedTravelAllowanceList) {
+    public FixedTravelAllowanceListAdapter(final Context context) {
         super(context, LAYOUT_ID);
         this.context = context;
 
@@ -74,7 +70,6 @@ public class FixedTravelAllowanceListAdapter extends ArrayAdapter<Object> {
         this.allowanceController = app.getFixedTravelAllowanceController();
 
         this.dateFormatter = new DefaultDateFormat(context);
-        //this.allowanceController = new FixedTravelAllowanceController(context);
         addAll(allowanceController.getLocationsAndAllowances());
 
         layoutChangeListener = new View.OnLayoutChangeListener() {
@@ -99,13 +94,7 @@ public class FixedTravelAllowanceListAdapter extends ArrayAdapter<Object> {
 
                 if (textViewSize - textWidth < 0) {
                     holder.tvSubtitleMore.setVisibility(View.VISIBLE);
-                } else {
-                    if (allowanceController.mealsProvisionToText(currentAllowance, 3).length() >
-                            provisionText.length()) {
-                        holder.tvSubtitleMore.setVisibility(View.VISIBLE);
-                    }
                 }
-
             }
         };
     }
@@ -353,7 +342,7 @@ public class FixedTravelAllowanceListAdapter extends ArrayAdapter<Object> {
                 || holder.tvSubtitleMore == null) {
             return;
         }
-        String provisionText = allowanceController.mealsProvisionToText(allowance, 1);
+        String provisionText = allowanceController.mealsProvisionToText(allowance, 3);
         holder.tvSubtitleEllipsized.setText(provisionText);
         holder.vgSubtitleEllipsized.setVisibility(View.VISIBLE);
         holder.tvSubtitleMore.setVisibility(View.INVISIBLE);

@@ -76,10 +76,7 @@ public class FixedTravelAllowanceListFragment extends ListFragment implements Sw
         this.context = this.getActivity();
         this.dateFormatter = new DefaultDateFormat(context);
 
-        ConcurCore app = (ConcurCore) context.getApplicationContext();
-        FixedTravelAllowanceController allowanceController = app.getFixedTravelAllowanceController();
-
-        this.adapter = new FixedTravelAllowanceListAdapter(this.getActivity(), allowanceController.getFixedTravelAllowances());
+        this.adapter = new FixedTravelAllowanceListAdapter(this.getActivity());
         setListAdapter(adapter);
     }
 
@@ -169,10 +166,7 @@ public class FixedTravelAllowanceListFragment extends ListFragment implements Sw
     public void onRefreshFinished() {
         if (swipeRefreshLayout != null) {
             swipeRefreshLayout.setRefreshing(false);
-
-            ConcurCore app = (ConcurCore) getActivity().getApplication();
-            FixedTravelAllowanceController controller = app.getFixedTravelAllowanceController();
-            adapter =  new FixedTravelAllowanceListAdapter(getActivity(), controller.getFixedTravelAllowances());
+            adapter =  new FixedTravelAllowanceListAdapter(getActivity());
             setListAdapter(adapter);
             renderSummary();
         }
