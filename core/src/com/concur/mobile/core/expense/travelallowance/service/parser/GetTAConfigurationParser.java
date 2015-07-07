@@ -16,6 +16,7 @@ public class GetTAConfigurationParser extends BaseParser {
 //    SimpleDateFormat dateFormat;
 
     private TravelAllowanceConfiguration configuration;
+    private  TravelAllowanceConfiguration newConfiguration;
 
     public GetTAConfigurationParser() {
         this.configuration = new TravelAllowanceConfiguration();
@@ -23,42 +24,88 @@ public class GetTAConfigurationParser extends BaseParser {
     }
 
     public TravelAllowanceConfiguration getConfigurationList() {
-
-        // Start: Hard-code some test data
-        TravelAllowanceConfiguration TAConfig = new TravelAllowanceConfiguration();
-        TAConfig.setDeductForProvidedBreakfast("Y");
-        TAConfig.setDeductForProvidedLunch("Y");
-        TAConfig.setDeductForProvidedDinner("Y");
-        TAConfig.setDefaultBreakfastToProvided("Y");
-        TAConfig.setDefaultLunchToProvided("Y");
-        TAConfig.setDefaultDinnerToProvided("Y");
-        TAConfig.setUseBorderCrossTime(true);
-        TAConfig.setMealDeductionList("DE");
-
-        configuration = (TAConfig);
-        // End: Hard-code some test data
-
         return configuration;
     }
 
     @Override
     public void startTag(String tag) {
         super.startTag(tag);
-        int i = 1;
         if (TACONFIG_TAG.equals(tag)) {
-            int j = 1;
+            newConfiguration = new TravelAllowanceConfiguration();
         }
     }
 
     @Override
     public void handleText(String tag, String text) {
         super.handleText(tag, text);
-        int i = 1;
+        switch (tag){
+            case "useBorderCrossTime":
+                if ( "Y".equals(text) ) {
+                    newConfiguration.setUseBorderCrossTime(true);
+                }else {
+                    newConfiguration.setUseBorderCrossTime(false);
+                }
+                break;
+            case "configCode":
+                newConfiguration.setConfigCode(text);
+                break;
+            case "deductForProvidedBreakfast":
+                newConfiguration.setDeductForProvidedBreakfast(text);
+                break;
+            case "deductForProvidedLunch":
+                newConfiguration.setDeductForProvidedLunch(text);
+                break;
+            case "deductForProvidedDinner":
+                newConfiguration.setDeductForProvidedDinner(text);
+                break;
+            case "defaultBreakfastToProvided":
+                newConfiguration.setDefaultBreakfastToProvided(text);
+                break;
+            case "defaultLunchToProvided":
+                newConfiguration.setDefaultLunchToProvided(text);
+                break;
+            case "defaultDinnerToProvided":
+                newConfiguration.setDefaultDinnerToProvided(text);
+                break;
+            case "lodgingTat":
+                newConfiguration.setLodgingTat(text);
+                break;
+            case "mealDeductionList":
+                newConfiguration.setMealDeductionList(text);
+                break;
+            case "mealsTat":
+                newConfiguration.setMealsTat(text);
+                break;
+            case "singleRowCheck":
+                newConfiguration.setSingleRowCheck(text);
+                break;
+            case "tacKey":
+                newConfiguration.setTacKey(text);
+                break;
+            case "useLodgingType":
+                if ( "Y".equals(text) ) {
+                    newConfiguration.setUseLodgingType(true);
+                }else {
+                    newConfiguration.setUseLodgingType(false);
+                }
+                break;
+            case "useOvernight":
+                if ( "Y".equals(text) ) {
+                    newConfiguration.setUseOvernight(true);
+                }else {
+                    newConfiguration.setUseOvernight(false);
+                }
+                break;
+            default:
+                break;
+        };
     }
 
     @Override
     public void endTag(String tag) {
         super.endTag(tag);
-        int i = 1;
+        if (TACONFIG_TAG.equals(tag)) {
+            configuration = newConfiguration;
+        }
     }
 }

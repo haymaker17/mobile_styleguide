@@ -31,7 +31,6 @@ public class TravelAllowanceConfigurationController {
 
     private Context context;
 
-    //ToDo: Check if we really need a list or only one instance of data model
     private TravelAllowanceConfiguration travelAllowanceConfig;
 
     public TravelAllowanceConfigurationController(Context context) {

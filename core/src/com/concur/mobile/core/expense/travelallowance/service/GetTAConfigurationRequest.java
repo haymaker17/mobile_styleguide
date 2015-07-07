@@ -53,7 +53,7 @@ public class GetTAConfigurationRequest extends CoreAsyncRequestTask {
 
         // register the parser of interest
         this.parser = new GetTAConfigurationParser();
-        parser.registerParser(this.parser, "Configuration");
+        parser.registerParser(this.parser, "TaConfig"); //Provide the name of teh StartTag in the response
 
         try {
             Log.d(LOG_TAG, "Start parsing configuration...");
