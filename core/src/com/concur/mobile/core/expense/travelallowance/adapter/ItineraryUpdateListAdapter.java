@@ -1,6 +1,7 @@
 package com.concur.mobile.core.expense.travelallowance.adapter;
 
 import android.content.Context;
+import android.text.format.DateUtils;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -12,6 +13,7 @@ import com.concur.core.R;
 import com.concur.mobile.core.ConcurCore;
 import com.concur.mobile.core.expense.travelallowance.controller.ItineraryUpdateController;
 import com.concur.mobile.core.expense.travelallowance.ui.model.CompactItinerarySegment;
+import com.concur.mobile.core.expense.travelallowance.util.StringUtilities;
 
 import java.util.List;
 
@@ -123,7 +125,7 @@ public class ItineraryUpdateListAdapter extends ArrayAdapter<Object> {
         return resultView;
     }
 
-    private void renderDeparture(CompactItinerarySegment segment) {
+    private void renderDeparture(final CompactItinerarySegment segment) {
         if (segment == null) {
             return;
         }
@@ -134,6 +136,20 @@ public class ItineraryUpdateListAdapter extends ArrayAdapter<Object> {
             holder.tvTitle.setText("@Departure@");
         }
 
+        if (segment.getDepartureDateTime() != null) {
+            String dateStr;
+            if (holder.tvDateValue != null) {
+                dateStr = DateUtils.formatDateTime(context, segment.getDepartureDateTime().getTime(),
+                        DateUtils.FORMAT_SHOW_DATE | DateUtils.FORMAT_SHOW_WEEKDAY | DateUtils.FORMAT_SHOW_YEAR
+                        | DateUtils.FORMAT_ABBREV_WEEKDAY | DateUtils.FORMAT_ABBREV_MONTH);
+                holder.tvDateValue.setText(dateStr);
+            }
+            if (holder.tvTimeValue != null) {
+                dateStr = DateUtils.formatDateTime(context, segment.getDepartureDateTime().getTime(),
+                        DateUtils.FORMAT_SHOW_TIME);
+                holder.tvTimeValue.setText(dateStr);
+            }
+        }
     }
 
     private void renderArrival(final CompactItinerarySegment segment) {
@@ -147,6 +163,20 @@ public class ItineraryUpdateListAdapter extends ArrayAdapter<Object> {
             holder.tvTitle.setText("@Arrival@");
         }
 
+        if (segment.getArrivalDateTime() != null) {
+            String dateStr;
+            if (holder.tvDateValue != null) {
+                dateStr = DateUtils.formatDateTime(context, segment.getArrivalDateTime().getTime(),
+                        DateUtils.FORMAT_SHOW_DATE | DateUtils.FORMAT_SHOW_WEEKDAY | DateUtils.FORMAT_SHOW_YEAR
+                                | DateUtils.FORMAT_ABBREV_WEEKDAY | DateUtils.FORMAT_ABBREV_MONTH);
+                holder.tvDateValue.setText(dateStr);
+            }
+            if (holder.tvTimeValue != null) {
+                dateStr = DateUtils.formatDateTime(context, segment.getArrivalDateTime().getTime(),
+                        DateUtils.FORMAT_SHOW_TIME);
+                holder.tvTimeValue.setText(dateStr);
+            }
+        }
     }
 
     private void renderDestination(final CompactItinerarySegment segment) {
@@ -158,6 +188,46 @@ public class ItineraryUpdateListAdapter extends ArrayAdapter<Object> {
 
         if (holder.tvTitle != null) {
             holder.tvTitle.setText("@Destination@");
+        }
+
+        String periodDateStr = StringUtilities.EMPTY_STRING;
+        if (segment.getArrivalDateTime() != null) {
+            String arrivalDateStr;
+            if (holder.tvArrivalTimeValue != null) {
+                arrivalDateStr = DateUtils.formatDateTime(context, segment.getArrivalDateTime().getTime(),
+                        DateUtils.FORMAT_SHOW_TIME);
+                holder.tvArrivalTimeValue.setText(arrivalDateStr);
+            }
+            if (holder.tvPeriodValue != null) {
+                periodDateStr = DateUtils.formatDateTime(context, segment.getArrivalDateTime().getTime(),
+                                    DateUtils.FORMAT_SHOW_DATE | DateUtils.FORMAT_SHOW_WEEKDAY
+                                    | DateUtils.FORMAT_SHOW_YEAR
+                                    | DateUtils.FORMAT_ABBREV_WEEKDAY | DateUtils.FORMAT_ABBREV_MONTH);
+            }
+        }
+
+        if (segment.getDepartureDateTime() != null) {
+            String departureDateStr = StringUtilities.EMPTY_STRING;;
+            if (holder.tvDepartureTimeValue != null) {
+                departureDateStr = DateUtils.formatDateTime(context, segment.getDepartureDateTime().getTime(),
+                        DateUtils.FORMAT_SHOW_TIME);
+                holder.tvDepartureTimeValue.setText(departureDateStr);
+            }
+            if (holder.tvPeriodValue != null) {
+                departureDateStr = DateUtils.formatDateTime(context, segment.getDepartureDateTime().getTime(),
+                        DateUtils.FORMAT_SHOW_DATE | DateUtils.FORMAT_SHOW_WEEKDAY
+                                | DateUtils.FORMAT_SHOW_YEAR
+                                | DateUtils.FORMAT_ABBREV_WEEKDAY | DateUtils.FORMAT_ABBREV_MONTH);
+            }
+            if (periodDateStr != null) {
+                periodDateStr = periodDateStr + " - " + departureDateStr;
+            } else {
+                periodDateStr = departureDateStr;
+            }
+        }
+
+        if (!StringUtilities.isNullOrEmpty(periodDateStr)) {
+            holder.tvPeriodValue.setText(periodDateStr);
         }
 
     }

@@ -46,11 +46,11 @@ public class ItineraryUpdateTestData {
         calendar.set(2015, 7, 1, 9, 0);
         destination.setArrivalDateTime(calendar.getTime());
         destination.setLocation(destLocation);
-        calendar.set(2015, 7, 3, 2, 0);
+        calendar.set(2015, 7, 3, 21, 0);
         destination.setDepartureDateTime(calendar.getTime());
         segments.add(destination);
 
-        calendar.set(2015, 7, 3, 10, 0);
+        calendar.set(2015, 7, 4, 4, 0);
         arrival.setArrivalDateTime(calendar.getTime());
         arrival.setLocation(location);
         segments.add(arrival);
