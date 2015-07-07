@@ -112,56 +112,84 @@ public class ItineraryUpdateListAdapter extends ArrayAdapter<Object> {
         }
 
         if (i == 0) {
-            renderDeparture();
+            renderDeparture((CompactItinerarySegment) getItem(i));
         } else {
             if (updateController.getCompactItinerarySegments().size() == i + 1) {
-                renderArrival();
+                renderArrival((CompactItinerarySegment) getItem(i));
             } else {
-                renderDestination();
+                renderDestination((CompactItinerarySegment) getItem(i));
             }
         }
         return resultView;
     }
 
-    private void renderDeparture() {
+    private void renderDeparture(CompactItinerarySegment segment) {
+        if (segment == null) {
+            return;
+        }
 
-        renderIcon(false);
+        renderCommonParts(segment, false);
+
         if (holder.tvTitle != null) {
             holder.tvTitle.setText("@Departure@");
         }
-        if (holder.vgDateTimeContainer != null) {
-            holder.vgDateTimeContainer.setVisibility(View.VISIBLE);
-        }
-        if (holder.vgPeriod != null) {
-            holder.vgPeriod.setVisibility(View.GONE);
-        }
+
     }
 
-    private void renderArrival() {
+    private void renderArrival(final CompactItinerarySegment segment) {
+        if (segment == null) {
+            return;
+        }
 
-        renderIcon(false);
+       renderCommonParts(segment, false);
+
         if (holder.tvTitle != null) {
             holder.tvTitle.setText("@Arrival@");
         }
-        if (holder.vgDateTimeContainer != null) {
-            holder.vgDateTimeContainer.setVisibility(View.VISIBLE);
-        }
-        if (holder.vgPeriod != null) {
-            holder.vgPeriod.setVisibility(View.GONE);
-        }
+
     }
 
-    private void renderDestination() {
+    private void renderDestination(final CompactItinerarySegment segment) {
+        if (segment == null) {
+            return;
+        }
 
-        renderIcon(true);
+        renderCommonParts(segment, true);
+
         if (holder.tvTitle != null) {
             holder.tvTitle.setText("@Destination@");
         }
-        if (holder.vgDateTimeContainer != null) {
-            holder.vgDateTimeContainer.setVisibility(View.GONE);
+
+    }
+
+    private void renderCommonParts(final CompactItinerarySegment segment, final boolean isDestination) {
+
+        if (segment == null) {
+            return;
         }
-        if (holder.vgPeriod != null) {
-            holder.vgPeriod.setVisibility(View.VISIBLE);
+
+        renderIcon(isDestination);
+        renderSeparator(isDestination);
+
+        if (holder.tvLocationValue != null) {
+            holder.tvLocationValue.setText(segment.getLocation().getName());
+        }
+
+        if (isDestination) {
+            if (holder.vgDateTimeContainer != null) {
+                holder.vgDateTimeContainer.setVisibility(View.GONE);
+            }
+            if (holder.vgPeriod != null) {
+                holder.vgPeriod.setVisibility(View.VISIBLE);
+            }
+
+        } else {
+            if (holder.vgDateTimeContainer != null) {
+                holder.vgDateTimeContainer.setVisibility(View.VISIBLE);
+            }
+            if (holder.vgPeriod != null) {
+                holder.vgPeriod.setVisibility(View.GONE);
+            }
         }
     }
 
@@ -173,6 +201,24 @@ public class ItineraryUpdateListAdapter extends ArrayAdapter<Object> {
             holder.ivLocationIcon.setImageResource(R.drawable.icon_location_blue);
         } else {
             holder.ivLocationIcon.setImageResource(R.drawable.blue_oval);
+        }
+    }
+
+    private void renderSeparator (final boolean isDestination) {
+        if (isDestination) {
+            if (holder.vSeparatorLong != null) {
+                holder.vSeparatorLong.setVisibility(View.GONE);
+            }
+            if (holder.vSeparatorShort != null) {
+                holder.vSeparatorShort.setVisibility(View.VISIBLE);
+            }
+        } else {
+            if (holder.vSeparatorLong != null) {
+                holder.vSeparatorLong.setVisibility(View.VISIBLE);
+            }
+            if (holder.vSeparatorShort != null) {
+                holder.vSeparatorShort.setVisibility(View.GONE);
+            }
         }
     }
 

@@ -26,15 +26,15 @@ public class ItineraryUpdateTestData {
 
         ItineraryLocation location = new ItineraryLocation();
         location.setCode("1234");
-        location.setName("Heidelberg");
-        location.setCountryName("Germany");
+        location.setName("@Heidelberg@");
+        location.setCountryName("@Germany@");
         location.setCountryCode("DE");
 
         ItineraryLocation destLocation = new ItineraryLocation();
         destLocation.setCode("4321");
-        destLocation.setName("Seattle");
+        destLocation.setName("@Seattle@");
         destLocation.setCountryCode("US");
-        destLocation.setCountryName("United States");
+        destLocation.setCountryName("@United States@");
 
         Calendar calendar = Calendar.getInstance();
         calendar.set(2015, 7, 1, 1, 0);

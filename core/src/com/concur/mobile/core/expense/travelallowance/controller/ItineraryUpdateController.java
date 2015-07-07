@@ -8,7 +8,7 @@ import java.util.Date;
 import java.util.List;
 
 /**
- * Created by D028778 on 03-Jul-15.
+ * Created by Michael Becherer on 03-Jul-15.
  */
 public class ItineraryUpdateController {
 
