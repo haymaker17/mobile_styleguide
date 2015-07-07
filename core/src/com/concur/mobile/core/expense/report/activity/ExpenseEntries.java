@@ -52,7 +52,6 @@ import com.concur.mobile.core.ConcurCore;
 import com.concur.mobile.core.activity.Preferences;
 import com.concur.mobile.core.expense.activity.ExpenseTypeSpinnerAdapter;
 import com.concur.mobile.core.expense.activity.ExpensesAndReceipts;
-import com.concur.mobile.core.expense.activity.TAItineraryActivity;
 import com.concur.mobile.core.expense.data.ExpenseType;
 import com.concur.mobile.core.expense.data.IExpenseEntryCache;
 import com.concur.mobile.core.expense.report.data.ExpenseReport;
@@ -63,7 +62,7 @@ import com.concur.mobile.core.expense.report.service.ReportDeleteRequest;
 import com.concur.mobile.core.expense.report.service.ReportEntryDetailRequest;
 import com.concur.mobile.core.expense.report.service.ReportEntryFormRequest;
 import com.concur.mobile.core.expense.service.GetExpenseTypesRequest;
-import com.concur.mobile.core.expense.travelallowance.activity.CreateItineraryActivity;
+import com.concur.mobile.core.expense.travelallowance.activity.ItineraryUpdateActivity;
 import com.concur.mobile.core.expense.travelallowance.activity.TravelAllowanceActivity;
 import com.concur.mobile.core.expense.travelallowance.controller.IServiceRequestListener;
 import com.concur.mobile.core.expense.travelallowance.controller.TravelAllowanceItineraryController;
@@ -1612,7 +1611,12 @@ public class ExpenseEntries extends AbstractExpenseActivity
                         if (app.getTaItineraryController() != null) {
                             if (app.getTaItineraryController().getItineraryList() == null
                                     || app.getTaItineraryController().getItineraryList().size() == 0) {
-                                intent = new Intent(ExpenseEntries.this, CreateItineraryActivity.class);
+                                intent = new Intent(ExpenseEntries.this, ItineraryUpdateActivity.class);
+                                intent.putExtra(Const.EXTRA_EXPENSE_REPORT_KEY, expRep.reportKey);
+                                intent.putExtra(Const.EXTRA_EXPENSE_REPORT_NAME, expRep.reportName);
+                                startActivityForResult(intent, REQUEST_VIEW_TA_ITIN_CREATE);
+                            } else {//There are itineraries already
+                                intent = new Intent(ExpenseEntries.this, ItineraryUpdateActivity.class);
                                 intent.putExtra(Const.EXTRA_EXPENSE_REPORT_KEY, expRep.reportKey);
                                 startActivityForResult(intent, REQUEST_VIEW_TA_ITIN_CREATE);
                             }
