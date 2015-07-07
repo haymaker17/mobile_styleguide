@@ -669,6 +669,7 @@ public class ExpenseReportEntry implements Serializable {
                 } else if (localName.equalsIgnoreCase(TA_DAY_KEY)) {
                     // only relevant for travel allowance
                     reportEntry.taDayKey = cleanChars;
+                    elementHandled = true;
                 } else if (localName.equalsIgnoreCase(REPORT_ENTRY) || localName.equalsIgnoreCase(REPORT_ENTRY_DETAIL)) {
                     reportEntries.add(reportEntry);
                     reportEntry = null;
