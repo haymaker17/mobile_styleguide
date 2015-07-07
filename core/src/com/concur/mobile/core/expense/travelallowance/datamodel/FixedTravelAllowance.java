@@ -1,20 +1,11 @@
 package com.concur.mobile.core.expense.travelallowance.datamodel;
 
-import android.content.Context;
-
 import com.concur.mobile.core.expense.travelallowance.util.DateUtils;
 
 import java.io.Serializable;
-import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Comparator;
 import java.util.Date;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-
-import com.concur.core.R;
-import com.concur.mobile.core.expense.travelallowance.util.StringUtilities;
 
 /**
  * Representation of a Fixed Travel Allowance (Per Diem)
@@ -60,17 +51,17 @@ public class FixedTravelAllowance implements Serializable, Comparable<FixedTrave
     /**
      * Denotes, how the breakfast is provisioned
      */
-    private MealProvision breakfastProvision;
+    private ICode breakfastProvision;
 
     /**
      * Denotes, how the lunch is provisioned
      */
-    private MealProvision lunchProvision;
+    private ICode lunchProvision;
 
     /**
      * Denotes, how the dinner is provisioned
      */
-    private MealProvision dinnerProvision;
+    private ICode dinnerProvision;
 
     /**
      * Indicates, whether overnight stay can be reimbursed or not
@@ -80,7 +71,7 @@ public class FixedTravelAllowance implements Serializable, Comparable<FixedTrave
     /**
      * Denotes the lodging type
      */
-    private LodgingType lodgingType;
+    private ICode lodgingType;
 
     /**
      * Creates an instance of a FixedTravelAllowance
@@ -210,7 +201,7 @@ public class FixedTravelAllowance implements Serializable, Comparable<FixedTrave
      *
      * @return Denotes, how the breakfast is provisioned
      */
-    public MealProvision getBreakfastProvision() {
+    public ICode getBreakfastProvision() {
         return breakfastProvision;
     }
 
@@ -228,7 +219,7 @@ public class FixedTravelAllowance implements Serializable, Comparable<FixedTrave
      *
      * @return Denotes, how the lunch is provisioned
      */
-    public MealProvision getLunchProvision() {
+    public ICode getLunchProvision() {
         return lunchProvision;
     }
 
@@ -246,7 +237,7 @@ public class FixedTravelAllowance implements Serializable, Comparable<FixedTrave
      *
      * @return Denotes, how the dinner is provisioned
      */
-    public MealProvision getDinnerProvision() {
+    public ICode getDinnerProvision() {
         return dinnerProvision;
     }
 
@@ -282,7 +273,7 @@ public class FixedTravelAllowance implements Serializable, Comparable<FixedTrave
      *
      * @return the lodging type
      */
-    public LodgingType getLodgingType() {
+    public ICode getLodgingType() {
         return lodgingType;
     }
 

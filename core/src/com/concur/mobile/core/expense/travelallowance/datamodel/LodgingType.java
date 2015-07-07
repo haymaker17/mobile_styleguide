@@ -9,7 +9,7 @@ import java.io.Serializable;
  *
  * @author Michael Becherer
  */
-public class LodgingType implements Comparable<LodgingType>, Serializable {
+public class LodgingType implements Comparable<LodgingType>, Serializable, ICode {
 
     private static final long serialVersionUID = 4213447001177852573L;
 
@@ -27,8 +27,8 @@ public class LodgingType implements Comparable<LodgingType>, Serializable {
      * Creates a new LodgingType instance
      */
     public LodgingType() {
-
     }
+
     /**
      * Creates a new LodgingType instance
      * @param code The coded representation of a lodging type e.g. "HOTEL"
@@ -40,40 +40,37 @@ public class LodgingType implements Comparable<LodgingType>, Serializable {
     }
 
     /**
-     * Getter method
-     *
-     * @return The coded representation of a lodging type e.g. "HOTEL"
+     * @{inheritDoc}
      */
+    @Override
     public String getCode() {
         return code;
     }
 
     /**
-     * Setter method
-     *
-     * @param code The code to be set
+     * @{inheritDoc}
      */
+    @Override
+    public String getDescription() {
+        return codeDescription;
+    }
+
+    /**
+     * @{inheritDoc}
+     */
+    @Override
     public void setCode(String code) {
         this.code = code;
     }
 
     /**
-     * Getter method
-     *
-     * @return The human readable value associated with the code e.g. "Hotel"
+     * @{inheritDoc}
      */
-    public String getCodeDescription() {
-        return codeDescription;
+    @Override
+    public void setDescription(String description) {
+        this.codeDescription = description;
     }
 
-    /**
-     * Setter method
-     *
-     * @param codeDescription The description to be set
-     */
-    public void setCodeDescription(String codeDescription) {
-        this.codeDescription = codeDescription;
-    }
 
     /**
      * {@inheritDoc}

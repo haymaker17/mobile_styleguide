@@ -1,6 +1,7 @@
 package com.concur.mobile.core.expense.travelallowance.datamodel;
 
 import com.concur.mobile.core.expense.travelallowance.util.StringUtilities;
+import com.google.android.gms.internal.de;
 
 import java.io.Serializable;
 
@@ -9,7 +10,7 @@ import java.io.Serializable;
  *
  * @author Michael Becherer
  */
-public class MealProvision implements Comparable<MealProvision>, Serializable {
+public class MealProvision implements Comparable<MealProvision>, Serializable, ICode {
 
     private static final long serialVersionUID = -3355549333702766315L;
 
@@ -31,8 +32,8 @@ public class MealProvision implements Comparable<MealProvision>, Serializable {
      * Create a new MealProvision instance
      */
     public MealProvision() {
-
     }
+
     /**
      * Creates a new MealProvision instance
      * @param code The coded representation of a provision e.g. "PRO"
@@ -44,38 +45,37 @@ public class MealProvision implements Comparable<MealProvision>, Serializable {
     }
 
     /**
-     * Getter method
-     *
-     * @return The coded representation of a provision e.g. "PRO"
+     * @{inheritDoc}
      */
+    @Override
     public String getCode() {
         return code;
     }
 
     /**
-     * Setter method
-     * @param code The code to be set
+     * @{inheritDoc}
      */
+    @Override
+    public String getDescription() {
+        return codeDescription;
+    }
+
+    /**
+     * @{inheritDoc}
+     */
+    @Override
     public void setCode(String code) {
         this.code = code;
     }
 
     /**
-     * Getter method
-     *
-     * @return The human readable value associated with the code e.g. "Provided"
+     * @{inheritDoc}
      */
-    public String getCodeDescription() {
-        return codeDescription;
+    @Override
+    public void setDescription(String description) {
+        this.codeDescription = description;
     }
 
-    /**
-     * Setter method
-     * @param codeDescription The description to be set
-     */
-    public void setCodeDescription(String codeDescription) {
-        this.codeDescription = codeDescription;
-    }
 
     /**
      * {@inheritDoc}

@@ -10,6 +10,7 @@ import com.concur.core.R;
 import com.concur.mobile.base.service.BaseAsyncRequestTask;
 import com.concur.mobile.base.service.BaseAsyncResultReceiver;
 import com.concur.mobile.core.expense.travelallowance.datamodel.FixedTravelAllowance;
+import com.concur.mobile.core.expense.travelallowance.datamodel.ICode;
 import com.concur.mobile.core.expense.travelallowance.datamodel.MealProvision;
 import com.concur.mobile.core.expense.travelallowance.service.GetTAFixedAllowancesRequest;
 import com.concur.mobile.core.expense.travelallowance.service.GetTAFixedAllowancesRequest2;
@@ -289,8 +290,8 @@ public class FixedTravelAllowanceController {
 
         String resultString = StringUtilities.EMPTY_STRING;
         List<String> mealsList;
-        List<MealProvision> sortedProvisions = new ArrayList<MealProvision>();
-        Map<MealProvision, List<String>> provisionMap = new HashMap<MealProvision, List<String>>();
+        List<ICode> sortedProvisions = new ArrayList<ICode>();
+        Map<ICode, List<String>> provisionMap = new HashMap<ICode, List<String>>();
 
         if (allowance.getBreakfastProvision() != null && !StringUtilities.isNullOrEmpty(allowance.getBreakfastProvision().getCode())
                 && !allowance.getBreakfastProvision().getCode().equals(MealProvision.NOT_PROVIDED_CODE)) {
@@ -327,7 +328,7 @@ public class FixedTravelAllowanceController {
         }
 
         int groupCount = 0;
-        for (MealProvision key : sortedProvisions) {
+        for (ICode key : sortedProvisions) {
 
             groupCount++;
             resultString = resultString + key + ": ";
