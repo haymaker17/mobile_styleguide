@@ -4306,7 +4306,7 @@ public abstract class AbstractExpenseActivity extends BaseActivity {
     }
 
     /**
-     * Populates the travel allownace fields on the ui to the passed viewGroup.
+     * Populates the travel allowance fields on the ui to the passed viewGroup.
      *
      * @param viewGroup
      *            the view group to be populated.
@@ -4316,14 +4316,19 @@ public abstract class AbstractExpenseActivity extends BaseActivity {
      */
     protected List<FormFieldView> populateAllowancesDetailViewGroup(ViewGroup viewGroup,
             ExpenseReportEntryDetail expRepEntDet) {
-
-        // TODO: make the code mor robust and try to refactor the depricated FormFieldView.
         List<FormFieldView> formFieldViews = new ArrayList<FormFieldView>();
+        
+        if (viewGroup != null && expRepEntDet != null) {
+            formFieldViews.addAll(populateViewWithFormFields(viewGroup,
+                    expRepEntDet.getTravelAllowanceFields(this.getApplicationContext()), null));
+        }
 
-
-        List<ExpenseReportFormField> travelAllowanceFields = expRepEntDet.getTravelAllowanceFields();
-
-        formFieldViews.addAll(populateViewWithFormFields(viewGroup, expRepEntDet.getTravelAllowanceFields(), null));
+        if (formFieldViews.isEmpty()) {
+            View allowanceFields = findViewById(R.id.allowance_fields);
+            if (allowanceFields != null) {
+                allowanceFields.setVisibility(View.GONE);
+            }
+        }
 
         return formFieldViews;
     }

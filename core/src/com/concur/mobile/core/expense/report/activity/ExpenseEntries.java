@@ -218,6 +218,7 @@ public class ExpenseEntries extends AbstractExpenseActivity
      */
     protected long upTime = 0L;
 
+
     /*
      * (non-Javadoc)
      * 

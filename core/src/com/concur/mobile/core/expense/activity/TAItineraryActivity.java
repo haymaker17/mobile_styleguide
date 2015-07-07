@@ -380,7 +380,7 @@ public class TAItineraryActivity extends BaseActivity {
 		}
     }
 
-    protected class DeleteItineraryRowListener extends AsyncReplyAdapter  {
+    protected class DeleteItineraryRowListener extends AsyncReplyAdapter {
     	public DeleteItineraryRowListener() {
     		super(TAItineraryActivity.this);
     	}

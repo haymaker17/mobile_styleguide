@@ -103,6 +103,8 @@ public class ExpenseReportEntry implements Serializable {
 
     public String eReceiptImageId;
 
+    public String taDayKey;
+
     // A flag indicating whether or not the attendee no show count has changed.
     public boolean noShowCountChanged;
 
@@ -489,6 +491,8 @@ public class ExpenseReportEntry implements Serializable {
 
         protected static final String E_RECEIPT_IMGID = "EreceiptImageId";
 
+        protected static final String TA_DAY_KEY = "TaDayKey";
+
         // Fields to help parsing
         protected StringBuilder chars = new StringBuilder();
 
@@ -662,6 +666,9 @@ public class ExpenseReportEntry implements Serializable {
                 } else if (localName.equalsIgnoreCase(VENDOR_DESCRIPTION)) {
                     reportEntry.vendorDescription = cleanChars;
                     elementHandled = true;
+                } else if (localName.equalsIgnoreCase(TA_DAY_KEY)) {
+                    // only relevant for travel allowance
+                    reportEntry.taDayKey = cleanChars;
                 } else if (localName.equalsIgnoreCase(REPORT_ENTRY) || localName.equalsIgnoreCase(REPORT_ENTRY_DETAIL)) {
                     reportEntries.add(reportEntry);
                     reportEntry = null;

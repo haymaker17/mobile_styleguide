@@ -7,6 +7,7 @@ import com.concur.mobile.core.expense.travelallowance.datamodel.FixedTravelAllow
 import com.concur.mobile.core.expense.travelallowance.datamodel.LodgingType;
 import com.concur.mobile.core.expense.travelallowance.datamodel.MealProvision;
 import com.concur.mobile.core.expense.travelallowance.datamodel.MealProvisionEnum;
+import com.concur.mobile.core.expense.travelallowance.service.parser.CodeList;
 import com.concur.mobile.core.expense.travelallowance.util.StringUtilities;
 
 import java.text.ParseException;

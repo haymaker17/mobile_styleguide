@@ -2600,6 +2600,8 @@ public class SegmentList extends BaseActivity {
         if (Preferences.shouldShowHotelJarvisUI()) {
             // suggestion will be null in this case
             intent = new Intent(this, RestHotelSearch.class);
+            // Add the Cliqbook trip id.
+            intent.putExtra(Const.EXTRA_TRAVEL_CLIQBOOK_TRIP_ID, trip.cliqbookTripId);
         } else {
             intent = new Intent(this, HotelSearch.class);
             intent.putExtra(Flurry.PARAM_NAME_BOOKED_FROM, Flurry.PARAM_VALUE_TRIPS);

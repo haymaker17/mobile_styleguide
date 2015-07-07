@@ -11,7 +11,7 @@ import com.concur.mobile.base.service.BaseAsyncRequestTask;
 import com.concur.mobile.base.service.BaseAsyncResultReceiver;
 import com.concur.mobile.core.expense.travelallowance.datamodel.FixedTravelAllowance;
 import com.concur.mobile.core.expense.travelallowance.datamodel.MealProvision;
-import com.concur.mobile.core.expense.travelallowance.service.GetTAFixedAllowancesRequest;
+import com.concur.mobile.core.expense.travelallowance.service.GetTAFixedAllowancesRequest2;
 import com.concur.mobile.core.expense.travelallowance.util.DateUtils;
 import com.concur.mobile.core.expense.travelallowance.util.IDateFormat;
 import com.concur.mobile.core.expense.travelallowance.util.StringUtilities;
@@ -41,7 +41,7 @@ public class FixedTravelAllowanceController {
      */
     private List<IServiceRequestListener> listeners;
 
-    private GetTAFixedAllowancesRequest getFixedAllowancesRequest;
+    private GetTAFixedAllowancesRequest2 getFixedAllowancesRequest2;
 
     /**
      * Use mocked data
@@ -59,19 +59,31 @@ public class FixedTravelAllowanceController {
     private List<FixedTravelAllowance> fixedTravelAllowances;
 
     /**
+     * This map contains the same FixedTravelAllowance objects. Map is used for efficient access to specific FixedTravelAllowance
+     * objects.
+     */
+    private Map<String, FixedTravelAllowance> fixedTAIdMap;
+
+    private FixedTravelAllowanceControlData controlData;
+
+
+    /**
      * Creates an instance and initializes the object
      */
     public FixedTravelAllowanceController(Context context) {
         this.fixedTravelAllowances = new ArrayList<FixedTravelAllowance>();
+        this.fixedTAIdMap = new HashMap<String, FixedTravelAllowance>();
         this.context = context;
         this.listeners = new ArrayList<IServiceRequestListener>();
     }
 
+
     public void refreshFixedTravelAllowances(String expenseReportKey) {
 
         this.fixedTravelAllowances = new ArrayList<FixedTravelAllowance>();
+        this.controlData = new FixedTravelAllowanceControlData();
 
-        if (getFixedAllowancesRequest != null && getFixedAllowancesRequest.getStatus() != AsyncTask.Status.FINISHED) {
+        if (getFixedAllowancesRequest2 != null && getFixedAllowancesRequest2.getStatus() != AsyncTask.Status.FINISHED) {
             // There is already an async task which is not finished yet. Return silently and let the task finish his work first.
             return;
         }
@@ -80,7 +92,9 @@ public class FixedTravelAllowanceController {
         receiver.setListener(new BaseAsyncRequestTask.AsyncReplyListener() {
             @Override
             public void onRequestSuccess(Bundle resultData) {
-                fixedTravelAllowances = getFixedAllowancesRequest.getFixedTravelAllowances();
+                fixedTravelAllowances = getFixedAllowancesRequest2.getFixedTravelAllowances();
+                //mealsProvisionLabels = getFixedAllowancesRequest2.getMealsProvisionLabelMap();
+                fillTAMap();
                 notifyListener(false);
                 int size = 0;
                 if (fixedTravelAllowances != null) {
@@ -108,8 +122,19 @@ public class FixedTravelAllowanceController {
             }
         });
 
-        getFixedAllowancesRequest = new GetTAFixedAllowancesRequest(context, receiver, expenseReportKey);
-        getFixedAllowancesRequest.execute();
+        getFixedAllowancesRequest2 = new GetTAFixedAllowancesRequest2(context, receiver, expenseReportKey);
+        getFixedAllowancesRequest2.setControlData(controlData);
+        getFixedAllowancesRequest2.execute();
+    }
+
+    private void fillTAMap() {
+        for (FixedTravelAllowance ta : fixedTravelAllowances) {
+            fixedTAIdMap.put(ta.getFixedTravelAllowanceId(), ta);
+        }
+    }
+
+    public FixedTravelAllowance getFixedTA(String fixedTAId) {
+        return fixedTAIdMap.get(fixedTAId);
     }
 
     private synchronized void notifyListener(boolean isFailed) {
@@ -327,4 +352,13 @@ public class FixedTravelAllowanceController {
         }
         return resultString;
     }
+
+
+    public FixedTravelAllowanceControlData getControlData() {
+        if (controlData == null) {
+            controlData = new FixedTravelAllowanceControlData();
+        }
+        return controlData;
+    }
+
 }
