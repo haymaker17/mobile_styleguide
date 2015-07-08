@@ -1,5 +1,6 @@
 package com.concur.mobile.core.expense.travelallowance.activity;
 
+import android.content.Intent;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.support.v7.app.ActionBar;
@@ -15,6 +16,7 @@ import android.widget.TextView;
 import com.concur.core.R;
 import com.concur.mobile.core.ConcurCore;
 import com.concur.mobile.core.activity.BaseActivity;
+import com.concur.mobile.core.expense.activity.ListSearch;
 import com.concur.mobile.core.expense.travelallowance.adapter.ItineraryUpdateListAdapter;
 import com.concur.mobile.core.expense.travelallowance.controller.ItineraryUpdateController;
 import com.concur.mobile.core.travel.hotel.activity.HotelSearch;
@@ -31,13 +33,19 @@ public class ItineraryUpdateActivity extends BaseActivity {
     private static final String CLASS_TAG = ItineraryUpdateActivity.class
             .getSimpleName();
 
-    private String expenseReportKey;
-    private ItineraryUpdateController itineraryUpdateController;
+
 
     private static final int CHECK_IN_DATE_DIALOG = 0;
     private static final int CHECK_OUT_DATE_DIALOG = 1;
     private static final String TAG_CALENDAR_DIALOG_FRAGMENT =
             HotelSearch.class.getSimpleName() + ".calendar.dialog.fragment";
+
+    private String expenseReportKey;
+    private ItineraryUpdateController itineraryUpdateController;
+    private View.OnClickListener onTimeClickListener;
+    private View.OnClickListener onDateClickListener;
+    private View.OnClickListener onLocationClickListener;
+
     private CalendarPickerDialogV1 calendarDialog;
 
     /**
@@ -53,6 +61,33 @@ public class ItineraryUpdateActivity extends BaseActivity {
             expenseReportKey = getIntent().getStringExtra(Const.EXTRA_EXPENSE_REPORT_KEY);
         }
 
+        onDateClickListener = new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+            }
+        };
+
+        onTimeClickListener = new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+            }
+        };
+
+        onLocationClickListener = new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent locationIntent = new Intent(ItineraryUpdateActivity.this, ListSearch.class);
+                locationIntent.putExtra(Const.EXTRA_EXPENSE_LIST_SEARCH_IS_MRU, true);
+                locationIntent.putExtra(Const.EXTRA_EXPENSE_LIST_SEARCH_FIELD_ID, "LocName");
+                locationIntent.putExtra(Const.EXTRA_EXPENSE_LIST_SEARCH_FT_CODE, "RPTINFO");
+                locationIntent.putExtra(Const.EXTRA_EXPENSE_LIST_SEARCH_TITLE, getText(R.string.location)
+                        .toString());
+                startActivityForResult(locationIntent, Const.REQUEST_CODE_LOCATION);
+            }
+        };
+
         if (getIntent().hasExtra(Const.EXTRA_EXPENSE_REPORT_NAME)) {
             String expenseReportName = getIntent().getStringExtra(Const.EXTRA_EXPENSE_REPORT_NAME);
             this.setContentView(R.layout.itin_update_activity);
@@ -60,7 +95,8 @@ public class ItineraryUpdateActivity extends BaseActivity {
 
             ListView listView = (ListView) findViewById(R.id.list_view);
             if (listView != null) {
-                listView.setAdapter(new ItineraryUpdateListAdapter(this));
+                listView.setAdapter(new ItineraryUpdateListAdapter(this, onLocationClickListener,
+                        onDateClickListener, onTimeClickListener));
             }
             renderDefaultValues();
         } else {//Temporary

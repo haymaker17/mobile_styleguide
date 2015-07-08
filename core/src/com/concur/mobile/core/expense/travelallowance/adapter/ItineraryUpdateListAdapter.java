@@ -1,9 +1,11 @@
 package com.concur.mobile.core.expense.travelallowance.adapter;
 
 import android.content.Context;
+import android.content.Intent;
 import android.text.format.DateUtils;
 import android.view.LayoutInflater;
 import android.view.View;
+import android.view.View.OnClickListener;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.ImageView;
@@ -11,9 +13,11 @@ import android.widget.TextView;
 
 import com.concur.core.R;
 import com.concur.mobile.core.ConcurCore;
+import com.concur.mobile.core.expense.activity.ListSearch;
 import com.concur.mobile.core.expense.travelallowance.controller.ItineraryUpdateController;
 import com.concur.mobile.core.expense.travelallowance.ui.model.CompactItinerarySegment;
 import com.concur.mobile.core.expense.travelallowance.util.StringUtilities;
+import com.concur.mobile.core.util.Const;
 
 import java.util.List;
 
@@ -27,16 +31,20 @@ public class ItineraryUpdateListAdapter extends ArrayAdapter<Object> {
     private static final int DESTINATION_ROW = 0;
     private static final int ENDPOINT_ROW = 1;
 
-    private Context context;
+    private final Context context;
     private ItineraryUpdateController updateController;
     private List<CompactItinerarySegment> segments;
     private ViewHolder holder;
+    private OnClickListener onTimeClickListener;
+    private OnClickListener onDateClickListener;
+    private OnClickListener onLocationClickListener;
 
     /**
      * Holds all UI controls needed for rendering
      */
     private final class ViewHolder {
         private TextView tvTitle;
+        private View vgLocation;
         private ImageView ivLocationIcon;
         private TextView tvLocationValue;
         private View vSeparatorLong;
@@ -54,10 +62,18 @@ public class ItineraryUpdateListAdapter extends ArrayAdapter<Object> {
         private TextView tvDepartureTimeValue;
     }
 
-    public ItineraryUpdateListAdapter(Context context) {
+    public ItineraryUpdateListAdapter(final Context context,
+                                      final OnClickListener onLocationClickListener,
+                                      final OnClickListener onDateClickListener,
+                                      final OnClickListener onTimeClickListener) {
 
         super(context, LAYOUT_ID);
+
         this.context = context;
+        this.onLocationClickListener = onLocationClickListener;
+        this.onDateClickListener = onDateClickListener;
+        this.onTimeClickListener = onTimeClickListener;
+
         ConcurCore app = (ConcurCore) context.getApplicationContext();
         this.updateController = app.getItineraryUpdateController();
 
@@ -72,6 +88,7 @@ public class ItineraryUpdateListAdapter extends ArrayAdapter<Object> {
     private void createViewHolder(final View view) {
         holder = new ViewHolder();
         holder.tvTitle = (TextView) view.findViewById(R.id.tv_title);
+        holder.vgLocation = view.findViewById(R.id.vg_location);
         holder.ivLocationIcon = (ImageView) view.findViewById(R.id.iv_location_icon);
         holder.tvLocationValue = (TextView) view.findViewById(R.id.tv_location_value);
         holder.vSeparatorLong = view.findViewById(R.id.v_separator_long);
@@ -93,14 +110,6 @@ public class ItineraryUpdateListAdapter extends ArrayAdapter<Object> {
      * {@inheritDoc}
      */
     @Override
-    public int getViewTypeCount() {
-        return 1;
-    }
-
-    /**
-     * {@inheritDoc}
-     */
-    @Override
     public View getView(int i, View convertView, ViewGroup viewGroup) {
 
         View resultView = null;
@@ -110,6 +119,10 @@ public class ItineraryUpdateListAdapter extends ArrayAdapter<Object> {
             resultView = inflater.inflate(LAYOUT_ID, viewGroup, false);
             createViewHolder(resultView);
             resultView.setTag(holder);
+            if (this.onLocationClickListener != null) {
+                holder.vgLocation.setOnClickListener(onLocationClickListener);
+                holder.vgLocation.setClickable(true);
+            }
         } else {
             resultView = convertView;
             holder = (ViewHolder) resultView.getTag();
@@ -144,6 +157,14 @@ public class ItineraryUpdateListAdapter extends ArrayAdapter<Object> {
      * {@inheritDoc}
      */
     @Override
+    public int getViewTypeCount() {
+        return 2;
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
     public boolean areAllItemsEnabled() {
         return false;
     }
@@ -155,6 +176,7 @@ public class ItineraryUpdateListAdapter extends ArrayAdapter<Object> {
     public boolean isEnabled(int position) {
         return false;
     }
+
 
     private void renderDeparture(final CompactItinerarySegment segment) {
         if (segment == null) {
@@ -238,7 +260,7 @@ public class ItineraryUpdateListAdapter extends ArrayAdapter<Object> {
         }
 
         if (segment.getDepartureDateTime() != null) {
-            String departureDateStr = StringUtilities.EMPTY_STRING;;
+            String departureDateStr = StringUtilities.EMPTY_STRING;
             if (holder.tvDepartureTimeValue != null) {
                 departureDateStr = DateUtils.formatDateTime(context, segment.getDepartureDateTime().getTime(),
                         DateUtils.FORMAT_SHOW_TIME);
