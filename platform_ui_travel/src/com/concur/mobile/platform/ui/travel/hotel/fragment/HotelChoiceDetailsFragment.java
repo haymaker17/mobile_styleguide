@@ -101,7 +101,7 @@ public class HotelChoiceDetailsFragment extends PlatformFragmentV1 implements On
         mImageView.setVisibility(View.GONE);
 
         View hotelView = header.findViewById(R.id.hotel_row);
-        hotelListItem.getHotel().lowestRate = null;
+        hotelListItem.getHotel().isChoiceDetailsScreen = true;
         ((HotelSearchResultListItem) hotelListItem).buildView(getActivity(), hotelView, null);
         // not necessary to show travel points - cannot make visibility GONE as it will change the alignment by pushing the star rating view to left
         ((TextView) hotelView.findViewById(R.id.travel_points_text)).setText("");
@@ -128,6 +128,7 @@ public class HotelChoiceDetailsFragment extends PlatformFragmentV1 implements On
 
         setActionBar();
         setupTabs();
+        hotelListItem.getHotel().isChoiceDetailsScreen = false;
 
         return mRoot;
     }
