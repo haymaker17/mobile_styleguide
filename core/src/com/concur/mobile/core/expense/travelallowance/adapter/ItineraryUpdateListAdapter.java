@@ -24,6 +24,8 @@ public class ItineraryUpdateListAdapter extends ArrayAdapter<Object> {
 
     private static final String CLASS_TAG = ItineraryUpdateListAdapter.class.getSimpleName();
     private static final int LAYOUT_ID = R.layout.itin_edit_segment;
+    private static final int DESTINATION_ROW = 0;
+    private static final int ENDPOINT_ROW = 1;
 
     private Context context;
     private ItineraryUpdateController updateController;
@@ -113,16 +115,45 @@ public class ItineraryUpdateListAdapter extends ArrayAdapter<Object> {
             holder = (ViewHolder) resultView.getTag();
         }
 
-        if (i == 0) {
-            renderDeparture((CompactItinerarySegment) getItem(i));
+        if (getItemViewType(i) == DESTINATION_ROW) {
+            renderDestination((CompactItinerarySegment) getItem(i));
         } else {
-            if (updateController.getCompactItinerarySegments().size() == i + 1) {
-                renderArrival((CompactItinerarySegment) getItem(i));
+            if (i == 0) {
+                renderDeparture((CompactItinerarySegment) getItem(i));
             } else {
-                renderDestination((CompactItinerarySegment) getItem(i));
+                renderArrival((CompactItinerarySegment) getItem(i));
             }
         }
         return resultView;
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public int getItemViewType(int i) {
+        //Assumption: Departure/Arrival always the first/last element
+        if (i > 0 && i + 1 < updateController.getCompactItinerarySegments().size()){
+            //Destination
+            return DESTINATION_ROW;
+        }
+        return ENDPOINT_ROW;
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public boolean areAllItemsEnabled() {
+        return false;
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public boolean isEnabled(int position) {
+        return false;
     }
 
     private void renderDeparture(final CompactItinerarySegment segment) {

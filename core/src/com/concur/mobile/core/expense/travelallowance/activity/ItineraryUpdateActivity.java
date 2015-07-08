@@ -4,6 +4,8 @@ import android.graphics.Color;
 import android.os.Bundle;
 import android.support.v7.app.ActionBar;
 import android.support.v7.widget.Toolbar;
+import android.view.Menu;
+import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.EditText;
@@ -103,12 +105,16 @@ public class ItineraryUpdateActivity extends BaseActivity {
         }
     }
 
+
+    private void onSave() {
+
+    }
+
     private void renderDefaultValues() {
         EditText etItinerary = (EditText) findViewById(R.id.et_itinerary);
         if (etItinerary != null) {
             etItinerary.setText(itineraryUpdateController.getCompactItinerary().getName());
         }
-
     }
 
     private void renderItineraryNameV1() {
@@ -163,15 +169,23 @@ public class ItineraryUpdateActivity extends BaseActivity {
     }
 
     @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
-        switch (item.getItemId()) {
-            case android.R.id.home:
-                onBackPressed();
-                return true;
+    public boolean onCreateOptionsMenu(Menu menu){
+        MenuInflater inflater = getMenuInflater();
+        inflater.inflate(R.menu.itinerary_save_menu, menu);
+        return super.onCreateOptionsMenu(menu);
+    }
 
-            default:
-                return super.onOptionsItemSelected(item);
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        if (item.getItemId() == android.R.id.home) {
+            onBackPressed();
+            return true;
         }
+        if (item.getItemId() == R.id.menuSave) {
+            onSave();
+            return true;
+        }
+        return super.onOptionsItemSelected(item);
     }
 
     @Override
