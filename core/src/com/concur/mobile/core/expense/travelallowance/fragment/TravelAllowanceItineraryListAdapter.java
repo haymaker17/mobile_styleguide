@@ -54,6 +54,7 @@ public class TravelAllowanceItineraryListAdapter extends ArrayAdapter<Object> {
 		public TextView location;
 		public TextView fromDateTime;
 		public TextView toDateTime;
+		public View borderCrossingLabel;
 		public TextView borderCrossingDateTime;
 		public View segmentDivider;
 		public View itineraryDivider;
@@ -185,6 +186,7 @@ public class TravelAllowanceItineraryListAdapter extends ArrayAdapter<Object> {
             holder.location = (TextView) view.findViewById(R.id.tv_location);
             holder.fromDateTime = (TextView) view.findViewById(R.id.tv_from_date_time);
             holder.toDateTime = (TextView) view.findViewById(R.id.tv_to_date_time);
+			holder.borderCrossingLabel = view.findViewById(R.id.tv_border_crossing_label);
             holder.borderCrossingDateTime = (TextView) view.findViewById(R.id.tv_border_crossing_date_time);
             holder.segmentDivider = view.findViewById(R.id.segment_separator_line);
             holder.itineraryDivider = view.findViewById(R.id.itinerary_separator_line);
@@ -214,9 +216,11 @@ public class TravelAllowanceItineraryListAdapter extends ArrayAdapter<Object> {
         }
 
         if (segment.getBorderCrossingDateTime() != null) {
+			holder.borderCrossingLabel.setVisibility(View.VISIBLE);
             holder.borderCrossingDateTime.setVisibility(View.VISIBLE);
 			holder.borderCrossingDateTime.setText(formatDate(segment.getBorderCrossingDateTime(), false));
         } else {
+			holder.borderCrossingLabel.setVisibility(View.GONE);
             holder.borderCrossingDateTime.setVisibility(View.GONE);
         }
 
