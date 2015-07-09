@@ -1,0 +1,108 @@
+<div class="container components">
+
+<section>
+<h2>Scope Bar</h2>
+	<div class="flexContainer half">
+		<div>
+			<p>A Tool Bar contains actionable controls related to the items on the screen or view</p>
+		</div>
+
+		<div>
+			<figure><img src="img/ios/components/bars/scope_bar/map_views_01.png" alt="Search Bar" width="338" height="599"/><span class="figure_text">Search Bar</span></figure>
+			<!-- <figure><img src="img/ios/components/bars/navbar_02.png" alt="Navbar" width="338" height="599"/></figure> -->
+			<figure><img src="img/ios/components/bars/scope_bar/expense_report_details.png" alt="Search Bar in Focus" width="338" height="599"/><span class="figure_text">Search Bar in Focus</span></figure>
+			<!-- <figure><img src="img/ios/components/bars/navbar_01.png" alt="Navbar" width="338" height="599"/></figure> -->
+		</div>
+	</div>
+</section>
+
+<section>
+<h3>Specs</h3>
+	<div class="flexContainer half">
+		<div>
+			<p>
+				Font, color, and Usage:
+				<ul>
+					<li>Default background fill: Concur Blue #0078C8</li>
+					<li>"Walkthrough" background fill: White #FFFFFF</li>
+					<li>"Unsaved" background fill: Dark Grey #7F8F97</li>					
+					<li>Navigation Bar: 44 tall</li>					
+					<li>Title: Helvetica Regular, 16 points, White #FFFFFF</li>
+					<li>Text: 8 padding</li>										
+					<li>Iconography 24, #FFFFFF</li>					
+				</ul>
+			</p>
+		</div>
+
+		<div>
+			<figure class="diagram"><img src="img/ios/components/bars/scope_bar/redline_scope_bar.png" alt="Scope Bar" width="338" height="599"/><span class="figure_text">Scope Bar</span></figure>
+			<!-- <figure><img src="img/ios/components/bars/navbar_01.png" alt="Navbar" width="338" height="599"/></figure> -->
+<!-- 			<figure><img src="img/ios/components/bars/navigation_bar/settings.png" alt="Navbar" width="338" height="599"/></figure> -->
+			<!-- <figure><img src="img/ios/components/bars/navbar_02.png" alt="Navbar" width="338" height="599"/></figure> -->
+		</div>
+	</div>
+</section>
+
+<section>
+<h3>Code Sample</h3>
+	<div class="flexContainer">
+		<div class="code_sample">
+			<table class="code_sample_table">
+<!--
+			<thead>
+				<tr>
+					<th>Type</th>
+					<th>Device</th>
+					<th>PX Density</th>
+					<th>Width</th>
+					<th>Height</th>
+				</tr>
+			</thead>
+-->
+			<tbody>
+				<!-- Apple iPhone --> 				
+				
+		            <tr><td><pre>// View 3 - Custom right bar button with a view</pre></td></tr>	
+					<tr><td><pre>// View 3 - Custom right bar button with a view</pre></td></tr>
+					<tr><td><pre>UISegmentedControl *segmentedControl = [[UISegmentedControl alloc] initWithItems:</pre></td></tr>
+					<tr><td><pre>[NSArray arrayWithObjects:</pre></td></tr>
+					<tr><td><pre>[UIImage imageNamed:@"up.png"],</pre></td></tr>
+					<tr><td><pre>[UIImage imageNamed:@"down.png"],</pre></td></tr>
+					<tr><td><pre>nil]];</pre></td></tr>
+					<tr><td><pre><br></pre></td></tr>					
+					<tr><td><pre>[segmentedControl addTarget:self action:@selector(segmentAction:) forControlEvents:UIControlEventValueChanged];</pre></td></tr>
+					<tr><td><pre>segmentedControl.frame = CGRectMake(0, 0, 90, kCustomButtonHeight);</pre></td></tr>
+					<tr><td><pre>segmentedControl.segmentedControlStyle = UISegmentedControlStyleBar;</pre></td></tr>
+					<tr><td><pre>segmentedControl.momentary = YES;</pre></td></tr>
+					<tr><td><pre><br></pre></td></tr>						
+					<tr><td><pre>defaultTintColor = segmentedControl.tintColor;    // Keep track if this if you need it later.</pre></td></tr>
+					<tr><td><pre>UIBarButtonItem *segmentBarItem = [[UIBarButtonItem alloc] initWithCustomView:segmentedControl];</pre></td></tr>
+					<tr><td><pre>self.navigationItem.rightBarButtonItem = segmentBarItem;</pre></td></tr>
+			</tbody>
+			</table>	
+		</div>
+	</div>
+</section>
+
+
+
+
+
+
+
+<!--
+<section>
+<h3>Filter Bar</h3>
+	<div class="flexContainer half">
+		<div>
+			<p>It can be useful to display a filter/sort bar when there are clearly defined or typical categories in which users might want to refine their search. The filter/sort bar is displayed anchored to the bottom of the page and displays the number of results as well as the filter/sort buttons</p>
+		</div>
+
+		<div>
+			<figure><img src="img/ios/components/bars/filter_bar.png" alt="Navbar" width="338" height="599"/></figure>
+		</div>
+	</div>
+</section>
+-->
+
+</div>

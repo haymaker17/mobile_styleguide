@@ -1,0 +1,157 @@
+<div class="container">
+
+<section class="components">
+<h2>Tool Bar & Navigation Bar Buttons</h2>
+	<div class="flexContainer half">
+		<div>
+			<p>A Tool Bar contains actionable controls related to the items on the screen or view</p>
+		</div>
+
+		<div>
+			<figure><img src="img/ios/components/bars/tool_bar/search_results.png" alt="Search Results" width="338" height="599"/><span class="figure_text">Search Results</span></figure>
+			<!-- <figure><img src="img/ios/components/bars/navbar_02.png" alt="Navbar" width="338" height="599"/></figure> -->
+			<figure><img src="img/ios/components/bars/tool_bar/selected_expense.png" alt="Selected Expense" width="338" height="599"/><span class="figure_text">Selected Expense</span></figure>
+			<!-- <figure><img src="img/ios/components/bars/navbar_01.png" alt="Navbar" width="338" height="599"/></figure> -->
+		</div>
+	</div>
+</section>
+
+<section class="components">
+<h3>Specs</h3>
+	<div class="flexContainer half">
+		<div>
+			<p>
+				Font, color, and Usage:
+				<ul>
+					<li>Default background fill: Concur Blue #0078C8</li>
+					<li>"Walkthrough" background fill: White #FFFFFF</li>
+					<li>"Unsaved" background fill: Dark Grey #7F8F97</li>					
+					<li>Navigation Bar: 44 tall</li>					
+					<li>Title: Helvetica Regular, 16 points, White #FFFFFF</li>
+					<li>Text: 8 padding</li>										
+					<li>Iconography 24, #FFFFFF</li>					
+				</ul>
+			</p>
+		</div>
+
+		<div>
+			<figure class="diagram"><img src="img/ios/components/bars/tool_bar/redline_tool_bar.png" alt="Redlines with Tool Bar" width="338" height="599"/><span class="figure_text">Redlines with Tool Bar</span></figure>
+			<!-- <figure><img src="img/ios/components/bars/navbar_01.png" alt="Navbar" width="338" height="599"/></figure> -->
+<!-- 			<figure><img src="img/ios/components/bars/navigation_bar/settings.png" alt="Navbar" width="338" height="599"/></figure> -->
+			<!-- <figure><img src="img/ios/components/bars/navbar_02.png" alt="Navbar" width="338" height="599"/></figure> -->
+		</div>
+	</div>
+</section>
+
+<section>
+	<p>
+		<h3>Phones</h3>
+		<div class="responsivetable">
+			<table class="devices">
+			<thead>
+				<tr>
+					<th class="td_10 device_visibility">Buttons</th>
+					<th class="td_30">Name</th>
+					<th class="td_20">Meaning</span></th>
+				</tr>
+			</thead>
+			<tbody>
+				<!-- Apple iPhone --> 				
+				<tr>
+		            <td><img class="img_device_icon" src="img/icons_concur/menu.svg" height="45" alt="Phone Icon" /></td>	
+					<td>Menu</td>
+					<td></td>
+				</tr>
+				<tr>
+		            <td><img class="img_device_icon" src="img/icons_concur/capture.svg" height="45" alt="Phone Icon" /></td>	
+					<td>Capture</td>
+					<td></td>
+				</tr>
+	            <tr>
+		            <td><img class="img_device_icon" src="img/icons_concur/mic.svg" height="45" alt="Phone Icon" /></td>
+					<td>Mic</td>
+					<td></td>
+				</tr>
+	            <tr>
+		            <td><img class="img_device_icon" src="img/icons_concur/map.svg" height="45" alt="Phone Icon" /></td>
+					<td>Map Locator</td>
+					<td></td>
+				</tr>
+	            <tr>
+		            <td><img class="img_device_icon" src="img/icons_concur/more.svg" height="45" alt="Phone Icon" /></td>
+					<td>More</td>
+					<td></td>
+				</tr>				
+	            <tr>
+		            <td><img class="img_device_icon" src="img/icons_concur/add.svg" height="45" alt="Phone Icon" /></td>
+					<td>Add</td>
+					<td></td>
+				</tr>	
+	            <tr>
+		            <td><img class="img_device_icon" src="img/icons_concur/select.svg" height="45" alt="Phone Icon" /></td>
+					<td>Select</td>
+					<td></td>
+				</tr>	
+	            <tr>
+		            <td><img class="img_device_icon" src="img/icons_concur/notifications.svg" height="45" alt="Phone Icon" /></td>
+					<td>Notifications</td>
+					<td></td>
+				</tr>	
+			</tbody>
+			</table>
+		</div>
+	</p>
+</section>
+
+<!--
+<section>
+<h3>Code Sample</h3>
+	<div class="flexContainer">
+		<div class="code_sample">
+			<table class="code_sample_table">
+			<tbody>
+		            <tr><td><pre>// View 3 - Custom right bar button with a view</pre></td></tr>	
+					<tr><td><pre>// View 3 - Custom right bar button with a view</pre></td></tr>
+					<tr><td><pre>UISegmentedControl *segmentedControl = [[UISegmentedControl alloc] initWithItems:</pre></td></tr>
+					<tr><td><pre>[NSArray arrayWithObjects:</pre></td></tr>
+					<tr><td><pre>[UIImage imageNamed:@"up.png"],</pre></td></tr>
+					<tr><td><pre>[UIImage imageNamed:@"down.png"],</pre></td></tr>
+					<tr><td><pre>nil]];</pre></td></tr>
+					<tr><td><pre><br></pre></td></tr>					
+					<tr><td><pre>[segmentedControl addTarget:self action:@selector(segmentAction:) forControlEvents:UIControlEventValueChanged];</pre></td></tr>
+					<tr><td><pre>segmentedControl.frame = CGRectMake(0, 0, 90, kCustomButtonHeight);</pre></td></tr>
+					<tr><td><pre>segmentedControl.segmentedControlStyle = UISegmentedControlStyleBar;</pre></td></tr>
+					<tr><td><pre>segmentedControl.momentary = YES;</pre></td></tr>
+					<tr><td><pre><br></pre></td></tr>						
+					<tr><td><pre>defaultTintColor = segmentedControl.tintColor;    // Keep track if this if you need it later.</pre></td></tr>
+					<tr><td><pre>UIBarButtonItem *segmentBarItem = [[UIBarButtonItem alloc] initWithCustomView:segmentedControl];</pre></td></tr>
+					<tr><td><pre>self.navigationItem.rightBarButtonItem = segmentBarItem;</pre></td></tr>
+			</tbody>
+			</table>	
+		</div>
+	</div>
+</section>
+-->
+
+
+
+
+
+
+
+<!--
+<section>
+<h3>Filter Bar</h3>
+	<div class="flexContainer half">
+		<div>
+			<p>It can be useful to display a filter/sort bar when there are clearly defined or typical categories in which users might want to refine their search. The filter/sort bar is displayed anchored to the bottom of the page and displays the number of results as well as the filter/sort buttons</p>
+		</div>
+
+		<div>
+			<figure><img src="img/ios/components/bars/filter_bar.png" alt="Navbar" width="338" height="599"/></figure>
+		</div>
+	</div>
+</section>
+-->
+
+</div>

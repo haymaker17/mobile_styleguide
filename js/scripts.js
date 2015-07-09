@@ -204,7 +204,7 @@ function setHeader(inTitle,inCategory,topCategory) {
 
 // get the commit notes from github so there's a changelist on the site
 function getGithubCommits() {
-  var html = "<thead><tr><th>Date</th><th>Description</th></tr></thead><tbody>";
+  var html = "<thead><tr><th class='td_20'>Date</th><th class='td_60'>Description</th></tr></thead><tbody>";
   //  var html = "<ul>";
   $.getJSON("https://api.github.com/repos/haymaker17/mobile_labs/commits", function(data){
     $.each(data, function(key, val){
@@ -228,12 +228,16 @@ function getGithubCommits() {
     html += "</tbody>"
     // html += "</ul>"
 
-    $(".changelist_body").html(html);
+    $(".changelist").html(html);
   });
 
 
 
 }
+
+
+
+
 
 
 
