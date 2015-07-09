@@ -1,27 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="wrap_content">
     
     <RelativeLayout 
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
-
-    <ImageView
-        android:id="@+id/iv_row_icon"
-        android:layout_width="11dp"
-        android:layout_height="11dp"
-        android:layout_marginLeft="32dp"
-        android:layout_marginTop="20dp"
-        android:src="@drawable/blue_oval" />
-
-        <ImageView
-            android:id="@+id/iv_row_icon_location"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginLeft="32dp"
-            android:layout_marginTop="20dp"
-            android:src="@drawable/icon_location_blue" />
+    android:layout_height="wrap_content">
 
     <LinearLayout
         android:id="@+id/segment_location"
@@ -30,23 +14,46 @@
         android:orientation="vertical"
         android:layout_alignParentLeft="true"
         android:layout_alignParentStart="true"
-        android:layout_marginLeft="72dp"
+        android:layout_marginLeft="32dp"
         android:layout_marginRight="16dp"
         android:layout_marginTop="16dp">
 
+        <RelativeLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content">
 
-         <TextView
-             android:id="@+id/tv_location"
-             android:layout_width="wrap_content"
-             android:layout_height="wrap_content"
-             android:fontFamily="sans-serif"
-             android:text="Seattle, WA"
-            android:textAppearance="@style/DefaultTitle" />
+            <TextView
+                android:id="@+id/tv_location"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="40dp"
+                android:text="Seattle, WA"
+                android:textAppearance="@style/DefaultTitle" />
+
+            <ImageView
+                android:id="@+id/iv_row_icon"
+                android:layout_width="11dp"
+                android:layout_height="11dp"
+                android:src="@drawable/blue_oval"
+                android:layout_centerVertical="true"/>
+
+
+            <ImageView
+                android:id="@+id/iv_row_icon_location"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:src="@drawable/icon_location_blue"
+                android:layout_centerVertical="true" />
+
+        </RelativeLayout>
+
 
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:orientation="horizontal">
+            android:orientation="horizontal"
+            android:gravity="center_vertical"
+            android:layout_marginLeft="40dp">
 
             <TextView
                 android:id="@+id/tv_from_date_time"
@@ -83,7 +90,8 @@
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:orientation="horizontal">
+            android:orientation="horizontal"
+            android:layout_marginLeft="40dp">
 
             <TextView
                 android:id="@+id/tv_border_crossing_label"
@@ -102,8 +110,6 @@
 
         </LinearLayout>
 
-
-
     </LinearLayout>
 
    <View
@@ -114,6 +120,13 @@
        android:layout_marginTop="16dp"
        android:layout_marginLeft="72dp"
        android:background="#dbe1e6" />
+
+        <View
+            android:id="@+id/header_separator_line"
+            android:layout_width="fill_parent"
+            android:layout_height="1dp"
+            android:layout_marginLeft="16dp"
+            android:background="#dbe1e6" />
     
 
    <include
@@ -122,7 +135,6 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_below="@id/segment_location"
-            android:layout_marginBottom="24dp"
             android:layout_marginTop="16dp" />
 
      

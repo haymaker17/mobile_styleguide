@@ -44,16 +44,17 @@ public class TravelAllowanceItineraryListAdapter extends ArrayAdapter<Object> {
      */
 	private static class ViewHolderHeaderRow {
 		public TextView itineraryName;
-		public View headerDivider;
 	}
 
 	/**
 	 * The view holder for the entry row which represents an itinerary segment.
 	 */
 	private static class ViewHolderEntryRow {
+		public View headerDivider;
 		public TextView location;
 		public TextView fromDateTime;
 		public TextView toDateTime;
+		public View borderCrossingLabel;
 		public TextView borderCrossingDateTime;
 		public View segmentDivider;
 		public View itineraryDivider;
@@ -146,7 +147,6 @@ public class TravelAllowanceItineraryListAdapter extends ArrayAdapter<Object> {
 			view = inflater.inflate(LAYOUT_ID_HEADER, null);
 			holder = new ViewHolderHeaderRow();
 			holder.itineraryName = (TextView) view.findViewById(R.id.tv_title);
-			holder.headerDivider = view.findViewById(R.id.v_divider_bottom);
 			view.setTag(holder);
 
             // Make not needed views GONE
@@ -154,13 +154,13 @@ public class TravelAllowanceItineraryListAdapter extends ArrayAdapter<Object> {
             view.findViewById(R.id.tv_subtitle_1).setVisibility(View.GONE);
             view.findViewById(R.id.tv_subtitle_2).setVisibility(View.GONE);
             view.findViewById(R.id.tv_value).setVisibility(View.GONE);
+			view.findViewById(R.id.v_divider_bottom).setVisibility(View.GONE);
 		}
 
 		holder = (ViewHolderHeaderRow) view.getTag();
 
 		holder.itineraryName.setText(itin.getName());
 		holder.itineraryName.setTextAppearance(ctx, R.style.DefaultTitle_Big);
-		holder.headerDivider.setVisibility(View.VISIBLE);
 
 		return view;
 	}
@@ -182,9 +182,11 @@ public class TravelAllowanceItineraryListAdapter extends ArrayAdapter<Object> {
             final LayoutInflater inflater = (LayoutInflater) this.ctx.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
             view = inflater.inflate(LAYOUT_ID_SEGMENT, null);
             holder = new ViewHolderEntryRow();
+			holder.headerDivider = view.findViewById(R.id.header_separator_line);
             holder.location = (TextView) view.findViewById(R.id.tv_location);
             holder.fromDateTime = (TextView) view.findViewById(R.id.tv_from_date_time);
             holder.toDateTime = (TextView) view.findViewById(R.id.tv_to_date_time);
+			holder.borderCrossingLabel = view.findViewById(R.id.tv_border_crossing_label);
             holder.borderCrossingDateTime = (TextView) view.findViewById(R.id.tv_border_crossing_date_time);
             holder.segmentDivider = view.findViewById(R.id.segment_separator_line);
             holder.itineraryDivider = view.findViewById(R.id.itinerary_separator_line);
@@ -214,25 +216,36 @@ public class TravelAllowanceItineraryListAdapter extends ArrayAdapter<Object> {
         }
 
         if (segment.getBorderCrossingDateTime() != null) {
+			holder.borderCrossingLabel.setVisibility(View.VISIBLE);
             holder.borderCrossingDateTime.setVisibility(View.VISIBLE);
 			holder.borderCrossingDateTime.setText(formatDate(segment.getBorderCrossingDateTime(), false));
         } else {
+			holder.borderCrossingLabel.setVisibility(View.GONE);
             holder.borderCrossingDateTime.setVisibility(View.GONE);
         }
 
+		// Separator line handling
         if (position + 1 == getCount()) {
             // In case of last element at all.
+			holder.headerDivider.setVisibility(View.GONE);
             holder.segmentDivider.setVisibility(View.GONE);
             holder.itineraryDivider.setVisibility(View.GONE);
         }
+
         if (position + 1 < getCount() && getItem(position + 1) instanceof CompactItinerary) {
             // Case last element in an itinerary.
+			holder.headerDivider.setVisibility(View.GONE);
             holder.segmentDivider.setVisibility(View.GONE);
             holder.itineraryDivider.setVisibility(View.VISIBLE);
         } else if (position + 1 < getCount()) {
             // Case not last element in an itinerary.
+			holder.headerDivider.setVisibility(View.GONE);
             holder.segmentDivider.setVisibility(View.VISIBLE);
             holder.itineraryDivider.setVisibility(View.GONE);
+			if (position - 1 > -1 && getItemViewType(position - 1) == HEADER_ROW) {
+				// Case: First segment in the itinerary
+				holder.headerDivider.setVisibility(View.VISIBLE);
+			}
         }
 
         return view;

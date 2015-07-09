@@ -10,10 +10,11 @@ import android.widget.Switch;
 import android.widget.TextView;
 
 import com.concur.core.R;
+import com.concur.mobile.core.ConcurCore;
 import com.concur.mobile.core.activity.BaseActivity;
+import com.concur.mobile.core.expense.travelallowance.controller.FixedTravelAllowanceControlData;
 import com.concur.mobile.core.expense.travelallowance.controller.FixedTravelAllowanceController;
 import com.concur.mobile.core.expense.travelallowance.datamodel.FixedTravelAllowance;
-import com.concur.mobile.core.expense.travelallowance.util.DateUtils;
 import com.concur.mobile.core.expense.travelallowance.util.DefaultDateFormat;
 import com.concur.mobile.core.expense.travelallowance.util.IDateFormat;
 import com.concur.mobile.core.expense.travelallowance.util.StringUtilities;
@@ -36,6 +37,8 @@ public class FixedTravelAllowanceDetailsActivity extends BaseActivity {
     //private FixedTravelAllowance allowance;
 
     private IDateFormat dateFormatter;
+
+    private FixedTravelAllowanceController allowanceController;
 
     public static final String INTENT_EXTRA_KEY_FIXED_TRAVEL_ALLOWANCE =
             FixedTravelAllowanceDetailsActivity.class.getName() + "FixedTravelAllowance";
@@ -61,6 +64,10 @@ public class FixedTravelAllowanceDetailsActivity extends BaseActivity {
                     callerIntent.getSerializableExtra(INTENT_EXTRA_KEY_FIXED_TRAVEL_ALLOWANCE);
         }
         this.dateFormatter = new DefaultDateFormat(this);
+
+        ConcurCore app = (ConcurCore) getApplication();
+        this.allowanceController = app.getFixedTravelAllowanceController();
+
         renderHeader(allowance);
         renderBreakfast(allowance);
         renderLunch(allowance);
@@ -86,8 +93,12 @@ public class FixedTravelAllowanceDetailsActivity extends BaseActivity {
             return;
         }
         TextView tvProvision = (TextView) this.findViewById(R.id.tv_breakfast_provision);
+        TextView tvLabel = (TextView) this.findViewById(R.id.tv_breakfast_label);
         if (tvProvision != null && allowance.getBreakfastProvision() != null) {
             tvProvision.setText(allowance.getBreakfastProvision().toString());
+        }
+        if (tvLabel != null && allowanceController != null && allowanceController.getControlData() != null) {
+            tvLabel.setText(allowanceController.getControlData().getLabel(FixedTravelAllowanceControlData.BREAKFAST_PROVIDED_LABEL));
         }
     }
     private void renderLunch(FixedTravelAllowance allowance) {
@@ -95,8 +106,12 @@ public class FixedTravelAllowanceDetailsActivity extends BaseActivity {
             return;
         }
         TextView tvProvision = (TextView) this.findViewById(R.id.tv_lunch_provision);
+        TextView tvLabel = (TextView) this.findViewById(R.id.tv_lunch_label);
         if (tvProvision != null && allowance.getLunchProvision() != null) {
             tvProvision.setText(allowance.getLunchProvision().toString());
+        }
+        if (tvLabel != null && allowanceController != null && allowanceController.getControlData() != null) {
+            tvLabel.setText(allowanceController.getControlData().getLabel(FixedTravelAllowanceControlData.LUNCH_PROVIDED_LABEL));
         }
     }
 
@@ -105,8 +120,12 @@ public class FixedTravelAllowanceDetailsActivity extends BaseActivity {
             return;
         }
         TextView tvProvision = (TextView) this.findViewById(R.id.tv_dinner_provision);
+        TextView tvLabel = (TextView) this.findViewById(R.id.tv_dinner_label);
         if (tvProvision != null && allowance.getDinnerProvision() != null) {
             tvProvision.setText(allowance.getDinnerProvision().toString());
+        }
+        if (tvLabel != null && allowanceController != null && allowanceController.getControlData() != null) {
+            tvLabel.setText(allowanceController.getControlData().getLabel(FixedTravelAllowanceControlData.DINNER_PROVIDED_LABEL));
         }
     }
 

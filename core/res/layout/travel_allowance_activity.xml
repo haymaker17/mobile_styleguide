@@ -8,7 +8,8 @@
         android:id="@+id/toolbar"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:background="#0078c8"/>
+        android:background="#0078c8"
+        android:elevation="3dp" />
 
     <android.support.design.widget.TabLayout
         android:id="@+id/tab_layout"

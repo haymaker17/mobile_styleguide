@@ -104,7 +104,7 @@ public class GetTAItinerariesResponseParser extends BaseParser {
                     .get("DepartDateTime")));
             ItineraryLocation depLoc = new ItineraryLocation();
             depLoc.setName(currentItineraryRow.get("DepartLocation"));
-            // TODO PK: set additional field for the location.
+            depLoc.setCode(currentItineraryRow.get("DepartLnKey"));
             seg.setDepartureLocation(depLoc);
 
             // Arrival
@@ -112,12 +112,14 @@ public class GetTAItinerariesResponseParser extends BaseParser {
                     .get("ArrivalDateTime")));
             ItineraryLocation arrLoc = new ItineraryLocation();
             arrLoc.setName(currentItineraryRow.get("ArrivalLocation"));
-            // TODO PK: set additional field for the location.
+            arrLoc.setCode(currentItineraryRow.get("ArrivalLnKey"));
             seg.setArrivalLocation(arrLoc);
 
             // Border Crossing
-            seg.setBorderCrossDateTime(dateFormat.parse(currentItineraryRow
-                    .get("BorderCrossDateTime")));
+            String borderCorssDateTime = currentItineraryRow.get("BorderCrossDateTime");
+            if (borderCorssDateTime != null) {
+                seg.setBorderCrossDateTime(dateFormat.parse(borderCorssDateTime));
+            }
 
 
 		} catch (ParseException e) {

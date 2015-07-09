@@ -135,35 +135,59 @@ public class TravelAllowanceItineraryController {
 
             int position = 0;
             for (ItinerarySegment segment : itinerary.getSegmentList()) {
-                CompactItinerarySegment compactSegment = new CompactItinerarySegment();
+
                 if (position == 0) {
+                    // Treat the very first segment separately because this will be always the open start segment
                     CompactItinerarySegment firstCompactSegment = new CompactItinerarySegment();
                     firstCompactSegment.setLocation(segment.getDepartureLocation());
                     firstCompactSegment.setDepartureDateTime(segment.getDepartureDateTime());
                     firstCompactSegment.setBorderCrossingDateTime(segment.getBorderCrossDateTime());
+                    firstCompactSegment.setIsSegmentOpen(true);
                     compactItinerary.getSegmentList().add(firstCompactSegment);
                 }
 
+                // Get the next itinerary segment if there is one.
                 ItinerarySegment nextSegment = null;
                 if (position + 1 < itinerary.getSegmentList().size()) {
                     nextSegment = itinerary.getSegmentList().get(position + 1);
                 }
 
                 if (nextSegment != null) {
-                    compactSegment.setLocation(segment.getArrivalLocation());
-                    compactSegment.setDepartureDateTime(segment.getArrivalDateTime());
-                    compactSegment.setArrivalDateTime(nextSegment.getDepartureDateTime());
-                    compactSegment.setBorderCrossingDateTime(segment.getBorderCrossDateTime());
+                    // Check the to location of the current segment and the from location of the next segment
+                    if (segment.getArrivalLocation().equals(nextSegment.getDepartureLocation())) {
+                        // Create a closed compact segment
+                        CompactItinerarySegment compactSegment = new CompactItinerarySegment();
+                        compactSegment.setLocation(segment.getArrivalLocation());
+                        compactSegment.setDepartureDateTime(segment.getArrivalDateTime());
+                        compactSegment.setArrivalDateTime(nextSegment.getDepartureDateTime());
+                        compactSegment.setBorderCrossingDateTime(nextSegment.getBorderCrossDateTime());
+                        compactSegment.setIsSegmentOpen(false);
+                        compactItinerary.getSegmentList().add(compactSegment);
+                    } else {
+                        // Create two open compact segments
+                        CompactItinerarySegment compactSegmentA = new CompactItinerarySegment();
+                        compactSegmentA.setLocation(segment.getArrivalLocation());
+                        compactSegmentA.setDepartureDateTime(segment.getArrivalDateTime());
+                        compactSegmentA.setIsSegmentOpen(true);
+                        compactItinerary.getSegmentList().add(compactSegmentA);
+
+                        CompactItinerarySegment compactSegmentB = new CompactItinerarySegment();
+                        compactSegmentB.setLocation(nextSegment.getDepartureLocation());
+                        compactSegmentB.setDepartureDateTime(nextSegment.getDepartureDateTime());
+                        compactSegmentB.setBorderCrossingDateTime(nextSegment.getBorderCrossDateTime());
+                        compactSegmentB.setIsSegmentOpen(true);
+                        compactItinerary.getSegmentList().add(compactSegmentB);
+                    }
                 }
 
                 if (nextSegment == null) {
                     // Last segment
-                    compactSegment.setDepartureDateTime(segment.getArrivalDateTime());
-                    compactSegment.setLocation(segment.getArrivalLocation());
-                    compactSegment.setBorderCrossingDateTime(segment.getBorderCrossDateTime());
+                    CompactItinerarySegment lastCompactSegment = new CompactItinerarySegment();
+                    lastCompactSegment.setDepartureDateTime(segment.getArrivalDateTime());
+                    lastCompactSegment.setLocation(segment.getArrivalLocation());
+                    lastCompactSegment.setIsSegmentOpen(true);
+                    compactItinerary.getSegmentList().add(lastCompactSegment);
                 }
-
-                compactItinerary.getSegmentList().add(compactSegment);
 
                 position++;
             }

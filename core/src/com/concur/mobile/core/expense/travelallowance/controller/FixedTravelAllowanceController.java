@@ -6,7 +6,6 @@ import android.os.Bundle;
 import android.os.Handler;
 import android.util.Log;
 
-import com.concur.core.R;
 import com.concur.mobile.base.service.BaseAsyncRequestTask;
 import com.concur.mobile.base.service.BaseAsyncResultReceiver;
 import com.concur.mobile.core.expense.travelallowance.datamodel.FixedTravelAllowance;
@@ -33,6 +32,20 @@ public class FixedTravelAllowanceController {
 
     private static final String CLASS_TAG = FixedTravelAllowanceController.class.getSimpleName();
 
+    private final class MealProvisionWithIndicator extends MealProvision {
+
+        private boolean indicator;
+
+        public MealProvisionWithIndicator(MealProvision mealProvision, boolean indicator) {
+            super(mealProvision.getCode(), mealProvision.getCodeDescription());
+            this.indicator = indicator;
+        }
+
+        public boolean getIndicator() {
+            return indicator;
+        }
+    }
+
     private BaseAsyncResultReceiver receiver;
 
     /**
@@ -42,11 +55,6 @@ public class FixedTravelAllowanceController {
     private List<IServiceRequestListener> listeners;
 
     private GetTAFixedAllowancesRequest2 getFixedAllowancesRequest2;
-
-    /**
-     * Use mocked data
-     */
-    private boolean useMockData = true;
 
     /**
      * The context needed in order to access resources
@@ -263,7 +271,7 @@ public class FixedTravelAllowanceController {
 
     /**
      * Builds a string based on the meals provisions (breakfast, lunch and dinner), such
-     * as "Provided: Breakfast, Lunch Business Meal: Dinner" for the given fixed travel allowance.
+     * as "Provided: Breakfast, Lunch; Business Meal: Dinner" for the given fixed travel allowance.
      * Therefore the provision characteristics of breakfast, lunch and dinner (e.g. "Provided")
      * are used for grouping. The order within the result is given by the rule:
      * breakfast before lunch before dinner.
@@ -290,27 +298,36 @@ public class FixedTravelAllowanceController {
 
         String resultString = StringUtilities.EMPTY_STRING;
         List<String> mealsList;
-        List<MealProvision> sortedProvisions = new ArrayList<MealProvision>();
+        List<MealProvisionWithIndicator> sortedProvisions = new ArrayList<MealProvisionWithIndicator>();
+        //List<MealProvision> checkBoxProvisions = new ArrayList<MealProvision>();
         Map<MealProvision, List<String>> provisionMap = new HashMap<MealProvision, List<String>>();
 
         if (allowance.getBreakfastProvision() != null && !StringUtilities.isNullOrEmpty(allowance.getBreakfastProvision().getCode())
                 && !allowance.getBreakfastProvision().getCode().equals(MealProvision.NOT_PROVIDED_CODE)) {
+
             mealsList = new ArrayList<String>();
-            mealsList.add(context.getString(R.string.itin_breakfast));
+            //mealsList.add(context.getString(R.string.itin_breakfast));
+            mealsList.add(this.controlData.getLabel(FixedTravelAllowanceControlData.BREAKFAST_PROVIDED_LABEL));
             provisionMap.put(allowance.getBreakfastProvision(), mealsList);
-            sortedProvisions.add(allowance.getBreakfastProvision());
+            MealProvisionWithIndicator sortedProvision = new MealProvisionWithIndicator(allowance.getBreakfastProvision(),
+                    controlData.getControlValue(FixedTravelAllowanceControlData.SHOW_BREAKFAST_PROVIDED_CHECKBOX));
+            sortedProvisions.add(sortedProvision);
         }
 
         if (allowance.getLunchProvision() != null && !StringUtilities.isNullOrEmpty(allowance.getLunchProvision().getCode())
                 && !allowance.getLunchProvision().getCode().equals(MealProvision.NOT_PROVIDED_CODE)) {
             if (provisionMap.containsKey(allowance.getLunchProvision())) {
                 mealsList = provisionMap.get(allowance.getLunchProvision());
-                mealsList.add(context.getString(R.string.itin_lunch));
+                //mealsList.add(context.getString(R.string.itin_lunch));
+                mealsList.add(this.controlData.getLabel(FixedTravelAllowanceControlData.LUNCH_PROVIDED_LABEL));
             } else {
                 mealsList = new ArrayList<String>();
-                mealsList.add(context.getString(R.string.itin_lunch));
+                //mealsList.add(context.getString(R.string.itin_lunch));
+                mealsList.add(this.controlData.getLabel(FixedTravelAllowanceControlData.LUNCH_PROVIDED_LABEL));
                 provisionMap.put(allowance.getLunchProvision(), mealsList);
-                sortedProvisions.add(allowance.getLunchProvision());
+                MealProvisionWithIndicator sortedProvision = new MealProvisionWithIndicator(allowance.getLunchProvision(),
+                        controlData.getControlValue(FixedTravelAllowanceControlData.SHOW_LUNCH_PROVIDED_CHECKBOX));
+                sortedProvisions.add(sortedProvision);
             }
         }
 
@@ -318,21 +335,26 @@ public class FixedTravelAllowanceController {
                 && !allowance.getDinnerProvision().getCode().equals(MealProvision.NOT_PROVIDED_CODE)) {
             if (provisionMap.containsKey(allowance.getDinnerProvision())) {
                 mealsList = provisionMap.get(allowance.getDinnerProvision());
-                mealsList.add(context.getString(R.string.itin_dinner));
+                //mealsList.add(context.getString(R.string.itin_dinner));
+                mealsList.add(this.controlData.getLabel(FixedTravelAllowanceControlData.DINNER_PROVIDED_LABEL));
             } else {
                 mealsList = new ArrayList<String>();
-                mealsList.add(context.getString(R.string.itin_dinner));
+                //mealsList.add(context.getString(R.string.itin_dinner));
+                mealsList.add(this.controlData.getLabel(FixedTravelAllowanceControlData.DINNER_PROVIDED_LABEL));
                 provisionMap.put(allowance.getDinnerProvision(), mealsList);
-                sortedProvisions.add(allowance.getDinnerProvision());
+                MealProvisionWithIndicator sortedProvision = new MealProvisionWithIndicator(allowance.getDinnerProvision(),
+                        controlData.getControlValue(FixedTravelAllowanceControlData.SHOW_DINNER_PROVIDED_CHECKBOX));
+                sortedProvisions.add(sortedProvision);
             }
         }
 
         int groupCount = 0;
-        for (MealProvision key : sortedProvisions) {
+        for (MealProvisionWithIndicator key : sortedProvisions) {
 
             groupCount++;
-            resultString = resultString + key + ": ";
-
+            if (!key.getIndicator()) {
+                resultString = resultString + key + ": ";
+            }
             int memberCount = 0;
             for (String value : provisionMap.get(key)) {
                 memberCount++;

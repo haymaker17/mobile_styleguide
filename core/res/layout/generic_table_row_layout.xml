@@ -84,12 +84,19 @@
 
     </RelativeLayout>
 
-    <include
-        android:layout_width="wrap_content"
+    <View
         android:id="@+id/v_divider_bottom"
-        android:layout_height="wrap_content"
-        layout="@layout/generic_divider_bold"
-        android:visibility="gone"
-        android:layout_below="@+id/list_field_container" />
+        android:layout_width="fill_parent"
+        android:layout_height="1dp"
+        android:background="#dbe1e6"
+        android:layout_below="@+id/list_field_container"/>
+
+    <!--<include-->
+        <!--android:layout_width="wrap_content"-->
+        <!--android:id="@+id/v_divider_bottom"-->
+        <!--android:layout_height="wrap_content"-->
+        <!--layout="@layout/generic_divider_bold"-->
+        <!--android:visibility="gone"-->
+        <!--android:layout_below="@+id/list_field_container" />-->
 
 </RelativeLayout>

@@ -2,6 +2,7 @@ package com.concur.mobile.core.expense.travelallowance.fragment;
 
 import android.app.Activity;
 import android.content.Context;
+import android.os.Build;
 import android.os.Bundle;
 import android.support.v4.app.ListFragment;
 import android.support.v4.widget.SwipeRefreshLayout;
@@ -13,6 +14,7 @@ import android.widget.ListAdapter;
 import android.widget.ListView;
 import android.widget.TextView;
 
+import com.concur.core.BuildConfig;
 import com.concur.core.R;
 import com.concur.mobile.core.ConcurCore;
 import com.concur.mobile.core.expense.travelallowance.controller.FixedTravelAllowanceController;
@@ -76,10 +78,7 @@ public class FixedTravelAllowanceListFragment extends ListFragment implements Sw
         this.context = this.getActivity();
         this.dateFormatter = new DefaultDateFormat(context);
 
-        ConcurCore app = (ConcurCore) context.getApplicationContext();
-        FixedTravelAllowanceController allowanceController = app.getFixedTravelAllowanceController();
-
-        this.adapter = new FixedTravelAllowanceListAdapter(this.getActivity(), allowanceController.getFixedTravelAllowances());
+        this.adapter = new FixedTravelAllowanceListAdapter(this.getActivity());
         setListAdapter(adapter);
     }
 
@@ -91,6 +90,13 @@ public class FixedTravelAllowanceListFragment extends ListFragment implements Sw
 //        return super.onCreateView(inflater, container, savedInstanceState);
 
         View view = inflater.inflate(R.layout.fixed_travel_allowance_list, container, false);
+
+        if (Build.VERSION.SDK_INT < Build.VERSION_CODES.LOLLIPOP) {
+            view.findViewById(R.id.v_divider_bottom).setVisibility(View.VISIBLE);
+        } else {
+            view.findViewById(R.id.v_divider_bottom).setVisibility(View.GONE);
+            view.findViewById(R.id.ta_summary).setElevation(3);
+        }
 
         swipeRefreshLayout = (SwipeRefreshLayout) view.findViewById(R.id.swipe_refresh_layout);
         swipeRefreshLayout.setOnRefreshListener(this);
@@ -169,10 +175,7 @@ public class FixedTravelAllowanceListFragment extends ListFragment implements Sw
     public void onRefreshFinished() {
         if (swipeRefreshLayout != null) {
             swipeRefreshLayout.setRefreshing(false);
-
-            ConcurCore app = (ConcurCore) getActivity().getApplication();
-            FixedTravelAllowanceController controller = app.getFixedTravelAllowanceController();
-            adapter =  new FixedTravelAllowanceListAdapter(getActivity(), controller.getFixedTravelAllowances());
+            adapter =  new FixedTravelAllowanceListAdapter(getActivity());
             setListAdapter(adapter);
             renderSummary();
         }
