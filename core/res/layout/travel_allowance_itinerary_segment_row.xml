@@ -120,6 +120,13 @@
        android:layout_marginTop="16dp"
        android:layout_marginLeft="72dp"
        android:background="#dbe1e6" />
+
+        <View
+            android:id="@+id/header_separator_line"
+            android:layout_width="fill_parent"
+            android:layout_height="1dp"
+            android:layout_marginLeft="16dp"
+            android:background="#dbe1e6" />
     
 
    <include
