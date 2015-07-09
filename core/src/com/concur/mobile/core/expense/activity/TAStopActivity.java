@@ -30,7 +30,7 @@ import com.concur.mobile.core.expense.data.SearchListResponse;
 import com.concur.mobile.core.expense.travelallowance.AsyncReplyAdapter;
 import com.concur.mobile.core.expense.travelallowance.Itinerary;
 import com.concur.mobile.core.expense.travelallowance.ItineraryRow;
-import com.concur.mobile.core.expense.travelallowance.SaveItineraryRequest;
+import com.concur.mobile.core.expense.travelallowance.service.SaveItineraryRequest;
 import com.concur.mobile.core.service.CoreAsyncRequestTask;
 import com.concur.mobile.core.util.Const;
 import com.concur.mobile.core.util.FormatUtil;

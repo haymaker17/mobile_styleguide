@@ -1,4 +1,4 @@
-package com.concur.mobile.core.expense.travelallowance;
+package com.concur.mobile.core.expense.travelallowance.service;
 
 import java.io.IOException;
 import java.text.SimpleDateFormat;
@@ -10,10 +10,12 @@ import android.content.Context;
 import com.concur.mobile.base.service.BaseAsyncResultReceiver;
 import com.concur.mobile.base.service.parser.CommonParser;
 import com.concur.mobile.core.ConcurCore;
-import com.concur.mobile.core.expense.travelallowance.service.GetTAItinerariesRequest;
+import com.concur.mobile.core.expense.travelallowance.controller.TravelAllowanceConfigurationController;
+import com.concur.mobile.core.expense.travelallowance.datamodel.ItinerarySegment;
 import com.concur.mobile.core.expense.travelallowance.service.parser.GetTAItinerariesResponseParser;
 import com.concur.mobile.core.service.CoreAsyncRequestTask;
 import com.concur.mobile.core.util.FormatUtil;
+import com.concur.mobile.core.expense.travelallowance.datamodel.Itinerary;
 
 public class SaveItineraryRequest extends CoreAsyncRequestTask {
 
@@ -21,13 +23,13 @@ public class SaveItineraryRequest extends CoreAsyncRequestTask {
 
     private GetTAItinerariesResponseParser itinParser;
     private Itinerary itinerary;
-    private ItineraryRow itineraryRow;
+    private ItinerarySegment itinerarySegment;
+    private Context context;
 
-    public SaveItineraryRequest(Context context, int id, BaseAsyncResultReceiver receiver, Itinerary itinerary,
-            ItineraryRow itineraryRow) {
-        super(context, id, receiver);
+    public SaveItineraryRequest(Context context, BaseAsyncResultReceiver receiver, Itinerary itinerary) {
+        super(context, 0, receiver);
+        this.context = context;
         this.itinerary = itinerary;
-        this.itineraryRow = itineraryRow;
     }
 
     @Override
@@ -37,37 +39,45 @@ public class SaveItineraryRequest extends CoreAsyncRequestTask {
 
     @Override
     protected String getPostBody() {
+        TravelAllowanceConfigurationController taConfig = ((ConcurCore) context.getApplicationContext())
+                .getTAConfigController();
         StringBuilder sb = new StringBuilder();
 
         SimpleDateFormat dateTimeFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm");
 
         sb.append("<Itinerary>");
-        FormatUtil.addXMLElementEscaped(sb, "ItinKey", itinerary.getItinKey());
+        //FormatUtil.addXMLElementEscaped(sb, "ItinKey", itinerary.getItineraryID());
         FormatUtil.addXMLElementEscaped(sb, "Name", itinerary.getName());
-        FormatUtil.addXMLElementEscaped(sb, "TacKey", itinerary.getTacKey());
-        FormatUtil.addXMLElementEscaped(sb, "TacName", itinerary.getTacName());
-        FormatUtil.addXMLElementEscaped(sb, "ShortDistanceTrip", itinerary.isShortDistanceTrip() ? "Y" : "N");
-        FormatUtil.addXMLElementEscaped(sb, "RptKey", itinerary.getRptKey());
-        if (itineraryRow == null) {
+        FormatUtil.addXMLElementEscaped(sb, "TacKey", taConfig.getTravelAllowanceConfigurationList().getTacKey());
+
+       // FormatUtil.addXMLElementEscaped(sb, "ShortDistanceTrip", "N");
+        // FormatUtil.addXMLElementEscaped(sb, "RptKey", itinerary.getExpenseReportID());
+
+
+        if (itinerary.getSegmentList().isEmpty()) {
             sb.append("<ItineraryRows/>");
         } else {
             sb.append("<ItineraryRows>");
-            sb.append("<ItineraryRow>");
+            for (ItinerarySegment segment : itinerary.getSegmentList()) {
 
-            FormatUtil.addXMLElementEscaped(sb, "IrKey", itineraryRow.getIrKey());
-            FormatUtil.addXMLElementEscaped(sb, "DepartLnKey", itineraryRow.getDepartLnKey());
-            FormatUtil.addXMLElementEscaped(sb, "DepartDateTime",
-                    dateTimeFormat.format(itineraryRow.getDepartDateTime()));
+                sb.append("<ItineraryRow>");
 
-            FormatUtil.addXMLElementEscaped(sb, "ArrivalLnKey", itineraryRow.getArrivalLnKey());
-            FormatUtil.addXMLElementEscaped(sb, "ArrivalRlKey", itineraryRow.getArrivalRlKey());
-            FormatUtil.addXMLElementEscaped(sb, "ArrivalDateTime",
-                    dateTimeFormat.format(itineraryRow.getArrivalDateTime()));
+                //FormatUtil.addXMLElementEscaped(sb, "IrKey", segment.getId());
+                FormatUtil.addXMLElementEscaped(sb, "DepartLnKey", segment.getDepartureLocation().getCode());
+                FormatUtil.addXMLElementEscaped(sb, "DepartDateTime",
+                        dateTimeFormat.format(segment.getDepartureDateTime()));
 
-            sb.append("</ItineraryRow>");
+                FormatUtil.addXMLElementEscaped(sb, "ArrivalLnKey", segment.getArrivalLocation().getCode());
+//                FormatUtil.addXMLElementEscaped(sb, "ArrivalRlKey", itineraryRow.getArrivalRlKey());
+                FormatUtil.addXMLElementEscaped(sb, "ArrivalDateTime",
+                        dateTimeFormat.format(segment.getArrivalDateTime()));
+
+                sb.append("</ItineraryRow>");
+            }
             sb.append("</ItineraryRows>");
         }
         sb.append("</Itinerary>");
+
         return sb.toString();
     }
 

@@ -63,6 +63,8 @@ public class ItineraryUpdateActivity extends BaseActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         ConcurCore app = (ConcurCore) getApplication();
+        app.getTAConfigController().refreshConfiguration();
+
         this.updateController = app.getItineraryUpdateController();
         String expenseReportName = StringUtilities.EMPTY_STRING;
 

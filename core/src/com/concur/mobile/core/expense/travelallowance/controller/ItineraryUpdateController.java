@@ -77,30 +77,90 @@ public class ItineraryUpdateController {
 
         //List<CompactItinerarySegment> segmentList = compactItinerary.getSegmentList();
 
-        CompactItinerarySegment previousSegment = null;
 
+        ItinerarySegment currentItinSegement = null;
+
+        CompactItinerarySegment nextCompactSegment = null;
+        int i = 0;
+        boolean nextSegmentFinished = false;
         for (CompactItinerarySegment segment : compactItinerary.getSegmentList()) {
-            ItinerarySegment ItinerarySegment = new ItinerarySegment();
+            if (i < compactItinerary.getSegmentList().size()) {
+                nextCompactSegment = compactItinerary.getSegmentList().get(i+1);
+                if (currentItinSegement == null) {
+                    currentItinSegement = new ItinerarySegment();
+                }
 
+                if (!nextSegmentFinished) {
+                    currentItinSegement.setDepartureLocation(segment.getLocation());
+                    currentItinSegement.setDepartureDateTime(segment.getDepartureDateTime());
+                    currentItinSegement.setBorderCrossDateTime(segment.getBorderCrossingDateTime());
+                    currentItinSegement.setArrivalLocation(nextCompactSegment.getLocation());
+                    currentItinSegement.setArrivalDateTime(nextCompactSegment.getDepartureDateTime());
 
-            if (previousSegment == null) {
-                ItinerarySegment.setDepartureLocation(segment.getLocation());
-                ItinerarySegment.setDepartureDateTime(segment.getDepartureDateTime());
-                ItinerarySegment.setBorderCrossDateTime(segment.getBorderCrossingDateTime());
-            } else {
-                ItinerarySegment.setArrivalLocation(segment.getLocation());
-                ItinerarySegment.setArrivalDateTime(segment.getArrivalDateTime());
-                ItinerarySegment.setDepartureLocation(previousSegment.getLocation());
-                ItinerarySegment.setDepartureDateTime(segment.getDepartureDateTime());
-                ItinerarySegment.setBorderCrossDateTime(segment.getBorderCrossingDateTime());
+                    itinerary.getSegmentList().add(currentItinSegement);
+                    currentItinSegement = null;
+
+                    if (nextCompactSegment.isSegmentOpen()) {
+                        nextSegmentFinished = true;
+                    } else {
+                        nextSegmentFinished = false;
+                    }
+                } else {
+                    nextSegmentFinished = false;
+                }
             }
 
-            itinerary.getSegmentList().add(ItinerarySegment);
-            previousSegment = segment;
+            i++;
         }
 
 
         return itinerary;
     }
+
+//    public Itinerary getItinerary() {
+//        Itinerary itinerary = new Itinerary();
+//
+//        itinerary.setName(compactItinerary.getName());
+//
+//        //List<CompactItinerarySegment> segmentList = compactItinerary.getSegmentList();
+//
+//        CompactItinerarySegment previousSegment = null;
+//
+//        ItinerarySegment currentItinSegement = null;
+//
+//        for (CompactItinerarySegment segment : compactItinerary.getSegmentList()) {
+//            if (currentItinSegement == null) {
+//                currentItinSegement = new ItinerarySegment();
+//            }
+//
+//            if (previousSegment == null) {
+//                currentItinSegement.setDepartureLocation(segment.getLocation());
+//                currentItinSegement.setDepartureDateTime(segment.getDepartureDateTime());
+//                currentItinSegement.setBorderCrossDateTime(segment.getBorderCrossingDateTime());
+//            } else {
+//                if (currentItinSegement.getDepartureLocation() == null && currentItinSegement.getArrivalLocation() == null) {
+//                    currentItinSegement.setDepartureLocation(previousSegment.getLocation());
+//                    currentItinSegement.setDepartureDateTime(previousSegment.getDepartureDateTime());
+//                    currentItinSegement.setArrivalLocation(segment.getLocation());
+//                    currentItinSegement.setArrivalDateTime(segment.getArrivalDateTime());
+//                } else {
+//                    currentItinSegement.setArrivalLocation(segment.getLocation());
+//                    currentItinSegement.setArrivalDateTime(segment.getArrivalDateTime());
+//                }
+//
+////                currentItinSegement.setBorderCrossDateTime(segment.getBorderCrossingDateTime());
+//            }
+//
+//            if (currentItinSegement.getDepartureLocation() != null && currentItinSegement.getArrivalLocation() != null) {
+//                itinerary.getSegmentList().add(currentItinSegement);
+//                currentItinSegement = null;
+//            }
+//
+//            previousSegment = segment;
+//        }
+//
+//
+//        return itinerary;
+//    }
 
 }
