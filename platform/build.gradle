@@ -3,6 +3,12 @@ apply plugin: 'android-library'
 dependencies {
     compile fileTree(dir: 'libs', include: '*.jar')
     compile project(':base')
+    testCompile 'org.robolectric:robolectric:3.+'
+    testCompile 'junit:junit:4.+'
+    testCompile files('libs/simple-xml-2.7.1.jar')
+    testCompile files('libs/jetty.jar')
+    testCompile files('libs/commons.io_2.0.1.jar')
+    testCompile files('libs/sqlcipher.jar')
 }
 
 android {
