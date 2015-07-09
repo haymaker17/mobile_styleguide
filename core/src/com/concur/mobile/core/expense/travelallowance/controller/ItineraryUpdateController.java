@@ -102,14 +102,15 @@ public class ItineraryUpdateController {
             }
         });
 
-        SaveItineraryRequest request = new SaveItineraryRequest(context, receiver, getItinerary());
+        SaveItineraryRequest request = new SaveItineraryRequest(context, receiver, getItinerary(expRepKey));
         request.execute();
     }
 
-    public Itinerary getItinerary() {
+    public Itinerary getItinerary(String repId) {
         Itinerary itinerary = new Itinerary();
 
         itinerary.setName(compactItinerary.getName());
+        itinerary.setExpenseReportID(repId);
 
         //List<CompactItinerarySegment> segmentList = compactItinerary.getSegmentList();
 

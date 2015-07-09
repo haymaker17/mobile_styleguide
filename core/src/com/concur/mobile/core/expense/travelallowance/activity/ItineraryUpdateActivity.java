@@ -175,13 +175,13 @@ public class ItineraryUpdateActivity extends BaseActivity {
             case Const.REQUEST_CODE_LOCATION:
                 if (resultCode == Activity.RESULT_OK) {
                     String selectedListItemKey = data.getStringExtra(Const.EXTRA_EXPENSE_LIST_SELECTED_LIST_ITEM_KEY);
-                    String selectedListItemCode = data.getStringExtra(Const.EXTRA_EXPENSE_LIST_SELECTED_LIST_ITEM_CODE);
+                    //String selectedListItemCode = data.getStringExtra(Const.EXTRA_EXPENSE_LIST_SELECTED_LIST_ITEM_CODE);
                     String selectedListItemText = data.getStringExtra(Const.EXTRA_EXPENSE_LIST_SELECTED_LIST_ITEM_TEXT);
                     if (this.currentPosition != null) {
                         CompactItinerarySegment segment = this.updateController.getCompactItinerarySegment(currentPosition.getPosition());
                         ItineraryLocation itinLocation = new ItineraryLocation();
                         itinLocation.setName(selectedListItemText);
-                        itinLocation.setCode(selectedListItemCode);
+                        itinLocation.setCode(selectedListItemKey);
                         segment.setLocation(itinLocation);
                         adapter.notifyDataSetChanged();
                     }

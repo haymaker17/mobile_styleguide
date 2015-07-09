@@ -48,7 +48,9 @@ public class SaveItineraryRequest extends CoreAsyncRequestTask {
         sb.append("<Itinerary>");
         //FormatUtil.addXMLElementEscaped(sb, "ItinKey", itinerary.getItineraryID());
         FormatUtil.addXMLElementEscaped(sb, "Name", itinerary.getName());
+        FormatUtil.addXMLElementEscaped(sb, "ItinKey", itinerary.getItineraryID());
         FormatUtil.addXMLElementEscaped(sb, "TacKey", taConfig.getTravelAllowanceConfigurationList().getTacKey());
+        FormatUtil.addXMLElementEscaped(sb, "RptKey", itinerary.getExpenseReportID());
 
        // FormatUtil.addXMLElementEscaped(sb, "ShortDistanceTrip", "N");
         // FormatUtil.addXMLElementEscaped(sb, "RptKey", itinerary.getExpenseReportID());
@@ -62,7 +64,7 @@ public class SaveItineraryRequest extends CoreAsyncRequestTask {
 
                 sb.append("<ItineraryRow>");
 
-                //FormatUtil.addXMLElementEscaped(sb, "IrKey", segment.getId());
+                FormatUtil.addXMLElementEscaped(sb, "IrKey", segment.getId());
                 FormatUtil.addXMLElementEscaped(sb, "DepartLnKey", segment.getDepartureLocation().getCode());
                 FormatUtil.addXMLElementEscaped(sb, "DepartDateTime",
                         dateTimeFormat.format(segment.getDepartureDateTime()));
@@ -71,6 +73,10 @@ public class SaveItineraryRequest extends CoreAsyncRequestTask {
 //                FormatUtil.addXMLElementEscaped(sb, "ArrivalRlKey", itineraryRow.getArrivalRlKey());
                 FormatUtil.addXMLElementEscaped(sb, "ArrivalDateTime",
                         dateTimeFormat.format(segment.getArrivalDateTime()));
+
+                FormatUtil.addXMLElementEscaped(sb, "BorderCrossDateTime",
+                        dateTimeFormat.format(segment.getArrivalDateTime()));
+
 
                 sb.append("</ItineraryRow>");
             }
