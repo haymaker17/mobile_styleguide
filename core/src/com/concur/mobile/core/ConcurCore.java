@@ -1334,7 +1334,7 @@ public abstract class ConcurCore extends MultiDexApplication {
      */
     public ItineraryUpdateController getItineraryUpdateController() {
         if (this.itineraryUpdateController == null) {
-            this.itineraryUpdateController = new ItineraryUpdateController();
+            this.itineraryUpdateController = new ItineraryUpdateController(this);
         }
         return this.itineraryUpdateController;
     }

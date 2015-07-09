@@ -192,7 +192,7 @@ public class TAStopActivity extends BaseActivity {
         itineraryRow.setDepartDateTime(departDateTime.getTime());
         itineraryRow.setArrivalDateTime(arriveDateTime.getTime());
         showDialog(DIALOG_SAVING);
-        new SaveItineraryRequest(getApplicationContext(), 1, asyncReceiver, itin, itineraryRow).execute();
+       // new SaveItineraryRequest(getApplicationContext(), 1, asyncReceiver, itin, itineraryRow).execute();
     }
 
     protected class GetTAItinerariesListener extends AsyncReplyAdapter {

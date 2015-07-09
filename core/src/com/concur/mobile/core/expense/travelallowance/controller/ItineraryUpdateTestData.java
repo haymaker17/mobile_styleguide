@@ -24,6 +24,7 @@ public class ItineraryUpdateTestData {
         CompactItinerarySegment arrival = new CompactItinerarySegment();
         CompactItinerarySegment destination = new CompactItinerarySegment();
 
+
         ItineraryLocation location = new ItineraryLocation();
         location.setCode("1234");
         location.setName("@Heidelberg@");
@@ -41,6 +42,7 @@ public class ItineraryUpdateTestData {
 
         departure.setDepartureDateTime(calendar.getTime());
         departure.setLocation(location);
+        departure.setIsSegmentOpen(true);
         segments.add(departure);
 
         calendar.set(2015, 7, 1, 9, 0);
@@ -53,6 +55,7 @@ public class ItineraryUpdateTestData {
         calendar.set(2015, 7, 4, 4, 0);
         arrival.setArrivalDateTime(calendar.getTime());
         arrival.setLocation(location);
+        arrival.setIsSegmentOpen(true);
         segments.add(arrival);
 
         compactItinerary.setSegmentList(segments);

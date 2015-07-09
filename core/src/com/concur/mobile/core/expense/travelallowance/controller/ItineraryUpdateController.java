@@ -1,7 +1,16 @@
 package com.concur.mobile.core.expense.travelallowance.controller;
 
+import android.content.Context;
+import android.os.Bundle;
+import android.os.Handler;
+import android.widget.Toast;
+
+import com.concur.mobile.base.service.BaseAsyncRequestTask;
+import com.concur.mobile.base.service.BaseAsyncResultReceiver;
+import com.concur.mobile.core.expense.travelallowance.AsyncReplyAdapter;
 import com.concur.mobile.core.expense.travelallowance.datamodel.Itinerary;
 import com.concur.mobile.core.expense.travelallowance.datamodel.ItinerarySegment;
+import com.concur.mobile.core.expense.travelallowance.service.SaveItineraryRequest;
 import com.concur.mobile.core.expense.travelallowance.ui.model.CompactItinerary;
 import com.concur.mobile.core.expense.travelallowance.ui.model.CompactItinerarySegment;
 
@@ -21,9 +30,12 @@ public class ItineraryUpdateController {
      */
     private CompactItinerary compactItinerary;
 
-    public ItineraryUpdateController() {
+    private Context context;
+
+    public ItineraryUpdateController(Context context) {
         this.compactItinerary = new CompactItinerary();
         compactItinerary.setSegmentList(new ArrayList<CompactItinerarySegment>());
+        this.context = context;
 
         this.useMockData = true;
     }
@@ -67,7 +79,31 @@ public class ItineraryUpdateController {
     }
 
     public void executeSave(String expRepKey) {
-        //TODO: Implementation
+        BaseAsyncResultReceiver receiver = new BaseAsyncResultReceiver(new Handler());
+        receiver.setListener(new BaseAsyncRequestTask.AsyncReplyListener() {
+            @Override
+            public void onRequestSuccess(Bundle resultData) {
+                Toast.makeText(context, "Success", Toast.LENGTH_SHORT).show();
+            }
+
+            @Override
+            public void onRequestFail(Bundle resultData) {
+                Toast.makeText(context, "Failed", Toast.LENGTH_SHORT).show();
+            }
+
+            @Override
+            public void onRequestCancel(Bundle resultData) {
+                Toast.makeText(context, "Canceled", Toast.LENGTH_SHORT).show();
+            }
+
+            @Override
+            public void cleanup() {
+                Toast.makeText(context, "Cleanup", Toast.LENGTH_SHORT).show();
+            }
+        });
+
+        SaveItineraryRequest request = new SaveItineraryRequest(context, receiver, getItinerary());
+        request.execute();
     }
 
     public Itinerary getItinerary() {
@@ -84,7 +120,7 @@ public class ItineraryUpdateController {
         int i = 0;
         boolean nextSegmentFinished = false;
         for (CompactItinerarySegment segment : compactItinerary.getSegmentList()) {
-            if (i < compactItinerary.getSegmentList().size()) {
+            if (i < compactItinerary.getSegmentList().size() - 1) {
                 nextCompactSegment = compactItinerary.getSegmentList().get(i+1);
                 if (currentItinSegement == null) {
                     currentItinSegement = new ItinerarySegment();
@@ -94,8 +130,13 @@ public class ItineraryUpdateController {
                     currentItinSegement.setDepartureLocation(segment.getLocation());
                     currentItinSegement.setDepartureDateTime(segment.getDepartureDateTime());
                     currentItinSegement.setBorderCrossDateTime(segment.getBorderCrossingDateTime());
-                    currentItinSegement.setArrivalLocation(nextCompactSegment.getLocation());
-                    currentItinSegement.setArrivalDateTime(nextCompactSegment.getDepartureDateTime());
+                    if (nextCompactSegment.isSegmentOpen()) {
+                        currentItinSegement.setArrivalLocation(nextCompactSegment.getLocation());
+                        currentItinSegement.setArrivalDateTime(nextCompactSegment.getArrivalDateTime());
+                    } else {
+                        currentItinSegement.setArrivalLocation(nextCompactSegment.getLocation());
+                        currentItinSegement.setArrivalDateTime(nextCompactSegment.getDepartureDateTime());
+                    }
 
                     itinerary.getSegmentList().add(currentItinSegement);
                     currentItinSegement = null;
