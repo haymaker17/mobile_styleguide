@@ -1,5 +1,7 @@
 package com.concur.mobile.core.expense.travelallowance.controller;
 
+import com.concur.mobile.core.expense.travelallowance.datamodel.Itinerary;
+import com.concur.mobile.core.expense.travelallowance.datamodel.ItinerarySegment;
 import com.concur.mobile.core.expense.travelallowance.ui.model.CompactItinerary;
 import com.concur.mobile.core.expense.travelallowance.ui.model.CompactItinerarySegment;
 
@@ -66,6 +68,39 @@ public class ItineraryUpdateController {
 
     public void executeSave(String expRepKey) {
         //TODO: Implementation
+    }
+
+    public Itinerary getItinerary() {
+        Itinerary itinerary = new Itinerary();
+
+        itinerary.setName(compactItinerary.getName());
+
+        //List<CompactItinerarySegment> segmentList = compactItinerary.getSegmentList();
+
+        CompactItinerarySegment previousSegment = null;
+
+        for (CompactItinerarySegment segment : compactItinerary.getSegmentList()) {
+            ItinerarySegment ItinerarySegment = new ItinerarySegment();
+
+
+            if (previousSegment == null) {
+                ItinerarySegment.setDepartureLocation(segment.getLocation());
+                ItinerarySegment.setDepartureDateTime(segment.getDepartureDateTime());
+                ItinerarySegment.setBorderCrossDateTime(segment.getBorderCrossingDateTime());
+            } else {
+                ItinerarySegment.setArrivalLocation(segment.getLocation());
+                ItinerarySegment.setArrivalDateTime(segment.getArrivalDateTime());
+                ItinerarySegment.setDepartureLocation(previousSegment.getLocation());
+                ItinerarySegment.setDepartureDateTime(segment.getDepartureDateTime());
+                ItinerarySegment.setBorderCrossDateTime(segment.getBorderCrossingDateTime());
+            }
+
+            itinerary.getSegmentList().add(ItinerarySegment);
+            previousSegment = segment;
+        }
+
+
+        return itinerary;
     }
 
 }
