@@ -103,10 +103,11 @@ public class HotelChoiceDetailsFragment extends PlatformFragmentV1 implements On
 
         View hotelView = header.findViewById(R.id.hotel_row);
 
+        Activity activity = getActivity();
         //Converting dp to pixels
-        int padding_right_px = ViewUtil.dpToPx(getActivity(), 21);
-        int padding_top_px = ViewUtil.dpToPx(getActivity(), 6);
-        int padding_px = ViewUtil.dpToPx(getActivity(), 10);
+        int padding_right_px = ViewUtil.dpToPx(activity, 21);
+        int padding_top_px = ViewUtil.dpToPx(activity, 6);
+        int padding_px = ViewUtil.dpToPx(activity, 10);
 
         //layout include is not changing the padding, so adding programmatically
         hotelView.setPadding(padding_px, padding_top_px, padding_right_px, padding_px);
