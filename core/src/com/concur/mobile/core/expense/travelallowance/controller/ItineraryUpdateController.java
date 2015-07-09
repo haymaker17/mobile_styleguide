@@ -48,7 +48,24 @@ public class ItineraryUpdateController {
     }
 
     public List<CompactItinerarySegment> getCompactItinerarySegments() {
-        return this.compactItinerary.getSegmentList();
+        List<CompactItinerarySegment> segments = null;
+        if (this.compactItinerary != null) {
+            segments = compactItinerary.getSegmentList();
+        }
+        return segments;
+    }
+
+    public CompactItinerarySegment getCompactItinerarySegment(int position) {
+        CompactItinerarySegment segment = null;
+        if (compactItinerary != null && compactItinerary.getSegmentList() != null
+                && position < this.compactItinerary.getSegmentList().size()) {
+            segment = this.compactItinerary.getSegmentList().get(position);
+        }
+        return segment;
+    }
+
+    public void executeSave(String expRepKey) {
+        //TODO: Implementation
     }
 
 }

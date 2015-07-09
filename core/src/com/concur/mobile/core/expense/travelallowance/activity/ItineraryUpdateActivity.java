@@ -1,5 +1,6 @@
 package com.concur.mobile.core.expense.travelallowance.activity;
 
+import android.app.Activity;
 import android.content.Intent;
 import android.graphics.Color;
 import android.os.Bundle;
@@ -11,7 +12,6 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.ListView;
-import android.widget.TextView;
 
 import com.concur.core.R;
 import com.concur.mobile.core.ConcurCore;
@@ -19,7 +19,9 @@ import com.concur.mobile.core.activity.BaseActivity;
 import com.concur.mobile.core.expense.activity.ListSearch;
 import com.concur.mobile.core.expense.travelallowance.adapter.ItineraryUpdateListAdapter;
 import com.concur.mobile.core.expense.travelallowance.controller.ItineraryUpdateController;
-import com.concur.mobile.core.travel.hotel.activity.HotelSearch;
+import com.concur.mobile.core.expense.travelallowance.datamodel.ItineraryLocation;
+import com.concur.mobile.core.expense.travelallowance.ui.model.CompactItinerarySegment;
+import com.concur.mobile.core.expense.travelallowance.util.StringUtilities;
 import com.concur.mobile.core.util.Const;
 import com.concur.mobile.platform.ui.common.widget.CalendarPickerDialogV1;
 
@@ -34,14 +36,15 @@ public class ItineraryUpdateActivity extends BaseActivity {
             .getSimpleName();
 
 
+    private static final int DIALOG_ID_DATE_PICKER = 0;
 
-    private static final int CHECK_IN_DATE_DIALOG = 0;
-    private static final int CHECK_OUT_DATE_DIALOG = 1;
     private static final String TAG_CALENDAR_DIALOG_FRAGMENT =
-            HotelSearch.class.getSimpleName() + ".calendar.dialog.fragment";
+            CLASS_TAG + ".calendar.dialog.fragment";
 
     private String expenseReportKey;
-    private ItineraryUpdateController itineraryUpdateController;
+    private ItineraryUpdateController updateController;
+    private ItineraryUpdateListAdapter adapter;
+    private int currentItemPosition;
     private View.OnClickListener onTimeClickListener;
     private View.OnClickListener onDateClickListener;
     private View.OnClickListener onLocationClickListener;
@@ -55,54 +58,20 @@ public class ItineraryUpdateActivity extends BaseActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         ConcurCore app = (ConcurCore) getApplication();
-        this.itineraryUpdateController = app.getItineraryUpdateController();
+        this.updateController = app.getItineraryUpdateController();
+        String expenseReportName = StringUtilities.EMPTY_STRING;
+
+        this.setContentView(R.layout.itin_update_activity);
 
         if (getIntent().hasExtra(Const.EXTRA_EXPENSE_REPORT_KEY)) {
-            expenseReportKey = getIntent().getStringExtra(Const.EXTRA_EXPENSE_REPORT_KEY);
+            this.expenseReportKey = getIntent().getStringExtra(Const.EXTRA_EXPENSE_REPORT_KEY);
         }
-
-        onDateClickListener = new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-
-            }
-        };
-
-        onTimeClickListener = new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-
-            }
-        };
-
-        onLocationClickListener = new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent locationIntent = new Intent(ItineraryUpdateActivity.this, ListSearch.class);
-                locationIntent.putExtra(Const.EXTRA_EXPENSE_LIST_SEARCH_IS_MRU, true);
-                locationIntent.putExtra(Const.EXTRA_EXPENSE_LIST_SEARCH_FIELD_ID, "LocName");
-                locationIntent.putExtra(Const.EXTRA_EXPENSE_LIST_SEARCH_FT_CODE, "RPTINFO");
-                locationIntent.putExtra(Const.EXTRA_EXPENSE_LIST_SEARCH_TITLE, getText(R.string.location)
-                        .toString());
-                startActivityForResult(locationIntent, Const.REQUEST_CODE_LOCATION);
-            }
-        };
 
         if (getIntent().hasExtra(Const.EXTRA_EXPENSE_REPORT_NAME)) {
-            String expenseReportName = getIntent().getStringExtra(Const.EXTRA_EXPENSE_REPORT_NAME);
-            this.setContentView(R.layout.itin_update_activity);
-            itineraryUpdateController.refreshCompactItinerary(expenseReportName);
-
-            ListView listView = (ListView) findViewById(R.id.list_view);
-            if (listView != null) {
-                listView.setAdapter(new ItineraryUpdateListAdapter(this, onLocationClickListener,
-                        onDateClickListener, onTimeClickListener));
-            }
-            renderDefaultValues();
-        } else {//Temporary
-            this.setContentView(R.layout.ta_itinerary_create);
-            renderItineraryNameV1();
+            expenseReportName = getIntent().getStringExtra(Const.EXTRA_EXPENSE_REPORT_NAME);
         }
+
+        updateController.refreshCompactItinerary(expenseReportName);
 
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         if (toolbar != null) {
@@ -116,92 +85,104 @@ public class ItineraryUpdateActivity extends BaseActivity {
 
         }
 
-
-        View vDepartureDate = findViewById(R.id.departure_date);
-        View vArrivalDate = findViewById(R.id.arrival_date);
-
-        // Hook up the handlers
-        if (vArrivalDate != null) {
-            vArrivalDate.setOnClickListener(new View.OnClickListener() {
-
-                @Override
-                public void onClick(View v) {
-                    showCalendarDialog(CHECK_IN_DATE_DIALOG);
+        onDateClickListener = new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Integer tagValue = (Integer) v.getTag(R.id.tag_key_position);
+                if (tagValue != null) {
+                    ItineraryUpdateActivity.this.currentItemPosition = tagValue;
                 }
-            });
+                showCalendarDialog(DIALOG_ID_DATE_PICKER);
+            }
+        };
+
+        onTimeClickListener = new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Integer tagValue = (Integer) v.getTag(R.id.tag_key_position);
+                if (tagValue != null) {
+                    ItineraryUpdateActivity.this.currentItemPosition = tagValue;
+                }
+            }
+        };
+
+        onLocationClickListener = new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Integer tagValue = (Integer) v.getTag(R.id.tag_key_position);
+                if (tagValue != null) {
+                    ItineraryUpdateActivity.this.currentItemPosition = tagValue;
+                }
+                Intent locationIntent = new Intent(ItineraryUpdateActivity.this, ListSearch.class);
+                locationIntent.putExtra(Const.EXTRA_EXPENSE_LIST_SEARCH_IS_MRU, true);
+                locationIntent.putExtra(Const.EXTRA_EXPENSE_LIST_SEARCH_FIELD_ID, "LocName");
+                locationIntent.putExtra(Const.EXTRA_EXPENSE_LIST_SEARCH_FT_CODE, "RPTINFO");
+                locationIntent.putExtra(Const.EXTRA_EXPENSE_LIST_SEARCH_TITLE, getText(R.string.location)
+                        .toString());
+                startActivityForResult(locationIntent, Const.REQUEST_CODE_LOCATION);
+            }
+        };
+
+        ListView listView = (ListView) findViewById(R.id.list_view);
+        if (listView != null) {
+            adapter = new ItineraryUpdateListAdapter(this, onLocationClickListener,
+                    onDateClickListener, onTimeClickListener);
+            listView.setAdapter(adapter);
         }
-        if (vDepartureDate != null) {
-            vDepartureDate.setOnClickListener(new View.OnClickListener() {
+        renderDefaultValues();
+    }
 
-                @Override
-                public void onClick(View v) {
-                    showCalendarDialog(CHECK_OUT_DATE_DIALOG);
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public void onActivityResult(int requestCode, int resultCode, Intent data) {
+        switch (requestCode) {
+            case Const.REQUEST_CODE_LOCATION:
+                if (resultCode == Activity.RESULT_OK) {
+                    String selectedListItemKey = data.getStringExtra(Const.EXTRA_EXPENSE_LIST_SELECTED_LIST_ITEM_KEY);
+                    String selectedListItemCode = data.getStringExtra(Const.EXTRA_EXPENSE_LIST_SELECTED_LIST_ITEM_CODE);
+                    String selectedListItemText = data.getStringExtra(Const.EXTRA_EXPENSE_LIST_SELECTED_LIST_ITEM_TEXT);
+                    CompactItinerarySegment segment = this.updateController.getCompactItinerarySegment(currentItemPosition);
+                    ItineraryLocation itinLocation = new ItineraryLocation();
+                    itinLocation.setName(selectedListItemText);
+                    itinLocation.setCode(selectedListItemCode);
+                    segment.setLocation(itinLocation);
+                    adapter.notifyDataSetChanged();
                 }
-            });
+                break;
+
+            default: break;
         }
     }
 
-
     private void onSave() {
-
+        updateController.executeSave(this.expenseReportKey);
     }
 
     private void renderDefaultValues() {
         EditText etItinerary = (EditText) findViewById(R.id.et_itinerary);
-        if (etItinerary != null) {
-            etItinerary.setText(itineraryUpdateController.getCompactItinerary().getName());
-        }
-    }
-
-    private void renderItineraryNameV1() {
-        View vItineraryName = this.findViewById(R.id.itinerary_name);
-        if (vItineraryName != null) {
-            TextView tvLabel = (TextView) vItineraryName.findViewById(R.id.field_name);
-            if (tvLabel != null) {
-                tvLabel.setText("@Itinerary Name@");
-            }
-            EditText etName = (EditText) vItineraryName.findViewById(R.id.field_value);
-            if (etName != null) {
-                etName.setText("@Expense Report Default@");
-            }
+        if (etItinerary != null && updateController.getCompactItinerary() != null) {
+            etItinerary.setText(updateController.getCompactItinerary().getName());
         }
     }
 
     private void showCalendarDialog(int id) {
-        Bundle bundle;
+        Bundle bundle = new Bundle();
 
-        //Temporary for testing
-        //TODO: Replace
-        Calendar checkInDate = Calendar.getInstance();
-        Calendar checkOutDate = Calendar.getInstance();
-        boolean isCheckin;
+        Calendar fromDate = Calendar.getInstance();
+        Calendar toDate = Calendar.getInstance();
 
         calendarDialog = new CalendarPickerDialogV1();
-        bundle = new Bundle();
-        switch (id) {
-            case CHECK_IN_DATE_DIALOG: {
-                bundle.putInt(CalendarPickerDialogV1.KEY_INITIAL_YEAR, checkInDate.get(Calendar.YEAR));
-                bundle.putInt(CalendarPickerDialogV1.KEY_INITIAL_MONTH, checkInDate.get(Calendar.MONTH));
-                bundle.putInt(CalendarPickerDialogV1.KEY_INITIAL_DAY, checkInDate.get(Calendar.DAY_OF_MONTH));
-                bundle.putInt(CalendarPickerDialogV1.KEY_TEXT_COLOR, Color.parseColor("#a5a5a5"));
-                isCheckin = true;
-                break;
-            }
-            case CHECK_OUT_DATE_DIALOG: {
-                bundle.putInt(CalendarPickerDialogV1.KEY_INITIAL_YEAR, checkOutDate.get(Calendar.YEAR));
-                bundle.putInt(CalendarPickerDialogV1.KEY_INITIAL_MONTH, checkOutDate.get(Calendar.MONTH));
-                bundle.putInt(CalendarPickerDialogV1.KEY_INITIAL_DAY, checkOutDate.get(Calendar.DAY_OF_MONTH));
-                bundle.putInt(CalendarPickerDialogV1.KEY_TEXT_COLOR, Color.parseColor("#a5a5a5"));
 
-                isCheckin = false;
-                break;
-            }
+        if (id == DIALOG_ID_DATE_PICKER) {
+            bundle.putInt(CalendarPickerDialogV1.KEY_INITIAL_YEAR, fromDate.get(Calendar.YEAR));
+            bundle.putInt(CalendarPickerDialogV1.KEY_INITIAL_MONTH, fromDate.get(Calendar.MONTH));
+            bundle.putInt(CalendarPickerDialogV1.KEY_INITIAL_DAY, fromDate.get(Calendar.DAY_OF_MONTH));
+            bundle.putInt(CalendarPickerDialogV1.KEY_TEXT_COLOR, Color.parseColor("#a5a5a5"));
+            calendarDialog.setArguments(bundle);
+            calendarDialog.show(getFragmentManager(), TAG_CALENDAR_DIALOG_FRAGMENT);
         }
-
-        //DialogId = id;
-        calendarDialog.setArguments(bundle);
-        //calendarDialog.setOnDateSetListener(new HotelDateSetListener(id, isCheckin));
-        calendarDialog.show(getFragmentManager(), TAG_CALENDAR_DIALOG_FRAGMENT);
     }
 
     @Override

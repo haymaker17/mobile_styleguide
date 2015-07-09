@@ -128,6 +128,8 @@ public class ItineraryUpdateListAdapter extends ArrayAdapter<Object> {
             holder = (ViewHolder) resultView.getTag();
         }
 
+        setTag(holder.vgLocation, i);
+
         if (getItemViewType(i) == DESTINATION_ROW) {
             renderDestination((CompactItinerarySegment) getItem(i));
         } else {
@@ -138,6 +140,13 @@ public class ItineraryUpdateListAdapter extends ArrayAdapter<Object> {
             }
         }
         return resultView;
+    }
+
+    private void setTag(final View v, int position) {
+        if (v == null) {
+            return;
+        }
+        v.setTag(R.id.tag_key_position, position);
     }
 
     /**

@@ -17,7 +17,7 @@ public class ItineraryUpdateTestData {
 
     public ItineraryUpdateTestData() {
         this.compactItinerary = new CompactItinerary();
-        compactItinerary.setName("Test Expense Report");
+        compactItinerary.setName("02.06.15 Claim");
 
         List<CompactItinerarySegment> segments = new ArrayList<CompactItinerarySegment>();
         CompactItinerarySegment departure = new CompactItinerarySegment();
