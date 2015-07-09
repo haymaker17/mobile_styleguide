@@ -1,7 +1,6 @@
 package com.concur.mobile.core.expense.travelallowance.adapter;
 
 import android.content.Context;
-import android.content.Intent;
 import android.text.format.DateUtils;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -13,11 +12,9 @@ import android.widget.TextView;
 
 import com.concur.core.R;
 import com.concur.mobile.core.ConcurCore;
-import com.concur.mobile.core.expense.activity.ListSearch;
 import com.concur.mobile.core.expense.travelallowance.controller.ItineraryUpdateController;
 import com.concur.mobile.core.expense.travelallowance.ui.model.CompactItinerarySegment;
 import com.concur.mobile.core.expense.travelallowance.util.StringUtilities;
-import com.concur.mobile.core.util.Const;
 
 import java.util.List;
 
@@ -39,6 +36,24 @@ public class ItineraryUpdateListAdapter extends ArrayAdapter<Object> {
     private OnClickListener onDateClickListener;
     private OnClickListener onLocationClickListener;
 
+    public final class PositionTag {
+
+        private int position;
+        private boolean isDeparture;
+
+        public PositionTag(int position, boolean isDeparture) {
+            this.position = position;
+            this.isDeparture = isDeparture;
+        }
+
+        public int getPosition() {
+            return position;
+        }
+
+        public boolean isDeparture() {
+            return isDeparture;
+        }
+    }
     /**
      * Holds all UI controls needed for rendering
      */
@@ -120,29 +135,65 @@ public class ItineraryUpdateListAdapter extends ArrayAdapter<Object> {
             createViewHolder(resultView);
             resultView.setTag(holder);
             if (this.onLocationClickListener != null) {
-                holder.vgLocation.setOnClickListener(onLocationClickListener);
-                holder.vgLocation.setClickable(true);
+                if (holder.vgLocation != null) {
+                    holder.vgLocation.setOnClickListener(onLocationClickListener);
+                    holder.vgLocation.setClickable(true);
+                }
+            }
+            if (this.onDateClickListener != null) {
+                if (holder.vgDate != null) {
+                    holder.vgDate.setOnClickListener(onDateClickListener);
+                    holder.vgDate.setClickable(true);
+                }
+                if (holder.vgArrivalTime != null) { //TODO: Time Picker as soon as UI is designed
+                    holder.vgArrivalTime.setOnClickListener(onDateClickListener);
+                    holder.vgArrivalTime.setClickable(true);
+                }
+                if (holder.vgDepartureTime != null) { //TODO: Time Picker as soon as UI is designed
+                    holder.vgDepartureTime.setOnClickListener(onDateClickListener);
+                    holder.vgDepartureTime.setClickable(true);
+                }
+            }
+            if (this.onTimeClickListener != null) {
+                if (holder.vgTime != null) {
+                    holder.vgTime.setOnClickListener(onTimeClickListener);
+                    holder.vgTime.setClickable(true);
+                }
             }
         } else {
             resultView = convertView;
             holder = (ViewHolder) resultView.getTag();
         }
 
-        setTag(holder.vgLocation, i);
-
         if (getItemViewType(i) == DESTINATION_ROW) {
             renderDestination((CompactItinerarySegment) getItem(i));
+            setPositionTag(holder.vgLocation, i, false);
+            setPositionTag(holder.vgArrivalTime, i, false);
+            setPositionTag(holder.vgDepartureTime, i, true);
         } else {
             if (i == 0) {
+                setPositionTag(holder.vgLocation, i, true);
+                setPositionTag(holder.vgDate, i, true);
+                setPositionTag(holder.vgTime, i, true);
                 renderDeparture((CompactItinerarySegment) getItem(i));
             } else {
+                setPositionTag(holder.vgLocation, i, false);
+                setPositionTag(holder.vgDate, i, false);
+                setPositionTag(holder.vgTime, i, false);
                 renderArrival((CompactItinerarySegment) getItem(i));
             }
         }
         return resultView;
     }
 
-    private void setTag(final View v, int position) {
+    private void setPositionTag(final View view, int position, boolean isDeparture) {
+        if (view != null) {
+            PositionTag positionTag = new PositionTag(position, isDeparture);
+            view.setTag(R.id.tag_key_position, positionTag);
+        }
+    }
+
+    private void setPositionTag(final View v, int position) {
         if (v == null) {
             return;
         }

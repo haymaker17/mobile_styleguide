@@ -23,9 +23,12 @@ import com.concur.mobile.core.expense.travelallowance.datamodel.ItineraryLocatio
 import com.concur.mobile.core.expense.travelallowance.ui.model.CompactItinerarySegment;
 import com.concur.mobile.core.expense.travelallowance.util.StringUtilities;
 import com.concur.mobile.core.util.Const;
+import com.concur.mobile.core.widget.CalendarPickerDialog;
+import com.concur.mobile.platform.ui.common.widget.CalendarPicker;
 import com.concur.mobile.platform.ui.common.widget.CalendarPickerDialogV1;
 
 import java.util.Calendar;
+import java.util.Date;
 
 public class ItineraryUpdateActivity extends BaseActivity {
 
@@ -44,12 +47,14 @@ public class ItineraryUpdateActivity extends BaseActivity {
     private String expenseReportKey;
     private ItineraryUpdateController updateController;
     private ItineraryUpdateListAdapter adapter;
-    private int currentItemPosition;
+    private ItineraryUpdateListAdapter.PositionTag currentPosition;
     private View.OnClickListener onTimeClickListener;
     private View.OnClickListener onDateClickListener;
     private View.OnClickListener onLocationClickListener;
+    private CalendarPickerDialogV1.OnDateSetListener onDateSetListener;
 
     private CalendarPickerDialogV1 calendarDialog;
+
 
     /**
      * {@inheritDoc}
@@ -88,9 +93,9 @@ public class ItineraryUpdateActivity extends BaseActivity {
         onDateClickListener = new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Integer tagValue = (Integer) v.getTag(R.id.tag_key_position);
+                ItineraryUpdateListAdapter.PositionTag tagValue = (ItineraryUpdateListAdapter.PositionTag) v.getTag(R.id.tag_key_position);
                 if (tagValue != null) {
-                    ItineraryUpdateActivity.this.currentItemPosition = tagValue;
+                    ItineraryUpdateActivity.this.currentPosition = tagValue;
                 }
                 showCalendarDialog(DIALOG_ID_DATE_PICKER);
             }
@@ -99,19 +104,20 @@ public class ItineraryUpdateActivity extends BaseActivity {
         onTimeClickListener = new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Integer tagValue = (Integer) v.getTag(R.id.tag_key_position);
+                ItineraryUpdateListAdapter.PositionTag tagValue = (ItineraryUpdateListAdapter.PositionTag) v.getTag(R.id.tag_key_position);
                 if (tagValue != null) {
-                    ItineraryUpdateActivity.this.currentItemPosition = tagValue;
+                    ItineraryUpdateActivity.this.currentPosition = tagValue;
                 }
+                //showCalendarDialog(DIALOG_ID_DATE_PICKER);
             }
         };
 
         onLocationClickListener = new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Integer tagValue = (Integer) v.getTag(R.id.tag_key_position);
+                ItineraryUpdateListAdapter.PositionTag tagValue = (ItineraryUpdateListAdapter.PositionTag) v.getTag(R.id.tag_key_position);
                 if (tagValue != null) {
-                    ItineraryUpdateActivity.this.currentItemPosition = tagValue;
+                    ItineraryUpdateActivity.this.currentPosition = tagValue;
                 }
                 Intent locationIntent = new Intent(ItineraryUpdateActivity.this, ListSearch.class);
                 locationIntent.putExtra(Const.EXTRA_EXPENSE_LIST_SEARCH_IS_MRU, true);
@@ -120,6 +126,32 @@ public class ItineraryUpdateActivity extends BaseActivity {
                 locationIntent.putExtra(Const.EXTRA_EXPENSE_LIST_SEARCH_TITLE, getText(R.string.location)
                         .toString());
                 startActivityForResult(locationIntent, Const.REQUEST_CODE_LOCATION);
+            }
+        };
+
+        onDateSetListener = new CalendarPickerDialogV1.OnDateSetListener() {
+            @Override
+            public void onDateSet(CalendarPicker view, int year, int month, int day) {
+                if (currentPosition != null) {
+                    Date date;
+                    Calendar cal = Calendar.getInstance();
+                    CompactItinerarySegment segment = updateController.getCompactItinerarySegment(currentPosition.getPosition());
+                    if (currentPosition.isDeparture()) {
+                        date = segment.getDepartureDateTime();
+                    } else {
+                        date = segment.getArrivalDateTime();
+                    }
+                    cal.setTime(date);
+                    cal.set(year, month, day);
+                    date = cal.getTime();
+                    if (currentPosition.isDeparture()) {
+                        segment.setDepartureDateTime(date);
+                    } else {
+                        segment.setArrivalDateTime(date);
+                    }
+                    adapter.notifyDataSetChanged();
+                    calendarDialog.dismiss();
+                }
             }
         };
 
@@ -143,21 +175,19 @@ public class ItineraryUpdateActivity extends BaseActivity {
                     String selectedListItemKey = data.getStringExtra(Const.EXTRA_EXPENSE_LIST_SELECTED_LIST_ITEM_KEY);
                     String selectedListItemCode = data.getStringExtra(Const.EXTRA_EXPENSE_LIST_SELECTED_LIST_ITEM_CODE);
                     String selectedListItemText = data.getStringExtra(Const.EXTRA_EXPENSE_LIST_SELECTED_LIST_ITEM_TEXT);
-                    CompactItinerarySegment segment = this.updateController.getCompactItinerarySegment(currentItemPosition);
-                    ItineraryLocation itinLocation = new ItineraryLocation();
-                    itinLocation.setName(selectedListItemText);
-                    itinLocation.setCode(selectedListItemCode);
-                    segment.setLocation(itinLocation);
-                    adapter.notifyDataSetChanged();
+                    if (this.currentPosition != null) {
+                        CompactItinerarySegment segment = this.updateController.getCompactItinerarySegment(currentPosition.getPosition());
+                        ItineraryLocation itinLocation = new ItineraryLocation();
+                        itinLocation.setName(selectedListItemText);
+                        itinLocation.setCode(selectedListItemCode);
+                        segment.setLocation(itinLocation);
+                        adapter.notifyDataSetChanged();
+                    }
                 }
                 break;
 
             default: break;
         }
-    }
-
-    private void onSave() {
-        updateController.executeSave(this.expenseReportKey);
     }
 
     private void renderDefaultValues() {
@@ -170,17 +200,17 @@ public class ItineraryUpdateActivity extends BaseActivity {
     private void showCalendarDialog(int id) {
         Bundle bundle = new Bundle();
 
-        Calendar fromDate = Calendar.getInstance();
-        Calendar toDate = Calendar.getInstance();
+        Calendar date = Calendar.getInstance();
 
         calendarDialog = new CalendarPickerDialogV1();
 
         if (id == DIALOG_ID_DATE_PICKER) {
-            bundle.putInt(CalendarPickerDialogV1.KEY_INITIAL_YEAR, fromDate.get(Calendar.YEAR));
-            bundle.putInt(CalendarPickerDialogV1.KEY_INITIAL_MONTH, fromDate.get(Calendar.MONTH));
-            bundle.putInt(CalendarPickerDialogV1.KEY_INITIAL_DAY, fromDate.get(Calendar.DAY_OF_MONTH));
+            bundle.putInt(CalendarPickerDialogV1.KEY_INITIAL_YEAR, date.get(Calendar.YEAR));
+            bundle.putInt(CalendarPickerDialogV1.KEY_INITIAL_MONTH, date.get(Calendar.MONTH));
+            bundle.putInt(CalendarPickerDialogV1.KEY_INITIAL_DAY, date.get(Calendar.DAY_OF_MONTH));
             bundle.putInt(CalendarPickerDialogV1.KEY_TEXT_COLOR, Color.parseColor("#a5a5a5"));
             calendarDialog.setArguments(bundle);
+            calendarDialog.setOnDateSetListener(onDateSetListener);
             calendarDialog.show(getFragmentManager(), TAG_CALENDAR_DIALOG_FRAGMENT);
         }
     }
@@ -199,7 +229,7 @@ public class ItineraryUpdateActivity extends BaseActivity {
             return true;
         }
         if (item.getItemId() == R.id.menuSave) {
-            onSave();
+            updateController.executeSave(this.expenseReportKey);
             return true;
         }
         return super.onOptionsItemSelected(item);
