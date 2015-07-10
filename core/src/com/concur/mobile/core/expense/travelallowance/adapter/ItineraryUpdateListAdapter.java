@@ -14,6 +14,7 @@ import com.concur.core.R;
 import com.concur.mobile.core.ConcurCore;
 import com.concur.mobile.core.expense.travelallowance.controller.ItineraryUpdateController;
 import com.concur.mobile.core.expense.travelallowance.ui.model.CompactItinerarySegment;
+import com.concur.mobile.core.expense.travelallowance.ui.model.PositionInfoTag;
 import com.concur.mobile.core.expense.travelallowance.util.StringUtilities;
 
 import java.util.List;
@@ -36,24 +37,6 @@ public class ItineraryUpdateListAdapter extends ArrayAdapter<Object> {
     private OnClickListener onDateClickListener;
     private OnClickListener onLocationClickListener;
 
-    public final class PositionTag {
-
-        private int position;
-        private boolean isDeparture;
-
-        public PositionTag(int position, boolean isDeparture) {
-            this.position = position;
-            this.isDeparture = isDeparture;
-        }
-
-        public int getPosition() {
-            return position;
-        }
-
-        public boolean isDeparture() {
-            return isDeparture;
-        }
-    }
     /**
      * Holds all UI controls needed for rendering
      */
@@ -167,37 +150,37 @@ public class ItineraryUpdateListAdapter extends ArrayAdapter<Object> {
 
         if (getItemViewType(i) == DESTINATION_ROW) {
             renderDestination((CompactItinerarySegment) getItem(i));
-            setPositionTag(holder.vgLocation, i, false);
-            setPositionTag(holder.vgArrivalTime, i, false);
-            setPositionTag(holder.vgDepartureTime, i, true);
+            setPositionInfoTag(holder.vgLocation, i);
+            setPositionInfoTag(holder.vgArrivalTime, i);
+            setPositionInfoTag(holder.vgDepartureTime, i);
         } else {
-            if (i == 0) {
-                setPositionTag(holder.vgLocation, i, true);
-                setPositionTag(holder.vgDate, i, true);
-                setPositionTag(holder.vgTime, i, true);
+            if (i == 0) {//Departure
+                setPositionInfoTag(holder.vgLocation, i, PositionInfoTag.INFO_OUTBOUND);
+                setPositionInfoTag(holder.vgDate, i, PositionInfoTag.INFO_OUTBOUND);
+                setPositionInfoTag(holder.vgTime, i, PositionInfoTag.INFO_OUTBOUND);
                 renderDeparture((CompactItinerarySegment) getItem(i));
-            } else {
-                setPositionTag(holder.vgLocation, i, false);
-                setPositionTag(holder.vgDate, i, false);
-                setPositionTag(holder.vgTime, i, false);
+            } else {//Arrival
+                setPositionInfoTag(holder.vgLocation, i, PositionInfoTag.INFO_INBOUND);
+                setPositionInfoTag(holder.vgDate, i, PositionInfoTag.INFO_INBOUND);
+                setPositionInfoTag(holder.vgTime, i, PositionInfoTag.INFO_INBOUND);
                 renderArrival((CompactItinerarySegment) getItem(i));
             }
         }
         return resultView;
     }
 
-    private void setPositionTag(final View view, int position, boolean isDeparture) {
+    private void setPositionInfoTag(final View view, int position, int info) {
         if (view != null) {
-            PositionTag positionTag = new PositionTag(position, isDeparture);
-            view.setTag(R.id.tag_key_position, positionTag);
+            PositionInfoTag positionInfoTag = new PositionInfoTag(position, info);
+            view.setTag(R.id.tag_key_position, positionInfoTag);
         }
     }
 
-    private void setPositionTag(final View v, int position) {
-        if (v == null) {
-            return;
+    private void setPositionInfoTag(final View view, int position) {
+        if (view != null) {
+            PositionInfoTag positionInfoTag = new PositionInfoTag(position);
+            view.setTag(R.id.tag_key_position, positionInfoTag);
         }
-        v.setTag(R.id.tag_key_position, position);
     }
 
     /**

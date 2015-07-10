@@ -21,9 +21,9 @@ import com.concur.mobile.core.expense.travelallowance.adapter.ItineraryUpdateLis
 import com.concur.mobile.core.expense.travelallowance.controller.ItineraryUpdateController;
 import com.concur.mobile.core.expense.travelallowance.datamodel.ItineraryLocation;
 import com.concur.mobile.core.expense.travelallowance.ui.model.CompactItinerarySegment;
+import com.concur.mobile.core.expense.travelallowance.ui.model.PositionInfoTag;
 import com.concur.mobile.core.expense.travelallowance.util.StringUtilities;
 import com.concur.mobile.core.util.Const;
-import com.concur.mobile.core.widget.CalendarPickerDialog;
 import com.concur.mobile.platform.ui.common.widget.CalendarPicker;
 import com.concur.mobile.platform.ui.common.widget.CalendarPickerDialogV1;
 
@@ -47,7 +47,7 @@ public class ItineraryUpdateActivity extends BaseActivity {
     private String expenseReportKey;
     private ItineraryUpdateController updateController;
     private ItineraryUpdateListAdapter adapter;
-    private ItineraryUpdateListAdapter.PositionTag currentPosition;
+    private PositionInfoTag currentPosition;
     private View.OnClickListener onTimeClickListener;
     private View.OnClickListener onDateClickListener;
     private View.OnClickListener onLocationClickListener;
@@ -95,7 +95,7 @@ public class ItineraryUpdateActivity extends BaseActivity {
         onDateClickListener = new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                ItineraryUpdateListAdapter.PositionTag tagValue = (ItineraryUpdateListAdapter.PositionTag) v.getTag(R.id.tag_key_position);
+                PositionInfoTag tagValue = (PositionInfoTag) v.getTag(R.id.tag_key_position);
                 if (tagValue != null) {
                     ItineraryUpdateActivity.this.currentPosition = tagValue;
                 }
@@ -106,7 +106,7 @@ public class ItineraryUpdateActivity extends BaseActivity {
         onTimeClickListener = new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                ItineraryUpdateListAdapter.PositionTag tagValue = (ItineraryUpdateListAdapter.PositionTag) v.getTag(R.id.tag_key_position);
+                PositionInfoTag tagValue = (PositionInfoTag) v.getTag(R.id.tag_key_position);
                 if (tagValue != null) {
                     ItineraryUpdateActivity.this.currentPosition = tagValue;
                 }
@@ -117,7 +117,7 @@ public class ItineraryUpdateActivity extends BaseActivity {
         onLocationClickListener = new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                ItineraryUpdateListAdapter.PositionTag tagValue = (ItineraryUpdateListAdapter.PositionTag) v.getTag(R.id.tag_key_position);
+                PositionInfoTag tagValue = (PositionInfoTag) v.getTag(R.id.tag_key_position);
                 if (tagValue != null) {
                     ItineraryUpdateActivity.this.currentPosition = tagValue;
                 }
@@ -138,7 +138,7 @@ public class ItineraryUpdateActivity extends BaseActivity {
                     Date date;
                     Calendar cal = Calendar.getInstance();
                     CompactItinerarySegment segment = updateController.getCompactItinerarySegment(currentPosition.getPosition());
-                    if (currentPosition.isDeparture()) {
+                    if (currentPosition.getInfo() == PositionInfoTag.INFO_OUTBOUND) {
                         date = segment.getDepartureDateTime();
                     } else {
                         date = segment.getArrivalDateTime();
@@ -146,7 +146,7 @@ public class ItineraryUpdateActivity extends BaseActivity {
                     cal.setTime(date);
                     cal.set(year, month, day);
                     date = cal.getTime();
-                    if (currentPosition.isDeparture()) {
+                    if (currentPosition.getInfo() == PositionInfoTag.INFO_OUTBOUND) {
                         segment.setDepartureDateTime(date);
                     } else {
                         segment.setArrivalDateTime(date);
