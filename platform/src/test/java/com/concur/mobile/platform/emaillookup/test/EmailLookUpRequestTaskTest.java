@@ -73,6 +73,7 @@ public class EmailLookUpRequestTaskTest extends AsyncRequestTest {
         BaseAsyncResultReceiver emailLookUpReplyReceiver = new BaseAsyncResultReceiver(getHander());
         emailLookUpReplyReceiver.setListener(new AsyncReplyListenerImpl());
         reqTask = new EmailLookUpRequestTask(context, 1, emailLookUpReplyReceiver, locale, email);
+        reqTask.setRetainResponse(true);
 
         if (DEBUG) {
             ShadowLog.d(Const.LOG_TAG, CLS_TAG + ".doTest: launching the request.");

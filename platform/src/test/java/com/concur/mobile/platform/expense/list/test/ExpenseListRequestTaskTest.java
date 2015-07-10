@@ -55,6 +55,7 @@ public class ExpenseListRequestTaskTest extends AsyncRequestTest {
         expenseListReplyReceiver.setListener(new AsyncReplyListenerImpl());
         Locale locale = context.getResources().getConfiguration().locale;
         ExpenseListRequestTask reqTask = new ExpenseListRequestTask(context, 1, expenseListReplyReceiver);
+        reqTask.setRetainResponse(true);
 
         if (DEBUG) {
             ShadowLog.d(Const.LOG_TAG, CLS_TAG + ".doTest: launching the request.");

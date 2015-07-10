@@ -1,6 +1,40 @@
 package com.concur.mobile.platform.test;
 
-import java.util.Locale;
+import android.app.Application;
+import android.content.Context;
+import android.content.pm.PackageManager.NameNotFoundException;
+import android.os.Build;
+import android.text.TextUtils;
+
+import com.concur.mobile.platform.authentication.system.config.test.SystemConfigRequestTaskTest;
+import com.concur.mobile.platform.authentication.test.AutoLoginRequestTaskTest;
+import com.concur.mobile.platform.authentication.test.PPLoginLightRequestTaskTest;
+import com.concur.mobile.platform.authentication.test.PPLoginRequestTaskTest;
+import com.concur.mobile.platform.config.provider.ClearConfigDBHelper;
+import com.concur.mobile.platform.config.provider.ConfigProvider;
+import com.concur.mobile.platform.config.user.test.UserConfigRequestTaskTest;
+import com.concur.mobile.platform.emaillookup.test.EmailLookUpRequestTaskTest;
+import com.concur.mobile.platform.expense.list.test.ExpenseListRequestTaskTest;
+import com.concur.mobile.platform.expense.list.test.SaveMobileEntryRequestTaskTest;
+import com.concur.mobile.platform.expense.provider.ClearExpenseDBHelper;
+import com.concur.mobile.platform.expense.provider.ExpenseProvider;
+import com.concur.mobile.platform.expense.receipt.ocr.test.StartOCRRequestTaskTest;
+import com.concur.mobile.platform.expense.receipt.ocr.test.StopOCRRequestTaskTest;
+import com.concur.mobile.platform.expense.smartexpense.list.test.SmartExpenseListRequestTaskTest;
+import com.concur.mobile.platform.password.reset.test.RequestPasswordResetRequestTaskTest;
+import com.concur.mobile.platform.password.reset.test.ResetUserPasswordRequestTaskTest;
+import com.concur.mobile.platform.provider.ClearSQLiteOpenHelper;
+import com.concur.mobile.platform.provider.PlatformSQLiteOpenHelper;
+import com.concur.mobile.platform.receipt.list.test.DeleteReceiptRequestTaskTest;
+import com.concur.mobile.platform.receipt.list.test.GetReceiptRequestTaskTest;
+import com.concur.mobile.platform.receipt.list.test.ReceiptListRequestTaskTest;
+import com.concur.mobile.platform.receipt.list.test.SaveReceiptRequestTaskTest;
+import com.concur.mobile.platform.service.MWSPlatformManager;
+import com.concur.mobile.platform.test.server.MockMWSServer;
+import com.concur.mobile.platform.travel.provider.ClearTravelDBHelper;
+import com.concur.mobile.platform.travel.provider.TravelProvider;
+import com.concur.mobile.platform.util.Format;
+import com.concur.platform.PlatformProperties;
 
 import org.junit.AfterClass;
 import org.junit.BeforeClass;
@@ -10,39 +44,7 @@ import org.robolectric.annotation.Config;
 import org.robolectric.shadows.ShadowContentResolver;
 import org.robolectric.shadows.ShadowLog;
 
-import android.app.Application;
-import android.content.pm.PackageManager.NameNotFoundException;
-import android.os.Build;
-import android.text.TextUtils;
-
-import com.concur.mobile.base.shadow.ShadowBaseAsyncRequestTask;
-import com.concur.mobile.platform.authentication.system.config.test.SystemConfigRequestTaskTest;
-import com.concur.mobile.platform.authentication.test.AutoLoginRequestTaskTest;
-import com.concur.mobile.platform.authentication.test.PPLoginLightRequestTaskTest;
-import com.concur.mobile.platform.authentication.test.PPLoginRequestTaskTest;
-import com.concur.mobile.platform.config.provider.ConfigProvider;
-import com.concur.mobile.platform.config.user.test.UserConfigRequestTaskTest;
-import com.concur.mobile.platform.emaillookup.test.EmailLookUpRequestTaskTest;
-import com.concur.mobile.platform.expense.list.test.ExpenseListRequestTaskTest;
-import com.concur.mobile.platform.expense.list.test.SaveMobileEntryRequestTaskTest;
-import com.concur.mobile.platform.expense.provider.ExpenseProvider;
-import com.concur.mobile.platform.expense.receipt.ocr.test.StartOCRRequestTaskTest;
-import com.concur.mobile.platform.expense.receipt.ocr.test.StopOCRRequestTaskTest;
-import com.concur.mobile.platform.expense.smartexpense.list.test.SmartExpenseListRequestTaskTest;
-import com.concur.mobile.platform.password.reset.test.RequestPasswordResetRequestTaskTest;
-import com.concur.mobile.platform.password.reset.test.ResetUserPasswordRequestTaskTest;
-import com.concur.mobile.platform.receipt.list.test.DeleteReceiptRequestTaskTest;
-import com.concur.mobile.platform.receipt.list.test.GetReceiptRequestTaskTest;
-import com.concur.mobile.platform.receipt.list.test.ReceiptListRequestTaskTest;
-import com.concur.mobile.platform.receipt.list.test.SaveReceiptRequestTaskTest;
-import com.concur.mobile.platform.service.MWSPlatformManager;
-import com.concur.mobile.platform.test.config.provider.shadow.ShadowConfigProvider;
-import com.concur.mobile.platform.test.expense.provider.shadow.ShadowExpenseProvider;
-import com.concur.mobile.platform.test.server.MockMWSServer;
-import com.concur.mobile.platform.test.travel.provider.shadow.ShadowTravelProvider;
-import com.concur.mobile.platform.travel.provider.TravelProvider;
-import com.concur.mobile.platform.util.Format;
-import com.concur.platform.PlatformProperties;
+import java.util.Locale;
 
 /**
  * Contains a suite of tests to run to exercise the ConcurPlatform project.
@@ -50,8 +52,7 @@ import com.concur.platform.PlatformProperties;
  * @author andrewk
  */
 @RunWith(ConcurPlatformTestRunner.class)
-@Config(manifest = "../platform_test/AndroidManifest.xml", shadows = { ShadowConfigProvider.class,
-        ShadowTravelProvider.class, ShadowBaseAsyncRequestTask.class, ShadowExpenseProvider.class })
+@Config(manifest = "src/test/AndroidManifest.xml", assetDir = "assets")
 public class PlatformTestSuite {
 
     private static final String CLS_TAG = "PlatformTestSuite";
@@ -698,20 +699,42 @@ public class PlatformTestSuite {
      * Will initialize the config and travel content providers.
      */
     private static void initContentProviders() {
+
         // Initialize the config content provider.
-        ConfigProvider configProvider = new ConfigProvider();
+        ConfigProvider configProvider = new ConfigProvider() {
+            @Override
+            public PlatformSQLiteOpenHelper initPlatformSQLiteOpenHelper(Context context) {
+                PlatformSQLiteOpenHelper helper = new ClearSQLiteOpenHelper(new ClearConfigDBHelper(context));
+                return helper;
+            }
+        };
+
         configProvider.onCreate();
         ShadowContentResolver.registerProvider(com.concur.mobile.platform.config.provider.Config.AUTHORITY,
                 configProvider);
 
         // Initialize the travel content provider.
-        TravelProvider travelProvider = new TravelProvider();
+        TravelProvider travelProvider = new TravelProvider() {
+            @Override
+            public PlatformSQLiteOpenHelper initPlatformSQLiteOpenHelper(Context context) {
+                PlatformSQLiteOpenHelper helper = new ClearSQLiteOpenHelper(new ClearTravelDBHelper(context));
+                return helper;
+            }
+        };
+
         travelProvider.onCreate();
         ShadowContentResolver.registerProvider(com.concur.mobile.platform.travel.provider.Travel.AUTHORITY,
                 travelProvider);
 
         // Initialize the expense content provider.
-        ExpenseProvider expenseProvider = new ExpenseProvider();
+        ExpenseProvider expenseProvider = new ExpenseProvider() {
+            @Override
+            public PlatformSQLiteOpenHelper initPlatformSQLiteOpenHelper(Context context) {
+                PlatformSQLiteOpenHelper helper = new ClearSQLiteOpenHelper(new ClearExpenseDBHelper(context));
+                return helper;
+            }
+        };
+
         expenseProvider.onCreate();
         ShadowContentResolver.registerProvider(com.concur.mobile.platform.expense.provider.Expense.AUTHORITY,
                 expenseProvider);

@@ -77,6 +77,7 @@ public class PPLoginLightRequestTaskTest extends AsyncRequestTest {
         Locale locale = context.getResources().getConfiguration().locale;
         PPLoginLightRequestTask reqTask = new PPLoginLightRequestTask(context, loginLightReplyReceiver, 1, locale,
                 ppLoginId, ppLoginPinPassword);
+        reqTask.setRetainResponse(true);
 
         if (DEBUG) {
             ShadowLog.d(Const.LOG_TAG, CLS_TAG + ".doTest: launching the request.");

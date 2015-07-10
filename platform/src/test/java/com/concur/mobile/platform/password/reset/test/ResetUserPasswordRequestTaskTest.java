@@ -86,6 +86,8 @@ public class ResetUserPasswordRequestTaskTest extends AsyncRequestTest {
         ResetUserPasswordRequestTask reqTask = new ResetUserPasswordRequestTask(context, 1, resetPasswordReplyReceiver,
                 email, keyPartA, keyPartB, password);
 
+        reqTask.setRetainResponse(true);
+
         if (DEBUG) {
             ShadowLog.d(Const.LOG_TAG, CLS_TAG + ".doTest: launching the request.");
         }

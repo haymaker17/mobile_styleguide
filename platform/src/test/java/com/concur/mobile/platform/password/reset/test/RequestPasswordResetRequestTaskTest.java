@@ -70,6 +70,7 @@ public class RequestPasswordResetRequestTaskTest extends AsyncRequestTest {
         resetPasswordReplyReceiver.setListener(new AsyncReplyListenerImpl());
         RequestPasswordResetRequestTask reqTask = new RequestPasswordResetRequestTask(context, 1,
                 resetPasswordReplyReceiver, locale, email);
+        reqTask.setRetainResponse(true);
 
         if (DEBUG) {
             ShadowLog.d(Const.LOG_TAG, CLS_TAG + ".doTest: launching the request.");

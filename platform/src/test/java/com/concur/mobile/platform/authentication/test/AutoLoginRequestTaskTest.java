@@ -52,6 +52,7 @@ public class AutoLoginRequestTaskTest extends AsyncRequestTest {
         loginReplyReceiver.setListener(new AsyncReplyListenerImpl());
         Locale locale = context.getResources().getConfiguration().locale;
         AutoLoginRequestTask reqTask = new AutoLoginRequestTask(context, 1, loginReplyReceiver, locale);
+        reqTask.setRetainResponse(true);
 
         if (DEBUG) {
             ShadowLog.d(Const.LOG_TAG, CLS_TAG + ".doTest: launching the request.");

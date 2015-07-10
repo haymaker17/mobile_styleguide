@@ -99,11 +99,13 @@ public class GetReceiptRequestTaskTest extends AsyncRequestTest {
         case SOURCE_ID: {
             reqTask = new GetReceiptRequestTask(context, 1, receiptReplyReceiver, null, recDAO.getId(),
                     downloadListener);
+            reqTask.setRetainResponse(true);
             break;
         }
         case SOURCE_URI: {
             reqTask = new GetReceiptRequestTask(context, 1, receiptReplyReceiver, null, recDAO.getContentUri()
                     .toString(), downloadListener);
+            reqTask.setRetainResponse(true);
             break;
         }
         }
