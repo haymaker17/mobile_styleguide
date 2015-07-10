@@ -78,7 +78,7 @@
             android:layout_alignParentLeft="true"
             android:layout_weight="0.6"
             android:textAppearance="@style/DefaultSubTitleMoreLabel"
-            android:text="@string/itin_more_information"
+            android:text="@string/general_more_information"
             android:layout_marginLeft="5dp" />
         </LinearLayout>
 

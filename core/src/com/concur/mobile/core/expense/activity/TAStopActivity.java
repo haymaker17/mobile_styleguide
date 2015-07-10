@@ -140,9 +140,9 @@ public class TAStopActivity extends BaseActivity {
         setFieldName(R.id.editDepartLocation, R.string.itin_depart_from);
         setFieldName(R.id.editArriveLocation, R.string.itin_arrive_in);
         setFieldName(R.id.editDepartDate, R.string.date);
-        setFieldName(R.id.editDepartTime, R.string.itin_time);
+        setFieldName(R.id.editDepartTime, R.string.general_time);
         setFieldName(R.id.editArriveDate, R.string.date);
-        setFieldName(R.id.editArriveTime, R.string.itin_time);
+        setFieldName(R.id.editArriveTime, R.string.general_time);
 
         findViewById(R.id.editDepartDate).setOnClickListener(onClickListener);
         findViewById(R.id.editDepartTime).setOnClickListener(onClickListener);

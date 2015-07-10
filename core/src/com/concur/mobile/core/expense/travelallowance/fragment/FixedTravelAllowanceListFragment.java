@@ -206,7 +206,7 @@ public class FixedTravelAllowanceListFragment extends ListFragment implements Sw
         vDividerBottom.setVisibility(View.VISIBLE);
 
         if (tvTitle != null) {
-            tvTitle.setText(R.string.itin_total_allowance);
+            tvTitle.setText(R.string.ta_total_allowance);
         }
 
         Double sum = allowanceController.getSum();

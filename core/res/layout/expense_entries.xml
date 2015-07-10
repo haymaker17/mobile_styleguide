@@ -126,7 +126,7 @@
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_marginLeft="@dimen/exp_list_header_row_title_left_margin"
-                            android:text="@string/itin_travel_allowances"
+                            android:text="@string/ta_travel_allowances"
                             android:textAppearance="@style/ListCellHeaderText"
                         />
                     </LinearLayout>

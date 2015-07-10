@@ -66,7 +66,7 @@ public class ViewPagerAdapter extends FragmentPagerAdapter {
     public CharSequence getPageTitle(int position) {
         switch (position) {
             case 0:
-                return context.getString(R.string.itin_adjustments);
+                return context.getString(R.string.ta_adjustments);
             case 1:
                 return context.getString(R.string.itin_itineraries);
         }
