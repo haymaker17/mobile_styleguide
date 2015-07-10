@@ -160,12 +160,15 @@ p {
 }
 
 .figure_text {
+	margin: 10px 10px; 	
 	font-size: .8rem;
 	font-weight: 300;
 	line-height: 1.2rem;
 	color: #858585;
-	margin-left: 10px;
 }
+
+
+
 
 
 .flexContainer.half figure:nth-child(even) {
@@ -184,6 +187,42 @@ p {
 .breadcrumb_arrow_position {
 	margin: 0 0 -4px 0;
 }
+
+
+
+
+
+/* components ------------ */
+
+.components img, .components video {
+	border: 1px solid #e2e2e2;
+}
+
+
+
+.video_poster_image, .video {
+	position: absolute;
+	top: 0;
+	left: 0;
+	height: 100%;
+	width: 100%;
+}
+
+.video_poster_image {
+	z-index: 1;
+}
+
+.videoplayer {
+	height: 472px;
+	width: 266px; 
+	position: relative;
+}
+
+.video {
+	background-color: #ffffff;
+	
+}
+
 
 
 
@@ -920,16 +959,6 @@ ul.nav {
 	color: #0078c8;
 }
 
-
-
-
-
-
-/* components ------------ */
-
-.components img, .components video {
-	border: 1px solid #e2e2e2;
-}
 
 
 

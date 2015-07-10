@@ -8,9 +8,22 @@
 		</div>
 
 		<div>
-			<figure><img src="img/ios/components/bars/status_bar/login_01.png" alt="Navbar" width="338" height="599"/><div class="figure_text">White background fill used for the Status Bar on "Walkthrough" screens.</div></figure>
-			<!-- <figure><img src="img/ios/components/bars/navbar_01.png" alt="Navbar" width="338" height="599"/></figure> -->
-			<figure><img src="img/ios/components/bars/status_bar/new_expense.png" alt="Navbar" width="338" height="599"/><div class="figure_text">Dark Grey background fill used for the Status Bar on "Unsaved" screens.</div></figure>
+			<figure>
+				<div class="videoplayer">
+					<img src="img/ios/components/bars/status_bar/login_01.png" class="video_poster_image" alt="Navbar" width="338" height="599">
+					<video class="video" preload="none">
+						<source id="mp4" src="videos/login_01.mp4" type="video/mp4">
+						<p>Your user agent does not support the HTML5 Video element.</p>
+					</video>
+				</div>
+				<div class="figure_text">White background fill used for the Status Bar on "Walkthrough" screens.</div>
+			</figure>
+			<figure>
+				<div class="videoplayer">
+					<img src="img/ios/components/bars/status_bar/new_expense.png" alt="Navbar" width="338" height="599"/>
+				</div>
+				<div class="figure_text">Dark Grey background fill used for the Status Bar on "Unsaved" screens.</div>
+			</figure>
 			<!-- <figure><img src="img/ios/components/bars/navbar_02.png" alt="Navbar" width="338" height="599"/></figure> -->
 		</div>
 	</div>
@@ -91,3 +104,57 @@
 -->
 
 </div>
+
+	<script>
+		
+		$(document).ready(function() {
+			
+			
+		   //show the video and hide the poster image
+		   $(".video_poster_image").on("click", function(e){
+			   
+			   //get which one we clicked on
+			   var video_index = $(this).siblings(".video").index("video");
+			   var video = $("video")[video_index]; 
+			   
+			   //play the video and hide the image
+			   video.play();
+			   //$(this).hide();
+			   $(this).fadeOut();
+			   //$(".bg_image").hide(alert('bla'));			   
+		   });
+		   
+		    //hide the video and show the poster image when the movie ends
+			$(".video").on("ended", function() {			
+				//$(this).siblings(".video_poster_image").show();
+				$(this).siblings(".video_poster_image").fadeIn();
+			});
+			
+			//pause/play functionality
+			$(".video").on("click",function(){
+				
+			   //get which one we clicked on
+			   var video_index = $(this).index("video");
+			   var video = $("video")[video_index];
+				
+				//play/pause the video
+				if (video.paused) {
+					video.play();
+				}
+				else {
+					video.pause();
+				}
+			})
+			
+		   
+		});
+		
+		$(function() { 
+			$(".changelist").on("click","a", function(ev){
+			ev.preventDefault();
+			getGithubCommits();
+		})
+	
+});
+		
+	</script>
