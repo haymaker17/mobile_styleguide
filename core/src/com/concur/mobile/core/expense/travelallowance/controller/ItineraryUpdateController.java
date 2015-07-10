@@ -7,12 +7,14 @@ import android.widget.Toast;
 
 import com.concur.mobile.base.service.BaseAsyncRequestTask;
 import com.concur.mobile.base.service.BaseAsyncResultReceiver;
+import com.concur.mobile.core.ConcurCore;
 import com.concur.mobile.core.expense.travelallowance.AsyncReplyAdapter;
 import com.concur.mobile.core.expense.travelallowance.datamodel.Itinerary;
 import com.concur.mobile.core.expense.travelallowance.datamodel.ItinerarySegment;
 import com.concur.mobile.core.expense.travelallowance.service.SaveItineraryRequest;
 import com.concur.mobile.core.expense.travelallowance.ui.model.CompactItinerary;
 import com.concur.mobile.core.expense.travelallowance.ui.model.CompactItinerarySegment;
+import com.concur.mobile.core.expense.travelallowance.util.StringUtilities;
 
 import java.util.ArrayList;
 import java.util.Date;
@@ -41,20 +43,17 @@ public class ItineraryUpdateController {
     }
 
     public void refreshCompactItinerary(String expenseReportName) {
-        if (useMockData) {
-            ItineraryUpdateTestData testData = new ItineraryUpdateTestData();
-            this.compactItinerary = testData.getCompactItinerary();
+        if (StringUtilities.isNullOrEmpty(expenseReportName)) {
+            //Temporary
+            ConcurCore app = (ConcurCore) context.getApplicationContext();
+            TravelAllowanceItineraryController controller = app.getTaItineraryController();
+            List<CompactItinerary> compactItineraries = controller.getCompactItineraryList();
+            this.compactItinerary = compactItineraries.get(0);
             return;
         }
-        this.compactItinerary = new CompactItinerary();
-        compactItinerary.setName(expenseReportName);
-        compactItinerary.setSegmentList(new ArrayList<CompactItinerarySegment>());
-        CompactItinerarySegment departure = new CompactItinerarySegment();
-        departure.setDepartureDateTime(new Date());
-        CompactItinerarySegment arrival = new CompactItinerarySegment();
-        arrival.setArrivalDateTime(new Date());
-        compactItinerary.getSegmentList().add(departure);
-        compactItinerary.getSegmentList().add(arrival);
+
+        ItineraryUpdateTestData testData = new ItineraryUpdateTestData();
+        this.compactItinerary = testData.getCompactItinerary();
     }
 
     public CompactItinerary getCompactItinerary(){

@@ -151,8 +151,8 @@ public class ItineraryUpdateListAdapter extends ArrayAdapter<Object> {
         if (getItemViewType(i) == DESTINATION_ROW) {
             renderDestination((CompactItinerarySegment) getItem(i));
             setPositionInfoTag(holder.vgLocation, i);
-            setPositionInfoTag(holder.vgArrivalTime, i);
-            setPositionInfoTag(holder.vgDepartureTime, i);
+            setPositionInfoTag(holder.vgArrivalTime, i, PositionInfoTag.INFO_INBOUND);
+            setPositionInfoTag(holder.vgDepartureTime, i, PositionInfoTag.INFO_OUTBOUND);
         } else {
             if (i == 0) {//Departure
                 setPositionInfoTag(holder.vgLocation, i, PositionInfoTag.INFO_OUTBOUND);
