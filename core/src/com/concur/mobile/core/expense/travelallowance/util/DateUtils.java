@@ -307,6 +307,52 @@ public final class DateUtils {
     }
 
     /**
+     * Creates a Calendar based on the given date. Replaces the time information (hours and
+     * minutes) by the given attributes
+     *
+     * @param date The date where hours and minutes needs to be replaces
+     * @param hourOfDay The new hours
+     * @param minute The new minutes
+     * @return The new Calendar, if date not equals null.
+     */
+    public static Calendar getCalendarKeepingDate(final Date date, final int hourOfDay, final int minute) {
+
+        if (date == null) {
+            return null;
+        }
+
+        Calendar cal = Calendar.getInstance();
+        cal.setTime(date);
+        cal.set(Calendar.HOUR_OF_DAY, hourOfDay);
+        cal.set(Calendar.MINUTE, minute);
+        return cal;
+    }
+
+    /**
+     * Creates a Calendar based on the given date. Replaces the date information (year, month, day)
+     * by the given attributes
+     *
+     * @param date The date where hours and minutes needs to be replaces
+     * @param year The new year
+     * @param month The new month
+     * @param day The new day
+     * @return The new Calendar, if date not equals null.
+     */
+    public static Calendar getCalendarKeepingTime(final Date date, final int year, final int month, final int day) {
+
+        if (date == null) {
+            return null;
+        }
+
+        Calendar cal = Calendar.getInstance();
+        cal.setTime(date);
+        cal.set(Calendar.YEAR, year);
+        cal.set(Calendar.MONTH, month);
+        cal.set(Calendar.DAY_OF_MONTH, day);
+        return cal;
+    }
+
+    /**
      * Checks for non-empty overlap of periods
      * @param ignoreTime True if only date information to be considered for
      * 					 intersecting period intervals

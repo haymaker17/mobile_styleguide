@@ -4,6 +4,7 @@ import android.app.Activity;
 import android.content.Intent;
 import android.graphics.Color;
 import android.os.Bundle;
+import android.support.v4.app.DialogFragment;
 import android.support.v7.app.ActionBar;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
@@ -12,6 +13,7 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.ListView;
+import android.widget.TimePicker;
 
 import com.concur.core.R;
 import com.concur.mobile.core.ConcurCore;
@@ -20,8 +22,10 @@ import com.concur.mobile.core.expense.activity.ListSearch;
 import com.concur.mobile.core.expense.travelallowance.adapter.ItineraryUpdateListAdapter;
 import com.concur.mobile.core.expense.travelallowance.controller.ItineraryUpdateController;
 import com.concur.mobile.core.expense.travelallowance.datamodel.ItineraryLocation;
+import com.concur.mobile.core.expense.travelallowance.fragment.TimePickerFragment;
 import com.concur.mobile.core.expense.travelallowance.ui.model.CompactItinerarySegment;
 import com.concur.mobile.core.expense.travelallowance.ui.model.PositionInfoTag;
+import com.concur.mobile.core.expense.travelallowance.util.DateUtils;
 import com.concur.mobile.core.expense.travelallowance.util.StringUtilities;
 import com.concur.mobile.core.util.Const;
 import com.concur.mobile.platform.ui.common.widget.CalendarPicker;
@@ -38,11 +42,11 @@ public class ItineraryUpdateActivity extends BaseActivity {
     private static final String CLASS_TAG = ItineraryUpdateActivity.class
             .getSimpleName();
 
-
-    private static final int DIALOG_ID_DATE_PICKER = 0;
-
     private static final String TAG_CALENDAR_DIALOG_FRAGMENT =
             CLASS_TAG + ".calendar.dialog.fragment";
+
+    private static final String TAG_TIME_DIALOG_FRAGMENT =
+            CLASS_TAG + ".time.dialog.fragment";
 
     private String expenseReportKey;
     private ItineraryUpdateController updateController;
@@ -52,9 +56,10 @@ public class ItineraryUpdateActivity extends BaseActivity {
     private View.OnClickListener onDateClickListener;
     private View.OnClickListener onLocationClickListener;
     private CalendarPickerDialogV1.OnDateSetListener onDateSetListener;
+    private TimePickerFragment.OnTimeSetListener onTimeSetListener;
 
     private CalendarPickerDialogV1 calendarDialog;
-
+    private TimePickerFragment timeDialog;
 
     /**
      * {@inheritDoc}
@@ -99,7 +104,7 @@ public class ItineraryUpdateActivity extends BaseActivity {
                 if (tagValue != null) {
                     ItineraryUpdateActivity.this.currentPosition = tagValue;
                 }
-                showCalendarDialog(DIALOG_ID_DATE_PICKER);
+                showCalendarDialog();
             }
         };
 
@@ -110,7 +115,7 @@ public class ItineraryUpdateActivity extends BaseActivity {
                 if (tagValue != null) {
                     ItineraryUpdateActivity.this.currentPosition = tagValue;
                 }
-                //showCalendarDialog(DIALOG_ID_DATE_PICKER);
+                showTimePickerDialog();
             }
         };
 
@@ -136,23 +141,51 @@ public class ItineraryUpdateActivity extends BaseActivity {
             public void onDateSet(CalendarPicker view, int year, int month, int day) {
                 if (currentPosition != null) {
                     Date date;
-                    Calendar cal = Calendar.getInstance();
+                    Calendar cal;
                     CompactItinerarySegment segment = updateController.getCompactItinerarySegment(currentPosition.getPosition());
                     if (currentPosition.getInfo() == PositionInfoTag.INFO_OUTBOUND) {
                         date = segment.getDepartureDateTime();
                     } else {
                         date = segment.getArrivalDateTime();
                     }
-                    cal.setTime(date);
-                    cal.set(year, month, day);
-                    date = cal.getTime();
-                    if (currentPosition.getInfo() == PositionInfoTag.INFO_OUTBOUND) {
-                        segment.setDepartureDateTime(date);
-                    } else {
-                        segment.setArrivalDateTime(date);
+                    if (date != null) {
+                        cal = DateUtils.getCalendarKeepingTime(date, year, month, day);
+                        date = cal.getTime();
+                        if (currentPosition.getInfo() == PositionInfoTag.INFO_OUTBOUND) {
+                            segment.setDepartureDateTime(date);
+                        } else {
+                            segment.setArrivalDateTime(date);
+                        }
+                        adapter.notifyDataSetChanged();
+                        calendarDialog.dismiss();
                     }
-                    adapter.notifyDataSetChanged();
-                    calendarDialog.dismiss();
+                }
+            }
+        };
+
+        onTimeSetListener = new TimePickerFragment.OnTimeSetListener() {
+            @Override
+            public void onTimeSet(TimePicker view, int hourOfDay, int minute) {
+                if (currentPosition != null) {
+                    Date date;
+                    Calendar cal;
+                    CompactItinerarySegment segment = updateController.getCompactItinerarySegment(currentPosition.getPosition());
+                    if (currentPosition.getInfo() == PositionInfoTag.INFO_OUTBOUND) {
+                        date = segment.getDepartureDateTime();
+                    } else {
+                        date = segment.getArrivalDateTime();
+                    }
+                    if (date != null) {
+                        cal = DateUtils.getCalendarKeepingDate(date, hourOfDay, minute);
+                        date = cal.getTime();
+                        if (currentPosition.getInfo() == PositionInfoTag.INFO_OUTBOUND) {
+                            segment.setDepartureDateTime(date);
+                        } else {
+                            segment.setArrivalDateTime(date);
+                        }
+                        adapter.notifyDataSetChanged();
+                        timeDialog.dismiss();
+                    }
                 }
             }
         };
@@ -199,22 +232,27 @@ public class ItineraryUpdateActivity extends BaseActivity {
         }
     }
 
-    private void showCalendarDialog(int id) {
+    private void showTimePickerDialog() {
+        timeDialog = new TimePickerFragment();
+        timeDialog.setOnTimeSetListener(onTimeSetListener);
+        timeDialog.show(getSupportFragmentManager(), TAG_TIME_DIALOG_FRAGMENT);
+    }
+
+    private void showCalendarDialog() {
         Bundle bundle = new Bundle();
 
         Calendar date = Calendar.getInstance();
 
         calendarDialog = new CalendarPickerDialogV1();
 
-        if (id == DIALOG_ID_DATE_PICKER) {
-            bundle.putInt(CalendarPickerDialogV1.KEY_INITIAL_YEAR, date.get(Calendar.YEAR));
-            bundle.putInt(CalendarPickerDialogV1.KEY_INITIAL_MONTH, date.get(Calendar.MONTH));
-            bundle.putInt(CalendarPickerDialogV1.KEY_INITIAL_DAY, date.get(Calendar.DAY_OF_MONTH));
-            bundle.putInt(CalendarPickerDialogV1.KEY_TEXT_COLOR, Color.parseColor("#a5a5a5"));
-            calendarDialog.setArguments(bundle);
-            calendarDialog.setOnDateSetListener(onDateSetListener);
-            calendarDialog.show(getFragmentManager(), TAG_CALENDAR_DIALOG_FRAGMENT);
-        }
+        bundle.putInt(CalendarPickerDialogV1.KEY_INITIAL_YEAR, date.get(Calendar.YEAR));
+        bundle.putInt(CalendarPickerDialogV1.KEY_INITIAL_MONTH, date.get(Calendar.MONTH));
+        bundle.putInt(CalendarPickerDialogV1.KEY_INITIAL_DAY, date.get(Calendar.DAY_OF_MONTH));
+        bundle.putInt(CalendarPickerDialogV1.KEY_TEXT_COLOR, Color.parseColor("#a5a5a5"));
+        calendarDialog.setArguments(bundle);
+        calendarDialog.setOnDateSetListener(onDateSetListener);
+        calendarDialog.show(getFragmentManager(), TAG_CALENDAR_DIALOG_FRAGMENT);
+
     }
 
     @Override
