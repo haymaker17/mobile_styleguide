@@ -9,6 +9,7 @@ import android.util.Log;
 import com.concur.mobile.base.service.BaseAsyncRequestTask;
 import com.concur.mobile.base.service.BaseAsyncResultReceiver;
 import com.concur.mobile.core.expense.travelallowance.datamodel.FixedTravelAllowance;
+import com.concur.mobile.core.expense.travelallowance.datamodel.ICode;
 import com.concur.mobile.core.expense.travelallowance.datamodel.MealProvision;
 import com.concur.mobile.core.expense.travelallowance.service.GetTAFixedAllowancesRequest2;
 import com.concur.mobile.core.expense.travelallowance.util.DateUtils;
@@ -36,8 +37,8 @@ public class FixedTravelAllowanceController {
 
         private boolean indicator;
 
-        public MealProvisionWithIndicator(MealProvision mealProvision, boolean indicator) {
-            super(mealProvision.getCode(), mealProvision.getCodeDescription());
+        public MealProvisionWithIndicator(ICode mealProvision, boolean indicator) {
+            super(mealProvision.getCode(), mealProvision.getDescription());
             this.indicator = indicator;
         }
 
@@ -298,9 +299,10 @@ public class FixedTravelAllowanceController {
 
         String resultString = StringUtilities.EMPTY_STRING;
         List<String> mealsList;
+       
         List<MealProvisionWithIndicator> sortedProvisions = new ArrayList<MealProvisionWithIndicator>();
         //List<MealProvision> checkBoxProvisions = new ArrayList<MealProvision>();
-        Map<MealProvision, List<String>> provisionMap = new HashMap<MealProvision, List<String>>();
+        Map<ICode, List<String>> provisionMap = new HashMap<ICode, List<String>>();
 
         if (allowance.getBreakfastProvision() != null && !StringUtilities.isNullOrEmpty(allowance.getBreakfastProvision().getCode())
                 && !allowance.getBreakfastProvision().getCode().equals(MealProvision.NOT_PROVIDED_CODE)) {
