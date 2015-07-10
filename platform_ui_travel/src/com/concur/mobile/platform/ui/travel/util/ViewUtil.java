@@ -4,6 +4,7 @@ import android.content.Context;
 import android.text.Spannable;
 import android.text.style.URLSpan;
 import android.text.util.Linkify;
+import android.util.DisplayMetrics;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -232,6 +233,19 @@ public class ViewUtil {
     public static void addSeparatorView(Context context, ViewGroup root) {
         LayoutInflater inflater = LayoutInflater.from(context);
         inflater.inflate(R.layout.group_separator_v1, root);
+    }
+
+    /**
+     * Will convert dp to pixels for view positions via code instead of xml
+     *
+     * @param context
+     * @param dp
+     * @return
+     */
+    public static int dpToPx(Context context, int dp) {
+        DisplayMetrics displayMetrics = context.getResources().getDisplayMetrics();
+        int px = Math.round(dp * (displayMetrics.xdpi / DisplayMetrics.DENSITY_DEFAULT));
+        return px;
     }
 
 }
