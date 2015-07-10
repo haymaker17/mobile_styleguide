@@ -11,6 +11,7 @@ import android.content.Context;
 
 import com.concur.mobile.core.expense.travelallowance.controller.FixedTravelAllowanceControlData;
 import com.concur.mobile.core.expense.travelallowance.datamodel.FixedTravelAllowance;
+import com.concur.mobile.core.expense.travelallowance.datamodel.ICode;
 import com.concur.mobile.core.expense.travelallowance.datamodel.LodgingType;
 import com.concur.mobile.core.expense.travelallowance.datamodel.MealProvision;
 import com.concur.mobile.core.expense.travelallowance.datamodel.MealProvisionEnum;
@@ -43,10 +44,6 @@ public class GetTAFixedAllowancesResponseDOMParser {
     private FixedTravelAllowanceControlData controlData;
 
 
-    private Map<String, MealProvision> providedMealValues;
-
-
-
 
     public GetTAFixedAllowancesResponseDOMParser(Context context) {
         this.context = context;
@@ -69,15 +66,15 @@ public class GetTAFixedAllowancesResponseDOMParser {
 
         nodeList = dom.getElementsByTagName(PROVIDED_MEAL_VALUES);
         if (nodeList.getLength() > 0) {
-            providedMealValues = new HashMap<String, MealProvision>();
-            parseCodeValueList(nodeList.item(0), PROVIDED_MEAL, providedMealValues);
+            Map<String, ICode> providedMealValues = new HashMap<String, ICode>();
+            parseCodeValueList(nodeList.item(0), PROVIDED_MEAL, providedMealValues, MealProvision.class);
             controlData.setProvidedMealValues(providedMealValues);
         }
 
         nodeList = dom.getElementsByTagName(LODGING_TYPE_VALUES);
         if (nodeList.getLength() > 0) {
-            Map<String, LodgingType> lodgingTypeValues = new HashMap<String, LodgingType>();
-            parseLodgingTypeList(nodeList.item(0), LODGING_TYPE, lodgingTypeValues);
+            Map<String, ICode> lodgingTypeValues = new HashMap<String, ICode>();
+            parseCodeValueList(nodeList.item(0), LODGING_TYPE, lodgingTypeValues, LodgingType.class);
             controlData.setLodgingTypeValues(lodgingTypeValues);
         }
 
@@ -123,9 +120,9 @@ public class GetTAFixedAllowancesResponseDOMParser {
                     if (controlData.getControlValue(FixedTravelAllowanceControlData.SHOW_BREAKFAST_PROVIDED_CHECKBOX)
                             || controlData
                                     .getControlValue(FixedTravelAllowanceControlData.SHOW_BREAKFAST_PROVIDED_PICKLIST)) {
-                        MealProvision breakfast = controlData.getProvidedMealValues().get(text);
+                        ICode breakfast = controlData.getProvidedMealValues().get(text);
                         if (breakfast != null) {
-                            currentAllowance.setBreakfastProvision(breakfast);
+                            currentAllowance.setBreakfastProvision((MealProvision) breakfast);
                         } else {
                             currentAllowance.setBreakfastProvision(MealProvisionEnum.fromCode(text, context));
                         }
@@ -135,9 +132,9 @@ public class GetTAFixedAllowancesResponseDOMParser {
                     if (controlData.getControlValue(FixedTravelAllowanceControlData.SHOW_LUNCH_PROVIDED_CHECKBOX)
                             || controlData
                             .getControlValue(FixedTravelAllowanceControlData.SHOW_LUNCH_PROVIDED_PICKLIST)) {
-                        MealProvision lunch = controlData.getProvidedMealValues().get(text);
+                        ICode lunch = controlData.getProvidedMealValues().get(text);
                         if (lunch != null) {
-                            currentAllowance.setLunchProvision(lunch);
+                            currentAllowance.setLunchProvision((MealProvision) lunch);
                         } else {
                             currentAllowance.setLunchProvision(MealProvisionEnum.fromCode(text, context));
                         }
@@ -148,9 +145,9 @@ public class GetTAFixedAllowancesResponseDOMParser {
                     if (controlData.getControlValue(FixedTravelAllowanceControlData.SHOW_DINNER_PROVIDED_CHECKBOX)
                             || controlData
                             .getControlValue(FixedTravelAllowanceControlData.SHOW_DINNER_PROVIDED_PICKLIST)) {
-                        MealProvision dinner = controlData.getProvidedMealValues().get(text);
+                        ICode dinner = controlData.getProvidedMealValues().get(text);
                         if (dinner != null) {
-                            currentAllowance.setDinnerProvision(dinner);
+                            currentAllowance.setDinnerProvision((MealProvision) dinner);
                         } else {
                             currentAllowance.setDinnerProvision(MealProvisionEnum.fromCode(text, context));
                         }
@@ -161,9 +158,9 @@ public class GetTAFixedAllowancesResponseDOMParser {
                 }
                 if (tag.equals("LodgingType")) {
                     if (controlData.getControlValue(FixedTravelAllowanceControlData.SHOW_LODGING_TYPE_PICKLIST)) {
-                        LodgingType lodgingType = controlData.getLodgingTypeValues().get(text);
+                        ICode lodgingType = controlData.getLodgingTypeValues().get(text);
                         if (lodgingType != null) {
-                            currentAllowance.setLodgingType(lodgingType);
+                            currentAllowance.setLodgingType((LodgingType) lodgingType);
                         } else {
                             currentAllowance.setLodgingType(new LodgingType(text, ""));
                         }
@@ -184,7 +181,7 @@ public class GetTAFixedAllowancesResponseDOMParser {
         }
     }
 
-    private void parseCodeValueList(Node rootValueNode, String nodeName, Map<String, MealProvision> resultMap) {
+    private void parseCodeValueList(Node rootValueNode, String nodeName, Map<String, ICode> resultMap, Class codeClass) {
         NodeList valueNodeList = rootValueNode.getChildNodes();
         for (int i = 0; i < valueNodeList.getLength(); i++) {
             String code = null;
@@ -201,35 +198,20 @@ public class GetTAFixedAllowancesResponseDOMParser {
                 }
             }
             if (code != null && value != null) {
-                MealProvision prv = new MealProvision(code, value);
-                resultMap.put(code, prv);
+                try {
+                    ICode codeObject = (ICode) codeClass.newInstance();
+                    codeObject.setCode(code);
+                    codeObject.setDescription(value);
+                    resultMap.put(code, codeObject);
+                } catch (InstantiationException e) {
+                    e.printStackTrace();
+                } catch (IllegalAccessException e) {
+                    e.printStackTrace();
+                }
+
             }
         }
     }
-
-    private void parseLodgingTypeList(Node rootValueNode, String nodeName, Map<String, LodgingType> resultMap) {
-        NodeList valueNodeList = rootValueNode.getChildNodes();
-        for (int i = 0; i < valueNodeList.getLength(); i++) {
-            String code = null;
-            String value = null;
-            Element valueElement = (Element) valueNodeList.item(i);
-            if (nodeName.equals(valueElement.getNodeName())) {
-                NodeList nodeList = valueElement.getElementsByTagName("Code");
-                if (nodeList.getLength() > 0) {
-                    code = nodeList.item(0).getFirstChild().getNodeValue();
-                }
-                nodeList = valueElement.getElementsByTagName("Value");
-                if (nodeList.getLength() > 0) {
-                    value = nodeList.item(0).getFirstChild().getNodeValue();
-                }
-            }
-            if (code != null && value != null) {
-                LodgingType lgt = new LodgingType(code, value);
-                resultMap.put(code, lgt);
-            }
-        }
-    }
-
 
 
     public void setControlData(FixedTravelAllowanceControlData controlData) {

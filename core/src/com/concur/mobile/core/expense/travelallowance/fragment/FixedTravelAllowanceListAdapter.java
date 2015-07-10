@@ -296,7 +296,7 @@ public class FixedTravelAllowanceListAdapter extends ArrayAdapter<Object> {
         if (allowance.getExcludedIndicator()) {
             if (holder.tvValue != null) {
                 holder.tvValue.setVisibility(View.VISIBLE);
-                holder.tvValue.setText(this.context.getString(R.string.itin_excluded));
+                holder.tvValue.setText(this.context.getString(R.string.ta_excluded));
             }
         } else {
             if (allowance.getOvernightIndicator()) {
@@ -319,7 +319,7 @@ public class FixedTravelAllowanceListAdapter extends ArrayAdapter<Object> {
         }
         if (allowance.getOvernightIndicator()) {
             holder.tvSubtitle1.setVisibility(View.VISIBLE);
-            holder.tvSubtitle1.setText(R.string.itin_overnight);
+            holder.tvSubtitle1.setText(R.string.ta_overnight);
         } else {
             holder.tvSubtitle1.setVisibility(View.GONE);
         }

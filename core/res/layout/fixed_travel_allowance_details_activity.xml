@@ -33,7 +33,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_alignParentLeft="true"
-            android:text="@string/itin_breakfast"
+            android:text="@string/ta_breakfast"
             android:textAppearance="@style/DailyAllowanceLabel" />
 
         <TextView
@@ -63,7 +63,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_alignParentLeft="true"
-            android:text="@string/itin_lunch"
+            android:text="@string/ta_lunch"
             android:textAppearance="@style/DailyAllowanceLabel" />
 
         <TextView
@@ -93,7 +93,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_alignParentLeft="true"
-            android:text="@string/itin_dinner"
+            android:text="@string/ta_dinner"
             android:textAppearance="@style/DailyAllowanceLabel" />
 
         <TextView
@@ -124,7 +124,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_alignParentLeft="true"
-            android:text="@string/itin_lodging"
+            android:text="@string/ta_lodging"
             android:textAppearance="@style/DailyAllowanceLabel" />
 
         <TextView
@@ -149,7 +149,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_alignParentLeft="true"
-            android:text="@string/itin_overnight"
+            android:text="@string/ta_overnight"
             android:textAppearance="@style/DailyAllowanceLabel" />
 
         <TextView

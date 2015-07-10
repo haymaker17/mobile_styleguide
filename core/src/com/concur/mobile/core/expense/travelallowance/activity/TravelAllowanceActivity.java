@@ -78,7 +78,7 @@ public class TravelAllowanceActivity extends AppCompatActivity
         }
 
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-        getSupportActionBar().setTitle(R.string.itin_travel_allowances);
+        getSupportActionBar().setTitle(R.string.ta_travel_allowances);
 
         ViewPager pager = (ViewPager) findViewById(R.id.view_pager);
         viewPagerAdapter = new ViewPagerAdapter(getSupportFragmentManager(), getApplicationContext());

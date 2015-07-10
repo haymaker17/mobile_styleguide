@@ -1,5 +1,6 @@
 package com.concur.mobile.core.expense.travelallowance.controller;
 
+import com.concur.mobile.core.expense.travelallowance.datamodel.ICode;
 import com.concur.mobile.core.expense.travelallowance.datamodel.LodgingType;
 import com.concur.mobile.core.expense.travelallowance.datamodel.MealProvision;
 import com.concur.mobile.core.expense.travelallowance.util.StringUtilities;
@@ -63,8 +64,8 @@ public class FixedTravelAllowanceControlData implements Serializable {
     private List<String> attributeKeys;
     private Map<String, Boolean> controlMap;
     private Map<String, String> labels;
-    private Map<String, MealProvision> providedMealValues;
-    private Map<String, LodgingType> lodgingTypeValues;
+    private Map<String, ICode> providedMealValues;
+    private Map<String, ICode> lodgingTypeValues;
 
 
     /**
@@ -180,9 +181,9 @@ public class FixedTravelAllowanceControlData implements Serializable {
         }
     }
 
-    public Map<String, MealProvision> getProvidedMealValues() {
+    public Map<String, ICode> getProvidedMealValues() {
         if (providedMealValues == null) {
-            providedMealValues = new HashMap<String, MealProvision>();
+            providedMealValues = new HashMap<String, ICode>();
         }
         return providedMealValues;
     }
@@ -193,7 +194,7 @@ public class FixedTravelAllowanceControlData implements Serializable {
      * @param providedMealValues
      *            The list of meal values.
      */
-    public void setProvidedMealValues(Map<String, MealProvision> providedMealValues) {
+    public void setProvidedMealValues(Map<String, ICode> providedMealValues) {
         this.providedMealValues = providedMealValues;
     }
 
@@ -201,9 +202,9 @@ public class FixedTravelAllowanceControlData implements Serializable {
      *
      * @return The lodging type values.
      */
-    public Map<String, LodgingType> getLodgingTypeValues() {
+    public Map<String, ICode> getLodgingTypeValues() {
         if (lodgingTypeValues == null) {
-            lodgingTypeValues = new HashMap<String, LodgingType>();
+            lodgingTypeValues = new HashMap<String, ICode>();
         }
         return lodgingTypeValues;
     }
@@ -214,7 +215,7 @@ public class FixedTravelAllowanceControlData implements Serializable {
      * @param lodgingTypeValues
      *            The lodging type values.
      */
-    public void setLodgingTypeValues(Map<String, LodgingType> lodgingTypeValues) {
+    public void setLodgingTypeValues(Map<String, ICode> lodgingTypeValues) {
         this.lodgingTypeValues = lodgingTypeValues;
     }
 }

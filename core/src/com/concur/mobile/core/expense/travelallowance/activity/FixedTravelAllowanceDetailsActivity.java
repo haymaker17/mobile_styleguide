@@ -54,7 +54,7 @@ public class FixedTravelAllowanceDetailsActivity extends BaseActivity {
         }
 
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-        getSupportActionBar().setTitle(R.string.itin_daily_allowance);
+        getSupportActionBar().setTitle(R.string.ta_daily_allowance);
 
 
         Intent callerIntent = this.getIntent();

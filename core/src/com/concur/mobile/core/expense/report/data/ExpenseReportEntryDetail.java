@@ -30,6 +30,7 @@ import com.concur.mobile.core.expense.report.service.GetTaxFormReply;
 import com.concur.mobile.core.expense.report.service.TaxForm;
 import com.concur.mobile.core.expense.travelallowance.controller.FixedTravelAllowanceControlData;
 import com.concur.mobile.core.expense.travelallowance.datamodel.FixedTravelAllowance;
+import com.concur.mobile.core.expense.travelallowance.datamodel.ICode;
 import com.concur.mobile.core.expense.travelallowance.datamodel.MealProvision;
 import com.concur.mobile.core.util.Const;
 import com.concur.mobile.core.util.FormatUtil;
@@ -104,25 +105,25 @@ public class ExpenseReportEntryDetail extends ExpenseReportEntry {
         String dinnerLabel = app.getFixedTravelAllowanceController().getControlData()
                 .getLabel(FixedTravelAllowanceControlData.DINNER_PROVIDED_LABEL);
 
-        MealProvision breakfast = ta.getBreakfastProvision();
+        ICode breakfast = ta.getBreakfastProvision();
         if (breakfast != null) {
             ExpenseReportFormField field1 = new ExpenseReportFormField("1", breakfastLabel,
-                    breakfast.getCodeDescription(), AccessType.RO, ExpenseReportFormField.ControlType.EDIT,
+                    breakfast.getDescription(), AccessType.RO, ExpenseReportFormField.ControlType.EDIT,
                     ExpenseReportFormField.DataType.VARCHAR, true);
             travelAllowanceFields.add(field1);
         }
 
-        MealProvision lunch = ta.getLunchProvision();
+        ICode lunch = ta.getLunchProvision();
         if (lunch != null) {
-            ExpenseReportFormField field2 = new ExpenseReportFormField("2", lunchLabel, lunch.getCodeDescription(),
+            ExpenseReportFormField field2 = new ExpenseReportFormField("2", lunchLabel, lunch.getDescription(),
                     AccessType.RO, ExpenseReportFormField.ControlType.EDIT, ExpenseReportFormField.DataType.VARCHAR,
                     true);
             travelAllowanceFields.add(field2);
         }
 
-        MealProvision dinner = ta.getDinnerProvision();
+        ICode dinner = ta.getDinnerProvision();
         if (dinner != null) {
-            ExpenseReportFormField field3 = new ExpenseReportFormField("3", dinnerLabel, dinner.getCodeDescription(),
+            ExpenseReportFormField field3 = new ExpenseReportFormField("3", dinnerLabel, dinner.getDescription(),
                     AccessType.RO, ExpenseReportFormField.ControlType.EDIT, ExpenseReportFormField.DataType.VARCHAR,
                     true);
             travelAllowanceFields.add(field3);

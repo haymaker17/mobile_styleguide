@@ -66,7 +66,7 @@ public class TAExpensesActivity extends BaseActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.ta_expenses_activity);
 
-        getSupportActionBar().setTitle(R.string.itin_expenses_and_adjustments);
+        getSupportActionBar().setTitle(R.string.ta_expenses_and_adjustments);
 
         if (savedInstanceState != null) {
             Log.i(CLS_TAG, "getting rptKey from savedInstanceState...");
@@ -115,19 +115,19 @@ public class TAExpensesActivity extends BaseActivity {
 		switch (id) {
 		case DIALOG_UPDATING_EXPENSES:
 	        dialog = new ProgressDialog(this);
-	        dialog.setMessage(getText(R.string.itin_updating_fixed));
+	        dialog.setMessage(getText(R.string.ta_updating_fixed));
 	        dialog.setIndeterminate(true);
 	        dialog.setCancelable(true);
 	        return dialog;
 		case DIALOG_FETCHING_ALLOWANCES:
 	        dialog = new ProgressDialog(this);
-	        dialog.setMessage(getText(R.string.itin_fetching_allowances));
+	        dialog.setMessage(getText(R.string.ta_fetching_allowances));
 	        dialog.setIndeterminate(true);
 	        dialog.setCancelable(true);
 	        return dialog;
 		case DIALOG_UPDATING_AMOUNTS:
 	        dialog = new ProgressDialog(this);
-	        dialog.setMessage(getText(R.string.itin_updating_amounts));
+	        dialog.setMessage(getText(R.string.ta_updating_amounts));
 	        dialog.setIndeterminate(true);
 	        dialog.setCancelable(true);
 	        return dialog;
@@ -216,8 +216,8 @@ public class TAExpensesActivity extends BaseActivity {
         private boolean updating = false;
         private FixedAllowanceRow row;
         
-        String[] choicesCheckbox = new String[] { getString(R.string.itin_meal_NPR), getString(R.string.itin_meal_PRO) }; 
-        String[] choicesPicklist = new String[] { getString(R.string.itin_meal_NPR), getString(R.string.itin_meal_PRO), getString(R.string.itin_meal_TAX) };
+        String[] choicesCheckbox = new String[] { getString(R.string.ta_meal_NPR), getString(R.string.ta_meal_PRO) };
+        String[] choicesPicklist = new String[] { getString(R.string.ta_meal_NPR), getString(R.string.ta_meal_PRO), getString(R.string.ta_meal_TAX) };
         
         public FixedAllowanceRowListItem(FixedAllowanceRow row) {
             this.row = row;
