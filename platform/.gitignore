@@ -2,4 +2,4 @@
 /bin/
 /local.properties
 /*.iml
-
+/platform/coverage-error.log
