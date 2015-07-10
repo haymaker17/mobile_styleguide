@@ -49,7 +49,7 @@
         android:background="@color/white_background"
         android:divider="@color/ListDivider"
         android:dividerHeight="1dp"
-        android:padding="12dp" />
+        />
 
     <TextView
         android:id="@+id/no_rooms"
