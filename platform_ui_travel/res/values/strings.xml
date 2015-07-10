@@ -1,7 +1,7 @@
 <resources>
 
     <!-- start of general strings -->
-    <string name="general_view_rates">View Rates</string>
+    <string name="view_rates">view rates</string>
     <string name="general_no_rates">No Rates</string>
     <string name="general_not_available">Not Available</string>
     <string name="general_sold_out">Sold Out</string>

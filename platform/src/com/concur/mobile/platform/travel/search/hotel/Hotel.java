@@ -49,6 +49,7 @@ public class Hotel implements Serializable, HotelDAO {
     public String availabilityErrorCode;
     public String currencyCode;
     public boolean showNearMe;
+    public boolean isChoiceDetailsScreen;
 
     /**
      * Contains search url
