@@ -109,6 +109,7 @@ public class StopOCRRequestTaskTest extends AsyncRequestTest {
         BaseAsyncResultReceiver stopOcrReplyReceiver = new BaseAsyncResultReceiver(getHander());
         stopOcrReplyReceiver.setListener(new AsyncReplyListenerImpl());
         StopOCRRequestTask reqTask = new StopOCRRequestTask(context, 1, stopOcrReplyReceiver, receiptImageId);
+        reqTask.setRetainResponse(true);
 
         if (DEBUG) {
             ShadowLog.d(Const.LOG_TAG, CLS_TAG + ".doTest: launching the request.");

@@ -4,6 +4,8 @@
 package com.concur.mobile.platform.test;
 
 import java.io.BufferedReader;
+import java.io.ByteArrayInputStream;
+import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
@@ -162,6 +164,32 @@ public abstract class AsyncRequestTest {
     }
 
     /**
+     * Get the stream bytes
+     * @param is
+     * @return
+     * @throws IOException
+     */
+    private static byte[] getBytes(InputStream is) throws IOException {
+
+        int len;
+        int size = 1024;
+        byte[] buf;
+
+        if (is instanceof ByteArrayInputStream) {
+            size = is.available();
+            buf = new byte[size];
+            len = is.read(buf, 0, size);
+        } else {
+            ByteArrayOutputStream bos = new ByteArrayOutputStream();
+            buf = new byte[size];
+            while ((len = is.read(buf, 0, size)) != -1)
+                bos.write(buf, 0, len);
+            buf = bos.toByteArray();
+        }
+        return buf;
+    }
+
+    /**
      * Will set the mock response on <code>server</code> to the contents of <code>mockRespFile</code> located in
      * <code>assets</code>.
      * 
@@ -189,12 +217,13 @@ public abstract class AsyncRequestTest {
         }
         if (is != null) {
             try {
-                AssetFileDescriptor asfd = assetMngr.openFd(mockRespFile);
+                InputStream inp = assetMngr.open(mockRespFile);
+                byte[] text = getBytes(inp);
                 if (responseHeaders != null) {
-                    responseHeaders.put("Content-Length", Long.toString(asfd.getLength()));
+                    responseHeaders.put("Content-Length", Long.toString(text.length));
                 } else {
                     responseHeaders = new HashMap<String, String>();
-                    responseHeaders.put("Content-Length", Long.toString(asfd.getLength()));
+                    responseHeaders.put("Content-Length", Long.toString(text.length));
                 }
             } catch (IOException ioExc) {
                 Log.w(Const.LOG_TAG, CLS_TAG + ".setMockResponse: I/O exception opening an asset file descriptor for '"

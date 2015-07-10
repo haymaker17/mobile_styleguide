@@ -51,9 +51,6 @@ public abstract class BaseAsyncRequestTask extends AsyncTask<Void, Void, Integer
 
     protected static final boolean LOG_TRAFFIC = false;
 
-    // Contains whether or not a server response is retained.
-    protected static final boolean RETAIN_RESPONSE = false;
-
     protected static final String HEADER_USER_AGENT = "User-Agent";
     protected static final String HEADER_CONTENT_TYPE = "Content-Type";
     protected static final String HEADER_CONTENT_LENGTH = "Content-Length";
@@ -139,6 +136,9 @@ public abstract class BaseAsyncRequestTask extends AsyncTask<Void, Void, Integer
      */
     protected ByteArrayInputStream response;
 
+    // Contains whether or not a server response is retained.
+    protected boolean retainServerResponse = false;
+
     // -------------------------------------------------
 
     /**
@@ -164,6 +164,9 @@ public abstract class BaseAsyncRequestTask extends AsyncTask<Void, Void, Integer
         resultCode = RESULT_OK;
     }
 
+    public void setRetainResponse(boolean retainResponse) {
+        this.retainServerResponse = retainResponse;
+    }
     /**
      * Safely dereference the {@link WeakReference} for the context
      * 
@@ -617,7 +620,7 @@ public abstract class BaseAsyncRequestTask extends AsyncTask<Void, Void, Integer
      * @return returns whether the request response should be retained; defaults to <code>false</code>.
      */
     public boolean isRetainResponseEnabled() {
-        return RETAIN_RESPONSE;
+        return retainServerResponse;
     }
 
     /**

@@ -65,6 +65,7 @@ public class SmartExpenseListRequestTaskTest extends AsyncRequestTest {
         BaseAsyncResultReceiver receiptListReplyReceiver = new BaseAsyncResultReceiver(getHander());
         receiptListReplyReceiver.setListener(new AsyncReplyListenerImpl());
         SmartExpenseListRequestTask reqTask = new SmartExpenseListRequestTask(context, 1, receiptListReplyReceiver);
+        reqTask.setRetainResponse(true);
 
         if (DEBUG) {
             ShadowLog.d(Const.LOG_TAG, CLS_TAG + ".doTest: launching the request.");

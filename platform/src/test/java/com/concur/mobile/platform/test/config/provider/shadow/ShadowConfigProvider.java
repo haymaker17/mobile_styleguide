@@ -20,6 +20,7 @@ import com.concur.mobile.platform.test.Const;
  * @author andrewk
  */
 @Implements(value = ConfigProvider.class, inheritImplementationMethods = true)
+@Deprecated
 public class ShadowConfigProvider extends ShadowContentProvider {
 
     private static final String CLS_TAG = "ShadowConfigProvider";

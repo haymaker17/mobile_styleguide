@@ -84,11 +84,13 @@ public class DeleteReceiptRequestTaskTest extends AsyncRequestTest {
         case SOURCE_URI: {
             ReceiptDAO recDAO = receipts.get(0);
             reqTask = new DeleteReceiptRequestTask(context, 1, deleteReceiptReplyReceiver, recDAO.getContentUri(), null);
+            reqTask.setRetainResponse(true);
             break;
         }
         case SOURCE_RECEIPT_IMAGE_ID: {
             ReceiptDAO recDAO = receipts.get(0);
             reqTask = new DeleteReceiptRequestTask(context, 1, deleteReceiptReplyReceiver, null, recDAO.getId());
+            reqTask.setRetainResponse(true);
             break;
         }
         }

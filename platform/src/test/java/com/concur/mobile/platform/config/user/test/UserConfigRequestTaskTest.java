@@ -54,6 +54,7 @@ public class UserConfigRequestTaskTest extends AsyncRequestTest {
         BaseAsyncResultReceiver userConfigReplyReceiver = new BaseAsyncResultReceiver(getHander());
         userConfigReplyReceiver.setListener(new AsyncReplyListenerImpl());
         UserConfigRequestTask reqTask = new UserConfigRequestTask(context, 1, userConfigReplyReceiver, hash);
+        reqTask.setRetainResponse(true);
 
         if (DEBUG) {
             ShadowLog.d(Const.LOG_TAG, CLS_TAG + ".doTest: launching the request.");

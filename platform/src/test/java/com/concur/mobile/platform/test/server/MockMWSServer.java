@@ -121,7 +121,7 @@ public class MockMWSServer {
                 } else {
                     servletResponse.setContentType("text/xml");
                 }
-                if (servletResponse.getContentType().startsWith("image")) {
+                if (servletResponse.getContentType() != null && servletResponse.getContentType().startsWith("image")) {
                     if (responseStream != null) {
                         ServletOutputStream servOutStr = servletResponse.getOutputStream();
                         BufferedInputStream bufIn = null;

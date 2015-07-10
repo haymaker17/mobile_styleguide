@@ -54,7 +54,7 @@ public class SystemConfigRequestTaskTest extends AsyncRequestTest {
         BaseAsyncResultReceiver sysConfigReceiver = new BaseAsyncResultReceiver(getHander());
         sysConfigReceiver.setListener(new AsyncReplyListenerImpl());
         SystemConfigRequestTask reqTask = new SystemConfigRequestTask(context, 1, sysConfigReceiver, hash);
-
+        reqTask.setRetainResponse(true);
         if (DEBUG) {
             ShadowLog.d(Const.LOG_TAG, CLS_TAG + ".doTest: launching the request.");
         }

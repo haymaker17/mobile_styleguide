@@ -73,6 +73,7 @@ public class SaveMobileEntryRequestTaskTest extends AsyncRequestTest {
 
             SaveMobileEntryRequestTask reqTask = new SaveMobileEntryRequestTask(context, 1, saveMEReplyReceiver,
                     mobileEntryUri, false);
+            reqTask.setRetainResponse(true);
 
             if (DEBUG) {
                 ShadowLog.d(Const.LOG_TAG, CLS_TAG + ".doTest: launching the request.");

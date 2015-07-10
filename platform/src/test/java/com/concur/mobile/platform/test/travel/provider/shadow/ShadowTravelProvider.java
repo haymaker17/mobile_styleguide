@@ -20,6 +20,7 @@ import com.concur.mobile.platform.travel.provider.TravelProvider;
  * @author andrewk
  */
 @Implements(value = TravelProvider.class, inheritImplementationMethods = true)
+@Deprecated
 public class ShadowTravelProvider extends ShadowContentProvider {
 
     private static final String CLS_TAG = "ShadowTravelProvider";

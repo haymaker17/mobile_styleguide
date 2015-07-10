@@ -13,6 +13,7 @@ import org.simpleframework.xml.core.Persister;
 
 import android.content.Context;
 import android.text.TextUtils;
+import android.util.Log;
 
 import com.concur.mobile.base.service.BaseAsyncRequestTask;
 import com.concur.mobile.base.service.BaseAsyncResultReceiver;
@@ -78,6 +79,7 @@ public class PPLoginRequestTaskTest extends AsyncRequestTest {
         Locale locale = context.getResources().getConfiguration().locale;
         PPLoginRequestTask reqTask = new PPLoginRequestTask(context, loginReplyReceiver, 1, locale, ppLoginId,
                 ppLoginPinPassword);
+        reqTask.setRetainResponse(true);
 
         if (DEBUG) {
             ShadowLog.d(Const.LOG_TAG, CLS_TAG + ".doTest: launching the request.");

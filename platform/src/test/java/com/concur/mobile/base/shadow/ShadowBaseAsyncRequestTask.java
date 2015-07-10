@@ -19,6 +19,7 @@ import com.concur.mobile.platform.test.Const;
  * @author andrewk
  */
 @Implements(value = BaseAsyncRequestTask.class, inheritImplementationMethods = true)
+@Deprecated
 public class ShadowBaseAsyncRequestTask extends ShadowAsyncTask<Void, Void, Integer> {
 
     private static final String CLS_TAG = "ShadowBaseAsyncRequestTask";

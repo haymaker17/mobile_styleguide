@@ -95,6 +95,7 @@ public class SaveReceiptRequestTaskTest extends AsyncRequestTest {
             ByteArrayOutputStream outStr = IOUtils.reusableOutputStream(is);
             reqTask = new SaveReceiptRequestTask(context, 1, saveReceiptReplyReceiver, null, outStr.toByteArray(),
                     "image/jpeg", uploadListener);
+            reqTask.setRetainResponse(true);
             break;
         }
         case SOURCE_INPUT_STREAM: {
@@ -103,6 +104,7 @@ public class SaveReceiptRequestTaskTest extends AsyncRequestTest {
             long contentLength = outStrBytes.length;
             reqTask = new SaveReceiptRequestTask(context, 1, saveReceiptReplyReceiver, null, new ByteArrayInputStream(
                     outStrBytes), contentLength, "image/jpeg", uploadListener);
+            reqTask.setRetainResponse(true);
             break;
         }
         case SOURCE_URI: {
@@ -115,6 +117,7 @@ public class SaveReceiptRequestTaskTest extends AsyncRequestTest {
             Assert.assertTrue("unable to write receipt data to receipt!", writeReceiptData(context, recDAO, is));
             reqTask = new SaveReceiptRequestTask(context, 1, saveReceiptReplyReceiver, recDAO.getContentUri(),
                     uploadListener);
+            reqTask.setRetainResponse(true);
             break;
         }
         }

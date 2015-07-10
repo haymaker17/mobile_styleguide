@@ -64,6 +64,7 @@ public class ReceiptListRequestTaskTest extends AsyncRequestTest {
         BaseAsyncResultReceiver receiptListReplyReceiver = new BaseAsyncResultReceiver(getHander());
         receiptListReplyReceiver.setListener(new AsyncReplyListenerImpl());
         ReceiptListRequestTask reqTask = new ReceiptListRequestTask(context, 1, receiptListReplyReceiver);
+        reqTask.setRetainResponse(true);
 
         if (DEBUG) {
             ShadowLog.d(Const.LOG_TAG, CLS_TAG + ".doTest: launching the request.");
