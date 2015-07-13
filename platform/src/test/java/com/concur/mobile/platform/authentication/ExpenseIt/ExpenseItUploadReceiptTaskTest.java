@@ -146,8 +146,7 @@ public class ExpenseItUploadReceiptTaskTest extends AsyncRequestTest {
                     Assert.assertNotNull("request response is null", response);
 
                     // Build the parser with type deserializers.
-                    GsonBuilder builder = new GsonBuilder();
-                    Gson gson = builder.create();
+                    Gson gson = new GsonBuilder().setDateFormat("yyyy-MM-dd HH:mm:ss").create();
 
                     ExpenseItPostReceiptResponse receiptResponse = gson.fromJson(response, ExpenseItPostReceiptResponse.class);
                     VerifyExpenseItUploadReceiptResult verifier = new VerifyExpenseItUploadReceiptResult();
@@ -175,24 +174,7 @@ public class ExpenseItUploadReceiptTaskTest extends AsyncRequestTest {
 
         //Setup the image information
         ExpenseItImage image = new ExpenseItImage();
-        String contentType = null;
-        if (filePath != null) {
-            File receiptFile = new File(filePath);
-            try {
-                if (receiptFile.exists()) {
-                    contentType = "image/png";
-                } else {
-                    Log.e(Const.LOG_TAG, CLS_TAG + ".uploadReceiptToExpenseIt: receipt image file '" + filePath
-                        + "' does not exist!");
-                    throw new IllegalArgumentException("Receipt image file '" + filePath + "' does not exist!");
-                }
-            } catch (SecurityException secExc) {
-                Log.e(Const.LOG_TAG, CLS_TAG + ".uploadReceiptToExpenseIt: can't access receipt file '" + filePath + ".", secExc);
-                throw new IllegalArgumentException("Receipt image file '" + filePath + "' is not accessible.");
-            }
-        } else {
-            Log.e(Const.LOG_TAG, CLS_TAG + ".uploadReceiptToExpenseIt: receipt image file is null!");
-        }
+        String contentType = contentType = "image/png";
 
         //Compress the bitmap
         image.setData(outStr.toByteArray(), contentType);

@@ -41,12 +41,6 @@ public class VerifyExpenseItUploadReceiptResult {
             throw new Exception(CLS_TAG + "." + MTAG + ": LoginResult info is null!");
         }
 
-        // Verify User Information.
-        SessionInfo sessionInfo = ConfigUtil.getExpenseItSessionInfo(context);
-        if (sessionInfo == null) {
-            throw new Exception(CLS_TAG + "." + MTAG + ": user info is null!");
-        }
-
         Assert.assertNotNull(MTAG + ": Response return null", receiptResponse.getExpenses());
 
         if (receiptResponse.getExpenses() == null) {

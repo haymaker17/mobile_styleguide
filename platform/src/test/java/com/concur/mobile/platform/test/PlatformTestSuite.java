@@ -9,6 +9,7 @@ import android.util.Pair;
 
 import com.concur.mobile.core.expenseIt.ExpenseItServerUtil;
 import com.concur.mobile.platform.authentication.ExpenseIt.ExpenseItLoginRequestTaskTest;
+import com.concur.mobile.platform.authentication.ExpenseIt.ExpenseItUploadReceiptTaskTest;
 import com.concur.mobile.platform.authentication.SessionInfo;
 import com.concur.mobile.platform.authentication.system.config.test.SystemConfigRequestTaskTest;
 import com.concur.mobile.platform.authentication.test.AutoLoginRequestTaskTest;
@@ -754,7 +755,7 @@ public class PlatformTestSuite {
     public void doUploadImageToExpenseIt() throws Exception {
 
         // Init and perform a PP login.
-        ExpenseItLoginRequestTaskTest test = new ExpenseItLoginRequestTaskTest();
+        ExpenseItUploadReceiptTaskTest test = new ExpenseItUploadReceiptTaskTest();
 
         // Set login credentials.
         String loginId;
