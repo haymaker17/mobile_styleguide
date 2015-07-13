@@ -3,6 +3,26 @@
  */
 package com.concur.mobile.platform.test;
 
+import android.content.Context;
+import android.content.res.AssetManager;
+import android.os.Bundle;
+import android.os.Handler;
+import android.os.HandlerThread;
+import android.text.TextUtils;
+import android.util.Log;
+
+import com.concur.mobile.base.service.BaseAsyncRequestTask;
+import com.concur.mobile.base.service.BaseAsyncRequestTask.AsyncReplyListener;
+import com.concur.mobile.platform.service.ExpenseItAsyncRequestTask;
+import com.concur.mobile.platform.service.PlatformAsyncRequestTask;
+import com.concur.mobile.platform.test.server.MockServer;
+
+import junit.framework.AssertionFailedError;
+
+import org.apache.commons.io.IOUtils;
+import org.junit.Assert;
+import org.robolectric.shadows.ShadowLog;
+
 import java.io.BufferedReader;
 import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
@@ -14,26 +34,6 @@ import java.nio.charset.UnsupportedCharsetException;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.concurrent.CountDownLatch;
-
-import junit.framework.AssertionFailedError;
-
-import org.apache.commons.io.IOUtils;
-import org.junit.Assert;
-import org.robolectric.shadows.ShadowLog;
-
-import android.content.Context;
-import android.content.res.AssetFileDescriptor;
-import android.content.res.AssetManager;
-import android.os.Bundle;
-import android.os.Handler;
-import android.os.HandlerThread;
-import android.text.TextUtils;
-import android.util.Log;
-
-import com.concur.mobile.base.service.BaseAsyncRequestTask;
-import com.concur.mobile.base.service.BaseAsyncRequestTask.AsyncReplyListener;
-import com.concur.mobile.platform.service.PlatformAsyncRequestTask;
-import com.concur.mobile.platform.test.server.MockMWSServer;
 
 /**
  * Provides an abstract class that can be extended to execute and wait for the response from an async request task.
@@ -60,12 +60,38 @@ public abstract class AsyncRequestTest {
     /**
      * Contains a reference to a mock MWS server.
      */
-    protected MockMWSServer mockServer;
+    protected MockServer mockServer;
 
     /**
      * Contains the expected result code based on the design of the test. Defaults to <code>BaseAsyncRequestTask.RESULT_OK</code>.
      */
     protected int expectedResultCode = BaseAsyncRequestTask.RESULT_OK;
+
+    /**
+     * Get the stream bytes
+     * @param is
+     * @return
+     * @throws IOException
+     */
+    private static byte[] getBytes(InputStream is) throws IOException {
+
+        int len;
+        int size = 1024;
+        byte[] buf;
+
+        if (is instanceof ByteArrayInputStream) {
+            size = is.available();
+            buf = new byte[size];
+            len = is.read(buf, 0, size);
+        } else {
+            ByteArrayOutputStream bos = new ByteArrayOutputStream();
+            buf = new byte[size];
+            while ((len = is.read(buf, 0, size)) != -1)
+                bos.write(buf, 0, len);
+            buf = bos.toByteArray();
+        }
+        return buf;
+    }
 
     /**
      * Sets the expected result code for the test. <br>
@@ -127,6 +153,29 @@ public abstract class AsyncRequestTest {
     }
 
     /**
+     * Gets the response from the server.
+     *
+     * @return returns the response from the server.
+     */
+    public String getResponseString(ExpenseItAsyncRequestTask reqTask) {
+        String response = null;
+
+        InputStream ins = reqTask.getResponse();
+        if (ins != null) {
+            try {
+                response = IOUtils.toString(reqTask.getResponse(), "UTF-8");
+            } catch (UnsupportedEncodingException unsEncExc) {
+                Log.e(Const.LOG_TAG, CLS_TAG + ".getResponseString: " + unsEncExc);
+            } catch (IOException ioExc) {
+                Log.e(Const.LOG_TAG, CLS_TAG + ".getResponseString: " + ioExc);
+            } catch (UnsupportedCharsetException unsCharSetExc) {
+                Log.e(Const.LOG_TAG, CLS_TAG + ".getResponseString: " + unsCharSetExc);
+            }
+        }
+        return response;
+    }
+
+    /**
      * Will verify the value of <code>expectedResultCode</code> with a value stored in <code>result.resultCode</code>. <br>
      */
     protected void verifyExpectedResultCode(String message) {
@@ -134,18 +183,18 @@ public abstract class AsyncRequestTest {
         Assert.assertEquals(CLS_TAG + ".verifyExpectedResult: " + message, expectedResultCode, result.resultCode);
     }
 
+    public MockServer getMockServer() {
+        return mockServer;
+    }
+
     /**
-     * Sets the instance of <code>MockMWSServer</code> associated with this test.
+     * Sets the instance of <code>MockServer</code> associated with this test.
      * 
      * @param mockServer
      *            contains a reference
      */
-    public void setMockServer(MockMWSServer mockServer) {
+    public void setMockServer(MockServer mockServer) {
         this.mockServer = mockServer;
-    }
-
-    public MockMWSServer getMockServer() {
-        return mockServer;
     }
 
     /**
@@ -159,34 +208,8 @@ public abstract class AsyncRequestTest {
      * @param mockRespFile
      *            contains the file path relative to the <code>assets</code> application path of the response data.
      */
-    public void setMockResponse(MockMWSServer server, int httpStatusCode, String mockRespFile) throws Exception {
+    public void setMockResponse(MockServer server, int httpStatusCode, String mockRespFile) throws Exception {
         setMockResponse(server, httpStatusCode, mockRespFile, null);
-    }
-
-    /**
-     * Get the stream bytes
-     * @param is
-     * @return
-     * @throws IOException
-     */
-    private static byte[] getBytes(InputStream is) throws IOException {
-
-        int len;
-        int size = 1024;
-        byte[] buf;
-
-        if (is instanceof ByteArrayInputStream) {
-            size = is.available();
-            buf = new byte[size];
-            len = is.read(buf, 0, size);
-        } else {
-            ByteArrayOutputStream bos = new ByteArrayOutputStream();
-            buf = new byte[size];
-            while ((len = is.read(buf, 0, size)) != -1)
-                bos.write(buf, 0, len);
-            buf = bos.toByteArray();
-        }
-        return buf;
     }
 
     /**
@@ -202,7 +225,7 @@ public abstract class AsyncRequestTest {
      * @param headers
      *            contains the response headers.
      */
-    public void setMockResponse(MockMWSServer server, int httpStatusCode, String mockRespFile,
+    public void setMockResponse(MockServer server, int httpStatusCode, String mockRespFile,
             Map<String, String> responseHeaders) throws Exception {
 
         // Set the mock response HTTP status code.
