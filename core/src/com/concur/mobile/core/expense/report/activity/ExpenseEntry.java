@@ -1843,8 +1843,9 @@ public class ExpenseEntry extends AbstractExpenseActivity {
         ViewGroup viewGroup = (ViewGroup) findViewById(R.id.travel_allowance_field_list);
 
         if (viewGroup != null) {
-            if (expRepEntDet.expKey.equals("FXMLS")) {
-                List<FormFieldView> frmFldViews = populateAllowancesDetailViewGroup(viewGroup, getExpRepEntDet());
+            if (expRepEntDet.expKey.equals("FXMLS") || expRepEntDet.expKey.equals("FXLDG")) {
+                List<FormFieldView> frmFldViews = populateAllowancesDetailViewGroup(viewGroup, getExpRepEntDet(),
+                        expRepEntDet.expKey);
                 if (frmFldViews != null && frmFldViews.size() > 0) {
                     if (frmFldViewListener != null) {
                         frmFldViewListener.setFormFieldViews(frmFldViews);

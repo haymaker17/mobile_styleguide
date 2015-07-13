@@ -93,8 +93,7 @@ public class GetTAFixedAllowancesRequest2 extends CoreAsyncRequestTask {
         parser.setControlData(controlData);
         try {
             parserStartMillis = System.currentTimeMillis();
-            DocumentBuilderFactory factory = DocumentBuilderFactory.newInstance();
-            DocumentBuilder builder = factory.newDocumentBuilder();
+            DocumentBuilder builder = DocumentBuilderFactory.newInstance().newDocumentBuilder();
             Document dom = builder.parse(is);
             parser.parse(dom);
         } catch (ParserConfigurationException e) {

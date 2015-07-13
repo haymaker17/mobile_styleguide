@@ -360,4 +360,13 @@ public class FixedTravelAllowanceController {
         return controlData;
     }
 
+    public boolean showOvernightOnDailyAllowanceMeals() {
+        if (controlData.getControlValue(FixedTravelAllowanceControlData.SHOW_OVERNIGHT_CHECKBOX)
+                && !controlData.getControlValue(FixedTravelAllowanceControlData.SHOW_LODGING_TYPE_PICKLIST)) {
+            return true;
+        } else {
+            return false;
+        }
+    }
+
 }
