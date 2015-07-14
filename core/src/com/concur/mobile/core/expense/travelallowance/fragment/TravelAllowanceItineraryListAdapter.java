@@ -7,6 +7,7 @@ import java.util.List;
 import com.concur.core.R;
 import com.concur.mobile.core.expense.travelallowance.ui.model.CompactItinerary;
 import com.concur.mobile.core.expense.travelallowance.ui.model.CompactItinerarySegment;
+import com.concur.mobile.core.expense.travelallowance.util.StringUtilities;
 
 import android.content.Context;
 import android.text.format.DateUtils;
@@ -283,6 +284,9 @@ public class TravelAllowanceItineraryListAdapter extends ArrayAdapter<Object> {
 
 
     private String formatDate(Date date, boolean withYear) {
+		if (date == null) {
+			return StringUtilities.EMPTY_STRING;
+		}
         if (withYear) {
             return DateUtils.formatDateTime(ctx, date.getTime(), DateUtils.FORMAT_SHOW_DATE
                     | DateUtils.FORMAT_ABBREV_MONTH | DateUtils.FORMAT_SHOW_YEAR| DateUtils.FORMAT_SHOW_TIME);
