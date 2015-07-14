@@ -6,7 +6,7 @@ import java.util.Date;
 /**
  * Created by D049515 on 23.06.2015.
  */
-public class ItinerarySegment implements Serializable, IDatePeriod {
+public class ItinerarySegment implements Serializable, IDatePeriod, ISynchronizationStatus {
 
 
     private static final long serialVersionUID = -5416179865430781088L;
@@ -17,6 +17,11 @@ public class ItinerarySegment implements Serializable, IDatePeriod {
     private ItineraryLocation arrivalLocation;
     private Date arrivalDateTime;
     private Date borderCrossDateTime;
+
+    /**
+     * The synchronization status of this {@code ItinerarySegment}
+     */
+    private SynchronizationStatusEnum syncStatus;
 
 
     public String getId() {
@@ -81,5 +86,21 @@ public class ItinerarySegment implements Serializable, IDatePeriod {
     @Override
     public Date getEndDate() {
         return this.arrivalDateTime;
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public SynchronizationStatusEnum getStatus() {
+        return this.syncStatus;
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public void setStatus(SynchronizationStatusEnum status) {
+        this.syncStatus = status;
     }
 }
