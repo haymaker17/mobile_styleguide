@@ -14,6 +14,7 @@ import android.view.View;
 import android.widget.EditText;
 import android.widget.ListView;
 import android.widget.TimePicker;
+import android.widget.Toast;
 
 import com.concur.core.R;
 import com.concur.mobile.core.ConcurCore;
@@ -269,7 +270,12 @@ public class ItineraryUpdateActivity extends BaseActivity {
             return true;
         }
         if (item.getItemId() == R.id.menuSave) {
-            updateController.executeSave(this.expenseReportKey);
+            if (!updateController.hasInternalDateInconsistency()) {
+                updateController.executeSave(this.expenseReportKey);
+            } else {
+                Toast.makeText(getApplicationContext(), "@Dates of this itinerary are not consistent@",
+                        Toast.LENGTH_LONG).show();
+            }
             return true;
         }
         return super.onOptionsItemSelected(item);

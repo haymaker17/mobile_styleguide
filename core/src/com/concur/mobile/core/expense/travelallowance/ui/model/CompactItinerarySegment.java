@@ -1,5 +1,6 @@
 package com.concur.mobile.core.expense.travelallowance.ui.model;
 
+import com.concur.mobile.core.expense.travelallowance.datamodel.IDatePeriod;
 import com.concur.mobile.core.expense.travelallowance.datamodel.ItineraryLocation;
 
 import java.io.Serializable;
@@ -8,7 +9,7 @@ import java.util.Date;
 /**
  * Created by D049515 on 26.06.2015.
  */
-public class CompactItinerarySegment implements Serializable {
+public class CompactItinerarySegment implements Serializable, IDatePeriod {
 
 
     private static final long serialVersionUID = 4838630230258758378L;
@@ -73,5 +74,19 @@ public class CompactItinerarySegment implements Serializable {
         this.displayBorderCrossing = displayBorderCrossing;
     }
 
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public Date getStartDate() {
+        return departureDateTime;
+    }
 
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public Date getEndDate() {
+        return arrivalDateTime;
+    }
 }

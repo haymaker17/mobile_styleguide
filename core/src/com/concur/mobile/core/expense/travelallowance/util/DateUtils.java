@@ -2,10 +2,14 @@ package com.concur.mobile.core.expense.travelallowance.util;
 
 import android.content.Context;
 
+import com.concur.mobile.core.expense.travelallowance.datamodel.IDatePeriod;
+
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
+import java.util.Collection;
 import java.util.Comparator;
 import java.util.Date;
+import java.util.List;
 import java.util.Locale;
 
 /**
@@ -368,6 +372,74 @@ public final class DateUtils {
         Comparator<Date> dateComparator = getDateComparator(ignoreTime);
         return dateComparator.compare(firstPeriodStart, secondPeriodEnd) <= 0
                 && dateComparator.compare(firstPeriodEnd, secondPeriodStart) >= 0;
+    }
+
+    /**
+     * Expects a sorted collection of objects implementing interface {@link IDatePeriod} and checks,
+     * whether the dates are either in ascending or descending order, depending on input parameter
+     * {@code ascending}. In order to check the method makes use of {@link #dateComp}.
+     * There is a minimum number of valid dates per period expected, which can be specified with
+     * parameter {@code minValidDatesPerPeriod}. For example: minValidDatesPerPeriod equals 2, hence
+     * start and end date both are expected to be valid and not null.
+     *
+     * @param ignoreTime             {@code true} to ignore the time part; {@code false} to consider it.
+     * @param ascending              If true, the dates must be in ascending order across the complete
+     *                               collection
+     * @param minValidDatesPerPeriod The minimum number expected valid dates per list element.
+     *                               Possible values are from 0 to 2.
+     * @param periods                The collection  of periods to be checked
+     * @return true, if the dates are in a subsequent order. Otherwise false. Also false, if the
+     * input parameters are invalid (e.g. collection of periods is null)
+     */
+    public static boolean hasSubsequentDates(final boolean ignoreTime, final boolean ascending,
+                                             final int minValidDatesPerPeriod,
+                                             final Collection<? extends IDatePeriod> periods) {
+
+        if (periods == null || periods.size() == 0 || minValidDatesPerPeriod > 2 || minValidDatesPerPeriod < 0) {
+            return false;
+        }
+
+        Comparator<Date> dateComparator = getDateComparator(ignoreTime);
+        Date cmpDate = null;
+
+        for (IDatePeriod period : periods) {
+
+            int numberValid = 0;
+            Date start = period.getStartDate();
+            Date end = period.getEndDate();
+
+            if (start != null) {
+                if (cmpDate != null) {
+                    if (ascending) {
+                        if (dateComparator.compare(cmpDate, start) >= 0) {
+                            return false;
+                        }
+                    } else if (dateComparator.compare(start, cmpDate) >= 0) {
+                        return false;
+                    }
+                }
+                cmpDate = start;
+                numberValid++;
+            }
+            if (end != null) {
+                if (cmpDate != null) {
+                    if (ascending) {
+                        if (dateComparator.compare(cmpDate, end) >= 0) {
+                            return false;
+                        }
+                    } else if (dateComparator.compare(end, cmpDate) >= 0) {
+                        return false;
+                    }
+                }
+                cmpDate = end;
+                numberValid++;
+            }
+            if (numberValid < minValidDatesPerPeriod) {
+                return false;
+            }
+
+        }
+        return true;
     }
 
     /**
