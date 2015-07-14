@@ -1,8 +1,13 @@
-apply plugin: 'android-library'
+apply plugin: 'com.android.library'
 
 dependencies {
     compile fileTree(dir: 'libs', include: '*.jar')
     compile project(':base')
+    testCompile 'org.robolectric:robolectric:3.+'
+    testCompile 'junit:junit:4.+'
+    testCompile files('libs/simple-xml-2.7.1.jar')
+    testCompile files('libs/jetty.jar')
+    testCompile files('libs/commons.io_2.0.1.jar')
 }
 
 android {
@@ -54,7 +59,6 @@ android {
     //Please comment out following block before merge back to 'dev' branch.
     /*##############   #####################     ##########################     ###################*/
 
-
 //    productFlavors {
 //        production{
 //
@@ -68,7 +72,6 @@ android {
 //            resValue "string", "sync_adapter_acc_type", prefix+".platform.common.account"
 //        }
 //    }
-
 
     /*##############   #####################     ##########################     ###################*/
 }
