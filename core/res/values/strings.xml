@@ -1771,7 +1771,7 @@
     <string name="dlg_no_current_location">Current location could not be determined. Please select desired location.</string>
     <string name="hotel_search_near_me">Hotels near me</string>
     <string name="hotel_search_near_me_sub_text">Find a hotel for tonight</string>
-    <string name="custom_fields_not_found">Could not retrieve custom fields."</string>
+    <string name="custom_fields_not_found">Could not retrieve custom fields.</string>
     <!-- end of book hotel for now -->
 
 

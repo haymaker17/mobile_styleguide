@@ -14,7 +14,7 @@ buildscript {
     }
 }
 
-ext.latestSdkVersion = 22
+ext.latestSdkVersion = 21
 ext.lowestSdkSupportVersion = 16
 
 allprojects {
@@ -35,7 +35,10 @@ subprojects {
 
                     main {
                         manifest.srcFile 'AndroidManifest.xml'
-                        java.srcDirs = ['src']
+                        java {
+                            srcDirs 'src'
+                            exclude 'test/**'
+                        }
                         resources.srcDirs = ['src']
                         aidl.srcDirs = ['src']
                         renderscript.srcDirs = ['src']
