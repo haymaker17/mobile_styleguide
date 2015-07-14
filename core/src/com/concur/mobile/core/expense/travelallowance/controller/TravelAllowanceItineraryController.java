@@ -132,6 +132,8 @@ public class TravelAllowanceItineraryController {
         for (Itinerary itinerary : getItineraryList()) {
             CompactItinerary compactItinerary = new CompactItinerary();
             compactItinerary.setName(itinerary.getName());
+            compactItinerary.setItineraryID(itinerary.getItineraryID());
+            compactItinerary.setExpenseReportID(itinerary.getExpenseReportID());
 
             int position = 0;
             for (ItinerarySegment segment : itinerary.getSegmentList()) {
@@ -158,8 +160,8 @@ public class TravelAllowanceItineraryController {
                         // Create a closed compact segment
                         CompactItinerarySegment compactSegment = new CompactItinerarySegment();
                         compactSegment.setLocation(segment.getArrivalLocation());
-                        compactSegment.setDepartureDateTime(segment.getArrivalDateTime());
-                        compactSegment.setArrivalDateTime(nextSegment.getDepartureDateTime());
+                        compactSegment.setDepartureDateTime(nextSegment.getDepartureDateTime());
+                        compactSegment.setArrivalDateTime(segment.getArrivalDateTime());
                         compactSegment.setBorderCrossingDateTime(nextSegment.getBorderCrossDateTime());
                         compactSegment.setIsSegmentOpen(false);
                         compactItinerary.getSegmentList().add(compactSegment);
@@ -167,7 +169,7 @@ public class TravelAllowanceItineraryController {
                         // Create two open compact segments
                         CompactItinerarySegment compactSegmentA = new CompactItinerarySegment();
                         compactSegmentA.setLocation(segment.getArrivalLocation());
-                        compactSegmentA.setDepartureDateTime(segment.getArrivalDateTime());
+                        compactSegmentA.setArrivalDateTime(segment.getArrivalDateTime());
                         compactSegmentA.setIsSegmentOpen(true);
                         compactItinerary.getSegmentList().add(compactSegmentA);
 
@@ -183,7 +185,7 @@ public class TravelAllowanceItineraryController {
                 if (nextSegment == null) {
                     // Last segment
                     CompactItinerarySegment lastCompactSegment = new CompactItinerarySegment();
-                    lastCompactSegment.setDepartureDateTime(segment.getArrivalDateTime());
+                    lastCompactSegment.setArrivalDateTime(segment.getArrivalDateTime());
                     lastCompactSegment.setLocation(segment.getArrivalLocation());
                     lastCompactSegment.setIsSegmentOpen(true);
                     compactItinerary.getSegmentList().add(lastCompactSegment);

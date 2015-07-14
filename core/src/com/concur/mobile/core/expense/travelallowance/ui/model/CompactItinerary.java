@@ -14,6 +14,9 @@ public class CompactItinerary implements Serializable {
 
     private String name;
     private List<CompactItinerarySegment> segmentList;
+    private String itineraryID;
+    private String expenseReportID;
+
 
     public String getName() {
         return name;
@@ -34,5 +37,19 @@ public class CompactItinerary implements Serializable {
         this.segmentList = segmentList;
     }
 
+    public String getItineraryID() {
+        return itineraryID;
+    }
 
+    public void setItineraryID(String itineraryID) {
+        this.itineraryID = itineraryID;
+    }
+
+    public String getExpenseReportID() {
+        return expenseReportID;
+    }
+
+    public void setExpenseReportID(String expenseReportID) {
+        this.expenseReportID = expenseReportID;
+    }
 }

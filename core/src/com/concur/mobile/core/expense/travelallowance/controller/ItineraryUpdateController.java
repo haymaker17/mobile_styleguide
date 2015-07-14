@@ -126,6 +126,7 @@ public class ItineraryUpdateController {
 
         itinerary.setName(compactItinerary.getName());
         itinerary.setExpenseReportID(repId);
+        itinerary.setItineraryID(compactItinerary.getItineraryID());
 
         //List<CompactItinerarySegment> segmentList = compactItinerary.getSegmentList();
 
@@ -151,7 +152,7 @@ public class ItineraryUpdateController {
                         currentItinSegement.setArrivalDateTime(nextCompactSegment.getArrivalDateTime());
                     } else {
                         currentItinSegement.setArrivalLocation(nextCompactSegment.getLocation());
-                        currentItinSegement.setArrivalDateTime(nextCompactSegment.getDepartureDateTime());
+                        currentItinSegement.setArrivalDateTime(nextCompactSegment.getArrivalDateTime());
                     }
 
                     itinerary.getSegmentList().add(currentItinSegement);

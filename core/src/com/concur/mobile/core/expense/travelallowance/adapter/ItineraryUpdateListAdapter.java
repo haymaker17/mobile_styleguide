@@ -300,6 +300,8 @@ public class ItineraryUpdateListAdapter extends ArrayAdapter<Object> {
                                     | DateUtils.FORMAT_SHOW_YEAR
                                     | DateUtils.FORMAT_ABBREV_WEEKDAY | DateUtils.FORMAT_ABBREV_MONTH);
             }
+        }else {
+            holder.tvArrivalTimeValue.setText(StringUtilities.EMPTY_STRING);
         }
 
         if (segment.getDepartureDateTime() != null) {
@@ -320,6 +322,8 @@ public class ItineraryUpdateListAdapter extends ArrayAdapter<Object> {
             } else {
                 periodDateStr = departureDateStr;
             }
+        }else {
+            holder.tvDepartureTimeValue.setText(StringUtilities.EMPTY_STRING);
         }
 
         if (!StringUtilities.isNullOrEmpty(periodDateStr)) {
