@@ -46,7 +46,6 @@ import com.concur.mobile.platform.expense.receipt.list.ReceiptListRequestTask;
 import com.concur.mobile.platform.expense.smartexpense.SmartExpenseListRequestTask;
 import com.concur.mobile.platform.expenseit.ErrorResponse;
 import com.concur.mobile.platform.expenseit.ExpenseItImage;
-import com.concur.mobile.platform.expenseit.ExpenseItPostReceipt;
 import com.concur.mobile.platform.expenseit.ExpenseItPostReceiptResponse;
 import com.concur.mobile.platform.expenseit.PostExpenseItReceiptAsyncTask;
 import com.concur.mobile.platform.ui.common.util.PreferenceUtil;
