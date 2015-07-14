@@ -3,17 +3,6 @@
  */
 package com.concur.mobile.core.expense.fragment;
 
-import java.util.ArrayList;
-import java.util.Calendar;
-import java.util.Collections;
-import java.util.HashMap;
-import java.util.HashSet;
-import java.util.Iterator;
-import java.util.List;
-import java.util.Map;
-
-import org.apache.http.HttpStatus;
-
 import android.app.Activity;
 import android.content.BroadcastReceiver;
 import android.content.Context;
@@ -51,6 +40,7 @@ import com.concur.mobile.core.dialog.SystemUnavailableDialogFragment;
 import com.concur.mobile.core.expense.charge.activity.CashExpenseListItem;
 import com.concur.mobile.core.expense.charge.activity.CorporateCardExpenseListItem;
 import com.concur.mobile.core.expense.charge.activity.EReceiptListItem;
+import com.concur.mobile.core.expense.charge.activity.ExpenseItListItem;
 import com.concur.mobile.core.expense.charge.activity.ExpenseListItem;
 import com.concur.mobile.core.expense.charge.activity.OcrListItem;
 import com.concur.mobile.core.expense.charge.activity.PersonalCardExpenseListItem;
@@ -95,9 +85,25 @@ import com.concur.mobile.core.view.ListItem;
 import com.concur.mobile.core.view.ListItemAdapter;
 import com.concur.mobile.platform.expense.receipt.list.ReceiptListUtil;
 import com.concur.mobile.platform.expense.receipt.list.dao.ReceiptDAO;
+import com.concur.mobile.platform.expenseit.ExpenseItParseCode;
+import com.concur.mobile.platform.expenseit.ExpenseItPostReceipt;
 import com.concur.mobile.platform.ocr.OcrStatusEnum;
 import com.concur.mobile.platform.ui.common.dialog.NoConnectivityDialogFragment;
 import com.concur.mobile.platform.ui.common.util.PreferenceUtil;
+
+import org.apache.http.HttpStatus;
+
+import java.text.SimpleDateFormat;
+import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.Collections;
+import java.util.Date;
+import java.util.HashMap;
+import java.util.HashSet;
+import java.util.Iterator;
+import java.util.List;
+import java.util.Locale;
+import java.util.Map;
 
 /**
  * An extension of <code>ConcurView</code> used to render a combined list of cash and card expenses.
@@ -2735,6 +2741,23 @@ public class Expenses extends BaseFragment implements INetworkActivityListener {
                         listItems.add(new HeaderListItem(header, HEADER_VIEW_TYPE));
                     }
                     listItems.add(listItem);
+                    break;
+                }
+                case EXPENSEIT_NOT_DONE: {
+
+                    ExpenseItListItem listItem = new ExpenseItListItem(expense, EXPENSE_VIEW_TYPE);
+
+                    Calendar transDate = listItem.getTransactionDate();
+                    if ((transDate != null)
+                            && (curYear == -1 || curYear != transDate.get(Calendar.YEAR) || curMonth != transDate
+                            .get(Calendar.MONTH))) {
+                        curYear = transDate.get(Calendar.YEAR);
+                        curMonth = transDate.get(Calendar.MONTH);
+                        String header = FormatUtil.SHORT_MONTH_FULL_YEAR_DISPLAY.format(transDate.getTime());
+                        listItems.add(new HeaderListItem(header, HEADER_VIEW_TYPE));
+                    }
+                    listItems.add(listItem);
+                    break;
                 }
 
                 }

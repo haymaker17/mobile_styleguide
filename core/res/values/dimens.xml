@@ -28,6 +28,9 @@
     <dimen name="universal_layout_margin_bottom">22dp</dimen>
     <dimen name="universal_layout_margin_top">22dp</dimen>
 
+    <!-- Expense-It Specific Spacing -->
+    <dimen name="status_icon_rotating_wheel_size">20dp</dimen>
+
     <!-- Test Drive Overlay Dimens -->
     <dimen name="td_dummy_action_bar_height">48dp</dimen>
     <dimen name="td_dummy_ab_icon_arrow_margin">38dp</dimen>
