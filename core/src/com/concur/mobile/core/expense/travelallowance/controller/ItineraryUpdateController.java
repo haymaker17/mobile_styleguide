@@ -8,8 +8,6 @@ import android.widget.Toast;
 import com.concur.mobile.base.service.BaseAsyncRequestTask;
 import com.concur.mobile.base.service.BaseAsyncResultReceiver;
 import com.concur.mobile.core.ConcurCore;
-import com.concur.mobile.core.expense.travelallowance.AsyncReplyAdapter;
-import com.concur.mobile.core.expense.travelallowance.datamodel.IDatePeriod;
 import com.concur.mobile.core.expense.travelallowance.datamodel.Itinerary;
 import com.concur.mobile.core.expense.travelallowance.datamodel.ItinerarySegment;
 import com.concur.mobile.core.expense.travelallowance.service.SaveItineraryRequest;
@@ -19,7 +17,6 @@ import com.concur.mobile.core.expense.travelallowance.util.DateUtils;
 import com.concur.mobile.core.expense.travelallowance.util.StringUtilities;
 
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.List;
 
 /**
@@ -104,21 +101,13 @@ public class ItineraryUpdateController {
             }
         });
 
+        Itinerary itinerary = getItinerary(expRepKey);
+        List<ItinerarySegment> periods = itinerary.getSegmentList();
+        if (!DateUtils.hasSubsequentDates(false, true, 1, periods)) {
+            Toast.makeText(context, "@Dates of this itinerary are not consistent@", Toast.LENGTH_SHORT).show();
+        }
         SaveItineraryRequest request = new SaveItineraryRequest(context, receiver, getItinerary(expRepKey));
         request.execute();
-    }
-
-    public boolean hasInternalDateInconsistency() {
-        if (this.compactItinerary == null) {
-            return false;
-        }
-
-        List<CompactItinerarySegment> segments = compactItinerary.getSegmentList();
-        if (!DateUtils.hasSubsequentDates(false, true, 1, segments)) {
-            return true;
-        }
-
-        return false;
     }
 
     public Itinerary getItinerary(String repId) {

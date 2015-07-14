@@ -25,7 +25,7 @@ import java.util.List;
 public class ItineraryUpdateListAdapter extends ArrayAdapter<Object> {
 
     private static final String CLASS_TAG = ItineraryUpdateListAdapter.class.getSimpleName();
-    private static final int LAYOUT_ID = R.layout.itin_edit_segment;
+    private static final int LAYOUT_ID = R.layout.ta_edit_segment;
     private static final int DESTINATION_ROW = 0;
     private static final int ENDPOINT_ROW = 1;
 

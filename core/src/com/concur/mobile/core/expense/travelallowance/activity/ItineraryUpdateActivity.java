@@ -4,7 +4,6 @@ import android.app.Activity;
 import android.content.Intent;
 import android.graphics.Color;
 import android.os.Bundle;
-import android.support.v4.app.DialogFragment;
 import android.support.v7.app.ActionBar;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
@@ -74,7 +73,7 @@ public class ItineraryUpdateActivity extends BaseActivity {
         this.updateController = app.getItineraryUpdateController();
         String expenseReportName = StringUtilities.EMPTY_STRING;
 
-        this.setContentView(R.layout.itin_update_activity);
+        this.setContentView(R.layout.ta_update_activity);
 
         if (getIntent().hasExtra(Const.EXTRA_EXPENSE_REPORT_KEY)) {
             this.expenseReportKey = getIntent().getStringExtra(Const.EXTRA_EXPENSE_REPORT_KEY);
@@ -270,12 +269,7 @@ public class ItineraryUpdateActivity extends BaseActivity {
             return true;
         }
         if (item.getItemId() == R.id.menuSave) {
-            if (!updateController.hasInternalDateInconsistency()) {
-                updateController.executeSave(this.expenseReportKey);
-            } else {
-                Toast.makeText(getApplicationContext(), "@Dates of this itinerary are not consistent@",
-                        Toast.LENGTH_LONG).show();
-            }
+            updateController.executeSave(this.expenseReportKey);
             return true;
         }
         return super.onOptionsItemSelected(item);

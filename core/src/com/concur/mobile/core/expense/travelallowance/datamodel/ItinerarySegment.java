@@ -6,7 +6,7 @@ import java.util.Date;
 /**
  * Created by D049515 on 23.06.2015.
  */
-public class ItinerarySegment implements Serializable {
+public class ItinerarySegment implements Serializable, IDatePeriod {
 
 
     private static final long serialVersionUID = -5416179865430781088L;
@@ -65,5 +65,21 @@ public class ItinerarySegment implements Serializable {
 
     public void setBorderCrossDateTime(Date borderCrossDateTime) {
         this.borderCrossDateTime = borderCrossDateTime;
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public Date getStartDate() {
+        return this.departureDateTime;
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public Date getEndDate() {
+        return this.arrivalDateTime;
     }
 }
