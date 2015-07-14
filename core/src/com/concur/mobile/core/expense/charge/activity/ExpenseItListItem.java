@@ -89,7 +89,7 @@ public class ExpenseItListItem extends ExpenseListItem {
             ImageView imageView = (ImageView) expenseView.findViewById(R.id.expense_expenseit_icon);
             ImageView arrows = (ImageView) expenseView.findViewById(R.id.expense_expenseit_arrows);
             if (imageView != null && arrows != null) {
-                if (status == ExpenseItParseCode.DEFAULT.value() || status == ExpenseItParseCode.UNPARSED.value()) {
+                if (isProcessing(status)) {
                     imageView.setImageResource(R.drawable.icon_processing);
                     arrows.setImageResource(R.drawable.icon_processing_arrow);
                     AnimationUtil.rotateAnimation(arrows);
@@ -155,18 +155,25 @@ public class ExpenseItListItem extends ExpenseListItem {
 
     private String getStatusText(Context context, int status) {
         String statusText = "";
-        if (status == ExpenseItParseCode.UPLOADED.value()
-                || status == ExpenseItParseCode.UPLOADED_BUT_NOT_QUEUED.value()
-                || status == ExpenseItParseCode.FAILED_UPLOAD_ATTEMPTS.value()
-                || status == ExpenseItParseCode.ANALYZING_REMOTELY_PENDING.value()
-                || status == ExpenseItParseCode.UNPARSED.value()
-                || status == ExpenseItParseCode.DEFAULT.value()) {
+        if (isProcessing(status)) {
             statusText = context.getString(R.string.expenseit_expense_detail_submitted);
         } else {
             // TODO: EJW: Elaborate more on the different status codes.
         }
 
         return statusText;
+    }
+
+    private boolean isProcessing(int status) {
+        if (status == ExpenseItParseCode.UPLOADED.value()
+                || status == ExpenseItParseCode.UPLOADED_BUT_NOT_QUEUED.value()
+                || status == ExpenseItParseCode.FAILED_UPLOAD_ATTEMPTS.value()
+                || status == ExpenseItParseCode.ANALYZING_REMOTELY_PENDING.value()
+                || status == ExpenseItParseCode.UNPARSED.value()
+                || status == ExpenseItParseCode.DEFAULT.value()) {
+            return true;
+        }
+        return false;
     }
 
     @Override
