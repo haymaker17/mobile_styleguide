@@ -201,20 +201,26 @@ public class TravelAllowanceItineraryListAdapter extends ArrayAdapter<Object> {
 
         holder.location.setText(segment.getLocation().getName());
 
-        if (segment.getArrivalDateTime() != null) {
-			holder.fromDateTime.setText(formatDate(segment.getDepartureDateTime(), false));
-			holder.toDateTime.setText(formatDate(segment.getArrivalDateTime(), false));
-            holder.toDateTime.setVisibility(View.VISIBLE);
-            holder.dateDivider.setVisibility(View.VISIBLE);
-            holder.rowIconLocation.setVisibility(View.VISIBLE);
-            holder.rowIcon.setVisibility(View.GONE);
-        } else {
-			holder.fromDateTime.setText(formatDate(segment.getDepartureDateTime(), true));
-            holder.toDateTime.setVisibility(View.GONE);
-            holder.dateDivider.setVisibility(View.GONE);
-            holder.rowIconLocation.setVisibility(View.GONE);
-            holder.rowIcon.setVisibility(View.VISIBLE);
-        }
+        if (segment.getArrivalDateTime() != null && segment.getDepartureDateTime() != null) {
+			holder.fromDateTime.setText(formatDate(segment.getArrivalDateTime(), false));
+			holder.fromDateTime.setVisibility(View.VISIBLE);
+			holder.dateDivider.setVisibility(View.VISIBLE);
+			holder.toDateTime.setText(formatDate(segment.getDepartureDateTime(), false));
+			holder.toDateTime.setVisibility(View.VISIBLE);
+			holder.rowIconLocation.setVisibility(View.VISIBLE);
+			holder.rowIcon.setVisibility(View.GONE);
+		} else {
+			holder.dateDivider.setVisibility(View.GONE);
+			holder.rowIconLocation.setVisibility(View.GONE);
+			holder.rowIcon.setVisibility(View.VISIBLE);
+			holder.fromDateTime.setVisibility(View.VISIBLE);
+			holder.toDateTime.setVisibility(View.GONE);
+			if (segment.getArrivalDateTime() != null) {
+				holder.fromDateTime.setText(formatDate(segment.getArrivalDateTime(), true));
+			} else {
+				holder.fromDateTime.setText(formatDate(segment.getDepartureDateTime(), true));
+			}
+		}
 
         if (segment.getBorderCrossingDateTime() != null) {
 			holder.borderCrossingLabel.setVisibility(View.VISIBLE);
