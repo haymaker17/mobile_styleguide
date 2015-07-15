@@ -6,12 +6,15 @@ import android.content.pm.PackageManager.NameNotFoundException;
 import android.os.Build;
 import android.text.TextUtils;
 
+import com.concur.mobile.platform.authentication.AccessToken;
+import com.concur.mobile.platform.authentication.LoginResult;
 import com.concur.mobile.platform.authentication.system.config.test.SystemConfigRequestTaskTest;
 import com.concur.mobile.platform.authentication.test.AutoLoginRequestTaskTest;
 import com.concur.mobile.platform.authentication.test.PPLoginLightRequestTaskTest;
 import com.concur.mobile.platform.authentication.test.PPLoginRequestTaskTest;
 import com.concur.mobile.platform.config.provider.ClearConfigDBHelper;
 import com.concur.mobile.platform.config.provider.ConfigProvider;
+import com.concur.mobile.platform.config.provider.ConfigUtil;
 import com.concur.mobile.platform.config.user.test.UserConfigRequestTaskTest;
 import com.concur.mobile.platform.emaillookup.test.EmailLookUpRequestTaskTest;
 import com.concur.mobile.platform.expense.list.test.ExpenseListRequestTaskTest;
@@ -713,6 +716,8 @@ public class PlatformTestSuite {
         ShadowContentResolver.registerProvider(com.concur.mobile.platform.config.provider.Config.AUTHORITY,
                 configProvider);
 
+        initConfigLoginInfo();
+
         // Initialize the travel content provider.
         TravelProvider travelProvider = new TravelProvider() {
             @Override
@@ -737,7 +742,24 @@ public class PlatformTestSuite {
 
         expenseProvider.onCreate();
         ShadowContentResolver.registerProvider(com.concur.mobile.platform.expense.provider.Expense.AUTHORITY,
-                expenseProvider);
+            expenseProvider);
+
+
+    }
+
+    /**
+     * Initializes a test user in config.Db session table.
+     */
+    private static void initConfigLoginInfo() {
+        //Init Session info for user
+        Context context = PlatformTestApplication.getApplication();
+        LoginResult loginResult = new LoginResult();
+        loginResult.userId = "allroles@ccrdemo.com";
+        loginResult.serverUrl = "www.concursolutions.com";
+        loginResult.userId = "gWnB$s4gQVrnBamNOI$sNB0Eoq54BXExKsAHw";
+        loginResult.accessToken = new AccessToken();
+        loginResult.accessToken.key = "AOai6mA9MM26vxtFb9DOx+exX/4=";
+        ConfigUtil.updateLoginInfo(context, loginResult);
     }
 
     /**
