@@ -1,16 +1,25 @@
 <LoginResult xmlns:i="http://www.w3.org/2001/XMLSchema-instance">
 	<AccessToken>
-		<AccessTokenKey>HqmdEfI6U85SptR19olF/Cpud9s=</AccessTokenKey>
+		<AccessTokenKey>AOai6mA9MM26vxtFb9DOx+exX/4=</AccessTokenKey>
 	</AccessToken>
-	<AuthenticationType>Password</AuthenticationType>
+	<AnalyticsId>51BB27D16AE095FEA273CB62648D5615860498C1AE3CBA7555B73001AD256662</AnalyticsId>
 	<EntityType>Corporate</EntityType>
-	<ExpenseCtryCode>GB</ExpenseCtryCode>
-	<HasRequiredCustomFields>false</HasRequiredCustomFields>
+	<ExpenseCtryCode>US</ExpenseCtryCode>
+	<HasRequiredCustomFields>true</HasRequiredCustomFields>
+	<Permissions>
+		<Areas>
+			<HasTravelRequest>false</HasTravelRequest>
+		</Areas>
+		<TravelRequest>
+			<IsRequestApprover>false</IsRequestApprover>
+			<IsRequestUser>false</IsRequestUser>
+		</TravelRequest>
+	</Permissions>
 	<PinExpirationDate>9999-12-31T23:59:59.9999999</PinExpirationDate>
 	<ProductOffering>Corporate</ProductOffering>
-	<ProfileStatus>0</ProfileStatus>
+	<ProfileStatus>21</ProfileStatus>
 	<RemoteWipe>N</RemoteWipe>
-	<RolesMobile>AutoCancelUser,CESUser,ClientCentralAdmin,CostaRicaAdmin,DemoUser,TravelAgentAdmin,TravelPointsUser,TravelUser,VendorGroupAdmin,ExpenseItUser,MOBILE_EXPENSE_TRAVELER,Dining_User,Taxi_User,Amtrak_User,Travel_Booking_Enabled,Air_Booking_Enabled,Metro_User,FlightTracker_User,GateGuru_User,TripItAd_User</RolesMobile>
+	<RolesMobile>AutoCancelUser,CESUser,ClientCentralAdmin,CVPUser,DemoUser,TravelAgentAdmin,TravelPointsUser,TravelUser,VendorGroupAdmin,ExpenseItUser,MOBILE_EXPENSE_TEST_EMP,MOBILE_EXPENSE_MANAGER,MOBILE_INVOICE_PAYMENT_APRVR,MOBILE_INVOICE_PAYMENT_USER,MOBILE_EXPENSE_TRAVELER,Dining_User,Amtrak_User,Travel_Booking_Enabled,Air_Booking_Enabled,TravelApprover,Metro_User,FlightTracker_User,GateGuru_User,TripItAd_User,ShowP2BGenerator</RolesMobile>
 	<ServiceURIs>
 		<ServiceInfo>
 			<Name>Expense</Name>
@@ -18,7 +27,7 @@
 		</ServiceInfo>
 	</ServiceURIs>
 	<Session>
-		<ID>589AECA8-5C29-4F97-B842-F37EFB9758BD</ID>
+		<ID>3B6287AC-4F7D-4B2E-BCF2-C8B3D3C1C719</ID>
 		<TimeOut>30</TimeOut>
 	</Session>
 	<SiteSettings>
@@ -30,6 +39,21 @@
 		<SiteSetting>
 			<Name>ALLOW_TRANS_DELETE</Name>
 			<Type>CARD</Type>
+			<Value>N</Value>
+		</SiteSetting>
+		<SiteSetting>
+			<Name>ENABLE_DYNAMIC_FIELD_EVALUATION</Name>
+			<Type>UI_MODIFICATION</Type>
+			<Value>Y</Value>
+		</SiteSetting>
+		<SiteSetting>
+			<Name>ENABLE_GEMS</Name>
+			<Type>MILEAGE</Type>
+			<Value>N</Value>
+		</SiteSetting>
+		<SiteSetting>
+			<Name>ENABLE_GEMS_GPS</Name>
+			<Type>MILEAGE</Type>
 			<Value>N</Value>
 		</SiteSetting>
 		<SiteSetting>
@@ -46,6 +70,26 @@
 			<Name>HasFixedTA</Name>
 			<Type>Mobile</Type>
 			<Value>N</Value>
+		</SiteSetting>
+		<SiteSetting>
+			<Name>HasTravelAllowanceFixed</Name>
+			<Type>Mobile</Type>
+			<Value>Y</Value>
+		</SiteSetting>
+		<SiteSetting>
+			<Name>CanImportTrips</Name>
+			<Type>Mobile</Type>
+			<Value>Y</Value>
+		</SiteSetting>
+		<SiteSetting>
+			<Name>GEMS_PERSONAL</Name>
+			<Type>MILEAGE</Type>
+			<Value>One</Value>
+		</SiteSetting>
+		<SiteSetting>
+			<Name>GEMS_COMPANY</Name>
+			<Type>MILEAGE</Type>
+			<Value>One</Value>
 		</SiteSetting>
 		<SiteSetting>
 			<Name>ShowNonrefundableMessage</Name>
@@ -65,6 +109,11 @@
 		<SiteSetting>
 			<Name>VoiceBookingEnabled</Name>
 			<Type>mobile</Type>
+			<Value>N</Value>
+		</SiteSetting>
+		<SiteSetting>
+			<Name>AllowFingerPrintLogin</Name>
+			<Type>OTMODULE</Type>
 			<Value>Y</Value>
 		</SiteSetting>
 		<SiteSetting>
@@ -85,22 +134,51 @@
 		<SiteSetting>
 			<Name>StreamHotelSearchResults</Name>
 			<Type>OTMODULE</Type>
-			<Value>N</Value>
+			<Value>Y</Value>
+		</SiteSetting>
+		<SiteSetting>
+			<Name>ShowHotelJarvisUIOniOS</Name>
+			<Type>OTMODULE</Type>
+			<Value>Y</Value>
+		</SiteSetting>
+		<SiteSetting>
+			<Name>ShowHotelJarvisUIOnAndroid</Name>
+			<Type>OTMODULE</Type>
+			<Value>Y</Value>
 		</SiteSetting>
 		<SiteSetting>
 			<Name>MobileViewPicklistCodes</Name>
 			<Type>OTMODULE</Type>
-			<Value>Y</Value>
+			<Value>N</Value>
+		</SiteSetting>
+		<SiteSetting>
+			<Name>EnableSpdy</Name>
+			<Type>OTMODULE</Type>
+			<Value>N</Value>
 		</SiteSetting>
 	</SiteSettings>
 	<TwitterUrl>http://api.twitter.com/1/statuses/user_timeline.xml?screen_name=Concur2Go</TwitterUrl>
 	<UserContact>
 		<CompanyName>Concur Connect-13 Mobile QA</CompanyName>
-		<Email>AHuser40@utest.com</Email>
+		<Email>allRoles@ccrdemo.com</Email>
 		<FirstName>William</FirstName>
-		<LastName>Never</LastName>
-		<Mi>4</Mi>
+		<HomeAddress>
+			<City>Bellevue</City>
+			<Country>US</Country>
+			<State>Alabama</State>
+			<Street>101 Fake St</Street>
+			<ZipCode>98004</ZipCode>
+		</HomeAddress>
+		<LastName>ROLES</LastName>
+		<Mi>N</Mi>
+		<WorkAddress>
+			<City>Bellevue</City>
+			<Country>US</Country>
+			<State>Alabama</State>
+			<Street>101 Fake St</Street>
+			<ZipCode>98004</ZipCode>
+		</WorkAddress>
 	</UserContact>
-	<UserCrnCode>GBP</UserCrnCode>
-	<UserId>nro2jdnGSnRkX1CLVv0$pBWWVdcAB3H2SY</UserId>
+	<UserCrnCode>USD</UserCrnCode>
+	<UserId>gWnB$s4gQVrnBamNOI$sNB0Eoq54BXExKsAHw</UserId>
 </LoginResult>
