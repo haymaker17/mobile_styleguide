@@ -11,12 +11,15 @@ import com.concur.mobile.base.service.parser.BaseParser;
 import com.concur.mobile.core.expense.travelallowance.datamodel.Itinerary;
 import com.concur.mobile.core.expense.travelallowance.datamodel.ItineraryLocation;
 import com.concur.mobile.core.expense.travelallowance.datamodel.ItinerarySegment;
+import com.concur.mobile.core.expense.travelallowance.datamodel.SynchronizationStatusEnum;
 
 public class GetTAItinerariesResponseParser extends BaseParser {
 
     private static final String ITINERARY_TAG = "Itinerary";
 
     private static final String ITINERARY_SEGMENT_TAG = "ItineraryRow";
+
+    private static final String SUCCESS = "SUCCESS";
 
     private List<Itinerary> itineraries;
 
@@ -116,9 +119,15 @@ public class GetTAItinerariesResponseParser extends BaseParser {
             seg.setArrivalLocation(arrLoc);
 
             // Border Crossing
-            String borderCorssDateTime = currentItineraryRow.get("BorderCrossDateTime");
-            if (borderCorssDateTime != null) {
-                seg.setBorderCrossDateTime(dateFormat.parse(borderCorssDateTime));
+            String borderCrossDateTime = currentItineraryRow.get("BorderCrossDateTime");
+            if (borderCrossDateTime != null) {
+                seg.setBorderCrossDateTime(dateFormat.parse(borderCrossDateTime));
+            }
+
+            // Status
+            String status = currentItineraryRow.get("Status");
+            if (status != null) {
+                seg.setStatus(SynchronizationStatusEnum.fromCode(status));
             }
 
 

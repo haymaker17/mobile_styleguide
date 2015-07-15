@@ -14,7 +14,7 @@ public enum SynchronizationStatusEnum {
      * target.
      */
     //TODO: Set string resource as soon as available
-    SYNCHRONIZED(//R.string.status_synchronized)
+    SYNCHRONIZED("SUCCESS", //R.string.status_synchronized)
                   0),
 
     /**
@@ -22,7 +22,7 @@ public enum SynchronizationStatusEnum {
      * needs to be refreshed.
      */
     //TODO: Set string resource as soon as available
-    FAILED(//R.string.status_failed)
+    FAILED("FAILED", //R.string.status_failed)
             0);
 
     /**
@@ -33,13 +33,19 @@ public enum SynchronizationStatusEnum {
     private int textResourceId;
 
     /**
+     * The coded representations
+     */
+    private String code;
+
+    /**
      * Creates a new {@code SynchronizationStatus} instance associated to
      * the given {@code textResourceId}.
      *
      * @param textResourceId The text resource id
      *
      */
-    private SynchronizationStatusEnum(final int textResourceId) {
+    private SynchronizationStatusEnum(final String code, final int textResourceId) {
+        this.code = code;
         this.textResourceId = textResourceId;
     }
 
@@ -54,4 +60,20 @@ public enum SynchronizationStatusEnum {
         return this.textResourceId;
     }
 
+    /**
+     * Gets the {@code SynchronizationStatusEnum} matching the given
+     * code.
+     *
+     * @param code the code to get the matching {@code SynchronizationStatusEnum} for
+     * @return the {@code SynchronizationStatusEnum} matching the given code;
+     *         null, if no matching {@code SynchronizationStatusEnum} could be found
+     */
+    public static SynchronizationStatusEnum fromCode(final String code) {
+        for (SynchronizationStatusEnum status : values()) {
+            if (status.code.equals(code)) {
+                return status;
+            }
+        }
+        return null;
+    }
 }
