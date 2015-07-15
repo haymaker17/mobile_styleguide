@@ -360,12 +360,42 @@ public class FixedTravelAllowanceController {
         return controlData;
     }
 
-    public boolean showOvernightOnDailyAllowanceMeals() {
-        if (controlData.getControlValue(FixedTravelAllowanceControlData.SHOW_OVERNIGHT_CHECKBOX)
-                && !controlData.getControlValue(FixedTravelAllowanceControlData.SHOW_LODGING_TYPE_PICKLIST)) {
-            return true;
-        } else {
+    public boolean showBreakfastProvision() {
+        boolean showCheckBox = controlData
+                .getControlValue(FixedTravelAllowanceControlData.SHOW_BREAKFAST_PROVIDED_CHECKBOX);
+        boolean showPickList = controlData
+                .getControlValue(FixedTravelAllowanceControlData.SHOW_BREAKFAST_PROVIDED_PICKLIST);
+
+        if (!showCheckBox && !showPickList) {
             return false;
+        } else {
+            return true;
+        }
+    }
+
+    public boolean showLunchProvision() {
+        boolean showCheckBox = controlData
+                .getControlValue(FixedTravelAllowanceControlData.SHOW_LUNCH_PROVIDED_CHECKBOX);
+        boolean showPickList = controlData
+                .getControlValue(FixedTravelAllowanceControlData.SHOW_LUNCH_PROVIDED_PICKLIST);
+
+        if (!showCheckBox && !showPickList) {
+            return false;
+        } else {
+            return true;
+        }
+    }
+
+    public boolean showDinnerProvision() {
+        boolean showCheckBox = controlData
+                .getControlValue(FixedTravelAllowanceControlData.SHOW_DINNER_PROVIDED_CHECKBOX);
+        boolean showPickList = controlData
+                .getControlValue(FixedTravelAllowanceControlData.SHOW_DINNER_PROVIDED_PICKLIST);
+
+        if (!showCheckBox && !showPickList) {
+            return false;
+        } else {
+            return true;
         }
     }
 

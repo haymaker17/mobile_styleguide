@@ -4305,46 +4305,6 @@ public abstract class AbstractExpenseActivity extends BaseActivity {
     }
 
     /**
-     * Populates the travel allowance fields and lodging fields on the ui to the passed viewGroup. This method should only be
-     * called for expenses with type FXMLS or FXLDG.
-     * 
-     * Meal fields (e.g. Breakfast, Lunch, and Dinner) are populated only for type FXMLS. The overnight indicator shows up on
-     * FXMLS only if the GetFixedTA control data "ShowLodgingTypePickList" is false and "ShowOvernightCheckBox" is true. In other
-     * cases the overnight indicator appears on the lodging allowance FXLDG.
-     *
-     * @param viewGroup
-     *            the view group to be populated.
-     * @param expRepEntDet
-     *            the expense report entry detail.
-     * @return the list of {@code FormFieldView} related to travel allowance
-     */
-    protected List<FormFieldView> populateAllowancesDetailViewGroup(ViewGroup viewGroup,
-            ExpenseReportEntryDetail expRepEntDet, String expTypeCode) {
-        List<FormFieldView> formFieldViews = new ArrayList<FormFieldView>();
-
-        if (viewGroup == null || expRepEntDet == null) {
-            return formFieldViews;
-        }
-
-        if (expTypeCode.equals("FXMLS")) {
-            // Show meal fields only for FXMLS
-            formFieldViews.addAll(populateViewWithFormFields(viewGroup,
-                    expRepEntDet.getTravelAllowanceMealsFields(this.getApplicationContext()), null));
-        }
-
-        ConcurCore app = (ConcurCore) getApplication();
-        if (app.getFixedTravelAllowanceController().showOvernightOnDailyAllowanceMeals() || expTypeCode.equals("FXLDG")) {
-            // The overnight indicator can appear on the meal daily allowance or on the lodging daily allowance (FXLDG). In case
-            // of FXLDG the lodging type is populated in addition.
-
-            formFieldViews.addAll(populateViewWithFormFields(viewGroup,
-                    expRepEntDet.getTravelAllowanceLodgingFields(this.getApplicationContext()), null));
-        }
-
-        return formFieldViews;
-    }
-
-    /**
      * Will populate a view group with expense report entry detail information.
      * 
      * @param viewGroup

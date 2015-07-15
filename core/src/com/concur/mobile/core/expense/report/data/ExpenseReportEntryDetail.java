@@ -8,7 +8,6 @@ import java.io.InputStream;
 import java.io.Reader;
 import java.math.BigDecimal;
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.Currency;
 import java.util.Iterator;
 import java.util.List;
@@ -20,19 +19,12 @@ import org.xml.sax.Attributes;
 import org.xml.sax.InputSource;
 import org.xml.sax.SAXException;
 
-import android.content.Context;
 import android.util.Log;
 
-import com.concur.core.R;
-import com.concur.mobile.core.ConcurCore;
 import com.concur.mobile.core.expense.data.ExpenseType;
 import com.concur.mobile.core.expense.report.data.ExpenseReportFormField.AccessType;
 import com.concur.mobile.core.expense.report.service.GetTaxFormReply;
 import com.concur.mobile.core.expense.report.service.TaxForm;
-import com.concur.mobile.core.expense.travelallowance.controller.FixedTravelAllowanceControlData;
-import com.concur.mobile.core.expense.travelallowance.datamodel.FixedTravelAllowance;
-import com.concur.mobile.core.expense.travelallowance.datamodel.ICode;
-import com.concur.mobile.core.expense.travelallowance.datamodel.MealProvision;
 import com.concur.mobile.core.util.Const;
 import com.concur.mobile.core.util.FormatUtil;
 import com.concur.mobile.core.util.ViewUtil;
@@ -83,104 +75,6 @@ public class ExpenseReportEntryDetail extends ExpenseReportEntry {
      * Contains a list of <code>ExpenseReportAttendee</code> objects representing entry level attendees.
      */
     private List<ExpenseReportAttendee> attendees;
-
-    public List<ExpenseReportFormField> getTravelAllowanceLodgingFields(Context context) {
-        List<ExpenseReportFormField> travelAllowanceLodgingFields = new ArrayList<ExpenseReportFormField>();
-        ConcurCore app = (ConcurCore) context.getApplicationContext();
-        FixedTravelAllowance ta = app.getFixedTravelAllowanceController().getFixedTA(taDayKey);
-
-        // Lodging Type
-        if (ta != null && ta.getLodgingType() != null) {
-            ICode lodgingType = ta.getLodgingType();
-
-            // Get lodging type field label
-            String lodgingTypeLabel = app.getFixedTravelAllowanceController().getControlData()
-                    .getLabel(FixedTravelAllowanceControlData.LODGING_TYPE_LABEL);
-
-            ExpenseReportFormField field1 = new ExpenseReportFormField("1", lodgingTypeLabel,
-                    lodgingType.getDescription(), AccessType.RO, ExpenseReportFormField.ControlType.EDIT,
-                    ExpenseReportFormField.DataType.VARCHAR, true);
-            travelAllowanceLodgingFields.add(field1);
-        }
-
-        // Overnight Indicator
-        boolean showOvernight = app.getFixedTravelAllowanceController().getControlData()
-                .getControlValue(FixedTravelAllowanceControlData.SHOW_OVERNIGHT_CHECKBOX);
-
-        if (ta != null && showOvernight) {
-            // Overnight indicator label
-            String overnightLabel = app.getFixedTravelAllowanceController().getControlData()
-                    .getLabel(FixedTravelAllowanceControlData.OVERNIGHT_LABEL);
-
-            // Overnight indicator text (yes / no)
-            String overNightIndicator = "";
-            if (ta.getOvernightIndicator()) {
-                overNightIndicator = context.getString(R.string.general_yes);
-            } else {
-                overNightIndicator = context.getString(R.string.general_no);
-            }
-
-            ExpenseReportFormField field2 = new ExpenseReportFormField("2", overnightLabel, overNightIndicator,
-                    AccessType.RO, ExpenseReportFormField.ControlType.EDIT,
-                    ExpenseReportFormField.DataType.VARCHAR, true);
-            travelAllowanceLodgingFields.add(field2);
-        }
-
-        return travelAllowanceLodgingFields;
-    }
-
-    /**
-     *
-     * @return A list for {@code ExpenseReportFormField}s needed for travel allowance.
-     * In case there are no travel allowance fields this method returns an empty list.
-     */
-    public List<ExpenseReportFormField> getTravelAllowanceMealsFields(Context context) {
-        ConcurCore app = (ConcurCore) context.getApplicationContext();
-        FixedTravelAllowance ta = app.getFixedTravelAllowanceController().getFixedTA(taDayKey);
-        List<ExpenseReportFormField> travelAllowanceFields = new ArrayList<ExpenseReportFormField>();
-
-        if (ta != null) {
-            String breakfastLabel = app.getFixedTravelAllowanceController().getControlData()
-                    .getLabel(FixedTravelAllowanceControlData.BREAKFAST_PROVIDED_LABEL);
-            String lunchLabel = app.getFixedTravelAllowanceController().getControlData()
-                    .getLabel(FixedTravelAllowanceControlData.LUNCH_PROVIDED_LABEL);
-            String dinnerLabel = app.getFixedTravelAllowanceController().getControlData()
-                    .getLabel(FixedTravelAllowanceControlData.DINNER_PROVIDED_LABEL);
-
-            ICode breakfast = ta.getBreakfastProvision();
-            if (breakfast != null) {
-                ExpenseReportFormField field1 = new ExpenseReportFormField("1", breakfastLabel,
-                        breakfast.getDescription(), AccessType.RO, ExpenseReportFormField.ControlType.EDIT,
-                        ExpenseReportFormField.DataType.VARCHAR, true);
-                travelAllowanceFields.add(field1);
-            }
-
-            ICode lunch = ta.getLunchProvision();
-            if (lunch != null) {
-                ExpenseReportFormField field2 = new ExpenseReportFormField("2", lunchLabel, lunch.getDescription(),
-                        AccessType.RO, ExpenseReportFormField.ControlType.EDIT, ExpenseReportFormField.DataType.VARCHAR,
-                        true);
-                travelAllowanceFields.add(field2);
-            }
-
-            ICode dinner = ta.getDinnerProvision();
-            if (dinner != null) {
-                ExpenseReportFormField field3 = new ExpenseReportFormField("3", dinnerLabel, dinner.getDescription(),
-                        AccessType.RO, ExpenseReportFormField.ControlType.EDIT, ExpenseReportFormField.DataType.VARCHAR,
-                        true);
-                travelAllowanceFields.add(field3);
-            }
-        }
-
-        if (ta == null || travelAllowanceFields.isEmpty()) {
-            String noAdjustments = context.getString(R.string.ta_no_adjustments);
-            travelAllowanceFields.add(new ExpenseReportFormField("1", null, noAdjustments, AccessType.RO,
-                    ExpenseReportFormField.ControlType.EDIT, ExpenseReportFormField.DataType.VARCHAR, true));
-        }
-
-        return travelAllowanceFields;
-    }
-
 
     /**
      * Gets whether this is a detail report entry.

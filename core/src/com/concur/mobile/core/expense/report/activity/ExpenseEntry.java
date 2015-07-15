@@ -75,6 +75,7 @@ import com.concur.mobile.core.expense.report.service.SaveReportEntryRequest;
 import com.concur.mobile.core.expense.report.service.TaxForm;
 import com.concur.mobile.core.expense.service.GetExpenseTypesRequest;
 import com.concur.mobile.core.expense.service.SearchListRequest;
+import com.concur.mobile.core.expense.travelallowance.expensedetails.TAFieldFactory;
 import com.concur.mobile.core.service.ConcurService;
 import com.concur.mobile.core.util.Const;
 import com.concur.mobile.core.util.ExpTypeMruAsyncTask;
@@ -1844,8 +1845,9 @@ public class ExpenseEntry extends AbstractExpenseActivity {
 
         if (viewGroup != null) {
             if (expRepEntDet.expKey.equals("FXMLS") || expRepEntDet.expKey.equals("FXLDG")) {
-                List<FormFieldView> frmFldViews = populateAllowancesDetailViewGroup(viewGroup, getExpRepEntDet(),
-                        expRepEntDet.expKey);
+                TAFieldFactory fieldFactory = new TAFieldFactory(this,expRepEntDet);
+                List<FormFieldView> frmFldViews = populateViewWithFormFields(viewGroup,
+                        fieldFactory.getFormFields(), null);
                 if (frmFldViews != null && frmFldViews.size() > 0) {
                     if (frmFldViewListener != null) {
                         frmFldViewListener.setFormFieldViews(frmFldViews);
