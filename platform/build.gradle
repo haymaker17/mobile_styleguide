@@ -15,11 +15,7 @@ android {
     compileSdkVersion 21
     buildToolsVersion "22.0.1"
 
-    /* test coverage */
-    jacoco {
-        version  = "0.7.5.201505241946"
-    }
-
+    /* START test coverage */
     buildTypes {
         release { }
         debug {
@@ -40,8 +36,7 @@ android {
         exclude 'lib/armeabi/libstlport_shared.so'
         exclude 'META-INF/LICENSE.txt'
     }
-
-    /* test coverage */
+    /* END test coverage */
 
     //For multi build purpose uncomment following block.
     // Please comment out following block before merge back to 'dev' branch.
@@ -105,9 +100,9 @@ android {
     /*##############   #####################     ##########################     ###################*/
 }
 
-/* test coverage */
+/* START test coverage */
 jacoco {
-    version  = "0.7.5.201505241946"
+    toolVersion  = "0.7.2.+"
 }
 
 task jacocoTestReport(type: JacocoReport, dependsOn: "testDebug") {
@@ -121,4 +116,4 @@ task jacocoTestReport(type: JacocoReport, dependsOn: "testDebug") {
     sourceDirectories = files('src/com/concur')
     executionData = files("$buildDir/jacoco/testDebug.exec")
 }
-/* test coverage */
+/* END test coverage */
