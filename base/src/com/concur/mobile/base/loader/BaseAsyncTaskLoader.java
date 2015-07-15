@@ -2,6 +2,7 @@ package com.concur.mobile.base.loader;
 
 import android.content.AsyncTaskLoader;
 import android.content.Context;
+import android.os.Bundle;
 import android.util.Log;
 
 import com.concur.mobile.base.util.Const;
@@ -27,6 +28,12 @@ public abstract class BaseAsyncTaskLoader<T> extends AsyncTaskLoader<T> {
      * Contains a reference to the currently loaded data.
      */
     protected T data;
+
+    /**
+     * The {@link Bundle} of data containing request results. This should generally not contain the full request result body. That
+     * data should be cached or stored elsewhere before the request completes.
+     */
+    protected Bundle resultData;
 
     /**
      * Constructs an instance of <code>BaseAsyncTaskLoader<T></code> given an application context.
