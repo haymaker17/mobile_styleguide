@@ -46,6 +46,11 @@ public final class DateUtils {
     private static final long SECONDS_IN_ONE_DAY = 86400L;
 
     /**
+     * The number of seconds in one minute.
+     */
+    private static final long SECONDS_IN_ONE_MINUTE = 60L;
+
+    /**
      * Empty string
      */
     private static final String EMPTY_STRING = "";
@@ -354,6 +359,16 @@ public final class DateUtils {
         cal.set(Calendar.MONTH, month);
         cal.set(Calendar.DAY_OF_MONTH, day);
         return cal;
+    }
+
+    /**
+     * Converts the given minutes into milliseconds
+     *
+     * @param minutes The minutes
+     * @return The milliseconds
+     */
+    public static long convertMinutesToMilliseconds(long minutes) {
+        return minutes * SECONDS_IN_ONE_MINUTE * MILLISECONDS_IN_ONE_SECOND;
     }
 
     /**

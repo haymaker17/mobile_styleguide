@@ -9,7 +9,7 @@ import java.util.Date;
 /**
  * Created by D049515 on 26.06.2015.
  */
-public class CompactItinerarySegment implements Serializable, IDatePeriod {
+public class CompactItinerarySegment implements Serializable {
 
 
     private static final long serialVersionUID = 4838630230258758378L;
@@ -74,19 +74,4 @@ public class CompactItinerarySegment implements Serializable, IDatePeriod {
         this.displayBorderCrossing = displayBorderCrossing;
     }
 
-    /**
-     * {@inheritDoc}
-     */
-    @Override
-    public Date getStartDate() {
-        return departureDateTime;
-    }
-
-    /**
-     * {@inheritDoc}
-     */
-    @Override
-    public Date getEndDate() {
-        return arrivalDateTime;
-    }
 }
