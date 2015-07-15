@@ -1,12 +1,14 @@
 package com.concur.mobile.core.expense.travelallowance.datamodel;
 
+import com.concur.mobile.core.expense.travelallowance.util.DateUtils;
+
 import java.io.Serializable;
 import java.util.Date;
 
 /**
  * Created by D049515 on 23.06.2015.
  */
-public class ItinerarySegment implements Serializable, IDatePeriod, ISynchronizationStatus {
+public class ItinerarySegment implements Serializable, IDatePeriodUTC, ISynchronizationStatus {
 
 
     private static final long serialVersionUID = -5416179865430781088L;
@@ -17,6 +19,11 @@ public class ItinerarySegment implements Serializable, IDatePeriod, ISynchroniza
     private ItineraryLocation arrivalLocation;
     private Date arrivalDateTime;
     private Date borderCrossDateTime;
+
+    /**
+     * The time zone offset in minutes
+     */
+    private long timeZoneOffset;
 
     /**
      * The synchronization status of this {@code ItinerarySegment}
@@ -73,19 +80,39 @@ public class ItinerarySegment implements Serializable, IDatePeriod, ISynchroniza
     }
 
     /**
-     * {@inheritDoc}
+     * Getter method
+     * @return the time zone offset in minutes
      */
-    @Override
-    public Date getStartDate() {
-        return this.departureDateTime;
+    public long getTimeZoneOffset() {
+        return timeZoneOffset;
+    }
+
+    /**
+     * Setter method
+     * @param timeZoneOffset the time zone offset in minutes
+     */
+    public void setTimeZoneOffset(long timeZoneOffset) {
+        this.timeZoneOffset = timeZoneOffset;
     }
 
     /**
      * {@inheritDoc}
      */
     @Override
-    public Date getEndDate() {
-        return this.arrivalDateTime;
+    public Date getStartDateUTC() {
+        Date dateUTC = new Date();
+        dateUTC.setTime(departureDateTime.getTime() + DateUtils.convertMinutesToMilliseconds(timeZoneOffset));
+        return dateUTC;
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public Date getEndDateUTC() {
+        Date dateUTC = new Date();
+        dateUTC.setTime(arrivalDateTime.getTime() + DateUtils.convertMinutesToMilliseconds(timeZoneOffset));
+        return dateUTC;
     }
 
     /**

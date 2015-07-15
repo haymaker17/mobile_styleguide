@@ -1,15 +1,12 @@
 package com.concur.mobile.core.expense.travelallowance.util;
 
-import android.content.Context;
-
-import com.concur.mobile.core.expense.travelallowance.datamodel.IDatePeriod;
+import com.concur.mobile.core.expense.travelallowance.datamodel.IDatePeriodUTC;
 
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Collection;
 import java.util.Comparator;
 import java.util.Date;
-import java.util.List;
 import java.util.Locale;
 
 /**
@@ -74,6 +71,16 @@ public final class DateUtils {
      */
     public static long convertDateToSeconds(final Date date) {
         return convertDateToSeconds(date, false);
+    }
+
+    /**
+     * Converts the given minutes into milliseconds
+     *
+     * @param minutes The minutes
+     * @return The milliseconds
+     */
+    public static long convertMinutesToMilliseconds(long minutes) {
+        return minutes * SECONDS_IN_ONE_MINUTE * MILLISECONDS_IN_ONE_SECOND;
     }
 
     /**
@@ -362,16 +369,6 @@ public final class DateUtils {
     }
 
     /**
-     * Converts the given minutes into milliseconds
-     *
-     * @param minutes The minutes
-     * @return The milliseconds
-     */
-    public static long convertMinutesToMilliseconds(long minutes) {
-        return minutes * SECONDS_IN_ONE_MINUTE * MILLISECONDS_IN_ONE_SECOND;
-    }
-
-    /**
      * Checks for non-empty overlap of periods
      * @param ignoreTime True if only date information to be considered for
      * 					 intersecting period intervals
@@ -390,7 +387,7 @@ public final class DateUtils {
     }
 
     /**
-     * Expects a sorted collection of objects implementing interface {@link IDatePeriod} and checks,
+     * Expects a sorted collection of objects implementing interface {@link IDatePeriodUTC} and checks,
      * whether the dates are either in ascending or descending order, depending on input parameter
      * {@code ascending}. In order to check the method makes use of {@link #dateComp}.
      * There is a minimum number of valid dates per period expected, which can be specified with
@@ -408,7 +405,7 @@ public final class DateUtils {
      */
     public static boolean hasSubsequentDates(final boolean ignoreTime, final boolean ascending,
                                              final int minValidDatesPerPeriod,
-                                             final Collection<? extends IDatePeriod> periods) {
+                                             final Collection<? extends IDatePeriodUTC> periods) {
 
         if (periods == null || periods.size() == 0 || minValidDatesPerPeriod > 2 || minValidDatesPerPeriod < 0) {
             return false;
@@ -417,11 +414,11 @@ public final class DateUtils {
         Comparator<Date> dateComparator = getDateComparator(ignoreTime);
         Date cmpDate = null;
 
-        for (IDatePeriod period : periods) {
+        for (IDatePeriodUTC period : periods) {
 
             int numberValid = 0;
-            Date start = period.getStartDate();
-            Date end = period.getEndDate();
+            Date start = period.getStartDateUTC();
+            Date end = period.getEndDateUTC();
 
             if (start != null) {
                 if (cmpDate != null) {

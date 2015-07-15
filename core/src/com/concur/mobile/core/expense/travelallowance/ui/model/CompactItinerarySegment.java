@@ -1,6 +1,5 @@
 package com.concur.mobile.core.expense.travelallowance.ui.model;
 
-import com.concur.mobile.core.expense.travelallowance.datamodel.IDatePeriod;
 import com.concur.mobile.core.expense.travelallowance.datamodel.ItineraryLocation;
 
 import java.io.Serializable;
