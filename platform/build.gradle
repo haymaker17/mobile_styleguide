@@ -1,4 +1,5 @@
 apply plugin: 'com.android.library'
+apply plugin: 'jacoco'
 
 dependencies {
     compile fileTree(dir: 'libs', include: '*.jar')
@@ -13,6 +14,34 @@ dependencies {
 android {
     compileSdkVersion 21
     buildToolsVersion "22.0.1"
+
+    /* test coverage */
+    jacoco {
+        version  = "0.7.5.201505241946"
+    }
+
+    buildTypes {
+        release { }
+        debug {
+            testCoverageEnabled true
+        }
+    }
+
+    defaultConfig {
+        testHandleProfiling true
+        testFunctionalTest true
+        multiDexEnabled true
+    }
+
+    packagingOptions {
+        exclude 'plugin.properties'
+        exclude 'lib/armeabi/libdatabase_sqlcipher.so'
+        exclude 'lib/armeabi/libsqlcipher_android.so'
+        exclude 'lib/armeabi/libstlport_shared.so'
+        exclude 'META-INF/LICENSE.txt'
+    }
+
+    /* test coverage */
 
     //For multi build purpose uncomment following block.
     // Please comment out following block before merge back to 'dev' branch.
@@ -75,3 +104,21 @@ android {
 
     /*##############   #####################     ##########################     ###################*/
 }
+
+/* test coverage */
+jacoco {
+    version  = "0.7.5.201505241946"
+}
+
+task jacocoTestReport(type: JacocoReport, dependsOn: "testDebug") {
+    group = "Reporting"
+    description = "Generate Jacoco coverage reports after running tests."
+    reports {
+        xml.enabled = true
+        html.enabled = true
+    }
+    classDirectories = fileTree(dir: './build/intermediates/classes/debug')
+    sourceDirectories = files('src/com/concur')
+    executionData = files("$buildDir/jacoco/testDebug.exec")
+}
+/* test coverage */
