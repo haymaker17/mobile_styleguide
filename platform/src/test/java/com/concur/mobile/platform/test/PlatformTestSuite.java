@@ -102,7 +102,7 @@ public class PlatformTestSuite {
      * @throws Exception
      *             throws an exception if the login request fails to properly parse the results.
      */
-    @Test
+    //@Test
     public void doPinPasswordLogin() throws Exception {
 
         // Init and perform a PP login.
@@ -162,7 +162,7 @@ public class PlatformTestSuite {
      * @throws Exception
      *             throws an exception if the login request fails to properly parse the results.
      */
-    @Test
+//    @Test
     public void doAutoLogin() throws Exception {
 
         // Run the pin/password light test.
@@ -240,7 +240,7 @@ public class PlatformTestSuite {
      * @throws Exception
      *             throws an exception if the email look-up request fails to properly parse the results.
      */
-    @Test
+//    @Test
     public void doEmailLookUp() throws Exception {
 
         // Init and perform a PP login.
@@ -417,7 +417,7 @@ public class PlatformTestSuite {
      * @throws Exception
      *             throws an exception if the system config fails to properly parse the results.
      */
-    @Test
+//    @Test
     public void doSystemConfig() throws Exception {
 
         // Init the login request
@@ -442,7 +442,7 @@ public class PlatformTestSuite {
      * @throws Exception
      *             throws an exception if the user config fails to properly parse the results.
      */
-    @Test
+//    @Test
     public void doUserConfig() throws Exception {
 
         // Init the login request
@@ -467,7 +467,7 @@ public class PlatformTestSuite {
      * @throws Exception
      *             throws an exception if the test fails.
      */
-    @Test
+//    @Test
     public void doExpenseList() throws Exception {
 
         // Init the login request
@@ -492,7 +492,7 @@ public class PlatformTestSuite {
      * @throws Exception
      *             throws an exception if the test fails.
      */
-    @Test
+//    @Test
     public void doSmartExpenseList() throws Exception {
 
         // Init the login request
@@ -517,7 +517,7 @@ public class PlatformTestSuite {
      * @throws Exception
      *             throws an exception if the test fails.
      */
-    @Test
+//    @Test
     public void doStartOcr() throws Exception {
 
         // Init the login request
@@ -561,7 +561,7 @@ public class PlatformTestSuite {
      * @throws Exception
      *             throws an exception if the test fails.
      */
-    @Test
+//    @Test
     public void doStopOcr() throws Exception {
 
         // Init the login request
@@ -594,7 +594,7 @@ public class PlatformTestSuite {
      * @throws Exception
      *             throws an exception if the test fails.
      */
-    @Test
+//    @Test
     public void doReceiptList() throws Exception {
 
         // Init the login request
@@ -676,7 +676,7 @@ public class PlatformTestSuite {
      * @throws Exception
      *             throws an exception if the test fails.
      */
-    @Test
+//    @Test
     public void doSaveMobileEntry() throws Exception {
 
         // Init the login request
