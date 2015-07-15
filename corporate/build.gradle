@@ -52,6 +52,8 @@ android {
     }
 
     packagingOptions {
+        exclude 'META-INF/LICENSE.txt'
+        exclude 'plugin.properties'
         exclude 'lib/armeabi/libdatabase_sqlcipher.so'
         exclude 'lib/armeabi/libsqlcipher_android.so'
         exclude 'lib/armeabi/libstlport_shared.so'
