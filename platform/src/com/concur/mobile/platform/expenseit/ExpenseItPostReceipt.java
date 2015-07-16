@@ -7,7 +7,6 @@ package com.concur.mobile.platform.expenseit;
 import com.google.gson.annotations.SerializedName;
 
 import java.io.Serializable;
-import java.util.Calendar;
 import java.util.Date;
 
 @SuppressWarnings("unused")
@@ -61,10 +60,23 @@ public class ExpenseItPostReceipt implements Serializable {
     @SerializedName("eta")
     private int eta;
 
+    //non serializable
+    private transient String userId;
+
+    private transient long contentId;
+
     private ErrorResponse expenseError = null;
 
     public void setExpenseError(ErrorResponse expenseError) {
         this.expenseError = expenseError;
+    }
+
+    public long getContentId() {
+        return contentId;
+    }
+
+    public void setContentId(long id) {
+        this.contentId = id;
     }
 
     public Long getId() {
@@ -73,6 +85,14 @@ public class ExpenseItPostReceipt implements Serializable {
 
     public void setId(long id) {
         this.id = id;
+    }
+
+    public String getUserId() {
+        return userId;
+    }
+
+    public void setUserId(String userId) {
+        this.userId = userId;
     }
 
     public Long getReportId() {

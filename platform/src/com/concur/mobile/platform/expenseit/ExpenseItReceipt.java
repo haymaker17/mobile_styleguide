@@ -20,7 +20,9 @@ import com.concur.mobile.platform.util.CursorUtil;
 import com.concur.mobile.platform.util.Parse;
 import com.google.gson.annotations.SerializedName;
 
+import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.List;
 
 public class ExpenseItReceipt implements ExpenseItReceiptDAO {
 
@@ -29,10 +31,10 @@ public class ExpenseItReceipt implements ExpenseItReceiptDAO {
     /**
      * String array containing all the ETag column names.
      */
-    public static String[] fullColumnList = { //
-        Expense.ExpenseItReceiptColumns._ID, //
-        Expense.ExpenseItReceiptColumns.ID, //
-        Expense.ExpenseItReceiptColumns.USER_ID, //
+    public static String[] fullColumnList = {
+        Expense.ExpenseItReceiptColumns._ID,
+        Expense.ExpenseItReceiptColumns.ID,
+        Expense.ExpenseItReceiptColumns.USER_ID,
         Expense.ExpenseItReceiptColumns.REPORT_ID,
         Expense.ExpenseItReceiptColumns.NOTE,
         Expense.ExpenseItReceiptColumns.CCTYPE,
@@ -106,6 +108,17 @@ public class ExpenseItReceipt implements ExpenseItReceiptDAO {
     protected transient Context context;
 
     /**
+     * Constructs an instance of <code>ExpenseItReceipt</code> with information stored in a cursor.
+     *
+     * @param context contains an application context.
+     * @param cursor  contains a cursor.
+     */
+    public ExpenseItReceipt(Context context, Cursor cursor) {
+        this.context = context;
+        init(cursor);
+    }
+
+    /**
      * Will construct an instance of <code>ExpenseItReceipt</code> with an application context.
      *
      * @param context contains a reference to an application context.
@@ -118,20 +131,29 @@ public class ExpenseItReceipt implements ExpenseItReceiptDAO {
     }
 
     /**
-     * Constructs an instance of <code>ExpenseItReceipt</code> with information populated from a Uri.
+     * get the full list of expenseIt Receipts from expense.db
      *
-     * @param context    contains an application context.
-     * @param contentUri contains the Uri.
+     * @return
      */
-    public ExpenseItReceipt(Context context, Uri contentUri) {
-        this.context = context;
+    @Override
+    public List<ExpenseItPostReceipt> getReceipts() {
+
+        List<ExpenseItPostReceipt> receipts = new ArrayList<>();
+
         ContentResolver resolver = context.getContentResolver();
         Cursor cursor = null;
+        if (userId == null) {
+            throw new IllegalArgumentException("UserId should be set");
+        }
         try {
-            cursor = resolver.query(contentUri, fullColumnList, null, null, Expense.ExpenseItReceiptColumns.DEFAULT_SORT_ORDER);
+            StringBuilder statement = new StringBuilder();
+            statement.append(Expense.ExpenseItReceiptColumns.USER_ID);
+            statement.append(" = ?");
+            String[] whereArgs = {userId};
+            cursor = resolver.query(Expense.ExpenseItReceiptColumns.CONTENT_URI, fullColumnList, statement.toString(), whereArgs, Expense.ExpenseItReceiptColumns.DEFAULT_SORT_ORDER);
             if (cursor != null) {
-                if (cursor.moveToFirst()) {
-                    init(cursor);
+                while (cursor.moveToNext()) {
+                    receipts.add(getReceipt(cursor));
                 }
             }
         } finally {
@@ -139,17 +161,41 @@ public class ExpenseItReceipt implements ExpenseItReceiptDAO {
                 cursor.close();
             }
         }
+
+        return receipts;
     }
 
-    /**
-     * Constructs an instance of <code>ExpenseItReceipt</code> with information stored in a cursor.
-     *
-     * @param context contains an application context.
-     * @param cursor  contains a cursor.
-     */
-    public ExpenseItReceipt(Context context, Cursor cursor) {
-        this.context = context;
-        init(cursor);
+    private static ExpenseItPostReceipt getReceipt(Cursor cursor) {
+        ExpenseItPostReceipt receipt = new ExpenseItPostReceipt();
+        receipt.setId(CursorUtil.getLongValue(cursor, Expense.ExpenseItReceiptColumns.ID));
+        receipt.setUserId(CursorUtil.getStringValue(cursor, Expense.ExpenseItReceiptColumns.USER_ID));
+        receipt.setReportId(CursorUtil.getLongValue(cursor, Expense.ExpenseItReceiptColumns.REPORT_ID));
+        receipt.setNote(CursorUtil.getStringValue(cursor, Expense.ExpenseItReceiptColumns.NOTE));
+        receipt.setCcType(CursorUtil.getStringValue(cursor, Expense.ExpenseItReceiptColumns.CCTYPE));
+        Long createdMilliSeconds = CursorUtil.getLongValue(cursor, Expense.ExpenseItReceiptColumns.CREATED_AT);
+        if (createdMilliSeconds != null) {
+            Calendar createdAtCol = Calendar.getInstance(Parse.UTC);
+            createdAtCol.setTimeInMillis(createdMilliSeconds);
+            createdAtCol.set(Calendar.MILLISECOND, 0);
+            receipt.setCreatedAt(createdAtCol.getTime());
+        }
+        Long sentToCteMilliSeconds = CursorUtil.getLongValue(cursor, Expense.ExpenseItReceiptColumns.SEND_TO_CTE_AT);
+        if (sentToCteMilliSeconds != null) {
+            Calendar sendToCteAtCol = Calendar.getInstance(Parse.UTC);
+            sendToCteAtCol.setTimeInMillis(sentToCteMilliSeconds);
+            sendToCteAtCol.set(Calendar.MILLISECOND, 0);
+            receipt.setSendToCteAt(sendToCteAtCol.getTime());
+        }
+        receipt.setImageDataUrl(CursorUtil.getStringValue(cursor, Expense.ExpenseItReceiptColumns.IMAGE_DATA_URL));
+        receipt.setTotalImageCount(CursorUtil.getIntValue(cursor, Expense.ExpenseItReceiptColumns.TOTAL_IMAGE_COUNT));
+        receipt.setTotalImagesUploaded(CursorUtil.getIntValue(cursor, Expense.ExpenseItReceiptColumns.TOTAL_IMAGES_UPLOADED));
+        receipt.setParsingStatusCode(CursorUtil.getIntValue(cursor, Expense.ExpenseItReceiptColumns.PARSING_STATUS_CODE));
+        receipt.setProcessingEngine(CursorUtil.getStringValue(cursor, Expense.ExpenseItReceiptColumns.PROCESSING_ENGINE));
+        receipt.setEta(CursorUtil.getIntValue(cursor, Expense.ExpenseItReceiptColumns.ETA));
+
+        receipt.setContentId(CursorUtil.getLongValue(cursor, Expense.ExpenseItReceiptColumns._ID));
+
+        return receipt;
     }
 
     private void init(Cursor cursor) {

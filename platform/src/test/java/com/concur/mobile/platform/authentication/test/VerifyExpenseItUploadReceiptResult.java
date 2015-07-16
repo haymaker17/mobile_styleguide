@@ -5,8 +5,6 @@ package com.concur.mobile.platform.authentication.test;
 
 import android.content.Context;
 
-import com.concur.mobile.platform.authentication.SessionInfo;
-import com.concur.mobile.platform.config.provider.ConfigUtil;
 import com.concur.mobile.platform.expenseit.ExpenseItPostReceipt;
 import com.concur.mobile.platform.expenseit.ExpenseItPostReceiptResponse;
 
@@ -18,6 +16,8 @@ import org.junit.Assert;
  * @author andrewk
  */
 public class VerifyExpenseItUploadReceiptResult {
+
+    final String MTAG = CLS_TAG + ".verify";
 
     private static final String CLS_TAG = VerifyExpenseItUploadReceiptResult.class.getSimpleName();
 
@@ -33,8 +33,6 @@ public class VerifyExpenseItUploadReceiptResult {
      *             throws an exception if the stored login result data does not match <code>loginResult</code>.
      */
     public void verify(Context context, ExpenseItPostReceiptResponse receiptResponse) throws Exception {
-
-        final String MTAG = CLS_TAG + ".verify";
 
         //Verify LoginResult is not null
         if (receiptResponse == null) {

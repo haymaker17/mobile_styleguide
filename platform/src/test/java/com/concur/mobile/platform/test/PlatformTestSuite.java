@@ -9,6 +9,7 @@ import android.util.Pair;
 
 import com.concur.mobile.core.expenseIt.ExpenseItServerUtil;
 import com.concur.mobile.platform.authentication.AccessToken;
+import com.concur.mobile.platform.authentication.ExpenseIt.ExpenseItGetReceiptTaskTest;
 import com.concur.mobile.platform.authentication.ExpenseIt.ExpenseItLoginRequestTaskTest;
 import com.concur.mobile.platform.authentication.ExpenseIt.ExpenseItUploadReceiptTaskTest;
 import com.concur.mobile.platform.authentication.LoginResult;
@@ -704,6 +705,54 @@ public class PlatformTestSuite {
 
         // Run the SaveMobileEntryRequestTask test.
         saveMETest.doTest();
+    }
+
+    @Test
+    public void doGetExpenseListFromExpenseIt() throws Exception {
+
+        // Init and perform a PP login.
+        ExpenseItGetReceiptTaskTest test = new ExpenseItGetReceiptTaskTest();
+
+        // Set login credentials.
+        String loginId;
+        String loginPinPassword;
+
+        // If using the mock server, then
+        if (PlatformTestApplication.useMockServer()) {
+            // Using mock-server, doesn't matter what the credentials
+            // actually are!
+            loginId = "ahuser40@utest.com";
+            loginPinPassword = "collective0";
+
+            // Init mock server.
+            initMockServer(new MockExpenseItServer());
+
+            // Set the mock server instance on the test.
+            test.setMockServer(server);
+        } else {
+            // Using live server! Enforce specified credentials.
+            loginId = System.getProperty(Const.PPLOGIN_ID, "").trim();
+            if (TextUtils.isEmpty(loginId)) {
+                throw new Exception(CLS_TAG + ".doPinPassword: using live server, no '" + Const.PPLOGIN_ID
+                    + "' system property specified!");
+            }
+            loginPinPassword = System.getProperty(Const.PPLOGIN_PIN_PASSWORD, "").trim();
+            if (TextUtils.isEmpty(loginPinPassword)) {
+                throw new Exception(CLS_TAG + ".doPinPassword: using live server, no '" + Const.PPLOGIN_PIN_PASSWORD
+                    + "' system property specified!");
+            }
+        }
+        // Set the credentials.
+        test.setCredentials(loginId, loginPinPassword);
+
+        // Init content providers.
+        initContentProviders();
+
+        initExpenseItProperties();
+
+        // Run the test.
+        test.doTest();
+
     }
 
     @Test

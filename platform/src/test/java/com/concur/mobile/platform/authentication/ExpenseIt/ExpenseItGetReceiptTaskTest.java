@@ -4,15 +4,14 @@
 package com.concur.mobile.platform.authentication.ExpenseIt;
 
 import android.content.Context;
-import android.content.res.AssetManager;
 
 import com.concur.mobile.base.service.BaseAsyncRequestTask;
 import com.concur.mobile.base.service.BaseAsyncResultReceiver;
-import com.concur.mobile.base.util.IOUtils;
-import com.concur.mobile.platform.authentication.test.VerifyExpenseItUploadReceiptResult;
-import com.concur.mobile.platform.expenseit.ExpenseItImage;
+import com.concur.mobile.platform.authentication.SessionInfo;
+import com.concur.mobile.platform.authentication.test.VerifyExpenseItGetReceiptsResult;
+import com.concur.mobile.platform.config.provider.ConfigUtil;
 import com.concur.mobile.platform.expenseit.ExpenseItPostReceiptResponse;
-import com.concur.mobile.platform.expenseit.PostExpenseItReceiptAsyncTask;
+import com.concur.mobile.platform.expenseit.GetExpenseItExpenseListAsyncTask;
 import com.concur.mobile.platform.test.AsyncRequestTest;
 import com.concur.mobile.platform.test.Const;
 import com.concur.mobile.platform.test.PlatformTestApplication;
@@ -23,9 +22,6 @@ import org.apache.http.HttpStatus;
 import org.junit.Assert;
 import org.robolectric.shadows.ShadowLog;
 
-import java.io.ByteArrayOutputStream;
-import java.io.IOException;
-import java.io.InputStream;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -35,9 +31,9 @@ import java.util.Map;
  *
  * @author andrewk
  */
-public class ExpenseItUploadReceiptTaskTest extends AsyncRequestTest {
+public class ExpenseItGetReceiptTaskTest extends AsyncRequestTest {
 
-    private static final String CLS_TAG = ExpenseItUploadReceiptTaskTest.class.getSimpleName();
+    private static final String CLS_TAG = ExpenseItGetReceiptTaskTest.class.getSimpleName();
 
     private static final boolean DEBUG = false;
 
@@ -71,24 +67,28 @@ public class ExpenseItUploadReceiptTaskTest extends AsyncRequestTest {
 
         Context context = PlatformTestApplication.getApplication();
 
+        // Verify User Information.
+        SessionInfo sessionInfo = ConfigUtil.getSessionInfo(context);
+        String userId = sessionInfo.getUserId();
+
         // Set the mock response if the mock server is being used.
         if (PlatformTestApplication.useMockServer()) {
 
             // Set the mock response for the test.
-            Map<String, String> responseHeaders = new HashMap<String, String>();
+            Map<String, String> responseHeaders = new HashMap();
 
             // Set the content-type.
             responseHeaders.put("Content-Type", "application/json");
             // Set the mock response for the test.
-            setMockResponse(mockServer, HttpStatus.SC_OK, "receipt/ExpenseItUploadImageResponse.json", responseHeaders);
+            setMockResponse(mockServer, HttpStatus.SC_OK, "receipt/GetExpenseItExpenseListResponse.json", responseHeaders);
         }
 
         // Initiate the login request.
-        BaseAsyncResultReceiver uploadReceiptReceiver = new BaseAsyncResultReceiver(getHander());
-        uploadReceiptReceiver.setListener(new AsyncReplyListenerImpl());
+        BaseAsyncResultReceiver getExpenseItReceiptReceiver = new BaseAsyncResultReceiver(getHander());
+        getExpenseItReceiptReceiver.setListener(new AsyncReplyListenerImpl());
         //Make the call
-        PostExpenseItReceiptAsyncTask reqTask = new PostExpenseItReceiptAsyncTask(context,
-            0, uploadReceiptReceiver, getImage(context));
+        GetExpenseItExpenseListAsyncTask reqTask = new GetExpenseItExpenseListAsyncTask(context,
+            0, userId, getExpenseItReceiptReceiver);
 
         reqTask.setRetainResponse(true);
 
@@ -143,12 +143,12 @@ public class ExpenseItUploadReceiptTaskTest extends AsyncRequestTest {
                     String response = getResponseString(reqTask);
                     Assert.assertNotNull("request response is null", response);
 
-                    // Build the parser with type deserializers.
+                    // Build the parser with type+ deserializers.
                     Gson gson = new GsonBuilder().setDateFormat("yyyy-MM-dd HH:mm:ss").create();
 
                     ExpenseItPostReceiptResponse receiptResponse = gson.fromJson(response, ExpenseItPostReceiptResponse.class);
-                    VerifyExpenseItUploadReceiptResult verifier = new VerifyExpenseItUploadReceiptResult();
-                    verifier.verify(context, receiptResponse);
+                    VerifyExpenseItGetReceiptsResult verifier = new VerifyExpenseItGetReceiptsResult();
+                    verifier.verify(context, userId, receiptResponse);
 
                     if (DEBUG) {
                         ShadowLog.d(Const.LOG_TAG, CLS_TAG + ".doTest: result ok.");
@@ -159,24 +159,6 @@ public class ExpenseItUploadReceiptTaskTest extends AsyncRequestTest {
 
         }
 
-    }
-
-    protected ExpenseItImage getImage(Context context) throws IOException {
-
-        String filePath = "receipt/IMG_20140731_142657.jpg";
-
-        // Set the content-length.
-        AssetManager assetMngr = context.getAssets();
-        InputStream is = assetMngr.open(filePath);
-        ByteArrayOutputStream outStr = IOUtils.reusableOutputStream(is);
-
-        //Setup the image information
-        ExpenseItImage image = new ExpenseItImage();
-        String contentType = contentType = "image/png";
-
-        //Compress the bitmap
-        image.setData(outStr.toByteArray(), contentType);
-        return image;
     }
 
 }

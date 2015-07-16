@@ -4,8 +4,10 @@
 
 package com.concur.mobile.platform.expenseit.dao;
 
+import com.concur.mobile.platform.expenseit.ExpenseItPostReceipt;
+
 import java.util.Calendar;
-import java.util.Date;
+import java.util.List;
 
 @SuppressWarnings("unused")
 public interface ExpenseItReceiptDAO {
@@ -76,4 +78,9 @@ public interface ExpenseItReceiptDAO {
      */
     void deleteAll();
 
+    /**
+     * Get all receipts list
+     * @return
+     */
+    List<ExpenseItPostReceipt> getReceipts();
 }
