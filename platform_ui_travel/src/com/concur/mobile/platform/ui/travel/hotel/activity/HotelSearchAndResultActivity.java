@@ -1022,7 +1022,8 @@ public class HotelSearchAndResultActivity extends TravelBaseActivity
     // invokes the updateUI call on the fragment
     private void updateResultsFragmentUI(List<HotelSearchResultListItem> hotelListItemsToUpdate, String toastMessage) {
         listItemAdapater.setItems(hotelListItemsToUpdate);
-        hotelSearchRESTResultFrag.updateUI(listItemAdapater, hotelListItemsToUpdate.size(), toastMessage);
+        hotelSearchRESTResultFrag
+                .updateUI(listItemAdapater, hotelListItems, hotelListItemsToUpdate.size(), toastMessage);
     }
 
     private void callPollLoader() {
