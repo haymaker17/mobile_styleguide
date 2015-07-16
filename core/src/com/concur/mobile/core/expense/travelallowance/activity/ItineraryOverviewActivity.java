@@ -1,9 +1,12 @@
 package com.concur.mobile.core.expense.travelallowance.activity;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.ActionBar;
 import android.support.v7.widget.Toolbar;
 import android.view.MenuItem;
+import android.view.View;
+import android.widget.AdapterView;
 import android.widget.ListView;
 
 import com.concur.core.R;
@@ -11,6 +14,7 @@ import com.concur.mobile.core.ConcurCore;
 import com.concur.mobile.core.activity.BaseActivity;
 import com.concur.mobile.core.expense.travelallowance.adapter.ItineraryOverviewListAdapter;
 import com.concur.mobile.core.expense.travelallowance.controller.TravelAllowanceItineraryController;
+import com.concur.mobile.core.expense.travelallowance.ui.model.CompactItinerary;
 import com.concur.mobile.core.util.Const;
 
 /**
@@ -49,6 +53,10 @@ public class ItineraryOverviewActivity extends BaseActivity {
      */
     private static final int LAYOUT_ID = R.layout.ta_itinerary_overview_activity;
 
+    /**
+     * The request code for the update activity
+     */
+    private static final int REQUEST_VIEW_TA_ITINERARY_UPDATE = 0;
 
     /**
      * {@inheritDoc}
@@ -77,13 +85,27 @@ public class ItineraryOverviewActivity extends BaseActivity {
         ActionBar actionBar = getSupportActionBar();
         if (actionBar != null) {
             actionBar.setDisplayHomeAsUpEnabled(true);
-            actionBar.setTitle("@Itineraries@");
+            actionBar.setTitle("@List of editable Itineraries@");
         }
 
         ListView listView = (ListView) findViewById(R.id.list_view);
         if (listView != null) {
             adapter = new ItineraryOverviewListAdapter(this);
             listView.setAdapter(adapter);
+            listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+                @Override
+                public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                    if (view == null) {
+                        return;
+                    }
+                    CompactItinerary compactItinerary = itineraryController.getCompactItineraryList().get(position);
+                    Intent intent = new Intent(ItineraryOverviewActivity.this, ItineraryUpdateActivity.class);
+                    intent.putExtra(Const.EXTRA_EXPENSE_REPORT_KEY, expenseReportKey);
+                    intent.putExtra(Const.EXTRA_EXPENSE_REPORT_NAME, expenseReportName);
+                    intent.putExtra(Const.EXTRA_ITINERARY_KEY, compactItinerary.getItineraryID());
+                    startActivityForResult(intent, REQUEST_VIEW_TA_ITINERARY_UPDATE);
+                }
+            });
         }
     }
 

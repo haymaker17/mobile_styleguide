@@ -41,19 +41,14 @@ public class ItineraryUpdateController {
         this.useMockData = true;
     }
 
-    public void refreshCompactItinerary(String expenseReportName) {
-        if (StringUtilities.isNullOrEmpty(expenseReportName)) {
-            //Temporary
-            //TODO MB: Replace
-            ConcurCore app = (ConcurCore) context.getApplicationContext();
-            TravelAllowanceItineraryController controller = app.getTaItineraryController();
-            List<CompactItinerary> compactItineraries = controller.getCompactItineraryList();
-            this.compactItinerary = compactItineraries.get(0);
-            return;
+    public void refreshCompactItinerary(String itineraryId) {
+        ConcurCore app = (ConcurCore) context.getApplicationContext();
+        TravelAllowanceItineraryController controller = app.getTaItineraryController();
+        this.compactItinerary = controller.getCompactItinerary(itineraryId);
+        if (this.compactItinerary == null) {//Create Mode
+            ItineraryUpdateTestData testData = new ItineraryUpdateTestData();
+            this.compactItinerary = testData.getCompactItinerary();
         }
-
-        ItineraryUpdateTestData testData = new ItineraryUpdateTestData();
-        this.compactItinerary = testData.getCompactItinerary();
     }
 
     public CompactItinerary getCompactItinerary(){

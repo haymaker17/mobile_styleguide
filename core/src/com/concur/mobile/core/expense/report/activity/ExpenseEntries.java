@@ -264,7 +264,11 @@ public class
 
         if (expRep != null) {
             ConcurCore app = (ConcurCore) getApplication();
-            app.getTaItineraryController().refreshItineraries(expRep.reportKey, true);
+            if (reportKeySource == Const.EXTRA_EXPENSE_REPORT_SOURCE_APPROVAL) {
+                app.getTaItineraryController().refreshItineraries(expRep.reportKey, true);
+            } else {
+                app.getTaItineraryController().refreshItineraries(expRep.reportKey, false);
+            }
             app.getFixedTravelAllowanceController().refreshFixedTravelAllowances(expRep.reportKey);
 
 //          Register Listener for Itinerary data and make button visible

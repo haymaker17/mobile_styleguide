@@ -13,7 +13,6 @@ import android.view.View;
 import android.widget.EditText;
 import android.widget.ListView;
 import android.widget.TimePicker;
-import android.widget.Toast;
 
 import com.concur.core.R;
 import com.concur.mobile.core.ConcurCore;
@@ -52,9 +51,6 @@ public class ItineraryUpdateActivity extends BaseActivity {
     private ItineraryUpdateController updateController;
     private ItineraryUpdateListAdapter adapter;
     private PositionInfoTag currentPosition;
-    private View.OnClickListener onTimeClickListener;
-    private View.OnClickListener onDateClickListener;
-    private View.OnClickListener onLocationClickListener;
     private CalendarPickerDialogV1.OnDateSetListener onDateSetListener;
     private TimePickerFragment.OnTimeSetListener onTimeSetListener;
 
@@ -66,6 +62,12 @@ public class ItineraryUpdateActivity extends BaseActivity {
      */
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+
+        View.OnClickListener onTimeClickListener;
+        View.OnClickListener onDateClickListener;
+        View.OnClickListener onLocationClickListener;
+
+        String itineraryId = null;
         super.onCreate(savedInstanceState);
         ConcurCore app = (ConcurCore) getApplication();
         app.getTAConfigController().refreshConfiguration();
@@ -83,7 +85,11 @@ public class ItineraryUpdateActivity extends BaseActivity {
             expenseReportName = getIntent().getStringExtra(Const.EXTRA_EXPENSE_REPORT_NAME);
         }
 
-        updateController.refreshCompactItinerary(expenseReportName);
+        if (getIntent().hasExtra(Const.EXTRA_ITINERARY_KEY)) {
+            itineraryId = getIntent().getStringExtra(Const.EXTRA_ITINERARY_KEY);
+        }
+
+        updateController.refreshCompactItinerary(itineraryId);
 
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         if (toolbar != null) {
@@ -93,7 +99,11 @@ public class ItineraryUpdateActivity extends BaseActivity {
         ActionBar actionBar = getSupportActionBar();
         if (actionBar != null) {
             actionBar.setDisplayHomeAsUpEnabled(true);
-            actionBar.setTitle("@New Itinerary@");
+            if (StringUtilities.isNullOrEmpty(itineraryId)) {
+                actionBar.setTitle("@New Itinerary@");
+            } else {
+                actionBar.setTitle("@Edit Itinerary@");
+            }
 
         }
 

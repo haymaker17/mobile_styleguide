@@ -761,6 +761,9 @@ public final class Const {
     public static final String EXTRA_LOGIN_LAUNCHED_FROM_PRE_LOGIN = "login.launched.from.pre.login";
     public static final String EXTRA_LOGIN_LAUNCHED_FROM_TEST_DRIVE_REGISTRATION = "login.launched.from.test.drive.registration";
 
+    // Itinerary and Travel Allowance related extra intent key values.
+    public static final String EXTRA_ITINERARY_KEY = "itinerary.key";
+
     // Travel related extra intent key values.
     public static final String EXTRA_TRAVEL_VOICE_BOOK_INITIATED = "travel.voice.book.initiated";
     public static final String EXTRA_TRAVEL_HOTEL_SEARCH_LOCATION = "travel.hotel.search.location";

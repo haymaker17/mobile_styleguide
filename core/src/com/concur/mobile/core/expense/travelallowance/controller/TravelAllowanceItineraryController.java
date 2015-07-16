@@ -14,6 +14,7 @@ import com.concur.mobile.core.expense.travelallowance.datamodel.ItinerarySegment
 import com.concur.mobile.core.expense.travelallowance.service.GetTAItinerariesRequest;
 import com.concur.mobile.core.expense.travelallowance.ui.model.CompactItinerary;
 import com.concur.mobile.core.expense.travelallowance.ui.model.CompactItinerarySegment;
+import com.concur.mobile.core.expense.travelallowance.util.StringUtilities;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -124,6 +125,18 @@ public class TravelAllowanceItineraryController {
             return new ArrayList<Itinerary>();
         }
         return itineraryList;
+    }
+
+    public CompactItinerary getCompactItinerary(String compactItineraryId) {
+        if (StringUtilities.isNullOrEmpty(compactItineraryId)) {
+            return null;
+        }
+        for (CompactItinerary compItinerary : getCompactItineraryList()) {
+            if (compactItineraryId.equals(compItinerary.getItineraryID())) {
+                return compItinerary;
+            }
+        }
+        return null;
     }
 
     public List<CompactItinerary> getCompactItineraryList() {
