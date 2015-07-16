@@ -130,7 +130,7 @@ public class ConfigUtil {
                     Config.SessionColumns.USER_ID };
 
             // select non-expenseIt session
-            String whereClause = Config.SessionColumns.SESSION_ID + " != ?";
+            String whereClause = Config.SessionColumns.SESSION_ID + " != ? OR " + Config.SessionColumns.SESSION_ID + " IS NULL";
             String[] whereArgs = { EXPENSE_IT_SESSION_ID };
             cursor = resolver.query(Config.SessionColumns.CONTENT_URI, sessionColumns, whereClause, whereArgs,
                     Config.SessionColumns.DEFAULT_SORT_ORDER);

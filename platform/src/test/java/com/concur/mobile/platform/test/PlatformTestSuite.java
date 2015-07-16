@@ -8,8 +8,10 @@ import android.text.TextUtils;
 import android.util.Pair;
 
 import com.concur.mobile.core.expenseIt.ExpenseItServerUtil;
+import com.concur.mobile.platform.authentication.AccessToken;
 import com.concur.mobile.platform.authentication.ExpenseIt.ExpenseItLoginRequestTaskTest;
 import com.concur.mobile.platform.authentication.ExpenseIt.ExpenseItUploadReceiptTaskTest;
+import com.concur.mobile.platform.authentication.LoginResult;
 import com.concur.mobile.platform.authentication.SessionInfo;
 import com.concur.mobile.platform.authentication.system.config.test.SystemConfigRequestTaskTest;
 import com.concur.mobile.platform.authentication.test.AutoLoginRequestTaskTest;
@@ -815,7 +817,9 @@ public class PlatformTestSuite {
 
         configProvider.onCreate();
         ShadowContentResolver.registerProvider(com.concur.mobile.platform.config.provider.Config.AUTHORITY,
-                configProvider);
+            configProvider);
+
+        initConfigLoginInfo();
 
         // Initialize the travel content provider.
         TravelProvider travelProvider = new TravelProvider() {
@@ -842,6 +846,21 @@ public class PlatformTestSuite {
         expenseProvider.onCreate();
         ShadowContentResolver.registerProvider(com.concur.mobile.platform.expense.provider.Expense.AUTHORITY,
             expenseProvider);
+    }
+
+    /**
+     * Initializes a test user in config.Db session table.
+     */
+    private static void initConfigLoginInfo() {
+        //Init Session info for user
+        Context context = PlatformTestApplication.getApplication();
+        LoginResult loginResult = new LoginResult();
+        loginResult.userId = "allroles@ccrdemo.com";
+        loginResult.serverUrl = "www.concursolutions.com";
+        loginResult.userId = "gWnB$s4gQVrnBamNOI$sNB0Eoq54BXExKsAHw";
+        loginResult.accessToken = new AccessToken();
+        loginResult.accessToken.key = "AOai6mA9MM26vxtFb9DOx+exX/4=";
+        ConfigUtil.updateLoginInfo(context, loginResult);
     }
 
     /**

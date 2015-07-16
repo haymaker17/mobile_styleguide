@@ -1,7 +1,7 @@
 <MWSResponse xmlns:i="http://www.w3.org/2001/XMLSchema-instance">
 	<Response>
-	    <Email>testuser@gmail.com</Email>
-   		<LoginId>testuser@some.com</LoginId>
+	    <Email>ahuser40@utest.com</Email>
+   		<LoginId>ahuser40@utest.com</LoginId>
    		<ServerUrl>https://emea.concursolutions.com</ServerUrl>  
    		<SignInMethod>Password</SignInMethod>
    		<SsoUrl>https://pfizer.com/sso</SsoUrl>

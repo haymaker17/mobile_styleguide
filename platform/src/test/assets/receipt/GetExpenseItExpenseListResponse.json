@@ -1,0 +1,883 @@
+{
+  "expenses": [{
+    "id": "16650519",
+    "note": null,
+    "ccType": null,
+    "createdAt": "2015-06-09 14:13:52",
+    "sentToCteAt": null,
+    "imageDataUrl": null,
+    "totalImageCount": 1,
+    "totalImagesUploaded": 1,
+    "parsingStatusCode": 3,
+    "eta": 0,
+    "processingEngine": "R"
+  }, {
+    "id": "16670691",
+    "note": null,
+    "ccType": null,
+    "createdAt": "2015-06-09 19:12:41",
+    "sentToCteAt": null,
+    "imageDataUrl": null,
+    "totalImageCount": 1,
+    "totalImagesUploaded": 1,
+    "parsingStatusCode": 3,
+    "eta": 0,
+    "processingEngine": "R"
+  }, {
+    "id": "16734852",
+    "note": null,
+    "ccType": null,
+    "createdAt": "2015-06-10 13:22:18",
+    "sentToCteAt": null,
+    "imageDataUrl": null,
+    "totalImageCount": 1,
+    "totalImagesUploaded": 1,
+    "parsingStatusCode": 3,
+    "eta": 0,
+    "processingEngine": "R"
+  }, {
+    "id": "16828056",
+    "note": "qqHhh",
+    "ccType": "VI",
+    "createdAt": "2015-06-11 13:22:53",
+    "sentToCteAt": null,
+    "imageDataUrl": null,
+    "totalImageCount": 1,
+    "totalImagesUploaded": 1,
+    "parsingStatusCode": 1,
+    "eta": 0,
+    "processingEngine": "R"
+  }, {
+    "id": "16921983",
+    "note": null,
+    "ccType": null,
+    "createdAt": "2015-06-12 13:10:11",
+    "sentToCteAt": null,
+    "imageDataUrl": null,
+    "totalImageCount": 1,
+    "totalImagesUploaded": 1,
+    "parsingStatusCode": 3,
+    "eta": 0,
+    "processingEngine": "R"
+  }, {
+    "id": "17145693",
+    "note": null,
+    "ccType": "AX",
+    "createdAt": "2015-06-16 09:38:32",
+    "sentToCteAt": null,
+    "imageDataUrl": null,
+    "totalImageCount": 1,
+    "totalImagesUploaded": 1,
+    "parsingStatusCode": 1,
+    "eta": 0,
+    "processingEngine": "R"
+  }, {
+    "id": "17145789",
+    "note": null,
+    "ccType": "AX",
+    "createdAt": "2015-06-16 09:39:07",
+    "sentToCteAt": null,
+    "imageDataUrl": null,
+    "totalImageCount": 1,
+    "totalImagesUploaded": 1,
+    "parsingStatusCode": 1,
+    "eta": 0,
+    "processingEngine": "R"
+  }, {
+    "id": "17145822",
+    "note": null,
+    "ccType": "AX",
+    "createdAt": "2015-06-16 09:39:21",
+    "sentToCteAt": null,
+    "imageDataUrl": null,
+    "totalImageCount": 1,
+    "totalImagesUploaded": 1,
+    "parsingStatusCode": 1,
+    "eta": 0,
+    "processingEngine": "R"
+  }, {
+    "id": "17145867",
+    "note": null,
+    "ccType": "AX",
+    "createdAt": "2015-06-16 09:39:47",
+    "sentToCteAt": null,
+    "imageDataUrl": null,
+    "totalImageCount": 1,
+    "totalImagesUploaded": 1,
+    "parsingStatusCode": 1,
+    "eta": 0,
+    "processingEngine": "R"
+  }, {
+    "id": "17149116",
+    "note": null,
+    "ccType": "AX",
+    "createdAt": "2015-06-16 10:13:48",
+    "sentToCteAt": null,
+    "imageDataUrl": null,
+    "totalImageCount": 1,
+    "totalImagesUploaded": 1,
+    "parsingStatusCode": 1,
+    "eta": 0,
+    "processingEngine": "R"
+  }, {
+    "id": "17149140",
+    "note": null,
+    "ccType": "AX",
+    "createdAt": "2015-06-16 10:14:10",
+    "sentToCteAt": null,
+    "imageDataUrl": null,
+    "totalImageCount": 1,
+    "totalImagesUploaded": 1,
+    "parsingStatusCode": 1,
+    "eta": 0,
+    "processingEngine": "R"
+  }, {
+    "id": "17149500",
+    "note": null,
+    "ccType": null,
+    "createdAt": "2015-06-16 10:17:53",
+    "sentToCteAt": null,
+    "imageDataUrl": null,
+    "totalImageCount": 1,
+    "totalImagesUploaded": 1,
+    "parsingStatusCode": 5,
+    "eta": 75,
+    "processingEngine": "R",
+    "error": {
+      "error_code": 996,
+      "error_message": "Receipt analysis taking longer than usual. Thanks for your patience."
+    }
+  }, {
+    "id": "17149737",
+    "note": null,
+    "ccType": "AX",
+    "createdAt": "2015-06-16 10:20:07",
+    "sentToCteAt": null,
+    "imageDataUrl": null,
+    "totalImageCount": 1,
+    "totalImagesUploaded": 1,
+    "parsingStatusCode": 1,
+    "eta": 0,
+    "processingEngine": "R"
+  }, {
+    "id": "17262843",
+    "note": null,
+    "ccType": null,
+    "createdAt": "2015-06-17 13:51:39",
+    "sentToCteAt": null,
+    "imageDataUrl": null,
+    "totalImageCount": 1,
+    "totalImagesUploaded": 1,
+    "parsingStatusCode": 3,
+    "eta": 0,
+    "processingEngine": "R"
+  }, {
+    "id": "17264106",
+    "note": null,
+    "ccType": null,
+    "createdAt": "2015-06-17 14:05:48",
+    "sentToCteAt": null,
+    "imageDataUrl": null,
+    "totalImageCount": 1,
+    "totalImagesUploaded": 1,
+    "parsingStatusCode": 3,
+    "eta": 0,
+    "processingEngine": "R"
+  }, {
+    "id": "17332179",
+    "note": null,
+    "ccType": null,
+    "createdAt": "2015-06-18 10:10:26",
+    "sentToCteAt": null,
+    "imageDataUrl": null,
+    "totalImageCount": 1,
+    "totalImagesUploaded": 1,
+    "parsingStatusCode": 3,
+    "eta": 0,
+    "processingEngine": "R"
+  }, {
+    "id": "17333745",
+    "note": null,
+    "ccType": null,
+    "createdAt": "2015-06-18 10:23:17",
+    "sentToCteAt": null,
+    "imageDataUrl": null,
+    "totalImageCount": 1,
+    "totalImagesUploaded": 1,
+    "parsingStatusCode": 3,
+    "eta": 0,
+    "processingEngine": "R"
+  }, {
+    "id": "18477795",
+    "note": null,
+    "ccType": null,
+    "createdAt": "2015-07-02 12:32:20",
+    "sentToCteAt": null,
+    "imageDataUrl": null,
+    "totalImageCount": 1,
+    "totalImagesUploaded": 1,
+    "parsingStatusCode": 3,
+    "eta": 0,
+    "processingEngine": "R"
+  }, {
+    "id": "18480321",
+    "note": null,
+    "ccType": null,
+    "createdAt": "2015-07-02 12:58:55",
+    "sentToCteAt": null,
+    "imageDataUrl": null,
+    "totalImageCount": 1,
+    "totalImagesUploaded": 1,
+    "parsingStatusCode": 3,
+    "eta": 0,
+    "processingEngine": "R"
+  }, {
+    "id": "18485052",
+    "note": null,
+    "ccType": null,
+    "createdAt": "2015-07-02 13:46:08",
+    "sentToCteAt": null,
+    "imageDataUrl": null,
+    "totalImageCount": 1,
+    "totalImagesUploaded": 1,
+    "parsingStatusCode": 5,
+    "eta": 75,
+    "processingEngine": "R",
+    "error": {
+      "error_code": 996,
+      "error_message": "Receipt analysis taking longer than usual. Thanks for your patience."
+    }
+  }, {
+    "id": "18485400",
+    "note": null,
+    "ccType": null,
+    "createdAt": "2015-07-02 13:51:24",
+    "sentToCteAt": null,
+    "imageDataUrl": null,
+    "totalImageCount": 1,
+    "totalImagesUploaded": 1,
+    "parsingStatusCode": 5,
+    "eta": 75,
+    "processingEngine": "R",
+    "error": {
+      "error_code": 996,
+      "error_message": "Receipt analysis taking longer than usual. Thanks for your patience."
+    }
+  }, {
+    "id": "18485586",
+    "note": null,
+    "ccType": null,
+    "createdAt": "2015-07-02 13:54:44",
+    "sentToCteAt": null,
+    "imageDataUrl": null,
+    "totalImageCount": 1,
+    "totalImagesUploaded": 1,
+    "parsingStatusCode": 5,
+    "eta": 75,
+    "processingEngine": "R",
+    "error": {
+      "error_code": 996,
+      "error_message": "Receipt analysis taking longer than usual. Thanks for your patience."
+    }
+  }, {
+    "id": "18485916",
+    "note": null,
+    "ccType": null,
+    "createdAt": "2015-07-02 13:59:18",
+    "sentToCteAt": null,
+    "imageDataUrl": null,
+    "totalImageCount": 1,
+    "totalImagesUploaded": 1,
+    "parsingStatusCode": 3,
+    "eta": 0,
+    "processingEngine": "R"
+  }, {
+    "id": "18490065",
+    "note": null,
+    "ccType": null,
+    "createdAt": "2015-07-02 14:54:01",
+    "sentToCteAt": null,
+    "imageDataUrl": null,
+    "totalImageCount": 1,
+    "totalImagesUploaded": 1,
+    "parsingStatusCode": 3,
+    "eta": 0,
+    "processingEngine": "R"
+  }, {
+    "id": "18490188",
+    "note": null,
+    "ccType": null,
+    "createdAt": "2015-07-02 14:55:17",
+    "sentToCteAt": null,
+    "imageDataUrl": null,
+    "totalImageCount": 1,
+    "totalImagesUploaded": 1,
+    "parsingStatusCode": 5,
+    "eta": 75,
+    "processingEngine": "R",
+    "error": {
+      "error_code": 996,
+      "error_message": "Receipt analysis taking longer than usual. Thanks for your patience."
+    }
+  }, {
+    "id": "18490263",
+    "note": null,
+    "ccType": null,
+    "createdAt": "2015-07-02 14:56:16",
+    "sentToCteAt": null,
+    "imageDataUrl": null,
+    "totalImageCount": 1,
+    "totalImagesUploaded": 1,
+    "parsingStatusCode": 5,
+    "eta": 75,
+    "processingEngine": "R",
+    "error": {
+      "error_code": 996,
+      "error_message": "Receipt analysis taking longer than usual. Thanks for your patience."
+    }
+  }, {
+    "id": "18490509",
+    "note": null,
+    "ccType": null,
+    "createdAt": "2015-07-02 15:00:30",
+    "sentToCteAt": null,
+    "imageDataUrl": null,
+    "totalImageCount": 1,
+    "totalImagesUploaded": 1,
+    "parsingStatusCode": 3,
+    "eta": 0,
+    "processingEngine": "R"
+  }, {
+    "id": "18490908",
+    "note": null,
+    "ccType": null,
+    "createdAt": "2015-07-02 15:08:42",
+    "sentToCteAt": null,
+    "imageDataUrl": null,
+    "totalImageCount": 1,
+    "totalImagesUploaded": 1,
+    "parsingStatusCode": 3,
+    "eta": 0,
+    "processingEngine": "R"
+  }, {
+    "id": "18491316",
+    "note": null,
+    "ccType": null,
+    "createdAt": "2015-07-02 15:14:18",
+    "sentToCteAt": null,
+    "imageDataUrl": null,
+    "totalImageCount": 1,
+    "totalImagesUploaded": 1,
+    "parsingStatusCode": 3,
+    "eta": 0,
+    "processingEngine": "R"
+  }, {
+    "id": "18492291",
+    "note": null,
+    "ccType": null,
+    "createdAt": "2015-07-02 15:26:30",
+    "sentToCteAt": null,
+    "imageDataUrl": null,
+    "totalImageCount": 1,
+    "totalImagesUploaded": 1,
+    "parsingStatusCode": 3,
+    "eta": 0,
+    "processingEngine": "R"
+  }, {
+    "id": "18492336",
+    "note": null,
+    "ccType": null,
+    "createdAt": "2015-07-02 15:27:15",
+    "sentToCteAt": null,
+    "imageDataUrl": null,
+    "totalImageCount": 1,
+    "totalImagesUploaded": 1,
+    "parsingStatusCode": 3,
+    "eta": 0,
+    "processingEngine": "R"
+  }, {
+    "id": "18492516",
+    "note": null,
+    "ccType": null,
+    "createdAt": "2015-07-02 15:30:29",
+    "sentToCteAt": null,
+    "imageDataUrl": null,
+    "totalImageCount": 1,
+    "totalImagesUploaded": 1,
+    "parsingStatusCode": 3,
+    "eta": 0,
+    "processingEngine": "R"
+  }, {
+    "id": "18502590",
+    "note": null,
+    "ccType": null,
+    "createdAt": "2015-07-02 19:01:50",
+    "sentToCteAt": null,
+    "imageDataUrl": null,
+    "totalImageCount": 1,
+    "totalImagesUploaded": 1,
+    "parsingStatusCode": 3,
+    "eta": 0,
+    "processingEngine": "R"
+  }, {
+    "id": "18503523",
+    "note": null,
+    "ccType": "$$",
+    "createdAt": "2015-07-02 19:29:59",
+    "sentToCteAt": null,
+    "imageDataUrl": null,
+    "totalImageCount": 1,
+    "totalImagesUploaded": 1,
+    "parsingStatusCode": 1,
+    "eta": 0,
+    "processingEngine": "R"
+  }, {
+    "id": "18503604",
+    "note": null,
+    "ccType": null,
+    "createdAt": "2015-07-02 19:33:38",
+    "sentToCteAt": null,
+    "imageDataUrl": null,
+    "totalImageCount": 1,
+    "totalImagesUploaded": 1,
+    "parsingStatusCode": 5,
+    "eta": 75,
+    "processingEngine": "R",
+    "error": {
+      "error_code": 996,
+      "error_message": "Receipt analysis taking longer than usual. Thanks for your patience."
+    }
+  }, {
+    "id": "18743550",
+    "note": null,
+    "ccType": null,
+    "createdAt": "2015-07-07 12:40:50",
+    "sentToCteAt": null,
+    "imageDataUrl": null,
+    "totalImageCount": 1,
+    "totalImagesUploaded": 1,
+    "parsingStatusCode": 3,
+    "eta": 0,
+    "processingEngine": "R"
+  }, {
+    "id": "18746409",
+    "note": null,
+    "ccType": null,
+    "createdAt": "2015-07-07 13:10:07",
+    "sentToCteAt": null,
+    "imageDataUrl": null,
+    "totalImageCount": 1,
+    "totalImagesUploaded": 1,
+    "parsingStatusCode": 3,
+    "eta": 0,
+    "processingEngine": "R"
+  }, {
+    "id": "18833688",
+    "note": null,
+    "ccType": null,
+    "createdAt": "2015-07-08 13:47:13",
+    "sentToCteAt": null,
+    "imageDataUrl": null,
+    "totalImageCount": 1,
+    "totalImagesUploaded": 1,
+    "parsingStatusCode": 3,
+    "eta": 0,
+    "processingEngine": "R"
+  }, {
+    "id": "18833742",
+    "note": null,
+    "ccType": null,
+    "createdAt": "2015-07-08 13:48:08",
+    "sentToCteAt": null,
+    "imageDataUrl": null,
+    "totalImageCount": 1,
+    "totalImagesUploaded": 1,
+    "parsingStatusCode": 3,
+    "eta": 0,
+    "processingEngine": "R"
+  }, {
+    "id": "18834447",
+    "note": null,
+    "ccType": null,
+    "createdAt": "2015-07-08 13:55:49",
+    "sentToCteAt": null,
+    "imageDataUrl": null,
+    "totalImageCount": 1,
+    "totalImagesUploaded": 1,
+    "parsingStatusCode": 5,
+    "eta": 75,
+    "processingEngine": "R",
+    "error": {
+      "error_code": 996,
+      "error_message": "Receipt analysis taking longer than usual. Thanks for your patience."
+    }
+  }, {
+    "id": "18835542",
+    "note": null,
+    "ccType": null,
+    "createdAt": "2015-07-08 14:09:05",
+    "sentToCteAt": null,
+    "imageDataUrl": null,
+    "totalImageCount": 1,
+    "totalImagesUploaded": 1,
+    "parsingStatusCode": 5,
+    "eta": 75,
+    "processingEngine": "R",
+    "error": {
+      "error_code": 996,
+      "error_message": "Receipt analysis taking longer than usual. Thanks for your patience."
+    }
+  }, {
+    "id": "18835974",
+    "note": null,
+    "ccType": null,
+    "createdAt": "2015-07-08 14:13:51",
+    "sentToCteAt": null,
+    "imageDataUrl": null,
+    "totalImageCount": 1,
+    "totalImagesUploaded": 1,
+    "parsingStatusCode": 5,
+    "eta": 75,
+    "processingEngine": "R",
+    "error": {
+      "error_code": 996,
+      "error_message": "Receipt analysis taking longer than usual. Thanks for your patience."
+    }
+  }, {
+    "id": "18836721",
+    "note": null,
+    "ccType": null,
+    "createdAt": "2015-07-08 14:22:40",
+    "sentToCteAt": null,
+    "imageDataUrl": null,
+    "totalImageCount": 1,
+    "totalImagesUploaded": 1,
+    "parsingStatusCode": 5,
+    "eta": 75,
+    "processingEngine": "R",
+    "error": {
+      "error_code": 996,
+      "error_message": "Receipt analysis taking longer than usual. Thanks for your patience."
+    }
+  }, {
+    "id": "18836796",
+    "note": null,
+    "ccType": null,
+    "createdAt": "2015-07-08 14:23:50",
+    "sentToCteAt": null,
+    "imageDataUrl": null,
+    "totalImageCount": 1,
+    "totalImagesUploaded": 1,
+    "parsingStatusCode": 5,
+    "eta": 75,
+    "processingEngine": "R",
+    "error": {
+      "error_code": 996,
+      "error_message": "Receipt analysis taking longer than usual. Thanks for your patience."
+    }
+  }, {
+    "id": "18837162",
+    "note": null,
+    "ccType": null,
+    "createdAt": "2015-07-08 14:27:45",
+    "sentToCteAt": null,
+    "imageDataUrl": null,
+    "totalImageCount": 1,
+    "totalImagesUploaded": 1,
+    "parsingStatusCode": 5,
+    "eta": 75,
+    "processingEngine": "R",
+    "error": {
+      "error_code": 996,
+      "error_message": "Receipt analysis taking longer than usual. Thanks for your patience."
+    }
+  }, {
+    "id": "18837291",
+    "note": null,
+    "ccType": null,
+    "createdAt": "2015-07-08 14:29:47",
+    "sentToCteAt": null,
+    "imageDataUrl": null,
+    "totalImageCount": 1,
+    "totalImagesUploaded": 1,
+    "parsingStatusCode": 5,
+    "eta": 75,
+    "processingEngine": "R",
+    "error": {
+      "error_code": 996,
+      "error_message": "Receipt analysis taking longer than usual. Thanks for your patience."
+    }
+  }, {
+    "id": "18837363",
+    "note": null,
+    "ccType": null,
+    "createdAt": "2015-07-08 14:30:33",
+    "sentToCteAt": null,
+    "imageDataUrl": null,
+    "totalImageCount": 1,
+    "totalImagesUploaded": 1,
+    "parsingStatusCode": 5,
+    "eta": 75,
+    "processingEngine": "R",
+    "error": {
+      "error_code": 996,
+      "error_message": "Receipt analysis taking longer than usual. Thanks for your patience."
+    }
+  }, {
+    "id": "18837810",
+    "note": null,
+    "ccType": null,
+    "createdAt": "2015-07-08 14:36:24",
+    "sentToCteAt": null,
+    "imageDataUrl": null,
+    "totalImageCount": 1,
+    "totalImagesUploaded": 1,
+    "parsingStatusCode": 5,
+    "eta": 75,
+    "processingEngine": "R",
+    "error": {
+      "error_code": 996,
+      "error_message": "Receipt analysis taking longer than usual. Thanks for your patience."
+    }
+  }, {
+    "id": "18837861",
+    "note": null,
+    "ccType": null,
+    "createdAt": "2015-07-08 14:37:08",
+    "sentToCteAt": null,
+    "imageDataUrl": null,
+    "totalImageCount": 1,
+    "totalImagesUploaded": 1,
+    "parsingStatusCode": 5,
+    "eta": 75,
+    "processingEngine": "R",
+    "error": {
+      "error_code": 996,
+      "error_message": "Receipt analysis taking longer than usual. Thanks for your patience."
+    }
+  }, {
+    "id": "18838203",
+    "note": null,
+    "ccType": null,
+    "createdAt": "2015-07-08 14:42:39",
+    "sentToCteAt": null,
+    "imageDataUrl": null,
+    "totalImageCount": 1,
+    "totalImagesUploaded": 1,
+    "parsingStatusCode": 5,
+    "eta": 75,
+    "processingEngine": "R",
+    "error": {
+      "error_code": 996,
+      "error_message": "Receipt analysis taking longer than usual. Thanks for your patience."
+    }
+  }, {
+    "id": "18838572",
+    "note": null,
+    "ccType": null,
+    "createdAt": "2015-07-08 14:47:27",
+    "sentToCteAt": null,
+    "imageDataUrl": null,
+    "totalImageCount": 1,
+    "totalImagesUploaded": 1,
+    "parsingStatusCode": 5,
+    "eta": 75,
+    "processingEngine": "R",
+    "error": {
+      "error_code": 996,
+      "error_message": "Receipt analysis taking longer than usual. Thanks for your patience."
+    }
+  }, {
+    "id": "18845451",
+    "note": null,
+    "ccType": null,
+    "createdAt": "2015-07-08 16:30:16",
+    "sentToCteAt": null,
+    "imageDataUrl": null,
+    "totalImageCount": 1,
+    "totalImagesUploaded": 1,
+    "parsingStatusCode": 3,
+    "eta": 0,
+    "processingEngine": "R"
+  }, {
+    "id": "18845580",
+    "note": null,
+    "ccType": null,
+    "createdAt": "2015-07-08 16:32:42",
+    "sentToCteAt": null,
+    "imageDataUrl": null,
+    "totalImageCount": 1,
+    "totalImagesUploaded": 1,
+    "parsingStatusCode": 3,
+    "eta": 0,
+    "processingEngine": "R"
+  }, {
+    "id": "19104578",
+    "note": null,
+    "ccType": null,
+    "createdAt": "2015-07-13 11:57:10",
+    "sentToCteAt": null,
+    "imageDataUrl": null,
+    "totalImageCount": 1,
+    "totalImagesUploaded": 1,
+    "parsingStatusCode": 3,
+    "eta": 0,
+    "processingEngine": "R"
+  }, {
+    "id": "19108730",
+    "note": null,
+    "ccType": null,
+    "createdAt": "2015-07-13 12:57:45",
+    "sentToCteAt": null,
+    "imageDataUrl": null,
+    "totalImageCount": 1,
+    "totalImagesUploaded": 1,
+    "parsingStatusCode": 3,
+    "eta": 0,
+    "processingEngine": "R"
+  }, {
+    "id": "19108880",
+    "note": null,
+    "ccType": null,
+    "createdAt": "2015-07-13 13:00:29",
+    "sentToCteAt": null,
+    "imageDataUrl": null,
+    "totalImageCount": 1,
+    "totalImagesUploaded": 1,
+    "parsingStatusCode": 3,
+    "eta": 0,
+    "processingEngine": "R"
+  }, {
+    "id": "19110382",
+    "note": null,
+    "ccType": null,
+    "createdAt": "2015-07-13 13:21:51",
+    "sentToCteAt": null,
+    "imageDataUrl": null,
+    "totalImageCount": 1,
+    "totalImagesUploaded": 1,
+    "parsingStatusCode": 3,
+    "eta": 0,
+    "processingEngine": "R"
+  }, {
+    "id": "19111412",
+    "note": null,
+    "ccType": null,
+    "createdAt": "2015-07-13 13:36:19",
+    "sentToCteAt": null,
+    "imageDataUrl": null,
+    "totalImageCount": 1,
+    "totalImagesUploaded": 1,
+    "parsingStatusCode": 5,
+    "eta": 75,
+    "processingEngine": "R",
+    "error": {
+      "error_code": 996,
+      "error_message": "Receipt analysis taking longer than usual. Thanks for your patience."
+    }
+  }, {
+    "id": "19111702",
+    "note": null,
+    "ccType": null,
+    "createdAt": "2015-07-13 13:39:41",
+    "sentToCteAt": null,
+    "imageDataUrl": null,
+    "totalImageCount": 1,
+    "totalImagesUploaded": 1,
+    "parsingStatusCode": 5,
+    "eta": 75,
+    "processingEngine": "R",
+    "error": {
+      "error_code": 996,
+      "error_message": "Receipt analysis taking longer than usual. Thanks for your patience."
+    }
+  }, {
+    "id": "19113024",
+    "note": null,
+    "ccType": null,
+    "createdAt": "2015-07-13 13:56:50",
+    "sentToCteAt": null,
+    "imageDataUrl": null,
+    "totalImageCount": 1,
+    "totalImagesUploaded": 1,
+    "parsingStatusCode": 5,
+    "eta": 75,
+    "processingEngine": "R",
+    "error": {
+      "error_code": 996,
+      "error_message": "Receipt analysis taking longer than usual. Thanks for your patience."
+    }
+  }, {
+    "id": "19113838",
+    "note": null,
+    "ccType": null,
+    "createdAt": "2015-07-13 14:11:32",
+    "sentToCteAt": null,
+    "imageDataUrl": null,
+    "totalImageCount": 1,
+    "totalImagesUploaded": 1,
+    "parsingStatusCode": 3,
+    "eta": 0,
+    "processingEngine": "R"
+  }, {
+    "id": "19114072",
+    "note": null,
+    "ccType": null,
+    "createdAt": "2015-07-13 14:16:34",
+    "sentToCteAt": null,
+    "imageDataUrl": null,
+    "totalImageCount": 1,
+    "totalImagesUploaded": 1,
+    "parsingStatusCode": 3,
+    "eta": 0,
+    "processingEngine": "R"
+  }, {
+    "id": "19114530",
+    "note": null,
+    "ccType": null,
+    "createdAt": "2015-07-13 14:26:03",
+    "sentToCteAt": null,
+    "imageDataUrl": null,
+    "totalImageCount": 1,
+    "totalImagesUploaded": 1,
+    "parsingStatusCode": 3,
+    "eta": 0,
+    "processingEngine": "R"
+  }, {
+    "id": "19118388",
+    "note": null,
+    "ccType": null,
+    "createdAt": "2015-07-13 15:35:48",
+    "sentToCteAt": null,
+    "imageDataUrl": null,
+    "totalImageCount": 1,
+    "totalImagesUploaded": 1,
+    "parsingStatusCode": 3,
+    "eta": 0,
+    "processingEngine": "R"
+  }, {
+    "id": "19118450",
+    "note": null,
+    "ccType": null,
+    "createdAt": "2015-07-13 15:36:30",
+    "sentToCteAt": null,
+    "imageDataUrl": null,
+    "totalImageCount": 1,
+    "totalImagesUploaded": 1,
+    "parsingStatusCode": 3,
+    "eta": 0,
+    "processingEngine": "R"
+  }, {
+    "id": "19160040",
+    "note": null,
+    "ccType": null,
+    "createdAt": "2015-07-14 11:21:32",
+    "sentToCteAt": null,
+    "imageDataUrl": null,
+    "totalImageCount": 1,
+    "totalImagesUploaded": 1,
+    "parsingStatusCode": 0,
+    "eta": 75,
+    "processingEngine": "R"
+  }]
+}
