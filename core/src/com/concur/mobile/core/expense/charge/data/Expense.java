@@ -22,6 +22,7 @@ import android.util.Log;
 import com.concur.mobile.core.util.Const;
 import com.concur.mobile.platform.expense.receipt.list.dao.ReceiptDAO;
 import com.concur.mobile.platform.expense.smartexpense.dao.SmartExpenseDAO;
+import com.concur.mobile.platform.expenseit.ExpenseItPostReceipt;
 
 /**
  * 
@@ -50,7 +51,9 @@ public class Expense {
         E_RECEIPT,       // E-receipt
         RECEIPT_CAPTURE, // A receipt capture/expense it expenses.
         OCR_NOT_DONE,   // An OCR receipt that is either pending, failed, or canceled.
+        EXPENSEIT_NOT_DONE,    // An ExpenseIt item that is currently in processing.
         UNKNOWN_EXPENSE // If we can't determine the type of expense based on keys and SmartExpenseId.
+
     };
 
     // The expense entry type.
@@ -77,6 +80,9 @@ public class Expense {
     // The OCRItem for this expense
     private OCRItem ocrItem;
 
+    // The ExpenseItItem for this expense.
+    private ExpenseItItem expenseItItem;
+
     // Whether or not we show the card icon in the Expenses list
     private boolean shouldShowCardIcon;
 
@@ -94,6 +100,17 @@ public class Expense {
     public Expense(ReceiptDAO ocrReceipt) {
         type = ExpenseEntryType.OCR_NOT_DONE;
         ocrItem = new OCRItem(ocrReceipt);
+    }
+
+    /**
+     * Constructs a new instance of an <code>Expense</code> that represents an ExpenseIt processing
+     * item.
+     *
+     * @param exItReceipt
+     */
+    public Expense(ExpenseItPostReceipt exItReceipt) {
+        type = ExpenseEntryType.EXPENSEIT_NOT_DONE;
+        expenseItItem = new ExpenseItItem(exItReceipt);
     }
 
     /**
@@ -312,6 +329,15 @@ public class Expense {
      */
     public OCRItem getOcrItem() {
         return ocrItem;
+    }
+
+    /**
+     * @return the <code>ExpenseItItem</code> if this is an ExpenseIt Entry, or <code>null</code>
+     * if it isn't.
+     *
+     */
+    public ExpenseItItem getExpenseItItem() {
+        return expenseItItem;
     }
 
     /**
