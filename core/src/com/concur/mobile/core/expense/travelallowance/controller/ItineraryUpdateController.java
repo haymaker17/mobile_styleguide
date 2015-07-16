@@ -73,6 +73,18 @@ public class ItineraryUpdateController {
     }
 
     public void executeSave(String expRepKey) {
+
+        Itinerary itinerary = getItinerary(expRepKey);
+        if (itinerary == null) {
+            return;
+        }
+
+        List<ItinerarySegment> periods = itinerary.getSegmentList();
+        if (!DateUtils.hasSubsequentDates(false, true, 1, periods)) {
+            Toast.makeText(context, "@Dates of this itinerary are not consistent@", Toast.LENGTH_SHORT).show();
+            return;
+        }
+
         BaseAsyncResultReceiver receiver = new BaseAsyncResultReceiver(new Handler());
         receiver.setListener(new BaseAsyncRequestTask.AsyncReplyListener() {
             @Override
@@ -96,11 +108,6 @@ public class ItineraryUpdateController {
             }
         });
 
-        Itinerary itinerary = getItinerary(expRepKey);
-        List<ItinerarySegment> periods = itinerary.getSegmentList();
-        if (!DateUtils.hasSubsequentDates(false, true, 1, periods)) {
-            Toast.makeText(context, "@Dates of this itinerary are not consistent@", Toast.LENGTH_SHORT).show();
-        }
         SaveItineraryRequest request = new SaveItineraryRequest(context, receiver, getItinerary(expRepKey));
         request.execute();
     }
