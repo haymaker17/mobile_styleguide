@@ -130,6 +130,13 @@ public class ItineraryUpdateController {
         for (CompactItinerarySegment segment : compactItinerary.getSegmentList()) {
             if (i < compactItinerary.getSegmentList().size() - 1) {
                 nextCompactSegment = compactItinerary.getSegmentList().get(i+1);
+
+                //Check consistency of compactItinerarySegments
+                if ( (segment.getDepartureDateTime() == null && nextCompactSegment.getArrivalDateTime() != null) ||     //Arrival w/o Departure
+                     (segment.getDepartureDateTime() == null && nextCompactSegment.getArrivalDateTime() == null)   ){   //Departure w/o Arrival
+                    Toast.makeText(context, "@Inconsistent Segment Sequence@", Toast.LENGTH_SHORT).show();
+                    return null;
+                }
                 if (currentItinSegement == null) {
                     currentItinSegement = new ItinerarySegment();
                 }
