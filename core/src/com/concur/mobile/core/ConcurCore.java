@@ -821,6 +821,53 @@ public abstract class ConcurCore extends MultiDexApplication {
         }
     }
 
+    /**
+     * Get authority name for content provider.
+     */
+    protected void setProviderAuthorities() {
+        // set authorities
+        StringBuilder providerName = new StringBuilder();
+        String authorityPrefix = getAuthorityPreFix();
+        // config authority
+        providerName.append(authorityPrefix).append(".platform").append(".config");
+        PlatformProperties.setConfigProviderAuthority(providerName.toString());
+
+        // expense authority
+        providerName.setLength(0);
+        providerName.append(authorityPrefix).append(".platform").append(".expense");
+        PlatformProperties.setExpenseProviderAuthority(providerName.toString());
+
+        // travel authority
+        providerName.setLength(0);
+        providerName.append(authorityPrefix).append(".platform").append(".travel");
+        PlatformProperties.setTravelProviderAuthority(providerName.toString());
+    }
+
+    /**
+     * Get authority prefix to set content providers' name dynamically.
+     * This method is important to run multiple instances of same app on one device.
+     */
+    abstract protected String getAuthorityPreFix();
+
+    /**
+     * Set account name for sync adapter
+     */
+    protected void setAccountNameForSyncAdapter() {
+        // set application id
+        StringBuilder providerName = new StringBuilder();
+        String accountNamePrefix = getAccountTypePrefix();
+
+        // config account
+        providerName.append(accountNamePrefix).append(".platform").append(".common.account");
+        PlatformProperties.setAccountTypeForSyncAdapter(providerName.toString());
+    }
+
+    /**
+     * Get account name prefix to set sync adapter's account name dynamically.
+     * This method is important to run multiple instances of same app on one device.
+     */
+    abstract protected String getAccountTypePrefix();
+
     abstract protected boolean bindProductService();
 
     @Override
