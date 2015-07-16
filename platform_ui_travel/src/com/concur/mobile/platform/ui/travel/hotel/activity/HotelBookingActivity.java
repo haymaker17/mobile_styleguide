@@ -59,8 +59,10 @@ public class HotelBookingActivity extends TravelBaseActivity implements SpinnerD
     // custom fields loader callback implementation
     private LoaderManager.LoaderCallbacks<TravelCustomFieldsConfig> customFieldsLoaderListener = new LoaderManager.LoaderCallbacks<TravelCustomFieldsConfig>() {
 
+        PlatformAsyncTaskLoader<TravelCustomFieldsConfig> asyncLoader = null;
+
         @Override public Loader<TravelCustomFieldsConfig> onCreateLoader(int id, Bundle bundle) {
-            PlatformAsyncTaskLoader<TravelCustomFieldsConfig> asyncLoader = null;
+
             if (update) {
                 showProgressBar(R.string.dlg_travel_retrieve_custom_fields_update_progress_message);
                 asyncLoader = new TravelCustomFieldsUpdateLoader(getApplicationContext(), formFields);
@@ -75,37 +77,41 @@ public class HotelBookingActivity extends TravelBaseActivity implements SpinnerD
                 TravelCustomFieldsConfig travelCustomFieldsConfig) {
 
             hideProgressBar();
+            if (asyncLoader.result == asyncLoader.SESSION_EXPIRED
+                    || asyncLoader.result == asyncLoader.RE_AUTHENTICATED) {
+                sessionExpired(asyncLoader.result);
+            } else {
+                if (travelCustomFieldsConfig == null) {
+                    // no custom fields
+                } else if (travelCustomFieldsConfig != null) {
 
-            if (travelCustomFieldsConfig == null) {
-                // no custom fields
-            } else if (travelCustomFieldsConfig != null) {
+                    if (travelCustomFieldsConfig.errorOccuredWhileRetrieving) {
+                        showToast("Could not retrieve custom fields.");
+                    } else {
 
-                if (travelCustomFieldsConfig.errorOccuredWhileRetrieving) {
-                    showToast("Could not retrieve custom fields.");
-                } else {
+                        travelCustomFieldsConfig = travelCustomFieldsConfig;
+                        formFields = travelCustomFieldsConfig.formFields;
+                        // to overcome the 'cannot perform this action inside of the onLoadFinished'
+                        final int WHAT = 1;
+                        Handler handler = new Handler() {
 
-                    travelCustomFieldsConfig = travelCustomFieldsConfig;
-                    formFields = travelCustomFieldsConfig.formFields;
-                    // to overcome the 'cannot perform this action inside of the onLoadFinished'
-                    final int WHAT = 1;
-                    Handler handler = new Handler() {
-
-                        @Override public void handleMessage(Message msg) {
-                            if (msg.what == WHAT) {
-                                initTravelCustomFieldsView();
+                            @Override public void handleMessage(Message msg) {
+                                if (msg.what == WHAT) {
+                                    initTravelCustomFieldsView();
+                                }
                             }
-                        }
-                    };
-                    handler.sendEmptyMessage(WHAT);
+                        };
+                        handler.sendEmptyMessage(WHAT);
+                    }
                 }
-            }
 
-            if (travelCustomFieldsConfig != null && travelCustomFieldsConfig.formFields != null) {
-                Log.d(Const.LOG_TAG,
-                        CLS_TAG + ".onLoadFinished ********************* : travelCustomFieldsConfig size : " + (
-                                travelCustomFieldsConfig != null ?
-                                        travelCustomFieldsConfig.formFields.size() :
-                                        null));
+                if (travelCustomFieldsConfig != null && travelCustomFieldsConfig.formFields != null) {
+                    Log.d(Const.LOG_TAG,
+                            CLS_TAG + ".onLoadFinished ********************* : travelCustomFieldsConfig size : " + (
+                                    travelCustomFieldsConfig != null ?
+                                            travelCustomFieldsConfig.formFields.size() :
+                                            null));
+                }
             }
 
         }
@@ -139,19 +145,26 @@ public class HotelBookingActivity extends TravelBaseActivity implements SpinnerD
     // pre sell options loader callback implementation
     private LoaderManager.LoaderCallbacks<HotelPreSellOption> preSellOptionsLoaderListener = new LoaderManager.LoaderCallbacks<HotelPreSellOption>() {
 
+        PlatformAsyncTaskLoader<HotelPreSellOption> hotelPreSellOptionAsyncTaskLoader;
+
         @Override public Loader<HotelPreSellOption> onCreateLoader(int id, Bundle bundle) {
 
             // request initial search
             Log.d(Const.LOG_TAG, " ***** creating preSellOption loader *****  ");
 
-            PlatformAsyncTaskLoader<HotelPreSellOption> hotelPreSellOptionAsyncTaskLoader = new HotelPreSellOptionLoader(
-                    getApplicationContext(), sellOptionsURL);
+            hotelPreSellOptionAsyncTaskLoader = new HotelPreSellOptionLoader(getApplicationContext(), sellOptionsURL);
 
             return hotelPreSellOptionAsyncTaskLoader;
         }
 
         @Override public void onLoadFinished(Loader<HotelPreSellOption> loader, HotelPreSellOption hotelPreSellOption) {
-            setPreSellOptions(hotelPreSellOption);
+            hideProgressBar();
+            if (hotelPreSellOptionAsyncTaskLoader.result == hotelPreSellOptionAsyncTaskLoader.SESSION_EXPIRED
+                    || hotelPreSellOptionAsyncTaskLoader.result == hotelPreSellOptionAsyncTaskLoader.RE_AUTHENTICATED) {
+                sessionExpired(hotelPreSellOptionAsyncTaskLoader.result);
+            } else {
+                setPreSellOptions(hotelPreSellOption);
+            }
 
         }
 
@@ -186,9 +199,9 @@ public class HotelBookingActivity extends TravelBaseActivity implements SpinnerD
     // HotelBooking loader callback implementation
     private LoaderManager.LoaderCallbacks<HotelBookingRESTResult> bookingLoaderListener = new LoaderManager.LoaderCallbacks<HotelBookingRESTResult>() {
 
-        @Override public Loader<HotelBookingRESTResult> onCreateLoader(int id, Bundle bundle) {
-            PlatformAsyncTaskLoader<HotelBookingRESTResult> hotelBookingAsyncRequestTask = null;
+        PlatformAsyncTaskLoader<HotelBookingRESTResult> hotelBookingAsyncRequestTask = null;
 
+        @Override public Loader<HotelBookingRESTResult> onCreateLoader(int id, Bundle bundle) {
             showProgressBar(R.string.hotel_booking_retrieving);
             // populate custField objects from formFields
             List<FormField> custFields = null;
@@ -217,34 +230,42 @@ public class HotelBookingActivity extends TravelBaseActivity implements SpinnerD
         public void onLoadFinished(Loader<HotelBookingRESTResult> loader, HotelBookingRESTResult bookingResult) {
 
             hideProgressBar();
-            if (bookingResult != null && bookingResult.error == null) {
-                Toast.makeText(getApplicationContext(), R.string.hotel_booking_success, Toast.LENGTH_LONG).show();
 
-                Intent intent = new Intent();
-                intent.putExtra(Const.EXTRA_TRAVEL_ITINERARY_LOCATOR,
-                        bookingResult.itineraryLocator != null ? bookingResult.itineraryLocator : null);
-                intent.putExtra(Const.EXTRA_TRAVEL_RECORD_LOCATOR,
-                        bookingResult.recordLocator != null ? bookingResult.recordLocator : null);
-
-                setResult(RESULT_OK, intent);
-
-                // TODO add GA event for booking
-                finish();
+            if (hotelBookingAsyncRequestTask.result == hotelBookingAsyncRequestTask.SESSION_EXPIRED
+                    || hotelBookingAsyncRequestTask.result == hotelBookingAsyncRequestTask.RE_AUTHENTICATED) {
+                sessionExpired(hotelBookingAsyncRequestTask.result);
             } else {
-                if (bookingResult != null && bookingResult.error != null) {
 
-                    userErrorMsg =
-                            bookingResult.error.getUserMessage() != null ? bookingResult.error.getUserMessage() : null;
-                }
+                if (bookingResult != null && bookingResult.error == null) {
+                    Toast.makeText(getApplicationContext(), R.string.hotel_booking_success, Toast.LENGTH_LONG).show();
 
-                new Handler().post(new Runnable() {
+                    Intent intent = new Intent();
+                    intent.putExtra(Const.EXTRA_TRAVEL_ITINERARY_LOCATOR,
+                            bookingResult.itineraryLocator != null ? bookingResult.itineraryLocator : null);
+                    intent.putExtra(Const.EXTRA_TRAVEL_RECORD_LOCATOR,
+                            bookingResult.recordLocator != null ? bookingResult.recordLocator : null);
 
-                    @Override public void run() {
-                        showFailurePopUp();
+                    setResult(RESULT_OK, intent);
+
+                    // TODO add GA event for booking
+                    finish();
+                } else {
+                    if (bookingResult != null && bookingResult.error != null) {
+
+                        userErrorMsg = bookingResult.error.getUserMessage() != null ?
+                                bookingResult.error.getUserMessage() :
+                                null;
                     }
-                });
 
-                // Toast.makeText(getApplicationContext(), R.string.hotel_booking_failed, Toast.LENGTH_LONG).show();
+                    new Handler().post(new Runnable() {
+
+                        @Override public void run() {
+                            showFailurePopUp();
+                        }
+                    });
+
+                    // Toast.makeText(getApplicationContext(), R.string.hotel_booking_failed, Toast.LENGTH_LONG).show();
+                }
             }
             isBookingInProgress = false;
         }
@@ -742,7 +763,6 @@ public class HotelBookingActivity extends TravelBaseActivity implements SpinnerD
 
     private void setPreSellOptions(HotelPreSellOption preSellOption) {
         this.preSellOption = preSellOption;
-        hideProgressBar();
 
         // total rate
         updateTotalRate();

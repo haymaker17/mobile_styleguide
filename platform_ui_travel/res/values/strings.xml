@@ -81,13 +81,11 @@
     <string name="hotel_search_results_sort_option_price">Price</string>
     <string name="hotel_search_results_sort_option_rating">Rating</string>
     <string name="hotel_search_results_sort_option_suggested">Suggested</string>
-    <string name="hotel_search_results_sort_option_default">Default</string>
     <string name="hotel_search_results_sorted_by_distance">results sorted by distance</string>
     <string name="hotel_search_results_sorted_by_preference">results sorted by preference</string>
     <string name="hotel_search_results_sorted_by_price">results sorted by price</string>
     <string name="hotel_search_results_sorted_by_rating">results sorted by rating</string>
     <string name="hotel_search_results_sorted_by_suggestion">results sorted by suggestion</string>
-    <string name="hotel_search_results_sorted_by_default">results sorted to default</string>
 
     <!-- end of hotel search results sort menu items -->
 

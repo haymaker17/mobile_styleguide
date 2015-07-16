@@ -72,7 +72,7 @@ public class HotelSearchAndResultActivity extends TravelBaseActivity
     // full set of hotel list items
     private List<HotelSearchResultListItem> hotelListItems;
 
-    // hotel list items to cache the 'default' server sort, instead of retrieveing from database
+    // hotel list items to cache the 'suggested' server sort, instead of retrieveing from database
     private List<HotelSearchResultListItem> serverSortedHotelListItemsCache;
 
     // set of hotel list items to sort
@@ -102,7 +102,6 @@ public class HotelSearchAndResultActivity extends TravelBaseActivity
     // MOB-24049
     private SpinnerItem sortItems[];
     private SpinnerItem curSortItem;
-    private boolean searchNearCompanyLocation;
     private String starRating;
     private Double distance;
     private String nameContaining;
@@ -112,8 +111,9 @@ public class HotelSearchAndResultActivity extends TravelBaseActivity
     // HotelSearchResults loader callback implementation
     private LoaderManager.LoaderCallbacks<HotelSearchRESTResult> hotelSearchRESTResultLoaderCallbacks = new LoaderManager.LoaderCallbacks<HotelSearchRESTResult>() {
 
+        PlatformAsyncTaskLoader<HotelSearchRESTResult> hotelSearchAsyncTaskLoader;
+
         @Override public Loader<HotelSearchRESTResult> onCreateLoader(int id, Bundle bundle) {
-            PlatformAsyncTaskLoader<HotelSearchRESTResult> hotelSearchAsyncTaskLoader;
             Context context = getApplicationContext();
             if (!searchDone && pollingURL != null) {
                 // request polling
@@ -146,108 +146,114 @@ public class HotelSearchAndResultActivity extends TravelBaseActivity
         @Override
         public void onLoadFinished(Loader<HotelSearchRESTResult> loader, HotelSearchRESTResult hotelSearchResult) {
 
-            List<HotelSearchResultListItem> hotelListItemsFromLoader = new ArrayList<HotelSearchResultListItem>();
-
-            Log.d(Const.LOG_TAG, " ***** searchdone *****  " + searchDone);
-
-            if (searchDone) {
-                // skip everything as this could be due to on orientation change or pop back from stack
-                Log.d(Const.LOG_TAG, " ***** searchDone true,  hotelListItems = " + (hotelListItems != null ?
-                        hotelListItems.size() :
-                        0));
+            if (hotelSearchAsyncTaskLoader.result == hotelSearchAsyncTaskLoader.SESSION_EXPIRED
+                    || hotelSearchAsyncTaskLoader.result == hotelSearchAsyncTaskLoader.RE_AUTHENTICATED) {
                 hotelSearchRESTResultFrag.hideProgressBar();
+                sessionExpired(hotelSearchAsyncTaskLoader.result);
             } else {
-                if (hotelSearchResult == null) {
+
+                List<HotelSearchResultListItem> hotelListItemsFromLoader = new ArrayList<HotelSearchResultListItem>();
+
+                Log.d(Const.LOG_TAG, " ***** searchdone *****  " + searchDone);
+
+                if (searchDone) {
+                    // skip everything as this could be due to on orientation change or pop back from stack
+                    Log.d(Const.LOG_TAG, " ***** searchDone true,  hotelListItems = " + (hotelListItems != null ?
+                            hotelListItems.size() :
+                            0));
                     hotelSearchRESTResultFrag.hideProgressBar();
-                    // hotelSearchRESTResultFrag.showNegativeView();
-                    // TODO handle the search errors
-                    Toast.makeText(getApplicationContext(), "Hotel Search Failed. Please try again.",
-                            Toast.LENGTH_SHORT).show();
                 } else {
-                    searchDone = hotelSearchResult.searchDone;
-                    hotelSearchRESTResultFrag.getHotelListView().setAlpha(0.50f);
-
-                    if (hotelSearchResult.hotels != null && hotelSearchResult.hotels.size() > 0) {
-                        for (Hotel hotel : hotelSearchResult.hotels) {
-                            hotel.distanceUnit = hotelSearchResult.distanceUnit;
-                            hotel.currencyCode = hotelSearchResult.currency;
-                            HotelSearchResultListItem item = new HotelSearchResultListItem(hotel);
-                            hotelListItemsFromLoader.add(item);
-                        }
-
-                        violations = hotelSearchResult.violations;
-                    }
-
-                    Log.d(Const.LOG_TAG,
-                            " ***** hotelSearchResult.searchDone " + searchDone + ",  hotelListItems = " + (
-                                    hotelListItems != null ?
-                                            hotelListItems.size() :
-                                            0) + ",  hotelListItemsFromLoader = " + (hotelListItemsFromLoader != null ?
-                                    hotelListItemsFromLoader.size() :
-                                    0));
-
-                    if (searchDone) {
-                        if (hotelListItems == null) {
-                            hotelListItems = new ArrayList<HotelSearchResultListItem>();
-                        }
-                        hotelListItems = hotelListItemsFromLoader;
-                        if (hotelListItems != null && hotelListItems.size() > 0) {
-
-                            // set hotel list items that can be sorted
-                            hotelListItemsToSort = new ArrayList<HotelSearchResultListItem>();
-                            hotelListItemsToSort.addAll(hotelListItems);
-
-                            benchmarksCollection = hotelSearchResult.benchmarksCollection;
-
-                            showResults();
-                        }
-
+                    if (hotelSearchResult == null) {
                         hotelSearchRESTResultFrag.hideProgressBar();
-
+                        // hotelSearchRESTResultFrag.showNegativeView();
+                        // TODO handle the search errors
+                        Toast.makeText(getApplicationContext(), "Hotel Search Failed. Please try again.",
+                                Toast.LENGTH_SHORT).show();
                     } else {
+                        searchDone = hotelSearchResult.searchDone;
+                        hotelSearchRESTResultFrag.getHotelListView().setAlpha(0.50f);
 
-                        if (fromPolling) {
-                            if (listItemAdapater == null) {
-                                Log.e(Const.LOG_TAG, " cannot call refreshUIListItem: listItemAdapater is null!");
-                            } else {
-                                hotelSearchRESTResultFrag
-                                        .refreshUIListItems(hotelListItemsFromLoader, listItemAdapater);
+                        if (hotelSearchResult.hotels != null && hotelSearchResult.hotels.size() > 0) {
+                            for (Hotel hotel : hotelSearchResult.hotels) {
+                                hotel.distanceUnit = hotelSearchResult.distanceUnit;
+                                hotel.currencyCode = hotelSearchResult.currency;
+                                HotelSearchResultListItem item = new HotelSearchResultListItem(hotel);
+                                hotelListItemsFromLoader.add(item);
                             }
-                        } else {
+
+                            violations = hotelSearchResult.violations;
+                        }
+
+                        Log.d(Const.LOG_TAG,
+                                " ***** hotelSearchResult.searchDone " + searchDone + ",  hotelListItems = " + (
+                                        hotelListItems != null ?
+                                                hotelListItems.size() :
+                                                0) + ",  hotelListItemsFromLoader = " + (
+                                        hotelListItemsFromLoader != null ? hotelListItemsFromLoader.size() : 0));
+
+                        if (searchDone) {
+                            if (hotelListItems == null) {
+                                hotelListItems = new ArrayList<HotelSearchResultListItem>();
+                            }
                             hotelListItems = hotelListItemsFromLoader;
-                            updateResultsFragmentUI(hotelListItemsFromLoader, null);
-                        }
+                            if (hotelListItems != null && hotelListItems.size() > 0) {
 
-                        if (hotelSearchResult.polling != null) {
-                            pollingURL = hotelSearchResult.polling.href;
-                        }
+                                // set hotel list items that can be sorted
+                                hotelListItemsToSort = new ArrayList<HotelSearchResultListItem>();
+                                hotelListItemsToSort.addAll(hotelListItems);
 
-                        // create a delayed handler for the aysnc task
-                        Handler asyncHandler = new Handler();
-                        asyncHandler.postDelayed(new Runnable() {
+                                benchmarksCollection = hotelSearchResult.benchmarksCollection;
 
-                            public void run() {
-                                // if the time taken for the search workflow (i.e. start of search to end of pricing) > 90 seconds
-                                // then
-                                // stop
-                                // the
-                                // functionality
-                                long timeNow = (System.currentTimeMillis() - searchWorkflowStartTime) / 1000;
-
-                                Log.d(Const.LOG_TAG,
-                                        " in retrieveHotelPricing, time now from start of search " + timeNow
-                                                + " seconds. If this is < 90 then will invoke GetHotelsPricing again.");
-                                if (timeNow < 90) {
-                                    // call the hotel polling loader that invokes the polling end point
-                                    callPollLoader();
-                                } else {
-
-                                    hotelSearchRESTResultFrag.hideProgressBar();
-
-                                }
+                                showResults();
                             }
 
-                        }, 2000);
+                            hotelSearchRESTResultFrag.hideProgressBar();
+
+                        } else {
+
+                            if (fromPolling) {
+                                if (listItemAdapater == null) {
+                                    Log.e(Const.LOG_TAG, " cannot call refreshUIListItem: listItemAdapater is null!");
+                                } else {
+                                    hotelSearchRESTResultFrag
+                                            .refreshUIListItems(hotelListItemsFromLoader, listItemAdapater);
+                                }
+                            } else {
+                                hotelListItems = hotelListItemsFromLoader;
+                                updateResultsFragmentUI(hotelListItemsFromLoader, null);
+                            }
+
+                            if (hotelSearchResult.polling != null) {
+                                pollingURL = hotelSearchResult.polling.href;
+                            }
+
+                            // create a delayed handler for the aysnc task
+                            Handler asyncHandler = new Handler();
+                            asyncHandler.postDelayed(new Runnable() {
+
+                                public void run() {
+                                    // if the time taken for the search workflow (i.e. start of search to end of pricing) > 90 seconds
+                                    // then
+                                    // stop
+                                    // the
+                                    // functionality
+                                    long timeNow = (System.currentTimeMillis() - searchWorkflowStartTime) / 1000;
+
+                                    Log.d(Const.LOG_TAG,
+                                            " in retrieveHotelPricing, time now from start of search " + timeNow
+                                                    + " seconds. If this is < 90 then will invoke GetHotelsPricing again.");
+                                    if (timeNow < 90) {
+                                        // call the hotel polling loader that invokes the polling end point
+                                        callPollLoader();
+                                    } else {
+
+                                        hotelSearchRESTResultFrag.hideProgressBar();
+
+                                    }
+                                }
+
+                            }, 2000);
+                        }
                     }
                 }
             }
@@ -257,8 +263,9 @@ public class HotelSearchAndResultActivity extends TravelBaseActivity
     // HotelRates loader callback implementation
     private LoaderManager.LoaderCallbacks<HotelRatesRESTResult> hotelRatesRESTResultLoaderCallbacks = new LoaderManager.LoaderCallbacks<HotelRatesRESTResult>() {
 
+        PlatformAsyncTaskLoader<HotelRatesRESTResult> hotelRatesAsyncTaskLoader;
+
         @Override public Loader<HotelRatesRESTResult> onCreateLoader(int id, Bundle args) {
-            PlatformAsyncTaskLoader<HotelRatesRESTResult> hotelRatesAsyncTaskLoader;
             Context context = getApplicationContext();
             Hotel hotelSelected = selectedHotelListItem.getHotel();
             String rateUrl = hotelSelected.ratesURL.href;
@@ -278,27 +285,35 @@ public class HotelSearchAndResultActivity extends TravelBaseActivity
         public void onLoadFinished(Loader<HotelRatesRESTResult> loader, HotelRatesRESTResult hotelRateResult) {
 
             hotelSearchRESTResultFrag.hideProgressBar();
-            if (mapFragment != null) {
-                mapFragment.hideProgressBar();
-            }
-            // bar.setVisibility(View.GONE);
-            Hotel hotel = hotelRateResult != null ? hotelRateResult.hotel : null;
-            if (hotel != null && hotel.rates != null) {
 
-                if (selectedHotelListItem != null && selectedHotelListItem.getHotel() != null) {
-                    selectedHotelListItem.getHotel().rates = hotel.rates;
-                    selectedHotelListItem.getHotel().lowestRate = hotel.lowestRate;
-                    selectedHotelListItem.getHotel().priceToBeat = hotel.priceToBeat;
-                    selectedHotelListItem.getHotel().availabilityErrorCode = hotel.availabilityErrorCode;
-                    selectedHotelListItem.getHotel().travelPointsForLowestRate = hotel.travelPointsForLowestRate;
-                    updatedViolations = hotelRateResult.violations;
-                    callFromDB = true;
-                    viewHotelChoiceDetails();
-                }
+            if (hotelRatesAsyncTaskLoader.result == hotelRatesAsyncTaskLoader.SESSION_EXPIRED
+                    || hotelRatesAsyncTaskLoader.result == hotelRatesAsyncTaskLoader.RE_AUTHENTICATED) {
 
+                sessionExpired(hotelRatesAsyncTaskLoader.result);
             } else {
-                callFromDB = false;
-                Toast.makeText(getApplicationContext(), "No Rooms Available", Toast.LENGTH_LONG).show();
+
+                if (mapFragment != null) {
+                    mapFragment.hideProgressBar();
+                }
+                // bar.setVisibility(View.GONE);
+                Hotel hotel = hotelRateResult != null ? hotelRateResult.hotel : null;
+                if (hotel != null && hotel.rates != null) {
+
+                    if (selectedHotelListItem != null && selectedHotelListItem.getHotel() != null) {
+                        selectedHotelListItem.getHotel().rates = hotel.rates;
+                        selectedHotelListItem.getHotel().lowestRate = hotel.lowestRate;
+                        selectedHotelListItem.getHotel().priceToBeat = hotel.priceToBeat;
+                        selectedHotelListItem.getHotel().availabilityErrorCode = hotel.availabilityErrorCode;
+                        selectedHotelListItem.getHotel().travelPointsForLowestRate = hotel.travelPointsForLowestRate;
+                        updatedViolations = hotelRateResult.violations;
+                        callFromDB = true;
+                        viewHotelChoiceDetails();
+                    }
+
+                } else {
+                    callFromDB = false;
+                    Toast.makeText(getApplicationContext(), "No Rooms Available", Toast.LENGTH_LONG).show();
+                }
             }
             // TODO add GA event for booking
         }
@@ -363,8 +378,6 @@ public class HotelSearchAndResultActivity extends TravelBaseActivity
             numberOfNights = 1;
         }
 
-        // MOB-24049
-        searchNearCompanyLocation = intent.getBooleanExtra("searchNearCompanyLocation", false);
         initSortOptions();
 
     }
@@ -385,24 +398,12 @@ public class HotelSearchAndResultActivity extends TravelBaseActivity
     }
 
     private void initSortOptions() {
-        // MOB-24049 - do not show 'default' sort option for current location or office location searches
-        if (searchNearMe || searchNearCompanyLocation) {
-            sortItems = new SpinnerItem[5];
-            sortItems[0] = new SpinnerItem("1", getString(R.string.hotel_search_results_sort_option_distance));
-            sortItems[1] = new SpinnerItem("2", getString(R.string.hotel_search_results_sort_option_preferred));
-            sortItems[2] = new SpinnerItem("3", getString(R.string.hotel_search_results_sort_option_price));
-            sortItems[3] = new SpinnerItem("4", getString(R.string.hotel_search_results_sort_option_rating));
-            sortItems[4] = new SpinnerItem("5", getString(R.string.hotel_search_results_sort_option_suggested));
-        } else {
-            sortItems = new SpinnerItem[6];
-            sortItems[0] = new SpinnerItem("0", getString(R.string.hotel_search_results_sort_option_default));
-            sortItems[1] = new SpinnerItem("1", getString(R.string.hotel_search_results_sort_option_distance));
-            sortItems[2] = new SpinnerItem("2", getString(R.string.hotel_search_results_sort_option_preferred));
-            sortItems[3] = new SpinnerItem("3", getString(R.string.hotel_search_results_sort_option_price));
-            sortItems[4] = new SpinnerItem("4", getString(R.string.hotel_search_results_sort_option_rating));
-            sortItems[5] = new SpinnerItem("5", getString(R.string.hotel_search_results_sort_option_suggested));
-        }
-
+        sortItems = new SpinnerItem[5];
+        sortItems[0] = new SpinnerItem("1", getString(R.string.hotel_search_results_sort_option_distance));
+        sortItems[1] = new SpinnerItem("2", getString(R.string.hotel_search_results_sort_option_preferred));
+        sortItems[2] = new SpinnerItem("3", getString(R.string.hotel_search_results_sort_option_price));
+        sortItems[3] = new SpinnerItem("4", getString(R.string.hotel_search_results_sort_option_rating));
+        sortItems[4] = new SpinnerItem("5", getString(R.string.hotel_search_results_sort_option_suggested));
     }
 
     // get hotels from database and populate the list items
@@ -441,8 +442,8 @@ public class HotelSearchAndResultActivity extends TravelBaseActivity
         if (curSortItem != null) {
             dialogFragment.curSpinnerItemId = curSortItem.id;
         } else {
-            // default to 'default' i.e. server sort or 'distance'
-            dialogFragment.curSpinnerItemId = sortItems[0].id;
+            // default to 'suggested' i.e. server sort or 'distance'
+            dialogFragment.curSpinnerItemId = sortItems[4].id;
         }
         dialogFragment.show(getFragmentManager(), FRAGMENT_SORT_ITEMS);
     }
@@ -475,13 +476,14 @@ public class HotelSearchAndResultActivity extends TravelBaseActivity
             toastMessage = getText(R.string.hotel_search_results_sorted_by_rating).toString();
             break;
         case "5":
-            sortBySuggestion(hotelListItemsToSort);
+            // default sort that came from server
+            defaultSort();
             toastMessage = getText(R.string.hotel_search_results_sorted_by_suggestion).toString();
             break;
         default:
             // default sort that came from server
             defaultSort();
-            toastMessage = getText(R.string.hotel_search_results_sorted_by_default).toString();
+            toastMessage = getText(R.string.hotel_search_results_sorted_by_suggestion).toString();
         }
         // refresh the UI with the updated hotelListItemsTemp
         updateResultsFragmentUI(hotelListItemsToSort, toastMessage);
@@ -554,19 +556,6 @@ public class HotelSearchAndResultActivity extends TravelBaseActivity
                 HotelComparator.CompareOrder.DESCENDING);
         HotelComparator secondarySort = new HotelComparator(HotelComparator.CompareField.CHEAPEST_ROOM,
                 HotelComparator.CompareOrder.ASCENDING);
-        // Perform the actual sort.
-        sortByComparator(primarySort, secondarySort, hotelListItemsToSort);
-    }
-
-    /**
-     * Sort the list of hotels primarily by suggestion, secondarily by preference.
-     */
-    protected void sortBySuggestion(List<HotelSearchResultListItem> hotelListItemsToSort) {
-        // Construct the primary/secondary sorts.
-        Comparator<Hotel> primarySort = new HotelComparator(HotelComparator.CompareField.RECOMMENDATION,
-                HotelComparator.CompareOrder.DESCENDING);
-        HotelComparator secondarySort = new HotelComparator(HotelComparator.CompareField.PREFERENCE,
-                HotelComparator.CompareOrder.DESCENDING);
         // Perform the actual sort.
         sortByComparator(primarySort, secondarySort, hotelListItemsToSort);
     }
@@ -918,14 +907,10 @@ public class HotelSearchAndResultActivity extends TravelBaseActivity
         } else {
             hotelListItems.clear();
         }
-        if (searchNearMe || searchNearCompanyLocation) {
-            // MOB-24049 - sort by distance if current location or office location search
-            sortByDistance(hotelListItemsToSort);
-        } else {
-            // MOB-24049 - no sort required, show the server sorted results as it is. cache this result set to be used to sort on 'default' option rather than retrieving again from database
-            serverSortedHotelListItemsCache = new ArrayList<HotelSearchResultListItem>(hotelListItemsToSort.size());
-            serverSortedHotelListItemsCache.addAll(hotelListItemsToSort);
-        }
+
+        //MOB-24365 - show the server sorted results as it is. cache this result set to be used to sort on 'suggested' option rather than retrieving again from database
+        serverSortedHotelListItemsCache = new ArrayList<HotelSearchResultListItem>(hotelListItemsToSort.size());
+        serverSortedHotelListItemsCache.addAll(hotelListItemsToSort);
 
         hotelListItems.addAll(hotelListItemsToSort);
 
