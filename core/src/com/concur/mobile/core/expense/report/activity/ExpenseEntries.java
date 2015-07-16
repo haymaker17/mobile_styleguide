@@ -62,6 +62,7 @@ import com.concur.mobile.core.expense.report.service.ReportDeleteRequest;
 import com.concur.mobile.core.expense.report.service.ReportEntryDetailRequest;
 import com.concur.mobile.core.expense.report.service.ReportEntryFormRequest;
 import com.concur.mobile.core.expense.service.GetExpenseTypesRequest;
+import com.concur.mobile.core.expense.travelallowance.activity.ItineraryOverviewActivity;
 import com.concur.mobile.core.expense.travelallowance.activity.ItineraryUpdateActivity;
 import com.concur.mobile.core.expense.travelallowance.activity.TravelAllowanceActivity;
 import com.concur.mobile.core.expense.travelallowance.controller.IServiceRequestListener;
@@ -79,7 +80,8 @@ import com.concur.mobile.core.util.ViewUtil;
  * 
  * @author AndrewK
  */
-public class ExpenseEntries extends AbstractExpenseActivity
+public class
+        ExpenseEntries extends AbstractExpenseActivity
                             implements IServiceRequestListener {
 
     private static final String CLS_TAG = ExpenseEntries.class.getSimpleName();
@@ -1615,11 +1617,12 @@ public class ExpenseEntries extends AbstractExpenseActivity
                                 intent = new Intent(ExpenseEntries.this, ItineraryUpdateActivity.class);
                                 intent.putExtra(Const.EXTRA_EXPENSE_REPORT_KEY, expRep.reportKey);
                                 intent.putExtra(Const.EXTRA_EXPENSE_REPORT_NAME, expRep.reportName);
-                                startActivityForResult(intent, REQUEST_VIEW_TA_ITIN_CREATE);
+                                startActivityForResult(intent, REQUEST_VIEW_TA_ITINERARY_UPDATE);
                             } else {//There are itineraries already
-                                intent = new Intent(ExpenseEntries.this, ItineraryUpdateActivity.class);
+                                intent = new Intent(ExpenseEntries.this, ItineraryOverviewActivity.class);
                                 intent.putExtra(Const.EXTRA_EXPENSE_REPORT_KEY, expRep.reportKey);
-                                startActivityForResult(intent, REQUEST_VIEW_TA_ITIN_CREATE);
+                                intent.putExtra(Const.EXTRA_EXPENSE_REPORT_NAME, expRep.reportName);
+                                startActivityForResult(intent, REQUEST_VIEW_TA_ITINERARY_OVERVIEW);
                             }
                         }
                     }
