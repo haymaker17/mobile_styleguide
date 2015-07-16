@@ -1,220 +1,241 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:background="#ffffff" >
 
-    <TextView
-        android:id="@+id/starRatingLabel"
-        android:layout_width="match_parent"
-        android:layout_height="48dp"
-        android:background="#f7fafd"
-        android:fontFamily="sans-serif"
-        android:paddingLeft="20dp"
-        android:paddingTop="26dp"
-        android:text="@string/hotel_search_results_filter_star_rating_label"
-        android:textAllCaps="true"
-        android:textColor="#898e91"
-        android:textSize="15sp" >
-    </TextView>
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+            android:layout_width="fill_parent"
+            android:layout_height="fill_parent"
+            android:fillViewport="true">
 
-    <RadioGroup
-        android:id="@+id/starRatingOptions"
+    <RelativeLayout
         android:layout_width="fill_parent"
-        android:layout_height="100dp"
-        android:layout_below="@id/starRatingLabel"
-        android:orientation="horizontal"
-        android:paddingBottom="24dp"
-        android:paddingLeft="20dp"
-        android:paddingRight="20dp"
-        android:paddingTop="24dp" >
-
-        <RadioButton
-            android:id="@+id/filter_all_stars_button"
-            style="@style/HotelFilterButtonTextStyle"
-            android:layout_width="80dp"
-            android:layout_height="match_parent"
-            android:layout_marginRight="4dp"
-            android:layout_weight="1"
-            android:background="@drawable/hotel_filter_button_custom"
-            android:button="@android:color/transparent"
-            android:fontFamily="sans-serif"
-            android:gravity="center_horizontal|center_vertical"
-            android:padding="10dp"
-            android:text="@string/hotel_search_results_filter_all" />
-
-        <RadioButton
-            android:id="@+id/filter_3_star_button"
-            style="@style/HotelFilterButtonTextStyle"
-            android:layout_width="80dp"
-            android:layout_height="match_parent"
-            android:layout_marginRight="4dp"
-            android:layout_weight="1"
-            android:background="@drawable/hotel_filter_button_custom"
-            android:button="@android:color/transparent"
-            android:drawableBottom="@drawable/filter_3_star"
-            android:fontFamily="sans-serif"
-            android:gravity="center_horizontal|center_vertical"
-            android:padding="10dp"
-            android:text="@string/hotel_search_results_filter_star_rating_3" />
-
-        <RadioButton
-            android:id="@+id/filter_4_star_button"
-            style="@style/HotelFilterButtonTextStyle"
-            android:layout_width="80dp"
-            android:layout_height="match_parent"
-            android:layout_marginRight="4dp"
-            android:layout_weight="1"
-            android:background="@drawable/hotel_filter_button_custom"
-            android:button="@android:color/transparent"
-            android:drawableBottom="@drawable/filter_4_star"
-            android:fontFamily="sans-serif"
-            android:gravity="center_horizontal|center_vertical"
-            android:padding="10dp"
-            android:text="@string/hotel_search_results_filter_star_rating_4" />
-
-        <RadioButton
-            android:id="@+id/filter_5_star_button"
-            style="@style/HotelFilterButtonTextStyle"
-            android:layout_width="80dp"
-            android:layout_height="match_parent"
-            android:layout_weight="1"
-            android:background="@drawable/hotel_filter_button_custom"
-            android:button="@android:color/transparent"
-            android:drawableBottom="@drawable/filter_5_star"
-            android:fontFamily="sans-serif"
-            android:gravity="center_horizontal|center_vertical"
-            android:padding="10dp"
-            android:text="@string/hotel_search_results_filter_star_rating_5" />
-    </RadioGroup>
-
-    <TextView
-        android:id="@+id/distanceLabel"
-        android:layout_width="match_parent"
-        android:layout_height="48dp"
-        android:layout_below="@id/starRatingOptions"
-        android:background="#f7fafd"
-        android:fontFamily="sans-serif"
-        android:paddingLeft="20dp"
-        android:paddingTop="26dp"
-        android:text="@string/hotel_search_results_filter_distance_label"
-        android:textAllCaps="true"
-        android:textColor="#898e91"
-        android:textSize="15dp" >
-    </TextView>
-
-    <RadioGroup
-        android:id="@+id/distanceOptions"
-        android:layout_width="fill_parent"
-        android:layout_height="100dp"
-        android:layout_below="@id/distanceLabel"
-        android:orientation="horizontal"
-        android:paddingBottom="24dp"
-        android:paddingLeft="20dp"
-        android:paddingRight="20dp"
-        android:paddingTop="24dp" >
-
-        <RadioButton
-            android:id="@+id/filter_distance_all_button"
-            style="@style/HotelFilterButtonTextStyle"
-            android:layout_width="80dp"
-            android:layout_height="match_parent"
-            android:layout_marginRight="4dp"
-            android:layout_weight="1"
-            android:background="@drawable/hotel_filter_button_custom"
-            android:button="@android:color/transparent"
-            android:fontFamily="sans-serif"
-            android:gravity="center_horizontal|center_vertical"
-            android:padding="5dp"
-            android:text="@string/hotel_search_results_filter_all" />
-
-        <RadioButton
-            android:id="@+id/filter_distance_5_button"
-            style="@style/HotelFilterButtonTextStyle"
-            android:layout_width="80dp"
-            android:layout_height="match_parent"
-            android:layout_marginRight="4dp"
-            android:layout_weight="1"
-            android:background="@drawable/hotel_filter_button_custom"
-            android:button="@android:color/transparent"
-            android:fontFamily="sans-serif"
-            android:gravity="center_horizontal|center_vertical"
-            android:padding="5dp"
-            android:text="@string/hotel_search_results_filter_distance_5miles" />
-
-        <RadioButton
-            android:id="@+id/filter_distance_15_button"
-            style="@style/HotelFilterButtonTextStyle"
-            android:layout_width="80dp"
-            android:layout_height="match_parent"
-            android:layout_marginRight="4dp"
-            android:layout_weight="1"
-            android:background="@drawable/hotel_filter_button_custom"
-            android:button="@android:color/transparent"
-            android:fontFamily="sans-serif"
-            android:gravity="center_horizontal|center_vertical"
-            android:padding="5dp"
-            android:text="@string/hotel_search_results_filter_distance_15miles" />
-
-        <RadioButton
-            android:id="@+id/filter_distance_25_button"
-            style="@style/HotelFilterButtonTextStyle"
-            android:layout_width="80dp"
-            android:layout_height="match_parent"
-            android:layout_weight="1"
-            android:background="@drawable/hotel_filter_button_custom"
-            android:button="@android:color/transparent"
-            android:fontFamily="sans-serif"
-            android:gravity="center_horizontal|center_vertical"
-            android:padding="5dp"
-            android:text="@string/hotel_search_results_filter_distance_25miles" />
-    </RadioGroup>
-
-    <TextView
-        android:id="@+id/nameContainingLabel"
-        android:layout_width="match_parent"
-        android:layout_height="48dp"
-        android:layout_below="@id/distanceOptions"
-        android:background="#f7fafd"
-        android:fontFamily="sans-serif"
-        android:paddingLeft="20dp"
-        android:paddingTop="26dp"
-        android:text="@string/hotel_search_results_filter_name_containing_label"
-        android:textAllCaps="true"
-        android:textColor="#898e91"
-        android:textSize="15sp" >
-    </TextView>
-
-    <LinearLayout
-        android:id="@+id/hotelNameToSearch"
-        android:layout_width="fill_parent"
-        android:layout_height="55dp"
-        android:paddingRight="20dp"
-        android:layout_below="@id/nameContainingLabel"
-        android:orientation="horizontal"
-        android:paddingLeft="20dp" >
-
-        <EditText
-            android:id="@+id/hotelNameToSearchId"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:fontFamily="sans-serif"
-            android:hint="@string/hotel_search_results_filter_name_containing_hint"
-            android:textColorHint="#a7b6bf"
-            android:textSize="14sp" />
-    </LinearLayout>
-
-    <Button
-        android:id="@+id/filterNow"
-        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_alignParentBottom="true"
-        android:layout_gravity="bottom"
-        android:background="#0078c8"
-        android:fontFamily="sans-serif-light"
-        android:gravity="center"
-        android:text="@string/general_filter"
-        android:textColor="#ffffff"
-        android:textSize="20sp" />
+        android:background="#ffffff"
+        >
 
-</RelativeLayout>
+        <TextView
+            android:id="@+id/starRatingLabel"
+            android:layout_width="match_parent"
+            android:layout_height="48dp"
+            android:background="#f7fafd"
+            android:fontFamily="sans-serif"
+            android:paddingLeft="20dp"
+            android:paddingTop="26dp"
+            android:text="@string/hotel_search_results_filter_star_rating_label"
+            android:textAllCaps="true"
+            android:textColor="#898e91"
+            android:textSize="15sp">
+        </TextView>
+
+        <RadioGroup
+            android:id="@+id/starRatingOptions"
+            android:layout_width="fill_parent"
+            android:layout_height="100dp"
+            android:layout_below="@id/starRatingLabel"
+            android:orientation="horizontal"
+            android:paddingBottom="24dp"
+            android:paddingLeft="20dp"
+            android:paddingRight="20dp"
+            android:paddingTop="24dp">
+
+            <RadioButton
+                android:id="@+id/filter_all_stars_button"
+                style="@style/HotelFilterButtonTextStyle"
+                android:layout_width="80dp"
+                android:layout_height="match_parent"
+                android:layout_marginRight="4dp"
+                android:layout_weight="1"
+                android:background="@drawable/hotel_filter_button_custom"
+                android:button="@android:color/transparent"
+                android:fontFamily="sans-serif"
+                android:gravity="center_horizontal|center_vertical"
+                android:padding="10dp"
+                android:text="@string/hotel_search_results_filter_all"/>
+
+            <RadioButton
+                android:id="@+id/filter_3_star_button"
+                style="@style/HotelFilterButtonTextStyle"
+                android:layout_width="80dp"
+                android:layout_height="match_parent"
+                android:layout_marginRight="4dp"
+                android:layout_weight="1"
+                android:background="@drawable/hotel_filter_button_custom"
+                android:button="@android:color/transparent"
+                android:drawableBottom="@drawable/filter_3_star"
+                android:fontFamily="sans-serif"
+                android:gravity="center_horizontal|center_vertical"
+                android:padding="10dp"
+                android:text="@string/hotel_search_results_filter_star_rating_3"/>
+
+            <RadioButton
+                android:id="@+id/filter_4_star_button"
+                style="@style/HotelFilterButtonTextStyle"
+                android:layout_width="80dp"
+                android:layout_height="match_parent"
+                android:layout_marginRight="4dp"
+                android:layout_weight="1"
+                android:background="@drawable/hotel_filter_button_custom"
+                android:button="@android:color/transparent"
+                android:drawableBottom="@drawable/filter_4_star"
+                android:fontFamily="sans-serif"
+                android:gravity="center_horizontal|center_vertical"
+                android:padding="10dp"
+                android:text="@string/hotel_search_results_filter_star_rating_4"/>
+
+            <RadioButton
+                android:id="@+id/filter_5_star_button"
+                style="@style/HotelFilterButtonTextStyle"
+                android:layout_width="80dp"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:background="@drawable/hotel_filter_button_custom"
+                android:button="@android:color/transparent"
+                android:drawableBottom="@drawable/filter_5_star"
+                android:fontFamily="sans-serif"
+                android:gravity="center_horizontal|center_vertical"
+                android:padding="10dp"
+                android:text="@string/hotel_search_results_filter_star_rating_5"/>
+        </RadioGroup>
+
+        <TextView
+            android:id="@+id/distanceLabel"
+            android:layout_width="match_parent"
+            android:layout_height="48dp"
+            android:layout_below="@id/starRatingOptions"
+            android:background="#f7fafd"
+            android:fontFamily="sans-serif"
+            android:paddingLeft="20dp"
+            android:paddingTop="26dp"
+            android:text="@string/hotel_search_results_filter_distance_label"
+            android:textAllCaps="true"
+            android:textColor="#898e91"
+            android:textSize="15dp">
+        </TextView>
+
+        <RadioGroup
+            android:id="@+id/distanceOptions"
+            android:layout_width="fill_parent"
+            android:layout_height="100dp"
+            android:layout_below="@id/distanceLabel"
+            android:orientation="horizontal"
+            android:paddingBottom="24dp"
+            android:paddingLeft="20dp"
+            android:paddingRight="20dp"
+            android:paddingTop="24dp">
+
+            <RadioButton
+                android:id="@+id/filter_distance_all_button"
+                style="@style/HotelFilterButtonTextStyle"
+                android:layout_width="80dp"
+                android:layout_height="match_parent"
+                android:layout_marginRight="4dp"
+                android:layout_weight="1"
+                android:background="@drawable/hotel_filter_button_custom"
+                android:button="@android:color/transparent"
+                android:fontFamily="sans-serif"
+                android:gravity="center_horizontal|center_vertical"
+                android:padding="5dp"
+                android:text="@string/hotel_search_results_filter_all"/>
+
+            <RadioButton
+                android:id="@+id/filter_distance_5_button"
+                style="@style/HotelFilterButtonTextStyle"
+                android:layout_width="80dp"
+                android:layout_height="match_parent"
+                android:layout_marginRight="4dp"
+                android:layout_weight="1"
+                android:background="@drawable/hotel_filter_button_custom"
+                android:button="@android:color/transparent"
+                android:fontFamily="sans-serif"
+                android:gravity="center_horizontal|center_vertical"
+                android:padding="5dp"
+                android:text="@string/hotel_search_results_filter_distance_5miles"/>
+
+            <RadioButton
+                android:id="@+id/filter_distance_15_button"
+                style="@style/HotelFilterButtonTextStyle"
+                android:layout_width="80dp"
+                android:layout_height="match_parent"
+                android:layout_marginRight="4dp"
+                android:layout_weight="1"
+                android:background="@drawable/hotel_filter_button_custom"
+                android:button="@android:color/transparent"
+                android:fontFamily="sans-serif"
+                android:gravity="center_horizontal|center_vertical"
+                android:padding="5dp"
+                android:text="@string/hotel_search_results_filter_distance_15miles"/>
+
+            <RadioButton
+                android:id="@+id/filter_distance_25_button"
+                style="@style/HotelFilterButtonTextStyle"
+                android:layout_width="80dp"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:background="@drawable/hotel_filter_button_custom"
+                android:button="@android:color/transparent"
+                android:fontFamily="sans-serif"
+                android:gravity="center_horizontal|center_vertical"
+                android:padding="5dp"
+                android:text="@string/hotel_search_results_filter_distance_25miles"/>
+        </RadioGroup>
+
+        <TextView
+            android:id="@+id/nameContainingLabel"
+            android:layout_width="match_parent"
+            android:layout_height="48dp"
+            android:layout_below="@id/distanceOptions"
+            android:background="#f7fafd"
+            android:fontFamily="sans-serif"
+            android:paddingLeft="20dp"
+            android:paddingTop="26dp"
+            android:text="@string/hotel_search_results_filter_name_containing_label"
+            android:textAllCaps="true"
+            android:textColor="#898e91"
+            android:textSize="15sp">
+        </TextView>
+
+        <LinearLayout
+            android:id="@+id/hotelNameToSearch"
+            android:layout_width="fill_parent"
+            android:layout_height="55dp"
+            android:paddingRight="20dp"
+            android:layout_below="@id/nameContainingLabel"
+            android:orientation="horizontal"
+            android:paddingLeft="20dp">
+
+            <EditText
+                android:id="@+id/hotelNameToSearchId"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:fontFamily="sans-serif"
+                android:hint="@string/hotel_search_results_filter_name_containing_hint"
+                android:textColorHint="#a7b6bf"
+                android:textSize="14sp"/>
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:orientation="vertical"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/hotelNameToSearch"
+            android:layout_alignParentBottom="true"
+            >
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="fill_parent"
+                android:layout_weight="1">
+                <!-- this expands to fill the empty space if needed -->
+            </LinearLayout>
+
+            <Button
+                android:id="@+id/filterNow"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="#0078c8"
+                android:fontFamily="sans-serif-light"
+                android:gravity="center"
+                android:text="@string/general_filter"
+                android:textColor="#ffffff"
+                android:textSize="20sp"/>
+        </LinearLayout>
+    </RelativeLayout>
+</ScrollView>

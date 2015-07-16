@@ -6,6 +6,7 @@ import android.content.Intent;
 import android.view.LayoutInflater;
 import android.view.View;
 
+import com.concur.breeze.BuildConfig;
 import com.concur.mobile.core.ConcurCore;
 import com.concur.mobile.core.config.RuntimeConfig;
 import com.concur.mobile.core.service.ConcurService;
@@ -17,18 +18,24 @@ public class ConcurMobile extends ConcurCore {
 
     // private static final String CLS_TAG = ConcurMobile.class.getSimpleName();
 
+    private static String contentProviderAuthorityPrefix = "com.concur.mobile";
+    private static String accountTypePrefix = "com.concur.mobile";
+
     /**
      * Good ol' default constructor
      */
     public ConcurMobile() {
         appContext = this;
+        setProviderAuthorities();
+        setAccountNameForSyncAdapter();
     }
+
 
     @Override
     public void onCreate() {
         super.onCreate();
-        
         RuntimeConfig.with(this).load();
+
     }
 
     @Override
@@ -105,6 +112,26 @@ public class ConcurMobile extends ConcurCore {
         it.putExtra(FROM_NOTIFICATION, true);
         activity.startActivity(it);
         activity.finish();
+    }
+
+    @Override
+    protected String getAuthorityPreFix() {
+        String retVal = "";
+        retVal = BuildConfig.AUTHORITY;
+        if (retVal != null && !retVal.isEmpty()) {
+            contentProviderAuthorityPrefix = retVal;
+        }
+        return contentProviderAuthorityPrefix;
+    }
+
+    @Override
+    protected String getAccountTypePrefix() {
+        String retVal = "";
+        retVal = BuildConfig.ACC_TYPE;
+        if (retVal != null && !retVal.isEmpty()) {
+            accountTypePrefix = retVal;
+        }
+        return accountTypePrefix;
     }
 
 }

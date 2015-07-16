@@ -1,4 +1,4 @@
-apply plugin: 'android-library'
+apply plugin: 'com.android.library'
 
 dependencies {
     compile fileTree(dir: 'libs', include: '*.jar')
@@ -7,6 +7,8 @@ dependencies {
     compile project(':apptentive-android:apptentive-android-sdk')
     compile project(':platform_ui_expense')
     compile project(':platform_ui_travel')
+    testCompile 'org.robolectric:robolectric:3.+'
+    testCompile 'junit:junit:4.+'
 }
 
 android {

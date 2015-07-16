@@ -1,0 +1,18 @@
+<MWSResponse xmlns:i="http://www.w3.org/2001/XMLSchema-instance">
+	<Response>
+		<AccessToken>
+			<AccessTokenKey>AOai6mA9MM26vxtFb9DOx+exX/4=</AccessTokenKey>
+		</AccessToken>
+		<AnalyticsId>51BB27D16AE095FEA273CB62648D5615860498C1AE3CBA7555B73001AD256662</AnalyticsId>
+		<AuthenticationType>Password</AuthenticationType>
+		<PinExpirationDate>9999-12-31T23:59:59.9999999</PinExpirationDate>
+		<Session>
+			<ID>32DD4D87-5268-48D3-A410-D30EE6886C99</ID>
+			<TimeOut>30</TimeOut>
+		</Session>
+		<UserId>gWnB$s4gQVrnBamNOI$sNB0Eoq54BXExKsAHw</UserId>
+	</Response>
+	<Status>
+		<IsSuccess>true</IsSuccess>
+	</Status>
+</MWSResponse>
