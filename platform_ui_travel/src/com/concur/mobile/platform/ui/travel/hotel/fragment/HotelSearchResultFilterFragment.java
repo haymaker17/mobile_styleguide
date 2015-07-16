@@ -1,11 +1,13 @@
 package com.concur.mobile.platform.ui.travel.hotel.fragment;
 
 import android.app.Activity;
+import android.content.Context;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.ViewGroup;
+import android.view.inputmethod.InputMethodManager;
 import android.widget.EditText;
 import android.widget.RadioButton;
 import com.concur.mobile.platform.ui.common.fragment.PlatformFragmentV1;
@@ -113,6 +115,10 @@ public class HotelSearchResultFilterFragment extends PlatformFragmentV1 {
                     if (editTxtView != null && editTxtView.getText() != null) {
                         nameToFilter = editTxtView.getText().toString().trim();
                     }
+                    // hide the soft key board
+                    InputMethodManager imm = (InputMethodManager) getActivity().getBaseContext().getSystemService(Context.INPUT_METHOD_SERVICE);
+                    imm.hideSoftInputFromWindow(editTxtView.getApplicationWindowToken(), 0);
+                    
                     callBackListener.filterResults(starRatingtoFilter, distanceToFilter, nameToFilter);
                 }
             }
@@ -134,31 +140,6 @@ public class HotelSearchResultFilterFragment extends PlatformFragmentV1 {
         }
 
     }
-
-    // @Override
-    // public void onPause() {
-    // super.onPause();
-    //
-    // if (baseActivity != null) {
-    // RetainerFragment retainer = baseActivity.getRetainer();
-    // if (retainer != null) {
-    // // Store the listener
-    // if (listener != null) {
-    // retainer.put(ON_CLICK_LISTENER_KEY, listener);
-    // }
-    // } else {
-    // Log.e(Const.LOG_TAG, CLS_TAG + ".onPause: retainer is null!");
-    // }
-    // } else {
-    // Log.e(Const.LOG_TAG, CLS_TAG + ".onPause: baseActivity is null!");
-    // }
-    // }
-    //
-    // @Override
-    // public void onResume() {
-    // super.onResume();
-    // restoreReceivers();
-    // }
 
     // Container Activity must implement this call back interface
     public interface HotelSearchResultsFilterListener {

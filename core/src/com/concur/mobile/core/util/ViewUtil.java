@@ -28,9 +28,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.pm.ActivityInfo;
-import android.content.pm.PackageInfo;
 import android.content.pm.PackageManager;
-import android.content.pm.PackageManager.NameNotFoundException;
 import android.content.pm.ResolveInfo;
 import android.database.Cursor;
 import android.graphics.Bitmap;
@@ -39,7 +37,6 @@ import android.graphics.BitmapFactory;
 import android.graphics.Matrix;
 import android.media.ExifInterface;
 import android.net.Uri;
-import android.os.Bundle;
 import android.os.Environment;
 import android.os.StatFs;
 import android.preference.PreferenceManager;
@@ -59,8 +56,6 @@ import android.view.animation.AnimationUtils;
 import android.webkit.CookieManager;
 import android.webkit.CookieSyncManager;
 import android.widget.CheckedTextView;
-import android.widget.LinearLayout;
-import android.widget.LinearLayout.LayoutParams;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 
@@ -74,17 +69,11 @@ import com.concur.mobile.core.expense.report.data.ExpenseReportEntry;
 import com.concur.mobile.core.expense.report.data.ExpenseReportEntryDetail;
 import com.concur.mobile.core.expense.report.data.ExpenseReportException;
 import com.concur.mobile.core.expense.report.service.SaveReportReply;
-import com.concur.mobile.core.ipm.data.IpmMsg;
-import com.concur.mobile.core.ipm.data.IpmParams;
 import com.concur.mobile.core.travel.data.RuleEnforcementLevel;
 import com.concur.mobile.core.travel.data.Violation;
 import com.concur.mobile.core.travel.hotel.data.HotelChoice;
 import com.concur.mobile.platform.util.Format;
 import com.concur.mobile.platform.util.Parse;
-import com.google.android.gms.ads.AdSize;
-import com.google.android.gms.ads.doubleclick.PublisherAdRequest;
-import com.google.android.gms.ads.doubleclick.PublisherAdView;
-import com.google.android.gms.ads.mediation.admob.AdMobExtras;
 
 /**
  * Contains a collection of utility methods to build particular views based on data type.

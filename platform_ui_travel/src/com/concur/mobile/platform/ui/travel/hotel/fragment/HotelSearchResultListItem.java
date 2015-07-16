@@ -102,14 +102,15 @@ public class HotelSearchResultListItem extends ListItem implements Serializable 
 
         // Set the price with currency symbol
         TextView txtView = (TextView) hotelView.findViewById(R.id.hotel_price);
-        if (txtView != null) {
+        if (txtView != null && !hotel.isChoiceDetailsScreen) {
             if (hotel.lowestRate != null) {
-                txtView.setVisibility(View.VISIBLE);
                 txtView.setText(FormatUtil
                         .formatAmountWithNoDecimals(hotel.lowestRate, context.getResources().getConfiguration().locale,
                                 hotel.currencyCode, true, false));
+                txtView.setTextAppearance(context, R.style.HotelPriceTextStyle);
             } else {
-                txtView.setVisibility(View.INVISIBLE);
+                txtView.setText(R.string.view_rates);
+                txtView.setTextAppearance(context, R.style.HotelCityTextStyle);
             }
         } else {
             Log.e(Const.LOG_TAG, CLS_TAG + ".getView: unable to locate price!");

@@ -59,8 +59,7 @@ public class HotelBookingActivity extends TravelBaseActivity implements SpinnerD
     // custom fields loader callback implementation
     private LoaderManager.LoaderCallbacks<TravelCustomFieldsConfig> customFieldsLoaderListener = new LoaderManager.LoaderCallbacks<TravelCustomFieldsConfig>() {
 
-        @Override
-        public Loader<TravelCustomFieldsConfig> onCreateLoader(int id, Bundle bundle) {
+        @Override public Loader<TravelCustomFieldsConfig> onCreateLoader(int id, Bundle bundle) {
             PlatformAsyncTaskLoader<TravelCustomFieldsConfig> asyncLoader = null;
             if (update) {
                 showProgressBar(R.string.dlg_travel_retrieve_custom_fields_update_progress_message);
@@ -72,8 +71,7 @@ public class HotelBookingActivity extends TravelBaseActivity implements SpinnerD
             return asyncLoader;
         }
 
-        @Override
-        public void onLoadFinished(Loader<TravelCustomFieldsConfig> loader,
+        @Override public void onLoadFinished(Loader<TravelCustomFieldsConfig> loader,
                 TravelCustomFieldsConfig travelCustomFieldsConfig) {
 
             hideProgressBar();
@@ -92,8 +90,7 @@ public class HotelBookingActivity extends TravelBaseActivity implements SpinnerD
                     final int WHAT = 1;
                     Handler handler = new Handler() {
 
-                        @Override
-                        public void handleMessage(Message msg) {
+                        @Override public void handleMessage(Message msg) {
                             if (msg.what == WHAT) {
                                 initTravelCustomFieldsView();
                             }
@@ -113,8 +110,7 @@ public class HotelBookingActivity extends TravelBaseActivity implements SpinnerD
 
         }
 
-        @Override
-        public void onLoaderReset(Loader<TravelCustomFieldsConfig> data) {
+        @Override public void onLoaderReset(Loader<TravelCustomFieldsConfig> data) {
             Log.d(Const.LOG_TAG, " ***** loader reset *****  ");
         }
     };
@@ -143,8 +139,7 @@ public class HotelBookingActivity extends TravelBaseActivity implements SpinnerD
     // pre sell options loader callback implementation
     private LoaderManager.LoaderCallbacks<HotelPreSellOption> preSellOptionsLoaderListener = new LoaderManager.LoaderCallbacks<HotelPreSellOption>() {
 
-        @Override
-        public Loader<HotelPreSellOption> onCreateLoader(int id, Bundle bundle) {
+        @Override public Loader<HotelPreSellOption> onCreateLoader(int id, Bundle bundle) {
 
             // request initial search
             Log.d(Const.LOG_TAG, " ***** creating preSellOption loader *****  ");
@@ -155,14 +150,12 @@ public class HotelBookingActivity extends TravelBaseActivity implements SpinnerD
             return hotelPreSellOptionAsyncTaskLoader;
         }
 
-        @Override
-        public void onLoadFinished(Loader<HotelPreSellOption> loader, HotelPreSellOption hotelPreSellOption) {
+        @Override public void onLoadFinished(Loader<HotelPreSellOption> loader, HotelPreSellOption hotelPreSellOption) {
             setPreSellOptions(hotelPreSellOption);
 
         }
 
-        @Override
-        public void onLoaderReset(Loader<HotelPreSellOption> loader) {
+        @Override public void onLoaderReset(Loader<HotelPreSellOption> loader) {
             // nothing to handle here
         }
     };
@@ -193,8 +186,7 @@ public class HotelBookingActivity extends TravelBaseActivity implements SpinnerD
     // HotelBooking loader callback implementation
     private LoaderManager.LoaderCallbacks<HotelBookingRESTResult> bookingLoaderListener = new LoaderManager.LoaderCallbacks<HotelBookingRESTResult>() {
 
-        @Override
-        public Loader<HotelBookingRESTResult> onCreateLoader(int id, Bundle bundle) {
+        @Override public Loader<HotelBookingRESTResult> onCreateLoader(int id, Bundle bundle) {
             PlatformAsyncTaskLoader<HotelBookingRESTResult> hotelBookingAsyncRequestTask = null;
 
             showProgressBar(R.string.hotel_booking_retrieving);
@@ -247,8 +239,7 @@ public class HotelBookingActivity extends TravelBaseActivity implements SpinnerD
 
                 new Handler().post(new Runnable() {
 
-                    @Override
-                    public void run() {
+                    @Override public void run() {
                         showFailurePopUp();
                     }
                 });
@@ -258,15 +249,13 @@ public class HotelBookingActivity extends TravelBaseActivity implements SpinnerD
             isBookingInProgress = false;
         }
 
-        @Override
-        public void onLoaderReset(Loader<HotelBookingRESTResult> data) {
+        @Override public void onLoaderReset(Loader<HotelBookingRESTResult> data) {
             Log.d(Const.LOG_TAG, " ***** loader reset *****  ");
         }
     };
     private String customTravelText;
 
-    @Override
-    public void onWindowFocusChanged(boolean hasFocus) {
+    @Override public void onWindowFocusChanged(boolean hasFocus) {
         super.onWindowFocusChanged(hasFocus);
 
         if (hasFocus && mListView != null) {
@@ -274,8 +263,7 @@ public class HotelBookingActivity extends TravelBaseActivity implements SpinnerD
         }
     }
 
-    @Override
-    protected void onCreate(Bundle savedInstanceState) {
+    @Override protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         initRetainerFragment();
         setContentView(R.layout.hotel_booking);
@@ -345,20 +333,17 @@ public class HotelBookingActivity extends TravelBaseActivity implements SpinnerD
      *
      * @see android.app.Activity#onPause()
      */
-    @Override
-    public void onPause() {
+    @Override public void onPause() {
         super.onPause();
 
     }
 
-    @Override
-    protected void onStop() {
+    @Override protected void onStop() {
         super.onStop();
 
     }
 
-    @Override
-    protected void onDestroy() {
+    @Override protected void onDestroy() {
         super.onDestroy();
 
     }
@@ -368,8 +353,7 @@ public class HotelBookingActivity extends TravelBaseActivity implements SpinnerD
      *
      * @see android.support.v4.app.Fragment#onResume()
      */
-    @Override
-    public void onResume() {
+    @Override public void onResume() {
         super.onResume();
 
     }
@@ -396,7 +380,7 @@ public class HotelBookingActivity extends TravelBaseActivity implements SpinnerD
                 mListView.addHeaderView(header);
 
                 ArrayAdapter<String> adapter = new ArrayAdapter<String>(this,
-                        android.R.layout.simple_expandable_list_item_1, new String[] { });
+                        android.R.layout.simple_expandable_list_item_1, new String[] {});
                 mListView.setAdapter(adapter);
                 mListView.requestFocus();
             }
@@ -443,13 +427,12 @@ public class HotelBookingActivity extends TravelBaseActivity implements SpinnerD
         initTravelCustomFieldsView();
 
         // reserve UI
-        reserveLayout = ((LinearLayout)findViewById(R.id.footer));
+        reserveLayout = ((LinearLayout) findViewById(R.id.footer));
         enableReserveLayout(false);
         reserveLayout.setOnClickListener(new View.OnClickListener() {
 
-            @Override
-            public void onClick(View v) {
-                if(!progressbarVisible) {
+            @Override public void onClick(View v) {
+                if (!progressbarVisible) {
                     doBooking();
                 }
             }
@@ -462,8 +445,7 @@ public class HotelBookingActivity extends TravelBaseActivity implements SpinnerD
 
         roomDescView.post(new Runnable() {
 
-            @Override
-            public void run() {
+            @Override public void run() {
                 int lineCount = roomDescView.getLineCount();
                 // animate txtView more than 3 lines
                 if (lineCount > 3) {
@@ -475,8 +457,7 @@ public class HotelBookingActivity extends TravelBaseActivity implements SpinnerD
 
                         ObjectAnimator animation = null;
 
-                        @Override
-                        public void onClick(View v) {
+                        @Override public void onClick(View v) {
                             if (isExpanded) {
                                 animation = ObjectAnimator.ofInt(v, "maxLines", 3);
                                 roomDescView
@@ -739,18 +720,18 @@ public class HotelBookingActivity extends TravelBaseActivity implements SpinnerD
 
     private void showCancellationPolicy() {
         StringBuilder statement = new StringBuilder();
-        if(hotelRateChangesOverStay != null) {
+        if (hotelRateChangesOverStay != null) {
             // format the statements
             statement.append(TextUtils.join("\n", hotelRateChangesOverStay));
         }
         if (cancellationPolicyStatements != null) {
             // format the statements
-            if(statement.length() > 0) {
+            if (statement.length() > 0) {
                 statement.append("\n\n");
             }
             statement.append(TextUtils.join("\n", cancellationPolicyStatements));
         }
-        if(statement.length() == 0) {
+        if (statement.length() == 0) {
             statement.append(getText(R.string.hotel_reserve_cancel_policy_not_available));
         }
 
@@ -1091,28 +1072,32 @@ public class HotelBookingActivity extends TravelBaseActivity implements SpinnerD
     }
 
     // enable or disbale the reserve linearlayout and its child items i.e. Reserve Room button and the amount Text field
-    private void enableReserveLayout(boolean enable){
+    private void enableReserveLayout(boolean enable) {
         reserveLayout.setClickable(enable);
-        for ( int i = 0; i < reserveLayout.getChildCount();  i++ ){
+        for (int i = 0; i < reserveLayout.getChildCount(); i++) {
             View view = reserveLayout.getChildAt(i);
             view.setEnabled(enable);
         }
     }
 
     private void updateTotalRate() {
-        if(preSellOption != null && preSellOption.totalPrice != null) {
-            if(preSellOption.totalPrice.amount != null) {
-                amount = preSellOption.totalPrice.amount;
-            }
-            if(preSellOption.totalPrice.crnCode != null) {
-                currCode = preSellOption.totalPrice.crnCode;
+        if (preSellOption != null) {
+            if (preSellOption.totalPrice != null) {
+                // update the amount that came from Pre-sell options total rate
+                if (preSellOption.totalPrice.amount != null) {
+                    amount = preSellOption.totalPrice.amount;
+                }
+                if (preSellOption.totalPrice.crnCode != null) {
+                    currCode = preSellOption.totalPrice.crnCode;
+                }
             }
         } else {
             amount = amount * numOfNights;
         }
         TextView txtView = (TextView) findViewById(R.id.hotel_room_rate);
-        String formattedAmount = FormatUtil.formatAmountWithNoDecimals(amount, this.getResources().getConfiguration().locale, currCode, true,
-                false);
+        String formattedAmount = FormatUtil
+                .formatAmountWithNoDecimals(amount, this.getResources().getConfiguration().locale, currCode, true,
+                        false);
         txtView.setText(formattedAmount);
         txtView = (TextView) findViewById(R.id.footer_amount);
         txtView.setText(formattedAmount);

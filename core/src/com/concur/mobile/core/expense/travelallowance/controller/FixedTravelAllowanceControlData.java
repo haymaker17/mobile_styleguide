@@ -1,15 +1,13 @@
 package com.concur.mobile.core.expense.travelallowance.controller;
 
-import com.concur.mobile.core.expense.travelallowance.datamodel.ICode;
-import com.concur.mobile.core.expense.travelallowance.datamodel.LodgingType;
-import com.concur.mobile.core.expense.travelallowance.datamodel.MealProvision;
-import com.concur.mobile.core.expense.travelallowance.util.StringUtilities;
-
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+
+import com.concur.mobile.core.expense.travelallowance.datamodel.ICode;
+import com.concur.mobile.core.expense.travelallowance.util.StringUtilities;
 
 /**
  * This is the control data object which holds the control data coming together with the fixed TAs for a specific expense report.
@@ -59,6 +57,8 @@ public class FixedTravelAllowanceControlData implements Serializable {
     public static final String BREAKFAST_PROVIDED_LABEL = "BreakfastProvidedLabel";
     public static final String DINNER_PROVIDED_LABEL = "DinnerProvidedLabel";
     public static final String LUNCH_PROVIDED_LABEL = "LunchProvidedLabel";
+    public static final String LODGING_TYPE_LABEL = "LodgingTypeLabel";
+    public static final String OVERNIGHT_LABEL = "OvernightLabel";
 
 
     private List<String> attributeKeys;
@@ -104,6 +104,8 @@ public class FixedTravelAllowanceControlData implements Serializable {
         attributeKeys.add(BREAKFAST_PROVIDED_LABEL);
         attributeKeys.add(DINNER_PROVIDED_LABEL);
         attributeKeys.add(LUNCH_PROVIDED_LABEL);
+        attributeKeys.add(LODGING_TYPE_LABEL);
+        attributeKeys.add(OVERNIGHT_LABEL);
     }
 
     /**

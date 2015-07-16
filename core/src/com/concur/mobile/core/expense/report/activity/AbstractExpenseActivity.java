@@ -4305,34 +4305,6 @@ public abstract class AbstractExpenseActivity extends BaseActivity {
     }
 
     /**
-     * Populates the travel allowance fields on the ui to the passed viewGroup.
-     *
-     * @param viewGroup
-     *            the view group to be populated.
-     * @param expRepEntDet
-     *            the expense report entry detail.
-     * @return the list of {@code FormFieldView} related to travel allowance
-     */
-    protected List<FormFieldView> populateAllowancesDetailViewGroup(ViewGroup viewGroup,
-            ExpenseReportEntryDetail expRepEntDet) {
-        List<FormFieldView> formFieldViews = new ArrayList<FormFieldView>();
-        
-        if (viewGroup != null && expRepEntDet != null) {
-            formFieldViews.addAll(populateViewWithFormFields(viewGroup,
-                    expRepEntDet.getTravelAllowanceFields(this.getApplicationContext()), null));
-        }
-
-        if (formFieldViews.isEmpty()) {
-            View allowanceFields = findViewById(R.id.allowance_fields);
-            if (allowanceFields != null) {
-                allowanceFields.setVisibility(View.GONE);
-            }
-        }
-
-        return formFieldViews;
-    }
-
-    /**
      * Will populate a view group with expense report entry detail information.
      * 
      * @param viewGroup
