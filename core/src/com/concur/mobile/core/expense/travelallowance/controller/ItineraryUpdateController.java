@@ -133,7 +133,7 @@ public class ItineraryUpdateController {
 
                 //Check consistency of compactItinerarySegments
                 if ( (segment.getDepartureDateTime() == null && nextCompactSegment.getArrivalDateTime() != null) ||     //Arrival w/o Departure
-                     (segment.getDepartureDateTime() == null && nextCompactSegment.getArrivalDateTime() == null)   ){   //Departure w/o Arrival
+                     (segment.getDepartureDateTime() != null && nextCompactSegment.getArrivalDateTime() == null)   ){   //Departure w/o Arrival
                     Toast.makeText(context, "@Inconsistent Segment Sequence@", Toast.LENGTH_SHORT).show();
                     return null;
                 }
