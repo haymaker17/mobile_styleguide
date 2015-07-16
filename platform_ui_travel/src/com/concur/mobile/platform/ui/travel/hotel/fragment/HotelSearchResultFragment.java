@@ -11,11 +11,14 @@ import android.widget.TextView;
 import android.widget.Toast;
 import com.concur.mobile.platform.travel.search.hotel.HotelPropertyId;
 import com.concur.mobile.platform.ui.common.fragment.PlatformFragmentV1;
+import com.concur.mobile.platform.ui.common.util.ImageCacheReceiver;
 import com.concur.mobile.platform.ui.common.view.ListItemAdapter;
 import com.concur.mobile.platform.ui.travel.R;
+import com.concur.mobile.platform.ui.travel.activity.BaseActivity;
 import com.concur.mobile.platform.ui.travel.util.Const;
 import com.concur.mobile.platform.util.Format;
 
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -29,8 +32,13 @@ public class HotelSearchResultFragment extends PlatformFragmentV1 {
     public String durationOfStayForDisplayInHeader;
 
     public boolean progressbarVisible;
-    private ListView hotelListView;
+    public ListView hotelListView;
     public View mainView;
+    // Contains a reference to the list item adapter.
+    private ListItemAdapter<HotelSearchResultListItem> listItemAdapater;
+
+    // full set of hotel list items
+    private List<HotelSearchResultListItem> hotelListItems;
 
     public ListView getHotelListView() {
         return hotelListView;
@@ -62,6 +70,10 @@ public class HotelSearchResultFragment extends PlatformFragmentV1 {
         mainView = inflater.inflate(R.layout.hotel_search_result_fragment, container, false);
 
         hotelListView = (ListView) mainView.findViewById(R.id.search_result_list_view);
+
+        if (hotelListItems == null) {
+            hotelListItems = new ArrayList<HotelSearchResultListItem>();
+        }
 
         setHasOptionsMenu(true);
 
@@ -137,11 +149,30 @@ public class HotelSearchResultFragment extends PlatformFragmentV1 {
 
     }
 
-    public void updateUI(ListItemAdapter<HotelSearchResultListItem> listItemAdapater, int nuomOfHotels,
-            String toastMessage) {
-        if (nuomOfHotels > 0) {
+    public void updateUI(ListItemAdapter<HotelSearchResultListItem> listItemAdapter,
+            List<HotelSearchResultListItem> listItems, int numOfHotels, String toastMessage) {
+        if (numOfHotels > 0) {
+
+            // Prior to setting the adapter on the view, init the image cache
+            // receiver to handle
+            // updating the list based on images downloaded asynchronously.
+
+            // hotelListView.setAdapter(listItemAdapater);
+
+            listItemAdapater = listItemAdapter;
+            hotelListItems = listItems;
+            Activity currentActivity = getActivity();
+            //        // Prior to setting the adapter on the view, init the image
+            //        // cache receiver to handle
+            //        // updating the list based on images downloaded asynchronously.
+            if (((BaseActivity) currentActivity).imageCacheReceiver == null) {
+                ((BaseActivity) currentActivity).setImageCacheReceiver(
+                        new ImageCacheReceiver<HotelSearchResultListItem>(listItemAdapater, hotelListView));
+                ((BaseActivity) currentActivity).registerImageCacheReceiver();
+            }
+
             hotelListView.setAdapter(listItemAdapater);
-            showNumberOfResultsInFooter(nuomOfHotels);
+            showNumberOfResultsInFooter(numOfHotels);
         }
         if (toastMessage != null) {
             Toast.makeText(getActivity().getApplicationContext(), toastMessage, Toast.LENGTH_SHORT).show();
@@ -217,10 +248,11 @@ public class HotelSearchResultFragment extends PlatformFragmentV1 {
     // private
 
     public void refreshUIListItems(List<HotelSearchResultListItem> hotelListItems,
-            ListItemAdapter<HotelSearchResultListItem> listItemAdapater) {
+            ListItemAdapter<HotelSearchResultListItem> listItemAdapt) {
 
         if (hotelListItems != null && hotelListItems.size() > 0) {
-            hotelListView.setAdapter(listItemAdapater);
+            listItemAdapater = listItemAdapt;
+
             Log.d(Const.LOG_TAG, " ***** .refreshUIListItem updated hotelListItems = " + hotelListItems.size());
             for (HotelSearchResultListItem hotelListItem : hotelListItems) {
                 refreshView(hotelListItem, listItemAdapater);
@@ -235,10 +267,10 @@ public class HotelSearchResultFragment extends PlatformFragmentV1 {
      * @param updatedHotelListItem contains the propertyId that should be refreshed.
      */
     public void refreshView(HotelSearchResultListItem updatedHotelListItem,
-            ListItemAdapter<HotelSearchResultListItem> listItemAdapater) {
+            ListItemAdapter<HotelSearchResultListItem> listItemAdapter) {
         int start = hotelListView.getFirstVisiblePosition();
         for (int i = start, j = hotelListView.getLastVisiblePosition(); i <= j; i++) {
-            HotelSearchResultListItem listItem = listItemAdapater.getItem(i);
+            HotelSearchResultListItem listItem = listItemAdapter.getItem(i);
             // NOTE: Need to check for 'listItem' not being null as the last visible position within the list
             // could be a list footer, which accounts for a visible position, but not reflecting any data
             // within the adapter.
@@ -254,7 +286,7 @@ public class HotelSearchResultFragment extends PlatformFragmentV1 {
                         }
                     }
                     if (refresh) {
-                        // no need to check for other porperty ids
+                        // no need to check for other property ids
                         break;
                     }
                 }
@@ -265,7 +297,7 @@ public class HotelSearchResultFragment extends PlatformFragmentV1 {
                     listItem.getHotel().distanceUnit = updatedHotelListItem.getHotel().distanceUnit;
 
                     View view = hotelListView.getChildAt(i - start);
-                    listItemAdapater.getView(i, view, hotelListView);
+                    listItemAdapter.getView(i, view, hotelListView);
 
                     // TODO - remove this log statement
                     Log.d(Const.LOG_TAG, " *** trying to refresh " + listItem.getHotel().name);
