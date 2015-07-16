@@ -1,8 +1,8 @@
 package com.concur.mobile.core.expense.charge.data;
 
-import com.concur.mobile.platform.expenseit.ExpenseItPostReceipt;
+import com.concur.mobile.platform.expenseit.dao.ExpenseItReceiptDAO;
 
-import java.util.Date;
+import java.util.Calendar;
 
 /**
  * POJO used to represent an ExpenseIt item in the Expense List.
@@ -13,10 +13,10 @@ public class ExpenseItItem {
 
     public static final String CLS_TAG = ExpenseItItem.class.getSimpleName();
 
-    private ExpenseItPostReceipt receipt;
+    private ExpenseItReceiptDAO receipt;
 
-    public ExpenseItItem(ExpenseItPostReceipt exReceipt) {
-        this.receipt = exReceipt;
+    public ExpenseItItem(ExpenseItReceiptDAO expItReceiptDAO) {
+        this.receipt = expItReceiptDAO;
     }
 
     /**
@@ -33,7 +33,7 @@ public class ExpenseItItem {
      *
      * @return date.
      */
-    public Date getUploadDate() {
+    public Calendar getUploadDate() {
         return receipt.getCreatedAt();
     }
 

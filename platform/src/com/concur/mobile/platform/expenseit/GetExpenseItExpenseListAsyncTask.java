@@ -5,12 +5,11 @@ package com.concur.mobile.platform.expenseit;
 
 import android.content.Context;
 import android.net.Uri;
-import android.text.TextUtils;
 import android.util.Log;
 
 import com.concur.mobile.base.service.BaseAsyncRequestTask;
 import com.concur.mobile.base.service.BaseAsyncResultReceiver;
-import com.concur.mobile.platform.expenseit.dao.ExpenseItReceiptDAO;
+import com.concur.mobile.platform.expense.provider.Expense;
 import com.concur.mobile.platform.service.ExpenseItAsyncRequestTask;
 import com.concur.mobile.platform.util.Const;
 import com.google.gson.Gson;
@@ -130,36 +129,43 @@ public class GetExpenseItExpenseListAsyncTask extends ExpenseItAsyncRequestTask 
 
         if (receiptResponse != null) {
             Calendar tmp;
-            ExpenseItReceiptDAO receiptContentProvider = new ExpenseItReceipt(getContext(), userId);
-            receiptContentProvider.deleteAll();
+
+            // TODO: EXPIT - need to reconcile data so we're not wiping out all the rows, we should just updated changed ones!
+            String where = Expense.ExpenseItReceiptColumns.USER_ID + " = ?";
+            String[] selectionArgs = new String[]{userId};
+            getContext().getContentResolver().delete(Expense.ExpenseItReceiptColumns.CONTENT_URI, where, selectionArgs);
+
             for (ExpenseItPostReceipt receipt : receiptResponse.getExpenses()) {
+
+                ExpenseItReceipt expenseItReceipt = new ExpenseItReceipt();
+
                 if (receipt.getId() != null) {
-                    receiptContentProvider.setId(receipt.getId());
+                    expenseItReceipt.setId(receipt.getId());
                 }
-                receiptContentProvider.setCcType(receipt.getCcType());
+                expenseItReceipt.setCcType(receipt.getCcType());
                 if (receipt.getReportId() != null) {
-                    receiptContentProvider.setReportId(receipt.getReportId());
+                    expenseItReceipt.setReportId(receipt.getReportId());
                 }
-                receiptContentProvider.setNote(receipt.getNote());
-                receiptContentProvider.setCcType(receipt.getCcType());
+                expenseItReceipt.setNote(receipt.getNote());
+                expenseItReceipt.setCcType(receipt.getCcType());
                 if (receipt.getCreatedAt() != null) {
                     tmp = Calendar.getInstance();
                     tmp.setTime(receipt.getCreatedAt());
-                    receiptContentProvider.setCreatedAt(tmp);
+                    expenseItReceipt.setCreatedAt(tmp);
                 }
                 if (receipt.getSendToCteAt() != null) {
                     tmp = Calendar.getInstance();
                     tmp.setTime(receipt.getSendToCteAt());
-                    receiptContentProvider.setSendToCteAt(tmp);
+                    expenseItReceipt.setSendToCteAt(tmp);
                 }
-                receiptContentProvider.setImageDataUrl(receipt.getImageDataUrl());
-                receiptContentProvider.setTotalImageCount(receipt.getTotalImageCount());
-                receiptContentProvider.setTotalImagesUploaded(receipt.getTotalImagesUploaded());
-                receiptContentProvider.setParsingStatusCode(receipt.getParsingStatusCode());
-                receiptContentProvider.setProcessingEngine(receipt.getProcessingEngine());
-                receiptContentProvider.setEta(receipt.getEta());
+                expenseItReceipt.setImageDataUrl(receipt.getImageDataUrl());
+                expenseItReceipt.setTotalImageCount(receipt.getTotalImageCount());
+                expenseItReceipt.setTotalImagesUploaded(receipt.getTotalImagesUploaded());
+                expenseItReceipt.setParsingStatusCode(receipt.getParsingStatusCode());
+                expenseItReceipt.setProcessingEngine(receipt.getProcessingEngine());
+                expenseItReceipt.setEta(receipt.getEta());
 
-                if (!receiptContentProvider.update()) {
+                if (!expenseItReceipt.update(getContext(), userId)) {
                     Log.e(Const.LOG_TAG, CLS_TAG + ".onPostParse: failed to update ExpenseIt Receipt DAO!");
                 }
             }

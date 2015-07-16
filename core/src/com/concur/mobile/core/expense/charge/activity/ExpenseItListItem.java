@@ -18,8 +18,6 @@ import com.concur.mobile.platform.expenseit.ExpenseItParseCode;
 import com.concur.mobile.platform.util.AnimationUtil;
 
 import java.util.Calendar;
-import java.util.Date;
-import java.util.GregorianCalendar;
 
 /**
  * An abstract extension of <code>ListItem</code> for the purposes of providing an expense list item view.
@@ -55,14 +53,7 @@ public class ExpenseItListItem extends ExpenseListItem {
      */
     @Override
     public Calendar getTransactionDate() {
-        Date date = expenseItItem.getUploadDate();
-
-        Calendar calEntry = null;
-        if (date != null) {
-            calEntry = new GregorianCalendar();
-            calEntry.setTime(date);
-        }
-        return calEntry;
+        return expenseItItem.getUploadDate();
     }
 
     @Override

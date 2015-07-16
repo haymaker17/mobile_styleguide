@@ -4,6 +4,9 @@
 
 package com.concur.mobile.platform.expenseit.dao;
 
+import android.content.Context;
+import android.net.Uri;
+
 import com.concur.mobile.platform.expenseit.ExpenseItPostReceipt;
 
 import java.util.Calendar;
@@ -62,21 +65,29 @@ public interface ExpenseItReceiptDAO {
 
     /**
      * Will update persistence with the current receipt values.
+     *
+     * @param context
+     * @param userId
      */
-    boolean update();
+    boolean update(Context context, String userId);
 
     /**
      * Will delete the receipt.
      *
+     * @param context
+     * @param userId
+     *
      * @return <code>true</code> upon success; <code>false</code> otherwise.
      */
-    boolean delete();
+    boolean delete(Context context, String userId);
 
     /**
-     * Will clear all entries in the expenseIt receipts store
+     *
+     * @param context
+     * @param userId
      * @return
      */
-    void deleteAll();
+    Uri getContentUri(Context context, String userId);
 
     /**
      * Get all receipts list

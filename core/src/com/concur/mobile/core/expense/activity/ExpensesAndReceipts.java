@@ -47,6 +47,7 @@ import com.concur.mobile.platform.expense.smartexpense.SmartExpenseListRequestTa
 import com.concur.mobile.platform.expenseit.ErrorResponse;
 import com.concur.mobile.platform.expenseit.ExpenseItImage;
 import com.concur.mobile.platform.expenseit.ExpenseItPostReceiptResponse;
+import com.concur.mobile.platform.expenseit.GetExpenseItExpenseListAsyncTask;
 import com.concur.mobile.platform.expenseit.PostExpenseItReceiptAsyncTask;
 import com.concur.mobile.platform.ui.common.util.PreferenceUtil;
 
@@ -61,6 +62,9 @@ public class ExpensesAndReceipts extends BaseActivity implements ExpensesCallbac
     public final static String CLS_TAG = ExpensesAndReceipts.class.getSimpleName();
 
     private static final String SMART_EXPENSE_LIST_RECEIVER = "smart.expense.list.request.receiver";
+
+    private static final String GET_EXPENSE_IT_LIST_RECEIVER = "get.expense.it.list.request.receiver";
+
 
     // Contains the key used to store/retrieve the ReceiptList receiver.
     private static final String GET_RECEIPT_LIST_RECEIVER_KEY = "get.receipt.list.receiver";
@@ -147,6 +151,51 @@ public class ExpensesAndReceipts extends BaseActivity implements ExpensesCallbac
      * Receiver for the ReceiptList call.
      */
     protected BaseAsyncResultReceiver getReceiptListReceiver;
+
+    /**
+     * Async task for getting the list of ExpenseIt items.
+     */
+    protected AsyncTask<Void, Void, Integer> expenseItListAsyncTask;
+
+    /**
+     * Receiver for retrieving the list of ExpenseIt items.
+     */
+    protected BaseAsyncResultReceiver expenseItListReceiver;
+
+    /**
+     * Listener used to handle the response for getting the list of ExpenseIt items.
+     */
+    protected AsyncReplyListener expenseItListReplyListener = new AsyncReplyListener() {
+
+        @Override
+        public void onRequestSuccess(Bundle resultData) {
+
+            Log.d(Const.LOG_TAG, CLS_TAG + ".ExpenseItListReplyListener - Successfully retrieved ExpenseIt items!");
+
+            // Need to update the GSEL.
+            doGetSmartExpenseList();
+        }
+
+        @Override
+        public void onRequestFail(Bundle resultData) {
+
+            Log.e(Const.LOG_TAG, CLS_TAG + ".ExpenseItListReplyListener - FAILED to retrieve ExpenseIt items!");
+
+            onGetSmartExpenseListFailed();
+        }
+
+        @Override
+        public void onRequestCancel(Bundle resultData) {
+
+            // Update the ExpenseList UI.
+            updateExpenseListUI();
+        }
+
+        @Override
+        public void cleanup() {
+            expenseItListReceiver = null;
+        }
+    };
 
     /**
      * Listener for the reply of the ReceiptList MWS call.
@@ -379,6 +428,14 @@ public class ExpensesAndReceipts extends BaseActivity implements ExpensesCallbac
                 retainer.put(GET_RECEIPT_LIST_RECEIVER_KEY, getReceiptListReceiver);
             }
         }
+
+        // Save the ExpenseIt receiver.
+        if (expenseItListReceiver != null) {
+            expenseItListReceiver.setListener(null);
+            if (retainer != null) {
+                retainer.put(GET_EXPENSE_IT_LIST_RECEIVER, expenseItListReceiver);
+            }
+        }
     }
 
     @Override
@@ -406,6 +463,14 @@ public class ExpensesAndReceipts extends BaseActivity implements ExpensesCallbac
                     getReceiptListReceiver.setListener(getReceiptListReplyListener);
 
                     showReceiptsListLoadingView();
+                }
+            }
+
+            // Restore ExpenseList receiver.
+            if (retainer.contains(GET_EXPENSE_IT_LIST_RECEIVER)) {
+                expenseItListReceiver = (BaseAsyncResultReceiver) retainer.get(GET_EXPENSE_IT_LIST_RECEIVER);
+                if (expenseItListReceiver != null) {
+                    expenseItListReceiver.setListener(expenseItListReplyListener);
                 }
             }
         }
@@ -479,7 +544,7 @@ public class ExpensesAndReceipts extends BaseActivity implements ExpensesCallbac
         updateExpenseListUI();
 
         DialogFragmentFactory.getAlertOkayInstance(R.string.dlg_expenses_retrieve_failed_title).show(
-            getSupportFragmentManager(), null);
+                getSupportFragmentManager(), null);
     }
 
     private void updateExpenseListUI() {
@@ -533,6 +598,61 @@ public class ExpensesAndReceipts extends BaseActivity implements ExpensesCallbac
         if (Preferences.isExpenseItUser()) {
             // OCR: What to do in this case?
         }
+    }
+
+    @Override
+    public void doGetExpenseItList() {
+
+        // Show the loading view.
+        int count = pageAdapter.getCount();
+        for (int i = 0; i < count; i++) {
+
+            Fragment frag = pageAdapter.getPage(i);
+            if (frag != null && frag instanceof Expenses) {
+                ((Expenses) frag).showLoadingView();
+                break;
+            }
+        }
+
+        if (expenseItListReceiver == null) {
+            expenseItListReceiver = new BaseAsyncResultReceiver(new Handler());
+            expenseItListReceiver.setListener(expenseItListReplyListener);
+        }
+
+        if (expenseItListAsyncTask != null && expenseItListAsyncTask.getStatus() != AsyncTask.Status.FINISHED) {
+            expenseItListReceiver.setListener(expenseItListReplyListener);
+        } else {
+
+            GetExpenseItExpenseListAsyncTask expenseItListReqTask = new GetExpenseItExpenseListAsyncTask(
+                    getApplicationContext(), 22, getUserId(), expenseItListReceiver);
+            expenseItListAsyncTask = expenseItListReqTask.execute();
+        }
+
+    }
+
+    /*
+    * (non-Javadoc)
+    *
+    * @see com.concur.mobile.core.expense.fragment.Expenses.ExpensesCallback#onGetSmartExpenseListSuccess()
+    */
+    @Override
+    public void onGetExpenseItListSuccess() {
+        // Load the UI from the expense cache.
+        updateExpenseListUI();
+    }
+
+    /*
+     * (non-Javadoc)
+     *
+     * @see com.concur.mobile.core.expense.fragment.Expenses.ExpensesCallback#onGetSmartExpenseListFailed()
+     */
+    @Override
+    public void onGetExpenseItListFailed() {
+        // Load the UI from the expense cache.
+        updateExpenseListUI();
+
+        DialogFragmentFactory.getAlertOkayInstance(R.string.dlg_expenseit_retrieve_failed_title).show(
+                getSupportFragmentManager(), null);
     }
 
     /**

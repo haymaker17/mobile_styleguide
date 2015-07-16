@@ -108,6 +108,12 @@ public class ExpenseItReceipt implements ExpenseItReceiptDAO {
     protected transient Context context;
 
     /**
+     * Default constructor.
+     */
+    public ExpenseItReceipt() {
+    }
+
+    /**
      * Constructs an instance of <code>ExpenseItReceipt</code> with information stored in a cursor.
      *
      * @param context contains an application context.
@@ -230,7 +236,8 @@ public class ExpenseItReceipt implements ExpenseItReceiptDAO {
         }
     }
 
-    public Uri getContentUri() {
+    @Override
+    public Uri getContentUri(Context context, String userId) {
         if (contentUri == null) {
             if (id != -1) {
                 String[] columnNames = {Expense.ExpenseItReceiptColumns.ID, Expense.ExpenseItReceiptColumns.USER_ID};
@@ -243,13 +250,13 @@ public class ExpenseItReceipt implements ExpenseItReceiptDAO {
     }
 
     @Override
-    public boolean delete() {
+    public boolean delete(Context context, String userId) {
         boolean retVal;
 
-        Uri recUri = getContentUri();
-        if (recUri != null) {
+        contentUri = getContentUri(context, userId);
+        if (contentUri != null) {
             ContentResolver resolver = context.getContentResolver();
-            int count = resolver.delete(recUri, null, null);
+            int count = resolver.delete(contentUri, null, null);
             retVal = (count == 1);
             // Clear out the URI.
             contentUri = null;
@@ -259,22 +266,8 @@ public class ExpenseItReceipt implements ExpenseItReceiptDAO {
         return retVal;
     }
 
-    /**
-     * Delete all receipts from ExpenseIt result
-     */
     @Override
-    public void deleteAll() {
-        ContentResolver resolver = context.getContentResolver();
-
-        // delete all records
-        int numOfRecordsDeleted = resolver.delete(Expense.ExpenseItReceiptColumns.CONTENT_URI, null, null);
-
-        Log.d(Const.LOG_TAG, CLS_TAG + ".deleteAll: number of expenseIt entries deleted '" + numOfRecordsDeleted);
-    }
-
-
-    @Override
-    public boolean update() {
+    public boolean update(Context context, String userId) {
         boolean retVal;
 
         ContentResolver resolver = context.getContentResolver();
@@ -297,7 +290,7 @@ public class ExpenseItReceipt implements ExpenseItReceiptDAO {
         ContentUtils.putValue(values, Expense.ExpenseItReceiptColumns.ETA, eta);
 
         // Grab the content URI if any.
-        Uri expenseItUri = getContentUri();
+        Uri expenseItUri = getContentUri(context, userId);
 
         if (expenseItUri != null) {
             // Perform an update.

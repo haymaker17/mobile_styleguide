@@ -5,10 +5,12 @@ package com.concur.mobile.core.expense.fragment;
 
 import android.app.Activity;
 import android.content.BroadcastReceiver;
+import android.content.ContentResolver;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.IntentFilter;
+import android.database.Cursor;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentActivity;
@@ -63,7 +65,6 @@ import com.concur.mobile.core.expense.charge.service.DeleteMobileEntriesRequest;
 import com.concur.mobile.core.expense.data.ExpenseType;
 import com.concur.mobile.core.expense.data.IExpenseEntryCache;
 import com.concur.mobile.core.expense.data.IExpenseReportCache;
-import com.concur.mobile.core.expense.receiptstore.data.ReceiptStoreCache;
 import com.concur.mobile.core.expense.report.activity.ActiveReportsListAdapter;
 import com.concur.mobile.core.expense.report.activity.ExpenseEntries;
 import com.concur.mobile.core.expense.report.activity.ExpenseReportHeader;
@@ -83,26 +84,20 @@ import com.concur.mobile.core.util.ViewUtil;
 import com.concur.mobile.core.view.HeaderListItem;
 import com.concur.mobile.core.view.ListItem;
 import com.concur.mobile.core.view.ListItemAdapter;
-import com.concur.mobile.platform.expense.receipt.list.ReceiptListUtil;
-import com.concur.mobile.platform.expense.receipt.list.dao.ReceiptDAO;
-import com.concur.mobile.platform.expenseit.ExpenseItParseCode;
-import com.concur.mobile.platform.expenseit.ExpenseItPostReceipt;
+import com.concur.mobile.platform.expenseit.ExpenseItReceipt;
 import com.concur.mobile.platform.ocr.OcrStatusEnum;
 import com.concur.mobile.platform.ui.common.dialog.NoConnectivityDialogFragment;
 import com.concur.mobile.platform.ui.common.util.PreferenceUtil;
 
 import org.apache.http.HttpStatus;
 
-import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Collections;
-import java.util.Date;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Iterator;
 import java.util.List;
-import java.util.Locale;
 import java.util.Map;
 
 /**
@@ -128,7 +123,13 @@ public class Expenses extends BaseFragment implements INetworkActivityListener {
 
         public void onGetSmartExpenseListFailed();
 
-        public void doGetReceiptList();
+//        public void doGetReceiptList();
+
+        public void doGetExpenseItList();
+
+        public void onGetExpenseItListSuccess();
+
+        public void onGetExpenseItListFailed();
 
     }
 
@@ -650,20 +651,20 @@ public class Expenses extends BaseFragment implements INetworkActivityListener {
             if (ConcurCore.isConnected()) {
                 if (app.getService() != null) {
 
-                    // Fixed issue when this is a new user or one with empty data.
-                    // If the RS is empty, the refetch it so the OCR items show
-                    // in the Expense List!
-                    boolean refreshReceiptList = false;
-                    if (Preferences.isExpenseItUser()) {
-                        ReceiptStoreCache rsCache = app.getReceiptStoreCache();
-                        if (rsCache == null || rsCache.shouldRefetchReceiptList() || !rsCache.hasLastReceiptList()
-                                || rsCache.getReceiptInfoList() == null
-                                || rsCache.getLastReceiptInfoListUpdateTime() == null) {
-                            refreshReceiptList = true;
-                        }
-                    }
+//                    // Fixed issue when this is a new user or one with empty data.
+//                    // If the RS is empty, the refetch it so the OCR items show
+//                    // in the Expense List!
+//                    boolean refreshReceiptList = false;
+//                    if (Preferences.isExpenseItUser()) {
+//                        ReceiptStoreCache rsCache = app.getReceiptStoreCache();
+//                        if (rsCache == null || rsCache.shouldRefetchReceiptList() || !rsCache.hasLastReceiptList()
+//                                || rsCache.getReceiptInfoList() == null
+//                                || rsCache.getLastReceiptInfoListUpdateTime() == null) {
+//                            refreshReceiptList = true;
+//                        }
+//                    }
 
-                    getSmartExpenses(refreshReceiptList);
+                    getSmartExpenses(Preferences.isExpenseItUser());
                 }
 
                 // Clear the refetch flag.
@@ -798,9 +799,23 @@ public class Expenses extends BaseFragment implements INetworkActivityListener {
             }
         }
 
-        boolean hasOCRReceipts = ReceiptListUtil.getOcrReceiptList(app, activity.getUserId(), false).size() > 0;
+        // Query to see if there are any ExpenseIt items.
+        boolean hasExpenseItItems = false;
+        Cursor cursor = null;
+        try {
+            String where = com.concur.mobile.platform.expense.provider.Expense.ExpenseItReceiptColumns.USER_ID + " = ?";
+            String[] selectionArgs = new String[]{activity.getUserId()};
+            cursor = getActivity().getContentResolver().query(com.concur.mobile.platform.expense.provider.Expense.ExpenseItReceiptColumns.CONTENT_URI,
+                    null, where, selectionArgs, null);
+            hasExpenseItItems = (cursor != null && cursor.getCount() > 0);
 
-        if ((filterHasItems && cacheList != null && cacheList.size() > 0) || hasOCRReceipts) {
+        } finally {
+            if(cursor != null) {
+                cursor.close();
+            }
+        }
+
+        if ((filterHasItems && cacheList != null && cacheList.size() > 0) || hasExpenseItItems) {
             // Ensure the view containing the expense list is displayed.
             if (viewState != ViewState.LOCAL_DATA) {
                 viewState = ViewState.LOCAL_DATA;
@@ -1271,7 +1286,7 @@ public class Expenses extends BaseFragment implements INetworkActivityListener {
         } else if (itemId == R.id.refresh) {
             if (ConcurCore.isConnected()) {
 
-                // Also refresh the ReceiptStore list (if OCR user).
+                // Also refresh the ExpenseIt list (if ExpenseIt user).
                 getSmartExpenses(true);
 
             } else {
@@ -1305,7 +1320,6 @@ public class Expenses extends BaseFragment implements INetworkActivityListener {
     /**
      * Will display a dialog box
      * 
-     * @param view
      */
     public void onDelete() {
 
@@ -2452,24 +2466,38 @@ public class Expenses extends BaseFragment implements INetworkActivityListener {
         return listItems;
     }
 
-    /**
-     * Merges OCR items (if OCR enabled) to the expense list.
-     * 
-     * @param expense
-     *            list of Expenses to merge into.
-     */
-    private void mergeOcrItems(List<Expense> expense) {
+    private void mergeExpenseItItems(List<Expense> expenses) {
 
-        if (Preferences.isExpenseItUser()) {
+        if(Preferences.isExpenseItUser()) {
 
-            // Don't include Receipts with OCR status of A_DONE or M_DONE.
-            // These Receipts should have been converted to an Expense entry returned back by GSEL.
-            List<ReceiptDAO> receiptList = ReceiptListUtil.getOcrReceiptList(app, activity.getUserId(), false);
-            for (ReceiptDAO ocrReceipt : receiptList) {
-                expense.add(new Expense(ocrReceipt));
+            // Query the DB for the list of ExpenseIt items.
+            ContentResolver resolver = activity.getContentResolver();
+            Cursor cursor = null;
+            try {
+                StringBuilder strBldr = new StringBuilder();
+                strBldr.append(com.concur.mobile.platform.expense.provider.Expense.ExpenseItReceiptColumns.USER_ID);
+                strBldr.append(" = ?");
+                String where = strBldr.toString();
+                String[] whereArgs = { activity.getUserId() };
+
+                cursor = resolver.query(com.concur.mobile.platform.expense.provider.Expense.ExpenseItReceiptColumns.CONTENT_URI,
+                        ExpenseItReceipt.fullColumnList, where, whereArgs,
+                        com.concur.mobile.platform.expense.provider.Expense.ExpenseItReceiptColumns.DEFAULT_SORT_ORDER);
+                if (cursor != null) {
+                    while (cursor.moveToNext()) {
+                        ExpenseItReceipt expIt = new ExpenseItReceipt(activity, cursor);
+                        expenses.add(new Expense(expIt));
+                    }
+                }
+            } finally {
+                if (cursor != null) {
+                    cursor.close();
+                }
             }
         }
+
     }
+
 
     /**
      * Will refresh the expense list.
@@ -2537,8 +2565,8 @@ public class Expenses extends BaseFragment implements INetworkActivityListener {
             expenses = (ArrayList<Expense>) cacheList.clone();
         }
 
-        // MOB-20914 - Add OCR items.
-        mergeOcrItems(expenses);
+        // Add ExpenseIt items.
+        mergeExpenseItItems(expenses);
 
         // MOB-15855
         // With some of the ExpenseIt items, ExpenseComparator seems to be violating the Comparison contract. This will be fixed
@@ -2870,16 +2898,12 @@ public class Expenses extends BaseFragment implements INetworkActivityListener {
         toggleButtonBar();
     }
 
-    private void getSmartExpenses(boolean refreshReceiptList) {
+    private void getSmartExpenses(boolean refreshExpenseItList) {
 
-        // If OCR users, need to kick off latest receipts list MWS
-        // so we have the OCR status. If that MWS call returns
-        // successfully, the callback/listener will then call this
-        // method again to fetch the list of Smart Expenses.
-        if (Preferences.isExpenseItUser() && refreshReceiptList) {
+        if (Preferences.isExpenseItUser() && refreshExpenseItList) {
 
             showLoadingView();
-            expensesCallback.doGetReceiptList();
+            expensesCallback.doGetExpenseItList();
 
             return;
         }

@@ -3,6 +3,18 @@
  */
 package com.concur.mobile.core.expense.charge.data;
 
+import android.text.TextUtils;
+import android.util.Log;
+
+import com.concur.mobile.core.util.Const;
+import com.concur.mobile.platform.expense.receipt.list.dao.ReceiptDAO;
+import com.concur.mobile.platform.expense.smartexpense.dao.SmartExpenseDAO;
+import com.concur.mobile.platform.expenseit.dao.ExpenseItReceiptDAO;
+
+import org.xml.sax.Attributes;
+import org.xml.sax.SAXException;
+import org.xml.sax.helpers.DefaultHandler;
+
 import java.io.ByteArrayInputStream;
 import java.io.IOException;
 import java.util.ArrayList;
@@ -11,18 +23,6 @@ import java.util.Iterator;
 import javax.xml.parsers.ParserConfigurationException;
 import javax.xml.parsers.SAXParser;
 import javax.xml.parsers.SAXParserFactory;
-
-import org.xml.sax.Attributes;
-import org.xml.sax.SAXException;
-import org.xml.sax.helpers.DefaultHandler;
-
-import android.text.TextUtils;
-import android.util.Log;
-
-import com.concur.mobile.core.util.Const;
-import com.concur.mobile.platform.expense.receipt.list.dao.ReceiptDAO;
-import com.concur.mobile.platform.expense.smartexpense.dao.SmartExpenseDAO;
-import com.concur.mobile.platform.expenseit.ExpenseItPostReceipt;
 
 /**
  * 
@@ -106,11 +106,11 @@ public class Expense {
      * Constructs a new instance of an <code>Expense</code> that represents an ExpenseIt processing
      * item.
      *
-     * @param exItReceipt
+     * @param expItReceiptDAO
      */
-    public Expense(ExpenseItPostReceipt exItReceipt) {
+    public Expense(ExpenseItReceiptDAO expItReceiptDAO) {
         type = ExpenseEntryType.EXPENSEIT_NOT_DONE;
-        expenseItItem = new ExpenseItItem(exItReceipt);
+        expenseItItem = new ExpenseItItem(expItReceiptDAO);
     }
 
     /**

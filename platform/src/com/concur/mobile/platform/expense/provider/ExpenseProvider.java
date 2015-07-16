@@ -3,8 +3,6 @@
  */
 package com.concur.mobile.platform.expense.provider;
 
-import java.util.HashMap;
-
 import android.content.Context;
 import android.content.UriMatcher;
 import android.util.SparseArray;
@@ -13,6 +11,8 @@ import com.concur.mobile.platform.provider.EncryptedSQLiteOpenHelper;
 import com.concur.mobile.platform.provider.PlatformContentProvider;
 import com.concur.mobile.platform.provider.PlatformSQLiteOpenHelper;
 import com.concur.mobile.platform.provider.UriMatcherInfo;
+
+import java.util.HashMap;
 
 /**
  * An extension of <code>PlatformContentProvider</code> providing expense content.
@@ -47,7 +47,7 @@ public class ExpenseProvider extends PlatformContentProvider {
     private static final int RECEIPT_ID = 16;
     private static final int SMART_EXPENSES = 17;
     private static final int SMART_EXPENSE_ID = 18;
-    private static final int EXPENSEIT_RECEIPT = 19;
+    private static final int EXPENSEIT_RECEIPTS = 19;
     private static final int EXPENSEIT_RECEIPT_ID = 20;
 
     // Contains the expense type projection map.
@@ -156,7 +156,7 @@ public class ExpenseProvider extends PlatformContentProvider {
         matcher.addURI(Expense.AUTHORITY, "smart_expenses/#", SMART_EXPENSE_ID);
 
         // Add expenseIt receipt.
-        matcher.addURI(Expense.AUTHORITY, "expenseit_receipts", EXPENSEIT_RECEIPT);
+        matcher.addURI(Expense.AUTHORITY, "expenseit_receipts", EXPENSEIT_RECEIPTS);
         matcher.addURI(Expense.AUTHORITY, "expenseit_receipts/#", EXPENSEIT_RECEIPT_ID);
 
         return matcher;
@@ -756,16 +756,30 @@ public class ExpenseProvider extends PlatformContentProvider {
         info.idPathPosition = Expense.SmartExpenseColumns.SMART_EXPENSE_ID_PATH_POSITION;
         map.put(SMART_EXPENSE_ID, info);
 
-        //Init the expenseIt receipt list id info.
+
+        // Init the ExpenseIt Receipt list info.
         info = new UriMatcherInfo();
         info.isIdSelection = false;
         info.mimeType = Expense.ExpenseItReceiptColumns.CONTENT_TYPE;
         info.tableName = Expense.ExpenseItReceiptColumns.TABLE_NAME;
         info.nullColumnName = Expense.ExpenseItReceiptColumns.USER_ID;
-        info.contentIdUriBase = Expense.ExpenseItReceiptColumns.CONTENT_ID_URI_BASE;
+        info.contentIdUriBase = Expense.ExpenseItReceiptColumns.CONTENT_URI;
         info.defaultSortOrder = Expense.ExpenseItReceiptColumns.DEFAULT_SORT_ORDER;
         info.projectionMap = expenseItReceiptProjMap;
-        map.put(EXPENSEIT_RECEIPT, info);
+        map.put(EXPENSEIT_RECEIPTS, info);
+
+        //Init the ExpenseIt Receipt list info.
+        info = new UriMatcherInfo();
+        info.isIdSelection = true;
+        info.mimeType = Expense.ExpenseItReceiptColumns.CONTENT_ITEM_TYPE;
+        info.tableName = Expense.ExpenseItReceiptColumns.TABLE_NAME;
+        info.nullColumnName = Expense.ExpenseItReceiptColumns.USER_ID;
+        info.contentIdUriBase = Expense.ExpenseItReceiptColumns.CONTENT_ID_URI_BASE;
+        info.idColumnName = Expense.ExpenseItReceiptColumns._ID;
+        info.projectionMap = expenseItReceiptProjMap;
+        info.defaultSortOrder = Expense.ExpenseItReceiptColumns.DEFAULT_SORT_ORDER;
+        info.idPathPosition = Expense.ExpenseItReceiptColumns.EXPENSEIT_RECEIPT_ID_PATH_POSITION;
+        map.put(EXPENSEIT_RECEIPT_ID, info);
 
         return map;
     }

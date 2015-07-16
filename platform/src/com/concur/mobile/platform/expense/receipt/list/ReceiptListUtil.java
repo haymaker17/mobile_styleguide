@@ -3,9 +3,6 @@
  */
 package com.concur.mobile.platform.expense.receipt.list;
 
-import java.util.ArrayList;
-import java.util.List;
-
 import android.content.ContentResolver;
 import android.content.Context;
 import android.database.Cursor;
@@ -14,6 +11,9 @@ import android.text.TextUtils;
 import com.concur.mobile.platform.expense.provider.Expense;
 import com.concur.mobile.platform.expense.receipt.list.dao.ReceiptDAO;
 import com.concur.mobile.platform.ocr.OcrStatusEnum;
+
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * @author Chris N. Diaz
@@ -88,6 +88,9 @@ public final class ReceiptListUtil {
     }
 
     /**
+     *
+     * @deprecated - this has been replaced by the ExpenseIt API stack.
+     *
      * Returns a list of OCR'd <code>ReceiptDAO</code> - that is, a receipt whose status is NOT "OCR_NOT_AVAILABLE",
      * "OCR_STAT_UNKNOWN", and "NOT_COMPANY_ENABLED".
      * 
@@ -99,6 +102,7 @@ public final class ReceiptListUtil {
      *            if <code>false</code>, filter out "A_DONE" and "M_DONE" OCR status.
      * @return
      */
+    @Deprecated
     public static List<ReceiptDAO> getOcrReceiptList(Context context, String userId, boolean includeDoneStatus) {
 
         List<ReceiptDAO> receiptList = new ArrayList<ReceiptDAO>();
