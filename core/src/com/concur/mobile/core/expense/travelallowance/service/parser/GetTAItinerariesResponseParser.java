@@ -7,6 +7,8 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import android.util.Log;
+
 import com.concur.mobile.base.service.parser.BaseParser;
 import com.concur.mobile.core.expense.travelallowance.datamodel.Itinerary;
 import com.concur.mobile.core.expense.travelallowance.datamodel.ItineraryLocation;
@@ -14,6 +16,9 @@ import com.concur.mobile.core.expense.travelallowance.datamodel.ItinerarySegment
 import com.concur.mobile.core.expense.travelallowance.datamodel.SynchronizationStatusEnum;
 
 public class GetTAItinerariesResponseParser extends BaseParser {
+
+    private static final String CLASS_TAG = GetTAItinerariesResponseParser.class
+        .getSimpleName();
 
     private static final String ITINERARY_TAG = "Itinerary";
 
@@ -130,6 +135,29 @@ public class GetTAItinerariesResponseParser extends BaseParser {
                 seg.setStatus(SynchronizationStatusEnum.fromCode(status));
             }
 
+            // Time Zone Offset
+            String arrivalOffset = null;
+            try {
+                arrivalOffset = currentItineraryRow.get("ArrivalTimeZoneOffset");
+                if (arrivalOffset != null) {
+                    long arrivalOffsetMinutes = Long.parseLong(arrivalOffset, 10);
+                    seg.setArrivalTimeZoneOffset(arrivalOffsetMinutes);
+                }
+            } catch (NumberFormatException e) {
+                Log.e(CLASS_TAG, "Not a Number: " + arrivalOffset);
+            }
+
+            // Time Zone Offset
+            String departureOffset = null;
+            try {
+                departureOffset = currentItineraryRow.get("DepartureTimeZoneOffset");
+                if (departureOffset != null) {
+                    long departureOffsetMinutes = Long.parseLong(departureOffset, 10);
+                    seg.setDepartureTimeZoneOffset(departureOffsetMinutes);
+                }
+            } catch (NumberFormatException e) {
+                Log.e(CLASS_TAG, "Not a Number: " + departureOffset);
+            }
 
 		} catch (ParseException e) {
 			e.printStackTrace();
