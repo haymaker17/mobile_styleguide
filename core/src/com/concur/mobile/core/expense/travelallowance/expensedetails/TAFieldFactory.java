@@ -35,11 +35,11 @@ public class TAFieldFactory {
     private FixedTravelAllowanceController controller;
 
 
-    public TAFieldFactory(Context context, ExpenseReportEntryDetail expRepEntryDetail) {
+    public TAFieldFactory(Context context, ExpenseReportEntryDetail expRepEntryDetail, FixedTravelAllowanceController controller) {
         this.expRepEntryDetail = expRepEntryDetail;
         this.context = context;
         this.formFields = new ArrayList<ExpenseReportFormField>();
-        this.controller = ((ConcurCore)context.getApplicationContext()).getFixedTravelAllowanceController();
+        this.controller = controller;
     }
 
     public List<ExpenseReportFormField> getFormFields() {

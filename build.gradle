@@ -46,6 +46,10 @@ subprojects {
                         assets.srcDirs = ['assets']
                     }
 
+                    androidTest{
+                        java.srcDirs = ['src/test/java']
+                    }
+
                     // Move the tests to tests/java, tests/res, etc...
                     instrumentTest.setRoot('tests')
 
