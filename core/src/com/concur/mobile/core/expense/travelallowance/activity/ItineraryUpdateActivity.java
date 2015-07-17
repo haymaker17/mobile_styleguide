@@ -305,5 +305,6 @@ public class ItineraryUpdateActivity extends BaseActivity {
         if (etItinerary != null) {
             itinerary.setName(etItinerary.getText().toString());
         }
+        itinerary.setExpenseReportID(expenseReportKey);
     }
 }

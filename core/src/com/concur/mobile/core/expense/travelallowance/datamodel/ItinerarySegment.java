@@ -122,7 +122,7 @@ public class ItinerarySegment implements Serializable, IDatePeriodUTC, ISynchron
     @Override
     public Date getStartDateUTC() {
         Date dateUTC = new Date();
-        dateUTC.setTime(departureDateTime.getTime() + DateUtils.convertMinutesToMilliseconds(departureTimeZoneOffset));
+        dateUTC.setTime(departureDateTime.getTime() - DateUtils.convertMinutesToMilliseconds(departureTimeZoneOffset));
         return dateUTC;
     }
 
@@ -132,7 +132,7 @@ public class ItinerarySegment implements Serializable, IDatePeriodUTC, ISynchron
     @Override
     public Date getEndDateUTC() {
         Date dateUTC = new Date();
-        dateUTC.setTime(arrivalDateTime.getTime() + DateUtils.convertMinutesToMilliseconds(arrivalTimeZoneOffset));
+        dateUTC.setTime(arrivalDateTime.getTime() - DateUtils.convertMinutesToMilliseconds(arrivalTimeZoneOffset));
         return dateUTC;
     }
 
