@@ -1,9 +1,8 @@
 package com.concur.mobile.core.expense.activity;
 
 import android.app.Dialog;
+import android.app.ProgressDialog;
 import android.content.Intent;
-import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.os.Handler;
@@ -25,7 +24,6 @@ import com.concur.mobile.base.ui.UIUtils;
 import com.concur.mobile.core.ConcurCore;
 import com.concur.mobile.core.activity.BaseActivity;
 import com.concur.mobile.core.activity.Preferences;
-import com.concur.mobile.core.dialog.DialogFragmentFactory;
 import com.concur.mobile.core.expense.data.IExpenseEntryCache;
 import com.concur.mobile.core.expense.fragment.Expenses;
 import com.concur.mobile.core.expense.fragment.Expenses.ExpensesCallback;
@@ -49,9 +47,11 @@ import com.concur.mobile.platform.expenseit.ExpenseItImage;
 import com.concur.mobile.platform.expenseit.ExpenseItPostReceiptResponse;
 import com.concur.mobile.platform.expenseit.GetExpenseItExpenseListAsyncTask;
 import com.concur.mobile.platform.expenseit.PostExpenseItReceiptAsyncTask;
+import com.concur.mobile.platform.ui.common.dialog.DialogFragmentFactory;
 import com.concur.mobile.platform.ui.common.util.PreferenceUtil;
 
-import java.io.ByteArrayOutputStream;
+import org.apache.commons.io.FileUtils;
+
 import java.io.File;
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -65,6 +65,7 @@ public class ExpensesAndReceipts extends BaseActivity implements ExpensesCallbac
 
     private static final String GET_EXPENSE_IT_LIST_RECEIVER = "get.expense.it.list.request.receiver";
 
+    private static final String UPLOAD_EXPENSE_IT_RECEIPT_RECEIVER = "upload.expense.it.receipt.request.receiver";
 
     // Contains the key used to store/retrieve the ReceiptList receiver.
     private static final String GET_RECEIPT_LIST_RECEIVER_KEY = "get.receipt.list.receiver";
@@ -88,12 +89,15 @@ public class ExpensesAndReceipts extends BaseActivity implements ExpensesCallbac
 
     // Because the EandRPagerAdapter gets called many times, we need to show test drive tips only once.
     protected boolean shouldShowTestDriveReceiptTips = true;
+
     protected boolean shouldShowTestDriveExpensesTips = true;
 
     /**
      *
      */
     protected BaseAsyncResultReceiver smartExpenseListReceiver;
+
+    protected ProgressDialog uploadExpenseItReceiptProgress;
 
     /**
      * Listener used to handle the response for getting the list of SmartExpenses.
@@ -277,7 +281,7 @@ public class ExpensesAndReceipts extends BaseActivity implements ExpensesCallbac
     protected long upTime = 0L;
 
 
-    protected BaseAsyncResultReceiver uploadImageReceiver;
+    protected BaseAsyncResultReceiver uploadExpenseItReceiptReceiver;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -436,6 +440,21 @@ public class ExpensesAndReceipts extends BaseActivity implements ExpensesCallbac
                 retainer.put(GET_EXPENSE_IT_LIST_RECEIVER, expenseItListReceiver);
             }
         }
+
+        // Upload ExpenseIt Receipt.
+        if(uploadExpenseItReceiptReceiver != null) {
+
+            uploadExpenseItReceiptReceiver.setListener(null);
+            if (retainer != null) {
+                retainer.put(UPLOAD_EXPENSE_IT_RECEIPT_RECEIVER, uploadExpenseItReceiptReceiver);
+            }
+
+            if(uploadExpenseItReceiptProgress != null) {
+                uploadExpenseItReceiptProgress.dismiss();
+                uploadExpenseItReceiptProgress = null;
+            }
+
+        }
     }
 
     @Override
@@ -471,6 +490,18 @@ public class ExpensesAndReceipts extends BaseActivity implements ExpensesCallbac
                 expenseItListReceiver = (BaseAsyncResultReceiver) retainer.get(GET_EXPENSE_IT_LIST_RECEIVER);
                 if (expenseItListReceiver != null) {
                     expenseItListReceiver.setListener(expenseItListReplyListener);
+                }
+            }
+
+            // Restore ExpenseIt Receipt receiver.
+            if(retainer.contains(UPLOAD_EXPENSE_IT_RECEIPT_RECEIVER)) {
+                uploadExpenseItReceiptReceiver = (BaseAsyncResultReceiver) retainer.get(UPLOAD_EXPENSE_IT_RECEIPT_RECEIVER);
+                if (uploadExpenseItReceiptReceiver != null) {
+
+                    String message = getText(R.string.dlg_saving_receipt).toString();
+                    uploadExpenseItReceiptProgress = ProgressDialog.show(this, null, message, true, false);
+
+                    uploadExpenseItReceiptReceiver.setListener(new UploadImageAsyncReplyListener(uploadExpenseItReceiptProgress));
                 }
             }
         }
@@ -728,60 +759,82 @@ public class ExpensesAndReceipts extends BaseActivity implements ExpensesCallbac
     }
 
     @Override
-    public void uploadReceiptToExpenseIt(String filePath) {
-        //Setup the image information
-        ExpenseItImage image = new ExpenseItImage();
-        String contentType = null;
-        if (filePath != null) {
-            File receiptFile = new File(filePath);
-            try {
-                if (receiptFile.exists()) {
-                    switch (ViewUtil.getDocumentType(receiptFile)) {
-                        case PNG:
-                            contentType = "image/png";
-                            break;
-                        case JPG:
-                            contentType = "image/jpeg";
-                            break;
-                        case PDF:
-                            contentType = "application/pdf";
-                            break;
-                        case UNKNOWN:
-                            Log.d(Const.LOG_TAG, CLS_TAG + ".uploadReceiptToExpenseIt: non jpg/png receipt image type.");
-                            throw new IllegalArgumentException("Receipt image file of non jpg/png type!");
-                    }
+    public void uploadReceiptToExpenseIt(final String filePath) {
 
-                } else {
-                    Log.e(Const.LOG_TAG, CLS_TAG + ".uploadReceiptToExpenseIt: receipt image file '" + filePath
-                        + "' does not exist!");
-                    throw new IllegalArgumentException("Receipt image file '" + filePath + "' does not exist!");
-                }
-            } catch (SecurityException secExc) {
-                Log.e(Const.LOG_TAG, CLS_TAG + ".uploadReceiptToExpenseIt: can't access receipt file '" + filePath + ".", secExc);
-                throw new IllegalArgumentException("Receipt image file '" + filePath + "' is not accessible.");
-            }
-        } else {
-            Log.e(Const.LOG_TAG, CLS_TAG + ".uploadReceiptToExpenseIt: receipt image file is null!");
-        }
-
-        //Compress the bitmap
-        Bitmap bm = BitmapFactory.decodeFile(filePath);
-        ByteArrayOutputStream baos = new ByteArrayOutputStream();
-        bm.compress(Bitmap.CompressFormat.JPEG, 50 /*quality 0--100%*/, baos); //bm is the bitmap object
-        image.setData(baos.toByteArray(), contentType);
+        // TODO: EXPIT - should we put an ExpenseIt item place holder in this list?
+        String message = getText(R.string.dlg_saving_receipt).toString();
+        uploadExpenseItReceiptProgress = ProgressDialog.show(this, null, message, true, false);
 
         //Setup the image receiver
-        if (uploadImageReceiver == null) {
-            uploadImageReceiver = new BaseAsyncResultReceiver(new Handler());
-            uploadImageReceiver.setListener(new UploadImageAsyncReplyListener());
+        if (uploadExpenseItReceiptReceiver == null) {
+            uploadExpenseItReceiptReceiver = new BaseAsyncResultReceiver(new Handler());
+            uploadExpenseItReceiptReceiver.setListener(new UploadImageAsyncReplyListener(uploadExpenseItReceiptProgress));
         }
 
-        //Make the call
-        PostExpenseItReceiptAsyncTask postExpenseItReceiptAsyncTask = new PostExpenseItReceiptAsyncTask(ConcurCore.getContext(),
-            0, uploadImageReceiver, image);
+        // Run in teh background so we don't block the UI.
+        new Thread(new Runnable() {
+            @Override
+            public void run() {
 
-        postExpenseItReceiptAsyncTask.execute();
-        // TODO: ANALYTICS - Log time it takes to upload.
+                //Setup the image information
+                String contentType = null;
+                if (filePath != null) {
+                    File receiptFile = new File(filePath);
+                    try {
+                        if (receiptFile.exists()) {
+                            switch (ViewUtil.getDocumentType(receiptFile)) {
+                                case PNG:
+                                    contentType = "image/png";
+                                    break;
+                                case JPG:
+                                    contentType = "image/jpeg";
+                                    break;
+                                case PDF:
+                                    contentType = "application/pdf";
+                                    break;
+                                case UNKNOWN:
+                                    Log.d(Const.LOG_TAG, CLS_TAG + ".uploadReceiptToExpenseIt: non jpg/png receipt image type.");
+                                    throw new IllegalArgumentException("Receipt image file of non jpg/png type!");
+                            }
+
+                        } else {
+                            Log.e(Const.LOG_TAG, CLS_TAG + ".uploadReceiptToExpenseIt: receipt image file '" + filePath
+                                    + "' does not exist!");
+                            throw new IllegalArgumentException("Receipt image file '" + filePath + "' does not exist!");
+                        }
+                    } catch (SecurityException secExc) {
+                        Log.e(Const.LOG_TAG, CLS_TAG + ".uploadReceiptToExpenseIt: can't access receipt file '" + filePath + ".", secExc);
+                        throw new IllegalArgumentException("Receipt image file '" + filePath + "' is not accessible.");
+                    }
+                } else {
+                    Log.e(Const.LOG_TAG, CLS_TAG + ".uploadReceiptToExpenseIt: receipt image file is null!");
+                }
+
+                byte[] imageData = null;
+                try {
+                    imageData = FileUtils.readFileToByteArray(new File(filePath));
+                } catch (Exception e) {
+                    Log.e(Const.LOG_TAG, CLS_TAG + ".uploadReceiptToExpenseIt() - problem reading in image file: " + filePath, e);
+                    uploadExpenseItReceiptReceiver = null;
+
+                    // TODO: EXPIT - throw up error dialog?
+                    Toast.makeText(getBaseContext(),
+                            "Failed to upload ExpenseIt Receipt image.", Toast.LENGTH_LONG).show();
+
+                    return;
+                }
+
+                ExpenseItImage image = new ExpenseItImage();
+                image.setData(imageData, contentType);
+
+                //Make the call
+                PostExpenseItReceiptAsyncTask postExpenseItReceiptAsyncTask = new PostExpenseItReceiptAsyncTask(ConcurCore.getContext(),
+                        0, uploadExpenseItReceiptReceiver, image);
+
+                postExpenseItReceiptAsyncTask.execute();
+                // TODO: ANALYTICS - Log time it takes to upload.
+            }
+        }).start();
     }
 
     /*
@@ -979,9 +1032,21 @@ public class ExpensesAndReceipts extends BaseActivity implements ExpensesCallbac
 
         protected String CLS_TAG = UploadImageAsyncReplyListener.class.getSimpleName();
 
+        private ProgressDialog progressDialog;
+
+        UploadImageAsyncReplyListener(ProgressDialog progressDialog) {
+            this.progressDialog = progressDialog;
+        }
+
         @Override
         public void onRequestSuccess(Bundle resultData) {
+
+            if(progressDialog != null) {
+                progressDialog.dismiss();
+            }
+
             if (resultData != null && resultData.containsKey(PostExpenseItReceiptAsyncTask.POST_EXPENSEIT_OCR_RESULT_KEY)) {
+
                 ExpenseItPostReceiptResponse receiptResponse = (ExpenseItPostReceiptResponse) resultData.get(PostExpenseItReceiptAsyncTask.POST_EXPENSEIT_OCR_RESULT_KEY);
                 if (receiptResponse != null) {
                     ErrorResponse error = receiptResponse.getExpenses()[0].getExpenseError();
@@ -992,16 +1057,18 @@ public class ExpensesAndReceipts extends BaseActivity implements ExpensesCallbac
                             // TODO: ANALYTICS - Track ExpenseIt image upload failure.
                         return;
                     } else {
-                        long id = receiptResponse.getExpenses()[0].getId();
-                        int totalSecs = receiptResponse.getExpenses()[0].getEta();
+//                        long id = receiptResponse.getExpenses()[0].getId();
+//                        int totalSecs = receiptResponse.getExpenses()[0].getEta();
+//
+//                        int hours = totalSecs / 3600;
+//                        int minutes = (totalSecs % 3600) / 60;
+//                        int seconds = totalSecs % 60;
+//
+//                        Toast.makeText(getBaseContext(), String.format(
+//                            "Successfully uploaded image with id=%d and estimate finish= %02d:%02d:%02d",
+//                            id, hours, minutes, seconds), Toast.LENGTH_LONG).show();
 
-                        int hours = totalSecs / 3600;
-                        int minutes = (totalSecs % 3600) / 60;
-                        int seconds = totalSecs % 60;
-
-                        Toast.makeText(getBaseContext(), String.format(
-                            "Successfully uploaded image with id=%d and estimate finish= %02d:%02d:%02d",
-                            id, hours, minutes, seconds), Toast.LENGTH_LONG).show();
+                        doGetExpenseItList();
                         // TODO: ANALYTICS - Track ExpenseIt image upload success.
                         return;
                     }
@@ -1013,19 +1080,28 @@ public class ExpensesAndReceipts extends BaseActivity implements ExpensesCallbac
         @Override
         public void onRequestFail(Bundle resultData) {
             Log.e(Const.LOG_TAG, CLS_TAG + ".OnRequestFail is called");
+
+            if(progressDialog != null) {
+                progressDialog.dismiss();
+            }
+
             Toast.makeText(getBaseContext(),"An error occurred uploading Image", Toast.LENGTH_LONG).show();
             // TODO: ANALYTICS - Track ExpenseIt image upload failure.
         }
 
         @Override
         public void onRequestCancel(Bundle resultData) {
-            Log.e(Const.LOG_TAG, CLS_TAG + ".OnRequestCancel is called");
+            Log.d(Const.LOG_TAG, CLS_TAG + ".OnRequestCancel is called");
             // TODO: ANALYTICS - Track ExpenseIt image upload cancel.
+
+            if(progressDialog != null) {
+                progressDialog.dismiss();
+            }
         }
 
         @Override
         public void cleanup() {
-
+            uploadExpenseItReceiptReceiver = null;
         }
     }
 }

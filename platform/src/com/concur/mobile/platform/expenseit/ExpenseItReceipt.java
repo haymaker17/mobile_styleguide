@@ -216,10 +216,10 @@ public class ExpenseItReceipt implements ExpenseItReceiptDAO {
             createdAt.setTimeInMillis(createdMilliSeconds);
             createdAt.set(Calendar.MILLISECOND, 0);
         }
-        Long SentToCtedMilliSeconds = CursorUtil.getLongValue(cursor, Expense.ExpenseItReceiptColumns.SEND_TO_CTE_AT);
-        if (SentToCtedMilliSeconds != null) {
+        Long sentToCtedMilliSeconds = CursorUtil.getLongValue(cursor, Expense.ExpenseItReceiptColumns.SEND_TO_CTE_AT);
+        if (sentToCtedMilliSeconds != null) {
             sendToCteAt = Calendar.getInstance(Parse.UTC);
-            sendToCteAt.setTimeInMillis(SentToCtedMilliSeconds);
+            sendToCteAt.setTimeInMillis(sentToCtedMilliSeconds);
             sendToCteAt.set(Calendar.MILLISECOND, 0);
         }
         imageDataUrl = CursorUtil.getStringValue(cursor, Expense.ExpenseItReceiptColumns.IMAGE_DATA_URL);
