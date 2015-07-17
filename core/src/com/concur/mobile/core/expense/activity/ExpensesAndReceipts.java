@@ -75,6 +75,9 @@ public class ExpensesAndReceipts extends BaseActivity implements ExpensesCallbac
 
     private static final int REQUEST_GET_RECEIPT_LIST = 2;
 
+    private static final String BUNDLE_EXPENSE_LIST_REQUEST_START_TIME = "expense.list.request" +
+            ".start.time";
+
     // Holds the time in milliseconds when the last expenseListRequest was sent.
     private long expenseListRequestStartTime = 0L;
 
@@ -302,6 +305,8 @@ public class ExpensesAndReceipts extends BaseActivity implements ExpensesCallbac
 
         if (savedInstanceState != null) {
             upTime = savedInstanceState.getLong(Const.ACTIVITY_STATE_UPTIME, 0L);
+            expenseListRequestStartTime = savedInstanceState.getLong
+                    (BUNDLE_EXPENSE_LIST_REQUEST_START_TIME, 0L);
         }
 
         getSupportActionBar().setDisplayHomeAsUpEnabled(false);
@@ -528,6 +533,8 @@ public class ExpensesAndReceipts extends BaseActivity implements ExpensesCallbac
             // even if it has been destroyed.
             outState.putLong(Const.ACTIVITY_STATE_UPTIME, upTime);
         }
+
+        outState.putLong(BUNDLE_EXPENSE_LIST_REQUEST_START_TIME, expenseListRequestStartTime);
     }
 
     /*
