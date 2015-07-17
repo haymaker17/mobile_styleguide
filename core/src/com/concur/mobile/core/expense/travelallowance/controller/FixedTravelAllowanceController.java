@@ -86,6 +86,11 @@ public class FixedTravelAllowanceController {
         this.listeners = new ArrayList<IServiceRequestListener>();
     }
 
+    protected void setFixedTAList(List<FixedTravelAllowance> list) {
+        this.fixedTravelAllowances = list;
+        this.fixedTAIdMap = new HashMap<String, FixedTravelAllowance>();
+        fillTAMap();
+    }
 
     public void refreshFixedTravelAllowances(String expenseReportKey) {
 
