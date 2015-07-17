@@ -75,6 +75,7 @@ public class ExpensesAndReceipts extends BaseActivity implements ExpensesCallbac
 
     private static final int REQUEST_GET_RECEIPT_LIST = 2;
 
+    //Bundle key for storing / restoring expenseListRequestStartTime
     private static final String BUNDLE_EXPENSE_LIST_REQUEST_START_TIME = "expense.list.request" +
             ".start.time";
 
