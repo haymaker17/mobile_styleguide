@@ -139,6 +139,18 @@ public class TravelAllowanceItineraryController {
         return null;
     }
 
+    public Itinerary getItinerary(String itineraryId) {
+        if (StringUtilities.isNullOrEmpty(itineraryId)) {
+            return null;
+        }
+        for (Itinerary itinerary : itineraryList) {
+            if (itineraryId.equals(itinerary.getItineraryID())) {
+                return itinerary;
+            }
+        }
+        return null;
+    }
+
     public List<CompactItinerary> getCompactItineraryList() {
         List<CompactItinerary> result = new ArrayList<CompactItinerary>();
 

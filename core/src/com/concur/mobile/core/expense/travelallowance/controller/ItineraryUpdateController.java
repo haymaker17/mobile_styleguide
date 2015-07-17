@@ -24,57 +24,56 @@ import java.util.List;
  */
 public class ItineraryUpdateController {
 
-    private boolean useMockData;
+    /**
+     * The stage for itinerary
+     */
+    private Itinerary itinerary;
 
     /**
-     * Stage for new itineraries
+     * The actual itinerary
      */
-    private CompactItinerary compactItinerary;
-
     private Context context;
 
     public ItineraryUpdateController(Context context) {
-        this.compactItinerary = new CompactItinerary();
-        compactItinerary.setSegmentList(new ArrayList<CompactItinerarySegment>());
+        this.itinerary = new Itinerary();
+        itinerary.setSegmentList(new ArrayList<ItinerarySegment>());
         this.context = context;
-
-        this.useMockData = true;
     }
 
-    public void refreshCompactItinerary(String itineraryId) {
+    public void refreshItinerary(String itineraryId) {
         ConcurCore app = (ConcurCore) context.getApplicationContext();
         TravelAllowanceItineraryController controller = app.getTaItineraryController();
-        this.compactItinerary = controller.getCompactItinerary(itineraryId);
-        if (this.compactItinerary == null) {//Create Mode
+        this.itinerary = controller.getItinerary(itineraryId);
+        if (this.itinerary == null) {//Create Mode
+            //TODO QMB: Replace convenience mode based on mock
             ItineraryUpdateTestData testData = new ItineraryUpdateTestData();
-            this.compactItinerary = testData.getCompactItinerary();
+            this.itinerary = testData.getItinerary();
         }
     }
 
-    public CompactItinerary getCompactItinerary(){
-        return this.compactItinerary;
+    public Itinerary getItinerary(){
+        return this.itinerary;
     }
 
-    public List<CompactItinerarySegment> getCompactItinerarySegments() {
-        List<CompactItinerarySegment> segments = null;
-        if (this.compactItinerary != null) {
-            segments = compactItinerary.getSegmentList();
+    public List<ItinerarySegment> getItinerarySegments() {
+        List<ItinerarySegment> segments = null;
+        if (this.itinerary != null) {
+            segments = itinerary.getSegmentList();
         }
         return segments;
     }
 
-    public CompactItinerarySegment getCompactItinerarySegment(int position) {
-        CompactItinerarySegment segment = null;
-        if (compactItinerary != null && compactItinerary.getSegmentList() != null
-                && position < this.compactItinerary.getSegmentList().size()) {
-            segment = this.compactItinerary.getSegmentList().get(position);
+    public ItinerarySegment getItinerarySegment(int position) {
+        ItinerarySegment segment = null;
+        if (itinerary != null && itinerary.getSegmentList() != null
+                && position < this.itinerary.getSegmentList().size()) {
+            segment = this.itinerary.getSegmentList().get(position);
         }
         return segment;
     }
 
     public void executeSave(String expRepKey) {
 
-        Itinerary itinerary = getItinerary(expRepKey);
         if (itinerary == null) {
             return;
         }
@@ -108,115 +107,8 @@ public class ItineraryUpdateController {
             }
         });
 
-        SaveItineraryRequest request = new SaveItineraryRequest(context, receiver, getItinerary(expRepKey));
+        SaveItineraryRequest request = new SaveItineraryRequest(context, receiver, itinerary);
         request.execute();
     }
-
-    public Itinerary getItinerary(String repId) {
-        Itinerary itinerary = new Itinerary();
-
-        itinerary.setName(compactItinerary.getName());
-        itinerary.setExpenseReportID(repId);
-        itinerary.setItineraryID(compactItinerary.getItineraryID());
-
-        //List<CompactItinerarySegment> segmentList = compactItinerary.getSegmentList();
-
-
-        ItinerarySegment currentItinSegement = null;
-
-        CompactItinerarySegment nextCompactSegment = null;
-        int i = 0;
-        boolean nextSegmentFinished = false;
-        for (CompactItinerarySegment segment : compactItinerary.getSegmentList()) {
-            if (i < compactItinerary.getSegmentList().size() - 1) {
-                nextCompactSegment = compactItinerary.getSegmentList().get(i+1);
-
-                //Check consistency of compactItinerarySegments
-                if ( (segment.getDepartureDateTime() == null && nextCompactSegment.getArrivalDateTime() != null) ||     //Arrival w/o Departure
-                     (segment.getDepartureDateTime() != null && nextCompactSegment.getArrivalDateTime() == null)   ){   //Departure w/o Arrival
-                    Toast.makeText(context, "@Inconsistent Segment Sequence@", Toast.LENGTH_SHORT).show();
-                    return null;
-                }
-                if (currentItinSegement == null) {
-                    currentItinSegement = new ItinerarySegment();
-                }
-
-                if (!nextSegmentFinished) {
-                    currentItinSegement.setDepartureLocation(segment.getLocation());
-                    currentItinSegement.setDepartureDateTime(segment.getDepartureDateTime());
-                    currentItinSegement.setBorderCrossDateTime(segment.getBorderCrossingDateTime());
-                    if (nextCompactSegment.isSegmentOpen()) {
-                        currentItinSegement.setArrivalLocation(nextCompactSegment.getLocation());
-                        currentItinSegement.setArrivalDateTime(nextCompactSegment.getArrivalDateTime());
-                    } else {
-                        currentItinSegement.setArrivalLocation(nextCompactSegment.getLocation());
-                        currentItinSegement.setArrivalDateTime(nextCompactSegment.getArrivalDateTime());
-                    }
-
-                    itinerary.getSegmentList().add(currentItinSegement);
-                    currentItinSegement = null;
-
-                    if (nextCompactSegment.isSegmentOpen()) {
-                        nextSegmentFinished = true;
-                    } else {
-                        nextSegmentFinished = false;
-                    }
-                } else {
-                    nextSegmentFinished = false;
-                }
-            }
-
-            i++;
-        }
-
-
-        return itinerary;
-    }
-
-//    public Itinerary getItinerary() {
-//        Itinerary itinerary = new Itinerary();
-//
-//        itinerary.setName(compactItinerary.getName());
-//
-//        //List<CompactItinerarySegment> segmentList = compactItinerary.getSegmentList();
-//
-//        CompactItinerarySegment previousSegment = null;
-//
-//        ItinerarySegment currentItinSegement = null;
-//
-//        for (CompactItinerarySegment segment : compactItinerary.getSegmentList()) {
-//            if (currentItinSegement == null) {
-//                currentItinSegement = new ItinerarySegment();
-//            }
-//
-//            if (previousSegment == null) {
-//                currentItinSegement.setDepartureLocation(segment.getLocation());
-//                currentItinSegement.setDepartureDateTime(segment.getDepartureDateTime());
-//                currentItinSegement.setBorderCrossDateTime(segment.getBorderCrossingDateTime());
-//            } else {
-//                if (currentItinSegement.getDepartureLocation() == null && currentItinSegement.getArrivalLocation() == null) {
-//                    currentItinSegement.setDepartureLocation(previousSegment.getLocation());
-//                    currentItinSegement.setDepartureDateTime(previousSegment.getDepartureDateTime());
-//                    currentItinSegement.setArrivalLocation(segment.getLocation());
-//                    currentItinSegement.setArrivalDateTime(segment.getArrivalDateTime());
-//                } else {
-//                    currentItinSegement.setArrivalLocation(segment.getLocation());
-//                    currentItinSegement.setArrivalDateTime(segment.getArrivalDateTime());
-//                }
-//
-////                currentItinSegement.setBorderCrossDateTime(segment.getBorderCrossingDateTime());
-//            }
-//
-//            if (currentItinSegement.getDepartureLocation() != null && currentItinSegement.getArrivalLocation() != null) {
-//                itinerary.getSegmentList().add(currentItinSegement);
-//                currentItinSegement = null;
-//            }
-//
-//            previousSegment = segment;
-//        }
-//
-//
-//        return itinerary;
-//    }
 
 }

@@ -20,9 +20,10 @@ import com.concur.mobile.core.activity.BaseActivity;
 import com.concur.mobile.core.expense.activity.ListSearch;
 import com.concur.mobile.core.expense.travelallowance.adapter.ItineraryUpdateListAdapter;
 import com.concur.mobile.core.expense.travelallowance.controller.ItineraryUpdateController;
+import com.concur.mobile.core.expense.travelallowance.datamodel.Itinerary;
 import com.concur.mobile.core.expense.travelallowance.datamodel.ItineraryLocation;
+import com.concur.mobile.core.expense.travelallowance.datamodel.ItinerarySegment;
 import com.concur.mobile.core.expense.travelallowance.fragment.TimePickerFragment;
-import com.concur.mobile.core.expense.travelallowance.ui.model.CompactItinerarySegment;
 import com.concur.mobile.core.expense.travelallowance.ui.model.PositionInfoTag;
 import com.concur.mobile.core.expense.travelallowance.util.DateUtils;
 import com.concur.mobile.core.expense.travelallowance.util.StringUtilities;
@@ -89,7 +90,7 @@ public class ItineraryUpdateActivity extends BaseActivity {
             itineraryId = getIntent().getStringExtra(Const.EXTRA_ITINERARY_KEY);
         }
 
-        updateController.refreshCompactItinerary(itineraryId);
+        updateController.refreshItinerary(itineraryId);
 
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         if (toolbar != null) {
@@ -152,7 +153,7 @@ public class ItineraryUpdateActivity extends BaseActivity {
                 if (currentPosition != null) {
                     Date date;
                     Calendar cal;
-                    CompactItinerarySegment segment = updateController.getCompactItinerarySegment(currentPosition.getPosition());
+                    ItinerarySegment segment = updateController.getItinerarySegment(currentPosition.getPosition());
                     if (currentPosition.getInfo() == PositionInfoTag.INFO_OUTBOUND) {
                         date = segment.getDepartureDateTime();
                     } else {
@@ -179,7 +180,7 @@ public class ItineraryUpdateActivity extends BaseActivity {
                 if (currentPosition != null) {
                     Date date;
                     Calendar cal;
-                    CompactItinerarySegment segment = updateController.getCompactItinerarySegment(currentPosition.getPosition());
+                    ItinerarySegment segment = updateController.getItinerarySegment(currentPosition.getPosition());
                     if (currentPosition.getInfo() == PositionInfoTag.INFO_OUTBOUND) {
                         date = segment.getDepartureDateTime();
                     } else {
@@ -221,11 +222,15 @@ public class ItineraryUpdateActivity extends BaseActivity {
                     //String selectedListItemCode = data.getStringExtra(Const.EXTRA_EXPENSE_LIST_SELECTED_LIST_ITEM_CODE);
                     String selectedListItemText = data.getStringExtra(Const.EXTRA_EXPENSE_LIST_SELECTED_LIST_ITEM_TEXT);
                     if (this.currentPosition != null) {
-                        CompactItinerarySegment segment = this.updateController.getCompactItinerarySegment(currentPosition.getPosition());
+                        ItinerarySegment segment = this.updateController.getItinerarySegment(currentPosition.getPosition());
                         ItineraryLocation itinLocation = new ItineraryLocation();
                         itinLocation.setName(selectedListItemText);
                         itinLocation.setCode(selectedListItemKey);
-                        segment.setLocation(itinLocation);
+                        if (currentPosition.getInfo() == PositionInfoTag.INFO_OUTBOUND) {
+                            segment.setDepartureLocation(itinLocation);
+                        } else {
+                            segment.setArrivalLocation(itinLocation);
+                        }
                         adapter.notifyDataSetChanged();
                     }
                 }
@@ -237,8 +242,8 @@ public class ItineraryUpdateActivity extends BaseActivity {
 
     private void renderDefaultValues() {
         EditText etItinerary = (EditText) findViewById(R.id.et_itinerary);
-        if (etItinerary != null && updateController.getCompactItinerary() != null) {
-            etItinerary.setText(updateController.getCompactItinerary().getName());
+        if (etItinerary != null && updateController.getItinerary() != null) {
+            etItinerary.setText(updateController.getItinerary().getName());
         }
     }
 
@@ -279,6 +284,7 @@ public class ItineraryUpdateActivity extends BaseActivity {
             return true;
         }
         if (item.getItemId() == R.id.menuSave) {
+            updateControllerData();
             updateController.executeSave(this.expenseReportKey);
             return true;
         }
@@ -288,5 +294,16 @@ public class ItineraryUpdateActivity extends BaseActivity {
     @Override
     protected void onDestroy() {
         super.onDestroy();
+    }
+
+    private void updateControllerData() {
+        EditText etItinerary = (EditText) findViewById(R.id.et_itinerary);
+        Itinerary itinerary = updateController.getItinerary();
+        if (itinerary == null) {
+            return;
+        }
+        if (etItinerary != null) {
+            itinerary.setName(etItinerary.getText().toString());
+        }
     }
 }

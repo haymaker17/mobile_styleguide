@@ -7,17 +7,13 @@ import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
-import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.concur.core.R;
 import com.concur.mobile.core.ConcurCore;
 import com.concur.mobile.core.expense.travelallowance.controller.ItineraryUpdateController;
-import com.concur.mobile.core.expense.travelallowance.ui.model.CompactItinerarySegment;
+import com.concur.mobile.core.expense.travelallowance.datamodel.ItinerarySegment;
 import com.concur.mobile.core.expense.travelallowance.ui.model.PositionInfoTag;
-import com.concur.mobile.core.expense.travelallowance.util.StringUtilities;
-
-import java.util.List;
 
 /**
  * Created by Michael Becherer on 03-Jul-15.
@@ -26,12 +22,9 @@ public class ItineraryUpdateListAdapter extends ArrayAdapter<Object> {
 
     private static final String CLASS_TAG = ItineraryUpdateListAdapter.class.getSimpleName();
     private static final int LAYOUT_ID = R.layout.ta_edit_segment;
-    private static final int DESTINATION_ROW = 0;
-    private static final int ENDPOINT_ROW = 1;
 
     private final Context context;
     private ItineraryUpdateController updateController;
-    private List<CompactItinerarySegment> segments;
     private ViewHolder holder;
     private OnClickListener onTimeClickListener;
     private OnClickListener onDateClickListener;
@@ -42,22 +35,28 @@ public class ItineraryUpdateListAdapter extends ArrayAdapter<Object> {
      */
     private final class ViewHolder {
         private TextView tvTitle;
-        private View vgLocation;
-        private ImageView ivLocationIcon;
-        private TextView tvLocationValue;
-        private View vSeparatorLong;
-        private View vSeparatorShort;
-        private View vgDateTimeContainer;
-        private View vgDate;
-        private TextView tvDateValue;
-        private View vgTime;
-        private TextView tvTimeValue;
-        private View vgPeriod;
-        private TextView tvPeriodValue;
-        private View vgArrivalTime;
-        private TextView tvArrivalTimeValue;
+        private View vDepartureLocation;
+        private View vgDepartureLocation;
+        private TextView tvDepartureLocationLabel;
+        private TextView tvDepartureLocationValue;
+        private View vDepartureDateTime;
+        private View vgDepartureDate;
+        private TextView tvDepartureDateLabel;
+        private TextView tvDepartureDateValue;
         private View vgDepartureTime;
+        private TextView tvDepartureTimeLabel;
         private TextView tvDepartureTimeValue;
+        private View vArrivalLocation;
+        private View vgArrivalLocation;
+        private TextView tvArrivalLocationLabel;
+        private TextView tvArrivalLocationValue;
+        private View vArrivalDateTime;
+        private View vgArrivalDate;
+        private TextView tvArrivalDateLabel;
+        private TextView tvArrivalDateValue;
+        private View vgArrivalTime;
+        private TextView tvArrivalTimeLabel;
+        private TextView tvArrivalTimeValue;
     }
 
     public ItineraryUpdateListAdapter(final Context context,
@@ -75,7 +74,7 @@ public class ItineraryUpdateListAdapter extends ArrayAdapter<Object> {
         ConcurCore app = (ConcurCore) context.getApplicationContext();
         this.updateController = app.getItineraryUpdateController();
 
-        addAll(updateController.getCompactItinerarySegments());
+        addAll(updateController.getItinerarySegments());
     }
 
     /**
@@ -86,22 +85,36 @@ public class ItineraryUpdateListAdapter extends ArrayAdapter<Object> {
     private void createViewHolder(final View view) {
         holder = new ViewHolder();
         holder.tvTitle = (TextView) view.findViewById(R.id.tv_title);
-        holder.vgLocation = view.findViewById(R.id.vg_location);
-        holder.ivLocationIcon = (ImageView) view.findViewById(R.id.iv_location_icon);
-        holder.tvLocationValue = (TextView) view.findViewById(R.id.tv_location_value);
-        holder.vSeparatorLong = view.findViewById(R.id.v_separator_long);
-        holder.vSeparatorShort = view.findViewById(R.id.v_separator_short);
-        holder.vgDateTimeContainer = view.findViewById(R.id.vg_date_time_container);
-        holder.vgDate = view.findViewById(R.id.vg_date);
-        holder.tvDateValue = (TextView) view.findViewById(R.id.tv_date_value);
-        holder.vgTime = view.findViewById(R.id.vg_date_time);
-        holder.tvTimeValue = (TextView) view.findViewById(R.id.tv_date_time_value);
-        holder.vgPeriod = view.findViewById(R.id.vg_period);
-        holder.tvPeriodValue = (TextView) view.findViewById(R.id.tv_period_value);
-        holder.vgArrivalTime = view.findViewById(R.id.vg_arrival_time);
-        holder.tvArrivalTimeValue = (TextView) view.findViewById(R.id.tv_arrival_time_value);
-        holder.vgDepartureTime = view.findViewById(R.id.vg_departure_time);
-        holder.tvDepartureTimeValue = (TextView) view.findViewById(R.id.tv_departure_time_value);
+        holder.vDepartureLocation = view.findViewById(R.id.v_departure_location);
+        if (holder.vDepartureLocation != null) {
+            holder.vgDepartureLocation = holder.vDepartureLocation.findViewById(R.id.vg_location);
+            holder.tvDepartureLocationLabel = (TextView) holder.vDepartureLocation.findViewById(R.id.tv_location_label);
+            holder.tvDepartureLocationValue = (TextView) holder.vDepartureLocation.findViewById(R.id.tv_location_value);
+        }
+        holder.vDepartureDateTime = view.findViewById(R.id.v_departure_date_time);
+        if (holder.vDepartureDateTime != null) {
+            holder.vgDepartureDate = holder.vDepartureDateTime.findViewById(R.id.vg_date);
+            holder.tvDepartureDateLabel = (TextView) holder.vDepartureDateTime.findViewById(R.id.tv_date_label);
+            holder.tvDepartureDateValue = (TextView) holder.vDepartureDateTime.findViewById(R.id.tv_date_value);
+            holder.vgDepartureTime =  holder.vDepartureDateTime.findViewById(R.id.vg_time);
+            holder.tvDepartureTimeLabel = (TextView) holder.vDepartureDateTime.findViewById(R.id.tv_time_label);
+            holder.tvDepartureTimeValue = (TextView) holder.vDepartureDateTime.findViewById(R.id.tv_time_value);
+        }
+        holder.vArrivalLocation = view.findViewById(R.id.v_arrival_location);
+        if (holder.vArrivalLocation != null) {
+            holder.vgArrivalLocation = holder.vArrivalLocation.findViewById(R.id.vg_location);
+            holder.tvArrivalLocationLabel = (TextView) holder.vArrivalLocation.findViewById(R.id.tv_location_label);
+            holder.tvArrivalLocationValue = (TextView) holder.vArrivalLocation.findViewById(R.id.tv_location_value);
+        }
+        holder.vArrivalDateTime = view.findViewById(R.id.v_arrival_date_time);
+        if (holder.vArrivalDateTime != null) {
+            holder.vgArrivalDate = holder.vArrivalDateTime.findViewById(R.id.vg_date);
+            holder.tvArrivalDateLabel = (TextView) holder.vArrivalDateTime.findViewById(R.id.tv_date_label);
+            holder.tvArrivalDateValue = (TextView) holder.vArrivalDateTime.findViewById(R.id.tv_date_value);
+            holder.vgArrivalTime =  holder.vArrivalDateTime.findViewById(R.id.vg_time);
+            holder.tvArrivalTimeLabel = (TextView) holder.vArrivalDateTime.findViewById(R.id.tv_time_label);
+            holder.tvArrivalTimeValue = (TextView) holder.vArrivalDateTime.findViewById(R.id.tv_time_value);
+        }
     }
 
     /**
@@ -118,29 +131,33 @@ public class ItineraryUpdateListAdapter extends ArrayAdapter<Object> {
             createViewHolder(resultView);
             resultView.setTag(holder);
             if (this.onLocationClickListener != null) {
-                if (holder.vgLocation != null) {
-                    holder.vgLocation.setOnClickListener(onLocationClickListener);
-                    holder.vgLocation.setClickable(true);
+                if (holder.vDepartureLocation != null) {
+                    holder.vDepartureLocation.setOnClickListener(onLocationClickListener);
+                    holder.vDepartureLocation.setClickable(true);
+                }
+                if (holder.vArrivalLocation != null) {
+                    holder.vArrivalLocation.setOnClickListener(onLocationClickListener);
+                    holder.vArrivalLocation.setClickable(true);
                 }
             }
             if (this.onDateClickListener != null) {
-                if (holder.vgDate != null) {
-                    holder.vgDate.setOnClickListener(onDateClickListener);
-                    holder.vgDate.setClickable(true);
+                if (holder.vgDepartureDate != null) {
+                    holder.vgDepartureDate.setOnClickListener(onDateClickListener);
+                    holder.vgDepartureDate.setClickable(true);
                 }
-                if (holder.vgArrivalTime != null) { //TODO: Time Picker as soon as UI is designed
-                    holder.vgArrivalTime.setOnClickListener(onDateClickListener);
-                    holder.vgArrivalTime.setClickable(true);
-                }
-                if (holder.vgDepartureTime != null) { //TODO: Time Picker as soon as UI is designed
-                    holder.vgDepartureTime.setOnClickListener(onDateClickListener);
-                    holder.vgDepartureTime.setClickable(true);
+                if (holder.vgArrivalDate != null) {
+                    holder.vgArrivalDate.setOnClickListener(onDateClickListener);
+                    holder.vgArrivalDate.setClickable(true);
                 }
             }
             if (this.onTimeClickListener != null) {
-                if (holder.vgTime != null) {
-                    holder.vgTime.setOnClickListener(onTimeClickListener);
-                    holder.vgTime.setClickable(true);
+                if (holder.vgDepartureTime != null) {
+                    holder.vgDepartureTime.setOnClickListener(onTimeClickListener);
+                    holder.vgDepartureTime.setClickable(true);
+                }
+                if (holder.vgArrivalTime != null) {
+                    holder.vgArrivalTime.setOnClickListener(onTimeClickListener);
+                    holder.vgArrivalTime.setClickable(true);
                 }
             }
         } else {
@@ -148,24 +165,19 @@ public class ItineraryUpdateListAdapter extends ArrayAdapter<Object> {
             holder = (ViewHolder) resultView.getTag();
         }
 
-        if (getItemViewType(i) == DESTINATION_ROW) {
-            renderDestination((CompactItinerarySegment) getItem(i));
-            setPositionInfoTag(holder.vgLocation, i);
-            setPositionInfoTag(holder.vgArrivalTime, i, PositionInfoTag.INFO_INBOUND);
-            setPositionInfoTag(holder.vgDepartureTime, i, PositionInfoTag.INFO_OUTBOUND);
-        } else {
-            if (i == 0) {//Departure
-                setPositionInfoTag(holder.vgLocation, i, PositionInfoTag.INFO_OUTBOUND);
-                setPositionInfoTag(holder.vgDate, i, PositionInfoTag.INFO_OUTBOUND);
-                setPositionInfoTag(holder.vgTime, i, PositionInfoTag.INFO_OUTBOUND);
-                renderDeparture((CompactItinerarySegment) getItem(i));
-            } else {//Arrival
-                setPositionInfoTag(holder.vgLocation, i, PositionInfoTag.INFO_INBOUND);
-                setPositionInfoTag(holder.vgDate, i, PositionInfoTag.INFO_INBOUND);
-                setPositionInfoTag(holder.vgTime, i, PositionInfoTag.INFO_INBOUND);
-                renderArrival((CompactItinerarySegment) getItem(i));
-            }
-        }
+        setPositionInfoTag(holder.vDepartureLocation, i, PositionInfoTag.INFO_OUTBOUND);
+        setPositionInfoTag(holder.vgDepartureDate, i, PositionInfoTag.INFO_OUTBOUND);
+        setPositionInfoTag(holder.vgDepartureTime, i, PositionInfoTag.INFO_OUTBOUND);
+
+        setPositionInfoTag(holder.vArrivalLocation, i, PositionInfoTag.INFO_INBOUND);
+        setPositionInfoTag(holder.vgArrivalDate, i, PositionInfoTag.INFO_INBOUND);
+        setPositionInfoTag(holder.vgArrivalTime, i, PositionInfoTag.INFO_INBOUND);
+
+        ItinerarySegment segment = (ItinerarySegment) getItem(i);
+        renderTitle(segment);
+        renderDeparture(segment);
+        renderArrival(segment);
+
         return resultView;
     }
 
@@ -174,34 +186,6 @@ public class ItineraryUpdateListAdapter extends ArrayAdapter<Object> {
             PositionInfoTag positionInfoTag = new PositionInfoTag(position, info);
             view.setTag(R.id.tag_key_position, positionInfoTag);
         }
-    }
-
-    private void setPositionInfoTag(final View view, int position) {
-        if (view != null) {
-            PositionInfoTag positionInfoTag = new PositionInfoTag(position);
-            view.setTag(R.id.tag_key_position, positionInfoTag);
-        }
-    }
-
-    /**
-     * {@inheritDoc}
-     */
-    @Override
-    public int getItemViewType(int i) {
-        //Assumption: Departure/Arrival always the first/last element
-        if (i > 0 && i + 1 < updateController.getCompactItinerarySegments().size()){
-            //Destination
-            return DESTINATION_ROW;
-        }
-        return ENDPOINT_ROW;
-    }
-
-    /**
-     * {@inheritDoc}
-     */
-    @Override
-    public int getViewTypeCount() {
-        return 2;
     }
 
     /**
@@ -220,176 +204,80 @@ public class ItineraryUpdateListAdapter extends ArrayAdapter<Object> {
         return false;
     }
 
+    private void renderTitle(final ItinerarySegment segment) {
+        if (holder.tvTitle == null || segment == null) {
+            return;
+        }
+        if (segment.getDepartureLocation() != null && segment.getArrivalLocation() != null) {
+            holder.tvTitle.setText(segment.getDepartureLocation().getName() + " - " + segment.getArrivalLocation().getName());
+        } else if (segment.getDepartureLocation() != null) {
+            holder.tvTitle.setText(segment.getDepartureLocation().getName());
+        } else {
+            holder.tvTitle.setText(segment.getArrivalLocation().getName());
+        }
+    }
 
-    private void renderDeparture(final CompactItinerarySegment segment) {
+    private void renderDeparture(final ItinerarySegment segment) {
         if (segment == null) {
             return;
         }
-
-        renderCommonParts(segment, false);
-
-        if (holder.tvTitle != null) {
-            holder.tvTitle.setText("@Departure@");
+        if (holder.tvDepartureLocationLabel != null) {
+            holder.tvDepartureLocationLabel.setText("@From@");
         }
-
+        if (holder.tvDepartureLocationValue != null) {
+            holder.tvDepartureLocationValue.setText(segment.getDepartureLocation().getName());
+        }
+        if (holder.tvDepartureDateLabel != null) {
+            holder.tvDepartureDateLabel.setText("@Departure Date@");
+        }
+        if (holder.tvDepartureTimeLabel != null) {
+            holder.tvDepartureTimeLabel.setText("@Time@");
+        }
         if (segment.getDepartureDateTime() != null) {
             String dateStr;
-            if (holder.tvDateValue != null) {
+            if (holder.tvDepartureDateValue != null) {
                 dateStr = DateUtils.formatDateTime(context, segment.getDepartureDateTime().getTime(),
                         DateUtils.FORMAT_SHOW_DATE | DateUtils.FORMAT_SHOW_WEEKDAY | DateUtils.FORMAT_SHOW_YEAR
                         | DateUtils.FORMAT_ABBREV_WEEKDAY | DateUtils.FORMAT_ABBREV_MONTH);
-                holder.tvDateValue.setText(dateStr);
+                holder.tvDepartureDateValue.setText(dateStr);
             }
-            if (holder.tvTimeValue != null) {
+            if (holder.tvDepartureTimeValue != null) {
                 dateStr = DateUtils.formatDateTime(context, segment.getDepartureDateTime().getTime(),
                         DateUtils.FORMAT_SHOW_TIME);
-                holder.tvTimeValue.setText(dateStr);
+                holder.tvDepartureTimeValue.setText(dateStr);
             }
         }
     }
 
-    private void renderArrival(final CompactItinerarySegment segment) {
+    private void renderArrival(final ItinerarySegment segment) {
         if (segment == null) {
             return;
         }
-
-       renderCommonParts(segment, false);
-
-        if (holder.tvTitle != null) {
-            holder.tvTitle.setText("@Arrival@");
+        if (holder.tvArrivalLocationLabel != null) {
+            holder.tvArrivalLocationLabel.setText("@To@");
         }
-
+        if (holder.tvArrivalLocationValue != null) {
+            holder.tvArrivalLocationValue.setText(segment.getArrivalLocation().getName());
+        }
+        if (holder.tvArrivalDateLabel != null) {
+            holder.tvArrivalDateLabel.setText("@Arrival Date@");
+        }
+        if (holder.tvArrivalTimeLabel != null) {
+            holder.tvArrivalTimeLabel.setText("@Time@");
+        }
         if (segment.getArrivalDateTime() != null) {
             String dateStr;
-            if (holder.tvDateValue != null) {
+            if (holder.tvArrivalDateValue != null) {
                 dateStr = DateUtils.formatDateTime(context, segment.getArrivalDateTime().getTime(),
                         DateUtils.FORMAT_SHOW_DATE | DateUtils.FORMAT_SHOW_WEEKDAY | DateUtils.FORMAT_SHOW_YEAR
                                 | DateUtils.FORMAT_ABBREV_WEEKDAY | DateUtils.FORMAT_ABBREV_MONTH);
-                holder.tvDateValue.setText(dateStr);
+                holder.tvArrivalDateValue.setText(dateStr);
             }
-            if (holder.tvTimeValue != null) {
+            if (holder.tvArrivalTimeValue != null) {
                 dateStr = DateUtils.formatDateTime(context, segment.getArrivalDateTime().getTime(),
                         DateUtils.FORMAT_SHOW_TIME);
-                holder.tvTimeValue.setText(dateStr);
+                holder.tvArrivalTimeValue.setText(dateStr);
             }
         }
     }
-
-    private void renderDestination(final CompactItinerarySegment segment) {
-        if (segment == null) {
-            return;
-        }
-
-        renderCommonParts(segment, true);
-
-        if (holder.tvTitle != null) {
-            holder.tvTitle.setText("@Destination@");
-        }
-
-        String periodDateStr = StringUtilities.EMPTY_STRING;
-        if (segment.getArrivalDateTime() != null) {
-            String arrivalDateStr;
-            if (holder.tvArrivalTimeValue != null) {
-                arrivalDateStr = DateUtils.formatDateTime(context, segment.getArrivalDateTime().getTime(),
-                        DateUtils.FORMAT_SHOW_TIME);
-                holder.tvArrivalTimeValue.setText(arrivalDateStr);
-            }
-            if (holder.tvPeriodValue != null) {
-                periodDateStr = DateUtils.formatDateTime(context, segment.getArrivalDateTime().getTime(),
-                                    DateUtils.FORMAT_SHOW_DATE | DateUtils.FORMAT_SHOW_WEEKDAY
-                                    | DateUtils.FORMAT_SHOW_YEAR
-                                    | DateUtils.FORMAT_ABBREV_WEEKDAY | DateUtils.FORMAT_ABBREV_MONTH);
-            }
-        }else {
-            holder.tvArrivalTimeValue.setText(StringUtilities.EMPTY_STRING);
-        }
-
-        if (segment.getDepartureDateTime() != null) {
-            String departureDateStr = StringUtilities.EMPTY_STRING;
-            if (holder.tvDepartureTimeValue != null) {
-                departureDateStr = DateUtils.formatDateTime(context, segment.getDepartureDateTime().getTime(),
-                        DateUtils.FORMAT_SHOW_TIME);
-                holder.tvDepartureTimeValue.setText(departureDateStr);
-            }
-            if (holder.tvPeriodValue != null) {
-                departureDateStr = DateUtils.formatDateTime(context, segment.getDepartureDateTime().getTime(),
-                        DateUtils.FORMAT_SHOW_DATE | DateUtils.FORMAT_SHOW_WEEKDAY
-                                | DateUtils.FORMAT_SHOW_YEAR
-                                | DateUtils.FORMAT_ABBREV_WEEKDAY | DateUtils.FORMAT_ABBREV_MONTH);
-            }
-            if (periodDateStr != null) {
-                periodDateStr = periodDateStr + " - " + departureDateStr;
-            } else {
-                periodDateStr = departureDateStr;
-            }
-        }else {
-            holder.tvDepartureTimeValue.setText(StringUtilities.EMPTY_STRING);
-        }
-
-        if (!StringUtilities.isNullOrEmpty(periodDateStr)) {
-            holder.tvPeriodValue.setText(periodDateStr);
-        }
-
-    }
-
-    private void renderCommonParts(final CompactItinerarySegment segment, final boolean isDestination) {
-
-        if (segment == null) {
-            return;
-        }
-
-        renderIcon(isDestination);
-        renderSeparator(isDestination);
-
-        if (holder.tvLocationValue != null) {
-            holder.tvLocationValue.setText(segment.getLocation().getName());
-        }
-
-        if (isDestination) {
-            if (holder.vgDateTimeContainer != null) {
-                holder.vgDateTimeContainer.setVisibility(View.GONE);
-            }
-            if (holder.vgPeriod != null) {
-                holder.vgPeriod.setVisibility(View.VISIBLE);
-            }
-
-        } else {
-            if (holder.vgDateTimeContainer != null) {
-                holder.vgDateTimeContainer.setVisibility(View.VISIBLE);
-            }
-            if (holder.vgPeriod != null) {
-                holder.vgPeriod.setVisibility(View.GONE);
-            }
-        }
-    }
-
-    private void renderIcon(final boolean isDestination) {
-        if (holder.ivLocationIcon == null) {
-            return;
-        }
-        if (isDestination) {
-            holder.ivLocationIcon.setImageResource(R.drawable.icon_location_blue);
-        } else {
-            holder.ivLocationIcon.setImageResource(R.drawable.blue_oval);
-        }
-    }
-
-    private void renderSeparator (final boolean isDestination) {
-        if (isDestination) {
-            if (holder.vSeparatorLong != null) {
-                holder.vSeparatorLong.setVisibility(View.GONE);
-            }
-            if (holder.vSeparatorShort != null) {
-                holder.vSeparatorShort.setVisibility(View.VISIBLE);
-            }
-        } else {
-            if (holder.vSeparatorLong != null) {
-                holder.vSeparatorLong.setVisibility(View.VISIBLE);
-            }
-            if (holder.vSeparatorShort != null) {
-                holder.vSeparatorShort.setVisibility(View.GONE);
-            }
-        }
-    }
-
 }

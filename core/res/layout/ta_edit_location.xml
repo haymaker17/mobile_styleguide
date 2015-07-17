@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/vg_location"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="horizontal"
+    tools:showIn="@layout/ta_edit_segment">
+
+    <ImageView
+        android:id="@+id/iv_location_icon"
+        android:layout_width="11dp"
+        android:layout_height="11dp"
+        android:layout_alignParentTop="true"
+        android:layout_marginRight="16dp"
+        android:layout_marginTop="2dp"
+        android:src="@drawable/blue_oval" />
+
+    <TextView
+        android:id="@+id/tv_location_label"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentTop="true"
+        android:layout_toEndOf="@+id/iv_location_icon"
+        android:layout_toRightOf="@+id/iv_location_icon"
+        android:fontFamily="sans-serif"
+        android:text="\@Location\@"
+        android:textAppearance="@style/DailyAllowanceLabel" />
+
+    <TextView
+        android:id="@+id/tv_location_value"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignLeft="@+id/tv_location_label"
+        android:layout_alignStart="@+id/tv_location_label"
+        android:layout_below="@+id/tv_location_label"
+        android:text="\@Heidelberg, Germany\@"
+        android:textAppearance="@style/DefaultTitle" />
+
+</RelativeLayout>
