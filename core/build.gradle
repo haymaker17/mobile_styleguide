@@ -9,6 +9,9 @@ dependencies {
     compile project(':platform_ui_travel')
     testCompile 'org.robolectric:robolectric:3.+'
     testCompile 'junit:junit:4.+'
+
+    androidTestCompile 'org.robolectric:robolectric:3.+'
+    androidTestCompile 'junit:junit:4.+'
 }
 
 android {
