@@ -637,6 +637,7 @@ public class ExpensesAndReceipts extends BaseActivity implements ExpensesCallbac
     */
     @Override
     public void onGetExpenseItListSuccess() {
+        // TODO: ANALYTICS - Track ExpenseIt list retrieval success.
         // Load the UI from the expense cache.
         updateExpenseListUI();
     }
@@ -648,6 +649,7 @@ public class ExpensesAndReceipts extends BaseActivity implements ExpensesCallbac
      */
     @Override
     public void onGetExpenseItListFailed() {
+        // TODO: ANALYTICS - Track ExpenseIt list retrieval failure.
         // Load the UI from the expense cache.
         updateExpenseListUI();
 
@@ -779,6 +781,7 @@ public class ExpensesAndReceipts extends BaseActivity implements ExpensesCallbac
             0, uploadImageReceiver, image);
 
         postExpenseItReceiptAsyncTask.execute();
+        // TODO: ANALYTICS - Log time it takes to upload.
     }
 
     /*
@@ -986,6 +989,7 @@ public class ExpensesAndReceipts extends BaseActivity implements ExpensesCallbac
                         Toast.makeText(getBaseContext(), String.format(
                             "Failed processing image with the following error %s (%s)",
                             error.getErrorMessage(), error.getErrorCode()), Toast.LENGTH_LONG).show();
+                            // TODO: ANALYTICS - Track ExpenseIt image upload failure.
                         return;
                     } else {
                         long id = receiptResponse.getExpenses()[0].getId();
@@ -998,6 +1002,7 @@ public class ExpensesAndReceipts extends BaseActivity implements ExpensesCallbac
                         Toast.makeText(getBaseContext(), String.format(
                             "Successfully uploaded image with id=%d and estimate finish= %02d:%02d:%02d",
                             id, hours, minutes, seconds), Toast.LENGTH_LONG).show();
+                        // TODO: ANALYTICS - Track ExpenseIt image upload success.
                         return;
                     }
                 }
@@ -1009,11 +1014,13 @@ public class ExpensesAndReceipts extends BaseActivity implements ExpensesCallbac
         public void onRequestFail(Bundle resultData) {
             Log.e(Const.LOG_TAG, CLS_TAG + ".OnRequestFail is called");
             Toast.makeText(getBaseContext(),"An error occurred uploading Image", Toast.LENGTH_LONG).show();
+            // TODO: ANALYTICS - Track ExpenseIt image upload failure.
         }
 
         @Override
         public void onRequestCancel(Bundle resultData) {
             Log.e(Const.LOG_TAG, CLS_TAG + ".OnRequestCancel is called");
+            // TODO: ANALYTICS - Track ExpenseIt image upload cancel.
         }
 
         @Override

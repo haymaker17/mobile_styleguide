@@ -109,9 +109,11 @@ public class ExpenseItListItem extends ExpenseListItem {
             // set the eta
             textView = (TextView) expenseView.findViewById(R.id.expenseit_processing_time);
             if (textView != null) {
-                int etaMinutes = expenseItItem.getEta();
-                if (etaMinutes > 0) {
-                    String eta = context.getResources().getString(R.string.expenseit_expense_processing_time, etaMinutes);
+                int etaInSeconds = expenseItItem.getEta();
+                if (etaInSeconds > 0) {
+                   String time = getEtaToString(etaInSeconds);
+                    String eta = context.getResources().getString(R.string.expenseit_expense_processing_time,
+                            time);
                     textView.setText(eta);
                 } else {
                     // If no ETA, display no text.
@@ -165,6 +167,28 @@ public class ExpenseItListItem extends ExpenseListItem {
             return true;
         }
         return false;
+    }
+
+    private String getEtaToString(int etaInSeconds) {
+        int etaTotalMinutes = etaInSeconds / 60;
+        int etaRemainingSeconds = etaInSeconds % 60;
+        String time;
+
+        // Determine time. The first and last cases are safety precautions,
+        // in case they are not handled above.
+        if ((etaTotalMinutes + etaRemainingSeconds) <= 0) {
+            time = "N/A";
+        } else if (etaTotalMinutes > 0 && etaRemainingSeconds <= 0) {
+            time = etaTotalMinutes + " min";
+        } else if (etaTotalMinutes > 0 && etaRemainingSeconds > 0) {
+            time = etaTotalMinutes + " min, " + etaRemainingSeconds + " sec";
+        } else if (etaTotalMinutes <= 0 && etaRemainingSeconds > 0) {
+            time = etaRemainingSeconds + " sec";
+        } else {
+            time = "N/A";
+        }
+
+        return time;
     }
 
     @Override
