@@ -54,6 +54,7 @@ import com.concur.mobile.platform.ui.common.util.PreferenceUtil;
 import java.io.ByteArrayOutputStream;
 import java.io.File;
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -72,6 +73,9 @@ public class ExpensesAndReceipts extends BaseActivity implements ExpensesCallbac
     private static final int REQUEST_GET_EXPENSE_LIST = 1;
 
     private static final int REQUEST_GET_RECEIPT_LIST = 2;
+
+    // Holds the time in milliseconds when the last expenseListRequest was sent.
+    private long expenseListRequestStartTime = 0L;
 
     /**
      * The AsyncTask resulting from the the MWS call to ReceiptList.
@@ -169,8 +173,16 @@ public class ExpensesAndReceipts extends BaseActivity implements ExpensesCallbac
 
         @Override
         public void onRequestSuccess(Bundle resultData) {
+            Long expenseItListRequestElapsedTime = 0L;
 
             Log.d(Const.LOG_TAG, CLS_TAG + ".ExpenseItListReplyListener - Successfully retrieved ExpenseIt items!");
+
+            //Record the time taken to retrieve ExpenseItListRequest
+            expenseItListRequestElapsedTime = Calendar.getInstance().getTimeInMillis() -
+            expenseListRequestStartTime;
+            EventTracker.INSTANCE.trackTimings(Flurry.EVENT_RETRIEVE_EXPENSEIT_LIST, Flurry
+                            .EVENT_RETRIEVE_EXPENSEIT_LIST, Flurry.EVENT_RETRIEVE_EXPENSEIT_LIST,
+                    expenseItListRequestElapsedTime);
 
             // Need to update the GSEL.
             doGetSmartExpenseList();
@@ -626,6 +638,9 @@ public class ExpensesAndReceipts extends BaseActivity implements ExpensesCallbac
             GetExpenseItExpenseListAsyncTask expenseItListReqTask = new GetExpenseItExpenseListAsyncTask(
                     getApplicationContext(), 22, getUserId(), expenseItListReceiver);
             expenseItListAsyncTask = expenseItListReqTask.execute();
+
+            //Record the start time of the expenseItList request to use for anaylytics
+            expenseListRequestStartTime = Calendar.getInstance().getTimeInMillis();
         }
 
     }
