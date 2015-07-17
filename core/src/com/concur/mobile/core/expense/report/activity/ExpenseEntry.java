@@ -1845,7 +1845,8 @@ public class ExpenseEntry extends AbstractExpenseActivity {
 
         if (viewGroup != null) {
             if (expRepEntDet.expKey.equals("FXMLS") || expRepEntDet.expKey.equals("FXLDG")) {
-                TAFieldFactory fieldFactory = new TAFieldFactory(this,expRepEntDet);
+                ConcurCore app = (ConcurCore) this.getApplication();
+                TAFieldFactory fieldFactory = new TAFieldFactory(this, expRepEntDet, app.getFixedTravelAllowanceController());
                 List<FormFieldView> frmFldViews = populateViewWithFormFields(viewGroup,
                         fieldFactory.getFormFields(), null);
                 if (frmFldViews != null && frmFldViews.size() > 0) {
