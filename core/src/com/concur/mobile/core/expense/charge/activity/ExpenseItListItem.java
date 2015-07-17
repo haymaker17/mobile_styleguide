@@ -82,12 +82,15 @@ public class ExpenseItListItem extends ExpenseListItem {
             if (imageView != null && arrows != null) {
                 if (isProcessing(status)) {
                     imageView.setImageResource(R.drawable.icon_processing);
+                    arrows.setVisibility(View.VISIBLE);
                     arrows.setImageResource(R.drawable.icon_processing_arrow);
                     AnimationUtil.rotateAnimation(arrows);
                 } else {
                     // TODO: EJ-W: Deal with the different cases.
                     // For now, just keeps the default icon (which is the processing icon),
                     // as defined in the layout file.
+                    imageView.setImageResource(R.drawable.expense_icon_cloud_red);
+                    arrows.setVisibility(View.GONE);
                 }
             } else {
                 Log.e(Const.LOG_TAG, CLS_TAG + ".buildView: can't locate the icon!");
@@ -109,9 +112,11 @@ public class ExpenseItListItem extends ExpenseListItem {
             // set the eta
             textView = (TextView) expenseView.findViewById(R.id.expenseit_processing_time);
             if (textView != null) {
-                int etaMinutes = expenseItItem.getEta();
-                if (etaMinutes > 0) {
-                    String eta = context.getResources().getString(R.string.expenseit_expense_processing_time, etaMinutes);
+                int etaInSeconds = expenseItItem.getEta();
+                if (etaInSeconds > 0) {
+                   String time = getEtaToString(etaInSeconds);
+                    String eta = context.getResources().getString(R.string.expenseit_expense_processing_time,
+                            time);
                     textView.setText(eta);
                 } else {
                     // If no ETA, display no text.
@@ -150,6 +155,7 @@ public class ExpenseItListItem extends ExpenseListItem {
             statusText = context.getString(R.string.expenseit_expense_detail_submitted);
         } else {
             // TODO: EJW: Elaborate more on the different status codes.
+            statusText = "Analyzing Error";
         }
 
         return statusText;
@@ -165,6 +171,28 @@ public class ExpenseItListItem extends ExpenseListItem {
             return true;
         }
         return false;
+    }
+
+    private String getEtaToString(int etaInSeconds) {
+        int etaTotalMinutes = etaInSeconds / 60;
+        int etaRemainingSeconds = etaInSeconds % 60;
+        String time;
+        // TODO: EJW - all this needs to be localized in strings.xml.
+        // Determine time. The first and last cases are safety precautions,
+        // in case they are not handled above.
+        if ((etaTotalMinutes + etaRemainingSeconds) <= 0) {
+            time = "N/A";
+        } else if (etaTotalMinutes > 0 && etaRemainingSeconds <= 0) {
+            time = etaTotalMinutes + " min";
+        } else if (etaTotalMinutes > 0 && etaRemainingSeconds > 0) {
+            time = etaTotalMinutes + " min, " + etaRemainingSeconds + " sec";
+        } else if (etaTotalMinutes <= 0 && etaRemainingSeconds > 0) {
+            time = etaRemainingSeconds + " sec";
+        } else {
+            time = "N/A";
+        }
+
+        return time;
     }
 
     @Override
