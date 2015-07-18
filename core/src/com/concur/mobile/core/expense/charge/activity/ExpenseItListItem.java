@@ -80,6 +80,7 @@ public class ExpenseItListItem extends ExpenseListItem {
             ImageView imageView = (ImageView) expenseView.findViewById(R.id.expense_expenseit_icon);
             ImageView arrows = (ImageView) expenseView.findViewById(R.id.expense_expenseit_arrows);
             if (imageView != null && arrows != null) {
+                // TODO: need to check if this has rubicon errors (ExpenseItPostReceipt.getExpenseError())
                 if (isProcessing(status)) {
                     imageView.setImageResource(R.drawable.icon_processing);
                     arrows.setVisibility(View.VISIBLE);
@@ -153,23 +154,56 @@ public class ExpenseItListItem extends ExpenseListItem {
         String statusText = "";
         if (isProcessing(status)) {
             statusText = context.getString(R.string.expenseit_expense_detail_submitted);
-        } else {
+        } else if(hasErrors(status)){
             // TODO: EJW: Elaborate more on the different status codes.
-            statusText = "Analyzing Error";
+            statusText = context.getString(R.string.expenseit_expense_list_error);
+        } else {
+            // TODO: EJW: Need to handle when item has been parsed (status code == 1) - hide this item!
         }
 
         return statusText;
     }
 
     private boolean isProcessing(int status) {
-        if (status == ExpenseItParseCode.UPLOADED.value()
+
+        if (status == ExpenseItParseCode.UNPARSED.value()
+//                || status == ExpenseItParseCode.PARSED.value()
+                ||status == ExpenseItParseCode.UPLOADED.value()
                 || status == ExpenseItParseCode.UPLOADED_BUT_NOT_QUEUED.value()
                 || status == ExpenseItParseCode.FAILED_UPLOAD_ATTEMPTS.value()
                 || status == ExpenseItParseCode.ANALYZING_REMOTELY_PENDING.value()
-                || status == ExpenseItParseCode.UNPARSED.value()
+                || status == ExpenseItParseCode.UPLOADING_IN_PROGRESS.value()
+                || status == ExpenseItParseCode.QUEUED_FOR_UPLOAD.value()
+                || status == ExpenseItParseCode.QUEUED_FOR_EXPORT.value()
+                || status == ExpenseItParseCode.QUEUED_FOR_DELETE.value()
+                || status == ExpenseItParseCode.QUEUED_FOR_MODIFY.value()
+                || status == ExpenseItParseCode.QUEUED_FOR_CREATION.value()
+//                || status == ExpenseItParseCode.SUCCESS_HIDDEN.value()
+//                || status == ExpenseItParseCode.SUCCESS_VISIBLE.value() // XXX: Not sure about this one.
+//                || status == ExpenseItParseCode.EXPORTED.value()    // XXX: Not sure about this one.
+                || status == ExpenseItParseCode.QUEUED_FOR_EXPORT_ON_SERVER.value()
                 || status == ExpenseItParseCode.DEFAULT.value()) {
+
             return true;
         }
+        return false;
+    }
+
+    private boolean hasErrors(int status) {
+
+        if(status == ExpenseItParseCode.MULTIPLE_RECEIPTS.value()
+                || status == ExpenseItParseCode.UNREADABLE.value()
+                || status == ExpenseItParseCode.EXPIRED.value()
+                || status == ExpenseItParseCode.NOT_RECEIPT.value()
+                || status == ExpenseItParseCode.OTHER.value()
+                || status == ExpenseItParseCode.NO_IMAGE_FOUND.value()
+                || status == ExpenseItParseCode.INTERVENTION_NEEDED.value()
+                || status == ExpenseItParseCode.PERMANENT_FAILURE.value()
+                || status == ExpenseItParseCode.DEFAULT.value()) {
+
+            return true;
+        }
+
         return false;
     }
 

@@ -4,6 +4,7 @@
     <!-- EXPENSEIT STRINGS -->
     <string name="expenseit_expense_processing_time">Average processing time: %s</string>
     <string name="expenseit_expense_detail_submitted">Analyzing receipt</string>
+    <string name="expenseit_expense_list_error">Analyzing error</string>
     <string name="expenseit_expense_detail_queued_waiting">Waiting for upload</string>
     <string name="expenseit_expense_detail_uploading">Uploading receipt</string>
     <string name="expenseit_expense_detail_export_pending">Waiting for export</string>
