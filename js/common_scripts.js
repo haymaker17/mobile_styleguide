@@ -1,7 +1,7 @@
 $(function() { 
 
 
-   $("#hamburger .icon").on("click",function(){
+   $("#hamburger").on("click",function(){
       toggleSidebar();
    })
 
