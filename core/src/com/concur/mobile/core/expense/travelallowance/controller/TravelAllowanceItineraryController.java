@@ -169,7 +169,6 @@ public class TravelAllowanceItineraryController {
                     CompactItinerarySegment firstCompactSegment = new CompactItinerarySegment();
                     firstCompactSegment.setLocation(segment.getDepartureLocation());
                     firstCompactSegment.setDepartureDateTime(segment.getDepartureDateTime());
-                    firstCompactSegment.setBorderCrossingDateTime(segment.getBorderCrossDateTime());
                     firstCompactSegment.setIsSegmentOpen(true);
                     compactItinerary.getSegmentList().add(firstCompactSegment);
                 }
@@ -188,7 +187,7 @@ public class TravelAllowanceItineraryController {
                         compactSegment.setLocation(segment.getArrivalLocation());
                         compactSegment.setDepartureDateTime(nextSegment.getDepartureDateTime());
                         compactSegment.setArrivalDateTime(segment.getArrivalDateTime());
-                        compactSegment.setBorderCrossingDateTime(nextSegment.getBorderCrossDateTime());
+                        compactSegment.setBorderCrossingDateTime(segment.getBorderCrossDateTime());
                         compactSegment.setIsSegmentOpen(false);
                         compactItinerary.getSegmentList().add(compactSegment);
                     } else {
