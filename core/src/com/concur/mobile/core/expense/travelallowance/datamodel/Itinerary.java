@@ -53,4 +53,44 @@ public class Itinerary implements Serializable{
     public void setSegmentList(List<ItinerarySegment> segmentList) {
         this.segmentList = segmentList;
     }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+
+        Itinerary itinerary = (Itinerary) o;
+
+        if (itineraryID != null ? !itineraryID.equals(itinerary.itineraryID) : itinerary.itineraryID != null)
+            return false;
+        if (name != null ? !name.equals(itinerary.name) : itinerary.name != null) return false;
+        if (expenseReportID != null ? !expenseReportID.equals(itinerary.expenseReportID) : itinerary.expenseReportID != null)
+            return false;
+
+        //Compare segment lists of both objects
+        if ( (segmentList == null && itinerary.segmentList != null )||
+             (segmentList != null && itinerary.segmentList == null )){
+            return false;
+        }
+        if (segmentList != null && itinerary.segmentList != null) {
+            if (segmentList.size() != itinerary.getSegmentList().size()) {
+                return false;
+            }
+            if (!segmentList.containsAll(itinerary.getSegmentList())) {
+                return false;
+            }
+        }
+
+    return true;
+
+    }
+
+    @Override
+    public int hashCode() {
+        int result = itineraryID != null ? itineraryID.hashCode() : 0;
+        result = 31 * result + (name != null ? name.hashCode() : 0);
+        result = 31 * result + (expenseReportID != null ? expenseReportID.hashCode() : 0);
+        result = 31 * result + (segmentList != null ? segmentList.hashCode() : 0);
+        return result;
+    }
 }

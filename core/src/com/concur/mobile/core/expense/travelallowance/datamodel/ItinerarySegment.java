@@ -131,4 +131,39 @@ public class ItinerarySegment implements Serializable, IDatePeriodUTC {
         return dateUTC;
     }
 
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+
+        ItinerarySegment that = (ItinerarySegment) o;
+
+        if (id != null ? !id.equals(that.id) : that.id != null) return false;
+        if (departureLocation != null ? !departureLocation.equals(that.departureLocation) : that.departureLocation != null)
+            return false;
+        if (departureDateTime != null ? !departureDateTime.equals(that.departureDateTime) : that.departureDateTime != null)
+            return false;
+        if (arrivalLocation != null ? !arrivalLocation.equals(that.arrivalLocation) : that.arrivalLocation != null)
+            return false;
+        if (arrivalDateTime != null ? !arrivalDateTime.equals(that.arrivalDateTime) : that.arrivalDateTime != null)
+            return false;
+        if (borderCrossDateTime != null ? !borderCrossDateTime.equals(that.borderCrossDateTime) : that.borderCrossDateTime != null)
+            return false;
+        return syncStatus == that.syncStatus;
+
+    }
+
+    @Override
+    public int hashCode() {
+        int result = id != null ? id.hashCode() : 0;
+        result = 31 * result + (departureLocation != null ? departureLocation.hashCode() : 0);
+        result = 31 * result + (departureDateTime != null ? departureDateTime.hashCode() : 0);
+        result = 31 * result + (arrivalLocation != null ? arrivalLocation.hashCode() : 0);
+        result = 31 * result + (arrivalDateTime != null ? arrivalDateTime.hashCode() : 0);
+        result = 31 * result + (borderCrossDateTime != null ? borderCrossDateTime.hashCode() : 0);
+        result = 31 * result + (syncStatus != null ? syncStatus.hashCode() : 0);
+        return result;
+    }
+
 }
