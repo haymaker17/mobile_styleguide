@@ -219,13 +219,13 @@ public class ItineraryUpdateActivity extends BaseActivity {
             case Const.REQUEST_CODE_LOCATION:
                 if (resultCode == Activity.RESULT_OK) {
                     String selectedListItemKey = data.getStringExtra(Const.EXTRA_EXPENSE_LIST_SELECTED_LIST_ITEM_KEY);
-                    //String selectedListItemCode = data.getStringExtra(Const.EXTRA_EXPENSE_LIST_SELECTED_LIST_ITEM_CODE);
                     String selectedListItemText = data.getStringExtra(Const.EXTRA_EXPENSE_LIST_SELECTED_LIST_ITEM_TEXT);
                     if (this.currentPosition != null) {
                         ItinerarySegment segment = this.updateController.getItinerarySegment(currentPosition.getPosition());
                         ItineraryLocation itinLocation = new ItineraryLocation();
                         itinLocation.setName(selectedListItemText);
                         itinLocation.setCode(selectedListItemKey);
+                        itinLocation.setRateLocationKey(segment.getArrivalLocation().getRateLocationKey());
                         if (currentPosition.getInfo() == PositionInfoTag.INFO_OUTBOUND) {
                             segment.setDepartureLocation(itinLocation);
                         } else {

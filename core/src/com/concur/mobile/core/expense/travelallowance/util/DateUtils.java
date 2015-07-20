@@ -497,10 +497,10 @@ public final class DateUtils {
                 if (cmpDate != null) {
                     if (ascending) {
                         if (dateComparator.compare(cmpDate, start) >= 0) {
-                            errorMap.put(period, new Message(Message.Severity.ERROR, Message.MSG_TA_OVERLAPPING_PREDECESSOR));
+                            errorMap.put(period, new Message(Message.Severity.ERROR, Message.MSG_UI_OVERLAPPING_PREDECESSOR));
                         }
                     } else if (dateComparator.compare(start, cmpDate) >= 0) {
-                        errorMap.put(period, new Message(Message.Severity.ERROR, Message.MSG_TA_OVERLAPPING_PREDECESSOR));
+                        errorMap.put(period, new Message(Message.Severity.ERROR, Message.MSG_UI_OVERLAPPING_PREDECESSOR));
                     }
                 }
                 cmpDate = start;
@@ -511,16 +511,16 @@ public final class DateUtils {
                     if (ascending) {
                         if (dateComparator.compare(cmpDate, end) >= 0) {
                             if (start != null) {
-                                errorMap.put(period, new Message(Message.Severity.ERROR, Message.MSG_TA_START_BEFORE_END));
+                                errorMap.put(period, new Message(Message.Severity.ERROR, Message.MSG_UI_START_BEFORE_END));
                             } else {
-                                errorMap.put(period, new Message(Message.Severity.ERROR, Message.MSG_TA_OVERLAPPING_PREDECESSOR));
+                                errorMap.put(period, new Message(Message.Severity.ERROR, Message.MSG_UI_OVERLAPPING_PREDECESSOR));
                             }
                         }
                     } else if (dateComparator.compare(end, cmpDate) >= 0) {
                         if (start != null) {
-                            errorMap.put(period, new Message(Message.Severity.ERROR, Message.MSG_TA_START_BEFORE_END));
+                            errorMap.put(period, new Message(Message.Severity.ERROR, Message.MSG_UI_START_BEFORE_END));
                         } else {
-                            errorMap.put(period, new Message(Message.Severity.ERROR, Message.MSG_TA_OVERLAPPING_PREDECESSOR));
+                            errorMap.put(period, new Message(Message.Severity.ERROR, Message.MSG_UI_OVERLAPPING_PREDECESSOR));
                         }
                     }
                 }
@@ -528,7 +528,7 @@ public final class DateUtils {
                 numberValid++;
             }
             if (numberValid < minValidDatesPerPeriod) {
-                errorMap.put(period, new Message(Message.Severity.ERROR, Message.MSG_TA_MISSING_DATES));
+                errorMap.put(period, new Message(Message.Severity.ERROR, Message.MSG_UI_MISSING_DATES));
             }
         }
         return errorMap;

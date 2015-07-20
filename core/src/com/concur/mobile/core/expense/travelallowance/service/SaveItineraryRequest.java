@@ -73,8 +73,7 @@ public class SaveItineraryRequest extends CoreAsyncRequestTask {
 //                FormatUtil.addXMLElementEscaped(sb, "ArrivalRlKey", itineraryRow.getArrivalRlKey());
                 FormatUtil.addXMLElementEscaped(sb, "ArrivalDateTime",
                         dateTimeFormat.format(segment.getArrivalDateTime()));
-                FormatUtil.addXMLElementEscaped(sb, "ArrivalRlKey",
-                        dateTimeFormat.format(segment.getArrivalLocation().getRateLocationKey()));
+                FormatUtil.addXMLElementEscaped(sb, "ArrivalRlKey", segment.getArrivalLocation().getRateLocationKey());
 
                 FormatUtil.addXMLElementEscaped(sb, "BorderCrossDateTime",
                         dateTimeFormat.format(segment.getArrivalDateTime()));
