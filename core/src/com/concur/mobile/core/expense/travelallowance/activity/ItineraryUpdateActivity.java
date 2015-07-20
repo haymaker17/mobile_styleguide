@@ -4,28 +4,39 @@ import android.app.Activity;
 import android.content.Intent;
 import android.graphics.Color;
 import android.os.Bundle;
+import android.os.Handler;
 import android.support.v7.app.ActionBar;
 import android.support.v7.widget.Toolbar;
+import android.view.ContextMenu;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.AdapterView;
 import android.widget.EditText;
 import android.widget.ListView;
 import android.widget.TimePicker;
+import android.widget.Toast;
 
 import com.concur.core.R;
+import com.concur.mobile.base.service.BaseAsyncRequestTask;
+import com.concur.mobile.base.service.BaseAsyncResultReceiver;
 import com.concur.mobile.core.ConcurCore;
 import com.concur.mobile.core.activity.BaseActivity;
 import com.concur.mobile.core.expense.activity.ListSearch;
 import com.concur.mobile.core.expense.travelallowance.adapter.ItineraryUpdateListAdapter;
+import com.concur.mobile.core.expense.travelallowance.controller.IServiceRequestListener;
 import com.concur.mobile.core.expense.travelallowance.controller.ItineraryUpdateController;
+import com.concur.mobile.core.expense.travelallowance.controller.TravelAllowanceItineraryController;
 import com.concur.mobile.core.expense.travelallowance.datamodel.Itinerary;
 import com.concur.mobile.core.expense.travelallowance.datamodel.ItineraryLocation;
 import com.concur.mobile.core.expense.travelallowance.datamodel.ItinerarySegment;
 import com.concur.mobile.core.expense.travelallowance.fragment.TimePickerFragment;
+import com.concur.mobile.core.expense.travelallowance.service.AbstractItineraryDeleteRequest;
+import com.concur.mobile.core.expense.travelallowance.service.DeleteItineraryRowRequest;
 import com.concur.mobile.core.expense.travelallowance.ui.model.PositionInfoTag;
 import com.concur.mobile.core.expense.travelallowance.util.DateUtils;
+import com.concur.mobile.core.expense.travelallowance.util.Message;
 import com.concur.mobile.core.expense.travelallowance.util.StringUtilities;
 import com.concur.mobile.core.util.Const;
 import com.concur.mobile.platform.ui.common.widget.CalendarPicker;
@@ -34,7 +45,7 @@ import com.concur.mobile.platform.ui.common.widget.CalendarPickerDialogV1;
 import java.util.Calendar;
 import java.util.Date;
 
-public class ItineraryUpdateActivity extends BaseActivity {
+public class ItineraryUpdateActivity extends BaseActivity implements IServiceRequestListener {
 
     /**
      * The name of this {@code Class} for logging purpose.
@@ -208,6 +219,8 @@ public class ItineraryUpdateActivity extends BaseActivity {
             listView.setAdapter(adapter);
         }
         renderDefaultValues();
+
+        registerForContextMenu(listView);
     }
 
     /**
@@ -294,6 +307,8 @@ public class ItineraryUpdateActivity extends BaseActivity {
     @Override
     protected void onDestroy() {
         super.onDestroy();
+        ConcurCore app = (ConcurCore) getApplication();
+        app.getTaItineraryController().unregisterListener(this);
     }
 
     private void updateControllerData() {
@@ -306,5 +321,74 @@ public class ItineraryUpdateActivity extends BaseActivity {
             itinerary.setName(etItinerary.getText().toString());
         }
         itinerary.setExpenseReportID(expenseReportKey);
+    }
+
+
+    @Override
+    public void onCreateContextMenu(ContextMenu menu, View v, ContextMenu.ContextMenuInfo menuInfo) {
+
+        menu.add("@DELETE@");
+    }
+
+    @Override
+    public boolean onContextItemSelected(MenuItem item) {
+        AdapterView.AdapterContextMenuInfo info = (AdapterView.AdapterContextMenuInfo) item.getMenuInfo();
+        ItinerarySegment segment = (ItinerarySegment) adapter.getItem(info.position);
+
+        ConcurCore app = (ConcurCore) this.getApplication();
+        final TravelAllowanceItineraryController itinController = app.getTaItineraryController();
+
+        BaseAsyncResultReceiver receiver = new BaseAsyncResultReceiver(new Handler());
+        receiver.setListener(new BaseAsyncRequestTask.AsyncReplyListener() {
+            @Override
+            public void onRequestSuccess(Bundle resultData) {
+                boolean isSuccess = resultData.getBoolean(AbstractItineraryDeleteRequest.IS_SUCCESS, false);
+                if (isSuccess) {
+                    Toast.makeText(ItineraryUpdateActivity.this, "@Success@", Toast.LENGTH_SHORT).show();
+                    itinController.registerListener(ItineraryUpdateActivity.this);
+                    itinController.refreshItineraries(
+                            ItineraryUpdateActivity.this.expenseReportKey, false);
+                } else {
+                    Message msg = (Message) resultData
+                            .getSerializable(AbstractItineraryDeleteRequest.RESULT_BUNDLE_ID_MESSAGE);
+                    if (msg != null) {
+                        Toast.makeText(ItineraryUpdateActivity.this, "@Failed@", Toast.LENGTH_SHORT).show();
+                    }
+                }
+            }
+
+            @Override
+            public void onRequestFail(Bundle resultData) {
+                Toast.makeText(ItineraryUpdateActivity.this, "@Failed@", Toast.LENGTH_SHORT).show();
+            }
+
+            @Override
+            public void onRequestCancel(Bundle resultData) {
+
+            }
+
+            @Override
+            public void cleanup() {
+
+            }
+        });
+
+        DeleteItineraryRowRequest deleteRequest = new DeleteItineraryRowRequest(this, receiver, updateController.getItinerary().getItineraryID(), segment.getId());
+        deleteRequest.execute();
+
+        return true;
+    }
+
+    @Override
+    public void onRequestSuccess(String controllerTag) {
+        updateController.refreshItinerary(updateController.getItinerary().getItineraryID());
+        this.adapter.clear();
+        this.adapter.addAll(updateController.getItinerarySegments());
+        this.adapter.notifyDataSetChanged();
+    }
+
+    @Override
+    public void onRequestFail(String controllerTag) {
+        Toast.makeText(this, "@List reftresh Failed@", Toast.LENGTH_SHORT).show();
     }
 }

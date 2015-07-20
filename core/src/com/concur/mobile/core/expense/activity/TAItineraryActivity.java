@@ -33,7 +33,7 @@ import com.concur.mobile.base.util.Format;
 import com.concur.mobile.core.ConcurCore;
 import com.concur.mobile.core.activity.BaseActivity;
 import com.concur.mobile.core.expense.travelallowance.AsyncReplyAdapter;
-import com.concur.mobile.core.expense.travelallowance.DeleteItineraryRowRequest;
+import com.concur.mobile.core.expense.travelallowance.service.DeleteItineraryRowRequest;
 import com.concur.mobile.core.expense.travelallowance.service.GetTAItinerariesRequest;
 import com.concur.mobile.core.expense.travelallowance.GetTAConfigRequest;
 import com.concur.mobile.core.expense.travelallowance.Itinerary;
@@ -211,7 +211,7 @@ public class TAItineraryActivity extends BaseActivity {
 
                 asyncReceiver.setListener(new DeleteItineraryRowListener());
 
-                new DeleteItineraryRowRequest(getApplicationContext(), 1, asyncReceiver, itinerary.getItinKey(), row
+                new DeleteItineraryRowRequest(getApplicationContext(), asyncReceiver, itinerary.getItinKey(), row
                         .getIrKey()).execute();
                 return true;
             }
@@ -388,17 +388,17 @@ public class TAItineraryActivity extends BaseActivity {
         public void onRequestSuccess(Bundle resultData) {
             boolean success = resultData.getBoolean(CoreAsyncRequestTask.IS_SUCCESS, false);
 
-            if (success) {
-                String status = resultData.getString(DeleteItineraryRowRequest.STATUS);
-                if (DeleteItineraryRowRequest.SUCCESS.equals(status)) {
-                    // reload the itin
-                    getTaItineraries = new GetTAItinerariesRequest(getApplicationContext(), asyncReceiver, rptKey, true);
-                    getTaItineraries.execute();
-                } else {
-                    Toast t = Toast.makeText(TAItineraryActivity.this, "Delete failed", Toast.LENGTH_SHORT);
-                    t.show();
-                }
-            } 
+//            if (success) {
+//                String status = resultData.getString(DeleteItineraryRowRequest.STATUS);
+//                if (DeleteItineraryRowRequest.SUCCESS.equals(status)) {
+//                    // reload the itin
+//                    getTaItineraries = new GetTAItinerariesRequest(getApplicationContext(), asyncReceiver, rptKey, true);
+//                    getTaItineraries.execute();
+//                } else {
+//                    Toast t = Toast.makeText(TAItineraryActivity.this, "Delete failed", Toast.LENGTH_SHORT);
+//                    t.show();
+//                }
+//            }
         }
     }
 }

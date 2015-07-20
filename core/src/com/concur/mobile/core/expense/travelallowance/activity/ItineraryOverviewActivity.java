@@ -3,25 +3,34 @@ package com.concur.mobile.core.expense.travelallowance.activity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
+import android.os.Handler;
 import android.support.v7.app.ActionBar;
 import android.support.v7.widget.Toolbar;
+import android.view.ContextMenu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ListView;
+import android.widget.Toast;
 
 import com.concur.core.R;
+import com.concur.mobile.base.service.BaseAsyncRequestTask;
+import com.concur.mobile.base.service.BaseAsyncResultReceiver;
 import com.concur.mobile.core.ConcurCore;
 import com.concur.mobile.core.activity.BaseActivity;
 import com.concur.mobile.core.expense.travelallowance.adapter.ItineraryOverviewListAdapter;
+import com.concur.mobile.core.expense.travelallowance.controller.IServiceRequestListener;
 import com.concur.mobile.core.expense.travelallowance.controller.TravelAllowanceItineraryController;
+import com.concur.mobile.core.expense.travelallowance.service.AbstractItineraryDeleteRequest;
+import com.concur.mobile.core.expense.travelallowance.service.DeleteItineraryRequest;
 import com.concur.mobile.core.expense.travelallowance.ui.model.CompactItinerary;
+import com.concur.mobile.core.expense.travelallowance.util.Message;
 import com.concur.mobile.core.util.Const;
 
 /**
  * Created by Michael Becherer on 16-Jul-15.
  */
-public class ItineraryOverviewActivity extends BaseActivity {
+public class ItineraryOverviewActivity extends BaseActivity implements IServiceRequestListener {
 
     /**
      * The name of this {@code Class} for logging purpose.
@@ -122,6 +131,7 @@ public class ItineraryOverviewActivity extends BaseActivity {
             });
 
         }
+        registerForContextMenu(listView);
     }
 
     @Override
@@ -133,4 +143,75 @@ public class ItineraryOverviewActivity extends BaseActivity {
         return super.onOptionsItemSelected(item);
     }
 
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        this.itineraryController.unregisterListener(this);
+    }
+
+    @Override
+    public void onCreateContextMenu(ContextMenu menu, View v, ContextMenu.ContextMenuInfo menuInfo) {
+
+        menu.add("@DELETE@");
+    }
+
+    @Override
+    public boolean onContextItemSelected(MenuItem item) {
+        AdapterView.AdapterContextMenuInfo info = (AdapterView.AdapterContextMenuInfo) item.getMenuInfo();
+        CompactItinerary itin = (CompactItinerary) adapter.getItem(info.position);
+
+        BaseAsyncResultReceiver receiver = new BaseAsyncResultReceiver(new Handler());
+        receiver.setListener(new BaseAsyncRequestTask.AsyncReplyListener() {
+            @Override
+            public void onRequestSuccess(Bundle resultData) {
+                boolean isSuccess = resultData.getBoolean(AbstractItineraryDeleteRequest.IS_SUCCESS, false);
+                if (isSuccess) {
+                    Toast.makeText(ItineraryOverviewActivity.this, "@Success@", Toast.LENGTH_SHORT).show();
+                    ItineraryOverviewActivity.this.itineraryController.registerListener(ItineraryOverviewActivity.this);
+                    ItineraryOverviewActivity.this.itineraryController.refreshItineraries(
+                            ItineraryOverviewActivity.this.expenseReportKey, false);
+                } else {
+                    Message msg = (Message) resultData
+                            .getSerializable(AbstractItineraryDeleteRequest.RESULT_BUNDLE_ID_MESSAGE);
+                    if (msg != null) {
+                        Toast.makeText(ItineraryOverviewActivity.this, "@Failed@", Toast.LENGTH_SHORT).show();
+                    }
+                }
+            }
+
+            @Override
+            public void onRequestFail(Bundle resultData) {
+                Toast.makeText(ItineraryOverviewActivity.this, "@Failed@", Toast.LENGTH_SHORT).show();
+            }
+
+            @Override
+            public void onRequestCancel(Bundle resultData) {
+
+            }
+
+            @Override
+            public void cleanup() {
+
+            }
+        });
+
+        DeleteItineraryRequest deleteRequest = new DeleteItineraryRequest(this, receiver, itin.getItineraryID());
+        deleteRequest.execute();
+
+        return true;
+    }
+
+    @Override
+    public void onRequestSuccess(String controllerTag) {
+        this.adapter.clear();
+        this.adapter.addAll(itineraryController.getCompactItineraryList());
+        this.adapter.notifyDataSetChanged();
+//        ListView listView = (ListView) findViewById(R.id.list_view);
+//        listView.setAdapter(this.adapter);
+    }
+
+    @Override
+    public void onRequestFail(String controllerTag) {
+        Toast.makeText(ItineraryOverviewActivity.this, "@List reftresh Failed@", Toast.LENGTH_SHORT).show();
+    }
 }
