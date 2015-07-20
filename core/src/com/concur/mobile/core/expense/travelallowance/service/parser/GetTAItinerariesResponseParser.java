@@ -14,6 +14,7 @@ import com.concur.mobile.core.expense.travelallowance.datamodel.Itinerary;
 import com.concur.mobile.core.expense.travelallowance.datamodel.ItineraryLocation;
 import com.concur.mobile.core.expense.travelallowance.datamodel.ItinerarySegment;
 import com.concur.mobile.core.expense.travelallowance.datamodel.SynchronizationStatusEnum;
+import com.concur.mobile.core.expense.travelallowance.util.Message;
 
 public class GetTAItinerariesResponseParser extends BaseParser {
 
@@ -150,11 +151,19 @@ public class GetTAItinerariesResponseParser extends BaseParser {
                 seg.setBorderCrossDateTime(dateFormat.parse(borderCrossDateTime));
             }
 
-            // Status
+            // Status, StatusText, StatusTextLocalized
             String status = currentItineraryRow.get("Status");
             if (status != null) {
                 seg.setSyncStatus(SynchronizationStatusEnum.fromCode(status));
+                if (SynchronizationStatusEnum.fromCode(status) == SynchronizationStatusEnum.FAILED) {
+                    // Status
+                    String statusText = currentItineraryRow.get("StatusText");
+                    // Status Text Localized
+                    String statusTextLocalized = currentItineraryRow.get("StatusTextLocalized");
+                    seg.setMessage(new Message(Message.Severity.ERROR, statusText, statusTextLocalized));
+                }
             }
+
 
 		} catch (ParseException e) {
 			e.printStackTrace();

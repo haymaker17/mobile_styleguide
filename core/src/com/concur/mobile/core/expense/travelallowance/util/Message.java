@@ -1,9 +1,11 @@
 package com.concur.mobile.core.expense.travelallowance.util;
 
+import java.io.Serializable;
+
 /**
  * Created by Michael Becherer on 19-Jul-15.
  */
-public class Message {
+public class Message implements Serializable {
 
     public final static String MSG_UI_START_BEFORE_END = "UI.StartBeforeEnd";
     public final static String MSG_UI_MISSING_DATES = "UI.MissingDates";
@@ -40,9 +42,7 @@ public class Message {
      * @param code The coded representation (see Message.MSG_UI_<...>)
      */
     public Message(Severity severity, String code) {
-        this.severity = severity;
-        this.code = code;
-        this.messageText = StringUtilities.EMPTY_STRING;
+        this(severity, code, StringUtilities.EMPTY_STRING);
     }
 
     /**
@@ -66,7 +66,7 @@ public class Message {
      */
     public Message(String statusText, String statusTextLocalized) {
         this.code = statusText;
-        this.messageText =  statusTextLocalized;
+        this.messageText = statusTextLocalized;
         if (statusText.contains(".Error")) {
             this.severity = Severity.ERROR;
             return;
@@ -129,7 +129,7 @@ public class Message {
     }
 
     /**
-     * {@InheritDoc}
+     * {@inheritDoc}
      *
      * @return the human readable localized message text or an empty string.
      */
