@@ -2,6 +2,7 @@ package com.concur.mobile.core.expense.travelallowance.activity;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.support.design.widget.FloatingActionButton;
 import android.support.v7.app.ActionBar;
 import android.support.v7.widget.Toolbar;
 import android.view.MenuItem;
@@ -106,6 +107,20 @@ public class ItineraryOverviewActivity extends BaseActivity {
                     startActivityForResult(intent, REQUEST_VIEW_TA_ITINERARY_UPDATE);
                 }
             });
+        }
+
+        FloatingActionButton createItineraryFAB = (FloatingActionButton) findViewById(R.id.createItineraryFAB);
+        if (createItineraryFAB !=null){
+            createItineraryFAB.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    Intent intent = new Intent(ItineraryOverviewActivity.this, ItineraryUpdateActivity.class);
+                    intent.putExtra(Const.EXTRA_EXPENSE_REPORT_KEY, expenseReportKey);
+                    intent.putExtra(Const.EXTRA_EXPENSE_REPORT_NAME, expenseReportName);
+                    startActivityForResult(intent, REQUEST_VIEW_TA_ITINERARY_UPDATE);
+                }
+            });
+
         }
     }
 
