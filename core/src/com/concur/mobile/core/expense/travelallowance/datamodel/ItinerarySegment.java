@@ -1,6 +1,7 @@
 package com.concur.mobile.core.expense.travelallowance.datamodel;
 
 import com.concur.mobile.core.expense.travelallowance.util.DateUtils;
+import com.concur.mobile.core.expense.travelallowance.util.Message;
 
 import java.io.Serializable;
 import java.util.Date;
@@ -8,7 +9,7 @@ import java.util.Date;
 /**
  * Created by D049515 on 23.06.2015.
  */
-public class ItinerarySegment implements Serializable, IDatePeriodUTC, ISynchronizationStatus {
+public class ItinerarySegment implements Serializable, IDatePeriodUTC {
 
 
     private static final long serialVersionUID = -5416179865430781088L;
@@ -19,22 +20,8 @@ public class ItinerarySegment implements Serializable, IDatePeriodUTC, ISynchron
     private ItineraryLocation arrivalLocation;
     private Date arrivalDateTime;
     private Date borderCrossDateTime;
-
-    /**
-     * The time zone offset in minutes for departure
-     */
-    private long departureTimeZoneOffset;
-
-    /**
-     * The time zone offset in minutes for arrival
-     */
-    private long arrivalTimeZoneOffset;
-
-    /**
-     * The synchronization status of this {@code ItinerarySegment}
-     */
     private SynchronizationStatusEnum syncStatus;
-
+    private Message message;
 
     public String getId() {
         return id;
@@ -85,35 +72,35 @@ public class ItinerarySegment implements Serializable, IDatePeriodUTC, ISynchron
     }
 
     /**
-     * Getter method
-     * @return the time zone offset in minutes
-     */
-    public long getDepartureTimeZoneOffset() {
-        return departureTimeZoneOffset;
-    }
-
-    /**
      * Setter method
-     * @param departureTimeZoneOffset the time zone offset in minutes
+     * @param message The message object to be set
      */
-    public void setDepartureTimeZoneOffset(long departureTimeZoneOffset) {
-        this.departureTimeZoneOffset = departureTimeZoneOffset;
+    public void setMessage(Message message) {
+        this.message = message;
     }
 
     /**
      * Getter method
-     * @return the time zone offset in minutes
+     * @return The message object
      */
-    public long getArrivalTimeZoneOffset() {
-        return arrivalTimeZoneOffset;
+    public Message getMessage() {
+        return this.message;
     }
 
     /**
      * Setter method
-     * @param arrivalTimeZoneOffset the time zone offset in minutes
+     * @param syncStatus The synchronization status to be set
      */
-    public void setArrivalTimeZoneOffset(long arrivalTimeZoneOffset) {
-        this.arrivalTimeZoneOffset = arrivalTimeZoneOffset;
+    public void setSyncStatus(SynchronizationStatusEnum syncStatus) {
+        this.syncStatus = syncStatus;
+    }
+
+    /**
+     * Getter method
+     * @return The synchronization status of this object
+     */
+    public SynchronizationStatusEnum getSyncStatus() {
+        return this.syncStatus;
     }
 
     /**
@@ -122,6 +109,10 @@ public class ItinerarySegment implements Serializable, IDatePeriodUTC, ISynchron
     @Override
     public Date getStartDateUTC() {
         Date dateUTC = new Date();
+        long departureTimeZoneOffset = 0;
+        if (departureLocation != null) {
+            departureTimeZoneOffset = departureLocation.getTimeZoneOffset();
+        }
         dateUTC.setTime(departureDateTime.getTime() - DateUtils.convertMinutesToMilliseconds(departureTimeZoneOffset));
         return dateUTC;
     }
@@ -132,23 +123,12 @@ public class ItinerarySegment implements Serializable, IDatePeriodUTC, ISynchron
     @Override
     public Date getEndDateUTC() {
         Date dateUTC = new Date();
+        long arrivalTimeZoneOffset = 0;
+        if (arrivalLocation != null) {
+            arrivalTimeZoneOffset = arrivalLocation.getTimeZoneOffset();
+        }
         dateUTC.setTime(arrivalDateTime.getTime() - DateUtils.convertMinutesToMilliseconds(arrivalTimeZoneOffset));
         return dateUTC;
     }
 
-    /**
-     * {@inheritDoc}
-     */
-    @Override
-    public SynchronizationStatusEnum getStatus() {
-        return this.syncStatus;
-    }
-
-    /**
-     * {@inheritDoc}
-     */
-    @Override
-    public void setStatus(SynchronizationStatusEnum status) {
-        this.syncStatus = status;
-    }
 }

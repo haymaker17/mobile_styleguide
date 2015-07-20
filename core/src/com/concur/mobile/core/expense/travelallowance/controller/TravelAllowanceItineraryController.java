@@ -14,6 +14,7 @@ import com.concur.mobile.core.expense.travelallowance.datamodel.ItinerarySegment
 import com.concur.mobile.core.expense.travelallowance.service.GetTAItinerariesRequest;
 import com.concur.mobile.core.expense.travelallowance.ui.model.CompactItinerary;
 import com.concur.mobile.core.expense.travelallowance.ui.model.CompactItinerarySegment;
+import com.concur.mobile.core.expense.travelallowance.util.Message;
 import com.concur.mobile.core.expense.travelallowance.util.StringUtilities;
 
 import java.util.ArrayList;

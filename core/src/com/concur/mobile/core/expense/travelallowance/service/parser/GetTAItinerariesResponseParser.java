@@ -113,6 +113,16 @@ public class GetTAItinerariesResponseParser extends BaseParser {
             ItineraryLocation depLoc = new ItineraryLocation();
             depLoc.setName(currentItineraryRow.get("DepartLocation"));
             depLoc.setCode(currentItineraryRow.get("DepartLnKey"));
+            String departureOffset = null;
+            try {
+                departureOffset = currentItineraryRow.get("DepartureTimeZoneOffset");
+                if (departureOffset != null) {
+                    long departureOffsetMinutes = Long.parseLong(departureOffset, 10);
+                    depLoc.setTimeZoneOffset(departureOffsetMinutes);
+                }
+            } catch (NumberFormatException e) {
+                Log.e(CLASS_TAG, "Not a Number: " + departureOffset);
+            }
             seg.setDepartureLocation(depLoc);
 
             // Arrival
@@ -121,6 +131,17 @@ public class GetTAItinerariesResponseParser extends BaseParser {
             ItineraryLocation arrLoc = new ItineraryLocation();
             arrLoc.setName(currentItineraryRow.get("ArrivalLocation"));
             arrLoc.setCode(currentItineraryRow.get("ArrivalLnKey"));
+            arrLoc.setRateLocationKey(currentItineraryRow.get("ArrivalRlKey"));
+            String arrivalOffset = null;
+            try {
+                arrivalOffset = currentItineraryRow.get("ArrivalTimeZoneOffset");
+                if (arrivalOffset != null) {
+                    long arrivalOffsetMinutes = Long.parseLong(arrivalOffset, 10);
+                    arrLoc.setTimeZoneOffset(arrivalOffsetMinutes);
+                }
+            } catch (NumberFormatException e) {
+                Log.e(CLASS_TAG, "Not a Number: " + arrivalOffset);
+            }
             seg.setArrivalLocation(arrLoc);
 
             // Border Crossing
@@ -132,31 +153,7 @@ public class GetTAItinerariesResponseParser extends BaseParser {
             // Status
             String status = currentItineraryRow.get("Status");
             if (status != null) {
-                seg.setStatus(SynchronizationStatusEnum.fromCode(status));
-            }
-
-            // Time Zone Offset
-            String arrivalOffset = null;
-            try {
-                arrivalOffset = currentItineraryRow.get("ArrivalTimeZoneOffset");
-                if (arrivalOffset != null) {
-                    long arrivalOffsetMinutes = Long.parseLong(arrivalOffset, 10);
-                    seg.setArrivalTimeZoneOffset(arrivalOffsetMinutes);
-                }
-            } catch (NumberFormatException e) {
-                Log.e(CLASS_TAG, "Not a Number: " + arrivalOffset);
-            }
-
-            // Time Zone Offset
-            String departureOffset = null;
-            try {
-                departureOffset = currentItineraryRow.get("DepartureTimeZoneOffset");
-                if (departureOffset != null) {
-                    long departureOffsetMinutes = Long.parseLong(departureOffset, 10);
-                    seg.setDepartureTimeZoneOffset(departureOffsetMinutes);
-                }
-            } catch (NumberFormatException e) {
-                Log.e(CLASS_TAG, "Not a Number: " + departureOffset);
+                seg.setSyncStatus(SynchronizationStatusEnum.fromCode(status));
             }
 
 		} catch (ParseException e) {

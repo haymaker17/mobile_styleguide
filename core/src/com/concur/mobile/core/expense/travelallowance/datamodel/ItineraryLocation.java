@@ -15,6 +15,16 @@ public class ItineraryLocation implements Serializable {
     private String countryCode;
     private String countryName;
 
+    /**
+     * Rate Location Key needed e.g. for updating itineraries
+     */
+    private String rateLocationKey;
+
+    /**
+     * The offset between the local time related to this location to UTC in minutes
+     */
+    private long timeZoneOffset;
+
     public String getName() {
         return name;
     }
@@ -47,35 +57,48 @@ public class ItineraryLocation implements Serializable {
         this.countryName = countryName;
     }
 
+    public String getRateLocationKey() {
+        return rateLocationKey;
+    }
+
+    public void setRateLocationKey(String rateLocationKey) {
+        this.rateLocationKey = rateLocationKey;
+    }
+
+    public long getTimeZoneOffset() {
+        return timeZoneOffset;
+    }
+
+    public void setTimeZoneOffset(long timeZoneOffset) {
+        this.timeZoneOffset = timeZoneOffset;
+    }
+
     @Override
     public boolean equals(Object o) {
-        if (this == o) {
-            return true;
-        }
-        if (o == null || getClass() != o.getClass()) {
-            return false;
-        }
+        if (this == o) return true;
+        if (!(o instanceof ItineraryLocation)) return false;
 
-        ItineraryLocation location = (ItineraryLocation) o;
+        ItineraryLocation that = (ItineraryLocation) o;
 
-        if (name != null ? !name.equals(location.name) : location.name != null) {
+        if (timeZoneOffset != that.timeZoneOffset) return false;
+        if (name != null ? !name.equals(that.name) : that.name != null) return false;
+        if (code != null ? !code.equals(that.code) : that.code != null) return false;
+        if (countryCode != null ? !countryCode.equals(that.countryCode) : that.countryCode != null)
             return false;
-        }
-        if (countryName != null ? !countryName.equals(location.countryName) : location.countryName != null) {
+        if (countryName != null ? !countryName.equals(that.countryName) : that.countryName != null)
             return false;
-        }
-        if (code != null ? !code.equals(location.code) : location.code != null) {
-            return false;
-        }
+        return !(rateLocationKey != null ? !rateLocationKey.equals(that.rateLocationKey) : that.rateLocationKey != null);
 
-        return true;
     }
 
     @Override
     public int hashCode() {
-        int result = code != null ? code.hashCode() : 0;
+        int result = name != null ? name.hashCode() : 0;
+        result = 31 * result + (code != null ? code.hashCode() : 0);
+        result = 31 * result + (countryCode != null ? countryCode.hashCode() : 0);
         result = 31 * result + (countryName != null ? countryName.hashCode() : 0);
-        result = 31 * result + (name != null ? name.hashCode() : 0);
+        result = 31 * result + (rateLocationKey != null ? rateLocationKey.hashCode() : 0);
+        result = 31 * result + (int) (timeZoneOffset ^ (timeZoneOffset >>> 32));
         return result;
     }
 }

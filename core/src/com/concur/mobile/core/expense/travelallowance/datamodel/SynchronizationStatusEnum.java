@@ -22,7 +22,7 @@ public enum SynchronizationStatusEnum {
      * needs to be refreshed.
      */
     //TODO: Set string resource as soon as available
-    FAILED("FAILED", //R.string.status_failed)
+    FAILED("FAILURE", //R.string.status_failed)
             0);
 
     /**
