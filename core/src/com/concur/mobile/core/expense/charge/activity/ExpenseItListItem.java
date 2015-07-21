@@ -115,7 +115,7 @@ public class ExpenseItListItem extends ExpenseListItem {
             if (textView != null) {
                 int etaInSeconds = expenseItItem.getEta();
                 if (etaInSeconds > 0) {
-                   String time = getEtaToString(etaInSeconds);
+                   String time = getEtaToString(context, etaInSeconds);
                     String eta = context.getResources().getString(R.string.expenseit_expense_processing_time,
                             time);
                     textView.setText(eta);
@@ -207,23 +207,29 @@ public class ExpenseItListItem extends ExpenseListItem {
         return false;
     }
 
-    private String getEtaToString(int etaInSeconds) {
+    private String getEtaToString(Context context, int etaInSeconds) {
         int etaTotalMinutes = etaInSeconds / 60;
         int etaRemainingSeconds = etaInSeconds % 60;
         String time;
+
         // TODO: EJW - all this needs to be localized in strings.xml.
+        // MOB-24792  Fix Localization of ExpenseIt ETA time
+        String min = context.getResources().getString(R.string.expenseit_eta_min);
+        String sec = context.getResources().getString(R.string.expenseit_eta_sec);
+        String na = context.getResources().getString(R.string.expenseit_eta_na);
+
         // Determine time. The first and last cases are safety precautions,
         // in case they are not handled above.
         if ((etaTotalMinutes + etaRemainingSeconds) <= 0) {
-            time = "N/A";
+            time = na;
         } else if (etaTotalMinutes > 0 && etaRemainingSeconds <= 0) {
-            time = etaTotalMinutes + " min";
+            time = etaTotalMinutes + " " + min;
         } else if (etaTotalMinutes > 0 && etaRemainingSeconds > 0) {
-            time = etaTotalMinutes + " min, " + etaRemainingSeconds + " sec";
+            time = etaTotalMinutes + " " + min + ", "  + etaRemainingSeconds + " " + sec;
         } else if (etaTotalMinutes <= 0 && etaRemainingSeconds > 0) {
-            time = etaRemainingSeconds + " sec";
+            time = etaRemainingSeconds + " " + sec;
         } else {
-            time = "N/A";
+            time = na;
         }
 
         return time;
