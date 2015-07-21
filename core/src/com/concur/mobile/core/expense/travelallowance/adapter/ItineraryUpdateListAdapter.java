@@ -15,6 +15,7 @@ import com.concur.mobile.core.expense.travelallowance.controller.ItineraryUpdate
 import com.concur.mobile.core.expense.travelallowance.datamodel.ItinerarySegment;
 import com.concur.mobile.core.expense.travelallowance.ui.model.PositionInfoTag;
 import com.concur.mobile.core.expense.travelallowance.util.Message;
+import com.concur.mobile.core.expense.travelallowance.util.StringUtilities;
 
 /**
  * Created by Michael Becherer on 03-Jul-15.
@@ -204,7 +205,7 @@ public class ItineraryUpdateListAdapter extends ArrayAdapter<Object> {
     public boolean isEnabled(int position) {
         // TODO PK: This is set to true in order to enable context menu on list items. The delete feature is currently implemented
         // in the context menu.
-        return true;
+        return false;
     }
 
     private void renderTitle(final ItinerarySegment segment) {
@@ -215,8 +216,10 @@ public class ItineraryUpdateListAdapter extends ArrayAdapter<Object> {
             holder.tvTitle.setText(segment.getDepartureLocation().getName() + " - " + segment.getArrivalLocation().getName());
         } else if (segment.getDepartureLocation() != null) {
             holder.tvTitle.setText(segment.getDepartureLocation().getName());
-        } else {
+        } else if (segment.getArrivalLocation() != null) {
             holder.tvTitle.setText(segment.getArrivalLocation().getName());
+        } else {
+            holder.tvTitle.setText(StringUtilities.EMPTY_STRING);
         }
         holder.tvTitle.setFocusable(false);
         holder.tvTitle.setFocusableInTouchMode(false);
@@ -225,11 +228,14 @@ public class ItineraryUpdateListAdapter extends ArrayAdapter<Object> {
             holder.tvTitle.setFocusable(true);
             holder.tvTitle.setFocusableInTouchMode(true);
             holder.tvTitle.setClickable(true);
+            holder.tvTitle.requestFocus();
             if (segment.getMessage().getMessageText() != null) {
                 holder.tvTitle.setError(segment.getMessage().getMessageText());
             } else {
                 holder.tvTitle.setError("@Internal Error@");
             }
+        } else {
+            holder.tvTitle.setError(null);
         }
     }
 
@@ -262,6 +268,8 @@ public class ItineraryUpdateListAdapter extends ArrayAdapter<Object> {
                         DateUtils.FORMAT_SHOW_TIME);
                 holder.tvDepartureTimeValue.setText(dateStr);
             }
+        } else {
+            holder.tvDepartureTimeValue.setText(StringUtilities.EMPTY_STRING);
         }
     }
 
@@ -294,6 +302,8 @@ public class ItineraryUpdateListAdapter extends ArrayAdapter<Object> {
                         DateUtils.FORMAT_SHOW_TIME);
                 holder.tvArrivalTimeValue.setText(dateStr);
             }
+        } else {
+            holder.tvArrivalTimeValue.setText(StringUtilities.EMPTY_STRING);
         }
     }
 }
