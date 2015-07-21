@@ -98,25 +98,6 @@ public class ItineraryOverviewActivity extends BaseActivity implements IServiceR
             actionBar.setTitle("@List of editable Itineraries@");
         }
 
-        ListView listView = (ListView) findViewById(R.id.list_view);
-        if (listView != null) {
-            adapter = new ItineraryOverviewListAdapter(this);
-            listView.setAdapter(adapter);
-            listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-                @Override
-                public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                    if (view == null) {
-                        return;
-                    }
-                    CompactItinerary compactItinerary = itineraryController.getCompactItineraryList().get(position);
-                    Intent intent = new Intent(ItineraryOverviewActivity.this, ItineraryUpdateActivity.class);
-                    intent.putExtra(Const.EXTRA_EXPENSE_REPORT_KEY, expenseReportKey);
-                    intent.putExtra(Const.EXTRA_EXPENSE_REPORT_NAME, expenseReportName);
-                    intent.putExtra(Const.EXTRA_ITINERARY_KEY, compactItinerary.getItineraryID());
-                    startActivityForResult(intent, REQUEST_VIEW_TA_ITINERARY_UPDATE);
-                }
-            });
-        }
 
         FloatingActionButton createItineraryFAB = (FloatingActionButton) findViewById(R.id.createItineraryFAB);
         if (createItineraryFAB !=null){
@@ -126,12 +107,10 @@ public class ItineraryOverviewActivity extends BaseActivity implements IServiceR
                     Intent intent = new Intent(ItineraryOverviewActivity.this, ItineraryUpdateActivity.class);
                     intent.putExtra(Const.EXTRA_EXPENSE_REPORT_KEY, expenseReportKey);
                     intent.putExtra(Const.EXTRA_EXPENSE_REPORT_NAME, expenseReportName);
-                    startActivityForResult(intent, REQUEST_VIEW_TA_ITINERARY_UPDATE);
+                    startActivity(intent);
                 }
             });
-
         }
-        registerForContextMenu(listView);
     }
 
     @Override
@@ -147,6 +126,32 @@ public class ItineraryOverviewActivity extends BaseActivity implements IServiceR
     protected void onDestroy() {
         super.onDestroy();
         this.itineraryController.unregisterListener(this);
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+
+        ListView listView = (ListView) findViewById(R.id.list_view);
+        if (listView != null) {
+            adapter = new ItineraryOverviewListAdapter(this);
+            listView.setAdapter(adapter);
+            listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+                @Override
+                public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                    if (view == null) {
+                        return;
+                    }
+                    CompactItinerary compactItinerary = itineraryController.getCompactItineraryList().get(position);
+                    Intent intent = new Intent(ItineraryOverviewActivity.this, ItineraryUpdateActivity.class);
+                    intent.putExtra(Const.EXTRA_EXPENSE_REPORT_KEY, expenseReportKey);
+                    intent.putExtra(Const.EXTRA_EXPENSE_REPORT_NAME, expenseReportName);
+                    intent.putExtra(Const.EXTRA_ITINERARY_KEY, compactItinerary.getItineraryID());
+                    startActivity(intent);
+                }
+            });
+        }
+        registerForContextMenu(listView);
     }
 
     @Override
