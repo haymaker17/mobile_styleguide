@@ -94,6 +94,13 @@ public class GetTAItinerariesResponseParser extends BaseParser {
 			if ("Name".equals(tag)) {
 				currentItinerary.setName(text);
 			}
+            if ("isLocked".equals(tag)) {
+                if ("Y".equals(text)) {
+                    currentItinerary.setLocked(true);
+                } else {
+                    currentItinerary.setLocked(false);
+                }
+            }
 		}
 
         // Handle Itinerary Segment

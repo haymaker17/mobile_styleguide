@@ -11,12 +11,12 @@ public class Itinerary implements Serializable{
 
     private static final long serialVersionUID = -3254062517635418907L;
 
-
     private String itineraryID;
     private String name;
     private String expenseReportID;
-    private List<ItinerarySegment> segmentList;
     private SynchronizationStatus syncStatus;
+    private boolean locked;
+    private List<ItinerarySegment> segmentList;
 
     public String getItineraryID() {
         return itineraryID;
@@ -61,33 +61,29 @@ public class Itinerary implements Serializable{
         this.syncStatus = syncStatus;
     }
 
+    public boolean getLocked() {
+        return locked;
+    }
+
+    public void setLocked(boolean locked) {
+        this.locked = locked;
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
+        if (!(o instanceof Itinerary)) return false;
 
         Itinerary itinerary = (Itinerary) o;
 
+        if (locked != itinerary.locked) return false;
         if (itineraryID != null ? !itineraryID.equals(itinerary.itineraryID) : itinerary.itineraryID != null)
             return false;
         if (name != null ? !name.equals(itinerary.name) : itinerary.name != null) return false;
         if (expenseReportID != null ? !expenseReportID.equals(itinerary.expenseReportID) : itinerary.expenseReportID != null)
             return false;
-
-        //Compare segment lists of both objects
-        if ( (segmentList == null && itinerary.segmentList != null )||
-             (segmentList != null && itinerary.segmentList == null )){
-            return false;
-        }
-        if (segmentList != null && itinerary.segmentList != null) {
-            if (segmentList.size() != itinerary.getSegmentList().size()) {
-                return false;
-            }
-            if (!segmentList.containsAll(itinerary.getSegmentList())) {
-                return false;
-            }
-        }
-        return syncStatus == itinerary.syncStatus;
+        if (syncStatus != itinerary.syncStatus) return false;
+        return equalsSegmentList(itinerary);
     }
 
     @Override
@@ -95,9 +91,32 @@ public class Itinerary implements Serializable{
         int result = itineraryID != null ? itineraryID.hashCode() : 0;
         result = 31 * result + (name != null ? name.hashCode() : 0);
         result = 31 * result + (expenseReportID != null ? expenseReportID.hashCode() : 0);
-        result = 31 * result + (segmentList != null ? segmentList.hashCode() : 0);
         result = 31 * result + (syncStatus != null ? syncStatus.hashCode() : 0);
+        result = 31 * result + (locked ? 1 : 0);
+        result = 31 * result + (segmentList != null ? segmentList.hashCode() : 0);
         return result;
+    }
+
+    /**
+     * Compares the itinerary lists.
+     * @param itinerary The itinerary to be compared with this
+     * @return true, if the segments lists are equal
+     */
+    private boolean equalsSegmentList(Itinerary itinerary) {
+        //Compare segment lists of both objects
+        if ( (segmentList == null && itinerary.segmentList != null )||
+             (segmentList != null && itinerary.segmentList == null )){
+            return true;
+        }
+        if (segmentList != null && itinerary.segmentList != null) {
+            if (segmentList.size() != itinerary.getSegmentList().size()) {
+                return true;
+            }
+            if (!segmentList.containsAll(itinerary.getSegmentList())) {
+                return true;
+            }
+        }
+        return false;
     }
 
 }
