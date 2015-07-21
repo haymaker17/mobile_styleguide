@@ -20,6 +20,7 @@ public class ItinerarySegment implements Serializable, IDatePeriodUTC {
     private ItineraryLocation arrivalLocation;
     private Date arrivalDateTime;
     private Date borderCrossDateTime;
+    private boolean locked;
     private Message message;
 
     public String getId() {
@@ -68,6 +69,14 @@ public class ItinerarySegment implements Serializable, IDatePeriodUTC {
 
     public void setBorderCrossDateTime(Date borderCrossDateTime) {
         this.borderCrossDateTime = borderCrossDateTime;
+    }
+
+    public boolean getLocked() {
+        return locked;
+    }
+
+    public void setLocked(boolean locked) {
+        this.locked = locked;
     }
 
     /**
@@ -122,6 +131,7 @@ public class ItinerarySegment implements Serializable, IDatePeriodUTC {
 
         ItinerarySegment that = (ItinerarySegment) o;
 
+        if (locked != that.locked) return false;
         if (id != null ? !id.equals(that.id) : that.id != null) return false;
         if (departureLocation != null ? !departureLocation.equals(that.departureLocation) : that.departureLocation != null)
             return false;
@@ -145,7 +155,7 @@ public class ItinerarySegment implements Serializable, IDatePeriodUTC {
         result = 31 * result + (arrivalLocation != null ? arrivalLocation.hashCode() : 0);
         result = 31 * result + (arrivalDateTime != null ? arrivalDateTime.hashCode() : 0);
         result = 31 * result + (borderCrossDateTime != null ? borderCrossDateTime.hashCode() : 0);
+        result = 31 * result + (locked ? 1 : 0);
         return result;
     }
-
 }

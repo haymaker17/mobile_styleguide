@@ -151,6 +151,14 @@ public class GetTAItinerariesResponseParser extends BaseParser {
                 seg.setBorderCrossDateTime(dateFormat.parse(borderCrossDateTime));
             }
 
+            // is row locked indicator
+            String lockedStr = currentItineraryRow.get("isRowLocked");
+            if ("Y".equals(lockedStr)) {
+                seg.setLocked(true);
+            } else {
+                seg.setLocked(false);
+            }
+
             // Status, StatusText, StatusTextLocalized
             String status = currentItineraryRow.get("Status");
             if ((status != null) && status.equals("FAILURE")) {
