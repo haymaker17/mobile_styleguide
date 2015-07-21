@@ -62,12 +62,10 @@ public class HotelBenchmarkListItem extends ListItem {
             if (benchmark.price == null) {
                 priceTextView.setText(R.string.price_to_beat_price_unavailable);
                 priceTextView.setTextAppearance(context, R.style.ListCellUnavailableText);
-                priceTextView.setGravity(Gravity.LEFT);
             } else {
                 Locale loc = context.getResources().getConfiguration().locale;
                 priceTextView.setText(FormatUtil.formatAmount(benchmark.price, loc, benchmark.crnCode, true));
                 priceTextView.setTextAppearance(context, R.style.ListCellPriceText);
-                priceTextView.setGravity(Gravity.RIGHT);
             }
 
             // location
