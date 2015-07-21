@@ -8,6 +8,7 @@ import android.os.Handler;
 import android.support.v7.app.ActionBar;
 import android.support.v7.widget.Toolbar;
 import android.view.ContextMenu;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
@@ -25,15 +26,18 @@ import com.concur.mobile.core.ConcurCore;
 import com.concur.mobile.core.activity.BaseActivity;
 import com.concur.mobile.core.expense.activity.ListSearch;
 import com.concur.mobile.core.expense.travelallowance.adapter.ItineraryUpdateListAdapter;
+import com.concur.mobile.core.expense.travelallowance.controller.FixedTravelAllowanceController;
 import com.concur.mobile.core.expense.travelallowance.controller.IServiceRequestListener;
 import com.concur.mobile.core.expense.travelallowance.controller.ItineraryUpdateController;
 import com.concur.mobile.core.expense.travelallowance.controller.TravelAllowanceItineraryController;
 import com.concur.mobile.core.expense.travelallowance.datamodel.Itinerary;
 import com.concur.mobile.core.expense.travelallowance.datamodel.ItineraryLocation;
 import com.concur.mobile.core.expense.travelallowance.datamodel.ItinerarySegment;
+import com.concur.mobile.core.expense.travelallowance.fragment.FixedTravelAllowanceListFragment;
 import com.concur.mobile.core.expense.travelallowance.fragment.TimePickerFragment;
 import com.concur.mobile.core.expense.travelallowance.service.AbstractItineraryDeleteRequest;
 import com.concur.mobile.core.expense.travelallowance.service.DeleteItineraryRowRequest;
+import com.concur.mobile.core.expense.travelallowance.fragment.TravelAllowanceItineraryListFragment;
 import com.concur.mobile.core.expense.travelallowance.ui.model.PositionInfoTag;
 import com.concur.mobile.core.expense.travelallowance.util.DateUtils;
 import com.concur.mobile.core.expense.travelallowance.util.Message;
@@ -218,6 +222,8 @@ public class ItineraryUpdateActivity extends BaseActivity implements IServiceReq
                     onDateClickListener, onTimeClickListener);
             listView.setAdapter(adapter);
         }
+
+        this.updateController.registerListener(this);
         renderDefaultValues();
 
         registerForContextMenu(listView);
@@ -309,6 +315,7 @@ public class ItineraryUpdateActivity extends BaseActivity implements IServiceReq
         super.onDestroy();
         ConcurCore app = (ConcurCore) getApplication();
         app.getTaItineraryController().unregisterListener(this);
+        this.updateController.unregisterListener(this);
     }
 
     private void updateControllerData() {
@@ -379,16 +386,37 @@ public class ItineraryUpdateActivity extends BaseActivity implements IServiceReq
         return true;
     }
 
+//    @Override
+//    public void onRequestSuccess(String controllerTag) {
+//        updateController.refreshItinerary(updateController.getItinerary().getItineraryID());
+//        this.adapter.clear();
+//        this.adapter.addAll(updateController.getItinerarySegments());
+//        this.adapter.notifyDataSetChanged();
+//    }
+//
+//    @Override
+//    public void onRequestFail(String controllerTag) {
+//        Toast.makeText(this, "@List reftresh Failed@", Toast.LENGTH_SHORT).show();
+//    }
+    /**
+     * {@inheritDoc}
+     */
     @Override
-    public void onRequestSuccess(String controllerTag) {
-        updateController.refreshItinerary(updateController.getItinerary().getItineraryID());
-        this.adapter.clear();
-        this.adapter.addAll(updateController.getItinerarySegments());
-        this.adapter.notifyDataSetChanged();
+    public void onRequestSuccess(final String controllerTag) {
+        Log.d(Const.LOG_TAG, CLASS_TAG + ".onRequestSuccess: " + controllerTag);
+        if (ItineraryUpdateController.CONTROLLER_TAG.equals(controllerTag)) {
+            Toast.makeText(this, "@Success@", Toast.LENGTH_SHORT).show();
+        }
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
-    public void onRequestFail(String controllerTag) {
-        Toast.makeText(this, "@List reftresh Failed@", Toast.LENGTH_SHORT).show();
+    public void onRequestFail(final String controllerTag) {
+        if (ItineraryUpdateController.CONTROLLER_TAG.equals(controllerTag)) {
+            Toast.makeText(this, "@Failed@", Toast.LENGTH_SHORT).show();
+            adapter.notifyDataSetChanged();
+        }
     }
 }

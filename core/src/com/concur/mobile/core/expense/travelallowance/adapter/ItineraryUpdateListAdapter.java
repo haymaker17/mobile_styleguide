@@ -14,6 +14,7 @@ import com.concur.mobile.core.ConcurCore;
 import com.concur.mobile.core.expense.travelallowance.controller.ItineraryUpdateController;
 import com.concur.mobile.core.expense.travelallowance.datamodel.ItinerarySegment;
 import com.concur.mobile.core.expense.travelallowance.ui.model.PositionInfoTag;
+import com.concur.mobile.core.expense.travelallowance.util.Message;
 
 /**
  * Created by Michael Becherer on 03-Jul-15.
@@ -216,6 +217,19 @@ public class ItineraryUpdateListAdapter extends ArrayAdapter<Object> {
             holder.tvTitle.setText(segment.getDepartureLocation().getName());
         } else {
             holder.tvTitle.setText(segment.getArrivalLocation().getName());
+        }
+        holder.tvTitle.setFocusable(false);
+        holder.tvTitle.setFocusableInTouchMode(false);
+        holder.tvTitle.setClickable(false);
+        if (segment.getMessage() != null && segment.getMessage().getSeverity() == Message.Severity.ERROR) {
+            holder.tvTitle.setFocusable(true);
+            holder.tvTitle.setFocusableInTouchMode(true);
+            holder.tvTitle.setClickable(true);
+            if (segment.getMessage().getMessageText() != null) {
+                holder.tvTitle.setError(segment.getMessage().getMessageText());
+            } else {
+                holder.tvTitle.setError("@Internal Error@");
+            }
         }
     }
 

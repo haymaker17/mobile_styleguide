@@ -11,10 +11,7 @@ import com.concur.mobile.core.ConcurCore;
 import com.concur.mobile.core.expense.travelallowance.datamodel.Itinerary;
 import com.concur.mobile.core.expense.travelallowance.datamodel.ItinerarySegment;
 import com.concur.mobile.core.expense.travelallowance.service.SaveItineraryRequest;
-import com.concur.mobile.core.expense.travelallowance.ui.model.CompactItinerary;
-import com.concur.mobile.core.expense.travelallowance.ui.model.CompactItinerarySegment;
 import com.concur.mobile.core.expense.travelallowance.util.DateUtils;
-import com.concur.mobile.core.expense.travelallowance.util.StringUtilities;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -23,6 +20,10 @@ import java.util.List;
  * Created by Michael Becherer on 03-Jul-15.
  */
 public class ItineraryUpdateController {
+
+    public static final String CONTROLLER_TAG = ItineraryUpdateController.class.getName();
+
+    private static final String CLASS_TAG = ItineraryUpdateController.class.getSimpleName();
 
     /**
      * The stage for itinerary
@@ -34,10 +35,17 @@ public class ItineraryUpdateController {
      */
     private Context context;
 
+    /**
+     * The list of registered listeners being notified from this controller as soon as data
+     * requests have been answered.
+     */
+    private List<IServiceRequestListener> listeners;
+
     public ItineraryUpdateController(Context context) {
         this.itinerary = new Itinerary();
         itinerary.setSegmentList(new ArrayList<ItinerarySegment>());
         this.context = context;
+        this.listeners = new ArrayList<IServiceRequestListener>();
     }
 
     public void refreshItinerary(String itineraryId) {
@@ -88,22 +96,22 @@ public class ItineraryUpdateController {
         receiver.setListener(new BaseAsyncRequestTask.AsyncReplyListener() {
             @Override
             public void onRequestSuccess(Bundle resultData) {
-                Toast.makeText(context, "@Success@", Toast.LENGTH_SHORT).show();
+                notifyListener(false);
             }
 
             @Override
             public void onRequestFail(Bundle resultData) {
-                Toast.makeText(context, "@Failed@", Toast.LENGTH_SHORT).show();
+                notifyListener(true);
             }
 
             @Override
             public void onRequestCancel(Bundle resultData) {
-                Toast.makeText(context, "@Canceled@", Toast.LENGTH_SHORT).show();
+
             }
 
             @Override
             public void cleanup() {
-                Toast.makeText(context, "@Cleanup@", Toast.LENGTH_SHORT).show();
+
             }
         });
 
@@ -111,4 +119,21 @@ public class ItineraryUpdateController {
         request.execute();
     }
 
+    public synchronized void registerListener(IServiceRequestListener listener) {
+        listeners.add(listener);
+    }
+
+    public synchronized void unregisterListener(IServiceRequestListener listener) {
+        listeners.remove(listener);
+    }
+
+    private synchronized void notifyListener(boolean isFailed) {
+        for(IServiceRequestListener listener : listeners) {
+            if (isFailed) {
+                listener.onRequestFail(CONTROLLER_TAG);
+            } else {
+                listener.onRequestSuccess(CONTROLLER_TAG);
+            }
+        }
+    }
 }

@@ -1,5 +1,9 @@
 package com.concur.mobile.core.expense.travelallowance.util;
 
+import android.content.Context;
+
+import com.concur.core.R;
+
 import java.io.Serializable;
 
 /**
@@ -10,6 +14,9 @@ public class Message implements Serializable {
     public final static String MSG_UI_START_BEFORE_END = "UI.StartBeforeEnd";
     public final static String MSG_UI_MISSING_DATES = "UI.MissingDates";
     public final static String MSG_UI_OVERLAPPING_PREDECESSOR = "UI.OverlappingPredecessor";
+
+    private static final long serialVersionUID = 1176695456567753781L;
+    private static final String CLASS_TAG = Message.class.getSimpleName();
 
     /**
      * The possible severities
@@ -109,6 +116,37 @@ public class Message implements Serializable {
      */
     public String getMessageText() {
         return messageText;
+    }
+
+    /**
+     * Getter method
+     * @return the human readable localized message text, if available.
+     * If context equals null, an empty String is returned. If no message text is
+     * available a standard text will be derived from the severity.
+     */
+    public String getMessageText(Context context) {
+        if (context == null) {
+            return StringUtilities.EMPTY_STRING;
+        }
+        if (StringUtilities.isNullOrEmpty(messageText)) {
+            String text = StringUtilities.EMPTY_STRING;
+            switch (severity) {
+                case ERROR:
+                    text = context.getString(R.string.general_error_message);
+                    break;
+                case WARNING:
+                    text = "@Warning@";
+                    break;
+                case INFO:
+                    text = "@Info@";
+                    break;
+                default:
+                    break;
+            }
+            return text;
+        } else {
+            return messageText;
+        }
     }
 
     /**

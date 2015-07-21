@@ -156,9 +156,7 @@ public class GetTAItinerariesResponseParser extends BaseParser {
             if (status != null) {
                 seg.setSyncStatus(SynchronizationStatusEnum.fromCode(status));
                 if (SynchronizationStatusEnum.fromCode(status) == SynchronizationStatusEnum.FAILED) {
-                    // Status
                     String statusText = currentItineraryRow.get("StatusText");
-                    // Status Text Localized
                     String statusTextLocalized = currentItineraryRow.get("StatusTextLocalized");
                     seg.setMessage(new Message(Message.Severity.ERROR, statusText, statusTextLocalized));
                 }
