@@ -7,7 +7,7 @@ package com.concur.mobile.core.expense.travelallowance.datamodel;
  *
  * Created by Michael Becherer on 14-Jul-15.
  */
-public enum SynchronizationStatusEnum {
+public enum SynchronizationStatus {
 
     /**
      * Indicates that a domain object is in sync with its synchronization
@@ -44,7 +44,7 @@ public enum SynchronizationStatusEnum {
      * @param textResourceId The text resource id
      *
      */
-    private SynchronizationStatusEnum(final String code, final int textResourceId) {
+    private SynchronizationStatus(final String code, final int textResourceId) {
         this.code = code;
         this.textResourceId = textResourceId;
     }
@@ -68,8 +68,8 @@ public enum SynchronizationStatusEnum {
      * @return the {@code SynchronizationStatusEnum} matching the given code;
      *         null, if no matching {@code SynchronizationStatusEnum} could be found
      */
-    public static SynchronizationStatusEnum fromCode(final String code) {
-        for (SynchronizationStatusEnum status : values()) {
+    public static SynchronizationStatus fromCode(final String code) {
+        for (SynchronizationStatus status : values()) {
             if (status.code.equals(code)) {
                 return status;
             }

@@ -26,18 +26,15 @@ import com.concur.mobile.core.ConcurCore;
 import com.concur.mobile.core.activity.BaseActivity;
 import com.concur.mobile.core.expense.activity.ListSearch;
 import com.concur.mobile.core.expense.travelallowance.adapter.ItineraryUpdateListAdapter;
-import com.concur.mobile.core.expense.travelallowance.controller.FixedTravelAllowanceController;
 import com.concur.mobile.core.expense.travelallowance.controller.IServiceRequestListener;
 import com.concur.mobile.core.expense.travelallowance.controller.ItineraryUpdateController;
 import com.concur.mobile.core.expense.travelallowance.controller.TravelAllowanceItineraryController;
 import com.concur.mobile.core.expense.travelallowance.datamodel.Itinerary;
 import com.concur.mobile.core.expense.travelallowance.datamodel.ItineraryLocation;
 import com.concur.mobile.core.expense.travelallowance.datamodel.ItinerarySegment;
-import com.concur.mobile.core.expense.travelallowance.fragment.FixedTravelAllowanceListFragment;
 import com.concur.mobile.core.expense.travelallowance.fragment.TimePickerFragment;
 import com.concur.mobile.core.expense.travelallowance.service.AbstractItineraryDeleteRequest;
 import com.concur.mobile.core.expense.travelallowance.service.DeleteItineraryRowRequest;
-import com.concur.mobile.core.expense.travelallowance.fragment.TravelAllowanceItineraryListFragment;
 import com.concur.mobile.core.expense.travelallowance.ui.model.PositionInfoTag;
 import com.concur.mobile.core.expense.travelallowance.util.DateUtils;
 import com.concur.mobile.core.expense.travelallowance.util.Message;
@@ -304,7 +301,7 @@ public class ItineraryUpdateActivity extends BaseActivity implements IServiceReq
         }
         if (item.getItemId() == R.id.menuSave) {
             updateControllerData();
-            updateController.executeSave(this.expenseReportKey);
+            updateController.executeUpdate(this.expenseReportKey);
             return true;
         }
         return super.onOptionsItemSelected(item);
@@ -404,8 +401,11 @@ public class ItineraryUpdateActivity extends BaseActivity implements IServiceReq
     @Override
     public void onRequestSuccess(final String controllerTag) {
         Log.d(Const.LOG_TAG, CLASS_TAG + ".onRequestSuccess: " + controllerTag);
-        if (ItineraryUpdateController.CONTROLLER_TAG.equals(controllerTag)) {
-            Toast.makeText(this, "@Success@", Toast.LENGTH_SHORT).show();
+        if (ItineraryUpdateController.CONTROLLER_TAG_UPDATE.equals(controllerTag)) {
+            Toast.makeText(this, R.string.general_succeeded, Toast.LENGTH_SHORT).show();
+            this.adapter.clear();
+            this.adapter.addAll(updateController.getItinerarySegments());
+            adapter.notifyDataSetChanged();
         }
     }
 
@@ -414,8 +414,8 @@ public class ItineraryUpdateActivity extends BaseActivity implements IServiceReq
      */
     @Override
     public void onRequestFail(final String controllerTag) {
-        if (ItineraryUpdateController.CONTROLLER_TAG.equals(controllerTag)) {
-            Toast.makeText(this, "@Failed@", Toast.LENGTH_SHORT).show();
+        if (ItineraryUpdateController.CONTROLLER_TAG_UPDATE.equals(controllerTag)) {
+            Toast.makeText(this, R.string.general_server_error, Toast.LENGTH_SHORT).show();
             adapter.notifyDataSetChanged();
         }
     }

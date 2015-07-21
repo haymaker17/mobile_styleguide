@@ -2,6 +2,7 @@ package com.concur.mobile.core.expense.travelallowance.service;
 
 import java.io.IOException;
 import java.text.SimpleDateFormat;
+import java.util.List;
 
 import org.xmlpull.v1.XmlPullParserException;
 
@@ -17,13 +18,16 @@ import com.concur.mobile.core.service.CoreAsyncRequestTask;
 import com.concur.mobile.core.util.FormatUtil;
 import com.concur.mobile.core.expense.travelallowance.datamodel.Itinerary;
 
+/**
+ * This class supports the request to save and validate ONE itinerary with several segments.
+ * The response is parsed using {@link GetTAItinerariesResponseParser}.
+ */
 public class SaveItineraryRequest extends CoreAsyncRequestTask {
 
-    public static final String LOG_TAG = GetTAItinerariesRequest.class.getSimpleName();
+    public static final String LOG_TAG = SaveItineraryRequest.class.getSimpleName();
 
     private GetTAItinerariesResponseParser itinParser;
     private Itinerary itinerary;
-    private ItinerarySegment itinerarySegment;
     private Context context;
 
     public SaveItineraryRequest(Context context, BaseAsyncResultReceiver receiver, Itinerary itinerary) {
@@ -110,10 +114,14 @@ public class SaveItineraryRequest extends CoreAsyncRequestTask {
 
     @Override
     protected int onPostParse() {
-        resultData.putBoolean(IS_SUCCESS, true);
-        ConcurCore core = (ConcurCore) ConcurCore.getContext();
-       // core.setTAItinerary(itinParser.getItinerary());
-
+        Itinerary resultItinerary = null;
+        if (itinParser != null) {
+            List<Itinerary> itineraries = itinParser.getItineraryList();
+            if (itineraries != null && itineraries.size() > 0) {
+                resultItinerary = itineraries.get(0);
+            }
+        }
+        resultData.putSerializable(IS_SUCCESS, resultItinerary);
         return RESULT_OK;
     }
 }

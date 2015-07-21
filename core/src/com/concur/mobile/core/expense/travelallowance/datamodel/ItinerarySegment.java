@@ -20,7 +20,6 @@ public class ItinerarySegment implements Serializable, IDatePeriodUTC {
     private ItineraryLocation arrivalLocation;
     private Date arrivalDateTime;
     private Date borderCrossDateTime;
-    private SynchronizationStatusEnum syncStatus;
     private Message message;
 
     public String getId() {
@@ -88,22 +87,6 @@ public class ItinerarySegment implements Serializable, IDatePeriodUTC {
     }
 
     /**
-     * Setter method
-     * @param syncStatus The synchronization status to be set
-     */
-    public void setSyncStatus(SynchronizationStatusEnum syncStatus) {
-        this.syncStatus = syncStatus;
-    }
-
-    /**
-     * Getter method
-     * @return The synchronization status of this object
-     */
-    public SynchronizationStatusEnum getSyncStatus() {
-        return this.syncStatus;
-    }
-
-    /**
      * {@inheritDoc}
      */
     @Override
@@ -150,7 +133,7 @@ public class ItinerarySegment implements Serializable, IDatePeriodUTC {
             return false;
         if (borderCrossDateTime != null ? !borderCrossDateTime.equals(that.borderCrossDateTime) : that.borderCrossDateTime != null)
             return false;
-        return syncStatus == that.syncStatus;
+        return true;
 
     }
 
@@ -162,7 +145,6 @@ public class ItinerarySegment implements Serializable, IDatePeriodUTC {
         result = 31 * result + (arrivalLocation != null ? arrivalLocation.hashCode() : 0);
         result = 31 * result + (arrivalDateTime != null ? arrivalDateTime.hashCode() : 0);
         result = 31 * result + (borderCrossDateTime != null ? borderCrossDateTime.hashCode() : 0);
-        result = 31 * result + (syncStatus != null ? syncStatus.hashCode() : 0);
         return result;
     }
 

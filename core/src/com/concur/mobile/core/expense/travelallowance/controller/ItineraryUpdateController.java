@@ -12,6 +12,7 @@ import com.concur.mobile.core.expense.travelallowance.datamodel.Itinerary;
 import com.concur.mobile.core.expense.travelallowance.datamodel.ItinerarySegment;
 import com.concur.mobile.core.expense.travelallowance.service.SaveItineraryRequest;
 import com.concur.mobile.core.expense.travelallowance.util.DateUtils;
+import com.concur.mobile.core.service.CoreAsyncRequestTask;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -21,7 +22,7 @@ import java.util.List;
  */
 public class ItineraryUpdateController {
 
-    public static final String CONTROLLER_TAG = ItineraryUpdateController.class.getName();
+    public static final String CONTROLLER_TAG_UPDATE = ItineraryUpdateController.class.getName() + ".Update";
 
     private static final String CLASS_TAG = ItineraryUpdateController.class.getSimpleName();
 
@@ -80,7 +81,7 @@ public class ItineraryUpdateController {
         return segment;
     }
 
-    public void executeSave(String expRepKey) {
+    public void executeUpdate(String expRepKey) {
 
         if (itinerary == null) {
             return;
@@ -96,12 +97,13 @@ public class ItineraryUpdateController {
         receiver.setListener(new BaseAsyncRequestTask.AsyncReplyListener() {
             @Override
             public void onRequestSuccess(Bundle resultData) {
-                notifyListener(false);
+                itinerary = (Itinerary) resultData.getSerializable(CoreAsyncRequestTask.IS_SUCCESS);
+                notifyListenerAfterUpdate(false);
             }
 
             @Override
             public void onRequestFail(Bundle resultData) {
-                notifyListener(true);
+                notifyListenerAfterUpdate(true);
             }
 
             @Override
@@ -127,12 +129,12 @@ public class ItineraryUpdateController {
         listeners.remove(listener);
     }
 
-    private synchronized void notifyListener(boolean isFailed) {
+    private synchronized void notifyListenerAfterUpdate(boolean isFailed) {
         for(IServiceRequestListener listener : listeners) {
             if (isFailed) {
-                listener.onRequestFail(CONTROLLER_TAG);
+                listener.onRequestFail(CONTROLLER_TAG_UPDATE);
             } else {
-                listener.onRequestSuccess(CONTROLLER_TAG);
+                listener.onRequestSuccess(CONTROLLER_TAG_UPDATE);
             }
         }
     }

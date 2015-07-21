@@ -16,8 +16,7 @@ public class Itinerary implements Serializable{
     private String name;
     private String expenseReportID;
     private List<ItinerarySegment> segmentList;
-
-
+    private SynchronizationStatus syncStatus;
 
     public String getItineraryID() {
         return itineraryID;
@@ -54,6 +53,14 @@ public class Itinerary implements Serializable{
         this.segmentList = segmentList;
     }
 
+    public SynchronizationStatus getSyncStatus() {
+        return syncStatus;
+    }
+
+    public void setSyncStatus(SynchronizationStatus syncStatus) {
+        this.syncStatus = syncStatus;
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
@@ -80,9 +87,7 @@ public class Itinerary implements Serializable{
                 return false;
             }
         }
-
-    return true;
-
+        return syncStatus == itinerary.syncStatus;
     }
 
     @Override
@@ -91,6 +96,8 @@ public class Itinerary implements Serializable{
         result = 31 * result + (name != null ? name.hashCode() : 0);
         result = 31 * result + (expenseReportID != null ? expenseReportID.hashCode() : 0);
         result = 31 * result + (segmentList != null ? segmentList.hashCode() : 0);
+        result = 31 * result + (syncStatus != null ? syncStatus.hashCode() : 0);
         return result;
     }
+
 }

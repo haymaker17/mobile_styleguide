@@ -13,7 +13,7 @@ import com.concur.mobile.base.service.parser.BaseParser;
 import com.concur.mobile.core.expense.travelallowance.datamodel.Itinerary;
 import com.concur.mobile.core.expense.travelallowance.datamodel.ItineraryLocation;
 import com.concur.mobile.core.expense.travelallowance.datamodel.ItinerarySegment;
-import com.concur.mobile.core.expense.travelallowance.datamodel.SynchronizationStatusEnum;
+import com.concur.mobile.core.expense.travelallowance.datamodel.SynchronizationStatus;
 import com.concur.mobile.core.expense.travelallowance.util.Message;
 
 public class GetTAItinerariesResponseParser extends BaseParser {
@@ -153,15 +153,14 @@ public class GetTAItinerariesResponseParser extends BaseParser {
 
             // Status, StatusText, StatusTextLocalized
             String status = currentItineraryRow.get("Status");
-            if (status != null) {
-                seg.setSyncStatus(SynchronizationStatusEnum.fromCode(status));
-                if (SynchronizationStatusEnum.fromCode(status) == SynchronizationStatusEnum.FAILED) {
-                    String statusText = currentItineraryRow.get("StatusText");
-                    String statusTextLocalized = currentItineraryRow.get("StatusTextLocalized");
-                    seg.setMessage(new Message(Message.Severity.ERROR, statusText, statusTextLocalized));
+            if ((status != null) && status.equals("FAILURE")) {
+                String statusText = currentItineraryRow.get("StatusText");
+                String statusTextLocalized = currentItineraryRow.get("StatusTextLocalized");
+                seg.setMessage(new Message(Message.Severity.ERROR, statusText, statusTextLocalized));
+                if (currentItinerary != null) {
+                    currentItinerary.setSyncStatus(SynchronizationStatus.FAILED);
                 }
             }
-
 
 		} catch (ParseException e) {
 			e.printStackTrace();
