@@ -224,6 +224,19 @@ public class ItineraryUpdateActivity extends BaseActivity implements IServiceReq
         renderDefaultValues();
 
         registerForContextMenu(listView);
+
+        findViewById(R.id.fab).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                addNewRow();
+            }
+        });
+    }
+
+    private void addNewRow() {
+        ItinerarySegment emptySegment = new ItinerarySegment();
+        adapter.add(emptySegment);
+        adapter.notifyDataSetChanged();
     }
 
     /**

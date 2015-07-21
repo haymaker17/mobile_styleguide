@@ -247,7 +247,12 @@ public class ItineraryUpdateListAdapter extends ArrayAdapter<Object> {
             holder.tvDepartureLocationLabel.setText("@From@");
         }
         if (holder.tvDepartureLocationValue != null) {
-            holder.tvDepartureLocationValue.setText(segment.getDepartureLocation().getName());
+            if (segment.getDepartureLocation() != null) {
+                holder.tvDepartureLocationValue.setText(segment.getDepartureLocation().getName());
+            } else {
+                holder.tvDepartureLocationValue.setText(StringUtilities.EMPTY_STRING);
+            }
+
         }
         if (holder.tvDepartureDateLabel != null) {
             holder.tvDepartureDateLabel.setText("@Departure Date@");
@@ -281,7 +286,11 @@ public class ItineraryUpdateListAdapter extends ArrayAdapter<Object> {
             holder.tvArrivalLocationLabel.setText("@To@");
         }
         if (holder.tvArrivalLocationValue != null) {
-            holder.tvArrivalLocationValue.setText(segment.getArrivalLocation().getName());
+            if (segment.getArrivalLocation() != null) {
+                holder.tvArrivalLocationValue.setText(segment.getArrivalLocation().getName());
+            } else {
+                holder.tvArrivalLocationValue.setText(StringUtilities.EMPTY_STRING);
+            }
         }
         if (holder.tvArrivalDateLabel != null) {
             holder.tvArrivalDateLabel.setText("@Arrival Date@");
