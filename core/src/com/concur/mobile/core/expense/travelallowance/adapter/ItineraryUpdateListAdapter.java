@@ -10,12 +10,12 @@ import android.widget.ArrayAdapter;
 import android.widget.TextView;
 
 import com.concur.core.R;
-import com.concur.mobile.core.ConcurCore;
-import com.concur.mobile.core.expense.travelallowance.controller.ItineraryUpdateController;
 import com.concur.mobile.core.expense.travelallowance.datamodel.ItinerarySegment;
 import com.concur.mobile.core.expense.travelallowance.ui.model.PositionInfoTag;
 import com.concur.mobile.core.expense.travelallowance.util.Message;
 import com.concur.mobile.core.expense.travelallowance.util.StringUtilities;
+
+import java.util.List;
 
 /**
  * Created by Michael Becherer on 03-Jul-15.
@@ -26,7 +26,6 @@ public class ItineraryUpdateListAdapter extends ArrayAdapter<Object> {
     private static final int LAYOUT_ID = R.layout.ta_edit_segment;
 
     private final Context context;
-    private ItineraryUpdateController updateController;
     private ViewHolder holder;
     private OnClickListener onTimeClickListener;
     private OnClickListener onDateClickListener;
@@ -61,10 +60,9 @@ public class ItineraryUpdateListAdapter extends ArrayAdapter<Object> {
         private TextView tvArrivalTimeValue;
     }
 
-    public ItineraryUpdateListAdapter(final Context context,
-                                      final OnClickListener onLocationClickListener,
-                                      final OnClickListener onDateClickListener,
-                                      final OnClickListener onTimeClickListener) {
+    public ItineraryUpdateListAdapter(final Context context, final OnClickListener onLocationClickListener,
+            final OnClickListener onDateClickListener, final OnClickListener onTimeClickListener,
+            List<ItinerarySegment> itinerarySegments) {
 
         super(context, LAYOUT_ID);
 
@@ -72,11 +70,7 @@ public class ItineraryUpdateListAdapter extends ArrayAdapter<Object> {
         this.onLocationClickListener = onLocationClickListener;
         this.onDateClickListener = onDateClickListener;
         this.onTimeClickListener = onTimeClickListener;
-
-        ConcurCore app = (ConcurCore) context.getApplicationContext();
-        this.updateController = app.getItineraryUpdateController();
-
-        addAll(updateController.getItinerarySegments());
+        addAll(itinerarySegments);
     }
 
     /**

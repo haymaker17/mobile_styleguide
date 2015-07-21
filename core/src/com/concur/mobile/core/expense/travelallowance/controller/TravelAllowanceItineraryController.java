@@ -12,9 +12,10 @@ import com.concur.mobile.base.service.BaseAsyncResultReceiver;
 import com.concur.mobile.core.expense.travelallowance.datamodel.Itinerary;
 import com.concur.mobile.core.expense.travelallowance.datamodel.ItinerarySegment;
 import com.concur.mobile.core.expense.travelallowance.service.GetTAItinerariesRequest;
+import com.concur.mobile.core.expense.travelallowance.service.SaveItineraryRequest;
 import com.concur.mobile.core.expense.travelallowance.ui.model.CompactItinerary;
 import com.concur.mobile.core.expense.travelallowance.ui.model.CompactItinerarySegment;
-import com.concur.mobile.core.expense.travelallowance.util.Message;
+import com.concur.mobile.core.expense.travelallowance.util.BundleId;
 import com.concur.mobile.core.expense.travelallowance.util.StringUtilities;
 
 import java.util.ArrayList;
@@ -36,7 +37,7 @@ import java.util.List;
  * 
  * @author Patricius Komarnicki
  */
-public class TravelAllowanceItineraryController {
+public class TravelAllowanceItineraryController extends BaseController {
 
     public static final String CONTROLLER_TAG = TravelAllowanceItineraryController.class.getName();
 
@@ -44,7 +45,7 @@ public class TravelAllowanceItineraryController {
 
     private BaseAsyncResultReceiver receiver;
 
-    private List<IServiceRequestListener> listeners;
+    //private List<IServiceRequestListener> listeners;
 
     private GetTAItinerariesRequest getItinerariesRequest;
 
@@ -53,7 +54,7 @@ public class TravelAllowanceItineraryController {
     private List<Itinerary> itineraryList;
 
     public TravelAllowanceItineraryController(Context context) {
-        this.listeners = new ArrayList<IServiceRequestListener>();
+       // this.listeners = new ArrayList<IServiceRequestListener>();
         this.context = context;
     }
 
@@ -74,13 +75,13 @@ public class TravelAllowanceItineraryController {
             @Override
             public void onRequestSuccess(Bundle resultData) {
                 itineraryList = getItinerariesRequest.getItineraryList();
-                notifyListener(false);
+                notifyListener(ControllerAction.REFRESH, true, resultData);
                 Log.d(CLASS_TAG, "Request success.");
             }
 
             @Override
             public void onRequestFail(Bundle resultData) {
-                notifyListener(true);
+                notifyListener(ControllerAction.REFRESH, false, resultData);
                 Log.d(CLASS_TAG, "Request failed.");
             }
 
@@ -103,23 +104,23 @@ public class TravelAllowanceItineraryController {
         getItinerariesRequest.execute();
     }
 
-    private synchronized void notifyListener(boolean isFailed) {
-        for(IServiceRequestListener listener : listeners) {
-            if (isFailed) {
-                listener.onRequestFail(CONTROLLER_TAG);
-            } else {
-                listener.onRequestSuccess(CONTROLLER_TAG);
-            }
-        }
-    }
+//    private synchronized void notifyListener(boolean isFailed) {
+//        for(IServiceRequestListener listener : listeners) {
+//            if (isFailed) {
+//                listener.onRequestFail(CONTROLLER_TAG);
+//            } else {
+//                listener.onRequestSuccess(CONTROLLER_TAG);
+//            }
+//        }
+//    }
 
-    public synchronized void registerListener(IServiceRequestListener listener) {
-        listeners.add(listener);
-    }
+//    public synchronized void registerListener(IServiceRequestListener listener) {
+//        listeners.add(listener);
+//    }
 
-    public synchronized void unregisterListener(IServiceRequestListener listener) {
-        listeners.remove(listener);
-    }
+//    public synchronized void unregisterListener(IServiceRequestListener listener) {
+//        listeners.remove(listener);
+//    }
 
     public List<Itinerary> getItineraryList() {
         if (itineraryList == null) {
@@ -223,5 +224,62 @@ public class TravelAllowanceItineraryController {
         }
 
         return result;
+    }
+
+    public void executeUpdate(Itinerary itinerary) {
+        if (itinerary == null) {
+            return;
+        }
+
+        BaseAsyncResultReceiver receiver = new BaseAsyncResultReceiver(new Handler());
+        receiver.setListener(new BaseAsyncRequestTask.AsyncReplyListener() {
+            @Override
+            public void onRequestSuccess(Bundle resultData) {
+                Itinerary resultItinerary = (Itinerary) resultData.getSerializable(BundleId.ITINERARY);
+                setItinerary(resultItinerary);
+                notifyListener(ControllerAction.UPDATE, true, resultData);
+            }
+
+            @Override
+            public void onRequestFail(Bundle resultData) {
+                notifyListener(ControllerAction.UPDATE, false, resultData);
+            }
+
+            @Override
+            public void onRequestCancel(Bundle resultData) {
+
+            }
+
+            @Override
+            public void cleanup() {
+
+            }
+        });
+
+        SaveItineraryRequest request = new SaveItineraryRequest(context, receiver, itinerary);
+        request.execute();
+
+    }
+
+    /**
+     * Adds the itinerary to the #itineraryList in case the passed itinerary doesn't exist yet. Else an existing itinerary will be
+     * replaced by the passed itinerary.
+     */
+    private synchronized void setItinerary(Itinerary itinerary) {
+
+        Itinerary currentItin = null;
+        int insertPosition = itineraryList.size();
+        for (int i = 0; i < itineraryList.size(); i++) {
+            currentItin = itineraryList.get(i);
+            if (currentItin.getItineraryID() != null && currentItin.getItineraryID().equals(itinerary.getItineraryID())) {
+                insertPosition = i;
+            }
+        }
+
+        if (insertPosition < itineraryList.size()) {
+            itineraryList.set(insertPosition, itinerary);
+        } else {
+            itineraryList.add(itinerary);
+        }
     }
 }

@@ -27,7 +27,7 @@ import java.util.Map;
 /**
  * Created by Michael Becherer on 23-Jun-15.
  */
-public class FixedTravelAllowanceController {
+public class FixedTravelAllowanceController extends BaseController {
 
     public static final String CONTROLLER_TAG = FixedTravelAllowanceController.class.getName();
 
@@ -53,7 +53,7 @@ public class FixedTravelAllowanceController {
      * The list of registered listeners being notified from this controller as soon as data
      * requests have been answered.
      */
-    private List<IServiceRequestListener> listeners;
+//    private List<IServiceRequestListener> listeners;
 
     private GetTAFixedAllowancesRequest2 getFixedAllowancesRequest2;
 
@@ -83,7 +83,7 @@ public class FixedTravelAllowanceController {
         this.fixedTravelAllowances = new ArrayList<FixedTravelAllowance>();
         this.fixedTAIdMap = new HashMap<String, FixedTravelAllowance>();
         this.context = context;
-        this.listeners = new ArrayList<IServiceRequestListener>();
+//        this.listeners = new ArrayList<IServiceRequestListener>();
     }
 
     protected void setFixedTAList(List<FixedTravelAllowance> list) {
@@ -109,7 +109,7 @@ public class FixedTravelAllowanceController {
                 fixedTravelAllowances = getFixedAllowancesRequest2.getFixedTravelAllowances();
                 //mealsProvisionLabels = getFixedAllowancesRequest2.getMealsProvisionLabelMap();
                 fillTAMap();
-                notifyListener(false);
+                notifyListener(ControllerAction.REFRESH, true, resultData);
                 int size = 0;
                 if (fixedTravelAllowances != null) {
                     size = fixedTravelAllowances.size();
@@ -119,7 +119,7 @@ public class FixedTravelAllowanceController {
 
             @Override
             public void onRequestFail(Bundle resultData) {
-                notifyListener(true);
+                notifyListener(ControllerAction.REFRESH, false, resultData);
                 Log.d(CLASS_TAG, "Request failed.");
             }
 
@@ -151,23 +151,23 @@ public class FixedTravelAllowanceController {
         return fixedTAIdMap.get(fixedTAId);
     }
 
-    private synchronized void notifyListener(boolean isFailed) {
-        for(IServiceRequestListener listener : listeners) {
-            if (isFailed) {
-                listener.onRequestFail(CONTROLLER_TAG);
-            } else {
-                listener.onRequestSuccess(CONTROLLER_TAG);
-            }
-        }
-    }
+//    private synchronized void notifyListener(boolean isFailed) {
+//        for(IServiceRequestListener listener : listeners) {
+//            if (isFailed) {
+//                listener.onRequestFail(CONTROLLER_TAG);
+//            } else {
+//                listener.onRequestSuccess(CONTROLLER_TAG);
+//            }
+//        }
+//    }
 
-    public synchronized void registerListener(IServiceRequestListener listener) {
-        listeners.add(listener);
-    }
+//    public synchronized void registerListener(IServiceRequestListener listener) {
+//        listeners.add(listener);
+//    }
 
-    public synchronized void unregisterListener(IServiceRequestListener listener) {
-        listeners.remove(listener);
-    }
+//    public synchronized void unregisterListener(IServiceRequestListener listener) {
+//        listeners.remove(listener);
+//    }
 
     /**
      * Get the list of fixed travel allowances

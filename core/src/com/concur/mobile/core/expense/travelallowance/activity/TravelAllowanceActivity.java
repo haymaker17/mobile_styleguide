@@ -12,8 +12,10 @@ import android.view.MenuItem;
 import com.concur.core.R;
 import com.concur.mobile.core.ConcurCore;
 import com.concur.mobile.core.expense.travelallowance.adapter.ViewPagerAdapter;
+import com.concur.mobile.core.expense.travelallowance.controller.ControllerAction;
 import com.concur.mobile.core.expense.travelallowance.controller.FixedTravelAllowanceController;
-import com.concur.mobile.core.expense.travelallowance.controller.IServiceRequestListener;
+import com.concur.mobile.core.expense.travelallowance.controller.IController;
+import com.concur.mobile.core.expense.travelallowance.controller.IControllerListener;
 import com.concur.mobile.core.expense.travelallowance.controller.TravelAllowanceItineraryController;
 import com.concur.mobile.core.expense.travelallowance.datamodel.FixedTravelAllowance;
 import com.concur.mobile.core.expense.travelallowance.fragment.FixedTravelAllowanceListFragment;
@@ -25,7 +27,7 @@ import com.concur.mobile.core.util.Const;
  * Created by D049515 on 15.06.2015.
  */
 public class TravelAllowanceActivity extends AppCompatActivity
-        implements FixedTravelAllowanceListFragment.IFixedTravelAllowanceSelectedListener, IServiceRequestListener, IFragmentCallback{
+        implements FixedTravelAllowanceListFragment.IFixedTravelAllowanceSelectedListener, IControllerListener, IFragmentCallback{
 
     private static final String CLASS_TAG = TravelAllowanceActivity.class.getSimpleName();
 
@@ -105,8 +107,14 @@ public class TravelAllowanceActivity extends AppCompatActivity
     @Override
     protected void onDestroy() {
         super.onDestroy();
-        this.itineraryController.unregisterListener(this);
-        this.allowanceController.unregisterListener(this);
+
+        if (itineraryController != null) {
+            this.itineraryController.unregisterListener(this);
+        }
+
+        if (this.allowanceController != null) {
+            this.allowanceController.unregisterListener(this);
+        }
     }
 
     @Override
@@ -122,39 +130,57 @@ public class TravelAllowanceActivity extends AppCompatActivity
     /**
      * {@inheritDoc}
      */
-    @Override
-    public void onRequestSuccess(final String controllerTag) {
-        Log.d(Const.LOG_TAG, CLASS_TAG + ".onRequestSuccess: " + controllerTag);
-        if (TravelAllowanceItineraryController.CONTROLLER_TAG.equals(controllerTag)) {
-            TravelAllowanceItineraryListFragment itinListFrag = viewPagerAdapter.getTravelAllowanceItineraryFragment();
-            if (itinListFrag != null) {
-                itinListFrag.onRefreshFinished();
-            }
-        }
-        if (FixedTravelAllowanceController.CONTROLLER_TAG.equals(controllerTag)) {
-            FixedTravelAllowanceListFragment allowanceFrag = viewPagerAdapter.getFixedTravelAllowanceFragment();
-            if (allowanceFrag != null) {
-                allowanceFrag.onRefreshFinished();
-            }
-        }
-    }
+//    @Override
+//    public void onRequestSuccess(final String controllerTag) {
+//        Log.d(Const.LOG_TAG, CLASS_TAG + ".onRequestSuccess: " + controllerTag);
+//        if (TravelAllowanceItineraryController.CONTROLLER_TAG.equals(controllerTag)) {
+//            TravelAllowanceItineraryListFragment itinListFrag = viewPagerAdapter.getTravelAllowanceItineraryFragment();
+//            if (itinListFrag != null) {
+//                itinListFrag.onRefreshFinished();
+//            }
+//        }
+//        if (FixedTravelAllowanceController.CONTROLLER_TAG.equals(controllerTag)) {
+//            FixedTravelAllowanceListFragment allowanceFrag = viewPagerAdapter.getFixedTravelAllowanceFragment();
+//            if (allowanceFrag != null) {
+//                allowanceFrag.onRefreshFinished();
+//            }
+//        }
+//    }
+//
+//    /**
+//     * {@inheritDoc}
+//     */
+//    @Override
+//    public void onRequestFail(final String controllerTag) {
+//        if (TravelAllowanceItineraryController.CONTROLLER_TAG.equals(controllerTag)) {
+//            TravelAllowanceItineraryListFragment itinListFrag = viewPagerAdapter.getTravelAllowanceItineraryFragment();
+//            if (itinListFrag != null) {
+//                itinListFrag.onRefreshFinished();
+//            }
+//        }
+//        if (FixedTravelAllowanceController.CONTROLLER_TAG.equals(controllerTag)) {
+//            FixedTravelAllowanceListFragment allowanceFrag = viewPagerAdapter.getFixedTravelAllowanceFragment();
+//            if (allowanceFrag != null) {
+//                allowanceFrag.onRefreshFinished();
+//            }
+//        }
+//    }
 
-    /**
-     * {@inheritDoc}
-     */
     @Override
-    public void onRequestFail(final String controllerTag) {
-        if (TravelAllowanceItineraryController.CONTROLLER_TAG.equals(controllerTag)) {
+    public void actionFinished(IController controller, ControllerAction action, boolean isSuccess, Bundle result) {
+        if (controller instanceof TravelAllowanceItineraryController) {
             TravelAllowanceItineraryListFragment itinListFrag = viewPagerAdapter.getTravelAllowanceItineraryFragment();
             if (itinListFrag != null) {
                 itinListFrag.onRefreshFinished();
             }
         }
-        if (FixedTravelAllowanceController.CONTROLLER_TAG.equals(controllerTag)) {
+
+        if (controller instanceof FixedTravelAllowanceController) {
             FixedTravelAllowanceListFragment allowanceFrag = viewPagerAdapter.getFixedTravelAllowanceFragment();
             if (allowanceFrag != null) {
                 allowanceFrag.onRefreshFinished();
             }
         }
+
     }
 }

@@ -17,7 +17,7 @@ import java.util.List;
 /**
  * Created by Holger Rose on 02.07.2015.
  */
-public class TravelAllowanceConfigurationController {
+public class TravelAllowanceConfigurationController extends BaseController {
 
     public static final String CONTROLLER_TAG = TravelAllowanceConfigurationController.class.getName();
 
@@ -25,7 +25,7 @@ public class TravelAllowanceConfigurationController {
 
     private BaseAsyncResultReceiver receiver;
 
-    private List<IServiceRequestListener> listeners;
+//    private List<IServiceRequestListener> listeners;
 
     private GetTAConfigurationRequest getConfigurationRequest;
 
@@ -34,7 +34,7 @@ public class TravelAllowanceConfigurationController {
     private TravelAllowanceConfiguration travelAllowanceConfig;
 
     public TravelAllowanceConfigurationController(Context context) {
-        this.listeners = new ArrayList<IServiceRequestListener>();
+//        this.listeners = new ArrayList<IServiceRequestListener>();
         this.context = context;
     }
 
@@ -55,13 +55,13 @@ public class TravelAllowanceConfigurationController {
             @Override
             public void onRequestSuccess(Bundle resultData) {
                 travelAllowanceConfig = getConfigurationRequest.getTravelAllowanceConfiguration();
-                notifyListener(false);
+                notifyListener(ControllerAction.REFRESH, true, resultData);
                 Log.d(CLASS_TAG, "Request success.");
             }
 
             @Override
             public void onRequestFail(Bundle resultData) {
-                notifyListener(true);
+                notifyListener(ControllerAction.REFRESH, false, resultData);
                 Log.d(CLASS_TAG, "Request failed.");
             }
 
@@ -83,23 +83,23 @@ public class TravelAllowanceConfigurationController {
     getConfigurationRequest.execute();
     }
 
-     private synchronized void notifyListener(boolean isFailed) {
-         for (IServiceRequestListener listener: listeners) {
-             if (isFailed){
-                 listener.onRequestFail(CONTROLLER_TAG);
-             } else {
-                 listener.onRequestSuccess(CONTROLLER_TAG);
-             }
-         }
-     }
+//     private synchronized void notifyListener(boolean isFailed) {
+//         for (IServiceRequestListener listener: listeners) {
+//             if (isFailed){
+//                 listener.onRequestFail(CONTROLLER_TAG);
+//             } else {
+//                 listener.onRequestSuccess(CONTROLLER_TAG);
+//             }
+//         }
+//     }
 
-     public synchronized void registerListener(IServiceRequestListener listener) {
-         listeners.add(listener);
-     }
-
-     public synchronized void unregisterListener(IServiceRequestListener listener) {
-         listeners.remove(listener);
-     }
+//     public synchronized void registerListener(IServiceRequestListener listener) {
+//         listeners.add(listener);
+//     }
+//
+//     public synchronized void unregisterListener(IServiceRequestListener listener) {
+//         listeners.remove(listener);
+//     }
 
   public TravelAllowanceConfiguration getTravelAllowanceConfigurationList(){
       if (travelAllowanceConfig == null){

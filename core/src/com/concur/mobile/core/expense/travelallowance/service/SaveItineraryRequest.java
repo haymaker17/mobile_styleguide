@@ -14,6 +14,7 @@ import com.concur.mobile.core.ConcurCore;
 import com.concur.mobile.core.expense.travelallowance.controller.TravelAllowanceConfigurationController;
 import com.concur.mobile.core.expense.travelallowance.datamodel.ItinerarySegment;
 import com.concur.mobile.core.expense.travelallowance.service.parser.GetTAItinerariesResponseParser;
+import com.concur.mobile.core.expense.travelallowance.util.BundleId;
 import com.concur.mobile.core.service.CoreAsyncRequestTask;
 import com.concur.mobile.core.util.FormatUtil;
 import com.concur.mobile.core.expense.travelallowance.datamodel.Itinerary;
@@ -121,7 +122,8 @@ public class SaveItineraryRequest extends CoreAsyncRequestTask {
                 resultItinerary = itineraries.get(0);
             }
         }
-        resultData.putSerializable(IS_SUCCESS, resultItinerary);
+        resultData.putBoolean(IS_SUCCESS, true);
+        resultData.putSerializable(BundleId.ITINERARY, resultItinerary);
         return RESULT_OK;
     }
 }

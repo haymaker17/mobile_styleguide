@@ -19,7 +19,9 @@ import com.concur.mobile.base.service.BaseAsyncResultReceiver;
 import com.concur.mobile.core.ConcurCore;
 import com.concur.mobile.core.activity.BaseActivity;
 import com.concur.mobile.core.expense.travelallowance.adapter.ItineraryOverviewListAdapter;
-import com.concur.mobile.core.expense.travelallowance.controller.IServiceRequestListener;
+import com.concur.mobile.core.expense.travelallowance.controller.ControllerAction;
+import com.concur.mobile.core.expense.travelallowance.controller.IController;
+import com.concur.mobile.core.expense.travelallowance.controller.IControllerListener;
 import com.concur.mobile.core.expense.travelallowance.controller.TravelAllowanceItineraryController;
 import com.concur.mobile.core.expense.travelallowance.service.AbstractItineraryDeleteRequest;
 import com.concur.mobile.core.expense.travelallowance.service.DeleteItineraryRequest;
@@ -30,7 +32,7 @@ import com.concur.mobile.core.util.Const;
 /**
  * Created by Michael Becherer on 16-Jul-15.
  */
-public class ItineraryOverviewActivity extends BaseActivity implements IServiceRequestListener {
+public class ItineraryOverviewActivity extends BaseActivity implements IControllerListener {
 
     /**
      * The name of this {@code Class} for logging purpose.
@@ -125,7 +127,9 @@ public class ItineraryOverviewActivity extends BaseActivity implements IServiceR
     @Override
     protected void onDestroy() {
         super.onDestroy();
-        this.itineraryController.unregisterListener(this);
+        if (this.itineraryController != null) {
+            this.itineraryController.unregisterListener(this);
+        }
     }
 
     @Override
@@ -206,17 +210,15 @@ public class ItineraryOverviewActivity extends BaseActivity implements IServiceR
         return true;
     }
 
-    @Override
-    public void onRequestSuccess(String controllerTag) {
-        this.adapter.clear();
-        this.adapter.addAll(itineraryController.getCompactItineraryList());
-        this.adapter.notifyDataSetChanged();
-//        ListView listView = (ListView) findViewById(R.id.list_view);
-//        listView.setAdapter(this.adapter);
-    }
 
     @Override
-    public void onRequestFail(String controllerTag) {
-        Toast.makeText(ItineraryOverviewActivity.this, "@List reftresh Failed@", Toast.LENGTH_SHORT).show();
+    public void actionFinished(IController controller, ControllerAction action, boolean isSuccess, Bundle result) {
+        if (isSuccess) {
+            this.adapter.clear();
+            this.adapter.addAll(itineraryController.getCompactItineraryList());
+            this.adapter.notifyDataSetChanged();
+        } else {
+            Toast.makeText(ItineraryOverviewActivity.this, "@List reftresh Failed@", Toast.LENGTH_SHORT).show();
+        }
     }
 }

@@ -65,7 +65,9 @@ import com.concur.mobile.core.expense.service.GetExpenseTypesRequest;
 import com.concur.mobile.core.expense.travelallowance.activity.ItineraryOverviewActivity;
 import com.concur.mobile.core.expense.travelallowance.activity.ItineraryUpdateActivity;
 import com.concur.mobile.core.expense.travelallowance.activity.TravelAllowanceActivity;
-import com.concur.mobile.core.expense.travelallowance.controller.IServiceRequestListener;
+import com.concur.mobile.core.expense.travelallowance.controller.ControllerAction;
+import com.concur.mobile.core.expense.travelallowance.controller.IController;
+import com.concur.mobile.core.expense.travelallowance.controller.IControllerListener;
 import com.concur.mobile.core.expense.travelallowance.controller.TravelAllowanceItineraryController;
 import com.concur.mobile.core.service.ConcurService;
 import com.concur.mobile.core.util.Const;
@@ -82,7 +84,7 @@ import com.concur.mobile.core.util.ViewUtil;
  */
 public class
         ExpenseEntries extends AbstractExpenseActivity
-                            implements IServiceRequestListener {
+                            implements IControllerListener {
 
     private static final String CLS_TAG = ExpenseEntries.class.getSimpleName();
 
@@ -104,17 +106,13 @@ public class
 
     private TravelAllowanceItineraryController itineraryController;
 
+
     @Override
-    public void onRequestSuccess(String controllerTag) {
+    public void actionFinished(IController controller, ControllerAction action, boolean isSuccess, Bundle result) {
         ConcurCore app = (ConcurCore) getApplication();
         if (app.getTaItineraryController() != null && app.getTaItineraryController().getItineraryList().size() > 0){
             showTravelAllowanceButton();
         }
-    }
-
-    @Override
-    public void onRequestFail(String controllerTag) {
-
     }
 
     private enum ExpenseEntryOption {
@@ -289,7 +287,9 @@ public class
     @Override
     protected void onDestroy() {
         super.onDestroy();
-        this.itineraryController.unregisterListener(this);
+        if (this.itineraryController != null) {
+            this.itineraryController.unregisterListener(this);
+        }
     }
 
     private void showTravelAllowanceButton(){

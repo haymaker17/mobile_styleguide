@@ -26,8 +26,9 @@ import com.concur.mobile.core.ConcurCore;
 import com.concur.mobile.core.activity.BaseActivity;
 import com.concur.mobile.core.expense.activity.ListSearch;
 import com.concur.mobile.core.expense.travelallowance.adapter.ItineraryUpdateListAdapter;
-import com.concur.mobile.core.expense.travelallowance.controller.IServiceRequestListener;
-import com.concur.mobile.core.expense.travelallowance.controller.ItineraryUpdateController;
+import com.concur.mobile.core.expense.travelallowance.controller.ControllerAction;
+import com.concur.mobile.core.expense.travelallowance.controller.IController;
+import com.concur.mobile.core.expense.travelallowance.controller.IControllerListener;
 import com.concur.mobile.core.expense.travelallowance.controller.TravelAllowanceItineraryController;
 import com.concur.mobile.core.expense.travelallowance.datamodel.Itinerary;
 import com.concur.mobile.core.expense.travelallowance.datamodel.ItineraryLocation;
@@ -36,6 +37,7 @@ import com.concur.mobile.core.expense.travelallowance.fragment.TimePickerFragmen
 import com.concur.mobile.core.expense.travelallowance.service.AbstractItineraryDeleteRequest;
 import com.concur.mobile.core.expense.travelallowance.service.DeleteItineraryRowRequest;
 import com.concur.mobile.core.expense.travelallowance.ui.model.PositionInfoTag;
+import com.concur.mobile.core.expense.travelallowance.util.BundleId;
 import com.concur.mobile.core.expense.travelallowance.util.DateUtils;
 import com.concur.mobile.core.expense.travelallowance.util.Message;
 import com.concur.mobile.core.expense.travelallowance.util.StringUtilities;
@@ -45,8 +47,10 @@ import com.concur.mobile.platform.ui.common.widget.CalendarPickerDialogV1;
 
 import java.util.Calendar;
 import java.util.Date;
+import java.util.List;
+import java.util.Locale;
 
-public class ItineraryUpdateActivity extends BaseActivity implements IServiceRequestListener {
+public class ItineraryUpdateActivity extends BaseActivity implements IControllerListener {
 
     /**
      * The name of this {@code Class} for logging purpose.
@@ -61,7 +65,8 @@ public class ItineraryUpdateActivity extends BaseActivity implements IServiceReq
             CLASS_TAG + ".time.dialog.fragment";
 
     private String expenseReportKey;
-    private ItineraryUpdateController updateController;
+    private Itinerary itinerary;
+    private TravelAllowanceItineraryController controller;
     private ItineraryUpdateListAdapter adapter;
     private PositionInfoTag currentPosition;
     private CalendarPickerDialogV1.OnDateSetListener onDateSetListener;
@@ -76,16 +81,16 @@ public class ItineraryUpdateActivity extends BaseActivity implements IServiceReq
     @Override
     protected void onCreate(Bundle savedInstanceState) {
 
+        ConcurCore app = (ConcurCore) getApplication();
+        this.controller = app.getTaItineraryController();
+
         View.OnClickListener onTimeClickListener;
         View.OnClickListener onDateClickListener;
         View.OnClickListener onLocationClickListener;
 
-        String itineraryId = null;
         super.onCreate(savedInstanceState);
-        ConcurCore app = (ConcurCore) getApplication();
         app.getTAConfigController().refreshConfiguration();
 
-        this.updateController = app.getItineraryUpdateController();
         String expenseReportName = StringUtilities.EMPTY_STRING;
 
         this.setContentView(R.layout.ta_update_activity);
@@ -98,11 +103,17 @@ public class ItineraryUpdateActivity extends BaseActivity implements IServiceReq
             expenseReportName = getIntent().getStringExtra(Const.EXTRA_EXPENSE_REPORT_NAME);
         }
 
+        String itineraryId = null;
         if (getIntent().hasExtra(Const.EXTRA_ITINERARY_KEY)) {
             itineraryId = getIntent().getStringExtra(Const.EXTRA_ITINERARY_KEY);
         }
 
-        updateController.refreshItinerary(itineraryId);
+        this.itinerary = controller.getItinerary(itineraryId);
+        if (this.itinerary == null) {
+            this.itinerary = new Itinerary();
+            this.itinerary.setExpenseReportID(this.expenseReportKey);
+            this.itinerary.setName(expenseReportName);
+        }
 
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         if (toolbar != null) {
@@ -165,7 +176,7 @@ public class ItineraryUpdateActivity extends BaseActivity implements IServiceReq
                 if (currentPosition != null) {
                     Date date;
                     Calendar cal;
-                    ItinerarySegment segment = updateController.getItinerarySegment(currentPosition.getPosition());
+                    ItinerarySegment segment = itinerary.getSegmentList().get(currentPosition.getPosition());
                     if (currentPosition.getInfo() == PositionInfoTag.INFO_OUTBOUND) {
                         date = segment.getDepartureDateTime();
                     } else {
@@ -192,7 +203,7 @@ public class ItineraryUpdateActivity extends BaseActivity implements IServiceReq
                 if (currentPosition != null) {
                     Date date;
                     Calendar cal;
-                    ItinerarySegment segment = updateController.getItinerarySegment(currentPosition.getPosition());
+                    ItinerarySegment segment = itinerary.getSegmentList().get(currentPosition.getPosition());
                     if (currentPosition.getInfo() == PositionInfoTag.INFO_OUTBOUND) {
                         date = segment.getDepartureDateTime();
                     } else {
@@ -214,13 +225,13 @@ public class ItineraryUpdateActivity extends BaseActivity implements IServiceReq
         };
 
         ListView listView = (ListView) findViewById(R.id.list_view);
-        if (listView != null) {
+        if (listView != null && this.itinerary != null) {
             adapter = new ItineraryUpdateListAdapter(this, onLocationClickListener,
-                    onDateClickListener, onTimeClickListener);
+                    onDateClickListener, onTimeClickListener, this.itinerary.getSegmentList());
             listView.setAdapter(adapter);
         }
 
-        this.updateController.registerListener(this);
+        controller.registerListener(this);
         renderDefaultValues();
 
         registerForContextMenu(listView);
@@ -235,6 +246,9 @@ public class ItineraryUpdateActivity extends BaseActivity implements IServiceReq
 
     private void addNewRow() {
         ItinerarySegment emptySegment = new ItinerarySegment();
+        emptySegment.setDepartureDateTime(Calendar.getInstance(Locale.getDefault()).getTime());
+        emptySegment.setArrivalDateTime(Calendar.getInstance(Locale.getDefault()).getTime());
+        this.itinerary.getSegmentList().add(emptySegment);
         adapter.add(emptySegment);
         adapter.notifyDataSetChanged();
     }
@@ -250,11 +264,13 @@ public class ItineraryUpdateActivity extends BaseActivity implements IServiceReq
                     String selectedListItemKey = data.getStringExtra(Const.EXTRA_EXPENSE_LIST_SELECTED_LIST_ITEM_KEY);
                     String selectedListItemText = data.getStringExtra(Const.EXTRA_EXPENSE_LIST_SELECTED_LIST_ITEM_TEXT);
                     if (this.currentPosition != null) {
-                        ItinerarySegment segment = this.updateController.getItinerarySegment(currentPosition.getPosition());
+                        ItinerarySegment segment = itinerary.getSegmentList().get(currentPosition.getPosition());
                         ItineraryLocation itinLocation = new ItineraryLocation();
                         itinLocation.setName(selectedListItemText);
                         itinLocation.setCode(selectedListItemKey);
-                        itinLocation.setRateLocationKey(segment.getArrivalLocation().getRateLocationKey());
+                        if (segment.getArrivalLocation() != null) {
+                            itinLocation.setRateLocationKey(segment.getArrivalLocation().getRateLocationKey());
+                        }
                         if (currentPosition.getInfo() == PositionInfoTag.INFO_OUTBOUND) {
                             segment.setDepartureLocation(itinLocation);
                         } else {
@@ -271,8 +287,8 @@ public class ItineraryUpdateActivity extends BaseActivity implements IServiceReq
 
     private void renderDefaultValues() {
         EditText etItinerary = (EditText) findViewById(R.id.et_itinerary);
-        if (etItinerary != null && updateController.getItinerary() != null) {
-            etItinerary.setText(updateController.getItinerary().getName());
+        if (etItinerary != null && this.itinerary != null) {
+            etItinerary.setText(itinerary.getName());
         }
     }
 
@@ -312,9 +328,16 @@ public class ItineraryUpdateActivity extends BaseActivity implements IServiceReq
             onBackPressed();
             return true;
         }
-        if (item.getItemId() == R.id.menuSave) {
+        if (item.getItemId() == R.id.menuSave && this.itinerary != null) {
             updateControllerData();
-            updateController.executeUpdate(this.expenseReportKey);
+
+            List<ItinerarySegment> periods = itinerary.getSegmentList();
+            if (!DateUtils.hasSubsequentDates(false, true, 1, periods)) {
+                Toast.makeText(this, "@Dates of this itinerary are not consistent@", Toast.LENGTH_SHORT).show();
+            } else {
+                controller.executeUpdate(this.itinerary);
+            }
+
             return true;
         }
         return super.onOptionsItemSelected(item);
@@ -323,21 +346,22 @@ public class ItineraryUpdateActivity extends BaseActivity implements IServiceReq
     @Override
     protected void onDestroy() {
         super.onDestroy();
-        ConcurCore app = (ConcurCore) getApplication();
-        app.getTaItineraryController().unregisterListener(this);
-        this.updateController.unregisterListener(this);
+
+        if (controller != null) {
+            controller.unregisterListener(this);
+        }
     }
 
     private void updateControllerData() {
         EditText etItinerary = (EditText) findViewById(R.id.et_itinerary);
-        Itinerary itinerary = updateController.getItinerary();
-        if (itinerary == null) {
+
+        if (this.itinerary == null) {
             return;
         }
         if (etItinerary != null) {
-            itinerary.setName(etItinerary.getText().toString());
+            this.itinerary.setName(etItinerary.getText().toString());
         }
-        itinerary.setExpenseReportID(expenseReportKey);
+        this.itinerary.setExpenseReportID(expenseReportKey);
     }
 
 
@@ -349,6 +373,11 @@ public class ItineraryUpdateActivity extends BaseActivity implements IServiceReq
 
     @Override
     public boolean onContextItemSelected(MenuItem item) {
+
+        if (this.itinerary == null) {
+            return true;
+        }
+
         AdapterView.AdapterContextMenuInfo info = (AdapterView.AdapterContextMenuInfo) item.getMenuInfo();
         ItinerarySegment segment = (ItinerarySegment) adapter.getItem(info.position);
 
@@ -390,7 +419,8 @@ public class ItineraryUpdateActivity extends BaseActivity implements IServiceReq
             }
         });
 
-        DeleteItineraryRowRequest deleteRequest = new DeleteItineraryRowRequest(this, receiver, updateController.getItinerary().getItineraryID(), segment.getId());
+        DeleteItineraryRowRequest deleteRequest = new DeleteItineraryRowRequest(this, receiver,
+                this.itinerary.getItineraryID(), segment.getId());
         deleteRequest.execute();
 
         return true;
@@ -411,25 +441,43 @@ public class ItineraryUpdateActivity extends BaseActivity implements IServiceReq
     /**
      * {@inheritDoc}
      */
-    @Override
-    public void onRequestSuccess(final String controllerTag) {
-        Log.d(Const.LOG_TAG, CLASS_TAG + ".onRequestSuccess: " + controllerTag);
-        if (ItineraryUpdateController.CONTROLLER_TAG_UPDATE.equals(controllerTag)) {
-            Toast.makeText(this, R.string.general_succeeded, Toast.LENGTH_SHORT).show();
-            this.adapter.clear();
-            this.adapter.addAll(updateController.getItinerarySegments());
-            adapter.notifyDataSetChanged();
-        }
-    }
+//    @Override
+//    public void onRequestSuccess(final String controllerTag) {
+//        Log.d(Const.LOG_TAG, CLASS_TAG + ".onRequestSuccess: " + controllerTag);
+//        if (ItineraryUpdateController.CONTROLLER_TAG_UPDATE.equals(controllerTag)) {
+//            Toast.makeText(this, R.string.general_succeeded, Toast.LENGTH_SHORT).show();
+//            this.adapter.clear();
+//            this.adapter.addAll(updateController.getItinerarySegments());
+//            adapter.notifyDataSetChanged();
+//        }
+//    }
 
     /**
      * {@inheritDoc}
      */
+//    @Override
+//    public void onRequestFail(final String controllerTag) {
+//        if (ItineraryUpdateController.CONTROLLER_TAG_UPDATE.equals(controllerTag)) {
+//            Toast.makeText(this, R.string.general_server_error, Toast.LENGTH_SHORT).show();
+//            adapter.notifyDataSetChanged();
+//        }
+//    }
+
     @Override
-    public void onRequestFail(final String controllerTag) {
-        if (ItineraryUpdateController.CONTROLLER_TAG_UPDATE.equals(controllerTag)) {
-            Toast.makeText(this, R.string.general_server_error, Toast.LENGTH_SHORT).show();
+    public void actionFinished(IController controller, ControllerAction action, boolean isSuccess, Bundle result) {
+        Itinerary resultItin = (Itinerary) result.getSerializable(BundleId.ITINERARY);
+
+        if (isSuccess) {
+            Toast.makeText(this, R.string.general_succeeded, Toast.LENGTH_SHORT).show();
+        }
+
+        if (resultItin != null) {
+            this.itinerary = resultItin;
+            this.adapter.clear();
+            this.adapter.addAll(this.itinerary.getSegmentList());
             adapter.notifyDataSetChanged();
+        } else {
+            Toast.makeText(this, R.string.general_server_error, Toast.LENGTH_SHORT).show();
         }
     }
 }

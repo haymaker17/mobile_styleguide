@@ -13,6 +13,8 @@ import org.junit.runner.RunWith;
 import org.robolectric.RobolectricTestRunner;
 import org.robolectric.annotation.Config;
 
+import java.util.Collections;
+
 /**
  * Created by D049515 on 14.07.2015.
  */
@@ -34,7 +36,7 @@ public class ItineraryUpdateListAdapterTest extends TestCase {
         onDateClickListener = null;
         onTimeClickListener = null;
         this.adapter = new ItineraryUpdateListAdapter(new Activity(), onLocationClickListener, onDateClickListener,
-                onTimeClickListener);
+                onTimeClickListener, Collections.EMPTY_LIST);
 
     }
 
