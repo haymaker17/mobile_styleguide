@@ -895,6 +895,8 @@ public class PlatformTestSuite {
         expenseProvider.onCreate();
         ShadowContentResolver.registerProvider(com.concur.mobile.platform.expense.provider.Expense.AUTHORITY,
             expenseProvider);
+
+
     }
 
     /**
