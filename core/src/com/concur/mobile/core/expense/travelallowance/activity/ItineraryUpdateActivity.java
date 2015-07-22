@@ -334,6 +334,8 @@ public class ItineraryUpdateActivity extends BaseActivity implements IController
             List<ItinerarySegment> periods = itinerary.getSegmentList();
             if (!DateUtils.hasSubsequentDates(false, true, 1, periods)) {
                 Toast.makeText(this, "@Dates of this itinerary are not consistent@", Toast.LENGTH_SHORT).show();
+            } else if (controller.checkItinerarySegmentsConsistency(itinerary)){
+                Toast.makeText(this, "@At least one location isn't consistent@", Toast.LENGTH_SHORT).show();
             } else {
                 controller.executeUpdate(this.itinerary);
             }

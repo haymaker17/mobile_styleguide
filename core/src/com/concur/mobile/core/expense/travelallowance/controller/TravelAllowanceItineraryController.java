@@ -282,4 +282,25 @@ public class TravelAllowanceItineraryController extends BaseController {
             itineraryList.add(itinerary);
         }
     }
+
+    public boolean checkItinerarySegmentsConsistency(Itinerary itinerary){
+        if (itinerary == null){
+            return false;
+        }
+        for (ItinerarySegment segment : itinerary.getSegmentList()){
+            if (checkInitialLocations(segment) == true){
+                return true;
+            }
+        }
+        return false;
+    }
+
+    private boolean checkInitialLocations(ItinerarySegment segment){
+        if (segment.getArrivalLocation()   == null || segment.getArrivalLocation().getCode()   == StringUtilities.EMPTY_STRING ||
+            segment.getDepartureLocation() == null || segment.getDepartureLocation().getCode() == StringUtilities.EMPTY_STRING    ){
+            return  true;
+        }else {
+            return false;
+        }
+    }
 }
