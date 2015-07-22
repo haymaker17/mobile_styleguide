@@ -15,6 +15,7 @@ import com.concur.mobile.core.expense.charge.data.ExpenseItItem;
 import com.concur.mobile.core.util.Const;
 import com.concur.mobile.core.util.FormatUtil;
 import com.concur.mobile.platform.expenseit.ExpenseItParseCode;
+import com.concur.mobile.platform.expenseit.ExpenseItPostReceipt;
 import com.concur.mobile.platform.util.AnimationUtil;
 
 import java.util.Calendar;
@@ -38,11 +39,18 @@ public class ExpenseItListItem extends ExpenseListItem {
     private ExpenseItItem expenseItItem;
 
     /**
+     * Is there a rubicon error?
+     */
+    private int rubiconErrorCode;
+
+    /**
      * Default public constructor.
      */
     public ExpenseItListItem(Expense expense, int listItemViewType) {
         super(expense, listItemViewType);
         expenseItItem = expense.getExpenseItItem();
+        rubiconErrorCode = expenseItItem.getErrorCode();
+        processingFailed = isInErrorState(expenseItItem.getParsingStatusCode());
     }
 
     /**
@@ -64,41 +72,8 @@ public class ExpenseItListItem extends ExpenseListItem {
         View expenseView = layoutInflater.inflate(R.layout.expense_expenseit_row, null);
 
         if (expenseView != null) {
-
-            int status = getExpenseItStatusCode();
-            // change the text based on the status
-            TextView textView = (TextView) expenseView.findViewById(R.id.expenseit_processing_status);
-            if (textView != null) {
-                // Call a separate function that converts the status code into text.
-                // We need the context to get the string resources.
-                textView.setText(getStatusText(context, status));
-            } else {
-                Log.e(Const.LOG_TAG, CLS_TAG + ".buildView: can't locate processing status field!");
-            }
-
-            // change the icon based on the status
-            ImageView imageView = (ImageView) expenseView.findViewById(R.id.expense_expenseit_icon);
-            ImageView arrows = (ImageView) expenseView.findViewById(R.id.expense_expenseit_arrows);
-            if (imageView != null && arrows != null) {
-                // TODO: need to check if this has rubicon errors (ExpenseItPostReceipt.getExpenseError())
-                if (isProcessing(status)) {
-                    imageView.setImageResource(R.drawable.icon_processing);
-                    arrows.setVisibility(View.VISIBLE);
-                    arrows.setImageResource(R.drawable.icon_processing_arrow);
-                    AnimationUtil.rotateAnimation(arrows);
-                } else {
-                    // TODO: EJ-W: Deal with the different cases.
-                    // For now, just keeps the default icon (which is the processing icon),
-                    // as defined in the layout file.
-                    imageView.setImageResource(R.drawable.expense_icon_cloud_red);
-                    arrows.setVisibility(View.GONE);
-                }
-            } else {
-                Log.e(Const.LOG_TAG, CLS_TAG + ".buildView: can't locate the icon!");
-            }
-
             // set the date
-            textView = (TextView) expenseView.findViewById(R.id.expenseit_upload_date);
+            TextView textView = (TextView) expenseView.findViewById(R.id.expenseit_upload_date);
             if (textView != null) {
                 Calendar transDate = getTransactionDate();
                 if (transDate != null) {
@@ -110,23 +85,52 @@ public class ExpenseItListItem extends ExpenseListItem {
                 Log.e(Const.LOG_TAG, CLS_TAG + ".buildView: can't locate upload date field!");
             }
 
+            // change the text based on the processingFailed
+            textView = (TextView) expenseView.findViewById(R.id.expenseit_processing_status);
+            if (textView != null) {
+                textView.setText(getStatusText(context));
+            } else {
+                Log.e(Const.LOG_TAG, CLS_TAG + ".buildView: can't locate processing parsingStatusCode field!");
+            }
+
+            // change the icon based on the parsingStatusCode
+            ImageView imageView = (ImageView) expenseView.findViewById(R.id.expense_expenseit_icon);
+            ImageView arrows = (ImageView) expenseView.findViewById(R.id.expense_expenseit_arrows);
+            if (imageView != null && arrows != null) {
+                // Check to make sure we're not in an error state, and if not, show processing.
+                if (processingFailed) {
+                    imageView.setImageResource(R.drawable.icon_error);
+                    arrows.setVisibility(View.GONE);
+                } else {
+                    imageView.setImageResource(R.drawable.icon_processing);
+                    arrows.setVisibility(View.VISIBLE);
+                    arrows.setImageResource(R.drawable.icon_processing_arrow);
+                    AnimationUtil.rotateAnimation(arrows);
+                }
+                // TODO: EJW - are there any other cases to handle (like exporting)?
+
+            } else {
+                Log.e(Const.LOG_TAG, CLS_TAG + ".buildView: can't locate the icon!");
+            }
+
             // set the eta
             textView = (TextView) expenseView.findViewById(R.id.expenseit_processing_time);
             if (textView != null) {
                 int etaInSeconds = expenseItItem.getEta();
-                if (etaInSeconds > 0) {
-                   String time = getEtaToString(etaInSeconds);
+                if (!processingFailed && etaInSeconds > 0) {
+                    String time = getEtaToString(etaInSeconds);
                     String eta = context.getResources().getString(R.string.expenseit_expense_processing_time,
                             time);
                     textView.setText(eta);
                 } else {
-                    // If no ETA, display no text.
+                    // If no ETA or is failed, display no text.
                     textView.setText("");
                 }
             } else {
                 Log.e(Const.LOG_TAG, CLS_TAG + ".buildView: can't locate processing time (ETA) field!");
             }
 
+            // Set checkbox to invisible for now (to maintain spacing)
             CheckBox checkBox = (CheckBox) expenseView.findViewById(R.id.expense_check);
             if (checkBox != null) {
                 checkBox.setVisibility(View.INVISIBLE);
@@ -142,69 +146,72 @@ public class ExpenseItListItem extends ExpenseListItem {
     }
 
     /**
-     * Returns the <code>ExpenseItParseCode</code>; See enum by the same name.
-     *
+     * Get the status text to put into the list.
+     * @param context
      * @return
      */
-    public int getExpenseItStatusCode() {
-        return expenseItItem.getParsingStatusCode();
-    }
-
-    private String getStatusText(Context context, int status) {
-        String statusText = "";
-        if (isProcessing(status)) {
-            statusText = context.getString(R.string.expenseit_expense_detail_submitted);
-        } else if(hasErrors(status)){
-            // TODO: EJW: Elaborate more on the different status codes.
+    private String getStatusText(Context context) {
+        String statusText;
+        if (processingFailed) {
             statusText = context.getString(R.string.expenseit_expense_list_error);
         } else {
-            // TODO: EJW: Need to handle when item has been parsed (status code == 1) - hide this item!
+            statusText = context.getString(R.string.expenseit_expense_detail_submitted);
         }
-
         return statusText;
     }
 
-    private boolean isProcessing(int status) {
-
-        if (status == ExpenseItParseCode.UNPARSED.value()
-//                || status == ExpenseItParseCode.PARSED.value()
-                ||status == ExpenseItParseCode.UPLOADED.value()
-                || status == ExpenseItParseCode.UPLOADED_BUT_NOT_QUEUED.value()
-                || status == ExpenseItParseCode.FAILED_UPLOAD_ATTEMPTS.value()
-                || status == ExpenseItParseCode.ANALYZING_REMOTELY_PENDING.value()
-                || status == ExpenseItParseCode.UPLOADING_IN_PROGRESS.value()
-                || status == ExpenseItParseCode.QUEUED_FOR_UPLOAD.value()
-                || status == ExpenseItParseCode.QUEUED_FOR_EXPORT.value()
-                || status == ExpenseItParseCode.QUEUED_FOR_DELETE.value()
-                || status == ExpenseItParseCode.QUEUED_FOR_MODIFY.value()
-                || status == ExpenseItParseCode.QUEUED_FOR_CREATION.value()
-//                || status == ExpenseItParseCode.SUCCESS_HIDDEN.value()
-//                || status == ExpenseItParseCode.SUCCESS_VISIBLE.value() // XXX: Not sure about this one.
-//                || status == ExpenseItParseCode.EXPORTED.value()    // XXX: Not sure about this one.
-                || status == ExpenseItParseCode.QUEUED_FOR_EXPORT_ON_SERVER.value()
-                || status == ExpenseItParseCode.DEFAULT.value()) {
-
-            return true;
-        }
-        return false;
+    /**
+     * Returns true if the object is in error state.
+     *
+     * @param status
+     * @return
+     */
+    private boolean isInErrorState(int status) {
+        return ((status == ExpenseItParseCode.MULTIPLE_RECEIPTS.value()) ||
+                (status == ExpenseItParseCode.UNREADABLE.value()) ||
+                (status == ExpenseItParseCode.EXPIRED.value()) ||
+                (status == ExpenseItParseCode.NO_IMAGE_FOUND.value()) ||
+                (status == ExpenseItParseCode.NOT_RECEIPT.value()) ||
+                (status == ExpenseItParseCode.OTHER.value()) ||
+                (status == ExpenseItParseCode.INTERVENTION_NEEDED.value()) ||
+                (status == ExpenseItParseCode.PERMANENT_FAILURE.value()) ||
+                (status == ExpenseItParseCode.DEFAULT.value()) ||
+                (rubiconErrorCode == ExpenseItPostReceipt.RUBICON_ERROR));
     }
 
-    private boolean hasErrors(int status) {
+    /**
+     * Returns true if the object is processing.
+     *
+     * @param status
+     * @return
+     */
+    private boolean isProcessing(int status) {
+        return ((status == ExpenseItParseCode.UNPARSED.value()) ||
+                (status == ExpenseItParseCode.UPLOADED.value()) ||
+                (status == ExpenseItParseCode.UPLOADED_BUT_NOT_QUEUED.value()) ||
+                (status == ExpenseItParseCode.FAILED_UPLOAD_ATTEMPTS.value()) ||
+                (status == ExpenseItParseCode.ANALYZING_REMOTELY_PENDING.value()) ||
+                (status == ExpenseItParseCode.UPLOADING_IN_PROGRESS.value()) ||
+                (status == ExpenseItParseCode.QUEUED_FOR_UPLOAD.value()) ||
+                (status == ExpenseItParseCode.QUEUED_FOR_EXPORT.value()) ||
+                (status == ExpenseItParseCode.QUEUED_FOR_DELETE.value()) ||
+                (status == ExpenseItParseCode.QUEUED_FOR_MODIFY.value()) ||
+                (status == ExpenseItParseCode.QUEUED_FOR_CREATION.value()) ||
+                (status == ExpenseItParseCode.QUEUED_FOR_EXPORT_ON_SERVER.value()) ||
+                (status == ExpenseItParseCode.DEFAULT.value()));
+    }
 
-        if(status == ExpenseItParseCode.MULTIPLE_RECEIPTS.value()
-                || status == ExpenseItParseCode.UNREADABLE.value()
-                || status == ExpenseItParseCode.EXPIRED.value()
-                || status == ExpenseItParseCode.NOT_RECEIPT.value()
-                || status == ExpenseItParseCode.OTHER.value()
-                || status == ExpenseItParseCode.NO_IMAGE_FOUND.value()
-                || status == ExpenseItParseCode.INTERVENTION_NEEDED.value()
-                || status == ExpenseItParseCode.PERMANENT_FAILURE.value()
-                || status == ExpenseItParseCode.DEFAULT.value()) {
-
-            return true;
-        }
-
-        return false;
+    /**
+     * Returns true if the object is in an export state - do we need this as a transition condition?
+     *
+     * @param status
+     * @return
+     */
+    private boolean isInExportState(int status) {
+        return ((status == ExpenseItParseCode.PARSED.value()) ||
+                (status == ExpenseItParseCode.SUCCESS_HIDDEN.value()) ||
+                (status == ExpenseItParseCode.SUCCESS_VISIBLE.value()) || // XXX: Not sure about this one.
+                (status == ExpenseItParseCode.EXPORTED.value()));   // XXX: Not sure about this one.
     }
 
     private String getEtaToString(int etaInSeconds) {
