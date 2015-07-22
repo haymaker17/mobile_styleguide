@@ -87,6 +87,12 @@ public class ExpenseItReceipt implements ExpenseItReceiptDAO {
     @SerializedName("eta")
     private int eta;
 
+    @SerializedName("errorCode")
+    private int errorCode;
+
+    @SerializedName("errorMessage")
+    private String errorMessage;
+
     /**
      * Contains the Uri associated with this receipt item.
      */
@@ -377,6 +383,18 @@ public class ExpenseItReceipt implements ExpenseItReceiptDAO {
     }
 
     @Override
+    public int getErrorCode() {
+        // TODO - CDIAZ - parse error code from JSON.
+        return errorCode;
+    }
+
+    @Override
+    public String getErrorMessage() {
+        // TODO - CDIAZ - parse error message from JSON.
+        return errorMessage;
+    }
+
+    @Override
     public void setId(long id) {
         this.id = id;
     }
@@ -436,5 +454,15 @@ public class ExpenseItReceipt implements ExpenseItReceiptDAO {
         this.eta = eta;
     }
 
+    @Override
+    public void setErrorCode(int errorCode) {
+        // TODO - CDIAZ - set error code for DAO.
+        this.errorCode = errorCode;
+    }
 
+    @Override
+    public void setErrorMessage(String errorMessage) {
+        // TODO - CDIAZ - set error message for DAO.
+        this.errorMessage = errorMessage;
+    }
 }

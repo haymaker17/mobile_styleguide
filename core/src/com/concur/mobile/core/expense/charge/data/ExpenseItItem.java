@@ -45,4 +45,22 @@ public class ExpenseItItem {
     public int getEta() {
         return receipt.getEta();
     }
+
+    /**
+     * Gets the error code from the error in v1 ExpenseIt response.
+     *
+     * @return error code.
+     */
+    public int getErrorCode() {
+        return receipt.getErrorCode();
+    }
+
+    /**
+     * Gets the error message from the error in v1 ExpenseIt response.
+     *
+     * @return error message.
+     */
+    public String getErrorMessage() {
+        return receipt.getErrorMessage();
+    }
 }
