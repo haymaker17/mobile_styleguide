@@ -210,7 +210,7 @@ public class ExpenseItListItem extends ExpenseListItem {
     private String getEtaToString(Context context, int etaInSeconds) {
         int etaTotalMinutes = etaInSeconds / 60;
         int etaRemainingSeconds = etaInSeconds % 60;
-        String time;
+        StringBuilder time = new StringBuilder();
 
         // TODO: EJW - all this needs to be localized in strings.xml.
         // MOB-24792  Fix Localization of ExpenseIt ETA time
@@ -221,18 +221,20 @@ public class ExpenseItListItem extends ExpenseListItem {
         // Determine time. The first and last cases are safety precautions,
         // in case they are not handled above.
         if ((etaTotalMinutes + etaRemainingSeconds) <= 0) {
-            time = na;
+            time.append(na);
         } else if (etaTotalMinutes > 0 && etaRemainingSeconds <= 0) {
-            time = etaTotalMinutes + " " + min;
+            time.append(etaTotalMinutes).append(" ").append(min);
         } else if (etaTotalMinutes > 0 && etaRemainingSeconds > 0) {
-            time = etaTotalMinutes + " " + min + ", "  + etaRemainingSeconds + " " + sec;
+            time.append(etaTotalMinutes)
+                    .append(" ").append(min).append(", ").append(etaRemainingSeconds)
+                    .append(" ").append(sec);
         } else if (etaTotalMinutes <= 0 && etaRemainingSeconds > 0) {
-            time = etaRemainingSeconds + " " + sec;
+            time.append(etaRemainingSeconds).append(" ").append(sec);
         } else {
-            time = na;
+            time.append(na);
         }
 
-        return time;
+        return time.toString();
     }
 
     @Override
