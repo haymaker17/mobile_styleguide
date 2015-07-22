@@ -10,6 +10,7 @@ import java.util.Map;
 import android.util.Log;
 
 import com.concur.mobile.base.service.parser.BaseParser;
+import com.concur.mobile.core.expense.travelallowance.datamodel.CodeListManager;
 import com.concur.mobile.core.expense.travelallowance.datamodel.Itinerary;
 import com.concur.mobile.core.expense.travelallowance.datamodel.ItineraryLocation;
 import com.concur.mobile.core.expense.travelallowance.datamodel.ItinerarySegment;
@@ -36,6 +37,8 @@ public class GetTAItinerariesResponseParser extends BaseParser {
     private String currentStartTag;
 
     SimpleDateFormat dateFormat;
+
+    private CodeListManager codeListManager = CodeListManager.getInstance();
 
 
     public GetTAItinerariesResponseParser() {
@@ -131,7 +134,7 @@ public class GetTAItinerariesResponseParser extends BaseParser {
             } catch (NumberFormatException e) {
                 Log.e(CLASS_TAG, "Not a Number: " + departureOffset);
             }
-            seg.setDepartureLocation(depLoc);
+            seg.setDepartureLocation(codeListManager.updateItineraryLocation(depLoc));
 
             // Arrival
             seg.setArrivalDateTime(dateFormat.parse(currentItineraryRow
@@ -150,7 +153,7 @@ public class GetTAItinerariesResponseParser extends BaseParser {
             } catch (NumberFormatException e) {
                 Log.e(CLASS_TAG, "Not a Number: " + arrivalOffset);
             }
-            seg.setArrivalLocation(arrLoc);
+            seg.setArrivalLocation(codeListManager.updateItineraryLocation(arrLoc));
 
             // Border Crossing
             String borderCrossDateTime = currentItineraryRow.get("BorderCrossDateTime");

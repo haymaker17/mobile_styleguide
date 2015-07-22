@@ -6,6 +6,8 @@ import java.util.HashMap;
 import java.util.Map;
 
 /**
+ * Singleton caching code lists
+ *
  * Created by Michael Becherer on 22-Jul-15.
  */
 public class CodeListManager {
