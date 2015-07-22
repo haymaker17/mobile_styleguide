@@ -119,10 +119,13 @@ public class Message implements Serializable {
     }
 
     /**
-     * Getter method
+     * Getter method for convenience
+     *
      * @return the human readable localized message text, if available.
      * If context equals null, an empty String is returned. If no message text is
-     * available a standard text will be derived from the severity.
+     * available a standard text will be derived from the severity using the context
+     * at least for messages with severity Error (Internal Error). Other severities
+     * cause empty strings.
      */
     public String getMessageText(Context context) {
         if (context == null) {
@@ -130,18 +133,8 @@ public class Message implements Serializable {
         }
         if (StringUtilities.isNullOrEmpty(messageText)) {
             String text = StringUtilities.EMPTY_STRING;
-            switch (severity) {
-                case ERROR:
-                    text = context.getString(R.string.general_error_message);
-                    break;
-                case WARNING:
-                    text = "@Warning@";
-                    break;
-                case INFO:
-                    text = "@Info@";
-                    break;
-                default:
-                    break;
+            if (severity == Severity.ERROR) {
+                text = context.getString(R.string.general_error);
             }
             return text;
         } else {
