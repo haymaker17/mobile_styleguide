@@ -211,8 +211,7 @@ public class ExpenseItListItem extends ExpenseListItem {
         int etaTotalMinutes = etaInSeconds / 60;
         int etaRemainingSeconds = etaInSeconds % 60;
         StringBuilder time = new StringBuilder();
-
-        // TODO: EJW - all this needs to be localized in strings.xml.
+        
         // MOB-24792  Fix Localization of ExpenseIt ETA time
         String min = context.getResources().getString(R.string.expenseit_eta_min);
         String sec = context.getResources().getString(R.string.expenseit_eta_sec);
