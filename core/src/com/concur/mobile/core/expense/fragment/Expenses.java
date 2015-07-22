@@ -84,7 +84,6 @@ import com.concur.mobile.core.util.ViewUtil;
 import com.concur.mobile.core.view.HeaderListItem;
 import com.concur.mobile.core.view.ListItem;
 import com.concur.mobile.core.view.ListItemAdapter;
-import com.concur.mobile.platform.expenseit.ExpenseItParseCode;
 import com.concur.mobile.platform.expenseit.ExpenseItReceipt;
 import com.concur.mobile.platform.ocr.OcrStatusEnum;
 import com.concur.mobile.platform.ui.common.dialog.NoConnectivityDialogFragment;
@@ -2776,11 +2775,12 @@ public class Expenses extends BaseFragment implements INetworkActivityListener {
 
                     // Check the status code if this ExpenseIt item has completed processing.
                     // XXX: Not 100% sure about these status codes.
-                    int statusCode = expense.getExpenseItItem().getParsingStatusCode();
-                    if(statusCode != ExpenseItParseCode.PARSED.value() // TODO: Do we want to still show if the item has been parsed?
-                            && statusCode != ExpenseItParseCode.SUCCESS_HIDDEN.value()
-                            && statusCode != ExpenseItParseCode.SUCCESS_VISIBLE.value()
-                            && statusCode != ExpenseItParseCode.EXPORTED.value()) {
+//                    int statusCode = expense.getExpenseItItem().getParsingStatusCode();
+                    // TODO: Do we want to still show if the item has been parsed? Leaving in for quick revision.
+//                    if(statusCode != ExpenseItParseCode.PARSED.value()
+//                            && statusCode != ExpenseItParseCode.SUCCESS_HIDDEN.value()
+//                            && statusCode != ExpenseItParseCode.SUCCESS_VISIBLE.value()
+//                            && statusCode != ExpenseItParseCode.EXPORTED.value()) {
 
                         ExpenseItListItem listItem = new ExpenseItListItem(expense, EXPENSE_VIEW_TYPE);
 
@@ -2794,7 +2794,7 @@ public class Expenses extends BaseFragment implements INetworkActivityListener {
                             listItems.add(new HeaderListItem(header, HEADER_VIEW_TYPE));
                         }
                         listItems.add(listItem);
-                    }
+//                    }
                     break;
                 }
 

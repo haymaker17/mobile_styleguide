@@ -67,9 +67,9 @@ public interface ExpenseItReceiptDAO {
 
     void setEta(int eta);
 
-    int setErrorCode();
+    void setErrorCode(int errorCode);
 
-    String setErrorMessage();
+    void setErrorMessage(String errorMessage);
 
     /**
      * Will update persistence with the current receipt values.
