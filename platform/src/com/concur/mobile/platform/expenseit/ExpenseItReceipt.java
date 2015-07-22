@@ -377,6 +377,18 @@ public class ExpenseItReceipt implements ExpenseItReceiptDAO {
     }
 
     @Override
+    public int getErrorCode() {
+        // TODO - ChrisD - parse error code from JSON.
+        return 0;
+    }
+
+    @Override
+    public String getErrorMessage() {
+        // TODO - ChrisD - parse error message from JSON.
+        return null;
+    }
+
+    @Override
     public void setId(long id) {
         this.id = id;
     }
@@ -436,5 +448,15 @@ public class ExpenseItReceipt implements ExpenseItReceiptDAO {
         this.eta = eta;
     }
 
+    @Override
+    public int setErrorCode() {
+        // TODO - ChrisD - set error code for DAO.
+        return 0;
+    }
 
+    @Override
+    public String setErrorMessage() {
+        // TODO - ChrisD - set error message for DAO.
+        return null;
+    }
 }
