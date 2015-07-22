@@ -1981,8 +1981,7 @@
 
     <!-- Start What's new -->
     <string-array name="whats_new">
-        <item>\u2022 Mobile SSO for EMEA clients fix</item>
-        <item>\u2022 Security improvements for logging in</item>
+        <item>\u2022 Minor bug fixes</item>
     </string-array>
     <!-- End What's new -->
 
