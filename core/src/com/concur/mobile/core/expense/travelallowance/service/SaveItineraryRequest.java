@@ -66,7 +66,7 @@ public class SaveItineraryRequest extends CoreAsyncRequestTask {
         } else {
             sb.append("<ItineraryRows>");
             for (ItinerarySegment segment : itinerary.getSegmentList()) {
-                if (!segment.isLocked()) {
+                //TODO: Deltas... if (!segment.isLocked()) {
                     sb.append("<ItineraryRow>");
 
                     FormatUtil.addXMLElementEscaped(sb, "IrKey", segment.getId());
@@ -82,7 +82,7 @@ public class SaveItineraryRequest extends CoreAsyncRequestTask {
                             dateTimeFormat.format(segment.getArrivalDateTime()));
 
                     sb.append("</ItineraryRow>");
-                }
+                //TODO: Deltas...}
             }
             sb.append("</ItineraryRows>");
         }
