@@ -223,11 +223,7 @@ public class ItineraryUpdateListAdapter extends ArrayAdapter<Object> {
             holder.tvTitle.setFocusableInTouchMode(true);
             holder.tvTitle.setClickable(true);
             holder.tvTitle.requestFocus();
-            if (segment.getMessage().getMessageText() != null) {
-                holder.tvTitle.setError(segment.getMessage().getMessageText());
-            } else {
-                holder.tvTitle.setError("@Internal Error@");
-            }
+            holder.tvTitle.setError(segment.getMessage().getMessageText(context));
         } else {
             holder.tvTitle.setError(null);
         }
@@ -247,7 +243,7 @@ public class ItineraryUpdateListAdapter extends ArrayAdapter<Object> {
             holder.vDepartureLocation.setEnabled(!segment.isLocked());
         }
         if (holder.tvDepartureLocationLabel != null) {
-            holder.tvDepartureLocationLabel.setText("@From@");
+            holder.tvDepartureLocationLabel.setText(R.string.general_from_location);
         }
         if (holder.tvDepartureLocationValue != null) {
             if (segment.getDepartureLocation() != null) {
@@ -261,7 +257,7 @@ public class ItineraryUpdateListAdapter extends ArrayAdapter<Object> {
             holder.tvDepartureDateLabel.setText("@Departure Date@");
         }
         if (holder.tvDepartureTimeLabel != null) {
-            holder.tvDepartureTimeLabel.setText("@Time@");
+            holder.tvDepartureTimeLabel.setText(R.string.general_time);
         }
         if (segment.getDepartureDateTime() != null) {
             String dateStr;
@@ -295,7 +291,7 @@ public class ItineraryUpdateListAdapter extends ArrayAdapter<Object> {
             holder.vArrivalLocation.setEnabled(!segment.isLocked());
         }
         if (holder.tvArrivalLocationLabel != null) {
-            holder.tvArrivalLocationLabel.setText("@To@");
+            holder.tvArrivalLocationLabel.setText(R.string.general_to_location);
         }
         if (holder.tvArrivalLocationValue != null) {
             if (segment.getArrivalLocation() != null) {
@@ -308,7 +304,7 @@ public class ItineraryUpdateListAdapter extends ArrayAdapter<Object> {
             holder.tvArrivalDateLabel.setText("@Arrival Date@");
         }
         if (holder.tvArrivalTimeLabel != null) {
-            holder.tvArrivalTimeLabel.setText("@Time@");
+            holder.tvArrivalTimeLabel.setText(R.string.general_time);
         }
         if (segment.getArrivalDateTime() != null) {
             String dateStr;

@@ -1,5 +1,7 @@
 package com.concur.mobile.core.expense.travelallowance.datamodel;
 
+import com.concur.core.R;
+
 /**
  * Enumeration of all possible states of a domain object regarding its
  * synchronization with an arbitrary synchronization target, for example a
@@ -13,17 +15,19 @@ public enum SynchronizationStatus {
      * Indicates that a domain object is in sync with its synchronization
      * target.
      */
-    //TODO: Set string resource as soon as available
-    SYNCHRONIZED("SUCCESS", //R.string.status_synchronized)
-                  0),
+    SYNCHRONIZED("SUCCESS", R.string.general_status_synchronized),
 
     /**
      * Indicates that the synchronization of a domain object failed target and
      * needs to be refreshed.
      */
-    //TODO: Set string resource as soon as available
-    FAILED("FAILURE", //R.string.status_failed)
-            0);
+    FAILED("FAILURE", R.string.general_status_synchronization_failed),
+
+    /**
+     * Indicates that a domain object is pending synchronization with its
+     * synchronization target.
+     */
+    PENDING("PENDING", R.string.general_status_synchronization_pending);
 
     /**
      * The text resource id associated to this {@code SynchronizationStatus}.

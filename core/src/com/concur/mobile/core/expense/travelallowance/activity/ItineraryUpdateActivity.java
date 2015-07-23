@@ -122,9 +122,9 @@ public class ItineraryUpdateActivity extends BaseActivity implements IController
         if (actionBar != null) {
             actionBar.setDisplayHomeAsUpEnabled(true);
             if (StringUtilities.isNullOrEmpty(itineraryId)) {
-                actionBar.setTitle("@New Itinerary@");
+                actionBar.setTitle(R.string.ta_new_itinerary);
             } else {
-                actionBar.setTitle("@Edit Itinerary@");
+                actionBar.setTitle(R.string.ta_edit_itinerary);
             }
 
         }
@@ -498,7 +498,17 @@ public class ItineraryUpdateActivity extends BaseActivity implements IController
         Itinerary resultItin = (Itinerary) result.getSerializable(BundleId.ITINERARY);
 
         if (isSuccess) {
-            Toast.makeText(this, R.string.general_succeeded, Toast.LENGTH_SHORT).show();
+            if (action == ControllerAction.DELETE) {
+                Toast.makeText(this, R.string.general_delete_success, Toast.LENGTH_SHORT).show();
+            } else {
+                Toast.makeText(this, R.string.general_save_success, Toast.LENGTH_SHORT).show();
+            }
+        } else {
+            if (action == ControllerAction.DELETE) {
+                Toast.makeText(this, R.string.general_delete_fail, Toast.LENGTH_SHORT).show();
+            } else {
+                Toast.makeText(this, R.string.general_save_fail, Toast.LENGTH_SHORT).show();
+            }
         }
 
         if (resultItin != null) {
