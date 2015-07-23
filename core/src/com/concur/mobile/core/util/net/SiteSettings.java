@@ -31,7 +31,7 @@ public final class SiteSettings {
                 "MobileViewPicklistCodes"), ALLOW_APPROVALS("AllowApprovals"), ALLOW_REPORTS("AllowReports"), ALLOW_TRAVEL_BOOKING(
                 "AllowTravelBooking"), ENABLE_VOICE_BOOKING("VoiceBookingEnabled"), ENABLE_HOTEL_SEARCH_STREAM(
                 "StreamHotelSearchResults"), HAS_FIXED_TA("HasFixedTA"), ENABLE_CONDITIONAL_FIELD_EVALUATION(
-                "ENABLE_DYNAMIC_FIELD_EVALUATION"), ENABLE_SPDY("EnableSpdy"), SHOW_JARVIS_HOTEL_UI("ShowHotelJarvisUIOnAndroid");
+                "ENABLE_DYNAMIC_FIELD_EVALUATION"), ENABLE_SPDY("EnableSpdy"), SHOW_JARVIS_HOTEL_UI("ShowJarvisHotelUIOnAndroid");
 
         // ****** enum fields and methods ****** //
 
