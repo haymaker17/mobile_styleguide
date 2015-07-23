@@ -362,11 +362,9 @@ public class ItineraryUpdateActivity extends BaseActivity implements IController
 
             adapter.setSaveMode();
             List<ItinerarySegment> periods = itinerary.getSegmentList();
-            if (!DateUtils.hasSubsequentDates(false, true, 1, periods)) {
-                Toast.makeText(this, "@Dates of this itinerary are not consistent@", Toast.LENGTH_SHORT).show();
-                adapter.notifyDataSetChanged();
-            } else if (controller.checkItinerarySegmentsConsistency(itinerary)){
-                Toast.makeText(this, "@At least one location isn't consistent@", Toast.LENGTH_SHORT).show();
+            if (!DateUtils.hasSubsequentDates(false, true, 1, periods)
+                    || (controller.checkItinerarySegmentsConsistency(itinerary))) {
+                Toast.makeText(this, R.string.general_data_inconsistent, Toast.LENGTH_SHORT).show();
                 adapter.notifyDataSetChanged();
             } else {
                 controller.executeUpdate(this.itinerary);
@@ -424,7 +422,7 @@ public class ItineraryUpdateActivity extends BaseActivity implements IController
             public void onRequestSuccess(Bundle resultData) {
                 boolean isSuccess = resultData.getBoolean(AbstractItineraryDeleteRequest.IS_SUCCESS, false);
                 if (isSuccess) {
-                    Toast.makeText(ItineraryUpdateActivity.this, "@Success@", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(ItineraryUpdateActivity.this, R.string.general_delete_success, Toast.LENGTH_SHORT).show();
                     itinController.registerListener(ItineraryUpdateActivity.this);
                     itinController.refreshItineraries(
                             ItineraryUpdateActivity.this.expenseReportKey, false);
@@ -432,14 +430,14 @@ public class ItineraryUpdateActivity extends BaseActivity implements IController
                     Message msg = (Message) resultData
                             .getSerializable(AbstractItineraryDeleteRequest.RESULT_BUNDLE_ID_MESSAGE);
                     if (msg != null) {
-                        Toast.makeText(ItineraryUpdateActivity.this, "@Failed@", Toast.LENGTH_SHORT).show();
+                        Toast.makeText(ItineraryUpdateActivity.this, R.string.general_delete_fail, Toast.LENGTH_SHORT).show();
                     }
                 }
             }
 
             @Override
             public void onRequestFail(Bundle resultData) {
-                Toast.makeText(ItineraryUpdateActivity.this, "@Failed@", Toast.LENGTH_SHORT).show();
+                Toast.makeText(ItineraryUpdateActivity.this, R.string.general_delete_fail, Toast.LENGTH_SHORT).show();
             }
 
             @Override

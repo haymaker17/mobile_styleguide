@@ -92,7 +92,7 @@ public class ItineraryOverviewActivity extends BaseActivity implements IControll
         ActionBar actionBar = getSupportActionBar();
         if (actionBar != null) {
             actionBar.setDisplayHomeAsUpEnabled(true);
-            actionBar.setTitle("@List of editable Itineraries@");
+            actionBar.setTitle(R.string.ta_itineraries);
         }
 
 
@@ -177,8 +177,9 @@ public class ItineraryOverviewActivity extends BaseActivity implements IControll
                 this.adapter.clear();
                 this.adapter.addAll(itineraryController.getItineraryList());
                 this.adapter.notifyDataSetChanged();
+                Toast.makeText(ItineraryOverviewActivity.this, R.string.general_delete_success, Toast.LENGTH_SHORT).show();
             } else {
-                Toast.makeText(ItineraryOverviewActivity.this, "@List reftresh Failed@", Toast.LENGTH_SHORT).show();
+                Toast.makeText(ItineraryOverviewActivity.this, R.string.general_delete_fail, Toast.LENGTH_SHORT).show();
             }
         }
     }
