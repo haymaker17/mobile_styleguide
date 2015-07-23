@@ -120,6 +120,7 @@ public class ItineraryUpdateListAdapter extends ArrayAdapter<Object> {
     public View getView(int i, View convertView, ViewGroup viewGroup) {
 
         View resultView = null;
+        ItinerarySegment segment = (ItinerarySegment) getItem(i);
 
         if (convertView == null) {
             LayoutInflater inflater = (LayoutInflater) this.context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
@@ -169,7 +170,6 @@ public class ItineraryUpdateListAdapter extends ArrayAdapter<Object> {
         setPositionInfoTag(holder.vgArrivalDate, i, PositionInfoTag.INFO_INBOUND);
         setPositionInfoTag(holder.vgArrivalTime, i, PositionInfoTag.INFO_INBOUND);
 
-        ItinerarySegment segment = (ItinerarySegment) getItem(i);
         renderTitle(segment);
         renderDeparture(segment);
         renderArrival(segment);
@@ -237,6 +237,15 @@ public class ItineraryUpdateListAdapter extends ArrayAdapter<Object> {
         if (segment == null) {
             return;
         }
+        if (holder.vgDepartureDate != null) {
+            holder.vgDepartureDate.setEnabled(!segment.getLocked());
+        }
+        if (holder.vgDepartureTime != null) {
+            holder.vgDepartureTime.setEnabled(!segment.getLocked());
+        }
+        if (holder.vDepartureLocation != null) {
+            holder.vDepartureLocation.setEnabled(!segment.getLocked());
+        }
         if (holder.tvDepartureLocationLabel != null) {
             holder.tvDepartureLocationLabel.setText("@From@");
         }
@@ -246,7 +255,7 @@ public class ItineraryUpdateListAdapter extends ArrayAdapter<Object> {
             } else {
                 holder.tvDepartureLocationValue.setText(StringUtilities.EMPTY_STRING);
             }
-
+            holder.tvDepartureLocationValue.setEnabled(!segment.getLocked());
         }
         if (holder.tvDepartureDateLabel != null) {
             holder.tvDepartureDateLabel.setText("@Departure Date@");
@@ -275,6 +284,15 @@ public class ItineraryUpdateListAdapter extends ArrayAdapter<Object> {
     private void renderArrival(final ItinerarySegment segment) {
         if (segment == null) {
             return;
+        }
+        if (holder.vgArrivalDate != null) {
+            holder.vgArrivalDate.setEnabled(!segment.getLocked());
+        }
+        if (holder.vgArrivalTime != null) {
+            holder.vgArrivalTime.setEnabled(!segment.getLocked());
+        }
+        if (holder.vArrivalLocation != null) {
+            holder.vArrivalLocation.setEnabled(!segment.getLocked());
         }
         if (holder.tvArrivalLocationLabel != null) {
             holder.tvArrivalLocationLabel.setText("@To@");

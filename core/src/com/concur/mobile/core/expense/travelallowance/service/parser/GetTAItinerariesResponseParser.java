@@ -97,7 +97,7 @@ public class GetTAItinerariesResponseParser extends BaseParser {
 			if ("Name".equals(tag)) {
 				currentItinerary.setName(text);
 			}
-            if ("isLocked".equals(tag)) {
+            if ("IsLocked".equals(tag)) {
                 if ("Y".equals(text)) {
                     currentItinerary.setLocked(true);
                 } else {
@@ -162,7 +162,7 @@ public class GetTAItinerariesResponseParser extends BaseParser {
             }
 
             // is row locked indicator
-            String lockedStr = currentItineraryRow.get("isRowLocked");
+            String lockedStr = currentItineraryRow.get("IsRowLocked");
             if ("Y".equals(lockedStr)) {
                 seg.setLocked(true);
             } else {

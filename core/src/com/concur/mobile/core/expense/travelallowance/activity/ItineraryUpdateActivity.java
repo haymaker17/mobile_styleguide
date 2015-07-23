@@ -234,12 +234,22 @@ public class ItineraryUpdateActivity extends BaseActivity implements IController
 
         registerForContextMenu(listView);
 
-        findViewById(R.id.fab).setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                addNewRow();
+        View fab = findViewById(R.id.fab);
+        if (fab != null) {
+            if (itinerary != null) {
+                if (itinerary.getLocked()) {
+                    fab.setVisibility(View.GONE);
+                } else {
+                    fab.setVisibility(View.VISIBLE);
+                }
             }
-        });
+            fab.setOnClickListener (new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    addNewRow();
+                }
+            });
+        }
     }
 
     private void addNewRow() {
@@ -287,6 +297,7 @@ public class ItineraryUpdateActivity extends BaseActivity implements IController
         EditText etItinerary = (EditText) findViewById(R.id.et_itinerary);
         if (etItinerary != null && this.itinerary != null) {
             etItinerary.setText(itinerary.getName());
+            etItinerary.setEnabled(!itinerary.getLocked());
         }
     }
 
