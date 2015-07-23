@@ -72,7 +72,7 @@ public class CodeListManager {
     /**
      * Updates the list of itinerary locations with a clone of the given itinerary location.
      * If the location is not buffered yet, the cloned itinerary location will be added.
-     * Important to know: This method is usually fed via web services. Aas the web services do not
+     * Important to know: This method is usually fed via web services. As the web services do not
      * always deliver complete location information the following rules are applied:
      * If there is no valid rate location key within the given itinerary
      * location, then the cloned itinerary will possibly be updated with the former key.
@@ -94,9 +94,11 @@ public class CodeListManager {
         ItineraryLocation updateLocation = getItineraryLocation(itineraryLocation.getCode());
         String oldRateLocationKey = null;
         String oldName = null;
+        Long oldOffset = null;
         if (updateLocation != null) {
             oldRateLocationKey = updateLocation.getRateLocationKey();
             oldName = updateLocation.getName();
+            oldOffset = updateLocation.getTimeZoneOffset();
         }
         itineraryLocations.put(newLocation.getCode(), newLocation);
         if (StringUtilities.isNullOrEmpty(newLocation.getRateLocationKey())) {
@@ -104,6 +106,9 @@ public class CodeListManager {
         }
         if (StringUtilities.isNullOrEmpty(newLocation.getName())) {
             newLocation.setName(oldName);
+        }
+        if (newLocation.getTimeZoneOffset() == null) {
+            newLocation.setTimeZoneOffset(oldOffset);
         }
         return newLocation;
     }
