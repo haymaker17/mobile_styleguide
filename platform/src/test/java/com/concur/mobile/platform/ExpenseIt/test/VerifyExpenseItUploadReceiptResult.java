@@ -1,7 +1,7 @@
 /**
  * 
  */
-package com.concur.mobile.platform.authentication.test;
+package com.concur.mobile.platform.ExpenseIt.test;
 
 import android.content.Context;
 

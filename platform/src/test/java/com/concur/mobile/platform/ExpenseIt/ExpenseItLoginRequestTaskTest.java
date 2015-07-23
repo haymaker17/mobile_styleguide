@@ -1,7 +1,7 @@
 /**
  *
  */
-package com.concur.mobile.platform.authentication.ExpenseIt;
+package com.concur.mobile.platform.ExpenseIt;
 
 import android.content.Context;
 
@@ -9,8 +9,7 @@ import com.concur.mobile.base.service.BaseAsyncRequestTask;
 import com.concur.mobile.base.service.BaseAsyncResultReceiver;
 import com.concur.mobile.platform.authentication.ExpenseItLoginResult;
 import com.concur.mobile.platform.authentication.LoginExpenseItTask;
-import com.concur.mobile.platform.authentication.test.VerifyExpenseItLoginResult;
-import com.concur.mobile.platform.test.AsyncRequestTest;
+import com.concur.mobile.platform.ExpenseIt.test.VerifyExpenseItLoginResult;
 import com.concur.mobile.platform.test.Const;
 import com.concur.mobile.platform.test.PlatformTestApplication;
 import com.google.gson.Gson;
@@ -27,9 +26,8 @@ import java.util.Map;
  * An extension of <code>AsyncRequestTest</code> for the purpose of testing the <code>PPLoginLightRequestTask</code> platform
  * request.
  *
- * @author andrewk
  */
-public class ExpenseItLoginRequestTaskTest extends AsyncRequestTest {
+public class ExpenseItLoginRequestTaskTest extends ExpenseItTest {
 
     private static final String CLS_TAG = ExpenseItLoginRequestTaskTest.class.getSimpleName();
 

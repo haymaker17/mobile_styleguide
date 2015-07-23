@@ -10,11 +10,11 @@ import java.io.Serializable;
 
 public class ErrorResponse implements Serializable{
 
-    public static final String DEFAULT_ERROR_MESSAGE = "Unknown error";
+    public static final String DEFAULT_NO_ERROR_MESSAGE = "Success";
     public static final Integer ERROR_CODE_NO_ERROR = -1;
 
     @SerializedName("errorMessage")
-    private String errorMessage = DEFAULT_ERROR_MESSAGE;
+    private String errorMessage = DEFAULT_NO_ERROR_MESSAGE;
 
     @SerializedName("errorCode")
     private Integer errorCode = ERROR_CODE_NO_ERROR;
