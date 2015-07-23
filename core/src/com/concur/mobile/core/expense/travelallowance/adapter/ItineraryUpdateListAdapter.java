@@ -31,6 +31,7 @@ public class ItineraryUpdateListAdapter extends ArrayAdapter<Object> {
     private OnClickListener onTimeClickListener;
     private OnClickListener onDateClickListener;
     private OnClickListener onLocationClickListener;
+    private Boolean isSaveTriggered;
 
     /**
      * Holds all UI controls needed for rendering
@@ -73,6 +74,21 @@ public class ItineraryUpdateListAdapter extends ArrayAdapter<Object> {
         this.onDateClickListener = onDateClickListener;
         this.onTimeClickListener = onTimeClickListener;
         addAll(itinerarySegments);
+    }
+
+    /**
+     * Method should be called when the user tries to save the data. As a consequence
+     * the mandatory fields are marked as erroneous if they aren't filled.
+     */
+    public void setSaveMode(){
+        this.isSaveTriggered = true;
+    }
+
+    /**
+     * Method can be called e.g. after the user creates a new row to avoid initially error icons
+     */
+    public void resetSaveMode(){
+        this.isSaveTriggered = false;
     }
 
     /**
@@ -258,8 +274,14 @@ public class ItineraryUpdateListAdapter extends ArrayAdapter<Object> {
         if (holder.tvDepartureLocationValue != null) {
             if (segment.getDepartureLocation() != null) {
                 holder.tvDepartureLocationValue.setText(segment.getDepartureLocation().getName());
+                holder.tvDepartureLocationValue.setError(null);
             } else {
                 holder.tvDepartureLocationValue.setText(StringUtilities.EMPTY_STRING);
+                if (isSaveTriggered == true ) {
+                    holder.tvDepartureLocationValue.setError("@Select departure location@"); //Seems to have no effect...
+                }else {
+                    holder.tvDepartureLocationValue.setError(null);
+                }
             }
             holder.tvDepartureLocationValue.setEnabled(!segment.isLocked());
         }
@@ -276,14 +298,28 @@ public class ItineraryUpdateListAdapter extends ArrayAdapter<Object> {
                         DateUtils.FORMAT_SHOW_DATE | DateUtils.FORMAT_SHOW_WEEKDAY | DateUtils.FORMAT_SHOW_YEAR
                         | DateUtils.FORMAT_ABBREV_WEEKDAY | DateUtils.FORMAT_ABBREV_MONTH);
                 holder.tvDepartureDateValue.setText(dateStr);
+                holder.tvDepartureDateValue.setError(null);
+                if ((dateStr == null) ){
+                    if (isSaveTriggered == true) {
+                        holder.tvDepartureDateValue.setError("");
+                    }else{
+                        holder.tvDepartureDateValue.setError(null);
+                    }
+                }
             }
             if (holder.tvDepartureTimeValue != null) {
                 dateStr = DateUtils.formatDateTime(context, segment.getDepartureDateTime().getTime(),
                         DateUtils.FORMAT_SHOW_TIME);
                 holder.tvDepartureTimeValue.setText(dateStr);
+                holder.tvDepartureTimeValue.setError(null);
             }
         } else {
             holder.tvDepartureTimeValue.setText(StringUtilities.EMPTY_STRING);
+            if (isSaveTriggered == true){
+                holder.tvDepartureTimeValue.setError("");
+            }else{
+                holder.tvDepartureTimeValue.setError(null);
+            }
         }
     }
 
@@ -306,8 +342,14 @@ public class ItineraryUpdateListAdapter extends ArrayAdapter<Object> {
         if (holder.tvArrivalLocationValue != null) {
             if (segment.getArrivalLocation() != null) {
                 holder.tvArrivalLocationValue.setText(segment.getArrivalLocation().getName());
+                holder.tvArrivalLocationValue.setError(null);
             } else {
                 holder.tvArrivalLocationValue.setText(StringUtilities.EMPTY_STRING);
+                if (isSaveTriggered == true ) {
+                    holder.tvArrivalLocationValue.setError("");
+                }else {
+                    holder.tvArrivalLocationValue.setError(null);
+                }
             }
         }
         if (holder.tvArrivalDateLabel != null) {
@@ -323,14 +365,32 @@ public class ItineraryUpdateListAdapter extends ArrayAdapter<Object> {
                         DateUtils.FORMAT_SHOW_DATE | DateUtils.FORMAT_SHOW_WEEKDAY | DateUtils.FORMAT_SHOW_YEAR
                                 | DateUtils.FORMAT_ABBREV_WEEKDAY | DateUtils.FORMAT_ABBREV_MONTH);
                 holder.tvArrivalDateValue.setText(dateStr);
+                if (dateStr != null){
+                    holder.tvArrivalDateValue.setError(null);
+                }else {
+                    if (isSaveTriggered == true ) {
+                        holder.tvArrivalDateValue.setError((""));
+                    }else {
+                        holder.tvArrivalDateValue.setError(null);
+                    }
+                }
             }
             if (holder.tvArrivalTimeValue != null) {
                 dateStr = DateUtils.formatDateTime(context, segment.getArrivalDateTime().getTime(),
                         DateUtils.FORMAT_SHOW_TIME);
                 holder.tvArrivalTimeValue.setText(dateStr);
+                holder.tvArrivalTimeValue.setError(null);
+                if (dateStr == null && isSaveTriggered == true){
+                        holder.tvArrivalTimeValue.setError((""));
+                }
             }
         } else {
             holder.tvArrivalTimeValue.setText(StringUtilities.EMPTY_STRING);
+            if (isSaveTriggered == true ) {
+                holder.tvArrivalTimeValue.setError("");
+            }else {
+                holder.tvArrivalTimeValue.setError(null);
+            }
         }
     }
 }

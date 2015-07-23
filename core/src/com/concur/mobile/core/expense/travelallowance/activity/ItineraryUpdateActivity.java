@@ -257,6 +257,7 @@ public class ItineraryUpdateActivity extends BaseActivity implements IController
         emptySegment.setDepartureDateTime(Calendar.getInstance(Locale.getDefault()).getTime());
         emptySegment.setArrivalDateTime(Calendar.getInstance(Locale.getDefault()).getTime());
         this.itinerary.getSegmentList().add(emptySegment);
+        adapter.resetSaveMode();
         adapter.add(emptySegment);
         adapter.notifyDataSetChanged();
     }
@@ -359,11 +360,14 @@ public class ItineraryUpdateActivity extends BaseActivity implements IController
         if (item.getItemId() == R.id.menuSave && this.itinerary != null) {
             updateControllerData();
 
+            adapter.setSaveMode();
             List<ItinerarySegment> periods = itinerary.getSegmentList();
             if (!DateUtils.hasSubsequentDates(false, true, 1, periods)) {
                 Toast.makeText(this, "@Dates of this itinerary are not consistent@", Toast.LENGTH_SHORT).show();
+                adapter.notifyDataSetChanged();
             } else if (controller.checkItinerarySegmentsConsistency(itinerary)){
                 Toast.makeText(this, "@At least one location isn't consistent@", Toast.LENGTH_SHORT).show();
+                adapter.notifyDataSetChanged();
             } else {
                 controller.executeUpdate(this.itinerary);
             }

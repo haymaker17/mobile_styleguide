@@ -102,7 +102,7 @@ public class ItinerarySegment implements Serializable, IDatePeriodUTC {
     public Date getStartDateUTC() {
         Date dateUTC = new Date();
         long departureTimeZoneOffset = 0;
-        if (departureLocation != null) {
+        if (departureLocation != null && departureLocation.getTimeZoneOffset() != null) {
             departureTimeZoneOffset = departureLocation.getTimeZoneOffset();
         }
         dateUTC.setTime(departureDateTime.getTime() - DateUtils.convertMinutesToMilliseconds(departureTimeZoneOffset));
@@ -116,7 +116,7 @@ public class ItinerarySegment implements Serializable, IDatePeriodUTC {
     public Date getEndDateUTC() {
         Date dateUTC = new Date();
         long arrivalTimeZoneOffset = 0;
-        if (arrivalLocation != null) {
+        if (arrivalLocation != null && arrivalLocation.getTimeZoneOffset() != null) {
             arrivalTimeZoneOffset = arrivalLocation.getTimeZoneOffset();
         }
         dateUTC.setTime(arrivalDateTime.getTime() - DateUtils.convertMinutesToMilliseconds(arrivalTimeZoneOffset));
