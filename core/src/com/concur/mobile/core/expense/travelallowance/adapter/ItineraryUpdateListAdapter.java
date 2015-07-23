@@ -238,13 +238,13 @@ public class ItineraryUpdateListAdapter extends ArrayAdapter<Object> {
             return;
         }
         if (holder.vgDepartureDate != null) {
-            holder.vgDepartureDate.setEnabled(!segment.getLocked());
+            holder.vgDepartureDate.setEnabled(!segment.isLocked());
         }
         if (holder.vgDepartureTime != null) {
-            holder.vgDepartureTime.setEnabled(!segment.getLocked());
+            holder.vgDepartureTime.setEnabled(!segment.isLocked());
         }
         if (holder.vDepartureLocation != null) {
-            holder.vDepartureLocation.setEnabled(!segment.getLocked());
+            holder.vDepartureLocation.setEnabled(!segment.isLocked());
         }
         if (holder.tvDepartureLocationLabel != null) {
             holder.tvDepartureLocationLabel.setText("@From@");
@@ -255,7 +255,7 @@ public class ItineraryUpdateListAdapter extends ArrayAdapter<Object> {
             } else {
                 holder.tvDepartureLocationValue.setText(StringUtilities.EMPTY_STRING);
             }
-            holder.tvDepartureLocationValue.setEnabled(!segment.getLocked());
+            holder.tvDepartureLocationValue.setEnabled(!segment.isLocked());
         }
         if (holder.tvDepartureDateLabel != null) {
             holder.tvDepartureDateLabel.setText("@Departure Date@");
@@ -286,13 +286,13 @@ public class ItineraryUpdateListAdapter extends ArrayAdapter<Object> {
             return;
         }
         if (holder.vgArrivalDate != null) {
-            holder.vgArrivalDate.setEnabled(!segment.getLocked());
+            holder.vgArrivalDate.setEnabled(!segment.isLocked());
         }
         if (holder.vgArrivalTime != null) {
-            holder.vgArrivalTime.setEnabled(!segment.getLocked());
+            holder.vgArrivalTime.setEnabled(!segment.isLocked());
         }
         if (holder.vArrivalLocation != null) {
-            holder.vArrivalLocation.setEnabled(!segment.getLocked());
+            holder.vArrivalLocation.setEnabled(!segment.isLocked());
         }
         if (holder.tvArrivalLocationLabel != null) {
             holder.tvArrivalLocationLabel.setText("@To@");

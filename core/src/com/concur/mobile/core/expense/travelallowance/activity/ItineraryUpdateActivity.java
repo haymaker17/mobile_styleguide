@@ -237,7 +237,7 @@ public class ItineraryUpdateActivity extends BaseActivity implements IController
         View fab = findViewById(R.id.fab);
         if (fab != null) {
             if (itinerary != null) {
-                if (itinerary.getLocked()) {
+                if (itinerary.isLocked()) {
                     fab.setVisibility(View.GONE);
                 } else {
                     fab.setVisibility(View.VISIBLE);
@@ -297,7 +297,7 @@ public class ItineraryUpdateActivity extends BaseActivity implements IController
         EditText etItinerary = (EditText) findViewById(R.id.et_itinerary);
         if (etItinerary != null && this.itinerary != null) {
             etItinerary.setText(itinerary.getName());
-            etItinerary.setEnabled(!itinerary.getLocked());
+            etItinerary.setEnabled(!itinerary.isLocked());
         }
     }
 

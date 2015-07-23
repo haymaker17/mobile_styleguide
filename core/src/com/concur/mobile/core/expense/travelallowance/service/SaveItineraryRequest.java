@@ -66,25 +66,23 @@ public class SaveItineraryRequest extends CoreAsyncRequestTask {
         } else {
             sb.append("<ItineraryRows>");
             for (ItinerarySegment segment : itinerary.getSegmentList()) {
+                if (!segment.isLocked()) {
+                    sb.append("<ItineraryRow>");
 
-                sb.append("<ItineraryRow>");
+                    FormatUtil.addXMLElementEscaped(sb, "IrKey", segment.getId());
+                    FormatUtil.addXMLElementEscaped(sb, "DepartLnKey", segment.getDepartureLocation().getCode());
+                    FormatUtil.addXMLElementEscaped(sb, "DepartDateTime",
+                            dateTimeFormat.format(segment.getDepartureDateTime()));
+                    FormatUtil.addXMLElementEscaped(sb, "ArrivalLnKey", segment.getArrivalLocation().getCode());
+                    FormatUtil.addXMLElementEscaped(sb, "ArrivalDateTime",
+                            dateTimeFormat.format(segment.getArrivalDateTime()));
+                    FormatUtil.addXMLElementEscaped(sb, "ArrivalRlKey", segment.getArrivalLocation().getRateLocationKey());
 
-                FormatUtil.addXMLElementEscaped(sb, "IrKey", segment.getId());
-                FormatUtil.addXMLElementEscaped(sb, "DepartLnKey", segment.getDepartureLocation().getCode());
-                FormatUtil.addXMLElementEscaped(sb, "DepartDateTime",
-                        dateTimeFormat.format(segment.getDepartureDateTime()));
+                    FormatUtil.addXMLElementEscaped(sb, "BorderCrossDateTime",
+                            dateTimeFormat.format(segment.getArrivalDateTime()));
 
-                FormatUtil.addXMLElementEscaped(sb, "ArrivalLnKey", segment.getArrivalLocation().getCode());
-//                FormatUtil.addXMLElementEscaped(sb, "ArrivalRlKey", itineraryRow.getArrivalRlKey());
-                FormatUtil.addXMLElementEscaped(sb, "ArrivalDateTime",
-                        dateTimeFormat.format(segment.getArrivalDateTime()));
-                FormatUtil.addXMLElementEscaped(sb, "ArrivalRlKey", segment.getArrivalLocation().getRateLocationKey());
-
-                FormatUtil.addXMLElementEscaped(sb, "BorderCrossDateTime",
-                        dateTimeFormat.format(segment.getArrivalDateTime()));
-
-
-                sb.append("</ItineraryRow>");
+                    sb.append("</ItineraryRow>");
+                }
             }
             sb.append("</ItineraryRows>");
         }

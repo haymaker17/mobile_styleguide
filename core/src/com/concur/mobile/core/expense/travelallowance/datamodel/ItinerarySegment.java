@@ -71,7 +71,7 @@ public class ItinerarySegment implements Serializable, IDatePeriodUTC {
         this.borderCrossDateTime = borderCrossDateTime;
     }
 
-    public boolean getLocked() {
+    public boolean isLocked() {
         return locked;
     }
 

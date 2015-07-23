@@ -61,7 +61,7 @@ public class Itinerary implements Serializable{
         this.syncStatus = syncStatus;
     }
 
-    public boolean getLocked() {
+    public boolean isLocked() {
         return locked;
     }
 
