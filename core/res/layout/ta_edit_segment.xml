@@ -4,14 +4,28 @@
     android:layout_height="match_parent"
     android:orientation="vertical">
 
-    <TextView
-        android:id="@+id/tv_title"
+    <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:background="@drawable/gradient_background"
-        android:paddingLeft="16dp"
-        android:text="\@Segment\@"
-        android:textAppearance="@style/DefaultTitle" />
+        android:background="@drawable/gradient_background">
+
+        <ImageView
+            android:id="@+id/iv_icon"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:visibility="gone"/>
+
+        <TextView
+            android:id="@+id/tv_title"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_toRightOf="@id/iv_icon"
+            android:paddingLeft="16dp"
+            android:text="\@Segment\@"
+            android:textAppearance="@style/DefaultTitle" />
+
+    </RelativeLayout>
+
 
     <include
         android:id="@+id/v_departure_location"

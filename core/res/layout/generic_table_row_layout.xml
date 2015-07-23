@@ -25,6 +25,14 @@
             android:text="Large Text"
             android:textAppearance="@style/DefaultTitle"/>
 
+        <ImageView
+            android:id="@+id/iv_icon"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentEnd="true"
+            android:layout_alignParentRight="true"
+            android:visibility="gone"/>
+
         <TextView
             android:id="@+id/tv_value"
             android:layout_width="wrap_content"

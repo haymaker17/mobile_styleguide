@@ -3,7 +3,6 @@ package com.concur.mobile.core.expense.travelallowance.activity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
-import android.os.Handler;
 import android.support.v7.app.ActionBar;
 import android.support.v7.widget.Toolbar;
 import android.view.ContextMenu;
@@ -14,8 +13,6 @@ import android.widget.ListView;
 import android.widget.Toast;
 
 import com.concur.core.R;
-import com.concur.mobile.base.service.BaseAsyncRequestTask;
-import com.concur.mobile.base.service.BaseAsyncResultReceiver;
 import com.concur.mobile.core.ConcurCore;
 import com.concur.mobile.core.activity.BaseActivity;
 import com.concur.mobile.core.expense.travelallowance.adapter.ItineraryOverviewListAdapter;
@@ -23,10 +20,7 @@ import com.concur.mobile.core.expense.travelallowance.controller.ControllerActio
 import com.concur.mobile.core.expense.travelallowance.controller.IController;
 import com.concur.mobile.core.expense.travelallowance.controller.IControllerListener;
 import com.concur.mobile.core.expense.travelallowance.controller.TravelAllowanceItineraryController;
-import com.concur.mobile.core.expense.travelallowance.service.AbstractItineraryDeleteRequest;
-import com.concur.mobile.core.expense.travelallowance.service.DeleteItineraryRequest;
-import com.concur.mobile.core.expense.travelallowance.ui.model.CompactItinerary;
-import com.concur.mobile.core.expense.travelallowance.util.Message;
+import com.concur.mobile.core.expense.travelallowance.datamodel.Itinerary;
 import com.concur.mobile.core.util.Const;
 
 /**
@@ -78,6 +72,7 @@ public class ItineraryOverviewActivity extends BaseActivity implements IControll
         super.onCreate(savedInstanceState);
         ConcurCore app = (ConcurCore) getApplication();
         this.itineraryController = app.getTaItineraryController();
+        this.itineraryController.registerListener(this);
 
         if (getIntent().hasExtra(Const.EXTRA_EXPENSE_REPORT_KEY)) {
             this.expenseReportKey = getIntent().getStringExtra(Const.EXTRA_EXPENSE_REPORT_KEY);
@@ -146,11 +141,11 @@ public class ItineraryOverviewActivity extends BaseActivity implements IControll
                     if (view == null) {
                         return;
                     }
-                    CompactItinerary compactItinerary = itineraryController.getCompactItineraryList().get(position);
+                    Itinerary itinerary = itineraryController.getItineraryList().get(position);
                     Intent intent = new Intent(ItineraryOverviewActivity.this, ItineraryUpdateActivity.class);
                     intent.putExtra(Const.EXTRA_EXPENSE_REPORT_KEY, expenseReportKey);
                     intent.putExtra(Const.EXTRA_EXPENSE_REPORT_NAME, expenseReportName);
-                    intent.putExtra(Const.EXTRA_ITINERARY_KEY, compactItinerary.getItineraryID());
+                    intent.putExtra(Const.EXTRA_ITINERARY_KEY, itinerary.getItineraryID());
                     startActivity(intent);
                 }
             });
@@ -167,45 +162,9 @@ public class ItineraryOverviewActivity extends BaseActivity implements IControll
     @Override
     public boolean onContextItemSelected(MenuItem item) {
         AdapterView.AdapterContextMenuInfo info = (AdapterView.AdapterContextMenuInfo) item.getMenuInfo();
-        CompactItinerary itin = (CompactItinerary) adapter.getItem(info.position);
+        Itinerary itin = (Itinerary) adapter.getItem(info.position);
+        itineraryController.executeDeleteItinerary(itin);
 
-        BaseAsyncResultReceiver receiver = new BaseAsyncResultReceiver(new Handler());
-        receiver.setListener(new BaseAsyncRequestTask.AsyncReplyListener() {
-            @Override
-            public void onRequestSuccess(Bundle resultData) {
-                boolean isSuccess = resultData.getBoolean(AbstractItineraryDeleteRequest.IS_SUCCESS, false);
-                if (isSuccess) {
-                    Toast.makeText(ItineraryOverviewActivity.this, "@Success@", Toast.LENGTH_SHORT).show();
-                    ItineraryOverviewActivity.this.itineraryController.registerListener(ItineraryOverviewActivity.this);
-                    ItineraryOverviewActivity.this.itineraryController.refreshItineraries(
-                            ItineraryOverviewActivity.this.expenseReportKey, false);
-                } else {
-                    Message msg = (Message) resultData
-                            .getSerializable(AbstractItineraryDeleteRequest.RESULT_BUNDLE_ID_MESSAGE);
-                    if (msg != null) {
-                        Toast.makeText(ItineraryOverviewActivity.this, "@Failed@", Toast.LENGTH_SHORT).show();
-                    }
-                }
-            }
-
-            @Override
-            public void onRequestFail(Bundle resultData) {
-                Toast.makeText(ItineraryOverviewActivity.this, "@Failed@", Toast.LENGTH_SHORT).show();
-            }
-
-            @Override
-            public void onRequestCancel(Bundle resultData) {
-
-            }
-
-            @Override
-            public void cleanup() {
-
-            }
-        });
-
-        DeleteItineraryRequest deleteRequest = new DeleteItineraryRequest(this, receiver, itin.getItineraryID());
-        deleteRequest.execute();
 
         return true;
     }
@@ -213,12 +172,14 @@ public class ItineraryOverviewActivity extends BaseActivity implements IControll
 
     @Override
     public void actionFinished(IController controller, ControllerAction action, boolean isSuccess, Bundle result) {
-        if (isSuccess) {
-            this.adapter.clear();
-            this.adapter.addAll(itineraryController.getCompactItineraryList());
-            this.adapter.notifyDataSetChanged();
-        } else {
-            Toast.makeText(ItineraryOverviewActivity.this, "@List reftresh Failed@", Toast.LENGTH_SHORT).show();
+        if (action == ControllerAction.DELETE) {
+            if (isSuccess) {
+                this.adapter.clear();
+                this.adapter.addAll(itineraryController.getItineraryList());
+                this.adapter.notifyDataSetChanged();
+            } else {
+                Toast.makeText(ItineraryOverviewActivity.this, "@List reftresh Failed@", Toast.LENGTH_SHORT).show();
+            }
         }
     }
 }

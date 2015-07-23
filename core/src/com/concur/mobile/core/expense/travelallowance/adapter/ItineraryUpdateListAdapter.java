@@ -7,6 +7,7 @@ import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.concur.core.R;
@@ -58,6 +59,7 @@ public class ItineraryUpdateListAdapter extends ArrayAdapter<Object> {
         private View vgArrivalTime;
         private TextView tvArrivalTimeLabel;
         private TextView tvArrivalTimeValue;
+        private ImageView icon;
     }
 
     public ItineraryUpdateListAdapter(final Context context, final OnClickListener onLocationClickListener,
@@ -81,6 +83,7 @@ public class ItineraryUpdateListAdapter extends ArrayAdapter<Object> {
     private void createViewHolder(final View view) {
         holder = new ViewHolder();
         holder.tvTitle = (TextView) view.findViewById(R.id.tv_title);
+        holder.icon = (ImageView) view.findViewById(R.id.iv_icon);
         holder.vDepartureLocation = view.findViewById(R.id.v_departure_location);
         if (holder.vDepartureLocation != null) {
             holder.vgDepartureLocation = holder.vDepartureLocation.findViewById(R.id.vg_location);
@@ -226,6 +229,13 @@ public class ItineraryUpdateListAdapter extends ArrayAdapter<Object> {
             holder.tvTitle.setError(segment.getMessage().getMessageText(context));
         } else {
             holder.tvTitle.setError(null);
+        }
+
+        if (segment.isLocked()) {
+            holder.icon.setImageResource(R.drawable.profile_icon_bank);
+            holder.icon.setVisibility(View.VISIBLE);
+        } else {
+            holder.icon.setVisibility(View.GONE);
         }
     }
 

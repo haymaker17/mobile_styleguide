@@ -6,16 +6,21 @@ import android.os.AsyncTask;
 import android.os.Bundle;
 import android.os.Handler;
 import android.util.Log;
+import android.widget.Toast;
 
 import com.concur.mobile.base.service.BaseAsyncRequestTask;
 import com.concur.mobile.base.service.BaseAsyncResultReceiver;
 import com.concur.mobile.core.expense.travelallowance.datamodel.Itinerary;
 import com.concur.mobile.core.expense.travelallowance.datamodel.ItinerarySegment;
+import com.concur.mobile.core.expense.travelallowance.datamodel.SynchronizationStatus;
+import com.concur.mobile.core.expense.travelallowance.service.AbstractItineraryDeleteRequest;
+import com.concur.mobile.core.expense.travelallowance.service.DeleteItineraryRequest;
 import com.concur.mobile.core.expense.travelallowance.service.GetTAItinerariesRequest;
 import com.concur.mobile.core.expense.travelallowance.service.SaveItineraryRequest;
 import com.concur.mobile.core.expense.travelallowance.ui.model.CompactItinerary;
 import com.concur.mobile.core.expense.travelallowance.ui.model.CompactItinerarySegment;
 import com.concur.mobile.core.expense.travelallowance.util.BundleId;
+import com.concur.mobile.core.expense.travelallowance.util.Message;
 import com.concur.mobile.core.expense.travelallowance.util.StringUtilities;
 
 import java.util.ArrayList;
@@ -302,5 +307,55 @@ public class TravelAllowanceItineraryController extends BaseController {
         }else {
             return false;
         }
+    }
+
+    public void executeDeleteItinerary(final Itinerary itinerary) {
+        BaseAsyncResultReceiver receiver = new BaseAsyncResultReceiver(new Handler());
+        receiver.setListener(new BaseAsyncRequestTask.AsyncReplyListener() {
+            @Override
+            public void onRequestSuccess(Bundle resultData) {
+                boolean isSuccess = resultData.getBoolean(AbstractItineraryDeleteRequest.IS_SUCCESS, false);
+                if (isSuccess) {
+                    itineraryList.remove(itinerary);
+                    notifyListener(ControllerAction.DELETE, true, null);
+                } else {
+                    Message msg = (Message) resultData
+                            .getSerializable(AbstractItineraryDeleteRequest.RESULT_BUNDLE_ID_MESSAGE);
+                    if (msg != null) {
+                        Itinerary itin = getItinerary(itinerary.getItineraryID());
+                        if (itin != null) {
+                            itin.setMessage(msg);
+                            itin.setSyncStatus(SynchronizationStatus.FAILED);
+                        }
+                    }
+                    notifyListener(ControllerAction.DELETE, false, resultData);
+                }
+            }
+
+            @Override
+            public void onRequestFail(Bundle resultData) {
+                Itinerary itin = getItinerary(itinerary.getItineraryID());
+                if (itin != null) {
+                    Message msg = new Message(Message.Severity.ERROR, "@ Delete Failed @");
+                    itin.setMessage(msg);
+                    itin.setSyncStatus(SynchronizationStatus.FAILED);
+                    resultData.putSerializable(AbstractItineraryDeleteRequest.RESULT_BUNDLE_ID_MESSAGE, msg);
+                }
+                notifyListener(ControllerAction.DELETE, false, resultData);
+            }
+
+            @Override
+            public void onRequestCancel(Bundle resultData) {
+
+            }
+
+            @Override
+            public void cleanup() {
+
+            }
+        });
+
+        DeleteItineraryRequest deleteRequest = new DeleteItineraryRequest(context, receiver, itinerary.getItineraryID());
+        deleteRequest.execute();
     }
 }

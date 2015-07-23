@@ -5,12 +5,13 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.concur.core.R;
 import com.concur.mobile.core.ConcurCore;
 import com.concur.mobile.core.expense.travelallowance.controller.TravelAllowanceItineraryController;
-import com.concur.mobile.core.expense.travelallowance.ui.model.CompactItinerary;
+import com.concur.mobile.core.expense.travelallowance.datamodel.Itinerary;
 
 /**
  * Created by Michael Becherer on 16-Jul-15.
@@ -53,6 +54,7 @@ public class ItineraryOverviewListAdapter  extends ArrayAdapter<Object> {
         private TextView tvSubtitle1;
         private TextView tvSubtitle2;
         private View vDividerBottom;
+        private ImageView icon;
     }
 
     public ItineraryOverviewListAdapter(Context context) {
@@ -61,7 +63,7 @@ public class ItineraryOverviewListAdapter  extends ArrayAdapter<Object> {
 
         ConcurCore app = (ConcurCore) context.getApplicationContext();
         this.itineraryController = app.getTaItineraryController();
-        addAll(itineraryController.getCompactItineraryList());
+        addAll(itineraryController.getItineraryList());
     }
 
     /**
@@ -71,7 +73,7 @@ public class ItineraryOverviewListAdapter  extends ArrayAdapter<Object> {
     public View getView(int i, View convertView, ViewGroup viewGroup) {
 
         View resultView = null;
-        CompactItinerary compactItinerary = (CompactItinerary) getItem(i);
+        Itinerary itinerary = (Itinerary) getItem(i);
 
         if (convertView == null) {
             LayoutInflater inflater = (LayoutInflater) this.context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
@@ -83,7 +85,7 @@ public class ItineraryOverviewListAdapter  extends ArrayAdapter<Object> {
             holder = (ViewHolder) resultView.getTag();
         }
 
-        renderViews(compactItinerary);
+        renderViews(itinerary);
         return resultView;
     }
 
@@ -100,18 +102,31 @@ public class ItineraryOverviewListAdapter  extends ArrayAdapter<Object> {
         holder.tvSubtitle2 = (TextView) view.findViewById(R.id.tv_subtitle_2);
         holder.vDividerTop = view.findViewById(R.id.v_divider_top);
         holder.vDividerBottom = view.findViewById(R.id.v_divider_bottom);
+        holder.icon = (ImageView) view.findViewById(R.id.iv_icon);
     }
 
     /**
      * Populates the view content and controls the visibility of the views
      */
-    private void renderViews(CompactItinerary compactItinerary) {
-        if (compactItinerary == null) {
+    private void renderViews(Itinerary itinerary) {
+        if (itinerary == null) {
             return;
         }
         if (holder.tvTitle != null) {
             holder.tvTitle.setVisibility(View.VISIBLE);
-            holder.tvTitle.setText(compactItinerary.getName());
+            holder.tvTitle.setText(itinerary.getName());
+            if (itinerary.getMessage() != null) {
+                holder.tvTitle.setError(itinerary.getMessage().getMessageText());
+            } else {
+                holder.tvTitle.setError(null);
+            }
+
+            if (itinerary.isLocked()) {
+                holder.icon.setVisibility(View.VISIBLE);
+                holder.icon.setImageResource(R.drawable.profile_icon_bank);
+            } else {
+                holder.icon.setVisibility(View.GONE);
+            }
         }
         if (holder.tvValue != null) {
             holder.tvValue.setVisibility(View.GONE);

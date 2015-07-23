@@ -1,5 +1,7 @@
 package com.concur.mobile.core.expense.travelallowance.datamodel;
 
+import com.concur.mobile.core.expense.travelallowance.util.Message;
+
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
@@ -17,6 +19,7 @@ public class Itinerary implements Serializable{
     private SynchronizationStatus syncStatus;
     private boolean locked;
     private List<ItinerarySegment> segmentList;
+    private Message message;
 
     public String getItineraryID() {
         return itineraryID;
@@ -67,6 +70,22 @@ public class Itinerary implements Serializable{
 
     public void setLocked(boolean locked) {
         this.locked = locked;
+    }
+
+    /**
+     * Setter method
+     * @param message The message object to be set
+     */
+    public void setMessage(Message message) {
+        this.message = message;
+    }
+
+    /**
+     * Getter method
+     * @return The message object
+     */
+    public Message getMessage() {
+        return this.message;
     }
 
     @Override
