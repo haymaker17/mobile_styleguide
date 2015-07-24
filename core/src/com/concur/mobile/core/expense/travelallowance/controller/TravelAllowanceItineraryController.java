@@ -242,7 +242,11 @@ public class TravelAllowanceItineraryController extends BaseController {
             public void onRequestSuccess(Bundle resultData) {
                 Itinerary resultItinerary = (Itinerary) resultData.getSerializable(BundleId.ITINERARY);
                 setItinerary(resultItinerary);
-                notifyListener(ControllerAction.UPDATE, true, resultData);
+                if (resultItinerary.getSyncStatus() == SynchronizationStatus.FAILED) {
+                    notifyListener(ControllerAction.UPDATE, false, resultData);
+                } else {
+                    notifyListener(ControllerAction.UPDATE, true, resultData);
+                }
             }
 
             @Override
