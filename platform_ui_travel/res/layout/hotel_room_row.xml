@@ -25,7 +25,7 @@
             android:fontFamily="sans-serif-medium"
             android:maxLines="3"
             android:textColor="#383f46"
-            android:textSize="16sp"/>
+            android:textSize="14sp"/>
 
         <TextView
             android:id="@+id/travel_points_text"

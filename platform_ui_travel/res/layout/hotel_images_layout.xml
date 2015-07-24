@@ -1,10 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:orientation="vertical" >
+              android:layout_width="match_parent"
+              android:layout_height="match_parent"
+              android:orientation="vertical">
 
-    <GridView
+    <com.concur.mobile.platform.ui.travel.view.CustomGridView
         android:id="@+id/gridview"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
@@ -16,7 +16,8 @@
         android:numColumns="2"
         android:padding="6dp"
         android:stretchMode="columnWidth"
-        android:verticalSpacing="@dimen/image_thumbnail_spacing" />
+        android:verticalSpacing="@dimen/image_thumbnail_spacing"
+        android:scrollbars="none"/>
 
     <TextView
         android:id="@+id/no_photos"
@@ -31,6 +32,6 @@
         android:text="@string/no_photos"
         android:textColor="#383f46"
         android:textSize="16sp"
-        android:visibility="gone" />
+        android:visibility="gone"/>
 
 </LinearLayout>

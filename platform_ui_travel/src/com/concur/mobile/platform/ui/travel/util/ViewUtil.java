@@ -5,9 +5,12 @@ import android.text.Spannable;
 import android.text.style.URLSpan;
 import android.text.util.Linkify;
 import android.util.DisplayMetrics;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ListAdapter;
+import android.widget.ListView;
 import android.widget.TextView;
 import com.concur.mobile.platform.travel.search.hotel.HotelPreference;
 import com.concur.mobile.platform.travel.search.hotel.HotelRecommended;
@@ -25,6 +28,7 @@ import java.util.List;
 public class ViewUtil {
 
     public static final String CLS_TAG = ViewUtil.class.getSimpleName();
+    private static final int UNBOUNDED = View.MeasureSpec.makeMeasureSpec(0, View.MeasureSpec.UNSPECIFIED);
 
     /**
      * Get the hotel company preferred localized string id
@@ -246,6 +250,60 @@ public class ViewUtil {
         DisplayMetrics displayMetrics = context.getResources().getDisplayMetrics();
         int px = Math.round(dp * (displayMetrics.xdpi / DisplayMetrics.DENSITY_DEFAULT));
         return px;
+    }
+
+    /**
+     * @param myListView calculate the listView size
+     */
+    public static void getListViewSize(ListView myListView) {
+        ListAdapter myListAdapter = myListView.getAdapter();
+        if (myListAdapter == null) {
+            //do nothing return null
+            return;
+        }
+
+        //set listAdapter in loop for getting final size
+        int totalHeight = 0;
+        for (int size = 0; size < myListAdapter.getCount(); size++) {
+            View listItem = myListAdapter.getView(size, null, myListView);
+            listItem.measure(UNBOUNDED, UNBOUNDED);
+
+            totalHeight += listItem.getMeasuredHeight();
+        }
+        //setting listview item in adapter
+        ViewGroup.LayoutParams params = myListView.getLayoutParams();
+        params.height = totalHeight + 50 + (myListView.getDividerHeight() * (myListAdapter.getCount()));
+        myListView.setLayoutParams(params);
+        // print height of adapter on log
+        Log.i("height of listItem:", String.valueOf(totalHeight));
+    }
+
+    /**
+     * Verify the scroll option for gridView
+     *
+     * @param v
+     * @param checkV
+     * @param dy
+     * @param x
+     * @param y
+     * @return
+     */
+    public static boolean canScroll(View v, boolean checkV, int dy, int x, int y) {
+        if (v instanceof ViewGroup) {
+            final ViewGroup group = (ViewGroup) v;
+            final int scrollX = v.getScrollX();
+            final int scrollY = v.getScrollY();
+            final int count = group.getChildCount();
+            for (int i = count - 1; i >= 0; i--) {
+                final View child = group.getChildAt(i);
+                if (x + scrollX >= child.getLeft() && x + scrollX < child.getRight() && y + scrollY >= child.getTop()
+                        && y + scrollY < child.getBottom() && canScroll(child, true, dy, x + scrollX - child.getLeft(),
+                        y + scrollY - child.getTop())) {
+                    return true;
+                }
+            }
+        }
+        return checkV;
     }
 
 }
