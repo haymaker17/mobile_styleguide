@@ -1,5 +1,7 @@
 package com.concur.mobile.core.expense.travelallowance.datamodel;
 
+//import com.concur.mobile.core.expense.travelallowance.util.DateComparator;
+import com.concur.mobile.core.expense.travelallowance.util.DateComparator;
 import com.concur.mobile.core.expense.travelallowance.util.DateUtils;
 import com.concur.mobile.core.expense.travelallowance.util.Message;
 
@@ -9,7 +11,7 @@ import java.util.Date;
 /**
  * Created by D049515 on 23.06.2015.
  */
-public class ItinerarySegment implements Serializable, IDatePeriodUTC {
+public class ItinerarySegment implements Serializable, IDatePeriodUTC, Comparable<ItinerarySegment> {
 
 
     private static final long serialVersionUID = -5416179865430781088L;
@@ -123,6 +125,40 @@ public class ItinerarySegment implements Serializable, IDatePeriodUTC {
         return dateUTC;
     }
 
+    @Override
+    public int compareTo(ItinerarySegment o) {
+
+        if (o == null){
+            return -1;
+        }
+        //First handle the cases tha at least one Departure date is null
+        if (this.getDepartureDateTime() == null) {
+            if (o.getDepartureDateTime() == null) {
+                return 0;
+            } else {
+                return -1;
+            }
+        } else if (o.getDepartureDateTime() == null) {
+            return 1;
+        }
+
+        DateComparator dateComparator = new DateComparator();
+        return dateComparator.compare(this.getStartDateUTC(), o.getStartDateUTC());
+
+        /*
+        long diff = this.getStartDateUTC().getTime() -  o.getStartDateUTC().getTime();
+        if (diff < 0){
+            return -1;
+        }else if (diff == 0) {
+            return 0;
+        } else {
+            return 1;
+        }
+
+*/
+
+       //return 0;
+    }
 
     @Override
     public boolean equals(Object o) {

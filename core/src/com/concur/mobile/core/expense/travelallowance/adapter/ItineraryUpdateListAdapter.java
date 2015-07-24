@@ -31,7 +31,7 @@ public class ItineraryUpdateListAdapter extends ArrayAdapter<Object> {
     private OnClickListener onTimeClickListener;
     private OnClickListener onDateClickListener;
     private OnClickListener onLocationClickListener;
-    private Boolean isSaveTriggered;
+    private boolean isSaveTriggered;
 
     /**
      * Holds all UI controls needed for rendering
