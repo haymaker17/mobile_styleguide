@@ -323,7 +323,7 @@ public final class Const {
     public static final String MOBILE_SHOW_P2B_GENERATOR = "ShowP2BGenerator";
 
     // Show Jarvis Hotel UI
-    public static final String SHOW_JARVIS_HOTEL_UI = "ShowHotelJarvisUIOnAndroid";
+    public static final String SHOW_JARVIS_HOTEL_UI = "ShowJarvisHotelUIOnAndroid";
 
     // The default ip/port for the MWS.
     public static final String BREEZE_WEB_ADDRESS = "https://www.concurbreeze.com/login";

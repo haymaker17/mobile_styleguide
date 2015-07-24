@@ -871,16 +871,11 @@ public class HotelBookingActivity extends TravelBaseActivity implements SpinnerD
             enableReserveLayout(false);
             boolean hasAllRequiredFields = true;
             StringBuffer requiredFieldsMsg = new StringBuffer();
-            // get selected credit card
-            String selectedCreditCardId = null;
-            if (cardChoices != null) {
-                if (curCardChoice == null) {
-                    // show credit card required message
-                    requiredFieldsMsg.append(getString(R.string.book_missing_field_card_selection));
-                    hasAllRequiredFields = false;
-                } else {
-                    selectedCreditCardId = curCardChoice.id;
-                }
+
+            if (cardChoices == null || curCardChoice == null) {
+                // show credit card required message
+                requiredFieldsMsg.append(getString(R.string.book_missing_field_card_selection));
+                hasAllRequiredFields = false;
             }
 
             // get selected violation reason and justification
@@ -984,10 +979,6 @@ public class HotelBookingActivity extends TravelBaseActivity implements SpinnerD
                         dialog.dismiss();
                     }
                 };
-                //                AlertDialogFragmentV1 dialog = DialogFragmentFactoryV1
-                //                        .getAlertDialog(getString(R.string.hotel_confirm_reserve_title), getString(msgResourse),
-                //                                R.string.hotel_confirm_reserve_ok, R.string.hotel_confirm_reserve_cancel, 0,
-                //                                okayListener, null, null, null);
 
                 AlertDialogFragmentV1 dialog = new AlertDialogFragmentV1();
                 dialog.setTitle(R.string.hotel_confirm_reserve_title);
@@ -998,15 +989,6 @@ public class HotelBookingActivity extends TravelBaseActivity implements SpinnerD
                 dialog.setNegativeButtonListener(cancelListener);
                 dialog.setCancelListener(cancelListener);
                 dialog.show(getFragmentManager(), DIALOG_FRAGMENT_ID);
-
-                //                CustomDialogFragment dialog = new CustomDialogFragment();
-                //
-                //                dialog.setTitle(R.string.hotel_confirm_reserve_title);
-                //                dialog.setMessage(R.string.hotel_confirm_reserve_msg);
-                //                dialog.setPositiveButtonText(R.string.hotel_confirm_reserve_ok);
-                //                dialog.setNegativeButtonText(R.string.hotel_confirm_reserve_cancel);
-                //
-                //                dialog.show(getFragmentManager(), DIALOG_FRAGMENT_ID);
 
             } else {
                 // show the required fields messages
