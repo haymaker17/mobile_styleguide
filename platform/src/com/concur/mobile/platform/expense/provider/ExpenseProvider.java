@@ -526,6 +526,8 @@ public class ExpenseProvider extends PlatformContentProvider {
         expenseItReceiptProjMap.put(Expense.ExpenseItReceiptColumns.TOTAL_IMAGES_UPLOADED,Expense.ExpenseItReceiptColumns.TOTAL_IMAGES_UPLOADED);
         expenseItReceiptProjMap.put(Expense.ExpenseItReceiptColumns.PARSING_STATUS_CODE,Expense.ExpenseItReceiptColumns.PARSING_STATUS_CODE);
         expenseItReceiptProjMap.put(Expense.ExpenseItReceiptColumns.PROCESSING_ENGINE,Expense.ExpenseItReceiptColumns.PROCESSING_ENGINE);
+        expenseItReceiptProjMap.put(Expense.ExpenseItReceiptColumns.ERROR_CODE,Expense.ExpenseItReceiptColumns.ERROR_CODE);
+        expenseItReceiptProjMap.put(Expense.ExpenseItReceiptColumns.ERROR_MESSAGE,Expense.ExpenseItReceiptColumns.ERROR_MESSAGE);
         expenseItReceiptProjMap.put(Expense.ExpenseItReceiptColumns.ETA,Expense.ExpenseItReceiptColumns.ETA);
     }
 

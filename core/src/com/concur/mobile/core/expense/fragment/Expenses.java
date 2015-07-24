@@ -2473,7 +2473,7 @@ public class Expenses extends BaseFragment implements INetworkActivityListener {
                 String[] whereArgs = {activity.getUserId()};
 
                 cursor = resolver.query(com.concur.mobile.platform.expense.provider.Expense.ExpenseItReceiptColumns.CONTENT_URI,
-                        ExpenseItReceipt.fullColumnList, where, whereArgs,
+                        null, where, whereArgs,
                         com.concur.mobile.platform.expense.provider.Expense.ExpenseItReceiptColumns.DEFAULT_SORT_ORDER);
                 if (cursor != null) {
                     while (cursor.moveToNext()) {

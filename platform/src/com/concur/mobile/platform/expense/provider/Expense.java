@@ -772,6 +772,8 @@ public class Expense {
         public static final String TOTAL_IMAGES_UPLOADED = "TOTAL_IMAGES_UPLOADED";
         public static final String PARSING_STATUS_CODE = "PARSING_STATUS_CODE";
         public static final String PROCESSING_ENGINE = "PROCESSING_ENGINE";
+        public static final String ERROR_CODE = "ERROR_CODE";
+        public static final String ERROR_MESSAGE = "ERROR_MESSAGE";
         public static final String ETA = "ETA";
         // End Column Definitions
     }

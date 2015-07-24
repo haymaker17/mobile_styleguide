@@ -792,6 +792,10 @@ public class ExpenseDBSchema {
 
         + Expense.ExpenseItReceiptColumns.PROCESSING_ENGINE + " TEXT, "
 
+        + Expense.ExpenseItReceiptColumns.ERROR_CODE + " INTEGER, "
+
+        + Expense.ExpenseItReceiptColumns.ERROR_MESSAGE + " TEXT, "
+
         + Expense.ExpenseItReceiptColumns.ETA + " INTEGER, "
 
         + Expense.ExpenseItReceiptColumns.USER_ID + " TEXT"

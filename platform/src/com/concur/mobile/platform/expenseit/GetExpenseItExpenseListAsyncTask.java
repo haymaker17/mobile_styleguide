@@ -165,6 +165,12 @@ public class GetExpenseItExpenseListAsyncTask extends ExpenseItAsyncRequestTask 
                 expenseItReceipt.setProcessingEngine(receipt.getProcessingEngine());
                 expenseItReceipt.setEta(receipt.getEta());
 
+                // Handle rubicon errors.
+                if(receipt.getExpenseError() != null) {
+                    expenseItReceipt.setErrorCode(receipt.getExpenseErrorCode());
+                    expenseItReceipt.setErrorMessage(receipt.getExpenseErrorMessage());
+                }
+
                 if (!expenseItReceipt.update(getContext(), userId)) {
                     Log.e(Const.LOG_TAG, CLS_TAG + ".onPostParse: failed to update ExpenseIt Receipt DAO!");
                 }
