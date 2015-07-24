@@ -29,6 +29,7 @@ import com.concur.mobile.core.expense.travelallowance.controller.ControllerActio
 import com.concur.mobile.core.expense.travelallowance.controller.IController;
 import com.concur.mobile.core.expense.travelallowance.controller.IControllerListener;
 import com.concur.mobile.core.expense.travelallowance.controller.TravelAllowanceItineraryController;
+import com.concur.mobile.core.expense.travelallowance.datamodel.CodeListManager;
 import com.concur.mobile.core.expense.travelallowance.datamodel.Itinerary;
 import com.concur.mobile.core.expense.travelallowance.datamodel.ItineraryLocation;
 import com.concur.mobile.core.expense.travelallowance.datamodel.ItinerarySegment;
@@ -280,6 +281,9 @@ public class ItineraryUpdateActivity extends BaseActivity implements IController
                         if (segment.getArrivalLocation() != null) {
                             itinLocation.setRateLocationKey(segment.getArrivalLocation().getRateLocationKey());
                         }
+                        //Update the cache
+                        CodeListManager clmgr = CodeListManager.getInstance();
+                        clmgr.updateItineraryLocation(itinLocation);
                         if (currentPosition.getInfo() == PositionInfoTag.INFO_OUTBOUND) {
                             segment.setDepartureLocation(itinLocation);
                         } else {
@@ -349,6 +353,23 @@ public class ItineraryUpdateActivity extends BaseActivity implements IController
         MenuInflater inflater = getMenuInflater();
         inflater.inflate(R.menu.itinerary_save_menu, menu);
         return super.onCreateOptionsMenu(menu);
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public boolean onPrepareOptionsMenu (Menu menu) {
+        if (this.itinerary.isLocked()) {
+            for (int i = 0; i < menu.size(); i++){
+                MenuItem item = menu.getItem(i);
+                if (item.getItemId() == R.id.menuSave) {
+                    item.setVisible(false);
+                    //item.setEnabled(false);
+                }
+            }
+        }
+        return true;
     }
 
     @Override
