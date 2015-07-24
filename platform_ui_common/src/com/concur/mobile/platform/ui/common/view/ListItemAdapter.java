@@ -1,13 +1,13 @@
 package com.concur.mobile.platform.ui.common.view;
 
-import java.util.ArrayList;
-import java.util.List;
-
 import android.content.Context;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 import android.widget.ListView;
+
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * An extension of <code>BaseAdapter</code>.
@@ -31,11 +31,9 @@ public class ListItemAdapter<T extends ListItem> extends BaseAdapter {
 
     /**
      * Constructs an instance of <code>ListItemAdapter</code> given a context and a list of items.
-     * 
-     * @param context
-     *            the context.
-     * @param listItems
-     *            the item list.
+     *
+     * @param context   the context.
+     * @param listItems the item list.
      */
     public ListItemAdapter(Context context, List<T> listItems) {
         this(context, listItems, -1);
@@ -45,14 +43,11 @@ public class ListItemAdapter<T extends ListItem> extends BaseAdapter {
      * Constructs an instance of <code>ListItemAdapter</code> given a context and a list of items. This version sets the maximum
      * view types to the highest possible view type count even if fewer than that will be in the list. This is to handle a problem
      * where the underlying implementation uses the view type integer as an index into an array with maxViewTypes elements.
-     * 
-     * @param context
-     *            the context.
-     * @param listItems
-     *            the item list.
-     * @param maxViewTypes
-     *            the maximum number of view types that are defined for this list regardless of whether they will actually be in
-     *            the list this time
+     *
+     * @param context      the context.
+     * @param listItems    the item list.
+     * @param maxViewTypes the maximum number of view types that are defined for this list regardless of whether they will actually be in
+     *                     the list this time
      */
     public ListItemAdapter(Context context, List<T> listItems, int maxViewTypes) {
         this.listItems = listItems;
@@ -62,9 +57,8 @@ public class ListItemAdapter<T extends ListItem> extends BaseAdapter {
 
     /**
      * Sets the list of items.
-     * 
-     * @param listItems
-     *            the list of items.
+     *
+     * @param listItems the list of items.
      */
     public void setItems(List<T> listItems) {
         this.listItems = listItems;
@@ -74,7 +68,7 @@ public class ListItemAdapter<T extends ListItem> extends BaseAdapter {
 
     /**
      * Gets the list of items.
-     * 
+     *
      * @return the list of items.
      */
     public List<T> getItems() {
@@ -200,22 +194,22 @@ public class ListItemAdapter<T extends ListItem> extends BaseAdapter {
 
     /**
      * Will refresh each visible view contained in a list view that match on <code>ListItem.listItemTag</code>.
-     * 
-     * @param listView
-     *            contains the list view instance.
-     * @param listItemTag
-     *            contains the tag identifying the views that should be refreshed.
+     *
+     * @param listView    contains the list view instance.
+     * @param listItemTag contains the tag identifying the views that should be refreshed.
      */
     public void refreshView(ListView listView, Object listItemTag) {
-        int start = listView.getFirstVisiblePosition();
-        for (int i = start, j = listView.getLastVisiblePosition(); i <= j; i++) {
-            T listItem = getItem(i);
-            // NOTE: Need to check for 'listItem' not being null as the last visible position within the list
-            // could be a list footer, which accounts for a visible position, but not reflecting any data
-            // within the adapter.
-            if (listItem != null && listItem.listItemTag != null && listItem.listItemTag.equals(listItemTag)) {
-                View view = listView.getChildAt(i - start);
-                getView(i, view, listView);
+        if (listView != null) {
+            int start = listView.getFirstVisiblePosition();
+            for (int i = start, j = listView.getLastVisiblePosition(); i <= j; i++) {
+                T listItem = getItem(i);
+                // NOTE: Need to check for 'listItem' not being null as the last visible position within the list
+                // could be a list footer, which accounts for a visible position, but not reflecting any data
+                // within the adapter.
+                if (listItem != null && listItem.listItemTag != null && listItem.listItemTag.equals(listItemTag)) {
+                    View view = listView.getChildAt(i - start);
+                    getView(i, view, listView);
+                }
             }
         }
     }

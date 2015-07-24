@@ -1,19 +1,10 @@
 package com.concur.mobile.platform.service;
 
-import java.sql.Date;
-import java.util.Locale;
-import java.util.concurrent.CountDownLatch;
-
 import android.annotation.SuppressLint;
 import android.content.Context;
-import android.os.AsyncTask;
-import android.os.Build;
-import android.os.Bundle;
-import android.os.Handler;
-import android.os.HandlerThread;
+import android.os.*;
 import android.text.TextUtils;
 import android.util.Log;
-
 import com.concur.mobile.base.service.BaseAsyncRequestTask;
 import com.concur.mobile.base.service.BaseAsyncRequestTask.AsyncReplyListener;
 import com.concur.mobile.base.service.BaseAsyncResultReceiver;
@@ -26,11 +17,15 @@ import com.concur.mobile.platform.util.Format;
 import com.concur.mobile.platform.util.Parse;
 import com.concur.platform.PlatformProperties;
 
+import java.sql.Date;
+import java.util.Locale;
+import java.util.concurrent.CountDownLatch;
+
 /**
  * Provides an implementation of <code>PlatformManager</code> for handling session management. <br>
  * <br>
  * <b>NOTE:</b> Only <code>MWSPlatformManager.PPLogin</code> authentication type is currently supported for re-authentication.
- * 
+ *
  * @author andrewk
  */
 public class MWSPlatformManager implements PlatformManager {
@@ -64,7 +59,9 @@ public class MWSPlatformManager implements PlatformManager {
      */
     public static enum AuthenticationType {
         PPLogin, SSO
-    };
+    }
+
+    ;
 
     /**
      * Contains the type of authentication.
@@ -104,9 +101,8 @@ public class MWSPlatformManager implements PlatformManager {
 
     /**
      * Will set whether or not auto-login is enabled.
-     * 
-     * @param autoLoginEnabled
-     *            contains whether or not auto-login is enabled.
+     *
+     * @param autoLoginEnabled contains whether or not auto-login is enabled.
      */
     public void setAutoLoginEnabled(boolean autoLoginEnabled) {
         this.autoLoginEnabled = autoLoginEnabled;
@@ -114,9 +110,8 @@ public class MWSPlatformManager implements PlatformManager {
 
     /**
      * Will set the authentication type.
-     * 
-     * @param authType
-     *            contains a reference to the authentication type.
+     *
+     * @param authType contains a reference to the authentication type.
      */
     public void setAuthenticationType(AuthenticationType authType) {
         this.authType = authType;
@@ -124,19 +119,16 @@ public class MWSPlatformManager implements PlatformManager {
 
     /**
      * Will set the authentication credentials for a pin/password authentication type.
-     * 
-     * @param ppLoginId
-     *            contains the login id.
-     * @param ppLoginPinPassword
-     *            contains the pin/password.
+     *
+     * @param ppLoginId          contains the login id.
+     * @param ppLoginPinPassword contains the pin/password.
      */
     public void setPPLoginAuthenticationInfo(String ppLoginId, String ppLoginPinPassword) {
         this.ppLoginId = ppLoginId;
         this.ppLoginPinPassword = ppLoginPinPassword;
     }
 
-    @Override
-    public int onRequestStarted(Context context, PlatformAsyncRequestTask request, Bundle resultData) {
+    @Override public int onRequestStarted(Context context, PlatformAsyncRequestTask request, Bundle resultData) {
 
         int retVal = BaseAsyncRequestTask.RESULT_OK;
 
@@ -164,9 +156,8 @@ public class MWSPlatformManager implements PlatformManager {
                         resultData.putBoolean(REAUTHENTICATION_NEEDED_KEY, Boolean.TRUE);
 
                         if (!TextUtils.isEmpty(ppLoginId) && !TextUtils.isEmpty(ppLoginPinPassword)) {
-                            Log.d(Const.LOG_TAG,
-                                    CLS_TAG
-                                            + ".onRequestStarted: session expired, auth-type is PPLogin, attempting re-authentication.");
+                            Log.d(Const.LOG_TAG, CLS_TAG
+                                    + ".onRequestStarted: session expired, auth-type is PPLogin, attempting re-authentication.");
                             retVal = renewPPLoginSession(context, resultData);
                         } else {
 
@@ -174,9 +165,8 @@ public class MWSPlatformManager implements PlatformManager {
                             resultData.putBoolean(REAUTHENTICATION_ATTEMPTED_KEY, Boolean.FALSE);
 
                             if (DEBUG) {
-                                Log.d(Const.LOG_TAG,
-                                        CLS_TAG
-                                                + ".onRequestStarted: session expired, auth-type is PPLogin, missing credentials.");
+                                Log.d(Const.LOG_TAG, CLS_TAG
+                                        + ".onRequestStarted: session expired, auth-type is PPLogin, missing credentials.");
                             }
                             retVal = BaseAsyncRequestTask.RESULT_CANCEL;
                         }
@@ -200,7 +190,8 @@ public class MWSPlatformManager implements PlatformManager {
                 } else {
 
                     if (DEBUG) {
-                        Log.d(Const.LOG_TAG, CLS_TAG + ".onRequestStarted: session expired, but auto-login turned-off.");
+                        Log.d(Const.LOG_TAG,
+                                CLS_TAG + ".onRequestStarted: session expired, but auto-login turned-off.");
                     }
                     // Set the re-authentication is required flag.
                     resultData.putBoolean(REAUTHENTICATION_NEEDED_KEY, Boolean.TRUE);
@@ -230,9 +221,8 @@ public class MWSPlatformManager implements PlatformManager {
 
     /**
      * Will determine whether a session has expired.
-     * 
-     * @param sessionInfo
-     *            contains a reference to a <code>SessionInfo</code> object.
+     *
+     * @param sessionInfo contains a reference to a <code>SessionInfo</code> object.
      * @return returns <code>true</code> if the session has expired; <code>false</code> otherwise.
      */
     public boolean isSessionExpired(SessionInfo sessionInfo) {
@@ -242,7 +232,7 @@ public class MWSPlatformManager implements PlatformManager {
             Long curTimeMillis = System.currentTimeMillis();
             if (sessionExpirationTime != null) {
                 if (sessionExpirationTime == 0L || (curTimeMillis > sessionExpirationTime)
-                        || (sessionExpirationTime - curTimeMillis) <= 300000L) {
+                    || (sessionExpirationTime - curTimeMillis) <= 300000L) {
                     retVal = true;
                 } else {
                     retVal = false;
@@ -258,13 +248,11 @@ public class MWSPlatformManager implements PlatformManager {
 
     /**
      * Will renew a session based on executing a PPLogin request.
-     * 
-     * @param resultData
-     *            contains a reference to the result data.
+     *
+     * @param resultData contains a reference to the result data.
      * @return contains whether or not the session was renewed.
      */
-    @SuppressLint("NewApi")
-    protected int renewPPLoginSession(Context context, Bundle resultData) {
+    @SuppressLint("NewApi") protected int renewPPLoginSession(Context context, Bundle resultData) {
 
         int resultCode = BaseAsyncRequestTask.RESULT_OK;
 
@@ -341,8 +329,7 @@ public class MWSPlatformManager implements PlatformManager {
         return resultCode;
     }
 
-    @Override
-    public void onRequestCompleted(Context context, PlatformAsyncRequestTask request) {
+    @Override public void onRequestCompleted(Context context, PlatformAsyncRequestTask request) {
 
         // If no session management is required for 'request', then immediately return.
         if (request != null && !request.requiresSessionId()) {
@@ -360,9 +347,8 @@ public class MWSPlatformManager implements PlatformManager {
                     Long sessionExpirationTime = System.currentTimeMillis() + (sessionTimeout * 60 * 1000);
                     ConfigUtil.updateSessionExpirationTime(context, sessionId, sessionExpirationTime);
                     if (DEBUG) {
-                        Log.d(Const.LOG_TAG,
-                                CLS_TAG + ".onRequestCompleted: updated session timeout to "
-                                        + Format.safeFormatDate(Parse.XML_DF_LOCAL, new Date(sessionExpirationTime)));
+                        Log.d(Const.LOG_TAG, CLS_TAG + ".onRequestCompleted: updated session timeout to " + Format
+                                .safeFormatDate(Parse.XML_DF_LOCAL, new Date(sessionExpirationTime)));
                     }
                 }
             } else {
@@ -378,8 +364,7 @@ public class MWSPlatformManager implements PlatformManager {
 
         private static final String CLS_TAG = MWSPlatformManager.CLS_TAG + ".LoginReplyListener";
 
-        @Override
-        public void onRequestSuccess(Bundle resultData) {
+        @Override public void onRequestSuccess(Bundle resultData) {
             if (DEBUG) {
                 Log.d(Const.LOG_TAG, CLS_TAG + ".onRequestSuccess: ");
             }
@@ -426,8 +411,7 @@ public class MWSPlatformManager implements PlatformManager {
             }
         }
 
-        @Override
-        public void onRequestFail(Bundle resultData) {
+        @Override public void onRequestFail(Bundle resultData) {
 
             if (DEBUG) {
                 Log.d(Const.LOG_TAG, CLS_TAG + ".onRequestFail: ");
@@ -467,8 +451,7 @@ public class MWSPlatformManager implements PlatformManager {
             }
         }
 
-        @Override
-        public void onRequestCancel(Bundle resultData) {
+        @Override public void onRequestCancel(Bundle resultData) {
             if (DEBUG) {
                 Log.d(Const.LOG_TAG, CLS_TAG + ".onRequestCancel: ");
             }
@@ -507,8 +490,7 @@ public class MWSPlatformManager implements PlatformManager {
             }
         }
 
-        @Override
-        public void cleanup() {
+        @Override public void cleanup() {
             if (DEBUG) {
                 Log.d(Const.LOG_TAG, CLS_TAG + ".cleanup: ");
             }
@@ -517,13 +499,12 @@ public class MWSPlatformManager implements PlatformManager {
 
     /**
      * An extension of <code>Semaphore</code> used to acquire the login result.
-     * 
+     *
      * @author andrewk
      */
     class LoginResult extends CountDownLatch {
 
-        @SuppressWarnings("unused")
-        private static final long serialVersionUID = 1L;
+        @SuppressWarnings("unused") private static final long serialVersionUID = 1L;
 
         /**
          * Contains the result data from a login attempt.
@@ -542,6 +523,125 @@ public class MWSPlatformManager implements PlatformManager {
             super(1);
         }
 
+    }
+
+    @Override public int onRequestStarted(Context context, PlatformAsyncTaskLoader loader, Bundle resultData) {
+
+        int retVal = PlatformAsyncTaskLoader.RESULT_OK;
+
+        // If no session management is required for 'request', then immediately return.
+        if (loader != null && !loader.requiresSessionId()) {
+            return retVal;
+        }
+
+        // Determine whether the session is about to expire, if so, then perform synchronous re-authentication
+        // if needed.
+        String sessionId = PlatformProperties.getSessionId();
+        if (!TextUtils.isEmpty(sessionId)) {
+            SessionInfo sessionInfo = ConfigUtil.getSessionInfo(context);
+            if (isSessionExpired(sessionInfo)) {
+
+                if (DEBUG) {
+                    Log.d(Const.LOG_TAG, CLS_TAG + ".onRequestStarted: session has expired.");
+                }
+
+                if (autoLoginEnabled) {
+                    switch (authType) {
+                    case PPLogin: {
+
+                        // Set the re-authentication is required flag.
+                        resultData.putBoolean(REAUTHENTICATION_NEEDED_KEY, Boolean.TRUE);
+
+                        if (!TextUtils.isEmpty(ppLoginId) && !TextUtils.isEmpty(ppLoginPinPassword)) {
+                            Log.d(Const.LOG_TAG, CLS_TAG
+                                    + ".onRequestStarted: session expired, auth-type is PPLogin, attempting re-authentication.");
+                            retVal = renewPPLoginSession(context, resultData);
+                        } else {
+
+                            // Set the re-authentication attempted flag.
+                            resultData.putBoolean(REAUTHENTICATION_ATTEMPTED_KEY, Boolean.FALSE);
+
+                            if (DEBUG) {
+                                Log.d(Const.LOG_TAG, CLS_TAG
+                                        + ".onRequestStarted: session expired, auth-type is PPLogin, missing credentials.");
+                            }
+                            retVal = BaseAsyncRequestTask.RESULT_CANCEL;
+                        }
+                        break;
+                    }
+                    case SSO: {
+                        if (DEBUG) {
+                            Log.d(Const.LOG_TAG, CLS_TAG
+                                    + ".onRequestStarted: session expired, auth-type is SSO, auto-login not supported.");
+                        }
+                        // Set the re-authentication is required flag.
+                        resultData.putBoolean(REAUTHENTICATION_NEEDED_KEY, Boolean.TRUE);
+                        // Set the re-authentication attempted flag.
+                        resultData.putBoolean(REAUTHENTICATION_ATTEMPTED_KEY, Boolean.FALSE);
+
+                        // SSO is not currently supported for re-authentication.
+                        retVal = PlatformAsyncTaskLoader.RESULT_CANCEL;
+                        break;
+                    }
+                    }
+                } else {
+
+                    if (DEBUG) {
+                        Log.d(Const.LOG_TAG,
+                                CLS_TAG + ".onRequestStarted: session expired, but auto-login turned-off.");
+                    }
+                    // Set the re-authentication is required flag.
+                    resultData.putBoolean(REAUTHENTICATION_NEEDED_KEY, Boolean.TRUE);
+                    // Set the re-authentication attempted flag.
+                    resultData.putBoolean(REAUTHENTICATION_ATTEMPTED_KEY, Boolean.FALSE);
+
+                    // Auto-login is disabled, cancel the request.
+                    retVal = BaseAsyncRequestTask.RESULT_CANCEL;
+                }
+            } else {
+                if (DEBUG) {
+                    Log.d(Const.LOG_TAG, CLS_TAG + ".onRequestStarted: session current.");
+                }
+                resultData.putBoolean(REAUTHENTICATION_NEEDED_KEY, Boolean.FALSE);
+                // Set the re-authentication attempted flag.
+                resultData.putBoolean(REAUTHENTICATION_ATTEMPTED_KEY, Boolean.FALSE);
+            }
+        } else {
+            if (DEBUG) {
+                Log.d(Const.LOG_TAG, CLS_TAG + ".onRequestStarted: no session id.");
+            }
+            // NO session id, unable to determine whether the session has expired.
+            retVal = PlatformAsyncTaskLoader.RESULT_CANCEL;
+        }
+        return retVal;
+    }
+
+    @Override public void onRequestCompleted(Context context, PlatformAsyncTaskLoader loader) {
+
+        // If no session management is required for 'request', then immediately return.
+        if (loader != null && !loader.requiresSessionId()) {
+            return;
+        }
+
+        // Update the session expiration time.
+        String sessionId = PlatformProperties.getSessionId();
+        if (!TextUtils.isEmpty(sessionId)) {
+            SessionInfo sessionInfo = ConfigUtil.getSessionInfo(context);
+            if (sessionInfo != null) {
+                Integer sessionTimeout = sessionInfo.getSessionTimeout();
+                if (sessionTimeout != null) {
+                    // Update the session timeout.
+                    Long sessionExpirationTime = System.currentTimeMillis() + (sessionTimeout * 60 * 1000);
+                    ConfigUtil.updateSessionExpirationTime(context, sessionId, sessionExpirationTime);
+                    if (DEBUG) {
+                        Log.d(Const.LOG_TAG, CLS_TAG + ".onRequestCompleted: updated session timeout to " + Format
+                                .safeFormatDate(Parse.XML_DF_LOCAL, new Date(sessionExpirationTime)));
+                    }
+                }
+            } else {
+                Log.e(Const.LOG_TAG, CLS_TAG + ".onRequestCompleted: sessionInfo is null!");
+            }
+        }
     }
 
 }

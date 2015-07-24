@@ -15,6 +15,7 @@ import android.util.Log;
 import android.view.View;
 import com.concur.mobile.platform.ui.common.dialog.DialogFragmentFactoryV1;
 import com.concur.mobile.platform.ui.common.fragment.RetainerFragmentV1;
+import com.concur.mobile.platform.ui.common.util.ImageCache;
 import com.concur.mobile.platform.ui.travel.R;
 import com.concur.mobile.platform.ui.travel.receiver.NetworkActivityReceiver;
 import com.concur.mobile.platform.ui.travel.receiver.NetworkActivityReceiver.INetworkActivityListener;
@@ -62,6 +63,10 @@ public class BaseActivity extends Activity implements INetworkActivityListener {
      */
     protected BroadcastReceiver offlineConnectivityReceiver;
     /**
+     * Contains a reference to a broadcast receiver to handle notifications of images having been downloaded.
+     */
+    public BroadcastReceiver imageCacheReceiver;
+    /**
      * Contains a reference to a broadcast receiver to handle network activity progress indicator.
      */
     protected NetworkActivityReceiver networkActivityReceiver;
@@ -101,6 +106,10 @@ public class BaseActivity extends Activity implements INetworkActivityListener {
      * Contains whether or not the system unavailable receiver has been registered.
      */
     private boolean systemUnavailableReceiverRegistered;
+    /**
+     * Contains whether or not the image cache receiver has been registered.
+     */
+    private boolean imageCacheReceiverRegistered;
 
     @Override
     public boolean isNetworkRequestInteresting(int networkMsgType) {
@@ -198,7 +207,7 @@ public class BaseActivity extends Activity implements INetworkActivityListener {
         // If being destroyed due to a non-configuration change, then
         // unregister the image cache receiver.
         if (getChangingConfigurations() == 0) {
-            // unregisterImageCacheReceiver();
+            unregisterImageCacheReceiver();
         }
 
     }
@@ -362,6 +371,27 @@ public class BaseActivity extends Activity implements INetworkActivityListener {
     }
 
     /**
+     * Will register a receiver to handle image download notifications.
+     */
+    public void registerImageCacheReceiver() {
+        if (imageCacheReceiver != null && !imageCacheReceiverRegistered) {
+            getApplicationContext()
+                    .registerReceiver(imageCacheReceiver, new IntentFilter(ImageCache.IMAGE_DOWNLOAD_ACTION));
+            imageCacheReceiverRegistered = true;
+        }
+    }
+
+    /**
+     * Will unregister a receiver to handle image download notifications.
+     */
+    protected void unregisterImageCacheReceiver() {
+        if (imageCacheReceiver != null && imageCacheReceiverRegistered) {
+            getApplicationContext().unregisterReceiver(imageCacheReceiver);
+            imageCacheReceiverRegistered = false;
+        }
+    }
+
+    /**
      * Called whenever the network data connectivity changes online or offline.
      *
      * @param available <code>true</code> if network data connectivity is available, otherwise <code>false</code>
@@ -429,6 +459,16 @@ public class BaseActivity extends Activity implements INetworkActivityListener {
      * Called when the concur service component has become unavailable.
      */
     protected void onServiceAvailable() {
+    }
+
+    /**
+     * Sets the instance of <code>BroadcastReceiver</code> that will handle notifications from the <code>ImageCache</code> of
+     * background image load completion.
+     *
+     * @param imageCacheReceiver contains an instance of <code>BroadcastReceiver</code>.
+     */
+    public void setImageCacheReceiver(BroadcastReceiver imageCacheReceiver) {
+        this.imageCacheReceiver = imageCacheReceiver;
     }
 
     /**
