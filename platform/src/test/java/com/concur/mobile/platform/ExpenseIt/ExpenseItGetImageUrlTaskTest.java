@@ -8,6 +8,8 @@ import android.content.Context;
 import com.concur.mobile.base.service.BaseAsyncRequestTask;
 import com.concur.mobile.base.service.BaseAsyncResultReceiver;
 import com.concur.mobile.platform.ExpenseIt.test.VerifyExpenseItImageUrlResult;
+import com.concur.mobile.platform.authentication.SessionInfo;
+import com.concur.mobile.platform.config.provider.ConfigUtil;
 import com.concur.mobile.platform.expenseit.ExpenseItGetImageUrlResponse;
 import com.concur.mobile.platform.expenseit.ExpenseItParseCode;
 import com.concur.mobile.platform.expenseit.ExpenseItPostReceipt;
@@ -60,7 +62,10 @@ public class ExpenseItGetImageUrlTaskTest extends ExpenseItTest {
             expenseIds.add(new Long(1)); //anything really
         } else {
             ExpenseItGetReceiptTaskTest receiptTaskTest = new ExpenseItGetReceiptTaskTest();
-            ExpenseItPostReceiptResponse receiptResponse = receiptTaskTest.getExpenseItReceipts();
+            // Verify User Information.
+            SessionInfo sessionInfo = ConfigUtil.getSessionInfo(context);
+            String userId = sessionInfo.getUserId();
+            ExpenseItPostReceiptResponse receiptResponse = receiptTaskTest.getExpenseItReceiptsFromServer(context, userId);
             for (ExpenseItPostReceipt receipt : receiptResponse.getExpenses()) {
                 if (receipt.getParsingStatusCode() != ExpenseItParseCode.EXPIRED.value() &&
                     receipt.getParsingStatusCode() != ExpenseItParseCode.FAILED_UPLOAD_ATTEMPTS.value() &&

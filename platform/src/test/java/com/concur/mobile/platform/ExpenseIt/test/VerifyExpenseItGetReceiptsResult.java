@@ -25,7 +25,7 @@ public class VerifyExpenseItGetReceiptsResult {
 
     private static final String CLS_TAG = VerifyExpenseItGetReceiptsResult.class.getSimpleName();
 
-    private HashMap<Long, ExpenseItPostReceipt> getExpenseItReceipts(Context context, String userId) {
+    private HashMap<Long, ExpenseItPostReceipt> getExpenseItReceiptsFromDb(Context context, String userId) {
 
         HashMap<Long, ExpenseItPostReceipt> receiptsMap =  new HashMap<>();
 
@@ -51,7 +51,7 @@ public class VerifyExpenseItGetReceiptsResult {
      */
     public void verify(Context context, String userId, ExpenseItPostReceiptResponse receiptResponse) throws Exception {
 
-        HashMap<Long, ExpenseItPostReceipt> receipts = getExpenseItReceipts(context, userId);
+        HashMap<Long, ExpenseItPostReceipt> receipts = getExpenseItReceiptsFromDb(context, userId);
 
         //Verify LoginResult is not null
         if (receiptResponse == null) {

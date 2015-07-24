@@ -65,7 +65,7 @@ public class ExpenseItPostReceipt implements Serializable {
 
     private transient long contentId;
 
-    private ErrorResponse expenseError = null;
+    private ErrorResponse expenseError = new ErrorResponse();
 
     public void setExpenseError(ErrorResponse expenseError) {
         this.expenseError = expenseError;

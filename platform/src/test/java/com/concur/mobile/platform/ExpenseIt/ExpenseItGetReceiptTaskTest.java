@@ -33,12 +33,7 @@ public class ExpenseItGetReceiptTaskTest extends ExpenseItTest {
 
     private static final String CLS_TAG = ExpenseItGetReceiptTaskTest.class.getSimpleName();
 
-    public ExpenseItPostReceiptResponse getExpenseItReceipts() throws Exception {
-        Context context = PlatformTestApplication.getApplication();
-
-        // Verify User Information.
-        SessionInfo sessionInfo = ConfigUtil.getSessionInfo(context);
-        String userId = sessionInfo.getUserId();
+    public ExpenseItPostReceiptResponse getExpenseItReceiptsFromServer(Context context, String userId) throws Exception {
 
         // Set the mock response if the mock server is being used.
         if (PlatformTestApplication.useMockServer()) {
@@ -116,12 +111,14 @@ public class ExpenseItGetReceiptTaskTest extends ExpenseItTest {
      */
     @Override
     public void doTest() throws Exception {
+
         Context context = PlatformTestApplication.getApplication();
+
         // Verify User Information.
         SessionInfo sessionInfo = ConfigUtil.getSessionInfo(context);
         String userId = sessionInfo.getUserId();
 
-        ExpenseItPostReceiptResponse receiptResponse = getExpenseItReceipts();
+        ExpenseItPostReceiptResponse receiptResponse = getExpenseItReceiptsFromServer(context, userId);
         VerifyExpenseItGetReceiptsResult verifier = new VerifyExpenseItGetReceiptsResult();
         verifier.verify(context, userId, receiptResponse);
         ShadowLog.d(Const.LOG_TAG, CLS_TAG + ".doTest: result ok.");

@@ -148,6 +148,8 @@ public class ExpenseItReceipt implements ExpenseItReceiptDAO {
                     receipts.add(getReceipt(cursor));
                 }
             }
+        } catch (Exception e) {
+            Log.e(Const.LOG_TAG, CLS_TAG + ".getReceipts() Error while retrieving receipt info");
         } finally {
             if (cursor != null) {
                 cursor.close();
