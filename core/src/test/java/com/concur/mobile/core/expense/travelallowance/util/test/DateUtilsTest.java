@@ -64,7 +64,7 @@ public class DateUtilsTest extends TestCase {
         expectedCal.set(Calendar.SECOND, 0);
         expectedCal.set(Calendar.MILLISECOND, 0);
 
-        Calendar resultCal = DateUtils.getCalendarKeepingDate(inputCal.getTime(), 2, 2);
+        Calendar resultCal = DateUtils.getCalendarKeepingDate(inputCal.getTime(), 2, 2, 0, 0);
 
         assertEquals(expectedCal, resultCal);
     }

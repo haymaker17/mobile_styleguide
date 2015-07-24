@@ -209,7 +209,7 @@ public class ItineraryUpdateActivity extends BaseActivity implements IController
                         date = segment.getArrivalDateTime();
                     }
                     if (date != null) {
-                        cal = DateUtils.getCalendarKeepingDate(date, hourOfDay, minute);
+                        cal = DateUtils.getCalendarKeepingDate(date, hourOfDay, minute, 0, 0);
                         date = cal.getTime();
                         if (currentPosition.getInfo() == PositionInfoTag.INFO_OUTBOUND) {
                             segment.setDepartureDateTime(date);

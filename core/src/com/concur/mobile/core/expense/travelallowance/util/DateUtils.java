@@ -330,10 +330,14 @@ public final class DateUtils {
      *
      * @param date The date where hours and minutes needs to be replaces
      * @param hourOfDay The new hours
-     * @param minute The new minutes
+     * @param minutes The new minutes
+     * @param seconds The new seconds
+     * @param milliseconds The new milliseconds
      * @return The new Calendar, if date not equals null.
      */
-    public static Calendar getCalendarKeepingDate(final Date date, final int hourOfDay, final int minute) {
+    public static Calendar getCalendarKeepingDate(final Date date, final int hourOfDay,
+                                                  final int minutes, final int seconds,
+                                                  final int milliseconds) {
 
         if (date == null) {
             return null;
@@ -342,7 +346,9 @@ public final class DateUtils {
         Calendar cal = Calendar.getInstance();
         cal.setTime(date);
         cal.set(Calendar.HOUR_OF_DAY, hourOfDay);
-        cal.set(Calendar.MINUTE, minute);
+        cal.set(Calendar.MINUTE, minutes);
+        cal.set(Calendar.SECOND, seconds);
+        cal.set(Calendar.MILLISECOND, milliseconds);
         return cal;
     }
 
