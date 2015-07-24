@@ -12,11 +12,12 @@ import java.util.Date;
  * @author Michael Becherer
  */
 public class DateComparator implements Comparator<Date>, Serializable {
-
+    
     /**
      * Version ID for serialization
      */
-    private static final long serialVersionUID = 1L;
+    private static final long serialVersionUID = -3146276207390450226L;
+
     /**
      * Indicates whether to ignore the time component.
      */
