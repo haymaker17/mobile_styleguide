@@ -22,6 +22,9 @@
     <string name="expenseit_eta_min">min</string>
     <string name="expenseit_eta_sec">sec</string>
     <string name="expenseit_eta_na">N/A</string>
+
+    <string name="expenseit_powered_by">Powered by ExpenseIt</string>
+    <string name="expenseit_analyzing_note">We'll be back with your analyzed receipt info shortly.</string>
     <!-- EXPENSEIT STRINGS END -->
 
 </resources>
