@@ -640,8 +640,8 @@
     <!-- Rest Hotel API -->
     <string name="search_destination_location">Destination</string>
     <string name="search_current_location">Current Location</string>
-    <string name="hotel_search_label_checkin_date">Check-in Date</string>
-    <string name="hotel_search_label_checkout_date">Check-out Date</string>
+    <string name="hotel_search_label_checkin_date">Check-in</string>
+    <string name="hotel_search_label_checkout_date">Check-out</string>
     <string name="loc_search_hint_v1">Search Destination</string>
     <string name="loc_search_office">Office Locations</string>
     <string name="loc_search_office_hint">Search for an Office Location</string>

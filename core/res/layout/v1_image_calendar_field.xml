@@ -53,8 +53,8 @@
             android:layout_marginRight="6dp"
             android:gravity="center_vertical"
             android:scrollHorizontally="true"
-            android:text="web, Jan 20, 2015"
-            android:textAppearance="@style/FormFieldValueTextV1" />
+            android:text="web, Jan 20"
+            android:textAppearance="@style/FormFieldValueTextV1"/>
 
         <TextView
             android:id="@+id/field_note"
