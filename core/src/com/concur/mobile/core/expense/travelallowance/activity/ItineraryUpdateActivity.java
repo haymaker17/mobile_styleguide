@@ -40,6 +40,7 @@ import com.concur.mobile.core.expense.travelallowance.util.StringUtilities;
 import com.concur.mobile.core.util.Const;
 
 import java.util.Calendar;
+import java.util.Collections;
 import java.util.Date;
 import java.util.List;
 import java.util.Locale;
@@ -374,6 +375,8 @@ public class ItineraryUpdateActivity extends BaseActivity implements IController
         if (item.getItemId() == R.id.menuSave && this.itinerary != null) {
             EditText etItinerary = (EditText) findViewById(R.id.et_itinerary);
             this.itinerary.setName(etItinerary.getText().toString());
+
+            Collections.sort(itinerary.getSegmentList());
 
             adapter.setSaveMode();
             List<ItinerarySegment> periods = itinerary.getSegmentList();
