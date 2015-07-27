@@ -11,8 +11,12 @@ import android.preference.PreferenceManager;
 import android.support.v4.app.FragmentActivity;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
+import android.support.v4.view.MotionEventCompat;
 import android.text.TextUtils;
+import android.util.Log;
+import android.view.MotionEvent;
 import android.view.View;
+import android.view.ViewConfiguration;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.TextView;
@@ -53,10 +57,12 @@ public class EmailPasswordActivity extends BaseActivity implements IProgressBarL
 
     public static final int TEST_DRIVE_REQ_CODE = 1;
 
+    private static final String LOG_TAG = EmailPasswordActivity.class.getSimpleName();
     /**
      * Extra flag used to indicate if we should automatically advanced to the company sigin on screen.
      */
     public static final String EXTRA_ADVANCE_TO_COMPANY_SIGN_ON = "advance_to_company_sign_on";
+
     public final static String TAG_LOGIN_WAIT_DIALOG = "tag.login.wait.dialog";
 
     protected final static String TAG_LOGIN_REMOTE_WIPE_DIALOG = "tag.login.remote.wipe.dialog";
@@ -89,6 +95,16 @@ public class EmailPasswordActivity extends BaseActivity implements IProgressBarL
 
     private ProgressDialogFragment.OnCancelListener loginPasswordFragCancelListener;
 
+    //Two finger duble tap Initialisation.
+    private static final int TIMEOUT = ViewConfiguration.getDoubleTapTimeout() + 100;
+
+    private long mFirstDownTime = 0;
+
+    private boolean mSeparateTouches = false;
+
+    private byte mTwoFingerTapCount = 0;
+
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -114,12 +130,12 @@ public class EmailPasswordActivity extends BaseActivity implements IProgressBarL
             progressDlgMessage = savedInstanceState.getString(PROGRESSBAR_MESSAGE, "");
         }
 
-        ImageView imag = (ImageView)findViewById(R.id.helpimg);
+        ImageView imag = (ImageView) findViewById(R.id.helpimg);
         imag.setVisibility(View.GONE);
 
-        TextView text = (TextView)findViewById(R.id.helpmsg);
+        TextView text = (TextView) findViewById(R.id.helpmsg);
         text.setText(getString(R.string.test_drive_registration));
-        text.setOnClickListener(new View.OnClickListener(){
+        text.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 EventTracker.INSTANCE.track(Flurry.CATEGORY_START_UP, "Test Drive Click");
@@ -181,10 +197,10 @@ public class EmailPasswordActivity extends BaseActivity implements IProgressBarL
     }
 
     public void showProgressBar() {
-        if(progressDlgMessage ==null || progressDlgMessage.isEmpty()){
+        if (progressDlgMessage == null || progressDlgMessage.isEmpty()) {
             progressDlgMessage = getString(R.string.dlg_logging_in).toString();
         }
-        if(progressDialog==null){
+        if (progressDialog == null) {
             // Initialize the progress dialog.
             progressDialog = DialogFragmentFactory.getProgressDialog(progressDlgMessage, true,
                     true, null);
@@ -210,15 +226,15 @@ public class EmailPasswordActivity extends BaseActivity implements IProgressBarL
         progressbarVisible = true;
         //View v = findViewById(R.id.progress_mask);
         //RelativeLayout progressBar = (RelativeLayout) v;
-       // progressBar.setVisibility(View.VISIBLE);
+        // progressBar.setVisibility(View.VISIBLE);
     }
 
     public void hideProgressBar() {
         //View v = findViewById(R.id.progress_mask);
         //RelativeLayout progressBar = (RelativeLayout) v;
-        if(progressDialog!=null){
+        if (progressDialog != null) {
             progressDialog.dismiss();
-            progressDialog=null;
+            progressDialog = null;
         }
         progressbarVisible = false;
         //progressBar.setVisibility(View.INVISIBLE);
@@ -247,7 +263,8 @@ public class EmailPasswordActivity extends BaseActivity implements IProgressBarL
             } else if (requestCode == Const.REQUEST_CODE_SSO_LOGIN) {
                 setResult(Activity.RESULT_OK);
                 finish();
-            }if (requestCode == TEST_DRIVE_REQ_CODE
+            }
+            if (requestCode == TEST_DRIVE_REQ_CODE
                     && data != null) {
                 ConcurCore.resetUserTimers();
 
@@ -355,9 +372,6 @@ public class EmailPasswordActivity extends BaseActivity implements IProgressBarL
         EventTracker.INSTANCE.track(Flurry.CATEGORY_SIGN_IN, Flurry.EVENT_EMAIL_LOOKUP_FAILURE, params);
     }
 
-    // ############### End of EmailLookupCallbacks implementations ############# //
-
-    // ############### HELPER METHODS ################ //
 
     private Bundle getEmailLookUpBundleFromSessionInfo(SessionInfo sessionInfo) {
         // Determine whether a company sign-on URL has been cached. If so,
@@ -394,11 +408,6 @@ public class EmailPasswordActivity extends BaseActivity implements IProgressBarL
     @Override
     public void trackLoginStatus(boolean success, String message) {
 
-    }
-
-    @Override
-    public boolean hasSavedCredentials() {
-        return false;
     }
 
     @Override
@@ -474,11 +483,6 @@ public class EmailPasswordActivity extends BaseActivity implements IProgressBarL
                         Preferences.isHideAutoLogin(false);
                     }
 
-                    // close dialog
-//                    if (progressDialog != null) {
-//                        progressDialog.dismiss();
-//                    }
-//
                     hideProgressBar();
                     // Go to homescreen ...
                     startHomeScreen(emailLookupBundle);
@@ -495,17 +499,7 @@ public class EmailPasswordActivity extends BaseActivity implements IProgressBarL
                  * @see com.concur.mobile.base.service.BaseAsyncRequestTask.AsyncReplyListener#onRequestFail(android.os.Bundle)
                  */
                 public void onRequestFail(Bundle resultData) {
-
-                    // close dialog
-//                    if (progressDialog != null) {
-//                        progressDialog.dismiss();
-//                    }
                     onLoginRequestFail(resultData);
-//                    // MOB-22674 - Show error dialog on failure.
-//                    DialogFragmentFactory.getAlertOkayInstance(getString(R.string.dlg_system_unavailable_title),
-//                            getString(R.string.dlg_system_unavailable_message)).show(
-//                            LoginPasswordActivity.this.getSupportFragmentManager(), null);
-
                 }
 
                 /*
@@ -687,5 +681,63 @@ public class EmailPasswordActivity extends BaseActivity implements IProgressBarL
         EventTracker.INSTANCE.track(Flurry.CATEGORY_SIGN_IN, Flurry.EVENT_NAME_OVERALL, params);
 
     }
-}
 
+    @Override
+    public void setOnTouchListenerForView(View view) {
+        ImageView img = (ImageView) view;
+        img.setOnTouchListener(new View.OnTouchListener() {
+            public boolean onTouch(View v, MotionEvent event) {
+                onTouchEvent(event);
+                return true;
+            }
+        });
+    }
+
+    @Override
+    public boolean onTouchEvent(MotionEvent event) {
+
+        int action = MotionEventCompat.getActionMasked(event);
+
+        switch (action) {
+            case (MotionEvent.ACTION_MOVE):
+                Log.d(LOG_TAG, "Action was MOVE");
+                return true;
+            case (MotionEvent.ACTION_CANCEL):
+                Log.d(LOG_TAG, "Action was CANCEL");
+                return true;
+            case (MotionEvent.ACTION_OUTSIDE):
+                Log.d(LOG_TAG, "Movement occurred outside bounds " +
+                        "of current screen element");
+                return true;
+            case MotionEvent.ACTION_DOWN:
+                if (mFirstDownTime == 0 || event.getEventTime() - mFirstDownTime > TIMEOUT)
+                    reset(event.getDownTime());
+                return true;
+            case MotionEvent.ACTION_POINTER_UP:
+                if (event.getPointerCount() == 2)
+                    mTwoFingerTapCount++;
+                else
+                    mFirstDownTime = 0;
+                return true;
+            case MotionEvent.ACTION_UP:
+                if (!mSeparateTouches)
+                    mSeparateTouches = true;
+                else if (mTwoFingerTapCount == 2 && event.getEventTime() - mFirstDownTime < TIMEOUT) {
+                    onTwoFingerDoubleTap();
+                    mFirstDownTime = 0;
+                }
+                return true;
+            default:
+                return super.onTouchEvent(event);
+        }
+    }
+
+    private void reset(long time) {
+        mFirstDownTime = time;
+        mSeparateTouches = false;
+        mTwoFingerTapCount = 0;
+    }
+    public void onTwoFingerDoubleTap(){
+        openSettings();
+    }
+}

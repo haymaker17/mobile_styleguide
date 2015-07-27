@@ -479,6 +479,7 @@
         </activity>
         <activity
             android:name="com.concur.mobile.corp.activity.EmailPasswordActivity"
+            android:windowSoftInputMode="adjustResize|adjustPan"
             android:theme="@style/ConcurTheme.NoActionBar">
     </activity>
     <activity

@@ -128,15 +128,6 @@ public class EmailPasswordFragment extends PlatformFragment implements OnClickLi
         public void onLoginHelpButtonPressed(String signInMethod);
 
         /**
-         * Returns <code>true</code> if the current user has a previously saved userId and pin/password. Otherwise,
-         * <code>false</code> is returned.
-         *
-         * @return <code>true</code> if the current user has a previously saved userId and pin/password. Otherwise,
-         * <code>false</code> is returned.
-         */
-        public boolean hasSavedCredentials();
-
-        /**
          * Invoked to log/track a success or failure during the Authentication request.
          *
          * @param success <code>true</code> if the Login request
@@ -158,13 +149,26 @@ public class EmailPasswordFragment extends PlatformFragment implements OnClickLi
         /**
          * Returns the parent Activity's <code>ProgressDialogFragment</code>, or <code>null</code. if none was set.
          *
-         * @return the parent Activity's <code>ProgressDialogFragment</code>, or <code>null</code. if none was set.
          */
         public void setProgressDialogCancelListener(ProgressDialogFragment.OnCancelListener cancelListener);
 
+        /**
+         * Sets Message for parent Activity's <code>ProgressDialogFragment</code>
+         *
+         */
         public void setProgressDialogMessage(String progressDialogString);
 
+        /**
+         * Opens Settings page
+         *
+         */
         public void openSettings();
+
+        /**
+         * Two finger Click listener for View.
+         *
+         */
+        public void setOnTouchListenerForView(View view);
     }
 
 
@@ -314,8 +318,6 @@ public class EmailPasswordFragment extends PlatformFragment implements OnClickLi
 
         or_sso_layout = (LinearLayout) root.findViewById(R.id.or_sso_layout);
 
-        setEmailLableAndEditText(root);
-        setDoubleFingerTap(root);
         // retrieve receiver if needed
         if (retainer != null) {
             emailLookupReceiver = (BaseAsyncResultReceiver) retainer.get(EMAIL_LOOK_UP_RECEIVER);
@@ -323,6 +325,9 @@ public class EmailPasswordFragment extends PlatformFragment implements OnClickLi
                 emailLookupReceiver.setListener(emailLookupReplyListener);
             }
         }
+
+        setEmailLableAndEditText(root);
+        setDoubleFingerTap(root);
 
         // If we got text pushed through to pre-load on this screen, set it here.
         Bundle args = getArguments();
@@ -364,6 +369,7 @@ public class EmailPasswordFragment extends PlatformFragment implements OnClickLi
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setRetainInstance(true);
+        //getActivity().getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_ADJUST_PAN | WindowManager.LayoutParams.SOFT_INPUT_ADJUST_RESIZE);
     }
 
     /*
@@ -402,21 +408,7 @@ public class EmailPasswordFragment extends PlatformFragment implements OnClickLi
             }
         });
 
-//        concurlogo.setOnTouchListener(new View.OnTouchListener() {
-//            @Override
-//            public boolean onTouch(View v, MotionEvent event) {
-//                int action = event.getAction() & MotionEvent.ACTION_MASK;
-//
-//                switch (action) {
-//                    case MotionEvent.ACTION_POINTER_DOWN:
-//                        // multitouch!! - touch down
-//                        int count = event.getPointerCount(); // Number of 'fingers' in this time
-//                        Toast.makeText(getActivity(), " Two Fingers Tapped Once. Yeeeyy :)" + count, Toast.LENGTH_LONG).show();
-//                        break;
-//                }
-//                return false;
-//            }
-//        });
+        emailPasswordCallBacks.setOnTouchListenerForView(concurlogo);
     }
 
     private void setSSOLogin(View root){
@@ -615,4 +607,5 @@ public class EmailPasswordFragment extends PlatformFragment implements OnClickLi
             }
         }
     };
+    
 }
