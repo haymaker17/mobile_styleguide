@@ -15,6 +15,7 @@ import com.concur.mobile.core.expense.travelallowance.datamodel.ItinerarySegment
 import com.concur.mobile.core.expense.travelallowance.datamodel.SynchronizationStatus;
 import com.concur.mobile.core.expense.travelallowance.service.AbstractItineraryDeleteRequest;
 import com.concur.mobile.core.expense.travelallowance.service.DeleteItineraryRequest;
+import com.concur.mobile.core.expense.travelallowance.service.DeleteItineraryRowRequest;
 import com.concur.mobile.core.expense.travelallowance.service.GetTAItinerariesRequest;
 import com.concur.mobile.core.expense.travelallowance.service.SaveItineraryRequest;
 import com.concur.mobile.core.expense.travelallowance.ui.model.CompactItinerary;
@@ -58,9 +59,12 @@ public class TravelAllowanceItineraryController extends BaseController {
 
     private List<Itinerary> itineraryList;
 
+    private List<Message> messageCache;
+
     public TravelAllowanceItineraryController(Context context) {
        // this.listeners = new ArrayList<IServiceRequestListener>();
         this.context = context;
+        this.messageCache = new ArrayList<Message>();
     }
 
 
@@ -241,16 +245,15 @@ public class TravelAllowanceItineraryController extends BaseController {
             @Override
             public void onRequestSuccess(Bundle resultData) {
                 Itinerary resultItinerary = (Itinerary) resultData.getSerializable(BundleId.ITINERARY);
-                setItinerary(resultItinerary);
-                if (resultItinerary.getSyncStatus() == SynchronizationStatus.FAILED) {
-                    notifyListener(ControllerAction.UPDATE, false, resultData);
-                } else {
-                    notifyListener(ControllerAction.UPDATE, true, resultData);
-                }
+                boolean isSuccess = handleAfterUpdateResponse(resultItinerary);
+                notifyListener(ControllerAction.UPDATE, isSuccess, resultData);
+
             }
 
             @Override
             public void onRequestFail(Bundle resultData) {
+                Message msg = new Message(Message.Severity.ERROR, "500", "Backend Dump!");
+                messageCache.add(msg);
                 notifyListener(ControllerAction.UPDATE, false, resultData);
             }
 
@@ -274,23 +277,23 @@ public class TravelAllowanceItineraryController extends BaseController {
      * Adds the itinerary to the #itineraryList in case the passed itinerary doesn't exist yet. Else an existing itinerary will be
      * replaced by the passed itinerary.
      */
-    private synchronized void setItinerary(Itinerary itinerary) {
-
-        Itinerary currentItin = null;
-        int insertPosition = itineraryList.size();
-        for (int i = 0; i < itineraryList.size(); i++) {
-            currentItin = itineraryList.get(i);
-            if (currentItin.getItineraryID() != null && currentItin.getItineraryID().equals(itinerary.getItineraryID())) {
-                insertPosition = i;
-            }
-        }
-
-        if (insertPosition < itineraryList.size()) {
-            itineraryList.set(insertPosition, itinerary);
-        } else {
-            itineraryList.add(itinerary);
-        }
-    }
+//    private synchronized void setItinerary(Itinerary itinerary) {
+//
+//        Itinerary currentItin = null;
+//        int insertPosition = itineraryList.size();
+//        for (int i = 0; i < itineraryList.size(); i++) {
+//            currentItin = itineraryList.get(i);
+//            if (currentItin.getItineraryID() != null && currentItin.getItineraryID().equals(itinerary.getItineraryID())) {
+//                insertPosition = i;
+//            }
+//        }
+//
+//        if (insertPosition < itineraryList.size()) {
+//            itineraryList.set(insertPosition, itinerary);
+//        } else {
+//            itineraryList.add(itinerary);
+//        }
+//    }
 
     public boolean checkItinerarySegmentsConsistency(Itinerary itinerary){
         if (itinerary == null){
@@ -326,11 +329,12 @@ public class TravelAllowanceItineraryController extends BaseController {
                     Message msg = (Message) resultData
                             .getSerializable(AbstractItineraryDeleteRequest.RESULT_BUNDLE_ID_MESSAGE);
                     if (msg != null) {
-                        Itinerary itin = getItinerary(itinerary.getItineraryID());
-                        if (itin != null) {
-                            itin.setMessage(msg);
-                            itin.setSyncStatus(SynchronizationStatus.FAILED);
-                        }
+//                        Itinerary itin = getItinerary(itinerary.getItineraryID());
+//                        if (itin != null) {
+//                            itin.setMessage(msg);
+//                            itin.setSyncStatus(SynchronizationStatus.FAILED);
+//                        }
+                        resultData.putSerializable(BundleId.ITINERARY, itinerary);
                     }
                     notifyListener(ControllerAction.DELETE, false, resultData);
                 }
@@ -341,9 +345,10 @@ public class TravelAllowanceItineraryController extends BaseController {
                 Itinerary itin = getItinerary(itinerary.getItineraryID());
                 if (itin != null) {
                     Message msg = new Message(Message.Severity.ERROR, "@ Delete Failed @");
-                    itin.setMessage(msg);
-                    itin.setSyncStatus(SynchronizationStatus.FAILED);
+//                    itin.setMessage(msg);
+//                    itin.setSyncStatus(SynchronizationStatus.FAILED);
                     resultData.putSerializable(AbstractItineraryDeleteRequest.RESULT_BUNDLE_ID_MESSAGE, msg);
+                    resultData.putSerializable(BundleId.ITINERARY, itinerary);
                 }
                 notifyListener(ControllerAction.DELETE, false, resultData);
             }
@@ -362,4 +367,170 @@ public class TravelAllowanceItineraryController extends BaseController {
         DeleteItineraryRequest deleteRequest = new DeleteItineraryRequest(context, receiver, itinerary.getItineraryID());
         deleteRequest.execute();
     }
+
+    public void executeDeleteSegment(final String itineraryId, final ItinerarySegment segment) {
+        BaseAsyncResultReceiver receiver = new BaseAsyncResultReceiver(new Handler());
+        receiver.setListener(new BaseAsyncRequestTask.AsyncReplyListener() {
+            @Override
+            public void onRequestSuccess(Bundle resultData) {
+                boolean isSuccess = resultData.getBoolean(AbstractItineraryDeleteRequest.IS_SUCCESS, false);
+                if (isSuccess) {
+                    getItinerary(itineraryId).getSegmentList().remove(segment);
+                    resultData.putSerializable(BundleId.SEGMENT, segment);
+                    notifyListener(ControllerAction.DELETE, true, resultData);
+                } else {
+                    Message msg = (Message) resultData
+                            .getSerializable(AbstractItineraryDeleteRequest.RESULT_BUNDLE_ID_MESSAGE);
+                    msg.setSourceObject(segment);
+                    messageCache.add(msg);
+//                    if (msg != null) {
+//                        Itinerary itin = getItinerary(itinerary.getItineraryID());
+//                        if (itin != null) {
+//                            itin.setMessage(msg);
+//                            itin.setSyncStatus(SynchronizationStatus.FAILED);
+//                        }
+//                    }
+                    resultData.putSerializable(BundleId.SEGMENT, segment);
+                    notifyListener(ControllerAction.DELETE, false, resultData);
+                }
+            }
+
+            @Override
+            public void onRequestFail(Bundle resultData) {
+//                Itinerary itin = getItinerary(itinerary.getItineraryID());
+//                if (itin != null) {
+                    Message msg = new Message(Message.Severity.ERROR, "@ Delete Failed @");
+                msg.setSourceObject(segment);
+//                    itin.setMessage(msg);
+//                    itin.setSyncStatus(SynchronizationStatus.FAILED);
+                resultData.putSerializable(BundleId.SEGMENT, segment);
+                    resultData.putSerializable(AbstractItineraryDeleteRequest.RESULT_BUNDLE_ID_MESSAGE, msg);
+//                }
+                notifyListener(ControllerAction.DELETE, false, resultData);
+            }
+
+            @Override
+            public void onRequestCancel(Bundle resultData) {
+
+            }
+
+            @Override
+            public void cleanup() {
+
+            }
+        });
+
+        DeleteItineraryRowRequest deleteRequest = new DeleteItineraryRowRequest(context, receiver, itineraryId, segment.getId());
+        deleteRequest.execute();
+    }
+
+    public List<Message> getMessages() {
+        if (messageCache == null) {
+            messageCache = new ArrayList<Message>();
+        }
+        return messageCache;
+    }
+
+    public void resetMessages() {
+        messageCache = new ArrayList<Message>();
+    }
+
+    private boolean handleAfterUpdateResponse(Itinerary resultItin) {
+
+        boolean isSuccess = true;
+            String itinId = resultItin.getItineraryID();
+            if (itinId != null && getItinerary(itinId) == null) {
+                // Create entire itinerary case
+                return handleItineraryCreate(resultItin);
+            } else if (itinId != null && getItinerary(itinId) != null) {
+                // Create segment or Update segment case
+                for (ItinerarySegment segment : resultItin.getSegmentList()) {
+                    if (getItinerary(itinId).getSegment(segment.getId()) == null) {
+                        // Create segment case
+                        isSuccess = handleSegmentCreate(itinId, segment);
+                    } else if (getItinerary(itinId).getSegment(segment.getId()) != null) {
+                        // Update segment case
+                       isSuccess = handleSegmentUpdate(itinId, segment);
+                    }
+                }
+            }
+
+        return isSuccess;
+
+    }
+
+    /**
+     * Check the itinerary. If there is a row which failed during creation don't add the itinerary
+     * to the list and delete it from backend.
+     * 
+     * @param createdItinerary
+     *
+     */
+    private boolean handleItineraryCreate(Itinerary createdItinerary) {
+        boolean isSuccess = true;
+        for(ItinerarySegment segment : createdItinerary.getSegmentList()) {
+            Message msg = segment.getMessage();
+            if (msg != null) {
+                msg.setSourceObject(segment);
+                messageCache.add(msg);
+
+                if (msg.getSeverity() == Message.Severity.ERROR) {
+                    isSuccess = false;
+                }
+            }
+        }
+
+        if (!isSuccess) {
+            executeDeleteItinerary(createdItinerary);
+        } else {
+            itineraryList.add(createdItinerary);
+        }
+
+        return isSuccess;
+    }
+
+    private boolean handleSegmentCreate(String itinId, ItinerarySegment segment) {
+        boolean isSuccess = true;
+        Itinerary itin = getItinerary(itinId);
+
+        Message msg = segment.getMessage();
+        if (msg != null) {
+            msg.setSourceObject(segment);
+            messageCache.add(msg);
+
+            if (msg.getSeverity() == Message.Severity.ERROR) {
+                isSuccess = false;
+            }
+        }
+
+        if (isSuccess) {
+            itin.getSegmentList().add(segment);
+        }
+
+        return isSuccess;
+    }
+
+    private boolean handleSegmentUpdate(String itinId, ItinerarySegment segment) {
+        boolean isSuccess = true;
+        Itinerary itin = getItinerary(itinId);
+        ItinerarySegment itinSegment = itin.getSegment(segment.getId());
+        Message msg = segment.getMessage();
+        if (msg != null) {
+            msg.setSourceObject(segment);
+            itinSegment.setMessage(msg);
+            messageCache.add(msg);
+            if (msg.getSeverity() == Message.Severity.ERROR) {
+                isSuccess = false;
+            }
+        }
+
+        if (isSuccess) {
+            int position = itin.getSegmentList().indexOf(itinSegment);
+            itin.getSegmentList().remove(position);
+            itin.getSegmentList().add(position, segment);
+        }
+
+        return isSuccess;
+    }
+
 }

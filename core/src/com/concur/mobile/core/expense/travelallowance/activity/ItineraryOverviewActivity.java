@@ -21,6 +21,7 @@ import com.concur.mobile.core.expense.travelallowance.controller.IController;
 import com.concur.mobile.core.expense.travelallowance.controller.IControllerListener;
 import com.concur.mobile.core.expense.travelallowance.controller.TravelAllowanceItineraryController;
 import com.concur.mobile.core.expense.travelallowance.datamodel.Itinerary;
+import com.concur.mobile.core.expense.travelallowance.util.BundleId;
 import com.concur.mobile.core.util.Const;
 
 /**
@@ -102,8 +103,10 @@ public class ItineraryOverviewActivity extends BaseActivity implements IControll
                 @Override
                 public void onClick(View view) {
                     Intent intent = new Intent(ItineraryOverviewActivity.this, ItineraryUpdateActivity.class);
-                    intent.putExtra(Const.EXTRA_EXPENSE_REPORT_KEY, expenseReportKey);
-                    intent.putExtra(Const.EXTRA_EXPENSE_REPORT_NAME, expenseReportName);
+                    Itinerary itin = new Itinerary();
+                    itin.setName(expenseReportName);
+                    itin.setExpenseReportID(expenseReportKey);
+                    intent.putExtra(BundleId.ITINERARY, itin);
                     startActivity(intent);
                 }
             });
@@ -143,9 +146,7 @@ public class ItineraryOverviewActivity extends BaseActivity implements IControll
                     }
                     Itinerary itinerary = itineraryController.getItineraryList().get(position);
                     Intent intent = new Intent(ItineraryOverviewActivity.this, ItineraryUpdateActivity.class);
-                    intent.putExtra(Const.EXTRA_EXPENSE_REPORT_KEY, expenseReportKey);
-                    intent.putExtra(Const.EXTRA_EXPENSE_REPORT_NAME, expenseReportName);
-                    intent.putExtra(Const.EXTRA_ITINERARY_KEY, itinerary.getItineraryID());
+                    intent.putExtra(BundleId.ITINERARY, itinerary);
                     startActivity(intent);
                 }
             });

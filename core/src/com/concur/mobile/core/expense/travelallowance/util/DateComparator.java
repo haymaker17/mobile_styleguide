@@ -40,24 +40,27 @@ public class DateComparator implements Comparator<Date>, Serializable {
             return 1;
         }
 
+
         final Calendar lhsCal = Calendar.getInstance();
         lhsCal.setTime(lhs);
         lhsCal.set(Calendar.MILLISECOND, 0);
+        lhsCal.set(Calendar.SECOND, 0);
 
         final Calendar rhsCal = Calendar.getInstance();
         rhsCal.setTime(rhs);
         rhsCal.set(Calendar.MILLISECOND, 0);
+        rhsCal.set(Calendar.SECOND, 0);
 
         if (ignoreTime) {
             lhsCal.set(Calendar.HOUR_OF_DAY, 0);
             lhsCal.set(Calendar.MINUTE, 0);
-            lhsCal.set(Calendar.SECOND, 0);
-            lhsCal.set(Calendar.MILLISECOND, 0);
+           // lhsCal.set(Calendar.SECOND, 0);
+           // lhsCal.set(Calendar.MILLISECOND, 0);
 
             rhsCal.set(Calendar.HOUR_OF_DAY, 0);
             rhsCal.set(Calendar.MINUTE, 0);
-            rhsCal.set(Calendar.SECOND, 0);
-            rhsCal.set(Calendar.MILLISECOND, 0);
+            //rhsCal.set(Calendar.SECOND, 0);
+            //rhsCal.set(Calendar.MILLISECOND, 0);
         }
 
         return lhsCal.compareTo(rhsCal);

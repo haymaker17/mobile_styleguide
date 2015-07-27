@@ -13,9 +13,11 @@ import android.widget.TextView;
 import com.concur.core.R;
 import com.concur.mobile.core.expense.travelallowance.datamodel.ItinerarySegment;
 import com.concur.mobile.core.expense.travelallowance.ui.model.PositionInfoTag;
+import com.concur.mobile.core.expense.travelallowance.util.ItineraryUtils;
 import com.concur.mobile.core.expense.travelallowance.util.Message;
 import com.concur.mobile.core.expense.travelallowance.util.StringUtilities;
 
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -32,6 +34,11 @@ public class ItineraryUpdateListAdapter extends ArrayAdapter<Object> {
     private OnClickListener onDateClickListener;
     private OnClickListener onLocationClickListener;
     private boolean isSaveTriggered;
+    private List<Message> messageList;
+
+    public void setMessageList(List<Message> messageList) {
+        this.messageList = messageList;
+    }
 
     /**
      * Holds all UI controls needed for rendering
@@ -74,6 +81,7 @@ public class ItineraryUpdateListAdapter extends ArrayAdapter<Object> {
         this.onDateClickListener = onDateClickListener;
         this.onTimeClickListener = onTimeClickListener;
         addAll(itinerarySegments);
+        messageList = new ArrayList<Message>();
     }
 
     /**
@@ -218,7 +226,7 @@ public class ItineraryUpdateListAdapter extends ArrayAdapter<Object> {
     public boolean isEnabled(int position) {
         // TODO PK: This is set to true in order to enable context menu on list items. The delete feature is currently implemented
         // in the context menu.
-        return false;
+        return true;
     }
 
     private void renderTitle(final ItinerarySegment segment) {
@@ -237,15 +245,25 @@ public class ItineraryUpdateListAdapter extends ArrayAdapter<Object> {
         holder.tvTitle.setFocusable(false);
         holder.tvTitle.setFocusableInTouchMode(false);
         holder.tvTitle.setClickable(false);
-        if (segment.getMessage() != null && segment.getMessage().getSeverity() == Message.Severity.ERROR) {
+        Message msg = ItineraryUtils.findMessage(messageList, segment);
+        if (msg != null && msg.getSeverity() == Message.Severity.ERROR) {
             holder.tvTitle.setFocusable(true);
             holder.tvTitle.setFocusableInTouchMode(true);
             holder.tvTitle.setClickable(true);
             holder.tvTitle.requestFocus();
-            holder.tvTitle.setError(segment.getMessage().getMessageText(context));
+            holder.tvTitle.setError(msg.getMessageText(context));
         } else {
             holder.tvTitle.setError(null);
         }
+//        if (segment.getMessage() != null && segment.getMessage().getSeverity() == Message.Severity.ERROR) {
+//            holder.tvTitle.setFocusable(true);
+//            holder.tvTitle.setFocusableInTouchMode(true);
+//            holder.tvTitle.setClickable(true);
+//            holder.tvTitle.requestFocus();
+//            holder.tvTitle.setError(segment.getMessage().getMessageText(context));
+//        } else {
+//            holder.tvTitle.setError(null);
+//        }
 
         if (segment.isLocked()) {
             holder.icon.setImageResource(R.drawable.profile_icon_bank);

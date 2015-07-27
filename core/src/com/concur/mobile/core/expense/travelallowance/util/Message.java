@@ -42,6 +42,8 @@ public class Message implements Serializable {
      */
     private String messageText;
 
+    private Object sourceObject;
+
     /**
      * Creates a message object. Defaults {@link #messageText} with an empty String.
      * Usually called for device related messages.
@@ -167,5 +169,13 @@ public class Message implements Serializable {
     @Override
     public String toString() {
         return this.messageText;
+    }
+
+    public Object getSourceObject() {
+        return sourceObject;
+    }
+
+    public void setSourceObject(Object sourceObject) {
+        this.sourceObject = sourceObject;
     }
 }

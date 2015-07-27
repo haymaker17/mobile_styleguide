@@ -5,6 +5,9 @@ import com.concur.mobile.core.expense.travelallowance.datamodel.ItinerarySegment
 import com.concur.mobile.core.expense.travelallowance.ui.model.CompactItinerary;
 import com.concur.mobile.core.expense.travelallowance.ui.model.CompactItinerarySegment;
 
+import java.util.Date;
+import java.util.List;
+
 
 /**
  * Created by D023077 on 17.07.2015.
@@ -69,5 +72,27 @@ public class ItineraryUtils {
         }
 
         return itinerary;
+    }
+
+    public static Message findMessage(List<Message> messageList, ItinerarySegment segment) {
+        if (messageList == null || segment == null) {
+            return null;
+        }
+
+        Date departure = segment.getDepartureDateTime();
+        Date arrival = segment.getArrivalDateTime();
+
+        for (Message msg : messageList) {
+            if (msg.getSourceObject() != null && msg.getSourceObject() instanceof ItinerarySegment) {
+                ItinerarySegment msgSourceObject = (ItinerarySegment) msg.getSourceObject();
+                int departureCompare = DateUtils.getDateComparator(false).compare(departure, msgSourceObject.getDepartureDateTime());
+                int arrivalCompare = DateUtils.getDateComparator(false).compare(arrival, msgSourceObject.getArrivalDateTime());
+                if (departureCompare == 0 && arrivalCompare == 0) {
+                    return msg;
+                }
+            }
+        }
+
+        return null;
     }
 }

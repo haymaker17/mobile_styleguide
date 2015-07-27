@@ -17,7 +17,9 @@ public class BaseController implements IController {
         if (listenerList == null) {
             listenerList = new ArrayList<IControllerListener>();
         }
-        listenerList.add(listener);
+        if (!listenerList.contains(listener)) {
+            listenerList.add(listener);
+        }
     }
 
     @Override

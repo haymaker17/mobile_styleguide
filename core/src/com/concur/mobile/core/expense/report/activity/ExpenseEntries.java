@@ -69,6 +69,8 @@ import com.concur.mobile.core.expense.travelallowance.controller.ControllerActio
 import com.concur.mobile.core.expense.travelallowance.controller.IController;
 import com.concur.mobile.core.expense.travelallowance.controller.IControllerListener;
 import com.concur.mobile.core.expense.travelallowance.controller.TravelAllowanceItineraryController;
+import com.concur.mobile.core.expense.travelallowance.datamodel.Itinerary;
+import com.concur.mobile.core.expense.travelallowance.util.BundleId;
 import com.concur.mobile.core.service.ConcurService;
 import com.concur.mobile.core.util.Const;
 import com.concur.mobile.core.util.EventTracker;
@@ -1619,8 +1621,10 @@ public class
                             if (app.getTaItineraryController().getItineraryList() == null
                                     || app.getTaItineraryController().getItineraryList().size() == 0) {
                                 intent = new Intent(ExpenseEntries.this, ItineraryUpdateActivity.class);
-                                intent.putExtra(Const.EXTRA_EXPENSE_REPORT_KEY, expRep.reportKey);
-                                intent.putExtra(Const.EXTRA_EXPENSE_REPORT_NAME, expRep.reportName);
+                                Itinerary itin = new Itinerary();
+                                itin.setExpenseReportID(expRep.reportKey);
+                                itin.setName(expRep.reportName);
+                                intent.putExtra(BundleId.ITINERARY, itin);
                                 startActivityForResult(intent, REQUEST_VIEW_TA_ITINERARY_UPDATE);
                             } else {//There are itineraries already
                                 intent = new Intent(ExpenseEntries.this, ItineraryOverviewActivity.class);

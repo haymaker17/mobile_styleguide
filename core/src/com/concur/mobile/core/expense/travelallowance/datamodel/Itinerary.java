@@ -88,6 +88,16 @@ public class Itinerary implements Serializable{
         return this.message;
     }
 
+    public ItinerarySegment getSegment(String segmentId) {
+        ItinerarySegment resultSegment = null;
+        for (ItinerarySegment segment : getSegmentList()) {
+            if (segment.getId() != null && segment.getId().equals(segmentId)) {
+                resultSegment = segment;
+            }
+        }
+        return resultSegment;
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;

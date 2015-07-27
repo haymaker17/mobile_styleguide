@@ -6,6 +6,7 @@ import com.concur.mobile.core.expense.travelallowance.datamodel.ItinerarySegment
 import com.concur.mobile.core.expense.travelallowance.ui.model.CompactItinerary;
 import com.concur.mobile.core.expense.travelallowance.ui.model.CompactItinerarySegment;
 import com.concur.mobile.core.expense.travelallowance.util.ItineraryUtils;
+import com.concur.mobile.core.expense.travelallowance.util.Message;
 
 import junit.framework.TestCase;
 
@@ -261,6 +262,130 @@ public class ItineraryUtilsTest extends TestCase {
 
         compactItinerary.setName(name);
         itinerary.setName(name);
+
+    }
+
+    /**
+     * To test the straightforward cases
+     *
+     * Case 1: Tow different segments and two messages with reference to these segemnts.
+     * Expected output: These two segments should be found by findMessage method
+     *
+     * Case 2: A third segment for which no message exists.
+     * Expected output: No message should be found.
+     */
+    @Test
+    public void findMessageTest() {
+        Calendar cal1 = Calendar.getInstance();
+        cal1.set(2015, Calendar.APRIL, 2, 10, 10);
+
+        Calendar cal2 = Calendar.getInstance();
+        cal2.set(2015, Calendar.APRIL, 3, 10, 10);
+
+        Calendar cal3 = Calendar.getInstance();
+        cal3.set(2015, Calendar.APRIL, 3, 11, 15);
+
+        ItinerarySegment seg1 = new ItinerarySegment();
+        seg1.setDepartureDateTime(cal1.getTime());
+        seg1.setArrivalDateTime(cal2.getTime());
+
+        ItinerarySegment seg2 = new ItinerarySegment();
+        seg2.setDepartureDateTime(cal2.getTime());
+        seg2.setArrivalDateTime(cal3.getTime());
+
+        Message msg1 = new Message(Message.Severity.ERROR, "Test1");
+        msg1.setSourceObject(seg1);
+
+        Message msg2 = new Message(Message.Severity.ERROR, "Test2");
+        msg2.setSourceObject(seg2);
+
+        List<Message> msgList = new ArrayList<>();
+        msgList.add(msg1);
+        msgList.add(msg2);
+
+        // Case 1
+        Message foundMsg = ItineraryUtils.findMessage(msgList, seg1);
+        assertNotNull(foundMsg);
+        assertEquals("Test1", foundMsg.getCode());
+
+        foundMsg = ItineraryUtils.findMessage(msgList, seg2);
+        assertNotNull(foundMsg);
+        assertEquals("Test2", foundMsg.getCode());
+
+        // Case 2
+        ItinerarySegment seg3 = new ItinerarySegment();
+        seg3.setDepartureDateTime(cal1.getTime());
+        seg3.setArrivalDateTime(cal3.getTime());
+
+        foundMsg = ItineraryUtils.findMessage(msgList, seg3);
+        assertNull(foundMsg);
+
+    }
+
+    /**
+     * To test some error cases with null values
+     *
+     * Case 1: passed message list is null. Passed segment not null.
+     * Expected output: null
+     *
+     * * Case 2: passed message list is not null. Passed segment is null.
+     * Expected output: null
+     *
+     * Case 3: Arrival date is null and departure date is equal
+     * Expected output: No NPE and message should be found.
+     *
+     * Case 4: Departure date is null and arrival date is equal
+     * Expected output: No NPE and message should be found.
+     *
+     */
+    @Test
+    public void findMessageNegativeTest() {
+        Calendar cal1 = Calendar.getInstance();
+        cal1.set(2015, Calendar.APRIL, 2, 10, 10);
+
+        Calendar cal2 = Calendar.getInstance();
+        cal2.set(2015, Calendar.APRIL, 3, 10, 10);
+
+        Calendar cal3 = Calendar.getInstance();
+        cal3.set(2015, Calendar.APRIL, 3, 11, 15);
+
+        ItinerarySegment seg1 = new ItinerarySegment();
+        seg1.setDepartureDateTime(cal1.getTime());
+        seg1.setArrivalDateTime(cal2.getTime());
+
+        ItinerarySegment seg2 = new ItinerarySegment();
+        seg2.setDepartureDateTime(cal2.getTime());
+        seg2.setArrivalDateTime(cal3.getTime());
+
+        Message msg1 = new Message(Message.Severity.ERROR, "Test1");
+        msg1.setSourceObject(seg1);
+
+        Message msg2 = new Message(Message.Severity.ERROR, "Test2");
+        msg2.setSourceObject(seg2);
+
+        List<Message> msgList = new ArrayList<>();
+        msgList.add(msg1);
+        msgList.add(msg2);
+
+        // Case 1
+        Message foundMsg = ItineraryUtils.findMessage(null, seg1);
+        assertNull(foundMsg);
+
+        // Case 2
+        foundMsg = ItineraryUtils.findMessage(msgList, null);
+        assertNull(foundMsg);
+
+        // Case 3
+        seg1.setArrivalDateTime(null);
+        foundMsg = ItineraryUtils.findMessage(msgList, seg1);
+        assertNotNull(foundMsg);
+        assertEquals("Test1", foundMsg.getCode());
+
+        // Case 4
+        seg1.setDepartureDateTime(null);
+        foundMsg = ItineraryUtils.findMessage(msgList, seg1);
+        assertNotNull(foundMsg);
+        assertEquals("Test1", foundMsg.getCode());
 
     }
 
