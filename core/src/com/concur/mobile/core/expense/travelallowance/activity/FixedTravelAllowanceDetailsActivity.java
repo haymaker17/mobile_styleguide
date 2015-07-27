@@ -159,9 +159,11 @@ public class FixedTravelAllowanceDetailsActivity extends BaseActivity {
             return;
         }
         vgOvernight.setVisibility(View.VISIBLE);
-        Switch swOvernight = (Switch) this.findViewById(R.id.sw_overnight);
-        if (swOvernight != null) {
-            swOvernight.setChecked(true);
+        TextView textView = (TextView) findViewById(R.id.tv_overnight_help);
+        if (allowance.getOvernightIndicator()) {
+            textView.setText(R.string.general_yes);
+        } else {
+            textView.setText(R.string.general_no);
         }
     }
 
