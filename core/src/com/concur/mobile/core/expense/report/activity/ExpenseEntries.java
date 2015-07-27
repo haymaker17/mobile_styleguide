@@ -275,14 +275,11 @@ public class
             this.itineraryController = app.getTaItineraryController();
             this.itineraryController.registerListener(this);
 
-//          Make button visible if itinerary table isn't empty.
-            if (app.getTaItineraryController() != null  && app.getTaItineraryController().getItineraryList().size() > 0){
+//          Make button Travel Allowances visible
+            if ((app.getTaItineraryController() != null && app.getTaItineraryController().getItineraryList().size() > 0)
+                    || reportKeySource != Const.EXTRA_EXPENSE_REPORT_SOURCE_APPROVAL && !expRep.isSubmitted()) {
                 showTravelAllowanceButton();
             }
-            if (reportKeySource != Const.EXTRA_EXPENSE_REPORT_SOURCE_APPROVAL) {
-                showTravelAllowanceButton();
-            }
-
         }
     }
 
@@ -1630,6 +1627,7 @@ public class
                                 intent = new Intent(ExpenseEntries.this, ItineraryOverviewActivity.class);
                                 intent.putExtra(Const.EXTRA_EXPENSE_REPORT_KEY, expRep.reportKey);
                                 intent.putExtra(Const.EXTRA_EXPENSE_REPORT_NAME, expRep.reportName);
+                                intent.putExtra(BundleId.EXPENSE_REPORT_IS_SUBMITTED, expRep.isSubmitted());
                                 startActivityForResult(intent, REQUEST_VIEW_TA_ITINERARY_OVERVIEW);
                             }
                         }

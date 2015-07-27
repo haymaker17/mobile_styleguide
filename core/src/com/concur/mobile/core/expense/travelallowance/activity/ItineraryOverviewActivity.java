@@ -56,6 +56,12 @@ public class ItineraryOverviewActivity extends BaseActivity implements IControll
     private String expenseReportName;
 
     /**
+     * The indicator, whether the expense report is submitted or not.
+     * True, if submitted.
+     */
+    private boolean expenseReportIsSubmitted;
+
+    /**
      * The layout this activity is dealing with
      */
     private static final int LAYOUT_ID = R.layout.ta_itinerary_overview_activity;
@@ -83,6 +89,10 @@ public class ItineraryOverviewActivity extends BaseActivity implements IControll
             this.expenseReportName = getIntent().getStringExtra(Const.EXTRA_EXPENSE_REPORT_NAME);
         }
 
+        if (getIntent().hasExtra(BundleId.EXPENSE_REPORT_IS_SUBMITTED)) {
+            this.expenseReportIsSubmitted = getIntent().getBooleanExtra(BundleId.EXPENSE_REPORT_IS_SUBMITTED, false);
+        }
+
         setContentView(LAYOUT_ID);
 
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
@@ -98,7 +108,12 @@ public class ItineraryOverviewActivity extends BaseActivity implements IControll
 
 
         FloatingActionButton createItineraryFAB = (FloatingActionButton) findViewById(R.id.createItineraryFAB);
-        if (createItineraryFAB !=null){
+        if (createItineraryFAB != null) {
+            if (expenseReportIsSubmitted) {
+                createItineraryFAB.setVisibility(View.GONE);
+            } else {
+                createItineraryFAB.setVisibility(View.VISIBLE);
+            }
             createItineraryFAB.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
@@ -156,8 +171,9 @@ public class ItineraryOverviewActivity extends BaseActivity implements IControll
 
     @Override
     public void onCreateContextMenu(ContextMenu menu, View v, ContextMenu.ContextMenuInfo menuInfo) {
-
-        menu.add("@DELETE@");
+        if (!this.expenseReportIsSubmitted) {
+            menu.add("@DELETE@");
+        }
     }
 
     @Override

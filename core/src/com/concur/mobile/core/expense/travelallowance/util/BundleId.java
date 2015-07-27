@@ -11,4 +11,5 @@ public final class BundleId {
     public static final String ITINERARY = Itinerary.class.getName();
     public static final String SEGMENT = ItinerarySegment.class.getName();
     public static final String MESSAGE = Message.class.getName();
+    public static final String EXPENSE_REPORT_IS_SUBMITTED = "expense.report.isSubmitted";
 }
