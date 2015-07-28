@@ -1,7 +1,7 @@
 /**
  * 
  */
-package com.concur.mobile.platform.authentication.test;
+package com.concur.mobile.platform.ExpenseIt.test;
 
 import android.content.Context;
 
@@ -15,7 +15,7 @@ import org.junit.Assert;
 import java.util.HashMap;
 
 /**
- * Provides a class to verify a <code>LoginResult</code> object against data stored in the content provider.
+ * Provides a class to verify <code>ExpenseItPostReceiptResponse</code> object against data stored in the content provider.
  * 
  * @author andrewk
  */
@@ -25,7 +25,7 @@ public class VerifyExpenseItGetReceiptsResult {
 
     private static final String CLS_TAG = VerifyExpenseItGetReceiptsResult.class.getSimpleName();
 
-    private HashMap<Long, ExpenseItPostReceipt> getExpenseItReceipts(Context context, String userId) {
+    private HashMap<Long, ExpenseItPostReceipt> getExpenseItReceiptsFromDb(Context context, String userId) {
 
         HashMap<Long, ExpenseItPostReceipt> receiptsMap =  new HashMap<>();
 
@@ -39,8 +39,8 @@ public class VerifyExpenseItGetReceiptsResult {
     }
 
      /**
-     * Will verify login response information stored in the config content provider against information stored in
-     * <code>loginResult</code>.
+     * Will verify response information stored in the config content provider against information stored in
+     * <code>ExpenseItPostReceipt</code>.
      * 
      * @param context
      *            contains a reference to the application context.
@@ -51,11 +51,11 @@ public class VerifyExpenseItGetReceiptsResult {
      */
     public void verify(Context context, String userId, ExpenseItPostReceiptResponse receiptResponse) throws Exception {
 
-        HashMap<Long, ExpenseItPostReceipt> receipts = getExpenseItReceipts(context, userId);
+        HashMap<Long, ExpenseItPostReceipt> receipts = getExpenseItReceiptsFromDb(context, userId);
 
         //Verify LoginResult is not null
         if (receiptResponse == null) {
-            throw new Exception(CLS_TAG + "." + MTAG + ": LoginResult info is null!");
+            throw new Exception(CLS_TAG + "." + MTAG + ": Response info is null!");
         }
 
         Assert.assertEquals(MTAG + ": entries should match", receiptResponse.getExpenses().length, receipts.size());

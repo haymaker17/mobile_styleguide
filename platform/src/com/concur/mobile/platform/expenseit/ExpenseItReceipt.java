@@ -29,26 +29,6 @@ public class ExpenseItReceipt implements ExpenseItReceiptDAO {
     private static final String CLS_TAG = ExpenseItReceipt.class.getSimpleName();
 
     /**
-     * String array containing all the ETag column names.
-     */
-    public static String[] fullColumnList = {
-        Expense.ExpenseItReceiptColumns._ID,
-        Expense.ExpenseItReceiptColumns.ID,
-        Expense.ExpenseItReceiptColumns.USER_ID,
-        Expense.ExpenseItReceiptColumns.REPORT_ID,
-        Expense.ExpenseItReceiptColumns.NOTE,
-        Expense.ExpenseItReceiptColumns.CCTYPE,
-        Expense.ExpenseItReceiptColumns.CREATED_AT,
-        Expense.ExpenseItReceiptColumns.SEND_TO_CTE_AT,
-        Expense.ExpenseItReceiptColumns.IMAGE_DATA_URL,
-        Expense.ExpenseItReceiptColumns.TOTAL_IMAGE_COUNT,
-        Expense.ExpenseItReceiptColumns.TOTAL_IMAGES_UPLOADED,
-        Expense.ExpenseItReceiptColumns.PARSING_STATUS_CODE,
-        Expense.ExpenseItReceiptColumns.PROCESSING_ENGINE,
-        Expense.ExpenseItReceiptColumns.ETA
-    };
-
-    /**
      * Contains the receipt image ID.
      */
     @SerializedName("id")
@@ -86,6 +66,12 @@ public class ExpenseItReceipt implements ExpenseItReceiptDAO {
 
     @SerializedName("eta")
     private int eta;
+
+    @SerializedName("errorCode")
+    private int errorCode;
+
+    @SerializedName("errorMessage")
+    private String errorMessage;
 
     /**
      * Contains the Uri associated with this receipt item.
@@ -156,12 +142,14 @@ public class ExpenseItReceipt implements ExpenseItReceiptDAO {
             statement.append(Expense.ExpenseItReceiptColumns.USER_ID);
             statement.append(" = ?");
             String[] whereArgs = {userId};
-            cursor = resolver.query(Expense.ExpenseItReceiptColumns.CONTENT_URI, fullColumnList, statement.toString(), whereArgs, Expense.ExpenseItReceiptColumns.DEFAULT_SORT_ORDER);
+            cursor = resolver.query(Expense.ExpenseItReceiptColumns.CONTENT_URI, null, statement.toString(), whereArgs, Expense.ExpenseItReceiptColumns.DEFAULT_SORT_ORDER);
             if (cursor != null) {
                 while (cursor.moveToNext()) {
                     receipts.add(getReceipt(cursor));
                 }
             }
+        } catch (Exception e) {
+            Log.e(Const.LOG_TAG, CLS_TAG + ".getReceipts() Error while retrieving receipt info");
         } finally {
             if (cursor != null) {
                 cursor.close();
@@ -197,6 +185,9 @@ public class ExpenseItReceipt implements ExpenseItReceiptDAO {
         receipt.setTotalImagesUploaded(CursorUtil.getIntValue(cursor, Expense.ExpenseItReceiptColumns.TOTAL_IMAGES_UPLOADED));
         receipt.setParsingStatusCode(CursorUtil.getIntValue(cursor, Expense.ExpenseItReceiptColumns.PARSING_STATUS_CODE));
         receipt.setProcessingEngine(CursorUtil.getStringValue(cursor, Expense.ExpenseItReceiptColumns.PROCESSING_ENGINE));
+        receipt.setExpenseErrorCode(CursorUtil.getIntValue(cursor, Expense.ExpenseItReceiptColumns.ERROR_CODE));
+        receipt.setExpenseErrorMessage(CursorUtil.getStringValue(cursor, Expense.ExpenseItReceiptColumns.ERROR_MESSAGE));
+
         receipt.setEta(CursorUtil.getIntValue(cursor, Expense.ExpenseItReceiptColumns.ETA));
 
         receipt.setContentId(CursorUtil.getLongValue(cursor, Expense.ExpenseItReceiptColumns._ID));
@@ -227,6 +218,14 @@ public class ExpenseItReceipt implements ExpenseItReceiptDAO {
         totalImagesUploaded = CursorUtil.getIntValue(cursor, Expense.ExpenseItReceiptColumns.TOTAL_IMAGES_UPLOADED);
         parsingStatusCode = CursorUtil.getIntValue(cursor, Expense.ExpenseItReceiptColumns.PARSING_STATUS_CODE);
         processingEngine = CursorUtil.getStringValue(cursor, Expense.ExpenseItReceiptColumns.PROCESSING_ENGINE);
+
+        Integer errCode = CursorUtil.getIntValue(cursor, Expense.ExpenseItReceiptColumns.ERROR_CODE);
+        if(errCode != null) {
+            errorCode = errCode;
+        }
+        errorMessage = CursorUtil.getStringValue(cursor, Expense.ExpenseItReceiptColumns.ERROR_MESSAGE);
+
+
         eta = CursorUtil.getIntValue(cursor, Expense.ExpenseItReceiptColumns.ETA);
 
 
@@ -287,6 +286,8 @@ public class ExpenseItReceipt implements ExpenseItReceiptDAO {
         ContentUtils.putValue(values, Expense.ExpenseItReceiptColumns.TOTAL_IMAGES_UPLOADED, totalImagesUploaded);
         ContentUtils.putValue(values, Expense.ExpenseItReceiptColumns.PARSING_STATUS_CODE, parsingStatusCode);
         ContentUtils.putValue(values, Expense.ExpenseItReceiptColumns.PROCESSING_ENGINE, processingEngine);
+        ContentUtils.putValue(values, Expense.ExpenseItReceiptColumns.ERROR_CODE, errorCode);
+        ContentUtils.putValue(values, Expense.ExpenseItReceiptColumns.ERROR_MESSAGE, errorMessage);
         ContentUtils.putValue(values, Expense.ExpenseItReceiptColumns.ETA, eta);
 
         // Grab the content URI if any.
@@ -377,6 +378,18 @@ public class ExpenseItReceipt implements ExpenseItReceiptDAO {
     }
 
     @Override
+    public int getErrorCode() {
+        // TODO - CDIAZ - parse error code from JSON.
+        return errorCode;
+    }
+
+    @Override
+    public String getErrorMessage() {
+        // TODO - CDIAZ - parse error message from JSON.
+        return errorMessage;
+    }
+
+    @Override
     public void setId(long id) {
         this.id = id;
     }
@@ -436,5 +449,13 @@ public class ExpenseItReceipt implements ExpenseItReceiptDAO {
         this.eta = eta;
     }
 
+    @Override
+    public void setErrorCode(int errorCode) {
+        this.errorCode = errorCode;
+    }
 
+    @Override
+    public void setErrorMessage(String errorMessage) {
+        this.errorMessage = errorMessage;
+    }
 }

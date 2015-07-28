@@ -27,7 +27,12 @@ public class PlatformTestApplication extends Application {
         super.onCreate();
 
         PlatformTestApplication.app = this;
-
+        if (!useMockServer) {
+            // Using live server! Enforce specified credentials.
+            System.setProperty(Const.PPLOGIN_ID, "ahuser40@utest.com");
+            System.setProperty(Const.PPLOGIN_PIN_PASSWORD, "collective0");
+            System.setProperty(Const.RESET_PASSWORD_EMAIL, "ahuser40@utest.com");
+        }
     }
 
     /**

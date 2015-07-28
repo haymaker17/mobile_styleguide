@@ -39,6 +39,10 @@ public interface ExpenseItReceiptDAO {
 
     int getEta();
 
+    int getErrorCode();
+
+    String getErrorMessage();
+
     void setId(long id);
 
     void setReportId(long reportId);
@@ -62,6 +66,10 @@ public interface ExpenseItReceiptDAO {
     void setProcessingEngine(String processingEngine);
 
     void setEta(int eta);
+
+    void setErrorCode(int errorCode);
+
+    void setErrorMessage(String errorMessage);
 
     /**
      * Will update persistence with the current receipt values.

@@ -9,9 +9,11 @@ import android.util.Pair;
 
 import com.concur.mobile.core.expenseIt.ExpenseItServerUtil;
 import com.concur.mobile.platform.authentication.AccessToken;
-import com.concur.mobile.platform.authentication.ExpenseIt.ExpenseItGetReceiptTaskTest;
-import com.concur.mobile.platform.authentication.ExpenseIt.ExpenseItLoginRequestTaskTest;
-import com.concur.mobile.platform.authentication.ExpenseIt.ExpenseItUploadReceiptTaskTest;
+import com.concur.mobile.platform.ExpenseIt.ExpenseItGetImageUrlTaskTest;
+import com.concur.mobile.platform.ExpenseIt.ExpenseItGetReceiptTaskTest;
+import com.concur.mobile.platform.ExpenseIt.ExpenseItLoginRequestTaskTest;
+import com.concur.mobile.platform.ExpenseIt.ExpenseItTest;
+import com.concur.mobile.platform.ExpenseIt.ExpenseItUploadReceiptTaskTest;
 import com.concur.mobile.platform.authentication.LoginResult;
 import com.concur.mobile.platform.authentication.SessionInfo;
 import com.concur.mobile.platform.authentication.system.config.test.SystemConfigRequestTaskTest;
@@ -707,52 +709,39 @@ public class PlatformTestSuite {
         saveMETest.doTest();
     }
 
-    @Test
-    public void doGetExpenseListFromExpenseIt() throws Exception {
+    private void doExpenseItTest(ExpenseItTest test) throws Exception {
 
-        // Init and perform a PP login.
-        ExpenseItGetReceiptTaskTest test = new ExpenseItGetReceiptTaskTest();
-
-        // Set login credentials.
-        String loginId;
-        String loginPinPassword;
+        if (test == null) {
+            throw new IllegalArgumentException("Your test should be valid");
+        }
 
         // If using the mock server, then
         if (PlatformTestApplication.useMockServer()) {
-            // Using mock-server, doesn't matter what the credentials
-            // actually are!
-            loginId = "ahuser40@utest.com";
-            loginPinPassword = "collective0";
 
             // Init mock server.
             initMockServer(new MockExpenseItServer());
 
             // Set the mock server instance on the test.
             test.setMockServer(server);
+
+            // Init content providers.
+            initContentProviders();
+
+            initExpenseItProperties();
+
         } else {
-            // Using live server! Enforce specified credentials.
-            loginId = System.getProperty(Const.PPLOGIN_ID, "").trim();
-            if (TextUtils.isEmpty(loginId)) {
-                throw new Exception(CLS_TAG + ".doPinPassword: using live server, no '" + Const.PPLOGIN_ID
-                    + "' system property specified!");
-            }
-            loginPinPassword = System.getProperty(Const.PPLOGIN_PIN_PASSWORD, "").trim();
-            if (TextUtils.isEmpty(loginPinPassword)) {
-                throw new Exception(CLS_TAG + ".doPinPassword: using live server, no '" + Const.PPLOGIN_PIN_PASSWORD
-                    + "' system property specified!");
-            }
+            //Test against real server, do login first
+            doExpenseItLogin();
         }
-        // Set the credentials.
-        test.setCredentials(loginId, loginPinPassword);
-
-        // Init content providers.
-        initContentProviders();
-
-        initExpenseItProperties();
 
         // Run the test.
         test.doTest();
+    }
 
+    @Test
+    public void doGetExpenseListFromExpenseIt() throws Exception {
+        ExpenseItGetReceiptTaskTest test = new ExpenseItGetReceiptTaskTest();
+        doExpenseItTest(test);
     }
 
     @Test
@@ -799,55 +788,19 @@ public class PlatformTestSuite {
         initExpenseItProperties();
         // Run the test.
         test.doTest();
+    }
 
+    @Test
+    public void doExpenseItGetImageUrlsTest() throws Exception {
+        ExpenseItGetImageUrlTaskTest test = new ExpenseItGetImageUrlTaskTest();
+        doExpenseItTest(test);
     }
 
     @Test
     public void doUploadImageToExpenseIt() throws Exception {
-
         // Init and perform a PP login.
         ExpenseItUploadReceiptTaskTest test = new ExpenseItUploadReceiptTaskTest();
-
-        // Set login credentials.
-        String loginId;
-        String loginPinPassword;
-
-        // If using the mock server, then
-        if (PlatformTestApplication.useMockServer()) {
-            // Using mock-server, doesn't matter what the credentials
-            // actually are!
-            loginId = "ahuser40@utest.com";
-            loginPinPassword = "collective0";
-
-            // Init mock server.
-            initMockServer(new MockExpenseItServer());
-
-            // Set the mock server instance on the test.
-            test.setMockServer(server);
-        } else {
-            // Using live server! Enforce specified credentials.
-            loginId = System.getProperty(Const.PPLOGIN_ID, "").trim();
-            if (TextUtils.isEmpty(loginId)) {
-                throw new Exception(CLS_TAG + ".doPinPassword: using live server, no '" + Const.PPLOGIN_ID
-                    + "' system property specified!");
-            }
-            loginPinPassword = System.getProperty(Const.PPLOGIN_PIN_PASSWORD, "").trim();
-            if (TextUtils.isEmpty(loginPinPassword)) {
-                throw new Exception(CLS_TAG + ".doPinPassword: using live server, no '" + Const.PPLOGIN_PIN_PASSWORD
-                    + "' system property specified!");
-            }
-        }
-        // Set the credentials.
-        test.setCredentials(loginId, loginPinPassword);
-
-        // Init content providers.
-        initContentProviders();
-
-        initExpenseItProperties();
-
-        // Run the test.
-        test.doTest();
-
+        doExpenseItTest(test);
     }
 
     /**
@@ -895,6 +848,8 @@ public class PlatformTestSuite {
         expenseProvider.onCreate();
         ShadowContentResolver.registerProvider(com.concur.mobile.platform.expense.provider.Expense.AUTHORITY,
             expenseProvider);
+
+
     }
 
     /**
@@ -952,10 +907,14 @@ public class PlatformTestSuite {
             ExpenseItProperties.setConsumerKey(expenseItServerAddress.second);
             ExpenseItProperties.setAppId(ExpenseItServerUtil.getAppId(PlatformTestApplication.getApplication()));
 
-            //First time the access token is not valid and we rely on LoginToExpenseIt to get the accessToken. On subsequent
-            //calls this value is set.
+            //Invalidate any Expenseit login information
             SessionInfo expenseItSessionInfo = ConfigUtil.getExpenseItSessionInfo(PlatformTestApplication.getApplication());
-            ExpenseItProperties.setAccessToken(expenseItSessionInfo.getAccessToken());
+            if (expenseItSessionInfo != null && !TextUtils.isEmpty(expenseItSessionInfo.getAccessToken())) {
+                //Clear ExpenseIt Login Info
+                ExpenseItProperties.setAccessToken(null);
+                // Update the config content provider.
+                ConfigUtil.removeExpenseItLoginInfo(PlatformTestApplication.getApplication());
+            }
         }
 
         // set user agent

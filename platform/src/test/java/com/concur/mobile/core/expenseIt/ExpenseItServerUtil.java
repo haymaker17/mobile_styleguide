@@ -146,7 +146,7 @@ public class ExpenseItServerUtil {
 
         Log.v(Const.LOG_TAG, "getAppID: Attempting Secure.ANDROID_ID");
         appId = Settings.Secure.getString(context.getContentResolver(), Settings.Secure.ANDROID_ID);
-        if (TextUtils.isEmpty(appId)) {
+        if (!TextUtils.isEmpty(appId)) {
             return appId;
         }
 

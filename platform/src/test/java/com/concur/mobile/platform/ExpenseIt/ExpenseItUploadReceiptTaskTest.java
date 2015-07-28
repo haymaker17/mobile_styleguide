@@ -1,7 +1,7 @@
 /**
  *
  */
-package com.concur.mobile.platform.authentication.ExpenseIt;
+package com.concur.mobile.platform.ExpenseIt;
 
 import android.content.Context;
 import android.content.res.AssetManager;
@@ -9,11 +9,10 @@ import android.content.res.AssetManager;
 import com.concur.mobile.base.service.BaseAsyncRequestTask;
 import com.concur.mobile.base.service.BaseAsyncResultReceiver;
 import com.concur.mobile.base.util.IOUtils;
-import com.concur.mobile.platform.authentication.test.VerifyExpenseItUploadReceiptResult;
+import com.concur.mobile.platform.ExpenseIt.test.VerifyExpenseItUploadReceiptResult;
 import com.concur.mobile.platform.expenseit.ExpenseItImage;
 import com.concur.mobile.platform.expenseit.ExpenseItPostReceiptResponse;
 import com.concur.mobile.platform.expenseit.PostExpenseItReceiptAsyncTask;
-import com.concur.mobile.platform.test.AsyncRequestTest;
 import com.concur.mobile.platform.test.Const;
 import com.concur.mobile.platform.test.PlatformTestApplication;
 import com.google.gson.Gson;
@@ -35,32 +34,11 @@ import java.util.Map;
  *
  * @author andrewk
  */
-public class ExpenseItUploadReceiptTaskTest extends AsyncRequestTest {
+public class ExpenseItUploadReceiptTaskTest extends ExpenseItTest {
 
     private static final String CLS_TAG = ExpenseItUploadReceiptTaskTest.class.getSimpleName();
 
     private static final boolean DEBUG = false;
-
-    /**
-     * Contains the request login id.
-     */
-    private String loginId;
-
-    /**
-     * Contains the request pin/password.
-     */
-    private String loginPinPassword;
-
-    /**
-     * Sets the authentication credentials.
-     *
-     * @param loginId          contains the login id.
-     * @param loginPinPassword contains the pin/password.
-     */
-    public void setCredentials(String loginId, String loginPinPassword) {
-        this.loginId = loginId;
-        this.loginPinPassword = loginPinPassword;
-    }
 
     /**
      * Will perform the test throwing an exception if the test fails.

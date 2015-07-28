@@ -1,19 +1,19 @@
 package com.concur.mobile.core.expense.charge.data;
 
-import java.io.Serializable;
-import java.util.ArrayList;
-import java.util.Calendar;
-
-import org.xml.sax.Attributes;
-import org.xml.sax.SAXException;
-import org.xml.sax.helpers.DefaultHandler;
-
 import android.content.Context;
 import android.text.TextUtils;
 
 import com.concur.mobile.core.expense.charge.data.MobileEntry.MobileEntrySAXHandler;
 import com.concur.mobile.platform.expense.smartexpense.dao.SmartExpenseDAO;
 import com.concur.mobile.platform.util.Parse;
+
+import org.xml.sax.Attributes;
+import org.xml.sax.SAXException;
+import org.xml.sax.helpers.DefaultHandler;
+
+import java.io.Serializable;
+import java.util.ArrayList;
+import java.util.Calendar;
 
 public class ReceiptCapture implements Serializable {
 
@@ -78,12 +78,19 @@ public class ReceiptCapture implements Serializable {
         crnCode = smartExpense.getCrnCode();
         expKey = smartExpense.getExpKey();
         expName = smartExpense.getExpenseName();
-        vendorName = smartExpense.getMerchantName(); // VenLiName or MerchantName?
+
+        if(!TextUtils.isEmpty(smartExpense.getMerchantName())) {
+            vendorName = smartExpense.getMerchantName();
+        } else if(!TextUtils.isEmpty(smartExpense.getVendorDescription())) {
+            vendorName = smartExpense.getVendorDescription();
+        }
+
         rcKey = smartExpense.getRcKey();
         smartExpId = smartExpense.getSmartExpenseId();
         transactionAmount = smartExpense.getTransactionAmount();
         transactionDate = smartExpense.getTransactionDate();
         smartExpenseId = smartExpense.getSmartExpenseId();
+
 
         if (!TextUtils.isEmpty(smartExpense.getMobileReceiptImageId())) {
             receiptImageId = smartExpense.getMobileReceiptImageId();

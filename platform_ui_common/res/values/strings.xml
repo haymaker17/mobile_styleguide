@@ -82,7 +82,6 @@
     <string name="login_403_error_message">Your password has expired or is temporary. Please reset your password.</string>
     <string name="login_403_error_reset">Reset</string>
     <string name="login_expense_it_failure">Failed to login to expenseIt</string>
-    <string name="login_expense_it_success">Successfully logged in to expenseIt</string>
     <!-- SSO Login -->
     <string name="sso_sign_in">Company Code Sign In</string>
 

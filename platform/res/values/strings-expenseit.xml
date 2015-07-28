@@ -4,6 +4,7 @@
     <!-- EXPENSEIT STRINGS -->
     <string name="expenseit_expense_processing_time">Average processing time: %s</string>
     <string name="expenseit_expense_detail_submitted">Analyzing receipt</string>
+    <string name="expenseit_expense_list_error">Analyzing error</string>
     <string name="expenseit_expense_detail_queued_waiting">Waiting for upload</string>
     <string name="expenseit_expense_detail_uploading">Uploading receipt</string>
     <string name="expenseit_expense_detail_export_pending">Waiting for export</string>
@@ -17,6 +18,10 @@
     <string name="expenseit_expense_detail_not_receipt">This image does not contain a receipt.</string>
     <string name="expenseit_expense_detail_unreadable">We were unable to read this receipt. Please retake the image and submit again.</string>
     <string name="expenseit_expense_detail_mulitple">This image contains multiple receipts. Please submit only one receipt per image.</string>
+
+    <string name="expenseit_eta_min">min</string>
+    <string name="expenseit_eta_sec">sec</string>
+    <string name="expenseit_eta_na">N/A</string>
     <!-- EXPENSEIT STRINGS END -->
 
 </resources>

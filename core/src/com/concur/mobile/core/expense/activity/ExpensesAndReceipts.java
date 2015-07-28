@@ -374,8 +374,6 @@ public class ExpensesAndReceipts extends BaseActivity implements ExpensesCallbac
 
                 }
 
-                ;
-
                 @Override
                 protected Boolean doInBackground(Void... params) {
                     boolean returnValue = app.isSessionAvailable();
@@ -387,7 +385,6 @@ public class ExpensesAndReceipts extends BaseActivity implements ExpensesCallbac
                     onHandleSuccess(result, app);
                 }
 
-                ;
 
             }.execute();
         } else {

@@ -189,37 +189,23 @@ public class LoginPasswordActivity extends BaseActivity implements LoginPassword
                     expenseItLoginReceiver = new BaseAsyncResultReceiver(new Handler());
                     expenseItLoginReceiver.setListener(new AsyncReplyListener() {
 
-                        private void showToast(final boolean success) {
-                            runOnUiThread(new Runnable() {
-                                @Override
-                                public void run() {
-                                    Toast.makeText(getApplicationContext(),
-                                        success ? R.string.login_expense_it_success :
-                                            R.string.login_expense_it_failure,
-                                        Toast.LENGTH_LONG).show();
-                                }
-                            });
-                        }
-
                         @Override
                         public void onRequestSuccess(Bundle resultData) {
                             Log.d(Const.LOG_TAG, CLS_TAG + ".expenseItLoginReceiver.onRequestSuccess is called");
                             Preferences.setUserLoggedOnToExpenseIt(true);
-                            showToast(true);
                         }
 
                         @Override
                         public void onRequestFail(Bundle resultData) {
                             Log.e(Const.LOG_TAG, CLS_TAG + ".expenseItLoginReceiver.onRequestFail is called");
                             Preferences.setUserLoggedOnToExpenseIt(false);
-                            showToast(false);
+                            Toast.makeText(getApplicationContext(), R.string.login_expense_it_failure, Toast.LENGTH_LONG).show();
                         }
 
                         @Override
                         public void onRequestCancel(Bundle resultData) {
                             Log.d(Const.LOG_TAG, CLS_TAG + ".expenseItLoginReceiver.onRequestCancel is called");
                             Preferences.setUserLoggedOnToExpenseIt(false);
-                            showToast(false);
                         }
 
                         @Override
