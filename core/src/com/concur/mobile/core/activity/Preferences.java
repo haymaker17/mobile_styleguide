@@ -29,22 +29,16 @@ import android.text.TextUtils;
 import android.util.Log;
 
 import com.concur.core.R;
+import com.concur.mobile.base.service.BaseAsyncRequestTask;
+import com.concur.mobile.base.service.BaseAsyncResultReceiver;
 import com.concur.mobile.core.ConcurCore;
 import com.concur.mobile.core.ConcurCore.Product;
 import com.concur.mobile.core.data.MobileDatabase;
 import com.concur.mobile.core.service.BaseRequestPasswordReset;
 import com.concur.mobile.core.service.ConcurService;
 import com.concur.mobile.core.service.CorpSsoQueryReply;
-import com.concur.mobile.core.util.Const;
-import com.concur.mobile.core.util.Crypt;
-import com.concur.mobile.core.util.EventTracker;
-import com.concur.mobile.core.util.Flurry;
-import com.concur.mobile.core.util.FormatUtil;
-import com.concur.mobile.core.util.Notifications;
-import com.concur.mobile.platform.authentication.AccessToken;
-import com.concur.mobile.platform.authentication.LoginResult;
-import com.concur.mobile.platform.authentication.Session;
-import com.concur.mobile.platform.authentication.SessionInfo;
+import com.concur.mobile.core.util.*;
+import com.concur.mobile.platform.authentication.*;
 import com.concur.mobile.platform.config.provider.ConfigUtil;
 import com.concur.mobile.platform.util.Parse;
 import com.concur.platform.PlatformProperties;
@@ -305,7 +299,7 @@ public class Preferences extends PreferenceActivity implements OnSharedPreferenc
      * could be upgrading from one of many previous versions we either have to build an upgrade stack or just make our upgrades
      * rerunnable. Since these changes are small and infrequent we will make them rerunnable.
      */
-    public static void upgradePreferences(ConcurCore app) {
+    public static void upgradePreferences(ConcurCore app, BaseAsyncResultReceiver autoLoginReceiver) {
 
         SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(ConcurCore.getContext());
 
@@ -313,6 +307,7 @@ public class Preferences extends PreferenceActivity implements OnSharedPreferenc
         shiftSession(prefs);
         removePreferences(prefs);
         platFormDataMigration(prefs, app);
+        doAutoLogin(prefs, app, true, autoLoginReceiver);
     }
 
     private static void platFormDataMigration(SharedPreferences prefs, ConcurCore app) {
@@ -844,8 +839,8 @@ public class Preferences extends PreferenceActivity implements OnSharedPreferenc
     public static boolean isTestDriveAccountExpired() {
         if (isTestDriveUser()) {
             SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(ConcurCore.getContext());
-            Calendar accountExpirationDate = Parse.parseXMLTimestamp(prefs.getString(
-                    Const.PREF_ACCOUNT_EXPIRATION_DATE, null));
+            Calendar accountExpirationDate = Parse.parseXMLTimestamp(
+                    prefs.getString(Const.PREF_ACCOUNT_EXPIRATION_DATE, null));
             if (accountExpirationDate != null) {
                 if (Calendar.getInstance().compareTo(accountExpirationDate) >= 0) {
                     return true;
@@ -1543,4 +1538,126 @@ public class Preferences extends PreferenceActivity implements OnSharedPreferenc
         e.commit();
     }
 	*/
+
+    // need to pull this out to some other appropriate class
+    public static void doAutoLogin(SharedPreferences prefs, final ConcurCore app,
+            final boolean expireLoginIfAutoLoginDisabled, BaseAsyncResultReceiver autoLoginReceiver) {
+        final SessionInfo sessionInfo = ConfigUtil.getSessionInfo(app.getApplicationContext());
+        boolean autoLogin = prefs.getBoolean(Const.PREF_AUTO_LOGIN, false);
+        Log.d(Const.LOG_TAG,
+                "-------------------------------------------------------------------------------------------autologin from prefs = "
+                        + autoLogin);
+        // If auto-login is enabled and company sign-on is being used, then force autoLogin to 'false'.
+        // Company Sign-on auto-login is not currently supported.
+        if (autoLogin) {
+            String signInMethod = sessionInfo.getSignInMethod();
+            Log.d(Const.LOG_TAG,
+                    "---------------------------------------------------------------------------------------- signInMethod = "
+                            + signInMethod);
+            Log.d(Const.LOG_TAG,
+                    "---------------------------------------------------------------------------------------- SSO Url = "
+                            + sessionInfo.getSSOUrl());
+            // NOTE - sometimes loginMethod is null and hence autoLogin is set to false, then AutoLogin is not called. does the code setting emailLookupBundle in the below onRequestSuccess causing this?
+            if ("SSO".equalsIgnoreCase(signInMethod) || !(TextUtils.isEmpty(sessionInfo.getSSOUrl()))) {
+                autoLogin = false;
+            }
+        }
+
+        if (autoLogin) {
+            Log.d(Const.LOG_TAG, "attempting autologin");
+            autoLoginReceiver.setListener(new BaseAsyncRequestTask.AsyncReplyListener() {
+
+                                              public void onRequestSuccess(Bundle resultData) {
+                                                  Log.d(Const.LOG_TAG,
+                                                          ".onRequestSucess ++++++++++++++++++++++++++++++++");
+
+                                                  Log.d(Const.LOG_TAG,
+                                                          "attempting to build emailLookupBundle, sessionInfo not null ? "
+                                                                  + (sessionInfo != null));
+                                                  Bundle emailLookupBundle = null;
+                                                  if (sessionInfo != null) {
+                                                      // all the below necessary ???? is the below code causing the random null value for signInMethod above?
+                                                      emailLookupBundle = new Bundle();
+                                                      String signInMethod = sessionInfo.getSignInMethod();
+                                                      String ssoUrl = sessionInfo.getSSOUrl();
+                                                      String serverUrl = sessionInfo.getServerUrl();
+                                                      String loginId = sessionInfo.getLoginId();
+                                                      Log.d(Const.LOG_TAG,
+                                                              "-------------------------------------------------------------------setting into bundle, signInMethod = "
+                                                                      + signInMethod);
+                                                      Log.d(Const.LOG_TAG,
+                                                              "-------------------------------------------------------------------setting into bundle, ssoUrl = "
+                                                                      + ssoUrl);
+                                                      Log.d(Const.LOG_TAG,
+                                                              "-------------------------------------------------------------------setting into bundle, serverUrl = "
+                                                                      + serverUrl);
+                                                      Log.d(Const.LOG_TAG,
+                                                              "-------------------------------------------------------------------setting into bundle, loginId = "
+                                                                      + loginId);
+                                                      // Set the login id.
+                                                      emailLookupBundle
+                                                              .putString(EmailLookUpRequestTask.EXTRA_LOGIN_ID_KEY,
+                                                                      loginId);
+                                                      // Set the server url.
+                                                      emailLookupBundle
+                                                              .putString(EmailLookUpRequestTask.EXTRA_SERVER_URL_KEY, (
+                                                                      serverUrl != null ?
+                                                                              serverUrl :
+                                                                              PlatformProperties.getServerAddress()));
+                                                      // Set the sign-in method.
+                                                      emailLookupBundle.putString(
+                                                              EmailLookUpRequestTask.EXTRA_SIGN_IN_METHOD_KEY,
+                                                              signInMethod);
+                                                      // Set the sso url.
+                                                      emailLookupBundle
+                                                              .putString(EmailLookUpRequestTask.EXTRA_SSO_URL_KEY,
+                                                                      ssoUrl);
+
+                                                  }
+                                                  UserAndSessionInfoUtil
+                                                          .updateUserAndSessionInfo(ConcurCore.getContext(),
+                                                                  emailLookupBundle);
+                                              }
+
+                                              public void onRequestFail(Bundle resultData) {
+                                                  if (expireLoginIfAutoLoginDisabled) {
+                                                      Log.d(Const.LOG_TAG, "expire login as autoLogin is disabled");
+                                                      // need to expire the login
+                                                      app.expireLogin();
+                                                  }
+                                              }
+
+                                              public void onRequestCancel(Bundle resultData) {
+                                                  if (expireLoginIfAutoLoginDisabled) {
+                                                      Log.d(Const.LOG_TAG, "expire login as autoLogin is disabled");
+                                                      // need to expire the login
+                                                      app.expireLogin();
+                                                  }
+                                              }
+
+                                              public void cleanup() {
+                                              }
+
+                                          }
+
+            );
+
+            UserAndSessionInfoUtil.setServerAddress(PlatformProperties.getServerAddress());
+
+            // Attempt to authenticate
+            // Re-entry to the UI will be via handleMessage() below
+            // perform an full AutoLoginRequest in order to get
+            // all the user roles, site settings, car configs, etc. and all that other good stuff.
+            AutoLoginRequestTask autoLoginRequestTask = new AutoLoginRequestTask(ConcurCore.getContext(), 0,
+                    autoLoginReceiver, Locale.getDefault());
+            autoLoginRequestTask.execute();
+        } else {
+            if (expireLoginIfAutoLoginDisabled) {
+                Log.d(Const.LOG_TAG,
+                        "---------------------------------------------------------------------------expire login as autoLogin is disabled");
+                // need to expire the login, will this take back to log in screen?
+                app.expireLogin();
+            }
+        }
+    }
 }
