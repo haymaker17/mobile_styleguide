@@ -13,10 +13,10 @@ public class ErrorResponse implements Serializable{
     public static final String DEFAULT_NO_ERROR_MESSAGE = "Success";
     public static final Integer ERROR_CODE_NO_ERROR = -1;
 
-    @SerializedName("errorMessage")
+    @SerializedName("error_message")
     private String errorMessage = DEFAULT_NO_ERROR_MESSAGE;
 
-    @SerializedName("errorCode")
+    @SerializedName("error_code")
     private Integer errorCode = ERROR_CODE_NO_ERROR;
 
     public Integer getErrorCode() {
