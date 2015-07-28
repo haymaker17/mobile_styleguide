@@ -218,6 +218,11 @@ public class ItineraryUpdateActivity extends BaseActivity implements IController
             listView.setAdapter(adapter);
         }
 
+        // In case of Create also create the first segment
+        if (StringUtilities.isNullOrEmpty(this.itinerary.getItineraryID() ) && this.itinerary.getSegmentList().size() == 0){
+            addNewRow();
+        }
+
         controller.registerListener(this);
         renderDefaultValues();
 
@@ -245,6 +250,9 @@ public class ItineraryUpdateActivity extends BaseActivity implements IController
         ItinerarySegment emptySegment = new ItinerarySegment();
         emptySegment.setDepartureDateTime(Calendar.getInstance(Locale.getDefault()).getTime());
         emptySegment.setArrivalDateTime(Calendar.getInstance(Locale.getDefault()).getTime());
+        if (itinerary.getSegmentList().size() > 0){
+            emptySegment.setDepartureLocation( (itinerary.getSegmentList().get(itinerary.getSegmentList().size() - 1)).getArrivalLocation() );
+        }
         this.itinerary.getSegmentList().add(emptySegment);
         adapter.resetSaveMode();
         adapter.add(emptySegment);
