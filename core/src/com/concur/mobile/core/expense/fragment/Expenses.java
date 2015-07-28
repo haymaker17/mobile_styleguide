@@ -2155,6 +2155,14 @@ public class Expenses extends BaseFragment implements INetworkActivityListener {
                     }
                     break;
                 }
+                    case EXPENSEIT_NOT_DONE:{
+                        ReceiptCapture receiptCaptures = exp.getReceiptCapture();
+                        Intent intent = new Intent(activity, QuickExpense.class);
+                        intent.putExtra(Const.EXTRA_EXPENSE_ENTRY_TYPE_KEY, exp.getExpenseEntryType().name());
+                        intent.putExtra(Const.EXTRA_EXPENSE_RECEIPT_CAPTURE_KEY, receiptCaptures.rcKey);
+                        startActivityForResult(intent, Const.EDIT_MOBILE_ENTRY);
+                        break;
+                    }
 
                 }
             } else {
