@@ -248,10 +248,16 @@ public class ItineraryUpdateActivity extends BaseActivity implements IController
 
     private void addNewRow() {
         ItinerarySegment emptySegment = new ItinerarySegment();
-        emptySegment.setDepartureDateTime(Calendar.getInstance(Locale.getDefault()).getTime());
-        emptySegment.setArrivalDateTime(Calendar.getInstance(Locale.getDefault()).getTime());
+        //Get current date/time without seconds and milliseconds as default value for arrival and departure
+        Calendar cal = Calendar.getInstance(Locale.getDefault());
+        Log.d(CLASS_TAG, String.valueOf(cal.getTime()));
+        cal.set(Calendar.SECOND, 0);
+        cal.set(Calendar.MILLISECOND,0);
+        Log.d(CLASS_TAG, String.valueOf(cal.getTime()));
+        emptySegment.setDepartureDateTime(cal.getTime());
+        emptySegment.setArrivalDateTime(cal.getTime());
         if (itinerary.getSegmentList().size() > 0){
-            emptySegment.setDepartureLocation( (itinerary.getSegmentList().get(itinerary.getSegmentList().size() - 1)).getArrivalLocation() );
+            emptySegment.setDepartureLocation((itinerary.getSegmentList().get(itinerary.getSegmentList().size() - 1)).getArrivalLocation());
         }
         this.itinerary.getSegmentList().add(emptySegment);
         adapter.resetSaveMode();
