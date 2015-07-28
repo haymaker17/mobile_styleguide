@@ -299,8 +299,11 @@ public class TravelAllowanceItineraryController extends BaseController {
         if (itinerary == null){
             return false;
         }
+        int i = -1;
         for (ItinerarySegment segment : itinerary.getSegmentList()){
+            i++;
             if (checkInitialLocations(segment) == true){
+                Log.d(CLASS_TAG,"Initial Location for index " + i);
                 return true;
             }
         }
@@ -308,8 +311,17 @@ public class TravelAllowanceItineraryController extends BaseController {
     }
 
     private boolean checkInitialLocations(ItinerarySegment segment){
-        if (segment.getArrivalLocation()   == null || segment.getArrivalLocation().getCode()   == StringUtilities.EMPTY_STRING ||
-            segment.getDepartureLocation() == null || segment.getDepartureLocation().getCode() == StringUtilities.EMPTY_STRING    ){
+        if (segment.getArrivalLocation()   == null ) {
+            Log.d(CLASS_TAG, "arrivalLocation is null");
+            return true;
+        }else if (StringUtilities.isNullOrEmpty(segment.getArrivalLocation().getCode()   ) ) {
+            Log.d(CLASS_TAG, "arrivalLocation has an invalid code");
+            return true;
+        }else if (    segment.getDepartureLocation() == null ) {
+            Log.d(CLASS_TAG, "departureLocation is null");
+            return true;
+        }else if (StringUtilities.isNullOrEmpty(segment.getDepartureLocation().getCode() )    ){
+            Log.d(CLASS_TAG, "departureLocation has an invalid code");
             return  true;
         }else {
             return false;

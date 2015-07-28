@@ -1,5 +1,7 @@
 package com.concur.mobile.core.expense.travelallowance.util;
 
+import android.util.Log;
+
 import com.concur.mobile.core.expense.travelallowance.datamodel.IDatePeriodUTC;
 
 import java.text.SimpleDateFormat;
@@ -17,6 +19,9 @@ import java.util.Map;
  * @author Michael Becherer
  */
 public final class DateUtils {
+
+
+    private static final String CLASS_TAG = DateUtils.class.getSimpleName();
 
     /**
      * The singleton {@code Comparator} instance for comparing {@code Calendar}
@@ -432,9 +437,11 @@ public final class DateUtils {
                 if (cmpDate != null) {
                     if (ascending) {
                         if (dateComparator.compare(cmpDate, start) >= 0) {
+                            Log.d(CLASS_TAG, "Start date " + start + " isn't ascending compared to previous end date " + cmpDate);
                             return false;
                         }
                     } else if (dateComparator.compare(start, cmpDate) >= 0) {
+                        Log.d(CLASS_TAG, "Start date " + start + " isn't descending compared to previous end date " + cmpDate);
                         return false;
                     }
                 }
@@ -445,9 +452,11 @@ public final class DateUtils {
                 if (cmpDate != null) {
                     if (ascending) {
                         if (dateComparator.compare(cmpDate, end) >= 0) {
+                            Log.d(CLASS_TAG, "End date " + end + " isn't ascending compared to previous start date " + cmpDate);
                             return false;
                         }
                     } else if (dateComparator.compare(end, cmpDate) >= 0) {
+                        Log.d(CLASS_TAG, "End date " + end + " isn't descending compared to previous start date " + cmpDate);
                         return false;
                     }
                 }
