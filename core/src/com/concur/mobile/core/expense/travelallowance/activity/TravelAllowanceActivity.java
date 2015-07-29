@@ -3,6 +3,7 @@ package com.concur.mobile.core.expense.travelallowance.activity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.design.widget.TabLayout;
+import android.support.v4.app.Fragment;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
@@ -18,10 +19,16 @@ import com.concur.mobile.core.expense.travelallowance.controller.IController;
 import com.concur.mobile.core.expense.travelallowance.controller.IControllerListener;
 import com.concur.mobile.core.expense.travelallowance.controller.TravelAllowanceItineraryController;
 import com.concur.mobile.core.expense.travelallowance.datamodel.FixedTravelAllowance;
+import com.concur.mobile.core.expense.travelallowance.datamodel.Itinerary;
 import com.concur.mobile.core.expense.travelallowance.fragment.FixedTravelAllowanceListFragment;
 import com.concur.mobile.core.expense.travelallowance.fragment.IFragmentCallback;
+import com.concur.mobile.core.expense.travelallowance.fragment.SimpleTAItineraryListFragment;
 import com.concur.mobile.core.expense.travelallowance.fragment.TravelAllowanceItineraryListFragment;
+import com.concur.mobile.core.expense.travelallowance.util.BundleId;
 import com.concur.mobile.core.util.Const;
+
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * Created by D049515 on 15.06.2015.
@@ -68,8 +75,8 @@ public class TravelAllowanceActivity extends AppCompatActivity
         this.allowanceController = app.getFixedTravelAllowanceController();
         this.allowanceController.registerListener(this);
 
-        if (getIntent().hasExtra(Const.EXTRA_EXPENSE_REPORT_KEY)) {
-            expenseReportKey = getIntent().getStringExtra(Const.EXTRA_EXPENSE_REPORT_KEY);
+        if (getIntent().hasExtra(BundleId.EXPENSE_REPORT_KEY)) {
+            expenseReportKey = getIntent().getStringExtra(BundleId.EXPENSE_REPORT_KEY);
         }
 
 
@@ -83,12 +90,43 @@ public class TravelAllowanceActivity extends AppCompatActivity
         getSupportActionBar().setTitle(R.string.ta_travel_allowances);
 
         ViewPager pager = (ViewPager) findViewById(R.id.view_pager);
-        viewPagerAdapter = new ViewPagerAdapter(getSupportFragmentManager(), getApplicationContext());
+        List<ViewPagerAdapter.ViewPagerItem> pagerItemList = new ArrayList<ViewPagerAdapter.ViewPagerItem>();
+        viewPagerAdapter = new ViewPagerAdapter(getSupportFragmentManager(), getApplicationContext(), getViewPagerItemList());
 
         pager.setAdapter(viewPagerAdapter);
 
         TabLayout tabLayout = (TabLayout) findViewById(R.id.tab_layout);
         tabLayout.setupWithViewPager(pager);
+
+    }
+    
+    private List<ViewPagerAdapter.ViewPagerItem> getViewPagerItemList() {
+
+        List<ViewPagerAdapter.ViewPagerItem> list = new ArrayList<>();
+
+        ViewPagerAdapter.ViewPagerItem adjustmentFrag = new ViewPagerAdapter.ViewPagerItem(
+                getString(R.string.ta_adjustments), FixedTravelAllowanceListFragment.class, null);
+        list.add(adjustmentFrag);
+
+        if (getIntent().getExtras().getBoolean(BundleId.IS_EDIT_MODE)) {
+            Bundle arguments = new Bundle();
+            ArrayList<Itinerary> itinList = new ArrayList<>(itineraryController.getItineraryList());
+            arguments.putSerializable(BundleId.ITINERARY_LIST, itinList);
+            arguments.putString(BundleId.EXPENSE_REPORT_KEY, getIntent().getStringExtra(BundleId.EXPENSE_REPORT_KEY));
+            arguments.putString(BundleId.EXPENSE_REPORT_NAME, getIntent().getStringExtra(BundleId.EXPENSE_REPORT_NAME));
+            arguments.putBoolean(BundleId.EXPENSE_REPORT_IS_SUBMITTED,
+                    getIntent().getBooleanExtra(BundleId.EXPENSE_REPORT_IS_SUBMITTED, false));
+            ViewPagerAdapter.ViewPagerItem itinFrag = new ViewPagerAdapter.ViewPagerItem(
+                    getString(R.string.itin_itineraries), SimpleTAItineraryListFragment.class, arguments);
+            list.add(itinFrag);
+        } else {
+            ViewPagerAdapter.ViewPagerItem itinFrag = new ViewPagerAdapter.ViewPagerItem(
+                    getString(R.string.itin_itineraries), TravelAllowanceItineraryListFragment.class, null);
+            list.add(itinFrag);
+        }
+
+
+        return list;
 
     }
 

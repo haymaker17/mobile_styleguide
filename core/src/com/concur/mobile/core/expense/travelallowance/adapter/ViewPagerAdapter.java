@@ -1,15 +1,18 @@
 package com.concur.mobile.core.expense.travelallowance.adapter;
 
 import android.content.Context;
+import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
+import android.util.Log;
 
 import com.concur.core.R;
 import com.concur.mobile.core.expense.travelallowance.fragment.FixedTravelAllowanceListFragment;
 import com.concur.mobile.core.expense.travelallowance.fragment.TravelAllowanceItineraryListFragment;
 
 import java.util.List;
+import java.util.Map;
 
 /**
  * This is the adapter for the {@code ViewPager} which holds the {@code FixedTravelAllowanceListFragment} and the
@@ -23,6 +26,20 @@ import java.util.List;
  */
 public class ViewPagerAdapter extends FragmentPagerAdapter {
 
+    public static class ViewPagerItem {
+        private String title;
+        private Class<? extends Fragment> fragmentClass;
+        private Bundle arguments;
+
+        public ViewPagerItem(String title, Class<? extends Fragment> fragmentClass, Bundle arguments) {
+            this.title = title;
+            this.fragmentClass = fragmentClass;
+            this.arguments = arguments;
+        }
+    }
+
+    private static final String CLASS_TAG = ViewPagerAdapter.class.getSimpleName();
+
     /**
      * The total number of fragments managed by this adapter.
      */
@@ -30,16 +47,18 @@ public class ViewPagerAdapter extends FragmentPagerAdapter {
 
     private FragmentManager fm;
     private Context context;
+    private List<ViewPagerItem> itemList;
 
     /**
      * Creates a new adapter.
      * @param fm is the {@code FragmentManager} from the support lib.
      * @param ctx the application context
      */
-    public ViewPagerAdapter(FragmentManager fm, Context ctx) {
+    public ViewPagerAdapter(FragmentManager fm, Context ctx, List<ViewPagerItem> itemList) {
         super(fm);
         this.fm = fm;
         this.context = ctx;
+        this.itemList = itemList;
     }
 
 
@@ -49,14 +68,28 @@ public class ViewPagerAdapter extends FragmentPagerAdapter {
      */
     @Override
     public Fragment getItem(int position) {
-        switch (position) {
-        case 0:
-            return new FixedTravelAllowanceListFragment();
-        case 1:
-            return new TravelAllowanceItineraryListFragment();
+        try {
+            Fragment fragment = itemList.get(position).fragmentClass.newInstance();
+            fragment.setArguments(itemList.get(position).arguments);
+            return fragment;
+        } catch (InstantiationException e) {
+            Log.e(CLASS_TAG, "Instantiation Exception.");
+            return null;
+        } catch (IllegalAccessException e) {
+            Log.e(CLASS_TAG, "Illegal Access Exception.");
+            return null;
         }
-        return null;
+
     }
+//    public Fragment getItem(int position) {
+//        switch (position) {
+//        case 0:
+//            return new FixedTravelAllowanceListFragment();
+//        case 1:
+//            return new TravelAllowanceItineraryListFragment();
+//        }
+//        return null;
+//    }
 
     /**
      * {@inheritDoc}
@@ -64,13 +97,14 @@ public class ViewPagerAdapter extends FragmentPagerAdapter {
      */
     @Override
     public CharSequence getPageTitle(int position) {
-        switch (position) {
-            case 0:
-                return context.getString(R.string.ta_adjustments);
-            case 1:
-                return context.getString(R.string.itin_itineraries);
-        }
-        return null;
+        return itemList.get(position).title;
+//        switch (position) {
+//            case 0:
+//                return context.getString(R.string.ta_adjustments);
+//            case 1:
+//                return context.getString(R.string.itin_itineraries);
+//        }
+//        return null;
     }
 
     /**
@@ -79,7 +113,7 @@ public class ViewPagerAdapter extends FragmentPagerAdapter {
      */
     @Override
     public int getCount() {
-        return COUNT;
+        return itemList.size();
     }
 
 
