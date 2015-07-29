@@ -25,7 +25,7 @@ public class ViewPagerAdapterTest extends TestCase {
     @Before
     public void setup() {
         AppCompatActivity activity = new AppCompatActivity();
-        this.adapter = new ViewPagerAdapter(activity.getSupportFragmentManager(), activity);
+        this.adapter = new ViewPagerAdapter(activity.getSupportFragmentManager(), activity, null);
     }
 
     @Test

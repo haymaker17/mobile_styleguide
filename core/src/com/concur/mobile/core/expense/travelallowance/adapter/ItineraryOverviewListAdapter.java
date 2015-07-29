@@ -16,6 +16,7 @@ import com.concur.mobile.core.expense.travelallowance.datamodel.Itinerary;
 /**
  * Created by Michael Becherer on 16-Jul-15.
  */
+@Deprecated
 public class ItineraryOverviewListAdapter  extends ArrayAdapter<Object> {
 
     /**

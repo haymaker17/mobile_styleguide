@@ -27,6 +27,7 @@ import com.concur.mobile.core.util.Const;
 /**
  * Created by Michael Becherer on 16-Jul-15.
  */
+@Deprecated
 public class ItineraryOverviewActivity extends BaseActivity implements IControllerListener {
 
     /**
