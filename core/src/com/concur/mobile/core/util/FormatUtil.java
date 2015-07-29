@@ -1,19 +1,5 @@
 package com.concur.mobile.core.util;
 
-import java.net.URI;
-import java.net.URISyntaxException;
-import java.text.DateFormat;
-import java.text.DecimalFormat;
-import java.text.DecimalFormatSymbols;
-import java.text.NumberFormat;
-import java.text.ParseException;
-import java.text.SimpleDateFormat;
-import java.util.Calendar;
-import java.util.Currency;
-import java.util.HashMap;
-import java.util.Locale;
-import java.util.TimeZone;
-
 import android.app.Activity;
 import android.content.Context;
 import android.os.Build;
@@ -28,6 +14,20 @@ import com.concur.core.R;
 import com.concur.mobile.core.activity.Preferences;
 import com.concur.mobile.platform.util.Format;
 
+import java.net.URI;
+import java.net.URISyntaxException;
+import java.text.DateFormat;
+import java.text.DecimalFormat;
+import java.text.DecimalFormatSymbols;
+import java.text.NumberFormat;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.Calendar;
+import java.util.Currency;
+import java.util.HashMap;
+import java.util.Locale;
+import java.util.TimeZone;
+
 public class FormatUtil {
 
     private static final String CLS_TAG = FormatUtil.class.getSimpleName();
@@ -38,6 +38,7 @@ public class FormatUtil {
     public static final DateFormat SHORT_DAY_DISPLAY;
     public static final DateFormat SHORT_DAY_DISPLAY_NO_COMMA;
     public static final DateFormat SHORT_DAY_YEAR_DISPLAY_NO_COMMA;
+    public static final DateFormat SHORT_DAY_FULL_MONTH_YEAR_DISPLAY_NO_COMMA;
     public static final DateFormat SHORT_MONTH_FULL_YEAR_DISPLAY;
     public static final DateFormat SHORT_MONTH_DAY_YEAR_DISPLAY;
     public static final DateFormat SHORT_MONTH_DAY_FULL_YEAR_DISPLAY;
@@ -84,6 +85,8 @@ public class FormatUtil {
         SHORT_DAY_DISPLAY_NO_COMMA.setTimeZone(UTC);
         SHORT_DAY_YEAR_DISPLAY_NO_COMMA = new SimpleDateFormat("EEE MMM d, yyyy");
         SHORT_DAY_YEAR_DISPLAY_NO_COMMA.setTimeZone(UTC);
+        SHORT_DAY_FULL_MONTH_YEAR_DISPLAY_NO_COMMA = new SimpleDateFormat("EEE MMMM d y");
+        SHORT_DAY_FULL_MONTH_YEAR_DISPLAY_NO_COMMA.setTimeZone(UTC);
         SHORT_MONTH_FULL_YEAR_DISPLAY = new SimpleDateFormat("MMM yyyy");
         SHORT_MONTH_FULL_YEAR_DISPLAY.setTimeZone(UTC);
         SHORT_MONTH_DAY_DISPLAY = new SimpleDateFormat("MMM d");
@@ -404,6 +407,35 @@ public class FormatUtil {
                 strBldr.append(ch);
             }
         }
+    }
+
+    public static String getEtaToString(Context context, int etaInSeconds) {
+        int etaTotalMinutes = etaInSeconds / 60;
+        int etaRemainingSeconds = etaInSeconds % 60;
+        StringBuilder time = new StringBuilder();
+
+        // MOB-24792  Fix Localization of ExpenseIt ETA time
+        String min = context.getResources().getString(R.string.expenseit_eta_min);
+        String sec = context.getResources().getString(R.string.expenseit_eta_sec);
+        String na = context.getResources().getString(R.string.expenseit_eta_na);
+
+        // Determine time. The first and last cases are safety precautions,
+        // in case they are not handled above.
+        if ((etaTotalMinutes + etaRemainingSeconds) <= 0) {
+            time.append(na);
+        } else if (etaTotalMinutes > 0 && etaRemainingSeconds <= 0) {
+            time.append(etaTotalMinutes).append(" ").append(min);
+        } else if (etaTotalMinutes > 0 && etaRemainingSeconds > 0) {
+            time.append(etaTotalMinutes)
+                    .append(" ").append(min).append(", ").append(etaRemainingSeconds)
+                    .append(" ").append(sec);
+        } else if (etaTotalMinutes <= 0 && etaRemainingSeconds > 0) {
+            time.append(etaRemainingSeconds).append(" ").append(sec);
+        } else {
+            time.append(na);
+        }
+
+        return time.toString();
     }
 
     public static String formatElapsedTime(Context context, int elapsed) {

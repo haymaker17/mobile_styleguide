@@ -29,6 +29,7 @@ import android.widget.AdapterView.OnItemLongClickListener;
 import android.widget.Button;
 import android.widget.CompoundButton;
 import android.widget.ListView;
+import android.widget.Toast;
 import android.widget.ViewFlipper;
 
 import com.concur.core.R;
@@ -42,6 +43,7 @@ import com.concur.mobile.core.dialog.SystemUnavailableDialogFragment;
 import com.concur.mobile.core.expense.charge.activity.CashExpenseListItem;
 import com.concur.mobile.core.expense.charge.activity.CorporateCardExpenseListItem;
 import com.concur.mobile.core.expense.charge.activity.EReceiptListItem;
+import com.concur.mobile.core.expense.charge.activity.ExpenseItDetailActivity;
 import com.concur.mobile.core.expense.charge.activity.ExpenseItListItem;
 import com.concur.mobile.core.expense.charge.activity.ExpenseListItem;
 import com.concur.mobile.core.expense.charge.activity.OcrListItem;
@@ -56,6 +58,7 @@ import com.concur.mobile.core.expense.charge.data.EReceipt;
 import com.concur.mobile.core.expense.charge.data.Expense;
 import com.concur.mobile.core.expense.charge.data.Expense.ExpenseEntryType;
 import com.concur.mobile.core.expense.charge.data.ExpenseComparator;
+import com.concur.mobile.core.expense.charge.data.ExpenseItItem;
 import com.concur.mobile.core.expense.charge.data.MobileEntry;
 import com.concur.mobile.core.expense.charge.data.MobileEntryStatus;
 import com.concur.mobile.core.expense.charge.data.OCRItem;
@@ -2147,6 +2150,25 @@ public class Expenses extends BaseFragment implements INetworkActivityListener {
                             intent.putExtra(Flurry.PARAM_NAME_CAME_FROM, Flurry.PARAM_VALUE_EXPENSE_LIST);
                             intent.putExtra(Const.EXTRA_EXPENSE_MOBILE_ENTRY_ACTION, Const.CREATE_MOBILE_ENTRY);
                             startActivityForResult(intent, Const.CREATE_MOBILE_ENTRY);
+                        }
+                        break;
+                    }
+                    case EXPENSEIT_NOT_DONE: {
+                        ExpenseItItem exItItem = exp.getExpenseItItem();
+
+                        if (!exItItem.isInErrorState()) {
+                            // Processing state.
+                            Intent intent = new Intent(activity, ExpenseItDetailActivity.class);
+                            intent.putExtra(Const.EXTRA_EXPENSE_RECEIPT_URL_KEY, exItItem.getImageDataUrl());
+                            intent.putExtra(Const.EXTRA_EXPENSE_TRANSACTION_DATE_KEY, exItItem.getUploadDate());
+                            intent.putExtra(ExpenseItDetailActivityFragment.EXTRA_EXPENSEIT_ETA_KEY, exItItem.getEta());
+
+                            startActivityForResult(intent, ExpenseItDetailActivityFragment.VIEW_PROCESSING_EXPENSEIT_ITEM_DETAILS);
+
+                        } else {
+                            // TODO: Handle error state as a manual expense.
+                            Toast.makeText(activity, "Failed ExpenseIt item!", Toast.LENGTH_LONG).show();
+
                         }
                         break;
                     }

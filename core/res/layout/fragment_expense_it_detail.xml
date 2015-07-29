@@ -44,6 +44,7 @@
                     android:layout_width="fill_parent"
                     android:layout_height="wrap_content"
                     android:background="@drawable/square_border"
+                    android:clickable="true"
                     android:orientation="vertical"
                     android:padding="1dp" >
 
@@ -105,25 +106,25 @@
                     android:padding="1dp" >
 
                     <LinearLayout
-                        android:id="@+id/expense_entry_header_fields"
+                        android:id="@+id/expenseit_header_fields"
                         android:layout_width="fill_parent"
                         android:layout_height="wrap_content"
                         android:orientation="vertical" >
 
                         <include
-                            android:id="@+id/expense_date"
-                            layout="@layout/edit_text_form_field" />
+                            android:id="@+id/expenseit_capture_date"
+                            layout="@layout/static_text_form_field" />
 
                         <include layout="@layout/group_separator" />
 
                         <include
-                            android:id="@+id/expense_vendor"
-                            layout="@layout/edit_text_form_field" />
+                            android:id="@+id/expenseit_details_processing_time"
+                            layout="@layout/static_text_form_field" />
 
                         <include layout="@layout/group_separator" />
 
                         <include
-                            android:id="@+id/expense_comment"
+                            android:id="@+id/expenseit_comment"
                             layout="@layout/image_form_field" />
 
                     </LinearLayout>

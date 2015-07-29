@@ -291,6 +291,9 @@
         <activity
             android:name="com.concur.mobile.core.expense.charge.activity.QuickExpense"
             android:windowSoftInputMode="adjustResize"/>
+        <activity
+            android:name="com.concur.mobile.core.expense.charge.activity.ExpenseItDetailActivity"
+            android:windowSoftInputMode="adjustResize"/>
         <activity android:name="com.concur.mobile.core.expense.activity.ExpensesAndReceipts">
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
