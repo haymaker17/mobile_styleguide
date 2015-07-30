@@ -85,6 +85,8 @@ import com.concur.mobile.core.util.ViewUtil;
 import com.concur.mobile.core.view.HeaderListItem;
 import com.concur.mobile.core.view.ListItem;
 import com.concur.mobile.core.view.ListItemAdapter;
+import com.concur.mobile.platform.expenseit.ErrorResponse;
+import com.concur.mobile.platform.expenseit.ExpenseItParseCode;
 import com.concur.mobile.platform.expenseit.ExpenseItReceipt;
 import com.concur.mobile.platform.ocr.OcrStatusEnum;
 import com.concur.mobile.platform.ui.common.dialog.NoConnectivityDialogFragment;
@@ -128,6 +130,10 @@ public class Expenses extends BaseFragment implements INetworkActivityListener {
         public void onGetExpenseItListSuccess();
 
         public void onGetExpenseItListFailed();
+
+        void startBackgroundRefresh();
+
+        void endBackgroundRefresh();
 
     }
 
@@ -2487,6 +2493,15 @@ public class Expenses extends BaseFragment implements INetworkActivityListener {
                 if (cursor != null) {
                     while (cursor.moveToNext()) {
                         ExpenseItReceipt expIt = new ExpenseItReceipt(activity, cursor);
+                        //While the expenseIt item is being exported to Concur. We get Eta=0 and the Processing status is processed.
+                        //This is a temporary stage until that item which succeeded OCRing is moved.
+                        //However, in the UI we want to show the item as still analyzing until this export process has finished.
+                        if (expIt.getParsingStatusCode() == ExpenseItParseCode.PARSED.value() &&
+                            expIt.getEta() == 0 &&
+                            expIt.getErrorCode() == ErrorResponse.ERROR_CODE_NO_ERROR) {
+                            expIt.setParsingStatusCode(ExpenseItParseCode.UNPARSED.value());
+                            expIt.setEta(30 /*secs*/);
+                        }
                         expenses.add(new Expense(expIt));
                     }
                 }
@@ -2499,6 +2514,9 @@ public class Expenses extends BaseFragment implements INetworkActivityListener {
 
     }
 
+    public ListItemAdapter<ListItem> getListItemAdapter() {
+        return listItemAdapter;
+    }
 
     /**
      * Will refresh the expense list.
@@ -2908,7 +2926,6 @@ public class Expenses extends BaseFragment implements INetworkActivityListener {
         }
 
         expensesCallback.doGetSmartExpenseList();
-
     }
 
     /**

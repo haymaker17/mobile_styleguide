@@ -60,12 +60,13 @@ public class ExpenseItPostReceipt implements Serializable {
     @SerializedName("eta")
     private int eta;
 
+    @SerializedName("error")
+    private ErrorResponse expenseError = new ErrorResponse();
+
     //non serializable
     private transient String userId;
 
     private transient long contentId;
-
-    private ErrorResponse expenseError = new ErrorResponse();
 
     public void setExpenseError(ErrorResponse expenseError) {
         this.expenseError = expenseError;

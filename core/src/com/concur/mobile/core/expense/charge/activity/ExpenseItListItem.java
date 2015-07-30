@@ -19,6 +19,7 @@ import com.concur.mobile.platform.expenseit.ExpenseItPostReceipt;
 import com.concur.mobile.platform.util.AnimationUtil;
 
 import java.util.Calendar;
+import java.util.Locale;
 
 /**
  * An abstract extension of <code>ListItem</code> for the purposes of providing an expense list item view.
@@ -185,7 +186,7 @@ public class ExpenseItListItem extends ExpenseListItem {
      * @param status
      * @return
      */
-    private boolean isProcessing(int status) {
+    private static boolean isProcessing(int status) {
         return ((status == ExpenseItParseCode.UNPARSED.value()) ||
                 (status == ExpenseItParseCode.UPLOADED.value()) ||
                 (status == ExpenseItParseCode.UPLOADED_BUT_NOT_QUEUED.value()) ||
@@ -199,6 +200,10 @@ public class ExpenseItListItem extends ExpenseListItem {
                 (status == ExpenseItParseCode.QUEUED_FOR_CREATION.value()) ||
                 (status == ExpenseItParseCode.QUEUED_FOR_EXPORT_ON_SERVER.value()) ||
                 (status == ExpenseItParseCode.DEFAULT.value()));
+    }
+
+    public boolean isProcessing() {
+        return isProcessing(expenseItItem.getParsingStatusCode());
     }
 
     /**
@@ -217,30 +222,19 @@ public class ExpenseItListItem extends ExpenseListItem {
     private String getEtaToString(Context context, int etaInSeconds) {
         int etaTotalMinutes = etaInSeconds / 60;
         int etaRemainingSeconds = etaInSeconds % 60;
-        StringBuilder time = new StringBuilder();
-        
+
         // MOB-24792  Fix Localization of ExpenseIt ETA time
-        String min = context.getResources().getString(R.string.expenseit_eta_min);
-        String sec = context.getResources().getString(R.string.expenseit_eta_sec);
+        String mins = context.getResources().getString(R.string.expenseit_eta_mins);
+        String secs = context.getResources().getString(R.string.expenseit_eta_secs);
         String na = context.getResources().getString(R.string.expenseit_eta_na);
 
-        // Determine time. The first and last cases are safety precautions,
-        // in case they are not handled above.
         if ((etaTotalMinutes + etaRemainingSeconds) <= 0) {
-            time.append(na);
-        } else if (etaTotalMinutes > 0 && etaRemainingSeconds <= 0) {
-            time.append(etaTotalMinutes).append(" ").append(min);
-        } else if (etaTotalMinutes > 0 && etaRemainingSeconds > 0) {
-            time.append(etaTotalMinutes)
-                    .append(" ").append(min).append(", ").append(etaRemainingSeconds)
-                    .append(" ").append(sec);
-        } else if (etaTotalMinutes <= 0 && etaRemainingSeconds > 0) {
-            time.append(etaRemainingSeconds).append(" ").append(sec);
+            return na;
+        } else if (etaTotalMinutes > 0) {
+            return String.format(Locale.getDefault(), mins, etaTotalMinutes, etaRemainingSeconds);
         } else {
-            time.append(na);
+            return String.format(Locale.getDefault(), secs, etaRemainingSeconds);
         }
-
-        return time.toString();
     }
 
     @Override

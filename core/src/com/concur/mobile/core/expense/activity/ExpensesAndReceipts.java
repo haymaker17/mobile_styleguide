@@ -24,6 +24,7 @@ import com.concur.mobile.base.ui.UIUtils;
 import com.concur.mobile.core.ConcurCore;
 import com.concur.mobile.core.activity.BaseActivity;
 import com.concur.mobile.core.activity.Preferences;
+import com.concur.mobile.core.expense.charge.activity.ExpenseItListItem;
 import com.concur.mobile.core.expense.data.IExpenseEntryCache;
 import com.concur.mobile.core.expense.fragment.Expenses;
 import com.concur.mobile.core.expense.fragment.Expenses.ExpensesCallback;
@@ -32,12 +33,14 @@ import com.concur.mobile.core.expense.receiptstore.activity.ReceiptStoreFragment
 import com.concur.mobile.core.expense.receiptstore.activity.ReceiptStoreFragment.ReceiptStoreFragmentCallback;
 import com.concur.mobile.core.expense.receiptstore.data.ReceiptStoreCache;
 import com.concur.mobile.core.fragment.BaseFragment;
+import com.concur.mobile.core.util.BackgroundRefreshView;
 import com.concur.mobile.core.util.Const;
 import com.concur.mobile.core.util.EventTracker;
 import com.concur.mobile.core.util.ExpenseDAOConverter;
 import com.concur.mobile.core.util.Flurry;
 import com.concur.mobile.core.util.ReceiptDAOConverter;
 import com.concur.mobile.core.util.ViewUtil;
+import com.concur.mobile.core.view.ListItem;
 import com.concur.mobile.platform.authentication.SessionInfo;
 import com.concur.mobile.platform.config.provider.ConfigUtil;
 import com.concur.mobile.platform.expense.receipt.list.ReceiptListRequestTask;
@@ -56,9 +59,12 @@ import java.io.File;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
+import java.util.Properties;
 
-public class ExpensesAndReceipts extends BaseActivity implements ExpensesCallback, ReceiptStoreFragmentCallback, SortExpensesDialogFragment.SortExpenseDialogListener {
+public class ExpensesAndReceipts extends BaseActivity implements ExpensesCallback, ReceiptStoreFragmentCallback, SortExpensesDialogFragment.SortExpenseDialogListener,
+    BackgroundRefreshView.SyncCallback{
 
     public final static String CLS_TAG = ExpensesAndReceipts.class.getSimpleName();
 
@@ -320,6 +326,8 @@ public class ExpensesAndReceipts extends BaseActivity implements ExpensesCallbac
 
     protected BaseAsyncResultReceiver uploadExpenseItReceiptReceiver;
 
+    protected BackgroundRefreshView backgroundRefreshListView;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -389,6 +397,56 @@ public class ExpensesAndReceipts extends BaseActivity implements ExpensesCallbac
             }.execute();
         } else {
             setPageAdapter(allowExpenses, allowReceipts);
+        }
+
+        //Create the background Timer
+        backgroundRefreshListView = new BackgroundRefreshView(this, BackgroundRefreshView.DEFAULT_INTERVAL);
+    }
+
+    /**
+     * Returns true if at least one ExpenseIt item status from the list is in processing mode.
+     * @return
+     */
+    private boolean isExpenseItItemsBeingAnalyzed() {
+
+        if (pageAdapter == null) {
+            return false;
+        }
+
+        int count = pageAdapter.getCount();
+
+        for (int i = 0; i < count; i++) {
+            Fragment frag = pageAdapter.getPage(i);
+            if (frag == null || !(frag instanceof Expenses)) {
+                continue;
+            }
+            List<ListItem> items = ((Expenses) frag).getListItemAdapter().getItems();
+            for (ListItem item : items) {
+                if (item instanceof ExpenseItListItem) {
+
+                    if (((ExpenseItListItem) item).isProcessing()) {
+                        return true;
+                    }
+                }
+            }
+        }
+        return false;
+    }
+
+    @Override
+    public void doSync() {
+        Log.i(Const.LOG_TAG, CLS_TAG + ".refreshListView is called.");
+
+        // Check if a expenseIt refresh is needed if there are items in the list that are still analyzing. Otherwise,
+        // if there are none than we turn off the timer.
+        // If no connection to the server than the backgroundRefresh will stay on.
+        if (isExpenseItItemsBeingAnalyzed()) {
+            if (ConcurCore.isConnected()) {
+                Log.i(Const.LOG_TAG, CLS_TAG + ".refreshListView-DoExpenseItList is called.");
+                doGetExpenseItList();
+            }
+        } else {
+            endBackgroundRefresh();
         }
     }
 
@@ -491,6 +549,9 @@ public class ExpensesAndReceipts extends BaseActivity implements ExpensesCallbac
             }
 
         }
+
+        //stop the refresh timer is on
+        endBackgroundRefresh();
     }
 
     @Override
@@ -540,6 +601,11 @@ public class ExpensesAndReceipts extends BaseActivity implements ExpensesCallbac
                     uploadExpenseItReceiptReceiver.setListener(new UploadImageAsyncReplyListener(uploadExpenseItReceiptProgress));
                 }
             }
+        }
+
+        //Start the background refresh on demand. If not needed than it will be turned off
+        if (Preferences.isExpenseItUser() && Preferences.isUserLoggedInExpenseIt()) {
+            startBackgroundRefresh();
         }
     }
 
@@ -615,7 +681,7 @@ public class ExpensesAndReceipts extends BaseActivity implements ExpensesCallbac
         updateExpenseListUI();
 
         DialogFragmentFactory.getAlertOkayInstance(R.string.dlg_expenses_retrieve_failed_title).show(
-                getSupportFragmentManager(), null);
+            getSupportFragmentManager(), null);
     }
 
     private void updateExpenseListUI() {
@@ -674,15 +740,9 @@ public class ExpensesAndReceipts extends BaseActivity implements ExpensesCallbac
     @Override
     public void doGetExpenseItList() {
 
-        // Show the loading view.
-        int count = pageAdapter.getCount();
-        for (int i = 0; i < count; i++) {
-
-            Fragment frag = pageAdapter.getPage(i);
-            if (frag != null && frag instanceof Expenses) {
-                ((Expenses) frag).showLoadingView();
-                break;
-            }
+        if (!Preferences.isUserLoggedInExpenseIt()) {
+            Log.e(Const.LOG_TAG, CLS_TAG + ".doGetExpenseItList is called while we're not logged in to ExpenseIt");
+            return;
         }
 
         if (expenseItListReceiver == null) {
@@ -728,7 +788,22 @@ public class ExpensesAndReceipts extends BaseActivity implements ExpensesCallbac
         updateExpenseListUI();
 
         DialogFragmentFactory.getAlertOkayInstance(R.string.dlg_expenseit_retrieve_failed_title).show(
-                getSupportFragmentManager(), null);
+            getSupportFragmentManager(), null);
+    }
+
+    @Override
+    public void startBackgroundRefresh() {
+        if (backgroundRefreshListView != null) {
+            backgroundRefreshListView.start();
+        }
+    }
+
+    @Override
+    public void endBackgroundRefresh() {
+        Log.i(Const.LOG_TAG, CLS_TAG + ".Stop background Refresh for list items is called.");
+        if (backgroundRefreshListView != null) {
+            backgroundRefreshListView.stop();
+        }
     }
 
     /**
@@ -1096,27 +1171,25 @@ public class ExpensesAndReceipts extends BaseActivity implements ExpensesCallbac
                 ExpenseItPostReceiptResponse receiptResponse = (ExpenseItPostReceiptResponse) resultData.get(PostExpenseItReceiptAsyncTask.POST_EXPENSEIT_OCR_RESULT_KEY);
                 if (receiptResponse != null) {
                     ErrorResponse error = receiptResponse.getExpenses()[0].getExpenseError();
-                    if (error != null) {
+                    if (error != null && error.isError()) {
                         Toast.makeText(getBaseContext(), String.format(
                             "Failed processing image with the following error %s (%s)",
                             error.getErrorMessage(), error.getErrorCode()), Toast.LENGTH_LONG).show();
                             // TODO: ANALYTICS - Track ExpenseIt image upload failure.
                         return;
                     } else {
-//                        long id = receiptResponse.getExpenses()[0].getId();
-//                        int totalSecs = receiptResponse.getExpenses()[0].getEta();
-//
-//                        int hours = totalSecs / 3600;
-//                        int minutes = (totalSecs % 3600) / 60;
-//                        int seconds = totalSecs % 60;
-//
-//                        Toast.makeText(getBaseContext(), String.format(
-//                            "Successfully uploaded image with id=%d and estimate finish= %02d:%02d:%02d",
-//                            id, hours, minutes, seconds), Toast.LENGTH_LONG).show();
 
-                        doGetExpenseItList();
-                        // TODO: ANALYTICS - Track ExpenseIt image upload success.
-                        return;
+                    //Make the call to get the new List
+                    doGetExpenseItList();
+
+                    //And start the background refresh
+                    if (Preferences.isExpenseItUser() && Preferences.isUserLoggedInExpenseIt()) {
+                        startBackgroundRefresh();
+                    }
+
+                    // TODO: ANALYTICS - Track ExpenseIt image upload success.
+
+                    return;
                     }
                 }
             }
