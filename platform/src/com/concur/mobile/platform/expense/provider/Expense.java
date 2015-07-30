@@ -767,7 +767,7 @@ public class Expense {
         public static final String CCTYPE = "CCTYPE";
         public static final String CREATED_AT = "CREATED_AT";
         public static final String SEND_TO_CTE_AT = "SEND_TO_CTE_AT";
-        public static final String IMAGE_DATA_URL = "IMAGE_DATA_URL";
+        public static final String IMAGE_DATA = "IMAGE_DATA";
         public static final String TOTAL_IMAGE_COUNT = "TOTAL_IMAGE_COUNT";
         public static final String TOTAL_IMAGES_UPLOADED = "TOTAL_IMAGES_UPLOADED";
         public static final String PARSING_STATUS_CODE = "PARSING_STATUS_CODE";

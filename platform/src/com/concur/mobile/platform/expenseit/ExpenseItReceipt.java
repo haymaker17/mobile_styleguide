@@ -180,7 +180,10 @@ public class ExpenseItReceipt implements ExpenseItReceiptDAO {
             sendToCteAtCol.set(Calendar.MILLISECOND, 0);
             receipt.setSendToCteAt(sendToCteAtCol.getTime());
         }
-        receipt.setImageDataUrl(CursorUtil.getStringValue(cursor, Expense.ExpenseItReceiptColumns.IMAGE_DATA_URL));
+
+        //TODO Harold Fix
+        /*receipt.setImageDataUrl(CursorUtil.getStringValue(cursor, Expense
+                .ExpenseItReceiptColumns.IMAGE_DATA_URL));*/
         receipt.setTotalImageCount(CursorUtil.getIntValue(cursor, Expense.ExpenseItReceiptColumns.TOTAL_IMAGE_COUNT));
         receipt.setTotalImagesUploaded(CursorUtil.getIntValue(cursor, Expense.ExpenseItReceiptColumns.TOTAL_IMAGES_UPLOADED));
         receipt.setParsingStatusCode(CursorUtil.getIntValue(cursor, Expense.ExpenseItReceiptColumns.PARSING_STATUS_CODE));
@@ -213,7 +216,9 @@ public class ExpenseItReceipt implements ExpenseItReceiptDAO {
             sendToCteAt.setTimeInMillis(sentToCtedMilliSeconds);
             sendToCteAt.set(Calendar.MILLISECOND, 0);
         }
-        imageDataUrl = CursorUtil.getStringValue(cursor, Expense.ExpenseItReceiptColumns.IMAGE_DATA_URL);
+        //TODO Harold Fix
+        /*imageDataUrl = CursorUtil.getStringValue(cursor, Expense.ExpenseItReceiptColumns
+                .IMAGE_DATA_URL);*/
         totalImageCount = CursorUtil.getIntValue(cursor, Expense.ExpenseItReceiptColumns.TOTAL_IMAGE_COUNT);
         totalImagesUploaded = CursorUtil.getIntValue(cursor, Expense.ExpenseItReceiptColumns.TOTAL_IMAGES_UPLOADED);
         parsingStatusCode = CursorUtil.getIntValue(cursor, Expense.ExpenseItReceiptColumns.PARSING_STATUS_CODE);
@@ -281,7 +286,9 @@ public class ExpenseItReceipt implements ExpenseItReceiptDAO {
         ContentUtils.putValue(values, Expense.ExpenseItReceiptColumns.CCTYPE, ccType);
         ContentUtils.putValue(values, Expense.ExpenseItReceiptColumns.CREATED_AT, createdAt == null ? null : createdAt.getTimeInMillis());
         ContentUtils.putValue(values, Expense.ExpenseItReceiptColumns.SEND_TO_CTE_AT, sendToCteAt == null ? null : sendToCteAt.getTimeInMillis());
-        ContentUtils.putValue(values, Expense.ExpenseItReceiptColumns.IMAGE_DATA_URL, imageDataUrl);
+        //TODO Harold Fix
+        /*ContentUtils.putValue(values, Expense.ExpenseItReceiptColumns.IMAGE_DATA_URL,
+                imageDataUrl);*/
         ContentUtils.putValue(values, Expense.ExpenseItReceiptColumns.TOTAL_IMAGE_COUNT, totalImageCount);
         ContentUtils.putValue(values, Expense.ExpenseItReceiptColumns.TOTAL_IMAGES_UPLOADED, totalImagesUploaded);
         ContentUtils.putValue(values, Expense.ExpenseItReceiptColumns.PARSING_STATUS_CODE, parsingStatusCode);

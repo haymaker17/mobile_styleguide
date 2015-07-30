@@ -782,7 +782,7 @@ public class ExpenseDBSchema {
 
         + Expense.ExpenseItReceiptColumns.SEND_TO_CTE_AT + " INTEGER, "
 
-        + Expense.ExpenseItReceiptColumns.IMAGE_DATA_URL + " TEXT, "
+        + Expense.ExpenseItReceiptColumns.IMAGE_DATA + " BLOB, "
 
         + Expense.ExpenseItReceiptColumns.TOTAL_IMAGE_COUNT + " INTEGER, "
 

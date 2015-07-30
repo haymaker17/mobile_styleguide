@@ -244,6 +244,7 @@
 
         <!-- Expense related activities. -->
         <activity android:name="com.concur.mobile.core.activity.ViewImage"/>
+        <activity android:name="com.concur.mobile.core.activity.ReceiptView"/>
         <activity
             android:name="com.concur.mobile.core.expense.report.activity.ExpenseReportHeader"
             android:windowSoftInputMode="adjustResize"/>

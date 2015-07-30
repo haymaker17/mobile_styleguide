@@ -34,6 +34,7 @@ import android.widget.ViewFlipper;
 import com.concur.core.R;
 import com.concur.mobile.core.ConcurCore;
 import com.concur.mobile.core.activity.Preferences;
+import com.concur.mobile.core.activity.ReceiptView;
 import com.concur.mobile.core.dialog.AlertDialogFragment;
 import com.concur.mobile.core.dialog.DialogFragmentFactory;
 import com.concur.mobile.core.dialog.DialogFragmentHandler;
@@ -2150,7 +2151,15 @@ public class Expenses extends BaseFragment implements INetworkActivityListener {
                         }
                         break;
                     }
+                    case EXPENSEIT_NOT_DONE:{
+                        Intent intent = new Intent(activity, ReceiptView.class);
 
+                        intent.putExtra(Const.EXTRA_EXPENSE_IT_ID, exp.getEReceipt()
+                                .getEReceiptId());
+                        startActivity(intent);
+
+                        break;
+                    }
                 }
             } else {
                 Log.e(Const.LOG_TAG, CLS_TAG + ".onItemClick: null expense list adapter!");
