@@ -1,6 +1,6 @@
 <selector xmlns:android="http://schemas.android.com/apk/res/android">
 
-    <item android:state_pressed="true" android:color="@color/MaterialConcurBlue"/>
-    <item android:color="@color/MaterialConcurBlue"/>
+    <item android:state_pressed="true" android:color="@color/MaterialDarkGray"/>
+    <item android:color="@color/MaterialDarkGray"/>
 
 </selector>

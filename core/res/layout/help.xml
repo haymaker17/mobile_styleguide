@@ -1,26 +1,43 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout style="@style/TransparantButton"
-              xmlns:android="http://schemas.android.com/apk/res/android"
-              android:layout_width="fill_parent"
-              android:layout_height="@dimen/footer_height"
-              android:layout_gravity="bottom"
-              android:background="@color/MaterialOffWhite"
-              android:gravity="center"
-              android:orientation="horizontal">
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="fill_parent"
+    android:layout_height="wrap_content"
+    android:layout_gravity="bottom"
+    android:orientation="vertical"
+    android:gravity="center">
 
-    <ImageView
-        android:id="@+id/helpimg"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginRight="5dp"
-        android:src="@drawable/icon_question_mark"/>
+    <View
+        android:layout_width="fill_parent"
+        android:layout_height="0.5dp"
+        android:background="@color/MaterialLightGray"
+        />
+    <LinearLayout
+        style="@style/TransparantButton"
+        android:layout_width="fill_parent"
+        android:layout_height="@dimen/footer_new_material_height"
+        android:layout_gravity="bottom"
+        android:background="@color/MaterialOffWhite"
+        android:gravity="center"
+        android:orientation="horizontal">
 
-    <TextView
-        android:id="@+id/helpmsg"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="@string/test_drive_help"
-        android:textAppearance="@style/TourSmallSecondaryText"
-        android:textColor="@color/btn_transparent_text"/>
 
+        <ImageView
+            android:id="@+id/helpimg"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginRight="5dp"
+            android:src="@drawable/icon_question_mark"/>
+
+        <TextView
+            android:id="@+id/helpmsg"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:fontFamily="sans-serif-light"
+            android:text="@string/test_drive_help"
+            android:textAppearance="@style/TourSmallSecondaryText"
+            android:textColor="@color/MaterialConcurBlue"
+            android:textSize="16dp"/>
+
+    </LinearLayout>
 </LinearLayout>

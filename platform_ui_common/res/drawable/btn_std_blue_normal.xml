@@ -6,7 +6,7 @@
         android:startColor="#1A000000"
         android:endColor="#1AFFFFFF"
         android:centerY="0.95"/> 
-    <solid android:color="@color/StandardBlueButton" />
+    <solid android:color="@color/MaterialConcurBlue" />
      <stroke android:width="1px" android:color="#3e8cb2"/>
-    <corners android:radius="2dp"/>
+    <corners android:radius="4dp"/>
 </shape>

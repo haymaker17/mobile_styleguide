@@ -1,83 +1,154 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:background="@color/MaterialWhite" >
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:background="@color/MaterialWhite">
 
-    <LinearLayout
-        android:id="@+id/mainlayout"
-        android:layout_width="fill_parent"
-        android:layout_height="fill_parent"
-        android:layout_marginLeft="@dimen/list_item_horizontal_margin"
-        android:layout_marginRight="@dimen/list_item_horizontal_margin"
-        android:orientation="vertical"
-        android:paddingBottom="18dp"
-        android:paddingTop="18dp" >
+    <View
+        android:id="@+id/main_layout"
+        android:layout_width="wrap_content"
+        android:layout_height="20dp"
+        android:layout_centerHorizontal="true"
+        android:layout_marginBottom="5dp"/>
 
-        <TextView
+    <ScrollView
+        android:id="@+id/main_scroll_layout"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_below="@id/main_layout"
+        android:fadingEdgeLength="20dp"
+        android:fillViewport="true"
+        android:scrollbars="none">
+
+        <LinearLayout
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"
-            android:paddingBottom="18dp"
-            android:gravity="left"
-            android:text="@string/test_drive_welcome_text"
-            android:textAppearance="@style/TestRegPrimary_Material" >
-        </TextView>
+            android:orientation="vertical">
 
-        <EditText
-            android:id="@+id/test_drive_email"
-            android:layout_width="fill_parent"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center"
-            android:textColor="@color/MaterialConcurBlue"
-            android:textSize="14dp"
-            android:hint="@string/test_drive_username_hint"
-            android:imeOptions="actionNext"
-            android:backgroundTint="@color/MaterialConcurBlue"
-            android:inputType="textEmailAddress|textAutoComplete|textAutoCorrect|textNoSuggestions|textFilter|textVisiblePassword"
-            android:padding="10dp">
-        </EditText>
+            <LinearLayout
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="8dp"
+                android:layout_marginRight="8dp"
+                android:layout_marginTop="18dp"
+                android:orientation="vertical">
 
-        <View
-            android:layout_width="fill_parent"
-            android:layout_height="10dp" />
+                <LinearLayout
+                    android:layout_width="fill_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical"
+                    android:padding="1dp">
 
-        <EditText
-            android:id="@+id/test_drive_password"
-            android:layout_width="fill_parent"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center"
-            android:textColor="@color/MaterialConcurBlue"
-            android:textSize="14dp"
-            android:hint="@string/test_drive_password_hint"
-            android:imeOptions="actionGo"
-            android:inputType="textPassword"
-            android:backgroundTint="@color/MaterialConcurBlue"
-            android:padding="10dp">
-        </EditText>
+                    <ImageView
+                        android:id="@+id/concurlogo"
+                        android:layout_width="fill_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center_horizontal"
+                        android:contentDescription="@string/app_name"
+                        android:padding="20dp"
+                        android:src="@drawable/concur_logo_sign_in"
+                        />
 
-        <View
-            android:layout_width="fill_parent"
-            android:layout_height="3dp" />
+                    <View
+                        android:layout_width="fill_parent"
+                        android:layout_height="20dp"
+                        />
+                </LinearLayout>
 
-        <Button
-            android:id="@+id/test_drive_submit"
-            style="@style/StandardBlueButton"
-            android:layout_width="fill_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="10dp"
-            android:text="@string/test_drive_submit" >
-        </Button>
+                <LinearLayout
+                    android:layout_width="fill_parent"
+                    android:layout_height="fill_parent"
+                    android:layout_marginLeft="@dimen/list_item_horizontal_margin"
+                    android:layout_marginRight="@dimen/list_item_horizontal_margin"
+                    android:orientation="vertical"
+                    android:paddingBottom="18dp"
+                    android:paddingTop="18dp">
 
-        <TextView
-            android:id="@+id/test_drive_termsandcondition"
-            android:layout_width="fill_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginBottom="10dp"
-            android:layout_marginTop="16dp"
-            android:gravity="center"
-            android:text="@string/test_drive_terms_and_condition"
-            android:textAppearance="@style/TestRegSecondary_Material" >
-        </TextView>
-    </LinearLayout>
+                    <TextView
+                        android:layout_width="fill_parent"
+                        android:layout_height="wrap_content"
+                        android:gravity="center_horizontal"
+                        android:paddingBottom="18dp"
+                        android:layout_marginLeft="25dp"
+                        android:layout_marginRight="25dp"
+                        android:text="@string/test_drive_welcome_text"
+                        android:textAppearance="@style/TestRegPrimary_Material">
+                    </TextView>
 
+                    <EditText
+                        android:id="@+id/test_drive_email"
+                        android:layout_width="fill_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center"
+                        android:hint="@string/test_drive_username_hint"
+                        android:imeOptions="actionNext"
+                        android:inputType="textEmailAddress|textAutoComplete|textAutoCorrect|textNoSuggestions|textFilter|textVisiblePassword"
+                        android:padding="10dp"
+                        android:layout_marginLeft="10dp"
+                        android:layout_marginRight="10dp"
+                        android:paddingTop="10dp"
+                        android:paddingBottom="10dp"
+                        android:textColorHint="@color/MaterialHintLightGray"
+                        android:textColor="@color/MaterialConcurBlue"
+                        android:backgroundTint="@color/MaterialTintLightBlue"
+                        android:gravity="left"
+                        android:textSize="22dp">
+                    </EditText>
+
+                    <View
+                        android:layout_width="fill_parent"
+                        android:layout_height="10dp"/>
+
+                    <EditText
+                        android:id="@+id/test_drive_password"
+                        android:layout_width="fill_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center"
+                        android:hint="@string/test_drive_password_hint"
+                        android:imeOptions="actionGo"
+                        android:inputType="textPassword"
+                        android:padding="10dp"
+                        android:layout_marginLeft="10dp"
+                        android:layout_marginRight="10dp"
+                        android:paddingTop="10dp"
+                        android:paddingBottom="10dp"
+                        android:textColorHint="@color/MaterialHintLightGray"
+                        android:textColor="@color/MaterialConcurBlue"
+                        android:backgroundTint="@color/MaterialTintLightBlue"
+                        android:gravity="left"
+                        android:fontFamily="sans-serif"
+                        android:textSize="22dp">
+                    </EditText>
+
+                    <View
+                        android:layout_width="fill_parent"
+                        android:layout_height="3dp"/>
+
+                    <Button
+                        android:id="@+id/test_drive_submit"
+                        style="@style/StandardBlueButton_Material"
+                        android:layout_width="fill_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center"
+                        android:layout_marginTop="10dp"
+                        android:layout_marginLeft="10dp"
+                        android:layout_marginRight="10dp"
+                        android:text="@string/test_drive_submit">
+                    </Button>
+
+                    <TextView
+                        android:id="@+id/test_drive_termsandcondition"
+                        android:layout_width="fill_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginBottom="10dp"
+                        android:layout_marginTop="16dp"
+                        android:gravity="center"
+                        android:text="@string/test_drive_terms_and_condition"
+                        android:textAppearance="@style/TestRegSecondary_Material">
+                    </TextView>
+                </LinearLayout>
+
+            </LinearLayout>
+        </LinearLayout>
+    </ScrollView>
 </RelativeLayout>

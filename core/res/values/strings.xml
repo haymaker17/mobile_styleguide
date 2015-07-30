@@ -91,7 +91,7 @@
     <string name="login_help_bad_email_dialog_title">Invalid Email</string>
     <string name="login_help_bad_email_dialog_message">Please input a valid email address to receive sign-in instructions.</string>
     <string name="login_help_topic_header">Or Select a Help Topic</string>
-    <string name="login_help_submit">Send My Sign In Details</string>
+    <string name="login_help_submit">Reset Password</string>
     <string name="pin_create_title">Mobile PIN</string>
     <string name="pin_create_prompt">Set your Mobile PIN to sign in to Concur.</string>
     <string name="pin_create_pin_hint">New PIN</string>
@@ -1934,8 +1934,8 @@
 <string name="test_drive_limited_text">has limited Concur Mobile functionality</string>
 <string name="test_drive_text">and you will receive educational information and news about Concur products and services.&lt;br/>&lt;br/>Test Drive Concur now, and see to how simple expense can be.</string>
 <string name="test_drive_welcome_text">Test Drive is a great way to learn more about Concur and how it can help you manage your expense reporting.</string>
-<string name="test_drive_username_hint">Enter Email Address</string>
-<string name="test_drive_password_hint">Create Password</string>
+<string name="test_drive_username_hint">Email Address</string>
+<string name="test_drive_password_hint">Password</string>
 <string name="test_drive_submit">Submit Registration</string>
 <string name="test_drive_terms_and_condition">Registering accepts our</string>
 <string name="test_drive_and">and</string>

@@ -4,6 +4,7 @@ import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.content.Context;
 import android.content.DialogInterface;
+import android.graphics.Typeface;
 import android.os.Bundle;
 import android.os.Handler;
 import android.support.v4.app.FragmentActivity;
@@ -326,7 +327,8 @@ public class EmailPasswordFragment extends PlatformFragment implements OnClickLi
             }
         }
 
-        setEmailLableAndEditText(root);
+        setEmailLableText(root);
+        setEmailEditText(root);
         setDoubleFingerTap(root);
 
         // If we got text pushed through to pre-load on this screen, set it here.
@@ -369,7 +371,6 @@ public class EmailPasswordFragment extends PlatformFragment implements OnClickLi
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setRetainInstance(true);
-        //getActivity().getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_ADJUST_PAN | WindowManager.LayoutParams.SOFT_INPUT_ADJUST_RESIZE);
     }
 
     /*
@@ -386,16 +387,17 @@ public class EmailPasswordFragment extends PlatformFragment implements OnClickLi
         }
     }
 
-    private void setEmailLableAndEditText(View root){
-        //set email id label
-        emailIdLabel = (TextView) root.findViewById(R.id.emailIdLabel);
-        emailIdLabel.setVisibility(View.VISIBLE);
-        emailIdLabel.setText(getString(R.string.email_lookup_label));
+    private void setEmailEditText(View root){
         // set email and password
         emailView = (EditText) root.findViewById(R.id.emailId);
         ViewUtil.setClearIconToEditText(emailView);
     }
-
+    private void setEmailLableText(View root){
+        //set email id label
+        emailIdLabel = (TextView) root.findViewById(R.id.emailIdLabel);
+        emailIdLabel.setVisibility(View.VISIBLE);
+        emailIdLabel.setText(getString(R.string.email_lookup_label));
+    }
     private void setDoubleFingerTap(View root){
         ImageView concurlogo = (ImageView) root.findViewById(com.concur.mobile.platform.ui.common.R.id.concurlogo);
 
@@ -559,6 +561,7 @@ public class EmailPasswordFragment extends PlatformFragment implements OnClickLi
         if (isEnterPassword) {
             emailView.setInputType(InputType.TYPE_CLASS_TEXT |
                     InputType.TYPE_TEXT_VARIATION_PASSWORD);
+            emailView.setTypeface(Typeface.DEFAULT);
             or_sso_layout.setVisibility(View.GONE);
         } else {
             emailView.setInputType(InputType.TYPE_CLASS_TEXT |

@@ -64,4 +64,6 @@
     <color name="MaterialGreen">#62AC64</color>
     <color name="MaterialLightGreen">#DFEFD4</color>
     <color name="MaterialLightBlue">#ECF7FF</color>
+    <color name="MaterialHintLightGray">#D2E2EB</color>
+    <color name="MaterialTintLightBlue">#A5CFEB</color>
 </resources>

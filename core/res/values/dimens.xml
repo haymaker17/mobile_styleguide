@@ -121,4 +121,6 @@
     <dimen name="activity_horizontal_margin">16dp</dimen>
     <dimen name="activity_vertical_margin">16dp</dimen>
 
+    <!-- new footer size material -->
+    <dimen name="footer_new_material_height">66dp</dimen>
 </resources>

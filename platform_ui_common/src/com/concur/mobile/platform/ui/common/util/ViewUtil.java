@@ -1,11 +1,5 @@
 package com.concur.mobile.platform.ui.common.util;
 
-import java.io.IOException;
-import java.io.InputStream;
-import java.io.OutputStream;
-import java.util.List;
-import java.util.Locale;
-
 import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
@@ -35,6 +29,12 @@ import android.widget.EditText;
 import android.widget.TextView;
 
 import com.concur.mobile.platform.ui.common.R;
+
+import java.io.IOException;
+import java.io.InputStream;
+import java.io.OutputStream;
+import java.util.List;
+import java.util.Locale;
 
 /**
  * Partial port of ViewUtil in core. Only APIs relevant to platform.ui.common is included here.
@@ -161,7 +161,7 @@ public class ViewUtil {
     /**
      * Will set the text to be displayed in a <code>TextView</code> component within a <code>View</code>.
      * 
-     * @param view
+     * @param parent
      *            the parent view containing the TextView
      * @param field_view_res_id
      *            the resource id of the view containing text view.
@@ -396,8 +396,8 @@ public class ViewUtil {
     /**
      * Will get the text displayed in <code>TextView</code> component within a <code>View</code>.
      * 
-     * @param activity
-     *            the activity containing the view.
+     * @param rootView
+     *            root view.
      * @param field_view_res_id
      *            the resource id of the view containing text view.
      * @param field_name_res_id
