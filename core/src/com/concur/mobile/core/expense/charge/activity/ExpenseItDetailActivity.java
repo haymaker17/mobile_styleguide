@@ -15,14 +15,12 @@ public class ExpenseItDetailActivity extends BaseActivity {
 
     public static final String FRAGMENT_EXPENSEIT_DETAIL = "FRAGMENT_EXPENSEIT_DETAIL";
 
+    public static final String EXPENSEIT_ITEM_KEY = "EXPENSEIT_ITEM_KEY";
+
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        if (isServiceAvailable()) {
-            buildView();
-        } else {
-            buildViewDelay = true;
-        }
+        buildView();
     }
 
     public void buildView() {

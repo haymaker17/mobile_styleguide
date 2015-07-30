@@ -4,6 +4,7 @@ import com.concur.mobile.platform.expenseit.ExpenseItParseCode;
 import com.concur.mobile.platform.expenseit.ExpenseItPostReceipt;
 import com.concur.mobile.platform.expenseit.dao.ExpenseItReceiptDAO;
 
+import java.io.Serializable;
 import java.util.Calendar;
 
 /**
@@ -11,9 +12,11 @@ import java.util.Calendar;
  *
  * @author Elliott Jacobsen-Watts
  */
-public class ExpenseItItem {
+public class ExpenseItItem implements Serializable {
 
     public static final String CLS_TAG = ExpenseItItem.class.getSimpleName();
+
+    private static final long serialVersionUID = -8493533688325626158L;
 
     private ExpenseItReceiptDAO receipt;
 
