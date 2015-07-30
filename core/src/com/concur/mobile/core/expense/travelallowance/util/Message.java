@@ -14,6 +14,7 @@ public class Message implements Serializable {
     public final static String MSG_UI_START_BEFORE_END = "UI.StartBeforeEnd";
     public final static String MSG_UI_MISSING_DATES = "UI.MissingDates";
     public final static String MSG_UI_OVERLAPPING_PREDECESSOR = "UI.OverlappingPredecessor";
+    public final static String MSG_UI_OVERLAPPING_SUCCESSOR = "UI.OverlappingSuccessor";
 
     private static final long serialVersionUID = 1176695456567753781L;
     private static final String CLASS_TAG = Message.class.getSimpleName();

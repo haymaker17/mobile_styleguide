@@ -8,6 +8,7 @@ import android.os.Handler;
 import android.util.Log;
 import android.widget.Toast;
 
+import com.concur.core.R;
 import com.concur.mobile.base.service.BaseAsyncRequestTask;
 import com.concur.mobile.base.service.BaseAsyncResultReceiver;
 import com.concur.mobile.core.expense.travelallowance.datamodel.Itinerary;
@@ -21,11 +22,16 @@ import com.concur.mobile.core.expense.travelallowance.service.SaveItineraryReque
 import com.concur.mobile.core.expense.travelallowance.ui.model.CompactItinerary;
 import com.concur.mobile.core.expense.travelallowance.ui.model.CompactItinerarySegment;
 import com.concur.mobile.core.expense.travelallowance.util.BundleId;
+import com.concur.mobile.core.expense.travelallowance.util.DateUtils;
 import com.concur.mobile.core.expense.travelallowance.util.Message;
 import com.concur.mobile.core.expense.travelallowance.util.StringUtilities;
 
 import java.util.ArrayList;
+import java.util.Comparator;
+import java.util.Date;
+import java.util.Iterator;
 import java.util.List;
+import java.util.ListIterator;
 
 /**
  * This controller is the glue between the backend service layer and the travel allowance itinerary UI.
@@ -58,6 +64,8 @@ public class TravelAllowanceItineraryController extends BaseController {
     private Context context;
 
     private List<Itinerary> itineraryList;
+
+    private Itinerary itineraryStage;
 
     private List<Message> messageCache;
 
@@ -136,6 +144,10 @@ public class TravelAllowanceItineraryController extends BaseController {
             return new ArrayList<Itinerary>();
         }
         return itineraryList;
+    }
+
+    public Itinerary getItineraryStage () {
+        return this.itineraryStage;
     }
 
     public CompactItinerary getCompactItinerary(String compactItineraryId) {
@@ -273,6 +285,10 @@ public class TravelAllowanceItineraryController extends BaseController {
 
     }
 
+    public synchronized void setItineraryStage(Itinerary itinerary) {
+        this.itineraryStage = itinerary;
+    }
+
     /**
      * Adds the itinerary to the #itineraryList in case the passed itinerary doesn't exist yet. Else an existing itinerary will be
      * replaced by the passed itinerary.
@@ -295,6 +311,128 @@ public class TravelAllowanceItineraryController extends BaseController {
 //        }
 //    }
 
+
+    /**
+     * Checks the date denoted by datePosition within the itinerary segment located at the given
+     * position within the given itinerary w.r.t. date overlaps.
+     * The method rushes through the given order of the list elements and expects the dates in
+     * ascending order.
+     * @param itinerary the itinerary containing the segment
+     * @param segmentPosition the position of the segment within the itinerary
+     * @param datePosition -1 = departure, 0 = border crossing, 1 = arrival
+     * @return -1 = Overlap with predecessor, 0 = no Overlap, 1 = Overlap with successor
+     */
+    public int checkOverlapping(Itinerary itinerary, int segmentPosition, int datePosition) {
+        if (itinerary == null || itinerary.getSegmentList() == null || itinerary.getSegmentList().size() == 0) {
+            return 0;
+        }
+        if (datePosition < - 1 || datePosition > 1) {
+            return 0;
+        }
+        if (segmentPosition < 0 || segmentPosition + 1 > itinerary.getSegmentList().size()) {
+            return 0;
+        }
+        ItinerarySegment segment = itinerary.getSegmentList().get(segmentPosition);
+        Comparator<Date> comparator = DateUtils.getDateComparator(false);
+        Date checkDate = null;
+        Message msg = null;
+        int result;
+        if (datePosition == -1) {//Departure
+            checkDate = segment.getStartDateUTC();
+            result = comparator.compare(checkDate, segment.getEndDateUTC());
+            if (result != -1) {
+                resetMessages(segment);
+                msg = new Message(Message.Severity.ERROR, Message.MSG_UI_START_BEFORE_END, "@Start before End or equal@");
+                msg.setSourceObject(segment);
+                messageCache.add(msg);
+                return result;
+            }
+        } else if (datePosition == 1) {//Arrival
+            checkDate = segment.getEndDateUTC();
+            result = comparator.compare(checkDate, segment.getStartDateUTC());
+            if (result != 1) {
+                resetMessages(segment);
+                msg = new Message(Message.Severity.ERROR, Message.MSG_UI_START_BEFORE_END, "@Start before End or equal@");
+                msg.setSourceObject(segment);
+                messageCache.add(msg);
+                return result;
+            }
+        } else {//TODO: BorderCrossing
+            return 0;
+        }
+        ListIterator<ItinerarySegment> itUp = itinerary.getSegmentList().listIterator(segmentPosition);
+        while (itUp.hasPrevious()) {
+            ItinerarySegment cmpSegment = itUp.previous();
+            result = comparator.compare(checkDate, cmpSegment.getEndDateUTC());
+            if (result != 1) {
+                resetMessages(segment);
+                msg = new Message(Message.Severity.ERROR, Message.MSG_UI_OVERLAPPING_PREDECESSOR, "@Overlap with Predecessor@");
+                msg.setSourceObject(segment);
+                messageCache.add(msg);
+                return result;
+            }
+            result = comparator.compare(checkDate, cmpSegment.getStartDateUTC());
+            if (result != 1) {
+                resetMessages(segment);
+                msg = new Message(Message.Severity.ERROR, Message.MSG_UI_OVERLAPPING_PREDECESSOR, "@Overlap with Predecessor@");
+                msg.setSourceObject(segment);
+                messageCache.add(msg);
+                return result;
+            }
+        }
+        ListIterator<ItinerarySegment> itDown = itinerary.getSegmentList().listIterator(segmentPosition + 1);
+        while (itDown.hasNext()) {
+            ItinerarySegment cmpSegment = itDown.next();
+            result = comparator.compare(checkDate, cmpSegment.getStartDateUTC());
+            if (result != -1) {
+                resetMessages(segment);
+                msg = new Message(Message.Severity.ERROR, Message.MSG_UI_OVERLAPPING_SUCCESSOR, "@Overlap with Successor@");
+                msg.setSourceObject(segment);
+                messageCache.add(msg);
+                return result;
+            }
+            result = comparator.compare(checkDate, cmpSegment.getEndDateUTC());
+            if (result != -1) {
+                resetMessages(segment);
+                msg = new Message(Message.Severity.ERROR, Message.MSG_UI_OVERLAPPING_SUCCESSOR, "@Overlap with Successor@");
+                msg.setSourceObject(segment);
+                messageCache.add(msg);
+                return result;
+            }
+        }
+        return 0;
+    }
+
+    /**
+     * Checks, whether all mandatory fields are filled
+     * @param itinerary the itinerary to be checked
+     * @return false, if not all mandatory fields are filled, otherwise true.
+     */
+    public boolean areAllMandatoryFieldsFilled(Itinerary itinerary) {
+        if (itinerary == null) {
+            return true;
+        }
+        resetMessages(itinerary);
+        Message msg;
+        if (StringUtilities.isNullOrEmpty(itinerary.getName())) {
+            msg = new Message(Message.Severity.ERROR, Message.MSG_UI_MISSING_DATES, "@Mandatory Dates are missing@");
+            msg.setSourceObject(itinerary);
+            messageCache.add(msg);
+            return false;
+        }
+        for (ItinerarySegment segment : itinerary.getSegmentList()) {
+            if (segment.getArrivalDateTime() == null || segment.getDepartureDateTime() == null
+                    || segment.getArrivalLocation() == null
+                    || segment.getDepartureLocation() == null) {
+                msg = new Message(Message.Severity.ERROR, Message.MSG_UI_MISSING_DATES, "@Mandatory Dates are missing@");
+                msg.setSourceObject(itinerary);
+                messageCache.add(msg);
+                return false;
+            }
+        }
+        return true;
+    }
+
     public boolean checkItinerarySegmentsConsistency(Itinerary itinerary){
         if (itinerary == null){
             return false;
@@ -303,7 +441,7 @@ public class TravelAllowanceItineraryController extends BaseController {
         for (ItinerarySegment segment : itinerary.getSegmentList()){
             i++;
             if (checkInitialLocations(segment) == true){
-                Log.d(CLASS_TAG,"Initial Location for index " + i);
+                Log.d(CLASS_TAG, "Initial Location for index " + i);
                 return true;
             }
         }
@@ -443,9 +581,37 @@ public class TravelAllowanceItineraryController extends BaseController {
         return messageCache;
     }
 
+    public List<Message> getMessages(final Object sourceObject) {
+        List<Message> resultList = new ArrayList<Message>();
+        if (sourceObject == null || messageCache == null) {
+            return resultList;
+        }
+        for (Message msg : messageCache ) {
+            if (msg.getSourceObject() == sourceObject) {
+                resultList.add(msg);
+            }
+        }
+        return resultList;
+    }
+
     public void resetMessages() {
         messageCache = new ArrayList<Message>();
     }
+
+
+    public void resetMessages(Object sourceObject) {
+        if (sourceObject == null) {
+            return;
+        }
+        Iterator<Message> it = messageCache.iterator();
+        while (it.hasNext()) {
+            Message msg = it.next();
+            if (msg.getSourceObject() != null && sourceObject == msg.getSourceObject()) {
+                it.remove();
+            }
+        }
+    }
+
 
     private boolean handleAfterUpdateResponse(Itinerary resultItin) {
 

@@ -15,8 +15,8 @@ package com.concur.mobile.core.expense.travelallowance.ui.model;
 public class PositionInfoTag {
 
     public final static int INFO_NONE = 0;
-    public final static int INFO_OUTBOUND = 1;
-    public final static int INFO_INBOUND = 2;
+    public final static int INFO_OUTBOUND = -1;
+    public final static int INFO_INBOUND = 1;
 
     /**
      * The position (respectively the list row index)
