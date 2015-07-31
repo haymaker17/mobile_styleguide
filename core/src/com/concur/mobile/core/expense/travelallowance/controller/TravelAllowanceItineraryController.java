@@ -5,7 +5,6 @@ import android.content.Context;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.os.Handler;
-import android.util.Log;
 
 import com.concur.mobile.base.service.BaseAsyncRequestTask;
 import com.concur.mobile.base.service.BaseAsyncResultReceiver;
@@ -20,6 +19,7 @@ import com.concur.mobile.core.expense.travelallowance.ui.model.CompactItinerary;
 import com.concur.mobile.core.expense.travelallowance.ui.model.CompactItinerarySegment;
 import com.concur.mobile.core.expense.travelallowance.util.BundleId;
 import com.concur.mobile.core.expense.travelallowance.util.DateUtils;
+import com.concur.mobile.core.expense.travelallowance.util.DebugUtils;
 import com.concur.mobile.core.expense.travelallowance.util.Message;
 import com.concur.mobile.core.expense.travelallowance.util.StringUtilities;
 
@@ -72,8 +72,6 @@ public class TravelAllowanceItineraryController extends BaseController {
         this.messageCache = new ArrayList<Message>();
     }
 
-
-
     public void refreshItineraries(String expenseReportKey, boolean isManager) {
 
         this.itineraryList = new ArrayList<Itinerary>();
@@ -90,13 +88,13 @@ public class TravelAllowanceItineraryController extends BaseController {
             public void onRequestSuccess(Bundle resultData) {
                 itineraryList = getItinerariesRequest.getItineraryList();
                 notifyListener(ControllerAction.REFRESH, true, resultData);
-                Log.d(CLASS_TAG, "Request success.");
+                DebugUtils.LogDTA(CLASS_TAG, "onRequestSuccess", "Request success");
             }
 
             @Override
             public void onRequestFail(Bundle resultData) {
                 notifyListener(ControllerAction.REFRESH, false, resultData);
-                Log.d(CLASS_TAG, "Request failed.");
+                DebugUtils.LogDTA(CLASS_TAG, "onRequestFail", "Request failed");
             }
 
             @Override
@@ -391,39 +389,6 @@ public class TravelAllowanceItineraryController extends BaseController {
         return true;
     }
 
-    public boolean checkItinerarySegmentsConsistency(Itinerary itinerary){
-        if (itinerary == null){
-            return false;
-        }
-        int i = -1;
-        for (ItinerarySegment segment : itinerary.getSegmentList()){
-            i++;
-            if (checkInitialLocations(segment) == true){
-                Log.d(CLASS_TAG, "Initial Location for index " + i);
-                return true;
-            }
-        }
-        return false;
-    }
-
-    private boolean checkInitialLocations(ItinerarySegment segment){
-        if (segment.getArrivalLocation()   == null ) {
-            Log.d(CLASS_TAG, "arrivalLocation is null");
-            return true;
-        }else if (StringUtilities.isNullOrEmpty(segment.getArrivalLocation().getCode()   ) ) {
-            Log.d(CLASS_TAG, "arrivalLocation has an invalid code");
-            return true;
-        }else if (    segment.getDepartureLocation() == null ) {
-            Log.d(CLASS_TAG, "departureLocation is null");
-            return true;
-        }else if (StringUtilities.isNullOrEmpty(segment.getDepartureLocation().getCode() )    ){
-            Log.d(CLASS_TAG, "departureLocation has an invalid code");
-            return  true;
-        }else {
-            return false;
-        }
-    }
-
     public void executeDeleteItinerary(final Itinerary itinerary) {
         BaseAsyncResultReceiver receiver = new BaseAsyncResultReceiver(new Handler());
         receiver.setListener(new BaseAsyncRequestTask.AsyncReplyListener() {
@@ -437,11 +402,6 @@ public class TravelAllowanceItineraryController extends BaseController {
                     Message msg = (Message) resultData
                             .getSerializable(AbstractItineraryDeleteRequest.RESULT_BUNDLE_ID_MESSAGE);
                     if (msg != null) {
-//                        Itinerary itin = getItinerary(itinerary.getItineraryID());
-//                        if (itin != null) {
-//                            itin.setMessage(msg);
-//                            itin.setSyncStatus(SynchronizationStatus.FAILED);
-//                        }
                         resultData.putSerializable(BundleId.ITINERARY, itinerary);
                     }
                     notifyListener(ControllerAction.DELETE, false, resultData);
@@ -453,8 +413,6 @@ public class TravelAllowanceItineraryController extends BaseController {
                 Itinerary itin = getItinerary(itinerary.getItineraryID());
                 if (itin != null) {
                     Message msg = new Message(Message.Severity.ERROR, "@ Delete Failed @");
-//                    itin.setMessage(msg);
-//                    itin.setSyncStatus(SynchronizationStatus.FAILED);
                     resultData.putSerializable(AbstractItineraryDeleteRequest.RESULT_BUNDLE_ID_MESSAGE, msg);
                     resultData.putSerializable(BundleId.ITINERARY, itinerary);
                 }
@@ -491,13 +449,6 @@ public class TravelAllowanceItineraryController extends BaseController {
                             .getSerializable(AbstractItineraryDeleteRequest.RESULT_BUNDLE_ID_MESSAGE);
                     msg.setSourceObject(segment);
                     messageCache.add(msg);
-//                    if (msg != null) {
-//                        Itinerary itin = getItinerary(itinerary.getItineraryID());
-//                        if (itin != null) {
-//                            itin.setMessage(msg);
-//                            itin.setSyncStatus(SynchronizationStatus.FAILED);
-//                        }
-//                    }
                     resultData.putSerializable(BundleId.SEGMENT, segment);
                     notifyListener(ControllerAction.DELETE, false, resultData);
                 }
@@ -505,15 +456,10 @@ public class TravelAllowanceItineraryController extends BaseController {
 
             @Override
             public void onRequestFail(Bundle resultData) {
-//                Itinerary itin = getItinerary(itinerary.getItineraryID());
-//                if (itin != null) {
-                    Message msg = new Message(Message.Severity.ERROR, "@ Delete Failed @");
+                Message msg = new Message(Message.Severity.ERROR, "@ Delete Failed @");
                 msg.setSourceObject(segment);
-//                    itin.setMessage(msg);
-//                    itin.setSyncStatus(SynchronizationStatus.FAILED);
                 resultData.putSerializable(BundleId.SEGMENT, segment);
-                    resultData.putSerializable(AbstractItineraryDeleteRequest.RESULT_BUNDLE_ID_MESSAGE, msg);
-//                }
+                resultData.putSerializable(AbstractItineraryDeleteRequest.RESULT_BUNDLE_ID_MESSAGE, msg);
                 notifyListener(ControllerAction.DELETE, false, resultData);
             }
 
