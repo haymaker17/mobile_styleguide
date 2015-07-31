@@ -47,6 +47,7 @@ import com.concur.mobile.platform.expense.receipt.list.ReceiptListRequestTask;
 import com.concur.mobile.platform.expense.smartexpense.SmartExpenseListRequestTask;
 import com.concur.mobile.platform.expenseit.ErrorResponse;
 import com.concur.mobile.platform.expenseit.ExpenseItImage;
+import com.concur.mobile.platform.expenseit.ExpenseItParseCode;
 import com.concur.mobile.platform.expenseit.ExpenseItPostReceiptResponse;
 import com.concur.mobile.platform.expenseit.GetExpenseItExpenseListAsyncTask;
 import com.concur.mobile.platform.expenseit.PostExpenseItReceiptAsyncTask;
@@ -425,7 +426,7 @@ public class ExpensesAndReceipts extends BaseActivity implements ExpensesCallbac
             for (ListItem item : items) {
                 if (item instanceof ExpenseItListItem) {
                     ExpenseItListItem tmp = (ExpenseItListItem) item;
-                    if (tmp.isProcessing()) {
+                    if (ExpenseItParseCode.isProcessing(tmp.getParsingStatusCode())) {
                         Log.i(Const.LOG_TAG, CLS_TAG + ".isExpenseItItemsBeingAnalyzed is true for item id");
                         return true;
                     }

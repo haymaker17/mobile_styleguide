@@ -158,6 +158,10 @@ public class ExpenseItListItem extends ExpenseListItem {
         return statusText;
     }
 
+    public int getParsingStatusCode() {
+        return expenseItItem.getParsingStatusCode();
+    }
+
     @Override
     protected String getVendorName() { return null; }
 
@@ -184,4 +188,6 @@ public class ExpenseItListItem extends ExpenseListItem {
 
     @Override
     protected boolean showLongPressMessage() { return false; }
+
+
 }
