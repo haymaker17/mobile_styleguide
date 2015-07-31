@@ -102,13 +102,14 @@ public class ItinerarySegment implements Serializable, IDatePeriodUTC, Comparabl
      */
     @Override
     public Date getStartDateUTC() {
-        if (departureLocation == null || departureLocation.getTimeZoneOffset() == null
-                || departureDateTime == null) {
+        if (departureDateTime == null) {
             return null;
         }
-        Date dateUTC = new Date();
         long departureTimeZoneOffset = 0;
-        departureTimeZoneOffset = departureLocation.getTimeZoneOffset();
+        if (departureLocation != null && departureLocation.getTimeZoneOffset() != null) {
+            departureTimeZoneOffset = departureLocation.getTimeZoneOffset();
+        }
+        Date dateUTC = new Date();
         dateUTC.setTime(departureDateTime.getTime() - DateUtils.convertMinutesToMilliseconds(departureTimeZoneOffset));
         return dateUTC;
     }
@@ -118,13 +119,14 @@ public class ItinerarySegment implements Serializable, IDatePeriodUTC, Comparabl
      */
     @Override
     public Date getEndDateUTC() {
-        if (arrivalLocation == null || arrivalLocation.getTimeZoneOffset() == null
-                || arrivalDateTime == null) {
+        if (arrivalDateTime == null) {
             return null;
         }
-        Date dateUTC = new Date();
         long arrivalTimeZoneOffset = 0;
-        arrivalTimeZoneOffset = arrivalLocation.getTimeZoneOffset();
+        if (arrivalLocation != null && arrivalLocation.getTimeZoneOffset() != null) {
+            arrivalTimeZoneOffset = arrivalLocation.getTimeZoneOffset();
+        }
+        Date dateUTC = new Date();
         dateUTC.setTime(arrivalDateTime.getTime() - DateUtils.convertMinutesToMilliseconds(arrivalTimeZoneOffset));
         return dateUTC;
     }

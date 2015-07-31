@@ -107,7 +107,10 @@ public class SimpleItineraryListAdapter extends RecyclerView.Adapter<SimpleItine
 
     @Override
     public int getItemCount() {
-        return itinList.size();
+        if (itinList != null) {
+            return itinList.size();
+        }
+        return 0;
     }
 
 

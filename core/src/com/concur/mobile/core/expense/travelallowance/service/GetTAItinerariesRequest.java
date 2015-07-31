@@ -1,6 +1,7 @@
 package com.concur.mobile.core.expense.travelallowance.service;
 
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.List;
 
 import org.xmlpull.v1.XmlPullParserException;
@@ -12,6 +13,7 @@ import com.concur.mobile.base.service.BaseAsyncResultReceiver;
 import com.concur.mobile.base.service.parser.CommonParser;
 import com.concur.mobile.core.expense.travelallowance.datamodel.Itinerary;
 import com.concur.mobile.core.expense.travelallowance.service.parser.GetTAItinerariesResponseParser;
+import com.concur.mobile.core.expense.travelallowance.util.BundleId;
 import com.concur.mobile.core.service.CoreAsyncRequestTask;
 
 public class GetTAItinerariesRequest extends CoreAsyncRequestTask {
@@ -83,6 +85,8 @@ public class GetTAItinerariesRequest extends CoreAsyncRequestTask {
 
         resultData.putBoolean(IS_SUCCESS, true);
 		this.itineraryList = parser.getItineraryList();
+		ArrayList<Itinerary> itinArrayList = new ArrayList<Itinerary>(this.itineraryList);
+		resultData.putSerializable(BundleId.ITINERARY_LIST, itinArrayList);
 
         long currentMillis = System.currentTimeMillis();
         Log.i(LOG_TAG, "Request total: " + (currentMillis - startMillis) + "ms");

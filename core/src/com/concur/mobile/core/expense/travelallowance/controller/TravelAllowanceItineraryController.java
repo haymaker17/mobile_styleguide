@@ -6,14 +6,11 @@ import android.os.AsyncTask;
 import android.os.Bundle;
 import android.os.Handler;
 import android.util.Log;
-import android.widget.Toast;
 
-import com.concur.core.R;
 import com.concur.mobile.base.service.BaseAsyncRequestTask;
 import com.concur.mobile.base.service.BaseAsyncResultReceiver;
 import com.concur.mobile.core.expense.travelallowance.datamodel.Itinerary;
 import com.concur.mobile.core.expense.travelallowance.datamodel.ItinerarySegment;
-import com.concur.mobile.core.expense.travelallowance.datamodel.SynchronizationStatus;
 import com.concur.mobile.core.expense.travelallowance.service.AbstractItineraryDeleteRequest;
 import com.concur.mobile.core.expense.travelallowance.service.DeleteItineraryRequest;
 import com.concur.mobile.core.expense.travelallowance.service.DeleteItineraryRowRequest;
@@ -120,24 +117,6 @@ public class TravelAllowanceItineraryController extends BaseController {
 
         getItinerariesRequest.execute();
     }
-
-//    private synchronized void notifyListener(boolean isFailed) {
-//        for(IServiceRequestListener listener : listeners) {
-//            if (isFailed) {
-//                listener.onRequestFail(CONTROLLER_TAG);
-//            } else {
-//                listener.onRequestSuccess(CONTROLLER_TAG);
-//            }
-//        }
-//    }
-
-//    public synchronized void registerListener(IServiceRequestListener listener) {
-//        listeners.add(listener);
-//    }
-
-//    public synchronized void unregisterListener(IServiceRequestListener listener) {
-//        listeners.remove(listener);
-//    }
 
     public List<Itinerary> getItineraryList() {
         if (itineraryList == null) {
@@ -288,29 +267,6 @@ public class TravelAllowanceItineraryController extends BaseController {
     public synchronized void setItineraryStage(Itinerary itinerary) {
         this.itineraryStage = itinerary;
     }
-
-    /**
-     * Adds the itinerary to the #itineraryList in case the passed itinerary doesn't exist yet. Else an existing itinerary will be
-     * replaced by the passed itinerary.
-     */
-//    private synchronized void setItinerary(Itinerary itinerary) {
-//
-//        Itinerary currentItin = null;
-//        int insertPosition = itineraryList.size();
-//        for (int i = 0; i < itineraryList.size(); i++) {
-//            currentItin = itineraryList.get(i);
-//            if (currentItin.getItineraryID() != null && currentItin.getItineraryID().equals(itinerary.getItineraryID())) {
-//                insertPosition = i;
-//            }
-//        }
-//
-//        if (insertPosition < itineraryList.size()) {
-//            itineraryList.set(insertPosition, itinerary);
-//        } else {
-//            itineraryList.add(itinerary);
-//        }
-//    }
-
 
     /**
      * Checks the date denoted by datePosition within the itinerary segment located at the given
@@ -631,6 +587,8 @@ public class TravelAllowanceItineraryController extends BaseController {
                        isSuccess = handleSegmentUpdate(itinId, segment);
                     }
                 }
+
+                getItinerary(itinId).setName(resultItin.getName());
             }
 
         return isSuccess;

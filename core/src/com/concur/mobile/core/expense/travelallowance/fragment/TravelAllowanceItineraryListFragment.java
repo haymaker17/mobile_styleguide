@@ -22,8 +22,8 @@ import com.concur.mobile.core.util.Const;
 
 public class TravelAllowanceItineraryListFragment extends ListFragment implements SwipeRefreshLayout.OnRefreshListener{
 
-
-	public static final String ON_REFRESH_MSG = "refreshItineraries";
+	private static final String CLASS_TAG = TravelAllowanceItineraryListFragment.class.getSimpleName();
+	public static final String ON_REFRESH_MSG = CLASS_TAG + ".refreshItineraries";
 
 	private String expenseReportKey;
 

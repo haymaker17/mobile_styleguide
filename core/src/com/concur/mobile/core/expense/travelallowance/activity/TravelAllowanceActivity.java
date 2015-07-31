@@ -27,6 +27,7 @@ import com.concur.mobile.core.expense.travelallowance.fragment.TravelAllowanceIt
 import com.concur.mobile.core.expense.travelallowance.util.BundleId;
 import com.concur.mobile.core.util.Const;
 
+import java.lang.reflect.Array;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -124,10 +125,7 @@ public class TravelAllowanceActivity extends AppCompatActivity
                     getString(R.string.itin_itineraries), TravelAllowanceItineraryListFragment.class, null);
             list.add(itinFrag);
         }
-
-
         return list;
-
     }
 
     @Override
@@ -139,6 +137,18 @@ public class TravelAllowanceActivity extends AppCompatActivity
 
             default:
                 return super.onOptionsItemSelected(item);
+        }
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        SimpleTAItineraryListFragment simpleTaListFrag = getSimpleTAItineraryListFragment();
+        if (simpleTaListFrag != null) {
+            Bundle bundle = new Bundle();
+            ArrayList<Itinerary> arrayList = new ArrayList<Itinerary>(itineraryController.getItineraryList());
+            bundle.putSerializable(BundleId.ITINERARY_LIST, arrayList);
+            simpleTaListFrag.onRefreshFinished(bundle);
         }
     }
 
@@ -163,46 +173,10 @@ public class TravelAllowanceActivity extends AppCompatActivity
         if (message.equals(FixedTravelAllowanceListFragment.ON_REFRESH_MSG)) {
             this.allowanceController.refreshFixedTravelAllowances(expenseReportKey);
         }
+        if (message.equals(SimpleTAItineraryListFragment.ON_REFRESH_MSG)) {
+            this.itineraryController.refreshItineraries(expenseReportKey, false);
+        }
     }
-
-    /**
-     * {@inheritDoc}
-     */
-//    @Override
-//    public void onRequestSuccess(final String controllerTag) {
-//        Log.d(Const.LOG_TAG, CLASS_TAG + ".onRequestSuccess: " + controllerTag);
-//        if (TravelAllowanceItineraryController.CONTROLLER_TAG.equals(controllerTag)) {
-//            TravelAllowanceItineraryListFragment itinListFrag = viewPagerAdapter.getTravelAllowanceItineraryFragment();
-//            if (itinListFrag != null) {
-//                itinListFrag.onRefreshFinished();
-//            }
-//        }
-//        if (FixedTravelAllowanceController.CONTROLLER_TAG.equals(controllerTag)) {
-//            FixedTravelAllowanceListFragment allowanceFrag = viewPagerAdapter.getFixedTravelAllowanceFragment();
-//            if (allowanceFrag != null) {
-//                allowanceFrag.onRefreshFinished();
-//            }
-//        }
-//    }
-//
-//    /**
-//     * {@inheritDoc}
-//     */
-//    @Override
-//    public void onRequestFail(final String controllerTag) {
-//        if (TravelAllowanceItineraryController.CONTROLLER_TAG.equals(controllerTag)) {
-//            TravelAllowanceItineraryListFragment itinListFrag = viewPagerAdapter.getTravelAllowanceItineraryFragment();
-//            if (itinListFrag != null) {
-//                itinListFrag.onRefreshFinished();
-//            }
-//        }
-//        if (FixedTravelAllowanceController.CONTROLLER_TAG.equals(controllerTag)) {
-//            FixedTravelAllowanceListFragment allowanceFrag = viewPagerAdapter.getFixedTravelAllowanceFragment();
-//            if (allowanceFrag != null) {
-//                allowanceFrag.onRefreshFinished();
-//            }
-//        }
-//    }
 
     @Override
     public void actionFinished(IController controller, ControllerAction action, boolean isSuccess, Bundle result) {
@@ -210,6 +184,11 @@ public class TravelAllowanceActivity extends AppCompatActivity
             TravelAllowanceItineraryListFragment itinListFrag = viewPagerAdapter.getTravelAllowanceItineraryFragment();
             if (itinListFrag != null) {
                 itinListFrag.onRefreshFinished();
+            }
+
+            SimpleTAItineraryListFragment simpleList = getSimpleTAItineraryListFragment();
+            if (simpleList != null) {
+                simpleList.onRefreshFinished(result);
             }
         }
 
@@ -219,6 +198,18 @@ public class TravelAllowanceActivity extends AppCompatActivity
                 allowanceFrag.onRefreshFinished();
             }
         }
+    }
 
+    public SimpleTAItineraryListFragment getSimpleTAItineraryListFragment() {
+        List<Fragment> fragments = getSupportFragmentManager().getFragments();
+        if (fragments == null) {
+            return null;
+        }
+        for (Fragment fragment : fragments) {
+            if (fragment instanceof SimpleTAItineraryListFragment) {
+                return (SimpleTAItineraryListFragment) fragment;
+            }
+        }
+        return null;
     }
 }

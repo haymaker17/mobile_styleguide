@@ -33,9 +33,8 @@ import java.util.Locale;
  */
 public class FixedTravelAllowanceListFragment extends ListFragment implements SwipeRefreshLayout.OnRefreshListener {
 
-    public static final String ON_REFRESH_MSG = "refreshAllowances";
-
     private static final String CLASS_TAG = FixedTravelAllowanceListFragment.class.getSimpleName();
+    public static final String ON_REFRESH_MSG = CLASS_TAG + ".refreshAllowances";
 
     /**
      * The activity context
