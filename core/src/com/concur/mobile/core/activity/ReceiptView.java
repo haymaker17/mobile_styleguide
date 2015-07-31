@@ -109,8 +109,8 @@ public class ReceiptView extends BaseActivity {
 
         //TODO Harold - Fix Database query to check for existing image
         if (expenseItReceiptId != 0) {
-            ExpenseItReceipt tyu = new ExpenseItReceipt(ConcurCore.getContext(), getUserId());
-            for(ExpenseItPostReceipt receipt: tyu.getReceipts()){
+            ExpenseItReceipt expenseItReceipt = new ExpenseItReceipt(ConcurCore.getContext(), getUserId());
+            for(ExpenseItPostReceipt receipt: expenseItReceipt.getReceipts()){
                 if (receipt.getId() == expenseItReceiptId){
                     expenseItPostReceipt = receipt;
                 }
@@ -119,7 +119,7 @@ public class ReceiptView extends BaseActivity {
             if (expenseItPostReceipt == null || expenseItPostReceipt.getImageData() == null){
                 getImage();
             }else {
-                imageView.setImageBitmap(tyu.getImageData());
+                imageView.setImageBitmap(expenseItReceipt.getImageData());
             }
         }
     }
@@ -127,9 +127,9 @@ public class ReceiptView extends BaseActivity {
     private void getImage() {
         getReceiptListReplyListener.setListener(asyncReplyListener);
 
-        GetExpenseItImageUrlAsyncTask hg = new GetExpenseItImageUrlAsyncTask
+        GetExpenseItImageUrlAsyncTask getExpenseItImageUrlAsyncTask = new GetExpenseItImageUrlAsyncTask
                 (ConcurCore.getContext(), 0, getReceiptListReplyListener, expenseItReceiptId);
-        hg.execute();
+        getExpenseItImageUrlAsyncTask.execute();
     }
 
     private Bitmap getBitmapFromURL(String url) {
