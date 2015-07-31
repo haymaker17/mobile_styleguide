@@ -1,4 +1,6 @@
 /gen/
 /bin/
 /local.properties
-/*.iml
+
+# Android Studio
+*.iml
