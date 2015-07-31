@@ -29,7 +29,6 @@ import android.widget.AdapterView.OnItemLongClickListener;
 import android.widget.Button;
 import android.widget.CompoundButton;
 import android.widget.ListView;
-import android.widget.Toast;
 import android.widget.ViewFlipper;
 
 import com.concur.core.R;
@@ -2165,15 +2164,12 @@ public class Expenses extends BaseFragment implements INetworkActivityListener {
                         if (!exItItem.isInErrorState()) {
                             // Processing state.
                             Intent intent = new Intent(activity, ExpenseItDetailActivity.class);
-                            intent.putExtra(Const.EXTRA_EXPENSE_RECEIPT_URL_KEY, exItItem.getImageDataUrl());
-                            intent.putExtra(Const.EXTRA_EXPENSE_TRANSACTION_DATE_KEY, exItItem.getUploadDate());
-                            intent.putExtra(ExpenseItDetailActivityFragment.EXTRA_EXPENSEIT_ETA_KEY, exItItem.getEta());
-
+                            intent.putExtra(ExpenseItDetailActivity.EXPENSEIT_ITEM_KEY, exItItem);
                             startActivityForResult(intent, ExpenseItDetailActivityFragment.VIEW_PROCESSING_EXPENSEIT_ITEM_DETAILS);
 
                         } else {
+
                             // TODO: Handle error state as a manual expense.
-                            Toast.makeText(activity, "Failed ExpenseIt item!", Toast.LENGTH_LONG).show();
 
                         }
                         break;

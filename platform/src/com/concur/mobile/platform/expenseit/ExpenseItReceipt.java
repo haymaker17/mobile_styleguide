@@ -20,13 +20,16 @@ import com.concur.mobile.platform.util.CursorUtil;
 import com.concur.mobile.platform.util.Parse;
 import com.google.gson.annotations.SerializedName;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.List;
 
-public class ExpenseItReceipt implements ExpenseItReceiptDAO {
+public class ExpenseItReceipt implements ExpenseItReceiptDAO, Serializable {
 
     private static final String CLS_TAG = ExpenseItReceipt.class.getSimpleName();
+
+    private static final long serialVersionUID = -8302495324270296222L;
 
     /**
      * Contains the receipt image ID.

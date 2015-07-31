@@ -1,13 +1,10 @@
 package com.concur.mobile.core.expense.fragment;
 
-import android.app.Activity;
 import android.app.AlertDialog;
 import android.app.Dialog;
 import android.content.DialogInterface;
 import android.os.Bundle;
 import android.support.v4.app.DialogFragment;
-import android.text.Editable;
-import android.text.TextWatcher;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -15,9 +12,10 @@ import android.view.ViewGroup;
 import android.view.WindowManager;
 import android.widget.EditText;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.concur.core.R;
+import com.concur.mobile.core.expense.charge.activity.ExpenseItDetailActivity;
+import com.concur.mobile.core.expense.charge.data.ExpenseItItem;
 import com.concur.mobile.core.util.Const;
 import com.concur.mobile.core.util.FormatUtil;
 import com.concur.mobile.core.util.ViewUtil;
@@ -34,8 +32,6 @@ public class ExpenseItDetailActivityFragment extends PlatformFragment {
     public static final String CLS_TAG = ExpenseItDetailActivityFragment.class.getSimpleName();
 
     public static final int VIEW_PROCESSING_EXPENSEIT_ITEM_DETAILS = 16;
-
-    public static final String EXTRA_EXPENSEIT_ETA_KEY = "expenseit.eta";
 
     private int eta;
     private String receiptURL; // need to add link to get this!
@@ -57,9 +53,11 @@ public class ExpenseItDetailActivityFragment extends PlatformFragment {
         getActivity().getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_ALWAYS_HIDDEN);
         Bundle data = getActivity().getIntent().getExtras();
 
-        date = (Calendar) data.get(Const.EXTRA_EXPENSE_TRANSACTION_DATE_KEY);
-        eta = data.getInt(EXTRA_EXPENSEIT_ETA_KEY);
-        receiptURL = data.getString(Const.EXTRA_EXPENSE_RECEIPT_URL_KEY);
+        ExpenseItItem expenseItItem = (ExpenseItItem) data.getSerializable(ExpenseItDetailActivity.EXPENSEIT_ITEM_KEY);
+
+        eta = expenseItItem.getEta();
+        receiptURL = expenseItItem.getImageDataUrl();
+        date = expenseItItem.getUploadDate();
 
         if (view != null) {
             // set URL / View Receipt button
@@ -81,9 +79,7 @@ public class ExpenseItDetailActivityFragment extends PlatformFragment {
         TextView uploadedLabel = (TextView) uploadedField.findViewById(R.id.field_name);
         uploadedLabel.setText(R.string.expenseit_details_label_uploaded);
 
-        String fmtDate =
-//                FormatUtil.SHORT_DAY_YEAR_DISPLAY_NO_COMMA.format(date.getTime()); // this is the existing format closest to spec.
-                FormatUtil.SHORT_DAY_FULL_MONTH_YEAR_DISPLAY_NO_COMMA.format(date.getTime());
+        String fmtDate = FormatUtil.SHORT_DAY_FULL_MONTH_YEAR_DISPLAY_NO_COMMA.format(date.getTime());
 
         ViewUtil.setTextViewText(view, R.id.expenseit_capture_date, R.id.field_value, fmtDate, true);
     }
@@ -103,15 +99,14 @@ public class ExpenseItDetailActivityFragment extends PlatformFragment {
         TextView commentLabel = (TextView) commentField.findViewById(R.id.field_name);
         commentLabel.setText(R.string.comment);
 
-        if (commentField != null) {
-            commentField.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    CommentDialogFragment df = new CommentDialogFragment();
-                    df.show(getActivity().getSupportFragmentManager(), CommentDialogFragment.DIALOG_FRAGMENT_ID);
-                }
-            });
-        }
+        commentField.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                CommentDialogFragment df = new CommentDialogFragment();
+                df.show(getActivity().getSupportFragmentManager(), CommentDialogFragment.DIALOG_FRAGMENT_ID);
+            }
+        });
+
     }
 
     private void getViewReceiptTransition(View view) {
@@ -121,27 +116,11 @@ public class ExpenseItDetailActivityFragment extends PlatformFragment {
                 @Override
                 public void onClick(View v) {
                     // TODO: Hook up receipt View.
-                    Toast.makeText(getActivity(), "Receipt URL: " + receiptURL, Toast.LENGTH_LONG).show();
                 }
             });
         } else {
             Log.e(Const.LOG_TAG, CLS_TAG + ".buildView view receipt button not found!");
         }
-    }
-
-    @Override
-    public void onAttach(Activity activity) {
-        super.onAttach(activity);
-    }
-
-    @Override
-    public void onResume() {
-        super.onResume();
-    }
-
-    @Override
-    public void onPause() {
-        super.onPause();
     }
 
     public static class CommentDialogFragment extends DialogFragment {
@@ -162,16 +141,14 @@ public class ExpenseItDetailActivityFragment extends PlatformFragment {
 
                 @Override
                 public void onClick(DialogInterface dialog, int which) {
-                    // TODO: save comment
-                    Toast.makeText(getActivity(), "You hit the OK button!", Toast.LENGTH_SHORT).show();
+                    // TODO: save comment to the expenseit service.
                 }
             });
             dlgBldr.setNegativeButton(getText(R.string.cancel), new DialogInterface.OnClickListener() {
 
                 @Override
                 public void onClick(DialogInterface dialog, int which) {
-                    // TODO: Cancel button
-                    Toast.makeText(getActivity(), "You hit the cancel button!", Toast.LENGTH_SHORT).show();
+                    // TODO: Cancel button. Don't save whatever the user types.
                 }
             });
 
