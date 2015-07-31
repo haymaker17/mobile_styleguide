@@ -3,6 +3,7 @@ package com.concur.mobile.core.expense.fragment;
 import android.app.AlertDialog;
 import android.app.Dialog;
 import android.content.DialogInterface;
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.DialogFragment;
 import android.util.Log;
@@ -14,6 +15,7 @@ import android.widget.EditText;
 import android.widget.TextView;
 
 import com.concur.core.R;
+import com.concur.mobile.core.activity.ReceiptView;
 import com.concur.mobile.core.expense.charge.activity.ExpenseItDetailActivity;
 import com.concur.mobile.core.expense.charge.data.ExpenseItItem;
 import com.concur.mobile.core.util.Const;
@@ -36,6 +38,7 @@ public class ExpenseItDetailActivityFragment extends PlatformFragment {
     private int eta;
     private String receiptURL; // need to add link to get this!
     private Calendar date;
+    private long receiptId = 0;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -56,8 +59,9 @@ public class ExpenseItDetailActivityFragment extends PlatformFragment {
         ExpenseItItem expenseItItem = (ExpenseItItem) data.getSerializable(ExpenseItDetailActivity.EXPENSEIT_ITEM_KEY);
 
         eta = expenseItItem.getEta();
-        receiptURL = expenseItItem.getImageDataUrl();
+        //receiptURL = expenseItItem.getImageData();
         date = expenseItItem.getUploadDate();
+        receiptId = expenseItItem.getReceiptId();
 
         if (view != null) {
             // set URL / View Receipt button
@@ -115,7 +119,9 @@ public class ExpenseItDetailActivityFragment extends PlatformFragment {
             viewReceipt.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    // TODO: Hook up receipt View.
+                    Intent intent = new Intent(getActivity(), ReceiptView.class);
+                    intent.putExtra(Const.EXTRA_EXPENSE_IT_RECEIPT_ID, receiptId);
+                    startActivity(intent);
                 }
             });
         } else {

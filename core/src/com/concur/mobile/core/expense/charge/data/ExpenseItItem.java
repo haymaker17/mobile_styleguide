@@ -1,5 +1,7 @@
 package com.concur.mobile.core.expense.charge.data;
 
+import android.graphics.Bitmap;
+
 import com.concur.mobile.platform.expenseit.ExpenseItParseCode;
 import com.concur.mobile.platform.expenseit.ExpenseItPostReceipt;
 import com.concur.mobile.platform.expenseit.dao.ExpenseItReceiptDAO;
@@ -79,7 +81,11 @@ public class ExpenseItItem implements Serializable {
                 || getErrorCode() == ExpenseItPostReceipt.RUBICON_ERROR;
     }
 
-    public String getImageDataUrl() {
-        return receipt.getImageDataUrl();
+    public Bitmap getImageData() {
+        return receipt.getImageData();
+    }
+
+    public long getReceiptId(){
+        return receipt.getId();
     }
 }

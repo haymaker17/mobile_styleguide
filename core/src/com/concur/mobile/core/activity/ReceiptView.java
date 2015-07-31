@@ -34,7 +34,7 @@ public class ReceiptView extends BaseActivity {
 
     private ImageView imageView = null;
 
-    private ExpenseItPostReceipt found = null;
+    private ExpenseItPostReceipt expenseItPostReceipt = null;
 
     BaseAsyncRequestTask.AsyncReplyListener asyncReplyListener = new BaseAsyncRequestTask
             .AsyncReplyListener() {
@@ -49,7 +49,9 @@ public class ReceiptView extends BaseActivity {
                 public void run() {
                     final Bitmap bitmap;
                     bitmap = getBitmapFromURL(response.getImages().get(0).getImageDataUrl());
-                    found.setImageData(bitmap);
+                    if (expenseItPostReceipt != null){
+                        expenseItPostReceipt.setImageData(bitmap);
+                    }
 
                     imageView.post(new Runnable() {
                         @Override
@@ -108,13 +110,13 @@ public class ReceiptView extends BaseActivity {
         //TODO Harold - Fix Database query to check for existing image
         if (expenseItReceiptId != 0) {
             ExpenseItReceipt tyu = new ExpenseItReceipt(ConcurCore.getContext(), getUserId());
-            for(ExpenseItPostReceipt r: tyu.getReceipts()){
-                if (r.getId() == expenseItReceiptId){
-                    found = r;
+            for(ExpenseItPostReceipt receipt: tyu.getReceipts()){
+                if (receipt.getId() == expenseItReceiptId){
+                    expenseItPostReceipt = receipt;
                 }
             }
 
-            if (found == null || found.getImageData() == null){
+            if (expenseItPostReceipt == null || expenseItPostReceipt.getImageData() == null){
                 getImage();
             }else {
                 imageView.setImageBitmap(tyu.getImageData());
