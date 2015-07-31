@@ -54,7 +54,7 @@
             android:textAppearance="@style/ListCellSubHeaderText"/>
 
         <TextView
-            android:id="@+id/expenseit_processing_time"
+            android:id="@+id/expenseit_details_processing_time"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_gravity="top|left"

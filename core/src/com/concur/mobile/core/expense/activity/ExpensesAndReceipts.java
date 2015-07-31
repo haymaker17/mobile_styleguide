@@ -33,7 +33,7 @@ import com.concur.mobile.core.expense.receiptstore.activity.ReceiptStoreFragment
 import com.concur.mobile.core.expense.receiptstore.activity.ReceiptStoreFragment.ReceiptStoreFragmentCallback;
 import com.concur.mobile.core.expense.receiptstore.data.ReceiptStoreCache;
 import com.concur.mobile.core.fragment.BaseFragment;
-import com.concur.mobile.core.util.BackgroundRefreshView;
+import com.concur.mobile.core.util.BackgroundSyncHandler;
 import com.concur.mobile.core.util.Const;
 import com.concur.mobile.core.util.EventTracker;
 import com.concur.mobile.core.util.ExpenseDAOConverter;
@@ -47,11 +47,13 @@ import com.concur.mobile.platform.expense.receipt.list.ReceiptListRequestTask;
 import com.concur.mobile.platform.expense.smartexpense.SmartExpenseListRequestTask;
 import com.concur.mobile.platform.expenseit.ErrorResponse;
 import com.concur.mobile.platform.expenseit.ExpenseItImage;
+import com.concur.mobile.platform.expenseit.ExpenseItParseCode;
 import com.concur.mobile.platform.expenseit.ExpenseItPostReceiptResponse;
 import com.concur.mobile.platform.expenseit.GetExpenseItExpenseListAsyncTask;
 import com.concur.mobile.platform.expenseit.PostExpenseItReceiptAsyncTask;
 import com.concur.mobile.platform.ui.common.dialog.DialogFragmentFactory;
 import com.concur.mobile.platform.ui.common.util.PreferenceUtil;
+import com.concur.mobile.platform.ui.expense.BuildConfig;
 
 import org.apache.commons.io.FileUtils;
 
@@ -61,10 +63,9 @@ import java.util.Calendar;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-import java.util.Properties;
 
 public class ExpensesAndReceipts extends BaseActivity implements ExpensesCallback, ReceiptStoreFragmentCallback, SortExpensesDialogFragment.SortExpenseDialogListener,
-    BackgroundRefreshView.SyncCallback{
+    BackgroundSyncHandler.SyncCallback{
 
     public final static String CLS_TAG = ExpensesAndReceipts.class.getSimpleName();
 
@@ -87,13 +88,6 @@ public class ExpensesAndReceipts extends BaseActivity implements ExpensesCallbac
 
     // Holds the time in milliseconds when the last expenseListRequest was sent.
     private long expenseListRequestStartTime = 0L;
-
-    /**
-     * Temp variables for record process times related to merging expenses and receipts
-     */
-    private long receiptListRequestStartTime = 0L;
-    private long GSELRequestStartTime = 0L;
-    //************
 
     /**
      * The AsyncTask resulting from the the MWS call to ReceiptList.
@@ -127,14 +121,8 @@ public class ExpensesAndReceipts extends BaseActivity implements ExpensesCallbac
 
         @Override
         public void onRequestSuccess(Bundle resultData) {
-            Long smartExpenseListRequestElapsedTime = 0L;
-
+            setIsRequestInProgress(false);
             Log.d(Const.LOG_TAG, CLS_TAG + ".SmartExpenseListReplyListener - Successfully retrieved SmartExpenses!");
-
-            smartExpenseListRequestElapsedTime = Calendar.getInstance().getTimeInMillis() -
-                    expenseListRequestStartTime;
-
-            Log.d(Const.LOG_TAG, "GSELReplyTime - " + smartExpenseListRequestElapsedTime);
 
             ConcurCore concurCore = (ConcurCore) ConcurCore.getContext();
 
@@ -154,7 +142,7 @@ public class ExpensesAndReceipts extends BaseActivity implements ExpensesCallbac
 
         @Override
         public void onRequestFail(Bundle resultData) {
-
+            setIsRequestInProgress(false);
             Log.e(Const.LOG_TAG, CLS_TAG + ".SmartExpenseListReplyListener - FAILED to retrieve SmartExpenses!");
 
             onGetSmartExpenseListFailed();
@@ -162,7 +150,7 @@ public class ExpensesAndReceipts extends BaseActivity implements ExpensesCallbac
 
         @Override
         public void onRequestCancel(Bundle resultData) {
-
+            setIsRequestInProgress(false);
             // Update the ExpenseList UI.
             updateExpenseListUI();
         }
@@ -200,6 +188,7 @@ public class ExpensesAndReceipts extends BaseActivity implements ExpensesCallbac
 
         @Override
         public void onRequestSuccess(Bundle resultData) {
+            setIsRequestInProgress(false);
             Long expenseItListRequestElapsedTime = 0L;
 
             Log.d(Const.LOG_TAG, CLS_TAG + ".ExpenseItListReplyListener - Successfully retrieved ExpenseIt items!");
@@ -211,15 +200,13 @@ public class ExpensesAndReceipts extends BaseActivity implements ExpensesCallbac
                             .EVENT_RETRIEVE_EXPENSEIT_LIST, Flurry.EVENT_RETRIEVE_EXPENSEIT_LIST,
                     expenseItListRequestElapsedTime);
 
-            Log.d(Const.LOG_TAG, "ExpenseItListReplyTime - " + expenseItListRequestElapsedTime);
-
             // Need to update the GSEL.
             doGetSmartExpenseList();
         }
 
         @Override
         public void onRequestFail(Bundle resultData) {
-
+            setIsRequestInProgress(false);
             Log.e(Const.LOG_TAG, CLS_TAG + ".ExpenseItListReplyListener - FAILED to retrieve ExpenseIt items!");
 
             onGetSmartExpenseListFailed();
@@ -227,7 +214,7 @@ public class ExpensesAndReceipts extends BaseActivity implements ExpensesCallbac
 
         @Override
         public void onRequestCancel(Bundle resultData) {
-
+            setIsRequestInProgress(false);
             // Update the ExpenseList UI.
             updateExpenseListUI();
         }
@@ -245,14 +232,8 @@ public class ExpensesAndReceipts extends BaseActivity implements ExpensesCallbac
 
         @Override
         public void onRequestSuccess(Bundle resultData) {
-            Long receiptListRequestElapsedTime = 0L;
 
             Log.d(Const.LOG_TAG, CLS_TAG + ".GetReceiptListReplyListener - call to get receipt list succeeded!");
-
-            //Record the time taken to retrieve ExpenseItListRequest
-            receiptListRequestElapsedTime = Calendar.getInstance().getTimeInMillis() -
-                    receiptListRequestStartTime;
-            Log.d(Const.LOG_TAG, "receiptListReplyTime - " + receiptListRequestElapsedTime);
 
             ConcurCore app = (ConcurCore) ConcurCore.getContext();
 
@@ -326,7 +307,28 @@ public class ExpensesAndReceipts extends BaseActivity implements ExpensesCallbac
 
     protected BaseAsyncResultReceiver uploadExpenseItReceiptReceiver;
 
-    protected BackgroundRefreshView backgroundRefreshListView;
+    protected BackgroundSyncHandler backgroundRefreshListView;
+
+    /**
+     * Tracks current call request statuses for both ExpenseIt and GSEL
+     * (DON NOT USE directly but rather use getter/setter)
+     */
+    private boolean isRequestInProgress = false;
+
+    public boolean isRequestInProgress() {
+        Log.d(Const.LOG_TAG, CLS_TAG + ".isRequestInProgress SET is called");
+        return isRequestInProgress;
+    }
+
+    public void setIsRequestInProgress(boolean isRequestInProgress) {
+        if (BuildConfig.DEBUG) {
+            if (this.isRequestInProgress == isRequestInProgress) {
+                throw new IllegalArgumentException(".isRequestInProgress: Fix your code! We should not have consecutive sets with same value");
+            }
+        }
+        Log.d(Const.LOG_TAG, CLS_TAG + ".isRequestInProgress GET is called");
+        this.isRequestInProgress = isRequestInProgress;
+    }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -400,7 +402,7 @@ public class ExpensesAndReceipts extends BaseActivity implements ExpensesCallbac
         }
 
         //Create the background Timer
-        backgroundRefreshListView = new BackgroundRefreshView(this, BackgroundRefreshView.DEFAULT_INTERVAL);
+        backgroundRefreshListView = new BackgroundSyncHandler(this, BackgroundSyncHandler.DEFAULT_INTERVAL);
     }
 
     /**
@@ -423,8 +425,9 @@ public class ExpensesAndReceipts extends BaseActivity implements ExpensesCallbac
             List<ListItem> items = ((Expenses) frag).getListItemAdapter().getItems();
             for (ListItem item : items) {
                 if (item instanceof ExpenseItListItem) {
-
-                    if (((ExpenseItListItem) item).isProcessing()) {
+                    ExpenseItListItem tmp = (ExpenseItListItem) item;
+                    if (ExpenseItParseCode.isProcessing(tmp.getParsingStatusCode())) {
+                        Log.i(Const.LOG_TAG, CLS_TAG + ".isExpenseItItemsBeingAnalyzed is true for item id");
                         return true;
                     }
                 }
@@ -436,6 +439,11 @@ public class ExpensesAndReceipts extends BaseActivity implements ExpensesCallbac
     @Override
     public void doSync() {
         Log.i(Const.LOG_TAG, CLS_TAG + ".refreshListView is called.");
+
+        if (isRequestInProgress()) {
+            Log.d(Const.LOG_TAG, CLS_TAG + ".refreshListView: ignoring sync since there is another request in progress.");
+            return;
+        }
 
         // Check if a expenseIt refresh is needed if there are items in the list that are still analyzing. Otherwise,
         // if there are none than we turn off the timer.
@@ -653,10 +661,9 @@ public class ExpensesAndReceipts extends BaseActivity implements ExpensesCallbac
             SmartExpenseListRequestTask smartExpReqTask = new SmartExpenseListRequestTask(getConcurCore()
                 .getApplicationContext(), 0, smartExpenseListReceiver, true);
             smartExpenseAsyncTask = smartExpReqTask.execute();
+            setIsRequestInProgress(true);
         }
 
-        //Record the start time of the GSEL request to use for anaylytics
-        GSELRequestStartTime = Calendar.getInstance().getTimeInMillis();
     }
 
     /*
@@ -758,6 +765,8 @@ public class ExpensesAndReceipts extends BaseActivity implements ExpensesCallbac
                     getApplicationContext(), 22, getUserId(), expenseItListReceiver);
             expenseItListAsyncTask = expenseItListReqTask.execute();
 
+            setIsRequestInProgress(true);
+
             //Record the start time of the expenseItList request to use for anaylytics
             expenseListRequestStartTime = Calendar.getInstance().getTimeInMillis();
         }
@@ -826,9 +835,6 @@ public class ExpensesAndReceipts extends BaseActivity implements ExpensesCallbac
                 REQUEST_GET_RECEIPT_LIST, getReceiptListReceiver);
             getReceiptListAsyncTask = receiptListTask.execute();
         }
-
-        //Record the start time of the ReceiptList request to use for anaylytics
-        receiptListRequestStartTime = Calendar.getInstance().getTimeInMillis();
     }
 
     private void showReceiptsListLoadingView() {

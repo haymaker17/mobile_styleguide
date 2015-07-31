@@ -14,12 +14,9 @@ import com.concur.mobile.core.expense.charge.data.Expense;
 import com.concur.mobile.core.expense.charge.data.ExpenseItItem;
 import com.concur.mobile.core.util.Const;
 import com.concur.mobile.core.util.FormatUtil;
-import com.concur.mobile.platform.expenseit.ExpenseItParseCode;
-import com.concur.mobile.platform.expenseit.ExpenseItPostReceipt;
 import com.concur.mobile.platform.util.AnimationUtil;
 
 import java.util.Calendar;
-import java.util.Locale;
 
 /**
  * An abstract extension of <code>ListItem</code> for the purposes of providing an expense list item view.
@@ -50,8 +47,8 @@ public class ExpenseItListItem extends ExpenseListItem {
     public ExpenseItListItem(Expense expense, int listItemViewType) {
         super(expense, listItemViewType);
         expenseItItem = expense.getExpenseItItem();
-        rubiconErrorCode = expenseItItem.getErrorCode();
-        processingFailed = isInErrorState(expenseItItem.getParsingStatusCode());
+        rubiconErrorCode = expenseItItem.getErrorCode(); // necessary now?
+        processingFailed = expenseItItem.isInErrorState();
     }
 
     /**
@@ -115,11 +112,11 @@ public class ExpenseItListItem extends ExpenseListItem {
             }
 
             // set the eta
-            textView = (TextView) expenseView.findViewById(R.id.expenseit_processing_time);
+            textView = (TextView) expenseView.findViewById(R.id.expenseit_details_processing_time);
             if (textView != null) {
                 int etaInSeconds = expenseItItem.getEta();
                 if (!processingFailed && etaInSeconds > 0) {
-                    String time = getEtaToString(context, etaInSeconds);
+                    String time = FormatUtil.getEtaToString(context, etaInSeconds);
                     String eta = context.getResources().getString(R.string.expenseit_expense_processing_time,
                             time);
                     textView.setText(eta);
@@ -161,80 +158,8 @@ public class ExpenseItListItem extends ExpenseListItem {
         return statusText;
     }
 
-    /**
-     * Returns true if the object is in error state.
-     *
-     * @param status
-     * @return
-     */
-    private boolean isInErrorState(int status) {
-        return ((status == ExpenseItParseCode.MULTIPLE_RECEIPTS.value()) ||
-                (status == ExpenseItParseCode.UNREADABLE.value()) ||
-                (status == ExpenseItParseCode.EXPIRED.value()) ||
-                (status == ExpenseItParseCode.NO_IMAGE_FOUND.value()) ||
-                (status == ExpenseItParseCode.NOT_RECEIPT.value()) ||
-                (status == ExpenseItParseCode.OTHER.value()) ||
-                (status == ExpenseItParseCode.INTERVENTION_NEEDED.value()) ||
-                (status == ExpenseItParseCode.PERMANENT_FAILURE.value()) ||
-                (status == ExpenseItParseCode.DEFAULT.value()) ||
-                (rubiconErrorCode == ExpenseItPostReceipt.RUBICON_ERROR));
-    }
-
-    /**
-     * Returns true if the object is processing.
-     *
-     * @param status
-     * @return
-     */
-    private static boolean isProcessing(int status) {
-        return ((status == ExpenseItParseCode.UNPARSED.value()) ||
-                (status == ExpenseItParseCode.UPLOADED.value()) ||
-                (status == ExpenseItParseCode.UPLOADED_BUT_NOT_QUEUED.value()) ||
-                (status == ExpenseItParseCode.FAILED_UPLOAD_ATTEMPTS.value()) ||
-                (status == ExpenseItParseCode.ANALYZING_REMOTELY_PENDING.value()) ||
-                (status == ExpenseItParseCode.UPLOADING_IN_PROGRESS.value()) ||
-                (status == ExpenseItParseCode.QUEUED_FOR_UPLOAD.value()) ||
-                (status == ExpenseItParseCode.QUEUED_FOR_EXPORT.value()) ||
-                (status == ExpenseItParseCode.QUEUED_FOR_DELETE.value()) ||
-                (status == ExpenseItParseCode.QUEUED_FOR_MODIFY.value()) ||
-                (status == ExpenseItParseCode.QUEUED_FOR_CREATION.value()) ||
-                (status == ExpenseItParseCode.QUEUED_FOR_EXPORT_ON_SERVER.value()) ||
-                (status == ExpenseItParseCode.DEFAULT.value()));
-    }
-
-    public boolean isProcessing() {
-        return isProcessing(expenseItItem.getParsingStatusCode());
-    }
-
-    /**
-     * Returns true if the object is in an export state - do we need this as a transition condition?
-     *
-     * @param status
-     * @return
-     */
-    private boolean isInExportState(int status) {
-        return ((status == ExpenseItParseCode.PARSED.value()) ||
-                (status == ExpenseItParseCode.SUCCESS_HIDDEN.value()) ||
-                (status == ExpenseItParseCode.SUCCESS_VISIBLE.value()) || // XXX: Not sure about this one.
-                (status == ExpenseItParseCode.EXPORTED.value()));   // XXX: Not sure about this one.
-    }
-
-    private String getEtaToString(Context context, int etaInSeconds) {
-        int etaTotalMinutes = etaInSeconds / 60;
-        int etaRemainingSeconds = etaInSeconds % 60;
-
-        // MOB-24792  Fix Localization of ExpenseIt ETA time
-        String mins = context.getResources().getString(R.string.expenseit_eta_mins);
-        String secs = context.getResources().getString(R.string.expenseit_eta_secs);
-        String na = context.getResources().getString(R.string.expenseit_eta_na);
-
-        if ((etaTotalMinutes + etaRemainingSeconds) <= 0) {
-            return na;
-        } else if (etaTotalMinutes > 0) {
-            return String.format(Locale.getDefault(), mins, etaTotalMinutes, etaRemainingSeconds);
-        } else {
-            return String.format(Locale.getDefault(), secs, etaRemainingSeconds);
-        }
+    public int getParsingStatusCode() {
+        return expenseItItem.getParsingStatusCode();
     }
 
     @Override
@@ -263,4 +188,6 @@ public class ExpenseItListItem extends ExpenseListItem {
 
     @Override
     protected boolean showLongPressMessage() { return false; }
+
+
 }

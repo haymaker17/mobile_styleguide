@@ -34,7 +34,6 @@ import android.widget.ViewFlipper;
 import com.concur.core.R;
 import com.concur.mobile.core.ConcurCore;
 import com.concur.mobile.core.activity.Preferences;
-import com.concur.mobile.core.activity.ReceiptView;
 import com.concur.mobile.core.dialog.AlertDialogFragment;
 import com.concur.mobile.core.dialog.DialogFragmentFactory;
 import com.concur.mobile.core.dialog.DialogFragmentHandler;
@@ -43,6 +42,7 @@ import com.concur.mobile.core.dialog.SystemUnavailableDialogFragment;
 import com.concur.mobile.core.expense.charge.activity.CashExpenseListItem;
 import com.concur.mobile.core.expense.charge.activity.CorporateCardExpenseListItem;
 import com.concur.mobile.core.expense.charge.activity.EReceiptListItem;
+import com.concur.mobile.core.expense.charge.activity.ExpenseItDetailActivity;
 import com.concur.mobile.core.expense.charge.activity.ExpenseItListItem;
 import com.concur.mobile.core.expense.charge.activity.ExpenseListItem;
 import com.concur.mobile.core.expense.charge.activity.OcrListItem;
@@ -57,6 +57,7 @@ import com.concur.mobile.core.expense.charge.data.EReceipt;
 import com.concur.mobile.core.expense.charge.data.Expense;
 import com.concur.mobile.core.expense.charge.data.Expense.ExpenseEntryType;
 import com.concur.mobile.core.expense.charge.data.ExpenseComparator;
+import com.concur.mobile.core.expense.charge.data.ExpenseItItem;
 import com.concur.mobile.core.expense.charge.data.MobileEntry;
 import com.concur.mobile.core.expense.charge.data.MobileEntryStatus;
 import com.concur.mobile.core.expense.charge.data.OCRItem;
@@ -2157,15 +2158,23 @@ public class Expenses extends BaseFragment implements INetworkActivityListener {
                         }
                         break;
                     }
-                    case EXPENSEIT_NOT_DONE:{
-                        Intent intent = new Intent(activity, ReceiptView.class);
+                    case EXPENSEIT_NOT_DONE: {
+                        ExpenseItItem exItItem = exp.getExpenseItItem();
 
-                        intent.putExtra(Const.EXTRA_EXPENSE_IT_RECEIPT_ID, exp
-                                .getExpenseItItem().getReceipt().getId());
-                        startActivity(intent);
+                        if (!exItItem.isInErrorState()) {
+                            // Processing state.
+                            Intent intent = new Intent(activity, ExpenseItDetailActivity.class);
+                            intent.putExtra(ExpenseItDetailActivity.EXPENSEIT_ITEM_KEY, exItItem);
+                            startActivityForResult(intent, ExpenseItDetailActivityFragment.VIEW_PROCESSING_EXPENSEIT_ITEM_DETAILS);
 
+                        } else {
+
+                            // TODO: Handle error state as a manual expense.
+
+                        }
                         break;
                     }
+
                 }
             } else {
                 Log.e(Const.LOG_TAG, CLS_TAG + ".onItemClick: null expense list adapter!");

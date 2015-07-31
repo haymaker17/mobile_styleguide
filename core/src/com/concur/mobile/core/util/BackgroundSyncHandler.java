@@ -7,9 +7,9 @@ package com.concur.mobile.core.util;
 import android.os.Handler;
 import android.util.Log;
 
-public class BackgroundRefreshView {
+public class BackgroundSyncHandler {
 
-    private final String CLS_TAG = BackgroundRefreshView.class.getSimpleName();
+    private final String CLS_TAG = BackgroundSyncHandler.class.getSimpleName();
 
     public final static int DEFAULT_INTERVAL = 1000 * 30;
 
@@ -25,7 +25,7 @@ public class BackgroundRefreshView {
 
     protected final SyncCallback syncCallback;
 
-    public BackgroundRefreshView(SyncCallback syncCallback, int interval) {
+    public BackgroundSyncHandler(SyncCallback syncCallback, int interval) {
         this.interval = interval;
         this.syncCallback  = syncCallback;
     }

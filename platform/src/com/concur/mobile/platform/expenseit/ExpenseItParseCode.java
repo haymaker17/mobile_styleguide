@@ -49,4 +49,57 @@ public enum  ExpenseItParseCode {
     public int getResId() {
         return resId;
     }
+
+    /**
+     * Returns true if the object is processing.
+     *
+     * @param status
+     * @return
+     */
+    public static boolean isProcessing(int status) {
+        return ((status == UNPARSED.value()) ||
+                (status == UPLOADED.value()) ||
+                (status == UPLOADED_BUT_NOT_QUEUED.value()) ||
+                (status == FAILED_UPLOAD_ATTEMPTS.value()) ||
+                (status == ANALYZING_REMOTELY_PENDING.value()) ||
+                (status == UPLOADING_IN_PROGRESS.value()) ||
+                (status == QUEUED_FOR_UPLOAD.value()) ||
+                (status == QUEUED_FOR_EXPORT.value()) ||
+                (status == QUEUED_FOR_DELETE.value()) ||
+                (status == QUEUED_FOR_MODIFY.value()) ||
+                (status == QUEUED_FOR_CREATION.value()) ||
+                (status == QUEUED_FOR_EXPORT_ON_SERVER.value()) ||
+                (status == DEFAULT.value()));
+    }
+
+    /**
+     * Returns true if the object is in error state.
+     *
+     * @param status
+     * @return
+     */
+    public static boolean isInErrorState(int status) {
+        return ((status == ExpenseItParseCode.MULTIPLE_RECEIPTS.value()) ||
+                (status == ExpenseItParseCode.UNREADABLE.value()) ||
+                (status == ExpenseItParseCode.EXPIRED.value()) ||
+                (status == ExpenseItParseCode.NO_IMAGE_FOUND.value()) ||
+                (status == ExpenseItParseCode.NOT_RECEIPT.value()) ||
+                (status == ExpenseItParseCode.OTHER.value()) ||
+                (status == ExpenseItParseCode.INTERVENTION_NEEDED.value()) ||
+                (status == ExpenseItParseCode.PERMANENT_FAILURE.value()) ||
+                (status == ExpenseItParseCode.DEFAULT.value()));
+    }
+
+    /**
+     * Returns true if the object is in an export state - do we need this as a transition condition?
+     *
+     * @param status
+     * @return
+     */
+    public static boolean isInExportState(int status) {
+        return ((status == ExpenseItParseCode.PARSED.value()) ||
+                (status == ExpenseItParseCode.SUCCESS_HIDDEN.value()) ||
+                (status == ExpenseItParseCode.SUCCESS_VISIBLE.value()) || // XXX: Not sure about this one.
+                (status == ExpenseItParseCode.EXPORTED.value()));   // XXX: Not sure about this one.
+    }
 }
