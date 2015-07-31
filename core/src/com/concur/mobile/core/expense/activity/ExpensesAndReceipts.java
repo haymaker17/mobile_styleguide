@@ -78,6 +78,8 @@ public class ExpensesAndReceipts extends BaseActivity implements ExpensesCallbac
     // Contains the key used to store/retrieve the ReceiptList receiver.
     private static final String GET_RECEIPT_LIST_RECEIVER_KEY = "get.receipt.list.receiver";
 
+    private static final String REQUEST_START_TIME = "request.start.time";
+
     private static final int REQUEST_GET_EXPENSE_LIST = 1;
 
     private static final int REQUEST_GET_RECEIPT_LIST = 2;
@@ -558,6 +560,13 @@ public class ExpensesAndReceipts extends BaseActivity implements ExpensesCallbac
 
         }
 
+        // Save the timer's start time.
+        if (expenseListRequestStartTime > 0L) {
+            if (retainer != null) {
+                retainer.put(REQUEST_START_TIME, expenseListRequestStartTime);
+            }
+        }
+
         //stop the refresh timer is on
         endBackgroundRefresh();
     }
@@ -608,6 +617,11 @@ public class ExpensesAndReceipts extends BaseActivity implements ExpensesCallbac
 
                     uploadExpenseItReceiptReceiver.setListener(new UploadImageAsyncReplyListener(uploadExpenseItReceiptProgress));
                 }
+            }
+
+            // Restore start time.
+            if (retainer.contains(REQUEST_START_TIME)) {
+                expenseListRequestStartTime = (long) retainer.get(REQUEST_START_TIME);
             }
         }
 
