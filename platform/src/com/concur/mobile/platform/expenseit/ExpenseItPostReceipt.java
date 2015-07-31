@@ -4,6 +4,8 @@
 
 package com.concur.mobile.platform.expenseit;
 
+import android.graphics.Bitmap;
+
 import com.google.gson.annotations.SerializedName;
 
 import java.io.Serializable;
@@ -42,8 +44,8 @@ public class ExpenseItPostReceipt implements Serializable {
     @SerializedName("sentToCteAt")
     private Date sendToCteAt;
 
-    @SerializedName("imageDataUrl")
-    private String imageDataUrl;
+    @SerializedName("imageData")
+    private Bitmap imageData;
 
     @SerializedName("totalImageCount")
     private int totalImageCount;
@@ -136,12 +138,12 @@ public class ExpenseItPostReceipt implements Serializable {
         this.sendToCteAt = sendToCteAt;
     }
 
-    public String getImageDataUrl() {
-        return imageDataUrl;
+    public Bitmap getImageData() {
+        return imageData;
     }
 
-    public void setImageDataUrl(String imageDataUrl) {
-        this.imageDataUrl = imageDataUrl;
+    public void setImageData(Bitmap imageData) {
+        this.imageData = imageData;
     }
 
     public int getTotalImageCount() {

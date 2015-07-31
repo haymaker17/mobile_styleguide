@@ -5,6 +5,7 @@
 package com.concur.mobile.platform.expenseit.dao;
 
 import android.content.Context;
+import android.graphics.Bitmap;
 import android.net.Uri;
 
 import com.concur.mobile.platform.expenseit.ExpenseItPostReceipt;
@@ -27,7 +28,7 @@ public interface ExpenseItReceiptDAO {
 
     Calendar getSendToCteAt();
 
-    String getImageDataUrl();
+    Bitmap getImageData();
 
     int getTotalImageCount();
 
@@ -55,7 +56,7 @@ public interface ExpenseItReceiptDAO {
 
     void setSendToCteAt(Calendar sendToCteAt);
 
-    void setImageDataUrl(String imageDataUrl);
+    void setImageData(Bitmap imageData);
 
     void setTotalImageCount(int totalImageCount);
 

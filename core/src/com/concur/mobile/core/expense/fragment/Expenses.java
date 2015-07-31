@@ -2160,8 +2160,8 @@ public class Expenses extends BaseFragment implements INetworkActivityListener {
                     case EXPENSEIT_NOT_DONE:{
                         Intent intent = new Intent(activity, ReceiptView.class);
 
-                        intent.putExtra(Const.EXTRA_EXPENSE_IT_ID, exp.getEReceipt()
-                                .getEReceiptId());
+                        intent.putExtra(Const.EXTRA_EXPENSE_IT_RECEIPT_ID, exp
+                                .getExpenseItItem().getReceipt().getId());
                         startActivity(intent);
 
                         break;

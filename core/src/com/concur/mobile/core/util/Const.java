@@ -1066,7 +1066,7 @@ public final class Const {
     public static final String EXTRA_EXPENSE_ATTENDEE_SEARCH_EXCLUDE_KEYS = "expense.attendee.search.exclude.keys";
     public static final String EXTRA_EXPENSE_ATTENDEE_SEARCH_EXCLUDE_EXTERNAL_IDS = "expense.attendee.search.exclude.external.ids";
     public static final String EXTRA_EXPENSE_IMAGE_FILE_PATH = "expense.image.file.path";
-    public static final String EXTRA_EXPENSE_IT_ID = "expense.receipt.id";
+    public static final String EXTRA_EXPENSE_IT_RECEIPT_ID = "expense.receipt.image.id";
 
     public static final String EXTRA_SEARCH_MODE = "search.mode";
     public static final String EXTRA_SEARCH_LOC_FROM = "search.loc.from";

@@ -1,5 +1,6 @@
 package com.concur.mobile.core.expense.charge.data;
 
+import com.concur.mobile.platform.expenseit.ExpenseItReceipt;
 import com.concur.mobile.platform.expenseit.dao.ExpenseItReceiptDAO;
 
 import java.util.Calendar;
@@ -62,5 +63,9 @@ public class ExpenseItItem {
      */
     public String getErrorMessage() {
         return receipt.getErrorMessage();
+    }
+
+    public ExpenseItReceipt getReceipt(){
+        return (ExpenseItReceipt)receipt;
     }
 }
