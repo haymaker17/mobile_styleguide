@@ -1,5 +1,7 @@
 package com.concur.mobile.core.expense.charge.data;
 
+import com.concur.mobile.platform.expenseit.ExpenseItParseCode;
+import com.concur.mobile.platform.expenseit.ExpenseItPostReceipt;
 import com.concur.mobile.platform.expenseit.dao.ExpenseItReceiptDAO;
 
 import java.util.Calendar;
@@ -62,5 +64,19 @@ public class ExpenseItItem {
      */
     public String getErrorMessage() {
         return receipt.getErrorMessage();
+    }
+
+    /**
+     * Returns whether the item is in an error state or not.
+     *
+     * @return in error state?
+     */
+    public boolean isInErrorState() {
+        return ExpenseItParseCode.isInErrorState(receipt.getParsingStatusCode())
+                || getErrorCode() == ExpenseItPostReceipt.RUBICON_ERROR;
+    }
+
+    public String getImageDataUrl() {
+        return receipt.getImageDataUrl();
     }
 }

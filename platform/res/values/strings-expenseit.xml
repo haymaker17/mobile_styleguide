@@ -24,7 +24,12 @@
     <string name="expenseit_eta_na">N/A</string>
 
     <string name="expenseit_powered_by">Powered by ExpenseIt</string>
-    <string name="expenseit_analyzing_note">We'll be back with your analyzed receipt info shortly.</string>
+    <string name="expenseit_analyzing_note">We\'ll be back with your analyzed receipt info shortly.</string>
+
+    <string name="expenseit_details_label_uploaded">Uploaded</string>
+    <string name="expenseit_details_label_processing_time">Processing Time</string>
+
+    <string name="expenseit_details_value_processing_time">Average %s</string>
     <!-- EXPENSEIT STRINGS END -->
 
 </resources>
