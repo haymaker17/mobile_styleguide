@@ -335,6 +335,7 @@ public class TravelAllowanceItineraryController extends BaseController {
                 messageCache.add(msg);
                 return result;
             }
+            resetMessages(cmpSegment, Message.MSG_UI_OVERLAPPING_SUCCESSOR);
         }
         ListIterator<ItinerarySegment> itDown = itinerary.getSegmentList().listIterator(segmentPosition + 1);
         while (itDown.hasNext()) {
@@ -355,6 +356,7 @@ public class TravelAllowanceItineraryController extends BaseController {
                 messageCache.add(msg);
                 return result;
             }
+            resetMessages(cmpSegment, Message.MSG_UI_OVERLAPPING_PREDECESSOR);
         }
         return 0;
     }
@@ -568,6 +570,19 @@ public class TravelAllowanceItineraryController extends BaseController {
         }
     }
 
+    private void resetMessages(Object sourceObject, String code) {
+        if (sourceObject == null || StringUtilities.isNullOrEmpty(code)) {
+            return;
+        }
+        Iterator<Message> it = messageCache.iterator();
+        while (it.hasNext()) {
+            Message msg = it.next();
+            if (msg.getSourceObject() != null && sourceObject == msg.getSourceObject()
+                    && code.equals(msg.getCode())) {
+                it.remove();
+            }
+        }
+    }
 
     private boolean handleAfterUpdateResponse(Itinerary resultItin) {
 
