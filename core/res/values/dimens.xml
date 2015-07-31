@@ -30,6 +30,9 @@
 
     <!-- Expense-It Specific Spacing -->
     <dimen name="status_icon_rotating_wheel_size">20dp</dimen>
+    <dimen name="expenseit_icon_padding_bottom">20dp</dimen>
+    <dimen name="expenseit_icon_padding_top">10dp</dimen>
+    <dimen name="expenseit_note_padding">16dp</dimen>
 
     <!-- Test Drive Overlay Dimens -->
     <dimen name="td_dummy_action_bar_height">48dp</dimen>
