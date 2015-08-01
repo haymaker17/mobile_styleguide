@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+      xmlns:yourapp="http://schemas.android.com/apk/res-auto">
+
+    <item android:id="@+id/delete_expenseit_receipt"
+          android:title="@string/delete"
+          yourapp:showAsAction="never"/>
+
+    <item android:id="@+id/cancel_expenseit_receipt"
+          android:title="@string/cancel"
+          yourapp:showAsAction="never"/>
+
+</menu>
