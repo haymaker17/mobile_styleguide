@@ -2,6 +2,8 @@ package com.concur.mobile.core.expense.charge.activity;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.view.Menu;
+import android.view.MenuInflater;
 
 import com.concur.core.R;
 import com.concur.mobile.core.activity.BaseActivity;
@@ -55,5 +57,12 @@ public class ExpenseItDetailActivity extends BaseActivity implements ExpenseItDe
         Intent intent = new Intent(this, ReceiptView.class);
         intent.putExtra(Const.EXTRA_EXPENSE_IT_RECEIPT_ID, receiptId);
         startActivity(intent);
+    }
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        MenuInflater inflater = getMenuInflater();
+        inflater.inflate(R.menu.expenseit_details_options, menu);
+        return true;
     }
 }
