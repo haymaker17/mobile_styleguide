@@ -1352,19 +1352,19 @@ a.icon span {
 }
 
 
-.diagram .redlines_status_bar_on, .diagram .redline_nav_bar_on, .diagram .redline_tool_bar_on, .diagram .redline_search_bar_on, .diagram .redline_scope_bar_on, .diagram .redlines_collection_view_on, .diagram .redline_segment_control_on {
+.diagram .redlines_status_bar_on, .diagram .redlines_nav_bar_on, .diagram .redlines_tool_bar_on, .diagram .redlines_search_bar_on, .diagram .redlines_scope_bar_on, .diagram .redlines_collection_view_on, .diagram .redlines_segment_control_on {
 	display: block;
 }
 
-.diagram:hover .redlines_status_bar_on, .diagram:hover .redline_nav_bar_on, .diagram:hover .redline_tool_bar_on, .diagram:hover .redline_scope_bar_on, .diagram:hover .redline_search_bar_on, .diagram:hover .redlines_collection_view_on, .diagram:hover .redline_segment_control_on {
+.diagram:hover .redlines_status_bar_on, .diagram:hover .redlines_nav_bar_on, .diagram:hover .redlines_tool_bar_on, .diagram:hover .redlines_scope_bar_on, .diagram:hover .redlines_search_bar_on, .diagram:hover .redlines_collection_view_on, .diagram:hover .redlines_segment_control_on {
 	display: none;
 }
 
-.diagram .redlines_status_bar_off, .diagram .redline_nav_bar_off, .diagram .redline_tool_bar_off, .diagram .redline_search_bar_off, .diagram .redline_scope_bar_off, .diagram .redlines_collection_view_off, .diagram .redline_segment_control_off {
+.diagram .redlines_status_bar_off, .diagram .redlines_nav_bar_off, .diagram .redlines_tool_bar_off, .diagram .redlines_search_bar_off, .diagram .redlines_scope_bar_off, .diagram .redlines_collection_view_off, .diagram .redlines_segment_control_off {
 	display: none;
 }
 
-.diagram:hover .redlines_status_bar_off, .diagram:hover .redline_nav_bar_off, .diagram:hover .redline_tool_bar_off, .diagram:hover .redline_search_bar_off, .diagram:hover .redline_scope_bar_off, .diagram:hover .redlines_collection_view_off, .diagram:hover .redline_segment_control_off {
+.diagram:hover .redlines_status_bar_off, .diagram:hover .redlines_nav_bar_off, .diagram:hover .redlines_tool_bar_off, .diagram:hover .redlines_search_bar_off, .diagram:hover .redlines_scope_bar_off, .diagram:hover .redlines_collection_view_off, .diagram:hover .redlines_segment_control_off {
 	display: block;
 }
 
