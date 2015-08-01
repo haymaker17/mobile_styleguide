@@ -188,7 +188,11 @@ public class ExpenseItReceipt implements ExpenseItReceiptDAO, Serializable {
         }
         byte [] imageData = CursorUtil.getBlobValue(cursor, Expense
                 .ExpenseItReceiptColumns.IMAGE_DATA);
-        receipt.setImageData(BitmapFactory.decodeByteArray(imageData, 0, imageData.length));
+        if (imageData != null) {
+            receipt.setImageData(BitmapFactory.decodeByteArray(imageData, 0, imageData.length));
+        } else {
+            receipt.setImageData(null);
+        }
         receipt.setTotalImageCount(CursorUtil.getIntValue(cursor, Expense.ExpenseItReceiptColumns.TOTAL_IMAGE_COUNT));
         receipt.setTotalImagesUploaded(CursorUtil.getIntValue(cursor, Expense.ExpenseItReceiptColumns.TOTAL_IMAGES_UPLOADED));
         receipt.setParsingStatusCode(CursorUtil.getIntValue(cursor, Expense.ExpenseItReceiptColumns.PARSING_STATUS_CODE));

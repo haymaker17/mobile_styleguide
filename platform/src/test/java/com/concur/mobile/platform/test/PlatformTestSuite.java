@@ -66,7 +66,7 @@ import java.util.Locale;
  * @author andrewk
  */
 @RunWith(ConcurPlatformTestRunner.class)
-@Config(manifest = "src/test/AndroidManifest.xml", assetDir = "assets")
+@Config(application = PlatformTestApplication.class, sdk = 21)
 public class PlatformTestSuite {
 
     private static final String CLS_TAG = "PlatformTestSuite";
