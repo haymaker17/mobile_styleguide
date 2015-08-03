@@ -280,7 +280,7 @@ public class ItineraryUpdateListAdapter extends ArrayAdapter<Object> {
             holder.tvDepartureLocationValue.setEnabled(!segment.isLocked());
         }
         if (holder.tvDepartureDateLabel != null) {
-            holder.tvDepartureDateLabel.setText("@Departure Date@");
+            holder.tvDepartureDateLabel.setText(R.string.ta_departure_date);
         }
         if (holder.tvDepartureTimeLabel != null) {
             holder.tvDepartureTimeLabel.setText(R.string.general_time);
@@ -327,7 +327,7 @@ public class ItineraryUpdateListAdapter extends ArrayAdapter<Object> {
             }
         }
         if (holder.tvArrivalDateLabel != null) {
-            holder.tvArrivalDateLabel.setText("@Arrival Date@");
+            holder.tvArrivalDateLabel.setText(R.string.ta_arrival_date);
         }
         if (holder.tvArrivalTimeLabel != null) {
             holder.tvArrivalTimeLabel.setText(R.string.general_time);
