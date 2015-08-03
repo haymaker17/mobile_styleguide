@@ -6,7 +6,6 @@ import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
-import android.widget.Switch;
 import android.widget.TextView;
 
 import com.concur.core.R;
@@ -15,10 +14,11 @@ import com.concur.mobile.core.activity.BaseActivity;
 import com.concur.mobile.core.expense.travelallowance.controller.FixedTravelAllowanceControlData;
 import com.concur.mobile.core.expense.travelallowance.controller.FixedTravelAllowanceController;
 import com.concur.mobile.core.expense.travelallowance.datamodel.FixedTravelAllowance;
+import com.concur.mobile.core.expense.travelallowance.util.BundleId;
+import com.concur.mobile.core.expense.travelallowance.util.DebugUtils;
 import com.concur.mobile.core.expense.travelallowance.util.DefaultDateFormat;
 import com.concur.mobile.core.expense.travelallowance.util.IDateFormat;
 import com.concur.mobile.core.expense.travelallowance.util.StringUtilities;
-import com.concur.mobile.core.util.Const;
 import com.concur.mobile.core.util.FormatUtil;
 
 import java.util.Locale;
@@ -28,7 +28,7 @@ public class FixedTravelAllowanceDetailsActivity extends BaseActivity {
     /**
      * The name of this {@code Class} for logging purpose.
      */
-    private static final String CLS_TAG = FixedTravelAllowanceDetailsActivity.class
+    private static final String CLASS_TAG = FixedTravelAllowanceDetailsActivity.class
             .getSimpleName();
 
     /**
@@ -56,12 +56,14 @@ public class FixedTravelAllowanceDetailsActivity extends BaseActivity {
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         getSupportActionBar().setTitle(R.string.ta_daily_allowance);
 
-
         Intent callerIntent = this.getIntent();
         FixedTravelAllowance allowance = null;
+        boolean isEditable = false;
         if (callerIntent != null) {
             allowance = (FixedTravelAllowance)
                     callerIntent.getSerializableExtra(INTENT_EXTRA_KEY_FIXED_TRAVEL_ALLOWANCE);
+            isEditable = callerIntent.getBooleanExtra(BundleId.EXPENSE_REPORT_IS_SUBMITTED, false)
+                    && callerIntent.getBooleanExtra(BundleId.IS_EDIT_MODE, false);
         }
         this.dateFormatter = new DefaultDateFormat(this);
 
@@ -209,7 +211,8 @@ public class FixedTravelAllowanceDetailsActivity extends BaseActivity {
     private void renderAmount(TextView tvAmount, Double amount, String crnCode) {
 
         if (tvAmount == null){
-            Log.e(Const.LOG_TAG, CLS_TAG + ".renderAmount: TextView null reference!");
+            Log.e(DebugUtils.LOG_TAG_TA,
+                    DebugUtils.buildLogText(CLASS_TAG, "renderAmount", "TextView null reference!"));
             return;
         }
         if (amount != null) {

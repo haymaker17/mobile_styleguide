@@ -159,7 +159,6 @@
         android:layout_alignParentLeft="true"
         android:layout_alignParentStart="true"
         android:layout_below="@+id/tv_overnight_label"
-        android:text="\@Hilfetext\@"
         android:textAppearance="@style/DailyAllowanceContent" />
 
     </RelativeLayout>

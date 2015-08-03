@@ -5,6 +5,7 @@ import android.content.Context;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.os.Handler;
+import android.util.Log;
 
 import com.concur.mobile.base.service.BaseAsyncRequestTask;
 import com.concur.mobile.base.service.BaseAsyncResultReceiver;
@@ -88,13 +89,13 @@ public class TravelAllowanceItineraryController extends BaseController {
             public void onRequestSuccess(Bundle resultData) {
                 itineraryList = getItinerariesRequest.getItineraryList();
                 notifyListener(ControllerAction.REFRESH, true, resultData);
-                DebugUtils.LogDTA(CLASS_TAG, "onRequestSuccess", "Request success");
+                Log.d(DebugUtils.LOG_TAG_TA, DebugUtils.buildLogText(CLASS_TAG, "onRequestSuccess", "Request success"));
             }
 
             @Override
             public void onRequestFail(Bundle resultData) {
                 notifyListener(ControllerAction.REFRESH, false, resultData);
-                DebugUtils.LogDTA(CLASS_TAG, "onRequestFail", "Request failed");
+                Log.d(DebugUtils.LOG_TAG_TA, DebugUtils.buildLogText(CLASS_TAG, "onRequestFail", "Request failed"));
             }
 
             @Override

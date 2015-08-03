@@ -53,7 +53,17 @@ public class TravelAllowanceActivity extends AppCompatActivity
      */
     @Override
     public void onFixedTravelAllowanceSelected(FixedTravelAllowance allowance) {
+
         Intent intent = new Intent(this, FixedTravelAllowanceDetailsActivity.class);
+
+        if (getIntent().hasExtra(BundleId.IS_EDIT_MODE)) {
+            intent.putExtra(BundleId.IS_EDIT_MODE, getIntent().getExtras().getBoolean(BundleId.IS_EDIT_MODE));
+        }
+
+        if (getIntent().hasExtra(BundleId.EXPENSE_REPORT_IS_SUBMITTED)) {
+            intent.putExtra(BundleId.EXPENSE_REPORT_IS_SUBMITTED, getIntent().getExtras().getBoolean(BundleId.EXPENSE_REPORT_IS_SUBMITTED));
+        }
+
         if (allowance != null) {
             intent.putExtra(FixedTravelAllowanceDetailsActivity.INTENT_EXTRA_KEY_FIXED_TRAVEL_ALLOWANCE, allowance);
             startActivityForResult(intent, REQUEST_CODE_FIXED_TRAVEL_ALLOWANCE_DETAILS);
