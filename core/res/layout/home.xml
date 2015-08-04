@@ -887,6 +887,11 @@
 
                     </RelativeLayout>
 
+                    <View
+                        android:layout_width="1px"
+                        android:layout_height="match_parent"
+                        android:background="@color/StrokeHomeFooter" />
+
                     <RelativeLayout
                         android:id="@+id/homeCamera"
                         android:layout_width="0dp"
@@ -917,6 +922,11 @@
                             android:textColor="@color/HomeFooterButtonText" />
 
                     </RelativeLayout>
+
+                    <View
+                        android:layout_width="1px"
+                        android:layout_height="match_parent"
+                        android:background="@color/StrokeHomeFooter" />
 
                     <RelativeLayout
                         android:id="@+id/homeExpenseIt"
@@ -950,6 +960,11 @@
 
                     </RelativeLayout>
 
+                    <View
+                        android:layout_width="1px"
+                        android:layout_height="match_parent"
+                        android:background="@color/StrokeHomeFooter" />
+
                     <RelativeLayout
                         android:id="@+id/homeQuickExpense"
                         android:layout_width="0dp"
@@ -980,6 +995,11 @@
                             android:textColor="@color/HomeFooterButtonText" />
 
                     </RelativeLayout>
+
+                    <View
+                        android:layout_width="1px"
+                        android:layout_height="match_parent"
+                        android:background="@color/StrokeHomeFooter" />
 
                     <RelativeLayout
                         android:id="@+id/homeMileage"
