@@ -175,46 +175,24 @@ p {
 
 
 
-/* seiji */ 
-/* nth-of-type */
-
-
 .flexContainer.third > div {
 	-webkit-flex: 1 0 auto;
 	flex: 1 0 auto;
-	width: 50%;
-/* 	width: 50%; */
-	background-color: grey;
-}	
-	
-.flexContainer.third > div:nth-child(3) {
-/* 	padding-right: 2%; */
-	background-color: yellow;
-}
-
-/*
-.flexContainer.third figure {
-	width: 33%;
-	float: left;
+	width: 31.33%;
 	margin-right: 2%;
-	background-color: red;
 }
 
-.flexContainer.third .diagram {
-	width: 98%;
-	float: left;
-	margin-right: 2%;
-	background-color: color;
+.flexContainer.third > div:nth-of-type(3n) {
+	width: 33.33%;
+	margin-right: 0;
 }
-*/
 
 
-.flexContainer.third figure img, .flexContainer.third figure video {
+
+.flexContainer.third figure img {
 	width: 100%;
 	height: auto;
-	background-color: orange;
 }
-
 
 
 
