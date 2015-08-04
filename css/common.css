@@ -1204,12 +1204,12 @@ a.icon span {
 	height: 22px;
 	width: 22px;
 	display: block;
-	background: url(../styleguide/img/icons_web/arrow_download.svg) no-repeat;
+	background: url(../img/icons_web/arrow_download.svg) no-repeat;
 	background-size: 22px;
 }
 
 .img_block  .icon.arrow::before {
-	background: url(../styleguide/img/icons_web/arrow_right.svg) no-repeat;
+	background: url(../img/icons_web/arrow_right.svg) no-repeat;
 }
 
 .icon-paper-clip::before {
@@ -1724,7 +1724,7 @@ h3 {
 	}
 
 	#hamburger .icon {
-		display: block;1
+		display: block;
 	}
 
 	#header_logo {
