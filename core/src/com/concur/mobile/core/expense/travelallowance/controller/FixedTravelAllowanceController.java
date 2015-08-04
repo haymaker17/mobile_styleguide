@@ -429,4 +429,44 @@ public class FixedTravelAllowanceController extends BaseController {
         }
     }
 
+    public void executeUpdate(FixedTravelAllowance allowance) {
+        if (allowance == null){
+            return;
+        }
+
+        BaseAsyncResultReceiver receiver = new BaseAsyncResultReceiver(new Handler());
+        receiver.setListener(new BaseAsyncRequestTask.AsyncReplyListener() {
+            @Override
+            public void onRequestSuccess(Bundle resultData) {
+//                Itinerary resultItinerary = (Itinerary) resultData.getSerializable(BundleId.ITINERARY);
+//                boolean isSuccess = handleAfterUpdateResponse(resultItinerary);
+//                notifyListener(ControllerAction.UPDATE, isSuccess, resultData);
+//
+            }
+
+            @Override
+            public void onRequestFail(Bundle resultData) {
+//                Message msg = new Message(Message.Severity.ERROR, "500", "Backend Dump!");
+//                messageCache.add(msg);
+//                notifyListener(ControllerAction.UPDATE, false, resultData);
+            }
+
+            @Override
+            public void onRequestCancel(Bundle resultData) {
+
+            }
+
+            @Override
+            public void cleanup() {
+
+            }
+        });
+
+//        SaveItineraryRequest request = new SaveItineraryRequest(context, receiver, itinerary);
+//        request.execute();
+
+
+
+    }
+
 }
