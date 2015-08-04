@@ -208,7 +208,9 @@
                 android:fontFamily="sans-serif"
                 android:hint="@string/hotel_search_results_filter_name_containing_hint"
                 android:textColorHint="#a7b6bf"
-                android:textSize="14sp"/>
+                android:textSize="14sp"
+                android:imeOptions="actionDone"
+                android:singleLine="true"/>
         </LinearLayout>
 
         <LinearLayout

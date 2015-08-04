@@ -323,7 +323,7 @@ public final class Const {
     public static final String MOBILE_SHOW_P2B_GENERATOR = "ShowP2BGenerator";
 
     // Show Jarvis Hotel UI
-    public static final String SHOW_JARVIS_HOTEL_UI = "ShowHotelJarvisUIOnAndroid";
+    public static final String SHOW_JARVIS_HOTEL_UI = "ShowJarvisHotelUIOnAndroid";
 
     // User is loggedIn to ExpenseIt
     public static final String PREF_USER_LOGGED_IN_EXPENSE_IT = "pref_user_logged_in_expense_it";

@@ -85,7 +85,7 @@ public class HotelSearchResultListItem extends ListItem implements Serializable 
             // Set the list item tag to the uri, this tag value is used in 'ListItemAdapter.refreshView'
             // to refresh the appropriate view items once images have been loaded.
             URI uri = URI.create(hotel.imagePairs.get(0).thumbnail);
-            listItemTag = uri;
+            this.listItemTag = uri;
             // Attempt to load the image from the image cache, if not there, then the
             // ImageCache will load it asynchronously and this view will be updated via
             // the ImageCache broadcast receiver available in BaseActivity.

@@ -63,12 +63,12 @@ android {
         exclude 'lib/x86/libsqlcipher_android.so'
         exclude 'lib/x86/libstlport_shared.so'
         exclude 'lib/sources'
+        exclude 'test/AndroidManifest.xml'
     }
 
     //For multi build purpose uncomment following block
     //Please comment out following block before merge back to 'dev' branch.
     /*##############   #####################     ##########################     ###################*/
-
 
 //    productFlavors {
 //        production {

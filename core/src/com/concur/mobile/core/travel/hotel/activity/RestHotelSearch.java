@@ -102,6 +102,7 @@ public class RestHotelSearch extends TravelBaseActivity
     private boolean isCheckin = false;
     private LoaderManager lm;
     private boolean update = false;
+    private PlatformAsyncTaskLoader<TravelCustomFieldsConfig> asyncLoader = null;
 
     // /////////////////////////////////////////////////////////////////
 
@@ -411,9 +412,7 @@ public class RestHotelSearch extends TravelBaseActivity
                             txtView.setText(s);
                             // Display a toast message indicating current
                             // location cannot be determined.
-                            String toastText = getText(R.string.dlg_no_current_location).toString();
-                            Toast toast = Toast.makeText(this, toastText, Toast.LENGTH_SHORT);
-                            toast.show();
+                            showToast(R.string.dlg_no_current_location);
                         } else {
                             txtView.setText(R.string.general_current_location);
                         }
@@ -446,9 +445,7 @@ public class RestHotelSearch extends TravelBaseActivity
             // txtView.setText(s);
             // Display a toast message indicating current
             // location cannot be determined.
-            String toastText = getText(R.string.dlg_no_current_location).toString();
-            Toast toast = Toast.makeText(this, toastText, Toast.LENGTH_SHORT);
-            toast.show();
+            showToast(R.string.dlg_no_current_location);
         } else {
             currentLocation = new LocationChoice();
             StringBuilder strBldr = new StringBuilder();
@@ -617,6 +614,26 @@ public class RestHotelSearch extends TravelBaseActivity
             }
             break;
         }
+
+        }
+
+        // check for session expire
+        if (resultCode != RESULT_OK) {
+            setResult(resultCode, data);
+
+            ConcurCore app = (ConcurCore) ConcurCore.getContext();
+            if (resultCode == PlatformAsyncTaskLoader.RE_AUTHENTICATED) {
+                // will start Home activity and finish this activity
+                app.launchHome(this);
+            } else if (resultCode == PlatformAsyncTaskLoader.SESSION_EXPIRED) {
+                // If we have no session at this point then auto-login was
+                // unsuccessful or not allowed.
+                // Bail out and throw them back to login
+                // Punt following line.
+                app.expireLogin();
+
+                finish();
+            }
 
         }
     }
@@ -907,11 +924,13 @@ public class RestHotelSearch extends TravelBaseActivity
     }
 
     public void showToast(int resId) {
-        Toast.makeText(this, resId, Toast.LENGTH_SHORT).show();
+        if (!isFinishing()) {
+            Toast.makeText(this, resId, Toast.LENGTH_SHORT).show();
+        }
     }
 
     @Override public Loader<TravelCustomFieldsConfig> onCreateLoader(int id, Bundle bundle) {
-        PlatformAsyncTaskLoader<TravelCustomFieldsConfig> asyncLoader = null;
+
         if (update) {
             showProgressBar(getString(R.string.dlg_travel_retrieve_custom_fields_update_progress_message));
             asyncLoader = new TravelCustomFieldsUpdateLoader(this, travelCustomFieldsConfig.formFields);
@@ -927,27 +946,32 @@ public class RestHotelSearch extends TravelBaseActivity
 
         hideProgressBar();
 
-        if (travelCustomFieldsConfig == null) {
-            // no custom fields
-        } else if (travelCustomFieldsConfig != null) {
+        if (asyncLoader.result == asyncLoader.SESSION_EXPIRED || asyncLoader.result == asyncLoader.RE_AUTHENTICATED) {
+            sessionExpired(asyncLoader.result);
+        } else {
 
-            if (travelCustomFieldsConfig.errorOccuredWhileRetrieving) {
-                showToast(R.string.custom_fields_not_found);
-            } else {
+            if (travelCustomFieldsConfig == null) {
+                // no custom fields
+            } else if (travelCustomFieldsConfig != null) {
 
-                this.travelCustomFieldsConfig = travelCustomFieldsConfig;
-                formFields = travelCustomFieldsConfig.formFields;
-                // to overcome the 'cannot perform this action inside of the onLoadFinished'
-                final int WHAT = 1;
-                Handler handler = new Handler() {
+                if (travelCustomFieldsConfig.errorOccuredWhileRetrieving) {
+                    showToast(R.string.custom_fields_not_found);
+                } else {
 
-                    @Override public void handleMessage(Message msg) {
-                        if (msg.what == WHAT) {
-                            initTravelCustomFieldsView();
+                    this.travelCustomFieldsConfig = travelCustomFieldsConfig;
+                    formFields = travelCustomFieldsConfig.formFields;
+                    // to overcome the 'cannot perform this action inside of the onLoadFinished'
+                    final int WHAT = 1;
+                    Handler handler = new Handler() {
+
+                        @Override public void handleMessage(Message msg) {
+                            if (msg.what == WHAT) {
+                                initTravelCustomFieldsView();
+                            }
                         }
-                    }
-                };
-                handler.sendEmptyMessage(WHAT);
+                    };
+                    handler.sendEmptyMessage(WHAT);
+                }
             }
         }
 
