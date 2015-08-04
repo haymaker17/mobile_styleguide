@@ -89,7 +89,8 @@
             android:text="$198.00"
             android:textColor="#0078c8"
             android:textSize="18sp"
-            android:textStyle="bold"/>
+            android:textStyle="bold"
+            android:gravity="right"/>
 
         <TextView
             android:id="@+id/hotel_room_rate_hint"

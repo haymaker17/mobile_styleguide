@@ -118,7 +118,8 @@
     <string name="hotel_reserve_this_room">Reserve Room</string>
     <string name="hotel_confirm_reserve_ok">RESERVE</string>
     <string name="hotel_confirm_reserve_cancel">CANCEL</string>
-    <string name="hotel_reserve_num_of_nights">%%0!number of nights%% night</string>
+    <string name="hotel_reserve_num_of_night">%%0!1 night%% night</string>
+    <string name="hotel_reserve_num_of_nights">%%0!number of nights%% nights</string>
     <string name="hotel_reserve_estimated_total">estimated total</string>
     <string name="hotel_reserve_cancel_policy">Cancellation Policy and Rate Details</string>
     <string name="hotel_reserve_cancel_policy_not_available">Cancellation policy not available</string>
