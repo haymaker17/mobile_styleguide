@@ -1,6 +1,16 @@
 $(function() { 
 
     //init();
+
+  $("#hamburger").on("click",function(){
+      toggleSidebar();
+   })
+
+   $("#dimmer").on("click",function(){
+      if ($("body").hasClass("sidebar_visible")) {
+         toggleSidebar();
+      }
+   })
     
   
   // Keep a mapping of url-to-container for caching purposes.
@@ -236,7 +246,97 @@ function getGithubCommits() {
 }
 
 
+/* open and close the sidebar when clicked ------------ */
+function toggleSidebar() {
+   var body = $("body");
 
+   if (body.hasClass("sidebar_visible")) {
+      body.removeClass("sidebar_visible");
+   }
+   else {
+      body.addClass("sidebar_visible");
+   }
+
+}
+
+
+$(window).scroll(function () {
+
+     fadeinElements();
+     fixHeader();
+
+ });
+
+
+ function fadeinElements() {
+     /* Check the location of each desired element */
+     $('.fadeinElement').each(function(i) {
+
+         var height_of_object = $(this).outerHeight();
+         var bottom_of_object = $(this).offset().top + height_of_object;
+         var middle_of_object = bottom_of_object - (height_of_object);
+         var bottom_of_window = $(window).scrollTop() + $(window).height();
+
+         /* If the object is completely visible in the window, fade it it */
+         if (bottom_of_window > middle_of_object) {
+
+             // $(this).animate({
+             //     'opacity': '1'
+             // }, 500);
+
+             $(this).addClass("visible");
+
+         }
+
+     });
+ }
+
+
+
+function fixHeader() {
+
+   var fromTop   = $("body").scrollTop();
+   $('body').toggleClass("fixedHeader", (fromTop > 60));
+   
+
+}
+
+
+function countItems() {
+
+   var itemCount = {
+      all: 0,
+      filter_list: 0,
+      filter_content: 0,
+      filter_bars: 0,
+      filter_controls: 0,
+      filter_login: 0,
+      filter_temp_view: 0,
+      filter_status: 0
+   };
+
+   $('.filterItemsContainer > div').each(function(index, element){
+     var thisClass  = $(element).attr("class");
+     itemCount[thisClass] += 1;
+     itemCount.all += 1;
+     
+   });
+
+   $('.filterOptions li').each(function(index, element){
+     var thisId   = $(element).data("filter");
+     var thisSpan = $(element).find("span");
+
+     thisSpan.html(itemCount[thisId]);
+     
+   });
+}
+
+function selectFirstItem() {
+   
+   if ($(".filterOptions").length > 0) {
+      $(".filterOptions li:first-child").click();
+   }
+}
 
 
 
