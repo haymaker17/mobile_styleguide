@@ -12,9 +12,10 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 import com.concur.core.R;
 import com.concur.mobile.core.request.activity.RequestListActivity;
-import com.concur.mobile.core.request.util.DateUtil;
 import com.concur.mobile.core.util.FormatUtil;
 import com.concur.mobile.platform.request.dto.RequestDTO;
+import com.concur.mobile.platform.request.dto.RequestExceptionDTO;
+import com.concur.mobile.platform.request.util.DateUtil;
 import com.concur.mobile.platform.ui.common.view.SwipeableRowView;
 
 import java.util.Collections;
@@ -104,10 +105,10 @@ public class SortedRequestListAdapter extends AbstractGenericAdapter<RequestDTO>
         amount.setTypeface(Typeface.DEFAULT_BOLD);
 
         requestRowExceptionIcon.setVisibility(View.GONE);
-        if (request.getHighestExceptionLevel().equals("NON_BLOCKING")) {
+        if (request.getHighestExceptionLevel() == RequestExceptionDTO.ExceptionLevel.NON_BLOCKING) {
             requestRowExceptionIcon.setImageResource(R.drawable.icon_status_yellow);
             requestRowExceptionIcon.setVisibility(View.VISIBLE);
-        } else if (request.getHighestExceptionLevel().equals("BLOCKING")) {
+        } else if (request.getHighestExceptionLevel() == RequestExceptionDTO.ExceptionLevel.BLOCKING) {
             requestRowExceptionIcon.setImageResource(R.drawable.icon_status_red);
             requestRowExceptionIcon.setVisibility(View.VISIBLE);
         }
