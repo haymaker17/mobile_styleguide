@@ -50,10 +50,17 @@ $(function() {
     //click on the accordion menu to open it to the right place
       if (thisCategory === parentCategory) {
           thisNavItem = $(".accordion").find("[data-class='" + thisCategory + "']").find("span:first");
+
+          //hide any other open menus
+          thisNavItem.siblings().find("ul").slideUp(200);
+
+          //close the sidebar if it's open
+          toggleSidebar(close);
       }
       else {
           
           thisNavItem = $(".accordion").find("[data-class='" + parentCategory + "']").find("[data-class='" + thisCategory + "']").find("span:first");
+          toggleSidebar(close);
       }
     
      
@@ -119,9 +126,11 @@ $(function() {
 
 function accordionMenu(inLink) {
 
-   var currentLink = inLink;
-   var nextItem    = inLink.next();
-   var linkParent  = inLink.parentsUntil(".accordion").length;
+   var currentLink  = inLink;
+   var nextItem     = currentLink.next();
+   var linkParent   = currentLink.parent();
+   var linkSiblings = linkParent.siblings().find("ul");
+   var linkTop      = currentLink.parentsUntil(".accordion").length;
 
    //check and see if this link is visible if it is, toggle it off
    if (nextItem.is(':visible')) {
@@ -133,9 +142,12 @@ function accordionMenu(inLink) {
    //this link isn't visible so let's open it and close the others
    else if(!nextItem.is(':visible')) {
       //this is a sub menu so open it
-      if (linkParent > 1) {
+      if (linkTop > 1) {
          nextItem.parents("ul").css("display","block");
          nextItem.slideDown(200);
+
+         linkSiblings.slideUp(200);
+
       }
 
       else {
@@ -147,8 +159,9 @@ function accordionMenu(inLink) {
    }
 
    function changeActive() {
-      $('.accordion li').removeClass('active');
+      $('.accordion').find("active").removeClass('active');
       currentLink.closest('li').addClass('active');
+      //currentLink.parents("span").addClass("active");
    }
 
    if(currentLink.closest('li').find('ul').children().length == 0) {
@@ -212,6 +225,8 @@ function setHeader(inTitle,inCategory,topCategory) {
 }  
 
 
+
+
 // get the commit notes from github so there's a changelist on the site
 function getGithubCommits() {
   var html = "<thead><tr><th class='td_20'>Date</th><th class='td_60'>Description</th></tr></thead><tbody>";
@@ -241,23 +256,30 @@ function getGithubCommits() {
     $(".changelist").html(html);
   });
 
-
-
 }
+
+
 
 
 /* open and close the sidebar when clicked ------------ */
-function toggleSidebar() {
+function toggleSidebar(inState) {
    var body = $("body");
 
-   if (body.hasClass("sidebar_visible")) {
+   if (inState == close) {
       body.removeClass("sidebar_visible");
    }
-   else {
-      body.addClass("sidebar_visible");
-   }
 
+   else {
+      if (body.hasClass("sidebar_visible")) {
+        body.removeClass("sidebar_visible");
+     }
+     else {
+        body.addClass("sidebar_visible");
+     }
+
+   }
 }
+
 
 
 $(window).scroll(function () {
@@ -266,6 +288,9 @@ $(window).scroll(function () {
      fixHeader();
 
  });
+
+
+
 
 
  function fadeinElements() {
@@ -298,8 +323,9 @@ function fixHeader() {
    var fromTop   = $("body").scrollTop();
    $('body').toggleClass("fixedHeader", (fromTop > 60));
    
-
 }
+
+
 
 
 function countItems() {
@@ -330,6 +356,9 @@ function countItems() {
      
    });
 }
+
+
+
 
 function selectFirstItem() {
    
