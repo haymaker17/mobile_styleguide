@@ -153,6 +153,8 @@ import java.util.TimeZone;
 @EventTracker.EventTrackerClassName(getClassName = "Home")
 public class Home extends BaseActivity implements View.OnClickListener, NavigationListener, ReceiptChoiceListener {
 
+    public static boolean forceExpirationHome;
+
     public static final String LAUNCH_EXPENSE_LIST = "LAUNCH_EXPENSE_LIST";
 
     private static final String CLS_TAG = Home.class.getSimpleName();
@@ -342,6 +344,10 @@ public class Home extends BaseActivity implements View.OnClickListener, Navigati
             sHandler = new ExpireLoginHandler(Looper.getMainLooper());
         }
         sHandler.dispatchMessage(sHandler.obtainMessage(1));
+    }
+
+    public static void expireLogin(boolean forceExpiration) {
+        forceExpirationHome = forceExpiration;
     }
 
     /**
@@ -717,6 +723,17 @@ public class Home extends BaseActivity implements View.OnClickListener, Navigati
             startActivity(intent);
         }
 
+    }
+
+    @Override
+    protected void onPostCreate(Bundle savedInstance) {
+        super.onPostCreate(savedInstance);
+
+        if (forceExpirationHome && liveHome != null) {
+            cancelAllDataRequests();
+            clearSessionData();
+            showExpiredDialog();
+        }
     }
 
     private void clearSessionData() {

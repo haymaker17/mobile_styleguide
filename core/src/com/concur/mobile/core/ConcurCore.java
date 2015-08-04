@@ -20,6 +20,7 @@ import android.location.Location;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 import android.os.Build;
+import android.os.Handler;
 import android.os.IBinder;
 import android.preference.PreferenceManager;
 import android.provider.Settings;
@@ -34,6 +35,7 @@ import android.widget.TableRow;
 import android.widget.TextView;
 
 import com.concur.core.R;
+import com.concur.mobile.base.service.BaseAsyncResultReceiver;
 import com.concur.mobile.base.util.Format;
 import com.concur.mobile.core.activity.Preferences;
 import com.concur.mobile.core.data.MobileDatabase;
@@ -2881,6 +2883,10 @@ public abstract class ConcurCore extends MultiDexApplication {
     // Our login expiration/activity redirect is convoluted. We need a hook here
     // so that each app can get back to its own way of expiring.
     public abstract void expireLogin();
+
+
+    // called from Preferences during the login request fail
+    public abstract void expireLogin(boolean forceExpiration);
 
     /**
      * Executed when the "remote wipe" flag is sent down from a Login/Auto-Login request.

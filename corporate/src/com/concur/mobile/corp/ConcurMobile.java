@@ -78,6 +78,15 @@ public class ConcurMobile extends ConcurCore {
     public void expireLogin() {
         Home.expireLogin();
     }
+
+    @Override
+    public void expireLogin(boolean forceExpiration) {
+        if(forceExpiration) {
+            Home.expireLogin(forceExpiration);
+        } else{
+            expireLogin();
+        }
+    }
     
     @Override
     public void remoteWipe() {

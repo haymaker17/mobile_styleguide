@@ -383,8 +383,7 @@ public class Startup extends BaseActivity {
                 // previous versions we either have to build an upgrade stack or just make our
                 // upgrades rerunnable. Since these changes are small and infrequent we will make
                 // them rerunnable.
-                BaseAsyncResultReceiver autoLoginReceiver = new BaseAsyncResultReceiver(new Handler());
-                Preferences.upgradePreferences(app, autoLoginReceiver);
+                Preferences.upgradePreferences(app);
             }
         } else {
             // Earlier versions of the app did not contain a version name/code.

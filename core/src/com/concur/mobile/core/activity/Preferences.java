@@ -15,6 +15,7 @@ import android.content.SharedPreferences.OnSharedPreferenceChangeListener;
 import android.content.pm.PackageInfo;
 import android.content.pm.PackageManager.NameNotFoundException;
 import android.os.Bundle;
+import android.os.Handler;
 import android.preference.CheckBoxPreference;
 import android.preference.ListPreference;
 import android.preference.Preference;
@@ -299,7 +300,7 @@ public class Preferences extends PreferenceActivity implements OnSharedPreferenc
      * could be upgrading from one of many previous versions we either have to build an upgrade stack or just make our upgrades
      * rerunnable. Since these changes are small and infrequent we will make them rerunnable.
      */
-    public static void upgradePreferences(ConcurCore app, BaseAsyncResultReceiver autoLoginReceiver) {
+    public static void upgradePreferences(ConcurCore app) {
 
         SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(ConcurCore.getContext());
 
@@ -307,7 +308,7 @@ public class Preferences extends PreferenceActivity implements OnSharedPreferenc
         shiftSession(prefs);
         removePreferences(prefs);
         platFormDataMigration(prefs, app);
-        doAutoLogin(prefs, app, true, autoLoginReceiver);
+        doAutoLogin(prefs, app);
     }
 
     private static void platFormDataMigration(SharedPreferences prefs, ConcurCore app) {
@@ -767,8 +768,8 @@ public class Preferences extends PreferenceActivity implements OnSharedPreferenc
      *            the shared preferences object.
      * @param sessionId
      *            the session id.
-     * @param sessionPIN
-     *            the session pin.
+     * @param duration
+     *            the duration.
      * @param sessionExpiration
      *            the session expiration time.
      */
@@ -1540,8 +1541,9 @@ public class Preferences extends PreferenceActivity implements OnSharedPreferenc
 	*/
 
     // need to pull this out to some other appropriate class
-    public static void doAutoLogin(SharedPreferences prefs, final ConcurCore app,
-            final boolean expireLoginIfAutoLoginDisabled, BaseAsyncResultReceiver autoLoginReceiver) {
+    public static void doAutoLogin(SharedPreferences prefs, final ConcurCore app) {
+        BaseAsyncResultReceiver autoLoginReceiver = new BaseAsyncResultReceiver(new Handler());
+        final Bundle emailLookupBundle;
         final SessionInfo sessionInfo = ConfigUtil.getSessionInfo(app.getApplicationContext());
         boolean autoLogin = prefs.getBoolean(Const.PREF_AUTO_LOGIN, false);
         Log.d(Const.LOG_TAG,
@@ -1564,6 +1566,27 @@ public class Preferences extends PreferenceActivity implements OnSharedPreferenc
         }
 
         if (autoLogin) {
+            if(sessionInfo != null) {
+                // create a bundle and persist the value in the bundle
+                emailLookupBundle = new Bundle();
+                // Set the login id.
+                emailLookupBundle.putString(EmailLookUpRequestTask.EXTRA_LOGIN_ID_KEY, sessionInfo.getLoginId());
+                // Set the server url.
+                emailLookupBundle.putString(EmailLookUpRequestTask.EXTRA_SERVER_URL_KEY,
+                        (sessionInfo.getServerUrl() != null ?
+                                sessionInfo.getServerUrl() :
+                                PlatformProperties.getServerAddress()));
+                // Set the sign-in method.
+                emailLookupBundle
+                        .putString(EmailLookUpRequestTask.EXTRA_SIGN_IN_METHOD_KEY, sessionInfo.getSignInMethod());
+                // Set the sso url.
+                emailLookupBundle.putString(EmailLookUpRequestTask.EXTRA_SSO_URL_KEY, sessionInfo.getSSOUrl());
+            } else {
+                // need to expire the login
+                app.expireLogin();
+                return;
+            }
+
             Log.d(Const.LOG_TAG, "attempting autologin");
             autoLoginReceiver.setListener(new BaseAsyncRequestTask.AsyncReplyListener() {
 
@@ -1574,65 +1597,29 @@ public class Preferences extends PreferenceActivity implements OnSharedPreferenc
                                                   Log.d(Const.LOG_TAG,
                                                           "attempting to build emailLookupBundle, sessionInfo not null ? "
                                                                   + (sessionInfo != null));
-                                                  Bundle emailLookupBundle = null;
-                                                  if (sessionInfo != null) {
-                                                      // all the below necessary ???? is the below code causing the random null value for signInMethod above?
-                                                      emailLookupBundle = new Bundle();
-                                                      String signInMethod = sessionInfo.getSignInMethod();
-                                                      String ssoUrl = sessionInfo.getSSOUrl();
-                                                      String serverUrl = sessionInfo.getServerUrl();
-                                                      String loginId = sessionInfo.getLoginId();
-                                                      Log.d(Const.LOG_TAG,
-                                                              "-------------------------------------------------------------------setting into bundle, signInMethod = "
-                                                                      + signInMethod);
-                                                      Log.d(Const.LOG_TAG,
-                                                              "-------------------------------------------------------------------setting into bundle, ssoUrl = "
-                                                                      + ssoUrl);
-                                                      Log.d(Const.LOG_TAG,
-                                                              "-------------------------------------------------------------------setting into bundle, serverUrl = "
-                                                                      + serverUrl);
-                                                      Log.d(Const.LOG_TAG,
-                                                              "-------------------------------------------------------------------setting into bundle, loginId = "
-                                                                      + loginId);
-                                                      // Set the login id.
-                                                      emailLookupBundle
-                                                              .putString(EmailLookUpRequestTask.EXTRA_LOGIN_ID_KEY,
-                                                                      loginId);
-                                                      // Set the server url.
-                                                      emailLookupBundle
-                                                              .putString(EmailLookUpRequestTask.EXTRA_SERVER_URL_KEY, (
-                                                                      serverUrl != null ?
-                                                                              serverUrl :
-                                                                              PlatformProperties.getServerAddress()));
-                                                      // Set the sign-in method.
-                                                      emailLookupBundle.putString(
-                                                              EmailLookUpRequestTask.EXTRA_SIGN_IN_METHOD_KEY,
-                                                              signInMethod);
-                                                      // Set the sso url.
-                                                      emailLookupBundle
-                                                              .putString(EmailLookUpRequestTask.EXTRA_SSO_URL_KEY,
-                                                                      ssoUrl);
-
+                                                  if(emailLookupBundle ==null) {
+                                                      onRequestFail(resultData);
+                                                  } else {
+                                                      UserAndSessionInfoUtil
+                                                              .updateUserAndSessionInfo(ConcurCore.getContext(),
+                                                                      emailLookupBundle);
                                                   }
-                                                  UserAndSessionInfoUtil
-                                                          .updateUserAndSessionInfo(ConcurCore.getContext(),
-                                                                  emailLookupBundle);
                                               }
 
                                               public void onRequestFail(Bundle resultData) {
-                                                  if (expireLoginIfAutoLoginDisabled) {
+
                                                       Log.d(Const.LOG_TAG, "expire login as autoLogin is disabled");
                                                       // need to expire the login
-                                                      app.expireLogin();
-                                                  }
+                                                      app.expireLogin(true);
+
                                               }
 
                                               public void onRequestCancel(Bundle resultData) {
-                                                  if (expireLoginIfAutoLoginDisabled) {
+
                                                       Log.d(Const.LOG_TAG, "expire login as autoLogin is disabled");
                                                       // need to expire the login
-                                                      app.expireLogin();
-                                                  }
+                                                      app.expireLogin(true);
+
                                               }
 
                                               public void cleanup() {
@@ -1652,12 +1639,12 @@ public class Preferences extends PreferenceActivity implements OnSharedPreferenc
                     autoLoginReceiver, Locale.getDefault());
             autoLoginRequestTask.execute();
         } else {
-            if (expireLoginIfAutoLoginDisabled) {
+
                 Log.d(Const.LOG_TAG,
                         "---------------------------------------------------------------------------expire login as autoLogin is disabled");
                 // need to expire the login, will this take back to log in screen?
-                app.expireLogin();
-            }
+                app.expireLogin(true);
+
         }
     }
 }
