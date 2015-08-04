@@ -9,17 +9,24 @@
         android:id="@+id/toolbar_daily_allowance"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:background="#0078c8"/>
+        android:background="@drawable/gradient_title_bar"/>
 
-    <include
-        android:id="@+id/vg_details_header"
-        layout="@layout/generic_table_row_layout"
+    <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_alignParentLeft="true"
-        android:layout_alignParentTop="true"
-        android:layout_marginLeft="0dp"
-        android:layout_marginTop="0dp" />
+        android:background="@drawable/subheader_gradient_background">
+
+        <include
+            android:id="@+id/vg_details_header"
+            layout="@layout/generic_table_row_layout"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_alignParentLeft="true"
+            android:layout_alignParentTop="true"
+            android:layout_marginLeft="0dp"
+            android:layout_marginTop="0dp" />
+
+    </LinearLayout>
 
     <LinearLayout
         android:id="@+id/vg_breakfast"

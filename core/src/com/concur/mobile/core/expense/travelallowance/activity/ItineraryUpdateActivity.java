@@ -17,6 +17,7 @@ import android.widget.AdapterView;
 import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.ListView;
+import android.widget.TextView;
 import android.widget.TimePicker;
 import android.widget.Toast;
 
@@ -126,8 +127,16 @@ public class ItineraryUpdateActivity extends BaseActivity implements IController
         ActionBar actionBar = getSupportActionBar();
         if (actionBar != null) {
             actionBar.setDisplayHomeAsUpEnabled(true);
+            TextView tvToolbarText = (TextView) findViewById(R.id.tv_toolbar_text);
+            if (tvToolbarText != null) {
+                tvToolbarText.setVisibility(View.GONE);
+            }
             if (StringUtilities.isNullOrEmpty(this.itinerary.getItineraryID())) {
                 actionBar.setTitle(R.string.ta_new_itinerary);
+                if (tvToolbarText != null && (controller.getItineraryList() == null
+                        || controller.getItineraryList().size() == 0)) {
+                        tvToolbarText.setVisibility(View.VISIBLE);
+                }
             } else {
                 actionBar.setTitle(R.string.ta_edit_itinerary);
             }

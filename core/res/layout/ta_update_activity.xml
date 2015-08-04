@@ -6,11 +6,31 @@
     android:background="#ffffff"
     android:orientation="vertical">
 
-    <android.support.v7.widget.Toolbar
-        android:id="@+id/toolbar"
+    <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:background="#0078c8" />
+        android:background="@drawable/gradient_title_bar"
+        android:orientation="vertical">
+
+        <android.support.v7.widget.Toolbar
+            android:id="@+id/toolbar"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:contentInsetStart="72dp"
+            app:contentInsetStart="72dp"
+            android:background="@android:color/transparent" />
+
+        <TextView
+            android:id="@+id/tv_toolbar_text"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="72dp"
+            android:layout_marginBottom="16dp"
+            android:layout_marginRight="16dp"
+            android:text="@string/itin_stops_infotext"
+            android:textAppearance="@style/DailyAllowanceLabel" />
+
+    </LinearLayout>
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -46,6 +66,7 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent">
 
+
     <ListView
         android:layout_width="wrap_content"
         android:layout_height="match_parent"
@@ -67,6 +88,8 @@
             app:layout_anchorGravity = "bottom|right|end"
             />
 
+
     </android.support.design.widget.CoordinatorLayout>
+
 
 </LinearLayout>
