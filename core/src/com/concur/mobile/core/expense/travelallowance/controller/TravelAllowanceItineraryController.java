@@ -10,6 +10,7 @@ import android.util.Log;
 import com.concur.mobile.base.service.BaseAsyncRequestTask;
 import com.concur.mobile.base.service.BaseAsyncResultReceiver;
 import com.concur.mobile.core.expense.travelallowance.datamodel.Itinerary;
+import com.concur.mobile.core.expense.travelallowance.datamodel.ItineraryLocation;
 import com.concur.mobile.core.expense.travelallowance.datamodel.ItinerarySegment;
 import com.concur.mobile.core.expense.travelallowance.service.AbstractItineraryDeleteRequest;
 import com.concur.mobile.core.expense.travelallowance.service.DeleteItineraryRequest;

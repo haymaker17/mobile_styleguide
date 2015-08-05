@@ -11,6 +11,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.concur.core.R;
+import com.concur.mobile.core.expense.travelallowance.datamodel.ItineraryLocation;
 import com.concur.mobile.core.expense.travelallowance.datamodel.ItinerarySegment;
 import com.concur.mobile.core.expense.travelallowance.ui.model.PositionInfoTag;
 import com.concur.mobile.core.expense.travelallowance.util.ItineraryUtils;
@@ -34,6 +35,7 @@ public class ItineraryUpdateListAdapter extends ArrayAdapter<Object> {
     private OnClickListener onLocationClickListener;
     private OnClickListener onItemClickListener;
     private List<Message> messageList;
+    private List<ItinerarySegment> segments;
 
     public void setMessageList(List<Message> messageList) {
         this.messageList = messageList;
@@ -49,6 +51,8 @@ public class ItineraryUpdateListAdapter extends ArrayAdapter<Object> {
         private TextView tvMessage;
 
         private View vDepartureLocation;
+        private ImageView ivDepartureSameLocation;
+        private ImageView ivDepartureLocation;
         private TextView tvDepartureLocationLabel;
         private TextView tvDepartureLocationValue;
         private View vDepartureDateTime;
@@ -59,6 +63,8 @@ public class ItineraryUpdateListAdapter extends ArrayAdapter<Object> {
         private TextView tvDepartureTimeLabel;
         private TextView tvDepartureTimeValue;
         private View vArrivalLocation;
+        private ImageView ivArrivalSameLocation;
+        private ImageView ivArrivalLocation;
         private TextView tvArrivalLocationLabel;
         private TextView tvArrivalLocationValue;
         private View vArrivalDateTime;
@@ -82,6 +88,7 @@ public class ItineraryUpdateListAdapter extends ArrayAdapter<Object> {
         this.onDateClickListener = onDateClickListener;
         this.onTimeClickListener = onTimeClickListener;
         this.onItemClickListener = onItemClickListener;
+        this.segments = itinerarySegments;
         addAll(itinerarySegments);
     }
 
@@ -103,6 +110,8 @@ public class ItineraryUpdateListAdapter extends ArrayAdapter<Object> {
         if (holder.vDepartureLocation != null) {
             holder.tvDepartureLocationLabel = (TextView) holder.vDepartureLocation.findViewById(R.id.tv_location_label);
             holder.tvDepartureLocationValue = (TextView) holder.vDepartureLocation.findViewById(R.id.tv_location_value);
+            holder.ivDepartureLocation = (ImageView) holder.vDepartureLocation.findViewById(R.id.iv_location_icon);
+            holder.ivDepartureSameLocation = (ImageView) holder.vDepartureLocation.findViewById(R.id.iv_same_location_icon);
         }
         holder.vDepartureDateTime = view.findViewById(R.id.v_departure_date_time);
         if (holder.vDepartureDateTime != null) {
@@ -117,6 +126,8 @@ public class ItineraryUpdateListAdapter extends ArrayAdapter<Object> {
         if (holder.vArrivalLocation != null) {
             holder.tvArrivalLocationLabel = (TextView) holder.vArrivalLocation.findViewById(R.id.tv_location_label);
             holder.tvArrivalLocationValue = (TextView) holder.vArrivalLocation.findViewById(R.id.tv_location_value);
+            holder.ivArrivalLocation = (ImageView) holder.vArrivalLocation.findViewById(R.id.iv_location_icon);
+            holder.ivArrivalSameLocation = (ImageView) holder.vArrivalLocation.findViewById(R.id.iv_same_location_icon);
         }
         holder.vArrivalDateTime = view.findViewById(R.id.v_arrival_date_time);
         if (holder.vArrivalDateTime != null) {
@@ -303,6 +314,14 @@ public class ItineraryUpdateListAdapter extends ArrayAdapter<Object> {
         } else {
             holder.tvDepartureTimeValue.setText(StringUtilities.EMPTY_STRING);
         }
+        if (holder.ivDepartureLocation != null) {
+            holder.ivDepartureLocation.setVisibility(View.VISIBLE);
+            holder.ivDepartureSameLocation.setVisibility(View.GONE);
+        }
+        if (hasSameLocation(this.segments, segment, false)) {
+            holder.ivDepartureLocation.setVisibility(View.GONE);
+            holder.ivDepartureSameLocation.setVisibility(View.VISIBLE);
+        }
     }
 
     private void renderArrival(final ItinerarySegment segment) {
@@ -350,5 +369,59 @@ public class ItineraryUpdateListAdapter extends ArrayAdapter<Object> {
         } else {
             holder.tvArrivalTimeValue.setText(StringUtilities.EMPTY_STRING);
         }
+        if (holder.ivArrivalLocation != null) {
+            holder.ivArrivalLocation.setVisibility(View.VISIBLE);
+            holder.ivArrivalSameLocation.setVisibility(View.GONE);
+        }
+        if (hasSameLocation(this.segments, segment, true)) {
+            holder.ivArrivalLocation.setVisibility(View.GONE);
+            holder.ivArrivalSameLocation.setVisibility(View.VISIBLE);
+        }
+    }
+
+    /**
+     * Checks the given segment, whether it has the same location like its
+     * predecessor or successor. The method expects a sorted segment list.
+     * @param segments the list holding the segments in question
+     * @param segment the given segment
+     * @param likeSuccessor if true, the succeeding departure (by means within the next segment)
+     *                      of the given arrival location needs to be checked;
+     *                      if false, the preceding arrival (by means within the previous segment)
+     *                      of the given departure location needs to be checked.
+     * @return true, if the locations are equal; otherwise false.
+     */
+    public boolean hasSameLocation(List<ItinerarySegment> segments, ItinerarySegment segment, boolean likeSuccessor) {
+        if (segments == null || segment == null) {
+            return false;
+        }
+        int position =  segments.indexOf(segment);
+        if (position < 0 || position + 1 > segments.size()) {
+            return false;
+        }
+        ItineraryLocation arrival;
+        ItineraryLocation departure;
+        if (likeSuccessor) {
+            if (position + 1 >= segments.size()) {
+                return false;
+            }
+            arrival = segment.getArrivalLocation();
+            departure = segments.get(position + 1).getDepartureLocation();
+        } else {
+            if (position <= 0) {
+                return false;
+            }
+            arrival = segments.get(position - 1).getArrivalLocation();
+            departure = segment.getDepartureLocation();
+        }
+        if (arrival == null && departure == null) {
+            return false;
+        }
+        if (arrival != null) {
+            return arrival.equals(departure);
+        }
+        if (departure != null) {
+            return departure.equals(arrival);
+        }
+        return false;
     }
 }
