@@ -74,6 +74,11 @@ public class FixedTravelAllowance implements Serializable, Comparable<FixedTrave
     private ICode lodgingType;
 
     /**
+     * Indicates if the allowance is locked
+     */
+    private boolean locked;
+
+    /**
      * Creates an instance of a FixedTravelAllowance
      */
     public FixedTravelAllowance() {
@@ -286,18 +291,28 @@ public class FixedTravelAllowance implements Serializable, Comparable<FixedTrave
         this.lodgingType = lodgingType;
     }
 
+    public boolean isLocked() {
+        return locked;
+    }
+
+    public void setLocked(boolean locked) {
+        this.locked = locked;
+    }
+
     /**
      * {@inheritDoc}
      */
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
-        if (!(o instanceof FixedTravelAllowance)) return false;
+        if (o == null || getClass() != o.getClass()) return false;
+//        if (!(o instanceof FixedTravelAllowance)) return false;
 
         FixedTravelAllowance that = (FixedTravelAllowance) o;
 
         if (excludedIndicator != that.excludedIndicator) return false;
         if (overnightIndicator != that.overnightIndicator) return false;
+        if (locked != that.locked) return false;
         if (fixedTravelAllowanceId != null ? !fixedTravelAllowanceId.equals(that.fixedTravelAllowanceId) : that.fixedTravelAllowanceId != null)
             return false;
         if (date != null ? !date.equals(that.date) : that.date != null) return false;
@@ -332,6 +347,7 @@ public class FixedTravelAllowance implements Serializable, Comparable<FixedTrave
         result = 31 * result + (dinnerProvision != null ? dinnerProvision.hashCode() : 0);
         result = 31 * result + (overnightIndicator ? 1 : 0);
         result = 31 * result + (lodgingType != null ? lodgingType.hashCode() : 0);
+        result = 31 * result + (locked ? 1 : 0);
         return result;
     }
 

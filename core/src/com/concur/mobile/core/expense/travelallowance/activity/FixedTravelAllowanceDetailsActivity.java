@@ -57,6 +57,7 @@ public class FixedTravelAllowanceDetailsActivity extends BaseActivity implements
 
     private Boolean isEditable;
     private FixedTravelAllowance allowance;
+    private String expenseReportKey;
 
     public static final String INTENT_EXTRA_KEY_FIXED_TRAVEL_ALLOWANCE =
             FixedTravelAllowanceDetailsActivity.class.getName() + "FixedTravelAllowance";
@@ -77,14 +78,22 @@ public class FixedTravelAllowanceDetailsActivity extends BaseActivity implements
         Intent callerIntent = this.getIntent();
         this.allowance = null;
         isEditable = false;
+
         if (callerIntent != null) {
             allowance = (FixedTravelAllowance)
                     callerIntent.getSerializableExtra(INTENT_EXTRA_KEY_FIXED_TRAVEL_ALLOWANCE);
             isEditable = !callerIntent.getBooleanExtra(BundleId.EXPENSE_REPORT_IS_SUBMITTED, true)
                     && callerIntent.getBooleanExtra(BundleId.IS_EDIT_MODE, false);
+            if (callerIntent.hasExtra(BundleId.EXPENSE_REPORT_KEY)) {
+                expenseReportKey = callerIntent.getStringExtra(BundleId.EXPENSE_REPORT_KEY);
+            }
         }
-        //TODO XLV: remove subsequent line to activate coding
+        if (StringUtilities.isNullOrEmpty(expenseReportKey) || allowance.isLocked()) {
+            isEditable = false;
+        }
+        //TODO XLV: Remove following line to enable edit mode
         isEditable = false;
+
         this.dateFormatter = new DefaultDateFormat(this);
 
         ConcurCore app = (ConcurCore) getApplication();
@@ -131,7 +140,8 @@ public class FixedTravelAllowanceDetailsActivity extends BaseActivity implements
         if (item.getItemId() == R.id.menuSave && this.allowance != null) {
             updateAllowanceFromUI();
 
-            allowanceController.executeUpdate(this.allowance);
+            allowanceController.executeUpdate(this.allowance, expenseReportKey);
+
         }
 
         return super.onOptionsItemSelected(item);

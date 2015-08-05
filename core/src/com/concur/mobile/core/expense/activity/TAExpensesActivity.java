@@ -33,7 +33,7 @@ import com.concur.mobile.core.expense.travelallowance.FixedAllowanceRow;
 import com.concur.mobile.core.expense.travelallowance.FixedAllowances;
 import com.concur.mobile.core.expense.travelallowance.GetTAFixedAllowancesRequest;
 import com.concur.mobile.core.expense.travelallowance.GetUpdatedFixedAllowanceAmounts;
-import com.concur.mobile.core.expense.travelallowance.UpdateFixedAllowances;
+//import com.concur.mobile.core.expense.travelallowance.service.UpdateFixedAllowances;
 import com.concur.mobile.core.service.CoreAsyncRequestTask;
 import com.concur.mobile.core.util.Const;
 import com.concur.mobile.core.util.FormatUtil;
@@ -50,7 +50,7 @@ public class TAExpensesActivity extends BaseActivity {
     private BaseAsyncResultReceiver asyncReceiver = new BaseAsyncResultReceiver(new Handler());
     private GetTAFixedAllowancesRequest getFixedAllowancesReq;
     private GetUpdatedFixedAllowanceAmounts getUpdatedAmountsReq;
-    private UpdateFixedAllowances updateFixedAllowancesReq;
+//    private UpdateFixedAllowances updateFixedAllowancesReq;
     
     private FixedAllowanceRowListItem rowBeingUpdated = null;
     
@@ -180,10 +180,10 @@ public class TAExpensesActivity extends BaseActivity {
     }
 
     private void updateFixedAllowances() {
-        asyncReceiver.setListener(new UpdateFixedAllowancesListener());
-        updateFixedAllowancesReq = new UpdateFixedAllowances(getApplicationContext(), 1, asyncReceiver, rptKey, fixedAllowances);
-        showDialog(DIALOG_UPDATING_EXPENSES);
-        updateFixedAllowancesReq.execute();
+//        asyncReceiver.setListener(new UpdateFixedAllowancesListener());
+//        updateFixedAllowancesReq = new UpdateFixedAllowances(getApplicationContext(), 1, asyncReceiver, rptKey, fixedAllowances);
+//        showDialog(DIALOG_UPDATING_EXPENSES);
+//        updateFixedAllowancesReq.execute();
     }
 
     private void fetchUpdatedFixedAllowanceAmounts(FixedAllowanceRowListItem item) {

@@ -25,6 +25,7 @@ import com.concur.mobile.core.expense.travelallowance.fragment.IFragmentCallback
 import com.concur.mobile.core.expense.travelallowance.fragment.SimpleTAItineraryListFragment;
 import com.concur.mobile.core.expense.travelallowance.fragment.TravelAllowanceItineraryListFragment;
 import com.concur.mobile.core.expense.travelallowance.util.BundleId;
+import com.concur.mobile.core.expense.travelallowance.util.StringUtilities;
 import com.concur.mobile.core.util.Const;
 
 import java.lang.reflect.Array;
@@ -64,10 +65,15 @@ public class TravelAllowanceActivity extends AppCompatActivity
             intent.putExtra(BundleId.EXPENSE_REPORT_IS_SUBMITTED, getIntent().getExtras().getBoolean(BundleId.EXPENSE_REPORT_IS_SUBMITTED));
         }
 
+        if(!StringUtilities.isNullOrEmpty(expenseReportKey) ){
+            intent.putExtra(BundleId.EXPENSE_REPORT_KEY, expenseReportKey);
+        }
+
         if (allowance != null) {
             intent.putExtra(FixedTravelAllowanceDetailsActivity.INTENT_EXTRA_KEY_FIXED_TRAVEL_ALLOWANCE, allowance);
             startActivityForResult(intent, REQUEST_CODE_FIXED_TRAVEL_ALLOWANCE_DETAILS);
         }
+
     }
 
     /**

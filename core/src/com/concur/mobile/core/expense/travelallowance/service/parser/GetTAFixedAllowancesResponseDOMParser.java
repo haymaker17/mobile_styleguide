@@ -97,6 +97,9 @@ public class GetTAFixedAllowancesResponseDOMParser {
                 if (tag.equals("TaDayKey")) {
                     currentAllowance.setFixedTravelAllowanceId(text);
                 }
+                if (tag.equals("IsLocked")){
+                    currentAllowance.setLocked(StringUtilities.toBoolean(text));
+                }
                 if (tag.equals("AllowanceDate")) {
                     try {
                         currentAllowance.setDate(dateFormat.parse(text));

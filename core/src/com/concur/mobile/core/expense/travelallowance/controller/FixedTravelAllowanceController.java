@@ -12,8 +12,11 @@ import com.concur.mobile.core.expense.travelallowance.datamodel.FixedTravelAllow
 import com.concur.mobile.core.expense.travelallowance.datamodel.ICode;
 import com.concur.mobile.core.expense.travelallowance.datamodel.MealProvision;
 import com.concur.mobile.core.expense.travelallowance.service.GetTAFixedAllowancesRequest2;
+import com.concur.mobile.core.expense.travelallowance.service.UpdateFixedAllowances;
+import com.concur.mobile.core.expense.travelallowance.util.BundleId;
 import com.concur.mobile.core.expense.travelallowance.util.DateUtils;
 import com.concur.mobile.core.expense.travelallowance.util.IDateFormat;
+import com.concur.mobile.core.expense.travelallowance.util.Message;
 import com.concur.mobile.core.expense.travelallowance.util.StringUtilities;
 
 import java.util.ArrayList;
@@ -429,8 +432,8 @@ public class FixedTravelAllowanceController extends BaseController {
         }
     }
 
-    public void executeUpdate(FixedTravelAllowance allowance) {
-        if (allowance == null){
+    public void executeUpdate(FixedTravelAllowance allowance, String expenseReportKey) {
+        if (allowance == null || StringUtilities.isNullOrEmpty(expenseReportKey)){
             return;
         }
 
@@ -438,6 +441,9 @@ public class FixedTravelAllowanceController extends BaseController {
         receiver.setListener(new BaseAsyncRequestTask.AsyncReplyListener() {
             @Override
             public void onRequestSuccess(Bundle resultData) {
+                resultData.getClass();
+//                FixedTravelAllowance resultAllowance = (FixedTravelAllowance) resultData.getSerializable(BundleId.);
+
 //                Itinerary resultItinerary = (Itinerary) resultData.getSerializable(BundleId.ITINERARY);
 //                boolean isSuccess = handleAfterUpdateResponse(resultItinerary);
 //                notifyListener(ControllerAction.UPDATE, isSuccess, resultData);
@@ -446,14 +452,14 @@ public class FixedTravelAllowanceController extends BaseController {
 
             @Override
             public void onRequestFail(Bundle resultData) {
-//                Message msg = new Message(Message.Severity.ERROR, "500", "Backend Dump!");
+                Message msg = new Message(Message.Severity.ERROR, "500", "Backend Dump!");
 //                messageCache.add(msg);
 //                notifyListener(ControllerAction.UPDATE, false, resultData);
             }
 
             @Override
             public void onRequestCancel(Bundle resultData) {
-
+                resultData.getClass();
             }
 
             @Override
@@ -462,8 +468,8 @@ public class FixedTravelAllowanceController extends BaseController {
             }
         });
 
-//        SaveItineraryRequest request = new SaveItineraryRequest(context, receiver, itinerary);
-//        request.execute();
+        UpdateFixedAllowances request = new UpdateFixedAllowances(context, receiver, expenseReportKey, allowance);
+        request.execute();
 
 
 
