@@ -43,9 +43,12 @@ public class ItineraryUpdateListAdapter extends ArrayAdapter<Object> {
      * Holds all UI controls needed for rendering
      */
     private final class ViewHolder {
-        private TextView tvTitle;
+
+        private View vMessageArea;
+        private ImageView ivIcon;
+        private TextView tvMessage;
+
         private View vDepartureLocation;
-        private View vgDepartureLocation;
         private TextView tvDepartureLocationLabel;
         private TextView tvDepartureLocationValue;
         private View vDepartureDateTime;
@@ -56,7 +59,6 @@ public class ItineraryUpdateListAdapter extends ArrayAdapter<Object> {
         private TextView tvDepartureTimeLabel;
         private TextView tvDepartureTimeValue;
         private View vArrivalLocation;
-        private View vgArrivalLocation;
         private TextView tvArrivalLocationLabel;
         private TextView tvArrivalLocationValue;
         private View vArrivalDateTime;
@@ -66,7 +68,6 @@ public class ItineraryUpdateListAdapter extends ArrayAdapter<Object> {
         private View vgArrivalTime;
         private TextView tvArrivalTimeLabel;
         private TextView tvArrivalTimeValue;
-        private ImageView icon;
     }
 
     public ItineraryUpdateListAdapter(final Context context, final OnClickListener onItemClickListener,
@@ -91,11 +92,15 @@ public class ItineraryUpdateListAdapter extends ArrayAdapter<Object> {
      */
     private void createViewHolder(final View view) {
         holder = new ViewHolder();
-        holder.tvTitle = (TextView) view.findViewById(R.id.tv_title);
-        holder.icon = (ImageView) view.findViewById(R.id.iv_icon);
+
+        holder.vMessageArea = view.findViewById(R.id.v_message_area);
+        if (holder.vMessageArea != null) {
+            holder.ivIcon = (ImageView) holder.vMessageArea.findViewById(R.id.iv_icon);
+            holder.tvMessage = (TextView) holder.vMessageArea.findViewById(R.id.tv_message);
+        }
+
         holder.vDepartureLocation = view.findViewById(R.id.v_departure_location);
         if (holder.vDepartureLocation != null) {
-            holder.vgDepartureLocation = holder.vDepartureLocation.findViewById(R.id.vg_location);
             holder.tvDepartureLocationLabel = (TextView) holder.vDepartureLocation.findViewById(R.id.tv_location_label);
             holder.tvDepartureLocationValue = (TextView) holder.vDepartureLocation.findViewById(R.id.tv_location_value);
         }
@@ -110,7 +115,6 @@ public class ItineraryUpdateListAdapter extends ArrayAdapter<Object> {
         }
         holder.vArrivalLocation = view.findViewById(R.id.v_arrival_location);
         if (holder.vArrivalLocation != null) {
-            holder.vgArrivalLocation = holder.vArrivalLocation.findViewById(R.id.vg_location);
             holder.tvArrivalLocationLabel = (TextView) holder.vArrivalLocation.findViewById(R.id.tv_location_label);
             holder.tvArrivalLocationValue = (TextView) holder.vArrivalLocation.findViewById(R.id.tv_location_value);
         }
@@ -140,8 +144,8 @@ public class ItineraryUpdateListAdapter extends ArrayAdapter<Object> {
             createViewHolder(resultView);
             resultView.setTag(holder);
             if (this.onItemClickListener != null) {
-                if (holder.tvTitle != null) {
-                    holder.tvTitle.setOnClickListener(onItemClickListener);
+                if (holder.vMessageArea != null) {
+                    holder.vMessageArea.setOnClickListener(onItemClickListener);
                 }
             }
             if (this.onLocationClickListener != null) {
@@ -187,7 +191,7 @@ public class ItineraryUpdateListAdapter extends ArrayAdapter<Object> {
         setPositionInfoTag(holder.vgArrivalDate, i, PositionInfoTag.INFO_INBOUND);
         setPositionInfoTag(holder.vgArrivalTime, i, PositionInfoTag.INFO_INBOUND);
 
-        renderTitle(segment);
+        renderMessageArea(segment);
         renderDeparture(segment);
         renderArrival(segment);
 
@@ -219,38 +223,36 @@ public class ItineraryUpdateListAdapter extends ArrayAdapter<Object> {
         return false;
     }
 
-    private void renderTitle(final ItinerarySegment segment) {
-        if (holder.tvTitle == null || segment == null) {
+    private void renderMessageArea(final ItinerarySegment segment) {
+        if (holder.vMessageArea == null || segment == null) {
             return;
         }
-        if (segment.getDepartureLocation() != null && segment.getArrivalLocation() != null) {
-            holder.tvTitle.setText(segment.getDepartureLocation().getName() + " - " + segment.getArrivalLocation().getName());
-        } else if (segment.getDepartureLocation() != null) {
-            holder.tvTitle.setText(segment.getDepartureLocation().getName());
-        } else if (segment.getArrivalLocation() != null) {
-            holder.tvTitle.setText(segment.getArrivalLocation().getName());
-        } else {
-            holder.tvTitle.setText(StringUtilities.EMPTY_STRING);
-        }
 
-        Message msg = null;
-        if (messageList != null) {
-            msg = ItineraryUtils.findMessage(messageList, segment);
-        }
-        if (msg != null && msg.getSeverity() == Message.Severity.ERROR) {
-            holder.tvTitle.setClickable(true);
-            holder.tvTitle.setError(msg.getMessageText(context));
-            holder.tvTitle.setTag(R.id.tag_message, msg);
-        } else {
-            holder.tvTitle.setClickable(false);
-            holder.tvTitle.setError(null);
-        }
-
+        holder.vMessageArea.setVisibility(View.GONE);
         if (segment.isLocked()) {
-            holder.icon.setImageResource(R.drawable.profile_icon_bank);
-            holder.icon.setVisibility(View.VISIBLE);
+            holder.vMessageArea.setVisibility(View.VISIBLE);
+            if (holder.ivIcon != null) {
+                holder.ivIcon.setImageResource(R.drawable.profile_icon_bank);
+                holder.ivIcon.setVisibility(View.VISIBLE);
+            }
+            if (holder.tvMessage != null) {
+                holder.tvMessage.setText("@Item is locked and cannot be edited@");
+            }
         } else {
-            holder.icon.setVisibility(View.GONE);
+            Message msg = null;
+            if (messageList != null) {
+                msg = ItineraryUtils.findMessage(messageList, segment);
+            }
+            if (msg != null && msg.getSeverity() == Message.Severity.ERROR) {
+                holder.vMessageArea.setVisibility(View.VISIBLE);
+                if (holder.ivIcon != null) {
+                    holder.ivIcon.setImageResource(R.drawable.icon_redex);
+                    holder.ivIcon.setVisibility(View.VISIBLE);
+                }
+                if (holder.tvMessage != null) {
+                    holder.tvMessage.setText(msg.getMessageText(context));
+                }
+            }
         }
     }
 

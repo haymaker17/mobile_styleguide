@@ -954,6 +954,13 @@
         <item name="android:fontFamily">sans-serif</item>
     </style>
 
+    <style name="DefaultMessage">
+        <item name="android:textSize">12sp</item>
+        <item name="android:textStyle">normal</item>
+        <item name="android:textColor">#bf6767</item>
+        <item name="android:fontFamily">sans-serif</item>
+    </style>
+
     <style name="DefaultValue">
         <item name="android:textSize">18sp</item>
         <item name="android:textStyle">normal</item>

@@ -2,32 +2,18 @@
 
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
-    android:id="@+id/vg_message"
+    android:id="@+id/vg_message_area"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:orientation="horizontal"
     tools:showIn="@layout/ta_edit_segment">
 
     <ImageView
-        android:id="@+id/iv_info_icon"
+        android:id="@+id/iv_icon"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:src="@drawable/icon_informational"
-        android:visibility="gone" />
+        android:src="@drawable/icon_informational" />
 
-    <ImageView
-        android:id="@+id/iv_error_icon"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:src="@drawable/icon_redex"
-        android:visibility="gone" />
-
-    <ImageView
-        android:id="@+id/iv_warning_icon"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:src="@drawable/icon_yellowex"
-        android:visibility="gone" />
 
     <TextView
         android:id="@+id/tv_message"
@@ -36,7 +22,7 @@
         android:layout_alignParentTop="true"
         android:layout_alignParentLeft="true"
         android:layout_marginLeft="56dp"
-        android:text="\@Error\@"
-        android:textAppearance="@style/DefaultLabel" />
+        android:text="\@Information\@"
+        android:textAppearance="@style/DefaultMessage" />
 
 </RelativeLayout>
