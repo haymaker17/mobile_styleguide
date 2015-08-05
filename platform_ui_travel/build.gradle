@@ -1,5 +1,4 @@
 apply plugin: 'com.android.library'
-apply plugin: 'jacoco'
 
 dependencies {
     compile fileTree(include: '*.jar', dir: 'libs')
