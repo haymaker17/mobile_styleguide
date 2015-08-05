@@ -12,7 +12,6 @@
         android:id="@+id/vg_date"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="4dp"
         android:layout_weight="0.39"
         android:orientation="horizontal">
 
@@ -22,6 +21,7 @@
             android:layout_height="11dp"
             android:layout_marginRight="16dp"
             android:layout_marginTop="2dp"
+            android:visibility="invisible"
             android:src="@drawable/icon_calendar_v1" />
 
         <TextView
@@ -31,9 +31,8 @@
             android:layout_alignParentTop="true"
             android:layout_toEndOf="@+id/iv_date_icon"
             android:layout_toRightOf="@+id/iv_date_icon"
-            android:fontFamily="sans-serif"
             android:text="\@Date\@"
-            android:textAppearance="@style/DailyAllowanceLabel" />
+            android:textAppearance="@style/DefaultLabel" />
 
         <TextView
             android:id="@+id/tv_date_value"
@@ -47,19 +46,18 @@
 
     </RelativeLayout>
 
-    <View
+    <include
         android:id="@+id/v_date_time_separator"
         android:layout_width="1dp"
         android:layout_height="match_parent"
         android:layout_gravity="center_vertical"
-        android:background="@color/CellBackgroundBottom"
-        android:clickable="false" />
+        android:clickable="false"
+        layout="@layout/ta_group_separator" />
 
     <RelativeLayout
         android:id="@+id/vg_time"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="4dp"
         android:layout_weight="0.59"
         android:orientation="horizontal">
 
@@ -69,9 +67,8 @@
             android:layout_height="wrap_content"
             android:layout_alignParentTop="true"
             android:layout_marginLeft="16dp"
-            android:fontFamily="sans-serif"
             android:text="\@Time\@"
-            android:textAppearance="@style/DailyAllowanceLabel" />
+            android:textAppearance="@style/DefaultLabel" />
 
         <TextView
             android:id="@+id/tv_time_value"

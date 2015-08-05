@@ -2,7 +2,7 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/ListStripeWhite"
+    android:background="@drawable/gradient_background"
     android:orientation="vertical">
 
     <android.support.v7.widget.Toolbar
@@ -46,7 +46,7 @@
             android:layout_height="wrap_content"
             android:layout_alignParentLeft="true"
             android:text="@string/ta_breakfast"
-            android:textAppearance="@style/DailyAllowanceLabel" />
+            android:textAppearance="@style/DefaultLabel" />
 
             <Switch
                 android:id="@+id/sv_breakfast_provided"
@@ -66,7 +66,7 @@
             android:layout_alignParentLeft="true"
             android:layout_alignParentStart="true"
             android:text="Large Text"
-            android:textAppearance="@style/DailyAllowanceContent" />
+            android:textAppearance="@style/DefaultValue.Small" />
 
         <Spinner
             android:id="@+id/sp_breakfast_provided"
@@ -96,7 +96,7 @@
             android:layout_height="wrap_content"
             android:layout_alignParentLeft="true"
             android:text="@string/ta_lunch"
-            android:textAppearance="@style/DailyAllowanceLabel" />
+            android:textAppearance="@style/DefaultLabel" />
 
         <TextView
             android:id="@+id/tv_lunch_provision"
@@ -105,7 +105,7 @@
             android:layout_alignParentLeft="true"
             android:layout_alignParentStart="true"
             android:text="Large Text"
-            android:textAppearance="@style/DailyAllowanceContent" />
+            android:textAppearance="@style/DefaultValue.Small" />
     </LinearLayout>
 
     <View
@@ -126,7 +126,7 @@
             android:layout_height="wrap_content"
             android:layout_alignParentLeft="true"
             android:text="@string/ta_dinner"
-            android:textAppearance="@style/DailyAllowanceLabel" />
+            android:textAppearance="@style/DefaultLabel" />
 
         <TextView
             android:id="@+id/tv_dinner_provision"
@@ -135,7 +135,7 @@
             android:layout_alignParentLeft="true"
             android:layout_alignParentStart="true"
             android:text="Large Text"
-            android:textAppearance="@style/DailyAllowanceContent" />
+            android:textAppearance="@style/DefaultValue.Small" />
     </LinearLayout>
 
     <View
@@ -157,7 +157,7 @@
             android:layout_height="wrap_content"
             android:layout_alignParentLeft="true"
             android:text="@string/ta_lodging"
-            android:textAppearance="@style/DailyAllowanceLabel" />
+            android:textAppearance="@style/DefaultLabel" />
 
         <TextView
             android:id="@+id/tv_lodging_value"
@@ -166,7 +166,7 @@
             android:layout_alignParentLeft="true"
             android:layout_alignParentStart="true"
             android:text="Large Text"
-            android:textAppearance="@style/DailyAllowanceContent" />
+            android:textAppearance="@style/DefaultValue.Small" />
     </LinearLayout>
 
     <RelativeLayout
@@ -182,7 +182,7 @@
             android:layout_height="wrap_content"
             android:layout_alignParentLeft="true"
             android:text="@string/ta_overnight"
-            android:textAppearance="@style/DailyAllowanceLabel" />
+            android:textAppearance="@style/DefaultLabel" />
 
         <TextView
         android:id="@+id/tv_overnight_help"
@@ -191,7 +191,7 @@
         android:layout_alignParentLeft="true"
         android:layout_alignParentStart="true"
         android:layout_below="@+id/tv_overnight_label"
-        android:textAppearance="@style/DailyAllowanceContent" />
+        android:textAppearance="@style/DefaultValue.Small" />
 
     </RelativeLayout>
 

@@ -4,43 +4,16 @@
     android:layout_height="match_parent"
     android:orientation="vertical">
 
-    <RelativeLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:background="@drawable/gradient_background">
-
-        <ImageView
-            android:id="@+id/iv_icon"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:visibility="gone"/>
-
-        <TextView
-            android:id="@+id/tv_title"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_toRightOf="@id/iv_icon"
-            android:paddingLeft="16dp"
-            android:text="\@Segment\@"
-            android:textAppearance="@style/DefaultTitle" />
-
-    </RelativeLayout>
-
-
     <include
         android:id="@+id/v_departure_location"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginLeft="16dp"
         android:layout_marginRight="16dp"
+        android:layout_marginBottom="16dp"
+        android:layout_marginTop="16dp"
         layout="@layout/ta_edit_location" />
 
-    <include
-        android:id="@+id/v_departure_separator_short"
-        android:layout_width="match_parent"
-        android:layout_height="1dp"
-        android:layout_marginLeft="16dp"
-        layout="@layout/group_separator_v1" />
 
     <include
         android:id="@+id/v_departure_date_time"
@@ -48,13 +21,8 @@
         android:layout_height="wrap_content"
         android:layout_marginLeft="16dp"
         android:layout_marginRight="16dp"
+        android:layout_marginBottom="16dp"
         layout="@layout/ta_edit_date_time" />
-
-    <include
-        android:id="@+id/v_departure_separator_long"
-        android:layout_width="match_parent"
-        android:layout_height="1dp"
-        layout="@layout/group_separator_v1" />
 
     <include
         android:id="@+id/v_arrival_location"
@@ -62,14 +30,9 @@
         android:layout_height="wrap_content"
         android:layout_marginLeft="16dp"
         android:layout_marginRight="16dp"
+        android:layout_marginBottom="16dp"
         layout="@layout/ta_edit_location" />
 
-    <include
-        android:id="@+id/v_arrival_separator_short"
-        android:layout_width="match_parent"
-        android:layout_height="1dp"
-        android:layout_marginLeft="16dp"
-        layout="@layout/group_separator_v1" />
 
     <include
         android:id="@+id/v_arrival_date_time"
@@ -77,12 +40,14 @@
         android:layout_height="wrap_content"
         android:layout_marginLeft="16dp"
         android:layout_marginRight="16dp"
+        android:layout_marginBottom="16dp"
         layout="@layout/ta_edit_date_time" />
 
     <include
-        android:id="@+id/v_arrival_separator_long"
+        android:id="@+id/v_arrival_separator_short"
         android:layout_width="match_parent"
         android:layout_height="1dp"
-        layout="@layout/group_separator_v1" />
+        android:layout_marginLeft="48dp"
+        layout="@layout/ta_group_separator" />
 
 </LinearLayout>

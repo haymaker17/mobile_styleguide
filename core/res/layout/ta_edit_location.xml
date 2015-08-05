@@ -24,9 +24,8 @@
         android:layout_alignParentTop="true"
         android:layout_toEndOf="@+id/iv_location_icon"
         android:layout_toRightOf="@+id/iv_location_icon"
-        android:fontFamily="sans-serif"
         android:text="\@Location\@"
-        android:textAppearance="@style/DailyAllowanceLabel" />
+        android:textAppearance="@style/DefaultLabel" />
 
     <TextView
         android:id="@+id/tv_location_value"

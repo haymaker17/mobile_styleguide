@@ -923,9 +923,12 @@
         <item name="android:textSize">20sp</item>
     </style>
 
+    <style name="DefaultDivider">
+        <item name="android:background">#dbe1e6</item>
+    </style>
 
     <style name="DefaultSoloTitle" parent="DefaultTitle">
-        <item name="android:textColor">#a7b6bf</item>
+        <item name="android:textColor">#7f8f97</item>
     </style>
 
     <style name="DefaultSubTitle">
@@ -935,11 +938,23 @@
         <item name="android:fontFamily">sans-serif-light</item>
     </style>
 
+    <style name="DefaultLabel">
+        <item name="android:textSize">12sp</item>
+        <item name="android:textStyle">normal</item>
+        <item name="android:textColor">#7f8f97</item>
+        <item name="android:fontFamily">sans-serif</item>
+    </style>
+
     <style name="DefaultValue">
         <item name="android:textSize">18sp</item>
         <item name="android:textStyle">normal</item>
         <item name="android:textColor">#0078C8</item>
         <item name="android:fontFamily">sans-serif</item>
+    </style>
+
+    <style name="DefaultValue.Small">
+        <item name="android:textSize">16sp</item>
+        <item name="android:textColor">#383f46</item>
     </style>
 
     <style name="GroupDivider">
