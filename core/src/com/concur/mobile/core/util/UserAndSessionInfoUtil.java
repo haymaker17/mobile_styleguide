@@ -125,7 +125,7 @@ public class UserAndSessionInfoUtil {
             ConfigUtil.updateSessionInfo(ctx, sessionInfo);
 
             //
-            //setLoginRequestFields(ctx.getApplicationContext(), signInMethod, ssoUrl);
+            setLoginRequestFields(ctx.getApplicationContext(), signInMethod, ssoUrl);
         }
         ConcurCore.saveLoginResponsePreferences(sessionInfo.getSessionId(), (ConcurCore) ctx.getApplicationContext(),
                 parseMap);
@@ -144,7 +144,7 @@ public class UserAndSessionInfoUtil {
     }
 
     // will retrieve the required fields to use in PPLoginRequestTask request for auto login scenario
-    /*public static void setLoginRequestFields(Context context, String signInMethod, String ssoUrl) {
+    public static void setLoginRequestFields(Context context, String signInMethod, String ssoUrl) {
         SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(context);
 
         MWSPlatformManager platformManager = (MWSPlatformManager) PlatformProperties.getPlatformSessionManager();
@@ -175,5 +175,5 @@ public class UserAndSessionInfoUtil {
         } else {
             platformManager.setAutoLoginEnabled(false);
         }
-    }*/
+    }
 }
