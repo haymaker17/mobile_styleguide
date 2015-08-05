@@ -1,0 +1,22 @@
+<manifest
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    package="com.concur.mobile.platform.ui.travel.test"
+    android:versionCode="2999"
+    android:versionName="0.0.0"
+    >
+
+    <uses-sdk
+        android:minSdkVersion="16"
+        android:targetSdkVersion="16"
+        />
+    <!-- <uses-permission android:name="android.permission.INTERNET" />
+     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
+     <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION"/>
+     <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION"/>
+     -->ß
+    <application android:name=".PlatformUITravelTestApplication">
+        <!-- Providers -->
+        <!-- Configuration Information Provider -->
+    </application>
+
+</manifest>
