@@ -194,7 +194,7 @@ public class RequestEntryActivity extends AbstractConnectFormFieldActivity imple
                     entry.setRequestId(requestId);
                     entry.setListSegment(new ArrayList<RequestSegmentDTO>());
                     final RequestSegmentDTO segment = new RequestSegmentDTO();
-                    segment.setDisplayOrder(0);
+                    segment.setDisplayOrder(1);
                     entry.getListSegment().add(segment);
 
                     final String requestSegmentTypeCode = bundle
@@ -324,7 +324,7 @@ public class RequestEntryActivity extends AbstractConnectFormFieldActivity imple
             } else {
                 oneWaySegment = inUseListSegment.iterator().next();
             }
-            oneWaySegment.setDisplayOrder(0);
+            oneWaySegment.setDisplayOrder(1);
             setDisplayFields(oneWaySegment, core.getRequestFormFieldsCache().getValue(entry.getSegmentFormId()),
                     fieldLayout, null, null);
         } else if (idFragment == TAB_ROUND_TRIP) {
@@ -368,7 +368,7 @@ public class RequestEntryActivity extends AbstractConnectFormFieldActivity imple
                 }
             }
 
-            int displayOrder = 0;
+            int displayOrder = 1;
             for (RequestSegmentDTO segment : inUseListSegment) {
                 segment.setDisplayOrder(displayOrder);
                 setDisplayFields(segment, core.getRequestFormFieldsCache().getValue(entry.getSegmentFormId()),
@@ -389,7 +389,7 @@ public class RequestEntryActivity extends AbstractConnectFormFieldActivity imple
             inUseListSegment = segmentsMultiLeg;
             //XXX
 
-            int displayOrder = 0;
+            int displayOrder = 1;
             for (RequestSegmentDTO segment : inUseListSegment) {
                 segment.setDisplayOrder(displayOrder);
                 displayOrder++;
@@ -811,7 +811,7 @@ public class RequestEntryActivity extends AbstractConnectFormFieldActivity imple
                 entry.setListSegment(segmentsMultiLeg);
             }
             final int length = entry.getListSegment().size();
-            for (int i = 0; i < length; i++) {
+            for (int i = 1; i <= length; i++) {
                 final RequestSegmentDTO segment = entry.getListSegment().get(i);
                 // --- Applies a bulletproof display order
                 segment.setDisplayOrder(i);
