@@ -121,6 +121,8 @@ import java.util.TimeZone;
 
 public abstract class ConcurCore extends MultiDexApplication {
 
+    public BaseAsyncResultReceiver autoLoginReceiver = new BaseAsyncResultReceiver(new Handler());
+
     // Maps between an activity class name and the list of currently running
     // AsyncTasks that were spawned while it was active.
     private final Map<String, List<CustomAsyncRequestTask>> mActivityTaskMap = new HashMap<String, List<CustomAsyncRequestTask>>();
@@ -2940,6 +2942,10 @@ public abstract class ConcurCore extends MultiDexApplication {
         if (requiredCustomFields == null)
             requiredCustomFields = Boolean.FALSE;
 
+        Boolean disableAutoLogin = (Boolean) responses.get(Const.LR_DISABLE_AUTO_LOGIN);
+        if (disableAutoLogin == null)
+            disableAutoLogin = Boolean.FALSE;
+
         Integer travelProfileStatus = (Integer) responses.get(Const.LR_TRAVEL_PROFILE_STATUS);
         Boolean hideReceiptStore = (Boolean) responses.get(Const.LR_SITE_SETTINGS_HIDE_RECEIPT_STORE);
         if (hideReceiptStore == null)
@@ -3013,6 +3019,7 @@ public abstract class ConcurCore extends MultiDexApplication {
         PreferenceUtil.savePreference(prefs, Const.PREF_ENABLE_SPDY, enableSpdy);
 
         PreferenceUtil.savePreference(prefs, Const.PREF_REQUIRED_CUSTOM_FIELDS, requiredCustomFields);
+        PreferenceUtil.savePreference(prefs, Const.PREF_DISABLE_AUTO_LOGIN, disableAutoLogin);
         PreferenceUtil.savePreference(prefs, Const.PREF_TRAVEL_PROFILE_STATUS, travelProfileStatus);
 
         PreferenceUtil.savePreference(prefs, Const.PREF_HAS_FIXED_TA, hasFixedTA);

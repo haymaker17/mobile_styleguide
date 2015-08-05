@@ -254,12 +254,18 @@ public class Preferences extends PreferenceActivity implements OnSharedPreferenc
                 // Clear pin
                 clearPin(ps.getSharedPreferences());
 
-                if (clearLoginID) {
+                if (clearLoginID || Const.PREF_AUTO_LOGIN.equals(key)){
                     // If not saving login then unset auto
                     CheckBoxPreference autoLogin = (CheckBoxPreference) ps.findPreference(Const.PREF_AUTO_LOGIN);
                     if (autoLogin != null) {
                         autoLogin.setChecked(false);
                     }
+                }
+            } else {
+                // If saving login then set auto login to true
+                CheckBoxPreference autoLogin = (CheckBoxPreference) ps.findPreference(Const.PREF_AUTO_LOGIN);
+                if (autoLogin != null) {
+                    autoLogin.setChecked(true);
                 }
             }
 
@@ -734,6 +740,7 @@ public class Preferences extends PreferenceActivity implements OnSharedPreferenc
 
     public static void enableAutoLogin(SharedPreferences prefs) {
         Editor e = prefs.edit();
+
         e.putBoolean(Const.PREF_DISABLE_AUTO_LOGIN, false);
         e.commit();
 
@@ -1542,12 +1549,16 @@ public class Preferences extends PreferenceActivity implements OnSharedPreferenc
 
     // need to pull this out to some other appropriate class
     public static void doAutoLogin(SharedPreferences prefs, final ConcurCore app) {
-        BaseAsyncResultReceiver autoLoginReceiver = new BaseAsyncResultReceiver(new Handler());
+        //BaseAsyncResultReceiver autoLoginReceiver = new BaseAsyncResultReceiver(new Handler());
         final Bundle emailLookupBundle;
         final SessionInfo sessionInfo = ConfigUtil.getSessionInfo(app.getApplicationContext());
+        boolean disableAutoLogin = prefs.getBoolean(Const.PREF_DISABLE_AUTO_LOGIN, false);
         boolean autoLogin = prefs.getBoolean(Const.PREF_AUTO_LOGIN, false);
+        if(disableAutoLogin) {
+            autoLogin = false;
+        }
         Log.d(Const.LOG_TAG,
-                "-------------------------------------------------------------------------------------------autologin from prefs = "
+                "-------------------------------------------------------------------------------------------autoLogin from prefs = "
                         + autoLogin);
         // If auto-login is enabled and company sign-on is being used, then force autoLogin to 'false'.
         // Company Sign-on auto-login is not currently supported.
@@ -1583,12 +1594,12 @@ public class Preferences extends PreferenceActivity implements OnSharedPreferenc
                 emailLookupBundle.putString(EmailLookUpRequestTask.EXTRA_SSO_URL_KEY, sessionInfo.getSSOUrl());
             } else {
                 // need to expire the login
-                app.expireLogin();
+                app.expireLogin(true);
                 return;
             }
 
             Log.d(Const.LOG_TAG, "attempting autologin");
-            autoLoginReceiver.setListener(new BaseAsyncRequestTask.AsyncReplyListener() {
+            app.autoLoginReceiver.setListener(new BaseAsyncRequestTask.AsyncReplyListener() {
 
                                               public void onRequestSuccess(Bundle resultData) {
                                                   Log.d(Const.LOG_TAG,
@@ -1636,7 +1647,7 @@ public class Preferences extends PreferenceActivity implements OnSharedPreferenc
             // perform an full AutoLoginRequest in order to get
             // all the user roles, site settings, car configs, etc. and all that other good stuff.
             AutoLoginRequestTask autoLoginRequestTask = new AutoLoginRequestTask(ConcurCore.getContext(), 0,
-                    autoLoginReceiver, Locale.getDefault());
+                    app.autoLoginReceiver, Locale.getDefault());
             autoLoginRequestTask.execute();
         } else {
 

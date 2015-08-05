@@ -1,9 +1,5 @@
 package com.concur.mobile.core.util;
 
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-
 import android.content.Context;
 import android.content.SharedPreferences;
 import android.content.SharedPreferences.Editor;
@@ -11,17 +7,17 @@ import android.os.Bundle;
 import android.preference.PreferenceManager;
 import android.text.TextUtils;
 import android.util.Log;
-
 import com.concur.mobile.core.ConcurCore;
 import com.concur.mobile.core.activity.Preferences;
 import com.concur.mobile.core.util.net.SiteSettings;
-import com.concur.mobile.platform.authentication.EmailLookUpRequestTask;
-import com.concur.mobile.platform.authentication.Permissions;
-import com.concur.mobile.platform.authentication.SessionInfo;
-import com.concur.mobile.platform.authentication.SiteSettingInfo;
-import com.concur.mobile.platform.authentication.UserInfo;
+import com.concur.mobile.platform.authentication.*;
 import com.concur.mobile.platform.config.provider.ConfigUtil;
+import com.concur.mobile.platform.service.MWSPlatformManager;
 import com.concur.platform.PlatformProperties;
+
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 
 public class UserAndSessionInfoUtil {
 
@@ -33,8 +29,8 @@ public class UserAndSessionInfoUtil {
         // MOB-21232 - There can be a race condition where session is being renewed/re-authenticated
         // and then the user logs out. In that case, the SessionInfo can be null, so just return.
         if (sessionInfo == null) {
-            Log.w(Const.LOG_TAG, CLS_TAG
-                    + ".updateUserAndSessionInfo() - SessionInfo is null! Perhaps the user has logged out.");
+            Log.w(Const.LOG_TAG,
+                    CLS_TAG + ".updateUserAndSessionInfo() - SessionInfo is null! Perhaps the user has logged out.");
             return;
         }
 
@@ -82,6 +78,7 @@ public class UserAndSessionInfoUtil {
 
         parseMap.put(Const.LR_TRAVEL_PROFILE_STATUS, userInfo.getProfileStatus());
         parseMap.put(Const.LR_REQUIRED_CUSTOM_FIELDS, userInfo.hasRequiredCustomFields());
+        parseMap.put(Const.LR_DISABLE_AUTO_LOGIN, userInfo.getDisableAutoLogin());
         parseMap.put(Const.LR_USER_ID, userInfo.getUserId());
         parseMap.put(Const.LR_ROLES, userInfo.getRolesMobile());
         parseMap.put(Const.LR_SITE_SETTINGS_ENABLE_CONDITIONAL_FIELD_EVALUATION,
@@ -127,6 +124,8 @@ public class UserAndSessionInfoUtil {
             // update session info so you will get it once everything is updated.
             ConfigUtil.updateSessionInfo(ctx, sessionInfo);
 
+            //
+            //setLoginRequestFields(ctx.getApplicationContext(), signInMethod, ssoUrl);
         }
         ConcurCore.saveLoginResponsePreferences(sessionInfo.getSessionId(), (ConcurCore) ctx.getApplicationContext(),
                 parseMap);
@@ -143,4 +142,38 @@ public class UserAndSessionInfoUtil {
             PlatformProperties.setServerAddress(serverUrl);
         }
     }
+
+    // will retrieve the required fields to use in PPLoginRequestTask request for auto login scenario
+    /*public static void setLoginRequestFields(Context context, String signInMethod, String ssoUrl) {
+        SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(context);
+
+        MWSPlatformManager platformManager = (MWSPlatformManager) PlatformProperties.getPlatformSessionManager();
+
+        // set auto login
+        boolean disableAutoLogin = prefs.getBoolean(Const.PREF_DISABLE_AUTO_LOGIN, false);
+        boolean autoLogin = prefs.getBoolean(Const.PREF_AUTO_LOGIN, false);
+        if (disableAutoLogin) {
+            autoLogin = false;
+        }
+
+        // If auto-login is enabled and company sign-on is being used, then force autoLogin to 'false'.
+        // Company Sign-on auto-login is not currently supported.
+        //setAuthenticationType(MWSPlatformManager.AuthenticationType.PPLogin);
+        //String loginMethod = sessionInfo.getSignInMethod();
+        if(autoLogin) {
+            if ("SSO".equalsIgnoreCase(signInMethod) || !(TextUtils.isEmpty(ssoUrl))) {
+                platformManager.setAutoLoginEnabled(false);
+                platformManager.setAuthenticationType(MWSPlatformManager.AuthenticationType.SSO);
+            } else {
+                platformManager.setAutoLoginEnabled(true);
+                if (signInMethod.equalsIgnoreCase(com.concur.mobile.platform.ui.common.util.Const.LOGIN_METHOD_PASSWORD)) {
+                    platformManager.setAuthenticationType(MWSPlatformManager.AuthenticationType.Password);
+                } else {
+                    platformManager.setAuthenticationType(MWSPlatformManager.AuthenticationType.MobilePassword);
+                }
+            }
+        } else {
+            platformManager.setAutoLoginEnabled(false);
+        }
+    }*/
 }
