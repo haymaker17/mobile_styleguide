@@ -29,8 +29,8 @@ public class RequestEntryDTO {
     @Expose @SerializedName("Segments")
     private List<RequestSegmentDTO> listSegment = new ArrayList<RequestSegmentDTO>();
     @Expose @SerializedName("ForeignCurrencyCode") private String foreignCurrencyCode;
+    @Expose @SerializedName("ForeignCurrencyName") private String foreignCurrencyName;
     @Expose @SerializedName("ForeignAmount") private Double foreignAmount;
-    @SerializedName("Comments") private List<RequestCommentDTO> comments;
     @SerializedName("ExpenseTypeName") private String expenseTypeName;
     @Expose @SerializedName("TripType") private TripType tripType;
 
@@ -38,7 +38,9 @@ public class RequestEntryDTO {
     @SerializedName("SegmentTypeName") private String segmentType;
     @SerializedName("SegmentTypeCode") private String segmentTypeCode;
     @Expose @SerializedName("SegmentTypeID") private String segmentTypeId;
+    @SerializedName("Exceptions") private List<RequestExceptionDTO> exceptions;
 
+    private List<RequestCommentDTO> comments;
     private Integer displayOrder = 1;
 
     // --- This is some horrible stuff required to post an entry...
@@ -138,5 +140,13 @@ public class RequestEntryDTO {
 
     public Integer getDisplayOrder() {
         return displayOrder;
+    }
+
+    public List<RequestExceptionDTO> getExceptions() {
+        return exceptions;
+    }
+
+    public void setExceptions(List<RequestExceptionDTO> exceptions) {
+        this.exceptions = exceptions;
     }
 }

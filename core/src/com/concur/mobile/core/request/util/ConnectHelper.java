@@ -27,7 +27,7 @@ public class ConnectHelper {
         REQUEST("travelrequest/requests"),
         REQUEST_ENTRY("travelrequest/segmentsentries"),
         GROUP_CONFIGURATIONS("travelrequest/requestgroupconfigurations"),
-        FORM_FIELDS("expense/formfields");
+        FORM_FIELDS("travelrequest/formsfields");
 
         public String moduleValue;
 

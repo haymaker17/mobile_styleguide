@@ -45,14 +45,16 @@ public class RequestDTO implements FormDTO {
     @Expose @SerializedName("EndDate") private Date endDate;
     @Expose @SerializedName("CreationDate") private Date requestDate;
     @Expose @SerializedName("Comment") private String lastComment;
-    @SerializedName("UserLoginID") private String userLoginId;
-    @SerializedName("ApproverLoginID") private String approverLoginId;
-    @SerializedName("SegmentTypes") private String segmentListString;
-    @SerializedName("HighestExceptionLevel") private String highestExceptionLevel;
+    @SerializedName("Comments") private List<RequestCommentDTO> commentHistory;
+    @SerializedName("LoginID") private String userLoginId;
+    @SerializedName("HighestExceptionLevel") private RequestExceptionDTO.ExceptionLevel highestExceptionLevel;
     @Expose @SerializedName("HeaderFormID") private String headerFormId;
+    @SerializedName("Exceptions") private List<RequestExceptionDTO> exceptions;
 
     // --- required to post/put
     @Expose @SerializedName(("PolicyID")) private String policyId;
+
+    @SerializedName("SegmentsEntries") private List<RequestEntryDTO> entryList;
 
     private Map<String, RequestEntryDTO> entriesMap;
 
@@ -164,22 +166,6 @@ public class RequestDTO implements FormDTO {
         this.userLoginId = userLoginId;
     }
 
-    public String getApproverLoginId() {
-        return approverLoginId;
-    }
-
-    public void setApproverLoginId(String approverLoginId) {
-        this.approverLoginId = approverLoginId;
-    }
-
-    public String getSegmentListString() {
-        return segmentListString;
-    }
-
-    public void setSegmentListString(String segmentList) {
-        this.segmentListString = segmentList;
-    }
-
     public String getHeaderFormId() {
         return headerFormId;
     }
@@ -208,12 +194,28 @@ public class RequestDTO implements FormDTO {
         this.policyId = policyId;
     }
 
-    public String getHighestExceptionLevel() {
+    public List<RequestCommentDTO> getCommentHistory() {
+        return commentHistory;
+    }
+
+    public void setCommentHistory(List<RequestCommentDTO> commentHistory) {
+        this.commentHistory = commentHistory;
+    }
+
+    public RequestExceptionDTO.ExceptionLevel getHighestExceptionLevel() {
         return highestExceptionLevel;
     }
 
-    public void setHighestExceptionLevel(String highestExceptionLevel) {
+    public void setHighestExceptionLevel(RequestExceptionDTO.ExceptionLevel highestExceptionLevel) {
         this.highestExceptionLevel = highestExceptionLevel;
+    }
+
+    public List<RequestExceptionDTO> getExceptions() {
+        return exceptions;
+    }
+
+    public void setExceptions(List<RequestExceptionDTO> exceptions) {
+        this.exceptions = exceptions;
     }
 
     public boolean isActionPermitted(RequestParser.PermittedAction action) {
