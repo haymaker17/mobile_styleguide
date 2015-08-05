@@ -1,24 +1,26 @@
 <div class="container">
 <section>
-<h2>Welcome to the Concur Mobile Style Guide!</h2>
+<h1>Welcome to the Concur Mobile Style Guide!</h1>
 <p>This style guide is provided to help Concur designers and engineers build consistant and engaging applications for Concur.</p>
 </section>
 
 <section>
-<h2>How to use this Style Guide</h2>
+<h1>How to use this Style Guide</h1>
 <p>The Concur Mobile styleguide is broken up by platforms. Each platform has their own requirments for design and are unique to their eco-system. As more platforms are added to Concur we (the Mobile Design team) will add them to the style guide.</p>
 <p>
 <ul class="img_block large no_hover">
-<li class="fadeinElement"><img src="img/logos/logo_apple.svg" height="50" width="50" /></li>
-<li class="fadeinElement"><img src="img/logos/logo_android.svg" height="50" width="50" /></li>
-<li class="fadeinElement"><img src="img/logos/logo_windows.svg" height="50" width="50" /></li>
+<li class="fadeinElement"><a href='#pages/ios/components_status_bar.html?&cat=iOS&parent=Bars&title=Status%20Bar'><img src="img/logos/logo_apple.svg" height="50" width="50" alt="Apple" /></a></li>
+<!-- <li class="fadeinElement"><a href='#pages/ios/introduction.html?&cat=concur&parent=concur&title=Introduction'><img src="img/logos/logo_apple.svg" height="50" width="50" alt="Apple" /></a></li> -->
+<li class="fadeinElement"><a href='#pages/android/introduction.html?&cat=android&parent=android&title=Introduction'><img src="img/logos/logo_android.svg" height="50" width="50" alt="Android" /></a></li>
+<li class="fadeinElement"><a href='#pages/windows/introduction.html?&cat=windows&parent=windows&title=Introduction'><img src="img/logos/logo_windows.svg" height="50" width="50" alt="Windows" /></a></li>
 </ul>
 </p>
 <p>Each platform section consists of style, typography, color, icons, animation, layyout, and components. As seen in the navigation to the left.</p>
 </section>
 
+<!--
 <section>
-<h2>Platform Categories</h2>
+<h1>Platform Categories</h1>
 <p>
 <ul class="img_block medium no_hover">
 <li class="fadeinElement"><img src="img/icons_web/icon_patterns.svg" 		height="30" width="30" /><span>Patterns</span></li>
@@ -32,9 +34,11 @@
 </p>
 <p>Each platform section consists of style, typography, color, icons, animation, layyout, and components. As seen in the navigation to the left.</p>
 </section>
+-->
 
+<!--
 <section>
-<h2>Device Sizes</h2>
+<h1>Device Sizes</h1>
 <p><img class="img_centered" src="img/devices.png" height="324" width="453" alt="devices" /></p>
 <p>
 	<h3>Common Phones</h3>
@@ -176,15 +180,38 @@
 </p>
 
 </section>
+-->
 
 
+<!--
 <section class="changelist">
-	<h2>Change Log</h2>
-	<a href="">Show Change Log</a>
-	<div class="changelist_body">
+	<h4>Change Log</h4>
+	<p>
+		<div class="responsivetable">
+			<table class="changelist_body">
+			</table>
+		</div>
+	</p>
+</section>
+-->
+
+<section>
+	<h1>Change Log</h1>
+		<!-- <a href="">Show Change Log</a><div class="changelist_body"> -->
+	<p>
+		<div class="responsivetable">
+			<table class="changelist">
+			</table>
+		</div>
+	</p>
 </section>
 
 <script>
+$(document).ready(function(){
+	getGithubCommits();
+});
+
+/*
 $(function() { 
 	$(".changelist").on("click","a", function(ev){
 		ev.preventDefault();
@@ -192,9 +219,8 @@ $(function() {
 	})
 	
 });
+*/
 </script>
-
-
 
 </div>
 
