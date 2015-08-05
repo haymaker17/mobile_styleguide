@@ -22,8 +22,8 @@ import com.concur.mobile.platform.util.CursorUtil;
 import com.concur.mobile.platform.util.Parse;
 import com.google.gson.annotations.SerializedName;
 
+import java.io.ByteArrayOutputStream;
 import java.io.Serializable;
-import java.nio.ByteBuffer;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.List;
@@ -56,7 +56,7 @@ public class ExpenseItReceipt implements ExpenseItReceiptDAO, Serializable {
     private Calendar sendToCteAt;
 
     @SerializedName("imageData")
-    private Bitmap imageData;
+    private byte[] imageData;
 
     @SerializedName("totalImageCount")
     private int totalImageCount;
@@ -186,9 +186,11 @@ public class ExpenseItReceipt implements ExpenseItReceiptDAO, Serializable {
             sendToCteAtCol.set(Calendar.MILLISECOND, 0);
             receipt.setSendToCteAt(sendToCteAtCol.getTime());
         }
-        byte [] imageData = CursorUtil.getBlobValue(cursor, Expense
+        byte[] imageData = CursorUtil.getBlobValue(cursor, Expense
                 .ExpenseItReceiptColumns.IMAGE_DATA);
-        receipt.setImageData(BitmapFactory.decodeByteArray(imageData, 0, imageData.length));
+        if (imageData != null) {
+            receipt.setImageData(BitmapFactory.decodeByteArray(imageData, 0, imageData.length));
+        }
         receipt.setTotalImageCount(CursorUtil.getIntValue(cursor, Expense.ExpenseItReceiptColumns.TOTAL_IMAGE_COUNT));
         receipt.setTotalImagesUploaded(CursorUtil.getIntValue(cursor, Expense.ExpenseItReceiptColumns.TOTAL_IMAGES_UPLOADED));
         receipt.setParsingStatusCode(CursorUtil.getIntValue(cursor, Expense.ExpenseItReceiptColumns.PARSING_STATUS_CODE));
@@ -221,18 +223,14 @@ public class ExpenseItReceipt implements ExpenseItReceiptDAO, Serializable {
             sendToCteAt.setTimeInMillis(sentToCtedMilliSeconds);
             sendToCteAt.set(Calendar.MILLISECOND, 0);
         }
-        byte [] imageDataBlob = CursorUtil.getBlobValue(cursor, Expense.ExpenseItReceiptColumns
-                .IMAGE_DATA);
-        if (imageDataBlob != null) {
-            imageData = BitmapFactory.decodeByteArray(imageDataBlob, 0, imageDataBlob.length);
-        }
+        imageData = CursorUtil.getBlobValue(cursor, Expense.ExpenseItReceiptColumns.IMAGE_DATA);
         totalImageCount = CursorUtil.getIntValue(cursor, Expense.ExpenseItReceiptColumns.TOTAL_IMAGE_COUNT);
         totalImagesUploaded = CursorUtil.getIntValue(cursor, Expense.ExpenseItReceiptColumns.TOTAL_IMAGES_UPLOADED);
         parsingStatusCode = CursorUtil.getIntValue(cursor, Expense.ExpenseItReceiptColumns.PARSING_STATUS_CODE);
         processingEngine = CursorUtil.getStringValue(cursor, Expense.ExpenseItReceiptColumns.PROCESSING_ENGINE);
 
         Integer errCode = CursorUtil.getIntValue(cursor, Expense.ExpenseItReceiptColumns.ERROR_CODE);
-        if(errCode != null) {
+        if (errCode != null) {
             errorCode = errCode;
         }
         errorMessage = CursorUtil.getStringValue(cursor, Expense.ExpenseItReceiptColumns.ERROR_MESSAGE);
@@ -247,25 +245,6 @@ public class ExpenseItReceipt implements ExpenseItReceiptDAO, Serializable {
         }
     }
 
-    private byte[] bitmapToByteArray(Bitmap bitmap) {
-        int iBytes = 0;
-        ByteBuffer buffer = null;
-
-        if (bitmap == null){
-            return null;
-        }
-
-        // Create the buffer with the correct size
-        iBytes = bitmap.getWidth() * bitmap.getHeight() * 4;
-        buffer = ByteBuffer.allocate(iBytes);
-
-        // Copy to buffer and then into byte array
-        bitmap.copyPixelsToBuffer(buffer);
-
-        return buffer.array();
-    }
-
-
     @Override
     public Uri getContentUri(Context context, String userId) {
         if (contentUri == null) {
@@ -273,7 +252,7 @@ public class ExpenseItReceipt implements ExpenseItReceiptDAO, Serializable {
                 String[] columnNames = {Expense.ExpenseItReceiptColumns.ID, Expense.ExpenseItReceiptColumns.USER_ID};
                 String[] columnValues = {Long.toString(id), userId};
                 contentUri = ContentUtils.getContentUri(context, Expense.ExpenseItReceiptColumns.CONTENT_URI, columnNames,
-                    columnValues);
+                        columnValues);
             }
         }
         return contentUri;
@@ -312,8 +291,14 @@ public class ExpenseItReceipt implements ExpenseItReceiptDAO, Serializable {
         ContentUtils.putValue(values, Expense.ExpenseItReceiptColumns.CCTYPE, ccType);
         ContentUtils.putValue(values, Expense.ExpenseItReceiptColumns.CREATED_AT, createdAt == null ? null : createdAt.getTimeInMillis());
         ContentUtils.putValue(values, Expense.ExpenseItReceiptColumns.SEND_TO_CTE_AT, sendToCteAt == null ? null : sendToCteAt.getTimeInMillis());
-        ContentUtils.putValue(values, Expense.ExpenseItReceiptColumns.IMAGE_DATA,
-                bitmapToByteArray(imageData));
+
+        if (imageData != null) {
+            if (imageData.length < 800000) {
+                ContentUtils.putValue(values, Expense.ExpenseItReceiptColumns.IMAGE_DATA,
+                        imageData);
+            }
+        }
+
         ContentUtils.putValue(values, Expense.ExpenseItReceiptColumns.TOTAL_IMAGE_COUNT, totalImageCount);
         ContentUtils.putValue(values, Expense.ExpenseItReceiptColumns.TOTAL_IMAGES_UPLOADED, totalImagesUploaded);
         ContentUtils.putValue(values, Expense.ExpenseItReceiptColumns.PARSING_STATUS_CODE, parsingStatusCode);
@@ -336,7 +321,7 @@ public class ExpenseItReceipt implements ExpenseItReceiptDAO, Serializable {
             } else {
                 if (rowsUpdated > 1) {
                     Log.w(Const.LOG_TAG, CLS_TAG + ".update: more than 1 row updated for Uri '" + expenseItUri.toString()
-                        + "'.");
+                            + "'.");
                 }
                 retVal = true;
             }
@@ -381,7 +366,13 @@ public class ExpenseItReceipt implements ExpenseItReceiptDAO, Serializable {
 
     @Override
     public Bitmap getImageData() {
-        return imageData;
+        Bitmap bitmap = null;
+
+        if (imageData != null){
+            bitmap = BitmapFactory.decodeByteArray(imageData, 0, imageData.length);
+        }
+
+        return bitmap;
     }
 
     @Override
@@ -453,7 +444,18 @@ public class ExpenseItReceipt implements ExpenseItReceiptDAO, Serializable {
 
     @Override
     public void setImageData(Bitmap imageData) {
-        this.imageData = imageData;
+        ByteArrayOutputStream byteArrayOutputStream = null;
+
+        if (imageData == null) return;
+
+        try {
+            byteArrayOutputStream = new ByteArrayOutputStream();
+            imageData.compress(Bitmap.CompressFormat.JPEG, 100, byteArrayOutputStream);
+            byteArrayOutputStream.close();
+            this.imageData = byteArrayOutputStream.toByteArray();
+        } catch (Exception ex) {
+            Log.d(CLS_TAG, ex.getMessage());
+        }
     }
 
     @Override

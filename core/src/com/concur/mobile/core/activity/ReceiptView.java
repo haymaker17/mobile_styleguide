@@ -4,19 +4,24 @@
 package com.concur.mobile.core.activity;
 
 import android.content.Intent;
+import android.database.Cursor;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.os.Bundle;
 import android.os.Handler;
+import android.view.View;
 import android.widget.ImageView;
+import android.widget.ProgressBar;
 
 import com.concur.core.R;
 import com.concur.mobile.base.service.BaseAsyncRequestTask;
 import com.concur.mobile.base.service.BaseAsyncResultReceiver;
 import com.concur.mobile.core.ConcurCore;
 import com.concur.mobile.core.util.Const;
+import com.concur.mobile.core.util.EventTracker;
+import com.concur.mobile.core.util.Flurry;
+import com.concur.mobile.platform.expense.provider.Expense;
 import com.concur.mobile.platform.expenseit.ExpenseItGetImageUrlResponse;
-import com.concur.mobile.platform.expenseit.ExpenseItPostReceipt;
 import com.concur.mobile.platform.expenseit.ExpenseItReceipt;
 import com.concur.mobile.platform.expenseit.GetExpenseItImageUrlAsyncTask;
 
@@ -34,7 +39,9 @@ public class ReceiptView extends BaseActivity {
 
     private ImageView imageView = null;
 
-    private ExpenseItPostReceipt expenseItPostReceipt = null;
+    private ProgressBar progressBar = null;
+
+    private ExpenseItReceipt expenseItReceipt = null;
 
     BaseAsyncRequestTask.AsyncReplyListener asyncReplyListener = new BaseAsyncRequestTask
             .AsyncReplyListener() {
@@ -49,13 +56,15 @@ public class ReceiptView extends BaseActivity {
                 public void run() {
                     final Bitmap bitmap;
                     bitmap = getBitmapFromURL(response.getImages().get(0).getImageDataUrl());
-                    if (expenseItPostReceipt != null){
-                        expenseItPostReceipt.setImageData(bitmap);
+                    if (expenseItReceipt != null){
+                        expenseItReceipt.setImageData(bitmap);
+                        expenseItReceipt.update(ReceiptView.this, getUserId());
                     }
 
                     imageView.post(new Runnable() {
                         @Override
                         public void run() {
+                            progressBar.setVisibility(View.GONE);
                             imageView.setImageBitmap(bitmap);
                         }
                     });
@@ -65,7 +74,7 @@ public class ReceiptView extends BaseActivity {
 
         @Override
         public void onRequestFail(Bundle resultData) {
-
+            EventTracker.INSTANCE.track(Flurry.EVENT_SHOW_ANALYZING_RECEIPT_FAILED, Flurry.EVENT_SHOW_ANALYZING_RECEIPT_FAILED);
         }
 
         @Override
@@ -97,6 +106,7 @@ public class ReceiptView extends BaseActivity {
         setContentView(R.layout.receipt_view);
 
         imageView = (ImageView) findViewById(R.id.imgvMain);
+        progressBar = (ProgressBar) findViewById(R.id.progressBar);
 
         intent = getIntent();
         if (intent.hasExtra(Const.EXTRA_EXPENSE_IT_RECEIPT_ID)) {
@@ -107,18 +117,24 @@ public class ReceiptView extends BaseActivity {
 
         getSupportActionBar().setTitle(screenTitle);
 
-        //TODO Harold - Fix Database query to check for existing image
         if (expenseItReceiptId != 0) {
-            ExpenseItReceipt expenseItReceipt = new ExpenseItReceipt(ConcurCore.getContext(), getUserId());
-            for(ExpenseItPostReceipt receipt: expenseItReceipt.getReceipts()){
-                if (receipt.getId() == expenseItReceiptId){
-                    expenseItPostReceipt = receipt;
-                }
-            }
+            StringBuilder statement = new StringBuilder();
+            statement.append(Expense.ExpenseItReceiptColumns.USER_ID);
+            statement.append(" = ? AND ");
+            statement.append(Expense.ExpenseItReceiptColumns.ID);
+            statement.append(" = ?");
+            String[] whereArgs = {getUserId(), expenseItReceiptId.toString()};
+            Cursor cursor = getContentResolver().query(Expense.ExpenseItReceiptColumns.CONTENT_URI, null, statement.toString(), whereArgs, Expense.ExpenseItReceiptColumns.DEFAULT_SORT_ORDER);
 
-            if (expenseItPostReceipt == null || expenseItPostReceipt.getImageData() == null){
+            cursor.moveToFirst();
+            expenseItReceipt = new ExpenseItReceipt(this,
+                    cursor);
+            cursor.close();
+
+            if (expenseItReceipt == null || expenseItReceipt.getImageData() == null){
                 getImage();
             }else {
+                progressBar.setVisibility(View.GONE);
                 imageView.setImageBitmap(expenseItReceipt.getImageData());
             }
         }

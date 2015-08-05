@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout
+<RelativeLayout
   	xmlns:android="http://schemas.android.com/apk/res/android"
   	android:layout_width="fill_parent"
   	android:layout_height="fill_parent"
@@ -13,8 +13,13 @@
 		android:id="@+id/imgvMain"
 		android:layout_width="fill_parent"
 		android:layout_height="fill_parent"
-		android:layout_weight="1"
 		android:background="@drawable/gradient_background"
 	/>
 
-</LinearLayout>
+	<ProgressBar
+        android:id="@+id/progressBar"
+		android:layout_width="75dp"
+		android:layout_height="75dp"
+		android:layout_centerInParent="true"/>
+
+</RelativeLayout>

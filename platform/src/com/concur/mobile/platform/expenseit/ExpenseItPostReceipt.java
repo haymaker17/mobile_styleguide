@@ -5,14 +5,19 @@
 package com.concur.mobile.platform.expenseit;
 
 import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
+import android.util.Log;
 
 import com.google.gson.annotations.SerializedName;
 
+import java.io.ByteArrayOutputStream;
 import java.io.Serializable;
 import java.util.Date;
 
 @SuppressWarnings("unused")
 public class ExpenseItPostReceipt implements Serializable {
+    private static final String CLS_TAG = ExpenseItPostReceipt.class.getSimpleName();
+
     public static final Integer ERROR_CODE_NO_ERROR = -1;
     public static final Integer DEFAULT_ERROR_CODE = 99;
     public static final int CONCUR_INVALID_ACCESS = 990;                // user's concur OAuth token is invalid
@@ -45,7 +50,7 @@ public class ExpenseItPostReceipt implements Serializable {
     private Date sendToCteAt;
 
     @SerializedName("imageData")
-    private Bitmap imageData;
+    private byte [] imageData;
 
     @SerializedName("totalImageCount")
     private int totalImageCount;
@@ -139,11 +144,28 @@ public class ExpenseItPostReceipt implements Serializable {
     }
 
     public Bitmap getImageData() {
-        return imageData;
+        Bitmap bitmap = null;
+
+        if (imageData != null){
+            bitmap = BitmapFactory.decodeByteArray(imageData, 0, imageData.length);
+        }
+
+        return bitmap;
     }
 
     public void setImageData(Bitmap imageData) {
-        this.imageData = imageData;
+        ByteArrayOutputStream byteArrayOutputStream = null;
+
+        if (imageData == null) return;
+
+        try {
+            byteArrayOutputStream = new ByteArrayOutputStream();
+            imageData.compress(Bitmap.CompressFormat.JPEG, 100, byteArrayOutputStream);
+            byteArrayOutputStream.close();
+            this.imageData = byteArrayOutputStream.toByteArray();
+        } catch (Exception ex) {
+            Log.d(CLS_TAG, ex.getMessage());
+        }
     }
 
     public int getTotalImageCount() {

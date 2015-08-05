@@ -168,6 +168,7 @@ public class Flurry {
     public static final String EVENT_NAME_HOTEL_RESERVE = "Hotel Reserve";
     public static final String EVENT_NAME_AIR_RESERVE = "Air Reserve";
     public static final String EVENT_RETRIEVE_EXPENSEIT_LIST = "ExpenseItListRequestTime";
+    public static final String EVENT_SHOW_ANALYZING_RECEIPT_FAILED = "ShowAnalyzingReceiptFailed";
 
     // Flurry parameter names.
     public static final String PARAM_NAME_VIA = "Via";
