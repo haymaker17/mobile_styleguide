@@ -57,9 +57,8 @@ public class GetExpenseItImageUrlAsyncTask extends ExpenseItAsyncRequestTask {
     }
 
     @Override
-    protected void configureConnection(HttpURLConnection connection) {
-        super.configureConnection(connection);
-        connection.setRequestProperty(HTTP_HEADER_CONTENT_TYPE, "application/json");
+    protected RequestMethod getRequestMethod() {
+        return RequestMethod.GET;
     }
 
     @Override

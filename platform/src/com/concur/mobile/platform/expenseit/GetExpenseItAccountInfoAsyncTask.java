@@ -4,6 +4,7 @@
 package com.concur.mobile.platform.expenseit;
 
 import android.content.Context;
+import android.net.Uri;
 import android.util.Log;
 
 import com.concur.mobile.base.service.BaseAsyncRequestTask;
@@ -21,36 +22,42 @@ import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.net.HttpURLConnection;
 
-public class PostExpenseItReceiptAsyncTask extends ExpenseItAsyncRequestTask {
+public class GetExpenseItAccountInfoAsyncTask extends ExpenseItAsyncRequestTask {
 
-    private static String CLS_TAG = PostExpenseItReceiptAsyncTask.class.getSimpleName();
+    private static String CLS_TAG = GetExpenseItAccountInfoAsyncTask.class.getSimpleName();
 
-    private static final String EXPENSES_URL = "v1/expenses";
+    private static final String ACCOUNTS_URL = "/v1/accounts/me";
 
-    public static final String POST_EXPENSEIT_OCR_RESULT_KEY = "POST_EXPENSEIT_OCR_RESULT_KEY";
-    protected ExpenseItImage image;
+    private static final String PARAM_INCLUDE_EXPENSE_ITEMS = "should_include_expense_items";
 
-    protected ExpenseItPostReceiptResponse receiptResponse;
+    static final String PARAM_VALUE_FALSE = "0";
 
-    public PostExpenseItReceiptAsyncTask(Context context, int requestId, BaseAsyncResultReceiver receiver, ExpenseItImage image) {
+    public static final String GET_EXPENSEIT_ACCOUNT_INFO = "GET_EXPENSEIT_ACCOUNT_INFO";
+
+    protected ExpenseItAccountInfoModel accountInfoResponse;
+
+    protected final String userId;
+
+    public GetExpenseItAccountInfoAsyncTask(Context context, int requestId, String userId, BaseAsyncResultReceiver receiver) {
         super(context, requestId, receiver);
-        this.image = image;
+        this.userId = userId;
     }
 
     @Override
     protected String getServiceEndPoint() {
-        return EXPENSES_URL;
+        final Uri.Builder builder = Uri.parse(ACCOUNTS_URL).buildUpon();
+        builder.appendQueryParameter(PARAM_INCLUDE_EXPENSE_ITEMS, PARAM_VALUE_FALSE);
+        return builder.build().toString();
     }
 
     @Override
     protected String getPostBody() {
-        Gson gson = new GsonBuilder().create();
-        return gson.toJson(image);
+        return super.getPostBody();
     }
 
     @Override
     protected RequestMethod getRequestMethod() {
-        return RequestMethod.POST;
+        return RequestMethod.GET;
     }
 
     @Override
@@ -59,15 +66,15 @@ public class PostExpenseItReceiptAsyncTask extends ExpenseItAsyncRequestTask {
 
         try {
             // Build the parser with type deserializers.
-            Gson gson = new GsonBuilder().setDateFormat("yyyy-MM-dd HH:mm:ss").create();
+            Gson gson = new GsonBuilder().create();
             if (connection.getResponseCode() >= HttpStatus.SC_OK &&
                 connection.getResponseCode() < HttpStatus.SC_MULTIPLE_CHOICES) {
 
-                ExpenseItPostReceiptResponse tmpResp = gson.fromJson(new InputStreamReader(new BufferedInputStream(is),
-                    "UTF-8"), ExpenseItPostReceiptResponse.class);
+                ExpenseItAccountInfoModel tmpResp = gson.fromJson(new InputStreamReader(new BufferedInputStream(is),
+                    "UTF-8"), ExpenseItAccountInfoModel.class);
 
                 if (tmpResp != null) {
-                    receiptResponse = tmpResp;
+                    accountInfoResponse = tmpResp;
                 } else {
                     Log.e(Const.LOG_TAG, CLS_TAG + ".parseStream: MWSResponse was null!");
                     result = BaseAsyncRequestTask.RESULT_ERROR;
@@ -77,10 +84,10 @@ public class PostExpenseItReceiptAsyncTask extends ExpenseItAsyncRequestTask {
                 ErrorResponse errResp = gson.fromJson(new InputStreamReader(new BufferedInputStream(is),
                     "UTF-8"), ErrorResponse.class);
                 if (errResp != null) {
-                    ExpenseItPostReceipt receipt = new ExpenseItPostReceipt();
-                    receipt.setExpenseError(errResp);
-                    ExpenseItPostReceipt[] list = new ExpenseItPostReceipt[] {receipt};
-                    receiptResponse.setExpenses((list));
+                    ExpenseItAccountInfoModel accountInfoResponse = new ExpenseItAccountInfoModel();
+                    accountInfoResponse.setErrorCode(errResp.getErrorCode());
+                    accountInfoResponse.setErrorMessage(errResp.getErrorMessage());
+                    accountInfoResponse.setAccountInfo(null);
                     result = BaseAsyncRequestTask.RESULT_ERROR;
                 } else {
                     Log.e(Const.LOG_TAG, CLS_TAG + ".parseStream: MWSResponse Error response was null!");
@@ -106,8 +113,9 @@ public class PostExpenseItReceiptAsyncTask extends ExpenseItAsyncRequestTask {
     @Override
     protected int onPostParse() {
         int result = super.onPostParse();
-        if (receiptResponse != null) {
-            resultData.putSerializable(POST_EXPENSEIT_OCR_RESULT_KEY, receiptResponse);
+
+        if (accountInfoResponse != null) {
+            resultData.putSerializable(GET_EXPENSEIT_ACCOUNT_INFO, accountInfoResponse);
         }
 
         return result;

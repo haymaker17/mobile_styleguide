@@ -80,6 +80,11 @@ public class LoginExpenseItTask extends ExpenseItAsyncRequestTask {
     }
 
     @Override
+    protected RequestMethod getRequestMethod() {
+        return RequestMethod.GET;
+    }
+
+    @Override
     protected String getPostBody() {
         return super.getPostBody();
     }

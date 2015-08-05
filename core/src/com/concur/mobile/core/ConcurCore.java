@@ -20,6 +20,7 @@ import android.location.Location;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 import android.os.Build;
+import android.os.Bundle;
 import android.os.Handler;
 import android.os.IBinder;
 import android.preference.PreferenceManager;
@@ -36,6 +37,7 @@ import android.widget.TableRow;
 import android.widget.TextView;
 
 import com.concur.core.R;
+import com.concur.mobile.base.service.BaseAsyncRequestTask;
 import com.concur.mobile.base.service.BaseAsyncResultReceiver;
 import com.concur.mobile.base.util.Format;
 import com.concur.mobile.core.activity.Preferences;
@@ -104,11 +106,16 @@ import com.concur.mobile.platform.common.formfield.ConnectFormFieldsCache;
 import com.concur.mobile.platform.config.provider.ClientData;
 import com.concur.mobile.platform.config.provider.ConfigUtil;
 import com.concur.mobile.platform.expense.provider.ExpenseUtil;
+import com.concur.mobile.platform.expenseit.ExpenseItAccountInfo;
+import com.concur.mobile.platform.expenseit.ExpenseItAccountInfoModel;
+import com.concur.mobile.platform.expenseit.GetExpenseItAccountInfoAsyncTask;
+import com.concur.mobile.platform.expenseit.UpdateExpenseItAccountInfoAsyncTask;
 import com.concur.mobile.platform.location.LastLocationTracker;
 import com.concur.mobile.platform.request.RequestGroupConfigurationCache;
 import com.concur.mobile.platform.request.RequestListCache;
 import com.concur.mobile.platform.request.dto.RequestDTO;
 import com.concur.mobile.platform.request.groupConfiguration.RequestGroupConfiguration;
+import com.concur.mobile.platform.service.ExpenseItAsyncRequestTask;
 import com.concur.mobile.platform.service.MWSPlatformManager;
 import com.concur.mobile.platform.service.parser.MWSResponseStatus;
 import com.concur.mobile.platform.ui.common.util.PreferenceUtil;
@@ -382,6 +389,11 @@ public abstract class ConcurCore extends MultiDexApplication {
     BaseAsyncResultReceiver validateReceiver;
 
     ValidateExpenseItAsyncTask validateExpenseItAsyncTask;
+
+    protected BaseAsyncResultReceiver expenseItGetAccountInfo;
+
+    protected BaseAsyncResultReceiver expenseItUpdateAccountInfo;
+
 
     /**
      * Local instance to handle service connection events and keep our service reference up-to-date
@@ -866,12 +878,106 @@ public abstract class ConcurCore extends MultiDexApplication {
                     long timeElapsed = System.nanoTime() - startTime;
                     // TODO: WESW - Log time elapsed
 
+                    //OnLogin, Verify that CTE export is turned on.
+                    if (isConnected() && Preferences.isUserLoggedInExpenseIt()) {
+                        ensureAutoCTETurnedOn();
+                    }
+
                     super.onPostExecute(result);
                 }
             };
             validateExpenseItAsyncTask.execute();
         }
     }
+
+
+    /**
+     *   Checks Account Info when logging in to set autoLogin to True is not set
+     */
+    public void ensureAutoCTETurnedOn() {
+        expenseItUpdateAccountInfo = new BaseAsyncResultReceiver(new Handler());
+        expenseItUpdateAccountInfo.setListener(new BaseAsyncRequestTask.AsyncReplyListener() {
+
+            @Override
+            public void onRequestSuccess(Bundle resultData) {
+                Log.d(com.concur.mobile.platform.ui.common.util.Const.LOG_TAG, CLS_TAG + ".expenseItUpdateAccountInfo.onRequestSuccess is called");
+                if (resultData != null && resultData.containsKey(GetExpenseItAccountInfoAsyncTask.GET_EXPENSEIT_ACCOUNT_INFO)) {
+                    ExpenseItAccountInfoModel accountInfoResponse = (ExpenseItAccountInfoModel) resultData.getSerializable(GetExpenseItAccountInfoAsyncTask.GET_EXPENSEIT_ACCOUNT_INFO);
+                    //AutoCte is turned Off
+                    if (accountInfoResponse.getAccountInfo() != null && !accountInfoResponse.getAccountInfo().isAutoCTE()) {
+                        turnOnAutoCTE(accountInfoResponse.getAccountInfo());
+                    }
+                }
+            }
+
+            @Override
+            public void onRequestFail(Bundle resultData) {
+                Log.e(com.concur.mobile.platform.ui.common.util.Const.LOG_TAG, CLS_TAG + ".expenseItUpdateAccountInfo.onRequestFail is called");
+            }
+
+            @Override
+            public void onRequestCancel(Bundle resultData) {
+                Log.d(com.concur.mobile.platform.ui.common.util.Const.LOG_TAG, CLS_TAG + ".expenseItUpdateAccountInfo.onRequestCancel is called");
+            }
+
+            @Override
+            public void cleanup() {
+            }
+        });
+
+        // Authentication was successful. Now perform ExpenseIt Login
+        SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(ConcurCore.this);
+        String userId = prefs.getString(Const.PREF_USER_ID, null);
+        ExpenseItAsyncRequestTask request = new GetExpenseItAccountInfoAsyncTask(ConcurCore.getContext(), 0, userId, expenseItUpdateAccountInfo);
+        request.execute();
+    }
+
+    /**
+     * Update Account Info by setting autoLogin to True
+     */
+    private void turnOnAutoCTE(ExpenseItAccountInfo accountInfo) {
+        expenseItGetAccountInfo = new BaseAsyncResultReceiver(new Handler());
+
+        accountInfo.setAutoCTE(true);
+
+        expenseItGetAccountInfo.setListener(new BaseAsyncRequestTask.AsyncReplyListener() {
+
+            @Override
+            public void onRequestSuccess(Bundle resultData) {
+                Log.d(com.concur.mobile.platform.ui.common.util.Const.LOG_TAG, CLS_TAG + ".turnOnAutoCTE.onRequestSuccess is called");
+                if (resultData != null && resultData.containsKey(UpdateExpenseItAccountInfoAsyncTask.UPDATE_EXPENSEIT_ACCOUNT_INFO)) {
+                    ExpenseItAccountInfoModel accountInfoUpdateResponse = (ExpenseItAccountInfoModel) resultData.getSerializable(UpdateExpenseItAccountInfoAsyncTask.UPDATE_EXPENSEIT_ACCOUNT_INFO);
+                    if (!accountInfoUpdateResponse.isError()) {
+                        Log.d(com.concur.mobile.platform.ui.common.util.Const.LOG_TAG, CLS_TAG + ".turnOnAutoCTE: Successfully update AutoCTE.");
+                        if (accountInfoUpdateResponse.getAccountInfo() != null && !accountInfoUpdateResponse.getAccountInfo().isAutoCTE()) {
+                            Log.e(com.concur.mobile.platform.ui.common.util.Const.LOG_TAG, CLS_TAG + ".turnOnAutoCTE: Failed to update AutoCTE to true.");
+                        }
+                    } else {
+                        Log.e(com.concur.mobile.platform.ui.common.util.Const.LOG_TAG, CLS_TAG + ".turnOnAutoCTE: Error occurred while updating AutoCTE.");
+                    }
+                }
+            }
+
+            @Override
+            public void onRequestFail(Bundle resultData) {
+                Log.e(com.concur.mobile.platform.ui.common.util.Const.LOG_TAG, CLS_TAG + ".turnOnAutoCTE.onRequestFail is called");
+            }
+
+            @Override
+            public void onRequestCancel(Bundle resultData) {
+                Log.d(com.concur.mobile.platform.ui.common.util.Const.LOG_TAG, CLS_TAG + ".turnOnAutoCTE.onRequestCancel is called");
+            }
+
+            @Override
+            public void cleanup() {
+            }
+        });
+
+        // Authentication was successful. Now perform ExpenseIt Login
+        ExpenseItAsyncRequestTask request = new UpdateExpenseItAccountInfoAsyncTask(ConcurCore.getContext(), 0, expenseItGetAccountInfo, accountInfo);
+        request.execute();
+    }
+
 
     /**
      * Get authority name for content provider.
