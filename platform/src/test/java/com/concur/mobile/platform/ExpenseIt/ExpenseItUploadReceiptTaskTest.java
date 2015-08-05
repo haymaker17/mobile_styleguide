@@ -13,6 +13,7 @@ import com.concur.mobile.platform.ExpenseIt.test.VerifyExpenseItUploadReceiptRes
 import com.concur.mobile.platform.expenseit.ExpenseItImage;
 import com.concur.mobile.platform.expenseit.ExpenseItPostReceiptResponse;
 import com.concur.mobile.platform.expenseit.PostExpenseItReceiptAsyncTask;
+import com.concur.mobile.platform.test.AsyncRequestTest;
 import com.concur.mobile.platform.test.Const;
 import com.concur.mobile.platform.test.PlatformTestApplication;
 import com.google.gson.Gson;
@@ -34,11 +35,15 @@ import java.util.Map;
  *
  * @author andrewk
  */
-public class ExpenseItUploadReceiptTaskTest extends ExpenseItTest {
+public class ExpenseItUploadReceiptTaskTest extends AsyncRequestTest {
 
     private static final String CLS_TAG = ExpenseItUploadReceiptTaskTest.class.getSimpleName();
 
     private static final boolean DEBUG = false;
+
+    public ExpenseItUploadReceiptTaskTest(boolean useMockServer) {
+        super(useMockServer);
+    }
 
     /**
      * Will perform the test throwing an exception if the test fails.
@@ -50,7 +55,7 @@ public class ExpenseItUploadReceiptTaskTest extends ExpenseItTest {
         Context context = PlatformTestApplication.getApplication();
 
         // Set the mock response if the mock server is being used.
-        if (PlatformTestApplication.useMockServer()) {
+        if (useMockServer()) {
 
             // Set the mock response for the test.
             Map<String, String> responseHeaders = new HashMap<String, String>();

@@ -67,6 +67,18 @@ public abstract class AsyncRequestTest {
      */
     protected int expectedResultCode = BaseAsyncRequestTask.RESULT_OK;
 
+    public abstract void doTest() throws Exception;
+
+    private final boolean useMockServer;
+
+    public AsyncRequestTest(boolean useMockServer) {
+        this.useMockServer =  useMockServer;
+    }
+
+    public boolean useMockServer() {
+        return useMockServer;
+    }
+
     /**
      * Get the stream bytes
      * @param is

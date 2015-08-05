@@ -12,6 +12,7 @@ import com.concur.mobile.platform.ExpenseIt.test.VerifyExpenseItGetReceiptsResul
 import com.concur.mobile.platform.config.provider.ConfigUtil;
 import com.concur.mobile.platform.expenseit.ExpenseItPostReceiptResponse;
 import com.concur.mobile.platform.expenseit.GetExpenseItExpenseListAsyncTask;
+import com.concur.mobile.platform.test.AsyncRequestTest;
 import com.concur.mobile.platform.test.Const;
 import com.concur.mobile.platform.test.PlatformTestApplication;
 import com.google.gson.Gson;
@@ -29,14 +30,18 @@ import java.util.Map;
  * request.
  *
  */
-public class ExpenseItGetReceiptTaskTest extends ExpenseItTest {
+public class ExpenseItGetReceiptTaskTest extends AsyncRequestTest {
 
     private static final String CLS_TAG = ExpenseItGetReceiptTaskTest.class.getSimpleName();
+
+    public ExpenseItGetReceiptTaskTest(boolean useMockServer) {
+        super(useMockServer);
+    }
 
     public ExpenseItPostReceiptResponse getExpenseItReceiptsFromServer(Context context, String userId) throws Exception {
 
         // Set the mock response if the mock server is being used.
-        if (PlatformTestApplication.useMockServer()) {
+        if (useMockServer()) {
 
             // Set the mock response for the test.
             Map<String, String> responseHeaders = new HashMap();

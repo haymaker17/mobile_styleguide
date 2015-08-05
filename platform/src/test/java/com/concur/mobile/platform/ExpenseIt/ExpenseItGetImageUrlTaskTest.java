@@ -10,11 +10,13 @@ import com.concur.mobile.base.service.BaseAsyncResultReceiver;
 import com.concur.mobile.platform.ExpenseIt.test.VerifyExpenseItImageUrlResult;
 import com.concur.mobile.platform.authentication.SessionInfo;
 import com.concur.mobile.platform.config.provider.ConfigUtil;
+import com.concur.mobile.platform.expense.list.Expense;
 import com.concur.mobile.platform.expenseit.ExpenseItGetImageUrlResponse;
 import com.concur.mobile.platform.expenseit.ExpenseItParseCode;
 import com.concur.mobile.platform.expenseit.ExpenseItPostReceipt;
 import com.concur.mobile.platform.expenseit.ExpenseItPostReceiptResponse;
 import com.concur.mobile.platform.expenseit.GetExpenseItImageUrlAsyncTask;
+import com.concur.mobile.platform.test.AsyncRequestTest;
 import com.concur.mobile.platform.test.Const;
 import com.concur.mobile.platform.test.PlatformTestApplication;
 import com.google.gson.Gson;
@@ -34,9 +36,14 @@ import java.util.Map;
  * request.
  *
  */
-public class ExpenseItGetImageUrlTaskTest extends ExpenseItTest {
+public class ExpenseItGetImageUrlTaskTest extends AsyncRequestTest {
 
     private static final String CLS_TAG = ExpenseItGetImageUrlTaskTest.class.getSimpleName();
+
+
+    public ExpenseItGetImageUrlTaskTest(boolean useMockServer) {
+        super(useMockServer);
+    }
 
     /**
      * Will perform the test throwing an exception if the test fails.
@@ -50,7 +57,7 @@ public class ExpenseItGetImageUrlTaskTest extends ExpenseItTest {
         Context context = PlatformTestApplication.getApplication();
 
         // Set the mock response if the mock server is being used.
-        if (PlatformTestApplication.useMockServer()) {
+        if (useMockServer()) {
 
             // Set the mock response for the test.
             Map<String, String> responseHeaders = new HashMap();
@@ -61,7 +68,7 @@ public class ExpenseItGetImageUrlTaskTest extends ExpenseItTest {
             setMockResponse(mockServer, HttpStatus.SC_OK, "expenseIt/GetExpenseItImageUrlResponse.json", responseHeaders);
             expenseIds.add(new Long(1)); //anything really
         } else {
-            ExpenseItGetReceiptTaskTest receiptTaskTest = new ExpenseItGetReceiptTaskTest();
+            ExpenseItGetReceiptTaskTest receiptTaskTest = new ExpenseItGetReceiptTaskTest(useMockServer());
             // Verify User Information.
             SessionInfo sessionInfo = ConfigUtil.getSessionInfo(context);
             String userId = sessionInfo.getUserId();
@@ -78,6 +85,8 @@ public class ExpenseItGetImageUrlTaskTest extends ExpenseItTest {
         for (Long expenseId: expenseIds) {
             ExpenseItGetImageUrlResponse urlResponse = getImageUrlAsyncTaskResponse(context, expenseId);
             verifyResponse(context,urlResponse);
+            //Need one test only
+            break;
         }
     }
 

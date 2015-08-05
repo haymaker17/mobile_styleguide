@@ -1,61 +1,31 @@
 package com.concur.mobile.platform.test;
 
-import android.app.Application;
-import android.content.Context;
-import android.content.pm.PackageManager.NameNotFoundException;
-import android.os.Build;
 import android.text.TextUtils;
-import android.util.Pair;
 
-import com.concur.mobile.core.expenseIt.ExpenseItServerUtil;
-import com.concur.mobile.platform.authentication.AccessToken;
-import com.concur.mobile.platform.ExpenseIt.ExpenseItGetImageUrlTaskTest;
-import com.concur.mobile.platform.ExpenseIt.ExpenseItGetReceiptTaskTest;
-import com.concur.mobile.platform.ExpenseIt.ExpenseItLoginRequestTaskTest;
-import com.concur.mobile.platform.ExpenseIt.ExpenseItTest;
-import com.concur.mobile.platform.ExpenseIt.ExpenseItUploadReceiptTaskTest;
-import com.concur.mobile.platform.authentication.LoginResult;
-import com.concur.mobile.platform.authentication.SessionInfo;
 import com.concur.mobile.platform.authentication.system.config.test.SystemConfigRequestTaskTest;
 import com.concur.mobile.platform.authentication.test.AutoLoginRequestTaskTest;
 import com.concur.mobile.platform.authentication.test.PPLoginLightRequestTaskTest;
 import com.concur.mobile.platform.authentication.test.PPLoginRequestTaskTest;
-import com.concur.mobile.platform.config.provider.ClearConfigDBHelper;
-import com.concur.mobile.platform.config.provider.ConfigProvider;
-import com.concur.mobile.platform.config.provider.ConfigUtil;
 import com.concur.mobile.platform.config.user.test.UserConfigRequestTaskTest;
 import com.concur.mobile.platform.emaillookup.test.EmailLookUpRequestTaskTest;
 import com.concur.mobile.platform.expense.list.test.ExpenseListRequestTaskTest;
 import com.concur.mobile.platform.expense.list.test.SaveMobileEntryRequestTaskTest;
-import com.concur.mobile.platform.expense.provider.ClearExpenseDBHelper;
-import com.concur.mobile.platform.expense.provider.ExpenseProvider;
 import com.concur.mobile.platform.expense.receipt.ocr.test.StartOCRRequestTaskTest;
 import com.concur.mobile.platform.expense.receipt.ocr.test.StopOCRRequestTaskTest;
 import com.concur.mobile.platform.expense.smartexpense.list.test.SmartExpenseListRequestTaskTest;
 import com.concur.mobile.platform.password.reset.test.RequestPasswordResetRequestTaskTest;
 import com.concur.mobile.platform.password.reset.test.ResetUserPasswordRequestTaskTest;
-import com.concur.mobile.platform.provider.ClearSQLiteOpenHelper;
-import com.concur.mobile.platform.provider.PlatformSQLiteOpenHelper;
 import com.concur.mobile.platform.receipt.list.test.DeleteReceiptRequestTaskTest;
 import com.concur.mobile.platform.receipt.list.test.GetReceiptRequestTaskTest;
 import com.concur.mobile.platform.receipt.list.test.ReceiptListRequestTaskTest;
 import com.concur.mobile.platform.receipt.list.test.SaveReceiptRequestTaskTest;
-import com.concur.mobile.platform.service.MWSPlatformManager;
-import com.concur.mobile.platform.test.server.MockExpenseItServer;
 import com.concur.mobile.platform.test.server.MockMWSServer;
-import com.concur.mobile.platform.test.server.MockServer;
-import com.concur.mobile.platform.travel.provider.ClearTravelDBHelper;
-import com.concur.mobile.platform.travel.provider.TravelProvider;
-import com.concur.mobile.platform.util.Format;
-import com.concur.platform.ExpenseItProperties;
-import com.concur.platform.PlatformProperties;
 
-import org.junit.AfterClass;
-import org.junit.BeforeClass;
+import org.junit.After;
+import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.robolectric.annotation.Config;
-import org.robolectric.shadows.ShadowContentResolver;
 import org.robolectric.shadows.ShadowLog;
 
 import java.util.Locale;
@@ -67,47 +37,39 @@ import java.util.Locale;
  */
 @RunWith(ConcurPlatformTestRunner.class)
 @Config(application = PlatformTestApplication.class, sdk = 21)
-public class PlatformTestSuite {
+public class PlatformTestSuite extends PlatformTestUtil{
 
     private static final String CLS_TAG = "PlatformTestSuite";
-
-    private static final Boolean DEBUG = Boolean.FALSE;
-
-    // Contains whether or not the mock server has been initialized.
-    private static boolean mockServerInitialized = Boolean.FALSE;
-
-    // Contains a reference to the mock MWS server.
-    private static MockServer server;
 
     /**
      * Performs any test suite set-up.
      */
-    @BeforeClass
-    public static void setUp() throws Exception {
+    @Before
+    public void setUp() throws Exception {
 
         // Initialize the shadow log to use stdout.
         ShadowLog.stream = System.out;
 
-        if (DEBUG) {
-            ShadowLog.d(Const.LOG_TAG, CLS_TAG + ".setUp: ");
-        }
-
+        ShadowLog.d(Const.LOG_TAG, CLS_TAG + ".setUp: ");
     }
 
     /**
      * Performs any test suite clean-up.
      */
-    @AfterClass
-    public static void cleanUp() throws Exception {
+    @After
+    public void cleanUp() throws Exception {
 
-        if (DEBUG) {
-            ShadowLog.d(Const.LOG_TAG, CLS_TAG + ".cleanUp: ");
-        }
+        ShadowLog.d(Const.LOG_TAG, CLS_TAG + ".cleanUp: ");
 
         // Shut-down the mock MWS server.
         if (server != null) {
             server.stop();
         }
+    }
+
+    @Override
+    protected boolean useMockServer() {
+        return true;
     }
 
     /**
@@ -120,14 +82,14 @@ public class PlatformTestSuite {
     public void doPinPasswordLogin() throws Exception {
 
         // Init and perform a PP login.
-        PPLoginRequestTaskTest test = new PPLoginRequestTaskTest();
+        PPLoginRequestTaskTest test = new PPLoginRequestTaskTest(useMockServer());
 
         // Set login credentials.
         String ppLoginId;
         String ppLoginPinPassword;
 
         // If using the mock server, then
-        if (PlatformTestApplication.useMockServer()) {
+        if (useMockServer()) {
 
             // Using mock-server, doesn't matter what the credentials
             // actually are!
@@ -183,8 +145,8 @@ public class PlatformTestSuite {
         doPinPasswordLoginLight();
 
         // Init the auto-login request and optionally set the mock server.
-        AutoLoginRequestTaskTest autoLoginTest = new AutoLoginRequestTaskTest();
-        if (PlatformTestApplication.useMockServer()) {
+        AsyncRequestTest autoLoginTest = new AutoLoginRequestTaskTest(useMockServer());
+        if (useMockServer()) {
             autoLoginTest.setMockServer(server);
         }
 
@@ -202,14 +164,14 @@ public class PlatformTestSuite {
     public void doPinPasswordLoginLight() throws Exception {
 
         // Init and perform a PP light login.
-        PPLoginLightRequestTaskTest test = new PPLoginLightRequestTaskTest();
+        PPLoginLightRequestTaskTest test = new PPLoginLightRequestTaskTest(useMockServer());
 
         // Set login credentials.
         String ppLoginId;
         String ppLoginPinPassword;
 
         // If using the mock server, then
-        if (PlatformTestApplication.useMockServer()) {
+        if (useMockServer()) {
 
             // Using mock-server, doesn't matter what the credentials
             // actually are!
@@ -258,14 +220,14 @@ public class PlatformTestSuite {
     public void doEmailLookUp() throws Exception {
 
         // Init and perform a PP login.
-        EmailLookUpRequestTaskTest test = new EmailLookUpRequestTaskTest();
+        EmailLookUpRequestTaskTest test = new EmailLookUpRequestTaskTest(useMockServer());
 
         // Set email lookup credentials.
         String email;
         Locale locale = PlatformTestApplication.getApplication().getResources().getConfiguration().locale;
 
         // If using the mock server, then
-        if (PlatformTestApplication.useMockServer()) {
+        if (useMockServer()) {
 
             // Using mock-server, doesn't matter what the credentials
             // actually are!
@@ -313,14 +275,14 @@ public class PlatformTestSuite {
     @Test
     public void doRequestPasswordReset() throws Exception {
 
-        RequestPasswordResetRequestTaskTest test = new RequestPasswordResetRequestTaskTest();
+        RequestPasswordResetRequestTaskTest test = new RequestPasswordResetRequestTaskTest(useMockServer());
 
         // Set email lookup credentials.
         String email;
         Locale locale = PlatformTestApplication.getApplication().getResources().getConfiguration().locale;
 
         // If using the mock server, then
-        if (PlatformTestApplication.useMockServer()) {
+        if (useMockServer()) {
 
             // Using mock-server, doesn't matter what the credentials
             // actually are!
@@ -363,7 +325,7 @@ public class PlatformTestSuite {
     @Test
     public void doResetUserPassword() throws Exception {
 
-        ResetUserPasswordRequestTaskTest test = new ResetUserPasswordRequestTaskTest();
+        ResetUserPasswordRequestTaskTest test = new ResetUserPasswordRequestTaskTest(useMockServer());
 
         // Set email lookup credentials.
         String email;
@@ -373,7 +335,7 @@ public class PlatformTestSuite {
         Locale locale = PlatformTestApplication.getApplication().getResources().getConfiguration().locale;
 
         // If using the mock server, then
-        if (PlatformTestApplication.useMockServer()) {
+        if (useMockServer()) {
 
             // Using mock-server, doesn't matter what the credentials
             // actually are!
@@ -437,8 +399,8 @@ public class PlatformTestSuite {
         // Init the login request
         doPinPasswordLogin();
 
-        SystemConfigRequestTaskTest sysConfigTask = new SystemConfigRequestTaskTest();
-        if (PlatformTestApplication.useMockServer()) {
+        AsyncRequestTest sysConfigTask = new SystemConfigRequestTaskTest(useMockServer());
+        if (useMockServer()) {
             // Init mock server.
             initMockServer(new MockMWSServer());
 
@@ -462,8 +424,8 @@ public class PlatformTestSuite {
         // Init the login request
         doPinPasswordLogin();
 
-        UserConfigRequestTaskTest userConfigTask = new UserConfigRequestTaskTest();
-        if (PlatformTestApplication.useMockServer()) {
+        AsyncRequestTest userConfigTask = new UserConfigRequestTaskTest(useMockServer());
+        if (useMockServer()) {
             // Init mock server.
             initMockServer(new MockMWSServer());
 
@@ -487,8 +449,8 @@ public class PlatformTestSuite {
         // Init the login request
         doPinPasswordLogin();
 
-        ExpenseListRequestTaskTest expenseListTest = new ExpenseListRequestTaskTest();
-        if (PlatformTestApplication.useMockServer()) {
+        AsyncRequestTest expenseListTest = new ExpenseListRequestTaskTest(useMockServer());
+        if (useMockServer()) {
             // Init mock server.
             initMockServer(new MockMWSServer());
 
@@ -512,8 +474,8 @@ public class PlatformTestSuite {
         // Init the login request
         doPinPasswordLogin();
 
-        SmartExpenseListRequestTaskTest smartExpenseListTest = new SmartExpenseListRequestTaskTest();
-        if (PlatformTestApplication.useMockServer()) {
+        AsyncRequestTest smartExpenseListTest = new SmartExpenseListRequestTaskTest(useMockServer());
+        if (useMockServer()) {
             // Init mock server.
             initMockServer(new MockMWSServer());
 
@@ -537,8 +499,8 @@ public class PlatformTestSuite {
         // Init the login request
         doPinPasswordLogin();
 
-        StartOCRRequestTaskTest startOcrTest = new StartOCRRequestTaskTest();
-        if (PlatformTestApplication.useMockServer()) {
+        AsyncRequestTest startOcrTest = new StartOCRRequestTaskTest(useMockServer());
+        if (useMockServer()) {
             // Init mock server.
             initMockServer(new MockMWSServer());
 
@@ -547,9 +509,8 @@ public class PlatformTestSuite {
         }
 
         // First, get the list of Receipts so we can grab one of them to StartOCR on.
-        ReceiptListRequestTaskTest receiptListTest = new ReceiptListRequestTaskTest();
-        boolean useMockServer = PlatformTestApplication.useMockServer();
-        if (useMockServer) {
+        AsyncRequestTest receiptListTest = new ReceiptListRequestTaskTest(useMockServer());
+        if (useMockServer()) {
             // Init mock server.
             initMockServer(new MockMWSServer());
 
@@ -561,8 +522,7 @@ public class PlatformTestSuite {
         receiptListTest.doTest();
 
         // Run the StartOCRRequestTaskTest test on the receipt we just saved.
-        startOcrTest.doTestSuccess();
-        startOcrTest.doTestFailure();
+        startOcrTest.doTest();
     }
 
     /**
@@ -581,14 +541,14 @@ public class PlatformTestSuite {
         // Init the login request
         doPinPasswordLogin();
 
-        StopOCRRequestTaskTest stopOcrTask = new StopOCRRequestTaskTest();
+        AsyncRequestTest stopOcrTask = new StopOCRRequestTaskTest(useMockServer());
         // Init mock server.
         initMockServer(new MockMWSServer());
         // Set the mock server instance on the test.
         stopOcrTask.setMockServer(server);
 
         // First, get the list of Receipts so we can grab one of them to StartOCR on.
-        ReceiptListRequestTaskTest receiptListTest = new ReceiptListRequestTaskTest();
+        AsyncRequestTest receiptListTest = new ReceiptListRequestTaskTest(useMockServer());
         // Init mock server.
         initMockServer(new MockMWSServer());
         // Set the mock server instance on the test.
@@ -598,8 +558,7 @@ public class PlatformTestSuite {
         receiptListTest.doTest();
 
         // Run the StartOCRRequestTaskTest test on the receipt we just saved.
-        stopOcrTask.doTestSuccess();
-        stopOcrTask.doTestFailure();
+        stopOcrTask.doTest();
     }
 
     /**
@@ -614,8 +573,8 @@ public class PlatformTestSuite {
         // Init the login request
         doPinPasswordLogin();
 
-        ReceiptListRequestTaskTest receiptListTest = new ReceiptListRequestTaskTest();
-        boolean useMockServer = PlatformTestApplication.useMockServer();
+        AsyncRequestTest receiptListTest = new ReceiptListRequestTaskTest(useMockServer());
+        boolean useMockServer = useMockServer();
         if (useMockServer) {
             // Init mock server.
             initMockServer(new MockMWSServer());
@@ -628,23 +587,24 @@ public class PlatformTestSuite {
         receiptListTest.doTest();
 
         // Run the GetReceiptRequestTask test with a receipt image id.
-        GetReceiptRequestTaskTest getReceiptTest = new GetReceiptRequestTaskTest(
-                GetReceiptRequestTaskTest.ReceiptIdSource.SOURCE_ID);
+        GetReceiptRequestTaskTest getReceiptTest = new GetReceiptRequestTaskTest(useMockServer());
+        getReceiptTest.setReceiptIdSource(GetReceiptRequestTaskTest.ReceiptIdSource.SOURCE_ID);
         if (useMockServer) {
             getReceiptTest.setMockServer(server);
         }
         getReceiptTest.doTest();
 
         // Run the GetReceiptRequestTask test with a receipt Uri.
-        getReceiptTest = new GetReceiptRequestTaskTest(GetReceiptRequestTaskTest.ReceiptIdSource.SOURCE_URI);
+        getReceiptTest = new GetReceiptRequestTaskTest(useMockServer());
+        getReceiptTest.setReceiptIdSource(GetReceiptRequestTaskTest.ReceiptIdSource.SOURCE_URI);
         if (useMockServer) {
             getReceiptTest.setMockServer(server);
         }
         getReceiptTest.doTest();
 
         // Run the SaveReceiptRequestTask with just a receipt Uri.
-        SaveReceiptRequestTaskTest saveReceiptTest = new SaveReceiptRequestTaskTest(
-                SaveReceiptRequestTaskTest.ReceiptSource.SOURCE_URI);
+        SaveReceiptRequestTaskTest saveReceiptTest = new SaveReceiptRequestTaskTest(useMockServer());
+        saveReceiptTest.setReceiptSource(SaveReceiptRequestTaskTest.ReceiptSource.SOURCE_URI);
         if (useMockServer) {
             saveReceiptTest.setMockServer(server);
         }
@@ -653,30 +613,32 @@ public class PlatformTestSuite {
         // saveReceiptTest.doTest();
 
         // Run the SaveReceiptRequestTask with an input stream.
-        saveReceiptTest = new SaveReceiptRequestTaskTest(SaveReceiptRequestTaskTest.ReceiptSource.SOURCE_INPUT_STREAM);
+        saveReceiptTest = new SaveReceiptRequestTaskTest(useMockServer());
+        saveReceiptTest.setReceiptSource(SaveReceiptRequestTaskTest.ReceiptSource.SOURCE_INPUT_STREAM);
         if (useMockServer) {
             saveReceiptTest.setMockServer(server);
         }
         saveReceiptTest.doTest();
 
         // Run the SaveReceiptRequestTask with a byte array.
-        saveReceiptTest = new SaveReceiptRequestTaskTest(SaveReceiptRequestTaskTest.ReceiptSource.SOURCE_BYTE_ARRAY);
+        saveReceiptTest = new SaveReceiptRequestTaskTest(useMockServer());
+        saveReceiptTest.setReceiptSource(SaveReceiptRequestTaskTest.ReceiptSource.SOURCE_BYTE_ARRAY);
         if (useMockServer) {
             saveReceiptTest.setMockServer(server);
         }
         saveReceiptTest.doTest();
 
         // Run the DeleteReceiptRequestTask with receipt uri.
-        DeleteReceiptRequestTaskTest deleteReceiptTest = new DeleteReceiptRequestTaskTest(
-                DeleteReceiptRequestTaskTest.ReceiptSource.SOURCE_URI);
+        DeleteReceiptRequestTaskTest deleteReceiptTest = new DeleteReceiptRequestTaskTest(useMockServer());
+        deleteReceiptTest.setReceiptSource(DeleteReceiptRequestTaskTest.ReceiptSource.SOURCE_URI);
         if (useMockServer) {
             deleteReceiptTest.setMockServer(server);
         }
         deleteReceiptTest.doTest();
 
         // Run the DeleteReceiptRequestTask with a receipt image id.
-        deleteReceiptTest = new DeleteReceiptRequestTaskTest(
-                DeleteReceiptRequestTaskTest.ReceiptSource.SOURCE_RECEIPT_IMAGE_ID);
+        deleteReceiptTest = new DeleteReceiptRequestTaskTest(useMockServer());
+        deleteReceiptTest.setReceiptSource(DeleteReceiptRequestTaskTest.ReceiptSource.SOURCE_RECEIPT_IMAGE_ID);
         if (useMockServer) {
             deleteReceiptTest.setMockServer(server);
         }
@@ -696,8 +658,8 @@ public class PlatformTestSuite {
         // Init the login request
         doPinPasswordLogin();
 
-        SaveMobileEntryRequestTaskTest saveMETest = new SaveMobileEntryRequestTaskTest();
-        if (PlatformTestApplication.useMockServer()) {
+        AsyncRequestTest saveMETest = new SaveMobileEntryRequestTaskTest(useMockServer());
+        if (useMockServer()) {
             // Init mock server.
             initMockServer(new MockMWSServer());
 
@@ -707,279 +669,6 @@ public class PlatformTestSuite {
 
         // Run the SaveMobileEntryRequestTask test.
         saveMETest.doTest();
-    }
-
-    private void doExpenseItTest(ExpenseItTest test) throws Exception {
-
-        if (test == null) {
-            throw new IllegalArgumentException("Your test should be valid");
-        }
-
-        // If using the mock server, then
-        if (PlatformTestApplication.useMockServer()) {
-
-            // Init mock server.
-            initMockServer(new MockExpenseItServer());
-
-            // Set the mock server instance on the test.
-            test.setMockServer(server);
-
-            // Init content providers.
-            initContentProviders();
-
-            initExpenseItProperties();
-
-        } else {
-            //Test against real server, do login first
-            doExpenseItLogin();
-        }
-
-        // Run the test.
-        test.doTest();
-    }
-
-    @Test
-    public void doGetExpenseListFromExpenseIt() throws Exception {
-        ExpenseItGetReceiptTaskTest test = new ExpenseItGetReceiptTaskTest();
-        doExpenseItTest(test);
-    }
-
-    @Test
-    public void doExpenseItLogin() throws Exception {
-
-        // Init and perform a PP login.
-        ExpenseItLoginRequestTaskTest test = new ExpenseItLoginRequestTaskTest();
-
-        // Set login credentials.
-        String loginId;
-        String loginPinPassword;
-
-        // If using the mock server, then
-        if (PlatformTestApplication.useMockServer()) {
-            // Using mock-server, doesn't matter what the credentials
-            // actually are!
-            loginId = "ahuser40@utest.com";
-            loginPinPassword = "collective0";
-
-            // Init mock server.
-            initMockServer(new MockExpenseItServer());
-
-            // Set the mock server instance on the test.
-            test.setMockServer(server);
-        } else {
-            // Using live server! Enforce specified credentials.
-            loginId = System.getProperty(Const.PPLOGIN_ID, "").trim();
-            if (TextUtils.isEmpty(loginId)) {
-                throw new Exception(CLS_TAG + ".doPinPassword: using live server, no '" + Const.PPLOGIN_ID
-                    + "' system property specified!");
-            }
-            loginPinPassword = System.getProperty(Const.PPLOGIN_PIN_PASSWORD, "").trim();
-            if (TextUtils.isEmpty(loginPinPassword)) {
-                throw new Exception(CLS_TAG + ".doPinPassword: using live server, no '" + Const.PPLOGIN_PIN_PASSWORD
-                    + "' system property specified!");
-            }
-        }
-        // Set the credentials.
-        test.setCredentials(loginId, loginPinPassword);
-
-        // Init content providers.
-        initContentProviders();
-
-        initExpenseItProperties();
-        // Run the test.
-        test.doTest();
-    }
-
-    @Test
-    public void doExpenseItGetImageUrlsTest() throws Exception {
-        ExpenseItGetImageUrlTaskTest test = new ExpenseItGetImageUrlTaskTest();
-        doExpenseItTest(test);
-    }
-
-    @Test
-    public void doUploadImageToExpenseIt() throws Exception {
-        // Init and perform a PP login.
-        ExpenseItUploadReceiptTaskTest test = new ExpenseItUploadReceiptTaskTest();
-        doExpenseItTest(test);
-    }
-
-    /**
-     * Will initialize the config and travel content providers.
-     */
-    private static void initContentProviders() {
-
-        // Initialize the config content provider.
-        ConfigProvider configProvider = new ConfigProvider() {
-            @Override
-            public PlatformSQLiteOpenHelper initPlatformSQLiteOpenHelper(Context context) {
-                PlatformSQLiteOpenHelper helper = new ClearSQLiteOpenHelper(new ClearConfigDBHelper(context));
-                return helper;
-            }
-        };
-
-        configProvider.onCreate();
-        ShadowContentResolver.registerProvider(com.concur.mobile.platform.config.provider.Config.AUTHORITY,
-            configProvider);
-
-        initConfigLoginInfo();
-
-        // Initialize the travel content provider.
-        TravelProvider travelProvider = new TravelProvider() {
-            @Override
-            public PlatformSQLiteOpenHelper initPlatformSQLiteOpenHelper(Context context) {
-                PlatformSQLiteOpenHelper helper = new ClearSQLiteOpenHelper(new ClearTravelDBHelper(context));
-                return helper;
-            }
-        };
-
-        travelProvider.onCreate();
-        ShadowContentResolver.registerProvider(com.concur.mobile.platform.travel.provider.Travel.AUTHORITY,
-            travelProvider);
-
-        // Initialize the expense content provider.
-        ExpenseProvider expenseProvider = new ExpenseProvider() {
-            @Override
-            public PlatformSQLiteOpenHelper initPlatformSQLiteOpenHelper(Context context) {
-                PlatformSQLiteOpenHelper helper = new ClearSQLiteOpenHelper(new ClearExpenseDBHelper(context));
-                return helper;
-            }
-        };
-
-        expenseProvider.onCreate();
-        ShadowContentResolver.registerProvider(com.concur.mobile.platform.expense.provider.Expense.AUTHORITY,
-            expenseProvider);
-
-
-    }
-
-    /**
-     * Initializes a test user in config.Db session table.
-     */
-    private static void initConfigLoginInfo() {
-        //Init Session info for user
-        Context context = PlatformTestApplication.getApplication();
-        LoginResult loginResult = new LoginResult();
-        loginResult.userId = "allroles@ccrdemo.com";
-        loginResult.serverUrl = "www.concursolutions.com";
-        loginResult.userId = "gWnB$s4gQVrnBamNOI$sNB0Eoq54BXExKsAHw";
-        loginResult.accessToken = new AccessToken();
-        loginResult.accessToken.key = "AOai6mA9MM26vxtFb9DOx+exX/4=";
-        ConfigUtil.updateLoginInfo(context, loginResult);
-    }
-
-    /**
-     * Will initalize the mock server.
-     */
-    private static void initMockServer(MockServer mockServer) throws Exception {
-        // Short-circuit of the platform has already been inited.
-        if (mockServerInitialized) {
-            return;
-        } else {
-            mockServerInitialized = true;
-        }
-
-        // Initialize the mock MWS server.
-        server = mockServer;
-        server.start();
-    }
-
-    /**
-     * Initialize the ExpenseIt properties used to authenticate ExpenseIt services
-     */
-    private void initExpenseItProperties() {
-
-        Application app = PlatformTestApplication.getApplication();
-
-        // Set the server name.
-        if (PlatformTestApplication.useMockServer()) {
-            StringBuilder strBldr = new StringBuilder();
-            strBldr.append("dev://");
-            strBldr.append(server.getAddress());
-            strBldr.append(":");
-            strBldr.append(server.getPort());
-            ExpenseItProperties.setServerAddress(strBldr.toString());
-            ExpenseItProperties.setConsumerKey("ExpenseItConsumerKey");
-            ExpenseItProperties.setAppId("ExpenseItMockAppId");
-        } else {
-            String serverAddr = System.getProperty(Const.SERVER_ADDRESS, Const.DEFAULT_SERVER_ADDRESS);
-            Pair<String, String> expenseItServerAddress = ExpenseItServerUtil.getMatchingConcurExpenseItServer(serverAddr);
-            ExpenseItProperties.setServerAddress(expenseItServerAddress.first);
-            ExpenseItProperties.setConsumerKey(expenseItServerAddress.second);
-            ExpenseItProperties.setAppId(ExpenseItServerUtil.getAppId(PlatformTestApplication.getApplication()));
-
-            //Invalidate any Expenseit login information
-            SessionInfo expenseItSessionInfo = ConfigUtil.getExpenseItSessionInfo(PlatformTestApplication.getApplication());
-            if (expenseItSessionInfo != null && !TextUtils.isEmpty(expenseItSessionInfo.getAccessToken())) {
-                //Clear ExpenseIt Login Info
-                ExpenseItProperties.setAccessToken(null);
-                // Update the config content provider.
-                ConfigUtil.removeExpenseItLoginInfo(PlatformTestApplication.getApplication());
-            }
-        }
-
-        // set user agent
-        // Initialize the user-agent http header information.
-        StringBuilder ua = new StringBuilder("ConcurPlatformTest/");
-        String versionName;
-        try {
-            versionName = app.getPackageManager().getPackageInfo(app.getPackageName(), 0).versionName;
-        } catch (NameNotFoundException e) {
-            versionName = "0.0.0";
-        }
-        ua.append(versionName);
-        ua.append(" (Android, ").append(Build.MODEL).append(", ").append(Build.VERSION.RELEASE).append(")");
-        String userAgent = ua.toString();
-        ExpenseItProperties.setUserAgent(userAgent);
-
-    }
-
-    /**
-     * Will initialize the platform properties.
-     */
-    private static void initPlatformProperties() {
-
-        Application app = PlatformTestApplication.getApplication();
-
-        // Set up platform properties.
-
-        // Set the server name.
-        if (PlatformTestApplication.useMockServer()) {
-            StringBuilder strBldr = new StringBuilder();
-            strBldr.append("dev://");
-            strBldr.append(server.getAddress());
-            strBldr.append(":");
-            strBldr.append(server.getPort());
-            PlatformProperties.setServerAddress(strBldr.toString());
-        } else {
-            String serverAddr = System.getProperty(Const.SERVER_ADDRESS, Const.DEFAULT_SERVER_ADDRESS);
-            serverAddr = Format.formatServerAddress(!Format.isDevServer(serverAddr), serverAddr);
-            PlatformProperties.setServerAddress(serverAddr);
-        }
-
-        // Initialize the user-agent http header information.
-        StringBuilder ua = new StringBuilder("ConcurPlatformTest/");
-        String versionName;
-        try {
-            versionName = app.getPackageManager().getPackageInfo(app.getPackageName(), 0).versionName;
-        } catch (NameNotFoundException e) {
-            versionName = "0.0.0";
-        }
-        ua.append(versionName);
-        ua.append(" (Android, ").append(Build.MODEL).append(", ").append(Build.VERSION.RELEASE).append(")");
-        String userAgent = ua.toString();
-        PlatformProperties.setUserAgent(userAgent);
-
-        MWSPlatformManager mwsPlatMngr = new MWSPlatformManager();
-
-        // Set the platform session manager.
-        PlatformProperties.setPlatformSessionManager(mwsPlatMngr);
-
-        // Set the auto-login setting.
-        mwsPlatMngr.setAutoLoginEnabled(false);
-
-        // Initialize any session/token information.
-        PlatformProperties.setAccessToken(null);
-        PlatformProperties.setSessionId(null);
     }
 
 }

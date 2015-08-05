@@ -35,18 +35,23 @@ public class SystemConfigRequestTaskTest extends AsyncRequestTest {
      */
     private String hash = null;
 
+    public SystemConfigRequestTaskTest(boolean useMockServer) {
+        super(useMockServer);
+    }
+
     /**
      * Will perform the test throwing an exception if the test fails.
      * 
      * @throws Exception
      *             throws an exception if the test fails.
      */
+    @Override
     public void doTest() throws Exception {
 
         Context context = PlatformTestApplication.getApplication();
 
         // Set the mock response if the mock server is being used.
-        if (PlatformTestApplication.useMockServer()) {
+        if (useMockServer()) {
             // Set the mock response for the test.
             setMockResponse(mockServer, HttpStatus.SC_OK, "config/SystemConfig.xml");
         }
