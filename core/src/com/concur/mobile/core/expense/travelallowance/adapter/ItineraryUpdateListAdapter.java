@@ -289,7 +289,7 @@ public class ItineraryUpdateListAdapter extends ArrayAdapter<Object> {
             String dateStr;
             if (holder.tvDepartureDateValue != null) {
                 dateStr = DateUtils.formatDateTime(context, segment.getDepartureDateTime().getTime(),
-                        DateUtils.FORMAT_SHOW_DATE | DateUtils.FORMAT_SHOW_WEEKDAY | DateUtils.FORMAT_SHOW_YEAR
+                        DateUtils.FORMAT_SHOW_DATE | DateUtils.FORMAT_SHOW_WEEKDAY
                         | DateUtils.FORMAT_ABBREV_WEEKDAY | DateUtils.FORMAT_ABBREV_MONTH);
                 holder.tvDepartureDateValue.setText(dateStr);
             }
@@ -336,7 +336,7 @@ public class ItineraryUpdateListAdapter extends ArrayAdapter<Object> {
             String dateStr;
             if (holder.tvArrivalDateValue != null) {
                 dateStr = DateUtils.formatDateTime(context, segment.getArrivalDateTime().getTime(),
-                        DateUtils.FORMAT_SHOW_DATE | DateUtils.FORMAT_SHOW_WEEKDAY | DateUtils.FORMAT_SHOW_YEAR
+                        DateUtils.FORMAT_SHOW_DATE | DateUtils.FORMAT_SHOW_WEEKDAY
                                 | DateUtils.FORMAT_ABBREV_WEEKDAY | DateUtils.FORMAT_ABBREV_MONTH);
                 holder.tvArrivalDateValue.setText(dateStr);
             }

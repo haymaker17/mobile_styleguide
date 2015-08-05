@@ -1,8 +1,5 @@
 package com.concur.mobile.core.expense.travelallowance.fragment;
 
-import java.util.ArrayList;
-import java.util.List;
-
 import android.app.Activity;
 import android.os.Bundle;
 import android.support.v4.app.ListFragment;
@@ -15,10 +12,10 @@ import android.widget.ListAdapter;
 import com.concur.core.R;
 import com.concur.mobile.core.ConcurCore;
 import com.concur.mobile.core.expense.travelallowance.controller.TravelAllowanceItineraryController;
-import com.concur.mobile.core.expense.travelallowance.datamodel.Itinerary;
-import com.concur.mobile.core.expense.travelallowance.datamodel.ItinerarySegment;
 import com.concur.mobile.core.expense.travelallowance.ui.model.CompactItinerary;
 import com.concur.mobile.core.util.Const;
+
+import java.util.List;
 
 public class TravelAllowanceItineraryListFragment extends ListFragment implements SwipeRefreshLayout.OnRefreshListener{
 

@@ -919,6 +919,11 @@
         <item name="android:fontFamily">sans-serif</item>
     </style>
 
+    <style name="DefaultToolbarTitle" parent="TextAppearance.Widget.AppCompat.Toolbar.Title">
+        <item name="android:textSize">22sp</item>
+        <item name="android:textStyle">bold</item>
+    </style>
+
     <style name="DefaultTitle.Big">
         <item name="android:textSize">20sp</item>
     </style>
@@ -936,6 +941,10 @@
         <item name="android:textStyle">normal</item>
         <item name="android:textColor">#383f46</item>
         <item name="android:fontFamily">sans-serif-light</item>
+    </style>
+
+    <style name="DefaultSubTitle.White">
+        <item name="android:textColor">#ffffff</item>
     </style>
 
     <style name="DefaultLabel">

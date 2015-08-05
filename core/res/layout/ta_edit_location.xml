@@ -13,9 +13,18 @@
         android:layout_width="11dp"
         android:layout_height="11dp"
         android:layout_alignParentTop="true"
-        android:layout_marginRight="16dp"
+        android:layout_marginRight="56dp"
         android:layout_marginTop="2dp"
         android:src="@drawable/blue_oval" />
+
+    <ImageView
+        android:id="@+id/iv_same_location_icon"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:src="@drawable/icon_location_blue"
+        android:layout_marginRight="56dp"
+        android:visibility="gone"
+        android:layout_marginTop="2dp" />
 
     <TextView
         android:id="@+id/tv_location_label"

@@ -19,7 +19,7 @@
             android:id="@+id/iv_date_icon"
             android:layout_width="11dp"
             android:layout_height="11dp"
-            android:layout_marginRight="16dp"
+            android:layout_marginRight="56dp"
             android:layout_marginTop="2dp"
             android:visibility="invisible"
             android:src="@drawable/icon_calendar_v1" />
@@ -28,6 +28,7 @@
             android:id="@+id/tv_date_label"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_marginRight="16dp"
             android:layout_alignParentTop="true"
             android:layout_toEndOf="@+id/iv_date_icon"
             android:layout_toRightOf="@+id/iv_date_icon"
@@ -41,6 +42,7 @@
             android:layout_alignLeft="@+id/tv_date_label"
             android:layout_alignStart="@+id/tv_date_label"
             android:layout_below="@+id/tv_date_label"
+            android:layout_marginRight="16dp"
             android:text="\@Tue, Jun 23, 2015\@"
             android:textAppearance="@style/DefaultTitle" />
 
