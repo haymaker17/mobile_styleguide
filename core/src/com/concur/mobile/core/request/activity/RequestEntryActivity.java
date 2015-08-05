@@ -811,10 +811,10 @@ public class RequestEntryActivity extends AbstractConnectFormFieldActivity imple
                 entry.setListSegment(segmentsMultiLeg);
             }
             final int length = entry.getListSegment().size();
-            for (int i = 1; i <= length; i++) {
+            for (int i = 0; i < length; i++) {
                 final RequestSegmentDTO segment = entry.getListSegment().get(i);
-                // --- Applies a bulletproof display order
-                segment.setDisplayOrder(i);
+                // --- Applies a bulletproof display order - has to start at 1 to fit ws responses
+                segment.setDisplayOrder(i + 1);
                 save(form, segment);
             }
             originFragment = viewedFragment;
@@ -829,7 +829,7 @@ public class RequestEntryActivity extends AbstractConnectFormFieldActivity imple
             // --- onRequestResult calls cleanup() on execution, so listener will be destroyed by processing
             final RequestTask task = new RequestTask(this, 1, asyncReceiverSave,
                     ConnectHelper.ConnectVersion.VERSION_3_1, ConnectHelper.Module.REQUEST_ENTRY,
-                    createMode ? ConnectHelper.Action.CREATE : ConnectHelper.Action.UPDATE,
+                    createMode ? ConnectHelper.Action.CREATE_AND_SUBMIT : ConnectHelper.Action.UPDATE_AND_SUBMIT,
                     createMode ? null : entry.getId()).setPostBody(RequestParser.toJson(entry));
             if (createMode) {
                 task.addUrlParameter(RequestTask.P_REQUEST_ID, request.getId());

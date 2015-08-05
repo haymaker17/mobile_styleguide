@@ -58,7 +58,7 @@ public class RequestDTO implements FormDTO {
 
     @SerializedName("UserPermissions") private Link permissionsLink;
 
-    private int displayOrder = 0;
+    private int displayOrder = 1;
 
     @Override public String getId() {
         return id;
