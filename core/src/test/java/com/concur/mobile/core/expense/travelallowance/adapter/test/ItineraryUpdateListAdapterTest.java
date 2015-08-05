@@ -1,6 +1,7 @@
 package com.concur.mobile.core.expense.travelallowance.adapter.test;
 
 import android.app.Activity;
+import android.content.Context;
 import android.view.View;
 
 import com.concur.mobile.core.expense.travelallowance.adapter.ItineraryUpdateListAdapter;
@@ -24,9 +25,11 @@ public class ItineraryUpdateListAdapterTest extends TestCase {
 
     private ItineraryUpdateListAdapter adapter;
 
+    private View.OnClickListener onItemClickListener;
     private View.OnClickListener onLocationClickListener;
     private View.OnClickListener onDateClickListener;
     private View.OnClickListener onTimeClickListener;
+    private Context context;
 
 
     @Before
@@ -35,7 +38,9 @@ public class ItineraryUpdateListAdapterTest extends TestCase {
         onLocationClickListener = null;
         onDateClickListener = null;
         onTimeClickListener = null;
-        this.adapter = new ItineraryUpdateListAdapter(new Activity(), onLocationClickListener, onDateClickListener,
+        onItemClickListener = null;
+        context = null;
+        this.adapter = new ItineraryUpdateListAdapter(context,  onItemClickListener, onLocationClickListener, onDateClickListener,
                 onTimeClickListener, Collections.EMPTY_LIST);
 
     }
