@@ -13,7 +13,6 @@
         android:layout_width="11dp"
         android:layout_height="11dp"
         android:layout_alignParentTop="true"
-        android:layout_marginRight="56dp"
         android:layout_marginTop="2dp"
         android:src="@drawable/blue_oval" />
 
@@ -22,7 +21,6 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:src="@drawable/icon_location_blue"
-        android:layout_marginRight="56dp"
         android:visibility="gone"
         android:layout_marginTop="2dp" />
 
@@ -31,8 +29,8 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignParentTop="true"
-        android:layout_toEndOf="@+id/iv_location_icon"
-        android:layout_toRightOf="@+id/iv_location_icon"
+        android:layout_alignParentLeft="true"
+        android:layout_marginLeft="56dp"
         android:text="\@Location\@"
         android:textAppearance="@style/DefaultLabel" />
 

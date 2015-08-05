@@ -19,9 +19,8 @@
             android:id="@+id/iv_date_icon"
             android:layout_width="11dp"
             android:layout_height="11dp"
-            android:layout_marginRight="56dp"
             android:layout_marginTop="2dp"
-            android:visibility="invisible"
+            android:visibility="gone"
             android:src="@drawable/icon_calendar_v1" />
 
         <TextView
@@ -30,8 +29,8 @@
             android:layout_height="wrap_content"
             android:layout_marginRight="16dp"
             android:layout_alignParentTop="true"
-            android:layout_toEndOf="@+id/iv_date_icon"
-            android:layout_toRightOf="@+id/iv_date_icon"
+            android:layout_alignParentLeft="true"
+            android:layout_marginLeft="56dp"
             android:text="\@Date\@"
             android:textAppearance="@style/DefaultLabel" />
 

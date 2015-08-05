@@ -966,6 +966,10 @@
         <item name="android:textColor">#383f46</item>
     </style>
 
+    <style name="DefaultValue.Tiny">
+        <item name="android:textSize">12sp</item>
+    </style>
+
     <style name="GroupDivider">
         <item name="android:background">#f7fafd</item>
         <item name="android:layout_height">9dp</item>
