@@ -34,6 +34,8 @@ public class ExpenseItReceipt implements ExpenseItReceiptDAO, Serializable {
 
     private static final long serialVersionUID = -8302495324270296222L;
 
+    private static final int MAX_IMAGE_BYTE_SIZE = 800000;
+
     /**
      * Contains the receipt image ID.
      */
@@ -190,6 +192,8 @@ public class ExpenseItReceipt implements ExpenseItReceiptDAO, Serializable {
                 .ExpenseItReceiptColumns.IMAGE_DATA);
         if (imageData != null) {
             receipt.setImageData(BitmapFactory.decodeByteArray(imageData, 0, imageData.length));
+        } else {
+            receipt.setImageData(null);
         }
         receipt.setTotalImageCount(CursorUtil.getIntValue(cursor, Expense.ExpenseItReceiptColumns.TOTAL_IMAGE_COUNT));
         receipt.setTotalImagesUploaded(CursorUtil.getIntValue(cursor, Expense.ExpenseItReceiptColumns.TOTAL_IMAGES_UPLOADED));
@@ -293,7 +297,7 @@ public class ExpenseItReceipt implements ExpenseItReceiptDAO, Serializable {
         ContentUtils.putValue(values, Expense.ExpenseItReceiptColumns.SEND_TO_CTE_AT, sendToCteAt == null ? null : sendToCteAt.getTimeInMillis());
 
         if (imageData != null) {
-            if (imageData.length < 800000) {
+            if (imageData.length < MAX_IMAGE_BYTE_SIZE) {
                 ContentUtils.putValue(values, Expense.ExpenseItReceiptColumns.IMAGE_DATA,
                         imageData);
             }

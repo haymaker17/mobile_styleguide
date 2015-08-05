@@ -78,6 +78,8 @@ public class ExpensesAndReceipts extends BaseActivity implements ExpensesCallbac
     // Contains the key used to store/retrieve the ReceiptList receiver.
     private static final String GET_RECEIPT_LIST_RECEIVER_KEY = "get.receipt.list.receiver";
 
+    private static final String REQUEST_START_TIME = "request.start.time";
+
     private static final int REQUEST_GET_EXPENSE_LIST = 1;
 
     private static final int REQUEST_GET_RECEIPT_LIST = 2;
@@ -106,6 +108,8 @@ public class ExpensesAndReceipts extends BaseActivity implements ExpensesCallbac
     protected boolean shouldShowTestDriveReceiptTips = true;
 
     protected boolean shouldShowTestDriveExpensesTips = true;
+
+    protected ExpenseItPostReceiptResponse currentExpenseItResponse = null;
 
     /**
      *
@@ -184,46 +188,7 @@ public class ExpensesAndReceipts extends BaseActivity implements ExpensesCallbac
     /**
      * Listener used to handle the response for getting the list of ExpenseIt items.
      */
-    protected AsyncReplyListener expenseItListReplyListener = new AsyncReplyListener() {
-
-        @Override
-        public void onRequestSuccess(Bundle resultData) {
-            setIsRequestInProgress(false);
-            Long expenseItListRequestElapsedTime = 0L;
-
-            Log.d(Const.LOG_TAG, CLS_TAG + ".ExpenseItListReplyListener - Successfully retrieved ExpenseIt items!");
-
-            //Record the time taken to retrieve ExpenseItListRequest
-            expenseItListRequestElapsedTime = Calendar.getInstance().getTimeInMillis() -
-            expenseListRequestStartTime;
-            EventTracker.INSTANCE.trackTimings(Flurry.EVENT_RETRIEVE_EXPENSEIT_LIST, Flurry
-                            .EVENT_RETRIEVE_EXPENSEIT_LIST, Flurry.EVENT_RETRIEVE_EXPENSEIT_LIST,
-                    expenseItListRequestElapsedTime);
-
-            // Need to update the GSEL.
-            doGetSmartExpenseList();
-        }
-
-        @Override
-        public void onRequestFail(Bundle resultData) {
-            setIsRequestInProgress(false);
-            Log.e(Const.LOG_TAG, CLS_TAG + ".ExpenseItListReplyListener - FAILED to retrieve ExpenseIt items!");
-
-            onGetSmartExpenseListFailed();
-        }
-
-        @Override
-        public void onRequestCancel(Bundle resultData) {
-            setIsRequestInProgress(false);
-            // Update the ExpenseList UI.
-            updateExpenseListUI();
-        }
-
-        @Override
-        public void cleanup() {
-            expenseItListReceiver = null;
-        }
-    };
+    protected GetExpenseItListAsyncReplyListener expenseItListReplyListener = new GetExpenseItListAsyncReplyListener();
 
     /**
      * Listener for the reply of the ReceiptList MWS call.
@@ -451,7 +416,7 @@ public class ExpensesAndReceipts extends BaseActivity implements ExpensesCallbac
         if (isExpenseItItemsBeingAnalyzed()) {
             if (ConcurCore.isConnected()) {
                 Log.i(Const.LOG_TAG, CLS_TAG + ".refreshListView-DoExpenseItList is called.");
-                doGetExpenseItList();
+                doGetExpenseItList(false);
             }
         } else {
             endBackgroundRefresh();
@@ -558,6 +523,17 @@ public class ExpensesAndReceipts extends BaseActivity implements ExpensesCallbac
 
         }
 
+        // Save the timer's start time.
+        if (expenseListRequestStartTime > 0L) {
+            if (retainer != null) {
+                retainer.put(REQUEST_START_TIME, expenseListRequestStartTime);
+            }
+        }
+
+        if(currentExpenseItResponse != null && retainer != null) {
+            retainer.put(GetExpenseItExpenseListAsyncTask.GET_EXPENSEIT_EXPENSES_LIST, currentExpenseItResponse);
+        }
+
         //stop the refresh timer is on
         endBackgroundRefresh();
     }
@@ -608,6 +584,16 @@ public class ExpensesAndReceipts extends BaseActivity implements ExpensesCallbac
 
                     uploadExpenseItReceiptReceiver.setListener(new UploadImageAsyncReplyListener(uploadExpenseItReceiptProgress));
                 }
+            }
+
+            // Restore start time.
+            if (retainer.contains(REQUEST_START_TIME)) {
+                expenseListRequestStartTime = (long) retainer.get(REQUEST_START_TIME);
+            }
+
+            if(retainer.contains(GetExpenseItExpenseListAsyncTask.GET_EXPENSEIT_EXPENSES_LIST)) {
+                currentExpenseItResponse = (ExpenseItPostReceiptResponse)
+                        retainer.get(GetExpenseItExpenseListAsyncTask.GET_EXPENSEIT_EXPENSES_LIST);
             }
         }
 
@@ -745,12 +731,14 @@ public class ExpensesAndReceipts extends BaseActivity implements ExpensesCallbac
     }
 
     @Override
-    public void doGetExpenseItList() {
+    public void doGetExpenseItList(boolean foreRefresh) {
 
         if (!Preferences.isUserLoggedInExpenseIt()) {
             Log.e(Const.LOG_TAG, CLS_TAG + ".doGetExpenseItList is called while we're not logged in to ExpenseIt");
             return;
         }
+
+        expenseItListReplyListener.forceRefresh = foreRefresh;
 
         if (expenseItListReceiver == null) {
             expenseItListReceiver = new BaseAsyncResultReceiver(new Handler());
@@ -1155,6 +1143,65 @@ public class ExpensesAndReceipts extends BaseActivity implements ExpensesCallbac
         }
     }
 
+    private class GetExpenseItListAsyncReplyListener implements AsyncReplyListener {
+
+        public boolean forceRefresh = false;
+
+        @Override
+        public void onRequestSuccess(Bundle resultData) {
+            setIsRequestInProgress(false);
+            Long expenseItListRequestElapsedTime = 0L;
+
+            Log.d(Const.LOG_TAG, CLS_TAG + ".ExpenseItListReplyListener - Successfully retrieved ExpenseIt items!");
+
+            //Record the time taken to retrieve ExpenseItListRequest
+            expenseItListRequestElapsedTime = Calendar.getInstance().getTimeInMillis() -
+                    expenseListRequestStartTime;
+            EventTracker.INSTANCE.trackTimings(Flurry.EVENT_RETRIEVE_EXPENSEIT_LIST, Flurry
+                            .EVENT_RETRIEVE_EXPENSEIT_LIST, Flurry.EVENT_RETRIEVE_EXPENSEIT_LIST,
+                    expenseItListRequestElapsedTime);
+
+
+            // Check whether or not we should refresh the GSEL if there are changes to the ExpenseIt list.
+            boolean getGSEL = true;
+            if(resultData != null) {
+                ExpenseItPostReceiptResponse response = (ExpenseItPostReceiptResponse)
+                        resultData.getSerializable(GetExpenseItExpenseListAsyncTask.GET_EXPENSEIT_EXPENSES_LIST);
+                if(currentExpenseItResponse != null && response != null) {
+                    getGSEL = !currentExpenseItResponse.equals(response);
+                }
+                currentExpenseItResponse = response;
+
+            }
+
+            if(getGSEL || forceRefresh) {
+                // Need to update the GSEL.
+                doGetSmartExpenseList();
+            }
+        }
+
+        @Override
+        public void onRequestFail(Bundle resultData) {
+            setIsRequestInProgress(false);
+            Log.e(Const.LOG_TAG, CLS_TAG + ".ExpenseItListReplyListener - FAILED to retrieve ExpenseIt items!");
+
+            onGetSmartExpenseListFailed();
+        }
+
+        @Override
+        public void onRequestCancel(Bundle resultData) {
+            setIsRequestInProgress(false);
+            // Update the ExpenseList UI.
+            updateExpenseListUI();
+        }
+
+        @Override
+        public void cleanup() {
+            expenseItListReceiver = null;
+        }
+    };
+
+
     private class UploadImageAsyncReplyListener implements AsyncReplyListener {
 
         protected String CLS_TAG = UploadImageAsyncReplyListener.class.getSimpleName();
@@ -1186,7 +1233,7 @@ public class ExpensesAndReceipts extends BaseActivity implements ExpensesCallbac
                     } else {
 
                     //Make the call to get the new List
-                    doGetExpenseItList();
+                    doGetExpenseItList(true);
 
                     //And start the background refresh
                     if (Preferences.isExpenseItUser() && Preferences.isUserLoggedInExpenseIt()) {

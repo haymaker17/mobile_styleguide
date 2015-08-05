@@ -118,19 +118,17 @@ public class Expenses extends BaseFragment implements INetworkActivityListener {
      */
     public interface ExpensesCallback {
 
-        public void doGetSmartExpenseList();
+        void doGetSmartExpenseList();
 
-        public void onGetSmartExpenseListSuccess();
+        void onGetSmartExpenseListSuccess();
 
-        public void onGetSmartExpenseListFailed();
+        void onGetSmartExpenseListFailed();
 
-//        public void doGetReceiptList();
+        void doGetExpenseItList(boolean forceRefresh);
 
-        public void doGetExpenseItList();
+        void onGetExpenseItListSuccess();
 
-        public void onGetExpenseItListSuccess();
-
-        public void onGetExpenseItListFailed();
+        void onGetExpenseItListFailed();
 
         void startBackgroundRefresh();
 
@@ -2929,7 +2927,7 @@ public class Expenses extends BaseFragment implements INetworkActivityListener {
         if (Preferences.isExpenseItUser() && refreshExpenseItList) {
 
             showLoadingView();
-            expensesCallback.doGetExpenseItList();
+            expensesCallback.doGetExpenseItList(true);
 
             return;
         }

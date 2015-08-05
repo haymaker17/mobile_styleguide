@@ -1,9 +1,9 @@
 package com.concur.mobile.core.expense.fragment;
 
+import android.app.Activity;
 import android.app.AlertDialog;
 import android.app.Dialog;
 import android.content.DialogInterface;
-import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.DialogFragment;
 import android.util.Log;
@@ -15,8 +15,6 @@ import android.widget.EditText;
 import android.widget.TextView;
 
 import com.concur.core.R;
-import com.concur.mobile.core.activity.ReceiptView;
-import com.concur.mobile.core.expense.charge.activity.ExpenseItDetailActivity;
 import com.concur.mobile.core.expense.charge.data.ExpenseItItem;
 import com.concur.mobile.core.util.Const;
 import com.concur.mobile.core.util.FormatUtil;
@@ -35,15 +33,44 @@ public class ExpenseItDetailActivityFragment extends PlatformFragment {
 
     public static final int VIEW_PROCESSING_EXPENSEIT_ITEM_DETAILS = 16;
 
+    private static final String EXPENSEIT_ITEM = "EXPENSEIT_ITEM";
+
     private int eta;
-    private String receiptURL; // need to add link to get this!
     private Calendar date;
     private long receiptId = 0;
+    private ExpenseItItem expenseItItem;
+
+    public interface ExpenseItDetailsViewReceiptCallback {
+        void initializeViewReceipt(long receiptId);
+    }
+
+    protected ExpenseItDetailsViewReceiptCallback callbackActivity;
+
+    @Override
+    public void onAttach(Activity activity) {
+        super.onAttach(activity);
+        if (!(activity instanceof ExpenseItDetailsViewReceiptCallback)) {
+            throw new IllegalArgumentException("Activity should implement DetailsCallback!");
+        }
+        callbackActivity = (ExpenseItDetailsViewReceiptCallback) activity;
+    }
+
+    public final static ExpenseItDetailActivityFragment newInstance(ExpenseItItem item){
+
+        ExpenseItDetailActivityFragment dialog = new ExpenseItDetailActivityFragment();
+        Bundle args = new Bundle();
+        args.putSerializable(EXPENSEIT_ITEM, item);
+        dialog.setArguments(args);
+
+        return dialog;
+    }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         super.onCreateView(inflater, container, savedInstanceState);
         setHasOptionsMenu(true);
+
+        expenseItItem = (ExpenseItItem) getArguments().getSerializable(EXPENSEIT_ITEM);
 
         View view = inflater.inflate(R.layout.fragment_expense_it_detail, container, false);
         buildView(view);
@@ -54,12 +81,11 @@ public class ExpenseItDetailActivityFragment extends PlatformFragment {
     public void buildView(View view) {
 
         getActivity().getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_ALWAYS_HIDDEN);
-        Bundle data = getActivity().getIntent().getExtras();
-
-        ExpenseItItem expenseItItem = (ExpenseItItem) data.getSerializable(ExpenseItDetailActivity.EXPENSEIT_ITEM_KEY);
+        if (expenseItItem == null || expenseItItem.getUploadDate() == null) {
+            return;
+        }
 
         eta = expenseItItem.getEta();
-        //receiptURL = expenseItItem.getImageData();
         date = expenseItItem.getUploadDate();
         receiptId = expenseItItem.getReceiptId();
 
@@ -119,9 +145,7 @@ public class ExpenseItDetailActivityFragment extends PlatformFragment {
             viewReceipt.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    Intent intent = new Intent(getActivity(), ReceiptView.class);
-                    intent.putExtra(Const.EXTRA_EXPENSE_IT_RECEIPT_ID, receiptId);
-                    startActivity(intent);
+                    callbackActivity.initializeViewReceipt(receiptId);
                 }
             });
         } else {

@@ -232,4 +232,20 @@ public class ExpenseItPostReceipt implements Serializable {
         return expenseError;
     }
 
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (!(o instanceof ExpenseItPostReceipt)) return false;
+
+        ExpenseItPostReceipt that = (ExpenseItPostReceipt) o;
+
+        return !(getId() != null ? !getId().equals(that.getId()) : that.getId() != null);
+
+    }
+
+    @Override
+    public int hashCode() {
+        return getId() != null ? getId().hashCode() : 0;
+    }
 }

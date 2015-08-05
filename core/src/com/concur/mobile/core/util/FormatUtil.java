@@ -412,30 +412,19 @@ public class FormatUtil {
     public static String getEtaToString(Context context, int etaInSeconds) {
         int etaTotalMinutes = etaInSeconds / 60;
         int etaRemainingSeconds = etaInSeconds % 60;
-        StringBuilder time = new StringBuilder();
 
         // MOB-24792  Fix Localization of ExpenseIt ETA time
         String min = context.getResources().getString(R.string.expenseit_eta_min);
         String sec = context.getResources().getString(R.string.expenseit_eta_sec);
         String na = context.getResources().getString(R.string.expenseit_eta_na);
 
-        // Determine time. The first and last cases are safety precautions,
-        // in case they are not handled above.
         if ((etaTotalMinutes + etaRemainingSeconds) <= 0) {
-            time.append(na);
-        } else if (etaTotalMinutes > 0 && etaRemainingSeconds <= 0) {
-            time.append(etaTotalMinutes).append(" ").append(min);
-        } else if (etaTotalMinutes > 0 && etaRemainingSeconds > 0) {
-            time.append(etaTotalMinutes)
-                    .append(" ").append(min).append(", ").append(etaRemainingSeconds)
-                    .append(" ").append(sec);
-        } else if (etaTotalMinutes <= 0 && etaRemainingSeconds > 0) {
-            time.append(etaRemainingSeconds).append(" ").append(sec);
+            return na;
+        } else if (etaTotalMinutes > 0) {
+            return String.format(Locale.getDefault(), min, etaTotalMinutes, etaRemainingSeconds);
         } else {
-            time.append(na);
+            return String.format(Locale.getDefault(), sec, etaRemainingSeconds);
         }
-
-        return time.toString();
     }
 
     public static String formatElapsedTime(Context context, int elapsed) {
