@@ -13,6 +13,7 @@ import com.concur.core.R;
 import com.concur.mobile.core.ConcurCore;
 import com.concur.mobile.core.expense.travelallowance.controller.FixedTravelAllowanceController;
 import com.concur.mobile.core.expense.travelallowance.datamodel.FixedTravelAllowance;
+import com.concur.mobile.core.expense.travelallowance.util.DebugUtils;
 import com.concur.mobile.core.expense.travelallowance.util.DefaultDateFormat;
 import com.concur.mobile.core.expense.travelallowance.util.IDateFormat;
 import com.concur.mobile.core.expense.travelallowance.util.StringUtilities;
@@ -43,7 +44,7 @@ public class FixedTravelAllowanceListAdapter extends ArrayAdapter<Object> {
 
     private FixedTravelAllowance currentAllowance;
 
-    private static final String CLS_TAG = FixedTravelAllowanceListAdapter.class.getSimpleName();
+    private static final String CLASS_TAG = FixedTravelAllowanceListAdapter.class.getSimpleName();
 
     private static final int LAYOUT_ID = R.layout.generic_table_row_layout;
 
@@ -127,9 +128,9 @@ public class FixedTravelAllowanceListAdapter extends ArrayAdapter<Object> {
      */
     @Override
     public View getView(int i, View convertView, ViewGroup viewGroup) {
-        Log.d(Const.LOG_TAG, CLS_TAG + ".getView: Render view index: " + i);
         if (i > getCount()) {
-            Log.e(Const.LOG_TAG, CLS_TAG + ".getView: Index is out of bounds. Index: " + i);
+            Log.e(DebugUtils.LOG_TAG_TA, DebugUtils.buildLogText(CLASS_TAG, "getView",
+                "Index is out of bounds. Index: " + i));
         }
 
         View resultView = null;
@@ -153,6 +154,7 @@ public class FixedTravelAllowanceListAdapter extends ArrayAdapter<Object> {
             renderHeaderRow(locationName);
         }
 
+
         if (getItemViewType(i) == ENTRY_ROW) {
             currentAllowance = (FixedTravelAllowance) getItem(i);
             boolean withBottomDivider = false;
@@ -166,7 +168,11 @@ public class FixedTravelAllowanceListAdapter extends ArrayAdapter<Object> {
 
             renderEntryRow(currentAllowance, withTopDivider, withBottomDivider);
         }
-
+        if (holder.vDividerBottom != null) {
+            if (i + 1 >= getCount()) {//Last Divider
+                holder.vDividerBottom.setVisibility(View.VISIBLE);
+            }
+        }
         return resultView;
     }
 
@@ -183,7 +189,9 @@ public class FixedTravelAllowanceListAdapter extends ArrayAdapter<Object> {
             return ENTRY_ROW;
         }
 
-        Log.e(Const.LOG_TAG, CLS_TAG + ".getItemViewType: Cannot identify view type for index: " + i);
+        Log.e(DebugUtils.LOG_TAG_TA, DebugUtils.buildLogText(CLASS_TAG, "getItemViewType",
+                "Cannot identify view type for index: " + i));
+
         return IGNORE_ITEM_VIEW_TYPE;
     }
 
@@ -355,11 +363,10 @@ public class FixedTravelAllowanceListAdapter extends ArrayAdapter<Object> {
      * @param amount   The amount to be rendered
      * @param crnCode  the currency code to be rendered
      */
-
     private void renderAmount(TextView tvAmount, Double amount, String crnCode) {
 
         if (tvAmount == null) {
-            Log.e(Const.LOG_TAG, CLS_TAG + ".renderAmount: TextView null reference!");
+            Log.d(DebugUtils.LOG_TAG_TA, DebugUtils.buildLogText(CLASS_TAG, "renderAmount", "TextView null reference!"));
             return;
         }
         tvAmount.setVisibility(View.VISIBLE);
