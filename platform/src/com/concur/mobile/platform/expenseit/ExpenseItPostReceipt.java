@@ -8,6 +8,7 @@ import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.util.Log;
 
+import com.concur.mobile.base.util.Const;
 import com.google.gson.annotations.SerializedName;
 
 import java.io.ByteArrayOutputStream;
@@ -164,7 +165,7 @@ public class ExpenseItPostReceipt implements Serializable {
             byteArrayOutputStream.close();
             this.imageData = byteArrayOutputStream.toByteArray();
         } catch (Exception ex) {
-            Log.d(CLS_TAG, ex.getMessage());
+            Log.e(Const.LOG_TAG, CLS_TAG + ex.getMessage());
         }
     }
 

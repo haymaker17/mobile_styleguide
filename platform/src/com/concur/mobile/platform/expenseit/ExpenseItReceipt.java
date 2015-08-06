@@ -297,6 +297,11 @@ public class ExpenseItReceipt implements ExpenseItReceiptDAO, Serializable {
         ContentUtils.putValue(values, Expense.ExpenseItReceiptColumns.SEND_TO_CTE_AT, sendToCteAt == null ? null : sendToCteAt.getTimeInMillis());
 
         if (imageData != null) {
+            if (imageData.length > MAX_IMAGE_BYTE_SIZE){
+                //TODO: Attempt to reduce image size
+                //ViewUtils.compressAndRotateImage();
+            }
+
             if (imageData.length < MAX_IMAGE_BYTE_SIZE) {
                 ContentUtils.putValue(values, Expense.ExpenseItReceiptColumns.IMAGE_DATA,
                         imageData);
@@ -457,8 +462,12 @@ public class ExpenseItReceipt implements ExpenseItReceiptDAO, Serializable {
             imageData.compress(Bitmap.CompressFormat.JPEG, 100, byteArrayOutputStream);
             byteArrayOutputStream.close();
             this.imageData = byteArrayOutputStream.toByteArray();
+            if (update(context, userId))
+            {
+                this.imageData = null;
+            }
         } catch (Exception ex) {
-            Log.d(CLS_TAG, ex.getMessage());
+            Log.e(Const.LOG_TAG, CLS_TAG + ex.getMessage());
         }
     }
 

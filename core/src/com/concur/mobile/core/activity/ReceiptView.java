@@ -9,9 +9,11 @@ import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.os.Bundle;
 import android.os.Handler;
+import android.util.Log;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.ProgressBar;
+import android.widget.TextView;
 
 import com.concur.core.R;
 import com.concur.mobile.base.service.BaseAsyncRequestTask;
@@ -43,6 +45,8 @@ public class ReceiptView extends BaseActivity {
 
     private ExpenseItReceipt expenseItReceipt = null;
 
+    private TextView receiptImageUnavailable = null;
+
     BaseAsyncRequestTask.AsyncReplyListener asyncReplyListener = new BaseAsyncRequestTask
             .AsyncReplyListener() {
         @Override
@@ -58,12 +62,15 @@ public class ReceiptView extends BaseActivity {
                     bitmap = getBitmapFromURL(response.getImages().get(0).getImageDataUrl());
                     if (expenseItReceipt != null){
                         expenseItReceipt.setImageData(bitmap);
-                        expenseItReceipt.update(ReceiptView.this, getUserId());
+                        if (expenseItReceipt.update(ReceiptView.this, getUserId()) == false){
+                            Log.e(Const.LOG_TAG, CLS_TAG + "Failed updating receipt in database");
+                        };
                     }
 
                     imageView.post(new Runnable() {
                         @Override
                         public void run() {
+                            receiptImageUnavailable.setVisibility(View.GONE);
                             progressBar.setVisibility(View.GONE);
                             imageView.setImageBitmap(bitmap);
                         }
@@ -74,12 +81,17 @@ public class ReceiptView extends BaseActivity {
 
         @Override
         public void onRequestFail(Bundle resultData) {
-            EventTracker.INSTANCE.track(Flurry.EVENT_SHOW_ANALYZING_RECEIPT_FAILED, Flurry.EVENT_SHOW_ANALYZING_RECEIPT_FAILED);
+            receiptImageUnavailable.setVisibility(View.VISIBLE);
+            progressBar.setVisibility(View.GONE);
+
+            EventTracker.INSTANCE.track(Flurry.EVENT_SHOW_ANALYZING_RECEIPT_FAILED,
+                    Flurry.EVENT_SHOW_ANALYZING_RECEIPT_FAILED);
         }
 
         @Override
         public void onRequestCancel(Bundle resultData) {
-
+            receiptImageUnavailable.setVisibility(View.GONE);
+            progressBar.setVisibility(View.GONE);
         }
 
         @Override
@@ -108,6 +120,7 @@ public class ReceiptView extends BaseActivity {
         imageView = (ImageView) findViewById(R.id.imgvMain);
         progressBar = (ProgressBar) findViewById(R.id.progressBar);
 
+
         intent = getIntent();
         if (intent.hasExtra(Const.EXTRA_EXPENSE_IT_RECEIPT_ID)) {
             expenseItReceiptId = intent.getLongExtra(Const.EXTRA_EXPENSE_IT_RECEIPT_ID, 0);
@@ -126,16 +139,20 @@ public class ReceiptView extends BaseActivity {
             String[] whereArgs = {getUserId(), expenseItReceiptId.toString()};
             Cursor cursor = getContentResolver().query(Expense.ExpenseItReceiptColumns.CONTENT_URI, null, statement.toString(), whereArgs, Expense.ExpenseItReceiptColumns.DEFAULT_SORT_ORDER);
 
-            cursor.moveToFirst();
-            expenseItReceipt = new ExpenseItReceipt(this,
-                    cursor);
-            cursor.close();
+            if (cursor.moveToFirst()) {
+                expenseItReceipt = new ExpenseItReceipt(this,
+                        cursor);
+                cursor.close();
 
-            if (expenseItReceipt == null || expenseItReceipt.getImageData() == null){
-                getImage();
-            }else {
+                if (expenseItReceipt == null || expenseItReceipt.getImageData() == null) {
+                    getImage();
+                } else {
+                    progressBar.setVisibility(View.GONE);
+                    imageView.setImageBitmap(expenseItReceipt.getImageData());
+                }
+            }else{
+                receiptImageUnavailable.setVisibility(View.VISIBLE);
                 progressBar.setVisibility(View.GONE);
-                imageView.setImageBitmap(expenseItReceipt.getImageData());
             }
         }
     }
