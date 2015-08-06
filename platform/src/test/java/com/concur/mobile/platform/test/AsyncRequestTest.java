@@ -20,6 +20,7 @@ import com.concur.mobile.platform.test.server.MockServer;
 import junit.framework.AssertionFailedError;
 
 import org.apache.commons.io.IOUtils;
+import org.apache.http.HttpStatus;
 import org.junit.Assert;
 import org.robolectric.shadows.ShadowLog;
 
@@ -103,6 +104,78 @@ public abstract class AsyncRequestTest {
             buf = bos.toByteArray();
         }
         return buf;
+    }
+
+    /**
+     * Will perform the test throwing an exception if the test fails.
+     *
+     * @throws Exception throws an exception if the test fails.
+     */
+    public void runTest(String mockFile, ExpenseItAsyncRequestTask reqTask, VerifyResponse verifyResponse) throws Exception {
+
+        Context context = PlatformTestApplication.getApplication();
+
+        // Set the mock response if the mock server is being used.
+        if (useMockServer()) {
+
+            // Set the mock response for the test.
+            Map<String, String> responseHeaders = new HashMap<>();
+
+            // Set the content-type.
+            responseHeaders.put("Content-Type", "application/json");
+            // Set the mock response for the test.
+            setMockResponse(mockServer, HttpStatus.SC_OK, mockFile, responseHeaders);
+        }
+
+        //Make the call
+        reqTask.setRetainResponse(true);
+
+        ShadowLog.d(Const.LOG_TAG, CLS_TAG + ".doTest: launching the request.");
+
+        // Launch the request.
+        launchRequest(reqTask);
+
+        ShadowLog.d(Const.LOG_TAG, CLS_TAG + ".doTest: launched the request.");
+
+        try {
+
+            ShadowLog.d(Const.LOG_TAG, CLS_TAG + ".doTest: waiting for result.");
+            // Wait for the result.
+            waitForResult();
+
+            ShadowLog.d(Const.LOG_TAG, CLS_TAG + ".doTest: obtained result.");
+
+        } catch (InterruptedException intExc) {
+            ShadowLog.e(Const.LOG_TAG, CLS_TAG + ".doTest: interrupted while acquiring login result.");
+            result.resultCode = BaseAsyncRequestTask.RESULT_CANCEL;
+        }
+
+        // Examine the result.
+        if (result != null) {
+
+            // Verify result code.
+            verifyExpectedResultCode(CLS_TAG);
+
+            switch (result.resultCode) {
+                case BaseAsyncRequestTask.RESULT_CANCEL: {
+                    ShadowLog.d(Const.LOG_TAG, CLS_TAG + ".doTest: result cancelled.");
+                    break;
+                }
+                case BaseAsyncRequestTask.RESULT_ERROR: {
+                    ShadowLog.d(Const.LOG_TAG, CLS_TAG + ".doTest: result error.");
+                    break;
+                }
+                case BaseAsyncRequestTask.RESULT_OK: {
+
+                    // Verify the result.
+                    String response = getResponseString(reqTask);
+                    Assert.assertNotNull("request response is null", response);
+
+                    verifyResponse.verify(context, verifyResponse.serializeResponse(response));
+                    break;
+                }
+            }
+        }
     }
 
     /**
