@@ -167,13 +167,6 @@ p {
 	margin-right: 2%;
 }
 
-.flexContainer.half > div {
-	-webkit-flex: 1 0 auto;
-	flex: 1 0 auto;
-	width: 50%;
-}
-
-
 
 .flexContainer.third > div {
 	-webkit-flex: 1 0 auto;
