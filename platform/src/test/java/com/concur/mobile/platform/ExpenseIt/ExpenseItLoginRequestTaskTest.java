@@ -10,6 +10,7 @@ import com.concur.mobile.base.service.BaseAsyncResultReceiver;
 import com.concur.mobile.platform.authentication.ExpenseItLoginResult;
 import com.concur.mobile.platform.authentication.LoginExpenseItTask;
 import com.concur.mobile.platform.ExpenseIt.test.VerifyExpenseItLoginResult;
+import com.concur.mobile.platform.test.AsyncRequestTest;
 import com.concur.mobile.platform.test.Const;
 import com.concur.mobile.platform.test.PlatformTestApplication;
 import com.google.gson.Gson;
@@ -27,7 +28,7 @@ import java.util.Map;
  * request.
  *
  */
-public class ExpenseItLoginRequestTaskTest extends ExpenseItTest {
+public class ExpenseItLoginRequestTaskTest extends AsyncRequestTest {
 
     private static final String CLS_TAG = ExpenseItLoginRequestTaskTest.class.getSimpleName();
 
@@ -42,6 +43,11 @@ public class ExpenseItLoginRequestTaskTest extends ExpenseItTest {
      * Contains the request pin/password.
      */
     private String loginPinPassword;
+
+
+    public ExpenseItLoginRequestTaskTest(boolean useMockServer) {
+        super(useMockServer);
+    }
 
     /**
      * Sets the authentication credentials.
@@ -64,7 +70,7 @@ public class ExpenseItLoginRequestTaskTest extends ExpenseItTest {
         Context context = PlatformTestApplication.getApplication();
 
         // Set the mock response if the mock server is being used.
-        if (PlatformTestApplication.useMockServer()) {
+        if (useMockServer()) {
 
             // Set the mock response for the test.
             Map<String, String> responseHeaders = new HashMap<String, String>();

@@ -49,6 +49,11 @@ public class ValidateExpenseItAsyncTask  extends ExpenseItAsyncRequestTask {
     }
 
     @Override
+    protected RequestMethod getRequestMethod() {
+        return RequestMethod.GET;
+    }
+
+    @Override
     public int parseStream(HttpURLConnection connection, InputStream is) {
         int result = BaseAsyncRequestTask.RESULT_OK;
         try {

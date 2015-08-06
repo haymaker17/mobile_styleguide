@@ -155,10 +155,10 @@ public class LoginPasswordActivity extends BaseActivity implements LoginPassword
                 // GA analytics
                 trackLoginOverall("Success");
                 if (signInMethod
-                        .equalsIgnoreCase(com.concur.mobile.platform.ui.common.util.Const.LOGIN_METHOD_MOBILE_PASSWORD)) {
+                    .equalsIgnoreCase(com.concur.mobile.platform.ui.common.util.Const.LOGIN_METHOD_MOBILE_PASSWORD)) {
                     trackLoginSuccess(Flurry.PARAM_VALUE_LOGIN_USING_MOBILE_PASSWORD);
                 } else if (signInMethod
-                        .equalsIgnoreCase(com.concur.mobile.platform.ui.common.util.Const.LOGIN_METHOD_PASSWORD)) {
+                    .equalsIgnoreCase(com.concur.mobile.platform.ui.common.util.Const.LOGIN_METHOD_PASSWORD)) {
                     trackLoginSuccess(Flurry.PARAM_VALUE_LOGIN_USING_PASSWORD);
                 }
 
@@ -193,6 +193,8 @@ public class LoginPasswordActivity extends BaseActivity implements LoginPassword
                         public void onRequestSuccess(Bundle resultData) {
                             Log.d(Const.LOG_TAG, CLS_TAG + ".expenseItLoginReceiver.onRequestSuccess is called");
                             Preferences.setUserLoggedOnToExpenseIt(true);
+                            ConcurCore concurCore = (ConcurCore) getApplication();
+                            concurCore.ensureAutoCTETurnedOn();
                         }
 
                         @Override
@@ -237,8 +239,8 @@ public class LoginPasswordActivity extends BaseActivity implements LoginPassword
 
                 // MOB-22674 - Show error dialog on failure.
                 DialogFragmentFactory.getAlertOkayInstance(getString(R.string.dlg_system_unavailable_title),
-                        getString(R.string.dlg_system_unavailable_message)).show(
-                        LoginPasswordActivity.this.getSupportFragmentManager(), null);
+                    getString(R.string.dlg_system_unavailable_message)).show(
+                    LoginPasswordActivity.this.getSupportFragmentManager(), null);
 
             }
 

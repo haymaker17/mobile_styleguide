@@ -4,6 +4,7 @@
 package com.concur.mobile.platform.expenseit;
 
 import android.content.Context;
+import android.net.Uri;
 import android.util.Log;
 
 import com.concur.mobile.base.service.BaseAsyncRequestTask;
@@ -21,36 +22,40 @@ import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.net.HttpURLConnection;
 
-public class PostExpenseItReceiptAsyncTask extends ExpenseItAsyncRequestTask {
+public class DeleteExpenseItReceiptAsyncTask extends ExpenseItAsyncRequestTask {
 
-    private static String CLS_TAG = PostExpenseItReceiptAsyncTask.class.getSimpleName();
+    private static String CLS_TAG = DeleteExpenseItReceiptAsyncTask.class.getSimpleName();
 
     private static final String EXPENSES_URL = "v1/expenses";
 
-    public static final String POST_EXPENSEIT_OCR_RESULT_KEY = "POST_EXPENSEIT_OCR_RESULT_KEY";
-    protected ExpenseItImage image;
+    private static final String SEGMENT_CURRENT_ID = "%d";
 
-    protected ExpenseItPostReceiptResponse receiptResponse;
+    public static final String DELETE_EXPENSEIT_RECEIPT_ASYNC_TASK = "DELETE_EXPENSEIT_RECEIPT_ASYNC_TASK";
 
-    public PostExpenseItReceiptAsyncTask(Context context, int requestId, BaseAsyncResultReceiver receiver, ExpenseItImage image) {
+    final private Long expenseId;
+
+    protected ErrorResponse deleteReceiptResponse;
+
+    public DeleteExpenseItReceiptAsyncTask(Context context, int requestId, BaseAsyncResultReceiver receiver, Long expenseId) {
         super(context, requestId, receiver);
-        this.image = image;
+        this.expenseId = expenseId;
     }
 
     @Override
     protected String getServiceEndPoint() {
-        return EXPENSES_URL;
+        final Uri.Builder builder = Uri.parse(EXPENSES_URL).buildUpon();
+        builder.appendPath(String.format(SEGMENT_CURRENT_ID, expenseId));
+        return builder.build().toString();
     }
 
     @Override
     protected String getPostBody() {
-        Gson gson = new GsonBuilder().create();
-        return gson.toJson(image);
+        return super.getPostBody();
     }
 
     @Override
     protected RequestMethod getRequestMethod() {
-        return RequestMethod.POST;
+        return RequestMethod.DELETE;
     }
 
     @Override
@@ -59,33 +64,22 @@ public class PostExpenseItReceiptAsyncTask extends ExpenseItAsyncRequestTask {
 
         try {
             // Build the parser with type deserializers.
-            Gson gson = new GsonBuilder().setDateFormat("yyyy-MM-dd HH:mm:ss").create();
+            Gson gson = new GsonBuilder().create();
             if (connection.getResponseCode() >= HttpStatus.SC_OK &&
                 connection.getResponseCode() < HttpStatus.SC_MULTIPLE_CHOICES) {
 
-                ExpenseItPostReceiptResponse tmpResp = gson.fromJson(new InputStreamReader(new BufferedInputStream(is),
-                    "UTF-8"), ExpenseItPostReceiptResponse.class);
+                ErrorResponse tmpResp = gson.fromJson(new InputStreamReader(new BufferedInputStream(is),
+                    "UTF-8"), ErrorResponse.class);
 
                 if (tmpResp != null) {
-                    receiptResponse = tmpResp;
+                    deleteReceiptResponse = tmpResp;
                 } else {
                     Log.e(Const.LOG_TAG, CLS_TAG + ".parseStream: MWSResponse was null!");
                     result = BaseAsyncRequestTask.RESULT_ERROR;
                 }
             } else {
-                // prepare the object Type expected in MWS response 'data' element
-                ErrorResponse errResp = gson.fromJson(new InputStreamReader(new BufferedInputStream(is),
-                    "UTF-8"), ErrorResponse.class);
-                if (errResp != null) {
-                    ExpenseItPostReceipt receipt = new ExpenseItPostReceipt();
-                    receipt.setExpenseError(errResp);
-                    ExpenseItPostReceipt[] list = new ExpenseItPostReceipt[] {receipt};
-                    receiptResponse.setExpenses((list));
-                    result = BaseAsyncRequestTask.RESULT_ERROR;
-                } else {
-                    Log.e(Const.LOG_TAG, CLS_TAG + ".parseStream: MWSResponse Error response was null!");
-                    result = BaseAsyncRequestTask.RESULT_ERROR;
-                }
+                Log.e(Const.LOG_TAG, CLS_TAG + ".parseStream: MWSResponse Error response was null!");
+                result = BaseAsyncRequestTask.RESULT_ERROR;
             }
         } catch (Exception exc) {
             Log.e(Const.LOG_TAG, CLS_TAG + ".parseStream: I/O exception parsing data.", exc);
@@ -105,9 +99,11 @@ public class PostExpenseItReceiptAsyncTask extends ExpenseItAsyncRequestTask {
 
     @Override
     protected int onPostParse() {
+
         int result = super.onPostParse();
-        if (receiptResponse != null) {
-            resultData.putSerializable(POST_EXPENSEIT_OCR_RESULT_KEY, receiptResponse);
+
+        if (deleteReceiptResponse != null) {
+            resultData.putSerializable(DELETE_EXPENSEIT_RECEIPT_ASYNC_TASK, deleteReceiptResponse);
         }
 
         return result;

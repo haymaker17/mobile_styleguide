@@ -66,8 +66,8 @@ public class GetExpenseItExpenseListAsyncTask extends ExpenseItAsyncRequestTask 
     }
 
     @Override
-    protected void configureConnection(HttpURLConnection connection) {
-        super.configureConnection(connection);
+    protected RequestMethod getRequestMethod() {
+        return RequestMethod.GET;
     }
 
     @Override

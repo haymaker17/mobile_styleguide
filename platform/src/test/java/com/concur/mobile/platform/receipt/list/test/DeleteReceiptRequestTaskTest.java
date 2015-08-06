@@ -38,9 +38,13 @@ public class DeleteReceiptRequestTaskTest extends AsyncRequestTest {
 
     public static enum ReceiptSource {
         SOURCE_URI, SOURCE_RECEIPT_IMAGE_ID
-    };
+    }
 
     private ReceiptSource source;
+
+    public DeleteReceiptRequestTaskTest(boolean useMockServer) {
+        super(useMockServer);
+    }
 
     /**
      * Will construct an instance of <code>DeleteReceiptRequestTaskTest</code> with a test type.
@@ -48,7 +52,7 @@ public class DeleteReceiptRequestTaskTest extends AsyncRequestTest {
      * @param source
      *            contains the type of test to run.
      */
-    public DeleteReceiptRequestTaskTest(ReceiptSource source) {
+    public void setReceiptSource(ReceiptSource source) {
         this.source = source;
     }
 
@@ -63,7 +67,7 @@ public class DeleteReceiptRequestTaskTest extends AsyncRequestTest {
         Context context = PlatformTestApplication.getApplication();
 
         // Set the mock response if the mock server is being used.
-        if (PlatformTestApplication.useMockServer()) {
+        if (useMockServer()) {
             setMockResponse(mockServer, HttpStatus.SC_OK, null);
         }
 

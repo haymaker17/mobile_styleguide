@@ -27,6 +27,7 @@ import java.io.InputStream;
 import java.io.Serializable;
 import java.io.UnsupportedEncodingException;
 import java.net.HttpURLConnection;
+import java.net.ProtocolException;
 import java.net.URLEncoder;
 import java.util.ArrayList;
 import java.util.List;
@@ -57,9 +58,25 @@ public abstract class ExpenseItAsyncRequestTask extends BaseAsyncRequestTask {
     public static final String HTTP_HEADER_AUTHORIZATION = "X-Authorization";
     public static final String HTTP_HEADER_APP_ID = "X-AppID";
     public static final String HTTP_HEADER_CONSUMER_KEY = "X-ConsumerKey";
-    protected static final String HTTP_HEADER_CONTENT_TYPE = "Content-Type";
     protected static final String HTTP_HEADER_CONNECTION = "Connection";
+    protected static final String HEADER_CONNECTION_CLOSE = "close";
+    protected static final String HEADER_CONNECTION_KEEP_ALIVE = "Keep-Alive";
+    protected static final int CONNECT_TIMEOUT_MILLIS = 10000;
+    protected static final int READ_TIMEOUT_MILLIS = 20000;
+
     private static final String CLS_TAG = ExpenseItAsyncRequestTask.class.getSimpleName();
+
+    protected enum RequestMethod {
+        GET,
+        POST,
+        PUT,
+        DELETE
+    }
+
+    /**
+     * gets the connection request type
+     */
+    protected abstract RequestMethod getRequestMethod();
 
     /**
      * Gets the service end-point for this request.
@@ -158,8 +175,22 @@ public abstract class ExpenseItAsyncRequestTask extends BaseAsyncRequestTask {
             }
         }
 
+        connection.setRequestProperty(HEADER_CONTENT_TYPE, CONTENT_TYPE_JSON);
+
+        connection.setConnectTimeout(CONNECT_TIMEOUT_MILLIS);
+        connection.setReadTimeout(READ_TIMEOUT_MILLIS);
+        connection.setRequestProperty(HTTP_HEADER_CONNECTION, HEADER_CONNECTION_KEEP_ALIVE);
+
         //Setup Connection
-        connection.setRequestProperty(HTTP_HEADER_CONNECTION, "Keep-Alive");
+        RequestMethod requestMethod = getRequestMethod();
+
+        try {
+            connection.setRequestMethod(requestMethod.toString());
+        } catch (ProtocolException e) {
+            Log.e(Const.LOG_TAG, CLS_TAG + ".configureConnection: Error while applying delete request method");
+            e.printStackTrace();
+        }
+
     }
 
     @Override
