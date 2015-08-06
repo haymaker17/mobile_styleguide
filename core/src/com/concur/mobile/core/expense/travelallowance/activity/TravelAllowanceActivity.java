@@ -189,8 +189,11 @@ public class TravelAllowanceActivity extends AppCompatActivity
         if (message.equals(FixedTravelAllowanceListFragment.ON_REFRESH_MSG)) {
             this.allowanceController.refreshFixedTravelAllowances(expenseReportKey);
         }
-        if (message.equals(SimpleTAItineraryListFragment.ON_REFRESH_MSG)) {
+        if (message.equals(SimpleTAItineraryListFragment.ON_REFRESH_MSG_ITIN)) {
             this.itineraryController.refreshItineraries(expenseReportKey, false);
+        }
+        if (message.equals(SimpleTAItineraryListFragment.ON_REFRESH_MSG_TA)) {
+            this.allowanceController.refreshFixedTravelAllowances(expenseReportKey);
         }
     }
 

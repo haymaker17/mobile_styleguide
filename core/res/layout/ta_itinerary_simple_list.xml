@@ -19,7 +19,6 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent" />
 
-
         <android.support.design.widget.FloatingActionButton
             android:id="@+id/fab"
             android:layout_width="wrap_content"
@@ -36,5 +35,13 @@
 
     </android.support.design.widget.CoordinatorLayout>
     </android.support.v4.widget.SwipeRefreshLayout>
+
+    <include
+        android:id="@+id/v_ta_footer"
+        layout="@layout/ta_footer"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:visibility="gone"
+        android:layout_alignParentBottom="true"/>
 
 </RelativeLayout>

@@ -954,6 +954,12 @@
         <item name="android:fontFamily">sans-serif</item>
     </style>
 
+    <style name="DefaultLabel.BigBlack">
+        <item name="android:textSize">14sp</item>
+        <item name="android:textStyle">bold</item>
+        <item name="android:textColor">#383f46</item>
+    </style>
+
     <style name="DefaultMessage">
         <item name="android:textSize">12sp</item>
         <item name="android:textStyle">normal</item>

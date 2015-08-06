@@ -512,7 +512,7 @@ public class TravelAllowanceItineraryController extends BaseController {
         Iterator<Message> it = messageCache.iterator();
         while (it.hasNext()) {
             Message msg = it.next();
-            if (msg.getSourceObject() != null && sourceObject == msg.getSourceObject()) {
+            if (msg.getSourceObject() != null && sourceObject.equals(msg.getSourceObject())) {
                 it.remove();
             }
         }
@@ -525,7 +525,7 @@ public class TravelAllowanceItineraryController extends BaseController {
         Iterator<Message> it = messageCache.iterator();
         while (it.hasNext()) {
             Message msg = it.next();
-            if (msg.getSourceObject() != null && sourceObject == msg.getSourceObject()
+            if (msg.getSourceObject() != null && sourceObject.equals(msg.getSourceObject())
                     && code.equals(msg.getCode())) {
                 it.remove();
             }

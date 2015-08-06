@@ -173,6 +173,10 @@ public class ItinerarySegment implements Serializable, IDatePeriodUTC, Comparabl
 
         ItinerarySegment that = (ItinerarySegment) o;
 
+        if (id != null && id.equals(that.id)) {//The id is a unique identifier
+            return true;
+        }
+
         if (locked != that.locked) return false;
         if (id != null ? !id.equals(that.id) : that.id != null) return false;
         if (departureLocation != null ? !departureLocation.equals(that.departureLocation) : that.departureLocation != null)
