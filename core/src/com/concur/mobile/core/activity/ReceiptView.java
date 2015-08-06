@@ -134,9 +134,10 @@ public class ReceiptView extends BaseActivity {
             statement.append(Expense.ExpenseItReceiptColumns.ID);
             statement.append(" = ?");
             String[] whereArgs = {getUserId(), expenseItReceiptId.toString()};
-            Cursor cursor = getContentResolver().query(Expense.ExpenseItReceiptColumns.CONTENT_URI, null, statement.toString(), whereArgs, Expense.ExpenseItReceiptColumns.DEFAULT_SORT_ORDER);
+            Cursor cursor = getContentResolver().query(Expense.ExpenseItReceiptColumns.CONTENT_URI,
+                    null, statement.toString(), whereArgs, Expense.ExpenseItReceiptColumns.DEFAULT_SORT_ORDER);
 
-            if (cursor.moveToFirst()) {
+            if (cursor != null && cursor.moveToFirst()) {
                 expenseItReceipt = new ExpenseItReceipt(this,
                         cursor);
                 cursor.close();
