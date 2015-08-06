@@ -116,10 +116,7 @@ public class ReceiptView extends BaseActivity {
         super.onCreate(savedInstanceState);
 
         setContentView(R.layout.receipt_view);
-
-        imageView = (ImageView) findViewById(R.id.imgvMain);
-        progressBar = (ProgressBar) findViewById(R.id.progressBar);
-
+        buildViews();
 
         intent = getIntent();
         if (intent.hasExtra(Const.EXTRA_EXPENSE_IT_RECEIPT_ID)) {
@@ -155,6 +152,12 @@ public class ReceiptView extends BaseActivity {
                 progressBar.setVisibility(View.GONE);
             }
         }
+    }
+
+    private void buildViews() {
+        imageView = (ImageView) findViewById(R.id.imgvMain);
+        progressBar = (ProgressBar) findViewById(R.id.progressBar);
+        receiptImageUnavailable = (TextView) findViewById(R.id.txtvReceiptImageUnavailable);
     }
 
     private void getImage() {
