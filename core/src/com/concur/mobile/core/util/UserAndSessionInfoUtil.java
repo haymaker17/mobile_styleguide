@@ -125,7 +125,7 @@ public class UserAndSessionInfoUtil {
             ConfigUtil.updateSessionInfo(ctx, sessionInfo);
 
             //
-            setLoginRequestFields(ctx.getApplicationContext(), signInMethod, ssoUrl);
+            setLoginRequestFields(ctx.getApplicationContext(), sessionInfo);
         }
         ConcurCore.saveLoginResponsePreferences(sessionInfo.getSessionId(), (ConcurCore) ctx.getApplicationContext(),
                 parseMap);
@@ -144,7 +144,14 @@ public class UserAndSessionInfoUtil {
     }
 
     // will retrieve the required fields to use in PPLoginRequestTask request for auto login scenario
-    public static void setLoginRequestFields(Context context, String signInMethod, String ssoUrl) {
+    public static void setLoginRequestFields(Context context, SessionInfo sessionInfo) {
+
+        String loginId = sessionInfo.getLoginId();
+        String email= sessionInfo.getEmail();
+        String serverURL = sessionInfo.getServerUrl();
+        String ssoURL = sessionInfo.getSSOUrl();
+        String signInMethod = sessionInfo.getSignInMethod();
+
         SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(context);
 
         MWSPlatformManager platformManager = (MWSPlatformManager) PlatformProperties.getPlatformSessionManager();
@@ -158,10 +165,8 @@ public class UserAndSessionInfoUtil {
 
         // If auto-login is enabled and company sign-on is being used, then force autoLogin to 'false'.
         // Company Sign-on auto-login is not currently supported.
-        //setAuthenticationType(MWSPlatformManager.AuthenticationType.PPLogin);
-        //String loginMethod = sessionInfo.getSignInMethod();
         if(autoLogin) {
-            if ("SSO".equalsIgnoreCase(signInMethod) || !(TextUtils.isEmpty(ssoUrl))) {
+            if ("SSO".equalsIgnoreCase(signInMethod) || !(TextUtils.isEmpty(ssoURL))) {
                 platformManager.setAutoLoginEnabled(false);
                 platformManager.setAuthenticationType(MWSPlatformManager.AuthenticationType.SSO);
             } else {
@@ -171,9 +176,19 @@ public class UserAndSessionInfoUtil {
                 } else {
                     platformManager.setAuthenticationType(MWSPlatformManager.AuthenticationType.MobilePassword);
                 }
+
+                // set other login information into Platformmanager so that you can retrieve it during the AutoLoginRequestTask
+                platformManager.setLoginId(loginId);
+                platformManager.setEmail(email);
+                platformManager.setServerURL(serverURL);
+                platformManager.setSsoURL(ssoURL);
+
             }
         } else {
             platformManager.setAutoLoginEnabled(false);
         }
+
+        // Update the platform session manager.
+        PlatformProperties.setPlatformSessionManager(platformManager);
     }
 }

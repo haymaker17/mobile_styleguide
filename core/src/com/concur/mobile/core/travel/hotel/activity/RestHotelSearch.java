@@ -30,6 +30,9 @@ import com.concur.mobile.core.travel.data.CompanyLocation;
 import com.concur.mobile.core.travel.data.LocationChoice;
 import com.concur.mobile.core.util.BookingDateUtil;
 import com.concur.mobile.core.util.FormatUtil;
+import com.concur.mobile.core.util.UserAndSessionInfoUtil;
+import com.concur.mobile.platform.authentication.EmailLookUpRequestTask;
+import com.concur.mobile.platform.service.MWSPlatformManager;
 import com.concur.mobile.platform.service.PlatformAsyncTaskLoader;
 import com.concur.mobile.platform.ui.common.view.SearchListFormFieldView;
 import com.concur.mobile.platform.ui.common.widget.CalendarPicker;
@@ -44,6 +47,7 @@ import com.concur.mobile.platform.ui.travel.loader.TravelCustomFieldsLoader;
 import com.concur.mobile.platform.ui.travel.loader.TravelCustomFieldsUpdateLoader;
 import com.concur.mobile.platform.ui.travel.util.Const;
 import com.concur.mobile.platform.util.Format;
+import com.concur.platform.PlatformProperties;
 
 import java.util.ArrayList;
 import java.util.Calendar;
@@ -624,13 +628,29 @@ public class RestHotelSearch extends TravelBaseActivity
             ConcurCore app = (ConcurCore) ConcurCore.getContext();
             if (resultCode == PlatformAsyncTaskLoader.RE_AUTHENTICATED) {
                 // will start Home activity and finish this activity
+
+                // below is required to update the latest information of SessionInfo and UserInfo via platform async loaders. this will support autologin from SessionManager in Core library
+                // retrieve login information from Platformmanager and update it in the UserAndSessionInfoUtil
+                MWSPlatformManager platformManager = (MWSPlatformManager) PlatformProperties
+                        .getPlatformSessionManager();
+
+                Bundle emailBundle = new Bundle();
+                emailBundle.putString(EmailLookUpRequestTask.EXTRA_LOGIN_ID_KEY, platformManager.getLoginId());
+                emailBundle.putString(EmailLookUpRequestTask.EXTRA_SERVER_URL_KEY, platformManager.getServerURL());
+                emailBundle.putString(EmailLookUpRequestTask.EXTRA_SIGN_IN_METHOD_KEY,
+                        platformManager.getAuthType().name());
+                emailBundle.putString(EmailLookUpRequestTask.EXTRA_SSO_URL_KEY, platformManager.getSsoURL());
+                emailBundle.putString(EmailLookUpRequestTask.EXTRA_EMAIL_KEY, platformManager.getEmail());
+
+                UserAndSessionInfoUtil.updateUserAndSessionInfo(this, emailBundle);
+
                 app.launchHome(this);
             } else if (resultCode == PlatformAsyncTaskLoader.SESSION_EXPIRED) {
                 // If we have no session at this point then auto-login was
                 // unsuccessful or not allowed.
                 // Bail out and throw them back to login
                 // Punt following line.
-                app.expireLogin();
+                app.expireLogin(true);
 
                 finish();
             }

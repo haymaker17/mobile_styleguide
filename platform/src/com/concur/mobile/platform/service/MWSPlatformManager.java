@@ -100,6 +100,15 @@ public class MWSPlatformManager implements PlatformManager {
      */
     protected HandlerThread handlerThread;
 
+
+    protected String loginId;
+
+    protected String email;
+
+    protected String serverURL;
+
+    protected String ssoURL;
+
     /**
      * Will set whether or not auto-login is enabled.
      *
@@ -127,6 +136,62 @@ public class MWSPlatformManager implements PlatformManager {
     public void setPPLoginAuthenticationInfo(String ppLoginId, String ppLoginPinPassword) {
         this.ppLoginId = ppLoginId;
         this.ppLoginPinPassword = ppLoginPinPassword;
+    }
+
+    public String getSsoURL() {
+        return ssoURL;
+    }
+
+    /**
+     * Will set SSO URL.
+     *
+     * @param ssoURL contains SSO URL.
+     */
+    public void setSsoURL(String ssoURL) {
+        this.ssoURL = ssoURL;
+    }
+
+    public String getServerURL() {
+        return serverURL;
+    }
+
+    /**
+     * Will set server URL.
+     *
+     * @param serverURL contains the server URL.
+     */
+    public void setServerURL(String serverURL) {
+        this.serverURL = serverURL;
+    }
+
+    public String getEmail() {
+        return email;
+    }
+
+    /**
+     * Will set email.
+     *
+     * @param email contains the email.
+     */
+    public void setEmail(String email) {
+        this.email = email;
+    }
+
+    public String getLoginId() {
+        return loginId;
+    }
+
+    /**
+     * Will set login id
+     *
+     * @param loginId contains the login id.
+     */
+    public void setLoginId(String loginId) {
+        this.loginId = loginId;
+    }
+
+    public AuthenticationType getAuthType() {
+        return authType;
     }
 
     @Override public int onRequestStarted(Context context, PlatformAsyncRequestTask request, Bundle resultData) {
@@ -377,7 +442,7 @@ public class MWSPlatformManager implements PlatformManager {
 
         private static final String CLS_TAG = MWSPlatformManager.CLS_TAG + ".LoginReplyListener";
 
-        @Override public void onRequestSuccess(Bundle resultData) {
+                @Override public void onRequestSuccess(Bundle resultData) {
             if (DEBUG) {
                 Log.d(Const.LOG_TAG, CLS_TAG + ".onRequestSuccess: ");
             }
@@ -393,6 +458,8 @@ public class MWSPlatformManager implements PlatformManager {
                 // Set the result information.
                 loginResult.resultCode = resultCode;
                 loginResult.resultData = resultData;
+
+
 
                 if (DEBUG) {
                     Log.d(Const.LOG_TAG, CLS_TAG + ".onRequestSuccess: releasing login result.");
