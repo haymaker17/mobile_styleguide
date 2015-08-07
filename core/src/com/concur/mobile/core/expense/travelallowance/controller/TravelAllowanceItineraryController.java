@@ -7,6 +7,7 @@ import android.os.Bundle;
 import android.os.Handler;
 import android.util.Log;
 
+import com.concur.core.R;
 import com.concur.mobile.base.service.BaseAsyncRequestTask;
 import com.concur.mobile.base.service.BaseAsyncResultReceiver;
 import com.concur.mobile.core.expense.travelallowance.datamodel.Itinerary;
@@ -299,7 +300,8 @@ public class TravelAllowanceItineraryController extends BaseController {
             result = comparator.compare(checkDate, segment.getEndDateUTC());
             if (result != -1) {
                 resetMessages(segment);
-                msg = new Message(Message.Severity.ERROR, Message.MSG_UI_START_BEFORE_END, "@Start before End or equal@");
+                msg = new Message(Message.Severity.ERROR, Message.MSG_UI_START_BEFORE_END,
+                        context.getString(R.string.ta_msg_start_end));
                 msg.setSourceObject(segment);
                 messageCache.add(msg);
                 return result;
@@ -309,7 +311,7 @@ public class TravelAllowanceItineraryController extends BaseController {
             result = comparator.compare(checkDate, segment.getStartDateUTC());
             if (result != 1) {
                 resetMessages(segment);
-                msg = new Message(Message.Severity.ERROR, Message.MSG_UI_START_BEFORE_END, "@Start before End or equal@");
+                msg = new Message(Message.Severity.ERROR, Message.MSG_UI_START_BEFORE_END, context.getString(R.string.ta_msg_start_end));
                 msg.setSourceObject(segment);
                 messageCache.add(msg);
                 return result;
@@ -323,7 +325,8 @@ public class TravelAllowanceItineraryController extends BaseController {
             result = comparator.compare(checkDate, cmpSegment.getEndDateUTC());
             if (result != 1) {
                 resetMessages(segment);
-                msg = new Message(Message.Severity.ERROR, Message.MSG_UI_OVERLAPPING_PREDECESSOR, "@Overlap with Predecessor@");
+                msg = new Message(Message.Severity.ERROR, Message.MSG_UI_OVERLAPPING_PREDECESSOR,
+                        context.getString(R.string.ta_overlap_preceding));
                 msg.setSourceObject(segment);
                 messageCache.add(msg);
                 return result;
@@ -331,7 +334,8 @@ public class TravelAllowanceItineraryController extends BaseController {
             result = comparator.compare(checkDate, cmpSegment.getStartDateUTC());
             if (result != 1) {
                 resetMessages(segment);
-                msg = new Message(Message.Severity.ERROR, Message.MSG_UI_OVERLAPPING_PREDECESSOR, "@Overlap with Predecessor@");
+                msg = new Message(Message.Severity.ERROR, Message.MSG_UI_OVERLAPPING_PREDECESSOR,
+                        context.getString(R.string.ta_overlap_preceding));
                 msg.setSourceObject(segment);
                 messageCache.add(msg);
                 return result;
@@ -344,7 +348,8 @@ public class TravelAllowanceItineraryController extends BaseController {
             result = comparator.compare(checkDate, cmpSegment.getStartDateUTC());
             if (result != -1) {
                 resetMessages(segment);
-                msg = new Message(Message.Severity.ERROR, Message.MSG_UI_OVERLAPPING_SUCCESSOR, "@Overlap with Successor@");
+                msg = new Message(Message.Severity.ERROR, Message.MSG_UI_OVERLAPPING_SUCCESSOR,
+                        context.getString(R.string.ta_overlap_following));
                 msg.setSourceObject(segment);
                 messageCache.add(msg);
                 return result;
@@ -352,7 +357,8 @@ public class TravelAllowanceItineraryController extends BaseController {
             result = comparator.compare(checkDate, cmpSegment.getEndDateUTC());
             if (result != -1) {
                 resetMessages(segment);
-                msg = new Message(Message.Severity.ERROR, Message.MSG_UI_OVERLAPPING_SUCCESSOR, "@Overlap with Successor@");
+                msg = new Message(Message.Severity.ERROR, Message.MSG_UI_OVERLAPPING_SUCCESSOR,
+                        context.getString(R.string.ta_overlap_following));
                 msg.setSourceObject(segment);
                 messageCache.add(msg);
                 return result;
@@ -374,7 +380,8 @@ public class TravelAllowanceItineraryController extends BaseController {
         resetMessages(itinerary);
         Message msg;
         if (StringUtilities.isNullOrEmpty(itinerary.getName())) {
-            msg = new Message(Message.Severity.ERROR, Message.MSG_UI_MISSING_DATES, "@Mandatory Dates are missing@");
+            msg = new Message(Message.Severity.ERROR, Message.MSG_UI_MISSING_DATES,
+                    context.getString(R.string.general_fill_required_fields));
             msg.setSourceObject(itinerary);
             messageCache.add(msg);
             return false;
@@ -383,7 +390,8 @@ public class TravelAllowanceItineraryController extends BaseController {
             if (segment.getArrivalDateTime() == null || segment.getDepartureDateTime() == null
                     || segment.getArrivalLocation() == null
                     || segment.getDepartureLocation() == null) {
-                msg = new Message(Message.Severity.ERROR, Message.MSG_UI_MISSING_DATES, "@Mandatory Dates are missing@");
+                msg = new Message(Message.Severity.ERROR, Message.MSG_UI_MISSING_DATES,
+                        context.getString(R.string.general_fill_required_fields));
                 msg.setSourceObject(itinerary);
                 messageCache.add(msg);
                 return false;
@@ -415,8 +423,6 @@ public class TravelAllowanceItineraryController extends BaseController {
             public void onRequestFail(Bundle resultData) {
                 Itinerary itin = getItinerary(itinerary.getItineraryID());
                 if (itin != null) {
-                    Message msg = new Message(Message.Severity.ERROR, "@ Delete Failed @");
-                    resultData.putSerializable(AbstractItineraryDeleteRequest.RESULT_BUNDLE_ID_MESSAGE, msg);
                     resultData.putSerializable(BundleId.ITINERARY, itinerary);
                 }
                 notifyListener(ControllerAction.DELETE, false, resultData);
@@ -459,10 +465,10 @@ public class TravelAllowanceItineraryController extends BaseController {
 
             @Override
             public void onRequestFail(Bundle resultData) {
-                Message msg = new Message(Message.Severity.ERROR, "@ Delete Failed @");
-                msg.setSourceObject(segment);
-                resultData.putSerializable(BundleId.SEGMENT, segment);
-                resultData.putSerializable(AbstractItineraryDeleteRequest.RESULT_BUNDLE_ID_MESSAGE, msg);
+//                Message msg = new Message(Message.Severity.ERROR, "@ Delete Failed @");
+//                msg.setSourceObject(segment);
+//                resultData.putSerializable(BundleId.SEGMENT, segment);
+//                resultData.putSerializable(AbstractItineraryDeleteRequest.RESULT_BUNDLE_ID_MESSAGE, msg);
                 notifyListener(ControllerAction.DELETE, false, resultData);
             }
 

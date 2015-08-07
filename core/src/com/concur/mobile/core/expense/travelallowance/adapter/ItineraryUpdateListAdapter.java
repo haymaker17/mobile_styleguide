@@ -247,7 +247,7 @@ public class ItineraryUpdateListAdapter extends ArrayAdapter<Object> {
                 holder.ivIcon.setVisibility(View.VISIBLE);
             }
             if (holder.tvMessage != null) {
-                holder.tvMessage.setText("@Item is locked and cannot be edited@");
+                holder.tvMessage.setText(R.string.general_item_locked);
             }
         } else {
             Message msg = null;
