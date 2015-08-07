@@ -104,6 +104,14 @@ public interface UserInfo {
     public String getUserCurrencyCode();
 
     /**
+     * Gets the disable auto login.
+     *
+     * @return whether auto login is disabled.
+     */
+    public Boolean getDisableAutoLogin();
+
+
+    /**
      * Gets the user id.
      * 
      * @return the user id.

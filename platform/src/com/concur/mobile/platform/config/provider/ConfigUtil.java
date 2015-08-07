@@ -275,7 +275,7 @@ public class ConfigUtil {
                     Config.UserColumns.ROLES_MOBILE, Config.UserColumns.CONTACT_COMPANY_NAME,
                     Config.UserColumns.CONTACT_EMAIL, Config.UserColumns.CONTACT_FIRST_NAME,
                     Config.UserColumns.CONTACT_LAST_NAME, Config.UserColumns.CONTACT_MIDDLE_INITIAL,
-                    Config.UserColumns.USER_CURRENCY_CODE, Config.UserColumns.USER_ID };
+                    Config.UserColumns.USER_CURRENCY_CODE, Config.UserColumns.IS_DISABLE_AUTO_LOGIN, Config.UserColumns.USER_ID };
             StringBuilder strBldr = new StringBuilder();
             strBldr.append(Config.UserColumns.USER_ID);
             strBldr.append(" = ?");
@@ -335,6 +335,10 @@ public class ConfigUtil {
 
                     // Set the user currency code.
                     info.userCurrencyCode = CursorUtil.getStringValue(cursor, Config.UserColumns.USER_CURRENCY_CODE);
+
+                    // Set disable auto login.
+                    info.disableAutoLogin = CursorUtil.getBooleanValue(cursor,
+                            Config.UserColumns.IS_DISABLE_AUTO_LOGIN);
 
                     // Set the user id.
                     info.userId = CursorUtil.getStringValue(cursor, Config.UserColumns.USER_ID);
@@ -851,6 +855,10 @@ public class ConfigUtil {
 
         // User currency code.
         ContentUtils.putValue(values, Config.UserColumns.USER_CURRENCY_CODE, loginResponse.userCurrencyCode);
+
+        // Disable Auto Login.
+        ContentUtils.putValue(values, Config.UserColumns.IS_DISABLE_AUTO_LOGIN,
+                loginResponse.disableAutoLogin);
 
         // User id.
         ContentUtils.putValue(values, Config.UserColumns.USER_ID, loginResponse.userId);
@@ -1504,7 +1512,7 @@ public class ConfigUtil {
      * 
      * @param context
      *            contains an application context.
-     * @param loginResponse
+     * @param loginResult
      *            contains the login response.
      * @throws IllegalArgumentException
      *             if <code>loginResponse</code> is null.
@@ -2550,6 +2558,11 @@ public class ConfigUtil {
 
         String userId;
 
+
+
+        Boolean disableAutoLogin;
+
+
         @Override
         public String getEntityType() {
             return entityType;
@@ -2613,6 +2626,11 @@ public class ConfigUtil {
         @Override
         public String getUserCurrencyCode() {
             return userCurrencyCode;
+        }
+
+        @Override
+        public Boolean getDisableAutoLogin() {
+            return disableAutoLogin;
         }
 
         @Override

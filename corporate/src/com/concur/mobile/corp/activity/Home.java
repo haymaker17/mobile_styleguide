@@ -4,13 +4,8 @@ import android.app.Activity;
 import android.app.AlertDialog;
 import android.app.Dialog;
 import android.app.PendingIntent;
-import android.content.BroadcastReceiver;
-import android.content.Context;
-import android.content.DialogInterface;
+import android.content.*;
 import android.content.DialogInterface.OnCancelListener;
-import android.content.Intent;
-import android.content.IntentFilter;
-import android.content.SharedPreferences;
 import android.content.res.Configuration;
 import android.content.res.Resources;
 import android.graphics.Paint;
@@ -18,12 +13,7 @@ import android.location.Criteria;
 import android.location.LocationListener;
 import android.location.LocationManager;
 import android.net.Uri;
-import android.os.AsyncTask;
-import android.os.Bundle;
-import android.os.Environment;
-import android.os.Handler;
-import android.os.Looper;
-import android.os.Message;
+import android.os.*;
 import android.preference.PreferenceManager;
 import android.provider.MediaStore;
 import android.support.v4.app.ActionBarDrawerToggle;
@@ -40,35 +30,16 @@ import android.text.util.Linkify;
 import android.util.Log;
 import android.util.SparseArray;
 import android.util.TypedValue;
-import android.view.ContextMenu;
+import android.view.*;
 import android.view.ContextMenu.ContextMenuInfo;
-import android.view.GestureDetector;
 import android.view.GestureDetector.SimpleOnGestureListener;
-import android.view.Gravity;
-import android.view.LayoutInflater;
-import android.view.Menu;
-import android.view.MenuInflater;
-import android.view.MenuItem;
-import android.view.MotionEvent;
-import android.view.View;
 import android.view.View.OnClickListener;
-import android.view.ViewGroup;
-import android.widget.ImageSwitcher;
-import android.widget.ImageView;
-import android.widget.LinearLayout;
-import android.widget.ScrollView;
-import android.widget.TextView;
-import android.widget.Toast;
-import android.widget.ViewFlipper;
+import android.widget.*;
 import com.concur.breeze.R;
 import com.concur.mobile.base.service.BaseAsyncResultReceiver;
 import com.concur.mobile.base.ui.UIUtils;
 import com.concur.mobile.core.ConcurCore;
-import com.concur.mobile.core.activity.BaseActivity;
-import com.concur.mobile.core.activity.MessageCenter;
-import com.concur.mobile.core.activity.Preferences;
-import com.concur.mobile.core.activity.Tour;
-import com.concur.mobile.core.activity.ViewImage;
+import com.concur.mobile.core.activity.*;
 import com.concur.mobile.core.config.RuntimeConfig;
 import com.concur.mobile.core.dialog.AlertDialogFragment;
 import com.concur.mobile.core.dialog.DialogFragmentFactory;
@@ -85,11 +56,7 @@ import com.concur.mobile.core.expense.data.IExpenseEntryCache;
 import com.concur.mobile.core.expense.data.IExpenseReportCache;
 import com.concur.mobile.core.expense.receiptstore.activity.ReceiptStoreFragment;
 import com.concur.mobile.core.expense.receiptstore.service.ReceiptShareService;
-import com.concur.mobile.core.expense.report.activity.ActiveReportsListAdapter;
-import com.concur.mobile.core.expense.report.activity.ExpenseActiveReports;
-import com.concur.mobile.core.expense.report.activity.ExpenseEntries;
-import com.concur.mobile.core.expense.report.activity.ExpenseEntryMileage;
-import com.concur.mobile.core.expense.report.activity.ExpenseReportHeader;
+import com.concur.mobile.core.expense.report.activity.*;
 import com.concur.mobile.core.expense.report.approval.activity.Approval;
 import com.concur.mobile.core.expense.report.data.CarConfig;
 import com.concur.mobile.core.expense.report.data.ExpenseReport;
@@ -99,11 +66,7 @@ import com.concur.mobile.core.expense.service.CountSummaryRequest;
 import com.concur.mobile.core.fragment.navigation.DefaultNavigationItem;
 import com.concur.mobile.core.fragment.navigation.DefaultSimpleNavigationItem;
 import com.concur.mobile.core.fragment.navigation.DefaultTextNavigationItem;
-import com.concur.mobile.core.fragment.navigation.Navigation.CustomNavigationItem;
-import com.concur.mobile.core.fragment.navigation.Navigation.NavigationItem;
-import com.concur.mobile.core.fragment.navigation.Navigation.NavigationListener;
-import com.concur.mobile.core.fragment.navigation.Navigation.SimpleNavigationItem;
-import com.concur.mobile.core.fragment.navigation.Navigation.TextNavigationItem;
+import com.concur.mobile.core.fragment.navigation.Navigation.*;
 import com.concur.mobile.core.request.activity.RequestListActivity;
 import com.concur.mobile.core.request.util.RequestStatus;
 import com.concur.mobile.core.service.ConcurService;
@@ -122,12 +85,7 @@ import com.concur.mobile.core.travel.hotel.activity.RestHotelSearch;
 import com.concur.mobile.core.travel.rail.activity.RailSearch;
 import com.concur.mobile.core.travel.service.ItineraryRequest;
 import com.concur.mobile.core.travel.service.ItinerarySummaryListRequest;
-import com.concur.mobile.core.util.ConcurException;
-import com.concur.mobile.core.util.Const;
-import com.concur.mobile.core.util.EventTracker;
-import com.concur.mobile.core.util.Flurry;
-import com.concur.mobile.core.util.RolesUtil;
-import com.concur.mobile.core.util.ViewUtil;
+import com.concur.mobile.core.util.*;
 import com.concur.mobile.corp.ConcurMobile;
 import com.concur.mobile.platform.authentication.LogoutRequestTask;
 import com.concur.mobile.platform.authentication.SessionInfo;
@@ -136,22 +94,18 @@ import com.concur.mobile.platform.location.LastLocationTracker;
 import com.concur.mobile.platform.ui.common.dialog.NoConnectivityDialogFragment;
 import com.concur.mobile.platform.ui.common.util.ImageUtil;
 import com.concur.platform.PlatformProperties;
-
 import org.apache.http.HttpStatus;
 
 import java.io.File;
 import java.net.URLEncoder;
-import java.util.ArrayList;
-import java.util.Calendar;
-import java.util.HashMap;
-import java.util.Iterator;
-import java.util.List;
-import java.util.Locale;
-import java.util.Map;
-import java.util.TimeZone;
+import java.util.*;
 
-@EventTracker.EventTrackerClassName(getClassName = "Home")
-public class Home extends BaseActivity implements View.OnClickListener, NavigationListener, ReceiptChoiceListener {
+@EventTracker.EventTrackerClassName(getClassName = "Home") public class Home extends BaseActivity
+        implements View.OnClickListener, NavigationListener, ReceiptChoiceListener {
+
+    public static boolean forceExpirationHome;
+
+    public AlertDialog expireDialog;
 
     public static final String LAUNCH_EXPENSE_LIST = "LAUNCH_EXPENSE_LIST";
 
@@ -275,8 +229,7 @@ public class Home extends BaseActivity implements View.OnClickListener, Navigati
             super(looper);
         }
 
-        @Override
-        public void handleMessage(Message msg) {
+        @Override public void handleMessage(Message msg) {
             if (liveHome != null && !liveHome.loginHasExpired) {
                 switch (msg.what) {
                 case 1:
@@ -304,8 +257,7 @@ public class Home extends BaseActivity implements View.OnClickListener, Navigati
             super(looper);
         }
 
-        @Override
-        public void handleMessage(Message msg) {
+        @Override public void handleMessage(Message msg) {
             if (liveHome != null && !liveHome.remoteWipe) {
                 switch (msg.what) {
                 case 1:
@@ -344,6 +296,10 @@ public class Home extends BaseActivity implements View.OnClickListener, Navigati
         sHandler.dispatchMessage(sHandler.obtainMessage(1));
     }
 
+    public static void expireLogin(boolean forceExpiration) {
+        forceExpirationHome = forceExpiration;
+    }
+
     /**
      * An access method to be used from another thread (presumably the ConcurServiceHandler) to indicate that the a "remote-wipe"
      * has been sent down from a login/auto-login response. The end result will be a cleared task stack with the Login activity
@@ -369,8 +325,7 @@ public class Home extends BaseActivity implements View.OnClickListener, Navigati
         /**
          * Receive notification that some piece of data has been retrieved.
          */
-        @Override
-        public void onReceive(Context context, Intent intent) {
+        @Override public void onReceive(Context context, Intent intent) {
 
             String action = intent.getAction();
             if (Const.ACTION_SUMMARY_UPDATED.equals(action)) {
@@ -426,8 +381,7 @@ public class Home extends BaseActivity implements View.OnClickListener, Navigati
 
     private String receiptImageDataLocalFilePath;
 
-    @Override
-    protected void onCreate(Bundle savedInstanceState) {
+    @Override protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         // Track this activity in a static for use by the expired login handler.
         // This is nulled in onDestroy to hopefully prevent a leak.
@@ -435,286 +389,297 @@ public class Home extends BaseActivity implements View.OnClickListener, Navigati
 
         setContentView(R.layout.home);
 
-        // Initialize the Navigation DrawerLayout
-        mDrawerLayout = (DrawerLayout) findViewById(R.id.home_frame);
-
-        // Tweak the action bar
-        final ActionBar actionBar = getSupportActionBar();
-
-        actionBar.setDisplayOptions(ActionBar.DISPLAY_HOME_AS_UP | ActionBar.DISPLAY_SHOW_HOME
-                | ActionBar.DISPLAY_USE_LOGO, ActionBar.DISPLAY_HOME_AS_UP | ActionBar.DISPLAY_SHOW_HOME
-                | ActionBar.DISPLAY_USE_LOGO | ActionBar.DISPLAY_SHOW_TITLE);
-
-        actionBar.setLogo(R.drawable.concur_logo);
-
-        // The button that toggles the drawer between open and close
-        mDrawerToggle = new ActionBarDrawerToggle(this, mDrawerLayout, R.drawable.concur_logo, R.string.empty_string,
-                R.string.empty_string);
-
-        // Set the drawer toggle as the DrawerListener
-        mDrawerLayout.setDrawerListener(mDrawerToggle);
-
-        // If this is a test drive user, show them the tips overlay and skip the
-        // usual home tips overlay
-        // Note: Do NOT Prompt for notifications for Test Drive users.
-        if (RolesUtil.isTestDriveUser() && Preferences.shouldShowTestDriveTips(Const.PREF_TD_SHOW_OVERLAY_HOME)) {
-            showTestDriveTips();
-        } else {
-            // Try to prompt for notifications just to be sure
-            if (!RolesUtil.isTestDriveUser()) {
-                promptForNotifications();
-            }
-        }
-
-        // If it's the first time running, and it's not a test drive user, show
-        // tour. Set not first time running either way.
-        SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(this);
-        if (Preferences.isFirstTimeRunning(prefs)) {
-            if (!RolesUtil.isTestDriveUser() && (RolesUtil.isExpenser(Home.this) || RolesUtil.isTraveler(Home.this))) {
-                showTour();
-            } else {
-                Preferences.setNotFirstTimeRunning(prefs);
-            }
-        }
-
-        // If the user should see the minSdkUpgradeMessage, show it.
-        if ((android.os.Build.VERSION.SDK_INT < android.os.Build.VERSION_CODES.JELLY_BEAN)
-                && !Preferences.hasShownMinSDKIncreaseMessage()) {
-            showMinSDKIncreaseMessage();
-        }
-
-        // Initialize the home screen navigation menu.
-        initNavigationMenu();
-
-        Intent launchIntent = getIntent();
-
-        if (launchIntent.hasExtra(REMOTE_WIPE)
-                || (savedInstanceState != null && savedInstanceState.containsKey(REMOTE_WIPE))) {
-
-            clearSessionData();
-            showRemoteWipeDialog();
-
-        } else if (launchIntent.hasExtra(EXPIRE_LOGIN)
-                || (savedInstanceState != null && savedInstanceState.containsKey(EXPIRE_LOGIN))) {
-
+        if (forceExpirationHome) {
+            //forceExpirationHome = false;
+            cancelAllDataRequests();
             clearSessionData();
             showExpiredDialog();
-        }
 
-        // MOB-17239
-        // If the current device date is greater than the Test Drive account
-        // expiration date, log them out.
-        // Note that this is temporary pending a more permanent design from
-        // UX/PM. At that point this will need to be removed.
-        if (Preferences.isTestDriveAccountExpired()) {
-            showTestDriveAccountExpiredDialog();
-        }
+        } else {
 
-        if (savedInstanceState != null && savedInstanceState.containsKey(Const.EXTRA_EXPENSE_IMAGE_FILE_PATH)) {
-            receiptCameraImageDataLocalFilePath = savedInstanceState.getString(Const.EXTRA_EXPENSE_IMAGE_FILE_PATH);
-        }
-        if (savedInstanceState != null) {
-            upTime = savedInstanceState.getLong(Const.ACTIVITY_STATE_UPTIME, 0L);
-        }
+            // Initialize the Navigation DrawerLayout
+            mDrawerLayout = (DrawerLayout) findViewById(R.id.home_frame);
 
-        hideFooter();
-        hideBookFooterButton();
-        hideMileageFooterButton();
-        // OCR: Disable backdoor Easter egg.
-        if (!Preferences.isOCRUser()/* || !Preferences.shouldUseNewOcrFeatures() */) {
-            hideQuickExpenseFooterButton();
-        }
-        hideReceiptFooterButton();
-        hideTravelRequestRow();
+            // Tweak the action bar
+            final ActionBar actionBar = getSupportActionBar();
 
-        // Hide the travel UI elements, if need be.
-        boolean isTraveler = RolesUtil.isTraveler(Home.this);
-        boolean isItinViewer = RolesUtil.isItinViewer(Home.this);
+            actionBar.setDisplayOptions(
+                    ActionBar.DISPLAY_HOME_AS_UP | ActionBar.DISPLAY_SHOW_HOME | ActionBar.DISPLAY_USE_LOGO,
+                    ActionBar.DISPLAY_HOME_AS_UP | ActionBar.DISPLAY_SHOW_HOME | ActionBar.DISPLAY_USE_LOGO
+                            | ActionBar.DISPLAY_SHOW_TITLE);
 
-        // ItinViewer is the new role indicating a non-cliqbook (TMC) company
-        // Due to server issues, both flags may be set. If so, make TU trump IV.
-        if (isTraveler) {
-            isItinViewer = false;
-        }
+            actionBar.setLogo(R.drawable.concur_logo);
 
-        boolean isTravelOnly = isTraveler
-                && !(RolesUtil.isExpenser(Home.this) || RolesUtil.isExpenseApprover(Home.this)
-                        || RolesUtil.isTRApprover(Home.this) || RolesUtil.isInvoiceApprover(Home.this)
-                        || RolesUtil.isInvoiceUser(Home.this) || RolesUtil.isTravelApprover(Home.this));
+            // The button that toggles the drawer between open and close
+            mDrawerToggle = new ActionBarDrawerToggle(this, mDrawerLayout, R.drawable.concur_logo,
+                    R.string.empty_string, R.string.empty_string);
 
-        if (isItinViewer) {
-            hideBookingUI();
-        } else if (!isTraveler) {
-            hideTravelUI();
-        } else if (isTravelOnly) {
-            hideExpenseUI();
+            // Set the drawer toggle as the DrawerListener
+            mDrawerLayout.setDrawerListener(mDrawerToggle);
 
-            // If travel booking is disabled, then don't show the booking UI.
-            if (Preferences.shouldAllowTravelBooking() && RolesUtil.isTraveler(Home.this)) {
-                showBookingRows();
+            // If this is a test drive user, show them the tips overlay and skip the
+            // usual home tips overlay
+            // Note: Do NOT Prompt for notifications for Test Drive users.
+            if (RolesUtil.isTestDriveUser() && Preferences.shouldShowTestDriveTips(Const.PREF_TD_SHOW_OVERLAY_HOME)) {
+                showTestDriveTips();
             } else {
-                hideBookingUI();
+                // Try to prompt for notifications just to be sure
+                if (!RolesUtil.isTestDriveUser()) {
+                    promptForNotifications();
+                }
             }
-        } else if (Preferences.shouldAllowTravelBooking() && RolesUtil.isTraveler(Home.this)) {
-            showBookFooterButton();
-        }
 
-        if (isItinViewer || isTraveler) {
-            // Travel UI initialization.
+            // If it's the first time running, and it's not a test drive user, show
+            // tour. Set not first time running either way.
+            SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(this);
+            if (Preferences.isFirstTimeRunning(prefs)) {
+                if (!RolesUtil.isTestDriveUser() && (RolesUtil.isExpenser(Home.this) || RolesUtil
+                        .isTraveler(Home.this))) {
+                    showTour();
+                } else {
+                    Preferences.setNotFirstTimeRunning(prefs);
+                }
+            }
 
-            // Show no trips
-            TextView view = getRowSubheader(R.id.homeRowTravel);
-            view.setText(R.string.home_row_travel_subheader_negative);
+            // If the user should see the minSdkUpgradeMessage, show it.
+            if ((android.os.Build.VERSION.SDK_INT < android.os.Build.VERSION_CODES.JELLY_BEAN) && !Preferences
+                    .hasShownMinSDKIncreaseMessage()) {
+                showMinSDKIncreaseMessage();
+            }
 
-        }
+            // Initialize the home screen navigation menu.
+            initNavigationMenu();
 
-        if (ViewUtil.isTravelRequestUser(this)) {
-            showTravelRequestRow();
-        }
+            Intent launchIntent = getIntent();
 
-        // Hide the expense section, if need be.
-        if (RolesUtil.isExpenser(Home.this)) {
+            if (launchIntent.hasExtra(REMOTE_WIPE) || (savedInstanceState != null && savedInstanceState
+                    .containsKey(REMOTE_WIPE))) {
+
+                clearSessionData();
+                showRemoteWipeDialog();
+
+            } else if (launchIntent.hasExtra(EXPIRE_LOGIN) || (savedInstanceState != null && savedInstanceState
+                    .containsKey(EXPIRE_LOGIN))) {
+
+                clearSessionData();
+                showExpiredDialog();
+            }
+
+            // MOB-17239
+            // If the current device date is greater than the Test Drive account
+            // expiration date, log them out.
+            // Note that this is temporary pending a more permanent design from
+            // UX/PM. At that point this will need to be removed.
+            if (Preferences.isTestDriveAccountExpired()) {
+                showTestDriveAccountExpiredDialog();
+            }
+
+            if (savedInstanceState != null && savedInstanceState.containsKey(Const.EXTRA_EXPENSE_IMAGE_FILE_PATH)) {
+                receiptCameraImageDataLocalFilePath = savedInstanceState.getString(Const.EXTRA_EXPENSE_IMAGE_FILE_PATH);
+            }
+            if (savedInstanceState != null) {
+                upTime = savedInstanceState.getLong(Const.ACTIVITY_STATE_UPTIME, 0L);
+            }
+
+            hideFooter();
+            hideBookFooterButton();
+            hideMileageFooterButton();
             // OCR: Disable backdoor Easter egg.
-            if (!Preferences.isOCRUser()/*
+            if (!Preferences.isOCRUser()/* || !Preferences.shouldUseNewOcrFeatures() */) {
+                hideQuickExpenseFooterButton();
+            }
+            hideReceiptFooterButton();
+            hideTravelRequestRow();
+
+            // Hide the travel UI elements, if need be.
+            boolean isTraveler = RolesUtil.isTraveler(Home.this);
+            boolean isItinViewer = RolesUtil.isItinViewer(Home.this);
+
+            // ItinViewer is the new role indicating a non-cliqbook (TMC) company
+            // Due to server issues, both flags may be set. If so, make TU trump IV.
+            if (isTraveler) {
+                isItinViewer = false;
+            }
+
+            boolean isTravelOnly =
+                    isTraveler && !(RolesUtil.isExpenser(Home.this) || RolesUtil.isExpenseApprover(Home.this)
+                            || RolesUtil.isTRApprover(Home.this) || RolesUtil.isInvoiceApprover(Home.this) || RolesUtil
+                            .isInvoiceUser(Home.this) || RolesUtil.isTravelApprover(Home.this));
+
+            if (isItinViewer) {
+                hideBookingUI();
+            } else if (!isTraveler) {
+                hideTravelUI();
+            } else if (isTravelOnly) {
+                hideExpenseUI();
+
+                // If travel booking is disabled, then don't show the booking UI.
+                if (Preferences.shouldAllowTravelBooking() && RolesUtil.isTraveler(Home.this)) {
+                    showBookingRows();
+                } else {
+                    hideBookingUI();
+                }
+            } else if (Preferences.shouldAllowTravelBooking() && RolesUtil.isTraveler(Home.this)) {
+                showBookFooterButton();
+            }
+
+            if (isItinViewer || isTraveler) {
+                // Travel UI initialization.
+
+                // Show no trips
+                TextView view = getRowSubheader(R.id.homeRowTravel);
+                view.setText(R.string.home_row_travel_subheader_negative);
+
+            }
+
+            if (ViewUtil.isTravelRequestUser(this)) {
+                showTravelRequestRow();
+            }
+
+            // Hide the expense section, if need be.
+            if (RolesUtil.isExpenser(Home.this)) {
+                // OCR: Disable backdoor Easter egg.
+                if (!Preferences.isOCRUser()/*
                                          * || !Preferences.shouldUseNewOcrFeatures ()
                                          */) {
-                showQuickExpenseFooterButton();
-                showReceiptFooterButton();
+                    showQuickExpenseFooterButton();
+                    showReceiptFooterButton();
+                } else {
+                    // With the new OCR design, we use camera icon with Expense
+                    // label, so hide the QE btn and show the Camera btn with
+                    // updated text
+                    hideQuickExpenseFooterButton();
+                    showReceiptFooterButton();
+                    TextView view = (TextView) findViewById(R.id.homeCameraText);
+                    view.setText(R.string.home_footer_button_expense);
+                }
+                if (ViewUtil.isShowMileageExpenseOnHomeScreenEnabled(Home.this) && showPersonalCarMileage()) {
+                    showMileageFooterButton();
+                    showMileageDrawerButton(View.VISIBLE);
+                }
             } else {
-                // With the new OCR design, we use camera icon with Expense
-                // label, so hide the QE btn and show the Camera btn with
-                // updated text
-                hideQuickExpenseFooterButton();
-                showReceiptFooterButton();
-                TextView view = (TextView) findViewById(R.id.homeCameraText);
-                view.setText(R.string.home_footer_button_expense);
+                // Hide the expense section.
+                hideExpenseUI();
             }
-            if (ViewUtil.isShowMileageExpenseOnHomeScreenEnabled(Home.this) && showPersonalCarMileage()) {
-                showMileageFooterButton();
-                showMileageDrawerButton(View.VISIBLE);
+
+            // Hide the approval section, if need be.
+            if (!RolesUtil.isExpenseApprover(Home.this) && !RolesUtil.isTRApprover(Home.this) && !RolesUtil
+                    .isInvoiceApprover(Home.this) && !RolesUtil.isInvoiceUser(Home.this) && !RolesUtil
+                    .isTravelApprover(Home.this)) {
+                hideApproverUI();
             }
-        } else {
-            // Hide the expense section.
-            hideExpenseUI();
-        }
 
-        // Hide the approval section, if need be.
-        if (!RolesUtil.isExpenseApprover(Home.this) && !RolesUtil.isTRApprover(Home.this)
-                && !RolesUtil.isInvoiceApprover(Home.this) && !RolesUtil.isInvoiceUser(Home.this)
-                && !RolesUtil.isTravelApprover(Home.this)) {
-            hideApproverUI();
-        }
+            // If access to report is now allowed, then hide the section.
+            if (!Preferences.shouldAllowReports()) {
+                // Hide the reports UI elements.
+                hideReportsUI();
+            }
 
-        // If access to report is now allowed, then hide the section.
-        if (!Preferences.shouldAllowReports()) {
-            // Hide the reports UI elements.
-            hideReportsUI();
-        }
-
-        // Hide the travel request approver elements.
-        if (!RolesUtil.isTRApprover(Home.this)) {
-            // TODO9
-            // Hide Travel Request Approver.
-            // setViewGone(R.id.homeTravelRequestApprovals);
-            // Hide the travel header.
-            // setViewGone(R.id.homeSectionTravelRequestHeader);
-        } else {
-            // If the user is a TR Approver and also has the Travel
-            // role, then hide the "Travel" header text.
-            if (isTraveler) {
+            // Hide the travel request approver elements.
+            if (!RolesUtil.isTRApprover(Home.this)) {
                 // TODO9
+                // Hide Travel Request Approver.
+                // setViewGone(R.id.homeTravelRequestApprovals);
+                // Hide the travel header.
                 // setViewGone(R.id.homeSectionTravelRequestHeader);
-            }
-        }
-
-        // Hide the whole Invoice section
-        // if neither approver or submitter is enabled.
-        if (!RolesUtil.isInvoiceApprover(Home.this) && !RolesUtil.isInvoiceUser(Home.this)) {
-            hideInvoiceUI();
-        }
-
-        // check to show trip list for a open booking user
-        boolean showTrips = RolesUtil.showTripsForOpenBookingUser(Home.this);
-        if (showTrips) {
-            showTripsUI();
-            // Show no trips
-            getRowSubheader(R.id.homeRowTravel).setText(R.string.home_row_travel_open_booking_subheader_negative);
-            if (isItinViewer || isTraveler) {
-                showTravelAgencyBtn = true;
             } else {
-                showTravelAgencyBtn = false;
-            }
-        }
-
-        // Add expense-user broadcast receivers.
-        if (RolesUtil.isExpenser(Home.this) || RolesUtil.isExpenseApprover(Home.this)
-                || RolesUtil.isInvoiceApprover(Home.this) || RolesUtil.isInvoiceUser(Home.this)
-                || RolesUtil.isTRApprover(Home.this)) {
-            // Add expense related broadcast receivers.
-            dataReceiverFilter.addAction(Const.ACTION_SUMMARY_UPDATED);
-
-            // We will receive this when getting the mileage form.
-            dataReceiverFilter.addAction(Const.ACTION_EXPENSE_REPORT_ENTRY_FORM_UPDATED);
-
-            // We will receive this when getting the carconfig.
-            dataReceiverFilter.addAction(Const.ACTION_EXPENSE_CAR_CONFIGS_UPDATED);
-
-            // We will receive this once a database reset has occurred.
-            dataReceiverFilter.addAction(Const.ACTION_DATABASE_RESET);
-        }
-
-        // Add traveler broadcast receiver.
-        if (isTraveler || isItinViewer || showTrips) {
-            dataReceiverFilter.addAction(Const.ACTION_SUMMARY_TRIPS_UPDATED);
-        }
-
-        // Register the receiver.
-        registerReceiver(dataReceiver, dataReceiverFilter);
-        dataReceiverRegistered = true;
-
-        // Try to get initial location
-        requestLastKnownLocation();
-
-        // Restore any receivers.
-        restoreReceivers();
-
-        // If the home screen was re-started due to a non-orientation change,
-        // then set the flag
-        // to refetch the itinerary summary list.
-        if (!orientationChange) {
-            IItineraryCache itinCache = getConcurCore().getItinCache();
-            if (itinCache != null) {
-                itinCache.setShouldRefetchSummaryList(true);
-            } else {
-                Log.e(Const.LOG_TAG, CLS_TAG + ".onCreate: itinerary cache is null!");
+                // If the user is a TR Approver and also has the Travel
+                // role, then hide the "Travel" header text.
+                if (isTraveler) {
+                    // TODO9
+                    // setViewGone(R.id.homeSectionTravelRequestHeader);
+                }
             }
 
-            // Start the Receipt Share service. This service will only run for a
-            // few minutes at start-up
-            // if there are no pending receipts to be uploaded to the Receipt
-            // Store.
-            Intent serviceIntent = new Intent(this, ReceiptShareService.class);
-            startService(serviceIntent);
-        }
-
-        // In some locales, having 4 buttons causes long text to wrap in footer
-        // buttons.
-        if (numberOfVisibleFooterButtons() >= 4) {
-            setSmallFooterButtonText();
-        }
-
-        hideBadges();
-
-        boolean launch = getIntent().getBooleanExtra(LAUNCH_EXPENSE_LIST, false);
-        if (launch) {
-            Intent intent;
-            if (Preferences.shouldUseNewOcrFeatures()) {
-                intent = new Intent(this, ExpensesAndReceiptsActivity.class);
-            } else {
-                intent = new Intent(this, ExpensesAndReceipts.class);
+            // Hide the whole Invoice section
+            // if neither approver or submitter is enabled.
+            if (!RolesUtil.isInvoiceApprover(Home.this) && !RolesUtil.isInvoiceUser(Home.this)) {
+                hideInvoiceUI();
             }
-            intent.putExtra("FORCE_REFRESH", true);
-            startActivity(intent);
+
+            // check to show trip list for a open booking user
+            boolean showTrips = RolesUtil.showTripsForOpenBookingUser(Home.this);
+            if (showTrips) {
+                showTripsUI();
+                // Show no trips
+                getRowSubheader(R.id.homeRowTravel).setText(R.string.home_row_travel_open_booking_subheader_negative);
+                if (isItinViewer || isTraveler) {
+                    showTravelAgencyBtn = true;
+                } else {
+                    showTravelAgencyBtn = false;
+                }
+            }
+
+            // Add expense-user broadcast receivers.
+            if (RolesUtil.isExpenser(Home.this) || RolesUtil.isExpenseApprover(Home.this) || RolesUtil
+                    .isInvoiceApprover(Home.this) || RolesUtil.isInvoiceUser(Home.this) || RolesUtil
+                    .isTRApprover(Home.this)) {
+                // Add expense related broadcast receivers.
+                dataReceiverFilter.addAction(Const.ACTION_SUMMARY_UPDATED);
+
+                // We will receive this when getting the mileage form.
+                dataReceiverFilter.addAction(Const.ACTION_EXPENSE_REPORT_ENTRY_FORM_UPDATED);
+
+                // We will receive this when getting the carconfig.
+                dataReceiverFilter.addAction(Const.ACTION_EXPENSE_CAR_CONFIGS_UPDATED);
+
+                // We will receive this once a database reset has occurred.
+                dataReceiverFilter.addAction(Const.ACTION_DATABASE_RESET);
+            }
+
+            // Add traveler broadcast receiver.
+            if (isTraveler || isItinViewer || showTrips) {
+                dataReceiverFilter.addAction(Const.ACTION_SUMMARY_TRIPS_UPDATED);
+            }
+
+            // Register the receiver.
+            registerReceiver(dataReceiver, dataReceiverFilter);
+            dataReceiverRegistered = true;
+
+            // Try to get initial location
+            requestLastKnownLocation();
+
+            // Restore any receivers.
+            restoreReceivers();
+
+            // If the home screen was re-started due to a non-orientation change,
+            // then set the flag
+            // to refetch the itinerary summary list.
+            if (!orientationChange) {
+                IItineraryCache itinCache = getConcurCore().getItinCache();
+                if (itinCache != null) {
+                    itinCache.setShouldRefetchSummaryList(true);
+                } else {
+                    Log.e(Const.LOG_TAG, CLS_TAG + ".onCreate: itinerary cache is null!");
+                }
+
+                // Start the Receipt Share service. This service will only run for a
+                // few minutes at start-up
+                // if there are no pending receipts to be uploaded to the Receipt
+                // Store.
+                Intent serviceIntent = new Intent(this, ReceiptShareService.class);
+                startService(serviceIntent);
+            }
+
+            // In some locales, having 4 buttons causes long text to wrap in footer
+            // buttons.
+            if (numberOfVisibleFooterButtons() >= 4) {
+                setSmallFooterButtonText();
+            }
+
+            hideBadges();
+
+            boolean launch = getIntent().getBooleanExtra(LAUNCH_EXPENSE_LIST, false);
+            if (launch) {
+                Intent intent;
+                if (Preferences.shouldUseNewOcrFeatures()) {
+                    intent = new Intent(this, ExpensesAndReceiptsActivity.class);
+                } else {
+                    intent = new Intent(this, ExpensesAndReceipts.class);
+                }
+                intent.putExtra("FORCE_REFRESH", true);
+                startActivity(intent);
+            }
         }
 
     }
@@ -742,8 +707,8 @@ public class Home extends BaseActivity implements View.OnClickListener, Navigati
 
     private void showRemoteWipeDialog() {
         // Notify the user about the "Remote Wipe".
-        AlertDialogFragment adf = DialogFragmentFactory.getAlertOkayInstance(R.string.account_locked,
-                R.string.account_locked_message);
+        AlertDialogFragment adf = DialogFragmentFactory
+                .getAlertOkayInstance(R.string.account_locked, R.string.account_locked_message);
         adf.setPositiveButtonListener(new AlertDialogFragment.OnClickListener() {
 
             public void onCancel(FragmentActivity activity, DialogInterface dialog) {
@@ -773,8 +738,12 @@ public class Home extends BaseActivity implements View.OnClickListener, Navigati
             }
         });
 
-        final AlertDialog dlg = b.create();
-        dlg.show();
+        if (expireDialog != null && expireDialog.isShowing()) {
+            // do nothing
+        } else {
+            expireDialog = b.create();
+            expireDialog.show();
+        }
     }
 
     private void launchLoginScreen() {
@@ -789,8 +758,8 @@ public class Home extends BaseActivity implements View.OnClickListener, Navigati
         CorpSsoQueryReply ssoReply = concurMobile.getCorpSsoQueryReply();
         SessionInfo sessionInfo = ConfigUtil.getSessionInfo(concurMobile.getApplicationContext());
         Intent login = null;
-        if (((ssoReply != null && ssoReply.ssoEnabled && ssoReply.ssoUrl != null))
-                || (sessionInfo != null && (!TextUtils.isEmpty(sessionInfo.getSSOUrl())))) {
+        if (((ssoReply != null && ssoReply.ssoEnabled && ssoReply.ssoUrl != null)) || (sessionInfo != null
+                && (!TextUtils.isEmpty(sessionInfo.getSSOUrl())))) {
             // Company sign-on.
             login = new Intent(Home.this, EmailLookupActivity.class);
             login.putExtra(EmailLookupActivity.EXTRA_ADVANCE_TO_COMPANY_SIGN_ON, true);
@@ -812,8 +781,8 @@ public class Home extends BaseActivity implements View.OnClickListener, Navigati
         // characters (IE '&#8211;', the '-' symbol) so the phone
         // number had to be hard written here and not in strings.xml. This is
         // the only place we use it anyways.
-        final SpannableString dialogBodyText = new SpannableString(getString(R.string.test_drive_expiration_message)
-                + Const.TEST_DRIVE_CONTACT_CONCUR_NUMBER);
+        final SpannableString dialogBodyText = new SpannableString(
+                getString(R.string.test_drive_expiration_message) + Const.TEST_DRIVE_CONTACT_CONCUR_NUMBER);
 
         final AlertDialog expirationAlertDialog = new AlertDialog.Builder(this)
                 .setTitle(R.string.test_drive_expiration_title).setCancelable(false).setMessage(dialogBodyText)
@@ -896,8 +865,7 @@ public class Home extends BaseActivity implements View.OnClickListener, Navigati
                 homeTourTextMessage = (TextView) findViewById(R.id.home_tour_text_message);
             }
 
-            @Override
-            public boolean onFling(MotionEvent e1, MotionEvent e2, float velocityX, float velocityY) {
+            @Override public boolean onFling(MotionEvent e1, MotionEvent e2, float velocityX, float velocityY) {
                 try {
                     if (Math.abs(e1.getY() - e2.getY()) > SWIPE_MAX_OFF_PATH)
                         return false;
@@ -906,8 +874,8 @@ public class Home extends BaseActivity implements View.OnClickListener, Navigati
                         flipper.setInAnimation(Home.this, R.anim.slide_in_right_fast);
                         flipper.setOutAnimation(Home.this, R.anim.slide_out_left_fast);
 
-                        homeTourDotsList.get(flipper.getDisplayedChild()).setBackgroundResource(
-                                R.drawable.home_tour_white_dot);
+                        homeTourDotsList.get(flipper.getDisplayedChild())
+                                .setBackgroundResource(R.drawable.home_tour_white_dot);
 
                         flipper.showNext();
 
@@ -922,8 +890,8 @@ public class Home extends BaseActivity implements View.OnClickListener, Navigati
                         flipper.setInAnimation(Home.this, R.anim.slide_in_left_fast);
                         flipper.setOutAnimation(Home.this, R.anim.slide_out_right_fast);
 
-                        homeTourDotsList.get(flipper.getDisplayedChild()).setBackgroundResource(
-                                R.drawable.home_tour_white_dot);
+                        homeTourDotsList.get(flipper.getDisplayedChild())
+                                .setBackgroundResource(R.drawable.home_tour_white_dot);
 
                         flipper.showPrevious();
 
@@ -939,8 +907,7 @@ public class Home extends BaseActivity implements View.OnClickListener, Navigati
                 return false;
             }
 
-            @Override
-            public boolean onDown(MotionEvent e) {
+            @Override public boolean onDown(MotionEvent e) {
                 return true;
             }
         }
@@ -952,8 +919,9 @@ public class Home extends BaseActivity implements View.OnClickListener, Navigati
             }
         };
 
-        View homeTourView = UIUtils.setupOverlay((ViewGroup) getWindow().getDecorView(), R.layout.home_tour,
-                dismissListener, R.id.home_tour_icon_cancel, this, R.anim.fade_out, 500L);
+        View homeTourView = UIUtils
+                .setupOverlay((ViewGroup) getWindow().getDecorView(), R.layout.home_tour, dismissListener,
+                        R.id.home_tour_icon_cancel, this, R.anim.fade_out, 500L);
 
         ViewFlipper homeTourFlipper = (ViewFlipper) findViewById(R.id.home_tour_view_flipper);
         View homeTourDots = homeTourView.findViewById(R.id.home_tour_dots);
@@ -983,8 +951,8 @@ public class Home extends BaseActivity implements View.OnClickListener, Navigati
 
             // Note: Only make this for expense users because Travel Only has
             // only one view.
-            final GestureDetector gestureDetector = new GestureDetector(this, new HomeTourGestureDetector(
-                    homeTourFlipper, homeTourDotsList));
+            final GestureDetector gestureDetector = new GestureDetector(this,
+                    new HomeTourGestureDetector(homeTourFlipper, homeTourDotsList));
 
             homeTourFlipper.setOnTouchListener(new View.OnTouchListener() {
 
@@ -1056,8 +1024,7 @@ public class Home extends BaseActivity implements View.OnClickListener, Navigati
         setViewInvisible(R.id.tip_trip_text);
     }
 
-    @Override
-    protected void onStart() {
+    @Override protected void onStart() {
         super.onStart();
 
         startLocationUpdates();
@@ -1068,82 +1035,82 @@ public class Home extends BaseActivity implements View.OnClickListener, Navigati
      * 
      * @see com.concur.mobile.corp.activity.BaseActivity#onResume()
      */
-    @Override
-    protected void onResume() {
+    @Override protected void onResume() {
 
         super.onResume();
 
-        String sessionId = PlatformProperties.getSessionId();
-        if (sessionId == null || sessionId.length() == 0) {
+        if (forceExpirationHome) {
+            forceExpirationHome = false;
+        } else {
 
-            if (getIntent().hasExtra(REMOTE_WIPE)) {
-                showRemoteWipeDialog();
-            } else if (isServiceAvailable()) {
+            String sessionId = PlatformProperties.getSessionId();
+            if (sessionId == null || sessionId.length() == 0) {
+
+                if (getIntent().hasExtra(REMOTE_WIPE)) {
+                    showRemoteWipeDialog();
+                } else if (isServiceAvailable()) {
                 /*
                  * MOB-15538 requires this check. In this case application has been forced stopped or killed by system. In that
                  * case when application recreated or restarted this activity also get created simultaneously. It is quite
                  * possible you don't have session id as db creation has delayed. please see newly created
                  * updateDataBasedOnServiceAvail in onResume and onServiceAvailable.
                  */
-                showExpiredDialog();
+                    showExpiredDialog();
+                } else {
+                    needService = true;
+                }
             } else {
-                needService = true;
-            }
-        } else {
-            // Restore any receivers.
-            restoreReceivers();
+                // Restore any receivers.
+                restoreReceivers();
 
-            // Re-register the data receiver, if need be.
-            if (!dataReceiverRegistered) {
-                registerReceiver(dataReceiver, dataReceiverFilter);
-                dataReceiverRegistered = true;
+                // Re-register the data receiver, if need be.
+                if (!dataReceiverRegistered) {
+                    registerReceiver(dataReceiver, dataReceiverFilter);
+                    dataReceiverRegistered = true;
+                }
+
+                // Go get the data
+                if (isServiceAvailable()) {
+                    updateDataBasedOnServiceAvail();
+                } else {
+                    needService = true;
+                }
+                updateOfflineQueueBar();
+
             }
 
-            // Go get the data
-            if (isServiceAvailable()) {
-                updateDataBasedOnServiceAvail();
+            showHideHomeImage();
+
+            // If we're showing the ActiveReportsListDialogFragment, we want to
+            // update its click and cancel listener because
+            // the fragment does not retain instance state.
+            Fragment reportListDialogFrag = getSupportFragmentManager().findFragmentByTag(ACTIVE_REPORTS_LIST_TAG);
+            if (reportListDialogFrag instanceof ActiveReportsListDialogFragment) {
+                ActiveReportsListDialogFragment dlgFrag = (ActiveReportsListDialogFragment) reportListDialogFrag;
+
+                dlgFrag.setClickListener(new SelectReportDialogClickListener());
+                dlgFrag.setCancelListener(new DialogCancelListener());
             } else {
-                needService = true;
+                Log.w(CLS_TAG, "Failed to find fragment for ACTIVE_REPORTS_LIST_TAG");
             }
-            updateOfflineQueueBar();
 
+            if (isTipsOverlayVisible) {
+                startTime = System.nanoTime();
+            }
         }
-
-        showHideHomeImage();
-
-        // If we're showing the ActiveReportsListDialogFragment, we want to
-        // update its click and cancel listener because
-        // the fragment does not retain instance state.
-        Fragment reportListDialogFrag = getSupportFragmentManager().findFragmentByTag(ACTIVE_REPORTS_LIST_TAG);
-        if (reportListDialogFrag instanceof ActiveReportsListDialogFragment) {
-            ActiveReportsListDialogFragment dlgFrag = (ActiveReportsListDialogFragment) reportListDialogFrag;
-
-            dlgFrag.setClickListener(new SelectReportDialogClickListener());
-            dlgFrag.setCancelListener(new DialogCancelListener());
-        } else {
-            Log.w(CLS_TAG, "Failed to find fragment for ACTIVE_REPORTS_LIST_TAG");
-        }
-
-        if (isTipsOverlayVisible) {
-            startTime = System.nanoTime();
-        }
-
     }
 
     /**
      * if your application targets API level 12 or lower, then your activity always handles this configuration change via this
      * method. API level 12 or lower doesnt restart the app if in AndroidManifest we mentioned android:confiChange="orientation".
-     * */
-    @Override
-    public void onConfigurationChanged(Configuration newConfig) {
+     */
+    @Override public void onConfigurationChanged(Configuration newConfig) {
         super.onConfigurationChanged(newConfig);
         showHideHomeImage();
     }
 
     /**
-     * 
      * Show or Hide Home Image based on orientation change.
-     * 
      */
     private void showHideHomeImage() {
         /*
@@ -1157,8 +1124,8 @@ public class Home extends BaseActivity implements View.OnClickListener, Navigati
         switch (orientation) {
         case Configuration.ORIENTATION_PORTRAIT:
             cityscape.setVisibility(View.VISIBLE);
-            cityscape.setImageResource(getResources().getIdentifier(Preferences.getCurrentCityscape(), "drawable",
-                    this.getPackageName()));
+            cityscape.setImageResource(
+                    getResources().getIdentifier(Preferences.getCurrentCityscape(), "drawable", this.getPackageName()));
             break;
         case Configuration.ORIENTATION_LANDSCAPE:
             cityscape.setVisibility(View.GONE);
@@ -1168,7 +1135,7 @@ public class Home extends BaseActivity implements View.OnClickListener, Navigati
 
     /**
      * Update your data after you have concur service available.
-     * */
+     */
     private void updateDataBasedOnServiceAvail() {
         if (!orientationChange) {
             loadData();
@@ -1182,8 +1149,7 @@ public class Home extends BaseActivity implements View.OnClickListener, Navigati
         }
     }
 
-    @Override
-    protected void onServiceAvailable() {
+    @Override protected void onServiceAvailable() {
         if (ConcurCore.isConnected()) {
             // Upload any saved exceptions. Occurs in a background task and we
             // do not care about success/fail.
@@ -1223,8 +1189,7 @@ public class Home extends BaseActivity implements View.OnClickListener, Navigati
      * 
      * @see com.concur.mobile.corp.activity.BaseActivity#onPause()
      */
-    @Override
-    protected void onPause() {
+    @Override protected void onPause() {
         super.onPause();
 
         if (dataReceiverRegistered) {
@@ -1256,8 +1221,8 @@ public class Home extends BaseActivity implements View.OnClickListener, Navigati
             // Save the time the user spent on this screen, but
             // perhaps put the app in the background.
             upTime += (System.nanoTime() - startTime) / 1000000000L; // Convert
-                                                                     // to
-                                                                     // seconds.
+            // to
+            // seconds.
         }
 
         if (confirmationDialog != null) {
@@ -1265,8 +1230,7 @@ public class Home extends BaseActivity implements View.OnClickListener, Navigati
         }
     }
 
-    @Override
-    protected void onStop() {
+    @Override protected void onStop() {
         super.onStop();
 
         stopLocationUpdates();
@@ -1277,8 +1241,7 @@ public class Home extends BaseActivity implements View.OnClickListener, Navigati
      * 
      * @see android.app.Activity#onDestroy()
      */
-    @Override
-    protected void onDestroy() {
+    @Override protected void onDestroy() {
         super.onDestroy();
 
         liveHome = null;
@@ -1290,8 +1253,7 @@ public class Home extends BaseActivity implements View.OnClickListener, Navigati
         }
     }
 
-    @Override
-    protected void onSaveInstanceState(Bundle outState) {
+    @Override protected void onSaveInstanceState(Bundle outState) {
         super.onSaveInstanceState(outState);
 
         // Indicate if we are in an expired state. This will get us to
@@ -1317,8 +1279,7 @@ public class Home extends BaseActivity implements View.OnClickListener, Navigati
 
     }
 
-    @Override
-    public boolean onCreateOptionsMenu(Menu menu) {
+    @Override public boolean onCreateOptionsMenu(Menu menu) {
         MenuInflater inflater = getMenuInflater();
         inflater.inflate(R.menu.home, menu);
 
@@ -1334,8 +1295,7 @@ public class Home extends BaseActivity implements View.OnClickListener, Navigati
         return true;
     }
 
-    @Override
-    public boolean onPrepareOptionsMenu(Menu menu) {
+    @Override public boolean onPrepareOptionsMenu(Menu menu) {
         if (!ConcurCore.isConnected()) {
             menu.findItem(R.id.menuReset).setVisible(false);
             menu.findItem(R.id.menuRefresh).setVisible(false);
@@ -1349,7 +1309,7 @@ public class Home extends BaseActivity implements View.OnClickListener, Navigati
 
     /**
      * refresh option menu using preferences.
-     * 
+     *
      * @param menu
      */
     private void showHideOptionMenu(Menu menu) {
@@ -1362,8 +1322,7 @@ public class Home extends BaseActivity implements View.OnClickListener, Navigati
         }
     }
 
-    @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
+    @Override public boolean onOptionsItemSelected(MenuItem item) {
 
         Intent i;
 
@@ -1571,8 +1530,7 @@ public class Home extends BaseActivity implements View.OnClickListener, Navigati
         }
     }
 
-    @Override
-    public void onCreateContextMenu(ContextMenu menu, View v, ContextMenuInfo menuInfo) {
+    @Override public void onCreateContextMenu(ContextMenu menu, View v, ContextMenuInfo menuInfo) {
         super.onCreateContextMenu(menu, v, menuInfo);
 
         switch (v.getId()) {
@@ -1752,7 +1710,7 @@ public class Home extends BaseActivity implements View.OnClickListener, Navigati
 
     /**
      * - ongoing -
-     * 
+     *
      * @param
      * @return
      */
@@ -1782,8 +1740,8 @@ public class Home extends BaseActivity implements View.OnClickListener, Navigati
             File receiptFile = new File(receiptFilePath);
             Uri outputFileUri = Uri.fromFile(receiptFile);
             receiptCameraImageDataLocalFilePath = receiptFile.getAbsolutePath();
-            Log.d(Const.LOG_TAG, CLS_TAG + ".captureReceipt: receipt image path -> '"
-                    + receiptCameraImageDataLocalFilePath + "'.");
+            Log.d(Const.LOG_TAG,
+                    CLS_TAG + ".captureReceipt: receipt image path -> '" + receiptCameraImageDataLocalFilePath + "'.");
             // Launch the camera application.
             Intent intent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
             intent.putExtra(MediaStore.EXTRA_OUTPUT, outputFileUri);
@@ -1798,8 +1756,7 @@ public class Home extends BaseActivity implements View.OnClickListener, Navigati
         }
     }
 
-    @Override
-    protected Dialog onCreateDialog(int id) {
+    @Override protected Dialog onCreateDialog(int id) {
         Dialog dlg = dialogs.get(id);
 
         if (dlg == null) {
@@ -1857,8 +1814,7 @@ public class Home extends BaseActivity implements View.OnClickListener, Navigati
      * 
      * @see android.app.Activity#onPrepareDialog(int, android.app.Dialog)
      */
-    @Override
-    protected void onPrepareDialog(int id, Dialog dialog) {
+    @Override protected void onPrepareDialog(int id, Dialog dialog) {
         switch (id) {
         case Const.DIALOG_TRAVEL_RETRIEVE_ITINERARY_FAILED: {
             AlertDialog alertDlg = (AlertDialog) dialog;
@@ -1872,8 +1828,7 @@ public class Home extends BaseActivity implements View.OnClickListener, Navigati
         }
     }
 
-    @Override
-    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+    @Override protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
 
         switch (requestCode) {
@@ -1968,9 +1923,8 @@ public class Home extends BaseActivity implements View.OnClickListener, Navigati
 
     /**
      * Will copy the image data captured by the camera.
-     * 
-     * @param data
-     *            the intent object containing capture information.
+     *
+     * @param data the intent object containing capture information.
      */
     private boolean copyCapturedImage() {
         boolean retVal = true;
@@ -2015,9 +1969,9 @@ public class Home extends BaseActivity implements View.OnClickListener, Navigati
         ConcurMobile concurMobile = (ConcurMobile) getApplication();
 
         // Request card list + summary count if expense user.
-        if (RolesUtil.isExpenser(Home.this) || RolesUtil.isExpenseApprover(Home.this)
-                || RolesUtil.isTRApprover(Home.this) || RolesUtil.isInvoiceApprover(Home.this)
-                || RolesUtil.isInvoiceUser(Home.this) || RolesUtil.isTravelApprover(Home.this)) {
+        if (RolesUtil.isExpenser(Home.this) || RolesUtil.isExpenseApprover(Home.this) || RolesUtil
+                .isTRApprover(Home.this) || RolesUtil.isInvoiceApprover(Home.this) || RolesUtil.isInvoiceUser(Home.this)
+                || RolesUtil.isTravelApprover(Home.this)) {
 
             // Grab the summary count.
             // Immediately show cached data.
@@ -2052,8 +2006,8 @@ public class Home extends BaseActivity implements View.OnClickListener, Navigati
 
         // Request trips if traveler or itinerary viewer.
         if (RolesUtil.isTraveler(Home.this) || RolesUtil.isItinViewer(Home.this) || RolesUtil.isTRApprover(Home.this)
-                || RolesUtil.isInvoiceApprover(Home.this) || RolesUtil.isInvoiceUser(Home.this)
-                || RolesUtil.showTripsForOpenBookingUser(Home.this)) {
+                || RolesUtil.isInvoiceApprover(Home.this) || RolesUtil.isInvoiceUser(Home.this) || RolesUtil
+                .showTripsForOpenBookingUser(Home.this)) {
 
             // Immediately show the cached data
             concurMobile.getService().getItinerarySummaryList();
@@ -2093,9 +2047,8 @@ public class Home extends BaseActivity implements View.OnClickListener, Navigati
 
     /**
      * Will examine the result of an attempt to retrieve summary information and update the UI.
-     * 
-     * @param intent
-     *            the intent object containing the result information.
+     *
+     * @param intent the intent object containing the result information.
      */
     protected void updateExpenseSummaryInfo(Intent intent) {
 
@@ -2107,8 +2060,9 @@ public class Home extends BaseActivity implements View.OnClickListener, Navigati
                     if (httpStatusCode == HttpStatus.SC_OK) {
                         if (!(intent.getStringExtra(Const.REPLY_STATUS).equalsIgnoreCase(Const.REPLY_STATUS_SUCCESS))) {
                             actionStatusErrorMessage = intent.getStringExtra(Const.REPLY_ERROR_MESSAGE);
-                            Log.e(Const.LOG_TAG, CLS_TAG + ".onReceive: mobile web service error -- "
-                                    + actionStatusErrorMessage + ".");
+                            Log.e(Const.LOG_TAG,
+                                    CLS_TAG + ".onReceive: mobile web service error -- " + actionStatusErrorMessage
+                                            + ".");
                         }
                     } else {
                         lastHttpErrorMessage = intent.getStringExtra(Const.REPLY_HTTP_STATUS_TEXT);
@@ -2119,9 +2073,8 @@ public class Home extends BaseActivity implements View.OnClickListener, Navigati
                 }
             } else {
                 if (countSummaryRequest != null && !countSummaryRequest.isCanceled()) {
-                    Log.e(Const.LOG_TAG,
-                            CLS_TAG + ".onReceive: service request error -- "
-                                    + intent.getStringExtra(Const.SERVICE_REQUEST_STATUS_TEXT));
+                    Log.e(Const.LOG_TAG, CLS_TAG + ".onReceive: service request error -- " + intent
+                                    .getStringExtra(Const.SERVICE_REQUEST_STATUS_TEXT));
                 }
             }
         } else {
@@ -2146,8 +2099,8 @@ public class Home extends BaseActivity implements View.OnClickListener, Navigati
             subView.setText(R.string.home_row_expensereports_subheader_negative);
         }
 
-        if (RolesUtil.isExpenseApprover(Home.this) || RolesUtil.isTRApprover(Home.this)
-                || RolesUtil.isInvoiceApprover(Home.this) || RolesUtil.isInvoiceUser(Home.this)) {
+        if (RolesUtil.isExpenseApprover(Home.this) || RolesUtil.isTRApprover(Home.this) || RolesUtil
+                .isInvoiceApprover(Home.this) || RolesUtil.isInvoiceUser(Home.this)) {
             TextView subView = getRowSubheader(R.id.homeRowApprovals);
             subView.setText(R.string.home_row_approvals_subheader_negative);
         }
@@ -2181,9 +2134,9 @@ public class Home extends BaseActivity implements View.OnClickListener, Navigati
                 subView.setText(R.string.home_row_expensereports_subheader_negative);
             }
 
-            if (RolesUtil.isTravelApprover(Home.this) || RolesUtil.isExpenseApprover(Home.this)
-                    || RolesUtil.isTRApprover(Home.this) || RolesUtil.isInvoiceApprover(Home.this)
-                    || RolesUtil.isInvoiceUser(Home.this)) {
+            if (RolesUtil.isTravelApprover(Home.this) || RolesUtil.isExpenseApprover(Home.this) || RolesUtil
+                    .isTRApprover(Home.this) || RolesUtil.isInvoiceApprover(Home.this) || RolesUtil
+                    .isInvoiceUser(Home.this)) {
                 TextView subView = getRowSubheader(R.id.homeRowApprovals);
                 final TextView txtvApprovalBadge = (TextView) findViewById(R.id.txtvApprovalBadge);
 
@@ -2235,7 +2188,6 @@ public class Home extends BaseActivity implements View.OnClickListener, Navigati
 
     /**
      * Determines whether personal car mileage should be displayed on action menu. Requires car configs to have been loaded.
-     * 
      */
     private boolean showPersonalCarMileage() {
 
@@ -2263,16 +2215,16 @@ public class Home extends BaseActivity implements View.OnClickListener, Navigati
                     // availability under PER_VARIABLE
                     CarConfig carConfig = carConfigList.get(i);
                     if (carConfig != null) {
-                        if (carConfig.crnCode.equalsIgnoreCase(userCurrencyCode)
-                                && ((carConfig.configType.equalsIgnoreCase(CarConfig.TYPE_PER_ONE) && carConfig.rates
-                                        .size() > 0))
+                        if (carConfig.crnCode.equalsIgnoreCase(userCurrencyCode) && ((
+                                carConfig.configType.equalsIgnoreCase(CarConfig.TYPE_PER_ONE)
+                                        && carConfig.rates.size() > 0))
                                 // TODO this line of code is not required.
                                 // Double check with Walt
                                 // ||
                                 // ((carConfig.configType.equalsIgnoreCase(CarConfig.TYPE_COM_FIX)
                                 // && carConfig.rates.size()>0))
-                                || ((carConfig.configType.equalsIgnoreCase(CarConfig.TYPE_PER_VAR) && carConfig.details
-                                        .size() > 0))) {
+                                || ((carConfig.configType.equalsIgnoreCase(CarConfig.TYPE_PER_VAR)
+                                && carConfig.details.size() > 0))) {
                             return true;
                         }
                     }
@@ -2296,8 +2248,9 @@ public class Home extends BaseActivity implements View.OnClickListener, Navigati
                     if (httpStatusCode == HttpStatus.SC_OK) {
                         if (!(intent.getStringExtra(Const.REPLY_STATUS).equalsIgnoreCase(Const.REPLY_STATUS_SUCCESS))) {
                             actionStatusErrorMessage = intent.getStringExtra(Const.REPLY_ERROR_MESSAGE);
-                            Log.e(Const.LOG_TAG, CLS_TAG + ".onReceive: mobile web service error -- "
-                                    + actionStatusErrorMessage + ".");
+                            Log.e(Const.LOG_TAG,
+                                    CLS_TAG + ".onReceive: mobile web service error -- " + actionStatusErrorMessage
+                                            + ".");
                         }
                     } else {
                         lastHttpErrorMessage = intent.getStringExtra(Const.REPLY_HTTP_STATUS_TEXT);
@@ -2308,9 +2261,8 @@ public class Home extends BaseActivity implements View.OnClickListener, Navigati
                 }
             } else {
                 if (itinerarySummaryListRequest != null && !itinerarySummaryListRequest.isCanceled()) {
-                    Log.e(Const.LOG_TAG,
-                            CLS_TAG + ".onReceive: service request error -- "
-                                    + intent.getStringExtra(Const.SERVICE_REQUEST_STATUS_TEXT));
+                    Log.e(Const.LOG_TAG, CLS_TAG + ".onReceive: service request error -- " + intent
+                                    .getStringExtra(Const.SERVICE_REQUEST_STATUS_TEXT));
                 }
             }
         } else {
@@ -2338,8 +2290,8 @@ public class Home extends BaseActivity implements View.OnClickListener, Navigati
      */
     private void updateTripUI() {
 
-        if (RolesUtil.isTraveler(Home.this) || RolesUtil.isItinViewer(Home.this)
-                || RolesUtil.showTripsForOpenBookingUser(Home.this)) {
+        if (RolesUtil.isTraveler(Home.this) || RolesUtil.isItinViewer(Home.this) || RolesUtil
+                .showTripsForOpenBookingUser(Home.this)) {
 
             ConcurMobile concurMobile = (ConcurMobile) getApplication();
             IItineraryCache itinCache = concurMobile.getItinCache();
@@ -2413,9 +2365,8 @@ public class Home extends BaseActivity implements View.OnClickListener, Navigati
 
     /**
      * Sets the visibility property on a view to <code>View.GONE</code>.
-     * 
-     * @param resId
-     *            the resource id of the view.
+     *
+     * @param resId the resource id of the view.
      */
     private void setViewGone(int resId) {
         View view = findViewById(resId);
@@ -2428,9 +2379,8 @@ public class Home extends BaseActivity implements View.OnClickListener, Navigati
 
     /**
      * Will set the visibility on a view to <code>View.VISIBLE</code>.
-     * 
-     * @param resId
-     *            the resource id of the view.
+     *
+     * @param resId the resource id of the view.
      */
     private void setViewVisible(int resId) {
         View view = findViewById(resId);
@@ -2443,9 +2393,8 @@ public class Home extends BaseActivity implements View.OnClickListener, Navigati
 
     /**
      * Will set the visibility on a view to <code>View.INVISIBLE</code>.
-     * 
-     * @param resId
-     *            the resource id of the view.
+     *
+     * @param resId the resource id of the view.
      */
     private void setViewInvisible(int resId) {
         View view = findViewById(resId);
@@ -2639,7 +2588,7 @@ public class Home extends BaseActivity implements View.OnClickListener, Navigati
 
     /**
      * Checks how many footer buttons are visible on the Home Screen
-     * 
+     *
      * @return number of visible buttons
      */
     private int numberOfVisibleFooterButtons() {
@@ -2753,9 +2702,8 @@ public class Home extends BaseActivity implements View.OnClickListener, Navigati
 
     /**
      * Retrieve the mileage entry form fields.
-     * 
-     * @param reportKey
-     *            a protected report key
+     *
+     * @param reportKey a protected report key
      */
     protected void getMileageEntryForm(String reportKey) {
         // Call out to get the entry form
@@ -2769,7 +2717,7 @@ public class Home extends BaseActivity implements View.OnClickListener, Navigati
 
     /**
      * Hand off to the mileage expense entry form.
-     * 
+     *
      * @param intent
      */
     protected void addMileageExpense(Intent intent) {
@@ -2789,7 +2737,7 @@ public class Home extends BaseActivity implements View.OnClickListener, Navigati
 
     /**
      * Return an intent to launch Tripit if installed or the market otherwise
-     * 
+     *
      * @return
      */
     // MOB-11146 required URI change
@@ -2805,6 +2753,7 @@ public class Home extends BaseActivity implements View.OnClickListener, Navigati
     // Location code
     // /////////////////////////////////////////////////////////////
     // /////////////////////////////////////////////////////////////
+
     /**
      * Tries to get the user's last known location.
      */
@@ -2887,9 +2836,8 @@ public class Home extends BaseActivity implements View.OnClickListener, Navigati
 
         /**
          * Constructs an instance of <code>ItineraryReceiver</code>.
-         * 
-         * @param activity
-         *            the activity.
+         *
+         * @param activity the activity.
          */
         ItineraryReceiver(Home activity) {
             super(activity);
@@ -2901,8 +2849,7 @@ public class Home extends BaseActivity implements View.OnClickListener, Navigati
          * @see com.concur.mobile.corp.activity.BaseActivity.BaseBroadcastReceiver#
          * clearActivityServiceRequest(com.concur.mobile.corp.activity .BaseActivity)
          */
-        @Override
-        protected void clearActivityServiceRequest(Home activity) {
+        @Override protected void clearActivityServiceRequest(Home activity) {
             activity.itineraryRequest = null;
         }
 
@@ -2912,8 +2859,7 @@ public class Home extends BaseActivity implements View.OnClickListener, Navigati
          * @see com.concur.mobile.corp.activity.BaseActivity.BaseBroadcastReceiver# dismissRequestDialog(android.content.Context,
          * android.content.Intent)
          */
-        @Override
-        protected void dismissRequestDialog(Context context, Intent intent) {
+        @Override protected void dismissRequestDialog(Context context, Intent intent) {
             activity.dismissDialog(Const.DIALOG_TRAVEL_RETRIEVE_ITINERARY);
         }
 
@@ -2923,8 +2869,7 @@ public class Home extends BaseActivity implements View.OnClickListener, Navigati
          * @see com.concur.mobile.corp.activity.BaseActivity.BaseBroadcastReceiver# handleFailure(android.content.Context,
          * android.content.Intent)
          */
-        @Override
-        protected void handleFailure(Context context, Intent intent) {
+        @Override protected void handleFailure(Context context, Intent intent) {
             activity.showDialog(Const.DIALOG_TRAVEL_RETRIEVE_ITINERARY_FAILED);
         }
 
@@ -2934,8 +2879,7 @@ public class Home extends BaseActivity implements View.OnClickListener, Navigati
          * @see com.concur.mobile.corp.activity.BaseActivity.BaseBroadcastReceiver# handleSuccess(android.content.Context,
          * android.content.Intent)
          */
-        @Override
-        protected void handleSuccess(Context context, Intent intent) {
+        @Override protected void handleSuccess(Context context, Intent intent) {
             if (intent.hasExtra(Const.EXTRA_ITIN_LOCATOR)) {
                 String itinLocator = intent.getStringExtra(Const.EXTRA_ITIN_LOCATOR);
                 if (itinLocator != null) {
@@ -2961,8 +2905,7 @@ public class Home extends BaseActivity implements View.OnClickListener, Navigati
          * @see com.concur.mobile.corp.activity.BaseActivity.BaseBroadcastReceiver#
          * setActivityServiceRequest(com.concur.mobile.corp.activity. BaseActivity, com.concur.mobile.corp.service.ServiceRequest)
          */
-        @Override
-        protected void setActivityServiceRequest(ItineraryRequest request) {
+        @Override protected void setActivityServiceRequest(ItineraryRequest request) {
             activity.itineraryRequest = request;
         }
 
@@ -2971,8 +2914,7 @@ public class Home extends BaseActivity implements View.OnClickListener, Navigati
          * 
          * @see com.concur.mobile.corp.activity.BaseActivity.BaseBroadcastReceiver# unregisterReceiver()
          */
-        @Override
-        protected void unregisterReceiver() {
+        @Override protected void unregisterReceiver() {
             activity.unregisterItineraryReceiver();
         }
 
@@ -2980,7 +2922,7 @@ public class Home extends BaseActivity implements View.OnClickListener, Navigati
 
     /**
      * Create a new AsyncTask to handle travel cityscape image manipulation
-     * 
+     *
      * @return
      */
     protected AsyncTask<Void, Void, Integer> initImageManipulator(final ImageSwitcher imgSwitcher) {
@@ -2988,11 +2930,11 @@ public class Home extends BaseActivity implements View.OnClickListener, Navigati
         return new AsyncTask<Void, Void, Integer>() {
 
             int[] cityscapes = { R.drawable.city_01, R.drawable.city_02, R.drawable.city_03, R.drawable.city_04,
-                    R.drawable.city_05, R.drawable.city_06, R.drawable.city_07, R.drawable.city_08, R.drawable.city_09 };
+                    R.drawable.city_05, R.drawable.city_06, R.drawable.city_07, R.drawable.city_08,
+                    R.drawable.city_09 };
             ImageSwitcher cityscape = imgSwitcher;
 
-            @Override
-            protected Integer doInBackground(Void... params) {
+            @Override protected Integer doInBackground(Void... params) {
 
                 Log.d(Const.LOG_TAG, "imgMan // doIB // cityscape = " + cityscape);
                 Integer cityscapeResourceId = null;
@@ -3019,8 +2961,7 @@ public class Home extends BaseActivity implements View.OnClickListener, Navigati
                 return cityscapeResourceId;
             }
 
-            @Override
-            protected void onPostExecute(Integer result) {
+            @Override protected void onPostExecute(Integer result) {
                 super.onPostExecute(result);
                 Log.d(Const.LOG_TAG, "imgMan // onPE //  res = " + result);
                 if (result != null) {
@@ -3054,18 +2995,18 @@ public class Home extends BaseActivity implements View.OnClickListener, Navigati
             navItem = new HomeScreenSimpleNavigationItem(NAVIGATION_PROFILE, -1, R.string.home_navigation_profile,
                     R.drawable.profile_icon_name, View.VISIBLE, View.VISIBLE, new Runnable() {
 
-                        public void run() {
-                            // Launch the receipt store.
-                            Intent intent;
-                            intent = new Intent(Home.this, ProfileInfo.class);
-                            startActivity(intent);
+                public void run() {
+                    // Launch the receipt store.
+                    Intent intent;
+                    intent = new Intent(Home.this, ProfileInfo.class);
+                    startActivity(intent);
 
-                            // Flurry Notification
-                            Map<String, String> params = new HashMap<String, String>();
-                            params.put(Flurry.PARAM_NAME_ACTION, Flurry.PARAM_VALUE_PROFILE);
-                            EventTracker.INSTANCE.track(Flurry.CATEGORY_HOME, Flurry.EVENT_NAME_ACTION, params);
-                        }
-                    });
+                    // Flurry Notification
+                    Map<String, String> params = new HashMap<String, String>();
+                    params.put(Flurry.PARAM_NAME_ACTION, Flurry.PARAM_VALUE_PROFILE);
+                    EventTracker.INSTANCE.track(Flurry.CATEGORY_HOME, Flurry.EVENT_NAME_ACTION, params);
+                }
+            });
             navItems.add(navItem);
 
         }
@@ -3119,24 +3060,24 @@ public class Home extends BaseActivity implements View.OnClickListener, Navigati
             navItem = new HomeScreenSimpleNavigationItem(NAVIGATION_RECEIPTS, -1, R.string.receipts,
                     R.drawable.icon_menu_receipt, View.VISIBLE, View.VISIBLE, new Runnable() {
 
-                        public void run() {
-                            // Launch the receipt store.
-                            Intent intent;
-                            if (Preferences.shouldUseNewOcrFeatures()) {
-                                intent = new Intent(Home.this, ExpensesAndReceiptsActivity.class);
-                            } else {
-                                intent = new Intent(Home.this, ExpensesAndReceipts.class);
-                            }
+                public void run() {
+                    // Launch the receipt store.
+                    Intent intent;
+                    if (Preferences.shouldUseNewOcrFeatures()) {
+                        intent = new Intent(Home.this, ExpensesAndReceiptsActivity.class);
+                    } else {
+                        intent = new Intent(Home.this, ExpensesAndReceipts.class);
+                    }
 
-                            intent.putExtra(Const.EXTRA_RECEIPT_ONLY_FRAGMENT, true);
-                            startActivity(intent);
+                    intent.putExtra(Const.EXTRA_RECEIPT_ONLY_FRAGMENT, true);
+                    startActivity(intent);
 
-                            // Flurry Notification
-                            Map<String, String> params = new HashMap<String, String>();
-                            params.put(Flurry.PARAM_NAME_ACTION, Flurry.PARAM_VALUE_RECEIPT_STORE);
-                            EventTracker.INSTANCE.track(Flurry.CATEGORY_HOME, Flurry.EVENT_NAME_ACTION, params);
-                        }
-                    });
+                    // Flurry Notification
+                    Map<String, String> params = new HashMap<String, String>();
+                    params.put(Flurry.PARAM_NAME_ACTION, Flurry.PARAM_VALUE_RECEIPT_STORE);
+                    EventTracker.INSTANCE.track(Flurry.CATEGORY_HOME, Flurry.EVENT_NAME_ACTION, params);
+                }
+            });
             navItems.add(navItem);
         }
 
@@ -3149,10 +3090,10 @@ public class Home extends BaseActivity implements View.OnClickListener, Navigati
                     R.string.home_navigation_car_mileage, R.drawable.icon_menu_mileage, View.VISIBLE,
                     navMileageVisibility, new Runnable() {
 
-                        public void run() {
-                            showMileageDialog();
-                        }
-                    });
+                public void run() {
+                    showMileageDialog();
+                }
+            });
             navItems.add(navItem);
         }
 
@@ -3182,25 +3123,24 @@ public class Home extends BaseActivity implements View.OnClickListener, Navigati
 
         // Add the "Learn More" tour here.
         if (RolesUtil.isTraveler(Home.this) && RolesUtil.isExpenser(Home.this)) {
-            navItem = new HomeScreenSimpleNavigationItem(NAVIGATION_LEARN_MORE, -1,
-                    R.string.home_navigation_learn_more, R.drawable.icon_menu_help, View.VISIBLE, View.VISIBLE,
-                    new Runnable() {
+            navItem = new HomeScreenSimpleNavigationItem(NAVIGATION_LEARN_MORE, -1, R.string.home_navigation_learn_more,
+                    R.drawable.icon_menu_help, View.VISIBLE, View.VISIBLE, new Runnable() {
 
-                        public void run() {
-                            if (!ConcurMobile.isConnected()) {
-                                showDialog(Const.DIALOG_NO_CONNECTIVITY);
-                            } else {
-                                // Launch the activity.
-                                Intent i = new Intent(Home.this, Tour.class);
-                                startActivity(i);
+                public void run() {
+                    if (!ConcurMobile.isConnected()) {
+                        showDialog(Const.DIALOG_NO_CONNECTIVITY);
+                    } else {
+                        // Launch the activity.
+                        Intent i = new Intent(Home.this, Tour.class);
+                        startActivity(i);
 
-                                // Flurry Notification.
-                                Map<String, String> params = new HashMap<String, String>();
-                                params.put(Flurry.PARAM_NAME_ACTION, Flurry.PARAM_VALUE_TOUR);
-                                EventTracker.INSTANCE.track(Flurry.CATEGORY_HOME, Flurry.EVENT_NAME_ACTION, params);
-                            }
-                        }
-                    });
+                        // Flurry Notification.
+                        Map<String, String> params = new HashMap<String, String>();
+                        params.put(Flurry.PARAM_NAME_ACTION, Flurry.PARAM_VALUE_TOUR);
+                        EventTracker.INSTANCE.track(Flurry.CATEGORY_HOME, Flurry.EVENT_NAME_ACTION, params);
+                    }
+                }
+            });
             navItems.add(navItem);
         }
 
@@ -3216,30 +3156,29 @@ public class Home extends BaseActivity implements View.OnClickListener, Navigati
             navItem = new HomeScreenSimpleNavigationItem(NAVIGATION_APP_TRIP_IT, -1, R.string.home_navigation_tripit,
                     R.drawable.icon_menu_tripit, View.VISIBLE, View.VISIBLE, new Runnable() {
 
-                        public void run() {
-                            // First check for the paid version (package
-                            // name: "com.tripit.paid").
-                            Intent i = ViewUtil.getPackageLaunchIntent(Home.this, "com.tripit.paid");
-                            if (i == null) {
-                                // Second, try for the free version (package
-                                // name: "com.tripit").
-                                i = ViewUtil.getPackageLaunchIntent(Home.this, "com.tripit");
-                            }
-                            if (i == null) {
-                                String url = "market://details?id=com.tripit";
-                                i = new Intent(Intent.ACTION_VIEW);
-                                i.setData(Uri.parse(url));
-                            }
-                            if (i != null) {
-                                startActivity(i);
-                                // Flurry Notification
-                                Map<String, String> params = new HashMap<String, String>();
-                                params.put(Flurry.PARAM_NAME_ACTION, Flurry.PARAM_VALUE_TRIP_IT);
-                                EventTracker.INSTANCE.track(Flurry.CATEGORY_EXTERNAL_APP, Flurry.EVENT_NAME_LAUNCH,
-                                        params);
-                            }
-                        }
-                    });
+                public void run() {
+                    // First check for the paid version (package
+                    // name: "com.tripit.paid").
+                    Intent i = ViewUtil.getPackageLaunchIntent(Home.this, "com.tripit.paid");
+                    if (i == null) {
+                        // Second, try for the free version (package
+                        // name: "com.tripit").
+                        i = ViewUtil.getPackageLaunchIntent(Home.this, "com.tripit");
+                    }
+                    if (i == null) {
+                        String url = "market://details?id=com.tripit";
+                        i = new Intent(Intent.ACTION_VIEW);
+                        i.setData(Uri.parse(url));
+                    }
+                    if (i != null) {
+                        startActivity(i);
+                        // Flurry Notification
+                        Map<String, String> params = new HashMap<String, String>();
+                        params.put(Flurry.PARAM_NAME_ACTION, Flurry.PARAM_VALUE_TRIP_IT);
+                        EventTracker.INSTANCE.track(Flurry.CATEGORY_EXTERNAL_APP, Flurry.EVENT_NAME_LAUNCH, params);
+                    }
+                }
+            });
             navItems.add(navItem);
         }
 
@@ -3261,8 +3200,8 @@ public class Home extends BaseActivity implements View.OnClickListener, Navigati
                                 // Flurry Notification
                                 Map<String, String> params = new HashMap<String, String>();
                                 params.put(Flurry.PARAM_NAME_ACTION, Flurry.PARAM_VALUE_EXPENSE_IT);
-                                EventTracker.INSTANCE.track(Flurry.CATEGORY_EXTERNAL_APP, Flurry.EVENT_NAME_LAUNCH,
-                                        params);
+                                EventTracker.INSTANCE
+                                        .track(Flurry.CATEGORY_EXTERNAL_APP, Flurry.EVENT_NAME_LAUNCH, params);
                             }
                         }
                     });
@@ -3327,51 +3266,49 @@ public class Home extends BaseActivity implements View.OnClickListener, Navigati
          */
 
         if (RuntimeConfig.with(this).canUseAppCenter()) {
-            navItem = new HomeScreenSimpleNavigationItem(NAVIGATION_APP_CENTER, -1,
-                    R.string.home_navigation_app_center, R.drawable.icon_menu_connect_to_apps, View.VISIBLE,
-                    View.VISIBLE, new Runnable() {
+            navItem = new HomeScreenSimpleNavigationItem(NAVIGATION_APP_CENTER, -1, R.string.home_navigation_app_center,
+                    R.drawable.icon_menu_connect_to_apps, View.VISIBLE, View.VISIBLE, new Runnable() {
 
-                        public void run() {
-                            String bareToken = Preferences.getAccessToken();
+                public void run() {
+                    String bareToken = Preferences.getAccessToken();
 
-                            if (bareToken == null) {
-                                Toast.makeText(Home.this,
-                                        "Unable to retrieve access token. Please log out and back in.",
-                                        Toast.LENGTH_LONG).show();
-                                return;
-                            }
+                    if (bareToken == null) {
+                        Toast.makeText(Home.this, "Unable to retrieve access token. Please log out and back in.",
+                                Toast.LENGTH_LONG).show();
+                        return;
+                    }
 
-                            Locale locale = Locale.getDefault();
+                    Locale locale = Locale.getDefault();
 
-                            String encodedToken = "";
+                    String encodedToken = "";
 
-                            try {
-                                String appCenterUrl;
-                                String serverAddress = Preferences.getServerAddress();
+                    try {
+                        String appCenterUrl;
+                        String serverAddress = Preferences.getServerAddress();
 
-                                if (serverAddress.toLowerCase(locale).contains("rqa3-cb.concurtech.net")) {
-                                    appCenterUrl = "http://appcenterdev.concursolutions.com";
-                                } else {
-                                    appCenterUrl = "https://appcenter.concursolutions.com";
-                                }
-
-                                encodedToken = URLEncoder.encode(bareToken, "UTF-8");
-
-                                String urlString = appCenterUrl + "/#/?accessToken=" + encodedToken + "&lang=" + locale;
-
-                                Intent i = new Intent(Home.this, SimpleWebViewActivity.class);
-                                i.putExtra("url", urlString);
-
-                                if (i != null) {
-                                    EventTracker.INSTANCE.track(Flurry.CATEGORY_MAIN_MENU, Flurry.ACTION_APP_CENTER);
-
-                                    startActivity(i);
-                                }
-                            } catch (Exception e) {
-                                Log.i(CLS_TAG, "Unable to URL-encode token: '" + bareToken + "'");
-                            }
+                        if (serverAddress.toLowerCase(locale).contains("rqa3-cb.concurtech.net")) {
+                            appCenterUrl = "http://appcenterdev.concursolutions.com";
+                        } else {
+                            appCenterUrl = "https://appcenter.concursolutions.com";
                         }
-                    });
+
+                        encodedToken = URLEncoder.encode(bareToken, "UTF-8");
+
+                        String urlString = appCenterUrl + "/#/?accessToken=" + encodedToken + "&lang=" + locale;
+
+                        Intent i = new Intent(Home.this, SimpleWebViewActivity.class);
+                        i.putExtra("url", urlString);
+
+                        if (i != null) {
+                            EventTracker.INSTANCE.track(Flurry.CATEGORY_MAIN_MENU, Flurry.ACTION_APP_CENTER);
+
+                            startActivity(i);
+                        }
+                    } catch (Exception e) {
+                        Log.i(CLS_TAG, "Unable to URL-encode token: '" + bareToken + "'");
+                    }
+                }
+            });
             navItems.add(navItem);
         }
 
@@ -3420,22 +3357,12 @@ public class Home extends BaseActivity implements View.OnClickListener, Navigati
 
     /**
      * Goes through all of the items to be added to the Navigation Drawer and adds them one at a time.
-     * 
-     * @param itemContainer
-     *            The LinearLayout inside of the Navigation Drawer that holds all of the NavigationItems
-     * 
-     * @param adContainer
-     *            The LinearLayout below itemContainer in the NavigationDrawer that holds the Ad Item
-     * 
-     * @param inflater
-     *            The LayoutInflater
-     * 
-     * @param navItems
-     *            The actual list of Navigation Items that we're to add to the Drawer
-     * 
-     * @param adNavItem
-     *            The advert item at the bottom of the drawer
-     * 
+     *
+     * @param itemContainer The LinearLayout inside of the Navigation Drawer that holds all of the NavigationItems
+     * @param adContainer   The LinearLayout below itemContainer in the NavigationDrawer that holds the Ad Item
+     * @param inflater      The LayoutInflater
+     * @param navItems      The actual list of Navigation Items that we're to add to the Drawer
+     * @param adNavItem     The advert item at the bottom of the drawer
      */
     protected void addNavigationItems(ViewGroup itemContainer, ViewGroup adContainer, LayoutInflater inflater,
             List<NavigationItem> navItems, NavigationItem adNavItem) {
@@ -3469,9 +3396,8 @@ public class Home extends BaseActivity implements View.OnClickListener, Navigati
                         }
 
                         // Remove line from items prior to separators in menu
-                        if (i < navItems.size() - 2
-                                && navItems.get(i + 1).getClass().getSimpleName()
-                                        .equalsIgnoreCase("DefaultTextNavigationItem")) {
+                        if (i < navItems.size() - 2 && navItems.get(i + 1).getClass().getSimpleName()
+                                .equalsIgnoreCase("DefaultTextNavigationItem")) {
                             try {
                                 navView.findViewById(R.id.navigation_item_separator).setVisibility(View.INVISIBLE);
                             } catch (Exception ex) {
@@ -3502,8 +3428,7 @@ public class Home extends BaseActivity implements View.OnClickListener, Navigati
                             if (imgView != null) {
                                 imgView.setImageResource(iconResId);
                             } else {
-                                Log.e(Const.LOG_TAG,
-                                        CLS_TAG
+                                Log.e(Const.LOG_TAG, CLS_TAG
                                                 + ".addNavigationItems: unable to locate 'icon' view in 'navigation_item' layout!");
                             }
                         } else {
@@ -3522,7 +3447,7 @@ public class Home extends BaseActivity implements View.OnClickListener, Navigati
                     }
                     navView.setTag(navItem);
                     itemContainer.addView(navView); // PARENT IS JUST
-                                                    // ITEMCONTAINER
+                    // ITEMCONTAINER
                     // Is the item selectable?
                     if (navItem.isSelectable()) {
                         navView.setOnClickListener(new NavigationItemOnClickListener());
@@ -3559,7 +3484,6 @@ public class Home extends BaseActivity implements View.OnClickListener, Navigati
     /**
      * The OnClickListener for items inside of the Navigation Drawer. Basically just check which item was clicked and hand off to
      * the {@link #onItemSelected(navItem) onItemSelected} method to handle which item was pressed.
-     * 
      */
     class NavigationItemOnClickListener implements OnClickListener {
 
@@ -3682,9 +3606,10 @@ public class Home extends BaseActivity implements View.OnClickListener, Navigati
      * @see com.concur.mobile.core.dialog.ReceiptChoiceDialogFragment. ReceiptChoiceListener#onCameraFailure(java.lang.String)
      */
     public void onCameraFailure(String filePath) {
-        DialogFragmentFactory.getAlertOkayInstance(
-                this.getText(R.string.dlg_expense_camera_image_import_failed_title).toString(),
-                R.string.dlg_expense_camera_image_import_failed_message).show(getSupportFragmentManager(), null);
+        DialogFragmentFactory
+                .getAlertOkayInstance(this.getText(R.string.dlg_expense_camera_image_import_failed_title).toString(),
+                        R.string.dlg_expense_camera_image_import_failed_message)
+                .show(getSupportFragmentManager(), null);
     }
 
     /*
@@ -3723,9 +3648,10 @@ public class Home extends BaseActivity implements View.OnClickListener, Navigati
      * @see com.concur.mobile.core.dialog.ReceiptChoiceDialogFragment. ReceiptChoiceListener#onGalleryFailure(java.lang.String)
      */
     public void onGalleryFailure(String filePath) {
-        DialogFragmentFactory.getAlertOkayInstance(
-                this.getText(R.string.dlg_expense_camera_image_import_failed_title).toString(),
-                R.string.dlg_expense_camera_image_import_failed_message).show(getSupportFragmentManager(), null);
+        DialogFragmentFactory
+                .getAlertOkayInstance(this.getText(R.string.dlg_expense_camera_image_import_failed_title).toString(),
+                        R.string.dlg_expense_camera_image_import_failed_message)
+                .show(getSupportFragmentManager(), null);
 
     }
 
@@ -3736,9 +3662,10 @@ public class Home extends BaseActivity implements View.OnClickListener, Navigati
      * ReceiptChoiceListener#onStorageMountFailure(java.lang.String)
      */
     public void onStorageMountFailure(String filePath) {
-        DialogFragmentFactory.getAlertOkayInstance(
-                this.getText(R.string.dlg_expense_no_external_storage_available_title).toString(),
-                R.string.dlg_expense_no_external_storage_available_message).show(getSupportFragmentManager(), null);
+        DialogFragmentFactory
+                .getAlertOkayInstance(this.getText(R.string.dlg_expense_no_external_storage_available_title).toString(),
+                        R.string.dlg_expense_no_external_storage_available_message)
+                .show(getSupportFragmentManager(), null);
 
     }
 

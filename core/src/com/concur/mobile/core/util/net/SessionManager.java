@@ -146,6 +146,11 @@ public class SessionManager {
                         + ".validateSessionId: session is expired or not set, re-establishing the session.");
 
                 boolean autoLogin = prefs.getBoolean(Const.PREF_AUTO_LOGIN, false);
+                boolean disableAutoLogin = prefs.getBoolean(Const.PREF_DISABLE_AUTO_LOGIN, false);
+
+                if(disableAutoLogin) {
+                    autoLogin = false;
+                }
 
                 // If auto-login is enabled and company sign-on is being used, then force autoLogin to 'false'.
                 // Company Sign-on auto-login is not currently supported.

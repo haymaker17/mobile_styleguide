@@ -30,7 +30,8 @@ public class ConfigDBSchema {
     // DATABASE_VERSION = 4 -- added 'EMAIL' to 'SESSION' table.
     // DATABASE_VERSION = 5 -- added 'TRAVEL_POINTS_CONFIG' table.
     // DATABASE_VERSION = 6 -- added 'PERMISSIONS' table.
-    static final int DATABASE_VERSION = 6;
+    // DATABASE_VERSION = 7 -- added IS_DISABLE_AUTO_LOGIN to 'User' table.
+    static final int DATABASE_VERSION = 7;
 
     // Creates the session table.
     protected static final String SCHEMA_CREATE_SESSION_TABLE = "CREATE TABLE IF NOT EXISTS "
@@ -54,7 +55,8 @@ public class ConfigDBSchema {
             + " INTEGER, " + Config.UserColumns.ROLES_MOBILE + " TEXT, " + Config.UserColumns.CONTACT_COMPANY_NAME
             + " TEXT, " + Config.UserColumns.CONTACT_EMAIL + " TEXT, " + Config.UserColumns.CONTACT_FIRST_NAME
             + " TEXT, " + Config.UserColumns.CONTACT_LAST_NAME + " TEXT, " + Config.UserColumns.CONTACT_MIDDLE_INITIAL
-            + " TEXT, " + Config.UserColumns.USER_CURRENCY_CODE + " TEXT, " + Config.UserColumns.USER_ID + " TEXT"
+            + " TEXT, " + Config.UserColumns.USER_CURRENCY_CODE + " TEXT, " + Config.UserColumns.IS_DISABLE_AUTO_LOGIN + " INTEGER, "
+            + Config.UserColumns.USER_ID + " TEXT"
             + ")";
 
     // Drop the user table.
@@ -400,6 +402,12 @@ public class ConfigDBSchema {
                 Log.e(Const.LOG_TAG, CLS_TAG + ".onUpgrade: failed to execute AddPermissionsTableUpgradeAction!");
             }
             break;
+        }
+        case 6: {
+            SchemaUpgradeAction sua = new AddUserDisableAutoLoginSupportAction(db, oldVersion, newVersion);
+            if (!sua.upgrade()) {
+                Log.e(Const.LOG_TAG, CLS_TAG + ".onUpgrade: failed to execute AddUserDisableAutoLoginSupportAction!");
+            }
         }
         default: {
             Log.v(Const.LOG_TAG, "DB version provided no upgrade path: " + newVersion);

@@ -20,6 +20,7 @@ import android.location.Location;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 import android.os.Build;
+import android.os.Handler;
 import android.os.IBinder;
 import android.preference.PreferenceManager;
 import android.provider.Settings;
@@ -34,6 +35,7 @@ import android.widget.TableRow;
 import android.widget.TextView;
 
 import com.concur.core.R;
+import com.concur.mobile.base.service.BaseAsyncResultReceiver;
 import com.concur.mobile.base.util.Format;
 import com.concur.mobile.core.activity.Preferences;
 import com.concur.mobile.core.data.MobileDatabase;
@@ -118,6 +120,8 @@ import java.util.Map.Entry;
 import java.util.TimeZone;
 
 public abstract class ConcurCore extends MultiDexApplication {
+
+    public BaseAsyncResultReceiver autoLoginReceiver = new BaseAsyncResultReceiver(new Handler());
 
     // Maps between an activity class name and the list of currently running
     // AsyncTasks that were spawned while it was active.
@@ -2882,6 +2886,10 @@ public abstract class ConcurCore extends MultiDexApplication {
     // so that each app can get back to its own way of expiring.
     public abstract void expireLogin();
 
+
+    // called from Preferences during the login request fail
+    public abstract void expireLogin(boolean forceExpiration);
+
     /**
      * Executed when the "remote wipe" flag is sent down from a Login/Auto-Login request.
      */
@@ -2933,6 +2941,10 @@ public abstract class ConcurCore extends MultiDexApplication {
         Boolean requiredCustomFields = (Boolean) responses.get(Const.LR_REQUIRED_CUSTOM_FIELDS);
         if (requiredCustomFields == null)
             requiredCustomFields = Boolean.FALSE;
+
+        Boolean disableAutoLogin = (Boolean) responses.get(Const.LR_DISABLE_AUTO_LOGIN);
+        if (disableAutoLogin == null)
+            disableAutoLogin = Boolean.FALSE;
 
         Integer travelProfileStatus = (Integer) responses.get(Const.LR_TRAVEL_PROFILE_STATUS);
         Boolean hideReceiptStore = (Boolean) responses.get(Const.LR_SITE_SETTINGS_HIDE_RECEIPT_STORE);
@@ -3007,6 +3019,7 @@ public abstract class ConcurCore extends MultiDexApplication {
         PreferenceUtil.savePreference(prefs, Const.PREF_ENABLE_SPDY, enableSpdy);
 
         PreferenceUtil.savePreference(prefs, Const.PREF_REQUIRED_CUSTOM_FIELDS, requiredCustomFields);
+        PreferenceUtil.savePreference(prefs, Const.PREF_DISABLE_AUTO_LOGIN, disableAutoLogin);
         PreferenceUtil.savePreference(prefs, Const.PREF_TRAVEL_PROFILE_STATUS, travelProfileStatus);
 
         PreferenceUtil.savePreference(prefs, Const.PREF_HAS_FIXED_TA, hasFixedTA);

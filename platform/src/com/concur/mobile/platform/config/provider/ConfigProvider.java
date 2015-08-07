@@ -252,6 +252,9 @@ public class ConfigProvider extends PlatformContentProvider {
         userProjectionMap.put(Config.UserColumns.CONTACT_MIDDLE_INITIAL, Config.UserColumns.CONTACT_MIDDLE_INITIAL);
         userProjectionMap.put(Config.UserColumns.USER_CURRENCY_CODE, Config.UserColumns.USER_CURRENCY_CODE);
         userProjectionMap.put(Config.UserColumns.USER_ID, Config.UserColumns.USER_ID);
+        userProjectionMap.put(Config.UserColumns.IS_DISABLE_AUTO_LOGIN,
+                Config.UserColumns.IS_DISABLE_AUTO_LOGIN);
+
 
         /*
          * Create and initialize the site setting project map.
