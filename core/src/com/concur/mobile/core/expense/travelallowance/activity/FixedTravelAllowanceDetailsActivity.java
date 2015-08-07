@@ -14,14 +14,18 @@ import android.widget.CompoundButton;
 import android.widget.Spinner;
 import android.widget.Switch;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.concur.core.R;
 import com.concur.mobile.core.ConcurCore;
 import com.concur.mobile.core.activity.BaseActivity;
 import com.concur.mobile.core.expense.travelallowance.TaConfig;
+import com.concur.mobile.core.expense.travelallowance.controller.ControllerAction;
 import com.concur.mobile.core.expense.travelallowance.controller.FixedTravelAllowanceControlData;
 import com.concur.mobile.core.expense.travelallowance.controller.FixedTravelAllowanceController;
 //import com.concur.mobile.core.expense.travelallowance.controller.TravelAllowanceConfigurationController;
+import com.concur.mobile.core.expense.travelallowance.controller.IController;
+import com.concur.mobile.core.expense.travelallowance.controller.IControllerListener;
 import com.concur.mobile.core.expense.travelallowance.datamodel.FixedTravelAllowance;
 import com.concur.mobile.core.expense.travelallowance.datamodel.ICode;
 import com.concur.mobile.core.expense.travelallowance.datamodel.MealProvision;
@@ -40,7 +44,7 @@ import java.util.List;
 import java.util.Locale;
 import java.util.Map;
 
-public class FixedTravelAllowanceDetailsActivity extends BaseActivity {
+public class FixedTravelAllowanceDetailsActivity extends BaseActivity implements IControllerListener {
 
     /**
      * The name of this {@code Class} for logging purpose.
@@ -101,6 +105,8 @@ public class FixedTravelAllowanceDetailsActivity extends BaseActivity {
 
         ConcurCore app = (ConcurCore) getApplication();
         this.allowanceController = app.getFixedTravelAllowanceController();
+        allowanceController.registerListener(this);
+
         controlData = allowanceController.getControlData();
 
         renderHeader(allowance);
@@ -109,6 +115,16 @@ public class FixedTravelAllowanceDetailsActivity extends BaseActivity {
         renderDinner(allowance);
         renderLodging(allowance);
         renderOvernight(allowance);
+    }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+
+        if (allowanceController != null) {
+            Log.d(DebugUtils.LOG_TAG_TA, DebugUtils.buildLogText(CLASS_TAG, "onDestroy", "Unregister myself as listener at FixedTravelAllowanceController."));
+            allowanceController.unregisterListener(this);
+        }
     }
 
     @Override
@@ -468,6 +484,39 @@ public class FixedTravelAllowanceDetailsActivity extends BaseActivity {
             }
         }
         return null;
+    }
+
+    @Override
+    public void actionFinished(IController controller, ControllerAction action, boolean isSuccess, Bundle result) {
+
+        if (action == ControllerAction.UPDATE) {
+            Log.d(DebugUtils.LOG_TAG_TA, DebugUtils.buildLogText(CLASS_TAG, "actionFinished",
+                    "Update Action callback finished with isSuccess: " + isSuccess));
+            if (isSuccess) {
+//                Itinerary createdItinerary = (Itinerary) result.getSerializable(BundleId.ITINERARY);
+//                this.itinerary = createdItinerary;
+//                refreshAdapter();
+//                // Update, respectively the creation of itineraries will generate Fixed Travel Allowances.
+//                // We need to refresh the buffered Allowances as navigation back to the allowance overview
+//                // would show the old data.
+//                ConcurCore app = (ConcurCore) getApplication();
+//                FixedTravelAllowanceController allowanceController = app.getFixedTravelAllowanceController();
+//                allowanceController.refreshFixedTravelAllowances(itinerary.getExpenseReportID());
+
+                Toast.makeText(this, R.string.general_save_success, Toast.LENGTH_SHORT).show();
+
+                allowanceController.refreshFixedTravelAllowances(expenseReportKey);
+
+            } else {
+                Toast.makeText(this, R.string.general_save_fail, Toast.LENGTH_SHORT).show();
+            }
+        }
+
+        if (action == ControllerAction.REFRESH ) {
+            allowance = allowanceController.getAllowanceByDate(allowance.getDate());
+            renderHeader(allowance);
+        }
+
     }
 
 }

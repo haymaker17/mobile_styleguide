@@ -13,6 +13,7 @@ import com.concur.mobile.core.expense.travelallowance.datamodel.ICode;
 import com.concur.mobile.core.expense.travelallowance.datamodel.MealProvision;
 import com.concur.mobile.core.expense.travelallowance.service.GetTAFixedAllowancesRequest2;
 import com.concur.mobile.core.expense.travelallowance.service.UpdateFixedAllowances;
+import com.concur.mobile.core.expense.travelallowance.util.BundleId;
 import com.concur.mobile.core.expense.travelallowance.util.DateUtils;
 import com.concur.mobile.core.expense.travelallowance.util.DebugUtils;
 import com.concur.mobile.core.expense.travelallowance.util.IDateFormat;
@@ -432,15 +433,16 @@ public class FixedTravelAllowanceController extends BaseController {
 
 //                Itinerary resultItinerary = (Itinerary) resultData.getSerializable(BundleId.ITINERARY);
 //                boolean isSuccess = handleAfterUpdateResponse(resultItinerary);
-//                notifyListener(ControllerAction.UPDATE, isSuccess, resultData);
-//
+                boolean isSuccess = resultData.getBoolean(BundleId.IS_SUCCESS);
+                notifyListener(ControllerAction.UPDATE, isSuccess, resultData);
+
             }
 
             @Override
             public void onRequestFail(Bundle resultData) {
                 Message msg = new Message(Message.Severity.ERROR, "500", "Backend Dump!");
 //                messageCache.add(msg);
-//                notifyListener(ControllerAction.UPDATE, false, resultData);
+                notifyListener(ControllerAction.UPDATE, false, resultData);
             }
 
             @Override
@@ -459,6 +461,18 @@ public class FixedTravelAllowanceController extends BaseController {
 
 
 
+    }
+
+    public FixedTravelAllowance getAllowanceByDate(Date date){
+        if (date == null){
+            return null;
+        }
+        for (FixedTravelAllowance allowance : fixedTravelAllowances){
+            if (date.equals(allowance.getDate())){
+                return  allowance;
+            }
+        }
+        return null;
     }
 
 }

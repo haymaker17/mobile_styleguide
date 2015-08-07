@@ -10,6 +10,7 @@ import com.concur.mobile.base.service.BaseAsyncResultReceiver;
 import com.concur.mobile.base.service.parser.CommonParser;
 import com.concur.mobile.core.expense.travelallowance.TaXmlUtil;
 import com.concur.mobile.core.expense.travelallowance.datamodel.FixedTravelAllowance;
+import com.concur.mobile.core.expense.travelallowance.util.BundleId;
 import com.concur.mobile.core.service.CoreAsyncRequestTask;
 import com.concur.mobile.core.util.FormatUtil;
 import com.concur.mobile.platform.service.parser.ActionResponseParser;
@@ -91,10 +92,10 @@ public class UpdateFixedAllowances extends CoreAsyncRequestTask {
     protected int onPostParse() {
         resultData.putString("StatusText", resultsParser.statusText);
         if ("SUCCESS".equals(resultsParser.status)) {
-            resultData.putBoolean(IS_SUCCESS, true);
+            resultData.putBoolean(BundleId.IS_SUCCESS, true);
             return RESULT_OK;
         } else {
-            resultData.putBoolean(IS_SUCCESS, false);
+            resultData.putBoolean(BundleId.IS_SUCCESS, false);
             return RESULT_ERROR;
         }
     }

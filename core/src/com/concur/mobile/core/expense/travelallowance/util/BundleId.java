@@ -16,5 +16,6 @@ public final class BundleId {
     public static final String EXPENSE_REPORT_NAME = "expense.report.name";
     public static final String EXPENSE_REPORT_KEY = "expense.report.key";
     public static final String IS_EDIT_MODE = "travelallowance.isEditMode";
+    public static final String IS_SUCCESS = "success";
 
 }
