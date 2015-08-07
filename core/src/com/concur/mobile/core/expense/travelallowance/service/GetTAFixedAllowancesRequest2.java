@@ -1,16 +1,5 @@
 package com.concur.mobile.core.expense.travelallowance.service;
 
-import java.io.IOException;
-import java.io.InputStream;
-import java.util.List;
-
-import javax.xml.parsers.DocumentBuilder;
-import javax.xml.parsers.DocumentBuilderFactory;
-import javax.xml.parsers.ParserConfigurationException;
-
-import org.w3c.dom.Document;
-import org.xml.sax.SAXException;
-
 import android.content.Context;
 import android.util.Log;
 
@@ -19,14 +8,26 @@ import com.concur.mobile.base.service.parser.CommonParser;
 import com.concur.mobile.core.expense.travelallowance.controller.FixedTravelAllowanceControlData;
 import com.concur.mobile.core.expense.travelallowance.datamodel.FixedTravelAllowance;
 import com.concur.mobile.core.expense.travelallowance.service.parser.GetTAFixedAllowancesResponseDOMParser;
+import com.concur.mobile.core.expense.travelallowance.util.DebugUtils;
 import com.concur.mobile.core.service.CoreAsyncRequestTask;
+
+import org.w3c.dom.Document;
+import org.xml.sax.SAXException;
+
+import java.io.IOException;
+import java.io.InputStream;
+import java.util.List;
+
+import javax.xml.parsers.DocumentBuilder;
+import javax.xml.parsers.DocumentBuilderFactory;
+import javax.xml.parsers.ParserConfigurationException;
 
 /**
  * Created by Michael Becherer on 26-Jun-15.
  */
 public class GetTAFixedAllowancesRequest2 extends CoreAsyncRequestTask {
 
-    public static final String LOG_TAG = GetTAFixedAllowancesRequest2.class
+    public static final String CLASS_TAG = GetTAFixedAllowancesRequest2.class
             .getSimpleName();
 
     private String rptKey;
@@ -66,14 +67,15 @@ public class GetTAFixedAllowancesRequest2 extends CoreAsyncRequestTask {
     @Override
     protected int onPostParse() {
         long currentMillisParser = System.currentTimeMillis();
-        Log.i(LOG_TAG, "Parsing time: " + (currentMillisParser - parserStartMillis) + "ms");
+        Log.i(DebugUtils.LOG_TAG_TA, DebugUtils.buildLogText(CLASS_TAG, "onPostParse",
+                "Parsing time = " + (currentMillisParser - parserStartMillis) + "ms"));
 
         resultData.putBoolean(IS_SUCCESS, true);
         this.fixedTravelAllowances = parser.getFixedTravelAllowances();
 
         long currentMillis = System.currentTimeMillis();
-        Log.i(LOG_TAG, "Request total: " + (currentMillis - startMillis) + "ms");
-
+        Log.i(DebugUtils.LOG_TAG_TA, DebugUtils.buildLogText(CLASS_TAG, "onPostParse",
+                "Request total = " + (currentMillis - startMillis) + "ms"));
         return RESULT_OK;
     }
 

@@ -12,6 +12,7 @@ import com.concur.mobile.base.service.BaseAsyncResultReceiver;
 import com.concur.mobile.base.service.parser.CommonParser;
 import com.concur.mobile.core.expense.travelallowance.datamodel.TravelAllowanceConfiguration;
 import com.concur.mobile.core.expense.travelallowance.service.parser.GetTAConfigurationParser;
+import com.concur.mobile.core.expense.travelallowance.util.DebugUtils;
 import com.concur.mobile.core.service.CoreAsyncRequestTask;
 
 
@@ -20,26 +21,26 @@ import com.concur.mobile.core.service.CoreAsyncRequestTask;
  */
 public class GetTAConfigurationRequest extends CoreAsyncRequestTask {
 
-    public static final String LOG_TAG = GetTAItinerariesRequest.class.getSimpleName();
-
-//    private String rptKey;
+    public static final String CLASS_TAG = GetTAConfigurationRequest.class.getSimpleName();
 
     private GetTAConfigurationParser parser;
 
     private TravelAllowanceConfiguration configuration;
 
-//    private boolean isManager;
+    private long startMillis;
+
+    private long parserStartMillis;
 
 
     public GetTAConfigurationRequest(Context context, BaseAsyncResultReceiver receiver) {
         super(context, 0, receiver);
     }
 
-//    @Override
-//    protected void onPreExecute() {
-//        startMillis = System.currentTimeMillis();
-//        super.onPreExecute();
-//    }
+    @Override
+    protected void onPreExecute() {
+        this.startMillis = System.currentTimeMillis();
+        super.onPreExecute();
+    }
 
     @Override
     protected String getServiceEndpoint() {
@@ -48,7 +49,7 @@ public class GetTAConfigurationRequest extends CoreAsyncRequestTask {
 
     @Override
     protected int parse(CommonParser parser) {
-//        parserStartMillis = System.currentTimeMillis();
+        parserStartMillis = System.currentTimeMillis();
         int result = RESULT_OK;
 
         // register the parser of interest
@@ -56,7 +57,7 @@ public class GetTAConfigurationRequest extends CoreAsyncRequestTask {
         parser.registerParser(this.parser, "TaConfig"); //Provide the name of teh StartTag in the response
 
         try {
-            Log.d(LOG_TAG, "Start parsing configuration...");
+            Log.d(DebugUtils.LOG_TAG_TA, DebugUtils.buildLogText(CLASS_TAG, "parse", "Start parsing configuration..."));
             parser.parse();
         } catch (XmlPullParserException e) {
             result = RESULT_ERROR;
@@ -71,15 +72,16 @@ public class GetTAConfigurationRequest extends CoreAsyncRequestTask {
 
     @Override
     protected int onPostParse() {
-//        long currentMillisParser = System.currentTimeMillis();
-//        Log.i(LOG_TAG, "Parsing time: " + (currentMillisParser - parserStartMillis) + "ms");
-//
+        long currentMillisParser = System.currentTimeMillis();
+        Log.i(DebugUtils.LOG_TAG_TA, DebugUtils.buildLogText(CLASS_TAG, "onPostParse",
+                "Parsing time = " + (currentMillisParser - parserStartMillis) + "ms"));
+
         resultData.putBoolean(IS_SUCCESS, true);
         this.configuration = parser.getConfigurationList();
 
-//        long currentMillis = System.currentTimeMillis();
-//        Log.i(LOG_TAG, "Request total: " + (currentMillis - startMillis) + "ms");
-//
+        long currentMillis = System.currentTimeMillis();
+        Log.i(DebugUtils.LOG_TAG_TA, DebugUtils.buildLogText(CLASS_TAG, "onPostParse",
+                "Request total = " + (currentMillis - startMillis) + "ms"));
         return RESULT_OK;
     }
 

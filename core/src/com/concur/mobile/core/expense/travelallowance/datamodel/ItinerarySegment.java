@@ -173,10 +173,6 @@ public class ItinerarySegment implements Serializable, IDatePeriodUTC, Comparabl
 
         ItinerarySegment that = (ItinerarySegment) o;
 
-        if (id != null && id.equals(that.id)) {//The id is a unique identifier
-            return true;
-        }
-
         if (locked != that.locked) return false;
         if (id != null ? !id.equals(that.id) : that.id != null) return false;
         if (departureLocation != null ? !departureLocation.equals(that.departureLocation) : that.departureLocation != null)
@@ -203,5 +199,12 @@ public class ItinerarySegment implements Serializable, IDatePeriodUTC, Comparabl
         result = 31 * result + (borderCrossDateTime != null ? borderCrossDateTime.hashCode() : 0);
         result = 31 * result + (locked ? 1 : 0);
         return result;
+    }
+
+    @Override
+    public String toString() {
+        return "ItinerarySegment{" +
+                "id='" + id + '\'' +
+                '}';
     }
 }

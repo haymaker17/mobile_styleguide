@@ -22,6 +22,7 @@ import com.concur.mobile.core.expense.travelallowance.ui.model.CompactItineraryS
 import com.concur.mobile.core.expense.travelallowance.util.BundleId;
 import com.concur.mobile.core.expense.travelallowance.util.DateUtils;
 import com.concur.mobile.core.expense.travelallowance.util.DebugUtils;
+import com.concur.mobile.core.expense.travelallowance.util.ItineraryUtils;
 import com.concur.mobile.core.expense.travelallowance.util.Message;
 import com.concur.mobile.core.expense.travelallowance.util.StringUtilities;
 
@@ -501,39 +502,109 @@ public class TravelAllowanceItineraryController extends BaseController {
     }
 
     public void resetMessages() {
+        Log.d(DebugUtils.LOG_TAG_TA, DebugUtils.buildLogText(CLASS_TAG, "resetMessages",
+                "Clear messageCache completely, actual size = " + messageCache.size()));
         messageCache = new ArrayList<Message>();
     }
 
+    public void resetMessages(Itinerary itinerary) {
+        if (itinerary == null || messageCache == null || messageCache.size() == 0) {
+            return;
+        }
+        Log.d(DebugUtils.LOG_TAG_TA, DebugUtils.buildLogText(CLASS_TAG, "resetMessages",
+                itinerary.toString()) + ", actual messageCache size = " + messageCache.size());
+        Iterator<Message> it = messageCache.iterator();
+        Itinerary msgItinerary;
+        while (it.hasNext()) {
+            Message msg = it.next();
+            if (msg.getSourceObject() != null && msg.getSourceObject() instanceof Itinerary) {
+                msgItinerary = (Itinerary) msg.getSourceObject();
+                if ((msgItinerary == itinerary)
+                        || (msgItinerary.getItineraryID() != null
+                            && msgItinerary.getItineraryID().equals(itinerary.getItineraryID()))) {
+                    it.remove();
+                }
+            }
+        }
+        Log.d(DebugUtils.LOG_TAG_TA, DebugUtils.buildLogText(CLASS_TAG, "resetMessages",
+                "new messageCache size = " + messageCache.size()));
+    }
 
-    public void resetMessages(Object sourceObject) {
-        if (sourceObject == null) {
+    public void resetBackendMessages (ItinerarySegment segment) {
+        if (segment == null || messageCache == null || messageCache.size() == 0) {
             return;
         }
         Iterator<Message> it = messageCache.iterator();
+        ItinerarySegment msgSegment;
         while (it.hasNext()) {
             Message msg = it.next();
-            if (msg.getSourceObject() != null && sourceObject.equals(msg.getSourceObject())) {
-                it.remove();
+            if (msg.getCode() != null && !msg.getCode().startsWith("UI.")) {
+                if (msg.getSourceObject() != null && msg.getSourceObject() instanceof ItinerarySegment) {
+                    msgSegment = (ItinerarySegment) msg.getSourceObject();
+                    if ((msgSegment == segment)
+                            || msgSegment.getId() != null && msgSegment.getId().equals(segment.getId())) {
+                        it.remove();
+                    } else {
+                        Date departure = segment.getDepartureDateTime();
+                        Date arrival = segment.getArrivalDateTime();
+                        int departureCompare = DateUtils.getDateComparator(false).compare(departure, msgSegment.getDepartureDateTime());
+                        int arrivalCompare = DateUtils.getDateComparator(false).compare(arrival, msgSegment.getArrivalDateTime());
+                        if (departureCompare == 0 && arrivalCompare == 0) {
+                            it.remove();
+                        }
+                    }
+                }
             }
         }
     }
 
-    private void resetMessages(Object sourceObject, String code) {
-        if (sourceObject == null || StringUtilities.isNullOrEmpty(code)) {
+    public void resetMessages(ItinerarySegment segment) {
+        if (segment == null || messageCache == null || messageCache.size() == 0) {
             return;
         }
+        Log.d(DebugUtils.LOG_TAG_TA, DebugUtils.buildLogText(CLASS_TAG, "resetMessages",
+                segment.toString()) + ", actual messageCache size = " + messageCache.size());
         Iterator<Message> it = messageCache.iterator();
+        ItinerarySegment msgSegment;
         while (it.hasNext()) {
             Message msg = it.next();
-            if (msg.getSourceObject() != null && sourceObject.equals(msg.getSourceObject())
-                    && code.equals(msg.getCode())) {
-                it.remove();
+            if (msg.getSourceObject() != null && msg.getSourceObject() instanceof ItinerarySegment) {
+                msgSegment = (ItinerarySegment) msg.getSourceObject();
+                if ((msgSegment == segment)
+                        || msgSegment.getId() != null && msgSegment.getId().equals(segment.getId())) {
+                    it.remove();
+                }
             }
         }
+        Log.d(DebugUtils.LOG_TAG_TA, DebugUtils.buildLogText(CLASS_TAG, "resetMessages",
+                "new messageCache size = " + messageCache.size()));
+    }
+
+    public void resetMessages(ItinerarySegment segment, String code) {
+        if (segment == null || messageCache == null || messageCache.size() == 0 || StringUtilities.isNullOrEmpty(code)) {
+            return;
+        }
+        Log.d(DebugUtils.LOG_TAG_TA, DebugUtils.buildLogText(CLASS_TAG, "resetMessages",
+                segment.toString()) + ", code = " + code + ", actual messageCache size = " + messageCache.size());
+        Iterator<Message> it = messageCache.iterator();
+        ItinerarySegment msgSegment;
+        while (it.hasNext()) {
+            Message msg = it.next();
+            if (code.equals(msg.getCode())) {
+                if (msg.getSourceObject() != null && msg.getSourceObject() instanceof ItinerarySegment) {
+                    msgSegment = (ItinerarySegment) msg.getSourceObject();
+                    if ((msgSegment == segment)
+                            || msgSegment.getId() != null && msgSegment.getId().equals(segment.getId())) {
+                        it.remove();
+                    }
+                }
+            }
+        }
+        Log.d(DebugUtils.LOG_TAG_TA, DebugUtils.buildLogText(CLASS_TAG, "resetMessages",
+                "new messageCache size = " + messageCache.size()));
     }
 
     private boolean handleAfterUpdateResponse(Itinerary resultItin) {
-
         boolean isSuccess = true;
             String itinId = resultItin.getItineraryID();
             if (itinId != null && getItinerary(itinId) == null) {
@@ -608,6 +679,41 @@ public class TravelAllowanceItineraryController extends BaseController {
 
         return isSuccess;
     }
+
+//    private boolean handleSegmentCreate(String itinId, ItinerarySegment segment) {
+//        boolean isSuccess = true;
+//        Itinerary itin = getItinerary(itinId);
+//
+//        Message msg = segment.getMessage();
+//        if (msg != null && msg.getSeverity() == Message.Severity.ERROR) {
+//            ItinerarySegment stageSegment = getSegmentWithSameHandle(itineraryStage, segment);
+//            msg.setSourceObject(stageSegment);
+//            messageCache.add(msg);
+//            isSuccess = false;
+//        }
+//
+//        if (isSuccess) {
+//            itin.getSegmentList().add(segment);
+//        }
+//
+//        return isSuccess;
+//    }
+
+//    private ItinerarySegment getSegmentWithSameHandle(Itinerary itinerary, ItinerarySegment segment) {
+//        if (itinerary == null || itinerary.getSegmentList() == null || segment == null ) {
+//            return null;
+//        }
+//        Date departure = segment.getDepartureDateTime();
+//        Date arrival = segment.getArrivalDateTime();
+//        for (ItinerarySegment cmpSegment : itinerary.getSegmentList()) {
+//            int departureCompare = DateUtils.getDateComparator(false).compare(departure, cmpSegment.getDepartureDateTime());
+//            int arrivalCompare = DateUtils.getDateComparator(false).compare(arrival, cmpSegment.getArrivalDateTime());
+//            if (departureCompare == 0 && arrivalCompare == 0) {
+//                return cmpSegment;
+//            }
+//        }
+//        return null;
+//    }
 
     private boolean handleSegmentUpdate(String itinId, ItinerarySegment segment) {
         boolean isSuccess = true;

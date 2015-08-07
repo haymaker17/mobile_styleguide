@@ -13,8 +13,8 @@ import com.concur.mobile.core.expense.travelallowance.datamodel.ICode;
 import com.concur.mobile.core.expense.travelallowance.datamodel.MealProvision;
 import com.concur.mobile.core.expense.travelallowance.service.GetTAFixedAllowancesRequest2;
 import com.concur.mobile.core.expense.travelallowance.service.UpdateFixedAllowances;
-import com.concur.mobile.core.expense.travelallowance.util.BundleId;
 import com.concur.mobile.core.expense.travelallowance.util.DateUtils;
+import com.concur.mobile.core.expense.travelallowance.util.DebugUtils;
 import com.concur.mobile.core.expense.travelallowance.util.IDateFormat;
 import com.concur.mobile.core.expense.travelallowance.util.Message;
 import com.concur.mobile.core.expense.travelallowance.util.StringUtilities;
@@ -96,7 +96,11 @@ public class FixedTravelAllowanceController extends BaseController {
     }
 
     public void refreshFixedTravelAllowances(String expenseReportKey) {
-
+        if (StringUtilities.isNullOrEmpty(expenseReportKey)) {
+            Log.d(DebugUtils.LOG_TAG_TA, DebugUtils.buildLogText(CLASS_TAG, "refreshFixedTravelAllowances", "Report Key is null or empty! Refused."));
+            return;
+        }
+        Log.d(DebugUtils.LOG_TAG_TA, DebugUtils.buildLogText(CLASS_TAG, "refreshFixedTravelAllowances", "Report Key " + expenseReportKey));
         this.fixedTravelAllowances = new ArrayList<FixedTravelAllowance>();
         this.controlData = new FixedTravelAllowanceControlData();
 
@@ -117,13 +121,13 @@ public class FixedTravelAllowanceController extends BaseController {
                 if (fixedTravelAllowances != null) {
                     size = fixedTravelAllowances.size();
                 }
-                Log.d(CLASS_TAG, "Request success: Size = " + size);
+                Log.d(DebugUtils.LOG_TAG_TA, DebugUtils.buildLogText(CLASS_TAG, "onRequestSuccess", "Reading fixed TAs, Size = " + size));
             }
 
             @Override
             public void onRequestFail(Bundle resultData) {
                 notifyListener(ControllerAction.REFRESH, false, resultData);
-                Log.d(CLASS_TAG, "Request failed.");
+                Log.d(DebugUtils.LOG_TAG_TA, DebugUtils.buildLogText(CLASS_TAG, "onRequestFail", "Reading fixed TAs failed"));
             }
 
             @Override
@@ -153,24 +157,6 @@ public class FixedTravelAllowanceController extends BaseController {
     public FixedTravelAllowance getFixedTA(String fixedTAId) {
         return fixedTAIdMap.get(fixedTAId);
     }
-
-//    private synchronized void notifyListener(boolean isFailed) {
-//        for(IServiceRequestListener listener : listeners) {
-//            if (isFailed) {
-//                listener.onRequestFail(CONTROLLER_TAG);
-//            } else {
-//                listener.onRequestSuccess(CONTROLLER_TAG);
-//            }
-//        }
-//    }
-
-//    public synchronized void registerListener(IServiceRequestListener listener) {
-//        listeners.add(listener);
-//    }
-
-//    public synchronized void unregisterListener(IServiceRequestListener listener) {
-//        listeners.remove(listener);
-//    }
 
     /**
      * Get the list of fixed travel allowances

@@ -1,11 +1,5 @@
 package com.concur.mobile.core.expense.travelallowance.service;
 
-import java.io.IOException;
-import java.util.ArrayList;
-import java.util.List;
-
-import org.xmlpull.v1.XmlPullParserException;
-
 import android.content.Context;
 import android.util.Log;
 
@@ -14,11 +8,18 @@ import com.concur.mobile.base.service.parser.CommonParser;
 import com.concur.mobile.core.expense.travelallowance.datamodel.Itinerary;
 import com.concur.mobile.core.expense.travelallowance.service.parser.GetTAItinerariesResponseParser;
 import com.concur.mobile.core.expense.travelallowance.util.BundleId;
+import com.concur.mobile.core.expense.travelallowance.util.DebugUtils;
 import com.concur.mobile.core.service.CoreAsyncRequestTask;
+
+import org.xmlpull.v1.XmlPullParserException;
+
+import java.io.IOException;
+import java.util.ArrayList;
+import java.util.List;
 
 public class GetTAItinerariesRequest extends CoreAsyncRequestTask {
 
-	public static final String LOG_TAG = GetTAItinerariesRequest.class
+	public static final String CLASS_TAG = GetTAItinerariesRequest.class
 			.getSimpleName();
 	private String rptKey;
 
@@ -66,7 +67,7 @@ public class GetTAItinerariesRequest extends CoreAsyncRequestTask {
 		parser.registerParser(this.parser, "Itinerary");
 
 		try {
-			Log.d(LOG_TAG, "Start parsing itineraries...");
+			Log.d(DebugUtils.LOG_TAG_TA, DebugUtils.buildLogText(CLASS_TAG, "parse", "Start parsing itineraries..."));
 			parser.parse();
 		} catch (XmlPullParserException e) {
 			result = RESULT_ERROR;
@@ -81,7 +82,8 @@ public class GetTAItinerariesRequest extends CoreAsyncRequestTask {
 	@Override
 	protected int onPostParse() {
         long currentMillisParser = System.currentTimeMillis();
-		Log.i(LOG_TAG, "Parsing time: " + (currentMillisParser - parserStartMillis) + "ms");
+		Log.i(DebugUtils.LOG_TAG_TA, DebugUtils.buildLogText(CLASS_TAG, "onPostParse",
+				"Parsing time = " + (currentMillisParser - parserStartMillis) + "ms"));
 
         resultData.putBoolean(IS_SUCCESS, true);
 		this.itineraryList = parser.getItineraryList();
@@ -89,7 +91,8 @@ public class GetTAItinerariesRequest extends CoreAsyncRequestTask {
 		resultData.putSerializable(BundleId.ITINERARY_LIST, itinArrayList);
 
         long currentMillis = System.currentTimeMillis();
-        Log.i(LOG_TAG, "Request total: " + (currentMillis - startMillis) + "ms");
+        Log.i(DebugUtils.LOG_TAG_TA, DebugUtils.buildLogText(CLASS_TAG, "onPostParse",
+				"Request total = " + (currentMillis - startMillis) + "ms"));
 
         return RESULT_OK;
 	}

@@ -47,6 +47,7 @@ public class ItineraryLocation implements Cloneable, Serializable {
 
     /**
      * The offset between the local time related to this location to UTC in minutes
+     * Note: it is an object and can be null and hence not valid.
      */
     private Long timeZoneOffset;
 

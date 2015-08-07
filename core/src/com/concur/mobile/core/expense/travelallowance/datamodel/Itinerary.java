@@ -148,4 +148,11 @@ public class Itinerary implements Serializable{
         return false;
     }
 
+    @Override
+    public String toString() {
+        return "Itinerary{" +
+                "itineraryID='" + itineraryID + '\'' +
+                ", name='" + name + '\'' +
+                '}';
+    }
 }

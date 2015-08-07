@@ -27,6 +27,7 @@ import com.concur.mobile.core.activity.BaseActivity;
 import com.concur.mobile.core.expense.activity.ListSearch;
 import com.concur.mobile.core.expense.travelallowance.adapter.ItineraryUpdateListAdapter;
 import com.concur.mobile.core.expense.travelallowance.controller.ControllerAction;
+import com.concur.mobile.core.expense.travelallowance.controller.FixedTravelAllowanceController;
 import com.concur.mobile.core.expense.travelallowance.controller.IController;
 import com.concur.mobile.core.expense.travelallowance.controller.IControllerListener;
 import com.concur.mobile.core.expense.travelallowance.controller.TravelAllowanceItineraryController;
@@ -40,6 +41,7 @@ import com.concur.mobile.core.expense.travelallowance.fragment.TimePickerFragmen
 import com.concur.mobile.core.expense.travelallowance.ui.model.PositionInfoTag;
 import com.concur.mobile.core.expense.travelallowance.util.BundleId;
 import com.concur.mobile.core.expense.travelallowance.util.DateUtils;
+import com.concur.mobile.core.expense.travelallowance.util.DebugUtils;
 import com.concur.mobile.core.expense.travelallowance.util.Message;
 import com.concur.mobile.core.expense.travelallowance.util.StringUtilities;
 import com.concur.mobile.core.util.Const;
@@ -97,12 +99,12 @@ public class ItineraryUpdateActivity extends BaseActivity implements IController
             this.itinerary = (Itinerary) getIntent().getExtras().getSerializable(BundleId.ITINERARY);
             this.controller.setItineraryStage(itinerary);
         } else {
-            Log.d(CLASS_TAG, "Restoring itinerary Stage from controller");
+            Log.d(DebugUtils.LOG_TAG_TA, DebugUtils.buildLogText(CLASS_TAG, "onCreate", "Restoring itinerary Stage from controller"));
             this.itinerary = this.controller.getItineraryStage();
         }
 
         if (this.itinerary == null) {
-            Log.e(CLASS_TAG, "onCreate: No itinerary found in intent.");
+            Log.e(DebugUtils.LOG_TAG_TA, DebugUtils.buildLogText(CLASS_TAG, "onCreate", "Mandatory itinerary not found in intent!"));
             throw new IllegalArgumentException(
                     "onCreate Activity: Expected and Itinerary in the intent extras with bundle id: "
                             + BundleId.ITINERARY + " but nothing found.");
@@ -201,6 +203,7 @@ public class ItineraryUpdateActivity extends BaseActivity implements IController
                     Calendar cal;
                     int datePosition = 0;
                     ItinerarySegment segment = itinerary.getSegmentList().get(currentPosition.getPosition());
+                    controller.resetBackendMessages(segment);
                     controller.resetMessages(segment);
                     if (currentPosition.getInfo() == PositionInfoTag.INFO_OUTBOUND) {
                         date = segment.getDepartureDateTime();
@@ -233,6 +236,7 @@ public class ItineraryUpdateActivity extends BaseActivity implements IController
                     Calendar cal;
                     int datePosition = 0;
                     ItinerarySegment segment = itinerary.getSegmentList().get(currentPosition.getPosition());
+                    controller.resetBackendMessages(segment);
                     controller.resetMessages(segment);
                     if (currentPosition.getInfo() == PositionInfoTag.INFO_OUTBOUND) {
                         date = segment.getDepartureDateTime();
@@ -297,10 +301,8 @@ public class ItineraryUpdateActivity extends BaseActivity implements IController
         ItinerarySegment emptySegment = new ItinerarySegment();
         //Get current date/time without seconds and milliseconds as default value for arrival and departure
         Calendar cal = Calendar.getInstance(Locale.getDefault());
-        Log.d(CLASS_TAG, String.valueOf(cal.getTime()));
         cal.set(Calendar.SECOND, 0);
-        cal.set(Calendar.MILLISECOND,0);
-        Log.d(CLASS_TAG, String.valueOf(cal.getTime()));
+        cal.set(Calendar.MILLISECOND, 0);
         emptySegment.setDepartureDateTime(cal.getTime());
         emptySegment.setArrivalDateTime(cal.getTime());
         if (itinerary.getSegmentList().size() > 0){
@@ -324,6 +326,7 @@ public class ItineraryUpdateActivity extends BaseActivity implements IController
                     int datePosition = 0;
                     if (this.currentPosition != null) {
                         ItinerarySegment segment = itinerary.getSegmentList().get(currentPosition.getPosition());
+                        controller.resetBackendMessages(segment);
                         controller.resetMessages(segment);
                         ItineraryLocation itinLocation = new ItineraryLocation();
                         itinLocation.setName(selectedListItemText);
@@ -333,7 +336,7 @@ public class ItineraryUpdateActivity extends BaseActivity implements IController
                         }
                         //Update the cache
                         CodeListManager clmgr = CodeListManager.getInstance();
-                        clmgr.updateItineraryLocation(itinLocation);
+                        itinLocation = clmgr.updateItineraryLocation(itinLocation);
                         if (currentPosition.getInfo() == PositionInfoTag.INFO_OUTBOUND) {
                             segment.setDepartureLocation(itinLocation);
                             datePosition = -1;
@@ -486,7 +489,7 @@ public class ItineraryUpdateActivity extends BaseActivity implements IController
         super.onDestroy();
 
         if (controller != null) {
-            Log.d(CLASS_TAG, "OnDestroy: Unregister Controller Listener.");
+            Log.d(DebugUtils.LOG_TAG_TA, DebugUtils.buildLogText(CLASS_TAG, "onDestroy", "Unregister myself as listener at TravelAllowanceItineraryController."));
             controller.unregisterListener(this);
         }
     }
@@ -503,19 +506,17 @@ public class ItineraryUpdateActivity extends BaseActivity implements IController
         // The context menu implementation is only temporary until the final ui design is in place.
 
         if (this.itinerary == null) {
-            Log.e(CLASS_TAG,
-                    "Delete Segment: Itinerary is null. Should never happen. Check initialization of Activity.");
             return true;
         }
 
         AdapterView.AdapterContextMenuInfo info = (AdapterView.AdapterContextMenuInfo) item.getMenuInfo();
         ItinerarySegment segment = (ItinerarySegment) adapter.getItem(info.position);
         if (segment.getId() == null) {
-            Log.d(CLASS_TAG, "Delete Segment: Segment id is null so only removing from Itinerary.");
+            Log.d(DebugUtils.LOG_TAG_TA, DebugUtils.buildLogText(CLASS_TAG, "onContextItemSelected", "Delete Segment - Segment id is null so only removing from Itinerary."));
             itinerary.getSegmentList().remove(segment);
             refreshAdapter();
         } else {
-            Log.d(CLASS_TAG, "Delete Segment: Trigger executeDeleteSegment on controller.");
+            Log.d(DebugUtils.LOG_TAG_TA, DebugUtils.buildLogText(CLASS_TAG, "onContextItemSelected", "Delete Segment - Trigger executeDeleteSegment on controller."));
             controller.executeDeleteSegment(itinerary.getItineraryID(), segment);
         }
 
@@ -525,7 +526,8 @@ public class ItineraryUpdateActivity extends BaseActivity implements IController
     @Override
     public void actionFinished(IController controller, ControllerAction action, boolean isSuccess, Bundle result) {
         if (action == ControllerAction.REFRESH || result == null) {
-            Log.d(CLASS_TAG, "Controller Action ignoring: " + "Action: " + action + " result: " + result);
+            Log.d(DebugUtils.LOG_TAG_TA, DebugUtils.buildLogText(CLASS_TAG, "actionFinished",
+                    "Controller Action ignoring " + "Action: " + action + " result: " + result));
             // Refresh should not be triggered from this UI!
             // Fresh data should ONLY come in the result bundle.
             // Result is null in case there is an automatic delete due to errors.
@@ -533,19 +535,28 @@ public class ItineraryUpdateActivity extends BaseActivity implements IController
         }
 
         if (action == ControllerAction.UPDATE) {
-            Log.d(CLASS_TAG, "Update action callback finished: isSuccess: " + isSuccess);
+            Log.d(DebugUtils.LOG_TAG_TA, DebugUtils.buildLogText(CLASS_TAG, "actionFinished",
+                    "Update Action callback finished with isSuccess: " + isSuccess));
             if (isSuccess) {
                 Itinerary createdItinerary = (Itinerary) result.getSerializable(BundleId.ITINERARY);
                 this.itinerary = createdItinerary;
                 refreshAdapter();
+                // Update, respectively the creation of itineraries will generate Fixed Travel Allowances.
+                // We need to refresh the buffered Allowances as navigation back to the allowance overview
+                // would show the old data.
+                ConcurCore app = (ConcurCore) getApplication();
+                FixedTravelAllowanceController allowanceController = app.getFixedTravelAllowanceController();
+                allowanceController.refreshFixedTravelAllowances(itinerary.getExpenseReportID());
                 Toast.makeText(this, R.string.general_save_success, Toast.LENGTH_SHORT).show();
+
             } else {
                 Toast.makeText(this, R.string.general_save_fail, Toast.LENGTH_SHORT).show();
             }
         }
 
         if (action == ControllerAction.DELETE) {
-            Log.d(CLASS_TAG, "Delete action callback finished: isSuccess: " + isSuccess);
+            Log.d(DebugUtils.LOG_TAG_TA, DebugUtils.buildLogText(CLASS_TAG, "anctionFinished",
+                    "Delete Action callback finished with isSuccess: " + isSuccess));
             if (isSuccess) {
                 ItinerarySegment deletedSegment = (ItinerarySegment) result.getSerializable(BundleId.SEGMENT);
                 this.itinerary.getSegmentList().remove(deletedSegment);
@@ -559,7 +570,7 @@ public class ItineraryUpdateActivity extends BaseActivity implements IController
     }
 
     private void refreshAdapter() {
-        Log.d(CLASS_TAG, "Refreshing adapter.");
+        Log.d(DebugUtils.LOG_TAG_TA, DebugUtils.buildLogText(CLASS_TAG, "refreshAdapter", "Refreshing adapter."));
         this.adapter.clear();
         this.adapter.addAll(this.itinerary.getSegmentList());
         this.adapter.setMessageList(this.controller.getMessages());
