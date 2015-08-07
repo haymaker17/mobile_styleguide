@@ -78,7 +78,7 @@ public class ExpenseItLoginRequestTaskTest extends AsyncRequestTest {
             // Set the content-type.
             responseHeaders.put("Content-Type", "application/json");
             // Set the mock response for the test.
-            setMockResponse(mockServer, HttpStatus.SC_OK, "authentication/ExpenseitLoginResponse.json", responseHeaders);
+            setMockResponse(mockServer, HttpStatus.SC_OK, "expenseIt/ExpenseitLoginResponse.json", responseHeaders);
         }
 
         // Initiate the login request.

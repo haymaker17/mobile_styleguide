@@ -16,6 +16,8 @@ import com.concur.mobile.platform.ExpenseIt.ExpenseItGetImageUrlTaskTest;
 import com.concur.mobile.platform.ExpenseIt.ExpenseItGetReceiptTaskTest;
 import com.concur.mobile.platform.ExpenseIt.ExpenseItLoginRequestTaskTest;
 import com.concur.mobile.platform.ExpenseIt.ExpenseItUploadReceiptTaskTest;
+import com.concur.mobile.platform.ExpenseIt.GetExpenseItAccountInfoTaskTest;
+import com.concur.mobile.platform.ExpenseIt.SetExpenseItAccountInfoTaskTest;
 import com.concur.mobile.platform.authentication.SessionInfo;
 import com.concur.mobile.platform.config.provider.ConfigUtil;
 import com.concur.mobile.platform.test.server.MockExpenseItServer;
@@ -223,5 +225,17 @@ public class ExpenseItAsyncRequestsUnitTests extends PlatformAsyncRequestTestUti
         DeleteExpenseItReceiptTaskTest testDelete = new DeleteExpenseItReceiptTaskTest(useMockServer());
         testDelete.setExpenseId(id);
         doExpenseItTest(testDelete);
+    }
+
+    @Test
+    public void doGetAccountInfo() throws Exception {
+        GetExpenseItAccountInfoTaskTest test = new GetExpenseItAccountInfoTaskTest(useMockServer());
+        doExpenseItTest(test);
+    }
+
+    @Test
+    public void doSetAccountInfo() throws Exception {
+        SetExpenseItAccountInfoTaskTest test = new SetExpenseItAccountInfoTaskTest(useMockServer());
+        doExpenseItTest(test);
     }
 }

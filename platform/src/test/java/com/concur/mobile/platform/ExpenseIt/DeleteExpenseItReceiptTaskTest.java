@@ -53,7 +53,7 @@ public class DeleteExpenseItReceiptTaskTest extends AsyncRequestTest {
         DeleteExpenseItReceiptAsyncTask reqTask = new DeleteExpenseItReceiptAsyncTask(context,
             0, deleteReceiptReceiver, expenseId);
 
-        runTest("receipt/ErrorResponseSuccess.json", reqTask, new VerifyResponse<ErrorResponse>() {
+        runTest("expenseIt/ErrorResponseSuccess.json", reqTask, new VerifyResponse<ErrorResponse>() {
             @Override
             public ErrorResponse serializeResponse(String result) {
                 // Build the parser with type deserializers.

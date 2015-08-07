@@ -47,7 +47,7 @@ public class ExpenseItUploadReceiptTaskTest extends AsyncRequestTest {
             0, uploadReceiptReceiver, getImage(context));
 
         VerifyExpenseItUploadReceiptResult verifier = new VerifyExpenseItUploadReceiptResult();
-        runTest("receipt/ExpenseItUploadImageResponse.json", reqTask, verifier);
+        runTest("expenseIt/ExpenseItUploadImageResponse.json", reqTask, verifier);
     }
 
     protected ExpenseItImage getImage(Context context) throws IOException {
