@@ -1,0 +1,74 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical">
+
+    <include
+        android:id="@+id/v_message_area"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="16dp"
+        android:layout_marginLeft="16dp"
+        android:layout_marginRight="16dp"
+        android:visibility="gone"
+        layout="@layout/ta_message_area" />
+
+    <include
+        android:id="@+id/v_departure_location"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="16dp"
+        android:layout_marginRight="16dp"
+        android:layout_marginBottom="16dp"
+        android:layout_marginTop="16dp"
+        layout="@layout/ta_edit_location" />
+
+
+    <include
+        android:id="@+id/v_departure_date_time"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="16dp"
+        android:layout_marginRight="16dp"
+        android:layout_marginBottom="16dp"
+        layout="@layout/ta_edit_date_time" />
+
+
+    <include
+        android:id="@+id/v_border_crossing"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="16dp"
+        android:layout_marginRight="16dp"
+        android:layout_marginBottom="16dp"
+        android:visibility="gone"
+        layout="@layout/ta_edit_border_crossing" />
+
+    <include
+        android:id="@+id/v_arrival_location"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="16dp"
+        android:layout_marginRight="16dp"
+        android:layout_marginBottom="16dp"
+        layout="@layout/ta_edit_location" />
+
+
+    <include
+        android:id="@+id/v_arrival_date_time"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="16dp"
+        android:layout_marginRight="16dp"
+        android:layout_marginBottom="16dp"
+        layout="@layout/ta_edit_date_time" />
+
+    <include
+        android:id="@+id/v_arrival_separator_short"
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:layout_marginLeft="72dp"
+        layout="@layout/ta_group_separator" />
+
+</LinearLayout>

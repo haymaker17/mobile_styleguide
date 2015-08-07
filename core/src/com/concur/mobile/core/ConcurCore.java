@@ -56,10 +56,13 @@ import com.concur.mobile.core.expense.report.service.AttendeeSearchReply;
 import com.concur.mobile.core.expense.report.service.ConditionalFieldAction;
 import com.concur.mobile.core.expense.report.service.ExtendedAttendeeSearchReply;
 import com.concur.mobile.core.expense.report.service.GetTaxFormReply;
-import com.concur.mobile.core.expense.ta.service.FixedAllowances;
-import com.concur.mobile.core.expense.ta.service.Itinerary;
-import com.concur.mobile.core.expense.ta.service.ItineraryRow;
-import com.concur.mobile.core.expense.ta.service.TaConfig;
+import com.concur.mobile.core.expense.travelallowance.FixedAllowances;
+import com.concur.mobile.core.expense.travelallowance.Itinerary;
+import com.concur.mobile.core.expense.travelallowance.ItineraryRow;
+import com.concur.mobile.core.expense.travelallowance.TaConfig;
+import com.concur.mobile.core.expense.travelallowance.controller.FixedTravelAllowanceController;
+import com.concur.mobile.core.expense.travelallowance.controller.TravelAllowanceConfigurationController;
+import com.concur.mobile.core.expense.travelallowance.controller.TravelAllowanceItineraryController;
 import com.concur.mobile.core.ipm.service.IpmReply;
 import com.concur.mobile.core.service.ConcurService;
 import com.concur.mobile.core.service.CorpSsoQueryReply;
@@ -288,6 +291,11 @@ public abstract class ConcurCore extends MultiDexApplication {
     protected Itinerary taItinerary;
     protected ItineraryRow taItineraryRow;
     protected TaConfig taConfig;
+
+    // Controllers for Allowance and Itinerary handling
+    private TravelAllowanceItineraryController taItineraryController;
+    private FixedTravelAllowanceController fixedTravelAllowanceController;
+    private TravelAllowanceConfigurationController taConfigController;
 
     // Trips for Approval
     protected List<TripToApprove> tripsToApprove;
@@ -1345,6 +1353,35 @@ public abstract class ConcurCore extends MultiDexApplication {
 
     public void setRailStationListLastRetrieved(Calendar stationsLastRetrieved) {
         this.railStationsLastRetrieved = stationsLastRetrieved;
+    }
+
+    public TravelAllowanceItineraryController getTaItineraryController() {
+        if (taItineraryController == null) {
+            taItineraryController = new TravelAllowanceItineraryController(this);
+        }
+        return taItineraryController;
+    }
+
+    /**
+     * Creates an instance of a {@link FixedTravelAllowanceController}
+     * @return The controller
+     */
+    public FixedTravelAllowanceController getFixedTravelAllowanceController() {
+        if (this.fixedTravelAllowanceController == null) {
+            this.fixedTravelAllowanceController = new FixedTravelAllowanceController(this);
+        }
+        return this.fixedTravelAllowanceController;
+    }
+
+    /**
+     * Creates an instance of a {@link TravelAllowanceConfigurationController}
+     * @return The controller
+     */
+    public TravelAllowanceConfigurationController getTAConfigController() {
+        if (this.taConfigController == null) {
+            this.taConfigController = new TravelAllowanceConfigurationController(this);
+        }
+        return this.taConfigController;
     }
 
     public TaConfig getTAConfig() {

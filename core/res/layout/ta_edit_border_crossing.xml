@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:orientation="horizontal"
+    tools:showIn="@layout/ta_edit_segment"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content">
+
+    <TextView
+        android:id="@+id/tv_border_crossing_label"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginRight="16dp"
+        android:layout_alignParentTop="true"
+        android:layout_alignParentLeft="true"
+        android:layout_marginLeft="56dp"
+        android:text="@string/itin_border_crossing"
+        android:textAppearance="@style/DefaultLabel" />
+
+    <TextView
+        android:id="@+id/tv_border_crossing_value"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentTop="true"
+        android:layout_marginRight="16dp"
+        android:text="\@Mon, Apr 20, 6:15 AM\@"
+        android:textAppearance="@style/DefaultValue.Tiny" />
+
+</LinearLayout>

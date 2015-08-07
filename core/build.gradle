@@ -7,8 +7,13 @@ dependencies {
     compile project(':apptentive-android:apptentive-android-sdk')
     compile project(':platform_ui_expense')
     compile project(':platform_ui_travel')
+    compile 'com.android.support:design:22.2.1'
+    compile 'com.android.support:recyclerview-v7:22.2.1'
     testCompile 'org.robolectric:robolectric:3.+'
     testCompile 'junit:junit:4.+'
+
+    androidTestCompile 'org.robolectric:robolectric:3.+'
+    androidTestCompile 'junit:junit:4.+'
 }
 
 android {
