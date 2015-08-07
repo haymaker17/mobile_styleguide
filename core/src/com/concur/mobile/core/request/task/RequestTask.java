@@ -130,6 +130,9 @@ public class RequestTask extends AbstractRequestWSCallTask {
     }
 
     public RequestTask setPostBody(String postBody) {
+        if (requestType != HttpRequestType.POST) {
+            requestType = HttpRequestType.POST;
+        }
         // --- null won't work as a value if it really is a POST, things are made to work with "" in this case.
         this.postBody = postBody != null ? postBody : (requestType == HttpRequestType.POST ? "" : null);
         return this;
