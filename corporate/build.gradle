@@ -13,9 +13,21 @@ android {
         minSdkVersion lowestSdkSupportVersion
         targetSdkVersion latestSdkVersion
         versionCode System.getenv("VERSION_CODE") as Integer ?: 2999
-        versionName "9.22.0"
+        versionName "9.23.0"
         multiDexEnabled true
         testInstrumentationRunner "com.android.test.runner.MultiDexTestRunner"
+
+        applicationId "com.concur.breeze"
+        resValue "string", "app_name", "Concur"
+
+        buildConfigField "String", "AUTHORITY", '"com.concur.mobile"'
+        buildConfigField "String", "ACC_TYPE", '"com.concur.mobile"'
+
+        resValue "string", "authority_expense", "com.concur.mobile.platform.expense"
+        resValue "string", "authority_config", "com.concur.mobile.platform.config"
+        resValue "string", "authority_travel", "com.concur.mobile.platform.travel"
+        resValue "string", "authenticator_acc_type", "com.concur.mobile.platform.common.account"
+
     }
 
     dexOptions {
@@ -40,6 +52,8 @@ android {
     }
 
     packagingOptions {
+        exclude 'META-INF/LICENSE.txt'
+        exclude 'plugin.properties'
         exclude 'lib/armeabi/libdatabase_sqlcipher.so'
         exclude 'lib/armeabi/libsqlcipher_android.so'
         exclude 'lib/armeabi/libstlport_shared.so'
@@ -47,7 +61,33 @@ android {
         exclude 'lib/x86/libsqlcipher_android.so'
         exclude 'lib/x86/libstlport_shared.so'
         exclude 'lib/sources'
+        exclude 'test/AndroidManifest.xml'
     }
+
+    //For multi build purpose uncomment following block
+    //Please comment out following block before merge back to 'dev' branch.
+    /*##############   #####################     ##########################     ###################*/
+
+//    productFlavors {
+//        production {
+//
+//        }
+//        ocr {
+//            applicationId "com.concur.breeze.ocr"
+//            resValue "string", "app_name", "ConcurOCR"
+//
+//            buildConfigField "String", "AUTHORITY", "\"${applicationId}\""
+//            buildConfigField "String", "ACC_TYPE", "\"${applicationId}\""
+//
+//            resValue "string", "authority_expense", applicationId + ".platform.expense"
+//            resValue "string", "authority_config", applicationId + ".platform.config"
+//            resValue "string", "authority_travel", applicationId + ".platform.travel"
+//            resValue "string", "authenticator_acc_type", applicationId + ".platform.common.account"
+//
+//        }
+//    }
+    /*##############   #####################     ##########################     ###################*/
+
 }
 
 // map for the version code
@@ -68,4 +108,5 @@ android.applicationVariants.all { variant ->
             versionIndex++
         }
     }
+
 }

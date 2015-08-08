@@ -9,6 +9,7 @@ import android.view.View;
 import android.widget.TableLayout;
 import android.widget.TableRow;
 import android.widget.TextView;
+import com.concur.mobile.platform.service.PlatformAsyncTaskLoader;
 import com.concur.mobile.platform.ui.common.view.FormFieldView;
 import com.concur.mobile.platform.ui.common.view.SearchListFormFieldView;
 import com.concur.mobile.platform.ui.travel.R;
@@ -42,25 +43,30 @@ public class TravelBaseActivity extends BaseActivity {
 
     protected List<TravelCustomField> formFields;
 
-    @Override
-    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
-        // View manageViolationsView = null;
+    @Override protected void onActivityResult(int requestCode, int resultCode, Intent data) {
 
-        switch (requestCode) {
-        case SearchListFormFieldView.SEARCH_LIST_REQUEST_CODE:
-            // MOB-14331
-            // Check whether there a form field view should handle the onActivityResult.
-            if (travelCustomFieldsFragment != null && travelCustomFieldsFragment.getFormFieldViewListener() != null
-                    && travelCustomFieldsFragment.getFormFieldViewListener().isCurrentFormFieldViewSet()) {
-                travelCustomFieldsFragment.getFormFieldViewListener().getCurrentFormFieldView()
-                        .onActivityResult(requestCode, resultCode, data);
+        if (resultCode == PlatformAsyncTaskLoader.SESSION_EXPIRED
+                || resultCode == PlatformAsyncTaskLoader.RE_AUTHENTICATED) {
+            setResult(resultCode, data);
+            finish();
+        } else {
+            switch (requestCode) {
+            case SearchListFormFieldView.SEARCH_LIST_REQUEST_CODE:
+                // MOB-14331
+                // Check whether there a form field view should handle the onActivityResult.
+                if (travelCustomFieldsFragment != null && travelCustomFieldsFragment.getFormFieldViewListener() != null
+                        && travelCustomFieldsFragment.getFormFieldViewListener().isCurrentFormFieldViewSet()) {
+                    travelCustomFieldsFragment.getFormFieldViewListener().getCurrentFormFieldView()
+                            .onActivityResult(requestCode, resultCode, data);
+                }
+                break;
             }
-            break;
         }
+
+        super.onActivityResult(requestCode, resultCode, data);
     }
 
-    @Override
-    protected Dialog onCreateDialog(int id) {
+    @Override protected Dialog onCreateDialog(int id) {
 
         Dialog dlg = null;
         // Check whether there a form field view should handle the dialog creation.
@@ -148,11 +154,18 @@ public class TravelBaseActivity extends BaseActivity {
         dlg = dlgBldr.create();
         dlg.setOnDismissListener(new DialogInterface.OnDismissListener() {
 
-            @Override
-            public void onDismiss(DialogInterface dialog) {
+            @Override public void onDismiss(DialogInterface dialog) {
                 invalidFields = null;
             }
         });
         dlg.show();
     }
+
+    public void sessionExpired(int resultCode) {
+        setResult(resultCode);
+
+        // finish (this or the extending subclass) activity
+        finish();
+    }
+
 }

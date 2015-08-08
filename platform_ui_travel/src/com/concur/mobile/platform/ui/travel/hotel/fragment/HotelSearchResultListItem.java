@@ -85,7 +85,7 @@ public class HotelSearchResultListItem extends ListItem implements Serializable 
             // Set the list item tag to the uri, this tag value is used in 'ListItemAdapter.refreshView'
             // to refresh the appropriate view items once images have been loaded.
             URI uri = URI.create(hotel.imagePairs.get(0).thumbnail);
-            listItemTag = uri;
+            this.listItemTag = uri;
             // Attempt to load the image from the image cache, if not there, then the
             // ImageCache will load it asynchronously and this view will be updated via
             // the ImageCache broadcast receiver available in BaseActivity.
@@ -102,14 +102,15 @@ public class HotelSearchResultListItem extends ListItem implements Serializable 
 
         // Set the price with currency symbol
         TextView txtView = (TextView) hotelView.findViewById(R.id.hotel_price);
-        if (txtView != null) {
+        if (txtView != null && !hotel.isChoiceDetailsScreen) {
             if (hotel.lowestRate != null) {
-                txtView.setVisibility(View.VISIBLE);
                 txtView.setText(FormatUtil
                         .formatAmountWithNoDecimals(hotel.lowestRate, context.getResources().getConfiguration().locale,
-                                hotel.currencyCode, true, false));
+                                hotel.currencyCode, true, true));
+                txtView.setTextAppearance(context, R.style.HotelPriceTextStyle);
             } else {
-                txtView.setVisibility(View.INVISIBLE);
+                txtView.setText(R.string.view_rates);
+                txtView.setTextAppearance(context, R.style.HotelCityTextStyle);
             }
         } else {
             Log.e(Const.LOG_TAG, CLS_TAG + ".getView: unable to locate price!");
@@ -162,12 +163,12 @@ public class HotelSearchResultListItem extends ListItem implements Serializable 
                 txtView.setTextAppearance(context, R.style.TravelPointsNegativeText);
                 txtView.setText(Format.localizeText(context, R.string.travel_points_can_be_redeemed, new Object[] {
                         FormatUtil.formatAmountWithNoDecimals(hotel.travelPointsForLowestRate,
-                                context.getResources().getConfiguration().locale, hotel.currencyCode, false, false) }));
+                                context.getResources().getConfiguration().locale, hotel.currencyCode, false, true) }));
             } else {
                 txtView.setTextAppearance(context, R.style.TravelPointsPositiveText);
                 txtView.setText(Format.localizeText(context, R.string.travel_points_can_be_earned, new Object[] {
                         FormatUtil.formatAmountWithNoDecimals(hotel.travelPointsForLowestRate,
-                                context.getResources().getConfiguration().locale, hotel.currencyCode, false, false) }));
+                                context.getResources().getConfiguration().locale, hotel.currencyCode, false, true) }));
             }
         }
 

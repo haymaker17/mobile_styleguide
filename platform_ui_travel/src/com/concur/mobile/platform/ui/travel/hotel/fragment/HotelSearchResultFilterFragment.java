@@ -1,11 +1,13 @@
 package com.concur.mobile.platform.ui.travel.hotel.fragment;
 
 import android.app.Activity;
+import android.content.Context;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.ViewGroup;
+import android.view.inputmethod.InputMethodManager;
 import android.widget.EditText;
 import android.widget.RadioButton;
 import com.concur.mobile.platform.ui.common.fragment.PlatformFragmentV1;
@@ -24,46 +26,65 @@ public class HotelSearchResultFilterFragment extends PlatformFragmentV1 {
         this.distanceUnitInKm = distanceUnitInKm;
     }
 
-    @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
+    @Override public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         super.onCreateView(inflater, container, savedInstanceState);
 
         // inflate the details fragment
         final View mainView = inflater.inflate(R.layout.hotel_search_result_filter_fragment, container, false);
 
         // hotel star rating filter
-        RadioButton button = (RadioButton) mainView.findViewById(R.id.filter_all_stars_button);
-        button.setChecked(true);
-        button.setOnClickListener(new View.OnClickListener() {
+        RadioButton allStarsBtn = (RadioButton) mainView.findViewById(R.id.filter_all_stars_button);
+        final RadioButton threeStarsBtn = (RadioButton) mainView.findViewById(R.id.filter_3_star_button);
+        final RadioButton fourStarsBtn = (RadioButton) mainView.findViewById(R.id.filter_4_star_button);
+        final RadioButton fiveStarsBtn = (RadioButton) mainView.findViewById(R.id.filter_5_star_button);
+
+        allStarsBtn.setChecked(true);
+        allStarsBtn.setOnClickListener(new View.OnClickListener() {
 
             public void onClick(View v) {
                 starRatingtoFilter = null;
+                //reset to unselected drawable
+                threeStarsBtn.setCompoundDrawablesWithIntrinsicBounds(0, 0, 0, R.drawable.filter_3_star);
+                fourStarsBtn.setCompoundDrawablesWithIntrinsicBounds(0, 0, 0, R.drawable.filter_4_star);
+                fiveStarsBtn.setCompoundDrawablesWithIntrinsicBounds(0, 0, 0, R.drawable.filter_5_star);
             }
         });
-        button = (RadioButton) mainView.findViewById(R.id.filter_3_star_button);
-        button.setOnClickListener(new View.OnClickListener() {
+
+        threeStarsBtn.setOnClickListener(new View.OnClickListener() {
 
             public void onClick(View v) {
+                threeStarsBtn.setCompoundDrawablesWithIntrinsicBounds(0, 0, 0, R.drawable.filter_3_star_white);
+                //reset to unselected drawable
+                fourStarsBtn.setCompoundDrawablesWithIntrinsicBounds(0, 0, 0, R.drawable.filter_4_star);
+                fiveStarsBtn.setCompoundDrawablesWithIntrinsicBounds(0, 0, 0, R.drawable.filter_5_star);
                 starRatingtoFilter = "3";
             }
         });
-        button = (RadioButton) mainView.findViewById(R.id.filter_4_star_button);
-        button.setOnClickListener(new View.OnClickListener() {
+
+        fourStarsBtn.setOnClickListener(new View.OnClickListener() {
 
             public void onClick(View v) {
+                fourStarsBtn.setCompoundDrawablesWithIntrinsicBounds(0, 0, 0, R.drawable.filter_4_star_white);
+                //reset to unselected drawable
+                threeStarsBtn.setCompoundDrawablesWithIntrinsicBounds(0, 0, 0, R.drawable.filter_3_star);
+                fiveStarsBtn.setCompoundDrawablesWithIntrinsicBounds(0, 0, 0, R.drawable.filter_5_star);
                 starRatingtoFilter = "4";
             }
         });
-        button = (RadioButton) mainView.findViewById(R.id.filter_5_star_button);
-        button.setOnClickListener(new View.OnClickListener() {
+
+        fiveStarsBtn.setOnClickListener(new View.OnClickListener() {
 
             public void onClick(View v) {
+                fiveStarsBtn.setCompoundDrawablesWithIntrinsicBounds(0, 0, 0, R.drawable.filter_5_star_white);
+                //reset to unselected drawable
+                threeStarsBtn.setCompoundDrawablesWithIntrinsicBounds(0, 0, 0, R.drawable.filter_3_star);
+                fourStarsBtn.setCompoundDrawablesWithIntrinsicBounds(0, 0, 0, R.drawable.filter_4_star);
                 starRatingtoFilter = "5";
             }
         });
 
         // hotel distance filter
-        button = (RadioButton) mainView.findViewById(R.id.filter_distance_all_button);
+        RadioButton button = (RadioButton) mainView.findViewById(R.id.filter_distance_all_button);
         button.setChecked(true);
         button.setOnClickListener(new View.OnClickListener() {
 
@@ -104,8 +125,7 @@ public class HotelSearchResultFilterFragment extends PlatformFragmentV1 {
 
         mainView.findViewById(R.id.filterNow).setOnClickListener(new OnClickListener() {
 
-            @Override
-            public void onClick(View v) {
+            @Override public void onClick(View v) {
                 final int id = v.getId();
                 if (id == R.id.filterNow) {
                     // hotel name containing filter
@@ -113,6 +133,11 @@ public class HotelSearchResultFilterFragment extends PlatformFragmentV1 {
                     if (editTxtView != null && editTxtView.getText() != null) {
                         nameToFilter = editTxtView.getText().toString().trim();
                     }
+                    // hide the soft key board
+                    InputMethodManager imm = (InputMethodManager) getActivity().getBaseContext()
+                            .getSystemService(Context.INPUT_METHOD_SERVICE);
+                    imm.hideSoftInputFromWindow(editTxtView.getApplicationWindowToken(), 0);
+
                     callBackListener.filterResults(starRatingtoFilter, distanceToFilter, nameToFilter);
                 }
             }
@@ -121,8 +146,7 @@ public class HotelSearchResultFilterFragment extends PlatformFragmentV1 {
         return mainView;
     }
 
-    @Override
-    public void onAttach(Activity activity) {
+    @Override public void onAttach(Activity activity) {
         super.onAttach(activity);
 
         // This makes sure that the container activity has implemented
@@ -135,34 +159,9 @@ public class HotelSearchResultFilterFragment extends PlatformFragmentV1 {
 
     }
 
-    // @Override
-    // public void onPause() {
-    // super.onPause();
-    //
-    // if (baseActivity != null) {
-    // RetainerFragment retainer = baseActivity.getRetainer();
-    // if (retainer != null) {
-    // // Store the listener
-    // if (listener != null) {
-    // retainer.put(ON_CLICK_LISTENER_KEY, listener);
-    // }
-    // } else {
-    // Log.e(Const.LOG_TAG, CLS_TAG + ".onPause: retainer is null!");
-    // }
-    // } else {
-    // Log.e(Const.LOG_TAG, CLS_TAG + ".onPause: baseActivity is null!");
-    // }
-    // }
-    //
-    // @Override
-    // public void onResume() {
-    // super.onResume();
-    // restoreReceivers();
-    // }
-
     // Container Activity must implement this call back interface
     public interface HotelSearchResultsFilterListener {
 
-        public void filterResults(String starRating, Double distance, String nameContaining);
+        void filterResults(String starRating, Double distance, String nameContaining);
     }
 }

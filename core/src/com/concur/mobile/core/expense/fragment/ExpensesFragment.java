@@ -96,13 +96,11 @@ import com.concur.mobile.core.util.FeedbackManager;
 import com.concur.mobile.core.util.Flurry;
 import com.concur.mobile.core.util.FormatUtil;
 import com.concur.mobile.core.util.RolesUtil;
-import com.concur.mobile.core.util.SortOrder;
 import com.concur.mobile.core.util.ViewUtil;
 import com.concur.mobile.core.view.ListItem;
 import com.concur.mobile.core.view.ListItemAdapter;
 import com.concur.mobile.core.view.ViewOnClickHandler;
 import com.concur.mobile.platform.ui.common.dialog.NoConnectivityDialogFragment;
-import com.concur.mobile.platform.ui.common.util.PreferenceUtil;
 
 /**
  * @deprecated Use <code>com.concur.mobile.platform.ui.expense.fragment.ExpenseListFragment</code>

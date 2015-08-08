@@ -12,12 +12,9 @@ import android.os.Handler;
 import android.os.Message;
 import android.text.TextUtils;
 import android.util.Log;
-import android.view.KeyEvent;
-import android.view.LayoutInflater;
-import android.view.View;
+import android.view.*;
 import android.view.View.OnClickListener;
 import android.view.ViewGroup.LayoutParams;
-import android.view.ViewStub;
 import android.widget.*;
 import com.concur.mobile.platform.common.SpinnerItem;
 import com.concur.mobile.platform.common.formfield.FormField;
@@ -59,9 +56,10 @@ public class HotelBookingActivity extends TravelBaseActivity implements SpinnerD
     // custom fields loader callback implementation
     private LoaderManager.LoaderCallbacks<TravelCustomFieldsConfig> customFieldsLoaderListener = new LoaderManager.LoaderCallbacks<TravelCustomFieldsConfig>() {
 
-        @Override
-        public Loader<TravelCustomFieldsConfig> onCreateLoader(int id, Bundle bundle) {
-            PlatformAsyncTaskLoader<TravelCustomFieldsConfig> asyncLoader = null;
+        PlatformAsyncTaskLoader<TravelCustomFieldsConfig> asyncLoader = null;
+
+        @Override public Loader<TravelCustomFieldsConfig> onCreateLoader(int id, Bundle bundle) {
+
             if (update) {
                 showProgressBar(R.string.dlg_travel_retrieve_custom_fields_update_progress_message);
                 asyncLoader = new TravelCustomFieldsUpdateLoader(getApplicationContext(), formFields);
@@ -72,49 +70,50 @@ public class HotelBookingActivity extends TravelBaseActivity implements SpinnerD
             return asyncLoader;
         }
 
-        @Override
-        public void onLoadFinished(Loader<TravelCustomFieldsConfig> loader,
+        @Override public void onLoadFinished(Loader<TravelCustomFieldsConfig> loader,
                 TravelCustomFieldsConfig travelCustomFieldsConfig) {
 
             hideProgressBar();
+            if (asyncLoader.result == asyncLoader.SESSION_EXPIRED
+                    || asyncLoader.result == asyncLoader.RE_AUTHENTICATED) {
+                sessionExpired(asyncLoader.result);
+            } else {
+                if (travelCustomFieldsConfig == null) {
+                    // no custom fields
+                } else if (travelCustomFieldsConfig != null) {
 
-            if (travelCustomFieldsConfig == null) {
-                // no custom fields
-            } else if (travelCustomFieldsConfig != null) {
+                    if (travelCustomFieldsConfig.errorOccuredWhileRetrieving) {
+                        showToast("Could not retrieve custom fields.");
+                    } else {
 
-                if (travelCustomFieldsConfig.errorOccuredWhileRetrieving) {
-                    showToast("Could not retrieve custom fields.");
-                } else {
+                        travelCustomFieldsConfig = travelCustomFieldsConfig;
+                        formFields = travelCustomFieldsConfig.formFields;
+                        // to overcome the 'cannot perform this action inside of the onLoadFinished'
+                        final int WHAT = 1;
+                        Handler handler = new Handler() {
 
-                    travelCustomFieldsConfig = travelCustomFieldsConfig;
-                    formFields = travelCustomFieldsConfig.formFields;
-                    // to overcome the 'cannot perform this action inside of the onLoadFinished'
-                    final int WHAT = 1;
-                    Handler handler = new Handler() {
-
-                        @Override
-                        public void handleMessage(Message msg) {
-                            if (msg.what == WHAT) {
-                                initTravelCustomFieldsView();
+                            @Override public void handleMessage(Message msg) {
+                                if (msg.what == WHAT) {
+                                    initTravelCustomFieldsView();
+                                }
                             }
-                        }
-                    };
-                    handler.sendEmptyMessage(WHAT);
+                        };
+                        handler.sendEmptyMessage(WHAT);
+                    }
                 }
-            }
 
-            if (travelCustomFieldsConfig != null && travelCustomFieldsConfig.formFields != null) {
-                Log.d(Const.LOG_TAG,
-                        CLS_TAG + ".onLoadFinished ********************* : travelCustomFieldsConfig size : " + (
-                                travelCustomFieldsConfig != null ?
-                                        travelCustomFieldsConfig.formFields.size() :
-                                        null));
+                if (travelCustomFieldsConfig != null && travelCustomFieldsConfig.formFields != null) {
+                    Log.d(Const.LOG_TAG,
+                            CLS_TAG + ".onLoadFinished ********************* : travelCustomFieldsConfig size : " + (
+                                    travelCustomFieldsConfig != null ?
+                                            travelCustomFieldsConfig.formFields.size() :
+                                            null));
+                }
             }
 
         }
 
-        @Override
-        public void onLoaderReset(Loader<TravelCustomFieldsConfig> data) {
+        @Override public void onLoaderReset(Loader<TravelCustomFieldsConfig> data) {
             Log.d(Const.LOG_TAG, " ***** loader reset *****  ");
         }
     };
@@ -143,32 +142,37 @@ public class HotelBookingActivity extends TravelBaseActivity implements SpinnerD
     // pre sell options loader callback implementation
     private LoaderManager.LoaderCallbacks<HotelPreSellOption> preSellOptionsLoaderListener = new LoaderManager.LoaderCallbacks<HotelPreSellOption>() {
 
-        @Override
-        public Loader<HotelPreSellOption> onCreateLoader(int id, Bundle bundle) {
+        PlatformAsyncTaskLoader<HotelPreSellOption> hotelPreSellOptionAsyncTaskLoader;
+
+        @Override public Loader<HotelPreSellOption> onCreateLoader(int id, Bundle bundle) {
 
             // request initial search
             Log.d(Const.LOG_TAG, " ***** creating preSellOption loader *****  ");
 
-            PlatformAsyncTaskLoader<HotelPreSellOption> hotelPreSellOptionAsyncTaskLoader = new HotelPreSellOptionLoader(
-                    getApplicationContext(), sellOptionsURL);
+            hotelPreSellOptionAsyncTaskLoader = new HotelPreSellOptionLoader(getApplicationContext(), sellOptionsURL);
 
             return hotelPreSellOptionAsyncTaskLoader;
         }
 
-        @Override
-        public void onLoadFinished(Loader<HotelPreSellOption> loader, HotelPreSellOption hotelPreSellOption) {
-            setPreSellOptions(hotelPreSellOption);
+        @Override public void onLoadFinished(Loader<HotelPreSellOption> loader, HotelPreSellOption hotelPreSellOption) {
+            hideProgressBar();
+            if (hotelPreSellOptionAsyncTaskLoader.result == hotelPreSellOptionAsyncTaskLoader.SESSION_EXPIRED
+                    || hotelPreSellOptionAsyncTaskLoader.result == hotelPreSellOptionAsyncTaskLoader.RE_AUTHENTICATED) {
+                sessionExpired(hotelPreSellOptionAsyncTaskLoader.result);
+            } else {
+                setPreSellOptions(hotelPreSellOption);
+            }
 
         }
 
-        @Override
-        public void onLoaderReset(Loader<HotelPreSellOption> loader) {
+        @Override public void onLoaderReset(Loader<HotelPreSellOption> loader) {
             // nothing to handle here
         }
     };
     private ArrayList<ViolationReason> selectedViolationReasons;
     private String userErrorMsg;
     private String[] cancellationPolicyStatements;
+    private String[] hotelRateChangesOverStay;
     private boolean progressbarVisible;
     private HotelRate hotelRate;
     private HotelPreSellOption preSellOption;
@@ -192,10 +196,9 @@ public class HotelBookingActivity extends TravelBaseActivity implements SpinnerD
     // HotelBooking loader callback implementation
     private LoaderManager.LoaderCallbacks<HotelBookingRESTResult> bookingLoaderListener = new LoaderManager.LoaderCallbacks<HotelBookingRESTResult>() {
 
-        @Override
-        public Loader<HotelBookingRESTResult> onCreateLoader(int id, Bundle bundle) {
-            PlatformAsyncTaskLoader<HotelBookingRESTResult> hotelBookingAsyncRequestTask = null;
+        PlatformAsyncTaskLoader<HotelBookingRESTResult> hotelBookingAsyncRequestTask = null;
 
+        @Override public Loader<HotelBookingRESTResult> onCreateLoader(int id, Bundle bundle) {
             showProgressBar(R.string.hotel_booking_retrieving);
             // populate custField objects from formFields
             List<FormField> custFields = null;
@@ -224,48 +227,53 @@ public class HotelBookingActivity extends TravelBaseActivity implements SpinnerD
         public void onLoadFinished(Loader<HotelBookingRESTResult> loader, HotelBookingRESTResult bookingResult) {
 
             hideProgressBar();
-            if (bookingResult != null && bookingResult.error == null) {
-                Toast.makeText(getApplicationContext(), R.string.hotel_booking_success, Toast.LENGTH_LONG).show();
 
-                Intent intent = new Intent();
-                intent.putExtra(Const.EXTRA_TRAVEL_ITINERARY_LOCATOR,
-                        bookingResult.itineraryLocator != null ? bookingResult.itineraryLocator : null);
-                intent.putExtra(Const.EXTRA_TRAVEL_RECORD_LOCATOR,
-                        bookingResult.recordLocator != null ? bookingResult.recordLocator : null);
-
-                setResult(RESULT_OK, intent);
-
-                // TODO add GA event for booking
-                finish();
+            if (hotelBookingAsyncRequestTask.result == hotelBookingAsyncRequestTask.SESSION_EXPIRED
+                    || hotelBookingAsyncRequestTask.result == hotelBookingAsyncRequestTask.RE_AUTHENTICATED) {
+                sessionExpired(hotelBookingAsyncRequestTask.result);
             } else {
-                if (bookingResult != null && bookingResult.error != null) {
 
-                    userErrorMsg =
-                            bookingResult.error.getUserMessage() != null ? bookingResult.error.getUserMessage() : null;
-                }
+                if (bookingResult != null && bookingResult.error == null) {
+                    Toast.makeText(getApplicationContext(), R.string.hotel_booking_success, Toast.LENGTH_LONG).show();
 
-                new Handler().post(new Runnable() {
+                    Intent intent = new Intent();
+                    intent.putExtra(Const.EXTRA_TRAVEL_ITINERARY_LOCATOR,
+                            bookingResult.itineraryLocator != null ? bookingResult.itineraryLocator : null);
+                    intent.putExtra(Const.EXTRA_TRAVEL_RECORD_LOCATOR,
+                            bookingResult.recordLocator != null ? bookingResult.recordLocator : null);
 
-                    @Override
-                    public void run() {
-                        showFailurePopUp();
+                    setResult(RESULT_OK, intent);
+
+                    // TODO add GA event for booking
+                    finish();
+                } else {
+                    if (bookingResult != null && bookingResult.error != null) {
+
+                        userErrorMsg = bookingResult.error.getUserMessage() != null ?
+                                bookingResult.error.getUserMessage() :
+                                null;
                     }
-                });
 
-                // Toast.makeText(getApplicationContext(), R.string.hotel_booking_failed, Toast.LENGTH_LONG).show();
+                    new Handler().post(new Runnable() {
+
+                        @Override public void run() {
+                            showFailurePopUp();
+                        }
+                    });
+
+                    // Toast.makeText(getApplicationContext(), R.string.hotel_booking_failed, Toast.LENGTH_LONG).show();
+                }
             }
             isBookingInProgress = false;
         }
 
-        @Override
-        public void onLoaderReset(Loader<HotelBookingRESTResult> data) {
+        @Override public void onLoaderReset(Loader<HotelBookingRESTResult> data) {
             Log.d(Const.LOG_TAG, " ***** loader reset *****  ");
         }
     };
     private String customTravelText;
 
-    @Override
-    public void onWindowFocusChanged(boolean hasFocus) {
+    @Override public void onWindowFocusChanged(boolean hasFocus) {
         super.onWindowFocusChanged(hasFocus);
 
         if (hasFocus && mListView != null) {
@@ -273,8 +281,7 @@ public class HotelBookingActivity extends TravelBaseActivity implements SpinnerD
         }
     }
 
-    @Override
-    protected void onCreate(Bundle savedInstanceState) {
+    @Override protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         initRetainerFragment();
         setContentView(R.layout.hotel_booking);
@@ -344,20 +351,17 @@ public class HotelBookingActivity extends TravelBaseActivity implements SpinnerD
      *
      * @see android.app.Activity#onPause()
      */
-    @Override
-    public void onPause() {
+    @Override public void onPause() {
         super.onPause();
 
     }
 
-    @Override
-    protected void onStop() {
+    @Override protected void onStop() {
         super.onStop();
 
     }
 
-    @Override
-    protected void onDestroy() {
+    @Override protected void onDestroy() {
         super.onDestroy();
 
     }
@@ -367,8 +371,7 @@ public class HotelBookingActivity extends TravelBaseActivity implements SpinnerD
      *
      * @see android.support.v4.app.Fragment#onResume()
      */
-    @Override
-    public void onResume() {
+    @Override public void onResume() {
         super.onResume();
 
     }
@@ -395,7 +398,7 @@ public class HotelBookingActivity extends TravelBaseActivity implements SpinnerD
                 mListView.addHeaderView(header);
 
                 ArrayAdapter<String> adapter = new ArrayAdapter<String>(this,
-                        android.R.layout.simple_expandable_list_item_1, new String[] { });
+                        android.R.layout.simple_expandable_list_item_1, new String[] {});
                 mListView.setAdapter(adapter);
                 mListView.requestFocus();
             }
@@ -409,8 +412,13 @@ public class HotelBookingActivity extends TravelBaseActivity implements SpinnerD
 
         // number of nights
         txtView = (TextView) findViewById(R.id.hotel_room_night);
-        txtView.setText(
-                Format.localizeText(this.getApplicationContext(), R.string.hotel_reserve_num_of_nights, numOfNights));
+        if(numOfNights == 1) {
+            txtView.setText(
+                    Format.localizeText(this.getApplicationContext(), R.string.hotel_reserve_num_of_night, numOfNights));
+        } else {
+            txtView.setText(
+                    Format.localizeText(this.getApplicationContext(), R.string.hotel_reserve_num_of_nights, numOfNights));
+        }
 
         // travel points earned
         if (hotelRate.travelPoints != null && hotelRate.travelPoints > 0) {
@@ -418,16 +426,11 @@ public class HotelBookingActivity extends TravelBaseActivity implements SpinnerD
             txtView = (TextView) findViewById(R.id.points_earned);
             txtView.setText(Format.localizeText(this, R.string.travel_points_can_be_earned_points, new Object[] {
                     FormatUtil.formatAmountWithNoDecimals(hotelRate.travelPoints * numOfNights,
-                            this.getResources().getConfiguration().locale, currCode, false, false) }));
+                            this.getResources().getConfiguration().locale, currCode, false, true) }));
         }
 
         // amount
-        txtView = (TextView) findViewById(R.id.hotel_room_rate);
-        String formattedAmount = FormatUtil.formatAmountWithNoDecimals(amount, this.getResources().getConfiguration().locale, currCode, true,
-                        false);
-        txtView.setText(formattedAmount);
-        txtView = (TextView) findViewById(R.id.footer_amount);
-        txtView.setText(formattedAmount);
+        updateTotalRate();
 
         // cancellation policy on click event
         findViewById(R.id.hotel_policy).setOnClickListener(new View.OnClickListener() {
@@ -447,13 +450,12 @@ public class HotelBookingActivity extends TravelBaseActivity implements SpinnerD
         initTravelCustomFieldsView();
 
         // reserve UI
-        reserveLayout = ((LinearLayout)findViewById(R.id.footer));
+        reserveLayout = ((LinearLayout) findViewById(R.id.footer));
         enableReserveLayout(false);
         reserveLayout.setOnClickListener(new View.OnClickListener() {
 
-            @Override
-            public void onClick(View v) {
-                if(!progressbarVisible) {
+            @Override public void onClick(View v) {
+                if (!progressbarVisible) {
                     doBooking();
                 }
             }
@@ -466,8 +468,7 @@ public class HotelBookingActivity extends TravelBaseActivity implements SpinnerD
 
         roomDescView.post(new Runnable() {
 
-            @Override
-            public void run() {
+            @Override public void run() {
                 int lineCount = roomDescView.getLineCount();
                 // animate txtView more than 3 lines
                 if (lineCount > 3) {
@@ -479,8 +480,7 @@ public class HotelBookingActivity extends TravelBaseActivity implements SpinnerD
 
                         ObjectAnimator animation = null;
 
-                        @Override
-                        public void onClick(View v) {
+                        @Override public void onClick(View v) {
                             if (isExpanded) {
                                 animation = ObjectAnimator.ofInt(v, "maxLines", 3);
                                 roomDescView
@@ -533,6 +533,7 @@ public class HotelBookingActivity extends TravelBaseActivity implements SpinnerD
 
                 ImageView imgView = (ImageView) tableLayout.findViewById(R.id.travel_violation_icon);
                 LayoutParams imgViewLayoutParams = imgView.getLayoutParams();
+                int imgViewPaddingTop = imgView.getPaddingTop();
 
                 // sort the violations in descending enforcement level i.e. max enforcement level will be at top
                 ArrayList<HotelViolation> violationsToDisplay = new ArrayList<HotelViolation>();
@@ -566,6 +567,8 @@ public class HotelBookingActivity extends TravelBaseActivity implements SpinnerD
                         } else if (hotelViolation.displayOrder == 2) {
                             imgView.setImageResource(R.drawable.icon_warning_yellow);
                         } else {
+                            // the comment image needs to be pushed down a bit
+                            imgView.setPadding(0, imgViewPaddingTop+1, 0, 0);
                             imgView.setImageResource(R.drawable.icon_comment_sm_grey);
                         }
                         currViolationId = hotelViolation.violationValueId;
@@ -577,17 +580,22 @@ public class HotelBookingActivity extends TravelBaseActivity implements SpinnerD
 
                         TextView newTxtView = new TextView(this);
                         newTxtView.setLayoutParams(txtViewLayoutParams);
+                        newTxtView.setGravity(Gravity.TOP);
                         newTxtView.setPadding(txtView.getPaddingLeft(), txtView.getPaddingTop(),
                                 txtView.getPaddingRight(), txtView.getPaddingBottom());
                         newTxtView.setText(hotelViolation.message);
 
                         ImageView newImgView = new ImageView(this);
+                        newImgView.setPadding(0, imgViewPaddingTop, 0, 0);
                         newImgView.setLayoutParams(imgViewLayoutParams);
                         if (hotelViolation.displayOrder == 3) {
                             newImgView.setImageResource(R.drawable.icon_warning_red);
                         } else if (hotelViolation.displayOrder == 2) {
                             newImgView.setImageResource(R.drawable.icon_warning_yellow);
                         } else {
+                            // the comment image needs to be pushed down a bit
+                            newImgView.setPadding(0, imgViewPaddingTop+1, 0, 0);
+
                             newImgView.setImageResource(R.drawable.icon_comment_sm_grey);
                         }
 
@@ -742,20 +750,32 @@ public class HotelBookingActivity extends TravelBaseActivity implements SpinnerD
     }
 
     private void showCancellationPolicy() {
-        String statement = (String) getText(R.string.hotel_reserve_cancel_policy_not_available);
+        StringBuilder statement = new StringBuilder();
+        if (hotelRateChangesOverStay != null) {
+            // format the statements
+            statement.append(TextUtils.join("\n", hotelRateChangesOverStay));
+        }
         if (cancellationPolicyStatements != null) {
             // format the statements
-            statement = TextUtils.join("\n", cancellationPolicyStatements);
+            if (statement.length() > 0) {
+                statement.append("\n\n");
+            }
+            statement.append(TextUtils.join("\n", cancellationPolicyStatements));
+        }
+        if (statement.length() == 0) {
+            statement.append(getText(R.string.hotel_reserve_cancel_policy_not_available));
         }
 
         DialogFragmentFactoryV1
-                .getAlertOkayInstance(getText(R.string.hotel_reserve_cancel_policy).toString(), statement)
+                .getAlertOkayInstance(getText(R.string.hotel_reserve_cancel_policy).toString(), statement.toString())
                 .show(getFragmentManager(), "");
     }
 
     private void setPreSellOptions(HotelPreSellOption preSellOption) {
         this.preSellOption = preSellOption;
-        hideProgressBar();
+
+        // total rate
+        updateTotalRate();
 
         if (preSellOption != null) {
             initPreSellOptions();
@@ -770,6 +790,7 @@ public class HotelBookingActivity extends TravelBaseActivity implements SpinnerD
         if (preSellOption != null) {
             // hotel cancellation policy
             cancellationPolicyStatements = preSellOption.hotelCancellationPolicy;
+            hotelRateChangesOverStay = preSellOption.hotelRateChangesOverStay;
 
             // credit cards
             initCardChoices();
@@ -860,16 +881,11 @@ public class HotelBookingActivity extends TravelBaseActivity implements SpinnerD
             enableReserveLayout(false);
             boolean hasAllRequiredFields = true;
             StringBuffer requiredFieldsMsg = new StringBuffer();
-            // get selected credit card
-            String selectedCreditCardId = null;
-            if (cardChoices != null) {
-                if (curCardChoice == null) {
-                    // show credit card required message
-                    requiredFieldsMsg.append(getString(R.string.book_missing_field_card_selection));
-                    hasAllRequiredFields = false;
-                } else {
-                    selectedCreditCardId = curCardChoice.id;
-                }
+
+            if (cardChoices == null || curCardChoice == null) {
+                // show credit card required message
+                requiredFieldsMsg.append(getString(R.string.book_missing_field_card_selection));
+                hasAllRequiredFields = false;
             }
 
             // get selected violation reason and justification
@@ -973,10 +989,6 @@ public class HotelBookingActivity extends TravelBaseActivity implements SpinnerD
                         dialog.dismiss();
                     }
                 };
-                //                AlertDialogFragmentV1 dialog = DialogFragmentFactoryV1
-                //                        .getAlertDialog(getString(R.string.hotel_confirm_reserve_title), getString(msgResourse),
-                //                                R.string.hotel_confirm_reserve_ok, R.string.hotel_confirm_reserve_cancel, 0,
-                //                                okayListener, null, null, null);
 
                 AlertDialogFragmentV1 dialog = new AlertDialogFragmentV1();
                 dialog.setTitle(R.string.hotel_confirm_reserve_title);
@@ -987,15 +999,6 @@ public class HotelBookingActivity extends TravelBaseActivity implements SpinnerD
                 dialog.setNegativeButtonListener(cancelListener);
                 dialog.setCancelListener(cancelListener);
                 dialog.show(getFragmentManager(), DIALOG_FRAGMENT_ID);
-
-                //                CustomDialogFragment dialog = new CustomDialogFragment();
-                //
-                //                dialog.setTitle(R.string.hotel_confirm_reserve_title);
-                //                dialog.setMessage(R.string.hotel_confirm_reserve_msg);
-                //                dialog.setPositiveButtonText(R.string.hotel_confirm_reserve_ok);
-                //                dialog.setNegativeButtonText(R.string.hotel_confirm_reserve_cancel);
-                //
-                //                dialog.show(getFragmentManager(), DIALOG_FRAGMENT_ID);
 
             } else {
                 // show the required fields messages
@@ -1081,12 +1084,35 @@ public class HotelBookingActivity extends TravelBaseActivity implements SpinnerD
     }
 
     // enable or disbale the reserve linearlayout and its child items i.e. Reserve Room button and the amount Text field
-    private void enableReserveLayout(boolean enable){
+    private void enableReserveLayout(boolean enable) {
         reserveLayout.setClickable(enable);
-        for ( int i = 0; i < reserveLayout.getChildCount();  i++ ){
+        for (int i = 0; i < reserveLayout.getChildCount(); i++) {
             View view = reserveLayout.getChildAt(i);
             view.setEnabled(enable);
         }
+    }
+
+    private void updateTotalRate() {
+        if (preSellOption != null) {
+            if (preSellOption.totalPrice != null) {
+                // update the amount that came from Pre-sell options total rate
+                if (preSellOption.totalPrice.amount != null) {
+                    amount = preSellOption.totalPrice.amount;
+                }
+                if (preSellOption.totalPrice.crnCode != null) {
+                    currCode = preSellOption.totalPrice.crnCode;
+                }
+            }
+        } else {
+            amount = amount * numOfNights;
+        }
+        TextView txtView = (TextView) findViewById(R.id.hotel_room_rate);
+        String formattedAmount = FormatUtil
+                .formatAmountWithNoDecimals(amount, this.getResources().getConfiguration().locale, currCode, true,
+                        true);
+        txtView.setText(formattedAmount);
+        txtView = (TextView) findViewById(R.id.footer_amount);
+        txtView.setText(formattedAmount);
     }
 
 }

@@ -15,6 +15,7 @@ import android.content.SharedPreferences.OnSharedPreferenceChangeListener;
 import android.content.pm.PackageInfo;
 import android.content.pm.PackageManager.NameNotFoundException;
 import android.os.Bundle;
+import android.os.Handler;
 import android.preference.CheckBoxPreference;
 import android.preference.ListPreference;
 import android.preference.Preference;
@@ -29,22 +30,16 @@ import android.text.TextUtils;
 import android.util.Log;
 
 import com.concur.core.R;
+import com.concur.mobile.base.service.BaseAsyncRequestTask;
+import com.concur.mobile.base.service.BaseAsyncResultReceiver;
 import com.concur.mobile.core.ConcurCore;
 import com.concur.mobile.core.ConcurCore.Product;
 import com.concur.mobile.core.data.MobileDatabase;
 import com.concur.mobile.core.service.BaseRequestPasswordReset;
 import com.concur.mobile.core.service.ConcurService;
 import com.concur.mobile.core.service.CorpSsoQueryReply;
-import com.concur.mobile.core.util.Const;
-import com.concur.mobile.core.util.Crypt;
-import com.concur.mobile.core.util.EventTracker;
-import com.concur.mobile.core.util.Flurry;
-import com.concur.mobile.core.util.FormatUtil;
-import com.concur.mobile.core.util.Notifications;
-import com.concur.mobile.platform.authentication.AccessToken;
-import com.concur.mobile.platform.authentication.LoginResult;
-import com.concur.mobile.platform.authentication.Session;
-import com.concur.mobile.platform.authentication.SessionInfo;
+import com.concur.mobile.core.util.*;
+import com.concur.mobile.platform.authentication.*;
 import com.concur.mobile.platform.config.provider.ConfigUtil;
 import com.concur.mobile.platform.util.Parse;
 import com.concur.platform.PlatformProperties;
@@ -259,12 +254,18 @@ public class Preferences extends PreferenceActivity implements OnSharedPreferenc
                 // Clear pin
                 clearPin(ps.getSharedPreferences());
 
-                if (clearLoginID) {
+                if (clearLoginID || Const.PREF_AUTO_LOGIN.equals(key)){
                     // If not saving login then unset auto
                     CheckBoxPreference autoLogin = (CheckBoxPreference) ps.findPreference(Const.PREF_AUTO_LOGIN);
                     if (autoLogin != null) {
                         autoLogin.setChecked(false);
                     }
+                }
+            } else {
+                // If saving login then set auto login to true
+                CheckBoxPreference autoLogin = (CheckBoxPreference) ps.findPreference(Const.PREF_AUTO_LOGIN);
+                if (autoLogin != null) {
+                    autoLogin.setChecked(true);
                 }
             }
 
@@ -313,6 +314,7 @@ public class Preferences extends PreferenceActivity implements OnSharedPreferenc
         shiftSession(prefs);
         removePreferences(prefs);
         platFormDataMigration(prefs, app);
+        doAutoLogin(prefs, app);
     }
 
     private static void platFormDataMigration(SharedPreferences prefs, ConcurCore app) {
@@ -738,6 +740,7 @@ public class Preferences extends PreferenceActivity implements OnSharedPreferenc
 
     public static void enableAutoLogin(SharedPreferences prefs) {
         Editor e = prefs.edit();
+
         e.putBoolean(Const.PREF_DISABLE_AUTO_LOGIN, false);
         e.commit();
 
@@ -772,8 +775,8 @@ public class Preferences extends PreferenceActivity implements OnSharedPreferenc
      *            the shared preferences object.
      * @param sessionId
      *            the session id.
-     * @param sessionPIN
-     *            the session pin.
+     * @param duration
+     *            the duration.
      * @param sessionExpiration
      *            the session expiration time.
      */
@@ -844,8 +847,8 @@ public class Preferences extends PreferenceActivity implements OnSharedPreferenc
     public static boolean isTestDriveAccountExpired() {
         if (isTestDriveUser()) {
             SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(ConcurCore.getContext());
-            Calendar accountExpirationDate = Parse.parseXMLTimestamp(prefs.getString(
-                    Const.PREF_ACCOUNT_EXPIRATION_DATE, null));
+            Calendar accountExpirationDate = Parse.parseXMLTimestamp(
+                    prefs.getString(Const.PREF_ACCOUNT_EXPIRATION_DATE, null));
             if (accountExpirationDate != null) {
                 if (Calendar.getInstance().compareTo(accountExpirationDate) >= 0) {
                     return true;
@@ -1543,4 +1546,116 @@ public class Preferences extends PreferenceActivity implements OnSharedPreferenc
         e.commit();
     }
 	*/
+
+    // need to pull this out to some other appropriate class
+    public static void doAutoLogin(SharedPreferences prefs, final ConcurCore app) {
+        //BaseAsyncResultReceiver autoLoginReceiver = new BaseAsyncResultReceiver(new Handler());
+        final Bundle emailLookupBundle;
+        final SessionInfo sessionInfo = ConfigUtil.getSessionInfo(app.getApplicationContext());
+        boolean disableAutoLogin = prefs.getBoolean(Const.PREF_DISABLE_AUTO_LOGIN, false);
+        boolean autoLogin = prefs.getBoolean(Const.PREF_AUTO_LOGIN, false);
+        if(disableAutoLogin) {
+            autoLogin = false;
+        }
+        Log.d(Const.LOG_TAG,
+                "-------------------------------------------------------------------------------------------autoLogin from prefs = "
+                        + autoLogin);
+        // If auto-login is enabled and company sign-on is being used, then force autoLogin to 'false'.
+        // Company Sign-on auto-login is not currently supported.
+        if (autoLogin) {
+            String signInMethod = sessionInfo.getSignInMethod();
+            Log.d(Const.LOG_TAG,
+                    "---------------------------------------------------------------------------------------- signInMethod = "
+                            + signInMethod);
+            Log.d(Const.LOG_TAG,
+                    "---------------------------------------------------------------------------------------- SSO Url = "
+                            + sessionInfo.getSSOUrl());
+            // NOTE - sometimes loginMethod is null and hence autoLogin is set to false, then AutoLogin is not called. does the code setting emailLookupBundle in the below onRequestSuccess causing this?
+            if ("SSO".equalsIgnoreCase(signInMethod) || !(TextUtils.isEmpty(sessionInfo.getSSOUrl()))) {
+                autoLogin = false;
+            }
+        }
+
+        if (autoLogin) {
+            if(sessionInfo != null) {
+                // create a bundle and persist the value in the bundle
+                emailLookupBundle = new Bundle();
+                // Set the login id.
+                emailLookupBundle.putString(EmailLookUpRequestTask.EXTRA_LOGIN_ID_KEY, sessionInfo.getLoginId());
+                // Set the server url.
+                emailLookupBundle.putString(EmailLookUpRequestTask.EXTRA_SERVER_URL_KEY,
+                        (sessionInfo.getServerUrl() != null ?
+                                sessionInfo.getServerUrl() :
+                                PlatformProperties.getServerAddress()));
+                // Set the sign-in method.
+                emailLookupBundle
+                        .putString(EmailLookUpRequestTask.EXTRA_SIGN_IN_METHOD_KEY, sessionInfo.getSignInMethod());
+                // Set the sso url.
+                emailLookupBundle.putString(EmailLookUpRequestTask.EXTRA_SSO_URL_KEY, sessionInfo.getSSOUrl());
+            } else {
+                // need to expire the login
+                app.expireLogin(true);
+                return;
+            }
+
+            Log.d(Const.LOG_TAG, "attempting autologin");
+            app.autoLoginReceiver.setListener(new BaseAsyncRequestTask.AsyncReplyListener() {
+
+                                              public void onRequestSuccess(Bundle resultData) {
+                                                  Log.d(Const.LOG_TAG,
+                                                          ".onRequestSucess ++++++++++++++++++++++++++++++++");
+
+                                                  Log.d(Const.LOG_TAG,
+                                                          "attempting to build emailLookupBundle, sessionInfo not null ? "
+                                                                  + (sessionInfo != null));
+                                                  if(emailLookupBundle ==null) {
+                                                      onRequestFail(resultData);
+                                                  } else {
+                                                      UserAndSessionInfoUtil
+                                                              .updateUserAndSessionInfo(ConcurCore.getContext(),
+                                                                      emailLookupBundle);
+                                                  }
+                                              }
+
+                                              public void onRequestFail(Bundle resultData) {
+
+                                                      Log.d(Const.LOG_TAG, "expire login as autoLogin is disabled");
+                                                      // need to expire the login
+                                                      app.expireLogin(true);
+
+                                              }
+
+                                              public void onRequestCancel(Bundle resultData) {
+
+                                                      Log.d(Const.LOG_TAG, "expire login as autoLogin is disabled");
+                                                      // need to expire the login
+                                                      app.expireLogin(true);
+
+                                              }
+
+                                              public void cleanup() {
+                                              }
+
+                                          }
+
+            );
+
+            UserAndSessionInfoUtil.setServerAddress(PlatformProperties.getServerAddress());
+
+            // Attempt to authenticate
+            // Re-entry to the UI will be via handleMessage() below
+            // perform an full AutoLoginRequest in order to get
+            // all the user roles, site settings, car configs, etc. and all that other good stuff.
+            AutoLoginRequestTask autoLoginRequestTask = new AutoLoginRequestTask(ConcurCore.getContext(), 0,
+                    app.autoLoginReceiver, Locale.getDefault());
+            autoLoginRequestTask.execute();
+        } else {
+
+                Log.d(Const.LOG_TAG,
+                        "---------------------------------------------------------------------------expire login as autoLogin is disabled");
+                // need to expire the login, will this take back to log in screen?
+                app.expireLogin(true);
+
+        }
+    }
 }

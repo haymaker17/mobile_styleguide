@@ -293,6 +293,11 @@ public final class Config {
         public static final String USER_CURRENCY_CODE = "USER_CURRENCY_CODE";
 
         /**
+         * Contains the disable auto login column name.
+         */
+        public static final String IS_DISABLE_AUTO_LOGIN = "IS_DISABLE_AUTO_LOGIN";
+
+        /**
          * Contains the user id column name.
          */
         public static final String USER_ID = "USER_ID";

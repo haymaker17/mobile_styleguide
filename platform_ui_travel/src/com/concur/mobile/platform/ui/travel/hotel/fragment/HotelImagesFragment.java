@@ -9,23 +9,30 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.*;
+import android.widget.AdapterView;
+import android.widget.BaseAdapter;
+import android.widget.ImageView;
+import android.widget.TextView;
 import com.concur.mobile.platform.travel.search.hotel.HotelImagePair;
 import com.concur.mobile.platform.ui.common.fragment.PlatformFragmentV1;
 import com.concur.mobile.platform.ui.common.util.ImageCache;
+import com.concur.mobile.platform.ui.common.util.ImageCacheReceiver;
 import com.concur.mobile.platform.ui.travel.R;
+import com.concur.mobile.platform.ui.travel.activity.BaseActivity;
 import com.concur.mobile.platform.ui.travel.hotel.activity.ImageDetailActivity;
 import com.concur.mobile.platform.ui.travel.hotel.fragment.HotelChoiceDetailsFragment.HotelChoiceDetailsFragmentListener;
 import com.concur.mobile.platform.ui.travel.util.Const;
+import com.concur.mobile.platform.ui.travel.view.CustomGridView;
 
 import java.net.URI;
 import java.util.List;
 
 public class HotelImagesFragment extends PlatformFragmentV1 implements AdapterView.OnItemClickListener {
 
-    private GridView mGridView;
+    private CustomGridView mGridView;
     private List<HotelImagePair> images;
     private HotelChoiceDetailsFragmentListener callBackListener;
+    private ImageAdapter imgAdapter;
 
     public HotelImagesFragment() {
         super();
@@ -40,10 +47,31 @@ public class HotelImagesFragment extends PlatformFragmentV1 implements AdapterVi
 
         View view = inflater.inflate(R.layout.hotel_images_layout, container, false);
 
-        mGridView = (GridView) view.findViewById(R.id.gridview);
+        mGridView = (CustomGridView) view.findViewById(R.id.gridview);
+        // ViewUtil.getGridViewSize(mGridView);
 
-        // initialize your gridview
-        mGridView.setAdapter(getAdapter(getActivity()));
+        //        mGridView.getViewTreeObserver().addOnGlobalLayoutListener(new ViewTreeObserver.OnGlobalLayoutListener() {
+        //
+        //            @Override
+        //            public void onGlobalLayout() {
+        //                mGridView.getViewTreeObserver()
+        //                        .removeOnGlobalLayoutListener(this); //removeGlobalOnLayoutListener(this);
+        //                View lastChild = mGridView.getChildAt(mGridView.getChildCount() - 1);
+        //                mGridView.setLayoutParams(
+        //                        new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT, lastChild.getBottom()));
+        //            }
+        //        });
+        Activity currentActivity = getActivity();
+        imgAdapter = new ImageAdapter(currentActivity);
+
+        // Prior to setting the adapter on the view, init the image
+        // cache receiver to handle
+        // updating the list based on images downloaded asynchronously.
+        ((BaseActivity) currentActivity).setImageCacheReceiver(new ImageCacheReceiver(imgAdapter, mGridView));
+        ((BaseActivity) currentActivity).registerImageCacheReceiver();
+
+        // initialize your grid view
+        mGridView.setAdapter(imgAdapter);
         mGridView.setOnItemClickListener(this);
         if (images == null || images.size() == 0) {
             TextView tv = (TextView) view.findViewById(R.id.no_photos);
@@ -82,7 +110,6 @@ public class HotelImagesFragment extends PlatformFragmentV1 implements AdapterVi
 
         Log.d(Const.LOG_TAG, " ***** HotelChoiceDetailsFragment, in onPause *****  ");
 
-        // retainer.put(STATE_HOTEL_LIST_ITEMS_KEY, hotelListItems);
     }
 
     @Override
@@ -90,36 +117,13 @@ public class HotelImagesFragment extends PlatformFragmentV1 implements AdapterVi
         // TODO Auto-generated method stub
         super.onResume();
 
-        // if (retainer.contains(STATE_HOTEL_LIST_ITEMS_KEY)) {
-        // hotelListItems = (List<HotelSearchResultListItem>) retainer.get(STATE_HOTEL_LIST_ITEMS_KEY);
-        // }
-
-        // Log.d(Const.LOG_TAG, " ***** HotelSearchResultFragment, in onResume *****  hotelListItems = "
-        // (hotelListItems != null ? hotelListItems.size() : 0));
     }
 
     @Override
     public void onItemClick(AdapterView<?> parent, View v, int position, long id) {
         final Intent i = new Intent(getActivity(), ImageDetailActivity.class);
-        // i.putExtra(ImageDetailActivity.EXTRA_IMAGE, (int) id);
-        // Bundle bundle = new Bundle();
-        // bundle.putSerializable(Const.EXTRA_HOTEL_IMAGES, (Serializable) images);
-        // i.putExtras(bundle);
         callBackListener.onImageClicked(v, (int) id);
-        // if (Build.VERSION.SDK_INT >= VERSION_CODES.JELLY_BEAN) {
-        // // makeThumbnailScaleUpAnimation() looks kind of ugly here as the loading spinner may
-        // // show plus the thumbnail image in GridView is cropped. so using
-        // // makeScaleUpAnimation() instead.
-        // ActivityOptions options = ActivityOptions.makeScaleUpAnimation(v, 0, 0, v.getWidth(), v.getHeight());
-        // getActivity().startActivity(i, options.toBundle());
-        // } else {
-        // startActivity(i);
-        // }
     }
-
-    // public void setItems(ChoiceItem[] items) {
-    // mChoiceItems = items;
-    // }
 
     /**
      * @return an adapter for the grid view
@@ -130,15 +134,13 @@ public class HotelImagesFragment extends PlatformFragmentV1 implements AdapterVi
 
     static class ViewHolder {
 
-        TextView imageTitle;
+        // TextView imageTitle;
         ImageView image;
     }
 
     public class ImageAdapter extends BaseAdapter {
 
         private Context mContext;
-
-        // private List<HotelImagePair> items;
 
         public ImageAdapter(Context c) {
             mContext = c;

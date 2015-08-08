@@ -30,6 +30,9 @@ import com.concur.mobile.core.travel.data.CompanyLocation;
 import com.concur.mobile.core.travel.data.LocationChoice;
 import com.concur.mobile.core.util.BookingDateUtil;
 import com.concur.mobile.core.util.FormatUtil;
+import com.concur.mobile.core.util.UserAndSessionInfoUtil;
+import com.concur.mobile.platform.authentication.EmailLookUpRequestTask;
+import com.concur.mobile.platform.service.MWSPlatformManager;
 import com.concur.mobile.platform.service.PlatformAsyncTaskLoader;
 import com.concur.mobile.platform.ui.common.view.SearchListFormFieldView;
 import com.concur.mobile.platform.ui.common.widget.CalendarPicker;
@@ -44,6 +47,7 @@ import com.concur.mobile.platform.ui.travel.loader.TravelCustomFieldsLoader;
 import com.concur.mobile.platform.ui.travel.loader.TravelCustomFieldsUpdateLoader;
 import com.concur.mobile.platform.ui.travel.util.Const;
 import com.concur.mobile.platform.util.Format;
+import com.concur.platform.PlatformProperties;
 
 import java.util.ArrayList;
 import java.util.Calendar;
@@ -102,6 +106,7 @@ public class RestHotelSearch extends TravelBaseActivity
     private boolean isCheckin = false;
     private LoaderManager lm;
     private boolean update = false;
+    private PlatformAsyncTaskLoader<TravelCustomFieldsConfig> asyncLoader = null;
 
     // /////////////////////////////////////////////////////////////////
 
@@ -411,9 +416,7 @@ public class RestHotelSearch extends TravelBaseActivity
                             txtView.setText(s);
                             // Display a toast message indicating current
                             // location cannot be determined.
-                            String toastText = getText(R.string.dlg_no_current_location).toString();
-                            Toast toast = Toast.makeText(this, toastText, Toast.LENGTH_SHORT);
-                            toast.show();
+                            showToast(R.string.dlg_no_current_location);
                         } else {
                             txtView.setText(R.string.general_current_location);
                         }
@@ -446,9 +449,7 @@ public class RestHotelSearch extends TravelBaseActivity
             // txtView.setText(s);
             // Display a toast message indicating current
             // location cannot be determined.
-            String toastText = getText(R.string.dlg_no_current_location).toString();
-            Toast toast = Toast.makeText(this, toastText, Toast.LENGTH_SHORT);
-            toast.show();
+            showToast(R.string.dlg_no_current_location);
         } else {
             currentLocation = new LocationChoice();
             StringBuilder strBldr = new StringBuilder();
@@ -529,7 +530,6 @@ public class RestHotelSearch extends TravelBaseActivity
             @Override public void onClick(View v) {
                 if (!ConcurCore.isConnected()) {
                     showOfflineDialog();
-
                 } else {
                     // Determine if there are any company locations, if so, then
                     // pass that flag into
@@ -619,6 +619,13 @@ public class RestHotelSearch extends TravelBaseActivity
         }
 
         }
+
+        // check for session expire or re-authenticated
+        if (resultCode != RESULT_OK) {
+            setResult(resultCode, data);
+            doLaunchHomeOrExpiryLogin(resultCode);
+
+        }
     }
 
     // ///////////////////////////////////////////////////////////////////////////
@@ -636,16 +643,14 @@ public class RestHotelSearch extends TravelBaseActivity
         // Set the check-in date.
         TextView txtView = (TextView) checkInDateView.findViewById(R.id.field_value);
         if (txtView != null) {
-            txtView.setText(
-                    Format.safeFormatCalendar(FormatUtil.SHORT_WEEKDAY_MONTH_DAY_FULL_YEAR_DISPLAY, checkInDate));
+            txtView.setText(Format.safeFormatCalendar(FormatUtil.SHORT_DAY_DISPLAY, checkInDate));
         } else {
             Log.e(Const.LOG_TAG, CLS_TAG + ".updateDateTimeButtons: unable to locate check-in field value!");
         }
         // Set the check-out date.
         txtView = (TextView) checkOutDateView.findViewById(R.id.field_value);
         if (txtView != null) {
-            txtView.setText(
-                    Format.safeFormatCalendar(FormatUtil.SHORT_WEEKDAY_MONTH_DAY_FULL_YEAR_DISPLAY, checkOutDate));
+            txtView.setText(Format.safeFormatCalendar(FormatUtil.SHORT_DAY_DISPLAY, checkOutDate));
         } else {
             Log.e(Const.LOG_TAG, CLS_TAG + ".updateDateTimeButtons: unable to locate check-out field value!");
         }
@@ -907,11 +912,13 @@ public class RestHotelSearch extends TravelBaseActivity
     }
 
     public void showToast(int resId) {
-        Toast.makeText(this, resId, Toast.LENGTH_SHORT).show();
+        if (!isFinishing()) {
+            Toast.makeText(this, resId, Toast.LENGTH_SHORT).show();
+        }
     }
 
     @Override public Loader<TravelCustomFieldsConfig> onCreateLoader(int id, Bundle bundle) {
-        PlatformAsyncTaskLoader<TravelCustomFieldsConfig> asyncLoader = null;
+
         if (update) {
             showProgressBar(getString(R.string.dlg_travel_retrieve_custom_fields_update_progress_message));
             asyncLoader = new TravelCustomFieldsUpdateLoader(this, travelCustomFieldsConfig.formFields);
@@ -927,27 +934,32 @@ public class RestHotelSearch extends TravelBaseActivity
 
         hideProgressBar();
 
-        if (travelCustomFieldsConfig == null) {
-            // no custom fields
-        } else if (travelCustomFieldsConfig != null) {
+        if (asyncLoader.result == asyncLoader.SESSION_EXPIRED || asyncLoader.result == asyncLoader.RE_AUTHENTICATED) {
+            doLaunchHomeOrExpiryLogin(asyncLoader.result);
+        } else {
 
-            if (travelCustomFieldsConfig.errorOccuredWhileRetrieving) {
-                showToast(R.string.custom_fields_not_found);
-            } else {
+            if (travelCustomFieldsConfig == null) {
+                // no custom fields
+            } else if (travelCustomFieldsConfig != null) {
 
-                this.travelCustomFieldsConfig = travelCustomFieldsConfig;
-                formFields = travelCustomFieldsConfig.formFields;
-                // to overcome the 'cannot perform this action inside of the onLoadFinished'
-                final int WHAT = 1;
-                Handler handler = new Handler() {
+                if (travelCustomFieldsConfig.errorOccuredWhileRetrieving) {
+                    showToast(R.string.custom_fields_not_found);
+                } else {
 
-                    @Override public void handleMessage(Message msg) {
-                        if (msg.what == WHAT) {
-                            initTravelCustomFieldsView();
+                    this.travelCustomFieldsConfig = travelCustomFieldsConfig;
+                    formFields = travelCustomFieldsConfig.formFields;
+                    // to overcome the 'cannot perform this action inside of the onLoadFinished'
+                    final int WHAT = 1;
+                    Handler handler = new Handler() {
+
+                        @Override public void handleMessage(Message msg) {
+                            if (msg.what == WHAT) {
+                                initTravelCustomFieldsView();
+                            }
                         }
-                    }
-                };
-                handler.sendEmptyMessage(WHAT);
+                    };
+                    handler.sendEmptyMessage(WHAT);
+                }
             }
         }
 
@@ -1031,4 +1043,38 @@ public class RestHotelSearch extends TravelBaseActivity
         }
 
     }
+
+    private void doLaunchHomeOrExpiryLogin(int resultCode) {
+        ConcurCore app = (ConcurCore) ConcurCore.getContext();
+        if (resultCode == PlatformAsyncTaskLoader.RE_AUTHENTICATED) {
+            // will start Home activity and finish this activity
+
+            // below is required to update the latest information of SessionInfo and UserInfo via platform async loaders. this will support autologin from SessionManager in Core library
+            // retrieve login information from Platformmanager and update it in the UserAndSessionInfoUtil
+            MWSPlatformManager platformManager = (MWSPlatformManager) PlatformProperties.getPlatformSessionManager();
+
+            Bundle emailBundle = new Bundle();
+            emailBundle.putString(EmailLookUpRequestTask.EXTRA_LOGIN_ID_KEY, platformManager.getLoginId());
+            emailBundle.putString(EmailLookUpRequestTask.EXTRA_SERVER_URL_KEY, platformManager.getServerURL());
+            emailBundle
+                    .putString(EmailLookUpRequestTask.EXTRA_SIGN_IN_METHOD_KEY, platformManager.getAuthType().name());
+            emailBundle.putString(EmailLookUpRequestTask.EXTRA_SSO_URL_KEY, platformManager.getSsoURL());
+            emailBundle.putString(EmailLookUpRequestTask.EXTRA_EMAIL_KEY, platformManager.getEmail());
+
+            UserAndSessionInfoUtil.updateUserAndSessionInfo(this, emailBundle);
+
+            Toast.makeText(this, R.string.login_expired_auto_sign_in_success, Toast.LENGTH_SHORT).show();
+
+            app.launchHome(this);
+        } else if (resultCode == PlatformAsyncTaskLoader.SESSION_EXPIRED) {
+            // If we have no session at this point then auto-login was
+            // unsuccessful or not allowed.
+            // Bail out and throw them back to login
+            // Punt following line.
+            app.expireLogin(true);
+
+            finish();
+        }
+    }
+
 }

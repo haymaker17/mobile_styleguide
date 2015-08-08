@@ -2,6 +2,7 @@ package com.concur.mobile.platform.service;
 
 import android.content.Context;
 import android.os.Build;
+import android.os.Bundle;
 import android.text.TextUtils;
 import android.util.Log;
 import com.concur.mobile.base.loader.BaseAsyncTaskLoader;
@@ -40,6 +41,8 @@ public abstract class PlatformAsyncTaskLoader<T> extends BaseAsyncTaskLoader<T> 
      * A generic result indicating that the request was cancelled prior to completion.
      */
     public static final int RESULT_CANCEL = -2;
+    public static final int SESSION_EXPIRED = -3;
+    public static final int RE_AUTHENTICATED = -4;
     public final static String IS_SUCCESS = "success";
     public final static String ERROR_MESSAGE = "error_message";
     public static final String HTTP_HEADER_AUTHORIZATION = "Authorization";
@@ -64,18 +67,50 @@ public abstract class PlatformAsyncTaskLoader<T> extends BaseAsyncTaskLoader<T> 
      */
     protected ByteArrayInputStream response;
 
-    protected int result;
+    public int result;
+
+    /**
+     * Gets whether this request requires a session id.
+     *
+     * @return returns whether this request requires a session id. Defaults to <code>true</code>.
+     */
+    protected boolean requiresSessionId() {
+        return true;
+    }
 
     public PlatformAsyncTaskLoader(Context context) {
         super(context);
     }
 
-    @Override
-    public T loadInBackground() {
+    @Override public T loadInBackground() {
 
         T t = null;
 
         int res = RESULT_OK;
+
+        // Notify the platform manager of a request about to be executed.
+        PlatformManager sessionManager = PlatformProperties.getPlatformSessionManager();
+        if (sessionManager != null) {
+            if (resultData == null) {
+                resultData = new Bundle();
+            }
+            res = sessionManager.onRequestStarted(getContext(), this, resultData);
+            // If onRequestStarted indicates the request should not go forward, let the caller decide
+            boolean reAuthenticationNeeded = resultData
+                    .getBoolean(MWSPlatformManager.REAUTHENTICATION_NEEDED_KEY, Boolean.FALSE);
+            if (reAuthenticationNeeded) {
+                Log.e(Const.LOG_TAG,
+                        getClass().getSimpleName() + " Request should not go forward, let the caller decide");
+                if (res == PlatformAsyncRequestTask.RESULT_OK) {
+                    // successfully re-authenticated
+                    result = RE_AUTHENTICATED;
+                } else {
+                    // could not re-authenticate, possible reason autologin disabled
+                    result = SESSION_EXPIRED;
+                }
+                return t;
+            }
+        }
 
         // Get the URL
         URL url = null;
@@ -163,6 +198,9 @@ public abstract class PlatformAsyncTaskLoader<T> extends BaseAsyncTaskLoader<T> 
                     connection.disconnect();
                 }
             }
+            if (res == RESULT_OK) {
+                res = onPostParse();
+            }
         }
 
         // make the result code available to concrete classes
@@ -218,39 +256,10 @@ public abstract class PlatformAsyncTaskLoader<T> extends BaseAsyncTaskLoader<T> 
         return res;
     }
 
-    @Override
-    protected void releaseResources(T data) {
+    @Override protected void releaseResources(T data) {
         // TODO Auto-generated method stub
 
     }
-
-    /**
-     * Return the User-Agent header string for this request. The default implementation creates a generic UA value with version. A
-     * product should produce its own value.
-     *
-     * @return A string containing the user agent for this request
-     */
-    // protected String getUserAgent() {
-    // PlatformProperties.getUserAgent();
-    //
-    // StringBuilder ua = new StringBuilder();
-    // ua.append("Concur/");
-    //
-    // Context ctx = getContext();
-    //
-    // if (ctx != null) {
-    // String versionName;
-    // try {
-    // versionName = ctx.getPackageManager().getPackageInfo(ctx.getPackageName(), 0).versionName;
-    // } catch (NameNotFoundException e) {
-    // versionName = "0.0.0";
-    // }
-    // ua.append(versionName);
-    // }
-    // ua.append(" (Android, ").append(Build.MODEL).append(", ").append(Build.VERSION.RELEASE).append(")");
-    //
-    // return ua.toString();
-    // }
 
     /**
      * Configure connection properties. The default implementation sets the user agent, content type to type/xml, connect timeout
@@ -351,5 +360,17 @@ public abstract class PlatformAsyncTaskLoader<T> extends BaseAsyncTaskLoader<T> 
      */
     public InputStream getResponse() {
         return response;
+    }
+
+    protected int onPostParse() {
+
+        int result = RESULT_OK;
+
+        // Notify the platform manager of a completed request.
+        PlatformManager sessionManager = PlatformProperties.getPlatformSessionManager();
+        if (sessionManager != null) {
+            sessionManager.onRequestCompleted(getContext(), this);
+        }
+        return result;
     }
 }

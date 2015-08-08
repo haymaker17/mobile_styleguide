@@ -323,7 +323,7 @@ public final class Const {
     public static final String MOBILE_SHOW_P2B_GENERATOR = "ShowP2BGenerator";
 
     // Show Jarvis Hotel UI
-    public static final String SHOW_JARVIS_HOTEL_UI = "ShowHotelJarvisUIOnAndroid";
+    public static final String SHOW_JARVIS_HOTEL_UI = "ShowJarvisHotelUIOnAndroid";
 
     // The default ip/port for the MWS.
     public static final String BREEZE_WEB_ADDRESS = "https://www.concurbreeze.com/login";
@@ -690,6 +690,7 @@ public final class Const {
     public static final String LR_CONTACT_EMAIL = "contact_email";
     public static final String LR_CONTACT_MIDDLE_INITIAL = "contact_middle_initial";
     public static final String LR_REQUIRED_CUSTOM_FIELDS = "required_custom_fields";
+    public static final String LR_DISABLE_AUTO_LOGIN = "disable_auto_login";
     public static final String LR_TRAVEL_PROFILE_STATUS = "travel.profile.status";
     public static final String LR_SITE_SETTINGS_LOCACTION_CHECK_IN = "site_settings_location_check_in";
     public static final String LR_SITE_SETTINGS_CARD_TRANS_DATE_EDITABLE = "site.settings.card.trans.date.editable";

@@ -1,7 +1,7 @@
 <resources>
 
     <!-- start of general strings -->
-    <string name="general_view_rates">View Rates</string>
+    <string name="view_rates">view rates</string>
     <string name="general_no_rates">No Rates</string>
     <string name="general_not_available">Not Available</string>
     <string name="general_sold_out">Sold Out</string>
@@ -81,13 +81,11 @@
     <string name="hotel_search_results_sort_option_price">Price</string>
     <string name="hotel_search_results_sort_option_rating">Rating</string>
     <string name="hotel_search_results_sort_option_suggested">Suggested</string>
-    <string name="hotel_search_results_sort_option_default">Default</string>
     <string name="hotel_search_results_sorted_by_distance">results sorted by distance</string>
-    <string name="hotel_search_results_sorted_by_preference">results sorted by preference</string>
+    <string name="hotel_search_results_sorted_by_preference">results sorted by preferred</string>
     <string name="hotel_search_results_sorted_by_price">results sorted by price</string>
     <string name="hotel_search_results_sorted_by_rating">results sorted by rating</string>
-    <string name="hotel_search_results_sorted_by_suggestion">results sorted by suggestion</string>
-    <string name="hotel_search_results_sorted_by_default">results sorted to default</string>
+    <string name="hotel_search_results_sorted_by_suggestion">results sorted by suggested</string>
 
     <!-- end of hotel search results sort menu items -->
 
@@ -120,14 +118,15 @@
     <string name="hotel_reserve_this_room">Reserve Room</string>
     <string name="hotel_confirm_reserve_ok">RESERVE</string>
     <string name="hotel_confirm_reserve_cancel">CANCEL</string>
-    <string name="hotel_reserve_num_of_nights">%%0!number of nights%% night</string>
+    <string name="hotel_reserve_num_of_night">%%0!1 night%% night</string>
+    <string name="hotel_reserve_num_of_nights">%%0!number of nights%% nights</string>
     <string name="hotel_reserve_estimated_total">estimated total</string>
     <string name="hotel_reserve_cancel_policy">Cancellation Policy and Rate Details</string>
     <string name="hotel_reserve_cancel_policy_not_available">Cancellation policy not available</string>
     <string name="hotel_violation_reasons_not_available">Violation reasons not available</string>
 
     <!-- end of hotel reservation screen -->
-    <dimen name="size_default_height">96dp</dimen>
+    <dimen name="size_default_height">120dp</dimen>
 
     <string name="action_settings">Settings</string>
     <string name="no_photos">No Photos Available</string>
@@ -184,7 +183,7 @@
     <!-- start of Travel Points -->
 
     <!-- start of Price-to-Beat -->
-    <string name="price_to_beat_ranges_header">Selecting rooms that cost less than the Price-to-Beat earns you Travel Points that can be used toward future benefits.</string>
+    <string name="price_to_beat_ranges_header">Book under this price to help your company meet its travel savings goals.</string>
     <string name="price_to_beat_price_unavailable">Unavailable</string>
     <!--  end of Price-to-Beat -->
 
