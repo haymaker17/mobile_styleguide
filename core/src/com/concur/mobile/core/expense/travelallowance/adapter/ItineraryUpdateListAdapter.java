@@ -51,7 +51,7 @@ public class ItineraryUpdateListAdapter extends ArrayAdapter<Object> {
         private TextView tvMessage;
 
         private View vDepartureLocation;
-        private ImageView ivDepartureSameLocation;
+        private ImageView ivDepartureStopLocation;
         private ImageView ivDepartureLocation;
         private TextView tvDepartureLocationLabel;
         private TextView tvDepartureLocationValue;
@@ -63,7 +63,7 @@ public class ItineraryUpdateListAdapter extends ArrayAdapter<Object> {
         private TextView tvDepartureTimeLabel;
         private TextView tvDepartureTimeValue;
         private View vArrivalLocation;
-        private ImageView ivArrivalSameLocation;
+        private ImageView ivArrivalStopLocation;
         private ImageView ivArrivalLocation;
         private TextView tvArrivalLocationLabel;
         private TextView tvArrivalLocationValue;
@@ -111,7 +111,7 @@ public class ItineraryUpdateListAdapter extends ArrayAdapter<Object> {
             holder.tvDepartureLocationLabel = (TextView) holder.vDepartureLocation.findViewById(R.id.tv_location_label);
             holder.tvDepartureLocationValue = (TextView) holder.vDepartureLocation.findViewById(R.id.tv_location_value);
             holder.ivDepartureLocation = (ImageView) holder.vDepartureLocation.findViewById(R.id.iv_location_icon);
-            holder.ivDepartureSameLocation = (ImageView) holder.vDepartureLocation.findViewById(R.id.iv_same_location_icon);
+            holder.ivDepartureStopLocation = (ImageView) holder.vDepartureLocation.findViewById(R.id.iv_stop_location_icon);
         }
         holder.vDepartureDateTime = view.findViewById(R.id.v_departure_date_time);
         if (holder.vDepartureDateTime != null) {
@@ -127,7 +127,7 @@ public class ItineraryUpdateListAdapter extends ArrayAdapter<Object> {
             holder.tvArrivalLocationLabel = (TextView) holder.vArrivalLocation.findViewById(R.id.tv_location_label);
             holder.tvArrivalLocationValue = (TextView) holder.vArrivalLocation.findViewById(R.id.tv_location_value);
             holder.ivArrivalLocation = (ImageView) holder.vArrivalLocation.findViewById(R.id.iv_location_icon);
-            holder.ivArrivalSameLocation = (ImageView) holder.vArrivalLocation.findViewById(R.id.iv_same_location_icon);
+            holder.ivArrivalStopLocation = (ImageView) holder.vArrivalLocation.findViewById(R.id.iv_stop_location_icon);
         }
         holder.vArrivalDateTime = view.findViewById(R.id.v_arrival_date_time);
         if (holder.vArrivalDateTime != null) {
@@ -203,8 +203,18 @@ public class ItineraryUpdateListAdapter extends ArrayAdapter<Object> {
         setPositionInfoTag(holder.vgArrivalTime, i, PositionInfoTag.INFO_INBOUND);
 
         renderMessageArea(segment);
-        renderDeparture(segment);
-        renderArrival(segment);
+
+        boolean withStopIcon = true;
+        if (i == 0) {
+            withStopIcon = false;
+        }
+        renderDeparture(segment, withStopIcon);
+
+        withStopIcon = true;
+        if (i + 1 == this.segments.size()) {
+            withStopIcon = false;
+        }
+        renderArrival(segment, withStopIcon);
 
         return resultView;
     }
@@ -267,7 +277,7 @@ public class ItineraryUpdateListAdapter extends ArrayAdapter<Object> {
         }
     }
 
-    private void renderDeparture(final ItinerarySegment segment) {
+    private void renderDeparture(final ItinerarySegment segment, final boolean withStopIcon) {
         if (segment == null) {
             return;
         }
@@ -314,17 +324,25 @@ public class ItineraryUpdateListAdapter extends ArrayAdapter<Object> {
         } else {
             holder.tvDepartureTimeValue.setText(StringUtilities.EMPTY_STRING);
         }
-        if (holder.ivDepartureLocation != null) {
-            holder.ivDepartureLocation.setVisibility(View.VISIBLE);
-            holder.ivDepartureSameLocation.setVisibility(View.GONE);
-        }
-        if (hasSameLocation(this.segments, segment, false)) {
-            holder.ivDepartureLocation.setVisibility(View.GONE);
-            holder.ivDepartureSameLocation.setVisibility(View.VISIBLE);
+
+        if (withStopIcon) {
+            if (holder.ivDepartureLocation != null) {
+                holder.ivDepartureLocation.setVisibility(View.GONE);
+            }
+            if (holder.ivDepartureStopLocation != null) {
+                holder.ivDepartureStopLocation.setVisibility(View.VISIBLE);
+            }
+        } else {
+            if (holder.ivDepartureLocation != null) {
+                holder.ivDepartureLocation.setVisibility(View.VISIBLE);
+            }
+            if (holder.ivDepartureStopLocation != null) {
+                holder.ivDepartureStopLocation.setVisibility(View.GONE);
+            }
         }
     }
 
-    private void renderArrival(final ItinerarySegment segment) {
+    private void renderArrival(final ItinerarySegment segment, final boolean withStopIcon) {
         if (segment == null) {
             return;
         }
@@ -369,13 +387,20 @@ public class ItineraryUpdateListAdapter extends ArrayAdapter<Object> {
         } else {
             holder.tvArrivalTimeValue.setText(StringUtilities.EMPTY_STRING);
         }
-        if (holder.ivArrivalLocation != null) {
-            holder.ivArrivalLocation.setVisibility(View.VISIBLE);
-            holder.ivArrivalSameLocation.setVisibility(View.GONE);
-        }
-        if (hasSameLocation(this.segments, segment, true)) {
-            holder.ivArrivalLocation.setVisibility(View.GONE);
-            holder.ivArrivalSameLocation.setVisibility(View.VISIBLE);
+        if (withStopIcon) {
+            if (holder.ivArrivalLocation != null) {
+                holder.ivArrivalLocation.setVisibility(View.GONE);
+            }
+            if (holder.ivArrivalStopLocation != null) {
+                holder.ivArrivalStopLocation.setVisibility(View.VISIBLE);
+            }
+        } else {
+            if (holder.ivArrivalLocation != null) {
+                holder.ivArrivalLocation.setVisibility(View.VISIBLE);
+            }
+            if (holder.ivArrivalStopLocation != null) {
+                holder.ivArrivalStopLocation.setVisibility(View.GONE);
+            }
         }
     }
 
