@@ -377,23 +377,13 @@ public class TravelAllowanceItineraryController extends BaseController {
         if (itinerary == null) {
             return true;
         }
-        resetMessages(itinerary);
-        Message msg;
         if (StringUtilities.isNullOrEmpty(itinerary.getName())) {
-            msg = new Message(Message.Severity.ERROR, Message.MSG_UI_MISSING_DATES,
-                    context.getString(R.string.general_fill_required_fields));
-            msg.setSourceObject(itinerary);
-            messageCache.add(msg);
             return false;
         }
         for (ItinerarySegment segment : itinerary.getSegmentList()) {
             if (segment.getArrivalDateTime() == null || segment.getDepartureDateTime() == null
                     || segment.getArrivalLocation() == null
                     || segment.getDepartureLocation() == null) {
-                msg = new Message(Message.Severity.ERROR, Message.MSG_UI_MISSING_DATES,
-                        context.getString(R.string.general_fill_required_fields));
-                msg.setSourceObject(itinerary);
-                messageCache.add(msg);
                 return false;
             }
         }
@@ -505,6 +495,18 @@ public class TravelAllowanceItineraryController extends BaseController {
             }
         }
         return resultList;
+    }
+
+    public boolean hasErrors() {
+        if (messageCache == null || messageCache.size() == 0) {
+            return false;
+        }
+        for (Message msg : this.messageCache) {
+            if (msg.getSeverity() == Message.Severity.ERROR) {
+                return true;
+            }
+        }
+        return false;
     }
 
     public void resetMessages() {

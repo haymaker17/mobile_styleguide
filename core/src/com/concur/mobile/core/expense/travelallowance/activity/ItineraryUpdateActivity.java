@@ -458,19 +458,23 @@ public class ItineraryUpdateActivity extends BaseActivity implements IController
             return true;
         }
         if (item.getItemId() == R.id.menuSave && this.itinerary != null) {
+            if (controller.hasErrors()) {
+                Toast.makeText(this, "@Save not possible. Correct errors first!@", Toast.LENGTH_SHORT).show();
+                return true;
+            }
             EditText etItinerary = (EditText) findViewById(R.id.et_itinerary);
             if (etItinerary != null) {
                 this.itinerary.setName(etItinerary.getText().toString());
             }
             if (!controller.areAllMandatoryFieldsFilled(itinerary)) {
-                List<Message> msgList = controller.getMessages(itinerary);
-                if (msgList != null && msgList.size() > 0) {
-                    showErrorDialog(msgList.get(0));
-                }
+                Message msg = new Message(Message.Severity.ERROR, Message.MSG_UI_MISSING_DATES,
+                        getString(R.string.general_fill_required_fields));
+                msg.setSourceObject(itinerary);
+                showErrorDialog(msg);
                 return true;
             }
 
-            Collections.sort(itinerary.getSegmentList());
+            //Collections.sort(itinerary.getSegmentList());
             List<ItinerarySegment> periods = itinerary.getSegmentList();
             if (!DateUtils.hasSubsequentDates(false, true, 2, periods)) //TODO: Border crossing
             {
