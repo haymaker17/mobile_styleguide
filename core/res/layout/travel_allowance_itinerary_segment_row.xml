@@ -32,8 +32,9 @@
 
             <ImageView
                 android:id="@+id/iv_row_icon"
-                android:layout_width="11dp"
-                android:layout_height="11dp"
+                android:layout_width="15dp"
+                android:layout_height="15dp"
+                android:layout_marginLeft="5dp"
                 android:src="@drawable/blue_oval"
                 android:layout_centerVertical="true"/>
 

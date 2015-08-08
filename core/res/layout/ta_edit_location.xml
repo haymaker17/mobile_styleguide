@@ -10,10 +10,11 @@
 
     <ImageView
         android:id="@+id/iv_location_icon"
-        android:layout_width="11dp"
-        android:layout_height="11dp"
+        android:layout_width="15dp"
+        android:layout_height="15dp"
         android:layout_alignParentTop="true"
         android:layout_marginTop="2dp"
+        android:layout_marginLeft="5dp"
         android:src="@drawable/blue_oval" />
 
     <ImageView
