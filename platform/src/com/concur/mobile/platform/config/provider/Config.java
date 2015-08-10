@@ -6,8 +6,10 @@ package com.concur.mobile.platform.config.provider;
 import android.net.Uri;
 import android.provider.BaseColumns;
 
+import com.concur.platform.PlatformProperties;
+
 /**
- * This class provide a contract between the config content provider and calling application code.
+ * This class provide a contract betweeen the config content provider and calling application code.
  * 
  * @author andrewk
  */
@@ -16,7 +18,7 @@ public final class Config {
     /**
      * The authority for the config provider.
      */
-    public static final String AUTHORITY = "com.concur.mobile.platform.config";
+    public static final String AUTHORITY = PlatformProperties.getConfigProviderAuthority();
 
     /**
      * A content:// style uri to the authority for the config provider
