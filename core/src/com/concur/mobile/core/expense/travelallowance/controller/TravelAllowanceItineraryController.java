@@ -614,8 +614,10 @@ public class TravelAllowanceItineraryController extends BaseController {
                     "Exchange segment of Itinerary to be updated with new result " + resultSegment.toString()));
             if (updSegment != null) {
                 int position = updItinerary.getSegmentList().indexOf(updSegment);
-                updItinerary.getSegmentList().remove(position);
-                updItinerary.getSegmentList().add(position, resultSegment);
+                if (position > -1) {
+                    updItinerary.getSegmentList().remove(position);
+                    updItinerary.getSegmentList().add(position, resultSegment);
+                }
             }
         }
         return isSuccess;
@@ -643,11 +645,15 @@ public class TravelAllowanceItineraryController extends BaseController {
             Log.d(DebugUtils.LOG_TAG_TA, DebugUtils.buildLogText(CLASS_TAG, "handleSegmentUpdate",
                     "Exchange segment of Itinerary to be updated and bufferd DB itinerary with new result " + resultSegment.toString()));
             int position = itin.getSegmentList().indexOf(itinSegment);
-            itin.getSegmentList().remove(position);
-            itin.getSegmentList().add(position, resultSegment); //Including positive messages
+            if (position > -1) {
+                itin.getSegmentList().remove(position);
+                itin.getSegmentList().add(position, resultSegment); //Including positive messages
+            }
             position = updItinerary.getSegmentList().indexOf(updSegment);
-            updItinerary.getSegmentList().remove(position);
-            updItinerary.getSegmentList().add(position, resultSegment);
+            if (position > -1) {
+                updItinerary.getSegmentList().remove(position);
+                updItinerary.getSegmentList().add(position, resultSegment);
+            }
         }
         return isSuccess;
     }
