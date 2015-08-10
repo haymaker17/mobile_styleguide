@@ -305,8 +305,13 @@ public class ItineraryUpdateActivity extends BaseActivity implements IController
         if (itinerary.getSegmentList().size() > 0){
             emptySegment.setDepartureLocation((itinerary.getSegmentList().get(itinerary.getSegmentList().size() - 1)).getArrivalLocation());
         }
+        Toast.makeText(this, "@New Item added@", Toast.LENGTH_SHORT).show();
         this.itinerary.getSegmentList().add(emptySegment);
         adapter.add(emptySegment);
+        ListView listView = (ListView) findViewById(R.id.list_view);
+        if (listView != null) {
+            listView.smoothScrollToPosition(adapter.getCount());
+        }
         adapter.notifyDataSetChanged();
     }
 

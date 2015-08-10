@@ -77,7 +77,8 @@
     <ListView
         android:layout_width="wrap_content"
         android:layout_height="match_parent"
-        android:transcriptMode="alwaysScroll"
+        android:clipToPadding="false"
+        android:paddingBottom="144dp"
         android:id="@+id/list_view" />
 
         <android.support.design.widget.FloatingActionButton
