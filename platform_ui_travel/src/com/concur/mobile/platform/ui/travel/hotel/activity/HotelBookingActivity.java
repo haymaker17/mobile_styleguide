@@ -85,8 +85,6 @@ public class HotelBookingActivity extends TravelBaseActivity implements SpinnerD
                     if (travelCustomFieldsConfig.errorOccuredWhileRetrieving) {
                         showToast("Could not retrieve custom fields.");
                     } else {
-
-                        travelCustomFieldsConfig = travelCustomFieldsConfig;
                         formFields = travelCustomFieldsConfig.formFields;
                         // to overcome the 'cannot perform this action inside of the onLoadFinished'
                         final int WHAT = 1;
@@ -839,7 +837,7 @@ public class HotelBookingActivity extends TravelBaseActivity implements SpinnerD
                 if (findViewById(R.id.hotel_room_violation_view) != null) {
                     findViewById(R.id.view_separator5).setVisibility(View.VISIBLE);
                 }
-                addTravelCustomFieldsView(false, false);
+                addTravelCustomFieldsView(false, false, update);
             }
         }
     }
@@ -851,9 +849,18 @@ public class HotelBookingActivity extends TravelBaseActivity implements SpinnerD
      * @param displayAtStart if <code>true</code> will result in the fields designated to be displayed at the start of the booking process
      *                       will be displayed; otherwise, fields at the end of the booking process will be displayed.
      */
-    protected void addTravelCustomFieldsView(boolean readOnly, boolean displayAtStart) {
+    protected void addTravelCustomFieldsView(boolean readOnly, boolean displayAtStart, boolean updateReq) {
         // Company has static custom fields, so display them via our nifty fragment!
         FragmentManager fragmentManager = getFragmentManager();
+
+        if (updateReq) {
+            Fragment fragment = getFragmentManager().findFragmentByTag(TRAVEL_CUSTOM_VIEW_FRAGMENT_TAG);
+            if (fragment != null) {
+                // remove the existing custom controls
+                getFragmentManager().beginTransaction().remove(fragment).commit();
+            }
+        }
+
         FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
         travelCustomFieldsFragment = new TravelCustomFieldsFragment();
         travelCustomFieldsFragment.readOnly = readOnly;
@@ -1058,7 +1065,7 @@ public class HotelBookingActivity extends TravelBaseActivity implements SpinnerD
         formFields = fields;
         travelCustomFieldsConfig.formFields = formFields;
         // Initialize the loader.
-        lm.initLoader(CUSTOM_FIELDS_LOADER_ID, null, customFieldsLoaderListener);
+        lm.restartLoader(CUSTOM_FIELDS_LOADER_ID, null, customFieldsLoaderListener);
     }
 
     private void showFailurePopUp() {
