@@ -47,7 +47,6 @@ import com.concur.mobile.core.expense.travelallowance.util.StringUtilities;
 import com.concur.mobile.core.util.Const;
 
 import java.util.Calendar;
-import java.util.Collections;
 import java.util.Date;
 import java.util.List;
 import java.util.Locale;
@@ -288,7 +287,9 @@ public class ItineraryUpdateActivity extends BaseActivity implements IController
             fab.setOnClickListener (new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
-                    addNewRow();
+                    if (!isDataInconsistent()) {
+                        addNewRow();
+                    }
                 }
             });
         }
@@ -296,14 +297,28 @@ public class ItineraryUpdateActivity extends BaseActivity implements IController
 
     private void addNewRow() {
         ItinerarySegment emptySegment = new ItinerarySegment();
-        //Get current date/time without seconds and milliseconds as default value for arrival and departure
+        //Get current date/time
         Calendar cal = Calendar.getInstance(Locale.getDefault());
-        cal.set(Calendar.SECOND, 0);
-        cal.set(Calendar.MILLISECOND, 0);
-        emptySegment.setDepartureDateTime(cal.getTime());
-        emptySegment.setArrivalDateTime(cal.getTime());
-        if (itinerary.getSegmentList().size() > 0){
-            emptySegment.setDepartureLocation((itinerary.getSegmentList().get(itinerary.getSegmentList().size() - 1)).getArrivalLocation());
+        if (itinerary.getSegmentList() != null) {
+            if (itinerary.getSegmentList().size() > 0) {
+                ItinerarySegment lastSegment = itinerary.getSegmentList().get(itinerary.getSegmentList().size() - 1);
+                emptySegment.setDepartureLocation(lastSegment.getArrivalLocation());
+                if (lastSegment.getArrivalDateTime() != null) {
+                    cal.setTime(lastSegment.getArrivalDateTime());
+                    cal.add(Calendar.MINUTE, 1);
+                    cal.set(Calendar.SECOND, 0);
+                    cal.set(Calendar.MILLISECOND, 0);
+                    emptySegment.setDepartureDateTime(cal.getTime());
+                    cal.add(Calendar.MINUTE, 1);
+                    emptySegment.setArrivalDateTime(cal.getTime());
+                }
+            } else {
+                cal.set(Calendar.SECOND, 0);
+                cal.set(Calendar.MILLISECOND, 0);
+                emptySegment.setDepartureDateTime(cal.getTime());
+                cal.add(Calendar.MINUTE, 1);
+                emptySegment.setArrivalDateTime(cal.getTime());
+            }
         }
         Toast.makeText(this, "@New Item added@", Toast.LENGTH_SHORT).show();
         this.itinerary.getSegmentList().add(emptySegment);
@@ -459,34 +474,39 @@ public class ItineraryUpdateActivity extends BaseActivity implements IController
             return true;
         }
         if (item.getItemId() == R.id.menuSave && this.itinerary != null) {
-            if (controller.hasErrors(this.itinerary)) {
-                Toast.makeText(this, "@Save not possible. Correct errors first!@", Toast.LENGTH_SHORT).show();
+            if (isDataInconsistent()) {
                 return true;
             }
+            controller.resetMessages(this.itinerary);
             EditText etItinerary = (EditText) findViewById(R.id.et_itinerary);
             if (etItinerary != null) {
                 this.itinerary.setName(etItinerary.getText().toString());
             }
-            if (!controller.areAllMandatoryFieldsFilled(itinerary)) {
-                Message msg = new Message(Message.Severity.ERROR, Message.MSG_UI_MISSING_DATES,
-                        getString(R.string.general_fill_required_fields));
-                msg.setSourceObject(itinerary);
-                showErrorDialog(msg);
-                return true;
-            }
-
-            //Collections.sort(itinerary.getSegmentList());
-            List<ItinerarySegment> periods = itinerary.getSegmentList();
-            if (!DateUtils.hasSubsequentDates(false, true, 2, periods)) //TODO: Border crossing
-            {
-                Toast.makeText(this, R.string.general_data_inconsistent, Toast.LENGTH_SHORT).show();
-                return true;
-            }
-            controller.resetMessages(this.itinerary);
             controller.executeUpdate(this.itinerary);
             return true;
         }
         return super.onOptionsItemSelected(item);
+    }
+
+    private boolean isDataInconsistent() {
+        if (controller.hasErrors(this.itinerary)) {
+            Toast.makeText(this, "@Action not possible. Correct errors first!@", Toast.LENGTH_SHORT).show();
+            return true;
+        }
+        if (!controller.areAllMandatoryFieldsFilled(itinerary)) {
+            Message msg = new Message(Message.Severity.ERROR, Message.MSG_UI_MISSING_DATES,
+                    getString(R.string.general_fill_required_fields));
+            msg.setSourceObject(itinerary);
+            showErrorDialog(msg);
+            return true;
+        }
+        List<ItinerarySegment> periods = itinerary.getSegmentList();
+        if (!DateUtils.hasSubsequentDates(false, true, 2, periods)) //TODO: Border crossing
+        {
+            Toast.makeText(this, R.string.general_data_inconsistent, Toast.LENGTH_SHORT).show();
+            return true;
+        }
+        return false;
     }
 
     @Override
