@@ -38,7 +38,7 @@ public class PreLogin extends BaseActivity {
                     && data != null) { // MOB-18672 this can be null for a Test Drive user.
                 // This scenario happens if user tries to create a new TestDrive account
                 // which already exists.
-                Intent i = new Intent(this, EmailPasswordActivity.class);
+                Intent i = new Intent(this, EmailPasswordLookupActivity.class);
                 i.putExtras(data.getExtras());
                 //reset user app start and login successful timer for google analytics
                 ConcurCore.resetUserTimers();

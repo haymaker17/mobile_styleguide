@@ -37,7 +37,7 @@ import com.concur.mobile.core.util.Flurry;
 import com.concur.mobile.core.util.FormUtil;
 import com.concur.mobile.core.util.ViewUtil;
 import com.concur.mobile.corp.ConcurMobile;
-import com.concur.mobile.corp.activity.EmailPasswordActivity;
+import com.concur.mobile.corp.activity.EmailPasswordLookupActivity;
 import com.concur.mobile.corp.activity.TestDriveTour;
 import com.concur.mobile.corp.service.TestDriveRegistrationAsyncTask;
 import com.concur.mobile.platform.ui.common.IProgressBarListener;
@@ -386,7 +386,7 @@ public class TestDriveRegistrationFragment extends BaseFragment implements OnCli
             }
 
             public void onClick(FragmentActivity activity, DialogInterface dialog, int which) {
-                Intent it = new Intent(activity,  EmailPasswordActivity.class);
+                Intent it = new Intent(activity,  EmailPasswordLookupActivity.class);
                 it.putExtra(Const.EXTRA_LOGIN_LAUNCHED_FROM_TEST_DRIVE_REGISTRATION, true);
 
                 TestDriveRegistrationFragment.this.activity.setResult(Activity.RESULT_OK);

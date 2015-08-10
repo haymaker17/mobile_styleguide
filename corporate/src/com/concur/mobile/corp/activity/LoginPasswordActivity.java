@@ -60,9 +60,9 @@ public class LoginPasswordActivity extends BaseActivity implements LoginPassword
 
     private BaseAsyncResultReceiver autoLoginReceiver;
 
-    private AutoLoginRequestTask autoLoginRequestTask;
-
     private LoginPasswordFragment loginPasswordFragment;
+
+    private AutoLoginRequestTask autoLoginRequestTask;
 
     private ProgressDialogFragment progressDialog;
 

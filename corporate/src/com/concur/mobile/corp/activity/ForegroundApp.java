@@ -101,7 +101,7 @@ public class ForegroundApp extends Activity {
                                 finish();
                             } else if (type != null && type.equalsIgnoreCase("MOB_SSO_LGIN")) {
                                 String companyCode = queryMap.get("companycode");
-                                Intent intent = new Intent(this, EmailPasswordActivity.class);
+                                Intent intent = new Intent(this, EmailPasswordLookupActivity.class);
                                 intent.putExtra(EmailLookupActivity.EXTRA_ADVANCE_TO_COMPANY_SIGN_ON, true);
                                 if (companyCode != null && companyCode.length() > 0) {
                                     intent.putExtra(Const.EXTRA_SSO_COMPANY_CODE, companyCode);

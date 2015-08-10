@@ -13,10 +13,13 @@ import android.content.DialogInterface.OnCancelListener;
 import android.content.Intent;
 import android.content.IntentFilter;
 import android.os.Bundle;
+import android.support.v4.view.MotionEventCompat;
 import android.text.Editable;
 import android.util.Log;
 import android.view.KeyEvent;
+import android.view.MotionEvent;
 import android.view.View;
+import android.view.ViewConfiguration;
 import android.view.WindowManager;
 import android.view.inputmethod.EditorInfo;
 import android.widget.Button;
@@ -75,6 +78,15 @@ public class CompanyCodeLoginActivity extends BaseActivity {
     private boolean fromNotification;
 
     private String companyCode;
+
+    // Double Tap Finger
+    private static final int TIMEOUT = ViewConfiguration.getDoubleTapTimeout() + 100;
+
+    private long mFirstDownTime = 0;
+
+    private boolean mSeparateTouches = false;
+
+    private byte mTwoFingerTapCount = 0;
 
     /*
      * (non-Javadoc)
@@ -135,16 +147,8 @@ public class CompanyCodeLoginActivity extends BaseActivity {
             Log.e(Const.LOG_TAG, CLS_TAG + ".onCreate: unable to locate 'loginButton'!");
         }
 
-        ImageView concurlogo = (ImageView) findViewById(R.id.concurlogo);
 
-        concurlogo.setOnLongClickListener(new View.OnLongClickListener() {
-
-            @Override
-            public boolean onLongClick(View v) {
-                openSettings();
-                return true;
-            }
-        });
+        setDoubleFingerTap();
 
         companyCodeView = (EditText) findViewById(R.id.companyCode);
         if (companyCodeView != null) {
@@ -187,6 +191,71 @@ public class CompanyCodeLoginActivity extends BaseActivity {
 
         // Restore any receivers.
         restoreReceivers();
+    }
+
+    private void setDoubleFingerTap(){
+        ImageView concur_logo = (ImageView) findViewById(R.id.concurlogo);
+
+        setOnTouchListenerForView(concur_logo);
+    }
+
+    public void setOnTouchListenerForView(View view) {
+        ImageView img = (ImageView) view;
+        img.setOnTouchListener(new View.OnTouchListener() {
+            public boolean onTouch(View v, MotionEvent event) {
+                onTouchEvent(event);
+                return true;
+            }
+        });
+    }
+
+    @Override
+    public boolean onTouchEvent(MotionEvent event) {
+
+        int action = MotionEventCompat.getActionMasked(event);
+
+        switch (action) {
+            case (MotionEvent.ACTION_MOVE):
+                Log.d(CLS_TAG, "Action was MOVE");
+                return true;
+            case (MotionEvent.ACTION_CANCEL):
+                Log.d(CLS_TAG, "Action was CANCEL");
+                return true;
+            case (MotionEvent.ACTION_OUTSIDE):
+                Log.d(CLS_TAG, "Movement occurred outside bounds " +
+                        "of current screen element");
+                return true;
+            case MotionEvent.ACTION_DOWN:
+                if (mFirstDownTime == 0 || event.getEventTime() - mFirstDownTime > TIMEOUT)
+                    reset(event.getDownTime());
+                return true;
+            case MotionEvent.ACTION_POINTER_UP:
+                if (event.getPointerCount() == 2)
+                    mTwoFingerTapCount++;
+                else
+                    mFirstDownTime = 0;
+                return true;
+            case MotionEvent.ACTION_UP:
+                if (!mSeparateTouches)
+                    mSeparateTouches = true;
+                else if (mTwoFingerTapCount == 2 && event.getEventTime() - mFirstDownTime < TIMEOUT) {
+                    onTwoFingerDoubleTap();
+                    mFirstDownTime = 0;
+                }
+                return true;
+            default:
+                return super.onTouchEvent(event);
+        }
+    }
+
+    private void reset(long time) {
+        mFirstDownTime = time;
+        mSeparateTouches = false;
+        mTwoFingerTapCount = 0;
+    }
+
+    public void onTwoFingerDoubleTap() {
+        openSettings();
     }
 
     public void openSettings() {

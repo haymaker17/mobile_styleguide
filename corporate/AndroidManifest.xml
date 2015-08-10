@@ -1,10 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
 <!-- The version lines below need to remain on separate lines for CM build purposes. -->
 
-<manifest package="com.concur.breeze"
-          xmlns:android="http://schemas.android.com/apk/res/android"
-          xmlns:tools="http://schemas.android.com/tools"
-          android:installLocation="internalOnly">
+<manifest
+    package="com.concur.breeze"
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:installLocation="internalOnly">
 
     <supports-screens
         android:largeScreens="true"
@@ -461,8 +462,8 @@
             android:theme="@style/ConcurBaseTheme.New">
         </activity>
         <!--<activity-->
-            <!--android:name="com.concur.mobile.corp.activity.PreLogin"-->
-            <!--android:theme="@style/ConcurTheme.NoActionBar">-->
+        <!--android:name="com.concur.mobile.corp.activity.PreLogin"-->
+        <!--android:theme="@style/ConcurTheme.NoActionBar">-->
         <!--</activity>-->
         <activity
             android:name="com.concur.mobile.corp.activity.TestDriveRegistration"
@@ -478,23 +479,23 @@
             android:theme="@style/ConcurBaseTheme.White.New">
         </activity>
         <activity
-            android:name="com.concur.mobile.corp.activity.EmailPasswordActivity"
+            android:name="com.concur.mobile.corp.activity.EmailPasswordLookupActivity"
             android:theme="@style/ConcurTheme.NoActionBar">
-    </activity>
-    <activity
-        android:name="com.concur.mobile.corp.activity.OpenSourceLicenseInfo"
-        android:theme="@style/ConcurBaseTheme">
-    </activity>
-    <activity
-        android:name="com.concur.mobile.corp.activity.OpenSourceLicenseDisplay"
-        android:theme="@style/ConcurBaseTheme">
-    </activity>
-    <activity
-        android:name="com.concur.mobile.corp.activity.ProfileInfo"
-        android:theme="@style/ConcurBaseTheme.New">
-    </activity>
+        </activity>
+        <activity
+            android:name="com.concur.mobile.corp.activity.OpenSourceLicenseInfo"
+            android:theme="@style/ConcurBaseTheme">
+        </activity>
+        <activity
+            android:name="com.concur.mobile.corp.activity.OpenSourceLicenseDisplay"
+            android:theme="@style/ConcurBaseTheme">
+        </activity>
+        <activity
+            android:name="com.concur.mobile.corp.activity.ProfileInfo"
+            android:theme="@style/ConcurBaseTheme.New">
+        </activity>
 
-    <!-- Providers -->
+        <!-- Providers -->
         <!-- Configuration Information Provider -->
         <provider
             android:name="com.concur.mobile.platform.config.provider.ConfigProvider"

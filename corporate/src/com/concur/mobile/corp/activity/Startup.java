@@ -321,13 +321,13 @@ public class Startup extends BaseActivity {
 
             //reset user timers
             ConcurCore.resetUserTimers();
-            startIntent = new Intent(this, EmailPasswordActivity.class);
+            startIntent = new Intent(this, EmailPasswordLookupActivity.class);
             // in home we are already setting this Preferences.setNotFirstTimeRunning(prefs);
         } else {
             //reset user timers
             ConcurCore.resetUserTimers();
             // go to login
-            startIntent = new Intent(this, EmailPasswordActivity.class);
+            startIntent = new Intent(this, EmailPasswordLookupActivity.class);
         }
     }
 

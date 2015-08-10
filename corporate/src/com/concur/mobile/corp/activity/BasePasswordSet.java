@@ -208,7 +208,7 @@ public abstract class BasePasswordSet extends BaseActivity implements OnClickLis
         frag.setPositiveButtonListener(new AlertDialogFragment.OnClickListener() {
 
             public void onCancel(FragmentActivity activity, DialogInterface dialog) {
-                Intent i = new Intent(BasePasswordSet.this, EmailPasswordActivity.class);
+                Intent i = new Intent(BasePasswordSet.this, EmailPasswordLookupActivity.class);
                 i.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
                 startActivity(i);
 
@@ -216,7 +216,7 @@ public abstract class BasePasswordSet extends BaseActivity implements OnClickLis
             }
 
             public void onClick(FragmentActivity activity, DialogInterface dialog, int which) {
-                Intent i = new Intent(BasePasswordSet.this, EmailPasswordActivity.class);
+                Intent i = new Intent(BasePasswordSet.this, EmailPasswordLookupActivity.class);
                 i.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
                 startActivity(i);
 
@@ -280,7 +280,7 @@ public abstract class BasePasswordSet extends BaseActivity implements OnClickLis
             }
 
             public void onClick(FragmentActivity activity, DialogInterface dialog, int which) {
-                Intent i = new Intent(BasePasswordSet.this, EmailPasswordActivity.class);
+                Intent i = new Intent(BasePasswordSet.this, EmailPasswordLookupActivity.class);
                 i.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
                 startActivity(i);
 
@@ -299,7 +299,7 @@ public abstract class BasePasswordSet extends BaseActivity implements OnClickLis
         frag.setPositiveButtonListener(new AlertDialogFragment.OnClickListener() {
 
             public void onCancel(FragmentActivity activity, DialogInterface dialog) {
-                Intent i = new Intent(BasePasswordSet.this, EmailPasswordActivity.class);
+                Intent i = new Intent(BasePasswordSet.this, EmailPasswordLookupActivity.class);
                 i.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
                 startActivity(i);
 
@@ -307,7 +307,7 @@ public abstract class BasePasswordSet extends BaseActivity implements OnClickLis
             }
 
             public void onClick(FragmentActivity activity, DialogInterface dialog, int which) {
-                Intent i = new Intent(BasePasswordSet.this, EmailPasswordActivity.class);
+                Intent i = new Intent(BasePasswordSet.this, EmailPasswordLookupActivity.class);
                 i.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
                 startActivity(i);
 
@@ -462,7 +462,7 @@ public abstract class BasePasswordSet extends BaseActivity implements OnClickLis
                 DialogFragmentFactory.getAlertOkayInstance("", R.string.login_failure).show(
                         getSupportFragmentManager(), null);
 
-                Intent i = new Intent(concurMobile, EmailPasswordActivity.class);
+                Intent i = new Intent(concurMobile, EmailPasswordLookupActivity.class);
                 i.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
                 startActivity(i);
 
