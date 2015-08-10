@@ -444,10 +444,13 @@ public class ViewUtil {
     }
 
     public static boolean hasFixedTA(Context context) {
-//TODO: Evaluate configuration
-        return true;
-        //SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(context);
-        //return prefs.getBoolean(Const.PREF_HAS_FIXED_TA, false);
+        SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(context);
+        return prefs.getBoolean(Const.PREF_HAS_FIXED_TA, false);
+    }
+
+    public static boolean hasTravelAllowanceFixed(Context context) {
+        SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(context);
+        return prefs.getBoolean(Const.PREF_HAS_TRAVEL_ALLOWANCE_FIXED, false);
     }
 
     public static boolean isConditionalFieldEvaluationEnabled(Context context) {

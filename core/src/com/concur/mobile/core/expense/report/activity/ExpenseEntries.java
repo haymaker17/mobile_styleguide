@@ -294,7 +294,9 @@ public class
     private void showTravelAllowanceButton(){
         View vHeaderItinerary = this.findViewById(R.id.header_itinerary);
         if (vHeaderItinerary != null){
-            vHeaderItinerary.setVisibility(View.VISIBLE);
+            if (ViewUtil.hasFixedTA(this)) {
+                vHeaderItinerary.setVisibility(View.VISIBLE);
+            }
         }
     }
 

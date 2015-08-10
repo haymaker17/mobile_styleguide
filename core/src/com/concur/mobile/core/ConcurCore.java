@@ -3008,6 +3008,10 @@ public abstract class ConcurCore extends MultiDexApplication {
         if (hasFixedTA == null)
             hasFixedTA = Boolean.FALSE;
 
+        Boolean hasTravelAllowanceFixed = (Boolean) responses.get(Const.LR_SITE_SETTINGS_MOBILE_HAS_TRAVEL_ALLOWANCE_FIXED);
+        if (hasTravelAllowanceFixed == null)
+            hasTravelAllowanceFixed = Boolean.FALSE;
+
         Boolean enableConditionalFieldEvaluation = (Boolean) responses
                 .get(Const.LR_SITE_SETTINGS_ENABLE_CONDITIONAL_FIELD_EVALUATION);
         if (enableConditionalFieldEvaluation == null)
@@ -3047,6 +3051,7 @@ public abstract class ConcurCore extends MultiDexApplication {
         PreferenceUtil.savePreference(prefs, Const.PREF_TRAVEL_PROFILE_STATUS, travelProfileStatus);
 
         PreferenceUtil.savePreference(prefs, Const.PREF_HAS_FIXED_TA, hasFixedTA);
+        PreferenceUtil.savePreference(prefs, Const.PREF_HAS_TRAVEL_ALLOWANCE_FIXED, hasTravelAllowanceFixed);
         PreferenceUtil.savePreference(prefs, Const.PREF_ALLOW_CONDITIONAL_FIELD_EVALUATION,
                 enableConditionalFieldEvaluation);
 

@@ -252,6 +252,7 @@ public final class Const {
     public static final String TEST_DRIVE_CONTACT_CONCUR_NUMBER = "1-888-883-8411";
 
     public static final String PREF_HAS_FIXED_TA = "pref_has_fixed_ta";
+    public static final String PREF_HAS_TRAVEL_ALLOWANCE_FIXED = "pref_has_travel_allowance_fixed";
 
     // Constants identifying specific role names.
     // An approver.
@@ -696,6 +697,7 @@ public final class Const {
     public static final String LR_SITE_SETTINGS_CARD_ALLOW_TRANS_DELETE = "site.settings.card.allow.trans.delete";
     public static final String LR_SITE_SETTINGS_MOBILE_PERSONAL_CAR_MILEAGE_ON_HOME = "site.settings.mobile.personal.car.mileage.on.home";
     public static final String LR_SITE_SETTINGS_MOBILE_HAS_FIXED_TA = "site.settings.mobile.has.fixed.ta";
+    public static final String LR_SITE_SETTINGS_MOBILE_HAS_TRAVEL_ALLOWANCE_FIXED = "site.settings.mobile.has.travel.allowance.fixed";
     public static final String LR_SITE_SETTINGS_HIDE_RECEIPT_STORE = "site.settings.hide.receipt.store";
     public static final String LR_SITE_SETTINGS_SHOW_NONREFUNDABLE_MESSAGE = "site.settings.show.nonrefundable.message";
     public static final String LR_SITE_SETTINGS_SHOW_LIST_CODES = "site.settings.show.list.codes";
