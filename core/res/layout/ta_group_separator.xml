@@ -3,4 +3,4 @@
     android:id="@+id/v_separator"
     android:layout_width="1dp"
     android:layout_height="1dp"
-    android:background="#dbe1e6" />
+    android:background="#a7b6bf" />

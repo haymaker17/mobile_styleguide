@@ -2,8 +2,16 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@drawable/gradient_background"
+    android:layout_marginLeft="20dp"
     android:orientation="vertical">
+
+    <include
+        android:id="@+id/v_arrival_separator_short"
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:layout_marginLeft="72dp"
+        android:layout_alignParentLeft="true"
+        layout="@layout/ta_group_separator" />
 
     <include
         android:id="@+id/v_message_area"
@@ -21,7 +29,7 @@
         android:layout_height="wrap_content"
         android:layout_marginLeft="16dp"
         android:layout_marginRight="16dp"
-        android:layout_marginBottom="16dp"
+        android:layout_marginBottom="8dp"
         android:layout_marginTop="16dp"
         layout="@layout/ta_edit_location" />
 
@@ -32,7 +40,7 @@
         android:layout_height="wrap_content"
         android:layout_marginLeft="16dp"
         android:layout_marginRight="16dp"
-        android:layout_marginBottom="16dp"
+        android:layout_marginBottom="20dp"
         layout="@layout/ta_edit_date_time" />
 
 
@@ -52,7 +60,7 @@
         android:layout_height="wrap_content"
         android:layout_marginLeft="16dp"
         android:layout_marginRight="16dp"
-        android:layout_marginBottom="16dp"
+        android:layout_marginBottom="8dp"
         layout="@layout/ta_edit_location" />
 
 
@@ -65,11 +73,13 @@
         android:layout_marginBottom="16dp"
         layout="@layout/ta_edit_date_time" />
 
+    <!--
     <include
         android:id="@+id/v_arrival_separator_short"
         android:layout_width="match_parent"
         android:layout_height="1dp"
-        android:layout_marginLeft="72dp"
+        android:layout_marginLeft="16dp"
         layout="@layout/ta_group_separator" />
+        -->
 
 </LinearLayout>
