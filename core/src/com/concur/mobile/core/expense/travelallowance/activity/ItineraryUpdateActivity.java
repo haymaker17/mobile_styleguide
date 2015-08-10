@@ -203,8 +203,7 @@ public class ItineraryUpdateActivity extends BaseActivity implements IController
                     Calendar cal;
                     int datePosition = 0;
                     ItinerarySegment segment = itinerary.getSegmentList().get(currentPosition.getPosition());
-                    controller.resetBackendMessages(segment);
-                    controller.resetMessages(segment);
+                    segment.setMessage(null);
                     if (currentPosition.getInfo() == PositionInfoTag.INFO_OUTBOUND) {
                         date = segment.getDepartureDateTime();
                     } else {
@@ -236,8 +235,7 @@ public class ItineraryUpdateActivity extends BaseActivity implements IController
                     Calendar cal;
                     int datePosition = 0;
                     ItinerarySegment segment = itinerary.getSegmentList().get(currentPosition.getPosition());
-                    controller.resetBackendMessages(segment);
-                    controller.resetMessages(segment);
+                    segment.setMessage(null);
                     if (currentPosition.getInfo() == PositionInfoTag.INFO_OUTBOUND) {
                         date = segment.getDepartureDateTime();
                     } else {
@@ -266,7 +264,6 @@ public class ItineraryUpdateActivity extends BaseActivity implements IController
             adapter = new ItineraryUpdateListAdapter(this, onItemClickListener, onLocationClickListener,
                     onDateClickListener, onTimeClickListener, this.itinerary.getSegmentList());
             listView.setAdapter(adapter);
-            adapter.setMessageList(controller.getMessages());
         }
 
         // In case of Create also create the first segment
@@ -326,8 +323,7 @@ public class ItineraryUpdateActivity extends BaseActivity implements IController
                     int datePosition = 0;
                     if (this.currentPosition != null) {
                         ItinerarySegment segment = itinerary.getSegmentList().get(currentPosition.getPosition());
-                        controller.resetBackendMessages(segment);
-                        controller.resetMessages(segment);
+                        segment.setMessage(null);
                         ItineraryLocation itinLocation = new ItineraryLocation();
                         itinLocation.setName(selectedListItemText);
                         itinLocation.setCode(selectedListItemKey);
@@ -447,7 +443,7 @@ public class ItineraryUpdateActivity extends BaseActivity implements IController
 
     @Override
     public void onBackPressed() {
-        controller.resetMessages();
+        controller.resetMessages(itinerary);
         super.onBackPressed();
     }
 
@@ -458,7 +454,7 @@ public class ItineraryUpdateActivity extends BaseActivity implements IController
             return true;
         }
         if (item.getItemId() == R.id.menuSave && this.itinerary != null) {
-            if (controller.hasErrors()) {
+            if (controller.hasErrors(this.itinerary)) {
                 Toast.makeText(this, "@Save not possible. Correct errors first!@", Toast.LENGTH_SHORT).show();
                 return true;
             }
@@ -481,8 +477,8 @@ public class ItineraryUpdateActivity extends BaseActivity implements IController
                 Toast.makeText(this, R.string.general_data_inconsistent, Toast.LENGTH_SHORT).show();
                 return true;
             }
+            controller.resetMessages(this.itinerary);
             controller.executeUpdate(this.itinerary);
-            controller.resetMessages();
             return true;
         }
         return super.onOptionsItemSelected(item);
@@ -577,7 +573,6 @@ public class ItineraryUpdateActivity extends BaseActivity implements IController
         Log.d(DebugUtils.LOG_TAG_TA, DebugUtils.buildLogText(CLASS_TAG, "refreshAdapter", "Refreshing adapter."));
         this.adapter.clear();
         this.adapter.addAll(this.itinerary.getSegmentList());
-        this.adapter.setMessageList(this.controller.getMessages());
         adapter.notifyDataSetChanged();
     }
 }

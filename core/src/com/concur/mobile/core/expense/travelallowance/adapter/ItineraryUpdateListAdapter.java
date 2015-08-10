@@ -14,7 +14,6 @@ import com.concur.core.R;
 import com.concur.mobile.core.expense.travelallowance.datamodel.ItineraryLocation;
 import com.concur.mobile.core.expense.travelallowance.datamodel.ItinerarySegment;
 import com.concur.mobile.core.expense.travelallowance.ui.model.PositionInfoTag;
-import com.concur.mobile.core.expense.travelallowance.util.ItineraryUtils;
 import com.concur.mobile.core.expense.travelallowance.util.Message;
 import com.concur.mobile.core.expense.travelallowance.util.StringUtilities;
 
@@ -34,12 +33,7 @@ public class ItineraryUpdateListAdapter extends ArrayAdapter<Object> {
     private OnClickListener onDateClickListener;
     private OnClickListener onLocationClickListener;
     private OnClickListener onItemClickListener;
-    private List<Message> messageList;
     private List<ItinerarySegment> segments;
-
-    public void setMessageList(List<Message> messageList) {
-        this.messageList = messageList;
-    }
 
     /**
      * Holds all UI controls needed for rendering
@@ -260,10 +254,7 @@ public class ItineraryUpdateListAdapter extends ArrayAdapter<Object> {
                 holder.tvMessage.setText(R.string.general_item_locked);
             }
         } else {
-            Message msg = null;
-            if (messageList != null) {
-                msg = ItineraryUtils.findMessage(messageList, segment);
-            }
+            Message msg = segment.getMessage();
             if (msg != null && msg.getSeverity() == Message.Severity.ERROR) {
                 holder.vMessageArea.setVisibility(View.VISIBLE);
                 if (holder.ivIcon != null) {
@@ -281,7 +272,7 @@ public class ItineraryUpdateListAdapter extends ArrayAdapter<Object> {
         if (segment == null) {
             return;
         }
-
+        Message msg = segment.getMessage();
         if (holder.vgDepartureDate != null) {
             holder.vgDepartureDate.setEnabled(!segment.isLocked());
         }
@@ -296,6 +287,10 @@ public class ItineraryUpdateListAdapter extends ArrayAdapter<Object> {
         }
         if (holder.tvDepartureLocationValue != null) {
             if (segment.getDepartureLocation() != null) {
+                holder.tvDepartureLocationValue.setTextAppearance(context, R.style.DefaultValue_Small);
+                if (msg != null && msg.containsField(ItinerarySegment.Field.DEPARTURE_LOCATION.getName())) {
+                    holder.tvDepartureLocationValue.setTextAppearance(context, R.style.DefaultValue_Small_Red);
+                }
                 holder.tvDepartureLocationValue.setText(segment.getDepartureLocation().getName());
             } else {
                 holder.tvDepartureLocationValue.setText(StringUtilities.EMPTY_STRING);
@@ -311,12 +306,20 @@ public class ItineraryUpdateListAdapter extends ArrayAdapter<Object> {
         if (segment.getDepartureDateTime() != null) {
             String dateStr;
             if (holder.tvDepartureDateValue != null) {
+                holder.tvDepartureDateValue.setTextAppearance(context, R.style.DefaultValue_Small);
+                if (msg != null && msg.containsField(ItinerarySegment.Field.DEPARTURE_DATE_TIME.getName())) {
+                    holder.tvDepartureDateValue.setTextAppearance(context, R.style.DefaultValue_Small_Red);
+                }
                 dateStr = DateUtils.formatDateTime(context, segment.getDepartureDateTime().getTime(),
                         DateUtils.FORMAT_SHOW_DATE | DateUtils.FORMAT_SHOW_WEEKDAY
                         | DateUtils.FORMAT_ABBREV_WEEKDAY | DateUtils.FORMAT_ABBREV_MONTH);
                 holder.tvDepartureDateValue.setText(dateStr);
             }
             if (holder.tvDepartureTimeValue != null) {
+                holder.tvDepartureTimeValue.setTextAppearance(context, R.style.DefaultValue_Small);
+                if (msg != null && msg.containsField(ItinerarySegment.Field.DEPARTURE_DATE_TIME.getName())) {
+                    holder.tvDepartureTimeValue.setTextAppearance(context, R.style.DefaultValue_Small_Red);
+                }
                 dateStr = DateUtils.formatDateTime(context, segment.getDepartureDateTime().getTime(),
                         DateUtils.FORMAT_SHOW_TIME);
                 holder.tvDepartureTimeValue.setText(dateStr);
@@ -324,7 +327,6 @@ public class ItineraryUpdateListAdapter extends ArrayAdapter<Object> {
         } else {
             holder.tvDepartureTimeValue.setText(StringUtilities.EMPTY_STRING);
         }
-
         if (withStopIcon) {
             if (holder.ivDepartureLocation != null) {
                 holder.ivDepartureLocation.setVisibility(View.GONE);
@@ -346,6 +348,7 @@ public class ItineraryUpdateListAdapter extends ArrayAdapter<Object> {
         if (segment == null) {
             return;
         }
+        Message msg = segment.getMessage();
         if (holder.vgArrivalDate != null) {
             holder.vgArrivalDate.setEnabled(!segment.isLocked());
         }
@@ -360,6 +363,10 @@ public class ItineraryUpdateListAdapter extends ArrayAdapter<Object> {
         }
         if (holder.tvArrivalLocationValue != null) {
             if (segment.getArrivalLocation() != null) {
+                holder.tvArrivalLocationValue.setTextAppearance(context, R.style.DefaultValue_Small);
+                if (msg != null && msg.containsField(ItinerarySegment.Field.ARRIVAL_LOCATION.getName())) {
+                    holder.tvArrivalLocationValue.setTextAppearance(context, R.style.DefaultValue_Small_Red);
+                }
                 holder.tvArrivalLocationValue.setText(segment.getArrivalLocation().getName());
             } else {
                 holder.tvArrivalLocationValue.setText(StringUtilities.EMPTY_STRING);
@@ -374,12 +381,20 @@ public class ItineraryUpdateListAdapter extends ArrayAdapter<Object> {
         if (segment.getArrivalDateTime() != null) {
             String dateStr;
             if (holder.tvArrivalDateValue != null) {
+                holder.tvArrivalDateValue.setTextAppearance(context, R.style.DefaultValue_Small);
+                if (msg != null && msg.containsField(ItinerarySegment.Field.ARRIVAL_DATE_TIME.getName())) {
+                    holder.tvArrivalDateValue.setTextAppearance(context, R.style.DefaultValue_Small_Red);
+                }
                 dateStr = DateUtils.formatDateTime(context, segment.getArrivalDateTime().getTime(),
                         DateUtils.FORMAT_SHOW_DATE | DateUtils.FORMAT_SHOW_WEEKDAY
                                 | DateUtils.FORMAT_ABBREV_WEEKDAY | DateUtils.FORMAT_ABBREV_MONTH);
                 holder.tvArrivalDateValue.setText(dateStr);
             }
             if (holder.tvArrivalTimeValue != null) {
+                holder.tvArrivalTimeValue.setTextAppearance(context, R.style.DefaultValue_Small);
+                if (msg != null && msg.containsField(ItinerarySegment.Field.ARRIVAL_DATE_TIME.getName())) {
+                    holder.tvArrivalTimeValue.setTextAppearance(context, R.style.DefaultValue_Small_Red);
+                }
                 dateStr = DateUtils.formatDateTime(context, segment.getArrivalDateTime().getTime(),
                         DateUtils.FORMAT_SHOW_TIME);
                 holder.tvArrivalTimeValue.setText(dateStr);

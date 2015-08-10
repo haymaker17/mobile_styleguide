@@ -5,6 +5,8 @@ import android.content.Context;
 import com.concur.core.R;
 
 import java.io.Serializable;
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * Created by Michael Becherer on 19-Jul-15.
@@ -43,6 +45,8 @@ public class Message implements Serializable {
      */
     private String messageText;
 
+    private List<String> fields;
+
     private Object sourceObject;
 
     /**
@@ -66,6 +70,23 @@ public class Message implements Serializable {
         this.severity = severity;
         this.code = code;
         this.messageText = messageText;
+    }
+
+    /**
+     * Creates a message object.
+     * Usually called for device related messages.
+     * @param severity The severity of the message
+     * @param code The coded representation (see Message.MSG_UI_<...>)
+     * @param fields The fields this message is referring to
+     */
+    public Message(Severity severity, String code, String messageText, String... fields) {
+        this(severity, code, messageText);
+        this.fields = new ArrayList<String>();
+        for (String field : fields) {
+            if (!StringUtilities.isNullOrEmpty(field) && !this.fields.contains(field)) {
+                this.fields.add(field);
+            }
+        }
     }
 
     /**
@@ -111,6 +132,42 @@ public class Message implements Serializable {
      */
     public String getCode() {
         return code;
+    }
+
+    /**
+     * Checks, whether this {@code Message} refers to the given field
+     * @param field The field to be checked
+     * @return true, if the {@code Message} refers to the given field, otherwise false.
+     */
+    public boolean containsField(String field) {
+        if (StringUtilities.isNullOrEmpty(field) || this.fields == null || this.fields.size() == 0){
+            return false;
+        }
+        return fields.contains(field);
+    }
+
+    /**
+     * Removes the given field references from this {@code Message}
+     * @param fields The field references ro be removed
+     */
+    public void removeField(String... fields) {
+        if (this.fields == null || this.fields.size() == 0) {
+            return;
+        }
+        for (String field : fields) {
+            if (!StringUtilities.isNullOrEmpty(field)) {
+                this.fields.remove(field);
+            }
+        }
+    }
+
+    /**
+     * Removes all field references from this {@code Message}
+     */
+    public void removeAllFields() {
+        if (this.fields != null) {
+            this.fields = new ArrayList<String>();
+        }
     }
 
     /**
@@ -162,14 +219,14 @@ public class Message implements Serializable {
         this.messageText = messageText;
     }
 
-    /**
-     * {@inheritDoc}
-     *
-     * @return the human readable localized message text or an empty string.
-     */
     @Override
     public String toString() {
-        return this.messageText;
+        return "Message{" +
+                "severity=" + severity +
+                ", code='" + code + '\'' +
+                ", messageText='" + messageText + '\'' +
+                ", fields=" + fields +
+                '}';
     }
 
     public Object getSourceObject() {

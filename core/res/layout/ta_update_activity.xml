@@ -58,7 +58,7 @@
             android:minLines="1"
             android:singleLine="true"
             android:text="\@Itineary\@"
-            style="@style/DefaultValue" />
+            style="@style/DefaultValue.Small" />
 
     </LinearLayout>
 

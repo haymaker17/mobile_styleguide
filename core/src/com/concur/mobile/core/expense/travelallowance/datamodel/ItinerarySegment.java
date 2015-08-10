@@ -1,8 +1,11 @@
 package com.concur.mobile.core.expense.travelallowance.datamodel;
 
 //import com.concur.mobile.core.expense.travelallowance.util.DateComparator;
+import android.util.Log;
+
 import com.concur.mobile.core.expense.travelallowance.util.DateComparator;
 import com.concur.mobile.core.expense.travelallowance.util.DateUtils;
+import com.concur.mobile.core.expense.travelallowance.util.DebugUtils;
 import com.concur.mobile.core.expense.travelallowance.util.Message;
 
 import java.io.Serializable;
@@ -13,7 +16,7 @@ import java.util.Date;
  */
 public class ItinerarySegment implements Serializable, IDatePeriodUTC, Comparable<ItinerarySegment> {
 
-
+    private static final String CLASS_TAG = ItinerarySegment.class.getSimpleName();
     private static final long serialVersionUID = -5416179865430781088L;
 
     private String id;
@@ -24,6 +27,30 @@ public class ItinerarySegment implements Serializable, IDatePeriodUTC, Comparabl
     private Date borderCrossDateTime;
     private boolean locked;
     private Message message;
+
+    /**
+     * Describes the possible fields in this model. Might be used in {@link Message}s
+     */
+    public enum Field {
+        ID("Id"),
+        DEPARTURE_LOCATION("departureLocation"),
+        DEPARTURE_DATE_TIME("departureDateTime"),
+        ARRIVAL_LOCATION("arrivalLocation"),
+        ARRIVAL_DATE_TIME("arrivalDateTime"),
+        BORDER_CROSS_DATE_TIME("borderCrossDateTime"),
+        LOCKED("locked");
+
+        private String name;
+
+        Field(String name) {
+            this.name = name;
+        }
+
+        public String getName() {
+            return this.name;
+        }
+
+    }
 
     public String getId() {
         return id;
@@ -94,6 +121,9 @@ public class ItinerarySegment implements Serializable, IDatePeriodUTC, Comparabl
      * @return The message object
      */
     public Message getMessage() {
+        if (message != null) {
+            Log.d(DebugUtils.LOG_TAG_TA, DebugUtils.buildLogText(CLASS_TAG, "getMessage", message.toString()));
+        }
         return this.message;
     }
 
@@ -204,7 +234,9 @@ public class ItinerarySegment implements Serializable, IDatePeriodUTC, Comparabl
     @Override
     public String toString() {
         return "ItinerarySegment{" +
-                "id='" + id + '\'' +
+                "arrivalDateTime=" + arrivalDateTime +
+                ", departureDateTime=" + departureDateTime +
+                ", id='" + id + '\'' +
                 '}';
     }
 }
