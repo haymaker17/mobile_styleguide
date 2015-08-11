@@ -1,16 +1,6 @@
 $(function() { 
 
     //init();
-
-  $("#hamburger").on("click",function(){
-      toggleSidebar();
-   })
-
-   $("#dimmer").on("click",function(){
-      if ($("body").hasClass("sidebar_visible")) {
-         toggleSidebar();
-      }
-   })
     
   
   // Keep a mapping of url-to-container for caching purposes.
@@ -50,17 +40,10 @@ $(function() {
     //click on the accordion menu to open it to the right place
       if (thisCategory === parentCategory) {
           thisNavItem = $(".accordion").find("[data-class='" + thisCategory + "']").find("span:first");
-
-          //hide any other open menus
-          thisNavItem.siblings().find("ul").slideUp(200);
-
-          //close the sidebar if it's open
-          toggleSidebar(close);
       }
       else {
           
           thisNavItem = $(".accordion").find("[data-class='" + parentCategory + "']").find("[data-class='" + thisCategory + "']").find("span:first");
-          toggleSidebar(close);
       }
     
      
@@ -126,11 +109,9 @@ $(function() {
 
 function accordionMenu(inLink) {
 
-   var currentLink  = inLink;
-   var nextItem     = currentLink.next();
-   var linkParent   = currentLink.parent();
-   var linkSiblings = linkParent.siblings().find("ul");
-   var linkTop      = currentLink.parentsUntil(".accordion").length;
+   var currentLink = inLink;
+   var nextItem    = inLink.next();
+   var linkParent  = inLink.parentsUntil(".accordion").length;
 
    //check and see if this link is visible if it is, toggle it off
    if (nextItem.is(':visible')) {
@@ -142,12 +123,9 @@ function accordionMenu(inLink) {
    //this link isn't visible so let's open it and close the others
    else if(!nextItem.is(':visible')) {
       //this is a sub menu so open it
-      if (linkTop > 1) {
+      if (linkParent > 1) {
          nextItem.parents("ul").css("display","block");
          nextItem.slideDown(200);
-
-         linkSiblings.slideUp(200);
-
       }
 
       else {
@@ -159,9 +137,8 @@ function accordionMenu(inLink) {
    }
 
    function changeActive() {
-      $('.accordion').find("active").removeClass('active');
+      $('.accordion li').removeClass('active');
       currentLink.closest('li').addClass('active');
-      //currentLink.parents("span").addClass("active");
    }
 
    if(currentLink.closest('li').find('ul').children().length == 0) {
@@ -210,27 +187,19 @@ function setHeader(inTitle,inCategory,topCategory) {
       category = topCategory;
    }
    else {
-      category = topCategory + "  <span><svg class='breadcrumb_arrow_position' version='1.1' xmlns='http://www.w3.org/2000/svg' xmlns:xlink='http://www.w3.org/1999/xlink' x='0px' y='0px' width='25px' height='25px' viewBox='0 0 30 30' style='enable-background:new 0 0 30 30;' xml:space='preserve'><polygon fill='#FFFFFF' class='breadcrumb_arrow' points='7.5,0 22.5,15 7.5,30 15.6,15'/></svg></span>  " + inCategory;
+      category = topCategory + "  <span>&gt;</span>  " + inCategory;
    }
 
-
-   title = category + "  <span><svg class='breadcrumb_arrow_position' version='1.1' xmlns='http://www.w3.org/2000/svg' xmlns:xlink='http://www.w3.org/1999/xlink' x='0px' y='0px' width='25px' height='25px' viewBox='0 0 30 30' style='enable-background:new 0 0 30 30;' xml:space='preserve'><polygon fill='#FFFFFF' class='breadcrumb_arrow' points='7.5,0 22.5,15 7.5,30 15.6,15'/></svg></span>  " + inTitle;
-
-   //title = category + "  <span><img id='breadcrumb_arrow' src='img/icons_web/breadcrumb_arrow.svg' height='30' width='30'></span>  " + inTitle;
-   // title = category + "  <span>&rsaquo;</span>  " + inTitle;
+   title = category + "  <span>&gt;</span>  " + inTitle;
 
    $("#header_title").html(title);
-   $("#breadcrumb_header_title").html(title);
    $("#body").removeClass().addClass(topCategory);
 }  
 
 
-
-
 // get the commit notes from github so there's a changelist on the site
 function getGithubCommits() {
-  var html = "<thead><tr><th class='td_20'>Date</th><th class='td_60'>Description</th></tr></thead><tbody>";
-  //  var html = "<ul>";
+  var html = "<ul>";
   $.getJSON("https://api.github.com/repos/haymaker17/mobile_labs/commits", function(data){
     $.each(data, function(key, val){
       var item = data[key];
@@ -246,127 +215,18 @@ function getGithubCommits() {
       var date = (m + "." + d + "." + y);
 
 
-	  html+= "<tr><td>" + date + "</td><td>" + message + "</td></tr>";
-      // html+= "<li>" + date + "<br><span>" + message + "</span></li>";
+
+      html+= "<li>" + date + "<br><span>" + message + "</span></li>";
     });
 
-    html += "</tbody>"
-    // html += "</ul>"
+    html += "</ul>"
 
-    $(".changelist").html(html);
+    $(".changelist_body").html(html);
   });
 
+
+
 }
-
-
-
-
-/* open and close the sidebar when clicked ------------ */
-function toggleSidebar(inState) {
-   var body = $("body");
-
-   if (inState == close) {
-      body.removeClass("sidebar_visible");
-   }
-
-   else {
-      if (body.hasClass("sidebar_visible")) {
-        body.removeClass("sidebar_visible");
-     }
-     else {
-        body.addClass("sidebar_visible");
-     }
-
-   }
-}
-
-
-
-$(window).scroll(function () {
-
-     fadeinElements();
-     fixHeader();
-
- });
-
-
-
-
-
- function fadeinElements() {
-     /* Check the location of each desired element */
-     $('.fadeinElement').each(function(i) {
-
-         var height_of_object = $(this).outerHeight();
-         var bottom_of_object = $(this).offset().top + height_of_object;
-         var middle_of_object = bottom_of_object - (height_of_object);
-         var bottom_of_window = $(window).scrollTop() + $(window).height();
-
-         /* If the object is completely visible in the window, fade it it */
-         if (bottom_of_window > middle_of_object) {
-
-             // $(this).animate({
-             //     'opacity': '1'
-             // }, 500);
-
-             $(this).addClass("visible");
-
-         }
-
-     });
- }
-
-
-
-function fixHeader() {
-
-   var fromTop   = $("body").scrollTop();
-   $('body').toggleClass("fixedHeader", (fromTop > 60));
-   
-}
-
-
-
-
-function countItems() {
-
-   var itemCount = {
-      all: 0,
-      filter_list: 0,
-      filter_content: 0,
-      filter_bars: 0,
-      filter_controls: 0,
-      filter_login: 0,
-      filter_temp_view: 0,
-      filter_status: 0
-   };
-
-   $('.filterItemsContainer > div').each(function(index, element){
-     var thisClass  = $(element).attr("class");
-     itemCount[thisClass] += 1;
-     itemCount.all += 1;
-     
-   });
-
-   $('.filterOptions li').each(function(index, element){
-     var thisId   = $(element).data("filter");
-     var thisSpan = $(element).find("span");
-
-     thisSpan.html(itemCount[thisId]);
-     
-   });
-}
-
-
-
-
-function selectFirstItem() {
-   
-   if ($(".filterOptions").length > 0) {
-      $(".filterOptions li:first-child").click();
-   }
-}
-
 
 
 
