@@ -132,16 +132,17 @@ public class ItinerarySegment implements Serializable, IDatePeriodUTC, Comparabl
      */
     @Override
     public Date getStartDateUTC() {
-        if (departureDateTime == null) {
-            return null;
-        }
-        long departureTimeZoneOffset = 0;
-        if (departureLocation != null && departureLocation.getTimeZoneOffset() != null) {
-            departureTimeZoneOffset = departureLocation.getTimeZoneOffset();
-        }
-        Date dateUTC = new Date();
-        dateUTC.setTime(departureDateTime.getTime() - DateUtils.convertMinutesToMilliseconds(departureTimeZoneOffset));
-        return dateUTC;
+        return this.departureDateTime;
+//        if (departureDateTime == null) {
+//            return null;
+//        }
+//        long departureTimeZoneOffset = 0;
+//        if (departureLocation != null && departureLocation.getTimeZoneOffset() != null) {
+//            departureTimeZoneOffset = departureLocation.getTimeZoneOffset();
+//        }
+//        Date dateUTC = new Date();
+//        dateUTC.setTime(departureDateTime.getTime() - DateUtils.convertMinutesToMilliseconds(departureTimeZoneOffset));
+//        return dateUTC;
     }
 
     /**
@@ -149,16 +150,17 @@ public class ItinerarySegment implements Serializable, IDatePeriodUTC, Comparabl
      */
     @Override
     public Date getEndDateUTC() {
-        if (arrivalDateTime == null) {
-            return null;
-        }
-        long arrivalTimeZoneOffset = 0;
-        if (arrivalLocation != null && arrivalLocation.getTimeZoneOffset() != null) {
-            arrivalTimeZoneOffset = arrivalLocation.getTimeZoneOffset();
-        }
-        Date dateUTC = new Date();
-        dateUTC.setTime(arrivalDateTime.getTime() - DateUtils.convertMinutesToMilliseconds(arrivalTimeZoneOffset));
-        return dateUTC;
+        return this.arrivalDateTime;
+//        if (arrivalDateTime == null) {
+//            return null;
+//        }
+//        long arrivalTimeZoneOffset = 0;
+//        if (arrivalLocation != null && arrivalLocation.getTimeZoneOffset() != null) {
+//            arrivalTimeZoneOffset = arrivalLocation.getTimeZoneOffset();
+//        }
+//        Date dateUTC = new Date();
+//        dateUTC.setTime(arrivalDateTime.getTime() - DateUtils.convertMinutesToMilliseconds(arrivalTimeZoneOffset));
+//        return dateUTC;
     }
 
     @Override
