@@ -298,7 +298,6 @@ public class HotelImagesFragment extends PlatformFragmentV1 implements AdapterVi
             ImageView imageView;
             if (convertView == null) { // if it's not recycled, instantiate and initialize
                 imageView = new RecyclingImageView(mContext);
-                // imageView.setScaleType(ImageView.ScaleType.CENTER_CROP);
                 imageView.setScaleType(ImageView.ScaleType.FIT_CENTER);
                 imageView.setBackgroundColor(getResources().getColor(R.color.grey_view_background));
                 imageView.setLayoutParams(mImageViewLayoutParams);
@@ -314,9 +313,7 @@ public class HotelImagesFragment extends PlatformFragmentV1 implements AdapterVi
             // Finally load the image asynchronously into the ImageView, this also takes care of
             // setting a placeholder image while the background thread runs
             URI uri = URI.create(images.get(position).image);
-            imageView.setScaleType(ImageView.ScaleType.FIT_CENTER);
             mImageFetcher.loadImage(uri, imageView);
-            imageView.setScaleType(ImageView.ScaleType.CENTER_CROP);
 
             return imageView;
             //END_INCLUDE(load_gridview_item)

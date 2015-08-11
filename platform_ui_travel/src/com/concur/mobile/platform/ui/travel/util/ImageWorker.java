@@ -13,7 +13,6 @@ import android.graphics.drawable.TransitionDrawable;
 import android.os.Build;
 import android.widget.ImageView;
 import com.concur.mobile.platform.service.PlatformImageAsyncTask;
-import com.concur.mobile.platform.ui.travel.R;
 
 import java.lang.ref.WeakReference;
 
@@ -357,21 +356,18 @@ public abstract class ImageWorker {
      * @param drawable
      */
     private void setImageDrawable(ImageView imageView, Drawable drawable) {
+        imageView.setScaleType(ImageView.ScaleType.CENTER_CROP);
         if (mFadeInBitmap) {
             // Transition drawable with a transparent drawable and the final drawable
             final TransitionDrawable td = new TransitionDrawable(
                     new Drawable[] { new ColorDrawable(android.R.color.transparent), drawable });
-            // Set background to loading bitmap
-            //            imageView.setScaleType(ImageView.ScaleType.FIT_CENTER);
-            //            imageView.setBackgroundColor(Color.parseColor("#EEEEEE"));
             imageView.setBackground(new BitmapDrawable(mResources, mLoadingBitmap));
 
             imageView.setImageDrawable(td);
             td.startTransition(FADE_IN_TIME);
         } else {
+
             imageView.setImageDrawable(drawable);
-            imageView.setScaleType(ImageView.ScaleType.FIT_CENTER);
-            imageView.setBackgroundColor(mResources.getColor(R.color.grey_view_background));
 
         }
     }

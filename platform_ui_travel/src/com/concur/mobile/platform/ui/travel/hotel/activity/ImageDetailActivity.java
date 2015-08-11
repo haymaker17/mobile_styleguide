@@ -48,7 +48,7 @@ public class ImageDetailActivity extends Activity implements OnClickListener {
         // resolution that is appropriate for both portrait and landscape. For best image quality
         // we shouldn't divide by 2, but this will use more memory and require a larger memory
         // cache.
-        final int longest = (height > width ? height : width) / 2;
+        final int longest = (height > width ? height : width) / 2; // / 4;
 
         TravelImageCache.ImageCacheParams cacheParams = new TravelImageCache.ImageCacheParams(this, IMAGE_CACHE_DIR);
         cacheParams.setMemCacheSizePercent(0.25f); // Set memory cache to 25% of app memory
