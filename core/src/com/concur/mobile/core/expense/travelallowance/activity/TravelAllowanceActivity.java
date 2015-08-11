@@ -125,7 +125,8 @@ public class TravelAllowanceActivity extends AppCompatActivity
                 getString(R.string.ta_adjustments), FixedTravelAllowanceListFragment.class, null);
         list.add(adjustmentFrag);
 
-        if (getIntent().getExtras().getBoolean(BundleId.IS_EDIT_MODE)) {
+        if (getIntent().getExtras().getBoolean(BundleId.IS_EDIT_MODE)
+                && !getIntent().getBooleanExtra(BundleId.EXPENSE_REPORT_IS_SUBMITTED, false)) {
             Bundle arguments = new Bundle();
             ArrayList<Itinerary> itinList = new ArrayList<>(itineraryController.getItineraryList());
             arguments.putSerializable(BundleId.ITINERARY_LIST, itinList);

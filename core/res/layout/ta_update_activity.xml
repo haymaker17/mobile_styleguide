@@ -92,7 +92,7 @@
             android:layout_below="@id/list_view"
             android:elevation="4dp"
             app:layout_anchor= "@id/list_view"
-            app:backgroundTint="#0078c8"
+            app:backgroundTint="#2f6996"
             app:layout_anchorGravity = "bottom|right|end"
             />
 
