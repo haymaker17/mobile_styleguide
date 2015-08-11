@@ -294,7 +294,7 @@ public class
     private void showTravelAllowanceButton(){
         View vHeaderItinerary = this.findViewById(R.id.header_itinerary);
         if (vHeaderItinerary != null){
-            if (ViewUtil.hasFixedTA(this)) {
+            if (ViewUtil.hasTravelAllowanceFixed(this)) {
                 vHeaderItinerary.setVisibility(View.VISIBLE);
             }
         }
@@ -1599,7 +1599,7 @@ public class
         view = findViewById(R.id.header_itinerary);
         if (view != null) {
             // hide if we don't have the setting
-            if (!ViewUtil.hasFixedTA(this)) {
+            if (!ViewUtil.hasTravelAllowanceFixed(this)) {
                 view.setVisibility(View.GONE);
             }
             view.setFocusable(true);
