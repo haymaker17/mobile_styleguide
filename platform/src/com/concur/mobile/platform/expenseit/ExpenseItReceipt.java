@@ -188,13 +188,13 @@ public class ExpenseItReceipt implements ExpenseItReceiptDAO, Serializable {
             sendToCteAtCol.set(Calendar.MILLISECOND, 0);
             receipt.setSendToCteAt(sendToCteAtCol.getTime());
         }
-        byte[] imageData = CursorUtil.getBlobValue(cursor, Expense
+        /*byte[] imageData = CursorUtil.getBlobValue(cursor, Expense
                 .ExpenseItReceiptColumns.IMAGE_DATA);
         if (imageData != null) {
             receipt.setImageData(BitmapFactory.decodeByteArray(imageData, 0, imageData.length));
         } else {
             receipt.setImageData(null);
-        }
+        }*/
         receipt.setTotalImageCount(CursorUtil.getIntValue(cursor, Expense.ExpenseItReceiptColumns.TOTAL_IMAGE_COUNT));
         receipt.setTotalImagesUploaded(CursorUtil.getIntValue(cursor, Expense.ExpenseItReceiptColumns.TOTAL_IMAGES_UPLOADED));
         receipt.setParsingStatusCode(CursorUtil.getIntValue(cursor, Expense.ExpenseItReceiptColumns.PARSING_STATUS_CODE));
@@ -227,7 +227,7 @@ public class ExpenseItReceipt implements ExpenseItReceiptDAO, Serializable {
             sendToCteAt.setTimeInMillis(sentToCtedMilliSeconds);
             sendToCteAt.set(Calendar.MILLISECOND, 0);
         }
-        imageData = CursorUtil.getBlobValue(cursor, Expense.ExpenseItReceiptColumns.IMAGE_DATA);
+        //imageData = CursorUtil.getBlobValue(cursor, Expense.ExpenseItReceiptColumns.IMAGE_DATA);
         totalImageCount = CursorUtil.getIntValue(cursor, Expense.ExpenseItReceiptColumns.TOTAL_IMAGE_COUNT);
         totalImagesUploaded = CursorUtil.getIntValue(cursor, Expense.ExpenseItReceiptColumns.TOTAL_IMAGES_UPLOADED);
         parsingStatusCode = CursorUtil.getIntValue(cursor, Expense.ExpenseItReceiptColumns.PARSING_STATUS_CODE);
@@ -375,10 +375,25 @@ public class ExpenseItReceipt implements ExpenseItReceiptDAO, Serializable {
 
     @Override
     public Bitmap getImageData() {
+        ContentResolver resolver = context.getContentResolver();
+        Cursor cursor = null;
+        byte [] blob = null;
         Bitmap bitmap = null;
+        StringBuilder statement = new StringBuilder();
+        statement.append(Expense.ExpenseItReceiptColumns.USER_ID);
+        statement.append(" = ? AND ");
+        statement.append(Expense.ExpenseItReceiptColumns._ID);
+        statement.append(" = ?");
+        String[] whereArgs = {userId, String.valueOf(id)};
 
-        if (imageData != null){
-            bitmap = BitmapFactory.decodeByteArray(imageData, 0, imageData.length);
+
+        cursor = resolver.query(Expense.ExpenseItReceiptColumns.CONTENT_URI, null, statement.toString(), whereArgs, Expense.ExpenseItReceiptColumns.DEFAULT_SORT_ORDER);
+        if (cursor != null && cursor.moveToNext()) {
+            blob = CursorUtil.getBlobValue(cursor, Expense.ExpenseItReceiptColumns.IMAGE_DATA);
+        }
+
+        if (blob != null){
+            bitmap = BitmapFactory.decodeByteArray(blob, 0, blob.length);
         }
 
         return bitmap;
