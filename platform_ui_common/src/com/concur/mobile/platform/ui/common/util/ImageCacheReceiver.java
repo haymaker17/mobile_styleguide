@@ -4,8 +4,6 @@ import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
 import android.util.Log;
-import android.widget.BaseAdapter;
-import android.widget.GridView;
 import android.widget.ListView;
 import com.concur.mobile.platform.ui.common.view.ListItem;
 import com.concur.mobile.platform.ui.common.view.ListItemAdapter;
@@ -21,10 +19,6 @@ public class ImageCacheReceiver<T extends ListItem> extends BroadcastReceiver {
 
     private ListItemAdapter<T> listItemAdapter;
 
-    private BaseAdapter adapter;
-
-    private GridView gridView;
-
     private ListView listView;
 
     /**
@@ -36,18 +30,6 @@ public class ImageCacheReceiver<T extends ListItem> extends BroadcastReceiver {
     public ImageCacheReceiver(ListItemAdapter<T> listItemAdapter, ListView listView) {
         this.listItemAdapter = listItemAdapter;
         this.listView = listView;
-    }
-
-    /**
-     * * Constructs an instance of <code>ImageCacheReceiver</code> with an base adapter and Grid view.
-     *
-     * @param adapter
-     * @param mGridView
-     */
-    public ImageCacheReceiver(BaseAdapter adapter, GridView mGridView) {
-        this.adapter = adapter;
-        this.gridView = mGridView;
-
     }
 
     /**
@@ -69,12 +51,9 @@ public class ImageCacheReceiver<T extends ListItem> extends BroadcastReceiver {
                 URI uri = (URI) intent.getSerializableExtra(ImageCache.EXTRA_IMAGE_DOWNLOAD_URI);
                 if (listItemAdapter != null) {
                     listItemAdapter.refreshView(listView, uri);
+                    //
                     listView.invalidateViews();
                     listView.refreshDrawableState();
-                } else if (adapter != null && gridView != null) {
-                    // to refresh grid view
-                    adapter.notifyDataSetChanged();
-                    gridView.refreshDrawableState();
                 }
             } else {
                 Log.e(Const.LOG_TAG, CLS_TAG + ".onReceive: listItemAdapter is null!");

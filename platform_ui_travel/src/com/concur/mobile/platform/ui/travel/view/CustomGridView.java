@@ -70,7 +70,7 @@ public class CustomGridView extends GridView {
                     float col = getNumColumns();
                     int rows = (int) Math.ceil(child / col);
                     if (rows > 2) {
-                        height = (int) ((rows * getColumnWidth() * 0.6 + 10) + (getHorizontalSpacing() * rows - 1));
+                        height = (int) ((rows * getColumnWidth() * 0.6 + 20) + (getHorizontalSpacing() * rows - 1));
                     } else {
                         height = (int) ((rows * getColumnWidth() * 0.7) + (getHorizontalSpacing() * rows - 1));
                     }

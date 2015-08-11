@@ -52,6 +52,7 @@ public class HotelChoiceDetailsFragment extends PlatformFragmentV1 implements On
     private Bitmap bitmap;
     private boolean progressbarVisible;
     private View progressBar;
+    private ScrollView scrollView;
 
     // empty constructor
     public HotelChoiceDetailsFragment() {
@@ -94,6 +95,7 @@ public class HotelChoiceDetailsFragment extends PlatformFragmentV1 implements On
         final Bundle bundle = i.getExtras();
         // hotel = new HotelSearchResultListItem();
         hotelListItem = (HotelSearchResultListItem) bundle.getSerializable(Const.EXTRA_HOTELS_DETAILS);
+        scrollView = (ScrollView) mRoot.findViewById(R.id.list_scrollView);
 
         // adding parallax view for the image header
         mListView = (ParallaxScollView) mRoot.findViewById(R.id.layout_listview);
@@ -234,18 +236,22 @@ public class HotelChoiceDetailsFragment extends PlatformFragmentV1 implements On
         if (TAB_DETAILS.equals(tabId)) {
             callBackListener.updateTab(tabId, R.id.tab_details);
             mCurrentTab = 0;
-            return;
+            //            mListView.requestFocus();
+            //            return;
         }
         if (TAB_ROOMS.equals(tabId)) {
             callBackListener.updateTab(tabId, R.id.tab_rooms);
             mCurrentTab = 1;
-            return;
+            //            mListView.requestFocus();
+            //            return;
         }
         if (TAB_IMAGES.equals(tabId)) {
             callBackListener.updateTab(tabId, R.id.tab_images);
             mCurrentTab = 2;
-            return;
+            // mListView.requestFocus();
+            //return;
         }
+        scrollView.fullScroll(ScrollView.FOCUS_UP);
 
     }
 
