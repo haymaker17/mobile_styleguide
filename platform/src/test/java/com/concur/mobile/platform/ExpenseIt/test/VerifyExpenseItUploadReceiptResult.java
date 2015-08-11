@@ -1,5 +1,5 @@
 /**
- * 
+ *
  */
 package com.concur.mobile.platform.ExpenseIt.test;
 
@@ -7,31 +7,44 @@ import android.content.Context;
 
 import com.concur.mobile.platform.expenseit.ExpenseItPostReceipt;
 import com.concur.mobile.platform.expenseit.ExpenseItPostReceiptResponse;
+import com.concur.mobile.platform.test.VerifyResponse;
+import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
 
 import org.junit.Assert;
 
 /**
  * Provides a class to verify a <code>LoginResult</code> object against data stored in the content provider.
- * 
+ *
  * @author andrewk
  */
-public class VerifyExpenseItUploadReceiptResult {
+public class VerifyExpenseItUploadReceiptResult implements VerifyResponse<ExpenseItPostReceiptResponse> {
 
     final String MTAG = CLS_TAG + ".verify";
 
     private static final String CLS_TAG = VerifyExpenseItUploadReceiptResult.class.getSimpleName();
 
-     /**
+    /**
+     * Build the parser with type deserializers.
+     * @param result
+     * @return
+     */
+    @Override
+    public ExpenseItPostReceiptResponse serializeResponse(String result) {
+        Gson gson = new GsonBuilder().setDateFormat("yyyy-MM-dd HH:mm:ss").create();
+        ExpenseItPostReceiptResponse resp = gson.fromJson(result, ExpenseItPostReceiptResponse.class);
+        return resp;
+    }
+
+    /**
      * Will verify login response information stored in the config content provider against information stored in
      * <code>loginResult</code>.
-     * 
-     * @param context
-     *            contains a reference to the application context.
-     * @param receiptResponse
-     *            contains a reference to a login response.
-     * @throws Exception
-     *             throws an exception if the stored login result data does not match <code>loginResult</code>.
+     *
+     * @param context         contains a reference to the application context.
+     * @param receiptResponse contains a reference to a login response.
+     * @throws Exception throws an exception if the stored login result data does not match <code>loginResult</code>.
      */
+    @Override
     public void verify(Context context, ExpenseItPostReceiptResponse receiptResponse) throws Exception {
 
         //Verify LoginResult is not null

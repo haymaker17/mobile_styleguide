@@ -70,15 +70,18 @@ public class DeleteExpenseItReceiptAsyncTask extends ExpenseItAsyncRequestTask {
 
                 ErrorResponse tmpResp = gson.fromJson(new InputStreamReader(new BufferedInputStream(is),
                     "UTF-8"), ErrorResponse.class);
-
-                if (tmpResp != null) {
-                    deleteReceiptResponse = tmpResp;
+                if (tmpResp == null) {
+                    //Success when ErrorResponse doesn't exist
+                    deleteReceiptResponse = new ErrorResponse();
                 } else {
-                    Log.e(Const.LOG_TAG, CLS_TAG + ".parseStream: MWSResponse was null!");
-                    result = BaseAsyncRequestTask.RESULT_ERROR;
+                    deleteReceiptResponse = tmpResp;
+                    if (deleteReceiptResponse.isError()) {
+                        Log.e(Const.LOG_TAG, CLS_TAG + ".parseStream: Error while Deleting the image!");
+                        result = BaseAsyncRequestTask.RESULT_ERROR;
+                    }
                 }
             } else {
-                Log.e(Const.LOG_TAG, CLS_TAG + ".parseStream: MWSResponse Error response was null!");
+                Log.e(Const.LOG_TAG, CLS_TAG + ".parseStream: Error responseCode is not within the correct range !");
                 result = BaseAsyncRequestTask.RESULT_ERROR;
             }
         } catch (Exception exc) {

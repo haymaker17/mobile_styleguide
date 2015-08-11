@@ -11,27 +11,28 @@ import android.text.TextUtils;
 import android.util.Pair;
 
 import com.concur.mobile.core.expenseIt.ExpenseItServerUtil;
+import com.concur.mobile.platform.ExpenseIt.DeleteExpenseItReceiptTaskTest;
 import com.concur.mobile.platform.ExpenseIt.ExpenseItGetImageUrlTaskTest;
 import com.concur.mobile.platform.ExpenseIt.ExpenseItGetReceiptTaskTest;
 import com.concur.mobile.platform.ExpenseIt.ExpenseItLoginRequestTaskTest;
 import com.concur.mobile.platform.ExpenseIt.ExpenseItUploadReceiptTaskTest;
+import com.concur.mobile.platform.ExpenseIt.GetExpenseItAccountInfoTaskTest;
+import com.concur.mobile.platform.ExpenseIt.SetExpenseItAccountInfoTaskTest;
 import com.concur.mobile.platform.authentication.SessionInfo;
 import com.concur.mobile.platform.config.provider.ConfigUtil;
 import com.concur.mobile.platform.test.server.MockExpenseItServer;
 import com.concur.platform.ExpenseItProperties;
 
+import junit.framework.Assert;
+
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
-import org.junit.runner.RunWith;
-import org.robolectric.annotation.Config;
 import org.robolectric.shadows.ShadowLog;
 
-@RunWith(ConcurPlatformTestRunner.class)
-@Config(application = PlatformTestApplication.class, sdk = 21)
-public class ExpenseItUnitTests extends PlatformTestUtil {
+public class ExpenseItAsyncRequestsUnitTests extends PlatformAsyncRequestTestUtil {
 
-    private static final String CLS_TAG = ExpenseItUnitTests.class.getSimpleName();
+    private static final String CLS_TAG = ExpenseItAsyncRequestsUnitTests.class.getSimpleName();
 
     /**
      * Performs any test suite set-up.
@@ -90,27 +91,6 @@ public class ExpenseItUnitTests extends PlatformTestUtil {
 
         // Run the test.
         test.doTest();
-    }
-
-    @Test
-    public void doGetExpenseListFromExpenseIt() throws Exception {
-        ExpenseItGetReceiptTaskTest test = new ExpenseItGetReceiptTaskTest(useMockServer());
-        doExpenseItTest(test);
-    }
-
-
-
-    @Test
-    public void doExpenseItGetImageUrlsTest() throws Exception {
-        ExpenseItGetImageUrlTaskTest test = new ExpenseItGetImageUrlTaskTest(useMockServer());
-        doExpenseItTest(test);
-    }
-
-    @Test
-    public void doUploadImageToExpenseIt() throws Exception {
-        // Init and perform a PP login.
-        ExpenseItUploadReceiptTaskTest test = new ExpenseItUploadReceiptTaskTest(useMockServer());
-        doExpenseItTest(test);
     }
 
     /**
@@ -211,6 +191,51 @@ public class ExpenseItUnitTests extends PlatformTestUtil {
         ua.append(" (Android, ").append(Build.MODEL).append(", ").append(Build.VERSION.RELEASE).append(")");
         String userAgent = ua.toString();
         ExpenseItProperties.setUserAgent(userAgent);
+    }
 
+    @Test
+    public void doGetExpenseListFromExpenseIt() throws Exception {
+        ExpenseItGetReceiptTaskTest test = new ExpenseItGetReceiptTaskTest(useMockServer());
+        doExpenseItTest(test);
+    }
+
+    @Test
+    public void doExpenseItGetImageUrlsTest() throws Exception {
+        ExpenseItGetImageUrlTaskTest test = new ExpenseItGetImageUrlTaskTest(useMockServer());
+        doExpenseItTest(test);
+    }
+
+    @Test
+    public void doUploadImageToExpenseIt() throws Exception {
+        ExpenseItUploadReceiptTaskTest test = new ExpenseItUploadReceiptTaskTest(useMockServer());
+        doExpenseItTest(test);
+    }
+
+    @Test
+    public void doDeleteExpenseItReceipt() throws Exception {
+        ExpenseItUploadReceiptTaskTest testUpload = new ExpenseItUploadReceiptTaskTest(useMockServer());
+        doExpenseItTest(testUpload);
+        Long id = testUpload.getExpenseItId();
+
+        Assert.assertNotNull("ExpenseIt Id should not be null", id);
+        if (id == null) {
+            return;
+        }
+
+        DeleteExpenseItReceiptTaskTest testDelete = new DeleteExpenseItReceiptTaskTest(useMockServer());
+        testDelete.setExpenseId(id);
+        doExpenseItTest(testDelete);
+    }
+
+    @Test
+    public void doGetAccountInfo() throws Exception {
+        GetExpenseItAccountInfoTaskTest test = new GetExpenseItAccountInfoTaskTest(useMockServer());
+        doExpenseItTest(test);
+    }
+
+    @Test
+    public void doSetAccountInfo() throws Exception {
+        SetExpenseItAccountInfoTaskTest test = new SetExpenseItAccountInfoTaskTest(useMockServer());
+        doExpenseItTest(test);
     }
 }
