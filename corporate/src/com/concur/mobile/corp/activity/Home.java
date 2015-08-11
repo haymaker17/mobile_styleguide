@@ -1041,6 +1041,9 @@ import java.util.*;
 
         if (forceExpirationHome) {
             forceExpirationHome = false;
+            cancelAllDataRequests();
+            clearSessionData();
+            showExpiredDialog();
         } else {
 
             String sessionId = PlatformProperties.getSessionId();
