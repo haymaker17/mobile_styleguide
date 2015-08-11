@@ -91,6 +91,23 @@ public class Message implements Serializable {
 
     /**
      * Creates a message object.
+     * Usually called for device related messages.
+     * @param severity The severity of the message
+     * @param code The coded representation (see Message.MSG_UI_<...>)
+     * @param fields The fields this message is referring to
+     */
+    public Message(Severity severity, String code, String messageText, List<String> fields) {
+        this(severity, code, messageText);
+        this.fields = new ArrayList<String>();
+        for (String field : fields) {
+            if (!StringUtilities.isNullOrEmpty(field) && !this.fields.contains(field)) {
+                this.fields.add(field);
+            }
+        }
+    }
+
+    /**
+     * Creates a message object.
      * Usually called for backend related messages.
      * @param statusText The status text representing the message code
      * @param statusTextLocalized The readable localized message text
@@ -144,6 +161,21 @@ public class Message implements Serializable {
             return false;
         }
         return fields.contains(field);
+    }
+
+    /**
+     * Adds the given fields to the list of fields
+     * @param fields The fields to be added
+     */
+    public void addField(String... fields) {
+        if (this.fields == null) {
+            this.fields = new ArrayList<String>();
+        }
+        for (String field : fields) {
+            if (!StringUtilities.isNullOrEmpty(field) && !containsField(field)) {
+                this.fields.add(field);
+            }
+        }
     }
 
     /**

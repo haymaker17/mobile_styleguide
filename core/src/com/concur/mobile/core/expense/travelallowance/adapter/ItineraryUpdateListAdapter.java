@@ -255,7 +255,8 @@ public class ItineraryUpdateListAdapter extends ArrayAdapter<Object> {
             }
         } else {
             Message msg = segment.getMessage();
-            if (msg != null && msg.getSeverity() == Message.Severity.ERROR) {
+            if (msg != null && msg.getSeverity() == Message.Severity.ERROR
+                    && !Message.MSG_UI_MISSING_DATES.equals(msg.getCode())) {
                 holder.vMessageArea.setVisibility(View.VISIBLE);
                 if (holder.ivIcon != null) {
                     holder.ivIcon.setImageResource(R.drawable.icon_redex);

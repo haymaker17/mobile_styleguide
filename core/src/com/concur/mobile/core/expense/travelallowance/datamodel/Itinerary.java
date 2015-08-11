@@ -21,6 +21,26 @@ public class Itinerary implements Serializable{
     private List<ItinerarySegment> segmentList;
     private Message message;
 
+    /**
+     * Describes the possible fields in this model. Might be used in {@link Message}s
+     */
+    public enum Field {
+        ID("itineraryID"),
+        NAME("name"),
+        EXPENSE_REPORT_ID("expenseReportID"),
+        LOCKED("locked");
+
+        private String name;
+
+        Field(String name) {
+            this.name = name;
+        }
+
+        public String getName() {
+            return this.name;
+        }
+    }
+
     public String getItineraryID() {
         return itineraryID;
     }

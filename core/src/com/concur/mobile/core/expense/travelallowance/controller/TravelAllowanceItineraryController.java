@@ -266,111 +266,126 @@ public class TravelAllowanceItineraryController extends BaseController {
     /**
      * Checks the date denoted by datePosition within the itinerary segment located at the given
      * position within the given itinerary w.r.t. date overlaps.
-     * The method rushes through the given order of the list elements and expects the dates in
+     * The method uses the given order of the list elements and expects the dates in
      * ascending order.
      * @param itinerary the itinerary containing the segment
      * @param segmentPosition the position of the segment within the itinerary
      * @param datePosition -1 = departure, 0 = border crossing, 1 = arrival
-     * @return -1 = Overlap with predecessor, 0 = no Overlap, 1 = Overlap with successor
      */
-    public int checkOverlapping(Itinerary itinerary, int segmentPosition, int datePosition) {
+    public void checkOverlapping(Itinerary itinerary, int segmentPosition, int datePosition) {
         if (itinerary == null || itinerary.getSegmentList() == null || itinerary.getSegmentList().size() == 0) {
-            return 0;
+            return;
         }
-        if (datePosition < - 1 || datePosition > 1) {
-            return 0;
+        if (datePosition < -1 || datePosition > 1) {
+            return;
         }
         if (segmentPosition < 0 || segmentPosition + 1 > itinerary.getSegmentList().size()) {
-            return 0;
+            return;
         }
         ItinerarySegment segment = itinerary.getSegmentList().get(segmentPosition);
+        ItinerarySegment cmpSegment = null;
         Comparator<Date> comparator = DateUtils.getDateComparator(false);
-        Date checkDate = null;
         Message msg = null;
-        Message cmpMsg = null;
+        String srcField = null;
+        String cmpField = null;
         int result;
-        if (datePosition == -1) {//Departure
-            checkDate = segment.getStartDateUTC();
-            result = comparator.compare(checkDate, segment.getEndDateUTC());
-            if (result != -1) {
+        if (datePosition == -1) {//Source is Departure
+            srcField = ItinerarySegment.Field.DEPARTURE_DATE_TIME.getName();
+            cmpField = ItinerarySegment.Field.ARRIVAL_DATE_TIME.getName();
+            result = comparator.compare(segment.getStartDateUTC(), segment.getEndDateUTC());
+            if (result > -1) {//equal or greater
                 msg = new Message(Message.Severity.ERROR, Message.MSG_UI_START_BEFORE_END,
-                        context.getString(R.string.ta_msg_start_end),
-                        ItinerarySegment.Field.ARRIVAL_DATE_TIME.getName(),
-                        ItinerarySegment.Field.DEPARTURE_DATE_TIME.getName()
-                );
+                        context.getString(R.string.ta_msg_start_end), srcField, cmpField);
                 segment.setMessage(msg);
-                return result;
+            }
+            //Compare to predecessor
+            ListIterator<ItinerarySegment> itUp = itinerary.getSegmentList().listIterator(segmentPosition);
+            if (itUp.hasPrevious()) {
+                cmpSegment = itUp.previous();
+                result = comparator.compare(segment.getStartDateUTC(), cmpSegment.getEndDateUTC());
+                if (result < 1) {//less or equal
+                    if (segment.getMessage() == null) {//no error yet
+                        msg = new Message(Message.Severity.ERROR, Message.MSG_UI_OVERLAPPING_PREDECESSOR,
+                                context.getString(R.string.ta_overlap_preceding), srcField);
+                        segment.setMessage(msg);
+                    }
+                    if (cmpSegment.getMessage() != null) {//mark field
+                        msg = cmpSegment.getMessage();
+                        msg.addField(cmpField);
+                    }
+                } else {
+                    if (cmpSegment.getMessage() != null
+                            && Message.MSG_UI_OVERLAPPING_SUCCESSOR.equals(cmpSegment.getMessage().getCode())) {
+                        cmpSegment.setMessage(null); //Source date change was healing predecessor
+                    }
+                }
+            }
+            //Now check the arrival date is maybe overlapping with its successor
+            ListIterator<ItinerarySegment> itDown = itinerary.getSegmentList().listIterator(segmentPosition + 1);
+            if (itDown.hasNext()) {
+                cmpSegment = itDown.next();
+                result = comparator.compare(segment.getEndDateUTC(), cmpSegment.getStartDateUTC());
+                if (result > -1) {//equal or greater
+                    if (segment.getMessage() == null) {//no error yet
+                        msg = new Message(Message.Severity.ERROR, Message.MSG_UI_OVERLAPPING_SUCCESSOR,
+                                context.getString(R.string.ta_overlap_following), ItinerarySegment.Field.ARRIVAL_DATE_TIME.getName());
+                        segment.setMessage(msg);
+                    }
+                    if (cmpSegment.getMessage() != null) {//mark field
+                        msg = cmpSegment.getMessage();
+                        msg.addField(cmpField);
+                    }
+                }
             }
         } else if (datePosition == 1) {//Arrival
-            checkDate = segment.getEndDateUTC();
-            result = comparator.compare(checkDate, segment.getStartDateUTC());
-            if (result != 1) {
+            srcField = ItinerarySegment.Field.ARRIVAL_DATE_TIME.getName();
+            cmpField = ItinerarySegment.Field.DEPARTURE_DATE_TIME.getName();
+            result = comparator.compare(segment.getEndDateUTC(), segment.getStartDateUTC());
+            if (result < 1) {//less or equal
                 msg = new Message(Message.Severity.ERROR, Message.MSG_UI_START_BEFORE_END,
-                        context.getString(R.string.ta_msg_start_end),
-                        ItinerarySegment.Field.ARRIVAL_DATE_TIME.getName(),
-                        ItinerarySegment.Field.DEPARTURE_DATE_TIME.getName()
-                );
+                        context.getString(R.string.ta_msg_start_end), srcField, cmpField);
                 segment.setMessage(msg);
-                return result;
             }
-        } else {//TODO: BorderCrossing
-            return 0;
-        }
-        ListIterator<ItinerarySegment> itUp = itinerary.getSegmentList().listIterator(segmentPosition);
-        while (itUp.hasPrevious()) {
-            ItinerarySegment cmpSegment = itUp.previous();
-            result = comparator.compare(checkDate, cmpSegment.getEndDateUTC());
-            if (result != 1) {//TODO: Add the fields to be colored in red
-                msg = new Message(Message.Severity.ERROR, Message.MSG_UI_OVERLAPPING_PREDECESSOR,
-                        context.getString(R.string.ta_overlap_preceding));
-                segment.setMessage(msg);
-                return result;
+            //Compare to successor
+            ListIterator<ItinerarySegment> itDown = itinerary.getSegmentList().listIterator(segmentPosition + 1);
+            if (itDown.hasNext()) {
+                cmpSegment = itDown.next();
+                result = comparator.compare(segment.getEndDateUTC(), cmpSegment.getStartDateUTC());
+                if (result > -1) {//equal or greater
+                    if (segment.getMessage() == null) {//no error yet
+                        msg = new Message(Message.Severity.ERROR, Message.MSG_UI_OVERLAPPING_SUCCESSOR,
+                                context.getString(R.string.ta_overlap_following), srcField);
+                        segment.setMessage(msg);
+                    }
+                    if (cmpSegment.getMessage() != null) {//mark field
+                        msg = cmpSegment.getMessage();
+                        msg.addField(cmpField);
+                    }
+                } else {
+                    if (cmpSegment.getMessage() != null
+                            && Message.MSG_UI_OVERLAPPING_PREDECESSOR.equals(cmpSegment.getMessage().getCode())) {
+                        cmpSegment.setMessage(null); //Source date change was healing successor
+                    }
+                }
             }
-            result = comparator.compare(checkDate, cmpSegment.getStartDateUTC());
-            if (result != 1) {//TODO: Add the fields to be colored in red
-                msg = new Message(Message.Severity.ERROR, Message.MSG_UI_OVERLAPPING_PREDECESSOR,
-                        context.getString(R.string.ta_overlap_preceding));
-                segment.setMessage(msg);
-                return result;
-            }
-            cmpMsg = cmpSegment.getMessage();
-            if (cmpMsg != null && !StringUtilities.isNullOrEmpty(cmpMsg.getCode())) {
-                if (cmpMsg.getCode().equals(Message.MSG_UI_OVERLAPPING_SUCCESSOR)) {
-                    //Prevent from showing message text on the UI, but keep the message
-                    //in order to color fields in red.
-                    //cmpMsg.setMessageText(StringUtilities.EMPTY_STRING);
-                    cmpSegment.setMessage(null);
+            //Now check the departure date is maybe overlapping with its predecessor
+            ListIterator<ItinerarySegment> itUp = itinerary.getSegmentList().listIterator(segmentPosition);
+            if (itUp.hasPrevious()) {
+                cmpSegment = itUp.previous();
+                result = comparator.compare(segment.getStartDateUTC(), cmpSegment.getEndDateUTC());
+                if (result < 1) {//less or equal
+                    if (segment.getMessage() == null) {//no error yet
+                        msg = new Message(Message.Severity.ERROR, Message.MSG_UI_OVERLAPPING_PREDECESSOR,
+                                context.getString(R.string.ta_overlap_preceding), ItinerarySegment.Field.DEPARTURE_DATE_TIME.getName());
+                        segment.setMessage(msg);
+                    }
+                    if (cmpSegment.getMessage() != null) {//mark field
+                        msg = cmpSegment.getMessage();
+                        msg.addField(cmpField);
+                    }
                 }
             }
         }
-        ListIterator<ItinerarySegment> itDown = itinerary.getSegmentList().listIterator(segmentPosition + 1);
-        while (itDown.hasNext()) {
-            ItinerarySegment cmpSegment = itDown.next();
-            result = comparator.compare(checkDate, cmpSegment.getStartDateUTC());
-            if (result != -1) {
-                msg = new Message(Message.Severity.ERROR, Message.MSG_UI_OVERLAPPING_SUCCESSOR,
-                        context.getString(R.string.ta_overlap_following));
-                segment.setMessage(msg);
-                return result;
-            }
-            result = comparator.compare(checkDate, cmpSegment.getEndDateUTC());
-            if (result != -1) {
-                msg = new Message(Message.Severity.ERROR, Message.MSG_UI_OVERLAPPING_SUCCESSOR,
-                        context.getString(R.string.ta_overlap_following));
-                segment.setMessage(msg);
-                return result;
-            }
-            cmpMsg = cmpSegment.getMessage();
-            if (cmpMsg != null && !StringUtilities.isNullOrEmpty(cmpMsg.getCode())) {
-                if (cmpMsg.getCode().equals(Message.MSG_UI_OVERLAPPING_PREDECESSOR)) {
-                    //Prevent from showing message text on the UI, but keep the message
-                    //in order to color fields in red.
-                    //cmpMsg.setMessageText(StringUtilities.EMPTY_STRING);
-                    cmpSegment.setMessage(null);
-                }
-            }
-        }
-        return 0;
     }
 
     /**
@@ -382,17 +397,35 @@ public class TravelAllowanceItineraryController extends BaseController {
         if (itinerary == null) {
             return true;
         }
+        boolean result = true;
         if (StringUtilities.isNullOrEmpty(itinerary.getName())) {
+//            Message msg = new Message(Message.Severity.ERROR,
+//                    Message.MSG_UI_MISSING_DATES, null, Itinerary.Field.NAME.getName());
+//            itinerary.setMessage(msg);
             return false;
         }
         for (ItinerarySegment segment : itinerary.getSegmentList()) {
-            if (segment.getArrivalDateTime() == null || segment.getDepartureDateTime() == null
-                    || segment.getArrivalLocation() == null
-                    || segment.getDepartureLocation() == null) {
-                return false;
+            List<String> fields = new ArrayList<String>();
+            if (segment.getArrivalDateTime() == null) {
+                fields.add(ItinerarySegment.Field.ARRIVAL_DATE_TIME.getName());
+            }
+            if (segment.getDepartureDateTime() ==  null) {
+                fields.add(ItinerarySegment.Field.DEPARTURE_DATE_TIME.getName());
+            }
+            if (segment.getArrivalLocation() == null) {
+                fields.add(ItinerarySegment.Field.ARRIVAL_LOCATION.getName());
+            }
+            if (segment.getDepartureLocation() == null) {
+                fields.add(ItinerarySegment.Field.DEPARTURE_LOCATION.getName());
+            }
+            if (fields.size() > 0) {
+                //No particular message text. Just use the field options to turn it into red on the UI.
+//                Message msg = new Message(Message.Severity.ERROR, Message.MSG_UI_MISSING_DATES, null, fields);
+//                segment.setMessage(msg);
+                result = false;
             }
         }
-        return true;
+        return result;
     }
 
     public void executeDeleteItinerary(final Itinerary itinerary) {
