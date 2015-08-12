@@ -1,6 +1,8 @@
 package com.concur.mobile.core.expense.travelallowance.activity;
 
+import android.content.Context;
 import android.content.Intent;
+import android.graphics.Color;
 import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
@@ -8,9 +10,9 @@ import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
-import android.widget.AdapterView;
+import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
-import android.widget.CompoundButton;
+import android.widget.RelativeLayout;
 import android.widget.Spinner;
 import android.widget.Switch;
 import android.widget.TextView;
@@ -19,15 +21,14 @@ import android.widget.Toast;
 import com.concur.core.R;
 import com.concur.mobile.core.ConcurCore;
 import com.concur.mobile.core.activity.BaseActivity;
-import com.concur.mobile.core.expense.travelallowance.TaConfig;
 import com.concur.mobile.core.expense.travelallowance.controller.ControllerAction;
 import com.concur.mobile.core.expense.travelallowance.controller.FixedTravelAllowanceControlData;
 import com.concur.mobile.core.expense.travelallowance.controller.FixedTravelAllowanceController;
-//import com.concur.mobile.core.expense.travelallowance.controller.TravelAllowanceConfigurationController;
 import com.concur.mobile.core.expense.travelallowance.controller.IController;
 import com.concur.mobile.core.expense.travelallowance.controller.IControllerListener;
 import com.concur.mobile.core.expense.travelallowance.datamodel.FixedTravelAllowance;
 import com.concur.mobile.core.expense.travelallowance.datamodel.ICode;
+import com.concur.mobile.core.expense.travelallowance.datamodel.LodgingType;
 import com.concur.mobile.core.expense.travelallowance.datamodel.MealProvision;
 import com.concur.mobile.core.expense.travelallowance.datamodel.MealProvisionEnum;
 import com.concur.mobile.core.expense.travelallowance.util.BundleId;
@@ -38,13 +39,53 @@ import com.concur.mobile.core.expense.travelallowance.util.StringUtilities;
 import com.concur.mobile.core.util.FormatUtil;
 
 import java.util.ArrayList;
-import java.util.Collection;
-import java.util.Collections;
 import java.util.List;
 import java.util.Locale;
 import java.util.Map;
 
 public class FixedTravelAllowanceDetailsActivity extends BaseActivity implements IControllerListener {
+
+    private static class CustomArrayAdapter<StringT> extends ArrayAdapter<String>
+    {
+        public CustomArrayAdapter(Context ctx, List<String> objects)
+        {
+            super(ctx, android.R.layout.simple_spinner_item, objects);
+        }
+
+        //other constructors
+
+        @Override
+        public View getDropDownView(int position, View convertView, ViewGroup parent) {
+
+//            method is responsible for the Textviews of the dropDown
+            View view = super.getDropDownView(position, convertView, parent);
+
+            //we know that simple_spinner_item has android.R.id.text1 TextView:
+
+            TextView text = (TextView)view.findViewById(android.R.id.text1);
+            text.setTextColor(Color.parseColor("#383F46"));
+
+            return view;
+
+        }
+
+        @Override
+        public View getView(int position, View convertView, ViewGroup parent) {
+
+//            method is responsible for the Textview of the text shown initially
+            View view = super.getView(position, convertView, parent);
+
+            //we know that simple_spinner_item has android.R.id.text1 TextView:
+
+            TextView text = (TextView)view.findViewById(android.R.id.text1);
+            text.setTextColor(Color.parseColor("#383F46"));
+
+            return view;
+
+        }
+
+
+    }
 
     /**
      * The name of this {@code Class} for logging purpose.
@@ -173,6 +214,19 @@ public class FixedTravelAllowanceDetailsActivity extends BaseActivity implements
         if (allowance == null) {
             return;
         }
+        RelativeLayout rlLayout = (RelativeLayout) this.findViewById(R.id.vg_breakfast);
+        if (rlLayout == null){
+            return;
+        }
+
+        //Section should not be rendered for traveller if the customizing for the traveller doesn't allow it
+        if (    ( isEditable == true ) &&
+                ( controlData.getControlValue(FixedTravelAllowanceControlData.SHOW_BREAKFAST_PROVIDED_CHECKBOX) == false &&
+                  controlData.getControlValue(FixedTravelAllowanceControlData.SHOW_BREAKFAST_PROVIDED_PICKLIST) == false    )){
+            rlLayout.setVisibility(View.GONE);
+            return;
+        }
+
         TextView tvProvision = (TextView) this.findViewById(R.id.tv_breakfast_provision);
         TextView tvLabel = (TextView) this.findViewById(R.id.tv_breakfast_label);
         Switch svSwitch = (Switch) this.findViewById(R.id.sv_breakfast_provided);
@@ -180,12 +234,16 @@ public class FixedTravelAllowanceDetailsActivity extends BaseActivity implements
 
         renderTextViewProvision(tvProvision, allowance.getBreakfastProvision());
 
-        renderSwitch( svSwitch, allowance.getBreakfastProvision(), controlData.getControlValue(FixedTravelAllowanceControlData.SHOW_BREAKFAST_PROVIDED_CHECKBOX));
-
-        renderSpinner( spinner, allowance.getBreakfastProvision(), !controlData.getControlValue(FixedTravelAllowanceControlData.SHOW_BREAKFAST_PROVIDED_CHECKBOX));
+        renderSwitch(svSwitch, allowance.getBreakfastProvision(),
+                allowanceController.getControlData().getLabel(FixedTravelAllowanceControlData.BREAKFAST_PROVIDED_LABEL),
+                controlData.getControlValue(FixedTravelAllowanceControlData.SHOW_BREAKFAST_PROVIDED_CHECKBOX));
+        renderSpinner(spinner, allowance.getBreakfastProvision(), null, controlData.getControlValue(FixedTravelAllowanceControlData.SHOW_BREAKFAST_PROVIDED_PICKLIST));
 
         if (tvLabel != null && allowanceController != null && allowanceController.getControlData() != null) {
             tvLabel.setText(allowanceController.getControlData().getLabel(FixedTravelAllowanceControlData.BREAKFAST_PROVIDED_LABEL));
+            if (isEditable == true && controlData.getControlValue(FixedTravelAllowanceControlData.SHOW_BREAKFAST_PROVIDED_CHECKBOX)) {
+                tvLabel.setVisibility(View.GONE);
+            }
         }
     }
 
@@ -197,6 +255,19 @@ public class FixedTravelAllowanceDetailsActivity extends BaseActivity implements
         if (allowance == null) {
             return;
         }
+        RelativeLayout rlLayout = (RelativeLayout) this.findViewById(R.id.rl_lunch);
+        if (rlLayout == null){
+            return;
+        }
+
+        //Section should not be rendered for traveller if the customizing for the traveller doesn't allow it
+        if (    ( isEditable == true ) &&
+                ( controlData.getControlValue(FixedTravelAllowanceControlData.SHOW_LUNCH_PROVIDED_CHECKBOX) == false &&
+                  controlData.getControlValue(FixedTravelAllowanceControlData.SHOW_LUNCH_PROVIDED_PICKLIST) == false      )){
+            rlLayout.setVisibility(View.GONE);
+            return;
+        }
+
         TextView tvProvision = (TextView) this.findViewById(R.id.tv_lunch_provision);
         TextView tvLabel = (TextView) this.findViewById(R.id.tv_lunch_label);
         Switch svSwitch = (Switch) this.findViewById(R.id.sv_lunch_provided);
@@ -204,12 +275,17 @@ public class FixedTravelAllowanceDetailsActivity extends BaseActivity implements
 
         renderTextViewProvision(tvProvision, allowance.getLunchProvision());
 
-        renderSwitch( svSwitch, allowance.getLunchProvision(), controlData.getControlValue(FixedTravelAllowanceControlData.SHOW_LUNCH_PROVIDED_CHECKBOX) );
-
-        renderSpinner( spinner, allowance.getLunchProvision(), !controlData.getControlValue(FixedTravelAllowanceControlData.SHOW_LUNCH_PROVIDED_CHECKBOX ) );
+        renderSwitch(svSwitch, allowance.getLunchProvision(),
+                     allowanceController.getControlData().getLabel(FixedTravelAllowanceControlData.LUNCH_PROVIDED_LABEL),
+                     controlData.getControlValue(FixedTravelAllowanceControlData.SHOW_LUNCH_PROVIDED_CHECKBOX));
+        renderSpinner(spinner, allowance.getLunchProvision(), null, controlData.getControlValue(FixedTravelAllowanceControlData.SHOW_LUNCH_PROVIDED_PICKLIST));
 
         if (tvLabel != null && allowanceController != null && allowanceController.getControlData() != null) {
             tvLabel.setText(allowanceController.getControlData().getLabel(FixedTravelAllowanceControlData.LUNCH_PROVIDED_LABEL));
+            if (isEditable == true && controlData.getControlValue(FixedTravelAllowanceControlData.SHOW_LUNCH_PROVIDED_CHECKBOX)) {
+                tvLabel.setVisibility(View.GONE);
+            }
+
         }
     }
 
@@ -221,6 +297,19 @@ public class FixedTravelAllowanceDetailsActivity extends BaseActivity implements
         if (allowance == null) {
             return;
         }
+        RelativeLayout rlLayout = (RelativeLayout) this.findViewById(R.id.rl_dinner);
+        if (rlLayout == null){
+            return;
+        }
+
+        //Section should not be rendered for traveller if the customizing for the traveller doesn't allow it
+        if (    ( isEditable == true ) &&
+                ( controlData.getControlValue(FixedTravelAllowanceControlData.SHOW_DINNER_PROVIDED_CHECKBOX) == false &&
+                  controlData.getControlValue(FixedTravelAllowanceControlData.SHOW_DINNER_PROVIDED_PICKLIST) == false    )){
+            rlLayout.setVisibility(View.GONE);
+            return;
+        }
+
         TextView tvProvision = (TextView) this.findViewById(R.id.tv_dinner_provision);
         TextView tvLabel = (TextView) this.findViewById(R.id.tv_dinner_label);
         Switch svSwitch = (Switch) this.findViewById(R.id.sv_dinner_provided);
@@ -228,12 +317,16 @@ public class FixedTravelAllowanceDetailsActivity extends BaseActivity implements
 
         renderTextViewProvision(tvProvision, allowance.getDinnerProvision());
 
-        renderSwitch(svSwitch, allowance.getDinnerProvision(), controlData.getControlValue(FixedTravelAllowanceControlData.SHOW_DINNER_PROVIDED_CHECKBOX));
-
-        renderSpinner(spinner, allowance.getDinnerProvision(), !controlData.getControlValue(FixedTravelAllowanceControlData.SHOW_DINNER_PROVIDED_CHECKBOX ) );
+        renderSwitch(svSwitch, allowance.getDinnerProvision(),
+                allowanceController.getControlData().getLabel(FixedTravelAllowanceControlData.DINNER_PROVIDED_LABEL),
+                controlData.getControlValue(FixedTravelAllowanceControlData.SHOW_DINNER_PROVIDED_CHECKBOX));
+        renderSpinner(spinner, allowance.getDinnerProvision(), null, controlData.getControlValue(FixedTravelAllowanceControlData.SHOW_DINNER_PROVIDED_PICKLIST));
 
         if (tvLabel != null && allowanceController != null && allowanceController.getControlData() != null) {
             tvLabel.setText(allowanceController.getControlData().getLabel(FixedTravelAllowanceControlData.DINNER_PROVIDED_LABEL));
+            if (isEditable == true && controlData.getControlValue(FixedTravelAllowanceControlData.SHOW_DINNER_PROVIDED_CHECKBOX)) {
+                tvLabel.setVisibility(View.GONE);
+            }
         }
     }
 
@@ -245,37 +338,93 @@ public class FixedTravelAllowanceDetailsActivity extends BaseActivity implements
         if (allowance == null) {
             return;
         }
-        if (allowance.getLodgingType() == null || allowance.getOvernightIndicator()) {
+        //Section should not be rendered for approver if no relevant data is available
+        if (( isEditable == false )&& (allowance.getLodgingType() == null || allowance.getOvernightIndicator())) {
             return;
         }
+        //Section should not be rendered for traveller if the customizing for the traveller doesn't allow it
+        if (isEditable == true && controlData.getControlValue(FixedTravelAllowanceControlData.SHOW_LODGING_TYPE_PICKLIST) == false){
+            return;
+        }
+
         View vgLodging = this.findViewById(R.id.rl_lodging);
         if (vgLodging == null) {
             return;
         }
         vgLodging.setVisibility(View.VISIBLE);
-        TextView tvValue = (TextView) this.findViewById(R.id.tv_lodging_value);
-        if (tvValue != null) {
-            tvValue.setText(allowance.getLodgingType().toString());
+
+        Spinner spinner = (Spinner) this.findViewById(R.id.sp_lodging_provided);
+        if (spinner == null) {
+            return;
         }
+
+        if (isEditable) {
+            renderSpinner(spinner, allowance.getLodgingType(), controlData.getLodgingTypeValues(), true);
+        }
+        TextView tvValue = (TextView) this.findViewById(R.id.tv_lodging_value);
+        renderTextViewProvision(tvValue, allowance.getLodgingType());
+//            if (tvValue != null) {
+//                tvValue.setText(allowance.getLodgingType().toString());
+//            }
+
     }
 
     private void renderOvernight(FixedTravelAllowance allowance) {
         if (allowance == null) {
             return;
         }
-        if (!allowance.getOvernightIndicator()) {
+        //Section should not be rendered for approver if no relevant data is available
+        if ((isEditable == false) && (!allowance.getOvernightIndicator())) {
             return;
         }
+        //Section should not be rendered for traveller if the customizing for the traveller doesn't allow it
+        if (isEditable == true && controlData.getControlValue(FixedTravelAllowanceControlData.SHOW_OVERNIGHT_CHECKBOX) == false){
+            return;
+        }
+
         View vgOvernight = this.findViewById(R.id.vg_overnight);
-        if (vgOvernight == null) {
+        if (vgOvernight == null ) {
             return;
         }
         vgOvernight.setVisibility(View.VISIBLE);
+
+        Spinner spinner = (Spinner) this.findViewById(R.id.sp_overnight);
+        if (spinner == null) {
+            return;
+        }
+        if (isEditable) {
+            List<String> list = new ArrayList<String>();
+            list.add(getResources().getString(R.string.general_yes));
+            list.add(getResources().getString(R.string.general_no));
+
+            ArrayAdapter<String> adapter = new CustomArrayAdapter<>(this, list);
+            adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+            spinner.setAdapter(adapter);
+
+            if (allowance.getOvernightIndicator()){
+                spinner.setSelection(0);
+            }else {
+                spinner.setSelection(1);
+            }
+            spinner.setVisibility(View.VISIBLE);
+        }else{
+            spinner.setVisibility(View.GONE);
+        }
+
+
         TextView textView = (TextView) findViewById(R.id.tv_overnight_help);
-        if (allowance.getOvernightIndicator()) {
-            textView.setText(R.string.general_yes);
-        } else {
-            textView.setText(R.string.general_no);
+        if (textView == null){
+            return;
+        }
+        if (isEditable == true){
+            textView.setVisibility(View.GONE);
+        }else {
+            textView.setVisibility(View.VISIBLE);
+            if (allowance.getOvernightIndicator()) {
+                textView.setText(R.string.general_yes);
+            } else {
+                textView.setText(R.string.general_no);
+            }
         }
     }
 
@@ -359,7 +508,7 @@ public class FixedTravelAllowanceDetailsActivity extends BaseActivity implements
      * @param provisionCode     current meal provision code
      * @param visible           indicates if either the switch or the spinner should be rendered
      */
-    private void renderSwitch(Switch svSwitch, ICode provisionCode, boolean visible){
+    private void renderSwitch(Switch svSwitch, ICode provisionCode, String label, boolean visible){
         if (svSwitch != null ){
             if (visible == false || provisionCode == null || isEditable == false ){
                 svSwitch.setVisibility(View.GONE);
@@ -367,7 +516,7 @@ public class FixedTravelAllowanceDetailsActivity extends BaseActivity implements
                 svSwitch.setVisibility(View.VISIBLE);
                 svSwitch.setTextOn(getString(MealProvisionEnum.PROVIDED.getResourceId()));
                 svSwitch.setTextOff(getString(MealProvisionEnum.NOT_PROVIDED.getResourceId()));
-
+                svSwitch.setText(label);
                 if (MealProvision.NOT_PROVIDED_CODE.equals(provisionCode.getCode())) {
                     svSwitch.setChecked(false);
                 } else {
@@ -385,12 +534,14 @@ public class FixedTravelAllowanceDetailsActivity extends BaseActivity implements
      * @param provisionCode     current meal provision code
      * @param visible           indicates if either the switch or the spinner should be rendered
      */
-    private void renderSpinner(Spinner spinner, ICode provisionCode, boolean visible){
+    private void renderSpinner(Spinner spinner, ICode provisionCode, Map<String, ICode> map, boolean visible){
         if (spinner != null) {
             if (visible == false || provisionCode == null || isEditable == false) {
                 spinner.setVisibility(View.GONE);
             } else {
-                Map<String, ICode> map = controlData.getProvidedMealValues();
+                if (map == null) {
+                    map = controlData.getProvidedMealValues();
+                }
                 List<String> list = new ArrayList<String>();
                 int index = 0;
                 int selectedIndex = -1;
@@ -401,7 +552,7 @@ public class FixedTravelAllowanceDetailsActivity extends BaseActivity implements
                     list.add(entry.getValue().toString());
                     index++;
                 }
-                ArrayAdapter<String> adapter = new ArrayAdapter<String>(this, android.R.layout.simple_spinner_dropdown_item, list);
+                ArrayAdapter<String> adapter = new CustomArrayAdapter<>(this, list);
                 adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
                 spinner.setAdapter(adapter);
 
@@ -409,6 +560,7 @@ public class FixedTravelAllowanceDetailsActivity extends BaseActivity implements
                     spinner.setSelection(selectedIndex);
                 }
                 spinner.setVisibility(View.VISIBLE);
+
             }
         }
     }
@@ -416,12 +568,16 @@ public class FixedTravelAllowanceDetailsActivity extends BaseActivity implements
     private void updateAllowanceFromUI(){
         MealProvision provision;
 
+        if (isEditable == false){
+            return;
+        }
+
         //******* Breakfast Provision **************************************************************
         provision = null;
         if (controlData.getControlValue(FixedTravelAllowanceControlData.SHOW_BREAKFAST_PROVIDED_CHECKBOX) == true) {
             Switch svSwitch = (Switch) this.findViewById(R.id.sv_breakfast_provided);
             provision = deriveMealProvisionFromSwitch(svSwitch);
-        } else if (controlData.getControlValue(FixedTravelAllowanceControlData.SHOW_BREAKFAST_PROVIDED_CHECKBOX) == false) {
+        } else if (controlData.getControlValue(FixedTravelAllowanceControlData.SHOW_BREAKFAST_PROVIDED_PICKLIST) == true) {
             Spinner spinner = (Spinner) this.findViewById(R.id.sp_breakfast_provided);
             provision = deriveMealProvisionFromSpinner(spinner);
         }
@@ -434,7 +590,7 @@ public class FixedTravelAllowanceDetailsActivity extends BaseActivity implements
         if (controlData.getControlValue(FixedTravelAllowanceControlData.SHOW_LUNCH_PROVIDED_CHECKBOX) == true) {
             Switch svSwitch = (Switch) this.findViewById(R.id.sv_lunch_provided);
             provision = deriveMealProvisionFromSwitch(svSwitch);
-        }else if (controlData.getControlValue(FixedTravelAllowanceControlData.SHOW_LUNCH_PROVIDED_CHECKBOX) == false) {
+        }else if (controlData.getControlValue(FixedTravelAllowanceControlData.SHOW_LUNCH_PROVIDED_PICKLIST) == true) {
             Spinner spinner = (Spinner) this.findViewById(R.id.sp_lunch_provided);
             provision = deriveMealProvisionFromSpinner(spinner);
         }
@@ -447,12 +603,36 @@ public class FixedTravelAllowanceDetailsActivity extends BaseActivity implements
         if (controlData.getControlValue(FixedTravelAllowanceControlData.SHOW_DINNER_PROVIDED_CHECKBOX) == true) {
             Switch svSwitch = (Switch) this.findViewById(R.id.sv_dinner_provided);
             provision = deriveMealProvisionFromSwitch(svSwitch);
-        }else if (controlData.getControlValue(FixedTravelAllowanceControlData.SHOW_DINNER_PROVIDED_CHECKBOX) == false){
+        }else if (controlData.getControlValue(FixedTravelAllowanceControlData.SHOW_DINNER_PROVIDED_PICKLIST) == true){
             Spinner spinner = (Spinner) this.findViewById(R.id.sp_dinner_provided);
             provision = deriveMealProvisionFromSpinner(spinner);
         }
         if (provision != null) {
             allowance.setDinnerProvision(provision);
+        }
+
+        //******* Lodging **************************************************************************
+        if (controlData.getControlValue(FixedTravelAllowanceControlData.SHOW_LODGING_TYPE_PICKLIST) == true) {
+            LodgingType lodgingType = null;
+            Spinner spinner = (Spinner) this.findViewById(R.id.sp_lodging_provided);
+            lodgingType = deriveLodgingProvisionFromSpinner(spinner);
+            if (lodgingType != null) {
+                allowance.setLodgingType(lodgingType);
+            }
+        }
+
+        //******* Overnight Indicator **************************************************************
+//        spinner = null;
+        if (controlData.getControlValue(FixedTravelAllowanceControlData.SHOW_OVERNIGHT_CHECKBOX) == true) {
+            Spinner spinner = (Spinner) this.findViewById(R.id.sp_overnight);
+            if (spinner != null) {
+                int i = spinner.getSelectedItemPosition();
+                if (i == 0) {
+                    allowance.setOvernightIndicator(true);
+                } else {
+                    allowance.setOvernightIndicator(false);
+                }
+            }
         }
 
     }
@@ -479,6 +659,24 @@ public class FixedTravelAllowanceDetailsActivity extends BaseActivity implements
             for (Map.Entry<String,ICode> entry : map.entrySet()){
                 if (i == index){
                     return new MealProvision(entry.getKey(), "");
+                }
+                index++;
+            }
+        }
+        return null;
+    }
+
+    private LodgingType deriveLodgingProvisionFromSpinner(Spinner spinner ){
+        if (spinner != null) {
+            int i = spinner.getSelectedItemPosition();
+
+            Map<String, ICode> map = controlData.getLodgingTypeValues();
+
+            int index = 0;
+
+            for (Map.Entry<String,ICode> entry : map.entrySet()){
+                if (i == index){
+                    return new LodgingType(entry.getKey(), "");
                 }
                 index++;
             }

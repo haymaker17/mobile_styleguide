@@ -1043,6 +1043,10 @@
         <item name="android:textColor">#383f46</item>
         <item name="android:fontFamily">sans-serif-light</item>
     </style>
+
+    <style name="DailyAllowanceSpinner">
+        <item name="android:popupBackground">#f7fafd</item>
+    </style>
     <!-- END Default style for daily allowance layout -->
 
 </resources>

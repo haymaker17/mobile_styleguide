@@ -55,7 +55,7 @@ public class UpdateFixedAllowances extends CoreAsyncRequestTask {
         sb.append("<FixedAllowanceRow>");
         FormatUtil.addXMLElementEscaped(sb, "TaDayKey", fixedAllowance.getFixedTravelAllowanceId());
         TaXmlUtil.appendXmlIfTrue(sb, "MarkedExcluded", fixedAllowance.getExcludedIndicator());
-        TaXmlUtil.appendXmlIfTrue(sb, "Overnight", fixedAllowance.getOvernightIndicator());
+        TaXmlUtil.appendXml(sb, "Overnight", fixedAllowance.getOvernightIndicator());
         TaXmlUtil.appendXmlIfNotEmpty(sb, "BreakfastProvided", fixedAllowance.getBreakfastProvision().getCode());
         TaXmlUtil.appendXmlIfNotEmpty(sb, "LunchProvided", fixedAllowance.getLunchProvision().getCode());
         TaXmlUtil.appendXmlIfNotEmpty(sb, "DinnerProvided", fixedAllowance.getDinnerProvision().getCode());
