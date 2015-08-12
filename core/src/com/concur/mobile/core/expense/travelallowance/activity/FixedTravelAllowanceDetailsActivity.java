@@ -399,44 +399,42 @@ public class FixedTravelAllowanceDetailsActivity extends BaseActivity implements
         }
         vgOvernight.setVisibility(View.VISIBLE);
 
-        Spinner spinner = (Spinner) this.findViewById(R.id.sp_overnight);
-        if (spinner == null) {
-            return;
-        }
         if (isEditable) {
-            List<String> list = new ArrayList<String>();
-            list.add(getResources().getString(R.string.general_yes));
-            list.add(getResources().getString(R.string.general_no));
-
-            ArrayAdapter<String> adapter = new CustomArrayAdapter<>(this, list);
-            adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-            spinner.setAdapter(adapter);
-
-            if (allowance.getOvernightIndicator()){
-                spinner.setSelection(0);
-            }else {
-                spinner.setSelection(1);
+            Switch svSwitch = (Switch) this.findViewById(R.id.sv_overnight);
+            if (svSwitch == null) {
+                return;
             }
-            spinner.setVisibility(View.VISIBLE);
+            if (isEditable) {
+                svSwitch.setVisibility(View.VISIBLE);
+                svSwitch.setTextOn(getResources().getString(R.string.general_yes));
+                svSwitch.setTextOff(getResources().getString(R.string.general_no));
+                svSwitch.setChecked(allowance.getOvernightIndicator());
+
+            }
+
+            TextView label = (TextView) findViewById(R.id.tv_overnight_label);
+            if (label != null){
+                label.setVisibility(View.GONE);
+            }
+
         }else{
-            spinner.setVisibility(View.GONE);
-        }
-
-
-        TextView textView = (TextView) findViewById(R.id.tv_overnight_help);
-        if (textView == null){
-            return;
-        }
-        if (isEditable == true){
-            textView.setVisibility(View.GONE);
-        }else {
-            textView.setVisibility(View.VISIBLE);
-            if (allowance.getOvernightIndicator()) {
-                textView.setText(R.string.general_yes);
-            } else {
-                textView.setText(R.string.general_no);
+            TextView textView = (TextView) findViewById(R.id.tv_overnight_help);
+            if (textView == null) {
+                return;
             }
+            if (isEditable == true) {
+                textView.setVisibility(View.GONE);
+            } else {
+                textView.setVisibility(View.VISIBLE);
+                if (allowance.getOvernightIndicator()) {
+                    textView.setText(R.string.general_yes);
+                } else {
+                    textView.setText(R.string.general_no);
+                }
+            }
+
         }
+
     }
 
     /**
@@ -640,16 +638,10 @@ public class FixedTravelAllowanceDetailsActivity extends BaseActivity implements
         }
 
         //******* Overnight Indicator **************************************************************
-//        spinner = null;
         if (controlData.getControlValue(FixedTravelAllowanceControlData.SHOW_OVERNIGHT_CHECKBOX) == true) {
-            Spinner spinner = (Spinner) this.findViewById(R.id.sp_overnight);
-            if (spinner != null) {
-                int i = spinner.getSelectedItemPosition();
-                if (i == 0) {
-                    allowance.setOvernightIndicator(true);
-                } else {
-                    allowance.setOvernightIndicator(false);
-                }
+            Switch svSwitch = (Switch) this.findViewById(R.id.sv_overnight);
+            if(svSwitch != null){
+                allowance.setOvernightIndicator(svSwitch.isChecked());
             }
         }
 
@@ -709,16 +701,6 @@ public class FixedTravelAllowanceDetailsActivity extends BaseActivity implements
             Log.d(DebugUtils.LOG_TAG_TA, DebugUtils.buildLogText(CLASS_TAG, "actionFinished",
                     "Update Action callback finished with isSuccess: " + isSuccess));
             if (isSuccess) {
-//                Itinerary createdItinerary = (Itinerary) result.getSerializable(BundleId.ITINERARY);
-//                this.itinerary = createdItinerary;
-//                refreshAdapter();
-//                // Update, respectively the creation of itineraries will generate Fixed Travel Allowances.
-//                // We need to refresh the buffered Allowances as navigation back to the allowance overview
-//                // would show the old data.
-//                ConcurCore app = (ConcurCore) getApplication();
-//                FixedTravelAllowanceController allowanceController = app.getFixedTravelAllowanceController();
-//                allowanceController.refreshFixedTravelAllowances(itinerary.getExpenseReportID());
-
                 Toast.makeText(this, R.string.general_save_success, Toast.LENGTH_SHORT).show();
 
                 allowanceController.refreshFixedTravelAllowances(expenseReportKey);

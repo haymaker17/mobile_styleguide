@@ -2,7 +2,6 @@ package com.concur.mobile.core.expense.travelallowance.util;
 
 import com.concur.mobile.core.expense.travelallowance.datamodel.Itinerary;
 import com.concur.mobile.core.expense.travelallowance.datamodel.ItinerarySegment;
-import com.concur.mobile.core.expense.travelallowance.datamodel.TravelAllowanceSystemConfiguration;
 
 /**
  * Created by D049515 on 21.07.2015.
@@ -10,7 +9,6 @@ import com.concur.mobile.core.expense.travelallowance.datamodel.TravelAllowanceS
 public final class BundleId {
 
     public static final String ITINERARY = Itinerary.class.getName();
-    public static final String SYSTEM_CONFIGURATION = TravelAllowanceSystemConfiguration.class.getName();
     public static final String ITINERARY_LIST = "travelallowance.itinerary.list";
     public static final String ALLOWANCE_LIST = "travelallowance.allowance.list";
     public static final String SEGMENT = ItinerarySegment.class.getName();
