@@ -310,8 +310,8 @@ public class TravelAllowanceItineraryController extends BaseController {
                         segment.setMessage(msg);
                     }
                     if (cmpSegment.getMessage() != null) {//mark field
-                        msg = cmpSegment.getMessage();
-                        msg.addField(cmpField);
+//                        msg = cmpSegment.getMessage();
+//                        msg.addField(cmpField);
                     }
                 } else {
                     if (cmpSegment.getMessage() != null
@@ -332,8 +332,8 @@ public class TravelAllowanceItineraryController extends BaseController {
                         segment.setMessage(msg);
                     }
                     if (cmpSegment.getMessage() != null) {//mark field
-                        msg = cmpSegment.getMessage();
-                        msg.addField(cmpField);
+//                        msg = cmpSegment.getMessage();
+//                        msg.addField(cmpField);
                     }
                 }
             }
@@ -358,8 +358,8 @@ public class TravelAllowanceItineraryController extends BaseController {
                         segment.setMessage(msg);
                     }
                     if (cmpSegment.getMessage() != null) {//mark field
-                        msg = cmpSegment.getMessage();
-                        msg.addField(cmpField);
+//                        msg = cmpSegment.getMessage();
+//                        msg.addField(cmpField);
                     }
                 } else {
                     if (cmpSegment.getMessage() != null
@@ -380,8 +380,8 @@ public class TravelAllowanceItineraryController extends BaseController {
                         segment.setMessage(msg);
                     }
                     if (cmpSegment.getMessage() != null) {//mark field
-                        msg = cmpSegment.getMessage();
-                        msg.addField(cmpField);
+//                        msg = cmpSegment.getMessage();
+//                        msg.addField(cmpField);
                     }
                 }
             }
