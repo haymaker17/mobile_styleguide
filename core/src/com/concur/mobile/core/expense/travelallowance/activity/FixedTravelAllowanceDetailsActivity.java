@@ -45,7 +45,7 @@ import java.util.Map;
 
 public class FixedTravelAllowanceDetailsActivity extends BaseActivity implements IControllerListener {
 
-    private static class CustomArrayAdapter<StringT> extends ArrayAdapter<String>
+    private static class CustomArrayAdapter<String> extends ArrayAdapter<String>
     {
         public CustomArrayAdapter(Context ctx, List<String> objects)
         {
@@ -225,6 +225,7 @@ public class FixedTravelAllowanceDetailsActivity extends BaseActivity implements
                 ( controlData.getControlValue(FixedTravelAllowanceControlData.SHOW_BREAKFAST_PROVIDED_CHECKBOX) == false &&
                   controlData.getControlValue(FixedTravelAllowanceControlData.SHOW_BREAKFAST_PROVIDED_PICKLIST) == false    )){
             rlLayout.setVisibility(View.GONE);
+            makeDividerGone(R.id.v_divider_breakfast);
             return;
         }
 
@@ -266,6 +267,7 @@ public class FixedTravelAllowanceDetailsActivity extends BaseActivity implements
                 ( controlData.getControlValue(FixedTravelAllowanceControlData.SHOW_LUNCH_PROVIDED_CHECKBOX) == false &&
                   controlData.getControlValue(FixedTravelAllowanceControlData.SHOW_LUNCH_PROVIDED_PICKLIST) == false      )){
             rlLayout.setVisibility(View.GONE);
+            makeDividerGone(R.id.v_divider_lunch);
             return;
         }
 
@@ -308,6 +310,7 @@ public class FixedTravelAllowanceDetailsActivity extends BaseActivity implements
                 ( controlData.getControlValue(FixedTravelAllowanceControlData.SHOW_DINNER_PROVIDED_CHECKBOX) == false &&
                   controlData.getControlValue(FixedTravelAllowanceControlData.SHOW_DINNER_PROVIDED_PICKLIST) == false    )){
             rlLayout.setVisibility(View.GONE);
+            makeDividerGone(R.id.v_divider_dinner);
             return;
         }
 
@@ -341,15 +344,22 @@ public class FixedTravelAllowanceDetailsActivity extends BaseActivity implements
         }
         //Section should not be rendered for approver if no relevant data is available
         if (( isEditable == false )&& (allowance.getLodgingType() == null || allowance.getOvernightIndicator())) {
+            makeDividerGone(R.id.v_divider_lodging);
+//            View divider = (View) this.findViewById(R.id.v_divider_lodging);
+//            if (divider != null) {
+//                divider.setVisibility(View.GONE);
+//            }
             return;
         }
         //Section should not be rendered for traveller if the customizing for the traveller doesn't allow it
         if (isEditable == true && controlData.getControlValue(FixedTravelAllowanceControlData.SHOW_LODGING_TYPE_PICKLIST) == false){
+            makeDividerGone(R.id.v_divider_lodging);
             return;
         }
 
         View vgLodging = this.findViewById(R.id.rl_lodging);
         if (vgLodging == null) {
+            makeDividerGone(R.id.v_divider_lodging);
             return;
         }
         vgLodging.setVisibility(View.VISIBLE);
@@ -563,6 +573,13 @@ public class FixedTravelAllowanceDetailsActivity extends BaseActivity implements
                 spinner.setVisibility(View.VISIBLE);
 
             }
+        }
+    }
+
+    private void makeDividerGone(int resourceID){
+        View divider = (View) this.findViewById(resourceID);
+        if (divider != null) {
+            divider.setVisibility(View.GONE);
         }
     }
 
