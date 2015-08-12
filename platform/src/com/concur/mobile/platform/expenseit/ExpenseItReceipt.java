@@ -57,9 +57,6 @@ public class ExpenseItReceipt implements ExpenseItReceiptDAO, Serializable {
     @SerializedName("sentToCteAt")
     private Calendar sendToCteAt;
 
-    @SerializedName("imageData")
-    private byte[] imageData;
-
     @SerializedName("totalImageCount")
     private int totalImageCount;
 
@@ -295,19 +292,6 @@ public class ExpenseItReceipt implements ExpenseItReceiptDAO, Serializable {
         ContentUtils.putValue(values, Expense.ExpenseItReceiptColumns.CCTYPE, ccType);
         ContentUtils.putValue(values, Expense.ExpenseItReceiptColumns.CREATED_AT, createdAt == null ? null : createdAt.getTimeInMillis());
         ContentUtils.putValue(values, Expense.ExpenseItReceiptColumns.SEND_TO_CTE_AT, sendToCteAt == null ? null : sendToCteAt.getTimeInMillis());
-
-        if (imageData != null) {
-            if (imageData.length > MAX_IMAGE_BYTE_SIZE){
-                //TODO: Attempt to reduce image size
-                //ViewUtils.compressAndRotateImage();
-            }
-
-            if (imageData.length < MAX_IMAGE_BYTE_SIZE) {
-                ContentUtils.putValue(values, Expense.ExpenseItReceiptColumns.IMAGE_DATA,
-                        imageData);
-            }
-        }
-
         ContentUtils.putValue(values, Expense.ExpenseItReceiptColumns.TOTAL_IMAGE_COUNT, totalImageCount);
         ContentUtils.putValue(values, Expense.ExpenseItReceiptColumns.TOTAL_IMAGES_UPLOADED, totalImagesUploaded);
         ContentUtils.putValue(values, Expense.ExpenseItReceiptColumns.PARSING_STATUS_CODE, parsingStatusCode);
@@ -376,23 +360,18 @@ public class ExpenseItReceipt implements ExpenseItReceiptDAO, Serializable {
     @Override
     public Bitmap getImageData() {
         ContentResolver resolver = context.getContentResolver();
+        Uri expenseItUri = getContentUri(context, userId);
         Cursor cursor = null;
-        byte [] blob = null;
+        byte[] blob = null;
         Bitmap bitmap = null;
-        StringBuilder statement = new StringBuilder();
-        statement.append(Expense.ExpenseItReceiptColumns.USER_ID);
-        statement.append(" = ? AND ");
-        statement.append(Expense.ExpenseItReceiptColumns._ID);
-        statement.append(" = ?");
-        String[] whereArgs = {userId, String.valueOf(id)};
 
-
-        cursor = resolver.query(Expense.ExpenseItReceiptColumns.CONTENT_URI, null, statement.toString(), whereArgs, Expense.ExpenseItReceiptColumns.DEFAULT_SORT_ORDER);
+        cursor = resolver.query(expenseItUri, null, null, null, Expense.ExpenseItReceiptColumns
+                .DEFAULT_SORT_ORDER);
         if (cursor != null && cursor.moveToNext()) {
             blob = CursorUtil.getBlobValue(cursor, Expense.ExpenseItReceiptColumns.IMAGE_DATA);
         }
 
-        if (blob != null){
+        if (blob != null) {
             bitmap = BitmapFactory.decodeByteArray(blob, 0, blob.length);
         }
 
@@ -468,7 +447,12 @@ public class ExpenseItReceipt implements ExpenseItReceiptDAO, Serializable {
 
     @Override
     public void setImageData(Bitmap imageData) {
+        ContentResolver resolver = context.getContentResolver();
+        ContentValues values = new ContentValues();
         ByteArrayOutputStream byteArrayOutputStream = null;
+        byte[] imageBytes = null;
+        Uri expenseItUri = null;
+        int rowsUpdated = 0;
 
         if (imageData == null) return;
 
@@ -476,10 +460,28 @@ public class ExpenseItReceipt implements ExpenseItReceiptDAO, Serializable {
             byteArrayOutputStream = new ByteArrayOutputStream();
             imageData.compress(Bitmap.CompressFormat.JPEG, 100, byteArrayOutputStream);
             byteArrayOutputStream.close();
-            this.imageData = byteArrayOutputStream.toByteArray();
-            if (update(context, userId))
-            {
-                this.imageData = null;
+            imageBytes = byteArrayOutputStream.toByteArray();
+
+            if (imageBytes != null) {
+                if (imageBytes.length > MAX_IMAGE_BYTE_SIZE) {
+                    //TODO: Attempt to reduce image size
+                    //ViewUtils.compressAndRotateImage();
+                }
+
+                if (imageBytes.length < MAX_IMAGE_BYTE_SIZE) {
+                    ContentUtils.putValue(values, Expense.ExpenseItReceiptColumns.IMAGE_DATA,
+                            imageBytes);
+
+                    expenseItUri = getContentUri(context, userId);
+                    if (expenseItUri != null) {
+                        rowsUpdated = resolver.update(expenseItUri, values, null, null);
+
+                        if (rowsUpdated == 0){
+                            Log.e(Const.LOG_TAG, CLS_TAG + ".Unable to update image data to " +
+                                    "receipt");
+                        }
+                    }
+                }
             }
         } catch (Exception ex) {
             Log.e(Const.LOG_TAG, CLS_TAG + ex.getMessage());

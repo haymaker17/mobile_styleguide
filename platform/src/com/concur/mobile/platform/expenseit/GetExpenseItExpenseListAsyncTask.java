@@ -158,7 +158,6 @@ public class GetExpenseItExpenseListAsyncTask extends ExpenseItAsyncRequestTask 
                     tmp.setTime(receipt.getSendToCteAt());
                     expenseItReceipt.setSendToCteAt(tmp);
                 }
-                expenseItReceipt.setImageData(receipt.getImageData());
                 expenseItReceipt.setTotalImageCount(receipt.getTotalImageCount());
                 expenseItReceipt.setTotalImagesUploaded(receipt.getTotalImagesUploaded());
                 expenseItReceipt.setParsingStatusCode(receipt.getParsingStatusCode());

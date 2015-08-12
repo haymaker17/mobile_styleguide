@@ -4,14 +4,8 @@
 
 package com.concur.mobile.platform.expenseit;
 
-import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
-import android.util.Log;
-
-import com.concur.mobile.base.util.Const;
 import com.google.gson.annotations.SerializedName;
 
-import java.io.ByteArrayOutputStream;
 import java.io.Serializable;
 import java.util.Date;
 
@@ -49,9 +43,6 @@ public class ExpenseItPostReceipt implements Serializable {
 
     @SerializedName("sentToCteAt")
     private Date sendToCteAt;
-
-    @SerializedName("imageData")
-    private byte [] imageData;
 
     @SerializedName("totalImageCount")
     private int totalImageCount;
@@ -142,31 +133,6 @@ public class ExpenseItPostReceipt implements Serializable {
 
     public void setSendToCteAt(Date sendToCteAt) {
         this.sendToCteAt = sendToCteAt;
-    }
-
-    public Bitmap getImageData() {
-        Bitmap bitmap = null;
-
-        if (imageData != null){
-            bitmap = BitmapFactory.decodeByteArray(imageData, 0, imageData.length);
-        }
-
-        return bitmap;
-    }
-
-    public void setImageData(Bitmap imageData) {
-        ByteArrayOutputStream byteArrayOutputStream = null;
-
-        if (imageData == null) return;
-
-        try {
-            byteArrayOutputStream = new ByteArrayOutputStream();
-            imageData.compress(Bitmap.CompressFormat.JPEG, 100, byteArrayOutputStream);
-            byteArrayOutputStream.close();
-            this.imageData = byteArrayOutputStream.toByteArray();
-        } catch (Exception ex) {
-            Log.e(Const.LOG_TAG, CLS_TAG + ex.getMessage());
-        }
     }
 
     public int getTotalImageCount() {
