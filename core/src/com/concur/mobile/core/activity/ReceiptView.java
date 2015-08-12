@@ -84,7 +84,7 @@ public class ReceiptView extends BaseActivity {
             receiptImageUnavailable.setVisibility(View.VISIBLE);
             progressBar.setVisibility(View.GONE);
 
-            EventTracker.INSTANCE.track(Flurry.EVENT_SHOW_ANALYZING_RECEIPT_FAILED,
+            EventTracker.INSTANCE.track(Flurry.CATEGORY_EXPENSE_EXPENSEIT,
                     Flurry.EVENT_SHOW_ANALYZING_RECEIPT_FAILED);
         }
 
