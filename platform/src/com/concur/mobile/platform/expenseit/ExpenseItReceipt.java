@@ -475,6 +475,9 @@ public class ExpenseItReceipt implements ExpenseItReceiptDAO, Serializable {
                                     "receipt");
                         }
                     }
+                }else{
+                    Log.i(Const.LOG_TAG, CLS_TAG + ".Saving image skipped due to large image " +
+                            "size.");
                 }
             }
         } catch (Exception ex) {
