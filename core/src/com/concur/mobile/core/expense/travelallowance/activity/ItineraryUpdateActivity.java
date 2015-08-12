@@ -334,7 +334,6 @@ public class ItineraryUpdateActivity extends BaseActivity implements IController
                 emptySegment.setArrivalDateTime(cal.getTime());
             }
         }
-        Toast.makeText(this, "@New Item added@", Toast.LENGTH_SHORT).show();
         this.itinerary.getSegmentList().add(emptySegment);
         adapter.add(emptySegment);
         ListView listView = (ListView) findViewById(R.id.list_view);
@@ -515,7 +514,8 @@ public class ItineraryUpdateActivity extends BaseActivity implements IController
 
     private boolean isDataInconsistent() {
         if (itinController.hasErrors(this.itinerary)) {
-            Toast.makeText(this, "@Action not possible. Correct errors first!@", Toast.LENGTH_SHORT).show();
+            //TODO: Add text Action not possible. Correct errors first
+            Toast.makeText(this, R.string.general_data_inconsistent, Toast.LENGTH_SHORT).show();
             return true;
         }
         if (!itinController.areAllMandatoryFieldsFilled(itinerary)) {
@@ -551,7 +551,7 @@ public class ItineraryUpdateActivity extends BaseActivity implements IController
 
     @Override
     public void onCreateContextMenu(ContextMenu menu, View v, ContextMenu.ContextMenuInfo menuInfo) {
-        menu.add("@DELETE@");
+        menu.add(R.string.delete);
     }
 
     @Override
@@ -593,7 +593,7 @@ public class ItineraryUpdateActivity extends BaseActivity implements IController
                 if (result != null) {
                     List<FixedTravelAllowance> allowances = (List<FixedTravelAllowance>) result.getSerializable(BundleId.ALLOWANCE_LIST);
                     if (allowanceController.executeUpdate(allowances, this.expenseReportKey)) {
-                        showProgressDialog("@Calculating Expenses...@");
+                        showProgressDialog(" "); //TODO: Add text Calculating Expenses
                     }
                 }
             }
@@ -614,7 +614,7 @@ public class ItineraryUpdateActivity extends BaseActivity implements IController
                     allowanceController.refreshFixedTravelAllowances(this.expenseReportKey);
                     Toast.makeText(this, R.string.general_save_success, Toast.LENGTH_SHORT).show();
                     if (allowanceController.refreshFixedTravelAllowances(this.expenseReportKey)) {
-                        showProgressDialog("@Calculating Allowances...@");
+                        showProgressDialog(" "); //TODO: Add text Calculating Allowances...
                     }
                 } else {
                     Toast.makeText(this, R.string.general_save_fail, Toast.LENGTH_SHORT).show();
