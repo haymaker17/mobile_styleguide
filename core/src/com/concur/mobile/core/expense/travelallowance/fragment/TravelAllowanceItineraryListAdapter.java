@@ -67,12 +67,12 @@ public class TravelAllowanceItineraryListAdapter extends ArrayAdapter<Object> {
 	/**
 	 * The layout ID for the entry row (itinerary segment).
 	 */
-	private static final int LAYOUT_ID_SEGMENT = R.layout.travel_allowance_itinerary_segment_row;
+	private static final int LAYOUT_ID_SEGMENT = R.layout.ta_travel_allowance_itinerary_segment_row;
 
 	/**
 	 * The layout ID for the header row (itinerary).
 	 */
-	private static final int LAYOUT_ID_HEADER = R.layout.generic_table_row_layout;
+	private static final int LAYOUT_ID_HEADER = R.layout.ta_generic_table_row_layout;
 
 	/**
 	 * Item view type ID for the header row.
@@ -161,7 +161,7 @@ public class TravelAllowanceItineraryListAdapter extends ArrayAdapter<Object> {
 		holder = (ViewHolderHeaderRow) view.getTag();
 
 		holder.itineraryName.setText(itin.getName());
-		holder.itineraryName.setTextAppearance(ctx, R.style.DefaultTitle_Big);
+		holder.itineraryName.setTextAppearance(ctx, R.style.TATitle_Big);
 
 		return view;
 	}

@@ -17,7 +17,6 @@ import com.concur.mobile.core.expense.travelallowance.util.DebugUtils;
 import com.concur.mobile.core.expense.travelallowance.util.DefaultDateFormat;
 import com.concur.mobile.core.expense.travelallowance.util.IDateFormat;
 import com.concur.mobile.core.expense.travelallowance.util.StringUtilities;
-import com.concur.mobile.core.util.Const;
 import com.concur.mobile.core.util.FormatUtil;
 
 import java.util.Locale;
@@ -46,7 +45,7 @@ public class FixedTravelAllowanceListAdapter extends ArrayAdapter<Object> {
 
     private static final String CLASS_TAG = FixedTravelAllowanceListAdapter.class.getSimpleName();
 
-    private static final int LAYOUT_ID = R.layout.generic_table_row_layout;
+    private static final int LAYOUT_ID = R.layout.ta_generic_table_row_layout;
 
     private Context context;
     private FixedTravelAllowanceController allowanceController;
@@ -239,7 +238,7 @@ public class FixedTravelAllowanceListAdapter extends ArrayAdapter<Object> {
 
         if (holder.tvTitle != null) {
             holder.tvTitle.setText(location);
-            holder.tvTitle.setTextAppearance(this.context, R.style.DefaultSoloTitle);
+            holder.tvTitle.setTextAppearance(this.context, R.style.TASoloTitle);
         }
         if (holder.tvValue != null) {
             holder.tvValue.setVisibility(View.GONE);
@@ -281,7 +280,7 @@ public class FixedTravelAllowanceListAdapter extends ArrayAdapter<Object> {
         }
 
         if (holder.tvTitle != null) {
-            holder.tvTitle.setTextAppearance(this.context, R.style.DefaultTitle);
+            holder.tvTitle.setTextAppearance(this.context, R.style.TATitle);
             holder.tvTitle.setText(dateFormatter.format(allowance.getDate(), false, true, false));
         }
 

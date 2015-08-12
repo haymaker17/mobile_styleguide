@@ -1038,6 +1038,10 @@
         <item name="android:fontFamily">sans-serif-light</item>
     </style>
 
+<<<<<<< HEAD
+    <style name="DailyAllowanceSpinner">
+        <item name="android:popupBackground">#f7fafd</item>
+    </style>
     
     <style name="DailyAllowanceSwitch">
         <item name="android:textSize">16sp</item>
@@ -1045,6 +1049,8 @@
         <item name="android:textColor">#7f8f97</item>
         <item name="android:fontFamily">sans-serif</item>
     </style>
+=======
+>>>>>>> Refactoring TA Styles and TA Layouts
     <!-- END Default style for daily allowance layout -->
 
 </resources>

@@ -7,7 +7,6 @@ import android.support.v4.app.Fragment;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
-import android.util.Log;
 import android.view.MenuItem;
 
 import com.concur.core.R;
@@ -26,9 +25,7 @@ import com.concur.mobile.core.expense.travelallowance.fragment.SimpleTAItinerary
 import com.concur.mobile.core.expense.travelallowance.fragment.TravelAllowanceItineraryListFragment;
 import com.concur.mobile.core.expense.travelallowance.util.BundleId;
 import com.concur.mobile.core.expense.travelallowance.util.StringUtilities;
-import com.concur.mobile.core.util.Const;
 
-import java.lang.reflect.Array;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -82,7 +79,7 @@ public class TravelAllowanceActivity extends AppCompatActivity
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        this.setContentView(R.layout.travel_allowance_activity);
+        this.setContentView(R.layout.ta_travel_allowance_activity);
 
         ConcurCore app = (ConcurCore) getApplication();
 

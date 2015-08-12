@@ -14,7 +14,7 @@
         <include
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            layout="@layout/generic_table_row_layout"
+            layout="@layout/ta_generic_table_row_layout"
             android:layout_alignParentLeft="true"
             android:layout_marginLeft="0dp"
             android:layout_alignParentTop="true"

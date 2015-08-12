@@ -16,7 +16,7 @@
         android:layout_height="@dimen/standard_button_height"
         android:layout_marginRight="@dimen/footer_button_horizontal_margin"
         android:background="@drawable/btn_standard"
-        android:textAppearance="@style/DefaultLabel.BigBlack"
+        android:textAppearance="@style/TALabel.BigBlack"
         android:paddingLeft="8dp"
         android:paddingRight="8dp"
         />

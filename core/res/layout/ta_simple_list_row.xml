@@ -17,7 +17,7 @@
 
     <include
         android:id="@+id/v_content"
-        layout="@layout/generic_table_row_layout"
+        layout="@layout/ta_generic_table_row_layout"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginRight="16dp"

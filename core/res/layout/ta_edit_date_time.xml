@@ -33,7 +33,7 @@
             android:layout_alignParentLeft="true"
             android:layout_marginLeft="56dp"
             android:text="\@Date\@"
-            android:textAppearance="@style/DefaultLabel" />
+            android:textAppearance="@style/TALabel" />
 
         <TextView
             android:id="@+id/tv_date_value"
@@ -44,7 +44,7 @@
             android:layout_below="@+id/tv_date_label"
             android:layout_marginRight="16dp"
             android:text="\@Tue, Jun 23, 2015\@"
-            android:textAppearance="@style/DefaultTitle" />
+            android:textAppearance="@style/TATitle" />
 
     </RelativeLayout>
 
@@ -70,7 +70,7 @@
             android:layout_alignParentTop="true"
             android:layout_marginLeft="16dp"
             android:text="\@Time\@"
-            android:textAppearance="@style/DefaultLabel" />
+            android:textAppearance="@style/TALabel" />
 
         <TextView
             android:id="@+id/tv_time_value"
@@ -80,7 +80,7 @@
             android:layout_alignStart="@+id/tv_time_label"
             android:layout_below="@+id/tv_time_label"
             android:text="\@2:27 PM\@"
-            android:textAppearance="@style/DefaultTitle" />
+            android:textAppearance="@style/TATitle" />
 
     </RelativeLayout>
 </LinearLayout>

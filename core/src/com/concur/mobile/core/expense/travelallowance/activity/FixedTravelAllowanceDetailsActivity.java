@@ -115,7 +115,7 @@ public class FixedTravelAllowanceDetailsActivity extends BaseActivity implements
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.fixed_travel_allowance_details_activity);
+        setContentView(R.layout.ta_fixed_travel_allowance_details_activity);
 
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar_daily_allowance);
         if (toolbar != null) {

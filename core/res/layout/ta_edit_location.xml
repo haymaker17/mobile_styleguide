@@ -34,7 +34,7 @@
         android:layout_alignParentLeft="true"
         android:layout_marginLeft="56dp"
         android:text="\@Location\@"
-        android:textAppearance="@style/DefaultLabel" />
+        android:textAppearance="@style/TALabel" />
 
     <TextView
         android:id="@+id/tv_location_value"
@@ -44,6 +44,6 @@
         android:layout_alignStart="@+id/tv_location_label"
         android:layout_below="@+id/tv_location_label"
         android:text="\@Heidelberg, Germany\@"
-        android:textAppearance="@style/DefaultTitle" />
+        android:textAppearance="@style/TATitle" />
 
 </RelativeLayout>

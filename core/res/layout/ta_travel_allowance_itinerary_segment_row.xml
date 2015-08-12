@@ -28,7 +28,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="40dp"
                 android:text="Seattle, WA"
-                android:textAppearance="@style/DefaultTitle" />
+                android:textAppearance="@style/TATitle" />
 
             <ImageView
                 android:id="@+id/iv_row_icon"
@@ -60,7 +60,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="March 23 - 2:00 PM"
-                android:textAppearance="@style/DefaultSubTitle"
+                android:textAppearance="@style/TASubTitle"
                 android:layout_weight="0.8"/>
 
             <View
@@ -75,7 +75,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="March 23 - 2:00 PM"
-                android:textAppearance="@style/DefaultSubTitle"
+                android:textAppearance="@style/TASubTitle"
                 android:layout_weight="1"
                 android:paddingLeft="16dp"
                 android:gravity="left"/>
@@ -98,7 +98,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="@string/itin_crossed_border"
-                android:textAppearance="@style/DefaultSubTitle"
+                android:textAppearance="@style/TASubTitle"
                 android:paddingRight="5dp"/>
 
             <TextView
@@ -106,7 +106,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="March 23 - 2:00 PM"
-                android:textAppearance="@style/DefaultSubTitle" />
+                android:textAppearance="@style/TASubTitle" />
 
         </LinearLayout>
 
@@ -131,7 +131,7 @@
 
    <include
             android:id="@+id/itinerary_separator_line"
-            layout="@layout/generic_divider_bold"
+            layout="@layout/ta_divider_bold"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_below="@id/segment_location"

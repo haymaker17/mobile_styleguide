@@ -11,8 +11,8 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:background="@drawable/gradient_title_bar"
-        android:titleTextAppearance="@style/DefaultToolbarTitle"
-        app:titleTextAppearance="@style/DefaultToolbarTitle" />
+        android:titleTextAppearance="@style/TAToolbarTitle"
+        app:titleTextAppearance="@style/TAToolbarTitle" />
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -21,7 +21,7 @@
 
         <include
             android:id="@+id/vg_details_header"
-            layout="@layout/generic_table_row_layout"
+            layout="@layout/ta_generic_table_row_layout"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_alignParentLeft="true"
@@ -42,7 +42,7 @@
 
             <RelativeLayout
                 android:id="@+id/vg_breakfast"
-                style="@style/DefaultRow"
+                style="@style/TARow"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content">
 
@@ -52,7 +52,7 @@
                     android:layout_height="wrap_content"
                     android:layout_alignParentLeft="true"
                     android:text="@string/ta_breakfast"
-                    android:textAppearance="@style/DefaultLabel" />
+                    android:textAppearance="@style/TALabel" />
 
                 <Switch
                     android:id="@+id/sv_breakfast_provided"
@@ -72,26 +72,26 @@
                     android:layout_alignParentStart="true"
                     android:layout_below="@+id/tv_breakfast_label"
                     android:text="Large Text"
-                    android:textAppearance="@style/DefaultValue.Small" />
+                    android:textAppearance="@style/TAValue.Small" />
 
                 <Spinner
                     android:id="@+id/sp_breakfast_provided"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_below="@+id/tv_breakfast_provision"
-                    style="@style/DailyAllowanceSpinner"
+                    style="@style/TADailyAllowanceSpinner"
                     android:visibility="visible" />
 
             </RelativeLayout>
 
             <View
                 android:id="@+id/v_divider_breakfast"
-                style="@style/ListRowDivider"
+                style="@style/TAListRowDivider"
                 android:layout_width="wrap_content" />
 
             <RelativeLayout
                 android:id="@+id/rl_lunch"
-                style="@style/DefaultRow"
+                style="@style/TARow"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content">
 
@@ -101,7 +101,7 @@
                     android:layout_height="wrap_content"
                     android:layout_alignParentLeft="true"
                     android:text="@string/ta_lunch"
-                    android:textAppearance="@style/DefaultLabel" />
+                    android:textAppearance="@style/TALabel" />
 
                 <Switch
                     android:id="@+id/sv_lunch_provided"
@@ -121,26 +121,26 @@
                     android:layout_alignParentStart="true"
                     android:layout_below="@+id/tv_lunch_label"
                     android:text="Large Text"
-                    android:textAppearance="@style/DefaultValue.Small" />
+                    android:textAppearance="@style/TAValue.Small" />
 
                 <Spinner
                     android:id="@+id/sp_lunch_provided"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_below="@+id/tv_lunch_label"
-                    style="@style/DailyAllowanceSpinner"
+                    style="@style/TADailyAllowanceSpinner"
                     android:visibility="visible" />
 
             </RelativeLayout>
 
             <View
                 android:id="@+id/v_divider_lunch"
-                style="@style/ListRowDivider"
+                style="@style/TAListRowDivider"
                 android:layout_width="wrap_content" />
 
             <RelativeLayout
                 android:id="@+id/rl_dinner"
-                style="@style/DefaultRow"
+                style="@style/TARow"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content">
 
@@ -150,7 +150,7 @@
                     android:layout_height="wrap_content"
                     android:layout_alignParentLeft="true"
                     android:text="@string/ta_dinner"
-                    android:textAppearance="@style/DefaultLabel" />
+                    android:textAppearance="@style/TALabel" />
 
                 <Switch
                     android:id="@+id/sv_dinner_provided"
@@ -170,26 +170,26 @@
                     android:layout_alignParentStart="true"
                     android:layout_below="@+id/tv_dinner_label"
                     android:text="Large Text"
-                    android:textAppearance="@style/DefaultValue.Small" />
+                    android:textAppearance="@style/TAValue.Small" />
 
                 <Spinner
                     android:id="@+id/sp_dinner_provided"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_below="@+id/tv_dinner_label"
-                    style="@style/DailyAllowanceSpinner"
+                    style="@style/TADailyAllowanceSpinner"
                     android:visibility="visible" />
 
             </RelativeLayout>
 
             <View
                 android:id="@+id/v_divider_dinner"
-                style="@style/ListRowDivider"
+                style="@style/TAListRowDivider"
                 android:layout_width="wrap_content" />
 
             <RelativeLayout
                 android:id="@+id/rl_lodging"
-                style="@style/DefaultRow"
+                style="@style/TARow"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:visibility="gone">
@@ -200,7 +200,7 @@
                     android:layout_height="wrap_content"
                     android:layout_alignParentLeft="true"
                     android:text="@string/ta_lodging"
-                    android:textAppearance="@style/DefaultLabel" />
+                    android:textAppearance="@style/TALabel" />
 
                 <TextView
                     android:id="@+id/tv_lodging_value"
@@ -210,26 +210,26 @@
                     android:layout_alignParentStart="true"
                     android:layout_below="@+id/tv_lodging_label"
                     android:text="Large Text"
-                    android:textAppearance="@style/DefaultValue.Small" />
+                    android:textAppearance="@style/TAValue.Small" />
 
                 <Spinner
                     android:id="@+id/sp_lodging_provided"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_below="@+id/tv_lodging_label"
-                    style="@style/DailyAllowanceSpinner"
+                    style="@style/TADailyAllowanceSpinner"
                     android:visibility="visible" />
 
             </RelativeLayout>
 
             <View
                 android:id="@+id/v_divider_lodging"
-                style="@style/ListRowDivider"
+                style="@style/TAListRowDivider"
                 android:layout_width="wrap_content" />
 
             <RelativeLayout
                 android:id="@+id/vg_overnight"
-                style="@style/DefaultRow"
+                style="@style/TARow"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:visibility="gone">
@@ -240,7 +240,7 @@
                     android:layout_height="wrap_content"
                     android:layout_alignParentLeft="true"
                     android:text="@string/ta_overnight"
-                    android:textAppearance="@style/DefaultLabel" />
+                    android:textAppearance="@style/TALabel" />
 
                 <TextView
                     android:id="@+id/tv_overnight_help"
@@ -249,14 +249,14 @@
                     android:layout_alignParentLeft="true"
                     android:layout_alignParentStart="true"
                     android:layout_below="@+id/tv_overnight_label"
-                    android:textAppearance="@style/DefaultValue.Small" />
+                    android:textAppearance="@style/TAValue.Small" />
 
                 <Spinner
                     android:id="@+id/sp_overnight"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_below="@+id/tv_overnight_help"
-                    style="@style/DailyAllowanceSpinner"
+                    style="@style/TADailyAllowanceSpinner"
                     android:visibility="visible" />
 
             </RelativeLayout>

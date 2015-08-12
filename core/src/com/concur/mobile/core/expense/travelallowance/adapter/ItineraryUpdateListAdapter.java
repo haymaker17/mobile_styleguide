@@ -288,9 +288,9 @@ public class ItineraryUpdateListAdapter extends ArrayAdapter<Object> {
         }
         if (holder.tvDepartureLocationValue != null) {
             if (segment.getDepartureLocation() != null) {
-                holder.tvDepartureLocationValue.setTextAppearance(context, R.style.DefaultValue_Small);
+                holder.tvDepartureLocationValue.setTextAppearance(context, R.style.TAValue_Small);
                 if (msg != null && msg.containsField(ItinerarySegment.Field.DEPARTURE_LOCATION.getName())) {
-                    holder.tvDepartureLocationValue.setTextAppearance(context, R.style.DefaultValue_Small_Red);
+                    holder.tvDepartureLocationValue.setTextAppearance(context, R.style.TAValue_Small_Red);
                 }
                 holder.tvDepartureLocationValue.setText(segment.getDepartureLocation().getName());
             } else {
@@ -307,9 +307,9 @@ public class ItineraryUpdateListAdapter extends ArrayAdapter<Object> {
         if (segment.getDepartureDateTime() != null) {
             String dateStr;
             if (holder.tvDepartureDateValue != null) {
-                holder.tvDepartureDateValue.setTextAppearance(context, R.style.DefaultValue_Small);
+                holder.tvDepartureDateValue.setTextAppearance(context, R.style.TAValue_Small);
                 if (msg != null && msg.containsField(ItinerarySegment.Field.DEPARTURE_DATE_TIME.getName())) {
-                    holder.tvDepartureDateValue.setTextAppearance(context, R.style.DefaultValue_Small_Red);
+                    holder.tvDepartureDateValue.setTextAppearance(context, R.style.TAValue_Small_Red);
                 }
                 dateStr = DateUtils.formatDateTime(context, segment.getDepartureDateTime().getTime(),
                         DateUtils.FORMAT_SHOW_DATE | DateUtils.FORMAT_SHOW_WEEKDAY
@@ -317,9 +317,9 @@ public class ItineraryUpdateListAdapter extends ArrayAdapter<Object> {
                 holder.tvDepartureDateValue.setText(dateStr);
             }
             if (holder.tvDepartureTimeValue != null) {
-                holder.tvDepartureTimeValue.setTextAppearance(context, R.style.DefaultValue_Small);
+                holder.tvDepartureTimeValue.setTextAppearance(context, R.style.TAValue_Small);
                 if (msg != null && msg.containsField(ItinerarySegment.Field.DEPARTURE_DATE_TIME.getName())) {
-                    holder.tvDepartureTimeValue.setTextAppearance(context, R.style.DefaultValue_Small_Red);
+                    holder.tvDepartureTimeValue.setTextAppearance(context, R.style.TAValue_Small_Red);
                 }
                 dateStr = DateUtils.formatDateTime(context, segment.getDepartureDateTime().getTime(),
                         DateUtils.FORMAT_SHOW_TIME);
@@ -364,9 +364,9 @@ public class ItineraryUpdateListAdapter extends ArrayAdapter<Object> {
         }
         if (holder.tvArrivalLocationValue != null) {
             if (segment.getArrivalLocation() != null) {
-                holder.tvArrivalLocationValue.setTextAppearance(context, R.style.DefaultValue_Small);
+                holder.tvArrivalLocationValue.setTextAppearance(context, R.style.TAValue_Small);
                 if (msg != null && msg.containsField(ItinerarySegment.Field.ARRIVAL_LOCATION.getName())) {
-                    holder.tvArrivalLocationValue.setTextAppearance(context, R.style.DefaultValue_Small_Red);
+                    holder.tvArrivalLocationValue.setTextAppearance(context, R.style.TAValue_Small_Red);
                 }
                 holder.tvArrivalLocationValue.setText(segment.getArrivalLocation().getName());
             } else {
@@ -382,9 +382,9 @@ public class ItineraryUpdateListAdapter extends ArrayAdapter<Object> {
         if (segment.getArrivalDateTime() != null) {
             String dateStr;
             if (holder.tvArrivalDateValue != null) {
-                holder.tvArrivalDateValue.setTextAppearance(context, R.style.DefaultValue_Small);
+                holder.tvArrivalDateValue.setTextAppearance(context, R.style.TAValue_Small);
                 if (msg != null && msg.containsField(ItinerarySegment.Field.ARRIVAL_DATE_TIME.getName())) {
-                    holder.tvArrivalDateValue.setTextAppearance(context, R.style.DefaultValue_Small_Red);
+                    holder.tvArrivalDateValue.setTextAppearance(context, R.style.TAValue_Small_Red);
                 }
                 dateStr = DateUtils.formatDateTime(context, segment.getArrivalDateTime().getTime(),
                         DateUtils.FORMAT_SHOW_DATE | DateUtils.FORMAT_SHOW_WEEKDAY
@@ -392,9 +392,9 @@ public class ItineraryUpdateListAdapter extends ArrayAdapter<Object> {
                 holder.tvArrivalDateValue.setText(dateStr);
             }
             if (holder.tvArrivalTimeValue != null) {
-                holder.tvArrivalTimeValue.setTextAppearance(context, R.style.DefaultValue_Small);
+                holder.tvArrivalTimeValue.setTextAppearance(context, R.style.TAValue_Small);
                 if (msg != null && msg.containsField(ItinerarySegment.Field.ARRIVAL_DATE_TIME.getName())) {
-                    holder.tvArrivalTimeValue.setTextAppearance(context, R.style.DefaultValue_Small_Red);
+                    holder.tvArrivalTimeValue.setTextAppearance(context, R.style.TAValue_Small_Red);
                 }
                 dateStr = DateUtils.formatDateTime(context, segment.getArrivalDateTime().getTime(),
                         DateUtils.FORMAT_SHOW_TIME);

@@ -68,7 +68,7 @@ public class TravelAllowanceItineraryListFragment extends ListFragment implement
 
 	@Override
 	public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-		View view = inflater.inflate(R.layout.travel_allowance_itinerary_list, container, false);
+		View view = inflater.inflate(R.layout.ta_travel_allowance_itinerary_list, container, false);
 
 		swipeRefreshLayout = (SwipeRefreshLayout) view.findViewById(R.id.swipe_refresh_layout);
 		swipeRefreshLayout.setOnRefreshListener(this);

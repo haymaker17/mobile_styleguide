@@ -16,8 +16,8 @@
             android:id="@+id/toolbar"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            app:titleTextAppearance="@style/DefaultToolbarTitle"
-            android:titleTextAppearance="@style/DefaultToolbarTitle"
+            app:titleTextAppearance="@style/TAToolbarTitle"
+            android:titleTextAppearance="@style/TAToolbarTitle"
             android:contentInsetStart="72dp"
             app:contentInsetStart="72dp"
             android:background="@android:color/transparent" />
@@ -30,7 +30,7 @@
             android:layout_marginBottom="16dp"
             android:layout_marginRight="16dp"
             android:text="@string/itin_stops_infotext"
-            android:textAppearance="@style/DefaultSubTitle.White" />
+            android:textAppearance="@style/TASubTitle.White" />
 
     </LinearLayout>
 
@@ -48,7 +48,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="@string/itin_itinerary_name"
-            android:textAppearance="@style/DefaultLabel" />
+            android:textAppearance="@style/TALabel" />
 
         <EditText
             android:id="@+id/et_itinerary"
@@ -58,7 +58,7 @@
             android:minLines="1"
             android:singleLine="true"
             android:text="\@Itineary\@"
-            style="@style/DefaultValue.Small" />
+            style="@style/TAValue.Small" />
 
     </LinearLayout>
 

@@ -9,17 +9,17 @@
 
     <View
         android:id="@+id/v_divider_bold_top"
-        style="@style/FatListRowDivider.Border"
+        style="@style/TAFatListRowDivider.Border"
         android:layout_width="wrap_content" />
 
     <View
         android:id="@+id/v_divider_bold"
-        style="@style/FatListRowDivider"
+        style="@style/TAFatListRowDivider"
         android:layout_width="wrap_content" />
 
     <View
         android:id="@+id/v_divider_bold_bottom"
-        style="@style/FatListRowDivider.Border"
+        style="@style/TAFatListRowDivider.Border"
         android:layout_width="wrap_content" />
 
 </LinearLayout>

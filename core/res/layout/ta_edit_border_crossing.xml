@@ -15,7 +15,7 @@
         android:layout_alignParentLeft="true"
         android:layout_marginLeft="56dp"
         android:text="@string/itin_border_crossing"
-        android:textAppearance="@style/DefaultLabel" />
+        android:textAppearance="@style/TALabel" />
 
     <TextView
         android:id="@+id/tv_border_crossing_value"
@@ -24,6 +24,6 @@
         android:layout_alignParentTop="true"
         android:layout_marginRight="16dp"
         android:text="\@Mon, Apr 20, 6:15 AM\@"
-        android:textAppearance="@style/DefaultValue.Tiny" />
+        android:textAppearance="@style/TAValue.Tiny" />
 
 </LinearLayout>

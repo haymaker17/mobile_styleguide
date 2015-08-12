@@ -24,6 +24,6 @@
         android:layout_alignParentLeft="true"
         android:layout_marginLeft="56dp"
         android:text="\@Information\@"
-        android:textAppearance="@style/DefaultMessage" />
+        android:textAppearance="@style/TAMessage" />
 
 </RelativeLayout>

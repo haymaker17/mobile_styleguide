@@ -5,13 +5,13 @@
 
     <View
         android:id="@+id/v_divider_top"
-        style="@style/ListRowDivider"
+        style="@style/TAListRowDivider"
         android:layout_width="wrap_content"
         android:visibility="gone"/>
 
     <RelativeLayout
         android:id="@+id/list_field_container"
-        style="@style/DefaultRow"
+        style="@style/TARow"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_below="@+id/v_divider_top">
@@ -23,7 +23,7 @@
             android:layout_alignParentLeft="true"
             android:layout_alignParentStart="true"
             android:text="Large Text"
-            android:textAppearance="@style/DefaultTitle"/>
+            android:textAppearance="@style/TATitle"/>
 
         <ImageView
             android:id="@+id/iv_icon"
@@ -40,7 +40,7 @@
             android:layout_alignParentEnd="true"
             android:layout_alignParentRight="true"
             android:text="Large Text"
-            android:textAppearance="@style/DefaultValue"/>
+            android:textAppearance="@style/TAValue"/>
 
         <TextView
             android:id="@+id/tv_subtitle_1"
@@ -51,7 +51,7 @@
             android:singleLine="true"
             android:ellipsize="end"
             android:text="Small Text"
-            android:textAppearance="@style/DefaultSubTitle"/>
+            android:textAppearance="@style/TASubTitle"/>
 
         <TextView
             android:id="@+id/tv_subtitle_2"
@@ -62,7 +62,7 @@
             android:singleLine="true"
             android:ellipsize="end"
             android:text="Small Text"
-            android:textAppearance="@style/DefaultSubTitle"/>
+            android:textAppearance="@style/TASubTitle"/>
 
         <LinearLayout
             android:id="@+id/vg_subtitle_ellipsized"
@@ -81,7 +81,7 @@
             android:ellipsize="end"
             android:text="Small Text"
             android:layout_weight="0.4"
-            android:textAppearance="@style/DefaultSubTitle" />
+            android:textAppearance="@style/TASubTitle" />
 
         <TextView
             android:id="@+id/tv_subtitle_more"
@@ -89,7 +89,7 @@
             android:layout_height="wrap_content"
             android:layout_alignParentLeft="true"
             android:layout_weight="0.6"
-            android:textAppearance="@style/DefaultSubTitleMoreLabel"
+            android:textAppearance="@style/TASubTitleMoreLabel"
             android:text="@string/general_more_information"
             android:layout_marginLeft="5dp" />
         </LinearLayout>
