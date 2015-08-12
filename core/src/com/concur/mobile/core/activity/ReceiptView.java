@@ -153,6 +153,9 @@ public class ReceiptView extends BaseActivity {
                 progressBar.setVisibility(View.GONE);
             }
         }
+
+        EventTracker.INSTANCE.track(Flurry.CATEGORY_EXPENSE_EXPENSEIT,
+                Flurry.ACTION_VIEW_RECEIPT);
     }
 
     private void buildViews() {

@@ -185,7 +185,7 @@ public class ExpenseItReceipt implements ExpenseItReceiptDAO, Serializable {
             sendToCteAtCol.set(Calendar.MILLISECOND, 0);
             receipt.setSendToCteAt(sendToCteAtCol.getTime());
         }
-        
+
         receipt.setTotalImageCount(CursorUtil.getIntValue(cursor, Expense.ExpenseItReceiptColumns.TOTAL_IMAGE_COUNT));
         receipt.setTotalImagesUploaded(CursorUtil.getIntValue(cursor, Expense.ExpenseItReceiptColumns.TOTAL_IMAGES_UPLOADED));
         receipt.setParsingStatusCode(CursorUtil.getIntValue(cursor, Expense.ExpenseItReceiptColumns.PARSING_STATUS_CODE));
