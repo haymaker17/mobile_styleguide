@@ -32,6 +32,7 @@ import com.concur.mobile.core.expense.travelallowance.controller.IController;
 import com.concur.mobile.core.expense.travelallowance.controller.IControllerListener;
 import com.concur.mobile.core.expense.travelallowance.controller.TravelAllowanceItineraryController;
 import com.concur.mobile.core.expense.travelallowance.datamodel.CodeListManager;
+import com.concur.mobile.core.expense.travelallowance.datamodel.FixedTravelAllowance;
 import com.concur.mobile.core.expense.travelallowance.datamodel.Itinerary;
 import com.concur.mobile.core.expense.travelallowance.datamodel.ItineraryLocation;
 import com.concur.mobile.core.expense.travelallowance.datamodel.ItinerarySegment;
@@ -589,46 +590,58 @@ public class ItineraryUpdateActivity extends BaseActivity implements IController
                 if (progressDialog != null) {
                     progressDialog.dismiss();
                 }
-                showProgressDialog("@Calculating Expenses...@");
+                if (result != null) {
+                    List<FixedTravelAllowance> allowances = (List<FixedTravelAllowance>) result.getSerializable(BundleId.ALLOWANCE_LIST);
+                    if (allowanceController.executeUpdate(allowances, this.expenseReportKey)) {
+                        showProgressDialog("@Calculating Expenses...@");
+                    }
+                }
             }
-            return;
         }
 
         if (action == ControllerAction.UPDATE) {
             Log.d(DebugUtils.LOG_TAG_TA, DebugUtils.buildLogText(CLASS_TAG, "actionFinished",
                     "Update Action callback finished with isSuccess: " + isSuccess));
-            if (isSuccess) {
-                Itinerary createdItinerary = (Itinerary) result.getSerializable(BundleId.ITINERARY);
-                this.itinerary = createdItinerary;
-                refreshAdapter();
-                // Update, respectively the creation of itineraries will generate Fixed Travel Allowances.
-                // We need to refresh the buffered Allowances as navigation back to the allowance overview
-                // would show the old data.
-                ConcurCore app = (ConcurCore) getApplication();
-                allowanceController = app.getFixedTravelAllowanceController();
-                allowanceController.refreshFixedTravelAllowances(this.expenseReportKey);
-                Toast.makeText(this, R.string.general_save_success, Toast.LENGTH_SHORT).show();
-                if (allowanceController.refreshFixedTravelAllowances(this.expenseReportKey)) {
-                    showProgressDialog("@Calculating Allowances...@");
+            if (controller instanceof TravelAllowanceItineraryController) {
+                if (isSuccess) {
+                    Itinerary createdItinerary = (Itinerary) result.getSerializable(BundleId.ITINERARY);
+                    this.itinerary = createdItinerary;
+                    // Update, respectively the creation of itineraries will generate Fixed Travel Allowances.
+                    // We need to refresh the buffered Allowances as navigation back to the allowance overview
+                    // would show the old data.
+                    ConcurCore app = (ConcurCore) getApplication();
+                    allowanceController = app.getFixedTravelAllowanceController();
+                    allowanceController.refreshFixedTravelAllowances(this.expenseReportKey);
+                    Toast.makeText(this, R.string.general_save_success, Toast.LENGTH_SHORT).show();
+                    if (allowanceController.refreshFixedTravelAllowances(this.expenseReportKey)) {
+                        showProgressDialog("@Calculating Allowances...@");
+                    }
+                } else {
+                    Toast.makeText(this, R.string.general_save_fail, Toast.LENGTH_SHORT).show();
                 }
-            } else {
-                Toast.makeText(this, R.string.general_save_fail, Toast.LENGTH_SHORT).show();
+                refreshAdapter();
+            }
+            if (controller instanceof FixedTravelAllowanceController) {
+                if (progressDialog != null) {
+                    progressDialog.dismiss();
+                }
             }
         }
 
         if (action == ControllerAction.DELETE) {
-            Log.d(DebugUtils.LOG_TAG_TA, DebugUtils.buildLogText(CLASS_TAG, "anctionFinished",
-                    "Delete Action callback finished with isSuccess: " + isSuccess));
-            if (isSuccess) {
-                ItinerarySegment deletedSegment = (ItinerarySegment) result.getSerializable(BundleId.SEGMENT);
-                this.itinerary.getSegmentList().remove(deletedSegment);
-                Toast.makeText(this, R.string.general_delete_success, Toast.LENGTH_SHORT).show();
-            } else {
-                Toast.makeText(this, R.string.general_delete_fail, Toast.LENGTH_SHORT).show();
+            if (controller instanceof TravelAllowanceItineraryController) {
+                Log.d(DebugUtils.LOG_TAG_TA, DebugUtils.buildLogText(CLASS_TAG, "anctionFinished",
+                        "Delete Action callback finished with isSuccess: " + isSuccess));
+                if (isSuccess) {
+                    ItinerarySegment deletedSegment = (ItinerarySegment) result.getSerializable(BundleId.SEGMENT);
+                    this.itinerary.getSegmentList().remove(deletedSegment);
+                    Toast.makeText(this, R.string.general_delete_success, Toast.LENGTH_SHORT).show();
+                } else {
+                    Toast.makeText(this, R.string.general_delete_fail, Toast.LENGTH_SHORT).show();
+                }
+                refreshAdapter();
             }
         }
-
-        refreshAdapter();
     }
 
     private void refreshAdapter() {

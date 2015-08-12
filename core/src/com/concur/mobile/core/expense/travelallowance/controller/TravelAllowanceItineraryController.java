@@ -69,12 +69,11 @@ public class TravelAllowanceItineraryController extends BaseController {
 
     public void refreshItineraries(String expenseReportKey, boolean isManager) {
 
-        this.itineraryList = new ArrayList<Itinerary>();
-
         if (getItinerariesRequest != null && getItinerariesRequest.getStatus() != AsyncTask.Status.FINISHED) {
             // There is already an async task which is not finished yet. Return silently and let the task finish his work first.
             return;
         }
+        this.itineraryList = new ArrayList<Itinerary>();
 
         receiver = new BaseAsyncResultReceiver(new Handler());
 

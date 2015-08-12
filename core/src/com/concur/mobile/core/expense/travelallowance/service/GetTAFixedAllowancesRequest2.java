@@ -7,7 +7,9 @@ import com.concur.mobile.base.service.BaseAsyncResultReceiver;
 import com.concur.mobile.base.service.parser.CommonParser;
 import com.concur.mobile.core.expense.travelallowance.controller.FixedTravelAllowanceControlData;
 import com.concur.mobile.core.expense.travelallowance.datamodel.FixedTravelAllowance;
+import com.concur.mobile.core.expense.travelallowance.datamodel.Itinerary;
 import com.concur.mobile.core.expense.travelallowance.service.parser.GetTAFixedAllowancesResponseDOMParser;
+import com.concur.mobile.core.expense.travelallowance.util.BundleId;
 import com.concur.mobile.core.expense.travelallowance.util.DebugUtils;
 import com.concur.mobile.core.service.CoreAsyncRequestTask;
 
@@ -16,6 +18,7 @@ import org.xml.sax.SAXException;
 
 import java.io.IOException;
 import java.io.InputStream;
+import java.util.ArrayList;
 import java.util.List;
 
 import javax.xml.parsers.DocumentBuilder;
@@ -72,7 +75,8 @@ public class GetTAFixedAllowancesRequest2 extends CoreAsyncRequestTask {
 
         resultData.putBoolean(IS_SUCCESS, true);
         this.fixedTravelAllowances = parser.getFixedTravelAllowances();
-
+        ArrayList<FixedTravelAllowance> allowances = new ArrayList<FixedTravelAllowance>(this.fixedTravelAllowances);
+        resultData.putSerializable(BundleId.ALLOWANCE_LIST, allowances);
         long currentMillis = System.currentTimeMillis();
         Log.i(DebugUtils.LOG_TAG_TA, DebugUtils.buildLogText(CLASS_TAG, "onPostParse",
                 "Request total = " + (currentMillis - startMillis) + "ms"));

@@ -12,6 +12,7 @@ public final class BundleId {
     public static final String ITINERARY = Itinerary.class.getName();
     public static final String SYSTEM_CONFIGURATION = TravelAllowanceSystemConfiguration.class.getName();
     public static final String ITINERARY_LIST = "travelallowance.itinerary.list";
+    public static final String ALLOWANCE_LIST = "travelallowance.allowance.list";
     public static final String SEGMENT = ItinerarySegment.class.getName();
     public static final String MESSAGE = Message.class.getName();
     public static final String PROGRESS_DIALOG_TEXT = "progressDialogFragmentText";
