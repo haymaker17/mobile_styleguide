@@ -149,6 +149,7 @@ public class SimpleTAItineraryListFragment extends Fragment implements SwipeRefr
             itin.setName(expenseReportName);
             itin.setExpenseReportID(expenseReportKey);
             intent.putExtra(BundleId.ITINERARY, itin);
+            intent.putExtra(BundleId.EXPENSE_REPORT_KEY, expenseReportKey);
             startActivity(intent);
         } else if (view.getId() == R.id.right_button) {
             deleteItineraries();
@@ -194,6 +195,7 @@ public class SimpleTAItineraryListFragment extends Fragment implements SwipeRefr
             Itinerary itinerary = itineraryList.get(pos);
             Intent intent = new Intent(getActivity(), ItineraryUpdateActivity.class);
             intent.putExtra(BundleId.ITINERARY, itinerary);
+            intent.putExtra(BundleId.EXPENSE_REPORT_KEY, expenseReportKey);
             startActivity(intent);
         }
     }

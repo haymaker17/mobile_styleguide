@@ -3,14 +3,6 @@
  */
 package com.concur.mobile.core.expense.report.activity;
 
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-
-import org.apache.http.HttpStatus;
-
 import android.app.Activity;
 import android.app.AlertDialog;
 import android.app.Dialog;
@@ -62,7 +54,6 @@ import com.concur.mobile.core.expense.report.service.ReportDeleteRequest;
 import com.concur.mobile.core.expense.report.service.ReportEntryDetailRequest;
 import com.concur.mobile.core.expense.report.service.ReportEntryFormRequest;
 import com.concur.mobile.core.expense.service.GetExpenseTypesRequest;
-import com.concur.mobile.core.expense.travelallowance.activity.ItineraryOverviewActivity;
 import com.concur.mobile.core.expense.travelallowance.activity.ItineraryUpdateActivity;
 import com.concur.mobile.core.expense.travelallowance.activity.TravelAllowanceActivity;
 import com.concur.mobile.core.expense.travelallowance.controller.ControllerAction;
@@ -78,6 +69,14 @@ import com.concur.mobile.core.util.Flurry;
 import com.concur.mobile.core.util.FormatUtil;
 import com.concur.mobile.core.util.SortOrder;
 import com.concur.mobile.core.util.ViewUtil;
+
+import org.apache.http.HttpStatus;
+
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 
 /**
  * Provides an activity to display expense report entries.
@@ -1626,6 +1625,7 @@ public class
                                 itin.setExpenseReportID(expRep.reportKey);
                                 itin.setName(expRep.reportName);
                                 intent.putExtra(BundleId.ITINERARY, itin);
+                                intent.putExtra(BundleId.EXPENSE_REPORT_KEY, expRep.reportKey);
                                 startActivity(intent);
                             } else {//There are itineraries already
                                 intent = new Intent(ExpenseEntries.this, TravelAllowanceActivity.class);

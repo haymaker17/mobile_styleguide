@@ -96,10 +96,16 @@ public class FixedTravelAllowanceController extends BaseController {
         fillTAMap();
     }
 
-    public void refreshFixedTravelAllowances(String expenseReportKey) {
+    /**
+     * Reads the allowances associated with the expene report from the backend
+     * @param expenseReportKey
+     * @return true, if request has been sent, otherwise false
+     */
+    public boolean refreshFixedTravelAllowances(String expenseReportKey) {
+
         if (StringUtilities.isNullOrEmpty(expenseReportKey)) {
-            Log.d(DebugUtils.LOG_TAG_TA, DebugUtils.buildLogText(CLASS_TAG, "refreshFixedTravelAllowances", "Report Key is null or empty! Refused."));
-            return;
+            Log.d(DebugUtils.LOG_TAG_TA, DebugUtils.buildLogText(CLASS_TAG, "refreshFixedTravelAllowances", "Report Key is null! Refused." ));
+            return false;
         }
         Log.d(DebugUtils.LOG_TAG_TA, DebugUtils.buildLogText(CLASS_TAG, "refreshFixedTravelAllowances", "Report Key " + expenseReportKey));
         this.fixedTravelAllowances = new ArrayList<FixedTravelAllowance>();
@@ -107,8 +113,9 @@ public class FixedTravelAllowanceController extends BaseController {
 
         if (getFixedAllowancesRequest2 != null && getFixedAllowancesRequest2.getStatus() != AsyncTask.Status.FINISHED) {
             // There is already an async task which is not finished yet. Return silently and let the task finish his work first.
-            return;
+            return false;
         }
+
         receiver = new BaseAsyncResultReceiver(new Handler());
 
         receiver.setListener(new BaseAsyncRequestTask.AsyncReplyListener() {
@@ -147,6 +154,7 @@ public class FixedTravelAllowanceController extends BaseController {
         getFixedAllowancesRequest2 = new GetTAFixedAllowancesRequest2(context, receiver, expenseReportKey);
         getFixedAllowancesRequest2.setControlData(controlData);
         getFixedAllowancesRequest2.execute();
+        return true;
     }
 
     private void fillTAMap() {
