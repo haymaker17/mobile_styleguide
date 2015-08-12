@@ -357,11 +357,12 @@ public class SessionManager {
                         loginResult.sessionId = null;
                         cleanup();
 
-                        // Analytics stuff.
-                        Map<String, String> params = new HashMap<String, String>();
-                        params.put("Type", Flurry.EVENT_REMOTE_WIPE);
-                        EventTracker.INSTANCE.track(Flurry.CATEGORY_SIGN_IN, Flurry.EVENT_NAME_FAILURE, params);
-
+                        if(replyListener == null) {
+                            // Analytics stuff.
+                            Map<String, String> params = new HashMap<String, String>();
+                            params.put("Type", Flurry.EVENT_REMOTE_WIPE);
+                            EventTracker.INSTANCE.track(Flurry.CATEGORY_SIGN_IN, Flurry.EVENT_NAME_FAILURE, params);
+                        }
                     }
                 } else {
 
@@ -385,11 +386,13 @@ public class SessionManager {
                     // Save the login response information.
                     Log.d(Const.LOG_TAG, CLS_TAG + ".validateSessionId: successfully created new session id.");
 
-                    // Flurry Notification
-                    Map<String, String> autoLoginParams = new HashMap<String, String>();
-                    autoLoginParams.put(Flurry.PARAM_NAME_TYPE, Flurry.PARAM_VALUE_AUTO_LOGIN);
-                    EventTracker.INSTANCE.track(Flurry.CATEGORY_SIGN_IN, Flurry.EVENT_NAME_AUTHENTICATION,
-                            autoLoginParams);
+                    if (replyListener == null) {
+                        // Flurry Notification
+                        Map<String, String> autoLoginParams = new HashMap<String, String>();
+                        autoLoginParams.put(Flurry.PARAM_NAME_TYPE, Flurry.PARAM_VALUE_AUTO_LOGIN);
+                        EventTracker.INSTANCE.track(Flurry.CATEGORY_SIGN_IN, Flurry.EVENT_NAME_AUTHENTICATION,
+                                autoLoginParams);
+                    }
 
                     // Set the result information.
                     loginResult.sessionId = PlatformProperties.getSessionId();
