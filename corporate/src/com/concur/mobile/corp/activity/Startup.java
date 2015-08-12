@@ -80,7 +80,7 @@ public class Startup extends BaseActivity {
     private SessionInfo sessionInfo;
 
     // List of languages the Eva API currently supports.
-    private static final List<String> TESTDRIVE_USER_COUNTRIES = Arrays.asList(new String[] { "US", "GB", "AU", "CA" });
+    private static final List<String> TESTDRIVE_USER_COUNTRIES = Arrays.asList(new String[]{"US", "GB", "AU", "CA"});
 
     // long miliseconds
     private long startTimeMillis, stopTimeMillis, totalTime;
@@ -91,23 +91,23 @@ public class Startup extends BaseActivity {
 
         Product p = ((ConcurMobile) getApplication()).getProduct();
         switch (p) {
-        case CORPORATE:
-            setContentView(R.layout.splash);
-            // MOB-20174 - AppDynaics stuff.
-            Instrumentation.start("AD-AAB-AAA-FUF", getApplicationContext(), true);
+            case CORPORATE:
+                setContentView(R.layout.splash);
+                // MOB-20174 - AppDynaics stuff.
+                Instrumentation.start("AD-AAB-AAA-FUF", getApplicationContext(), true);
 
-            new Handler().postDelayed(new Runnable() {
+                new Handler().postDelayed(new Runnable() {
 
-                public void run() {
-                    doSplashFinish();
-                }
+                    public void run() {
+                        doSplashFinish();
+                    }
 
-            }, SPLASH_DELAY);
+                }, SPLASH_DELAY);
 
-            break;
-        default:
-            // No splash
-            isSplashDone = true;
+                break;
+            default:
+                // No splash
+                isSplashDone = true;
         }
 
         if (getIntent() != null && getIntent().getExtras() != null) {
@@ -189,11 +189,18 @@ public class Startup extends BaseActivity {
                 // Perform a company sign-on based login.
                 emailLookupBundle = getEmailLookUpBundleFromSessionInfo(sessionInfo);
                 // set server url
-                String serverUrl = ssoReply.serverUrl;
-                if(sessionInfo!=null){
+                //MOB-24861 SSO URL is null crash issue.
+                String serverUrl = null;
+                if (ssoReply != null) {
+                    serverUrl = ssoReply.serverUrl;
+                } else if (sessionInfo != null) {
+                    serverUrl = sessionInfo.getServerUrl();
+                }
+
+                if (sessionInfo != null) {
                     sessionInfo.setServerUrl(serverUrl);
                 }
-                if(serverUrl!=null && !serverUrl.isEmpty()){
+                if (serverUrl != null && !serverUrl.isEmpty()) {
                     //set platformproperties
                     PlatformProperties.setServerAddress(serverUrl);
                 }
@@ -415,9 +422,9 @@ public class Startup extends BaseActivity {
 
     /**
      * Attempt a login. Will spawn a LoginThread to do the work so this method will return before the login has completed.
-     * 
+     * <p/>
      * When not connected just return true if we have a login ID and pin saved.
-     * 
+     *
      * @return true if the login was attempted, false otherwise
      */
     protected boolean doLogin() {
@@ -497,50 +504,50 @@ public class Startup extends BaseActivity {
             final int requestID = resultData.getInt(BaseAsyncRequestTask.REQUEST_ID);
 
             switch (requestID) {
-            case AUTO_LOGIN_REQUEST_ID: {
-                // MOB-18782 Check remote wipe.
-                if (resultData.getBoolean(LoginResponseKeys.REMOTE_WIPE_KEY, false)) {
-                    showRemoteWipeDialog();
-                } else {
-
-                    SessionInfo sessionInfo = ConfigUtil.getSessionInfo(Startup.this);
-                    String sessionId = sessionInfo.getSessionId();
-
-                    if (TextUtils.isEmpty(sessionId)) {
-                        startLoginScreen();
+                case AUTO_LOGIN_REQUEST_ID: {
+                    // MOB-18782 Check remote wipe.
+                    if (resultData.getBoolean(LoginResponseKeys.REMOTE_WIPE_KEY, false)) {
+                        showRemoteWipeDialog();
                     } else {
-                        // Save the login information.
-                        UserAndSessionInfoUtil.updateUserAndSessionInfo(Startup.this, emailLookupBundle);
 
-                        // Statistics Notification
-                        Map<String, String> params = new HashMap<String, String>();
-                        params.put(Flurry.PARAM_NAME_TYPE, Flurry.PARAM_VALUE_AUTO_LOGIN);
-                        EventTracker.INSTANCE.track(Flurry.CATEGORY_SIGN_IN, Flurry.EVENT_NAME_AUTHENTICATION, params);
+                        SessionInfo sessionInfo = ConfigUtil.getSessionInfo(Startup.this);
+                        String sessionId = sessionInfo.getSessionId();
 
-                        startHomeScreen();
+                        if (TextUtils.isEmpty(sessionId)) {
+                            startLoginScreen();
+                        } else {
+                            // Save the login information.
+                            UserAndSessionInfoUtil.updateUserAndSessionInfo(Startup.this, emailLookupBundle);
+
+                            // Statistics Notification
+                            Map<String, String> params = new HashMap<String, String>();
+                            params.put(Flurry.PARAM_NAME_TYPE, Flurry.PARAM_VALUE_AUTO_LOGIN);
+                            EventTracker.INSTANCE.track(Flurry.CATEGORY_SIGN_IN, Flurry.EVENT_NAME_AUTHENTICATION, params);
+
+                            startHomeScreen();
+                        }
+
+                        // Don't come back here
+                        doLoginFinish();
                     }
-
-                    // Don't come back here
-                    doLoginFinish();
+                    break;
                 }
-                break;
-            }
-            case VALIDATE_PASSWORD_REQUEST_ID: {
-                AutoLoginRequestTask autoLoginRequestTask = new AutoLoginRequestTask(getApplication()
-                        .getApplicationContext(), AUTO_LOGIN_REQUEST_ID, loginReceiver, Locale.getDefault());
-                autoLoginRequestTask.execute();
+                case VALIDATE_PASSWORD_REQUEST_ID: {
+                    AutoLoginRequestTask autoLoginRequestTask = new AutoLoginRequestTask(getApplication()
+                            .getApplicationContext(), AUTO_LOGIN_REQUEST_ID, loginReceiver, Locale.getDefault());
+                    autoLoginRequestTask.execute();
 
-                break;
-            }
-            default: {
-                if (resultData.getBoolean(LoginResponseKeys.REMOTE_WIPE_KEY, false)) {
-                    showRemoteWipeDialog();
-                } else {
-                    displayUnableToLoginDialog("StartupLoginListner.onRequestSuccess(): "
-                            + "Login returned sucessfully, but with unknown request ID: " + requestID);
+                    break;
                 }
-                break;
-            }
+                default: {
+                    if (resultData.getBoolean(LoginResponseKeys.REMOTE_WIPE_KEY, false)) {
+                        showRemoteWipeDialog();
+                    } else {
+                        displayUnableToLoginDialog("StartupLoginListner.onRequestSuccess(): "
+                                + "Login returned sucessfully, but with unknown request ID: " + requestID);
+                    }
+                    break;
+                }
             }
         }
 
