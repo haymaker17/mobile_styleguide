@@ -197,8 +197,9 @@ public class FixedTravelAllowanceDetailsActivity extends BaseActivity implements
 
         if (item.getItemId() == R.id.menuSave && this.allowance != null) {
             updateAllowanceFromUI();
-
-            allowanceController.executeUpdate(this.allowance, expenseReportKey);
+            List<FixedTravelAllowance> allowances = new ArrayList<FixedTravelAllowance>();
+            allowances.add(this.allowance);
+            allowanceController.executeUpdate(allowances, expenseReportKey);
 
         }
 

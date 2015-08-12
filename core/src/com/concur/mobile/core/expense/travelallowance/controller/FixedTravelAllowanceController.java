@@ -427,29 +427,32 @@ public class FixedTravelAllowanceController extends BaseController {
         }
     }
 
-    public void executeUpdate(FixedTravelAllowance allowance, String expenseReportKey) {
-        if (allowance == null || StringUtilities.isNullOrEmpty(expenseReportKey)){
-            return;
+    /**
+     * Updates the given allowances
+     * @param allowances The list of allowances to be updated
+     * @param expenseReportKey The expense report the allowances are associated with
+     * @return true, if the request has been sent
+     */
+    public boolean executeUpdate(List<FixedTravelAllowance> allowances, String expenseReportKey) {
+        if (StringUtilities.isNullOrEmpty(expenseReportKey)) {
+            Log.d(DebugUtils.LOG_TAG_TA, DebugUtils.buildLogText(CLASS_TAG, "executeUpdate", "Report Key is null! Refused." ));
+            return false;
         }
-
+        if (allowances == null || allowances.size() == 0) {
+            Log.d(DebugUtils.LOG_TAG_TA, DebugUtils.buildLogText(CLASS_TAG, "executeUpdate", "Allowance list is null or empty! Refused." ));
+            return false;
+        }
         BaseAsyncResultReceiver receiver = new BaseAsyncResultReceiver(new Handler());
         receiver.setListener(new BaseAsyncRequestTask.AsyncReplyListener() {
             @Override
             public void onRequestSuccess(Bundle resultData) {
                 resultData.getClass();
-//                FixedTravelAllowance resultAllowance = (FixedTravelAllowance) resultData.getSerializable(BundleId.);
-
-//                Itinerary resultItinerary = (Itinerary) resultData.getSerializable(BundleId.ITINERARY);
-//                boolean isSuccess = handleAfterUpdateResponse(resultItinerary);
                 boolean isSuccess = resultData.getBoolean(BundleId.IS_SUCCESS);
                 notifyListener(ControllerAction.UPDATE, isSuccess, resultData);
-
             }
 
             @Override
             public void onRequestFail(Bundle resultData) {
-                Message msg = new Message(Message.Severity.ERROR, "500", "Backend Dump!");
-//                messageCache.add(msg);
                 notifyListener(ControllerAction.UPDATE, false, resultData);
             }
 
@@ -464,11 +467,9 @@ public class FixedTravelAllowanceController extends BaseController {
             }
         });
 
-        UpdateFixedAllowances request = new UpdateFixedAllowances(context, receiver, expenseReportKey, allowance);
+        UpdateFixedAllowances request = new UpdateFixedAllowances(context, receiver, expenseReportKey, allowances);
         request.execute();
-
-
-
+        return true;
     }
 
     public FixedTravelAllowance getAllowanceByDate(Date date){

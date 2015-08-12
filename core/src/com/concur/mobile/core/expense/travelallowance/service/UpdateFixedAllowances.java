@@ -1,6 +1,7 @@
 package com.concur.mobile.core.expense.travelallowance.service;
 
 import java.io.IOException;
+import java.util.List;
 
 import org.xmlpull.v1.XmlPullParserException;
 
@@ -34,12 +35,12 @@ public class UpdateFixedAllowances extends CoreAsyncRequestTask {
     public static final String LOG_TAG = GetTAItinerariesRequest.class.getSimpleName();
 
     private ResultsParser resultsParser;
-    private FixedTravelAllowance fixedAllowance;
+    private List<FixedTravelAllowance> fixedAllowances;
     private String rptKey;
 
-    public UpdateFixedAllowances(Context context, BaseAsyncResultReceiver receiver, String rptKey, FixedTravelAllowance fixedAllowance) {
+    public UpdateFixedAllowances(Context context, BaseAsyncResultReceiver receiver, String rptKey, List<FixedTravelAllowance> fixedAllowances) {
         super(context, 0, receiver);
-        this.fixedAllowance = fixedAllowance;
+        this.fixedAllowances = fixedAllowances;
         this.rptKey = rptKey;
     }
 
@@ -52,18 +53,20 @@ public class UpdateFixedAllowances extends CoreAsyncRequestTask {
     protected String getPostBody() {
         StringBuilder sb = new StringBuilder();
 
-        sb.append("<FixedAllowanceRow>");
-        FormatUtil.addXMLElementEscaped(sb, "TaDayKey", fixedAllowance.getFixedTravelAllowanceId());
-        TaXmlUtil.appendXmlIfTrue(sb, "MarkedExcluded", fixedAllowance.getExcludedIndicator());
-        TaXmlUtil.appendXml(sb, "Overnight", fixedAllowance.getOvernightIndicator());
-        TaXmlUtil.appendXmlIfNotEmpty(sb, "BreakfastProvided", fixedAllowance.getBreakfastProvision().getCode());
-        TaXmlUtil.appendXmlIfNotEmpty(sb, "LunchProvided", fixedAllowance.getLunchProvision().getCode());
-        TaXmlUtil.appendXmlIfNotEmpty(sb, "DinnerProvided", fixedAllowance.getDinnerProvision().getCode());
-        if (fixedAllowance.getLodgingType() != null) {
-            TaXmlUtil.appendXmlIfNotEmpty(sb, "LodgingType", fixedAllowance.getLodgingType().getCode());
-        }
+        for (FixedTravelAllowance fixedAllowance : this.fixedAllowances) {
+            sb.append("<FixedAllowanceRow>");
+            FormatUtil.addXMLElementEscaped(sb, "TaDayKey", fixedAllowance.getFixedTravelAllowanceId());
+            TaXmlUtil.appendXmlIfTrue(sb, "MarkedExcluded", fixedAllowance.getExcludedIndicator());
+            TaXmlUtil.appendXml(sb, "Overnight", fixedAllowance.getOvernightIndicator());
+            TaXmlUtil.appendXmlIfNotEmpty(sb, "BreakfastProvided", fixedAllowance.getBreakfastProvision().getCode());
+            TaXmlUtil.appendXmlIfNotEmpty(sb, "LunchProvided", fixedAllowance.getLunchProvision().getCode());
+            TaXmlUtil.appendXmlIfNotEmpty(sb, "DinnerProvided", fixedAllowance.getDinnerProvision().getCode());
+            if (fixedAllowance.getLodgingType() != null) {
+                TaXmlUtil.appendXmlIfNotEmpty(sb, "LodgingType", fixedAllowance.getLodgingType().getCode());
+            }
 
-        sb.append("</FixedAllowanceRow>");
+            sb.append("</FixedAllowanceRow>");
+        }
 
         return sb.toString();
     }
