@@ -705,8 +705,14 @@ public class HotelSearchAndResultActivity extends TravelBaseActivity
 
                 // star rating
                 if (starRatingFilterEnabled) {
-                    if (listItem.getHotel().preferences != null && !starRating
-                            .equals(listItem.getHotel().preferences.starRating)) {
+                    if (listItem.getHotel().preferences != null && listItem.getHotel().preferences.starRating != null
+                            && listItem.getHotel().preferences.starRating.trim().length() > 0) {
+                        if (Integer.parseInt(starRating) > Integer
+                                .parseInt(listItem.getHotel().preferences.starRating)) {
+                            itemsToBeRemoved.add(listItem);
+                            continue;
+                        }
+                    } else {
                         itemsToBeRemoved.add(listItem);
                         continue;
                     }

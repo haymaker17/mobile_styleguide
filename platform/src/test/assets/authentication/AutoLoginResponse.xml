@@ -142,7 +142,7 @@
 			<Value>Y</Value>
 		</SiteSetting>
 		<SiteSetting>
-			<Name>ShowHotelJarvisUIOnAndroid</Name>
+			<Name>ShowJarvisHotelUIOnAndroid</Name>
 			<Type>OTMODULE</Type>
 			<Value>Y</Value>
 		</SiteSetting>

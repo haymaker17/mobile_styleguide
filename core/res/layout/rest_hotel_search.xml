@@ -1,11 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:id="@+id/hotel_v1"
-    style="@style/ConcurRestTheme.White.ActionBarTabs"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:background="#ffffff"
-    android:orientation="vertical" >
+              android:id="@+id/hotel_v1"
+              style="@style/ConcurRestTheme.White.ActionBarTabs"
+              android:layout_width="match_parent"
+              android:layout_height="match_parent"
+              android:background="#ffffff"
+              android:orientation="vertical">
 
     <!-- Include the standard header bits -->
 
@@ -13,12 +13,12 @@
         android:id="@+id/header"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        layout="@layout/standard_header" />
+        layout="@layout/standard_header"/>
 
     <ScrollView
         android:layout_width="match_parent"
         android:layout_height="0dp"
-        android:layout_weight="1" >
+        android:layout_weight="1">
 
         <LinearLayout
             android:id="@+id/hotel_search_v1"
@@ -27,22 +27,22 @@
             android:layout_marginLeft="@dimen/list_item_horizontal_margin"
             android:layout_marginRight="@dimen/list_item_horizontal_margin"
             android:layout_marginTop="@dimen/list_group_vertical_margin"
-            android:orientation="vertical" >
+            android:orientation="vertical">
 
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:orientation="vertical"
-                android:padding="1dp" >
+                android:padding="1dp">
 
                 <include
                     android:id="@+id/hotel_location"
                     android:layout_width="match_parent"
                     android:layout_height="0dp"
                     android:layout_weight=".105"
-                    layout="@layout/v1_image_list_field" />
+                    layout="@layout/v1_image_list_field"/>
 
-                <include layout="@layout/group_separator_v1" />
+                <include layout="@layout/group_separator_v1"/>
 
                 <!-- Check-in/out Group -->
 
@@ -52,20 +52,20 @@
                     android:layout_height="wrap_content"
                     android:layout_marginRight="6dp"
                     android:layout_marginTop="@dimen/list_group_vertical_margin"
-                    android:orientation="horizontal" >
+                    android:orientation="horizontal">
 
                     <LinearLayout
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
                         android:layout_gravity="left"
                         android:layout_weight="0.49"
-                        android:orientation="vertical" >
+                        android:orientation="vertical">
 
                         <include
                             android:id="@+id/hotel_search_label_checkin"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            layout="@layout/v1_image_calendar_field" />
+                            layout="@layout/v1_image_calendar_field"/>
                     </LinearLayout>
 
                     <View
@@ -75,26 +75,56 @@
                         android:layout_gravity="center_vertical"
                         android:layout_marginBottom="10dp"
                         android:background="@color/CellBackgroundBottom"
-                        android:clickable="false" />
+                        android:clickable="false"/>
 
                     <LinearLayout
+                        android:id="@+id/hotel_search_check_out"
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
                         android:layout_gravity="right"
-                        android:layout_marginLeft="6dp"
+                        android:layout_marginLeft="15dp"
                         android:layout_weight="0.49"
-                        android:orientation="vertical" >
+                        android:orientation="vertical">
 
-                        <include
-                            android:id="@+id/hotel_search_check_out"
+
+                        <TextView
+                            android:id="@+id/field_name"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            layout="@layout/v1_image_calendar_field" />
+                            android:layout_marginLeft="4dp"
+                            android:layout_marginRight="6dp"
+                            android:layout_marginTop="6dp"
+                            android:text="Field Name"
+                            android:textAppearance="@style/FormFieldLabelTextV1"
+                            />
+
+                        <TextView
+                            android:id="@+id/field_value"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_gravity="center_vertical"
+                            android:layout_marginBottom="8dp"
+                            android:layout_marginLeft="4dp"
+                            android:layout_marginRight="6dp"
+                            android:gravity="center_vertical"
+                            android:scrollHorizontally="true"
+                            android:text="web, Jan 20"
+                            android:textAppearance="@style/FormFieldValueTextV1"/>
+
+                        <TextView
+                            android:id="@+id/field_note"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginLeft="14dp"
+                            android:layout_marginRight="6dp"
+                            android:text="Field Note"
+                            android:textAppearance="@style/FormFieldNoteTextV1"
+                            android:visibility="gone"/>
                     </LinearLayout>
                 </LinearLayout>
             </LinearLayout>
 
-            <include layout="@layout/group_separator_v1" />
+            <include layout="@layout/group_separator_v1"/>
 
             <ProgressBar
                 android:id="@+id/rest_custom_field_search_progress"
@@ -119,7 +149,7 @@
                 android:id="@+id/hotel_booking_custom_fields"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:orientation="vertical" >
+                android:orientation="vertical">
             </LinearLayout>
 
         </LinearLayout>
@@ -127,6 +157,6 @@
 
     <include
         android:id="@+id/footer"
-        layout="@layout/footer_navigation_bar_one_button_full" />
+        layout="@layout/footer_navigation_bar_one_button_full"/>
 
 </LinearLayout>

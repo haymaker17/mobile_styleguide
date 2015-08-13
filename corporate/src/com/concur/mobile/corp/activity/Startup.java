@@ -569,17 +569,18 @@ public class Startup extends BaseActivity {
         private void displayUnableToLoginDialog(final String debugMessage) {
 
             // If login fails for some reason, then go to the EmailLookup screen.
-            AlertDialogFragment dialog = DialogFragmentFactory.getPositiveDialogFragment(
-                    getText(R.string.general_error).toString(), getText(R.string.login_failure).toString(),
-                    getText(R.string.okay).toString(), new AlertDialogFragment.OnClickListener() {
+            AlertDialogFragment dialog = DialogFragmentFactory
+                    .getPositiveDialogFragment(getText(R.string.general_error).toString(),
+                            getText(R.string.login_failure).toString(), getText(R.string.okay).toString(),
+                            new AlertDialogFragment.OnClickListener() {
 
-                        public void onCancel(FragmentActivity activity, DialogInterface dialog) {
-                            // nothing to do
-                        }
+                                public void onCancel(FragmentActivity activity, DialogInterface dialog) {
+                                    // nothing to do
+                                }
 
-                        public void onClick(FragmentActivity activity, DialogInterface dialog, int which) {
-                            Log.e(Const.LOG_TAG, debugMessage);
-                            startLoginScreen();
+                                public void onClick(FragmentActivity activity, DialogInterface dialog, int which) {
+                                    Log.e(Const.LOG_TAG, debugMessage);
+                                    startLoginScreen();
                             doLoginFinish();
                         }
 

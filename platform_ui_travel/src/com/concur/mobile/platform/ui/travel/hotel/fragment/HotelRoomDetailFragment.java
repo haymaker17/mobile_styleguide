@@ -8,7 +8,6 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemClickListener;
-import android.widget.ListView;
 import android.widget.TextView;
 import com.concur.mobile.platform.travel.search.hotel.HotelRate;
 import com.concur.mobile.platform.ui.common.fragment.PlatformFragmentV1;
@@ -17,6 +16,8 @@ import com.concur.mobile.platform.ui.common.view.ListItemAdapter;
 import com.concur.mobile.platform.ui.travel.R;
 import com.concur.mobile.platform.ui.travel.hotel.fragment.HotelChoiceDetailsFragment.HotelChoiceDetailsFragmentListener;
 import com.concur.mobile.platform.ui.travel.util.Const;
+import com.concur.mobile.platform.ui.travel.util.ViewUtil;
+import com.concur.mobile.platform.ui.travel.view.CustomListView;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -66,16 +67,18 @@ public class HotelRoomDetailFragment extends PlatformFragmentV1 {
                             hotelRooms.get(0).getHotelRoom().currency, true, true));
         }// end of price to beat header
 
-        ListView listView = (ListView) mainView.findViewById(R.id.hotel_rooms_list_view);
+        CustomListView listView = (CustomListView) mainView.findViewById(R.id.hotel_rooms_list_view);
         TextView tv = (TextView) mainView.findViewById(R.id.no_rooms);
         listView.setVisibility(View.GONE);
         tv.setVisibility(View.GONE);
+
         // Configuration config = getResources().getConfiguration();
         if (hotelRooms != null && hotelRooms.size() > 0) {
             listItemAdapater = new ListItemAdapter<HotelRoomListItem>(getActivity().getApplicationContext(),
                     hotelRooms);
             listView.setAdapter(listItemAdapater);
             listView.setVisibility(View.VISIBLE);
+            ViewUtil.getListViewSize(listView);
 
             listView.setOnItemClickListener(new OnItemClickListener() {
 

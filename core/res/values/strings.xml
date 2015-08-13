@@ -65,6 +65,7 @@
     <string name="login_sso_no_company_code_msg">Please provide a value for company code.</string>
     <string name="login_sso_query_failed_title">Retrieval Failed</string>
     <string name="login_expired">Your session has expired and auto-sign in is disabled.  You must sign in again.</string>
+    <string name="login_expired_auto_sign_in_success">Your session has expired and you are automatically signed in.</string>
     <string name="login_enter_name_password">Enter Concur User Name</string>
     <string name="login_help_with_signin_title">Sign In Help</string>
     <string name="login_more_help">More Help</string>
@@ -641,8 +642,8 @@
     <!-- Rest Hotel API -->
     <string name="search_destination_location">Destination</string>
     <string name="search_current_location">Current Location</string>
-    <string name="hotel_search_label_checkin_date">Check-in Date</string>
-    <string name="hotel_search_label_checkout_date">Check-out Date</string>
+    <string name="hotel_search_label_checkin_date">Check-in</string>
+    <string name="hotel_search_label_checkout_date">Check-out</string>
     <string name="loc_search_hint_v1">Search Destination</string>
     <string name="loc_search_office">Office Locations</string>
     <string name="loc_search_office_hint">Search for an Office Location</string>
@@ -1983,8 +1984,7 @@
 
     <!-- Start What's new -->
     <string-array name="whats_new">
-        <item>\u2022 Mobile SSO for EMEA clients fix</item>
-        <item>\u2022 Security improvements for logging in</item>
+        <item>\u2022 Crash fixes</item>
     </string-array>
     <!-- End What's new -->
 
