@@ -35,11 +35,9 @@ import com.concur.mobile.platform.ui.common.login.EmailLookupFragment;
 import com.concur.mobile.platform.ui.common.login.EmailLookupFragment.EmailLookupCallbacks;
 import com.concur.platform.PlatformProperties;
 
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
-@EventTracker.EventTrackerClassName(getClassName = "Email Lookup")
+@EventTracker.EventTrackerClassName(getClassName = Flurry.SCREEN_NAME_EMAIL_LOOKUP)
 public class EmailLookupActivity extends BaseActivity implements IProgressBarListener, EmailLookupCallbacks {
 
     /**
@@ -62,10 +60,10 @@ public class EmailLookupActivity extends BaseActivity implements IProgressBarLis
         super.onCreate(savedInstanceState);
         setContentView(R.layout.test_drive_main);
 
-        if(ConcurCore.userEntryAppTimer>0L){
-            ConcurCore.userEntryAppTimer+=System.currentTimeMillis();
-        }else{
-            ConcurCore.userEntryAppTimer=System.currentTimeMillis();
+        if (ConcurCore.userEntryAppTimer > 0L) {
+            ConcurCore.userEntryAppTimer += System.currentTimeMillis();
+        } else {
+            ConcurCore.userEntryAppTimer = System.currentTimeMillis();
         }
         // Enable the progress mask if needed
         if (savedInstanceState != null) {
@@ -167,13 +165,13 @@ public class EmailLookupActivity extends BaseActivity implements IProgressBarLis
                 setResult(Activity.RESULT_OK);
                 finish();
             }
-        }else {
-            if(ConcurCore.userEntryAppTimer>0L){
-                ConcurCore.userEntryAppTimer+=System.currentTimeMillis();
+        } else {
+            if (ConcurCore.userEntryAppTimer > 0L) {
+                ConcurCore.userEntryAppTimer += System.currentTimeMillis();
                 Log.d(">>>>>>>> " + Const.LOG_TAG + " >>>>>> ", " Total Time EmailLookup time = " + ConcurCore.userEntryAppTimer);
-            }else{
-                ConcurCore.userEntryAppTimer=System.currentTimeMillis();
-                Log.d(">>>>>>>> "+Const.LOG_TAG + " >>>>>> ", " Total Time EmailLookup  time = " + ConcurCore.userEntryAppTimer);
+            } else {
+                ConcurCore.userEntryAppTimer = System.currentTimeMillis();
+                Log.d(">>>>>>>> " + Const.LOG_TAG + " >>>>>> ", " Total Time EmailLookup  time = " + ConcurCore.userEntryAppTimer);
             }
         }
 
@@ -200,11 +198,11 @@ public class EmailLookupActivity extends BaseActivity implements IProgressBarLis
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {
-        case R.id.menuSettings:
-            Intent i = new Intent(this, Preferences.class);
-            i.putExtra(Preferences.OPEN_SOURCE_LIBRARY_CLASS, OpenSourceLicenseInfo.class);
-            startActivity(i);
-            break;
+            case R.id.menuSettings:
+                Intent i = new Intent(this, Preferences.class);
+                i.putExtra(Preferences.OPEN_SOURCE_LIBRARY_CLASS, OpenSourceLicenseInfo.class);
+                startActivity(i);
+                break;
         }
         return super.onOptionsItemSelected(item);
     }
@@ -235,12 +233,24 @@ public class EmailLookupActivity extends BaseActivity implements IProgressBarLis
         Bundle loginBundle = resultData;
         if (signInMethod.equalsIgnoreCase(com.concur.mobile.platform.ui.common.util.Const.LOGIN_METHOD_PASSWORD)
                 || (signInMethod
-                        .equalsIgnoreCase(com.concur.mobile.platform.ui.common.util.Const.LOGIN_METHOD_MOBILE_PASSWORD))) {
+                .equalsIgnoreCase(com.concur.mobile.platform.ui.common.util.Const.LOGIN_METHOD_MOBILE_PASSWORD))) {
+
+            // GA
+            if (signInMethod.equalsIgnoreCase(com.concur.mobile.platform.ui.common.util.Const.LOGIN_METHOD_PASSWORD)) {// GA
+                EventTracker.INSTANCE.eventTrack(Flurry.CATEGORY_SIGN_IN, Flurry.ACTION_SUCCESS_CREDENTIAL_TYPE,
+                        Flurry.LABEL_LOGIN_USING_PASSWORD, null);
+            } else {
+                EventTracker.INSTANCE.eventTrack(Flurry.CATEGORY_SIGN_IN, Flurry.ACTION_SUCCESS_CREDENTIAL_TYPE,
+                        Flurry.LABEL_LOGIN_USING_PASSWORD, null);
+            }
             Intent it = new Intent(this, LoginPasswordActivity.class);
             it.putExtra(EmailLookUpRequestTask.EXTRA_LOGIN_BUNDLE, loginBundle);
             startActivityForResult(it, LOGIN_PASSWORD_REQ_CODE);
         } else if (signInMethod.equalsIgnoreCase(com.concur.mobile.platform.ui.common.util.Const.LOGIN_METHOD_SSO)
                 && !TextUtils.isEmpty(ssoUrl)) {
+            // GA
+            EventTracker.INSTANCE.eventTrack(Flurry.CATEGORY_SIGN_IN, Flurry.ACTION_SUCCESS_CREDENTIAL_TYPE,
+                    Flurry.LABEL_LOGIN_USING_SSO, null);
             // Launch the company sign-on activity.
             Intent it = new Intent(this, CompanySignOnActivity.class);
             it.putExtra(EmailLookUpRequestTask.EXTRA_LOGIN_BUNDLE, loginBundle);
@@ -315,10 +325,17 @@ public class EmailLookupActivity extends BaseActivity implements IProgressBarLis
      * String)
      */
     public void trackEmailLookupFailure(String failureType) {
-        Map<String, String> params = new HashMap<String, String>();
-        params.put("Type", failureType);
+        if (failureType.equalsIgnoreCase(EmailLookupCallbacks.FAILURE_REASON_FORMAT)) {
+            EventTracker.INSTANCE.eventTrack(Flurry.CATEGORY_SIGN_IN, Flurry.ACTION_FAIL_REASON,
+                    Flurry.LABEL_BAD_CREDENTIALS, null);
+        } else if (failureType.equalsIgnoreCase(EmailLookupCallbacks.FAILURE_REASON_OFFLINE)) {
+            EventTracker.INSTANCE.eventTrack(Flurry.CATEGORY_SIGN_IN, Flurry.ACTION_FAIL_REASON,
+                    Flurry.LABEL_OFFLINE, null);
+        } else {
+            EventTracker.INSTANCE.eventTrack(Flurry.CATEGORY_SIGN_IN, Flurry.ACTION_FAIL_REASON,
+                    Flurry.LABEL_SERVER_ERROR, null);
+        }
 
-        EventTracker.INSTANCE.track(Flurry.CATEGORY_SIGN_IN, Flurry.EVENT_EMAIL_LOOKUP_FAILURE, params);
     }
 
     // ############### End of EmailLookupCallbacks implementations ############# //

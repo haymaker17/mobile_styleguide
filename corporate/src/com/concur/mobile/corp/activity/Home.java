@@ -100,7 +100,7 @@ import java.io.File;
 import java.net.URLEncoder;
 import java.util.*;
 
-@EventTracker.EventTrackerClassName(getClassName = "Home") public class Home extends BaseActivity
+@EventTracker.EventTrackerClassName(getClassName = Flurry.SCREEN_NAME_HOME) public class Home extends BaseActivity
         implements View.OnClickListener, NavigationListener, ReceiptChoiceListener {
 
     public static boolean forceExpirationHome;
