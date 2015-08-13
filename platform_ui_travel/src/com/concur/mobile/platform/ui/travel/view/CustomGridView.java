@@ -76,6 +76,7 @@ public class CustomGridView extends GridView {
                         height = (int) (((rows + 1) * getColumnWidth() * 0.7) + (getHorizontalSpacing() * rows - 1));
                     }
                     setLayoutParams(new LinearLayout.LayoutParams(LayoutParams.MATCH_PARENT, height));
+                    //focusSearch(FOCUS_UP);
 
                 }
             }

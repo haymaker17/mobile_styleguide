@@ -236,22 +236,18 @@ public class HotelChoiceDetailsFragment extends PlatformFragmentV1 implements On
         if (TAB_DETAILS.equals(tabId)) {
             callBackListener.updateTab(tabId, R.id.tab_details);
             mCurrentTab = 0;
-            //            mListView.requestFocus();
-            //            return;
+            return;
         }
         if (TAB_ROOMS.equals(tabId)) {
             callBackListener.updateTab(tabId, R.id.tab_rooms);
             mCurrentTab = 1;
-            //            mListView.requestFocus();
-            //            return;
+            return;
         }
         if (TAB_IMAGES.equals(tabId)) {
             callBackListener.updateTab(tabId, R.id.tab_images);
             mCurrentTab = 2;
-            // mListView.requestFocus();
-            //return;
+            return;
         }
-        scrollView.fullScroll(ScrollView.FOCUS_UP);
 
     }
 
