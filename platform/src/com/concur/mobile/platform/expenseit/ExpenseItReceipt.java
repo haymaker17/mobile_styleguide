@@ -128,6 +128,16 @@ public class ExpenseItReceipt implements ExpenseItReceiptDAO, Serializable {
     }
 
     /**
+     * Returns whether the item is in an error state or not.
+     *
+     * @return in error state?
+     */
+    public boolean isInErrorState() {
+        return ExpenseItParseCode.isInErrorState(getParsingStatusCode())
+                || getErrorCode() == ExpenseItPostReceipt.RUBICON_ERROR;
+    }
+
+    /**
      * get the full list of expenseIt Receipts from expense.db
      *
      * @return

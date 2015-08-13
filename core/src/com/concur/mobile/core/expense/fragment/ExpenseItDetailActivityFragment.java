@@ -15,10 +15,10 @@ import android.widget.EditText;
 import android.widget.TextView;
 
 import com.concur.core.R;
-import com.concur.mobile.core.expense.charge.data.ExpenseItItem;
 import com.concur.mobile.core.util.Const;
 import com.concur.mobile.core.util.FormatUtil;
 import com.concur.mobile.core.util.ViewUtil;
+import com.concur.mobile.platform.expenseit.ExpenseItReceipt;
 import com.concur.mobile.platform.ui.common.fragment.PlatformFragment;
 
 import java.util.Calendar;
@@ -38,7 +38,7 @@ public class ExpenseItDetailActivityFragment extends PlatformFragment {
     private int eta;
     private Calendar date;
     private long receiptId = 0;
-    private ExpenseItItem expenseItItem;
+    private ExpenseItReceipt expenseItReceipt;
 
     public interface ExpenseItDetailsViewReceiptCallback {
         void initializeViewReceipt(long receiptId);
@@ -55,7 +55,7 @@ public class ExpenseItDetailActivityFragment extends PlatformFragment {
         callbackActivity = (ExpenseItDetailsViewReceiptCallback) activity;
     }
 
-    public final static ExpenseItDetailActivityFragment newInstance(ExpenseItItem item){
+    public final static ExpenseItDetailActivityFragment newInstance(ExpenseItReceipt item){
 
         ExpenseItDetailActivityFragment dialog = new ExpenseItDetailActivityFragment();
         Bundle args = new Bundle();
@@ -70,7 +70,7 @@ public class ExpenseItDetailActivityFragment extends PlatformFragment {
         super.onCreateView(inflater, container, savedInstanceState);
         setHasOptionsMenu(true);
 
-        expenseItItem = (ExpenseItItem) getArguments().getSerializable(EXPENSEIT_ITEM);
+        expenseItReceipt = (ExpenseItReceipt) getArguments().getSerializable(EXPENSEIT_ITEM);
 
         View view = inflater.inflate(R.layout.fragment_expense_it_detail, container, false);
         buildView(view);
@@ -81,13 +81,13 @@ public class ExpenseItDetailActivityFragment extends PlatformFragment {
     public void buildView(View view) {
 
         getActivity().getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_ALWAYS_HIDDEN);
-        if (expenseItItem == null || expenseItItem.getUploadDate() == null) {
+        if (expenseItReceipt == null || expenseItReceipt.getCreatedAt() == null) {
             return;
         }
 
-        eta = expenseItItem.getEta();
-        date = expenseItItem.getUploadDate();
-        receiptId = expenseItItem.getReceiptId();
+        eta = expenseItReceipt.getEta();
+        date = expenseItReceipt.getCreatedAt();
+        receiptId = expenseItReceipt.getId();
 
         if (view != null) {
             // set URL / View Receipt button

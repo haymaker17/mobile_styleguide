@@ -57,7 +57,6 @@ import com.concur.mobile.core.expense.charge.data.EReceipt;
 import com.concur.mobile.core.expense.charge.data.Expense;
 import com.concur.mobile.core.expense.charge.data.Expense.ExpenseEntryType;
 import com.concur.mobile.core.expense.charge.data.ExpenseComparator;
-import com.concur.mobile.core.expense.charge.data.ExpenseItItem;
 import com.concur.mobile.core.expense.charge.data.MobileEntry;
 import com.concur.mobile.core.expense.charge.data.MobileEntryStatus;
 import com.concur.mobile.core.expense.charge.data.OCRItem;
@@ -2157,12 +2156,12 @@ public class Expenses extends BaseFragment implements INetworkActivityListener {
                         break;
                     }
                     case EXPENSEIT_NOT_DONE: {
-                        ExpenseItItem exItItem = exp.getExpenseItItem();
+                        ExpenseItReceipt expenseItReceipt = exp.getExpenseItReceipt();
 
-                        if (!exItItem.isInErrorState()) {
+                        if (!expenseItReceipt.isInErrorState()) {
                             // Processing state.
                             Intent intent = new Intent(activity, ExpenseItDetailActivity.class);
-                            intent.putExtra(ExpenseItDetailActivity.EXPENSEIT_ITEM_KEY, exItItem);
+                            intent.putExtra(ExpenseItDetailActivity.EXPENSEIT_RECEIPT_ID_KEY, expenseItReceipt.getId());
                             startActivityForResult(intent, ExpenseItDetailActivityFragment.VIEW_PROCESSING_EXPENSEIT_ITEM_DETAILS);
 
                         } else {
