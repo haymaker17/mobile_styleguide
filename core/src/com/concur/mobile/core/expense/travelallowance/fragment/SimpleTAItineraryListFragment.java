@@ -41,6 +41,7 @@ public class SimpleTAItineraryListFragment extends Fragment implements SwipeRefr
     private static final String CLASS_TAG = SimpleTAItineraryListFragment.class.getSimpleName();
     public static final String ON_REFRESH_MSG_ITIN = CLASS_TAG + ".refreshItineraries";
     public static final String ON_REFRESH_MSG_TA = CLASS_TAG + ".refreshAllowances";
+    private static final int REQUEST_CODE_UPDATE_ITINERARY = 0x01;
 
     private boolean expenseReportIsSubmitted;
     private String expenseReportName;
@@ -162,7 +163,7 @@ public class SimpleTAItineraryListFragment extends Fragment implements SwipeRefr
             itin.setExpenseReportID(expenseReportKey);
             intent.putExtra(BundleId.ITINERARY, itin);
             intent.putExtra(BundleId.EXPENSE_REPORT_KEY, expenseReportKey);
-            startActivity(intent);
+            getActivity().startActivityForResult(intent, REQUEST_CODE_UPDATE_ITINERARY);
         } else if (view.getId() == R.id.right_button) {
             deleteItineraries();
         }
@@ -208,7 +209,7 @@ public class SimpleTAItineraryListFragment extends Fragment implements SwipeRefr
             Intent intent = new Intent(getActivity(), ItineraryUpdateActivity.class);
             intent.putExtra(BundleId.ITINERARY, itinerary);
             intent.putExtra(BundleId.EXPENSE_REPORT_KEY, expenseReportKey);
-            startActivity(intent);
+            getActivity().startActivityForResult(intent, REQUEST_CODE_UPDATE_ITINERARY);
         }
     }
 

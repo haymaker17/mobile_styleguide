@@ -643,7 +643,8 @@ public class ItineraryUpdateActivity extends BaseActivity implements IController
                 if (result != null) {
                     List<FixedTravelAllowance> allowances = (List<FixedTravelAllowance>) result.getSerializable(BundleId.ALLOWANCE_LIST);
                     if (allowanceController.executeUpdate(allowances, this.expenseReportKey)) {
-                        showProgressDialog("                    "); //TODO: Add text Calculating Expenses
+                        showProgressDialog(" "); //TODO: Add text Calculating Expenses
+                        this.onBackPressed(); //Leave the screen on success.
                     }
                 }
             }
@@ -663,8 +664,12 @@ public class ItineraryUpdateActivity extends BaseActivity implements IController
                     allowanceController = app.getFixedTravelAllowanceController();
                     allowanceController.refreshFixedTravelAllowances(this.expenseReportKey);
                     Toast.makeText(this, R.string.general_save_success, Toast.LENGTH_SHORT).show();
+                    // Follow up: Expense Entries needs to be refreshed later on as we have an successful save.
+                    Intent resultIntent = new Intent();
+                    resultIntent.putExtra(Const.EXTRA_EXPENSE_REFRESH_HEADER, true);
+                    this.setResult(RESULT_OK, resultIntent);
                     if (allowanceController.refreshFixedTravelAllowances(this.expenseReportKey)) {
-                        showProgressDialog("                    "); //TODO: Add text Calculating Allowances...
+                        showProgressDialog(" "); //TODO: Add text Calculating Allowances...
                     }
                 } else {
                     Toast.makeText(this, R.string.general_save_fail, Toast.LENGTH_SHORT).show();

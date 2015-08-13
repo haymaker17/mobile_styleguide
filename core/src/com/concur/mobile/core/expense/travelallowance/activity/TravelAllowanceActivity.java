@@ -25,6 +25,7 @@ import com.concur.mobile.core.expense.travelallowance.fragment.SimpleTAItinerary
 import com.concur.mobile.core.expense.travelallowance.fragment.TravelAllowanceItineraryListFragment;
 import com.concur.mobile.core.expense.travelallowance.util.BundleId;
 import com.concur.mobile.core.expense.travelallowance.util.StringUtilities;
+import com.concur.mobile.core.util.Const;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -37,7 +38,8 @@ public class TravelAllowanceActivity extends AppCompatActivity
 
     private static final String CLASS_TAG = TravelAllowanceActivity.class.getSimpleName();
 
-    private static final int REQUEST_CODE_FIXED_TRAVEL_ALLOWANCE_DETAILS = 0x01;
+    private static final int REQUEST_CODE_UPDATE_ITINERARY = 0x01;
+    private static final int REQUEST_CODE_FIXED_TRAVEL_ALLOWANCE_DETAILS = 0x02;
 
     private String expenseReportKey;
 
@@ -113,7 +115,19 @@ public class TravelAllowanceActivity extends AppCompatActivity
         tabLayout.setupWithViewPager(pager);
 
     }
-    
+
+    @Override
+    public void onActivityResult(int requestCode, int resultCode, Intent data) {
+        if (requestCode == REQUEST_CODE_UPDATE_ITINERARY
+                || requestCode == REQUEST_CODE_FIXED_TRAVEL_ALLOWANCE_DETAILS) {//bypass
+            if (data != null && data.getBooleanExtra(Const.EXTRA_EXPENSE_REFRESH_HEADER, false)) {
+                Intent resultIntent = new Intent();
+                resultIntent.putExtra(Const.EXTRA_EXPENSE_REFRESH_HEADER, true);
+                setResult(RESULT_OK, resultIntent);
+            }
+        }
+    }
+
     private List<ViewPagerAdapter.ViewPagerItem> getViewPagerItemList() {
 
         List<ViewPagerAdapter.ViewPagerItem> list = new ArrayList<>();

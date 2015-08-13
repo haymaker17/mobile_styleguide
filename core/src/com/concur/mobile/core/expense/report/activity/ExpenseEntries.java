@@ -1626,14 +1626,14 @@ public class
                                 itin.setName(expRep.reportName);
                                 intent.putExtra(BundleId.ITINERARY, itin);
                                 intent.putExtra(BundleId.EXPENSE_REPORT_KEY, expRep.reportKey);
-                                startActivity(intent);
+                                startActivityForResult(intent, REQUEST_VIEW_TA_ITINERARY);
                             } else {//There are itineraries already
                                 intent = new Intent(ExpenseEntries.this, TravelAllowanceActivity.class);
                                 intent.putExtra(BundleId.EXPENSE_REPORT_KEY, expRep.reportKey);
                                 intent.putExtra(BundleId.EXPENSE_REPORT_NAME, expRep.reportName);
                                 intent.putExtra(BundleId.EXPENSE_REPORT_IS_SUBMITTED, expRep.isSubmitted());
 								intent.putExtra(BundleId.IS_EDIT_MODE, true);
-                                startActivity(intent);
+                                startActivityForResult(intent, REQUEST_VIEW_TA_ITINERARY);
                             }
                         }
                     }
@@ -1648,6 +1648,7 @@ public class
     @Override
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
         if (requestCode == REQUEST_VIEW_TA_ITINERARY) {
+
             if (resultCode == Activity.RESULT_OK) {
 
                 // Register the receiver.

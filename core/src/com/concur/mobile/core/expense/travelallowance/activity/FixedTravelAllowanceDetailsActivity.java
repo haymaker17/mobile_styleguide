@@ -36,6 +36,7 @@ import com.concur.mobile.core.expense.travelallowance.util.DebugUtils;
 import com.concur.mobile.core.expense.travelallowance.util.DefaultDateFormat;
 import com.concur.mobile.core.expense.travelallowance.util.IDateFormat;
 import com.concur.mobile.core.expense.travelallowance.util.StringUtilities;
+import com.concur.mobile.core.util.Const;
 import com.concur.mobile.core.util.FormatUtil;
 
 import java.util.ArrayList;
@@ -702,9 +703,11 @@ public class FixedTravelAllowanceDetailsActivity extends BaseActivity implements
                     "Update Action callback finished with isSuccess: " + isSuccess));
             if (isSuccess) {
                 Toast.makeText(this, R.string.general_save_success, Toast.LENGTH_SHORT).show();
-
                 allowanceController.refreshFixedTravelAllowances(expenseReportKey);
-
+                Intent resultIntent = new Intent();
+                resultIntent.putExtra(Const.EXTRA_EXPENSE_REFRESH_HEADER, true);
+                this.setResult(RESULT_OK, resultIntent);
+                onBackPressed(); //Leave the screen on success.
             } else {
                 Toast.makeText(this, R.string.general_save_fail, Toast.LENGTH_SHORT).show();
             }
