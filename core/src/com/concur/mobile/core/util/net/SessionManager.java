@@ -362,9 +362,15 @@ public class SessionManager {
                         loginResult.sessionId = null;
                         cleanup();
 
-                        EventTracker.INSTANCE.eventTrack(Flurry.CATEGORY_SIGN_IN, Flurry.ACTION_SIGN_IN_FAIL_METHOD,
-                                Flurry.LABEL_REMOTE_WIPE, null);
-
+                        if(replyListener == null) {
+                            // Analytics stuff.
+                            EventTracker.INSTANCE.eventTrack(Flurry.CATEGORY_SIGN_IN, Flurry.ACTION_SIGN_IN_FAIL_METHOD,
+                                    Flurry.LABEL_AUTO_LOGIN, null);
+                            EventTracker.INSTANCE.eventTrack(Flurry.CATEGORY_SIGN_IN, Flurry.ACTION_FAIL_CREDENTIAL_TYPE,
+                                    Flurry.LABEL_LOGIN_USING_PASSWORD, null);
+                            EventTracker.INSTANCE.eventTrack(Flurry.CATEGORY_SIGN_IN, Flurry.ACTION_FAIL_REASON,
+                                    Flurry.LABEL_SERVER_ERROR, null);
+                        }
                     }
                 } else {
 
@@ -387,22 +393,21 @@ public class SessionManager {
 
                     // Save the login response information.
                     Log.d(Const.LOG_TAG, CLS_TAG + ".validateSessionId: successfully created new session id.");
+                    if (replyListener == null) {
+                        EventTracker.INSTANCE.eventTrack(Flurry.CATEGORY_SIGN_IN, Flurry.ACTION_SIGN_IN_SUCCESS_METHOD,
+                                Flurry.LABEL_AUTO_LOGIN, null);
 
-                    EventTracker.INSTANCE.eventTrack(Flurry.CATEGORY_SIGN_IN, Flurry.ACTION_SIGN_IN_SUCCESS_METHOD,
-                            Flurry.LABEL_AUTO_LOGIN, null);
-
-                    if (signInMethod.equalsIgnoreCase(com.concur.mobile.platform.ui.common.util.Const.LOGIN_METHOD_SSO)) {
-                        EventTracker.INSTANCE.eventTrack(Flurry.CATEGORY_SIGN_IN, Flurry.ACTION_SUCCESS_CREDENTIAL_TYPE,
-                                Flurry.LABEL_LOGIN_USING_SSO, null);
-                    } else if (signInMethod.equalsIgnoreCase(com.concur.mobile.platform.ui.common.util.Const.LOGIN_METHOD_MOBILE_PASSWORD)) {
-                        EventTracker.INSTANCE.eventTrack(Flurry.CATEGORY_SIGN_IN, Flurry.ACTION_SUCCESS_CREDENTIAL_TYPE,
-                                Flurry.LABEL_LOGIN_USING_MOBILE_PASSWORD, null);
-                    } else {
-                        EventTracker.INSTANCE.eventTrack(Flurry.CATEGORY_SIGN_IN, Flurry.ACTION_SUCCESS_CREDENTIAL_TYPE,
-                                Flurry.LABEL_LOGIN_USING_PASSWORD, null);
+                        if (signInMethod.equalsIgnoreCase(com.concur.mobile.platform.ui.common.util.Const.LOGIN_METHOD_SSO)) {
+                            EventTracker.INSTANCE.eventTrack(Flurry.CATEGORY_SIGN_IN, Flurry.ACTION_SUCCESS_CREDENTIAL_TYPE,
+                                    Flurry.LABEL_LOGIN_USING_SSO, null);
+                        } else if (signInMethod.equalsIgnoreCase(com.concur.mobile.platform.ui.common.util.Const.LOGIN_METHOD_MOBILE_PASSWORD)) {
+                            EventTracker.INSTANCE.eventTrack(Flurry.CATEGORY_SIGN_IN, Flurry.ACTION_SUCCESS_CREDENTIAL_TYPE,
+                                    Flurry.LABEL_LOGIN_USING_MOBILE_PASSWORD, null);
+                        } else {
+                            EventTracker.INSTANCE.eventTrack(Flurry.CATEGORY_SIGN_IN, Flurry.ACTION_SUCCESS_CREDENTIAL_TYPE,
+                                    Flurry.LABEL_LOGIN_USING_PASSWORD, null);
+                        }
                     }
-
-
                     // Set the result information.
                     loginResult.sessionId = PlatformProperties.getSessionId();
 
@@ -452,15 +457,14 @@ public class SessionManager {
             // Invoke any other listeners.
             if (replyListener != null) {
                 replyListener.onFailure(resultData.getString("request.http.status.message"));
-            }
-
-            EventTracker.INSTANCE.eventTrack(Flurry.CATEGORY_SIGN_IN, Flurry.ACTION_SIGN_IN_FAIL_METHOD,
-                    Flurry.LABEL_AUTO_LOGIN, null);
-            EventTracker.INSTANCE.eventTrack(Flurry.CATEGORY_SIGN_IN, Flurry.ACTION_FAIL_CREDENTIAL_TYPE,
+                EventTracker.INSTANCE.eventTrack(Flurry.CATEGORY_SIGN_IN, Flurry.ACTION_SIGN_IN_FAIL_METHOD,
+                        Flurry.LABEL_AUTO_LOGIN, null);
+                EventTracker.INSTANCE.eventTrack(Flurry.CATEGORY_SIGN_IN, Flurry.ACTION_FAIL_CREDENTIAL_TYPE,
                         Flurry.LABEL_LOGIN_USING_PASSWORD, null);
-            EventTracker.INSTANCE.eventTrack(Flurry.CATEGORY_SIGN_IN, Flurry.ACTION_FAIL_REASON,
+                EventTracker.INSTANCE.eventTrack(Flurry.CATEGORY_SIGN_IN, Flurry.ACTION_FAIL_REASON,
                         Flurry.LABEL_SERVER_ERROR, null);
 
+            }
 
             return;
 
