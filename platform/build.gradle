@@ -4,7 +4,6 @@ apply plugin: 'jacoco'
 dependencies {
     compile fileTree(dir: 'libs', include: '*.jar')
     compile project(':base')
-    compile project(':dictionary')
     testCompile 'org.robolectric:robolectric:3.+'
     testCompile 'junit:junit:4.+'
     testCompile files('libs/simple-xml-2.7.1.jar')
