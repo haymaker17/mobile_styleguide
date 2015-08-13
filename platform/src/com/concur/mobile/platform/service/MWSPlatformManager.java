@@ -8,6 +8,7 @@ import android.util.Log;
 import com.concur.mobile.base.service.BaseAsyncRequestTask;
 import com.concur.mobile.base.service.BaseAsyncRequestTask.AsyncReplyListener;
 import com.concur.mobile.base.service.BaseAsyncResultReceiver;
+import com.concur.mobile.platform.authentication.AutoLoginRequestTask;
 import com.concur.mobile.platform.authentication.LoginResponseKeys;
 import com.concur.mobile.platform.authentication.PPLoginRequestTask;
 import com.concur.mobile.platform.authentication.SessionInfo;
@@ -58,7 +59,7 @@ public class MWSPlatformManager implements PlatformManager {
      * An enumeration containing authentication types.
      */
     public static enum AuthenticationType {
-        PPLogin, SSO
+        PPLogin, SSO, Password, MobilePassword
     }
 
     ;
@@ -99,6 +100,15 @@ public class MWSPlatformManager implements PlatformManager {
      */
     protected HandlerThread handlerThread;
 
+
+    protected String loginId;
+
+    protected String email;
+
+    protected String serverURL;
+
+    protected String ssoURL;
+
     /**
      * Will set whether or not auto-login is enabled.
      *
@@ -126,6 +136,62 @@ public class MWSPlatformManager implements PlatformManager {
     public void setPPLoginAuthenticationInfo(String ppLoginId, String ppLoginPinPassword) {
         this.ppLoginId = ppLoginId;
         this.ppLoginPinPassword = ppLoginPinPassword;
+    }
+
+    public String getSsoURL() {
+        return ssoURL;
+    }
+
+    /**
+     * Will set SSO URL.
+     *
+     * @param ssoURL contains SSO URL.
+     */
+    public void setSsoURL(String ssoURL) {
+        this.ssoURL = ssoURL;
+    }
+
+    public String getServerURL() {
+        return serverURL;
+    }
+
+    /**
+     * Will set server URL.
+     *
+     * @param serverURL contains the server URL.
+     */
+    public void setServerURL(String serverURL) {
+        this.serverURL = serverURL;
+    }
+
+    public String getEmail() {
+        return email;
+    }
+
+    /**
+     * Will set email.
+     *
+     * @param email contains the email.
+     */
+    public void setEmail(String email) {
+        this.email = email;
+    }
+
+    public String getLoginId() {
+        return loginId;
+    }
+
+    /**
+     * Will set login id
+     *
+     * @param loginId contains the login id.
+     */
+    public void setLoginId(String loginId) {
+        this.loginId = loginId;
+    }
+
+    public AuthenticationType getAuthType() {
+        return authType;
     }
 
     @Override public int onRequestStarted(Context context, PlatformAsyncRequestTask request, Bundle resultData) {
@@ -185,6 +251,18 @@ public class MWSPlatformManager implements PlatformManager {
                         // SSO is not currently supported for re-authentication.
                         retVal = BaseAsyncRequestTask.RESULT_CANCEL;
                         break;
+                    }
+                    default : {
+                        String accessToken = sessionInfo.getAccessToken();
+                        if(accessToken != null) {
+                            // Set the re-authentication is required flag.
+                            resultData.putBoolean(REAUTHENTICATION_NEEDED_KEY, Boolean.TRUE);
+                            retVal = renewAutoLoginSession(context, resultData);
+                        } else {
+                            // Set the re-authentication is required flag.
+                            resultData.putBoolean(REAUTHENTICATION_NEEDED_KEY, Boolean.FALSE);
+                            retVal = BaseAsyncRequestTask.RESULT_CANCEL;
+                        }
                     }
                     }
                 } else {
@@ -364,7 +442,7 @@ public class MWSPlatformManager implements PlatformManager {
 
         private static final String CLS_TAG = MWSPlatformManager.CLS_TAG + ".LoginReplyListener";
 
-        @Override public void onRequestSuccess(Bundle resultData) {
+                @Override public void onRequestSuccess(Bundle resultData) {
             if (DEBUG) {
                 Log.d(Const.LOG_TAG, CLS_TAG + ".onRequestSuccess: ");
             }
@@ -380,6 +458,8 @@ public class MWSPlatformManager implements PlatformManager {
                 // Set the result information.
                 loginResult.resultCode = resultCode;
                 loginResult.resultData = resultData;
+
+
 
                 if (DEBUG) {
                     Log.d(Const.LOG_TAG, CLS_TAG + ".onRequestSuccess: releasing login result.");
@@ -583,6 +663,19 @@ public class MWSPlatformManager implements PlatformManager {
                         retVal = PlatformAsyncTaskLoader.RESULT_CANCEL;
                         break;
                     }
+                    default : {
+                        String accessToken = sessionInfo.getAccessToken();
+                        if(accessToken != null) {
+                            // Set the re-authentication is required flag.
+                            resultData.putBoolean(REAUTHENTICATION_NEEDED_KEY, Boolean.TRUE);
+                            retVal = renewAutoLoginSession(context, resultData);
+                        } else {
+                            // Set the re-authentication is required flag.
+                            resultData.putBoolean(REAUTHENTICATION_NEEDED_KEY, Boolean.FALSE);
+                            retVal = BaseAsyncRequestTask.RESULT_CANCEL;
+                        }
+                    }
+
                     }
                 } else {
 
@@ -643,5 +736,91 @@ public class MWSPlatformManager implements PlatformManager {
             }
         }
     }
+
+    /**
+     * Will renew a session based on executing a AutoLoginRequestTask request.
+     *
+     * @param resultData contains a reference to the result data.
+     * @return contains whether or not the session was renewed.
+     */
+    @SuppressLint("NewApi") protected int renewAutoLoginSession(Context context, Bundle resultData) {
+
+        int resultCode = BaseAsyncRequestTask.RESULT_OK;
+
+        // Set the re-authentication is required flag.
+        resultData.putBoolean(REAUTHENTICATION_NEEDED_KEY, Boolean.TRUE);
+        // Set the re-authentication attempted flag.
+        resultData.putBoolean(REAUTHENTICATION_ATTEMPTED_KEY, Boolean.TRUE);
+
+        // Init the login result.
+        loginResult = new LoginResult();
+        loginResult.resultCode = BaseAsyncRequestTask.RESULT_OK;
+        loginResult.resultData = null;
+
+        // Init the handler thread with associated looper as this thread will be
+        // blocked in the 'loginResult.await' call below.
+        handlerThread = new HandlerThread("AutoLoginResultThread");
+        handlerThread.start();
+
+        // Initiate the login request.
+        loginReplyReceiver = new BaseAsyncResultReceiver(new Handler(handlerThread.getLooper()));
+        loginReplyReceiver.setListener(new LoginReplyListener());
+        Locale locale = context.getResources().getConfiguration().locale;
+
+        AutoLoginRequestTask autoLoginRequestTask = new AutoLoginRequestTask(
+                context, 1,
+                loginReplyReceiver, locale);
+
+        if (DEBUG) {
+            Log.d(Const.LOG_TAG, CLS_TAG + ".renewPPLoginSession: executing login request.");
+        }
+
+        // Check for HoneyComb or later to execute login request on separate thread pool. Otherwise,
+        // this thread will be blocked by 'loginResult.await' call below.
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.HONEYCOMB) {
+            if (DEBUG) {
+                Log.d(Const.LOG_TAG, CLS_TAG + ".renewPPLoginSession: executeOnExecutor.");
+            }
+            autoLoginRequestTask.executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
+        } else {
+            if (DEBUG) {
+                Log.d(Const.LOG_TAG, CLS_TAG + ".renewPPLoginSession: execute.");
+            }
+            autoLoginRequestTask.execute();
+        }
+
+        // Acquire the login result if ready.
+        try {
+
+            if (DEBUG) {
+                Log.d(Const.LOG_TAG, CLS_TAG + ".renewPPLoginSession: waiting for login result.");
+            }
+            // Wait for the latch to be decremented.
+            loginResult.await();
+            if (DEBUG) {
+                Log.d(Const.LOG_TAG, CLS_TAG + ".renewPPLoginSession: got login result.");
+            }
+
+            // Set the result code in the return value and in the bundle.
+            resultCode = loginResult.resultCode;
+            resultData.putInt(REAUTHENTICATION_RESULT_CODE_KEY, loginResult.resultCode);
+
+            // Set the result data.
+            resultData.putBundle(REAUTHENTICATION_RESULT_DATA_KEY, loginResult.resultData);
+
+        } catch (InterruptedException intExc) {
+
+            if (DEBUG) {
+                Log.d(Const.LOG_TAG, CLS_TAG + ".renewPPLoginSession: interrupted while acquiring login result.");
+            }
+
+            Log.e(Const.LOG_TAG, CLS_TAG + ".renewPPLoginSession: interrupted while acquiring result", intExc);
+
+            resultCode = BaseAsyncRequestTask.RESULT_CANCEL;
+        }
+
+        return resultCode;
+    }
+
 
 }

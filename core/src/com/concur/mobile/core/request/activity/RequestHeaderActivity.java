@@ -167,11 +167,14 @@ public class RequestHeaderActivity extends AbstractConnectFormFieldActivity impl
             asyncReceiverSave.setListener(new SaveListener());
             requestHeaderVF.setDisplayedChild(ID_LOADING_VIEW);
             // --- onRequestResult calls cleanup() on execution, so listener will be destroyed by processing
-            new RequestTask(this, 1, asyncReceiverSave, ConnectHelper.ConnectVersion.VERSION_3_1,
-                    ConnectHelper.Module.REQUEST,
-                    tr.getId() != null ? ConnectHelper.Action.UPDATE : ConnectHelper.Action.CREATE,
-                    tr.getId() != null ? tr.getId() : null).setPostBody(RequestParser.toJson((RequestDTO) tr))
-                    .execute();
+            final RequestTask task = new RequestTask(this, 1, asyncReceiverSave,
+                    ConnectHelper.ConnectVersion.VERSION_3_1, ConnectHelper.Module.REQUEST, tr.getId() != null ?
+                    ConnectHelper.Action.UPDATE_AND_SUBMIT :
+                    ConnectHelper.Action.CREATE_AND_SUBMIT, tr.getId() != null ? tr.getId() : null)
+                    .setPostBody(RequestParser.toJson((RequestDTO) tr));
+            task.addUrlParameter(RequestTask.P_REQUEST_DO_SUBMIT, Boolean.FALSE.toString());
+            task.addUrlParameter(RequestTask.P_REQUEST_FORCE_SUBMIT, Boolean.FALSE.toString());
+            task.execute();
         } else {
             new NoConnectivityDialogFragment().show(getSupportFragmentManager(), CLS_TAG);
         }

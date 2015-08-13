@@ -45,8 +45,8 @@ public class TravelBaseActivity extends BaseActivity {
 
     @Override protected void onActivityResult(int requestCode, int resultCode, Intent data) {
 
-        if (resultCode == PlatformAsyncTaskLoader.RE_AUTHENTICATED
-                || resultCode == PlatformAsyncTaskLoader.SESSION_EXPIRED) {
+        if (resultCode == PlatformAsyncTaskLoader.SESSION_EXPIRED
+                || resultCode == PlatformAsyncTaskLoader.RE_AUTHENTICATED) {
             setResult(resultCode, data);
             finish();
         } else {
@@ -62,6 +62,8 @@ public class TravelBaseActivity extends BaseActivity {
                 break;
             }
         }
+
+        super.onActivityResult(requestCode, resultCode, data);
     }
 
     @Override protected Dialog onCreateDialog(int id) {
