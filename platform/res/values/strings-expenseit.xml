@@ -29,7 +29,7 @@
     <string name="expenseit_details_label_uploaded">Uploaded</string>
     <string name="expenseit_details_label_processing_time">Processing Time</string>
 
-    <string name="expenseit_details_value_processing_time">Average %s</string>
+    <string name="expenseit_details_value_processing_time">Average</string>
 
     <string name="expenseit_cancel_dialog_message">Cancelling analysis</string>
     <string name="expenseit_stop_processing_button">Stop</string>

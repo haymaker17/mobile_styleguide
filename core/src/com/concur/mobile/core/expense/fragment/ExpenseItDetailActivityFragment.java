@@ -116,12 +116,15 @@ public class ExpenseItDetailActivityFragment extends PlatformFragment {
 
     private void setEtaLabelAndFieldValues(View view) {
         // format ETA
+        StringBuilder strBld = new StringBuilder(getString(R.string.expenseit_details_value_processing_time));
+        strBld.append(" ");
         String fmtEta = FormatUtil.getEtaToString(getActivity(), eta);
+        strBld.append(fmtEta);
 
         View uploadedField = view.findViewById(R.id.expenseit_details_processing_time);
         TextView uploadedLabel = (TextView) uploadedField.findViewById(R.id.field_name);
         uploadedLabel.setText(R.string.expenseit_details_label_processing_time);
-        ViewUtil.setTextViewText(view, R.id.expenseit_details_processing_time, R.id.field_value, fmtEta, true);
+        ViewUtil.setTextViewText(view, R.id.expenseit_details_processing_time, R.id.field_value, strBld.toString(), true);
     }
 
     private void setCommentLabelAndFieldValues(View view) {

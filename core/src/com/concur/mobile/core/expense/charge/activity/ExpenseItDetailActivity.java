@@ -125,28 +125,21 @@ public class ExpenseItDetailActivity extends BaseActivity implements ExpenseItDe
     protected BaseAsyncRequestTask.AsyncReplyListener mDeleteExpenseItAsyncReplyListener = new BaseAsyncRequestTask.AsyncReplyListener() {
         @Override
         public void onRequestSuccess(Bundle resultData) {
-            if (mCancelProgressDialogFragment != null) {
-                mCancelProgressDialogFragment.dismiss();
-            }
             Log.d(Const.LOG_TAG, CLS_TAG + ".onRequestSuccess for DeleteExpenseItAsyncReplyListener called!");
             onDeleteRequestSuccess(resultData);
         }
 
         @Override
         public void onRequestFail(Bundle resultData) {
-            if (mCancelProgressDialogFragment != null) {
-                mCancelProgressDialogFragment.dismiss();
-            }
             Log.e(Const.LOG_TAG, CLS_TAG + ".onRequestFail for DeleteExpenseItAsyncReplyListener called!");
+            hideCancelProgressDialog();
             onDeleteRequestFailure(resultData);
         }
 
         @Override
         public void onRequestCancel(Bundle resultData) {
-            if (mCancelProgressDialogFragment != null) {
-                mCancelProgressDialogFragment.dismiss();
-            }
             Log.d(Const.LOG_TAG, CLS_TAG + ".onRequestCancel for DeleteExpenseItAsyncReplyListener called!");
+            hideCancelProgressDialog();
             mDeleteExpenseItReceiptAsyncTask.cancel(true);
         }
 
@@ -243,14 +236,17 @@ public class ExpenseItDetailActivity extends BaseActivity implements ExpenseItDe
                     mSaveExpenseItReceiptReceiver.setServiceRequest(mSaveReceiptRequestTask);
                 } else {
                     Log.e(Const.LOG_TAG, CLS_TAG + ".uploadReceiptToConcur: unable to create new request for mSaveReceiptRequestTask!");
+                    hideCancelProgressDialog();
                     unregisterSaveExpenseItReceiptReceiver();
                 }
             } else {
                 Log.e(Const.LOG_TAG, CLS_TAG + ".uploadReceiptToConcur: receiptImage could not be written to file!");
+                hideCancelProgressDialog();
                 showUnexpectedErrorDialog();
             }
         } else {
             Log.e(Const.LOG_TAG, CLS_TAG + ".uploadReceiptToConcur: receiptImage is null!");
+            hideCancelProgressDialog();
             showUnexpectedErrorDialog();
         }
     }
@@ -306,6 +302,12 @@ public class ExpenseItDetailActivity extends BaseActivity implements ExpenseItDe
                     }
                 });
         mCancelProgressDialogFragment.show(getSupportFragmentManager(), CANCEL_EXPENSEIT_PROCESSING_DIALOG_TAG);
+    }
+
+    private void hideCancelProgressDialog() {
+        if (mCancelProgressDialogFragment != null) {
+            mCancelProgressDialogFragment.dismiss();
+        }
     }
 
     private void showExpenseItCancelConfirmationPrompt() {
@@ -576,10 +578,12 @@ public class ExpenseItDetailActivity extends BaseActivity implements ExpenseItDe
                 uploadReceiptToConcur();
             } else {
                 Log.d(Const.LOG_TAG, CLS_TAG + ".onDeleteRequestSuccess called with error. The error code was " + errorCode);
+                hideCancelProgressDialog();
                 showUnexpectedErrorAlert();
             }
         } else {
             Log.d(Const.LOG_TAG, CLS_TAG + ".onDeleteRequestSuccess called, but there was no ErrorResponse.");
+            hideCancelProgressDialog();
             showUnexpectedErrorAlert();
         }
     }
@@ -643,11 +647,13 @@ public class ExpenseItDetailActivity extends BaseActivity implements ExpenseItDe
     }
 
     private void initializeExpenseFromExpenseIt() {
+        IExpenseEntryCache expEntCache = ExpenseItDetailActivity.this.getConcurCore().getExpenseEntryCache();
         Intent newExpenseIntent = new Intent(this, QuickExpense.class);
         newExpenseIntent.putExtra(Const.EXTRA_EXPENSE_ENTRY_TYPE_KEY, Expense.ExpenseEntryType.CASH.name());
         newExpenseIntent.putExtra(Const.EXTRA_EXPENSE_RECEIPT_IMAGE_ID_KEY, receiptImageId);
         newExpenseIntent.putExtra(Const.EXTRA_EXPENSE_TRANSACTION_DATE_KEY, item.getCreatedAt().getTimeInMillis());
         startActivity(newExpenseIntent);
+        expEntCache.setShouldFetchExpenseList();
         this.setResult(Activity.RESULT_OK);
         this.finish();
     }
@@ -691,6 +697,7 @@ public class ExpenseItDetailActivity extends BaseActivity implements ExpenseItDe
                 Log.d(Const.LOG_TAG, CLS_TAG + ".handleSuccess: receipt image ID is " + activity.receiptImageId);
                 if (activity.receiptImageId != null) {
                     activity.receiptImageId.trim();
+                    activity.hideCancelProgressDialog();
                     activity.initializeExpenseFromExpenseIt();
                 }
             } else {
