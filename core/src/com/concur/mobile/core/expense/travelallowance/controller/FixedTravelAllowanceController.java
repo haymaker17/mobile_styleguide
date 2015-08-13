@@ -17,7 +17,6 @@ import com.concur.mobile.core.expense.travelallowance.util.BundleId;
 import com.concur.mobile.core.expense.travelallowance.util.DateUtils;
 import com.concur.mobile.core.expense.travelallowance.util.DebugUtils;
 import com.concur.mobile.core.expense.travelallowance.util.IDateFormat;
-import com.concur.mobile.core.expense.travelallowance.util.Message;
 import com.concur.mobile.core.expense.travelallowance.util.StringUtilities;
 
 import java.util.ArrayList;
@@ -32,8 +31,6 @@ import java.util.Map;
  * Created by Michael Becherer on 23-Jun-15.
  */
 public class FixedTravelAllowanceController extends BaseController {
-
-    public static final String CONTROLLER_TAG = FixedTravelAllowanceController.class.getName();
 
     private static final String CLASS_TAG = FixedTravelAllowanceController.class.getSimpleName();
 
@@ -129,13 +126,15 @@ public class FixedTravelAllowanceController extends BaseController {
                 if (fixedTravelAllowances != null) {
                     size = fixedTravelAllowances.size();
                 }
-                Log.d(DebugUtils.LOG_TAG_TA, DebugUtils.buildLogText(CLASS_TAG, "onRequestSuccess", "Reading fixed TAs, Size = " + size));
+                Log.d(DebugUtils.LOG_TAG_TA, DebugUtils.buildLogText(CLASS_TAG,
+                        "refreshFixedTravelAllowances->onRequestSuccess", "Reading fixed TAs, Size = " + size));
             }
 
             @Override
             public void onRequestFail(Bundle resultData) {
                 notifyListener(ControllerAction.REFRESH, false, resultData);
-                Log.d(DebugUtils.LOG_TAG_TA, DebugUtils.buildLogText(CLASS_TAG, "onRequestFail", "Reading fixed TAs failed"));
+                Log.d(DebugUtils.LOG_TAG_TA, DebugUtils.buildLogText(CLASS_TAG,
+                        "refreshFixedTravelAllowances->onRequestFail", "Reading fixed TAs failed"));
             }
 
             @Override
@@ -448,11 +447,13 @@ public class FixedTravelAllowanceController extends BaseController {
             public void onRequestSuccess(Bundle resultData) {
                 resultData.getClass();
                 boolean isSuccess = resultData.getBoolean(BundleId.IS_SUCCESS);
+                Log.d(DebugUtils.LOG_TAG_TA, DebugUtils.buildLogText(CLASS_TAG, "executeUpdate->onRequestSuccess", "isSuccess = " + isSuccess));
                 notifyListener(ControllerAction.UPDATE, isSuccess, resultData);
             }
 
             @Override
             public void onRequestFail(Bundle resultData) {
+                Log.d(DebugUtils.LOG_TAG_TA, DebugUtils.buildLogText(CLASS_TAG, "executeUpdate->onRequestFail", "Failed!"));
                 notifyListener(ControllerAction.UPDATE, false, resultData);
             }
 

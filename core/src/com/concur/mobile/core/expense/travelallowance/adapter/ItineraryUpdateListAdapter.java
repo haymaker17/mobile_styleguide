@@ -245,14 +245,15 @@ public class ItineraryUpdateListAdapter extends ArrayAdapter<Object> {
 
         holder.vMessageArea.setVisibility(View.GONE);
         if (segment.isLocked()) {
-            holder.vMessageArea.setVisibility(View.VISIBLE);
-            if (holder.ivIcon != null) {
-                holder.ivIcon.setImageResource(R.drawable.profile_icon_bank);
-                holder.ivIcon.setVisibility(View.VISIBLE);
-            }
-            if (holder.tvMessage != null) {
-                holder.tvMessage.setText(R.string.general_item_locked);
-            }
+//            holder.vMessageArea.setVisibility(View.VISIBLE);
+//            if (holder.ivIcon != null) {
+//                holder.ivIcon.setImageResource(R.drawable.profile_icon_bank);
+//                holder.ivIcon.setVisibility(View.VISIBLE);
+//            }
+//            if (holder.tvMessage != null) {
+//                holder.tvMessage.setText(R.string.general_item_locked);
+//            }
+            return;
         } else {
             Message msg = segment.getMessage();
             if (msg != null && msg.getSeverity() == Message.Severity.ERROR
@@ -266,6 +267,17 @@ public class ItineraryUpdateListAdapter extends ArrayAdapter<Object> {
                     holder.tvMessage.setText(msg.getMessageText(context));
                 }
             }
+        }
+    }
+
+    private void renderLabel(TextView tvView, int resourceId, Message msg, String field) {
+        if (tvView == null) {
+            return;
+        }
+        tvView.setText(resourceId);
+        tvView.setTextAppearance(context, R.style.TALabel);
+        if (msg != null && msg.containsField(field)) {
+            tvView.setTextAppearance(context, R.style.TALabel_Red);
         }
     }
 
@@ -283,44 +295,26 @@ public class ItineraryUpdateListAdapter extends ArrayAdapter<Object> {
         if (holder.vDepartureLocation != null) {
             holder.vDepartureLocation.setEnabled(!segment.isLocked());
         }
-        if (holder.tvDepartureLocationLabel != null) {
-            holder.tvDepartureLocationLabel.setText(R.string.general_from_location);
-        }
         if (holder.tvDepartureLocationValue != null) {
             if (segment.getDepartureLocation() != null) {
-                holder.tvDepartureLocationValue.setTextAppearance(context, R.style.TAValue_Small);
-                if (msg != null && msg.containsField(ItinerarySegment.Field.DEPARTURE_LOCATION.getName())) {
-                    holder.tvDepartureLocationValue.setTextAppearance(context, R.style.TAValue_Small_Red);
-                }
                 holder.tvDepartureLocationValue.setText(segment.getDepartureLocation().getName());
             } else {
                 holder.tvDepartureLocationValue.setText(StringUtilities.EMPTY_STRING);
             }
             holder.tvDepartureLocationValue.setEnabled(!segment.isLocked());
         }
-        if (holder.tvDepartureDateLabel != null) {
-            holder.tvDepartureDateLabel.setText(R.string.ta_departure_date);
-        }
-        if (holder.tvDepartureTimeLabel != null) {
-            holder.tvDepartureTimeLabel.setText(R.string.general_time);
-        }
+        renderLabel(holder.tvDepartureLocationLabel, R.string.general_from_location, msg, ItinerarySegment.Field.DEPARTURE_LOCATION.getName());
+        renderLabel(holder.tvDepartureDateLabel, R.string.ta_departure_date, msg, ItinerarySegment.Field.DEPARTURE_DATE_TIME.getName());
+        renderLabel(holder.tvDepartureTimeLabel, R.string.general_time, msg, ItinerarySegment.Field.DEPARTURE_DATE_TIME.getName());
         if (segment.getDepartureDateTime() != null) {
             String dateStr;
             if (holder.tvDepartureDateValue != null) {
-                holder.tvDepartureDateValue.setTextAppearance(context, R.style.TAValue_Small);
-                if (msg != null && msg.containsField(ItinerarySegment.Field.DEPARTURE_DATE_TIME.getName())) {
-                    holder.tvDepartureDateValue.setTextAppearance(context, R.style.TAValue_Small_Red);
-                }
                 dateStr = DateUtils.formatDateTime(context, segment.getDepartureDateTime().getTime(),
                         DateUtils.FORMAT_SHOW_DATE | DateUtils.FORMAT_SHOW_WEEKDAY
                         | DateUtils.FORMAT_ABBREV_WEEKDAY | DateUtils.FORMAT_ABBREV_MONTH);
                 holder.tvDepartureDateValue.setText(dateStr);
             }
             if (holder.tvDepartureTimeValue != null) {
-                holder.tvDepartureTimeValue.setTextAppearance(context, R.style.TAValue_Small);
-                if (msg != null && msg.containsField(ItinerarySegment.Field.DEPARTURE_DATE_TIME.getName())) {
-                    holder.tvDepartureTimeValue.setTextAppearance(context, R.style.TAValue_Small_Red);
-                }
                 dateStr = DateUtils.formatDateTime(context, segment.getDepartureDateTime().getTime(),
                         DateUtils.FORMAT_SHOW_TIME);
                 holder.tvDepartureTimeValue.setText(dateStr);
@@ -359,43 +353,25 @@ public class ItineraryUpdateListAdapter extends ArrayAdapter<Object> {
         if (holder.vArrivalLocation != null) {
             holder.vArrivalLocation.setEnabled(!segment.isLocked());
         }
-        if (holder.tvArrivalLocationLabel != null) {
-            holder.tvArrivalLocationLabel.setText(R.string.general_to_location);
-        }
         if (holder.tvArrivalLocationValue != null) {
             if (segment.getArrivalLocation() != null) {
-                holder.tvArrivalLocationValue.setTextAppearance(context, R.style.TAValue_Small);
-                if (msg != null && msg.containsField(ItinerarySegment.Field.ARRIVAL_LOCATION.getName())) {
-                    holder.tvArrivalLocationValue.setTextAppearance(context, R.style.TAValue_Small_Red);
-                }
                 holder.tvArrivalLocationValue.setText(segment.getArrivalLocation().getName());
             } else {
                 holder.tvArrivalLocationValue.setText(StringUtilities.EMPTY_STRING);
             }
         }
-        if (holder.tvArrivalDateLabel != null) {
-            holder.tvArrivalDateLabel.setText(R.string.ta_arrival_date);
-        }
-        if (holder.tvArrivalTimeLabel != null) {
-            holder.tvArrivalTimeLabel.setText(R.string.general_time);
-        }
+        renderLabel(holder.tvArrivalLocationLabel, R.string.general_to_location, msg, ItinerarySegment.Field.ARRIVAL_LOCATION.getName());
+        renderLabel(holder.tvArrivalDateLabel, R.string.ta_arrival_date, msg, ItinerarySegment.Field.ARRIVAL_DATE_TIME.getName());
+        renderLabel(holder.tvArrivalTimeLabel, R.string.general_time, msg, ItinerarySegment.Field.ARRIVAL_DATE_TIME.getName());
         if (segment.getArrivalDateTime() != null) {
             String dateStr;
             if (holder.tvArrivalDateValue != null) {
-                holder.tvArrivalDateValue.setTextAppearance(context, R.style.TAValue_Small);
-                if (msg != null && msg.containsField(ItinerarySegment.Field.ARRIVAL_DATE_TIME.getName())) {
-                    holder.tvArrivalDateValue.setTextAppearance(context, R.style.TAValue_Small_Red);
-                }
                 dateStr = DateUtils.formatDateTime(context, segment.getArrivalDateTime().getTime(),
                         DateUtils.FORMAT_SHOW_DATE | DateUtils.FORMAT_SHOW_WEEKDAY
                                 | DateUtils.FORMAT_ABBREV_WEEKDAY | DateUtils.FORMAT_ABBREV_MONTH);
                 holder.tvArrivalDateValue.setText(dateStr);
             }
             if (holder.tvArrivalTimeValue != null) {
-                holder.tvArrivalTimeValue.setTextAppearance(context, R.style.TAValue_Small);
-                if (msg != null && msg.containsField(ItinerarySegment.Field.ARRIVAL_DATE_TIME.getName())) {
-                    holder.tvArrivalTimeValue.setTextAppearance(context, R.style.TAValue_Small_Red);
-                }
                 dateStr = DateUtils.formatDateTime(context, segment.getArrivalDateTime().getTime(),
                         DateUtils.FORMAT_SHOW_TIME);
                 holder.tvArrivalTimeValue.setText(dateStr);
@@ -422,7 +398,8 @@ public class ItineraryUpdateListAdapter extends ArrayAdapter<Object> {
 
     /**
      * Checks the given segment, whether it has the same location like its
-     * predecessor or successor. The method expects a sorted segment list.
+     * predecessor or successor. The method expects a sorted segment list. Needed for rendering
+     * vertical line between departure and arrival.
      * @param segments the list holding the segments in question
      * @param segment the given segment
      * @param likeSuccessor if true, the succeeding departure (by means within the next segment)

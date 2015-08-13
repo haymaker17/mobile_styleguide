@@ -82,13 +82,13 @@ public class TravelAllowanceItineraryController extends BaseController {
             public void onRequestSuccess(Bundle resultData) {
                 itineraryList = getItinerariesRequest.getItineraryList();
                 notifyListener(ControllerAction.REFRESH, true, resultData);
-                Log.d(DebugUtils.LOG_TAG_TA, DebugUtils.buildLogText(CLASS_TAG, "onRequestSuccess", "Request success"));
+                Log.d(DebugUtils.LOG_TAG_TA, DebugUtils.buildLogText(CLASS_TAG, "refreshItineraries->onRequestSuccess", "Request success"));
             }
 
             @Override
             public void onRequestFail(Bundle resultData) {
                 notifyListener(ControllerAction.REFRESH, false, resultData);
-                Log.d(DebugUtils.LOG_TAG_TA, DebugUtils.buildLogText(CLASS_TAG, "onRequestFail", "Request failed"));
+                Log.d(DebugUtils.LOG_TAG_TA, DebugUtils.buildLogText(CLASS_TAG, "refreshItineraries->onRequestFail", "Failed!"));
             }
 
             @Override
@@ -219,26 +219,30 @@ public class TravelAllowanceItineraryController extends BaseController {
     }
 
     /**
-     * Execeutes the backend update for the given itinerary
+     * Executes the backend update for the given itinerary
      * @param updItinerary The itinerary to be changed or created
+     * @return true, if the request has been sent
      */
-    public void executeUpdate(final Itinerary updItinerary) {
+    public boolean executeUpdate(final Itinerary updItinerary) {
         if (updItinerary == null) {
-            return;
+            Log.d(DebugUtils.LOG_TAG_TA, DebugUtils.buildLogText(CLASS_TAG, "executeUpdate", "Itinerary is null! Refused."));
+            return false;
         }
-
+        Log.d(DebugUtils.LOG_TAG_TA, DebugUtils.buildLogText(CLASS_TAG, "executeUpdate", "Itinerary = " + updItinerary.toString()));
         BaseAsyncResultReceiver receiver = new BaseAsyncResultReceiver(new Handler());
         receiver.setListener(new BaseAsyncRequestTask.AsyncReplyListener() {
             @Override
             public void onRequestSuccess(Bundle resultData) {
                 Itinerary resultItinerary = (Itinerary) resultData.getSerializable(BundleId.ITINERARY);
                 boolean isSuccess = handleAfterUpdateResponse(updItinerary, resultItinerary);
+                Log.d(DebugUtils.LOG_TAG_TA, DebugUtils.buildLogText(CLASS_TAG, "executeUpdateItinerary->onRequestSuccess",
+                        "isSuccess = " + isSuccess + ", Resulting Itinerary = " + resultItinerary.toString()));
                 notifyListener(ControllerAction.UPDATE, isSuccess, resultData);
-
             }
 
             @Override
             public void onRequestFail(Bundle resultData) {
+                Log.d(DebugUtils.LOG_TAG_TA, DebugUtils.buildLogText(CLASS_TAG, "executeUpdateItinerary->onRequestFail", "Failed!"));
                 notifyListener(ControllerAction.UPDATE, false, resultData);
             }
 
@@ -255,7 +259,7 @@ public class TravelAllowanceItineraryController extends BaseController {
 
         SaveItineraryRequest request = new SaveItineraryRequest(context, receiver, updItinerary);
         request.execute();
-
+        return true;
     }
 
     public synchronized void setItineraryStage(Itinerary itinerary) {
@@ -398,10 +402,10 @@ public class TravelAllowanceItineraryController extends BaseController {
         }
         boolean result = true;
         if (StringUtilities.isNullOrEmpty(itinerary.getName())) {
-//            Message msg = new Message(Message.Severity.ERROR,
-//                    Message.MSG_UI_MISSING_DATES, null, Itinerary.Field.NAME.getName());
-//            itinerary.setMessage(msg);
-            return false;
+            Message msg = new Message(Message.Severity.ERROR,
+                    Message.MSG_UI_MISSING_DATES, null, Itinerary.Field.NAME.getName());
+            itinerary.setMessage(msg);
+            result = false;
         }
         for (ItinerarySegment segment : itinerary.getSegmentList()) {
             List<String> fields = new ArrayList<String>();
@@ -418,21 +422,31 @@ public class TravelAllowanceItineraryController extends BaseController {
                 fields.add(ItinerarySegment.Field.DEPARTURE_LOCATION.getName());
             }
             if (fields.size() > 0) {
-                //No particular message text. Just use the field options to turn it into red on the UI.
-//                Message msg = new Message(Message.Severity.ERROR, Message.MSG_UI_MISSING_DATES, null, fields);
-//                segment.setMessage(msg);
+                //No particular message text. Just use the field options to turn label into red on the UI.
+                Message msg = new Message(Message.Severity.ERROR, Message.MSG_UI_MISSING_DATES, null, fields);
+                segment.setMessage(msg);
+                if (itinerary.getMessage() == null) {
+                    msg = new Message(Message.Severity.ERROR, Message.MSG_UI_MISSING_DATES);
+                    itinerary.setMessage(msg);
+                }
                 result = false;
             }
         }
         return result;
     }
 
-    public void executeDeleteItinerary(final Itinerary itinerary) {
+    public boolean executeDeleteItinerary(final Itinerary itinerary) {
+        if (itinerary == null) {
+            Log.d(DebugUtils.LOG_TAG_TA, DebugUtils.buildLogText(CLASS_TAG, "executeDeleteItinerary", "Itinerary is null! Refused."));
+            return false;
+        }
+        Log.d(DebugUtils.LOG_TAG_TA, DebugUtils.buildLogText(CLASS_TAG, "executeDeleteItinerary", "Itinerary = " + itinerary.toString()));
         BaseAsyncResultReceiver receiver = new BaseAsyncResultReceiver(new Handler());
         receiver.setListener(new BaseAsyncRequestTask.AsyncReplyListener() {
             @Override
             public void onRequestSuccess(Bundle resultData) {
                 boolean isSuccess = resultData.getBoolean(AbstractItineraryDeleteRequest.IS_SUCCESS, false);
+                Log.d(DebugUtils.LOG_TAG_TA, DebugUtils.buildLogText(CLASS_TAG, "executeDeleteItinerary->onRequestSuccess", "isSuccess = " + isSuccess));
                 if (isSuccess) {
                     itineraryList.remove(itinerary);
                     notifyListener(ControllerAction.DELETE, true, null);
@@ -448,6 +462,7 @@ public class TravelAllowanceItineraryController extends BaseController {
 
             @Override
             public void onRequestFail(Bundle resultData) {
+                Log.d(DebugUtils.LOG_TAG_TA, DebugUtils.buildLogText(CLASS_TAG, "executeDeleteItinerary->onRequestFail", "Failed!"));
                 Itinerary itin = getItinerary(itinerary.getItineraryID());
                 if (itin != null) {
                     resultData.putSerializable(BundleId.ITINERARY, itinerary);
@@ -468,14 +483,22 @@ public class TravelAllowanceItineraryController extends BaseController {
 
         DeleteItineraryRequest deleteRequest = new DeleteItineraryRequest(context, receiver, itinerary.getItineraryID());
         deleteRequest.execute();
+        return true;
     }
 
-    public void executeDeleteSegment(final String itineraryId, final ItinerarySegment segment) {
+    public boolean executeDeleteSegment(final String itineraryId, final ItinerarySegment segment) {
+        if (StringUtilities.isNullOrEmpty(itineraryId) || segment == null) {
+            Log.d(DebugUtils.LOG_TAG_TA, DebugUtils.buildLogText(CLASS_TAG, "executeDeleteSegment", "Refused."));
+            return false;
+        }
+        Log.d(DebugUtils.LOG_TAG_TA, DebugUtils.buildLogText(CLASS_TAG,
+                "executeDeleteSegment", "Itinerary Id = " + itineraryId + ", Segment = " + segment.toString()));
         BaseAsyncResultReceiver receiver = new BaseAsyncResultReceiver(new Handler());
         receiver.setListener(new BaseAsyncRequestTask.AsyncReplyListener() {
             @Override
             public void onRequestSuccess(Bundle resultData) {
                 boolean isSuccess = resultData.getBoolean(AbstractItineraryDeleteRequest.IS_SUCCESS, false);
+                Log.d(DebugUtils.LOG_TAG_TA, DebugUtils.buildLogText(CLASS_TAG, "executeDeleteSegment->onRequestSuccess", "isSuccess = " + isSuccess));
                 if (isSuccess) {
                     getItinerary(itineraryId).getSegmentList().remove(segment);
                     resultData.putSerializable(BundleId.SEGMENT, segment);
@@ -488,6 +511,7 @@ public class TravelAllowanceItineraryController extends BaseController {
 
             @Override
             public void onRequestFail(Bundle resultData) {
+                Log.d(DebugUtils.LOG_TAG_TA, DebugUtils.buildLogText(CLASS_TAG, "executeDeleteSegment->onRequestFail", "Failed!"));
                 notifyListener(ControllerAction.DELETE, false, resultData);
             }
 
@@ -504,6 +528,7 @@ public class TravelAllowanceItineraryController extends BaseController {
 
         DeleteItineraryRowRequest deleteRequest = new DeleteItineraryRowRequest(context, receiver, itineraryId, segment.getId());
         deleteRequest.execute();
+        return true;
     }
 
     /**
@@ -544,13 +569,37 @@ public class TravelAllowanceItineraryController extends BaseController {
             return;
         }
         Log.d(DebugUtils.LOG_TAG_TA, DebugUtils.buildLogText(CLASS_TAG, "resetMessages",
-                "For Itinerary " + itinerary.toString()));
+                "For " + itinerary.toString()));
         itinerary.setMessage(null);
-        if (itinerary.getSegmentList() == null || itinerary.getSegmentList().size() > 0) {
+        if (itinerary.getSegmentList() == null || itinerary.getSegmentList().size() == 0) {
             return;
         }
         for (ItinerarySegment segment : itinerary.getSegmentList()) {
             segment.setMessage(null);
+        }
+    }
+
+    /**
+     * Clears all messages of the given Itinerary with the given messages code
+     * @param itinerary The itinerary for which the messages should be cleard
+     * @param code The message code of the {@link Message}s
+     */
+    public void resetMessages(Itinerary itinerary, String code) {
+        if (itinerary == null || StringUtilities.isNullOrEmpty(code)) {
+            return;
+        }
+        Log.d(DebugUtils.LOG_TAG_TA, DebugUtils.buildLogText(CLASS_TAG, "resetMessages",
+                "For " + itinerary.toString() + ", with message code = " + code));
+        if (itinerary.getMessage() != null && code.equals(itinerary.getMessage().getCode())) {
+            itinerary.setMessage(null);
+        }
+        if (itinerary.getSegmentList() == null || itinerary.getSegmentList().size() == 0) {
+            return;
+        }
+        for (ItinerarySegment segment : itinerary.getSegmentList()) {
+            if (segment.getMessage() != null && code.equals(segment.getMessage().getCode())) {
+                segment.setMessage(null);
+            }
         }
     }
 
@@ -667,7 +716,7 @@ public class TravelAllowanceItineraryController extends BaseController {
             if (msg.getSeverity() == Message.Severity.ERROR) {
                 isSuccess = false;
                 Log.d(DebugUtils.LOG_TAG_TA, DebugUtils.buildLogText(CLASS_TAG, "handleSegmentUpdate",
-                        "Adding error message to segment of Itinerary to be updated " + updItinerary.toString()));
+                        "Adding error message to segment of the itinerary to be updated " + updItinerary.toString()));
                 if (updSegment != null) {
                     updSegment.setMessage(msg);
                 }
@@ -675,7 +724,7 @@ public class TravelAllowanceItineraryController extends BaseController {
         }
         if (isSuccess) {
             Log.d(DebugUtils.LOG_TAG_TA, DebugUtils.buildLogText(CLASS_TAG, "handleSegmentUpdate",
-                    "Exchange segment of Itinerary to be updated and bufferd DB itinerary with new result " + resultSegment.toString()));
+                    "Exchange segment of the itinerary to be updated as well as the segment of the buffered DB itinerary with new result " + resultSegment.toString()));
             int position = itin.getSegmentList().indexOf(itinSegment);
             if (position > -1) {
                 itin.getSegmentList().remove(position);

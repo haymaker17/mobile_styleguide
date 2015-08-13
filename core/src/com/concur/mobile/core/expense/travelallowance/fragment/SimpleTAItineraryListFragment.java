@@ -9,8 +9,10 @@ import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
 import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.Toast;
@@ -142,6 +144,16 @@ public class SimpleTAItineraryListFragment extends Fragment implements SwipeRefr
     }
 
     @Override
+    public boolean onContextItemSelected(MenuItem item) {
+        AdapterView.AdapterContextMenuInfo info = (AdapterView.AdapterContextMenuInfo) item.getMenuInfo();
+        if (this.itineraryList != null && itineraryList.size() != 0 && info.position >= 0 && info.position + 1 < itineraryList.size()) {
+            Itinerary itin = this.itineraryList.get(info.position);
+            itineraryController.executeDeleteItinerary(itin);
+        }
+        return true;
+    }
+
+        @Override
     public void onClick(View view) {
         if (view.getId() == R.id.fab) {
             Intent intent = new Intent(getActivity(), ItineraryUpdateActivity.class);
@@ -223,6 +235,9 @@ public class SimpleTAItineraryListFragment extends Fragment implements SwipeRefr
         }
     }
 
+    /**
+     * Deletes all itineraries listed in the corresponding member variable.
+     */
     private void deleteItineraries() {
         if (this.itineraryDeletionList == null || this.itineraryDeletionList.size() == 0) {
             return;

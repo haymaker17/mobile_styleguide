@@ -44,7 +44,7 @@
             android:layout_below="@+id/tv_date_label"
             android:layout_marginRight="16dp"
             android:text="\@Tue, Jun 23, 2015\@"
-            android:textAppearance="@style/TATitle" />
+            android:textAppearance="@style/TAValue.Small" />
 
     </RelativeLayout>
 
@@ -80,7 +80,7 @@
             android:layout_alignStart="@+id/tv_time_label"
             android:layout_below="@+id/tv_time_label"
             android:text="\@2:27 PM\@"
-            android:textAppearance="@style/TATitle" />
+            android:textAppearance="@style/TAValue.Small" />
 
     </RelativeLayout>
 </LinearLayout>

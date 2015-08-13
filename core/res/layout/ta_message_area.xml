@@ -5,15 +5,15 @@
     android:id="@+id/vg_message_area"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:orientation="horizontal"
-    tools:showIn="@layout/ta_edit_segment">
+    android:orientation="horizontal">
 
     <ImageView
         android:id="@+id/iv_icon"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginLeft="4dp"
-        android:src="@drawable/icon_informational" />
+        android:layout_marginTop="4dp"
+        android:src="@drawable/icon_redex" />
 
 
     <TextView
@@ -23,7 +23,6 @@
         android:layout_alignParentTop="true"
         android:layout_alignParentLeft="true"
         android:layout_marginLeft="56dp"
-        android:text="\@Information\@"
         android:textAppearance="@style/TAMessage" />
 
 </RelativeLayout>

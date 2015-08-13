@@ -44,6 +44,6 @@
         android:layout_alignStart="@+id/tv_location_label"
         android:layout_below="@+id/tv_location_label"
         android:text="\@Heidelberg, Germany\@"
-        android:textAppearance="@style/TATitle" />
+        android:textAppearance="@style/TAValue.Small" />
 
 </RelativeLayout>

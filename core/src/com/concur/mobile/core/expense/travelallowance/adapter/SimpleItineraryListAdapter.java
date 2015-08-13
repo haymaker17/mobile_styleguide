@@ -93,13 +93,13 @@ public class SimpleItineraryListAdapter extends RecyclerView.Adapter<SimpleItine
         if (holder.tvTitle != null) {
             holder.tvTitle.setVisibility(View.VISIBLE);
             holder.tvTitle.setText(itinerary.getName());
-
-            if (itinerary.isLocked()) {
-                holder.icon.setVisibility(View.VISIBLE);
-                holder.icon.setImageResource(R.drawable.profile_icon_bank);
-            } else {
-                holder.icon.setVisibility(View.GONE);
-            }
+            //Do not show icon
+//            if (itinerary.isLocked()) {
+//                holder.icon.setVisibility(View.VISIBLE);
+//                holder.icon.setImageResource(R.drawable.profile_icon_bank);
+//            } else {
+//                holder.icon.setVisibility(View.GONE);
+//            }
         }
         if (holder.tvValue != null) {
             holder.tvValue.setVisibility(View.GONE);

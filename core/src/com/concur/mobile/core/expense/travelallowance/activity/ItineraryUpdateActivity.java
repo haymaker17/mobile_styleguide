@@ -5,6 +5,8 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.ActionBar;
 import android.support.v7.widget.Toolbar;
+import android.text.Editable;
+import android.text.TextWatcher;
 import android.util.Log;
 import android.view.ContextMenu;
 import android.view.Menu;
@@ -155,6 +157,33 @@ public class ItineraryUpdateActivity extends BaseActivity implements IController
             }
         }
 
+        EditText etItinerary = (EditText) findViewById(R.id.et_itinerary);
+        if (etItinerary != null) {
+            etItinerary.addTextChangedListener(new TextWatcher() {
+                @Override
+                public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+                    return;
+                }
+
+                @Override
+                public void onTextChanged(CharSequence s, int start, int before, int count) {
+                    return;
+                }
+
+                @Override
+                public void afterTextChanged(Editable s) {
+                    if (itinerary != null && itinerary.getMessage() != null) {
+                        Message msg = itinerary.getMessage();
+                        if (Message.MSG_UI_MISSING_DATES.equals(msg.getCode())) {
+                            itinController.resetMessages(itinerary, msg.getCode());
+                            renderNameLabel();
+                            adapter.notifyDataSetChanged();
+                        }
+                    }
+                }
+            });
+        }
+
         onItemClickListener = new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -214,6 +243,7 @@ public class ItineraryUpdateActivity extends BaseActivity implements IController
                     int datePosition = 0;
                     ItinerarySegment segment = itinerary.getSegmentList().get(currentPosition.getPosition());
                     segment.setMessage(null);
+                    itinController.resetMessages(itinerary, Message.MSG_UI_MISSING_DATES);
                     if (currentPosition.getInfo() == PositionInfoTag.INFO_OUTBOUND) {
                         date = segment.getDepartureDateTime();
                     } else {
@@ -246,6 +276,7 @@ public class ItineraryUpdateActivity extends BaseActivity implements IController
                     int datePosition = 0;
                     ItinerarySegment segment = itinerary.getSegmentList().get(currentPosition.getPosition());
                     segment.setMessage(null);
+                    itinController.resetMessages(itinerary, Message.MSG_UI_MISSING_DATES);
                     if (currentPosition.getInfo() == PositionInfoTag.INFO_OUTBOUND) {
                         date = segment.getDepartureDateTime();
                     } else {
@@ -357,6 +388,7 @@ public class ItineraryUpdateActivity extends BaseActivity implements IController
                     if (this.currentPosition != null) {
                         ItinerarySegment segment = itinerary.getSegmentList().get(currentPosition.getPosition());
                         segment.setMessage(null);
+                        itinController.resetMessages(itinerary, Message.MSG_UI_MISSING_DATES);
                         ItineraryLocation itinLocation = new ItineraryLocation();
                         itinLocation.setName(selectedListItemText);
                         itinLocation.setCode(selectedListItemKey);
@@ -392,9 +424,24 @@ public class ItineraryUpdateActivity extends BaseActivity implements IController
 
     private void renderDefaultValues() {
         EditText etItinerary = (EditText) findViewById(R.id.et_itinerary);
-        if (etItinerary != null && this.itinerary != null) {
-            etItinerary.setText(itinerary.getName());
-            etItinerary.setEnabled(!itinerary.isLocked());
+        if (etItinerary == null || this.itinerary == null) {
+            return;
+        }
+        etItinerary.setText(itinerary.getName());
+        etItinerary.setEnabled(!itinerary.isLocked());
+    }
+
+    private void renderNameLabel() {
+        TextView tvItineraryLabel = (TextView) findViewById(R.id.tv_itinerary_label);
+        if (tvItineraryLabel == null || this.itinerary == null) {
+            return;
+        }
+        tvItineraryLabel.setTextAppearance(this, R.style.TALabel);
+        if (itinerary.getMessage() != null) {
+            Message msg = itinerary.getMessage();
+            if (msg.containsField(Itinerary.Field.NAME.getName())) {
+                tvItineraryLabel.setTextAppearance(this, R.style.TALabel_Red);
+            }
         }
     }
 
@@ -519,9 +566,12 @@ public class ItineraryUpdateActivity extends BaseActivity implements IController
             return true;
         }
         if (!itinController.areAllMandatoryFieldsFilled(itinerary)) {
-            Message msg = new Message(Message.Severity.ERROR, Message.MSG_UI_MISSING_DATES,
-                    getString(R.string.general_fill_required_fields));
-            showErrorDialog(msg);
+//            Message msg = new Message(Message.Severity.ERROR, Message.MSG_UI_MISSING_DATES,
+//                    getString(R.string.general_fill_required_fields));
+//            showErrorDialog(msg);
+            Toast.makeText(this, R.string.general_fill_required_fields, Toast.LENGTH_SHORT).show();
+            adapter.notifyDataSetChanged();
+            renderNameLabel();
             return true;
         }
         List<ItinerarySegment> periods = itinerary.getSegmentList();
@@ -593,7 +643,7 @@ public class ItineraryUpdateActivity extends BaseActivity implements IController
                 if (result != null) {
                     List<FixedTravelAllowance> allowances = (List<FixedTravelAllowance>) result.getSerializable(BundleId.ALLOWANCE_LIST);
                     if (allowanceController.executeUpdate(allowances, this.expenseReportKey)) {
-                        showProgressDialog(" "); //TODO: Add text Calculating Expenses
+                        showProgressDialog("                    "); //TODO: Add text Calculating Expenses
                     }
                 }
             }
@@ -614,7 +664,7 @@ public class ItineraryUpdateActivity extends BaseActivity implements IController
                     allowanceController.refreshFixedTravelAllowances(this.expenseReportKey);
                     Toast.makeText(this, R.string.general_save_success, Toast.LENGTH_SHORT).show();
                     if (allowanceController.refreshFixedTravelAllowances(this.expenseReportKey)) {
-                        showProgressDialog(" "); //TODO: Add text Calculating Allowances...
+                        showProgressDialog("                    "); //TODO: Add text Calculating Allowances...
                     }
                 } else {
                     Toast.makeText(this, R.string.general_save_fail, Toast.LENGTH_SHORT).show();
@@ -633,9 +683,11 @@ public class ItineraryUpdateActivity extends BaseActivity implements IController
                 Log.d(DebugUtils.LOG_TAG_TA, DebugUtils.buildLogText(CLASS_TAG, "anctionFinished",
                         "Delete Action callback finished with isSuccess: " + isSuccess));
                 if (isSuccess) {
-                    ItinerarySegment deletedSegment = (ItinerarySegment) result.getSerializable(BundleId.SEGMENT);
-                    this.itinerary.getSegmentList().remove(deletedSegment);
-                    Toast.makeText(this, R.string.general_delete_success, Toast.LENGTH_SHORT).show();
+                    if (result != null) {//We get null for auto delete
+                        ItinerarySegment deletedSegment = (ItinerarySegment) result.getSerializable(BundleId.SEGMENT);
+                        this.itinerary.getSegmentList().remove(deletedSegment);
+                        Toast.makeText(this, R.string.general_delete_success, Toast.LENGTH_SHORT).show();
+                    }
                 } else {
                     Toast.makeText(this, R.string.general_delete_fail, Toast.LENGTH_SHORT).show();
                 }
