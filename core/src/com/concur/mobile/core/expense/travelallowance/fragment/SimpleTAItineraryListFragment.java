@@ -132,11 +132,12 @@ public class SimpleTAItineraryListFragment extends Fragment implements SwipeRefr
             }
         }
 
-        if (expenseReportIsSubmitted) {
-            adapter.setDeleteEnabled(false);
-        } else {
-            adapter.setDeleteEnabled(true);
-        }
+//        if (expenseReportIsSubmitted) {
+//            adapter.setDeleteEnabled(false);
+//        } else {
+//            adapter.setDeleteEnabled(true);
+//        }
+        adapter.setDeleteEnabled(false);
 
         swipeRefreshLayout = (SwipeRefreshLayout) view.findViewById(R.id.swipe_refresh_layout);
         swipeRefreshLayout.setOnRefreshListener(this);

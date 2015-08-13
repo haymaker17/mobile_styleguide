@@ -1596,10 +1596,17 @@ public class
 
         // Set click-handler on itinerary view
         view = findViewById(R.id.header_itinerary);
+        view.setVisibility(View.VISIBLE);
         if (view != null) {
             // hide if we don't have the setting
             if (!ViewUtil.hasTravelAllowanceFixed(this)) {
                 view.setVisibility(View.GONE);
+            } else if (reportKeySource == Const.EXTRA_EXPENSE_REPORT_SOURCE_APPROVAL) {
+                ConcurCore app = (ConcurCore) getApplication();
+                if (app.getTaItineraryController().getItineraryList() == null
+                        || app.getTaItineraryController().getItineraryList().size() == 0) {
+                    view.setVisibility(View.GONE);
+                }
             }
             view.setFocusable(true);
             view.setClickable(true);
