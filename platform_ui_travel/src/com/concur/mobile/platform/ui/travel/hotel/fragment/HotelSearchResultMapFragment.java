@@ -2,7 +2,6 @@ package com.concur.mobile.platform.ui.travel.hotel.fragment;
 
 import android.app.Activity;
 import android.app.FragmentManager;
-import android.app.FragmentTransaction;
 import android.os.Build;
 import android.os.Bundle;
 import android.util.Log;
@@ -50,7 +49,6 @@ public class HotelSearchResultMapFragment extends PlatformFragmentV1
 
     public Bundle args;
 
-    // empty constructor
     public HotelSearchResultMapFragment() {
         setRetainInstance(true);
     }
@@ -115,18 +113,19 @@ public class HotelSearchResultMapFragment extends PlatformFragmentV1
     }
 
     @Override public void onDestroyView() {
-        super.onDestroyView();
-        if (mapFragment != null) {
-            FragmentTransaction ft = getActivity().getFragmentManager().beginTransaction();
-            ft.remove(mapFragment);
-            ft.commitAllowingStateLoss();
-        }
 
+//        if (mapFragment != null) {
+        //            FragmentTransaction ft = getActivity().getFragmentManager().beginTransaction();
+        //            ft.remove(mapFragment);
+        //            ft.commit();
+        //            //AllowingStateLoss();
+        //
+        //        }
+        super.onDestroyView();
         googleMap = null;
     }
 
-    @Override
-    public void onBackPressed() {
+    @Override public void onBackPressed() {
 
         hideProgressBar();
         super.onBackPressed();
@@ -172,8 +171,7 @@ public class HotelSearchResultMapFragment extends PlatformFragmentV1
         }
         googleMap.setOnCameraChangeListener(new GoogleMap.OnCameraChangeListener() {
 
-            @Override
-            public void onCameraChange(CameraPosition arg0) {
+            @Override public void onCameraChange(CameraPosition arg0) {
                 // Move camera.
                 googleMap.moveCamera(CameraUpdateFactory.newLatLngBounds(builder.build(), 100));
                 // Remove listener to prevent position reset on camera move.
