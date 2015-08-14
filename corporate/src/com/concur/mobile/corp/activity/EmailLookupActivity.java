@@ -24,6 +24,7 @@ import com.concur.mobile.core.util.Const;
 import com.concur.mobile.core.util.EventTracker;
 import com.concur.mobile.core.util.Flurry;
 import com.concur.mobile.core.util.UserAndSessionInfoUtil;
+import com.concur.mobile.corp.ConcurMobile;
 import com.concur.mobile.platform.authentication.EmailLookUpRequestTask;
 import com.concur.mobile.platform.authentication.SessionInfo;
 import com.concur.mobile.platform.config.provider.ConfigUtil;
@@ -166,13 +167,10 @@ public class EmailLookupActivity extends BaseActivity implements IProgressBarLis
                 finish();
             }
         } else {
-            if (ConcurCore.userEntryAppTimer > 0L) {
-                ConcurCore.userEntryAppTimer += System.currentTimeMillis();
-                Log.d(">>>>>>>> " + Const.LOG_TAG + " >>>>>> ", " Total Time EmailLookup time = " + ConcurCore.userEntryAppTimer);
-            } else {
-                ConcurCore.userEntryAppTimer = System.currentTimeMillis();
-                Log.d(">>>>>>>> " + Const.LOG_TAG + " >>>>>> ", " Total Time EmailLookup  time = " + ConcurCore.userEntryAppTimer);
-            }
+            //reset timings
+            ConcurMobile.resetUserTimers();
+            ConcurCore.userEntryAppTimer = System.currentTimeMillis();
+            Log.d(">>>>>>>> " + Const.LOG_TAG + " >>>>>> ", " Total Time EmailLookup time = " + ConcurCore.userEntryAppTimer);
         }
 
     }

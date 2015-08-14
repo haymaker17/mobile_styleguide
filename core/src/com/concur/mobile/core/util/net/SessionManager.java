@@ -306,8 +306,7 @@ public class SessionManager {
             Log.e("logUserWaitingTime : ", " total wait time is = 0");
         }
         // Statistics Notification
-        EventTracker.INSTANCE.trackTimings(Flurry.CATEGORY_WAIT_TIME, Flurry.ACTION_AUTO_LOGIN_WAIT,
-                Flurry.LABEL_WAIT_TIME, totalWaitTime);
+        //TODO not required event tracking right now. In future may be.
         ConcurCore.resetAutloLoginTimes();
     }
     /**
