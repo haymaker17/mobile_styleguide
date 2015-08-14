@@ -24,15 +24,15 @@ public class CustomListView extends ListView {
 
     @Override
     protected void onDraw(Canvas canvas) {
+        super.onDraw(canvas);
         if (getCount() != old_count) {
             old_count = getCount();
 
             params = getLayoutParams();
-            params.height = getCount() * (old_count > 0 ? getChildAt(0).getHeight() : 0) + 20;
+            params.height = (getCount() + 2) * (old_count > 0 ? getChildAt(0).getHeight() : 0) + 20;
             setLayoutParams(params);
         }
 
-        super.onDraw(canvas);
     }
 
 }

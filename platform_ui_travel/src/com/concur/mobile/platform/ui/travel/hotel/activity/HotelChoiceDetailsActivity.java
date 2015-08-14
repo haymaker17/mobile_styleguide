@@ -24,17 +24,18 @@ import com.concur.mobile.platform.ui.travel.loader.TravelCustomFieldsConfig;
 import com.concur.mobile.platform.ui.travel.util.Const;
 import com.concur.mobile.platform.ui.travel.util.ParallaxScollView;
 import com.concur.mobile.platform.ui.travel.util.ViewUtil;
-import com.google.android.gms.common.ConnectionResult;
-import com.google.android.gms.common.GooglePlayServicesUtil;
-import com.google.android.gms.maps.CameraUpdateFactory;
-import com.google.android.gms.maps.GoogleMap;
-import com.google.android.gms.maps.OnMapReadyCallback;
-import com.google.android.gms.maps.model.LatLng;
-import com.google.android.gms.maps.model.MarkerOptions;
+import com.google.android.m4b.maps.CameraUpdateFactory;
+import com.google.android.m4b.maps.GoogleMap;
+import com.google.android.m4b.maps.OnMapReadyCallback;
+import com.google.android.m4b.maps.model.LatLng;
+import com.google.android.m4b.maps.model.MarkerOptions;
 
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
+
+//import com.google.android.gms.common.ConnectionResult;
+//import com.google.android.gms.common.GooglePlayServicesUtil;
 
 /**
  * @author tejoa
@@ -194,44 +195,44 @@ public class HotelChoiceDetailsActivity extends TravelBaseActivity
             showOfflineDialog();
 
         } else {
-            int resultCode = GooglePlayServicesUtil.isGooglePlayServicesAvailable(this);
+            //  int resultCode = GooglePlayServicesUtil.isGooglePlayServicesAvailable(this);
 
             // TODO customize ShowMaps to view single and multiple hotels
             // Intent i = new Intent(this, ShowHotelMap.class);
-            if (resultCode == ConnectionResult.SUCCESS && hotel != null) {
-                // i.putExtra(Const.EXTRA_HOTEL_LOCATION, post);
-                // startActivity(i);
-                // Intent i = this.getIntent();
-                // i.putExtra(Const.EXTRA_HOTEL_LOCATION, post);
-                hotelMapFragment = (HotelMapFragment) getFragmentManager().findFragmentByTag(FRAGMENT_HOTEL_MAP);
-                //  LatLng post = new LatLng(hotel.latitude, hotel.longitude);
-                if (hotelMapFragment == null) {
-                    hotelMapFragment = new HotelMapFragment();
+            //  if (resultCode == ConnectionResult.SUCCESS && hotel != null) {
+            // i.putExtra(Const.EXTRA_HOTEL_LOCATION, post);
+            // startActivity(i);
+            // Intent i = this.getIntent();
+            // i.putExtra(Const.EXTRA_HOTEL_LOCATION, post);
+            hotelMapFragment = (HotelMapFragment) getFragmentManager().findFragmentByTag(FRAGMENT_HOTEL_MAP);
+            //  LatLng post = new LatLng(hotel.latitude, hotel.longitude);
+            if (hotelMapFragment == null) {
+                hotelMapFragment = new HotelMapFragment();
 
-                }
-                FragmentTransaction ft = getFragmentManager().beginTransaction();
-                if (!hotelMapFragment.isVisible()) {
-                    Bundle args = new Bundle();
-                    //  args.putSerializable(Const.EXTRA_HOTELS_LIST, (Serializable) hotelList);
-                    args.putString(Const.EXTRA_TRAVEL_LATITUDE, hotel.latitude.toString());
-                    args.putString(Const.EXTRA_TRAVEL_LONGITUDE, hotel.longitude.toString());
-                    args.putBoolean(Const.EXTRA_TRAVEL_SEARCH_NEAR_ME, hotel.showNearMe);
-                    hotelMapFragment.setArguments(args);
-
-                    ft.hide(hotelDetailsFrag);
-
-                    // if (mapFragment != null && !mapFragment.isAdded()) {
-                    ft.add(R.id.tabcontainer, hotelMapFragment, FRAGMENT_HOTEL_MAP);
-                    ft.addToBackStack(null);
-                    ft.commit();
-                } else {
-                    ft.hide(hotelMapFragment);
-                    getFragmentManager().popBackStackImmediate();
-                }
-
-            } else {
-                Toast.makeText(this, R.string.map_unavailable, Toast.LENGTH_LONG).show();
             }
+            FragmentTransaction ft = getFragmentManager().beginTransaction();
+            if (!hotelMapFragment.isVisible()) {
+                Bundle args = new Bundle();
+                //  args.putSerializable(Const.EXTRA_HOTELS_LIST, (Serializable) hotelList);
+                args.putString(Const.EXTRA_TRAVEL_LATITUDE, hotel.latitude.toString());
+                args.putString(Const.EXTRA_TRAVEL_LONGITUDE, hotel.longitude.toString());
+                args.putBoolean(Const.EXTRA_TRAVEL_SEARCH_NEAR_ME, hotel.showNearMe);
+                hotelMapFragment.setArguments(args);
+
+                ft.hide(hotelDetailsFrag);
+
+                // if (mapFragment != null && !mapFragment.isAdded()) {
+                ft.add(R.id.tabcontainer, hotelMapFragment, FRAGMENT_HOTEL_MAP);
+                ft.addToBackStack(null);
+                ft.commit();
+            } else {
+                ft.hide(hotelMapFragment);
+                getFragmentManager().popBackStackImmediate();
+            }
+
+            //            } else {
+            //                Toast.makeText(this, R.string.map_unavailable, Toast.LENGTH_LONG).show();
+            //            }
         }
 
     }
@@ -252,6 +253,7 @@ public class HotelChoiceDetailsActivity extends TravelBaseActivity
                 fm.beginTransaction().replace(placeholder, new HotelImagesFragment(hotel.imagePairs), tabId).commit();
             }
         }
+
     }
 
     @Override

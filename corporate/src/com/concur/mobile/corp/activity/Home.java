@@ -1100,6 +1100,9 @@ public class Home extends BaseActivity implements View.OnClickListener, Navigati
 
         if (forceExpirationHome) {
             forceExpirationHome = false;
+            cancelAllDataRequests();
+            clearSessionData();
+            showExpiredDialog();
         } else {
 
             String sessionId = PlatformProperties.getSessionId();
