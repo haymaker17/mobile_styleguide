@@ -9,7 +9,7 @@
 
     <!-- Replace placeholder ID with your tracking ID -->
     <string name="ga_trackingId">UA-47360705-4</string>
-    <!--<string name="ga_trackingId">UA-47360705-9</string>-->
+    <string name="ga_trackingId_test">UA-47360705-9</string>
     <!--<string name="ga_trackingId">UA-63130914-1</string> ray's analytics id-->
 
     <!--

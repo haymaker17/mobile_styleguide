@@ -50,8 +50,6 @@ public class LoginPasswordActivity extends BaseActivity implements LoginPassword
     public final static String TAG_LOGIN_WAIT_DIALOG = "tag.login.wait.dialog";
 
     protected final static String TAG_LOGIN_REMOTE_WIPE_DIALOG = "tag.login.remote.wipe.dialog";
-    protected final static String LOGIN_STATE_KEY = "login";
-    protected final static String PIN_STATE_KEY = "pin";
 
     private boolean fromNotification;
 
@@ -524,20 +522,8 @@ public class LoginPasswordActivity extends BaseActivity implements LoginPassword
     }
 
     private void gotoHome(Bundle emailLookup) {
-        Intent i = null;
-        i = new Intent(this, Home.class);
-        if (ConcurCore.userEntryAppTimer > 0 && emailLookup != null) {
-            ConcurCore.userSuccessfulLoginTimer = System.currentTimeMillis();
-            long totalWaitTime = ConcurCore.userSuccessfulLoginTimer - ConcurCore.userEntryAppTimer;
-            String signInMethod = emailLookup.getString(EmailLookUpRequestTask.EXTRA_SIGN_IN_METHOD_KEY);
-            // Log to Google Analytics
-            if (totalWaitTime <= 0) {
-                totalWaitTime = 0;
-            }
-            EventTracker.INSTANCE.trackTimings(Flurry.CATEGORY_SIGN_IN, signInMethod,
-                    Flurry.LABEL_WAIT_TIME, totalWaitTime);
-            ConcurCore.resetUserTimers();
-        }
+        Intent i=new Intent(this, Home.class);
+        logUserTimings(emailLookup);
         startActivity(i);
         this.setResult(Activity.RESULT_OK);
         this.finish();
@@ -575,6 +561,29 @@ public class LoginPasswordActivity extends BaseActivity implements LoginPassword
         } else {
             EventTracker.INSTANCE.eventTrack(Flurry.CATEGORY_SIGN_IN, Flurry.ACTION_SUCCESS_CREDENTIAL_TYPE,
                     Flurry.LABEL_LOGIN_USING_PASSWORD, null);
+        }
+    }
+
+    private void logUserTimings(Bundle emailLookup){
+        if (ConcurCore.userEntryAppTimer > 0 && emailLookup != null) {
+            ConcurCore.userSuccessfulLoginTimer = System.currentTimeMillis();
+            long totalWaitTime = ConcurCore.userSuccessfulLoginTimer - ConcurCore.userEntryAppTimer;
+            String signInMethod = emailLookup.getString(EmailLookUpRequestTask.EXTRA_SIGN_IN_METHOD_KEY);
+            // Log to Google Analytics
+            if (totalWaitTime <= 0) {
+                totalWaitTime = 0;
+            }
+
+            if (signInMethod.equalsIgnoreCase(com.concur.mobile.platform.ui.common.util.Const.LOGIN_METHOD_SSO)) {
+                signInMethod=Flurry.LABEL_LOGIN_USING_SSO;
+            } else if (signInMethod.equalsIgnoreCase(com.concur.mobile.platform.ui.common.util.Const.LOGIN_METHOD_MOBILE_PASSWORD)) {
+                signInMethod=Flurry.LABEL_LOGIN_USING_MOBILE_PASSWORD;
+            } else {
+                signInMethod=Flurry.LABEL_LOGIN_USING_PASSWORD;
+            }
+
+            EventTracker.INSTANCE.trackTimings(Flurry.CATEGORY_SIGN_IN, totalWaitTime,signInMethod, null);
+            ConcurCore.resetUserTimers();
         }
     }
 

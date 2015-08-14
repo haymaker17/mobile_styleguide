@@ -358,6 +358,8 @@ public class CompanySignOnActivity extends BaseActivity {
             webView.goBack();
             return true;
         } else if(keyCode == KeyEvent.KEYCODE_BACK) {
+            //reset timings
+            ConcurMobile.resetUserTimers();
             super.onKeyDown(keyCode, event);
             setResult(RESULT_OK);
             return true;
@@ -435,8 +437,7 @@ public class CompanySignOnActivity extends BaseActivity {
                 fromNotification = getIntent().getExtras().getBoolean(ConcurMobile.FROM_NOTIFICATION);
             }
             if (!fromNotification) {
-                Intent i = null;
-                i = new Intent(this, Home.class);
+                Intent i = new Intent(this, Home.class);
                 if(ConcurCore.userEntryAppTimer>0){
                     ConcurCore.userSuccessfulLoginTimer = System.currentTimeMillis();
                     long totalWaitTime = ConcurCore.userSuccessfulLoginTimer - ConcurCore.userEntryAppTimer;
@@ -445,8 +446,8 @@ public class CompanySignOnActivity extends BaseActivity {
                     if(totalWaitTime<=0){
                         totalWaitTime=0;
                     }
-                    EventTracker.INSTANCE.trackTimings(Flurry.CATEGORY_SIGN_IN, signInMethod,
-                            Flurry.LABEL_WAIT_TIME, totalWaitTime);
+                    EventTracker.INSTANCE.trackTimings(Flurry.CATEGORY_SIGN_IN, totalWaitTime,
+                            signInMethod, null);
                     ConcurCore.resetUserTimers();
                 }
                 startActivity(i);
@@ -509,7 +510,7 @@ public class CompanySignOnActivity extends BaseActivity {
             UserAndSessionInfoUtil.updateUserAndSessionInfo(CompanySignOnActivity.this, emailLookupBundle);
 
             // Track the success
-            Login.trackLoginSuccess(Flurry.PARAM_VALUE_LOGIN_USING_SSO);
+            trackLoginStatus(true,Flurry.PARAM_VALUE_LOGIN_USING_SSO);
 
             if (!isShuttingDown) {
                 String signInMethod = emailLookupBundle.getString(EmailLookUpRequestTask.EXTRA_SIGN_IN_METHOD_KEY);

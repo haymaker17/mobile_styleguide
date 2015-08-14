@@ -288,12 +288,12 @@ public enum EventTracker {
      * Tracks the given event to Google Analytics after a list of high scores finishes loading
      *
      * @param eventCategory    Event Category
-     * @param eventTimingName  Timing Event Name
-     * @param eventTimingLabel Timing Event Lable
-     * @param timingValue      Timing Event Value
+     * @param eventName  Timing Event Name
+     * @param eventLabel Timing Event Lable
+     * @param eventTimeValue      Timing Event Value
      */
-    public void trackTimings(String eventCategory, String eventTimingName, String eventTimingLabel, Long timingValue) {
-        MapBuilder builder = MapBuilder.createTiming(eventCategory, timingValue, eventTimingName, eventTimingLabel);
+    public void trackTimings(String eventCategory, Long eventTimeValue, String eventName, String eventLabel) {
+        MapBuilder builder = MapBuilder.createTiming(eventCategory, eventTimeValue, eventName, eventLabel);
         builder.set(USER_ID_TAG, analyticsId);
         builder.set(Fields.customDimension(CUSTOM_ID_INDEX), analyticsId);
         if (this.analyticsId != null) {
