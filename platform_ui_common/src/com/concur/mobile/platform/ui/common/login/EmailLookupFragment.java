@@ -1,7 +1,5 @@
 package com.concur.mobile.platform.ui.common.login;
 
-import java.util.Locale;
-
 import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.content.Context;
@@ -29,6 +27,8 @@ import com.concur.mobile.platform.ui.common.fragment.PlatformFragment;
 import com.concur.mobile.platform.ui.common.util.Const;
 import com.concur.mobile.platform.ui.common.util.FormUtil;
 
+import java.util.Locale;
+
 public class EmailLookupFragment extends PlatformFragment implements OnClickListener {
 
     /**
@@ -49,7 +49,7 @@ public class EmailLookupFragment extends PlatformFragment implements OnClickList
      * @author Chris N. Diaz
      */
     public interface EmailLookupCallbacks {
-        
+
         /**
          * "Format Issue" tracking/logging reason.
          */
@@ -59,7 +59,7 @@ public class EmailLookupFragment extends PlatformFragment implements OnClickList
          * "Offline" tracking/logging reason.
          */
         public final static String FAILURE_REASON_OFFLINE = "Offline";
-        
+
         /**
          * Invoked when the EmailLookup request has succeeded.
          * 
@@ -90,7 +90,7 @@ public class EmailLookupFragment extends PlatformFragment implements OnClickList
         
         /**
          * Invoked to log/track a failure during the EmailLookup request.
-         * 
+         *
          * @param failureType string indicating the reason for failing the Email Lookup.
          *  For example: <code>FAILURE_REASON_FORMAT</code> or <code>FAILURE_REASON_OFFLINE</code>.
          */
