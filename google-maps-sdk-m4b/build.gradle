@@ -1,0 +1,2 @@
+configurations.create("default")
+artifacts.add("default", file('google-maps-sdk-m4b.aar'))
