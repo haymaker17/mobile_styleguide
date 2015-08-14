@@ -19,8 +19,6 @@ import java.util.List;
  */
 public class TravelAllowanceConfigurationController extends BaseController {
 
-    public static final String CONTROLLER_TAG = TravelAllowanceConfigurationController.class.getName();
-
     private static final String CLASS_TAG = TravelAllowanceConfigurationController.class.getSimpleName();
 
     private BaseAsyncResultReceiver receiver;

@@ -61,6 +61,7 @@ import com.concur.mobile.core.expense.travelallowance.controller.IController;
 import com.concur.mobile.core.expense.travelallowance.controller.IControllerListener;
 import com.concur.mobile.core.expense.travelallowance.controller.TravelAllowanceItineraryController;
 import com.concur.mobile.core.expense.travelallowance.datamodel.Itinerary;
+import com.concur.mobile.core.expense.travelallowance.datamodel.TravelAllowanceConfiguration;
 import com.concur.mobile.core.expense.travelallowance.util.BundleId;
 import com.concur.mobile.core.service.ConcurService;
 import com.concur.mobile.core.util.Const;
@@ -269,7 +270,6 @@ public class
                 app.getTaItineraryController().refreshItineraries(expRep.reportKey, false);
             }
             app.getFixedTravelAllowanceController().refreshFixedTravelAllowances(expRep.reportKey);
-            app.getTAConfigController().refreshConfiguration();
 
 //          Register Listener for Itinerary data and make button visible
             this.itineraryController = app.getTaItineraryController();
@@ -1599,14 +1599,22 @@ public class
         view = findViewById(R.id.header_itinerary);
         view.setVisibility(View.VISIBLE);
         if (view != null) {
+            ConcurCore app = (ConcurCore) getApplication();
             // hide if we don't have the setting
             if (!ViewUtil.hasTravelAllowanceFixed(this)) {
                 view.setVisibility(View.GONE);
             } else if (reportKeySource == Const.EXTRA_EXPENSE_REPORT_SOURCE_APPROVAL) {
-                ConcurCore app = (ConcurCore) getApplication();
                 if (app.getTaItineraryController().getItineraryList() == null
                         || app.getTaItineraryController().getItineraryList().size() == 0) {
                     view.setVisibility(View.GONE);
+                }
+            } else {
+                if (app.getTAConfigController().getTravelAllowanceConfigurationList() != null) {
+                    TravelAllowanceConfiguration taConfig = app.getTAConfigController().getTravelAllowanceConfigurationList();
+                    if (!TravelAllowanceConfiguration.FIXED.equals(taConfig.getLodgingTat())
+                            && !TravelAllowanceConfiguration.FIXED.equals(taConfig.getMealsTat())) {
+                        view.setVisibility(View.GONE);
+                    }
                 }
             }
             view.setFocusable(true);

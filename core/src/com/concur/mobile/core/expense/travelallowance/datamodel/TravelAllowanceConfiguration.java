@@ -12,6 +12,8 @@ public class TravelAllowanceConfiguration implements Serializable{
 
     private static final long serialVersionUID = -8125890049086381735L;
 
+    public static final String FIXED = "FIXED";
+
     /**
      * Indicates, whether border cross time should be used or not
      */
