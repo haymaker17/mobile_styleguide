@@ -13,7 +13,10 @@ import com.concur.mobile.base.service.BaseAsyncResultReceiver;
 import com.concur.mobile.core.activity.Preferences;
 import com.concur.mobile.core.dialog.DialogFragmentFactory;
 import com.concur.mobile.core.service.ResetPassword;
+import com.concur.mobile.core.util.EventTracker;
+import com.concur.mobile.core.util.Flurry;
 
+@EventTracker.EventTrackerClassName(getClassName =Flurry.SCREEN_NAME_FORGOT_PASSWORD_RESET)
 public class PasswordSet extends BasePasswordSet {
 
     @Override

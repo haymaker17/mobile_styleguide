@@ -8,6 +8,7 @@ import android.net.Uri;
 import android.provider.BaseColumns;
 
 import com.concur.mobile.platform.config.provider.Config.UserColumns;
+import com.concur.platform.PlatformProperties;
 
 /**
  * This class provide a contract between the expense content provider and calling application code.
@@ -19,7 +20,7 @@ public class Expense {
     /**
      * The authority for the expense provider.
      */
-    public static final String AUTHORITY = "com.concur.mobile.platform.expense";
+    public static final String AUTHORITY = PlatformProperties.getExpenseProviderAuthority();
 
     /**
      * A content:// style uri to the authority for the expense provider
