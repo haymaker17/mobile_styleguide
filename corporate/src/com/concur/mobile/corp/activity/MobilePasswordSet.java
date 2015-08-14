@@ -6,7 +6,10 @@ import com.concur.breeze.R;
 import com.concur.mobile.base.service.BaseAsyncResultReceiver;
 import com.concur.mobile.core.dialog.DialogFragmentFactory;
 import com.concur.mobile.core.service.ResetMobilePassword;
+import com.concur.mobile.core.util.EventTracker;
+import com.concur.mobile.core.util.Flurry;
 
+@EventTracker.EventTrackerClassName(getClassName =Flurry.SCREEN_NAME_FORGOT_PIN_RESET)
 public class MobilePasswordSet extends BasePasswordSet {
 
     // Done
