@@ -432,6 +432,13 @@ public class Flurry {
     public static final String LABEL_BAD_CREDENTIALS = "Bad Credentials";
     public static final String LABEL_OFFLINE = "Offline";
 
+    public static final String EVENT_CATEGORY_TRAVEL_HOTEL = "TRAVEL-HOTEL";
+    public static final String EVENT_ACTION_TRAVEL_DESTINATION_TAPPED = "Destination Tapped";
+    public static final String EVENT_ACTION_TRAVEL_SEARCH_INITIATED = "Search Initiated";
+    public static final String EVENT_LABEL_TRAVEL_SEARCH_CURRENT_LOCATION = "Current Location";
+    public static final String EVENT_LABEL_TRAVEL_SEARCH_OFFICE_LOCATION = "Office Location";
+    public static final String EVENT_LABEL_TRAVEL_SEARCH_OTHER = "Other";
+
     /**
      * Formats a Flurry event name based on a category and name.
      *
