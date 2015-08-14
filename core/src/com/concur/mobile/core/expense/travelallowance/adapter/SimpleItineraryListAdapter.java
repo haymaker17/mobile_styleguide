@@ -168,6 +168,7 @@ public class SimpleItineraryListAdapter extends RecyclerView.Adapter<SimpleItine
         String locationString = StringUtilities.EMPTY_STRING;
 
         boolean first = true;
+        int pos = 1;
         for (ItinerarySegment segment : segments) {
             if (segment.getArrivalLocation() != null
                     && !StringUtilities.isNullOrEmpty(segment.getArrivalLocation().getName())) {
@@ -178,6 +179,10 @@ public class SimpleItineraryListAdapter extends RecyclerView.Adapter<SimpleItine
                     locationString = locationString + "; " + segment.getArrivalLocation().getName();
                 }
             }
+            if (pos + 1 >= segments.size()) {
+                break;
+            }
+            pos++;
         }
         if (!StringUtilities.isNullOrEmpty(locationString)) {
             holder.tvSubtitle2.setVisibility(View.VISIBLE);

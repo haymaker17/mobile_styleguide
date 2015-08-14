@@ -8,6 +8,7 @@ import android.support.v4.app.Fragment;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.view.ContextMenu;
 import android.view.LayoutInflater;
 import android.view.MenuItem;
 import android.view.View;
@@ -54,6 +55,39 @@ public class SimpleTAItineraryListFragment extends Fragment implements SwipeRefr
     private TravelAllowanceItineraryController itineraryController;
 
     private RecyclerView recyclerView;
+
+    private class ContextMenuRecyclerView extends RecyclerView {
+        private RecyclerContextMenuInfo contextMenuInfo;
+
+        public ContextMenuRecyclerView() {
+            super(getActivity());
+        }
+
+        @Override
+        protected ContextMenu.ContextMenuInfo getContextMenuInfo() {
+            return contextMenuInfo;
+        }
+
+        @Override
+        public boolean showContextMenuForChild(View originalView) {
+            final int longPressPosition = getChildAdapterPosition(originalView);
+            if (longPressPosition >= 0) {
+                final long longPressId = getAdapter().getItemId(longPressPosition);
+                contextMenuInfo = new RecyclerContextMenuInfo(longPressPosition, longPressId);
+                return super.showContextMenuForChild(originalView);
+            }
+            return false;
+        }
+
+        public class RecyclerContextMenuInfo implements ContextMenu.ContextMenuInfo {
+            public RecyclerContextMenuInfo(int position, long id) {
+                this.position = position;
+                this.id = id;
+            }
+            final public int position;
+            final public long id;
+        }
+    }
 
     /**
      * {@inheritDoc}

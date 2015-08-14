@@ -235,7 +235,7 @@ public class ItineraryUpdateListAdapter extends ArrayAdapter<Object> {
     public boolean isEnabled(int position) {
         // TODO PK: This is set to true in order to enable context menu on list items. The delete feature is currently implemented
         // in the context menu.
-        return false;
+        return true;
     }
 
     private void renderMessageArea(final ItinerarySegment segment) {

@@ -77,6 +77,7 @@ public class ItineraryUpdateActivity extends BaseActivity implements IController
             CLASS_TAG + ".progress.dialog.fragment";
 
     private Itinerary itinerary;
+    private int taskChain;
     private String expenseReportKey;
     private TravelAllowanceItineraryController itinController;
     private FixedTravelAllowanceController allowanceController;
@@ -114,6 +115,7 @@ public class ItineraryUpdateActivity extends BaseActivity implements IController
         } else {
             Log.d(DebugUtils.LOG_TAG_TA, DebugUtils.buildLogText(CLASS_TAG, "onCreate", "Restoring itinerary Stage from itinController"));
             this.itinerary = this.itinController.getItineraryStage();
+            this.taskChain = savedInstanceState.getInt(BundleId.TASK_CHAIN, 0);
         }
 
         if (this.itinerary == null) {
@@ -340,6 +342,7 @@ public class ItineraryUpdateActivity extends BaseActivity implements IController
         }
     }
 
+
     private void addNewRow() {
         ItinerarySegment emptySegment = new ItinerarySegment();
         //Get current date/time
@@ -419,7 +422,8 @@ public class ItineraryUpdateActivity extends BaseActivity implements IController
     @Override
     protected void onSaveInstanceState(Bundle outState) {
         super.onSaveInstanceState(outState);
-        outState.putSerializable(BundleId.ITINERARY, this.itinerary);
+        //outState.putSerializable(BundleId.ITINERARY, this.itinerary);
+        outState.putInt(BundleId.TASK_CHAIN, this.taskChain);
     }
 
     private void renderDefaultValues() {
@@ -535,11 +539,21 @@ public class ItineraryUpdateActivity extends BaseActivity implements IController
     @Override
     public void onBackPressed() {
         itinController.resetMessages(itinerary);
+        if (itinController != null) {
+            Log.d(DebugUtils.LOG_TAG_TA, DebugUtils.buildLogText(CLASS_TAG, "onBackPressed", "Unregister myself as listener at TravelAllowanceItineraryController."));
+            itinController.unregisterListener(this);
+        }
+
+        if (allowanceController != null) {
+            Log.d(DebugUtils.LOG_TAG_TA, DebugUtils.buildLogText(CLASS_TAG, "onBackPressed", "Unregister myself as listener at FixedTravelAllowanceController."));
+            allowanceController.unregisterListener(this);
+        }
         super.onBackPressed();
     }
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
+        Log.d(DebugUtils.LOG_TAG_TA, DebugUtils.buildLogText(CLASS_TAG, "onOptionsItemSelected", "item = " + item));
         if (item.getItemId() == android.R.id.home) {
             onBackPressed();
             return true;
@@ -554,6 +568,7 @@ public class ItineraryUpdateActivity extends BaseActivity implements IController
                 this.itinerary.setName(etItinerary.getText().toString());
             }
             itinController.executeUpdate(this.itinerary);
+            taskChain = 1;
             return true;
         }
         return super.onOptionsItemSelected(item);
@@ -575,10 +590,12 @@ public class ItineraryUpdateActivity extends BaseActivity implements IController
             return true;
         }
         List<ItinerarySegment> periods = itinerary.getSegmentList();
-        if (!DateUtils.hasSubsequentDates(false, true, 2, periods)) //TODO: Border crossing
-        {
-            Toast.makeText(this, R.string.general_data_inconsistent, Toast.LENGTH_SHORT).show();
-            return true;
+        if (periods != null && periods.size() > 0) {
+            if (!DateUtils.hasSubsequentDates(false, true, 2, periods)) //TODO: Border crossing
+            {
+                Toast.makeText(this, R.string.general_data_inconsistent, Toast.LENGTH_SHORT).show();
+                return true;
+            }
         }
         return false;
     }
@@ -629,45 +646,46 @@ public class ItineraryUpdateActivity extends BaseActivity implements IController
 
     @Override
     public void actionFinished(IController controller, ControllerAction action, boolean isSuccess, Bundle result) {
+        Log.d(DebugUtils.LOG_TAG_TA, DebugUtils.buildLogText(CLASS_TAG, "actionFinished", "controller = " + controller.getClass().getSimpleName() +
+                ", action = " + action + ", isSuccess = " + isSuccess));
         if (action == ControllerAction.REFRESH) {
             if (controller instanceof TravelAllowanceItineraryController && result == null) {
                 // Result is null in case there is an automatic delete due to errors.
-                Log.d(DebugUtils.LOG_TAG_TA, DebugUtils.buildLogText(CLASS_TAG, "actionFinished",
-                        "Controller Action ignoring " + "Action " + action + ", result = " + result));
                 return;
             }
             if (controller instanceof FixedTravelAllowanceController) {
                 if (progressDialog != null) {
                     progressDialog.dismiss();
                 }
-                if (result != null) {
-                    List<FixedTravelAllowance> allowances = (List<FixedTravelAllowance>) result.getSerializable(BundleId.ALLOWANCE_LIST);
-                    if (allowanceController.executeUpdate(allowances, this.expenseReportKey)) {
-                        showProgressDialog(" "); //TODO: Add text Calculating Expenses
-                        this.onBackPressed(); //Leave the screen on success.
+                if (taskChain != 1) {
+                    Log.d(DebugUtils.LOG_TAG_TA, DebugUtils.buildLogText(CLASS_TAG, "actionFinished", "Got not needed notification... Ignoring"));
+                    return;
+                }
+                if (isSuccess) {
+                    Log.d(DebugUtils.LOG_TAG_TA, DebugUtils.buildLogText(CLASS_TAG, "actionFinished",
+                            "Allowances need to be updated in order to generate expenses"));
+                    if (result != null) {
+                        List<FixedTravelAllowance> allowances = (List<FixedTravelAllowance>) result.getSerializable(BundleId.ALLOWANCE_LIST);
+                        if (allowanceController.executeUpdate(allowances, this.expenseReportKey)) {
+                            showProgressDialog(" "); //TODO: Add text Calculating Expenses
+                        }
                     }
                 }
             }
         }
-
         if (action == ControllerAction.UPDATE) {
-            Log.d(DebugUtils.LOG_TAG_TA, DebugUtils.buildLogText(CLASS_TAG, "actionFinished",
-                    "Update Action callback finished with isSuccess: " + isSuccess));
             if (controller instanceof TravelAllowanceItineraryController) {
                 if (isSuccess) {
                     Itinerary createdItinerary = (Itinerary) result.getSerializable(BundleId.ITINERARY);
                     this.itinerary = createdItinerary;
-                    // Update, respectively the creation of itineraries will generate Fixed Travel Allowances.
-                    // We need to refresh the buffered Allowances as navigation back to the allowance overview
-                    // would show the old data.
                     ConcurCore app = (ConcurCore) getApplication();
                     allowanceController = app.getFixedTravelAllowanceController();
-                    allowanceController.refreshFixedTravelAllowances(this.expenseReportKey);
                     Toast.makeText(this, R.string.general_save_success, Toast.LENGTH_SHORT).show();
-                    // Follow up: Expense Entries needs to be refreshed later on as we have an successful save.
                     Intent resultIntent = new Intent();
                     resultIntent.putExtra(Const.EXTRA_EXPENSE_REFRESH_HEADER, true);
                     this.setResult(RESULT_OK, resultIntent);
+                    Log.d(DebugUtils.LOG_TAG_TA, DebugUtils.buildLogText(CLASS_TAG, "actionFinished",
+                            "Itinerary Update caused changes to Allowances. Need to refresh..."));
                     if (allowanceController.refreshFixedTravelAllowances(this.expenseReportKey)) {
                         showProgressDialog(" "); //TODO: Add text Calculating Allowances...
                     }
@@ -680,13 +698,15 @@ public class ItineraryUpdateActivity extends BaseActivity implements IController
                 if (progressDialog != null) {
                     progressDialog.dismiss();
                 }
+                if (isSuccess) {
+                    Log.d(DebugUtils.LOG_TAG_TA, DebugUtils.buildLogText(CLASS_TAG, "actionFinished",
+                            "Allowances have been saved successfully in order to generate expenses"));
+                    this.onBackPressed(); //Leave the screen on successfully process chain.
+                }
             }
         }
-
         if (action == ControllerAction.DELETE) {
             if (controller instanceof TravelAllowanceItineraryController) {
-                Log.d(DebugUtils.LOG_TAG_TA, DebugUtils.buildLogText(CLASS_TAG, "anctionFinished",
-                        "Delete Action callback finished with isSuccess: " + isSuccess));
                 if (isSuccess) {
                     if (result != null) {//We get null for auto delete
                         ItinerarySegment deletedSegment = (ItinerarySegment) result.getSerializable(BundleId.SEGMENT);

@@ -997,7 +997,7 @@
     </style>
 
     <style name="TAListRowDivider">
-        <item name="android:background">#dbe1e6</item>
+        <item name="android:background">#a7b6bf</item>
         <item name="android:layout_height">1dp</item>
         <item name="android:layout_marginLeft">16dp</item>
     </style>

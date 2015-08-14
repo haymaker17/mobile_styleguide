@@ -9,6 +9,7 @@ import com.concur.mobile.core.expense.travelallowance.datamodel.ItinerarySegment
 public final class BundleId {
 
     public static final String ITINERARY = Itinerary.class.getName();
+    public static final String TASK_CHAIN = "taskchain";
     public static final String ITINERARY_LIST = "travelallowance.itinerary.list";
     public static final String ALLOWANCE_LIST = "travelallowance.allowance.list";
     public static final String SEGMENT = ItinerarySegment.class.getName();

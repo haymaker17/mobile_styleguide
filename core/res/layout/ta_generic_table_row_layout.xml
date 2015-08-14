@@ -100,7 +100,7 @@
         android:id="@+id/v_divider_bottom"
         android:layout_width="match_parent"
         android:layout_height="1dp"
-        android:background="#dbe1e6"
+        android:background="#a7b6bf"
         android:visibility="gone"
         android:layout_below="@+id/list_field_container"/>
 

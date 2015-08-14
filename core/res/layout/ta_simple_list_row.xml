@@ -28,6 +28,7 @@
         layout="@layout/ta_group_separator"
         android:layout_width="match_parent"
         android:layout_height="1dp"
+        android:layout_marginLeft="16dp"
         android:layout_alignLeft="@+id/v_content"
         android:layout_below="@+id/v_content" />
 

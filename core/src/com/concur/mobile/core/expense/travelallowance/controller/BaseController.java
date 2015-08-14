@@ -38,5 +38,11 @@ public class BaseController implements IController {
         }
     }
 
+    public synchronized boolean isListenerRegistered(IControllerListener listener) {
+        if (listenerList != null && listenerList.size() > 0) {
+            return listenerList.contains(listener);
+        }
+        return false;
+    }
 
 }

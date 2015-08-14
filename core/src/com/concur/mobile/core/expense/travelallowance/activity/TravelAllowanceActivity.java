@@ -7,6 +7,7 @@ import android.support.v4.app.Fragment;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
+import android.util.Log;
 import android.view.MenuItem;
 
 import com.concur.core.R;
@@ -24,6 +25,7 @@ import com.concur.mobile.core.expense.travelallowance.fragment.IFragmentCallback
 import com.concur.mobile.core.expense.travelallowance.fragment.SimpleTAItineraryListFragment;
 import com.concur.mobile.core.expense.travelallowance.fragment.TravelAllowanceItineraryListFragment;
 import com.concur.mobile.core.expense.travelallowance.util.BundleId;
+import com.concur.mobile.core.expense.travelallowance.util.DebugUtils;
 import com.concur.mobile.core.expense.travelallowance.util.StringUtilities;
 import com.concur.mobile.core.util.Const;
 
@@ -86,10 +88,9 @@ public class TravelAllowanceActivity extends AppCompatActivity
         ConcurCore app = (ConcurCore) getApplication();
 
         this.itineraryController = app.getTaItineraryController();
-        this.itineraryController.registerListener(this);
-
         this.allowanceController = app.getFixedTravelAllowanceController();
-        this.allowanceController.registerListener(this);
+
+        registerControllerActionListener();
 
         if (getIntent().hasExtra(BundleId.EXPENSE_REPORT_KEY)) {
             expenseReportKey = getIntent().getStringExtra(BundleId.EXPENSE_REPORT_KEY);
@@ -178,16 +179,43 @@ public class TravelAllowanceActivity extends AppCompatActivity
             bundle.putSerializable(BundleId.ITINERARY_LIST, arrayList);
             simpleTaListFrag.onRefreshFinished(bundle);
         }
+        FixedTravelAllowanceListFragment fixedTaListFrag = getFixedTravelAllowanceListFragment();
+        if (fixedTaListFrag != null) {
+            fixedTaListFrag.onRefreshFinished();
+        }
+    }
+
+    @Override
+    protected void onStart() {
+        super.onStart();
+        registerControllerActionListener();
+    }
+
+    @Override
+    protected void onStop() {
+        super.onStop();
+        unregisterControllerActionListener();
     }
 
     @Override
     protected void onDestroy() {
         super.onDestroy();
+        unregisterControllerActionListener();
+    }
 
+    private void registerControllerActionListener() {
+        if (itineraryController != null) {
+            this.itineraryController.registerListener(this);
+        }
+        if (this.allowanceController != null) {
+            this.allowanceController.registerListener(this);
+        }
+    }
+
+    private void unregisterControllerActionListener() {
         if (itineraryController != null) {
             this.itineraryController.unregisterListener(this);
         }
-
         if (this.allowanceController != null) {
             this.allowanceController.unregisterListener(this);
         }
@@ -195,6 +223,7 @@ public class TravelAllowanceActivity extends AppCompatActivity
 
     @Override
     public void sendMessage(String message) {
+        Log.d(DebugUtils.LOG_TAG_TA, DebugUtils.buildLogText(CLASS_TAG, "sendMessage", "message = " + message));
         if (message.equals(TravelAllowanceItineraryListFragment.ON_REFRESH_MSG)) {
             this.itineraryController.refreshItineraries(expenseReportKey, true);
         }
@@ -239,6 +268,19 @@ public class TravelAllowanceActivity extends AppCompatActivity
         for (Fragment fragment : fragments) {
             if (fragment instanceof SimpleTAItineraryListFragment) {
                 return (SimpleTAItineraryListFragment) fragment;
+            }
+        }
+        return null;
+    }
+
+    public FixedTravelAllowanceListFragment getFixedTravelAllowanceListFragment() {
+        List<Fragment> fragments = getSupportFragmentManager().getFragments();
+        if (fragments == null) {
+            return null;
+        }
+        for (Fragment fragment : fragments) {
+            if (fragment instanceof FixedTravelAllowanceListFragment) {
+                return (FixedTravelAllowanceListFragment) fragment;
             }
         }
         return null;
