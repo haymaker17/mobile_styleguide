@@ -4,7 +4,8 @@
 <h1>Text Fields</h1>
 	<div class="flexContainer half">
 		<div>
-			<p>A text field enables the user to enter a single line of text into a field area. Text fields can be alphanumeric or numeric.</p>
+			<p>Touching a text field places the cursor and automatically displays the keyboard. In addition to typing, text fields allow for a variety of other tasks, such as text selection (cut, copy, paste) and data lookup via auto-completion.</p>
+			<p>When a text field is empty, the label or title of the text field is displayed centered in the field. Once the field is selected, the label shrinks and moves up to allow space for the entered text. This is all done in-line, staying on the current screen.</p>
 		</div>
 
 		<div>
@@ -71,6 +72,30 @@
 <h3>Specs</h3>
 	<div class="flexContainer half">
 		<div>
+			<p>
+				Font, Color, and Usage:
+				<ul>
+					<li>'Active' Title: Helvetica Regular, 14 points, Dark Grey #0078C8</li>
+					<li>'Active' Value: Helvetica Regular, 16 points, Concur Blue #0078C8</li>						
+				</ul>
+			</p>
+		</div>
+		<div>
+			<figure class="diagram">
+				<img class="redlines_on" src="img/ios/components/controls/text_fields/redlines_text_fields_03_on.png" alt="'Active' Text Fields" width="338" height="599"/>
+				<img class="redlines_off" src="img/ios/components/controls/text_fields/redlines_text_fields_03_off.png" alt="'Active' Text Fields" width="338" height="599"/>
+				<div class="figure_text">Redlines with 'Active' Text Fields</div>
+			</figure>
+		</div>
+	</div>
+</section>
+
+<section>
+<h2>'Error' Text Field</h2>		
+	<div class="flexContainer half">
+		<div>
+			<p>Required fields are pre-filled in with "*Field name* is required" and is colored light gray. When the user taps on the field, the field is cleared out automatically so the user doesn't have to clear it manually. If a form is submitted and a required field is not filled out, the user is presented with an overlay stating such. In addition, the required fields are indicated in red and the page is automatically scrolled to the first unfilled required field.</p>
+			<h3>Specs</h3>
 			<p>
 				Font, Color, and Usage:
 				<ul>
