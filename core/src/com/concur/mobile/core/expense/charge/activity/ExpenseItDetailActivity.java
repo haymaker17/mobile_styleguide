@@ -10,11 +10,13 @@ import android.graphics.BitmapFactory;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.os.Handler;
+import android.support.v4.app.DialogFragment;
 import android.support.v4.app.FragmentActivity;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
+import android.widget.Toast;
 
 import com.concur.core.R;
 import com.concur.mobile.base.service.BaseAsyncRequestTask;
@@ -22,6 +24,7 @@ import com.concur.mobile.base.service.BaseAsyncResultReceiver;
 import com.concur.mobile.core.ConcurCore;
 import com.concur.mobile.core.activity.BaseActivity;
 import com.concur.mobile.core.activity.ReceiptView;
+import com.concur.mobile.core.dialog.ReceiptChoiceDialogFragment;
 import com.concur.mobile.core.expense.charge.data.Expense;
 import com.concur.mobile.core.expense.data.IExpenseEntryCache;
 import com.concur.mobile.core.expense.fragment.ExpenseItDetailActivityFragment;
@@ -47,7 +50,8 @@ import java.net.URL;
 /**
  * @author Elliott Jacobsen-Watts
  */
-public class ExpenseItDetailActivity extends BaseActivity implements ExpenseItDetailActivityFragment.ExpenseItDetailsViewReceiptCallback {
+public class ExpenseItDetailActivity extends BaseActivity
+        implements ExpenseItDetailActivityFragment.ExpenseItDetailsViewReceiptCallback, ReceiptChoiceDialogFragment.ReceiptChoiceListener {
 
     public static final String CLS_TAG = ExpenseItDetailActivity.class.getSimpleName();
 
@@ -221,7 +225,8 @@ public class ExpenseItDetailActivity extends BaseActivity implements ExpenseItDe
                 Const.RECEIPT_COMPRESS_BITMAP_QUALITY, localImageFilePath);
     }
 
-    private void uploadReceiptToConcur() {
+
+    private void uploadReceiptImageToReceiptStore() {
         if (receiptImage != null) {
 
             boolean writtenToFile = saveReceiptImageToLocalStorage();
@@ -235,17 +240,17 @@ public class ExpenseItDetailActivity extends BaseActivity implements ExpenseItDe
                 if (request != null) {
                     mSaveExpenseItReceiptReceiver.setServiceRequest(mSaveReceiptRequestTask);
                 } else {
-                    Log.e(Const.LOG_TAG, CLS_TAG + ".uploadReceiptToConcur: unable to create new request for mSaveReceiptRequestTask!");
+                    Log.e(Const.LOG_TAG, CLS_TAG + ".uploadReceiptImageToReceiptStore: unable to create new request for mSaveReceiptRequestTask!");
                     hideCancelProgressDialog();
                     unregisterSaveExpenseItReceiptReceiver();
                 }
             } else {
-                Log.e(Const.LOG_TAG, CLS_TAG + ".uploadReceiptToConcur: receiptImage could not be written to file!");
+                Log.e(Const.LOG_TAG, CLS_TAG + ".uploadReceiptImageToReceiptStore: receiptImage could not be written to file!");
                 hideCancelProgressDialog();
                 showUnexpectedErrorDialog();
             }
         } else {
-            Log.e(Const.LOG_TAG, CLS_TAG + ".uploadReceiptToConcur: receiptImage is null!");
+            Log.e(Const.LOG_TAG, CLS_TAG + ".uploadReceiptImageToReceiptStore: receiptImage is null!");
             hideCancelProgressDialog();
             showUnexpectedErrorDialog();
         }
@@ -368,6 +373,9 @@ public class ExpenseItDetailActivity extends BaseActivity implements ExpenseItDe
 
         if (id == R.id.cancel_expenseit_receipt) {
             showExpenseItCancelConfirmationPrompt();
+        } else if (id == R.id.replace_expenseit_receipt) {
+            DialogFragment receiptChoiceDialog = new ReceiptChoiceDialogFragment();
+            receiptChoiceDialog.show(this.getSupportFragmentManager(), ReceiptChoiceDialogFragment.DIALOG_FRAGMENT_ID);
         }
 
         return true;
@@ -575,7 +583,7 @@ public class ExpenseItDetailActivity extends BaseActivity implements ExpenseItDe
             // If there was no error with deletion...
             if (errorCode == ErrorResponse.ERROR_CODE_NO_ERROR) {
                 Log.d(Const.LOG_TAG, CLS_TAG + ".onDeleteRequestSuccess called! Creating a new expense.");
-                uploadReceiptToConcur();
+                uploadReceiptImageToReceiptStore();
             } else {
                 Log.d(Const.LOG_TAG, CLS_TAG + ".onDeleteRequestSuccess called with error. The error code was " + errorCode);
                 hideCancelProgressDialog();
@@ -656,6 +664,55 @@ public class ExpenseItDetailActivity extends BaseActivity implements ExpenseItDe
         expEntCache.setShouldFetchExpenseList();
         this.setResult(Activity.RESULT_OK);
         this.finish();
+    }
+
+    @Override
+    public void onCameraSuccess(String filePath) {
+        if (filePath != null && filePath.length() > 0) {
+            Toast.makeText(this, "camera success", Toast.LENGTH_SHORT).show();
+
+            // get the file's location.
+            localImageFilePath = filePath;
+            // upload the receipt image to ExpenseIt.
+
+            // delete the existing expenseit item.
+
+            // end activity, take user back to expense list, refresh expense list.
+
+        } else {
+            showUnexpectedErrorDialog();
+        }
+    }
+
+    @Override
+    public void onCameraFailure(String filePath) {
+        String title = getString(R.string.dlg_expense_camera_image_import_failed_title);
+        String message = getString(R.string.dlg_expense_camera_image_import_failed_message);
+        DialogFragmentFactory.getAlertOkayInstance(title, message)
+                .show(getSupportFragmentManager(), null);
+    }
+
+    @Override
+    public void onGallerySuccess(String filePath) {
+        if (filePath != null && filePath.length() > 0) {
+            Toast.makeText(this, "gallery success", Toast.LENGTH_SHORT).show();
+        } else {
+            showUnexpectedErrorDialog();
+        }
+    }
+
+    @Override
+    public void onGalleryFailure(String filePath) {
+        String title = getString(R.string.dlg_expense_camera_image_import_failed_title);
+        String message = getString(R.string.dlg_expense_camera_image_import_failed_message);
+        DialogFragmentFactory.getAlertOkayInstance(title, message);
+    }
+
+    @Override
+    public void onStorageMountFailure(String filePath) {
+        String title = getString(R.string.dlg_expense_no_external_storage_available_title);
+        String message = getString(R.string.dlg_expense_no_external_storage_available_message);
+        DialogFragmentFactory.getAlertOkayInstance(title, message);
     }
 
     static class SaveExpenseItReceiver extends BaseBroadcastReceiver<ExpenseItDetailActivity, SaveReceiptRequest> {

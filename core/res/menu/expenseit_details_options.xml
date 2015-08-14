@@ -4,6 +4,10 @@
 
     <item android:id="@+id/cancel_expenseit_receipt"
           android:title="@string/expenseit_stop_processing_button"
-          yourapp:showAsAction="ifRoom"/>
+          yourapp:showAsAction="never"/>
+
+    <item android:id="@+id/replace_expenseit_receipt"
+          android:title="@string/expenseit_replace_receipt_button"
+          yourapp:showAsAction="never"/>
 
 </menu>
