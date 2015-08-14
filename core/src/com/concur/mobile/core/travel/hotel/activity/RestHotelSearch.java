@@ -28,9 +28,7 @@ import com.concur.mobile.core.data.UserConfig;
 import com.concur.mobile.core.travel.activity.LocationSearchV1;
 import com.concur.mobile.core.travel.data.CompanyLocation;
 import com.concur.mobile.core.travel.data.LocationChoice;
-import com.concur.mobile.core.util.BookingDateUtil;
-import com.concur.mobile.core.util.FormatUtil;
-import com.concur.mobile.core.util.UserAndSessionInfoUtil;
+import com.concur.mobile.core.util.*;
 import com.concur.mobile.platform.authentication.EmailLookUpRequestTask;
 import com.concur.mobile.platform.service.MWSPlatformManager;
 import com.concur.mobile.platform.service.PlatformAsyncTaskLoader;
@@ -59,6 +57,7 @@ import java.util.TimeZone;
  *
  * @author Tejoa
  */
+@EventTracker.EventTrackerClassName(getClassName = "Travel-Hotel-Search-Criteria")
 public class RestHotelSearch extends TravelBaseActivity
         implements LoaderManager.LoaderCallbacks<TravelCustomFieldsConfig>,
         TravelCustomFieldsFragment.TravelCustomFieldsFragmentCallBackListener {
@@ -817,6 +816,17 @@ public class RestHotelSearch extends TravelBaseActivity
             intent.putExtra("customTravelText", customTravelText);
         }
         intent.putExtra("searchNearMe", searchNearMe);
+
+        String eventLabelSearchLocation = Flurry.EVENT_LABEL_TRAVEL_SEARCH_OTHER;
+        if(searchNearMe) {
+            eventLabelSearchLocation = Flurry.EVENT_LABEL_TRAVEL_SEARCH_CURRENT_LOCATION;
+        } else if(currentLocation instanceof CompanyLocation) {
+            eventLabelSearchLocation = Flurry.EVENT_LABEL_TRAVEL_SEARCH_OFFICE_LOCATION;
+        }
+
+        Log.d(Const.LOG_TAG, CLS_TAG + "*********************** EventTracker - " + Flurry.EVENT_CATEGORY_TRAVEL_HOTEL + " - " + Flurry.EVENT_ACTION_TRAVEL_SEARCH_INITIATED + " - " + eventLabelSearchLocation);
+        EventTracker.INSTANCE.eventTrack(Flurry.EVENT_CATEGORY_TRAVEL_HOTEL, Flurry.EVENT_ACTION_TRAVEL_SEARCH_INITIATED,
+                eventLabelSearchLocation);
 
         startActivityForResult(intent, Const.REQUEST_CODE_BOOK_HOTEL);
     }
