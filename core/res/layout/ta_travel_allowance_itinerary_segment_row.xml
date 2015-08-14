@@ -67,7 +67,7 @@
                 android:id="@+id/date_separator_line"
                 android:layout_width="1dp"
                 android:layout_height="15dp"
-                android:background="#dbe1e6"
+                android:background="#a7b6bf"
                 />
 
             <TextView
@@ -84,7 +84,8 @@
 
         <View
             android:layout_width="1dp"
-            android:layout_height="24dp"
+            android:layout_height="1dp"
+            android:background="#a7b6bf"
             />
 
         <LinearLayout
@@ -119,23 +120,34 @@
        android:layout_below="@id/segment_location"
        android:layout_marginTop="16dp"
        android:layout_marginLeft="72dp"
-       android:background="#dbe1e6" />
+       android:background="#a7b6bf" />
 
         <View
             android:id="@+id/header_separator_line"
             android:layout_width="fill_parent"
             android:layout_height="1dp"
             android:layout_marginLeft="16dp"
-            android:background="#dbe1e6" />
-    
+            android:background="#a7b6bf" />
 
-   <include
+
+
+        <View
+            android:id="@+id/itinerary_separator_line"
+            android:layout_width="fill_parent"
+            android:layout_height="1dp"
+            android:layout_marginTop="16dp"
+            android:layout_below="@id/segment_location"
+            android:background="#a7b6bf" />
+
+        <!--
+        <include
             android:id="@+id/itinerary_separator_line"
             layout="@layout/ta_divider_bold"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_below="@id/segment_location"
             android:layout_marginTop="16dp" />
+            -->
 
      
      </RelativeLayout>
