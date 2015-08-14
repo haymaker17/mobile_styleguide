@@ -55,6 +55,7 @@ public class TravelAllowanceItineraryListAdapter extends ArrayAdapter<Object> {
 		public TextView location;
 		public TextView fromDateTime;
 		public TextView toDateTime;
+		public View borderCrossing;
 		public View borderCrossingLabel;
 		public TextView borderCrossingDateTime;
 		public View segmentDivider;
@@ -88,6 +89,7 @@ public class TravelAllowanceItineraryListAdapter extends ArrayAdapter<Object> {
 
 	private Context ctx;
 
+	private boolean bcHidden;
 
     /**
      * Creates a list adapter for the travel allowance itinerary list.
@@ -98,9 +100,10 @@ public class TravelAllowanceItineraryListAdapter extends ArrayAdapter<Object> {
      *            The list of {@code CompactItinerary}s which results from a transformation of the data model. {@see
      *            TravelAllowanceItineraryController}
      */
-	public TravelAllowanceItineraryListAdapter(Context ctx, List<CompactItinerary> itineraryList) {
+	public TravelAllowanceItineraryListAdapter(Context ctx, List<CompactItinerary> itineraryList, boolean hideBC) {
 		super(ctx, 0);
 		this.ctx = ctx;
+		this.bcHidden = hideBC;
 		addAll(createFlatList(itineraryList));
 	}
 
@@ -187,6 +190,7 @@ public class TravelAllowanceItineraryListAdapter extends ArrayAdapter<Object> {
             holder.location = (TextView) view.findViewById(R.id.tv_location);
             holder.fromDateTime = (TextView) view.findViewById(R.id.tv_from_date_time);
             holder.toDateTime = (TextView) view.findViewById(R.id.tv_to_date_time);
+			holder.borderCrossing = view.findViewById(R.id.v_border_crossing);
 			holder.borderCrossingLabel = view.findViewById(R.id.tv_border_crossing_label);
             holder.borderCrossingDateTime = (TextView) view.findViewById(R.id.tv_border_crossing_date_time);
             holder.segmentDivider = view.findViewById(R.id.segment_separator_line);
@@ -222,14 +226,23 @@ public class TravelAllowanceItineraryListAdapter extends ArrayAdapter<Object> {
 			}
 		}
 
-        if (segment.getBorderCrossingDateTime() != null) {
-			holder.borderCrossingLabel.setVisibility(View.VISIBLE);
-            holder.borderCrossingDateTime.setVisibility(View.VISIBLE);
-			holder.borderCrossingDateTime.setText(formatDate(segment.getBorderCrossingDateTime(), false));
-        } else {
-			holder.borderCrossingLabel.setVisibility(View.GONE);
-            holder.borderCrossingDateTime.setVisibility(View.GONE);
-        }
+		if (bcHidden) {
+			if (holder.borderCrossing != null) {
+				holder.borderCrossing.setVisibility(View.GONE);
+			}
+		} else {
+			if (holder.borderCrossing != null) {
+				holder.borderCrossing.setVisibility(View.VISIBLE);
+			}
+			if (segment.getBorderCrossingDateTime() != null) {
+				holder.borderCrossingLabel.setVisibility(View.VISIBLE);
+				holder.borderCrossingDateTime.setVisibility(View.VISIBLE);
+				holder.borderCrossingDateTime.setText(formatDate(segment.getBorderCrossingDateTime(), false));
+			} else {
+				holder.borderCrossingLabel.setVisibility(View.GONE);
+				holder.borderCrossingDateTime.setVisibility(View.GONE);
+			}
+		}
 
 		// Separator line handling
         if (position + 1 == getCount()) {
@@ -302,4 +315,8 @@ public class TravelAllowanceItineraryListAdapter extends ArrayAdapter<Object> {
         }
 
     }
+
+	public void setBorderCrossingHidden(boolean hidden) {
+		this.bcHidden = hidden;
+	}
 }

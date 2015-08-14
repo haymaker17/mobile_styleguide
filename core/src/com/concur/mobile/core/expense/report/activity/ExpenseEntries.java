@@ -269,6 +269,7 @@ public class
                 app.getTaItineraryController().refreshItineraries(expRep.reportKey, false);
             }
             app.getFixedTravelAllowanceController().refreshFixedTravelAllowances(expRep.reportKey);
+            app.getTAConfigController().refreshConfiguration();
 
 //          Register Listener for Itinerary data and make button visible
             this.itineraryController = app.getTaItineraryController();

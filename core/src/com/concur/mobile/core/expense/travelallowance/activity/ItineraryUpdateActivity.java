@@ -690,6 +690,7 @@ public class ItineraryUpdateActivity extends BaseActivity implements IController
                         showProgressDialog(" "); //TODO: Add text Calculating Allowances...
                     }
                 } else {
+                    taskChain = 0; //Important due to auto delete and error situations. -> Abort chain.
                     Toast.makeText(this, R.string.general_save_fail, Toast.LENGTH_SHORT).show();
                 }
                 refreshAdapter();

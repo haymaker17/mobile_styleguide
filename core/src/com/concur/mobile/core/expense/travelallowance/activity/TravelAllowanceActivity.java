@@ -137,8 +137,8 @@ public class TravelAllowanceActivity extends AppCompatActivity
                 getString(R.string.ta_adjustments), FixedTravelAllowanceListFragment.class, null);
         list.add(adjustmentFrag);
 
-        if (getIntent().getExtras().getBoolean(BundleId.IS_EDIT_MODE)
-                && !getIntent().getBooleanExtra(BundleId.EXPENSE_REPORT_IS_SUBMITTED, false)) {
+        boolean isTraveller = getIntent().getExtras().getBoolean(BundleId.IS_EDIT_MODE, true);
+        if (isTraveller && !getIntent().getBooleanExtra(BundleId.EXPENSE_REPORT_IS_SUBMITTED, false)) {
             Bundle arguments = new Bundle();
             ArrayList<Itinerary> itinList = new ArrayList<>(itineraryController.getItineraryList());
             arguments.putSerializable(BundleId.ITINERARY_LIST, itinList);
@@ -150,8 +150,10 @@ public class TravelAllowanceActivity extends AppCompatActivity
                     getString(R.string.itin_itineraries), SimpleTAItineraryListFragment.class, arguments);
             list.add(itinFrag);
         } else {
+            Bundle arguments = new Bundle();
+            arguments.putBoolean(BundleId.IS_EDIT_MODE, isTraveller);
             ViewPagerAdapter.ViewPagerItem itinFrag = new ViewPagerAdapter.ViewPagerItem(
-                    getString(R.string.itin_itineraries), TravelAllowanceItineraryListFragment.class, null);
+                    getString(R.string.itin_itineraries), TravelAllowanceItineraryListFragment.class, arguments);
             list.add(itinFrag);
         }
         return list;

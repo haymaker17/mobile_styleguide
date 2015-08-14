@@ -11,8 +11,10 @@ import android.widget.ListAdapter;
 
 import com.concur.core.R;
 import com.concur.mobile.core.ConcurCore;
+import com.concur.mobile.core.expense.travelallowance.controller.TravelAllowanceConfigurationController;
 import com.concur.mobile.core.expense.travelallowance.controller.TravelAllowanceItineraryController;
 import com.concur.mobile.core.expense.travelallowance.ui.model.CompactItinerary;
+import com.concur.mobile.core.expense.travelallowance.util.BundleId;
 import com.concur.mobile.core.util.Const;
 
 import java.util.List;
@@ -28,25 +30,35 @@ public class TravelAllowanceItineraryListFragment extends ListFragment implement
 
 	private IFragmentCallback callback;
 
-	ListAdapter adapter;
+	private boolean hideBC;
+	private ListAdapter adapter;
 
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 
-		Bundle bundle = getArguments();
-		if (bundle != null && bundle.containsKey(Const.EXTRA_EXPENSE_REPORT_KEY)) {
-			expenseReportKey = bundle.getString(Const.EXTRA_EXPENSE_REPORT_KEY);
-		}
-
 		ConcurCore app = (ConcurCore) getActivity().getApplication();
 		TravelAllowanceItineraryController controller = app.getTaItineraryController();
 
+		Bundle bundle = getArguments();
+		if (bundle != null) {
+			if (bundle.containsKey(Const.EXTRA_EXPENSE_REPORT_KEY)){
+				expenseReportKey = bundle.getString(Const.EXTRA_EXPENSE_REPORT_KEY);
+			}
+			if (bundle.getBoolean(BundleId.IS_EDIT_MODE, false)) {//Traveller
+				if (app.getTAConfigController().getTravelAllowanceConfigurationList() != null
+						&& !app.getTAConfigController().getTravelAllowanceConfigurationList().isUseBorderCrossTime()) {
+					hideBC = true;
+				}
+			}
+		}
+
 		List<CompactItinerary> compactItinList = controller.getCompactItineraryList();
 
-		adapter = new TravelAllowanceItineraryListAdapter(getActivity(), compactItinList);
+		adapter = new TravelAllowanceItineraryListAdapter(getActivity(), compactItinList, hideBC);
 
 		setListAdapter(adapter);
+
 	}
 
 	@Override
@@ -97,7 +109,7 @@ public class TravelAllowanceItineraryListFragment extends ListFragment implement
 		ConcurCore app = (ConcurCore) getActivity().getApplication();
 		TravelAllowanceItineraryController controller = app.getTaItineraryController();
 
-		adapter =  new TravelAllowanceItineraryListAdapter(getActivity(), controller.getCompactItineraryList());
+		adapter =  new TravelAllowanceItineraryListAdapter(getActivity(), controller.getCompactItineraryList(), hideBC);
 		setListAdapter(adapter);
 	}
 }

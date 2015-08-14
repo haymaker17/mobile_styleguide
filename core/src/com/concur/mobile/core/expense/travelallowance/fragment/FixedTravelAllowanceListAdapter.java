@@ -306,13 +306,9 @@ public class FixedTravelAllowanceListAdapter extends ArrayAdapter<Object> {
                 holder.tvValue.setText(this.context.getString(R.string.ta_excluded));
             }
         } else {
-            if (allowance.getOvernightIndicator()) {
-                renderOvernight(allowance);
-            } else {
-                renderSubtitleEllipsized(allowance);
-            }
-            renderAmount(holder.tvValue, allowance.getAmount(), allowance.getCurrencyCode());
+            renderSubtitleEllipsized(allowance);
         }
+        renderAmount(holder.tvValue, allowance.getAmount(), allowance.getCurrencyCode());
     }
 
     /**
@@ -350,6 +346,15 @@ public class FixedTravelAllowanceListAdapter extends ArrayAdapter<Object> {
             return;
         }
         String provisionText = allowanceController.mealsProvisionToText(allowance, 3);
+        if (StringUtilities.isNullOrEmpty(provisionText)) {
+            if (allowance.getOvernightIndicator()) {
+                provisionText = context.getString(R.string.ta_overnight);
+            }
+        } else {
+            if (allowance.getOvernightIndicator()) {
+                provisionText = provisionText + "; " + context.getString(R.string.ta_overnight);
+            }
+        }
         holder.tvSubtitleEllipsized.setText(provisionText);
         holder.vgSubtitleEllipsized.setVisibility(View.VISIBLE);
         holder.tvSubtitleMore.setVisibility(View.INVISIBLE);
