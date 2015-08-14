@@ -10,6 +10,7 @@ import android.content.res.Configuration;
 import android.graphics.Rect;
 import android.graphics.drawable.Drawable;
 import android.net.Uri;
+import android.os.Build;
 import android.os.IBinder;
 import android.preference.PreferenceManager;
 import android.provider.Browser;
@@ -604,4 +605,16 @@ public class ViewUtil {
             }
         });
     }
+
+    public static boolean isEmulator() {
+        boolean retVal = false;
+        String product  = Build.PRODUCT;
+        if (product.matches(".*_?sdk_?.*")) {
+            retVal = true;
+        } else {
+            retVal = false;
+        }
+        return retVal;
+    }
+
 }

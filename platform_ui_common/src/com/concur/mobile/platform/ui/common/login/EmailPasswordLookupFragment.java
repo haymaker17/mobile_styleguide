@@ -330,16 +330,19 @@ public class EmailPasswordLookupFragment extends PlatformFragment implements OnC
     private void setDoubleFingerTap(View root){
         ImageView concur_logo = (ImageView) root.findViewById(com.concur.mobile.platform.ui.common.R.id.concurlogo);
 
-        concur_logo.setOnLongClickListener(new View.OnLongClickListener() {
+        if(ViewUtil.isEmulator()){
+            concur_logo.setOnLongClickListener(new View.OnLongClickListener() {
 
-            @Override
-            public boolean onLongClick(View v) {
-                emailLookupCallbacks.openSettings();
-                return true;
-            }
-        });
+                @Override
+                public boolean onLongClick(View v) {
+                    emailLookupCallbacks.openSettings();
+                    return true;
+                }
+            });
+        }else{
+            emailLookupCallbacks.setOnTouchListenerForView(concur_logo);
+        }
 
-        emailLookupCallbacks.setOnTouchListenerForView(concur_logo);
     }
 
     private void setSSOLogin(View root){
