@@ -1,0 +1,199 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/itinerary_create"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="#ffffff"
+    android:orientation="vertical" >
+
+    <android.support.v7.widget.Toolbar
+        android:id="@+id/toolbar"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="#0078c8"/>
+
+
+    <include
+        android:id="@+id/itinerary_name"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        layout="@layout/edit_text_form_field" />
+
+
+    <LinearLayout
+            android:id="@+id/departure_container"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="@dimen/list_item_horizontal_margin"
+            android:layout_marginRight="@dimen/list_item_horizontal_margin"
+            android:layout_marginTop="@dimen/list_group_vertical_margin"
+            android:orientation="vertical" >
+
+
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:padding="1dp" >
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:textAppearance="?android:attr/textAppearanceLarge"
+                    android:text="\@Departure\@"
+                    android:background="@drawable/gradient_background"
+                    android:id="@+id/tv_departure_header" />
+
+                <include
+                    android:id="@+id/departure_location"
+                    android:layout_width="match_parent"
+                    android:layout_height="0dp"
+                    android:layout_weight=".105"
+                    layout="@layout/v1_image_list_field" />
+
+                <include layout="@layout/group_separator_v1" />
+
+                <!-- Check-in/out Group -->
+
+                <LinearLayout
+                    android:id="@+id/departure_date_container"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginRight="6dp"
+                    android:layout_marginTop="@dimen/list_group_vertical_margin"
+                    android:orientation="horizontal" >
+
+                    <LinearLayout
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="left"
+                        android:layout_weight="0.49"
+                        android:orientation="vertical" >
+
+                        <include
+                            android:id="@+id/departure_date"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            layout="@layout/v1_image_calendar_field" />
+                    </LinearLayout>
+
+                    <View
+                        android:id="@+id/departure_side_view_separator"
+                        android:layout_width="1dp"
+                        android:layout_height="match_parent"
+                        android:layout_gravity="center_vertical"
+                        android:layout_marginBottom="10dp"
+                        android:background="@color/CellBackgroundBottom"
+                        android:clickable="false" />
+
+                    <LinearLayout
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="right"
+                        android:layout_marginLeft="6dp"
+                        android:layout_weight="0.49"
+                        android:orientation="vertical" >
+
+                        <include
+                            android:id="@+id/departure_time"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            layout="@layout/v1_image_calendar_field" />
+                    </LinearLayout>
+                </LinearLayout>
+            </LinearLayout>
+
+            <include layout="@layout/group_separator_v1" />
+
+
+        </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/arrival_container"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="@dimen/list_item_horizontal_margin"
+        android:layout_marginRight="@dimen/list_item_horizontal_margin"
+        android:layout_marginTop="@dimen/list_group_vertical_margin"
+        android:orientation="vertical" >
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:padding="1dp" >
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:textAppearance="?android:attr/textAppearanceLarge"
+                android:text="\@Arrival\@"
+                android:background="@drawable/gradient_background"
+                android:id="@+id/tv_arrival_header" />
+
+            <include
+                android:id="@+id/arrival_location"
+                android:layout_width="match_parent"
+                android:layout_height="0dp"
+                android:layout_weight=".105"
+                layout="@layout/v1_image_list_field" />
+
+            <include layout="@layout/group_separator_v1" />
+
+            <!-- Check-in/out Group -->
+
+            <LinearLayout
+                android:id="@+id/arrival_date_container"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginRight="6dp"
+                android:layout_marginTop="@dimen/list_group_vertical_margin"
+                android:orientation="horizontal" >
+
+                <LinearLayout
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="left"
+                    android:layout_weight="0.49"
+                    android:orientation="vertical" >
+
+                    <include
+                        android:id="@+id/arrival_date"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        layout="@layout/v1_image_calendar_field" />
+                </LinearLayout>
+
+                <View
+                    android:id="@+id/side_view_separator"
+                    android:layout_width="1dp"
+                    android:layout_height="match_parent"
+                    android:layout_gravity="center_vertical"
+                    android:layout_marginBottom="10dp"
+                    android:background="@color/CellBackgroundBottom"
+                    android:clickable="false" />
+
+                <LinearLayout
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="right"
+                    android:layout_marginLeft="6dp"
+                    android:layout_weight="0.49"
+                    android:orientation="vertical" >
+
+                    <include
+                        android:id="@+id/arrival_time"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        layout="@layout/v1_image_calendar_field" />
+                </LinearLayout>
+            </LinearLayout>
+        </LinearLayout>
+
+        <include layout="@layout/group_separator_v1" />
+
+
+    </LinearLayout>
+
+</LinearLayout>

@@ -112,11 +112,12 @@
                         android:paddingRight="@dimen/list_cell_padding_right"
                         android:paddingTop="@dimen/list_cell_padding_top"
                         android:paddingBottom="@dimen/list_cell_padding_bottom"
+						android:visibility="gone"
                     >
                         <ImageView
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:src="@drawable/icon_receipt_button"
+                            android:src="@drawable/icon_travel_allowance_grey"
                             android:layout_marginLeft="@dimen/exp_list_header_row_icon_margin"
                             android:layout_marginRight="@dimen/exp_list_header_row_icon_margin"
                         />
@@ -125,7 +126,7 @@
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_marginLeft="@dimen/exp_list_header_row_title_left_margin"
-                            android:text="@string/itinerary"
+                            android:text="@string/ta_travel_allowances"
                             android:textAppearance="@style/ListCellHeaderText"
                         />
                     </LinearLayout>

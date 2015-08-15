@@ -1885,37 +1885,7 @@
     <!-- end of hotel streaming -->
 
 
-    <!-- start of travel allowance -->
-<string name="itinerary">Itinerary</string>
-<string name="itinerary_stop">Itinerary Stop</string>
-<string name="itin_add_stop">Add Itinerary Stop</string>
-<string name="itin_proceed_to_expenses">Proceed to Expenses</string>
-<string name="itin_depart_from">Depart from (city)</string>
-<string name="itin_time">Time</string>
-<string name="itin_arrive_in">Arrive in (city)</string>
-<string name="itin_edit_stop">Itinerary Stop</string>
-<string name="itin_delete_stop">Delete Itinerary Stop</string>
-<string name="itin_stop_actions">Itinerary Stop Actions</string>
-<string name="itin_expenses_and_adjustments">Expenses &amp; Adjustments</string>
-<string name="itin_exclude">Exclude</string>
-<string name="itin_meal_PRO">Provided (exclude)</string>
-<string name="itin_meal_NPR">Include</string>
-<string name="itin_meal_TAX">Taxable</string>
-<string name="itin_breakfast">Breakfast</string>
-<string name="itin_lunch">Lunch</string>
-<string name="itin_dinner">Dinner</string>
-<string name="itin_stops_infotext">Create an itinerary with all the stops for adding Travel Allowance Expenses to the report</string>
-<string name="itin_stop_departure">Departure</string>
-<string name="itin_stop_arrival">Arrival</string>
-<string name="itin_stop_arrival_rate_location">Arrival Rate Location</string>
-<string name="itin_stop_n_of">Itinerary Stop: %%0%% of %%1%%</string>
-<string name="itin_name_template">%%0%%</string>
-<string name="itin_fetching">Fetching Itinerary</string>
-<string name="itin_saving_stop">Saving Itinerary Stop</string>
-<string name="itin_updating_fixed">Updating Fixed Allowances</string>
-<string name="itin_fetching_allowances">Fetching Allowances</string>
-<string name="itin_updating_amounts">Updating Amounts</string>
-    <!-- end of travel allowance -->
+    <!-- travel allowance (moved to dictionary) -->
 
 
     <!-- Start of test drive -->

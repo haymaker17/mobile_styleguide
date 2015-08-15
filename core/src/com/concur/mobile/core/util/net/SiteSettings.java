@@ -30,7 +30,8 @@ public final class SiteSettings {
                 "LocateAndAlert"), SHOW_NONREFUNDABLE_MESSAGE("ShowNonrefundableMessage"), VIEW_PICKLIST_CODES(
                 "MobileViewPicklistCodes"), ALLOW_APPROVALS("AllowApprovals"), ALLOW_REPORTS("AllowReports"), ALLOW_TRAVEL_BOOKING(
                 "AllowTravelBooking"), ENABLE_VOICE_BOOKING("VoiceBookingEnabled"), ENABLE_HOTEL_SEARCH_STREAM(
-                "StreamHotelSearchResults"), HAS_FIXED_TA("HasFixedTA"), ENABLE_CONDITIONAL_FIELD_EVALUATION(
+                "StreamHotelSearchResults"), HAS_FIXED_TA("HasFixedTA"),HAS_TRAVEL_ALLOWANCE_FIXED("HasTravelAllowanceFixed"),
+                 ENABLE_CONDITIONAL_FIELD_EVALUATION(
                 "ENABLE_DYNAMIC_FIELD_EVALUATION"), ENABLE_SPDY("EnableSpdy"), SHOW_JARVIS_HOTEL_UI("ShowJarvisHotelUIOnAndroid");
 
         // ****** enum fields and methods ****** //
@@ -262,6 +263,15 @@ public final class SiteSettings {
      */
     public boolean hasFixedTa() {
         return checkSiteSetting(SiteSetting.HAS_FIXED_TA, "mobile", "y");
+    }
+
+    /**
+     * Gets whether the user has a Fixed TA Configuration
+     *
+     * @return
+     */
+    public boolean hasTravelAllowanceFixed() {
+        return checkSiteSetting(SiteSetting.HAS_TRAVEL_ALLOWANCE_FIXED, "mobile", "y");
     }
 
     /**

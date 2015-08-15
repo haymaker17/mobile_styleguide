@@ -1828,4 +1828,22 @@
   <string name="segment_phone">Telefon</string>
   <string name="hotel_search_criteria">Suchkriterien: innerhalb %%1%% %%2%% von %%3%%.</string>
   <string name="td_overlay_capture_new_receipt">Neuen Beleg \nerfassen</string>
+  <!--new texts -->
+    <string name="itin_adjustments">"Anpassungen"</string>
+    <string name="itin_allowances">"Spesen"</string>
+    <string name="itin_border_crossing">"Grenzüberschreitung"</string>
+    <string name="itin_crossed_border">"Überschrittene Grenze"</string>
+    <string name="itin_daily_allowance">"Tagegeld"</string>
+    <string name="itin_departed">"Abreise"</string> 
+    <string name="itin_excluded">"Ausgeschlossen"</string>
+    <string name="itin_expense_details">"Ausgabendetails"</string>
+    <string name="itin_itineraries">"Reisepläne"</string>
+    <string name="itin_lodging">"Unterkunft"</string>
+    <string name="itin_meals">"Verpflegung"</string>
+    <string name="itin_more_information">"Weitere"</string>
+    <string name="itin_meal_not_provided">"Nicht eingeschlossen"</string>
+    <string name="itin_overnight">"Mit Übernachtung"</string>
+    <string name="itin_total_allowance">"Summe der Spesen"</string>
+    <string name="itin_travel_allowances">"Reisespesen"</string>
+  <!-- end of travel allowance -->
 </resources>

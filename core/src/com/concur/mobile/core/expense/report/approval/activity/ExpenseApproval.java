@@ -398,8 +398,14 @@ public class ExpenseApproval extends BaseActivity {
                     // MOB-20035 Need to fetch report detail, disable clicking on report items
                     itemClickEnabled = false;
 
-                    // Launch a request to obtain a detailed report.
                     ConcurCore ConcurCore = (ConcurCore) getApplication();
+
+                    // Request to read the employee configuration
+                    if (ConcurCore.getTAConfigController() != null) {
+                        ConcurCore.getTAConfigController().refreshConfiguration();
+                    }
+
+                    // Launch a request to obtain a detailed report.
                     ConcurService concurService = ConcurCore.getService();
                     registerReportDetailReceiver();
                     reportDetailReceiver.setLaunchIntent(intent);

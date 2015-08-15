@@ -1829,4 +1829,23 @@
   <string name="segment_phone">Telefon</string>
   <string name="hotel_search_criteria">Sökkriterier: inom %%1%% %%2%% från %%3%%</string>
   <string name="td_overlay_capture_new_receipt">Registrera ett \nnytt kvitto</string>
+
+  <!--new texts -->
+  <string name="itin_adjustments">"Justeringar"</string>
+  <string name="itin_allowances">"Traktamenten"</string>
+  <string name="itin_border_crossing">"Gränspassage"</string>
+  <string name="itin_crossed_border">"Passerad gräns"</string>
+  <string name="itin_daily_allowance">"Dagligt traktamente"</string>
+  <string name="itin_departed">"Avrest"</string>
+  <string name="itin_excluded">"Exkluderad"</string>
+  <string name="itin_expense_details">"Utläggsdetaljer"</string>
+  <string name="itin_itineraries">"Resplaner"</string>
+  <string name="itin_lodging">"Logi"</string>
+  <string name="itin_meals">"Måltider"</string>
+  <string name="itin_more_information">"Mer"</string>
+  <string name="itin_meal_not_provided">"Ingår inte"</string>
+  <string name="itin_overnight">"Övernattning"</string>
+  <string name="itin_total_allowance">"Traktamente totalt"</string>
+  <string name="itin_travel_allowances">"Resetraktamente"</string>
+
 </resources>
