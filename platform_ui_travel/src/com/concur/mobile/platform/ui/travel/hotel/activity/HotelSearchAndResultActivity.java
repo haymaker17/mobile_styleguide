@@ -29,8 +29,6 @@ import com.concur.mobile.platform.ui.travel.hotel.fragment.HotelSearchResultFrag
 import com.concur.mobile.platform.ui.travel.loader.TravelCustomFieldsConfig;
 import com.concur.mobile.platform.ui.travel.util.Const;
 import com.concur.mobile.platform.util.Format;
-import com.google.android.gms.common.ConnectionResult;
-import com.google.android.gms.common.GooglePlayServicesUtil;
 
 import java.io.Serializable;
 import java.util.*;
@@ -763,11 +761,11 @@ public class HotelSearchAndResultActivity extends TravelBaseActivity
         if (isOffline) {
             showOfflineDialog();
         } else if (!hotelSearchRESTResultFrag.progressbarVisible) {
-            int resultCode = GooglePlayServicesUtil.isGooglePlayServicesAvailable(this);
+            //int resultCode = GooglePlayServicesUtil.isGooglePlayServicesAvailable(this);
             mapFragment = (HotelSearchResultMapFragment) getFragmentManager()
                     .findFragmentByTag(FRAGMENT_SEARCH_RESULT_MAP);
-            if (resultCode == ConnectionResult.SUCCESS && listItemAdapater != null
-                    && listItemAdapater.getItems() != null) {
+            //resultCode == ConnectionResult.SUCCESS &&
+            if (listItemAdapater != null && listItemAdapater.getItems() != null) {
                 List<HotelSearchResultListItem> hotelList = listItemAdapater.getItems();
 
                 if (mapFragment == null) {

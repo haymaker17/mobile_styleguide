@@ -1,6 +1,7 @@
 package com.concur.mobile.platform.ui.travel.util;
 
 import android.content.Context;
+import android.os.Build;
 import android.text.Spannable;
 import android.text.style.URLSpan;
 import android.text.util.Linkify;
@@ -304,6 +305,10 @@ public class ViewUtil {
             }
         }
         return checkV;
+    }
+
+    public static boolean hasHoneycomb() {
+        return Build.VERSION.SDK_INT >= Build.VERSION_CODES.HONEYCOMB;
     }
 
 }

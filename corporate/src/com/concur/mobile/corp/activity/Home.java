@@ -152,9 +152,8 @@ import java.util.Locale;
 import java.util.Map;
 import java.util.TimeZone;
 
-@EventTracker.EventTrackerClassName(getClassName = "Home")
-public class Home extends BaseActivity
-        implements View.OnClickListener, NavigationListener, ReceiptChoiceListener {
+@EventTracker.EventTrackerClassName(getClassName = Flurry.SCREEN_NAME_HOME)
+public class Home extends BaseActivity implements View.OnClickListener, NavigationListener, ReceiptChoiceListener {
 
     public static boolean forceExpirationHome;
 
@@ -1098,6 +1097,9 @@ public class Home extends BaseActivity
 
         if (forceExpirationHome) {
             forceExpirationHome = false;
+            cancelAllDataRequests();
+            clearSessionData();
+            showExpiredDialog();
         } else {
 
             String sessionId = PlatformProperties.getSessionId();
@@ -1998,7 +2000,6 @@ public class Home extends BaseActivity
     /**
      * Will copy the image data captured by the camera.
      *
-     * @param data the intent object containing capture information.
      */
     private boolean copyCapturedImage() {
         boolean retVal = true;
@@ -2255,7 +2256,7 @@ public class Home extends BaseActivity
             subView.setText(R.string.home_row_expenses_subheader_negative);
 
         } else {
-            // Indicate there is no summary data available.
+            // Indicate there is no summary data available
             updateExpenseSummaryNoDataAvailable();
         }
     }
@@ -3581,7 +3582,7 @@ public class Home extends BaseActivity
 
     /**
      * The OnClickListener for items inside of the Navigation Drawer. Basically just check which item was clicked and hand off to
-     * the {@link #onItemSelected(navItem) onItemSelected} method to handle which item was pressed.
+     * the method to handle which item was pressed.
      */
     class NavigationItemOnClickListener implements OnClickListener {
 

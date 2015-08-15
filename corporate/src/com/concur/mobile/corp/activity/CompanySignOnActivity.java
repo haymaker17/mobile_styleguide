@@ -25,6 +25,7 @@ import android.webkit.WebSettings;
 import android.webkit.WebView;
 import android.webkit.WebViewClient;
 import com.concur.breeze.R;
+import com.concur.mobile.base.service.BaseAsyncRequestTask;
 import com.concur.mobile.base.service.BaseAsyncRequestTask.AsyncReplyListener;
 import com.concur.mobile.base.service.BaseAsyncResultReceiver;
 import com.concur.mobile.core.ConcurCore;
@@ -46,12 +47,14 @@ import com.concur.mobile.platform.authentication.EmailLookUpRequestTask;
 import com.concur.mobile.platform.util.Format;
 import com.concur.platform.PlatformProperties;
 
+import org.apache.http.HttpStatus;
+
 import java.util.Locale;
 
 /**
  * An extension of <code>BaseActivity</code> for the purposes of displaying a web-view containing company sign-on pages.
  */
-@EventTracker.EventTrackerClassName(getClassName = "SSO")
+@EventTracker.EventTrackerClassName(getClassName =Flurry.SCREEN_NAME_SSO)
 public class CompanySignOnActivity extends BaseActivity {
 
     private static final String CLS_TAG = CompanySignOnActivity.class.getSimpleName();
@@ -355,6 +358,8 @@ public class CompanySignOnActivity extends BaseActivity {
             webView.goBack();
             return true;
         } else if(keyCode == KeyEvent.KEYCODE_BACK) {
+            //reset timings
+            ConcurMobile.resetUserTimers();
             super.onKeyDown(keyCode, event);
             setResult(RESULT_OK);
             return true;
@@ -432,8 +437,7 @@ public class CompanySignOnActivity extends BaseActivity {
                 fromNotification = getIntent().getExtras().getBoolean(ConcurMobile.FROM_NOTIFICATION);
             }
             if (!fromNotification) {
-                Intent i = null;
-                i = new Intent(this, Home.class);
+                Intent i = new Intent(this, Home.class);
                 if(ConcurCore.userEntryAppTimer>0){
                     ConcurCore.userSuccessfulLoginTimer = System.currentTimeMillis();
                     long totalWaitTime = ConcurCore.userSuccessfulLoginTimer - ConcurCore.userEntryAppTimer;
@@ -442,8 +446,8 @@ public class CompanySignOnActivity extends BaseActivity {
                     if(totalWaitTime<=0){
                         totalWaitTime=0;
                     }
-                    EventTracker.INSTANCE.trackTimings(Flurry.CATEGORY_SIGN_IN, signInMethod,
-                            Flurry.LABEL_WAIT_TIME, totalWaitTime);
+                    EventTracker.INSTANCE.trackTimings(Flurry.CATEGORY_SIGN_IN, totalWaitTime,
+                            signInMethod, null);
                     ConcurCore.resetUserTimers();
                 }
                 startActivity(i);
@@ -506,7 +510,7 @@ public class CompanySignOnActivity extends BaseActivity {
             UserAndSessionInfoUtil.updateUserAndSessionInfo(CompanySignOnActivity.this, emailLookupBundle);
 
             // Track the success
-            Login.trackLoginSuccess(Flurry.PARAM_VALUE_LOGIN_USING_SSO);
+            trackLoginStatus(true,Flurry.PARAM_VALUE_LOGIN_USING_SSO);
 
             if (!isShuttingDown) {
                 String signInMethod = emailLookupBundle.getString(EmailLookUpRequestTask.EXTRA_SIGN_IN_METHOD_KEY);
@@ -568,6 +572,8 @@ public class CompanySignOnActivity extends BaseActivity {
                         webView.clearCache(true);
                     }
                 });
+
+                trackLoginStatus(false, Flurry.LABEL_REMOTE_WIPE);
             } else {
                 Log.i(Const.LOG_TAG, CLS_TAG + ".onRequestFail: mobile session login failed!");
 
@@ -590,6 +596,18 @@ public class CompanySignOnActivity extends BaseActivity {
                     TAG_CONFIG_SESSION_WAIT_DIALOG);
             if (df != null)
                 df.dismiss();
+
+            // Check the HTTP response for tracking
+            Integer httpStatus = (Integer) resultData.get(BaseAsyncRequestTask.HTTP_STATUS_CODE);
+            if (httpStatus != null && httpStatus == HttpStatus.SC_FORBIDDEN) {
+                trackLoginStatus(false, Flurry.LABEL_FORBIDDEN);
+            } else if (httpStatus != null && httpStatus == HttpStatus.SC_INTERNAL_SERVER_ERROR) {
+                trackLoginStatus(false, Flurry.LABEL_SERVER_ERROR);
+            } else if (httpStatus != null && httpStatus == HttpStatus.SC_UNAUTHORIZED) {
+                trackLoginStatus(false, Flurry.LABEL_SERVER_ERROR);
+            } else {
+                trackLoginStatus(false, Flurry.LABEL_BAD_CREDENTIALS);
+            }
         }
 
         public void onRequestCancel(Bundle resultData) {
@@ -600,6 +618,46 @@ public class CompanySignOnActivity extends BaseActivity {
         public void cleanup() {
             corpSSOLoginReceiver = null;
         }
+    }
+
+    /*
+     * (non-Javadoc)
+     *
+     * @see
+     * com.concur.mobile.platform.ui.common.login.LoginPasswordFragment.LoginPasswordCallbacks#trackLoginFailure(java.lang.String)
+     */
+    public void trackLoginStatus(boolean success, String method) {
+        if (success) {
+            trackLoginSuccess(method);
+        } else {
+            EventTracker.INSTANCE.eventTrack(Flurry.CATEGORY_SIGN_IN, Flurry.ACTION_SIGN_IN_FAIL_METHOD,
+                    Flurry.LABEL_MANUAL, null);
+
+            EventTracker.INSTANCE.eventTrack(Flurry.CATEGORY_SIGN_IN, Flurry.ACTION_FAIL_CREDENTIAL_TYPE,
+                    Flurry.LABEL_LOGIN_USING_SSO, null);
+
+            if (method.equalsIgnoreCase(Flurry.LABEL_REMOTE_WIPE)) {
+                EventTracker.INSTANCE.eventTrack(Flurry.CATEGORY_SIGN_IN, Flurry.ACTION_FAIL_REASON,
+                        Flurry.LABEL_REMOTE_WIPE, null);
+            } else if (method.equalsIgnoreCase(Flurry.LABEL_FORBIDDEN)) {
+                EventTracker.INSTANCE.eventTrack(Flurry.CATEGORY_SIGN_IN, Flurry.ACTION_FAIL_REASON,
+                        Flurry.LABEL_FORBIDDEN, null);
+            } else if (method.equalsIgnoreCase(Flurry.LABEL_BAD_CREDENTIALS)) {
+                EventTracker.INSTANCE.eventTrack(Flurry.CATEGORY_SIGN_IN, Flurry.ACTION_FAIL_REASON,
+                        Flurry.LABEL_BAD_CREDENTIALS, null);
+            } else {
+                EventTracker.INSTANCE.eventTrack(Flurry.CATEGORY_SIGN_IN, Flurry.ACTION_FAIL_REASON,
+                        Flurry.LABEL_SERVER_ERROR, null);
+            }
+
+        }
+    }
+
+    private static void trackLoginSuccess(String signInMethod) {
+        EventTracker.INSTANCE.eventTrack(Flurry.CATEGORY_SIGN_IN, Flurry.ACTION_SIGN_IN_SUCCESS_METHOD,
+                Flurry.LABEL_MANUAL, null);
+        EventTracker.INSTANCE.eventTrack(Flurry.CATEGORY_SIGN_IN, Flurry.ACTION_SUCCESS_CREDENTIAL_TYPE,
+                Flurry.LABEL_LOGIN_USING_SSO, null);
     }
 
 }

@@ -557,8 +557,8 @@
         <!-- ================ -->
         <!-- Google Maps V2 -->
         <meta-data
-            android:name="com.google.android.maps.v2.API_KEY"
-            android:value="AIzaSyAWtEGpvM50-W7Oho_IsFmS-vmL0skZGek"/>
+            android:name="com.google.android.geo.API_KEY"
+            android:value="AIzaSyBQn7XgxFJTS5e5YP9R7Ls6wnLrdQIPTuY"/>
 
         <!-- ================== -->
         <!-- Begin Google DFP -->
