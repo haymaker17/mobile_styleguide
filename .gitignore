@@ -53,3 +53,4 @@ local.properties
 .gradle
 build/
 /*.iml
+dictionary/
