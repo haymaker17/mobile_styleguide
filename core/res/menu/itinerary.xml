@@ -10,7 +10,7 @@
     <item
         android:id="@+id/menuProceed"
         android:icon="@drawable/arrow_right"
-        android:title="@string/itin_proceed_to_expenses"
+        android:title="@string/ta_proceed_to_expenses"
         yourapp:showAsAction="ifRoom">
     </item>
 </menu>

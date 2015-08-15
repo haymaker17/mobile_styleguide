@@ -177,6 +177,7 @@ public class LoginResponseParser {
         parseMap.put(Const.LR_SITE_SETTINGS_ALLOW_TRAVEL_BOOKING, ssInstance.isAllowTravelBookingEnabled());
         parseMap.put(Const.LR_SITE_SETTINGS_ALLOW_VOICE_BOOKING, ssInstance.isVoiceBookingEnabled());
         parseMap.put(Const.LR_SITE_SETTINGS_MOBILE_HAS_FIXED_TA, ssInstance.hasFixedTa());
+        parseMap.put(Const.LR_SITE_SETTINGS_MOBILE_HAS_TRAVEL_ALLOWANCE_FIXED, ssInstance.hasTravelAllowanceFixed());
         parseMap.put(Const.LR_SITE_SETTINGS_ENABLE_CONDITIONAL_FIELD_EVALUATION,
                 ssInstance.isConditionalFieldEvaluationEnabled());
         parseMap.put(Const.LR_SITE_SETTINGS_ENABLE_SPDY, ssInstance.isSpdyEnabled());

@@ -3,14 +3,6 @@
  */
 package com.concur.mobile.core.expense.report.activity;
 
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-
-import org.apache.http.HttpStatus;
-
 import android.app.Activity;
 import android.app.AlertDialog;
 import android.app.Dialog;
@@ -52,7 +44,6 @@ import com.concur.mobile.core.ConcurCore;
 import com.concur.mobile.core.activity.Preferences;
 import com.concur.mobile.core.expense.activity.ExpenseTypeSpinnerAdapter;
 import com.concur.mobile.core.expense.activity.ExpensesAndReceipts;
-import com.concur.mobile.core.expense.activity.TAItineraryActivity;
 import com.concur.mobile.core.expense.data.ExpenseType;
 import com.concur.mobile.core.expense.data.IExpenseEntryCache;
 import com.concur.mobile.core.expense.report.data.ExpenseReport;
@@ -63,6 +54,15 @@ import com.concur.mobile.core.expense.report.service.ReportDeleteRequest;
 import com.concur.mobile.core.expense.report.service.ReportEntryDetailRequest;
 import com.concur.mobile.core.expense.report.service.ReportEntryFormRequest;
 import com.concur.mobile.core.expense.service.GetExpenseTypesRequest;
+import com.concur.mobile.core.expense.travelallowance.activity.ItineraryUpdateActivity;
+import com.concur.mobile.core.expense.travelallowance.activity.TravelAllowanceActivity;
+import com.concur.mobile.core.expense.travelallowance.controller.ControllerAction;
+import com.concur.mobile.core.expense.travelallowance.controller.IController;
+import com.concur.mobile.core.expense.travelallowance.controller.IControllerListener;
+import com.concur.mobile.core.expense.travelallowance.controller.TravelAllowanceItineraryController;
+import com.concur.mobile.core.expense.travelallowance.datamodel.Itinerary;
+import com.concur.mobile.core.expense.travelallowance.datamodel.TravelAllowanceConfiguration;
+import com.concur.mobile.core.expense.travelallowance.util.BundleId;
 import com.concur.mobile.core.service.ConcurService;
 import com.concur.mobile.core.util.Const;
 import com.concur.mobile.core.util.EventTracker;
@@ -71,12 +71,22 @@ import com.concur.mobile.core.util.FormatUtil;
 import com.concur.mobile.core.util.SortOrder;
 import com.concur.mobile.core.util.ViewUtil;
 
+import org.apache.http.HttpStatus;
+
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+
 /**
  * Provides an activity to display expense report entries.
  * 
  * @author AndrewK
  */
-public class ExpenseEntries extends AbstractExpenseActivity {
+public class
+        ExpenseEntries extends AbstractExpenseActivity
+                            implements IControllerListener {
 
     private static final String CLS_TAG = ExpenseEntries.class.getSimpleName();
 
@@ -95,6 +105,17 @@ public class ExpenseEntries extends AbstractExpenseActivity {
     private static final String EXPENSE_TYPES = "expense.types";
 
     private static final String SELECTED_EXPENSE_TYPE = "selected.expense.type";
+
+    private TravelAllowanceItineraryController itineraryController;
+
+
+    @Override
+    public void actionFinished(IController controller, ControllerAction action, boolean isSuccess, Bundle result) {
+        ConcurCore app = (ConcurCore) getApplication();
+        if (app.getTaItineraryController() != null && app.getTaItineraryController().getItineraryList().size() > 0){
+            showTravelAllowanceButton();
+        }
+    }
 
     private enum ExpenseEntryOption {
         ViewDetails, ViewReceipt, RemoveFromReport, AttachSelectedGalleryReceipt, AttachSelectedCloudReceipt, AttachCapturedReceipt
@@ -199,6 +220,7 @@ public class ExpenseEntries extends AbstractExpenseActivity {
      */
     protected long upTime = 0L;
 
+
     /*
      * (non-Javadoc)
      * 
@@ -238,6 +260,43 @@ public class ExpenseEntries extends AbstractExpenseActivity {
 
         if (retainer.contains(SELECTED_EXPENSE_TYPE)) {
             selectedExpenseType = (ExpenseType) retainer.get(SELECTED_EXPENSE_TYPE);
+        }
+
+        if (expRep != null) {
+            ConcurCore app = (ConcurCore) getApplication();
+            if (reportKeySource == Const.EXTRA_EXPENSE_REPORT_SOURCE_APPROVAL) {
+                app.getTaItineraryController().refreshItineraries(expRep.reportKey, true);
+            } else {
+                app.getTaItineraryController().refreshItineraries(expRep.reportKey, false);
+            }
+            app.getFixedTravelAllowanceController().refreshFixedTravelAllowances(expRep.reportKey);
+
+//          Register Listener for Itinerary data and make button visible
+            this.itineraryController = app.getTaItineraryController();
+            this.itineraryController.registerListener(this);
+
+//          Make button Travel Allowances visible
+            if ((app.getTaItineraryController() != null && app.getTaItineraryController().getItineraryList().size() > 0)
+                    || reportKeySource != Const.EXTRA_EXPENSE_REPORT_SOURCE_APPROVAL && !expRep.isSubmitted()) {
+                showTravelAllowanceButton();
+            }
+        }
+    }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        if (this.itineraryController != null) {
+            this.itineraryController.unregisterListener(this);
+        }
+    }
+
+    private void showTravelAllowanceButton(){
+        View vHeaderItinerary = this.findViewById(R.id.header_itinerary);
+        if (vHeaderItinerary != null){
+            if (ViewUtil.hasTravelAllowanceFixed(this)) {
+                vHeaderItinerary.setVisibility(View.VISIBLE);
+            }
         }
     }
 
@@ -1538,10 +1597,25 @@ public class ExpenseEntries extends AbstractExpenseActivity {
 
         // Set click-handler on itinerary view
         view = findViewById(R.id.header_itinerary);
+        view.setVisibility(View.VISIBLE);
         if (view != null) {
+            ConcurCore app = (ConcurCore) getApplication();
             // hide if we don't have the setting
-            if (!ViewUtil.hasFixedTA(this)) {
+            if (!ViewUtil.hasTravelAllowanceFixed(this)) {
                 view.setVisibility(View.GONE);
+            } else if (reportKeySource == Const.EXTRA_EXPENSE_REPORT_SOURCE_APPROVAL) {
+                if (app.getTaItineraryController().getItineraryList() == null
+                        || app.getTaItineraryController().getItineraryList().size() == 0) {
+                    view.setVisibility(View.GONE);
+                }
+            } else {
+                if (app.getTAConfigController().getTravelAllowanceConfigurationList() != null) {
+                    TravelAllowanceConfiguration taConfig = app.getTAConfigController().getTravelAllowanceConfigurationList();
+                    if (!TravelAllowanceConfiguration.FIXED.equals(taConfig.getLodgingTat())
+                            && !TravelAllowanceConfiguration.FIXED.equals(taConfig.getMealsTat())) {
+                        view.setVisibility(View.GONE);
+                    }
+                }
             }
             view.setFocusable(true);
             view.setClickable(true);
@@ -1550,10 +1624,35 @@ public class ExpenseEntries extends AbstractExpenseActivity {
 
                 @Override
                 public void onClick(View v) {
-                    Intent intent = new Intent(ExpenseEntries.this, TAItineraryActivity.class);
-                    intent.putExtra(Const.EXTRA_EXPENSE_REPORT_KEY, expRep.reportKey);
-                    intent.putExtra(Const.EXTRA_EXPENSE_REPORT_NAME, expRep.reportName);
-                    startActivityForResult(intent, REQUEST_VIEW_TA_ITINERARY);
+                    Intent intent;
+                    if (reportKeySource == Const.EXTRA_EXPENSE_REPORT_SOURCE_APPROVAL) {
+                        intent = new Intent(ExpenseEntries.this, TravelAllowanceActivity.class);
+                        intent.putExtra(BundleId.EXPENSE_REPORT_KEY, expRep.reportKey);
+                        intent.putExtra(BundleId.EXPENSE_REPORT_NAME, expRep.reportName);
+                        intent.putExtra(BundleId.IS_EDIT_MODE, false);
+                        startActivity(intent);
+                    } else {
+                        ConcurCore app = (ConcurCore) getApplication();
+                        if (app.getTaItineraryController() != null) {
+                            if (app.getTaItineraryController().getItineraryList() == null
+                                    || app.getTaItineraryController().getItineraryList().size() == 0) {
+                                intent = new Intent(ExpenseEntries.this, ItineraryUpdateActivity.class);
+                                Itinerary itin = new Itinerary();
+                                itin.setExpenseReportID(expRep.reportKey);
+                                itin.setName(expRep.reportName);
+                                intent.putExtra(BundleId.ITINERARY, itin);
+                                intent.putExtra(BundleId.EXPENSE_REPORT_KEY, expRep.reportKey);
+                                startActivityForResult(intent, REQUEST_VIEW_TA_ITINERARY);
+                            } else {//There are itineraries already
+                                intent = new Intent(ExpenseEntries.this, TravelAllowanceActivity.class);
+                                intent.putExtra(BundleId.EXPENSE_REPORT_KEY, expRep.reportKey);
+                                intent.putExtra(BundleId.EXPENSE_REPORT_NAME, expRep.reportName);
+                                intent.putExtra(BundleId.EXPENSE_REPORT_IS_SUBMITTED, expRep.isSubmitted());
+								intent.putExtra(BundleId.IS_EDIT_MODE, true);
+                                startActivityForResult(intent, REQUEST_VIEW_TA_ITINERARY);
+                            }
+                        }
+                    }
                 }
             });
         } else {
@@ -1565,6 +1664,7 @@ public class ExpenseEntries extends AbstractExpenseActivity {
     @Override
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
         if (requestCode == REQUEST_VIEW_TA_ITINERARY) {
+
             if (resultCode == Activity.RESULT_OK) {
 
                 // Register the receiver.

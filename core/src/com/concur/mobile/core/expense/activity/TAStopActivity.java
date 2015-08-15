@@ -27,10 +27,10 @@ import com.concur.mobile.core.ConcurCore;
 import com.concur.mobile.core.activity.BaseActivity;
 import com.concur.mobile.core.expense.data.ListItem;
 import com.concur.mobile.core.expense.data.SearchListResponse;
-import com.concur.mobile.core.expense.ta.service.AsyncReplyAdapter;
-import com.concur.mobile.core.expense.ta.service.Itinerary;
-import com.concur.mobile.core.expense.ta.service.ItineraryRow;
-import com.concur.mobile.core.expense.ta.service.SaveItineraryRequest;
+import com.concur.mobile.core.expense.travelallowance.AsyncReplyAdapter;
+import com.concur.mobile.core.expense.travelallowance.Itinerary;
+import com.concur.mobile.core.expense.travelallowance.ItineraryRow;
+import com.concur.mobile.core.expense.travelallowance.service.SaveItineraryRequest;
 import com.concur.mobile.core.service.CoreAsyncRequestTask;
 import com.concur.mobile.core.util.Const;
 import com.concur.mobile.core.util.FormatUtil;
@@ -140,9 +140,9 @@ public class TAStopActivity extends BaseActivity {
         setFieldName(R.id.editDepartLocation, R.string.itin_depart_from);
         setFieldName(R.id.editArriveLocation, R.string.itin_arrive_in);
         setFieldName(R.id.editDepartDate, R.string.date);
-        setFieldName(R.id.editDepartTime, R.string.itin_time);
+        setFieldName(R.id.editDepartTime, R.string.general_time);
         setFieldName(R.id.editArriveDate, R.string.date);
-        setFieldName(R.id.editArriveTime, R.string.itin_time);
+        setFieldName(R.id.editArriveTime, R.string.general_time);
 
         findViewById(R.id.editDepartDate).setOnClickListener(onClickListener);
         findViewById(R.id.editDepartTime).setOnClickListener(onClickListener);
@@ -192,7 +192,7 @@ public class TAStopActivity extends BaseActivity {
         itineraryRow.setDepartDateTime(departDateTime.getTime());
         itineraryRow.setArrivalDateTime(arriveDateTime.getTime());
         showDialog(DIALOG_SAVING);
-        new SaveItineraryRequest(getApplicationContext(), 1, asyncReceiver, itin, itineraryRow).execute();
+       // new SaveItineraryRequest(getApplicationContext(), 1, asyncReceiver, itin, itineraryRow).execute();
     }
 
     protected class GetTAItinerariesListener extends AsyncReplyAdapter {

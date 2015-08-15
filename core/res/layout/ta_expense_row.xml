@@ -46,7 +46,7 @@
 	            android:id="@+id/checkBox1"
 	            android:layout_width="196dp"
 	            android:layout_height="wrap_content"
-	            android:text="@string/itin_exclude"
+	            android:text="@string/ta_exclude"
 	            android:layout_alignParentRight="true"
 	            android:layout_alignParentTop="true" />
 	    </RelativeLayout>
@@ -65,7 +65,7 @@
             android:layout_alignParentLeft="true"
             android:layout_centerVertical="true"
             android:layout_toLeftOf="@+id/taBreakfastSpinner"
-            android:text="@string/itin_breakfast" />
+            android:text="@string/ta_breakfast" />
 
         <Spinner
             android:id="@+id/taBreakfastSpinner"
@@ -88,7 +88,7 @@
             android:layout_alignParentLeft="true"
             android:layout_centerVertical="true"
             android:layout_toLeftOf="@+id/taLunchSpinner"
-            android:text="@string/itin_lunch" />
+            android:text="@string/ta_lunch" />
 
         <Spinner
             android:id="@+id/taLunchSpinner"
@@ -111,7 +111,7 @@
             android:layout_alignParentLeft="true"
             android:layout_centerVertical="true"
             android:layout_toLeftOf="@+id/taDinnerSpinner"
-            android:text="@string/itin_dinner" />
+            android:text="@string/ta_dinner" />
 
         <Spinner
             android:id="@+id/taDinnerSpinner"

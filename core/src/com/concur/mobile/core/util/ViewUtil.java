@@ -448,6 +448,11 @@ public class ViewUtil {
         return prefs.getBoolean(Const.PREF_HAS_FIXED_TA, false);
     }
 
+    public static boolean hasTravelAllowanceFixed(Context context) {
+        SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(context);
+        return prefs.getBoolean(Const.PREF_HAS_TRAVEL_ALLOWANCE_FIXED, false);
+    }
+
     public static boolean isConditionalFieldEvaluationEnabled(Context context) {
         SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(context);
         return prefs.getBoolean(Const.PREF_ALLOW_CONDITIONAL_FIELD_EVALUATION, false);

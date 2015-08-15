@@ -1829,4 +1829,23 @@
   <string name="segment_phone">Tél.</string>
   <string name="hotel_search_criteria">Critères de recherche : dans %%1%% %%2%% de %%3%%.</string>
   <string name="td_overlay_capture_new_receipt">Saisir un \nnouveau reçu</string>
+
+  <!--new texts -->
+  <string name="itin_adjustments">"Ajustements"</string>
+  <string name="itin_allowances">"Indemnités"</string>
+  <string name="itin_border_crossing">"Passage à la frontière"</string>
+  <string name="itin_crossed_border">"Frontière passée"</string>
+  <string name="itin_daily_allowance">"Indemnité journalière"</string>
+  <string name="itin_departed">"Parti"</string>
+  <string name="itin_excluded">"Exclu"</string>
+  <string name="itin_expense_details">"Détails des dépenses"</string>
+  <string name="itin_itineraries">"Itinéraires"</string>
+  <string name="itin_lodging">"Hébergement"</string>
+  <string name="itin_meals">"Repas"</string>
+  <string name="itin_more_information">"Plus"</string>
+  <string name="itin_meal_not_provided">"Non compris"</string>
+  <string name="itin_overnight">"Nuitée"</string>
+  <string name="itin_total_allowance">"Indemnité totale"</string>
+  <string name="itin_travel_allowances">"Indemnité de déplacement"</string>
+
 </resources>
