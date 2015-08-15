@@ -4,8 +4,13 @@ import android.app.Activity;
 import android.app.AlertDialog;
 import android.app.Dialog;
 import android.app.PendingIntent;
-import android.content.*;
+import android.content.BroadcastReceiver;
+import android.content.Context;
+import android.content.DialogInterface;
 import android.content.DialogInterface.OnCancelListener;
+import android.content.Intent;
+import android.content.IntentFilter;
+import android.content.SharedPreferences;
 import android.content.res.Configuration;
 import android.content.res.Resources;
 import android.graphics.Paint;
@@ -13,7 +18,12 @@ import android.location.Criteria;
 import android.location.LocationListener;
 import android.location.LocationManager;
 import android.net.Uri;
-import android.os.*;
+import android.os.AsyncTask;
+import android.os.Bundle;
+import android.os.Environment;
+import android.os.Handler;
+import android.os.Looper;
+import android.os.Message;
 import android.preference.PreferenceManager;
 import android.provider.MediaStore;
 import android.support.v4.app.ActionBarDrawerToggle;
@@ -30,16 +40,36 @@ import android.text.util.Linkify;
 import android.util.Log;
 import android.util.SparseArray;
 import android.util.TypedValue;
-import android.view.*;
+import android.view.ContextMenu;
 import android.view.ContextMenu.ContextMenuInfo;
+import android.view.GestureDetector;
 import android.view.GestureDetector.SimpleOnGestureListener;
+import android.view.Gravity;
+import android.view.LayoutInflater;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
+import android.view.MotionEvent;
+import android.view.View;
 import android.view.View.OnClickListener;
-import android.widget.*;
+import android.view.ViewGroup;
+import android.widget.ImageSwitcher;
+import android.widget.ImageView;
+import android.widget.LinearLayout;
+import android.widget.ScrollView;
+import android.widget.TextView;
+import android.widget.Toast;
+import android.widget.ViewFlipper;
+
 import com.concur.breeze.R;
 import com.concur.mobile.base.service.BaseAsyncResultReceiver;
 import com.concur.mobile.base.ui.UIUtils;
 import com.concur.mobile.core.ConcurCore;
-import com.concur.mobile.core.activity.*;
+import com.concur.mobile.core.activity.BaseActivity;
+import com.concur.mobile.core.activity.MessageCenter;
+import com.concur.mobile.core.activity.Preferences;
+import com.concur.mobile.core.activity.Tour;
+import com.concur.mobile.core.activity.ViewImage;
 import com.concur.mobile.core.config.RuntimeConfig;
 import com.concur.mobile.core.dialog.AlertDialogFragment;
 import com.concur.mobile.core.dialog.DialogFragmentFactory;
@@ -56,7 +86,11 @@ import com.concur.mobile.core.expense.data.IExpenseEntryCache;
 import com.concur.mobile.core.expense.data.IExpenseReportCache;
 import com.concur.mobile.core.expense.receiptstore.activity.ReceiptStoreFragment;
 import com.concur.mobile.core.expense.receiptstore.service.ReceiptShareService;
-import com.concur.mobile.core.expense.report.activity.*;
+import com.concur.mobile.core.expense.report.activity.ActiveReportsListAdapter;
+import com.concur.mobile.core.expense.report.activity.ExpenseActiveReports;
+import com.concur.mobile.core.expense.report.activity.ExpenseEntries;
+import com.concur.mobile.core.expense.report.activity.ExpenseEntryMileage;
+import com.concur.mobile.core.expense.report.activity.ExpenseReportHeader;
 import com.concur.mobile.core.expense.report.approval.activity.Approval;
 import com.concur.mobile.core.expense.report.data.CarConfig;
 import com.concur.mobile.core.expense.report.data.ExpenseReport;
@@ -66,7 +100,11 @@ import com.concur.mobile.core.expense.service.CountSummaryRequest;
 import com.concur.mobile.core.fragment.navigation.DefaultNavigationItem;
 import com.concur.mobile.core.fragment.navigation.DefaultSimpleNavigationItem;
 import com.concur.mobile.core.fragment.navigation.DefaultTextNavigationItem;
-import com.concur.mobile.core.fragment.navigation.Navigation.*;
+import com.concur.mobile.core.fragment.navigation.Navigation.CustomNavigationItem;
+import com.concur.mobile.core.fragment.navigation.Navigation.NavigationItem;
+import com.concur.mobile.core.fragment.navigation.Navigation.NavigationListener;
+import com.concur.mobile.core.fragment.navigation.Navigation.SimpleNavigationItem;
+import com.concur.mobile.core.fragment.navigation.Navigation.TextNavigationItem;
 import com.concur.mobile.core.request.activity.RequestListActivity;
 import com.concur.mobile.core.request.util.RequestStatus;
 import com.concur.mobile.core.service.ConcurService;
@@ -85,7 +123,12 @@ import com.concur.mobile.core.travel.hotel.activity.RestHotelSearch;
 import com.concur.mobile.core.travel.rail.activity.RailSearch;
 import com.concur.mobile.core.travel.service.ItineraryRequest;
 import com.concur.mobile.core.travel.service.ItinerarySummaryListRequest;
-import com.concur.mobile.core.util.*;
+import com.concur.mobile.core.util.ConcurException;
+import com.concur.mobile.core.util.Const;
+import com.concur.mobile.core.util.EventTracker;
+import com.concur.mobile.core.util.Flurry;
+import com.concur.mobile.core.util.RolesUtil;
+import com.concur.mobile.core.util.ViewUtil;
 import com.concur.mobile.corp.ConcurMobile;
 import com.concur.mobile.platform.authentication.LogoutRequestTask;
 import com.concur.mobile.platform.authentication.SessionInfo;
@@ -94,14 +137,22 @@ import com.concur.mobile.platform.location.LastLocationTracker;
 import com.concur.mobile.platform.ui.common.dialog.NoConnectivityDialogFragment;
 import com.concur.mobile.platform.ui.common.util.ImageUtil;
 import com.concur.platform.PlatformProperties;
+
 import org.apache.http.HttpStatus;
 
 import java.io.File;
 import java.net.URLEncoder;
-import java.util.*;
+import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.HashMap;
+import java.util.Iterator;
+import java.util.List;
+import java.util.Locale;
+import java.util.Map;
+import java.util.TimeZone;
 
-@EventTracker.EventTrackerClassName(getClassName = "Home") public class Home extends BaseActivity
-        implements View.OnClickListener, NavigationListener, ReceiptChoiceListener {
+@EventTracker.EventTrackerClassName(getClassName = Flurry.SCREEN_NAME_HOME)
+public class Home extends BaseActivity implements View.OnClickListener, NavigationListener, ReceiptChoiceListener {
 
     public static boolean forceExpirationHome;
 
@@ -229,19 +280,20 @@ import java.util.*;
             super(looper);
         }
 
-        @Override public void handleMessage(Message msg) {
+        @Override
+        public void handleMessage(Message msg) {
             if (liveHome != null && !liveHome.loginHasExpired) {
                 switch (msg.what) {
-                case 1:
-                    Log.d(Const.LOG_TAG, "login expired, resetting");
+                    case 1:
+                        Log.d(Const.LOG_TAG, "login expired, resetting");
 
-                    liveHome.loginHasExpired = true;
-                    Intent home = new Intent(liveHome, Home.class);
-                    home.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
-                    home.putExtra(EXPIRE_LOGIN, true);
-                    liveHome.startActivity(home);
+                        liveHome.loginHasExpired = true;
+                        Intent home = new Intent(liveHome, Home.class);
+                        home.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+                        home.putExtra(EXPIRE_LOGIN, true);
+                        liveHome.startActivity(home);
 
-                    break;
+                        break;
                 }
             }
         }
@@ -257,19 +309,20 @@ import java.util.*;
             super(looper);
         }
 
-        @Override public void handleMessage(Message msg) {
+        @Override
+        public void handleMessage(Message msg) {
             if (liveHome != null && !liveHome.remoteWipe) {
                 switch (msg.what) {
-                case 1:
-                    Log.d(Const.LOG_TAG, "RemoteWipeHandler: remote wipe, resetting");
+                    case 1:
+                        Log.d(Const.LOG_TAG, "RemoteWipeHandler: remote wipe, resetting");
 
-                    liveHome.remoteWipe = true;
-                    Intent home = new Intent(liveHome, Home.class);
-                    home.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
-                    home.putExtra(REMOTE_WIPE, true);
-                    liveHome.startActivity(home);
+                        liveHome.remoteWipe = true;
+                        Intent home = new Intent(liveHome, Home.class);
+                        home.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+                        home.putExtra(REMOTE_WIPE, true);
+                        liveHome.startActivity(home);
 
-                    break;
+                        break;
                 }
             }
         }
@@ -325,7 +378,8 @@ import java.util.*;
         /**
          * Receive notification that some piece of data has been retrieved.
          */
-        @Override public void onReceive(Context context, Intent intent) {
+        @Override
+        public void onReceive(Context context, Intent intent) {
 
             String action = intent.getAction();
             if (Const.ACTION_SUMMARY_UPDATED.equals(action)) {
@@ -381,7 +435,8 @@ import java.util.*;
 
     private String receiptImageDataLocalFilePath;
 
-    @Override protected void onCreate(Bundle savedInstanceState) {
+    @Override
+    protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         // Track this activity in a static for use by the expired login handler.
         // This is nulled in onDestroy to hopefully prevent a leak.
@@ -853,19 +908,20 @@ import java.util.*;
                 this.homeTourDotsList = homeTourDotsList;
 
                 Resources res = getResources();
-                homeTourTitleStrings = new String[] { res.getString(R.string.home_tour_expense1_title),
+                homeTourTitleStrings = new String[]{res.getString(R.string.home_tour_expense1_title),
                         res.getString(R.string.home_tour_expense2_title),
-                        res.getString(R.string.home_tour_travel1_title) };
+                        res.getString(R.string.home_tour_travel1_title)};
 
-                homeTourMessageStrings = new String[] { res.getString(R.string.home_tour_expense1_message),
+                homeTourMessageStrings = new String[]{res.getString(R.string.home_tour_expense1_message),
                         res.getString(R.string.home_tour_expense2_message),
-                        res.getString(R.string.home_tour_travel1_message) };
+                        res.getString(R.string.home_tour_travel1_message)};
 
                 homeTourTextTitle = (TextView) findViewById(R.id.home_tour_text_title);
                 homeTourTextMessage = (TextView) findViewById(R.id.home_tour_text_message);
             }
 
-            @Override public boolean onFling(MotionEvent e1, MotionEvent e2, float velocityX, float velocityY) {
+            @Override
+            public boolean onFling(MotionEvent e1, MotionEvent e2, float velocityX, float velocityY) {
                 try {
                     if (Math.abs(e1.getY() - e2.getY()) > SWIPE_MAX_OFF_PATH)
                         return false;
@@ -907,7 +963,8 @@ import java.util.*;
                 return false;
             }
 
-            @Override public boolean onDown(MotionEvent e) {
+            @Override
+            public boolean onDown(MotionEvent e) {
                 return true;
             }
         }
@@ -1024,7 +1081,8 @@ import java.util.*;
         setViewInvisible(R.id.tip_trip_text);
     }
 
-    @Override protected void onStart() {
+    @Override
+    protected void onStart() {
         super.onStart();
 
         startLocationUpdates();
@@ -1035,12 +1093,16 @@ import java.util.*;
      * 
      * @see com.concur.mobile.corp.activity.BaseActivity#onResume()
      */
-    @Override protected void onResume() {
+    @Override
+    protected void onResume() {
 
         super.onResume();
 
         if (forceExpirationHome) {
             forceExpirationHome = false;
+            cancelAllDataRequests();
+            clearSessionData();
+            showExpiredDialog();
         } else {
 
             String sessionId = PlatformProperties.getSessionId();
@@ -1104,7 +1166,8 @@ import java.util.*;
      * if your application targets API level 12 or lower, then your activity always handles this configuration change via this
      * method. API level 12 or lower doesnt restart the app if in AndroidManifest we mentioned android:confiChange="orientation".
      */
-    @Override public void onConfigurationChanged(Configuration newConfig) {
+    @Override
+    public void onConfigurationChanged(Configuration newConfig) {
         super.onConfigurationChanged(newConfig);
         showHideHomeImage();
     }
@@ -1122,14 +1185,14 @@ import java.util.*;
         ImageView cityscape = (ImageView) findViewById(R.id.travelCityscape);
         int orientation = getResources().getConfiguration().orientation;
         switch (orientation) {
-        case Configuration.ORIENTATION_PORTRAIT:
-            cityscape.setVisibility(View.VISIBLE);
-            cityscape.setImageResource(
-                    getResources().getIdentifier(Preferences.getCurrentCityscape(), "drawable", this.getPackageName()));
-            break;
-        case Configuration.ORIENTATION_LANDSCAPE:
-            cityscape.setVisibility(View.GONE);
-            break;
+            case Configuration.ORIENTATION_PORTRAIT:
+                cityscape.setVisibility(View.VISIBLE);
+                cityscape.setImageResource(
+                        getResources().getIdentifier(Preferences.getCurrentCityscape(), "drawable", this.getPackageName()));
+                break;
+            case Configuration.ORIENTATION_LANDSCAPE:
+                cityscape.setVisibility(View.GONE);
+                break;
         }
     }
 
@@ -1149,7 +1212,8 @@ import java.util.*;
         }
     }
 
-    @Override protected void onServiceAvailable() {
+    @Override
+    protected void onServiceAvailable() {
         if (ConcurCore.isConnected()) {
             // Upload any saved exceptions. Occurs in a background task and we
             // do not care about success/fail.
@@ -1189,7 +1253,8 @@ import java.util.*;
      * 
      * @see com.concur.mobile.corp.activity.BaseActivity#onPause()
      */
-    @Override protected void onPause() {
+    @Override
+    protected void onPause() {
         super.onPause();
 
         if (dataReceiverRegistered) {
@@ -1230,7 +1295,8 @@ import java.util.*;
         }
     }
 
-    @Override protected void onStop() {
+    @Override
+    protected void onStop() {
         super.onStop();
 
         stopLocationUpdates();
@@ -1241,7 +1307,8 @@ import java.util.*;
      * 
      * @see android.app.Activity#onDestroy()
      */
-    @Override protected void onDestroy() {
+    @Override
+    protected void onDestroy() {
         super.onDestroy();
 
         liveHome = null;
@@ -1253,7 +1320,8 @@ import java.util.*;
         }
     }
 
-    @Override protected void onSaveInstanceState(Bundle outState) {
+    @Override
+    protected void onSaveInstanceState(Bundle outState) {
         super.onSaveInstanceState(outState);
 
         // Indicate if we are in an expired state. This will get us to
@@ -1279,7 +1347,8 @@ import java.util.*;
 
     }
 
-    @Override public boolean onCreateOptionsMenu(Menu menu) {
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
         MenuInflater inflater = getMenuInflater();
         inflater.inflate(R.menu.home, menu);
 
@@ -1295,7 +1364,8 @@ import java.util.*;
         return true;
     }
 
-    @Override public boolean onPrepareOptionsMenu(Menu menu) {
+    @Override
+    public boolean onPrepareOptionsMenu(Menu menu) {
         if (!ConcurCore.isConnected()) {
             menu.findItem(R.id.menuReset).setVisible(false);
             menu.findItem(R.id.menuRefresh).setVisible(false);
@@ -1322,57 +1392,58 @@ import java.util.*;
         }
     }
 
-    @Override public boolean onOptionsItemSelected(MenuItem item) {
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
 
         Intent i;
 
         switch (item.getItemId()) {
-        case android.R.id.home: {
-            // If navigation button is pressed, slide nav drawer open
-            mDrawerToggle.onOptionsItemSelected(item);
-        }
-        case R.id.menuRefresh:
-            loadData();
-            break;
-        case R.id.menuMessageCenter: {
-            // Flurry Notification
-            Map<String, String> params = new HashMap<String, String>();
-            params.put(Flurry.PARAM_NAME_ACTION, Flurry.PARAM_VALUE_MESSAGE_CENTER);
-            EventTracker.INSTANCE.track(Flurry.CATEGORY_HOME, Flurry.EVENT_NAME_ACTION, params);
-
-            Intent intent = new Intent(Home.this, MessageCenter.class);
-            startActivityForResult(intent, REQUEST_CODE_MSG_CENTER);
-            break;
-        }
-        case R.id.menuSettings: {
-            i = new Intent(this, Preferences.class);
-            i.putExtra(OPEN_SOURCE_LIBRARY_CLASS, OpenSourceLicenseInfo.class);
-            startActivity(i);
-            break;
-        }
-        case R.id.menuReset: {
-            if (ConcurCore.isConnected()) {
-                ConcurMobile app = (ConcurMobile) getApplication();
-                // Only perform a clear if there are no outstanding requests
-                // for data.
-                if (inProgressRef == 0) {
-                    // Clear everything
-                    app.clearLocalData();
-                    ((ConcurCore) getApplication()).getUserConfig();
-                }
+            case android.R.id.home: {
+                // If navigation button is pressed, slide nav drawer open
+                mDrawerToggle.onOptionsItemSelected(item);
             }
-            break;
-        }
-        case R.id.menuLogout: {
-            logout();
+            case R.id.menuRefresh:
+                loadData();
+                break;
+            case R.id.menuMessageCenter: {
+                // Flurry Notification
+                Map<String, String> params = new HashMap<String, String>();
+                params.put(Flurry.PARAM_NAME_ACTION, Flurry.PARAM_VALUE_MESSAGE_CENTER);
+                EventTracker.INSTANCE.track(Flurry.CATEGORY_HOME, Flurry.EVENT_NAME_ACTION, params);
 
-            break;
-        }
-        // case R.id.menuViewLog: {
-        // i = new Intent(this, LogView.class);
-        // startActivity(i);
-        // break;
-        // }
+                Intent intent = new Intent(Home.this, MessageCenter.class);
+                startActivityForResult(intent, REQUEST_CODE_MSG_CENTER);
+                break;
+            }
+            case R.id.menuSettings: {
+                i = new Intent(this, Preferences.class);
+                i.putExtra(OPEN_SOURCE_LIBRARY_CLASS, OpenSourceLicenseInfo.class);
+                startActivity(i);
+                break;
+            }
+            case R.id.menuReset: {
+                if (ConcurCore.isConnected()) {
+                    ConcurMobile app = (ConcurMobile) getApplication();
+                    // Only perform a clear if there are no outstanding requests
+                    // for data.
+                    if (inProgressRef == 0) {
+                        // Clear everything
+                        app.clearLocalData();
+                        ((ConcurCore) getApplication()).getUserConfig();
+                    }
+                }
+                break;
+            }
+            case R.id.menuLogout: {
+                logout();
+
+                break;
+            }
+            // case R.id.menuViewLog: {
+            // i = new Intent(this, LogView.class);
+            // startActivity(i);
+            // break;
+            // }
         }
 
         return super.onOptionsItemSelected(item);
@@ -1465,90 +1536,91 @@ import java.util.*;
         Intent i;
 
         switch (id) {
-        case R.id.menuHomeBookAir:
-        case R.id.homeRowBookFlight:
-            // Check whether user has permission to book air via mobile.
-            if (ViewUtil.isAirUser(this)) {
-                // Check for a complete travel profile.
-                if (ViewUtil.isTravelProfileComplete(this) || ViewUtil.isTravelProfileCompleteMissingTSA(this)) {
-                    i = new Intent(this, AirSearch.class);
-                    if (isFromMoreMenu) {
-                        i.putExtra(Flurry.PARAM_NAME_BOOKED_FROM, Flurry.PARAM_VALUE_HOME_MORE);
-                        isFromMoreMenu = false;
+            case R.id.menuHomeBookAir:
+            case R.id.homeRowBookFlight:
+                // Check whether user has permission to book air via mobile.
+                if (ViewUtil.isAirUser(this)) {
+                    // Check for a complete travel profile.
+                    if (ViewUtil.isTravelProfileComplete(this) || ViewUtil.isTravelProfileCompleteMissingTSA(this)) {
+                        i = new Intent(this, AirSearch.class);
+                        if (isFromMoreMenu) {
+                            i.putExtra(Flurry.PARAM_NAME_BOOKED_FROM, Flurry.PARAM_VALUE_HOME_MORE);
+                            isFromMoreMenu = false;
+                        } else {
+                            i.putExtra(Flurry.PARAM_NAME_BOOKED_FROM, Flurry.PARAM_VALUE_HOME);
+                        }
+                        ConcurMobile.userClickTime = System.currentTimeMillis();
+                        startActivity(i);
                     } else {
-                        i.putExtra(Flurry.PARAM_NAME_BOOKED_FROM, Flurry.PARAM_VALUE_HOME);
+                        showDialog(Const.DIALOG_TRAVEL_PROFILE_INCOMPLETE);
                     }
-                    ConcurMobile.userClickTime = System.currentTimeMillis();
-                    startActivity(i);
                 } else {
-                    showDialog(Const.DIALOG_TRAVEL_PROFILE_INCOMPLETE);
+                    showDialog(Const.DIALOG_TRAVEL_NO_AIR_PERMISSION);
                 }
-            } else {
-                showDialog(Const.DIALOG_TRAVEL_NO_AIR_PERMISSION);
-            }
-            break;
-        case R.id.menuHomeBookCar:
-        case R.id.homeRowBookCar:
-            i = new Intent(this, CarSearch.class);
-            if (isFromMoreMenu) {
-                i.putExtra(Flurry.PARAM_NAME_BOOKED_FROM, Flurry.PARAM_VALUE_HOME_MORE);
-                isFromMoreMenu = false;
-            } else {
-                i.putExtra(Flurry.PARAM_NAME_BOOKED_FROM, Flurry.PARAM_VALUE_HOME);
-            }
-            ConcurMobile.userClickTime = System.currentTimeMillis();
-            startActivity(i);
-            break;
-        case R.id.menuHomeBookHotel:
-        case R.id.homeRowBookHotel:
-            if (Preferences.shouldShowHotelJarvisUI()) {
-                i = new Intent(this, RestHotelSearch.class);
-            } else {
-                i = new Intent(this, HotelSearch.class);
-            }
-            if (isFromMoreMenu) {
-                i.putExtra(Flurry.PARAM_NAME_BOOKED_FROM, Flurry.PARAM_VALUE_HOME_MORE);
-                isFromMoreMenu = false;
-            } else {
-                i.putExtra(Flurry.PARAM_NAME_BOOKED_FROM, Flurry.PARAM_VALUE_HOME);
-            }
-            ConcurMobile.userClickTime = System.currentTimeMillis();
-            startActivityForResult(i, Const.REQUEST_CODE_BOOK_HOTEL);
-            break;
-        case R.id.menuHomeBookRail:
-        case R.id.homeRowBookTrain:
-            i = new Intent(this, RailSearch.class);
-            if (isFromMoreMenu) {
-                i.putExtra(Flurry.PARAM_NAME_BOOKED_FROM, Flurry.PARAM_VALUE_HOME_MORE);
-                isFromMoreMenu = false;
-            } else {
-                i.putExtra(Flurry.PARAM_NAME_BOOKED_FROM, Flurry.PARAM_VALUE_HOME);
-            }
-            ConcurMobile.userClickTime = System.currentTimeMillis();
-            startActivity(i);
-            break;
+                break;
+            case R.id.menuHomeBookCar:
+            case R.id.homeRowBookCar:
+                i = new Intent(this, CarSearch.class);
+                if (isFromMoreMenu) {
+                    i.putExtra(Flurry.PARAM_NAME_BOOKED_FROM, Flurry.PARAM_VALUE_HOME_MORE);
+                    isFromMoreMenu = false;
+                } else {
+                    i.putExtra(Flurry.PARAM_NAME_BOOKED_FROM, Flurry.PARAM_VALUE_HOME);
+                }
+                ConcurMobile.userClickTime = System.currentTimeMillis();
+                startActivity(i);
+                break;
+            case R.id.menuHomeBookHotel:
+            case R.id.homeRowBookHotel:
+                if (Preferences.shouldShowHotelJarvisUI()) {
+                    i = new Intent(this, RestHotelSearch.class);
+                } else {
+                    i = new Intent(this, HotelSearch.class);
+                }
+                if (isFromMoreMenu) {
+                    i.putExtra(Flurry.PARAM_NAME_BOOKED_FROM, Flurry.PARAM_VALUE_HOME_MORE);
+                    isFromMoreMenu = false;
+                } else {
+                    i.putExtra(Flurry.PARAM_NAME_BOOKED_FROM, Flurry.PARAM_VALUE_HOME);
+                }
+                ConcurMobile.userClickTime = System.currentTimeMillis();
+                startActivityForResult(i, Const.REQUEST_CODE_BOOK_HOTEL);
+                break;
+            case R.id.menuHomeBookRail:
+            case R.id.homeRowBookTrain:
+                i = new Intent(this, RailSearch.class);
+                if (isFromMoreMenu) {
+                    i.putExtra(Flurry.PARAM_NAME_BOOKED_FROM, Flurry.PARAM_VALUE_HOME_MORE);
+                    isFromMoreMenu = false;
+                } else {
+                    i.putExtra(Flurry.PARAM_NAME_BOOKED_FROM, Flurry.PARAM_VALUE_HOME);
+                }
+                ConcurMobile.userClickTime = System.currentTimeMillis();
+                startActivity(i);
+                break;
         }
     }
 
-    @Override public void onCreateContextMenu(ContextMenu menu, View v, ContextMenuInfo menuInfo) {
+    @Override
+    public void onCreateContextMenu(ContextMenu menu, View v, ContextMenuInfo menuInfo) {
         super.onCreateContextMenu(menu, v, menuInfo);
 
         switch (v.getId()) {
-        case R.id.homeBook:
+            case R.id.homeBook:
 
-            BookTravelDialogFragment dialogFragment = new BookTravelDialogFragment();
+                BookTravelDialogFragment dialogFragment = new BookTravelDialogFragment();
 
-            // Add arguments
-            Bundle args = new Bundle();
-            if (isFromMoreMenu) {
-                args.putBoolean(BookTravelDialogFragment.IS_FROM_MORE_MENU_ARG, isFromMoreMenu);
-                isFromMoreMenu = false;
-            }
+                // Add arguments
+                Bundle args = new Bundle();
+                if (isFromMoreMenu) {
+                    args.putBoolean(BookTravelDialogFragment.IS_FROM_MORE_MENU_ARG, isFromMoreMenu);
+                    isFromMoreMenu = false;
+                }
 
-            dialogFragment.setArguments(args);
-            (dialogFragment).show(getSupportFragmentManager(), null);
+                dialogFragment.setArguments(args);
+                (dialogFragment).show(getSupportFragmentManager(), null);
 
-            break;
+                break;
         }
     }
 
@@ -1559,143 +1631,143 @@ import java.util.*;
 
         final int id = v.getId();
         switch (id) {
-        // TODO - Remove refresh and MC from here
-        // case R.id.homeRefresh:
-        // loadData();
-        // break;
-        // case R.id.homeMsgCntr: {
-        // // Flurry Notification
-        // Map<String, String> params = new HashMap<String, String>();
-        // params.put(Flurry.PARAM_NAME_ACTION,
-        // Flurry.PARAM_VALUE_MESSAGE_CENTER);
-        // EventTracker.INSTANCE.track(Flurry.CATEGORY_HOME,
-        // Flurry.EVENT_NAME_ACTION, params);
-        //
-        // Intent intent = new Intent(Home.this, MessageCenter.class);
-        // startActivity(intent);
-        // break;
-        // }
-        case R.id.homeBook:
-            // MOB-11313
-            if (!ConcurCore.isConnected()) {
-                showDialog(Const.DIALOG_NO_CONNECTIVITY);
-            } else {
-                registerForContextMenu(v);
-                openContextMenu(v);
+            // TODO - Remove refresh and MC from here
+            // case R.id.homeRefresh:
+            // loadData();
+            // break;
+            // case R.id.homeMsgCntr: {
+            // // Flurry Notification
+            // Map<String, String> params = new HashMap<String, String>();
+            // params.put(Flurry.PARAM_NAME_ACTION,
+            // Flurry.PARAM_VALUE_MESSAGE_CENTER);
+            // EventTracker.INSTANCE.track(Flurry.CATEGORY_HOME,
+            // Flurry.EVENT_NAME_ACTION, params);
+            //
+            // Intent intent = new Intent(Home.this, MessageCenter.class);
+            // startActivity(intent);
+            // break;
+            // }
+            case R.id.homeBook:
+                // MOB-11313
+                if (!ConcurCore.isConnected()) {
+                    showDialog(Const.DIALOG_NO_CONNECTIVITY);
+                } else {
+                    registerForContextMenu(v);
+                    openContextMenu(v);
 
-                // Flurry Notification
+                    // Flurry Notification
                 /*
                  * Map<String, String> params = new HashMap<String, String>(); params.put(Flurry.PARAM_NAME_ACTION,
                  * Flurry.PARAM_VALUE_BOOK_TRAVEL); EventTracker.INSTANCE.track(Flurry.CATEGORY_HOME, Flurry.EVENT_NAME_ACTION,
                  * params);
                  */
 
-                Map<String, String> params = new HashMap<String, String>();
-                params.put(Flurry.PARAM_NAME_ACTION, Flurry.PARAM_VALUE_BOOK_TRAVEL);
-                EventTracker.INSTANCE.track(Flurry.CATEGORY_HOME_MORE, Flurry.EVENT_NAME_ACTION, params);
-            }
-            break;
-        case R.id.homeRowTravel: {
-            cancelAllDataRequests();
-            i = new Intent(this, TripList.class);
+                    Map<String, String> params = new HashMap<String, String>();
+                    params.put(Flurry.PARAM_NAME_ACTION, Flurry.PARAM_VALUE_BOOK_TRAVEL);
+                    EventTracker.INSTANCE.track(Flurry.CATEGORY_HOME_MORE, Flurry.EVENT_NAME_ACTION, params);
+                }
+                break;
+            case R.id.homeRowTravel: {
+                cancelAllDataRequests();
+                i = new Intent(this, TripList.class);
 
-            // do not show Travel Agency button for expense only && open booking
-            i.putExtra(Const.EXTRA_SHOW_TRAVEL_AGENCY_BUTTON, showTravelAgencyBtn);
-
-            // Flurry Notification
-            Map<String, String> params = new HashMap<String, String>();
-            params.put(Flurry.PARAM_NAME_ACTION, Flurry.PARAM_VALUE_VIEW_TRIPS);
-            EventTracker.INSTANCE.track(Flurry.CATEGORY_HOME, Flurry.EVENT_NAME_ACTION, params);
-
-            break;
-        }
-        case R.id.homeRowApprovals: {
-            cancelAllDataRequests();
-            i = new Intent(this, Approval.class);
-            // Flurry Notification
-            Map<String, String> params = new HashMap<String, String>();
-            params.put(Flurry.PARAM_NAME_ACTION, Flurry.PARAM_VALUE_VIEW_APPROVALS);
-            EventTracker.INSTANCE.track(Flurry.CATEGORY_HOME, Flurry.EVENT_NAME_ACTION, params);
-            break;
-        }
-        case R.id.homeRowExpenses: {
-            cancelAllDataRequests();
-            // i = new Intent(this, AllExpense.class);
-            if (Preferences.shouldUseNewOcrFeatures()) {
-                i = new Intent(this, ExpensesAndReceiptsActivity.class);
-            } else {
-                i = new Intent(this, ExpensesAndReceipts.class);
-            }
-            // Flurry Notification
-            Map<String, String> params = new HashMap<String, String>();
-            params.put(Flurry.PARAM_NAME_ACTION, Flurry.PARAM_VALUE_VIEW_EXPENSE_LIST);
-            EventTracker.INSTANCE.track(Flurry.CATEGORY_HOME, Flurry.EVENT_NAME_ACTION, params);
-            break;
-        }
-
-        case R.id.homeQuickExpense:
-            // Verify that we have expense types
-            ConcurCore ConcurCore = (ConcurCore) getApplication();
-            IExpenseEntryCache expEntCache = ConcurCore.getExpenseEntryCache();
-            ArrayList<ExpenseType> expenseTypes = expEntCache.getExpenseTypes();
-            if (expenseTypes != null) {
-                i = new Intent(Home.this, QuickExpense.class);
-                // Set the type of expense entry we are creating, defaults to
-                // cash.
-                i.putExtra(Const.EXTRA_EXPENSE_ENTRY_TYPE_KEY, Expense.ExpenseEntryType.CASH.name());
-                i.putExtra(Flurry.PARAM_NAME_CAME_FROM, Flurry.PARAM_VALUE_HOME);
-                i.putExtra(Const.EXTRA_EXPENSE_MOBILE_ENTRY_ACTION, Const.CREATE_MOBILE_ENTRY);
-                requestCode = Const.CREATE_MOBILE_ENTRY;
+                // do not show Travel Agency button for expense only && open booking
+                i.putExtra(Const.EXTRA_SHOW_TRAVEL_AGENCY_BUTTON, showTravelAgencyBtn);
 
                 // Flurry Notification
                 Map<String, String> params = new HashMap<String, String>();
-                params.put(Flurry.PARAM_NAME_ACTION, Flurry.PARAM_VALUE_QUICK_EXPENSE);
+                params.put(Flurry.PARAM_NAME_ACTION, Flurry.PARAM_VALUE_VIEW_TRIPS);
                 EventTracker.INSTANCE.track(Flurry.CATEGORY_HOME, Flurry.EVENT_NAME_ACTION, params);
-            } else {
-                // Can't go there
-                showDialog(Const.DIALOG_EXPENSE_NO_EXPENSE_TYPES);
+
+                break;
             }
-            break;
-        case R.id.homeMileage:
-            showMileageDialog();
-            break;
+            case R.id.homeRowApprovals: {
+                cancelAllDataRequests();
+                i = new Intent(this, Approval.class);
+                // Flurry Notification
+                Map<String, String> params = new HashMap<String, String>();
+                params.put(Flurry.PARAM_NAME_ACTION, Flurry.PARAM_VALUE_VIEW_APPROVALS);
+                EventTracker.INSTANCE.track(Flurry.CATEGORY_HOME, Flurry.EVENT_NAME_ACTION, params);
+                break;
+            }
+            case R.id.homeRowExpenses: {
+                cancelAllDataRequests();
+                // i = new Intent(this, AllExpense.class);
+                if (Preferences.shouldUseNewOcrFeatures()) {
+                    i = new Intent(this, ExpensesAndReceiptsActivity.class);
+                } else {
+                    i = new Intent(this, ExpensesAndReceipts.class);
+                }
+                // Flurry Notification
+                Map<String, String> params = new HashMap<String, String>();
+                params.put(Flurry.PARAM_NAME_ACTION, Flurry.PARAM_VALUE_VIEW_EXPENSE_LIST);
+                EventTracker.INSTANCE.track(Flurry.CATEGORY_HOME, Flurry.EVENT_NAME_ACTION, params);
+                break;
+            }
 
-        case R.id.homeRowTR:
-            i = showTravelRequest(i);
-            break;
+            case R.id.homeQuickExpense:
+                // Verify that we have expense types
+                ConcurCore ConcurCore = (ConcurCore) getApplication();
+                IExpenseEntryCache expEntCache = ConcurCore.getExpenseEntryCache();
+                ArrayList<ExpenseType> expenseTypes = expEntCache.getExpenseTypes();
+                if (expenseTypes != null) {
+                    i = new Intent(Home.this, QuickExpense.class);
+                    // Set the type of expense entry we are creating, defaults to
+                    // cash.
+                    i.putExtra(Const.EXTRA_EXPENSE_ENTRY_TYPE_KEY, Expense.ExpenseEntryType.CASH.name());
+                    i.putExtra(Flurry.PARAM_NAME_CAME_FROM, Flurry.PARAM_VALUE_HOME);
+                    i.putExtra(Const.EXTRA_EXPENSE_MOBILE_ENTRY_ACTION, Const.CREATE_MOBILE_ENTRY);
+                    requestCode = Const.CREATE_MOBILE_ENTRY;
 
-        case R.id.homeRowExpenseReports: {
-            cancelAllDataRequests();
-            i = new Intent(this, ExpenseActiveReports.class);
-            // Flurry Notification
-            Map<String, String> params = new HashMap<String, String>();
-            params.put(Flurry.PARAM_NAME_ACTION, Flurry.PARAM_VALUE_VIEW_REPORTS);
-            EventTracker.INSTANCE.track(Flurry.CATEGORY_HOME, Flurry.EVENT_NAME_ACTION, params);
-            break;
-        }
-        case R.id.homeCamera: {
-            // OCR
-            if (Preferences.isOCRUser() && /*
+                    // Flurry Notification
+                    Map<String, String> params = new HashMap<String, String>();
+                    params.put(Flurry.PARAM_NAME_ACTION, Flurry.PARAM_VALUE_QUICK_EXPENSE);
+                    EventTracker.INSTANCE.track(Flurry.CATEGORY_HOME, Flurry.EVENT_NAME_ACTION, params);
+                } else {
+                    // Can't go there
+                    showDialog(Const.DIALOG_EXPENSE_NO_EXPENSE_TYPES);
+                }
+                break;
+            case R.id.homeMileage:
+                showMileageDialog();
+                break;
+
+            case R.id.homeRowTR:
+                i = showTravelRequest(i);
+                break;
+
+            case R.id.homeRowExpenseReports: {
+                cancelAllDataRequests();
+                i = new Intent(this, ExpenseActiveReports.class);
+                // Flurry Notification
+                Map<String, String> params = new HashMap<String, String>();
+                params.put(Flurry.PARAM_NAME_ACTION, Flurry.PARAM_VALUE_VIEW_REPORTS);
+                EventTracker.INSTANCE.track(Flurry.CATEGORY_HOME, Flurry.EVENT_NAME_ACTION, params);
+                break;
+            }
+            case R.id.homeCamera: {
+                // OCR
+                if (Preferences.isOCRUser() && /*
                                             * Preferences.shouldUseNewOcrFeatures () &&
                                             */!RolesUtil.isTestDriveUser()) {
-                // Create the fragment and show it as a dialog.
-                DialogFragment newFragment = new ReceiptChoiceDialogFragment();
-                newFragment.show(this.getSupportFragmentManager(), ReceiptChoiceDialogFragment.DIALOG_FRAGMENT_ID);
-            } else {
-                cancelAllDataRequests();
-                captureReceipt();
-            }
+                    // Create the fragment and show it as a dialog.
+                    DialogFragment newFragment = new ReceiptChoiceDialogFragment();
+                    newFragment.show(this.getSupportFragmentManager(), ReceiptChoiceDialogFragment.DIALOG_FRAGMENT_ID);
+                } else {
+                    cancelAllDataRequests();
+                    captureReceipt();
+                }
 
-            break;
-        }
-        case R.id.homeRowBookCar:
-        case R.id.homeRowBookFlight:
-        case R.id.homeRowBookHotel:
-        case R.id.homeRowBookTrain:
-            handleBookingClick(id);
-            // We don't worry about setting i here because the handle() method
-            // will launch the activity
-            break;
+                break;
+            }
+            case R.id.homeRowBookCar:
+            case R.id.homeRowBookFlight:
+            case R.id.homeRowBookHotel:
+            case R.id.homeRowBookTrain:
+                handleBookingClick(id);
+                // We don't worry about setting i here because the handle() method
+                // will launch the activity
+                break;
         }
 
         if (i != null) {
@@ -1756,53 +1828,54 @@ import java.util.*;
         }
     }
 
-    @Override protected Dialog onCreateDialog(int id) {
+    @Override
+    protected Dialog onCreateDialog(int id) {
         Dialog dlg = dialogs.get(id);
 
         if (dlg == null) {
             switch (id) {
-            case Const.DIALOG_EXPENSE_NO_MILEAGE_FORM: {
-                AlertDialog.Builder dlgBldr = new AlertDialog.Builder(this);
-                dlgBldr.setTitle(R.string.dlg_expense_no_mileage_form_title);
-                dlgBldr.setMessage(R.string.dlg_expense_no_mileage_form);
-                dlgBldr.setPositiveButton(getText(R.string.okay), new DialogInterface.OnClickListener() {
+                case Const.DIALOG_EXPENSE_NO_MILEAGE_FORM: {
+                    AlertDialog.Builder dlgBldr = new AlertDialog.Builder(this);
+                    dlgBldr.setTitle(R.string.dlg_expense_no_mileage_form_title);
+                    dlgBldr.setMessage(R.string.dlg_expense_no_mileage_form);
+                    dlgBldr.setPositiveButton(getText(R.string.okay), new DialogInterface.OnClickListener() {
 
-                    public void onClick(DialogInterface dialog, int which) {
-                        dialog.dismiss();
-                    }
-                });
-                return dlgBldr.create();
-
-            }
-            case Const.DIALOG_TRAVEL_RETRIEVE_ITINERARY: {
-                dlg = super.onCreateDialog(id);
-                dlg.setOnCancelListener(new OnCancelListener() {
-
-                    public void onCancel(DialogInterface dialog) {
-                        // Cancel any outstanding request.
-                        if (itineraryRequest != null) {
-                            itineraryRequest.cancel();
+                        public void onClick(DialogInterface dialog, int which) {
+                            dialog.dismiss();
                         }
-                    }
-                });
-                break;
-            }
-            case Const.DIALOG_ALLOW_REPORTS: {
-                AlertDialog.Builder dlgBldr = new AlertDialog.Builder(this);
-                dlgBldr.setTitle(R.string.home_navigation_car_mileage_not_allow_title);
-                dlgBldr.setMessage(R.string.home_navigation_car_mileage_not_allow_msg);
-                dlgBldr.setPositiveButton(getText(R.string.okay), new DialogInterface.OnClickListener() {
+                    });
+                    return dlgBldr.create();
 
-                    public void onClick(DialogInterface dialog, int which) {
-                        dialog.dismiss();
-                    }
-                });
-                return dlgBldr.create();
-            }
-            default:
-                dlg = ((ConcurMobile) getApplication()).createDialog(this, id);
-                dialogs.put(id, dlg);
-                break;
+                }
+                case Const.DIALOG_TRAVEL_RETRIEVE_ITINERARY: {
+                    dlg = super.onCreateDialog(id);
+                    dlg.setOnCancelListener(new OnCancelListener() {
+
+                        public void onCancel(DialogInterface dialog) {
+                            // Cancel any outstanding request.
+                            if (itineraryRequest != null) {
+                                itineraryRequest.cancel();
+                            }
+                        }
+                    });
+                    break;
+                }
+                case Const.DIALOG_ALLOW_REPORTS: {
+                    AlertDialog.Builder dlgBldr = new AlertDialog.Builder(this);
+                    dlgBldr.setTitle(R.string.home_navigation_car_mileage_not_allow_title);
+                    dlgBldr.setMessage(R.string.home_navigation_car_mileage_not_allow_msg);
+                    dlgBldr.setPositiveButton(getText(R.string.okay), new DialogInterface.OnClickListener() {
+
+                        public void onClick(DialogInterface dialog, int which) {
+                            dialog.dismiss();
+                        }
+                    });
+                    return dlgBldr.create();
+                }
+                default:
+                    dlg = ((ConcurMobile) getApplication()).createDialog(this, id);
+                    dialogs.put(id, dlg);
+                    break;
             }
         }
 
@@ -1814,117 +1887,118 @@ import java.util.*;
      * 
      * @see android.app.Activity#onPrepareDialog(int, android.app.Dialog)
      */
-    @Override protected void onPrepareDialog(int id, Dialog dialog) {
+    @Override
+    protected void onPrepareDialog(int id, Dialog dialog) {
         switch (id) {
-        case Const.DIALOG_TRAVEL_RETRIEVE_ITINERARY_FAILED: {
-            AlertDialog alertDlg = (AlertDialog) dialog;
-            alertDlg.setMessage(actionStatusErrorMessage);
-            break;
-        }
-        default: {
-            super.onPrepareDialog(id, dialog);
-            break;
-        }
+            case Const.DIALOG_TRAVEL_RETRIEVE_ITINERARY_FAILED: {
+                AlertDialog alertDlg = (AlertDialog) dialog;
+                alertDlg.setMessage(actionStatusErrorMessage);
+                break;
+            }
+            default: {
+                super.onPrepareDialog(id, dialog);
+                break;
+            }
         }
     }
 
-    @Override protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
 
         switch (requestCode) {
-        case Const.CREATE_MOBILE_ENTRY:
-            if (resultCode == Activity.RESULT_OK) {
-                // Go straight to the entries list
-                Intent intent;
-                if (Preferences.shouldUseNewOcrFeatures()) {
-                    intent = new Intent(this, ExpensesAndReceiptsActivity.class);
+            case Const.CREATE_MOBILE_ENTRY:
+                if (resultCode == Activity.RESULT_OK) {
+                    // Go straight to the entries list
+                    Intent intent;
+                    if (Preferences.shouldUseNewOcrFeatures()) {
+                        intent = new Intent(this, ExpensesAndReceiptsActivity.class);
+                    } else {
+                        intent = new Intent(this, ExpensesAndReceipts.class);
+                    }
+                    intent.putExtra(Const.EXTRA_CHECK_PROMPT_TO_RATE, true);
+                    startActivity(intent);
+                }
+                break;
+            case Const.CREATE_NEW_REPORT: {
+
+                if (data != null && data.hasExtra(Const.EXTRA_EXPENSE_REPORT_KEY)) {
+                    String reportKey = data.getStringExtra(Const.EXTRA_EXPENSE_REPORT_KEY);
+                    if (reportKey != null) {
+                        getMileageEntryForm(reportKey);
+                    }
+                }
+                break;
+            }
+            case Const.CREATE_MILEAGE_EXPENSE:
+                if (resultCode == Activity.RESULT_OK) {
+                    // Go to the report
+                    Intent i = new Intent(this, ExpenseEntries.class);
+                    i.putExtra(Const.EXTRA_EXPENSE_REPORT_KEY, data.getStringExtra(Const.EXTRA_EXPENSE_REPORT_KEY));
+                    i.putExtra(Const.EXTRA_EXPENSE_REPORT_SOURCE,
+                            data.getIntExtra(Const.EXTRA_EXPENSE_REPORT_SOURCE, Const.EXPENSE_REPORT_SOURCE_ACTIVE));
+                    startActivity(i);
+                }
+                break;
+            case Const.REQUEST_CODE_BOOK_HOTEL:
+                if (resultCode == Activity.RESULT_OK) {
+                    SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(ConcurMobile.getContext());
+                    if (Preferences.shouldPromptToRate(prefs, false)) {
+                        showDialog(Const.DIALOG_PROMPT_TO_RATE);
+                    }
+                }
+                break;
+
+            case REQUEST_TAKE_PICTURE: {
+                if (resultCode == Activity.RESULT_OK) {
+                    if (copyCapturedImage()) {
+
+                        // Flurry Notification
+                        Map<String, String> params = new HashMap<String, String>();
+                        params.put(Flurry.PARAM_NAME_ACTION, Flurry.PARAM_VALUE_CAMERA);
+                        params.put(Flurry.PARAM_NAME_RESULT, Flurry.PARAM_VALUE_OKAY);
+
+                        Intent it = new Intent(this, ViewImage.class);
+                        StringBuilder strBldr = new StringBuilder("file://");
+                        strBldr.append(receiptImageDataLocalFilePath);
+                        it.putExtra(Const.EXTRA_EXPENSE_RECEIPT_URL_KEY, strBldr.toString());
+                        it.putExtra(Const.EXTRA_RECEIPT_ONLY_FRAGMENT, true);
+                        it.putExtra(Const.EXTRA_SHOW_MENU, true);
+                        it.putExtra(Const.EXTRA_EXPENSE_IMAGE_FILE_PATH, receiptImageDataLocalFilePath);
+                        it.putExtra(Flurry.PARAM_NAME_FROM, Flurry.PARAM_VALUE_CAMERA);
+                        it.putExtra(Const.EXTRA_EXPENSE_SCREEN_TITLE_KEY, getText(R.string.receipt_image));
+                        startActivity(it);
+
+                    } else {
+                        // Flurry Notification.
+                        Map<String, String> params = new HashMap<String, String>();
+                        params.put(Flurry.PARAM_NAME_FAILURE,
+                                Flurry.PARAM_VALUE_FAILED_TO_CAPTURE_OR_REDUCE_RESOLUTION_FOR_RECEIPT_IMAGE);
+                        EventTracker.INSTANCE.track(Flurry.CATEGORY_RECEIPTS, Flurry.EVENT_NAME_FAILURE, params);
+
+                        showDialog(Const.DIALOG_EXPENSE_CAMERA_IMAGE_IMPORT_FAILED);
+                    }
                 } else {
-                    intent = new Intent(this, ExpensesAndReceipts.class);
-                }
-                intent.putExtra(Const.EXTRA_CHECK_PROMPT_TO_RATE, true);
-                startActivity(intent);
-            }
-            break;
-        case Const.CREATE_NEW_REPORT: {
-
-            if (data != null && data.hasExtra(Const.EXTRA_EXPENSE_REPORT_KEY)) {
-                String reportKey = data.getStringExtra(Const.EXTRA_EXPENSE_REPORT_KEY);
-                if (reportKey != null) {
-                    getMileageEntryForm(reportKey);
-                }
-            }
-            break;
-        }
-        case Const.CREATE_MILEAGE_EXPENSE:
-            if (resultCode == Activity.RESULT_OK) {
-                // Go to the report
-                Intent i = new Intent(this, ExpenseEntries.class);
-                i.putExtra(Const.EXTRA_EXPENSE_REPORT_KEY, data.getStringExtra(Const.EXTRA_EXPENSE_REPORT_KEY));
-                i.putExtra(Const.EXTRA_EXPENSE_REPORT_SOURCE,
-                        data.getIntExtra(Const.EXTRA_EXPENSE_REPORT_SOURCE, Const.EXPENSE_REPORT_SOURCE_ACTIVE));
-                startActivity(i);
-            }
-            break;
-        case Const.REQUEST_CODE_BOOK_HOTEL:
-            if (resultCode == Activity.RESULT_OK) {
-                SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(ConcurMobile.getContext());
-                if (Preferences.shouldPromptToRate(prefs, false)) {
-                    showDialog(Const.DIALOG_PROMPT_TO_RATE);
-                }
-            }
-            break;
-
-        case REQUEST_TAKE_PICTURE: {
-            if (resultCode == Activity.RESULT_OK) {
-                if (copyCapturedImage()) {
-
                     // Flurry Notification
                     Map<String, String> params = new HashMap<String, String>();
                     params.put(Flurry.PARAM_NAME_ACTION, Flurry.PARAM_VALUE_CAMERA);
-                    params.put(Flurry.PARAM_NAME_RESULT, Flurry.PARAM_VALUE_OKAY);
-
-                    Intent it = new Intent(this, ViewImage.class);
-                    StringBuilder strBldr = new StringBuilder("file://");
-                    strBldr.append(receiptImageDataLocalFilePath);
-                    it.putExtra(Const.EXTRA_EXPENSE_RECEIPT_URL_KEY, strBldr.toString());
-                    it.putExtra(Const.EXTRA_RECEIPT_ONLY_FRAGMENT, true);
-                    it.putExtra(Const.EXTRA_SHOW_MENU, true);
-                    it.putExtra(Const.EXTRA_EXPENSE_IMAGE_FILE_PATH, receiptImageDataLocalFilePath);
-                    it.putExtra(Flurry.PARAM_NAME_FROM, Flurry.PARAM_VALUE_CAMERA);
-                    it.putExtra(Const.EXTRA_EXPENSE_SCREEN_TITLE_KEY, getText(R.string.receipt_image));
-                    startActivity(it);
-
-                } else {
-                    // Flurry Notification.
-                    Map<String, String> params = new HashMap<String, String>();
-                    params.put(Flurry.PARAM_NAME_FAILURE,
-                            Flurry.PARAM_VALUE_FAILED_TO_CAPTURE_OR_REDUCE_RESOLUTION_FOR_RECEIPT_IMAGE);
-                    EventTracker.INSTANCE.track(Flurry.CATEGORY_RECEIPTS, Flurry.EVENT_NAME_FAILURE, params);
-
-                    showDialog(Const.DIALOG_EXPENSE_CAMERA_IMAGE_IMPORT_FAILED);
+                    params.put(Flurry.PARAM_NAME_RESULT, Flurry.PARAM_VALUE_CANCEL);
+                    EventTracker.INSTANCE.track(Flurry.CATEGORY_HOME, Flurry.EVENT_NAME_ACTION, params);
                 }
-            } else {
-                // Flurry Notification
-                Map<String, String> params = new HashMap<String, String>();
-                params.put(Flurry.PARAM_NAME_ACTION, Flurry.PARAM_VALUE_CAMERA);
-                params.put(Flurry.PARAM_NAME_RESULT, Flurry.PARAM_VALUE_CANCEL);
-                EventTracker.INSTANCE.track(Flurry.CATEGORY_HOME, Flurry.EVENT_NAME_ACTION, params);
+                break;
             }
-            break;
-        }
-        case REQUEST_CODE_MSG_CENTER:
-            if (resultCode == Activity.RESULT_OK) {
-                // refresh option menu
-                supportInvalidateOptionsMenu();
-            }
-            break;
+            case REQUEST_CODE_MSG_CENTER:
+                if (resultCode == Activity.RESULT_OK) {
+                    // refresh option menu
+                    supportInvalidateOptionsMenu();
+                }
+                break;
         }
     }
 
     /**
      * Will copy the image data captured by the camera.
      *
-     * @param data the intent object containing capture information.
      */
     private boolean copyCapturedImage() {
         boolean retVal = true;
@@ -2074,7 +2148,7 @@ import java.util.*;
             } else {
                 if (countSummaryRequest != null && !countSummaryRequest.isCanceled()) {
                     Log.e(Const.LOG_TAG, CLS_TAG + ".onReceive: service request error -- " + intent
-                                    .getStringExtra(Const.SERVICE_REQUEST_STATUS_TEXT));
+                            .getStringExtra(Const.SERVICE_REQUEST_STATUS_TEXT));
                 }
             }
         } else {
@@ -2181,7 +2255,7 @@ import java.util.*;
             subView.setText(R.string.home_row_expenses_subheader_negative);
 
         } else {
-            // Indicate there is no summary data available.
+            // Indicate there is no summary data available
             updateExpenseSummaryNoDataAvailable();
         }
     }
@@ -2262,7 +2336,7 @@ import java.util.*;
             } else {
                 if (itinerarySummaryListRequest != null && !itinerarySummaryListRequest.isCanceled()) {
                     Log.e(Const.LOG_TAG, CLS_TAG + ".onReceive: service request error -- " + intent
-                                    .getStringExtra(Const.SERVICE_REQUEST_STATUS_TEXT));
+                            .getStringExtra(Const.SERVICE_REQUEST_STATUS_TEXT));
                 }
             }
         } else {
@@ -2849,7 +2923,8 @@ import java.util.*;
          * @see com.concur.mobile.corp.activity.BaseActivity.BaseBroadcastReceiver#
          * clearActivityServiceRequest(com.concur.mobile.corp.activity .BaseActivity)
          */
-        @Override protected void clearActivityServiceRequest(Home activity) {
+        @Override
+        protected void clearActivityServiceRequest(Home activity) {
             activity.itineraryRequest = null;
         }
 
@@ -2859,7 +2934,8 @@ import java.util.*;
          * @see com.concur.mobile.corp.activity.BaseActivity.BaseBroadcastReceiver# dismissRequestDialog(android.content.Context,
          * android.content.Intent)
          */
-        @Override protected void dismissRequestDialog(Context context, Intent intent) {
+        @Override
+        protected void dismissRequestDialog(Context context, Intent intent) {
             activity.dismissDialog(Const.DIALOG_TRAVEL_RETRIEVE_ITINERARY);
         }
 
@@ -2869,7 +2945,8 @@ import java.util.*;
          * @see com.concur.mobile.corp.activity.BaseActivity.BaseBroadcastReceiver# handleFailure(android.content.Context,
          * android.content.Intent)
          */
-        @Override protected void handleFailure(Context context, Intent intent) {
+        @Override
+        protected void handleFailure(Context context, Intent intent) {
             activity.showDialog(Const.DIALOG_TRAVEL_RETRIEVE_ITINERARY_FAILED);
         }
 
@@ -2879,7 +2956,8 @@ import java.util.*;
          * @see com.concur.mobile.corp.activity.BaseActivity.BaseBroadcastReceiver# handleSuccess(android.content.Context,
          * android.content.Intent)
          */
-        @Override protected void handleSuccess(Context context, Intent intent) {
+        @Override
+        protected void handleSuccess(Context context, Intent intent) {
             if (intent.hasExtra(Const.EXTRA_ITIN_LOCATOR)) {
                 String itinLocator = intent.getStringExtra(Const.EXTRA_ITIN_LOCATOR);
                 if (itinLocator != null) {
@@ -2905,7 +2983,8 @@ import java.util.*;
          * @see com.concur.mobile.corp.activity.BaseActivity.BaseBroadcastReceiver#
          * setActivityServiceRequest(com.concur.mobile.corp.activity. BaseActivity, com.concur.mobile.corp.service.ServiceRequest)
          */
-        @Override protected void setActivityServiceRequest(ItineraryRequest request) {
+        @Override
+        protected void setActivityServiceRequest(ItineraryRequest request) {
             activity.itineraryRequest = request;
         }
 
@@ -2914,7 +2993,8 @@ import java.util.*;
          * 
          * @see com.concur.mobile.corp.activity.BaseActivity.BaseBroadcastReceiver# unregisterReceiver()
          */
-        @Override protected void unregisterReceiver() {
+        @Override
+        protected void unregisterReceiver() {
             activity.unregisterItineraryReceiver();
         }
 
@@ -2929,12 +3009,13 @@ import java.util.*;
         Log.d(Const.LOG_TAG, "imgMan // init");
         return new AsyncTask<Void, Void, Integer>() {
 
-            int[] cityscapes = { R.drawable.city_01, R.drawable.city_02, R.drawable.city_03, R.drawable.city_04,
+            int[] cityscapes = {R.drawable.city_01, R.drawable.city_02, R.drawable.city_03, R.drawable.city_04,
                     R.drawable.city_05, R.drawable.city_06, R.drawable.city_07, R.drawable.city_08,
-                    R.drawable.city_09 };
+                    R.drawable.city_09};
             ImageSwitcher cityscape = imgSwitcher;
 
-            @Override protected Integer doInBackground(Void... params) {
+            @Override
+            protected Integer doInBackground(Void... params) {
 
                 Log.d(Const.LOG_TAG, "imgMan // doIB // cityscape = " + cityscape);
                 Integer cityscapeResourceId = null;
@@ -2961,7 +3042,8 @@ import java.util.*;
                 return cityscapeResourceId;
             }
 
-            @Override protected void onPostExecute(Integer result) {
+            @Override
+            protected void onPostExecute(Integer result) {
                 super.onPostExecute(result);
                 Log.d(Const.LOG_TAG, "imgMan // onPE //  res = " + result);
                 if (result != null) {
@@ -3365,7 +3447,7 @@ import java.util.*;
      * @param adNavItem     The advert item at the bottom of the drawer
      */
     protected void addNavigationItems(ViewGroup itemContainer, ViewGroup adContainer, LayoutInflater inflater,
-            List<NavigationItem> navItems, NavigationItem adNavItem) {
+                                      List<NavigationItem> navItems, NavigationItem adNavItem) {
         NavigationItem navItem = null;
 
         if (navItems != null) {
@@ -3429,7 +3511,7 @@ import java.util.*;
                                 imgView.setImageResource(iconResId);
                             } else {
                                 Log.e(Const.LOG_TAG, CLS_TAG
-                                                + ".addNavigationItems: unable to locate 'icon' view in 'navigation_item' layout!");
+                                        + ".addNavigationItems: unable to locate 'icon' view in 'navigation_item' layout!");
                             }
                         } else {
                             ViewUtil.setVisibility(navView, R.id.icon, View.GONE);
@@ -3483,7 +3565,7 @@ import java.util.*;
 
     /**
      * The OnClickListener for items inside of the Navigation Drawer. Basically just check which item was clicked and hand off to
-     * the {@link #onItemSelected(navItem) onItemSelected} method to handle which item was pressed.
+     * the method to handle which item was pressed.
      */
     class NavigationItemOnClickListener implements OnClickListener {
 
@@ -3714,7 +3796,7 @@ class HomeScreenSimpleNavigationItem extends DefaultSimpleNavigationItem {
     Runnable run;
 
     HomeScreenSimpleNavigationItem(int id, int layoutResId, int textResId, int iconResId, int iconVisibility,
-            int navItemVisibility, Runnable run) {
+                                   int navItemVisibility, Runnable run) {
         super(id, layoutResId, textResId, iconResId, iconVisibility, navItemVisibility);
         this.run = run;
     }

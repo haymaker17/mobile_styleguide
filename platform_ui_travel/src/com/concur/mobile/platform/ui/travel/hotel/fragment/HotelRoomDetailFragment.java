@@ -16,7 +16,6 @@ import com.concur.mobile.platform.ui.common.view.ListItemAdapter;
 import com.concur.mobile.platform.ui.travel.R;
 import com.concur.mobile.platform.ui.travel.hotel.fragment.HotelChoiceDetailsFragment.HotelChoiceDetailsFragmentListener;
 import com.concur.mobile.platform.ui.travel.util.Const;
-import com.concur.mobile.platform.ui.travel.util.ViewUtil;
 import com.concur.mobile.platform.ui.travel.view.CustomListView;
 
 import java.util.ArrayList;
@@ -74,11 +73,13 @@ public class HotelRoomDetailFragment extends PlatformFragmentV1 {
 
         // Configuration config = getResources().getConfiguration();
         if (hotelRooms != null && hotelRooms.size() > 0) {
-            listItemAdapater = new ListItemAdapter<HotelRoomListItem>(getActivity().getApplicationContext(),
-                    hotelRooms);
+            if (listItemAdapater == null) {
+                listItemAdapater = new ListItemAdapter<HotelRoomListItem>(getActivity().getApplicationContext(),
+                        hotelRooms);
+            }
             listView.setAdapter(listItemAdapater);
             listView.setVisibility(View.VISIBLE);
-            ViewUtil.getListViewSize(listView);
+            //ViewUtil.getListViewSize(listView);
 
             listView.setOnItemClickListener(new OnItemClickListener() {
 

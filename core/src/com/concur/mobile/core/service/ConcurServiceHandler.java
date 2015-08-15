@@ -164,6 +164,7 @@ import com.concur.mobile.core.travel.service.TravelCustomFieldsRequest;
 import com.concur.mobile.core.travel.service.TravelCustomFieldsUpdateReply;
 import com.concur.mobile.core.travel.service.TravelCustomFieldsUpdateRequest;
 import com.concur.mobile.core.util.Const;
+import com.concur.mobile.core.util.EventTracker;
 import com.concur.mobile.core.util.Flurry;
 import com.concur.mobile.core.util.FormatUtil;
 import com.concur.mobile.core.util.net.SessionManager;
@@ -185,7 +186,9 @@ import java.net.MalformedURLException;
 import java.net.URL;
 import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.TimeZone;
 
 import javax.xml.parsers.FactoryConfigurationError;
@@ -220,7 +223,7 @@ public class ConcurServiceHandler extends Handler {
         concurService.removeStickyBroadcast(new Intent(Const.ACTION_NETWORK_ACTIVITY_START));
     }
 
-    protected synchronized boolean verifySession(Message msg) {
+    protected synchronized boolean verifySession(final Message msg) {
 
         if (msg.obj instanceof ServiceRequest) {
             ServiceRequest request = (ServiceRequest) msg.obj;
@@ -232,6 +235,16 @@ public class ConcurServiceHandler extends Handler {
 
                             @Override
                             public void onSuccess(String sessionId) {
+
+                                // MOB-24610 - Don't keep log Events whenever the PushNotificaiton Service starts.
+                                if(msg.what != Const.MSG_NOTIFICATION_REGISTER) {
+                                    // Flurry Notification
+                                    Map<String, String> autoLoginParams = new HashMap<String, String>();
+                                    autoLoginParams.put(Flurry.PARAM_NAME_TYPE, Flurry.PARAM_VALUE_AUTO_LOGIN);
+                                    EventTracker.INSTANCE.track(Flurry.CATEGORY_SIGN_IN, Flurry.EVENT_NAME_AUTHENTICATION,
+                                            autoLoginParams);
+                                }
+
                                 if (sessionId == null) {
                                     ConcurCore app = (ConcurCore) ConcurCore.getContext();
                                     // If we have no session at this point then auto-login was
@@ -244,6 +257,12 @@ public class ConcurServiceHandler extends Handler {
 
                             @Override
                             public void onRemoteWipe() {
+
+                                // Analytics stuff.
+                                Map<String, String> params = new HashMap<String, String>();
+                                params.put("Type", Flurry.EVENT_REMOTE_WIPE);
+                                EventTracker.INSTANCE.track(Flurry.CATEGORY_SIGN_IN, Flurry.EVENT_NAME_FAILURE, params);
+
                                 // MOB-18782 - If remote wipe was passed down, then notify the app.
                                 ConcurCore app = (ConcurCore) ConcurCore.getContext();
                                 app.remoteWipe();

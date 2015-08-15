@@ -40,6 +40,10 @@ import com.concur.mobile.platform.ui.common.util.ViewUtil;
 import java.util.HashMap;
 import java.util.Map;
 
+import java.util.HashMap;
+import java.util.Map;
+
+@EventTracker.EventTrackerClassName(getClassName =Flurry.SCREEN_NAME_FORGOT_PASSWORD_REQUEST)
 public class LoginHelp extends BaseActivity implements OnClickListener {
 
     private static final String PROGRESS_MASK_SHOWN = "progress.mask.shown";

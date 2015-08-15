@@ -7,6 +7,7 @@ import android.net.Uri;
 import android.provider.BaseColumns;
 
 import com.concur.mobile.platform.config.provider.Config.UserColumns;
+import com.concur.platform.PlatformProperties;
 
 /**
  * This class provide a contract between the travel content provider and calling application code.
@@ -18,7 +19,7 @@ public final class Travel {
     /**
      * The authority for the Travel provider.
      */
-    public static final String AUTHORITY = "com.concur.mobile.platform.travel";
+    public static final String AUTHORITY = PlatformProperties.getTravelProviderAuthority();
 
 
     /**

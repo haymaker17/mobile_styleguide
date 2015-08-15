@@ -13,10 +13,6 @@ import android.preference.PreferenceManager;
 import android.support.v4.app.FragmentActivity;
 import android.text.TextUtils;
 import android.util.Log;
-import android.view.View;
-import android.view.animation.Animation;
-import android.view.animation.AnimationUtils;
-import android.widget.TextView;
 
 import com.appdynamics.eumagent.runtime.Instrumentation;
 import com.concur.breeze.R;
@@ -41,7 +37,6 @@ import com.concur.mobile.corp.ConcurMobile;
 import com.concur.mobile.platform.authentication.AutoLoginRequestTask;
 import com.concur.mobile.platform.authentication.EmailLookUpRequestTask;
 import com.concur.mobile.platform.authentication.LoginResponseKeys;
-import com.concur.mobile.platform.authentication.PPLoginLightRequestTask;
 import com.concur.mobile.platform.authentication.SessionInfo;
 import com.concur.mobile.platform.config.provider.ConfigUtil;
 import com.concur.platform.PlatformProperties;
@@ -57,8 +52,6 @@ import java.util.Map;
 public class Startup extends BaseActivity {
 
     public static final String CLS_TAG = Startup.class.getSimpleName();
-    public static final String START_TIME = "start time";
-    public static final String END_TIME = "end time";
 
     protected final int SPLASH_DELAY = 2500;
     protected boolean isSplashDone = false;
@@ -81,9 +74,6 @@ public class Startup extends BaseActivity {
 
     // List of languages the Eva API currently supports.
     private static final List<String> TESTDRIVE_USER_COUNTRIES = Arrays.asList(new String[] { "US", "GB", "AU", "CA" });
-
-    // long miliseconds
-    private long startTimeMillis, stopTimeMillis, totalTime;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -113,6 +103,9 @@ public class Startup extends BaseActivity {
         if (getIntent() != null && getIntent().getExtras() != null) {
             fromNotification = getIntent().getExtras().getBoolean(ConcurMobile.FROM_NOTIFICATION);
         }
+
+        //reset timer
+        ConcurMobile.resetUserTimers();;
     }
 
     /*
@@ -189,7 +182,14 @@ public class Startup extends BaseActivity {
                 // Perform a company sign-on based login.
                 emailLookupBundle = getEmailLookUpBundleFromSessionInfo(sessionInfo);
                 // set server url
-                String serverUrl = ssoReply.serverUrl;
+                //MOB-24861 SSO URL is null crash issue.
+                String serverUrl = null;
+                if (ssoReply != null) {
+                    serverUrl = ssoReply.serverUrl;
+                } else if (sessionInfo != null) {
+                    serverUrl = sessionInfo.getServerUrl();
+                }
+
                 if(sessionInfo!=null){
                     sessionInfo.setServerUrl(serverUrl);
                 }
@@ -267,21 +267,8 @@ public class Startup extends BaseActivity {
     }
 
     protected void doLoginFinish() {
-        if (startTimeMillis > 0L) {
-            // Google Analytics
-            stopTimeMillis = System.currentTimeMillis();
-            totalTime = stopTimeMillis - startTimeMillis;
-            Log.d(Const.LOG_TAG, CLS_TAG + ".process: request(" + "AutoLogin" + ") took " + (totalTime) + " ms.");
-            logTotleTimeForAutoLogin(totalTime);
-        }
         isLoginDone = true;
         doFinish();
-    }
-
-    private void logTotleTimeForAutoLogin(long totalWaitTime) {
-        // Statistics Notification
-        EventTracker.INSTANCE.trackTimings(Flurry.CATEGORY_WAIT_TIME, Flurry.ACTION_AUTO_LOGIN_WAIT,
-                Flurry.LABEL_WAIT_TIME, totalWaitTime);
     }
 
     protected void doFinish() {
@@ -417,84 +404,6 @@ public class Startup extends BaseActivity {
         }
     }
 
-    /**
-     * Attempt a login. Will spawn a LoginThread to do the work so this method will return before the login has completed.
-     * 
-     * When not connected just return true if we have a login ID and pin saved.
-     * 
-     * @return true if the login was attempted, false otherwise
-     */
-    protected boolean doLogin() {
-
-        loginReceiver = new BaseAsyncResultReceiver(new Handler());
-        loginReceiver.setListener(new StartupLoginListner());
-
-        Log.d(Const.LOG_TAG, "attempting autologin");
-
-        // Grab values
-        String loginId = (sessionInfo != null ? sessionInfo.getLoginId() : null);
-        String pinOrPassword = Preferences.getPin(PreferenceManager.getDefaultSharedPreferences(this), null);
-        String accessToken = (sessionInfo != null ? sessionInfo.getAccessToken() : null);
-
-        if (loginId == null || (pinOrPassword == null && accessToken == null)) {
-            Log.d(Const.LOG_TAG, "cannot autologin");
-            return false;
-        }
-
-        if (ConcurMobile.isConnected()) {
-            // TODO MOB-23154: Right now only time tracking required for Autologin, in future if we want it for each request
-            // this implementation will be in the class PlatFormAsyncTaskRequest/BaseAsyncRequestTask.
-            startTimeMillis = System.currentTimeMillis();
-
-            // Animate in the message about authentication happening.
-            TextView txtView = (TextView) findViewById(R.id.splash_message);
-            if (txtView != null) {
-                Animation fadeInAnim = AnimationUtils.loadAnimation(Startup.this, R.anim.fade_in);
-                fadeInAnim.setFillAfter(true);
-                txtView.setVisibility(View.VISIBLE);
-                txtView.startAnimation(fadeInAnim);
-            } else {
-                Log.e(Const.LOG_TAG, CLS_TAG + ".doLogin: can't locate splash text view!");
-            }
-
-            UserAndSessionInfoUtil.setServerAddress(sessionInfo.getServerUrl());
-
-            // Attempt to authenticate
-            // Re-entry to the UI will be via handleMessage() below
-            ConcurMobile app = (ConcurMobile) getApplication();
-            if (accessToken != null) {
-                AutoLoginRequestTask autoLoginRequestTask = new AutoLoginRequestTask(getApplication()
-                        .getApplicationContext(), AUTO_LOGIN_REQUEST_ID, loginReceiver, Locale.getDefault()) {
-
-                    // MOB-20508 - If logging in was initiated by the Receipt Share (notification)
-                    // then we should modify the User Agent so it is easily detectable in MobileMetrics.
-                    @Override
-                    protected String getUserAgent() {
-                        return (fromNotification ? super.getUserAgent() + " (AutoLoginV3; From Notification)" : super
-                                .getUserAgent());
-                    }
-                };
-                autoLoginRequestTask.execute();
-            } else {
-                Locale locale = Locale.getDefault();
-                PPLoginLightRequestTask ppLoginLightRequestTask = new PPLoginLightRequestTask(
-                        app.getApplicationContext(), loginReceiver, VALIDATE_PASSWORD_REQUEST_ID, locale, loginId,
-                        pinOrPassword);
-                ppLoginLightRequestTask.execute();
-            }
-
-            return true;
-
-        } else {
-            // If disconnected with auto-login enabled and both values saved then say we logged in.
-            // Move us on and finish this activity
-            startHomeScreen();
-            doLoginFinish();
-
-            return true;
-        }
-    }
-
     protected class StartupLoginListner implements AsyncReplyListener {
 
         public void onRequestSuccess(Bundle resultData) {
@@ -617,16 +526,12 @@ public class Startup extends BaseActivity {
 
     @Override
     public void onSaveInstanceState(Bundle savedInstanceState) {
-        savedInstanceState.putLong(START_TIME, startTimeMillis);
-        savedInstanceState.putLong(END_TIME, stopTimeMillis);
         super.onSaveInstanceState(savedInstanceState);
     }
 
     @Override
     public void onRestoreInstanceState(Bundle savedInstanceState) {
         super.onRestoreInstanceState(savedInstanceState);
-        this.startTimeMillis = savedInstanceState.getLong(START_TIME);
-        this.stopTimeMillis = savedInstanceState.getLong(END_TIME);
     }
 
 }

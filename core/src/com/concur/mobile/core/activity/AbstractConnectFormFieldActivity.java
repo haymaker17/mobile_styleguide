@@ -636,9 +636,7 @@ public abstract class AbstractConnectFormFieldActivity extends BaseActivity {
         view.setBackground(backgroundColor);
 
         int viewHeight = 50;
-        final int segmentLayoutIdx = model.getDisplayOrder() != null ? model.getDisplayOrder() : 0;
-        ((LinearLayout) getCurrentFieldsLayout().getChildAt(segmentLayoutIdx))
-                .addView(view, ActionBar.LayoutParams.MATCH_PARENT, viewHeight);
+        getSegmentLayout(model).addView(view, ActionBar.LayoutParams.MATCH_PARENT, viewHeight);
     }
 
     protected void addSeparator(final FormDTO model) {
@@ -648,9 +646,7 @@ public abstract class AbstractConnectFormFieldActivity extends BaseActivity {
         view.setBackground(backgroundColor);
 
         int viewHeight = 15;
-        final int segmentLayoutIdx = model.getDisplayOrder() != null ? model.getDisplayOrder() : 0;
-        ((LinearLayout) getCurrentFieldsLayout().getChildAt(segmentLayoutIdx))
-                .addView(view, ActionBar.LayoutParams.MATCH_PARENT, viewHeight);
+        getSegmentLayout(model).addView(view, ActionBar.LayoutParams.MATCH_PARENT, viewHeight);
     }
 
     protected void addBlockTitle(final String title, final FormDTO model) {
@@ -661,9 +657,7 @@ public abstract class AbstractConnectFormFieldActivity extends BaseActivity {
         view.setTextSize(TypedValue.COMPLEX_UNIT_SP, 16);
         view.setTextColor(getResources().getColor(R.color.blue));
 
-        final int segmentLayoutIdx = model.getDisplayOrder() != null ? model.getDisplayOrder() : 0;
-        ((LinearLayout) getCurrentFieldsLayout().getChildAt(segmentLayoutIdx))
-                .addView(view, ActionBar.LayoutParams.MATCH_PARENT, ActionBar.LayoutParams.WRAP_CONTENT);
+        getSegmentLayout(model).addView(view, ActionBar.LayoutParams.MATCH_PARENT, ActionBar.LayoutParams.WRAP_CONTENT);
         addSeparator(model);
         addWhiteSpace(model);
     }
@@ -707,13 +701,18 @@ public abstract class AbstractConnectFormFieldActivity extends BaseActivity {
         if (titleLayoutFieldsMapping != null && titleLayoutFieldsMapping.containsKey(fieldName)) {
             return (TextView) titleLayoutFieldsMapping.get(fieldName).findViewWithTag(fieldName);
         }
-        final int segmentLayoutIdx = model.getDisplayOrder() != null ? model.getDisplayOrder() : 0;
-        // --- get current segment layout
-        final LinearLayout segmentLayout = (LinearLayout) getCurrentFieldsLayout().getChildAt(segmentLayoutIdx);
+        final LinearLayout segmentLayout = getSegmentLayout(model);
         if (segmentLayout != null) {
             return (TextView) segmentLayout.findViewWithTag(fieldName);
         }
         return null;
+    }
+
+    private LinearLayout getSegmentLayout(FormDTO model) {
+        // --- ws returns 1..n so we use 1..n on activity side, yet we need 0..n for layout ids => -1
+        final int segmentLayoutIdx = model.getDisplayOrder() != null ? model.getDisplayOrder() - 1 : 0;
+        // --- get current segment layout
+        return (LinearLayout) getCurrentFieldsLayout().getChildAt(segmentLayoutIdx);
     }
 
     public void setCanSave(boolean canSave) {

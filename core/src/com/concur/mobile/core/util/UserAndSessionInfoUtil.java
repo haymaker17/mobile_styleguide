@@ -70,6 +70,7 @@ public class UserAndSessionInfoUtil {
         parseMap.put(Const.LR_SITE_SETTINGS_ALLOW_TRAVEL_BOOKING, ssInstance.isAllowTravelBookingEnabled());
         parseMap.put(Const.LR_SITE_SETTINGS_ALLOW_VOICE_BOOKING, ssInstance.isVoiceBookingEnabled());
         parseMap.put(Const.LR_SITE_SETTINGS_MOBILE_HAS_FIXED_TA, ssInstance.hasFixedTa());
+        parseMap.put(Const.LR_SITE_SETTINGS_MOBILE_HAS_TRAVEL_ALLOWANCE_FIXED, ssInstance.hasTravelAllowanceFixed());
         parseMap.put(Const.LR_SITE_SETTINGS_ENABLE_SPDY, ssInstance.isSpdyEnabled());
 
         parseMap.put(Const.LR_PERMISSIONS_TR, permissions.getAreasPermissions().hasTravelRequest);

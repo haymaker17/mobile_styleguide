@@ -29,7 +29,6 @@ public class Flurry {
     public static final String CATEGORY_REPORT_ENTRY = "Report Entry";
     public static final String CATEGORY_REPORTS = "Reports";
     public static final String CATEGORY_SETTINGS = "Settings";
-    public static final String CATEGORY_SIGN_IN = "Sign In";
     public static final String CATEGORY_TRIP_APPROVAL = "Trip Approval";
     public static final String CATEGORY_USER = "User";
     public static final String CATEGORY_VOICE_BOOK = "Voice Book";
@@ -399,6 +398,46 @@ public class Flurry {
     public static final String CATEGORY_WAIT_TIME = "Wait Time";
     public static final String LABEL_WAIT_TIME = "measurement in milliseconds";
     public static final String ACTION_AUTO_LOGIN_WAIT = "Authenticating View";
+
+
+    // SCREEN NAME FOR SIGN IN
+    public static final String SCREEN_NAME_EMAIL_LOOKUP = "Sign In-Enter Email";
+    public static final String SCREEN_NAME_LOGIN_PASSWORD = "Sign In-Enter Password";
+    public static final String SCREEN_NAME_SSO = "Sign In-SSO Company Code";
+    public static final String SCREEN_NAME_FORGOT_PASSWORD_REQUEST = "Sign In-Forgot Password-Enter Email";
+    public static final String SCREEN_NAME_FORGOT_PASSWORD_RESET = "Sign In-Forgot Password-New Password";
+    public static final String SCREEN_NAME_FORGOT_PIN_RESET = "Sign In-Forgot PIN-New PIN";
+    public static final String SCREEN_NAME_EMAIL_PASSWORD = "Sign In-Enter Email Password";
+    public static final String SCREEN_NAME_HOME = "Home";
+
+
+
+    //Login Category, event action and param values
+    public static final String CATEGORY_SIGN_IN = "Sign In";
+
+    public static final String ACTION_SIGN_IN_SUCCESS_METHOD = "Success-Method";
+    public static final String ACTION_SIGN_IN_FAIL_METHOD = "Fail-Method";
+    public static final String ACTION_SUCCESS_CREDENTIAL_TYPE = "Success-Credential Type";
+    public static final String ACTION_FAIL_CREDENTIAL_TYPE = "Fail-Credential Type";
+    public static final String ACTION_FAIL_REASON = "Fail-Reason";
+
+    public static final String LABEL_AUTO_LOGIN = "Auto Login";
+    public static final String LABEL_MANUAL = "Manual";
+    public static final String LABEL_LOGIN_USING_PASSWORD = "Password";
+    public static final String LABEL_LOGIN_USING_MOBILE_PASSWORD = "Mobile Password";
+    public static final String LABEL_LOGIN_USING_SSO = "SSO";
+    public static final String LABEL_REMOTE_WIPE = "Remote Wipe";
+    public static final String LABEL_FORBIDDEN = "Forbidden";
+    public static final String LABEL_SERVER_ERROR = "Server Error";
+    public static final String LABEL_BAD_CREDENTIALS = "Bad Credentials";
+    public static final String LABEL_OFFLINE = "Offline";
+
+    public static final String EVENT_CATEGORY_TRAVEL_HOTEL = "TRAVEL-HOTEL";
+    public static final String EVENT_ACTION_TRAVEL_DESTINATION_TAPPED = "Destination Tapped";
+    public static final String EVENT_ACTION_TRAVEL_SEARCH_INITIATED = "Search initiated";
+    public static final String EVENT_LABEL_TRAVEL_SEARCH_CURRENT_LOCATION = "Current Location";
+    public static final String EVENT_LABEL_TRAVEL_SEARCH_OFFICE_LOCATION = "Office Location";
+    public static final String EVENT_LABEL_TRAVEL_SEARCH_OTHER = "Other";
 
     /**
      * Formats a Flurry event name based on a category and name.
