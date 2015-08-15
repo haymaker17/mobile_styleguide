@@ -1178,7 +1178,7 @@ public abstract class AbstractExpenseActivity extends BaseActivity {
             saveReceiptReceiver.setRequest(saveReceiptRequest);
             showDialog(getSavingReceiptDialogId());
         } else {
-            Log.e(Const.LOG_TAG, CLS_TAG + ".sendConnectPostImageReportRequest: unable to create 'SaveReceiptRequest'!");
+            Log.w(Const.LOG_TAG, CLS_TAG + ".sendConnectPostImageReportRequest: unable to create 'SaveReceiptRequest'!");
             unregisterSaveReceiptReceiver();
         }
 
@@ -4995,7 +4995,7 @@ public abstract class AbstractExpenseActivity extends BaseActivity {
                                     saveReceiptReceiver.setRequest(saveReceiptRequest);
                                     showDialog(getSavingReceiptDialogId());
                                 } else {
-                                    Log.e(Const.LOG_TAG, CLS_TAG
+                                    Log.w(Const.LOG_TAG, CLS_TAG
                                             + ".onActivityResult(TakePicture): unable to create 'SaveReceiptRequest'!");
                                     unregisterSaveReceiptReceiver();
                                 }
@@ -5049,7 +5049,7 @@ public abstract class AbstractExpenseActivity extends BaseActivity {
                                     saveReceiptReceiver.setRequest(saveReceiptRequest);
                                     showDialog(getSavingReceiptDialogId());
                                 } else {
-                                    Log.e(Const.LOG_TAG,
+                                    Log.w(Const.LOG_TAG,
                                             CLS_TAG
                                                     + ".onActivityResult(ChoosePicture): unable to create 'SaveReceiptRequest'!");
                                     unregisterSaveReceiptReceiver();

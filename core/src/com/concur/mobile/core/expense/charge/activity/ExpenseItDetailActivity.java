@@ -12,25 +12,29 @@ import android.os.Bundle;
 import android.os.Handler;
 import android.support.v4.app.DialogFragment;
 import android.support.v4.app.FragmentActivity;
+import android.text.TextUtils;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
-import android.widget.Toast;
 
 import com.concur.core.R;
 import com.concur.mobile.base.service.BaseAsyncRequestTask;
 import com.concur.mobile.base.service.BaseAsyncResultReceiver;
 import com.concur.mobile.core.ConcurCore;
 import com.concur.mobile.core.activity.BaseActivity;
+import com.concur.mobile.core.activity.Preferences;
 import com.concur.mobile.core.activity.ReceiptView;
 import com.concur.mobile.core.dialog.ReceiptChoiceDialogFragment;
+import com.concur.mobile.core.expense.activity.ExpensesAndReceipts;
 import com.concur.mobile.core.expense.charge.data.Expense;
 import com.concur.mobile.core.expense.data.IExpenseEntryCache;
 import com.concur.mobile.core.expense.fragment.ExpenseItDetailActivityFragment;
+import com.concur.mobile.core.expense.receiptstore.activity.ReceiptStoreFragment;
 import com.concur.mobile.core.expense.service.SaveReceiptRequest;
 import com.concur.mobile.core.service.ConcurService;
 import com.concur.mobile.core.util.Const;
+import com.concur.mobile.core.util.Flurry;
 import com.concur.mobile.core.util.ViewUtil;
 import com.concur.mobile.platform.expense.provider.ExpenseUtil;
 import com.concur.mobile.platform.expenseit.DeleteExpenseItReceiptAsyncTask;
@@ -59,9 +63,22 @@ public class ExpenseItDetailActivity extends BaseActivity
 
     public static final String EXPENSEIT_RECEIPT_ID_KEY = "EXPENSEIT_RECEIPT_ID_KEY";
 
-    private static final String CANCEL_EXPENSEIT_PROCESSING_DIALOG_TAG = "CANCEL_EXPENSEIT_PROCESSING_DIALOG";
+    private static final String EXPENSEIT_PROCESSING_DIALOG_TAG = "EXPENSEIT_PROCESSING_DIALOG";
 
-    private ProgressDialogFragment mCancelProgressDialogFragment;
+    private static String RECEIPT_IMAGE_BITMAP_KEY = "RECEIPT_IMAGE_BITMAP_KEY";
+
+    private static String LOCAL_IMAGE_FILE_PATH_KEY = "LOCAL_IMAGE_FILE_PATH_KEY";
+
+    private static String RECEIPT_IMAGE_ID_KEY = "RECEIPT_IMAGE_ID_KEY";
+
+    private static String MENU_ACTION_KEY = "MENU_ACTION_KEY";
+
+    private static int MENU_ACTION_CANCEL = 1;
+
+    private static int MENU_ACTION_REPLACE = 2;
+
+
+    private ProgressDialogFragment mProgressDialogFragment;
 
     private DeleteExpenseItReceiptAsyncTask mDeleteExpenseItReceiptAsyncTask;
 
@@ -95,7 +112,9 @@ public class ExpenseItDetailActivity extends BaseActivity
 
     private String receiptImageId;
 
-    private String localImageFilePath = ViewUtil.createExternalMediaImageFilePath();
+    private String localImageFilePath;
+
+    private int menuAction = 0;
 
     protected BaseAsyncRequestTask.AsyncReplyListener mGetExpenseItReceiptImageUrlListener = new BaseAsyncRequestTask.AsyncReplyListener() {
         @Override
@@ -136,14 +155,14 @@ public class ExpenseItDetailActivity extends BaseActivity
         @Override
         public void onRequestFail(Bundle resultData) {
             Log.e(Const.LOG_TAG, CLS_TAG + ".onRequestFail for DeleteExpenseItAsyncReplyListener called!");
-            hideCancelProgressDialog();
+            hideProgressDialog();
             onDeleteRequestFailure(resultData);
         }
 
         @Override
         public void onRequestCancel(Bundle resultData) {
             Log.d(Const.LOG_TAG, CLS_TAG + ".onRequestCancel for DeleteExpenseItAsyncReplyListener called!");
-            hideCancelProgressDialog();
+            hideProgressDialog();
             mDeleteExpenseItReceiptAsyncTask.cancel(true);
         }
 
@@ -221,10 +240,37 @@ public class ExpenseItDetailActivity extends BaseActivity
     }
 
     private boolean saveReceiptImageToLocalStorage() {
+        localImageFilePath = ViewUtil.createExternalMediaImageFilePath();
         return ImageUtil.writeBitmapToFile(receiptImage, Const.RECEIPT_COMPRESS_BITMAP_FORMAT,
                 Const.RECEIPT_COMPRESS_BITMAP_QUALITY, localImageFilePath);
     }
 
+    private void doUploadReceipt() {
+
+        if(receiptImage != null && menuAction == MENU_ACTION_CANCEL) {
+            uploadReceiptImageToReceiptStore();
+        } else if(!TextUtils.isEmpty(localImageFilePath) && menuAction == MENU_ACTION_REPLACE) {
+            uploadReceiptToExpenseIt(localImageFilePath);
+        } else {
+            Log.w(Const.LOG_TAG, CLS_TAG + ".doUploadReceipt() - unhandled action.");
+        }
+
+    }
+
+    private void uploadReceiptToExpenseIt(String filePath) {
+
+        // After capturing the image, launching the ExpenseAndReceipts class
+        // to upload/save the image to the R.S. and refresh the Receipts List UI.
+        Intent newIt = new Intent(this, ExpensesAndReceipts.class);
+        newIt.putExtra(Const.EXTRA_RECEIPT_ONLY_FRAGMENT, false);
+        newIt.putExtra(ReceiptStoreFragment.EXTRA_START_OCR_ON_UPLOAD, true);
+        //We may need to check for more conditions here such as if we're connected successfully to expenseit.
+        newIt.putExtra(ReceiptStoreFragment.EXTRA_USE_EXPENSEIT, Preferences.isExpenseItUser());
+        newIt.putExtra(Const.EXTRA_EXPENSE_IMAGE_FILE_PATH, filePath);
+        newIt.putExtra(Flurry.PARAM_NAME_FROM, Flurry.PARAM_VALUE_CAMERA);
+        newIt.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+        startActivity(newIt);
+    }
 
     private void uploadReceiptImageToReceiptStore() {
         if (receiptImage != null) {
@@ -241,17 +287,17 @@ public class ExpenseItDetailActivity extends BaseActivity
                     mSaveExpenseItReceiptReceiver.setServiceRequest(mSaveReceiptRequestTask);
                 } else {
                     Log.e(Const.LOG_TAG, CLS_TAG + ".uploadReceiptImageToReceiptStore: unable to create new request for mSaveReceiptRequestTask!");
-                    hideCancelProgressDialog();
+                    hideProgressDialog();
                     unregisterSaveExpenseItReceiptReceiver();
                 }
             } else {
                 Log.e(Const.LOG_TAG, CLS_TAG + ".uploadReceiptImageToReceiptStore: receiptImage could not be written to file!");
-                hideCancelProgressDialog();
+                hideProgressDialog();
                 showUnexpectedErrorDialog();
             }
         } else {
             Log.e(Const.LOG_TAG, CLS_TAG + ".uploadReceiptImageToReceiptStore: receiptImage is null!");
-            hideCancelProgressDialog();
+            hideProgressDialog();
             showUnexpectedErrorDialog();
         }
     }
@@ -297,21 +343,15 @@ public class ExpenseItDetailActivity extends BaseActivity
         return true;
     }
 
-    private void showCancelProgressDialog() {
-        String message = getString(R.string.expenseit_cancel_dialog_message);
-        mCancelProgressDialogFragment = DialogFragmentFactory.getProgressDialog(message, false, true,
-                new ProgressDialogFragment.OnCancelListener() {
-                    @Override
-                    public void onCancel(FragmentActivity activity, DialogInterface dialog) {
-                        Log.i(Const.LOG_TAG, CLS_TAG + "cancel called on cancel request processing.");
-                    }
-                });
-        mCancelProgressDialogFragment.show(getSupportFragmentManager(), CANCEL_EXPENSEIT_PROCESSING_DIALOG_TAG);
+    private void showProgressDialog(int messageResId) {
+        String message = getString(messageResId);
+        mProgressDialogFragment = DialogFragmentFactory.getProgressDialog(message, false, true, null);
+        mProgressDialogFragment.show(getSupportFragmentManager(), EXPENSEIT_PROCESSING_DIALOG_TAG);
     }
 
-    private void hideCancelProgressDialog() {
-        if (mCancelProgressDialogFragment != null) {
-            mCancelProgressDialogFragment.dismiss();
+    private void hideProgressDialog() {
+        if (mProgressDialogFragment != null) {
+            mProgressDialogFragment.dismiss();
         }
     }
 
@@ -321,7 +361,8 @@ public class ExpenseItDetailActivity extends BaseActivity
         AlertDialogFragment.OnClickListener yesListener = new AlertDialogFragment.OnClickListener() {
             @Override
             public void onClick(FragmentActivity activity, DialogInterface dialog, int which) {
-                showCancelProgressDialog();
+
+                showProgressDialog(R.string.expenseit_cancel_dialog_message);
 
                 Bitmap image = null;
                 Exception error = null;
@@ -372,8 +413,10 @@ public class ExpenseItDetailActivity extends BaseActivity
         int id = item.getItemId();
 
         if (id == R.id.cancel_expenseit_receipt) {
+            menuAction = MENU_ACTION_CANCEL;
             showExpenseItCancelConfirmationPrompt();
         } else if (id == R.id.replace_expenseit_receipt) {
+            menuAction = MENU_ACTION_REPLACE;
             DialogFragment receiptChoiceDialog = new ReceiptChoiceDialogFragment();
             receiptChoiceDialog.show(this.getSupportFragmentManager(), ReceiptChoiceDialogFragment.DIALOG_FRAGMENT_ID);
         }
@@ -407,6 +450,26 @@ public class ExpenseItDetailActivity extends BaseActivity
             retainer.put(EXPENSEIT_SAVE_RECEIPT_IMAGE_RECEIVER, mSaveExpenseItReceiptReceiver);
         }
 
+        // Retain the Receipt ID.
+        if(!TextUtils.isEmpty(receiptImageId)) {
+            retainer.put(RECEIPT_IMAGE_ID_KEY, receiptImageId);
+        }
+
+        // Retain the path of the local image.
+        if(!TextUtils.isEmpty(localImageFilePath)) {
+            retainer.put(LOCAL_IMAGE_FILE_PATH_KEY, localImageFilePath);
+        }
+
+        // Retain the Image bitmap.
+        if(receiptImage != null) {
+            retainer.put(RECEIPT_IMAGE_BITMAP_KEY, receiptImage);
+        }
+
+        // Retain the last selected menu action.
+        if(menuAction != 0) {
+            retainer.put(MENU_ACTION_KEY, menuAction);
+        }
+
 //        Uncomment after refactoring upload receipt into an AsyncTask.
 //        // Retain the upload receiver.
 //        if (mExpenseItReceiptUploadReceiver != null) {
@@ -421,34 +484,52 @@ public class ExpenseItDetailActivity extends BaseActivity
     protected void onResume() {
         super.onResume();
 
-        // Recover the delete receiver
         if (retainer != null) {
+
+            // Recover the delete receiver
             if (retainer.contains(EXPENSEIT_RECEIPT_RECEIVER)) {
                 mDeleteExpenseItReceiptReceiver = (BaseAsyncResultReceiver) retainer.get(EXPENSEIT_RECEIPT_RECEIVER);
                 if (mDeleteExpenseItReceiptReceiver != null) {
                     mDeleteExpenseItReceiptReceiver.setListener(mDeleteExpenseItAsyncReplyListener);
                 }
             }
-        }
 
-        // Recover the url receiver
-        if (retainer != null) {
+            // Recover the url receiver
             if (retainer.contains(EXPENSEIT_RECEIPT_IMAGE_URL_RECEIVER)) {
                 mGetExpenseItReceiptImageUrlReceiver = (BaseAsyncResultReceiver) retainer.get(EXPENSEIT_RECEIPT_IMAGE_URL_RECEIVER);
                 if (mGetExpenseItReceiptImageUrlReceiver != null) {
                     mGetExpenseItReceiptImageUrlReceiver.setListener(mGetExpenseItReceiptImageUrlListener);
                 }
             }
-        }
 
-        // Recover upload receiver
-        if (retainer != null) {
-            mSaveExpenseItReceiptReceiver = (SaveExpenseItReceiver) retainer.get(EXPENSEIT_SAVE_RECEIPT_IMAGE_RECEIVER);
-            if (mSaveExpenseItReceiptReceiver != null) {
-                mSaveExpenseItReceiptReceiver.setActivity(this);
-            } else {
-                Log.e(Const.LOG_TAG, CLS_TAG + ".onResume: retainer contains null reference for save receipt receiver!");
+            // Recover upload receiver
+            if(retainer.contains(EXPENSEIT_SAVE_RECEIPT_IMAGE_RECEIVER)) {
+                mSaveExpenseItReceiptReceiver = (SaveExpenseItReceiver) retainer.get(EXPENSEIT_SAVE_RECEIPT_IMAGE_RECEIVER);
+                if (mSaveExpenseItReceiptReceiver != null) {
+                    mSaveExpenseItReceiptReceiver.setActivity(this);
+                }
             }
+
+            // Recover the Receipt ID.
+            if(retainer.contains(RECEIPT_IMAGE_ID_KEY)) {
+                receiptImageId = (String) retainer.get(RECEIPT_IMAGE_ID_KEY);
+            }
+
+            // Recover the path of the local image.
+            if(retainer.contains(LOCAL_IMAGE_FILE_PATH_KEY)) {
+                localImageFilePath = (String) retainer.get(LOCAL_IMAGE_FILE_PATH_KEY);
+            }
+
+            // Recover the Image bitmap.
+            if(retainer.contains(RECEIPT_IMAGE_BITMAP_KEY)) {
+                receiptImage = (Bitmap) retainer.get(RECEIPT_IMAGE_BITMAP_KEY);
+            }
+
+            // Recover the last selected menu action.
+            if(retainer.contains(MENU_ACTION_KEY)) {
+                menuAction = (int) retainer.get(MENU_ACTION_KEY);
+            }
+
         }
 
 //        Uncomment after refactoring upload receipt into an AsyncTask.
@@ -583,15 +664,15 @@ public class ExpenseItDetailActivity extends BaseActivity
             // If there was no error with deletion...
             if (errorCode == ErrorResponse.ERROR_CODE_NO_ERROR) {
                 Log.d(Const.LOG_TAG, CLS_TAG + ".onDeleteRequestSuccess called! Creating a new expense.");
-                uploadReceiptImageToReceiptStore();
+                doUploadReceipt();
             } else {
                 Log.d(Const.LOG_TAG, CLS_TAG + ".onDeleteRequestSuccess called with error. The error code was " + errorCode);
-                hideCancelProgressDialog();
+                hideProgressDialog();
                 showUnexpectedErrorAlert();
             }
         } else {
             Log.d(Const.LOG_TAG, CLS_TAG + ".onDeleteRequestSuccess called, but there was no ErrorResponse.");
-            hideCancelProgressDialog();
+            hideProgressDialog();
             showUnexpectedErrorAlert();
         }
     }
@@ -666,20 +747,25 @@ public class ExpenseItDetailActivity extends BaseActivity
         this.finish();
     }
 
+    private void onUploadToExpenseItFinished() {
+        if(menuAction == MENU_ACTION_REPLACE) {
+            // This was a Receipt replace action, so go back to the ExpenseList.
+            IExpenseEntryCache expEntCache = this.getConcurCore().getExpenseEntryCache();
+            expEntCache.setShouldFetchExpenseList();
+            ExpenseItDetailActivity.this.setResult(Activity.RESULT_OK);
+            ExpenseItDetailActivity.this.finish();
+        } else {
+            initializeExpenseFromExpenseIt();
+        }
+    }
+
     @Override
     public void onCameraSuccess(String filePath) {
-        if (filePath != null && filePath.length() > 0) {
-            Toast.makeText(this, "camera success", Toast.LENGTH_SHORT).show();
-
-            // get the file's location.
+        if (!TextUtils.isEmpty(filePath)) {
+            showProgressDialog(R.string.expenseit_replace_dialog_message);
             localImageFilePath = filePath;
-            // upload the receipt image to ExpenseIt.
-
-            // delete the existing expenseit item.
-
-            // end activity, take user back to expense list, refresh expense list.
-
-        } else {
+            doDeleteExpenseItExpenseAsyncTask();
+        }  else {
             showUnexpectedErrorDialog();
         }
     }
@@ -694,8 +780,10 @@ public class ExpenseItDetailActivity extends BaseActivity
 
     @Override
     public void onGallerySuccess(String filePath) {
-        if (filePath != null && filePath.length() > 0) {
-            Toast.makeText(this, "gallery success", Toast.LENGTH_SHORT).show();
+        if (!TextUtils.isEmpty(filePath)) {
+            showProgressDialog(R.string.expenseit_replace_dialog_message);
+            localImageFilePath = filePath;
+            doDeleteExpenseItExpenseAsyncTask();
         } else {
             showUnexpectedErrorDialog();
         }
@@ -754,8 +842,8 @@ public class ExpenseItDetailActivity extends BaseActivity
                 Log.d(Const.LOG_TAG, CLS_TAG + ".handleSuccess: receipt image ID is " + activity.receiptImageId);
                 if (activity.receiptImageId != null) {
                     activity.receiptImageId.trim();
-                    activity.hideCancelProgressDialog();
-                    activity.initializeExpenseFromExpenseIt();
+                    activity.hideProgressDialog();
+                    activity.onUploadToExpenseItFinished();
                 }
             } else {
                 Log.e(Const.LOG_TAG, CLS_TAG + ".handleSuccess: intent does not contain key!");

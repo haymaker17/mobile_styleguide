@@ -31,6 +31,7 @@
     <string name="expenseit_details_value_processing_time">Average</string>
 
     <string name="expenseit_cancel_dialog_message">Cancelling analysis</string>
+    <string name="expenseit_replace_dialog_message">Replacing analysis</string>
     <string name="expenseit_confirmation_message">Stop receipt analysis and create an expense manually?</string>
     <string name="expenseit_finished_processing_title">Receipt analysis complete!</string>
     <string name="expenseit_finished_processing_message">Your receipt has finished analysis and can be found in the list of Expenses.</string>
