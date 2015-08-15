@@ -1157,9 +1157,8 @@ public class ExpensesAndReceipts extends BaseActivity implements ExpensesCallbac
             //Record the time taken to retrieve ExpenseItListRequest
             expenseItListRequestElapsedTime = Calendar.getInstance().getTimeInMillis() -
                     expenseListRequestStartTime;
-            EventTracker.INSTANCE.trackTimings(Flurry.EVENT_RETRIEVE_EXPENSEIT_LIST, Flurry
-                            .EVENT_RETRIEVE_EXPENSEIT_LIST, Flurry.EVENT_RETRIEVE_EXPENSEIT_LIST,
-                    expenseItListRequestElapsedTime);
+            EventTracker.INSTANCE.trackTimings(Flurry.EVENT_RETRIEVE_EXPENSEIT_LIST, expenseItListRequestElapsedTime,
+                    Flurry.EVENT_RETRIEVE_EXPENSEIT_LIST, Flurry.EVENT_RETRIEVE_EXPENSEIT_LIST);
 
 
             // Check whether or not we should refresh the GSEL if there are changes to the ExpenseIt list.
