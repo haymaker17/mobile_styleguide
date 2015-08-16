@@ -156,9 +156,9 @@ public class ExpenseItDetailActivity extends BaseActivity
         public void onRequestSuccess(Bundle resultData) {
             Log.d(Const.LOG_TAG, CLS_TAG + ".onRequestSuccess for DeleteExpenseItAsyncReplyListener called!");
 
+            // Log the event.
             EventTracker.INSTANCE.trackTimings("Expense-ExpenseIt",
-                    System.currentTimeMillis() - metricsTiming, "Edit", "Delete");
-
+                    System.currentTimeMillis() - metricsTiming, "Delete Expense", "");
             onDeleteRequestSuccess(resultData);
         }
 
@@ -178,6 +178,7 @@ public class ExpenseItDetailActivity extends BaseActivity
 
         @Override
         public void cleanup() {
+            metricsTiming = 0L;
             mDeleteExpenseItReceiptReceiver = null;
         }
     };
@@ -288,6 +289,7 @@ public class ExpenseItDetailActivity extends BaseActivity
             boolean writtenToFile = saveReceiptImageToLocalStorage();
 
             if (writtenToFile) {
+                metricsTiming = System.currentTimeMillis();
                 registerSaveExpenseItReceiptReceiver();
                 ConcurCore core = getConcurCore();
                 ConcurService service = core.getService();
@@ -371,6 +373,8 @@ public class ExpenseItDetailActivity extends BaseActivity
         AlertDialogFragment.OnClickListener yesListener = new AlertDialogFragment.OnClickListener() {
             @Override
             public void onClick(FragmentActivity activity, DialogInterface dialog, int which) {
+
+                EventTracker.INSTANCE.eventTrack("Expense-ExpenseIt", "Stop Analysis");
 
                 showProgressDialog(R.string.expenseit_cancel_dialog_message);
 
@@ -858,7 +862,13 @@ public class ExpenseItDetailActivity extends BaseActivity
 
         @Override
         protected void handleSuccess(Context context, Intent intent) {
+
             ExpenseItDetailActivity activity = getActivity();
+
+            // Log the event.
+            EventTracker.INSTANCE.trackTimings("Expense-ReceiptStore",
+                    System.currentTimeMillis() - activity.metricsTiming, "Upload Receipt", "");
+
             Log.d(Const.LOG_TAG, CLS_TAG + ".handleSuccess called!");
             // get imageID.
             if (intent.hasExtra(Const.EXTRA_EXPENSE_RECEIPT_IMAGE_ID_KEY)) {
