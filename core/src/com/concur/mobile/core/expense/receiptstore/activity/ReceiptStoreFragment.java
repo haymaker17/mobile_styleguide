@@ -1830,7 +1830,7 @@ public class ReceiptStoreFragment extends BaseFragment {
                 saveReceiptReceiver.setServiceRequest(saveReceiptRequest);
                 SaveReceiptProgressDialogHandler.show(this);
             } else {
-                Log.e(Const.LOG_TAG, CLS_TAG + ".onActivityResult(TakePicture): unable to create 'SaveReceiptRequest'!");
+                Log.w(Const.LOG_TAG, CLS_TAG + ".onActivityResult(TakePicture): unable to create 'SaveReceiptRequest'!");
                 unregisterSaveReceiptReceiver();
             }
         } else {

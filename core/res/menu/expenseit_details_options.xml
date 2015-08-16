@@ -2,12 +2,12 @@
 <menu xmlns:android="http://schemas.android.com/apk/res/android"
       xmlns:yourapp="http://schemas.android.com/apk/res-auto">
 
-    <item android:id="@+id/delete_expenseit_receipt"
-          android:title="@string/delete"
+    <item android:id="@+id/cancel_expenseit_receipt"
+          android:title="@string/expenseit_stop_processing_button"
           yourapp:showAsAction="never"/>
 
-    <item android:id="@+id/cancel_expenseit_receipt"
-          android:title="@string/cancel"
+    <item android:id="@+id/replace_expenseit_receipt"
+          android:title="@string/expenseit_replace_receipt_button"
           yourapp:showAsAction="never"/>
 
 </menu>

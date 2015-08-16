@@ -64,7 +64,7 @@ public class ReceiptView extends BaseActivity {
                         expenseItReceipt.setImageData(bitmap);
                         if (expenseItReceipt.update(ReceiptView.this, getUserId()) == false){
                             Log.e(Const.LOG_TAG, CLS_TAG + "Failed updating receipt in database");
-                        };
+                        }
                     }
 
                     imageView.post(new Runnable() {

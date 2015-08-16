@@ -11,9 +11,9 @@ import android.widget.TextView;
 
 import com.concur.core.R;
 import com.concur.mobile.core.expense.charge.data.Expense;
-import com.concur.mobile.core.expense.charge.data.ExpenseItItem;
 import com.concur.mobile.core.util.Const;
 import com.concur.mobile.core.util.FormatUtil;
+import com.concur.mobile.platform.expenseit.ExpenseItReceipt;
 import com.concur.mobile.platform.util.AnimationUtil;
 
 import java.util.Calendar;
@@ -34,7 +34,7 @@ public class ExpenseItListItem extends ExpenseListItem {
     /**
      * the ExpenseItPostReceipt object.
      */
-    private ExpenseItItem expenseItItem;
+    private ExpenseItReceipt expenseItReceipt;
 
     /**
      * Is there a rubicon error?
@@ -46,9 +46,9 @@ public class ExpenseItListItem extends ExpenseListItem {
      */
     public ExpenseItListItem(Expense expense, int listItemViewType) {
         super(expense, listItemViewType);
-        expenseItItem = expense.getExpenseItItem();
-        rubiconErrorCode = expenseItItem.getErrorCode(); // necessary now?
-        processingFailed = expenseItItem.isInErrorState();
+        expenseItReceipt = expense.getExpenseItReceipt();
+        rubiconErrorCode = expenseItReceipt.getErrorCode(); // necessary now?
+        processingFailed = expenseItReceipt.isInErrorState();
     }
 
     /**
@@ -59,7 +59,7 @@ public class ExpenseItListItem extends ExpenseListItem {
      */
     @Override
     public Calendar getTransactionDate() {
-        return expenseItItem.getUploadDate();
+        return expenseItReceipt.getCreatedAt();
     }
 
     @Override
@@ -114,7 +114,7 @@ public class ExpenseItListItem extends ExpenseListItem {
             // set the eta
             textView = (TextView) expenseView.findViewById(R.id.expenseit_details_processing_time);
             if (textView != null) {
-                int etaInSeconds = expenseItItem.getEta();
+                int etaInSeconds = expenseItReceipt.getEta();
                 if (!processingFailed && etaInSeconds > 0) {
                     String time = FormatUtil.getEtaToString(context, etaInSeconds);
                     String eta = context.getResources().getString(R.string.expenseit_expense_processing_time,
@@ -159,7 +159,7 @@ public class ExpenseItListItem extends ExpenseListItem {
     }
 
     public int getParsingStatusCode() {
-        return expenseItItem.getParsingStatusCode();
+        return expenseItReceipt.getParsingStatusCode();
     }
 
     @Override

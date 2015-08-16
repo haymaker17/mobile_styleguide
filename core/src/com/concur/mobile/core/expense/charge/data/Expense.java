@@ -9,7 +9,7 @@ import android.util.Log;
 import com.concur.mobile.core.util.Const;
 import com.concur.mobile.platform.expense.receipt.list.dao.ReceiptDAO;
 import com.concur.mobile.platform.expense.smartexpense.dao.SmartExpenseDAO;
-import com.concur.mobile.platform.expenseit.dao.ExpenseItReceiptDAO;
+import com.concur.mobile.platform.expenseit.ExpenseItReceipt;
 
 import org.xml.sax.Attributes;
 import org.xml.sax.SAXException;
@@ -80,8 +80,8 @@ public class Expense {
     // The OCRItem for this expense
     private OCRItem ocrItem;
 
-    // The ExpenseItItem for this expense.
-    private ExpenseItItem expenseItItem;
+    // The ExpenseItReceipt for this expense.
+    private ExpenseItReceipt expenseItReceipt;
 
     // Whether or not we show the card icon in the Expenses list
     private boolean shouldShowCardIcon;
@@ -106,11 +106,11 @@ public class Expense {
      * Constructs a new instance of an <code>Expense</code> that represents an ExpenseIt processing
      * item.
      *
-     * @param expItReceiptDAO
+     * @param expItReceipt
      */
-    public Expense(ExpenseItReceiptDAO expItReceiptDAO) {
+    public Expense(ExpenseItReceipt expItReceipt) {
         type = ExpenseEntryType.EXPENSEIT_NOT_DONE;
-        expenseItItem = new ExpenseItItem(expItReceiptDAO);
+        this.expenseItReceipt = expItReceipt;
     }
 
     /**
@@ -332,12 +332,12 @@ public class Expense {
     }
 
     /**
-     * @return the <code>ExpenseItItem</code> if this is an ExpenseIt Entry, or <code>null</code>
+     * @return the <code>ExpenseItReceipt</code> if this is an ExpenseIt Entry, or <code>null</code>
      * if it isn't.
      *
      */
-    public ExpenseItItem getExpenseItItem() {
-        return expenseItItem;
+    public ExpenseItReceipt getExpenseItReceipt() {
+        return expenseItReceipt;
     }
 
     /**
