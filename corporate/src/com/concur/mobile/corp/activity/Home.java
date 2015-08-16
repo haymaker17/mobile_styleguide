@@ -2276,7 +2276,7 @@ public class Home extends BaseActivity implements View.OnClickListener, Navigati
 
         ConcurMobile concurMobile = (ConcurMobile) getApplication();
         ArrayList<CarConfig> carConfigList = concurMobile.getCarConfigs();
-        if (carConfigList == null) {
+        if (carConfigList == null && concurMobile.getService() != null) { // MOB-24854 - for some reason ConcurService is null...don't know why...
             carConfigList = concurMobile.getService().getCarConfigs();
         }
         SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(this);
