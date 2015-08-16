@@ -34,6 +34,7 @@ import com.concur.mobile.core.expense.receiptstore.activity.ReceiptStoreFragment
 import com.concur.mobile.core.expense.service.SaveReceiptRequest;
 import com.concur.mobile.core.service.ConcurService;
 import com.concur.mobile.core.util.Const;
+import com.concur.mobile.core.util.EventTracker;
 import com.concur.mobile.core.util.Flurry;
 import com.concur.mobile.core.util.ViewUtil;
 import com.concur.mobile.platform.expense.provider.ExpenseUtil;
@@ -54,6 +55,7 @@ import java.net.URL;
 /**
  * @author Elliott Jacobsen-Watts
  */
+@EventTracker.EventTrackerClassName(getClassName = "Expense-AnalyzingReceiptDetail")
 public class ExpenseItDetailActivity extends BaseActivity
         implements ExpenseItDetailActivityFragment.ExpenseItDetailsViewReceiptCallback, ReceiptChoiceDialogFragment.ReceiptChoiceListener {
 
@@ -65,13 +67,15 @@ public class ExpenseItDetailActivity extends BaseActivity
 
     private static final String EXPENSEIT_PROCESSING_DIALOG_TAG = "EXPENSEIT_PROCESSING_DIALOG";
 
-    private static String RECEIPT_IMAGE_BITMAP_KEY = "RECEIPT_IMAGE_BITMAP_KEY";
+    private static final String RECEIPT_IMAGE_BITMAP_KEY = "RECEIPT_IMAGE_BITMAP_KEY";
 
-    private static String LOCAL_IMAGE_FILE_PATH_KEY = "LOCAL_IMAGE_FILE_PATH_KEY";
+    private static final String LOCAL_IMAGE_FILE_PATH_KEY = "LOCAL_IMAGE_FILE_PATH_KEY";
 
-    private static String RECEIPT_IMAGE_ID_KEY = "RECEIPT_IMAGE_ID_KEY";
+    private static final String RECEIPT_IMAGE_ID_KEY = "RECEIPT_IMAGE_ID_KEY";
 
-    private static String MENU_ACTION_KEY = "MENU_ACTION_KEY";
+    private static final String METRICS_TIMING_KEY = "METRICS_TIMING_KEY";
+
+    private static final String MENU_ACTION_KEY = "MENU_ACTION_KEY";
 
     private static int MENU_ACTION_CANCEL = 1;
 
@@ -116,6 +120,8 @@ public class ExpenseItDetailActivity extends BaseActivity
 
     private int menuAction = 0;
 
+    private long metricsTiming = 0L;
+
     protected BaseAsyncRequestTask.AsyncReplyListener mGetExpenseItReceiptImageUrlListener = new BaseAsyncRequestTask.AsyncReplyListener() {
         @Override
         public void onRequestSuccess(Bundle resultData) {
@@ -149,6 +155,10 @@ public class ExpenseItDetailActivity extends BaseActivity
         @Override
         public void onRequestSuccess(Bundle resultData) {
             Log.d(Const.LOG_TAG, CLS_TAG + ".onRequestSuccess for DeleteExpenseItAsyncReplyListener called!");
+
+            EventTracker.INSTANCE.trackTimings("Expense-ExpenseIt",
+                    System.currentTimeMillis() - metricsTiming, "Edit", "Delete");
+
             onDeleteRequestSuccess(resultData);
         }
 
@@ -417,6 +427,9 @@ public class ExpenseItDetailActivity extends BaseActivity
             showExpenseItCancelConfirmationPrompt();
         } else if (id == R.id.replace_expenseit_receipt) {
             menuAction = MENU_ACTION_REPLACE;
+
+            EventTracker.INSTANCE.eventTrack("Expense-ExpenseIt", "Replace Receipt");
+
             DialogFragment receiptChoiceDialog = new ReceiptChoiceDialogFragment();
             receiptChoiceDialog.show(this.getSupportFragmentManager(), ReceiptChoiceDialogFragment.DIALOG_FRAGMENT_ID);
         }
@@ -468,6 +481,11 @@ public class ExpenseItDetailActivity extends BaseActivity
         // Retain the last selected menu action.
         if(menuAction != 0) {
             retainer.put(MENU_ACTION_KEY, menuAction);
+        }
+
+        // Retain the metrics timing for cancel/replace.
+        if(metricsTiming != 0L) {
+            retainer.put(METRICS_TIMING_KEY, metricsTiming);
         }
 
 //        Uncomment after refactoring upload receipt into an AsyncTask.
@@ -528,6 +546,11 @@ public class ExpenseItDetailActivity extends BaseActivity
             // Recover the last selected menu action.
             if(retainer.contains(MENU_ACTION_KEY)) {
                 menuAction = (int) retainer.get(MENU_ACTION_KEY);
+            }
+
+            // Recover the last stop/replace metrics timing.
+            if(retainer.contains(METRICS_TIMING_KEY)) {
+                metricsTiming = (long) retainer.get(METRICS_TIMING_KEY);
             }
 
         }
@@ -594,6 +617,7 @@ public class ExpenseItDetailActivity extends BaseActivity
         }
         // otherwise, if everything's all good, then make the call.
         else {
+            metricsTiming = System.currentTimeMillis();
             mDeleteExpenseItReceiptAsyncTask = new DeleteExpenseItReceiptAsyncTask(
                     getApplicationContext(), 1, mDeleteExpenseItReceiptReceiver, item.getId());
             mDeleteExpenseItReceiptAsyncTask.execute();
