@@ -4,7 +4,8 @@
 <h1>Text Fields</h1>
 	<div class="flexContainer half">
 		<div>
-			<p>A Tool Bar contains actionable controls related to the items on the screen or view</p>
+			<p>Touching a text field places the cursor and automatically displays the keyboard. In addition to typing, text fields allow for a variety of other tasks, such as text selection (cut, copy, paste) and data lookup via auto-completion.</p>
+			<p>When a text field is empty, the label or title of the text field is displayed centered in the field. Once the field is selected, the label shrinks and moves up to allow space for the entered text. This is all done in-line, staying on the current screen.</p>
 		</div>
 
 		<div>
@@ -21,81 +22,93 @@
 </section>
 
 <section>
-<h2>Text Fields</h2>	
+<h2>'Normal' Text Field</h2>	
 <h3>Specs</h3>
 	<div class="flexContainer half">
 		<div>
 			<p>
-				Font, color, and Usage:
-				<ul>
-					<li>Default background fill: Concur Blue #0078C8</li>
-					<li>"Walkthrough" background fill: White #FFFFFF</li>
-					<li>"Unsaved" background fill: Dark Grey #7F8F97</li>					
-					<li>Navigation Bar: 44 tall</li>					
-					<li>Title: Helvetica Regular, 16 points, White #FFFFFF</li>
-					<li>Text: 8 padding</li>										
-					<li>Iconography 24, #FFFFFF</li>					
+				Font, Color, and Usage:
+				<ul>				
+					<li>'Normal' Title: SF UI Text, 16 points, Dark Grey #7F8F97</li>
+					<li>Divider: Light Grey #DBE1E6</li>															
 				</ul>
 			</p>
 		</div>
 		<div>
 			<figure class="diagram">
-				<img src="img/ios/components/controls/text_fields/redlines_text_fields_01_on.png" alt="Text Fields" width="338" height="599"/>
-				<div class="figure_text">Redlines with Text Fields</div>
+				<img class="redlines_on" src="img/ios/components/controls/text_fields/redlines_text_fields_01_on.png" alt="'Normal' Text Fields" width="338" height="599"/>
+				<img class="redlines_off" src="img/ios/components/controls/text_fields/redlines_text_fields_01_off.png" alt="'Normal' Text Fields" width="338" height="599"/>
+				<div class="figure_text">Redlines with 'Normal' Text Fields</div>
 			</figure>
 		</div>
 	</div>
 </section>
 
 <section>
-<h2>Text Fields</h2>		
+<h2>'Focus' Text Field</h2>		
 <h3>Specs</h3>
 	<div class="flexContainer half">
 		<div>
 			<p>
-				Font, color, and Usage:
+				Font, Color, and Usage:
 				<ul>
-					<li>Default background fill: Concur Blue #0078C8</li>
-					<li>"Walkthrough" background fill: White #FFFFFF</li>
-					<li>"Unsaved" background fill: Dark Grey #7F8F97</li>					
-					<li>Navigation Bar: 44 tall</li>					
-					<li>Title: Helvetica Regular, 16 points, White #FFFFFF</li>
-					<li>Text: 8 padding</li>										
-					<li>Iconography 24, #FFFFFF</li>					
+					<li>'Focus' Title: SF UI Text, 14 points, Concur Blue #0078C8</li>
+					<li>'Focus' Value: SF UI Text, 16 points, Concur Blue #0078C8</li>								
 				</ul>
 			</p>
 		</div>
 		<div>
 			<figure class="diagram">
-				<img src="img/ios/components/controls/text_fields/redlines_text_fields_02_on.png" alt="Text Fields" width="338" height="599"/>
-				<div class="figure_text">Redlines with Text Fields</div>
+				<img class="redlines_on" src="img/ios/components/controls/text_fields/redlines_text_fields_02_on.png" alt="'Focus' Text Fields" width="338" height="599"/>
+				<img class="redlines_off" src="img/ios/components/controls/text_fields/redlines_text_fields_02_off.png" alt="'Focus' Text Fields" width="338" height="599"/>				
+				<div class="figure_text">Redlines with 'Focus' Text Fields</div>
 			</figure>
 		</div>
 	</div>
 </section>
 
 <section>
-<h2>Text Fields</h2>		
+<h2>'Active' Text Field</h2>		
 <h3>Specs</h3>
 	<div class="flexContainer half">
 		<div>
 			<p>
-				Font, color, and Usage:
+				Font, Color, and Usage:
 				<ul>
-					<li>Default background fill: Concur Blue #0078C8</li>
-					<li>"Walkthrough" background fill: White #FFFFFF</li>
-					<li>"Unsaved" background fill: Dark Grey #7F8F97</li>					
-					<li>Navigation Bar: 44 tall</li>					
-					<li>Title: Helvetica Regular, 16 points, White #FFFFFF</li>
-					<li>Text: 8 padding</li>										
-					<li>Iconography 24, #FFFFFF</li>					
+					<li>'Active' Title: SF UI Text, 14 points, Dark Grey #0078C8</li>
+					<li>'Active' Value: SF UI Text, 16 points, Concur Blue #0078C8</li>						
 				</ul>
 			</p>
 		</div>
 		<div>
 			<figure class="diagram">
-				<img src="img/ios/components/controls/text_fields/redlines_text_fields_03_on.png" alt="Text Fields" width="338" height="599"/>
-				<div class="figure_text">Redlines with Text Fields</div>
+				<img class="redlines_on" src="img/ios/components/controls/text_fields/redlines_text_fields_03_on.png" alt="'Active' Text Fields" width="338" height="599"/>
+				<img class="redlines_off" src="img/ios/components/controls/text_fields/redlines_text_fields_03_off.png" alt="'Active' Text Fields" width="338" height="599"/>
+				<div class="figure_text">Redlines with 'Active' Text Fields</div>
+			</figure>
+		</div>
+	</div>
+</section>
+
+<section>
+<h2>'Error' Text Field</h2>		
+	<div class="flexContainer half">
+		<div>
+			<p>Required fields are pre-filled in with "*Field name* is required" and is colored light gray. When the user taps on the field, the field is cleared out automatically so the user doesn't have to clear it manually. If a form is submitted and a required field is not filled out, the user is presented with an overlay stating such. In addition, the required fields are indicated in red and the page is automatically scrolled to the first unfilled required field.</p>
+			<h3>Specs</h3>
+			<p>
+				Font, Color, and Usage:
+				<ul>
+					<li>'Active' Title: SF UI Text, 14 points, Dark Grey #0078C8</li>
+					<li>'Active' Value: SF UI Text, 16 points, Concur Blue #0078C8</li>						
+				</ul>
+			</p>
+		</div>
+		<div>
+			<figure class="diagram">
+				<img class="redlines_on" src="img/ios/components/controls/text_fields/redlines_text_fields_03_on.png" alt="'Active' Text Fields" width="338" height="599"/>
+				<img class="redlines_off" src="img/ios/components/controls/text_fields/redlines_text_fields_03_off.png" alt="'Active' Text Fields" width="338" height="599"/>
+				<div class="figure_text">Redlines with 'Active' Text Fields</div>
 			</figure>
 		</div>
 	</div>

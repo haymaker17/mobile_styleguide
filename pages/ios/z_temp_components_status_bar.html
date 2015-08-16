@@ -1,0 +1,186 @@
+<div class="container components">
+
+
+
+<section>
+<h1>Status Bar</h1>
+<div class="three_quarters float_left">
+<p>The Status Bar displays important information about the device and its current environment.</p>
+</div>
+<div class="quarter float_left"><p><a href="img/ios/components/bars/status_bar/.zip" class="icon"><img src="img/icons_web/arrow_download.svg" height="25" width="25">Status Bar<br><span>2.9 MB (.zip)</span></a></p>
+</div>
+
+</section>
+
+
+</section>
+
+
+
+<section>
+<h3>Specs</h3>
+	<div class="flexContainer half">
+		<div>
+			<p>
+				Usage and Color:
+				<!-- There are three instances where the background color should change on the Status Bar. -->
+				<ul>
+					<li>Default background fill: Concur Blue #0078C8</li>
+					<li>"Unsaved" background fill: Dark Grey #7F8F97</li>
+					<li>"Walkthrough" background fill: White #FFFFFF</li>
+				</ul>
+			</p>
+		</div>
+
+		<div>
+			<figure class="diagram">
+				<img class="redlines_on" src="img/ios/components/bars/status_bar/redline_status_bar_on.png" alt="Status Bar"/></a>
+				<img class="redlines_off" src="img/ios/components/bars/status_bar/redline_status_bar_off.png" alt="Status Bar"/>
+				<div class="figure_text">Redlines with Status Bar</div>
+			</figure>
+			<!-- <figure><img src="img/ios/components/bars/navbar_01.png" alt="Navbar" width="338" height="599"/></figure> -->
+<!-- 			<figure><img src="img/ios/components/bars/navigation_bar/settings.png" alt="Navbar" width="338" height="599"/></figure> -->
+			<!-- <figure><img src="img/ios/components/bars/navbar_02.png" alt="Navbar" width="338" height="599"/></figure> -->
+		</div>
+	</div>
+</section>
+
+
+<section>
+<h2>Examples</h2>
+	<div class="flexContainer half">
+		<div>
+			<p></p>
+		</div>
+
+
+		<div class="fadeinElement">
+			<figure>
+				<div class="videoplayer">
+					<img src="img/ios/components/bars/status_bar/login_01.png" class="video_poster_image" alt="Navbar" width="338" height="599">
+					<video class="video" preload="auto">
+						<source id="mp4" src="videos/login_01.mp4" type="video/mp4">
+						<p>Your user agent does not support the HTML5 Video element.</p>
+					</video>
+				</div>
+				<img src="img/ios/components/bars/status_bar/login_01.png" width="338" height="599">
+
+				<div class="figure_text">A white background fill is used for the Status Bar on "Walkthrough" screens.</div>
+			</figure>
+			<figure>
+				<div class="videoplayer">
+					<img src="img/ios/components/bars/status_bar/new_expense.png" alt="Navbar" width="338" height="599"/>
+				</div>
+				<div class="figure_text">A Dark Grey background fill is used for the Status Bar on "Unsaved" screens.</div>
+			</figure>
+			<!-- <figure><img src="img/ios/components/bars/navbar_02.png" alt="Navbar" width="338" height="599"/></figure> -->
+		</div>
+	</div>
+</section>
+
+<!--
+<section>
+<h3>Code Sample</h3>
+	<div class="flexContainer">
+		<div class="code_sample">
+			<table class="code_sample_table">
+			<tbody>			
+		            <tr><td><pre>// View 3 - Custom right bar button with a view</pre></td></tr>	
+					<tr><td><pre>// View 3 - Custom right bar button with a view</pre></td></tr>
+					<tr><td><pre>UISegmentedControl *segmentedControl = [[UISegmentedControl alloc] initWithItems:</pre></td></tr>
+					<tr><td><pre>[NSArray arrayWithObjects:</pre></td></tr>
+					<tr><td><pre>[UIImage imageNamed:@"up.png"],</pre></td></tr>
+					<tr><td><pre>[UIImage imageNamed:@"down.png"],</pre></td></tr>
+					<tr><td><pre>nil]];</pre></td></tr>
+					<tr><td><pre><br></pre></td></tr>					
+					<tr><td><pre>[segmentedControl addTarget:self action:@selector(segmentAction:) forControlEvents:UIControlEventValueChanged];</pre></td></tr>
+					<tr><td><pre>segmentedControl.frame = CGRectMake(0, 0, 90, kCustomButtonHeight);</pre></td></tr>
+					<tr><td><pre>segmentedControl.segmentedControlStyle = UISegmentedControlStyleBar;</pre></td></tr>
+					<tr><td><pre>segmentedControl.momentary = YES;</pre></td></tr>
+					<tr><td><pre><br></pre></td></tr>						
+					<tr><td><pre>defaultTintColor = segmentedControl.tintColor;    // Keep track if this if you need it later.</pre></td></tr>
+					<tr><td><pre>UIBarButtonItem *segmentBarItem = [[UIBarButtonItem alloc] initWithCustomView:segmentedControl];</pre></td></tr>
+					<tr><td><pre>self.navigationItem.rightBarButtonItem = segmentBarItem;</pre></td></tr>
+			</tbody>
+			</table>	
+		</div>
+	</div>
+</section>
+-->
+
+
+
+
+
+
+
+<!--
+<section>
+<h3>Filter Bar</h3>
+	<div class="flexContainer half">
+		<div>
+			<p>It can be useful to display a filter/sort bar when there are clearly defined or typical categories in which users might want to refine their search. The filter/sort bar is displayed anchored to the bottom of the page and displays the number of results as well as the filter/sort buttons</p>
+		</div>
+
+		<div>
+			<figure><img src="img/ios/components/bars/filter_bar.png" alt="Navbar" width="338" height="599"/></figure>
+		</div>
+	</div>
+</section>
+-->
+
+</div>
+
+	<script>
+		
+		$(document).ready(function() {
+			
+			
+		   //show the video and hide the poster image
+		   $(".video_poster_image").on("click", function(e){
+			   
+			   //get which one we clicked on
+			   var video_index = $(this).siblings(".video").index("video");
+			   var video = $("video")[video_index]; 
+			   
+			   //play the video and hide the image
+			   video.play();
+			   //$(this).hide();
+			   $(this).fadeOut();
+			   //$(".bg_image").hide(alert('bla'));			   
+		   });
+		   
+		    //hide the video and show the poster image when the movie ends
+			$(".video").on("ended", function() {			
+				//$(this).siblings(".video_poster_image").show();
+				$(this).siblings(".video_poster_image").fadeIn();
+			});
+			
+			//pause/play functionality
+			$(".video").on("click",function(){
+				
+			   //get which one we clicked on
+			   var video_index = $(this).index("video");
+			   var video = $("video")[video_index];
+				
+				//play/pause the video
+				if (video.paused) {
+					video.play();
+				}
+				else {
+					video.pause();
+				}
+			})
+			
+		   
+		});
+		
+		$(function() { 
+			$(".changelist").on("click","a", function(ev){
+			ev.preventDefault();
+			getGithubCommits();
+		})
+	
+});
+		
+	</script>

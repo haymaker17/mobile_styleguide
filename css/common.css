@@ -167,13 +167,6 @@ p {
 	margin-right: 2%;
 }
 
-.flexContainer.half > div {
-	-webkit-flex: 1 0 auto;
-	flex: 1 0 auto;
-	width: 50%;
-}
-
-
 
 .flexContainer.third > div {
 	-webkit-flex: 1 0 auto;
@@ -263,7 +256,13 @@ p {
 	background-color: #ffffff;
 }
 
+.add_space {
+	margin-top: 25px;
+}
 
+img.border_none {
+	border: none;
+}
 
 
 
@@ -1162,7 +1161,7 @@ a.icon span {
 }
 
 .img_block.tall li div {
-	height: 8em;
+	height: 10em;
 }
 
 .img_block.tall h4 {
