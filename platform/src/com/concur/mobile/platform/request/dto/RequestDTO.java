@@ -33,36 +33,68 @@ public class RequestDTO implements FormDTO {
         }
     }
 
-    @Expose @SerializedName("RequestID") private String id;
-    @Expose @SerializedName("Name") private String name;
-    @Expose @SerializedName("Purpose") private String purpose;
-    @Expose @SerializedName("CurrencyCode") private String currencyCode;
-    @SerializedName("EmployeeName") private String employeeName;
-    @SerializedName("ApprovalStatusName") private String approvalStatus;
-    @Expose @SerializedName("ApprovalStatusCode") private String approvalStatusCode;
-    @SerializedName("TotalApprovedAmount") private Double total;
-    @Expose @SerializedName("StartDate") private Date startDate;
-    @Expose @SerializedName("EndDate") private Date endDate;
-    @Expose @SerializedName("CreationDate") private Date requestDate;
-    @Expose @SerializedName("Comment") private String lastComment;
-    @SerializedName("Comments") private List<RequestCommentDTO> commentHistory;
-    @SerializedName("LoginID") private String userLoginId;
-    @SerializedName("HighestExceptionLevel") private RequestExceptionDTO.ExceptionLevel highestExceptionLevel;
-    @Expose @SerializedName("HeaderFormID") private String headerFormId;
-    @SerializedName("Exceptions") private List<RequestExceptionDTO> exceptions;
+    @Expose
+    @SerializedName("RequestID")
+    private String id;
+    @Expose
+    @SerializedName("Name")
+    private String name;
+    @Expose
+    @SerializedName("Purpose")
+    private String purpose;
+    @Expose
+    @SerializedName("CurrencyCode")
+    private String currencyCode;
+    @SerializedName("EmployeeName")
+    private String employeeName;
+    @SerializedName("ApprovalStatusName")
+    private String approvalStatus;
+    @Expose
+    @SerializedName("ApprovalStatusCode")
+    private String approvalStatusCode;
+    @SerializedName("TotalApprovedAmount")
+    private Double total;
+    @Expose
+    @SerializedName("StartDate")
+    private Date startDate;
+    @Expose
+    @SerializedName("EndDate")
+    private Date endDate;
+    @Expose
+    @SerializedName("CreationDate")
+    private Date requestDate;
+    @Expose
+    @SerializedName("Comment")
+    private String lastComment;
+    @SerializedName("Comments")
+    private List<RequestCommentDTO> commentHistory;
+    @SerializedName("LoginID")
+    private String userLoginId;
+    @SerializedName("HighestExceptionLevel")
+    private RequestExceptionDTO.ExceptionLevel highestExceptionLevel;
+    @Expose
+    @SerializedName("HeaderFormID")
+    private String headerFormId;
+    @SerializedName("Exceptions")
+    private List<RequestExceptionDTO> exceptions;
 
     // --- required to post/put
-    @Expose @SerializedName(("PolicyID")) private String policyId;
+    @Expose
+    @SerializedName(("PolicyID"))
+    private String policyId;
 
-    @SerializedName("SegmentsEntries") private List<RequestEntryDTO> entryList;
+    @SerializedName("SegmentsEntries")
+    private List<RequestEntryDTO> entryList;
 
     private Map<String, RequestEntryDTO> entriesMap;
 
-    @SerializedName("UserPermissions") private Link permissionsLink;
+    @SerializedName("UserPermissions")
+    private Link permissionsLink;
 
     private int displayOrder = 1;
 
-    @Override public String getId() {
+    @Override
+    public String getId() {
         return id;
     }
 
@@ -230,7 +262,8 @@ public class RequestDTO implements FormDTO {
         return false;
     }
 
-    @Override public Integer getDisplayOrder() {
+    @Override
+    public Integer getDisplayOrder() {
         return displayOrder;
     }
 }

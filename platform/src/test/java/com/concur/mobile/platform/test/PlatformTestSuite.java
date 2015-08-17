@@ -5,7 +5,6 @@ import android.content.Context;
 import android.content.pm.PackageManager.NameNotFoundException;
 import android.os.Build;
 import android.text.TextUtils;
-
 import com.concur.mobile.platform.authentication.AccessToken;
 import com.concur.mobile.platform.authentication.LoginResult;
 import com.concur.mobile.platform.authentication.system.config.test.SystemConfigRequestTaskTest;
@@ -32,13 +31,12 @@ import com.concur.mobile.platform.receipt.list.test.DeleteReceiptRequestTaskTest
 import com.concur.mobile.platform.receipt.list.test.GetReceiptRequestTaskTest;
 import com.concur.mobile.platform.receipt.list.test.ReceiptListRequestTaskTest;
 import com.concur.mobile.platform.receipt.list.test.SaveReceiptRequestTaskTest;
+import com.concur.mobile.platform.request.GroupConfigurationTaskTest;
 import com.concur.mobile.platform.service.MWSPlatformManager;
 import com.concur.mobile.platform.test.server.MockMWSServer;
 import com.concur.mobile.platform.travel.provider.ClearTravelDBHelper;
 import com.concur.mobile.platform.travel.provider.TravelProvider;
-import com.concur.mobile.platform.util.Format;
 import com.concur.platform.PlatformProperties;
-
 import org.junit.AfterClass;
 import org.junit.BeforeClass;
 import org.junit.Test;
@@ -51,11 +49,10 @@ import java.util.Locale;
 
 /**
  * Contains a suite of tests to run to exercise the ConcurPlatform project.
- * 
+ *
  * @author andrewk
  */
-@RunWith(ConcurPlatformTestRunner.class)
-@Config(manifest = "src/test/AndroidManifest.xml", assetDir = "assets")
+@RunWith(ConcurPlatformTestRunner.class) @Config(manifest = "src/test/AndroidManifest.xml", assetDir = "assets")
 public class PlatformTestSuite {
 
     private static final String CLS_TAG = "PlatformTestSuite";
@@ -71,8 +68,7 @@ public class PlatformTestSuite {
     /**
      * Performs any test suite set-up.
      */
-    @BeforeClass
-    public static void setUp() throws Exception {
+    @BeforeClass public static void setUp() throws Exception {
 
         // Initialize the shadow log to use stdout.
         ShadowLog.stream = System.out;
@@ -86,8 +82,7 @@ public class PlatformTestSuite {
     /**
      * Performs any test suite clean-up.
      */
-    @AfterClass
-    public static void cleanUp() throws Exception {
+    @AfterClass public static void cleanUp() throws Exception {
 
         if (DEBUG) {
             ShadowLog.d(Const.LOG_TAG, CLS_TAG + ".cleanUp: ");
@@ -101,12 +96,10 @@ public class PlatformTestSuite {
 
     /**
      * Performs a pin-password login test.
-     * 
-     * @throws Exception
-     *             throws an exception if the login request fails to properly parse the results.
+     *
+     * @throws Exception throws an exception if the login request fails to properly parse the results.
      */
-    @Test
-    public void doPinPasswordLogin() throws Exception {
+    @Test public void doPinPasswordLogin() throws Exception {
 
         // Init and perform a PP login.
         PPLoginRequestTaskTest test = new PPLoginRequestTaskTest();
@@ -164,12 +157,10 @@ public class PlatformTestSuite {
      * <b>NOTE:</b>&nbsp;&nbsp; This test will first perform a <code>PPLoginLightRequestTaskTest</code> test in order to obtain an
      * access token, then perform an <code>AutoLoginRequestTaskTest</code> with the access token to complete the login process
      * with fully-populated data.
-     * 
-     * @throws Exception
-     *             throws an exception if the login request fails to properly parse the results.
+     *
+     * @throws Exception throws an exception if the login request fails to properly parse the results.
      */
-    @Test
-    public void doAutoLogin() throws Exception {
+    @Test public void doAutoLogin() throws Exception {
 
         // Run the pin/password light test.
         doPinPasswordLoginLight();
@@ -186,12 +177,10 @@ public class PlatformTestSuite {
 
     /**
      * Performs a pin-password "light" login test.
-     * 
-     * @throws Exception
-     *             throws an exception if the login request fails to properly parse the results.
+     *
+     * @throws Exception throws an exception if the login request fails to properly parse the results.
      */
-    @Test
-    public void doPinPasswordLoginLight() throws Exception {
+    @Test public void doPinPasswordLoginLight() throws Exception {
 
         // Init and perform a PP light login.
         PPLoginLightRequestTaskTest test = new PPLoginLightRequestTaskTest();
@@ -242,12 +231,10 @@ public class PlatformTestSuite {
 
     /**
      * Performs a email look-up test.
-     * 
-     * @throws Exception
-     *             throws an exception if the email look-up request fails to properly parse the results.
+     *
+     * @throws Exception throws an exception if the email look-up request fails to properly parse the results.
      */
-    @Test
-    public void doEmailLookUp() throws Exception {
+    @Test public void doEmailLookUp() throws Exception {
 
         // Init and perform a PP login.
         EmailLookUpRequestTaskTest test = new EmailLookUpRequestTaskTest();
@@ -298,12 +285,10 @@ public class PlatformTestSuite {
 
     /**
      * Performs a request password reset test.
-     * 
-     * @throws Exception
-     *             throws an exception if the password reset request fails to properly parse the results.
+     *
+     * @throws Exception throws an exception if the password reset request fails to properly parse the results.
      */
-    @Test
-    public void doRequestPasswordReset() throws Exception {
+    @Test public void doRequestPasswordReset() throws Exception {
 
         RequestPasswordResetRequestTaskTest test = new RequestPasswordResetRequestTaskTest();
 
@@ -328,8 +313,9 @@ public class PlatformTestSuite {
             // Using live server! Enforce specified credentials.
             email = System.getProperty(Const.RESET_PASSWORD_EMAIL, "").trim();
             if (TextUtils.isEmpty(email)) {
-                throw new Exception(CLS_TAG + ".doRequestPasswordReset: using live server, no '"
-                        + Const.RESET_PASSWORD_EMAIL + "' system property specified!");
+                throw new Exception(
+                        CLS_TAG + ".doRequestPasswordReset: using live server, no '" + Const.RESET_PASSWORD_EMAIL
+                                + "' system property specified!");
             }
         }
         // Set the credentials.
@@ -348,12 +334,10 @@ public class PlatformTestSuite {
 
     /**
      * Performs a reset user password reset test.
-     * 
-     * @throws Exception
-     *             throws an exception if the password reset request fails to properly parse the results.
+     *
+     * @throws Exception throws an exception if the password reset request fails to properly parse the results.
      */
-    @Test
-    public void doResetUserPassword() throws Exception {
+    @Test public void doResetUserPassword() throws Exception {
 
         ResetUserPasswordRequestTaskTest test = new ResetUserPasswordRequestTaskTest();
 
@@ -384,23 +368,27 @@ public class PlatformTestSuite {
             // Using live server! Enforce specified credentials.
             email = System.getProperty(Const.RESET_PASSWORD_EMAIL, "").trim();
             if (TextUtils.isEmpty(email)) {
-                throw new Exception(CLS_TAG + ".doResetUserPassword: using live server, no '"
-                        + Const.RESET_PASSWORD_EMAIL + "' system property specified!");
+                throw new Exception(
+                        CLS_TAG + ".doResetUserPassword: using live server, no '" + Const.RESET_PASSWORD_EMAIL
+                                + "' system property specified!");
             }
             password = System.getProperty(Const.RESET_PASSWORD_PASSWORD, "").trim();
             if (TextUtils.isEmpty(password)) {
-                throw new Exception(CLS_TAG + ".doResetUserPassword: using live server, no '"
-                        + Const.RESET_PASSWORD_PASSWORD + "' system property specified!");
+                throw new Exception(
+                        CLS_TAG + ".doResetUserPassword: using live server, no '" + Const.RESET_PASSWORD_PASSWORD
+                                + "' system property specified!");
             }
             keyPartA = System.getProperty(Const.RESET_PASSWORD_KEY_PART_A, "").trim();
             if (TextUtils.isEmpty(email)) {
-                throw new Exception(CLS_TAG + ".doResetUserPassword: using live server, no '"
-                        + Const.RESET_PASSWORD_KEY_PART_A + "' system property specified!");
+                throw new Exception(
+                        CLS_TAG + ".doResetUserPassword: using live server, no '" + Const.RESET_PASSWORD_KEY_PART_A
+                                + "' system property specified!");
             }
             keyPartB = System.getProperty(Const.RESET_PASSWORD_KEY_PART_B, "").trim();
             if (TextUtils.isEmpty(email)) {
-                throw new Exception(CLS_TAG + ".doResetUserPassword: using live server, no '"
-                        + Const.RESET_PASSWORD_KEY_PART_B + "' system property specified!");
+                throw new Exception(
+                        CLS_TAG + ".doResetUserPassword: using live server, no '" + Const.RESET_PASSWORD_KEY_PART_B
+                                + "' system property specified!");
             }
         }
         // Set the credentials.
@@ -419,12 +407,10 @@ public class PlatformTestSuite {
 
     /**
      * Performs a System Config test.
-     * 
-     * @throws Exception
-     *             throws an exception if the system config fails to properly parse the results.
+     *
+     * @throws Exception throws an exception if the system config fails to properly parse the results.
      */
-    @Test
-    public void doSystemConfig() throws Exception {
+    @Test public void doSystemConfig() throws Exception {
 
         // Init the login request
         doPinPasswordLogin();
@@ -444,12 +430,10 @@ public class PlatformTestSuite {
 
     /**
      * Performs a User Config test.
-     * 
-     * @throws Exception
-     *             throws an exception if the user config fails to properly parse the results.
+     *
+     * @throws Exception throws an exception if the user config fails to properly parse the results.
      */
-    @Test
-    public void doUserConfig() throws Exception {
+    @Test public void doUserConfig() throws Exception {
 
         // Init the login request
         doPinPasswordLogin();
@@ -469,12 +453,10 @@ public class PlatformTestSuite {
 
     /**
      * Performs an expense list test.
-     * 
-     * @throws Exception
-     *             throws an exception if the test fails.
+     *
+     * @throws Exception throws an exception if the test fails.
      */
-    @Test
-    public void doExpenseList() throws Exception {
+    @Test public void doExpenseList() throws Exception {
 
         // Init the login request
         doPinPasswordLogin();
@@ -494,12 +476,10 @@ public class PlatformTestSuite {
 
     /**
      * Performs a smart expense list test.
-     * 
-     * @throws Exception
-     *             throws an exception if the test fails.
+     *
+     * @throws Exception throws an exception if the test fails.
      */
-    @Test
-    public void doSmartExpenseList() throws Exception {
+    @Test public void doSmartExpenseList() throws Exception {
 
         // Init the login request
         doPinPasswordLogin();
@@ -518,13 +498,34 @@ public class PlatformTestSuite {
     }
 
     /**
-     * Performs a StartOCR test.
-     * 
-     * @throws Exception
-     *             throws an exception if the test fails.
+     * Performs a group configuration test.
+     *
+     * @throws Exception throws an exception if the test fails.
      */
-    @Test
-    public void doStartOcr() throws Exception {
+    @Test public void doGroupConfiguration() throws Exception {
+
+        // Init the login request
+        doPinPasswordLogin();
+
+        GroupConfigurationTaskTest groupConfigurationTaskTest = new GroupConfigurationTaskTest();
+        if (PlatformTestApplication.useMockServer()) {
+            // Init mock server.
+            initMockServer();
+
+            // Set the mock server instance on the test.
+            groupConfigurationTaskTest.setMockServer(mwsServer);
+        }
+
+        // Run the GroupConfigurationTaskTest test.
+        groupConfigurationTaskTest.doTest();
+    }
+
+    /**
+     * Performs a StartOCR test.
+     *
+     * @throws Exception throws an exception if the test fails.
+     */
+    @Test public void doStartOcr() throws Exception {
 
         // Init the login request
         doPinPasswordLogin();
@@ -559,16 +560,14 @@ public class PlatformTestSuite {
 
     /**
      * Performs a StopOCR test.
-     * 
+     * <p/>
      * NOTE: This only tests against the mock server. The reason being is testing against a real live server is difficult. First,
      * we need to call StartOCR and IMMEDIATELY call StopOCR. The timing needs to be perfect in order for this call to succeed,
      * otherwise, the we're trying to stop an OCR that has already succeeded.
-     * 
-     * @throws Exception
-     *             throws an exception if the test fails.
+     *
+     * @throws Exception throws an exception if the test fails.
      */
-    @Test
-    public void doStopOcr() throws Exception {
+    @Test public void doStopOcr() throws Exception {
 
         // Init the login request
         doPinPasswordLogin();
@@ -596,12 +595,10 @@ public class PlatformTestSuite {
 
     /**
      * Performs a receipt list test.
-     * 
-     * @throws Exception
-     *             throws an exception if the test fails.
+     *
+     * @throws Exception throws an exception if the test fails.
      */
-    @Test
-    public void doReceiptList() throws Exception {
+    @Test public void doReceiptList() throws Exception {
 
         // Init the login request
         doPinPasswordLogin();
@@ -678,12 +675,10 @@ public class PlatformTestSuite {
 
     /**
      * Performs save mobile entry test.
-     * 
-     * @throws Exception
-     *             throws an exception if the test fails.
+     *
+     * @throws Exception throws an exception if the test fails.
      */
-    @Test
-    public void doSaveMobileEntry() throws Exception {
+    @Test public void doSaveMobileEntry() throws Exception {
 
         // Init the login request
         doPinPasswordLogin();
@@ -717,44 +712,43 @@ public class PlatformTestSuite {
 
         // Initialize the config content provider.
         ConfigProvider configProvider = new ConfigProvider() {
-            @Override
-            public PlatformSQLiteOpenHelper initPlatformSQLiteOpenHelper(Context context) {
+
+            @Override public PlatformSQLiteOpenHelper initPlatformSQLiteOpenHelper(Context context) {
                 PlatformSQLiteOpenHelper helper = new ClearSQLiteOpenHelper(new ClearConfigDBHelper(context));
                 return helper;
             }
         };
         configProvider.onCreate();
-        ShadowContentResolver.registerProvider(com.concur.mobile.platform.config.provider.Config.AUTHORITY,
-                configProvider);
+        ShadowContentResolver
+                .registerProvider(com.concur.mobile.platform.config.provider.Config.AUTHORITY, configProvider);
 
         initConfigLoginInfo();
 
         // Initialize the travel content provider.
         TravelProvider travelProvider = new TravelProvider() {
-            @Override
-            public PlatformSQLiteOpenHelper initPlatformSQLiteOpenHelper(Context context) {
+
+            @Override public PlatformSQLiteOpenHelper initPlatformSQLiteOpenHelper(Context context) {
                 PlatformSQLiteOpenHelper helper = new ClearSQLiteOpenHelper(new ClearTravelDBHelper(context));
                 return helper;
             }
         };
 
         travelProvider.onCreate();
-        ShadowContentResolver.registerProvider(com.concur.mobile.platform.travel.provider.Travel.AUTHORITY,
-                travelProvider);
+        ShadowContentResolver
+                .registerProvider(com.concur.mobile.platform.travel.provider.Travel.AUTHORITY, travelProvider);
 
         // Initialize the expense content provider.
         ExpenseProvider expenseProvider = new ExpenseProvider() {
-            @Override
-            public PlatformSQLiteOpenHelper initPlatformSQLiteOpenHelper(Context context) {
+
+            @Override public PlatformSQLiteOpenHelper initPlatformSQLiteOpenHelper(Context context) {
                 PlatformSQLiteOpenHelper helper = new ClearSQLiteOpenHelper(new ClearExpenseDBHelper(context));
                 return helper;
             }
         };
 
         expenseProvider.onCreate();
-        ShadowContentResolver.registerProvider(com.concur.mobile.platform.expense.provider.Expense.AUTHORITY,
-            expenseProvider);
-
+        ShadowContentResolver
+                .registerProvider(com.concur.mobile.platform.expense.provider.Expense.AUTHORITY, expenseProvider);
 
     }
 
@@ -808,7 +802,11 @@ public class PlatformTestSuite {
             PlatformProperties.setServerAddress(strBldr.toString());
         } else {
             String serverAddr = System.getProperty(Const.SERVER_ADDRESS, Const.DEFAULT_SERVER_ADDRESS);
-            serverAddr = Format.formatServerAddress(!Format.isDevServer(serverAddr), serverAddr);
+            //serverAddr = Format.formatServerAddress(!Format.isDevServer(serverAddr), serverAddr);
+            /* You can't format server address here, because PlatformAsyncRequestTask will force it to https
+             * if it's not starting with dev://, which will end up in a certificate error
+             */
+
             PlatformProperties.setServerAddress(serverAddr);
         }
 

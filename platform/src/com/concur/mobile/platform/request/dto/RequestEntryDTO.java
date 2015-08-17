@@ -16,7 +16,8 @@ public class RequestEntryDTO {
 
         private String name;
 
-        @Override public String getName() {
+        @Override
+        public String getName() {
             return name;
         }
 
@@ -25,26 +26,47 @@ public class RequestEntryDTO {
         }
     }
 
-    @Expose @SerializedName("ID") private String id;
-    @Expose @SerializedName("Segments")
+    @Expose
+    @SerializedName("ID")
+    private String id;
+    @Expose
+    @SerializedName("Segments")
     private List<RequestSegmentDTO> listSegment = new ArrayList<RequestSegmentDTO>();
-    @Expose @SerializedName("ForeignCurrencyCode") private String foreignCurrencyCode;
-    @Expose @SerializedName("ForeignCurrencyName") private String foreignCurrencyName;
-    @Expose @SerializedName("ForeignAmount") private Double foreignAmount;
-    @SerializedName("ExpenseTypeName") private String expenseTypeName;
-    @Expose @SerializedName("TripType") private TripType tripType;
+    @Expose
+    @SerializedName("ForeignCurrencyCode")
+    private String foreignCurrencyCode;
+    @Expose
+    @SerializedName("ForeignCurrencyName")
+    private String foreignCurrencyName;
+    @Expose
+    @SerializedName("ForeignAmount")
+    private Double foreignAmount;
+    @SerializedName("ExpenseTypeName")
+    private String expenseTypeName;
+    @Expose
+    @SerializedName("TripType")
+    private TripType tripType;
 
-    @Expose @SerializedName("SegmentFormID") private String segmentFormId;
-    @SerializedName("SegmentTypeName") private String segmentType;
-    @SerializedName("SegmentTypeCode") private String segmentTypeCode;
-    @Expose @SerializedName("SegmentTypeID") private String segmentTypeId;
-    @SerializedName("Exceptions") private List<RequestExceptionDTO> exceptions;
+    @Expose
+    @SerializedName("SegmentFormID")
+    private String segmentFormId;
+    @SerializedName("SegmentTypeName")
+    private String segmentType;
+    @SerializedName("SegmentTypeCode")
+    private String segmentTypeCode;
+    @Expose
+    @SerializedName("SegmentTypeID")
+    private String segmentTypeId;
+    @SerializedName("Exceptions")
+    private List<RequestExceptionDTO> exceptions;
 
     private List<RequestCommentDTO> comments;
     private Integer displayOrder = 1;
 
     // --- This is some horrible stuff required to post an entry...
-    @Expose @SerializedName("RequestID") private String requestId;
+    @Expose
+    @SerializedName("RequestID")
+    private String requestId;
 
     public String getSegmentTypeId() {
         return segmentTypeId;

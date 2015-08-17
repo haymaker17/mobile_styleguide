@@ -108,7 +108,7 @@ public abstract class AsyncRequestTest {
      * 
      * @return returns the response from the server.
      */
-    public String getResponseString(PlatformAsyncRequestTask reqTask) {
+    public <T extends BaseAsyncRequestTask> String getResponseString(T reqTask) {
         String response = null;
 
         InputStream ins = reqTask.getResponse();
@@ -299,7 +299,7 @@ public abstract class AsyncRequestTest {
      * @param requestTask
      *            contains a reference to a <code>BaseAsyncRequestTask</code>.
      */
-    protected void launchRequest(BaseAsyncRequestTask requestTask) {
+    protected <T extends BaseAsyncRequestTask> void launchRequest(T requestTask) {
 
         // Ensure the result is constructed prior to launching the request task.
         result = new AsyncRequestResult();
@@ -325,6 +325,55 @@ public abstract class AsyncRequestTest {
             ShadowLog.d(Const.LOG_TAG, CLS_TAG + ".waitForResult: got login result.");
         }
 
+    }
+
+    /**
+     * Executes task, retrieve result and returns true if the resultCode is OK
+     *
+     * @param task   the task to execute
+     * @param result the object to store the result in
+     * @return whether the resultCode is OK or not
+     */
+    protected boolean populateTaskResult(final BaseAsyncRequestTask task, final AsyncRequestResult result) {
+        boolean isOk = false;
+        task.setRetainResponse(true);
+
+        // Launch the request.
+        launchRequest(task);
+
+        try {
+            // Wait for the result.
+            waitForResult();
+        } catch (InterruptedException intExc) {
+            if (DEBUG) {
+                ShadowLog.e(com.concur.mobile.platform.test.Const.LOG_TAG,
+                        CLS_TAG + ".doTest: interrupted while acquiring login result.");
+            }
+            result.resultCode = BaseAsyncRequestTask.RESULT_CANCEL;
+        }
+
+        // Examine the result.
+        if (result != null) {
+
+            // Verify result code.
+            verifyExpectedResultCode(CLS_TAG);
+
+            switch (result.resultCode) {
+            case BaseAsyncRequestTask.RESULT_CANCEL: {
+                Assert.fail("Result canceled");
+                break;
+            }
+            case BaseAsyncRequestTask.RESULT_ERROR: {
+                Assert.fail("Result error");
+                break;
+            }
+            case BaseAsyncRequestTask.RESULT_OK: {
+                isOk = true;
+                break;
+            }
+            }
+        }
+        return isOk;
     }
 
     /**
