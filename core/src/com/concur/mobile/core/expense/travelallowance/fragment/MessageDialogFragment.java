@@ -33,6 +33,9 @@ public class MessageDialogFragment extends DialogFragment {
                 builder.setNeutralButton(R.string.cancel, null);
                 builder.setCancelable(true);
             }
+            if (arguments.containsKey(BundleId.MESSAGE_TITLE)){
+                builder.setTitle(arguments.getString(BundleId.MESSAGE_TITLE));
+            }
         }
         return builder.create();
     }
