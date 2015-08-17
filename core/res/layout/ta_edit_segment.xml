@@ -82,4 +82,29 @@
         layout="@layout/ta_group_separator" />
         -->
 
+    <LinearLayout
+        android:id="@+id/ta_return_to_home"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:visibility="gone">
+
+        <ImageView
+            android:id="@+id/ta_only_one_itinerary_plus4"
+            android:layout_width="20dp"
+            android:layout_height="20dp"
+            android:src="@drawable/icon_add_button_plus"
+            android:visibility="visible"
+            android:background="#2d6a95"/>
+
+        <TextView
+            android:id="@+id/ta_only_one_itinerary_text4"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/ta_breakfast"
+            android:visibility="visible"
+            android:textColor="#383f46"/>
+
+     </LinearLayout>
+
 </LinearLayout>

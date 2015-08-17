@@ -134,6 +134,7 @@ public class ItineraryUpdateActivity extends BaseActivity implements IController
         View.OnClickListener onTimeClickListener;
         View.OnClickListener onDateClickListener;
         View.OnClickListener onLocationClickListener;
+        View.OnClickListener onReturnToHomeListener;
 
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         if (toolbar != null) {
@@ -301,10 +302,19 @@ public class ItineraryUpdateActivity extends BaseActivity implements IController
             }
         };
 
+        onReturnToHomeListener = new View.OnClickListener(){
+            @Override
+            public void onClick(View v) {
+                if (!isDataInconsistent()) {
+                    addNewRow();
+                }
+            }
+        };
+
         ListView listView = (ListView) findViewById(R.id.list_view);
         if (listView != null && this.itinerary != null) {
             adapter = new ItineraryUpdateListAdapter(this, onItemClickListener, onLocationClickListener,
-                    onDateClickListener, onTimeClickListener, this.itinerary.getSegmentList());
+                    onDateClickListener, onTimeClickListener, onReturnToHomeListener, this.itinerary.getSegmentList());
             listView.setAdapter(adapter);
         }
 

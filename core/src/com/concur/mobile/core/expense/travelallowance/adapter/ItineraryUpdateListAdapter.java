@@ -8,6 +8,7 @@ import android.view.View.OnClickListener;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.concur.core.R;
@@ -33,6 +34,7 @@ public class ItineraryUpdateListAdapter extends ArrayAdapter<Object> {
     private OnClickListener onDateClickListener;
     private OnClickListener onLocationClickListener;
     private OnClickListener onItemClickListener;
+    private  OnClickListener onReturnToHomeListener;
     private List<ItinerarySegment> segments;
 
     /**
@@ -68,11 +70,13 @@ public class ItineraryUpdateListAdapter extends ArrayAdapter<Object> {
         private View vgArrivalTime;
         private TextView tvArrivalTimeLabel;
         private TextView tvArrivalTimeValue;
+        private LinearLayout llReturn;
     }
 
     public ItineraryUpdateListAdapter(final Context context, final OnClickListener onItemClickListener,
                                       final OnClickListener onLocationClickListener,
             final OnClickListener onDateClickListener, final OnClickListener onTimeClickListener,
+            final OnClickListener onReturnToHomeListener,
             List<ItinerarySegment> itinerarySegments) {
 
         super(context, LAYOUT_ID);
@@ -82,6 +86,7 @@ public class ItineraryUpdateListAdapter extends ArrayAdapter<Object> {
         this.onDateClickListener = onDateClickListener;
         this.onTimeClickListener = onTimeClickListener;
         this.onItemClickListener = onItemClickListener;
+        this.onReturnToHomeListener = onReturnToHomeListener;
         this.segments = itinerarySegments;
         addAll(itinerarySegments);
     }
@@ -132,6 +137,7 @@ public class ItineraryUpdateListAdapter extends ArrayAdapter<Object> {
             holder.tvArrivalTimeLabel = (TextView) holder.vArrivalDateTime.findViewById(R.id.tv_time_label);
             holder.tvArrivalTimeValue = (TextView) holder.vArrivalDateTime.findViewById(R.id.tv_time_value);
         }
+        holder.llReturn = (LinearLayout) view.findViewById(R.id.ta_return_to_home);
     }
 
     /**
@@ -183,6 +189,10 @@ public class ItineraryUpdateListAdapter extends ArrayAdapter<Object> {
                     holder.vgArrivalTime.setClickable(true);
                 }
             }
+            if (this.onReturnToHomeListener != null){
+                holder.llReturn.setOnClickListener(onReturnToHomeListener);
+            }
+
         } else {
             resultView = convertView;
             holder = (ViewHolder) resultView.getTag();
@@ -209,6 +219,12 @@ public class ItineraryUpdateListAdapter extends ArrayAdapter<Object> {
             withStopIcon = false;
         }
         renderArrival(segment, withStopIcon);
+
+        if (segments != null && segments.size() == 1){
+            holder.llReturn.setVisibility(View.VISIBLE);
+        }else{
+            holder.llReturn.setVisibility(View.GONE);
+        }
 
         return resultView;
     }
