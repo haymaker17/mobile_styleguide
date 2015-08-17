@@ -264,7 +264,9 @@ img.border_none {
 	border: none;
 }
 
-
+.bold_text {
+	font-weight: 600;
+}
 
 
 
