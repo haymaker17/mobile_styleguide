@@ -1631,7 +1631,7 @@ public class
                         intent.putExtra(BundleId.EXPENSE_REPORT_NAME, expRep.reportName);
                         intent.putExtra(BundleId.IS_EDIT_MODE, false);
                         startActivity(intent);
-                    } else {
+                    } else {//Traveller
                         ConcurCore app = (ConcurCore) getApplication();
                         if (app.getTaItineraryController() != null) {
                             if (app.getTaItineraryController().getItineraryList() == null
@@ -1642,6 +1642,7 @@ public class
                                 itin.setName(expRep.reportName);
                                 intent.putExtra(BundleId.ITINERARY, itin);
                                 intent.putExtra(BundleId.EXPENSE_REPORT_KEY, expRep.reportKey);
+                                intent.putExtra(BundleId.EXPENSE_REPORT_DATE, expRep.reportDateCalendar.getTime());
                                 startActivityForResult(intent, REQUEST_VIEW_TA_ITINERARY);
                             } else {//There are itineraries already
                                 intent = new Intent(ExpenseEntries.this, TravelAllowanceActivity.class);

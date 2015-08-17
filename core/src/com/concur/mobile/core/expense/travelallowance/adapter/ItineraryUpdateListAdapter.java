@@ -32,7 +32,7 @@ public class ItineraryUpdateListAdapter extends ArrayAdapter<Object> {
     private OnClickListener onTimeClickListener;
     private OnClickListener onDateClickListener;
     private OnClickListener onLocationClickListener;
-    private OnClickListener onItemClickListener;
+    private OnClickListener onDeleteItemClickListener;
     private List<ItinerarySegment> segments;
 
     /**
@@ -68,6 +68,8 @@ public class ItineraryUpdateListAdapter extends ArrayAdapter<Object> {
         private View vgArrivalTime;
         private TextView tvArrivalTimeLabel;
         private TextView tvArrivalTimeValue;
+        private View vBorderCrossing;
+        private ImageView ivDelete;
     }
 
     public ItineraryUpdateListAdapter(final Context context, final OnClickListener onItemClickListener,
@@ -81,7 +83,7 @@ public class ItineraryUpdateListAdapter extends ArrayAdapter<Object> {
         this.onLocationClickListener = onLocationClickListener;
         this.onDateClickListener = onDateClickListener;
         this.onTimeClickListener = onTimeClickListener;
-        this.onItemClickListener = onItemClickListener;
+        this.onDeleteItemClickListener = onItemClickListener;
         this.segments = itinerarySegments;
         addAll(itinerarySegments);
     }
@@ -132,7 +134,11 @@ public class ItineraryUpdateListAdapter extends ArrayAdapter<Object> {
             holder.tvArrivalTimeLabel = (TextView) holder.vArrivalDateTime.findViewById(R.id.tv_time_label);
             holder.tvArrivalTimeValue = (TextView) holder.vArrivalDateTime.findViewById(R.id.tv_time_value);
         }
-    }
+        holder.vBorderCrossing = view.findViewById(R.id.v_border_crossing);
+        if (holder.vBorderCrossing != null) {
+            holder.ivDelete = (ImageView) holder.vBorderCrossing.findViewById(R.id.iv_delete_icon);
+        }
+     }
 
     /**
      * {@inheritDoc}
@@ -148,9 +154,11 @@ public class ItineraryUpdateListAdapter extends ArrayAdapter<Object> {
             resultView = inflater.inflate(LAYOUT_ID, viewGroup, false);
             createViewHolder(resultView);
             resultView.setTag(holder);
-            if (this.onItemClickListener != null) {
-                if (holder.vMessageArea != null) {
-                    holder.vMessageArea.setOnClickListener(onItemClickListener);
+
+            if (this.onDeleteItemClickListener != null) {
+                if (holder.ivDelete != null) {
+                    holder.ivDelete.setOnClickListener(onDeleteItemClickListener);
+                    holder.ivDelete.setClickable(true);
                 }
             }
             if (this.onLocationClickListener != null) {
@@ -188,6 +196,8 @@ public class ItineraryUpdateListAdapter extends ArrayAdapter<Object> {
             holder = (ViewHolder) resultView.getTag();
         }
 
+        setPositionInfoTag(holder.ivDelete, i, PositionInfoTag.INFO_NONE);
+
         setPositionInfoTag(holder.vDepartureLocation, i, PositionInfoTag.INFO_OUTBOUND);
         setPositionInfoTag(holder.vgDepartureDate, i, PositionInfoTag.INFO_OUTBOUND);
         setPositionInfoTag(holder.vgDepartureTime, i, PositionInfoTag.INFO_OUTBOUND);
@@ -209,6 +219,8 @@ public class ItineraryUpdateListAdapter extends ArrayAdapter<Object> {
             withStopIcon = false;
         }
         renderArrival(segment, withStopIcon);
+
+        renderBorderCrossing(segment);
 
         return resultView;
     }
@@ -236,6 +248,16 @@ public class ItineraryUpdateListAdapter extends ArrayAdapter<Object> {
         // TODO PK: This is set to true in order to enable context menu on list items. The delete feature is currently implemented
         // in the context menu.
         return true;
+    }
+
+    private void renderBorderCrossing(final ItinerarySegment segment) {
+        //Currently we show the delete icon only, if necessary. Border Crossing itself is not yet supported
+        if (holder.ivDelete != null) {
+            holder.ivDelete.setVisibility(View.VISIBLE);
+            if (segment.isLocked()) {
+                holder.ivDelete.setVisibility(View.INVISIBLE);
+            }
+        }
     }
 
     private void renderMessageArea(final ItinerarySegment segment) {
