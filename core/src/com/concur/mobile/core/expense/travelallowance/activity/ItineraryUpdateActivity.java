@@ -26,7 +26,6 @@ import android.widget.Toast;
 import com.concur.core.R;
 import com.concur.mobile.core.ConcurCore;
 import com.concur.mobile.core.activity.BaseActivity;
-import com.concur.mobile.core.expense.activity.ListSearch;
 import com.concur.mobile.core.expense.travelallowance.adapter.ItineraryUpdateListAdapter;
 import com.concur.mobile.core.expense.travelallowance.controller.ControllerAction;
 import com.concur.mobile.core.expense.travelallowance.controller.FixedTravelAllowanceController;
@@ -226,7 +225,7 @@ public class ItineraryUpdateActivity extends BaseActivity implements IController
                 if (tagValue != null) {
                     ItineraryUpdateActivity.this.currentPosition = tagValue;
                 }
-                Intent locationIntent = new Intent(ItineraryUpdateActivity.this, ListSearch.class);
+                Intent locationIntent = new Intent(ItineraryUpdateActivity.this, ItineraryListSearch.class);
                 locationIntent.putExtra(Const.EXTRA_EXPENSE_LIST_SEARCH_IS_MRU, true);
                 locationIntent.putExtra(Const.EXTRA_EXPENSE_LIST_SEARCH_FIELD_ID, "LocName");
                 locationIntent.putExtra(Const.EXTRA_EXPENSE_LIST_SEARCH_FT_CODE, "RPTINFO");

@@ -50,6 +50,8 @@ public class TravelAllowanceItineraryListFragment extends ListFragment implement
 						&& !app.getTAConfigController().getTravelAllowanceConfigurationList().isUseBorderCrossTime()) {
 					hideBC = true;
 				}
+			} else {
+				hideBC = true; //Hide Border Crossing for Approver too!
 			}
 		}
 

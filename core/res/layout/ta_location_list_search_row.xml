@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="fill_parent"
+    android:layout_height="wrap_content"
+    >
+    <TextView
+        android:id="@+id/listItemName"
+        android:layout_height="wrap_content"
+        android:layout_width="fill_parent"
+        android:textAppearance="@style/PrimaryText"
+        android:padding="16dp"
+        />
+
+    <include
+        android:id="@+id/v_separator_short"
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:layout_marginLeft="16dp"
+        android:layout_below="@+id/listItemName"
+        layout="@layout/ta_group_separator" />
+
+</RelativeLayout>
