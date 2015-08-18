@@ -209,8 +209,10 @@ public class ItineraryUpdateListAdapter extends ArrayAdapter<Object> {
         renderMessageArea(segment);
 
         boolean withStopIcon = true;
+        boolean withDeleteIcon = true;
         if (i == 0) {
             withStopIcon = false;
+            withDeleteIcon = false;
         }
         renderDeparture(segment, withStopIcon);
 
@@ -220,7 +222,7 @@ public class ItineraryUpdateListAdapter extends ArrayAdapter<Object> {
         }
         renderArrival(segment, withStopIcon);
 
-        renderBorderCrossing(segment);
+        renderBorderCrossing(segment, withDeleteIcon);
 
         return resultView;
     }
@@ -250,11 +252,11 @@ public class ItineraryUpdateListAdapter extends ArrayAdapter<Object> {
         return true;
     }
 
-    private void renderBorderCrossing(final ItinerarySegment segment) {
+    private void renderBorderCrossing(final ItinerarySegment segment, final boolean withDeleteIcon) {
         //Currently we show the delete icon only, if necessary. Border Crossing itself is not yet supported
         if (holder.ivDelete != null) {
             holder.ivDelete.setVisibility(View.VISIBLE);
-            if (segment.isLocked()) {
+            if (!withDeleteIcon || segment.isLocked()) {
                 holder.ivDelete.setVisibility(View.INVISIBLE);
             }
         }
