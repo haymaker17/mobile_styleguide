@@ -16,6 +16,7 @@ public final class BundleId {
     public static final String MESSAGE = Message.class.getName();
     public static final String MESSAGE_TEXT = "message.text";
     public static final String MESSAGE_TITLE = "message.title";
+    public static final String MESSAGE_POSITIVE_BUTTON_TEXT = "message.positive.button.text";
     public static final String PROGRESS_DIALOG_TEXT = "progressDialogFragmentText";
     public static final String EXPENSE_REPORT_IS_SUBMITTED = "expense.report.isSubmitted";
     public static final String EXPENSE_REPORT_NAME = "expense.report.name";

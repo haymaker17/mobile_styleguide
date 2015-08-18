@@ -510,7 +510,7 @@ public class ItineraryUpdateActivity extends BaseActivity implements IController
 
     private void showDeleteDialog() {
         Bundle bundle = new Bundle();
-        bundle.putString(BundleId.MESSAGE_TEXT, getString(R.string.itin_delete_stop));
+        bundle.putString(BundleId.MESSAGE_TEXT, getResources().getQuantityString(R.plurals.dlg_offline_remove_confirm_message, 1));
         MessageDialogFragment messageDialog = new MessageDialogFragment();
         messageDialog.setArguments(bundle);
         messageDialog.setOnOkListener(onDeleteOkClickListener);
