@@ -1,21 +1,22 @@
 	<!DOCTYPE html>
-<html>
+<html ng-app="mobileStyleguide">
 <head>
 	<meta charset="utf-8">   
 	<meta name="apple-mobile-web-app-capable" content="yes">
 	<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
 	<meta name="viewport" content="width=device-width, initial-scale=1">
 	<title>Concur Mobile | Styleguide</title>
+	<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
+	<script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.4.2/angular.min.js"></script>
+	<script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.4.2/angular-route.min.js"></script>
+	<script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.4.2/angular-animate.min.js"></script>
+	<script src="js/router.js"></script>
 	<link rel="stylesheet" type="text/css" media="screen" href="css/normalize.css">
 	<link rel="stylesheet" type="text/css" media="screen" href="css/common.css" >
 	<link href="img/logos/apple-touch-icon.png" rel="apple-touch-icon" />
 	<link href="img/logos/apple-touch-icon-76x76.png" rel="apple-touch-icon" sizes="76x76" />
 	<link href="img/logos/apple-touch-icon-120x120.png" rel="apple-touch-icon" sizes="120x120" />
 	<link href="img/logos/apple-touch-icon-152x152.png" rel="apple-touch-icon" sizes="152x152" />
-	<!-- Bootstrap CSS -->
-	<!-- <link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap.min.css">
-	<link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap-theme.min.css">
--->
 
 </head>
 <body>
@@ -42,178 +43,169 @@
 		
 
 		<div id="content">
-			<nav id="main_nav">
-				<ul class="accordion">
+			<nav id="main_nav"  >
+				<ul class="accordion" >
 					<li data-class="concur"><span class="top">Introduction</span>
 						<ul>
-							<li><a href='#pages/introduction.html?&cat=concur&parent=concur&title=Introduction'>Welcome</a></li>
-							<li><a href='#pages/resources.html?&cat=concur&parent=concur&title=Resources'>Resources</a></li>
+							<li><a href='#pages/introduction' data-cat="Concur" data-parent="Concur">Welcome</a></li>
+							<li><a href='#pages/resources'    data-cat="Concur" data-parent="Concur">Resources</a></li>
 						</ul>
 					</li>
 					<li data-class="iOS"><span class="top">iOS</span>
 						<ul>
-<!-- 							<li><a href='#pages/ios/introduction.html?&cat=iOS&parent=iOS&title=Introduction'>Introduction</a></li> -->
-							<li><a href='#pages/ios/devices.html?&cat=iOS&parent=iOS&title=Devices'>Devices</a></li>
-<!-- 							<li><a href='#pages/ios/typography.html?&cat=iOS&parent=iOS&title=Typography'>Typography</a></li> -->
-							<li><a href='#pages/ios/colors.html?&cat=iOS&parent=iOS&title=Colors'>Colors</a></li>
-							<li><a href='#pages/ios/icons.html?&cat=iOS&parent=iOS&title=Icons'>Icons</a></li>
+							<li><a href='#pages/ios/devices'    data-cat="iOS" data-parent="iOS">Devices</a></li>
+							<li><a href='#pages/ios/typography' data-cat="iOS" data-parent="iOS">Typography</a></li>
+							<li><a href='#pages/ios/colors'     data-cat="iOS" data-parent="iOS">Colors</a></li>
+							<li><a href='#pages/ios/icons'      data-cat="iOS" data-parent="iOS">Icons</a></li>
 							<li data-class="Components"><span class="middle">Components</span>
 								<ul>
 									<li data-class="Bars"><span class="middle">Bars</span>
 									<ul>
-										<li><a href='#pages/ios/components_status_bar.html?&cat=iOS&parent=Bars&title=Status%20Bar'>Status Bar</a></li>
-										<li><a href='#pages/ios/components_navigation_bar.html?&cat=iOS&parent=Bars&title=Navigation%20Bar'>Navigation Bar</a></li>
-										<li><a href='#pages/ios/components_tool_bar.html?&cat=iOS&parent=Bars&title=Tool%20Bar'>Tool Bar</a></li>
-										<!-- <li><a href='#pages/ios/components_tool_bar_navigation_bar_buttons.html?&cat=iOS&parent=Bars&title=Tool%20Bar%20%26%20Navigation%20Bar%20Buttons'>Tool Bar & Navigation Bar Buttons</a></li> -->
-										<li><a href='#pages/ios/components_search_bar.html?&cat=iOS&parent=Bars&title=Search%20Bar'>Search Bar</a></li>
-										<li><a href='#pages/ios/components_scope_bar.html?&cat=iOS&parent=Bars&title=Scope%20Bar'>Scope Bar</a></li>
+										<li><a href='#pages/ios/components_status_bar'     data-cat="iOS" data-parent="Bars">Status Bar</a></li>
+										<li><a href='#pages/ios/components_navigation_bar' data-cat="iOS" data-parent="Bars">Navigation Bar</a></li>
+										<li><a href='#pages/ios/components_tool_bar'       data-cat="iOS" data-parent="Bars">Tool Bar</a></li>
+										<!-- <li><a href='#pages/ios/components_tool_bar_navigation_bar_buttons'>Tool Bar & Navigation Bar Buttons</a></li> -->
+										<li><a href='#pages/ios/components_search_bar'     data-cat="iOS" data-parent="Bars">Search Bar</a></li>
+										<li><a href='#pages/ios/components_scope_bar'      data-cat="iOS" data-parent="Bars">Scope Bar</a></li>
 									</ul>
 									</li>
 									<li data-class="Control_Views"><span class="middle">Control Views</span>
 									<ul>
-										<li><a href='#pages/ios/components_folder_view.html?&cat=iOS&parent=Control%20Views&title=Folder%20View'>Folder View</a></li>
-										<li><a href='#pages/ios/components_collection_view.html?&cat=iOS&parent=Control%20Views&title=Collection%20View'>Collection View</a></li>
-										<li><a href='#pages/ios/components_image_view.html?&cat=iOS&parent=Control%20Views&title=Image%20View'>Image View</a></li>
-										<li><a href='#pages/ios/components_map_view.html?&cat=iOS&parent=Control%20Views&title=Map%20View'>Map View</a></li>
-<!-- 										<li><a href='#pages/ios/components_percent_view.html?&cat=iOS&parent=Controls&title=Percent%20View'>Percent View</a></li> -->
-<!-- 										<li><a href='#pages/ios/components_popover.html?&cat=iOS&parent=Control%20Views&title=Popover'>Popover</a></li> -->
-<!-- 										<li><a href='#pages/ios/components_scrolling_view.html?&cat=iOS&parent=Control%20Views&title=Scrolling%20View'>Scrolling View</a></li> -->
-										<li><a href='#pages/ios/components_table_view.html?&cat=iOS&parent=Control%20Views&title=Table%20View'>Table View</a></li>
+										<li><a href='#pages/ios/components_folder_view'     data-cat="iOS" data-parent="Control Views">Folder View</a></li>
+										<li><a href='#pages/ios/components_collection_view' data-cat="iOS" data-parent="Control Views">Collection View</a></li>
+										<li><a href='#pages/ios/components_image_view'      data-cat="iOS" data-parent="Control Views">Image View</a></li>
+										<li><a href='#pages/ios/components_map_view'        data-cat="iOS" data-parent="Control Views">Map View</a></li>
+										<!-- <li><a href='#pages/ios/components_percent_view'    data-cat="iOS" data-parent="Control Views">Percent View</a></li> -->
+										<!-- <li><a href='#pages/ios/components_popover'         data-cat="iOS" data-parent="Control Views">Popover</a></li> -->
+										<li><a href='#pages/ios/components_table_view'      data-cat="iOS" data-parent="Control Views">Table View</a></li>
 									</ul>
 									</li>
 									<li data-class="Controls"><span class="middle">Controls</span>
 									<ul>
-										<li><a href='#pages/ios/components_activity_indicator.html?&cat=iOS&parent=Controls&title=Activity%20Indicator'>Activity Indicator</a></li>
-<!-- 										<li><a href='#pages/ios/components_badges.html?&cat=iOS&parent=Controls&title=Badges'>Badges</a></li> -->
-										<li><a href='#pages/ios/components_date_picker.html?&cat=iOS&parent=Controls&title=Date%20Picker'>Date Picker</a></li>
-<!-- 										<li><a href='#pages/ios/components_info_button.html?&cat=iOS&parent=Controls&title=Info%20Button'>Info Button</a></li> -->
-										<!-- <li><a href='#pages/ios/components_label.html?&cat=iOS&parent=Controls&title=Label'>Label</a></li> -->
-										<!-- <li><a href='#pages/ios/components_list_picker.html?&cat=iOS&parent=Controls&title=List%20Picker'>List Picker</a></li> -->
-										<li><a href='#pages/ios/components_refresh_control.html?&cat=iOS&parent=Controls&title=Refresh%20Control'>Refresh Control</a></li>
-										<li><a href='#pages/ios/components_segment_control.html?&cat=iOS&parent=Controls&title=Segment%20Control'>Segment Control</a></li>
-										<li><a href='#pages/ios/components_status_flags.html?&cat=iOS&parent=Controls&title=Status%20Flags'>Status Flags</a></li>
-										<li><a href='#pages/ios/components_switch.html?&cat=iOS&parent=Controls&title=Switch'>Switch</a></li>
-										<li><a href='#pages/ios/components_system_buttons.html?&cat=iOS&parent=Controls&title=System%20Button'>System Button</a></li>
-										<li><a href='#pages/ios/components_tags.html?&cat=iOS&parent=Controls&title=Tags'>Tags</a></li>
-										<li><a href='#pages/ios/components_text_fields.html?&cat=iOS&parent=Controls&title=Text%20Fields'>Text Fields</a></li>
-										<li><a href='#pages/ios/components_toggle.html?&cat=iOS&parent=Controls&title=Toggle'>Toggle</a></li>
+										<li><a href='#pages/ios/components_activity_indicator' data-cat="iOS" data-parent="Controls">Activity Indicator</a></li>
+										<li><a href='#pages/ios/components_badges'             data-cat="iOS" data-parent="Controls">Badges</a></li>
+										<li><a href='#pages/ios/components_date_picker'        data-cat="iOS" data-parent="Controls">Date Picker</a></li>
+										<!-- <li><a href='#pages/ios/components_info_button'   data-cat="iOS" data-parent="Controls">Info Button</a></li> -->
+										<!-- <li><a href='#pages/ios/components_list_picker'   data-cat="iOS" data-parent="Controls">List Picker</a></li> -->
+										<li><a href='#pages/ios/components_refresh_control'    data-cat="iOS" data-parent="Controls">Refresh Control</a></li>
+										<li><a href='#pages/ios/components_segment_control'    data-cat="iOS" data-parent="Controls">Segment Control</a></li>
+										<li><a href='#pages/ios/components_status_flags'       data-cat="iOS" data-parent="Controls">Status Flags</a></li>
+										<li><a href='#pages/ios/components_switch'             data-cat="iOS" data-parent="Controls">Switch</a></li>
+										<li><a href='#pages/ios/components_system_buttons'     data-cat="iOS" data-parent="Controls">System Button</a></li>
+										<li><a href='#pages/ios/components_tags'               data-cat="iOS" data-parent="Controls">Tags</a></li>
+										<li><a href='#pages/ios/components_text_fields'        data-cat="iOS" data-parent="Controls">Text Fields</a></li>
+										<li><a href='#pages/ios/components_toggle'             data-cat="iOS" data-parent="Controls">Toggle</a></li>
 									</ul>
 									</li>									
 									<li data-class="Temporary_Views"><span class="middle">Temporary Views</span>
 									<ul>
-										<!-- <li><a href='#pages/ios/components_alert.html?&cat=iOS&parent=Temporary%20Views&title=Alert'>Alert</a></li> -->
-										<li><a href='#pages/ios/components_action_sheet.html?&cat=iOS&parent=Temporary%20Views&title=Action%20Sheet'>Action Sheet</a></li>
-										<!-- <li><a href='#pages/ios/components_map_view.html?&cat=iOS&parent=Temporary%20Views&title=Modal%20View'>Modal View</a></li -->
-										<li><a href='#pages/ios/components_overflow.html?&cat=iOS&parent=Controls&title=Overflow'>Overflow</a></li>														<li><a href='#pages/ios/components_notifications.html?&cat=iOS&parent=Controls&title=Notifications'>Notifications</a></li>				
-<!-- 										<li><a href='#pages/ios/components_toasts.html?&cat=iOS&parent=Temporary%20Views&title=Toasts'>Toasts</a></li> -->
+										<li><a href='#pages/ios/components_action_sheet'  data-cat="iOS" data-parent="Temporary Views">Action Sheet</a></li>
+										<li><a href='#pages/ios/components_overflow'      data-cat="iOS" data-parent="Temporary Views">Overflow</a></li>		
+										<li><a href='#pages/ios/components_notifications' data-cat="iOS" data-parent="Temporary Views">Notifications</a></li>								
+										<li><a href='#pages/ios/components_toasts'        data-cat="iOS" data-parent="Temporary Views">Toasts</a></li>
 									</ul>
 									</li>
 								</ul>
 							</li>
-<!--
 							<li data-class="Resources"><span class="middle">Resources</span>
 								<ul>									
-									<li><a href='#pages/ios/resources_1.html?&cat=iOS&parent=Resources&title=Branding%20Site'>Branding Site</a></li>
-									<li><a href='#pages/ios/components_asset_library.html?&cat=iOS&parent=Resources&title=Asset%20Library'>Asset Library</a></li>
-									<li><a href='#pages/ios/components_templates.html?&cat=iOS&parent=Resources&title=Templates'>Templates</a></li>
-									<li><a href='#pages/ios/components_demos_prototypes.html?&cat=iOS&parent=Resources&title=Demos%20%26%20Prototypes'>Demos & Prototypes</a></li>
-									<li><a href='#pages/ios/tools.html?&cat=iOS&parent=Resources&title=Tools'>Tools</a></li>
+									<li><a href='#pages/ios/resources_1'                 data-cat="iOS" data-parent="Resources">Branding Site</a></li>
+									<li><a href='#pages/ios/components_asset_library'    data-cat="iOS" data-parent="Resources">Asset Library</a></li>
+									<li><a href='#pages/ios/components_templates'        data-cat="iOS" data-parent="Resources">Templates</a></li>
+									<li><a href='#pages/ios/components_demos_prototypes' data-cat="iOS" data-parent="Resources">Demos & Prototypes</a></li>
+									<li><a href='#pages/ios/tools'>Tools</a></li>
 								</ul>
 							</li>
--->
 						</ul>
 					</li>
 
 					<!-- Android -->
-<!--
 					<li data-class="Android"><span class="top">Android</span>
 						<ul>
-							<li><a href='#pages/android/introduction.html?&cat=Android&parent=Android&title=Introduction'>Introduction</a></li>
-							<li><a href='#pages/android/devices.html?&cat=Android&parent=Android&title=Devices'>Devices</a></li>
-							<li><a href='#pages/android/typography.html?&cat=Android&parent=Android&title=Typography'>Typography</a></li>
-							<li><a href='#pages/android/colors.html?&cat=Android&parent=Android&title=Colors'>Colors</a></li>
-							<li><a href='#pages/android/icons.html?&cat=Android&parent=Android&title=Icons'>Icons</a></li>
+							<li><a href='#pages/android/introduction' data-cat="android" data-parent="android">Introduction</a></li>
+							<li><a href='#pages/android/devices'      data-cat="android" data-parent="android">Devices</a></li>
+							<li><a href='#pages/android/typography'   data-cat="android" data-parent="android">Typography</a></li>
+							<li><a href='#pages/android/colors'       data-cat="android" data-parent="android">Colors</a></li>
+							<li><a href='#pages/android/icons'        data-cat="android" data-parent="android">Icons</a></li>
 							<li data-class="Components"><span class="middle">Components</span>
 								<ul>
-									<li><a href='#pages/android/components_Nebiltebuttons.html?&cat=Android&parent=Components&title=Buttons'>Buttons</a></li>
-									<li><a href='#pages/android/components_cards.html?&cat=Android&parent=Components&title=Cards'>Cards</a></li>
-									<li><a href='#pages/android/components_dialogs.html?&cat=Android&parent=Components&title=Dialogs'>Dialogs</a></li>
-									<li><a href='#pages/android/components_dividers.html?&cat=Android&parent=Components&title=Dividers'>Dividers</a></li>
-									<li><a href='#pages/android/components_grid.html?&cat=Android&parent=Components&title=Grid'>Grid</a></li>
-									<li><a href='#pages/android/components_list.html?&cat=Android&parent=Components&title=List'>List</a></li>
-									<li><a href='#pages/android/components_menus.html?&cat=Android&parent=Components&title=Menus'>Menus</a></li>
-									<li><a href='#pages/android/components_pickers.html?&cat=Android&parent=Components&title=Pickers'>Pickers</a></li>
-									<li><a href='#pages/android/components_progress_and_activity.html?&cat=Android&parent=Components&title=Progress%20%26%20Activity'>Progress & Activity</a></li>
-									<li><a href='#pages/android/components_selection_controls.html?&cat=Android&parent=Components&title=Selection%20Controls'>Selection Controls</a></li>
-									<li><a href='#pages/android/components_snackbars_and_toast.html?&cat=Android&parent=Components&title=Snackbars%20%26%20Toast'>Snackbars & Toast</a></li>
-									<li><a href='#pages/android/components_status.html?&cat=Android&parent=Components&title=Status'>Status</a></li>
-									<li><a href='#pages/android/components_subheaders.html?&cat=Android&parent=Components&title=Subheaders'>Subheaders</a></li>
-									<li><a href='#pages/android/components_tabs.html?&cat=Android&parent=Components&title=Tabs'>Tabs</a></li>
-									<li><a href='#pages/android/components_tags.html?&cat=Android&parent=Components&title=Tags'>Tags</a></li>
-									<li><a href='#pages/android/components_text_fields.html?&cat=Android&parent=Components&title=Status%20Bar'>Text Fields</a></li>
-									<li><a href='#pages/android/components_toolbars.html?&cat=Android&parent=Components&title=Toolbars'>Toolbars</a></li>
+									<li><a href='#pages/android/components_buttons'               data-cat="android" data-parent="Components">Buttons</a></li>
+									<li><a href='#pages/android/components_cards'                 data-cat="android" data-parent="Components">Cards</a></li>
+									<li><a href='#pages/android/components_dialogs'               data-cat="android" data-parent="Components">Dialogs</a></li>
+									<li><a href='#pages/android/components_dividers'              data-cat="android" data-parent="Components">Dividers</a></li>
+									<li><a href='#pages/android/components_grid'                  data-cat="android" data-parent="Components">Grid</a></li>
+									<li><a href='#pages/android/components_list'                  data-cat="android" data-parent="Components">List</a></li>
+									<li><a href='#pages/android/components_menus'                 data-cat="android" data-parent="Components">Menus</a></li>
+									<li><a href='#pages/android/components_pickers'               data-cat="android" data-parent="Components">Pickers</a></li>
+									<li><a href='#pages/android/components_progress_and_activity' data-cat="android" data-parent="Components">Progress & Activity</a></li>
+									<li><a href='#pages/android/components_selection_controls'    data-cat="android" data-parent="Components">Selection Controls</a></li>
+									<li><a href='#pages/android/components_snackbars_and_toast'   data-cat="android" data-parent="Components">Snackbars & Toast</a></li>
+									<li><a href='#pages/android/components_status'                data-cat="android" data-parent="Components">Status</a></li>
+									<li><a href='#pages/android/components_subheaders'            data-cat="android" data-parent="Components">Subheaders</a></li>
+									<li><a href='#pages/android/components_tabs'                  data-cat="android" data-parent="Components">Tabs</a></li>
+									<li><a href='#pages/android/components_tags'                  data-cat="android" data-parent="Components">Tags</a></li>
+									<li><a href='#pages/android/components_text_fields'           data-cat="android" data-parent="Components">Text Fields</a></li>
+									<li><a href='#pages/android/components_toolbars'              data-cat="android" data-parent="Components">Toolbars</a></li>
 								</ul>
 							</li>
 							<li data-class="Resources"><span class="middle">Resources</span>
 								<ul>									
-									<li><a href='#pages/android/components_alert.html?&cat=Android&parent=Resources&title=Branding%20Site'>Branding Site</a></li>
-									<li><a href='#pages/android/components_asset_library.html?&cat=Android&parent=Resources&title=Asset%20Library'>Asset Library</a></li>
-									<li><a href='#pages/android/components_templates.html?&cat=Android&parent=Resources&title=Templates'>Templates</a></li>
-									<li><a href='#pages/android/components_demos_prototypes.html?&cat=Android&parent=Resources&title=Demos%20%26Prototypes'>Demos & Prototypes</a></li>
-									<li><a href='#pages/android/tools.html?&cat=Android&parent=Resources&title=Tools'>Tools</a></li>
+									<li><a href='#pages/android/components_alert'            data-cat="android" data-parent="Resources">Branding Site</a></li>
+									<li><a href='#pages/android/components_asset_library'    data-cat="android" data-parent="Resources">Asset Library</a></li>
+									<li><a href='#pages/android/components_templates'        data-cat="android" data-parent="Resources">Templates</a></li>
+									<li><a href='#pages/android/components_demos_prototypes' data-cat="android" data-parent="Resources">Demos & Prototypes</a></li>
+									<li><a href='#pages/android/tools'>Tools</a></li>
 								</ul>
 							</li>
 						</ul>
 					</li>
--->
 
 					<!-- Windows -->
-<!--
-					<li data-class="Android"><span class="top">Windows</span>
+					<li data-class="Windows"><span class="top">Windows</span>
 						<ul>
-							<li><a href='#pages/android/introduction.html?&cat=Android&parent=Android&title=Introduction'>Introduction</a></li>
-							<li><a href='#pages/android/devices.html?&cat=Android&parent=Android&title=Devices'>Devices</a></li>
-							<li><a href='#pages/android/typography.html?&cat=Android&parent=Android&title=Typography'>Typography</a></li>
-							<li><a href='#pages/android/colors.html?&cat=Android&parent=Android&title=Colors'>Colors</a></li>
-							<li><a href='#pages/android/icons.html?&cat=Android&parent=Android&title=Icons'>Icons</a></li>
+							<li><a href='#pages/windows/introduction' data-cat="windows" data-parent="windows">Introduction</a></li>
+							<li><a href='#pages/windows/devices'      data-cat="windows" data-parent="windows">Devices</a></li>
+							<li><a href='#pages/windows/typography'   data-cat="windows" data-parent="windows">Typography</a></li>
+							<li><a href='#pages/windows/colors'       data-cat="windows" data-parent="windows">Colors</a></li>
+							<li><a href='#pages/windows/icons'        data-cat="windows" data-parent="windows">Icons</a></li>
 							<li data-class="Components"><span class="middle">Components</span>
 								<ul>
-									<li><a href='#pages/android/components_Nebiltebuttons.html?&cat=Android&parent=Components&title=Buttons'>Buttons</a></li>
-									<li><a href='#pages/android/components_cards.html?&cat=Android&parent=Components&title=Cards'>Cards</a></li>
-									<li><a href='#pages/android/components_dialogs.html?&cat=Android&parent=Components&title=Dialogs'>Dialogs</a></li>
-									<li><a href='#pages/android/components_dividers.html?&cat=Android&parent=Components&title=Dividers'>Dividers</a></li>
-									<li><a href='#pages/android/components_grid.html?&cat=Android&parent=Components&title=Grid'>Grid</a></li>
-									<li><a href='#pages/android/components_list.html?&cat=Android&parent=Components&title=List'>List</a></li>
-									<li><a href='#pages/android/components_menus.html?&cat=Android&parent=Components&title=Menus'>Menus</a></li>
-									<li><a href='#pages/android/components_pickers.html?&cat=Android&parent=Components&title=Pickers'>Pickers</a></li>
-									<li><a href='#pages/android/components_progress_and_activity.html?&cat=Android&parent=Components&title=Progress%20%26%20Activity'>Progress & Activity</a></li>
-									<li><a href='#pages/android/components_selection_controls.html?&cat=Android&parent=Components&title=Selection%20Controls'>Selection Controls</a></li>
-									<li><a href='#pages/android/components_snackbars_and_toast.html?&cat=Android&parent=Components&title=Snackbars%20%26%20Toast'>Snackbars & Toast</a></li>
-									<li><a href='#pages/android/components_status.html?&cat=Android&parent=Components&title=Status'>Status</a></li>
-									<li><a href='#pages/android/components_subheaders.html?&cat=Android&parent=Components&title=Subheaders'>Subheaders</a></li>
-									<li><a href='#pages/android/components_tabs.html?&cat=Android&parent=Components&title=Tabs'>Tabs</a></li>
-									<li><a href='#pages/android/components_tags.html?&cat=Android&parent=Components&title=Tags'>Tags</a></li>
-									<li><a href='#pages/android/components_text_fields.html?&cat=Android&parent=Components&title=Status%20Bar'>Text Fields</a></li>
-									<li><a href='#pages/android/components_toolbars.html?&cat=Android&parent=Components&title=Toolbars'>Toolbars</a></li>
+									<li><a href='#pages/windows/components_buttons'               data-cat="windows" data-parent="Components">Buttons</a></li>
+									<li><a href='#pages/windows/components_cards'                 data-cat="windows" data-parent="Components">Cards</a></li>
+									<li><a href='#pages/windows/components_dialogs'               data-cat="windows" data-parent="Components">Dialogs</a></li>
+									<li><a href='#pages/windows/components_dividers'              data-cat="windows" data-parent="Components">Dividers</a></li>
+									<li><a href='#pages/windows/components_grid'                  data-cat="windows" data-parent="Components">Grid</a></li>
+									<li><a href='#pages/windows/components_list'                  data-cat="windows" data-parent="Components">List</a></li>
+									<li><a href='#pages/windows/components_menus'                 data-cat="windows" data-parent="Components">Menus</a></li>
+									<li><a href='#pages/windows/components_pickers'               data-cat="windows" data-parent="Components">Pickers</a></li>
+									<li><a href='#pages/windows/components_progress_and_activity' data-cat="windows" data-parent="Components">Progress & Activity</a></li>
+									<li><a href='#pages/windows/components_selection_controls'    data-cat="windows" data-parent="Components">Selection Controls</a></li>
+									<li><a href='#pages/windows/components_snackbars_and_toast'   data-cat="windows" data-parent="Components">Snackbars & Toast</a></li>
+									<li><a href='#pages/windows/components_status'                data-cat="windows" data-parent="Components">Status</a></li>
+									<li><a href='#pages/windows/components_subheaders'            data-cat="windows" data-parent="Components">Subheaders</a></li>
+									<li><a href='#pages/windows/components_tabs'                  data-cat="windows" data-parent="Components">Tabs</a></li>
+									<li><a href='#pages/windows/components_tags'                  data-cat="windows" data-parent="Components">Tags</a></li>
+									<li><a href='#pages/windows/components_text_fields'           data-cat="windows" data-parent="Components">Text Fields</a></li>
+									<li><a href='#pages/windows/components_toolbars'              data-cat="windows" data-parent="Components">Toolbars</a></li>
 								</ul>
 							</li>
 							<li data-class="Resources"><span class="middle">Resources</span>
 								<ul>									
-									<li><a href='#pages/android/components_alert.html?&cat=Android&parent=Resources&title=Branding%20Site'>Branding Site</a></li>
-									<li><a href='#pages/android/components_asset_library.html?&cat=Android&parent=Resources&title=Asset%20Library'>Asset Library</a></li>
-									<li><a href='#pages/android/components_templates.html?&cat=Android&parent=Resources&title=Templates'>Templates</a></li>
-									<li><a href='#pages/android/components_demos_prototypes.html?&cat=Android&parent=Resources&title=Demos%20%26Prototypes'>Demos & Prototypes</a></li>
-									<li><a href='#pages/android/tools.html?&cat=Android&parent=Resources&title=Tools'>Tools</a></li>
+									<li><a href='#pages/windows/components_alert'            data-cat="windows" data-parent="Resources">Branding Site</a></li>
+									<li><a href='#pages/windows/components_asset_library'    data-cat="windows" data-parent="Resources">Asset Library</a></li>
+									<li><a href='#pages/windows/components_templates'        data-cat="windows" data-parent="Resources">Templates</a></li>
+									<li><a href='#pages/windows/components_demos_prototypes' data-cat="windows" data-parent="Resources">Demos & Prototypes</a></li>
+									<li><a href='#pages/windows/tools'>Tools</a></li>
 								</ul>
 							</li>
 						</ul>
 					</li>
+
 					<li data-class="web"><span class="top">Web</span>
 						<ul>
-							<li><a href='#pages/web/login.html?&cat=web&parent=web&title=Login'>Login</a></li>
+							<li><a href='#pages/web/login' data-cat="web" data-parent="web">Login</a></li>
 						</ul>
 					</li>
--->
 					<!-- <li data-class="windows"><a href="#">Marketing</a>
 						<ul>
 							<li><a href='#pages/marketing/ios.html'>iOS</a></li>
@@ -228,7 +220,10 @@
 			<div id="breadcrumbs">
 				<h1 id="breadcrumb_header_title"></h1>
 			</div>			
-			<div id="main"><div class="distractor">loading ...</div></div>
+			<div id="main" class="fade" ng-view autoscroll="true">
+				
+
+			</div>
 			<footer id="footer">
 				<div class="copyright">Copyright © 2014 Concur Technologies Inc. All rights reserved.</div>
 				<div class="contact">Contact Us: <a href="mailto:mobilelabs@concur.com?Subject=Mobile%20Style%20Guide">mobilelabs@concur.com</a></div>
@@ -241,12 +236,9 @@
 
 	<!-- scripts -->
 	<!-- local jquery --><!-- <script src="../js/jquery.min.js"></script> -->
-	<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
-	<script src="js/imagesloaded.pkgd.min.js"></script>
-	<script src="js/isotope.pkgd.min.js"></script>
-    <script src="js/jquery.ba-bbq.min.js"></script>
-
+	<script src="js/scrollReveal.js"></script>
 	<script src="js/scripts.js"></script>
+	
 	<!-- typekit -->
 	<script type="text/javascript" src="//use.typekit.net/xcq7kyb.js"></script>
 	<script type="text/javascript">try{Typekit.load();}catch(e){}</script>
