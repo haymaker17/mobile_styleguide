@@ -1,12 +1,5 @@
 package com.concur.mobile.core.activity;
 
-import java.util.Calendar;
-import java.util.Formatter;
-import java.util.HashMap;
-import java.util.Locale;
-import java.util.Map;
-import java.util.UUID;
-
 import android.content.ContentResolver;
 import android.content.Intent;
 import android.content.SharedPreferences;
@@ -15,7 +8,6 @@ import android.content.SharedPreferences.OnSharedPreferenceChangeListener;
 import android.content.pm.PackageInfo;
 import android.content.pm.PackageManager.NameNotFoundException;
 import android.os.Bundle;
-import android.os.Handler;
 import android.preference.CheckBoxPreference;
 import android.preference.ListPreference;
 import android.preference.Preference;
@@ -31,18 +23,35 @@ import android.util.Log;
 
 import com.concur.core.R;
 import com.concur.mobile.base.service.BaseAsyncRequestTask;
-import com.concur.mobile.base.service.BaseAsyncResultReceiver;
 import com.concur.mobile.core.ConcurCore;
 import com.concur.mobile.core.ConcurCore.Product;
 import com.concur.mobile.core.data.MobileDatabase;
 import com.concur.mobile.core.service.BaseRequestPasswordReset;
 import com.concur.mobile.core.service.ConcurService;
 import com.concur.mobile.core.service.CorpSsoQueryReply;
-import com.concur.mobile.core.util.*;
-import com.concur.mobile.platform.authentication.*;
+import com.concur.mobile.core.util.Const;
+import com.concur.mobile.core.util.Crypt;
+import com.concur.mobile.core.util.EventTracker;
+import com.concur.mobile.core.util.Flurry;
+import com.concur.mobile.core.util.FormatUtil;
+import com.concur.mobile.core.util.Notifications;
+import com.concur.mobile.core.util.UserAndSessionInfoUtil;
+import com.concur.mobile.platform.authentication.AccessToken;
+import com.concur.mobile.platform.authentication.AutoLoginRequestTask;
+import com.concur.mobile.platform.authentication.EmailLookUpRequestTask;
+import com.concur.mobile.platform.authentication.LoginResult;
+import com.concur.mobile.platform.authentication.Session;
+import com.concur.mobile.platform.authentication.SessionInfo;
 import com.concur.mobile.platform.config.provider.ConfigUtil;
 import com.concur.mobile.platform.util.Parse;
 import com.concur.platform.PlatformProperties;
+
+import java.util.Calendar;
+import java.util.Formatter;
+import java.util.HashMap;
+import java.util.Locale;
+import java.util.Map;
+import java.util.UUID;
 
 @EventTracker.EventTrackerClassName(getClassName = "Settings")
 public class Preferences extends PreferenceActivity implements OnSharedPreferenceChangeListener {
@@ -74,8 +83,8 @@ public class Preferences extends PreferenceActivity implements OnSharedPreferenc
     static {
         ContentResolver cr = ConcurCore.getContext().getContentResolver();
         String id = Settings.Secure.getString(cr, Settings.Secure.ANDROID_ID);
-        String fixedKey = new String(new byte[] { (byte) 0x37, (byte) 0x48, (byte) 0xAE, (byte) 0x1E, (byte) 0xDF,
-                (byte) 0x23, (byte) 0x45, (byte) 0xA9, (byte) 0x8C, (byte) 0x33, (byte) 0x24, (byte) 0xE4 });
+        String fixedKey = new String(new byte[]{(byte) 0x37, (byte) 0x48, (byte) 0xAE, (byte) 0x1E, (byte) 0xDF,
+                (byte) 0x23, (byte) 0x45, (byte) 0xA9, (byte) 0x8C, (byte) 0x33, (byte) 0x24, (byte) 0xE4});
         String key;
         if (id != null) {
             key = id + fixedKey;
@@ -231,9 +240,8 @@ public class Preferences extends PreferenceActivity implements OnSharedPreferenc
 
     /**
      * Will set the instance of <code>MobileDatabase</code> used by this <code>Preferences</code> class to store information.
-     * 
-     * @param mdb
-     *            a reference to the <code>MobileDatabase</code> instance.
+     *
+     * @param mdb a reference to the <code>MobileDatabase</code> instance.
      */
     public static void setMobileDatabase(MobileDatabase mdb) {
         db = mdb;
@@ -254,7 +262,7 @@ public class Preferences extends PreferenceActivity implements OnSharedPreferenc
                 // Clear pin
                 clearPin(ps.getSharedPreferences());
 
-                if (clearLoginID || Const.PREF_AUTO_LOGIN.equals(key)){
+                if (clearLoginID || Const.PREF_AUTO_LOGIN.equals(key)) {
                     // If not saving login then unset auto
                     CheckBoxPreference autoLogin = (CheckBoxPreference) ps.findPreference(Const.PREF_AUTO_LOGIN);
                     if (autoLogin != null) {
@@ -380,7 +388,7 @@ public class Preferences extends PreferenceActivity implements OnSharedPreferenc
                     ssoUrl = ssoQueryReply.ssoUrl;
                     // set server url
                     serverUrl = ssoQueryReply.serverUrl;
-                    if(serverUrl!=null && !serverUrl.isEmpty()){
+                    if (serverUrl != null && !serverUrl.isEmpty()) {
                         //set platformproperties
                         sessionInfo.setServerUrl(serverUrl);
                     }
@@ -426,7 +434,7 @@ public class Preferences extends PreferenceActivity implements OnSharedPreferenc
     /**
      * This should only be called when running a new version for the first time. It will ensure that login/pin are encrypted in
      * the proper location and that the plaintext versions are deleted.
-     * 
+     *
      * @param prefs
      */
     private static void encryptLoginAndPin(SharedPreferences prefs) {
@@ -597,7 +605,7 @@ public class Preferences extends PreferenceActivity implements OnSharedPreferenc
 
     /**
      * Gets the current server address set on the application context.
-     * 
+     *
      * @return returns the current server address set on the application context.
      */
     public static String getServerAddress() {
@@ -608,11 +616,10 @@ public class Preferences extends PreferenceActivity implements OnSharedPreferenc
 
     /**
      * Saves the oAuth token.
-     * 
+     * <p/>
      * If <code>accessToken</code> is <code>null</code> or the empty string, then the access token com component will be deleted.
-     * 
-     * @param accessToken
-     *            the oAuth token to save.
+     *
+     * @param accessToken the oAuth token to save.
      */
     public static void saveAccessToken(String accessToken) {
         if (db != null) {
@@ -626,9 +633,8 @@ public class Preferences extends PreferenceActivity implements OnSharedPreferenc
 
     /**
      * Attempts to retrieve the saved oAuth token or <code>null</code> if there is none.
-     * 
+     *
      * @return the saved oAuth token or <code>null</code> if there is none.
-     * 
      */
     public static String getAccessToken() {
         if (db != null) {
@@ -640,9 +646,9 @@ public class Preferences extends PreferenceActivity implements OnSharedPreferenc
 
     /**
      * @deprecated - use {@link com.concur.platform.PlatformProperties#setAccessToken(String)
-     *             PlatformProperties.setAccessToken(null)} instead.
-     * 
-     *             Deletes the oAuth token from the data store.
+     * PlatformProperties.setAccessToken(null)} instead.
+     * <p/>
+     * Deletes the oAuth token from the data store.
      */
     @Deprecated
     public static void clearAccessToken() {
@@ -653,12 +659,11 @@ public class Preferences extends PreferenceActivity implements OnSharedPreferenc
     }
 
     /**
-     * @deprecated - use {@link com.concur.platform.PlatformProperties#setAccessToken(String)
-     *             PlatformProperties.setAccessToken(null)} and
-     *             {@link com.concur.platform.PlatformProperties#setSessionId(String) PlatformProperties.setSessionId(null)}
-     *             instead.
-     * 
      * @param prefs
+     * @deprecated - use {@link com.concur.platform.PlatformProperties#setAccessToken(String)
+     * PlatformProperties.setAccessToken(null)} and
+     * {@link com.concur.platform.PlatformProperties#setSessionId(String) PlatformProperties.setSessionId(null)}
+     * instead.
      */
     @Deprecated
     public static void clearUser(SharedPreferences prefs) {
@@ -676,9 +681,9 @@ public class Preferences extends PreferenceActivity implements OnSharedPreferenc
     }
 
     /**
-     * @deprecated - use {@link com.concur.platform.PlatformProperties#setSessionId(String) PlatformProperties.setSessionId(null)}
-     *             instead.
      * @param prefs
+     * @deprecated - use {@link com.concur.platform.PlatformProperties#setSessionId(String) PlatformProperties.setSessionId(null)}
+     * instead.
      */
     @Deprecated
     public static void clearSession(SharedPreferences prefs) {
@@ -686,11 +691,10 @@ public class Preferences extends PreferenceActivity implements OnSharedPreferenc
     }
 
     /**
-     * @deprecated - use {@link com.concur.platform.PlatformProperties#setSessionId(String) PlatformProperties.setSessionId(null)}
-     *             instead.
-     * 
      * @param prefs
      * @param keepPin
+     * @deprecated - use {@link com.concur.platform.PlatformProperties#setSessionId(String) PlatformProperties.setSessionId(null)}
+     * instead.
      */
     @Deprecated
     public static void clearSession(SharedPreferences prefs, boolean keepPin) {
@@ -717,9 +721,8 @@ public class Preferences extends PreferenceActivity implements OnSharedPreferenc
 
     /**
      * Will clear any A/B Test information.
-     * 
-     * @param prefs
-     *            contains the <code>SharedPreferences</code> object.
+     *
+     * @param prefs contains the <code>SharedPreferences</code> object.
      */
     public static void clearABTestInfo(SharedPreferences prefs) {
         // Clear everything
@@ -748,14 +751,13 @@ public class Preferences extends PreferenceActivity implements OnSharedPreferenc
     }
 
     /**
-     * @deprecated - use {@link com.concur.platform.PlatformProperties#setSessionId(String) PlatformProperties.setSessionId(null)}
-     *             instead.
-     * 
-     *             Will clear the session pin, id and expiration if the session id in <code>prefs<code> matches
-     * on <code>sessionId</code>.
-     * 
      * @param prefs
      * @param sessionId
+     * @deprecated - use {@link com.concur.platform.PlatformProperties#setSessionId(String) PlatformProperties.setSessionId(null)}
+     * instead.
+     * <p/>
+     * Will clear the session pin, id and expiration if the session id in <code>prefs<code> matches
+     * on <code>sessionId</code>.
      */
     @Deprecated
     public static void clearSessionIfCurrent(SharedPreferences prefs, String sessionId) {
@@ -770,18 +772,14 @@ public class Preferences extends PreferenceActivity implements OnSharedPreferenc
     /**
      * Will set the session id and expiration time. This method sets the information from within a <code>Preferences</code> class
      * synchronized block.
-     * 
-     * @param prefs
-     *            the shared preferences object.
-     * @param sessionId
-     *            the session id.
-     * @param duration
-     *            the duration.
-     * @param sessionExpiration
-     *            the session expiration time.
+     *
+     * @param prefs             the shared preferences object.
+     * @param sessionId         the session id.
+     * @param duration          the duration.
+     * @param sessionExpiration the session expiration time.
      */
     public static void setSessionInfo(SharedPreferences prefs, String accessToken, String sessionId, Integer duration,
-            Long sessionExpiration) {
+                                      Long sessionExpiration) {
 
         synchronized (Preferences.class) {
 
@@ -816,7 +814,7 @@ public class Preferences extends PreferenceActivity implements OnSharedPreferenc
 
     /**
      * Determine if this is the first time the application has run since install.
-     * 
+     *
      * @param prefs
      */
     public static boolean isFirstTimeRunning(SharedPreferences prefs) {
@@ -825,7 +823,7 @@ public class Preferences extends PreferenceActivity implements OnSharedPreferenc
 
     /**
      * Store a preference indicating that the application has been run since install.
-     * 
+     *
      * @param prefs
      */
     public static void setNotFirstTimeRunning(SharedPreferences prefs) {
@@ -860,10 +858,8 @@ public class Preferences extends PreferenceActivity implements OnSharedPreferenc
 
     /**
      * Check if the test drive user should show overlay tips for the current activity
-     * 
-     * @param targetInPrefs
-     *            is the string in const that relates to the calling activity (IE Const.PREF_TD_HOME)
-     * 
+     *
+     * @param targetInPrefs is the string in const that relates to the calling activity (IE Const.PREF_TD_HOME)
      * @return whether or not the tips overlay should show. If the user has seen them, we will return false.
      */
     public static boolean shouldShowTestDriveTips(String targetInPrefs) {
@@ -873,7 +869,7 @@ public class Preferences extends PreferenceActivity implements OnSharedPreferenc
 
     /**
      * Puts a value into prefs so shouldShow (above) returns false if it has been shown.
-     * 
+     *
      * @param targetInPrefs
      */
     public static void setShouldNotShowTestDriveTips(String targetInPrefs) {
@@ -1151,9 +1147,8 @@ public class Preferences extends PreferenceActivity implements OnSharedPreferenc
 
     /**
      * Sets whether or not we should show message center badge.
-     * 
-     * @param allow
-     *            Indicates whether or not we should show message center badge
+     *
+     * @param allow Indicates whether or not we should show message center badge
      */
     public static void setShowNotificationBadge(boolean allow) {
         SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(ConcurCore.getContext());
@@ -1164,7 +1159,7 @@ public class Preferences extends PreferenceActivity implements OnSharedPreferenc
 
     /**
      * Checks SharedPreferences for whether or not the user already visit new updates in message center
-     * 
+     *
      * @return whether or not user has viewed new updates in message center; by default its true
      */
     public static boolean shouldShowNotificationBadge() {
@@ -1174,7 +1169,7 @@ public class Preferences extends PreferenceActivity implements OnSharedPreferenc
 
     /**
      * Gets whether or not report approvals is allowed.
-     * 
+     *
      * @return returns whether report approvals is allowed.
      */
     public static boolean shouldAllowReportApprovals() {
@@ -1184,7 +1179,7 @@ public class Preferences extends PreferenceActivity implements OnSharedPreferenc
 
     /**
      * Gets whether or not reports are allowed.
-     * 
+     *
      * @return returns whether reports are allowed.
      */
     public static boolean shouldAllowReports() {
@@ -1194,7 +1189,7 @@ public class Preferences extends PreferenceActivity implements OnSharedPreferenc
 
     /**
      * Gets whether or not travel booking is allowed.
-     * 
+     *
      * @return returns whether or not travel booking is allowed.
      */
     public static boolean shouldAllowTravelBooking() {
@@ -1204,7 +1199,7 @@ public class Preferences extends PreferenceActivity implements OnSharedPreferenc
 
     /**
      * Gets whether or not travel search/booking by Voice is enabled.
-     * 
+     *
      * @return returns whether or not travel search/booking by Voice is enabled.
      */
     public static boolean shouldAllowVoiceBooking() {
@@ -1214,7 +1209,7 @@ public class Preferences extends PreferenceActivity implements OnSharedPreferenc
 
     /**
      * Gets whether or not Spdy is enabled.
-     * 
+     *
      * @return returns whether or not Spdy is enabled..
      */
     public static boolean shouldEnableSpdy() {
@@ -1517,7 +1512,7 @@ public class Preferences extends PreferenceActivity implements OnSharedPreferenc
         SessionInfo sessionInfo = ConfigUtil.getSessionInfo(ConcurCore.getContext());
         return sessionInfo != null
                 && com.concur.mobile.platform.ui.common.util.Const.LOGIN_METHOD_SSO.equalsIgnoreCase(sessionInfo
-                        .getSignInMethod());
+                .getSignInMethod());
     }
 
     public static boolean hasShownMinSDKIncreaseMessage() {
@@ -1554,22 +1549,19 @@ public class Preferences extends PreferenceActivity implements OnSharedPreferenc
         final SessionInfo sessionInfo = ConfigUtil.getSessionInfo(app.getApplicationContext());
         boolean disableAutoLogin = prefs.getBoolean(Const.PREF_DISABLE_AUTO_LOGIN, false);
         boolean autoLogin = prefs.getBoolean(Const.PREF_AUTO_LOGIN, false);
-        if(disableAutoLogin) {
+        if (disableAutoLogin || sessionInfo == null) {
+
             autoLogin = false;
         }
-        Log.d(Const.LOG_TAG,
-                "-------------------------------------------------------------------------------------------autoLogin from prefs = "
-                        + autoLogin);
+        Log.d(Const.LOG_TAG, "autoLogin from prefs = " + autoLogin);
+
         // If auto-login is enabled and company sign-on is being used, then force autoLogin to 'false'.
         // Company Sign-on auto-login is not currently supported.
         if (autoLogin) {
             String signInMethod = sessionInfo.getSignInMethod();
-            Log.d(Const.LOG_TAG,
-                    "---------------------------------------------------------------------------------------- signInMethod = "
-                            + signInMethod);
-            Log.d(Const.LOG_TAG,
-                    "---------------------------------------------------------------------------------------- SSO Url = "
-                            + sessionInfo.getSSOUrl());
+            Log.d(Const.LOG_TAG, "signInMethod = " + signInMethod);
+            Log.d(Const.LOG_TAG, "SSO Url = " + sessionInfo.getSSOUrl());
+
             // NOTE - sometimes loginMethod is null and hence autoLogin is set to false, then AutoLogin is not called. does the code setting emailLookupBundle in the below onRequestSuccess causing this?
             if ("SSO".equalsIgnoreCase(signInMethod) || !(TextUtils.isEmpty(sessionInfo.getSSOUrl()))) {
                 autoLogin = false;
@@ -1577,7 +1569,7 @@ public class Preferences extends PreferenceActivity implements OnSharedPreferenc
         }
 
         if (autoLogin) {
-            if(sessionInfo != null) {
+            if (sessionInfo != null) {
                 // create a bundle and persist the value in the bundle
                 emailLookupBundle = new Bundle();
                 // Set the login id.
@@ -1601,42 +1593,42 @@ public class Preferences extends PreferenceActivity implements OnSharedPreferenc
             Log.d(Const.LOG_TAG, "attempting autologin");
             app.autoLoginReceiver.setListener(new BaseAsyncRequestTask.AsyncReplyListener() {
 
-                                              public void onRequestSuccess(Bundle resultData) {
-                                                  Log.d(Const.LOG_TAG,
-                                                          ".onRequestSucess ++++++++++++++++++++++++++++++++");
+                                                  public void onRequestSuccess(Bundle resultData) {
+                                                      Log.d(Const.LOG_TAG,
+                                                              ".onRequestSucess ++++++++++++++++++++++++++++++++");
 
-                                                  Log.d(Const.LOG_TAG,
-                                                          "attempting to build emailLookupBundle, sessionInfo not null ? "
-                                                                  + (sessionInfo != null));
-                                                  if(emailLookupBundle ==null) {
-                                                      onRequestFail(resultData);
-                                                  } else {
-                                                      UserAndSessionInfoUtil
-                                                              .updateUserAndSessionInfo(ConcurCore.getContext(),
-                                                                      emailLookupBundle);
+                                                      Log.d(Const.LOG_TAG,
+                                                              "attempting to build emailLookupBundle, sessionInfo not null ? "
+                                                                      + (sessionInfo != null));
+                                                      if (emailLookupBundle == null) {
+                                                          onRequestFail(resultData);
+                                                      } else {
+                                                          UserAndSessionInfoUtil
+                                                                  .updateUserAndSessionInfo(ConcurCore.getContext(),
+                                                                          emailLookupBundle);
+                                                      }
                                                   }
-                                              }
 
-                                              public void onRequestFail(Bundle resultData) {
-
-                                                      Log.d(Const.LOG_TAG, "expire login as autoLogin is disabled");
-                                                      // need to expire the login
-                                                      app.expireLogin(true);
-
-                                              }
-
-                                              public void onRequestCancel(Bundle resultData) {
+                                                  public void onRequestFail(Bundle resultData) {
 
                                                       Log.d(Const.LOG_TAG, "expire login as autoLogin is disabled");
                                                       // need to expire the login
                                                       app.expireLogin(true);
 
-                                              }
+                                                  }
 
-                                              public void cleanup() {
-                                              }
+                                                  public void onRequestCancel(Bundle resultData) {
 
-                                          }
+                                                      Log.d(Const.LOG_TAG, "expire login as autoLogin is disabled");
+                                                      // need to expire the login
+                                                      app.expireLogin(true);
+
+                                                  }
+
+                                                  public void cleanup() {
+                                                  }
+
+                                              }
 
             );
 
@@ -1651,10 +1643,10 @@ public class Preferences extends PreferenceActivity implements OnSharedPreferenc
             autoLoginRequestTask.execute();
         } else {
 
-                Log.d(Const.LOG_TAG,
-                        "---------------------------------------------------------------------------expire login as autoLogin is disabled");
-                // need to expire the login, will this take back to log in screen?
-                app.expireLogin(true);
+            Log.d(Const.LOG_TAG,
+                    "---------------------------------------------------------------------------expire login as autoLogin is disabled");
+            // need to expire the login, will this take back to log in screen?
+            app.expireLogin(true);
 
         }
     }
