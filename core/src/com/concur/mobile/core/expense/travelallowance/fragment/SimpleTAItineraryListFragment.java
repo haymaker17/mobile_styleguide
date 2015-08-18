@@ -143,7 +143,6 @@ public class SimpleTAItineraryListFragment extends Fragment implements SwipeRefr
             intent.putExtra(BundleId.EXPENSE_REPORT_KEY, expenseReportKey);
             intent.putExtra(BundleId.EXPENSE_REPORT_DATE, expenseReportDate);
             getActivity().startActivityForResult(intent, REQUEST_CODE_UPDATE_ITINERARY);
-            //TODO: Add default date
         } else if (view.getId() == R.id.iv_delete_icon) {
             int pos = this.recyclerView.getChildAdapterPosition((View) view.getParent());
             Itinerary itinerary = itineraryList.get(pos);
