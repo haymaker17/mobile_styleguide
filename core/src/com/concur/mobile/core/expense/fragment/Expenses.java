@@ -2157,18 +2157,9 @@ public class Expenses extends BaseFragment implements INetworkActivityListener {
                     }
                     case EXPENSEIT_NOT_DONE: {
                         ExpenseItReceipt expenseItReceipt = exp.getExpenseItReceipt();
-
-                        if (!expenseItReceipt.isInErrorState()) {
-                            // Processing state.
-                            Intent intent = new Intent(activity, ExpenseItDetailActivity.class);
-                            intent.putExtra(ExpenseItDetailActivity.EXPENSEIT_RECEIPT_ID_KEY, expenseItReceipt.getId());
-                            startActivityForResult(intent, ExpenseItDetailActivityFragment.VIEW_PROCESSING_EXPENSEIT_ITEM_DETAILS);
-
-                        } else {
-
-                            // TODO: Handle error state as a manual expense.
-
-                        }
+                        Intent intent = new Intent(activity, ExpenseItDetailActivity.class);
+                        intent.putExtra(ExpenseItDetailActivity.EXPENSEIT_RECEIPT_ID_KEY, expenseItReceipt.getId());
+                        startActivityForResult(intent, ExpenseItDetailActivityFragment.VIEW_PROCESSING_EXPENSEIT_ITEM_DETAILS);
                         break;
                     }
 
