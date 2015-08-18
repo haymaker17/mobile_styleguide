@@ -24,7 +24,6 @@ import com.concur.mobile.base.service.BaseAsyncResultReceiver;
 import com.concur.mobile.core.ConcurCore;
 import com.concur.mobile.core.activity.BaseActivity;
 import com.concur.mobile.core.activity.Preferences;
-import com.concur.mobile.core.activity.ReceiptView;
 import com.concur.mobile.core.dialog.ReceiptChoiceDialogFragment;
 import com.concur.mobile.core.expense.activity.ExpensesAndReceipts;
 import com.concur.mobile.core.expense.charge.data.Expense;
@@ -61,6 +60,10 @@ public class ExpenseItDetailActivity extends BaseActivity
 
     public static final String CLS_TAG = ExpenseItDetailActivity.class.getSimpleName();
 
+    public static final int VIEW_RECEIPT_REQUEST_CODE = 777;
+
+    public static final int REPLACE_RECEIPT_RESULT_CODE = 999;
+
     private static final String FRAGMENT_EXPENSEIT_DETAIL = "FRAGMENT_EXPENSEIT_DETAIL";
 
     public static final String EXPENSEIT_RECEIPT_ID_KEY = "EXPENSEIT_RECEIPT_ID_KEY";
@@ -77,9 +80,9 @@ public class ExpenseItDetailActivity extends BaseActivity
 
     private static final String MENU_ACTION_KEY = "MENU_ACTION_KEY";
 
-    private static int MENU_ACTION_CANCEL = 1;
+    private static final int MENU_ACTION_CANCEL = 1;
 
-    private static int MENU_ACTION_REPLACE = 2;
+    private static final int MENU_ACTION_REPLACE = 2;
 
 
     private ProgressDialogFragment mProgressDialogFragment;
@@ -264,6 +267,10 @@ public class ExpenseItDetailActivity extends BaseActivity
             uploadReceiptToExpenseIt(localImageFilePath);
         } else {
             Log.w(Const.LOG_TAG, CLS_TAG + ".doUploadReceipt() - unhandled action.");
+            if(currProgressDialog != null) {
+                currProgressDialog.dismiss();
+            }
+            showUnexpectedErrorDialog();
         }
 
     }
@@ -343,15 +350,21 @@ public class ExpenseItDetailActivity extends BaseActivity
 
     @Override
     public void initializeViewReceipt(long receiptId) {
-        Intent intent = new Intent(this, ReceiptView.class);
+        Intent intent = new Intent(this, ExpenseItReceiptView.class);
         intent.putExtra(Const.EXTRA_EXPENSE_IT_RECEIPT_ID, receiptId);
-        startActivity(intent);
+        startActivityForResult(intent, VIEW_RECEIPT_REQUEST_CODE);
     }
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         MenuInflater inflater = getMenuInflater();
         inflater.inflate(R.menu.expenseit_details_options, menu);
+
+        // Only show the "replace" menu if this ExpenseIt item has failed analysis.
+        if(!item.isInErrorState()) {
+            menu.findItem(R.id.replace_expenseit_receipt).setVisible(false);
+        }
+
         return true;
     }
 
@@ -571,7 +584,19 @@ public class ExpenseItDetailActivity extends BaseActivity
 //        }
     }
 
-//    Uncomment after refactoring upload receipt into an AsyncTask.
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if(requestCode == VIEW_RECEIPT_REQUEST_CODE
+                && resultCode == REPLACE_RECEIPT_RESULT_CODE) {
+
+            menuAction = MENU_ACTION_REPLACE;
+            DialogFragment receiptChoiceDialog = new ReceiptChoiceDialogFragment();
+            receiptChoiceDialog.show(this.getSupportFragmentManager(), ReceiptChoiceDialogFragment.DIALOG_FRAGMENT_ID);
+        }
+    }
+
+    //    Uncomment after refactoring upload receipt into an AsyncTask.
 //    private void doUploadReceiptImageToReceiptStoreAsyncTask() {
 //        // set up the receiver
 //        if (mExpenseItReceiptUploadReceiver == null) {

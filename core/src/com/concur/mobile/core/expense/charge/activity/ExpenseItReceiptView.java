@@ -1,7 +1,7 @@
 /**
  *
  */
-package com.concur.mobile.core.activity;
+package com.concur.mobile.core.expense.charge.activity;
 
 import android.content.Intent;
 import android.database.Cursor;
@@ -10,6 +10,8 @@ import android.graphics.BitmapFactory;
 import android.os.Bundle;
 import android.os.Handler;
 import android.util.Log;
+import android.view.Menu;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.ProgressBar;
@@ -19,6 +21,7 @@ import com.concur.core.R;
 import com.concur.mobile.base.service.BaseAsyncRequestTask;
 import com.concur.mobile.base.service.BaseAsyncResultReceiver;
 import com.concur.mobile.core.ConcurCore;
+import com.concur.mobile.core.activity.BaseActivity;
 import com.concur.mobile.core.util.Const;
 import com.concur.mobile.core.util.EventTracker;
 import com.concur.mobile.core.util.Flurry;
@@ -33,9 +36,10 @@ import java.net.URL;
 /**
  * @author Harold Frazier, Jr.
  */
-public class ReceiptView extends BaseActivity {
+@EventTracker.EventTrackerClassName(getClassName = "Expense-AnalyzingReceiptDetail-ReceiptViewer")
+public class ExpenseItReceiptView extends BaseActivity {
 
-    private static final String CLS_TAG = ReceiptView.class.getSimpleName();
+    private static final String CLS_TAG = ExpenseItReceiptView.class.getSimpleName();
 
     private Long expenseItReceiptId = null;
 
@@ -62,7 +66,7 @@ public class ReceiptView extends BaseActivity {
                     bitmap = getBitmapFromURL(response.getImages().get(0).getImageDataUrl());
                     if (expenseItReceipt != null){
                         expenseItReceipt.setImageData(bitmap);
-                        if (expenseItReceipt.update(ReceiptView.this, getUserId()) == false){
+                        if (expenseItReceipt.update(ExpenseItReceiptView.this, getUserId()) == false){
                             Log.e(Const.LOG_TAG, CLS_TAG + "Failed updating receipt in database");
                         }
                     }
@@ -110,21 +114,18 @@ public class ReceiptView extends BaseActivity {
      */
     @Override
     protected void onCreate(Bundle savedInstanceState) {
-        String screenTitle;
-        Intent intent = null;
 
         super.onCreate(savedInstanceState);
 
         setContentView(R.layout.receipt_view);
         buildViews();
 
-        intent = getIntent();
+        Intent intent = getIntent();
         if (intent.hasExtra(Const.EXTRA_EXPENSE_IT_RECEIPT_ID)) {
             expenseItReceiptId = intent.getLongExtra(Const.EXTRA_EXPENSE_IT_RECEIPT_ID, 0);
         }
 
-        screenTitle = getText(R.string.expense_receipt).toString();
-
+        String screenTitle = getText(R.string.expense_receipt).toString();
         getSupportActionBar().setTitle(screenTitle);
 
         if (expenseItReceiptId != 0) {
@@ -138,8 +139,7 @@ public class ReceiptView extends BaseActivity {
                     null, statement.toString(), whereArgs, Expense.ExpenseItReceiptColumns.DEFAULT_SORT_ORDER);
 
             if (cursor != null && cursor.moveToFirst()) {
-                expenseItReceipt = new ExpenseItReceipt(this,
-                        cursor);
+                expenseItReceipt = new ExpenseItReceipt(this, cursor);
                 cursor.close();
 
                 if (expenseItReceipt == null || expenseItReceipt.getImageData() == null) {
@@ -156,6 +156,28 @@ public class ReceiptView extends BaseActivity {
 
         EventTracker.INSTANCE.track(Flurry.CATEGORY_EXPENSE_EXPENSEIT,
                 Flurry.ACTION_VIEW_RECEIPT);
+    }
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        menu.add(0, R.id.replace_expenseit_receipt, 0, R.string.expenseit_replace_receipt_button);
+        return true;
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        super.onOptionsItemSelected(item);
+
+        int id = item.getItemId();
+        if(id == R.id.replace_expenseit_receipt) {
+            EventTracker.INSTANCE.eventTrack("Expense-ExpenseIt", "Replace Receipt");
+
+            setResult(ExpenseItDetailActivity.REPLACE_RECEIPT_RESULT_CODE);
+            this.finish();
+
+        }
+
+        return true;
     }
 
     private void buildViews() {

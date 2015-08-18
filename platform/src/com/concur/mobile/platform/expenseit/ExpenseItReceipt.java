@@ -365,14 +365,20 @@ public class ExpenseItReceipt implements ExpenseItReceiptDAO, Serializable {
     public Bitmap getImageData() {
         ContentResolver resolver = context.getContentResolver();
         Uri expenseItUri = getContentUri(context, userId);
-        Cursor cursor = null;
         byte[] blob = null;
         Bitmap bitmap = null;
 
-        cursor = resolver.query(expenseItUri, null, null, null, Expense.ExpenseItReceiptColumns
-                .DEFAULT_SORT_ORDER);
-        if (cursor != null && cursor.moveToNext()) {
-            blob = CursorUtil.getBlobValue(cursor, Expense.ExpenseItReceiptColumns.IMAGE_DATA);
+        Cursor cursor = null;
+
+        try {
+            cursor = resolver.query(expenseItUri, null, null, null, Expense.ExpenseItReceiptColumns.DEFAULT_SORT_ORDER);
+            if (cursor != null && cursor.moveToNext()) {
+                blob = CursorUtil.getBlobValue(cursor, Expense.ExpenseItReceiptColumns.IMAGE_DATA);
+            }
+        } finally {
+            if(cursor != null) {
+                cursor.close();
+            }
         }
 
         if (blob != null) {
