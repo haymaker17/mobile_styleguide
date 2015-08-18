@@ -145,6 +145,9 @@ public class PlatformTestSuite {
         // Set the credentials.
         test.setCredentials(ppLoginId, ppLoginPinPassword);
 
+        // Init content provider authority
+        initContentProvidersAuthority();
+
         // Init content providers.
         initContentProviders();
 
@@ -699,6 +702,15 @@ public class PlatformTestSuite {
     }
 
     /**
+     * Will initialize the config and travel and expense content provider authority.
+     */
+    private static void initContentProvidersAuthority() {
+        //set up authority for content providers
+        PlatformProperties.setConfigProviderAuthority("com.concur.platform.provider.config");
+        PlatformProperties.setTravelProviderAuthority("com.concur.platform.provider.travel");
+        PlatformProperties.setExpenseProviderAuthority("com.concur.platform.provider.expense");
+    }
+    /**
      * Will initialize the config and travel content providers.
      */
     private static void initContentProviders() {
@@ -711,7 +723,6 @@ public class PlatformTestSuite {
                 return helper;
             }
         };
-
         configProvider.onCreate();
         ShadowContentResolver.registerProvider(com.concur.mobile.platform.config.provider.Config.AUTHORITY,
                 configProvider);
@@ -825,6 +836,7 @@ public class PlatformTestSuite {
         // Initialize any session/token information.
         PlatformProperties.setAccessToken(null);
         PlatformProperties.setSessionId(null);
+
     }
 
 }
