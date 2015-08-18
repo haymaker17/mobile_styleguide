@@ -27,6 +27,7 @@ import com.concur.mobile.core.expense.travelallowance.util.BundleId;
 import com.concur.mobile.core.expense.travelallowance.util.StringUtilities;
 
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 /**
@@ -43,6 +44,7 @@ public class SimpleTAItineraryListFragment extends Fragment implements SwipeRefr
     private boolean expenseReportIsSubmitted;
     private String expenseReportName;
     private String expenseReportKey;
+    private Date expenseReportDate;
     private SwipeRefreshLayout swipeRefreshLayout;
     private IFragmentCallback callback;
     private SimpleItineraryListAdapter adapter;
@@ -96,6 +98,7 @@ public class SimpleTAItineraryListFragment extends Fragment implements SwipeRefr
             this.expenseReportIsSubmitted = getArguments().getBoolean(BundleId.EXPENSE_REPORT_IS_SUBMITTED, false);
             this.expenseReportName = getArguments().getString(BundleId.EXPENSE_REPORT_NAME, StringUtilities.EMPTY_STRING);
             this.expenseReportKey = getArguments().getString(BundleId.EXPENSE_REPORT_KEY, StringUtilities.EMPTY_STRING);
+            this.expenseReportDate = (Date) getArguments().getSerializable(BundleId.EXPENSE_REPORT_DATE);
         }
 
         adapter = new SimpleItineraryListAdapter(getActivity(), itineraryList);
@@ -138,7 +141,9 @@ public class SimpleTAItineraryListFragment extends Fragment implements SwipeRefr
             itin.setExpenseReportID(expenseReportKey);
             intent.putExtra(BundleId.ITINERARY, itin);
             intent.putExtra(BundleId.EXPENSE_REPORT_KEY, expenseReportKey);
+            intent.putExtra(BundleId.EXPENSE_REPORT_DATE, expenseReportDate);
             getActivity().startActivityForResult(intent, REQUEST_CODE_UPDATE_ITINERARY);
+            //TODO: Add default date
         } else if (view.getId() == R.id.iv_delete_icon) {
             int pos = this.recyclerView.getChildAdapterPosition((View) view.getParent());
             Itinerary itinerary = itineraryList.get(pos);

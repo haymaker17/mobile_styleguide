@@ -378,11 +378,20 @@ public class ItineraryUpdateActivity extends BaseActivity implements IController
                     emptySegment.setArrivalDateTime(cal.getTime());
                 }
             } else {
-                cal.set(Calendar.SECOND, 0);
-                cal.set(Calendar.MILLISECOND, 0);
-                emptySegment.setDepartureDateTime(cal.getTime());
-                cal.add(Calendar.MINUTE, 1);
-                emptySegment.setArrivalDateTime(cal.getTime());
+                if(defaultDate != null) {
+                    cal.setTime(this.defaultDate);
+                    cal.set(Calendar.SECOND, 0);
+                    cal.set(Calendar.MILLISECOND, 0);
+                    emptySegment.setDepartureDateTime(cal.getTime());
+                    cal.add(Calendar.MINUTE, 1);
+                    emptySegment.setArrivalDateTime(cal.getTime());
+                } else {
+                    cal.set(Calendar.SECOND, 0);
+                    cal.set(Calendar.MILLISECOND, 0);
+                    emptySegment.setDepartureDateTime(cal.getTime());
+                    cal.add(Calendar.MINUTE, 1);
+                    emptySegment.setArrivalDateTime(cal.getTime());
+                }
             }
         }
         this.itinerary.getSegmentList().add(emptySegment);
@@ -517,7 +526,7 @@ public class ItineraryUpdateActivity extends BaseActivity implements IController
         messageDialog.show(getSupportFragmentManager(), TAG_DELETE_DIALOG_FRAGMENT);
     }
 
-    private void showErrorDialog(Message msg) {
+    private void showErrorDialog(Message msg) {//Use Toast instead
         if (msg == null) {
             return;
         }

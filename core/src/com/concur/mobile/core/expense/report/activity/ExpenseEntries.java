@@ -1648,6 +1648,7 @@ public class
                                 intent = new Intent(ExpenseEntries.this, TravelAllowanceActivity.class);
                                 intent.putExtra(BundleId.EXPENSE_REPORT_KEY, expRep.reportKey);
                                 intent.putExtra(BundleId.EXPENSE_REPORT_NAME, expRep.reportName);
+                                intent.putExtra(BundleId.EXPENSE_REPORT_DATE, expRep.reportDateCalendar.getTime());
                                 intent.putExtra(BundleId.EXPENSE_REPORT_IS_SUBMITTED, expRep.isSubmitted());
 								intent.putExtra(BundleId.IS_EDIT_MODE, true);
                                 startActivityForResult(intent, REQUEST_VIEW_TA_ITINERARY);

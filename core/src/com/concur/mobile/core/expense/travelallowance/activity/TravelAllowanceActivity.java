@@ -146,6 +146,7 @@ public class TravelAllowanceActivity extends AppCompatActivity
             arguments.putString(BundleId.EXPENSE_REPORT_NAME, getIntent().getStringExtra(BundleId.EXPENSE_REPORT_NAME));
             arguments.putBoolean(BundleId.EXPENSE_REPORT_IS_SUBMITTED,
                     getIntent().getBooleanExtra(BundleId.EXPENSE_REPORT_IS_SUBMITTED, false));
+            arguments.putSerializable(BundleId.EXPENSE_REPORT_DATE, getIntent().getSerializableExtra(BundleId.EXPENSE_REPORT_DATE));
             ViewPagerAdapter.ViewPagerItem itinFrag = new ViewPagerAdapter.ViewPagerItem(
                     getString(R.string.itin_itineraries), SimpleTAItineraryListFragment.class, arguments);
             list.add(itinFrag);
