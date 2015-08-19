@@ -264,12 +264,12 @@ public class ExpenseItDetailActivity extends BaseActivity
             image = item.getImageData(); // context is null.
         } catch (Exception e) {
             error = e;
-            Log.e(Const.LOG_TAG, CLS_TAG + ".showExpenseItCancelConfirmationPrompt: image.getImageData() threw exception.");
+            Log.e(Const.LOG_TAG, CLS_TAG + ".doManualExpenseTransitionOperations: image.getImageData() threw exception.");
         }
 
         if (error == null && image != null) { // accessing the content resolver results in nullPointerException.
             // Try to get the image from local DB.
-            Log.d(Const.LOG_TAG, CLS_TAG + ".showExpenseItCancelConfirmationPrompt: got image data from DB.");
+            Log.d(Const.LOG_TAG, CLS_TAG + ".doManualExpenseTransitionOperations: got image data from DB.");
             receiptImage = image;
 
             // save receipt.
@@ -277,14 +277,14 @@ public class ExpenseItDetailActivity extends BaseActivity
                 // delete receipt call.
                 doDeleteExpenseItExpenseAsyncTask();
             } else {
-                Log.e(Const.LOG_TAG, CLS_TAG + ".showExpenseItCancelConfirmationPrompt: failed to save image to storage!");
+                Log.e(Const.LOG_TAG, CLS_TAG + ".doManualExpenseTransitionOperations: failed to save image to storage!");
                 showUnexpectedErrorAlert();
             }
 
         } else {
             // Get the image from ExpenseIt service. If the receipt has been exported, then
             // this call will fail. This is expected and handled.
-            Log.d(Const.LOG_TAG, CLS_TAG + ".showExpenseItCancelConfirmationPrompt: getting image from ExpenseIt.");
+            Log.d(Const.LOG_TAG, CLS_TAG + ".doManualExpenseTransitionOperations: getting image from ExpenseIt.");
             doGetExpenseItReceiptImageUrlAsyncTask();
         }
     }
@@ -683,7 +683,7 @@ public class ExpenseItDetailActivity extends BaseActivity
         if (response != null) {
             if (response.getImages() != null && response.getImages().get(0) != null) {
                 final String url = response.getImages().get(0).getImageDataUrl();
-                Log.d(Const.LOG_TAG, CLS_TAG + ".onRequestSuccess: response was not null, and the URL is: " + url);
+                Log.d(Const.LOG_TAG, CLS_TAG + ".onRetrieveUrlRequestSuccess: response was not null, and the URL is: " + url);
 
                 new AsyncTask<Void, Void, Void>() {
                     Exception error;
@@ -719,11 +719,11 @@ public class ExpenseItDetailActivity extends BaseActivity
 
                 }.execute();
             } else {
-                Log.e(Const.LOG_TAG, CLS_TAG + ".onRequestSuccess: response.getImages() is null!");
+                Log.e(Const.LOG_TAG, CLS_TAG + ".onRetrieveUrlRequestSuccess: response.getImages() is null!");
                 showUnexpectedErrorDialog();
             }
         } else {
-            Log.e(Const.LOG_TAG, CLS_TAG + ".onRequestSuccess: response is null!");
+            Log.e(Const.LOG_TAG, CLS_TAG + ".onRetrieveUrlRequestSuccess: response is null!");
             showUnexpectedErrorDialog();
         }
     }
