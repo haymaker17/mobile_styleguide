@@ -1952,7 +1952,8 @@
 
     <!-- Start What's new -->
     <string-array name="whats_new">
-        <item>\u2022 Crash fixes</item>
+        <item>\u2022 Fix for Expense Report Approval notifications</item>
+        <item>\u2022 Crash Fix for some OS 5 users during start up</item>
     </string-array>
     <!-- End What's new -->
 
