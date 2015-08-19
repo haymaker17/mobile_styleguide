@@ -167,6 +167,13 @@ p {
 	margin-right: 2%;
 }
 
+.flexContainer.half > div {
+	-webkit-flex: 1 0 auto;
+	flex: 1 0 auto;
+	width: 50%;
+}
+
+
 
 .flexContainer.third > div {
 	-webkit-flex: 1 0 auto;
@@ -221,7 +228,8 @@ p {
 }
 
 .breadcrumb_arrow_position {
-	margin: 0 0 -4px 0;
+	margin: 0 0 0 0;
+	height: 15px;
 }
 
 
@@ -230,7 +238,7 @@ p {
 
 /* components ------------ */
 
-.components img, .components video {
+.components figure img, .components video {
 	border: 1px solid #e2e2e2;
 }
 
@@ -260,13 +268,8 @@ p {
 	margin-top: 25px;
 }
 
-img.border_none {
-	border: none;
-}
 
-.bold_text {
-	font-weight: 600;
-}
+
 
 
 
@@ -393,13 +396,13 @@ img.border_none {
 
 #header_title {
 	position: absolute;
-	bottom: 18%;
+	bottom: 12%;
 	width: 70%;
 	left: 295px;
 	text-transform: uppercase;
 	font-weight: 300;
 	color: #fff;
-	font-size: 1.7rem;
+	font-size: 1.5rem;
 	margin: 0;
 	padding: 0;
 	-webkit-transition: all .15s ease-in;
@@ -579,7 +582,7 @@ footer a {
     -ms-transition: all .25s ease-in;
      -o-transition: all .25s ease-in;
         transition: all .25s ease-in;
-        opacity: 0;
+        /*opacity: 0;*/
     padding: 35px;
 }
 
@@ -664,6 +667,40 @@ ul.nav {
 
 
 
+/* fade in/out content */
+@keyframes fadeOut {
+    from    { opacity: 1;}
+    to      { opacity: 0;}
+}
+@-webkit-keyframes fadeOut {
+    from    { opacity: 1;}
+    to      { opacity: 0;}
+}
+
+
+@keyframes fadeIn {
+    from    { opacity: 0;}
+    to      { opacity: 1;}
+}
+@-webkit-keyframes fadeIn {
+    from    { opacity: 0;}
+    to      { opacity: 1;}
+}
+
+
+.fade.ng-enter  { 
+	animation: fadeIn 0.25s both ease-in; 
+	-webkit-animation: fadeIn 0.25s both ease-in; 
+	z-index: 9999; 
+}
+.fade.ng-leave  { 
+	animation: fadeOut 0.15s both ease-in; 
+	-webkit-animation: fadeOut 0.15s both ease-in; 
+	z-index: 8888; 
+}
+
+
+
 
 /* Accordion menus */
 
@@ -706,6 +743,10 @@ ul.nav {
   line-height: 2rem;
 }
 
+.accordion li.active > a {
+	color: #0078c8;
+}
+
 .accordion > li.active > a {
 	background: rgba(235,235,235,.5);
 }
@@ -713,6 +754,12 @@ ul.nav {
 .accordion a.active {
 	font-weight: 400;
 	color: #0078c8;
+}
+
+.accordion > li > ul > li > ul > li span {
+  display: block;
+  font-weight: 300;
+  color: #676767;
 }
 
 .accordion > li > ul > li > ul > li a {
@@ -1539,7 +1586,7 @@ a.icon span {
 }
 
 
-
+/*
 .fadeinElement {
 	opacity: 0;
 	-webkit-transition: opacity .75s ease-in;
@@ -1548,7 +1595,7 @@ a.icon span {
 	     -o-transition: opacity .75s ease-in;
 	        transition: opacity .75s ease-in;
 }
-
+*/
 .visible {
 	opacity: 1;
 }
@@ -1745,7 +1792,7 @@ h3 {
 		position: fixed;
 		top: 60px;
 		width: 100%;
-		height: 65px;
+		height: 55px;
 		z-index: 2;
 		/* background: #eaf7ff; */
 		background: rgb(249,249,249);
@@ -1756,6 +1803,7 @@ h3 {
 		position: inherit;	
 		top: 53px;
 		left: 35px;
+		font-size: 1.5rem;
 		text-transform: uppercase;
 /* 		color: #000; */
 		color: #858585;
