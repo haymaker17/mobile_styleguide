@@ -15,7 +15,6 @@ import android.support.v4.app.FragmentActivity;
 import android.text.TextUtils;
 import android.util.Log;
 import android.view.Menu;
-import android.view.MenuInflater;
 import android.view.MenuItem;
 
 import com.concur.core.R;
@@ -84,6 +83,9 @@ public class ExpenseItDetailActivity extends BaseActivity
 
     private static final int MENU_ACTION_REPLACE = 2;
 
+    private static int MENU_ACTION_EDIT = 3;
+
+    private Menu menu;
 
     private ProgressDialogFragment mProgressDialogFragment;
 
@@ -253,6 +255,40 @@ public class ExpenseItDetailActivity extends BaseActivity
         showPositivePrompt(title, message);
     }
 
+    private void doManualExpenseTransitionOperations() {
+        Bitmap image = null;
+        Exception error = null;
+
+        // Check that the receipt exists in the DB.
+        try {
+            image = item.getImageData(); // context is null.
+        } catch (Exception e) {
+            error = e;
+            Log.e(Const.LOG_TAG, CLS_TAG + ".showExpenseItCancelConfirmationPrompt: image.getImageData() threw exception.");
+        }
+
+        if (error == null && image != null) { // accessing the content resolver results in nullPointerException.
+            // Try to get the image from local DB.
+            Log.d(Const.LOG_TAG, CLS_TAG + ".showExpenseItCancelConfirmationPrompt: got image data from DB.");
+            receiptImage = image;
+
+            // save receipt.
+            if (saveReceiptImageToLocalStorage()) {
+                // delete receipt call.
+                doDeleteExpenseItExpenseAsyncTask();
+            } else {
+                Log.e(Const.LOG_TAG, CLS_TAG + ".showExpenseItCancelConfirmationPrompt: failed to save image to storage!");
+                showUnexpectedErrorAlert();
+            }
+
+        } else {
+            // Get the image from ExpenseIt service. If the receipt has been exported, then
+            // this call will fail. This is expected and handled.
+            Log.d(Const.LOG_TAG, CLS_TAG + ".showExpenseItCancelConfirmationPrompt: getting image from ExpenseIt.");
+            doGetExpenseItReceiptImageUrlAsyncTask();
+        }
+    }
+
     private boolean saveReceiptImageToLocalStorage() {
         localImageFilePath = ViewUtil.createExternalMediaImageFilePath();
         return ImageUtil.writeBitmapToFile(receiptImage, Const.RECEIPT_COMPRESS_BITMAP_FORMAT,
@@ -261,7 +297,7 @@ public class ExpenseItDetailActivity extends BaseActivity
 
     private void doUploadReceipt() {
 
-        if(receiptImage != null && menuAction == MENU_ACTION_CANCEL) {
+        if(receiptImage != null && (menuAction == MENU_ACTION_CANCEL || menuAction == MENU_ACTION_EDIT)) {
             uploadReceiptImageToReceiptStore();
         } else if(!TextUtils.isEmpty(localImageFilePath) && menuAction == MENU_ACTION_REPLACE) {
             uploadReceiptToExpenseIt(localImageFilePath);
@@ -357,14 +393,24 @@ public class ExpenseItDetailActivity extends BaseActivity
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
-        MenuInflater inflater = getMenuInflater();
-        inflater.inflate(R.menu.expenseit_details_options, menu);
+        this.menu = menu;
+        getMenuInflater().inflate(R.menu.expenseit_details_options, this.menu);
 
         // Only show the "replace" menu if this ExpenseIt item has failed analysis.
-        if(!item.isInErrorState()) {
-            menu.findItem(R.id.replace_expenseit_receipt).setVisible(false);
+        if(item.isInErrorState()) {
+            this.menu.findItem(R.id.replace_expenseit_receipt).setVisible(true);
         }
 
+        return true;
+    }
+
+    @Override
+    public boolean onPrepareOptionsMenu(Menu menu) {
+        super.onPrepareOptionsMenu(menu);
+        if (this.item.isInErrorState()) {
+            menu.findItem(R.id.edit_expenseit_receipt).setVisible(true);
+            menu.findItem(R.id.cancel_expenseit_receipt).setVisible(false);
+        }
         return true;
     }
 
@@ -381,47 +427,14 @@ public class ExpenseItDetailActivity extends BaseActivity
     }
 
     private void showExpenseItCancelConfirmationPrompt() {
-        String title = getString(R.string.confirm);
-        String message = getString(R.string.expenseit_confirmation_message);
+        String titleString = getString(R.string.confirm);
+        String messageString = getString(R.string.expenseit_cancel_confirmation_message);
         AlertDialogFragment.OnClickListener yesListener = new AlertDialogFragment.OnClickListener() {
             @Override
             public void onClick(FragmentActivity activity, DialogInterface dialog, int which) {
-
                 EventTracker.INSTANCE.eventTrack("Expense-ExpenseIt", "Stop Analysis");
-
                 showProgressDialog(R.string.expenseit_cancel_dialog_message);
-
-                Bitmap image = null;
-                Exception error = null;
-
-                // Check that the receipt exists in the DB.
-                try {
-                    image = item.getImageData(); // context is null.
-                } catch (Exception e) {
-                    error = e;
-                    Log.e(Const.LOG_TAG, CLS_TAG + ".showExpenseItCancelConfirmationPrompt: image.getImageData() threw exception.");
-                }
-
-                if (error == null && image != null) { // accessing the content resolver results in nullPointerException.
-                    // Try to get the image from local DB.
-                    Log.d(Const.LOG_TAG, CLS_TAG + ".showExpenseItCancelConfirmationPrompt: got image data from DB.");
-                    receiptImage = image;
-
-                    // save receipt.
-                    if (saveReceiptImageToLocalStorage()) {
-                        // delete receipt call.
-                        doDeleteExpenseItExpenseAsyncTask();
-                    } else {
-                        Log.e(Const.LOG_TAG, CLS_TAG + ".showExpenseItCancelConfirmationPrompt: failed to save image to storage!");
-                        showUnexpectedErrorAlert();
-                    }
-
-                } else {
-                    // Get the image from ExpenseIt service. If the receipt has been exported, then
-                    // this call will fail. This is expected and handled.
-                    Log.d(Const.LOG_TAG, CLS_TAG + ".showExpenseItCancelConfirmationPrompt: getting image from ExpenseIt.");
-                    doGetExpenseItReceiptImageUrlAsyncTask();
-                }
+                doManualExpenseTransitionOperations();
             }
 
             @Override
@@ -430,9 +443,11 @@ public class ExpenseItDetailActivity extends BaseActivity
             }
         };
 
-        DialogFragmentFactory.getAlertDialog(title, message, R.string.general_yes, -1, R.string.general_no,
+        DialogFragmentFactory.getAlertDialog(titleString, messageString, R.string.general_yes, -1, R.string.general_no,
                 yesListener, null, null, null).show(getSupportFragmentManager(), CLS_TAG);
     }
+
+
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
@@ -449,6 +464,12 @@ public class ExpenseItDetailActivity extends BaseActivity
 
             DialogFragment receiptChoiceDialog = new ReceiptChoiceDialogFragment();
             receiptChoiceDialog.show(this.getSupportFragmentManager(), ReceiptChoiceDialogFragment.DIALOG_FRAGMENT_ID);
+        } else if (id == R.id.edit_expenseit_receipt) {
+            menuAction = MENU_ACTION_EDIT;
+
+            EventTracker.INSTANCE.eventTrack("Expense-ExpenseIt", "Edit Receipt");
+            showProgressDialog(R.string.expenseit_converting_dialog_message);
+            doManualExpenseTransitionOperations();
         }
 
         return true;

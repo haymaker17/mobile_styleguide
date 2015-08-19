@@ -38,7 +38,7 @@ public class FormatUtil {
     public static final DateFormat SHORT_DAY_DISPLAY;
     public static final DateFormat SHORT_DAY_DISPLAY_NO_COMMA;
     public static final DateFormat SHORT_DAY_YEAR_DISPLAY_NO_COMMA;
-    public static final DateFormat SHORT_DAY_FULL_MONTH_YEAR_DISPLAY_NO_COMMA;
+    public static final DateFormat SHORT_DAY_SHORT_MONTH_YEAR_TIME_WITH_SEPARATOR;
     public static final DateFormat SHORT_MONTH_FULL_YEAR_DISPLAY;
     public static final DateFormat SHORT_MONTH_DAY_YEAR_DISPLAY;
     public static final DateFormat SHORT_MONTH_DAY_FULL_YEAR_DISPLAY;
@@ -85,8 +85,8 @@ public class FormatUtil {
         SHORT_DAY_DISPLAY_NO_COMMA.setTimeZone(UTC);
         SHORT_DAY_YEAR_DISPLAY_NO_COMMA = new SimpleDateFormat("EEE MMM d, yyyy");
         SHORT_DAY_YEAR_DISPLAY_NO_COMMA.setTimeZone(UTC);
-        SHORT_DAY_FULL_MONTH_YEAR_DISPLAY_NO_COMMA = new SimpleDateFormat("EEE MMMM d y");
-        SHORT_DAY_FULL_MONTH_YEAR_DISPLAY_NO_COMMA.setTimeZone(UTC);
+        SHORT_DAY_SHORT_MONTH_YEAR_TIME_WITH_SEPARATOR = new SimpleDateFormat("EEE MMM d y '-' hh:mm a");
+        SHORT_DAY_SHORT_MONTH_YEAR_TIME_WITH_SEPARATOR.setTimeZone(UTC);
         SHORT_MONTH_FULL_YEAR_DISPLAY = new SimpleDateFormat("MMM yyyy");
         SHORT_MONTH_FULL_YEAR_DISPLAY.setTimeZone(UTC);
         SHORT_MONTH_DAY_DISPLAY = new SimpleDateFormat("MMM d");
