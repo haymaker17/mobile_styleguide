@@ -38,7 +38,6 @@ public abstract class PlatformTestSuite {
                 return helper;
             }
         };
-
         configProvider.onCreate();
         ShadowContentResolver.registerProvider(com.concur.mobile.platform.config.provider.Config.AUTHORITY,
             configProvider);
@@ -76,7 +75,7 @@ public abstract class PlatformTestSuite {
     /**
      * Initializes a test user in config.Db session table.
      */
-    private void initConfigLoginInfo() {
+    private static void initConfigLoginInfo() {
         //Init Session info for user
         Context context = PlatformTestApplication.getApplication();
         LoginResult loginResult = new LoginResult();
