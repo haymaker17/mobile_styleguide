@@ -148,7 +148,7 @@ public class CorporateTestSuite {
             ,RailSearchResultsFares.class
             ,ReceiptShare.class
             ,ReceiptShareStatus.class
-            ,ReceiptView.class
+            ,ExpenseItReceiptView.class
             ,Register.class
             ,RequestEntryActivity.class
             ,RequestHeaderActivity.class

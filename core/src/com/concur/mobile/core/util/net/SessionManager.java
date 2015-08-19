@@ -152,6 +152,11 @@ public class SessionManager {
                         + ".validateSessionId: session is expired or not set, re-establishing the session.");
 
                 boolean autoLogin = prefs.getBoolean(Const.PREF_AUTO_LOGIN, false);
+                boolean disableAutoLogin = prefs.getBoolean(Const.PREF_DISABLE_AUTO_LOGIN, false);
+
+                if(disableAutoLogin) {
+                    autoLogin = false;
+                }
 
                 // If auto-login is enabled and company sign-on is being used, then force autoLogin to 'false'.
                 // Company Sign-on auto-login is not currently supported.
@@ -307,8 +312,7 @@ public class SessionManager {
             Log.e("logUserWaitingTime : ", " total wait time is = 0");
         }
         // Statistics Notification
-        EventTracker.INSTANCE.trackTimings(Flurry.CATEGORY_WAIT_TIME, Flurry.ACTION_AUTO_LOGIN_WAIT,
-                Flurry.LABEL_WAIT_TIME, totalWaitTime);
+        //TODO not required event tracking right now. In future may be.
         ConcurCore.resetAutloLoginTimes();
     }
     /**
@@ -363,11 +367,15 @@ public class SessionManager {
                         loginResult.sessionId = null;
                         cleanup();
 
-                        // Analytics stuff.
-                        Map<String, String> params = new HashMap<String, String>();
-                        params.put("Type", Flurry.EVENT_REMOTE_WIPE);
-                        EventTracker.INSTANCE.track(Flurry.CATEGORY_SIGN_IN, Flurry.EVENT_NAME_FAILURE, params);
-
+                        if(replyListener == null) {
+                            // Analytics stuff.
+                            EventTracker.INSTANCE.eventTrack(Flurry.CATEGORY_SIGN_IN, Flurry.ACTION_SIGN_IN_FAIL_METHOD,
+                                    Flurry.LABEL_AUTO_LOGIN, null);
+                            EventTracker.INSTANCE.eventTrack(Flurry.CATEGORY_SIGN_IN, Flurry.ACTION_FAIL_CREDENTIAL_TYPE,
+                                    Flurry.LABEL_LOGIN_USING_PASSWORD, null);
+                            EventTracker.INSTANCE.eventTrack(Flurry.CATEGORY_SIGN_IN, Flurry.ACTION_FAIL_REASON,
+                                    Flurry.LABEL_SERVER_ERROR, null);
+                        }
                     }
                 } else {
 
@@ -390,13 +398,21 @@ public class SessionManager {
 
                     // Save the login response information.
                     Log.d(Const.LOG_TAG, CLS_TAG + ".validateSessionId: successfully created new session id.");
+                    if (replyListener == null) {
+                        EventTracker.INSTANCE.eventTrack(Flurry.CATEGORY_SIGN_IN, Flurry.ACTION_SIGN_IN_SUCCESS_METHOD,
+                                Flurry.LABEL_AUTO_LOGIN, null);
 
-                    // Flurry Notification
-                    Map<String, String> autoLoginParams = new HashMap<String, String>();
-                    autoLoginParams.put(Flurry.PARAM_NAME_TYPE, Flurry.PARAM_VALUE_AUTO_LOGIN);
-                    EventTracker.INSTANCE.track(Flurry.CATEGORY_SIGN_IN, Flurry.EVENT_NAME_AUTHENTICATION,
-                            autoLoginParams);
-
+                        if (signInMethod.equalsIgnoreCase(com.concur.mobile.platform.ui.common.util.Const.LOGIN_METHOD_SSO)) {
+                            EventTracker.INSTANCE.eventTrack(Flurry.CATEGORY_SIGN_IN, Flurry.ACTION_SUCCESS_CREDENTIAL_TYPE,
+                                    Flurry.LABEL_LOGIN_USING_SSO, null);
+                        } else if (signInMethod.equalsIgnoreCase(com.concur.mobile.platform.ui.common.util.Const.LOGIN_METHOD_MOBILE_PASSWORD)) {
+                            EventTracker.INSTANCE.eventTrack(Flurry.CATEGORY_SIGN_IN, Flurry.ACTION_SUCCESS_CREDENTIAL_TYPE,
+                                    Flurry.LABEL_LOGIN_USING_MOBILE_PASSWORD, null);
+                        } else {
+                            EventTracker.INSTANCE.eventTrack(Flurry.CATEGORY_SIGN_IN, Flurry.ACTION_SUCCESS_CREDENTIAL_TYPE,
+                                    Flurry.LABEL_LOGIN_USING_PASSWORD, null);
+                        }
+                    }
                     // Set the result information.
                     loginResult.sessionId = PlatformProperties.getSessionId();
 
@@ -477,6 +493,13 @@ public class SessionManager {
             // Invoke any other listeners.
             if (replyListener != null) {
                 replyListener.onFailure(resultData.getString("request.http.status.message"));
+                EventTracker.INSTANCE.eventTrack(Flurry.CATEGORY_SIGN_IN, Flurry.ACTION_SIGN_IN_FAIL_METHOD,
+                        Flurry.LABEL_AUTO_LOGIN, null);
+                EventTracker.INSTANCE.eventTrack(Flurry.CATEGORY_SIGN_IN, Flurry.ACTION_FAIL_CREDENTIAL_TYPE,
+                        Flurry.LABEL_LOGIN_USING_PASSWORD, null);
+                EventTracker.INSTANCE.eventTrack(Flurry.CATEGORY_SIGN_IN, Flurry.ACTION_FAIL_REASON,
+                        Flurry.LABEL_SERVER_ERROR, null);
+
             }
 
             return;

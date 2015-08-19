@@ -61,10 +61,13 @@ import com.concur.mobile.core.expense.report.service.AttendeeSearchReply;
 import com.concur.mobile.core.expense.report.service.ConditionalFieldAction;
 import com.concur.mobile.core.expense.report.service.ExtendedAttendeeSearchReply;
 import com.concur.mobile.core.expense.report.service.GetTaxFormReply;
-import com.concur.mobile.core.expense.ta.service.FixedAllowances;
-import com.concur.mobile.core.expense.ta.service.Itinerary;
-import com.concur.mobile.core.expense.ta.service.ItineraryRow;
-import com.concur.mobile.core.expense.ta.service.TaConfig;
+import com.concur.mobile.core.expense.travelallowance.FixedAllowances;
+import com.concur.mobile.core.expense.travelallowance.Itinerary;
+import com.concur.mobile.core.expense.travelallowance.ItineraryRow;
+import com.concur.mobile.core.expense.travelallowance.TaConfig;
+import com.concur.mobile.core.expense.travelallowance.controller.FixedTravelAllowanceController;
+import com.concur.mobile.core.expense.travelallowance.controller.TravelAllowanceConfigurationController;
+import com.concur.mobile.core.expense.travelallowance.controller.TravelAllowanceItineraryController;
 import com.concur.mobile.core.ipm.service.IpmReply;
 import com.concur.mobile.core.service.ConcurService;
 import com.concur.mobile.core.service.CorpSsoQueryReply;
@@ -132,6 +135,8 @@ import java.util.Map.Entry;
 import java.util.TimeZone;
 
 public abstract class ConcurCore extends MultiDexApplication {
+
+    public BaseAsyncResultReceiver autoLoginReceiver = new BaseAsyncResultReceiver(new Handler());
 
     // Maps between an activity class name and the list of currently running
     // AsyncTasks that were spawned while it was active.
@@ -302,6 +307,11 @@ public abstract class ConcurCore extends MultiDexApplication {
     protected Itinerary taItinerary;
     protected ItineraryRow taItineraryRow;
     protected TaConfig taConfig;
+
+    // Controllers for Allowance and Itinerary handling
+    private TravelAllowanceItineraryController taItineraryController;
+    private FixedTravelAllowanceController fixedTravelAllowanceController;
+    private TravelAllowanceConfigurationController taConfigController;
 
     // Trips for Approval
     protected List<TripToApprove> tripsToApprove;
@@ -1513,6 +1523,35 @@ public abstract class ConcurCore extends MultiDexApplication {
 
     public void setRailStationListLastRetrieved(Calendar stationsLastRetrieved) {
         this.railStationsLastRetrieved = stationsLastRetrieved;
+    }
+
+    public TravelAllowanceItineraryController getTaItineraryController() {
+        if (taItineraryController == null) {
+            taItineraryController = new TravelAllowanceItineraryController(this);
+        }
+        return taItineraryController;
+    }
+
+    /**
+     * Creates an instance of a {@link FixedTravelAllowanceController}
+     * @return The controller
+     */
+    public FixedTravelAllowanceController getFixedTravelAllowanceController() {
+        if (this.fixedTravelAllowanceController == null) {
+            this.fixedTravelAllowanceController = new FixedTravelAllowanceController(this);
+        }
+        return this.fixedTravelAllowanceController;
+    }
+
+    /**
+     * Creates an instance of a {@link TravelAllowanceConfigurationController}
+     * @return The controller
+     */
+    public TravelAllowanceConfigurationController getTAConfigController() {
+        if (this.taConfigController == null) {
+            this.taConfigController = new TravelAllowanceConfigurationController(this);
+        }
+        return this.taConfigController;
     }
 
     public TaConfig getTAConfig() {
@@ -3050,6 +3089,10 @@ public abstract class ConcurCore extends MultiDexApplication {
     // so that each app can get back to its own way of expiring.
     public abstract void expireLogin();
 
+
+    // called from Preferences during the login request fail
+    public abstract void expireLogin(boolean forceExpiration);
+
     /**
      * Executed when the "remote wipe" flag is sent down from a Login/Auto-Login request.
      */
@@ -3102,6 +3145,10 @@ public abstract class ConcurCore extends MultiDexApplication {
         if (requiredCustomFields == null)
             requiredCustomFields = Boolean.FALSE;
 
+        Boolean disableAutoLogin = (Boolean) responses.get(Const.LR_DISABLE_AUTO_LOGIN);
+        if (disableAutoLogin == null)
+            disableAutoLogin = Boolean.FALSE;
+
         Integer travelProfileStatus = (Integer) responses.get(Const.LR_TRAVEL_PROFILE_STATUS);
         Boolean hideReceiptStore = (Boolean) responses.get(Const.LR_SITE_SETTINGS_HIDE_RECEIPT_STORE);
         if (hideReceiptStore == null)
@@ -3139,6 +3186,10 @@ public abstract class ConcurCore extends MultiDexApplication {
         if (hasFixedTA == null)
             hasFixedTA = Boolean.FALSE;
 
+        Boolean hasTravelAllowanceFixed = (Boolean) responses.get(Const.LR_SITE_SETTINGS_MOBILE_HAS_TRAVEL_ALLOWANCE_FIXED);
+        if (hasTravelAllowanceFixed == null)
+            hasTravelAllowanceFixed = Boolean.FALSE;
+
         Boolean enableConditionalFieldEvaluation = (Boolean) responses
                 .get(Const.LR_SITE_SETTINGS_ENABLE_CONDITIONAL_FIELD_EVALUATION);
         if (enableConditionalFieldEvaluation == null)
@@ -3175,9 +3226,11 @@ public abstract class ConcurCore extends MultiDexApplication {
         PreferenceUtil.savePreference(prefs, Const.PREF_ENABLE_SPDY, enableSpdy);
 
         PreferenceUtil.savePreference(prefs, Const.PREF_REQUIRED_CUSTOM_FIELDS, requiredCustomFields);
+        PreferenceUtil.savePreference(prefs, Const.PREF_DISABLE_AUTO_LOGIN, disableAutoLogin);
         PreferenceUtil.savePreference(prefs, Const.PREF_TRAVEL_PROFILE_STATUS, travelProfileStatus);
 
         PreferenceUtil.savePreference(prefs, Const.PREF_HAS_FIXED_TA, hasFixedTA);
+        PreferenceUtil.savePreference(prefs, Const.PREF_HAS_TRAVEL_ALLOWANCE_FIXED, hasTravelAllowanceFixed);
         PreferenceUtil.savePreference(prefs, Const.PREF_ALLOW_CONDITIONAL_FIELD_EVALUATION,
                 enableConditionalFieldEvaluation);
 

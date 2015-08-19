@@ -39,7 +39,7 @@ public class RequestEntryDTO {
     @SerializedName("SegmentTypeCode") private String segmentTypeCode;
     @Expose @SerializedName("SegmentTypeID") private String segmentTypeId;
 
-    private Integer displayOrder = 0;
+    private Integer displayOrder = 1;
 
     // --- This is some horrible stuff required to post an entry...
     @Expose @SerializedName("RequestID") private String requestId;

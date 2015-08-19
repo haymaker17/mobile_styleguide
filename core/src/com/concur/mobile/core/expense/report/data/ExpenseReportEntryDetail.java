@@ -29,6 +29,7 @@ import com.concur.mobile.core.util.Const;
 import com.concur.mobile.core.util.FormatUtil;
 import com.concur.mobile.core.util.ViewUtil;
 
+
 /**
  * Models detailed expense report entry information.
  * 
@@ -74,6 +75,10 @@ public class ExpenseReportEntryDetail extends ExpenseReportEntry {
      * Contains a list of <code>ExpenseReportAttendee</code> objects representing entry level attendees.
      */
     private List<ExpenseReportAttendee> attendees;
+
+
+    
+
 
     /**
      * Gets whether this is a detail report entry.

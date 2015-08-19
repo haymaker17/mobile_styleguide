@@ -106,7 +106,7 @@ public class HotelSearchResultListItem extends ListItem implements Serializable 
             if (hotel.lowestRate != null) {
                 txtView.setText(FormatUtil
                         .formatAmountWithNoDecimals(hotel.lowestRate, context.getResources().getConfiguration().locale,
-                                hotel.currencyCode, true, false));
+                                hotel.currencyCode, true, true));
                 txtView.setTextAppearance(context, R.style.HotelPriceTextStyle);
             } else {
                 txtView.setText(R.string.view_rates);
@@ -163,12 +163,12 @@ public class HotelSearchResultListItem extends ListItem implements Serializable 
                 txtView.setTextAppearance(context, R.style.TravelPointsNegativeText);
                 txtView.setText(Format.localizeText(context, R.string.travel_points_can_be_redeemed, new Object[] {
                         FormatUtil.formatAmountWithNoDecimals(hotel.travelPointsForLowestRate,
-                                context.getResources().getConfiguration().locale, hotel.currencyCode, false, false) }));
+                                context.getResources().getConfiguration().locale, hotel.currencyCode, false, true) }));
             } else {
                 txtView.setTextAppearance(context, R.style.TravelPointsPositiveText);
                 txtView.setText(Format.localizeText(context, R.string.travel_points_can_be_earned, new Object[] {
                         FormatUtil.formatAmountWithNoDecimals(hotel.travelPointsForLowestRate,
-                                context.getResources().getConfiguration().locale, hotel.currencyCode, false, false) }));
+                                context.getResources().getConfiguration().locale, hotel.currencyCode, false, true) }));
             }
         }
 

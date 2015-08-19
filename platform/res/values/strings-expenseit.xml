@@ -28,8 +28,18 @@
 
     <string name="expenseit_details_label_uploaded">Uploaded</string>
     <string name="expenseit_details_label_processing_time">Processing Time</string>
+    <string name="expenseit_details_value_processing_time">Average</string>
 
-    <string name="expenseit_details_value_processing_time">Average %s</string>
+    <string name="expenseit_cancel_dialog_message">Cancelling analysis</string>
+    <string name="expenseit_replace_dialog_message">Replacing analysis</string>
+    <string name="expenseit_confirmation_message">Stop receipt analysis and create an expense manually?</string>
+    <string name="expenseit_finished_processing_title">Receipt analysis complete!</string>
+    <string name="expenseit_finished_processing_message">Your receipt has finished analysis and can be found in the list of Expenses.</string>
+    <string name="expenseit_service_unavailable">Service Unavailable!</string>
+    <string name="expenseit_unexpected_error">An unexpected error occurred. Please try again later.</string>
+
+    <string name="expenseit_stop_processing_button">Stop</string>
+    <string name="expenseit_replace_receipt_button">Replace</string>
     <!-- EXPENSEIT STRINGS END -->
 
 </resources>

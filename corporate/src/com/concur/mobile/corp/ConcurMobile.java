@@ -7,6 +7,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 
 import com.concur.breeze.BuildConfig;
+import com.concur.breeze.R;
 import com.concur.mobile.core.ConcurCore;
 import com.concur.mobile.core.config.RuntimeConfig;
 import com.concur.mobile.core.service.ConcurService;
@@ -56,8 +57,13 @@ public class ConcurMobile extends ConcurCore {
      */
 	@Override
 	public String getGATrackingId() {
-		return getString(com.concur.breeze.R.string.ga_trackingId);
-	}    
+        boolean isDebug = BuildConfig.DEBUG;
+        if(isDebug==Boolean.TRUE){
+            return getString(R.string.ga_trackingId_test);
+        }else{
+            return getString(R.string.ga_trackingId);
+        }
+	}
 
     /*
      * (non-Javadoc)
@@ -77,6 +83,15 @@ public class ConcurMobile extends ConcurCore {
     @Override
     public void expireLogin() {
         Home.expireLogin();
+    }
+
+    @Override
+    public void expireLogin(boolean forceExpiration) {
+        if(forceExpiration) {
+            Home.expireLogin(forceExpiration);
+        } else{
+            expireLogin();
+        }
     }
     
     @Override

@@ -12,12 +12,9 @@ import android.os.Handler;
 import android.os.Message;
 import android.text.TextUtils;
 import android.util.Log;
-import android.view.KeyEvent;
-import android.view.LayoutInflater;
-import android.view.View;
+import android.view.*;
 import android.view.View.OnClickListener;
 import android.view.ViewGroup.LayoutParams;
-import android.view.ViewStub;
 import android.widget.*;
 import com.concur.mobile.platform.common.SpinnerItem;
 import com.concur.mobile.platform.common.formfield.FormField;
@@ -88,8 +85,6 @@ public class HotelBookingActivity extends TravelBaseActivity implements SpinnerD
                     if (travelCustomFieldsConfig.errorOccuredWhileRetrieving) {
                         showToast("Could not retrieve custom fields.");
                     } else {
-
-                        travelCustomFieldsConfig = travelCustomFieldsConfig;
                         formFields = travelCustomFieldsConfig.formFields;
                         // to overcome the 'cannot perform this action inside of the onLoadFinished'
                         final int WHAT = 1;
@@ -415,8 +410,13 @@ public class HotelBookingActivity extends TravelBaseActivity implements SpinnerD
 
         // number of nights
         txtView = (TextView) findViewById(R.id.hotel_room_night);
-        txtView.setText(
-                Format.localizeText(this.getApplicationContext(), R.string.hotel_reserve_num_of_nights, numOfNights));
+        if(numOfNights == 1) {
+            txtView.setText(
+                    Format.localizeText(this.getApplicationContext(), R.string.hotel_reserve_num_of_night, numOfNights));
+        } else {
+            txtView.setText(
+                    Format.localizeText(this.getApplicationContext(), R.string.hotel_reserve_num_of_nights, numOfNights));
+        }
 
         // travel points earned
         if (hotelRate.travelPoints != null && hotelRate.travelPoints > 0) {
@@ -424,7 +424,7 @@ public class HotelBookingActivity extends TravelBaseActivity implements SpinnerD
             txtView = (TextView) findViewById(R.id.points_earned);
             txtView.setText(Format.localizeText(this, R.string.travel_points_can_be_earned_points, new Object[] {
                     FormatUtil.formatAmountWithNoDecimals(hotelRate.travelPoints * numOfNights,
-                            this.getResources().getConfiguration().locale, currCode, false, false) }));
+                            this.getResources().getConfiguration().locale, currCode, false, true) }));
         }
 
         // amount
@@ -531,6 +531,7 @@ public class HotelBookingActivity extends TravelBaseActivity implements SpinnerD
 
                 ImageView imgView = (ImageView) tableLayout.findViewById(R.id.travel_violation_icon);
                 LayoutParams imgViewLayoutParams = imgView.getLayoutParams();
+                int imgViewPaddingTop = imgView.getPaddingTop();
 
                 // sort the violations in descending enforcement level i.e. max enforcement level will be at top
                 ArrayList<HotelViolation> violationsToDisplay = new ArrayList<HotelViolation>();
@@ -564,6 +565,8 @@ public class HotelBookingActivity extends TravelBaseActivity implements SpinnerD
                         } else if (hotelViolation.displayOrder == 2) {
                             imgView.setImageResource(R.drawable.icon_warning_yellow);
                         } else {
+                            // the comment image needs to be pushed down a bit
+                            imgView.setPadding(0, imgViewPaddingTop+1, 0, 0);
                             imgView.setImageResource(R.drawable.icon_comment_sm_grey);
                         }
                         currViolationId = hotelViolation.violationValueId;
@@ -575,17 +578,22 @@ public class HotelBookingActivity extends TravelBaseActivity implements SpinnerD
 
                         TextView newTxtView = new TextView(this);
                         newTxtView.setLayoutParams(txtViewLayoutParams);
+                        newTxtView.setGravity(Gravity.TOP);
                         newTxtView.setPadding(txtView.getPaddingLeft(), txtView.getPaddingTop(),
                                 txtView.getPaddingRight(), txtView.getPaddingBottom());
                         newTxtView.setText(hotelViolation.message);
 
                         ImageView newImgView = new ImageView(this);
+                        newImgView.setPadding(0, imgViewPaddingTop, 0, 0);
                         newImgView.setLayoutParams(imgViewLayoutParams);
                         if (hotelViolation.displayOrder == 3) {
                             newImgView.setImageResource(R.drawable.icon_warning_red);
                         } else if (hotelViolation.displayOrder == 2) {
                             newImgView.setImageResource(R.drawable.icon_warning_yellow);
                         } else {
+                            // the comment image needs to be pushed down a bit
+                            newImgView.setPadding(0, imgViewPaddingTop+1, 0, 0);
+
                             newImgView.setImageResource(R.drawable.icon_comment_sm_grey);
                         }
 
@@ -829,7 +837,7 @@ public class HotelBookingActivity extends TravelBaseActivity implements SpinnerD
                 if (findViewById(R.id.hotel_room_violation_view) != null) {
                     findViewById(R.id.view_separator5).setVisibility(View.VISIBLE);
                 }
-                addTravelCustomFieldsView(false, false);
+                addTravelCustomFieldsView(false, false, update);
             }
         }
     }
@@ -841,9 +849,18 @@ public class HotelBookingActivity extends TravelBaseActivity implements SpinnerD
      * @param displayAtStart if <code>true</code> will result in the fields designated to be displayed at the start of the booking process
      *                       will be displayed; otherwise, fields at the end of the booking process will be displayed.
      */
-    protected void addTravelCustomFieldsView(boolean readOnly, boolean displayAtStart) {
+    protected void addTravelCustomFieldsView(boolean readOnly, boolean displayAtStart, boolean updateReq) {
         // Company has static custom fields, so display them via our nifty fragment!
         FragmentManager fragmentManager = getFragmentManager();
+
+        if (updateReq) {
+            Fragment fragment = getFragmentManager().findFragmentByTag(TRAVEL_CUSTOM_VIEW_FRAGMENT_TAG);
+            if (fragment != null) {
+                // remove the existing custom controls
+                getFragmentManager().beginTransaction().remove(fragment).commit();
+            }
+        }
+
         FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
         travelCustomFieldsFragment = new TravelCustomFieldsFragment();
         travelCustomFieldsFragment.readOnly = readOnly;
@@ -1048,7 +1065,7 @@ public class HotelBookingActivity extends TravelBaseActivity implements SpinnerD
         formFields = fields;
         travelCustomFieldsConfig.formFields = formFields;
         // Initialize the loader.
-        lm.initLoader(CUSTOM_FIELDS_LOADER_ID, null, customFieldsLoaderListener);
+        lm.restartLoader(CUSTOM_FIELDS_LOADER_ID, null, customFieldsLoaderListener);
     }
 
     private void showFailurePopUp() {
@@ -1099,7 +1116,7 @@ public class HotelBookingActivity extends TravelBaseActivity implements SpinnerD
         TextView txtView = (TextView) findViewById(R.id.hotel_room_rate);
         String formattedAmount = FormatUtil
                 .formatAmountWithNoDecimals(amount, this.getResources().getConfiguration().locale, currCode, true,
-                        false);
+                        true);
         txtView.setText(formattedAmount);
         txtView = (TextView) findViewById(R.id.footer_amount);
         txtView.setText(formattedAmount);

@@ -144,6 +144,8 @@ public abstract class AbstractExpenseActivity extends BaseActivity {
     protected static final int REQUEST_VIEW_ATTENDEES = 6;
 
     protected static final int REQUEST_VIEW_TA_ITINERARY = 7;
+    protected static final int REQUEST_VIEW_TA_ITINERARY_UPDATE = 8;
+    protected static final int REQUEST_VIEW_TA_ITINERARY_OVERVIEW = 9;
 
     private static final int NO_IMG_OR_REC_REQ = 0;
     private static final int IMG_REQ = 1;
@@ -1178,7 +1180,7 @@ public abstract class AbstractExpenseActivity extends BaseActivity {
             saveReceiptReceiver.setRequest(saveReceiptRequest);
             showDialog(getSavingReceiptDialogId());
         } else {
-            Log.e(Const.LOG_TAG, CLS_TAG + ".sendConnectPostImageReportRequest: unable to create 'SaveReceiptRequest'!");
+            Log.w(Const.LOG_TAG, CLS_TAG + ".sendConnectPostImageReportRequest: unable to create 'SaveReceiptRequest'!");
             unregisterSaveReceiptReceiver();
         }
 
@@ -4995,7 +4997,7 @@ public abstract class AbstractExpenseActivity extends BaseActivity {
                                     saveReceiptReceiver.setRequest(saveReceiptRequest);
                                     showDialog(getSavingReceiptDialogId());
                                 } else {
-                                    Log.e(Const.LOG_TAG, CLS_TAG
+                                    Log.w(Const.LOG_TAG, CLS_TAG
                                             + ".onActivityResult(TakePicture): unable to create 'SaveReceiptRequest'!");
                                     unregisterSaveReceiptReceiver();
                                 }
@@ -5049,7 +5051,7 @@ public abstract class AbstractExpenseActivity extends BaseActivity {
                                     saveReceiptReceiver.setRequest(saveReceiptRequest);
                                     showDialog(getSavingReceiptDialogId());
                                 } else {
-                                    Log.e(Const.LOG_TAG,
+                                    Log.w(Const.LOG_TAG,
                                             CLS_TAG
                                                     + ".onActivityResult(ChoosePicture): unable to create 'SaveReceiptRequest'!");
                                     unregisterSaveReceiptReceiver();

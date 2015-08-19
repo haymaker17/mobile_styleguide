@@ -5,12 +5,12 @@ import android.content.Intent;
 import android.os.Bundle;
 import com.concur.mobile.platform.ui.travel.R;
 import com.concur.mobile.platform.ui.travel.util.Const;
-import com.google.android.gms.maps.CameraUpdateFactory;
-import com.google.android.gms.maps.GoogleMap;
-import com.google.android.gms.maps.MapFragment;
-import com.google.android.gms.maps.OnMapReadyCallback;
-import com.google.android.gms.maps.model.LatLng;
-import com.google.android.gms.maps.model.MarkerOptions;
+import com.google.android.m4b.maps.CameraUpdateFactory;
+import com.google.android.m4b.maps.GoogleMap;
+import com.google.android.m4b.maps.MapFragment;
+import com.google.android.m4b.maps.OnMapReadyCallback;
+import com.google.android.m4b.maps.model.LatLng;
+import com.google.android.m4b.maps.model.MarkerOptions;
 
 /**
  * Activity to show all hotels in Google Maps

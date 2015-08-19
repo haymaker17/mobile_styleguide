@@ -244,7 +244,7 @@
 
         <!-- Expense related activities. -->
         <activity android:name="com.concur.mobile.core.activity.ViewImage"/>
-        <activity android:name="com.concur.mobile.core.activity.ReceiptView"/>
+        <activity android:name="com.concur.mobile.core.expense.charge.activity.ExpenseItReceiptView"/>
         <activity
             android:name="com.concur.mobile.core.expense.report.activity.ExpenseReportHeader"
             android:windowSoftInputMode="adjustResize"/>
@@ -322,6 +322,12 @@
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value="com.concur.mobile.core.expense.activity.TAItineraryActivity"/>
         </activity>
+        <activity android:name="com.concur.mobile.core.expense.travelallowance.activity.TravelAllowanceActivity"
+                  android:theme="@style/ConcurBaseTheme.NoActionBar"/>
+        <activity android:name="com.concur.mobile.core.expense.travelallowance.activity.FixedTravelAllowanceDetailsActivity"
+            android:theme="@style/ConcurBaseTheme.NoActionBar"/>
+        <activity android:name="com.concur.mobile.core.expense.travelallowance.activity.ItineraryUpdateActivity"
+            android:theme="@style/ConcurBaseTheme.NoActionBar"/>
         <activity android:name="com.concur.mobile.core.travel.air.activity.AirPriceToBeatSearch"/>
         <activity android:name="com.concur.mobile.core.travel.air.activity.AirPriceToBeatSearchResults"/>
         <activity android:name="com.concur.mobile.core.travel.hotel.activity.HotelPriceToBeatSearch"/>
@@ -557,8 +563,8 @@
         <!-- ================ -->
         <!-- Google Maps V2 -->
         <meta-data
-            android:name="com.google.android.maps.v2.API_KEY"
-            android:value="AIzaSyAWtEGpvM50-W7Oho_IsFmS-vmL0skZGek"/>
+            android:name="com.google.android.geo.API_KEY"
+            android:value="AIzaSyBQn7XgxFJTS5e5YP9R7Ls6wnLrdQIPTuY"/>
 
         <!-- ================== -->
         <!-- Begin Google DFP -->

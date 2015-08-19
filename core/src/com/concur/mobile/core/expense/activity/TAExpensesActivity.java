@@ -27,13 +27,13 @@ import com.concur.core.R;
 import com.concur.mobile.base.service.BaseAsyncResultReceiver;
 import com.concur.mobile.core.ConcurCore;
 import com.concur.mobile.core.activity.BaseActivity;
-import com.concur.mobile.core.expense.ta.service.AsyncReplyAdapter;
-import com.concur.mobile.core.expense.ta.service.FixedAllowanceAmounts;
-import com.concur.mobile.core.expense.ta.service.FixedAllowanceRow;
-import com.concur.mobile.core.expense.ta.service.FixedAllowances;
-import com.concur.mobile.core.expense.ta.service.GetTAFixedAllowancesRequest;
-import com.concur.mobile.core.expense.ta.service.GetUpdatedFixedAllowanceAmounts;
-import com.concur.mobile.core.expense.ta.service.UpdateFixedAllowances;
+import com.concur.mobile.core.expense.travelallowance.AsyncReplyAdapter;
+import com.concur.mobile.core.expense.travelallowance.FixedAllowanceAmounts;
+import com.concur.mobile.core.expense.travelallowance.FixedAllowanceRow;
+import com.concur.mobile.core.expense.travelallowance.FixedAllowances;
+import com.concur.mobile.core.expense.travelallowance.GetTAFixedAllowancesRequest;
+import com.concur.mobile.core.expense.travelallowance.GetUpdatedFixedAllowanceAmounts;
+//import com.concur.mobile.core.expense.travelallowance.service.UpdateFixedAllowances;
 import com.concur.mobile.core.service.CoreAsyncRequestTask;
 import com.concur.mobile.core.util.Const;
 import com.concur.mobile.core.util.FormatUtil;
@@ -50,7 +50,7 @@ public class TAExpensesActivity extends BaseActivity {
     private BaseAsyncResultReceiver asyncReceiver = new BaseAsyncResultReceiver(new Handler());
     private GetTAFixedAllowancesRequest getFixedAllowancesReq;
     private GetUpdatedFixedAllowanceAmounts getUpdatedAmountsReq;
-    private UpdateFixedAllowances updateFixedAllowancesReq;
+//    private UpdateFixedAllowances updateFixedAllowancesReq;
     
     private FixedAllowanceRowListItem rowBeingUpdated = null;
     
@@ -66,7 +66,7 @@ public class TAExpensesActivity extends BaseActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.ta_expenses_activity);
 
-        getSupportActionBar().setTitle(R.string.itin_expenses_and_adjustments);
+        getSupportActionBar().setTitle(R.string.ta_expenses_and_adjustments);
 
         if (savedInstanceState != null) {
             Log.i(CLS_TAG, "getting rptKey from savedInstanceState...");
@@ -115,19 +115,19 @@ public class TAExpensesActivity extends BaseActivity {
 		switch (id) {
 		case DIALOG_UPDATING_EXPENSES:
 	        dialog = new ProgressDialog(this);
-	        dialog.setMessage(getText(R.string.itin_updating_fixed));
+	        dialog.setMessage(getText(R.string.ta_updating_fixed));
 	        dialog.setIndeterminate(true);
 	        dialog.setCancelable(true);
 	        return dialog;
 		case DIALOG_FETCHING_ALLOWANCES:
 	        dialog = new ProgressDialog(this);
-	        dialog.setMessage(getText(R.string.itin_fetching_allowances));
+	        dialog.setMessage(getText(R.string.ta_fetching_allowances));
 	        dialog.setIndeterminate(true);
 	        dialog.setCancelable(true);
 	        return dialog;
 		case DIALOG_UPDATING_AMOUNTS:
 	        dialog = new ProgressDialog(this);
-	        dialog.setMessage(getText(R.string.itin_updating_amounts));
+	        dialog.setMessage(getText(R.string.ta_updating_amounts));
 	        dialog.setIndeterminate(true);
 	        dialog.setCancelable(true);
 	        return dialog;
@@ -180,10 +180,10 @@ public class TAExpensesActivity extends BaseActivity {
     }
 
     private void updateFixedAllowances() {
-        asyncReceiver.setListener(new UpdateFixedAllowancesListener());
-        updateFixedAllowancesReq = new UpdateFixedAllowances(getApplicationContext(), 1, asyncReceiver, rptKey, fixedAllowances);
-        showDialog(DIALOG_UPDATING_EXPENSES);
-        updateFixedAllowancesReq.execute();
+//        asyncReceiver.setListener(new UpdateFixedAllowancesListener());
+//        updateFixedAllowancesReq = new UpdateFixedAllowances(getApplicationContext(), 1, asyncReceiver, rptKey, fixedAllowances);
+//        showDialog(DIALOG_UPDATING_EXPENSES);
+//        updateFixedAllowancesReq.execute();
     }
 
     private void fetchUpdatedFixedAllowanceAmounts(FixedAllowanceRowListItem item) {
@@ -216,8 +216,8 @@ public class TAExpensesActivity extends BaseActivity {
         private boolean updating = false;
         private FixedAllowanceRow row;
         
-        String[] choicesCheckbox = new String[] { getString(R.string.itin_meal_NPR), getString(R.string.itin_meal_PRO) }; 
-        String[] choicesPicklist = new String[] { getString(R.string.itin_meal_NPR), getString(R.string.itin_meal_PRO), getString(R.string.itin_meal_TAX) };
+        String[] choicesCheckbox = new String[] { getString(R.string.ta_meal_NPR), getString(R.string.ta_meal_PRO) };
+        String[] choicesPicklist = new String[] { getString(R.string.ta_meal_NPR), getString(R.string.ta_meal_PRO), getString(R.string.ta_meal_TAX) };
         
         public FixedAllowanceRowListItem(FixedAllowanceRow row) {
             this.row = row;

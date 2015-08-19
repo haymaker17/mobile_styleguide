@@ -3,9 +3,6 @@
  */
 package com.concur.mobile.platform.expense.provider;
 
-import java.util.ArrayList;
-import java.util.List;
-
 import android.annotation.SuppressLint;
 import android.content.ContentResolver;
 import android.content.Context;
@@ -19,8 +16,12 @@ import com.concur.mobile.platform.expense.list.PersonalCard;
 import com.concur.mobile.platform.expense.list.dao.PersonalCardDAO;
 import com.concur.mobile.platform.expense.smartexpense.SmartExpense;
 import com.concur.mobile.platform.expense.smartexpense.SmartPersonalCard;
+import com.concur.mobile.platform.expenseit.ExpenseItReceipt;
 import com.concur.mobile.platform.provider.PlatformContentProvider;
 import com.concur.mobile.platform.util.Const;
+
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * Provides a set of utility methods for accessing the Expense content provider.
@@ -72,6 +73,35 @@ public class ExpenseUtil {
         }
 
         return smartExpenses;
+    }
+
+    public static ExpenseItReceipt getExpenseIt(Context context, String userId, long expenseItId) {
+
+        ContentResolver resolver = context.getContentResolver();
+        Cursor cursor = null;
+        try {
+            StringBuilder strBldr = new StringBuilder();
+            strBldr.append(Expense.SmartExpenseColumns.USER_ID);
+            strBldr.append(" = ? AND ");
+            strBldr.append(Expense.ExpenseItReceiptColumns.ID);
+            strBldr.append(" = ?");
+            String where = strBldr.toString();
+            String[] whereArgs = { userId, String.valueOf(expenseItId) };
+
+            cursor = resolver.query(Expense.ExpenseItReceiptColumns.CONTENT_URI, null, where,
+                    whereArgs, Expense.ExpenseItReceiptColumns.DEFAULT_SORT_ORDER);
+            if (cursor != null) {
+                if (cursor.moveToFirst()) {
+                    ExpenseItReceipt expenseItReceipt = new ExpenseItReceipt(context, cursor);
+                    return expenseItReceipt;
+                }
+            }
+        } finally {
+            if (cursor != null) {
+                cursor.close();
+            }
+        }
+        return null;
     }
 
     /**

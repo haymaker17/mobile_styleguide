@@ -1829,4 +1829,23 @@
   <string name="segment_phone">电话</string>
   <string name="hotel_search_criteria">搜索条件:在 %%3%% 的 %%1%% %%2%% 范围内</string>
   <string name="td_overlay_capture_new_receipt">获取\n新收据</string>
+
+  <!--new texts -->
+  <string name="itin_adjustments">"调整"</string>
+  <string name="itin_allowances">"补助"</string>
+  <string name="itin_border_crossing">"过境"</string>
+  <string name="itin_crossed_border">"已过境"</string>
+  <string name="itin_daily_allowance">"每日补助"</string>
+  <string name="itin_departed">"已出发"</string>
+  <string name="itin_excluded">"已排除"</string>
+  <string name="itin_expense_details">"费用详细信息"</string>
+  <string name="itin_itineraries">"行程计划"</string>
+  <string name="itin_lodging">"住宿费"</string>
+  <string name="itin_meals">"餐费"</string>
+  <string name="itin_more_information">"更多"</string>
+  <string name="itin_meal_not_provided">"未提供"</string>
+  <string name="itin_overnight">"过夜"</string>
+  <string name="itin_total_allowance">"总补助"</string>
+  <string name="itin_travel_allowances">"差旅补助"</string>
+
 </resources>

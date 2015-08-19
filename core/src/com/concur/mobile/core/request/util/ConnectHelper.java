@@ -41,8 +41,8 @@ public class ConnectHelper {
         DETAIL(null),
         SUBMIT("submit"),
         RECALL("recall"),
-        CREATE(null),
-        UPDATE(null);
+        CREATE_AND_SUBMIT(null),
+        UPDATE_AND_SUBMIT(null);
 
         public String actionValue;
 
@@ -132,11 +132,11 @@ public class ConnectHelper {
             break;
 
         //post output status (example) "/api/v3.0/travelrequest/requests"
-        case CREATE:
+        case CREATE_AND_SUBMIT:
             break;
 
         //post output status (example) "/api/v3.0/travelrequest/requests/{id}"
-        case UPDATE:
+        case UPDATE_AND_SUBMIT:
             if (id != null && id.length() > 0) {
                 serviceUri.append("/" + id);
             } else {

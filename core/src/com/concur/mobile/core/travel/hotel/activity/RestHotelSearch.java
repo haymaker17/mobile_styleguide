@@ -28,8 +28,9 @@ import com.concur.mobile.core.data.UserConfig;
 import com.concur.mobile.core.travel.activity.LocationSearchV1;
 import com.concur.mobile.core.travel.data.CompanyLocation;
 import com.concur.mobile.core.travel.data.LocationChoice;
-import com.concur.mobile.core.util.BookingDateUtil;
-import com.concur.mobile.core.util.FormatUtil;
+import com.concur.mobile.core.util.*;
+import com.concur.mobile.platform.authentication.EmailLookUpRequestTask;
+import com.concur.mobile.platform.service.MWSPlatformManager;
 import com.concur.mobile.platform.service.PlatformAsyncTaskLoader;
 import com.concur.mobile.platform.ui.common.view.SearchListFormFieldView;
 import com.concur.mobile.platform.ui.common.widget.CalendarPicker;
@@ -44,6 +45,7 @@ import com.concur.mobile.platform.ui.travel.loader.TravelCustomFieldsLoader;
 import com.concur.mobile.platform.ui.travel.loader.TravelCustomFieldsUpdateLoader;
 import com.concur.mobile.platform.ui.travel.util.Const;
 import com.concur.mobile.platform.util.Format;
+import com.concur.platform.PlatformProperties;
 
 import java.util.ArrayList;
 import java.util.Calendar;
@@ -55,6 +57,7 @@ import java.util.TimeZone;
  *
  * @author Tejoa
  */
+@EventTracker.EventTrackerClassName(getClassName = "Travel-Hotel-Search-Criteria")
 public class RestHotelSearch extends TravelBaseActivity
         implements LoaderManager.LoaderCallbacks<TravelCustomFieldsConfig>,
         TravelCustomFieldsFragment.TravelCustomFieldsFragmentCallBackListener {
@@ -526,7 +529,6 @@ public class RestHotelSearch extends TravelBaseActivity
             @Override public void onClick(View v) {
                 if (!ConcurCore.isConnected()) {
                     showOfflineDialog();
-
                 } else {
                     // Determine if there are any company locations, if so, then
                     // pass that flag into
@@ -617,23 +619,10 @@ public class RestHotelSearch extends TravelBaseActivity
 
         }
 
-        // check for session expire
+        // check for session expire or re-authenticated
         if (resultCode != RESULT_OK) {
             setResult(resultCode, data);
-
-            ConcurCore app = (ConcurCore) ConcurCore.getContext();
-            if (resultCode == PlatformAsyncTaskLoader.RE_AUTHENTICATED) {
-                // will start Home activity and finish this activity
-                app.launchHome(this);
-            } else if (resultCode == PlatformAsyncTaskLoader.SESSION_EXPIRED) {
-                // If we have no session at this point then auto-login was
-                // unsuccessful or not allowed.
-                // Bail out and throw them back to login
-                // Punt following line.
-                app.expireLogin();
-
-                finish();
-            }
+            doLaunchHomeOrExpiryLogin(resultCode);
 
         }
     }
@@ -653,16 +642,14 @@ public class RestHotelSearch extends TravelBaseActivity
         // Set the check-in date.
         TextView txtView = (TextView) checkInDateView.findViewById(R.id.field_value);
         if (txtView != null) {
-            txtView.setText(
-                    Format.safeFormatCalendar(FormatUtil.SHORT_WEEKDAY_MONTH_DAY_FULL_YEAR_DISPLAY, checkInDate));
+            txtView.setText(Format.safeFormatCalendar(FormatUtil.SHORT_DAY_DISPLAY, checkInDate));
         } else {
             Log.e(Const.LOG_TAG, CLS_TAG + ".updateDateTimeButtons: unable to locate check-in field value!");
         }
         // Set the check-out date.
         txtView = (TextView) checkOutDateView.findViewById(R.id.field_value);
         if (txtView != null) {
-            txtView.setText(
-                    Format.safeFormatCalendar(FormatUtil.SHORT_WEEKDAY_MONTH_DAY_FULL_YEAR_DISPLAY, checkOutDate));
+            txtView.setText(Format.safeFormatCalendar(FormatUtil.SHORT_DAY_DISPLAY, checkOutDate));
         } else {
             Log.e(Const.LOG_TAG, CLS_TAG + ".updateDateTimeButtons: unable to locate check-out field value!");
         }
@@ -830,6 +817,17 @@ public class RestHotelSearch extends TravelBaseActivity
         }
         intent.putExtra("searchNearMe", searchNearMe);
 
+        String eventLabelSearchLocation = Flurry.EVENT_LABEL_TRAVEL_SEARCH_OTHER;
+        if(searchNearMe) {
+            eventLabelSearchLocation = Flurry.EVENT_LABEL_TRAVEL_SEARCH_CURRENT_LOCATION;
+        } else if(currentLocation instanceof CompanyLocation) {
+            eventLabelSearchLocation = Flurry.EVENT_LABEL_TRAVEL_SEARCH_OFFICE_LOCATION;
+        }
+
+        Log.d(Const.LOG_TAG, CLS_TAG + "*********************** EventTracker - " + Flurry.EVENT_CATEGORY_TRAVEL_HOTEL + " - " + Flurry.EVENT_ACTION_TRAVEL_SEARCH_INITIATED + " - " + eventLabelSearchLocation);
+        EventTracker.INSTANCE.eventTrack(Flurry.EVENT_CATEGORY_TRAVEL_HOTEL, Flurry.EVENT_ACTION_TRAVEL_SEARCH_INITIATED,
+                eventLabelSearchLocation);
+
         startActivityForResult(intent, Const.REQUEST_CODE_BOOK_HOTEL);
     }
 
@@ -947,7 +945,7 @@ public class RestHotelSearch extends TravelBaseActivity
         hideProgressBar();
 
         if (asyncLoader.result == asyncLoader.SESSION_EXPIRED || asyncLoader.result == asyncLoader.RE_AUTHENTICATED) {
-            sessionExpired(asyncLoader.result);
+            doLaunchHomeOrExpiryLogin(asyncLoader.result);
         } else {
 
             if (travelCustomFieldsConfig == null) {
@@ -1055,4 +1053,38 @@ public class RestHotelSearch extends TravelBaseActivity
         }
 
     }
+
+    private void doLaunchHomeOrExpiryLogin(int resultCode) {
+        ConcurCore app = (ConcurCore) ConcurCore.getContext();
+        if (resultCode == PlatformAsyncTaskLoader.RE_AUTHENTICATED) {
+            // will start Home activity and finish this activity
+
+            // below is required to update the latest information of SessionInfo and UserInfo via platform async loaders. this will support autologin from SessionManager in Core library
+            // retrieve login information from Platformmanager and update it in the UserAndSessionInfoUtil
+            MWSPlatformManager platformManager = (MWSPlatformManager) PlatformProperties.getPlatformSessionManager();
+
+            Bundle emailBundle = new Bundle();
+            emailBundle.putString(EmailLookUpRequestTask.EXTRA_LOGIN_ID_KEY, platformManager.getLoginId());
+            emailBundle.putString(EmailLookUpRequestTask.EXTRA_SERVER_URL_KEY, platformManager.getServerURL());
+            emailBundle
+                    .putString(EmailLookUpRequestTask.EXTRA_SIGN_IN_METHOD_KEY, platformManager.getAuthType().name());
+            emailBundle.putString(EmailLookUpRequestTask.EXTRA_SSO_URL_KEY, platformManager.getSsoURL());
+            emailBundle.putString(EmailLookUpRequestTask.EXTRA_EMAIL_KEY, platformManager.getEmail());
+
+            UserAndSessionInfoUtil.updateUserAndSessionInfo(this, emailBundle);
+
+            Toast.makeText(this, R.string.login_expired_auto_sign_in_success, Toast.LENGTH_SHORT).show();
+
+            app.launchHome(this);
+        } else if (resultCode == PlatformAsyncTaskLoader.SESSION_EXPIRED) {
+            // If we have no session at this point then auto-login was
+            // unsuccessful or not allowed.
+            // Bail out and throw them back to login
+            // Punt following line.
+            app.expireLogin(true);
+
+            finish();
+        }
+    }
+
 }

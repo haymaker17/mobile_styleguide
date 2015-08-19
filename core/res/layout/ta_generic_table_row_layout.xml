@@ -1,0 +1,115 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+
+    <View
+        android:id="@+id/v_divider_top"
+        style="@style/TAListRowDivider"
+        android:layout_width="wrap_content"
+        android:visibility="gone"/>
+
+    <RelativeLayout
+        android:id="@+id/list_field_container"
+        style="@style/TARow"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/v_divider_top">
+
+        <TextView
+            android:id="@+id/tv_title"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentLeft="true"
+            android:layout_alignParentStart="true"
+            android:text="Large Text"
+            android:textAppearance="@style/TATitle"/>
+
+        <ImageView
+            android:id="@+id/iv_icon"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentEnd="true"
+            android:layout_alignParentRight="true"
+            android:visibility="gone"/>
+
+        <TextView
+            android:id="@+id/tv_value"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentEnd="true"
+            android:layout_alignParentRight="true"
+            android:text="Large Text"
+            android:textAppearance="@style/TAValue"/>
+
+        <TextView
+            android:id="@+id/tv_subtitle_1"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentLeft="true"
+            android:layout_below="@+id/tv_title"
+            android:singleLine="true"
+            android:ellipsize="end"
+            android:text="Small Text"
+            android:textAppearance="@style/TASubTitle"/>
+
+        <TextView
+            android:id="@+id/tv_subtitle_2"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentLeft="true"
+            android:layout_below="@+id/tv_subtitle_1"
+            android:singleLine="true"
+            android:ellipsize="end"
+            android:text="Small Text"
+            android:textAppearance="@style/TASubTitle"/>
+
+        <LinearLayout
+            android:id="@+id/vg_subtitle_ellipsized"
+            android:visibility="gone"
+            android:orientation="horizontal"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/tv_subtitle_2" >
+
+        <TextView
+            android:id="@+id/tv_subtitle_ellipsized"
+            android:singleLine="true"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_alignParentLeft="true"
+            android:ellipsize="end"
+            android:text="Small Text"
+            android:layout_weight="0.4"
+            android:textAppearance="@style/TASubTitle" />
+
+        <TextView
+            android:id="@+id/tv_subtitle_more"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_alignParentLeft="true"
+            android:layout_weight="0.6"
+            android:textAppearance="@style/TASubTitleMoreLabel"
+            android:text="@string/general_more_information"
+            android:layout_marginLeft="5dp" />
+        </LinearLayout>
+
+    </RelativeLayout>
+
+    <View
+        android:id="@+id/v_divider_bottom"
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:background="#a7b6bf"
+        android:visibility="gone"
+        android:layout_below="@+id/list_field_container"/>
+
+    <!--<include-->
+        <!--android:layout_width="wrap_content"-->
+        <!--android:id="@+id/v_divider_bottom"-->
+        <!--android:layout_height="wrap_content"-->
+        <!--layout="@layout/generic_divider_bold"-->
+        <!--android:visibility="gone"-->
+        <!--android:layout_below="@+id/list_field_container" />-->
+
+</RelativeLayout>

@@ -75,6 +75,7 @@ import com.concur.mobile.core.expense.report.service.SaveReportEntryRequest;
 import com.concur.mobile.core.expense.report.service.TaxForm;
 import com.concur.mobile.core.expense.service.GetExpenseTypesRequest;
 import com.concur.mobile.core.expense.service.SearchListRequest;
+import com.concur.mobile.core.expense.travelallowance.expensedetails.TAFieldFactory;
 import com.concur.mobile.core.service.ConcurService;
 import com.concur.mobile.core.util.Const;
 import com.concur.mobile.core.util.ExpTypeMruAsyncTask;
@@ -1375,6 +1376,9 @@ public class ExpenseEntry extends AbstractExpenseActivity {
                 // Lockdown read-only fields.
                 lockDownReadOnlyFields();
 
+                // Set the travel allowance fields
+                populateAllowance();
+
                 // Set the expense details.
                 populateFormFields();
 
@@ -1830,6 +1834,39 @@ public class ExpenseEntry extends AbstractExpenseActivity {
         } else {
             Log.e(Const.LOG_TAG, CLS_TAG
                     + ".populateExpenseEntryTitleHeader: unable to locate expense entry title header view!");
+        }
+    }
+
+    /**
+     * To populate the travel allowance fields of a daily allowance expense.
+     */
+    protected void populateAllowance() {
+        ViewGroup viewGroup = (ViewGroup) findViewById(R.id.travel_allowance_field_list);
+
+        if (viewGroup != null) {
+            if (expRepEntDet.expKey.equals("FXMLS") || expRepEntDet.expKey.equals("FXLDG")) {
+                ConcurCore app = (ConcurCore) this.getApplication();
+                TAFieldFactory fieldFactory = new TAFieldFactory(this, expRepEntDet, app.getFixedTravelAllowanceController());
+                List<FormFieldView> frmFldViews = populateViewWithFormFields(viewGroup,
+                        fieldFactory.getFormFields(), null);
+                if (frmFldViews != null && frmFldViews.size() > 0) {
+                    if (frmFldViewListener != null) {
+                        frmFldViewListener.setFormFieldViews(frmFldViews);
+                    } else {
+                        Log.e(Const.LOG_TAG, CLS_TAG + ".populateAllowance: frmFldViewListener is null!");
+                    }
+                }
+            } else {
+                // Intention is to show the travel allowances only for daily allowance expenses.
+                View allowanceFields = findViewById(R.id.allowance_fields);
+                if (allowanceFields != null) {
+                    allowanceFields.setVisibility(View.GONE);
+                }
+                return;
+            }
+
+        } else {
+            Log.e(Const.LOG_TAG, CLS_TAG + ".populateAllowance: expense entry form field group not found!");
         }
     }
 

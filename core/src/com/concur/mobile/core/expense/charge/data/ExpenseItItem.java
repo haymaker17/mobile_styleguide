@@ -2,9 +2,7 @@ package com.concur.mobile.core.expense.charge.data;
 
 import android.graphics.Bitmap;
 
-import com.concur.mobile.platform.expenseit.ExpenseItParseCode;
-import com.concur.mobile.platform.expenseit.ExpenseItPostReceipt;
-import com.concur.mobile.platform.expenseit.dao.ExpenseItReceiptDAO;
+import com.concur.mobile.platform.expenseit.ExpenseItReceipt;
 
 import java.io.Serializable;
 import java.util.Calendar;
@@ -20,10 +18,14 @@ public class ExpenseItItem implements Serializable {
 
     private static final long serialVersionUID = -8493533688325626158L;
 
-    private ExpenseItReceiptDAO receipt;
+    private ExpenseItReceipt receipt;
 
-    public ExpenseItItem(ExpenseItReceiptDAO expItReceiptDAO) {
-        this.receipt = expItReceiptDAO;
+    public ExpenseItItem(ExpenseItReceipt expItReceipt) {
+        this.receipt = expItReceipt;
+    }
+
+    public ExpenseItReceipt getReceipt() {
+        return receipt;
     }
 
     /**
@@ -69,16 +71,6 @@ public class ExpenseItItem implements Serializable {
      */
     public String getErrorMessage() {
         return receipt.getErrorMessage();
-    }
-
-    /**
-     * Returns whether the item is in an error state or not.
-     *
-     * @return in error state?
-     */
-    public boolean isInErrorState() {
-        return ExpenseItParseCode.isInErrorState(receipt.getParsingStatusCode())
-                || getErrorCode() == ExpenseItPostReceipt.RUBICON_ERROR;
     }
 
     public Bitmap getImageData() {

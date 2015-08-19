@@ -19,11 +19,11 @@ import com.concur.mobile.platform.ui.common.view.ListItemAdapter;
 import com.concur.mobile.platform.ui.travel.R;
 import com.concur.mobile.platform.ui.travel.hotel.fragment.HotelChoiceDetailsFragment.HotelChoiceDetailsFragmentListener;
 import com.concur.mobile.platform.ui.travel.util.Const;
-import com.google.android.gms.maps.GoogleMap;
-import com.google.android.gms.maps.GoogleMapOptions;
-import com.google.android.gms.maps.MapFragment;
-import com.google.android.gms.maps.OnMapReadyCallback;
-import com.google.android.gms.maps.model.*;
+import com.google.android.m4b.maps.GoogleMap;
+import com.google.android.m4b.maps.GoogleMapOptions;
+import com.google.android.m4b.maps.MapFragment;
+import com.google.android.m4b.maps.OnMapReadyCallback;
+import com.google.android.m4b.maps.model.*;
 
 /**
  * Fragment for Hotel Details tab
@@ -64,18 +64,20 @@ public class HotelDetailsFragment extends PlatformFragmentV1 implements OnClickL
         // inflate the details fragment
         View mainView = inflater.inflate(R.layout.hotel_details_layout, container, false);
 
-        post = new LatLng(hotel.latitude, hotel.longitude);
+        if (hotel != null && hotel.latitude != null && hotel.longitude != null) {
+            post = new LatLng(hotel.latitude, hotel.longitude);
 
-        GoogleMapOptions options = new GoogleMapOptions().liteMode(true);
-        options.mapToolbarEnabled(false);
-        CameraPosition camera = new CameraPosition(post, 15, 0, 0);
-        options.camera(camera);
+            GoogleMapOptions options = new GoogleMapOptions().liteMode(true);
+            options.mapToolbarEnabled(false);
+            CameraPosition camera = new CameraPosition(post, 15, 0, 0);
+            options.camera(camera);
 
-        mapView = mainView.findViewById(R.id.map_view);
-        mapFragment = MapFragment.newInstance(options);
-        mapFragment.getMapAsync(this);
-        //
-        getFragmentManager().beginTransaction().replace(R.id.map_view, mapFragment).commit();
+            mapView = mainView.findViewById(R.id.map_view);
+            mapFragment = MapFragment.newInstance(options);
+            mapFragment.getMapAsync(this);
+            //
+            getFragmentManager().beginTransaction().replace(R.id.map_view, mapFragment).commit();
+        }
 
         //add hotel name
         TextView name = ((TextView) mainView.findViewById(R.id.hotel_name));

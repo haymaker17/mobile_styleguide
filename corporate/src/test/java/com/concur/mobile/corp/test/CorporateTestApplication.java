@@ -57,6 +57,11 @@ public class CorporateTestApplication extends ConcurCore {
     }
 
     @Override
+    public void expireLogin(boolean forceExpiration) {
+
+    }
+
+    @Override
     protected boolean bindProductService() {
         return bindService(new Intent(this, ConcurService.class), serviceConn, Context.BIND_AUTO_CREATE);
     }
