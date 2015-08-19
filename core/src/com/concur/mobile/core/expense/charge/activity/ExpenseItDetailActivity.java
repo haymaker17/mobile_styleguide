@@ -454,7 +454,7 @@ public class ExpenseItDetailActivity extends BaseActivity
         } else if (id == R.id.edit_expenseit_receipt) {
             menuAction = MENU_ACTION_EDIT;
 
-            // TODO: MOB-24906 (story) metrics: EventTracker.INSTANCE.eventTrack("Expense-ExpenseIt", "Edit Receipt/Expense");
+            EventTracker.INSTANCE.eventTrack("Expense-ExpenseIt", "Edit Receipt");
             showProgressDialog(R.string.expenseit_converting_dialog_message);
             doManualExpenseTransitionOperations();
         }
