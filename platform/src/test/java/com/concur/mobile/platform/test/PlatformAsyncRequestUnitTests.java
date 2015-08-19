@@ -120,6 +120,9 @@ public class PlatformAsyncRequestUnitTests extends PlatformAsyncRequestTestUtil 
         // Set the credentials.
         test.setCredentials(ppLoginId, ppLoginPinPassword);
 
+        // Init content provider authority
+        initContentProvidersAuthority();
+
         // Init content providers.
         initContentProviders();
 
@@ -129,6 +132,7 @@ public class PlatformAsyncRequestUnitTests extends PlatformAsyncRequestTestUtil 
         // Run the test.
         test.doTest();
     }
+
 
     /**
      * Performs a auto-login test. <br>

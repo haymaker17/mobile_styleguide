@@ -54,6 +54,11 @@ public class CorporateTestSuite {
     }
 
     @Test
+    public void testEmpty() {
+
+    }
+
+    //@Test
     public void testExpenseItListBackgroundRefresh() {
         if (!testActivities) {
             return;

@@ -31,7 +31,7 @@ public class CorpTestRunner extends RobolectricTestRunner {
             public List<ResourcePath> getIncludedResourcePaths() {
                 List<ResourcePath> paths = super.getIncludedResourcePaths();
                 paths.add(new ResourcePath(getRClass(), getPackageName(), Fs.fileFromPath("res"), getAssetsDirectory()));
-                paths.add(new ResourcePath(getRClass(), getPackageName(), Fs.fileFromPath("../corporate/build/intermediates/exploded-aar/com.android.support/appcompat-v7/21.0.3/res"), getAssetsDirectory()));
+                paths.add(new ResourcePath(getRClass(), getPackageName(), Fs.fileFromPath("../corporate/build/intermediates/exploded-aar/com.android.support/appcompat-v7/22.2.1/res"), getAssetsDirectory()));
                 return paths;
             }
         };
