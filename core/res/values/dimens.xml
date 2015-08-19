@@ -53,11 +53,11 @@
 
     <!-- test drive tour -->
     <dimen name="test_drive_tour_img_margin_top">25dip</dimen>
-    <dimen name="test_drive_tour_img_margin_bottom">30dip</dimen>
+    <dimen name="test_drive_tour_img_margin_bottom">40dip</dimen>
     <dimen name="test_drive_tour_text_margin_top">15dip</dimen>
     <dimen name="test_drive_tour_topic_margin">10dip</dimen>
     <dimen name="test_drive_tour_topic_img_text_margin_left">6dip</dimen>
-    <dimen name="test_drive_tour_max_image_size">175dp</dimen>
+    <dimen name="test_drive_tour_max_image_size">225dp</dimen>
 
     <!-- Home Tour Dimens -->
     <dimen name="home_tour_dot_size">6dp</dimen>

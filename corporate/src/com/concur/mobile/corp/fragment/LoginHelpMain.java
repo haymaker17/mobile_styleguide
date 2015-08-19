@@ -7,6 +7,7 @@ import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.ViewGroup;
 import android.widget.TextView;
+
 import com.concur.breeze.R;
 import com.concur.mobile.base.util.Format;
 import com.concur.mobile.core.dialog.DialogFragmentFactory;
@@ -42,5 +43,4 @@ public class LoginHelpMain extends BaseFragment {
 
         return root;
     }
-
 }

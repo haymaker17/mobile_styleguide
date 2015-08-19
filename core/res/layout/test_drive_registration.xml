@@ -126,7 +126,7 @@
 
                     <Button
                         android:id="@+id/test_drive_submit"
-                        style="@style/StandardBlueButton_Material"
+                        style="@style/Standard_Button_Green_Material"
                         android:layout_width="fill_parent"
                         android:layout_height="wrap_content"
                         android:layout_gravity="center"

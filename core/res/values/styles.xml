@@ -226,7 +226,7 @@
     </style>
 
     <style name="TourText" parent="@android:style/TextAppearance">
-        <item name="android:textColor">@android:color/white</item>
+        <item name="android:textColor">@android:color/black</item>
         <item name="android:textSize">18sp</item>
     </style>
 

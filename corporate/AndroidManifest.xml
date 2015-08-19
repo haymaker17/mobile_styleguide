@@ -478,7 +478,7 @@
         </activity>
         <activity
             android:name="com.concur.mobile.corp.activity.TestDriveTour"
-            android:theme="@style/ConcurBaseTheme.New">
+            android:theme="@style/ConcurTheme.NoActionBar">
         </activity>
         <activity
             android:name="com.concur.mobile.corp.activity.EmailLookupActivity"

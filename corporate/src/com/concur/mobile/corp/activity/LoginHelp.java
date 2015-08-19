@@ -8,15 +8,12 @@ import android.os.Handler;
 import android.support.v4.app.FragmentActivity;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
-import android.support.v4.view.MotionEventCompat;
 import android.util.Log;
-import android.view.MotionEvent;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.ViewConfiguration;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.EditText;
-import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.concur.breeze.R;
@@ -36,9 +33,6 @@ import com.concur.mobile.core.util.Flurry;
 import com.concur.mobile.corp.fragment.LoginHelpMain;
 import com.concur.mobile.platform.authentication.EmailLookUpRequestTask;
 import com.concur.mobile.platform.ui.common.util.ViewUtil;
-
-import java.util.HashMap;
-import java.util.Map;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -89,7 +83,6 @@ public class LoginHelp extends BaseActivity implements OnClickListener {
             }
         }
         initiateFooterLayout();
-        setDoubleFingerTap();
         // We have an email, shoot it to the fragment which will show it in a Readonly field.
         FragmentManager fm = getSupportFragmentManager();
         loginHelpFragment = (BaseFragment) fm.findFragmentByTag(FRAGMENT_LOGIN_HELP_MAIN);
@@ -294,76 +287,5 @@ public class LoginHelp extends BaseActivity implements OnClickListener {
             resetPasswordRequestReceiver = null;
         }
 
-    }
-
-    private void setDoubleFingerTap(){
-        ImageView concur_logo = (ImageView) findViewById(R.id.concurlogo);
-
-        setOnTouchListenerForView(concur_logo);
-    }
-
-    public void setOnTouchListenerForView(View view) {
-        ImageView img = (ImageView) view;
-        img.setOnTouchListener(new View.OnTouchListener() {
-            public boolean onTouch(View v, MotionEvent event) {
-                onTouchEvent(event);
-                return true;
-            }
-        });
-    }
-
-    @Override
-    public boolean onTouchEvent(MotionEvent event) {
-
-        int action = MotionEventCompat.getActionMasked(event);
-
-        switch (action) {
-            case (MotionEvent.ACTION_MOVE):
-                Log.d(CLS_TAG, "Action was MOVE");
-                return true;
-            case (MotionEvent.ACTION_CANCEL):
-                Log.d(CLS_TAG, "Action was CANCEL");
-                return true;
-            case (MotionEvent.ACTION_OUTSIDE):
-                Log.d(CLS_TAG, "Movement occurred outside bounds " +
-                        "of current screen element");
-                return true;
-            case MotionEvent.ACTION_DOWN:
-                if (mFirstDownTime == 0 || event.getEventTime() - mFirstDownTime > TIMEOUT)
-                    reset(event.getDownTime());
-                return true;
-            case MotionEvent.ACTION_POINTER_UP:
-                if (event.getPointerCount() == 2)
-                    mTwoFingerTapCount++;
-                else
-                    mFirstDownTime = 0;
-                return true;
-            case MotionEvent.ACTION_UP:
-                if (!mSeparateTouches)
-                    mSeparateTouches = true;
-                else if (mTwoFingerTapCount == 2 && event.getEventTime() - mFirstDownTime < TIMEOUT) {
-                    onTwoFingerDoubleTap();
-                    mFirstDownTime = 0;
-                }
-                return true;
-            default:
-                return super.onTouchEvent(event);
-        }
-    }
-
-    private void reset(long time) {
-        mFirstDownTime = time;
-        mSeparateTouches = false;
-        mTwoFingerTapCount = 0;
-    }
-
-    public void onTwoFingerDoubleTap() {
-        openSettings();
-    }
-
-    public void openSettings() {
-        Intent i = new Intent(this, Preferences.class);
-        i.putExtra(Preferences.OPEN_SOURCE_LIBRARY_CLASS, OpenSourceLicenseInfo.class);
-        startActivity(i);
     }
 }

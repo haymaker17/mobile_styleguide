@@ -1,8 +1,5 @@
 package com.concur.mobile.corp.activity;
 
-import java.util.HashMap;
-import java.util.Map;
-
 import android.app.Activity;
 import android.content.Context;
 import android.content.DialogInterface;
@@ -17,9 +14,6 @@ import android.view.GestureDetector;
 import android.view.GestureDetector.SimpleOnGestureListener;
 import android.view.KeyEvent;
 import android.view.LayoutInflater;
-import android.view.Menu;
-import android.view.MenuInflater;
-import android.view.MenuItem;
 import android.view.MotionEvent;
 import android.view.Surface;
 import android.view.View;
@@ -29,12 +23,16 @@ import android.widget.Button;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.ViewFlipper;
+
 import com.concur.breeze.R;
 import com.concur.mobile.core.activity.BaseActivity;
 import com.concur.mobile.core.util.Const;
 import com.concur.mobile.core.util.EventTracker;
 import com.concur.mobile.core.util.Flurry;
 import com.concur.mobile.corp.ConcurMobile;
+
+import java.util.HashMap;
+import java.util.Map;
 
 public class TestDriveTour extends BaseActivity {
 
@@ -48,6 +46,7 @@ public class TestDriveTour extends BaseActivity {
     protected long startTime = 0L;
     protected long upTime = 0L;
 
+    protected Button launch;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -57,11 +56,9 @@ public class TestDriveTour extends BaseActivity {
         // Tour is portrait only
         setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
 
-        initScreenHeader();
-
         final Resources resources = getResources();
-        activeColor = resources.getColor(R.color.tourPageMarkerActive);
-        inactiveColor = resources.getColor(R.color.tourPageMarkerInactive);
+        activeColor = resources.getColor(R.color.MaterialGreen);
+        inactiveColor = resources.getColor(R.color.MaterialHintLightGray);
 
         // Find the flipper and the page dots layout
         flipper = (ViewFlipper) findViewById(R.id.tourFlipper);
@@ -76,15 +73,6 @@ public class TestDriveTour extends BaseActivity {
         flipper.addView(page, LayoutParams.MATCH_PARENT, LayoutParams.MATCH_PARENT);
         page = infl.inflate(R.layout.test_drive_tour_page_2, null);
 
-        // on-click listener of launch button
-        Button launch = (Button) page.findViewById(R.id.td_tour_launch);
-        launch.setOnClickListener(new View.OnClickListener() {
-
-            public void onClick(View v) {
-                gotoHome(false);
-            }
-        });
-
         flipper.addView(page, LayoutParams.MATCH_PARENT, LayoutParams.MATCH_PARENT);
 
         // Setup the gesture listener
@@ -94,6 +82,41 @@ public class TestDriveTour extends BaseActivity {
         if (savedInstanceState != null) {
             upTime = savedInstanceState.getLong(Const.ACTIVITY_STATE_UPTIME, 0L);
         }
+
+        // on-click listener of launch button
+        launch= (Button) findViewById(R.id.test_drive_continue);
+        launch.setText(getString(R.string.next));
+        launch.setOnClickListener(new View.OnClickListener() {
+
+            public void onClick(View v) {
+                flipper.showNext();
+                showContinue();
+            }
+        });
+    }
+
+    //Show continue button
+    private void showContinue(){
+        launch.setText(getString(R.string.test_drive_tour_welcome_pg2_launch));
+        launch.setOnClickListener(new View.OnClickListener() {
+
+            public void onClick(View v) {
+                gotoHome(false);
+            }
+        });
+    }
+
+    //Show next button
+    private void showNext(){
+        launch= (Button) findViewById(R.id.test_drive_continue);
+        launch.setText(getString(R.string.next));
+        launch.setOnClickListener(new View.OnClickListener() {
+
+            public void onClick(View v) {
+                flipper.showNext();
+                showContinue();
+            }
+        });
     }
 
     @Override
@@ -151,10 +174,6 @@ public class TestDriveTour extends BaseActivity {
 
     }
 
-    protected void initScreenHeader() {
-        getSupportActionBar().setTitle(R.string.test_drive_title);
-    }
-
     protected class MultiViewGestureListener extends SimpleOnGestureListener {
 
         @Override
@@ -166,8 +185,8 @@ public class TestDriveTour extends BaseActivity {
                 if (currentChild < flipper.getChildCount() - 1) {
                     flipper.setInAnimation(TestDriveTour.this, R.anim.slide_in_right);
                     flipper.setOutAnimation(TestDriveTour.this, R.anim.slide_out_left);
+                    showContinue();
                     flipper.showNext();
-
                     pageMarkers.getChildAt(currentChild).setBackgroundColor(inactiveColor);
                     pageMarkers.getChildAt(currentChild + 1).setBackgroundColor(activeColor);
                 }
@@ -176,8 +195,8 @@ public class TestDriveTour extends BaseActivity {
                 if (currentChild > 0) {
                     flipper.setInAnimation(TestDriveTour.this, R.anim.slide_in_left);
                     flipper.setOutAnimation(TestDriveTour.this, R.anim.slide_out_right);
+                    showNext();
                     flipper.showPrevious();
-
                     pageMarkers.getChildAt(currentChild).setBackgroundColor(inactiveColor);
                     pageMarkers.getChildAt(currentChild - 1).setBackgroundColor(activeColor);
                 }
@@ -186,27 +205,6 @@ public class TestDriveTour extends BaseActivity {
             return true;
         }
 
-    }
-
-    @Override
-    public boolean onCreateOptionsMenu(Menu menu) {
-        MenuInflater inflater = getMenuInflater();
-        inflater.inflate(R.menu.test_drive, menu);
-        return true;
-    }
-
-    @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
-        switch (item.getItemId()) {
-
-        case R.id.menuSkip: {
-            gotoHome(true);
-            break;
-
-        }
-
-        }
-        return super.onOptionsItemSelected(item);
     }
 
     /**
@@ -234,7 +232,7 @@ public class TestDriveTour extends BaseActivity {
     @Override
     public boolean onKeyDown(int keyCode, KeyEvent event) {
         if (keyCode == KeyEvent.KEYCODE_BACK) {
-            gotoHome(true);
+
             return true;
         }
         return super.onKeyDown(keyCode, event);

@@ -55,7 +55,7 @@ import java.util.HashMap;
 import java.util.Locale;
 import java.util.Map;
 
-@EventTracker.EventTrackerClassName(getClassName = "Email Lookup")
+@EventTracker.EventTrackerClassName(getClassName = Flurry.SCREEN_NAME_EMAIL_PASSWORD)
 public class EmailPasswordLookupActivity extends BaseActivity implements IProgressBarListener, EmailPasswordLookupFragment.EmailLookupCallbacks, NewLoginPasswordFragment.LoginPasswordCallbacks {
 
     /**
@@ -71,7 +71,7 @@ public class EmailPasswordLookupActivity extends BaseActivity implements IProgre
 
     public static final int TEST_DRIVE_REQ_CODE = 3;
 
-    public static int noOfLoginAttempts=0;
+    public static int noOfLoginAttempts = 0;
 
     private static final String FRAGMENT_EMAIL_LOOKUP = "FRAGMENT_EMAIL_LOOKUP";
     private static final String FRAGMENT_LOGIN_PASSWORD = "FRAGMENT_LOGIN_PASSWORD";
@@ -225,15 +225,15 @@ public class EmailPasswordLookupActivity extends BaseActivity implements IProgre
                     if (autoLoginRequestTask != null) {
                         autoLoginRequestTask.cancel(true);
                     }
-               }
-           });
+                }
+            });
         }
         progressDialog.show(getSupportFragmentManager(), TAG_LOGIN_WAIT_DIALOG);
         progressbarVisible = true;
 
     }
 
-    private void setAutoRequestReceiver(){
+    private void setAutoRequestReceiver() {
         autoLoginReceiver = new BaseAsyncResultReceiver(new Handler());
         autoLoginReceiver.setListener(new BaseAsyncRequestTask.AsyncReplyListener() {
 
@@ -288,7 +288,7 @@ public class EmailPasswordLookupActivity extends BaseActivity implements IProgre
                 Preferences.setTestDriveSigninTryAgainCount(0);
 
                 //reset attempts
-                noOfLoginAttempts=0;
+                noOfLoginAttempts = 0;
             }
 
             /*
@@ -298,14 +298,14 @@ public class EmailPasswordLookupActivity extends BaseActivity implements IProgre
              */
             public void onRequestFail(Bundle resultData) {
                 noOfLoginAttempts++;
-                if(noOfLoginAttempts>2){
-                    loginPasswordFragment.removeFragment();
-                    noOfLoginAttempts=0;
-                    return;
-                }
                 // close dialog
                 if (progressDialog != null) {
                     progressDialog.dismiss();
+                }
+                if (noOfLoginAttempts > 2) {
+                    loginPasswordFragment.removeFragment();
+                    noOfLoginAttempts = 0;
+                    return;
                 }
 
                 // MOB-22674 - Show error dialog on failure.
@@ -333,6 +333,7 @@ public class EmailPasswordLookupActivity extends BaseActivity implements IProgre
 
         });
     }
+
     public void hideProgressBar() {
         //View v = findViewById(R.id.progress_mask);
         //RelativeLayout progressBar = (RelativeLayout) v;
@@ -453,7 +454,7 @@ public class EmailPasswordLookupActivity extends BaseActivity implements IProgre
     private void startLoginFragment(Bundle emailLookupBundle) {
         FragmentManager fm = getSupportFragmentManager();
         FragmentTransaction ft = fm.beginTransaction();
-        loginPasswordFragment= (NewLoginPasswordFragment)fm.findFragmentByTag(FRAGMENT_LOGIN_PASSWORD);
+        loginPasswordFragment = (NewLoginPasswordFragment) fm.findFragmentByTag(FRAGMENT_LOGIN_PASSWORD);
         if (loginPasswordFragment == null) {
             loginPasswordFragment = new NewLoginPasswordFragment();
         }
@@ -646,10 +647,13 @@ public class EmailPasswordLookupActivity extends BaseActivity implements IProgre
      */
     public void onLoginRequestFail(Bundle resultData) {
         noOfLoginAttempts++;
-        if(noOfLoginAttempts>2){
+        if (progressDialog != null) {
+            progressDialog.dismiss();
+        }
+        if (noOfLoginAttempts > 2) {
             loginPasswordFragment.removeFragment();
-            noOfLoginAttempts=0;
-        }else{
+            noOfLoginAttempts = 0;
+        } else {
             if (loginPasswordFragment.isDetached()) {
                 return;
             }
@@ -657,9 +661,9 @@ public class EmailPasswordLookupActivity extends BaseActivity implements IProgre
             // Record the number of times the user tries to sign in.
             Preferences.incrementTestDriveSigninTryAgainCount();
 
-            if (progressDialog != null) {
-                progressDialog.dismiss();
-            }
+//            if (progressDialog != null) {
+//                progressDialog.dismiss();
+//            }
 
             if (resultData != null && resultData.getBoolean(LoginResponseKeys.REMOTE_WIPE_KEY)) {
                 remoteWipe();
@@ -839,16 +843,24 @@ public class EmailPasswordLookupActivity extends BaseActivity implements IProgre
     private void gotoHome(Bundle emailLookup) {
         Intent i = null;
         i = new Intent(this, Home.class);
-        if(ConcurCore.userEntryAppTimer>0 && emailLookup!=null){
+        if (ConcurCore.userEntryAppTimer > 0 && emailLookup != null) {
             ConcurCore.userSuccessfulLoginTimer = System.currentTimeMillis();
             long totalWaitTime = ConcurCore.userSuccessfulLoginTimer - ConcurCore.userEntryAppTimer;
             String signInMethod = emailLookup.getString(EmailLookUpRequestTask.EXTRA_SIGN_IN_METHOD_KEY);
             // Log to Google Analytics
-            if(totalWaitTime<=0){
-                totalWaitTime=0;
+            if (totalWaitTime <= 0) {
+                totalWaitTime = 0;
             }
-            EventTracker.INSTANCE.trackTimings(Flurry.CATEGORY_SIGN_IN, signInMethod,
-                    Flurry.LABEL_WAIT_TIME, totalWaitTime);
+
+            if (signInMethod.equalsIgnoreCase(com.concur.mobile.platform.ui.common.util.Const.LOGIN_METHOD_SSO)) {
+                signInMethod = Flurry.LABEL_LOGIN_USING_SSO;
+            } else if (signInMethod.equalsIgnoreCase(com.concur.mobile.platform.ui.common.util.Const.LOGIN_METHOD_MOBILE_PASSWORD)) {
+                signInMethod = Flurry.LABEL_LOGIN_USING_MOBILE_PASSWORD;
+            } else {
+                signInMethod = Flurry.LABEL_LOGIN_USING_PASSWORD;
+            }
+            EventTracker.INSTANCE.trackTimings(Flurry.CATEGORY_SIGN_IN, totalWaitTime, signInMethod, null);
+
             ConcurCore.resetUserTimers();
         }
         startActivity(i);

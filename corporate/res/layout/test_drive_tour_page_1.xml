@@ -25,13 +25,13 @@
                 android:id="@+id/tourImage"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:maxWidth="@dimen/test_drive_tour_max_image_size"
-                android:adjustViewBounds="true"
+                android:adjustViewBounds="false"
+                android:minHeight="250dp"
+                android:minWidth="250dp"
                 android:layout_centerHorizontal="true"
                 android:layout_marginBottom="@dimen/test_drive_tour_img_margin_bottom"
                 android:layout_marginTop="@dimen/test_drive_tour_img_margin_top"
-                android:scaleType="fitCenter"
-                android:src="@drawable/tour_graphic2" />
+                android:src="@drawable/test_drive_tour_image1" />
 
             <LinearLayout
                 android:id="@+id/container_layout"
@@ -44,22 +44,21 @@
 
                 <TextView
                     android:id="@+id/td_tour_welcome_title"
-                    android:layout_width="wrap_content"
+                    android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginBottom="@dimen/test_drive_tour_text_margin_top"
                     android:layout_marginTop="@dimen/test_drive_tour_text_margin_top"
-                    android:gravity="center"
+                    android:gravity="center_horizontal"
                     android:text="@string/test_drive_tour_welcome_pg1_title"
-                    android:textAppearance="@style/TourText" />
+                    android:textAppearance="@style/TourText_Material" />
 
                 <TextView
                     android:id="@+id/td_tour_welcome_subtitle"
-                    android:layout_width="wrap_content"
+                    android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginBottom="@dimen/test_drive_tour_text_margin_top"
-                    android:gravity="center"
+                    android:gravity="center_horizontal"
                     android:text="@string/test_drive_tour_welcome_pg1_subtitle"
-                    android:textAppearance="@style/TourText" />
+                    android:textAppearance="@style/TourText_Material" />
 
                 <include
                     android:id="@+id/td_tour_topic1"
