@@ -125,7 +125,11 @@
                                 android:id="@+id/expenseit_error_icon"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
-                                android:src="@drawable/icon_error"/>
+                                android:layout_marginBottom="@dimen/exp_list_header_row_icon_margin"
+                                android:layout_marginTop="@dimen/exp_list_header_row_icon_margin"
+                                android:layout_marginLeft="@dimen/exp_list_header_row_icon_margin"
+                                android:layout_marginRight="@dimen/exp_list_header_row_icon_margin"
+                                android:src="@drawable/expenseit_icon_error_red"/>
 
                             <TextView
                                 android:id="@+id/expenseit_error_text"
