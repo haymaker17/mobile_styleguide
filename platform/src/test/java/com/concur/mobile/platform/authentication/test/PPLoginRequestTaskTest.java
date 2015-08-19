@@ -3,17 +3,8 @@
  */
 package com.concur.mobile.platform.authentication.test;
 
-import java.util.Locale;
-
-import org.apache.http.HttpStatus;
-import org.junit.Assert;
-import org.robolectric.shadows.ShadowLog;
-import org.simpleframework.xml.Serializer;
-import org.simpleframework.xml.core.Persister;
-
 import android.content.Context;
 import android.text.TextUtils;
-import android.util.Log;
 
 import com.concur.mobile.base.service.BaseAsyncRequestTask;
 import com.concur.mobile.base.service.BaseAsyncResultReceiver;
@@ -22,6 +13,14 @@ import com.concur.mobile.platform.test.AsyncRequestTest;
 import com.concur.mobile.platform.test.Const;
 import com.concur.mobile.platform.test.PlatformTestApplication;
 import com.concur.mobile.platform.util.Parse;
+
+import org.apache.http.HttpStatus;
+import org.junit.Assert;
+import org.robolectric.shadows.ShadowLog;
+import org.simpleframework.xml.Serializer;
+import org.simpleframework.xml.core.Persister;
+
+import java.util.Locale;
 
 /**
  * Unit Test for the <code>com.concur.mobile.platform.authentication.PPLoginRequestTask</code>.
@@ -44,6 +43,10 @@ public class PPLoginRequestTaskTest extends AsyncRequestTest {
      */
     private String ppLoginPinPassword;
 
+    public PPLoginRequestTaskTest(boolean useMockServer) {
+        super(useMockServer);
+    }
+
     /**
      * Sets the authentication credentials.
      * 
@@ -63,12 +66,13 @@ public class PPLoginRequestTaskTest extends AsyncRequestTest {
      * @throws Exception
      *             throws an exception if the test fails.
      */
+    @Override
     public void doTest() throws Exception {
 
         Context context = PlatformTestApplication.getApplication();
 
         // Set the mock response if the mock server is being used.
-        if (PlatformTestApplication.useMockServer()) {
+        if (useMockServer()) {
             // Set the mock response for the test.
             setMockResponse(mockServer, HttpStatus.SC_OK, "authentication/PPLoginResponse.xml");
         }

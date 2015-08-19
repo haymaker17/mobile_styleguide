@@ -215,6 +215,7 @@
     <string name="home_footer_button_receipt">Receipt</string>
     <string name="home_footer_button_expense">Expense</string>
     <string name="home_footer_button_mileage">Mileage</string>
+    <string name="home_footer_button_expenseit">ExpenseIt</string>
     <string name="prompt_notifications_allow_title">Notifications</string>
     <string name="prompt_notifications_allow_text">Concur Mobile can send notifications to your device when items such as approvals or card charges are ready for you.  Do you wish to allow these notifications?</string>
 
@@ -1277,6 +1278,7 @@
     <string name="dlg_system_unavailable_title">System Unavailable</string>
     <string name="dlg_system_unavailable_message">The service is unable to complete the operation at this time.  Please try again later, or contact your company administrator if this continues.</string>
     <string name="dlg_expenses_retrieve_failed_title">Expenses Retrieval Failed</string>
+    <string name="dlg_expenseit_retrieve_failed_title">Failed to retrieve ExpenseIt items.</string>
     <string name="dlg_expense_approval_retrieve_failed_title">Expense Approvals Retrieve Failed</string>
     <string name="dlg_expense_active_report_retrieve_failed_title">Active Reports Retrieve Failed</string>
     <string name="dlg_expense_report_detail_retrieve_failed_title">Report Detail Retrieve Failed</string>

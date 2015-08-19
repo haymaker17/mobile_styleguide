@@ -50,6 +50,10 @@ public class Flurry {
     public static final String CATEGORY_ALL_MOBILE_EXPENSES = "All Mobile Expenses";
     public static final String CATEGORY_MAIN_MENU = "Main Menu";
 
+    // ################### GOOGLE ANALYTICS CATEGORIES ################# //
+    public static final String CATEGORY_EXPENSE_EXPENSEIT = "Expense-ExpenseIt";
+    // ################ END GOOGLE ANALYTICS CATEGORIES ################# //
+
     // ################### NEW GOOGLE ANALTYICS LABELS ################# //
 
     public static final String LABEL_ALL_EXPENSES = "All Expenses";
@@ -67,6 +71,7 @@ public class Flurry {
     public static final String ACTION_RECEIPT_DETAILS = "View Receipt details";
     public static final String ACTION_E_RECEIPT_IMAGE_ERROR = "E-Receipt Image Error";
     public static final String ACTION_APP_CENTER = "App Center";
+    public static final String ACTION_VIEW_RECEIPT = "View Receipt";
 
     // ####################### END GA ACTIONS ###################### //
 
@@ -166,6 +171,8 @@ public class Flurry {
     public static final String EVENT_NAME_VIEWED_MANAGE_VIOLATIONS = "Manage Violations Viewed";
     public static final String EVENT_NAME_HOTEL_RESERVE = "Hotel Reserve";
     public static final String EVENT_NAME_AIR_RESERVE = "Air Reserve";
+    public static final String EVENT_RETRIEVE_EXPENSEIT_LIST = "ExpenseItListRequestTime";
+    public static final String EVENT_SHOW_ANALYZING_RECEIPT_FAILED = "ShowAnalyzingReceiptFailed";
 
     // Flurry parameter names.
     public static final String PARAM_NAME_VIA = "Via";

@@ -1038,11 +1038,9 @@ public class Preferences extends PreferenceActivity implements OnSharedPreferenc
         return prefs.getBoolean(Const.PREF_SHOW_TRIPIT_AD, true);
     }
 
-    // Renaming isExpenseIt user to isOCRUser.
-    public static boolean isOCRUser() {
-        // SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(ConcurCore.getContext());
-        // return prefs.getBoolean(Const.PREF_SHOW_EXPENSEIT_AD, true);
-        return false;
+    public static boolean isExpenseItUser() {
+        SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(ConcurCore.getContext());
+        return prefs.getBoolean(Const.PREF_SHOW_EXPENSEIT_AD, true);
     }
 
     public static boolean isCardAgreementAccepted() {
@@ -1541,6 +1539,18 @@ public class Preferences extends PreferenceActivity implements OnSharedPreferenc
         e.commit();
     }
 	*/
+
+    public static void setUserLoggedOnToExpenseIt(boolean isLoggedIn) {
+        SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(ConcurCore.getContext());
+        Editor e = prefs.edit();
+        e.putBoolean(Const.PREF_USER_LOGGED_IN_EXPENSE_IT, isLoggedIn);
+        e.commit();
+    }
+
+    public static boolean isUserLoggedInExpenseIt() {
+        SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(ConcurCore.getContext());
+        return prefs.getBoolean(Const.PREF_USER_LOGGED_IN_EXPENSE_IT, false);
+    }
 
     // need to pull this out to some other appropriate class
     public static void doAutoLogin(SharedPreferences prefs, final ConcurCore app) {

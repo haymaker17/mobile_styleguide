@@ -7,11 +7,14 @@ import android.os.Bundle;
 import android.preference.PreferenceManager;
 import android.text.TextUtils;
 import android.util.Log;
+import android.util.Pair;
 import com.concur.mobile.core.ConcurCore;
 import com.concur.mobile.core.activity.Preferences;
+import com.concur.mobile.core.util.net.ExpenseItServerUtil;
 import com.concur.mobile.core.util.net.SiteSettings;
 import com.concur.mobile.platform.authentication.*;
 import com.concur.mobile.platform.config.provider.ConfigUtil;
+import com.concur.platform.ExpenseItProperties;
 import com.concur.mobile.platform.service.MWSPlatformManager;
 import com.concur.platform.PlatformProperties;
 
@@ -141,6 +144,9 @@ public class UserAndSessionInfoUtil {
             e.putString(Const.PREF_MWS_ADDRESS, serverUrl);
             e.commit();
             PlatformProperties.setServerAddress(serverUrl);
+            Pair<String, String> expenseItServerAddress = ExpenseItServerUtil.getMatchingConcurExpenseItServer(serverUrl);
+            ExpenseItProperties.setServerAddress(expenseItServerAddress.first);
+            ExpenseItProperties.setConsumerKey(expenseItServerAddress.second);
         }
     }
 

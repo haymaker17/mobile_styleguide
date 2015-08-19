@@ -3,6 +3,18 @@
  */
 package com.concur.mobile.core.expense.charge.data;
 
+import android.text.TextUtils;
+import android.util.Log;
+
+import com.concur.mobile.core.util.Const;
+import com.concur.mobile.platform.expense.receipt.list.dao.ReceiptDAO;
+import com.concur.mobile.platform.expense.smartexpense.dao.SmartExpenseDAO;
+import com.concur.mobile.platform.expenseit.ExpenseItReceipt;
+
+import org.xml.sax.Attributes;
+import org.xml.sax.SAXException;
+import org.xml.sax.helpers.DefaultHandler;
+
 import java.io.ByteArrayInputStream;
 import java.io.IOException;
 import java.util.ArrayList;
@@ -11,17 +23,6 @@ import java.util.Iterator;
 import javax.xml.parsers.ParserConfigurationException;
 import javax.xml.parsers.SAXParser;
 import javax.xml.parsers.SAXParserFactory;
-
-import org.xml.sax.Attributes;
-import org.xml.sax.SAXException;
-import org.xml.sax.helpers.DefaultHandler;
-
-import android.text.TextUtils;
-import android.util.Log;
-
-import com.concur.mobile.core.util.Const;
-import com.concur.mobile.platform.expense.receipt.list.dao.ReceiptDAO;
-import com.concur.mobile.platform.expense.smartexpense.dao.SmartExpenseDAO;
 
 /**
  * 
@@ -50,7 +51,9 @@ public class Expense {
         E_RECEIPT,       // E-receipt
         RECEIPT_CAPTURE, // A receipt capture/expense it expenses.
         OCR_NOT_DONE,   // An OCR receipt that is either pending, failed, or canceled.
+        EXPENSEIT_NOT_DONE,    // An ExpenseIt item that is currently in processing.
         UNKNOWN_EXPENSE // If we can't determine the type of expense based on keys and SmartExpenseId.
+
     };
 
     // The expense entry type.
@@ -77,6 +80,9 @@ public class Expense {
     // The OCRItem for this expense
     private OCRItem ocrItem;
 
+    // The ExpenseItReceipt for this expense.
+    private ExpenseItReceipt expenseItReceipt;
+
     // Whether or not we show the card icon in the Expenses list
     private boolean shouldShowCardIcon;
 
@@ -94,6 +100,17 @@ public class Expense {
     public Expense(ReceiptDAO ocrReceipt) {
         type = ExpenseEntryType.OCR_NOT_DONE;
         ocrItem = new OCRItem(ocrReceipt);
+    }
+
+    /**
+     * Constructs a new instance of an <code>Expense</code> that represents an ExpenseIt processing
+     * item.
+     *
+     * @param expItReceipt
+     */
+    public Expense(ExpenseItReceipt expItReceipt) {
+        type = ExpenseEntryType.EXPENSEIT_NOT_DONE;
+        this.expenseItReceipt = expItReceipt;
     }
 
     /**
@@ -312,6 +329,15 @@ public class Expense {
      */
     public OCRItem getOcrItem() {
         return ocrItem;
+    }
+
+    /**
+     * @return the <code>ExpenseItReceipt</code> if this is an ExpenseIt Entry, or <code>null</code>
+     * if it isn't.
+     *
+     */
+    public ExpenseItReceipt getExpenseItReceipt() {
+        return expenseItReceipt;
     }
 
     /**

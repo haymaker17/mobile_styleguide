@@ -1,9 +1,5 @@
 package com.concur.mobile.core.dialog;
 
-import java.io.File;
-import java.util.HashMap;
-import java.util.Map;
-
 import android.app.Activity;
 import android.content.Intent;
 import android.net.Uri;
@@ -23,6 +19,10 @@ import com.concur.mobile.core.util.RolesUtil;
 import com.concur.mobile.core.util.ViewUtil;
 import com.concur.mobile.core.widget.FileSearchActivity;
 import com.concur.mobile.platform.ui.common.util.ImageUtil;
+
+import java.io.File;
+import java.util.HashMap;
+import java.util.Map;
 
 @SuppressWarnings("deprecation")
 public class ReceiptChoiceDialogFragment extends ChoiceGridDialogFragment {
@@ -131,8 +131,11 @@ public class ReceiptChoiceDialogFragment extends ChoiceGridDialogFragment {
     @Override
     public void onAttach(Activity activity) {
         super.onAttach(activity);
-        // TODO try catch. reference : emaillookupfragment.onattach();
-        listener = (ReceiptChoiceListener) activity;
+        try {
+            listener = (ReceiptChoiceListener) activity;
+        } catch (ClassCastException e) {
+            throw new ClassCastException(activity.toString() + " must implement ReceiptChoiceListener.");
+        }
     }
 
     @Override
@@ -234,8 +237,6 @@ public class ReceiptChoiceDialogFragment extends ChoiceGridDialogFragment {
     /**
      * Will copy the image data captured by the camera.
      * 
-     * @param data
-     *            the intent object containing capture information.
      */
     private boolean copyCapturedImage() {
         boolean retVal = true;

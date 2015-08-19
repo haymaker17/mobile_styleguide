@@ -326,6 +326,9 @@ public final class Const {
     // Show Jarvis Hotel UI
     public static final String SHOW_JARVIS_HOTEL_UI = "ShowJarvisHotelUIOnAndroid";
 
+    // User is loggedIn to ExpenseIt
+    public static final String PREF_USER_LOGGED_IN_EXPENSE_IT = "pref_user_logged_in_expense_it";
+
     // The default ip/port for the MWS.
     public static final String BREEZE_WEB_ADDRESS = "https://www.concurbreeze.com/login";
     // public static final String DEFAULT_MWS_ADDRESS = "www.concursolutions.com";
@@ -1069,6 +1072,7 @@ public final class Const {
     public static final String EXTRA_EXPENSE_ATTENDEE_SEARCH_EXCLUDE_KEYS = "expense.attendee.search.exclude.keys";
     public static final String EXTRA_EXPENSE_ATTENDEE_SEARCH_EXCLUDE_EXTERNAL_IDS = "expense.attendee.search.exclude.external.ids";
     public static final String EXTRA_EXPENSE_IMAGE_FILE_PATH = "expense.image.file.path";
+    public static final String EXTRA_EXPENSE_IT_RECEIPT_ID = "expense.receipt.image.id";
 
     public static final String EXTRA_SEARCH_MODE = "search.mode";
     public static final String EXTRA_SEARCH_LOC_FROM = "search.loc.from";

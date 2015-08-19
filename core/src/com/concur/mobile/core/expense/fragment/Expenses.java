@@ -1,29 +1,19 @@
 /**
- * 
+ *
  */
 package com.concur.mobile.core.expense.fragment;
 
-import java.util.ArrayList;
-import java.util.Calendar;
-import java.util.Collections;
-import java.util.HashMap;
-import java.util.HashSet;
-import java.util.Iterator;
-import java.util.List;
-import java.util.Map;
-
-import org.apache.http.HttpStatus;
-
 import android.app.Activity;
 import android.content.BroadcastReceiver;
+import android.content.ContentResolver;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.IntentFilter;
+import android.database.Cursor;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentActivity;
-import android.support.v4.app.FragmentManager;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.Menu;
@@ -52,6 +42,8 @@ import com.concur.mobile.core.dialog.SystemUnavailableDialogFragment;
 import com.concur.mobile.core.expense.charge.activity.CashExpenseListItem;
 import com.concur.mobile.core.expense.charge.activity.CorporateCardExpenseListItem;
 import com.concur.mobile.core.expense.charge.activity.EReceiptListItem;
+import com.concur.mobile.core.expense.charge.activity.ExpenseItDetailActivity;
+import com.concur.mobile.core.expense.charge.activity.ExpenseItListItem;
 import com.concur.mobile.core.expense.charge.activity.ExpenseListItem;
 import com.concur.mobile.core.expense.charge.activity.OcrListItem;
 import com.concur.mobile.core.expense.charge.activity.PersonalCardExpenseListItem;
@@ -74,7 +66,6 @@ import com.concur.mobile.core.expense.charge.service.DeleteMobileEntriesRequest;
 import com.concur.mobile.core.expense.data.ExpenseType;
 import com.concur.mobile.core.expense.data.IExpenseEntryCache;
 import com.concur.mobile.core.expense.data.IExpenseReportCache;
-import com.concur.mobile.core.expense.receiptstore.data.ReceiptStoreCache;
 import com.concur.mobile.core.expense.report.activity.ActiveReportsListAdapter;
 import com.concur.mobile.core.expense.report.activity.ExpenseEntries;
 import com.concur.mobile.core.expense.report.activity.ExpenseReportHeader;
@@ -94,8 +85,9 @@ import com.concur.mobile.core.util.ViewUtil;
 import com.concur.mobile.core.view.HeaderListItem;
 import com.concur.mobile.core.view.ListItem;
 import com.concur.mobile.core.view.ListItemAdapter;
-import com.concur.mobile.platform.expense.receipt.list.ReceiptListUtil;
-import com.concur.mobile.platform.expense.receipt.list.dao.ReceiptDAO;
+import com.concur.mobile.platform.expenseit.ErrorResponse;
+import com.concur.mobile.platform.expenseit.ExpenseItParseCode;
+import com.concur.mobile.platform.expenseit.ExpenseItReceipt;
 import com.concur.mobile.platform.ocr.OcrStatusEnum;
 import com.concur.mobile.platform.ui.common.dialog.NoConnectivityDialogFragment;
 import com.concur.mobile.platform.ui.common.util.PreferenceUtil;
@@ -105,7 +97,6 @@ import org.apache.http.HttpStatus;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Collections;
-import java.util.Comparator;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Iterator;
@@ -114,7 +105,7 @@ import java.util.Map;
 
 /**
  * An extension of <code>ConcurView</code> used to render a combined list of cash and card expenses.
- * 
+ *
  * @author AndrewK
  */
 public class Expenses extends BaseFragment implements INetworkActivityListener {
@@ -122,20 +113,25 @@ public class Expenses extends BaseFragment implements INetworkActivityListener {
     private static final String CLS_TAG = Expenses.class.getSimpleName();
 
     /**
-     * 
-     * 
      * @author Chris N. Diaz
-     *
      */
     public interface ExpensesCallback {
 
-        public void doGetSmartExpenseList();
+        void doGetSmartExpenseList();
 
-        public void onGetSmartExpenseListSuccess();
+        void onGetSmartExpenseListSuccess();
 
-        public void onGetSmartExpenseListFailed();
+        void onGetSmartExpenseListFailed();
 
-        public void doGetReceiptList();
+        void doGetExpenseItList(boolean forceRefresh);
+
+        void onGetExpenseItListSuccess();
+
+        void onGetExpenseItListFailed();
+
+        void startBackgroundRefresh();
+
+        void endBackgroundRefresh();
 
     }
 
@@ -186,13 +182,15 @@ public class Expenses extends BaseFragment implements INetworkActivityListener {
     public enum ViewState {
         LOCAL_DATA, // Indicates there is local data being viewed.
         LOCAL_DATA_REFRESH, // Indicates viewing local data with background
-                            // fetch on-going.
+        // fetch on-going.
         RESTORE_APP_STATE, // Indicates the application is restoring state.
         NO_LOCAL_DATA_REFRESH, // No local data present, server refresh
-                               // happening.
+        // happening.
         NO_DATA
         // No data either locally or from the server.
-    };
+    }
+
+    ;
 
     /**
      * Contains the current view state.
@@ -644,9 +642,8 @@ public class Expenses extends BaseFragment implements INetworkActivityListener {
 
     /**
      * Will initiate refreshing the data if needbe.
-     * 
-     * @param showNoConnectivityDialog
-     *            whether to show the "no connectivity" dialog if the client is not connected.
+     *
+     * @param showNoConnectivityDialog whether to show the "no connectivity" dialog if the client is not connected.
      */
     public void checkForRefreshData(boolean showNoConnectivityDialog) {
         IExpenseEntryCache expEntCache = app.getExpenseEntryCache();
@@ -657,20 +654,20 @@ public class Expenses extends BaseFragment implements INetworkActivityListener {
             if (ConcurCore.isConnected()) {
                 if (app.getService() != null) {
 
-                    // Fixed issue when this is a new user or one with empty data.
-                    // If the RS is empty, the refetch it so the OCR items show
-                    // in the Expense List!
-                    boolean refreshReceiptList = false;
-                    if (Preferences.isOCRUser()) {
-                        ReceiptStoreCache rsCache = app.getReceiptStoreCache();
-                        if (rsCache == null || rsCache.shouldRefetchReceiptList() || !rsCache.hasLastReceiptList()
-                                || rsCache.getReceiptInfoList() == null
-                                || rsCache.getLastReceiptInfoListUpdateTime() == null) {
-                            refreshReceiptList = true;
-                        }
-                    }
+//                    // Fixed issue when this is a new user or one with empty data.
+//                    // If the RS is empty, the refetch it so the OCR items show
+//                    // in the Expense List!
+//                    boolean refreshReceiptList = false;
+//                    if (Preferences.isExpenseItUser()) {
+//                        ReceiptStoreCache rsCache = app.getReceiptStoreCache();
+//                        if (rsCache == null || rsCache.shouldRefetchReceiptList() || !rsCache.hasLastReceiptList()
+//                                || rsCache.getReceiptInfoList() == null
+//                                || rsCache.getLastReceiptInfoListUpdateTime() == null) {
+//                            refreshReceiptList = true;
+//                        }
+//                    }
 
-                    getSmartExpenses(refreshReceiptList);
+                    getSmartExpenses(Preferences.isExpenseItUser());
                 }
 
                 // Clear the refetch flag.
@@ -805,9 +802,23 @@ public class Expenses extends BaseFragment implements INetworkActivityListener {
             }
         }
 
-        boolean hasOCRReceipts = ReceiptListUtil.getOcrReceiptList(app, activity.getUserId(), false).size() > 0;
+        // Query to see if there are any ExpenseIt items.
+        boolean hasExpenseItItems = false;
+        Cursor cursor = null;
+        try {
+            String where = com.concur.mobile.platform.expense.provider.Expense.ExpenseItReceiptColumns.USER_ID + " = ?";
+            String[] selectionArgs = new String[]{activity.getUserId()};
+            cursor = getActivity().getContentResolver().query(com.concur.mobile.platform.expense.provider.Expense.ExpenseItReceiptColumns.CONTENT_URI,
+                    null, where, selectionArgs, null);
+            hasExpenseItItems = (cursor != null && cursor.getCount() > 0);
 
-        if ((filterHasItems && cacheList != null && cacheList.size() > 0) || hasOCRReceipts) {
+        } finally {
+            if (cursor != null) {
+                cursor.close();
+            }
+        }
+
+        if ((filterHasItems && cacheList != null && cacheList.size() > 0) || hasExpenseItItems) {
             // Ensure the view containing the expense list is displayed.
             if (viewState != ViewState.LOCAL_DATA) {
                 viewState = ViewState.LOCAL_DATA;
@@ -1182,36 +1193,36 @@ public class Expenses extends BaseFragment implements INetworkActivityListener {
     public void onPrepareOptionsMenu(Menu menu) {
         if (viewState != ViewState.RESTORE_APP_STATE) {
             switch (viewState) {
-            case LOCAL_DATA:
-            case LOCAL_DATA_REFRESH: {
-                // Show 'Select All' option.
-                MenuItem menuItem = menu.findItem(R.id.select_all);
-                if (menuItem != null) {
-                    menuItem.setVisible(true);
-                    if (allExpensesSelected()) {
-                        menuItem.setTitle(R.string.deselect_all);
+                case LOCAL_DATA:
+                case LOCAL_DATA_REFRESH: {
+                    // Show 'Select All' option.
+                    MenuItem menuItem = menu.findItem(R.id.select_all);
+                    if (menuItem != null) {
+                        menuItem.setVisible(true);
+                        if (allExpensesSelected()) {
+                            menuItem.setTitle(R.string.deselect_all);
+                        } else {
+                            menuItem.setTitle(R.string.select_all);
+                        }
                     } else {
-                        menuItem.setTitle(R.string.select_all);
+                        Log.e(Const.LOG_TAG, CLS_TAG + ".onPrepareOptionsMenu: missing 'select_all' menu item!");
                     }
-                } else {
-                    Log.e(Const.LOG_TAG, CLS_TAG + ".onPrepareOptionsMenu: missing 'select_all' menu item!");
+                    break;
                 }
-                break;
-            }
-            case NO_DATA:
-            case NO_LOCAL_DATA_REFRESH: {
-                // Hide 'Select All' option.
-                MenuItem menuItem = menu.findItem(R.id.select_all);
-                if (menuItem != null) {
-                    menuItem.setVisible(false);
-                } else {
-                    Log.e(Const.LOG_TAG, CLS_TAG + ".onPrepareOptionsMenu: missing 'select_all' menu item!");
+                case NO_DATA:
+                case NO_LOCAL_DATA_REFRESH: {
+                    // Hide 'Select All' option.
+                    MenuItem menuItem = menu.findItem(R.id.select_all);
+                    if (menuItem != null) {
+                        menuItem.setVisible(false);
+                    } else {
+                        Log.e(Const.LOG_TAG, CLS_TAG + ".onPrepareOptionsMenu: missing 'select_all' menu item!");
+                    }
+                    break;
                 }
-                break;
-            }
-            case RESTORE_APP_STATE:
-                // No-op.
-                break;
+                case RESTORE_APP_STATE:
+                    // No-op.
+                    break;
             }
         }
     }
@@ -1278,7 +1289,7 @@ public class Expenses extends BaseFragment implements INetworkActivityListener {
         } else if (itemId == R.id.refresh) {
             if (ConcurCore.isConnected()) {
 
-                // Also refresh the ReceiptStore list (if OCR user).
+                // Also refresh the ExpenseIt list (if ExpenseIt user).
                 getSmartExpenses(true);
 
             } else {
@@ -1298,7 +1309,7 @@ public class Expenses extends BaseFragment implements INetworkActivityListener {
 
     /**
      * Will determine whether all responses have been received for pending expense delete requests.
-     * 
+     *
      * @return whether all responses have been received for pending expense delete requests.
      */
     private boolean allExpenseDeleteResponsesReceived() {
@@ -1311,8 +1322,6 @@ public class Expenses extends BaseFragment implements INetworkActivityListener {
 
     /**
      * Will display a dialog box
-     * 
-     * @param view
      */
     public void onDelete() {
 
@@ -1333,34 +1342,34 @@ public class Expenses extends BaseFragment implements INetworkActivityListener {
         while (selExpIter.hasNext()) {
             Expense exp = selExpIter.next();
             switch (exp.getExpenseEntryType()) {
-            case CASH:
-                mobileEntries.add(exp.getCashTransaction());
-                break;
-            case PERSONAL_CARD:
-                // Per MOB-4286, deletion from mobile is not
-                // supported.
-                // pctKeys.add(exp.getPersonalCardTransaction().pctKey);
-                break;
-            case CORPORATE_CARD:
-                // Per MOB-4286, deletion from mobile is not
-                // supported.
-                // cctKeys.add(exp.getCorporateCardTransaction().getCctKey());
-                break;
-            case SMART_CORPORATE:
-                // Per MOB-4286, deletion from mobile is not
-                // supported.
-                // mobileEntries.add(exp.getCashTransaction());
-                // cctKeys.add(exp.getCorporateCardTransaction().getCctKey());
-                break;
-            case SMART_PERSONAL:
-                // Per MOB-4286, deletion from mobile is not
-                // supported.
-                // mobileEntries.add(exp.getCashTransaction());
-                // pctKeys.add(exp.getPersonalCardTransaction().pctKey);
-                break;
-            case RECEIPT_CAPTURE:
-                // deletion from mobile is not supported.
-                break;
+                case CASH:
+                    mobileEntries.add(exp.getCashTransaction());
+                    break;
+                case PERSONAL_CARD:
+                    // Per MOB-4286, deletion from mobile is not
+                    // supported.
+                    // pctKeys.add(exp.getPersonalCardTransaction().pctKey);
+                    break;
+                case CORPORATE_CARD:
+                    // Per MOB-4286, deletion from mobile is not
+                    // supported.
+                    // cctKeys.add(exp.getCorporateCardTransaction().getCctKey());
+                    break;
+                case SMART_CORPORATE:
+                    // Per MOB-4286, deletion from mobile is not
+                    // supported.
+                    // mobileEntries.add(exp.getCashTransaction());
+                    // cctKeys.add(exp.getCorporateCardTransaction().getCctKey());
+                    break;
+                case SMART_PERSONAL:
+                    // Per MOB-4286, deletion from mobile is not
+                    // supported.
+                    // mobileEntries.add(exp.getCashTransaction());
+                    // pctKeys.add(exp.getPersonalCardTransaction().pctKey);
+                    break;
+                case RECEIPT_CAPTURE:
+                    // deletion from mobile is not supported.
+                    break;
             }
         }
 
@@ -1497,10 +1506,8 @@ public class Expenses extends BaseFragment implements INetworkActivityListener {
 
     /**
      * Gets the number of mobile entries in the cache list that haven't been uploaded.
-     * 
-     * @param cacheList
-     *            List of expense entries in ExpenseEntryCache
-     * 
+     *
+     * @param cacheList List of expense entries in ExpenseEntryCache
      * @return number of offline mobile entries
      */
     protected int getOfflineItemCount(ArrayList<Expense> cacheList) {
@@ -1518,9 +1525,9 @@ public class Expenses extends BaseFragment implements INetworkActivityListener {
 
     /**
      * Determines whether the current list of selected expenses contain any cash expenses.
-     * 
+     *
      * @return <code>true</code> if the current list of selected expenses contain at least one cash expense; <code>false</code>
-     *         otherwise.
+     * otherwise.
      */
     private boolean isCashExpenseSelected() {
         boolean retVal = false;
@@ -1553,9 +1560,9 @@ public class Expenses extends BaseFragment implements INetworkActivityListener {
 
     /**
      * Determines whether the current list of selected expenses contain any non-cash expenses.
-     * 
+     *
      * @return <code>true</code> if the current list of selected expenses contain at least one non-cash expense;
-     *         <code>false</code> otherwise.
+     * <code>false</code> otherwise.
      */
     private boolean isCardChargeSelected() {
         boolean retVal = false;
@@ -1574,9 +1581,9 @@ public class Expenses extends BaseFragment implements INetworkActivityListener {
 
     /**
      * Determines whether the current list of selected expenses contain at least one "smart" expense.
-     * 
+     *
      * @return <code>true</code> if the current list of selected expenses contain at least one "smart" expense; <code>false</code>
-     *         otherwise.
+     * otherwise.
      */
     private boolean isSmartExpenseSelected() {
         boolean retVal = false;
@@ -1688,7 +1695,7 @@ public class Expenses extends BaseFragment implements INetworkActivityListener {
 
     /**
      * Will animate sliding of the button bar depending upon the <code>onScreen</code> parameter.
-     * 
+     *
      * @param onScreen
      */
     protected void slideButtonBar(final boolean onScreen) {
@@ -1745,7 +1752,7 @@ public class Expenses extends BaseFragment implements INetworkActivityListener {
 
     /**
      * An extension of <code>BroadcastReceiver</code> for responding to the outcome of adding expenses to a report.
-     * 
+     *
      * @author AndrewK
      */
     class AddToReportReceiver extends BroadcastReceiver {
@@ -1770,7 +1777,7 @@ public class Expenses extends BaseFragment implements INetworkActivityListener {
                         if (httpStatusCode == HttpStatus.SC_OK) {
                             if ((intent.getStringExtra(Const.REPLY_STATUS).equalsIgnoreCase(Const.REPLY_STATUS_SUCCESS))
                                     || (intent.getStringExtra(Const.REPLY_STATUS)
-                                            .equalsIgnoreCase(Const.REPLY_STATUS_SUCCESS_SMARTEXP))) {
+                                    .equalsIgnoreCase(Const.REPLY_STATUS_SUCCESS_SMARTEXP))) {
                                 if (intent.hasExtra(Const.REPLY_ERROR_MESSAGE)) {
                                     actionStatusErrorMessage = intent.getStringExtra(Const.REPLY_ERROR_MESSAGE);
                                 }
@@ -1857,7 +1864,7 @@ public class Expenses extends BaseFragment implements INetworkActivityListener {
 
     /**
      * An extension of <code>BroadcastReceiver</code> for responding to the results of an expense receipt upload attempt.
-     * 
+     *
      * @author AndrewK
      */
     class ReceiptUploadReceiver extends BroadcastReceiver {
@@ -1912,7 +1919,7 @@ public class Expenses extends BaseFragment implements INetworkActivityListener {
 
     /**
      * An extension of <code>BroadcastReceiver</code> used to handle the result of a request to delete cash expenses.
-     * 
+     *
      * @author AndrewK
      */
     class DeleteMobileEntryReceiver extends BroadcastReceiver {
@@ -1994,7 +2001,7 @@ public class Expenses extends BaseFragment implements INetworkActivityListener {
 
     /**
      * An extension of <code>BroadcastReceiver</code> for responding to the result of deleting a set of expenses.
-     * 
+     *
      * @author AndrewK
      */
     class DeleteExpenseReceiver extends BroadcastReceiver {
@@ -2051,7 +2058,7 @@ public class Expenses extends BaseFragment implements INetworkActivityListener {
 
     /**
      * An implementation of <code>AdapterView.OnItemClickListener</code> to handle the selection of expense entries.
-     * 
+     *
      * @author AndrewK
      */
     class ExpenseEntryClickListener implements AdapterView.OnItemClickListener {
@@ -2069,85 +2076,92 @@ public class Expenses extends BaseFragment implements INetworkActivityListener {
             if (listItemAdapter != null) {
                 Expense exp = ((ExpenseListItem) listItemAdapter.getItem(position)).expense;
                 switch (exp.getExpenseEntryType()) {
-                case CASH: {
-                    MobileEntry mobileEntry = exp.getCashTransaction();
-                    Intent intent = new Intent(activity, QuickExpense.class);
-                    intent.putExtra(Const.EXTRA_EXPENSE_ENTRY_TYPE_KEY, exp.getExpenseEntryType().name());
-                    intent.putExtra(Const.EXTRA_EXPENSE_MOBILE_ENTRY_KEY, mobileEntry.getMeKey());
-                    startActivityForResult(intent, Const.EDIT_MOBILE_ENTRY);
-                    break;
-                }
-                case PERSONAL_CARD: {
-                    PersonalCardTransaction persCardTrans = exp.getPersonalCardTransaction();
-                    Intent intent = new Intent(activity, QuickExpense.class);
-                    intent.putExtra(Const.EXTRA_EXPENSE_ENTRY_TYPE_KEY, exp.getExpenseEntryType().name());
-                    intent.putExtra(Const.EXTRA_EXPENSE_MOBILE_ENTRY_PERSONAL_CARD_ACCOUNT_KEY,
-                            exp.getPersonalCard().pcaKey);
-                    intent.putExtra(Const.EXTRA_EXPENSE_PERSONAL_CARD_TRANSACTION_KEY, persCardTrans.pctKey);
-                    startActivityForResult(intent, Const.EDIT_MOBILE_ENTRY);
-                    break;
-                }
-                case CORPORATE_CARD: {
-                    CorporateCardTransaction corpCardTrans = exp.getCorporateCardTransaction();
-                    Intent intent = new Intent(activity, QuickExpense.class);
-                    intent.putExtra(Const.EXTRA_EXPENSE_ENTRY_TYPE_KEY, exp.getExpenseEntryType().name());
-                    intent.putExtra(Const.EXTRA_EXPENSE_CORPORATE_CARD_TRANSACTION_KEY, corpCardTrans.getCctKey());
-                    startActivityForResult(intent, Const.EDIT_MOBILE_ENTRY);
-                    break;
-                }
-                case SMART_CORPORATE: {
-                    CorporateCardTransaction corpCardTrans = exp.getCorporateCardTransaction();
-                    Intent intent = new Intent(activity, QuickExpense.class);
-                    intent.putExtra(Const.EXTRA_EXPENSE_ENTRY_TYPE_KEY, exp.getExpenseEntryType().name());
-                    intent.putExtra(Const.EXTRA_EXPENSE_CORPORATE_CARD_TRANSACTION_KEY, corpCardTrans.getCctKey());
-                    startActivityForResult(intent, Const.EDIT_MOBILE_ENTRY);
-                    break;
-                }
-                case SMART_PERSONAL: {
-                    PersonalCardTransaction persCardTrans = exp.getPersonalCardTransaction();
-                    Intent intent = new Intent(activity, QuickExpense.class);
-                    intent.putExtra(Const.EXTRA_EXPENSE_ENTRY_TYPE_KEY, exp.getExpenseEntryType().name());
-                    intent.putExtra(Const.EXTRA_EXPENSE_PERSONAL_CARD_TRANSACTION_KEY, persCardTrans.pctKey);
-                    startActivityForResult(intent, Const.EDIT_MOBILE_ENTRY);
-                    break;
-                }
-                case RECEIPT_CAPTURE: {
-                    ReceiptCapture receiptCaptures = exp.getReceiptCapture();
-                    Intent intent = new Intent(activity, QuickExpense.class);
-                    intent.putExtra(Const.EXTRA_EXPENSE_ENTRY_TYPE_KEY, exp.getExpenseEntryType().name());
-                    intent.putExtra(Const.EXTRA_EXPENSE_RECEIPT_CAPTURE_KEY, receiptCaptures.rcKey);
-                    startActivityForResult(intent, Const.EDIT_MOBILE_ENTRY);
-                    break;
-                }
-                case E_RECEIPT: {
-                    EReceipt eReceipt = exp.getEReceipt();
-                    Intent intent = new Intent(activity, QuickExpense.class);
-                    intent.putExtra(Const.EXTRA_EXPENSE_ENTRY_TYPE_KEY, exp.getExpenseEntryType().name());
-                    intent.putExtra(Const.EXTRA_EXPENSE_E_RECEIPT_KEY, eReceipt.getEReceiptId());
-                    startActivityForResult(intent, Const.EDIT_MOBILE_ENTRY);
-                    break;
-                }
-                case OCR_NOT_DONE: {
-
-                    OCRItem item = exp.getOcrItem();
-
-                    if (OcrStatusEnum.isFailed(item.getOcrStatus())) {
-                        // Convert Failed OCR to mobile entry
+                    case CASH: {
+                        MobileEntry mobileEntry = exp.getCashTransaction();
                         Intent intent = new Intent(activity, QuickExpense.class);
-                        intent.putExtra(Const.EXTRA_EXPENSE_ENTRY_TYPE_KEY, ExpenseEntryType.CASH);
-                        intent.putExtra(Const.EXTRA_EXPENSE_RECEIPT_IMAGE_ID_KEY, item.getReceiptImageId());
-                        // If we have upload date, we will use that as transaction date
-                        if (item.getUploadDate() != null)
-                            intent.putExtra(Const.EXTRA_EXPENSE_TRANSACTION_DATE_KEY, item.getUploadDate()
-                                    .getTimeInMillis());
-
-                        intent.putExtra(Const.EXTRA_EXPENSE_ENTRY_TYPE_KEY, Expense.ExpenseEntryType.CASH.name());
-                        intent.putExtra(Flurry.PARAM_NAME_CAME_FROM, Flurry.PARAM_VALUE_EXPENSE_LIST);
-                        intent.putExtra(Const.EXTRA_EXPENSE_MOBILE_ENTRY_ACTION, Const.CREATE_MOBILE_ENTRY);
-                        startActivityForResult(intent, Const.CREATE_MOBILE_ENTRY);
+                        intent.putExtra(Const.EXTRA_EXPENSE_ENTRY_TYPE_KEY, exp.getExpenseEntryType().name());
+                        intent.putExtra(Const.EXTRA_EXPENSE_MOBILE_ENTRY_KEY, mobileEntry.getMeKey());
+                        startActivityForResult(intent, Const.EDIT_MOBILE_ENTRY);
+                        break;
                     }
-                    break;
-                }
+                    case PERSONAL_CARD: {
+                        PersonalCardTransaction persCardTrans = exp.getPersonalCardTransaction();
+                        Intent intent = new Intent(activity, QuickExpense.class);
+                        intent.putExtra(Const.EXTRA_EXPENSE_ENTRY_TYPE_KEY, exp.getExpenseEntryType().name());
+                        intent.putExtra(Const.EXTRA_EXPENSE_MOBILE_ENTRY_PERSONAL_CARD_ACCOUNT_KEY,
+                                exp.getPersonalCard().pcaKey);
+                        intent.putExtra(Const.EXTRA_EXPENSE_PERSONAL_CARD_TRANSACTION_KEY, persCardTrans.pctKey);
+                        startActivityForResult(intent, Const.EDIT_MOBILE_ENTRY);
+                        break;
+                    }
+                    case CORPORATE_CARD: {
+                        CorporateCardTransaction corpCardTrans = exp.getCorporateCardTransaction();
+                        Intent intent = new Intent(activity, QuickExpense.class);
+                        intent.putExtra(Const.EXTRA_EXPENSE_ENTRY_TYPE_KEY, exp.getExpenseEntryType().name());
+                        intent.putExtra(Const.EXTRA_EXPENSE_CORPORATE_CARD_TRANSACTION_KEY, corpCardTrans.getCctKey());
+                        startActivityForResult(intent, Const.EDIT_MOBILE_ENTRY);
+                        break;
+                    }
+                    case SMART_CORPORATE: {
+                        CorporateCardTransaction corpCardTrans = exp.getCorporateCardTransaction();
+                        Intent intent = new Intent(activity, QuickExpense.class);
+                        intent.putExtra(Const.EXTRA_EXPENSE_ENTRY_TYPE_KEY, exp.getExpenseEntryType().name());
+                        intent.putExtra(Const.EXTRA_EXPENSE_CORPORATE_CARD_TRANSACTION_KEY, corpCardTrans.getCctKey());
+                        startActivityForResult(intent, Const.EDIT_MOBILE_ENTRY);
+                        break;
+                    }
+                    case SMART_PERSONAL: {
+                        PersonalCardTransaction persCardTrans = exp.getPersonalCardTransaction();
+                        Intent intent = new Intent(activity, QuickExpense.class);
+                        intent.putExtra(Const.EXTRA_EXPENSE_ENTRY_TYPE_KEY, exp.getExpenseEntryType().name());
+                        intent.putExtra(Const.EXTRA_EXPENSE_PERSONAL_CARD_TRANSACTION_KEY, persCardTrans.pctKey);
+                        startActivityForResult(intent, Const.EDIT_MOBILE_ENTRY);
+                        break;
+                    }
+                    case RECEIPT_CAPTURE: {
+                        ReceiptCapture receiptCaptures = exp.getReceiptCapture();
+                        Intent intent = new Intent(activity, QuickExpense.class);
+                        intent.putExtra(Const.EXTRA_EXPENSE_ENTRY_TYPE_KEY, exp.getExpenseEntryType().name());
+                        intent.putExtra(Const.EXTRA_EXPENSE_RECEIPT_CAPTURE_KEY, receiptCaptures.rcKey);
+                        startActivityForResult(intent, Const.EDIT_MOBILE_ENTRY);
+                        break;
+                    }
+                    case E_RECEIPT: {
+                        EReceipt eReceipt = exp.getEReceipt();
+                        Intent intent = new Intent(activity, QuickExpense.class);
+                        intent.putExtra(Const.EXTRA_EXPENSE_ENTRY_TYPE_KEY, exp.getExpenseEntryType().name());
+                        intent.putExtra(Const.EXTRA_EXPENSE_E_RECEIPT_KEY, eReceipt.getEReceiptId());
+                        startActivityForResult(intent, Const.EDIT_MOBILE_ENTRY);
+                        break;
+                    }
+                    case OCR_NOT_DONE: {
+
+                        OCRItem item = exp.getOcrItem();
+
+                        if (OcrStatusEnum.isFailed(item.getOcrStatus())) {
+                            // Convert Failed OCR to mobile entry
+                            Intent intent = new Intent(activity, QuickExpense.class);
+                            intent.putExtra(Const.EXTRA_EXPENSE_ENTRY_TYPE_KEY, ExpenseEntryType.CASH);
+                            intent.putExtra(Const.EXTRA_EXPENSE_RECEIPT_IMAGE_ID_KEY, item.getReceiptImageId());
+                            // If we have upload date, we will use that as transaction date
+                            if (item.getUploadDate() != null)
+                                intent.putExtra(Const.EXTRA_EXPENSE_TRANSACTION_DATE_KEY, item.getUploadDate()
+                                        .getTimeInMillis());
+
+                            intent.putExtra(Const.EXTRA_EXPENSE_ENTRY_TYPE_KEY, Expense.ExpenseEntryType.CASH.name());
+                            intent.putExtra(Flurry.PARAM_NAME_CAME_FROM, Flurry.PARAM_VALUE_EXPENSE_LIST);
+                            intent.putExtra(Const.EXTRA_EXPENSE_MOBILE_ENTRY_ACTION, Const.CREATE_MOBILE_ENTRY);
+                            startActivityForResult(intent, Const.CREATE_MOBILE_ENTRY);
+                        }
+                        break;
+                    }
+                    case EXPENSEIT_NOT_DONE: {
+                        ExpenseItReceipt expenseItReceipt = exp.getExpenseItReceipt();
+                        Intent intent = new Intent(activity, ExpenseItDetailActivity.class);
+                        intent.putExtra(ExpenseItDetailActivity.EXPENSEIT_RECEIPT_ID_KEY, expenseItReceipt.getId());
+                        startActivityForResult(intent, ExpenseItDetailActivityFragment.VIEW_PROCESSING_EXPENSEIT_ITEM_DETAILS);
+                        break;
+                    }
 
                 }
             } else {
@@ -2175,11 +2189,9 @@ public class Expenses extends BaseFragment implements INetworkActivityListener {
 
     /**
      * Will handle adding the current set of selected expenses to either an existing report or a new report.
-     * 
-     * @param reportKey
-     *            the key of an existing report.
-     * @param reportName
-     *            the name of a new report to create.
+     *
+     * @param reportKey  the key of an existing report.
+     * @param reportName the name of a new report to create.
      */
     private void handleAddToReport(String reportKey, String reportName) {
         // Iterate over the list of selected expenses and seperate into two
@@ -2213,165 +2225,165 @@ public class Expenses extends BaseFragment implements INetworkActivityListener {
             Double atnAmt = null;
             String atnMeKey = null;
             switch (exp.getExpenseEntryType()) {
-            case CASH:
-                // Add the mobile entry key.
-                MobileEntry transctn = exp.getCashTransaction();
-                meKeys.add(transctn.getMeKey());
-                smartExpIds.add(transctn.smartExpenseId);
-                // Add an attendee entry map, if needbe.
-                if (transctn.getExpKey() != null && expenseTypeSupportsDefaultAttendee(transctn.getExpKey())) {
-                    atnAmt = transctn.getTransactionAmount();
-                    atnMeKey = transctn.getMeKey();
-                }
-                ++flurryHowManyAddedCount;
-                if (!flurryHasReceipt) {
-                    if (transctn != null && transctn.getReceiptImageId() != null) {
-                        flurryHasReceipt = true;
+                case CASH:
+                    // Add the mobile entry key.
+                    MobileEntry transctn = exp.getCashTransaction();
+                    meKeys.add(transctn.getMeKey());
+                    smartExpIds.add(transctn.smartExpenseId);
+                    // Add an attendee entry map, if needbe.
+                    if (transctn.getExpKey() != null && expenseTypeSupportsDefaultAttendee(transctn.getExpKey())) {
+                        atnAmt = transctn.getTransactionAmount();
+                        atnMeKey = transctn.getMeKey();
                     }
-                }
-                break;
-            case PERSONAL_CARD:
-                // Add the personal card transaction key.
-                PersonalCardTransaction personalTrans = exp.getPersonalCardTransaction();
-                pctKeys.add(personalTrans.pctKey);
-                smartExpIds.add(personalTrans.smartExpenseId);
-                // Add an attendee map, if needbe.
-                if (personalTrans.mobileEntry != null) {
-                    if (personalTrans.mobileEntry.getExpKey() != null
-                            && expenseTypeSupportsDefaultAttendee(personalTrans.mobileEntry.getExpKey())) {
-                        if (personalTrans.mobileEntry.getMeKey() != null
-                                && personalTrans.mobileEntry.getTransactionAmount() != null) {
-                            atnAmt = personalTrans.mobileEntry.getTransactionAmount();
-                            atnMeKey = personalTrans.mobileEntry.getMeKey();
+                    ++flurryHowManyAddedCount;
+                    if (!flurryHasReceipt) {
+                        if (transctn != null && transctn.getReceiptImageId() != null) {
+                            flurryHasReceipt = true;
                         }
                     }
-                }
-                ++flurryHowManyAddedCount;
-                flurryHasCreditCard = true;
-                if (!flurryHasReceipt) {
-                    if (personalTrans != null && personalTrans.mobileEntry != null
-                            && personalTrans.mobileEntry.getReceiptImageId() != null) {
-                        flurryHasReceipt = true;
-                    }
-                }
-                break;
-            case CORPORATE_CARD:
-                // Add the corporate card transaction key.
-                CorporateCardTransaction ccTrans = exp.getCorporateCardTransaction();
-                MobileEntry ccMobEntry = ccTrans.getMobileEntry();
-                cctKeys.add(ccTrans.getCctKey());
-                smartExpIds.add(ccTrans.smartExpenseId);
-                // Add an attendee map, if needbe.
-                if (ccMobEntry != null) {
-                    if (ccMobEntry.getExpKey() != null && expenseTypeSupportsDefaultAttendee(ccMobEntry.getExpKey())) {
-                        if (ccMobEntry.getMeKey() != null && ccMobEntry.getTransactionAmount() != null) {
-                            atnAmt = ccMobEntry.getTransactionAmount();
-                            atnMeKey = ccMobEntry.getMeKey();
+                    break;
+                case PERSONAL_CARD:
+                    // Add the personal card transaction key.
+                    PersonalCardTransaction personalTrans = exp.getPersonalCardTransaction();
+                    pctKeys.add(personalTrans.pctKey);
+                    smartExpIds.add(personalTrans.smartExpenseId);
+                    // Add an attendee map, if needbe.
+                    if (personalTrans.mobileEntry != null) {
+                        if (personalTrans.mobileEntry.getExpKey() != null
+                                && expenseTypeSupportsDefaultAttendee(personalTrans.mobileEntry.getExpKey())) {
+                            if (personalTrans.mobileEntry.getMeKey() != null
+                                    && personalTrans.mobileEntry.getTransactionAmount() != null) {
+                                atnAmt = personalTrans.mobileEntry.getTransactionAmount();
+                                atnMeKey = personalTrans.mobileEntry.getMeKey();
+                            }
                         }
                     }
-                }
-                ++flurryHowManyAddedCount;
-                flurryHasCreditCard = true;
-                if (!flurryHasReceipt) {
-                    if (ccTrans != null && ccMobEntry != null && ccMobEntry.getReceiptImageId() != null) {
-                        flurryHasReceipt = true;
-                    }
-                }
-                break;
-            case SMART_CORPORATE:
-                smartCorpExpenses.add(exp);
-                // Add an attendee map, if needbe.
-                CorporateCardTransaction smartCCTrans = exp.getCorporateCardTransaction();
-                MobileEntry smartMobEntry = smartCCTrans.getMobileEntry();
-                MobileEntry cashTrans = exp.getCashTransaction();
-                smartExpIds.add(smartCCTrans.smartExpenseId);
-                if (smartMobEntry != null) {
-                    if (smartMobEntry.getExpKey() != null
-                            && expenseTypeSupportsDefaultAttendee(smartMobEntry.getExpKey())) {
-                        if (smartMobEntry.getMeKey() != null && smartMobEntry.getTransactionAmount() != null) {
-                            atnAmt = smartMobEntry.getTransactionAmount();
-                            atnMeKey = smartMobEntry.getMeKey();
+                    ++flurryHowManyAddedCount;
+                    flurryHasCreditCard = true;
+                    if (!flurryHasReceipt) {
+                        if (personalTrans != null && personalTrans.mobileEntry != null
+                                && personalTrans.mobileEntry.getReceiptImageId() != null) {
+                            flurryHasReceipt = true;
                         }
                     }
-                } else if (cashTrans != null) {
-                    if (cashTrans.getExpKey() != null && expenseTypeSupportsDefaultAttendee(cashTrans.getExpKey())) {
-                        atnAmt = cashTrans.getTransactionAmount();
-                        atnMeKey = cashTrans.getMeKey();
-                    }
-                }
-                ++flurryHowManyAddedCount;
-                flurryHasCreditCard = true;
-                if (!flurryHasReceipt) {
-                    if ((smartCCTrans != null && smartMobEntry != null && smartMobEntry.getReceiptImageId() != null)
-                            || (cashTrans != null && cashTrans.getReceiptImageId() != null)) {
-                        flurryHasReceipt = true;
-                    }
-                }
-                break;
-            case SMART_PERSONAL:
-                smartPersExpenses.add(exp);
-                // Add an attendee map, if needbe.
-                MobileEntry smartPersonalMobEntry = exp.getPersonalCardTransaction().mobileEntry;
-                MobileEntry smartCashTrans = exp.getCashTransaction();
-                smartExpIds.add(smartPersonalMobEntry.smartExpenseId);
-                if (smartPersonalMobEntry != null) {
-                    if (smartPersonalMobEntry.getExpKey() != null
-                            && expenseTypeSupportsDefaultAttendee(smartPersonalMobEntry.getExpKey())) {
-                        if (smartPersonalMobEntry.getMeKey() != null
-                                && smartPersonalMobEntry.getTransactionAmount() != null) {
-                            atnAmt = smartPersonalMobEntry.getTransactionAmount();
-                            atnMeKey = smartPersonalMobEntry.getMeKey();
+                    break;
+                case CORPORATE_CARD:
+                    // Add the corporate card transaction key.
+                    CorporateCardTransaction ccTrans = exp.getCorporateCardTransaction();
+                    MobileEntry ccMobEntry = ccTrans.getMobileEntry();
+                    cctKeys.add(ccTrans.getCctKey());
+                    smartExpIds.add(ccTrans.smartExpenseId);
+                    // Add an attendee map, if needbe.
+                    if (ccMobEntry != null) {
+                        if (ccMobEntry.getExpKey() != null && expenseTypeSupportsDefaultAttendee(ccMobEntry.getExpKey())) {
+                            if (ccMobEntry.getMeKey() != null && ccMobEntry.getTransactionAmount() != null) {
+                                atnAmt = ccMobEntry.getTransactionAmount();
+                                atnMeKey = ccMobEntry.getMeKey();
+                            }
                         }
                     }
-                } else if (smartCashTrans != null) {
-                    if (smartCashTrans.getExpKey() != null
-                            && expenseTypeSupportsDefaultAttendee(smartCashTrans.getExpKey())) {
-                        atnAmt = smartCashTrans.getTransactionAmount();
-                        atnMeKey = smartCashTrans.getMeKey();
+                    ++flurryHowManyAddedCount;
+                    flurryHasCreditCard = true;
+                    if (!flurryHasReceipt) {
+                        if (ccTrans != null && ccMobEntry != null && ccMobEntry.getReceiptImageId() != null) {
+                            flurryHasReceipt = true;
+                        }
                     }
-                }
-                ++flurryHowManyAddedCount;
-                flurryHasCreditCard = true;
-                if (!flurryHasReceipt) {
-                    if ((exp.getPersonalCardTransaction() != null && smartPersonalMobEntry != null && smartPersonalMobEntry
-                            .getReceiptImageId() != null)
-                            || (smartCashTrans != null && smartCashTrans.getReceiptImageId() != null)) {
-                        flurryHasReceipt = true;
+                    break;
+                case SMART_CORPORATE:
+                    smartCorpExpenses.add(exp);
+                    // Add an attendee map, if needbe.
+                    CorporateCardTransaction smartCCTrans = exp.getCorporateCardTransaction();
+                    MobileEntry smartMobEntry = smartCCTrans.getMobileEntry();
+                    MobileEntry cashTrans = exp.getCashTransaction();
+                    smartExpIds.add(smartCCTrans.smartExpenseId);
+                    if (smartMobEntry != null) {
+                        if (smartMobEntry.getExpKey() != null
+                                && expenseTypeSupportsDefaultAttendee(smartMobEntry.getExpKey())) {
+                            if (smartMobEntry.getMeKey() != null && smartMobEntry.getTransactionAmount() != null) {
+                                atnAmt = smartMobEntry.getTransactionAmount();
+                                atnMeKey = smartMobEntry.getMeKey();
+                            }
+                        }
+                    } else if (cashTrans != null) {
+                        if (cashTrans.getExpKey() != null && expenseTypeSupportsDefaultAttendee(cashTrans.getExpKey())) {
+                            atnAmt = cashTrans.getTransactionAmount();
+                            atnMeKey = cashTrans.getMeKey();
+                        }
                     }
-                }
-                break;
-            case RECEIPT_CAPTURE:
-                // Add the corporate card transaction key.
-                smartExpIds.add(exp.getReceiptCapture().smartExpenseId);
-                ++flurryHowManyAddedCount;
-                flurryHasCreditCard = false;
-                if (!flurryHasReceipt) {
-                    if (exp.getReceiptCapture() != null && exp.getReceiptCapture().receiptImageId != null
-                            && exp.getReceiptCapture().receiptImageId.length() > 0) {
-                        flurryHasReceipt = true;
+                    ++flurryHowManyAddedCount;
+                    flurryHasCreditCard = true;
+                    if (!flurryHasReceipt) {
+                        if ((smartCCTrans != null && smartMobEntry != null && smartMobEntry.getReceiptImageId() != null)
+                                || (cashTrans != null && cashTrans.getReceiptImageId() != null)) {
+                            flurryHasReceipt = true;
+                        }
                     }
-                }
-                break;
+                    break;
+                case SMART_PERSONAL:
+                    smartPersExpenses.add(exp);
+                    // Add an attendee map, if needbe.
+                    MobileEntry smartPersonalMobEntry = exp.getPersonalCardTransaction().mobileEntry;
+                    MobileEntry smartCashTrans = exp.getCashTransaction();
+                    smartExpIds.add(smartPersonalMobEntry.smartExpenseId);
+                    if (smartPersonalMobEntry != null) {
+                        if (smartPersonalMobEntry.getExpKey() != null
+                                && expenseTypeSupportsDefaultAttendee(smartPersonalMobEntry.getExpKey())) {
+                            if (smartPersonalMobEntry.getMeKey() != null
+                                    && smartPersonalMobEntry.getTransactionAmount() != null) {
+                                atnAmt = smartPersonalMobEntry.getTransactionAmount();
+                                atnMeKey = smartPersonalMobEntry.getMeKey();
+                            }
+                        }
+                    } else if (smartCashTrans != null) {
+                        if (smartCashTrans.getExpKey() != null
+                                && expenseTypeSupportsDefaultAttendee(smartCashTrans.getExpKey())) {
+                            atnAmt = smartCashTrans.getTransactionAmount();
+                            atnMeKey = smartCashTrans.getMeKey();
+                        }
+                    }
+                    ++flurryHowManyAddedCount;
+                    flurryHasCreditCard = true;
+                    if (!flurryHasReceipt) {
+                        if ((exp.getPersonalCardTransaction() != null && smartPersonalMobEntry != null && smartPersonalMobEntry
+                                .getReceiptImageId() != null)
+                                || (smartCashTrans != null && smartCashTrans.getReceiptImageId() != null)) {
+                            flurryHasReceipt = true;
+                        }
+                    }
+                    break;
+                case RECEIPT_CAPTURE:
+                    // Add the corporate card transaction key.
+                    smartExpIds.add(exp.getReceiptCapture().smartExpenseId);
+                    ++flurryHowManyAddedCount;
+                    flurryHasCreditCard = false;
+                    if (!flurryHasReceipt) {
+                        if (exp.getReceiptCapture() != null && exp.getReceiptCapture().receiptImageId != null
+                                && exp.getReceiptCapture().receiptImageId.length() > 0) {
+                            flurryHasReceipt = true;
+                        }
+                    }
+                    break;
 
-            case E_RECEIPT:
-                // Add the mobile entry key.
-                EReceipt eReceipt = exp.getEReceipt();
-                smartExpIds.add(eReceipt.smartExpenseId);
-                // Add an attendee entry map, if needbe.
-                if (eReceipt.getExpKey() != null && expenseTypeSupportsDefaultAttendee(eReceipt.getExpKey())) {
-                    atnAmt = eReceipt.getTransactionAmount();
-                    atnMeKey = eReceipt.getEReceiptId();
-                }
-
-                isEreceipt = true;
-                ++flurryHowManyAddedCount;
-                if (!flurryHasReceipt) {
-                    if (eReceipt != null && eReceipt.getEReceiptImageId() != null) {
-                        flurryHasReceipt = true;
+                case E_RECEIPT:
+                    // Add the mobile entry key.
+                    EReceipt eReceipt = exp.getEReceipt();
+                    smartExpIds.add(eReceipt.smartExpenseId);
+                    // Add an attendee entry map, if needbe.
+                    if (eReceipt.getExpKey() != null && expenseTypeSupportsDefaultAttendee(eReceipt.getExpKey())) {
+                        atnAmt = eReceipt.getTransactionAmount();
+                        atnMeKey = eReceipt.getEReceiptId();
                     }
-                }
 
-                break;
+                    isEreceipt = true;
+                    ++flurryHowManyAddedCount;
+                    if (!flurryHasReceipt) {
+                        if (eReceipt != null && eReceipt.getEReceiptImageId() != null) {
+                            flurryHasReceipt = true;
+                        }
+                    }
+
+                    break;
             }
             // Add to the AttendeeEntryMap.
             if (atnAmt != null && atnMeKey != null && defAtt != null) {
@@ -2405,7 +2417,7 @@ public class Expenses extends BaseFragment implements INetworkActivityListener {
 
     /**
      * Gets the default attendee list.
-     * 
+     *
      * @return the default attendee list.
      */
     private ExpenseReportAttendee getDefaultAttendee() {
@@ -2415,11 +2427,10 @@ public class Expenses extends BaseFragment implements INetworkActivityListener {
 
     /**
      * Gets whether or not an expense key supports attendees and whether the default attendee should be added.
-     * 
-     * @param expKey
-     *            the expense key to examine.
+     *
+     * @param expKey the expense key to examine.
      * @return whether or not <code>expKey</cdoe> supports attendees and whether the default
-     *      attendee should be added.
+     * attendee should be added.
      */
     private boolean expenseTypeSupportsDefaultAttendee(String expKey) {
         boolean defAttSupported = false;
@@ -2441,7 +2452,7 @@ public class Expenses extends BaseFragment implements INetworkActivityListener {
 
     /**
      * Gets a list of list items to be set on the list item adapter.
-     * 
+     *
      * @return the set of list items.
      */
     private List<ListItem> getListItems() {
@@ -2459,23 +2470,49 @@ public class Expenses extends BaseFragment implements INetworkActivityListener {
         return listItems;
     }
 
-    /**
-     * Merges OCR items (if OCR enabled) to the expense list.
-     * 
-     * @param expense
-     *            list of Expenses to merge into.
-     */
-    private void mergeOcrItems(List<Expense> expense) {
+    private void mergeExpenseItItems(List<Expense> expenses) {
 
-        if (Preferences.isOCRUser()) {
+        if (Preferences.isExpenseItUser()) {
 
-            // Don't include Receipts with OCR status of A_DONE or M_DONE.
-            // These Receipts should have been converted to an Expense entry returned back by GSEL.
-            List<ReceiptDAO> receiptList = ReceiptListUtil.getOcrReceiptList(app, activity.getUserId(), false);
-            for (ReceiptDAO ocrReceipt : receiptList) {
-                expense.add(new Expense(ocrReceipt));
+            // Query the DB for the list of ExpenseIt items.
+            ContentResolver resolver = activity.getContentResolver();
+            Cursor cursor = null;
+            try {
+                StringBuilder strBldr = new StringBuilder();
+                strBldr.append(com.concur.mobile.platform.expense.provider.Expense.ExpenseItReceiptColumns.USER_ID);
+                strBldr.append(" = ?");
+                String where = strBldr.toString();
+                String[] whereArgs = {activity.getUserId()};
+
+                cursor = resolver.query(com.concur.mobile.platform.expense.provider.Expense.ExpenseItReceiptColumns.CONTENT_URI,
+                        null, where, whereArgs,
+                        com.concur.mobile.platform.expense.provider.Expense.ExpenseItReceiptColumns.DEFAULT_SORT_ORDER);
+                if (cursor != null) {
+                    while (cursor.moveToNext()) {
+                        ExpenseItReceipt expIt = new ExpenseItReceipt(activity, cursor);
+                        //While the expenseIt item is being exported to Concur. We get Eta=0 and the Processing status is processed.
+                        //This is a temporary stage until that item which succeeded OCRing is moved.
+                        //However, in the UI we want to show the item as still analyzing until this export process has finished.
+                        if (expIt.getParsingStatusCode() == ExpenseItParseCode.PARSED.value() &&
+                            expIt.getEta() == 0 &&
+                            expIt.getErrorCode() == ErrorResponse.ERROR_CODE_NO_ERROR) {
+                            expIt.setParsingStatusCode(ExpenseItParseCode.UNPARSED.value());
+                            expIt.setEta(30 /*secs*/);
+                        }
+                        expenses.add(new Expense(expIt));
+                    }
+                }
+            } finally {
+                if (cursor != null) {
+                    cursor.close();
+                }
             }
         }
+
+    }
+
+    public ListItemAdapter<ListItem> getListItemAdapter() {
+        return listItemAdapter;
     }
 
     /**
@@ -2506,13 +2543,13 @@ public class Expenses extends BaseFragment implements INetworkActivityListener {
 
     /**
      * Populate the list of displayed expenses with the whole or filtered list of all expenses
-     * 
+     *
      * @param cacheList
      * @param pcaKey
      */
     @SuppressWarnings("unchecked")
     private List<ListItem> populateExpenseListItems(ArrayList<Expense> cacheList, String pcaKey,
-            boolean corpCardTransOnly) {
+                                                    boolean corpCardTransOnly) {
         List<ListItem> listItems = null;
         List<Expense> expenses = null;
         if (pcaKey != null) {
@@ -2544,8 +2581,8 @@ public class Expenses extends BaseFragment implements INetworkActivityListener {
             expenses = (ArrayList<Expense>) cacheList.clone();
         }
 
-        // MOB-20914 - Add OCR items.
-        mergeOcrItems(expenses);
+        // Add ExpenseIt items.
+        mergeExpenseItItems(expenses);
 
         // MOB-15855
         // With some of the ExpenseIt items, ExpenseComparator seems to be violating the Comparison contract. This will be fixed
@@ -2589,10 +2626,29 @@ public class Expenses extends BaseFragment implements INetworkActivityListener {
             int flurryReceiptCount = 0;
             for (Expense expense : expenses) {
                 switch (expense.getExpenseEntryType()) {
-                case CASH: {
-                    // Offline expenses do not display
-                    if (!MobileEntryStatus.NEW.equals(expense.getCashTransaction().getStatus())) {
-                        CashExpenseListItem listItem = new CashExpenseListItem(expense, expenseButtonMap,
+                    case CASH: {
+                        // Offline expenses do not display
+                        if (!MobileEntryStatus.NEW.equals(expense.getCashTransaction().getStatus())) {
+                            CashExpenseListItem listItem = new CashExpenseListItem(expense, expenseButtonMap,
+                                    checkedExpenses, onCheckChange, EXPENSE_VIEW_TYPE);
+                            Calendar transDate = listItem.getTransactionDate();
+                            if (curYear == -1 || curYear != transDate.get(Calendar.YEAR)
+                                    || curMonth != transDate.get(Calendar.MONTH)) {
+                                curYear = transDate.get(Calendar.YEAR);
+                                curMonth = transDate.get(Calendar.MONTH);
+                                String header = FormatUtil.SHORT_MONTH_FULL_YEAR_DISPLAY.format(transDate.getTime());
+                                listItems.add(new HeaderListItem(header, HEADER_VIEW_TYPE));
+                            }
+                            listItems.add(listItem);
+                            ++flurryMobileEntryCount;
+                            if (listItem.showReceipt()) {
+                                ++flurryReceiptCount;
+                            }
+                        }
+                        break;
+                    }
+                    case CORPORATE_CARD: {
+                        CorporateCardExpenseListItem listItem = new CorporateCardExpenseListItem(expense, expenseButtonMap,
                                 checkedExpenses, onCheckChange, EXPENSE_VIEW_TYPE);
                         Calendar transDate = listItem.getTransactionDate();
                         if (curYear == -1 || curYear != transDate.get(Calendar.YEAR)
@@ -2603,175 +2659,170 @@ public class Expenses extends BaseFragment implements INetworkActivityListener {
                             listItems.add(new HeaderListItem(header, HEADER_VIEW_TYPE));
                         }
                         listItems.add(listItem);
-                        ++flurryMobileEntryCount;
+                        ++flurryCardCount;
                         if (listItem.showReceipt()) {
                             ++flurryReceiptCount;
                         }
-                    }
-                    break;
-                }
-                case CORPORATE_CARD: {
-                    CorporateCardExpenseListItem listItem = new CorporateCardExpenseListItem(expense, expenseButtonMap,
-                            checkedExpenses, onCheckChange, EXPENSE_VIEW_TYPE);
-                    Calendar transDate = listItem.getTransactionDate();
-                    if (curYear == -1 || curYear != transDate.get(Calendar.YEAR)
-                            || curMonth != transDate.get(Calendar.MONTH)) {
-                        curYear = transDate.get(Calendar.YEAR);
-                        curMonth = transDate.get(Calendar.MONTH);
-                        String header = FormatUtil.SHORT_MONTH_FULL_YEAR_DISPLAY.format(transDate.getTime());
-                        listItems.add(new HeaderListItem(header, HEADER_VIEW_TYPE));
-                    }
-                    listItems.add(listItem);
-                    ++flurryCardCount;
-                    if (listItem.showReceipt()) {
-                        ++flurryReceiptCount;
-                    }
 
-                    // GA tracking
-                    cctCount++;
-                    break;
-                }
-                case PERSONAL_CARD: {
-                    PersonalCardExpenseListItem listItem = new PersonalCardExpenseListItem(expense, expenseButtonMap,
-                            checkedExpenses, onCheckChange, EXPENSE_VIEW_TYPE);
-                    Calendar transDate = listItem.getTransactionDate();
-                    if (curYear == -1 || curYear != transDate.get(Calendar.YEAR)
-                            || curMonth != transDate.get(Calendar.MONTH)) {
-                        curYear = transDate.get(Calendar.YEAR);
-                        curMonth = transDate.get(Calendar.MONTH);
-                        String header = FormatUtil.SHORT_MONTH_FULL_YEAR_DISPLAY.format(transDate.getTime());
-                        listItems.add(new HeaderListItem(header, HEADER_VIEW_TYPE));
+                        // GA tracking
+                        cctCount++;
+                        break;
                     }
-                    listItems.add(listItem);
-                    ++flurryCardCount;
-                    if (listItem.showReceipt()) {
-                        ++flurryReceiptCount;
+                    case PERSONAL_CARD: {
+                        PersonalCardExpenseListItem listItem = new PersonalCardExpenseListItem(expense, expenseButtonMap,
+                                checkedExpenses, onCheckChange, EXPENSE_VIEW_TYPE);
+                        Calendar transDate = listItem.getTransactionDate();
+                        if (curYear == -1 || curYear != transDate.get(Calendar.YEAR)
+                                || curMonth != transDate.get(Calendar.MONTH)) {
+                            curYear = transDate.get(Calendar.YEAR);
+                            curMonth = transDate.get(Calendar.MONTH);
+                            String header = FormatUtil.SHORT_MONTH_FULL_YEAR_DISPLAY.format(transDate.getTime());
+                            listItems.add(new HeaderListItem(header, HEADER_VIEW_TYPE));
+                        }
+                        listItems.add(listItem);
+                        ++flurryCardCount;
+                        if (listItem.showReceipt()) {
+                            ++flurryReceiptCount;
+                        }
+                        break;
                     }
-                    break;
-                }
-                case SMART_CORPORATE: {
-                    SmartCorporateExpenseListItem listItem = new SmartCorporateExpenseListItem(expense,
-                            expenseButtonMap, checkedExpenses, onCheckChange, EXPENSE_VIEW_TYPE);
-                    Calendar transDate = listItem.getTransactionDate();
-                    if (curYear == -1 || curYear != transDate.get(Calendar.YEAR)
-                            || curMonth != transDate.get(Calendar.MONTH)) {
-                        curYear = transDate.get(Calendar.YEAR);
-                        curMonth = transDate.get(Calendar.MONTH);
-                        String header = FormatUtil.SHORT_MONTH_FULL_YEAR_DISPLAY.format(transDate.getTime());
-                        listItems.add(new HeaderListItem(header, HEADER_VIEW_TYPE));
-                    }
-                    listItems.add(listItem);
-                    ++flurryCardCount;
-                    if (listItem.showReceipt()) {
-                        ++flurryReceiptCount;
-                    }
+                    case SMART_CORPORATE: {
+                        SmartCorporateExpenseListItem listItem = new SmartCorporateExpenseListItem(expense,
+                                expenseButtonMap, checkedExpenses, onCheckChange, EXPENSE_VIEW_TYPE);
+                        Calendar transDate = listItem.getTransactionDate();
+                        if (curYear == -1 || curYear != transDate.get(Calendar.YEAR)
+                                || curMonth != transDate.get(Calendar.MONTH)) {
+                            curYear = transDate.get(Calendar.YEAR);
+                            curMonth = transDate.get(Calendar.MONTH);
+                            String header = FormatUtil.SHORT_MONTH_FULL_YEAR_DISPLAY.format(transDate.getTime());
+                            listItems.add(new HeaderListItem(header, HEADER_VIEW_TYPE));
+                        }
+                        listItems.add(listItem);
+                        ++flurryCardCount;
+                        if (listItem.showReceipt()) {
+                            ++flurryReceiptCount;
+                        }
 
-                    // GA tracking
-                    smartMatchedCount++;
-                    break;
-                }
-                case SMART_PERSONAL: {
-                    SmartPersonalExpenseListItem listItem = new SmartPersonalExpenseListItem(expense, expenseButtonMap,
-                            checkedExpenses, onCheckChange, EXPENSE_VIEW_TYPE);
-                    Calendar transDate = listItem.getTransactionDate();
-                    if (curYear == -1 || curYear != transDate.get(Calendar.YEAR)
-                            || curMonth != transDate.get(Calendar.MONTH)) {
-                        curYear = transDate.get(Calendar.YEAR);
-                        curMonth = transDate.get(Calendar.MONTH);
-                        String header = FormatUtil.SHORT_MONTH_FULL_YEAR_DISPLAY.format(transDate.getTime());
-                        listItems.add(new HeaderListItem(header, HEADER_VIEW_TYPE));
+                        // GA tracking
+                        smartMatchedCount++;
+                        break;
                     }
-                    listItems.add(listItem);
-                    ++flurryCardCount;
-                    if (listItem.showReceipt()) {
-                        ++flurryReceiptCount;
-                    }
+                    case SMART_PERSONAL: {
+                        SmartPersonalExpenseListItem listItem = new SmartPersonalExpenseListItem(expense, expenseButtonMap,
+                                checkedExpenses, onCheckChange, EXPENSE_VIEW_TYPE);
+                        Calendar transDate = listItem.getTransactionDate();
+                        if (curYear == -1 || curYear != transDate.get(Calendar.YEAR)
+                                || curMonth != transDate.get(Calendar.MONTH)) {
+                            curYear = transDate.get(Calendar.YEAR);
+                            curMonth = transDate.get(Calendar.MONTH);
+                            String header = FormatUtil.SHORT_MONTH_FULL_YEAR_DISPLAY.format(transDate.getTime());
+                            listItems.add(new HeaderListItem(header, HEADER_VIEW_TYPE));
+                        }
+                        listItems.add(listItem);
+                        ++flurryCardCount;
+                        if (listItem.showReceipt()) {
+                            ++flurryReceiptCount;
+                        }
 
-                    // GA tracking
-                    smartMatchedCount++;
-                    break;
-                }
-                case RECEIPT_CAPTURE: {
-                    ReceiptCaptureListItem listItem = new ReceiptCaptureListItem(expense, expenseButtonMap,
-                            checkedExpenses, onCheckChange, EXPENSE_VIEW_TYPE);
-                    Calendar transDate = listItem.getTransactionDate();
-                    if ((transDate != null)
-                            && (curYear == -1 || curYear != transDate.get(Calendar.YEAR) || curMonth != transDate
-                                    .get(Calendar.MONTH))) {
-                        curYear = transDate.get(Calendar.YEAR);
-                        curMonth = transDate.get(Calendar.MONTH);
-                        String header = FormatUtil.SHORT_MONTH_FULL_YEAR_DISPLAY.format(transDate.getTime());
-                        listItems.add(new HeaderListItem(header, HEADER_VIEW_TYPE));
+                        // GA tracking
+                        smartMatchedCount++;
+                        break;
                     }
-                    listItems.add(listItem);
-                    ++flurryCardCount;
-                    if (listItem.showReceipt()) {
-                        ++flurryReceiptCount;
+                    case RECEIPT_CAPTURE: {
+                        ReceiptCaptureListItem listItem = new ReceiptCaptureListItem(expense, expenseButtonMap,
+                                checkedExpenses, onCheckChange, EXPENSE_VIEW_TYPE);
+                        Calendar transDate = listItem.getTransactionDate();
+                        if ((transDate != null)
+                                && (curYear == -1 || curYear != transDate.get(Calendar.YEAR) || curMonth != transDate
+                                .get(Calendar.MONTH))) {
+                            curYear = transDate.get(Calendar.YEAR);
+                            curMonth = transDate.get(Calendar.MONTH);
+                            String header = FormatUtil.SHORT_MONTH_FULL_YEAR_DISPLAY.format(transDate.getTime());
+                            listItems.add(new HeaderListItem(header, HEADER_VIEW_TYPE));
+                        }
+                        listItems.add(listItem);
+                        ++flurryCardCount;
+                        if (listItem.showReceipt()) {
+                            ++flurryReceiptCount;
+                        }
+                        break;
                     }
-                    break;
-                }
-                case E_RECEIPT: {
-                    EReceiptListItem listItem = new EReceiptListItem(expense, expenseButtonMap, checkedExpenses,
-                            onCheckChange, EXPENSE_VIEW_TYPE);
-                    Calendar transDate = listItem.getTransactionDate();
-                    if ((transDate != null)
-                            && (curYear == -1 || curYear != transDate.get(Calendar.YEAR) || curMonth != transDate
-                                    .get(Calendar.MONTH))) {
-                        curYear = transDate.get(Calendar.YEAR);
-                        curMonth = transDate.get(Calendar.MONTH);
-                        String header = FormatUtil.SHORT_MONTH_FULL_YEAR_DISPLAY.format(transDate.getTime());
-                        listItems.add(new HeaderListItem(header, HEADER_VIEW_TYPE));
-                    }
-                    listItems.add(listItem);
+                    case E_RECEIPT: {
+                        EReceiptListItem listItem = new EReceiptListItem(expense, expenseButtonMap, checkedExpenses,
+                                onCheckChange, EXPENSE_VIEW_TYPE);
+                        Calendar transDate = listItem.getTransactionDate();
+                        if ((transDate != null)
+                                && (curYear == -1 || curYear != transDate.get(Calendar.YEAR) || curMonth != transDate
+                                .get(Calendar.MONTH))) {
+                            curYear = transDate.get(Calendar.YEAR);
+                            curMonth = transDate.get(Calendar.MONTH);
+                            String header = FormatUtil.SHORT_MONTH_FULL_YEAR_DISPLAY.format(transDate.getTime());
+                            listItems.add(new HeaderListItem(header, HEADER_VIEW_TYPE));
+                        }
+                        listItems.add(listItem);
 
-                    if (listItem.showReceipt()) {
-                        ++flurryReceiptCount;
-                    }
+                        if (listItem.showReceipt()) {
+                            ++flurryReceiptCount;
+                        }
 
-                    // GA tracking
-                    eReceiptCount++;
-                    if (expense.isSmartMatched()) {
-                        smartMatchedEreceiptCount++;
+                        // GA tracking
+                        eReceiptCount++;
+                        if (expense.isSmartMatched()) {
+                            smartMatchedEreceiptCount++;
+                        }
+                        break;
                     }
-                    break;
-                }
-                case OCR_NOT_DONE: {
+                    case OCR_NOT_DONE: {
 
-                    OcrListItem listItem = new OcrListItem(expense, EXPENSE_VIEW_TYPE);
-                    Calendar transDate = listItem.getTransactionDate();
-                    if ((transDate != null)
-                            && (curYear == -1 || curYear != transDate.get(Calendar.YEAR) || curMonth != transDate
-                                    .get(Calendar.MONTH))) {
-                        curYear = transDate.get(Calendar.YEAR);
-                        curMonth = transDate.get(Calendar.MONTH);
-                        String header = FormatUtil.SHORT_MONTH_FULL_YEAR_DISPLAY.format(transDate.getTime());
-                        listItems.add(new HeaderListItem(header, HEADER_VIEW_TYPE));
+                        OcrListItem listItem = new OcrListItem(expense, EXPENSE_VIEW_TYPE);
+                        Calendar transDate = listItem.getTransactionDate();
+                        if ((transDate != null)
+                                && (curYear == -1 || curYear != transDate.get(Calendar.YEAR) || curMonth != transDate
+                                .get(Calendar.MONTH))) {
+                            curYear = transDate.get(Calendar.YEAR);
+                            curMonth = transDate.get(Calendar.MONTH);
+                            String header = FormatUtil.SHORT_MONTH_FULL_YEAR_DISPLAY.format(transDate.getTime());
+                            listItems.add(new HeaderListItem(header, HEADER_VIEW_TYPE));
+                        }
+                        listItems.add(listItem);
+                        break;
                     }
-                    listItems.add(listItem);
+                    case EXPENSEIT_NOT_DONE: {
+                        ExpenseItListItem listItem = new ExpenseItListItem(expense, EXPENSE_VIEW_TYPE);
+                        Calendar transDate = listItem.getTransactionDate();
+                        if ((transDate != null)
+                                && (curYear == -1 || curYear != transDate.get(Calendar.YEAR) || curMonth != transDate
+                                .get(Calendar.MONTH))) {
+                            curYear = transDate.get(Calendar.YEAR);
+                            curMonth = transDate.get(Calendar.MONTH);
+                            String header = FormatUtil.SHORT_MONTH_FULL_YEAR_DISPLAY.format(transDate.getTime());
+                            listItems.add(new HeaderListItem(header, HEADER_VIEW_TYPE));
+                        }
+                        listItems.add(listItem);
+                        break;
+                    }
                 }
 
-                }
+                // Flurry Notification.
+                Map<String, String> params = new HashMap<String, String>();
+                params.put(Flurry.PARAM_NAME_CARD_COUNT, Integer.toString(flurryCardCount));
+                params.put(Flurry.PARAM_NAME_MOBILE_ENTRY_COUNT, Integer.toString(flurryMobileEntryCount));
+                params.put(Flurry.PARAM_NAME_RECEIPT_COUNT, Integer.toString(flurryReceiptCount));
+                EventTracker.INSTANCE.track(Flurry.CATEGORY_MOBILE_ENTRY, Flurry.EVENT_NAME_LIST, params);
+
+                // MOB-21114 Google Analytics tracking.
+                EventTracker.INSTANCE.track(Flurry.CATEGORY_ALL_MOBILE_EXPENSES, Flurry.ACTION_EXPENSE_LIST,
+                        Flurry.LABEL_ALL_EXPENSES, totalCount);
+                EventTracker.INSTANCE.track(Flurry.CATEGORY_ALL_MOBILE_EXPENSES, Flurry.ACTION_EXPENSE_LIST,
+                        Flurry.PARAM_VALUE_E_RECEIPT, eReceiptCount);
+                EventTracker.INSTANCE.track(Flurry.CATEGORY_ALL_MOBILE_EXPENSES, Flurry.ACTION_EXPENSE_LIST,
+                        Flurry.LABEL_SMARTMATCHED_EXPENSE, smartMatchedCount);
+                EventTracker.INSTANCE.track(Flurry.CATEGORY_ALL_MOBILE_EXPENSES, Flurry.ACTION_EXPENSE_LIST,
+                        Flurry.LABEL_SMARTMATCHED_EXPENSE_ERECEIPT, smartMatchedEreceiptCount);
+                EventTracker.INSTANCE.track(Flurry.CATEGORY_ALL_MOBILE_EXPENSES, Flurry.ACTION_EXPENSE_LIST,
+                        Flurry.LABEL_CORPORATE_CARD_EXPENSE, cctCount);
+
             }
-
-            // Flurry Notification.
-            Map<String, String> params = new HashMap<String, String>();
-            params.put(Flurry.PARAM_NAME_CARD_COUNT, Integer.toString(flurryCardCount));
-            params.put(Flurry.PARAM_NAME_MOBILE_ENTRY_COUNT, Integer.toString(flurryMobileEntryCount));
-            params.put(Flurry.PARAM_NAME_RECEIPT_COUNT, Integer.toString(flurryReceiptCount));
-            EventTracker.INSTANCE.track(Flurry.CATEGORY_MOBILE_ENTRY, Flurry.EVENT_NAME_LIST, params);
-
-            // MOB-21114 Google Analytics tracking.
-            EventTracker.INSTANCE.track(Flurry.CATEGORY_ALL_MOBILE_EXPENSES, Flurry.ACTION_EXPENSE_LIST,
-                    Flurry.LABEL_ALL_EXPENSES, totalCount);
-            EventTracker.INSTANCE.track(Flurry.CATEGORY_ALL_MOBILE_EXPENSES, Flurry.ACTION_EXPENSE_LIST,
-                    Flurry.PARAM_VALUE_E_RECEIPT, eReceiptCount);
-            EventTracker.INSTANCE.track(Flurry.CATEGORY_ALL_MOBILE_EXPENSES, Flurry.ACTION_EXPENSE_LIST,
-                    Flurry.LABEL_SMARTMATCHED_EXPENSE, smartMatchedCount);
-            EventTracker.INSTANCE.track(Flurry.CATEGORY_ALL_MOBILE_EXPENSES, Flurry.ACTION_EXPENSE_LIST,
-                    Flurry.LABEL_SMARTMATCHED_EXPENSE_ERECEIPT, smartMatchedEreceiptCount);
-            EventTracker.INSTANCE.track(Flurry.CATEGORY_ALL_MOBILE_EXPENSES, Flurry.ACTION_EXPENSE_LIST,
-                    Flurry.LABEL_CORPORATE_CARD_EXPENSE, cctCount);
-
         }
         return listItems;
     }
@@ -2782,6 +2833,7 @@ public class Expenses extends BaseFragment implements INetworkActivityListener {
      * any new expense object representing the same data is placed within a new hash set of checked expenses becoming the official
      * set.
      */
+
     private void reselectCheckedExpenses(List<Expense> expenses) {
         Iterator<Expense> ckExpIter = checkedExpenses.iterator();
         HashSet<Expense> newCheckedExpenses = new HashSet<Expense>();
@@ -2793,63 +2845,63 @@ public class Expenses extends BaseFragment implements INetworkActivityListener {
                 // Check for expense type equality.
                 if (ckExp.getExpenseEntryType().equals(listExp.getExpenseEntryType())) {
                     switch (ckExp.getExpenseEntryType()) {
-                    case CASH: {
-                        // Do the expense keys match?
-                        MobileEntry cashTrans = ckExp.getCashTransaction();
-                        if (cashTrans.getMeKey().equalsIgnoreCase(listExp.getCashTransaction().getMeKey())) {
-                            newCheckedExpenses.add(listExp);
+                        case CASH: {
+                            // Do the expense keys match?
+                            MobileEntry cashTrans = ckExp.getCashTransaction();
+                            if (cashTrans.getMeKey().equalsIgnoreCase(listExp.getCashTransaction().getMeKey())) {
+                                newCheckedExpenses.add(listExp);
+                            }
+                            break;
                         }
-                        break;
-                    }
-                    case PERSONAL_CARD: {
-                        // Do the personal card accounts match?
-                        if (ckExp.getPersonalCard().pcaKey.equalsIgnoreCase(listExp.getPersonalCard().pcaKey)) {
-                            // Do the card transactions match?
-                            if (ckExp.getPersonalCardTransaction().pctKey.equalsIgnoreCase(listExp
-                                    .getPersonalCardTransaction().pctKey)) {
+                        case PERSONAL_CARD: {
+                            // Do the personal card accounts match?
+                            if (ckExp.getPersonalCard().pcaKey.equalsIgnoreCase(listExp.getPersonalCard().pcaKey)) {
+                                // Do the card transactions match?
+                                if (ckExp.getPersonalCardTransaction().pctKey.equalsIgnoreCase(listExp
+                                        .getPersonalCardTransaction().pctKey)) {
+                                    newCheckedExpenses.add(listExp);
+                                }
+                            }
+                            break;
+                        }
+                        case CORPORATE_CARD: {
+                            // Do the corporate card transaction keys match?
+                            if (ckExp.getCorporateCardTransaction().getCctKey()
+                                    .equalsIgnoreCase(listExp.getCorporateCardTransaction().getCctKey())) {
+                                newCheckedExpenses.add(listExp);
+                            }
+                            break;
+                        }
+                        case SMART_CORPORATE: {
+                            // Do the corporate card transaction keys match?
+                            if (ckExp.getCorporateCardTransaction().getCctKey()
+                                    .equalsIgnoreCase(listExp.getCorporateCardTransaction().getCctKey())) {
+                                newCheckedExpenses.add(listExp);
+                            }
+                            break;
+                        }
+                        case SMART_PERSONAL: {
+                            // Do the personal card accounts match?
+                            if (ckExp.getPersonalCard().pcaKey.equalsIgnoreCase(listExp.getPersonalCard().pcaKey)) {
+                                // Do the card transactions match?
+                                if (ckExp.getPersonalCardTransaction().pctKey.equalsIgnoreCase(listExp
+                                        .getPersonalCardTransaction().pctKey)) {
+                                    newCheckedExpenses.add(listExp);
+                                }
+                            }
+                            break;
+                        }
+                        case RECEIPT_CAPTURE: {
+                            if (ckExp.getReceiptCapture().rcKey.equalsIgnoreCase(listExp.getReceiptCapture().rcKey)) {
+                                newCheckedExpenses.add(listExp);
+                            }
+                            break;
+                        }
+                        case E_RECEIPT: {
+                            if (ckExp.getEReceipt().getEReceiptId().equalsIgnoreCase(listExp.getEReceipt().getEReceiptId())) {
                                 newCheckedExpenses.add(listExp);
                             }
                         }
-                        break;
-                    }
-                    case CORPORATE_CARD: {
-                        // Do the corporate card transaction keys match?
-                        if (ckExp.getCorporateCardTransaction().getCctKey()
-                                .equalsIgnoreCase(listExp.getCorporateCardTransaction().getCctKey())) {
-                            newCheckedExpenses.add(listExp);
-                        }
-                        break;
-                    }
-                    case SMART_CORPORATE: {
-                        // Do the corporate card transaction keys match?
-                        if (ckExp.getCorporateCardTransaction().getCctKey()
-                                .equalsIgnoreCase(listExp.getCorporateCardTransaction().getCctKey())) {
-                            newCheckedExpenses.add(listExp);
-                        }
-                        break;
-                    }
-                    case SMART_PERSONAL: {
-                        // Do the personal card accounts match?
-                        if (ckExp.getPersonalCard().pcaKey.equalsIgnoreCase(listExp.getPersonalCard().pcaKey)) {
-                            // Do the card transactions match?
-                            if (ckExp.getPersonalCardTransaction().pctKey.equalsIgnoreCase(listExp
-                                    .getPersonalCardTransaction().pctKey)) {
-                                newCheckedExpenses.add(listExp);
-                            }
-                        }
-                        break;
-                    }
-                    case RECEIPT_CAPTURE: {
-                        if (ckExp.getReceiptCapture().rcKey.equalsIgnoreCase(listExp.getReceiptCapture().rcKey)) {
-                            newCheckedExpenses.add(listExp);
-                        }
-                        break;
-                    }
-                    case E_RECEIPT: {
-                        if (ckExp.getEReceipt().getEReceiptId().equalsIgnoreCase(listExp.getEReceipt().getEReceiptId())) {
-                            newCheckedExpenses.add(listExp);
-                        }
-                    }
                     }
                 }
             }
@@ -2860,22 +2912,17 @@ public class Expenses extends BaseFragment implements INetworkActivityListener {
         toggleButtonBar();
     }
 
-    private void getSmartExpenses(boolean refreshReceiptList) {
+    private void getSmartExpenses(boolean refreshExpenseItList) {
 
-        // If OCR users, need to kick off latest receipts list MWS
-        // so we have the OCR status. If that MWS call returns
-        // successfully, the callback/listener will then call this
-        // method again to fetch the list of Smart Expenses.
-        if (Preferences.isOCRUser() && refreshReceiptList) {
+        if (Preferences.isExpenseItUser() && refreshExpenseItList) {
 
             showLoadingView();
-            expensesCallback.doGetReceiptList();
+            expensesCallback.doGetExpenseItList(true);
 
             return;
         }
 
         expensesCallback.doGetSmartExpenseList();
-
     }
 
     /**

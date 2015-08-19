@@ -1,5 +1,4 @@
 apply plugin: 'com.android.library'
-apply plugin: 'jacoco'
 
 dependencies {
     compile fileTree(include: '*.jar', dir: 'libs')
@@ -14,20 +13,6 @@ android {
     // --- Filled by parent's build
     compileSdkVersion 21
     buildToolsVersion "22.0.1"
-
-    /* START test coverage */
-    buildTypes {
-        release {}
-        debug {
-            testCoverageEnabled true
-        }
-    }
-
-    defaultConfig {
-        testHandleProfiling true
-        testFunctionalTest true
-        multiDexEnabled true
-    }
 
     sourceSets {
         main {
@@ -54,20 +39,3 @@ android {
     }
 
 }
-/* START test coverage */
-jacoco {
-    toolVersion = "0.7.2.+"
-}
-
-task jacocoTestReport(type: JacocoReport, dependsOn: "testDebug") {
-    group = "Reporting"
-    description = "Generate Jacoco coverage reports after running tests."
-    reports {
-        xml.enabled = true
-        html.enabled = true
-    }
-    classDirectories = fileTree(dir: './build/intermediates/classes/debug')
-    sourceDirectories = files('src/com/concur')
-    executionData = files("$buildDir/jacoco/testDebug.exec")
-}
-/* END test coverage */

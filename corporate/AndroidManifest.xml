@@ -244,6 +244,7 @@
 
         <!-- Expense related activities. -->
         <activity android:name="com.concur.mobile.core.activity.ViewImage"/>
+        <activity android:name="com.concur.mobile.core.expense.charge.activity.ExpenseItReceiptView"/>
         <activity
             android:name="com.concur.mobile.core.expense.report.activity.ExpenseReportHeader"
             android:windowSoftInputMode="adjustResize"/>
@@ -290,6 +291,9 @@
             android:windowSoftInputMode="adjustResize"/>
         <activity
             android:name="com.concur.mobile.core.expense.charge.activity.QuickExpense"
+            android:windowSoftInputMode="adjustResize"/>
+        <activity
+            android:name="com.concur.mobile.core.expense.charge.activity.ExpenseItDetailActivity"
             android:windowSoftInputMode="adjustResize"/>
         <activity android:name="com.concur.mobile.core.expense.activity.ExpensesAndReceipts">
             <meta-data
