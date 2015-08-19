@@ -140,7 +140,6 @@ public class ExpenseItReceiptView extends BaseActivity {
 
             if (cursor != null && cursor.moveToFirst()) {
                 expenseItReceipt = new ExpenseItReceipt(this, cursor);
-                cursor.close();
 
                 if (expenseItReceipt == null || expenseItReceipt.getImageData() == null) {
                     getImage();
@@ -152,6 +151,7 @@ public class ExpenseItReceiptView extends BaseActivity {
                 receiptImageUnavailable.setVisibility(View.VISIBLE);
                 progressBar.setVisibility(View.GONE);
             }
+            cursor.close();
         }
 
         EventTracker.INSTANCE.track(Flurry.CATEGORY_EXPENSE_EXPENSEIT,
