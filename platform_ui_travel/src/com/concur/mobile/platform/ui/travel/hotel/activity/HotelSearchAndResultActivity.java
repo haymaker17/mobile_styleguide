@@ -1027,7 +1027,7 @@ public class HotelSearchAndResultActivity extends TravelBaseActivity
                             new Object[]{formattedMinBenchmarkPrice, formattedMaxBenchmarkPrice});
                 }
                 ((TextView) (priceToBeatView.findViewById(R.id.priceToBeatText)))
-                        .setText(getText(R.string.price_to_beat_label) + " : " + priceToBeatRangeText);
+                        .setText(getString(R.string.price_to_beat_label).toUpperCase() + " : " + priceToBeatRangeText);
                 // init the onclick event
                 priceToBeatView.setOnClickListener(new View.OnClickListener() {
 

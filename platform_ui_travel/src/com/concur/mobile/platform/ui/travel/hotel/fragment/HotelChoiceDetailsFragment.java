@@ -11,9 +11,15 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.*;
+import android.widget.ArrayAdapter;
+import android.widget.ImageView;
+import android.widget.ScrollView;
+import android.widget.TabHost;
 import android.widget.TabHost.OnTabChangeListener;
 import android.widget.TabHost.TabSpec;
+import android.widget.TabWidget;
+import android.widget.TextView;
+
 import com.concur.mobile.platform.travel.search.hotel.Hotel;
 import com.concur.mobile.platform.travel.search.hotel.HotelImagePair;
 import com.concur.mobile.platform.ui.common.fragment.PlatformFragmentV1;
@@ -136,7 +142,7 @@ public class HotelChoiceDetailsFragment extends PlatformFragmentV1 implements On
         mListView.addHeaderView(header);
 
         ArrayAdapter<String> adapter = new ArrayAdapter<String>(getActivity(),
-                android.R.layout.simple_expandable_list_item_1, new String[] { });
+                android.R.layout.simple_expandable_list_item_1, new String[]{});
         mListView.setAdapter(adapter);
 
         setActionBar();
@@ -202,6 +208,7 @@ public class HotelChoiceDetailsFragment extends PlatformFragmentV1 implements On
                 .inflate(R.layout.tab, (ViewGroup) mRoot.findViewById(android.R.id.tabs), false);
         TextView tv = ((TextView) indicator.findViewById(R.id.text));
         tv.setText(labelId);
+        tv.setAllCaps(true);
         // setting tabs width to 1/3
         DisplayMetrics displaymetrics = new DisplayMetrics();
         getActivity().getWindowManager().getDefaultDisplay().getMetrics(displaymetrics);
@@ -260,42 +267,42 @@ public class HotelChoiceDetailsFragment extends PlatformFragmentV1 implements On
         List<HotelImagePair> imagePairs = (hotel != null ? hotel.imagePairs : null);
         int orientation = getResources().getConfiguration().orientation;
         switch (orientation) {
-        case Configuration.ORIENTATION_PORTRAIT:
+            case Configuration.ORIENTATION_PORTRAIT:
 
-            if (mImageView != null && imagePairs != null && imagePairs.size() > 0) {
-                HotelImagePair image2 = null;
-                bitmap = null;
+                if (mImageView != null && imagePairs != null && imagePairs.size() > 0) {
+                    HotelImagePair image2 = null;
+                    bitmap = null;
 
-                if (imagePairs.size() > 1) {
-                    image2 = imagePairs.get(1);
+                    if (imagePairs.size() > 1) {
+                        image2 = imagePairs.get(1);
+                    } else {
+                        image2 = imagePairs.get(0);
+                    }
+                    String Url = image2.image;
+                    URI uri = URI.create(image2.image);
+                    ImageCache imgCache = ImageCache.getInstance(getActivity());
+
+                    // set the image uri in the activity associated with this fragment
+                    callBackListener.setHeaderImageURL(Url);
+                    bitmap = imgCache.getBitmapFromCache(uri);
+                    if (bitmap == null) {
+                        new LoaderImageView(getActivity(), Url, mImageView, uri);
+                        mListView.requestFocus();
+
+                    } else {
+                        mImageView.setImageBitmap(bitmap);
+                        mImageView.setVisibility(View.VISIBLE);
+                    }
+
                 } else {
-                    image2 = imagePairs.get(0);
-                }
-                String Url = image2.image;
-                URI uri = URI.create(image2.image);
-                ImageCache imgCache = ImageCache.getInstance(getActivity());
+                    mImageView.setVisibility(View.GONE);
 
-                // set the image uri in the activity associated with this fragment
-                callBackListener.setHeaderImageURL(Url);
-                bitmap = imgCache.getBitmapFromCache(uri);
-                if (bitmap == null) {
-                    new LoaderImageView(getActivity(), Url, mImageView, uri);
-                    mListView.requestFocus();
-
-                } else {
-                    mImageView.setImageBitmap(bitmap);
-                    mImageView.setVisibility(View.VISIBLE);
                 }
 
-            } else {
+                break;
+            case Configuration.ORIENTATION_LANDSCAPE:
                 mImageView.setVisibility(View.GONE);
-
-            }
-
-            break;
-        case Configuration.ORIENTATION_LANDSCAPE:
-            mImageView.setVisibility(View.GONE);
-            break;
+                break;
         }
     }
 
