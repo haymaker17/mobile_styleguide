@@ -8,7 +8,7 @@ import android.view.ViewGroup;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 import com.concur.core.R;
-import com.concur.mobile.core.request.util.DateUtil;
+import com.concur.mobile.platform.request.util.DateUtil;
 import com.concur.mobile.core.util.FormatUtil;
 import com.concur.mobile.platform.request.dto.RequestEntryDTO;
 import com.concur.mobile.platform.request.dto.RequestSegmentDTO;

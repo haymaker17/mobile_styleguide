@@ -12,7 +12,7 @@ import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 import com.concur.core.R;
-import com.concur.mobile.core.request.util.DateUtil;
+import com.concur.mobile.platform.request.util.DateUtil;
 import com.concur.mobile.core.util.Const;
 import com.concur.mobile.core.util.FormatUtil;
 import com.concur.mobile.platform.request.dto.RequestDTO;

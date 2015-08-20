@@ -1,10 +1,10 @@
-package com.concur.mobile.core.request.task;
+package com.concur.mobile.platform.request.task;
 
 import android.content.Context;
 import android.util.Log;
+
 import com.concur.mobile.base.service.BaseAsyncResultReceiver;
-import com.concur.mobile.core.request.util.ConnectHelper;
-import com.concur.mobile.core.service.ServiceRequestException;
+import com.concur.mobile.platform.request.util.ConnectHelper;
 import com.concur.mobile.platform.util.Const;
 
 import java.net.HttpURLConnection;
@@ -64,8 +64,8 @@ public class RequestTask extends AbstractRequestWSCallTask {
      * @param entityId
      */
     public RequestTask(Context context, int taskId, BaseAsyncResultReceiver receiver,
-            ConnectHelper.ConnectVersion version, ConnectHelper.Module module, ConnectHelper.Action action,
-            String entityId) {
+                       ConnectHelper.ConnectVersion version, ConnectHelper.Module module, ConnectHelper.Action action,
+                       String entityId) {
         super(context, taskId, receiver);
         this.version = version;
         this.module = module;
@@ -84,7 +84,7 @@ public class RequestTask extends AbstractRequestWSCallTask {
      * @param entityId
      */
     public RequestTask(Context context, int taskId, BaseAsyncResultReceiver receiver, ConnectHelper.Action action,
-            String entityId) {
+                       String entityId) {
         super(context, taskId, receiver);
         this.entityId = entityId;
         this.params = new HashMap<String, Object>();
@@ -97,12 +97,14 @@ public class RequestTask extends AbstractRequestWSCallTask {
      * @return returns the service end-point for this request.
      * @throws com.concur.mobile.core.service.ServiceRequestException
      */
-    @Override protected String getServiceEndPoint() throws ServiceRequestException {
+    @Override
+    protected String getServiceEndPoint() throws Exception {
         return ConnectHelper
                 .getServiceEndpointURI(version, module, action, params, entityId, requestType == HttpRequestType.GET);
     }
 
-    @Override protected String getPostBody() {
+    @Override
+    protected String getPostBody() {
         return postBody;
     }
 
@@ -111,7 +113,8 @@ public class RequestTask extends AbstractRequestWSCallTask {
      *
      * @see com.concur.mobile.platform.service.PlatformAsyncRequestTask#configureConnection(java.net.HttpURLConnection)
      */
-    @Override protected void configureConnection(HttpURLConnection connection) {
+    @Override
+    protected void configureConnection(HttpURLConnection connection) {
         super.configureConnection(connection);
 
         if (requestType == HttpRequestType.PUT) {
@@ -142,23 +145,23 @@ public class RequestTask extends AbstractRequestWSCallTask {
         this.action = action;
         switch (action) {
 
-        case LIST:
-        case DETAIL:
-            postBody = null;
-            requestType = HttpRequestType.GET;
-            break;
+            case LIST:
+            case DETAIL:
+                postBody = null;
+                requestType = HttpRequestType.GET;
+                break;
 
-        case UPDATE_AND_SUBMIT:
-            postBody = "";
-            requestType = HttpRequestType.PUT;
-            break;
+            case UPDATE_AND_SUBMIT:
+                postBody = "";
+                requestType = HttpRequestType.PUT;
+                break;
 
-        case CREATE_AND_SUBMIT:
-        default:
-            // --- any custom action not specifically defined will be considered as a POST action
-            postBody = "";
-            requestType = HttpRequestType.POST;
-            break;
+            case CREATE_AND_SUBMIT:
+            default:
+                // --- any custom action not specifically defined will be considered as a POST action
+                postBody = "";
+                requestType = HttpRequestType.POST;
+                break;
         }
         return this;
     }

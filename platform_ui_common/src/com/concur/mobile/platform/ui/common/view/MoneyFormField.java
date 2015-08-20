@@ -62,24 +62,42 @@ public class MoneyFormField extends EditText implements TextWatcher {
                 DigitsKeyListener.getInstance("0123456789"));
     }
 
+    /**
+     * Set the currency code of the currency in use. This will apply the corresponding currency to the amount
+     * string rendered on screen ($###,###.## / ### ###,##€ / whatever) depending on the user's locale & the code
+     * received.
+     * => The string format depends on the locale while the currency within depends on the code received.
+     *
+     * @param currencyCode
+     */
     public void setCurrencyCode(String currencyCode) {
-        if (currencyCode != null && (currency == null || !currencyCode.equals(currency.getCurrencyCode()))) {
-            // --- removes the previous currency symbol
-            if (getText().length() > 0 && currency != null) {
+        if (currencyCode == null) {
+            return;
+        }
+        if (currency == null) {
+            // --- Value set
+            applyCurrency(currencyCode);
+            afterTextChanged(getText());
+        } else if (!currencyCode.equals(currency.getCurrencyCode())) {
+            // --- Value changed
+            if (getText().length() > 0) {
                 // --- remove old currency symbol first
                 final String s = cleanInput(getText().toString());
+
                 applyCurrency(currencyCode);
                 setText(s);
             } else {
                 applyCurrency(currencyCode);
-                afterTextChanged(getText());
             }
-        } else if (currencyCode != null && currency == null) {
-            applyCurrency(currencyCode);
-            afterTextChanged(getText());
         }
     }
 
+    /**
+     * Basically removes the formatting applied by FormatUtil.formatAmout() to extract the double value displayed
+     *
+     * @param input
+     * @return
+     */
     private String cleanInput(String input) {
         return input.replaceAll(Matcher.quoteReplacement("[" + currency.getSymbol() + groupingSeparator + " ]"), "");
     }
@@ -165,11 +183,9 @@ public class MoneyFormField extends EditText implements TextWatcher {
     }
 
     private int getDecimalSeparatorPosition(String s) {
-        if (locale != null && s.length() > 0) {
+        if (s != null && s.length() > 0) {
             final String sSeparator = String.valueOf(decimalSeparator);
-            if (s.contains(sSeparator)) {
-                return s.indexOf(sSeparator);
-            }
+            return s.indexOf(sSeparator);
         }
         return -1;
     }
