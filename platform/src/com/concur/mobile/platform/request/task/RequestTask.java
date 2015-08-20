@@ -95,7 +95,7 @@ public class RequestTask extends AbstractRequestWSCallTask {
      * Gets the service end-point for this request.
      *
      * @return returns the service end-point for this request.
-     * @throws com.concur.mobile.core.service.ServiceRequestException
+     * @throws Exception
      */
     @Override
     protected String getServiceEndPoint() throws Exception {
@@ -151,17 +151,17 @@ public class RequestTask extends AbstractRequestWSCallTask {
                 requestType = HttpRequestType.GET;
                 break;
 
-            case UPDATE_AND_SUBMIT:
-                postBody = "";
-                requestType = HttpRequestType.PUT;
-                break;
+        case UPDATE_AND_SUBMIT:
+            postBody = "";
+            requestType = HttpRequestType.PUT;
+            break;
 
-            case CREATE_AND_SUBMIT:
-            default:
-                // --- any custom action not specifically defined will be considered as a POST action
-                postBody = "";
-                requestType = HttpRequestType.POST;
-                break;
+        case CREATE_AND_SUBMIT:
+        default:
+            // --- any custom action not specifically defined will be considered as a POST action
+            postBody = "";
+            requestType = HttpRequestType.POST;
+            break;
         }
         return this;
     }

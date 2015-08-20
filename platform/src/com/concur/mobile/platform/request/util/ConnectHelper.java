@@ -4,7 +4,6 @@ import android.content.Context;
 import android.os.Bundle;
 import android.widget.Toast;
 import com.concur.mobile.base.service.BaseAsyncRequestTask;
-import com.concur.mobile.core.service.ServiceRequestException;
 
 import java.util.Map;
 import java.util.Map.Entry;
@@ -69,10 +68,10 @@ public class ConnectHelper {
      * @param queryStringParameters get || post parameters
      * @param isGet                 == (task.getPostBody() == null)
      * @return the endpoint url
-     * @throws ServiceRequestException exception which occurred
+     * @throws Exception exception which occurred
      */
     public static String getServiceEndpointURI(ConnectVersion connectVersion, Module module, Action action,
-            Map<String, Object> queryStringParameters, boolean isGet) throws ServiceRequestException {
+            Map<String, Object> queryStringParameters, boolean isGet) throws Exception {
         return getServiceEndpointURI(connectVersion, module, action, queryStringParameters, null, isGet);
     }
 
@@ -85,10 +84,10 @@ public class ConnectHelper {
      * @param isGet                 == (task.getPostBody() == null)
      * @param id                    the id of the specific entity we want to retrieve/work on
      * @return the endpoint url
-     * @throws ServiceRequestException exception which occurred
+     * @throws Exception exception which occurred
      */
     public static String getServiceEndpointURI(ConnectVersion connectVersion, Module module, Action action,
-            Map<String, Object> queryStringParameters, String id, boolean isGet) throws ServiceRequestException {
+            Map<String, Object> queryStringParameters, String id, boolean isGet) throws Exception {
         // --- "/api/v3.0/travelrequest"
         final StringBuilder serviceUri = new StringBuilder(
                 ENDPOINT_URI + connectVersion.versionNumber + "/" + module.moduleValue);
@@ -109,7 +108,7 @@ public class ConnectHelper {
             if (id != null && id.length() > 0) {
                 serviceUri.append("/" + id);
             } else {
-                throw new ServiceRequestException("ID cannot be null");
+                throw new Exception("ID cannot be null");
             }
 
             break;
@@ -119,13 +118,13 @@ public class ConnectHelper {
             if (id != null && id.length() > 0) {
                 serviceUri.append("/" + id);
             } else {
-                throw new ServiceRequestException("ID cannot be null");
+                throw new Exception("ID cannot be null");
             }
 
             if (action.actionValue != null) {
                 serviceUri.append("/" + action.actionValue);
             } else {
-                throw new ServiceRequestException("Action cannot be null");
+                throw new Exception("Action cannot be null");
             }
             break;
 
@@ -138,7 +137,7 @@ public class ConnectHelper {
             if (id != null && id.length() > 0) {
                 serviceUri.append("/" + id);
             } else {
-                throw new ServiceRequestException("ID cannot be null");
+                throw new Exception("ID cannot be null");
             }
             break;
 

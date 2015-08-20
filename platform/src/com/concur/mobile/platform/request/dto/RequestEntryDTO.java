@@ -60,8 +60,8 @@ public class RequestEntryDTO {
     @SerializedName("Exceptions")
     private List<RequestExceptionDTO> exceptions;
 
-    private List<RequestCommentDTO> comments;
     private Integer displayOrder = 1;
+    private List<RequestCommentDTO> comments;
 
     // --- This is some horrible stuff required to post an entry...
     @Expose

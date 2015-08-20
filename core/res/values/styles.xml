@@ -902,8 +902,11 @@
         <item name="android:textStyle">bold</item>
         <item name="android:textColor">@color/CellTextBlue</item>
     </style>
-
-
+    <style name="RequestExceptionDialog" parent="@android:style/Theme.Holo.Light">
+        <item name="android:windowBackground">@null</item>
+        <item name="android:windowIsFloating">true</item>
+    </style>
+    
     <!-- Styles for Travel Allowances -->
     <style name="TARow">
         <item name="android:paddingTop">16dp</item>

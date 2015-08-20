@@ -9,9 +9,8 @@ import android.util.Log;
 
 import com.concur.mobile.base.service.BaseAsyncRequestTask;
 import com.concur.mobile.base.service.BaseAsyncResultReceiver;
-import com.concur.mobile.core.service.ServiceRequestException;
-import com.concur.mobile.core.util.Const;
 import com.concur.mobile.platform.service.PlatformAsyncRequestTask;
+import com.concur.mobile.platform.util.Const;
 import com.concur.mobile.platform.util.Format;
 import com.concur.platform.PlatformProperties;
 
@@ -74,7 +73,7 @@ public abstract class AbstractRequestWSCallTask extends BaseAsyncRequestTask {
                     Log.e(Const.LOG_TAG, CLS_TAG + ".getURL: service end-point is not set, cancelling request.");
                     resultCode = BaseAsyncRequestTask.RESULT_CANCEL;
                 }
-            } catch (ServiceRequestException e) {
+            } catch (Exception e) {
                 Log.e(Const.LOG_TAG,
                         CLS_TAG + ".getURL: request cancelled. Following error met: " + (e.getMessage() != null ?
                                 e.getMessage() :
@@ -93,9 +92,9 @@ public abstract class AbstractRequestWSCallTask extends BaseAsyncRequestTask {
      * Gets the service end-point for this request.
      *
      * @return returns the service end-point for this request.
-     * @throws ServiceRequestException
+     * @throws Exception
      */
-    protected abstract String getServiceEndPoint() throws ServiceRequestException;
+    protected abstract String getServiceEndPoint() throws Exception;
 
     /**
      * Gets whether this request requires a session id.

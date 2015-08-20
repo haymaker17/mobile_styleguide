@@ -15,7 +15,6 @@ import android.view.View.OnClickListener;
 import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.ViewFlipper;
-
 import com.concur.core.R;
 import com.concur.mobile.base.service.BaseAsyncRequestTask;
 import com.concur.mobile.base.service.BaseAsyncRequestTask.AsyncReplyListener;
@@ -23,9 +22,6 @@ import com.concur.mobile.base.service.BaseAsyncResultReceiver;
 import com.concur.mobile.core.ConcurCore;
 import com.concur.mobile.core.activity.BaseActivity;
 import com.concur.mobile.core.request.adapter.SortedRequestListAdapter;
-import com.concur.mobile.platform.request.task.RequestTask;
-import com.concur.mobile.platform.request.util.ConnectHelper;
-import com.concur.mobile.platform.request.util.RequestStatus;
 import com.concur.mobile.core.util.Const;
 import com.concur.mobile.core.util.EventTracker;
 import com.concur.mobile.core.util.Flurry;
@@ -35,17 +31,15 @@ import com.concur.mobile.platform.request.RequestGroupConfigurationCache;
 import com.concur.mobile.platform.request.RequestListCache;
 import com.concur.mobile.platform.request.dto.RequestDTO;
 import com.concur.mobile.platform.request.groupConfiguration.RequestGroupConfiguration;
+import com.concur.mobile.platform.request.task.RequestTask;
+import com.concur.mobile.platform.request.util.ConnectHelper;
 import com.concur.mobile.platform.request.util.RequestParser;
+import com.concur.mobile.platform.request.util.RequestStatus;
 import com.concur.mobile.platform.ui.common.dialog.NoConnectivityDialogFragment;
 import com.concur.mobile.platform.ui.common.util.RowSwipeGestureListener;
 import com.getbase.floatingactionbutton.AddFloatingActionButton;
 
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.HashSet;
-import java.util.List;
-import java.util.Map;
-import java.util.Set;
+import java.util.*;
 
 /**
  * @author olivierb
@@ -85,8 +79,7 @@ public class RequestListActivity extends BaseActivity implements SwipeRefreshLay
     private RequestListCache requestListCache = null;
     private ConnectFormFieldsCache formFieldsCache = null;
 
-    @Override
-    protected void onCreate(Bundle savedInstanceState) {
+    @Override protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         final ConcurCore concurCore = (ConcurCore) getApplication();
         setContentView(R.layout.request_list);
@@ -151,8 +144,7 @@ public class RequestListActivity extends BaseActivity implements SwipeRefreshLay
                     /**
                      * @see RowSwipeGestureListener#onRowTap(Object)
                      */
-                    @Override
-                    public boolean onRowTap(RequestDTO request) {
+                    @Override public boolean onRowTap(RequestDTO request) {
 
                         // Flurry Notification
                         Map<String, String> params = new HashMap<String, String>();
@@ -173,8 +165,7 @@ public class RequestListActivity extends BaseActivity implements SwipeRefreshLay
                     /**
                      * @see RowSwipeGestureListener#onButtonTap(Object, View)
                      */
-                    @Override
-                    public boolean onButtonTap(RequestDTO request, View view) {
+                    @Override public boolean onButtonTap(RequestDTO request, View view) {
                         if (view != null && view.getId() == R.id.recallButton) {
                             // --- execute recall action
                             Log.d(CLS_TAG, "--- Request RECALL action (list)");
@@ -182,7 +173,8 @@ public class RequestListActivity extends BaseActivity implements SwipeRefreshLay
                             // Flurry Notification
                             Map<String, String> params = new HashMap<String, String>();
                             params.put(Flurry.PARAM_NAME_ACTION, Flurry.PARAM_VALUE_TRAVEL_REQUEST_LIST_RECALL_ACTION);
-                            EventTracker.INSTANCE.track(Flurry.CATEGORY_TRAVEL_REQUEST, Flurry.EVENT_NAME_ACTION, params);
+                            EventTracker.INSTANCE
+                                    .track(Flurry.CATEGORY_TRAVEL_REQUEST, Flurry.EVENT_NAME_ACTION, params);
 
                             recallRequestAction(request);
                         }
@@ -192,8 +184,7 @@ public class RequestListActivity extends BaseActivity implements SwipeRefreshLay
                     /**
                      * @see RowSwipeGestureListener#isRowSwipeable(Object)
                      */
-                    @Override
-                    public boolean isRowSwipeable(RequestDTO tr) {
+                    @Override public boolean isRowSwipeable(RequestDTO tr) {
                         return tr != null && tr.isActionPermitted(RequestParser.PermittedAction.RECALL);
                     }
                 });
@@ -226,8 +217,7 @@ public class RequestListActivity extends BaseActivity implements SwipeRefreshLay
 
         newRequestButton.setOnClickListener(new OnClickListener() {
 
-            @Override
-            public void onClick(View v) {
+            @Override public void onClick(View v) {
                 // --- reminder: button is displayed only if a configuration with a default policy exists
                 final String formId = groupConfigurationCache.getValue(getUserId()).getFormId();
 
@@ -378,8 +368,7 @@ public class RequestListActivity extends BaseActivity implements SwipeRefreshLay
         }
     }
 
-    @Override
-    protected void onResume() {
+    @Override protected void onResume() {
         super.onResume();
         // --- Request Group Configuration
         if (asyncGroupConfigurationReceiver == null) {
@@ -410,20 +399,18 @@ public class RequestListActivity extends BaseActivity implements SwipeRefreshLay
         }
     }
 
-    @Override
-    protected void onPause() {
+    @Override protected void onPause() {
         super.onPause();
         cleanupReceivers();
     }
 
-    @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
+    @Override public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {
-            case android.R.id.home:
-                NavUtils.navigateUpFromSameTask(this);
-                return true;
-            default:
-                return super.onOptionsItemSelected(item);
+        case android.R.id.home:
+            NavUtils.navigateUpFromSameTask(this);
+            return true;
+        default:
+            return super.onOptionsItemSelected(item);
         }
     }
 
@@ -431,8 +418,7 @@ public class RequestListActivity extends BaseActivity implements SwipeRefreshLay
         asyncFormFieldsReceiver.setListener(null);
     }
 
-    @Override
-    public void onRefresh() {
+    @Override public void onRefresh() {
         // If we are offline, show a toast and dismiss the refresh spinner.
         if (!ConcurCore.isConnected()) {
             swipeLayout.setRefreshing(false);
@@ -447,8 +433,7 @@ public class RequestListActivity extends BaseActivity implements SwipeRefreshLay
      */
     private class TRListListener implements AsyncReplyListener {
 
-        @Override
-        public void onRequestSuccess(Bundle resultData) {
+        @Override public void onRequestSuccess(Bundle resultData) {
             // converts the result string to a list of TravelRequestDTO
             final List<RequestDTO> listRequests = requestParser
                     .parseTRListResponse(resultData.getString(BaseAsyncRequestTask.HTTP_RESPONSE));
@@ -469,8 +454,7 @@ public class RequestListActivity extends BaseActivity implements SwipeRefreshLay
             updateListUI(listRequests);
         }
 
-        @Override
-        public void onRequestFail(Bundle resultData) {
+        @Override public void onRequestFail(Bundle resultData) {
             if (requestListView.getAdapter().isEmpty()) {
                 handleRefreshFail();
             }
@@ -478,8 +462,7 @@ public class RequestListActivity extends BaseActivity implements SwipeRefreshLay
             Log.d(Const.LOG_TAG, " onRequestFail in TRListListener...");
         }
 
-        @Override
-        public void onRequestCancel(Bundle resultData) {
+        @Override public void onRequestCancel(Bundle resultData) {
             if (requestListView.getAdapter().isEmpty()) {
                 handleRefreshFail();
             }
@@ -487,8 +470,7 @@ public class RequestListActivity extends BaseActivity implements SwipeRefreshLay
             Log.d(Const.LOG_TAG, " onRequestCancel in TRListListener...");
         }
 
-        @Override
-        public void cleanup() {
+        @Override public void cleanup() {
             asyncTRListReceiver.setListener(null);
         }
     }
@@ -498,8 +480,7 @@ public class RequestListActivity extends BaseActivity implements SwipeRefreshLay
      */
     private class FormFieldsListener implements AsyncReplyListener {
 
-        @Override
-        public void onRequestSuccess(Bundle resultData) {
+        @Override public void onRequestSuccess(Bundle resultData) {
             final String formId = resultData.getString(RequestTask.P_FORM_ID);
             // --- parse the form received
             final List<ConnectForm> lForms = requestParser
@@ -507,20 +488,17 @@ public class RequestListActivity extends BaseActivity implements SwipeRefreshLay
             formFieldsCache.addForms(lForms);
         }
 
-        @Override
-        public void onRequestFail(Bundle resultData) {
+        @Override public void onRequestFail(Bundle resultData) {
             Log.d(Const.LOG_TAG, CLS_TAG + " calling decrement from onrequestfails");
             Log.d(Const.LOG_TAG, " onRequestFail in FormFieldsListener...");
         }
 
-        @Override
-        public void onRequestCancel(Bundle resultData) {
+        @Override public void onRequestCancel(Bundle resultData) {
             Log.d(Const.LOG_TAG, CLS_TAG + " calling decrement from onrequestcancel");
             Log.d(Const.LOG_TAG, " onRequestCancel in FormFieldsListener...");
         }
 
-        @Override
-        public void cleanup() {
+        @Override public void cleanup() {
             asyncFormFieldsReceiver.setListener(null);
         }
     }
@@ -530,8 +508,7 @@ public class RequestListActivity extends BaseActivity implements SwipeRefreshLay
      */
     private class GroupConfigurationListener implements AsyncReplyListener {
 
-        @Override
-        public void onRequestSuccess(Bundle resultData) {
+        @Override public void onRequestSuccess(Bundle resultData) {
             // --- parse the configurations received
             final List<RequestGroupConfiguration> rgcc = requestParser
                     .parseRequestGroupConfigurationsResponse(resultData.getString(BaseAsyncRequestTask.HTTP_RESPONSE));
@@ -551,49 +528,44 @@ public class RequestListActivity extends BaseActivity implements SwipeRefreshLay
             }
         }
 
-        @Override
-        public void onRequestFail(Bundle resultData) {
+        @Override public void onRequestFail(Bundle resultData) {
             Log.d(Const.LOG_TAG, CLS_TAG + " calling decrement from onrequestfails");
             Log.d(Const.LOG_TAG, " onRequestFail in GroupConfigurationListener...");
         }
 
-        @Override
-        public void onRequestCancel(Bundle resultData) {
+        @Override public void onRequestCancel(Bundle resultData) {
             Log.d(Const.LOG_TAG, CLS_TAG + " calling decrement from onrequestcancel");
             Log.d(Const.LOG_TAG, " onRequestCancel in GroupConfigurationListener...");
         }
 
-        @Override
-        public void cleanup() {
+        @Override public void cleanup() {
             asyncGroupConfigurationReceiver.setListener(null);
         }
     }
 
-    @Override
-    public void onActivityResult(int requestCode, int resultCode, Intent data) {
+    @Override public void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
         switch (requestCode) {
-            case (HEADER_RESULT):
-            case (SUMMARY_RESULT):
-                if (data != null) {
-                    // --- no result means we came from a request creation, so we need a refresh
-                    final Boolean doWSCall = data.getBooleanExtra(RequestEditActivity.DO_WS_REFRESH, true);
-                    if (doWSCall) {
-                        refreshData(true);
-                    } else {
-                        refreshData(false);
-                    }
+        case (HEADER_RESULT):
+        case (SUMMARY_RESULT):
+            if (data != null) {
+                // --- no result means we came from a request creation, so we need a refresh
+                final Boolean doWSCall = data.getBooleanExtra(RequestEditActivity.DO_WS_REFRESH, true);
+                if (doWSCall) {
+                    refreshData(true);
                 } else {
                     refreshData(false);
                 }
-                break;
+            } else {
+                refreshData(false);
+            }
+            break;
         }
     }
 
     public class TRActionListener implements AsyncReplyListener {
 
-        @Override
-        public void onRequestSuccess(Bundle resultData) {
+        @Override public void onRequestSuccess(Bundle resultData) {
             ((RequestListCache) getConcurCore().getRequestListCache()).setDirty(true);
 
             final String trId = resultData.getString(RequestTask.P_REQUEST_ID);
@@ -608,8 +580,7 @@ public class RequestListActivity extends BaseActivity implements SwipeRefreshLay
             refreshData(true);
         }
 
-        @Override
-        public void onRequestFail(Bundle resultData) {
+        @Override public void onRequestFail(Bundle resultData) {
             ConnectHelper.displayResponseMessage(getApplicationContext(), resultData,
                     getResources().getString(R.string.tr_error_recall));
 
@@ -618,8 +589,7 @@ public class RequestListActivity extends BaseActivity implements SwipeRefreshLay
             setView(ID_LIST_VIEW);
         }
 
-        @Override
-        public void onRequestCancel(Bundle resultData) {
+        @Override public void onRequestCancel(Bundle resultData) {
             ConnectHelper
                     .displayMessage(getApplicationContext(), getResources().getString(R.string.tr_operation_canceled));
             Log.d(Const.LOG_TAG, CLS_TAG + " calling decrement from onRequestCancel");
@@ -627,8 +597,7 @@ public class RequestListActivity extends BaseActivity implements SwipeRefreshLay
             setView(ID_LIST_VIEW);
         }
 
-        @Override
-        public void cleanup() {
+        @Override public void cleanup() {
             asyncRequestActionReceiver.setListener(null);
         }
     }

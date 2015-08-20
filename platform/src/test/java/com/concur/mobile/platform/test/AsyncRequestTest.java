@@ -318,11 +318,10 @@ public abstract class AsyncRequestTest {
     /**
      * Executes task, retrieve result and returns true if the resultCode is OK
      *
-     * @param task   the task to execute
-     * @param result the object to store the result in
+     * @param task the task to execute
      * @return whether the resultCode is OK or not
      */
-    protected boolean populateTaskResult(final BaseAsyncRequestTask task, final AsyncRequestResult result) {
+    protected <T extends BaseAsyncRequestTask> boolean populateTaskResult(T task) {
         boolean isOk = false;
         task.setRetainResponse(true);
 

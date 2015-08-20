@@ -1,5 +1,9 @@
 package com.concur.mobile.platform.config.provider;
 
+import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.List;
+
 import android.annotation.SuppressLint;
 import android.content.ContentResolver;
 import android.content.ContentValues;
@@ -41,10 +45,6 @@ import com.concur.mobile.platform.util.CursorUtil;
 import com.concur.mobile.platform.util.Format;
 import com.concur.mobile.platform.util.Parse;
 
-import java.util.ArrayList;
-import java.util.Calendar;
-import java.util.List;
-
 /**
  * Contains a set of utility methods for updating the Config provider.
  */
@@ -58,12 +58,16 @@ public class ConfigUtil {
 
     /**
      * Will update the session expiration time for the session with id <code>sessionId</code>.
-     *
-     * @param context               contains a reference to an application context.
-     * @param sessionId             contains a reference to the session id.
-     * @param sessionExpirationTime contains the session expiration time.
+     * 
+     * @param context
+     *            contains a reference to an application context.
+     * @param sessionId
+     *            contains a reference to the session id.
+     * @param sessionExpirationTime
+     *            contains the session expiration time.
      * @return returns <code>true</code> upon success; <code>false</code> otherwise.
-     * @throws IllegalArgumentException if <code>sessionId</code> is null or empty.
+     * @throws IllegalArgumentException
+     *             if <code>sessionId</code> is null or empty.
      */
     public static boolean updateSessionExpirationTime(Context context, String sessionId, Long sessionExpirationTime) {
         boolean updated = true;
@@ -78,7 +82,7 @@ public class ConfigUtil {
         ContentValues values = new ContentValues();
         values.put(Config.SessionColumns.SESSION_EXPIRATION_TIME, sessionExpirationTime);
         String where = Config.SessionColumns.SESSION_ID + " = ?";
-        String[] selectionArgs = {sessionId};
+        String[] selectionArgs = { sessionId };
         int rowsUpdated = resolver.update(Config.SessionColumns.CONTENT_URI, values, where, selectionArgs);
 
         if (rowsUpdated == 1) {
@@ -95,10 +99,11 @@ public class ConfigUtil {
 
     /**
      * Will retrieve the current session information stored in the Config provider.
-     *
-     * @param context contains the application context.
+     * 
+     * @param context
+     *            contains the application context.
      * @return returns an instance of <code>SessionInfo</code> containing the latest session information. If no session exists,
-     * then <code>null</code> will be returned.
+     *         then <code>null</code> will be returned.
      */
     public static SessionInfo getSessionInfo(Context context) {
 
@@ -107,12 +112,12 @@ public class ConfigUtil {
         ContentResolver resolver = context.getContentResolver();
         Cursor cursor = null;
         try {
-            String[] sessionColumns = {Config.SessionColumns.ACCESS_TOKEN_KEY,
+            String[] sessionColumns = { Config.SessionColumns.ACCESS_TOKEN_KEY,
                     Config.SessionColumns.AUTHENTICATION_TYPE, Config.SessionColumns.SESSION_ID,
                     Config.SessionColumns.SESSION_TIME_OUT, Config.SessionColumns.SESSION_EXPIRATION_TIME,
                     Config.SessionColumns.LOGIN_ID, Config.SessionColumns.SERVER_URL,
                     Config.SessionColumns.SIGN_IN_METHOD, Config.SessionColumns.SSO_URL, Config.SessionColumns.EMAIL,
-                    Config.SessionColumns.USER_ID};
+                    Config.SessionColumns.USER_ID };
             cursor = resolver.query(Config.SessionColumns.CONTENT_URI, sessionColumns, null, null,
                     Config.SessionColumns.DEFAULT_SORT_ORDER);
             if (cursor != null) {
@@ -167,11 +172,14 @@ public class ConfigUtil {
 
     /**
      * Will update the current session information stored in the Config provider.
-     *
-     * @param context  contains the application context.
-     * @param sessInfo contains the session information.
+     * 
+     * @param context
+     *            contains the application context.
+     * @param sessInfo
+     *            contains the session information.
      * @return returns <code>true</code> upon success; otherwise, returns <code>false</code>
-     * @throws IllegalArgumentException if <code>sessInfo</code> is null or <code>sessInfo.getSessionId</code> returns null or empty.
+     * @throws IllegalArgumentException
+     *             if <code>sessInfo</code> is null or <code>sessInfo.getSessionId</code> returns null or empty.
      */
     public static boolean updateSessionInfo(Context context, SessionInfo sessInfo) {
         boolean updated = true;
@@ -223,7 +231,7 @@ public class ConfigUtil {
         ContentUtils.putValue(values, Config.SessionColumns.USER_ID, sessInfo.getUserId());
 
         String where = Config.SessionColumns.SESSION_ID + " = ?";
-        String[] selectionArgs = {sessInfo.getSessionId()};
+        String[] selectionArgs = { sessInfo.getSessionId() };
         int rowsUpdated = resolver.update(Config.SessionColumns.CONTENT_URI, values, where, selectionArgs);
 
         if (rowsUpdated == 1) {
@@ -240,12 +248,15 @@ public class ConfigUtil {
 
     /**
      * Will retrieve the current user information stored in the Config provider for a specific user id.
-     *
-     * @param context contains the application context.
-     * @param userId  contains the user id.
+     * 
+     * @param context
+     *            contains the application context.
+     * @param userId
+     *            contains the user id.
      * @return returns an instance of <code>UserInfo</code> containing the latest user information. If no user exists, then
-     * <code>null</code> will be returned.
-     * @throws IllegalArgumentException if <code>userId</code> is null or empty.
+     *         <code>null</code> will be returned.
+     * @throws IllegalArgumentException
+     *             if <code>userId</code> is null or empty.
      */
     public static UserInfo getUserInfo(Context context, String userId) {
 
@@ -258,18 +269,18 @@ public class ConfigUtil {
         ContentResolver resolver = context.getContentResolver();
         Cursor cursor = null;
         try {
-            String[] userColumns = {Config.UserColumns.ENTITY_TYPE, Config.UserColumns.EXPENSE_COUNTRY_CODE,
+            String[] userColumns = { Config.UserColumns.ENTITY_TYPE, Config.UserColumns.EXPENSE_COUNTRY_CODE,
                     Config.UserColumns.HAS_REQUIRED_CUSTOM_FIELDS, Config.UserColumns.PIN_EXPIRATION_DATE,
                     Config.UserColumns.PRODUCT_OFFERING, Config.UserColumns.PROFILE_STATUS,
                     Config.UserColumns.ROLES_MOBILE, Config.UserColumns.CONTACT_COMPANY_NAME,
                     Config.UserColumns.CONTACT_EMAIL, Config.UserColumns.CONTACT_FIRST_NAME,
                     Config.UserColumns.CONTACT_LAST_NAME, Config.UserColumns.CONTACT_MIDDLE_INITIAL,
-                    Config.UserColumns.USER_CURRENCY_CODE, Config.UserColumns.IS_DISABLE_AUTO_LOGIN, Config.UserColumns.USER_ID};
+                    Config.UserColumns.USER_CURRENCY_CODE, Config.UserColumns.IS_DISABLE_AUTO_LOGIN, Config.UserColumns.USER_ID };
             StringBuilder strBldr = new StringBuilder();
             strBldr.append(Config.UserColumns.USER_ID);
             strBldr.append(" = ?");
             String where = strBldr.toString();
-            String[] whereArgs = {userId};
+            String[] whereArgs = { userId };
 
             cursor = resolver.query(Config.UserColumns.CONTENT_URI, userColumns, where, whereArgs,
                     Config.UserColumns.DEFAULT_SORT_ORDER);
@@ -345,12 +356,15 @@ public class ConfigUtil {
 
     /**
      * Will retrieve the current site setting information stored in the Config provider for a specific user id.
-     *
-     * @param context contains the application context.
-     * @param userId  contains the user id.
+     * 
+     * @param context
+     *            contains the application context.
+     * @param userId
+     *            contains the user id.
      * @return returns a list of <code>SiteSettingInfo</code> containing the latest site setting information. If no user exists,
-     * then <code>null</code> will be returned.
-     * @throws IllegalArgumentException if <code>userId</code> is null or empty.
+     *         then <code>null</code> will be returned.
+     * @throws IllegalArgumentException
+     *             if <code>userId</code> is null or empty.
      */
     public static List<SiteSettingInfo> getSiteSettingInfo(Context context, String userId) {
 
@@ -363,13 +377,13 @@ public class ConfigUtil {
         ContentResolver resolver = context.getContentResolver();
         Cursor cursor = null;
         try {
-            String[] siteSettingColumns = {Config.SiteSettingColumns.NAME, Config.SiteSettingColumns.TYPE,
-                    Config.SiteSettingColumns.VALUE, Config.SiteSettingColumns.USER_ID};
+            String[] siteSettingColumns = { Config.SiteSettingColumns.NAME, Config.SiteSettingColumns.TYPE,
+                    Config.SiteSettingColumns.VALUE, Config.SiteSettingColumns.USER_ID };
             StringBuilder strBldr = new StringBuilder();
             strBldr.append(Config.SiteSettingColumns.USER_ID);
             strBldr.append(" = ?");
             String where = strBldr.toString();
-            String[] whereArgs = {userId};
+            String[] whereArgs = { userId };
 
             cursor = resolver.query(Config.SiteSettingColumns.CONTENT_URI, siteSettingColumns, where, whereArgs,
                     Config.SiteSettingColumns.DEFAULT_SORT_ORDER);
@@ -411,11 +425,14 @@ public class ConfigUtil {
 
     /**
      * Will retrieve the current permissions information stored in the Config provider for a specific user id.
-     *
-     * @param context contains the application context.
-     * @param userId  contains the user id.
+     * 
+     * @param context
+     *            contains the application context.
+     * @param userId
+     *            contains the user id.
      * @return returns the latest permissions information. If no user exists, then <code>null</code> will be returned.
-     * @throws IllegalArgumentException if <code>userId</code> is null or empty.
+     * @throws IllegalArgumentException
+     *             if <code>userId</code> is null or empty.
      */
     public static Permissions getPermissionsInfo(Context context, String userId) {
         final Permissions infos = new Permissions();
@@ -427,12 +444,12 @@ public class ConfigUtil {
         final ContentResolver resolver = context.getContentResolver();
         Cursor cursor = null;
         try {
-            final String[] permissionsColumns = {Config.PermissionsColumns.NAME, Config.PermissionsColumns.VALUE};
+            final String[] permissionsColumns = { Config.PermissionsColumns.NAME, Config.PermissionsColumns.VALUE };
             final StringBuilder strBldr = new StringBuilder();
             strBldr.append(Config.PermissionsColumns.USER_ID);
             strBldr.append(" = ?");
             final String where = strBldr.toString();
-            final String[] whereArgs = {userId};
+            final String[] whereArgs = { userId };
 
             cursor = resolver.query(Config.PermissionsColumns.CONTENT_URI, permissionsColumns, where, whereArgs,
                     Config.PermissionsColumns.DEFAULT_SORT_ORDER);
@@ -452,12 +469,15 @@ public class ConfigUtil {
 
     /**
      * Will retrieve the value of <code>Config.SystemConfig.HASH</code> column for the user id value of <code>userId</code>.
-     *
-     * @param context contains an application context.
-     * @param userId  contains the user id.
+     * 
+     * @param context
+     *            contains an application context.
+     * @param userId
+     *            contains the user id.
      * @return Returns the server-generated hash code for the system configuration information; otherwise, <code>null</code> is
-     * returned.
-     * @throws IllegalArgumentException if <code>userId</code> is null or empty.
+     *         returned.
+     * @throws IllegalArgumentException
+     *             if <code>userId</code> is null or empty.
      */
     public static String getSystemConfigHash(Context context, String userId) {
         String hash = null;
@@ -469,12 +489,12 @@ public class ConfigUtil {
         ContentResolver resolver = context.getContentResolver();
         Cursor cursor = null;
         try {
-            String[] systemConfigColumns = {Config.SystemConfigColumns.HASH};
+            String[] systemConfigColumns = { Config.SystemConfigColumns.HASH };
             StringBuilder strBldr = new StringBuilder();
             strBldr.append(Config.SystemConfigColumns.USER_ID);
             strBldr.append(" = ?");
             String where = strBldr.toString();
-            String[] whereArgs = {userId};
+            String[] whereArgs = { userId };
             cursor = resolver.query(Config.SystemConfigColumns.CONTENT_URI, systemConfigColumns, where, whereArgs,
                     Config.SystemConfigColumns.DEFAULT_SORT_ORDER);
             if (cursor != null) {
@@ -494,12 +514,15 @@ public class ConfigUtil {
 
     /**
      * Will retrieve the value of <code>Config.UserConfig.HASH</code> column for the user id value of <code>userId</code>.
-     *
-     * @param context contains an application context.
-     * @param userId  contains the user id.
+     * 
+     * @param context
+     *            contains an application context.
+     * @param userId
+     *            contains the user id.
      * @return Returns the server-generated hash code for the user configuration information; otherwise, <code>null</code> is
-     * returned.
-     * @throws IllegalArgumentException if <code>userId</code> is null or empty.
+     *         returned.
+     * @throws IllegalArgumentException
+     *             if <code>userId</code> is null or empty.
      */
     public static String getUserConfigHash(Context context, String userId) {
         String hash = null;
@@ -511,12 +534,12 @@ public class ConfigUtil {
         ContentResolver resolver = context.getContentResolver();
         Cursor cursor = null;
         try {
-            String[] userConfigColumns = {Config.UserConfigColumns.HASH};
+            String[] userConfigColumns = { Config.UserConfigColumns.HASH };
             StringBuilder strBldr = new StringBuilder();
             strBldr.append(Config.UserConfigColumns.USER_ID);
             strBldr.append(" = ?");
             String where = strBldr.toString();
-            String[] whereArgs = {userId};
+            String[] whereArgs = { userId };
             cursor = resolver.query(Config.UserConfigColumns.CONTENT_URI, userConfigColumns, where, whereArgs,
                     Config.UserConfigColumns.DEFAULT_SORT_ORDER);
             if (cursor != null) {
@@ -536,8 +559,9 @@ public class ConfigUtil {
 
     /**
      * Will remove the information stored in the Config content provider that is supplied upon login.
-     *
-     * @param context contains a reference to the application context.
+     * 
+     * @param context
+     *            contains a reference to the application context.
      */
     public static void removeLoginInfo(Context context) {
 
@@ -574,8 +598,9 @@ public class ConfigUtil {
 
     /**
      * Will perform a remote wipe on the data in the config provider.
-     *
-     * @param context contains the application context.
+     * 
+     * @param context
+     *            contains the application context.
      */
     public static void remoteWipe(Context context) {
 
@@ -610,10 +635,13 @@ public class ConfigUtil {
 
     /**
      * Will update the session, user and site-setting information in the config provider.
-     *
-     * @param context       contains the application context.
-     * @param loginResponse contains the login response object.
-     * @throws IllegalArgumentException if <code>loginResponse</code> is null.
+     * 
+     * @param context
+     *            contains the application context.
+     * @param loginResponse
+     *            contains the login response object.
+     * @throws IllegalArgumentException
+     *             if <code>loginResponse</code> is null.
      */
     public static void updateLoginInfo(Context context, LoginResult loginResponse) {
 
@@ -657,9 +685,11 @@ public class ConfigUtil {
 
     /**
      * Will insert site-setting info table with information from login response.
-     *
-     * @param resolver      contains the content resolver.
-     * @param loginResponse contains the login response.
+     * 
+     * @param resolver
+     *            contains the content resolver.
+     * @param loginResponse
+     *            contains the login response.
      */
     private static void insertSiteSettingInfo(ContentResolver resolver, LoginResult loginResponse) {
 
@@ -704,9 +734,11 @@ public class ConfigUtil {
 
     /**
      * Will insert permissions info table with information from login response.
-     *
-     * @param resolver      contains the content resolver.
-     * @param loginResponse contains the login response.
+     * 
+     * @param resolver
+     *            contains the content resolver.
+     * @param loginResponse
+     *            contains the login response.
      */
     private static void insertPermissionsInfo(ContentResolver resolver, LoginResult loginResponse) {
         final ContentValues values = new ContentValues();
@@ -768,9 +800,11 @@ public class ConfigUtil {
 
     /**
      * Will insert user info table with information from login response.
-     *
-     * @param resolver      contains the content resolver.
-     * @param loginResponse contains the login response.
+     * 
+     * @param resolver
+     *            contains the content resolver.
+     * @param loginResponse
+     *            contains the login response.
      */
     private static void insertUserInfo(ContentResolver resolver, LoginResult loginResponse) {
 
@@ -839,10 +873,13 @@ public class ConfigUtil {
 
     /**
      * Will update session info table with information from login response.
-     *
-     * @param resolver      contains the content resolver.
-     * @param loginResponse contains the login response.
-     * @throws IllegalArgumentException if <code>loginResponse</code> is null.
+     * 
+     * @param resolver
+     *            contains the content resolver.
+     * @param loginResponse
+     *            contains the login response.
+     * @throws IllegalArgumentException
+     *             if <code>loginResponse</code> is null.
      */
     public static void updateSessionInfo(ContentResolver resolver, LoginResult loginResponse, boolean setSessionId) {
 
@@ -912,11 +949,15 @@ public class ConfigUtil {
 
     /**
      * Will update system configuration information.
-     *
-     * @param context      contains a reference to an application context.
-     * @param systemConfig contains the system configuration object.
-     * @param userId       contains the user id.
-     * @throws IllegalArgumentException if <code>userId</code> is null or empty.
+     * 
+     * @param context
+     *            contains a reference to an application context.
+     * @param systemConfig
+     *            contains the system configuration object.
+     * @param userId
+     *            contains the user id.
+     * @throws IllegalArgumentException
+     *             if <code>userId</code> is null or empty.
      */
     public static void updateSystemConfigInfo(Context context, SystemConfig systemConfig, String userId) {
 
@@ -930,7 +971,7 @@ public class ConfigUtil {
         strBldr.append(Config.SystemConfigColumns.USER_ID);
         strBldr.append(" = ?");
         String whereClause = strBldr.toString();
-        String[] whereArgs = {userId};
+        String[] whereArgs = { userId };
 
         // Punt all system configuration information.
         int rowsAffected = resolver.delete(Config.SystemConfigColumns.CONTENT_URI, whereClause, whereArgs);
@@ -984,10 +1025,13 @@ public class ConfigUtil {
 
     /**
      * Will insert into the office location table information from <code>systemConfig</code>.
-     *
-     * @param resolver     contains a reference to a content resolver.
-     * @param systemConfig contains the system configuration.
-     * @param userId       contains the user id.
+     * 
+     * @param resolver
+     *            contains a reference to a content resolver.
+     * @param systemConfig
+     *            contains the system configuration.
+     * @param userId
+     *            contains the user id.
      */
     private static void insertOfficeLocationInfo(ContentResolver resolver, SystemConfig systemConfig, String userId) {
 
@@ -1043,10 +1087,13 @@ public class ConfigUtil {
 
     /**
      * Will insert into the expense type table information from <code>systemConfig</code>.
-     *
-     * @param resolver     contains a reference to a content resolver.
-     * @param systemConfig contains the system configuration.
-     * @param userId       contains the user id.
+     * 
+     * @param resolver
+     *            contains a reference to a content resolver.
+     * @param systemConfig
+     *            contains the system configuration.
+     * @param userId
+     *            contains the user id.
      */
     private static void insertExpenseTypeInfo(ContentResolver resolver, SystemConfig systemConfig, String userId) {
 
@@ -1163,10 +1210,13 @@ public class ConfigUtil {
 
     /**
      * Will insert into the reason code table information from <code>systemConfig</code>.
-     *
-     * @param resolver     contains a reference to a content resolver.
-     * @param systemConfig contains the system configuration.
-     * @param userId       contains the user id.
+     * 
+     * @param resolver
+     *            contains a reference to a content resolver.
+     * @param systemConfig
+     *            contains the system configuration.
+     * @param userId
+     *            contains the user id.
      */
     private static void insertReasonCodeInfo(ContentResolver resolver, SystemConfig systemConfig, String userId) {
 
@@ -1229,10 +1279,13 @@ public class ConfigUtil {
 
     /**
      * Will insert into the system configuration table information from <code>systemConfig</code>.
-     *
-     * @param resolver     contains a reference to a content resolver.
-     * @param systemConfig contains the system configuration information.
-     * @param userId       contains the user id.
+     * 
+     * @param resolver
+     *            contains a reference to a content resolver.
+     * @param systemConfig
+     *            contains the system configuration information.
+     * @param userId
+     *            contains the user id.
      */
     private static void insertSystemConfigInfo(ContentResolver resolver, SystemConfig systemConfig, String userId) {
 
@@ -1269,11 +1322,15 @@ public class ConfigUtil {
 
     /**
      * Will update the config content provider with user configuration information.
-     *
-     * @param context    contains an application context.
-     * @param userConfig contains a user configuration object.
-     * @param userId     contains the user id for which the information will be updated.
-     * @throws IllegalArgumentException if <code>userId</code> is null or empty.
+     * 
+     * @param context
+     *            contains an application context.
+     * @param userConfig
+     *            contains a user configuration object.
+     * @param userId
+     *            contains the user id for which the information will be updated.
+     * @throws IllegalArgumentException
+     *             if <code>userId</code> is null or empty.
      */
     public static void updateUserConfigInfo(Context context, UserConfig userConfig, String userId) {
 
@@ -1288,7 +1345,7 @@ public class ConfigUtil {
         strBldr.append(Config.UserConfigColumns.USER_ID);
         strBldr.append(" = ?");
         String whereClause = strBldr.toString();
-        String[] whereArgs = {userId};
+        String[] whereArgs = { userId };
 
         // Punt all system configuration information.
         int rowsAffected = resolver.delete(Config.UserConfigColumns.CONTENT_URI, whereClause, whereArgs);
@@ -1452,10 +1509,13 @@ public class ConfigUtil {
 
     /**
      * Will update client data table with information from login response.
-     *
-     * @param context     contains an application context.
-     * @param loginResult contains the login response.
-     * @throws IllegalArgumentException if <code>loginResponse</code> is null.
+     * 
+     * @param context
+     *            contains an application context.
+     * @param loginResult
+     *            contains the login response.
+     * @throws IllegalArgumentException
+     *             if <code>loginResponse</code> is null.
      */
     public static void updateAnalyticsIdInClientData(Context context, LoginResult loginResult) {
         ClientData clientData = new ClientData(context);
@@ -1469,10 +1529,13 @@ public class ConfigUtil {
 
     /**
      * Will insert into the user configuration table information from <code>userConfig</code>.
-     *
-     * @param resolver   contains a reference to a content resolver.
-     * @param userConfig contains the system configuration information.
-     * @param userId     contains the user id.
+     * 
+     * @param resolver
+     *            contains a reference to a content resolver.
+     * @param userConfig
+     *            contains the system configuration information.
+     * @param userId
+     *            contains the user id.
      */
     private static void insertUserConfigInfo(ContentResolver resolver, UserConfig userConfig, String userId) {
 
@@ -1505,10 +1568,13 @@ public class ConfigUtil {
 
     /**
      * Will insert into the car type configuration table information from <code>userConfig</code>.
-     *
-     * @param resolver   contains a reference to a content resolver.
-     * @param userConfig contains the system configuration information.
-     * @param userId     contains the user id.
+     * 
+     * @param resolver
+     *            contains a reference to a content resolver.
+     * @param userConfig
+     *            contains the system configuration information.
+     * @param userId
+     *            contains the user id.
      */
     private static void insertCarTypeInfo(ContentResolver resolver, UserConfig userConfig, String userId) {
 
@@ -1556,13 +1622,16 @@ public class ConfigUtil {
 
     /**
      * Will insert into the attendee column definition table information from <code>userConfig</code>.
-     *
-     * @param resolver   contains a reference to a content resolver.
-     * @param userConfig contains the system configuration information.
-     * @param userId     contains the user id.
+     * 
+     * @param resolver
+     *            contains a reference to a content resolver.
+     * @param userConfig
+     *            contains the system configuration information.
+     * @param userId
+     *            contains the user id.
      */
     private static void insertAttendeeColumnDefinitionInfo(ContentResolver resolver, UserConfig userConfig,
-                                                           String userId) {
+            String userId) {
 
         // Set up the content values object.
         ContentValues values = new ContentValues();
@@ -1616,10 +1685,13 @@ public class ConfigUtil {
 
     /**
      * Will insert into the attendee type table information from <code>userConfig</code>.
-     *
-     * @param resolver   contains a reference to a content resolver.
-     * @param userConfig contains the system configuration information.
-     * @param userId     contains the user id.
+     * 
+     * @param resolver
+     *            contains a reference to a content resolver.
+     * @param userConfig
+     *            contains the system configuration information.
+     * @param userId
+     *            contains the user id.
      */
     private static void insertAttendeeTypeInfo(ContentResolver resolver, UserConfig userConfig, String userId) {
 
@@ -1677,10 +1749,13 @@ public class ConfigUtil {
 
     /**
      * Will insert into the currency table information from <code>userConfig</code>.
-     *
-     * @param resolver   contains a reference to a content resolver.
-     * @param userConfig contains the system configuration information.
-     * @param userId     contains the user id.
+     * 
+     * @param resolver
+     *            contains a reference to a content resolver.
+     * @param userConfig
+     *            contains the system configuration information.
+     * @param userId
+     *            contains the user id.
      */
     private static void insertCurrencyInfo(ContentResolver resolver, UserConfig userConfig, String userId) {
 
@@ -1774,10 +1849,13 @@ public class ConfigUtil {
 
     /**
      * Will insert into the expense confirmation table information from <code>userConfig</code>.
-     *
-     * @param resolver   contains a reference to a content resolver.
-     * @param userConfig contains the system configuration information.
-     * @param userId     contains the user id.
+     * 
+     * @param resolver
+     *            contains a reference to a content resolver.
+     * @param userConfig
+     *            contains the system configuration information.
+     * @param userId
+     *            contains the user id.
      */
     private static void insertExpenseConfirmationInfo(ContentResolver resolver, UserConfig userConfig, String userId) {
 
@@ -1827,10 +1905,13 @@ public class ConfigUtil {
 
     /**
      * Will insert into the policy table information from <code>userConfig</code>.
-     *
-     * @param resolver   contains a reference to a content resolver.
-     * @param userConfig contains the system configuration information.
-     * @param userId     contains the user id.
+     * 
+     * @param resolver
+     *            contains a reference to a content resolver.
+     * @param userConfig
+     *            contains the system configuration information.
+     * @param userId
+     *            contains the user id.
      */
     private static void insertPolicyInfo(ContentResolver resolver, UserConfig userConfig, String userId) {
 
@@ -1882,10 +1963,13 @@ public class ConfigUtil {
 
     /**
      * Will insert into the Yodlee payment type table information from <code>userConfig</code>.
-     *
-     * @param resolver   contains a reference to a content resolver.
-     * @param userConfig contains the system configuration information.
-     * @param userId     contains the user id.
+     * 
+     * @param resolver
+     *            contains a reference to a content resolver.
+     * @param userConfig
+     *            contains the system configuration information.
+     * @param userId
+     *            contains the user id.
      */
     private static void insertYodleePaymentTypeInfo(ContentResolver resolver, UserConfig userConfig, String userId) {
 
@@ -1931,10 +2015,13 @@ public class ConfigUtil {
 
     /**
      * Will insert into the credit card type table information from <code>userConfig</code>.
-     *
-     * @param resolver   contains a reference to a content resolver.
-     * @param userConfig contains the system configuration information.
-     * @param userId     contains the user id.
+     * 
+     * @param resolver
+     *            contains a reference to a content resolver.
+     * @param userConfig
+     *            contains the system configuration information.
+     * @param userId
+     *            contains the user id.
      */
     private static void insertCreditCardInfo(ContentResolver resolver, UserConfig userConfig, String userId) {
 
@@ -1992,10 +2079,13 @@ public class ConfigUtil {
 
     /**
      * Will insert into the affinity program table information from <code>userConfig</code>.
-     *
-     * @param resolver   contains a reference to a content resolver.
-     * @param userConfig contains the system configuration information.
-     * @param userId     contains the user id.
+     * 
+     * @param resolver
+     *            contains a reference to a content resolver.
+     * @param userConfig
+     *            contains the system configuration information.
+     * @param userId
+     *            contains the user id.
      */
     private static void insertAffinityProgramInfo(ContentResolver resolver, UserConfig userConfig, String userId) {
 
@@ -2055,10 +2145,13 @@ public class ConfigUtil {
 
     /**
      * Will insert into the travel points config table information from <code>userConfig</code>.
-     *
-     * @param resolver   contains a reference to a content resolver.
-     * @param userConfig contains the system configuration information.
-     * @param userId     contains the user id.
+     * 
+     * @param resolver
+     *            contains a reference to a content resolver.
+     * @param userConfig
+     *            contains the system configuration information.
+     * @param userId
+     *            contains the user id.
      */
     private static void insertTravelPointsConfigInfo(ContentResolver resolver, UserConfig userConfig, String userId) {
 
@@ -2103,34 +2196,37 @@ public class ConfigUtil {
 
     /**
      * Set the corresponding permission on Permissions object => Uses Permissions.PermissionName enum to map ws response to field
-     *
+     * 
      * @param permissions
      * @param cursor
      */
     private static void setPermission(Permissions permissions, Cursor cursor) {
         switch (PermissionName.valueOf(CursorUtil.getStringValue(cursor, Config.PermissionsColumns.NAME))) {
-            case HAS_TRAVEL_REQUEST:
-                permissions.getAreasPermissions().hasTravelRequest = CursorUtil.getBooleanValue(cursor,
-                        PermissionsColumns.VALUE);
-                break;
-            case TR_USER:
-                permissions.getTravelRequestPermissions().isRequestUser = CursorUtil.getBooleanValue(cursor,
-                        PermissionsColumns.VALUE);
-                break;
-            case TR_APPROVER:
-                permissions.getTravelRequestPermissions().isRequestApprover = CursorUtil.getBooleanValue(cursor,
-                        PermissionsColumns.VALUE);
-                break;
+        case HAS_TRAVEL_REQUEST:
+            permissions.getAreasPermissions().hasTravelRequest = CursorUtil.getBooleanValue(cursor,
+                    PermissionsColumns.VALUE);
+            break;
+        case TR_USER:
+            permissions.getTravelRequestPermissions().isRequestUser = CursorUtil.getBooleanValue(cursor,
+                    PermissionsColumns.VALUE);
+            break;
+        case TR_APPROVER:
+            permissions.getTravelRequestPermissions().isRequestApprover = CursorUtil.getBooleanValue(cursor,
+                    PermissionsColumns.VALUE);
+            break;
         }
     }
 
     /**
      * Will set the passphrase used to access content from the <code>Config</code> content provider.
-     *
-     * @param context    contains an application context.
-     * @param passphrase contains the passphrase.
+     * 
+     * @param context
+     *            contains an application context.
+     * @param passphrase
+     *            contains the passphrase.
      * @return returns <code>true</code> upon success; <code>false</code> otherwise.
-     * @throws IllegalArgumentException if <code>passphrase</code> is null or empty
+     * @throws IllegalArgumentException
+     *             if <code>passphrase</code> is null or empty
      */
     @SuppressLint("NewApi")
     public static boolean setPassphrase(Context context, String passphrase) {
@@ -2180,12 +2276,16 @@ public class ConfigUtil {
 
     /**
      * Will reset the passphrase used to access content from the <code>Config</code> content provider.
-     *
-     * @param context           contains an application context.
-     * @param currentPassphrase contains the current passphrase.
-     * @param newPassphrase     contains the new passphrase.
+     * 
+     * @param context
+     *            contains an application context.
+     * @param currentPassphrase
+     *            contains the current passphrase.
+     * @param newPassphrase
+     *            contains the new passphrase.
      * @return returns <code>true</code> upon success; <code>false</code> otherwise.
-     * @throws IllegalArgumentException if <code>currentPassphrase</code> or <code>newPassphrase</code> is null or empty.
+     * @throws IllegalArgumentException
+     *             if <code>currentPassphrase</code> or <code>newPassphrase</code> is null or empty.
      */
     @SuppressLint("NewApi")
     public static boolean resetPassphrase(Context context, String currentPassphrase, String newPassphrase) {
@@ -2241,8 +2341,9 @@ public class ConfigUtil {
 
     /**
      * Will clear all content contained in the <code>Config</code> content provider.
-     *
-     * @param context contains an application context.
+     * 
+     * @param context
+     *            contains an application context.
      * @return returns <code>true</code> upon success; <code>false</code> otherwise.
      */
     @SuppressLint("NewApi")
@@ -2458,6 +2559,7 @@ public class ConfigUtil {
         String userId;
 
 
+
         Boolean disableAutoLogin;
 
 
@@ -2540,7 +2642,7 @@ public class ConfigUtil {
 
     /**
      * Provides an implementation of <code>SiteSettingInfo</code>.
-     *
+     * 
      * @author andrewk
      */
     static class SiteSettingInfoImpl implements SiteSettingInfo {

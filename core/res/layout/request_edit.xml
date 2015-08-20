@@ -1,0 +1,435 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+            android:layout_width="fill_parent"
+            android:layout_height="fill_parent"
+    >
+
+    <ViewFlipper
+        xmlns:android="http://schemas.android.com/apk/res/android"
+        android:id="@+id/requestDetailVF"
+        android:minWidth="300dp"
+        android:minHeight="420dp"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="#F7FAFD"
+        >
+
+        <include
+            android:id="@+id/loading_data"
+            layout="@layout/loading_data"/>
+
+        <LinearLayout
+            android:id="@+id/editRequestForm"
+            android:orientation="vertical"
+            android:layout_height="match_parent"
+            android:layout_width="match_parent"
+            android:minWidth="300dp"
+            android:minHeight="420dp"
+            android:background="#FFFFFFFF"
+            android:descendantFocusability="beforeDescendants"
+            android:focusableInTouchMode="true"
+            >
+
+
+            <!-- START LOCATION -->
+            <RelativeLayout
+                android:id="@+id/requestEditStartLocationLayout"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@color/White"
+                android:layout_marginTop="19dp"
+                >
+
+                <LinearLayout
+                    android:id="@+id/requestEditStartLocationIcon"
+                    android:orientation="vertical"
+                    android:layout_width="72dp"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentLeft="true">
+
+                    <ImageView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:src="@drawable/icon_location_grey"
+                        android:layout_marginLeft="16dp"/>
+
+                </LinearLayout>
+
+                <TextView
+                    android:id="@+id/requestEditStartLocationTitle"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/tr_start_location"
+                    android:textSize="12sp"
+                    android:textColor="#a7b6bf"
+                    android:layout_toRightOf="@id/requestEditStartLocationIcon"/>
+
+                <EditText
+                    android:id="@+id/requestEditStartLocation"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text=""
+                    android:lines="1"
+                    android:textSize="16sp"
+                    android:textColor="#1d78bd"
+                    android:layout_below="@id/requestEditStartLocationTitle"
+                    android:layout_alignLeft="@id/requestEditStartLocationTitle"
+                    android:background="@android:color/transparent"
+                    android:focusable="false"
+                    android:focusableInTouchMode="false"
+                    />
+
+                <!-- Horizontal Separator -->
+                <View
+                    android:layout_width="wrap_content"
+                    android:layout_height="1dp"
+                    android:background="#a7b6bf"
+                    android:layout_toRightOf="@id/requestEditStartLocationIcon"
+                    android:layout_below="@id/requestEditStartLocation"
+                    android:layout_marginTop="19dp"/>
+
+            </RelativeLayout>
+
+            <!-- DESTINATION -->
+            <RelativeLayout
+                android:id="@+id/requestEditDestinationLayout"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@color/White"
+                android:layout_marginTop="19dp"
+                >
+
+                <LinearLayout
+                    android:id="@+id/requestEditDestinationIcon"
+                    android:orientation="vertical"
+                    android:layout_width="72dp"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentLeft="true">
+
+                    <ImageView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:src="@drawable/icon_destination_grey"
+                        android:layout_marginLeft="16dp"/>
+
+                </LinearLayout>
+
+                <TextView
+                    android:id="@+id/requestEditDestinationTitle"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/tr_end_location"
+                    android:textSize="12sp"
+                    android:textColor="#a7b6bf"
+                    android:layout_toRightOf="@id/requestEditDestinationIcon"/>
+
+                <EditText
+                    android:id="@+id/requestEditDestination"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text=""
+                    android:lines="1"
+                    android:textSize="16sp"
+                    android:textColor="#1d78bd"
+                    android:layout_below="@id/requestEditDestinationTitle"
+                    android:layout_alignLeft="@id/requestEditDestinationTitle"
+                    android:background="@android:color/transparent"
+                    android:focusable="false"
+                    android:focusableInTouchMode="false"/>
+
+                <!-- Horizontal Separator -->
+                <View
+                    android:layout_width="wrap_content"
+                    android:layout_height="1dp"
+                    android:background="#a7b6bf"
+                    android:layout_toRightOf="@id/requestEditDestinationIcon"
+                    android:layout_below="@id/requestEditDestination"
+                    android:layout_marginTop="19dp"/>
+
+            </RelativeLayout>
+
+            <!-- START DATE & END DATE -->
+            <RelativeLayout
+                android:id="@+id/requestEditDateBlockLayout"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@color/White"
+                android:layout_marginTop="10dp"
+                >
+
+                <LinearLayout
+                    android:id="@+id/requestEditDateIcon"
+                    android:orientation="vertical"
+                    android:layout_width="72dp"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentLeft="true">
+
+                    <ImageView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:src="@drawable/icon_calendar_grey"
+                        android:layout_marginLeft="16dp"/>
+
+                </LinearLayout>
+
+                <RelativeLayout
+                    android:id="@+id/requestEditDateBlock"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_toRightOf="@id/requestEditDateIcon"
+                    >
+
+                    <!-- Start date -->
+                    <RelativeLayout
+                        android:id="@+id/requestEditStartDateLayout"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        >
+
+                        <TextView
+                            android:id="@+id/requestEditStartDateTitle"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="@string/tr_start_date"
+                            android:textSize="12sp"
+                            android:textColor="#a7b6bf"
+                            android:layout_alignParentLeft="true"/>
+
+                        <TextView
+                            android:id="@+id/requestEditStartDate"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text=""
+                            android:textSize="16sp"
+                            android:textColor="#1d78bd"
+                            android:layout_below="@id/requestEditStartDateTitle"
+                            android:layout_alignLeft="@id/requestEditStartDateTitle"/>
+
+                    </RelativeLayout>
+
+                    <!-- Vertical Separator -->
+                    <LinearLayout
+                        android:id="@+id/requestEditDateSeparator"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_centerHorizontal="true">
+
+                        <View
+                            android:layout_width="1dp"
+                            android:layout_height="50dp"
+                            android:background="#a7b6bf"/>
+
+                    </LinearLayout>
+
+                    <!-- End date -->
+                    <RelativeLayout
+                        android:id="@+id/requestEditEndDateLayout"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_toRightOf="@id/requestEditDateSeparator"
+                        >
+
+                        <TextView
+                            android:id="@+id/requestEditEndDateTitle"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="@string/tr_end_date"
+                            android:textSize="12sp"
+                            android:textColor="#a7b6bf"
+                            android:layout_marginLeft="16dp"
+                            />
+
+                        <TextView
+                            android:id="@+id/requestEditEndDate"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text=""
+                            android:textSize="16sp"
+                            android:textColor="#1d78bd"
+                            android:layout_below="@id/requestEditEndDateTitle"
+                            android:layout_alignLeft="@id/requestEditEndDateTitle"/>
+                    </RelativeLayout>
+
+                </RelativeLayout>
+
+                <!-- Horizontal Separator -->
+                <View
+                    android:layout_width="wrap_content"
+                    android:layout_height="1dp"
+                    android:background="#a7b6bf"
+                    android:layout_toRightOf="@id/requestEditDateIcon"
+                    android:layout_below="@id/requestEditDateBlock"
+                    android:layout_marginTop="19dp"/>
+
+            </RelativeLayout>
+
+            <!-- BUSINESS PURPOSE -->
+            <RelativeLayout
+                android:id="@+id/requestEditBusinessPurposeLayout"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@color/White"
+                android:layout_marginTop="19dp"
+                >
+
+                <LinearLayout
+                    android:id="@+id/requestEditBusinessPurposeIcon"
+                    android:layout_width="72dp"
+                    android:layout_height="wrap_content"
+                    android:layout_centerVertical="true"
+                    android:layout_alignParentLeft="true">
+
+                    <ImageView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:src="@drawable/icon_business_purpose_grey"
+                        android:layout_marginLeft="16dp"/>
+
+                </LinearLayout>
+
+                <TextView
+                    android:id="@+id/requestEditBusinessPurposeTitle"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/tr_business_purpose"
+                    android:textSize="12sp"
+                    android:textColor="#a7b6bf"
+                    android:layout_toRightOf="@id/requestEditBusinessPurposeIcon"/>
+
+                <EditText
+                    android:id="@+id/requestEditBusinessPurpose"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text=""
+                    android:lines="5"
+                    android:textSize="16sp"
+                    android:textColor="#1d78bd"
+                    android:layout_alignLeft="@id/requestEditBusinessPurposeTitle"
+                    android:layout_below="@id/requestEditBusinessPurposeTitle"
+                    android:background="@android:color/transparent"
+                    />
+
+                <!-- Horizontal Separator -->
+                <View
+                    android:layout_width="wrap_content"
+                    android:layout_height="1dp"
+                    android:background="#a7b6bf"
+                    android:layout_toRightOf="@id/requestEditBusinessPurposeIcon"
+                    android:layout_below="@id/requestEditBusinessPurpose"/>
+
+            </RelativeLayout>
+
+            <!-- COMMENT -->
+            <RelativeLayout
+                android:id="@+id/requestEditCommentLayout"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@color/White"
+                android:layout_marginTop="19dp"
+                >
+
+                <LinearLayout
+                    android:id="@+id/requestEditCommentIcon"
+                    android:layout_width="72dp"
+                    android:layout_height="wrap_content"
+                    android:layout_centerVertical="true"
+                    android:layout_alignParentLeft="true">
+
+                    <ImageView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:src="@drawable/icon_comment_grey"
+                        android:layout_marginLeft="16dp"/>
+
+                </LinearLayout>
+
+                <TextView
+                    android:id="@+id/requestEditCommentTitle"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/tr_comment"
+                    android:textSize="12sp"
+                    android:textColor="#a7b6bf"
+                    android:layout_toRightOf="@id/requestEditCommentIcon"/>
+
+                <EditText
+                    android:id="@+id/requestEditComment"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text=""
+                    android:lines="5"
+                    android:textSize="16sp"
+                    android:textColor="#1d78bd"
+                    android:layout_alignLeft="@id/requestEditCommentTitle"
+                    android:layout_below="@id/requestEditCommentTitle"
+                    android:background="@android:color/transparent"/>
+
+            </RelativeLayout>
+
+            <!-- Big Horizontal Separator -->
+            <View
+                android:layout_width="wrap_content"
+                android:layout_height="1dp"
+                android:background="#a7b6bf"/>
+
+            <View
+                android:layout_width="wrap_content"
+                android:layout_height="5dp"
+                android:background="#D3DADF"/>
+
+            <View
+                android:layout_width="wrap_content"
+                android:layout_height="1dp"
+                android:background="#a7b6bf"/>
+
+
+            <!-- SAVE BUTTON -->
+            <RelativeLayout
+                android:id="@+id/saveButton"
+                android:layout_width="match_parent"
+                android:layout_height="60dp"
+                android:background="#1d78bd"
+                android:clickable="true"
+                android:onClick="saveAction"
+                android:layout_marginTop="20dp">
+
+
+                <TextView
+                    android:id="@+id/saveButtonTitle"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/tr_submit_request"
+                    android:textSize="20sp"
+                    android:textColor="@color/White"
+                    android:layout_marginLeft="16dp"
+                    android:layout_alignParentLeft="true"
+                    android:layout_centerVertical="true"/>
+
+                <LinearLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:background="@drawable/round_border_request"
+                    android:layout_alignParentRight="true"
+                    android:layout_centerVertical="true"
+                    android:layout_marginRight="16dp">
+
+                    <TextView
+                        android:id="@+id/requestEditAmount"
+                        android:layout_width="fill_parent"
+                        android:layout_height="wrap_content"
+                        android:text="$1800.00"
+                        android:textColor="@color/White"
+                        android:gravity="center"
+                        android:textSize="20sp"
+                        android:layout_marginRight="16dp"
+                        android:layout_marginLeft="16dp"/>
+
+                </LinearLayout>
+
+            </RelativeLayout>
+
+
+        </LinearLayout>
+    </ViewFlipper>
+
+</ScrollView>
