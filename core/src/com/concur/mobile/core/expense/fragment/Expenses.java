@@ -2914,7 +2914,7 @@ public class Expenses extends BaseFragment implements INetworkActivityListener {
 
     private void getSmartExpenses(boolean refreshExpenseItList) {
 
-        if (Preferences.isExpenseItUser() && refreshExpenseItList) {
+        if (Preferences.isExpenseItUser() && Preferences.isUserLoggedInExpenseIt() && refreshExpenseItList) {
 
             showLoadingView();
             expensesCallback.doGetExpenseItList(true);
