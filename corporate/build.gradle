@@ -13,7 +13,7 @@ android {
         minSdkVersion lowestSdkSupportVersion
         targetSdkVersion latestSdkVersion
         versionCode System.getenv("VERSION_CODE") as Integer ?: 2999
-        versionName "9.25"
+        versionName "9.25.0"
         multiDexEnabled true
         testInstrumentationRunner "com.android.test.runner.MultiDexTestRunner"
 
