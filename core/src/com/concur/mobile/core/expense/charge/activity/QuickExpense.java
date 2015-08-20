@@ -31,6 +31,7 @@ import android.net.Uri;
 import android.os.Bundle;
 import android.os.Environment;
 import android.provider.MediaStore;
+import android.support.v4.app.FragmentActivity;
 import android.text.Editable;
 import android.text.SpannableStringBuilder;
 import android.text.TextUtils;
@@ -94,6 +95,8 @@ import com.concur.mobile.core.widget.CalendarPicker;
 import com.concur.mobile.core.widget.CalendarPickerDialog;
 import com.concur.mobile.core.widget.CalendarPickerDialog.OnDateSetListener;
 import com.concur.mobile.platform.location.LastLocationTracker;
+import com.concur.mobile.platform.ui.common.dialog.AlertDialogFragment;
+import com.concur.mobile.platform.ui.common.dialog.DialogFragmentFactory;
 import com.concur.mobile.platform.util.Format;
 import com.concur.mobile.platform.util.Parse;
 
@@ -485,6 +488,31 @@ public class QuickExpense extends BaseActivity {
     protected void onResume() {
         super.onResume();
         restoreReceivers();
+    }
+
+    @Override
+    public void onBackPressed() {
+        if (getIntent().hasExtra(ExpenseItDetailActivity.EXTRA_PREFERENCE_CONFIRM_USER_CHOICE_KEY)) {
+            String title = getString(R.string.confirm);
+            String message = getString(R.string.dlg_expense_save_cancel_confirmation_message);
+            int yes = R.string.okay;
+            int no = R.string.cancel;
+            AlertDialogFragment.OnClickListener yesListener = new AlertDialogFragment.OnClickListener() {
+                @Override
+                public void onClick(FragmentActivity activity, DialogInterface dialog, int which) {
+                    QuickExpense.super.onBackPressed();
+                }
+
+                @Override
+                public void onCancel(FragmentActivity activity, DialogInterface dialog) {
+                    // non-op.
+                }
+            };
+            DialogFragmentFactory.getAlertDialog(title, message, yes, -1, no, yesListener, null, null, null)
+                    .show(getSupportFragmentManager(), CLS_TAG);
+        } else {
+            super.onBackPressed();
+        }
     }
 
     protected void restoreReceivers() {

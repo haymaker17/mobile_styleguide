@@ -63,6 +63,8 @@ public class ExpenseItDetailActivity extends BaseActivity
 
     public static final int REPLACE_RECEIPT_RESULT_CODE = 999;
 
+    public static final String EXTRA_PREFERENCE_CONFIRM_USER_CHOICE_KEY = "EXTRA_PREFERENCE_CONFIRM_USER_CHOICE";
+
     private static final String FRAGMENT_EXPENSEIT_DETAIL = "FRAGMENT_EXPENSEIT_DETAIL";
 
     public static final String EXPENSEIT_RECEIPT_ID_KEY = "EXPENSEIT_RECEIPT_ID_KEY";
@@ -815,6 +817,7 @@ public class ExpenseItDetailActivity extends BaseActivity
         newExpenseIntent.putExtra(Const.EXTRA_EXPENSE_ENTRY_TYPE_KEY, Expense.ExpenseEntryType.CASH.name());
         newExpenseIntent.putExtra(Const.EXTRA_EXPENSE_RECEIPT_IMAGE_ID_KEY, receiptImageId);
         newExpenseIntent.putExtra(Const.EXTRA_EXPENSE_TRANSACTION_DATE_KEY, item.getCreatedAt().getTimeInMillis());
+        newExpenseIntent.putExtra(EXTRA_PREFERENCE_CONFIRM_USER_CHOICE_KEY, true);
         startActivity(newExpenseIntent);
         expEntCache.setShouldFetchExpenseList();
         this.setResult(Activity.RESULT_OK);
