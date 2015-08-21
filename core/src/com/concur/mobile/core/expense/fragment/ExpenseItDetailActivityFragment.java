@@ -12,6 +12,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.view.WindowManager;
 import android.widget.EditText;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.concur.core.R;
@@ -36,9 +37,13 @@ public class ExpenseItDetailActivityFragment extends PlatformFragment {
     private static final String EXPENSEIT_ITEM = "EXPENSEIT_ITEM";
 
     private int eta;
-    private Calendar date;
+    private Calendar dateCreated;
     private long receiptId = 0;
     private ExpenseItReceipt expenseItReceipt;
+
+    View fragmentView;
+
+    private boolean isInErrorState = false;
 
     public interface ExpenseItDetailsViewReceiptCallback {
         void initializeViewReceipt(long receiptId);
@@ -71,14 +76,15 @@ public class ExpenseItDetailActivityFragment extends PlatformFragment {
         setHasOptionsMenu(true);
 
         expenseItReceipt = (ExpenseItReceipt) getArguments().getSerializable(EXPENSEIT_ITEM);
+        isInErrorState = expenseItReceipt.isInErrorState();
 
-        View view = inflater.inflate(R.layout.fragment_expense_it_detail, container, false);
-        buildView(view);
+        fragmentView = inflater.inflate(R.layout.fragment_expense_it_detail, container, false);
+        buildView();
 
-        return view;
+        return fragmentView;
     }
 
-    public void buildView(View view) {
+    public void buildView() {
 
         getActivity().getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_ALWAYS_HIDDEN);
         if (expenseItReceipt == null || expenseItReceipt.getCreatedAt() == null) {
@@ -86,49 +92,72 @@ public class ExpenseItDetailActivityFragment extends PlatformFragment {
         }
 
         eta = expenseItReceipt.getEta();
-        date = expenseItReceipt.getCreatedAt();
+        dateCreated = expenseItReceipt.getCreatedAt();
         receiptId = expenseItReceipt.getId();
 
-        if (view != null) {
-            // set URL / View Receipt button
-            getViewReceiptTransition(view);
-            // set date uploaded
-            setUploadDateLabelAndFieldValues(view);
-            // set eta
-            setEtaLabelAndFieldValues(view);
-            // set comment - this will take some work.
-            setCommentLabelAndFieldValues(view);
+        if (fragmentView != null) {
+            getViewReceiptTransition();
+            setUploadDateLabelAndFieldValues();
+            setCommentLabelAndFieldValues();
+
+            if (isInErrorState) {
+                // set date sent for processing
+                setDateSentForProcessingLabelAndFieldValues();
+                setErrorNoteAndMessage();
+            } else {
+                // set eta
+                setEtaLabelAndFieldValues();
+            }
+
         } else {
             Log.e(Const.LOG_TAG, CLS_TAG + ".buildView could not find the fragment!");
         }
 
     }
 
-    private void setUploadDateLabelAndFieldValues(View view) {
-        View uploadedField = view.findViewById(R.id.expenseit_capture_date);
+    private void setErrorNoteAndMessage() {
+        TextView note = (TextView) fragmentView.findViewById(R.id.expenseit_analyzing_note);
+        note.setText(R.string.expenseit_failure_note);
+
+        LinearLayout message = (LinearLayout) fragmentView.findViewById(R.id.expenseit_error_message_field);
+        message.setVisibility(View.VISIBLE);
+    }
+
+    private void setUploadDateLabelAndFieldValues() {
+        View uploadedField = fragmentView.findViewById(R.id.expenseit_capture_date);
         TextView uploadedLabel = (TextView) uploadedField.findViewById(R.id.field_name);
         uploadedLabel.setText(R.string.expenseit_details_label_uploaded);
 
-        String fmtDate = FormatUtil.SHORT_DAY_FULL_MONTH_YEAR_DISPLAY_NO_COMMA.format(date.getTime());
+        String fmtDate = FormatUtil.SHORT_DAY_SHORT_MONTH_YEAR_TIME_WITH_SEPARATOR.format(dateCreated.getTime());
 
-        ViewUtil.setTextViewText(view, R.id.expenseit_capture_date, R.id.field_value, fmtDate, true);
+        ViewUtil.setTextViewText(fragmentView, R.id.expenseit_capture_date, R.id.field_value, fmtDate, true);
     }
 
-    private void setEtaLabelAndFieldValues(View view) {
+    private void setDateSentForProcessingLabelAndFieldValues() {
+        View processingField = fragmentView.findViewById(R.id.expenseit_details_processing_time);
+        TextView processingLabel = (TextView) processingField.findViewById(R.id.field_name);
+        processingLabel.setText(R.string.expenseit_details_label_sent_for_analysis_time);
+
+        String fmtDate = FormatUtil.SHORT_DAY_SHORT_MONTH_YEAR_TIME_WITH_SEPARATOR.format(dateCreated.getTime());
+
+        ViewUtil.setTextViewText(fragmentView, R.id.expenseit_details_processing_time, R.id.field_value, fmtDate, true);
+    }
+
+    private void setEtaLabelAndFieldValues() {
         // format ETA
         StringBuilder strBld = new StringBuilder(getString(R.string.expenseit_details_value_processing_time));
         strBld.append(" ");
         String fmtEta = FormatUtil.getEtaToString(getActivity(), eta);
         strBld.append(fmtEta);
 
-        View uploadedField = view.findViewById(R.id.expenseit_details_processing_time);
+        View uploadedField = fragmentView.findViewById(R.id.expenseit_details_processing_time);
         TextView uploadedLabel = (TextView) uploadedField.findViewById(R.id.field_name);
         uploadedLabel.setText(R.string.expenseit_details_label_processing_time);
-        ViewUtil.setTextViewText(view, R.id.expenseit_details_processing_time, R.id.field_value, strBld.toString(), true);
+        ViewUtil.setTextViewText(fragmentView, R.id.expenseit_details_processing_time, R.id.field_value, strBld.toString(), true);
     }
 
-    private void setCommentLabelAndFieldValues(View view) {
-        View commentField = view.findViewById(R.id.expenseit_comment);
+    private void setCommentLabelAndFieldValues() {
+        View commentField = fragmentView.findViewById(R.id.expenseit_comment);
         TextView commentLabel = (TextView) commentField.findViewById(R.id.field_name);
         commentLabel.setText(R.string.comment);
 
@@ -142,8 +171,8 @@ public class ExpenseItDetailActivityFragment extends PlatformFragment {
 
     }
 
-    private void getViewReceiptTransition(View view) {
-        View viewReceipt = view.findViewById(R.id.header_expenseit_receipt);
+    private void getViewReceiptTransition() {
+        View viewReceipt = fragmentView.findViewById(R.id.header_expenseit_receipt);
         if (viewReceipt != null) {
             viewReceipt.setOnClickListener(new View.OnClickListener() {
                 @Override

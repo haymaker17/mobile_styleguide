@@ -136,6 +136,9 @@ public class ExpenseItAsyncRequestsUnitTests extends PlatformAsyncRequestTestUti
         // Set the credentials.
         test.setCredentials(loginId, loginPinPassword);
 
+        // Init content provider authority
+        initContentProvidersAuthority();
+
         // Init content providers.
         initContentProviders();
 
