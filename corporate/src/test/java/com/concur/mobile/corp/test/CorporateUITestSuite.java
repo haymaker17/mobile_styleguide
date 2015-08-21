@@ -76,14 +76,6 @@ import com.concur.mobile.core.travel.car.activity.CarSearchNoResults;
 import com.concur.mobile.core.travel.car.activity.CarSearchProgress;
 import com.concur.mobile.core.travel.car.activity.CarSearchResults;
 import com.concur.mobile.core.travel.car.activity.VoiceCarSearchActivity;
-import com.concur.mobile.core.travel.hotel.activity.HotelPriceToBeatSearch;
-import com.concur.mobile.core.travel.hotel.activity.HotelPriceToBeatSearchResults;
-import com.concur.mobile.core.travel.hotel.activity.HotelReserveRoom;
-import com.concur.mobile.core.travel.hotel.activity.HotelSearch;
-import com.concur.mobile.core.travel.hotel.activity.HotelSearchNoResults;
-import com.concur.mobile.core.travel.hotel.activity.HotelSearchResults;
-import com.concur.mobile.core.travel.hotel.activity.HotelSearchRoomDetails;
-import com.concur.mobile.core.travel.hotel.activity.HotelSearchRooms;
 import com.concur.mobile.core.travel.hotel.activity.RestHotelSearch;
 import com.concur.mobile.core.travel.hotel.activity.VoiceHotelSearchActivity;
 import com.concur.mobile.core.travel.rail.activity.RailSearch;
@@ -114,10 +106,6 @@ import com.concur.mobile.corp.activity.Startup;
 import com.concur.mobile.corp.activity.TestDriveRegistration;
 import com.concur.mobile.corp.activity.TestDriveTour;
 import com.concur.mobile.corp.activity.UniversalTour;
-import com.concur.mobile.platform.ui.travel.hotel.activity.HotelBookingActivity;
-import com.concur.mobile.platform.ui.travel.hotel.activity.HotelChoiceDetailsActivity;
-import com.concur.mobile.platform.ui.travel.hotel.activity.HotelSearchAndResultActivity;
-import com.concur.mobile.platform.ui.travel.hotel.activity.HotelVoiceSearchActivity;
 import com.concur.mobile.platform.ui.travel.hotel.activity.ImageDetailActivity;
 
 import org.junit.Test;
@@ -182,18 +170,18 @@ public class CorporateUITestSuite extends CorporateTestSuite {
             , FileSearchActivity.class
             , ForegroundApp.class
             , Home.class
-            , HotelBookingActivity.class
-            , HotelChoiceDetailsActivity.class
-            , HotelPriceToBeatSearch.class
-            , HotelPriceToBeatSearchResults.class
-            , HotelReserveRoom.class
-            , HotelSearch.class
-            , HotelSearchAndResultActivity.class
-            , HotelSearchNoResults.class
-            , HotelSearchResults.class
-            , HotelSearchRoomDetails.class
-            , HotelSearchRooms.class
-            , HotelVoiceSearchActivity.class
+//            , HotelBookingActivity.class
+//            , HotelChoiceDetailsActivity.class
+//            , HotelPriceToBeatSearch.class
+//            , HotelPriceToBeatSearchResults.class
+//            , HotelReserveRoom.class
+//            , HotelSearch.class
+//            , HotelSearchAndResultActivity.class
+//            , HotelSearchNoResults.class
+//            , HotelSearchResults.class
+//            , HotelSearchRoomDetails.class
+//            , HotelSearchRooms.class
+//            , HotelVoiceSearchActivity.class
             , ImageActivity.class
             , ImageDetailActivity.class
             , InvoicesWebView.class
