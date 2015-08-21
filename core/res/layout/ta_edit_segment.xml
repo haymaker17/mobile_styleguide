@@ -40,7 +40,7 @@
         android:layout_height="wrap_content"
         android:layout_marginLeft="16dp"
         android:layout_marginRight="16dp"
-        android:layout_marginBottom="20dp"
+        android:layout_marginBottom="0dp"
         layout="@layout/ta_edit_date_time" />
 
 
@@ -50,8 +50,7 @@
         android:layout_height="wrap_content"
         android:layout_marginLeft="16dp"
         android:layout_marginRight="16dp"
-        android:layout_marginBottom="16dp"
-        android:visibility="gone"
+        android:layout_marginBottom="0dp"
         layout="@layout/ta_edit_border_crossing" />
 
     <include

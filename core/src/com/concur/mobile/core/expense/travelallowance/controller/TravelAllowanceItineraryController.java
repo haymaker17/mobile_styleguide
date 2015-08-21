@@ -112,7 +112,7 @@ public class TravelAllowanceItineraryController extends BaseController {
 
     public List<Itinerary> getItineraryList() {
         if (itineraryList == null) {
-            return new ArrayList<Itinerary>();
+            itineraryList = new ArrayList<Itinerary>();
         }
         return itineraryList;
     }

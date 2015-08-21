@@ -4,25 +4,23 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content">
 
-    <CheckBox
-        android:id="@+id/cb_selection"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_centerVertical="true"
-        android:layout_gravity="center_vertical"
-        android:layout_marginLeft="16dp"
-        android:layout_marginRight="16dp"
-        android:backgroundTint="#0078c8"
-        android:buttonTint="#0078c8" />
-
     <include
         android:id="@+id/v_content"
         layout="@layout/ta_generic_table_row_layout"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginRight="16dp"
-        android:layout_toRightOf="@+id/cb_selection" />
+        android:layout_marginRight="16dp" />
 
+    <ImageView
+        android:id="@+id/iv_delete_icon"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerVertical="true"
+        android:layout_gravity="center_vertical"
+        android:layout_marginLeft="16dp"
+        android:layout_alignParentRight="true"
+        android:src="@drawable/icon_delete_grey"
+        android:layout_marginRight="16dp" />
 
     <include
         layout="@layout/ta_group_separator"

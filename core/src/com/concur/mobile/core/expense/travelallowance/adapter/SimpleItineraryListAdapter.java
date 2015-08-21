@@ -5,7 +5,6 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.CheckBox;
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -17,7 +16,6 @@ import com.concur.mobile.core.expense.travelallowance.util.DefaultDateFormat;
 import com.concur.mobile.core.expense.travelallowance.util.IDateFormat;
 import com.concur.mobile.core.expense.travelallowance.util.StringUtilities;
 
-import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
@@ -32,8 +30,7 @@ public class SimpleItineraryListAdapter extends RecyclerView.Adapter<SimpleItine
         TextView tvValue;
         TextView tvSubtitle1;
         TextView tvSubtitle2;
-        ImageView icon;
-        CheckBox cbSelection;
+        ImageView ivDelete;
 
         public ViewHolder(View v) {
             super(v);
@@ -42,16 +39,15 @@ public class SimpleItineraryListAdapter extends RecyclerView.Adapter<SimpleItine
             tvValue = (TextView) vContent.findViewById(R.id.tv_value);
             tvSubtitle1 = (TextView) vContent.findViewById(R.id.tv_subtitle_1);
             tvSubtitle2 = (TextView) vContent.findViewById(R.id.tv_subtitle_2);
-            icon = (ImageView) vContent.findViewById(R.id.iv_icon);
-            cbSelection = (CheckBox) v.findViewById(R.id.cb_selection);
+            ivDelete = (ImageView) v.findViewById(R.id.iv_delete_icon);
         }
     }
 
     private List<Itinerary> itinList;
     private IDateFormat dateFormatter;
     private View.OnClickListener onClickListener;
+    private View.OnClickListener onDeleteClickListener;
     private boolean deleteEnabled;
-    private List<Itinerary> deletionList;
 
     public SimpleItineraryListAdapter(Context context, List<Itinerary> itineraryList) {
         this.itinList = itineraryList;
@@ -62,8 +58,6 @@ public class SimpleItineraryListAdapter extends RecyclerView.Adapter<SimpleItine
         if (itineraryList != null) {
             itinList = itineraryList;
         }
-        //Clear the list with itineraries marked as to be deleted
-        this.deletionList = new ArrayList<Itinerary>();
         notifyDataSetChanged();
     }
 
@@ -78,11 +72,15 @@ public class SimpleItineraryListAdapter extends RecyclerView.Adapter<SimpleItine
             if (vContent != null) {
                 vContent.setOnClickListener(onClickListener);
             }
-            CheckBox cbSelection = (CheckBox) v.findViewById(R.id.cb_selection);
-            if (cbSelection != null) {
-                cbSelection.setOnClickListener(onClickListener);
+        }
+
+        if (onDeleteClickListener != null) {
+            ImageView ivDelete = (ImageView) v.findViewById(R.id.iv_delete_icon);
+            if (ivDelete != null) {
+                ivDelete.setOnClickListener(onDeleteClickListener);
             }
         }
+
         return new ViewHolder(v);
     }
 
@@ -93,42 +91,19 @@ public class SimpleItineraryListAdapter extends RecyclerView.Adapter<SimpleItine
         if (holder.tvTitle != null) {
             holder.tvTitle.setVisibility(View.VISIBLE);
             holder.tvTitle.setText(itinerary.getName());
-            //Do not show icon
-//            if (itinerary.isLocked()) {
-//                holder.icon.setVisibility(View.VISIBLE);
-//                holder.icon.setImageResource(R.drawable.profile_icon_bank);
-//            } else {
-//                holder.icon.setVisibility(View.GONE);
-//            }
+        }
+        if (holder.ivDelete != null) {
+            holder.ivDelete.setVisibility(View.VISIBLE);
+            if (!deleteEnabled || itinerary.isLocked()) {
+                holder.ivDelete.setVisibility(View.GONE);
+            }
         }
         if (holder.tvValue != null) {
             holder.tvValue.setVisibility(View.GONE);
         }
 
-        renderSelection(holder, itinerary);
         renderSubtitle1(holder, itinerary);
         renderSubtitle2(holder, itinerary);
-    }
-
-    private void renderSelection (ViewHolder holder, Itinerary itinerary) {
-        if (holder.cbSelection == null) {
-            return;
-        }
-        if (this.deleteEnabled) {
-            holder.cbSelection.setVisibility(View.VISIBLE);
-        } else {
-            holder.cbSelection.setVisibility(View.GONE);
-        }
-        if (itinerary == null) {
-            return;
-        }
-        if (this.deletionList == null || this.deletionList.size() == 0) {
-            holder.cbSelection.setChecked(false);
-        } else if (this.deletionList.contains(itinerary)) {
-            holder.cbSelection.setChecked(true);
-        } else {
-            holder.cbSelection.setChecked(false);
-        }
     }
 
     private void renderSubtitle1(ViewHolder holder, Itinerary itinerary) {
@@ -202,11 +177,12 @@ public class SimpleItineraryListAdapter extends RecyclerView.Adapter<SimpleItine
         this.onClickListener = onClickListener;
     }
 
+    public void setOnDeleteClickListener(View.OnClickListener onDeleteClickListener) {
+        this.onDeleteClickListener = onDeleteClickListener;
+    }
+
     public void setDeleteEnabled(boolean deleteEnabled) {
         this.deleteEnabled = deleteEnabled;
     }
 
-    public void setDeletionList(List<Itinerary> deletionList) {
-        this.deletionList = deletionList;
-    }
 }

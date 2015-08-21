@@ -155,17 +155,17 @@ public class Itinerary implements Serializable{
         //Compare segment lists of both objects
         if ( (segmentList == null && itinerary.segmentList != null )||
              (segmentList != null && itinerary.segmentList == null )){
-            return true;
+            return false;
         }
         if (segmentList != null && itinerary.segmentList != null) {
             if (segmentList.size() != itinerary.getSegmentList().size()) {
-                return true;
+                return false;
             }
             if (!segmentList.containsAll(itinerary.getSegmentList())) {
-                return true;
+                return false;
             }
         }
-        return false;
+        return true;
     }
 
     @Override

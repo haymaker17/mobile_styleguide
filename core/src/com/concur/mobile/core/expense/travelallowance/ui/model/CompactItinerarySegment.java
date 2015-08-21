@@ -73,4 +73,33 @@ public class CompactItinerarySegment implements Serializable {
         this.displayBorderCrossing = displayBorderCrossing;
     }
 
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+
+        CompactItinerarySegment that = (CompactItinerarySegment) o;
+
+        if (isSegmentOpen != that.isSegmentOpen) return false;
+        if (displayBorderCrossing != that.displayBorderCrossing) return false;
+        if (location != null ? !location.equals(that.location) : that.location != null)
+            return false;
+        if (arrivalDateTime != null ? !arrivalDateTime.equals(that.arrivalDateTime) : that.arrivalDateTime != null)
+            return false;
+        if (departureDateTime != null ? !departureDateTime.equals(that.departureDateTime) : that.departureDateTime != null)
+            return false;
+        return !(borderCrossingDateTime != null ? !borderCrossingDateTime.equals(that.borderCrossingDateTime) : that.borderCrossingDateTime != null);
+
+    }
+
+    @Override
+    public int hashCode() {
+        int result = location != null ? location.hashCode() : 0;
+        result = 31 * result + (arrivalDateTime != null ? arrivalDateTime.hashCode() : 0);
+        result = 31 * result + (departureDateTime != null ? departureDateTime.hashCode() : 0);
+        result = 31 * result + (borderCrossingDateTime != null ? borderCrossingDateTime.hashCode() : 0);
+        result = 31 * result + (isSegmentOpen ? 1 : 0);
+        result = 31 * result + (displayBorderCrossing ? 1 : 0);
+        return result;
+    }
 }
