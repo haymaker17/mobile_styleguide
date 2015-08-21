@@ -45,11 +45,8 @@
 
     <string name="expenseit_stop_processing_button">Stop</string>
     <string name="expenseit_replace_receipt_button">Replace</string>
-<<<<<<< HEAD
     <string name="expenseit_delete_receipt_button">Delete</string>
-=======
     <string name="expenseit_edit_receipt_button">Edit</string>
->>>>>>> 2b0ce06975814b3f43c37875510dd5242b6d5d52
     <!-- EXPENSEIT STRINGS END -->
 
 </resources>

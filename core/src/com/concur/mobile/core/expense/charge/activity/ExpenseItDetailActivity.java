@@ -17,6 +17,7 @@ import android.text.TextUtils;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.widget.Toast;
 
 import com.concur.core.R;
 import com.concur.mobile.base.service.BaseAsyncRequestTask;
@@ -300,11 +301,7 @@ public class ExpenseItDetailActivity extends BaseActivity
 
     private void doUploadReceipt() {
 
-<<<<<<< HEAD
-        if (receiptImage != null && menuAction == MENU_ACTION_CANCEL) {
-=======
         if(receiptImage != null && (menuAction == MENU_ACTION_CANCEL || menuAction == MENU_ACTION_EDIT)) {
->>>>>>> 2b0ce06975814b3f43c37875510dd5242b6d5d52
             uploadReceiptImageToReceiptStore();
         } else if (!TextUtils.isEmpty(localImageFilePath) && menuAction == MENU_ACTION_REPLACE) {
             uploadReceiptToExpenseIt(localImageFilePath);
@@ -404,13 +401,9 @@ public class ExpenseItDetailActivity extends BaseActivity
         getMenuInflater().inflate(R.menu.expenseit_details_options, this.menu);
 
         // Only show the "replace" menu if this ExpenseIt item has failed analysis.
-<<<<<<< HEAD
-        if (!item.isInErrorState()) {
-            menu.findItem(R.id.replace_expenseit_receipt).setVisible(false);
-=======
+
         if(item.isInErrorState()) {
             this.menu.findItem(R.id.replace_expenseit_receipt).setVisible(true);
->>>>>>> 2b0ce06975814b3f43c37875510dd5242b6d5d52
         }
 
         return true;
@@ -476,17 +469,14 @@ public class ExpenseItDetailActivity extends BaseActivity
 
             DialogFragment receiptChoiceDialog = new ReceiptChoiceDialogFragment();
             receiptChoiceDialog.show(this.getSupportFragmentManager(), ReceiptChoiceDialogFragment.DIALOG_FRAGMENT_ID);
-<<<<<<< HEAD
         } else if (id == R.id.delete_expenseit_receipt) {
             deleteReceipt();
-=======
         } else if (id == R.id.edit_expenseit_receipt) {
             menuAction = MENU_ACTION_EDIT;
 
             EventTracker.INSTANCE.eventTrack("Expense-ExpenseIt", "Edit Receipt");
             showProgressDialog(R.string.expenseit_converting_dialog_message);
             doManualExpenseTransitionOperations();
->>>>>>> 2b0ce06975814b3f43c37875510dd5242b6d5d52
         }
 
         return true;
@@ -857,6 +847,7 @@ public class ExpenseItDetailActivity extends BaseActivity
                     EventTracker.INSTANCE.eventTrack(Flurry.CATEGORY_EXPENSE_UNMANAGED_EXPENSEIT,
                             Flurry.ACTION_EDIT_RECEIPT, Flurry.LABEL_DELETE_RECEIPT);
 
+                    Toast.makeText(ExpenseItDetailActivity.this, "Not implemented", Toast.LENGTH_SHORT).show();
                     //deleteSmartExpense()
                 }
             }
