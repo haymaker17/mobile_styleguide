@@ -21,32 +21,13 @@ import org.junit.Assert;
 
 import java.util.List;
 
-//@RunWith(RobolectricGradleTestRunner.class) @Config(constants = BuildConfig.class, sdk = 21)
-//@RunWith(ConcurPlatformTestRunner.class)
-//@Config(manifest = "src/test/AndroidManifest.xml", assetDir = "assets", constants = BuildConfig.class, sdk = 21)
 public class GroupConfigurationTaskTest
-        extends AsyncRequestTest /*implements BaseAsyncRequestTask.AsyncReplyListener*/ {
+        extends AsyncRequestTest {
 
-    private static final String CLS_TAG = GroupConfigurationTaskTest.class.getName();
     private static final String PREF_USER_ID = "pref_saved_user_id";
-    // --- Fill those with your VM params
-    private static final String TEST_SRV_URL = "dev://172.27.64.163";
-    private static final String TEST_LOGIN_ID = "acsontos@outtask.com";
-    private static final String TEST_LOGIN_PWD = "1111";
 
     private RequestGroupConfigurationCache groupConfigurationCache = null;
     private final RequestParser requestParser = new RequestParser();
-
-    /*@Before public void setUp() throws Exception {
-        // --- Add -Duse.mock.server="false" to your VM params in Run/Debug Configuration to disable server mock
-        if (System.getProperty(Const.USE_MOCK_SERVER, Boolean.TRUE.toString()).equals(Boolean.FALSE.toString())) {
-            System.setProperty(Const.SERVER_ADDRESS, TEST_SRV_URL);
-            System.setProperty(Const.PPLOGIN_ID, TEST_LOGIN_ID);
-            System.setProperty(Const.PPLOGIN_PIN_PASSWORD, TEST_LOGIN_PWD);
-        }
-
-        new PlatformTestSuite().doAutoLogin();
-    }*/
 
     /*@Test */
     public void doTest() throws Exception {
@@ -54,8 +35,6 @@ public class GroupConfigurationTaskTest
         // setup
         if (groupConfigurationCache == null) {
             groupConfigurationCache = new RequestGroupConfigurationCache();
-        } else {
-            groupConfigurationCache.clear();
         }
 
         // Set the mock response if the mock server is being used.
@@ -67,7 +46,7 @@ public class GroupConfigurationTaskTest
         final BaseAsyncResultReceiver resListener = new BaseAsyncResultReceiver(getHander());
         resListener.setListener(new AsyncReplyListenerImpl());
 
-        final RequestTask task = new RequestTask(PlatformTestApplication.getApplication()/*RequestListActivity.this*/,
+        final RequestTask task = new RequestTask(PlatformTestApplication.getApplication(),
                 1, resListener, ConnectHelper.ConnectVersion.VERSION_3_1, ConnectHelper.Module.GROUP_CONFIGURATIONS,
                 ConnectHelper.Action.LIST, null);
 
@@ -89,6 +68,7 @@ public class GroupConfigurationTaskTest
                 Assert.fail("Response parsing failed.");
             }
 
+            groupConfigurationCache.clear();
             // Perform the verification & store the group Configuration.
             if (rgcc != null && rgcc.size() > 0) {
                 // --- add configurations to cache if there is any
@@ -106,9 +86,5 @@ public class GroupConfigurationTaskTest
                 .getDefaultSharedPreferences(PlatformTestApplication.getApplication());
         final String userId = prefs.getString(PREF_USER_ID, null);
         return userId;
-    }
-
-    public RequestGroupConfigurationCache getGroupConfigurationCache() {
-        return groupConfigurationCache;
     }
 }
