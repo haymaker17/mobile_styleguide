@@ -52,6 +52,7 @@ public class Flurry {
 
     // ################### GOOGLE ANALYTICS CATEGORIES ################# //
     public static final String CATEGORY_EXPENSE_EXPENSEIT = "Expense-ExpenseIt";
+    public static final String CATEGORY_EXPENSE_UNMANAGED_EXPENSEIT = "Expense-Unmanaged-ExpenseIt";
     // ################ END GOOGLE ANALYTICS CATEGORIES ################# //
 
     // ################### NEW GOOGLE ANALTYICS LABELS ################# //
@@ -62,6 +63,7 @@ public class Flurry {
     public static final String LABEL_CORPORATE_CARD_EXPENSE = "Corporate Card Expense";
     public static final String LABEL_QUICK_EXPENSE_DETAIL = "Quick Expense Detail";
     public static final String LABEL_REPORT_ENTRY_DETAIL = "Report Entry Detail";
+    public static final String LABEL_DELETE_RECEIPT = "Delete";
 
     // ####################### END GA LABELS ########################## //
 
@@ -72,6 +74,7 @@ public class Flurry {
     public static final String ACTION_E_RECEIPT_IMAGE_ERROR = "E-Receipt Image Error";
     public static final String ACTION_APP_CENTER = "App Center";
     public static final String ACTION_VIEW_RECEIPT = "View Receipt";
+    public static final String ACTION_EDIT_RECEIPT = "Edit";
 
     // ####################### END GA ACTIONS ###################### //
 

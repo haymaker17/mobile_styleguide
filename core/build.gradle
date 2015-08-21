@@ -12,9 +12,9 @@ dependencies {
     compile 'com.android.support:recyclerview-v7:22.2.1'
     testCompile 'org.robolectric:robolectric:3.+'
     testCompile 'junit:junit:4.+'
-
     androidTestCompile 'org.robolectric:robolectric:3.+'
     androidTestCompile 'junit:junit:4.+'
+    compile 'com.android.support:support-v13:22.2.0'
 }
 
 android {

@@ -1,6 +1,7 @@
 package com.concur.mobile.core.expense.charge.activity;
 
 import android.app.Activity;
+import android.app.AlertDialog;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
@@ -261,13 +262,13 @@ public class ExpenseItDetailActivity extends BaseActivity
 
     private void doUploadReceipt() {
 
-        if(receiptImage != null && menuAction == MENU_ACTION_CANCEL) {
+        if (receiptImage != null && menuAction == MENU_ACTION_CANCEL) {
             uploadReceiptImageToReceiptStore();
-        } else if(!TextUtils.isEmpty(localImageFilePath) && menuAction == MENU_ACTION_REPLACE) {
+        } else if (!TextUtils.isEmpty(localImageFilePath) && menuAction == MENU_ACTION_REPLACE) {
             uploadReceiptToExpenseIt(localImageFilePath);
         } else {
             Log.w(Const.LOG_TAG, CLS_TAG + ".doUploadReceipt() - unhandled action.");
-            if(currProgressDialog != null) {
+            if (currProgressDialog != null) {
                 currProgressDialog.dismiss();
             }
             showUnexpectedErrorDialog();
@@ -361,7 +362,7 @@ public class ExpenseItDetailActivity extends BaseActivity
         inflater.inflate(R.menu.expenseit_details_options, menu);
 
         // Only show the "replace" menu if this ExpenseIt item has failed analysis.
-        if(!item.isInErrorState()) {
+        if (!item.isInErrorState()) {
             menu.findItem(R.id.replace_expenseit_receipt).setVisible(false);
         }
 
@@ -449,6 +450,8 @@ public class ExpenseItDetailActivity extends BaseActivity
 
             DialogFragment receiptChoiceDialog = new ReceiptChoiceDialogFragment();
             receiptChoiceDialog.show(this.getSupportFragmentManager(), ReceiptChoiceDialogFragment.DIALOG_FRAGMENT_ID);
+        } else if (id == R.id.delete_expenseit_receipt) {
+            deleteReceipt();
         }
 
         return true;
@@ -481,27 +484,27 @@ public class ExpenseItDetailActivity extends BaseActivity
         }
 
         // Retain the Receipt ID.
-        if(!TextUtils.isEmpty(receiptImageId)) {
+        if (!TextUtils.isEmpty(receiptImageId)) {
             retainer.put(RECEIPT_IMAGE_ID_KEY, receiptImageId);
         }
 
         // Retain the path of the local image.
-        if(!TextUtils.isEmpty(localImageFilePath)) {
+        if (!TextUtils.isEmpty(localImageFilePath)) {
             retainer.put(LOCAL_IMAGE_FILE_PATH_KEY, localImageFilePath);
         }
 
         // Retain the Image bitmap.
-        if(receiptImage != null) {
+        if (receiptImage != null) {
             retainer.put(RECEIPT_IMAGE_BITMAP_KEY, receiptImage);
         }
 
         // Retain the last selected menu action.
-        if(menuAction != 0) {
+        if (menuAction != 0) {
             retainer.put(MENU_ACTION_KEY, menuAction);
         }
 
         // Retain the metrics timing for cancel/replace.
-        if(metricsTiming != 0L) {
+        if (metricsTiming != 0L) {
             retainer.put(METRICS_TIMING_KEY, metricsTiming);
         }
 
@@ -538,7 +541,7 @@ public class ExpenseItDetailActivity extends BaseActivity
             }
 
             // Recover upload receiver
-            if(retainer.contains(EXPENSEIT_SAVE_RECEIPT_IMAGE_RECEIVER)) {
+            if (retainer.contains(EXPENSEIT_SAVE_RECEIPT_IMAGE_RECEIVER)) {
                 mSaveExpenseItReceiptReceiver = (SaveExpenseItReceiver) retainer.get(EXPENSEIT_SAVE_RECEIPT_IMAGE_RECEIVER);
                 if (mSaveExpenseItReceiptReceiver != null) {
                     mSaveExpenseItReceiptReceiver.setActivity(this);
@@ -546,27 +549,27 @@ public class ExpenseItDetailActivity extends BaseActivity
             }
 
             // Recover the Receipt ID.
-            if(retainer.contains(RECEIPT_IMAGE_ID_KEY)) {
+            if (retainer.contains(RECEIPT_IMAGE_ID_KEY)) {
                 receiptImageId = (String) retainer.get(RECEIPT_IMAGE_ID_KEY);
             }
 
             // Recover the path of the local image.
-            if(retainer.contains(LOCAL_IMAGE_FILE_PATH_KEY)) {
+            if (retainer.contains(LOCAL_IMAGE_FILE_PATH_KEY)) {
                 localImageFilePath = (String) retainer.get(LOCAL_IMAGE_FILE_PATH_KEY);
             }
 
             // Recover the Image bitmap.
-            if(retainer.contains(RECEIPT_IMAGE_BITMAP_KEY)) {
+            if (retainer.contains(RECEIPT_IMAGE_BITMAP_KEY)) {
                 receiptImage = (Bitmap) retainer.get(RECEIPT_IMAGE_BITMAP_KEY);
             }
 
             // Recover the last selected menu action.
-            if(retainer.contains(MENU_ACTION_KEY)) {
+            if (retainer.contains(MENU_ACTION_KEY)) {
                 menuAction = (int) retainer.get(MENU_ACTION_KEY);
             }
 
             // Recover the last stop/replace metrics timing.
-            if(retainer.contains(METRICS_TIMING_KEY)) {
+            if (retainer.contains(METRICS_TIMING_KEY)) {
                 metricsTiming = (long) retainer.get(METRICS_TIMING_KEY);
             }
 
@@ -587,7 +590,7 @@ public class ExpenseItDetailActivity extends BaseActivity
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
-        if(requestCode == VIEW_RECEIPT_REQUEST_CODE
+        if (requestCode == VIEW_RECEIPT_REQUEST_CODE
                 && resultCode == REPLACE_RECEIPT_RESULT_CODE) {
 
             menuAction = MENU_ACTION_REPLACE;
@@ -625,8 +628,7 @@ public class ExpenseItDetailActivity extends BaseActivity
         // make the call, unless it's already in use.
         if (mGetExpenseItImageUrlAsyncTask != null && mGetExpenseItImageUrlAsyncTask.getStatus() != AsyncTask.Status.FINISHED) {
             mGetExpenseItReceiptImageUrlReceiver.setListener(mGetExpenseItReceiptImageUrlListener);
-        }
-        else {
+        } else {
             mGetExpenseItImageUrlAsyncTask = new GetExpenseItImageUrlAsyncTask(getApplicationContext(), 1,
                     mGetExpenseItReceiptImageUrlReceiver, item.getId());
             mGetExpenseItImageUrlAsyncTask.execute();
@@ -672,7 +674,7 @@ public class ExpenseItDetailActivity extends BaseActivity
                     protected Void doInBackground(Void... params) {
                         try {
                             receiptImage = getBitmapFromURL(url);
-                            if (receiptImage != null ) {
+                            if (receiptImage != null) {
                                 writtenToFile = saveReceiptImageToLocalStorage();
                                 if (!writtenToFile) {
                                     Log.e(Const.LOG_TAG, CLS_TAG + ".onRetrieveUrlRequestSuccess: did not save image to storage!");
@@ -772,8 +774,7 @@ public class ExpenseItDetailActivity extends BaseActivity
                 mSaveExpenseItReceiptFilter = new IntentFilter(Const.ACTION_EXPENSE_RECEIPT_SAVE);
             }
             this.getApplicationContext().registerReceiver(mSaveExpenseItReceiptReceiver, mSaveExpenseItReceiptFilter);
-        }
-        else {
+        } else {
             Log.e(Const.LOG_TAG, CLS_TAG + ".registerSaveExpenseItReceiptReceiver: mSaveExpenseItReceiptReceiver is null!");
         }
     }
@@ -782,8 +783,7 @@ public class ExpenseItDetailActivity extends BaseActivity
         if (mSaveExpenseItReceiptReceiver != null) {
             this.getApplicationContext().unregisterReceiver(mSaveExpenseItReceiptReceiver);
             mSaveExpenseItReceiptReceiver = null;
-        }
-        else {
+        } else {
             Log.e(Const.LOG_TAG, CLS_TAG + ".unregisterSaveExpenseItReceiptReceiver: mSaveExpenseItReceiptReceiver is null!");
         }
     }
@@ -801,7 +801,7 @@ public class ExpenseItDetailActivity extends BaseActivity
     }
 
     private void onUploadToExpenseItFinished() {
-        if(menuAction == MENU_ACTION_REPLACE) {
+        if (menuAction == MENU_ACTION_REPLACE) {
             // This was a Receipt replace action, so go back to the ExpenseList.
             IExpenseEntryCache expEntCache = this.getConcurCore().getExpenseEntryCache();
             expEntCache.setShouldFetchExpenseList();
@@ -812,13 +812,36 @@ public class ExpenseItDetailActivity extends BaseActivity
         }
     }
 
+    private void deleteReceipt() {
+        AlertDialogFragment.OnClickListener onClickListener = new AlertDialogFragment.OnClickListener() {
+            @Override
+            public void onClick(FragmentActivity activity, DialogInterface dialog, int which) {
+
+                if (which == AlertDialog.BUTTON_POSITIVE) {
+                    EventTracker.INSTANCE.eventTrack(Flurry.CATEGORY_EXPENSE_UNMANAGED_EXPENSEIT,
+                            Flurry.ACTION_EDIT_RECEIPT, Flurry.LABEL_DELETE_RECEIPT);
+
+                    //deleteSmartExpense()
+                }
+            }
+
+            @Override
+            public void onCancel(FragmentActivity activity, DialogInterface dialog) {
+
+            }
+        };
+
+        DialogFragmentFactory.getAlertOkayCancelInstance("Delete Receipt", "Are You Sure?", onClickListener,
+                onClickListener, onClickListener);
+    }
+
     @Override
     public void onCameraSuccess(String filePath) {
         if (!TextUtils.isEmpty(filePath)) {
             showProgressDialog(R.string.expenseit_replace_dialog_message);
             localImageFilePath = filePath;
             doDeleteExpenseItExpenseAsyncTask();
-        }  else {
+        } else {
             showUnexpectedErrorDialog();
         }
     }

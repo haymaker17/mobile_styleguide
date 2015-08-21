@@ -40,6 +40,7 @@
 
     <string name="expenseit_stop_processing_button">Stop</string>
     <string name="expenseit_replace_receipt_button">Replace</string>
+    <string name="expenseit_delete_receipt_button">Delete</string>
     <!-- EXPENSEIT STRINGS END -->
 
 </resources>
