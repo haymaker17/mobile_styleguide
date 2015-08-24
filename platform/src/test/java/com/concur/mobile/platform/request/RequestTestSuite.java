@@ -13,8 +13,6 @@ import org.robolectric.annotation.Config;
 /**
  * Created by OlivierB on 20/08/2015.
  */
-@RunWith(ConcurPlatformTestRunner.class)
-@Config(manifest = "src/test/AndroidManifest.xml", assetDir = "assets")
 public class RequestTestSuite extends PlatformTestSuite {
 
     // --- Fill those with your VM params for non-mocked runs
@@ -46,7 +44,7 @@ public class RequestTestSuite extends PlatformTestSuite {
         // Init the login request
         doPinPasswordLogin();
 
-        GroupConfigurationTaskTest groupConfigurationTaskTest = new GroupConfigurationTaskTest();
+        final GroupConfigurationTaskTest groupConfigurationTaskTest = new GroupConfigurationTaskTest();
         if (PlatformTestApplication.useMockServer()) {
             // Init mock server.
             initMockServer();
@@ -70,7 +68,7 @@ public class RequestTestSuite extends PlatformTestSuite {
         // Init the login request
         doPinPasswordLogin();
 
-        SaveAndSubmitTaskTest saveAndSubmitTaskTest = new SaveAndSubmitTaskTest();
+        final SaveAndSubmitTaskTest saveAndSubmitTaskTest = new SaveAndSubmitTaskTest();
         if (PlatformTestApplication.useMockServer()) {
             // Init mock server.
             initMockServer();
@@ -81,5 +79,29 @@ public class RequestTestSuite extends PlatformTestSuite {
 
         // Run the GroupConfigurationTaskTest test.
         saveAndSubmitTaskTest.doTest();
+    }
+
+    /**
+     * Performs a group configuration test.
+     *
+     * @throws Exception throws an exception if the test fails.
+     */
+    @Test
+    public void doRecall() throws Exception {
+
+        // Init the login request
+        doPinPasswordLogin();
+
+        final RecallTaskTest recallTaskTest = new RecallTaskTest();
+        if (PlatformTestApplication.useMockServer()) {
+            // Init mock server.
+            initMockServer();
+
+            // Set the mock server instance on the test.
+            recallTaskTest.setMockServer(mwsServer);
+        }
+
+        // Run the GroupConfigurationTaskTest test.
+        recallTaskTest.doTest();
     }
 }

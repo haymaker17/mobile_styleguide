@@ -24,12 +24,16 @@ import com.concur.platform.PlatformProperties;
 
 import org.junit.AfterClass;
 import org.junit.BeforeClass;
+import org.junit.runner.RunWith;
+import org.robolectric.annotation.Config;
 import org.robolectric.shadows.ShadowContentResolver;
 import org.robolectric.shadows.ShadowLog;
 
 /**
  * Created by OlivierB on 20/08/2015.
  */
+@RunWith(ConcurPlatformTestRunner.class)
+@Config(manifest = "src/test/AndroidManifest.xml", assetDir = "assets")
 public abstract class PlatformTestSuite {
     protected static final String CLS_TAG = "PlatformTestSuite";
     private static final Boolean DEBUG = Boolean.FALSE;

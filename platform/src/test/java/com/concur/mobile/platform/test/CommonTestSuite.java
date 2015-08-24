@@ -24,8 +24,6 @@ import java.util.Locale;
  *
  * @author andrewk
  */
-@RunWith(ConcurPlatformTestRunner.class)
-@Config(manifest = "src/test/AndroidManifest.xml", assetDir = "assets")
 public class CommonTestSuite extends PlatformTestSuite {
 
     @Test
