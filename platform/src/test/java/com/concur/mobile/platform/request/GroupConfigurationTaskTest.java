@@ -27,7 +27,11 @@ public class GroupConfigurationTaskTest
     private static final String PREF_USER_ID = "pref_saved_user_id";
 
     private RequestGroupConfigurationCache groupConfigurationCache = null;
-    private final RequestParser requestParser = new RequestParser();
+    private RequestParser requestParser;
+
+    public GroupConfigurationTaskTest(RequestParser requestParser) {
+        this.requestParser = requestParser;
+    }
 
     /*@Test */
     public void doTest() throws Exception {

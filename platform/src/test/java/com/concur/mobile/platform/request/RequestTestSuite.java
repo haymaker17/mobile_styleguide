@@ -1,14 +1,12 @@
 package com.concur.mobile.platform.request;
 
-import com.concur.mobile.platform.test.ConcurPlatformTestRunner;
+import com.concur.mobile.platform.request.util.RequestParser;
 import com.concur.mobile.platform.test.Const;
 import com.concur.mobile.platform.test.PlatformTestApplication;
 import com.concur.mobile.platform.test.PlatformTestSuite;
 
 import org.junit.BeforeClass;
 import org.junit.Test;
-import org.junit.runner.RunWith;
-import org.robolectric.annotation.Config;
 
 /**
  * Created by OlivierB on 20/08/2015.
@@ -20,6 +18,7 @@ public class RequestTestSuite extends PlatformTestSuite {
     private static final String TEST_LOGIN_ID = "acsontos@outtask.com";
     private static final String TEST_LOGIN_PWD = "1111";
     // nb: add -Duse.mock.server="false" to VM options in your configuration to disable mocks
+    private final RequestParser requestParser = new RequestParser();
 
     @BeforeClass
     public static void setUp() throws Exception {
@@ -44,7 +43,7 @@ public class RequestTestSuite extends PlatformTestSuite {
         // Init the login request
         doPinPasswordLogin();
 
-        final GroupConfigurationTaskTest groupConfigurationTaskTest = new GroupConfigurationTaskTest();
+        final GroupConfigurationTaskTest groupConfigurationTaskTest = new GroupConfigurationTaskTest(requestParser);
         if (PlatformTestApplication.useMockServer()) {
             // Init mock server.
             initMockServer();
@@ -68,7 +67,7 @@ public class RequestTestSuite extends PlatformTestSuite {
         // Init the login request
         doPinPasswordLogin();
 
-        final SaveAndSubmitTaskTest saveAndSubmitTaskTest = new SaveAndSubmitTaskTest();
+        final SaveAndSubmitTaskTest saveAndSubmitTaskTest = new SaveAndSubmitTaskTest(requestParser);
         if (PlatformTestApplication.useMockServer()) {
             // Init mock server.
             initMockServer();

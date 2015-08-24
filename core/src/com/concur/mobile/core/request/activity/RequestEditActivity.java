@@ -108,8 +108,8 @@ public class RequestEditActivity extends BaseActivity implements OnClickListener
         if (requestId != null) {
             tr = requestListCache.getValue(requestId);
             form = formFieldsCache.getFormFields(tr.getHeaderFormId());
-            setCanSave(tr.getApprovalStatusCode().equals(RequestDTO.ApprovalStatus.CREATION.getCode()) || tr
-                    .getApprovalStatusCode().equals(RequestDTO.ApprovalStatus.RECALLED.getCode()));
+            setCanSave(tr.getApprovalStatus().equals(RequestDTO.ApprovalStatus.CREATION.getName()) || tr
+                    .getApprovalStatus().equals(RequestDTO.ApprovalStatus.RECALLED.getName()));
             startDate = tr.getStartDate();
             endDate = tr.getEndDate();
         }
