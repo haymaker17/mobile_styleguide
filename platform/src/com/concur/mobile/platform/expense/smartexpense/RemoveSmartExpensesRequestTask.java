@@ -15,6 +15,7 @@ import org.apache.http.HttpStatus;
 import java.io.IOException;
 import java.io.InputStream;
 import java.net.HttpURLConnection;
+import java.net.ProtocolException;
 import java.util.ArrayList;
 
 
@@ -80,14 +81,17 @@ public class RemoveSmartExpensesRequestTask extends PlatformAsyncRequestTask {
 
     @Override
     protected void configureConnection(HttpURLConnection connection) {
-
         super.configureConnection(connection);
 
-        // Set timeout values to 2.5 minutes (server will be set to 2 minutes).
-        //$REVIEW: Maybe we don't need to set timeout
+        try {
+            connection.setRequestMethod(REQUEST_METHOD_POST);
+        } catch (ProtocolException protExc) {
+            Log.e(Const.LOG_TAG, CLS_TAG + ".configureConnection: protocol exception setting request method to '"
+                + REQUEST_METHOD_POST + "'", protExc);
+        }
 
-        connection.setConnectTimeout(150000);
-        connection.setReadTimeout(150000);
+        // Set the accept header to JSON.
+        connection.setRequestProperty(HEADER_ACCEPT, CONTENT_TYPE_JSON);
     }
 
     @Override

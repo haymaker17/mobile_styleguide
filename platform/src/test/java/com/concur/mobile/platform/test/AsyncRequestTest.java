@@ -13,8 +13,6 @@ import android.util.Log;
 
 import com.concur.mobile.base.service.BaseAsyncRequestTask;
 import com.concur.mobile.base.service.BaseAsyncRequestTask.AsyncReplyListener;
-import com.concur.mobile.platform.service.ExpenseItAsyncRequestTask;
-import com.concur.mobile.platform.service.PlatformAsyncRequestTask;
 import com.concur.mobile.platform.test.server.MockServer;
 
 import junit.framework.AssertionFailedError;
@@ -111,7 +109,7 @@ public abstract class AsyncRequestTest {
      *
      * @throws Exception throws an exception if the test fails.
      */
-    public void runTest(String mockFile, ExpenseItAsyncRequestTask reqTask, VerifyResponse verifyResponse) throws Exception {
+    public void runTest(String mockFile, BaseAsyncRequestTask reqTask, VerifyResponse verifyResponse) throws Exception {
 
         Context context = PlatformTestApplication.getApplication();
 
@@ -219,30 +217,7 @@ public abstract class AsyncRequestTest {
      * 
      * @return returns the response from the server.
      */
-    public String getResponseString(PlatformAsyncRequestTask reqTask) {
-        String response = null;
-
-        InputStream ins = reqTask.getResponse();
-        if (ins != null) {
-            try {
-                response = IOUtils.toString(reqTask.getResponse(), "UTF-8");
-            } catch (UnsupportedEncodingException unsEncExc) {
-                Log.e(Const.LOG_TAG, CLS_TAG + ".getResponseString: " + unsEncExc);
-            } catch (IOException ioExc) {
-                Log.e(Const.LOG_TAG, CLS_TAG + ".getResponseString: " + ioExc);
-            } catch (UnsupportedCharsetException unsCharSetExc) {
-                Log.e(Const.LOG_TAG, CLS_TAG + ".getResponseString: " + unsCharSetExc);
-            }
-        }
-        return response;
-    }
-
-    /**
-     * Gets the response from the server.
-     *
-     * @return returns the response from the server.
-     */
-    public String getResponseString(ExpenseItAsyncRequestTask reqTask) {
+    public String getResponseString(BaseAsyncRequestTask reqTask) {
         String response = null;
 
         InputStream ins = reqTask.getResponse();
