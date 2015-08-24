@@ -4,6 +4,8 @@ dependencies {
     compile fileTree(include: '*.jar', dir: 'libs')
     compile project(':core')
     compile 'com.android.support:multidex:1.0.0'
+    testCompile 'org.robolectric:robolectric:3.+'
+    testCompile 'junit:junit:4.+'
 }
 
 
