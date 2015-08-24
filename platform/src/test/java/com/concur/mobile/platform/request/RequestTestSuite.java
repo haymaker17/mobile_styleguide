@@ -14,7 +14,7 @@ import org.junit.Test;
 public class RequestTestSuite extends PlatformTestSuite {
 
     // --- Fill those with your VM params for non-mocked runs
-    private static final String TEST_SRV_URL = "dev://172.27.64.163";
+    private static final String TEST_SRV_URL = "dev://xxx.xxx.xxx.xxx";
     private static final String TEST_LOGIN_ID = "acsontos@outtask.com";
     private static final String TEST_LOGIN_PWD = "1111";
     // nb: add -Duse.mock.server="false" to VM options in your configuration to disable mocks

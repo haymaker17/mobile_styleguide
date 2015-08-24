@@ -24,9 +24,10 @@ public class SaveAndSubmitTaskTest
 
     private RequestParser requestParser;
     private RequestDTO tr;
-    private static final String REQUEST_NAME_STRING = "Trip in March";
-    private static final String REQUEST_POLICY_ID_STRING = "gWohOcl7WcxM34o3LnfEe$s2lWjryBP$s5zWQ";
-    private static final String REQUEST_PURPOSE_STRING = "March trip test";
+
+    protected static final String REQUEST_NAME_STRING = "Trip in March";
+    protected static final String REQUEST_POLICY_ID_STRING = "gWohOcl7WcxM34o3LnfEe$s2lWjryBP$s5zWQ";
+    protected static final String REQUEST_PURPOSE_STRING = "March trip test";
 
     public SaveAndSubmitTaskTest(RequestParser requestParser) {
         this.requestParser = requestParser;
@@ -163,10 +164,14 @@ public class SaveAndSubmitTaskTest
                 Assert.assertEquals(RequestExceptionDTO.ExceptionLevel.BLOCKING, request.getHighestExceptionLevel());
                 Assert.assertTrue(request.getExceptions().size() > 0);
             } else {
-                Assert.assertEquals(forceIfRequired ? RequestDTO.ApprovalStatus.PENDING_VALIDATION : RequestDTO.ApprovalStatus.CREATION, request.getApprovalStatus());
                 Assert.assertEquals(REQUEST_PURPOSE_STRING, request.getPurpose());
                 Assert.assertEquals(RequestExceptionDTO.ExceptionLevel.NON_BLOCKING, request.getHighestExceptionLevel());
                 Assert.assertTrue(request.getExceptions().size() > 0);
+                if (forceIfRequired) {
+                    Assert.assertEquals(RequestDTO.ApprovalStatus.PENDING_VALIDATION, request.getApprovalStatus());
+                } else {
+                    Assert.assertEquals(RequestDTO.ApprovalStatus.CREATION, request.getApprovalStatus());
+                }
             }
         }
     }
