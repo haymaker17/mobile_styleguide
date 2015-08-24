@@ -46,46 +46,21 @@ import java.util.Map;
 
 public class FixedTravelAllowanceDetailsActivity extends BaseActivity implements IControllerListener {
 
-    private static class CustomArrayAdapter<String> extends ArrayAdapter<String>
+    private static class CustomArrayAdapter<T> extends ArrayAdapter<T>
     {
-        public CustomArrayAdapter(Context ctx, List<String> objects)
-        {
+
+        public CustomArrayAdapter(Context ctx, List<T> objects) {
             super(ctx, android.R.layout.simple_spinner_item, objects);
         }
 
-        //other constructors
-
         @Override
         public View getDropDownView(int position, View convertView, ViewGroup parent) {
-
-//            method is responsible for the Textviews of the dropDown
-            View view = super.getDropDownView(position, convertView, parent);
-
-            //we know that simple_spinner_item has android.R.id.text1 TextView:
-
-            TextView text = (TextView)view.findViewById(android.R.id.text1);
-            text.setTextColor(Color.parseColor("#383F46"));
+            View view =  super.getDropDownView(position, convertView, parent);
+            // TODO PK: Needs to be converted in dp. See java doc.
+            view.setPadding(40, 50, 0, 50);
 
             return view;
-
         }
-
-        @Override
-        public View getView(int position, View convertView, ViewGroup parent) {
-
-//            method is responsible for the Textview of the text shown initially
-            View view = super.getView(position, convertView, parent);
-
-            //we know that simple_spinner_item has android.R.id.text1 TextView:
-
-            TextView text = (TextView)view.findViewById(android.R.id.text1);
-            text.setTextColor(Color.parseColor("#383F46"));
-
-            return view;
-
-        }
-
-
     }
 
     /**
@@ -117,6 +92,8 @@ public class FixedTravelAllowanceDetailsActivity extends BaseActivity implements
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.ta_fixed_travel_allowance_details_activity);
+
+
 
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar_daily_allowance);
         if (toolbar != null) {
@@ -371,13 +348,15 @@ public class FixedTravelAllowanceDetailsActivity extends BaseActivity implements
         }
 
         if (isEditable) {
+//            ArrayAdapter<ICode> adapter = new ArrayAdapter<ICode>(this, android.R.layout.simple_spinner_item, new ArrayList<ICode>(controlData.getLodgingTypeValues().values()));
+//            spinner.setAdapter(adapter);
             renderSpinner(spinner, allowance.getLodgingType(), controlData.getLodgingTypeValues(), true);
         }
         TextView tvValue = (TextView) this.findViewById(R.id.tv_lodging_value);
         renderTextViewProvision(tvValue, allowance.getLodgingType());
-//            if (tvValue != null) {
-//                tvValue.setText(allowance.getLodgingType().toString());
-//            }
+            if (tvValue != null) {
+                tvValue.setText(allowance.getLodgingType().toString());
+            }
 
     }
 
@@ -552,28 +531,20 @@ public class FixedTravelAllowanceDetailsActivity extends BaseActivity implements
                 if (map == null) {
                     map = controlData.getProvidedMealValues();
                 }
-                List<String> list = new ArrayList<String>();
-                int index = 0;
-                int selectedIndex = -1;
-                for (Map.Entry<String,ICode> entry : map.entrySet()){
-                    if (entry.getValue().getCode().equals(provisionCode.getCode())){
-                        selectedIndex = index;
-                    }
-                    list.add(entry.getValue().toString());
-                    index++;
-                }
-                ArrayAdapter<String> adapter = new CustomArrayAdapter<>(this, list);
-                adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+                List<ICode> list = new ArrayList<ICode>(map.values());
+
+                ArrayAdapter<ICode> adapter = new CustomArrayAdapter<ICode>(this, list);
                 spinner.setAdapter(adapter);
 
+                int selectedIndex = list.indexOf(provisionCode);
                 if (selectedIndex > -1) {
                     spinner.setSelection(selectedIndex);
                 }
                 spinner.setVisibility(View.VISIBLE);
-
             }
         }
     }
+
 
     private void makeDividerGone(int resourceID){
         View divider = (View) this.findViewById(resourceID);

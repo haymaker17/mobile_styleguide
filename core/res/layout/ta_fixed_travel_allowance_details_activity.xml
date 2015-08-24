@@ -11,6 +11,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:background="@drawable/gradient_title_bar"
+        android:theme="@style/Theme.AppCompat.NoActionBar"
         android:titleTextAppearance="@style/TAToolbarTitle"
         app:titleTextAppearance="@style/TAToolbarTitle" />
 
@@ -78,7 +79,6 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_below="@+id/tv_breakfast_provision"
-                    style="@style/TADailyAllowanceSpinner"
                     android:visibility="visible" />
 
             </RelativeLayout>
@@ -126,7 +126,6 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_below="@+id/tv_lunch_label"
-                    style="@style/TADailyAllowanceSpinner"
                     android:visibility="visible" />
 
             </RelativeLayout>
@@ -174,7 +173,6 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_below="@+id/tv_dinner_label"
-                    style="@style/TADailyAllowanceSpinner"
                     android:visibility="visible" />
 
             </RelativeLayout>
@@ -214,7 +212,6 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_below="@+id/tv_lodging_label"
-                    style="@style/TADailyAllowanceSpinner"
                     android:visibility="visible" />
 
             </RelativeLayout>
