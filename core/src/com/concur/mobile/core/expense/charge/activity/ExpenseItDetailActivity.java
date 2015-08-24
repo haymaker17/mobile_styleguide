@@ -298,7 +298,7 @@ public class ExpenseItDetailActivity extends BaseActivity
             image = item.getImageData(); // context is null.
         } catch (Exception e) {
             error = e;
-            Log.e(Const.LOG_TAG, CLS_TAG + ".doManualExpenseTransitionOperations: image.getImageData() threw exception.");
+            Log.e(Const.LOG_TAG, CLS_TAG + ".doManualExpenseTransitionOperations: image.getImageData() threw exception!\n", e);
         }
 
         if (error == null && image != null) { // accessing the content resolver results in nullPointerException.

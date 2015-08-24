@@ -493,26 +493,30 @@ public class QuickExpense extends BaseActivity {
     @Override
     public void onBackPressed() {
         if (getIntent().hasExtra(ExpenseItDetailActivity.EXTRA_PREFERENCE_CONFIRM_USER_CHOICE_KEY)) {
-            String title = getString(R.string.confirm);
-            String message = getString(R.string.dlg_expense_save_cancel_confirmation_message);
-            int yes = R.string.okay;
-            int no = R.string.cancel;
-            AlertDialogFragment.OnClickListener yesListener = new AlertDialogFragment.OnClickListener() {
-                @Override
-                public void onClick(FragmentActivity activity, DialogInterface dialog, int which) {
-                    QuickExpense.super.onBackPressed();
-                }
-
-                @Override
-                public void onCancel(FragmentActivity activity, DialogInterface dialog) {
-                    // non-op.
-                }
-            };
-            DialogFragmentFactory.getAlertDialog(title, message, yes, -1, no, yesListener, null, null, null)
-                    .show(getSupportFragmentManager(), CLS_TAG);
+            showChangeLossConfirmationPrompt();
         } else {
             super.onBackPressed();
         }
+    }
+
+    private void showChangeLossConfirmationPrompt() {
+        String title = getString(R.string.confirm);
+        String message = getString(R.string.dlg_expense_save_cancel_confirmation_message);
+        int yes = R.string.okay;
+        int no = R.string.cancel;
+        AlertDialogFragment.OnClickListener yesListener = new AlertDialogFragment.OnClickListener() {
+            @Override
+            public void onClick(FragmentActivity activity, DialogInterface dialog, int which) {
+                QuickExpense.super.onBackPressed();
+            }
+
+            @Override
+            public void onCancel(FragmentActivity activity, DialogInterface dialog) {
+                // non-op.
+            }
+        };
+        DialogFragmentFactory.getAlertDialog(title, message, yes, -1, no, yesListener, null, null, null)
+                .show(getSupportFragmentManager(), CLS_TAG);
     }
 
     protected void restoreReceivers() {
