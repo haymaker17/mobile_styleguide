@@ -62,26 +62,36 @@ public class GroupConfigurationTaskTest
             Assert.assertNotNull("Request response is null", response);
 
             // --- parse the configurations received
-            List<RequestGroupConfiguration> rgcc = null;
+            List<RequestGroupConfiguration> configurationList;
             try {
-                rgcc = requestParser.parseRequestGroupConfigurationsResponse(
+                configurationList = requestParser.parseRequestGroupConfigurationsResponse(
                         result.resultData.getString(BaseAsyncRequestTask.HTTP_RESPONSE));
-                Assert.assertNotNull("Response is empty", rgcc);
-                Assert.assertTrue(rgcc.size() > 0);
+                Assert.assertNotNull("Response is empty", configurationList);
+                Assert.assertTrue(configurationList.size() > 0);
+                fillCacheTest(configurationList);
             } catch (Exception e) {
                 Assert.fail("Response parsing failed.");
             }
 
-            groupConfigurationCache.clear();
-            // Perform the verification & store the group Configuration.
-            if (rgcc != null && rgcc.size() > 0) {
-                // --- add configurations to cache if there is any
-                final String userId = getUserId();
-                for (RequestGroupConfiguration rgc : rgcc) {
-                    groupConfigurationCache.addValue(userId, rgc);
-                }
-                Assert.assertTrue(groupConfigurationCache.hasCachedValues());
+        }
+    }
+
+    /**
+     * Same behavior as what's done on RequestListActivity class
+     * TODO: create a dedicated method somewhere suited and call it instead.
+     *
+     * @param configurationList
+     */
+    private void fillCacheTest(List<RequestGroupConfiguration> configurationList) {
+        groupConfigurationCache.clear();
+        // Perform the verification & store the group Configuration.
+        if (configurationList != null && configurationList.size() > 0) {
+            // --- add configurations to cache if there is any
+            final String userId = getUserId();
+            for (RequestGroupConfiguration rgc : configurationList) {
+                groupConfigurationCache.addValue(userId, rgc);
             }
+            Assert.assertTrue(groupConfigurationCache.hasCachedValues());
         }
     }
 

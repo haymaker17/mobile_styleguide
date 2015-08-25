@@ -57,7 +57,7 @@ public class RequestTestSuite extends PlatformTestSuite {
     }
 
     /**
-     * Performs a group configuration test.
+     * Performs save and submit tests.
      *
      * @throws Exception throws an exception if the test fails.
      */
@@ -81,7 +81,7 @@ public class RequestTestSuite extends PlatformTestSuite {
     }
 
     /**
-     * Performs a group configuration test.
+     * Performs a recall test.
      *
      * @throws Exception throws an exception if the test fails.
      */
@@ -102,5 +102,55 @@ public class RequestTestSuite extends PlatformTestSuite {
 
         // Run the GroupConfigurationTaskTest test.
         recallTaskTest.doTest();
+    }
+
+
+    /**
+     * Performs a Request List retrieving test.
+     *
+     * @throws Exception throws an exception if the test fails.
+     */
+    @Test
+    public void doList() throws Exception {
+
+        // Init the login request
+        doPinPasswordLogin();
+
+        final RequestListTaskTest requestListTaskTest = new RequestListTaskTest(requestParser);
+        if (PlatformTestApplication.useMockServer()) {
+            // Init mock server.
+            initMockServer();
+
+            // Set the mock server instance on the test.
+            requestListTaskTest.setMockServer(mwsServer);
+        }
+
+        // Run the GroupConfigurationTaskTest test.
+        requestListTaskTest.doTest();
+    }
+
+
+    /**
+     * Performs a Request Detail retrieving test.
+     *
+     * @throws Exception throws an exception if the test fails.
+     */
+    @Test
+    public void doDetail() throws Exception {
+
+        // Init the login request
+        doPinPasswordLogin();
+
+        final RequestDetailTaskTest requestDetailTaskTest = new RequestDetailTaskTest(requestParser);
+        if (PlatformTestApplication.useMockServer()) {
+            // Init mock server.
+            initMockServer();
+
+            // Set the mock server instance on the test.
+            requestDetailTaskTest.setMockServer(mwsServer);
+        }
+
+        // Run the GroupConfigurationTaskTest test.
+        requestDetailTaskTest.doTest();
     }
 }
