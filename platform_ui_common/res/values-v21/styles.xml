@@ -47,7 +47,7 @@
         <item name="colorPrimaryDark">@color/Black</item>
     </style>
 
-    <style name="ConcurBaseTheme.NoActionBar" parent="Theme.AppCompat.NoActionBar">
+    <style name="ConcurBaseTheme.NoActionBar">
 
         <!--
             Theme customizations available in newer API levels can go in
@@ -56,15 +56,27 @@
         -->
         <item name="windowActionBar">false</item>
         <item name="android:windowNoTitle">true</item>
+        <!--
+             Following parameter is needed for AppCompat v22.+
+             and relevant only if this style is applied to an
+             activity which inherits from AppCompatActivity.
+         -->
+        <item name="windowNoTitle">true</item>
     </style>
 
     <style name="ConcurBaseTheme.Translucent">
         <item name="android:windowIsTranslucent">true</item>
     </style>
 
-    <style name="ConcurBaseTheme.Translucent.NoActionBar" parent="Theme.AppCompat.NoActionBar">
+    <style name="ConcurBaseTheme.Translucent.NoActionBar">
         <item name="windowActionBar">false</item>
         <item name="android:windowNoTitle">true</item>
+        <!--
+             Following parameter is needed for AppCompat v22.+
+             and relevant only if this style is applied to an
+             activity which inherits from AppCompatActivity.
+         -->
+        <item name="windowNoTitle">true</item>
     </style>
 
     <style name="ConcurTheme" parent="ConcurBaseTheme">
@@ -77,15 +89,33 @@
 
     <style name="ConcurTheme.Dialog" parent="android:Theme.Dialog">
         <item name="android:windowNoTitle">true</item>
+        <!--
+             Following parameter is needed for AppCompat v22.+
+             and relevant only if this style is applied to an
+             activity which inherits from AppCompatActivity.
+         -->
+        <item name="windowNoTitle">true</item>
     </style>
 
     <style name="ConcurTheme.Dialog.Light" parent="android:Theme.Dialog">
         <item name="android:windowNoTitle">true</item>
+        <!--
+             Following parameter is needed for AppCompat v22.+
+             and relevant only if this style is applied to an
+             activity which inherits from AppCompatActivity.
+         -->
+        <item name="windowNoTitle">true</item>
     </style>
 
     <!-- MOB-14596 - work around to fix in 2.x devices -->
     <style name="ConcurTheme.Sherlock.Dialog.Light" parent="Theme.AppCompat.Dialog">
         <item name="android:windowNoTitle">true</item>
+        <!--
+             Following parameter is needed for AppCompat v22.+
+             and relevant only if this style is applied to an
+             activity which inherits from AppCompatActivity.
+         -->
+        <item name="windowNoTitle">true</item>
     </style>
 
     <style name="ConcurTheme.Dialog.WhatsNew" parent="@android:style/Theme.Dialog">
@@ -96,6 +126,12 @@
         <item name="android:windowIsTranslucent">true</item>
         <item name="android:windowFrame">@null</item>
         <item name="android:windowBackground">@android:color/transparent</item>
+        <!--
+             Following parameter is needed for AppCompat v22.+
+             and relevant only if this style is applied to an
+             activity which inherits from AppCompatActivity.
+         -->
+        <item name="windowNoTitle">true</item>
     </style>
 
     <style name="BigPrimaryText" parent="PrimaryText">

@@ -54,14 +54,9 @@ import com.concur.mobile.core.expense.report.service.ReportDeleteRequest;
 import com.concur.mobile.core.expense.report.service.ReportEntryDetailRequest;
 import com.concur.mobile.core.expense.report.service.ReportEntryFormRequest;
 import com.concur.mobile.core.expense.service.GetExpenseTypesRequest;
-import com.concur.mobile.core.expense.travelallowance.activity.ItineraryUpdateActivity;
-import com.concur.mobile.core.expense.travelallowance.activity.TravelAllowanceActivity;
-import com.concur.mobile.core.expense.travelallowance.controller.ControllerAction;
-import com.concur.mobile.core.expense.travelallowance.controller.IController;
-import com.concur.mobile.core.expense.travelallowance.controller.IControllerListener;
-import com.concur.mobile.core.expense.travelallowance.controller.TravelAllowanceItineraryController;
-import com.concur.mobile.core.expense.travelallowance.datamodel.Itinerary;
-import com.concur.mobile.core.expense.travelallowance.datamodel.TravelAllowanceConfiguration;
+
+import com.concur.mobile.core.expense.travelallowance.TravelAllowanceFacade;
+
 import com.concur.mobile.core.expense.travelallowance.util.BundleId;
 import com.concur.mobile.core.service.ConcurService;
 import com.concur.mobile.core.util.Const;
@@ -86,7 +81,7 @@ import java.util.Map;
  */
 public class
         ExpenseEntries extends AbstractExpenseActivity
-                            implements IControllerListener {
+                             {
 
     private static final String CLS_TAG = ExpenseEntries.class.getSimpleName();
 
@@ -106,16 +101,16 @@ public class
 
     private static final String SELECTED_EXPENSE_TYPE = "selected.expense.type";
 
-    private TravelAllowanceItineraryController itineraryController;
+   // private TravelAllowanceItineraryController itineraryController;
 
 
-    @Override
-    public void actionFinished(IController controller, ControllerAction action, boolean isSuccess, Bundle result) {
-        ConcurCore app = (ConcurCore) getApplication();
-        if (app.getTaItineraryController() != null && app.getTaItineraryController().getItineraryList().size() > 0){
-            showTravelAllowanceButton();
-        }
-    }
+//    @Override
+//    public void actionFinished(IController controller, ControllerAction action, boolean isSuccess, Bundle result) {
+//        ConcurCore app = (ConcurCore) getApplication();
+//        if (app.getTaItineraryController() != null && app.getTaItineraryController().getItineraryList().size() > 0){
+//            showTravelAllowanceButton();
+//        }
+//    }
 
     private enum ExpenseEntryOption {
         ViewDetails, ViewReceipt, RemoveFromReport, AttachSelectedGalleryReceipt, AttachSelectedCloudReceipt, AttachCapturedReceipt
@@ -221,6 +216,8 @@ public class
     protected long upTime = 0L;
 
 
+    private TravelAllowanceFacade taFacade;
+
     /*
      * (non-Javadoc)
      * 
@@ -262,43 +259,68 @@ public class
             selectedExpenseType = (ExpenseType) retainer.get(SELECTED_EXPENSE_TYPE);
         }
 
-        if (expRep != null) {
+        if (ViewUtil.hasTravelAllowanceFixed(this)) {
             ConcurCore app = (ConcurCore) getApplication();
-            if (reportKeySource == Const.EXTRA_EXPENSE_REPORT_SOURCE_APPROVAL) {
-                app.getTaItineraryController().refreshItineraries(expRep.reportKey, true);
+
+            final boolean isInApproval = reportKeySource == Const.EXTRA_EXPENSE_REPORT_SOURCE_APPROVAL;
+
+            this.taFacade = new TravelAllowanceFacade(expRep, isInApproval, app.getTaController(),
+                    new TravelAllowanceFacade.ExpenseEntriesTACallback() {
+
+                        @Override
+                        public void enableTAItineraryButton(final Class<?> taStartActivity, final boolean isEditMode) {
+                            View button = findViewById(R.id.header_itinerary);
+                            if (button == null) {
+                                return;
+                            }
+                            button.setVisibility(View.VISIBLE);
+                            button.setFocusable(true);
+                            button.setClickable(true);
+
+                            // Add a view click listener to start TA flow
+                            button.setOnClickListener(new View.OnClickListener() {
+
+                                @Override
+                                public void onClick(View v) {
+                                    Intent intent = new Intent(ExpenseEntries.this, taStartActivity);
+                                    intent.putExtra(BundleId.EXPENSE_REPORT_KEY, expRep.reportKey);
+                                    intent.putExtra(BundleId.EXPENSE_REPORT_NAME, expRep.reportName);
+                                    intent.putExtra(BundleId.EXPENSE_REPORT_IS_SUBMITTED, expRep.isSubmitted());
+                                    intent.putExtra(BundleId.EXPENSE_REPORT_DATE, expRep.reportDateCalendar.getTime());
+                                    intent.putExtra(BundleId.IS_EDIT_MODE, isEditMode);
+                                    ExpenseEntries.this.startActivityForResult(intent, REQUEST_VIEW_TA_ITINERARY);
+                                }
+                            });
+                        }
+                    });
+
+            if (savedInstanceState == null) {
+                taFacade.refreshTaData();
             } else {
-                app.getTaItineraryController().refreshItineraries(expRep.reportKey, false);
-            }
-            app.getFixedTravelAllowanceController().refreshFixedTravelAllowances(expRep.reportKey);
-
-//          Register Listener for Itinerary data and make button visible
-            this.itineraryController = app.getTaItineraryController();
-            this.itineraryController.registerListener(this);
-
-//          Make button Travel Allowances visible
-            if ((app.getTaItineraryController() != null && app.getTaItineraryController().getItineraryList().size() > 0)
-                    || reportKeySource != Const.EXTRA_EXPENSE_REPORT_SOURCE_APPROVAL && !expRep.isSubmitted()) {
-                showTravelAllowanceButton();
+                taFacade.refreshVisibility();
             }
         }
+
+
+
     }
 
     @Override
     protected void onDestroy() {
         super.onDestroy();
-        if (this.itineraryController != null) {
-            this.itineraryController.unregisterListener(this);
-        }
+//        if (this.itineraryController != null) {
+//            this.itineraryController.unregisterListener(this);
+//        }
     }
 
-    private void showTravelAllowanceButton(){
-        View vHeaderItinerary = this.findViewById(R.id.header_itinerary);
-        if (vHeaderItinerary != null){
-            if (ViewUtil.hasTravelAllowanceFixed(this)) {
-                vHeaderItinerary.setVisibility(View.VISIBLE);
-            }
-        }
-    }
+//    private void showTravelAllowanceButton(){
+//        View vHeaderItinerary = this.findViewById(R.id.header_itinerary);
+//        if (vHeaderItinerary != null){
+//            if (ViewUtil.hasTravelAllowanceFixed(this)) {
+//                vHeaderItinerary.setVisibility(View.VISIBLE);
+//            }
+//        }
+//    }
 
     @Override
     protected void onPause() {
@@ -577,6 +599,14 @@ public class
             clickIntent.putExtra(Const.EXTRA_EXPENSE_REPORT_SOURCE, reportKeySource);
             viewClickHandler.addViewLauncherForResult(titleHeader, clickIntent, REQUEST_VIEW_SUMMARY);
             titleHeader.setOnClickListener(viewClickHandler);
+        }
+
+        // Handle the Itinerary Button logic which is switched on by Travel Allowance Fixed site setting.
+        if (ViewUtil.hasTravelAllowanceFixed(this) && taFacade != null) {
+            taFacade.refreshVisibility();
+//            TravelAllowanceFacade travelAllowanceFacade = new TravelAllowanceFacade(this);
+//            travelAllowanceFacade.initializeItineraryButton(expRep,
+//                    reportKeySource == Const.EXTRA_EXPENSE_REPORT_SOURCE_APPROVAL, REQUEST_VIEW_TA_ITINERARY);
         }
     }
 
@@ -1596,77 +1626,76 @@ public class
         }
 
         // Set click-handler on itinerary view
-        view = findViewById(R.id.header_itinerary);
-        view.setVisibility(View.VISIBLE);
-        if (view != null) {
-            ConcurCore app = (ConcurCore) getApplication();
-            // hide if we don't have the setting
-            if (!ViewUtil.hasTravelAllowanceFixed(this)) {
-                view.setVisibility(View.GONE);
-            } else if (reportKeySource == Const.EXTRA_EXPENSE_REPORT_SOURCE_APPROVAL) {
-                if (app.getTaItineraryController().getItineraryList() == null
-                        || app.getTaItineraryController().getItineraryList().size() == 0) {
-                    view.setVisibility(View.GONE);
-                }
-            } else {
-                if (app.getTAConfigController().getTravelAllowanceConfigurationList() != null) {
-                    TravelAllowanceConfiguration taConfig = app.getTAConfigController().getTravelAllowanceConfigurationList();
-                    if (!TravelAllowanceConfiguration.FIXED.equals(taConfig.getLodgingTat())
-                            && !TravelAllowanceConfiguration.FIXED.equals(taConfig.getMealsTat())) {
-                        view.setVisibility(View.GONE);
-                    }
-                }
-            }
-            view.setFocusable(true);
-            view.setClickable(true);
-            // Add a view click listener to start TA flow
-            view.setOnClickListener(new OnClickListener() {
-
-                @Override
-                public void onClick(View v) {
-                    Intent intent;
-                    if (reportKeySource == Const.EXTRA_EXPENSE_REPORT_SOURCE_APPROVAL) {
-                        intent = new Intent(ExpenseEntries.this, TravelAllowanceActivity.class);
-                        intent.putExtra(BundleId.EXPENSE_REPORT_KEY, expRep.reportKey);
-                        intent.putExtra(BundleId.EXPENSE_REPORT_NAME, expRep.reportName);
-                        intent.putExtra(BundleId.IS_EDIT_MODE, false);
-                        startActivity(intent);
-                    } else {//Traveller
-                        ConcurCore app = (ConcurCore) getApplication();
-                        if (app.getTaItineraryController() != null) {
-                            if (app.getTaItineraryController().getItineraryList() == null
-                                    || app.getTaItineraryController().getItineraryList().size() == 0) {
-                                intent = new Intent(ExpenseEntries.this, ItineraryUpdateActivity.class);
-                                Itinerary itin = new Itinerary();
-                                itin.setExpenseReportID(expRep.reportKey);
-                                itin.setName(expRep.reportName);
-                                intent.putExtra(BundleId.ITINERARY, itin);
-                                intent.putExtra(BundleId.EXPENSE_REPORT_KEY, expRep.reportKey);
-                                intent.putExtra(BundleId.EXPENSE_REPORT_DATE, expRep.reportDateCalendar.getTime());
-                                startActivityForResult(intent, REQUEST_VIEW_TA_ITINERARY);
-                            } else {//There are itineraries already
-                                intent = new Intent(ExpenseEntries.this, TravelAllowanceActivity.class);
-                                intent.putExtra(BundleId.EXPENSE_REPORT_KEY, expRep.reportKey);
-                                intent.putExtra(BundleId.EXPENSE_REPORT_NAME, expRep.reportName);
-                                intent.putExtra(BundleId.EXPENSE_REPORT_DATE, expRep.reportDateCalendar.getTime());
-                                intent.putExtra(BundleId.EXPENSE_REPORT_IS_SUBMITTED, expRep.isSubmitted());
-								intent.putExtra(BundleId.IS_EDIT_MODE, true);
-                                startActivityForResult(intent, REQUEST_VIEW_TA_ITINERARY);
-                            }
-                        }
-                    }
-                }
-            });
-        } else {
-            Log.e(Const.LOG_TAG, CLS_TAG + ".populateExpenseHeaderView: unable to locate header report summary view!");
-        }
+//        view = findViewById(R.id.header_itinerary);
+//        if (view != null) {
+//            view.setVisibility(View.VISIBLE);
+//            ConcurCore app = (ConcurCore) getApplication();
+//            // hide if we don't have the setting
+//            if (!ViewUtil.hasTravelAllowanceFixed(this)) {
+//                view.setVisibility(View.GONE);
+//            } else if (reportKeySource == Const.EXTRA_EXPENSE_REPORT_SOURCE_APPROVAL) {
+//                if (app.getTaItineraryController().getItineraryList() == null
+//                        || app.getTaItineraryController().getItineraryList().size() == 0) {
+//                    view.setVisibility(View.GONE);
+//                }
+//            } else {
+//                if (app.getTAConfigController().getTravelAllowanceConfigurationList() != null) {
+//                    TravelAllowanceConfiguration taConfig = app.getTAConfigController().getTravelAllowanceConfigurationList();
+//                    if (!TravelAllowanceConfiguration.FIXED.equals(taConfig.getLodgingTat())
+//                            && !TravelAllowanceConfiguration.FIXED.equals(taConfig.getMealsTat())) {
+//                        view.setVisibility(View.GONE);
+//                    }
+//                }
+//            }
+//            view.setFocusable(true);
+//            view.setClickable(true);
+//            // Add a view click listener to start TA flow
+//            view.setOnClickListener(new OnClickListener() {
+//
+//                @Override
+//                public void onClick(View v) {
+//                    Intent intent;
+//                    if (reportKeySource == Const.EXTRA_EXPENSE_REPORT_SOURCE_APPROVAL) {
+//                        intent = new Intent(ExpenseEntries.this, TravelAllowanceActivity.class);
+//                        intent.putExtra(BundleId.EXPENSE_REPORT_KEY, expRep.reportKey);
+//                        intent.putExtra(BundleId.EXPENSE_REPORT_NAME, expRep.reportName);
+//                        intent.putExtra(BundleId.IS_EDIT_MODE, false);
+//                        startActivity(intent);
+//                    } else {//Traveller
+//                        ConcurCore app = (ConcurCore) getApplication();
+//                        if (app.getTaItineraryController() != null) {
+//                            if (app.getTaItineraryController().getItineraryList() == null
+//                                    || app.getTaItineraryController().getItineraryList().size() == 0) {
+//                                intent = new Intent(ExpenseEntries.this, ItineraryUpdateActivity.class);
+//                                Itinerary itin = new Itinerary();
+//                                itin.setExpenseReportID(expRep.reportKey);
+//                                itin.setName(expRep.reportName);
+//                                intent.putExtra(BundleId.ITINERARY, itin);
+//                                intent.putExtra(BundleId.EXPENSE_REPORT_KEY, expRep.reportKey);
+//                                intent.putExtra(BundleId.EXPENSE_REPORT_DATE, expRep.reportDateCalendar.getTime());
+//                                startActivityForResult(intent, REQUEST_VIEW_TA_ITINERARY);
+//                            } else {//There are itineraries already
+//                                intent = new Intent(ExpenseEntries.this, TravelAllowanceActivity.class);
+//                                intent.putExtra(BundleId.EXPENSE_REPORT_KEY, expRep.reportKey);
+//                                intent.putExtra(BundleId.EXPENSE_REPORT_NAME, expRep.reportName);
+//                                intent.putExtra(BundleId.EXPENSE_REPORT_DATE, expRep.reportDateCalendar.getTime());
+//                                intent.putExtra(BundleId.EXPENSE_REPORT_IS_SUBMITTED, expRep.isSubmitted());
+//								intent.putExtra(BundleId.IS_EDIT_MODE, true);
+//                                startActivityForResult(intent, REQUEST_VIEW_TA_ITINERARY);
+//                            }
+//                        }
+//                    }
+//                }
+//            });
+//        } else {
+//            Log.e(Const.LOG_TAG, CLS_TAG + ".populateExpenseHeaderView: unable to locate header report summary view!");
+//        }
 
     }
 
     @Override
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
         if (requestCode == REQUEST_VIEW_TA_ITINERARY) {
-
             if (resultCode == Activity.RESULT_OK) {
 
                 // Register the receiver.

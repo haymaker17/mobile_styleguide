@@ -16,6 +16,7 @@ import android.widget.TextView;
 
 import com.concur.core.R;
 import com.concur.mobile.core.ConcurCore;
+import com.concur.mobile.core.expense.travelallowance.adapter.FixedTravelAllowanceListAdapter;
 import com.concur.mobile.core.expense.travelallowance.controller.FixedTravelAllowanceController;
 import com.concur.mobile.core.expense.travelallowance.datamodel.FixedTravelAllowance;
 import com.concur.mobile.core.expense.travelallowance.util.DefaultDateFormat;
@@ -189,7 +190,7 @@ public class FixedTravelAllowanceListFragment extends ListFragment implements Sw
         }
 
         ConcurCore app = (ConcurCore) context.getApplicationContext();
-        FixedTravelAllowanceController allowanceController = app.getFixedTravelAllowanceController();
+        FixedTravelAllowanceController allowanceController = app.getTaController().getFixedTravelAllowanceController();
         List<FixedTravelAllowance> allowances = allowanceController.getFixedTravelAllowances();
         if (allowances == null || allowances.size() == 0) {
             return;

@@ -10,6 +10,7 @@ import com.concur.mobile.base.service.BaseAsyncRequestTask;
 import com.concur.mobile.base.service.BaseAsyncResultReceiver;
 import com.concur.mobile.core.expense.travelallowance.datamodel.TravelAllowanceConfiguration;
 import com.concur.mobile.core.expense.travelallowance.service.GetTAConfigurationRequest;
+import com.concur.mobile.core.expense.travelallowance.util.DebugUtils;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -23,8 +24,6 @@ public class TravelAllowanceConfigurationController extends BaseController {
 
     private BaseAsyncResultReceiver receiver;
 
-//    private List<IServiceRequestListener> listeners;
-
     private GetTAConfigurationRequest getConfigurationRequest;
 
     private Context context;
@@ -32,35 +31,32 @@ public class TravelAllowanceConfigurationController extends BaseController {
     private TravelAllowanceConfiguration travelAllowanceConfig;
 
     public TravelAllowanceConfigurationController(Context context) {
-//        this.listeners = new ArrayList<IServiceRequestListener>();
         this.context = context;
     }
 
-    public void refreshConfiguration(){
-
-
-//        this.itineraryList = new ArrayList<Itinerary>();
+    public void refreshConfiguration() {
 
         if (getConfigurationRequest != null && getConfigurationRequest.getStatus() != AsyncTask.Status.FINISHED) {
             // There is already an async task which is not finished yet. Return silently and let the task finish his work first.
+            Log.d(DebugUtils.LOG_TAG_TA, DebugUtils.buildLogText(CLASS_TAG, "refreshConfiguration", "Refresh still in progress."));
             return;
         }
-
 
         receiver = new BaseAsyncResultReceiver(new Handler());
 
         receiver.setListener(new BaseAsyncRequestTask.AsyncReplyListener() {
+
             @Override
             public void onRequestSuccess(Bundle resultData) {
                 travelAllowanceConfig = getConfigurationRequest.getTravelAllowanceConfiguration();
                 notifyListener(ControllerAction.REFRESH, true, resultData);
-                Log.d(CLASS_TAG, "Request success.");
+                Log.d(DebugUtils.LOG_TAG_TA, DebugUtils.buildLogText(CLASS_TAG, "refreshConfiguration", "Request success."));
             }
 
             @Override
             public void onRequestFail(Bundle resultData) {
                 notifyListener(ControllerAction.REFRESH, false, resultData);
-                Log.d(CLASS_TAG, "Request failed.");
+                Log.d(DebugUtils.LOG_TAG_TA, DebugUtils.buildLogText(CLASS_TAG, "refreshConfiguration", "Request failed."));
             }
 
             @Override
@@ -76,38 +72,17 @@ public class TravelAllowanceConfigurationController extends BaseController {
             }
         });
 
-    getConfigurationRequest = new GetTAConfigurationRequest(context, receiver);
-
-    getConfigurationRequest.execute();
+        getConfigurationRequest = new GetTAConfigurationRequest(context, receiver);
+        getConfigurationRequest.execute();
     }
 
-//     private synchronized void notifyListener(boolean isFailed) {
-//         for (IServiceRequestListener listener: listeners) {
-//             if (isFailed){
-//                 listener.onRequestFail(CONTROLLER_TAG);
-//             } else {
-//                 listener.onRequestSuccess(CONTROLLER_TAG);
-//             }
-//         }
-//     }
-
-//     public synchronized void registerListener(IServiceRequestListener listener) {
-//         listeners.add(listener);
-//     }
-//
-//     public synchronized void unregisterListener(IServiceRequestListener listener) {
-//         listeners.remove(listener);
-//     }
-
+    /**
+     *
+     * @return can return null if there is no ta config loaded yet.
+     */
   public TravelAllowanceConfiguration getTravelAllowanceConfigurationList(){
-      if (travelAllowanceConfig == null){
-          return new TravelAllowanceConfiguration();
-      }
       return travelAllowanceConfig;
   }
 
-//    public List<CompactItinerary> getCompactItineraryList() {
-//
-//    }
 
 }

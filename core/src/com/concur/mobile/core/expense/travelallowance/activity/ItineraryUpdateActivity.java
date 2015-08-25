@@ -106,13 +106,15 @@ public class ItineraryUpdateActivity extends BaseActivity implements IController
         this.setContentView(R.layout.ta_update_activity);
 
         ConcurCore app = (ConcurCore) getApplication();
-        this.itinController = app.getTaItineraryController();
-        this.allowanceController = app.getFixedTravelAllowanceController();
-        app.getTAConfigController().refreshConfiguration();
+        this.itinController = app.getTaController().getTaItineraryController();
+        this.allowanceController = app.getTaController().getFixedTravelAllowanceController();
+        app.getTaController().getTAConfigController().refreshConfiguration();
 
         if (getIntent().hasExtra(BundleId.EXPENSE_REPORT_KEY)) {
             this.expenseReportKey = getIntent().getStringExtra(BundleId.EXPENSE_REPORT_KEY);
         }
+
+        String expenseReportName = getIntent().getStringExtra(BundleId.EXPENSE_REPORT_NAME);
 
         if (savedInstanceState == null) {//very first create
             this.itinerary = (Itinerary) getIntent().getExtras().getSerializable(BundleId.ITINERARY);
@@ -127,10 +129,13 @@ public class ItineraryUpdateActivity extends BaseActivity implements IController
         }
 
         if (this.itinerary == null) {
-            Log.e(DebugUtils.LOG_TAG_TA, DebugUtils.buildLogText(CLASS_TAG, "onCreate", "Mandatory itinerary not found in intent!"));
-            throw new IllegalArgumentException(
-                    "onCreate Activity: Expected and Itinerary in the intent extras with bundle id: "
-                            + BundleId.ITINERARY + " but nothing found.");
+            this.itinerary = new Itinerary();
+            itinerary.setExpenseReportID(this.expenseReportKey);
+            itinerary.setName(expenseReportName);
+//            Log.e(DebugUtils.LOG_TAG_TA, DebugUtils.buildLogText(CLASS_TAG, "onCreate", "Mandatory itinerary not found in intent!"));
+//            throw new IllegalArgumentException(
+//                    "onCreate Activity: Expected and Itinerary in the intent extras with bundle id: "
+//                            + BundleId.ITINERARY + " but nothing found.");
         }
 
         /* To hide the keyboard after the custom spinner selection was done. */
@@ -728,7 +733,7 @@ public class ItineraryUpdateActivity extends BaseActivity implements IController
                     Itinerary createdItinerary = (Itinerary) result.getSerializable(BundleId.ITINERARY);
                     this.itinerary = createdItinerary;
                     ConcurCore app = (ConcurCore) getApplication();
-                    allowanceController = app.getFixedTravelAllowanceController();
+                    allowanceController = app.getTaController().getFixedTravelAllowanceController();
                     Toast.makeText(this, R.string.general_save_success, Toast.LENGTH_SHORT).show();
                     Intent resultIntent = new Intent();
                     resultIntent.putExtra(Const.EXTRA_EXPENSE_REFRESH_HEADER, true);

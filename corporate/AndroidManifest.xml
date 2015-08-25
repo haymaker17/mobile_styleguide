@@ -321,7 +321,7 @@
         <activity android:name="com.concur.mobile.core.expense.travelallowance.activity.TravelAllowanceActivity"
             android:theme="@style/ConcurBaseTheme.NoActionBar" />
         <activity android:name="com.concur.mobile.core.expense.travelallowance.activity.FixedTravelAllowanceDetailsActivity"
-            android:theme="@style/DailyAllowanceActivityTheme" />
+            android:theme="@style/ConcurBaseTheme.NoActionBar" />
         <activity android:name="com.concur.mobile.core.expense.travelallowance.activity.ItineraryUpdateActivity"
             android:theme="@style/ConcurBaseTheme.NoActionBar"/>
         <activity android:name="com.concur.mobile.core.expense.travelallowance.activity.ItineraryListSearch"

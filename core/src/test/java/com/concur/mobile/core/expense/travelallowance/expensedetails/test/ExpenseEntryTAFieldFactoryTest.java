@@ -12,7 +12,7 @@ import com.concur.mobile.core.expense.travelallowance.controller.FixedTravelAllo
 import com.concur.mobile.core.expense.travelallowance.datamodel.FixedTravelAllowance;
 import com.concur.mobile.core.expense.travelallowance.datamodel.LodgingType;
 import com.concur.mobile.core.expense.travelallowance.datamodel.MealProvision;
-import com.concur.mobile.core.expense.travelallowance.expensedetails.TAFieldFactory;
+import com.concur.mobile.core.expense.travelallowance.expensedetails.ExpenseEntryTAFieldFactory;
 
 import junit.framework.TestCase;
 
@@ -33,7 +33,7 @@ import testconfig.StringConstants;
  */
 @Config(constants = BuildConfig.class, manifest = "AndroidManifest.xml", sdk = 21)
 @RunWith(RoboTestRunner.class)
-public class TAFieldFactoryTest extends TestCase {
+public class ExpenseEntryTAFieldFactoryTest extends TestCase {
 
     private class FixedTAControllerDouble extends FixedTravelAllowanceController {
         /**
@@ -61,7 +61,7 @@ public class TAFieldFactoryTest extends TestCase {
         }
     }
 
-    private TAFieldFactory factory;
+    private ExpenseEntryTAFieldFactory factory;
 
     private ExpenseReportEntryDetail expRepEntryDetail;
 
@@ -111,7 +111,7 @@ public class TAFieldFactoryTest extends TestCase {
         expRepEntryDetail.taDayKey = "1";
         expRepEntryDetail.expKey = "xxx";
 
-        factory = new TAFieldFactory(new Activity(), expRepEntryDetail, new FixedTravelAllowanceController(new Activity()));
+        factory = new ExpenseEntryTAFieldFactory(new Activity(), expRepEntryDetail, new FixedTravelAllowanceController(new Activity()));
 
         List<ExpenseReportFormField> fieldList = factory.getFormFields();
         assertEquals(0, fieldList.size());
@@ -135,7 +135,7 @@ public class TAFieldFactoryTest extends TestCase {
         expRepEntryDetail.taDayKey = "1";
         expRepEntryDetail.expKey = "xxx";
 
-        factory = new TAFieldFactory(new Activity(), expRepEntryDetail, controller);
+        factory = new ExpenseEntryTAFieldFactory(new Activity(), expRepEntryDetail, controller);
 
         List<ExpenseReportFormField> fieldList = factory.getFormFields();
         assertEquals(0, fieldList.size());
@@ -155,7 +155,7 @@ public class TAFieldFactoryTest extends TestCase {
         expRepEntryDetail.taDayKey = "1";
         expRepEntryDetail.expKey = "FXMLS";
 
-        factory = new TAFieldFactory(new Activity(), expRepEntryDetail,new FixedTravelAllowanceController(new Activity()));
+        factory = new ExpenseEntryTAFieldFactory(new Activity(), expRepEntryDetail,new FixedTravelAllowanceController(new Activity()));
 
         List<ExpenseReportFormField> fieldList = factory.getFormFields();
         assertEquals(1, fieldList.size());
@@ -197,7 +197,7 @@ public class TAFieldFactoryTest extends TestCase {
         assertNotNull(controller.getFixedTA("1").getLunchProvision());
 
         // Test execution
-        factory = new TAFieldFactory(new Activity(), expRepEntryDetail, controller);
+        factory = new ExpenseEntryTAFieldFactory(new Activity(), expRepEntryDetail, controller);
 
         // Assert
         List<ExpenseReportFormField> fieldList = factory.getFormFields();
@@ -249,7 +249,7 @@ public class TAFieldFactoryTest extends TestCase {
         assertNull(controller.getFixedTA("1").getLunchProvision());
 
         // Test execution
-        factory = new TAFieldFactory(new Activity(), expRepEntryDetail, controller);
+        factory = new ExpenseEntryTAFieldFactory(new Activity(), expRepEntryDetail, controller);
 
         // Assert
         List<ExpenseReportFormField> fieldList = factory.getFormFields();
@@ -306,7 +306,7 @@ public class TAFieldFactoryTest extends TestCase {
         assertNull(controller.getFixedTA("1").getLunchProvision());
 
         // Test execution
-        factory = new TAFieldFactory(new Activity(), expRepEntryDetail, controller);
+        factory = new ExpenseEntryTAFieldFactory(new Activity(), expRepEntryDetail, controller);
 
         // Assert
         List<ExpenseReportFormField> fieldList = factory.getFormFields();
@@ -360,7 +360,7 @@ public class TAFieldFactoryTest extends TestCase {
         assertNull(controller.getFixedTA("1").getLunchProvision());
 
         // Test execution
-        factory = new TAFieldFactory(new Activity(), expRepEntryDetail, controller);
+        factory = new ExpenseEntryTAFieldFactory(new Activity(), expRepEntryDetail, controller);
 
         // Assert
         List<ExpenseReportFormField> fieldList = factory.getFormFields();
@@ -417,7 +417,7 @@ public class TAFieldFactoryTest extends TestCase {
         assertNull(controller.getFixedTA("1").getLunchProvision());
 
         // Test execution
-        factory = new TAFieldFactory(new Activity(), expRepEntryDetail, controller);
+        factory = new ExpenseEntryTAFieldFactory(new Activity(), expRepEntryDetail, controller);
 
         // Assert
         List<ExpenseReportFormField> fieldList = factory.getFormFields();
@@ -462,7 +462,7 @@ public class TAFieldFactoryTest extends TestCase {
         expRepEntryDetail.expKey = "FXLDG";
 
         // Test execution
-        factory = new TAFieldFactory(new Activity(), expRepEntryDetail, controller);
+        factory = new ExpenseEntryTAFieldFactory(new Activity(), expRepEntryDetail, controller);
 
         // Assert
         List<ExpenseReportFormField> fieldList = factory.getFormFields();

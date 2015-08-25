@@ -19,14 +19,16 @@
         app:titleTextAppearance="@style/TAToolbarTitle"
         android:titleTextAppearance="@style/TAToolbarTitle"
         android:background="@android:color/transparent"
-        android:elevation="3dp" />
+        android:elevation="3dp"
+        android:theme="@style/Theme.AppCompat.NoActionBar"/>
 
     <android.support.design.widget.TabLayout
         android:id="@+id/tab_layout"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:background="@android:color/transparent"
-        android:elevation="3dp" />
+        android:elevation="3dp"
+        android:theme="@style/Theme.AppCompat.NoActionBar"/>
 
         </LinearLayout>
 

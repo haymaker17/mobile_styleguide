@@ -19,7 +19,7 @@ import java.util.List;
 /**
  * Created by D049515 on 15.07.2015.
  */
-public class TAFieldFactory {
+public class ExpenseEntryTAFieldFactory {
 
     private static final String MEALS = "FXMLS";
     private static final String LODGING = "FXLDG";
@@ -34,12 +34,20 @@ public class TAFieldFactory {
 
     private FixedTravelAllowanceController controller;
 
+    public ExpenseEntryTAFieldFactory(Context context, ExpenseReportEntryDetail expRepEntryDetail) {
+        this(context, expRepEntryDetail, null);
+    }
 
-    public TAFieldFactory(Context context, ExpenseReportEntryDetail expRepEntryDetail, FixedTravelAllowanceController controller) {
+    public ExpenseEntryTAFieldFactory(Context context, ExpenseReportEntryDetail expRepEntryDetail, FixedTravelAllowanceController controller) {
         this.expRepEntryDetail = expRepEntryDetail;
         this.context = context;
         this.formFields = new ArrayList<ExpenseReportFormField>();
-        this.controller = controller;
+        if (controller == null) {
+            ConcurCore app = (ConcurCore) context.getApplicationContext();
+            this.controller = app.getTaController().getFixedTravelAllowanceController();
+        } else {
+            this.controller = controller;
+        }
     }
 
     public List<ExpenseReportFormField> getFormFields() {

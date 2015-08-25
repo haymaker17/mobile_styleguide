@@ -68,7 +68,7 @@ public class SimpleTAItineraryListFragment extends Fragment implements SwipeRefr
         }
         if (this.itineraryController == null) {
             ConcurCore app = (ConcurCore) getActivity().getApplication();
-            this.itineraryController = app.getTaItineraryController();
+            this.itineraryController = app.getTaController().getTaItineraryController();
         }
         if (this.itineraryController != null) {
             this.itineraryController.registerListener(this);

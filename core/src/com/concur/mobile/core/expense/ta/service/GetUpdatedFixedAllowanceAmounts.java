@@ -1,4 +1,4 @@
-package com.concur.mobile.core.expense.travelallowance;
+package com.concur.mobile.core.expense.ta.service;
 
 import java.io.IOException;
 import java.util.HashMap;
@@ -10,6 +10,7 @@ import android.util.Log;
 
 import com.concur.mobile.base.service.BaseAsyncResultReceiver;
 import com.concur.mobile.base.service.parser.CommonParser;
+import com.concur.mobile.core.expense.travelallowance.util.TaXmlUtil;
 import com.concur.mobile.core.service.CoreAsyncRequestTask;
 import com.concur.mobile.core.util.Const;
 

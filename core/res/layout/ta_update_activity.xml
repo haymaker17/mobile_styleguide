@@ -20,7 +20,8 @@
             android:titleTextAppearance="@style/TAToolbarTitle"
             android:contentInsetStart="72dp"
             app:contentInsetStart="72dp"
-            android:background="@android:color/transparent" />
+            android:background="@android:color/transparent"
+            android:theme="@style/Theme.AppCompat.NoActionBar"/>
 
         <TextView
             android:id="@+id/tv_toolbar_text"

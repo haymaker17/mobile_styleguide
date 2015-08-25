@@ -1,4 +1,4 @@
-package com.concur.mobile.core.expense.travelallowance;
+package com.concur.mobile.core.expense.ta.service;
 
 public class TaConfig {
 

@@ -400,11 +400,6 @@ public class ExpenseApproval extends BaseActivity {
 
                     ConcurCore ConcurCore = (ConcurCore) getApplication();
 
-                    // Request to read the employee configuration
-                    if (ConcurCore.getTAConfigController() != null) {
-                        ConcurCore.getTAConfigController().refreshConfiguration();
-                    }
-
                     // Launch a request to obtain a detailed report.
                     ConcurService concurService = ConcurCore.getService();
                     registerReportDetailReceiver();

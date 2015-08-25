@@ -87,8 +87,8 @@ public class TravelAllowanceActivity extends AppCompatActivity
 
         ConcurCore app = (ConcurCore) getApplication();
 
-        this.itineraryController = app.getTaItineraryController();
-        this.allowanceController = app.getFixedTravelAllowanceController();
+        this.itineraryController = app.getTaController().getTaItineraryController();
+        this.allowanceController = app.getTaController().getFixedTravelAllowanceController();
 
         registerControllerActionListener();
 

@@ -1,4 +1,4 @@
-package com.concur.mobile.core.expense.travelallowance.fragment;
+package com.concur.mobile.core.expense.travelallowance.adapter;
 
 import java.util.ArrayList;
 import java.util.Date;

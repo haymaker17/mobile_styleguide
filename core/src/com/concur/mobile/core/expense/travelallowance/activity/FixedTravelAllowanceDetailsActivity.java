@@ -46,23 +46,6 @@ import java.util.Map;
 
 public class FixedTravelAllowanceDetailsActivity extends BaseActivity implements IControllerListener {
 
-    private static class CustomArrayAdapter<T> extends ArrayAdapter<T>
-    {
-
-        public CustomArrayAdapter(Context ctx, List<T> objects) {
-            super(ctx, android.R.layout.simple_spinner_item, objects);
-        }
-
-        @Override
-        public View getDropDownView(int position, View convertView, ViewGroup parent) {
-            View view =  super.getDropDownView(position, convertView, parent);
-            // TODO PK: Needs to be converted in dp. See java doc.
-            view.setPadding(40, 50, 0, 50);
-
-            return view;
-        }
-    }
-
     /**
      * The name of this {@code Class} for logging purpose.
      */
@@ -123,7 +106,7 @@ public class FixedTravelAllowanceDetailsActivity extends BaseActivity implements
         this.dateFormatter = new DefaultDateFormat(this);
 
         ConcurCore app = (ConcurCore) getApplication();
-        this.allowanceController = app.getFixedTravelAllowanceController();
+        this.allowanceController = app.getTaController().getFixedTravelAllowanceController();
         allowanceController.registerListener(this);
 
         controlData = allowanceController.getControlData();
@@ -533,7 +516,8 @@ public class FixedTravelAllowanceDetailsActivity extends BaseActivity implements
                 }
                 List<ICode> list = new ArrayList<ICode>(map.values());
 
-                ArrayAdapter<ICode> adapter = new CustomArrayAdapter<ICode>(this, list);
+                ArrayAdapter<ICode> adapter = new ArrayAdapter<ICode>(this, android.R.layout.simple_spinner_item, list);
+                adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
                 spinner.setAdapter(adapter);
 
                 int selectedIndex = list.indexOf(provisionCode);
