@@ -7,8 +7,11 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.res.Resources;
 import android.graphics.Color;
+import android.graphics.drawable.GradientDrawable;
 import android.os.Bundle;
 import android.os.Handler;
+import android.text.TextUtils;
+import android.util.DisplayMetrics;
 import android.util.Log;
 import android.view.View;
 import android.view.View.OnClickListener;
@@ -21,6 +24,7 @@ import com.concur.mobile.core.ConcurCore;
 import com.concur.mobile.core.activity.BaseActivity;
 import com.concur.mobile.core.request.util.RequestExceptionDialog;
 import com.concur.mobile.core.util.Const;
+import com.concur.mobile.core.util.FormatUtil;
 import com.concur.mobile.platform.common.formfield.ConnectForm;
 import com.concur.mobile.platform.common.formfield.ConnectFormField;
 import com.concur.mobile.platform.common.formfield.ConnectFormFieldsCache;
@@ -36,7 +40,9 @@ import com.concur.mobile.platform.request.task.RequestTask;
 import com.concur.mobile.platform.request.util.ConnectHelper;
 import com.concur.mobile.platform.request.util.RequestParser;
 
+import java.text.DateFormat;
 import java.text.DateFormatSymbols;
+import java.text.SimpleDateFormat;
 import java.util.*;
 
 public class RequestEditActivity extends BaseActivity implements OnClickListener, DatePickerDialog.OnDateSetListener {
@@ -48,6 +54,9 @@ public class RequestEditActivity extends BaseActivity implements OnClickListener
     private TextView locationTappedView = null;
     private TextView dateTappedView = null;
     private TextView customTappedView = null;
+
+
+    public static final DateFormat df = new SimpleDateFormat("MMM dd, yyyy");
 
     /**
      * Touch Event
@@ -70,8 +79,15 @@ public class RequestEditActivity extends BaseActivity implements OnClickListener
     private ConnectFormFieldsCache formFieldsCache = null;
     private RequestGroupConfigurationCache groupConfigurationCache = null;
     private BaseAsyncResultReceiver asyncRequestActionReceiver;
+
+    //Edit Values
+    private String startLocation = null;
+    private String destination = null;
     private Date startDate = null;
     private Date endDate = null;
+    private String businessPurpose = null;
+    private String comment = null;
+    private double totalAmount = 0f;
 
     private ConnectFormField commentCFF;
 
@@ -110,8 +126,48 @@ public class RequestEditActivity extends BaseActivity implements OnClickListener
             form = formFieldsCache.getFormFields(tr.getHeaderFormId());
             setCanSave(tr.getApprovalStatusCode().equals(RequestDTO.ApprovalStatus.CREATION.getCode()) || tr
                     .getApprovalStatusCode().equals(RequestDTO.ApprovalStatus.RECALLED.getCode()));
+
+
+            //fields Value
+            startLocation = "";
+            destination = " "; //TEMP must be  get from WS
             startDate = tr.getStartDate();
             endDate = tr.getEndDate();
+            businessPurpose = tr.getPurpose();
+            comment = tr.getLastComment();
+            totalAmount = tr.getTotal();
+
+
+            /**** UI SETTINGS ****/
+            //Hide Start Location in any case
+            RelativeLayout startLocationLayout = (RelativeLayout) findViewById(R.id.requestEditStartLocationLayout);
+            startLocationLayout.setVisibility(View.GONE);
+
+            //TEMP (We need to take that back from WS (not yet implemented)
+            RelativeLayout destinationLayout = (RelativeLayout) findViewById(R.id.requestEditDestinationLayout);
+            destinationLayout.setEnabled(false);
+
+            //Is Editable
+            if(tr.getApprovalStatusCode().equals(RequestDTO.ApprovalStatus.RECALLED.getCode())
+                    || tr.getApprovalStatusCode().equals(RequestDTO.ApprovalStatus.CREATION.getCode())){
+
+                //set editable
+                setReadAndWrite(true);
+                //NOT Invert Color
+                revertSubmitColor(false);
+            }
+            else{
+                //Not Editable
+                RelativeLayout submitButton = (RelativeLayout) findViewById(R.id.saveButton);
+                submitButton.setClickable(false);
+                TextView saveButtonTitle = (TextView)findViewById(R.id.saveButtonTitle);
+                saveButtonTitle.setText(R.string.tr_request_amount);
+                //Invert Color
+                revertSubmitColor(true);
+
+                //set readOnly
+                setReadAndWrite(false);
+            }
         }
         // --- create mode
         else {
@@ -124,6 +180,9 @@ public class RequestEditActivity extends BaseActivity implements OnClickListener
             tr.setCurrencyCode(Currency.getInstance(locale).getCurrencyCode());
             tr.setRequestDate(new Date());
             setCanSave(true);
+
+            //fields Value
+            totalAmount = 0f;
         }
 
         asyncRequestActionReceiver = new BaseAsyncResultReceiver(new Handler());
@@ -138,9 +197,44 @@ public class RequestEditActivity extends BaseActivity implements OnClickListener
                     .getString(R.string.tr_optional) + ")");
 
         configureUI();
+
+        //Set values on field if any (update mode for example)
+        refreshFieldsValue();
     }
 
-    private void configureUI() {
+
+    private int dpToPx(int dp) {
+        return Math.round(dp * getApplicationContext().getResources().getDisplayMetrics().density);
+    }
+
+    private void revertSubmitColor(boolean isRevert) {
+
+        RelativeLayout submitButton = (RelativeLayout) findViewById(R.id.saveButton);
+        TextView saveButtonTitle = (TextView) findViewById(R.id.saveButtonTitle);
+        LinearLayout requestEditAmountLayout = (LinearLayout) findViewById(R.id.requestEditAmountLayout);
+        GradientDrawable myGrad = (GradientDrawable)requestEditAmountLayout.getBackground();
+        TextView requestEditAmount = (TextView) findViewById(R.id.requestEditAmount);
+
+        if(isRevert){
+            //Invert Color
+            submitButton.setBackgroundColor(Color.WHITE);
+            saveButtonTitle.setTextColor(Color.parseColor("#1d78bd"));
+            myGrad.setStroke(dpToPx(1), Color.parseColor("#1d78bd")); //1dp
+            myGrad.setColor(Color.WHITE);
+            requestEditAmount.setTextColor(Color.parseColor("#1d78bd"));
+        }
+        else{
+            //NOT Invert Color
+            submitButton.setBackgroundColor(Color.parseColor("#1d78bd"));
+            saveButtonTitle.setTextColor(Color.WHITE);
+            myGrad.setStroke(dpToPx(1), Color.WHITE);
+            myGrad.setColor(Color.parseColor("#1d78bd"));
+            requestEditAmount.setTextColor(Color.WHITE);
+        }
+
+    }
+
+     private void configureUI() {
 
         /**************************/
         /** finish editing event */
@@ -189,8 +283,12 @@ public class RequestEditActivity extends BaseActivity implements OnClickListener
 
         // Set the expense header navigation bar information.
         try {
-            final String headerNavBarTitle = getResources().getString(R.string.travel_request_header_title);
-            getSupportActionBar().setTitle(headerNavBarTitle);
+            if(tr.getName() != null) {
+                getSupportActionBar().setTitle(tr.getName());
+            }else{
+                final String headerNavBarTitle = getResources().getString(R.string.travel_request_header_title);
+                getSupportActionBar().setTitle(headerNavBarTitle);
+            }
         } catch (Resources.NotFoundException resNotFndExc) {
             android.util.Log.e(Const.LOG_TAG,
                     CLS_TAG + ".populateExpenseHeaderNavBarInfo: missing navigation bar title text resource!",
@@ -478,6 +576,81 @@ public class RequestEditActivity extends BaseActivity implements OnClickListener
         }
 
         return ret.toString();
+    }
+
+
+    private void setReadAndWrite(boolean isReadAndWrite) {
+
+        // Location
+        final RelativeLayout startLocationLayout = (RelativeLayout) findViewById(R.id.requestEditStartLocationLayout);
+        startLocationLayout.setEnabled(isReadAndWrite);
+        final RelativeLayout destinationLayout = (RelativeLayout) findViewById(R.id.requestEditDestinationLayout);
+        destinationLayout.setEnabled(isReadAndWrite);
+
+        //Date
+        RelativeLayout startDateLayout = (RelativeLayout) findViewById(R.id.requestEditStartDateLayout);
+        startDateLayout.setEnabled(isReadAndWrite);
+        RelativeLayout endDateLayout = (RelativeLayout) findViewById(R.id.requestEditEndDateLayout);
+        endDateLayout.setEnabled(isReadAndWrite);
+
+        //Business Purpose & Comment
+        RelativeLayout requestEditBusinessPurposeLayout = (RelativeLayout) findViewById(R.id.requestEditBusinessPurposeLayout);
+        requestEditBusinessPurposeLayout.setEnabled(isReadAndWrite);
+        RelativeLayout requestEditCommentLayout = (RelativeLayout) findViewById(R.id.requestEditCommentLayout);
+        requestEditCommentLayout.setEnabled(isReadAndWrite);
+        TextView requestEditBusinessPurposeTexView = (TextView) findViewById(R.id.requestEditBusinessPurpose);
+        requestEditBusinessPurposeTexView.setEnabled(isReadAndWrite);
+        TextView requestEditCommentTexView = (TextView) findViewById(R.id.requestEditComment);
+        requestEditCommentTexView.setEnabled(isReadAndWrite);
+
+    }
+
+    private void refreshFieldsValue() {
+        TextView textView;
+
+        //Starting Location
+        if(startLocation != null) {
+            textView = (TextView) findViewById(R.id.requestEditStartLocation);
+            textView.setText(startLocation);
+        }
+
+        //Destination
+        if(destination != null) {
+            textView = (TextView) findViewById(R.id.requestEditDestination);
+            textView.setText(destination);
+        }
+
+        //Start Date
+        if(startDate != null) {
+            textView = (TextView) findViewById(R.id.requestEditStartDate);
+            textView.setText(df.format(startDate));
+        }
+
+        //End Date
+        if(endDate != null) {
+            textView = (TextView) findViewById(R.id.requestEditEndDate);
+            textView.setText(df.format(endDate));
+        }
+
+        //Business Purpose
+        if(businessPurpose != null) {
+            textView = (TextView) findViewById(R.id.requestEditBusinessPurpose);
+            textView.setText(businessPurpose);
+        }
+
+        //Comment
+        if(startLocation != null) {
+            textView = (TextView) findViewById(R.id.requestEditComment);
+            textView.setText(comment);
+        }
+
+        //Total Amount
+        textView = (TextView) findViewById(R.id.requestEditAmount);
+        float amount = ((float)((int)(totalAmount * 100f)) ) /100f ;
+        final String formattedAmount = FormatUtil.formatAmount(amount,
+                getApplicationContext().getResources().getConfiguration().locale, tr.getCurrencyCode(), true, true);
+        textView.setText(formattedAmount);
+
     }
 
     /** check required for specifique field */

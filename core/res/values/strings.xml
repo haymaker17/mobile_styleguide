@@ -653,6 +653,7 @@
     <string name="tr_start_date">Start Date</string>
     <string name="tr_end_date">End Date</string>
     <string name="tr_start_location">Starting Location</string>
+    <string name="tr_request_amount">Request Amount</string>
     <string name="tr_end_location">Destination</string>
     <string name="tr_business_purpose">Business Purpose</string>
     <string name="tr_submit_request">Submit Request</string>

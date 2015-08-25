@@ -2,6 +2,7 @@
 <ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
             android:layout_width="fill_parent"
             android:layout_height="fill_parent"
+            android:background="#FFFFFF"
     >
 
     <ViewFlipper
@@ -11,7 +12,7 @@
         android:minHeight="420dp"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:background="#F7FAFD"
+        android:background="#FFFFFF"
         >
 
         <include
@@ -406,6 +407,7 @@
                     android:layout_centerVertical="true"/>
 
                 <LinearLayout
+                    android:id="@+id/requestEditAmountLayout"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:background="@drawable/round_border_request"
@@ -417,7 +419,7 @@
                         android:id="@+id/requestEditAmount"
                         android:layout_width="fill_parent"
                         android:layout_height="wrap_content"
-                        android:text="$1800.00"
+                        android:text=""
                         android:textColor="@color/White"
                         android:gravity="center"
                         android:textSize="20sp"

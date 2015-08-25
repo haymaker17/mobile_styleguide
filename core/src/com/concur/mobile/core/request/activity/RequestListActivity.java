@@ -154,7 +154,7 @@ public class RequestListActivity extends BaseActivity implements SwipeRefreshLay
                         if (request != null) {
                             final String reqId = request.getId();
                             if (reqId != null) {
-                                displayTravelRequestDetail(reqId);
+                                displayTravelRequestEdit(reqId);
                             } else {
                                 Log.e(Const.LOG_TAG, CLS_TAG + ".onItemClick: request id is null!");
                             }
