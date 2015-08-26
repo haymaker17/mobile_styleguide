@@ -1,0 +1,69 @@
+{
+  "LoginID": "acsontos@outtask.com",
+  "RequestID": "3334",
+  "CurrencyCode": "USD",
+  "CurrencyName": "US, Dollar",
+  "PolicyID": "gWohOcl7WcxM34o3LnfEe$s2lWjryBP$s5zWQ",
+  "PolicyName": "Default Request Policy",
+  "CreationDate": "2013-11-04T11:13:15",
+  "EmployeeName": "Csontos, André",
+  "ApprovalStatusName": "Approved - Pending Booking",
+  "ApprovalStatusCode": "Q_PEBK",
+  "AuthorizedDate": "2014-01-28T16:22:32",
+  "SubmitDate": "2014-01-27T14:43:50",
+  "TotalPostedAmount": 125,
+  "TotalApprovedAmount": 125,
+  "TotalRemainingAmount": 125,
+  "ApprovalLimitDate": null,
+  "AgencyOfficeName": "",
+  "HeaderFormID": "gWtQwHAXzuCYOB3HfH6$pmp74dYQq3rP4pSg",
+  "HighestExceptionLevel": "NONE",
+  "LastModifiedDate": "2014-04-07T09:50:50",
+  "Comments": [],
+  "Exceptions": [],
+  "SegmentsEntries": [
+    {
+      "ID": "gWlb7X$sbxthzYAq7t8OqPeqb3nUM$pObtyMg",
+      "ForeignAmount": 125,
+      "ExchangeRate": 1,
+      "ForeignCurrencyCode": "USD",
+      "ForeignCurrencyName": "US, Dollar",
+      "LastModifiedDate": "2014-01-28T16:22:33",
+      "SegmentFormID": "gWtQwHAXzuCd5jgqAhaCk$spbR4crQb0MXcg",
+      "SegmentTypeID": null,
+      "SegmentFormTypeCode": "REQ_SEG_HOTEL",
+      "SegmentTypeCode": "HOTEL",
+      "SegmentTypeName": "Hotel Reservation",
+      "TripType": null,
+      "Segments": [
+        {
+          "ID": "gWoH$sYdLcIWR9w0nLgO2JvIp2756in$spp1g",
+          "ToLocationName": "Londonderry",
+          "FromLocationName": "",
+          "IsAgencyBooked": false,
+          "IsSelfBooked": false,
+          "Order": 1,
+          "LastModifiedDate": "2013-11-04T16:00:06",
+          "Exceptions": [],
+          "DepartureDate": "2013-11-12T02:45:00",
+          "ArrivalDate": "2013-11-21T18:30:00",
+          "FromLocationID": null,
+          "ToLocationID": "gWkf$s2FYmiic919EAY22g88$pnKgdbdZj17w",
+          "ToLocationDetail": "aaa",
+          "FromLocationDetail": "",
+          "FlightNumber": "",
+          "Comment": ""
+        }
+      ],
+      "Exceptions": []
+    }
+  ],
+  "UserPermissions": {
+    "Links": []
+  },
+  "Name": "ščřžýáíĐëŸč뜱뛯ｸウあ",
+  "Purpose": "あああ",
+  "StartDate": null,
+  "EndDate": null,
+  "AgencyOfficeID": null
+}

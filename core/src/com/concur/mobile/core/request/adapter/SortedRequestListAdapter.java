@@ -99,7 +99,7 @@ public class SortedRequestListAdapter extends AbstractGenericAdapter<RequestDTO>
         final Locale loc = getContext().getResources().getConfiguration().locale;
         startDate.setText(DateUtil.getFormattedDateForLocale(DateUtil.DatePattern.MVP, (loc != null) ? loc : Locale.US,
                 request.getStartDate()));
-        status.setText(request.getApprovalStatus());
+        status.setText(request.getApprovalStatusName());
 
         name.setTypeface(Typeface.DEFAULT_BOLD);
         amount.setTypeface(Typeface.DEFAULT_BOLD);

@@ -1,6 +1,7 @@
 package com.concur.mobile.platform.request.util;
 
 import android.util.Log;
+
 import com.concur.mobile.platform.common.formfield.ConnectForm;
 import com.concur.mobile.platform.common.formfield.ConnectFormField;
 import com.concur.mobile.platform.request.dto.RequestCommentDTO;
@@ -10,7 +11,12 @@ import com.concur.mobile.platform.request.dto.RequestExceptionDTO;
 import com.concur.mobile.platform.request.groupConfiguration.RequestGroupConfiguration;
 import com.concur.mobile.platform.request.location.Location;
 import com.concur.mobile.platform.request.permission.Link;
-import com.concur.mobile.platform.util.*;
+import com.concur.mobile.platform.util.BooleanDeserializer;
+import com.concur.mobile.platform.util.DateDeserializer;
+import com.concur.mobile.platform.util.DoubleDeserializer;
+import com.concur.mobile.platform.util.EnumDeserializer;
+import com.concur.mobile.platform.util.IntegerDeserializer;
+import com.concur.mobile.platform.util.Parse;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import com.google.gson.annotations.SerializedName;
@@ -60,8 +66,10 @@ public class RequestParser {
      */
     private class ActionResponse {
 
-        @SerializedName("ID") private String id = null;
-        @SerializedName("URI") private String uri = null;
+        @SerializedName("ID")
+        private String id = null;
+        @SerializedName("URI")
+        private String uri = null;
 
         public String getId() {
             return id;
@@ -75,15 +83,22 @@ public class RequestParser {
     private class TRDetailResponse {
 
         // --- TR object properties
-        @SerializedName("ApprovalStatusName") private String approvalStatus;
-        @SerializedName("ApprovalStatusCode") private String approvalStatusCode;
-        @SerializedName("TotalApprovedAmount") private Double total;
+        @SerializedName("ApprovalStatusName")
+        private String approvalStatusName;
+        @SerializedName("ApprovalStatusCode")
+        private RequestDTO.ApprovalStatus approvalStatus;
+        @SerializedName("TotalApprovedAmount")
+        private Double total;
         // --- TR childs + permissions properties
-        @SerializedName("UserPermissions") private Link link;
-        @SerializedName("SegmentsEntries") private List<RequestEntryDTO> entryList;
-        @SerializedName("Comments") private List<RequestCommentDTO> commentList;
+        @SerializedName("UserPermissions")
+        private Link link;
+        @SerializedName("SegmentsEntries")
+        private List<RequestEntryDTO> entryList;
+        @SerializedName("Comments")
+        private List<RequestCommentDTO> commentList;
         // --- required to post/put
-        @SerializedName(("PolicyID")) private String policyId;
+        @SerializedName(("PolicyID"))
+        private String policyId;
 
         public Link getLink() {
             return link;
@@ -97,12 +112,12 @@ public class RequestParser {
             return commentList;
         }
 
-        public String getApprovalStatus() {
-            return approvalStatus;
+        public String getApprovalStatusName() {
+            return approvalStatusName;
         }
 
-        public String getApprovalStatusCode() {
-            return approvalStatusCode;
+        public RequestDTO.ApprovalStatus getApprovalStatus() {
+            return approvalStatus;
         }
 
         public Double getTotal() {
@@ -116,8 +131,10 @@ public class RequestParser {
 
     private class TRSaveAndSubmitResponse {
 
-        @SerializedName("ID") private String id;
-        @SerializedName("Request") private RequestDTO request;
+        @SerializedName("ID")
+        private String id;
+        @SerializedName("Request")
+        private RequestDTO request;
 
         public String getId() {
             return id;
@@ -151,11 +168,14 @@ public class RequestParser {
         Log.d(CLS_TAG, "parseTRListResponse :: starting parse");
         final Gson gson = builder.create();
         final GsonListContainer<RequestDTO> requestList = gson
-                .fromJson(jsonRes, new TypeToken<GsonListContainer<RequestDTO>>() {}.getType());
+                .fromJson(jsonRes, new TypeToken<GsonListContainer<RequestDTO>>() {
+                }.getType());
         return requestList.getList();
     }
 
-    @SuppressWarnings("rawtypes") public void parseTRDetailResponse(RequestDTO tr, String jsonRes) {
+    @SuppressWarnings("rawtypes")
+    @Deprecated
+    public void parseTRDetailResponse(RequestDTO tr, String jsonRes) {
         final GsonBuilder builder = new GsonBuilder();
         builder.registerTypeAdapter(Boolean.class, new BooleanDeserializer());
         builder.registerTypeAdapter(Integer.class, new IntegerDeserializer());
@@ -171,8 +191,8 @@ public class RequestParser {
 
         // --- Apply properties on TR object
         tr.setTotal(connectTR.getTotal());
-        tr.setApprovalStatusCode(connectTR.getApprovalStatusCode());
         tr.setApprovalStatus(connectTR.getApprovalStatus());
+        tr.setApprovalStatusName(connectTR.getApprovalStatusName());
         tr.setPolicyId(connectTR.getPolicyId());
 
         // --- custom processing : permissions
@@ -218,7 +238,8 @@ public class RequestParser {
         final Gson gson = builder.create();
         Log.d(CLS_TAG, "parseFormFieldsResponse :: starting parse");
         final GsonListContainer<ConnectForm> clc = gson
-                .fromJson(jsonRes, new TypeToken<GsonListContainer<ConnectForm>>() {}.getType());
+                .fromJson(jsonRes, new TypeToken<GsonListContainer<ConnectForm>>() {
+                }.getType());
         return clc.getList();
     }
 
@@ -234,9 +255,13 @@ public class RequestParser {
         builder.registerTypeAdapter(Integer.class, new IntegerDeserializer());
         builder.registerTypeAdapter(Double.class, new DoubleDeserializer());
         builder.registerTypeAdapter(Date.class, new DateDeserializer(Parse.XML_DF));
-        builder.registerTypeAdapter(RequestEntryDTO.TripType.class,
+        builder.registerTypeAdapter(RequestExceptionDTO.ExceptionLevel.class,
                 new EnumDeserializer<>(RequestExceptionDTO.ExceptionLevel.class,
                         EnumDeserializer.EnumParsingType.NAME));
+        builder.registerTypeAdapter(RequestDTO.ApprovalStatus.class,
+                new EnumDeserializer<>(RequestDTO.ApprovalStatus.class,
+                        EnumDeserializer.EnumParsingType.STRING_VALUE));
+
         final Gson gson = builder.create();
         Log.d(CLS_TAG, "parseSaveAndSubmitResponse :: starting parse");
         final TRSaveAndSubmitResponse resp = gson.fromJson(jsonRes, TRSaveAndSubmitResponse.class);
@@ -257,7 +282,8 @@ public class RequestParser {
         final Gson gson = builder.create();
         Log.d(CLS_TAG, "RequestGroupConfiguration :: starting parse");
         final GsonListContainer<RequestGroupConfiguration> clc = gson
-                .fromJson(jsonRes, new TypeToken<GsonListContainer<RequestGroupConfiguration>>() {}.getType());
+                .fromJson(jsonRes, new TypeToken<GsonListContainer<RequestGroupConfiguration>>() {
+                }.getType());
         return clc.getList();
     }
 
@@ -273,7 +299,8 @@ public class RequestParser {
 
         final Gson gson = builder.create();
         final GsonListContainer<Location> clc = gson
-                .fromJson(jsonRes, new TypeToken<GsonListContainer<Location>>() {}.getType());
+                .fromJson(jsonRes, new TypeToken<GsonListContainer<Location>>() {
+                }.getType());
         return clc.getList();
     }
 
@@ -282,7 +309,8 @@ public class RequestParser {
         Log.d(CLS_TAG, "parseLocation :: starting parse");
 
         final Gson gson = builder.create();
-        final Location clc = gson.fromJson(jsonRes, new TypeToken<Location>() {}.getType());
+        final Location clc = gson.fromJson(jsonRes, new TypeToken<Location>() {
+        }.getType());
         return clc;
     }
 

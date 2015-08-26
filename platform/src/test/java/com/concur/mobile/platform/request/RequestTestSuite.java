@@ -1,14 +1,12 @@
 package com.concur.mobile.platform.request;
 
-import com.concur.mobile.platform.test.ConcurPlatformTestRunner;
+import com.concur.mobile.platform.request.util.RequestParser;
 import com.concur.mobile.platform.test.Const;
 import com.concur.mobile.platform.test.PlatformTestApplication;
 import com.concur.mobile.platform.test.PlatformTestSuite;
 
 import org.junit.BeforeClass;
 import org.junit.Test;
-import org.junit.runner.RunWith;
-import org.robolectric.annotation.Config;
 
 /**
  * Created by OlivierB on 20/08/2015.
@@ -16,10 +14,11 @@ import org.robolectric.annotation.Config;
 public class RequestTestSuite extends PlatformTestSuite {
 
     // --- Fill those with your VM params for non-mocked runs
-    private static final String TEST_SRV_URL = "dev://172.27.64.163";
+    private static final String TEST_SRV_URL = "dev://xxx.xxx.xxx.xxx";
     private static final String TEST_LOGIN_ID = "acsontos@outtask.com";
     private static final String TEST_LOGIN_PWD = "1111";
     // nb: add -Duse.mock.server="false" to VM options in your configuration to disable mocks
+    private final RequestParser requestParser = new RequestParser();
 
     @BeforeClass
     public static void setUp() throws Exception {
@@ -44,7 +43,7 @@ public class RequestTestSuite extends PlatformTestSuite {
         // Init the login request
         doPinPasswordLogin();
 
-        final GroupConfigurationTaskTest groupConfigurationTaskTest = new GroupConfigurationTaskTest();
+        final GroupConfigurationTaskTest groupConfigurationTaskTest = new GroupConfigurationTaskTest(requestParser);
         if (PlatformTestApplication.useMockServer()) {
             // Init mock server.
             initMockServer();
@@ -58,7 +57,7 @@ public class RequestTestSuite extends PlatformTestSuite {
     }
 
     /**
-     * Performs a group configuration test.
+     * Performs save and submit tests.
      *
      * @throws Exception throws an exception if the test fails.
      */
@@ -68,7 +67,7 @@ public class RequestTestSuite extends PlatformTestSuite {
         // Init the login request
         doPinPasswordLogin();
 
-        final SaveAndSubmitTaskTest saveAndSubmitTaskTest = new SaveAndSubmitTaskTest();
+        final SaveAndSubmitTaskTest saveAndSubmitTaskTest = new SaveAndSubmitTaskTest(requestParser);
         if (PlatformTestApplication.useMockServer()) {
             // Init mock server.
             initMockServer();
@@ -82,7 +81,7 @@ public class RequestTestSuite extends PlatformTestSuite {
     }
 
     /**
-     * Performs a group configuration test.
+     * Performs a recall test.
      *
      * @throws Exception throws an exception if the test fails.
      */
@@ -103,5 +102,55 @@ public class RequestTestSuite extends PlatformTestSuite {
 
         // Run the GroupConfigurationTaskTest test.
         recallTaskTest.doTest();
+    }
+
+
+    /**
+     * Performs a Request List retrieving test.
+     *
+     * @throws Exception throws an exception if the test fails.
+     */
+    @Test
+    public void doList() throws Exception {
+
+        // Init the login request
+        doPinPasswordLogin();
+
+        final RequestListTaskTest requestListTaskTest = new RequestListTaskTest(requestParser);
+        if (PlatformTestApplication.useMockServer()) {
+            // Init mock server.
+            initMockServer();
+
+            // Set the mock server instance on the test.
+            requestListTaskTest.setMockServer(mwsServer);
+        }
+
+        // Run the GroupConfigurationTaskTest test.
+        requestListTaskTest.doTest();
+    }
+
+
+    /**
+     * Performs a Request Detail retrieving test.
+     *
+     * @throws Exception throws an exception if the test fails.
+     */
+    @Test
+    public void doDetail() throws Exception {
+
+        // Init the login request
+        doPinPasswordLogin();
+
+        final RequestDetailTaskTest requestDetailTaskTest = new RequestDetailTaskTest(requestParser);
+        if (PlatformTestApplication.useMockServer()) {
+            // Init mock server.
+            initMockServer();
+
+            // Set the mock server instance on the test.
+            requestDetailTaskTest.setMockServer(mwsServer);
+        }
+
+        // Run the GroupConfigurationTaskTest test.
+        requestDetailTaskTest.doTest();
     }
 }

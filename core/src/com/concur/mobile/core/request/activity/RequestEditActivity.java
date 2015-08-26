@@ -124,8 +124,8 @@ public class RequestEditActivity extends BaseActivity implements OnClickListener
         if (requestId != null) {
             tr = requestListCache.getValue(requestId);
             form = formFieldsCache.getFormFields(tr.getHeaderFormId());
-            setCanSave(tr.getApprovalStatusCode().equals(RequestDTO.ApprovalStatus.CREATION.getCode()) || tr
-                    .getApprovalStatusCode().equals(RequestDTO.ApprovalStatus.RECALLED.getCode()));
+            setCanSave(tr.getApprovalStatus().equals(RequestDTO.ApprovalStatus.CREATION.getName()) || tr
+                    .getApprovalStatus().equals(RequestDTO.ApprovalStatus.RECALLED.getName()));
 
 
             //fields Value
@@ -148,8 +148,8 @@ public class RequestEditActivity extends BaseActivity implements OnClickListener
             destinationLayout.setEnabled(false);
 
             //Is Editable
-            if(tr.getApprovalStatusCode().equals(RequestDTO.ApprovalStatus.RECALLED.getCode())
-                    || tr.getApprovalStatusCode().equals(RequestDTO.ApprovalStatus.CREATION.getCode())){
+            if(tr.getApprovalStatus().equals(RequestDTO.ApprovalStatus.RECALLED.getCode())
+                    || tr.getApprovalStatus().equals(RequestDTO.ApprovalStatus.CREATION.getCode())){
 
                 //set editable
                 setReadAndWrite(true);

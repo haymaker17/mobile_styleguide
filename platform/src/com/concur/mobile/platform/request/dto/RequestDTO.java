@@ -1,5 +1,6 @@
 package com.concur.mobile.platform.request.dto;
 
+import com.concur.mobile.platform.common.formfield.IFormField;
 import com.concur.mobile.platform.request.permission.Link;
 import com.concur.mobile.platform.request.permission.UserPermission;
 import com.concur.mobile.platform.request.util.RequestParser;
@@ -15,21 +16,22 @@ import java.util.Map;
  */
 public class RequestDTO implements FormDTO {
 
-    public enum ApprovalStatus {
+    public enum ApprovalStatus implements IFormField.EnumField<ApprovalStatus> {
         CREATION("Q_NOTF"),
         PENDING_VALIDATION("Q_PEND"),
         PENDING_EBOOKING("Q_PEBK"),
         APPROVED("Q_APPR"),
         RECALLED("Q_RESU");
 
-        private String code;
+        private String name;
 
-        ApprovalStatus(String code) {
-            this.code = code;
+        ApprovalStatus(String name) {
+            this.name = name;
         }
 
-        public String getCode() {
-            return code;
+        @Override
+        public String getName() {
+            return name;
         }
     }
 
@@ -48,10 +50,10 @@ public class RequestDTO implements FormDTO {
     @SerializedName("EmployeeName")
     private String employeeName;
     @SerializedName("ApprovalStatusName")
-    private String approvalStatus;
+    private String approvalStatusName;
     @Expose
     @SerializedName("ApprovalStatusCode")
-    private String approvalStatusCode;
+    private ApprovalStatus approvalStatus;
     @SerializedName("TotalApprovedAmount")
     private Double total;
     @Expose
@@ -134,20 +136,20 @@ public class RequestDTO implements FormDTO {
         this.employeeName = employeeName;
     }
 
-    public String getApprovalStatus() {
+    public String getApprovalStatusName() {
+        return approvalStatusName;
+    }
+
+    public void setApprovalStatusName(String approvalStatusName) {
+        this.approvalStatusName = approvalStatusName;
+    }
+
+    public ApprovalStatus getApprovalStatus() {
         return approvalStatus;
     }
 
-    public void setApprovalStatus(String approvalStatus) {
+    public void setApprovalStatus(ApprovalStatus approvalStatus) {
         this.approvalStatus = approvalStatus;
-    }
-
-    public String getApprovalStatusCode() {
-        return approvalStatusCode;
-    }
-
-    public void setApprovalStatusCode(String approvalStatusCode) {
-        this.approvalStatusCode = approvalStatusCode;
     }
 
     public Double getTotal() {
