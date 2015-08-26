@@ -1,4 +1,4 @@
-package com.concur.mobile.platform.ui.travel.hotel.activity;
+package com.concur.mobile.platform.ui.travel.view;
 
 import android.app.Fragment;
 import android.app.FragmentManager;

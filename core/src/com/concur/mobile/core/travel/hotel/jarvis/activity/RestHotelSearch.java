@@ -1,7 +1,7 @@
 /**
  *
  */
-package com.concur.mobile.core.travel.hotel.activity;
+package com.concur.mobile.core.travel.hotel.jarvis.activity;
 
 import android.app.*;
 import android.content.Intent;
@@ -28,6 +28,7 @@ import com.concur.mobile.core.data.UserConfig;
 import com.concur.mobile.core.travel.activity.LocationSearchV1;
 import com.concur.mobile.core.travel.data.CompanyLocation;
 import com.concur.mobile.core.travel.data.LocationChoice;
+import com.concur.mobile.core.travel.hotel.activity.HotelSearch;
 import com.concur.mobile.core.util.*;
 import com.concur.mobile.platform.authentication.EmailLookUpRequestTask;
 import com.concur.mobile.platform.service.MWSPlatformManager;
@@ -37,8 +38,6 @@ import com.concur.mobile.platform.ui.common.widget.CalendarPicker;
 import com.concur.mobile.platform.ui.common.widget.CalendarPickerDialogV1;
 import com.concur.mobile.platform.ui.travel.activity.TravelBaseActivity;
 import com.concur.mobile.platform.ui.travel.fragment.TravelCustomFieldsFragment;
-import com.concur.mobile.platform.ui.travel.hotel.activity.HotelSearchAndResultActivity;
-import com.concur.mobile.platform.ui.travel.hotel.activity.HotelVoiceSearchActivity;
 import com.concur.mobile.platform.ui.travel.loader.TravelCustomField;
 import com.concur.mobile.platform.ui.travel.loader.TravelCustomFieldsConfig;
 import com.concur.mobile.platform.ui.travel.loader.TravelCustomFieldsLoader;

@@ -76,7 +76,7 @@ import com.concur.mobile.core.travel.car.activity.CarSearchNoResults;
 import com.concur.mobile.core.travel.car.activity.CarSearchProgress;
 import com.concur.mobile.core.travel.car.activity.CarSearchResults;
 import com.concur.mobile.core.travel.car.activity.VoiceCarSearchActivity;
-import com.concur.mobile.core.travel.hotel.activity.RestHotelSearch;
+import com.concur.mobile.core.travel.hotel.jarvis.activity.RestHotelSearch;
 import com.concur.mobile.core.travel.hotel.activity.VoiceHotelSearchActivity;
 import com.concur.mobile.core.travel.rail.activity.RailSearch;
 import com.concur.mobile.core.travel.rail.activity.RailSearchDetail;
@@ -106,7 +106,7 @@ import com.concur.mobile.corp.activity.Startup;
 import com.concur.mobile.corp.activity.TestDriveRegistration;
 import com.concur.mobile.corp.activity.TestDriveTour;
 import com.concur.mobile.corp.activity.UniversalTour;
-import com.concur.mobile.platform.ui.travel.hotel.activity.ImageDetailActivity;
+import com.concur.mobile.core.travel.hotel.jarvis.activity.ImageDetailActivity;
 
 import org.junit.Test;
 

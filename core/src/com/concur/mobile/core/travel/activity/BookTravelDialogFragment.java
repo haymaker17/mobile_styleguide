@@ -3,8 +3,6 @@
  */
 package com.concur.mobile.core.travel.activity;
 
-import java.util.ArrayList;
-
 import android.app.Activity;
 import android.app.AlertDialog;
 import android.app.Dialog;
@@ -27,13 +25,14 @@ import com.concur.mobile.core.travel.air.activity.AirSearch;
 import com.concur.mobile.core.travel.air.activity.VoiceAirSearchActivity;
 import com.concur.mobile.core.travel.car.activity.CarSearch;
 import com.concur.mobile.core.travel.car.activity.VoiceCarSearchActivity;
-import com.concur.mobile.core.travel.hotel.activity.HotelSearch;
-import com.concur.mobile.core.travel.hotel.activity.RestHotelSearch;
 import com.concur.mobile.core.travel.hotel.activity.VoiceHotelSearchActivity;
+import com.concur.mobile.core.travel.hotel.jarvis.activity.RestHotelSearch;
 import com.concur.mobile.core.travel.rail.activity.RailSearch;
 import com.concur.mobile.core.util.Const;
 import com.concur.mobile.core.util.Flurry;
 import com.concur.mobile.core.util.ViewUtil;
+
+import java.util.ArrayList;
 
 /**
  * <code>DialogFragment</code> to prompt user to book something, i.e. a Hotel, Flight, Car, Train, etc.

@@ -119,7 +119,7 @@ import com.concur.mobile.core.travel.car.activity.CarSearch;
 import com.concur.mobile.core.travel.data.IItineraryCache;
 import com.concur.mobile.core.travel.data.Trip;
 import com.concur.mobile.core.travel.hotel.activity.HotelSearch;
-import com.concur.mobile.core.travel.hotel.activity.RestHotelSearch;
+import com.concur.mobile.core.travel.hotel.jarvis.activity.RestHotelSearch;
 import com.concur.mobile.core.travel.rail.activity.RailSearch;
 import com.concur.mobile.core.travel.service.ItineraryRequest;
 import com.concur.mobile.core.travel.service.ItinerarySummaryListRequest;

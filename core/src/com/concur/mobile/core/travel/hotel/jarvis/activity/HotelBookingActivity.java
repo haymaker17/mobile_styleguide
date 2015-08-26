@@ -1,4 +1,4 @@
-package com.concur.mobile.platform.ui.travel.hotel.activity;
+package com.concur.mobile.core.travel.hotel.jarvis.activity;
 
 import android.animation.ObjectAnimator;
 import android.annotation.SuppressLint;
@@ -33,6 +33,7 @@ import android.widget.TableRow;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.concur.core.R;
 import com.concur.mobile.platform.common.SpinnerItem;
 import com.concur.mobile.platform.common.formfield.FormField;
 import com.concur.mobile.platform.service.PlatformAsyncTaskLoader;
@@ -50,7 +51,6 @@ import com.concur.mobile.platform.ui.common.dialog.DialogFragmentFactoryV1;
 import com.concur.mobile.platform.ui.common.fragment.RetainerFragmentV1;
 import com.concur.mobile.platform.ui.common.util.FormatUtil;
 import com.concur.mobile.platform.ui.common.util.ImageCache;
-import com.concur.mobile.platform.ui.travel.R;
 import com.concur.mobile.platform.ui.travel.activity.TravelBaseActivity;
 import com.concur.mobile.platform.ui.travel.fragment.TravelCustomFieldsFragment;
 import com.concur.mobile.platform.ui.travel.hotel.fragment.SpinnerDialogFragment;

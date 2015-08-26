@@ -10,7 +10,7 @@ import java.util.TimeZone;
 import java.util.TreeMap;
 import java.util.TreeSet;
 
-import com.concur.mobile.core.travel.hotel.activity.RestHotelSearch;
+import com.concur.mobile.core.travel.hotel.jarvis.activity.RestHotelSearch;
 import org.apache.http.HttpStatus;
 
 import android.app.AlertDialog;

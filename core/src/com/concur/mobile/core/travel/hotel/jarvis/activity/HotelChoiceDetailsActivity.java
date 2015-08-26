@@ -1,4 +1,4 @@
-package com.concur.mobile.platform.ui.travel.hotel.activity;
+package com.concur.mobile.core.travel.hotel.jarvis.activity;
 
 import android.app.ActivityOptions;
 import android.app.FragmentManager;
@@ -13,13 +13,20 @@ import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Toast;
+
+import com.concur.core.R;
 import com.concur.mobile.platform.travel.search.hotel.Hotel;
 import com.concur.mobile.platform.travel.search.hotel.HotelRate;
 import com.concur.mobile.platform.travel.search.hotel.HotelViolation;
-import com.concur.mobile.platform.ui.travel.R;
 import com.concur.mobile.platform.ui.travel.activity.TravelBaseActivity;
-import com.concur.mobile.platform.ui.travel.hotel.fragment.*;
+import com.concur.mobile.platform.ui.travel.hotel.fragment.HotelChoiceDetailsFragment;
 import com.concur.mobile.platform.ui.travel.hotel.fragment.HotelChoiceDetailsFragment.HotelChoiceDetailsFragmentListener;
+import com.concur.mobile.platform.ui.travel.hotel.fragment.HotelDetailsFragment;
+import com.concur.mobile.platform.ui.travel.hotel.fragment.HotelImagesFragment;
+import com.concur.mobile.platform.ui.travel.hotel.fragment.HotelMapFragment;
+import com.concur.mobile.platform.ui.travel.hotel.fragment.HotelRoomDetailFragment;
+import com.concur.mobile.platform.ui.travel.hotel.fragment.HotelRoomListItem;
+import com.concur.mobile.platform.ui.travel.hotel.fragment.HotelSearchResultListItem;
 import com.concur.mobile.platform.ui.travel.loader.TravelCustomFieldsConfig;
 import com.concur.mobile.platform.ui.travel.util.Const;
 import com.concur.mobile.platform.ui.travel.util.ParallaxScollView;
@@ -34,8 +41,6 @@ import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
-//import com.google.android.gms.common.ConnectionResult;
-//import com.google.android.gms.common.GooglePlayServicesUtil;
 
 /**
  * @author tejoa
@@ -315,15 +320,15 @@ public class HotelChoiceDetailsActivity extends TravelBaseActivity
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
 
         switch (requestCode) {
-        case Const.REQUEST_CODE_BOOK_HOTEL: {
-            if (resultCode == RESULT_OK) {
-                setResult(RESULT_OK, data);
-                Log.d(com.concur.mobile.platform.util.Const.LOG_TAG,
-                        "\n\n\n ****** HotelChoiceDetailsActivity onActivityResult with result code : " + resultCode);
-                finish();
+            case Const.REQUEST_CODE_BOOK_HOTEL: {
+                if (resultCode == RESULT_OK) {
+                    setResult(RESULT_OK, data);
+                    Log.d(com.concur.mobile.platform.util.Const.LOG_TAG,
+                            "\n\n\n ****** HotelChoiceDetailsActivity onActivityResult with result code : " + resultCode);
+                    finish();
+                }
+                break;
             }
-            break;
-        }
         }
 
         super.onActivityResult(requestCode, resultCode, data);

@@ -1,16 +1,16 @@
-package com.concur.mobile.platform.ui.travel.hotel.activity;
+package com.concur.mobile.core.travel.hotel.jarvis.activity;
 
 import android.content.Intent;
 import android.speech.tts.TextToSpeech;
 import android.text.Html;
 import android.text.Spanned;
 import android.util.Log;
+
+import com.concur.core.R;
 import com.concur.mobile.eva.data.EvaTime;
 import com.concur.mobile.eva.service.EvaApiRequest.BookingSelection;
 import com.concur.mobile.eva.service.EvaHotelReply;
 import com.concur.mobile.platform.ui.common.util.FormatUtil;
-import com.concur.mobile.platform.ui.travel.R;
-import com.concur.mobile.platform.ui.travel.activity.VoiceSearchActivity;
 import com.concur.mobile.platform.ui.travel.util.Const;
 import com.concur.mobile.platform.util.Format;
 
@@ -98,10 +98,10 @@ public class HotelVoiceSearchActivity extends VoiceSearchActivity {
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         switch (requestCode) {
-        case Const.REQUEST_CODE_BACK_BUTTON_PRESSED: {
-            // back button press on started activity
-            getIntent().putExtra(RESET_UI_ON_RESUME, true);
-        }
+            case Const.REQUEST_CODE_BACK_BUTTON_PRESSED: {
+                // back button press on started activity
+                getIntent().putExtra(RESET_UI_ON_RESUME, true);
+            }
         }
 
         super.onActivityResult(requestCode, resultCode, data);

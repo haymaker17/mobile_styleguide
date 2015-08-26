@@ -4,6 +4,7 @@ import android.content.Context;
 import android.telephony.PhoneNumberUtils;
 import android.text.util.Linkify;
 import android.widget.TextView;
+
 import com.concur.mobile.platform.travel.search.hotel.HotelPreference;
 import com.concur.mobile.platform.travel.search.hotel.HotelRecommended;
 import com.concur.mobile.platform.travel.search.hotel.HotelViolation;
@@ -11,6 +12,7 @@ import com.concur.mobile.platform.travel.search.hotel.RuleEnforcementLevel;
 import com.concur.mobile.platform.ui.travel.BuildConfig;
 import com.concur.mobile.platform.ui.travel.R;
 import com.concur.mobile.platform.ui.travel.util.ViewUtil;
+
 import org.junit.Assert;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -25,24 +27,29 @@ import java.util.List;
  * @author ratank
  */
 @Config(constants = BuildConfig.class, manifest = "src/main/AndroidManifest.xml")
-@RunWith(RobolectricGradleTestRunner.class) public class ViewUtilTest {
+@RunWith(RobolectricGradleTestRunner.class)
+public class ViewUtilTest {
 
-    @Test public void testGetHotelCompanyPreferredTextId_hotelPreferenceNull() {
+    @Test
+    public void testGetHotelCompanyPreferredTextId_hotelPreferenceNull() {
         Assert.assertEquals(-1, ViewUtil.getHotelCompanyPreferredTextId(null));
     }
 
-    @Test public void testGetHotelCompanyPreferredTextId_propertyMostPreferred() {
+    @Test
+    public void testGetHotelCompanyPreferredTextId_propertyMostPreferred() {
         HotelPreference hotelPreference = new HotelPreference();
         hotelPreference.companyPreference = "PropertyMostPreferred";
         Assert.assertEquals(R.string.hotel_property_most_preferred,
                 ViewUtil.getHotelCompanyPreferredTextId(hotelPreference));
     }
 
-    @Test public void testGetHotelSuggestionTextId_hotelRecommendedNull() {
+    @Test
+    public void testGetHotelSuggestionTextId_hotelRecommendedNull() {
         Assert.assertEquals(-1, ViewUtil.getHotelSuggestionTextId(null));
     }
 
-    @Test public void testGetHotelSuggestionTextId_companyFavorite() {
+    @Test
+    public void testGetHotelSuggestionTextId_companyFavorite() {
         HotelRecommended hotelRecommended = new HotelRecommended();
         hotelRecommended.category = "CompanyFavorite";
         hotelRecommended.totalScore = 2.0;// some value
@@ -50,7 +57,8 @@ import java.util.List;
                 ViewUtil.getHotelSuggestionTextId(hotelRecommended));
     }
 
-    @Test public void testGetRuleEnforcementLevelAsString() {
+    @Test
+    public void testGetRuleEnforcementLevelAsString() {
         // test null - default returns NONE
         Assert.assertEquals("NONE", ViewUtil.getRuleEnforcementLevelAsString(null));
 
@@ -73,7 +81,8 @@ import java.util.List;
         Assert.assertEquals("HIDE", ViewUtil.getRuleEnforcementLevelAsString(50));
     }
 
-    @Test public void testGetRuleEnforcementLevel() {
+    @Test
+    public void testGetRuleEnforcementLevel() {
         // test NONE - less than 0 or 100
         RuleEnforcementLevel ruleEnforcementLevel = ViewUtil.getRuleEnforcementLevel(9);
         Assert.assertEquals(RuleEnforcementLevel.NONE, ruleEnforcementLevel);
@@ -102,7 +111,8 @@ import java.util.List;
 
     }
 
-    @Test public void testShowGDSName_nameMismatch() {
+    @Test
+    public void testShowGDSName_nameMismatch() {
         // for some reasons this is giving null hence, for time being, will use RuntimeEnvironment.application
         //Context context = PlatformUITravelTestApplication.getApplication();
         Context context = RuntimeEnvironment.application;
@@ -111,20 +121,23 @@ import java.util.List;
         Assert.assertEquals("GDS Name set in TextView is in-correct", "(Sabre)", txtView.getText());
     }
 
-    @Test public void testStripUnderlines() {
+    @Test
+    public void testStripUnderlines() {
         Context context = RuntimeEnvironment.application;
         TextView txtView = new TextView(context);
         txtView.setText(PhoneNumberUtils.formatNumber("040 12345 6789"));
         Linkify.addLinks(txtView, Linkify.PHONE_NUMBERS);
-        ViewUtil.stripUnderlines(txtView);
+        // ViewUtil.stripUnderlines(txtView);
         // TODO - check that the underline is removed !
     }
 
-    @Test public void testGetShowButNoBookingViolation_null() {
+    @Test
+    public void testGetShowButNoBookingViolation_null() {
         Assert.assertNull(ViewUtil.getShowButNoBookingViolation(null, null, -1));
     }
 
-    @Test public void testGetShowButNoBookingViolation() {
+    @Test
+    public void testGetShowButNoBookingViolation() {
         List<HotelViolation> violations = new ArrayList<HotelViolation>();
         HotelViolation violation = new HotelViolation();
         violation.enforcementLevel = "40";
@@ -132,7 +145,8 @@ import java.util.List;
         Assert.assertEquals("40", ViewUtil.getShowButNoBookingViolation(violations, "40", 40).enforcementLevel);
     }
 
-    @Test public void testGetMaxRuleEnforcementViolation() {
+    @Test
+    public void testGetMaxRuleEnforcementViolation() {
         List<HotelViolation> violations = new ArrayList<HotelViolation>();
         HotelViolation violation = new HotelViolation();
         violation.enforcementLevel = "40";

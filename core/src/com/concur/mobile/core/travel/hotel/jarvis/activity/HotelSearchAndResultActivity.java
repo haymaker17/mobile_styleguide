@@ -1,4 +1,4 @@
-package com.concur.mobile.platform.ui.travel.hotel.activity;
+package com.concur.mobile.core.travel.hotel.jarvis.activity;
 
 import android.app.FragmentManager;
 import android.app.FragmentTransaction;
@@ -16,6 +16,7 @@ import android.widget.AdapterView.OnItemClickListener;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.concur.core.R;
 import com.concur.mobile.platform.common.SpinnerItem;
 import com.concur.mobile.platform.service.PlatformAsyncTaskLoader;
 import com.concur.mobile.platform.travel.provider.TravelUtilHotel;
@@ -31,7 +32,6 @@ import com.concur.mobile.platform.travel.search.hotel.HotelSearchResultLoader;
 import com.concur.mobile.platform.travel.search.hotel.HotelViolation;
 import com.concur.mobile.platform.ui.common.util.FormatUtil;
 import com.concur.mobile.platform.ui.common.view.ListItemAdapter;
-import com.concur.mobile.platform.ui.travel.R;
 import com.concur.mobile.platform.ui.travel.activity.TravelBaseActivity;
 import com.concur.mobile.platform.ui.travel.hotel.fragment.HotelBenchmarkListItem;
 import com.concur.mobile.platform.ui.travel.hotel.fragment.HotelBenchmarksFragment;
