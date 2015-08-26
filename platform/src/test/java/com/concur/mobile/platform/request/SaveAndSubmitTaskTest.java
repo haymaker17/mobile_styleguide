@@ -11,6 +11,7 @@ import com.concur.mobile.platform.request.dto.RequestExceptionDTO;
 import com.concur.mobile.platform.request.task.RequestTask;
 import com.concur.mobile.platform.request.util.ConnectHelper;
 import com.concur.mobile.platform.request.util.RequestParser;
+import com.concur.mobile.platform.test.AsyncRequestTest;
 import com.concur.mobile.platform.test.PlatformTestApplication;
 
 import org.apache.http.HttpStatus;
@@ -19,8 +20,7 @@ import org.junit.Assert;
 import java.util.Currency;
 import java.util.Locale;
 
-public class SaveAndSubmitTaskTest
-        extends com.concur.mobile.platform.test.AsyncRequestTest {
+public class SaveAndSubmitTaskTest extends AsyncRequestTest {
 
     private RequestParser requestParser;
     private RequestDTO tr;

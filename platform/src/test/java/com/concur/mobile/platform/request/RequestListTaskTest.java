@@ -20,8 +20,7 @@ import java.util.Set;
 /**
  * Created by OlivierB on 25/08/2015.
  */
-public class RequestListTaskTest
-        extends AsyncRequestTest {
+public class RequestListTaskTest extends AsyncRequestTest {
 
     private RequestParser requestParser;
     private RequestListCache requestListCache;
