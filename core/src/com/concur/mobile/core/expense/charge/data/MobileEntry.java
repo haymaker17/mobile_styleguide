@@ -362,7 +362,7 @@ public class MobileEntry implements Cloneable {
         }
         this.expKey = receiptCaptures.expKey;
         this.expName = receiptCaptures.expName;
-        this.locationName = "";
+        this.locationName = receiptCaptures.locName;
         this.vendorName = receiptCaptures.vendorName;
         this.transactionAmount = receiptCaptures.transactionAmount;
         if (transactionAmount == null) {
@@ -380,6 +380,9 @@ public class MobileEntry implements Cloneable {
         // MOB-13441 - Init 'status' to normal since this MobileEntry is being created to refer to
         // information about the card transaction.
         this.status = MobileEntryStatus.NORMAL;
+        this.comment = receiptCaptures.comment;
+
+        this.smartExpenseId = receiptCaptures.smartExpenseId;
     }
 
     /**
@@ -406,7 +409,7 @@ public class MobileEntry implements Cloneable {
             transactionAmount = 0.0;
         }
         this.transactionDate = Format.safeFormatCalendar(FormatUtil.MONTH_DAY_FULL_YEAR_DISPLAY,
-                eReceipt.getTransactionDate());
+            eReceipt.getTransactionDate());
         this.transactionDateCalendar = eReceipt.getTransactionDate();
         if (isCashTransaction)
             this.entryType = Expense.ExpenseEntryType.CASH;
@@ -478,6 +481,10 @@ public class MobileEntry implements Cloneable {
      */
     public String getMeKey() {
         return meKey;
+    }
+
+    public String getRcKey() {
+        return rcKey;
     }
 
     /*

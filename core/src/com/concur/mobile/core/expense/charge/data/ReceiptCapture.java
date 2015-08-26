@@ -71,6 +71,10 @@ public class ReceiptCapture implements Serializable {
      */
     public String smartExpenseId;
 
+    public String comment;
+
+    public String locName;
+
     public ReceiptCapture() {
     }
 
@@ -90,7 +94,8 @@ public class ReceiptCapture implements Serializable {
         transactionAmount = smartExpense.getTransactionAmount();
         transactionDate = smartExpense.getTransactionDate();
         smartExpenseId = smartExpense.getSmartExpenseId();
-
+        comment = smartExpense.getComment();
+        locName = smartExpense.getLocName();
 
         if (!TextUtils.isEmpty(smartExpense.getMobileReceiptImageId())) {
             receiptImageId = smartExpense.getMobileReceiptImageId();
