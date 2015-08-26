@@ -25,6 +25,7 @@ import com.concur.mobile.core.travel.air.activity.AirSearch;
 import com.concur.mobile.core.travel.air.activity.VoiceAirSearchActivity;
 import com.concur.mobile.core.travel.car.activity.CarSearch;
 import com.concur.mobile.core.travel.car.activity.VoiceCarSearchActivity;
+import com.concur.mobile.core.travel.hotel.activity.HotelSearch;
 import com.concur.mobile.core.travel.hotel.activity.VoiceHotelSearchActivity;
 import com.concur.mobile.core.travel.hotel.jarvis.activity.RestHotelSearch;
 import com.concur.mobile.core.travel.rail.activity.RailSearch;
