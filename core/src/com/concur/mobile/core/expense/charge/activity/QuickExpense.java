@@ -179,6 +179,8 @@ public class QuickExpense extends BaseActivity {
 
     private static final String EXTRA_SAVE_RECEIPT_RECEIVER_KEY = "receipt.save.receiver";
 
+    private static final String EXTRA_SAVE_SMART_EXPENSE_RECEIVER_KEY = "receipt.save.smart.expense.receiver";
+
     // Contains the key used to store/retrieve the append receipt receiver.
     private static final String APPEND_RECEIPT_RECEIVER_KEY = "append.receipt.receiver";
 
@@ -543,6 +545,14 @@ public class QuickExpense extends BaseActivity {
                 // Add it to the retainer
                 retainer.put(APPEND_RECEIPT_RECEIVER_KEY, appendReceiptReceiver);
             }
+
+            //Retain the SaveExpense receiver
+            if (saveExpenseListReceiver != null) {
+                saveExpenseListReceiver.setListener(null);
+                if (retainer != null) {
+                    retainer.put(EXTRA_SAVE_SMART_EXPENSE_RECEIVER_KEY, saveExpenseListReceiver);
+                }
+            }
         }
     }
 
@@ -609,6 +619,13 @@ public class QuickExpense extends BaseActivity {
                 appendReceiptReceiver = (AppendReceiptReceiver) retainer.get(APPEND_RECEIPT_RECEIVER_KEY);
                 // Reset the activity reference.
                 appendReceiptReceiver.setActivity(this);
+            }
+            //Restore saveSmartExpense Receiver
+            if (retainer.contains(EXTRA_SAVE_SMART_EXPENSE_RECEIVER_KEY)) {
+                saveExpenseListReceiver = (BaseAsyncResultReceiver) retainer.get(EXTRA_SAVE_SMART_EXPENSE_RECEIVER_KEY);
+                if (saveExpenseListReceiver != null) {
+                    saveExpenseListReceiver.setListener(saveSmartExpenseListener);
+                }
             }
         }
     }
