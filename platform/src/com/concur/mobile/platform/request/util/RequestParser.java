@@ -165,6 +165,9 @@ public class RequestParser {
         final GsonBuilder builder = new GsonBuilder();
         builder.registerTypeAdapter(Double.class, new DoubleDeserializer());
         builder.registerTypeAdapter(Date.class, new DateDeserializer(Parse.LONG_YEAR_MONTH_DAY));
+        builder.registerTypeAdapter(RequestDTO.ApprovalStatus.class,
+                new EnumDeserializer<>(RequestDTO.ApprovalStatus.class,
+                        EnumDeserializer.EnumParsingType.STRING_VALUE));
         Log.d(CLS_TAG, "parseTRListResponse :: starting parse");
         final Gson gson = builder.create();
         final GsonListContainer<RequestDTO> requestList = gson
@@ -184,6 +187,9 @@ public class RequestParser {
         builder.registerTypeAdapter(RequestEntryDTO.TripType.class,
                 new EnumDeserializer<RequestExceptionDTO.ExceptionLevel>(RequestExceptionDTO.ExceptionLevel.class,
                         EnumDeserializer.EnumParsingType.NAME));
+        builder.registerTypeAdapter(RequestDTO.ApprovalStatus.class,
+                new EnumDeserializer<>(RequestDTO.ApprovalStatus.class,
+                        EnumDeserializer.EnumParsingType.STRING_VALUE));
 
         final Gson gson = builder.create();
         Log.d(CLS_TAG, "parseTRDetailResponse :: starting parse");
