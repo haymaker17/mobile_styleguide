@@ -18,8 +18,7 @@ import java.util.Locale;
 /**
  * Created by OlivierB on 14/08/2015.
  */
-public class RecallTaskTest
-        extends AsyncRequestTest {
+public class RecallTaskTest extends AsyncRequestTest {
 
     private RequestParser requestParser;
     private String requestIdForRecall;

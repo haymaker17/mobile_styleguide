@@ -153,4 +153,29 @@ public class RequestTestSuite extends PlatformTestSuite {
         // Run the GroupConfigurationTaskTest test.
         requestDetailTaskTest.doTest();
     }
+
+
+    /**
+     * Performs a Request Location retrieving test.
+     *
+     * @throws Exception throws an exception if the test fails.
+     */
+    @Test
+    public void doLocation() throws Exception {
+
+        // Init the login request
+        doPinPasswordLogin();
+
+        final RequestLocationTaskTest requestLocationTaskTest = new RequestLocationTaskTest(requestParser);
+        if (PlatformTestApplication.useMockServer()) {
+            // Init mock server.
+            initMockServer();
+
+            // Set the mock server instance on the test.
+            requestLocationTaskTest.setMockServer(mwsServer);
+        }
+
+        // Run the GroupConfigurationTaskTest test.
+        requestLocationTaskTest.doTest();
+    }
 }

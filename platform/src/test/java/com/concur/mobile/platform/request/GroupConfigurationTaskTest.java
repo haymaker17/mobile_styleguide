@@ -21,8 +21,7 @@ import org.junit.Assert;
 
 import java.util.List;
 
-public class GroupConfigurationTaskTest
-        extends AsyncRequestTest {
+public class GroupConfigurationTaskTest extends AsyncRequestTest {
 
     private static final String PREF_USER_ID = "pref_saved_user_id";
 

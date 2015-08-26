@@ -31,8 +31,7 @@ import java.util.Locale;
  * Note: this requires an existing active Request with at least one entry on your VM if you disable
  * mocks.
  */
-public class RequestDetailTaskTest
-        extends AsyncRequestTest {
+public class RequestDetailTaskTest extends AsyncRequestTest {
 
     private RequestParser requestParser;
     private static final String MOCK_REQUEST_ID = "3334";
