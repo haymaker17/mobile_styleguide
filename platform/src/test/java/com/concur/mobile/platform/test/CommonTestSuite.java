@@ -13,6 +13,7 @@ import com.concur.mobile.platform.password.reset.test.RequestPasswordResetReques
 import com.concur.mobile.platform.password.reset.test.ResetUserPasswordRequestTaskTest;
 import com.concur.mobile.platform.receipt.list.test.ReceiptListRequestTaskTest;
 
+import org.junit.Before;
 import org.junit.Test;
 
 import java.util.Locale;
@@ -23,6 +24,21 @@ import java.util.Locale;
  * @author andrewk
  */
 public class CommonTestSuite extends PlatformTestSuite {
+
+    private boolean loginDone = false;
+
+    @Before
+    public void configure() throws Exception {
+        if (!loginDone) {
+            // Init the login request
+            doPinPasswordLogin();
+            loginDone = true;
+        }
+        if (PlatformTestApplication.useMockServer()) {
+            // Init mock server.
+            initMockServer();
+        }
+    }
 
     @Test
     public void doPinPasswordLogin() throws Exception {
@@ -46,9 +62,7 @@ public class CommonTestSuite extends PlatformTestSuite {
 
         // Init the auto-login request and optionally set the mock server.
         AutoLoginRequestTaskTest autoLoginTest = new AutoLoginRequestTaskTest();
-        if (PlatformTestApplication.useMockServer()) {
-            autoLoginTest.setMockServer(mwsServer);
-        }
+        initTaskMockServer(autoLoginTest);
 
         // Run the AutoLogin test.
         autoLoginTest.doTest();
@@ -76,9 +90,6 @@ public class CommonTestSuite extends PlatformTestSuite {
             // actually are!
             ppLoginId = "ahuser40@utest.com";
             ppLoginPinPassword = "collective0";
-
-            // Init mock server.
-            initMockServer();
 
             // Set the mock server instance on the test.
             test.setMockServer(mwsServer);
@@ -131,9 +142,6 @@ public class CommonTestSuite extends PlatformTestSuite {
             // actually are!
             email = "ahuser40@utest.com";
 
-            // Init mock server.
-            initMockServer();
-
             // Set the mock server instance on the test.
             test.setMockServer(mwsServer);
 
@@ -185,9 +193,6 @@ public class CommonTestSuite extends PlatformTestSuite {
             // actually are!
             email = "ahuser40@utest.com";
 
-            // Init mock server.
-            initMockServer();
-
             // Set the mock server instance on the test.
             test.setMockServer(mwsServer);
 
@@ -211,7 +216,6 @@ public class CommonTestSuite extends PlatformTestSuite {
 
         // Run the test.
         test.doTest();
-
     }
 
     /**
@@ -229,7 +233,6 @@ public class CommonTestSuite extends PlatformTestSuite {
         String password;
         String keyPartA;
         String keyPartB;
-        Locale locale = PlatformTestApplication.getApplication().getResources().getConfiguration().locale;
 
         // If using the mock server, then
         if (PlatformTestApplication.useMockServer()) {
@@ -240,9 +243,6 @@ public class CommonTestSuite extends PlatformTestSuite {
             keyPartA = "f73f4208623a4f7492bf860aef44b9db";
             keyPartB = "f73f4208623a4f7492bf860aef44b9db";
             password = "foobar";
-
-            // Init mock server.
-            initMockServer();
 
             // Set the mock server instance on the test.
             test.setMockServer(mwsServer);
@@ -300,13 +300,7 @@ public class CommonTestSuite extends PlatformTestSuite {
         doPinPasswordLogin();
 
         SystemConfigRequestTaskTest sysConfigTask = new SystemConfigRequestTaskTest();
-        if (PlatformTestApplication.useMockServer()) {
-            // Init mock server.
-            initMockServer();
-
-            // Set the mock server instance on the test.
-            sysConfigTask.setMockServer(mwsServer);
-        }
+        initTaskMockServer(sysConfigTask);
 
         // Run the SystemConfigTest test.
         sysConfigTask.doTest();
@@ -324,13 +318,7 @@ public class CommonTestSuite extends PlatformTestSuite {
         doPinPasswordLogin();
 
         UserConfigRequestTaskTest userConfigTask = new UserConfigRequestTaskTest();
-        if (PlatformTestApplication.useMockServer()) {
-            // Init mock server.
-            initMockServer();
-
-            // Set the mock server instance on the test.
-            userConfigTask.setMockServer(mwsServer);
-        }
+        initTaskMockServer(userConfigTask);
 
         // Run the SystemConfigTest test.
         userConfigTask.doTest();
@@ -348,24 +336,11 @@ public class CommonTestSuite extends PlatformTestSuite {
         doPinPasswordLogin();
 
         StartOCRRequestTaskTest startOcrTest = new StartOCRRequestTaskTest();
-        if (PlatformTestApplication.useMockServer()) {
-            // Init mock server.
-            initMockServer();
-
-            // Set the mock server instance on the test.
-            startOcrTest.setMockServer(mwsServer);
-        }
+        initTaskMockServer(startOcrTest);
 
         // First, get the list of Receipts so we can grab one of them to StartOCR on.
         ReceiptListRequestTaskTest receiptListTest = new ReceiptListRequestTaskTest();
-        boolean useMockServer = PlatformTestApplication.useMockServer();
-        if (useMockServer) {
-            // Init mock server.
-            initMockServer();
-
-            // Set the mock server instance on the test.
-            receiptListTest.setMockServer(mwsServer);
-        }
+        initTaskMockServer(receiptListTest);
 
         // Run the ReceiptListRequestTask test.
         receiptListTest.doTest();
@@ -391,17 +366,11 @@ public class CommonTestSuite extends PlatformTestSuite {
         doPinPasswordLogin();
 
         StopOCRRequestTaskTest stopOcrTask = new StopOCRRequestTaskTest();
-        // Init mock server.
-        initMockServer();
-        // Set the mock server instance on the test.
-        stopOcrTask.setMockServer(mwsServer);
+        initTaskMockServer(stopOcrTask);
 
         // First, get the list of Receipts so we can grab one of them to StartOCR on.
         ReceiptListRequestTaskTest receiptListTest = new ReceiptListRequestTaskTest();
-        // Init mock server.
-        initMockServer();
-        // Set the mock server instance on the test.
-        receiptListTest.setMockServer(mwsServer);
+        initTaskMockServer(receiptListTest);
 
         // Run the ReceiptListRequestTask test.
         receiptListTest.doTest();

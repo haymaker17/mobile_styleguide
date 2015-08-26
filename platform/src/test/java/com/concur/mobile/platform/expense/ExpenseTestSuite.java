@@ -11,6 +11,7 @@ import com.concur.mobile.platform.test.ConcurPlatformTestRunner;
 import com.concur.mobile.platform.test.PlatformTestApplication;
 import com.concur.mobile.platform.test.PlatformTestSuite;
 
+import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.robolectric.annotation.Config;
@@ -22,6 +23,21 @@ import org.robolectric.annotation.Config;
 @Config(manifest = "src/test/AndroidManifest.xml", assetDir = "assets")
 public class ExpenseTestSuite extends PlatformTestSuite {
 
+    private boolean loginDone = false;
+
+    @Before
+    public void configure() throws Exception {
+        if (!loginDone) {
+            // Init the login request
+            doPinPasswordLogin();
+            loginDone = true;
+        }
+        if (PlatformTestApplication.useMockServer()) {
+            // Init mock server.
+            initMockServer();
+        }
+    }
+
     /**
      * Performs an expense list test.
      *
@@ -30,17 +46,8 @@ public class ExpenseTestSuite extends PlatformTestSuite {
     @Test
     public void doExpenseList() throws Exception {
 
-        // Init the login request
-        doPinPasswordLogin();
-
         ExpenseListRequestTaskTest expenseListTest = new ExpenseListRequestTaskTest();
-        if (PlatformTestApplication.useMockServer()) {
-            // Init mock server.
-            initMockServer();
-
-            // Set the mock server instance on the test.
-            expenseListTest.setMockServer(mwsServer);
-        }
+        initTaskMockServer(expenseListTest);
 
         // Run the ExpenseListRequestTask test.
         expenseListTest.doTest();
@@ -54,17 +61,8 @@ public class ExpenseTestSuite extends PlatformTestSuite {
     @Test
     public void doSmartExpenseList() throws Exception {
 
-        // Init the login request
-        doPinPasswordLogin();
-
         SmartExpenseListRequestTaskTest smartExpenseListTest = new SmartExpenseListRequestTaskTest();
-        if (PlatformTestApplication.useMockServer()) {
-            // Init mock server.
-            initMockServer();
-
-            // Set the mock server instance on the test.
-            smartExpenseListTest.setMockServer(mwsServer);
-        }
+        initTaskMockServer(smartExpenseListTest);
 
         // Run the ExpenseListRequestTask test.
         smartExpenseListTest.doTest();
@@ -78,18 +76,9 @@ public class ExpenseTestSuite extends PlatformTestSuite {
     @Test
     public void doReceiptList() throws Exception {
 
-        // Init the login request
-        doPinPasswordLogin();
-
         ReceiptListRequestTaskTest receiptListTest = new ReceiptListRequestTaskTest();
         boolean useMockServer = PlatformTestApplication.useMockServer();
-        if (useMockServer) {
-            // Init mock server.
-            initMockServer();
-
-            // Set the mock server instance on the test.
-            receiptListTest.setMockServer(mwsServer);
-        }
+        initTaskMockServer(receiptListTest);
 
         // Run the ReceiptListRequestTask test.
         receiptListTest.doTest();
@@ -97,56 +86,42 @@ public class ExpenseTestSuite extends PlatformTestSuite {
         // Run the GetReceiptRequestTask test with a receipt image id.
         GetReceiptRequestTaskTest getReceiptTest = new GetReceiptRequestTaskTest(
                 GetReceiptRequestTaskTest.ReceiptIdSource.SOURCE_ID);
-        if (useMockServer) {
-            getReceiptTest.setMockServer(mwsServer);
-        }
+        initTaskMockServer(getReceiptTest);
         getReceiptTest.doTest();
 
         // Run the GetReceiptRequestTask test with a receipt Uri.
         getReceiptTest = new GetReceiptRequestTaskTest(GetReceiptRequestTaskTest.ReceiptIdSource.SOURCE_URI);
-        if (useMockServer) {
-            getReceiptTest.setMockServer(mwsServer);
-        }
+        initTaskMockServer(getReceiptTest);
         getReceiptTest.doTest();
 
         // Run the SaveReceiptRequestTask with just a receipt Uri.
         SaveReceiptRequestTaskTest saveReceiptTest = new SaveReceiptRequestTaskTest(
                 SaveReceiptRequestTaskTest.ReceiptSource.SOURCE_URI);
-        if (useMockServer) {
-            saveReceiptTest.setMockServer(mwsServer);
-        }
+        initTaskMockServer(saveReceiptTest);
         // The Roboelectric ContentResolver current throws an UnsupportedException upon attempting to read
         // from a content Uri input stream!
         // saveReceiptTest.doTest();
 
         // Run the SaveReceiptRequestTask with an input stream.
         saveReceiptTest = new SaveReceiptRequestTaskTest(SaveReceiptRequestTaskTest.ReceiptSource.SOURCE_INPUT_STREAM);
-        if (useMockServer) {
-            saveReceiptTest.setMockServer(mwsServer);
-        }
+        initTaskMockServer(saveReceiptTest);
         saveReceiptTest.doTest();
 
         // Run the SaveReceiptRequestTask with a byte array.
         saveReceiptTest = new SaveReceiptRequestTaskTest(SaveReceiptRequestTaskTest.ReceiptSource.SOURCE_BYTE_ARRAY);
-        if (useMockServer) {
-            saveReceiptTest.setMockServer(mwsServer);
-        }
+        initTaskMockServer(saveReceiptTest);
         saveReceiptTest.doTest();
 
         // Run the DeleteReceiptRequestTask with receipt uri.
         DeleteReceiptRequestTaskTest deleteReceiptTest = new DeleteReceiptRequestTaskTest(
                 DeleteReceiptRequestTaskTest.ReceiptSource.SOURCE_URI);
-        if (useMockServer) {
-            deleteReceiptTest.setMockServer(mwsServer);
-        }
+        initTaskMockServer(deleteReceiptTest);
         deleteReceiptTest.doTest();
 
         // Run the DeleteReceiptRequestTask with a receipt image id.
         deleteReceiptTest = new DeleteReceiptRequestTaskTest(
                 DeleteReceiptRequestTaskTest.ReceiptSource.SOURCE_RECEIPT_IMAGE_ID);
-        if (useMockServer) {
-            deleteReceiptTest.setMockServer(mwsServer);
-        }
+        initTaskMockServer(deleteReceiptTest);
         deleteReceiptTest.doTest();
 
     }
@@ -159,17 +134,8 @@ public class ExpenseTestSuite extends PlatformTestSuite {
     @Test
     public void doSaveMobileEntry() throws Exception {
 
-        // Init the login request
-        doPinPasswordLogin();
-
         SaveMobileEntryRequestTaskTest saveMETest = new SaveMobileEntryRequestTaskTest();
-        if (PlatformTestApplication.useMockServer()) {
-            // Init mock server.
-            initMockServer();
-
-            // Set the mock server instance on the test.
-            saveMETest.setMockServer(mwsServer);
-        }
+        initTaskMockServer(saveMETest);
 
         // Run the SaveMobileEntryRequestTask test.
         saveMETest.doTest();

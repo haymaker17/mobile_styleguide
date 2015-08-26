@@ -275,4 +275,11 @@ public abstract class PlatformTestSuite {
         // Run the test.
         test.doTest();
     }
+
+    protected <T extends AsyncRequestTest> void initTaskMockServer(T task) {
+        if (PlatformTestApplication.useMockServer()) {
+            // Set the mock server instance on the test.
+            task.setMockServer(mwsServer);
+        }
+    }
 }

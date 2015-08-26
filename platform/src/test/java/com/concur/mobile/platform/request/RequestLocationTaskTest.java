@@ -20,17 +20,7 @@ import java.util.List;
  */
 public class RequestLocationTaskTest extends AsyncRequestTest {
 
-    private RequestParser requestParser;
     private static final String SEARCHED_TEXT = "ter";
-
-    public RequestLocationTaskTest(RequestParser requestParser) {
-        this.requestParser = requestParser;
-    }
-
-    /*
-
-            .execute();
-     */
 
     public void doTest() throws Exception {
         // Set the mock response if the mock server is being used.

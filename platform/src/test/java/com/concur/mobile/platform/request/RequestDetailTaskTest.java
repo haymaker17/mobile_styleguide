@@ -33,7 +33,6 @@ import java.util.Locale;
  */
 public class RequestDetailTaskTest extends AsyncRequestTest {
 
-    private RequestParser requestParser;
     private static final String MOCK_REQUEST_ID = "3334";
     protected static final String MOCK_REQUEST_NAME = "ščřžýáíĐëŸč뜱뛯ｸウあ";
     protected static final String MOCK_REQUEST_POLICY_ID = "gWohOcl7WcxM34o3LnfEe$s2lWjryBP$s5zWQ";
@@ -41,10 +40,6 @@ public class RequestDetailTaskTest extends AsyncRequestTest {
     protected static final String MOCK_ENTRY_ID = "gWlb7X$sbxthzYAq7t8OqPeqb3nUM$pObtyMg";
     protected static final String MOCK_TO_LOC_ID = "gWoH$sYdLcIWJ8htEYF$sOCLa1d4oqWAx35lw";
     protected static final String MOCK_FROM_LOC_ID = "gWkf$s2FZT$pVA8fw6oAc76Ij4lNWYPwIT9Cg";
-
-    public RequestDetailTaskTest(RequestParser requestParser) {
-        this.requestParser = requestParser;
-    }
 
     private RequestDTO initMockedTR() {
         final RequestDTO tr = new RequestDTO();
@@ -88,7 +83,7 @@ public class RequestDetailTaskTest extends AsyncRequestTest {
         } else {
             // --- creates the request on the VM and retrieve the ID
             requestDTO = getTR();
-            // --- if no ID was retrieved, then exit the test (=> no existing active request with an entry on VM !!)
+            // --- if no TR was retrieved, then exit the test (=> no existing active request with an entry on VM !!)
             if (requestDTO == null) {
                 return;
             }
@@ -108,7 +103,8 @@ public class RequestDetailTaskTest extends AsyncRequestTest {
             Assert.assertNotNull("Request response is null", response);
 
             try {
-                requestParser.parseTRDetailResponse(requestDTO, result.resultData.getString(BaseAsyncRequestTask.HTTP_RESPONSE));
+                RequestParser
+                        .parseTRDetailResponse(requestDTO, result.resultData.getString(BaseAsyncRequestTask.HTTP_RESPONSE));
                 Assert.assertNotNull("EntriesMap is empty", requestDTO.getEntriesMap());
                 Assert.assertTrue(requestDTO.getEntriesMap().size() > 0);
             } catch (Exception e) {
@@ -138,7 +134,7 @@ public class RequestDetailTaskTest extends AsyncRequestTest {
             // --- parse the configurations received
             List<RequestDTO> listRequests;
             try {
-                listRequests = requestParser
+                listRequests = RequestParser
                         .parseTRListResponse(result.resultData.getString(BaseAsyncRequestTask.HTTP_RESPONSE));
                 if (listRequests.size() > 0) {
                     for (RequestDTO tr : listRequests) {

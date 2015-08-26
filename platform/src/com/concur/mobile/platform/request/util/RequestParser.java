@@ -149,7 +149,7 @@ public class RequestParser {
      * ************************************************************
      */
 
-    private Date parseDate(String baseStr, SimpleDateFormat sdf) {
+    private static Date parseDate(String baseStr, SimpleDateFormat sdf) {
         if (baseStr != null) {
             try {
                 return sdf.parse(baseStr);
@@ -161,7 +161,7 @@ public class RequestParser {
         return null;
     }
 
-    public List<RequestDTO> parseTRListResponse(String jsonRes) {
+    public static List<RequestDTO> parseTRListResponse(String jsonRes) {
         final GsonBuilder builder = new GsonBuilder();
         builder.registerTypeAdapter(Double.class, new DoubleDeserializer());
         builder.registerTypeAdapter(Date.class, new DateDeserializer(Parse.LONG_YEAR_MONTH_DAY));
@@ -175,7 +175,7 @@ public class RequestParser {
 
     @SuppressWarnings("rawtypes")
     @Deprecated
-    public void parseTRDetailResponse(RequestDTO tr, String jsonRes) {
+    public static void parseTRDetailResponse(RequestDTO tr, String jsonRes) {
         final GsonBuilder builder = new GsonBuilder();
         builder.registerTypeAdapter(Boolean.class, new BooleanDeserializer());
         builder.registerTypeAdapter(Integer.class, new IntegerDeserializer());
@@ -225,7 +225,7 @@ public class RequestParser {
      *
      * @param jsonRes the json string
      */
-    public List<ConnectForm> parseFormFieldsResponse(String jsonRes) {
+    public static List<ConnectForm> parseFormFieldsResponse(String jsonRes) {
         final GsonBuilder builder = new GsonBuilder();
         builder.registerTypeAdapter(Boolean.class, new BooleanDeserializer());
         builder.registerTypeAdapter(Integer.class, new IntegerDeserializer());
@@ -274,7 +274,7 @@ public class RequestParser {
      *
      * @param jsonRes the json string
      */
-    public List<RequestGroupConfiguration> parseRequestGroupConfigurationsResponse(String jsonRes) {
+    public static List<RequestGroupConfiguration> parseRequestGroupConfigurationsResponse(String jsonRes) {
         final GsonBuilder builder = new GsonBuilder();
         builder.registerTypeAdapter(Boolean.class, new BooleanDeserializer());
         builder.registerTypeAdapter(Integer.class, new IntegerDeserializer());

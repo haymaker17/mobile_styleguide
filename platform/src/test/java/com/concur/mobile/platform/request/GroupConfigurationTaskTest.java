@@ -26,11 +26,6 @@ public class GroupConfigurationTaskTest extends AsyncRequestTest {
     private static final String PREF_USER_ID = "pref_saved_user_id";
 
     private RequestGroupConfigurationCache groupConfigurationCache = null;
-    private RequestParser requestParser;
-
-    public GroupConfigurationTaskTest(RequestParser requestParser) {
-        this.requestParser = requestParser;
-    }
 
     /*@Test */
     public void doTest() throws Exception {
@@ -63,7 +58,7 @@ public class GroupConfigurationTaskTest extends AsyncRequestTest {
             // --- parse the configurations received
             List<RequestGroupConfiguration> configurationList;
             try {
-                configurationList = requestParser.parseRequestGroupConfigurationsResponse(
+                configurationList = RequestParser.parseRequestGroupConfigurationsResponse(
                         result.resultData.getString(BaseAsyncRequestTask.HTTP_RESPONSE));
                 Assert.assertNotNull("Response is empty", configurationList);
                 Assert.assertTrue(configurationList.size() > 0);

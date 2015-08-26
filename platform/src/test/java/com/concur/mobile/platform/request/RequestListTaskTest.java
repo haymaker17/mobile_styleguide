@@ -22,12 +22,7 @@ import java.util.Set;
  */
 public class RequestListTaskTest extends AsyncRequestTest {
 
-    private RequestParser requestParser;
     private RequestListCache requestListCache;
-
-    public RequestListTaskTest(RequestParser requestParser) {
-        this.requestParser = requestParser;
-    }
 
     /**
      * Execute a Request List retrieving test
@@ -67,7 +62,7 @@ public class RequestListTaskTest extends AsyncRequestTest {
             // --- parse the configurations received
             List<RequestDTO> listRequests;
             try {
-                listRequests = requestParser
+                listRequests = RequestParser
                         .parseTRListResponse(result.resultData.getString(BaseAsyncRequestTask.HTTP_RESPONSE));
                 Assert.assertNotNull("Response is empty", listRequests);
                 Assert.assertTrue(listRequests.size() > 0);

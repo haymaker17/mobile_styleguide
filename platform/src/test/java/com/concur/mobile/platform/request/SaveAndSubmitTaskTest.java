@@ -22,16 +22,11 @@ import java.util.Locale;
 
 public class SaveAndSubmitTaskTest extends AsyncRequestTest {
 
-    private RequestParser requestParser;
     private RequestDTO tr;
 
     protected static final String REQUEST_NAME_STRING = "Trip in March";
     protected static final String REQUEST_POLICY_ID_STRING = "gWohOcl7WcxM34o3LnfEe$s2lWjryBP$s5zWQ";
     protected static final String REQUEST_PURPOSE_STRING = "March trip test";
-
-    public SaveAndSubmitTaskTest(RequestParser requestParser) {
-        this.requestParser = requestParser;
-    }
 
     private void initCreate(boolean applyPurpose) {
         tr = null;
@@ -83,7 +78,7 @@ public class SaveAndSubmitTaskTest extends AsyncRequestTest {
             // --- parse the configurations received
             RequestDTO request = null;
             try {
-                request = requestParser.parseSaveAndSubmitResponse(
+                request = RequestParser.parseSaveAndSubmitResponse(
                         result.resultData.getString(BaseAsyncRequestTask.HTTP_RESPONSE));
                 Assert.assertNotNull("Response is empty", request);
             } catch (Exception e) {
@@ -146,7 +141,7 @@ public class SaveAndSubmitTaskTest extends AsyncRequestTest {
             // --- parse the configurations received
             RequestDTO request = null;
             try {
-                request = requestParser.parseSaveAndSubmitResponse(
+                request = RequestParser.parseSaveAndSubmitResponse(
                         result.resultData.getString(BaseAsyncRequestTask.HTTP_RESPONSE));
                 Assert.assertNotNull("Response is empty", request);
             } catch (Exception e) {

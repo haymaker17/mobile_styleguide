@@ -1,10 +1,10 @@
 package com.concur.mobile.platform.request;
 
-import com.concur.mobile.platform.request.util.RequestParser;
 import com.concur.mobile.platform.test.Const;
 import com.concur.mobile.platform.test.PlatformTestApplication;
 import com.concur.mobile.platform.test.PlatformTestSuite;
 
+import org.junit.Before;
 import org.junit.BeforeClass;
 import org.junit.Test;
 
@@ -18,16 +18,27 @@ public class RequestTestSuite extends PlatformTestSuite {
     private static final String TEST_LOGIN_ID = "acsontos@outtask.com";
     private static final String TEST_LOGIN_PWD = "1111";
     // nb: add -Duse.mock.server="false" to VM options in your configuration to disable mocks
-    private final RequestParser requestParser = new RequestParser();
+    private boolean loginDone = false;
 
     @BeforeClass
     public static void setUp() throws Exception {
-        PlatformTestSuite.setUp();
-
         if (!PlatformTestApplication.useMockServer()) {
             System.setProperty(Const.SERVER_ADDRESS, TEST_SRV_URL);
             System.setProperty(Const.PPLOGIN_ID, TEST_LOGIN_ID);
             System.setProperty(Const.PPLOGIN_PIN_PASSWORD, TEST_LOGIN_PWD);
+        }
+    }
+
+    @Before
+    public void configure() throws Exception {
+        if (!loginDone) {
+            // Init the login request
+            doPinPasswordLogin();
+            loginDone = true;
+        }
+        if (PlatformTestApplication.useMockServer()) {
+            // Init mock server.
+            initMockServer();
         }
     }
 
@@ -40,17 +51,8 @@ public class RequestTestSuite extends PlatformTestSuite {
     @Test
     public void doGroupConfiguration() throws Exception {
 
-        // Init the login request
-        doPinPasswordLogin();
-
-        final GroupConfigurationTaskTest groupConfigurationTaskTest = new GroupConfigurationTaskTest(requestParser);
-        if (PlatformTestApplication.useMockServer()) {
-            // Init mock server.
-            initMockServer();
-
-            // Set the mock server instance on the test.
-            groupConfigurationTaskTest.setMockServer(mwsServer);
-        }
+        final GroupConfigurationTaskTest groupConfigurationTaskTest = new GroupConfigurationTaskTest();
+        initTaskMockServer(groupConfigurationTaskTest);
 
         // Run the GroupConfigurationTaskTest test.
         groupConfigurationTaskTest.doTest();
@@ -64,17 +66,8 @@ public class RequestTestSuite extends PlatformTestSuite {
     @Test
     public void doSaveAndSubmit() throws Exception {
 
-        // Init the login request
-        doPinPasswordLogin();
-
-        final SaveAndSubmitTaskTest saveAndSubmitTaskTest = new SaveAndSubmitTaskTest(requestParser);
-        if (PlatformTestApplication.useMockServer()) {
-            // Init mock server.
-            initMockServer();
-
-            // Set the mock server instance on the test.
-            saveAndSubmitTaskTest.setMockServer(mwsServer);
-        }
+        final SaveAndSubmitTaskTest saveAndSubmitTaskTest = new SaveAndSubmitTaskTest();
+        initTaskMockServer(saveAndSubmitTaskTest);
 
         // Run the GroupConfigurationTaskTest test.
         saveAndSubmitTaskTest.doTest();
@@ -88,17 +81,8 @@ public class RequestTestSuite extends PlatformTestSuite {
     @Test
     public void doRecall() throws Exception {
 
-        // Init the login request
-        doPinPasswordLogin();
-
         final RecallTaskTest recallTaskTest = new RecallTaskTest();
-        if (PlatformTestApplication.useMockServer()) {
-            // Init mock server.
-            initMockServer();
-
-            // Set the mock server instance on the test.
-            recallTaskTest.setMockServer(mwsServer);
-        }
+        initTaskMockServer(recallTaskTest);
 
         // Run the GroupConfigurationTaskTest test.
         recallTaskTest.doTest();
@@ -113,17 +97,8 @@ public class RequestTestSuite extends PlatformTestSuite {
     @Test
     public void doList() throws Exception {
 
-        // Init the login request
-        doPinPasswordLogin();
-
-        final RequestListTaskTest requestListTaskTest = new RequestListTaskTest(requestParser);
-        if (PlatformTestApplication.useMockServer()) {
-            // Init mock server.
-            initMockServer();
-
-            // Set the mock server instance on the test.
-            requestListTaskTest.setMockServer(mwsServer);
-        }
+        final RequestListTaskTest requestListTaskTest = new RequestListTaskTest();
+        initTaskMockServer(requestListTaskTest);
 
         // Run the GroupConfigurationTaskTest test.
         requestListTaskTest.doTest();
@@ -138,17 +113,8 @@ public class RequestTestSuite extends PlatformTestSuite {
     @Test
     public void doDetail() throws Exception {
 
-        // Init the login request
-        doPinPasswordLogin();
-
-        final RequestDetailTaskTest requestDetailTaskTest = new RequestDetailTaskTest(requestParser);
-        if (PlatformTestApplication.useMockServer()) {
-            // Init mock server.
-            initMockServer();
-
-            // Set the mock server instance on the test.
-            requestDetailTaskTest.setMockServer(mwsServer);
-        }
+        final RequestDetailTaskTest requestDetailTaskTest = new RequestDetailTaskTest();
+        initTaskMockServer(requestDetailTaskTest);
 
         // Run the GroupConfigurationTaskTest test.
         requestDetailTaskTest.doTest();
@@ -163,17 +129,8 @@ public class RequestTestSuite extends PlatformTestSuite {
     @Test
     public void doLocation() throws Exception {
 
-        // Init the login request
-        doPinPasswordLogin();
-
-        final RequestLocationTaskTest requestLocationTaskTest = new RequestLocationTaskTest(requestParser);
-        if (PlatformTestApplication.useMockServer()) {
-            // Init mock server.
-            initMockServer();
-
-            // Set the mock server instance on the test.
-            requestLocationTaskTest.setMockServer(mwsServer);
-        }
+        final RequestLocationTaskTest requestLocationTaskTest = new RequestLocationTaskTest();
+        initTaskMockServer(requestLocationTaskTest);
 
         // Run the GroupConfigurationTaskTest test.
         requestLocationTaskTest.doTest();
