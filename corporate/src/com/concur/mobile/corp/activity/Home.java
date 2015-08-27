@@ -106,7 +106,7 @@ import com.concur.mobile.core.fragment.navigation.Navigation.NavigationListener;
 import com.concur.mobile.core.fragment.navigation.Navigation.SimpleNavigationItem;
 import com.concur.mobile.core.fragment.navigation.Navigation.TextNavigationItem;
 import com.concur.mobile.core.request.activity.RequestListActivity;
-import com.concur.mobile.core.request.util.RequestStatus;
+import com.concur.mobile.platform.request.util.RequestStatus;
 import com.concur.mobile.core.service.ConcurService;
 import com.concur.mobile.core.service.CorpSsoQueryReply;
 import com.concur.mobile.core.service.ServiceRequest;

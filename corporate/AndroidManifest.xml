@@ -352,6 +352,11 @@
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value="com.concur.mobile.core.request.activity.RequestSummaryActivity"/>
         </activity>
+        <activity android:name="com.concur.mobile.core.request.activity.RequestEditActivity" >
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value="com.concur.mobile.core.request.activity.RequestSummaryActivity" />
+        </activity>
         <activity
             android:name="com.concur.mobile.core.request.activity.RequestEntryActivity">
             <meta-data

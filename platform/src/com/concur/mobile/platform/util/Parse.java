@@ -1,16 +1,15 @@
 package com.concur.mobile.platform.util;
 
+import android.util.Log;
+import com.concur.mobile.platform.common.formfield.IFormField.EnumField;
+import com.concur.mobile.platform.util.EnumDeserializer.EnumParsingType;
+
 import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.TimeZone;
-
-import android.util.Log;
-
-import com.concur.mobile.platform.common.formfield.IFormField.EnumField;
-import com.concur.mobile.platform.util.EnumDeserializer.EnumParsingType;
 
 /**
  * Contains a set of utility methods for parsing data for platform responses.
@@ -43,11 +42,10 @@ public class Parse {
 
     /**
      * Helper to parse timestamps from the XML
-     * 
-     * @param dateText
-     *            The timestamp string from the XML. Should be trimmed.
+     *
+     * @param dateText The timestamp string from the XML. Should be trimmed.
      * @return A {@link Calendar} representing the timestamp. If the timestamp was not parseable then this will have the value 20
-     *         Dec 1970 16:00:00 .
+     * Dec 1970 16:00:00 .
      */
     public static Calendar parseXMLTimestamp(String dateText) {
         return parseTimestamp(dateText, XML_DF);
@@ -55,14 +53,11 @@ public class Parse {
 
     /**
      * Helper to parse timestamps from XML
-     * 
-     * @param dateText
-     *            The timestamp string from the XML. Should be trimmed.
-     * @param df
-     *            An instance of <code>DateFormat</code>.
-     * 
+     *
+     * @param dateText The timestamp string from the XML. Should be trimmed.
+     * @param df       An instance of <code>DateFormat</code>.
      * @return A {@link Calendar} representing the timestamp. If the timestamp was not parseable then this will have the value 20
-     *         Dec 1970 16:00:00 .
+     * Dec 1970 16:00:00 .
      */
     public static Calendar parseTimestamp(String dateText, DateFormat df) {
         Calendar cal = null;
@@ -84,9 +79,8 @@ public class Parse {
     /**
      * Will parse a boolean value indicated within <code>text</code> as either the case insensitive value
      * <code>y, n, t, f, true, false, yes, no</code>.
-     * 
-     * @param text
-     *            the boolean value to be parsed.
+     *
+     * @param text the boolean value to be parsed.
      * @return an instance of <code>Boolean</code> indicating the parsed value; <code>null</code> otherwise.
      */
     public static Boolean safeParseBoolean(String text) {
@@ -117,9 +111,8 @@ public class Parse {
     /**
      * Parse a String value into a Long. Checks for null and length before attempting the parse and will catch and log parse
      * exceptions.
-     * 
-     * @param text
-     *            A {@link String} containing the value to parse
+     *
+     * @param text A {@link String} containing the value to parse
      * @return A {@link Long} value if the text parses okay; null otherwise.
      */
     public static Long safeParseLong(String text) {
@@ -139,9 +132,8 @@ public class Parse {
     /**
      * Parse a String value into an Integer. Checks for null and length before attempting the parse and will catch and log parse
      * exceptions.
-     * 
-     * @param text
-     *            A {@link String} containing the value to parse
+     *
+     * @param text A {@link String} containing the value to parse
      * @return An {@link Integer} value if the text parses okay; null otherwise.
      */
     public static Integer safeParseInteger(String text) {
@@ -161,9 +153,8 @@ public class Parse {
     /**
      * Parse a String value into an Integer. Checks for null and length before attempting the parse and will catch and log parse
      * exceptions. If <code>text</code> could not be parsed into an <code>Integer</code>, then <code>0</code> will be returned.
-     * 
-     * @param text
-     *            A {@link String} containing the value to parse
+     *
+     * @param text A {@link String} containing the value to parse
      * @return An {@link Integer} value if the text parses okay; otherwise 0 will be returned.
      */
     public static Integer safeParseIntegerDefaultToZero(String text) {
@@ -176,9 +167,8 @@ public class Parse {
     /**
      * Parse a String value into a Float. Checks for null and length before attempting the parse and will catch and log parse
      * exceptions.
-     * 
-     * @param text
-     *            A {@link String} containing the value to parse
+     *
+     * @param text A {@link String} containing the value to parse
      * @return A {@link Float} value if the text parses okay; null otherwise.
      */
     public static Float safeParseFloat(String text) {
@@ -198,9 +188,8 @@ public class Parse {
     /**
      * Parse a String value into a Double. Checks for null and length before attempting the parse and will catch and log parse
      * exceptions.
-     * 
-     * @param text
-     *            A {@link String} containing the value to parse
+     *
+     * @param text A {@link String} containing the value to parse
      * @return An {@link Double} value if the text parses okay; null otherwise.
      */
     public static Double safeParseDouble(String text) {
@@ -221,8 +210,7 @@ public class Parse {
      * Parse a String value into a Date. Checks for null and length before attempting the parse and will catch and log parse
      * exceptions.
      *
-     * @param text
-     *            A {@link String} containing the value to parse
+     * @param text A {@link String} containing the value to parse
      * @return An {@link Date} value if the text parses okay; null otherwise.
      */
     public static Date safeParseDate(String text, DateFormat df) {
@@ -242,17 +230,14 @@ public class Parse {
     /**
      * Parse a String value into an enum. Checks for null and length before attempting the parse and will catch and log parse
      * exceptions. Enum's class is required as Enum.valueOf() can't be called without it.
-     * 
-     * @param enumClass
-     *            the enum's class
-     * @param text
-     *            A {@link String} containing the value to parse
-     * @param parsingType
-     *            the parsingType to use with this kind of enum
+     *
+     * @param enumClass   the enum's class
+     * @param text        A {@link String} containing the value to parse
+     * @param parsingType the parsingType to use with this kind of enum
      * @return An {@link Enum} value if the text parses okay; null otherwise.
      */
-    @SuppressWarnings("unchecked")
-    public static <T extends Enum<T>> T safeParseEnum(Class<T> enumClass, String text, EnumParsingType parsingType) {
+    @SuppressWarnings("unchecked") public static <T extends Enum<T>> T safeParseEnum(Class<T> enumClass, String text,
+            EnumParsingType parsingType) {
         if (enumClass != null && text != null) {
             try {
                 switch (parsingType) {
@@ -261,16 +246,21 @@ public class Parse {
                     for (T t : enumClass.getEnumConstants()) {
                         // --- <?> => generic information erased at runtime
                         if (t instanceof EnumField<?>) {
-                            if (((EnumField<T>) t).getName().equalsIgnoreCase(text))
+                            if (((EnumField<T>) t).getName().equalsIgnoreCase(text)) {
                                 return t;
-                        } else
+                            }
+                        } else {
                             throw new IllegalArgumentException(
                                     "enum needs to implements EnumField to use EnumParsingType.STRING_VALUE .");
+                        }
                     }
                     throw new IllegalArgumentException("can't locate enum value for parsed text '" + text + "'.");
 
+                case NAME:
                 default:
-                    Log.d(CLS_TAG, "default - text :: " + text + " | class => " + enumClass.getName());
+                    Log.d(Const.LOG_TAG,
+                            CLS_TAG + ".safeParseEnum: default - text :: " + text + " | class => " + enumClass
+                                    .getName());
                     return Enum.valueOf(enumClass, text);
                 }
             } catch (IllegalArgumentException iae) {

@@ -22,6 +22,7 @@ public class EnumDeserializer<T extends Enum<T>> implements JsonDeserializer<T> 
     private EnumParsingType parsingType;
     
     public enum EnumParsingType {
+        NAME,
         STRING_VALUE
     }
     
