@@ -28,11 +28,15 @@ import com.concur.mobile.corp.ConcurMobile;
 import com.concur.mobile.platform.authentication.EmailLookUpRequestTask;
 import com.concur.mobile.platform.authentication.SessionInfo;
 import com.concur.mobile.platform.config.provider.ConfigUtil;
+import com.concur.mobile.platform.service.PlatformAsyncRequestTask;
 import com.concur.mobile.platform.ui.common.IProgressBarListener;
+import com.concur.mobile.platform.ui.common.dialog.DialogFragmentFactory;
 import com.concur.mobile.platform.ui.common.fragment.PlatformFragment;
 import com.concur.mobile.platform.ui.common.login.EmailLookupFragment;
 import com.concur.mobile.platform.ui.common.login.EmailLookupFragment.EmailLookupCallbacks;
 import com.concur.platform.PlatformProperties;
+
+import java.util.List;
 
 @EventTracker.EventTrackerClassName(getClassName = Flurry.SCREEN_NAME_EMAIL_LOOKUP)
 public class EmailLookupActivity extends BaseActivity implements IProgressBarListener, EmailLookupCallbacks {
@@ -257,7 +261,32 @@ public class EmailLookupActivity extends BaseActivity implements IProgressBarLis
 
     @Override
     public void onEmailLookupRequestFail(Bundle resultData) {
-        // TODO do not do anything
+        boolean dialogShown = false;
+
+        // MOB-15531 - show error message from MWS (only in the case of Akamai related error) and
+        // in other cases, show the general email lookup error message
+        if (resultData != null && resultData.containsKey(PlatformAsyncRequestTask.EXTRA_MWS_RESPONSE_STATUS_ERRORS_KEY)) {
+            List<com.concur.mobile.platform.service.parser.Error> errors = (List<com.concur.mobile.platform.service.parser.Error>) resultData
+                    .getSerializable(PlatformAsyncRequestTask.EXTRA_MWS_RESPONSE_STATUS_ERRORS_KEY);
+            if (errors != null && errors.size() > 0) {
+                if (errors.get(0) != null && errors.get(0).getCode() != null
+                        && errors.get(0).getCode().equals("RATE_LIMIT_1")) {
+
+                    // show error message from MWS
+                    DialogFragmentFactory.getAlertOkayInstance(getText(R.string.general_network_error).toString(),
+                            errors.get(0).getUserMessage()).show(getSupportFragmentManager(), null);
+
+                    dialogShown = true;
+                }
+            }
+        }
+
+        if (!dialogShown) {
+            // show the general email lookup error message
+            DialogFragmentFactory.getAlertOkayInstance(getText(R.string.email_lookup_unable_to_login_title).toString(),
+                    R.string.email_lookup_unable_to_login_msg).show(getSupportFragmentManager(), null);
+            trackEmailLookupFailure(Flurry.EVENT_OTHER_ERROR);
+        }
     }
 
     /*

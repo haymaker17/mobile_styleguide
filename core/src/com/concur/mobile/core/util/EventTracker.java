@@ -10,6 +10,7 @@ import android.text.TextUtils;
 import com.google.analytics.tracking.android.EasyTracker;
 import com.google.analytics.tracking.android.Fields;
 import com.google.analytics.tracking.android.GoogleAnalytics;
+import com.google.analytics.tracking.android.Logger;
 import com.google.analytics.tracking.android.MapBuilder;
 
 import java.lang.annotation.Annotation;
@@ -41,6 +42,11 @@ public enum EventTracker {
 
     @SuppressWarnings("unused")
     private String gaTrackingId; // Google Analytics Tracking ID
+
+    private Double sampleFrequency = 100.0;
+
+    // GA Logger verbosity.
+    private static final Logger.LogLevel GA_LOG_VERBOSITY = Logger.LogLevel.VERBOSE;
 
     @Retention(value = RetentionPolicy.RUNTIME)
     @Target({ElementType.TYPE})
@@ -76,6 +82,8 @@ public enum EventTracker {
         // though they were dispatched.
         boolean dryRun = false; // TODO: this should be in some config file.
         GoogleAnalytics.getInstance(appContext).setDryRun(dryRun);
+        // Set Logger verbosity.
+        GoogleAnalytics.getInstance(appContext).getLogger().setLogLevel(GA_LOG_VERBOSITY);
     }
 
     /**
@@ -182,8 +190,10 @@ public enum EventTracker {
      */
     public void eventTrack(String eventCategory, String eventAction, String eventLabel) {
         MapBuilder builder = MapBuilder.createEvent(eventCategory, eventAction, eventLabel, null);
-        builder.set(USER_ID_TAG, analyticsId);
-        builder.set(Fields.customDimension(CUSTOM_ID_INDEX), analyticsId);
+        if (this.analyticsId != null && !this.analyticsId.isEmpty()) {
+            builder.set(USER_ID_TAG, analyticsId);
+            builder.set(Fields.customDimension(CUSTOM_ID_INDEX), analyticsId);
+        }
         EasyTracker.getInstance(appContext).send(builder.build());
     }
 
@@ -211,8 +221,10 @@ public enum EventTracker {
      */
     public void eventTrack(String eventCategory, String eventAction, String eventLabel, Long value) {
         MapBuilder builder = MapBuilder.createEvent(eventCategory, eventAction, eventLabel, value);
-        builder.set(USER_ID_TAG, analyticsId);
-        builder.set(Fields.customDimension(CUSTOM_ID_INDEX), analyticsId);
+        if (this.analyticsId != null && !this.analyticsId.isEmpty()) {
+            builder.set(USER_ID_TAG, analyticsId);
+            builder.set(Fields.customDimension(CUSTOM_ID_INDEX), analyticsId);
+        }
         EasyTracker.getInstance(appContext).send(builder.build());
     }
 
@@ -260,15 +272,19 @@ public enum EventTracker {
             for (String paramKey : parameters.keySet()) {
                 MapBuilder builder = MapBuilder.createEvent(eventCategory, eventAction,
                         Flurry.formatFlurryEvent(paramKey, parameters.get(paramKey)), null);
-                builder.set(USER_ID_TAG, analyticsId);
-                builder.set(Fields.customDimension(CUSTOM_ID_INDEX), analyticsId);
+                if (this.analyticsId != null && !this.analyticsId.isEmpty()) {
+                    builder.set(USER_ID_TAG, analyticsId);
+                    builder.set(Fields.customDimension(CUSTOM_ID_INDEX), analyticsId);
+                }
                 EasyTracker.getInstance(appContext).send(builder.build());
             }
 
         } else {
             MapBuilder builder = MapBuilder.createEvent(eventCategory, eventAction, null, null);
-            builder.set(USER_ID_TAG, analyticsId);
-            builder.set(Fields.customDimension(CUSTOM_ID_INDEX), analyticsId);
+            if (this.analyticsId != null && !this.analyticsId.isEmpty()) {
+                builder.set(USER_ID_TAG, analyticsId);
+                builder.set(Fields.customDimension(CUSTOM_ID_INDEX), analyticsId);
+            }
             EasyTracker.getInstance(appContext).send(builder.build());
         }
     }
@@ -294,10 +310,10 @@ public enum EventTracker {
      */
     public void trackTimings(String eventCategory, Long eventTimeValue, String eventName, String eventLabel) {
         MapBuilder builder = MapBuilder.createTiming(eventCategory, eventTimeValue, eventName, eventLabel);
-        builder.set(USER_ID_TAG, analyticsId);
-        builder.set(Fields.customDimension(CUSTOM_ID_INDEX), analyticsId);
-        if (this.analyticsId != null) {
+        if (this.analyticsId != null && !this.analyticsId.isEmpty()) {
             EasyTracker.getInstance(appContext).set(USER_ID_TAG, analyticsId);
+            builder.set(USER_ID_TAG, analyticsId);
+            builder.set(Fields.customDimension(CUSTOM_ID_INDEX), analyticsId);
         }
         EasyTracker.getInstance(appContext).send(builder.build());
     }
@@ -313,7 +329,7 @@ public enum EventTracker {
         if (className != null && !className.isEmpty()) {
             EasyTracker.getInstance(appContext).set(Fields.SCREEN_NAME, className);
             //assigned user id for user id view.
-            if (this.analyticsId != null) {
+            if (this.analyticsId != null && !this.analyticsId.isEmpty()) {
                 EasyTracker.getInstance(appContext).set(USER_ID_TAG, analyticsId);
             }
 
@@ -332,7 +348,7 @@ public enum EventTracker {
         if (className != null && !className.isEmpty()) {
             EasyTracker.getInstance(appContext).set(Fields.SCREEN_NAME, className);
             //assigned user id for user id view.
-            if (this.analyticsId != null) {
+            if (this.analyticsId != null && !this.analyticsId.isEmpty()) {
                 EasyTracker.getInstance(appContext).set(USER_ID_TAG, analyticsId);
             }
 

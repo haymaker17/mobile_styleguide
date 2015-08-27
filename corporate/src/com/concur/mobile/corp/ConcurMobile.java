@@ -59,7 +59,8 @@ public class ConcurMobile extends ConcurCore {
 	public String getGATrackingId() {
         boolean isDebug = BuildConfig.DEBUG;
         if(isDebug==Boolean.TRUE){
-            return getString(R.string.ga_trackingId_test);
+            //once we update to GA SDK v4 we will have multiple ids at this moment there is only id. so change ga_trackingid in analytics.xml for testing.
+            return getString(R.string.ga_trackingId);
         }else{
             return getString(R.string.ga_trackingId);
         }

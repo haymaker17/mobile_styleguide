@@ -36,12 +36,15 @@ import com.concur.mobile.core.service.ConcurService;
 import com.concur.mobile.core.service.CorpSsoQueryReply;
 import com.concur.mobile.core.service.CorpSsoQueryRequest;
 import com.concur.mobile.core.util.Const;
+import com.concur.mobile.core.util.EventTracker;
+import com.concur.mobile.core.util.Flurry;
 import com.concur.mobile.corp.ConcurMobile;
 import com.concur.mobile.platform.ui.common.util.ViewUtil;
 
 /**
  * An extension of <code>BaseActivity</code> supporting SSO-based corporate login.
  */
+@EventTracker.EventTrackerClassName(getClassName = Flurry.SCREEN_NAME_SSO)
 public class CompanyCodeLoginActivity extends BaseActivity {
 
     private static final String CLS_TAG = CompanyCodeLoginActivity.class.getSimpleName();
@@ -555,6 +558,10 @@ public class CompanyCodeLoginActivity extends BaseActivity {
          */
         @Override
         protected void handleFailure(Context context, Intent intent) {
+            EventTracker.INSTANCE.eventTrack(Flurry.CATEGORY_SIGN_IN, Flurry.ACTION_SIGN_IN_FAIL_METHOD,
+                    Flurry.LABEL_MANUAL, null);
+            EventTracker.INSTANCE.eventTrack(Flurry.CATEGORY_SIGN_IN, Flurry.ACTION_FAIL_CREDENTIAL_TYPE,
+                    Flurry.LABEL_LOGIN_USING_SSO, null);
             activity.showDialog(DIALOG_SSO_QUERY_NOT_FOUND);
         }
 
@@ -571,6 +578,8 @@ public class CompanyCodeLoginActivity extends BaseActivity {
             if (reply != null) {
                 if (reply.ssoEnabled) {
                     if (reply.ssoUrl != null) {
+                        EventTracker.INSTANCE.eventTrack(Flurry.CATEGORY_SIGN_IN, Flurry.ACTION_SUCCESS_CREDENTIAL_TYPE,
+                                Flurry.LABEL_LOGIN_USING_SSO, null);
                         // Launch the company sign-on activity.
                         Intent i = new Intent(activity, CompanySignOnActivity.class);
                         i.putExtra(ConcurMobile.FROM_NOTIFICATION, activity.fromNotification);

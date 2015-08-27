@@ -44,6 +44,7 @@ import com.concur.mobile.platform.ui.common.dialog.AlertDialogFragment;
 import com.concur.mobile.platform.ui.common.dialog.DialogFragmentFactory;
 import com.concur.mobile.platform.ui.common.dialog.ProgressDialogFragment;
 import com.concur.mobile.platform.ui.common.fragment.PlatformFragment;
+import com.concur.mobile.platform.ui.common.login.EmailLookupFragment;
 import com.concur.mobile.platform.ui.common.login.EmailPasswordLookupFragment;
 import com.concur.mobile.platform.ui.common.login.NewLoginPasswordFragment;
 import com.concur.mobile.platform.ui.common.util.ViewUtil;
@@ -51,9 +52,7 @@ import com.concur.platform.PlatformProperties;
 
 import org.apache.http.HttpStatus;
 
-import java.util.HashMap;
 import java.util.Locale;
-import java.util.Map;
 
 @EventTracker.EventTrackerClassName(getClassName = Flurry.SCREEN_NAME_EMAIL_PASSWORD)
 public class EmailPasswordLookupActivity extends BaseActivity implements IProgressBarListener, EmailPasswordLookupFragment.EmailLookupCallbacks, NewLoginPasswordFragment.LoginPasswordCallbacks {
@@ -120,6 +119,9 @@ public class EmailPasswordLookupActivity extends BaseActivity implements IProgre
         if (getIntent().getExtras() != null && getIntent().getExtras().containsKey(ConcurMobile.FROM_NOTIFICATION)) {
             fromNotification = getIntent().getExtras().getBoolean(ConcurMobile.FROM_NOTIFICATION);
         }
+
+        //reset expiration because if after upgrade user sees this page it means he will login trough normal process.
+        Home.forceExpirationHome=false;
 
         if (ConcurCore.userEntryAppTimer > 0L) {
             ConcurCore.userEntryAppTimer += System.currentTimeMillis();
@@ -232,108 +234,6 @@ public class EmailPasswordLookupActivity extends BaseActivity implements IProgre
         progressbarVisible = true;
 
     }
-
-    private void setAutoRequestReceiver() {
-        autoLoginReceiver = new BaseAsyncResultReceiver(new Handler());
-        autoLoginReceiver.setListener(new BaseAsyncRequestTask.AsyncReplyListener() {
-
-            /*
-             * (non-Javadoc)
-             *
-             * @see com.concur.mobile.base.service.BaseAsyncRequestTask.AsyncReplyListener#onRequestSuccess(android.os.Bundle)
-             */
-            public void onRequestSuccess(Bundle resultData) {
-
-                if (loginPasswordFragment.isDetached()) {
-                    return;
-                }
-
-                saveCredentials(userId, pinOrPassword, signInMethod);
-
-                Bundle extras = getIntent().getExtras();
-                Bundle emailLookupBundle = null;
-                if (extras != null && extras.containsKey(EmailLookUpRequestTask.EXTRA_LOGIN_BUNDLE)) {
-                    emailLookupBundle = extras.getBundle(EmailLookUpRequestTask.EXTRA_LOGIN_BUNDLE);
-                }
-                UserAndSessionInfoUtil.updateUserAndSessionInfo(ConcurCore.getContext(), emailLookupBundle);
-
-                // GA analytics
-                trackLoginOverall("Success");
-                if (signInMethod
-                        .equalsIgnoreCase(com.concur.mobile.platform.ui.common.util.Const.LOGIN_METHOD_MOBILE_PASSWORD)) {
-                    trackLoginSuccess(Flurry.PARAM_VALUE_LOGIN_USING_MOBILE_PASSWORD);
-                } else if (signInMethod
-                        .equalsIgnoreCase(com.concur.mobile.platform.ui.common.util.Const.LOGIN_METHOD_PASSWORD)) {
-                    trackLoginSuccess(Flurry.PARAM_VALUE_LOGIN_USING_PASSWORD);
-                }
-
-                // remove autologin if SSO user
-                if (signInMethod.equalsIgnoreCase(com.concur.mobile.platform.ui.common.util.Const.LOGIN_METHOD_SSO)) {
-                    Preferences.isHideAutoLogin(true);
-                } else {
-                    Preferences.isHideAutoLogin(false);
-                }
-
-                // close dialog
-                if (progressDialog != null) {
-                    progressDialog.dismiss();
-                }
-
-                // Go to homescreen ...
-                startHomeScreen(emailLookupBundle);
-
-                // Set this back to 0 so we don't record this attempt
-                // if the user goes back to try and register. We only
-                // want to record if the user failed to sign in.
-                Preferences.setTestDriveSigninTryAgainCount(0);
-
-                //reset attempts
-                noOfLoginAttempts = 0;
-            }
-
-            /*
-             * (non-Javadoc)
-             *
-             * @see com.concur.mobile.base.service.BaseAsyncRequestTask.AsyncReplyListener#onRequestFail(android.os.Bundle)
-             */
-            public void onRequestFail(Bundle resultData) {
-                noOfLoginAttempts++;
-                // close dialog
-                if (progressDialog != null) {
-                    progressDialog.dismiss();
-                }
-                if (noOfLoginAttempts > 2) {
-                    loginPasswordFragment.removeFragment();
-                    noOfLoginAttempts = 0;
-                    return;
-                }
-
-                // MOB-22674 - Show error dialog on failure.
-                DialogFragmentFactory.getAlertOkayInstance(getString(R.string.dlg_system_unavailable_title),
-                        getString(R.string.dlg_system_unavailable_message)).show(
-                        EmailPasswordLookupActivity.this.getSupportFragmentManager(), null);
-
-            }
-
-            /*
-             * (non-Javadoc)
-             *
-             * @see com.concur.mobile.base.service.BaseAsyncRequestTask.AsyncReplyListener#onRequestCancel(android.os.Bundle)
-             */
-            public void onRequestCancel(Bundle resultData) {
-            }
-
-            /*
-             * (non-Javadoc)
-             *
-             * @see com.concur.mobile.base.service.BaseAsyncRequestTask.AsyncReplyListener#cleanup()
-             */
-            public void cleanup() {
-            }
-
-        });
-    }
-
     public void hideProgressBar() {
         //View v = findViewById(R.id.progress_mask);
         //RelativeLayout progressBar = (RelativeLayout) v;
@@ -378,9 +278,8 @@ public class EmailPasswordLookupActivity extends BaseActivity implements IProgre
                 finish();
             }
         } else {
-            if (ConcurCore.userEntryAppTimer > 0L) {
-                ConcurCore.userEntryAppTimer += System.currentTimeMillis();
-            } else {
+            if(loginPasswordFragment==null || loginPasswordFragment.isDetached()){
+                ConcurCore.resetUserTimers();
                 ConcurCore.userEntryAppTimer = System.currentTimeMillis();
             }
         }
@@ -417,9 +316,20 @@ public class EmailPasswordLookupActivity extends BaseActivity implements IProgre
         if (signInMethod.equalsIgnoreCase(com.concur.mobile.platform.ui.common.util.Const.LOGIN_METHOD_PASSWORD)
                 || (signInMethod
                 .equalsIgnoreCase(com.concur.mobile.platform.ui.common.util.Const.LOGIN_METHOD_MOBILE_PASSWORD))) {
+            // GA
+            if (signInMethod.equalsIgnoreCase(com.concur.mobile.platform.ui.common.util.Const.LOGIN_METHOD_PASSWORD)) {// GA
+                EventTracker.INSTANCE.eventTrack(Flurry.CATEGORY_SIGN_IN, Flurry.ACTION_SUCCESS_CREDENTIAL_TYPE,
+                        Flurry.LABEL_LOGIN_USING_PASSWORD, null);
+            } else {
+                EventTracker.INSTANCE.eventTrack(Flurry.CATEGORY_SIGN_IN, Flurry.ACTION_SUCCESS_CREDENTIAL_TYPE,
+                        Flurry.LABEL_LOGIN_USING_PASSWORD, null);
+            }
             startLoginFragment(resultData);
         } else if (signInMethod.equalsIgnoreCase(com.concur.mobile.platform.ui.common.util.Const.LOGIN_METHOD_SSO)
                 && !TextUtils.isEmpty(ssoUrl)) {
+            // GA
+            EventTracker.INSTANCE.eventTrack(Flurry.CATEGORY_SIGN_IN, Flurry.ACTION_SUCCESS_CREDENTIAL_TYPE,
+                    Flurry.LABEL_LOGIN_USING_SSO, null);
             // Launch the company sign-on activity.
             Intent it = new Intent(this, CompanySignOnActivity.class);
             it.putExtra(EmailLookUpRequestTask.EXTRA_LOGIN_BUNDLE, loginBundle);
@@ -432,6 +342,7 @@ public class EmailPasswordLookupActivity extends BaseActivity implements IProgre
 
     @Override
     public void onEmailLookupRequestFail(Bundle resultData) {
+        trackEmailLookupFailure(Flurry.EVENT_OTHER_ERROR);
         // resultData contains the sign-in method. {Values: Password/MobilePassword/SSO} , and email id used in email lookup.
         startLoginFragment(resultData);
     }
@@ -447,7 +358,7 @@ public class EmailPasswordLookupActivity extends BaseActivity implements IProgre
     public void onLoginHelpButtonPressed(String signInMethod) {
         Intent i = new Intent(this, LoginHelp.class);
         i.putExtra(EmailLookUpRequestTask.EXTRA_SIGN_IN_METHOD_KEY, signInMethod);
-        startActivity(i);
+        startActivityForResult(i, LOGIN_PASSWORD_REQ_CODE);
     }
 
 
@@ -495,10 +406,17 @@ public class EmailPasswordLookupActivity extends BaseActivity implements IProgre
      * String)
      */
     public void trackEmailLookupFailure(String failureType) {
-        Map<String, String> params = new HashMap<String, String>();
-        params.put("Type", failureType);
+        if (failureType.equalsIgnoreCase(EmailLookupFragment.EmailLookupCallbacks.FAILURE_REASON_FORMAT)) {
+            EventTracker.INSTANCE.eventTrack(Flurry.CATEGORY_SIGN_IN, Flurry.ACTION_FAIL_REASON,
+                    Flurry.LABEL_BAD_CREDENTIALS, null);
+        } else if (failureType.equalsIgnoreCase(EmailLookupFragment.EmailLookupCallbacks.FAILURE_REASON_OFFLINE)) {
+            EventTracker.INSTANCE.eventTrack(Flurry.CATEGORY_SIGN_IN, Flurry.ACTION_FAIL_REASON,
+                    Flurry.LABEL_OFFLINE, null);
+        } else {
+            EventTracker.INSTANCE.eventTrack(Flurry.CATEGORY_SIGN_IN, Flurry.ACTION_FAIL_REASON,
+                    Flurry.LABEL_SERVER_ERROR, null);
+        }
 
-        EventTracker.INSTANCE.track(Flurry.CATEGORY_SIGN_IN, Flurry.EVENT_EMAIL_LOOKUP_FAILURE, params);
     }
 
     // ############### End of EmailLookupCallbacks implementations ############# //
@@ -646,6 +564,7 @@ public class EmailPasswordLookupActivity extends BaseActivity implements IProgre
      * )
      */
     public void onLoginRequestFail(Bundle resultData) {
+        //increase number of attempts
         noOfLoginAttempts++;
         if (progressDialog != null) {
             progressDialog.dismiss();
@@ -674,20 +593,20 @@ public class EmailPasswordLookupActivity extends BaseActivity implements IProgre
                     StringBuilder title = new StringBuilder(getText(R.string.login_403_error_title));
                     StringBuilder message = new StringBuilder(getText(R.string.login_403_error_message));
                     loginPasswordFragment.show403PasswordError(title, message);
-                    trackLoginStatus(false, Flurry.EVENT_FORBIDDEN);
+                    trackLoginStatus(false, Flurry.LABEL_FORBIDDEN);
                 } else if (httpStatus != null && httpStatus == HttpStatus.SC_INTERNAL_SERVER_ERROR) {
                     StringBuilder title = new StringBuilder(getText(R.string.login_500_error_title));
                     StringBuilder message = new StringBuilder(getText(R.string.login_500_error_message));
                     loginPasswordFragment.show500PasswordError(title, message);
-                    trackLoginStatus(false, Flurry.EVENT_SERVER_ERROR);
+                    trackLoginStatus(false, Flurry.LABEL_SERVER_ERROR);
                 } else if (httpStatus != null && httpStatus == HttpStatus.SC_UNAUTHORIZED) {
                     loginPasswordFragment.showInvalidPasswordError(new StringBuilder(
                             getText(R.string.login_password_or_pin_invalid)));
-                    trackLoginStatus(false, Flurry.EVENT_SERVER_ERROR);
+                    trackLoginStatus(false, Flurry.LABEL_SERVER_ERROR);
                 } else {
                     loginPasswordFragment.showInvalidPasswordError(new StringBuilder(
                             getText(R.string.login_password_or_pin_invalid)));
-                    trackLoginStatus(false, Flurry.EVENT_BAD_CREDENTIALS);
+                    trackLoginStatus(false, Flurry.LABEL_BAD_CREDENTIALS);
                 }
             }
         }
@@ -706,23 +625,6 @@ public class EmailPasswordLookupActivity extends BaseActivity implements IProgre
         String savedPin = Preferences.getPin(prefs, null);
 
         return (savedLoginId != null && savedPin != null);
-    }
-
-    /*
-     * (non-Javadoc)
-     *
-     * @see
-     * com.concur.mobile.platform.ui.common.login.LoginPasswordFragment.LoginPasswordCallbacks#trackLoginFailure(java.lang.String)
-     */
-    public void trackLoginStatus(boolean success, String message) {
-        if (success) {
-            //trackLoginSuccess(message);
-        } else {
-            // Track failure.
-            Map<String, String> params = new HashMap<String, String>();
-            params.put("Type", message);
-            EventTracker.INSTANCE.track(Flurry.CATEGORY_SIGN_IN, Flurry.EVENT_NAME_FAILURE, params);
-        }
     }
 
     /*
@@ -810,7 +712,7 @@ public class EmailPasswordLookupActivity extends BaseActivity implements IProgre
         // Clear out the Web View cache and cookies.
         com.concur.mobile.core.util.ViewUtil.clearWebViewCookies(this);
 
-        trackLoginStatus(false, Flurry.EVENT_REMOTE_WIPE);
+        trackLoginStatus(false, Flurry.LABEL_REMOTE_WIPE);
     }
 
     private void startHomeScreen(Bundle emailLookup) {
@@ -841,28 +743,8 @@ public class EmailPasswordLookupActivity extends BaseActivity implements IProgre
     }
 
     private void gotoHome(Bundle emailLookup) {
-        Intent i = null;
-        i = new Intent(this, Home.class);
-        if (ConcurCore.userEntryAppTimer > 0 && emailLookup != null) {
-            ConcurCore.userSuccessfulLoginTimer = System.currentTimeMillis();
-            long totalWaitTime = ConcurCore.userSuccessfulLoginTimer - ConcurCore.userEntryAppTimer;
-            String signInMethod = emailLookup.getString(EmailLookUpRequestTask.EXTRA_SIGN_IN_METHOD_KEY);
-            // Log to Google Analytics
-            if (totalWaitTime <= 0) {
-                totalWaitTime = 0;
-            }
-
-            if (signInMethod.equalsIgnoreCase(com.concur.mobile.platform.ui.common.util.Const.LOGIN_METHOD_SSO)) {
-                signInMethod = Flurry.LABEL_LOGIN_USING_SSO;
-            } else if (signInMethod.equalsIgnoreCase(com.concur.mobile.platform.ui.common.util.Const.LOGIN_METHOD_MOBILE_PASSWORD)) {
-                signInMethod = Flurry.LABEL_LOGIN_USING_MOBILE_PASSWORD;
-            } else {
-                signInMethod = Flurry.LABEL_LOGIN_USING_PASSWORD;
-            }
-            EventTracker.INSTANCE.trackTimings(Flurry.CATEGORY_SIGN_IN, totalWaitTime, signInMethod, null);
-
-            ConcurCore.resetUserTimers();
-        }
+        Intent i=new Intent(this, Home.class);
+        logUserTimings(emailLookup);
         startActivity(i);
         this.setResult(Activity.RESULT_OK);
         this.finish();
@@ -888,42 +770,186 @@ public class EmailPasswordLookupActivity extends BaseActivity implements IProgre
         }
     }
 
-    private static void trackLoginSuccess(String credType) {
-
-        // Track the login success
-        Map<String, String> params = new HashMap<String, String>();
-        params.put("Sign In", credType);
-
-        String paramValue = Flurry.PARAM_VALUE_CTE;
-
-        Context ctx = ConcurCore.getContext();
-
-        if (com.concur.mobile.core.util.ViewUtil.isBreezeUser(ctx)) {
-            paramValue = Flurry.PARAM_VALUE_BREEZE;
-        } else if (!com.concur.mobile.core.util.ViewUtil.isExpenser(ctx)
-                && !com.concur.mobile.core.util.ViewUtil.isTravelUser(ctx)
-                && com.concur.mobile.core.util.ViewUtil.isExpenseApprover(ctx)) {
-            paramValue = "Approval Only";
-        } else if (!com.concur.mobile.core.util.ViewUtil.isTravelUser(ctx)) {
-            paramValue = Flurry.PARAM_VALUE_EXPENSE_ONLY;
-        } else if (!com.concur.mobile.core.util.ViewUtil.isExpenser(ctx)) {
-            paramValue = Flurry.PARAM_VALUE_TRAVEL_ONLY;
+    private static void trackLoginSuccess(String signInMethod) {
+        EventTracker.INSTANCE.eventTrack(Flurry.CATEGORY_SIGN_IN, Flurry.ACTION_SIGN_IN_SUCCESS_METHOD,
+                Flurry.LABEL_MANUAL, null);
+        if (signInMethod.equalsIgnoreCase(com.concur.mobile.platform.ui.common.util.Const.LOGIN_METHOD_SSO)) {
+            EventTracker.INSTANCE.eventTrack(Flurry.CATEGORY_SIGN_IN, Flurry.ACTION_SUCCESS_CREDENTIAL_TYPE,
+                    Flurry.LABEL_LOGIN_USING_SSO, null);
+        } else if (signInMethod.equalsIgnoreCase(com.concur.mobile.platform.ui.common.util.Const.LOGIN_METHOD_MOBILE_PASSWORD)) {
+            EventTracker.INSTANCE.eventTrack(Flurry.CATEGORY_SIGN_IN, Flurry.ACTION_SUCCESS_CREDENTIAL_TYPE,
+                    Flurry.LABEL_LOGIN_USING_MOBILE_PASSWORD, null);
+        } else {
+            EventTracker.INSTANCE.eventTrack(Flurry.CATEGORY_SIGN_IN, Flurry.ACTION_SUCCESS_CREDENTIAL_TYPE,
+                    Flurry.LABEL_LOGIN_USING_PASSWORD, null);
         }
-        params.put("User Type", paramValue);
-
-        EventTracker.INSTANCE.track(Flurry.CATEGORY_SIGN_IN, Flurry.EVENT_NAME_SUCCESS, params);
     }
 
-    private static void trackLoginOverall(String finalState) {
 
-        Map<String, String> params = new HashMap<String, String>();
-        params.put("Final", finalState);
-        params.put(Flurry.EVENT_NAME_TYPE, Flurry.PARAM_VALUE_AUTO_LOGIN);
+    private void logUserTimings(Bundle emailLookup){
+        if (ConcurCore.userEntryAppTimer > 0) {
+            ConcurCore.userSuccessfulLoginTimer = System.currentTimeMillis();
+            long totalWaitTime = ConcurCore.userSuccessfulLoginTimer - ConcurCore.userEntryAppTimer;
+            if(emailLookup!=null){
+                signInMethod = emailLookup.getString(EmailLookUpRequestTask.EXTRA_SIGN_IN_METHOD_KEY);
+            }
+            // Log to Google Analytics
+            if (totalWaitTime <= 0) {
+                totalWaitTime = 0;
+            }
 
-        EventTracker.INSTANCE.track(Flurry.CATEGORY_SIGN_IN, Flurry.EVENT_NAME_OVERALL, params);
+            if (signInMethod.equalsIgnoreCase(com.concur.mobile.platform.ui.common.util.Const.LOGIN_METHOD_SSO)) {
+                signInMethod=Flurry.LABEL_LOGIN_USING_SSO;
+            } else if (signInMethod.equalsIgnoreCase(com.concur.mobile.platform.ui.common.util.Const.LOGIN_METHOD_MOBILE_PASSWORD)) {
+                signInMethod=Flurry.LABEL_LOGIN_USING_MOBILE_PASSWORD;
+            } else {
+                signInMethod=Flurry.LABEL_LOGIN_USING_PASSWORD;
+            }
 
+            EventTracker.INSTANCE.trackTimings(Flurry.CATEGORY_SIGN_IN, totalWaitTime,signInMethod, null);
+            ConcurCore.resetUserTimers();
+        }
     }
 
+    /*
+     * (non-Javadoc)
+     *
+     * @see
+     * com.concur.mobile.platform.ui.common.login.LoginPasswordFragment.LoginPasswordCallbacks#trackLoginFailure(java.lang.String)
+     */
+    public void trackLoginStatus(boolean success, String method) {
+        if (success) {
+            trackLoginSuccess(method);
+        } else {
+
+            EventTracker.INSTANCE.eventTrack(Flurry.CATEGORY_SIGN_IN, Flurry.ACTION_SIGN_IN_FAIL_METHOD,
+                    Flurry.LABEL_MANUAL, null);
+
+            if (signInMethod.equalsIgnoreCase(com.concur.mobile.platform.ui.common.util.Const.LOGIN_METHOD_SSO)) {
+                EventTracker.INSTANCE.eventTrack(Flurry.CATEGORY_SIGN_IN, Flurry.ACTION_FAIL_CREDENTIAL_TYPE,
+                        Flurry.LABEL_LOGIN_USING_SSO, null);
+            } else if (signInMethod.equalsIgnoreCase(com.concur.mobile.platform.ui.common.util.Const.LOGIN_METHOD_MOBILE_PASSWORD)) {
+                EventTracker.INSTANCE.eventTrack(Flurry.CATEGORY_SIGN_IN, Flurry.ACTION_FAIL_CREDENTIAL_TYPE,
+                        Flurry.LABEL_LOGIN_USING_MOBILE_PASSWORD, null);
+            } else {
+                EventTracker.INSTANCE.eventTrack(Flurry.CATEGORY_SIGN_IN, Flurry.ACTION_FAIL_CREDENTIAL_TYPE,
+                        Flurry.LABEL_LOGIN_USING_PASSWORD, null);
+            }
+
+            if (method.equalsIgnoreCase(Flurry.LABEL_REMOTE_WIPE)) {
+                EventTracker.INSTANCE.eventTrack(Flurry.CATEGORY_SIGN_IN, Flurry.ACTION_FAIL_REASON,
+                        Flurry.LABEL_REMOTE_WIPE, null);
+            } else if (method.equalsIgnoreCase(Flurry.LABEL_FORBIDDEN)) {
+                EventTracker.INSTANCE.eventTrack(Flurry.CATEGORY_SIGN_IN, Flurry.ACTION_FAIL_REASON,
+                        Flurry.LABEL_FORBIDDEN, null);
+            } else if (method.equalsIgnoreCase(Flurry.LABEL_BAD_CREDENTIALS)) {
+                EventTracker.INSTANCE.eventTrack(Flurry.CATEGORY_SIGN_IN, Flurry.ACTION_FAIL_REASON,
+                        Flurry.LABEL_BAD_CREDENTIALS, null);
+            } else {
+                EventTracker.INSTANCE.eventTrack(Flurry.CATEGORY_SIGN_IN, Flurry.ACTION_FAIL_REASON,
+                        Flurry.LABEL_SERVER_ERROR, null);
+            }
+
+        }
+    }
+
+
+    private void setAutoRequestReceiver() {
+        autoLoginReceiver = new BaseAsyncResultReceiver(new Handler());
+        autoLoginReceiver.setListener(new BaseAsyncRequestTask.AsyncReplyListener() {
+
+            /*
+             * (non-Javadoc)
+             *
+             * @see com.concur.mobile.base.service.BaseAsyncRequestTask.AsyncReplyListener#onRequestSuccess(android.os.Bundle)
+             */
+            public void onRequestSuccess(Bundle resultData) {
+
+                if (loginPasswordFragment.isDetached()) {
+                    return;
+                }
+
+                saveCredentials(userId, pinOrPassword, signInMethod);
+
+                Bundle extras = getIntent().getExtras();
+                Bundle emailLookupBundle = null;
+                if (extras != null && extras.containsKey(EmailLookUpRequestTask.EXTRA_LOGIN_BUNDLE)) {
+                    emailLookupBundle = extras.getBundle(EmailLookUpRequestTask.EXTRA_LOGIN_BUNDLE);
+                }
+                UserAndSessionInfoUtil.updateUserAndSessionInfo(ConcurCore.getContext(), emailLookupBundle);
+
+                // GA analytics
+                trackLoginStatus(true, signInMethod);
+
+                // remove autologin if SSO user
+                if (signInMethod.equalsIgnoreCase(com.concur.mobile.platform.ui.common.util.Const.LOGIN_METHOD_SSO)) {
+                    Preferences.isHideAutoLogin(true);
+                } else {
+                    Preferences.isHideAutoLogin(false);
+                }
+
+                // close dialog
+                if (progressDialog != null) {
+                    progressDialog.dismiss();
+                }
+
+                // Go to homescreen ...
+                startHomeScreen(emailLookupBundle);
+
+                // Set this back to 0 so we don't record this attempt
+                // if the user goes back to try and register. We only
+                // want to record if the user failed to sign in.
+                Preferences.setTestDriveSigninTryAgainCount(0);
+
+                //reset attempts
+                noOfLoginAttempts = 0;
+            }
+
+            /*
+             * (non-Javadoc)
+             *
+             * @see com.concur.mobile.base.service.BaseAsyncRequestTask.AsyncReplyListener#onRequestFail(android.os.Bundle)
+             */
+            public void onRequestFail(Bundle resultData) {
+                // GA analytics
+                trackLoginStatus(false, signInMethod);
+                //increase number of attempts
+                noOfLoginAttempts++;
+                // close dialog
+                if (progressDialog != null) {
+                    progressDialog.dismiss();
+                }
+                if (noOfLoginAttempts > 2) {
+                    loginPasswordFragment.removeFragment();
+                    noOfLoginAttempts = 0;
+                    return;
+                }
+
+                // MOB-22674 - Show error dialog on failure.
+                DialogFragmentFactory.getAlertOkayInstance(getString(R.string.dlg_system_unavailable_title),
+                        getString(R.string.dlg_system_unavailable_message)).show(
+                        EmailPasswordLookupActivity.this.getSupportFragmentManager(), null);
+
+            }
+
+            /*
+             * (non-Javadoc)
+             *
+             * @see com.concur.mobile.base.service.BaseAsyncRequestTask.AsyncReplyListener#onRequestCancel(android.os.Bundle)
+             */
+            public void onRequestCancel(Bundle resultData) {
+            }
+
+            /*
+             * (non-Javadoc)
+             *
+             * @see com.concur.mobile.base.service.BaseAsyncRequestTask.AsyncReplyListener#cleanup()
+             */
+            public void cleanup() {
+            }
+
+        });
+    }
     /*
      * (non-Javadoc)
      * @see android.support.v4.app.Fragment#onPause()
