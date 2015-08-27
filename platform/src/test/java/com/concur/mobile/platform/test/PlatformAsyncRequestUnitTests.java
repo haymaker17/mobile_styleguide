@@ -15,6 +15,9 @@ import com.concur.mobile.platform.expense.list.test.ExpenseListRequestTaskTest;
 import com.concur.mobile.platform.expense.list.test.SaveMobileEntryRequestTaskTest;
 import com.concur.mobile.platform.expense.receipt.ocr.test.StartOCRRequestTaskTest;
 import com.concur.mobile.platform.expense.receipt.ocr.test.StopOCRRequestTaskTest;
+import com.concur.mobile.platform.expense.smartexpense.RemoveSmartExpenseRequestTaskTest;
+import com.concur.mobile.platform.expense.smartexpense.RemoveSmartExpensesRequestTask;
+import com.concur.mobile.platform.expense.smartexpense.SaveSmartExpenseRequestTaskTest;
 import com.concur.mobile.platform.expense.smartexpense.list.test.SmartExpenseListRequestTaskTest;
 import com.concur.mobile.platform.password.reset.test.RequestPasswordResetRequestTaskTest;
 import com.concur.mobile.platform.password.reset.test.ResetUserPasswordRequestTaskTest;
@@ -724,6 +727,42 @@ public class PlatformAsyncRequestUnitTests extends PlatformAsyncRequestTestUtil 
         // Initialize any session/token information.
         PlatformProperties.setAccessToken(null);
         PlatformProperties.setSessionId(null);
+    }
+
+    @Test
+    public void doSaveSmartExpense() throws Exception {
+        SaveSmartExpenseRequestTaskTest saveTest = new SaveSmartExpenseRequestTaskTest(useMockServer());
+        doPlatformTest(saveTest);
+    }
+
+    @Test
+    public void doRemoveSmartExpense() throws Exception {
+        RemoveSmartExpenseRequestTaskTest removeTest = new RemoveSmartExpenseRequestTaskTest(useMockServer());
+        doPlatformTest(removeTest);
+    }
+
+    protected void doPlatformTest(AsyncRequestTest test) throws Exception {
+
+        if (test == null) {
+            throw new IllegalArgumentException("Your test should be valid");
+        }
+
+        // Init the login request
+        doPinPasswordLogin();
+
+        // If using the mock server, then
+        if (useMockServer()) {
+
+            // Init mock server.
+            initMockServer(new MockMWSServer());
+
+            // Set the mock server instance on the test.
+            test.setMockServer(server);
+
+        }
+
+        // Run the test.
+        test.doTest();
     }
 
 }

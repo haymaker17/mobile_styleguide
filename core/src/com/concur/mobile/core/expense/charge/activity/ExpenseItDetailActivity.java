@@ -494,7 +494,7 @@ public class ExpenseItDetailActivity extends BaseActivity
         if (mGetExpenseItReceiptImageUrlReceiver != null) {
             mGetExpenseItReceiptImageUrlReceiver.setListener(null);
             if (retainer != null) {
-                retainer.put(EXPENSEIT_RECEIPT_IMAGE_URL_RECEIVER, mGetExpenseItReceiptImageUrlListener);
+                retainer.put(EXPENSEIT_RECEIPT_IMAGE_URL_RECEIVER, mGetExpenseItReceiptImageUrlReceiver);
             }
         }
 

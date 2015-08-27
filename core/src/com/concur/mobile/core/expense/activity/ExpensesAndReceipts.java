@@ -88,8 +88,13 @@ public class ExpensesAndReceipts extends BaseActivity implements ExpensesCallbac
     private static final String BUNDLE_EXPENSE_LIST_REQUEST_START_TIME = "expense.list.request" +
             ".start.time";
 
+    // Bundle key for string/restoring metrics timing.
+    private static final String METRICS_TIMING_KEY = "METRICS_TIMING_KEY";
+
     // Holds the time in milliseconds when the last expenseListRequest was sent.
     private long expenseListRequestStartTime = 0L;
+
+    private long metricsTiming = 0L;
 
     /**
      * The AsyncTask resulting from the the MWS call to ReceiptList.
@@ -534,6 +539,11 @@ public class ExpensesAndReceipts extends BaseActivity implements ExpensesCallbac
             retainer.put(GetExpenseItExpenseListAsyncTask.GET_EXPENSEIT_EXPENSES_LIST, currentExpenseItResponse);
         }
 
+        // Retain the metrics timing for cancel/replace.
+        if (metricsTiming != 0L && retainer != null) {
+            retainer.put(METRICS_TIMING_KEY, metricsTiming);
+        }
+
         //stop the refresh timer is on
         endBackgroundRefresh();
     }
@@ -594,6 +604,11 @@ public class ExpensesAndReceipts extends BaseActivity implements ExpensesCallbac
             if(retainer.contains(GetExpenseItExpenseListAsyncTask.GET_EXPENSEIT_EXPENSES_LIST)) {
                 currentExpenseItResponse = (ExpenseItPostReceiptResponse)
                         retainer.get(GetExpenseItExpenseListAsyncTask.GET_EXPENSEIT_EXPENSES_LIST);
+            }
+
+            // Recover the last stop/replace metrics timing.
+            if (retainer.contains(METRICS_TIMING_KEY)) {
+                metricsTiming = (long) retainer.get(METRICS_TIMING_KEY);
             }
         }
 
@@ -947,7 +962,9 @@ public class ExpensesAndReceipts extends BaseActivity implements ExpensesCallbac
                         0, uploadExpenseItReceiptReceiver, image);
 
                 postExpenseItReceiptAsyncTask.execute();
-                // TODO: ANALYTICS - Log time it takes to upload.
+
+                metricsTiming = System.currentTimeMillis();
+
             }
         }).start();
     }
@@ -1225,23 +1242,25 @@ public class ExpensesAndReceipts extends BaseActivity implements ExpensesCallbac
                     ErrorResponse error = receiptResponse.getExpenses()[0].getExpenseError();
                     if (error != null && error.isError()) {
                         Toast.makeText(getBaseContext(), String.format(
-                            "Failed processing image with the following error %s (%s)",
-                            error.getErrorMessage(), error.getErrorCode()), Toast.LENGTH_LONG).show();
-                            // TODO: ANALYTICS - Track ExpenseIt image upload failure.
+                                "Failed processing image with the following error %s (%s)",
+                                error.getErrorMessage(), error.getErrorCode()), Toast.LENGTH_LONG).show();
+                        // TODO: ANALYTICS - Track ExpenseIt image upload failure.
                         return;
                     } else {
 
-                    //Make the call to get the new List
-                    doGetExpenseItList(true);
+                        //Make the call to get the new List
+                        doGetExpenseItList(true);
 
-                    //And start the background refresh
-                    if (Preferences.isExpenseItUser() && Preferences.isUserLoggedInExpenseIt()) {
-                        startBackgroundRefresh();
-                    }
+                        //And start the background refresh
+                        if (Preferences.isExpenseItUser() && Preferences.isUserLoggedInExpenseIt()) {
+                            startBackgroundRefresh();
+                        }
 
-                    // TODO: ANALYTICS - Track ExpenseIt image upload success.
+                        // Log the event.
+                        EventTracker.INSTANCE.trackTimings("Expense-ExpenseIt",
+                                System.currentTimeMillis() - metricsTiming, "Upload Receipt", "");
 
-                    return;
+                        return;
                     }
                 }
             }
@@ -1273,6 +1292,7 @@ public class ExpensesAndReceipts extends BaseActivity implements ExpensesCallbac
         @Override
         public void cleanup() {
             uploadExpenseItReceiptReceiver = null;
+            metricsTiming = 0L;
         }
     }
 }
