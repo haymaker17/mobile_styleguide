@@ -6,6 +6,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.CheckBox;
+import android.widget.CompoundButton;
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -17,6 +18,8 @@ import com.concur.mobile.platform.expenseit.ExpenseItReceipt;
 import com.concur.mobile.platform.util.AnimationUtil;
 
 import java.util.Calendar;
+import java.util.HashMap;
+import java.util.HashSet;
 
 /**
  * An abstract extension of <code>ListItem</code> for the purposes of providing an expense list item view.
@@ -46,6 +49,16 @@ public class ExpenseItListItem extends ExpenseListItem {
      */
     public ExpenseItListItem(Expense expense, int listItemViewType) {
         super(expense, listItemViewType);
+        expenseItReceipt = expense.getExpenseItReceipt();
+        rubiconErrorCode = expenseItReceipt.getErrorCode(); // necessary now?
+        processingFailed = expenseItReceipt.isInErrorState();
+    }
+
+    public ExpenseItListItem(Expense expense, HashMap<Expense, CompoundButton> expenseButtonMap,
+                             HashSet<Expense> checkedExpenses, CompoundButton
+                                     .OnCheckedChangeListener checkChangeListener, int
+                                     listItemViewType){
+        super(expense, expenseButtonMap, checkedExpenses, checkChangeListener, listItemViewType);
         expenseItReceipt = expense.getExpenseItReceipt();
         rubiconErrorCode = expenseItReceipt.getErrorCode(); // necessary now?
         processingFailed = expenseItReceipt.isInErrorState();
@@ -131,7 +144,15 @@ public class ExpenseItListItem extends ExpenseListItem {
             // Set checkbox to invisible for now (to maintain spacing)
             CheckBox checkBox = (CheckBox) expenseView.findViewById(R.id.expense_check);
             if (checkBox != null) {
-                checkBox.setVisibility(View.INVISIBLE);
+                //checkBox.setVisibility(View.INVISIBLE);
+
+                // Add to the button/expense mapping.
+                expenseButtonMap.put(expense, checkBox);
+                // Set the on check change listener.
+                if (checkedExpenses != null) {
+                    checkBox.setChecked(checkedExpenses.contains(expense));
+                }
+                checkBox.setOnCheckedChangeListener(checkChangeListener);
             } else {
                 Log.e(Const.LOG_TAG, CLS_TAG + ".buildView: can't locate the checkbox!");
             }

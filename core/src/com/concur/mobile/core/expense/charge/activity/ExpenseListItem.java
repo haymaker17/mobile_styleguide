@@ -48,7 +48,7 @@ public abstract class ExpenseListItem extends ListItem {
      * @param expense
      * @param listItemViewType
      */
-    protected ExpenseListItem(Expense expense, int listItemViewType) {
+    protected ExpenseListItem(Expense expense,  int listItemViewType) {
         this(expense, null, null, null, listItemViewType);
     }
 

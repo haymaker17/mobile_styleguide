@@ -18,7 +18,7 @@
         android:layout_gravity="center"
         android:focusable="false"
         android:focusableInTouchMode="false"
-        android:visibility="invisible"/>
+        android:visibility="visible"/>
 
     <LinearLayout
         android:layout_width="match_parent"

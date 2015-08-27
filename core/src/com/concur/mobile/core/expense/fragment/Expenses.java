@@ -12,6 +12,7 @@ import android.content.Intent;
 import android.content.IntentFilter;
 import android.database.Cursor;
 import android.os.Bundle;
+import android.os.Handler;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentActivity;
 import android.util.Log;
@@ -32,6 +33,8 @@ import android.widget.ListView;
 import android.widget.ViewFlipper;
 
 import com.concur.core.R;
+import com.concur.mobile.base.service.BaseAsyncRequestTask;
+import com.concur.mobile.base.service.BaseAsyncResultReceiver;
 import com.concur.mobile.core.ConcurCore;
 import com.concur.mobile.core.activity.Preferences;
 import com.concur.mobile.core.dialog.AlertDialogFragment;
@@ -85,6 +88,8 @@ import com.concur.mobile.core.util.ViewUtil;
 import com.concur.mobile.core.view.HeaderListItem;
 import com.concur.mobile.core.view.ListItem;
 import com.concur.mobile.core.view.ListItemAdapter;
+import com.concur.mobile.platform.expense.smartexpense.RemoveSmartExpensesRequestTask;
+import com.concur.mobile.platform.expense.smartexpense.SmartExpense;
 import com.concur.mobile.platform.expenseit.ErrorResponse;
 import com.concur.mobile.platform.expenseit.ExpenseItParseCode;
 import com.concur.mobile.platform.expenseit.ExpenseItReceipt;
@@ -399,6 +404,34 @@ public class Expenses extends BaseFragment implements INetworkActivityListener {
      * Contains whether the expenses being added to a report contain at least one receipt.
      */
     boolean flurryHasReceipt = false;
+
+    private RemoveSmartExpensesRequestTask mRemoveSmartExpensesRequestTask = null;
+    private static String EXPENSEIT_DELETE_SMART_EXPENSE_RECEIVER =
+            "EXPENSEIT_DELETE_SMART_EXPENSE_RECEIVER";
+    private BaseAsyncResultReceiver mRemoveSmartExpenseReceiver;
+
+    protected BaseAsyncRequestTask.AsyncReplyListener mRemoveSmartExpenseAsyncReplyListener = new
+            BaseAsyncRequestTask.AsyncReplyListener() {
+                @Override
+                public void onRequestSuccess(Bundle resultData) {
+
+                }
+
+                @Override
+                public void onRequestFail(Bundle resultData) {
+
+                }
+
+                @Override
+                public void onRequestCancel(Bundle resultData) {
+
+                }
+
+                @Override
+                public void cleanup() {
+
+                }
+            };
 
     private ExpensesCallback expensesCallback;
 
@@ -1338,6 +1371,8 @@ public class Expenses extends BaseFragment implements INetworkActivityListener {
         final ArrayList<String> cctKeys = new ArrayList<String>();
         // List of selected cash transactions.
         final ArrayList<MobileEntry> mobileEntries = new ArrayList<MobileEntry>();
+        // List of selected ExpenseIt transactions.
+        final ArrayList<ExpenseItReceipt> expenseItReceipts = new ArrayList<ExpenseItReceipt>();
         Iterator<Expense> selExpIter = checkedExpenses.iterator();
         while (selExpIter.hasNext()) {
             Expense exp = selExpIter.next();
@@ -1370,6 +1405,9 @@ public class Expenses extends BaseFragment implements INetworkActivityListener {
                 case RECEIPT_CAPTURE:
                     // deletion from mobile is not supported.
                     break;
+                case EXPENSEIT_NOT_DONE:
+                    expenseItReceipts.add(exp.getExpenseItReceipt());
+                    break;
             }
         }
 
@@ -1388,6 +1426,8 @@ public class Expenses extends BaseFragment implements INetworkActivityListener {
             hasCardCharges = (checkedExpenses != null && checkedExpenses.size() > 0);
         }
 
+        boolean hasExpenseItReceipts = expenseItReceipts != null && expenseItReceipts.size() > 0;
+
         /*
          * The dialog message and title will vary depending on what combination of card and cash expenses are to be deleted.
          * Currently only card charges are checked for quantity to produce a string from plurals because we are not supporting
@@ -1396,7 +1436,11 @@ public class Expenses extends BaseFragment implements INetworkActivityListener {
         String dialogMessage;
         String dialogTitle;
 
-        if (hasCashExpenses & !hasCardCharges) {
+        if (hasExpenseItReceipts) {
+            dialogMessage = getResources().getQuantityString(R.plurals.dlg_expense_remove_confirm_message,
+                    cashExpensesSelected).toString();
+            dialogTitle = getString(R.string.dlg_expense_confirm_report_delete_title);
+        } else if (hasCashExpenses & !hasCardCharges) {
             dialogMessage = getResources().getQuantityString(R.plurals.dlg_expense_remove_confirm_message,
                     cashExpensesSelected).toString();
             dialogTitle = getString(R.string.dlg_expense_confirm_report_delete_title);
@@ -1498,6 +1542,22 @@ public class Expenses extends BaseFragment implements INetworkActivityListener {
                             }
                         }
                     }, null, null, null).show(getFragmentManager(), null);
+        } else if (hasExpenseItReceipts) {
+            SmartExpense smartExpense;
+            ArrayList<SmartExpense> smartExpenseArrayList;
+            if (!expenseItReceipts.isEmpty()) {
+                EventTracker.INSTANCE.eventTrack(Flurry.CATEGORY_EXPENSE_UNMANAGED_EXPENSEIT,
+                        Flurry.ACTION_EDIT_RECEIPT, Flurry.LABEL_DELETE_RECEIPT);
+
+                smartExpenseArrayList = new ArrayList<>();
+                for (ExpenseItReceipt receipt : expenseItReceipts) {
+                    smartExpense = new SmartExpense();
+                    smartExpense.setSmartExpenseId(String.valueOf(receipt.getId()));
+                    smartExpenseArrayList.add(smartExpense);
+                }
+
+                doRemoveSmartExpenseAsyncTask(smartExpenseArrayList);
+            }
         } else {
             // There are only card charges here, so throw up an "ok" alert dialog.
             DialogFragmentFactory.getAlertOkayInstance(dialogTitle, dialogMessage).show(getFragmentManager(), null);
@@ -1748,6 +1808,21 @@ public class Expenses extends BaseFragment implements INetworkActivityListener {
             slideButtonBar(onScreen);
             barVisible = onScreen;
         }
+    }
+
+    private void doRemoveSmartExpenseAsyncTask(ArrayList<SmartExpense> arySmartExpenses) {
+        if (mRemoveSmartExpenseReceiver == null) {
+            mRemoveSmartExpenseReceiver = new BaseAsyncResultReceiver(new Handler());
+            mRemoveSmartExpenseReceiver.setListener(mRemoveSmartExpenseAsyncReplyListener);
+        }
+
+        if (mRemoveSmartExpensesRequestTask != null) {
+            mRemoveSmartExpenseReceiver.setListener(mRemoveSmartExpenseAsyncReplyListener);
+        }
+
+        mRemoveSmartExpensesRequestTask = new RemoveSmartExpensesRequestTask
+                (getConcurCore().getBaseContext(), 1, mRemoveSmartExpenseReceiver, arySmartExpenses);
+        mRemoveSmartExpensesRequestTask.execute();
     }
 
     /**
@@ -2494,8 +2569,8 @@ public class Expenses extends BaseFragment implements INetworkActivityListener {
                         //This is a temporary stage until that item which succeeded OCRing is moved.
                         //However, in the UI we want to show the item as still analyzing until this export process has finished.
                         if (expIt.getParsingStatusCode() == ExpenseItParseCode.PARSED.value() &&
-                            expIt.getEta() == 0 &&
-                            expIt.getErrorCode() == ErrorResponse.ERROR_CODE_NO_ERROR) {
+                                expIt.getEta() == 0 &&
+                                expIt.getErrorCode() == ErrorResponse.ERROR_CODE_NO_ERROR) {
                             expIt.setParsingStatusCode(ExpenseItParseCode.UNPARSED.value());
                             expIt.setEta(30 /*secs*/);
                         }
@@ -2788,7 +2863,9 @@ public class Expenses extends BaseFragment implements INetworkActivityListener {
                         break;
                     }
                     case EXPENSEIT_NOT_DONE: {
-                        ExpenseItListItem listItem = new ExpenseItListItem(expense, EXPENSE_VIEW_TYPE);
+                        ExpenseItListItem listItem = new ExpenseItListItem(expense, expenseButtonMap, checkedExpenses,
+                                onCheckChange, EXPENSE_VIEW_TYPE);
+
                         Calendar transDate = listItem.getTransactionDate();
                         if ((transDate != null)
                                 && (curYear == -1 || curYear != transDate.get(Calendar.YEAR) || curMonth != transDate

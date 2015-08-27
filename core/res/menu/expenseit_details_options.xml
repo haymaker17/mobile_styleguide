@@ -17,8 +17,4 @@
           android:visible="false"
           yourapp:showAsAction="never"/>
 
-    <item android:id="@+id/delete_expenseit_receipt"
-          android:title="@string/expenseit_delete_receipt_button"
-          yourapp:showAsAction="never"/>
-
 </menu>

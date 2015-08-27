@@ -1,7 +1,6 @@
 package com.concur.mobile.core.expense.charge.activity;
 
 import android.app.Activity;
-import android.app.AlertDialog;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
@@ -37,8 +36,6 @@ import com.concur.mobile.core.util.EventTracker;
 import com.concur.mobile.core.util.Flurry;
 import com.concur.mobile.core.util.ViewUtil;
 import com.concur.mobile.platform.expense.provider.ExpenseUtil;
-import com.concur.mobile.platform.expense.smartexpense.RemoveSmartExpensesRequestTask;
-import com.concur.mobile.platform.expense.smartexpense.SmartExpense;
 import com.concur.mobile.platform.expenseit.DeleteExpenseItReceiptAsyncTask;
 import com.concur.mobile.platform.expenseit.ErrorResponse;
 import com.concur.mobile.platform.expenseit.ExpenseItGetImageUrlResponse;
@@ -52,7 +49,6 @@ import com.concur.mobile.platform.ui.common.util.ImageUtil;
 import java.io.IOException;
 import java.io.InputStream;
 import java.net.URL;
-import java.util.ArrayList;
 
 /**
  * @author Elliott Jacobsen-Watts
@@ -114,11 +110,6 @@ public class ExpenseItDetailActivity extends BaseActivity
 
     private static String EXPENSEIT_RECEIPT_IMAGE_URL_RECEIVER = "EXPENSEIT_RECEIPT_IMAGE_URL_RECEIVER";
     private BaseAsyncResultReceiver mGetExpenseItReceiptImageUrlReceiver;
-
-    private RemoveSmartExpensesRequestTask mRemoveSmartExpensesRequestTask = null;
-    private static String EXPENSEIT_DELETE_SMART_EXPENSE_RECEIVER =
-            "EXPENSEIT_DELETE_SMART_EXPENSE_RECEIVER";
-    private BaseAsyncResultReceiver mRemoveSmartExpenseReceiver;
 
 //    Uncomment after refactoring upload receipt into an AsyncTask.
 //    private static String EXPENSEIT_RECEIPT_UPLOAD_RECEIVER = "EXPENSEIT_RECEIPT_UPLOAD_RECEIVER";
@@ -196,29 +187,6 @@ public class ExpenseItDetailActivity extends BaseActivity
         public void cleanup() {
             metricsTiming = 0L;
             mDeleteExpenseItReceiptReceiver = null;
-        }
-    };
-
-    protected BaseAsyncRequestTask.AsyncReplyListener mRemoveSmartExpenseAsyncReplyListener = new
-            BaseAsyncRequestTask.AsyncReplyListener() {
-        @Override
-        public void onRequestSuccess(Bundle resultData) {
-
-        }
-
-        @Override
-        public void onRequestFail(Bundle resultData) {
-
-        }
-
-        @Override
-        public void onRequestCancel(Bundle resultData) {
-
-        }
-
-        @Override
-        public void cleanup() {
-
         }
     };
 
@@ -499,8 +467,6 @@ public class ExpenseItDetailActivity extends BaseActivity
 
             DialogFragment receiptChoiceDialog = new ReceiptChoiceDialogFragment();
             receiptChoiceDialog.show(this.getSupportFragmentManager(), ReceiptChoiceDialogFragment.DIALOG_FRAGMENT_ID);
-        } else if (id == R.id.delete_expenseit_receipt) {
-            deleteReceipt();
         } else if (id == R.id.edit_expenseit_receipt) {
             menuAction = MENU_ACTION_EDIT;
 
@@ -710,20 +676,6 @@ public class ExpenseItDetailActivity extends BaseActivity
         }
     }
 
-    private void doRemoveSmartExpenseAsyncTask(ArrayList<SmartExpense> arySmartExpenses){
-        if (mRemoveSmartExpenseReceiver == null){
-            mRemoveSmartExpenseReceiver = new BaseAsyncResultReceiver(new Handler());
-            mRemoveSmartExpenseReceiver.setListener(mRemoveSmartExpenseAsyncReplyListener);
-        }
-
-        if (mRemoveSmartExpensesRequestTask != null){
-            mRemoveSmartExpenseReceiver.setListener(mRemoveSmartExpenseAsyncReplyListener);
-        }
-
-        mRemoveSmartExpensesRequestTask = new RemoveSmartExpensesRequestTask
-                (getApplicationContext(), 1, mRemoveSmartExpenseReceiver, arySmartExpenses);
-    }
-
     private void onRetrieveUrlRequestSuccess(Bundle resultData) {
         // get the response
         final ExpenseItGetImageUrlResponse response = (ExpenseItGetImageUrlResponse)
@@ -880,30 +832,6 @@ public class ExpenseItDetailActivity extends BaseActivity
         } else {
             initializeExpenseFromExpenseIt();
         }
-    }
-
-    private void deleteReceipt() {
-        AlertDialogFragment.OnClickListener onClickListener = new AlertDialogFragment.OnClickListener() {
-            @Override
-            public void onClick(FragmentActivity activity, DialogInterface dialog, int which) {
-
-                if (which == AlertDialog.BUTTON_POSITIVE) {
-                    EventTracker.INSTANCE.eventTrack(Flurry.CATEGORY_EXPENSE_UNMANAGED_EXPENSEIT,
-                            Flurry.ACTION_EDIT_RECEIPT, Flurry.LABEL_DELETE_RECEIPT);
-
-
-                    //doRemoveSmartExpenseAsyncTask(item.);
-                }
-            }
-
-            @Override
-            public void onCancel(FragmentActivity activity, DialogInterface dialog) {
-
-            }
-        };
-
-        DialogFragmentFactory.getAlertOkayCancelInstance("Delete Receipt", "Are You Sure?", onClickListener,
-                onClickListener, onClickListener);
     }
 
     @Override
