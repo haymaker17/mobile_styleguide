@@ -982,28 +982,31 @@ public class QuickExpense extends BaseActivity {
         } else if (expEntType.equals(Expense.ExpenseEntryType.RECEIPT_CAPTURE)) {
             mobileEntry = new MobileEntry(expenseEntry.getReceiptCapture());
             if (mobileEntry.getRcKey() != null) {
-                //CrnCode
-                currencyReadOnly = false;
+
                 //ExpKey
                 expenseTypeReadOnly = false;
-                //VendorDescription
-                vendorReadOnly = false;
                 //Comment
                 commentReadOnly = false;
-                //TransactionDate
-                transDateReadOnly = false;
-                //TransactionAmount
-                amountReadOnly = false;
                 //LocName
                 locationReadOnly = false;
-
                 //Enable Save
                 saveReadOnly = false;
-
                 //cannot update receipt
                 receiptViewOnly = true;
 
-                String headerText = this.getResources().getString(R.string.quick_ereceipt_title);
+                // If this ReceiptCapture is smart matched, then we shouldn't enabled certain fields.
+                if(expenseEntry.isSmartMatched()) {
+                    //CrnCode
+                    currencyReadOnly = true;
+                    //VendorDescription
+                    vendorReadOnly = true;
+                    //TransactionDate
+                    transDateReadOnly = true;
+                    //TransactionAmount
+                    amountReadOnly = true;
+                }
+
+                String headerText = this.getResources().getString(R.string.quick_expenseit_title);
                 showViewSubHeader(headerText);
             } else {
                 currencyReadOnly = amountReadOnly = locationReadOnly = vendorReadOnly = true;
@@ -1203,7 +1206,7 @@ public class QuickExpense extends BaseActivity {
     /**
      * Will set the currently selected expense type and update the display.
      * 
-     * @param oldExpType
+     * @param selExpType
      *            the expense type.
      */
     protected void setSelectedExpenseType(ExpenseType selExpType) {
@@ -1240,7 +1243,7 @@ public class QuickExpense extends BaseActivity {
     /**
      * Will set the currently selected currency type and update the display.
      * 
-     * @param curType
+     * @param selCurType
      *            the expense type.
      */
     protected void setSelectedCurrencyType(ListItem selCurType) {
@@ -2787,8 +2790,6 @@ public class QuickExpense extends BaseActivity {
     /**
      * Will copy the image data captured by the camera.
      * 
-     * @param data
-     *            the intent object containing capture information.
      */
     private boolean copyCapturedImage() {
         boolean retVal = true;
@@ -3277,6 +3278,7 @@ public class QuickExpense extends BaseActivity {
         @Override
         protected void handleFailure(Context context, Intent intent) {
             activity.showDialog(Const.DIALOG_EXPENSE_SAVE_FAILED);
+            activity.unregisterSaveExpenseReceiver();
         }
 
         @Override
@@ -3345,6 +3347,7 @@ public class QuickExpense extends BaseActivity {
                     // Offline Create.
                 }
             }
+            activity.unregisterSaveExpenseReceiver();
             activity.updateMRUs(activity.saveExpenseRequest);
             activity.setResult(Activity.RESULT_OK);
             activity.finish();
