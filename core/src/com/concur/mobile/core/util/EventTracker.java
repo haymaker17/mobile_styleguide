@@ -43,7 +43,7 @@ public enum EventTracker {
     @SuppressWarnings("unused")
     private String gaTrackingId; // Google Analytics Tracking ID
 
-    private Double sampleFrequency = 100.0;
+    private Double sampleFrequency = 200.0;
 
     // GA Logger verbosity.
     private static final Logger.LogLevel GA_LOG_VERBOSITY = Logger.LogLevel.VERBOSE;
@@ -332,7 +332,7 @@ public enum EventTracker {
             if (this.analyticsId != null && !this.analyticsId.isEmpty()) {
                 EasyTracker.getInstance(appContext).set(USER_ID_TAG, analyticsId);
             }
-
+            EasyTracker.getInstance(appContext).set(Fields.SAMPLE_RATE, ""+sampleFrequency);
             EasyTracker.getInstance(appContext).activityStart(activity);
         }
     }
@@ -351,7 +351,7 @@ public enum EventTracker {
             if (this.analyticsId != null && !this.analyticsId.isEmpty()) {
                 EasyTracker.getInstance(appContext).set(USER_ID_TAG, analyticsId);
             }
-
+            EasyTracker.getInstance(appContext).set(Fields.SAMPLE_RATE, ""+sampleFrequency);
             EasyTracker.getInstance(appContext).activityStop(activity);
         }
     }
