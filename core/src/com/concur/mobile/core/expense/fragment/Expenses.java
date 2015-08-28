@@ -1464,7 +1464,7 @@ public class Expenses extends BaseFragment implements INetworkActivityListener {
          * build the button and by default that button will dismiss the dialog onClick. Since that's all we want our negative
          * listener to do, passing null is sufficient here.
          */
-        if (hasCashExpenses) {
+        if (hasCashExpenses || hasExpenseItReceipts) {
 
             originalFragTag = getTag();
 
@@ -1540,24 +1540,25 @@ public class Expenses extends BaseFragment implements INetworkActivityListener {
                                             + "Expenses.onDelete getAlertDialog can't reference Expenses!");
                                 }
                             }
+
+                            //Check for Expensit Receipts
+                            SmartExpense smartExpense;
+                            ArrayList<SmartExpense> smartExpenseArrayList;
+                            if (!expenseItReceipts.isEmpty()) {
+                                EventTracker.INSTANCE.eventTrack(Flurry.CATEGORY_EXPENSE_UNMANAGED_EXPENSEIT,
+                                        Flurry.ACTION_EDIT_RECEIPT, Flurry.LABEL_DELETE_RECEIPT);
+
+                                smartExpenseArrayList = new ArrayList<>();
+                                for (ExpenseItReceipt receipt : expenseItReceipts) {
+                                    smartExpense = new SmartExpense();
+                                    smartExpense.setSmartExpenseId(String.valueOf(receipt.getId()));
+                                    smartExpenseArrayList.add(smartExpense);
+                                }
+
+                                doRemoveSmartExpenseAsyncTask(smartExpenseArrayList);
+                            }
                         }
                     }, null, null, null).show(getFragmentManager(), null);
-        } else if (hasExpenseItReceipts) {
-            SmartExpense smartExpense;
-            ArrayList<SmartExpense> smartExpenseArrayList;
-            if (!expenseItReceipts.isEmpty()) {
-                EventTracker.INSTANCE.eventTrack(Flurry.CATEGORY_EXPENSE_UNMANAGED_EXPENSEIT,
-                        Flurry.ACTION_EDIT_RECEIPT, Flurry.LABEL_DELETE_RECEIPT);
-
-                smartExpenseArrayList = new ArrayList<>();
-                for (ExpenseItReceipt receipt : expenseItReceipts) {
-                    smartExpense = new SmartExpense();
-                    smartExpense.setSmartExpenseId(String.valueOf(receipt.getId()));
-                    smartExpenseArrayList.add(smartExpense);
-                }
-
-                doRemoveSmartExpenseAsyncTask(smartExpenseArrayList);
-            }
         } else {
             // There are only card charges here, so throw up an "ok" alert dialog.
             DialogFragmentFactory.getAlertOkayInstance(dialogTitle, dialogMessage).show(getFragmentManager(), null);
