@@ -30,6 +30,7 @@ import android.widget.AdapterView.OnItemLongClickListener;
 import android.widget.Button;
 import android.widget.CompoundButton;
 import android.widget.ListView;
+import android.widget.Toast;
 import android.widget.ViewFlipper;
 
 import com.concur.core.R;
@@ -414,17 +415,19 @@ public class Expenses extends BaseFragment implements INetworkActivityListener {
             BaseAsyncRequestTask.AsyncReplyListener() {
                 @Override
                 public void onRequestSuccess(Bundle resultData) {
-
+                    refreshExpenseList();
                 }
 
                 @Override
                 public void onRequestFail(Bundle resultData) {
-
+                    Toast.makeText(getConcurCore().getBaseContext(), "Delete Failed", Toast
+                            .LENGTH_SHORT).show();
                 }
 
                 @Override
                 public void onRequestCancel(Bundle resultData) {
-
+                    Toast.makeText(getConcurCore().getBaseContext(), "Delete Cancelled", Toast
+                            .LENGTH_SHORT).show();
                 }
 
                 @Override
@@ -1520,7 +1523,6 @@ public class Expenses extends BaseFragment implements INetworkActivityListener {
                                 mobileEntryDeleteRequest = null;
                                 mobileEntryDeleteResponseReceived = false;
                             }
-                            toggleButtonBar();
 
                             // Fifth, requests were sent out, display a dialog box.
                             if (pendingRequest) {
@@ -1556,7 +1558,10 @@ public class Expenses extends BaseFragment implements INetworkActivityListener {
                                 }
 
                                 doRemoveSmartExpenseAsyncTask(smartExpenseArrayList);
+                                checkedExpenses.clear();
                             }
+
+                            toggleButtonBar();
                         }
                     }, null, null, null).show(getFragmentManager(), null);
         } else {
