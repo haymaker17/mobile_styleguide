@@ -120,7 +120,7 @@
         <item name="actionOverflowButtonStyle">@style/ActionBarOverflowButton</item>
     </style>
 
-    <style name="ConcurBaseTheme.NoActionBar" parent="Theme.AppCompat.NoActionBar">
+    <style name="ConcurBaseTheme.NoActionBar" parent="Theme.AppCompat.Light.NoActionBar">
 
         <!--
             Theme customizations available in newer API levels can go in
@@ -135,7 +135,7 @@
         <item name="android:windowIsTranslucent">true</item>
     </style>
 
-    <style name="ConcurBaseTheme.Translucent.NoActionBar" parent="Theme.AppCompat.NoActionBar">
+    <style name="ConcurBaseTheme.Translucent.NoActionBar" parent="Theme.AppCompat.Light.NoActionBar">
         <item name="windowActionBar">false</item>
         <item name="android:windowNoTitle">true</item>
     </style>
