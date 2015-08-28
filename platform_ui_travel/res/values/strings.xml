@@ -48,6 +48,7 @@
     <string name="map_unavailable">Map Unavailable</string>
     <string name="map_loading">Could not show maps now, search in-progress.</string>
     <string name="no_rooms">No Rooms Available</string>
+    <string name="hotel_search_no_hotels_found">We could not find any hotels with the given search criteria. Please try again with different criteria.</string>
 
 
     <!-- Hotel -->

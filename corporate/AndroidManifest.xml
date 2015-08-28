@@ -353,6 +353,11 @@
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value="com.concur.mobile.core.request.activity.RequestSummaryActivity"/>
         </activity>
+        <activity android:name="com.concur.mobile.core.request.activity.RequestEditActivity" >
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value="com.concur.mobile.core.request.activity.RequestSummaryActivity" />
+        </activity>
         <activity
             android:name="com.concur.mobile.core.request.activity.RequestEntryActivity">
             <meta-data
@@ -486,7 +491,7 @@
         </activity>
         <activity
             android:name="com.concur.mobile.corp.activity.EmailPasswordLookupActivity"
-            android:theme="@style/ConcurTheme.NoActionBar">
+            android:theme="@style/ConcurTheme.Translucent.NoActionBar.Material">
         </activity>
         <activity
             android:name="com.concur.mobile.corp.activity.OpenSourceLicenseInfo"

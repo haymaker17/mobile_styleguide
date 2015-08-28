@@ -652,6 +652,14 @@
     <!-- Travel Request -->
     <string name="tr_start_date">Start Date</string>
     <string name="tr_end_date">End Date</string>
+    <string name="tr_start_location">Starting Location</string>
+    <string name="tr_request_amount">Request Amount</string>
+    <string name="tr_end_location">Destination</string>
+    <string name="tr_business_purpose">Business Purpose</string>
+    <string name="tr_submit_request">Submit Request</string>
+    <string name="tr_comment">Comment</string>
+    <string name="tr_required">Required</string>
+    <string name="tr_optional">Optional</string>
     <string name="tr_name">Request Name</string>
     <string name="tr_employee_name">Employee Name</string>
     <string name="tr_header">Request Header</string>
@@ -659,6 +667,7 @@
     <string name="tr_new_request">No Requests</string>
     <string name="tr_new_request_desc">When you add a request, you will see it here</string>
     <string name="tr_new_request_desc_no_create">You can add requests using your Web Concur account</string>
+    <string name="tr_name_parameterized_value">Trip to %%0%%</string>
     <string name="tr_list_header_active">ACTIVE REQUESTS</string>
     <string name="tr_list_header_approved">APPROVED REQUESTS</string>
     <string name="tr_error_recall">An error occured on your request Recall. Please try again on the website for further informations.</string>
@@ -678,6 +687,7 @@
     <string name="tr_segment_block_dropoff">Drop-Off</string>
     <string name="tr_segment_block_checkin">Check-In</string>
     <string name="tr_segment_block_checkout">Check-Out</string>
+    <string name="tr_server_error">A system error occurred. Please try again or contact your administrator.</string>
     <string name="travel_segments">Segments</string>
     <string name="travel_segment_title">Segment</string>
     <string name="travel_request_expected_expenses">Expected Expenses</string>
@@ -1771,7 +1781,7 @@
     <string name="dlg_no_current_location">Current location could not be determined. Please select desired location.</string>
     <string name="hotel_search_near_me">Hotels near me</string>
     <string name="hotel_search_near_me_sub_text">Find a hotel for tonight</string>
-    <string name="custom_fields_not_found">Could not retrieve custom fields.</string>
+    <string name="custom_fields_not_found">Could not retrieve custom fields."</string>
     <!-- end of book hotel for now -->
 
 
@@ -1899,6 +1909,7 @@
     <string name="universal_tour_expense">Submit your expenses</string>
     <string name="universal_tour_expense_more">and get reimbursed.</string>
     <string name="universal_tour_feature_text">Features depend on your company configuration.</string>
+
     <string name="test_drive_registration">Not a member yet? Try Test Drive</string>
     <string name="test_drive_help">Learn more about Concur</string>
     <string name="test_drive">&lt;big>Test Drive&lt;/big></string>
@@ -1932,7 +1943,6 @@
     <string name="test_drive_tour_welcome_pg2_title">Getting started</string>
     <string name="test_drive_tour_welcome_pg2_subtitle">We have pre-loaded sample expense reports, card charges and receipts as well as guided overlays to help you on your way.\n</string>
     <string name="test_drive_tour_welcome_pg2_subtitle1">Note: This is a demo account and should not be used for real expenses.</string>
-
     <string name="test_drive_tour_welcome_pg2_launch">Launch Test Drive!</string>
     <string name="test_drive_tour_skip">Skip</string>
     <string name="test_drive_expiration_title">Test Drive Expired</string>
@@ -1954,7 +1964,8 @@
 
     <!-- Start What's new -->
     <string-array name="whats_new">
-        <item>\u2022 Crash fixes</item>
+        <item>\u2022 Fix for Expense Report Approval notifications</item>
+        <item>\u2022 Crash Fix for some OS 5 users during start up</item>
     </string-array>
     <!-- End What's new -->
 

@@ -287,8 +287,12 @@ public class Flurry {
     public static final String PARAM_VALUE_REFRESH_DATA = "Refresh Data";
     public static final String PARAM_VALUE_LOCATION_CHECK_IN = "Location Checkin";
     public static final String PARAM_VALUE_TRAVEL_REQUEST = "Travel Request";
+    public static final String PARAM_VALUE_TRAVEL_REQUEST_CLICK = "Travel Request Click";
     public static final String PARAM_VALUE_TRAVEL_REQUEST_LIST = "Travel Request List";
+    public static final String PARAM_VALUE_TRAVEL_REQUEST_LIST_RECALL_ACTION = "Travel Request List Recall Action";
+    public static final String PARAM_VALUE_TRAVEL_REQUEST_LIST_ROW_TAP_ACTION = "Travel Request List Row Tap Action";
     public static final String PARAM_VALUE_TRAVEL_REQUEST_SUMMARY = "Travel Request Summary";
+    public static final String PARAM_VALUE_TRAVEL_REQUEST_LIST_PLUS_BUTTON = "Travel Request List Plus Button";
     public static final String PARAM_VALUE_TRAVEL_REQUEST_HEADER = "Travel Request Header";
     public static final String PARAM_VALUE_TRAVEL_REQUEST_ENTRY = "Travel Request Entry";
     public static final String PARAM_VALUE_TRAVEL_REQUEST_LOCATION = "Travel Request Location";

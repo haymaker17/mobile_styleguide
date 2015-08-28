@@ -12,7 +12,9 @@ import android.view.MenuItem;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.View.OnClickListener;
-import android.widget.*;
+import android.widget.ListView;
+import android.widget.TextView;
+import android.widget.ViewFlipper;
 import com.concur.core.R;
 import com.concur.mobile.base.service.BaseAsyncRequestTask;
 import com.concur.mobile.base.service.BaseAsyncRequestTask.AsyncReplyListener;
@@ -20,9 +22,6 @@ import com.concur.mobile.base.service.BaseAsyncResultReceiver;
 import com.concur.mobile.core.ConcurCore;
 import com.concur.mobile.core.activity.BaseActivity;
 import com.concur.mobile.core.request.adapter.SortedRequestListAdapter;
-import com.concur.mobile.core.request.task.RequestTask;
-import com.concur.mobile.core.request.util.ConnectHelper;
-import com.concur.mobile.core.request.util.RequestStatus;
 import com.concur.mobile.core.util.Const;
 import com.concur.mobile.core.util.EventTracker;
 import com.concur.mobile.core.util.Flurry;
@@ -32,7 +31,10 @@ import com.concur.mobile.platform.request.RequestGroupConfigurationCache;
 import com.concur.mobile.platform.request.RequestListCache;
 import com.concur.mobile.platform.request.dto.RequestDTO;
 import com.concur.mobile.platform.request.groupConfiguration.RequestGroupConfiguration;
+import com.concur.mobile.platform.request.task.RequestTask;
+import com.concur.mobile.platform.request.util.ConnectHelper;
 import com.concur.mobile.platform.request.util.RequestParser;
+import com.concur.mobile.platform.request.util.RequestStatus;
 import com.concur.mobile.platform.ui.common.dialog.NoConnectivityDialogFragment;
 import com.concur.mobile.platform.ui.common.util.RowSwipeGestureListener;
 import com.getbase.floatingactionbutton.AddFloatingActionButton;
@@ -77,16 +79,15 @@ public class RequestListActivity extends BaseActivity implements SwipeRefreshLay
     private RequestListCache requestListCache = null;
     private ConnectFormFieldsCache formFieldsCache = null;
 
-    private String formWaitingForRefresh = null;
-    private String reqWaitingForFormRefresh = null;
-
     @Override protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         final ConcurCore concurCore = (ConcurCore) getApplication();
         setContentView(R.layout.request_list);
 
         asyncGroupConfigurationReceiver = new BaseAsyncResultReceiver(new Handler());
+        asyncFormFieldsReceiver = new BaseAsyncResultReceiver((new Handler()));
 
+        // --- Group Configuration
         if (!concurCore.getRequestGroupConfigurationCache().hasCachedValues()) {
             HAS_CONFIGURATION = false;
             asyncGroupConfigurationReceiver.setListener(new GroupConfigurationListener());
@@ -95,6 +96,10 @@ public class RequestListActivity extends BaseActivity implements SwipeRefreshLay
                     ConnectHelper.Action.LIST, null).execute();
         } else {
             HAS_CONFIGURATION = true;
+            asyncFormFieldsReceiver.setListener(new FormFieldsListener());
+            new RequestTask(RequestListActivity.this, 2, asyncFormFieldsReceiver,
+                    ConnectHelper.ConnectVersion.VERSION_3_1, ConnectHelper.Module.FORM_FIELDS,
+                    ConnectHelper.Action.LIST, null).execute();
         }
 
         // -------------
@@ -113,6 +118,12 @@ public class RequestListActivity extends BaseActivity implements SwipeRefreshLay
         }
 
         configureUI();
+
+        // Flurry Notification
+        Map<String, String> params = new HashMap<String, String>();
+        params.put(Flurry.PARAM_NAME_ACTION, Flurry.PARAM_VALUE_TRAVEL_REQUEST_LIST);
+        EventTracker.INSTANCE.track(Flurry.CATEGORY_TRAVEL_REQUEST, Flurry.EVENT_NAME_LAUNCH, params);
+
     }
 
     private void configureUI() {
@@ -134,14 +145,16 @@ public class RequestListActivity extends BaseActivity implements SwipeRefreshLay
                      * @see RowSwipeGestureListener#onRowTap(Object)
                      */
                     @Override public boolean onRowTap(RequestDTO request) {
+
+                        // Flurry Notification
+                        Map<String, String> params = new HashMap<String, String>();
+                        params.put(Flurry.PARAM_NAME_ACTION, Flurry.PARAM_VALUE_TRAVEL_REQUEST_LIST_ROW_TAP_ACTION);
+                        EventTracker.INSTANCE.track(Flurry.CATEGORY_TRAVEL_REQUEST, Flurry.EVENT_NAME_ACTION, params);
+
                         if (request != null) {
                             final String reqId = request.getId();
                             if (reqId != null) {
-                                if (!formFieldsCache.isFormBeingRefreshed(request.getHeaderFormId())) {
-                                    displayTravelRequestDetail(reqId);
-                                } else {
-                                    waitFormFieldsCacheRefresh(request.getHeaderFormId(), request.getId());
-                                }
+                                displayTravelRequestEdit(reqId);
                             } else {
                                 Log.e(Const.LOG_TAG, CLS_TAG + ".onItemClick: request id is null!");
                             }
@@ -156,6 +169,13 @@ public class RequestListActivity extends BaseActivity implements SwipeRefreshLay
                         if (view != null && view.getId() == R.id.recallButton) {
                             // --- execute recall action
                             Log.d(CLS_TAG, "--- Request RECALL action (list)");
+
+                            // Flurry Notification
+                            Map<String, String> params = new HashMap<String, String>();
+                            params.put(Flurry.PARAM_NAME_ACTION, Flurry.PARAM_VALUE_TRAVEL_REQUEST_LIST_RECALL_ACTION);
+                            EventTracker.INSTANCE
+                                    .track(Flurry.CATEGORY_TRAVEL_REQUEST, Flurry.EVENT_NAME_ACTION, params);
+
                             recallRequestAction(request);
                         }
                         return true;
@@ -200,11 +220,13 @@ public class RequestListActivity extends BaseActivity implements SwipeRefreshLay
             @Override public void onClick(View v) {
                 // --- reminder: button is displayed only if a configuration with a default policy exists
                 final String formId = groupConfigurationCache.getValue(getUserId()).getFormId();
-                if (formFieldsCache.getValue(formId) != null) {
-                    displayTravelRequestHeader();
-                } else {
-                    waitFormFieldsCacheRefresh(formId, null);
-                }
+
+                // --- Flurry tracking
+                Map<String, String> params = new HashMap<String, String>();
+                params.put(Flurry.PARAM_NAME_ACTION, Flurry.PARAM_VALUE_TRAVEL_REQUEST_LIST_PLUS_BUTTON);
+                EventTracker.INSTANCE.track(Flurry.CATEGORY_TRAVEL_REQUEST, Flurry.EVENT_NAME_ACTION, params);
+
+                displayTravelRequestEdit(null);
             }
         });
     }
@@ -236,43 +258,6 @@ public class RequestListActivity extends BaseActivity implements SwipeRefreshLay
         }
     }
 
-    private void waitFormFieldsCacheRefresh(String formId, String reqId) {
-        // set screen as loading and implement some handling on task success / fail / cancel actions
-        formWaitingForRefresh = formId;
-        reqWaitingForFormRefresh = reqId;
-
-        setView(ID_LOADING_VIEW);
-    }
-
-    private void handleAwaitingRefresh(String formId, boolean isSuccess) {
-        if (formWaitingForRefresh != null && formId.equals(formWaitingForRefresh)) {
-            if (isSuccess) {
-                if (reqWaitingForFormRefresh != null) {
-                    // --- update
-                    displayTravelRequestDetail(reqWaitingForFormRefresh);
-                } else {
-                    // --- create
-                    displayTravelRequestHeader();
-                }
-            } else {
-                if (reqWaitingForFormRefresh == null) {
-                    // --- disables creation
-                    HAS_CONFIGURATION = false;
-                }
-                if (requestListCache.hasCachedValues()) {
-                    setView(ID_LIST_VIEW);
-                } else {
-                    setView(ID_EMPTY_VIEW);
-                }
-                Log.e(CLS_TAG, "Form retrieving failed.");
-                Toast.makeText(this, getResources().getString(R.string.general_error), Toast.LENGTH_LONG);
-            }
-            formWaitingForRefresh = null;
-            reqWaitingForFormRefresh = null;
-        }
-
-    }
-
     /**
      * Generates RequestDetailsActivity intent
      *
@@ -284,6 +269,7 @@ public class RequestListActivity extends BaseActivity implements SwipeRefreshLay
         if (!ConcurCore.isConnected() && (tr == null || tr.getEntriesMap() == null)) {
             new NoConnectivityDialogFragment().show(getSupportFragmentManager(), CLS_TAG);
         } else {
+            /* FIXME
             final Intent i = new Intent(RequestListActivity.this, RequestSummaryActivity.class);
             i.putExtra(RequestListActivity.REQUEST_ID, reqId);
 
@@ -294,24 +280,16 @@ public class RequestListActivity extends BaseActivity implements SwipeRefreshLay
             params.put(Flurry.PARAM_NAME_TO, Flurry.PARAM_VALUE_TRAVEL_REQUEST_SUMMARY);
             EventTracker.INSTANCE.track(Flurry.CATEGORY_TRAVEL_REQUEST, Flurry.EVENT_NAME_LAUNCH, params);
 
-            startActivityForResult(i, SUMMARY_RESULT);
+            startActivityForResult(i, SUMMARY_RESULT);*/
         }
     }
 
-    /**
-     * Generates RequestHeaderActivity intent
-     */
-    private void displayTravelRequestHeader() {
+    private void displayTravelRequestEdit(String reqId) {
         if (HAS_CONFIGURATION) {
-            final Intent i = new Intent(RequestListActivity.this, RequestHeaderActivity.class);
-            i.putExtra(RequestSummaryActivity.REQUEST_IS_EDITABLE, Boolean.TRUE.toString());
-
-            // --- Flurry tracking
+            final Intent i = new Intent(RequestListActivity.this, RequestEditActivity.class);
+            i.putExtra(RequestListActivity.REQUEST_ID, reqId);
+            i.putExtra(RequestEditActivity.REQUEST_IS_EDITABLE, Boolean.TRUE.toString());
             i.putExtra(Flurry.PARAM_NAME_CAME_FROM, Flurry.PARAM_VALUE_TRAVEL_REQUEST_LIST);
-            final Map<String, String> params = new HashMap<String, String>();
-            params.put(Flurry.PARAM_NAME_FROM, Flurry.PARAM_VALUE_TRAVEL_REQUEST_LIST);
-            params.put(Flurry.PARAM_NAME_TO, Flurry.PARAM_VALUE_TRAVEL_REQUEST_HEADER);
-            EventTracker.INSTANCE.track(Flurry.CATEGORY_TRAVEL_REQUEST, Flurry.EVENT_NAME_LAUNCH, params);
 
             startActivityForResult(i, HEADER_RESULT);
         }
@@ -451,30 +429,6 @@ public class RequestListActivity extends BaseActivity implements SwipeRefreshLay
     }
 
     /**
-     * Handles tap upon an item on the request list
-     */
-    class ListAdapterRowClickListener implements AdapterView.OnItemClickListener {
-
-        @Override public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-            final SortedRequestListAdapter adapter = (SortedRequestListAdapter) requestListView.getAdapter();
-            final RequestDTO request = adapter.getItem(position);
-            if (request != null) {
-                final String reqId = request.getId();
-                if (reqId != null) {
-                    if (!formFieldsCache.isFormBeingRefreshed(request.getHeaderFormId())) {
-                        displayTravelRequestDetail(reqId);
-                    } else {
-                        waitFormFieldsCacheRefresh(request.getHeaderFormId(), request.getId());
-                    }
-                } else {
-                    Log.e(Const.LOG_TAG, CLS_TAG + ".onItemClick: request id is null!");
-                }
-            }
-        }
-
-    }
-
-    /**
      * Call asynchronous task to retrieve data through connect
      */
     private class TRListListener implements AsyncReplyListener {
@@ -494,18 +448,6 @@ public class RequestListActivity extends BaseActivity implements SwipeRefreshLay
                 requestListCache.addValue(trDTO);
                 // --- hashset will handle duplicates
                 headerFormIds.add(trDTO.getHeaderFormId());
-            }
-            /*
-             * WS call to get forms & fields data with the set of ids TBC : using a queue isn't necessary as user mostly use a
-             * tiny number of different forms, and anyway they usually have at most 5 requests at the same time.
-             */
-            for (String formId : headerFormIds) {
-                formFieldsCache.setFormRefreshStatus(formId, true);
-
-                new RequestTask(RequestListActivity.this, 2, asyncFormFieldsReceiver,
-                        ConnectHelper.ConnectVersion.VERSION_3_0, ConnectHelper.Module.FORM_FIELDS,
-                        ConnectHelper.Action.LIST, formId).addUrlParameter(RequestTask.P_FORM_ID, formId)
-                        .addResultData(RequestTask.P_FORM_ID, formId).execute();
             }
 
             // update the approvals list with the trips needing approval
@@ -540,36 +482,24 @@ public class RequestListActivity extends BaseActivity implements SwipeRefreshLay
 
         @Override public void onRequestSuccess(Bundle resultData) {
             final String formId = resultData.getString(RequestTask.P_FORM_ID);
-            formFieldsCache.setFormRefreshStatus(formId, false);
             // --- parse the form received
-            final ConnectForm rForm = requestParser
+            final List<ConnectForm> lForms = requestParser
                     .parseFormFieldsResponse(resultData.getString(BaseAsyncRequestTask.HTTP_RESPONSE));
-            if (rForm != null)
-            // --- add form to cache if there is any
-            {
-                formFieldsCache.addForm(formId, rForm);
-            }
-            handleAwaitingRefresh(formId, true);
+            formFieldsCache.addForms(lForms);
         }
 
         @Override public void onRequestFail(Bundle resultData) {
-            final String formId = resultData.getString(RequestTask.P_FORM_ID);
-            formFieldsCache.setFormRefreshStatus(formId, false);
             Log.d(Const.LOG_TAG, CLS_TAG + " calling decrement from onrequestfails");
             Log.d(Const.LOG_TAG, " onRequestFail in FormFieldsListener...");
-            handleAwaitingRefresh(formId, false);
         }
 
         @Override public void onRequestCancel(Bundle resultData) {
-            final String formId = resultData.getString(RequestTask.P_FORM_ID);
-            formFieldsCache.setFormRefreshStatus(formId, false);
             Log.d(Const.LOG_TAG, CLS_TAG + " calling decrement from onrequestcancel");
             Log.d(Const.LOG_TAG, " onRequestCancel in FormFieldsListener...");
-            handleAwaitingRefresh(formId, false);
         }
 
         @Override public void cleanup() {
-            // --- ntd
+            asyncFormFieldsReceiver.setListener(null);
         }
     }
 
@@ -590,17 +520,11 @@ public class RequestListActivity extends BaseActivity implements SwipeRefreshLay
                 }
                 // --- New Request button is set to visible only if we obtained a configuration (contains segment types) and it has a default policy
                 HAS_CONFIGURATION = true;
-                if (isCreateRequestAvailable()) {
-                    final String formId = groupConfigurationCache.getValue(getUserId()).getFormId();
-                    formFieldsCache.setFormRefreshStatus(formId, true);
-
-                    new RequestTask(RequestListActivity.this, 2, asyncFormFieldsReceiver,
-                            ConnectHelper.ConnectVersion.VERSION_3_0, ConnectHelper.Module.FORM_FIELDS,
-                            ConnectHelper.Action.LIST, formId).addUrlParameter(RequestTask.P_FORM_ID, formId)
-                            .addResultData(RequestTask.P_FORM_ID, formId).execute();
-
-                    newRequestButton.setVisibility(View.VISIBLE);
-                }
+                // --- Forms & Fields
+                asyncFormFieldsReceiver.setListener(new FormFieldsListener());
+                new RequestTask(RequestListActivity.this, 2, asyncFormFieldsReceiver,
+                        ConnectHelper.ConnectVersion.VERSION_3_1, ConnectHelper.Module.FORM_FIELDS,
+                        ConnectHelper.Action.LIST, null).execute();
             }
         }
 
@@ -626,7 +550,7 @@ public class RequestListActivity extends BaseActivity implements SwipeRefreshLay
         case (SUMMARY_RESULT):
             if (data != null) {
                 // --- no result means we came from a request creation, so we need a refresh
-                final Boolean doWSCall = data.getBooleanExtra(RequestHeaderActivity.DO_WS_REFRESH, true);
+                final Boolean doWSCall = data.getBooleanExtra(RequestEditActivity.DO_WS_REFRESH, true);
                 if (doWSCall) {
                     refreshData(true);
                 } else {

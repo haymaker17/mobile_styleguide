@@ -1,0 +1,125 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="#FFFFFF">
+
+    <!-- MAIN LAYOUT -->
+    <LinearLayout
+        android:id="@+id/exceptionDialogLayout"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_gravity="center"
+        android:background="#FFFFFF"
+        android:orientation="vertical" >
+
+
+        <!-- EXCEPTION LIST -->
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight="0.8"
+            android:orientation="vertical" >
+
+            <ListView
+                android:id="@+id/requestExceptionListView"
+                android:layout_width="fill_parent"
+                android:layout_height="fill_parent"
+                android:background="#FFFFFF"
+                android:footerDividersEnabled="false"
+                android:headerDividersEnabled="false"
+                android:dividerHeight="0dp"
+                android:divider="@null"
+                />
+
+        </LinearLayout>
+
+
+
+        <RelativeLayout
+            android:layout_width="fill_parent"
+            android:layout_height="0dp"
+            android:layout_weight="0.2"
+            android:background="#FFFFFF">
+
+
+            <!-- Horizontal Separator -->
+            <View
+                android:id="@+id/horizontalSeparator"
+                android:layout_width="wrap_content"
+                android:layout_height="1dp"
+                android:background="#a7b6bf"
+                android:layout_marginTop="19dp"/>
+
+
+            <!-- BUTTONS BACK & SUBMIT -->
+            <LinearLayout android:layout_width="fill_parent"
+                android:id="@+id/backAndSubmitButtons"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:layout_below="@+id/horizontalSeparator" >
+
+                <RelativeLayout
+                    android:id="@+id/layoutBack"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:orientation="horizontal">
+
+                    <!-- Back Button -->
+                    <Button
+                        android:id="@+id/btn_back"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:background="@android:color/white"
+                        android:clickable="true"
+                        android:text="@string/back"
+                        android:textColor="#1d78bd"
+                        android:textStyle="bold"
+                        android:layout_centerInParent="true"/>
+
+                </RelativeLayout>
+
+
+                <RelativeLayout
+                    android:id="@+id/layoutSubmit"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1">
+
+                    <!-- Submit Button -->
+                    <!-- Vertical Separator -->
+                    <LinearLayout
+                        android:id="@+id/verticalSeparator"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_alignParentLeft="true">
+
+                        <View
+                            android:layout_width="1dp"
+                            android:layout_height="500dp"
+                            android:background="#a7b6bf"/>
+
+                    </LinearLayout>
+
+                    <Button
+                        android:id="@+id/btn_submit"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:background="@android:color/white"
+                        android:clickable="true"
+                        android:text="@string/submit"
+                        android:textColor="#1d78bd"
+                        android:textStyle="bold"
+                        android:layout_centerInParent="true" />
+
+                </RelativeLayout>
+
+            </LinearLayout>
+
+
+        </RelativeLayout>
+
+    </LinearLayout>
+
+</LinearLayout>
