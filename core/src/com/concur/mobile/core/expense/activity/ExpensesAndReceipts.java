@@ -700,7 +700,7 @@ public class ExpensesAndReceipts extends BaseActivity implements ExpensesCallbac
 
             Fragment frag = pageAdapter.getPage(i);
             if (frag != null && frag instanceof Expenses) {
-                ((Expenses) frag).updateExpenseListUI();
+                ((Expenses) frag).updateExpenseListUI(ExpensesAndReceipts.this);
                 break;
             }
         }

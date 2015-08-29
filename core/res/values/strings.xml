@@ -1280,6 +1280,8 @@
     <string name="dlg_system_unavailable_message">The service is unable to complete the operation at this time.  Please try again later, or contact your company administrator if this continues.</string>
     <string name="dlg_expenses_retrieve_failed_title">Expenses Retrieval Failed</string>
     <string name="dlg_expenseit_retrieve_failed_title">Failed to retrieve ExpenseIt items.</string>
+    <string name="dlg_expenseit_delete_failed_title">Failed to delete ExpenseIt item(s).</string>
+    <string name="dlg_expenseit_add_to_report_failed_title">Adding failed ExpenseIt items to a Report is not allowed.</string>
     <string name="dlg_expense_approval_retrieve_failed_title">Expense Approvals Retrieve Failed</string>
     <string name="dlg_expense_active_report_retrieve_failed_title">Active Reports Retrieve Failed</string>
     <string name="dlg_expense_report_detail_retrieve_failed_title">Report Detail Retrieve Failed</string>

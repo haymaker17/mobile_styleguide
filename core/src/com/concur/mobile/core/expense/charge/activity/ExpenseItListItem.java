@@ -144,7 +144,9 @@ public class ExpenseItListItem extends ExpenseListItem {
             // Set checkbox to invisible for now (to maintain spacing)
             CheckBox checkBox = (CheckBox) expenseView.findViewById(R.id.expense_check);
             if (checkBox != null) {
-                //checkBox.setVisibility(View.INVISIBLE);
+                if(expense.getExpenseItReceipt().isInErrorState()) {
+                    checkBox.setVisibility(View.VISIBLE);
+                }
 
                 // Add to the button/expense mapping.
                 expenseButtonMap.put(expense, checkBox);

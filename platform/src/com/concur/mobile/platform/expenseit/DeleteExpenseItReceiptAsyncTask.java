@@ -21,6 +21,7 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.net.HttpURLConnection;
+import java.util.List;
 
 public class DeleteExpenseItReceiptAsyncTask extends ExpenseItAsyncRequestTask {
 
@@ -32,7 +33,9 @@ public class DeleteExpenseItReceiptAsyncTask extends ExpenseItAsyncRequestTask {
 
     public static final String DELETE_EXPENSEIT_RECEIPT_ASYNC_TASK = "DELETE_EXPENSEIT_RECEIPT_ASYNC_TASK";
 
-    final private Long expenseId;
+    private Long expenseId;
+
+    private List<Long> bulkExpenseIds;
 
     protected ErrorResponse deleteReceiptResponse;
 
@@ -41,11 +44,36 @@ public class DeleteExpenseItReceiptAsyncTask extends ExpenseItAsyncRequestTask {
         this.expenseId = expenseId;
     }
 
+    public DeleteExpenseItReceiptAsyncTask(Context context, int requestId, BaseAsyncResultReceiver receiver, List<Long> bulkExpenseIds) {
+        super(context, requestId, receiver);
+        this.bulkExpenseIds = bulkExpenseIds;
+    }
+
     @Override
     protected String getServiceEndPoint() {
         final Uri.Builder builder = Uri.parse(EXPENSES_URL).buildUpon();
-        builder.appendPath(String.format(SEGMENT_CURRENT_ID, expenseId));
-        return builder.build().toString();
+
+        if(bulkExpenseIds != null && !bulkExpenseIds.isEmpty()) {
+
+            // NOTE: We're not using Uri.Builder here for the query parameter part
+            // because it escapes the commas (,) when adding multiple ExpenseIt IDs.
+            String endpoint = builder.build().toString();
+
+            StringBuffer ids = new StringBuffer();
+            ids.append("?ids=");
+
+            for(Long id : bulkExpenseIds) {
+                ids.append(Long.toString(id));
+                ids.append(",");
+            }
+
+            return endpoint.concat(ids.toString());
+
+        } else {
+            builder.appendPath(String.format(SEGMENT_CURRENT_ID, expenseId));
+            return builder.build().toString();
+        }
+
     }
 
     @Override

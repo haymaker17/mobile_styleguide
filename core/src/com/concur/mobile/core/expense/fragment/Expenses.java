@@ -11,6 +11,7 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.IntentFilter;
 import android.database.Cursor;
+import android.os.AsyncTask;
 import android.os.Bundle;
 import android.os.Handler;
 import android.support.v4.app.Fragment;
@@ -30,7 +31,6 @@ import android.widget.AdapterView.OnItemLongClickListener;
 import android.widget.Button;
 import android.widget.CompoundButton;
 import android.widget.ListView;
-import android.widget.Toast;
 import android.widget.ViewFlipper;
 
 import com.concur.core.R;
@@ -89,8 +89,7 @@ import com.concur.mobile.core.util.ViewUtil;
 import com.concur.mobile.core.view.HeaderListItem;
 import com.concur.mobile.core.view.ListItem;
 import com.concur.mobile.core.view.ListItemAdapter;
-import com.concur.mobile.platform.expense.smartexpense.RemoveSmartExpensesRequestTask;
-import com.concur.mobile.platform.expense.smartexpense.SmartExpense;
+import com.concur.mobile.platform.expenseit.DeleteExpenseItReceiptAsyncTask;
 import com.concur.mobile.platform.expenseit.ErrorResponse;
 import com.concur.mobile.platform.expenseit.ExpenseItParseCode;
 import com.concur.mobile.platform.expenseit.ExpenseItReceipt;
@@ -406,35 +405,74 @@ public class Expenses extends BaseFragment implements INetworkActivityListener {
      */
     boolean flurryHasReceipt = false;
 
-    private RemoveSmartExpensesRequestTask mRemoveSmartExpensesRequestTask = null;
-    private static String EXPENSEIT_DELETE_SMART_EXPENSE_RECEIVER =
-            "EXPENSEIT_DELETE_SMART_EXPENSE_RECEIVER";
-    private BaseAsyncResultReceiver mRemoveSmartExpenseReceiver;
+    private DeleteExpenseItReceiptAsyncTask mDeleteExpenseItReceiptAsyncTask;
+    private BaseAsyncResultReceiver mDeleteExpenseItReceiptReceiver;
+    protected BaseAsyncRequestTask.AsyncReplyListener mDeleteExpenseItAsyncReplyListener = new BaseAsyncRequestTask.AsyncReplyListener() {
+        @Override
+        public void onRequestSuccess(Bundle resultData) {
+            Log.d(Const.LOG_TAG, CLS_TAG + ".onRequestSuccess for DeleteExpenseItAsyncReplyListener called!");
 
-    protected BaseAsyncRequestTask.AsyncReplyListener mRemoveSmartExpenseAsyncReplyListener = new
-            BaseAsyncRequestTask.AsyncReplyListener() {
-                @Override
-                public void onRequestSuccess(Bundle resultData) {
-                    refreshExpenseList();
-                }
+            // Log the event.
+//            EventTracker.INSTANCE.trackTimings("Expense-ExpenseIt",
+//                    System.currentTimeMillis() - metricsTiming, "Delete Expense", "");
+            DeleteExpenseProgressDialogHandler.dismiss(Expenses.this);
 
-                @Override
-                public void onRequestFail(Bundle resultData) {
-                    Toast.makeText(getConcurCore().getBaseContext(), "Delete Failed", Toast
-                            .LENGTH_SHORT).show();
-                }
+            // Also refresh the ExpenseIt list (if ExpenseIt user).
+            getSmartExpenses(true);
+        }
 
-                @Override
-                public void onRequestCancel(Bundle resultData) {
-                    Toast.makeText(getConcurCore().getBaseContext(), "Delete Cancelled", Toast
-                            .LENGTH_SHORT).show();
-                }
+        @Override
+        public void onRequestFail(Bundle resultData) {
+            Log.e(Const.LOG_TAG, CLS_TAG + ".onRequestFail for DeleteExpenseItAsyncReplyListener called!");
 
-                @Override
-                public void cleanup() {
+            DeleteExpenseProgressDialogHandler.dismiss(Expenses.this);
+            showExpenseDeleteFailure(getString(R.string.dlg_expenseit_delete_failed_title));
 
-                }
-            };
+            // Also refresh the ExpenseIt list (if ExpenseIt user).
+            getSmartExpenses(true);
+        }
+
+        @Override
+        public void onRequestCancel(Bundle resultData) {
+            Log.d(Const.LOG_TAG, CLS_TAG + ".onRequestCancel for DeleteExpenseItAsyncReplyListener called!");
+            mDeleteExpenseItReceiptAsyncTask.cancel(true);
+            DeleteExpenseProgressDialogHandler.dismiss(Expenses.this);
+        }
+
+        @Override
+        public void cleanup() {
+//            metricsTiming = 0L;
+            mDeleteExpenseItReceiptReceiver = null;
+        }
+    };
+
+//    private RemoveSmartExpensesRequestTask mRemoveSmartExpensesRequestTask = null;
+//    private BaseAsyncResultReceiver mRemoveSmartExpenseReceiver;
+
+//    protected BaseAsyncRequestTask.AsyncReplyListener mRemoveSmartExpenseAsyncReplyListener = new
+//            BaseAsyncRequestTask.AsyncReplyListener() {
+//                @Override
+//                public void onRequestSuccess(Bundle resultData) {
+//                    refreshExpenseList();
+//                }
+//
+//                @Override
+//                public void onRequestFail(Bundle resultData) {
+//                    Toast.makeText(getConcurCore().getBaseContext(), "Delete Failed", Toast
+//                            .LENGTH_SHORT).show();
+//                }
+//
+//                @Override
+//                public void onRequestCancel(Bundle resultData) {
+//                    Toast.makeText(getConcurCore().getBaseContext(), "Delete Cancelled", Toast
+//                            .LENGTH_SHORT).show();
+//                }
+//
+//                @Override
+//                public void cleanup() {
+//
+//                }
+//            };
 
     private ExpensesCallback expensesCallback;
 
@@ -807,7 +845,7 @@ public class Expenses extends BaseFragment implements INetworkActivityListener {
     /**
      * Updates the ExpneseList UI with the latest data.
      */
-    public void updateExpenseListUI() {
+    public void updateExpenseListUI(Context context) {
 
         // If there is no local cached data, then flip to view indicating this.
         IExpenseEntryCache expEntCache = app.getExpenseEntryCache();
@@ -844,7 +882,7 @@ public class Expenses extends BaseFragment implements INetworkActivityListener {
         try {
             String where = com.concur.mobile.platform.expense.provider.Expense.ExpenseItReceiptColumns.USER_ID + " = ?";
             String[] selectionArgs = new String[]{activity.getUserId()};
-            cursor = getActivity().getContentResolver().query(com.concur.mobile.platform.expense.provider.Expense.ExpenseItReceiptColumns.CONTENT_URI,
+            cursor = context.getContentResolver().query(com.concur.mobile.platform.expense.provider.Expense.ExpenseItReceiptColumns.CONTENT_URI,
                     null, where, selectionArgs, null);
             hasExpenseItItems = (cursor != null && cursor.getCount() > 0);
 
@@ -955,6 +993,24 @@ public class Expenses extends BaseFragment implements INetworkActivityListener {
         // Check for connectivity, if none, then display dialog and return.
         if (!ConcurCore.isConnected()) {
             new NoConnectivityDialogFragment().show(getFragmentManager(), null);
+            return;
+        }
+
+        // Need to check if a user has selected a failed ExpenseIt item.
+        boolean hasFailedExpenseItItem = false;
+        Iterator<Expense> selExpIter = checkedExpenses.iterator();
+        while (selExpIter.hasNext()) {
+            Expense exp = selExpIter.next();
+            if(exp.getExpenseEntryType() == ExpenseEntryType.EXPENSEIT_NOT_DONE) {
+                if(exp.getExpenseItReceipt() != null && exp.getExpenseItReceipt().isInErrorState()) {
+                    hasFailedExpenseItItem = true;
+                    break;
+                }
+            }
+        }
+
+        if(hasFailedExpenseItItem) {
+            showAddToReportFailure(getString(R.string.dlg_expenseit_add_to_report_failed_title));
             return;
         }
 
@@ -1351,7 +1407,12 @@ public class Expenses extends BaseFragment implements INetworkActivityListener {
     private boolean allExpenseDeleteResponsesReceived() {
         boolean retVal = false;
         if ((mobileEntryDeleteRequest == null || (mobileEntryDeleteRequest != null && mobileEntryDeleteResponseReceived))) {
-            retVal = true;
+            // If we still need to delete ExpenseIt items, then set this to false.
+            if(mDeleteExpenseItReceiptReceiver != null) {
+                retVal = false;
+            } else {
+                retVal = true;
+            }
         }
         return retVal;
     }
@@ -1439,11 +1500,7 @@ public class Expenses extends BaseFragment implements INetworkActivityListener {
         String dialogMessage;
         String dialogTitle;
 
-        if (hasExpenseItReceipts) {
-            dialogMessage = getResources().getQuantityString(R.plurals.dlg_expense_remove_confirm_message,
-                    cashExpensesSelected).toString();
-            dialogTitle = getString(R.string.dlg_expense_confirm_report_delete_title);
-        } else if (hasCashExpenses & !hasCardCharges) {
+        if (hasExpenseItReceipts || (hasCashExpenses & !hasCardCharges)) {
             dialogMessage = getResources().getQuantityString(R.plurals.dlg_expense_remove_confirm_message,
                     cashExpensesSelected).toString();
             dialogTitle = getString(R.string.dlg_expense_confirm_report_delete_title);
@@ -1524,7 +1581,23 @@ public class Expenses extends BaseFragment implements INetworkActivityListener {
                                 mobileEntryDeleteResponseReceived = false;
                             }
 
-                            // Fifth, requests were sent out, display a dialog box.
+                            // Fifth, Check for ExpenseIt Receipts
+                            if (!expenseItReceipts.isEmpty()) {
+
+                                EventTracker.INSTANCE.eventTrack(Flurry.CATEGORY_EXPENSE_UNMANAGED_EXPENSEIT,
+                                        Flurry.ACTION_EDIT_RECEIPT, Flurry.LABEL_DELETE_RECEIPT);
+
+                                numOfExpensesToDelete += expenseItReceipts.size();
+                                List<Long> expenseItIds = new ArrayList<>();
+                                for (ExpenseItReceipt receipt : expenseItReceipts) {
+                                    expenseItIds.add(receipt.getId());
+                                }
+
+                                doDeleteExpenseItExpenseAsyncTask(expenseItIds);
+                                pendingRequest = (mDeleteExpenseItReceiptAsyncTask != null || mDeleteExpenseItReceiptReceiver != null);
+                            }
+
+                            // Sixth, requests were sent out, display a dialog box.
                             if (pendingRequest) {
                                 // Log the event
                                 EventTracker.INSTANCE.track("Expenses", "Delete Mobile Entry");
@@ -1541,24 +1614,6 @@ public class Expenses extends BaseFragment implements INetworkActivityListener {
                                     Log.e(Const.LOG_TAG, CLS_TAG
                                             + "Expenses.onDelete getAlertDialog can't reference Expenses!");
                                 }
-                            }
-
-                            //Check for Expensit Receipts
-                            SmartExpense smartExpense;
-                            ArrayList<SmartExpense> smartExpenseArrayList;
-                            if (!expenseItReceipts.isEmpty()) {
-                                EventTracker.INSTANCE.eventTrack(Flurry.CATEGORY_EXPENSE_UNMANAGED_EXPENSEIT,
-                                        Flurry.ACTION_EDIT_RECEIPT, Flurry.LABEL_DELETE_RECEIPT);
-
-                                smartExpenseArrayList = new ArrayList<>();
-                                for (ExpenseItReceipt receipt : expenseItReceipts) {
-                                    smartExpense = new SmartExpense();
-                                    smartExpense.setSmartExpenseId(String.valueOf(receipt.getId()));
-                                    smartExpenseArrayList.add(smartExpense);
-                                }
-
-                                doRemoveSmartExpenseAsyncTask(smartExpenseArrayList);
-                                checkedExpenses.clear();
                             }
 
                             toggleButtonBar();
@@ -1587,84 +1642,6 @@ public class Expenses extends BaseFragment implements INetworkActivityListener {
             }
         }
         return count;
-    }
-
-    /**
-     * Determines whether the current list of selected expenses contain any cash expenses.
-     *
-     * @return <code>true</code> if the current list of selected expenses contain at least one cash expense; <code>false</code>
-     * otherwise.
-     */
-    private boolean isCashExpenseSelected() {
-        boolean retVal = false;
-        if (checkedExpenses != null && checkedExpenses.size() > 0) {
-            Iterator<Expense> expIter = checkedExpenses.iterator();
-            while (expIter.hasNext()) {
-                Expense checkedExpense = expIter.next();
-                if (checkedExpense.getExpenseEntryType() == Expense.ExpenseEntryType.CASH) {
-                    retVal = true;
-                    break;
-                }
-            }
-        }
-        return retVal;
-    }
-
-    private int areMultipleCashExpensesSelected() {
-        int numOfCashExpensesRead = 0;
-        if (checkedExpenses != null && checkedExpenses.size() > 0) {
-            Iterator<Expense> expIter = checkedExpenses.iterator();
-            while (expIter.hasNext()) {
-                Expense checkedExpense = expIter.next();
-                if (checkedExpense.getExpenseEntryType() == Expense.ExpenseEntryType.CASH) {
-                    numOfCashExpensesRead++;
-                }
-            }
-        }
-        return numOfCashExpensesRead;
-    }
-
-    /**
-     * Determines whether the current list of selected expenses contain any non-cash expenses.
-     *
-     * @return <code>true</code> if the current list of selected expenses contain at least one non-cash expense;
-     * <code>false</code> otherwise.
-     */
-    private boolean isCardChargeSelected() {
-        boolean retVal = false;
-        if (checkedExpenses != null && checkedExpenses.size() > 0) {
-            Iterator<Expense> expIter = checkedExpenses.iterator();
-            while (expIter.hasNext()) {
-                Expense checkedExpense = expIter.next();
-                if (checkedExpense.getExpenseEntryType() != Expense.ExpenseEntryType.CASH) {
-                    retVal = true;
-                    break;
-                }
-            }
-        }
-        return retVal;
-    }
-
-    /**
-     * Determines whether the current list of selected expenses contain at least one "smart" expense.
-     *
-     * @return <code>true</code> if the current list of selected expenses contain at least one "smart" expense; <code>false</code>
-     * otherwise.
-     */
-    private boolean isSmartExpenseSelected() {
-        boolean retVal = false;
-        if (checkedExpenses != null && checkedExpenses.size() > 0) {
-            Iterator<Expense> expIter = checkedExpenses.iterator();
-            while (expIter.hasNext()) {
-                Expense checkedExpense = expIter.next();
-                if (checkedExpense.getExpenseEntryType() == Expense.ExpenseEntryType.SMART_CORPORATE
-                        || checkedExpense.getExpenseEntryType() == Expense.ExpenseEntryType.SMART_PERSONAL) {
-                    retVal = true;
-                    break;
-                }
-            }
-        }
-        return retVal;
     }
 
     /**
@@ -1816,19 +1793,39 @@ public class Expenses extends BaseFragment implements INetworkActivityListener {
         }
     }
 
-    private void doRemoveSmartExpenseAsyncTask(ArrayList<SmartExpense> arySmartExpenses) {
-        if (mRemoveSmartExpenseReceiver == null) {
-            mRemoveSmartExpenseReceiver = new BaseAsyncResultReceiver(new Handler());
-            mRemoveSmartExpenseReceiver.setListener(mRemoveSmartExpenseAsyncReplyListener);
-        }
+//    private void doRemoveSmartExpenseAsyncTask(ArrayList<SmartExpense> arySmartExpenses) {
+//        if (mRemoveSmartExpenseReceiver == null) {
+//            mRemoveSmartExpenseReceiver = new BaseAsyncResultReceiver(new Handler());
+//            mRemoveSmartExpenseReceiver.setListener(mRemoveSmartExpenseAsyncReplyListener);
+//        }
+//
+//        if (mRemoveSmartExpensesRequestTask != null) {
+//            mRemoveSmartExpenseReceiver.setListener(mRemoveSmartExpenseAsyncReplyListener);
+//        }
+//
+//        mRemoveSmartExpensesRequestTask = new RemoveSmartExpensesRequestTask
+//                (getConcurCore().getBaseContext(), 1, mRemoveSmartExpenseReceiver, arySmartExpenses);
+//        mRemoveSmartExpensesRequestTask.execute();
+//    }
 
-        if (mRemoveSmartExpensesRequestTask != null) {
-            mRemoveSmartExpenseReceiver.setListener(mRemoveSmartExpenseAsyncReplyListener);
+    private void doDeleteExpenseItExpenseAsyncTask(List<Long> expenseItIds) {
+        // set up the receiver.
+        if (mDeleteExpenseItReceiptReceiver == null) {
+            mDeleteExpenseItReceiptReceiver = new BaseAsyncResultReceiver(new Handler());
+            mDeleteExpenseItReceiptReceiver.setListener(mDeleteExpenseItAsyncReplyListener);
         }
-
-        mRemoveSmartExpensesRequestTask = new RemoveSmartExpensesRequestTask
-                (getConcurCore().getBaseContext(), 1, mRemoveSmartExpenseReceiver, arySmartExpenses);
-        mRemoveSmartExpensesRequestTask.execute();
+        // make the call.
+        // if the call is still being made, then set the listener to the current call.
+        if (mDeleteExpenseItReceiptAsyncTask != null && mDeleteExpenseItReceiptAsyncTask.getStatus() != AsyncTask.Status.FINISHED) {
+            mDeleteExpenseItReceiptReceiver.setListener(mDeleteExpenseItAsyncReplyListener);
+        }
+        // otherwise, if everything's all good, then make the call.
+        else {
+//            metricsTiming = System.currentTimeMillis();
+            mDeleteExpenseItReceiptAsyncTask = new DeleteExpenseItReceiptAsyncTask(
+                    getActivity(), 1, mDeleteExpenseItReceiptReceiver, expenseItIds);
+            mDeleteExpenseItReceiptAsyncTask.execute();
+        }
     }
 
     /**
@@ -2073,63 +2070,6 @@ public class Expenses extends BaseFragment implements INetworkActivityListener {
                                         + intent.getStringExtra(Const.SERVICE_REQUEST_STATUS_TEXT));
                         new SystemUnavailableDialogFragment().show(getFragmentManager(), null);
                     }
-                }
-            } else {
-                Log.e(Const.LOG_TAG, CLS_TAG + ".onReceive: missing service request status!");
-            }
-        }
-    }
-
-    /**
-     * An extension of <code>BroadcastReceiver</code> for responding to the result of deleting a set of expenses.
-     *
-     * @author AndrewK
-     */
-    class DeleteExpenseReceiver extends BroadcastReceiver {
-
-        final String CLS_TAG = Expenses.CLS_TAG + "." + DeleteExpenseReceiver.class.getSimpleName();
-
-        /*
-         * (non-Javadoc)
-         * 
-         * @see android.content.BroadcastReceiver#onReceive(android.content.Context, android.content.Intent)
-         */
-        @Override
-        public void onReceive(Context context, Intent intent) {
-
-            // Upon success, we want to request a new list from the server.
-            // Dismiss the dialog.
-            DeleteExpenseProgressDialogHandler.dismiss(Expenses.this);
-
-            int serviceRequestStatus = intent.getIntExtra(Const.SERVICE_REQUEST_STATUS, -1);
-            if (serviceRequestStatus != -1) {
-                if (serviceRequestStatus == Const.SERVICE_REQUEST_STATUS_OKAY) {
-                    int httpStatusCode = intent.getIntExtra(Const.REPLY_HTTP_STATUS_CODE, -1);
-                    if (httpStatusCode != -1) {
-                        if (httpStatusCode == HttpStatus.SC_OK) {
-                            if (intent.getStringExtra(Const.REPLY_STATUS).equalsIgnoreCase(Const.REPLY_STATUS_SUCCESS)) {
-
-                                getSmartExpenses(false);
-
-                            } else {
-                                actionStatusErrorMessage = intent.getStringExtra(Const.REPLY_ERROR_MESSAGE);
-                                Log.e(Const.LOG_TAG, CLS_TAG + ".onReceive: mobile web service error -- "
-                                        + actionStatusErrorMessage + ".");
-                                showExpenseDeleteFailure(actionStatusErrorMessage);
-                            }
-                        } else {
-                            lastHttpErrorMessage = intent.getStringExtra(Const.REPLY_HTTP_STATUS_TEXT);
-                            Log.e(Const.LOG_TAG, CLS_TAG + ".onReceive: http error -- " + lastHttpErrorMessage + ".");
-                            new SystemUnavailableDialogFragment().show(getFragmentManager(), null);
-                        }
-                    } else {
-                        Log.e(Const.LOG_TAG, CLS_TAG + ".onReceive: missing http reply code!");
-                    }
-                } else {
-                    Log.e(Const.LOG_TAG,
-                            CLS_TAG + ".onReceive: service request error -- "
-                                    + intent.getStringExtra(Const.SERVICE_REQUEST_STATUS_TEXT));
-                    new SystemUnavailableDialogFragment().show(getFragmentManager(), null);
                 }
             } else {
                 Log.e(Const.LOG_TAG, CLS_TAG + ".onReceive: missing service request status!");
@@ -2669,7 +2609,7 @@ public class Expenses extends BaseFragment implements INetworkActivityListener {
         // With some of the ExpenseIt items, ExpenseComparator seems to be violating the Comparison contract. This will be fixed
         // in 9.8 but the try/catch prevents a crash in the meantime.
         try {
-            String sortOrder = PreferenceUtil.getStringPreference(getBaseActivity(), PREF_EXPENSE_LIST_SORT_ORDER,
+            String sortOrder = PreferenceUtil.getStringPreference(getConcurCore(), PREF_EXPENSE_LIST_SORT_ORDER,
                     com.concur.mobile.platform.expense.provider.Expense.SmartExpenseColumns.DATE_NEWEST_SORT_ORDER);
             Collections.sort(expenses, new ExpenseComparator(sortOrder));
         } catch (IllegalArgumentException e) {
