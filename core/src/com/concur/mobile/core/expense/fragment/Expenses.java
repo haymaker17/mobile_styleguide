@@ -113,6 +113,7 @@ import java.util.Map;
  *
  * @author AndrewK
  */
+@EventTracker.EventTrackerClassName(getClassName = "Expense-List")
 public class Expenses extends BaseFragment implements INetworkActivityListener {
 
     private static final String CLS_TAG = Expenses.class.getSimpleName();
@@ -412,9 +413,6 @@ public class Expenses extends BaseFragment implements INetworkActivityListener {
         public void onRequestSuccess(Bundle resultData) {
             Log.d(Const.LOG_TAG, CLS_TAG + ".onRequestSuccess for DeleteExpenseItAsyncReplyListener called!");
 
-            // Log the event.
-//            EventTracker.INSTANCE.trackTimings("Expense-ExpenseIt",
-//                    System.currentTimeMillis() - metricsTiming, "Delete Expense", "");
             DeleteExpenseProgressDialogHandler.dismiss(Expenses.this);
 
             // Also refresh the ExpenseIt list (if ExpenseIt user).
@@ -441,7 +439,6 @@ public class Expenses extends BaseFragment implements INetworkActivityListener {
 
         @Override
         public void cleanup() {
-//            metricsTiming = 0L;
             mDeleteExpenseItReceiptReceiver = null;
         }
     };
@@ -1490,7 +1487,7 @@ public class Expenses extends BaseFragment implements INetworkActivityListener {
             hasCardCharges = (checkedExpenses != null && checkedExpenses.size() > 0);
         }
 
-        boolean hasExpenseItReceipts = expenseItReceipts != null && expenseItReceipts.size() > 0;
+        final boolean hasExpenseItReceipts = expenseItReceipts != null && expenseItReceipts.size() > 0;
 
         /*
          * The dialog message and title will vary depending on what combination of card and cash expenses are to be deleted.
@@ -1584,10 +1581,12 @@ public class Expenses extends BaseFragment implements INetworkActivityListener {
                             // Fifth, Check for ExpenseIt Receipts
                             if (!expenseItReceipts.isEmpty()) {
 
-                                EventTracker.INSTANCE.eventTrack(Flurry.CATEGORY_EXPENSE_UNMANAGED_EXPENSEIT,
-                                        Flurry.ACTION_EDIT_RECEIPT, Flurry.LABEL_DELETE_RECEIPT);
+                                Long count = new Long(expenseItReceipts.size());
+                                numOfExpensesToDelete += count;
 
-                                numOfExpensesToDelete += expenseItReceipts.size();
+                                EventTracker.INSTANCE.eventTrack("Expense-Unmanaged-ExpenseIt",
+                                        "Edit", "Delete", count);
+
                                 List<Long> expenseItIds = new ArrayList<>();
                                 for (ExpenseItReceipt receipt : expenseItReceipts) {
                                     expenseItIds.add(receipt.getId());
