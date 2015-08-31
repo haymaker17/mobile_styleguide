@@ -1487,7 +1487,7 @@ public class Expenses extends BaseFragment implements INetworkActivityListener {
         // If there's more checked expenses than just cash expenses, they are card charges. If no cash expenses, all are cards.
         // This can be simplified when card charge deletion is enabled by checking their combined array sizes.
         boolean hasCardCharges = false;
-        if (hasCashExpenses & hasExpenseItReceipts) {
+        if (hasCashExpenses || hasExpenseItReceipts) {
             hasCardCharges = (checkedExpenses.size() > (expenseItReceipts.size() + mobileEntries.size()));
         } else if (hasCashExpenses) {
            hasCardCharges = (checkedExpenses.size() > mobileEntries.size());
