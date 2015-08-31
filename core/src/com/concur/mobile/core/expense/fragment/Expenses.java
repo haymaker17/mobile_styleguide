@@ -1478,16 +1478,22 @@ public class Expenses extends BaseFragment implements INetworkActivityListener {
             cashExpensesSelected = mobileEntries.size();
         }
 
+        final boolean hasExpenseItReceipts = expenseItReceipts != null && expenseItReceipts.size() > 0;
+        int expenseItExpensesSelected = 0;
+        if (hasExpenseItReceipts) {
+            expenseItExpensesSelected = expenseItReceipts.size();
+        }
+
         // If there's more checked expenses than just cash expenses, they are card charges. If no cash expenses, all are cards.
         // This can be simplified when card charge deletion is enabled by checking their combined array sizes.
         boolean hasCardCharges = false;
-        if (hasCashExpenses) {
-            hasCardCharges = (checkedExpenses.size() > mobileEntries.size());
+        if (hasCashExpenses & hasExpenseItReceipts) {
+            hasCardCharges = (checkedExpenses.size() > (expenseItReceipts.size() + mobileEntries.size()));
+        } else if (hasCashExpenses) {
+           hasCardCharges = (checkedExpenses.size() > mobileEntries.size());
         } else {
             hasCardCharges = (checkedExpenses != null && checkedExpenses.size() > 0);
         }
-
-        final boolean hasExpenseItReceipts = expenseItReceipts != null && expenseItReceipts.size() > 0;
 
         /*
          * The dialog message and title will vary depending on what combination of card and cash expenses are to be deleted.
@@ -1497,17 +1503,17 @@ public class Expenses extends BaseFragment implements INetworkActivityListener {
         String dialogMessage;
         String dialogTitle;
 
-        if (hasExpenseItReceipts || (hasCashExpenses & !hasCardCharges)) {
+        if ((hasExpenseItReceipts | hasCashExpenses) & !hasCardCharges) {
             dialogMessage = getResources().getQuantityString(R.plurals.dlg_expense_remove_confirm_message,
-                    cashExpensesSelected).toString();
+                    cashExpensesSelected + expenseItExpensesSelected).toString();
             dialogTitle = getString(R.string.dlg_expense_confirm_report_delete_title);
-        } else if (hasCardCharges & !hasCashExpenses) {
+        } else if (hasCardCharges && (!hasCashExpenses & !hasExpenseItReceipts)) {
             dialogMessage = getString(R.string.dlg_expense_remove_card_charge_not_supported);
             dialogTitle = getString(R.string.dlg_expense_delete_failed_title);
         } else {
             // Must be a mix
             dialogMessage = getResources().getQuantityString(R.plurals.dlg_expense_remove_mixed_confirm,
-                    cashExpensesSelected);
+                    cashExpensesSelected + expenseItExpensesSelected);
             dialogTitle = getString(R.string.dlg_expense_confirm_report_delete_title);
         }
 
