@@ -73,6 +73,8 @@ public class ExpenseItDetailActivity extends BaseActivity
 
     private static final String RECEIPT_IMAGE_BITMAP_KEY = "RECEIPT_IMAGE_BITMAP_KEY";
 
+    private static final String NEW_COMMENT_FROM_FRAGMENT_KEY = "NEW_COMMENT_FROM_FRAGMENT_KEY";
+
     private static final String LOCAL_IMAGE_FILE_PATH_KEY = "LOCAL_IMAGE_FILE_PATH_KEY";
 
     private static final String RECEIPT_IMAGE_ID_KEY = "RECEIPT_IMAGE_ID_KEY";
@@ -485,7 +487,7 @@ public class ExpenseItDetailActivity extends BaseActivity
         super.onPause();
 
         if (newComment != null) {
-            retainer.put("newComment", newComment);
+            retainer.put(NEW_COMMENT_FROM_FRAGMENT_KEY, newComment);
         }
 
         // Retain the delete receiver.
@@ -551,8 +553,8 @@ public class ExpenseItDetailActivity extends BaseActivity
 
         if (retainer != null) {
 
-            if (retainer.contains("newComment")) {
-                newComment = (String) retainer.get("newComment");
+            if (retainer.contains(NEW_COMMENT_FROM_FRAGMENT_KEY)) {
+                newComment = (String) retainer.get(NEW_COMMENT_FROM_FRAGMENT_KEY);
             }
 
             // Recover the delete receiver

@@ -44,6 +44,8 @@ public class ExpenseItDetailActivityFragment extends PlatformFragment {
 
     protected static int RESULT_CANCELLED = 2611;
 
+    private static String NOTE_KEY = "NOTE_KEY";
+
     private int eta;
     private Calendar dateCreated;
     private long receiptId = 0;
@@ -87,18 +89,13 @@ public class ExpenseItDetailActivityFragment extends PlatformFragment {
 
         expenseItReceipt = (ExpenseItReceipt) getArguments().getSerializable(EXPENSEIT_ITEM);
         isInErrorState = expenseItReceipt.isInErrorState();
-
-        if (savedInstanceState != null && savedInstanceState.containsKey("note")) {
-            noteBody = savedInstanceState.getString("note");
-        }
-
         fragmentView = inflater.inflate(R.layout.fragment_expense_it_detail, container, false);
-        buildView();
+        buildView(savedInstanceState);
 
         return fragmentView;
     }
 
-    public void buildView() {
+    public void buildView(Bundle savedInstanceState) {
 
         getActivity().getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_ALWAYS_HIDDEN);
         if (expenseItReceipt == null || expenseItReceipt.getCreatedAt() == null) {
@@ -108,7 +105,12 @@ public class ExpenseItDetailActivityFragment extends PlatformFragment {
         eta = expenseItReceipt.getEta();
         dateCreated = expenseItReceipt.getCreatedAt();
         receiptId = expenseItReceipt.getId();
-        noteBody = expenseItReceipt.getNote();
+
+        if (savedInstanceState != null && savedInstanceState.containsKey(NOTE_KEY)) {
+            noteBody = savedInstanceState.getString(NOTE_KEY);
+        } else {
+            noteBody = expenseItReceipt.getNote();
+        }
 
         if (fragmentView != null) {
             getViewReceiptTransition();
@@ -128,6 +130,12 @@ public class ExpenseItDetailActivityFragment extends PlatformFragment {
             Log.e(Const.LOG_TAG, CLS_TAG + ".buildView could not find the fragment!");
         }
 
+    }
+
+    @Override
+    public void onSaveInstanceState(Bundle outState) {
+        super.onSaveInstanceState(outState);
+        outState.putString(NOTE_KEY, noteBody);
     }
 
     private void setErrorNoteAndMessage() {
@@ -212,7 +220,8 @@ public class ExpenseItDetailActivityFragment extends PlatformFragment {
         super.onActivityResult(requestCode, resultCode, data);
         if (resultCode == RESULT_SAVE_COMMENT) {
             Log.d(Const.LOG_TAG, CLS_TAG + ".onActivityResult: resultCode is RESULT_SAVE_COMMENT.");
-            noteBody = ViewUtil.getTextViewText(getActivity(), R.id.expenseit_comment, R.id.field_value);
+            noteBody = data.getStringExtra(CommentDialogFragment.NEW_COMMENT_KEY);
+            ViewUtil.setTextViewText(fragmentView, R.id.expenseit_comment, R.id.field_value, noteBody, true);
             callbackActivity.saveComment(noteBody);
         } else if (resultCode == RESULT_CANCELLED) {
             Log.d(Const.LOG_TAG, CLS_TAG + ".onActivityResult: resultCode is RESULT_CANCELLED.");
@@ -224,6 +233,8 @@ public class ExpenseItDetailActivityFragment extends PlatformFragment {
         public CommentDialogFragment() { }
 
         public static final String DIALOG_FRAGMENT_ID = "COMMENT_DIALOG";
+
+        public static final String NEW_COMMENT_KEY = "NEW_COMMENT";
 
         private TextView charCount;
 
@@ -287,7 +298,7 @@ public class ExpenseItDetailActivityFragment extends PlatformFragment {
                 @Override
                 public void onClick(DialogInterface dialog, int which) {
                     String comment = textBox.getText().toString().trim();
-                    ViewUtil.setTextViewText(getActivity(), R.id.expenseit_comment, R.id.field_value, comment, true);
+                    getActivity().getIntent().putExtra(NEW_COMMENT_KEY, comment);
                     getTargetFragment().onActivityResult(getTargetRequestCode(),
                             ExpenseItDetailActivityFragment.RESULT_SAVE_COMMENT, getActivity().getIntent());
                     lastTextChanged = null;
