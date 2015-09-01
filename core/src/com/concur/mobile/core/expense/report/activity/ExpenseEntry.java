@@ -76,6 +76,7 @@ import com.concur.mobile.core.expense.report.service.TaxForm;
 import com.concur.mobile.core.expense.service.GetExpenseTypesRequest;
 import com.concur.mobile.core.expense.service.SearchListRequest;
 import com.concur.mobile.core.expense.travelallowance.TravelAllowanceFacade;
+import com.concur.mobile.core.expense.travelallowance.util.BundleId;
 import com.concur.mobile.core.service.ConcurService;
 import com.concur.mobile.core.util.Const;
 import com.concur.mobile.core.util.ExpTypeMruAsyncTask;
@@ -262,7 +263,7 @@ public class ExpenseEntry extends AbstractExpenseActivity {
         // Restore any receivers.
         restoreReceivers();
 
-        if (ViewUtil.hasTravelAllowanceFixed(this)) {
+        if (ViewUtil.hasTravelAllowanceFixed(this) && (expRepEntDet.expKey.equals("FXMLS") || expRepEntDet.expKey.equals("FXLDG"))) {
             this.taFacade = new TravelAllowanceFacade(new TravelAllowanceFacade.ExpenseEntryTACallback() {
 
                 @Override
@@ -282,21 +283,18 @@ public class ExpenseEntry extends AbstractExpenseActivity {
                     } else {
                         // Make the view group visible for fixed allowances.
                         allowanceFields.setVisibility(View.VISIBLE);
+                        taFacade.setExpenseDetailsTAFormFields(expenseReportFormFields);
                     }
 
                     List<FormFieldView> frmFldViews = populateViewWithFormFields(viewGroup,
                             expenseReportFormFields, null);
 
-                    if (frmFldViews != null && frmFldViews.size() > 0 && frmFldViewListener != null) {
-                    if (frmFldViewListener.getFormFieldViews() != null) {
-                        frmFldViewListener.getFormFieldViews().addAll(frmFldViews);
-                    } else {
-                        frmFldViewListener.setFormFieldViews(frmFldViews);
+                    if (frmFldViewListener != null) {
+                        frmFldViewListener.setTaFormFieldViews(frmFldViews);
                     }
                 }
-                }
             });
-            taFacade.setupExpenseEntryTAFields(this.getApplicationContext(), expRepEntDet);
+            taFacade.setupExpenseEntryTAFields(this.getApplicationContext(), expRep, expRepEntDet);
         }
     }
 
@@ -2536,7 +2534,29 @@ public class ExpenseEntry extends AbstractExpenseActivity {
         boolean retVal = false;
         final int itemId = item.getItemId();
         if (itemId == R.id.menuSave) {
-            save();
+            if (ViewUtil.hasTravelAllowanceFixed(this) && (expRepEntDet.expKey.equals("FXMLS") || expRepEntDet.expKey.equals("FXLDG"))) {
+                this.taFacade.setSaveExpenseEntryTACallback(new TravelAllowanceFacade.SaveExpenseEntryTACallback() {
+                    @Override
+                    public void saveTA() {
+                        showDialog(Const.DIALOG_EXPENSE_SAVE_REPORT_ENTRY);
+                    }
+
+                    @Override
+                    public void saveTAFinished() {
+                        dismissDialog(Const.DIALOG_EXPENSE_SAVE_REPORT_ENTRY);
+                        // Call the original expense save.
+                        save();
+                    }
+                });
+                if (frmFldViewListener.getTaFormFieldViews() != null) {
+                    for (FormFieldView field : frmFldViewListener.getTaFormFieldViews()) {
+                        field.commit();
+                    }
+                }
+                this.taFacade.saveExpenseEntryTA(this.getApplicationContext(), expRep, expRepEntDet);
+            } else {
+                save();
+            }
         } else if (itemId == R.id.capture_receipt_picture) {
             if (ConcurCore.isConnected()) {
                 if (!isNewExpense()) {
@@ -3419,15 +3439,35 @@ public class ExpenseEntry extends AbstractExpenseActivity {
                                         activity.finish();
                                     }
                                 } else {
-                                    activity.actionStatusErrorMessage = intent
-                                            .getStringExtra(Const.REPLY_ERROR_MESSAGE);
-                                    Log.e(Const.LOG_TAG, CLS_TAG + ".onReceive: mobile web service error -- "
-                                            + activity.actionStatusErrorMessage);
-                                    // Display an error dialog.
-                                    activity.showDialog(Const.DIALOG_EXPENSE_SAVE_REPORT_ENTRY_FAILED);
+                                    if (ViewUtil.hasTravelAllowanceFixed(activity) && activity.taFacade != null
+                                            && activity.taFacade.isTaUpdateSucceeded()
+                                            && (activity.expRepEntDet.expKey.equals("FXMLS")
+                                                    || activity.expRepEntDet.expKey.equals("FXLDG"))) {
+                                        // In case the expense amount goes to zero after an TA update the expense update would
+                                        // fail because the expense doesn't exist anymore. Handle this logic in case of TA as
+                                        // normal and trigger an expense list refresh.
+                                        activity.taFacade.resetTaUpdateSucceeded();
+                                        // Dismiss the dialog.
+                                        activity.dismissDialog(Const.DIALOG_EXPENSE_SAVE_REPORT_ENTRY);
+                                        IExpenseReportCache expRepCache = ((ConcurCore) activity.getApplication())
+                                                .getExpenseActiveCache();
+                                        expRepCache.setShouldRefreshReportList();
+                                        Intent i = new Intent();
+                                        i.putExtra(BundleId.EXPENSE_DETAILS_TA_UPDATE, true);
+                                        activity.setResult(Activity.RESULT_OK, i);
 
-                                    // Dismiss the dialog.
-                                    activity.dismissDialog(Const.DIALOG_EXPENSE_SAVE_REPORT_ENTRY);
+                                        activity.finish();
+                                    } else {
+                                        activity.actionStatusErrorMessage = intent
+                                                .getStringExtra(Const.REPLY_ERROR_MESSAGE);
+                                        Log.e(Const.LOG_TAG, CLS_TAG + ".onReceive: mobile web service error -- "
+                                                + activity.actionStatusErrorMessage);
+                                        // Display an error dialog.
+                                        activity.showDialog(Const.DIALOG_EXPENSE_SAVE_REPORT_ENTRY_FAILED);
+
+                                        // Dismiss the dialog.
+                                        activity.dismissDialog(Const.DIALOG_EXPENSE_SAVE_REPORT_ENTRY);
+                                    }
                                 }
                             } else {
                                 activity.lastHttpErrorMessage = intent.getStringExtra(Const.REPLY_HTTP_STATUS_TEXT);

@@ -292,9 +292,15 @@ public class
                                 }
                             });
                         }
+
+                        @Override
+                        public void taDateRefreshFinished() {
+                            dismissDialog(Const.DIALOG_EXPENSE_RETRIEVE_REPORT_ENTRY_DETAIL_PROGRESS);
+                        }
                     });
 
             if (savedInstanceState == null) {
+                showDialog(Const.DIALOG_EXPENSE_RETRIEVE_REPORT_ENTRY_DETAIL_PROGRESS);
                 taFacade.refreshTaData();
             } else {
                 taFacade.refreshVisibility();
@@ -1695,27 +1701,31 @@ public class
 
     @Override
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
-        if (requestCode == REQUEST_VIEW_TA_ITINERARY) {
-            if (resultCode == Activity.RESULT_OK) {
+        boolean resultAfterTaUpdate = false;
+        if (data != null) {
+            resultAfterTaUpdate = data.getBooleanExtra(BundleId.EXPENSE_DETAILS_TA_UPDATE, false);
+        }
+        if ((requestCode == REQUEST_VIEW_TA_ITINERARY && resultCode == Activity.RESULT_OK)
+                || (requestCode == REQUEST_VIEW_ENTRY_DETAILS && resultAfterTaUpdate
+                        && resultCode == Activity.RESULT_OK)) {
 
-                // Register the receiver.
-                registerReportDetailReceiver();
+            // Register the receiver.
+            registerReportDetailReceiver();
 
-                showDialog(Const.DIALOG_EXPENSE_RETRIEVE_REPORT_DETAIL);
+            showDialog(Const.DIALOG_EXPENSE_RETRIEVE_REPORT_DETAIL);
 
-                reportDetailRequest = ((ConcurCore) getApplication()).getService().sendReportDetailSummaryRequest(
-                        expRep.reportKey, reportKeySource);
+            reportDetailRequest = ((ConcurCore) getApplication()).getService()
+                    .sendReportDetailSummaryRequest(expRep.reportKey, reportKeySource);
 
-                if (reportDetailRequest != null) {
-                    // Set the request on the receiver.
-                    reportDetailReceiver.setRequest(reportDetailRequest);
-                } else {
-                    // Unregister the receiver.
-                    unregisterReportDetailReceiver();
-                    Log.e(Const.LOG_TAG, CLS_TAG + ".onActivityResult: unable to create report detail request!");
-                }
-
+            if (reportDetailRequest != null) {
+                // Set the request on the receiver.
+                reportDetailReceiver.setRequest(reportDetailRequest);
+            } else {
+                // Unregister the receiver.
+                unregisterReportDetailReceiver();
+                Log.e(Const.LOG_TAG, CLS_TAG + ".onActivityResult: unable to create report detail request!");
             }
+
         } else {
             super.onActivityResult(requestCode, resultCode, data);
         }

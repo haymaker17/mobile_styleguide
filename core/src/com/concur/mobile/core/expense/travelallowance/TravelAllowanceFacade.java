@@ -4,6 +4,7 @@ import android.content.Context;
 import android.os.Bundle;
 import android.util.Log;
 
+import com.concur.mobile.core.ConcurCore;
 import com.concur.mobile.core.expense.report.data.ExpenseReport;
 import com.concur.mobile.core.expense.report.data.ExpenseReportEntryDetail;
 import com.concur.mobile.core.expense.report.data.ExpenseReportFormField;
@@ -16,11 +17,13 @@ import com.concur.mobile.core.expense.travelallowance.controller.IControllerList
 import com.concur.mobile.core.expense.travelallowance.controller.TravelAllowanceConfigurationController;
 import com.concur.mobile.core.expense.travelallowance.controller.TravelAllowanceController;
 import com.concur.mobile.core.expense.travelallowance.controller.TravelAllowanceItineraryController;
+import com.concur.mobile.core.expense.travelallowance.datamodel.FixedTravelAllowance;
 import com.concur.mobile.core.expense.travelallowance.datamodel.TravelAllowanceConfiguration;
 import com.concur.mobile.core.expense.travelallowance.expensedetails.ExpenseEntryTAFieldFactory;
 import com.concur.mobile.core.expense.travelallowance.util.DebugUtils;
 
 import java.lang.ref.WeakReference;
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -31,12 +34,20 @@ import java.util.List;
  */
 public class TravelAllowanceFacade implements IControllerListener {
 
+
     public interface ExpenseEntriesTACallback {
         void enableTAItineraryButton(final Class<?> taStartActivity, final boolean isEditMode);
+
+        void taDateRefreshFinished();
     }
 
     public interface ExpenseEntryTACallback {
         void populateTravelAllowanceFields(List<ExpenseReportFormField> expenseReportFormFields);
+    }
+
+    public interface SaveExpenseEntryTACallback {
+        void saveTA();
+        void saveTAFinished();
     }
 
 
@@ -53,13 +64,18 @@ public class TravelAllowanceFacade implements IControllerListener {
     private boolean configRefreshDone = false;
     private boolean itineraryRefreshDone = false;
 
+    private List<ExpenseReportFormField> expenseDetailsTAFormFields;
 
-    private WeakReference<ExpenseEntriesTACallback> expenseEntriesCallbackReference;
-    private WeakReference<ExpenseEntryTACallback> expenseEntryCallbackReference;
+    private boolean taUpdateSucceeded = false;
+
+    private ExpenseEntriesTACallback expenseEntriesCallbackReference;
+    private ExpenseEntryTACallback expenseEntryCallbackReference;
+    private SaveExpenseEntryTACallback saveExpenseEntryTACallbackReference;
+
 
     public TravelAllowanceFacade(ExpenseReport expenseReport, boolean isInApproval, TravelAllowanceController taController,
                                  ExpenseEntriesTACallback callback) {
-        this.expenseEntriesCallbackReference = new WeakReference<ExpenseEntriesTACallback>(callback);
+        this.expenseEntriesCallbackReference = callback;
         this.fixedTravelAllowanceController = taController.getFixedTravelAllowanceController();
         this.itineraryController = taController.getTaItineraryController();
         this.configurationController = taController.getTAConfigController();
@@ -69,23 +85,31 @@ public class TravelAllowanceFacade implements IControllerListener {
     }
 
     public TravelAllowanceFacade(ExpenseEntryTACallback callback) {
-        this.expenseEntryCallbackReference = new WeakReference<ExpenseEntryTACallback>(callback);
+        this.expenseEntryCallbackReference = callback;
     }
 
 
 
     public void refreshVisibility() {
         if (expRep == null) {
+            Log.d(DebugUtils.LOG_TAG_TA,
+                    DebugUtils.buildLogText(CLASS_TAG, "refreshVisibility",
+                            " expense report is null"));
             return;
         }
+
+        Log.d(DebugUtils.LOG_TAG_TA,
+                DebugUtils.buildLogText(CLASS_TAG, "refreshVisibility",
+                        "isInApproval: " + isInApproval + ", isSubmitted(): " + expRep.isSubmitted()));
+
         if (isInApproval || expRep.isSubmitted()) {
             // In approval case or if report is submitted (for traveler case) only show the button if itineraries are available.
             if (itineraryController.getItineraryList().size() > 0) {
                 Log.d(DebugUtils.LOG_TAG_TA,
                         DebugUtils.buildLogText(CLASS_TAG, "refreshVisibility",
                                 " Button visible: Approver case and list > 0."));
-                if (expenseEntriesCallbackReference.get() != null) {
-                    expenseEntriesCallbackReference.get().enableTAItineraryButton(TravelAllowanceActivity.class, false);
+                if (expenseEntriesCallbackReference != null) {
+                    expenseEntriesCallbackReference.enableTAItineraryButton(TravelAllowanceActivity.class, false);
                 }
                 return;
             }
@@ -94,20 +118,28 @@ public class TravelAllowanceFacade implements IControllerListener {
             if (configurationController != null
                     && configurationController.getTravelAllowanceConfigurationList() != null) {
                 TravelAllowanceConfiguration config = configurationController.getTravelAllowanceConfigurationList();
+                Log.d(DebugUtils.LOG_TAG_TA,
+                        DebugUtils.buildLogText(CLASS_TAG, "refreshVisibility",
+                                " Button visible: Traveler case employee config: LodgingTat = "
+                                        + config.getLodgingTat() + " MealsTat = " + config.getMealsTat()));
                 if (TravelAllowanceConfiguration.FIXED.equals(config.getLodgingTat())
                         || TravelAllowanceConfiguration.FIXED.equals(config.getMealsTat())) {
-                    Log.d(DebugUtils.LOG_TAG_TA,
-                            DebugUtils.buildLogText(CLASS_TAG, "refreshVisibility",
-                                    " Button visible: Traveler case employee config: LodgingTat = "
-                                            + config.getLodgingTat() + " MealsTat = " + config.getMealsTat()));
+
+                    if (expenseEntriesCallbackReference == null) {
+                        Log.d(DebugUtils.LOG_TAG_TA,
+                                DebugUtils.buildLogText(CLASS_TAG, "refreshVisibility",
+                                        "callback: " + expenseEntriesCallbackReference));
+                    }
+
+
                     if (itineraryController.getItineraryList().size() == 0) {
-                        if (expenseEntriesCallbackReference.get() != null) {
-                            expenseEntriesCallbackReference.get().enableTAItineraryButton(ItineraryUpdateActivity.class,
+                        if (expenseEntriesCallbackReference != null) {
+                            expenseEntriesCallbackReference.enableTAItineraryButton(ItineraryUpdateActivity.class,
                                     true);
                         }
                     } else {
-                        if (expenseEntriesCallbackReference.get() != null) {
-                            expenseEntriesCallbackReference.get().enableTAItineraryButton(TravelAllowanceActivity.class,
+                        if (expenseEntriesCallbackReference != null) {
+                            expenseEntriesCallbackReference.enableTAItineraryButton(TravelAllowanceActivity.class,
                                     true);
                         }
                     }
@@ -129,6 +161,9 @@ public class TravelAllowanceFacade implements IControllerListener {
 
             if (configRefreshDone) {
                 refreshVisibility();
+                if (expenseEntriesCallbackReference != null) {
+                    expenseEntriesCallbackReference.taDateRefreshFinished();
+                }
             }
 
         }
@@ -142,7 +177,20 @@ public class TravelAllowanceFacade implements IControllerListener {
 
             if (itineraryRefreshDone) {
                 refreshVisibility();
+                if (expenseEntriesCallbackReference != null) {
+                    expenseEntriesCallbackReference.taDateRefreshFinished();
+                }
             }
+        }
+
+        if (controller instanceof FixedTravelAllowanceController && action == ControllerAction.UPDATE) {
+            controller.unregisterListener(this);
+            SaveExpenseEntryTACallback saveTACallback = saveExpenseEntryTACallbackReference;
+            this.taUpdateSucceeded = isSuccess;
+            if (saveTACallback != null) {
+                saveTACallback.saveTAFinished();
+            }
+            ((FixedTravelAllowanceController) controller).refreshFixedTravelAllowances(expRep.reportKey);
         }
     }
 
@@ -160,16 +208,62 @@ public class TravelAllowanceFacade implements IControllerListener {
         itineraryController.refreshItineraries(expRep.reportKey, isInApproval);
     }
 
-    public void setupExpenseEntryTAFields(Context context, ExpenseReportEntryDetail expRepEntDet) {
+    public void setupExpenseEntryTAFields(Context context, ExpenseReport expenseReport, ExpenseReportEntryDetail expRepEntDet) {
             if (expRepEntDet.expKey.equals("FXMLS") || expRepEntDet.expKey.equals("FXLDG")) {
                 ExpenseEntryTAFieldFactory fieldFactory = new ExpenseEntryTAFieldFactory(context,
                         expRepEntDet);
+                boolean isEditable = !expenseReport.isSubmitted();
+                fieldFactory.setIsEditable(isEditable);
                 List<ExpenseReportFormField> frmFlds = fieldFactory.getFormFields();
-                if (expenseEntryCallbackReference.get() != null) {
-                    expenseEntryCallbackReference.get().populateTravelAllowanceFields(frmFlds);
+                if (expenseEntryCallbackReference != null) {
+                    expenseEntryCallbackReference.populateTravelAllowanceFields(frmFlds);
                 }
             }
     }
 
 
+    public void setSaveExpenseEntryTACallback (SaveExpenseEntryTACallback callback) {
+        this.saveExpenseEntryTACallbackReference = callback;
+    }
+
+    public void saveExpenseEntryTA(Context context, ExpenseReport expenseReport, ExpenseReportEntryDetail expRepEntDet) {
+        this.expRep = expenseReport;
+        SaveExpenseEntryTACallback saveCallback = saveExpenseEntryTACallbackReference;
+        if (saveCallback != null) {
+            saveCallback.saveTA();
+        }
+
+        if (expenseDetailsTAFormFields == null || expenseDetailsTAFormFields.size() == 0) {
+            saveCallback.saveTAFinished();
+            return;
+        }
+
+        ConcurCore app = (ConcurCore) context.getApplicationContext();
+        boolean isEditable = !expenseReport.isSubmitted();
+        ExpenseEntryTAFieldFactory fieldFactory = new ExpenseEntryTAFieldFactory(context, expRepEntDet,
+                app.getTaController().getFixedTravelAllowanceController());
+        fieldFactory.setIsEditable(isEditable);
+
+        FixedTravelAllowance ta = fieldFactory.generateFromFormFields(expenseDetailsTAFormFields, expRepEntDet.taDayKey);
+        List<FixedTravelAllowance> taList = new ArrayList<FixedTravelAllowance>();
+        taList.add(ta);
+
+        FixedTravelAllowanceController controller = app.getTaController().getFixedTravelAllowanceController();
+        controller.registerListener(this);
+        controller.executeUpdate(taList, expRepEntDet.rptKey);
+
+    }
+
+    public void setExpenseDetailsTAFormFields(List<ExpenseReportFormField> formFields) {
+        this.expenseDetailsTAFormFields = formFields;
+    }
+
+
+    public boolean isTaUpdateSucceeded() {
+        return taUpdateSucceeded;
+    }
+
+    public void resetTaUpdateSucceeded() {
+        this.taUpdateSucceeded = false;
+    }
 }

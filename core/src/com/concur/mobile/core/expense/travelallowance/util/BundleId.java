@@ -24,5 +24,8 @@ public final class BundleId {
     public static final String EXPENSE_REPORT_KEY = "expense.report.key";
     public static final String IS_EDIT_MODE = "travelallowance.isEditMode";
     public static final String IS_SUCCESS = "success";
+    public static final String EXPENSE_DETAILS_TA_UPDATE = "travelallowance.expenseDetail.update";
+    public static final String REFRESH_FIXED_TA = "travelallowance.refresh.fixed.ta";
+
 
 }
