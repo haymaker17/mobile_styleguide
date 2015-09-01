@@ -4,8 +4,12 @@ import android.app.Activity;
 import android.app.AlertDialog;
 import android.app.Dialog;
 import android.content.DialogInterface;
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.DialogFragment;
+import android.text.Editable;
+import android.text.InputFilter;
+import android.text.TextWatcher;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -36,9 +40,14 @@ public class ExpenseItDetailActivityFragment extends PlatformFragment {
 
     private static final String EXPENSEIT_ITEM = "EXPENSEIT_ITEM";
 
+    protected static int RESULT_SAVE_COMMENT = 2610;
+
+    protected static int RESULT_CANCELLED = 2611;
+
     private int eta;
     private Calendar dateCreated;
     private long receiptId = 0;
+    private String noteBody;
     private ExpenseItReceipt expenseItReceipt;
 
     View fragmentView;
@@ -47,6 +56,7 @@ public class ExpenseItDetailActivityFragment extends PlatformFragment {
 
     public interface ExpenseItDetailsViewReceiptCallback {
         void initializeViewReceipt(long receiptId);
+        void saveComment(String comment);
     }
 
     protected ExpenseItDetailsViewReceiptCallback callbackActivity;
@@ -78,6 +88,10 @@ public class ExpenseItDetailActivityFragment extends PlatformFragment {
         expenseItReceipt = (ExpenseItReceipt) getArguments().getSerializable(EXPENSEIT_ITEM);
         isInErrorState = expenseItReceipt.isInErrorState();
 
+        if (savedInstanceState != null && savedInstanceState.containsKey("note")) {
+            noteBody = savedInstanceState.getString("note");
+        }
+
         fragmentView = inflater.inflate(R.layout.fragment_expense_it_detail, container, false);
         buildView();
 
@@ -94,6 +108,7 @@ public class ExpenseItDetailActivityFragment extends PlatformFragment {
         eta = expenseItReceipt.getEta();
         dateCreated = expenseItReceipt.getCreatedAt();
         receiptId = expenseItReceipt.getId();
+        noteBody = expenseItReceipt.getNote();
 
         if (fragmentView != null) {
             getViewReceiptTransition();
@@ -160,12 +175,19 @@ public class ExpenseItDetailActivityFragment extends PlatformFragment {
         View commentField = fragmentView.findViewById(R.id.expenseit_comment);
         TextView commentLabel = (TextView) commentField.findViewById(R.id.field_name);
         commentLabel.setText(R.string.comment);
+        if (noteBody != null) {
+            ViewUtil.setTextViewText(fragmentView, R.id.expenseit_comment, R.id.field_value, noteBody, true);
+        }
 
         commentField.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                CommentDialogFragment df = new CommentDialogFragment();
-                df.show(getActivity().getSupportFragmentManager(), CommentDialogFragment.DIALOG_FRAGMENT_ID);
+                DialogFragment df = CommentDialogFragment.newInstance(noteBody);
+                df.setTargetFragment(ExpenseItDetailActivityFragment.this, RESULT_SAVE_COMMENT);
+                getActivity().getSupportFragmentManager()
+                        .beginTransaction()
+                        .add(df, CommentDialogFragment.DIALOG_FRAGMENT_ID)
+                        .commit();
             }
         });
 
@@ -185,24 +207,90 @@ public class ExpenseItDetailActivityFragment extends PlatformFragment {
         }
     }
 
+    @Override
+    public void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if (resultCode == RESULT_SAVE_COMMENT) {
+            Log.d(Const.LOG_TAG, CLS_TAG + ".onActivityResult: resultCode is RESULT_SAVE_COMMENT.");
+            noteBody = ViewUtil.getTextViewText(getActivity(), R.id.expenseit_comment, R.id.field_value);
+            callbackActivity.saveComment(noteBody);
+        } else if (resultCode == RESULT_CANCELLED) {
+            Log.d(Const.LOG_TAG, CLS_TAG + ".onActivityResult: resultCode is RESULT_CANCELLED.");
+        }
+    }
+
     public static class CommentDialogFragment extends DialogFragment {
 
-        public CommentDialogFragment() {
-            super();
-        }
+        public CommentDialogFragment() { }
 
         public static final String DIALOG_FRAGMENT_ID = "COMMENT_DIALOG";
+
+        private TextView charCount;
+
+        private EditText textBox;
+
+        private View dialogView;
+
+        public static final int EXPENSEIT_MAX_SUPPORTED_CHARS = 500;
+
+        private final TextWatcher mEditTextWatcher = new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+
+            }
+
+            @Override
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
+                String charCountInt = String.valueOf(EXPENSEIT_MAX_SUPPORTED_CHARS - s.length());
+                if (charCount != null) {
+                    charCount.setText(getString(R.string.expenseit_char_limit, charCountInt));
+                }
+            }
+
+            @Override
+            public void afterTextChanged(Editable s) {
+                lastTextChanged = s.toString();
+            }
+        };
+
+        public String lastTextChanged;
+
+        public static String COMMENT_KEY = "comment.key";
+
+        public static CommentDialogFragment newInstance(String comment) {
+            CommentDialogFragment fragment = new CommentDialogFragment();
+            Bundle args = new Bundle();
+            args.putString(CommentDialogFragment.COMMENT_KEY, comment);
+            fragment.setArguments(args);
+
+            return fragment;
+        }
 
         @Override
         public Dialog onCreateDialog(Bundle savedInstanceState) {
 
             AlertDialog.Builder dlgBldr = new AlertDialog.Builder(getActivity());
+            LayoutInflater inflater = getActivity().getLayoutInflater();
+            dialogView = inflater.inflate(R.layout.expenseit_comment_dialog_layout, null);
+            dlgBldr.setView(dialogView);
+            setCommentLayout();
             dlgBldr.setTitle(getText(R.string.comment));
             dlgBldr.setCancelable(true);
+            dlgBldr.setOnCancelListener(new DialogInterface.OnCancelListener() {
+                @Override
+                public void onCancel(DialogInterface dialog) {
+                    lastTextChanged = null;
+                }
+            });
             dlgBldr.setPositiveButton(getText(R.string.okay), new DialogInterface.OnClickListener() {
 
                 @Override
                 public void onClick(DialogInterface dialog, int which) {
+                    String comment = textBox.getText().toString().trim();
+                    ViewUtil.setTextViewText(getActivity(), R.id.expenseit_comment, R.id.field_value, comment, true);
+                    getTargetFragment().onActivityResult(getTargetRequestCode(),
+                            ExpenseItDetailActivityFragment.RESULT_SAVE_COMMENT, getActivity().getIntent());
+                    lastTextChanged = null;
                     // TODO: save comment to the expenseit service.
                 }
             });
@@ -210,16 +298,28 @@ public class ExpenseItDetailActivityFragment extends PlatformFragment {
 
                 @Override
                 public void onClick(DialogInterface dialog, int which) {
-                    // TODO: Cancel button. Don't save whatever the user types.
+                    getTargetFragment().onActivityResult(getTargetRequestCode(),
+                            ExpenseItDetailActivityFragment.RESULT_CANCELLED, getActivity().getIntent());
+                    lastTextChanged = null;
                 }
             });
-
-            EditText textEdit = new EditText(getActivity());
-            textEdit.setMinLines(3);
-            textEdit.setMaxLines(3);
-            textEdit.setLayoutParams(new ViewGroup.LayoutParams(ViewGroup.LayoutParams.FILL_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT));
-            dlgBldr.setView(textEdit);
             return dlgBldr.create();
+        }
+
+        private void setCommentLayout() {
+            String comment = getArguments().getString(COMMENT_KEY);
+            int charCountRemaining = EXPENSEIT_MAX_SUPPORTED_CHARS;
+            textBox = (EditText) dialogView.findViewById(R.id.expenseit_text_comment_edit_text);
+            charCount = (TextView) dialogView.findViewById(R.id.expenseit_char_count_text_view);
+            textBox.setFilters(new InputFilter[]{new InputFilter.LengthFilter(EXPENSEIT_MAX_SUPPORTED_CHARS)});
+            textBox.addTextChangedListener(mEditTextWatcher);
+            textBox.setMaxLines(3);
+            if (comment != null) {
+                charCountRemaining = (EXPENSEIT_MAX_SUPPORTED_CHARS - comment.length());
+                textBox.setText(comment);
+            }
+            charCount.setText(getString(R.string.expenseit_char_limit, String.valueOf(charCountRemaining)));
+            textBox.setSelection(textBox.getText().length());
         }
     }
 }

@@ -89,6 +89,8 @@ public class ExpenseItDetailActivity extends BaseActivity
 
     private Menu menu;
 
+    private String newComment;
+
     private ProgressDialogFragment mProgressDialogFragment;
 
     private DeleteExpenseItReceiptAsyncTask mDeleteExpenseItReceiptAsyncTask;
@@ -482,6 +484,10 @@ public class ExpenseItDetailActivity extends BaseActivity
     protected void onPause() {
         super.onPause();
 
+        if (newComment != null) {
+            retainer.put("newComment", newComment);
+        }
+
         // Retain the delete receiver.
         if (mDeleteExpenseItReceiptReceiver != null) {
             mDeleteExpenseItReceiptReceiver.setListener(null);
@@ -544,6 +550,10 @@ public class ExpenseItDetailActivity extends BaseActivity
         super.onResume();
 
         if (retainer != null) {
+
+            if (retainer.contains("newComment")) {
+                newComment = (String) retainer.get("newComment");
+            }
 
             // Recover the delete receiver
             if (retainer.contains(EXPENSEIT_RECEIPT_RECEIVER)) {
@@ -876,6 +886,11 @@ public class ExpenseItDetailActivity extends BaseActivity
         String title = getString(R.string.dlg_expense_no_external_storage_available_title);
         String message = getString(R.string.dlg_expense_no_external_storage_available_message);
         DialogFragmentFactory.getAlertOkayInstance(title, message);
+    }
+
+    @Override
+    public void saveComment(String comment) {
+        this.newComment = comment;
     }
 
     static class SaveExpenseItReceiver extends BaseBroadcastReceiver<ExpenseItDetailActivity, SaveReceiptRequest> {

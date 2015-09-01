@@ -47,6 +47,8 @@
     <string name="expenseit_replace_receipt_button">Replace</string>
     <string name="expenseit_delete_receipt_button">Delete</string>
     <string name="expenseit_edit_receipt_button">Edit</string>
+
+    <string name="expenseit_char_limit">%s/500</string>
     <!-- EXPENSEIT STRINGS END -->
 
 </resources>
