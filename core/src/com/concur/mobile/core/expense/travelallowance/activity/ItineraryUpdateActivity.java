@@ -40,7 +40,6 @@ import com.concur.mobile.core.expense.travelallowance.datamodel.ItineraryLocatio
 import com.concur.mobile.core.expense.travelallowance.datamodel.ItinerarySegment;
 import com.concur.mobile.core.expense.travelallowance.fragment.DatePickerFragment;
 import com.concur.mobile.core.expense.travelallowance.fragment.MessageDialogFragment;
-import com.concur.mobile.core.expense.travelallowance.fragment.ProgressDialogFragment;
 import com.concur.mobile.core.expense.travelallowance.fragment.TimePickerFragment;
 import com.concur.mobile.core.expense.travelallowance.ui.model.PositionInfoTag;
 import com.concur.mobile.core.expense.travelallowance.util.BundleId;
@@ -75,8 +74,6 @@ public class ItineraryUpdateActivity extends BaseActivity implements IController
     private static final String TAG_DELETE_DIALOG_FRAGMENT =
             CLASS_TAG + ".delete.dialog.fragment";
 
-    private static final String TAG_PROGRESS_DIALOG_FRAGMENT =
-            CLASS_TAG + ".progress.dialog.fragment";
 
     private Itinerary itinerary;
     private int taskChain;
@@ -92,7 +89,6 @@ public class ItineraryUpdateActivity extends BaseActivity implements IController
 
     private DatePickerFragment calendarDialog;
     private TimePickerFragment timeDialog;
-    private ProgressDialogFragment progressDialog;
 
     private Date defaultDate;
 
@@ -552,17 +548,6 @@ public class ItineraryUpdateActivity extends BaseActivity implements IController
         messageDialog.show(getSupportFragmentManager(), TAG_MESSAGE_DIALOG_FRAGMENT);
     }
 
-    private void showProgressDialog(String progressText) {
-        if (StringUtilities.isNullOrEmpty(progressText)) {
-            return;
-        }
-        Bundle bundle = new Bundle();
-        bundle.putString(BundleId.PROGRESS_DIALOG_TEXT, progressText);
-        progressDialog = new ProgressDialogFragment();
-        progressDialog.setArguments(bundle);
-        progressDialog.show(getSupportFragmentManager(), TAG_PROGRESS_DIALOG_FRAGMENT);
-    }
-
     @Override
     public boolean onCreateOptionsMenu(Menu menu){
         MenuInflater inflater = getMenuInflater();
@@ -708,9 +693,10 @@ public class ItineraryUpdateActivity extends BaseActivity implements IController
                 return;
             }
             if (controller instanceof FixedTravelAllowanceController) {
-                if (progressDialog != null) {
-                    progressDialog.dismiss();
-                }
+                findViewById(R.id.progressBar).setVisibility(View.GONE);
+                findViewById(R.id.et_itinerary).setEnabled(true);
+                findViewById(R.id.list_view).setEnabled(true);
+
                 if (taskChain != 1) {
                     Log.d(DebugUtils.LOG_TAG_TA, DebugUtils.buildLogText(CLASS_TAG, "actionFinished", "Got not needed notification... Ignoring"));
                     return;
@@ -721,7 +707,9 @@ public class ItineraryUpdateActivity extends BaseActivity implements IController
                     if (result != null) {
                         List<FixedTravelAllowance> allowances = (List<FixedTravelAllowance>) result.getSerializable(BundleId.ALLOWANCE_LIST);
                         if (allowanceController.executeUpdate(allowances, this.expenseReportKey)) {
-                            showProgressDialog(" "); //TODO: Add text Calculating Expenses
+                            findViewById(R.id.progressBar).setVisibility(View.VISIBLE);
+                            findViewById(R.id.et_itinerary).setEnabled(false);
+                            findViewById(R.id.list_view).setEnabled(false);
                         }
                     }
                 }
@@ -741,7 +729,9 @@ public class ItineraryUpdateActivity extends BaseActivity implements IController
                     Log.d(DebugUtils.LOG_TAG_TA, DebugUtils.buildLogText(CLASS_TAG, "actionFinished",
                             "Itinerary Update caused changes to Allowances. Need to refresh..."));
                     if (allowanceController.refreshFixedTravelAllowances(this.expenseReportKey)) {
-                        showProgressDialog(" "); //TODO: Add text Calculating Allowances...
+                        findViewById(R.id.progressBar).setVisibility(View.VISIBLE);
+                        findViewById(R.id.et_itinerary).setEnabled(false);
+                        findViewById(R.id.list_view).setEnabled(false);
                     }
                 } else {
                     taskChain = 0; //Important due to auto delete and error situations. -> Abort chain.
@@ -750,9 +740,9 @@ public class ItineraryUpdateActivity extends BaseActivity implements IController
                 refreshAdapter();
             }
             if (controller instanceof FixedTravelAllowanceController) {
-                if (progressDialog != null) {
-                    progressDialog.dismiss();
-                }
+                findViewById(R.id.progressBar).setVisibility(View.GONE);
+                findViewById(R.id.et_itinerary).setEnabled(true);
+                findViewById(R.id.list_view).setEnabled(true);
                 if (isSuccess) {
                     Log.d(DebugUtils.LOG_TAG_TA, DebugUtils.buildLogText(CLASS_TAG, "actionFinished",
                             "Allowances have been saved successfully in order to generate expenses"));

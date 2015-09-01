@@ -126,6 +126,14 @@ public class TravelAllowanceActivity extends AppCompatActivity
                 resultIntent.putExtra(Const.EXTRA_EXPENSE_REFRESH_HEADER, true);
                 setResult(RESULT_OK, resultIntent);
             }
+
+            if (data != null && data.getBooleanExtra(BundleId.REFRESH_FIXED_TA, false)) {
+                this.allowanceController.refreshFixedTravelAllowances(expenseReportKey);
+                FixedTravelAllowanceListFragment fixedTaListFrag = getFixedTravelAllowanceListFragment();
+                if (fixedTaListFrag != null) {
+                    fixedTaListFrag.showRefreshIndicator();
+                }
+            }
         }
     }
 
@@ -184,7 +192,7 @@ public class TravelAllowanceActivity extends AppCompatActivity
         }
         FixedTravelAllowanceListFragment fixedTaListFrag = getFixedTravelAllowanceListFragment();
         if (fixedTaListFrag != null) {
-            fixedTaListFrag.onRefreshFinished();
+            //fixedTaListFrag.onRefreshFinished();
         }
     }
 

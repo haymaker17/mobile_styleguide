@@ -164,6 +164,7 @@ public class FixedTravelAllowanceListFragment extends ListFragment implements Sw
      */
     @Override
     public void onRefresh() {
+        getListView().setEnabled(false);
         if (this.callback != null) {
             this.callback.sendMessage(ON_REFRESH_MSG);
         } else {
@@ -177,6 +178,14 @@ public class FixedTravelAllowanceListFragment extends ListFragment implements Sw
             adapter =  new FixedTravelAllowanceListAdapter(getActivity());
             setListAdapter(adapter);
             renderSummary();
+            getListView().setEnabled(true);
+        }
+    }
+
+    public void showRefreshIndicator() {
+        if (swipeRefreshLayout != null) {
+            swipeRefreshLayout.setRefreshing(true);
+            getListView().setEnabled(false);
         }
     }
 

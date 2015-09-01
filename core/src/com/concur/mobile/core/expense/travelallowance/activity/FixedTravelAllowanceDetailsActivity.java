@@ -12,6 +12,7 @@ import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
+import android.widget.ProgressBar;
 import android.widget.RelativeLayout;
 import android.widget.Spinner;
 import android.widget.Switch;
@@ -85,6 +86,7 @@ public class FixedTravelAllowanceDetailsActivity extends BaseActivity implements
 
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         getSupportActionBar().setTitle(R.string.ta_daily_allowance);
+
 
         Intent callerIntent = this.getIntent();
         allowance = null;
@@ -161,12 +163,15 @@ public class FixedTravelAllowanceDetailsActivity extends BaseActivity implements
             List<FixedTravelAllowance> allowances = new ArrayList<FixedTravelAllowance>();
             allowances.add(this.allowance);
             allowanceController.executeUpdate(allowances, expenseReportKey);
-
+            ProgressBar bar = (ProgressBar) findViewById(R.id.progressBar);
+            bar.setVisibility(View.VISIBLE);
+            item.setEnabled(false);
+            disableAllFields();
         }
 
         return super.onOptionsItemSelected(item);
-
     }
+
 
     /**
      * Render breakfast section
@@ -658,9 +663,10 @@ public class FixedTravelAllowanceDetailsActivity extends BaseActivity implements
                     "Update Action callback finished with isSuccess: " + isSuccess));
             if (isSuccess) {
                 Toast.makeText(this, R.string.general_save_success, Toast.LENGTH_SHORT).show();
-                allowanceController.refreshFixedTravelAllowances(expenseReportKey);
+                //allowanceController.refreshFixedTravelAllowances(expenseReportKey);
                 Intent resultIntent = new Intent();
                 resultIntent.putExtra(Const.EXTRA_EXPENSE_REFRESH_HEADER, true);
+                resultIntent.putExtra(BundleId.REFRESH_FIXED_TA, true);
                 this.setResult(RESULT_OK, resultIntent);
                 onBackPressed(); //Leave the screen on success.
             } else {
@@ -673,6 +679,17 @@ public class FixedTravelAllowanceDetailsActivity extends BaseActivity implements
             renderHeader(allowance);
         }
 
+    }
+
+    private void disableAllFields() {
+        findViewById(R.id.sv_breakfast_provided).setEnabled(false);
+        findViewById(R.id.sp_breakfast_provided).setEnabled(false);
+        findViewById(R.id.sv_lunch_provided).setEnabled(false);
+        findViewById(R.id.sp_lunch_provided).setEnabled(false);
+        findViewById(R.id.sv_dinner_provided).setEnabled(false);
+        findViewById(R.id.sp_dinner_provided).setEnabled(false);
+        findViewById(R.id.sp_lodging_provided).setEnabled(false);
+        findViewById(R.id.sv_overnight).setEnabled(false);
     }
 
 }
