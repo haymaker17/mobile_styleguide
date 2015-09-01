@@ -417,14 +417,14 @@ public class QuickExpense extends BaseActivity {
     // MRU data collector
     protected MrudataCollector mrudataCollector;
 
-    protected SaveSmartExpenseRequestTask saveSmartExpReqTask;
+    protected SaveSmartExpenseRequestTask saveSmartExpenseRequest;
 
-    protected BaseAsyncResultReceiver saveExpenseListReceiver;
+    protected BaseAsyncResultReceiver saveSmartExpenseReceiver;
+
     /**
      * Listener used to handle the response for getting the list of SmartExpenses.
      */
-    protected BaseAsyncRequestTask.AsyncReplyListener saveSmartExpenseListener = new BaseAsyncRequestTask.AsyncReplyListener() {
-
+    protected class SaveSmartExpenseListener implements BaseAsyncRequestTask.AsyncReplyListener {
 
         @Override
         public void onRequestSuccess(Bundle resultData) {
@@ -460,7 +460,7 @@ public class QuickExpense extends BaseActivity {
 
         @Override
         public void cleanup() {
-            saveSmartExpReqTask = null;
+            saveSmartExpenseRequest = null;
         }
 
         protected void dismissProgressDialog() {
@@ -547,10 +547,10 @@ public class QuickExpense extends BaseActivity {
             }
 
             //Retain the SaveExpense receiver
-            if (saveExpenseListReceiver != null) {
-                saveExpenseListReceiver.setListener(null);
+            if (saveSmartExpenseReceiver != null) {
+                saveSmartExpenseReceiver.setListener(null);
                 if (retainer != null) {
-                    retainer.put(EXTRA_SAVE_SMART_EXPENSE_RECEIVER_KEY, saveExpenseListReceiver);
+                    retainer.put(EXTRA_SAVE_SMART_EXPENSE_RECEIVER_KEY, saveSmartExpenseReceiver);
                 }
             }
         }
@@ -622,9 +622,9 @@ public class QuickExpense extends BaseActivity {
             }
             //Restore saveSmartExpense Receiver
             if (retainer.contains(EXTRA_SAVE_SMART_EXPENSE_RECEIVER_KEY)) {
-                saveExpenseListReceiver = (BaseAsyncResultReceiver) retainer.get(EXTRA_SAVE_SMART_EXPENSE_RECEIVER_KEY);
-                if (saveExpenseListReceiver != null) {
-                    saveExpenseListReceiver.setListener(saveSmartExpenseListener);
+                saveSmartExpenseReceiver = (BaseAsyncResultReceiver) retainer.get(EXTRA_SAVE_SMART_EXPENSE_RECEIVER_KEY);
+                if (saveSmartExpenseReceiver != null) {
+                    saveSmartExpenseReceiver.setListener(new SaveSmartExpenseListener());
                 }
             }
         }
@@ -995,7 +995,9 @@ public class QuickExpense extends BaseActivity {
                 receiptViewOnly = true;
 
                 // If this ReceiptCapture is smart matched, then we shouldn't enabled certain fields.
-                if(expenseEntry.isSmartMatched()) {
+                // MOB-25324: Allow editing for all fields in SmartExpense when it is a Mobile_entry
+                if(expenseEntry.isSmartMatched() &&
+                    (mobileEntry.getCctKey() != null || mobileEntry.getPctKey() != null || mobileEntry.getPcaKey() != null)) {
                     //CrnCode
                     currencyReadOnly = true;
                     //VendorDescription
@@ -1983,11 +1985,11 @@ public class QuickExpense extends BaseActivity {
 
                 @Override
                 public void onCancel(DialogInterface dialog) {
-                    if (saveSmartExpReqTask != null) {
-                        saveSmartExpReqTask.cancel(true);
+                    if (saveSmartExpenseRequest != null) {
+                        saveSmartExpenseRequest.cancel(true);
                     } else {
-                        Log.e(Const.LOG_TAG, CLS_TAG + ".onCancel(SaveExpenseDialog): saveExpenseRequest is null!");
-                    }
+                    Log.e(Const.LOG_TAG, CLS_TAG + ".onCancel(SaveExpenseDialog): saveExpenseRequest is null!");
+                }
                 }
             });
             dialog = progDlg;
@@ -3178,14 +3180,14 @@ public class QuickExpense extends BaseActivity {
      */
     private void saveSmartExpense() {
 
-        if (saveSmartExpReqTask != null) {
+        if (saveSmartExpenseRequest != null) {
             //We are in the middle of another save
             return;
         }
 
-        if (saveExpenseListReceiver == null) {
-            saveExpenseListReceiver = new BaseAsyncResultReceiver(new Handler());
-            saveExpenseListReceiver.setListener(saveSmartExpenseListener);
+        if (saveSmartExpenseReceiver == null) {
+            saveSmartExpenseReceiver = new BaseAsyncResultReceiver(new Handler());
+            saveSmartExpenseReceiver.setListener(new SaveSmartExpenseListener());
         }
 
         //Setup SmartExpense
@@ -3201,9 +3203,9 @@ public class QuickExpense extends BaseActivity {
         smartExpense.setMeKey(mobileEntry.getMeKey());
         smartExpense.setSmartExpenseId(mobileEntry.smartExpenseId);
 
-        saveSmartExpReqTask = new SaveSmartExpenseRequestTask(this,
-            REQUEST_SAVE_SMART_EXPENSE, saveExpenseListReceiver, smartExpense, false);
-        saveSmartExpReqTask.execute();
+        saveSmartExpenseRequest = new SaveSmartExpenseRequestTask(this.getApplicationContext(),
+            REQUEST_SAVE_SMART_EXPENSE, saveSmartExpenseReceiver, smartExpense, false);
+        saveSmartExpenseRequest.execute();
 
         //Show the Save progress dialog
         showDialog(DIALOG_SAVE_SMART_EXPENSE);
