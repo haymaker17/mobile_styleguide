@@ -40,11 +40,11 @@ public class ExpenseItDetailActivityFragment extends PlatformFragment {
 
     private static final String EXPENSEIT_ITEM = "EXPENSEIT_ITEM";
 
-    protected static int RESULT_SAVE_COMMENT = 2610;
+    protected static final int RESULT_SAVE_COMMENT = 2610;
 
-    protected static int RESULT_CANCELLED = 2611;
+    protected static final int RESULT_CANCELLED = 2611;
 
-    private static String NOTE_KEY = "NOTE_KEY";
+    private static final String NOTE_KEY = "NOTE_KEY";
 
     private int eta;
     private Calendar dateCreated;
@@ -52,7 +52,7 @@ public class ExpenseItDetailActivityFragment extends PlatformFragment {
     private String noteBody;
     private ExpenseItReceipt expenseItReceipt;
 
-    View fragmentView;
+    private View fragmentView;
 
     private boolean isInErrorState = false;
 
