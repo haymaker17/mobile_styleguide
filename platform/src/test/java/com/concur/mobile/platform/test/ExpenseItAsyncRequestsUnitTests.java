@@ -17,7 +17,7 @@ import com.concur.mobile.platform.ExpenseIt.ExpenseItGetReceiptTaskTest;
 import com.concur.mobile.platform.ExpenseIt.ExpenseItLoginRequestTaskTest;
 import com.concur.mobile.platform.ExpenseIt.ExpenseItUploadReceiptTaskTest;
 import com.concur.mobile.platform.ExpenseIt.GetExpenseItAccountInfoTaskTest;
-import com.concur.mobile.platform.ExpenseIt.PostExpenseItNoteTaskTest;
+import com.concur.mobile.platform.ExpenseIt.PutExpenseItNoteTaskTest;
 import com.concur.mobile.platform.ExpenseIt.SetExpenseItAccountInfoTaskTest;
 import com.concur.mobile.platform.authentication.SessionInfo;
 import com.concur.mobile.platform.config.provider.ConfigUtil;
@@ -216,7 +216,7 @@ public class ExpenseItAsyncRequestsUnitTests extends PlatformAsyncRequestTestUti
     }
 
     @Test
-    public void doPostNoteToExpenseItEntry() throws Exception {
+    public void doPutNoteToExpenseItEntry() throws Exception {
         ExpenseItUploadReceiptTaskTest testUpload = new ExpenseItUploadReceiptTaskTest(useMockServer());
         doExpenseItTest(testUpload);
         Long id = testUpload.getExpenseItId();
@@ -226,7 +226,7 @@ public class ExpenseItAsyncRequestsUnitTests extends PlatformAsyncRequestTestUti
             return;
         }
 
-        PostExpenseItNoteTaskTest test = new PostExpenseItNoteTaskTest(useMockServer());
+        PutExpenseItNoteTaskTest test = new PutExpenseItNoteTaskTest(useMockServer());
         test.setExpenseId(id);
         doExpenseItTest(test);
     }

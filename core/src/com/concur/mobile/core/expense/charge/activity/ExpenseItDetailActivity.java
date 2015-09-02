@@ -42,7 +42,7 @@ import com.concur.mobile.platform.expenseit.ExpenseItGetImageUrlResponse;
 import com.concur.mobile.platform.expenseit.ExpenseItNote;
 import com.concur.mobile.platform.expenseit.ExpenseItReceipt;
 import com.concur.mobile.platform.expenseit.GetExpenseItImageUrlAsyncTask;
-import com.concur.mobile.platform.expenseit.PostExpenseItNoteAsyncTask;
+import com.concur.mobile.platform.expenseit.PutExpenseItNoteAsyncTask;
 import com.concur.mobile.platform.ui.common.dialog.AlertDialogFragment;
 import com.concur.mobile.platform.ui.common.dialog.DialogFragmentFactory;
 import com.concur.mobile.platform.ui.common.dialog.ProgressDialogFragment;
@@ -101,7 +101,7 @@ public class ExpenseItDetailActivity extends BaseActivity
 
     private GetExpenseItImageUrlAsyncTask mGetExpenseItImageUrlAsyncTask;
 
-    private PostExpenseItNoteAsyncTask mPostExpenseItNoteAsyncTask;
+    private PutExpenseItNoteAsyncTask mPutExpenseItNoteAsyncTask;
 
 //    Uncomment after refactoring upload receipt into an AsyncTask.
 //    private SaveReceiptRequestTask mSaveReceiptRequestTask;
@@ -119,8 +119,8 @@ public class ExpenseItDetailActivity extends BaseActivity
     private static String EXPENSEIT_RECEIPT_IMAGE_URL_RECEIVER = "EXPENSEIT_RECEIPT_IMAGE_URL_RECEIVER";
     private BaseAsyncResultReceiver mGetExpenseItReceiptImageUrlReceiver;
 
-    private static String EXPENSEIT_POST_COMMENT_RECEIVER = "EXPENSEIT_POST_COMMENT_RECEIVER";
-    private BaseAsyncResultReceiver mPostExpenseItCommentReceiver;
+    private static String EXPENSEIT_PUT_COMMENT_RECEIVER = "EXPENSEIT_PUT_COMMENT_RECEIVER";
+    private BaseAsyncResultReceiver mPutExpenseItCommentReceiver;
 
 //    Uncomment after refactoring upload receipt into an AsyncTask.
 //    private static String EXPENSEIT_RECEIPT_UPLOAD_RECEIVER = "EXPENSEIT_RECEIPT_UPLOAD_RECEIVER";
@@ -199,27 +199,27 @@ public class ExpenseItDetailActivity extends BaseActivity
         }
     };
 
-    protected BaseAsyncRequestTask.AsyncReplyListener mPostCommentAsyncReplyListener = new BaseAsyncRequestTask.AsyncReplyListener() {
+    protected BaseAsyncRequestTask.AsyncReplyListener mPutCommentAsyncReplyListener = new BaseAsyncRequestTask.AsyncReplyListener() {
         @Override
         public void onRequestSuccess(Bundle resultData) {
-            Log.d(Const.LOG_TAG, CLS_TAG + ".onRequestSuccess for PostCommentAsyncReplyListener called.");
+            Log.d(Const.LOG_TAG, CLS_TAG + ".onRequestSuccess for PutCommentAsyncReplyListener called.");
         }
 
         @Override
         public void onRequestFail(Bundle resultData) {
             // TODO: Handle failure, currently fails silently.
-            Log.e(Const.LOG_TAG, CLS_TAG + ".onRequestFailed for PostCommentAsyncReplyListener called.");
+            Log.e(Const.LOG_TAG, CLS_TAG + ".onRequestFailed for PutCommentAsyncReplyListener called.");
         }
 
         @Override
         public void onRequestCancel(Bundle resultData) {
-            Log.d(Const.LOG_TAG, CLS_TAG + ".onRequestCancelled for PostCommentAsyncReplyListener called.");
-            mPostExpenseItNoteAsyncTask.cancel(true);
+            Log.d(Const.LOG_TAG, CLS_TAG + ".onRequestCancelled for PutCommentAsyncReplyListener called.");
+            mPutExpenseItNoteAsyncTask.cancel(true);
         }
 
         @Override
         public void cleanup() {
-            mPostExpenseItCommentReceiver = null;
+            mPutExpenseItCommentReceiver = null;
         }
     };
 
@@ -530,10 +530,10 @@ public class ExpenseItDetailActivity extends BaseActivity
         }
 
         // retain the comment reciever.
-        if (mPostExpenseItCommentReceiver != null) {
-            mPostExpenseItCommentReceiver.setListener(null);
+        if (mPutExpenseItCommentReceiver != null) {
+            mPutExpenseItCommentReceiver.setListener(null);
             if (retainer != null) {
-                retainer.put(EXPENSEIT_POST_COMMENT_RECEIVER, mPostExpenseItCommentReceiver);
+                retainer.put(EXPENSEIT_PUT_COMMENT_RECEIVER, mPutExpenseItCommentReceiver);
             }
         }
 
@@ -605,10 +605,10 @@ public class ExpenseItDetailActivity extends BaseActivity
             }
 
             // Recover the comment receiver
-            if (retainer.contains(EXPENSEIT_POST_COMMENT_RECEIVER)) {
-                mPostExpenseItCommentReceiver = (BaseAsyncResultReceiver) retainer.get(EXPENSEIT_POST_COMMENT_RECEIVER);
-                if (mPostExpenseItCommentReceiver != null) {
-                    mPostExpenseItCommentReceiver.setListener(mPostCommentAsyncReplyListener);
+            if (retainer.contains(EXPENSEIT_PUT_COMMENT_RECEIVER)) {
+                mPutExpenseItCommentReceiver = (BaseAsyncResultReceiver) retainer.get(EXPENSEIT_PUT_COMMENT_RECEIVER);
+                if (mPutExpenseItCommentReceiver != null) {
+                    mPutExpenseItCommentReceiver.setListener(mPutCommentAsyncReplyListener);
                 }
             }
 
@@ -725,18 +725,18 @@ public class ExpenseItDetailActivity extends BaseActivity
 
     private void doSaveCommentAsyncTask() {
         // set up the receiver
-        if (mPostExpenseItCommentReceiver == null) {
-            mPostExpenseItCommentReceiver = new BaseAsyncResultReceiver(new Handler());
-            mPostExpenseItCommentReceiver.setListener(mPostCommentAsyncReplyListener);
+        if (mPutExpenseItCommentReceiver == null) {
+            mPutExpenseItCommentReceiver = new BaseAsyncResultReceiver(new Handler());
+            mPutExpenseItCommentReceiver.setListener(mPutCommentAsyncReplyListener);
         }
 
         // make the call, unless it's already in use.
-        if (mPostExpenseItNoteAsyncTask != null && mPostExpenseItNoteAsyncTask.getStatus() != AsyncTask.Status.FINISHED) {
-            mPostExpenseItCommentReceiver.setListener(mPostCommentAsyncReplyListener);
+        if (mPutExpenseItNoteAsyncTask != null && mPutExpenseItNoteAsyncTask.getStatus() != AsyncTask.Status.FINISHED) {
+            mPutExpenseItCommentReceiver.setListener(mPutCommentAsyncReplyListener);
         } else {
-            mPostExpenseItNoteAsyncTask = new PostExpenseItNoteAsyncTask(getApplicationContext(), 1,
-                    mPostExpenseItCommentReceiver, newComment);
-            mPostExpenseItNoteAsyncTask.execute();
+            mPutExpenseItNoteAsyncTask = new PutExpenseItNoteAsyncTask(getApplicationContext(), 1,
+                    mPutExpenseItCommentReceiver, newComment);
+            mPutExpenseItNoteAsyncTask.execute();
         }
     }
 

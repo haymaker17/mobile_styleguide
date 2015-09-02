@@ -8,7 +8,7 @@ import java.util.Arrays;
 /**
  * @author Elliott Jacobsen-Watts
  */
-public class PostExpenseItNoteResponse implements Serializable {
+public class PutExpenseItNoteResponse implements Serializable {
 
     private static final long serialVersionUID = -8283442092654590236L;
 
@@ -28,11 +28,11 @@ public class PostExpenseItNoteResponse implements Serializable {
         if (this == o) {
             return true;
         }
-        if (!(o instanceof PostExpenseItNoteResponse)) {
+        if (!(o instanceof PutExpenseItNoteResponse)) {
             return false;
         }
 
-        PostExpenseItNoteResponse that = (PostExpenseItNoteResponse) o;
+        PutExpenseItNoteResponse that = (PutExpenseItNoteResponse) o;
 
         return Arrays.equals(getExpenses(), that.getExpenses());
     }

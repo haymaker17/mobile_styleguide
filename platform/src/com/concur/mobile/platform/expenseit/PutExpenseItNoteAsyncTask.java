@@ -19,18 +19,18 @@ import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.net.HttpURLConnection;
 
-public class PostExpenseItNoteAsyncTask extends ExpenseItAsyncRequestTask {
+public class PutExpenseItNoteAsyncTask extends ExpenseItAsyncRequestTask {
 
-    private static final String CLS_TAG = PostExpenseItNoteAsyncTask.class.getSimpleName();
+    private static final String CLS_TAG = PutExpenseItNoteAsyncTask.class.getSimpleName();
 
     private static final String EXPENSES_URL = "v1/expenses";
 
     public static final String PUT_EXPENSEIT_NOTE_RESULT_KEY = "PUT_EXPENSEIT_NOTE_RESULT_KEY";
     private ExpenseItNote note;
 
-    protected PostExpenseItNoteResponse noteResponse;
+    protected PutExpenseItNoteResponse noteResponse;
 
-    public PostExpenseItNoteAsyncTask(Context context, int requestId, BaseAsyncResultReceiver receiver, ExpenseItNote note) {
+    public PutExpenseItNoteAsyncTask(Context context, int requestId, BaseAsyncResultReceiver receiver, ExpenseItNote note) {
         super(context, requestId, receiver);
         this.note = note;
     }
@@ -68,8 +68,8 @@ public class PostExpenseItNoteAsyncTask extends ExpenseItAsyncRequestTask {
             if (connection.getResponseCode() >= HttpStatus.SC_OK &&
                     connection.getResponseCode() < HttpStatus.SC_MULTIPLE_CHOICES) {
 
-                PostExpenseItNoteResponse tmpResp = gson.fromJson(new InputStreamReader(new BufferedInputStream(is),
-                        "UTF-8"), PostExpenseItNoteResponse.class);
+                PutExpenseItNoteResponse tmpResp = gson.fromJson(new InputStreamReader(new BufferedInputStream(is),
+                        "UTF-8"), PutExpenseItNoteResponse.class);
 
                 if (tmpResp != null) {
                     noteResponse = tmpResp;

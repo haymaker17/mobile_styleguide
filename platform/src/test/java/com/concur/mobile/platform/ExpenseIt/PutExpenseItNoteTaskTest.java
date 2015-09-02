@@ -3,16 +3,16 @@ package com.concur.mobile.platform.ExpenseIt;
 import android.content.Context;
 
 import com.concur.mobile.base.service.BaseAsyncResultReceiver;
-import com.concur.mobile.platform.ExpenseIt.test.VerifyExpenseItPostNoteResult;
+import com.concur.mobile.platform.ExpenseIt.test.VerifyExpenseItPutNoteResult;
 import com.concur.mobile.platform.expenseit.ExpenseItNote;
-import com.concur.mobile.platform.expenseit.PostExpenseItNoteAsyncTask;
+import com.concur.mobile.platform.expenseit.PutExpenseItNoteAsyncTask;
 import com.concur.mobile.platform.test.AsyncRequestTest;
 import com.concur.mobile.platform.test.PlatformTestApplication;
 
 /**
  * @author Elliott Jacobsen-Watts
  */
-public class PostExpenseItNoteTaskTest extends AsyncRequestTest {
+public class PutExpenseItNoteTaskTest extends AsyncRequestTest {
 
     private Long expenseId;
 
@@ -20,7 +20,7 @@ public class PostExpenseItNoteTaskTest extends AsyncRequestTest {
         this.expenseId = id;
     }
 
-    public PostExpenseItNoteTaskTest(boolean useMockServer) {
+    public PutExpenseItNoteTaskTest(boolean useMockServer) {
         super(useMockServer);
     }
 
@@ -32,10 +32,10 @@ public class PostExpenseItNoteTaskTest extends AsyncRequestTest {
         BaseAsyncResultReceiver noteReceiver = new BaseAsyncResultReceiver(getHander());
         noteReceiver.setListener(new AsyncReplyListenerImpl());
 
-        PostExpenseItNoteAsyncTask task = new PostExpenseItNoteAsyncTask(context,
+        PutExpenseItNoteAsyncTask task = new PutExpenseItNoteAsyncTask(context,
                 0, noteReceiver, getNote());
 
-        VerifyExpenseItPostNoteResult verifier = new VerifyExpenseItPostNoteResult();
+        VerifyExpenseItPutNoteResult verifier = new VerifyExpenseItPutNoteResult();
         runTest("expenseIt/PostExpenseItNoteResponse.json", task, verifier);
     }
 

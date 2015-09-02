@@ -3,7 +3,7 @@ package com.concur.mobile.platform.ExpenseIt.test;
 import android.content.Context;
 
 import com.concur.mobile.platform.expenseit.ExpenseItPostReceipt;
-import com.concur.mobile.platform.expenseit.PostExpenseItNoteResponse;
+import com.concur.mobile.platform.expenseit.PutExpenseItNoteResponse;
 import com.concur.mobile.platform.test.VerifyResponse;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
@@ -13,21 +13,21 @@ import org.junit.Assert;
 /**
  * @author Elliott Jacobsen-Watts
  */
-public class VerifyExpenseItPostNoteResult implements VerifyResponse<PostExpenseItNoteResponse> {
+public class VerifyExpenseItPutNoteResult implements VerifyResponse<PutExpenseItNoteResponse> {
 
     private final String MTAG = CLS_TAG + ".verify";
 
-    private static final String CLS_TAG = VerifyExpenseItPostNoteResult.class.getSimpleName();
+    private static final String CLS_TAG = VerifyExpenseItPutNoteResult.class.getSimpleName();
 
     @Override
-    public PostExpenseItNoteResponse serializeResponse(String result) {
+    public PutExpenseItNoteResponse serializeResponse(String result) {
         Gson gson = new GsonBuilder().setDateFormat("yyyy-MM-dd HH:mm:ss").create();
-        PostExpenseItNoteResponse response = gson.fromJson(result, PostExpenseItNoteResponse.class);
+        PutExpenseItNoteResponse response = gson.fromJson(result, PutExpenseItNoteResponse.class);
         return response;
     }
 
     @Override
-    public void verify(Context context, PostExpenseItNoteResponse response) throws Exception {
+    public void verify(Context context, PutExpenseItNoteResponse response) throws Exception {
         if (response == null) {
             throw new Exception(CLS_TAG + "." + MTAG + ": response info is null");
         }
