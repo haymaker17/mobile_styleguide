@@ -95,7 +95,7 @@
         android:id="@+id/hotel_booking_scroll_view"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_above="@+id/footer"
+        android:layout_above="@+id/footerDivider"
         android:layout_below="@id/offline"
         android:layout_weight="1"
         android:fillViewport="true">
