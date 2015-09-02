@@ -1,0 +1,15 @@
+{
+  "expenses": [{
+    "id": "22848240",
+    "note": "ConcurMobile",
+    "ccType": null,
+    "createdAt": "2015-09-02 05:37:15",
+    "sentToCteAt": null,
+    "imageDataUrl": null,
+    "totalImageCount": 1,
+    "totalImagesUploaded": 0,
+    "parsingStatusCode": 0,
+    "eta": 184,
+    "processingEngine": "R"
+  }]
+}
