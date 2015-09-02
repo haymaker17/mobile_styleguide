@@ -110,6 +110,7 @@ public class EmailPasswordLookupActivity extends BaseActivity implements IProgre
     private String pinOrPassword = "";
     private String signInMethod = "";
 
+    private Bundle emailLookupBundle;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -312,7 +313,7 @@ public class EmailPasswordLookupActivity extends BaseActivity implements IProgre
             UserAndSessionInfoUtil.setServerAddress(PlatformProperties.getServerAddress());
         }
 
-        Bundle loginBundle = resultData;
+        emailLookupBundle= resultData;
         if (signInMethod.equalsIgnoreCase(com.concur.mobile.platform.ui.common.util.Const.LOGIN_METHOD_PASSWORD)
                 || (signInMethod
                 .equalsIgnoreCase(com.concur.mobile.platform.ui.common.util.Const.LOGIN_METHOD_MOBILE_PASSWORD))) {
@@ -332,7 +333,7 @@ public class EmailPasswordLookupActivity extends BaseActivity implements IProgre
                     Flurry.LABEL_LOGIN_USING_SSO, null);
             // Launch the company sign-on activity.
             Intent it = new Intent(this, CompanySignOnActivity.class);
-            it.putExtra(EmailLookUpRequestTask.EXTRA_LOGIN_BUNDLE, loginBundle);
+            it.putExtra(EmailLookUpRequestTask.EXTRA_LOGIN_BUNDLE, emailLookupBundle);
             startActivityForResult(it, LOGIN_SSO_REQ_CODE);
         } else {
             // TODO error.
@@ -872,11 +873,13 @@ public class EmailPasswordLookupActivity extends BaseActivity implements IProgre
                 saveCredentials(userId, pinOrPassword, signInMethod);
 
                 Bundle extras = getIntent().getExtras();
-                Bundle emailLookupBundle = null;
+                Bundle bundle = null;
                 if (extras != null && extras.containsKey(EmailLookUpRequestTask.EXTRA_LOGIN_BUNDLE)) {
-                    emailLookupBundle = extras.getBundle(EmailLookUpRequestTask.EXTRA_LOGIN_BUNDLE);
+                    bundle = extras.getBundle(EmailLookUpRequestTask.EXTRA_LOGIN_BUNDLE);
+                }else{
+                    bundle=emailLookupBundle;
                 }
-                UserAndSessionInfoUtil.updateUserAndSessionInfo(ConcurCore.getContext(), emailLookupBundle);
+                UserAndSessionInfoUtil.updateUserAndSessionInfo(ConcurCore.getContext(), bundle);
 
                 // GA analytics
                 trackLoginStatus(true, signInMethod);
